@@ -12,7 +12,7 @@ libRpcre.a: get.o maketables.o pcre.o study.o
 ifneq ($(strip $(BUILD)),CROSS)
 dftables.exe: dftables.o
 chartables.h: dftables.exe
-	./dftables > chartables.h
+	./dftables chartables.h
 else
 chartables.h: chartables.h.win 
 	$(CP) chartables.h.win chartables.h

@@ -260,6 +260,9 @@ do
       case OP_TYPEMINQUERY:
       switch(tcode[1])
         {
+        case OP_ANY:
+        return FALSE;
+
         case OP_NOT_DIGIT:
         for (c = 0; c < 32; c++)
           start_bits[c] |= ~cd->cbits[c+cbit_digit];
@@ -394,7 +397,7 @@ Returns:    pointer to a pcre_extra block, with study_data filled in and the
             NULL on error or if no optimization possible
 */
 
-pcre_extra *
+EXPORT pcre_extra *
 pcre_study(const pcre *external_re, int options, const char **errorptr)
 {
 uschar start_bits[32];

@@ -11,8 +11,8 @@
 make changes to pcre.in. */
 
 #define PCRE_MAJOR          4
-#define PCRE_MINOR          4
-#define PCRE_DATE           21-August-2003
+#define PCRE_MINOR          5
+#define PCRE_DATE           11-January-2004
 
 /* Win32 uses DLL by default */
 
@@ -53,16 +53,17 @@ extern "C" {
 
 /* Exec-time and get/set-time error codes */
 
-#define PCRE_ERROR_NOMATCH        (-1)
-#define PCRE_ERROR_NULL           (-2)
-#define PCRE_ERROR_BADOPTION      (-3)
-#define PCRE_ERROR_BADMAGIC       (-4)
-#define PCRE_ERROR_UNKNOWN_NODE   (-5)
-#define PCRE_ERROR_NOMEMORY       (-6)
-#define PCRE_ERROR_NOSUBSTRING    (-7)
-#define PCRE_ERROR_MATCHLIMIT     (-8)
-#define PCRE_ERROR_CALLOUT        (-9)  /* Never used by PCRE itself */
-#define PCRE_ERROR_BADUTF8       (-10)
+#define PCRE_ERROR_NOMATCH         (-1)
+#define PCRE_ERROR_NULL            (-2)
+#define PCRE_ERROR_BADOPTION       (-3)
+#define PCRE_ERROR_BADMAGIC        (-4)
+#define PCRE_ERROR_UNKNOWN_NODE    (-5)
+#define PCRE_ERROR_NOMEMORY        (-6)
+#define PCRE_ERROR_NOSUBSTRING     (-7)
+#define PCRE_ERROR_MATCHLIMIT      (-8)
+#define PCRE_ERROR_CALLOUT         (-9)  /* Never used by PCRE itself */
+#define PCRE_ERROR_BADUTF8        (-10)
+#define PCRE_ERROR_BADUTF8_OFFSET (-11)
 
 /* Request types for pcre_fullinfo() */
 
@@ -86,6 +87,7 @@ extern "C" {
 #define PCRE_CONFIG_LINK_SIZE               2
 #define PCRE_CONFIG_POSIX_MALLOC_THRESHOLD  3
 #define PCRE_CONFIG_MATCH_LIMIT             4
+#define PCRE_CONFIG_STACKRECURSE            5
 
 /* Bit flags for the pcre_extra structure */
 
@@ -129,18 +131,23 @@ typedef struct pcre_callout_block {
 } pcre_callout_block;
 
 /* Indirection for store get and free functions. These can be set to
-alternative malloc/free functions if required. There is also an optional
-callout function that is triggered by the (?) regex item. Some magic is
-required for Win32 DLL; it is null on other OS. For Virtual Pascal, these
-have to be different again. */
+alternative malloc/free functions if required. Special ones are used in the
+non-recursive case for "frames". There is also an optional callout function
+that is triggered by the (?) regex item. Some magic is required for Win32 DLL;
+it is null on other OS. For Virtual Pascal, these have to be different again.
+*/
 
 #ifndef VPCOMPAT
 PCRE_DATA_SCOPE void *(*pcre_malloc)(size_t);
 PCRE_DATA_SCOPE void  (*pcre_free)(void *);
+PCRE_DATA_SCOPE void *(*pcre_stack_malloc)(size_t);
+PCRE_DATA_SCOPE void  (*pcre_stack_free)(void *);
 PCRE_DATA_SCOPE int   (*pcre_callout)(pcre_callout_block *);
 #else   /* VPCOMPAT */
 extern void *pcre_malloc(size_t);
 extern void  pcre_free(void *);
+extern void *pcre_stack_malloc(size_t);
+extern void  pcre_stack_free(void *);
 extern int   pcre_callout(pcre_callout_block *);
 #endif  /* VPCOMPAT */
 

@@ -44,7 +44,26 @@ modules, but which are not relevant to the outside. */
 #define LINK_SIZE 2
 #define POSIX_MALLOC_THRESHOLD 10
 #define MATCH_LIMIT 10000000
+#define EXPORT
 #endif
+
+/* Standard C headers plus the external interface definition. The only time
+setjmp and stdarg are used is when NO_RECURSE is set. */
+
+#include <ctype.h>
+#include <limits.h>
+#include <setjmp.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifndef PCRE_SPY
+#define PCRE_DEFINITION       /* Win32 __declspec(export) trigger for .dll */
+#endif
+
+#include "pcre.h"
 
 /* When compiling for use with the Virtual Pascal compiler, these functions
 need to have their names changed. PCRE must be compiled with the -DVPCOMPAT
@@ -157,21 +176,6 @@ capturing parenthesis numbers in back references. */
 
 #define PUT2INC(a,n,d)  PUT2(a,n,d), a += 2
 
-
-/* Standard C headers plus the external interface definition */
-
-#include <ctype.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifndef PCRE_SPY
-#define PCRE_DEFINITION       /* Win32 __declspec(export) trigger for .dll */
-#endif
-
-#include "pcre.h"
 
 /* In case there is no definition of offsetof() provided - though any proper
 Standard C system should have one. */
@@ -362,40 +366,40 @@ enum {
                            class - the difference is relevant only when a UTF-8
                            character > 255 is encountered. */
 
-  OP_XCLASS,         /* 56 Extended class for handling UTF-8 chars within the
+  OP_XCLASS,         /* 57 Extended class for handling UTF-8 chars within the
                            class. This does both positive and negative. */
 
-  OP_REF,            /* 57 Match a back reference */
-  OP_RECURSE,        /* 58 Match a numbered subpattern (possibly recursive) */
-  OP_CALLOUT,        /* 59 Call out to external function if provided */
+  OP_REF,            /* 58 Match a back reference */
+  OP_RECURSE,        /* 59 Match a numbered subpattern (possibly recursive) */
+  OP_CALLOUT,        /* 60 Call out to external function if provided */
 
-  OP_ALT,            /* 60 Start of alternation */
-  OP_KET,            /* 61 End of group that doesn't have an unbounded repeat */
-  OP_KETRMAX,        /* 62 These two must remain together and in this */
-  OP_KETRMIN,        /* 63 order. They are for groups the repeat for ever. */
+  OP_ALT,            /* 61 Start of alternation */
+  OP_KET,            /* 62 End of group that doesn't have an unbounded repeat */
+  OP_KETRMAX,        /* 63 These two must remain together and in this */
+  OP_KETRMIN,        /* 64 order. They are for groups the repeat for ever. */
 
   /* The assertions must come before ONCE and COND */
 
-  OP_ASSERT,         /* 64 Positive lookahead */
-  OP_ASSERT_NOT,     /* 65 Negative lookahead */
-  OP_ASSERTBACK,     /* 66 Positive lookbehind */
-  OP_ASSERTBACK_NOT, /* 67 Negative lookbehind */
-  OP_REVERSE,        /* 68 Move pointer back - used in lookbehind assertions */
+  OP_ASSERT,         /* 65 Positive lookahead */
+  OP_ASSERT_NOT,     /* 66 Negative lookahead */
+  OP_ASSERTBACK,     /* 67 Positive lookbehind */
+  OP_ASSERTBACK_NOT, /* 68 Negative lookbehind */
+  OP_REVERSE,        /* 69 Move pointer back - used in lookbehind assertions */
 
   /* ONCE and COND must come after the assertions, with ONCE first, as there's
   a test for >= ONCE for a subpattern that isn't an assertion. */
 
-  OP_ONCE,           /* 69 Once matched, don't back up into the subpattern */
-  OP_COND,           /* 70 Conditional group */
-  OP_CREF,           /* 71 Used to hold an extraction string number (cond ref) */
+  OP_ONCE,           /* 70 Once matched, don't back up into the subpattern */
+  OP_COND,           /* 71 Conditional group */
+  OP_CREF,           /* 72 Used to hold an extraction string number (cond ref) */
 
-  OP_BRAZERO,        /* 72 These two must remain together and in this */
-  OP_BRAMINZERO,     /* 73 order. */
+  OP_BRAZERO,        /* 73 These two must remain together and in this */
+  OP_BRAMINZERO,     /* 74 order. */
 
-  OP_BRANUMBER,      /* 74 Used for extracting brackets whose number is greater
+  OP_BRANUMBER,      /* 75 Used for extracting brackets whose number is greater
                            than can fit into an opcode. */
 
-  OP_BRA             /* 75 This and greater values are used for brackets that
+  OP_BRA             /* 76 This and greater values are used for brackets that
                            extract substrings up to a basic limit. After that,
                            use is made of OP_BRANUMBER. */
 };
@@ -438,10 +442,10 @@ in UTF-8 mode. The code that uses this table must know about such things. */
   1, 1, 1, 1, 2, 1, 1,           /* Any, Anybyte, \Z, \z, Opt, ^, $        */ \
   2,                             /* Chars - the minimum length             */ \
   2,                             /* not                                    */ \
-  /* Positive single-char repeats                                          */ \
-  2, 2, 2, 2, 2, 2,              /* *, *?, +, +?, ?, ??      ** These are  */ \
-  4, 4, 4,                       /* upto, minupto, exact     ** minima     */ \
-  /* Negative single-char repeats                                          */ \
+  /* Positive single-char repeats                            ** These are  */ \
+  2, 2, 2, 2, 2, 2,              /* *, *?, +, +?, ?, ??      ** minima in  */ \
+  4, 4, 4,                       /* upto, minupto, exact     ** UTF-8 mode */ \
+  /* Negative single-char repeats - only for chars < 256                   */ \
   2, 2, 2, 2, 2, 2,              /* NOT *, *?, +, +?, ?, ??                */ \
   4, 4, 4,                       /* NOT upto, minupto, exact               */ \
   /* Positive type repeats                                                 */ \
@@ -597,13 +601,23 @@ typedef struct branch_chain {
 call within the pattern. */
 
 typedef struct recursion_info {
-  struct recursion_info *prev;  /* Previous recursion record (or NULL) */
+  struct recursion_info *prevrec; /* Previous recursion record (or NULL) */
   int group_num;                /* Number of group that was called */
   const uschar *after_call;     /* "Return value": points after the call in the expr */
   const uschar *save_start;     /* Old value of md->start_match */
   int *offset_save;             /* Pointer to start of saved offsets */
   int saved_max;                /* Number of saved offsets */
 } recursion_info;
+
+/* When compiling in a mode that doesn't use recursive calls to match(),
+a structure is used to remember local variables on the heap. It is defined in
+pcre.c, close to the match() function, so that it is easy to keep it in step
+with any changes of local variable. However, the pointer to the current frame
+must be saved in some "static" place over a longjmp(). We declare the
+structure here so that we can put a pointer in the match_data structure.
+NOTE: This isn't used for a "normal" compilation of pcre. */
+
+struct heapframe;
 
 /* Structure for passing "static" information around between the functions
 doing the matching, so that they are thread-safe. */
@@ -632,6 +646,7 @@ typedef struct match_data {
   int    start_offset;          /* The start offset value */
   recursion_info *recursive;    /* Linked list of recursion data */
   void  *callout_data;          /* To pass back to callouts */
+  struct heapframe *thisframe;  /* Used only when compiling for no recursion */
 } match_data;
 
 /* Bit definitions for entries in the pcre_ctypes table. */

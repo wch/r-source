@@ -45,7 +45,7 @@ R: Makefile chartables.h
 	@$(MAKE) $(noinst_LIBRARIES)
 
 chartables.h: dftables
-	./dftables > chartables.h
+	./dftables chartables.h
 
 dftables.o:  maketables.c internal.h pcre.h
 dftables: dftables.o

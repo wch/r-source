@@ -237,7 +237,7 @@ INSTALLATION CHANGES
 
     o	The defaults for configure are now --without-zlib
 	--without-bzlib --without-pcre.  PCRE >= 4.0 is now required:
-	the included PCRE sources have been updated to version 4.4.
+	the included PCRE sources have been updated to version 4.5.
 
     o	configure no longer lists bzip2 and PCRE as `additional
 	capabilities' as all builds of R have had them since 1.7.0.
