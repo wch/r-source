@@ -1,7 +1,6 @@
 count.fields <- function(file, sep = "", skip = 0)
-{
 	.Internal(count.fields(file, sep, skip))
-}
+
 
 read.table <-
 function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
@@ -25,8 +24,7 @@ function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
 		skip <- skip + 1
 		row.lens <- row.lens[-1]
 		nlines <- nlines - 1
-	}
-	else if (missing(col.names))
+	} else if (missing(col.names))
 		col.names <- paste("V", 1:row.lens[1], sep="")
 
 	##  check that all rows have equal lengths
@@ -59,15 +57,13 @@ function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
 
 	if(is.logical(as.is)) {
 		as.is <- rep(as.is, length=cols)
-	}
-	else if(is.numeric(as.is)) {
+	} else if(is.numeric(as.is)) {
 		if(any(as.is < 1 | as.is > cols))
 			stop("invalid numeric as.is expression")
 		i <- rep(FALSE, cols)
 		i[as.is] <- TRUE
 		as.is <- i
-	}
-	if (length(as.is) != cols)
+	} else if (length(as.is) != cols)
 		stop(paste("as.is has the wrong length",
 			   length(as.is),"!= cols =", cols))
 	for (i in 1:cols)
@@ -82,22 +78,19 @@ function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
 			data <- data[-1]
 		}
 		else row.names <- as.character(1:nlines)
-	}
-	else if (is.null(row.names))
+	} else if (is.null(row.names)) {
 		row.names <- as.character(1:nlines)
-	else if (is.character(row.names)) {
+	} else if (is.character(row.names)) {
 		if (length(row.names) == 1) {
 			rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]
 			row.names <- data[[rowvar]]
 			data <- data[-rowvar]
 		}
-	}
-	else if (is.numeric(row.names) && length(row.names) == 1) {
+	} else if (is.numeric(row.names) && length(row.names) == 1) {
 		rlabp <- row.names
 		row.names <- data[[rlabp]]
 		data <- data[-rlabp]
-	}
-	else stop("invalid row.names specification")
+	} else stop("invalid row.names specification")
 
 	##  this is extremely underhanded
 	##  we should use the constructor function ...
@@ -105,5 +98,5 @@ function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
 
 	class(data) <- "data.frame"
 	row.names(data) <- row.names
-	return(data)
+	data
 }
