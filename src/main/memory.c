@@ -2291,6 +2291,7 @@ int (LEVELS)(SEXP x) { return LEVELS(x); }
 
 int *(LOGICAL)(SEXP x) { return LOGICAL(x); }
 int *(INTEGER)(SEXP x) { return INTEGER(x); }
+Rbyte *(RAW)(SEXP x) { return RAW(x); }
 double *(REAL)(SEXP x) { return REAL(x); }
 Rcomplex *(COMPLEX)(SEXP x) { return COMPLEX(x); }
 SEXP *(STRING_PTR)(SEXP x) { return STRING_PTR(x); }

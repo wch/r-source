@@ -638,6 +638,7 @@ SEXP (VECTOR_ELT)(SEXP x, int i);
 SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v);
 int *(LOGICAL)(SEXP x);
 int *(INTEGER)(SEXP x);
+Rbyte *(RAW)(SEXP x);
 double *(REAL)(SEXP x);
 Rcomplex *(COMPLEX)(SEXP x);
 SEXP *(STRING_PTR)(SEXP x);
