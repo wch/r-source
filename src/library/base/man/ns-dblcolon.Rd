@@ -7,6 +7,7 @@
 }
 \usage{
 pkg::name
+pkg:::name
 }
 \arguments{
   \item{pkg}{package name symbol or string literal.}
