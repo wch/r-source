@@ -8,16 +8,25 @@
 
 		CHANGES IN R VERSION 1.7.0
 
+
 USER-VISIBLE CHANGES
 
 
 NEW FEATURES
 
-    o library was changed so that it no longer complains about
-      generic functions not specific to the library
+    o   library() was changed so that when the methods package is
+	attached it no longer complains about generic functions not
+	specific to the library.
 
-    o require has a new argument, character.only,
-          -- to make it align with library
+    o   require() has a new argument, character.only,
+          -- to make it align with library.
+
+
+INSTALLATION CHANGES
+
+    o   TITLE files in packages are no longer used to create package
+	lists, the Title field in the DESCRIPTION file being preferred.
+
 
 
 
