@@ -21,7 +21,7 @@ run: $(PKG)-Ex.R
 	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.prev ; fi
 	@rm -f $(PKG)-Ex.Rout.fail
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	@$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout \
+	@$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout 2>&1 \
 	  || mv  $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail
 	@if test -f $(PKG)-Ex.Rout.prev ; then \
 	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail; \
@@ -57,7 +57,7 @@ test-out = $(test-src:.R=.Rout)
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
-	@$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $< > $@ || (mv $@ $@.fail && exit 1)
+	@$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $< > $@  2>&1 || (mv $@ $@.fail && exit 1)
 	@if test -f $@.save ; then \
 	  mv $@ $@.fail; \
 	  echo -n "  Comparing \`$@' to \`$@.save' ..."; \

@@ -82,7 +82,7 @@ all: test-Specific test-Reg test-Demo
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo -n "running \`$<' ..."
-	@$(R) < $<  > $@  || (mv $@ $@.fail && exit 1)
+	@$(R) < $< > $@  2>&1 || (mv $@ $@.fail && exit 1)
 	@echo "OK"
 	@if test -f $(srcdir)/$@.save  ; then \
 	  mv $@ $@.fail; \
@@ -95,7 +95,7 @@ all: test-Specific test-Reg test-Demo
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
 	@echo -n "running '$<' ..."
-	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@echo "OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
