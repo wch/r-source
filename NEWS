@@ -23,8 +23,10 @@ NEW FEATURES
     o   ar.ols() has separate demean and intercept arguments, uses
         internal scaling for greater accuracy.
 
-    o   xxxPR functions allow NCHAR=-1 for S compatibility, at least
-	on many Unix platforms.
+    o   xxxPR functions allow NCHAR=-1 for S compatibility.
+
+    o   `Rcomplex' is preferred to `complex' (a future reserved word
+	in C) for R complex objects passed to C.
 
 
 BUG FIXES
