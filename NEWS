@@ -684,6 +684,10 @@ BUG FIXES
         body of an anonymous function(x), leading to a variable 
 	capture issue. Now, function(...) is used instead.
 
+    o   chisq.test(simulate.p.value = TRUE) was returning slightly
+	incorrect p values, notably p = 0 when the data gave the most
+	extreme value.
+ 
 
 
 

@@ -59,7 +59,8 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
             ## a sensible way to deal with rounding issues (PR#3486):
             STATISTIC <- sum(sort((x - E) ^ 2 / E, decreasing = TRUE))
             PARAMETER <- NA
-            PVAL <- sum(tmp$results >= STATISTIC) / B
+            ## use correct significance level for a Monte Carlo test
+            PVAL <- (1 + sum(tmp$results >= STATISTIC)) / (B + 1)
         }
         else {
             if (simulate.p.value)
