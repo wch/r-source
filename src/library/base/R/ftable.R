@@ -228,6 +228,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             names(row.vars) <- s[i]
             col.vars[[1]] <- s[-i]
             z <- z[3 : length(z)]
+            skip <- skip + 2
         }
         else {
             ## Case B.
@@ -274,6 +275,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                                 quote, nlines = 1, skip = skip +
                                 n.col.vars, quiet = TRUE)
         z <- z[(n.col.vars + 2) : length(z)]
+        skip <- skip + n.col.vars + 1
     }
     p <- 1
     n <- integer(n.row.vars)
@@ -283,7 +285,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
     is.row.lab <- rep(rep(c(TRUE, FALSE), length(z)),
                       c(rbind(z - min(z) + 1, min(z) - 1)))
     s <- scan(file, what = "", sep = sep, quote = quote, quiet = TRUE,
-              skip = skip + n.col.vars + 1)
+              skip = skip)
     values <- as.numeric(s[!is.row.lab])
     tmp <- s[is.row.lab]
     len <- length(tmp)
