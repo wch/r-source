@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-10, @value{FAQ-YEAR}-05-17
+@set FAQ-VERSION 1.7-11, @value{FAQ-YEAR}-05-20
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2061,6 +2061,11 @@ PVM APIs, and examples and documentation for its use.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
+@item sampfling
+Implements a modified version of the Sampford sampling algorithm.  Given
+a quantity assigned to each unit in the population, samples are drawn
+with probability proportional to te product of the quantities of the
+units included in the sample.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
 @item sem
@@ -2838,6 +2843,7 @@ dir /opt/R/src/unix
 * How can I get command line editing to work?::  
 * How can I turn a string into a variable?::  
 * Why do lattice/trellis graphics not work?::  
+* How can I sort the rows of a data frame?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3498,7 +3504,7 @@ vars[["a"]]
 @noindent
 without any of this messing about.
 
-@node Why do lattice/trellis graphics not work?,  , How can I turn a string into a variable?, R Miscellanea
+@node Why do lattice/trellis graphics not work?, How can I sort the rows of a data frame?, How can I turn a string into a variable?, R Miscellanea
 @section Why do lattice/trellis graphics not work?
 
 The most likely reason is that you forgot to tell R to display the
@@ -3509,6 +3515,12 @@ actual display.  When you use these functions interactively at the
 command line, the result is automatically printed, but in
 @code{source()} or inside your own functions you will need an explicit
 @code{print()} statement.
+
+@node How can I sort the rows of a data frame?,  , Why do lattice/trellis graphics not work?, R Miscellanea
+@section How can I sort the rows of a data frame?
+
+To sort the rows within a data frame, with respect to the values in one
+or more of the columns, simply use @code{order()}.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
