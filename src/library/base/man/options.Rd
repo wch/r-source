@@ -81,6 +81,10 @@ getOption(x)
     signals and internally detected errors. The default expression is
     \code{NULL}: see \code{\link{stop}} for the behaviour in that case.}
 
+  \item{show.error.messages}{a logical. Should error messages be
+    printed?  Intended for use with \code{\link{try}} or a
+    user-installed error handler.}
+
   \item{warn}{sets the handling of warning messages.  If \code{warn}
     is negative all warnings are ignored.  If \code{warn} is zero
     (the default) warnings are stored until the top--level function

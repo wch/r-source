@@ -226,6 +226,11 @@ void InitOptions(void)
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
                                 /* turned on after load of base  */
+    TAG(v) = install("error.messages");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = 1;
+    v = CDR(v);
+
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }
@@ -384,6 +389,13 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if( !isLanguage(argi) &&  !isExpression(argi) )
 		    errorcall(call, "error parameter invalid");
 		VECTOR(value)[i] = SetOption(tag, argi);
+	    }
+/* handle this here to avoid GetOption during error handling */
+	    else if ( streql(CHAR(namei), "show.error.messages") ) {
+		if( !isLogical(argi) && length(argi) != 1 )
+		    errorcall(call, "show.error.messages parameter invalid");
+		VECTOR(value)[i] = SetOption(tag, argi);
+		R_ShowErrorMessages = LOGICAL(argi)[0];
 	    }
 	    else if (streql(CHAR(namei), "echo")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)

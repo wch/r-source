@@ -3,6 +3,17 @@
 stop <- function(message = NULL).Internal(stop(message))
 warning <- function(message = NULL).Internal(warning(message))
 restart <- function(on = TRUE).Internal(restart(on))
+geterrmessage <- function() .Internal(geterrmessage())
+try <- function(expr, first = T)
+{
+    restart(first)
+    if(first) {
+        first <- F
+        expr
+    } else
+       invisible(structure(.Internal(geterrmessage()), class="try-error"))
+}
+
 
 comment <- function(x).Internal(comment(x))
 "comment<-" <- function(x,value).Internal("comment<-"(x,value))

@@ -31,6 +31,14 @@ NEW FEATURES
     o	Data directories can now be zipped as Rdata.zip, provided a
         list of contents is provided in file `filelist'.
 
+    o	New function try(expr) which provides a user-friendly wrapper
+	to restart().
+
+    o	New function geterrmessage() to retrieve the last error
+	message, for use in try() and user's error handlers, and new
+	option "show.error.messages" to control the printing of error
+	messages.
+
 
 BUG FIXES
 
@@ -60,7 +68,7 @@ BUG FIXES
     o   list.files now skips non-existent/unreadable directories with 
 	a warning, rather that failing with an error.
 
-    o	Lots of help example now tidy up the files they created.
+    o	Lots of help examples now tidy up the files they created.
 
 
 	**************************************************
