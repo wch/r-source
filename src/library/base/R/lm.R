@@ -358,8 +358,8 @@ residuals.lm <- function(object,
     r <- .Alias(object$residuals)
     switch(type,
            working = r,
-           deviance,
-           pearson= if(is.null(object$weights)) r else r * sqrt(object$weights))
+           deviance=,
+           pearson =if(is.null(object$weights)) r else r * sqrt(object$weights))
 }
 fitted.lm <- function(object, ...) object$fitted.values
 coef.lm <- function(object, ...) object$coefficients
