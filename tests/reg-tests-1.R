@@ -764,6 +764,7 @@ detach("package:stepfun")
 all.equal(c("A", "B"), c("A", NA))
 ## failed in 1.5.1
 
+<<<<<<< reg-tests-1.R
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
 sapply(DF, class)
@@ -839,6 +840,12 @@ stopifnot(class(fit) == "try-error")
 x <- 0; class(x) <- "octmode"
 stopifnot(as.character(x) == "0")
 ## gave "" in 1.5.1
+
+## failed since at least version 0.90:
+stopifnot(is.character(a12 <- all.equal(1,1:2)),
+          length(a12) == 2,
+          a12[2] == "Numeric: lengths (1, 2) differ")
+## a12 was *list* of length 3
 
 
 ## keep at end, as package `methods' has had persistent side effects

@@ -32,7 +32,7 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
     cplx <- is.complex(target)
     if(lt != lc)
 	return(paste(if(cplx)"Complex" else "Numeric",
-                     ": lengths (", lt, ", ", lc, ") differ"), sep = "")
+                     ": lengths (", lt, ", ", lc, ") differ", sep = ""))
     else msg <- NULL
     target <- as.vector(target)
     current <- as.vector(current)

@@ -210,6 +210,9 @@ BUG FIXES
     o	all.equal.character() now works correctly also when NAs don't
 	match (PR#1767).
 
+    o	all.equal.numeric() now gives character {instead of list} when
+	lengths don't match.
+
     o	read.dcf() had a memory leak.
 
     o	Setting "tcl = a" in a highlevel graphic function worked almost
