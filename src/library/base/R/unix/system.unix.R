@@ -10,9 +10,12 @@ unix <- function(call, intern = FALSE) {
 tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
 
 ##--- The following should/could really be done in C [platform !] :
-unlink <- function(x) {
+unlink <- function(x, recursive = FALSE) {
     if(!is.character(x)) stop("argument must be character")
-    system(paste("rm -rf ", paste(x, collapse = " ")))
+    if(recursive)
+        system(paste("rm -rf ", paste(x, collapse = " ")))
+    else
+        system(paste("rm -f ", paste(x, collapse = " ")))
 }
 
 dir.create <- function(path)

@@ -117,45 +117,75 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 #include <sys/types.h>
 #include <sys/stat.h>
 
-SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
+static int R_unlink(char *names, int recursive);
+
+static int R_unlink_one(char *dir, char *name, int recursive)
 {
-    SEXP  fn, ans;
+    char tmp[MAX_PATH];
+
+    if(strcmp(name, ".") == 0) return 0;
+    if(strcmp(name, "..") == 0) return 0;
+    strcpy(tmp, dir); strcat(tmp, "\\");
+    strcat(tmp, name);
+    return (recursive ? R_unlink(tmp, 1): unlink(tmp)) !=0;
+}
+
+static int R_unlink(char *names, int recursive)
+{
+    int failures = 0;
     char *p, tmp[MAX_PATH], dir[MAX_PATH];
     WIN32_FIND_DATA find_data;
     HANDLE fh;
-    int i, nfiles, failures = 0;
     struct stat sb;
+
+    strcpy(tmp, names);
+    for(p = tmp; *p != '\0'; p++) if(*p == '/') *p = '\\';
+    if(stat(tmp, &sb) == 0) {
+	/* Is this a directory? */
+	if(sb.st_mode & _S_IFDIR) {
+	    if(recursive) {
+		strcpy(dir, tmp); strcat(tmp, "\\*");
+		fh = FindFirstFile(tmp, &find_data);
+		if (fh != INVALID_HANDLE_VALUE) {
+		    failures += R_unlink_one(dir, find_data.cFileName, 1);
+		    while(FindNextFile(fh, &find_data))
+			failures += R_unlink_one(dir, find_data.cFileName, 1);
+		    FindClose(fh);
+		}
+	    } 
+	    if(rmdir(dir)) failures++;
+	} else {/* Regular file (or several) */
+	    strcpy(dir, tmp);
+	    if ((p = strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
+	    /* check for wildcard matches */
+	    fh = FindFirstFile(tmp, &find_data);
+	    if (fh != INVALID_HANDLE_VALUE) {
+		failures += R_unlink_one(dir, find_data.cFileName, 0);
+		while(FindNextFile(fh, &find_data))
+		    failures += R_unlink_one(dir, find_data.cFileName, 0);
+		FindClose(fh);
+	    }
+	}
+    }
+    return failures;
+}
+
+
+SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  fn, ans;
+    int i, nfiles, failures = 0, recursive;
 
     checkArity(op, args);
     fn = CAR(args);
     nfiles = length(fn);
     if (!isString(fn) || nfiles < 1)
 	errorcall(call, "invalid file name argument");
-    for(i = 0; i < nfiles; i++) {
-	strcpy(tmp, CHAR(STRING_ELT(fn, i)));
-	for(p = tmp; *p != '\0'; p++)
-	    if(*p == '/') *p = '\\';
-	if(stat(tmp, &sb) == 0)
-	    /* Is this a directory? */
-	    if(sb.st_mode & _S_IFDIR) {
-		if(rmdir(tmp)) failures++;
-		continue;
-	    }
-	/* Regular file (or more) */
-	strcpy(dir, tmp);
-	if ((p = strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
-	/* check for wildcard matches */
-	fh = FindFirstFile(tmp, &find_data);
-	if (fh != INVALID_HANDLE_VALUE) {
-	    strcpy(tmp, dir); strcat(tmp, find_data.cFileName);
-	    failures += (unlink(tmp) !=0);
-	    while(FindNextFile(fh, &find_data)) {
-		strcpy(tmp, dir); strcat(tmp, find_data.cFileName);
-		failures += (unlink(tmp) !=0);
-	    }
-	    FindClose(fh);
-	} /* else  failures++;*/
-    }
+    recursive = asLogical(CADR(args));
+    if (recursive == NA_LOGICAL)
+	errorcall(call, "invalid recursive argument");
+    for(i = 0; i < nfiles; i++)
+	failures += R_unlink(CHAR(STRING_ELT(fn, i)), recursive);
     PROTECT(ans = allocVector(INTSXP, 1));
     if (!failures)
 	INTEGER(ans)[0] = 0;

@@ -29,7 +29,8 @@ unix <- function(call, intern = FALSE)
 
 tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
 
-unlink <- function(x) invisible(.Internal(unlink(x)))
+unlink <- function(x, recursive=FALSE)
+    invisible(.Internal(unlink(x, recursive)))
 
 flush.console <- function() .Internal(flush.console())
 

@@ -504,7 +504,7 @@ FUNTAB R_FunTab[] =
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL},
 #endif
 #ifdef Win32
-{"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},
+{"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},

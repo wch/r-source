@@ -124,6 +124,9 @@ NEW FEATURES
     o   Class "dendrogram" in package mva providing general support
         for tree-like structures (plotting, cutting, ...).
 
+    o	New argument `recursive' to unlink(). The default behaviour on
+	Unix is now that of rm -f, not rm -rf.
+
 
 BUG FIXES
 

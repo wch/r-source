@@ -45,14 +45,14 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         if(!localcran && is.null(destdir)){
             answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
             if(answer == "y" | answer == "Y")
-                unlink(tmpd)
+                unlink(tmpd, TRUE)
             else
                 cat("The packages are in", tmpd)
             cat("\n")
         }
     }
     else
-        unlink(tmpd)
+        unlink(tmpd, TRUE)
     invisible()
 }
 
