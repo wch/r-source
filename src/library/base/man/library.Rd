@@ -2,7 +2,8 @@
 \title{Loading and Listing of Packages}
 \usage{
 library(name, help = NULL, lib.loc = .lib.loc,
-	character.only = FALSE, logical.return = FALSE)
+	character.only = FALSE, logical.return = FALSE,
+	warn.conflicts = TRUE)
 require(name, quietly = FALSE)
 provide(name)
 
@@ -31,6 +32,10 @@ provide(name)
     library trees to search through.}
   \item{character.only}{a logical indicating whether \code{name} or
     \code{help} can be assumed to be character strings.}
+  \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
+      \code{TRUE} is returned to indicate success.}
+  \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
+    printed about \code{\link{conflicts}} from attaching the new package.}
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where

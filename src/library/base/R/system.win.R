@@ -1,3 +1,12 @@
+.Platform <-
+    list(OS.type = "Windows",
+         file.sep = "\\\\",
+         dynlib.ext = ".dll",
+         show.file = function(file) .NotYetImplemented(),
+         append.file = function(f1,f2) .NotYetImplemented(), # concat(f1,f2)
+         show.libraries = function(lib.loc, fsep) .NotYetImplemented(),
+         )
+
 data <- function(..., list = character(0), package = .packages(),
 		 lib.loc = .lib.loc) {
     ## FIXME add support for package and lib.loc args
