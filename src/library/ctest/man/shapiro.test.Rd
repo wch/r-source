@@ -33,7 +33,7 @@ shapiro.test(x)
   \emph{Applied Statistics}, \bold{44}, 547--551.
 }
 \seealso{
-  \code{\link[base:lm]{qqnorm}} for producing a normal quantile-quantile plot.
+  \code{\link[base:qqnorm]{qqnorm}} for producing a normal quantile-quantile plot.
 }
 \examples{
 % FIXME: could use something more interesting here
