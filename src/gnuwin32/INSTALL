@@ -247,8 +247,8 @@ packages.
 Once everything is set up
 
 	make
-	make distribution
 	make recommended
+	make distribution
 	make fullcheck
 	make rinstaller
 
