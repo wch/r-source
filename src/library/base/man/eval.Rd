@@ -62,7 +62,7 @@ local(expr, envir = new.env())
   between \R and S in this area.  In particular, the default enclosure
   in S is the global environment.
 
-  When evaluating expressions in dataframes that has been passed as
+  When evaluating expressions in data frames that has been passed as
   argument to a function, the relevant enclosure is often the caller's
   environment, i.e., one needs
   \code{eval(x, data, parent.frame())}.

@@ -135,9 +135,9 @@ str(cbind(d, char = I(letters[1:10])), vec.len = 10)
 
 stopifnot(1:10 == row.names(d))# {coercion}
 
-(d0  <- d[, FALSE]) # NULL dataframe with 10 rows
-(d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
-(d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
+(d0  <- d[, FALSE]) # NULL data frame with 10 rows
+(d.0 <- d[FALSE, ]) # <0 rows> data frame  (3 cols)
+(d00 <- d0[FALSE,])  # NULL data frame with 0 rows
 }
 \keyword{classes}
 \keyword{methods}

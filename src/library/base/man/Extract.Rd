@@ -21,7 +21,7 @@
 \alias{.subset}
 \alias{.subset2}
 \description{
-  Operators act on vectors, arrays, dataframes and lists to extract or
+  Operators act on vectors, arrays, data frames and lists to extract or
   replace subsets.
 }
 \usage{
@@ -61,7 +61,7 @@ x$name
   values which are printed (for which use \code{[as.character(i)]}).
 
   When \code{[.data.frame} is used for subsetting rows of a
-  \code{\link{data.frame}}, it returns a dataframe with unique
+  \code{\link{data.frame}}, it returns a data frame with unique
   (and non-missing)row names, if necessary transforming the names using
   \code{\link{make.names}( * , unique = TRUE)}. See the \code{swiss}
   example below.
