@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file extra.c
- *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -937,7 +937,7 @@ void InitTempDir()
 
 void CleanTempDir()
 {
-    R_unlink(R_TempDir, 1);
+    if(R_TempDir) R_unlink(R_TempDir, 1);
 }
 
 SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
