@@ -43,7 +43,7 @@ rt(n, df)
   variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)}, and
 %%fails  \eqn{{\chi_{\nu}}^2}{(Chi(df))^2} 
   \eqn{\chi^2_\nu}{Chi(df)^2} 
-  is chi-squared, see \code{\link{pchisqr}}.
+  is chi-squared, see \code{\link{pchisq}}.
   
   The most used applications are power calculations for \eqn{t}-tests:\cr
   Let \eqn{T= \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}

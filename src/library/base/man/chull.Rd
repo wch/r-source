@@ -15,7 +15,7 @@ chull(x, y=NULL)
 }
 
 \details{
-    \code{\link{xy.coord}} is used to intepret the specification of the
+    \code{\link{xy.coords}} is used to intepret the specification of the
     points. The algorithm is that given by Eddy (1977).
 
     `Peeling' as used in the S function \code{chull} can be implemented
@@ -36,7 +36,7 @@ chull(x, y=NULL)
 }
 \author{B. D. Ripley}
 
-\seealso{\code{\link{xy.coord}},\code{\link{polygon}}}
+\seealso{\code{\link{xy.coords}},\code{\link{polygon}}}
 
 \examples{
 X <- matrix(rnorm(2000), ncol=2)

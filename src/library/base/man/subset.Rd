@@ -34,7 +34,7 @@ subset.data.frame(x, subset, select)
 }
 \author{Peter Dalgaard}
 \seealso{
-    \code{\link{"["}},
+    \code{\link{[}},
     \code{\link{transform}}
 }
 \examples{

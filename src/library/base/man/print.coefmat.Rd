@@ -39,21 +39,23 @@ print.coefmat(x, digits=max(3, .Options$digits - 2),
  \item{\dots}{Further arguments for \code{print(..)}.}
 }
 \description{
-  Utility function to be used in ``higher level'' \code{\link{print}}
-  methods,  such as \code{\link{print.summary.lm}},
-  \code{\link{print.summary.glm}} and \code{\link{print.anova}}.  The
-  goal is to provide a flexible interface with smart defaults such that
-  often, only \code{x} needs to be specified.
+    Utility function to be used in ``higher level'' \code{\link{print}}
+    methods, such as \code{\link{print.summary.lm}},
+    \code{\link{print.summary.glm}} and \code{\link{print.anova}}.  The
+    goal is to provide a flexible interface with smart defaults such
+    that often, only \code{x} needs to be specified.
 }
 \details{
- Despite its name, this is \bold{not} (yet) a method for the generic
- \code{\link{print}} function,  because there is no \code{\link{class}}
- \code{"coefmat"}.
+    Despite its name, this is \bold{not} (yet) a method for the generic
+    \code{\link{print}} function, because there is no class
+    \code{"coefmat"}.
 }
 \value{Invisibly returns its argument, \code{x}.}}
 \author{Martin Maechler}
-\seealso{\code{\link{print.pval}}, \code{\link{print.summary.lm}},
-  \code{\link{format}}.}
+\seealso{
+    \code{\link{print.summary.lm}},
+    \code{\link{format.pval}}, 
+    \code{\link{format}}}.
 \examples{
 cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
 cmat <- cbind(cmat, cmat[,1]/cmat[,2])
