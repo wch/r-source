@@ -447,7 +447,7 @@ the environment variable @code{R_LIBS} or the @R{} object @code{.lib.loc}.
 
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
-more than one library, if course.
+more than one library, of course.
 
 To install packages from source on Unix use
 @smallexample
@@ -465,7 +465,7 @@ Rcmd INSTALL -l /path/to/library pkg1 pkg2 ...
 @end smallexample
 
 @findex install.packages 
-Alternatively, packages can be downloaded and installed for within @R{}.
+Alternatively, packages can be downloaded and installed from within @R{}.
 First set the option @code{CRAN} to your nearest @acronym{CRAN} mirror, for
 example
 @smallexample
@@ -659,7 +659,7 @@ will give a list. Probably the most important ones not covered elsewhere are
 You can use @code{--without-foo} or @code{--disable-foo} for the
 negatives.
 
-You will want to use @code{--disable-R-profiling} if you are building a
+You will want to use @code{--enable-R-profiling} if you are building a
 profiled copy of @R{}.
 
 Flag @code{--enable-R-shlib} causes the make process to make @file{libR.so},
