@@ -4,7 +4,10 @@
 \description{
   Turn unevaluated expressions into character strings.
 }
-\usage{deparse(expr, width.cutoff = 60, backtick = mode(expr) %in% c("expression", "call", "(")}
+\usage{
+deparse(expr, width.cutoff = 60,
+        backtick = mode(expr) \%in\% c("expression", "call", "(")
+}
 \arguments{
   \item{expr}{any \R expression.}
   \item{width.cutoff}{integer in \eqn{[20, 500]} determining the cutoff
