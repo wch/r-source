@@ -174,18 +174,10 @@ none
 
 Directory:  incoming
 
-* PR# 571 *
-Subject:  Missing -lc for compilation on AIX (R 1.1.0) 
-From: Thomas Vogels <tov@infiniti.ece.cmu.edu>
-Date: Thu, 15 Jun 2000 13:42:50 -0400
-* PR# 564 *
-Subject: "clipping error in x11()"
-From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
-* PR# 551 *
-Subject: Bus Error crash
-From: kjetikj@astro.uio.no
-Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
+* PR# 573 *
+Subject:  Missing -lm for tcltk (R 1.1.0, AIX 4.3) 
+From: Thomas Vogels <tov@phoenix.ece.cmu.edu>
+Date: Fri, 16 Jun 2000 10:32:54 -0400
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
@@ -195,6 +187,14 @@ Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
 Subject: Postscript device ignores title if it is too long.
 From: Stephen Eglen <stephen@anc.ed.ac.uk>
 Date: Fri, 9 Jun 2000 09:17:09 +0100 (BST)
+* PR# 564 *
+Subject: "clipping error in x11()"
+From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
+* PR# 551 *
+Subject: Bus Error crash
+From: kjetikj@astro.uio.no
+Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 * PR# 568 *
 Subject: problem with aperm?
 From: Jim Lemon <jim.lemon@uts.edu.au>
@@ -211,3 +211,14 @@ Date: Wed, 14 Jun 2000 21:45:35 +0200 (MET DST)
 Subject: Typo in the documentation of prcomp.
 From: =?iso-8859-1?q?Bj=F8rn-Helge_Mevik?= <bhm@math.uio.no>
 Date: 14 Jun 2000 14:16:14 +0200
+* PR# 572 *
+Subject: RE: [Rd] [PATCH] ./configure fails to recognize alphapca56
+Subject: RE: [Rd] [PATCH] ./configure fails to recognize alphapca56 (R-1.
+From: Martyn Plummer <plummer@iarc.fr>
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Fri, 16 Jun 2000 14:04:08 +0200 (CEST)
+Date: Fri, 16 Jun 2000 09:46:24 +0200 (CEST)
+* PR# 571 *
+Subject:  Missing -lc for compilation on AIX (R 1.1.0) 
+From: Thomas Vogels <tov@infiniti.ece.cmu.edu>
+Date: Thu, 15 Jun 2000 13:42:50 -0400
