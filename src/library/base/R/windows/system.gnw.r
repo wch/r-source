@@ -27,8 +27,6 @@ unix <- function(call, intern = FALSE)
     system(call, intern)
 }
 
-tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
-
 unlink <- function(x, recursive=FALSE)
     invisible(.Internal(unlink(x, recursive)))
 

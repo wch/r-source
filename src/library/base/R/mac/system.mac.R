@@ -4,8 +4,6 @@ system <- function(call, intern = FALSE)
 dir.create <- function(path)
     invisible(.Internal(dir.create(path)))
 
-tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
-
 unlink <- function(x, recursive=FALSE)
     invisible(.Internal(unlink(x, recursive)))
 
@@ -24,9 +22,9 @@ help.start <- function(gui = "irrelevant", browser = "irrelevant")
 
 
 
-applescript <-function (path , scriptname) 
+applescript <-function (path , scriptname)
 {
   rc <- .Internal(applescript(path,scriptname))
-  if (rc != 0) 
+  if (rc != 0)
     warning("Error in AppleScript")
 }

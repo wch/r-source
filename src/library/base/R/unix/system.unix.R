@@ -7,8 +7,6 @@ unix <- function(call, intern = FALSE) {
     system(call, intern)
 }
 
-tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
-
 ##--- The following should/could really be done in C [platform !] :
 unlink <- function(x, recursive = FALSE) {
     if(!is.character(x)) stop("argument must be character")
