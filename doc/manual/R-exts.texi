@@ -519,7 +519,9 @@ top level of the package will @emph{not} be installed and so not be
 known to users of Windows and MacOS X compiled packages (and not seen by
 those who use @command{R CMD INSTALL} or @command{install.packages} on
 the tarball).  So any information files you wish an end user to see
-should be included in @file{inst}.
+should be included in @file{inst}.  One thing you might like to add to
+@file{inst} is a @file{CITATION} file for use by the @code{citation}
+function.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
