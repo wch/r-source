@@ -2333,8 +2333,13 @@ void putdots(int *pold, int new)
 #endif
 }
 
+/* note, ALL the possible structures have the first two elements */
+typedef struct {
+    int length;
+    char *type;
+    void *ctxt;
+} inetconn;
 
-/* TODO select file mode based on ContentType ? */
 
 /* download(url, destfile, quiet) */
 
@@ -2404,6 +2409,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		nnew = nbytes/1024;
 		if(!quiet) putdots(&ndots, nnew);
 	    }
+	    len = ((inetconn *)ctxt)->length;
 	    R_HTTPClose(ctxt);
 	    fclose(out);
 	    R_Busy(0);
@@ -2414,6 +2420,8 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		    REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
 	    }
 	}
+	if (len > 0 && len != nbytes)
+	    warning("downloaded length %d != reported length %d", nbytes, len);
 	if (status == 1) error("cannot open URL `%s'", url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
@@ -2438,6 +2446,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		nnew = nbytes/1024;
 		if(!quiet) putdots(&ndots, nnew);
 	    }
+	    len = ((inetconn *)ctxt)->length;
 	    R_FTPClose(ctxt);
 	    fclose(out);
 	    R_Busy(0);
@@ -2448,6 +2457,8 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		    REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
 	    }
 	}
+	if (len > 0 && len != nbytes)
+	    warning("downloaded length %d != reported length %d", nbytes, len);
 	if (status == 1) error("cannot open URL `%s'", url);
 #endif
 
@@ -2459,12 +2470,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
-
-typedef struct {
-    int length;
-    char *type;
-    void *ctxt;
-} inetconn;
 
 
 #ifdef HAVE_LIBXML
@@ -2523,6 +2528,7 @@ void R_HTTPClose(void *ctx)
 	free(ctx);
     }
 }
+
 
 void *R_FTPOpen(const char *url)
 {
