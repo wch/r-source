@@ -366,3 +366,11 @@ Date: Tue, 23 Oct 2001 06:50:44 +0900
 Subject:  round() doesnt
 From: David Brahm  <a215020@onyx.fmr.com>
 Date: Mon, 22 Oct 2001 18:08:50 -0400 (EDT)
+* PR# 1139 *
+Subject: round() doesn't
+From: David Brahm  <a215020@agate.fmr.com>
+Date: Mon, 22 Oct 2001 19:15:13 -0400 (EDT)
+* PR# 1140 *
+Subject: Possible bug, Rprof() and scan(pipe())
+From: Don MacQueen <macq@llnl.gov>
+Date: Tue, 23 Oct 2001 13:50:26 -0700
