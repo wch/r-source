@@ -17,5 +17,5 @@ PKGS=`ls|sed '
 export RHOME
 for pkg in ${PKGS}
 do
-    sh ${RHOME}/etc/INSTALL -doc ${pkg}
+    sh ${RHOME}/etc/INSTALL -docs ${pkg}
 done

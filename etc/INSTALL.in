@@ -3,7 +3,7 @@
 # ${RHOME}/etc/INSTALL for installing add-on packages
 # Usage:
 #	R INSTALL [-help/+help] [-html/+html] [-latex/+latex]
-#                 [+doc/-doc] pkg [lib]
+#                 [+docs/-docs] pkg [lib]
 
 
 IHELP=y
@@ -16,7 +16,7 @@ if [ "$1" = "-html" ]; then shift; IHTML=;  fi
 if [ "$1" = "+latex" ]; then shift; ILATEX=y; fi
 if [ "$1" = "-latex" ]; then shift; ILATEX=;  fi
 
-if [ "$1" = "-doc" ]
+if [ "$1" = "-docs" ]
 then
     shift
     IHELP=""
@@ -24,7 +24,7 @@ then
     ILATEX=""
 fi
 
-if [ "$1" = "+doc" ]
+if [ "$1" = "+docs" ]
 then
     shift
     IHELP="y"
