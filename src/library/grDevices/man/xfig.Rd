@@ -16,7 +16,7 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
     \code{""}, the output is piped to the command given by the argument
-    \code{command}.  For use with \code{onefile=FALSE} give a
+    \code{command}.  For use with \code{onefile = FALSE} give a
     \code{printf} format such as \code{"Rplot\%d.fig"} (the default in
     that case).}
   \item{onefile}{logical: if true allow multiple figures
@@ -53,10 +53,10 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 \details{
   Although \code{xfig} can produce multiple plots in one file, the XFig
   format does not say how to separate or view them.  So
-  \code{onefile=FALSE} is the default.
+  \code{onefile = FALSE} is the default.
 }
 \note{
-  On some line textures (\code{0 <= lty > 4}) are used.  Eventually this
+  Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this
   will be partially remedied, but the XFig file format does not allow as
   general line textures as the \R model.  Unimplemented line textures
   are displayed as \emph{dash-double-dotted}.
