@@ -31,6 +31,6 @@ Belmont, CA: Wadsworth.
 }
 \examples{
 data(airquality)
-pairs(airquality, main = "airquality data")
+pairs(airquality, panel = panel.smooth, main = "airquality data")
 }
 \keyword{datasets}
