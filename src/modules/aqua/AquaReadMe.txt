@@ -1,14 +1,14 @@
 ReadMe file for building, installing and executing the AQUA - Darwin R GUI.
 
 
-Building RAqua from Source:
+Building R with Aqua GUI from Source:
 
 0) You need C and Fortran compilers.  See 
   http://www.economia.unimi.it/R/
  for some recommendations.  
 
 1)
-You can build the RAqua GUI either with or without X11 support, and with 
+You can build the R with Aqua GUI either with or without X11 support, and with 
 or without Tcl/Tk support.  
 
 Without either X11 or Tcl/Tk:
@@ -37,8 +37,16 @@ See
      http://www.economia.unimi.it/R/
 for more information on where to get it and how to install it.
 
-
-2) To install the RAqua GUI type
+2)	R with Aqua GUI requires R to be built as a framework, which is default. Thus,
+        you need to install R as a framework with
+%  sudo make install-Rframework
+        which installs, by default, the R.framework inside /Library/Frameworks. You can
+        change the R.framework location at build-time in the near future by specifying the
+        flag  --enable-R-framework[=DIR]  at configure time, DIR beign /Library/Frameworks
+        by default.
+        
+3)	To install the R with Aqua GUI, provided that you have installed the R.framework as
+        in point 2) you should type
 
 %  make install-aqua
 
@@ -48,15 +56,15 @@ administrator password and sudo:
 %  sudo make install-aqua
 
 
-3)  double-click on the StartR icon in /Applications, or drag it to the 
-Dock and single-click it.
+3)  double-click on the R icon in /Applications, or drag it to the 
+Dock and single-click it. You can move the R applications everywhere on your system
 
 
 Installing packages:
-Binary packages will be provided by the time RAqua is released.  Source 
+Binary packages will be provided by the time R is released.  Source 
 packages can be installed but may need some extra stuff:
 
- - For packages with no C or Fortran, RAqua is sufficient.
+ - For packages with no C or Fortran, R is sufficient.
 
  - For packages with C but not Fortran the Apple developer toolkit is 
    sufficient 
@@ -76,7 +84,7 @@ Eg
 
 
 
-About the RAqua GUI:
+About the R with Aqua GUI:
 
 The GUI has separate input and output windows.  What you type goes into
 the small input window, and the output goes in the large window above. 
@@ -141,5 +149,5 @@ you can't find a local declaration for a variable look at the top of the
 file.
 
 
-This version: nov 19th 2003
+This version: dec 13rd 2003
 	
