@@ -1,5 +1,8 @@
 ## The following must be an ABSOLUTE path
 ## or RELATIVE to 'Ex_Tests' (RHOME/test/Examples/ :
+
+include ../../Makeconf
+
 rRHOME= ../..
 #
 RETC = $(rRHOME)/etc
@@ -85,4 +88,6 @@ realclean: clean
 	@-rm -f -r auto pkg-*.tex
 
 install:
-	@echo "Not implemented yet ..."
+	$(INSTALL) -d $(rhome)/doc/manual
+	$(INSTALL_DATA) *.tex *.sty $(rhome)/doc/manual
+
