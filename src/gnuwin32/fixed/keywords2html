@@ -1,7 +1,17 @@
-#-*- perl -*- (for *.in)
+#-*- perl -*-
 #
 # Translate KEYWORDS.db to HTML
 #
+
+    
+sub searchKey {
+
+    my $key=$_[0];
+    my $retval = "<a href=\"";
+    $retval .= "javascript:searchInIndex('$key', false, true, false);";
+    $retval .= "\">$key</a>";
+    return($retval);
+}
 
 @key = ();
 while(<>){
@@ -53,12 +63,3 @@ for($n=0; $n<$depth; $n++){
 }
 print "</dd></dl>\n";
 	
-    
-sub searchKey (){
-
-    my $key=$_[0];
-    my $retval = "<a href=\"";
-    $retval .= "javascript:searchInIndex('$key', false, true, false);";
-    $retval .= "\">$key</a>";
-    return($retval);
-}
