@@ -171,3 +171,23 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
                   ...)
     invisible(x)
 }
+
+print.data.frame <- function (x, ..., digits = NULL,
+                              quote = FALSE, right = TRUE)
+{
+    if (length(x) == 0) {
+        cat("NULL data frame with", length(row.names(x)), "rows\n")
+    }
+    else if (length(row.names(x)) == 0) {
+        print.default(names(x), quote = FALSE)
+        cat("<0 rows> (or 0-length row.names)\n")
+    }
+    else {
+         if (!is.null(digits)) {
+             op <- options(digits = digits)
+             on.exit(options(op))
+         }
+         print.matrix(format(x), ..., quote = quote, right = right)
+     }
+    invisible(x)
+}

@@ -174,3 +174,29 @@ formatC <- function (x, digits = NULL, width = NULL,
 	attributes(r) <- x.atr
     r
 }
+
+format.factor <- function(x, ...)
+    format(as.character(x), ...)
+
+format.data.frame <- function(x, ...)
+{
+    dims<-dim(x)
+    nc <- dims[2]
+    rval <- vector("list", nc)
+    for(i in 1:nc)
+        rval[[i]] <- format(x[[i]], ...)
+    dn <-dimnames(x)
+    names(rval) <- dn[[2]]
+    return(data.frame(rval, row.names= dn[[1]]) )
+}
+
+format.AsIs <- function(x, width = 12, ...)
+{
+     n <- length(x)
+     rvec <- rep(NA,n)
+     for( i in 1:n )
+       rvec[i] <- toString(x[[i]], width, ...)
+     return(format.char(rvec, flag="+"))
+}
+
+

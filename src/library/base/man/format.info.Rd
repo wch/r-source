@@ -10,7 +10,7 @@ format.info(x)
 }
 \description{
   Information is returned on how \code{\link{format}(x, digits =
-    options("digits"))} would be formatted like.
+    options("digits"))} would be formatted.
 }
 \value{
   An \code{\link{integer}} \code{\link{vector}} of length 3, say
