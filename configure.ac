@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.88 $)
+AC_REVISION($Revision: 1.89 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -973,7 +973,7 @@ fi
 ## difference, but e.g. on Mach-O for Darwin there is.
 ##
 ## Also need flags to build the Rlapack shared library on some platforms.
-LIBR_EXT="${SHLIB_EXT}"
+DYLIB_EXT="${SHLIB_EXT}"
 LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
 RLAPACK_LDFLAGS="${SHLIB_LDFLAGS}"
 case "${host_os}" in
@@ -983,7 +983,7 @@ case "${host_os}" in
     LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
     ;;
   darwin*)
-    LIBR_EXT=".dylib"
+    DYLIB_EXT=".dylib"
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
@@ -1013,7 +1013,7 @@ AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}",
 [Define this to be the extension used for shared libraries on your
 system.])
 AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
-AC_SUBST(LIBR_EXT)
+AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)

@@ -35,7 +35,7 @@ DISTFILES = \
 ## Change to 'lapack.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix target 'install' then.
 lapack_la = lapack$(SHLIB_EXT)
-Rlapack_la = libRlapack$(LIBR_EXT)
+Rlapack_la = libRlapack$(DYLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(lapack_la)
 lapack_la_SOURCES = $(SOURCES)
@@ -91,7 +91,7 @@ Rlapack_install: $(Rlapack_la)
 install: installdirs
 @USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) $(Rexecmodulesdir)
-@USE_EXTERNAL_LAPACK_FALSE@	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(LIBR_EXT)
+@USE_EXTERNAL_LAPACK_FALSE@	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(DYLIB_EXT)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:
@@ -103,7 +103,7 @@ mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
-	  lapack$(SHLIB_EXT) @USE_EXTERNAL_LAPACK_FALSE@ libRlapack$(LIBR_EXT)
+	  lapack$(SHLIB_EXT) @USE_EXTERNAL_LAPACK_FALSE@ libRlapack$(DYLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

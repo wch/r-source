@@ -97,7 +97,7 @@ R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_bu
 ## <FIXME>
 ## Change to 'libR.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix target 'install' then.
-libR_la = libR$(LIBR_EXT)
+libR_la = libR$(DYLIB_EXT)
 ## </FIXME>
 Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
@@ -111,6 +111,7 @@ libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
 libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+LIBR_LDFLAGS = @LIBR_LDFLAGS@
 
 all: Makefile Makedeps R
 
@@ -186,14 +187,14 @@ uninstall:
 	@rm -f $(Rexecbindir)/R.bin
 	@rmdir $(Rexecbindir) 2>/dev/null \
 	  || echo "  subdir $(Rexecbindir) not removed"
-	@rm -f $(Rexeclibdir)/libR$(LIBR_EXT)
+	@rm -f $(Rexeclibdir)/libR$(DYLIB_EXT)
 	@rmdir $(Rexeclibdir) 2>/dev/null \
 	  || echo "  subdir $(Rexeclibdir) not removed"
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(LIBR_EXT) \
+	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
 	  $(Rexecbin_PROGRAMS)
 distclean: clean
 	@-rm -f Makefile
