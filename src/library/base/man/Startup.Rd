@@ -2,6 +2,9 @@
 \alias{Startup}
 \alias{Rprofile}
 \alias{.Rprofile}
+\alias{Rprofile.site}
+\alias{Renviron.site}
+\alias{.Renviron}
 \alias{.First}
 \title{Initialization at Start of an R Session}
 \usage{
