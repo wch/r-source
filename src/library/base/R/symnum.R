@@ -10,8 +10,10 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     ## Martin Maechler, 21 Jan 1994; Dedicated to Benjamin Schaad, born that day
 
     ##--------------- Argument checking -----------------------------
+    if(length(x) == 0)
+        return(noquote("()"))
     has.na <- any(nax <- is.na(x))
-    num.x <- !is.logical(x)
+    num.x <- is.numeric(x)## !is.logical(x)
     if(num.x) {
 	eval(corr)
 	cutpoints <- sort(cutpoints)
@@ -47,7 +49,9 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	    iS[which(ii)[abs(x[ii] - minc) < eps]] <- 1#-> symbol[1]
 	}
     }
-    else  {				# logical x : no need for cut(points)
+    else if(!is.logical(x))
+        stop("`x' must be numeric or logical")
+    else  { ## logical x : no need for cut(points)
 	if(missing(symbols))		# different default
 	    symbols <- c(".","|")
 	else if(length(symbols) != 2)

@@ -116,10 +116,7 @@ BUG FIXES
 
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
-    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
-
-    o	curve(*, add = TRUE) now works properly with active log scales.
-
+    o	symnum(x) behaves more reasonable for zero length or non-numeric x.
 
 
 	**************************************************
@@ -176,9 +173,13 @@ BUG FIXES
     o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
 	since now in the C code (int)(f*n + 1e-7) is used.
 
+    o	curve(*, add = TRUE) now works properly with active log scales.
+
     o	rt() could give different results on different platforms as
 	the order of evaluation of calls to random numbers was not
 	fully defined.	This affected the Mac port.
+
+    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
 
     o	ppr() inside nested calls sometimes failed to find objects
 	due to a typo in the eval call in ppr.formula.
@@ -196,10 +197,10 @@ BUG FIXES
 
     o	nls( ~ rhs, ..)	 now works (formula with empty left hand side).
 
-    o   the fuzz added in hist() for 1.2.2 broke the logic testing for 
-        equidistant breakpoints
+    o	the fuzz added in hist() for 1.2.2 broke the logic testing for 
+	equidistant breakpoints.
 
-    o   calls to replacement functions ("f<-") lost argument names (PR#888)
+    o	calls to replacement functions ("f<-") lost argument names (PR#888)
 
  
 
