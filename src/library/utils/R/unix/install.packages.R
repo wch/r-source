@@ -69,11 +69,11 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         cmd0 <- paste(file.path(R.home(),"bin","R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
-        for(p in update[, 1]) {
-            cmd <- paste(cmd0, "-l", update[, 2], update[, 3])
+        for(i in 1:nrow(update)) {
+            cmd <- paste(cmd0, "-l", update[i, 2], update[i, 3])
             status <- system(cmd)
             if(status > 0)
-                warning(paste("Installation of package", p,
+                warning(paste("Installation of package", update[i, 1],
                               "had non-zero exit status"))
         }
         cat("\n")
