@@ -41,7 +41,7 @@ unserialize(connection, refhook = NULL)
   to \code{TRUE}.
 
   \code{unserialize} reads an object from \code{connection}.
-  \code{connection} may also be a scaler string.
+  \code{connection} may also be a scalar string.
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
@@ -60,8 +60,8 @@ unserialize(connection, refhook = NULL)
 \value{
   For \code{serialize}, \code{NULL} unless \code{connection=NULL}, when
   the result is stored in the first element of a character vector (but
-  is not a normal character string and should not be processed except by
-  \code{unserialize}.)
+  is not a normal character string unless \code{ascii = TRUE} and should
+  not be processed except by \code{unserialize}).
 
   For \code{unserialize} and \code{.readRDS}, an \R object.
 
