@@ -24,9 +24,9 @@
 #define R_S_H
 
 #ifndef USING_R
-#define USING_R
+# define USING_R
 /* is this a good idea? - conflicts with many versions of f2c.h */
-#define longint int
+# define longint int
 #endif
 
 #ifdef __cplusplus
@@ -39,14 +39,14 @@ extern "C" {
 #include <limits.h>
 #include <float.h>
 #ifdef Macintosh
-#include <fp.h>
+# include <fp.h>
 #else
-#include <math.h>
+# include <math.h>
 #endif
 
-#include "Rconfig.h"
+#include <Rconfig.h>
 #include "R_ext/Constants.h"
-#include "R_ext/Memory.h" /* S_alloc */
+#include "R_ext/Memory.h"	/* S_alloc */
 
 /* Not quite full compatibility: beware! */
 /* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
@@ -70,7 +70,7 @@ typedef struct {
 } S_complex;
 
 #ifdef S_OLD_COMPLEX
-#  define complex S_complex
+# define complex S_complex
 #endif
 
 /* Not quite full compatibility: beware! */

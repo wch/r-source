@@ -20,12 +20,26 @@
 #ifndef DEVICES_H_
 #define DEVICES_H_
 
-#include "R_ext/Graphics.h"
+#include <Rgraphics.h>
 
+#define addDevice		Rf_addDevice
+#define copyDisplayList		Rf_copyDisplayList
+#define deviceNumber		Rf_deviceNumber
+#define DevNull			Rf_DevNull
+#define inhibitDisplayList	Rf_inhibitDisplayList
 #define InitGraphics		Rf_InitGraphics
+#define GetDevice		Rf_GetDevice
 #define KillAllDevices		Rf_KillAllDevices
+#define KillDevice		Rf_KillDevice
+#define killDevice		Rf_killDevice
+#define nextDevice		Rf_nextDevice
+#define NumDevices		Rf_NumDevices
+#define StartDevice		Rf_StartDevice
+#define playDisplayList		Rf_playDisplayList
+#define prevDevice		Rf_prevDevice
+#define recordGraphicOperation	Rf_recordGraphicOperation
 
-/* Initialise internal device structures. */
+/* Initialize internal device structures. */
 void InitGraphics(void);
 /* Kill all active devices (used at shutdown). */
 void KillAllDevices(void);
@@ -48,5 +62,52 @@ XFigDeviceDriver(DevDesc*, char*, char*, char*,
 #ifdef OLD_Macintosh
 Rboolean MacDeviceDriver(char**, int, double*, int);
 #endif
+
+
+/*-------------------------------------------------------------------
+ *
+ *  DEVICE FUNCTIONS are concerned with the creation and destruction
+ *  of devices.
+ *
+ */
+
+/* Return a pointer to a device which is identified by number */
+DevDesc* GetDevice(int);
+/* Kill device which is identified by number. */
+void KillDevice(DevDesc*);
+/* How many devices exist ? (>= 1) */
+int NumDevices(void);
+/* Get the index of the specified device. */
+int deviceNumber(DevDesc*);
+/* Create a new device. */
+int StartDevice(SEXP, SEXP, int, SEXP, int);
+
+void DevNull(void);
+
+/* Miscellaneous */
+void recordGraphicOperation(SEXP, SEXP, DevDesc*);
+void copyDisplayList(int);
+void playDisplayList(DevDesc*);
+void inhibitDisplayList(DevDesc*);
+
+/*-------------------------------------------------------------------
+ *
+ *  DEVICE UTILITIES are concerned with providing information
+ *  for R interpreted functions.
+ *
+ */
+
+/* Return the number of the next device. */
+int nextDevice(int);
+/* Return the number of the previous device. */
+int prevDevice(int);
+/* Make the specified device (specified by number) the current device */
+int selectDevice(int);
+/* Kill device which is identified by number. */
+void killDevice(int);
+/* ...NO DOC... */
+void addDevice(DevDesc *);
+
+
 
 #endif

@@ -30,11 +30,6 @@ typedef struct {
 	double i;
 } Rcomplex;
 
-/* This will go away in due course */
-#ifdef R_OLD_COMPLEX
-typedef Rcomplex complex;
-#endif
-
 #ifdef  __cplusplus
 }
 #endif

@@ -56,7 +56,7 @@ void	rPsort(double*, int, int);
 void	cPsort(Rcomplex*, int, int);
 
 int	IndexWidth(int);
-int	Rstrlen(char*);
+int	Rstrlen(char*, int);
 char*	R_ExpandFileName(char*);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);

@@ -38,7 +38,7 @@
 
 #include "config.h"
 
-#include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
+#include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #include "Internal.h"		/* do_FOO */
 
@@ -393,6 +393,8 @@ extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
 extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
+void	Init_C_alloc(void);
+void	Reset_C_alloc(void);
 
 /* The Pointer Protection Stack */
 extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
@@ -640,6 +642,8 @@ SEXP parse(FILE*, int);
 void PrintGreeting(void);
 void PrintVersion(char *);
 void PrintWarnings(void);
+void process_global_Renviron();
+void process_users_Renviron();
 SEXP promiseArgs(SEXP, SEXP);
 void Rcons_vprintf(const char *, va_list);
 void RemoveClass(SEXP, char *);
