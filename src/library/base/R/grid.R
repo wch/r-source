@@ -1,17 +1,30 @@
-grid <- function (nx=NULL, ny=NULL, col="lightgray", lty="dotted")
+grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted", lwd = NULL,
+                  equilogs = TRUE)
 {
     if (is.null(nx)|| nx >= 1) {
-        axp <- par("xaxp")
-        if(is.null(nx)) nx <- axp[3]
-        at <- if(par("xlog")) 10^seq(log10(axp[1]), log10(axp[2]), len= 1+nx)
-            else seq(axp[1],axp[2],len=1+nx)
-	abline(v = at, col = col, lty = lty)
+        log <- par("xlog")
+        if(is.null(nx)) { ## align to tickmarks
+            ax <- par("xaxp")
+            if(log && equilogs && ax[3] > 0) ax[3] <- 1
+            at <- axTicks(1, axp = ax, log=log)
+        } else { # equidistant, also from box borders
+            U <- par("usr")
+            at <- seq(U[1],U[2], len = nx+1)
+            at <- (if(log) 10^at else at)[-c(1,nx+1)]
+        }
+        abline(v = at, col = col, lty = lty, lwd = lwd)
     }
     if (is.null(ny)|| ny >= 1) {
-        axp <- par("yaxp")
-        if(is.null(ny)) ny <- axp[3]
-        at <- if(par("ylog")) 10^seq(log10(axp[1]), log10(axp[2]), len= 1+ny)
-            else seq(axp[1],axp[2],len=1+ny)
-	abline(h = at, col = col, lty = lty)
+        log <- par("ylog")
+        if(is.null(ny)) { ## align to tickmarks
+            ax <- par("yaxp")
+            if(log && equilogs && ax[3] > 0) ax[3] <- 1
+            at <- axTicks(2, axp = ax, log=log)
+        } else { # equidistant, also from box borders
+            U <- par("usr")
+            at <- seq(U[3],U[4], len = ny+1)
+            at <- (if(log) 10^at else at)[-c(1,ny+1)]
+        }
+	abline(h = at, col = col, lty = lty, lwd = lwd)
     }
 }

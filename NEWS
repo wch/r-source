@@ -14,6 +14,8 @@ USER-VISIBLE CHANGES
     o	The default colour palette now has "grey" instead of "white"
 	in location 8.	See palette().
 
+    o	grid(nx) behaves differently (but the same as in R versions <= 0.64).
+
 
 NEW FEATURES
 
@@ -165,7 +167,7 @@ NEW FEATURES
 
     o	New functions La.chol and La.chol2inv for Cholesky decomposition
 	and inverse of positive definite matrices using Lapack.
- 
+
     o   Changes to the tcltk package
 
 	- on Unix systems, the Tcl event loop has been integrated with
@@ -175,9 +177,9 @@ NEW FEATURES
 	- also on Unix, stubs have been created to divert R's input
           and output routines to go via Tcl commands. (Nothing
           uses this at present, but packages might be developed to
-          take advantage of it.) 
+          take advantage of it.)
 
-	- return value from Tcl commands is no longer invisible. A new 
+	- return value from Tcl commands is no longer invisible. A new
 	  print method, print.tclObj(), has been introduced.
 
         - Tcl variables created by tclVar() are now explicitly put into
@@ -188,11 +190,18 @@ NEW FEATURES
           (e.g. Tix)
 
 	- The tkpager() function had not been updated for the return
-          value change from 1.5.0 
+          value change from 1.5.0
 
     o	The bmp(), jpeg() and png() devices can produce multiple
 	bitmaps, one for each page.  The defailt filenames have
 	changed to include a sequence number.
+
+    o	New function axTicks() returning tick mark locations like axis().
+
+    o	grid() has a more sensible default behavior.  Tick axis alignment
+        only happens when no numbers of grid cells are specified.  New
+        arguments lwd and equilogs, see ?grid.
+
 
 
 DEPRECATED & DEFUNCT
@@ -251,7 +260,7 @@ UTILITIES
         syntaxes. RweaveLatex() now gets its prompt from options() and
         uses the text width as linebreak cutoff for deparsing input
         statements.
-    
+
 
 
 BUG FIXES
@@ -405,7 +414,7 @@ BUG FIXES
 
     o	order(na.last=NA) failed if all args were of length 1. (PR#1913)
 
-    o	grid() now works properly also with log coordinates active. <MM:FIXME>
+    o	grid() now also works with log coordinates active.
 
     o	plot.table(tab, xlab="X", ylab="Y") now works as expected.
 
@@ -419,7 +428,7 @@ BUG FIXES
     o	aov() could still fail on multistrata models with very long
 	Error formulae.
 
-    o	try() could fail in BATCH use due to use of fflush(stdin). 
+    o	try() could fail in BATCH use due to use of fflush(stdin).
 	Only seen on Solaris. (PR#1934)
 
 
