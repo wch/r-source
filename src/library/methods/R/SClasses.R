@@ -223,7 +223,7 @@ new <-
             for(i in seq(along=snames)) {
               slotName <- el(snames, i)
               slotClass <- elNamed(slotDefs, slotName)
-              slotVal <- el(args, i)
+              slotVal <- el(elements, i)
               if(!.Force && !is(slotVal, slotClass))
                 stop(paste("Invalid object for slot \"", slotName,
                            "\", with class \"", class(slotVal), 
