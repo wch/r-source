@@ -2576,8 +2576,11 @@ library(stats)
 data(eurodist)
 cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)
 cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
-stopifnot(identical(cm1$x,  cmdsE$x),
-          identical(cm1$ac, cmdsE$ac))
+# FAILED on Debian testing just prior to 1.9.0!
+#stopifnot(identical(cm1$x,  cmdsE$x),
+#          identical(cm1$ac, cmdsE$ac))
+stopifnot(all.equal(cm1$x,  cmdsE$x),
+          all.equal(cm1$ac, cmdsE$ac))
 ## end of moved from cmdscale.Rd
 
 
