@@ -8,7 +8,7 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
 
     format <- charmatch(format, c("normal", "short"), nomatch = 0)
     if (format == 0) {
-        warning("Format must be normal or short. Using normal",
+        warning("'format' must be \"normal\" or \"short\". Using \"normal\"",
                 call. = FALSE, immediate. = TRUE)
         format <- 1
     }
@@ -20,7 +20,7 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
                                   "size", "size:decending"),
                         nomatch = 0)
     if (sortby == 0) {
-        warning("Wrong sortby specified. Using score",
+        warning("wrong 'sortby' specified. Using \"score\"",
                 call. = FALSE, immediate. = TRUE)
         sortby <- 1
     }
@@ -37,7 +37,8 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
     res <- pmatch(restrict, c("Rhelp02a", "Rhelp01", "functions","docs"),
                   nomatch = 0)
     if (all(res) == 0) {
-        warning("Wrong restriction specified. Using Rhelp02a, functions, docs",
+        warning("wrong restriction specified.\nUsing ",
+                'c("Rhelp02a", "functions", "docs")',
                 call. = FALSE, immediate. = TRUE)
         res <- c(1, 3, 4)
     }
@@ -47,7 +48,8 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
 
     qstring <- paste(string, mpp, format, sortby, res, sep = "&")
     browseURL(qstring)
-    cat("A search query has been submitted to http://search.r-project.org\n")
-    cat("The results page should open in your browser shortly\n")
+    cat(gettext("A search query has been submitted to"),
+        "http://search.r-project.org\n")
+    cat(gettext("The results page should open in your browser shortly\n"))
     invisible(qstring)
 }
