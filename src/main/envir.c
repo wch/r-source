@@ -155,17 +155,23 @@ SEXP R_HashGet(int hashcode, SEXP symbol, SEXP table)
 {
     SEXP chain;
 
+#if 0 
+/* Removed by pd -- never seen the "3rd arg" stuff and when the table
+   is a VECSXP it can't be NULL...*/
+
     /* Do type checking */
     if (TYPEOF(table) != VECSXP){
 	printf("3rd arg (table) not of type VECSXP, from R_HashGet\n");
     }
+    
     if (isNull(table)) {
 	error("Table is null, from R_HashGet");
     }
+#endif
     /* Grab the chain from the hashtable */
     chain = VECTOR(table)[hashcode];
     /* Retrieve the value from the chain */
-    for (; !isNull(chain); chain = CDR(chain)) {
+    for (; chain != R_NilValue ; chain = CDR(chain)) {
 	if (TAG(chain) == symbol) {
 	    return CAR(chain);
 	}

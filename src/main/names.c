@@ -751,6 +751,8 @@ static void SymbolShortcuts()
 {
     R_Bracket2Symbol = install("[[");
     R_BracketSymbol = install("[");
+    R_BraceSymbol = install("{");
+    R_TmpvalSymbol = install("*tmp*");
     R_ClassSymbol = install("class");
     R_DimNamesSymbol = install("dimnames");
     R_DimSymbol = install("dim");

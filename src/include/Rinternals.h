@@ -211,6 +211,8 @@ extern SEXP	R_MissingArg;	    /* Missing argument marker */
 /* Symbol Table Shortcuts */
 extern SEXP	R_Bracket2Symbol;   /* "[[" */
 extern SEXP	R_BracketSymbol;    /* "[" */
+extern SEXP	R_BraceSymbol;      /* "{" */
+extern SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern SEXP	R_ClassSymbol;	    /* "class" */
 extern SEXP	R_DimNamesSymbol;   /* "dimnames" */
 extern SEXP	R_DimSymbol;	    /* "dim" */

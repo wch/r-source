@@ -50,9 +50,8 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
        since the computation of one may destroy the other */
 
 
-    tmp = install("[["); 
     ind = allocVector(INTSXP, 1);
-    PROTECT(tmp = LCONS(tmp, LCONS(X, LCONS(ind, R_NilValue))));
+    PROTECT(tmp = LCONS(R_Bracket2Symbol, LCONS(X, LCONS(ind, R_NilValue))));
     PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
     PROTECT(ans = allocVector(VECSXP, n));

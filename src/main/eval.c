@@ -750,7 +750,7 @@ static char *asym[] = {":=", "<-", "<<-"};
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, tmploc, tmpsym;
+    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, tmploc;
     char buf[32];
 
     expr = CAR(args);
@@ -779,14 +779,13 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	in the computation.  For efficiency reasons we record the
 	location where this variable is stored.  */
 
-    tmpsym = install("*tmp*");
     if (rho == R_NilValue)
 	errorcall(call, "cannot do complex assignments in NULL environment");
-    defineVar(tmpsym, R_NilValue, rho);
-    tmploc = findVarLocInFrame(rho, tmpsym);
+    defineVar(R_TmpvalSymbol, R_NilValue, rho);
+    tmploc = findVarLocInFrame(rho, R_TmpvalSymbol);
 #ifdef OLD
     tmploc = FRAME(rho);
-    while(tmploc != R_NilValue && TAG(tmploc) != tmpsym)
+    while(tmploc != R_NilValue && TAG(tmploc) != R_TmpvalSymbol)
 	tmploc = CDR(tmploc);
 #endif
 
@@ -818,7 +817,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 			      install(buf), TAG(tmploc), CDDR(expr), tmp));
     expr = eval(expr, rho);
     UNPROTECT(5);
-    unbindVar(tmpsym, rho);
+    unbindVar(R_TmpvalSymbol, rho);
     return duplicate(saverhs);
 }
 
