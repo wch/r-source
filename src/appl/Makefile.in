@@ -23,6 +23,7 @@ SRCS_C = \
 	approx.c \
 	bakslv.c \
 	binning.c \
+	chisqsim.c \
 	chull.c \
 	cpoly.c \
 	cumsum.c \
