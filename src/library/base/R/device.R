@@ -119,4 +119,8 @@ dev.control <- function(displaylist)
         invisible()
 }
 
-
+graphics.off <- function () 
+{
+        while ((which <- dev.cur()) != 1)
+		dev.off(which)
+}
