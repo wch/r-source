@@ -328,12 +328,14 @@ static void R_LoadProfile(FILE *fp)
 	    doneit = 1;
 	    R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
 	}
+        R_Inputfile = NULL;
     }
 }
 
 void mainloop(void)
 {
     SEXP cmd;
+    FILE *fp;
 
     /* Print a platform and version dependent */
     /* greeting and a pointer to the copyleft. */
@@ -382,8 +384,9 @@ void mainloop(void)
     /* If there is an error we pass on to the repl. */
     /* Perhaps it makes more sense to quit gracefully? */
 
-    R_Inputfile = R_OpenLibraryFile("base");
-    if (R_Inputfile == NULL) {
+    fp = R_OpenLibraryFile("base");
+    R_Inputfile = fp;
+    if (fp == NULL) {
 	R_Suicide("unable to open the base package\n");
     }
 
@@ -393,8 +396,10 @@ void mainloop(void)
     signal(SIGINT, onintr);
     if (!doneit) {
 	doneit = 1;
-	R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
+	R_ReplFile(fp, R_NilValue, 0, 0);
     }
+    R_Inputfile = NULL;
+    fclose(fp);
 
     /* This is where we try to load a user's */
     /* saved data.	The right thing to do here */

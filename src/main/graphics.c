@@ -2619,20 +2619,65 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 /* Compute string width. */
 double GStrWidth(char *str, int units, DevDesc *dd)
 {
+#ifdef OLD
     double w = dd->dp.strWidth(str, dd);
     if (units != DEVICE)
 	w = GConvertXUnits(w, DEVICE, units, dd);
     return w;
+#else
+    double w;
+    static *sbuf = NULL;
+    if (sbuf) {
+	free(sbuf);
+	sbuf = NULL;
+        warning("freeing previous text buffer in GStrWidth\n");
+    }
+    w = 0;
+    if(str && *str) {
+        char *s, *sbuf, *sb;
+	double wdash;
+	sbuf = (char*)malloc(strlen(str) + 1);
+	sb = sbuf;
+        for(s = str; ; s++) {
+            if (*s == '\n' || *s == '\0') {
+		*sb = '\0';
+		wdash = dd->dp.strWidth(sbuf, dd);
+		if (wdash > w) w = wdash;
+		sb = sbuf;
+	    }
+	    else *sb++ = *s;
+	    if (!*s) break;
+	}
+	if (units != DEVICE)
+	    w = GConvertXUnits(w, DEVICE, units, dd);
+    }
+    return w;
+#endif
 }
 
 
 /* Compute string height. */
 double GStrHeight(char *str, int units, DevDesc *dd)
 {
+#ifdef OLD
     double h = dd->gp.cex * dd->gp.cra[1];
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
     return h;
+#else
+    double h;
+    char *s;
+    int n;
+    /* Count the lines of text */
+    n = 1;
+    for(s = str; *s ; s++)
+	if (*s == '\n')
+	    n += 1;
+    h = n * dd->gp.cex * dd->gp.cra[1];
+    if (units != DEVICE)
+	h = GConvertYUnits(h, DEVICE, units, dd);
+    return h;
+#endif
 }
 
 
@@ -2640,23 +2685,75 @@ double GStrHeight(char *str, int units, DevDesc *dd)
 void GText(double x, double y, int coords, char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
-
+    /* Deallocate any prior string buffer */
+    static *sbuf = NULL;
+    if (sbuf) {
+	free(sbuf);
+	sbuf = NULL;
+        warning("freeing previous text buffer in GText\n");
+    }
     if(str && *str) {
+        char *s, *sbuf, *sb;
+	int i, n;
+	double xoff, yoff, yadj;
+	/* Fixup for string centering. */
+	/* Higher functions send in NA_REAL */
+	/* when true text centering is desired */
+	if (!FINITE(yc)) {
+	    yadj = (dd->gp.yCharOffset - 0.5);
+	    yc = 0.5;
+	}
+	else yadj = 0;
+	if (!FINITE(xc)) xc = 0.5;
+	/* We work in NDC coordinates */
+	GConvert(&x, &y, coords, NDC, dd);
+	/* Set device clipping (if available) */
 	GClip(dd);
-	if(dd->dp.canClip) {
-	    dd->dp.text(x, y, coords, str, xc, yc, rot, dd);
-	}
-	else {
-	    if(!dd->dp.xpd) {
-		double xtest = x;
-		double ytest = y;
-		GConvert(&xtest, &ytest, coords, NDC, dd);
-		if(xtest < 0 || ytest < 0 ||
-		   xtest > 1 || ytest > 1)
-		    return;
+	/* Count the lines of text */
+	n = 1;
+        for(s = str; *s ; s++)
+            if (*s == '\n')
+		n += 1;
+	/* Allocate a temporary buffer */
+	sbuf = (char*)malloc(strlen(str) + 1);
+	sb = sbuf;
+	i = 0;
+        for(s = str; ; s++) {
+            if (*s == '\n' || *s == '\0') {
+		*sb = '\0';
+		/* Compute the approriate offset. */
+		/* (translate verticaly then rotate). */
+		yoff = GConvertYUnits((1 - yc) * (n - 1) - i - yadj,
+				      CHARS, INCHES, dd);
+		xoff = - yoff * sin(DEG2RAD * rot);
+		yoff = yoff * cos(DEG2RAD * rot);
+		GConvert(&xoff, &yoff, INCHES, NDC, dd);
+		xoff = x + xoff;
+		yoff = y + yoff;
+		if(dd->dp.canClip) {
+		    dd->dp.text(xoff, yoff, NDC, sbuf, xc, yc, rot, dd);
+		}
+		else {
+		    if(!dd->dp.xpd) {
+			double xtest = x;
+			double ytest = y;
+			GConvert(&xtest, &ytest, NDC, NFC, dd);
+			if(xtest < 0 || ytest < 0 ||
+			   xtest > 1 || ytest > 1)
+			    return;
+		    }
+		    dd->dp.text(x, y, NDC, sbuf, xc, yc, rot, dd);
+		}
+		sb = sbuf;
+		i += 1;
 	    }
-	    dd->dp.text(x, y, coords, str, xc, yc, rot, dd);
+	    else *sb++ = *s;
+	    if (!*s) break;
 	}
+        if (sbuf) {
+	    free(sbuf);
+	    sbuf = NULL;
+        }
     }
 }
 

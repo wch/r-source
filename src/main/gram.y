@@ -873,25 +873,26 @@ static SEXP R_Parse1(int *status)
     return R_CurrentExpr;
 }
 
+static FILE *fp_parse;
+
 static int file_getc(void)
 {
-    return R_fgetc(R_Inputfile);
+    return R_fgetc(fp_parse);
 }
 
 static int file_ungetc(int c)
 {
-    return ungetc(c, R_Inputfile);
+    return ungetc(c, fp_parse);
 }
 
 SEXP R_Parse1File(FILE *fp, int gencode, int *status)
 {
     ParseInit();
     GenerateCode = gencode;
-    R_Inputfile = fp;
+    fp_parse = fp;
     ptr_getc = file_getc;
     ptr_ungetc = file_ungetc;
     R_Parse1(status);
-    R_Inputfile = NULL;
     return R_CurrentExpr;
 }
 
@@ -1019,7 +1020,7 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
 {
     GenerateCode = 1;
     R_ParseError = 1;
-    R_Inputfile = fp;
+    fp_parse = fp;
     ptr_getc = file_getc;
     ptr_ungetc = file_ungetc;
     return R_Parse(n, status);
