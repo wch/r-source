@@ -8,10 +8,11 @@
   seasonal component.
 }
 \usage{
-decompose(x, type = "additive")}
+decompose(x, type = c("additive", "multiplicative"))
+}
 \arguments{
   \item{x}{A time series.}
-  \item{type}{Either \code{additive} or \code{multiplicative}.}
+  \item{type}{The type of seasonal component.}
 }
 \details{
 The additive model used is:
@@ -23,15 +24,15 @@ The multiplicative model used is:
 Y[t] = T[t] * S[t] + e[t]
 }
 \note{
-  The function \code{stl} provides a much more sophisticated way for
+  The function \code{\link{stl}} provides a much more sophisticated
   decomposition.
 }
 \value{
-  An object of class \code{decomposed.ts} with following components:
+  An object of class \code{"decomposed.ts"} with following components:
   \item{seasonal}{The seasonal component (i.e., the repeated seasonal figure)}
   \item{figure}{The estimated seasonal figure only}
   \item{trend}{The trend component}
-  \item{random}{The reminder part}
+  \item{random}{The remainder part}
   \item{type}{The value of \code{type}}
 }
 \author{

@@ -5,7 +5,7 @@ function (x,
           alpha    = NULL, # level
           beta     = NULL, # trend
           gamma    = NULL, # seasonal component
-          seasonal = "additive",
+          seasonal = c("additive", "multiplicative"),
           start.periods = 3,
 
           # starting values
@@ -15,7 +15,7 @@ function (x,
           )
 {
     x <- as.ts(x)
-    seasonal <- pmatch(seasonal, c("additive", "multiplicative"), 1)
+    seasonal <- match.arg(seasonal)
     f <- frequency(x)
 
     if (!is.null(alpha) && alpha==0)
@@ -24,7 +24,7 @@ function (x,
         any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1))
         stop ("alpha, beta and gamma must be within the unit interval.")
     if ((is.null(gamma) || gamma > 0)) {
-        if (seasonal == 2 && any(x <= 0))
+        if (seasonal == "multiplicative" && any(x <= 0))
             stop ("data must be strictly non-negative for multiplicative Holt-Winters")
         if (start.periods < 3)
             stop ("Need at least 3 periods to compute seasonal start values")
@@ -45,7 +45,7 @@ function (x,
 
         ## decompose series
         st <- decompose(ts(x[1:wind], start = start(x), frequency = f),
-                        if (seasonal == 1) "additive" else "multiplicative")
+                        seasonal)
 
         ## level & intercept
         m  <- lm (na.omit(st$trend) ~ c(1:(wind - f + 1)))
@@ -56,7 +56,7 @@ function (x,
     }
 
     ## Call to filtering loop
-    hw <- function(alpha, beta, gamma) {
+    hw <- function(alpha, beta, gamma)
         .C ("HoltWinters",
             as.double(x),
             as.integer(length(x)),
@@ -64,7 +64,7 @@ function (x,
             as.double(beta),
             as.double(gamma),
             as.integer(start.time),
-            as.integer(seasonal),
+            as.integer(! + (seasonal == "multiplicative")),
             as.integer(f),
 
             a = as.double(l.start),
@@ -74,7 +74,6 @@ function (x,
             xhat = double(length(x) - start.time + 1),
             PACKAGE = "ts"
             )
-    }
 
     ## if alpha and/or beta and/or gamma are omitted, use optim to find the
     ## values minimizing the squared prediction error
@@ -146,7 +145,7 @@ function (x,
                    coefficients = c(a = final.fit$a,
                                     b = if (beta > 0) final.fit$b,
                                     s = if (gamma > 0) final.fit$s),
-                   seasonal  = if (seasonal == 1) "additive" else "multiplicative",
+                   seasonal  = seasonal,
                    SSE       = final.fit$SSE,
                    call      = match.call()
                    ),
@@ -191,65 +190,55 @@ predict.HoltWinters <-
     ## compute prediction intervals
     if (prediction.interval) int <- quantile*sqrt(sapply(1:n.ahead,vars))
     ts(
-       cbind(fit=fit,
-             upr=if(prediction.interval) fit+int,
-             lwr=if(prediction.interval) fit-int
+       cbind(fit = fit,
+             upr = if(prediction.interval) fit + int,
+             lwr = if(prediction.interval) fit - int
              ),
-       start = end(lag(object$fitted, k=-1)),
+       start = end(lag(object$fitted, k = -1)),
        freq  = frequency(object$fitted)
        )
 }
 
-## compute residuals
 residuals.HoltWinters <- function (object, ...) object$x - object$fitted
 
 
-## Plot function
-"plot.HoltWinters" <-
-function (x,
-          predicted.values=NA,
-          intervals=TRUE,
-          separator=TRUE,
-          col=1,
-          col.predicted=2,
-          col.intervals=4,
-          lty.separator=3,
-          ylab="Observed / Fitted",
-          main="Holt-Winters filtering",
-          ...
-          )
+plot.HoltWinters <-
+    function (x, predicted.values = NA, intervals = TRUE,
+              separator = TRUE, col = 1, col.predicted = 2, col.intervals = 4,
+              lty.separator = 3, ylab = "Observed / Fitted",
+              main = "Holt-Winters filtering", ...)
 {
     ## plot fitted/predicted values
     plot(ts(c(x$fitted, if(!is.na(predicted.values)) predicted.values[,1]),
-            start=start(fitted(x)),
-            frequency=frequency(fitted(x))),
-         col=col.predicted,
-         ylim=range(na.omit(c(x$fitted,x$x,predicted.values))),
-         ylab=ylab, main=main,
+            start = start(fitted(x)),
+            frequency = frequency(fitted(x))),
+         col = col.predicted,
+         ylim = range(na.omit(c(x$fitted,x$x,predicted.values))),
+         ylab = ylab, main = main,
          ...
          )
 
     ## plot prediction interval
     if(!is.na(predicted.values) && intervals && ncol(predicted.values) > 1) {
-        lines(predicted.values[,2], col=col.intervals)
-        lines(predicted.values[,3], col=col.intervals)
+        lines(predicted.values[,2], col = col.intervals)
+        lines(predicted.values[,3], col = col.intervals)
     }
 
     ## plot observed values
-    lines(x$x, col=col)
+    lines(x$x, col = col)
 
     ## plot separator
     if (separator && !is.na(predicted.values))
-        abline (v=time(x$x)[length(x$x)], lty=lty.separator)
+        abline (v = time(x$x)[length(x$x)], lty = lty.separator)
 }
 
 ## print function
 print.HoltWinters <- function (x, ...)
 {
     cat ("Holt-Winters exponential smoothing",
-         if (x$beta == 0) "without" else "with",
-         "trend and",
-         if (x$gamma == 0) "without" else paste(if (x$beta==0) "with ", x$seasonal, sep=""),
+         if (x$beta == 0) "without" else "with", "trend and",
+         if (x$gamma == 0) "without" else
+         paste(if (x$beta==0) "with ", x$seasonal, sep=""),
          "seasonal componenent.\n")
     cat ("\nCall:\n", deparse (x$call), "\n\n")
     cat ("Smoothing parameters:\n")
@@ -262,9 +251,9 @@ print.HoltWinters <- function (x, ...)
 }
 
 ## decompose additive/multiplicative series into trend/seasonal figures/noise
-decompose <- function (x, type="additive")
+decompose <- function (x, type = c("additive", "multiplicative"))
 {
-    type = pmatch (type, c("additive", "multiplicative"), 1)
+    type = match.arg(type)
     l <- length(x)
     f <- frequency(x)
     if (f == 1) stop ("Time series has no period")
@@ -274,10 +263,7 @@ decompose <- function (x, type="additive")
     trend <- filter (x, rep(1, f)/f)
 
     ## compute seasonal components
-    season <- if (type == 1)
-        x - trend
-    else
-        x / trend
+    season <- if (type == "additive") x - trend else x / trend
 
     ## remove incomplete seasons at beginning/end
     season <- window(season, start(x) + c(1, 0), c(end(x)[1] - 1, f))
@@ -300,7 +286,7 @@ decompose <- function (x, type="additive")
                    trend    = trend,
                    random   = x - if (type == 1) seasonal + trend else seasonal * trend,
                    figure   = figure,
-                   type     = if (type == 1) "additive" else "multiplicative"
+                   type     = type
                    ),
               class = "decomposed.ts"
               )
@@ -319,7 +305,4 @@ plot.decomposed.ts <- function(x, ...)
          main = paste("Decomposition of", x$type, "time series"),
          ...)
 }
-
-
-
 

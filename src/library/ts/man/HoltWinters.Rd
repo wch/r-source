@@ -10,16 +10,15 @@
 }
 \usage{
 HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
-          seasonal = "additive",
-          start.periods = 3, l.start = NULL, b.start = NULL, s.start = NULL)
-
+          seasonal = "additive", start.periods = 3,
+          l.start = NULL, b.start = NULL, s.start = NULL)
 }
 \arguments{
   \item{x}{An object of class \code{ts}}
-  \item{alpha}{Alpha parameter of Holt-Winters Filter}
-  \item{beta}{Beta Parameter of Holt-Winters Filter. If set to 0,
+  \item{alpha}{\eqn{alpha} parameter of Holt-Winters Filter}
+  \item{beta}{\eqn{beta} parameter of Holt-Winters Filter. If set to 0,
     the function will do exponential smoothing.}
-  \item{gamma}{Gamma parameter used for the seasonal component.
+  \item{gamma}{\eqn{gamma} parameter used for the seasonal component.
     If set to 0, an non-seasonal model is fitted.}
   \item{seasonal}{Selects an \code{"additive"} or \code{"multiplicative"}
     seasonal model. (Only takes effect if \code{gamma} is non-zero).}
@@ -32,29 +31,31 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 }
 \details{
   The additive Holt-Winters prediction function (for time series with
-  period length p) is:
-
-  Yhat[t+h] = a[t] + h * b[t] + s[t + 1 + (h - 1) mod p],
-
-  where a[t], b[t] and s[t] are recursively given by:
-
-  a[t] = alpha * (Y[t] - s[t-p]  + (1-alpha) * (a[t-1] + b[t-1])\cr
-  b[t] = beta  * (a[t] - a[t-1]) + (1-beta)  *      b[t-1]\cr
-  s[t] = gamma * (Y[t] - a[t])   + (1-gamma) *      s[t-p]
+  period length p) is
+  \deqn{\hat Y[t+h] = a[t] + h b[t] + s[t + 1 + (h - 1) \bmod p],}{
+    Yhat[t+h] = a[t] + h * b[t] + s[t + 1 + (h - 1) mod p],}
+  where \eqn{a[t]}, \eqn{b[t]} and \eqn{s[t]} are given by
+  \deqn{a[t] = \alpha (Y[t] - s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}{
+  a[t] = \alpha (Y[t] - s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}
+  \deqn{b[t] = \beta (a[t] -a[t-1]) + (1-\beta)  b[t-1]}{
+  b[t] = \beta (a[t] - a[t-1]) + (1-\beta) b[t-1]}
+  \deqn{s[t] = \gamma (Y[t] - a[t])   + (1-\gamma) s[t-p]}{
+  s[t] = \gamma (Y[t] - a[t]) + (1-\gamma) s[t-p]}
 
   The multiplicative Holt-Winters prediction function (for time series
-  with period length p) is:
+  with period length p) is
+  \deqn{\hat Y[t+h] = (a[t] + h b[t]) \times s[t + 1 + (h - 1) \bmod p].}{
+    Yhat[t+h] = (a[t] + h * b[t]) * s[t + 1 + (h - 1) mod p],}
+  where \eqn{a[t]}, \eqn{b[t]} and \eqn{s[t]} are given by
+  \deqn{a[t] = \alpha (Y[t] / s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}{
+  a[t] = \alpha (Y[t] / s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}
+  \deqn{b[t] = \beta (a[t] - a[t-1]) + (1-\beta) b[t-1]}{
+  b[t] = \beta (a[t] - a[t-1]) + (1-\beta) b[t-1]}
+  \deqn{s[t] = \gamma (Y[t] / a[t])   + (1-\gamma) s[t-p]}{
+  s[t] = \gamma  (Y[t] / a[t])  + (1-\gamma) s[t-p]}
 
-  Yhat[t+h] = (a[t] + h * b[t]) * s[t + 1 + (h - 1) mod p],
-
-  where a[t], b[t] and s[t] are recursively given by:
-
-  a[t] = alpha * (Y[t] / s[t-p]  + (1-alpha) * (a[t-1] + b[t-1])\cr
-  b[t] = beta  * (a[t] - a[t-1]) + (1-beta)  *      b[t-1]\cr
-  s[t] = gamma * (Y[t] / a[t])   + (1-gamma) *      s[t-p]
-
-  The function tries to find the optimal values of \code{alpha} and/or
-  \code{beta} and/or \code{gamma} by minimizing the squared
+  The function tries to find the optimal values of \eqn{\alpha} and/or
+  \eqn{\beta} and/or \eqn{\gamma} by minimizing the squared
   \code{step}-step prediction error if they are omitted.
 
   Start values for \code{a}, \code{b} and \code{s} are detected by
@@ -64,7 +65,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   trend component is used for starting level and trend.)
 }
 \value{
-  A list with components:\cr
+  An object of class \code{"HoltWinters"}, a list with components:
   \item{fitted}{The filtered time series}
   \item{x}{The original series}
   \item{alpha}{alpha used for filtering}
@@ -99,6 +100,11 @@ data(co2)
 %% Seasonal Holt-Winters
 (m <- HoltWinters(co2))
 plot(m)
+
+data(AirPassengers)
+(m <- HoltWinters(AirPassengers, seasonal = "mult"))
+plot(m)
+monthplot(m)
 
 %% Non-Seasonal Holt-Winters
 data(uspop)
