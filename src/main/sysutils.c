@@ -331,7 +331,7 @@ static void iconv_Init(void)
 #endif
 
 
-#if defined(HAVE_DECL_ICONVLIST) && HAVE_DECL_ICONVLIST 
+#ifdef HAVE_ICONVLIST
 static unsigned int cnt;
 
 static int 
@@ -358,7 +358,7 @@ write_one (unsigned int namescount, char * *names, void *data)
 /* iconv(x, from, to, sub) */
 SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#if defined(HAVE_DECL_ICONV) && HAVE_DECL_ICONV
+#ifdef HAVE_ICONV
     SEXP ans, x = CAR(args);
     iconv_t obj;
     int i, j;
@@ -373,7 +373,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     iconv_Init();
 #endif
     if(isNull(x)) {  /* list locales */
-#if defined(HAVE_DECL_ICONVLIST) && HAVE_DECL_ICONVLIST
+#ifdef HAVE_ICONVLIST
 	cnt = 0;
 	iconvlist(count_one, NULL);
 	PROTECT(ans = allocVector(STRSXP, cnt));
@@ -405,9 +405,9 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	top_of_loop:
 	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
-	next_char:
 	    /* First initialize output */
 	    iconv (obj, NULL, NULL, &outbuf, &outb);
+        next_char:
 	    /* Then convert input  */
 	    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
 	    *outbuf = '\0';
@@ -423,7 +423,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 			goto top_of_loop;
 		    }
-		    snprintf(outbuf, 4, "<%02x>", (unsigned char)*inbuf);
+		    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 		    outbuf += 4; outb -= 4;
 		} else {
 		    if(outb < strlen(sub)) {
@@ -452,7 +452,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-#if defined(HAVE_DECL_ICONV) && HAVE_DECL_ICONV
+#ifdef HAVE_ICONV
 void * Riconv_open (char* tocode, char* fromcode)
 {
 #ifdef Win32

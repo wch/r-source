@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2004 R Core Team
+### Copyright (C) 1998-2005 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -2686,14 +2686,57 @@ esac
 
 
 ## R_ICONV
-## -------------
+## -------
 ## Look for iconv, possibly in libiconv.
+## Need to include <iconv.h> as this may define iconv as a macro.
+## libiconv, e.g. on MacOS X, has iconv as a macro and needs -liconv.
 AC_DEFUN([R_ICONV],
 [AC_CHECK_HEADERS(iconv.h)
-if test "${ac_cv_header_iconv_h}" = yes; then
-  ## libiconv, e.g. in MacOS X, has iconv as a macro and needs -liconv.
-  AC_CHECK_DECLS([iconv, iconvlist], , , [#include <iconv.h>])
-  AC_CHECK_LIB(iconv, libiconv)
+## need to ignore cache for this as it may set LIBS
+unset ac_cv_func_iconv
+AC_CACHE_CHECK(for iconv, ac_cv_func_iconv, [
+  ac_cv_func_iconv="no"
+  AC_TRY_LINK([#include <stdlib.h>
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif],
+      [iconv_t cd = iconv_open("","");
+       iconv(cd,NULL,NULL,NULL,NULL);
+       iconv_close(cd);],
+      ac_cv_func_iconv=yes)
+  if test "$ac_cv_func_iconv" != yes; then
+    r_save_LIBS="$LIBS"
+    LIBS="$LIBS -liconv"
+    AC_TRY_LINK([#include <stdlib.h>
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif],
+        [iconv_t cd = iconv_open("","");
+         iconv(cd,NULL,NULL,NULL,NULL);
+         iconv_close(cd);],
+        ac_cv_func_iconv="in libiconv")
+      if test "ac_cv_func_iconv" = no; then 
+        LIBS="$r_save_LIBS"
+      fi
+  fi
+])
+if test "$ac_cv_func_iconv" != no; then
+  AC_DEFINE(HAVE_ICONV, 1, [Define if you have the `iconv' function.])
+fi
+## if the iconv we are using was in libiconv we have already included -liconv
+AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [
+  ac_cv_func_iconvlist="no"
+  AC_TRY_LINK([#include <stdlib.h>
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif
+static int count_one (unsigned int namescount, char * *names, void *data) 
+{return 0;}],
+    [iconvlist(count_one, NULL);],
+      ac_cv_func_iconvlist=yes)
+   ])
+if test "$ac_cv_func_iconvlist" = yes; then
+  AC_DEFINE(HAVE_ICONVLIST, 1, [Define if you have the `iconvlist' function.])
 fi
 ])# R_ICONV
 
