@@ -2969,11 +2969,19 @@ void GPretty(double *lo, double *up, int *ndiv)
 	if(fabs((U =10*base)-cell) < fabs(unit-cell)) unit = U;
 	
 	ns = floor(*lo/unit);
+#ifdef OLD
 	while(ns*unit > *lo *(1- DBL_EPSILON)) ns--;
+#else
+	while(ns*unit >= *lo *(1- DBL_EPSILON)) ns--;
+#endif
 	ns++;
 	
 	nu = ceil(*up/unit);
+#ifdef OLD
 	while(nu*unit < *up *(1+ DBL_EPSILON)) nu++;
+#else
+	while(nu*unit <= *up *(1+ DBL_EPSILON)) nu++;
+#endif
 	nu--;
 	
 	*lo = ns * unit;
