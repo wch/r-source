@@ -196,7 +196,7 @@ void copyMostAttribNoTs(SEXP inp, SEXP ans)
 	    } else {
 		SEXP new_cl;
 		int i, j, l = LENGTH(cl);
-		PROTECT(new_cl = allocVector(l - 1, STRSXP));
+		PROTECT(new_cl = allocVector(STRSXP, l - 1));
 		for (i = 0, j = 0; i < l; i++)
 		    if (strcmp(CHAR(STRING_ELT(cl, i)), "ts"))
 			SET_STRING_ELT(new_cl, j++, STRING_ELT(cl, i));
