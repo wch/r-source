@@ -803,7 +803,7 @@ SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 		s = duplicate(s);
 	    PROTECT(s);
 	    R_Visible = 0;
-	    setVar(CAR(args), s, rho);
+	    setVar(CAR(args), s, ENCLOS(rho));
 	    UNPROTECT(1);
 	    NAMED(s) = 1;
 	    return s;
