@@ -96,7 +96,7 @@ static void formt(int, double *, double *,
 static void freev(int, int *, int *,
 		  int *, int *, int *, int *, int *, int *,
 		  int *, int, int *);
-static void hpsolb(int, double *, int *, int *);
+static void hpsolb(int, double *, int *, int);
 static void lnsrlb(int, double *, double *,
 		   int *, double *, double *, double *, double *,
 		   double *, double *, double *, double *,
@@ -1516,18 +1516,10 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     --wbp;
     --c;
     --p;
-    wt_dim1 = m;
-    wt_offset = 1 + wt_dim1 * 1;
-    wt -= wt_offset;
-    sy_dim1 = m;
-    sy_offset = 1 + sy_dim1 * 1;
-    sy -= sy_offset;
-    ws_dim1 = n;
-    ws_offset = 1 + ws_dim1 * 1;
-    ws -= ws_offset;
-    wy_dim1 = n;
-    wy_offset = 1 + wy_dim1 * 1;
-    wy -= wy_offset;
+    wt_dim1 = m;    wt_offset = 1 + wt_dim1 * 1;    wt -= wt_offset;
+    sy_dim1 = m;    sy_offset = 1 + sy_dim1 * 1;    sy -= sy_offset;
+    ws_dim1 = n;    ws_offset = 1 + ws_dim1 * 1;    ws -= ws_offset;
+    wy_dim1 = n;    wy_offset = 1 + wy_dim1 * 1;    wy -= wy_offset;
 
     /* Function Body */
 
@@ -1688,17 +1680,16 @@ L777:
 	ibp = iorder[ibkmin];
     } else {
 	if (iter == 2) {
-/*	       Replace the already used smallest breakpoint with the */
-/*	       breakpoint numbered nbreak > nlast, before heapsort call. */
+	    /* Replace the already used smallest breakpoint with the */
+	    /* breakpoint numbered nbreak > nlast, before heapsort call. */
 	    if (ibkmin != nbreak) {
 		t[ibkmin] = t[nbreak];
 		iorder[ibkmin] = iorder[nbreak];
 	    }
-/*	  Update heap structure of breakpoints */
-/*	     (if iter=2, initialize heap). */
 	}
-	i__1 = iter - 2;
-	hpsolb(nleft, &t[1], &iorder[1], &i__1);
+	/* Update heap structure of breakpoints */
+	/* (if iter=2, initialize heap). */
+	hpsolb(nleft, &t[1], &iorder[1], iter - 2);
 	tj = t[nleft];
 	ibp = iorder[nleft];
     }
@@ -2512,7 +2503,7 @@ static void freev(int n, int *nfree, int *indx,
 } /* freev */
 /* ======================= The end of freev ============================== */
 
-static void hpsolb(int n, double *t, int *iorder, int *iheap)
+static void hpsolb(int n, double *t, int *iorder, int iheap)
 {
 /*	************
 
@@ -2567,7 +2558,7 @@ static void hpsolb(int n, double *t, int *iorder, int *iheap)
     --t;
 
     /* Function Body */
-    if (*iheap == 0) {
+    if (iheap == 0) {
 /*	  Rearrange the elements t(1) to t(n) to form a heap. */
 	for (k = 2; k <= n; ++k) {
 	    ddum = t[k];
