@@ -445,7 +445,11 @@ static Rconnection newfile(char *description, char *mode)
 #  include <sys/stat.h>
 # else
 #  include <types.h>
-#  include <stat.h>
+#  ifndef __MRC__
+#   include <stat.h>
+#  else
+#   include <mpw_stat.h>
+#  endif
 # endif /* mac */
 #endif
 

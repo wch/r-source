@@ -1202,7 +1202,11 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
    (Stefano M. Iacus) Jago Nov-00
 */
 
-#include <stat.h>
+#  ifndef __MRC__
+#   include <stat.h>
+#  else
+#   include <mpw_stat.h>
+#  endif
 
 SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1349,7 +1353,11 @@ char **CommandLineArgs = NULL;
 
 #ifdef HAVE_STAT
 #include <types.h>
-#include <stat.h>
+#  ifndef __MRC__
+#   include <stat.h>
+#  else
+#   include <mpw_stat.h>
+#  endif
 
 Rboolean R_FileExists(char *path)
 {
