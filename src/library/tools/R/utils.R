@@ -622,7 +622,7 @@ function(expr)
             .Traceback <- get(".Traceback", env = .GlobalEnv)
         else .Traceback <- NULL
         if (is.null(.Traceback) || length(.Traceback) == 0)
-            cat("No traceback available\n")
+            cat(gettext("No traceback available\n"))
         else {
             n <- length(.Traceback)
             for (i in 1:n) {

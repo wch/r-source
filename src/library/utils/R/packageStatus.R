@@ -78,7 +78,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method)
 
 summary.packageStatus <- function(object, ...)
 {
-    cat(gettext("\nInstalled packages:\n"))
+    cat("\nInstalled packages:\n")
     cat(  "-------------------\n")
     for(k in levels(object$inst$LibPath)){
         ok <- (object$inst$LibPath==k)
@@ -91,9 +91,9 @@ summary.packageStatus <- function(object, ...)
                          function(x) sort(as.character(x))))
         }
     }
-    cat(gettext("\n\nAvailable packages:\n"))
+    cat("\n\nAvailable packages:\n")
     cat(    "-------------------\n")
-    cat(gettext("(each package appears only once)\n"))
+    cat("(each package appears only once)\n")
     for(k in levels(object$avail$Repository)){
         cat("\n*** Repository ", k, "\n", sep="")
         ok <- object$avail$Repository==k
@@ -107,10 +107,10 @@ summary.packageStatus <- function(object, ...)
 
 print.packageStatus <- function(x, ...)
 {
-    cat(gettext("Number of installed packages:\n"))
+    cat("Number of installed packages:\n")
     print(table(x$inst$LibPath, x$inst$Status))
 
-    cat(gettext("\nNumber of available packages (each package counted only once):\n"))
+    cat("\nNumber of available packages (each package counted only once):\n")
     print(table(x$avail$Repository, x$avail$Status))
     invisible(x)
 }
@@ -132,7 +132,7 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
     update <- NULL
     old <- which(object$inst$Status == "upgrade")
     if(length(old) == 0) {
-        cat(gettext("Nothing to do!\n"))
+        cat("Nothing to do!\n")
         return(invisible())
     }
 

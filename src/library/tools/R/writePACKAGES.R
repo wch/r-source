@@ -20,7 +20,7 @@ write_PACKAGES <-
         ## many (roughly length(files))
         ## warnings are *expected*, hence suppressed
         op <- options(warn = -1)
-        if(verbose) cat("Processing packages:\n")
+        if(verbose) cat(gettext("Processing packages:\n"))
         if(type == "winBinary") {
             for(i in seq(along = files)) {
                 if(verbose) cat("  ", files[i], "\n", sep ="")
@@ -61,7 +61,7 @@ write_PACKAGES <-
             }
             setwd(cwd)
         }
-        if(verbose) cat("done\n")
+        if(verbose) cat(gettext("done\n"))
         options(op)                  # change warning level back again
         desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
         colnames(desc) <- fields

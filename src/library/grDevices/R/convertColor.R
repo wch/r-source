@@ -49,16 +49,16 @@ make.rgb <-
 }
 
 print.colorConverter <- function(x,...) {
-    cat("Color space converter: ",x$name,"\n")
+    cat(gettext("Color space converter: "), x$name, "\n", sep="")
     if (!is.null(x$reference.white))
-        cat("Reference white: ", x$reference.white,"\n")
+        cat(gettext("Reference white: "), x$reference.white, "\n", sep="")
     invisible(x)
 }
 
 print.RGBcolorConverter <- function(x,...) {
     print.colorConverter(x, ...)
     if (!is.null(x$gamma))
-        cat("display gamma =",x$gamma,"\n")
+        cat(gettext("display gamma"), " = ", x$gamma, "\n", sep="")
     invisible(x)
 }
 

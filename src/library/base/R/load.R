@@ -109,7 +109,7 @@ sys.load.image <- function(name, quiet) {
     if (file.exists(name)) {
         load(name, envir = .GlobalEnv)
         if (! quiet)
-	    cat("[Previously saved workspace restored]\n\n")
+	    cat(gettext("[Previously saved workspace restored]\n\n"))
     }
 }
 

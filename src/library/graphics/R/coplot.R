@@ -328,7 +328,7 @@ coplot <-
 	}
     }
     if (length(missingrows) > 0) {
-	cat("\nMissing rows:", missingrows,"\n")
+	cat("\n", gettext("Missing rows"), ": ",  missingrows, "\n", sep ="")
 	invisible(missingrows)
     }
 }
