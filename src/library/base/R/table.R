@@ -1,10 +1,25 @@
-table <- function (..., exclude = c(NA, NaN), dnn = list.names(...)) {
-    list.names <- function (...) {
+table <- function (..., exclude = c(NA, NaN),
+   dnn = list.names(..., deparse.level = deparse.level), deparse.level = 1) 
+{
+    list.names <- function(..., deparse.level) {
         l <- as.list(substitute(list(...)))[-1]
         nm <- names(l)
-        fixup <- if (is.null(nm)) seq(along=l) else nm==""
-        dep <- sapply(l[fixup], function(x)deparse(x)[1])
-        if (is.null(nm)) dep else {nm[fixup]<-dep ; nm}
+        fixup <- if (is.null(nm)) 
+            seq(along = l)
+        else nm == ""
+        dep <- sapply(l[fixup], function(x) 
+	    switch (deparse.level + 1,
+		"", 
+		if (is.symbol(x)) as.character(x) else "", 
+		deparse(x)[1]
+	    )
+        )
+        if (is.null(nm)) 
+            dep
+        else {
+            nm[fixup] <- dep
+            nm
+        }
     }
     
     args <- list(...)
