@@ -353,8 +353,8 @@ void Rgui_configure()
     setbackground(wconfig, LightGrey);
     l_mdi = newlabel("Single or multiple windows",
 		      rect(10, 10, 150, 20), AlignLeft);
-    rb_mdi = newradiobutton("MDI", rect(150, 10 , 40, 20), cMDI);
-    rb_sdi = newradiobutton("SDI", rect(200, 10 , 40, 20), cSDI);
+    rb_mdi = newradiobutton("MDI", rect(150, 10 , 70, 20), cMDI);
+    rb_sdi = newradiobutton("SDI", rect(220, 10 , 70, 20), cSDI);
     
 
     toolbar = newcheckbox("MDI toolbar", rect(300, 10, 100, 20), NULL);
@@ -369,8 +369,8 @@ void Rgui_configure()
 
     l_mwin = newlabel("Pager style", rect(10, 50, 90, 20), AlignLeft);
     newradiogroup();
-    rb_mwin = newradiobutton("multiple windows", rect(100, 50, 100, 20), NULL);
-    rb_swin = newradiobutton("single window", rect(220, 50 , 100, 20), NULL);
+    rb_mwin = newradiobutton("multiple windows", rect(150, 50, 150, 20), NULL);
+    rb_swin = newradiobutton("single window", rect(320, 50 , 100, 20), NULL);
     if(pagerMultiple) check(rb_mwin); else check(rb_swin);
 
 /* Font, pointsize, style */
@@ -378,7 +378,7 @@ void Rgui_configure()
     l_font = newlabel("Font", rect(10, 100, 40, 20), AlignLeft);
     
     f_font = newdropfield(FontsList, rect(60, 100, 120, 20), NULL);
-    tt_font = newcheckbox("TrueType only", rect(190, 100, 100, 20), NULL);
+    tt_font = newcheckbox("TrueType only", rect(190, 100, 110, 20), NULL);
     {
 	char *pf;
 	if ((strlen(fontname) > 1) && 
