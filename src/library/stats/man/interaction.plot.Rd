@@ -7,7 +7,7 @@
 }
 \usage{
 interaction.plot(x.factor, trace.factor, response, fun = mean,
-                 type = c("l", "p"), legend = TRUE,
+                 type = c("l", "p", "b"), legend = TRUE,
                  trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
                  xlab = deparse(substitute(x.factor)), ylab = ylabel,
                  ylim = range(cells, na.rm=TRUE),
@@ -72,6 +72,7 @@ attach(ToothGrowth)
 interaction.plot(dose, supp, len, fixed=TRUE)
 dose <- ordered(dose)
 interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
+interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p")
 detach()
 
 with(OrchardSprays, {
@@ -86,6 +87,15 @@ with(esoph, {
   interaction.plot(agegp, alcgp, ncases/ncontrols)
   interaction.plot(agegp, tobgp, ncases/ncontrols, trace.label="tobacco",
 		   fixed=TRUE, xaxt = "n")
+  ## deal with NAs:
+  esoph[66,] # second to last age group: 65-74
+  ncases[66] <- NA
+  interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5)
+				# doesn't show *last* group either
+  interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5, type = "b")
+  ## alternative take non-NA's  {"cheating"}
+  interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5,
+                   fun = function(x) mean(x,na.rm=TRUE))
 })
 }
 \keyword{hplot}

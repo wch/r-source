@@ -1,6 +1,6 @@
 interaction.plot <-
     function(x.factor, trace.factor, response, fun=mean,
-             type = c("l", "p"), legend = TRUE,
+             type = c("l", "p", "b"), legend = TRUE,
              trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
              xlab = deparse(substitute(x.factor)), ylab = ylabel,
              ylim = range(cells, na.rm=TRUE),
@@ -56,12 +56,11 @@ interaction.plot <-
             col <- col[1 + (ord - 1) %% length(col)]
             pch <- pch[ord]
         }
-        if(type == "l")
-            legend(xleg, yleg, legend = ylabs, col = col, lty = lty,
-                   bty = leg.bty, bg = leg.bg)
-        else
-            legend(xleg, yleg, legend = ylabs, col = col, pch = pch,
-                   bty = leg.bty, bg = leg.bg)
+
+        legend(xleg, yleg, legend = ylabs, col = col,
+               pch = if(type %in% c("p","b")) pch,# NULL works
+               lty = if(type %in% c("l","b")) lty,# NULL works
+               bty = leg.bty, bg = leg.bg)
     }
     invisible()
 }

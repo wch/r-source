@@ -22,7 +22,7 @@ USER-VISIBLE CHANGES
 	latter is probably unimportant of itself, but reduces
 	commensurately the time spent in garbage collection.
 
-	Packages are by default installed using lazy loading if they 
+	Packages are by default installed using lazy loading if they
 	have more than 50kB of R code and did not use a saved image.
 	This can be overridden by INSTALL --[no-]lazy or via a field
 	in the DESCRIPTION file.  Note that as with --save, any other
@@ -129,6 +129,8 @@ NEW FEATURES
     o	heatmap() has a new argument 'reorderfun'.
 
     o	interaction() has new argument 'sep'.
+
+    o	interaction.plot() allows 'type = "b"'.
 
     o	New functions is.leaf(), dendrapply() and a labels() method for
 	dendrogram objects.
