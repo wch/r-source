@@ -64,7 +64,8 @@ function(package, dir, lib.loc = NULL)
                                   .read_Rd_lines_quietly(f),
                                   value = TRUE))
             }
-            all_doc_topics <- gsub("\\\\alias{(.*)}.*", "\\1", aliases)
+            all_doc_topics <-
+                gsub("\\\\alias\\{(.*)\\}.*", "\\1", aliases)
             all_doc_topics <- gsub("\\\\%", "%", all_doc_topics)
             all_doc_topics <- gsub(" ", "", all_doc_topics)
             all_doc_topics <- sort(unique(all_doc_topics))

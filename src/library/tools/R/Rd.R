@@ -517,12 +517,12 @@ function(txt, type, predefined = TRUE)
                 ## \alias entries seem to be special (Paren.Rd).
                 ## The regexp below feels wrong, but is based on what is
                 ## used in Perl's R::Rdlists::build_index(), sort of.
-                pos <- regexpr("{([^\n]*)}(\n|$)", txt)
+                pos <- regexpr("\\{([^\n]*)\\}(\n|$)", txt)
             }
             if(pos == -1)
                 stop(paste("unterminated section", sQuote(type)))
             else {
-                out <- c(out, sub("{([^\n]*)}(\n|$).*", "\\1", txt))
+                out <- c(out, sub("\\{([^\n]*)\\}(\n|$).*", "\\1", txt))
                 txt <- substring(txt, pos + attr(pos, "match.length"))
                 next
             }
