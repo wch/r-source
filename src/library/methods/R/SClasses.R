@@ -346,10 +346,12 @@ validObject <- function(object, test = FALSE) {
     i <- i+1
     if(is.function(testFun) && !is(object, superClass))
       next ## skip conditional relations that don't hold for this object
-    validityMethod <- getClassDef(superClass, where)@validity
-    if(is(validityMethod, "function"))
-      errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
-    
+    superDef <- getClassDef(superClass, where)
+    if(is(superDef, "classRepresentation")) {
+        validityMethod <- superDef@validity
+        if(is(validityMethod, "function"))
+            errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
+    }
   }
   validityMethod <- classDef@validity
   if(length(errors) == 0 && is(validityMethod, "function")) {
