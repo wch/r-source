@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-58, 2001-05-21
+Version 1.2-59, 2001-05-23
 Kurt Hornik
 
 
@@ -157,7 +157,7 @@ and a `$' for the shell prompt (where applicable).
 Features specific to the Windows and Mac OS ports of R are described in the
 "R for Windows FAQ" (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) and "R
 for Macintosh FAQ/DOC" (http://www.eco-dip.unimi.it/R/rmac-FAQ.html).  If
-you have information on Windows or Mac systems that you think should be
+you have information on Mac or Windows systems that you think should be
 added to this document, please let me know.
 
 2 R Basics
@@ -546,19 +546,20 @@ comments and reports.
 which carry identical material, consisting of the R distribution(s), the
 contributed extensions, documentation for R, and binaries.
 
-   The CRAN master site can be found at the URL
+   The CRAN master site at TU Wien, Austria, can be found at the URL
 
-     `http://cran.r-project.org/'     (Austria)
+     `http://cran.r-project.org/'
 
-(which is the same as `http://cran.at.r-project.org/') and is currently
-being mirrored daily at
+and is currently being mirrored daily at
 
-     `http://cran.dk.r-project.org/'  (Denmark)
-     `http://cran.hu.r-project.org/'  (Hungary)
-     `http://cran.it.r-project.org/'  (Italy)
-     `http://cran.ch.r-project.org/'  (Switzerland)
-     `http://cran.uk.r-project.org/'  (United Kingdom)
-     `http://cran.us.r-project.org/'  (USA/Wisconsin)
+     `http://cran.at.r-project.org/'(TU Wien, Austria)
+     `http://cran.au.r-project.org/'(PlanetMirror, Australia)
+     `http://cran.ch.r-project.org/'(ETH Zu"rich, Switzerland)
+     `http://cran.dk.r-project.org/'(SunSITE, Denmark)
+     `http://cran.hu.r-project.org/'(Semmelweis U, Hungary)
+     `http://cran.uk.r-project.org/'(U of Bristol, United
+                                  Kingdom)
+     `http://cran.us.r-project.org/'(U of Wisconsin, USA)
 
 Please use the CRAN site closest to you to reduce network load.
 
