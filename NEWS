@@ -42,6 +42,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   (a real oldie - and trival too) is.recursive now TRUE for
+    	expressions 
+
     o   sanitised delete.response
 
     o   x[["a",]] could crash R
