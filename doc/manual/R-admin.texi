@@ -1190,7 +1190,7 @@ Some care is needed to ensure that libraries found by
 the testing process will not detect many of the possible problems.  For
 32-bit builds under @command{cc} the flag @option{-dalign} is needed for
 some of the Sun libraries: fortunately the equivalent flag for
-@command{gcc}, @option{-munaligned-doubles}, is the default.  In theory,
+@command{gcc}, @option{-mno-unaligned-doubles}, is the default.  In theory,
 libraries such as @code{libpng}, @code{libjpeg}, @code{zlib} and the
 ATLAS libraries need to be built with a @code{pic} or @code{PIC} flag,
 which could be a problem if static libraries are used.  In practice this
