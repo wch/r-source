@@ -397,7 +397,7 @@ bitmap createbitmap(int width, int height, int depth, unsigned char *data)
 	return obj;
 }
 
-void getbitmapdata2(bitmap obj, unsigned char **data, int *row_bytes)
+void getbitmapdata2(bitmap obj, unsigned char **data)
 {
 	rect r = obj->rect;
 	int depth = 32, size, ret;
@@ -411,12 +411,11 @@ void getbitmapdata2(bitmap obj, unsigned char **data, int *row_bytes)
 	bmi.bmiHeader.biCompression = BI_RGB;
 	bmi.bmiHeader.biClrUsed = 0;
 
-	*row_bytes = ((depth * r.width) + 7) / 8;
-	size = *row_bytes * r.height;
+	size = 4 * r.width * r.height;
 	*data = (unsigned char *) malloc(size);
 	if(*data) {
 	    ret = GetDIBits(get_context(obj), (HBITMAP)obj->handle, 
-			    1, r.height, (LPSTR)*data, &bmi, DIB_RGB_COLORS);
+			    0, r.height, (LPSTR)*data, &bmi, DIB_RGB_COLORS);
 	    if(!ret) {
 		free(*data);
 		*data = NULL;
