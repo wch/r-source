@@ -9,6 +9,7 @@
 &     p1ip(ld4,nk),p2ip(ldnk,nk)
       double precisiont1,t2,ratio, a,b,c,d,e,eps,xm,p,q,r,tol1,tol2,u,v,
 &     w, fu,fv,fw,fx,x,ax,bx
+      common /XXXsbart/q
       integer i
       i=1
 23000 if(.not.(i.le.n))goto 23002
@@ -81,8 +82,6 @@ c      eps = sqrt(eps)
       q = abs(q)
       r = e
       e = d
-c  stupid line by KH but currently needed for g77 -O2?
-      call dummy(q)
 c
 c  is parabola acceptable
 c
@@ -162,10 +161,5 @@ c
       crit = fx
       return
 23012 continue
-      return
-      end
-
-      subroutine dummy(q)
-      double precision q
       return
       end
