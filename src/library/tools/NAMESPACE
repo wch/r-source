@@ -15,8 +15,8 @@ export(.installPackageDescription, .installPackageIndices,
 ## when Sweave objects are in place
 export(pkgVignettes, RtangleWritedoc, RweaveLatexOptions)
 
-## these seem to need to be exported
-exportPattern("^print")
+## once upon a time these seem to need to be exported
+## exportPattern("^print")
 
 S3method(print, checkDemoIndex)
 S3method(print, checkDocArgs)
