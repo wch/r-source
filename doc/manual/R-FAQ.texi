@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-16, 2002-07-21
+@set FAQ-VERSION 1.5-17, 2002-07-30
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1478,6 +1478,9 @@ Functions for generating and manipulating generalised binned kernel
 density estimates.
 @item GeneSOM
 Clustering genes using Self-Organizing Maps (SOMs).
+@item ISwR
+Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
+2002, Springer.
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
