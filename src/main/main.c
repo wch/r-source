@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998-1999	    The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#define __MAIN__
 #include "Defn.h"
 #include "Graphics.h"
 #include "IOStuff.h"
@@ -26,124 +28,13 @@
 /* The `real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
 
-/* Global Variables:  For convenience all interpeter */
-/* global symbols are declared here.  This does not */
-/* include user interface symbols which are included */
-/* in separate platform dependent modules. */
+/* Global Variables:  For convenience, all interpeter global symbols
+ * ================   are declared in Defn.h as extern -- and defined here.
+ *
+ * This does not include user interface symbols which are included
+ * in separate platform dependent modules. 
+ */
 
-
-/* The R Home Directory */
-
-char*	R_Home;			    /* The Root of the R Tree */
-
-/* Memory Management */
-
-int	R_NSize = R_NSIZE;	    /* Size of cons cell heap */
-int	R_VSize = R_VSIZE;	    /* Size of the vector heap */
-SEXP	R_NHeap;		    /* Start of the cons cell heap */
-SEXP	R_FreeSEXP;		    /* Cons cell free list */
-VECREC*	R_VHeap;		    /* Base of the vector heap */
-VECREC*	R_VTop;			    /* Current top of the vector heap */
-VECREC*	R_VMax;			    /* bottom of R_alloc'ed heap */
-long	R_Collected;		    /* Number of free cons cells (after gc) */
-
-
-/* The Pointer Protection Stack */
-
-int	R_PPStackSize = R_PPSSIZE;  /* The stack size (elements) */
-int	R_PPStackTop;		    /* The top of the stack */
-SEXP*	R_PPStack;		    /* The pointer protection stack */
-
-
-/* Evaluation Environment */
-
-SEXP	R_Call;			    /* The current call */
-SEXP	R_GlobalEnv;		    /* The "global" environment */
-SEXP	R_CurrentExpr;		    /* Currently evaluating expression */
-SEXP	R_ReturnedValue;	    /* Slot for return-ing values */
-SEXP*	R_SymbolTable;		    /* The symbol table */
-RCNTXT	R_Toplevel;		    /* Storage for the toplevel environment */
-RCNTXT*	R_ToplevelContext;	    /* The toplevel environment */
-RCNTXT*	R_GlobalContext;	    /* The global environment */
-int	R_Visible;		    /* Value visibility flag */
-int	R_EvalDepth = 0;	    /* Evaluation recursion depth */
-int	R_EvalCount = 0;	    /* Evaluation count */
-
-
-/* File Input/Output */
-
-int	R_Interactive = 1;	    /* Interactive? */
-int	R_Quiet = 0;		    /* Be quiet */
-int	R_Slave = 0;		    /* Run as a slave process */
-int	R_Verbose = 0;		    /* Be verbose */
-int	R_Console;		    /* Console active flag */
-IoBuffer R_ConsoleIob;		    /* Console IO Buffer */
-FILE*	R_Inputfile = NULL;	    /* Current input flag */
-FILE*	R_Consolefile = NULL;	    /* Console output file */
-FILE*	R_Outputfile = NULL;	    /* Output file */
-FILE*	R_Sinkfile = NULL;	    /* Sink file */
-
-
-/* Objects Used In Parsing  */
-
-SEXP	R_CommentSxp;		    /* Comments accumulate here */
-SEXP	R_ParseText;		    /* Text to be parsed */
-int	R_ParseCnt;		    /* Count of lines of text to be parsed */
-int	R_ParseError = 0;	    /* Line where parse error occured */
-
-
-/* Special Values */
-
-SEXP	R_NilValue;		    /* The nil object */
-SEXP	R_UnboundValue;		    /* Unbound marker */
-SEXP	R_MissingArg;		    /* Missing argument marker */
-
-
-/* Symbol Table Shortcuts */
-
-SEXP	R_Bracket2Symbol;	    /* "[[" */
-SEXP	R_BracketSymbol;	    /* "[" */
-SEXP	R_ClassSymbol;		    /* "class" */
-SEXP	R_DimNamesSymbol;	    /* "dimnames" */
-SEXP	R_DimSymbol;		    /* "dim" */
-SEXP	R_DollarSymbol;		    /* "$" */
-SEXP	R_DotsSymbol;		    /* "..." */
-SEXP	R_DropSymbol;		    /* "drop" */
-SEXP	R_LevelsSymbol;		    /* "levels" */
-SEXP	R_ModeSymbol;		    /* "mode" */
-SEXP	R_NamesSymbol;		    /* "names" */
-SEXP	R_NaRmSymbol;		    /* "na.rm" */
-SEXP	R_RowNamesSymbol;	    /* "row.names" */
-SEXP	R_SeedsSymbol;		    /* ".Random.seed" */
-SEXP	R_LastvalueSymbol;	    /* ".Last.value" */
-SEXP	R_TspSymbol;		    /* "tsp" */
-SEXP	R_CommentSymbol;	    /* "comment" */
-
-
-/* Arithmetic Values */
-
-double	R_tmp;			    /* Temporary Value */
-double	R_NaN;			    /* NaN or -DBL_MAX */
-double	R_PosInf;		    /* IEEE Inf or DBL_MAX */
-double	R_NegInf;		    /* IEEE -Inf or -DBL_MAX */
-int	R_NaInt;		    /* NA_INTEGER */
-double	R_NaReal;		    /* NA_REAL */
-SEXP	R_NaString;		    /* NA_STRING */
-SEXP	R_BlankString;		    /* "" as a CHARSXP */
-
-
-/* Image Dump/Restore */
-
-char	R_ImageName[256];	    /* Default image name */
-int	R_Unnamed = 1;		    /* Use default name? */
-int	R_DirtyImage = 0;	    /* Current image dirty */
-int	R_Init = 0;		    /* Do we have an image loaded */
-
-/* Error/Warning Globals */
-/* perhaps these can be stuck into a context?? */
-
-int    R_CollectWarnings = 0;       /* Collect warnings into one spot */
-SEXP   R_Warnings;                  /* The warnings */
 
 static int ParseBrowser(SEXP, SEXP);
 
@@ -492,8 +383,6 @@ void mainloop(void)
     R_CleanUp(1);	/* query save */
 }
 
-int R_BrowseLevel = 0;
-
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
     int rval=0;
@@ -581,3 +470,4 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_BrowseLevel--;
     return R_ReturnedValue;
 }
+#undef __MAIN__

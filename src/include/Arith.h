@@ -46,12 +46,19 @@
 # endif
 #endif
 
-extern double	R_tmp;		/* Used in NaN/Inf checks */
+
+#ifdef __MAIN__
+#define extern
+#endif
+extern double	R_tmp;		/*  Temporary Value used in NaN/Inf checks */
 extern double	R_NaN;		/* IEEE NaN or -DBL_MAX */
 extern double	R_PosInf;	/* IEEE Inf or DBL_MAX */
 extern double	R_NegInf;	/* IEEE -Inf or -DBL_MAX */
 extern int	R_NaInt;	/* NA_INTEGER etc */
 extern double	R_NaReal;	/* NA_REAL */
+#ifdef __MAIN__
+#undef extern
+#endif
 
 #define NA_LOGICAL	R_NaInt
 #define NA_INTEGER	R_NaInt

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -339,6 +340,20 @@ enum {
 
 /*--- Global Variables ---------------------------------------------------- */
 
+/* Defined and initialized in names.c (not main.c) :*/
+#ifndef __R_Names__
+extern 
+#endif
+FUNTAB	R_FunTab[];	    /* Built in functions */
+
+
+#ifdef __MAIN__
+#define extern
+#define INI_as(v) = v
+#else
+#define INI_as(v)
+#endif
+
 extern int	errno;
 extern int	gc_inhibit_torture;
 
@@ -346,8 +361,8 @@ extern int	gc_inhibit_torture;
 extern char*	R_Home;		    /* Root of the R tree */
 
 /* Memory Management */
-extern int	R_NSize;	    /* Size of cons cell heap */
-extern int	R_VSize;	    /* Size of the vector heap */
+extern int	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
+extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern VECREC*	R_VHeap;	    /* Base of the vector heap */
@@ -356,7 +371,7 @@ extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
 
 /* The Pointer Protection Stack */
-extern int	R_PPStackSize;	    /* The stack size (elements) */
+extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
 extern int	R_PPStackTop;	    /* The top of the stack */
 extern SEXP*	R_PPStack;	    /* The pointer protection stack */
 
@@ -370,27 +385,27 @@ extern RCNTXT	R_Toplevel;	    /* Storage for the toplevel environment */
 extern RCNTXT*	R_ToplevelContext;  /* The toplevel environment */
 extern RCNTXT*	R_GlobalContext;    /* The global environment */
 extern int	R_Visible;	    /* Value visibility flag */
-extern int	R_EvalDepth;	    /* Evaluation recursion depth */
-extern int	R_EvalCount;	    /* Evaluation count */
-extern FUNTAB	R_FunTab[];	    /* Built in functions */
-extern int	R_BrowseLevel;	    /* how deep the browser is */
+extern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
+extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
+extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 /* File Input/Output */
-extern int	R_Interactive;	    /* Non-zero during interactive use */
-extern int	R_Quiet;	    /* Be as quiet as possible */
-extern int	R_Slave;	    /* Run as a slave process */
-extern int	R_Verbose;	    /* Be verbose */
+extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */
+extern int	R_Quiet		INI_as(0);	/* Be as quiet as possible */
+extern int	R_Slave		INI_as(0);	/* Run as a slave process */
+extern int	R_Verbose	INI_as(0);	/* Be verbose */
 /* extern int	R_Console; */	    /* Console active flag */
-extern FILE*	R_Inputfile;	    /* Current input flag */
-extern FILE*	R_Consolefile;	    /* Console output file */
-extern FILE*	R_Outputfile;	    /* Output file */
-extern FILE*	R_Sinkfile;	    /* Sink file */
+/* IoBuffer R_ConsoleIob; : --> ./IOStuff.h */
+extern FILE*	R_Inputfile	INI_as(NULL);	/* Current input flag */
+extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
+extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
+extern FILE*	R_Sinkfile	INI_as(NULL);	/* Sink file */
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
 extern SEXP	R_ParseText;	    /* Text to be parsed */
 extern int	R_ParseCnt;	    /* Count of lines of text to be parsed */
-extern int	R_ParseError;	    /* Line where parse error occured */
+extern int	R_ParseError	INI_as(0); /* Line where parse error occured */
 
 /* Special Values */
 extern SEXP	R_NilValue;	    /* The nil object */
@@ -416,20 +431,26 @@ extern SEXP	R_TspSymbol;	    /* "tsp" */
 extern SEXP	R_LastvalueSymbol;  /* ".Last.value" */
 extern SEXP	R_CommentSymbol;    /* "comment" */
 
-/* Missing Values - others from Arith.h */
+/* Missing & Arithmetic Values - others in Arith.h */
 extern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
 extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
 /* Image Dump/Restore */
 extern char	R_ImageName[256];   /* Default image name */
-extern int	R_Unnamed;	    /* Use default name? */
-extern int	R_DirtyImage;	    /* Current image dirty */
-extern int	R_Init;		    /* Do we have an image loaded */
-extern FILE*	R_FileRef;	    /* the environment file pointer  */
+extern int	R_Unnamed	INI_as(1);	/* Use default name? */
+extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
+extern int	R_Init		INI_as(0);	/* Do we have an image loaded */
+/* extern FILE*	R_FileRef;	    the environment file pointer  */
 
 /* Warnings/Errors */
-extern int      R_CollectWarnings;  /* the number of warnings */
-extern SEXP     R_Warnings;         /* the warnings and their calls */
+extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
+extern SEXP	R_Warnings;	    /* the warnings and their calls */
+
+#ifdef __MAIN__
+#undef extern
+#endif
+#undef INI_as
+
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
@@ -604,6 +625,7 @@ int isSymbol(SEXP);
 int isTs(SEXP);
 int isUnordered(SEXP);
 int isUserBinop(SEXP);
+int isValidName(char *);
 int isVector(SEXP);
 int isVectorizable(SEXP);
 int isVectorList(SEXP);

@@ -19,6 +19,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#define __R_Names__
 #include "Defn.h"
 #include "Print.h"
 #include "names.h"
@@ -827,3 +828,4 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return (args);
 }
+#undef __R_Names__

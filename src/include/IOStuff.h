@@ -49,12 +49,17 @@ typedef struct IoBuffer {
 
 typedef struct TextBuffer {
 	char	*vmax;				/* Memory stack top */
-	unsigned char	*buf;				/* Line buffer */
-	unsigned char	*bufp;				/* Line buffer location */
+	unsigned char	*buf;			/* Line buffer */
+	unsigned char	*bufp;			/* Line buffer location */
 	SEXP	text;				/* String Vector */
 	int	ntext;				/* Vector length */
 	int	offset;				/* Offset within vector */
 } TextBuffer;
+
+#ifndef __MAIN__
+extern
+#endif
+IoBuffer R_ConsoleIob;	    			/* Console IO Buffer */
 
 /*- some of these really could be void */
 int R_IoBufferInit(IoBuffer*);
