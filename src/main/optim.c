@@ -981,6 +981,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
     iwa = (int *) R_alloc(3*n, sizeof(int));
     strcpy(task, "START");
     while(1) {
+	/* Main workhorse setulb() from ../appl/lbfgsb.c : */
 	setulb(n, m, x, l, u, nbd, &f, g, factr, &pgtol, wa, iwa, task,
 	       tr, lsave, isave, dsave);
 /*	Rprintf("in lbfgsb - %s\n", task);*/
