@@ -13,13 +13,17 @@ NEW FEATURES
 
     o	The Macintosh port becomes a full member of the R family and its
 	sources are incorporated as from this release.	
-	See src/macintosh/INSTALL for how that port is built.
+	See `src/macintosh/INSTALL' for how that port is built.
 	This is bound to be modified for future versions, and suggestions
 	and volunteers are very welcome.
 
-    o	The API header files and export files R.exp  are released under
+    o	The API header files and export files `R.exp' are released under
 	LGPL rather than GPL to allow dynamical loaded code to be
 	distributed under licences other than GPL.
+
+    o	Configure now uses a much expanded search list for finding a
+	FORTRAN 77 compiler, and no longer disallows wrapper scripts for
+	this compiler.
 
 
 BUG FIXES
