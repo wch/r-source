@@ -25638,6 +25638,10 @@ if test -n "${warn_browser}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_browser}" >&5
 echo "$as_me: WARNING: ${warn_browser}" >&2;}
 fi
+if test -n "${warn_pdfviewer}"; then
+  { echo "$as_me:$LINENO: WARNING: ${warn_pdfviewer}" >&5
+echo "$as_me: WARNING: ${warn_pdfviewer}" >&2;}
+fi
 
 ### Local variables: ***
 ### mode: outline-minor ***
