@@ -13,21 +13,32 @@
   An object with the following attributes:
   \item{factors}{A matrix of variables by terms showing which variables
     appear in which terms.}
-  \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
-    indicating that an intercept is to be fit.}
-  \item{order}{An integer specifying the order (highest number of
-    interactions) in the model.}
-  \item{response} {The index of the variable (in variables) of the
-  response (the left hand side of the formula).}
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model.}
   \item{variables}{A list of the variables in the model}
+  \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
+    indicating that an intercept is to be fit.}
+  \item{order}{A vector of the same length as \code{term.labels}
+      indicating the order of interaction for each term }
+  \item{response} {The index of the variable (in variables) of the
+      response (the left hand side of the formula).}
+  \item{offset}{If the model contains \code{\link{offset}} terms there
+      is an \code{offset} attribute indicating which terms are offsets}
+  \item{specials}{If the \code{specials} argument was given to
+      \code{\link{terms.formula}} there is a \code{specials}
+      attribute, a list of vectors indicating the terms that contain
+      these special functions.} 
 }
 \note{
-  These objects are different from those found in S. In particular there
-  is no \code{formula} attribute, instead the object is itself a
-  formula. Thus, the mode of a terms object is different as well.
-\seealso{
+    These objects are different from those found in S. In particular there
+    is no \code{formula} attribute, instead the object is itself a
+    formula. Thus, the mode of a terms object is different as well.
+}
+\note{
+    An example of the \code{specials} argument can be seen in the
+    \code{\link{aov}} function.
+}
+  \seealso{
 \code{\link{terms}}, \code{\link{terms.default}}, \code{\link{formula}}.
 }
 %%--- MM: I would really like instructive examples here...
