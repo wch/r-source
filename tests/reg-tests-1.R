@@ -3245,3 +3245,12 @@ apply(a, 1:2, func1)
 
 # col2rgb must return a matrix for a single colour
 stopifnot(is.matrix(col2rgb("red")))
+
+
+### Subscripting matrices with NA's
+
+AAA<-array(1:6,c(6,1,1))
+idx<-c(1,2,NA,NA,5,6)
+B<-10*(1:6)
+AAA[idx,1,1]<-B
+all.equal(as.vector(AAA),c(10,20,3,4,50,60))

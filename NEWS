@@ -638,6 +638,8 @@ BUG FIXES
     o   Fix some issues with nonsyntactical names in modelling code
         (PR# 7202), relating to backquoting. There are likely more.
 
+    o   Subassignment with arrays and NA indices was broken (half of PR#7210)
+
 
 
 	**************************************************
