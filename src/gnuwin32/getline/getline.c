@@ -348,11 +348,11 @@ gl_getc()
  c = 0; 
  while (!c) {
    a = 0;
-   while(!a) {
+/*   while(!a) {
       PeekConsoleInput(Win32InputStream,&r,1,&a); 
       if (gl_events_hook) 
              gl_events_hook();
-   }
+	     }*/
    ReadConsoleInput(Win32InputStream,&r,1,&a);
    if (!(r.EventType==KEY_EVENT)) break;
    if (r.Event.KeyEvent.bKeyDown) {
