@@ -868,7 +868,7 @@ R> cube(2)
 @end example
 
 @c The following more `realistic' example illustrating the differences in
-@c scoping is due to @email{thomas@@biostat.washington.edu, Thomas Lumley}.
+@c scoping is due to @email{tlumley@@u.washington.edu, Thomas Lumley}.
 @c The function
 
 @c @example
