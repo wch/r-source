@@ -75,6 +75,6 @@ install: all
 	for f in include/*.h; \
 		do $(INSTALL_DATA) $$f $(rhome)/include; done
 	@echo "Installing library ..."
-	cd library; tar c [a-z]* | (cd $(rhome)/library; tar x)
+	cd library; tar cf - [a-z]* | (cd $(rhome)/library; tar xf -)
 	$(INSTALL_DATA) library/LibIndex $(rhome)/library
 
