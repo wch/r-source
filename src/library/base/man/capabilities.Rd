@@ -37,7 +37,7 @@ capabilities(what = NULL)
       }
     \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
       that this is more correctly known by the international standard
-      IEC 60059.}
+      IEC 60559.}
     \item{bzip2}{Is \code{\link{bzfile}} available?}
     }
 }
