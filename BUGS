@@ -363,15 +363,11 @@ Date: Thu, 29 Nov 2001 14:48:35 -0600
 Subject: The Ultimate Calling Card
 From: "" <send0@ewasher.org>
 Date: Fri, 21 Dec 2001 07:23:49 +0100 (MET)
-* PR# 1225 *
-Subject: "at 0x78003b44 referenced memory at 0x00000000"
-From: jabraham@ucalgary.ca
-Date: Fri, 21 Dec 2001 19:51:33 +0100 (MET)
 * PR# 1226 *
 Subject: problem in predict.mlm
 From: Bob Gray <gray@jimmy.harvard.edu>
 Date: Sun, 23 Dec 2001 09:05:57 -0500
-* PR# 1227 *
-Subject: read.table
-From: possolo@crd.ge.com
-Date: Tue, 25 Dec 2001 22:45:46 +0100 (MET)
+* PR# 1228 *
+Subject: bug with var(rep(1e30, 3))
+From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
+Date: Wed, 26 Dec 2001 13:03:31 +0100
