@@ -8,9 +8,11 @@
 
 BUG FIXES
 
+    o	which(x) failed when x had names and NAs.
+
     o	Typos in NegBinomial.Rd (Negative Binomial distrib), thanks to Ch.Gu.
 
-    o	revsort() misbehaved if n<=1, causing sample(1,1,,1) to 
+    o	revsort() misbehaved if n<=1, causing sample(1,1,,1) to
     	segfault
 
     o	Improved error message from check.options().

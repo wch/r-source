@@ -2,13 +2,11 @@ which <- function(logic, arr.ind = FALSE)
 {
     if(!is.logical(logic))
 	stop("argument to \"which\" is not logical")
-    if(0 == (n <- length(logic)))
-	return(integer(0))
-    wh <- (1:n)[logic & !is.na(logic)]
+    wh <- seq(along=logic)[ll <- logic & !is.na(logic)]
     if ((m <- length(wh)) > 0) {
 	dl <- dim(logic)
 	if (is.null(dl) || !arr.ind) {
-	    names(wh) <- names(logic)[logic]
+	    names(wh) <- names(logic)[ll]
 	}
 	else { ##-- return a matrix  length(wh) x rank
 	    rank <- length(dl)
@@ -16,9 +14,9 @@ which <- function(logic, arr.ind = FALSE)
 	    wh <- 1 + wh1 %% dl[1]
 	    wh <- matrix(wh, nrow = m, ncol = rank,
 			 dimnames =
-                         list(dimnames(logic)[[1]][wh],
-                              if(rank == 2) c("row", "col")# for matrices
-                              else paste("dim", 1:rank, sep="")))
+			 list(dimnames(logic)[[1]][wh],
+			      if(rank == 2) c("row", "col")# for matrices
+			      else paste("dim", 1:rank, sep="")))
 	    if(rank >= 2) {
 		denom <- 1
 		for (i in 2:rank) {
