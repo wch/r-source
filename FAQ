@@ -1,10 +1,11 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.64-14, 1999/07/07
+Version 0.64-15, 1999/07/23
 Kurt Hornik
 
 
 Table of Contents
+*****************
 
 
 1 Introduction
@@ -77,6 +78,8 @@ Table of Contents
 10 Acknowledgments
 
 
+
+
 1 Introduction
 **************
 
@@ -100,8 +103,8 @@ for more details.
 
      `http://www.gnu.org/copyleft/gpl.html'.
 
-You can also obtain it by writing to the Free Software Foundation, Inc.,
-675 Mass Ave, Cambridge, MA 02139, USA.
+You can also obtain it by writing to the Free Software Foundation, Inc., 59
+Temple Place -- Suite 330, Boston, MA 02111-1307, USA.
 
 1.2 Obtaining this document
 ===========================
@@ -153,7 +156,7 @@ certain system functions, and the ability to run programs stored in script
 files.
 
    The design of R has been heavily influenced by two existing languages:
-Becker, Chambers & Wilks' S (*note What is S?::.) and Sussman's Scheme
+Becker, Chambers & Wilks' S (*note What is S?::) and Sussman's Scheme
 (http://www.cs.indiana.edu/scheme-repository/home.html).  Whereas the
 resulting language is very similar in appearance to S, the underlying
 implementation and semantics are derived from Scheme.  *Note What are the
@@ -339,7 +342,7 @@ on R and the R API are currently being written.
 
    In the absence of an R manual, documentation for S/S-PLUS (see *Note R
 and S::) can be used in combination with this FAQ (*note What are the
-differences between R and S?::.).  We recommend
+differences between R and S?::).  We recommend
 
      W. N. Venables and B. D. Ripley (1997), "Modern Applied Statistics with
      S-PLUS.  Second Edition".  Springer, ISBN 0-387-98214-0.
@@ -437,6 +440,7 @@ contributed extensions, documentation for R, and binaries.
 
 and is currently being mirrored daily at
 
+     `http://mirror.aarnet.edu.au/CRAN/'            (Australia)
      `http://SunSITE.auc.dk/R/'                     (Denmark)
      `http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/'(Italy)
      `ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/'      (Japan)
@@ -655,7 +659,7 @@ optimizer supports this (and typically, the builtin ones do not).
 state.  A simple example (taken from Abelson and Sussman) is obtained by
 typing `demo(scoping)' at the R prompt.  Further information is provided in
 the standard R reference "R: A Language for Data Analysis and Graphics"
-(*note What documentation exists for R?::.) and a paper on "Lexical Scope
+(*note What documentation exists for R?::) and a paper on "Lexical Scope
 and Statistical Computing" by Robert Gentleman and Ross Ihaka which can be
 obtained from the `doc/misc' directory of a CRAN site.
 
@@ -916,7 +920,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 
 *Rnotes*
      The data sets for the exercises in Rnotes (*note What documentation
-     exists for R?::.).
+     exists for R?::).
 
 *acepack*
      ace (Alternating Conditional Expectations) and avas (Additivity and
@@ -1412,7 +1416,7 @@ also be used for error recovery through the use of the transcript mode.
    To specify command line arguments for the inferior R process, use `C-u
 M-x R' for starting R.  This prompts you for the arguments; in particular,
 you can increase the memory size this way (*note Why does R run out of
-memory?::.).
+memory?::).
 
 7 R Miscellania
 ***************
@@ -1468,7 +1472,7 @@ memory when reading in a large table.
 This can happen for example when Emacs is used for editing the file and
 `next-line-add-newlines' is set to `nil'.  To avoid the problem, either set
 `require-final-newline' to a non-`nil' value in one of your Emacs startup
-files, or make sure R-mode (*note Is there Emacs support for R?::.) is used
+files, or make sure R-mode (*note Is there Emacs support for R?::) is used
 for editing R source files (which locally ensures this setting).
 
    Earlier R versions had a similar problem when reading in data files, but
@@ -1876,3 +1880,4 @@ Anthony Rossini, and Andreas Weingessel for their comments which helped me
 improve this FAQ.
 
    More to some soon ...
+
