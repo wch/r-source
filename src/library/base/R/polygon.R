@@ -1,4 +1,4 @@
-polygon <- function(x, y=NULL, density = -1, angle = 45, border=par("fg"), ...)
+polygon <- function(x, y=NULL, col=NA, border=NULL, lty=NULL, xpd=NULL, density = -1, angle = 45, ...)
 {
     if (!missing(density))
 	.NotYetUsed("density")
@@ -6,5 +6,5 @@ polygon <- function(x, y=NULL, density = -1, angle = 45, border=par("fg"), ...)
 	.NotYetUsed("angle")
     xy <- xy.coords(x, y)
     ##-- FIXME: what if 'log' is active, for x or y?
-    .Internal(polygon(xy$x, xy$y, border=border, ...))
+    .Internal(polygon(xy$x, xy$y, col, border, lty, xpd, ...))
 }
