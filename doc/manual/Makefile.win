@@ -4,6 +4,7 @@
 
 srcdir = .
 top_srcdir = ../..
+subdir = doc/manual
 
 SOURCES_TEXI = R-FAQ.texi R-exts.texi R-intro.texi
 
@@ -69,7 +70,7 @@ version.tex: ../../bin/rterm.exe $(top_srcdir)/VERSION
 FORCE:
 
 refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
-	@echo " PDF LaTeX documentation: Reference Index ..."
+	@echo " PDF/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
 	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
@@ -88,9 +89,10 @@ R-intro.pdf: R-intro.texi version.texi
 	$(PDFTEX) R-intro.texi
 	$(PDFTEX) R-intro.texi
 
-version.texi: $(top_srcdir)/VERSION
+version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
+	  v="$${v} (`sed 's|/| |g' $(top_srcdir)/date-stamp`)"; \
 	  echo "@set VERSION $${v}" > $@)
 
 
