@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o   If the dimnames of a table are themselves named, then their names
+	are used to label the respective dimensions in tabular output.
+
     o	chisq.test() now optionally computes the p-value by Monte Carlo
 	simulation (in the standard case of a 2-d contigency table).
 
