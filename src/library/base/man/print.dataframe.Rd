@@ -2,10 +2,7 @@
 \title{Printing Data Frames}
 \alias{print.data.frame}
 \description{
-  These functions create or manipulate data frames, tightly coupled
-  collections of variables which share many of the properties of
-  matrices and of lists, used as the fundamental data structure by most
-  of \R's modeling software.
+  Print a data frame.
 }
 \usage{
 \method{print}{data.frame}(x, \dots, digits = NULL, quote = FALSE, right = TRUE)
@@ -14,15 +11,18 @@
   \item{x}{object of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
   \item{digits}{the minimum number of significant digits to be used.}
-  \item{quote}{logical, indicating whether or not strings
-    (\code{\link{character}}s) should be printed with surrounding quotes.}
+  \item{quote}{logical, indicating whether or not entries should be
+    printed with surrounding quotes.}
   \item{right}{logical, indicating whether or not strings should be
     right-aligned. The default is left-alignment.}
 }
-\value{
-  For the \code{\link{print}} method (\code{print.data.frame}), see
-  \code{\link{print.matrix}}.
-}
+\details{
+  This calls \code{\link{format}} which formats the data frame
+  column-by-column, then converts to a character matrix and dispatches
+  to the \code{print} method for matrices.
+
+  When \code{quote = TRUE} only the entries are quoted not the row names
+  nor the column names.
 }
 \seealso{
   \code{\link{data.frame}}.

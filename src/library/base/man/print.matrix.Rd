@@ -1,9 +1,9 @@
 \name{prmatrix}
 \alias{prmatrix}
-\title{Print Matrices}
+\title{Print Matrices, Old-style}
 \usage{
-prmatrix(x, rowlab=character(0), collab=character(0),
-         quote=TRUE, right=FALSE, na.print = NULL, \dots)
+prmatrix(x, rowlab = character(0), collab = character(0),
+         quote = TRUE, right = FALSE, na.print = NULL, \dots)
 }
 \arguments{
   \item{x}{numeric or character matrix.}
@@ -36,7 +36,7 @@ prmatrix(m6 <- diag(6), row = rep("",6), coll=rep("",6))
 
 chm <- matrix(scan(system.file("help", "AnIndex", package = "eda"),
                    what = ""), , 2, byrow = TRUE)
-chm  #-> print.default(.)  = `same' as  print.matrix(chm)
+chm  # uses print.matrix()
 prmatrix(chm, collab = paste("Column",1:3), right=TRUE, quote=FALSE)
 }
 \keyword{print}
