@@ -15,7 +15,6 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
 
 .onLoad <- function(lib, pkg)
 {
-    library.dynam( "grid", pkg, lib )
     ## want eval in C code to see unexported objects
     environment(.GridEvalEnv) <- asNamespace("grid")
     .Call("L_initGrid", .GridEvalEnv, PACKAGE="grid")
