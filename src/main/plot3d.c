@@ -1188,10 +1188,11 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     /* R versions up to incl. 0.61.3, 1998-05-03): */
     atom = DBL_EPSILON * (zmax - zmin);
 #else
-    /* changed to 1e-3, but this caused PR#897 (R 0.62 -- 1.2.2)
+    /* change to 1e-3, reconsidered because of PR#897
      * but 1e-7, and even  2*DBL_EPSILON do not prevent inf.loop in contour().
+     * maybe something like   16 * DBL_EPSILON * (..).
      * see also MAX_ns above */
-    atom = 16 * DBL_EPSILON * (zmax - zmin);
+    atom = 1e-3 * (zmax - zmin);
 #endif
 
     /* Initialize the segment data base */
