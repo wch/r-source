@@ -448,6 +448,9 @@ BUG FIXES
     o	order(na.last = NA, decreasing = TRUE) now sorts in decreasing
 	order.	(PR#1906)
 
+    o	order(na.last=NA) failed if all args were of length 1 or all
+	were NA. (PR#1913, 1981)
+
     o	source() would crash if the `keep.source = TRUE' and the input
 	contained a function with a line longer than 1024 chars. (PR#1900)
 
@@ -458,8 +461,6 @@ BUG FIXES
 
     o	lqs() and cov.rob() check that the quantile argument does not
 	exceed n-1.
-
-    o	order(na.last=NA) failed if all args were of length 1. (PR#1913)
 
     o	grid() now also works with log coordinates active.
 

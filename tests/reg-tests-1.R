@@ -887,14 +887,15 @@ d > list(5)
 ## failed in 1.5.1
 
 
-## order(na.last = NA) (PR#1913 / 1906)
+## order(na.last = NA) (PR#1913 / 1906 / 1981)
 x <- 1
 order(x, na.last=NA)
 order(x, x, x, na.last=NA)
 ## failed in 1.5.1, since sapply simplified to a scalar.
-order(c(1,2,3,NA), na.last=NA, decreasing=TRUE)
+stopifnot(3:1 == order(c(1,2,3,NA), na.last=NA, decreasing=TRUE))
 ## ignored `decreasing' in 1.5.1
-
+order(c(NA, NA), na.last = NA)
+## error in 1.5.1, now integer(0)
 
 ## as.list() coerced logical to integer (PR#1926)
 x <- c(TRUE,FALSE,NA)
