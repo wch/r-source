@@ -59,7 +59,7 @@ library <-
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
 		firstlib(which.lib.loc, package)
 	    }
-            if(!is.null(firstlib <- getOption(".First")[[package]]))
+            if(!is.null(firstlib <- getOption(".First.lib")[[package]]))
                 firstlib(which.lib.loc, package)
 	    if (warn.conflicts &&
 		!exists(".conflicts.OK",  envir = env, inherits = FALSE)) {
