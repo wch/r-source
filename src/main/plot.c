@@ -623,7 +623,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
     int i, n, ne;
     if (!log || axp[2] < 0) { /* ---- linear axis ---- Only use	axp[]  arg. */
 	n = fabs(axp[2]) + 0.25;/* >= 0 */
-	dn = n;
+	dn = imax2(1, n);
 	rng = axp[1] - axp[0];
 	small = fabs(rng)/(100.*dn);
 	at = allocVector(REALSXP, n + 1);
@@ -631,7 +631,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	    REAL(at)[i] = axp[0] + (i / dn) * rng;
 	    if (fabs(REAL(at)[i]) < small)
 		REAL(at)[i] = 0;
-	}
+	}       
     }
     else { /* ------ log axis ----- */
 	n = (axp[2] + 0.5);
@@ -839,7 +839,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* drop  NA, Inf and -Inf values */
     ntmp = 0;
     for(i = 0; i < n; i++) {
-	if(R_FINITE(REAL(at)[i])) ntmp = i;
+	if(R_FINITE(REAL(at)[i])) ntmp = i+1;
     }
     n = ntmp;
     if (n == 0)

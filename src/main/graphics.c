@@ -1928,7 +1928,9 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	GLPretty(&min, &max, &n);
     }
     else GPretty(&min, &max, &n);
-
+    if (fabs(max - min) < fmax2(fabs(max), fabs(min))*100*DBL_EPSILON)
+	error("relative range of values is too small to compute accurately");
+    
     if(swap) {
 	temp = min;
 	min = max;

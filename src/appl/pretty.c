@@ -73,7 +73,8 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 	cell = fmax2(fabs(*lo),fabs(*up));
 	/* U = upper bound on cell/unit */
 	U = 1 + (h5 >= 1.5*h+.5) ? 1/(1+h) : 1.5/(1+h5);
-	i_small = dx < cell * U * imax2(1,*ndiv) *DBL_EPSILON;
+	/* added times 3, as several calculations here */
+	i_small = dx < cell * U * imax2(1,*ndiv) * DBL_EPSILON *3;
     }
 
     /*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
@@ -164,11 +165,11 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
         *lo = ns;
 	*up = nu;
     }
-    return unit;
 #ifdef DEBUGpr
     REprintf("\t ns=%.0f ==> lo=%g\n", ns, *lo);
     REprintf("\t nu=%.0f ==> up=%g  ==> ndiv = %d\n", nu, *up, *ndiv);
 #endif
+    return unit;
 #undef h
 #undef h5
 }

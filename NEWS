@@ -212,6 +212,10 @@ BUG FIXES
 	rug() always clipped x values to the plot region, but now
 	admits to doing so with a warning.
 
+    o	plot() and axis() got in trouble with very small relative
+	ranges: these are now required to be at 100x the machine
+	precision.
+
 
 	**************************************************
 	*						 *
