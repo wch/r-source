@@ -55,7 +55,7 @@ NEW FEATURES
 	?Comparison.
 
     o	deparse(), dput() and dump() have a new 'control' argument to
-    	control the level of detail when deparsing. dump() defaults to 
+    	control the level of detail when deparsing. dump() defaults to
     	the most detail, the others default to less.  See ?deparse
     	for the details.
 
@@ -267,6 +267,11 @@ BUG FIXES
 	open for writing, nor that non-ascii saves cannot be made to a
 	text-mode connection.
 
+    o	phyper() uses a new algorithm based on Morten Welinder's bug
+	report (PR#6772).  This leads to faster code for large arguments
+	and more precise code, e.g. for phyper(59, 150,150, 60,	lower=FALSE).
+	This also fixes bug (PR#7064) about fisher.test().
+
 
 
 
@@ -305,8 +310,8 @@ BUG FIXES
     o	hasArg() used wrong logic to get the parent function. (sys.function()
 	behaves differently from what is documented
 
-    o	prompt(ff) now gives proper \usage{..} for
-	f <- function(x, g = function(u) { x <- u^2 ; sin(x)/x }) { g(x) }
+    o	prompt(f) now gives proper \usage{..} for
+	f <- function(x, g = function(u) { v <- u^2 ; sin(v)/v }) { g(x) }
 
 
 
