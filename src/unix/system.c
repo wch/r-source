@@ -53,6 +53,9 @@
 #endif
 #endif
 
+void fpu_setup(int);     /* in sys-unix.c */
+
+
 static int UsingReadline = 1;
 int SaveAction = SA_SAVEASK;
 int RestoreAction = SA_RESTORE;
@@ -319,14 +322,7 @@ void R_CleanUp(int saveact)
     }
     CleanEd();
     KillAllDevices();
-
-#ifdef __FreeBSD__
-    fpsetmask(~0);
-#endif
-
-#ifdef NEED___SETFPUCW
-    __setfpucw(_FPU_DEFAULT);
-#endif
+    fpu_setup(0);
 
     exit(0);
 }
@@ -410,17 +406,6 @@ int R_ChooseFile(int new, char *buf, int len)
 
 	/*--- Initialization Code ---*/
 
-#ifdef __FreeBSD__
-#ifdef HAVE_FLOATINGPOINT_H
-#include <floatingpoint.h>
-#endif
-#endif
-
-#ifdef linux
-#ifdef HAVE_FPU_CONTROL_H
-#include <fpu_control.h>
-#endif
-#endif
 
 void R_ShowMessage(char *s)
 {
@@ -476,14 +461,6 @@ int main(int ac, char **av)
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
-#ifdef __FreeBSD__
-    fpsetmask(0);
-#endif
-
-#ifdef NEED___SETFPUCW
-    __setfpucw(_FPU_IEEE);
-#endif
-
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
 	R_HistoryFile = ".Rhistory";
     R_HistorySize = 512;
@@ -502,6 +479,8 @@ int main(int ac, char **av)
     }
 #endif
 #endif
+    fpu_setup(1);
+
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;

@@ -32,7 +32,7 @@
 
 #include "devGNOME.h"
 
-#include "../unix/Startup.h"
+#include "Startup.h"
 
 #include "terminal.h"
 #include "gtkconsole.h"
@@ -46,15 +46,9 @@
 #endif
 #endif
 
+void fpu_setup(int);     /* in sys-unix.c */
+
 	/*--- Initialization Code ---*/
-
-#ifdef __FreeBSD__
-#include <floatingpoint.h>
-#endif
-
-#ifdef linux
-#include <fpu_control.h>
-#endif
 
 int UsingReadline = 1;
 int SaveAction = SA_SAVEASK;
@@ -175,6 +169,7 @@ Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor cho
 	break;
     case SA_SUICIDE:
     default:
+	break;
     }
 
     /* unlink all the files we opened for editing */
@@ -187,14 +182,7 @@ Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor cho
 
     /* close all the graphics devices */
     KillAllDevices();
-
-#ifdef __FreeBSD__
-    fpsetmask(~0);
-#endif
-
-#ifdef NEED___SETFPUCW
-    __setfpucw(_FPU_DEFAULT);
-#endif
+    fpu_setup(0);
 
     exit(0);
 }
@@ -273,14 +261,6 @@ int main(int ac, char **av)
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
-#ifdef __FreeBSD__
-    fpsetmask(0);
-#endif
-
-#ifdef NEED___SETFPUCW
-    __setfpucw(_FPU_IEEE);
-#endif
-
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
 	R_HistoryFile = ".Rhistory";
     R_HistorySize = 512;
@@ -297,6 +277,8 @@ int main(int ac, char **av)
 
     /* restore command history */
     gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), R_HistoryFile, R_HistorySize, NULL);
+
+    fpu_setup(1);
 
     /* start main loop */
     mainloop();

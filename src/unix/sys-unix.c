@@ -241,3 +241,40 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return tlist;
     }
 }
+
+/*
+ *  helpers for start-up code
+ */
+
+#ifdef __FreeBSD__
+#ifdef HAVE_FLOATINGPOINT_H
+#include <floatingpoint.h>
+#endif
+#endif
+
+#ifdef linux
+#ifdef HAVE_FPU_CONTROL_H
+#include <fpu_control.h>
+#endif
+#endif
+
+void fpu_setup(int start)
+{
+    if (start) {
+#ifdef __FreeBSD__
+    fpsetmask(0);
+#endif
+
+#ifdef NEED___SETFPUCW
+    __setfpucw(_FPU_IEEE);
+#endif	
+    } else {
+#ifdef __FreeBSD__
+    fpsetmask(~0);
+#endif
+
+#ifdef NEED___SETFPUCW
+    __setfpucw(_FPU_DEFAULT);
+#endif
+    }
+}
