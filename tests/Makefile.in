@@ -78,8 +78,9 @@ FORCE:
 %.Rout : %.R
 	@rm -f $@ $@.fail
 	@echo "running \`$<'"
-	@$(R) < $< > $@.fail
+	@$(R) < $< > $@
 	@if [ -f $(srcdir)/$@.save ] ; then \
+	  mv $@ $@.fail; \
 	  echo @ECHO_N@ \
 	    "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
