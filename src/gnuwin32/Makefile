@@ -207,7 +207,7 @@ srcdist:
 #taken from ../include/makefile.in
 SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
 	 Fortran.h Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h \
-	 Random.h Utils.h Platform.h FFDecl.h FFTab.h globalvar.h
+	 Random.h Rinternals.h Utils.h Platform.h FFDecl.h FFTab.h globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
