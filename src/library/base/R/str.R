@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.9 1999/01/06 15:37:49 pd Exp $
+    ## $Id: str.R,v 1.9.6.1 1999/09/29 22:16:58 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -33,15 +33,15 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 			)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
-    ## -------------------------------------------------------------------------
+    ## ------------------------------------------------------------------------
     ## Arguments: --- see HELP file --
-    ##	 max.level: Maximal level of nesting to be reported (0: as many as nec.)
+    ##	max.level: Maximal level of nesting to be reported (0: as many as nec.)
     ##
-    ## -------------------------------------------------------------------------
+    ## ------------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
-    ## -------------------------------------------------------------------------
-    ## $Id: str.R,v 1.9 1999/01/06 15:37:49 pd Exp $
+    ## ------------------------------------------------------------------------
+    ## $Id: str.R,v 1.9.6.1 1999/09/29 22:16:58 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -52,9 +52,11 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    if(le > 0) paste("[1:", paste(le), "]", sep = "")
 	    else "(0)"
 	} else ""
-    std.attr <- "names"			  #-- Default NON interesting attributes
+    ## NON interesting attributes:
+    std.attr <- "names"
+
     has.class <- !is.null(cl <- class(object))
-    mod <- ""
+    mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
 
     if(is.function(object)) {
@@ -103,7 +105,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		mod <- substr(mode(object), 1, 4)
 		if     (mod == "nume")
 		    mod <- if(is.integer(object))"int" else "num"
-		else if(mod == "char") mod <- "chr"
+		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
 		    di <- dim(object)
@@ -205,7 +207,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		format.fun <- function(x) deparse(as.expression(x))
 		vec.len <- round(.75 * vec.len)
 	    } else if (mod == "name"){
-		object <- paste(object); mod <- 'chr' #-- show "as" char.
+		object <- paste(object)#-- show `as' char
 	    } else if (mod == "argument"){
 		format.fun <- deparse
 	    } else {
@@ -236,12 +238,12 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    format.fun <- format
 	}
 
-	if(mod == 'chr') {
+	if(char.like) {
 	    bracket <- if (le>0) '"' else ""
 	    format.fun <- function(x)x
 	    vec.len <- sum(cumsum(3 + if(le>0) nchar(object) else 0) <
-			   wid - (4 + 5 * nest.lev + nchar(str1)))
-					# 5*nest is 'arbitrary'
+			   wid - (4 + 5*nest.lev + nchar(str1)))
+				##    5*nest  is 'arbitrary'
 	} else {
 	    bracket <- ""
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
@@ -262,10 +264,10 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     if(give.attr) { #possible:	 || has.class && any(cl == 'terms')
 	nam <- names(a)
 	for (i in seq(len=length(a)))
-	    if (all(nam[i] != std.attr)) { #-- only ``non-standard'' attributes:
-		cat(indent.str, paste('- attr(*, "',nam[i],'")=',sep=''),sep="")
+	    if (all(nam[i] != std.attr)) { #-- only `non-standard' attributes:
+		cat(indent.str,paste('- attr(*, "',nam[i],'")=',sep=''),sep="")
 		str(a[[i]],
-		    indent.str = paste(indent.str,".."), nest.lev= nest.lev + 1,
+		    indent.str = paste(indent.str,".."), nest.lev= nest.lev+1,
 		    max.level= max.level, vec.len= vec.len, digits.d= digits.d,
 		    give.attr= give.attr, give.length = give.length, wid = wid)
 	    }
