@@ -131,6 +131,10 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	GInit(&dd->dp);
 	if (!deviceDriverRoutine || 
 	    !(deviceDriverRoutine)(dd, display, width, height, ps, gamma, 
@@ -170,6 +174,10 @@ SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	if (!ptr_GTKDeviceDriver ((DevDesc*)dev, display, width, height, ps)) {
 	    free(dev);
 	    errorcall(call, "unable to start device gtk");
@@ -206,6 +214,10 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	if (!ptr_GnomeDeviceDriver((DevDesc*)dev, display, width, height, ps)){
 	    free(dev);
 	    errorcall(call, "unable to start device gtk");
@@ -296,6 +308,10 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	/* Do this for early redraw attempts */
 	dev->newDevStruct = 1;
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	/* Took out the GInit because MOST of it is setting up
 	 * R base graphics parameters.  
 	 * This is supposed to happen via addDevice now.

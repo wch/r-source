@@ -90,6 +90,10 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dev, display, width, height, ps, 
 			    (Rboolean)recording, resize, canvas, gamma)) {

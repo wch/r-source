@@ -106,6 +106,10 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	if(!PSDeviceDriver((DevDesc*) dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd)) {
@@ -156,6 +160,10 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	if(!PicTeXDeviceDriver((DevDesc*) dev, file, bg, fg, 
 			       width, height, debug)) {
 	    free(dev);
@@ -217,6 +225,10 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	if(!XFigDeviceDriver((DevDesc*) dev, file, paper, family, bg, fg, width, height,
 			     (double)horizontal, ps, onefile, pagecentre)) {
 	    free(dev);
@@ -271,6 +283,10 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
 	if(!PDFDeviceDriver((DevDesc*) dev, file, family, encoding, bg, fg, 
 			    width, height, ps, onefile)) {
 	    free(dev);
