@@ -12,10 +12,11 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 2,
          col.res= "gray", cex = 1, pch = par("pch"),
+         ask = interactive() && nb.fig < n.tms && .Device != "postscript",
          ...)
 }
 \arguments{
-  \item{model}{fitted model object}o
+  \item{model}{fitted model object}
   \item{data}{data frame in which the variables in \code{model} can be found}
   \item{partial.resid}{logical; should partial residuals be plotted?}
   \item{rug}{add \link{rug}plots (jittered 1-d histograms) to the axes?}
@@ -33,6 +34,8 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
   \item{col.res, cex, pch}{color, plotting character expansion and type
     for partial residuals, when \code{partial.resid = TRUE}, see
     \code{\link{points}}.}
+   \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
+     each plot, see \code{\link{par}(ask=.)}.}
   \item{\dots}{other graphical parameters}
 }
 \details{

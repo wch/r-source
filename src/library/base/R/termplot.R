@@ -3,6 +3,8 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
                      main = NULL, col.term = 2, lwd.term = 1.5,
                      col.se = "orange", lty.se = 2, lwd.se = 1,
                      col.res= "gray", cex = 1, pch = par("pch"),
+                     ask = interactive() && nb.fig < n.tms &&
+                           .Device != "postscript",
                      ...)
 {
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
@@ -17,7 +19,7 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
     ## Defaults:
     if (is.null(xlabs))
 	xlabs <- nmt
-    if (is.null(ylab)) 
+    if (is.null(ylab))
 	ylab <- substitute(link(foo),
                            list(foo=formula(model)[[2]]))
     if (is.null(main))
@@ -43,6 +45,13 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
         lines(x, tms[iy,i] + tt, lty=lty.se, lwd=lwd.se, col=col.se)
         lines(x, tms[iy,i] - tt, lty=lty.se, lwd=lwd.se, col=col.se)
     }
+
+    nb.fig <- prod(par("mfcol"))
+    if (ask) {
+        op <- par(ask = TRUE)
+        on.exit(par(op))
+    }
+    ##---------- Do the individual plots : ----------
 
     for (i in 1:n.tms) {
 	ylims <- range(tms[,i], na.rm=TRUE)

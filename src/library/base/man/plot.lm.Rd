@@ -8,7 +8,7 @@ plot.lm(x, which = 1:4,
                     "Scale-Location plot", "Cook's distance plot"),
         panel = points,
         sub.caption = deparse(x$call), main = "",
-        ask = interactive() && one.fig && length(which) > 1
+        ask = interactive() && nb.fig < length(which)
          	&& .Device != "postscript",
         \dots,
         id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
@@ -36,7 +36,7 @@ plot.lm(x, which = 1:4,
   \item{cex.id}{magnification of point labels.}
 }
 \description{
-  Four plots (choosable by \code{which}) are currently provided: a plot
+  Four plots (selectable by \code{which}) are currently provided: a plot
   of residuals against fitted values, a Scale-Location plot of
   \eqn{\sqrt{| residuals |}} against fitted values, a Normal Q-Q plot,
   and a plot of Cook's distances versus row labels.
