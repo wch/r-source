@@ -34,11 +34,11 @@ double ppois(double x, double lambda)
     if (ISNAN(x) || ISNAN(lambda))
 	return x + lambda;
 #endif
-    x = floor(x + 0.5);
     if(lambda <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
+    x = floor(x + 0.5);
     if (x < 0)
 	return 0;
 #ifdef IEEE_754
