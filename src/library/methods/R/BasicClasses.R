@@ -37,13 +37,13 @@
     setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
 
     setClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
-             
+
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
     nullClass <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE, package = "methods")
     assignClassDef("NULL", nullClass, where = envir); clList <- c(clList, "NULL")
 
-    
+
     setClass("structure", where = envir); clList <- c(clList, "structure")
     stClasses <- c("matrix", "array") # classes that have attributes, but no class attr.
     for(.class in stClasses) {
@@ -60,7 +60,7 @@
 
     for(.class in vClasses)
         setIs(.class, "vector", where = envir)
-    
+
     setIs("double", "numeric", where = envir)
     setIs("integer", "numeric", where = envir)
 
@@ -70,7 +70,7 @@
               value
           }),
           where = envir)
-    
+
     for(.class in stClasses)
         setIs(.class, "structure", where = envir)
     setIs("matrix", "array", where = envir)
@@ -79,7 +79,7 @@
               if(is(value, "matrix"))
                   value
               else
-                  stop("Replacement value is not a matrix")
+                  stop("replacement value is not a matrix")
           }),
           where = envir)
 
@@ -89,7 +89,7 @@
     ## (see def'n of BasicClasses above).
     setClass("ts", representation(.Data = "vector", tsp = "numeric"), contains = "vector",
              prototype = newBasic("ts"), where = envir)
-    
+
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.
@@ -98,10 +98,10 @@
     setClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
     setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir); clList <- c(clList, "if")
     setClass("<-", "language", prototype = quote("<undef>"<-NULL), where = envir); clList <- c(clList, "<-")
-    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), where = envir); clList <- c(clList, "for") 
-    setClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while") 
-    setClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat") 
-    setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(") 
+    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), where = envir); clList <- c(clList, "for")
+    setClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while")
+    setClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat")
+    setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(")
 
     ## a virtual class used to allow NULL as an indicator that a possible function
     ## is not supplied (used, e.g., for the validity slot in classRepresentation
@@ -161,14 +161,14 @@
     ## but NOT the class argument (!), and it won't work right
     ## if people set up "mts" objects with "ts" class (!, again)
     setMethod("initialize", "ts",
-              function(object, data =   NA, start = 1, end = numeric(0), frequency = 1, 
+              function(object, data =   NA, start = 1, end = numeric(0), frequency = 1,
     deltat = 1, ts.eps = getOption("ts.eps"), names = NULL, ...) {
                   if(nargs() < 2) # guaranteed to be called with object from new
                       object
                   else if(is.ts(data) && nargs() == 2 + length(list(...)))
                       .mergeAttrs(data, object, list(...))
                   else {
-                      value <- ts(data, start, end, frequency, 
+                      value <- ts(data, start, end, frequency,
                                   deltat, ts.eps, names = names)
                       .mergeAttrs(value, object, list(...))
                   }

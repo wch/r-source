@@ -10,9 +10,8 @@
            genericFunction = NULL) {
       checkTrace <- function(fun, what, f) {
           if(is(fun, "traceable")) {
-              warning("The function being used as ", what,
-                      " in making a generic function for \"", f,
-                      "\" is currently traced; the function used will have tracing removed")
+              warning(gettextf("The function being used as %s in making a generic function for '%s' is currently traced; the function used will have tracing removed",
+                               what, f), domain = NA)
               .untracedFunction(fun)
           }
           else
@@ -33,8 +32,8 @@
       else if(is(genericFunction, "genericFunction"))
           value <- genericFunction
       else
-          stop("The `genericFunction' argument must be NULL or a generic function object; got an object of class \"",
-               class(genericFunction), "\"")
+          stop(gettextf("the `genericFunction' argument must be NULL or a generic function object; got an object of class \"%s\"", class(genericFunction)),
+               domain = NA)
       value@.Data <- fdef
       value@generic <- f
       value@group <- group
@@ -44,13 +43,14 @@
       if(is.null(signature))
           signature <- args
       else if(any(is.na(match(signature, args))))
-          stop(paste("Non-arguments found in the signature:",
-                     paste(signature[is.na(match(signature, args))], collapse = ", ")))
+          stop(gettextf("non-arguments found in the signature: %s",
+                     paste(signature[is.na(match(signature, args))],
+                           collapse = ", ")), domain = NA)
       dots <- match("...", signature)
       if(!is.na(dots)) ## ... is not currently supported in method signatures
           signature <- signature[-dots]
       if(length(signature) == 0)
-          stop("No suitable arguments to dispatch methods in this function")
+          stop("no suitable arguments to dispatch methods in this function")
       value@signature <- signature
       name <- signature[[1]]
       if(is.null(fdefault))
@@ -59,11 +59,10 @@
           fdefault <- checkTrace(fdefault)
           if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
              !is.primitive(fdefault))
-              stop("The formal arguments of the generic function for \"",
-                   f, "\" (",
-                   paste(formalArgs(fdef), collapse = ", "),
-                   ") differ from those of the non-generic to be used as the default, (",
-                   paste(formalArgs(fdefault), collapse = ", "), ")")
+              stop(gettextf("the formal arguments of the generic function for '%s' (%s) differ from those of the non-generic to be used as the default, (%s)",
+                            f, paste(formalArgs(fdef), collapse = ", "),
+                            paste(formalArgs(fdefault), collapse = ", ")),
+                   domain = NA)
           methods <- MethodsList(name, asMethodDefinition(fdefault))
       }
       value@default <- methods
@@ -102,13 +101,14 @@ makeGeneric <-
       if(is.null(signature))
           signature <- args
       else if(any(is.na(match(signature, args))))
-          stop(paste("Non-arguments found in the signature:",
-                     paste(signature[is.na(match(signature, args))], collapse = ", ")))
+          stop(gettextf("non-arguments found in the signature: %s",
+                        paste(signature[is.na(match(signature, args))],
+                              collapse = ", ")), domain = NA)
       dots <- match("...", signature)
       if(!is.na(dots)) ## ... is not currently supported in method signatures
           signature <- signature[-dots]
       if(length(signature) == 0)
-          stop("No suitable arguments to dispatch methods in this function")
+          stop("no suitable arguments to dispatch methods in this function")
 ###--------
       slot(value, "signature", FALSE) <- signature
 ###--------
@@ -139,9 +139,10 @@ makeStandardGeneric <-
       ## methods are prohibited)
       fgen <- genericForPrimitive(f)
       if(identical(fgen, FALSE))
-        stop(paste("Special function \"", f, "\" is not permitted to have methods", sep=""))
+        stop(gettextf("special function '%s' is not permitted to have methods",
+                      f), domain = NA)
       if(is.null(fgen)) {
-        warning(paste("Special function \"", f, "\" has no known argument list; will assume \"(x, ...)\"", sep=""))
+        warning(gettextf("special function '%s' has no known argument list; will assume '(x, ...)'", f), domain = NA)
         ## unknown
         fgen <- function(x, ...) {}
       }
@@ -170,7 +171,7 @@ generic.skeleton <-
     if(is.null(fdefault)) {
       fdefault <- fdef
       body(fdefault) <- substitute(stop(MESSAGE), list(MESSAGE=
-          paste("Invalid call in method dispatch to \"",name, "\" (no default method)",
+          paste("invalid call in method dispatch to \"",name, "\" (no default method)",
                 sep="")))
       environment(fdefault) <- NULL
     }
@@ -216,8 +217,8 @@ getAllMethods <-
       if(is.null(basicDef)) {
           gwhere <- findFunction(f, where = where)
           if(length(gwhere) == 0)
-              stop("\"",f, "\" is not a function visible from \"",
-                   getPackageName(where), "\"")
+              stop(gettextf("'%s' is not a function visible from '%s'",
+                            f, getPackageName(where)), domain = NA)
           ## TODO: deal with multiple versions
           gwhere <- gwhere[[1]]
           if(search)
@@ -236,14 +237,11 @@ getAllMethods <-
           fdef <- getGeneric(f, TRUE, where)
       }
       else if(is.function(fdef) && search) {
-          warning("\"",f,"\" from \"",
-                  packageName(gwhere), "\" is a nongeneric function; no methods available")
+          warning(gettextf("'%s' from '%s' is anon-generic function; no methods available", f, packageName(gwhere)), domain = NA)
           return(NULL)
       }
       else
-          stop("Invalid \"fdef\" for \"", f,
-               "\" in getAllMethods; expected either a genericFunction object or a primitive function, got an object of class \"",
-               class(fdef), "\"")
+          stop(gettextf("Invalid 'fdef' for '%s' in 'getAllMethods'; expected either a 'genericFunction object' or a primitive function, got an object of class \"%s\"", f, class(fdef)), domain = NA)
       metaname <- mlistMetaName(fdef@generic, where)
       primCase <- is.primitive(deflt)
       ## NOTE: getGroup & getGeneric have to be called with the default
@@ -366,7 +364,7 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     }
     dotsPos <- match("...", fnames)
     if(is.na(dotsPos))
-        stop("Methods can add arguments to the generic only if \"...\" is an argument to the generic")
+        stop("methods can add arguments to the generic only if '...' is an argument to the generic")
     ## pass down all the names in common between method & generic, plus "..."
     ## even if the method doesn't have it.  But NOT any arguments having class
     ## "missing" implicitly (see conformMethod)
@@ -383,10 +381,8 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
         trailingArgs <- fnames[seq(to = length(fnames), length = ntrail)]
         if(!identical(mnames[seq(to = length(mnames), length = ntrail)],
                       trailingArgs))
-            stop(paste("Arguments after \"...\" in the generic (",
-                       paste(trailingArgs, collapse=", "),
-                       ") must appear in the method, in the same place at the end of the argument list",
-                       sep=""))
+            stop(gettextf("arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list",
+                          paste(trailingArgs, collapse=", ")), domain = NA)
         newCallNames <- character(length(newCall))
         newCallNames[seq(to =length(newCallNames), length = ntrail)] <-
             trailingArgs
@@ -432,16 +428,14 @@ getGeneric <-
       if(is.primitive(baseDef)) {
           value <- genericForPrimitive(f)
           if(!is.function(value) && mustFind)
-              stop("Methods cannot be defined for the primitive function \"",
-                   f, "\"")
-
+              stop(gettextf("methods cannot be defined for the primitive function '%s'", f), domain = NA)
       }
   }
     if(is.function(value))
         value
     else if(mustFind)
         ## the C code will have thrown an error if f is not a single string
-        stop("No generic function found for \"",f,"\"")
+        stop(gettextf("no generic function found for '%s'", f), domain = NA)
     else
       NULL
   }
@@ -537,12 +531,11 @@ mlistMetaName <-
               if(is(fdef, "genericFunction"))
                   methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
               else
-                  stop("The methods object name for \"", name, "\" must include the name of the package that contains the generic function, but there is no generic function of this name")
+                  stop(gettextf("the methods object name for '%s' must include the name of the package that contains the generic function, but there is no generic function of this name", name), domain = NA)
           }
       }
       else
-          stop(paste("No way to associate a generic function with an object of class \"",
-                     class(name), "\"", sep=""))
+          stop(gettextf("no way to associate a generic function with an object of class \"%s\"", class(name)), domain = NA)
   }
 
 getGenerics <-
@@ -589,7 +582,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
 cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.frame()),
                                   package, methods = getAllMethods(f, fdef, where)) {
     if(!is(fdef, "genericFunction")) {
-        warning("No methods found for \"", f, "\"; cacheGenericsMetaData will have no effect")
+        warning(gettextf("no methods found for '%s'; 'cacheGenericsMetaData' will have no effect", f), domain = NA)
         return(FALSE)
     }
     if(missing(package))
@@ -612,7 +605,8 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
                reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
                set = setPrimitiveMethods(f, deflt, code, fdef, methods),
 ##               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL),
-               stop("internal error: bad code for setPrimitiveMethods: ", code))
+               stop(gettextf("internal error: bad code for 'setPrimitiveMethods': %s", code), domain = NA)
+               )
     }
     else if(isGroup(f, fdef = fdef)) {
         members <- fdef@groupMembers
@@ -860,10 +854,10 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     if(is(x, "call")) {
         if(identical(x[[1]], quote(standardGeneric))) {
             if(!identical(x[[2]], fname))
-                warning("The body of the generic function for \"",
-                        fname, "\" calls standardGeneric to dispatch on a different name (\"",
-                        paste(as.character(x[[2]]), collapse = "\\n"),
-                        "\")!")
+                warning(gettextf("the body of the generic function for '%s' calls 'standardGeneric' to dispatch on a different name ('%s')!",
+                                 fname,
+                                 paste(as.character(x[[2]]), collapse = "\n")),
+                        domain = NA)
             TRUE
         }
         else {
@@ -890,7 +884,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         FALSE
     else {
         if(!.recursiveCallTest(body, fname))
-            warning("The supplied generic function definition does not seem to call standardGeneric; no methods will be dispatched!")
+            warning("the supplied generic function definition does not seem to call 'standardGeneric'; no methods will be dispatched!")
         TRUE
     }
 }
@@ -907,8 +901,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         else if(is(mi, "MethodsList"))
             mi <- Recall(mi, f)
         else
-            stop("Internal error: Bad methods list object in fixing methods for prmitive function \"",
-                 f, "\"")
+            stop(gettextf("internal error: Bad methods list object in fixing methods for prmitive function '%s'", f), domain = NA)
         methods[[i]] <- mi
     }
     mlist@methods <- methods
@@ -980,7 +973,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         value <- list(env)
         repeat {
             if(is.null(env))
-                stop("Botched namespace: Failed to find base namespace in its parents")
+                stop("botched namespace: Failed to find base namespace in its parents")
             env <- parent.env(env)
             value <- c(value, list(env))
             if(isBaseNamespace(env))
@@ -1021,7 +1014,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ## start n generations back; by default the caller of the caller to this function
     ## go back nmax at most (e.g., a function in the methods package that knows it's never
     ## called more than nmax levels in could supply this argument
-    if(nmax < 1) stop("Got a negative maximum number of frames to look at")
+    if(nmax < 1) stop("got a negative maximum number of frames to look at")
     ev <- topenv(parent.frame()) # .GlobalEnv or the environment in which methods is being built.
     for(back in seq(start = -n, length = nmax)) {
         fun <- sys.function(back)
@@ -1127,7 +1120,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     }
     f <- getGeneric(group)
     if(is.null(f)) {
-        warning("\"", f, "\" is not a generic function (or not visible here)" )
+        warning(gettextf("'%s' is not a generic function (or not visible here)",
+                         f), domain = NA)
         return(character())
     }
     else if(!is(f, "groupGenericFunction"))
@@ -1143,8 +1137,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
                 else if(is(x, "genericFunction"))
                     x@generic
                 else
-                    stop("Invalid element in the groupMembers slot (class \"",
-                         class(x), "\")")
+                    stop(gettextf("invalid element in the groupMembers slot (class \"%s\")", class(x)), domain = NA)
             })
         else
             members

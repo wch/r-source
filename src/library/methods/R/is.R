@@ -31,7 +31,7 @@ extends <-
         classDef1 <- getClassDef(class1)
     }
     else
-        stop("class1 must be the name of a class or a class definition")
+        stop("'class1' must be the name of a class or a class definition")
     if(missing(class2)) {
         if(is.null(classDef1))
             return(class1)
@@ -57,7 +57,7 @@ extends <-
         class2 <- class2@className
     }
     else if(!(is.character(class2) && length(class2) == 1))
-        stop("class2 must be the name of a class or a class definition")
+        stop("'class2' must be the name of a class or a class definition")
     else
         classDef2 <- getClassDef(class2)
     value <- possibleExtends(class1, class2, classDef1, classDef2)
@@ -91,8 +91,7 @@ setIs <-
     where <- as.environment(where)
     classDef2 <- getClassDef(class2, where)
     if(is.null(classDef2))
-        stop("Class \"", class2, "\" has no visible definition from package or environment \"",
-             getPackageName(where), "\"")
+        stop(gettextf("class \"%s\" has no visible definition from package or environment '%s'", class2, getPackageName(where)), domain = NA)
     ## check some requirements:
     ## One of the classes must be on the target environment (so that the relation can
     ## be retained by saving the corresponding image)
@@ -103,11 +102,10 @@ setIs <-
     local2 <- exists(m2, where, inherits = FALSE) &&
     !(classDef2@sealed || bindingIsLocked(m2, where))
     if(!(local1 || local2) )
-        stop("Cannot create a setIs relation when neither of the classes (\"",
-             class1,"\" and \"", class2, "\") is local and modifiable in this package")
+        stop(gettextf("cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s\") is local and modifiable in this package",
+                      class1, class2), domain = NA)
     if(classDef@sealed && !isClassUnion(classDef2))
-        stop("Class \"", class1,
-             "\" is sealed; new superclasses can not be defined, except by setClassUnion")
+        stop(gettextf("class \"%s\" is sealed; new superclasses can not be defined, except by 'setClassUnion'", class1), dpmain = NA)
     prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
                          FALSE) # used in checking for previous coerce
     if(is.null(extensionObject))
@@ -121,7 +119,7 @@ setIs <-
     if(!classDef@sealed) {
         where1 <- findClass(class1, where)[[1]]
         if(!bindingIsLocked(m1, where1)) {
-            ## the direct contains information 
+            ## the direct contains information
             elNamed(classDef@contains, class2) <- obj
             if(doComplete)
                 classDef@contains <- completeExtends(classDef, class2, obj, where = where)
@@ -142,11 +140,12 @@ setIs <-
 }
 
 .validExtends <- function(class1, class2, classDef1,  classDef2, slotTests) {
-    .msg <- function(class1, class2) paste("Class \"", class1, "\" cannot extend class \"", class2,
-                                           "\": ", sep="")
+    .msg <- function(class1, class2) gettextf("class \"%s\" cannot extend class \"%s\"", class1, class2)
     if((is.null(classDef1) || is.null(classDef2)) &&
        !(isVirtualClass(class1) && isVirtualClass(class2)))
-        stop(.msg(class2, class2), "Both classes must be defined.")
+        stop(.msg(class2, class2), ": ",
+             gettext("Both classes must be defined"),
+             domain = NA)
     if(slotTests) {
         slots2 <- classDef2@slots
         if(length(slots2) > 0) {
@@ -154,20 +153,23 @@ setIs <-
             slots1 <- classDef1@slots
             n1 <- names(slots1)
             if(any(is.na(match(n2, n1))))
-                stop(.msg(class2, class2),
-                     "Class \"", class1, "\" is missing slots from class \"", class2,
-                     "\" (", paste(n2[is.na(match(n2, n1))], collapse = ", "),
-                     "), and no coerce method was supplied")
+                stop(.msg(class2, class2), ": ",
+                     gettextf("class \"%s\" is missing slots from class \"%s\" (%s), and no coerce method was supplied",
+                              class1, class2,
+                              paste(n2[is.na(match(n2, n1))], collapse = ", ")),
+                     domain = NA)
             bad <- character()
             for(what in n2)
                 if(!extends(elNamed(slots1, what), elNamed(slots2, what)))
                     bad <- c(bad, what)
             if(length(bad)>0)
-                stop(.msg(class1, class2), "Slots in class \"", class1, "\" must extend corresponding slots in class \"",
-                     class2, "\": fails for ", paste(bad, collapse = ", "))
+                stop(.msg(class1, class2), ": ",
+                     gettextf("slots in class \"%s\" must extend corresponding slots in class \"%s\": fails for %s",
+                              class1, class2, paste(bad, collapse = ", ")),
+                     domain = NA)
         }
     }
     TRUE
 }
 
-    
+

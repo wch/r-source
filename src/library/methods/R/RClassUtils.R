@@ -114,7 +114,7 @@ makePrototypeFromClassDef <-
     ## in the prototype--the inherited slots were done in the loop over extends
     if(!is.na(match(".Data", snames))) {
         dataPartClass <- elNamed(slots, ".Data")
-        
+
         ## check the data part
         if(!(isVirtualClass(dataPartClass))) {
             if(isClass(class(prototype), where = where)) {
@@ -124,10 +124,9 @@ makePrototypeFromClassDef <-
             else
                 OK <- FALSE
             if(identical(OK, FALSE))
-                stop("In constructing the prototype for class \"", className, "\": ",
-                 "Prototype has class \"",
-                       .class1(prototype), "\", but the data part specifies class \"",
-                       dataPartClass,"\"")
+                stop(gettextf("in constructing the prototype for class \"%s\": prototype has class \"%s\", but the data part specifies class \"%s\"",
+                              className, .class1(prototype), dataPartClass),
+                     domain = NA)
         }
         iData <- -match(".Data", snames)
         snames <- snames[iData]
@@ -144,9 +143,8 @@ makePrototypeFromClassDef <-
     }
     extra <- pnames[is.na(match(pnames, snames)) & !is.na(match(pnames, pslots))]
     if(length(extra)>0)
-        warning("In constructing the prototype for class \"", className, "\", ",
-                "Slots in prototype and not in class:",
-                      paste(extra, collapse=", "))
+        warning(gettextf("in constructing the prototype for class \"%s\", slots in prototype and not in class: %s",
+                         className, paste(extra, collapse=", ")), domain = NA)
     ## now check the elements of the prototype against the class definition
     slotDefs <- getSlots(ClassDef); slotNames <- names(slotDefs)
     pnames <- names(attributes(prototype))
@@ -167,9 +165,9 @@ makePrototypeFromClassDef <-
         }
     }
     if(any(check))
-        stop("In making the prototype for class \"", className,
-             "\" elements of the prototype failed to match the corresponding slot class: ",
-             paste(pnames[check], "(class \"", slotDefs[match(pnames[check], slotNames)], "\")", collapse = ", "))
+        stop(gettextf("in making the prototype for class \"%s\" elements of the prototype failed to match the corresponding slot class: %s",
+                      className,
+                      paste(pnames[check], "(class \"", slotDefs[match(pnames[check], slotNames)], "\")", collapse = ", ")), domain = NA)
     prototype
 }
 
@@ -220,9 +218,8 @@ completeClassDefinition <-
        && getOption("warn") > 0 ## NEEDED:  a better way to turn on strict testing
        ) {
         bad <- names(ClassDef@subclasses)[!is.na(match(names(ClassDef@subclasses), names(ClassDef@contains)))]
-        warning("Potential cycle in class inheritance: \"",Class,
-                "\" has duplicates in superclasses and subclasses (",
-                paste(bad, collapse = ", "), ")")
+        warning(gettextf("potential cycle in class inheritance: \"%s\" has duplicates in superclasses and subclasses (%s)",
+                         Class, paste(bad, collapse = ", ")), domain = NA)
     }
     ClassDef
 }
@@ -291,11 +288,12 @@ completeClassDefinition <-
             }
         }
         if(any(undefClasses))
-            warning("Undefined slot classes in definition of \"",
-                    ClassDef@className, "\": ",
-                    paste(names(properties)[undefClasses], "(class \"",
-                          unlist(properties, recursive = FALSE)[undefClasses],
-                          "\")", collapse = ", ", sep=""))
+            warning(gettextf("undefined slot classes in definition of \"%s\": %s",
+                             ClassDef@className,
+                             paste(names(properties)[undefClasses], "(class \"",
+                                   unlist(properties, recursive = FALSE)[undefClasses],
+                                   "\")", collapse = ", ", sep = "")),
+                    domain = NA)
         ClassDef@slots <- properties
         ClassDef
 }
@@ -370,13 +368,12 @@ superClassDepth <-
         exti <- ext[[i]]
         soFar <- c(soFar, what)
         if(!is(exti, "SClassExtension"))
-            stop("In definition of class \"", ClassDef@className,
-                 "\"  information for superclass \"", what,
-                 "\" is of class \"", class(exti), "\" (expected \"SClassExtension\"")
+            stop(gettextf("in definition of class \"%s\", information for superclass \"%s\" is of class \"%s\" (expected \"SClassExtension\")",
+                          ClassDef@className, what, class(exti)), domain = NA)
         superClass <-  getClassDef(exti@superClass, package = exti@package)
             if(is.null(superClass)) {
-                warning("class \"", ClassDef@className, "\" extends an undefined class,\"",
-                        what, "\"")
+                warning(gettextf("class \"%s\" extends an undefined class, \"%s\"",
+                                 ClassDef@className, what), domain = NA)
                 next
             }
             more <- Recall(superClass, soFar)
@@ -418,13 +415,12 @@ assignClassDef <-
   ## assign the definition of the class to the specially named object
   function(Class, def, where = .GlobalEnv) {
       if(!is(def,"classRepresentation"))
-          stop("Trying to assign an object of class \"", class(def),
-               "\" as the definition of class \"", Class,
-               "\": must supply a \"classRepresentation\" object.")
+          stop(gettextf("trying to assign an object of class \"%s\" as the definition of class \"%s\": must supply a \"classRepresentation\" object",
+                        class(def), Class), domain = NA)
       clName <- def@className; attributes(clName) <- NULL
       if(!.identC(Class, clName))
-          stop("Assigning as \"", Class, "\" a class representation with internal name ",
-               def@className, "\"")
+          stop(gettextf("assigning as \"%s\" a class representation with internal name \"%s\"",
+                        Class, def@className), domain = NA)
       assign(classMetaName(Class), def, where)
   }
 
@@ -487,7 +483,7 @@ newBasic <-
                "expression" = eval(substitute(expression(...))),
                "externalptr" = {
                    if(nargs() > 1)
-                       stop("externalptr objects cannot be initialized from new()")
+                       stop("'externalptr' objects cannot be initialized from new()")
                    .newExternalptr()
                },
                "single" = as.single(c(...)),
@@ -508,14 +504,13 @@ newBasic <-
                           msg <- paste("Calling new() on an undefined and non-basic class (\"",
                                Class, "\")", sep="")
                       else
-                          msg <- paste("Initializing objects from class \"", Class, "\" with these arguments is not supported",
-                                     sep ="")
+                          msg <- gettextf("initializing objects from class \"%s\" with these arguments is not supported", Class)
                   }
                   )
   if(is.null(msg))
       value
   else
-      stop(msg)
+      stop(msg, domain = NA)
 }
 
 defaultPrototype <-
@@ -541,13 +536,11 @@ reconcilePropertiesAndPrototype <-
       slots <-  validSlotNames(allNames(properties))
       dataPartClass <- elNamed(properties, ".Data")
       if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, name)))
-          stop("In defining class \"", name, "\", the supplied data part class, \"",
-               dataPartClass,
-               "\" is not valid (must be a basic class or a virtual class combining basic classes)")
+          stop(gettextf("in defining class \"%s\", the supplied data part class, \"%s\" is not valid (must be a basic class or a virtual class combining basic classes)", name, dataPartClass), domain = NA)
       prototypeClass <- getClass(class(prototype), where = where)
       if((!is.null(dataPartClass) || length(superClasses) > 0)
          && is.na(match("VIRTUAL", superClasses))) {
-          ## Look for a data part in the super classes, either an inherited
+          ## Look for a data part in the superclasses, either an inherited
           ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
           for(cl in superClasses) {
               clDef <- getClassDef(cl, where = where)
@@ -555,15 +548,16 @@ reconcilePropertiesAndPrototype <-
               if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
                       if(!is.na(match(thisDataPart, c("NULL", "environment"))))
-                          warning("Class \"", thisDataPart, "\" cannot be used as the data part of another class")
+                          warning(gettextf("class \"%s\" cannot be used as the data part of another class",
+                                           thisDataPart), domain = NA)
                       else
                           dataPartClass <- thisDataPart
                   }
                   else if(!extends(dataPartClass, thisDataPart) &&
                           !isVirtualClass(thisDataPart, where = where))
-                      warning("More than one possible class for the data part:  using \"",
-                              dataPartClass, "\" rather than \"",
-                              thisDataPart, "\"")
+                      warning(gettextf("more than one possible class for the data part:  using \"%s\" rather than \"%s\"",
+                                       dataPartClass, thisDataPart),
+                              domain = NA)
               }
           }
           if(length(dataPartClass) > 0) {
@@ -572,9 +566,9 @@ reconcilePropertiesAndPrototype <-
                   slots <- names(properties)
               }
               else if(!extends(elNamed(properties, ".Data"), dataPartClass))
-                  stop(paste("Conflicting definition of data part: .Data = \"",
-                             elNamed(properties, ".Data"),"\", super class implies \"",
-                             dataPartClass, "\"", sep=""))
+                  stop(gettextf("conflicting definition of data part: .Data = \"%s\", superclass implies \"%s\"",
+                                elNamed(properties, ".Data"), dataPartClass),
+                       domain = NA)
               pslots <- NULL
               if(is.null(prototype)) {
                   if(isVirtualClass(dataPartClass, where = where))
@@ -598,16 +592,14 @@ reconcilePropertiesAndPrototype <-
                       }
                       else if(!extends(getClass(class(prototype@object), where = where)
                                        , dataPartClass))
-                          stop("A prototype object was supplied with object slot of class \"",
-                           class(prototype@object),
-                           "\", but the class definition requires an object that is class \"",
-                           dataPartClass, "\"")
+                          stop(gettextf("a prototype object was supplied with object slot of class \"%s\", but the class definition requires an object that is class \"%s\"",
+                                        class(prototype@object), dataPartClass),
+                               domain = NA)
                   }
                   else if(!extends(prototypeClass, dataPartClass))
-                      stop("A prototype was supplied of class \"",
-                           class(prototype),
-                           "\", but the class definition requires an object that is class \"",
-                           dataPartClass, "\"")
+                      stop(gettextf("a prototype was supplied of class \"%s\", but the class definition requires an object that is class \"%s\"",
+                                    class(prototype), dataPartClass),
+                           domain = NA)
               }
           }
           if(is.null(prototype)) { ## non-vector (may extend NULL)
@@ -626,17 +618,16 @@ reconcilePropertiesAndPrototype <-
               dups <- !is.na(match(theseSlots, allProps))
               for(dup in theseSlots[dups])
                   if(!extends(elNamed(allProps, dup), elNamed(theseProperties, dup)))
-                      stop(paste("Slot \"", dup, "\" in class \"", name,
-                                 "\" currently defined (or inherited) as \"", elNamed(allProps, dup),
-                                 "\", conflicts with an inherited definition in class \"",
-                                 cl, "\"", sep=""))
+                      stop(gettextf("slot \"%s\" in class \"%s\" currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class \"%s\"",
+                                    dup, name, elNamed(allProps, dup), cl),
+                           domain = NA)
               theseSlots <- theseSlots[!dups]
               if(length(theseSlots)>0)
                   allProps[theseSlots] <- theseProperties[theseSlots]
           }
           else
-              stop(paste("Class \"", name, "\" extends an undefined class (\"",
-                         cl, "\"", sep=""))
+              stop(gettextf("class \"%s\" extends an undefined class (\"%s\")",
+                            name, cl), domain = NA)
       }
       if(is.null(dataPartClass)) {
           if(extends(prototypeClass, "classPrototypeDef"))
@@ -653,7 +644,8 @@ reconcilePropertiesAndPrototype <-
           if((is.na(match(dataPartClass, .BasicClasses)) &&
              !isVirtualClass(dataPartDef)) ||
              length(dataPartDef@slots) > 0)
-              stop(paste("\"", dataPartClass, "\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots", sep=""))
+              stop(gettextf("\%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots",dataPartClass),
+                   domain = NA)
           if(extends(prototypeClass, "classPrototypeDef"))
           {}
           else if(extends(prototypeClass, dataPartClass)) {
@@ -933,10 +925,10 @@ completeSubclasses <-
             }
         }
         else
-            stop("The ", if(superClassCase) "superClass" else "subClass",
-                 " list for class, \"",
-                 className, "\", includes an undefined class, \"",
-                 .className(by), "\"")
+            stop(gettextf("the %s list for class, \"%s\", includes an undefined class, \"%s\"",
+                          if(superClassCase) "superClass" else "subClass",
+                          className,.className(by)),
+                 domain = NA)
     }
     what <- names(ext)  ## the direct and indirect extensions
     if(!all(is.na(match(what, className)))) {
@@ -960,9 +952,9 @@ completeSubclasses <-
                     whatError <- "have itself as a subclass"
                     relation <- "has subclass"
                 }
-                stop("Class \"", className, "\" may not ", whatError,
-                     ": it ", relation, " class \"", fromTo,
-                     "\", with a circular relation back to \"", className, "\"")
+                stop(gettextf("class \"%s\" may not %s: it %s class \"%s\", with a circular relation back to \"%s\"",
+                              className, whatError, relation, fromTo, className),
+                     domain = NA)
             }
         }
         ## but sub/superclasses can enter multiple ways, with all but the first
@@ -1056,7 +1048,8 @@ getDataPart <- function(object) {
     if(length(temp) == 0)
         return(object)
     if(is.na(match(".Data", names(temp))))
-       stop("No .Data slot defined for class \"", class(object), "\"")
+       stop(gettextf("no '.Data' slot defined for class \"%s\"", class(object)),
+            domain = NA)
     dataPart <- temp[[".Data"]]
     switch(dataPart,
            ## the common cases, for efficiency
@@ -1076,7 +1069,7 @@ getDataPart <- function(object) {
                attr(value, "ts") <- attr(object, "ts")
                object <- value
            },
-           ## default:  
+           ## default:
            if(is.na(match(dataPart, .BasicClasses))) {
                ## keep attributes not corresponding to slots
                attrVals <- attributes(object)
@@ -1095,9 +1088,8 @@ setDataPart <- function(object, value) {
     classDef <- getClass(class(object))
     dataClass <- elNamed(getSlots(classDef), ".Data")
     if(is.null(dataClass))
-        stop(paste("class \"", class(object),
-                   "\" does not have a data part (a .Data slot) defined",
-                   sep=""))
+        stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
+                      class(object)), domain = NA)
     value <- as(value, dataClass)
     .mergeAttrs(value, object)
 }
@@ -1120,9 +1112,8 @@ setDataPart <- function(object, value) {
             if(.identC(cl, "ts"))
                 value <- cl
             else
-                warning("Old-style (``S3'') class \"", cl,
-                        "\" supplied as a superclass of \"", .className(inClass),
-                        "\", but no automatic conversion will be peformed for S3 classes")
+                warning(gettextf("old-style (``S3'') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
+                                 cl, .className(inClass)), domain = NA)
         }
         else if(identical(ClassDef@virtual, TRUE) &&
                length(ClassDef@slots) == 0 &&
@@ -1357,18 +1348,17 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     if(!identical(args, newArgs)) {
         n <- length(args)
         if(n != length(newArgs))
-            stop(paste("Trying to change the argument list of a function with ",
-                       n, " arguments to have arguments (",
-                 paste(newArgs, collapse = ", "), ")", sep=""))
+            stop(gettextf("trying to change the argument list of a function with %d arguments to have arguments (%s)",
+                          n, paste(newArgs, collapse = ", ")),
+                 domain = NA)
         bdy <- body(def)
         ## check for other uses of newArgs
         checkFor <- newArgs[is.na(match(newArgs, args))]
         locals <- all.vars(bdy)
         if(length(checkFor) > 0 && any(!is.na(match(checkFor, locals))))
-            stop(paste("Get rid of variables in definition (",
-                       paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
-                       "); they conflict with the needed change to argument names (",
-                       paste(newArgs, collapse = ", "), ")", sep=""))
+            stop(gettextf("get rid of variables in definition (%s); they conflict with the needed change to argument names (%s)",
+                          paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
+                          paste(newArgs, collapse = ", ")), domain = NA)
         ll <- vector("list", 2*n)
         for(i in seq(length = n)) {
             ll[[i]] <- as.name(args[[i]])
@@ -1378,7 +1368,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         body(def, envir = environment(def)) <- substituteDirect(bdy, ll)
         if(!silent) {
             msg <-
-                gettextf("Arguments in definition changed from (%s) to (%s)",
+                gettextf("arguments in definition changed from (%s) to (%s)",
                          paste(args, collapse = ", "),
                          paste(newArgs, collapse = ", "))
             message(strwrap(msg), domain = NA)
@@ -1392,8 +1382,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     }
     else {
         if(!is(validity, "function"))
-            stop(paste("A validity method must be a function of one argument, got an object of class \"",
-                       class(validity), "\"", sep=""))
+            stop(gettextf("a validity method must be a function of one argument, got an object of class \"%s\"", class(validity)), domain = NA)
         validity <- substituteFunctionArgs(validity, "object")
     }
     validity
@@ -1459,7 +1448,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
        .identC(package, get(".packageName", topEnv)))
         return(topEnv) # kludge for source'ing package code
     if(!require(package, character.only = TRUE))
-        stop("Unable to find required package \"", package, "\"")
+        stop(gettextf("unable to find required package '%s'", package),
+             domain = NA)
     value <- .asEnvironmentPackage(package)
     assign(package, value, envir = .PackageEnvironments)
     value
@@ -1491,7 +1481,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
             .requirePackage(package)
      }
 
-            
+
 ..classEnv <- function(Class, default = .requirePackage("methods"), mustFind = TRUE) {
     if(is.character(Class))
         package <- packageSlot(Class)
@@ -1512,13 +1502,13 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                 }
             }
             if(is.null(def) && mustFind)
-                stop("Unable to find an environment containing class \"", Class, "\"")
+                stop(gettextf("unable to find an environment containing class \"%s\"", Class), domain = NA)
             value
         }
         else
             .requirePackage(package)
     }
-    
+
 ## find a generic function reference, using the package slot if present
 ## FIXME:  this and .classEnv should be combined and implemented in C for speed
 ## They differ in that  .classEnv uses the class metaname when it searches; i.e.,

@@ -46,10 +46,9 @@
     from@.Data <- value
     from
 }
-    
+
 .ErrorReplace <- function(from, to, value)
-    stop(paste("No replace method was defined for as(x, \"", to,
-               "\") <- value for class \"", class(from), "\"", sep=""))
+    stop(gettextf("no replace method was defined for as(x, \"%s\") <- value for class \"%s\"", to, class(from)), domain = NA)
 
 .objectSlotNames <- function(object) {
     ## a quick version that makes no attempt to check the class definition
@@ -101,10 +100,9 @@ makeExtends <- function(Class, to,
         }
         else
             coerce <- .ChangeFormals(coerce, .simpleExtCoerce, "`coerce' argument to setIs ")
-        
+
     }
-    else stop("The `coerce' argument to setIs should be a function of one argument, got an object of class \"",
-              class(coerce), "\"")
+    else stop(gettextf("the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class \"%s\"", class(coerce)), domain = NA)
     if(is.null(test))
         test <- .simpleExtTest
     else
@@ -131,10 +129,8 @@ makeExtends <- function(Class, to,
                 body(replace, envir = packageEnv) <-
                     substitute({
                         if(!is(value, TO))
-                            stop("The computation: as(object,\"", TO,
-                                 "\") <- value is valid when object has class",
-                                 FROM, "\" only if is(value, \"",TO,"\") is TRUE ( class(value) was \"",
-                                 class(value), "\")")
+                            stop(gexttextf("the computation: as(object,\"%s\") <- value is valid when object has class \"%s\" only if is(value, \"%s\") is TRUE ( class(value) was \"%s\n",
+                                 TO, FROM, TO, class(value)), domain = NA)
                         value
                     }, list(FROM = Class, TO = to))
             }
@@ -167,9 +163,7 @@ makeExtends <- function(Class, to,
         else
             replace <- .ErrorReplace
         if(identical(replace, .ErrorReplace))
-            warning("There is no automatic definition for as(object, \"", to,
-                    "\") <- value when object has class \"", Class,
-                    "\" and no replace= argument was supplied; replacement will be an error")
+            warning(gettextf("there is no automatic definition for as(object, \"%s\") <- value when object has class \"%s\" and no 'replace' argument was supplied; replacement will be an error", to, Class), domain = NA)
     }
     else if(is(replace, "function")) {
         ## turn function of two or three arguments into correct 3-arg form
@@ -183,12 +177,11 @@ makeExtends <- function(Class, to,
             replace <- .ChangeFormals(replace, .ErrorReplace, "`replace' argument to setIs ")
     }
     else
-        stop("the replace= argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"",
-             class(replace), "\"")
+        stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\"", class(replace)), domain = NA)
     new("SClassExtension", subClass = Class, superClass = to, package = package, coerce = coerce,
                test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)
-    
-    
+
+
 }
 
 .findAll <- function(what, where = topenv(parent.frame())) {
@@ -212,4 +205,4 @@ makeExtends <- function(Class, to,
         }
     value
 }
-    
+

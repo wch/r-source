@@ -36,7 +36,7 @@
                 what <- as.character(fname[[3]])
             }
             else
-                stop("Argument what should be the name of a function")
+                stop("argument 'what' should be the name of a function")
         }
     }
     else {
@@ -59,7 +59,8 @@
     if(is.null(whereF)) {
         allWhere <- findFunction(what, where = where)
         if(length(allWhere)==0)
-            stop("No function definition for \"", what, "\" found")
+            stop(gettextf("no function definition for '%s' found", what),
+                 domain = NA)
         whereF <- as.environment(allWhere[[1]])
     }
         if(is.null(def))
@@ -83,7 +84,7 @@
             if(is(def, "traceable"))
                 newFun <- .untracedFunction(def)
             else {
-                warning("The method for \"", what, "\" for this signature was not being traced")
+                warning(gettextf("the method for \"%s\" for this signature was not being traced", what), domain = NA)
                 return(what)
             }
         }
@@ -148,7 +149,7 @@
                                    list(DEF = def))
                def <- eval(function(...)NULL)
                body(def, environment = .GlobalEnv) <- fBody
-               warning("making a traced version of a primitive; arguments will be treated as \"...\"")
+               warning("making a traced version of a primitive; arguments will be treated as '...'")
            }
            )
     if(!identical(doEdit, FALSE)) {
@@ -175,7 +176,7 @@
             def <- Recall(def, tracer, exit, at, print, FALSE)
         def2 <- edit(def, editor = editor, file = file)
         if(!is.function(def2))
-            stop("The editing in trace() can only change the body of the function; got an object of class ", class(def2))
+            stop(gettextf("The editing in trace() can only change the body of the function; got an object of class \"%s\"", class(def2)), domain = NA)
         if(!identical(args(def), args(def2)))
             stop("The editing in trace() can only change the body of the function, not the arguments or defaults")
         fBody <- body(def2)
@@ -185,9 +186,9 @@
         fBody <- body(def)
         if(length(at) > 0) {
             if(is.null(tracer))
-                stop("can't use \"at\" argument without a trace expression")
+                stop("cannot use 'at' argument without a trace expression")
             else if(class(fBody) != "{")
-                stop("can't use \"at\" argument unless the function body has the form { ... }")
+                stop("cannot use 'at' argument unless the function body has the form '{ ... }'")
             for(i in at) {
                 if(print)
                     expri <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
@@ -291,7 +292,7 @@ trySilent <- function(expr) {
     pname <- getPackageName(where)
     if(verbose) {
         msg <-
-            gettextf("Assigning over the binding of symbol \"%s\" in environment/package \"%s\"",
+            gettextf("assigning over the binding of symbol \"%s\" in environment/package \"%s\"",
                      what, pname)
         message(strwrap(msg), domain = NA)
     }
@@ -314,8 +315,7 @@ trySilent <- function(expr) {
 
 .setMethodOverBinding <- function(what, signature, method, where, verbose = TRUE) {
     if(verbose)
-        warning("Setting a method over the binding of symbol \"", what,
-                "\" in environment/package \"", getPackageName(where), "\"")
+        warning(gettextf("setting a method over the binding of symbol '%s' in environment/package '%s'", what, getPackageName(where)), domain = NA)
     if(exists(what, envir = where, inherits = FALSE)) {
         fdef <- get(what, envir = where)
         hasFunction <- is(fdef, "genericFunction")

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-27 15:46\n"
+"POT-Creation-Date: 2005-03-02 15:01\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,43 +11,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "Replacement value is not a matrix"
+msgid "replacement value is not a matrix"
 msgstr ""
 
-msgid "Methods may not be defined for primitive function \""
+msgid "methods may not be defined for primitive function '%s' in this version of R"
 msgstr ""
 
-msgid "\" in this version of R"
+msgid "'%s' is not one of the basic functions"
 msgstr ""
 
-msgid "\""
+msgid "no replace method was defined for as(x, \"%s\") <- value for class \"%s\""
 msgstr ""
 
-msgid "\" is not one of the basic functions"
-msgstr ""
-
-msgid "No replace method was defined for as(x, \""
-msgstr ""
-
-msgid "\") <- value for class \""
-msgstr ""
-
-msgid "The `coerce' argument to setIs should be a function of one argument, got an object of class \""
-msgstr ""
-
-msgid "The computation: as(object,\""
-msgstr ""
-
-msgid "\") <- value is valid when object has class"
-msgstr ""
-
-msgid "\" only if is(value, \""
-msgstr ""
-
-msgid "\") is TRUE ( class(value) was \""
-msgstr ""
-
-msgid "\")"
+msgid "the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class \"%s\""
 msgstr ""
 
 msgid "There is no automatic definition for as(object, \""
@@ -59,28 +35,19 @@ msgstr ""
 msgid "\" and no replace= argument was supplied; replacement will be an error"
 msgstr ""
 
-msgid "the replace= argument to setIs() should be a function of 2 or 3 arguments, got an object of class \""
+msgid "the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\""
 msgstr ""
 
-msgid "The member classes must be defined: not true of"
+msgid "the member classes must be defined: not true of %s"
 msgstr ""
 
-msgid "character"
+msgid "unable to create union class:  could not set members %s"
 msgstr ""
 
-msgid ","
+msgid "if the `def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") to dispatch methods"
 msgstr ""
 
-msgid "Unable to create union class:  could not set members"
-msgstr ""
-
-msgid "If the `def' argument is supplied, it must be a function that calls standardGeneric(\""
-msgstr ""
-
-msgid "\") to dispatch methods."
-msgstr ""
-
-msgid "Must supply a function skeleton, explicitly or via an existing function"
+msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 
 msgid "Function \""
@@ -89,22 +56,22 @@ msgstr ""
 msgid "\" appears to be a Generic function, but with generic name \""
 msgstr ""
 
+msgid "\""
+msgstr ""
+
 msgid "Generic function \""
 msgstr ""
 
 msgid "\" not found for removal"
 msgstr ""
 
-msgid "Invalid argument \"f\", expected function or its name, got an object of class \""
+msgid "Invalid argument \"f\", expected function or its name, got an object of class \"%s\""
 msgstr ""
 
-msgid "Internal error: did not get a valid generic function object for function \""
+msgid "Internal error: did not get a valid generic function object for function '%s'"
 msgstr ""
 
-msgid "The environment \""
-msgstr ""
-
-msgid "\" is locked; cannot assign methods for function \""
+msgid "The environment '%s' is locked; cannot assign methods for function '%s'"
 msgstr ""
 
 msgid "The 'where' environment ("
@@ -152,6 +119,9 @@ msgstr ""
 msgid "No method found for function \""
 msgstr ""
 
+msgid ","
+msgstr ""
+
 msgid "Apparent inconsistency in the methods for function \""
 msgstr ""
 
@@ -195,6 +165,9 @@ msgid "First argument should be the name(s) of generic functions"
 msgstr ""
 
 msgid "(got object of class \""
+msgstr ""
+
+msgid "\")"
 msgstr ""
 
 msgid "The environment/package \""
@@ -854,221 +827,152 @@ msgstr ""
 msgid "\" for"
 msgstr ""
 
-msgid "\"traceOn\" is deprecated:  use the function \"trace\" in the methods package instead"
+msgid "'traceOn' is deprecated:  use the function 'trace' in the 'methods' package instead"
 msgstr ""
 
-msgid "\"traceOff\" is deprecated:  use the function \"untrace\" in the methods package instead"
+msgid "'traceOff' is deprecated:  use the function 'untrace' in the 'methods' package instead"
 msgstr ""
 
-msgid "no"
+msgid "no %sfunction '%s' found"
 msgstr ""
 
-msgid "non-generic"
+msgid "'%s' is not one of the element names"
 msgstr ""
 
-msgid "function \""
+msgid "internal problem in as():  \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE"
 msgstr ""
 
-msgid "\" is not one of the element names"
+msgid "no method or default for coercing \"%s\" to \"%s\""
 msgstr ""
 
-msgid "Internal problem in as():  \""
+msgid "no method or default for as() replacement of \"%s\" with Class=\"%s\""
 msgstr ""
 
-msgid "\" is(object, \""
+msgid "trying to set an as relation from \"%s\" to itself"
 msgstr ""
 
-msgid ") is TRUE, but the metadata asserts that the is relation is FALSE"
+msgid "class \"%s\" is not defined in this environment"
 msgstr ""
 
-msgid "No method or default for coercing \""
+msgid "class \"%s\" is a class union: coerce relations to a class union are not meaningful"
 msgstr ""
 
-msgid "\" to \""
+msgid "as method must have one or two arguments, plus optional `strict'; got (%s)"
 msgstr ""
 
-msgid "No method or default for as() replacement of \""
+msgid "a replace method definition in 'setAs' must be a function of two arguments, got %d"
 msgstr ""
 
-msgid "\" with Class=\""
-msgstr ""
-
-msgid "Trying to set an as relation from \""
-msgstr ""
-
-msgid "\" to itself"
-msgstr ""
-
-msgid "\" is not defined in this environment"
-msgstr ""
-
-msgid "\" is a class union: coerce relations to a class union are not meaningful"
-msgstr ""
-
-msgid "as method must have one or two arguments, plus optional `strict'; got ("
-msgstr ""
-
-msgid "a replace method definition in setAs must be a function of two arguments, got"
-msgstr ""
-
-msgid "Argument names in replace changed to agree with \"coerce<-\" generic:"
+msgid "argument names in replace changed to agree with \"coerce<-\" generic:\n%s"
 msgstr ""
 
 msgid "ambiguous object (length!=1) to coerce to \"name\""
 msgstr ""
 
-msgid "Undefined coerce method"
+msgid "undefined coerce method"
 msgstr ""
 
-msgid "Methods currently exist for coercing from \""
+msgid "methods currently exist for coercing from \"%s\" to \"%s\"; they will be replaced."
 msgstr ""
 
-msgid "\"; they will be replaced."
+msgid "object '%s' not found"
 msgstr ""
 
-msgid "Object \""
+msgid "object '%s' not changed (it is not consistent with the current definition of class \"%s\" from '%s')"
 msgstr ""
 
-msgid "\" not found"
+msgid "no definition for the class of '%s' (class \"%s\") found"
 msgstr ""
 
-msgid "\" not changed (it is not consistent with the current definition of class \""
+msgid "object '%s' not changed (it does not appear to be from a version of R earlier than 1.8.0)"
 msgstr ""
 
-msgid "No definition for the class of \""
+msgid "'class1' must be the name of a class or a class definition"
 msgstr ""
 
-msgid "\" (class \""
+msgid "'class2' must be the name of a class or a class definition"
 msgstr ""
 
-msgid "\") found"
+msgid "class \"%s\" has no visible definition from package or environment '%s'"
 msgstr ""
 
-msgid "\" not changed (it does not appear to be from a version of R earlier than 1.8)"
+msgid "cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s\") is local and modifiable in this package"
 msgstr ""
 
-msgid "class1 must be the name of a class or a class definition"
+msgid "class \"%s\" is sealed; new superclasses can not be defined, except by 'setClassUnion'"
 msgstr ""
 
-msgid "class2 must be the name of a class or a class definition"
+msgid "class \"%s\" cannot extend class \"%s\""
 msgstr ""
 
-msgid "\" has no visible definition from package or environment \""
+msgid "Both classes must be defined"
 msgstr ""
 
-msgid "Cannot create a setIs relation when neither of the classes (\""
+msgid "Class \"%s\" is missing slots from class \"%s\" (%s), and no coerce method was supplied"
 msgstr ""
 
-msgid "\" and \""
+msgid "Slots in class \"%s\" must extend corresponding slots in class \"%s\": fails for %s"
 msgstr ""
 
-msgid "\") is local and modifiable in this package"
+msgid "invalid index for function argument"
 msgstr ""
 
-msgid "\" is sealed; new superclasses can not be defined, except by setClassUnion"
+msgid "inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)"
 msgstr ""
 
-msgid "Both classes must be defined."
+msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr ""
 
-msgid "\" is missing slots from class \""
+msgid "explicit replacement not defined for as(x, \"%s\") <- value for old-style class \"%s\""
 msgstr ""
 
-msgid "), and no coerce method was supplied"
+msgid "argument 'Classes' must be a vector of two classes; got an argument of length %d"
 msgstr ""
 
-msgid "Slots in class \""
+msgid "no definition of class \"%s\" found"
 msgstr ""
 
-msgid "\" must extend corresponding slots in class \""
+msgid "multiple definitions of \"%s\" found; using the one on %s"
 msgstr ""
 
-msgid "\": fails for"
+msgid "no definition of class \"%s\" in the specified position, %s, definition(s) on : %s"
 msgstr ""
 
-msgid "Invalid index for function argument"
+msgid "invalid call to 'classLabel': expected a name or a class definition, got an object of class \"%s\""
 msgstr ""
 
-msgid "inconsistent old-style class information for \""
+msgid "argument 'what' should be the name of a function"
 msgstr ""
 
-msgid "\" (maybe mixing old and new classes?)"
+msgid "no function definition for '%s' found"
 msgstr ""
 
-msgid "Explicit coercion of old-style class ("
+msgid "the method for \"%s\" for this signature was not being traced"
 msgstr ""
 
-msgid ") is not defined"
+msgid "making a traced version of a primitive; arguments will be treated as '...'"
 msgstr ""
 
-msgid "Explicit replacement not defined for as(x, \""
-msgstr ""
-
-msgid "\") <- value for old-style class \""
-msgstr ""
-
-msgid "Argument Classes must be a vector of two classes; got an argument of length"
-msgstr ""
-
-msgid "No definition of class \""
-msgstr ""
-
-msgid "Multiple definitions of \""
-msgstr ""
-
-msgid "\" found; using the one on"
-msgstr ""
-
-msgid "\" in the specified position,"
-msgstr ""
-
-msgid "; definition(s) on :"
-msgstr ""
-
-msgid "invalid call to classLabel: expected a name or a class definition, got an object of class"
-msgstr ""
-
-msgid "Argument what should be the name of a function"
-msgstr ""
-
-msgid "No function definition for \""
-msgstr ""
-
-msgid "The method for \""
-msgstr ""
-
-msgid "\" for this signature was not being traced"
-msgstr ""
-
-msgid "making a traced version of a primitive; arguments will be treated as \"...\""
-msgstr ""
-
-msgid "The editing in trace() can only change the body of the function; got an object of class"
+msgid "The editing in trace() can only change the body of the function; got an object of class \"%s\""
 msgstr ""
 
 msgid "The editing in trace() can only change the body of the function, not the arguments or defaults"
 msgstr ""
 
-msgid "can't use \"at\" argument without a trace expression"
+msgid "cannot use 'at' argument without a trace expression"
 msgstr ""
 
-msgid "can't use \"at\" argument unless the function body has the form { ... }"
+msgid "cannot use 'at' argument unless the function body has the form '{ ... }'"
 msgstr ""
 
-msgid "Assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+msgid "assigning over the binding of symbol \"%s\" in environment/package \"%s\""
 msgstr ""
 
-msgid "Setting a method over the binding of symbol \""
+msgid "setting a method over the binding of symbol '%s' in environment/package '%s'"
 msgstr ""
 
-msgid "\" in environment/package \""
-msgstr ""
-
-msgid "Not a package name:"
+msgid "not a package name: %s"
 msgstr ""
 
 msgid "Looks like the methods library was not installed correctly; check the make results!"
-msgstr ""
-
-msgid "Saving namespace image ..."
 msgstr ""

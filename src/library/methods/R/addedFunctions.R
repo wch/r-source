@@ -41,7 +41,8 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
         where <- parent.env(where)
     }
     if(!found && mustFind)
-        stop("no ", if(generic) "" else "non-generic ", "function \"", name, "\" found")
+        if(generic) stop(gettextf("no function '%s' found"), domain = NA)
+        else stop(gettextf("no non-generic function '%s' found"), domain = NA)
     f
 }
 
@@ -64,7 +65,8 @@ elNamed <-
     i <- match(name, names(x))
     if(is.na(i)) {
         if(mustFind)
-            stop(paste("\"", name, "\" is not one of the element names", sep=""))
+            stop(gettextf("'%s' is not one of the element names", name),
+                 domain = NA)
         else NULL
     }
     else

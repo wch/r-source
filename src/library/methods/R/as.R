@@ -29,9 +29,8 @@ as <-
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
                 if(identical(ext, FALSE))
-                    stop("Internal problem in as():  \"", thisClass, "\" is(object, \"",
-                         Class, "\) is TRUE, but the metadata asserts that the is relation is FALSE")
-                else if(identical(ext, TRUE)) 
+                    stop(gettextf("internal problem in as():  \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE", thisClass, Class), domain = NA)
+                else if(identical(ext, TRUE))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
                 else {
                     test <- ext@test
@@ -55,8 +54,7 @@ as <-
         }
     }
     if(is.null(asMethod))
-        stop(paste("No method or default for coercing \"", thisClass,
-                       "\" to \"", Class, "\"", sep=""))
+        stop(gettextf("no method or default for coercing \"%s\" to \"%s\"", thisClass, Class), domain = NA)
     else if(strict)
         asMethod(object)
     else
@@ -96,7 +94,7 @@ as <-
     }
     else
         NULL
-        
+
 }
 
 
@@ -138,17 +136,16 @@ as <-
         ## cache for next call
         if(canCache && !is.null(asMethod))
             cacheMethod("coerce<-", sig, asMethod, fdef = coerceFun)
-    
+
     }
     if(is.null(asMethod))
-        stop(paste("No method or default for as() replacement of \"", thisClass,
-                   "\" with Class=\"", Class, "\"", sep=""))
+        stop(gettextf("no method or default for as() replacement of \"%s\" with Class=\"%s\"", thisClass, Class), domain = NA)
     asMethod(object, Class, value)
 }
 
 
 
-setAs <- 
+setAs <-
   function(from, to, def, replace = NULL, where = topenv(parent.frame()))
 {
     ## where there is an "is" relation, modify it
@@ -163,15 +160,14 @@ setAs <-
     }
     else if(identical(extds, TRUE)) {
         if(.identC(from, to))
-            stop("Trying to set an as relation from \"", .class1(from),
-                 "\" to itself")
+            stop(gettextf("trying to set an 'as' relation from \"%s\" to itself", .class1(from)), domain = NA)
         ## usually to will be a class union, where setAs() is not
         ## allowed by the definition of a union
         toDef <- getClassDef(to, where=where)
         if(is.null(toDef))
-            stop("Class \"", to, "\" is not defined in this environment")
+            stop(gettextf("class \"%s\" is not defined in this environment", to), domain = NA)
         if(isClassUnion(toDef))
-            stop("Class \"",to,"\" is a class union: coerce relations to a class union are not meaningful")
+            stop(gettextf("class \"%s\" is a class union: 'coerce' relations to a class union are not meaningful", to), domain = NA)
         ## else go ahead (but are there any cases here where extds is TRUE?)
         setIs(from, to, coerce = def, replace = replace, where = where)
     }
@@ -182,8 +178,9 @@ setAs <-
             def <- substituteFunctionArgs(def, "from")
         else if(length(args) == 2)
             def <- substituteFunctionArgs(def, c("from", "to"))
-        else stop(paste("as method must have one or two arguments, plus optional `strict'; got (",
-                        paste(formalArgs(def), collapse = ", "), ")", sep=""))
+        else stop(gettextf("'as' method must have one or two arguments, plus optional 'strict'; got (%s)",
+                           paste(formalArgs(def), collapse = ", ")),
+                  domain = NA)
         method <- as.list(coerce@.Data) # the function def'n, just to get arguments correct
         method$to <- to
         method <- as.function(method)
@@ -196,14 +193,14 @@ setAs <-
             else {
                 ## if not from an extends object, process the arguments
                 if(length(args) != 2)
-                    stop("a replace method definition in setAs must be a function of two arguments, got ", length(args))
+                    stop(gettextf("a 'replace' method definition in 'setAs' must be a function of two arguments, got %d", length(args)), domain = NA)
                 replace <- body(replace)
                 if(!identical(args, c("from", "value"))) {
                     ll <- list(quote(from), quote(value))
                     names(ll) <- args
                     replace <- substituteDirect(replace, ll)
-                    warning("Argument names in replace changed to agree with \"coerce<-\" generic:\n",
-                            paste(deparse(bdy), sep="\n    "), "\n")
+                    warning(gettextf("argument names in replace changed to agree with \"coerce<-\" generic:\n%s", paste(deparse(bdy), sep="\n    ")),
+                            domain = NA)
                 }
                 method <- eval(function(from, to, value)NULL)
                 functionBody(method, envir = .GlobalEnv) <- replace
@@ -220,9 +217,9 @@ setAs <-
              where = where)
   setGeneric("coerce<-", function(from, to, value)standardGeneric("coerce<-"), where = where)
   basics <- c(
- "POSIXct",  "POSIXlt",  "array",  "call",  "character",  "complex",  "data.frame", 
- "environment",  "expression",  "factor",  "formula",  "function",  "integer", 
- "list",  "logical",  "matrix",  "name",  "numeric",  "ordered", 
+ "POSIXct",  "POSIXlt",  "array",  "call",  "character",  "complex",  "data.frame",
+ "environment",  "expression",  "factor",  "formula",  "function",  "integer",
+ "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
   "single",  "table",  "ts",  "vector")
   basics <- basics[!is.na(match(basics,.BasicClasses))]
   for(what in basics) {
@@ -272,7 +269,7 @@ setAs <-
   ## not accounted for and maybe not needed:  real, pairlist, double
 }
 
-.basicCoerceMethod <- function(from, to, strict = TRUE) stop("Undefined coerce method")
+.basicCoerceMethod <- function(from, to, strict = TRUE) stop("undefined coerce method")
 
 .makeAsMethod <- function(expr, simple, Class, ClassDef, where) {
     if(is(expr, "function")) {
@@ -321,8 +318,7 @@ setAs <-
                                       fdef = rdef))
     if(prevCoerce || prevRepl) {
         if(!prevIs)
-            warning("Methods currently exist for coercing from \"", from,
-                    "\" to \"", to, "\"; they will be replaced.")
+            warning(gettextf("methods currently exist for coercing from \"%s\" to \"%s\"; they will be replaced.", from, to), domain = NA)
         if(prevCoerce)
             setMethod(cdef, sig, NULL, where = NULL)
         if(prevRepl)
@@ -331,5 +327,5 @@ setAs <-
     }
     else
         FALSE
-    
+
 }

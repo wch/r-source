@@ -12,7 +12,7 @@
     if(missing(where)) {
         where <- match(paste("package:", pkgname, sep=""), search())
         if(is.na(where)) {
-            warning(paste("Not a package name: ",pkgname))
+            warning(gettextf("not a package name: %s",pkgname), domain = NA)
             return()
         }
         where <- as.environment(where)
@@ -55,7 +55,7 @@
     }
     else {
         if(!identical(saved, TRUE))
-            stop("Looks like the methods library was not installed correctly; check the make results!\n")
+            stop("Looks like the methods library was not installed correctly; check the make results!")
         ## assign the environment of a function from the methods package--
         ## the namespace of the methods package, if it has one, or the global environment
         assign(".methodsNamespace", environment(get("setGeneric", where)), where)
@@ -107,4 +107,4 @@
 .Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
-message("Saving namespace image ...")
+message("Saving namespace image ...", domain = NA)

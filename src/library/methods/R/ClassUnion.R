@@ -16,8 +16,8 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
     if(length(members)>0) {
         membersDefined <- sapply(members, isClass, where = as.environment(where))
         if(!all(membersDefined))
-            stop("The member classes must be defined: not true of ",
-                 paste(dQuote(as(members, "character")), collapse=", "))
+            stop(gettextf("the member classes must be defined: not true of %s",
+                          paste(dQuote(as(members, "character")), collapse=", ")), domain = NA)
     }
     def <- new("ClassUnionRepresentation",
                makeClassRepresentation(name, package = getPackageName(where), where = where))
@@ -36,8 +36,8 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
             try(removeClass(name, where = where))
         else
             try(setClass(name, prev, where = where))
-        stop("Unable to create union class:  could not set members ",
-             paste(dQuote(failed), collapse=", "))
+        stop(gettextf("unable to create union class:  could not set members %s",
+                      paste(dQuote(failed), collapse=", ")), domain = NA)
     }
     value
 }

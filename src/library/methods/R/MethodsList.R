@@ -20,7 +20,7 @@ MethodsList <-
     if(is.name(.ArgName)){}
     else if(is.character(.ArgName) && length(.ArgName) == 1)
         .ArgName <- as.name(.ArgName)
-    else stop("Invalid first argument: should be the name of the first argument in the dispatch")
+    else stop("invalid first argument: should be the name of the first argument in the dispatch")
     slot(value, "argument") <- .ArgName
     value
 }
@@ -37,8 +37,8 @@ makeMethodsList <-
         names(object) <- mnames
     }
     if(any(duplicated(mnames)))
-        stop("duplicate element names in MethodsList at level ", level, ": ",
-             paste("\"", unique(mnames[duplicated(mnames)]), "\"", collapse=", "))
+        stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
+             level, paste("\"", unique(mnames[duplicated(mnames)]), "\"", collapse=", ")), domain = NA)
     for(i in seq(along=object)) {
         eli <- el(object, i)
         if(is(eli, "function")
@@ -47,8 +47,7 @@ makeMethodsList <-
                 is(eli, "named"))
             el(object, i) <- Recall(eli, NULL, level+1)
         else
-            stop(paste("Element ", i, " at level ", level, " (class \"",
-                       class(eli), "\") can't be interpreted as a function or named list", sep=""))
+            stop(gettextf("element %d at level %d (class \"%s\") cannot be interpreted as a function or named list", i, level, class(eli)), domain = NA)
     }
     slot(value, "methods") <- object
     value
@@ -67,7 +66,7 @@ SignatureMethod <-
 {
     n <- length(signature)
     if(n > length(names))
-        stop("arguments \"names\" and \"signature\" must have the same length")
+        stop("arguments 'names' and 'signature' must have the same length")
     if(n == 0)
         return(definition)
     Class <- el(signature,n)
@@ -88,8 +87,7 @@ insertMethod <-
     ## See rev. 1.17 for the code before the assertions added.
     if(identical(args[1], "...")) {
         if(!identical(signature[[1]], "ANY"))
-           stop("inserting method with invalid signature matching argument \"...\" to class \"",
-                signature[[1]], "\"")
+           stop(gettextf("inserting method with invalid signature matching argument '...' to class \"%s\"", signature[[1]]), domain = NA)
         args <- args[-1]
         signature <- signature[-1]
         if(length(signature) == 0)
@@ -98,8 +96,7 @@ insertMethod <-
     if(length(signature) == 0)
         stop("inserting method corresponding to empty signature")
     if(!is(mlist, "MethodsList"))
-        stop(paste("inserting method into non-methods-list object (class \"",
-                   .class1(mlist), "\")", sep=""))
+        stop(gettextf("inserting method into non-methods-list object (class \"%s\")", .class1(mlist)), domain = NA)
     if(length(args) > 1 && !cacheOnly)
         mlist <- balanceMethodsList(mlist, args)
     Class <- el(signature, 1)
@@ -189,14 +186,13 @@ MethodsListSelect <-
         if(is.function(mlist)) # call to f, inside MethodsListSelect
             {on.exit(); return(mlist)}
         if(is.null(f)) # recursive recall of MethodsListSelect
-            stop("Invalid method sublist")
+            stop("invalid method sublist")
         else if(!is.null(mlist)) # NULL => 1st call to genericFunction
-            stop("\"", f, "\" is not a valid generic function: methods list was an object of class \"",
-                 class(mlist), "\"")
+            stop(gettextf("'%f' is not a valid generic function: methods list was an object of class \"%s\"", f, class(mlist)), domain = NA)
     }
     if(!is.logical(useInherited))
-        stop("useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"",
-             class(useInherited), "\"")
+        stop(gettextf("'useInherited' must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"%s\"",
+                      class(useInherited)), domain = NA)
     if(identical(mlist, .getMethodsForDispatch(f, fdef))) {
         resetNeeded <- TRUE
         ## On the initial call:
@@ -415,12 +411,10 @@ matchSignature <-
   function(signature, fun, where = NULL)
 {
     if(!is(fun, "genericFunction"))
-        stop("Trying to match a method signature to an object (of class \"",
-             class(fun), "\") that is not a generic function.")
+        stop(gettextf("trying to match a method signature to an object (of class \"%s\") that is not a generic function", class(fun)), domain = NA)
     anames <- fun@signature
     if(!is(signature, "list") && !is(signature, "character"))
-        stop("Trying to match a method signature of class \"",
-             class(signature), "\"; expects a list or a character vector.")
+        stop(gettextf("trying to match a method signature of class \"%s\"; expects a list or a character vector", class(signature)), domain = NA)
     if(length(signature) == 0)
         return(character())
     sigClasses <- as.character(signature)
@@ -428,16 +422,17 @@ matchSignature <-
         unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])
-            warning("In the method signature for function \"", fun@generic,
-                    "\", no definition for class(es): ", paste("\"", unknown, "\"", sep="", collapse = ", "))
+            warning(gettextf("in the method signature for function '%s' no definition for class(es): %s",
+                             fun@generic,
+                             paste("\"", unknown, "\"", sep="", collapse = ", ")),
+                    domain = NA)
         }
     }
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
-        stop("Object to use as a method signature for function \"", fun@generic,
-             "\" doesn't look like a legitimate signature (a vector of single class names): there were ",
-             length(sigClasses), " class names, but ", length(signature),
-             " elements in the signature object.")
+        stop(gettextf("object to use as a method signature for function '%s' does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object",
+                      fun@generic, length(sigClasses), length(signature)),
+             domain = NA)
     if(is.null(names(signature))) {
         which <- seq(length = length(signature))
     }
@@ -456,9 +451,10 @@ matchSignature <-
     snames <- names(smatch)[-1]
     which <- match(snames, anames)
     if(any(is.na(which)))
-        stop(paste("In the method signature for function \"", fun@generic,
-                "\", invalid argument names in the signature:",
-                   paste(snames[is.na(which)], collapse = ", ")))
+        stop(gettextf("in the method signature for function '%s' invalid argument names in the signature: %s",
+                      fun@generic,
+                      paste(snames[is.na(which)], collapse = ", ")),
+             domain = NA)
 }
     n <- length(anames)
     value <- rep("ANY", n)
@@ -555,7 +551,7 @@ function(f, filename = NULL, methods)
     if(missing(methods)) {
         where <- find(mlistMetaName(f))
         if(length(where) == 0)
-            stop(paste("No methods found for generic", sQuote(f)))
+            stop(gettextf("no methods found for generic '%s'", f), domain = NA)
         where <- where[1]
         methods <- getMethods(f, where)
         if(where != 1)
@@ -648,9 +644,9 @@ linearizeMlist <-
                 arguments <- c(arguments, lapply(mi@arguments, preC, argname))
             }
             else
-                warning("Skipping methods list element ", paste(cnames[i], collapse = ", "),
-                        " of unexpected class \"", .class1(mi),
-                        "\"\n\n")
+                warning(gettextf("skipping methods list element %s of unexpected class \"%s\"\n\n",
+                                paste(cnames[i], collapse = ", "), .class1(mi)),
+                        domain = NA)
         }
         new("LinearMethodsList", methods = value, classes = classes, arguments = arguments)
     }

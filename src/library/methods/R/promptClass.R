@@ -100,19 +100,21 @@ function (clName, filename = NULL, type = "class",
     }
     whereClass <- find(classMetaName(clName))
     if(length(whereClass) == 0)
-        stop(paste0("No definition of class \"", clName,"\" found"))
+        stop(gettextf("no definition of class \"%s\" found", clName),
+             domain = NA)
     else if(length(whereClass) > 1) {
         if(identical(where, topenv(parent.frame()))) {
             whereClass <- whereClass[[1]]
-            warning("Multiple definitions of \"", clName, "\" found; using the one on ",
-                    whereClass)
+            warning(gettextf("multiple definitions of \"%s\" found; using the one on %s", clName, whereClass), domain = NA)
         }
         else {
             if(exists(classMetaName(clName), where, inherits = FALSE))
                 whereClass <- where
             else
-                stop("No definition of class \"", clName, "\" in the specified position, ",
-                     where, "; definition(s) on :", paste(whereClass, collapse = ", "))
+                stop(gettextf("no definition of class \"%s\" in the specified position, %s, definition(s) on : %s",
+                              clName, where,
+                              paste(whereClass, collapse = ", ")),
+                     domain = NA)
         }
     }
     fullName <- utils::topicName("class", clName)
