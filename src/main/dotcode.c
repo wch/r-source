@@ -1159,7 +1159,7 @@ SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP retval = do_dotcall(call, op, args, env);
     if (call != R_NilValue) {
         DevDesc *dd = CurrentDevice();
-        GCheckState(dd);
+	GCheckState(dd);
 	recordGraphicOperation(op, args, dd);
     }
     return retval;
