@@ -1,4 +1,5 @@
-medpolish <- function (x, eps=0.01, maxiter=10, trace.iter = TRUE)
+medpolish <-
+    function (x, eps=0.01, maxiter=10, trace.iter = TRUE, na.rm = FALSE)
 {
     z <- as.matrix(x)
     nr <- nrow(z)
@@ -8,21 +9,21 @@ medpolish <- function (x, eps=0.01, maxiter=10, trace.iter = TRUE)
     c <- numeric(nc)
     oldsum <- 0
     for(iter in 1:maxiter) {
-	rdelta <- apply(z, 1, median)
+	rdelta <- apply(z, 1, median, na.rm = na.rm)
 	z <- z - matrix(rdelta, nr=nr, nc=nc)
 	r <- r + rdelta
-	delta <- median(c)
+	delta <- median(c, na.rm = na.rm)
 	c <- c - delta
 	t <- t + delta
-	cdelta <- apply(z, 2, median)
+	cdelta <- apply(z, 2, median, na.rm = na.rm)
 	z <- z - matrix(cdelta, nr=nr, nc=nc, byrow=TRUE)
 	c <- c + cdelta
-	delta <- median(r)
+	delta <- median(r, na.rm = na.rm)
 	r <- r - delta
 	t <- t + delta
-	newsum <- sum(abs(z))
-	converged <- newsum==0 || abs(1-oldsum/newsum) < eps
-        if(converged) break
+	newsum <- sum(abs(z), na.rm = na.rm)
+	converged <- newsum==0 || abs(newsum-oldsum) < eps*newsum
+	if(converged) break
 	oldsum <- newsum
 	if(trace.iter) cat(iter,":", newsum,"\n")
     }

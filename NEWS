@@ -51,6 +51,8 @@ NEW FEATURES
     o	prcomp() is now fast for n x m inputs with m >> n, but the 
 	signs of the results may have changed in that case.
 
+    o	medpolish {eda} now has an `na.rm' argument (PR#2298).
+
 
 INSTALLATION CHANGES
 
