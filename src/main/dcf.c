@@ -147,7 +147,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		}
 		else{
-		    //error("Line %d is malformed!", n+1);
+		  /* error("Line %d is malformed!", n+1); */
 		}
 	    }
 	}
