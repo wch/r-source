@@ -13,8 +13,9 @@
 }
 \title{Default Printing}
 \usage{
-print.default(x, digits = NULL, quote = TRUE, na.print = NULL,
-              print.gap = NULL, right = FALSE, \dots)
+\method{print}{default}(x, digits = NULL, quote = TRUE, na.print = NULL,
+      print.gap = NULL, right = FALSE, \dots)
+
 print.atomic(x, quote = TRUE, \dots)
 }
 \arguments{

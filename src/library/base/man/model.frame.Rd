@@ -7,13 +7,16 @@
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
 model.frame(formula, \dots)
-model.frame.default(formula, data = NULL,
-                    subset = NULL, na.action = na.fail,
-                    drop.unused.levels = FALSE, xlev = NULL, \dots)
 
-Methods for
-        lm      glm     aovlist
-}
+\method{model.frame}{default}(formula, data = NULL,
+           subset = NULL, na.action = na.fail,
+           drop.unused.levels = FALSE, xlev = NULL, \dots)
+
+\method{model.frame}{aovlist}(formula, data, \dots)
+
+\method{model.frame}{glm}(formula, data, na.action, \dots)
+
+\method{model.frame}{lm}(formula, data, na.action, \dots)
 \arguments{
   \item{formula}{a model formula}
 

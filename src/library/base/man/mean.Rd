@@ -2,7 +2,8 @@
 \title{Arithmetic Mean}
 \usage{
 mean(x, \dots)
-mean.default(x, trim = 0, na.rm = FALSE, \dots)
+
+\method{mean}{default}(x, trim = 0, na.rm = FALSE, \dots)
 }
 \alias{mean}
 \alias{mean.default}

@@ -12,7 +12,8 @@
 }
 \usage{
 toString(x, \dots)
-toString.default(x, width, \dots)
+
+\method{toString}{default}(x, width, \dots)
 }
 \arguments{
   \item{x}{The object to be converted.}

@@ -21,7 +21,6 @@
 }
 \usage{
 time(x, \dots)
-time.ts(x, \dots)
 \method{time}{default}(x, offset=0, \dots)
 
 cycle(x, \dots)

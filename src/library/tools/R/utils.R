@@ -268,14 +268,16 @@ function(package)
     ## @code{package} which 'look' like S3 methods, but are not.
     ## using package=NULL returns all known examples
     stopList <-
-        list(base = c("boxplot.stats",
+        list(base = c("anova.lmlist",
+             "boxplot.stats",
              "close.screen", "close.socket",
              "fitted.values",
              "flush.console",
              "format.char", "format.info", "format.pval",
              "influence.measures",
              "kappa.tri",
-             "plot.new", "plot.window", "plot.xy", "print.coefmat",
+             "plot.new", "plot.window", "plot.xy",
+             "print.coefmat", "print.atomic",
              "rep.int",
              "split.screen",
              "update.packages"),
