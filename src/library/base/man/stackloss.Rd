@@ -18,7 +18,7 @@
 }
 \description{(Brownlee, cited by Dodge, slightly reformatted by MM):
 ``Obtained from 21 days of operation of a plant for the oxidation
- of ammonia (NH_3) to nitric acid (HNO_3).
+ of ammonia (NH3) to nitric acid (HNO3).
  The nitric oxides produced are absorbed in a countercurrent absorption
  tower.
 
