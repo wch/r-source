@@ -1,6 +1,6 @@
 \name{demo}
 \alias{demo}
-\title{Demonstrations of R functionality}
+\title{Demonstrations of R Functionality}
 \description{
   \code{demo} is a user-friendly interface to running some demonstration
   \R scripts.  \code{demo()} gives the list of available topics.
@@ -11,9 +11,11 @@ demo(topic, device = getOption("device"),
      character.only = FALSE, verbose = getOption("verbose"))
 }
 \arguments{
-  \item{topic}{name or string constant, or a character string: the topic
-    which should be demonstrated.  If omitted, the list of available
-    topics is displayed.}
+  \item{topic}{the topic which should be demonstrated, given as a
+    \link{name} or literal character string, or a character string,
+    depending on whether \code{character.only} is \code{FALSE} (default)
+    or \code{TRUE}.  If omitted, the list of available topics is
+    displayed.}
   \item{device}{the graphics device to be used.}
   \item{package}{a character vector giving the packages to look into for
     demos.  By default, all packages in the search path are used.}

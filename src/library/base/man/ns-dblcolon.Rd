@@ -10,8 +10,8 @@ pkg::name
 pkg:::name
 }
 \arguments{
-  \item{pkg}{package name symbol or string literal.}
-  \item{name}{variable name symbol or string literal.}
+  \item{pkg}{package name symbol or literal character string.}
+  \item{name}{variable name symbol or literal character string.}
 }
 \details{
   The expression \code{pkg::name} returns the value of the exported

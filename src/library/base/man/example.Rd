@@ -12,8 +12,8 @@ example(topic, package = .packages(), lib.loc = NULL,
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
 \arguments{
-  \item{topic}{name or string constant: the online \code{\link{help}}
-    topic the examples of which should be run.}
+  \item{topic}{name or literal character string: the online
+    \code{\link{help}} topic the examples of which should be run.}
   \item{package}{a character vector with package names.  By default,
     all packages in the search path are used.}
   \item{lib.loc}{a character vector of directory names of \R libraries,

@@ -9,7 +9,7 @@
 get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
 }
 \arguments{
-  \item{x}{a variable name (given as a quoted character string).}
+  \item{x}{a variable name (given as a character string).}
   \item{pos}{where to look for the object (see the details section); if
     omitted, the function will search, as if the name of the object
     appeared in unquoted in an expression.

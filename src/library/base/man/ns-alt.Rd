@@ -1,27 +1,25 @@
 \name{ns-alt}
 \title{Experimental Alternative Name Specification Support}
-
 \alias{.Export}
 \alias{.Import}
 \alias{.ImportFrom}
 \alias{.S3method}
-
-\usage{
-  .Export(\dots)
-  .Import(\dots)
-  .ImportFrom(name, \dots)
-  .S3method(generic, class, method)
-}
-\arguments{
-  \item{\dots}{unevaluated character or name arguments.}
-  \item{name}{unevaluated character or name.}
-  \item{generic}{unevaluated character or name.}
-  \item{class}{unevaluated character or name.}
-  \item{method}{optional evaluated character or function argument.}
-}
 \description{
   Alternative interface for specifying a name space within the code of a
   package.
+}
+\usage{
+.Export(\dots)
+.Import(\dots)
+.ImportFrom(name, \dots)
+.S3method(generic, class, method)
+}
+\arguments{
+  \item{\dots}{name or literal character string arguments.}
+  \item{name}{name or literal character string.}
+  \item{generic}{name or literal character string.}
+  \item{class}{name or literal character string.}
+  \item{method}{optional character or function argument.}
 }
 \details{
   As an experimental alternative to using a \file{NAMESPACE} file it is

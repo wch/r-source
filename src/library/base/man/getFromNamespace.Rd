@@ -11,7 +11,7 @@ getFromNamespace(x, ns, pos = -1, envir = as.environment(pos))
 fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 }
 \arguments{
-  \item{x}{an object name (given as a quoted character string).}
+  \item{x}{an object name (given as a character string).}
   \item{ns}{a namespace, or character string giving the namespace.}
   \item{pos}{where to look for the object: see \code{\link{get}}.}
   \item{envir}{an alternative way to specify an environment to look in.}

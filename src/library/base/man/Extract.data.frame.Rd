@@ -38,7 +38,7 @@ x$name <- value
     Coercion section.  If \code{NULL}, deletes the column if a single
     column is selected.}
 
-  \item{name}{a character string or (unquoted) name.}
+  \item{name}{name or literal character string.}
 }
 \details{
   Data frames can be indexed in several modes.  When \code{[} and

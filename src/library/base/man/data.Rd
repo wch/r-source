@@ -11,7 +11,7 @@ data(\dots, list = character(0), package = .packages(),
      envir = .GlobalEnv)
 }
 \arguments{
-  \item{\dots}{a sequence of names or string constants.}
+  \item{\dots}{a sequence of names or literal character strings.}
   \item{list}{a character vector.}
   \item{package}{a name or character vector giving the packages to look
     into for data sets.  By default, all packages in the search path are
