@@ -727,7 +727,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     list(imports=imports, exports=exports, exportPatterns = exportPatterns,
          importClasses=importClasses, importMethods=importMethods,
          exportClasses=exportClasses, exportMethods=exportMethods,
-         dynlibs=dynlibs, S3methods = S3methods[seq(len=nS3),])
+         dynlibs=dynlibs, S3methods = S3methods[seq(len=nS3), ,drop=FALSE])
 }
 
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
