@@ -26,7 +26,7 @@
 ###  To build R you also need the complete Waste 2.x distribution
 ###  Refer to http://www.merzwaren.com/waste
 ###
-###  Jago Aug 26 2001, Stefano M. Iacus
+###  Jago Nov 11 2001, Stefano M. Iacus
 ###  (`iacus-ng' recently released, so it can't be bug free)
 ###   
 ###  bug report or optimization hints can be sent to
@@ -110,6 +110,17 @@ if !`Exists :::f2cLib`
  end
 end
 
+
+if !`Exists :::zlibLib`
+ begin
+  Alert "Please indicate where zlibLib is"
+  set  zlibLib "`GetFilename`" 
+  Echo "Installing zlibLib"
+  Duplicate  {zlibLib} :::
+ end
+end
+
+
 if !`Exists :::.Renviron`
  Duplicate  :.Renviron :::
 end
@@ -155,7 +166,7 @@ echo " " >>MakeR
 echo Includes = -i ::include -i ::extra:xdr '¶' >>MakeR
 echo  -i : -i :dir -i :waste -i :edit -i :gui  '¶' >>MakeR
 echo  -i :extra -i :dll -i :sys '¶' >>MakeR
-echo  -i '"''{'WasteDir'}C_C++ Headers"' -i :f2c ¶
+echo  -i '"''{'WasteDir'}C_C++ Headers"' -i :f2c -i :zlib ¶
       -i '"''{'MFDir'}'CHeaders'"' ¶
 	  -i '"''{'MFDir'}'Sources'"' >>MakeR
 echo " " >>MakeR
@@ -185,7 +196,8 @@ echo '"''{'PPCLibraries'}'StdCRuntime.o'"'   '¶' >>MakeR
 echo '"''{'PPCLibraries'}'PPCCRuntime.o'"'   '¶' >>MakeR
 echo '"''{'PPCLibraries'}'PPCToolLibs.o'"' '¶' >>MakeR
 echo '"''{'WasteLib'}''"' '¶' >>MakeR
-echo '":::f2cLib"' >>MakeR
+echo '":::f2cLib"'  '¶' >>MakeR
+echo '":::zlibLib"' >>MakeR
 
 
 echo " " >>MakeR
