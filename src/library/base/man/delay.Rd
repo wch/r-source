@@ -4,9 +4,10 @@
 delay(x, env=.GlobalEnv)
 }
 \alias{delay}
+\concept{promise}
 \arguments{
-\item{x}{an expression.}
-\item{env}{an evaluation environment}
+  \item{x}{an expression.}
+  \item{env}{an evaluation environment}
 }
 \description{
   \code{delay} creates a \emph{promise} to evaluate the given
@@ -15,10 +16,14 @@ delay(x, env=.GlobalEnv)
   used by \R for the evaluation of (interpreted) functions.
 }
 \value{
-  A \emph{promise} to evaluate the expression.
-  The value which is returned by \code{delay} can be assigned
-  without forcing its evaluation, but any further accesses
-  will cause evaluation.
+  A \emph{promise} to evaluate the expression.  The value which is
+  returned by \code{delay} can be assigned without forcing its
+  evaluation, but any further accesses will cause evaluation.
+}
+\details{
+  If promises are kept inside an \code{\link{environment}} or
+  \code{\link{list}}, they can be accessed in several ways without
+  evaluation, see the examples below.
 }
 \examples{
 x <- delay({
@@ -29,6 +34,16 @@ x <- delay({
 
 x^2 #- yippee
 x^2 #- simple number
+
+e <- (function(x, y = 1, z) environment())(1+2, "y", {cat(" HO! "); pi+2})
+(le <- as.list(e))# a list with three promise components
+utils::str(le)# even shows what's promised
+
+le$z # prints; does not eval
+ez <- le$z
+ez-2 # "HO!", pi
+ez # 5.14
+le$z # still promise
 }
 \keyword{programming}
 \keyword{data}
