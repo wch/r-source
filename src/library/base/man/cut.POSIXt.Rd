@@ -5,8 +5,8 @@
   Method for \code{\link{cut}} applied to date-time objects.
 }
 \usage{
-\method{cut}{POSIXt}(x, breaks, labels=NULL, start.on.monday=TRUE,
-    right=FALSE, \dots)
+\method{cut}{POSIXt}(x, breaks, labels = NULL, start.on.monday = TRUE,
+    right = FALSE, \dots)
 }
 \arguments{
   \item{x}{an object inheriting from class \code{"POSIXt"}.}
@@ -16,10 +16,11 @@
     interval specification, one of \code{"secs"}, \code{"mins"},
     \code{"hours"}, \code{"days"}, \code{"weeks"}, \code{"months"}
     or \code{"years"}.
- }
- \item{labels}{
-   labels for the levels of the resulting category.  By default,
-    labels are constructed using \code{"(a,b]"} interval notation. If
+  }
+  \item{labels}{
+    labels for the levels of the resulting category.  By default,
+    labels are constructed from the left-hand end of the intervals
+    (which are include for the default value of \code{right}). If
     \code{labels = FALSE}, simple integer codes are returned instead
     of a factor.
   }
