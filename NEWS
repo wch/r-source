@@ -32,7 +32,7 @@ NEW FEATURES
 
     o   pdf() now responds to the 'paper' and 'pagecentre'
 	arguments.  The default value of 'paper' is "special"
-	for backward-compatibility (this is different from the 
+	for backward-compatibility (this is different from the
         default for postscript()).
 
     o	Faster algorithm in summaryRprof().
@@ -318,9 +318,12 @@ NEW FEATURES
     	deprecated.
 
     o   New functions for multivariate linear models: anova.mlm,
-        SSD, estVar, mauchley.test (for sphericity). Also vcov() 
+        SSD, estVar, mauchley.test (for sphericity). Also vcov()
 	does something more sensible for "mlm" class objects
 	now.
+
+    o	The default in options("expressions") has been increased to 5000,
+	and the maximal settable value to 500000.
 
 
 INTERNATIONALIZATION

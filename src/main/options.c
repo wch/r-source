@@ -29,13 +29,13 @@
 
 /* The global var. R_Expressions is in Defn.h */
 #define R_MIN_EXPRESSIONS_OPT	25
-#define R_MAX_EXPRESSIONS_OPT	100000
+#define R_MAX_EXPRESSIONS_OPT	500000
 
 /* Interface to the (polymorphous!)  options(...)  command.
  *
  * We have two kind of options:
- *   1) those used exclusively from R code, 
- *	typically initialized in Rprofile.  
+ *   1) those used exclusively from R code,
+ *	typically initialized in Rprofile.
 
  *	Their names need not appear here, but may, when we want
  *	to make sure that they are assigned `valid' values only.
@@ -44,7 +44,7 @@
  *	Either accessing and/or setting a global C variable,
  *	or just accessed by e.g.  GetOption(install("pager"), ..)
  *
- * A (complete?!) list of these (2):	
+ * A (complete?!) list of these (2):
  *
  *	"prompt"
  *	"continue"
@@ -299,7 +299,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     options = SYMVALUE(Options());
 
     if (args == R_NilValue) {
-	/* This is the zero argument case.  
+	/* This is the zero argument case.
 	   We alloc up a real list and write the system values into it.
 	*/
 	n = length(options);
@@ -316,8 +316,8 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return value;
     }
 
-    /* The arguments to "options" can either be a sequence of 
-       name = value form, or can be a single list.  
+    /* The arguments to "options" can either be a sequence of
+       name = value form, or can be a single list.
        This means that we must code so that both forms will work.
        [ Vomits quietly onto shoes ... ]
        */
@@ -367,7 +367,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
-		    errorcall(call, 
+		    errorcall(call,
 			      _("invalid width parameter, allowed %d...%d"),
 			      R_MIN_WIDTH_OPT, R_MAX_WIDTH_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
@@ -375,7 +375,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "digits")) {
 		k = asInteger(argi);
 		if (k < R_MIN_DIGITS_OPT || k > R_MAX_DIGITS_OPT)
-		    errorcall(call, 
+		    errorcall(call,
 			      _("invalid digits parameter, allowed %d...%d"),
 			      R_MIN_DIGITS_OPT, R_MAX_DIGITS_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
@@ -383,7 +383,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
 		if (k < R_MIN_EXPRESSIONS_OPT || k > R_MAX_EXPRESSIONS_OPT)
-		    errorcall(call, 
+		    errorcall(call,
 			      _("expressions parameter invalid, allowed %d...%d"),
 			      R_MIN_EXPRESSIONS_OPT, R_MAX_EXPRESSIONS_OPT);
 		R_Expressions = k;
