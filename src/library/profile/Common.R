@@ -4,7 +4,7 @@ attach(NULL, name = "Autoloads")
 assign(".Autoloaded", NULL, env=.AutoloadEnv)
 T <- TRUE
 F <- FALSE
-R.version <- structure(Version(), class = "simple.list")
+R.version <- structure(R.Version(), class = "simple.list")
 version <- .Alias(R.version)# for S-compatibility
 R.version.string <- local({
     cc <- function(...) paste(..., collapse=" ")
