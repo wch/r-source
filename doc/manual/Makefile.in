@@ -20,7 +20,7 @@ DISTFILES = \
 	Rd.sty \
 	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top refman.bot
-SUBDIRS =
+SUBDIRS = images
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
@@ -53,6 +53,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-tex; \
+	  $(MAKE) rhome=$(top_builddir) install-images-eps; \
+	  $(MAKE) rhome=$(top_builddir) install-images-pdf; \
 	fi
 
 .texi.dvi:
@@ -129,10 +131,19 @@ install: installdirs install-tex
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual
 install-strip: install
-install-dvi: dvi
-	@$(MKINSTALLDIRS) $(rhome)/doc/dvi
+install-dvi: dvi installdirs install-images-eps
 	@for f in *.dvi; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/dvi; \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual; \
+	done
+install-images-eps:
+	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
+	@for f in $(srcdir)/images/*.eps; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
+	done
+install-images-pdf:
+	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
+	@for f in $(srcdir)/images/*.pdf; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
 	done
 install-info: info $(infodir)/dir
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
@@ -142,10 +153,9 @@ install-info: info $(infodir)/dir
 	  $(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/$${f} \
 	    || echo "You need to adjust $(infodir)/dir manually"; \
 	done
-install-pdf: pdf
-	@$(MKINSTALLDIRS) $(rhome)/doc/pdf
+install-pdf: pdf installdirs
 	@for f in *.pdf; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/pdf; \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual; \
 	done
 install-tex:
 	@for f in $(srcdir)/Rd.sty; do \
@@ -160,8 +170,9 @@ uninstall:
 	@echo "Uninstalling doc/manual ..."
 	@rm -rf $(rhome)/doc/manual
 uninstall-dvi:
-	@-rm -f $(rhome)/doc/dvi/*
-	@-rmdir $(rhome)/doc/dvi
+	@-rm -f $(rhome)/doc/manual/images/*.eps
+	@-rmdir $(rhome)/doc/manual/images
+	@-rm -f $(rhome)/doc/manual/*.dvi
 uninstall-info:
 	@for f in $(OBJECTS_INFO); do \
 	  $(INSTALL_INFO) --remove --info-dir=$(infodir) $${f} \
@@ -171,14 +182,13 @@ uninstall-info:
 	  rm -f $(infodir)/$${f}; \
 	done
 uninstall-pdf:
-	@-rm -f $(rhome)/doc/pdf/*
-	@-rmdir $(rhome)/doc/pdf
+	@-rm -f $(rhome)/doc/manual/*.pdf
 
 mostlyclean: clean
 clean:
-	@echo cleaning in doc/manual
+	@echo "cleaning in doc/manual"
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f Rd.sty Rd2dvi.tex; \
+	  rm -rf Rd.sty Rd2dvi.tex images; \
 	fi
 	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.info* *.ky *.kys \
 	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
@@ -194,7 +204,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
         done
-	@for d in $(SUBDIRS) man; do \
+	@for d in $(SUBDIRS); do \
 	  if test -d $(srcdir)/$${d}; then \
 	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
 	        | (cd $(distdir); $(TAR) -x -f -)) \
