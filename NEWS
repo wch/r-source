@@ -10,6 +10,7 @@
 
 
 NEW FEATURES
+    o   persp and image are now generic functions
 
     o	Changes to connections:
 
