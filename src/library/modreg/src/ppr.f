@@ -1267,8 +1267,8 @@ c   this was `eps' (=? sqrt(machine eps)) in ./sbart.f :
 
       isetup = 0
       ier = 1
-      call qsbart(gcvpen,df1,dx,dy,dw,0.0,n,knot,nk,coef,dsmo,lev,crit,
-     &     iparms,lambda,param,isetup, work,4,1,ier)
+      call qsbart(gcvpen,df1,dx,dy,dw,0.0d0,n,knot,nk,coef,dsmo,lev,
+     &     crit,iparms,lambda,param,isetup, work,4,1,ier)
       if(ier .gt. 0) call intpr('TROUBLE:',8, ier, 1)
       do 50 i = 1,n
  50      smo(i) = dsmo(i)

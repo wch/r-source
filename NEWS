@@ -677,6 +677,7 @@ BUG FIXES
 
     o	qbeta(0.25, 0.143891, 0.05) was (incorrectly) 3e-308. (PR#1201)
 
+    o   Fixed alignment problem in ppr.f on Irix (PR# 1002, 1026)
 
 
 	**************************************************
