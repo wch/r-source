@@ -29,7 +29,7 @@ duplicated(x, incomparables = FALSE, \dots)
   arrays (including matrices).
 
   The data frame method works by pasting together a character
-  representation of the rows separated by \code{\r}, so may be imperfect
+  representation of the rows separated by \code{\\r}, so may be imperfect
   if the data frame has characters with embedded carriage returns or
   columns which do not reliably map to characters.
 
