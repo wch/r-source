@@ -12,12 +12,12 @@ detach(name, pos = 2, version)
   }
   \item{pos}{
     Index position in \code{\link{search}()} of database to
-    detach.  When \code{name} is \code{\link{numeric}}, \code{pos = name}
+    detach.  When \code{name} is a number, \code{pos = name}
     is used.
   }
-    \item{version}{A character string denoting a version number of the
-     package to be loaded.  If no version is given, a suitable default
-     is chosen.}
+  \item{version}{A character string denoting a version number of the
+    package to be loaded.  If no version is given, a suitable default
+    is chosen.}
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()} path
