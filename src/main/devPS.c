@@ -365,7 +365,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 			  char *fontname, int ISOLatin1)
 {
     char buf[BUFSIZE], *p;
-    int mode, i = 0, ii, nKPX=0;
+    int mode, i = 0, j, ii, nKPX=0;
     FILE *fp;
 
     if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
@@ -380,6 +380,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
     for (ii = 0; ii < 256; ii++) {
 	charnames[ii][0] = '\0';
 	metrics->CharInfo[ii].WX = 0;
+	for(j = 0; j < 4; j++) metrics->CharInfo[ii].BBox[j] = 0;
     }
     while (fgets(buf, BUFSIZE, fp)) {
 	switch(KeyType(buf)) {
