@@ -580,6 +580,9 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (mode) {
 		a = args;
 		t = CDR(call);
+		/* FIXME KH 1998/06/23
+		   This should obviously do something useful, but
+		   currently breaks [cr]bind() if one arg is a df
 		while (a != R_NilValue) {
 			if(t == R_NilValue)
 				errorcall(call, "corrupt data frame args!\n");
@@ -589,6 +592,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			t = CDR(t);
 			a = CDR(a);
 		}
+		*/
 		switch(PRIMVAL(op)) {
 		    case 1:
 			op = install("cbind.data.frame");
