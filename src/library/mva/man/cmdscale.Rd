@@ -49,11 +49,11 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
      }
 }
 \references{
-  Cox, F.C. and Cox, M.A.A. (1994)
+  Cox, T. F. and Cox, M. A. A. (1994)
   \emph{Multidimensional Scaling}.
   Chapman and Hall.
 
-  Mardia, K. V., J. T. Kent and J. M. Bibby (1979).  Chapter 14 of
+  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).  Chapter 14 of
   \emph{Multivariate Analysis}, London: Academic Press.
 
   Seber, G. A. F. (1984).
@@ -73,7 +73,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   the dissimilarities \eqn{d_{ij} + c*}{d[i,j] + c*} are used instead of
   the original \eqn{d_{ij}}{d[i,j]}'s.
 
-  Whereas S-plus computes this constant using an approximation suggested by
+  Whereas S-PLUS computes this constant using an approximation suggested by
   Torgerson, \R uses the exact analytical solution of Cailliez (1983),
   see also Cox and Cox (1994).
 }
