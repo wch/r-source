@@ -48,8 +48,8 @@ infinite (i.e. equal to one of \code{Inf} or \code{-Inf}).
 %%- better ones ?!??
     ANSI/IEEE 754 Floating-Point Standard.
 
-    Currently (6/1999), Bill M.'s \email{billm@melbpc.org.au} tutorial
-    and examples at \cr \url{http://www.linuxsupportline.com/~billm/}
+    Currently (6/2002), Bill Metzenthen's \email{billm@suburbia.net} tutorial
+    and examples at \cr \url{http://www.suburbia.net/~billm/}
 }
 \examples{
 pi / 0 ## = Inf a non-zero number divided by zero creates infinity
