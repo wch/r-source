@@ -1064,7 +1064,7 @@ sub check_pkg {
 
     ## Check for missing documentation entries.
 
-    if(((-d "R") || (-d "data")) && (-d "man")) {
+    if(((-d "R") || (-d "data"))) {
 	$log->checking("for missing documentation entries");
 
 	my $Rcmd= "options(warn=1)\n";
