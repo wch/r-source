@@ -10,8 +10,8 @@ rw1070
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
 
-TITLE files in packages are no longer used, as since 1.6.0 a package has
-been required to have a DESCRIPTION file.
+The format of packages.html has changed, with packages listed by
+library tree (as happens on Unix) when there is more than one tree.
 
 The output when building R or source packages is much quieter.
 
