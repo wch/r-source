@@ -54,7 +54,7 @@ help.start(update = TRUE, gui = "irrelevant",
 
   \code{help.start} and the Java-based search engine have been tested
   under Internet Explorer 6, Netscape 6.2.3/7.0/7.1, Opera 6.01,
-  Mozilla 1.5 and MozillaFirebird 0.7.
+  Mozilla 1.5 and MozillaFirefox 0.8.
 #endif
 }
 
@@ -71,7 +71,7 @@ help.start(browser="C:\\\\Program Files\\\\Internet Explorer\\\\IEXPLORE.EXE")
 help.start(browser="C:/Program Files/Netscape/Netscape/netscp.exe")
 help.start(browser="C:/Program Files/Opera/Opera.exe")
 help.start(browser="C:/Program Files/mozilla.org/Mozilla/mozilla.exe")
-help.start(browser="C:/Program Files/mozilla.org/Firebird/MozillaFirebird.exe")
+help.start(browser="C:/Program Files/Mozilla Firefox/firefox.exe")
 #endif
 }}
 \keyword{documentation}
