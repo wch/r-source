@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2001  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -338,7 +338,7 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
 
 static char enccode[5000];
 
-static int GetNextItem(FILE *fp, char *dest)
+static int GetNextItem(FILE *fp, char *dest, int c)
 {
     static char buf[1000], *p = NULL, *p0;
 
@@ -346,14 +346,13 @@ static int GetNextItem(FILE *fp, char *dest)
 	if (feof(fp)) { p = NULL; return 1; }
 	if (!p || *p == '\n' || *p == '\0') {
 	    p = fgets(buf, 1000, fp);
-	    strcat(enccode, p);
 	}
 	while (isspace((int)*p)) p++;
 	if (p == '\0' || *p == '%'|| *p == '\n') { p = NULL; continue; }
 	p0 = p;
 	while (!isspace((int)*p)) p++;
 	if (p != '\0') *p++ = '\0';
-	strcpy(dest, p0);
+	if(c == 45) strcpy(dest, "/minus"); else strcpy(dest, p0);
 	break;
     }
     return 0;
@@ -373,17 +372,19 @@ LoadEncoding(char *fontpath, char *encname)
 #ifdef DEBUG_PS
     Rprintf("encoding path is %s\n", buf);
 #endif
-    strcpy(enccode, "");
     if (!(fp = R_fopen(buf, "r"))) return 0;
-    if (GetNextItem(fp, buf)) return 0; /* encoding name */
-    strcpy(encname, buf+1);
-    if (GetNextItem(fp, buf)) { fclose(fp); return 0;} /* [ */
+    if (GetNextItem(fp, buf, 0)) return 0; /* encoding name */
+    strcpy(encname, buf+1); sprintf(enccode, "/%s [\n", encname);
+    if (GetNextItem(fp, buf, 0)) { fclose(fp); return 0;} /* [ */
     for(i = 0; i < 256; i++) {
-	if (GetNextItem(fp, buf)) { fclose(fp); return 0; }
+	if (GetNextItem(fp, buf, i)) { fclose(fp); return 0; }
 	strcpy(encnames[i], buf+1);
+	strcat(enccode, " /"); strcat(enccode, encnames[i]);
+	if(i%8 == 7) strcat(enccode, "\n");
     }
-    if (GetNextItem(fp, buf)) { fclose(fp); return 0;} /* ] */
+    if (GetNextItem(fp, buf, 0)) { fclose(fp); return 0;} /* ] */
     fclose(fp);
+    strcat(enccode,"]\n");
     return 1;
 }
 
@@ -502,7 +503,7 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
     for ( ; *p; p++) {
 	wx = metrics->CharInfo[*p].WX;
 	if(wx == NA_SHORT)
-	    warning("font width unknown for character `%c'");
+	    warning("font width unknown for character %d", *p);
 	else sum += wx;
 	
 	/* check for kerning adjustment */
@@ -534,7 +535,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	wx = metrics->CharInfo[c].WX;
 	if(wx == NA_SHORT) {
-	    warning("font metrics unknown for character `%c'", c);
+	    warning("font metrics unknown for character %d", c);
 	    wx = 0;
 	}
 	*width = 0.001 * wx;
@@ -546,17 +547,18 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 
 static char *TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 
-static void PSEncodeFont(FILE *fp, int encoding, char *encname)
+static void PSEncodeFont(FILE *fp, char *encname)
 {
     int i;
 
-    if (encoding && strcmp(encname, "ISOLatin1Encoding")) 
+    /* include encoding unless it is ISOLatin1Encoding, which is predefined */
+    if (strcmp(encname, "ISOLatin1Encoding")) 
 	fprintf(fp, "%% begin encoding\n%s def\n%% end encoding\n", enccode);
     for (i = 0; i < 4 ; i++) {
 	fprintf(fp, "/%s findfont\n", familyname[i]);
 	fprintf(fp, "dup length dict begin\n");
 	fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
-	if (encoding) fprintf(fp, "  /Encoding %s def\n", encname);
+	fprintf(fp, "  /Encoding %s def\n", encname);
 	fprintf(fp, "  currentdict\n");
 	fprintf(fp, "  end\n");
 	fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
@@ -573,8 +575,9 @@ static void PSEncodeFont(FILE *fp, int encoding, char *encname)
 /* of the (unrotated) printer page in points whereas the graphics */
 /* region box is for the rotated page. */
 
-static void PSFileHeader(FILE *fp, int encoding, char* encname, char *papername,
-			 double paperwidth, double paperheight, Rboolean landscape,
+static void PSFileHeader(FILE *fp, char* encname, 
+			 char *papername, double paperwidth, 
+			 double paperheight, Rboolean landscape,
 			 int EPSFheader,
 			 double left, double bottom, double right, double top)
 {
@@ -615,7 +618,7 @@ static void PSFileHeader(FILE *fp, int encoding, char* encname, char *papername,
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
     fprintf(fp, "%% end   .ps.prolog\n");
-    PSEncodeFont(fp, encoding, encname);
+    PSEncodeFont(fp, encname);
     fprintf(fp, "%%%%EndProlog\n");
 }
 
@@ -746,8 +749,7 @@ typedef struct {
     int pageno;		/* page number */
 			
     int fontfamily;	/* font family */
-    int encoding;	/* font encoding */
-    char encname[50];
+    char encname[PATH_MAX]; /* font encoding */
     char **afmpaths;	/* for user-specified family */
     int maxpointsize;
 
@@ -840,7 +842,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
        then we must free(dd) */
 
     double xoff, yoff, pointsize;
-    rcolor setbg, setfg, setfill;
+    rcolor setbg, setfg;
 
     PostScriptDesc *pd;
 
@@ -862,12 +864,11 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
     pd->fontfamily = strcmp(family, "User") ? MatchFamily(family) : USERAFM;
-    pd->encoding = 1;
+    strcpy(pd->encname, encoding);
     pd->afmpaths = afmpaths;
 
     setbg = str2col(bg);
     setfg = str2col(fg);
-    setfill = NA_INTEGER;
 
     pd->width = width;
     pd->height = height;
@@ -1107,7 +1108,7 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
     char buf[512], *p;
     int i;
 
-    if (!LoadEncoding("ISOLatin1.enc", pd->encname))
+    if (!LoadEncoding(pd->encname, pd->encname))
 	error("problem loading encoding file");
     for(i = 0; i < 4 ; i++) {
 	if(pd->fontfamily == USERAFM) p = pd->afmpaths[i];
@@ -1157,7 +1158,6 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
 
     if(pd->landscape)
 	PSFileHeader(pd->psfp,
-		     pd->encoding,
 		     pd->encname,
 		     pd->papername,
 		     pd->paperwidth,
@@ -1170,7 +1170,6 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
 		     dd->dp.right);
     else
 	PSFileHeader(pd->psfp,
-		     pd->encoding,
 		     pd->encname,
 		     pd->papername,
 		     pd->paperwidth,
@@ -1507,7 +1506,6 @@ typedef struct {
 
     int fontfamily;	 /* font family */
     int fontnum;	 /* font number in XFig */
-    int encoding;	 /* font encoding */
     int fontstyle;	 /* font style, R, B, I, BI, S */
     int fontsize;	 /* font size in points */
     int maxpointsize;
@@ -1535,13 +1533,6 @@ typedef struct {
     FontMetricInfo metrics[5];	/* font metrics */
 
 } XFigDesc;
-
-/* TODO
-
-   line styles
-   more accurate text positioning. Ross suggests using XFig justification
-     if appropriate.
- */
 
 static void
 XF_FileHeader(FILE *fp, char *papername, Rboolean landscape, Rboolean onefile)
@@ -1693,7 +1684,6 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     strcpy(pd->papername, paper);
     pd->fontfamily = MatchFamily(family);
     pd->fontnum = XFig_basenums[pd->fontfamily];
-    pd->encoding = 1;
     pd->bg = str2col(bg);
     pd->col = str2col(fg);
     pd->fill = NA_INTEGER;
@@ -2169,4 +2159,18 @@ static void XFig_MetricInfo(int c, double *ascent, double *descent,
     *ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
     *descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
     *width = floor(dd->gp.cex * dd->gp.ps + 0.5) * *width;
+}
+
+/***********************************************************************
+
+                 PDF driver also shares font handling
+
+************************************************************************/
+
+Rboolean
+PDFDeviceDriver(DevDesc* dd, char *file, char *family, char *encoding, 
+		char *bg, char *fg, double width, double height, double ps)
+{
+    warning("pdf driver is not yet operational");
+    return 0;
 }

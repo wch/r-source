@@ -12,17 +12,15 @@
 NEW FEATURES
 
      o	New components in .Machine give the sizes of long, long long
-	and long double types (or 0 if they do not exist).
+	and long double C types (or 0 if they do not exist).
+
+     o	postscript() allows user-specified encoding, with encoding
+	files supplied for Windows, Mac, Unicode and various others.
+
+     o	pdf() graphics driver (not yet operational).
 
 
 BUG FIXES
-
-     o	postscript() and xfig() devices now make use of genuine Adobe
-	afm files, and warn if characters are used in string width or
-	height calculations that are not in the encoding in use.
-
-     o	readBin() and writeBin() were not always correctly detecting
-	useful long types (such as long double).
 
 
 
@@ -31,6 +29,7 @@ BUG FIXES
 	*	       1.2 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
 
 		CHANGES IN R VERSION 1.2.1
 

@@ -4,6 +4,7 @@
 	 width	= 0,
 	 height = 0,
 	 family = "Helvetica",
+	 encoding = "ISOLatin1.enc",
 	 pointsize  = 12,
 	 bg	= "white",
 	 fg	= "black",
@@ -113,7 +114,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 }
 
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
-                  onefile=FALSE, ...)
+                  onefile = FALSE, ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
@@ -122,6 +123,16 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     .Internal(XFig(file, old$paper, old$family, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre))
+}
+
+pdf <- function (file = "Rplots.pdf", width = 6, height = 6, ...)
+{
+    new <- list(...)# eval
+    old <- check.options(new = new, name.opt = ".PostScript.Options",
+			 reset = FALSE, assign.opt = FALSE)
+
+    .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,
+                  width, height, old$pointsize))
 }
 
 .ps.prolog <- c(

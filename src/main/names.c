@@ -631,6 +631,7 @@ FUNTAB R_FunTab[] =
 {"PS",		do_PS,		0,	111,   15,	PP_FUNCALL},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"XFig",	do_XFig,	0,	111,   12,	PP_FUNCALL},
+{"PDF",		do_PDF,		0,	111,    8,	PP_FUNCALL},
 #ifdef Win32
 {"devga",	do_devga,	0,	111,	5,	PP_FUNCALL},
 #endif

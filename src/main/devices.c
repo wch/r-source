@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ static char *SaveString(SEXP sxp, int offset)
  *  ------------------------		--> devPS.c
  *  file	= output filename
  *  paper	= paper type
- *  face	= typeface = "family"
+ *  family	= typeface = "family"
+ *  encoding	= char encoding file name
  *  bg		= background color
  *  fg		= foreground color
  *  width	= width in inches
@@ -62,7 +63,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd;
     char *vmax;
     char *file, *paper, *family=NULL, *bg, *fg, *cmd;
-    char *afms[4], encoding;
+    char *afms[4], *encoding;
     int i, horizontal, onefile, pagecentre, printit;
     double height, width, ps;
     SEXP fam;
@@ -171,7 +172,7 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
  *  ------------------------		--> devPS.c
  *  file	= output filename
  *  paper	= paper type
- *  face	= typeface = "family"
+ *  family	= typeface = "family"
  *  bg		= background color
  *  fg		= foreground color
  *  width	= width in inches
@@ -186,14 +187,14 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
     char *vmax;
-    char *file, *paper, *face, *bg, *fg;
+    char *file, *paper, *family, *bg, *fg;
     int horizontal, onefile, pagecentre;
     double height, width, ps;
     gcall = call;
     vmax = vmaxget();
     file = SaveString(CAR(args), 0);  args = CDR(args);
     paper = SaveString(CAR(args), 0); args = CDR(args);
-    face = SaveString(CAR(args), 0);  args = CDR(args);
+    family = SaveString(CAR(args), 0);  args = CDR(args);
     bg = SaveString(CAR(args), 0);    args = CDR(args);
     fg = SaveString(CAR(args), 0);    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
@@ -212,12 +213,62 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
 	GInit(&dd->dp);
-	if(!XFigDeviceDriver(dd, file, paper, face, bg, fg, width, height,
+	if(!XFigDeviceDriver(dd, file, paper, family, bg, fg, width, height,
 			     (double)horizontal, ps, onefile, pagecentre)) {
 	    free(dd);
 	    errorcall(call, "unable to start device xfig");
 	}
 	gsetVar(install(".Device"), mkString("xfig"), R_NilValue);
+	addDevice(dd);
+	initDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
+
+/*  PDF Device Driver Parameters:
+ *  ------------------------		--> devPS.c
+ *  file	= output filename
+ *  family	= typeface = "family"
+ *  encoding	= char encoding file name
+ *  bg		= background color
+ *  fg		= foreground color
+ *  width	= width in inches
+ *  height	= height in inches
+ *  ps		= pointsize
+ */
+
+SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd;
+    char *vmax;
+    char *file, *encoding, *family, *bg, *fg;
+    double height, width, ps;
+    gcall = call;
+    vmax = vmaxget();
+    file = SaveString(CAR(args), 0);  args = CDR(args);
+    family = SaveString(CAR(args), 0);  args = CDR(args);
+    encoding = SaveString(CAR(args), 0);  args = CDR(args);
+    bg = SaveString(CAR(args), 0);    args = CDR(args);
+    fg = SaveString(CAR(args), 0);    args = CDR(args);
+    width = asReal(CAR(args));	      args = CDR(args);
+    height = asReal(CAR(args));	      args = CDR(args);
+    ps = asReal(CAR(args));
+
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dd->displayList = R_NilValue;
+	GInit(&dd->dp);
+	if(!PDFDeviceDriver(dd, file, family, encoding, bg, fg, 
+			    width, height, ps)) {
+	    free(dd);
+	    errorcall(call, "unable to start device pdf");
+	}
+	gsetVar(install(".Device"), mkString("pdf"), R_NilValue);
 	addDevice(dd);
 	initDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
