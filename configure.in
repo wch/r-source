@@ -458,9 +458,12 @@ fi
 GNOME_INIT_HOOK([],cont)
 if test "$GNOMEUI_LIBS" = ""; then
   GNOME_ENABLED="no"
+  RGNOMEDIR=""
 else
   GNOME_ENABLED="yes"
+  RGNOMEDIR="gnome"
 fi
+AC_SUBST(RGNOMEDIR)
 
 ### Library functions.
 
@@ -675,7 +678,7 @@ AC_OUTPUT(Makeconf Makefile
   etc/Makefile etc/Makeconf
   src/Makefile src/appl/Makefile src/include/Makefile
   src/library/Makefile src/main/Makefile src/nmath/Makefile
-  src/scripts/Makefile src/unix/Makefile
+  src/scripts/Makefile src/unix/Makefile src/gnome/Makefile
   src/library/base/Makefile src/library/profile/Makefile
   src/library/eda/Makefile src/library/eda/src/Makefile
   src/library/lqs/Makefile src/library/lqs/src/Makefile

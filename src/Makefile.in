@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = include appl nmath unix main scripts library
+SUBDIRS = include appl nmath unix @RGNOMEDIR@ main scripts library
 
 all install install-strip TAGS info dvi dist check R docs::
 	@for d in $(SUBDIRS); do \
