@@ -92,8 +92,8 @@ draft manuals, in PDF).
 Optionally, you can download the installer, `rwinst.exe'.
 
 Alternatively, two installers based on Inno Setup are available.  One,
-`SetupR.exe' is about 10Mb and gives a complete installation. The
-other, `miniR.exe' is a small installation and comes in five files
+`SetupR.exe', is about 10Mb and gives a complete installation. The
+other, `miniR.exe', is a small installation and comes in five files
 which fit onto four floppy discs.
 
 2.2 How do I install R for Windows?
@@ -179,8 +179,8 @@ It depends what you want to print.
 2.7 Can I use `R BATCH'?
 ========================
 
-Yes, if you have Perl installed.  The Windows analogue is `Rcmd BATCH':
-use `Rcmd BATCH --help' for full details.
+Yes, if you have Perl and `rwXxxxsp.zip' installed.  The Windows
+analogue is `Rcmd BATCH': use `Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'. A sample batch
 file might contain (as one line)
@@ -251,15 +251,23 @@ folder, and remove them by running this with argument `/U'.
 3.1 Can I install packages (libraries) in this version?
 =======================================================
 
-Yes, but you will need a lot of tools to do so, unless the author has
-been kind enough to provide a pre-compiled version for Windows as a
-`.zip' file.
+Yes, but you will need a lot of tools to do so, unless the author or the
+maintainers of the `bin/windows/contrib' section on CRAN has been kind
+enough to provide a pre-compiled version for Windows as a `.zip' file.
 
-If there is not a binary version or that is not up-to-date or you prefer
-compiling from source, get `rwXxxxsp.zip' from the distribution (see
-Q1.1) and unpack it in `rwXxxx'.  Then read the `readme.packages'.  You
-will need to collect and install several tools to use this.  Once you
-have done so, just run `Rcmd INSTALL pkgname'. To check the package
+You can install pre-compiled packages either from CRAN or from a local
+`.zip' file by using `install.packages': see its help page.  There are
+menu items on the `Packages' menu to provide a point-and-click
+interface to package installation.
+
+Note that the pre-compiled versions on CRAN are unsupported: see
+<http://cran.r-project.org/bin/windows/contrib/ReadMe>
+
+If there is not a pre-compiled version or that is not up-to-date or you
+prefer compiling from source, get `rwXxxxsp.zip' from the distribution
+(see Q1.1) and unpack it in `rwXxxx'.  Then read the `readme.packages'.
+You will need to collect and install several tools to use this.  Once
+you have done so, just run `Rcmd INSTALL pkgname'. To check the package
 (run all the examples on its help pages and in its test suite, if any)
 use `Rcmd check pkgname': see the `Writing R Extensions' manual.
 
@@ -350,7 +358,7 @@ install it. (That will put the `bin' directory containing the Tcl and
 Tk DLLs in your path).  You then need to set the environment variable
 `TCL_LIBRARY', to something like `c:/Program Files/Tcl/lib/tcl8.3'.
 (The startup code for the package will warn you if this is unset, and
-Q3.2 explains how to set them.  NB: do not quote the path, even if as
+Q3.2 explains how to set it.  NB: do not quote the path, even if as
 here it contains spaces.)
 
 3.7 Hyperlinks in Compiled HTML sometimes do not work.
