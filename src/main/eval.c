@@ -738,45 +738,43 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     for (i = 0; i < n; i++) {
 	DO_LOOP_DEBUG(call, op, args, rho, bgn);
-	if (isVector(v))
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
 	switch (TYPEOF(val)) {
 	case LGLSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
 	    LOGICAL(v)[0] = LOGICAL(val)[i];
 	    setVar(sym, v, rho);
-	    ans = eval(body, rho);
 	    break;
 	case INTSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
 	    INTEGER(v)[0] = INTEGER(val)[i];
 	    setVar(sym, v, rho);
-	    ans = eval(body, rho);
 	    break;
 	case REALSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
 	    REAL(v)[0] = REAL(val)[i];
 	    setVar(sym, v, rho);
-	    ans = eval(body, rho);
 	    break;
 	case CPLXSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
 	    COMPLEX(v)[0] = COMPLEX(val)[i];
 	    setVar(sym, v, rho);
-	    ans = eval(body, rho);
 	    break;
 	case STRSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
 	    SET_STRING_ELT(v, 0, STRING_ELT(val, i));
 	    setVar(sym, v, rho);
-	    ans = eval(body, rho);
 	    break;
 	case EXPRSXP:
 	case VECSXP:
 	    setVar(sym, VECTOR_ELT(val, i), rho);
-	    ans = eval(body, rho);
 	    break;
 	case LISTSXP:
 	    setVar(sym, CAR(val), rho);
-	    ans = eval(body, rho);
 	    val = CDR(val);
+	    break;
+	default: errorcall(call, "bad for loop sequence");
 	}
-	REPROTECT(ans, api);
+	REPROTECT(ans = eval(body, rho), api);
     for_next:
     }
  for_break:
