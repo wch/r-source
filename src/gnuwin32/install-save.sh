@@ -11,6 +11,10 @@ export R_SAVE_IMAGE
 
 if ${R_SAVE_IMAGE}; then
     echo "  save image"
+    if test -f NAMESPACE; then
+      echo "ERROR: cannot use --save if package has NAMESPACE yet"
+	exit 1
+    fi
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
