@@ -30,16 +30,11 @@
 %% See 'upquote.sty' for details.
 %% We use \pkg{verbatim} for our ExampleCode environment, which in its
 %% \verbatim@font has an explicit \let\do\do@noligs\verbatim@nolig@list
-%% rather than (the identical) \@noligs.  Hence, we need to add to
-%% \verbatim@font ...
-\RequirePackage{textcomp}
-\begingroup
-\catcode`'=\active               
-\catcode``=\active               
-\g@addto@macro\verbatim@font
-   {\let`\textasciigrave
-    \let'\textquotesingle}
-\endgroup
+%% rather than (the identical) \@noligs from the LaTeX2e kernel.
+%% Hence, we add to \verbatim@font ... suggestion by Bernd Raichle
+%% <raichle@Informatik.Uni-Stuttgart.DE>.
+\RequirePackage{upquote}
+\g@addto@macro\verbatim@font\@noligs
 
 \addtolength{\textheight}{12mm}
 \addtolength{\topmargin}{-9mm}   % still fits on US paper
