@@ -395,7 +395,6 @@ void jump_to_toplevel()
     R_FlushConsole();
     R_ClearerrConsole();
     R_ParseError = 0;
-    vmaxset(NULL);
     if (R_GlobalContext->cend != NULL)
 	(R_GlobalContext->cend) ();
     for (c = R_GlobalContext; c; c = c->nextcontext) {
@@ -410,6 +409,7 @@ void jump_to_toplevel()
 	if (c->callflag == CTXT_TOPLEVEL)
 	    break;
     }
+    vmaxset(NULL);
     if ( !R_Interactive && !haveHandler && inError ) {
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
@@ -458,7 +458,8 @@ void Rf_resetStack(int topLevelReset) {
 	REprintf("Lost warning messages\n");
     inError=0;
     inWarning=0;
-    R_PPStackTop = 0;
+    R_PPStackTop = R_ToplevelContext->cstacktop;
+    R_EvalDepth = R_ToplevelContext->evaldepth;
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
     if(topLevelReset) {
