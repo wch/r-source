@@ -88,8 +88,14 @@ pascal void RAboutHandler(WindowRef window);
 #define kRCmdInstallFromBioC	'bioc'
 #define kRCmdInstallFromSrc	'ipfs'
 
-
-
+/* items in the Help Menu */
+#define kRHelpStart		'rhlp'
+#define kRHelpOnTopic		'rhot'
+#define kRSearchHelpOn		'rsho'
+#define kRExampleRun		'rexr'
+                
+                
+                
 static pascal OSStatus
 RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 static pascal OSStatus
@@ -139,13 +145,20 @@ static const EventTypeSpec	RWinEvents[] =
         { kEventClassWindow, kEventWindowBoundsChanged }
 };
 
+MenuRef HelpMenu = NULL; /* Will be the Reference to Apple's Help Menu */
+static 	short 	RHelpMenuItem=-1;
+static 	short 	RTopicHelpItem=-1;
+static	short 	RunExampleItem=-1;
+static	short	SearchHelpItem=-1;
+static  short  	PreferencesItem=-1;
+
 void Raqua_StartConsole(void)
 {
     IBNibRef 	nibRef = NULL;
     OSErr	err = noErr;
     CFURLRef    bundleURL = NULL;
     CFBundleRef RBundle = NULL;
-
+    Str255	menuStr;
     err = CreateNibReference(CFSTR("main"), &nibRef);
     if(err != noErr) 
      goto noconsole;
@@ -154,7 +167,7 @@ void Raqua_StartConsole(void)
     if(err != noErr)
      goto noconsole;
 
-    err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow);
+     err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow);
     if(err != noErr)
      goto noconsole;
     
@@ -240,7 +253,32 @@ void Raqua_StartConsole(void)
 
 
     SelectWindow(ConsoleWindow);
+    /* SetsUp additional Help Menu items */
+    HMGetHelpMenu(&HelpMenu,NULL);
+    if (HelpMenu != nil) {
+                CopyCStringToPascal("R Help", menuStr);
+		AppendMenu(HelpMenu, menuStr);
+		RHelpMenuItem = CountMenuItems(HelpMenu);
+                SetMenuItemCommandID(HelpMenu, RHelpMenuItem, kRHelpStart); 
+                SetMenuItemCommandKey(HelpMenu, RHelpMenuItem, false, '?');
+ 
+                CopyCStringToPascal("Help On Topic...", menuStr);
+		AppendMenu(HelpMenu, menuStr);
+		RTopicHelpItem = CountMenuItems(HelpMenu);
+                SetMenuItemCommandID(HelpMenu, RTopicHelpItem, kRHelpOnTopic); 
+ 
+                CopyCStringToPascal("Search Help On...", menuStr);
+		AppendMenu(HelpMenu, menuStr);
+		SearchHelpItem = CountMenuItems(HelpMenu);
+                SetMenuItemCommandID(HelpMenu, SearchHelpItem, kRSearchHelpOn); 
 
+                CopyCStringToPascal("Run An Example...", menuStr);
+		AppendMenu(HelpMenu, menuStr);
+		RunExampleItem = CountMenuItems(HelpMenu);
+                SetMenuItemCommandID(HelpMenu, RunExampleItem, kRExampleRun); 
+
+	}
+  
 noconsole:
     if(bundleURL)
      CFRelease( bundleURL );
@@ -514,7 +552,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdChangeWorkDir:
-                Aqua_RWrite("Change Working Directory: not yet implemented\r");
+                Aqua_RWrite("Change Working Directory: not yet implemented");
                consolecmd("\r");
               break;
 
@@ -537,20 +575,40 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdInstallFromCRAN:
-               Aqua_RWrite("Install packages from CRAN: not yet implemented\r");
+               Aqua_RWrite("Install packages from CRAN: not yet implemented");
                consolecmd("\r");
               break;
 
               case kRCmdInstallFromBioC:
-               Aqua_RWrite("Install packages from BioConductor: not yet implemented\r");
+               Aqua_RWrite("Install packages from BioConductor: not yet implemented");
                consolecmd("\r");
               break;
 
               case kRCmdInstallFromSrc:
-               Aqua_RWrite("Instal package from source: not yet implemented\r");
+               Aqua_RWrite("Install package from source: not yet implemented");
                consolecmd("\r");
               break;
 
+/* Help Menu */
+              case kRHelpStart:
+                consolecmd("help.start()\r");
+              break;
+              
+              case kRHelpOnTopic:  
+               Aqua_RWrite("Help On Topic: not yet implemented");
+               consolecmd("\r");
+              break;
+              
+              case kRSearchHelpOn:
+               Aqua_RWrite("Search Help On: not yet implemented");
+               consolecmd("\r");
+              break;
+              
+              case kRExampleRun:
+               Aqua_RWrite("Run An Example: not yet implemented");
+               consolecmd("\r");
+              break;
+                        
               default:
               break;
              }
