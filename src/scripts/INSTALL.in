@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.158 $'
+revision='$Revision: 1.158.4.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -36,6 +36,7 @@ Options:
                         package is attached; if given, ARGS are passed
                         to R when creating the save image
       --no-save         do not save the package source as an image file
+      --lazy            use lazy loading
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -158,6 +159,7 @@ with_package_versions=false
 save="CHECK"
 save_args=
 fake=false
+lazy=false
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -172,6 +174,8 @@ while test -n "${1}"; do
       save=true;;
     --save=*)
       save_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --lazy)
+      lazy=true ;;
     --no-save)
       save=false ;;
     -d|--debug)
@@ -508,6 +512,13 @@ do_install_source () {
   esac
   export R_SAVE_IMAGE
 
+
+  if ${R_SAVE_IMAGE} && ${lazy} && test -s R_PROFILE.R; then
+    echo "cannot currently both use lazy loading _and_ save image with RPROFILE.R"
+    echo "so will not try lazy loading"
+    lazy=false
+  fi
+
   if ${R_SAVE_IMAGE}; then
     message "save image"
     ## <NOTE>
@@ -551,6 +562,12 @@ do_install_source () {
       cat install.R >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
     fi
   fi
+
+  if ${lazy}; then
+     echo "tools:::makeLazyLoading(\"${pkg_name}\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C ${R_EXE} --vanilla --slave
+  fi
+
 
   if test -d man; then
     message "help"

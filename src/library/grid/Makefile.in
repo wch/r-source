@@ -15,13 +15,16 @@ DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = grid
 
+R_EXE = $(top_builddir)/bin/R --vanilla
+
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` > $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
 	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
@@ -68,15 +71,22 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
+@USE_LAZY_LOAD_TRUE@	@$(MAKE) RfilesLazy
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+RfilesLazy:
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
+
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R 
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION

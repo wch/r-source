@@ -1,0 +1,16 @@
+.First.lib <- function(libname, pkgname)
+{
+    fullName <- paste("package", pkgname, sep=":")
+    myEnv <- as.environment(match(fullName, search()))
+    dbbase <- file.path(libname, pkgname, "R", pkgname)
+    rm(.First.lib, envir = myEnv)
+    lazyLoad(dbbase, myEnv)
+    if(exists(".First.lib", envir = myEnv, inherits = FALSE)) {
+        f <- get(".First.lib", envir = myEnv, inherits = FALSE)
+        if(is.function(f))
+            f(libname, pkgname)
+        else
+            stop(paste("package \"", pkgname,
+                       "\"has a non-function .First.lib", sep=""))
+    }
+}

@@ -14,6 +14,8 @@ DISTFILES = LICENSE DESCRIPTION.in Makefile.in NAMESPACE install.R
 
 pkg = methods
 
+R_EXE = $(top_builddir)/bin/R --vanilla
+
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
@@ -56,11 +58,17 @@ all: Makefile DESCRIPTION
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
 	@$(MAKE) Rfiles
+@USE_LAZY_LOAD_TRUE@	@$(MAKE) RfilesLazy
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+RfilesLazy:
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
+	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 
 Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
   $(top_builddir)/library/$(pkg)/R/all.rda
@@ -82,8 +90,7 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	  (echo \
 	    "options(save.image.defaults=list(compress=TRUE, safe=FALSE))"; \
 	    cat all.R) | \
-	    R_DEFAULT_PACKAGES=NULL \
-	    $(top_builddir)/bin/R --vanilla --slave --save; \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave --save; \
 	  $(INSTALL_DATA) .RData $@; \
 	  $(INSTALL_DATA) $(top_srcdir)/share/R/firstlib.R \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
