@@ -584,11 +584,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "14"
+#define R_DAY "DD"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MONTH "June"
+#define R_MONTH "Mmmm"
 EOF
 
 cat >> confdefs.h <<\EOF
