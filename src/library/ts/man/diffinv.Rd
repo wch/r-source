@@ -3,7 +3,7 @@
 \alias{diffinv.default}
 \alias{diffinv.ts}
 \alias{diffinv.vector}
-\title{Discrete Integrals: Inverse of Differencing}
+\title{Discrete Integration: Inverse of Differencing}
 \description{
   Computes the inverse function of the lagged differences function
   \code{\link{diff}}. 

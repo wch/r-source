@@ -14,7 +14,7 @@ scatter.smooth(x, y, span = 2/3, degree = 1,
     xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
     ylim = range(y, prediction$y), evaluation = 50, ...)
 loess.smooth(x, y, span = 2/3, degree = 1,
-    family = c("symmetric", "gaussian"), evaluation=50, ...)
+    family = c("symmetric", "gaussian"), evaluation = 50, ...)
 }
 \arguments{
   \item{x}{x coordinates for scatter plot.}
@@ -31,10 +31,16 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{\dots}{graphical parameters.}
 }
 \details{
-  \code{loess.smooth} is an auxiliary function.
+  \code{loess.smooth} is an auxiliary function which evaluates the
+  \code{loess} smooth at \code{evaluation} equally spaced points
+  covering the range of \code{x}.
 }
 \value{
-  None.
+  For \code{scatter.smooth}, none.
+
+  For \code{loess.smooth}, a list with two components, \code{x} (the
+  grid of evaluation points) and \code{y} (the smoothed values at the
+  grid points).
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{loess}}}

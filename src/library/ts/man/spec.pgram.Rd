@@ -1,6 +1,6 @@
 \name{spec.pgram}
 \alias{spec.pgram}
-\title{Estimate Spectral Density of a Time Series from Smoothed
+\title{Estimate Spectral Density of a Time Series by a Smoothed
     Periodogram}
 \usage{
 spec.pgram(x, spans = NULL, kernel, taper = 0.1,

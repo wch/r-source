@@ -1,8 +1,8 @@
 \name{plot.acf}
 \alias{plot.acf}
-\title{Plotting Autocovariance and Autocorrelation Functions}
+\title{Plot Autocovariance and Autocorrelation Functions}
 \description{
-  Plotting method for objects of class \code{"acf"}.
+  Plot method for objects of class \code{"acf"}.
 }
 \usage{
 \method{plot}{acf}(x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,

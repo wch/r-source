@@ -7,6 +7,7 @@ plot.ppr                 Plot Ridge Functions for Projection Pursuit
 ppr                      Projection Pursuit Regression
 predict.loess            Predict Loess Curve or Surface
 predict.smooth.spline    Predict from Smoothing Spline Fit
+rock                     Measurements on Petroleum Rock Samples
 scatter.smooth           Scatter Plot with Smooth Curve Fitted by Loess
 smooth.spline            Fit a Smoothing Spline
 supsmu                   Friedmans's SuperSmoother

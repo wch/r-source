@@ -29,7 +29,8 @@ window		Subset to a time window
 Functions in package ts:
 -----------------------
 
-acf		Autocovariance and autocorrelation function
+acf		Auto- and Cross- Covariance and -Correlation Function
+                   Estimation
 acf2AR          Compute an AR Process Exactly Fitting an ACF
 ar		Wrapper for autoregression estimation functions
 ar.burg		Estimate autoregression model by Burg's method
@@ -37,40 +38,41 @@ ar.ols		Estimate autoregression model by ordinary least squares
 ar.mle		Estimate autoregression model by maximum likelihood
 ar.yw		Estimate autoregression model by solving Yule-Walker equations
 arima           ARIMA Modelling of Time Series
-arima0		ARIMA modelling -- provisional version
+arima0		ARIMA Modelling of Time Series -- Preliminary Version
 arima.sim       Simulate from an ARIMA Model
 ARMAacf         Compute Theoretical ACF for an ARMA Process
 ARMAtoMA        Convert ARMA Process to Infinite MA Process
-Box.test	Box-Pierce and Ljung-Box tests of independence
+Box.test	Box-Pierce and Ljung-Box tests
 ccf		Cross-covariance and cross-correlations for two series
-cpgram		Plot cumulative periodogram of univariate time series
-decompose	Classical seasonal decomposition by moving averages
-diffinv		Discrete integration, the inverse of diff()
-embed		Embedding a time series
-filter		Linear filtering on a time series
+cpgram		Plot Cumulative Periodogram
+decompose	Classical Seasonal Decomposition by Moving Averages
+diffinv		Discrete Integration: Inverse of Differencing
+embed		Embedding a Time Series
+filter		Linear Filtering on a Time Series
 HoltWinters     Holt-Winters Filtering
-kernapply	Apply kernel smoothers
-kernel		Smoothing kernel objects (and (modified) Daniell, Fejer and 
+kernapply	Apply Smoothing Kernel
+kernel		Smoothing kernel Objects (and (modified) Daniell, Fejer and 
 		   Dirichlet kernels)
-lag		Compute lagged version of time series
+lag		Lag a Time Series
 lag.plot        Time Series Lag Plots
 monthplot	Plot a Seasonal or other Subseries
-na.contiguous	Find longest contiguous stretch of non-NAs
+na.contiguous	Find Longest Contiguous Stretch of non-NAs
 pacf		Partial autocorrelation function
-plot.acf	Plot autocorrelation function
-plot.spec	Plot spectral density estimate, coherency and phase.
-PP.test		Phillips-Perron test for unit roots
+plot.acf	Plot Autocovariance and Autocorrelation Functions
+plot.spec	Plot Spectral Densities
+PP.test		Phillips-Perron Test for Unit Roots
 predict		methods for ar, arima, arima0 and StructTS
-spec.ar		Estimate spectral density by autoregression
-spec.pgram	Estimate spectral density from periodogram
-spec.taper	Taper by cosine bell
+spec.ar		Estimate Spectral Density of a Time Series from AR Fit
+spec.pgram	Estimate Spectral Density of a Time Series by a Smoothed
+		   Periodogram
+spec.taper	Taper a Time Series by a Cosine Bell
 spectrum	Wrapper for spectral density estimation functions
-stl		Seasonal decomposition using loess
+stl		Seasonal Decomposition of Time Series by Loess
 stlmethods      Methods for STL Objects
 StructTS        Fit Structural Time Series
-toeplitz	Generate Toeplitz matrix
+toeplitz	Form Symmetric Toeplitz Matrix
 ts.intersect	Bind time series as multivariate ts over the common time base
-ts.plot		Plot several time series with different time bases
+ts.plot		Plot Multiple Time Series
 ts.union	Bind time series as multivariate ts over their total time base
 tsdiag          Diagnostic Plots for Time-Series Fits
 tsSmooth        Use Fixed-Interval Smoothing on Time Series

@@ -1,6 +1,6 @@
 \name{PP.test}
 \alias{PP.test}
-\title{Phillips-Perron Unit Root Test}
+\title{Phillips-Perron Test for Unit Roots}
 \usage{
 PP.test(x, lshort = TRUE)
 }
