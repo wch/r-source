@@ -57,7 +57,7 @@
 #include "Mathlib.h"
 #include "Print.h"
 
-#define BUFSIZE 256
+#define BUFSIZE 8192  /* used by Rprintf etc */
 static char *Encodebuf=NULL;
 
 static void AllocBuffer(int len)
