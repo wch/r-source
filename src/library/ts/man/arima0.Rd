@@ -7,8 +7,8 @@
 \usage{
 arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
-       xreg = NULL, include.mean = TRUE, na.action = na.fail,
-       delta = 0.01, transform.pars = 2)
+       xreg = NULL, include.mean = TRUE,
+       delta = 0.01, transform.pars = 2, fixed = NULL)
 
 \method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
 
@@ -32,8 +32,6 @@ arima0.diag(fit, gof.lag = 10)
     \code{FALSE} for differenced ones (where a mean would not affect
     the fit nor predictions).}
 
-  \item{na.action}{Function to be applied to remove missing values.}
-
   \item{delta}{A value to indicate at which point `fast recursions'
     should be used. See the Details section.}
 
@@ -41,6 +39,11 @@ arima0.diag(fit, gof.lag = 10)
     transformed to ensure that they remain in the region of
     invertibility. If equal to 2, the optimization is rerun on
     the original scale to find the Hessian.}
+
+  \item{fixed}{optional numeric vector of the same length as the total
+    number of parameters.  If supplied, only non-\code{NA} entries in
+    \code{fixed} will be varied.
+  }
 
   \item{object, fit}{The result of an \code{arima0} fit.}
 
@@ -71,14 +74,17 @@ arima0.diag(fit, gof.lag = 10)
     
   The exact likelihood is computed via a state-space representation of
   the ARMA process, and the innovations and their variance found by a
-  Kalman filter using the Fortran code of Gardener \emph{et al.}
-  (1980).  This has the option to switch to `fast recursions' (assume
+  Kalman filter based on Gardener \emph{et al.} (1980).  This has
+  the option to switch to `fast recursions' (assume
   an effectively infinite past) if the innovations variance is close
   enough to its asymptotic bound. The argument \code{delta} sets the
   tolerance: at its default value the approximation is normally
   negligible and the speed-up considerable. Exact computations can be
   ensured by setting \code{delta} to a negative value.
 
+  As from \R 1.5.0 missing values are allowed, but any missing values
+  will force \code{delta} to be ignored and full recursions used.
+  
   The variance matrix of the estimates is found from the Hessian of
   the log-likelihood, and so may only be a rough guide, especially for
   fits close to the boundary of invertibility.
@@ -112,7 +118,7 @@ arima0.diag(fit, gof.lag = 10)
 
   \item{aic}{the AIC value corresponding to the log-likelihood.}
 
-  \item{resid}{the residuals.}
+  \item{residuals}{the residuals. (Was \code{resid} prior to \R 1.5.0.)}
 
   \item{call}{the matched call.}
 
@@ -171,5 +177,19 @@ predict(fit, n.ahead=6)
 
 data(LakeHuron)
 arima0(LakeHuron, order=c(2,0,0), xreg=1:98)
-}
+\testonly{
+## test fitting with NAs
+tmp <- LakeHuron
+tmp[c(17, 45, 96)] <- NA
+arima0(tmp, order=c(2,0,0), xreg=1:98)
+arima0(tmp, order=c(1,1,1), xreg=1:98)
+trend <- 1:98
+trend[c(20, 67)] <- NA
+arima0(tmp, order=c(2,0,0), xreg=trend)
+
+## tests of prediction
+predict(arima0(lh, order=c(1,0,1)), n.ahead=5)
+predict(arima0(lh, order=c(1,1,0)), n.ahead=5)
+predict(arima0(lh, order=c(0,2,1)), n.ahead=5)
+}}
 \keyword{ts}

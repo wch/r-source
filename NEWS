@@ -71,6 +71,11 @@ NEW FEATURES
 
    o	Argument `split' of summary.{aov,aovlist} is now implemented. 
 
+   o	arima0() now handles missing values internally so the `na.action'
+	argument has been removed: missing values are also accepted in
+	the `xreg' argument.  There is a new argument `fixed' to allow
+	some of the parameters to be held fixed.
+
 
 
 DEPRECATED & DEFUNCT

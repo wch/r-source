@@ -166,14 +166,14 @@ void arma0fa(double *inparams, double *res)
 	}
     }
 
-    F77_CALL(starma)(&ip, &iq, &ir, &np, phi, theta, a, p, v, thetab,
-		     xnext, xrow, rbar, &nrbar, &ifault);
+    starma(&ip, &iq, &ir, &np, phi, theta, a, p, v, thetab,
+	   xnext, xrow, rbar, &nrbar, &ifault);
     sumlog = 0.0;
     ssq = 0.0;
     it = 0;
     iupd = 1;
-    F77_CALL(karma)(&ip, &iq, &ir, &np, phi, theta, a, p, v, &n, w, resid,
-		    &sumlog, &ssq, &iupd, &delta, &it);
+    karma(&ip, &iq, &ir, &np, phi, theta, a, p, v, &n, w, resid,
+	  &sumlog, &ssq, &iupd, &delta, &it);
     *res = 0.5*(log(ssq/(double)n) + sumlog/(double)n);
     s2 = ssq/(double)n;
 }
@@ -219,7 +219,7 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
     p1 = (double *) R_alloc(irz, sizeof(double));
     store = (double *) R_alloc(ird, sizeof(double));
 
-    F77_CALL(forkal)(&ip, &iq, &ir, &np, &ird, 
+    forkal(&ip, &iq, &ir, &np, &ird, 
 		     &irz, &d, &il, &n, &nrbar, 
 		     phi, theta, del+1, 
 		     w, x, var, a1, 
