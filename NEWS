@@ -272,6 +272,9 @@ INSTALLATION CHANGES
     o	The XPG4 sed is used on Solaris for forming dependencies,
 	which should now be done correctly.
 
+    o	Makeinfo 4.5 or later is now required for building the HTML and
+	Info versions of the manuals.
+
 
 BUG FIXES
 
