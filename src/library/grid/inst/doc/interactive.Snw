@@ -5,14 +5,19 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 \title{An Example of Interactive Graphics Editing in Grid}
 \author{Paul Murrell}
 
 \begin{document}
 \maketitle
 
-<<echo=FALSE, results=hide, eval=TRUE>>=
+<<echo=FALSE, results=hide>>=
+library(graphics)
 library(grid)
+ps.options(pointsize=12)
+options(width=60)
 
 @
 First of all, we create an x-axis and draw it on the device.

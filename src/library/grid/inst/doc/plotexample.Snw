@@ -7,6 +7,8 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 
 \newcommand{\aside}[1]{\begin{list}{}
                                    {\setlength{\leftmargin}{1in}
@@ -20,6 +22,12 @@
 
 \begin{document}
 \maketitle
+
+<<echo=FALSE, results=hide>>=
+library(graphics)
+library(grid)
+ps.options(pointsize=12)
+options(width=60)
 
 @
 The \grid{} system contains a degree of complexity in order
@@ -90,9 +98,6 @@ The first step in creating the plot involves defining a ``data'' region.
 This is a region which has sensible scales on the axes for plotting the
 data and margins around the outside
 for the axes to fit in, with a space for a title at the top.
-
-<<echo=FALSE, results=hide>>=
-library(grid)
 
 <<datavp>>=
 data.vp <- viewport(x=unit(5, "lines"),
@@ -610,6 +615,6 @@ grid.draw(date)
 
 All of this may seem a bit irrelevant to interactive use, but it
 does provide a basis for creating an editable plot interface like 
-M Kondrin's {\tt Disgrace} package.
+M Kondrin's {\tt Rgrace} package.
 
 \end{document} 

@@ -9,6 +9,8 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 
 \title{Modifying \grid{} {\tt grob}s}
 \author{Paul Murrell}
@@ -17,7 +19,10 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(graphics)
 library(grid)
+ps.options(pointsize=12)
+options(width=60)
 
 @
 There is a distinction between \grob{}s which are just stored

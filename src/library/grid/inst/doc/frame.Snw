@@ -5,11 +5,20 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
+
 \title{A GUI-Builder Approach to Grid Graphics}
 \author{Paul Murrell}
 
 \begin{document}
 \maketitle
+
+<<echo=FALSE, results=hide>>=
+library(graphics)
+library(grid)
+ps.options(pointsize=12)
+options(width=60)
 
 @
 Grid contains a lot of support for locating, sizing, and 
@@ -38,9 +47,6 @@ arranging Grid graphical objects.
 You can create a {\tt "frame"} graphical object using the function
 {\tt frameGrob()}.  You must assign the result to a variable in order
 to pack grobs into it.
-
-<<echo=FALSE, results=hide>>=
-library(grid)
 
 <<results=hide>>=
 gf <- frameGrob()

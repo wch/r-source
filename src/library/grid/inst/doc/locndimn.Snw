@@ -1,6 +1,10 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Locations versus Dimensions}
 %\VignettePackage{grid}
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 
 \newcommand{\grid}{{\tt grid}}
 
@@ -11,6 +15,13 @@
 
 \maketitle
 
+<<echo=FALSE, results=hide>>=
+library(graphics)
+library(grid)
+ps.options(pointsize=12)
+options(width=60)
+
+@
 \grid{} makes use of unit objects to express both the locations and 
 dimensions of graphical components.  For example, the {\tt grid.rect()}
 function treats its x- and y-arguments as locations within the current
@@ -38,7 +49,6 @@ and dimensions are added like lengths.  The following
 diagram demonstrates the difference:
 
 <<fig=TRUE, echo=FALSE, results=hide>>=
-library(grid)
 diagram.locn <- function(i, n, locn) {
   x <- i/(n+1)
   grid.lines(x=unit(rep(x, 2), "npc"),

@@ -5,12 +5,20 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 \title{Drawing Lines Between Viewports: \\
 {\tt grid.move.to} and {\tt grid.line.to}}
 \author{Paul Murrell}
 
 \begin{document}
 \maketitle
+
+<<echo=FALSE, results=hide>>=
+library(graphics)
+library(grid)
+ps.options(pointsize=12)
+options(width=60)
 
 @
 Many graphics systems have the notion of a current drawing location.
@@ -24,9 +32,6 @@ segments and multiple graphs). }.
 
 The following code demonstrates a simple example (the output is 
 given after the code).
-
-<<echo=FALSE, results=hide>>=
-library(grid)
 
 <<fig, results=hide, fig=TRUE, width=5, height=4, include=FALSE>>=
 pushViewport(

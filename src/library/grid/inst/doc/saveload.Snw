@@ -5,12 +5,21 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 \title{Saving and Loading \grid{} Graphics}
 \author{Paul Murrell}
 
 \begin{document}
 \maketitle
 
+<<echo=FALSE, results=hide>>=
+library(graphics)
+library(grid)
+ps.options(pointsize=12)
+options(width=60)
+
+@
 This is a general discussion concerning how you might go about 
 creating (and reusing) persistent representations of \grid{} 
 graphics, and some of the pitfalls in the various options.
@@ -45,10 +54,6 @@ but it cannot be reloaded into \R{}.
 
 A third way of creating a persistent version of \grid{} graphics is to
 ``save'' an \R{} display list using, for example, ...
-
-<<echo=false>>=
-# load grid
-library(grid)
 
 <<fig=true, include=false, label=grid>>=
 grid.grill()

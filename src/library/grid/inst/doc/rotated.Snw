@@ -5,19 +5,24 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
 \title{Rotated Viewports}
 \author{Paul Murrell}
 
 \begin{document}
 \maketitle
 
+<<echo=FALSE, results=hide>>=
+library(graphics)
+library(grid)
+ps.options(pointsize=12)
+options(width=60)
+
 @
 It is possible to specify an angle of rotation for a Grid viewport.
 For example, the following code draws the example multipanel plot 
 at an angle of $15^\circ$.
-
-<<echo=FALSE, results=hide, eval=TRUE>>=
-library(grid)
 
 <<fig=TRUE, results=hide>>=
 pushViewport(viewport(h=.8, w=.8, angle=15))
