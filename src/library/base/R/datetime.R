@@ -118,21 +118,37 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 
 "+.POSIXt" <- function(e1, e2)
 {
+    coerceTimeUnit <- function(x)
+    {
+        switch(attr(x,"units"),
+               secs = x, mins = 60*x, hours = 60*60*x,
+               days = 60*60*24*x, weeks = 60*60*24*7*x)
+    }
+
     if (nargs() == 1) return(e1)
     # only valid if one of e1 and e2 is a scalar.
     if(inherits(e1, "POSIXt") && inherits(e2, "POSIXt"))
         stop("binary + is not defined for POSIXt objects")
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
+    if (inherits(e1, "difftime")) e1 <- coerceTimeUnit(e1)
+    if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
     structure(unclass(e1) + unclass(e2), class = c("POSIXt", "POSIXct"))
 }
 
 "-.POSIXt" <- function(e1, e2)
 {
+    coerceTimeUnit <- function(x)
+    {
+        switch(attr(x,"units"),
+               secs = x, mins = 60*x, hours = 60*60*x,
+               days = 60*60*24*x, weeks = 60*60*24*7*x)
+    }
     if(!inherits(e1, "POSIXt"))
         stop("Can only subtract from POSIXt objects")
     if (nargs() == 1) stop("unary - is not defined for POSIXt objects")
     if(inherits(e2, "POSIXt")) return(difftime(e1, e2))
+    if (inherits(e2, "difftime")) e2 <- unclass(coerceTimeUnit(e2))
     if(!is.null(class(e2)))
         stop("can only subtract numbers from POSIXt objects")
     structure(unclass(as.POSIXct(e1)) - e2, class = c("POSIXt", "POSIXct"))

@@ -89,9 +89,10 @@ mean(time)
   is used to allow operations such as subtraction to mix the two classes.
 
   Logical comparisons and limited arithmetic are available for both classes.
-  One can add or subtract a number of seconds from a date-time object,
-  but not add two date-time objects. Subtraction of two date-time objects
-  is equivalent to using \code{difftime}; see the details below.  Be aware
+  One can add or subtract a number of seconds or a
+  \code{\link{difftime}} object from a date-time object,
+  but not add two date-time objects.  Subtraction of two date-time objects
+  is equivalent to using \code{\link{difftime}}.  Be aware
   that \code{"POSIXlt"} objects will be interpreted as being in the
   current timezone for these operations, unless a timezone has been
   specified.
