@@ -11,6 +11,12 @@
 
 NEW FEATURES
 
+    o   Support for handling embedded '\n's in text strings
+	handed to low-level graphics functions has been added.
+	Some changes to the PostScript graphics driver were
+	needed to support this, so there may some minor change
+	in the appearance of plots produced in PostScript.
+
     o   The LaTeX documentation is now split into 2 parts: the (currently
         almost non-existent) manual and a reference index.
         Manual: new section on loading C++ code.
