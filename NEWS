@@ -13,7 +13,10 @@
 BUG FIXES
 
     o	pbinom(q, N, prob) is now more accurate when prob is close to 0
-	(PR#6756).
+	(PR#6757).
+
+    o	pcauchy(x, .., log.p) is now more accurate for large x,
+	particularly when log.p = TRUE	(PR#6756).
 
 
 
