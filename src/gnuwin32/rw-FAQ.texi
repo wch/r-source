@@ -548,7 +548,7 @@ that is causing the error.
 
 
 @menu
-* Can I install packages (libraries) in this version?::
+* Can I install packages into libraries in this version?::
 * I don't have permission to write to the @RWVER@\library directory::
 * The packages I installed do not appear in the HTML help system::
 * My functions are not found by the HTML help search system.::
@@ -559,8 +559,8 @@ that is causing the error.
 @end menu
 
 
-@node Can I install packages (libraries) in this version?, I don't have permission to write to the @RWVER@\library directory, Packages, Packages
-@section Can I install packages (libraries) in this version?
+@node Can I install packages into libraries in this version?, I don't have permission to write to the @RWVER@\library directory, Packages, Packages
+@section Can I install packages into libraries in this version?
 
 Yes, but you will need a lot of tools to do so, unless the author or the
 maintainers of the @code{bin/windows/contrib} section on CRAN have been
@@ -595,7 +595,7 @@ the instructions @strong{exactly}.  At least 90% of the questions asked
 are because people have not done so.
 
 
-@node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
+@node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages into libraries in this version?, Packages
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
 
 You can install packages anywhere and use the environment variable
@@ -1099,7 +1099,7 @@ package @code{stats} might be
 @noindent
 
 Alternatively, in Rgui you can use the `Misc|Break to debugger' menu item
-after your DLL is loaded.  The C function call @code{breaktodebugger()} 
+after your DLL is loaded.  The C function call @code{breaktodebugger()}
 will do the same thing.
 
 @item
@@ -1113,7 +1113,7 @@ version of @code{gdb}.  It does often work with the @code{cygwin} version.
 
 @item
 Other debuggers than @code{gdb} can be used.  We have successfully
-used the @code{insight} front-end to @code{gdb} (see 
+used the @code{insight} front-end to @code{gdb} (see
 @uref{http://sources.redhat.com/insight/}), and Borland's debugger
 with a DLL compiled in a Borland compiler.
 
