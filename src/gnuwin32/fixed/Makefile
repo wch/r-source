@@ -36,7 +36,7 @@ fixh: version h/config.h \
 
 # some headers have log1p, but end user's set may not have.
 # so assume not.
-../../include/Rmath.h: ../../include/Rmath.h.in
+../../include/Rmath.h: ../../include/Rmath.h0.in
 	$(SED) -e /@RMATH_HAVE_LOG1P@/d  -e /@RMATH_HAVE_EXPM1@/d $< > $@
 
 ../../../bin/massage-Examples: ../../../share/perl/massage-Examples.pl

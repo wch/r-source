@@ -1244,7 +1244,7 @@ AC_CONFIG_FILES(
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile
   src/include/Makefile
-  src/include/Rmath.h
+  src/include/Rmath.h0
   src/include/R_ext/Makefile
   src/library/Recommended/Makefile
   src/library/Makefile
