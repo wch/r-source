@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -599,6 +599,7 @@ SEXP mkTrue(void);
 SEXP namesgets(SEXP, SEXP);
 int ncols(SEXP);
 int nrows(SEXP);
+int nlevels(SEXP);
 SEXP nthcdr(SEXP, int);
 void onintr();
 FILE* R_OpenLibraryFile();
@@ -614,12 +615,12 @@ void protect(SEXP);
 char *R_alloc(long, int);
 void REvprintf(const char*, va_list);
 void REprintf(char*, ...);
-void R_RestoreGlobalEnv(void);
-int restore_image(char*);
-SEXP rownamesgets(SEXP,SEXP);
 void Rprintf(char*, ...);
 char *Rsprintf(char*, ...);
 void Rvprintf(const char*, va_list);
+void R_RestoreGlobalEnv(void);
+int restore_image(char*);
+SEXP rownamesgets(SEXP,SEXP);
 void rsort(double *x, int);
 int Rstrlen(char*);
 SEXP R_LoadFromFile(FILE*);
