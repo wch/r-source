@@ -44,46 +44,14 @@ args <- function(name).Internal(args(name))
 ##- attr <- function(x, which).Internal(attr(x, which))
 ##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
 
-##cbind <- function(..., deparse.level=1) {
-##    if(deparse.level != 1) stop("cbind(.) does not accept deparse.level in R.")
-##    .Internal(cbind(...))
-##}
-
-cbind <- function (..., deparse.level = 1)
-{
-    cl <- substitute(cbind(...))
-    l <- as.list(cl[-1])
-    nm <- names(l)
-    fixup <- if (is.null(nm)) 1:length(l) else nm == ""
-    nm[fixup] <- switch(deparse.level + 1,
-                        "",
-                        sapply(l[fixup], function(x)
-                               if (is.symbol(x)) as.character(x) else ""),
-                        sapply(l[fixup], function(x) deparse(x)[1]))
-    names(cl)<-c("",nm)
-    eval.parent(call(".Internal",cl))
+cbind <- function(..., deparse.level=1) {
+    if(deparse.level != 1) stop("cbind(.) does not accept deparse.level in R.")
+    .Internal(cbind(...))
 }
-
-##rbind <- function(..., deparse.level=1) {
-##    if(deparse.level != 1) stop("rbind(.) does not accept deparse.level in R.")
-##    .Internal(rbind(...))
-##}
-
-rbind <- function (..., deparse.level = 1)
-{
-    cl <- substitute(rbind(...))
-    l <- as.list(cl[-1])
-    nm <- names(l)
-    fixup <- if (is.null(nm)) seq(along = l) else nm == ""
-    nm[fixup] <- switch(deparse.level + 1,
-                        "",
-                        sapply(l[fixup], function(x)
-                               if (is.symbol(x)) as.character(x) else ""),
-                        sapply(l[fixup], function(x) deparse(x)[1]))
-    names(cl)<-c("",nm)
-    eval.parent(call(".Internal",cl))
+rbind <- function(..., deparse.level=1) {
+    if(deparse.level != 1) stop("rbind(.) does not accept deparse.level in R.")
+    .Internal(rbind(...))
 }
-
 
 dataentry <- function(data, modes).Internal(dataentry(data, modes))
 deparse <-
