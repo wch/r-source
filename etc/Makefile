@@ -1,7 +1,5 @@
 ## ${RHOME}/etc/Makefile
 
-TESTS   = ../tests
-Ex_Tests = $(TESTS)/Examples
 CleanMe1 = SHLIB COMPILE INSTALL REMOVE
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help help.pretty html2dos
@@ -18,11 +16,6 @@ build-help: stamp-help
 build-html: stamp-html
 build-latex: stamp-latex $(DVI)
 build-docs: stamp-docs $(DVI)
-tests: test-Examples
-
-test-Examples: $(Ex_Tests)
-	@cp -p Makefile-test-Ex $(Ex_Tests)/Makefile
-	-(cd $(Ex_Tests); make $@)
 
 stamp-help: $(MANSRC)
 	@echo "Building ALL help pages"
@@ -51,16 +44,12 @@ stamp-docs: $(MANSRC)
 $(DVI): stamp-latex
 	-(cd $(MANdest); make Man.dvi)
 
-$(Ex_Tests):
-	@if [ ! -d $@ ]; then mkdir -p $@ ; fi
-
 clean:
 	-(cd $(MANdest); make $@)
-	@-(cd $(Ex_Tests) && make $@)
 
 moreclean: clean
 	@rm -f $(CleanMe1)
 
 distclean realclean:
-	@rm -fr $(CleanMe) $(Ex_Tests)
+	@rm -fr $(CleanMe)
 	@rm -f stamp-*
