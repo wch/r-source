@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
- *  Copyright (C) 2003        The R Foundation
+ *  Copyright (C) 2003, 2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -538,6 +538,8 @@ FUNTAB R_FunTab[] =
 {"dir.create",	do_dircreate,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"winDialog",	do_windialog,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"winDialogString", do_windialogstring, 0, 11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"winMenuNames", do_winmenunames, 0,    11,     0,      {PP_FUNCALL, PREC_FN,   0}},
+{"winMenuItems", do_wingetmenuitems, 0, 11, 1, {PP_FUNCALL, PREC_FN, 0}},
 {"winMenuAdd",	do_winmenuadd,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"winMenuDel",	do_winmenudel,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"memory.size",	do_memsize,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

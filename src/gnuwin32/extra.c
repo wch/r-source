@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -492,6 +493,67 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
 extern UImode CharacterMode;
 static char msgbuf[256];
 
+SEXP do_winmenunames(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP menuNames;
+    int i, nmenus;
+
+    checkArity(op, args);
+    if (CharacterMode != RGui)
+	errorcall(call, "Menu functions can only be used in the GUI");
+
+    nmenus = numwinmenus();
+
+    PROTECT(menuNames = allocVector(STRSXP, nmenus));
+
+    for (i = 0; i < nmenus; i++) {
+	SET_STRING_ELT(menuNames, i, mkChar(getusermenuname(i)));
+    }
+
+    UNPROTECT(1);
+    return(menuNames);
+}
+
+SEXP do_wingetmenuitems(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP mname, ans, ansnames;
+    menuItems *items;
+    char errmsg[50];
+    int i;
+
+
+    checkArity(op, args);
+    if (CharacterMode != RGui)
+	errorcall(call, "Menu functions can only be used in the GUI");
+
+    mname = CAR(args);
+    if (!isString(mname) || length(mname) != 1)
+	error("invalid 'menuname' argument");
+
+    items = wingetmenuitems(CHAR(STRING_ELT(mname,0)), errmsg);
+    if (items->numItems == 0) {
+	sprintf(msgbuf, "unable to retrieve items for %s (%s)",
+		CHAR(STRING_ELT(mname,0)), errmsg);
+	freemenuitems(items);
+	errorcall(call, msgbuf);
+    }
+
+    PROTECT(ans = allocVector(STRSXP, items->numItems));
+    PROTECT(ansnames = allocVector(STRSXP, items->numItems));
+    for (i = 0; i < items->numItems; i++) {
+	SET_STRING_ELT(ans, i, mkChar(items->mItems[i]->action));
+	SET_STRING_ELT(ansnames, i, mkChar(items->mItems[i]->name));
+    }
+
+    setAttrib(ans, R_NamesSymbol, ansnames);
+
+    freemenuitems(items);
+
+    UNPROTECT(2);
+    return(ans);
+}
+
+
 SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP smenu, sitem;
@@ -933,7 +995,7 @@ void InitTempDir()
     res = mkdir(tm);
     if(res) {
 	char buff[2000];
-	sprintf(buff, "%s\nDoes %s exist and is it writeable?", 
+	sprintf(buff, "%s\nDoes %s exist and is it writeable?",
 		"Can't mkdir R_TempDir", tmp);
 	R_Suicide(buff);
     }

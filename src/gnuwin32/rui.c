@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1042,13 +1043,6 @@ int DialogSelectFile(char *buf, int len)
 static menu usermenus[10];
 static char usermenunames[10][51];
 
-typedef struct {
-    menuitem m;
-    char *name;
-    char *action;
-}  uitem;
-typedef uitem *Uitem;
-
 static Uitem  umitems[500];
 
 static int nmenus=0, nitems=0;
@@ -1062,6 +1056,80 @@ static void menuuser(control m)
     Rconsolecmd(p);
 }
 
+int numwinmenus(void) {
+    return(nmenus);
+}
+
+char *getusermenuname(int pos) {
+    return(usermenunames[pos]);
+}
+
+menuItems *wingetmenuitems(char *mname, char *errmsg) {
+    menuItems *items;
+    char mitem[102], *p, *q, *r;
+    int i,j=0;
+
+    q = (char *)malloc(100 * sizeof(char));
+    r = (char *)malloc(100 * sizeof(char));
+
+    items = (menuItems *)malloc(sizeof(menuItems));
+    items->mItems = (Uitem *)malloc(500 * sizeof(Uitem));
+
+    if (strlen(mname) > 100) {
+	strcpy(errmsg, "mname is limited to 100 chars");
+	return NULL;
+    }
+
+    strcpy(mitem, mname); strcat(mitem, "/");
+
+    for (i = 0; i < nitems; i++) {
+	p = (char *)strstr(umitems[i]->name, mitem);
+
+	if (p == NULL)
+	    continue;
+	/* the 'mitem' pattern might be showing up */
+	/* as a substring in another valid name.  Make sure */
+	/* this isn't the case */
+	if (strlen(p) != strlen(umitems[i]->name))
+	    continue;
+
+	strcpy(q, p+strlen(mitem));
+	/* Due to the way menu items are stored, it can't be */
+	/* determined if this is say item 'foo' from menu 'Blah/bar' */
+	/* or item 'bar/foo' from menu 'Blah'.  Check this manually */
+	/* by adding the item label to the menu we're looking for. */
+	sprintf(r, "%s%s", mitem, umitems[i]->m->text);
+	if (strcmp(r, p) != 0)
+	    continue;
+
+	items->mItems[j] = (Uitem)malloc(sizeof(uitem));
+	items->mItems[j]->name = (char *)malloc((strlen(q) + 1) * sizeof(char));
+	items->mItems[j]->action = (char *)malloc((strlen(umitems[i]->action) + 1) * sizeof(char));
+
+	strcpy(items->mItems[j]->name, q);
+	strcpy(items->mItems[j]->action, umitems[i]->action);
+	j++;
+    }
+    free(q);
+    free(r);
+
+    items->numItems = j;
+    if (j == 0) sprintf(errmsg, "menu %s does not exist", mname);
+
+    return(items);
+}
+
+void freemenuitems(menuItems *items) {
+    int j;
+
+    for (j = 0; j < items->numItems; j++) {
+	free(items->mItems[j]->name);
+	free(items->mItems[j]->action);
+	free(items->mItems[j]);
+    }
+    free(items->mItems);
+    free(items);
+}
 
 int winaddmenu(char * name, char *errmsg)
 {

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -68,6 +68,8 @@ SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winmenunames(SEXP, SEXP, SEXP, SEXP);
+SEXP do_wingetmenuitems(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
 #endif

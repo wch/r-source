@@ -3,6 +3,8 @@
 \alias{winMenuAddItem}
 \alias{winMenuDel}
 \alias{winMenuDelItem}
+\alias{winMenuNames}
+\alias{winMenuItems}
 \title{User Menus under Windows}
 \description{
   Enables users to add, delete and program menus under Windows.
@@ -12,6 +14,8 @@ winMenuAdd(menuname)
 winMenuAddItem(menuname, itemname, action)
 winMenuDel(menuname)
 winMenuDelItem(menuname, itemname)
+winMenuNames()
+winMenuItems(menuname)
 }
 \arguments{
   \item{menuname}{a character string naming a menu.}
@@ -26,6 +30,9 @@ winMenuDelItem(menuname, itemname)
   By default the action character string is treated as \R input, being
   echoed on the command line and parsed and executed as usual.
 
+  If the \code{menuname} parameter of \code{winMenuAddItem} does not
+  already exist, it will be created automatically.
+  
   Specifying an existing item in \code{winMenuAddItem} enables the
   action to be changed.
 
@@ -35,6 +42,15 @@ winMenuDelItem(menuname, itemname)
 
   If the \code{action} is specified as \code{"none"} no action is taken:
   this can be useful to reserve items for future expansion.
+
+  The function \code{winMenuNames} can be used to find out what menus
+  have been created by the user and returns a vector of the existing
+  menu names.
+
+  The \code{winMenuItems} function will take the name of a menu and
+  return the items that exist in that menu.  The return value is a named
+  vector where the names correspond to the names of the items and the
+  values of the vector are the corresponding actions.
 }
 \value{
   \code{NULL}, invisibly. If an error occurs, an informative error
@@ -51,5 +67,7 @@ winMenuAddItem("Testit", "two", "disable")
 winMenuAddItem("Testit", "three", "cccc")
 winMenuAddItem("Testit/extras", "one more", "ddd")
 winMenuAddItem("Testit/extras", "and another", "eee")
+winMenuNames()
+winMenuItems("Testit")
 }}
 \keyword{utilities}

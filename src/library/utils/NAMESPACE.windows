@@ -3,4 +3,4 @@ export(DLL.version, Filters, choose.files, fixup.libraries.URLs,
        make.search.html, memory.limit, memory.size, readClipboard,
        select.list, win.version, winDialog, winDialogString,
        winMenuAdd, winMenuAddItem, winMenuDel, winMenuDelItem,
-       writeClipboard, zip.unpack)
+       winMenuNames, winMenuItems, writeClipboard, zip.unpack)

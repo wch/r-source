@@ -23,6 +23,8 @@ in SDI mode ("Rgui --sdi" or via the settings in file `Rconsole').
 Changed windows() so that new windows fit within the MDI client
 area.
 
+Added winMenuNames() and winMenuItems() functions to query user menus.
+
 
 Installation
 ------------

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998, 1999  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +30,18 @@ extern int MDIset;
 LibExtern window RConsole;
 #undef LibExtern
 
+typedef struct {
+    menuitem m;
+    char *name;
+    char *action;
+}  uitem;
+typedef uitem *Uitem;
+
+typedef struct {
+  int numItems;
+  Uitem *mItems;
+} menuItems;
+
 void Rconsolecmd(char *);
 
 void R_ShowMessage(char *s);
@@ -41,6 +54,11 @@ int winaddmenu(char * name, char *errmsg);
 int winaddmenuitem(char * item, char * menu, char * action, char *errmsg);
 int windelmenu(char * menu, char *errmsg);
 int windelmenuitem(char * item, char * menu, char *errmsg);
+
+int numwinmenus(void);
+char *getusermenuname(int pos);
+menuItems *wingetmenuitems(char *mname, char *errmsg);
+void freemenuitems(menuItems *items);
 
 void Rwin_fpset();
 

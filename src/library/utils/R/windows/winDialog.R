@@ -21,3 +21,22 @@ winMenuDel <- function(menuname)
 
 winMenuDelItem <- function(menuname, itemname)
     invisible(.Internal(winMenuDel(menuname, itemname)))
+
+winMenuAdd <- function(menuname)
+    invisible(.Internal(winMenuAdd(menuname, NULL, NULL)))
+
+winMenuAddItem <- function(menuname, itemname, action) {
+    ## If specified menu does not exist, add it
+    z <- winMenuNames()
+    if (! menuname %in% z)
+        winMenuAdd(menuname)
+
+    invisible(.Internal(winMenuAdd(menuname, itemname, action)))
+}
+winMenuNames <- function() {
+    .Internal(winMenuNames())
+}
+
+winMenuItems <- function(menuname) {
+    .Internal(winMenuItems(menuname))
+}
