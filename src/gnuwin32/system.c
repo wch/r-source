@@ -635,7 +635,7 @@ char *PrintUsage(void)
 {
     static char msg[5000];
     char msg0[] =
-"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save data sets at the end of the session\n  --no-save             Don't save them\n",
+"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save data sets at the end of the session\n  --no-save             Don't save them\n",
 	msg1[] =
 "  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved data sets at startup\n  --no-restore-data     Don't restore previously saved data sets\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
 	msg2[] =
