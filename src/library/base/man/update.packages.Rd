@@ -17,7 +17,7 @@ update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method, instlib = NULL,
                 ask=TRUE, available=NULL, destdir=NULL,
-		installWithVers=TRUE)
+		installWithVers=FALSE)
 
 installed.packages(lib.loc = NULL, priority = NULL)
 CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
@@ -32,7 +32,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,
-		 installWithVers=TRUE)
+		 installWithVers=FALSE)
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R

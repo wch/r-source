@@ -1,7 +1,7 @@
 install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              contriburl=contrib.url(CRAN),
                              method, available=NULL, destdir=NULL,
-			     installWithVers=TRUE)
+			     installWithVers=FALSE)
 {
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]

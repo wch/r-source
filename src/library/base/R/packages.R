@@ -18,7 +18,7 @@ update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
                             contriburl=contrib.url(CRAN),
                             method, instlib=NULL, ask=TRUE,
                             available=NULL, destdir=NULL,
-			    installWithVers=TRUE)
+			    installWithVers=FALSE)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
