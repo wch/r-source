@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-19, 2000-11-01
+Version 1.1-20, 2000-11-02
 Kurt Hornik
 
 
@@ -773,11 +773,9 @@ optimizer supports this.
 state.  A simple example (taken from Abelson and Sussman) is obtained by
 typing `demo(scoping)' at the R prompt.  Further information is provided in
 the standard R reference "R: A Language for Data Analysis and Graphics"
-(*note What documentation exists for R?::) and a paper on "Lexical Scope
-and Statistical Computing" by Robert Gentleman and Ross Ihaka which can be
-obtained from the `doc/misc' directory of a CRAN site and will appear in the
-_Journal of Computational and Graphical Statistics_ around the beginning of
-2000.
+(*note What documentation exists for R?::) and in Robert Gentleman and Ross
+Ihaka (2000), "Lexical Scope and Statistical Computing", _Journal of
+Computational and Graphical Statistics_, *9*, 491-508.
 
    Lexical scoping also implies a further major difference.  Whereas S
 stores all objects as separate files in a directory somewhere (usually
@@ -975,9 +973,9 @@ handling of line types, more convenient color handling (via palettes),
 gamma correction for color, and, most importantly, mathematical annotation
 in plot texts, via input expressions reminiscent of TeX constructs.  See
 the help page for `plotmath', which features an impressive on-line example.
-The paper "An Approach to Providing Mathematical Annotation in Plots" by
-Paul Murrell and Ross Ihaka, which will soon appear in the _Journal of
-Computational and Graphical Statistics_, has more details on this.
+More details can be found in Paul Murrell and Ross Ihaka (2000), "An
+Approach to Providing Mathematical Annotation in Plots", _Journal of
+Computational and Graphical Statistics_, *9*, 582-599.
 
 4 R Web Interfaces
 ******************
@@ -1179,6 +1177,9 @@ works, was published in the Journal of Statistical Software
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation
      approach to GLMs for dependent data.
+
+*gld*
+     Basic functions for the generalised (Tukey) lambda distribution.
 
 *gss*
      A comprehensive package for structural multivariate function estimation
