@@ -1,5 +1,9 @@
 useDynLib(lqs)
-export(cov.mcd , cov.mve, cov.rob, lmsreg, lqs, lqs.default, lqs.formula,
+
+export(cov.mcd, cov.mve, cov.rob, lmsreg, lqs, lqs.default, lqs.formula,
        ltsreg, predict.lqs)  
-S3method(predict,lqs)
-S3method(print,lqs)
+
+S3method(lqs, default)
+S3method(lqs, formula)
+S3method(predict, lqs)
+S3method(print, lqs)

@@ -1,8 +1,6 @@
 useDynLib(eda)
 
 export(line, medpolish, smooth)
-## until match.arg is fixed
-export(residuals.tukeyline)
 
 S3method(coef, tukeyline)
 S3method(fitted, tukeyline)

@@ -2,7 +2,7 @@
 \title{General Tree Structures}
 \alias{dendrogram}% the class
 \alias{as.dendrogram}
-\alias{as.dendrogram.hclust}
+%\alias{as.dendrogram.hclust}
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
 \alias{print.dendrogram}
@@ -23,7 +23,6 @@
 }
 \usage{
 as.dendrogram(object, \dots)
-as.dendrogram.hclust(object, \dots)
 \method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
          center=FALSE, edge.root= !is.null(attr(x,"edgetext")),
          nodePar = NULL, edgePar = list(), xlab="", ylab="",
@@ -40,8 +39,8 @@ str.dendrogram(object, max.level = 0, vec.len = 4, digits.d= 3, nchar.max= 128,
     nest.lev = 0, indent.str = "", \dots)
 }
 \arguments{
-  \item{object}{any \R object that can be made into a class
-    \code{"dendrogram"} one.}
+  \item{object}{any \R object that can be made into one of class
+    \code{"dendrogram"}.}
   \item{x}{object of class \code{"dendrogram"}.}
   \item{type}{type of plot.}
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
