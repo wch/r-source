@@ -5,6 +5,7 @@ svd <- function(x, nu=min(n,p), nv=min(n,p)) {
     dx <- dim(x)
     n <- dx[1]
     p <- dx[2]
+    if(!n || !p) stop("0 extent dimensions")
 
     if(nu == 0) {
 	job <- 0

@@ -7,6 +7,7 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     if((nr <- nrow(x)) != nrow(y)) stop("unequal number of rows in cancor")
     ncx <- ncol(x)
     ncy <- ncol(y)
+    if(!nr || !ncx || !ncy) stop("dimension 0 in x or y")
     if(is.logical(xcenter)) {
 	if(xcenter) {
 	    xcenter <- apply(x, 2, mean)
@@ -31,8 +32,8 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     }
     qx <- qr(x)
     qy <- qr(y)
-    dx <- qx$rank
-    dy <- qy$rank
+    dx <- qx$rank;	if(!dx) stop("`x' has rank 0")
+    dy <- qy$rank;	if(!dy) stop("`y' has rank 0")
     ## compute svd(Qx'Qy)
     z <- svd(qr.qty(qx, qr.qy(qy, diag(1, nr, dy)))[1:dx,, drop = FALSE],
 	     dx, dy)
