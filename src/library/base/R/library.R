@@ -1,19 +1,23 @@
 library <-
-function(package, help, lib.loc = .lib.loc, character.only = FALSE,
+function(package, help, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"))
+         keep.source = getOption("keep.source.pkgs"),
+         verbose = getOption("verbose"))
 {
-    fQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("`", s, "'", sep = "")
     if(!missing(package)) {
 	if(!character.only)
 	    package <- as.character(substitute(package))
+        if(length(package) != 1)
+            stop("argument `package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
 	if(is.na(match(pkgname, search()))) {
-            pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+            pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
+                                     verbose = verbose)
             if(length(pkgpath) == 0) {
                 txt <- paste("There is no package called",
-                             fQuote(package))
-                if (logical.return) {
+                             sQuote(package))
+                if(logical.return) {
                     warning(txt)
 		    return(FALSE)
 		}
@@ -22,20 +26,20 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
             which.lib.loc <- dirname(pkgpath)
             codeFile <- file.path(which.lib.loc, package, "R", package)
 	    ## create environment (not attached yet)
-	    loadenv <- new.env(hash=TRUE, parent = .GlobalEnv)
+	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
 	    ## source file into loadenv
 	    if(file.exists(codeFile))
                 sys.source(codeFile, loadenv, keep.source = keep.source)
             else
 		warning(paste("Package ",
-                              fQuote(package),
+                              sQuote(package),
                               "contains no R code"))
             ## now transfer contents of loadenv to an attached frame
 	    env <- attach(NULL, name = pkgname)
             ## detach does not allow character vector args
             on.exit(do.call("detach", list(name = pkgname)))
             attr(env, "path") <- file.path(which.lib.loc, package)
-            for (name in ls(loadenv, all=T)) {
+            for (name in ls(loadenv, all = TRUE)) {
                 val <- get(name, env = loadenv)
                 rm(list=name, envir = loadenv, inherits = FALSE)
 	        if (typeof(val) == "closure" &&
@@ -57,11 +61,11 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
                     if (logical.return) return(FALSE)
                     else stop(".First.lib failed")
             }
-	    if (warn.conflicts &&
-		!exists(".conflicts.OK",  envir = env, inherits = FALSE)) {
-		##-- Check for conflicts
-		dont.mind <- c("last.dump", "last.warning", ".Last.value",
-			       ".Random.seed")
+	    if(warn.conflicts &&
+               !exists(".conflicts.OK", envir = env, inherits = FALSE)) {
+		## Check for conflicts
+		dont.mind <- c("last.dump", "last.warning",
+                               ".Last.value", ".Random.seed")
 		lib.pos <- match(pkgname, search())
 		ob <- objects(lib.pos)
 		fst <- TRUE
@@ -74,7 +78,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 			       [!obs %in% dont.mind])) {
 			if (fst) {
 			    fst <- FALSE
-			    cat("\nAttaching package ", fQuote(package),
+			    cat("\nAttaching package ", sQuote(package),
                                 ":\n\n", sep = "")
 			}
 			cat("\n\tThe following object(s) are masked",
@@ -85,19 +89,16 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	    }
             on.exit()
 	}
-	else {
-	    if (getOption("verbose"))
-		warning(paste("Package",
-                              pkgname,
-                              "already present in search()"))
-	}
+	else if(verbose)
+            warning(paste("Package", sQuote(package),
+                          "already present in search()"))
     }
     else if(!missing(help)) {
 	if(!character.only)
 	    help <- as.character(substitute(help))
         help <- help[1]                 # only give help on one package
 
-        pkgpath <- .find.package(help, lib.loc)
+        pkgpath <- .find.package(help, lib.loc, verbose = verbose)
         outFile <- tempfile("Rlibrary")
         outConn <- file(outFile, open = "w")
         docFiles <- file.path(pkgpath,
@@ -112,10 +113,12 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
         close(outConn)
         file.show(outFile, delete.file = TRUE,
                   title = paste("Documentation for package",
-                  fQuote(help)))
+                  sQuote(help)))
     }
     else {
 	## library():
+        if(is.null(lib.loc))
+            lib.loc <- .lib.loc
         db <- matrix(character(0), nr = 0, nc = 3)
         nopkgs <- character(0)
 
@@ -148,33 +151,43 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 }
 
 library.dynam <-
-function(chname, package = .packages(), lib.loc = .lib.loc, verbose =
+function(chname, package = .packages(), lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    if (!exists(".Dyn.libs"))
+    if(!exists(".Dyn.libs")) {
+        ## <FIXME>
+        ## Do we really want to assign to .AutoloadEnv?
         assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
-    if (missing(chname) || (LEN <- nchar(chname)) == 0)
+        ## </FIXME>
+    }
+    if(missing(chname) || (LEN <- nchar(chname)) == 0)
         return(.Dyn.libs)
     nc.ext <- nchar(file.ext)
-    if (substr(chname, LEN - nc.ext + 1, LEN) == file.ext)
+    if(substr(chname, LEN - nc.ext + 1, LEN) == file.ext)
         chname <- substr(chname, 1, LEN - nc.ext)
-    if (is.na(match(chname, .Dyn.libs))) {
-        for(pkg in .find.package(package, lib.loc, missing(lib.loc),
-                                 quiet = TRUE)) {
+    if(is.na(match(chname, .Dyn.libs))) {
+        ## <FIXME>
+        ## Do we really want `quiet = TRUE'?
+        for(pkg in .find.package(package, lib.loc, quiet = TRUE,
+                                 verbose = verbose)) {
             file <- file.path(pkg, "libs",
                               paste(chname, file.ext, sep = ""))
             if(file.exists(file)) break
             else
                 file <- ""
         }
+        ## </FIXME>
         if(file == "") {
             stop(paste("dynamic library `", chname, "' not found",
                        sep = ""))
         }
-        if (verbose)
+        if(verbose)
             cat("now dyn.load(", file, ")..\n", sep = "")
         dyn.load(file, ...)
+        ## <FIXME>
+        ## Do we really want to assign to .AutoloadEnv?
         assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
+        ## </FIXME>
     }
     invisible(.Dyn.libs)
 }
@@ -192,8 +205,10 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 }
 
 .packages <-
-function(all.available = FALSE, lib.loc = .lib.loc)
+function(all.available = FALSE, lib.loc = NULL)
 {
+    if(is.null(lib.loc))
+        lib.loc <- .lib.loc
     if(all.available) {
 	ans <- character(0)
         lib.loc <- lib.loc[file.exists(lib.loc)]
@@ -233,20 +248,21 @@ function(package = .packages(), quiet = FALSE)
 }
 
 .find.package <-
-function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
+function(package, lib.loc = NULL, use.attached, quiet = FALSE,
+         verbose = getOption("verbose"))
 {
-    if(missing(use.attached))
-        use.attached <- missing(lib.loc)
-    else if(is.null(use.attached))
-        use.attached <- FALSE
-    else if(!is.logical(use.attached))
-        stop("incorrect value for `use.attached'")
-
-    fQuote <- function(s) paste("`", s, "'", sep = "")
+    if(!missing(use.attached))
+        warning("argument `use.attached' is deprecated")
+    use.attached <- FALSE
+    if(is.null(lib.loc)) {
+        use.attached <- TRUE
+        lib.loc <- .lib.loc
+    }
+    
+    sQuote <- function(s) paste("`", s, "'", sep = "")
 
     n <- length(package)
-    if(n == 0)
-        return(character(0))
+    if(n == 0) return(character(0))
 
     bad <- character(0)                 # names of packages not found
     paths <- character(0)               # paths to packages found
@@ -262,14 +278,13 @@ function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
         }
         if(length(fp) > 1) {
             fp <- fp[1]
-            ## <FIXME>
-            ## This may be useful calling library() interactively, but
-            ## is really a nuisance for the QA checks.  Temporarily
-            ## commented until we know what we we really want ...
-            ## warning(paste("package `", pkg, "' found more than once,\n",
-            ##   "using the one found in `", dirname(fp), "'",
-            ##   sep = ""))
-            ## </FIXME>
+            if(verbose) {
+                warning(paste("package ", sQuote(pkg),
+                              " found more than once,\n",
+                              "using the one found in ",
+                              sQuote(dirname(fp)),
+                              sep = ""))
+            }
         }
         paths <- c(paths, fp)
     }
@@ -278,7 +293,7 @@ function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
         if(length(paths) == 0)
             stop("none of the packages were found")
         for(pkg in bad)
-            warning(paste("there is no package called", fQuote(pkg)))
+            warning(paste("there is no package called", sQuote(pkg)))
     }
 
     paths
