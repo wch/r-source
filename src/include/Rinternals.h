@@ -900,10 +900,11 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 void R_RestoreHashCount(SEXP rho);
 Rboolean R_IsPackageEnv(SEXP rho);
 SEXP R_PackageEnvName(SEXP rho);
+SEXP R_FindPackageEnv(SEXP info);
 #ifdef EXPERIMENTAL_NAMESPACES
 Rboolean R_IsNamespaceEnv(SEXP rho);
 SEXP R_NamespaceEnvName(SEXP rho);
-SEXP R_FindNamespace(char *name);
+SEXP R_FindNamespace(SEXP info);
 #endif
 #define ENVIRONMENT_LOCKING
 #define FANCY_BINDINGS

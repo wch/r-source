@@ -2120,12 +2120,32 @@ SEXP do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef ENVIRONMENT_LOCKING
 void R_LockEnvironment(SEXP env, Rboolean bindings)
 {
-    if (bindings)
-	error("locking bindings is not supported yet");
     if (env == R_NilValue)
 	error("locking the NULL (base) environment is not supported yet");
     if (TYPEOF(env) != ENVSXP)
 	error("not an environment");
+    if (bindings) {
+#ifdef FANCY_BINDINGS
+	if (IS_HASHED(env)) {
+	    SEXP table, chain;
+	    int i, size;
+	    table = HASHTAB(env);
+	    size = HASHSIZE(table);
+	    for (i = 0; i < size; i++)
+		for (chain = VECTOR_ELT(table, i);
+		     chain != R_NilValue;
+		     chain = CDR(chain))
+		    LOCK_BINDING(chain);
+	}
+	else {
+	    SEXP frame;
+	    for (frame = FRAME(env); frame != R_NilValue; frame = CDR(frame))
+		LOCK_BINDING(frame);
+	}
+#else
+	error("locking bindings is not supported");
+#endif
+    }
     LOCK_FRAME(env);
 }
 
@@ -2315,6 +2335,24 @@ SEXP R_PackageEnvName(SEXP rho)
 	return R_NilValue;
 }
 
+SEXP R_FindPackageEnv(SEXP info)
+{
+    SEXP fun, expr, val;
+    PROTECT(info);
+    fun = install("findPackageEnv");
+    if (findVar(fun, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
+	warning("using .GlobalEnv instead of %s", CHAR(STRING_ELT(info, 0)));
+	UNPROTECT(1);
+	return R_GlobalEnv;
+    }
+    else {
+	PROTECT(expr = LCONS(fun, LCONS(info, R_NilValue)));
+	val = eval(expr, R_GlobalEnv);
+	UNPROTECT(2);
+	return val;
+    }
+}
+
 #ifdef EXPERIMENTAL_NAMESPACES
 Rboolean R_IsNamespaceEnv(SEXP rho)
 {
@@ -2346,14 +2384,21 @@ SEXP R_NamespaceEnvName(SEXP rho)
     else return R_NilValue;
 }
 
-SEXP R_FindNamespace(char *name)
+SEXP R_FindNamespace(SEXP info)
 {
-    SEXP str, fun, expr, val;
-    PROTECT(str = ScalarString(mkChar(name)));
+    SEXP fun, expr, val;
+    PROTECT(info);
     fun = install("findNamespace");
-    PROTECT(expr = LCONS(fun, LCONS(str, R_NilValue)));
-    val = eval(expr, R_GlobalEnv);
-    UNPROTECT(2);
-    return val;
+    if (findVar(fun, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
+	warning("namespaces not abailable; using .GlobalEnv");
+	UNPROTECT(1);
+	return R_GlobalEnv;
+    }
+    else {
+	PROTECT(expr = LCONS(fun, LCONS(info, R_NilValue)));
+	val = eval(expr, R_GlobalEnv);
+	UNPROTECT(2);
+	return val;
+    }
 }
 #endif
