@@ -173,7 +173,8 @@ remove.packages <- function(pkgs, lib, version) {
 
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
-        warning(paste("argument `lib' is missing: using", lib))
+        warning(paste("argument", sQuote("lib"),
+                      "is missing: using", lib))
     }
 
     if (!missing(version))

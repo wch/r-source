@@ -61,13 +61,14 @@ smooth.spline <-
 		  ncol = 3, byrow=TRUE)
     wbar <- tmp[, 1]
     ybar <- tmp[, 2]/ifelse(wbar > 0, wbar, 1)
-    yssw <- sum(tmp[, 3] - wbar*ybar^2)# will be added to RSS for GCV
+    yssw <- sum(tmp[, 3] - wbar*ybar^2) # will be added to RSS for GCV
     nx <- length(ux)
     if(nx <= 3) stop("need at least four unique `x' values")
     if(cv && nx < n)
-        warning("crossvalidation with non-unique `x' seems doubtful")
+        warning(paste("crossvalidation with non-unique", sQuote("x"),
+                      "seems doubtful"))
     r.ux <- ux[nx] - ux[1]
-    xbar <- (ux - ux[1])/r.ux # scaled to [0,1]
+    xbar <- (ux - ux[1])/r.ux           # scaled to [0,1]
     if(all.knots) {
 	knot <- c(rep(xbar[1], 3), xbar, rep(xbar[nx], 3))
 	nk <- nx + 2

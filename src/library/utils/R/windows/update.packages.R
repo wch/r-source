@@ -69,7 +69,8 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning(paste("argument `lib' is missing: using", lib))
+            warning(paste("argument", sQuote("lib"),
+                          "is missing: using", lib))
     }
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)

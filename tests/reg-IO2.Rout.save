@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-24)
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 2.0.0 Under development (unstable) (2004-05-23), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ## tests of boundary cases in read.table()
 > # empty file
@@ -61,7 +62,7 @@ Error in read.table("foo1") : no lines available in input
 Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
 	line 1 did not have 4 elements
 In addition: Warning message: 
-header and `col.names' are of different lengths in: read.table("foo3", header = TRUE, col.names = letters[1:4]) 
+header and 'col.names' are of different lengths in: read.table("foo3", header = TRUE, col.names = letters[1:4]) 
 > unlink("foo3")
 > 
 > # incomplete last line

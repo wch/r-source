@@ -163,7 +163,8 @@ str.default <-
 	} else if (is.factor(object)) {
 	    nl <- length(lev.att <- levels(object))
 	    if(!is.character(lev.att)) {# should not happen..
-		warning("`object' doesn't have legal levels()!")
+		warning(paste(sQuote("object"),
+                              "does not have valid levels()!"))
 		nl <- 0
 	    }
 	    ord <- is.ordered(object)

@@ -383,7 +383,7 @@ cut.dendrogram <- function(x, h, ...)
     assignNodes <- function(subtree, h) {
 	if(!isLeaf(subtree)) {
 	    if(!(K <- length(subtree)))
-		warning("`subtree' of length 0 !!")
+		warning(paste(sQuote("subtree"), "of length 0 !!"))
 	    new.mem <- 0
 	    for(k in 1:K) {
 		if(attr(subtree[[k]], "height") <= h) {

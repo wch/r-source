@@ -1,36 +1,40 @@
-count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
-                         blank.lines.skip = TRUE, comment.char = "#")
+count.fields <-
+function(file, sep = "", quote = "\"'", skip = 0,
+         blank.lines.skip = TRUE, comment.char = "#")
 {
     if(is.character(file)) {
         file <- file(file)
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop("argument `file' must be a character string or connection")
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
     .Internal(count.fields(file, sep, quote, skip, blank.lines.skip,
                            comment.char))
 }
 
 
-type.convert <- function(x, na.strings = "NA", as.is = FALSE, dec = ".")
+type.convert <-
+function(x, na.strings = "NA", as.is = FALSE, dec = ".")
     .Internal(type.convert(x, na.strings, as.is, dec))
 
 
 read.table <-
-    function (file, header = FALSE, sep = "", quote = "\"'", dec = ".",
-              row.names, col.names, as.is = FALSE,
-	      na.strings = "NA", colClasses = NA,
-              nrows = -1, skip = 0,
-              check.names = TRUE, fill = !blank.lines.skip,
-              strip.white = FALSE, blank.lines.skip = TRUE,
-              comment.char = "#")
+function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
+         row.names, col.names, as.is = FALSE,
+         na.strings = "NA", colClasses = NA,
+         nrows = -1, skip = 0,
+         check.names = TRUE, fill = !blank.lines.skip,
+         strip.white = FALSE, blank.lines.skip = TRUE,
+         comment.char = "#")
 {
     if(is.character(file)) {
         file <- file(file, "r")
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop("argument `file' must be a character string or connection")
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
     if(!isOpen(file)) {
         open(file, "r")
         on.exit(close(file))
@@ -84,7 +88,8 @@ read.table <-
         readLines(file, 1) # skip over header
         if(missing(col.names)) col.names <- first
         else if(length(first) != length(col.names))
-            warning("header and `col.names' are of different lengths")
+            warning(paste("header and", sQuote("col.names"),
+                          "are of different lengths"))
 
     } else if (missing(col.names))
 	col.names <- paste("V", 1:cols, sep = "")
@@ -193,26 +198,26 @@ read.table <-
 }
 
 read.csv <-
-    function (file, header = TRUE, sep = ",", quote="\"", dec=".",
-              fill = TRUE, ...)
+function (file, header = TRUE, sep = ",", quote="\"", dec=".",
+          fill = TRUE, ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill, ...)
 
 read.csv2 <-
-    function (file, header = TRUE, sep = ";", quote="\"", dec=",",
-              fill = TRUE, ...)
+function (file, header = TRUE, sep = ";", quote="\"", dec=",",
+          fill = TRUE, ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill, ...)
 
 read.delim <-
-    function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
-              fill = TRUE, ...)
+function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
+          fill = TRUE, ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill, ...)
 
 read.delim2 <-
-    function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
-              fill = TRUE, ...)
+function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
+          fill = TRUE, ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill, ...)
 
