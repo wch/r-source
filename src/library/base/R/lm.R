@@ -349,12 +349,12 @@ update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
 	eval(call, sys.frame(sys.parent()))
 }
 
-residuals.lm <- function(z) z$residuals
-fitted.lm <- function(z) z$fitted.values
-coef.lm <- function(z) z$coefficients
-weights.lm <- function(z) z$weights
-df.residual.lm <- function(z) z$df.residual
-deviance.lm <- function(z) sum((z$residuals)^2)
+residuals.lm <- function(x) x$residuals
+fitted.lm <- function(x) x$fitted.values
+coef.lm <- function(x) x$coefficients
+weights.lm <- function(x) x$weights
+df.residual.lm <- function(x) x$df.residual
+deviance.lm <- function(x) sum((x$residuals)^2)
 formula.lm <- function(x) formula(x$terms)
 family.lm <- function(x) { gaussian() }
 
@@ -526,5 +526,5 @@ predict.lm <- function (object, newdata = model.frame(object),
 ##}
 
 effects.lm <- function(...) .NotYetImplemented()
-                                        
+
 plot.lm <- function(...) .NotYetImplemented()

@@ -648,31 +648,30 @@ print.anova.glm <- function(x, digits = max(3, .Options$digits - 3),
 
 # GLM Methods for Generic Functions :
 
-coef.glm <- function(object) object$coefficients
-deviance.glm <- function(object) object$deviance
-effects.glm <- function(object) object$effects
-fitted.glm<- function(object) object$fitted.values
+coef.glm <- function(x) x$coefficients
+deviance.glm <- function(x) x$deviance
+effects.glm <- function(x) x$effects
+fitted.glm<- function(x) x$fitted.values
 
-family.glm <- function(object) {
-	family <- get(as.character(object$family$family), mode="function")
-	family()
+family.glm <- function(x) {
+  get(as.character(x$family$family), mode="function")()
 }
 
-residuals.glm <- function(object, type="deviance")
+residuals.glm <- function(x, type="deviance")
 {
 	ntyp <- match(type, c("deviance", "pearson", "working", "response"))
 	if(is.na(ntyp))
 		stop(paste("invalid `type':", type))
-	y  <- object$y
-	mu <- object$fitted.values
-	wts<- object$prior.weights
+	y  <- x$y
+	mu <- x$fitted.values
+	wts<- x$prior.weights
 	switch(ntyp,
-		deviance = if(object$df.res > 0) {
-		  d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
+		deviance = if(x$df.res > 0) {
+		  d.res <- sqrt((x$family$dev.resids)(y, mu, wts))
 		  ifelse(y > mu, d.res, -d.res)
 		} else rep(0, length(mu)),
-		pearson	 = object$residuals * sqrt(object$weights),
-		working	 = object$residuals,
+		pearson	 = x$residuals * sqrt(x$weights),
+		working	 = x$residuals,
 		response = y - mu
 		)
 }
