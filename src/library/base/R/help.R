@@ -77,22 +77,37 @@ help <-
                 if(file.exists(zfile)) {
                     FILE <- tempfile()
                     on.exit(unlink(FILE))
-                    cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
+                    cat("\\documentclass[",
+                        .Options$papersize,
+                        "paper]{article}",
+                        "\n",
+                        "\\usepackage[",
+                        getenv("R_RD4DVI"),
+                        "]{Rd}",
+                        "\n",
+                        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
+                        "\\begin{document}\n",
                         file = FILE, sep = "")
-                    file.append(FILE,
-                                file.path(R.home(), "doc", "manual", "Rd.sty"))
-                    cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
-                        file = FILE, append = TRUE)
                     file.append(FILE, zfile)
-                    cat("\\end{document}\n", file = FILE, append = TRUE)
-                    system(paste(file.path(R.home(), "bin", "help"),
-                                 "PRINT", FILE, topic,
-                                 .Options$latexcmd, .Options$dvipscmd)
-                           )
+                    cat("\\end{document}\n",
+                        file = FILE, append = TRUE)
+                    system(paste(paste("TEXINPUTS=",
+                                       file.path(R.home(), "doc",
+                                                 "manual"),
+                                       ":",
+                                       "$TEXINPUTS",
+                                       sep = ""),
+                                 file.path(R.home(), "bin", "help"),
+                                 "PRINT",
+                                 FILE,
+                                 topic,
+                                 .Options$latexcmd,
+                                 .Options$dvipscmd))
                     return(invisible())
                 }
                 else
-                    stop(paste("No offline documentation for", topic, "is available"))
+                    stop(paste("No offline documentation for", topic,
+                               "is available"))
             }
         }
         else
