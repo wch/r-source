@@ -228,7 +228,7 @@ function(package, dir, lib.loc = NULL)
                     (length(fAttr) == 2
                      && fAttr[1] == "genericFunction"
                      && fAttr[2] != basename(dir))
-                } == FALSE)]
+                }) == FALSE]
         }
         ## </FIXME>
     }
