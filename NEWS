@@ -278,6 +278,8 @@ BUG FIXES
 
     o	$<- did not duplicate when it needed to.
 
+    o	methods("$") and methods("$<-") were failing to find methods.
+
 
 
 		CHANGES IN R VERSION 1.7.1

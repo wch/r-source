@@ -70,7 +70,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   For \code{KalmanSmooth}, a list with two components.
   Component \code{smooth} is a \code{n} by \code{p} matrix of state
   estimates based on all the observations, with one row for each time.
-  Component \code{smooth} is a \code{n} by \code{p} by \code{p} array of
+  Component \code{var} is a \code{n} by \code{p} by \code{p} array of
   variance matrices.
 
   For \code{KalmanForecast}, a list with components \code{pred}, the
