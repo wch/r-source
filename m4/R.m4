@@ -436,7 +436,10 @@ AC_DEFUN([R_PROG_CXX_FLAG],
 ##
 ## If we have not been forced to use a particular FORTRAN compiler, try
 ## to find one using one of the several common names.  The list is based
-## on what the current autoconf CVS contains, and ordered by
+## on what the current autoconf CVS contains.  This says,
+##
+## <Quote>
+## Compilers are ordered by
 ##  1. F77, F90, F95
 ##  2. Good/tested native compilers, bad/untested native compilers
 ##  3. Wrappers around f2c go last.
@@ -451,6 +454,10 @@ AC_DEFUN([R_PROG_CXX_FLAG],
 ## fl32 is the Microsoft Fortran "PowerStation" compiler.
 ## af77 is the Apogee F77 compiler for Intergraph hardware running CLIX.
 ## epcf90 is the "Edinburgh Portable Compiler" F90.
+## </Quote>
+##
+## In fact, on HP-UX fort77 is the POSIX-compatible native compiler and
+## f77 is not: hence we need look for fort77 first!
 ##
 ## The configure options `--with-g77', `--with-f77', or `--with-f2c'
 ## force g77, f77, or f2c to be used (under *exactly* these names).  It
@@ -484,7 +491,16 @@ elif ${use_f2c}; then
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 else
   F77=
-  AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+  case "${host}" in
+    *hpux*)
+      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf cf77 cft77 pgf77 fl32 af77 \
+                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      ;;
+    *)
+      AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 \
+                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      ;;
+  esac
   if test -z "${F77}"; then
     AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
@@ -1059,7 +1075,7 @@ AC_DEFUN([R_BITMAPS], [
         AC_CHECK_LIB(png, png_create_write_struct, [
           BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
 	  AC_DEFINE(HAVE_PNG)
-        ], , ${LIBS})
+        ], , [${LIBS} -lz])
       ], AC_MSG_RESULT([no]))
     ])
   ])

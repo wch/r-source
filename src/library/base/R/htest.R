@@ -1,27 +1,32 @@
-print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
+print.htest <-
+function(x, digits = 4, quote = TRUE, prefix = "", ...)
 {
     cat("\n")
-    writeLines(strwrap(x$method, prefix="\t"))
+    writeLines(strwrap(x$method, prefix = "\t"))
     cat("\n")
     cat("data: ", x$data.name, "\n")
+    out <- character()
     if(!is.null(x$statistic))
-	cat(names(x$statistic), " = ", format(round(x$statistic, 4)),
-	    ", ", sep = "")
-    if(!is.null (x$parameter))
-	cat(paste(names(x$parameter), " = ", format(round(x$parameter, 3)),
-                  ",", sep = ""), "")
-    cat("p-value =", format.pval(x$p.value, digits= digits), "\n")
+        out <- c(out, paste(names(x$statistic), "=",
+                            format(round(x$statistic, 4))))
+    if(!is.null(x$parameter))
+        out <- c(out, paste(names(x$parameter), "=",
+                            format(round(x$parameter, 3))))
+    if(!is.null(x$p.value))
+        out <- c(out, paste("p-value =",
+                            format.pval(x$p.value, digits = digits)))
+    writeLines(strwrap(paste(out, collapse = ", ")))
     if(!is.null(x$alternative)) {
         cat("alternative hypothesis: ")
 	if(!is.null(x$null.value)) {
 	    if(length(x$null.value) == 1) {
                 alt.char <-
-                  switch(x$alternative,
-                         two.sided = "not equal to",
-                         less = "less than",
-                         greater = "greater than")
-
-		cat("true", names(x$null.value), "is", alt.char, x$null.value, "\n")
+                    switch(x$alternative,
+                           two.sided = "not equal to",
+                           less = "less than",
+                           greater = "greater than")
+		cat("true", names(x$null.value), "is", alt.char,
+                    x$null.value, "\n")
 	    }
 	    else {
 		cat(x$alternative, "\nnull values:\n")

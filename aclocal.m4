@@ -1,4 +1,4 @@
-dnl aclocal.m4 generated automatically by aclocal 1.4
+dnl aclocal.m4 generated automatically by aclocal 1.4-p4
 
 dnl Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -381,7 +381,16 @@ elif ${use_f2c}; then
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 else
   F77=
-  AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+  case "${host}" in
+    *hpux*)
+      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf cf77 cft77 pgf77 fl32 af77 \
+                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      ;;
+    *)
+      AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 \
+                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      ;;
+  esac
   if test -z "${F77}"; then
     AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
@@ -890,7 +899,7 @@ AC_DEFUN([R_BITMAPS], [
         AC_CHECK_LIB(png, png_create_write_struct, [
           BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
 	  AC_DEFINE(HAVE_PNG)
-        ], , ${LIBS})
+        ], , [${LIBS} -lz])
       ], AC_MSG_RESULT([no]))
     ])
   ])
