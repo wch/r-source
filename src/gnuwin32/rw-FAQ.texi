@@ -268,6 +268,20 @@ R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
 several times slower on some tasks).
 
+If you are running a version of Windows which supports more than 2Gb per
+process, you can let the R executables use it by marking their headers
+suitably.  If you have Visual Studio use
+@smallexample
+editbin /LARGEADDRESSAWARE \path\to\rw1081\bin\Rgui.exe
+editbin /LARGEADDRESSAWARE \path\to\rw1081\bin\Rterm.exe
+@end smallexample
+and check this by
+@smallexample
+dumpbin /headers \path\to\rw1081\bin\Rgui.exe
+dumpbin /headers \path\to\rw1081\bin\Rterm.exe
+@end smallexample
+
+
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
