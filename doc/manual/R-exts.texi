@@ -263,18 +263,20 @@ be used, for example @file{Makevars.win} or @file{Makefile.win} on
 Windows take precedence over @file{Makevars} or @file{Makefile}.
 
 The @file{data} subdirectory is for additional data files the package
-makes available for loading using @code{data()}.  Currently, data files
-can have one of three types as indicated by their extension: plain R
-code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
-@file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
-(For portability please use images saved with @code{save(,
-ascii=TRUE)}.)  Note that R code should be ``self-sufficient'' and not
-make use of extra functionality provided by the package, so that the
-data file can also be used without having to load the package.  The
-@file{data} subdirectory should also contain a @file{00Index} file that
-describes the datasets available.  Ideally this should have a one-line
-description of each dataset, with full documentation in the @file{man}
-directory.
+makes available for loading using @code{data()}.  Currently, data
+files can have one of three types as indicated by their extension:
+plain R code (@file{.R} or @file{.r}), tables (@file{.tab},
+@file{.txt}, or @file{.csv}), or @code{save()} images (@file{.RData}
+or @file{.rda}).  (As from @R{} 1.5.0 one can assume that all ports of
+@R{} have the same binary (XDR) format and can read compressed images.
+For portability to earlier versions use images saved with @code{save(,
+ascii = TRUE, version = 1)}.)  Note that R code should be
+``self-sufficient'' and not make use of extra functionality provided
+by the package, so that the data file can also be used without having
+to load the package.  The @file{data} subdirectory should also contain
+a @file{00Index} file that describes the datasets available.  Ideally
+this should have a one-line description of each dataset, with full
+documentation in the @file{man} directory.
 
 The @file{demo} subdirectory is for @R{} scripts (for running via
 @code{demo()}) which demonstrate some of the functionality of the
