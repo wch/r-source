@@ -10,8 +10,9 @@
 }
 \usage{
 heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
-	distfun = dist, hclustfun = hclust, add.expr,
-	symm = FALSE, revC = identical(Colv, "Rowv"),
+	distfun = dist, hclustfun = hclust,
+        reorderfun = function(d,w) reorder(d,w),
+        add.expr, symm = FALSE, revC = identical(Colv, "Rowv"),
 	scale=c("row", "column", "none"), na.rm = TRUE,
 	margins = c(5, 5), ColSideColors, RowSideColors,
 	cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
@@ -34,6 +35,9 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \item{hclustfun}{function used to compute the hierarchical clustering
     when \code{Rowv} or \code{Colv} are not dendrograms.  Defaults to
     \code{\link{hclust}}.}
+  \item{reorderfun}{function(d,w) of dendrogram and weights for
+    reordering the row and column dendrograms.  The default uses
+    \code{\link{reorder.dendrogram}}.}
   \item{add.expr}{expression that will be evaluated after the call to
     \code{image}.  Can be used to add components to the plot.}
   \item{symm}{logical indicating if \code{x} should be treated
@@ -152,7 +156,7 @@ heatmap(x, Rowv = NA, Colv = NA, scale="column",
 data(attitude)
 round(Ca <- cor(attitude), 2)
 symnum(Ca) # simple graphic
-heatmap(Ca,		 symm = TRUE, margin=c(6,6))# with reorder()
+heatmap(Ca,	        symm = TRUE, margin=c(6,6))# with reorder()
 heatmap(Ca, Rowv=FALSE, symm = TRUE, margin=c(6,6))# _NO_ reorder()
 
 ## For variable clustering, rather use distance based on cor():
