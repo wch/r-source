@@ -1,5 +1,5 @@
-
-##-- These are the ones used in 0.16.1 -- ../../../main/par.c  Query(..) :
+##-- These are the ones used in ../../../main/par.c  Query(..) :
+##-- Documentation in		../../../include/Graphics.h
 .Pars <- c(
 	   "adj", "ann", "ask", "bg", "bty",
 	   "cex", "cex.axis", "cex.lab", "cex.main", "cex.sub", "cin",
