@@ -102,6 +102,17 @@ NEW FEATURES
     o   Previously deprecated functions read.table.url(), scan.url(),
 	source.url(), httpclient() and parse.dcf() are defunct.
 
+    o	Transparency is now supported on most graphics devices.
+	Internally colors include an alpha channel for opacity, but at
+	present there is only visible support for transparent/opaque.
+	The new color "transparent" (and NA and "NA") is transparent,
+	and is the default background color for most devices.  Those
+	devices (postscript, XFig, PDF, Windows metafile and printer)
+	that previously treated bg = "white" as transparent now have
+	"transparent" as the default and will actually print "white".
+	(NB: you may have bg="white" saved in .Postscript.options in
+	your workspace.)  [Not yet finished.]
+
 
 
 

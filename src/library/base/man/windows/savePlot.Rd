@@ -3,14 +3,14 @@
 \title{Save Windows Plot to a File}
 \usage{
 savePlot(filename="Rplot",
-         type=c("wmf", "png", "jpeg", "jpg", "bmp", "ps"),
+         type=c("wmf", "png", "jpeg", "jpg", "bmp", "ps", "pdf"),
          device=dev.cur())
 }
 \arguments{
   \item{filename}{The filename under which to save the plot, without
     the extension.}
   \item{type}{The type of plot, Windows metafile, PNG, JPEG, BMP
-    (Windows bitmap format)  or PostScript.}
+    (Windows bitmap format), PostScript or PDF.}
   \item{device}{A device number of a \code{windows} device, by default
     the current device.}
 }
@@ -19,7 +19,7 @@ savePlot(filename="Rplot",
 }
 \details{
   This is equivalent to selecting the `Save as' menu item on the
-  `File' menu of a devga device.
+  `File' menu of a \code{\link{windows}} device.
 
   Using \code{filename} as \code{"clipboard"} or \code{""} with
   \code{type = "wmf"} will copy to the clipboard.
@@ -29,6 +29,8 @@ savePlot(filename="Rplot",
 }
 \author{Guido Masarotto, B. D. Ripley}
 
-\seealso{\code{\link{dev.print}}}
+\seealso{
+  \code{\link{windows}}, \code{\link{dev.print}}
+}
 
 \keyword{misc}

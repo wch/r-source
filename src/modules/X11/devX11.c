@@ -1106,7 +1106,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 
     /* Foreground and Background Colors */
 
-    xd->bg =  dd->dp.bg	 = R_RGB(255, 255, 255);
+    xd->bg =  dd->dp.bg	 = 0xffffffff; /* R_RGB(255, 255, 255); */
     xd->fg =  dd->dp.fg	 = R_RGB(0, 0, 0);
     xd->col = dd->dp.col = xd->fg;
 
@@ -1329,7 +1329,7 @@ static void X11_NewPage(DevDesc *dd)
     if (xd->type > WINDOW) {
 	if (xd->npages++)
 	    error("attempt to draw second page on pixmap device");
-	xd->bg = dd->dp.bg;
+	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : 0xffffff;
 	SetColor(xd->bg, dd);
 	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
 		       xd->windowWidth, xd->windowHeight);
@@ -1338,7 +1338,7 @@ static void X11_NewPage(DevDesc *dd)
 
     FreeX11Colors();
     if ( (model == PSEUDOCOLOR2) || (xd->bg != dd->dp.bg)) {
-	xd->bg = dd->dp.bg;
+	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : 0xffffff;
 	whitepixel = GetX11Pixel(R_RED(xd->bg),R_GREEN(xd->bg),R_BLUE(xd->bg));
 	XSetWindowBackground(display, xd->window, whitepixel);
     }
@@ -1350,7 +1350,7 @@ static void X11_NewPage(DevDesc *dd)
 
 extern int R_SaveAsPng(void  *d, int width, int height, 
 		       unsigned long (*gp)(XImage *, int, int),
-		       int bgr, FILE *fp);
+		       int bgr, FILE *fp, unsigned int transparent);
 
 extern int R_SaveAsJpeg(void  *d, int width, int height, 
 			unsigned long (*gp)(XImage *, int, int),
@@ -1430,7 +1430,8 @@ static void X11_Close(DevDesc *dd)
 			   AllPlanes, ZPixmap);
 	    if (xd->type == PNG) 
 		R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight, 
-			    bitgp, 0, xd->fp);
+			    bitgp, 0, xd->fp, 
+			    R_OPAQUE(dd->dp.bg) ? 0 : 0xffffff);
 	    else if (xd->type == JPEG)
 		R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight, 
 			     bitgp, 0, xd->quality, xd->fp);

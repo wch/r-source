@@ -1,6 +1,7 @@
 windows <- function(width = 7, height = 7, pointsize = 12,
                     record = getOption("graphics.record"),
-                    rescale = c("R", "fit", "fixed"), xpinch, ypinch)
+                    rescale = c("R", "fit", "fixed"), xpinch, ypinch,
+                    canvas = "white")
 {
     rescale <- match.arg(rescale)
     rescale <- match(rescale, c("R", "fit", "fixed"))
@@ -11,33 +12,34 @@ windows <- function(width = 7, height = 7, pointsize = 12,
         if(!length(ypinch <- getOption("ypinch"))) ypinch <- NA
     ypinch <- as.double(ypinch)
     .Internal(devga("", width, height, pointsize, record, rescale,
-                    xpinch, ypinch))
+                    xpinch, ypinch, canvas))
 }
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA))
+    .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white"))
 
 win.print <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("win.print", width, height, pointsize, FALSE, 1, NA, NA))
+    .Internal(devga("win.print", width, height, pointsize, FALSE, 1,
+                    NA, NA, "white"))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA))
+                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
 
 png <- function(filename = "Rplot.png", width = 480, height = 480,
                 pointsize = 12)
     .Internal(devga(paste("png:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA))
+                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
 
 bmp <- function(filename = "Rplot.bmp", width = 480, height = 480,
                 pointsize = 12)
     .Internal(devga(paste("bmp:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA))
+                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
 
 jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75)
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA))
+                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
 
 bringToTop <- function(which = dev.cur())
 {
@@ -50,7 +52,7 @@ bringToTop <- function(which = dev.cur())
 }
 
 savePlot <- function(filename = "Rplot",
-                     type = c("wmf", "png", "jpeg", "jpg", "bmp","ps"),
+                     type = c("wmf", "png", "jpeg", "jpg", "bmp", "ps", "pdf"),
                      device = dev.cur())
 {
     type <- match.arg(type)

@@ -156,7 +156,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "bg")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
-	naIntCheck(ix, what);
+/*	naIntCheck(ix, what); */
 	dd->dp.bg = dd->gp.bg = ix;
 	dd->dp.new = dd->gp.new = FALSE;
     }

@@ -34,6 +34,10 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
   diagrams and blocks of solid colour. The JPEG format is lossy,
   but may be useful for image plots, for example.
 
+  \code{png} supports transparent backgrounds: use
+  \code{par(bg="transparent")} between opening the device and plotting.
+  Not all PNG viewers render files with transparency correctly.
+
   \R can be compiled without support for either or both of these
   devices: this will be reported if you attempt to use them on a system
   where they are not supported.  They will not be not available if \R has

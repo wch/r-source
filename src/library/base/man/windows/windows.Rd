@@ -11,13 +11,13 @@
 \usage{
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
-        rescale = c("R", "fit", "fixed"), xpinch, ypinch)
+        rescale = c("R", "fit", "fixed"), xpinch, ypinch,
+        canvas = "white")
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
 win.print(width = 7, height = 7, pointsize = 12)
-
 }
 
 \arguments{
@@ -30,7 +30,10 @@ win.print(width = 7, height = 7, pointsize = 12)
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
   \item{rescale}{controls the action for resizing plots.}
-  \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and vertically.}
+  \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and
+    vertically.}
+  \item{canvas}{color.  The color of the canvas which is visible
+    when the background color is transparent.}
 }
 
 \description{
@@ -47,6 +50,10 @@ win.print(width = 7, height = 7, pointsize = 12)
 
   The size of a window is computed from information provided about the
   display: it depends on the system being configured accurately.
+  By default a screen device asks Windows for the number of pixels per
+  inch.  This can be overridden (it is often wrong) by specifying
+  \code{xpinch} and \code{ypinch} or the corresponding options
+  \code{"xpinch"} and \code{"ypinch"}.
 
   A graphics window is not allowed to be specified at more that 85\% of
   the screen width or height: the width and height are rescaled
@@ -56,10 +63,6 @@ win.print(width = 7, height = 7, pointsize = 12)
   output is copied to the clipboard when the device is closed. A
   \code{win.metafile} device can only be used for a single page.
 
-  By default a screen device asks Windows for the number of pixels per
-  inch.  This can be overridden (it is often wrong) by specifying
-  \code{xpinch} and \code{ypinch} or the corresponding options
-  \code{"xpinch"} and \code{"ypinch"}.
 
   If a screen device is re-sized, the default behaviour is to redraw the
   plot(s) as if the new size had been specified originally.  Using
@@ -82,8 +85,18 @@ win.print(width = 7, height = 7, pointsize = 12)
   metrics of the rescaled fonts (which are in integer sizes)
 
   The displayed region may be bigger than the `paper' size, and areas
-  outside the `paper' are coloured light grey.  Graphics parameters such
+  outside the `paper' are coloured in the Windows application background
+  colour.  Graphics parameters such
   as \code{"din"} refer to the scaled plot if rescaling is in effect.
+
+  The different colours need to be distinguished carefully. The area
+  outside the device region is coloured in the Windows application background
+  colour.  The device region is coloured in the canvas colour.  This is
+  over-painted by the background colour of a plot when a new page is
+  called for, but that background colour can be transparent (and is by
+  default).  The difference between setting the canvas colour and the
+  background colour is that when the device is copied the background
+  colour is copied but the canvas colour is not.
 }
 
 \value{
@@ -93,7 +106,8 @@ win.print(width = 7, height = 7, pointsize = 12)
 \author{Guido Masarotto}
 
 \seealso{
-  \code{\link{bringToTop}}, \code{\link{Devices}}, \code{\link{postscript}}
+  \code{\link{savePlot}}, \code{\link{bringToTop}},
+  \code{\link{Devices}}, \code{\link{postscript}}
 }
 
 \keyword{device}

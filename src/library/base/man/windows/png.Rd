@@ -28,6 +28,10 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
   diagrams and blocks of solid colour. The JPEG format is lossy,
   but may be useful for image plots, for example. The BMP format is
   standard on Windows, and supported elsewhere.
+
+  \code{png} supports transparent backgrounds: use
+  \code{par(bg="transparent")} between opening the device and plotting.
+  Not all PNG viewers render files with transparency correctly.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
@@ -39,7 +43,7 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
   set to a 24-bit or 32-bit colour mode.
 }
 
-\author{Guido Masarotto}
+\author{Guido Masarotto and Brian Ripley}
 
 \seealso{\code{\link{Devices}}, \code{\link{dev.print}},
   \code{\link{bitmap}}}

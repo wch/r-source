@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999  Guido Masarotto and the R Development Core Team
+ *  Copyright (C) 1999, 2001  Guido Masarotto and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  * void *d : an 'opaque' view of the source of the pixels;
  * int width, height: dimensions in pixels;
  * unsigned long (*gp)(void *d, int x, int y): a function which
- *     returns the colour of the (x,y) pixel stored either as
+ *     returns the colour of the (x,y) pixels stored either as
  *     BGR (R model, see include/Graphics.h) or as RGB in the
  *     24 least sig. bits (8 bit for channel).
  *     (0,0) is the left-top corner. (3,2) is the third pixel 
@@ -80,13 +80,15 @@ static void my_png_warning(png_structp png_ptr, png_const_charp msg)
 
 int R_SaveAsPng(void  *d, int width, int height, 
 		unsigned long (*gp)(void *, int, int),
-		int bgr, FILE *fp) 
+		int bgr, FILE *fp, unsigned int transparent) 
 {
   png_structp png_ptr;
   png_infop info_ptr;
   unsigned long  col, palette[256];
   png_color pngpalette[256];
   png_bytep pscanline, scanline = calloc(3*width,sizeof(png_byte));
+  png_byte trans[256];
+  png_color_16 trans_values[1];
   int i, j, r, ncols, mid, high, low, withpalette;
   DECLARESHIFTS;
 
@@ -128,7 +130,9 @@ int R_SaveAsPng(void  *d, int width, int height,
   /* I/O initialization functions is REQUIRED */
   png_init_io(png_ptr, fp);
   /* Have we less than 256 different colors? */
-  ncols = mid = 0;
+  ncols = 0;
+  if(transparent) palette[ncols++] = transparent & 0xFFFFFFUL;
+  mid = ncols;
   withpalette = 1;
   for (i = 0; (i < height) && withpalette ; i++) {
     for (j = 0; (j < width) && withpalette ; j++) {
@@ -168,6 +172,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 	       withpalette ? PNG_COLOR_TYPE_PALETTE : PNG_COLOR_TYPE_RGB,
 	       PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, 
 	       PNG_FILTER_TYPE_BASE);
+
   if (withpalette) {
     for (i = 0; i < ncols ; i++) {
       col = palette[i];
@@ -177,6 +182,19 @@ int R_SaveAsPng(void  *d, int width, int height,
     } 
     png_set_PLTE(png_ptr, info_ptr, pngpalette, ncols);
   } 
+  /* Deal with transparency */
+  if(transparent) {
+      if(withpalette) {
+	  for (i = 0; i < ncols ; i++)
+	      trans[i] = (palette[i] == (transparent & 0xFFFFFFUL)) ? 0:255;
+      } else {
+	  trans_values[0].red = GETRED(transparent);
+	  trans_values[0].blue = GETBLUE(transparent);
+	  trans_values[0].green = GETGREEN(transparent);
+      }
+      png_set_tRNS(png_ptr, info_ptr, trans, ncols, trans_values);
+  }
+
   /* Write the file header information.  REQUIRED */
   png_write_info(png_ptr, info_ptr);
 
@@ -220,7 +238,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 #else
 int R_SaveAsPng(void  *d, int width, int height, 
 		unsigned long (*gp)(void *, int, int),
-		int bgr, FILE *fp) 
+		int bgr, FILE *fp, unsigned int transparent) 
 {
     warning("No png support in this version of R");
     return 0;

@@ -42,10 +42,17 @@ extern "C" {
  *		green = ((color >>  8) & 255)
  *		blue  = ((color >> 16) & 255)
  */
+/*
+ *	Changes from 1.4.0: use top 8 bits as an alpha channel.
+ * 	0 = opaque, 255 = transparent.
+ *	At present only 0 and >0 are used, with no semi-transparent.
+ */
 #define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16))
 #define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
+#define R_ALPHA(col)	(((col)>>24)&255)
+#define R_OPAQUE(col)	(R_ALPHA(col) == 0)
 
 /*
  *	Some Notes on Line Textures
