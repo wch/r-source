@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-9, 2003-05-12
+Version 1.7-10, 2003-05-17
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1678,6 +1678,11 @@ distributions of R.)
      scaling each column by its SD, or scaling each column by its MAD).
      The finished classifier will consist of a classification tree with one
      such k-nn classifier in each leaf.
+
+*lars*
+     Least Angle Regression, Lasso and Forward Stagewise: efficient
+     procedures for fitting an entire lasso sequence with the cost of a
+     single least squares fit.
 
 *lasso2*
      Routines and documentation for solving regression problems while
