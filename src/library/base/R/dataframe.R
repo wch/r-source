@@ -74,15 +74,13 @@ dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
     x
 }
 
-## <FIXME> what is really intended here </FIXME>
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
-    if(is.null(attr(x, "class"))) class(x) <- data.class(x)
     UseMethod("as.data.frame", x, row.names, optional)
 }
 as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
-    stop(paste("can't coerce", data.class(x), "into a data.frame"))
+    stop(paste("can't coerce", class(x), "into a data.frame"))
 
 
 ###  Here are methods ensuring that the arguments to "data.frame"
