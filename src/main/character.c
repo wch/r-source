@@ -112,11 +112,11 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	errorcall(call, "nchar() requires a character vector");
+	errorcall(call, _("nchar() requires a character vector"));
     len = LENGTH(x);
     stype = CADR(args);
     if(!isString(stype) || LENGTH(stype) != 1)
-	errorcall(call, "invalid 'type' arg");
+	errorcall(call, _("invalid 'type' arg"));
     type = CHAR(STRING_ELT(stype, 0));
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
@@ -207,12 +207,12 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     l = LENGTH(so);
 
     if(!isString(x))
-      errorcall(call, "extracting substrings from a non-character object");
+      errorcall(call, _("extracting substrings from a non-character object"));
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
     if(len > 0) {
 	if (!isInteger(sa) || !isInteger(so) || k == 0 || l == 0)
-	    errorcall(call, "invalid substring argument(s) in substr()");
+	    errorcall(call, _("invalid substring argument(s) in substr()"));
 
 	for (i = 0; i < len; i++) {
 	    if (STRING_ELT(x,i)==NA_STRING){
@@ -275,16 +275,16 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     l = LENGTH(so);
 
     if(!isString(x))
-      errorcall(call, "replacing substrings in a non-character object");
+      errorcall(call, _("replacing substrings in a non-character object"));
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
     if(len > 0) {
 	if (!isInteger(sa) || !isInteger(so) || k == 0 || l == 0)
-	    errorcall(call,"invalid substring argument(s) in substr<-()");
+	    errorcall(call, _("invalid substring argument(s) in substr<-()"));
 
 	v = LENGTH(value);
 	if (!isString(value) || v == 0)
-	    errorcall(call, "invalid rhs in substr<-()");
+	    errorcall(call, _("invalid rhs in substr<-()"));
 
 	for (i = 0; i < len; i++) {
 	    if (STRING_ELT(x, i) == NA_STRING ||
@@ -350,7 +350,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     perl = asLogical(CAD4R(args));
 
     if(!isString(x) || !isString(tok))
-	errorcall_return(call, "non-character argument in strsplit()");
+	errorcall_return(call, _("non-character argument in strsplit()"));
     if(extended_opt == NA_INTEGER) extended_opt = 1;
     if(perl == NA_INTEGER) perl = 0;
 
@@ -358,7 +358,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if(perl) {
 	if(utf8locale) options = PCRE_UTF8;
 	else if(mbcslocale)
-	    warning("perl = TRUE is only fully implemented in UTF-8 locales");
+	    warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
     }
 #endif
 
@@ -411,7 +411,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		re_pcre = pcre_compile(split, options,
 				       &errorptr, &erroffset, tables);
 		if (!re_pcre)
-		    errorcall(call, "invalid split pattern '%s'", split);
+		    errorcall(call, _("invalid split pattern '%s'"), split);
 		re_pe = pcre_study(re_pcre, 0, &errorptr);
 		bufp = buf;
 		if(*bufp != '\0') {
@@ -433,7 +433,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		*/
 		usedRegex = TRUE;
 		if(regcomp(&reg, split, eflags))
-		    errorcall(call, "invalid split pattern '%s'", split);
+		    errorcall(call, _("invalid split pattern '%s'"), split);
 		bufp = buf;
 		if(*bufp != '\0') {
 		    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
@@ -699,7 +699,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
 
     if (!isString(CAR(args)))
-	errorcall_return(call, "the first argument must be a string");
+	errorcall_return(call, _("the first argument must be a string"));
     len = length(CAR(args));
 
     PROTECT(ans = allocVector(STRSXP, len));
@@ -714,7 +714,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 			   stripchars(STRING_ELT(CAR(args), i), minlen));
 	}
     }
-    if(warn) warningcall(call, "abbreviate used with non-ASCII chars");
+    if(warn) warningcall(call, _("abbreviate used with non-ASCII chars"));
     UNPROTECT(1);
     return(ans);
 }
@@ -730,11 +730,11 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op ,args);
     arg = CAR(args);
     if (!isString(arg))
-	errorcall(call, "non-character names");
+	errorcall(call, _("non-character names"));
     n = length(arg);
     allow_ = asLogical(CADR(args));
     if(allow_ == NA_LOGICAL)
-	errorcall(call, "invalid allow_");
+	errorcall(call, _("invalid value of allow_"));
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
 	this = CHAR(STRING_ELT(arg, i));
@@ -787,7 +787,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 			(allow_ && *wc != L'_')) *wc = L'.';
 		wcstombs(this, wstr, strlen(this)+1);
 		Free(wstr);
-	    } else errorcall(call, "invalid multibyte string %d", i+1);
+	    } else errorcall(call, _("invalid multibyte string %d"), i+1);
 	} else
 #endif
 	{
@@ -851,7 +851,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
-	errorcall(call, "regular expression is invalid in this locale");
+	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     n = length(vec);
     nmatches = 0;
@@ -873,7 +873,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (igcase_opt) eflags = eflags | REG_ICASE;
 
 	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	    errorcall(call, "invalid regular expression '%s'",
+	    errorcall(call, _("invalid regular expression '%s'"),
 		      CHAR(STRING_ELT(pat, 0)));
 
 	for (i = 0 ; i < n ; i++) {
@@ -882,7 +882,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_UTF8
 		if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i))))
 		    errorcall(call, 
-			      "input string %d is invalid in this locale",
+			      _("input string %d is invalid in this locale"),
 			      i+1);
 #endif
 		if (fixed_opt) LOGICAL(ind)[i] =
@@ -934,7 +934,7 @@ static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
 		if (k > nsubexpr)
-		    error("invalid backreference %d in regular expression", k);
+		    error(_("invalid backreference %d in regular expression"), k);
 		n += (regmatch[k].rm_eo - regmatch[k].rm_so) - 2;
 		p++;
 	    }
@@ -1020,18 +1020,18 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
-	errorcall(call, "'pattern' is invalid in this locale");
+	errorcall(call, _("'pattern' is invalid in this locale"));
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
-	errorcall(call, "'replacement' is invalid in this locale");
+	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
     if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	errorcall(call, "invalid regular expression '%s'",
+	errorcall(call, _("invalid regular expression '%s'"),
 		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) {
 	spat = CHAR(STRING_ELT(pat, 0));
 	patlen = strlen(spat);
 	if(!patlen)
-	    errorcall(call, "zero-length pattern");
+	    errorcall(call, _("zero-length pattern"));
 	replen = strlen(CHAR(STRING_ELT(rep, 0)));
     }
 
@@ -1063,7 +1063,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
 	if(mbcslocale && !mbcsValid(s))
-	    errorcall(call, "input string %d is invalid in this locale", i+1);
+	    errorcall(call, ("input string %d is invalid in this locale"), i+1);
 #endif
 	if(fixed_opt) {
 	    st = fgrep_one(spat, s);
@@ -1171,10 +1171,10 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
-	errorcall(call, "regular expression is invalid in this locale");
+	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	errorcall(call, "invalid regular expression '%s'",
+	errorcall(call, _("invalid regular expression '%s'"),
 		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
     n = length(text);
@@ -1187,7 +1187,8 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 #ifdef SUPPORT_UTF8
 	    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
-		errorcall(call, "input string %d is invalid in this locale", 
+		errorcall(call,
+			  _("input string %d is invalid in this locale"), 
 			  i+1);
 #endif
 	    if (fixed_opt) {
@@ -1253,7 +1254,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if(!isString(x))
-	errorcall(call, "non-character argument to tolower()");
+	errorcall(call, _("non-character argument to tolower()"));
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
 #ifdef SUPPORT_MBCS
@@ -1277,7 +1278,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(y, i, allocString(nb));
 		    wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
 		} else {
-		    errorcall(call, "invalid multibyte string %d", i+1);
+		    errorcall(call, _("invalid multibyte string %d"), i+1);
 		}
 	    }
 	}
@@ -1327,7 +1328,7 @@ wtr_build_spec(const wchar_t *s, struct wtr_spec *trs) {
 	if(s[i + 1] == L'-') {
 	    new->type = WTR_RANGE;
 	    if(s[i] > s[i + 2])
-		error("decreasing range specification (`%lc-%lc')",
+		error(_("decreasing range specification ('%lc-%lc')"),
 		      s[i], s[i + 2]);
 	    new->u.r.first = s[i];
 	    new->u.r.last = s[i + 2];
@@ -1413,7 +1414,7 @@ tr_build_spec(const char *s, struct tr_spec *trs) {
 	if(s[i + 1] == '-') {
 	    new->type = TR_RANGE;
 	    if(s[i] > s[i + 2])
-		error("decreasing range specification (`%c-%c')",
+		error(_("decreasing range specification ('%c-%c')"),
 		      s[i], s[i + 2]);
 	    new->u.r.first = s[i];
 	    new->u.r.last = s[i + 2];
@@ -1491,7 +1492,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (STRING_ELT(old,0) == NA_STRING ||
 	STRING_ELT(new,0) == NA_STRING) {
-	errorcall(call, "invalid (NA) arguments.");
+	errorcall(call, _("invalid (NA) arguments."));
     }
 
 #ifdef SUPPORT_MBCS
@@ -1513,14 +1514,14 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	trs_new->next = NULL;
 	/* Build the old and new wtr_spec lists. */
 	nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
-	if(nc < 0) errorcall(call, "invalid multibyte string 'old'");
+	if(nc < 0) errorcall(call, _("invalid multibyte string 'old'"));
 	AllocBuffer((nc+1)*sizeof(wchar_t));
 	wc = (wchar_t *) cbuff.data;
 	mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
 	wtr_build_spec(wc, trs_old);
 
 	nc = mbstowcs(NULL, CHAR(STRING_ELT(new, 0)), 0);
-	if(nc < 0) errorcall(call, "invalid multibyte string 'new'");
+	if(nc < 0) errorcall(call, _("invalid multibyte string 'new'"));
 	AllocBuffer((nc+1)*sizeof(wchar_t));
 	wc = (wchar_t *) cbuff.data;
 	mbstowcs(wc, CHAR(STRING_ELT(new, 0)), nc + 1);
@@ -1539,7 +1540,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(c_old == '\0')
 		break;
 	    else if(c_new == '\0')
-		errorcall(call, "old is longer than new");
+		errorcall(call, _("old is longer than new"));
 	    else
 		xtable[c_old] = c_new;
 	}
@@ -1556,7 +1557,8 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 		if(nc < 0)
-		    errorcall(call, "invalid input multibyte string %d", i+1);
+		    errorcall(call, _("invalid input multibyte string %d"), 
+			      i+1);
 		AllocBuffer((nc+1)*sizeof(wchar_t));
 		wc = (wchar_t *) cbuff.data;
 		mbstowcs(wc, xi, nc + 1);
@@ -1599,7 +1601,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(c_old == '\0')
 		break;
 	    else if(c_new == '\0')
-		errorcall(call, "old is longer than new");
+		errorcall(call, _("old is longer than new"));
 	    else
 		xtable[c_old] = c_new;
 	}
@@ -1698,7 +1700,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    warn = TRUE; break;
 		}
 	if(warn)
-	    warning("Use of agrep() in a UTF-8 locale may only work for ASCII strings");
+	    warning(_("Use of agrep() in a UTF-8 locale may only work for ASCII strings"));
     }
 #endif
 
@@ -1707,7 +1709,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     aps = apse_create((unsigned char *)str, (apse_size_t)strlen(str),
 		      max_distance_opt);
     if(!aps)
-	error("could not allocate memory for approximate matching");
+	error(_("could not allocate memory for approximate matching"));
 
     /* Set further restrictions on search distances. */
     apse_set_deletions(aps, max_deletions_opt);
@@ -1731,7 +1733,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* Most likely, an error in apse_set_caseignore_slice()
 	     * means that allocating memory failed (as we ensure that
 	     * the slice is contained in the string) ... */
-	    errorcall(call, "could not perform case insensitive matching");
+	    errorcall(call, _("could not perform case insensitive matching"));
 	}
 	/* Perform match. */
 	if(apse_match(aps,
@@ -1773,9 +1775,9 @@ SEXP do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
     int nc;
 
     if(!isString(x) || LENGTH(x) == 0)
-	errorcall(call, "argument must be a character vector of length 1");
+	errorcall(call, _("argument must be a character vector of length 1"));
     if(LENGTH(x) > 1)
-	warningcall(call, "argument should be a character vector of length 1\nall but the first element will be ignored");
+	warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
     nc = LENGTH(STRING_ELT(x, 0));
     ans = allocVector(RAWSXP, nc);
     memcpy(RAW(ans), CHAR(STRING_ELT(x, 0)), nc);
@@ -1790,10 +1792,10 @@ SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[2];
 
     if(!isRaw(x))
-	errorcall(call, "argument 'x' must be a raw vector");
+	errorcall(call, _("argument 'x' must be a raw vector"));
     multiple = asLogical(CADR(args));
     if(multiple == NA_LOGICAL)
-	errorcall(call, "argument 'multiple' must be TRUE or FALSE");
+	errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
     if(multiple) {
 	buf[1] = '\0';
 	PROTECT(ans = allocVector(STRSXP, nc));
@@ -1822,9 +1824,9 @@ SEXP do_rawShift(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, shift = asInteger(CADR(args));
 
     if(!isRaw(x))
-	errorcall(call, "argument 'x' must be a raw vector");
+	errorcall(call, _("argument 'x' must be a raw vector"));
     if(shift == NA_INTEGER || shift < -8 || shift > 8)
-	errorcall(call, "argument 'shift' must be a small integer");
+	errorcall(call, _("argument 'shift' must be a small integer"));
     PROTECT(ans = duplicate(x));
     if (shift > 0)
 	for(i = 0; i < LENGTH(x); i++)
@@ -1843,7 +1845,7 @@ SEXP do_rawToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     unsigned int tmp;
 
     if(!isRaw(x))
-	errorcall(call, "argument 'x' must be a raw vector");
+	errorcall(call, _("argument 'x' must be a raw vector"));
     PROTECT(ans = allocVector(RAWSXP, 8*LENGTH(x)));
     for(i = 0; i < LENGTH(x); i++) {
 	tmp = (unsigned int) RAW(x)[i];
@@ -1861,7 +1863,7 @@ SEXP do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     unsigned int tmp;
 
     if(!isInteger(x))
-	errorcall(call, "argument 'x' must be a integer vector");
+	errorcall(call, _("argument 'x' must be a integer vector"));
     PROTECT(ans = allocVector(RAWSXP, 32*LENGTH(x)));
     for(i = 0; i < LENGTH(x); i++) {
 	tmp = (unsigned int) INTEGER(x)[i];
@@ -1881,13 +1883,13 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
     Rbyte btmp;
 
     if (TYPEOF(x) != RAWSXP && TYPEOF(x) != RAWSXP && TYPEOF(x) != INTSXP)
-	errorcall(call, "argument 'x' must be raw, integer or logical");
+	errorcall(call, _("argument 'x' must be raw, integer or logical"));
     if (!isString(stype)  || LENGTH(stype) != 1)
-	errorcall(call, "argument 'type' must be a character string");
+	errorcall(call, _("argument 'type' must be a character string"));
     useRaw = strcmp(CHAR(STRING_ELT(stype, 0)), "integer");
     fac = useRaw ? 8 : 32;
     if (len% fac)
-	errorcall(call, "argument 'x' must be a multiple of %d long", fac);
+	errorcall(call, _("argument 'x' must be a multiple of %d long"), fac);
     slen = len/fac;
     PROTECT(ans = allocVector(useRaw ? RAWSXP : INTSXP, slen));
     for(i = 0; i < slen; i++)
@@ -1900,7 +1902,8 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 		else if(isLogical(x) || isInteger(x)) {
 		    j = INTEGER(x)[8*i+k];
 		    if(j == NA_INTEGER)
-			errorcall(call, "argument 'x' must not contain NAs");
+			errorcall(call,
+				  _("argument 'x' must not contain NAs"));
 		    btmp |= j & 0x1;
 		}
 	    }
@@ -1914,7 +1917,8 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 		else if(isLogical(x) || isInteger(x)) {
 		    j = INTEGER(x)[32*i+k];
 		    if(j == NA_INTEGER)
-			errorcall(call, "argument 'x' must not contain NAs");
+			errorcall(call,
+				  _("argument 'x' must not contain NAs"));
 		    itmp |= j & 0x1;
 		}
 	    }
@@ -1939,16 +1943,16 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	errorcall(call, "strtrim() requires a character vector");
+	errorcall(call, _("strtrim() requires a character vector"));
     len = LENGTH(x);
     PROTECT(width = coerceVector(CADR(args), INTSXP));
     nw = LENGTH(width);
     if(!nw || (nw < len && len % nw))
-	errorcall(call, "invalid 'width' argument");
+	errorcall(call, _("invalid 'width' argument"));
     for(i = 0; i < nw; i++)
 	if(INTEGER(width)[i] == NA_INTEGER ||
 	   INTEGER(width)[i] < 0)
-	    errorcall(call, "invalid 'width' argument");
+	    errorcall(call, _("invalid 'width' argument"));
     PROTECT(s = allocVector(STRSXP, len));
     for (i = 0; i < len; i++) {
 	if(STRING_ELT(x, i) == NA_STRING) {

@@ -105,16 +105,16 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_UTF8
     if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
-	warning("perl = TRUE is only fully implemented in UTF-8 locales");
+	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
-	errorcall(call, "regular expression is invalid in this locale");
+	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     if (igcase_opt) options |= PCRE_CASELESS;
 
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
-    if (!re_pcre) errorcall(call, "invalid regular expression '%s'", 
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"), 
 			    CHAR(STRING_ELT(pat, 0)));
 
     n = length(vec);
@@ -129,7 +129,8 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 #ifdef SUPPORT_UTF8
 	if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i))))
-	    errorcall(call, "input string %d is invalid in this locale", i+1);
+	    errorcall(call, _("input string %d is invalid in this locale"),
+		      i+1);
 #endif
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, &ovector, 0);
 	if (rc >= 0) {
@@ -172,7 +173,8 @@ static int length_adj(char *repl, int *ovec, int nsubexpr)
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
 		if (k > nsubexpr)
-		    error("invalid backreference %d in regular expression", k);
+		    error(_("invalid backreference %d in regular expression"),
+			  k);
 		n += (ovec[2*k+1] - ovec[2*k]) - 2;
 		p++;
 	    }
@@ -241,11 +243,11 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_UTF8
     if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
-	warning("perl = TRUE is only fully implemented in UTF-8 locales");
+	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
-	errorcall(call, "'pattern' is invalid in this locale");
+	errorcall(call, _("'pattern' is invalid in this locale"));
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
-	errorcall(call, "'replacement' is invalid in this locale");
+	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(rep) || length(rep) < 1 ||
@@ -257,7 +259,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
-    if (!re_pcre) errorcall(call, "invalid regular expression '%s'",
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"),
 			    CHAR(STRING_ELT(pat, 0)));
     re_nsub = pcre_info(re_pcre, NULL, NULL);
     re_pe = pcre_study(re_pcre, 0, &errorptr);
@@ -290,7 +292,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
 	if(mbcslocale && !mbcsValid(s))
-	    errorcall(call, "input string %d is invalid in this locale", i+1);
+	    errorcall(call, _("input string %d is invalid in this locale"),
+		      i+1);
 #endif
 	while (pcre_exec(re_pcre, re_pe, s+offset, nns-offset, 0, 0, 
 			 ovector, 30) >= 0) {
@@ -355,17 +358,17 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_UTF8
     if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
-	warning("perl = TRUE is only fully implemented in UTF-8 locales");
+	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
 #endif
 
 #ifdef SUPPORT_UTF8
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
-	errorcall(call, "regular expression is invalid in this locale");
+	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, 
 			   &errorptr, &erroffset, tables);
-    if (!re_pcre) errorcall(call, "invalid regular expression '%s'",
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"),
 			    CHAR(STRING_ELT(pat, 0)));
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
@@ -380,7 +383,8 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 #ifdef SUPPORT_UTF8
 	if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
-	    errorcall(call, "input string %d is invalid in this locale", i+1);
+	    errorcall(call, _("input string %d is invalid in this locale"),
+		      i+1);
 #endif
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, ovector, 3);
 	if (rc >= 0) {

@@ -6,6 +6,10 @@ src/appl/binning.c
 src/appl/pretty.c
 src/appl/rcont.c
 src/appl/strsignif.c
+src/main/character.c
+src/main/connections.c
+src/main/errors.c
+src/main/pcre.c
 src/main/version.c
 src/modules/internet/internet.c
 src/modules/internet/nanoftp.c
