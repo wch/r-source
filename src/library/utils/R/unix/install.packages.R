@@ -63,7 +63,8 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         update <- cbind(pkgs, lib)
         colnames(update) <- c("Package", "LibPath")
         found <- pkgs %in% foundpkgs[, 1]
-        update <- cbind(update[found, , drop=FALSE], file = foundpkgs[, 2])
+        files <- foundpkgs[match(pkgs[found], foundpkgs[, 1]), 2]
+        update <- cbind(update[found, , drop=FALSE], file = files)
         if(nrow(update) > 1) {
             upkgs <- unique(pkgs <- update[, 1])
             DL <- .make_dependency_list(upkgs, available)

@@ -91,6 +91,9 @@ BUG FIXES
 	a new page IF there had been a previous traditional graphics
 	plot (on the same device).
 
+    o	Using install.packages() to install the same package to more
+	than one library gave an incorrect warning message.
+
 
 
 
