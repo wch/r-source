@@ -82,12 +82,14 @@ uninstall:
 	@echo "uninstalling share ..."
 	@rm -rf $(rhome)/share
 
+## we cannot remove make/vars.mk until distclean as etc/Makeconf includes it.
 mostlyclean:
 clean:
+
+distclean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -rf $(SUBDIRS_WITH_NO_BUILD); \
 	fi
-distclean:
 	-@rm -f Makefile
 maintainer-clean: distclean
 
