@@ -10,8 +10,6 @@ Rterm.exe can be used in three distinct modes:
 Its purpose is to provide something similar to the main Unix interface
 for R, including a batch capability.
 
-[We have had reports that modes 1 and 3 do not work under Windows 2000.]
-
 In interactive use the interpreter can be interrupted by Ctrl-C or
 Ctrl-Break.  Input is interpreted as-is except for the keys
 interpreted by getline (see below) and that special characters

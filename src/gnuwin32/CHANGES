@@ -8,7 +8,7 @@ rw1020
 ======
 
 This version has been compiled against msvcrt.dll not crtdll.dll.
-This give small speed increases and generally more accurate results.
+This gives small speed increases and generally more accurate results.
 Packages compiled against crtdll.dll will still work (as far as we are
 aware), but for best results should be re-compiled.
 
@@ -61,7 +61,7 @@ Gui changes
 -   The Print menu item on the File menu of a console or pager now prints
     the selection if there is one, and the whole (saved) contents otherwise.
 
--   There is a new Save to File item on the File menu of a console or pager
+-   There is a new `Save to File' item on the File menu of a console or pager
     which saves the selection if there is one, and the whole (saved) 
     contents otherwise.
 
@@ -140,15 +140,16 @@ If the options setting for a pager or editor (or the options argument to
 edit.default) is a path containing a space, it is automatically
 quoted if not already quoted.
 
-The range of allowed text sizes in a window/win.print device has been
+The range of allowed text sizes in a windows/win.print device has been
 increased, so smaller values of cex will work.  (The smallest allowed
 text size is 2pt not 8pt.)
 
-Interactive use of Rterm.exe on Windows 2000 systems is now possible (including
-under ESS).
+Interactive use of Rterm.exe on Windows 2000 systems is now possible 
+(including under ESS).
 
-Better rendering of wide (lwd>1), dashed (lty != "solid") lines on the 
-screen device.
+Better rendering of wide (lwd > 1), dashed (lty != "solid") lines on the 
+windows/win.print device.
+
 
 rw1011
 ======

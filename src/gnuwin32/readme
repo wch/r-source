@@ -8,9 +8,6 @@ of differences below.  The port was by Guido Masarotto and Brian Ripley.
 
 See the file `CHANGES' for the new features of this version.
 
-[Testing on Windows 2000 has not been extensive, and a few features
-have been reported to not work there.]
-
 As of rw1020 you will need MSVCRT.dll installed.  It is installed on
 all Windows 98, ME, NT4.0 and 2000 machines, but not all 95 machines.
 You can download it from
@@ -95,8 +92,7 @@ Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including command-line editing
-(see the file README.Rterm).  [We have had reports that this does
-not work under Windows 2000.]
+(see the file README.Rterm).
 
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
@@ -110,8 +106,7 @@ to run batch jobs.
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
 under NTEmacs, for example with ess-5.1.16.  The pager is
 automatically set to "console" so help will be displayed in emacs
-buffers.  [We have had reports that this does not work under Windows
-2000.]
+buffers.
 
 
 GRAPHICS:
