@@ -83,6 +83,22 @@ AC_ARG_WITH(f77,
 ## Here we should maybe check that only one of the above options for
 ## dealing with FORTRAN were specified.
 
+AC_ARG_ENABLE(blas,
+  [  --enable-blas           use BLAS library (if available)],
+  [if test "$enableval" = no;
+    then use_blas=false;
+    else use_blas=true;
+  fi],
+  use_blas=true)
+
+AC_ARG_ENABLE(readline,
+  [  --enable-readline       use readline library (if available)],
+  [if test "$enableval" = no;
+    then use_readline=false;
+    else use_readline=true;
+   fi],
+  use_readline=true)
+
 ### Programs.
 
 AC_PROG_INSTALL
@@ -256,10 +272,15 @@ AC_CHECK_LIB(ncurses, main,,
   AC_CHECK_LIB(termcap, main,,
     AC_CHECK_LIB(termlib, main)
 ))
-AC_CHECK_LIB(readline, main)
 AC_CHECK_LIB(dl, dlopen)
-AC_CHECK_LIB(blas, main, LIBS="-lblas ${LIBS}" BLAS="", BLAS="blas.o")
+BLAS="blas.o"
+if ${use_blas}; then
+  AC_CHECK_LIB(blas, main, LIBS="-lblas ${LIBS}" BLAS="")
+fi
 AC_SUBST(BLAS)
+if ${use_readline}; then
+  AC_CHECK_LIB(readline, main)
+fi
 
 ### Library functions.
 
