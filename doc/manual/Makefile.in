@@ -47,7 +47,10 @@ R_PAPERSIZE = @R_PAPERSIZE@
 R_RD4DVI = @R_RD4DVI@
 R_RD4PDF = @R_RD4PDF@
 
-pkgsrcs = $(R_PKGS_BASE:=-pkg.tex)
+pkgsrcs_BASE = $(R_PKGS_BASE:=-pkg.tex)
+pkgsrcs_RECOMMENDED = $(R_PKGS_RECOMMENDED_EXPANDED:=-pkg.tex)
+pkgsrcs = $(pkgsrcs_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(pkgsrcs_RECOMMENDED)
+@USE_RECOMMENDED_PACKAGES_TRUE@USE_RECOMMENDED_PACKAGES = yes
 
 texiincludes = version.texi $(srcdir)/R-defs.texi
 
@@ -100,7 +103,17 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
-	  for p in $(R_PKGS_BASE); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  if test "$(USE_RECOMMENDED_PACKAGES)" = yes; then \
+	    echo "\\part{Base Packages}"; \
+	    pkgsrcs="$(pkgsrcs_BASE)"; \
+	    for p in $${pkgsrcs}; do echo "\\input{$${p}}"; done; \
+	    echo "\\part{Recommended Packages}"; \
+	    pkgsrcs=`(for p in $(pkgsrcs_RECOMMENDED); \
+	      do echo $${p}; done) | sort`; \
+	    for p in $${pkgsrcs}; do echo "\\input{$${p}}"; done; \
+	  else \
+	    for p in $(pkgsrcs_BASE); do echo "\\input{$${p}}"; done; \
+	  fi; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
@@ -116,7 +129,7 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  echo "$${v}") > $@
 stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
-$(pkgsrcs): FORCE $(top_srcdir)/share/perl/build-help.pl
+$(pkgsrcs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
@@ -126,6 +139,15 @@ $(pkgsrcs): FORCE $(top_srcdir)/share/perl/build-help.pl
 	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
+$(pkgsrcs_RECOMMENDED): FORCE
+	@(pkg=`basename $@ -pkg.tex`; \
+	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
+	    -print 2> /dev/null | grep $@ > /dev/null || \
+	(\
+	  echo "collecting LaTeX docs for package '$${pkg}' ..."; \
+	  RLIB="$(top_builddir)/library" \
+	    $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
+	))
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)
@@ -176,7 +198,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
-	  for p in $(R_PKGS_BASE); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  for p in $(pkgsrcs_BASE); do echo "\\input{$${p}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
@@ -190,7 +212,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
-stamp-refman-pdf: $(pkgsrcs)
+stamp-refman-pdf: $(pkgsrcs_BASE)
 	@touch $@
 
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex $(srcdir)/pdfcolor.tex
