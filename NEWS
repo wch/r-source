@@ -16,6 +16,10 @@ USER-VISIBLE CHANGES
 	distribute data in that format.  (We are unaware of any
 	platform that did not support XDR in recent versions of R.)
 
+	gzfile() is guaranteed to be available, so the preferred
+	method to distribute data objects is now via 
+	save(compress = TRUE).
+
 
 NEW FEATURES
 
@@ -85,7 +89,7 @@ NEW FEATURES
 
    o    acosh(), asinh(), atanh() are guaranteed to be available.
 
-   o    New na.action function na.pass() passes through NAs.
+   o    New na.action function na.pass() passes through NAs unaltered.
 
    o    piechart() has been renamed to pie(), as piechart is a Trellis
 	function for arrays of pie charts.  The default fill colours
@@ -98,11 +102,11 @@ NEW FEATURES
 	   ARIMA-fitting functions.
 
 	-  New function arima() which will replace arima0() in due
-           course.  Meanwhile, arima0() has been in enhanced in
-           several ways.  Missing values are accepted.  Parameter
-           values can be initialized and held fixed during fitting.
-	   There is a new argument `method' giving the option to use
-	   conditional-sum-of-squares estimation.
+           course.  Meanwhile, arima0() has been enhanced in several
+           ways.  Missing values are accepted.  Parameter values can
+           be initialized and can held fixed during fitting.  There is
+           a new argument `method' giving the option to use
+           conditional-sum-of-squares estimation.
 
 	-  New function arima.sim().
 
@@ -121,7 +125,7 @@ NEW FEATURES
    o    Much improved printing of matrices and arrays of type "list".
 
    o    deriv/deriv3() can now handle expressions involving pnorm and
-	dnorm (with a single argument), as in S.
+	dnorm (with a single argument), as in S-PLUS.
 
    o	rug() now has a "..." argument allowing its location to be specified.
 
@@ -130,7 +134,7 @@ NEW FEATURES
 
    o	plclust() in package mva, for more S-PLUS compatibility.
 
-   o	new function expm1() both in R and in C API, for accurate exp(x)-1;
+   o	New function expm1() both in R and in C API, for accurate exp(x)-1;
 	precision improvement in pexp() and pweibull() in some cases.
 	(PR#1334-5)
 
@@ -139,18 +143,20 @@ NEW FEATURES
 	details: the R usage already protected against the
 	reported `weakness'.
 
-   0    changes in package "methods"
+   o    changes in package "methods"
 
-      -  classes can explicitly have a "data part", formally
-         represented as a .Data slot in the class definition, but
-         implemented consistently with informal structures.  While the
-         implementation is different, the user-level behavior largely
-         follows the discussion in "Programming with Data".
+       -  New function validSlotNames().
 
-      -  a "next method" facility has been provided, via the function
-         callNextMethod.  This calls the method that would have been
-         selected if the currently active method didn't exist.  See
-         the online documentation.  This is an extension to the API.
+       -  Classes can explicitly have a "data part", formally
+          represented as a .Data slot in the class definition, but
+          implemented consistently with informal structures.  While the
+          implementation is different, the user-level behavior largely
+          follows the discussion in "Programming with Data".
+
+      -   A "next method" facility has been provided, via the function
+          callNextMethod.  This calls the method that would have been
+          selected if the currently active method didn't exist.  See
+          the online documentation.  This is an extension to the API.
 
 
 DEPRECATED & DEFUNCT
@@ -218,71 +224,6 @@ C-LEVEL FACILITIES
 
 BUG FIXES
 
-    o	match, unique and duplicated were not declaring all NaNs to be
-	equal, yet not always distinguishing NA and NaN.  This was
-	very rare except for data imported as binary numbers.
-
-    o   The error handler recover protects itself against errors in
-        dump.frames and uses a new utility, limitedLabels, to generate
-        names for the dump that don't inadvertently blow the limit on
-        symbol length.  (TODO:  either fix dump.frames accordingly or
-        remove the limit--say by truncating very long symbols?)
-
-    o	se.contrasts() works more reliably with multistratum models,
-	and its help page has an example.
-
-    o	summary.lm() was not returning r.squared nor adj.r.squared for
-	intercept-only models, but summary.lm.null() was returning
-	r.squared but not adj.r.squared.  Now both are always
-	returned.  Neither returned f.statistic, and that is now
-	documented.
-
-    o	Subsetting of matrices of mode list (or other non-atomic
-	modes) was not implemented and gave incorrect results without
-	warning. (PR#1329)
-	Under some circumstances subsetting of a character matrix
-	inserted NA in the wrong place.
-
-    o   abs() was not being treated as member of the Math group
-	generic function, so e.g. its method for data frames was not
-	being used.
-
-    o   set.seed(123, "default") was not using the value 123 (only for
-	kind = "default").
-
-    o	logLik.lm() now uses  "df = p + 1" again (`+ sigma'!).
-
-    o	Added strptime() workaround for those platforms (such as
-	Solaris) that returned missing components as 0.  Missing
-	months and days are now detected, but missing years will still
-	be interpreted as 1900 on such platforms.
-
-    o   Inheritance in formal classes (the methods package) works
-        breadth-first as intuition would expect.
-
-    o   The new() function works better (maybe even correctly?) for
-        the various combinations of super-classes and prototypes that
-        can be supplied as unnamed arguments.
-
-
-
-	**************************************************
-	*						 *
-	*	       1.4 SERIES NEWS			 *
-	*						 *
-	**************************************************
-
-
-		CHANGES IN R VERSION 1.4.2
-
-
-NEW FEATURES
-
-    o	New function validSlotNames() in package methods.
-
-
-BUG FIXES
-
     o	Insufficient information was being recorded in the display list
 	for the identify() function.  In particular, the "plot="
 	argument was ignored when replaying the display list. (PR#1157)
@@ -329,6 +270,60 @@ BUG FIXES
 
     o	demo(is.things) didn't work properly when the methods package was
 	attached.
+
+    o	match, unique and duplicated were not declaring all NaNs to be
+	equal, yet not always distinguishing NA and NaN.  This was
+	very rare except for data imported as binary numbers.
+
+    o   The error handler recover protects itself against errors in
+        dump.frames and uses a new utility, limitedLabels, to generate
+        names for the dump that don't inadvertently blow the limit on
+        symbol length.  (TODO:  either fix dump.frames accordingly or
+        remove the limit--say by truncating very long symbols?)
+
+    o	se.contrasts() works more reliably with multistratum models,
+	and its help page has an example.
+
+    o	summary.lm() was not returning r.squared nor adj.r.squared for
+	intercept-only models, but summary.lm.null() was returning
+	r.squared but not adj.r.squared.  Now both are always
+	returned.  Neither returned f.statistic, and that is now
+	documented.
+
+    o	Subsetting of matrices of mode list (or other non-atomic
+	modes) was not implemented and gave incorrect results without
+	warning. (PR#1329)
+	Under some circumstances subsetting of a character matrix
+	inserted NA in the wrong place.
+
+    o   abs() was not being treated as member of the Math group
+	generic function, so e.g. its method for data frames was not
+	being used.
+
+    o	set.seed(seed, "default") was not using the `seed' value (only
+	for kind = "default").
+
+    o	logLik.lm() now uses  "df = p + 1" again (`+ sigma'!).
+
+    o	Added strptime() workaround for those platforms (such as
+	Solaris) that returned missing components as 0.  Missing
+	months and days are now detected, but missing years will still
+	be interpreted as 1900 on such platforms.
+
+    o   Inheritance in formal classes (the methods package) works
+        breadth-first as intuition would expect.
+
+    o   The new() function works better (maybe even correctly?) for
+        the various combinations of super-classes and prototypes that
+        can be supplied as unnamed arguments.
+
+
+
+	**************************************************
+	*						 *
+	*	       1.4 SERIES NEWS			 *
+	*						 *
+	**************************************************
 
 
 		CHANGES IN R VERSION 1.4.1
@@ -823,7 +818,7 @@ NEW FEATURES
 
     o	The operator "=" is now allowed as an assignment
 	operator in the grammar, for consistency with other languages,
-	including recent versions of S-Plus.  Assignments with "=" are
+	including recent versions of S-PLUS.  Assignments with "=" are
 	basically allowed only at top-level and in braced or
 	parenthesized expressions, to make famous errors such as
 	"if(x=0) 1 else 2" illegal in the grammar.
