@@ -3,7 +3,7 @@
 \alias{loadURL}
 \title{Reload Saved Datasets}
 \description{
-  Reload the datasets written to a file with the function \code{save}.
+  Reload datasets written with the function \code{save}.
 }
 \usage{
 load(file, envir = parent.frame())
@@ -25,6 +25,11 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 
   \code{loadURL} is a convenience wrapper which downloads a file, loads
   it and deletes the downloaded copy.
+
+  Only \R objects saved in the current format (used since \R 1.4.0)
+  can be read from a connection.  If no input is available on a
+  connection a warning will be given, but any input not in the current
+  format will result in a error.
 }
 \value{
   A character vector of the names of objects created, invisibly.
@@ -39,7 +44,7 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 }
 \examples{
 ## save all data
-save(list = ls(), file= "all.Rdata")
+save(list = ls(all=TRUE), file= "all.Rdata")
 
 ## restore the saved values to the current environment
 load("all.Rdata")
@@ -47,7 +52,7 @@ load("all.Rdata")
 ## restore the saved values to the user's workspace
 load("all.Rdata", .GlobalEnv)
 
-\dontrun{## This example is not real
+\dontrun{
 ## print the value to see what objects were created.
 print(loadURL("http://some.where.net/R/data/kprats.rda"))
 # or, avoiding making a local copy,

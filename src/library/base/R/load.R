@@ -14,14 +14,17 @@ load <- function (file, envir = parent.frame())
     }
 
     magic <- readChar(con, 5)
-
+    if(nchar(magic) == 0) {
+        warning("no input available on ", sQuote(file))
+        return(character(0))
+    }
     if (regexpr("RD[AX]2\n", magic) == -1) {
         ## Not a version 2 magic number, so try the old way.
         if (is.character(file)) {
             close(con)
             on.exit()
         }
-        else stop("loading from connections not compatible with magic number")
+        else stop("the input does not start with a magic number compatible with  loading from a connection")
         .Internal(load(file, envir))
     }
     else .Internal(loadFromConn(con, envir))
@@ -38,7 +41,7 @@ save <- function(..., list = character(0),
     if (missing(ascii) && ! is.null(opts$ascii))
         ascii <- opts$ascii
     if (missing(version)) version <- opts$version
-    
+
     names <- as.character( substitute( list(...)))[-1]
     list<- c(list, names)
     if (! is.null(version) && version == 1)
@@ -64,7 +67,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
 
     opts <- getOption("save.image.defaults")
     if(is.null(opts)) opts <- getOption("save.defaults")
-        
+
     if (missing(safe) && ! is.null(opts$safe))
         safe <- opts$safe
     if (missing(compress) && ! is.null(opts$compress))
