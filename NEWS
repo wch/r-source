@@ -78,6 +78,9 @@ BUG FIXES
     o	plot.lm(), dffits(), covratio() now do the right thing for weighted
 	lm regression.
 
+    o	formatC(as.integer(c(1,0,NA))) now works. PR#394, thanks to Jens O.-A.
+
+    o	format.char(.) is much faster for long vector argument [Jens O.-A.]
 
 
 		CHANGES IN R VERSION 0.90.1

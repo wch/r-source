@@ -39,13 +39,19 @@ format.char <- function(x, width = NULL, flag = "-")
     nc <- nchar(x)			#-- string lengths
     if(is.null(width)) width <- max(nc)
     else if(width<0) { flag <- "-"; width <- -width }
-    pad <- sapply(pmax(0,width - nc),
-		  function(no) paste(character(no+1), collapse =" "))
+    ##- 0.90.1 and earlier:
+    ##- pad <- sapply(pmax(0,width - nc),
+    ##-			function(no) paste(character(no+1), collapse =" "))
+    ## Speedup by Jens Oehlschlaegel:
+    tab <- unique(no <- pmax(0, width - nc))
+    tabpad <- sapply(tab+1, function(n) paste(character(n), collapse = " "))
+    pad <- tabpad[match(no, tab)]
+
     r <-
-        if(flag=="-")   paste(x, pad, sep="")#-- LEFT  justified
-        else	        paste(pad, x, sep="")#-- RIGHT justified
+	if(flag=="-")	paste(x, pad, sep="")#-- LEFT  justified
+	else		paste(pad, x, sep="")#-- RIGHT justified
     if(!is.null(at))
-        attributes(r) <- at
+	attributes(r) <- at
     r
 }
 
@@ -94,10 +100,10 @@ formatC <- function (x, digits = NULL, width = NULL,
 	sapply(no+1, function(n) paste(character(n), collapse=" "))
 
     if (!(n <- length(x))) return("")
-    if (missing(mode))	  mode <- storage.mode(x)
+    if (is.null(mode))	  mode <- storage.mode(x)
     else if (any(mode == c("double", "real", "integer")))  {
       ## for .C call later on
-        if(mode=="real") mode <- "double"
+	if(mode=="real") mode <- "double"
 	storage.mode(x) <- mode
     }
     else stop("\"mode\" must be \"double\" (\"real\") or \"integer\"")
@@ -107,11 +113,6 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    x <- as.character(x)
 	}
 	return(format.char(x, width=width, flag=flag))
-    }
-    some.special <- !all(Ok <- is.finite(x))
-    if (some.special) {
-	rQ <- as.character(x[!Ok])
-	x[!Ok] <- 0
     }
     if (missing(format) || is.null(format))
 	format <- if (mode == "integer") "d" else "g"
@@ -124,13 +125,18 @@ formatC <- function (x, digits = NULL, width = NULL,
 	}
 	else stop('"format" must be in {"f","e","E","g","G", "fg", "s"}')
     }
+    some.special <- !all(Ok <- is.finite(x))
+    if (some.special) {
+	rQ <- as.character(x[!Ok])
+	x[!Ok] <- as.vector(0, mode = mode)
+    }
     if(is.null(width) && is.null(digits))
-        width <- 1
+	width <- 1
     if (is.null(digits))
 	digits <- if (mode == "integer") 2 else 4
     else if(digits < 0)
 	digits <- 6
-    if(is.null(width))  width <- digits + 1
+    if(is.null(width))	width <- digits + 1
     else if (width == 0)width <- digits
     i.strlen <-
 	pmax(abs(width),
@@ -157,7 +163,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    format = as.character(format),
 	    flag   = as.character(flag),
 	    result = blank.chars(i.strlen),
-            PACKAGE = "base")$result
+	    PACKAGE = "base")$result
     ##Dbg if(any(ii <- (nc.res <- nchar(r)) > i.strlen)) {
     ##Dbg  cat("formatC: some  i.strlen[.] were too small:\n")
     ##Dbg  print(cbind(ii=which(ii), strlen=i.strlen[ii], nchar=nc.res[ii]))
