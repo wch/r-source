@@ -111,12 +111,6 @@ plot(x,x, ylim=c(1e-18,1e11),log="y", ylab="",type='n',
 for(nu in nus) lines(x,besselK(x,nu=nu), col = nu+2)
 legend(0,1e-5, leg=paste("nu=",nus), col = nus+2, lwd=1)
 
-## Check the Scaling :
-for(nu in nus)
-   print(all(abs(1- besselK(x,nu)*exp( x) / besselK(x,nu,expo=TRUE)) < 2e-15))
-for(nu in nus)
-   print(all(abs(1- besselI(x,nu)*exp(-x) / besselI(x,nu,expo=TRUE)) < 1e-15))
-
 yl <- c(-1.6, .6)
 plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
 for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
