@@ -389,8 +389,8 @@ sub build_index {
 	$generic =~ s/\.[^.]+$//o;
 #	print "   $alias, $generic, $file, $currentfile\n";
 	next if $alias =~ /<-$/o || $generic =~ /<-$/o;
-	if ($generic eq $current && $file eq $currentfile && 
-	    $generic ne "ar") { 
+	if ($generic ne "" && $generic eq $current && 
+	    $file eq $currentfile && $generic ne "ar") { 
 #	    print "skipping $alias\n";
 	    next; 
 	} else { $current = $alias; $currentfile = $file;}
@@ -467,8 +467,8 @@ sub build_htmlfctlist {
 	    next if $alias =~ /<-$/o || $generic =~ /<-$/o;
 	    next if $alias =~ /plot\./o;
 	    next if $alias =~ /print\./o;
-	    if ($generic eq $current && $file eq $currentfile
-		&& $generic ne "ar") { 
+	    if ($generic ne "" && $generic eq $current && 
+		$file eq $currentfile && $generic ne "ar") { 
 		next;
 	    } else { $current  = $alias; $currentfile = $file;}
 	    my $title = striptitle($htmltitles{$alias});

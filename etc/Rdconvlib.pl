@@ -1961,10 +1961,11 @@ sub ltxstriptitle { # text
     $text =~ s/\\R/\\R\{\}/go;
     return $text;
 }
+sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
 sub rdoc2latex {# (filename)
 
-    my($c,$a);
+    my $c, $a;
 
     if($_[0]!= -1) {
       if($_[0]) { open latexout, "> $_[0]"; } else { open latexout, "| cat"; }
@@ -1975,17 +1976,26 @@ sub rdoc2latex {# (filename)
     print latexout ltxstriptitle($blocks{"title"});
     print latexout "\}\n";
 
-    foreach (@aliases) {
-      $c= code2latex($_,0);
-      $a= latex_code_alias($c);
-      print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
-	if $debug;
-      printf latexout "\\alias\{%s\}\{%s\}\n", $a, $blocks{"name"}
+    my $current = $blocks{"name"}, $generic, $cmd;
+    foreach (sort foldorder @aliases) {
+	$generic = $a = $_;
+	$generic =~ s/\.data\.frame$/.dataframe/o;
+	$generic =~ s/\.model\.matrix$/.modelmatrix/o;
+	$generic =~ s/\.[^.]+$//o;
+	if ($generic ne "" && $generic eq $current && $generic ne "ar") { 
+	    $cmd = "methalias"
+	} else { $cmd = "alias"; $current = $a; }
+	
+	$c = code2latex($_,0);
+	$a = latex_code_alias($c);
+	print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
+	    if $debug;
+	printf latexout "\\%s\{%s\}\{%s\}\n", $cmd, $a, $blocks{"name"}
 	unless /^\Q$blocks{"name"}\E$/; # Q..E : Quote (escape) Metacharacters
     }
     foreach (@keywords) {
-      printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
-      unless /^$/ ;
+	printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
+	unless /^$/ ;
     }
     latex_print_block("description", "Description");
     latex_print_codeblock("usage", "Usage");
