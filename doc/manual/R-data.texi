@@ -85,7 +85,6 @@ principal authors of the packages mentioned are
 @item @pkg{RODBC} @tab Michael Lapsley
 @item @pkg{RPgSQL} @tab Timothy Keitt
 @item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
-@item @pkg{stataread} @tab Thomas Lumley
 @end multitable
 @end quotation
 
@@ -603,28 +602,28 @@ may be unavoidable if the originating system is not available.
 @findex read.dta
 @findex write.dta
 
-Import and export facilities for Stata @file{.dta} files and provided by
-package @pkg{stataread} on @acronym{CRAN}. This is a binary file format,
-and files from versions 5.0 and 6.0 of Stata can be read and (despite
-the package name) written by functions @code{read.dta} and
-@code{write.dta}.
+Import and export facilities for Stata @file{.dta} files are provided by
+package @pkg{foreign} on @acronym{CRAN}. (Formerly this was a separate
+package @pkg{stataread}.) This is a binary file format, and files from
+versions 5.0 and 6.0 of Stata can be read and written by functions
+@code{read.dta} and @code{write.dta}.
 
 @node Minitab, SAS, Stata, Importing from other statistical systems
 @section Minitab
 @findex read.mtp
 
-Package @pkg{foreign} in the Devel area on @acronym{CRAN} provides a
-function @code{read.mtp} to read a `Minitab Portable Worksheet'.  This
-returns the components of the worksheet as an @R{} list.
+Package @pkg{foreign} on @acronym{CRAN} provides a function
+@code{read.mtp} to read a `Minitab Portable Worksheet'.  This returns
+the components of the worksheet as an @R{} list.
 
 @node SAS, S-PLUS, Minitab, Importing from other statistical systems
 @section SAS
 @cindex SAS
 @findex read.xport
 
-Package @pkg{foreign} in the Devel area on @acronym{CRAN} provides a
-function @code{read.xport} to read a file in SAS Transport (XPORT)
-format and return a list of data frames.
+Package @pkg{foreign} on @acronym{CRAN} provides a function
+@code{read.xport} to read a file in SAS Transport (XPORT) format and
+return a list of data frames.
 
 @node S-PLUS, SPSS, SAS, Importing from other statistical systems
 @section S-PLUS
