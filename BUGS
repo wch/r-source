@@ -292,3 +292,11 @@ Date: Thu, 19 Aug 1999 06:03:06 +0900
 Subject: seg.fault for some illegal .Random.seed (new since 0.64)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 20 Aug 1999 14:17:31 +0200
+* PR# 254 *
+Subject: Strange 'Unimplemented feature in rep' error
+From: Lutz Prechelt <prechelt@ira.uka.de>
+Date: Mon, 23 Aug 1999 19:43:24 +0200
+* PR# 255 *
+Subject: broken link in R FAQ page?
+From: Tian-Xiong Lu <tian@chico.ma.adfa.edu.au>
+Date: Tue, 24 Aug 1999 13:41:21 +1000 (EST)
