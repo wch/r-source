@@ -29,6 +29,7 @@ DISTFILES = Makefile.in \
 	install-sh \
 	keywords2html.pl \
 	ldAIX4 \
+	mdate-sh \
 	missing \
 	mkinstalldirs \
 	move-if-change \
