@@ -293,6 +293,13 @@ enforce this dependency---some build targets force a lot of
 computation even if all files are up to date.)  The first four targets
 are the default build if just "make" is run.
 
+If you want to customize the installation by adding extra packages,
+replace `make rinstaller' by something like
+
+	make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
+
+(Note these packages will also be added to the miniR installer.)
+
 
 Cross-building on ix86 Linux
 ============================

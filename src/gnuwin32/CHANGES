@@ -14,7 +14,7 @@ packages unless options("CRAN") has already been set in your session,
 e.g. in your .Rprofile file or from the 'Select CRAN mirror' menu
 item.  (In batch use, not having set a mirror will lead to an error.)
 BDR's supplementary collection is now included in the default
-options("CRAN"): if you want to include it set something like
+options("CRAN"): if you want to include it explicitly set something like
 options(CRAN=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
 
 The new (in R 2.0.0) graphics pars "lend", "ljoin" and "lmitre" are
@@ -34,6 +34,9 @@ R 2.0.1 patched
 We work around reported bugs in Windows XP as to which characters are
 printable by attempting to print all non-control characters when using
 print().
+
+There are now facilities (documented in file src/gnuwin32/INSTALL) to
+add packages when building the R installer.
 
 
 
