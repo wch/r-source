@@ -61,8 +61,10 @@ R:
 	@cd $(top_builddir) && $(MAKE) R
 
 .R.Rout:
-	@if test -f $@.prev ; then mv $@.prev $@.bakk ; fi
-	@if test -f $@ ; then cp -p $@ $@.prev ; fi
+	@if test -f $@; then \
+	  if test -f $@.prev ; then mv $@.prev $@.bakk ; fi ; \
+	  cp -p $@ $@.prev ; \
+	fi
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
