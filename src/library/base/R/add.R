@@ -148,7 +148,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     n <- nrow(x)
     y <- object$y
     if(is.null(y)) y <- model.response(model.frame(object), "numeric")
-    wt <- model.weights(model.frame(object))
+    wt <- object$prior.weights
     if(is.null(wt)) wt <- rep(1, n)
     Terms <- attr(Terms, "term.labels")
     asgn <- attr(x, "assign")
@@ -338,7 +338,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     y <- object$y
     if(is.null(y)) y <- model.response(model.frame(object), "numeric")
     na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
-    wt <- model.weights(model.frame(object))
+    wt <- object$prior.weights
     if(is.null(wt)) wt <- rep(1, n)
     rank <- object$rank
     for(i in 1:ns) {
