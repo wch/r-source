@@ -369,12 +369,6 @@ R_PROG_TEXMF
 ## Unzip && zip
 AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
 AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
-## Libtool
-AM_DISABLE_STATIC
-AM_PROG_LIBTOOL
-AC_SUBST(LIBTOOL_DEPS)
-## Makeinfo
-R_PROG_MAKEINFO
 ## Browser
 R_PROG_BROWSER
 ## PDF viewer
@@ -388,6 +382,16 @@ R_PROG_CPP_CPPFLAGS
 R_PROG_F77_OR_F2C
 AC_PROG_CXX
 AC_PROG_CXXCPP
+
+## Libtool.
+## (Run this after R_PROG_F77_OR_F2C, as AC_PROG_LIBTOOL checks for a
+## Fortran 77 compiler and sets F77 accordingly.)
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
+AC_SUBST(LIBTOOL_DEPS)
+## Makeinfo
+R_PROG_MAKEINFO
+
 
 ### * Checks for libraries.
 

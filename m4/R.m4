@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2002 R Core Team
+### Copyright (C) 1998-2003 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -181,13 +181,13 @@ AC_SUBST(R_RD4PDF)
 ## ---------------
 AC_DEFUN([R_PROG_MAKEINFO],
 ## This used to be part of R_PROG_TEXMF, where it really belongs.
-## Unfortunately, AM_PROG_LIBTOOL unconditionally overwrites MAKEINFO
+## Unfortunately, AC_PROG_LIBTOOL unconditionally overwrites MAKEINFO
 ## by makeinfo or missing.  To allow users to pass a MAKEINFO setting to
-## configure, we thus have to run R_PROG_TEXMF before AM_PROG_LIBTOOL,
+## configure, we thus have to run R_PROG_TEXMF before AC_PROG_LIBTOOL,
 ## save the result to something not overwritten (hence MAKEINFO_CMD),
 ## and finally set MAKEINFO according to our needs.
 [AC_REQUIRE([R_PROG_TEXMF])
-AC_REQUIRE([AM_PROG_LIBTOOL])
+AC_REQUIRE([AC_PROG_LIBTOOL])
 if test -n "${MAKEINFO_CMD}"; then
   _R_PROG_MAKEINFO_VERSION
 fi
@@ -627,7 +627,8 @@ fi
 ## In fact, on HP-UX fort77 is the POSIX-compatible native compiler and
 ## f77 is not: hence we need look for fort77 first!
 AC_DEFUN([R_PROG_F77_OR_F2C],
-[if test -n "${F77}" && test -n "${F2C}"; then
+[AC_BEFORE([$0], [AC_PROG_LIBTOOL])
+if test -n "${F77}" && test -n "${F2C}"; then
   warn_F77_and_F2C="both 'F77' and 'F2C' given.
 Using the given Fortran 77 compiler ..."
   AC_MSG_WARN([${warn_F77_and_F2C}])
