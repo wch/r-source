@@ -15,7 +15,8 @@
   \itemize{
     \item \code{state.abb}: character vector of 2-letter abbreviations
     for the state names.
-    \item \code{state.area}: numeric vector of state areas.
+    \item \code{state.area}: numeric vector of state areas (in square
+    miles).
     \item \code{state.division}: factor giving state divisions (New
     England, Middle Atlantic, South Atlantic, East South Central, West
     South Central, East North Central, West North Central, Mountain, and
