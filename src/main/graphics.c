@@ -5648,12 +5648,8 @@ void addDevice(DevDesc *dd)
 
     UNPROTECT(2);
 
-    if (dd->newDevStruct)
-	;
-    else {
-	copyGPar(dpptr(dd), gpptr(dd));
-	GReset(dd);
-    }
+    copyGPar(dpptr(dd), gpptr(dd));
+    GReset(dd);
 
     /* In case a device driver did not call R_CheckDeviceAvailable
        before starting its allocation, we complete the allocation and

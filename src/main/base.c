@@ -56,7 +56,7 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	/* ddp->lty = dev->startlty; */
 	/* Initialise the gp settings too.
 	 */
-	copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp));
+	/* copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp)); */
 	break;
     case GE_CopyState:
 	sd = dd->gesd[baseRegisterIndex];
@@ -69,6 +69,7 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	playDisplayList((DevDesc*) dd);
 	break;
     case GE_SaveSnapshotState:
+	sd = dd->gesd[baseRegisterIndex];
 	PROTECT(state = allocVector(INTSXP,
 				    /* Got this formula from devga.c
 				     * Not sure why the "+ 1"
@@ -81,6 +82,7 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	UNPROTECT(1);
 	break;
     case GE_RestoreSnapshotState:
+	sd = dd->gesd[baseRegisterIndex];
 	copyGPar((GPar*) INTEGER(data),
 		 &(((baseSystemState*) sd->systemSpecific)->dpSaved));	
 	break;
