@@ -33,10 +33,11 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \details{
   These functions work with a general univariate state-space model
-  with state vector \code{a}, transitions \code{a <- T a + e}, \eqn{e ~
-    N(0, \kappa Q)} and observation equation \code{y = Z'a + R eta},
-  \eqn{eta ~ N(0, \kappa h)}.  The likelihood is a profile likelihood
-  after estimation of \eqn{\kappa}.
+  with state vector \code{a}, transitions \code{a <- T a + e},
+  \eqn{e \sim {\cal N}(0, \kappa Q)}{e \~ N(0, kappa Q)} and observation
+  equation \code{y = Z'a + R eta},
+  \eqn{(eta\equiv\eta), \eta \sim {\cal N}(0, \kappa h)}{eta ~ N(0, \kappa h)}.
+  The likelihood is a profile likelihood after estimation of \eqn{\kappa}.
 
   The model is specified as a list with at least components
   \describe{
@@ -52,7 +53,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   \code{KalmanSmooth} is the workhorse function for
   \code{\link{tsSmooth}}.
-  
+
   \code{makeARIMA} constructs the state-space model for an ARIMA model.
 }
 
@@ -71,7 +72,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   estimates based on all the observations, with one row for each time.
   Component \code{smooth} is a \code{n} by \code{p} by \code{p} array of
   variance matrices.
-  
+
   For \code{KalmanForecast}, a list with components \code{pred}, the
   predictions, and \code{var}, the unscaled variances of the prediction
   errors (to be muliplied by \code{s2}).
