@@ -128,7 +128,13 @@ A package consists of a subdirectory containing the files
 @file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
 @file{man}, @file{src}, and @file{tests} (some of which can be missing).
 
-Optionally the package can also contain (Bourne shell) script files
+The package subdirectory should be given the same name as the package.  Because
+some file systems (e.g. those on Windows) are not case-sensitive, to maintain
+portability it is strongly recommended that case distinctions not be used to
+distinguish different packages.  For example, if you have a package 
+named @file{foo}, do not also create a package named @file{Foo}.
+
+Optionally the package can contain (Bourne shell) script files
 @file{configure} and @file{cleanup} which are executed before and
 (provided that option @option{--clean} was given) after installation on
 Unix, see @ref{Configure and cleanup}.

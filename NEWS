@@ -51,6 +51,10 @@ BUG FIXES
 
     o	The "r+" and "r+b" modes of opening file connections disallowed
 	writing.
+
+    o	library() now warns the user if the chosen package name 
+	doesn't match the internal package name, and corrects the 
+	error. (PR#2816)
     
 
 
