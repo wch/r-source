@@ -30,7 +30,7 @@ as.list <- function(x,...) UseMethod("as.list")
 as.list.default <- function (x,...)
 {
     if (is.function(x))
-	return(c(formals(x), body(x)))
+	return(c(formals(x), list(body(x))))
     if (is.expression(x)) {
 	n <- length(x)
 	l <- vector("list", n)

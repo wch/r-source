@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-23)
+Version 1.2.0 Under development (unstable) (2000-12-09)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,6 +13,7 @@ Type `demo()' for some demos, `help()' for on-line help, or
 `help.start()' for a HTML browser interface to help.
 Type `q()' to quit R.
 
+Loading required package: ctest 
 > .proctime00 <- proc.time()
 > 
 > isall.equal <- function(x,y)
@@ -40,7 +41,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(l, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -100,7 +101,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(l, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 IS: [1] TRUE
@@ -277,9 +278,9 @@ Error in as.table.default(x) : cannot coerce into a table
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -1002,7 +1003,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -1062,7 +1063,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 IS: [1] TRUE
@@ -1229,9 +1230,9 @@ Error in as.table.default(x) : cannot coerce into a table
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -1311,7 +1312,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -1371,7 +1372,7 @@ IS: [1] TRUE
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
@@ -1538,9 +1539,9 @@ Error in as.table.default(x) : cannot coerce into a table
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -1620,7 +1621,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -1680,7 +1681,7 @@ IS: [1] TRUE
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
@@ -1847,9 +1848,9 @@ Error in as.table.default(x) : cannot coerce into a table
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-[1] TRUE
+Error in as.function.default(l, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -2525,6 +2526,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.46 0.07 1.54 0 0 
+Time elapsed:  2 0.12 2.14 0 0 
 > 
 > 

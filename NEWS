@@ -600,7 +600,10 @@ BUG FIXES
     o	NA || x , NA && y (etc) do not give errors anymore, but work as
 	the "|" and "&" operators and as documented (PR#749).
 
-
+    o   Coercing lists to functions failed if argument list was empty.
+        (PR#743). Also coercing functions to lists was wrong when the
+	body was a single constant.
+ 
 
 	**************************************************
 	*						 *

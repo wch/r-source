@@ -1074,8 +1074,13 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Check the arguments; we need a list and environment. */
 
     arglist = CAR(args);
+#if OLD
     if (length(arglist) > 1 && !isNewList(arglist))
 	errorcall(call, "list argument expected");
+#else
+    if (!isNewList(arglist))
+	errorcall(call, "list argument expected");
+#endif
 
     envir = CADR(args);
     if (!isNull(envir) && !isEnvironment(envir))
@@ -1095,10 +1100,14 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pargs = CDR(pargs);
     }
     CheckFormals(args);
+#if OLD
     if( n == 1 )
 	args =  mkCLOSXP(args, arglist, envir);
     else
 	args =  mkCLOSXP(args, VECTOR_ELT(arglist, n - 1), envir);
+#else
+    args =  mkCLOSXP(args, VECTOR_ELT(arglist, n - 1), envir);
+#endif
     UNPROTECT(1);
     return args;
 }
