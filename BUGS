@@ -262,3 +262,11 @@ Date: Fri, 23 Apr 1999 20:08:55 +0200 (MET DST)
 Subject: Multivariate ts -- arithmetic bug [ for SOME time-series ]
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 27 Apr 1999 19:33:18 +0200
+* PR# 179 *
+Subject: Problems with setting .Random.seed
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 29 Apr 1999 09:49:19 +0100 (BST)
+* PR# 180 *
+Subject: nlm on a function in the Math group
+From: Douglas Bates <bates@stat.wisc.edu>
+Date: Thu, 29 Apr 1999 17:11:00 -0500 (CDT)
