@@ -40,6 +40,7 @@
 #include <RCarbon.h>
 
 #include "RIntf.h"
+#include "Fileio.h"
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -312,7 +313,7 @@ void mac_savehistory(char *file)
 
     if (!file || !g_end_Cmd) return;
 
-    fp = fopen(file, "w");
+    fp = R_fopen(file, "w");
     if (!fp) {
     char msg[256];
 	sprintf(msg, "Unable to open history file \"%s\" for writing", file);
@@ -344,7 +345,7 @@ void mac_loadhistory(char *file)
     char buf[1002];
 
     if (!file || *file==NULL) return;
-    fp = fopen(file, "r");
+    fp = R_fopen(file, "r");
     if (!fp) {
  /* REprintf("\nUnable to open history file \"%s\" for reading\n", file);
  */	return;

@@ -285,18 +285,9 @@ FILE *R_OpenInitFile(void)
 FILE* R_OpenFile1(char *file)
 {
     FILE*                fp;
-#ifdef __MRC__    
-    char 			unixPath[400];
-#endif
-    /* Max file length is 256 characters */
-    
-#ifdef __MRC__
-     ConvertHFSPathToUnixPath(file, unixPath) ;
-     strcpy(file,unixPath);
-#endif 
    
     
-    fp = fopen(file, "r");
+    fp = R_fopen(file, "r");
 
     return fp;
 }
@@ -708,7 +699,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
     
-	/* try open the file in the R_Home:etc folder */
+	/* try open the file in the R_Home: folder */
 	fp = FSp_fopen(&spec,"r");
 	if (fp == NULL)
 	{ /* Okey, lets try open the file in the preference folder */
@@ -934,10 +925,10 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     if (home == NULL)
 	error("R_HOME not set");
     sprintf(buf, "%s:doc:html:index.html", home);
-    ff = fopen(buf, "r");
+    ff = R_fopen(buf, "r");
     if (!ff) {
 	sprintf(buf, "%s:doc:html:index.htm", home);
-	ff = fopen(buf, "r");
+	ff = R_fopen(buf, "r");
 	if (!ff) {
 	    sprintf(buf, "%s:doc:html:index.htm[l] not found", home);
 	    error(buf);
@@ -1042,7 +1033,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
     item = CHAR(STRING_ELT(CAR(args), 0));
     type = asInteger(CADR(args));
     if (type == 1) {
-	ff = fopen(item, "r");
+	ff = R_fopen(item, "r");
 	if (!ff) {
 	    sprintf(buf, "%s not found", item);
 	    error(buf);
@@ -1808,10 +1799,13 @@ static int process_Renviron(char *filename)
     char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
     int errs = 0;
 
-    if (!filename || !(fp = fopen(filename, "r"))) return 0;
+    if (!filename || !(fp = R_fopen(filename, "r"))) return 0;
     sprintf(msg, "\n   File %s contains invalid line(s)", filename);
-
+#ifdef __MRC__
+    while(R_fgets(sm, BUF_SIZE, fp)) {
+#else
     while(fgets(sm, BUF_SIZE, fp)) {
+#endif
 	sm[BUF_SIZE] = '\0';
 	s = rmspace(sm);
 	if(strlen(s) == 0 || s[0] == '#') continue;
