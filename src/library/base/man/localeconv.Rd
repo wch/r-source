@@ -16,8 +16,9 @@ Sys.localeconv()
   case the value will be \code{NULL}.
 }
 \seealso{
-  \code{\link{Sys.setlocale}} for ways to set locales: by default \R uses the
-  C clocal for \code{"LC_NUMERIC"} and \code{"LC_MONETARY"}.
+  \code{\link{Sys.setlocale}} for ways to set locales:
+  by default \R uses the C locale for \code{"LC_NUMERIC"}
+  and \code{"LC_MONETARY"}.
 }
 \examples{
 Sys.localeconv()
