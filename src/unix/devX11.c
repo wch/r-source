@@ -27,6 +27,12 @@
 #define OLD
 */
 
+#ifdef HAVE_RINT
+#define R_rint(x) rint(x)
+#else
+#define R_rint(x) ((int) x + 0.5)
+#endif
+
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -824,7 +830,7 @@ static XFontStruct *RLoadFont(int face, int size)
        24 points. It's almost y = x * 100/72, but not quite. The
        constants were found using lm(). --pd */
     
-    pixelsize = rint(size * 1.43 - 0.4);
+    pixelsize = R_rint(size * 1.43 - 0.4);
 
     if(face == 4)
 	sprintf(buf, symbolname,  pixelsize);
@@ -1182,20 +1188,25 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     if (x0 < x1) {
-	xd->clip.x = (int)x0;
-	xd->clip.width = (int)(x1 - x0);
+	xd->clip.x = R_rint(x0);
+	xd->clip.width = R_rint(x1 - x0);
     }
     else {
-	xd->clip.x = (int)x1;
-	xd->clip.width = (int)(x0 - x1);
+	xd->clip.x = R_rint(x1);
+	xd->clip.width = R_rint(x0 - x1);
     }
+
+    /* For some reason an adjustment is needed in the y direction to
+       get the boundaries included in the clip region, but not in the
+       x direction. Hence the -1 and +2. */
+
     if (y0 < y1) {
-	xd->clip.y = (int)y0;
-	xd->clip.height = (int)(y1 - y0);
+	xd->clip.y = R_rint(y0) - 1;
+	xd->clip.height = R_rint(y1 - y0) + 2;
     }
     else {
-	xd->clip.y = (int)y1;
-	xd->clip.height = (int)(y0 - y1);
+	xd->clip.y = R_rint(y1) - 1;
+	xd->clip.height = R_rint(y0 - y1) + 2;
     }
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
 #ifdef XSYNC
