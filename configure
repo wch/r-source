@@ -537,7 +537,7 @@ fi
 . ${srcdir}/config.site
 
 ac_aux_dir=
-for ac_dir in aux $srcdir/aux; do
+for ac_dir in ${srcdir}/aux $srcdir/${srcdir}/aux; do
   if test -f $ac_dir/install-sh; then
     ac_aux_dir=$ac_dir
     ac_install_sh="$ac_aux_dir/install-sh -c"
@@ -549,7 +549,7 @@ for ac_dir in aux $srcdir/aux; do
   fi
 done
 if test -z "$ac_aux_dir"; then
-  { echo "configure: error: can not find install-sh or install.sh in aux $srcdir/aux" 1>&2; exit 1; }
+  { echo "configure: error: can not find install-sh or install.sh in ${srcdir}/aux $srcdir/${srcdir}/aux" 1>&2; exit 1; }
 fi
 ac_config_guess=$ac_aux_dir/config.guess
 ac_config_sub=$ac_aux_dir/config.sub
@@ -4011,18 +4011,20 @@ ac_given_srcdir=$srcdir
 ac_given_INSTALL="$INSTALL"
 
 trap 'rm -fr `echo "Makeconf Makefile
-  doc/keyword-test 
-  etc/COMPILE etc/INSTALL etc/Makeconf etc/Makefile etc/REMOVE 
-  etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB etc/Sd2Rd 
-  etc/build-help etc/help.pretty etc/html2dos
-  demos/dynload/Makefile
-  doc/manual/lib2tex
-  src/Makefile src/appl/Makefile src/include/Makefile 
+  afm/Makefile
+  demos/Makefile
+  doc/Makefile doc/keyword-test doc/manual/Makefile doc/manual/lib2tex
+  etc/Makefile etc/Makeconf
+  src/Makefile src/appl/Makefile src/include/Makefile
   src/library/Makefile src/main/Makefile src/nmath/Makefile
   src/scripts/Makefile src/unix/Makefile
-  src/include/GETSYMBOLS
   src/library/base/Makefile src/library/profile/Makefile
-  src/scripts/fwf2table src/scripts/R.sh
+  src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE
+  src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
+  src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
+  src/scripts/build-help src/scripts/fwf2table src/scripts/help.pretty
+  src/scripts/html2dos
+  tests/Makefile tests/Examples/Makefile
  src/include/Platform.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
@@ -4135,18 +4137,20 @@ EOF
 cat >> $CONFIG_STATUS <<EOF
 
 CONFIG_FILES=\${CONFIG_FILES-"Makeconf Makefile
-  doc/keyword-test 
-  etc/COMPILE etc/INSTALL etc/Makeconf etc/Makefile etc/REMOVE 
-  etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB etc/Sd2Rd 
-  etc/build-help etc/help.pretty etc/html2dos
-  demos/dynload/Makefile
-  doc/manual/lib2tex
-  src/Makefile src/appl/Makefile src/include/Makefile 
+  afm/Makefile
+  demos/Makefile
+  doc/Makefile doc/keyword-test doc/manual/Makefile doc/manual/lib2tex
+  etc/Makefile etc/Makeconf
+  src/Makefile src/appl/Makefile src/include/Makefile
   src/library/Makefile src/main/Makefile src/nmath/Makefile
   src/scripts/Makefile src/unix/Makefile
-  src/include/GETSYMBOLS
   src/library/base/Makefile src/library/profile/Makefile
-  src/scripts/fwf2table src/scripts/R.sh
+  src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE
+  src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
+  src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
+  src/scripts/build-help src/scripts/fwf2table src/scripts/help.pretty
+  src/scripts/html2dos
+  tests/Makefile tests/Examples/Makefile
 "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
@@ -4343,11 +4347,6 @@ R is now configured for ${host}
   C compiler:               ${CC} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
 " 1>&6
-(cd doc; chmod +x keyword-test)
-  (cd doc/manual; chmod +x lib2tex)
-  (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
-           build-help help.pretty html2dos)
-  mkdir -p bin include library
-  (cd src/include; chmod +x GETSYMBOLS; ./GETSYMBOLS)
+chmod +x doc/keyword-test doc/manual/lib2tex
 
 
