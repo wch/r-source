@@ -23,6 +23,8 @@
 \alias{MacRoman}
 \alias{WinAnsi}
 \alias{native.enc}
+\concept{encoding}
+\concept{compression}
 \title{Functions to Manipulate Connections}
 \description{
   Functions to create, open and close connections.

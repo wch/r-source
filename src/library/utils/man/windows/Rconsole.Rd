@@ -1,6 +1,9 @@
 \name{Rwin configuration}
 \alias{Rconsole}
 \alias{Rdevga}
+\concept{console}
+\concept{fonts}
+\concept{preferences}
 \title{R for Windows Configuration}
 \description{
   The file \file{Rconsole} configures the R GUI console in this
