@@ -119,7 +119,6 @@ function(..., list = character(0),
 
     paths <- file.path(paths, "data")
     for(name in names) {
-	if (name == "CO2") name <- "zCO2"
         found <- FALSE
         for(p in paths) {
             ## does this package have "Rdata" databases?

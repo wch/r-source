@@ -44,12 +44,18 @@ rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
     makeLazyLoadDB(e, dbbase, compress = compress)
 }
 
-list_data_in_pkg <- function(package, lib.loc = NULL)
+list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 {
-    pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
-     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
-    dataDir <- file.path(pkgpath, "data")
+    if(is.null(dataDir)) {
+        pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+        if(length(pkgpath) == 0)
+            stop(paste("There is no package called", sQuote(package)))
+        dataDir <- file.path(pkgpath, "data")
+    } else {
+        pkgpath <- sub("/data$", "", dataDir)
+        package <- basename(pkgpath)
+        lib.loc <- dirname(pkgpath)
+    }
     if(file_test("-d", dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- .readRDS(sv)

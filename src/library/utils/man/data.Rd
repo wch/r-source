@@ -73,6 +73,10 @@ data(\dots, list = character(0), package = NULL,
   warning is given: such packages are incomplete.  The information about
   available data sets is returned in an object of class
   \code{"packageIQR"}.  The structure of this class is experimental.
+  Where the datasets have a different name from the argument that should
+  be used to retrieve them the index will have an entry like
+  \code{beaver1 (beavers)} which tells us that dataset \code{beaver1}
+  can be retrieved by the call \code{data(beaver)}.
 
   If \code{lib.loc} and \code{package} are both \code{NULL} (the
   default), the data sets are searched for in all the currently loaded

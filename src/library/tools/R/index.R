@@ -27,23 +27,31 @@ function(dataDir, contents)
 
     if(!file_test("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
-    dataFiles <- list_files_with_type(dataDir, "data")
+    ## dataFiles <- list_files_with_type(dataDir, "data")
     ## <FIXME>
     ## To avoid name clashes CO2 is stored as zCO2.R.
-    dataTopics <- unique(basename(file_path_sans_ext(dataFiles)))
-    dataTopics[dataTopics == "zCO2"] <- "CO2"
+    ## dataTopics <- unique(basename(file_path_sans_ext(dataFiles)))
+    ## dataTopics[dataTopics == "zCO2"] <- "CO2"
     ## </FIXME>
-    if(!length(dataTopics)) return(matrix("", 0, 2))
-    dataTopics <- sort(dataTopics)
-    dataIndex <- cbind(dataTopics, "")
+    dataTopics <- list_data_in_pkg(dataDir=dataDir)
+    names(dataTopics) <- paste(names(dataTopics), "/", sep="")
+    datasets <- unlist(dataTopics)
+    names(datasets) <- sub("/[^/]*$", "", names(datasets))
+
+    if(!length(datasets)) return(matrix("", 0, 3))
+    datasets <- sort(datasets)
+    dataIndex <- cbind(datasets, "")
     ## Note that NROW(contents) might be 0.
     if(NROW(contents)) {
         aliasIndices <-
             rep(1 : NROW(contents), sapply(contents$Aliases, length))
-        idx <- match(dataTopics, unlist(contents$Aliases), 0)
+        idx <- match(datasets, unlist(contents$Aliases), 0)
         dataIndex[which(idx != 0), 2] <-
             contents[aliasIndices[idx], "Title"]
     }
+    dataIndex[, 1] <-
+        as.vector(ifelse(datasets == names(datasets), datasets,
+                         paste(datasets, " (", names(datasets), ")", sep="")))
     dimnames(dataIndex) <- NULL
     dataIndex
 }

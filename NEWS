@@ -40,6 +40,8 @@ USER-VISIBLE CHANGES
 	to package 'utils'.  Please read the help page carefully if
 	you use the 'package' or 'lib.loc' arguments.
 
+	data() now lists datasets, and not just names data() accepts.
+
     o   Dataset 'phones' has been renamed to 'WorldPhones'.
 
     o	Datasets 'sunspot.month' and 'sunspot.year' are available
