@@ -25,7 +25,7 @@ methods <- function (generic.function, class)
 }
 
 data.class <- function(x) {
-    if (length(cl <- class(x)))
+    if (length(cl <- oldClass(x)))
 	cl[1]
     else {
 	l <- length(dim(x))

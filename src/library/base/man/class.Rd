@@ -1,13 +1,9 @@
 \name{class}
 \title{Object Classes}
-\usage{
-class(x)
-class(x) <- names
-unclass(x)
-inherits(x, what, which = FALSE)
-}
 \alias{class}
 \alias{class<-}
+\alias{oldClass}
+\alias{oldClass<-}
 \alias{unclass}
 \alias{inherits}
 \description{
@@ -15,22 +11,36 @@ inherits(x, what, which = FALSE)
   an object-oriented style of programming.  Method despatch takes place
   based on the class of the first argument to the generic function.
 }
+\usage{
+class(x)
+class(x) <- names
+unclass(x)
+inherits(x, what, which = FALSE)
+}
 \arguments{
-  \item{x}{an objects}
+  \item{x}{a \R object}
   \item{what}{a character vector naming classes.}
   \item{which}{logical affecting return value: see Details.}
 }
 
 \details{
-  An \R ``object'' is a data object which has a \code{class} attribute.
-  A class attribute is a character vector giving the names of
-  the classes which the object ``inherits'' from.  When a generic
+  Many \R objects have a \code{class} attribute, a character vector
+  giving the names of the classes which the object ``inherits'' from.
+  If the object does not have a class attribute, it has an implicit
+  class, \code{"matrix"}, \code{"array"} or the result of
+  \code{\link{mode}(x)}.  (Functions \code{oldClass} and
+  \code{oldClass<-} get and set the attribute, which can also be done
+  directly.)
+
+  When a generic
   function \code{fun} is applied to an object with class attribute
   \code{c("first", "second")}, the system searches for a function called
   \code{fun.first} and, if it finds it, applies it to the object.  If no
   such function is found, a function called \code{fun.second} is tried.
   If no class name produces a suitable function, the function
-  \code{fun.default} is used.
+  \code{fun.default} is used (if it exists).
+  If there is no class attribute, the implicit class is tried, then the
+  default method.
 
   The function \code{class} prints the vector of names of classes an
   object inherits from.  Correspondingly, \code{class<-} sets the
@@ -47,6 +57,19 @@ inherits(x, what, which = FALSE)
   no match. If \code{which} is \code{FALSE} then \code{TRUE} is 
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
+}
+
+\section{Formal classes}{
+  An additional mechanism of \emph{formal} classes has been available in
+  packages \code{methods} since \R 1.4.0, and as from \R 1.7.0 this
+  is attached by default.  For objects which have a formal class, its name
+  is returned by \code{class} as a character vector of length one.
+
+  The replacement version of the function sets the class to the value
+  provided.  For classes that have a formal definition, directly
+  replacing the class this way is strongly deprecated.  The expression
+  \code{\link{as}(object, value)} is the way to coerce an object to a
+  particular class.
 }
 \seealso{
   \code{\link{UseMethod}}, \code{\link{NextMethod}}.

@@ -1,20 +1,20 @@
 \name{methods}
 \title{Class Methods}
-\usage{
-UseMethod(generic, object)
-NextMethod(generic = NULL, object = NULL, \dots)
-methods(generic.function, class)
-}
 \alias{UseMethod}
 \alias{NextMethod}
 \alias{methods}
+\alias{.isMethodsDispatchOn}
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method despatch takes place
   based on the class of the first argument to the generic function or on
   the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
 }
-\alias{.isMethodsDispatchOn}
+\usage{
+UseMethod(generic, object)
+NextMethod(generic = NULL, object = NULL, \dots)
+methods(generic.function, class)
+}
 \arguments{
   \item{generic}{a character string naming a function.}
   \item{object}{an object whose class will determine the method to be
@@ -28,7 +28,12 @@ methods(generic.function, class)
 \details{
   An \R ``object'' is a data object which has a \code{class} attribute.
   A class attribute is a character vector giving the names of
-  the classes which the object ``inherits'' from.  When a generic
+  the classes which the object ``inherits'' from.
+  If the object does not have a class attribute, it has an implicit
+  class, \code{"matrix"}, \code{"array"} or the result of
+  \code{\link{mode}(x)}.
+
+  When a generic
   function \code{fun} is applied to an object with class attribute
   \code{c("first", "second")}, the system searches for a function called
   \code{fun.first} and, if it finds it, applied it to the object.  If no
@@ -67,7 +72,7 @@ methods(generic.function, class)
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
   it is recommended to use the more flexible and robust \emph{S4} scheme
-  provided in the \file{methods} package after \code{library(methods)}.
+  provided in the \code{methods} package.
   \cr
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
   new S4 methods are available but is meant for \R internal use only.

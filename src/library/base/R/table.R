@@ -174,7 +174,7 @@ margin.table <- function(x, margin = NULL)
         dimnames(z) <- dimnames(x)[margin]
     }
     else return(sum(x))
-    class(z) <- class(x)
+    class(z) <- oldClass(x) # avoid adding "matrix"
     z
 }
 

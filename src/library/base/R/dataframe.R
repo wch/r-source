@@ -29,12 +29,12 @@ is.na.data.frame <- function (x)
 
 is.data.frame <- function(x) inherits(x, "data.frame")
 
-I <- function(x) { structure(x, class = unique(c("AsIs", class(x)))) }
+I <- function(x) { structure(x, class = unique(c("AsIs", oldClass(x)))) }
 
 print.AsIs <- function (x, ...)
 {
-    cl <- class(x)
-    class(x) <- cl[cl != "AsIs"]
+    cl <- oldClass(x)
+    oldClass(x) <- cl[cl != "AsIs"]
     NextMethod("print")
     invisible(x)
 }

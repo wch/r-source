@@ -17,12 +17,12 @@
     }
     \item{\code{objWithClass}:}{
       return the result of setting the class of \code{object} to
-      \code{value}.  Defined as a separate primitive function because R
-      types cannot generally be changed in place.
+      \code{value}.  Defined as a separate primitive function because \R
+      types cannot generally be changed in place.  The same as
+      \code{\link{class<-}}.
     }
-    \item{\code{dataClass}:}{ returns a single string for the class of
-      \code{object} even in the case that the object has an old-style
-      class attribute with multiple strings.
+    \item{\code{dataClass}:}{
+      Now the same as \code{\link{class}}.
     }
     \item{\code{topicName}:}{
       the string used internally to find documenation of the given type

@@ -267,12 +267,13 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(matchedarg = cptr->promargs);
     PROTECT(newcall = duplicate(cptr->call));
 
-    if(R_has_methods(NULL)) /* if the methods package has been attached */
-        class = R_data_class(obj, FALSE);
+    class = R_data_class(obj, FALSE);
+    /* if(R_has_methods(NULL)) /* if the methods package has been attached */
+    /*    class = R_data_class(obj, FALSE);
     else if (isObject(obj)) 
 	class = getAttrib(obj, R_ClassSymbol);
     else
-        class = R_NilValue;
+       class = R_NilValue;*/
     nclass = length(class);
     for (i = 0; i < nclass; i++) {
 	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
