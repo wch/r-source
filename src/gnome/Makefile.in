@@ -12,42 +12,40 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = \
-	../unix/dataentry.c \
-	../unix/dynload.c \
-	../unix/sys-unix.c \
-	../unix/sys-common.c \
-	system.c \
-	system-choosefile.c \
-	system-console.c \
-	system-showfiles.c \
-	devGNOME.c \
-	devGTK.c \
-	edit.c \
-	gdkrotated.c \
-	gtkconsole.c \
-	gnome-find-dialog.c \
-	terminal.c \
-	terminal-find.c \
-	terminal-functions.c \
-	terminal-menu.c \
-	terminal-prefs.c \
-	terminal-toolbar.c
+SOURCES = ../unix/dataentry.c \
+	  ../unix/dynload.c \
+	  ../unix/sys-unix.c \
+	  ../unix/sys-common.c \
+	  system.c \
+	  system-choosefile.c \
+	  system-console.c \
+	  system-showfiles.c \
+	  devGNOME.c \
+	  devGTK.c \
+	  edit.c \
+	  gdkrotated.c \
+	  gtkconsole.c \
+	  gnome-find-dialog.c \
+	  terminal.c \
+	  terminal-find.c \
+	  terminal-functions.c \
+	  terminal-menu.c \
+	  terminal-prefs.c \
+	  terminal-toolbar.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = \
-	dataentry.h \
-	devGNOME.h \
-	devGTK.h \
-	gdkrotated.h \
-	gnome-find-dialog.h \
-	gtkconsole.h \
-	terminal-find.h \
-	terminal-functions.h \
-	terminal-menu.h \
-	terminal-prefs.h \
-	terminal-toolbar.h \
-	terminal.h
+HEADERS = dataentry.h \
+	  devGNOME.h \
+	  devGTK.h \
+	  gdkrotated.h \
+	  gnome-find-dialog.h \
+	  gtkconsole.h \
+	  terminal-find.h \
+	  terminal-functions.h \
+	  terminal-menu.h \
+	  terminal-prefs.h \
+	  terminal-toolbar.h \
+	  terminal.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
@@ -66,8 +64,8 @@ Makefile: $(srcdir)/Makefile.in \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-Makedeps: Makefile
-	@cat $(DEPENDS) >> $<
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
 R: Makefile
