@@ -46,8 +46,6 @@ stamp-recommended: $(OBJECTS)
 ## Currently, we enforce the order in which package sources are listed
 ## in 'share/make/vars.mk'; we could prepend sources which must come
 ## first. 
-## (Note that this currently starts with 'survival' as this was needed
-## by 'boot' at some time: not clear whether this is still true.)
 Makedeps: Makefile
 	@(set $(R_PKGS_RECOMMENDED_SOURCES); \
 	  while test -n "$${2}"; do \
@@ -67,12 +65,6 @@ INSTALL-OPTS=--lazy
 	MAKE="$(MAKE)" $(R) CMD INSTALL $(INSTALL-OPTS) -l $(top_builddir)/library $<
 ## </FIXME>
 	@touch $@
-
-## <FIXME>
-## This no longer seems to be the case?
-## survival needs to be installed before boot
-## boot.ts: survival.ts boot.tgz
-## </FIXME>
 
 R docs:
 
