@@ -34,7 +34,9 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         intercept <- attr(Terms, "intercept")
         ecall <- lmcall
         ecall$formula <- as.formula(paste(deparse(formula[[2]]), "~", eTerm,
-                                          if(!intercept) "- 1"))
+                                          if(!intercept) "- 1"),
+                                    env=environment(formula))
+
         ecall$method <- "qr"
         ecall$qr <- TRUE
         ecall$contrasts <- NULL

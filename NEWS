@@ -694,6 +694,8 @@ BUG FIXES
 
     o   lqs() could give warnings if there was an exact fit. (PR#1184)
 
+    o   aov() didn't find free-floating variables for Error() terms when
+	called from inside another function
 
 
 	**************************************************
