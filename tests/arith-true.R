@@ -108,10 +108,15 @@ all(abs(Isi-1) < 100* Meps)
 ## polyroot():
 all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
 
-## gamma():
+## gamma()
 abs(gamma(1/2)^2 - pi) < 4* Meps
 r <- rlnorm(5000)
 all(abs(rErr(gamma(r+1), r*gamma(r))) < 500 * Meps)
+## more accurate for integers n <= 50 since R 1.8.0	Sol8: perfect
+n <-   20; all(		 gamma(1:n) == cumprod(c(1,1:(n-1))))# Lnx: up too n=28
+n <-   50; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 20*Meps)#Lnx: f=2
+n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
+n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
 
 n <-   10; all(		 gamma(1:n) == cumprod(c(1,1:(n-1))))
 n <-   20; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 100*Meps)

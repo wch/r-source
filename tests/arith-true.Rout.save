@@ -1,17 +1,17 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.6.0 Under development (unstable) (2002-08-05)
+R : Copyright 2003, The R Development Core Team
+Version 1.8.0 alpha (2003-09-12)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ####=== Numerical / Arithmetic Tests
 > ####--- ALL tests here should return  TRUE !
@@ -170,11 +170,20 @@ NaNs produced in: log(x)
 > all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
 [1] TRUE
 > 
-> ## gamma():
+> ## gamma()
 > abs(gamma(1/2)^2 - pi) < 4* Meps
 [1] TRUE
 > r <- rlnorm(5000)
 > all(abs(rErr(gamma(r+1), r*gamma(r))) < 500 * Meps)
+[1] TRUE
+> ## more accurate for integers n <= 50 since R 1.8.0	Sol8: perfect
+> n <-   20; all(		 gamma(1:n) == cumprod(c(1,1:(n-1))))# Lnx: up too n=28
+[1] TRUE
+> n <-   50; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 20*Meps)#Lnx: f=2
+[1] TRUE
+> n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
+[1] TRUE
+> n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
 [1] TRUE
 > 
 > n <-   10; all(		 gamma(1:n) == cumprod(c(1,1:(n-1))))
@@ -289,5 +298,5 @@ NaNs produced in: gamma(x)
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.07 0.1 2.22 0 0 
+Time elapsed:  2.52 0.01 2.66 0 0 
 > 
