@@ -35,7 +35,7 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .load_package_quietly(package, lib.loc)
-        codeEnv <- .packageEnv(package)
+        codeEnv <- .package_env(package)
 
         codeObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
@@ -311,7 +311,7 @@ function(x, ...)
         if(tag == "S4 methods")
             writeLines(strwrap(x[[i]], indent = 2, exdent = 2))
         else
-            .prettyPrint(x[[i]])
+            .pretty_print(x[[i]])
     }
     invisible(x)
 }
@@ -354,7 +354,7 @@ function(package, dir, lib.loc = NULL,
         ## Load package into codeEnv.
         if(!isBase)
             .load_package_quietly(package, lib.loc)
-        codeEnv <- .packageEnv(package)
+        codeEnv <- .package_env(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
 
@@ -586,7 +586,7 @@ function(package, dir, lib.loc = NULL,
                    SIMPLIFY = FALSE)
         ## Replacement functions.
         ind <- as.logical(sapply(exprs,
-                                 .isCallFromReplacementFunctionUsage))
+                                 .is_call_from_replacement_function_usage))
         if(any(ind)) {
             exprs <- exprs[ind]
             replaceFuns <-
@@ -696,7 +696,7 @@ function(x, ...)
     ##        && identical(TRUE, attr(x, "hasNamespace"))) {
     ##         if(length(objectsInCodeNotInUsages)) {
     ##             writeLines("Exported objects without usage information:")
-    ##             .prettyPrint(objectsInCodeNotInUsages)
+    ##             .pretty_print(objectsInCodeNotInUsages)
     ##             writeLines("")
     ##         }
     ##     }
@@ -714,7 +714,7 @@ function(x, ...)
     ##        && identical(TRUE, attr(x, "hasNamespace"))) {
     ##         if(length(functionsInCodeNotInUsages)) {
     ##             writeLines("Exported functions without usage information:")
-    ##             .prettyPrint(functionsInCodeNotInUsages)
+    ##             .pretty_print(functionsInCodeNotInUsages)
     ##             writeLines("")
     ##         }
     ##     }
@@ -728,7 +728,7 @@ function(x, ...)
             writeLines(paste("Functions/methods with usage in",
                              "documentation object", sQuote(fname),
                              "but not in code:"))
-            .prettyPrint(unique(functionsInUsagesNotInCode[[fname]]))
+            .pretty_print(unique(functionsInUsagesNotInCode[[fname]]))
             writeLines("")
         }
     }
@@ -800,7 +800,7 @@ function(package, lib.loc = NULL)
     ## Load package into codeEnv.
     if(!isBase)
         .load_package_quietly(package, lib.loc)
-    codeEnv <- .packageEnv(package)
+    codeEnv <- .package_env(package)
 
     if(!.isMethodsDispatchOn())
         return(badRdObjects)
@@ -859,12 +859,12 @@ function(package, lib.loc = NULL)
         txt
     }
 
-    S4classesChecked <- character()
+    S4_classes_checked <- character()
     for(cl in S4classes) {
         idx <- which(utils::topicName("class", cl) == aliases)
         if(length(idx) == 1) {
             ## Add sanity checking later ...
-            S4classesChecked <- c(S4classesChecked, cl)
+            S4_classes_checked <- c(S4_classes_checked, cl)
             slotsInCode <-
                 sort(names(methods::slot(methods::getClass(cl, where =
                                                            codeEnv),
@@ -880,8 +880,8 @@ function(package, lib.loc = NULL)
         }
     }
 
-    attr(badRdObjects, "S4classesChecked") <-
-        as.character(S4classesChecked)
+    attr(badRdObjects, "S4_classes_checked") <-
+        as.character(S4_classes_checked)
     badRdObjects
 }
 
@@ -942,7 +942,7 @@ function(package, lib.loc = NULL)
     ## Load package into codeEnv.
     if(!isBase)
         .load_package_quietly(package, lib.loc)
-    codeEnv <- .packageEnv(package)
+    codeEnv <- .package_env(package)
 
     ## Could check here whether the package has any variables or data
     ## sets (and return if not).
@@ -1008,7 +1008,7 @@ function(package, lib.loc = NULL)
     dataExts <- .make_file_exts("data")
 
     ## Now go through the aliases.
-    dataFramesChecked <- character()
+    data_frames_checked <- character()
     for(i in seq(along = aliases)) {
         ## Store the documented variable names.
         varNamesInDocs <- sort(RdVarNames[[i]])
@@ -1036,7 +1036,7 @@ function(package, lib.loc = NULL)
         }
         if(!is.data.frame(al)) next
         ## Now we should be ready:
-        dataFramesChecked <- c(dataFramesChecked, aliases[i])
+        data_frames_checked <- c(data_frames_checked, aliases[i])
         varNamesInCode <- sort(names(al))
         if(!identical(varNamesInCode, varNamesInDocs))
             badRdObjects[[dbNames[i]]] <-
@@ -1045,8 +1045,8 @@ function(package, lib.loc = NULL)
                      docs = varNamesInDocs)
     }
 
-    attr(badRdObjects, "dataFramesChecked") <-
-        as.character(dataFramesChecked)
+    attr(badRdObjects, "data_frames_checked") <-
+        as.character(data_frames_checked)
     badRdObjects
 }
 
@@ -1164,10 +1164,10 @@ function(package, dir, lib.loc = NULL)
         functions <- functions[ind]
         argNamesInUsage <-
             unlist(sapply(exprs[ind],
-                          function(e) .argNamesFromCall(e[-1])))
+                          function(e) .arg_names_from_call(e[-1])))
         ## Replacement functions.
         ind <- as.logical(sapply(exprs,
-                                 .isCallFromReplacementFunctionUsage))
+                                 .is_call_from_replacement_function_usage))
         if(any(ind)) {
             replaceFuns <-
                 paste(sapply(exprs[ind],
@@ -1179,8 +1179,8 @@ function(package, dir, lib.loc = NULL)
                 c(argNamesInUsage,
                   unlist(sapply(exprs[ind],
                                 function(e)
-                                c(.argNamesFromCall(e[[2]][-1]),
-                                  .argNamesFromCall(e[[3]])))))
+                                c(.arg_names_from_call(e[[2]][-1]),
+                                  .arg_names_from_call(e[[3]])))))
         }
         ## And finally transform the S3 \method{}{} markup into the
         ## usual function names ...
@@ -1224,7 +1224,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
-        ## '-deprecated' (see Deprecated.Rd).
+        ## '-deprecated' (see e.g. base-deprecated.Rd).
         if(!any(grep("-deprecated$", aliases))) {
             ## Currently, there is no useful markup for S3 Ops group
             ## methods and S3 methods for subscripting and subassigning,
@@ -1276,28 +1276,28 @@ function(x, ...)
             writeLines(paste("Undocumented arguments",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            .prettyPrint(unique(argNamesInUsageMissingInArgList))
+            .pretty_print(unique(argNamesInUsageMissingInArgList))
         }
         duplicatedArgsInArgList <- x[[docObj]][["duplicated"]]
         if(length(duplicatedArgsInArgList) > 0) {
             writeLines(paste("Duplicated \\argument entries",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            .prettyPrint(duplicatedArgsInArgList)
+            .pretty_print(duplicatedArgsInArgList)
         }
         argNamesInArgListMissingInUsage <- x[[docObj]][["overdoc"]]
         if(length(argNamesInArgListMissingInUsage) > 0) {
             writeLines(paste("Documented arguments not in \\usage",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            .prettyPrint(unique(argNamesInArgListMissingInUsage))
+            .pretty_print(unique(argNamesInArgListMissingInUsage))
         }
         functionsNotInAliases <- x[[docObj]][["unaliased"]]
         if(length(functionsNotInAliases) > 0) {
             writeLines(paste("Objects in \\usage without \\alias",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            .prettyPrint(unique(functionsNotInAliases))
+            .pretty_print(unique(functionsNotInAliases))
         }
 
         writeLines("")
@@ -1332,7 +1332,7 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .load_package_quietly(package, lib.loc)
-        codeEnv <- .packageEnv(package)
+        codeEnv <- .package_env(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
 
@@ -1438,7 +1438,7 @@ function(package, dir, lib.loc = NULL)
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
-    methodsStopList <- .make_S3_methods_stop_list(basename(dir))
+    methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
     methodsInPackage <- sapply(allGenerics, function(g) {
         ## <FIXME>
         ## We should really determine the name g dispatches for, see
@@ -1451,7 +1451,7 @@ function(package, dir, lib.loc = NULL)
             functionsInCode[substr(functionsInCode, 1, nchar(name))
                             == name]
         ## </FIXME>
-        methods <- methods %w/o% methodsStopList
+        methods <- methods %w/o% methods_stop_list
         if(hasNamespace) {
             ## Find registered methods for generic g.
             methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
@@ -1491,7 +1491,7 @@ function(package, dir, lib.loc = NULL)
         ## what we want due to backquotifying.)
         ## Replacement functions.
         ind <- as.logical(sapply(exprs,
-                                 .isCallFromReplacementFunctionUsage))
+                                 .is_call_from_replacement_function_usage))
         if(any(ind)) {
             replaceFuns <-
                 paste(sapply(exprs[ind],
@@ -1575,7 +1575,7 @@ function(package, dir, file, lib.loc = NULL,
         codeEnv <- if(packageHasNamespace(package, dirname(dir)))
             asNamespace(package)
         else
-            .packageEnv(package)
+            .package_env(package)
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
@@ -1719,7 +1719,7 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .load_package_quietly(package, lib.loc)
-        codeEnv <- .packageEnv(package)
+        codeEnv <- .package_env(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
 
@@ -1795,8 +1795,8 @@ function(package, dir, lib.loc = NULL)
                              is.function(get(f, envir = codeEnv)))
                       == TRUE]
 
-    methodsStopList <- .make_S3_methods_stop_list(basename(dir))
-    S3groupGenerics <- .get_S3_group_generics()
+    methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
+    S3_group_generics <- .get_S3_group_generics()
 
     checkArgs <- function(g, m, env) {
         ## Do the arguments of method m (in codeEnv) 'extend' those of
@@ -1811,7 +1811,7 @@ function(package, dir, lib.loc = NULL)
         gm <- if(m %in% S3reg) {
             ## See registerS3method() in namespace.R.
             defenv <-
-                if (g %in% S3groupGenerics) .BaseNamespaceEnv
+                if (g %in% S3_group_generics) .BaseNamespaceEnv
                 else if (typeof(genfun) == "closure") environment(genfun)
                 else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)
@@ -1852,24 +1852,24 @@ function(package, dir, lib.loc = NULL)
 
     ## Deal with S3 group methods.  We create a separate environment
     ## with pseudo-definitions for these.
-    S3groupGenericsEnv <- new.env()
+    S3_group_generics_env <- new.env()
     assign("Math",
            function(x, ...) UseMethod("Math"),
-           envir = S3groupGenericsEnv)
+           envir = S3_group_generics_env)
     assign("Ops",
            function(e1, e2) UseMethod("Ops"),
-           envir = S3groupGenericsEnv)
+           envir = S3_group_generics_env)
     assign("Summary",
            function(x, ...) UseMethod("Summary"),
-           envir = S3groupGenericsEnv)
+           envir = S3_group_generics_env)
     assign("Complex",
            function(x, ...) UseMethod("Complex"),
-           envir = S3groupGenericsEnv)
+           envir = S3_group_generics_env)
 
     ## Now determine the 'bad' methods in the function objects of the
     ## package.
     badMethods <- list()
-    envList <- list(codeEnv, S3groupGenericsEnv)
+    envList <- list(codeEnv, S3_group_generics_env)
     if(!isBase) {
         ## <FIXME>
         ## Look for generics in the whole of the former base.
@@ -1906,7 +1906,7 @@ function(package, dir, lib.loc = NULL)
                 ind <- depends %in% .packages()
                 if(any(ind)) {
                     envList <-
-                        c(envList, lapply(depends[ind], .packageEnv))
+                        c(envList, lapply(depends[ind], .package_env))
                 }
             }
         }
@@ -1919,7 +1919,7 @@ function(package, dir, lib.loc = NULL)
         }
         else
             objects(envir = env, all.names = TRUE)
-        S3generics <- if(length(objectsInEnv))
+        S3_generics <- if(length(objectsInEnv))
             objectsInEnv[sapply(objectsInEnv, .is_S3_generic, env)
                          == TRUE]
         else character(0)
@@ -1927,16 +1927,16 @@ function(package, dir, lib.loc = NULL)
         ## For base, also add the internal S3 generics which are not
         ## .Primitive (as checkArgs() does not deal with these).
         if(identical(env, as.environment(NULL))) {
-            internalS3generics <- .get_internal_S3_generics()
-            internalS3generics <-
-                internalS3generics[sapply(internalS3generics,
-                                          .is_primitive,
-                                          NULL)
-                                   == FALSE]
-            S3generics <- c(S3generics, internalS3generics)
+            internal_S3_generics <- .get_internal_S3_generics()
+            internal_S3_generics <-
+                internal_S3_generics[sapply(internal_S3_generics,
+                                            .is_primitive,
+                                            NULL)
+                                     == FALSE]
+            S3_generics <- c(S3_generics, internal_S3_generics)
         }
 
-        for(g in S3generics) {
+        for(g in S3_generics) {
             ## Find all methods in functionsInCode for S3 generic g.
             ## <FIXME>
             ## We should really determine the name g dispatches for, see
@@ -1949,7 +1949,7 @@ function(package, dir, lib.loc = NULL)
                 functionsInCode[substr(functionsInCode, 1, nchar(name))
                                 == name]
             ## </FIXME>
-            methods <- methods %w/o% methodsStopList
+            methods <- methods %w/o% methods_stop_list
             if(hasNamespace) {
                 ## Find registered methods for generic g.
                 methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
@@ -2018,7 +2018,7 @@ function(package, dir, lib.loc = NULL)
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
         }
         else
-            codeEnv <- .packageEnv(package)
+            codeEnv <- .package_env(package)
     }
 
     else {
@@ -2098,12 +2098,12 @@ function(package, dir, lib.loc = NULL)
         }) == FALSE]} else character(0)
 
     if(.isMethodsDispatchOn()) {
-        S4generics <- methods::getGenerics(codeEnv)
+        S4_generics <- methods::getGenerics(codeEnv)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
-        S4generics <- grep("<-$", S4generics, value = TRUE)
+        S4_generics <- grep("<-$", S4_generics, value = TRUE)
         badS4ReplaceMethods <-
-            sapply(S4generics,
+            sapply(S4_generics,
                    function(f) {
                        meths <- methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
                        ind <- which(sapply(methods::slot(meths,
@@ -2134,7 +2134,7 @@ function(package, dir, lib.loc = NULL)
 print.checkReplaceFuns <-
 function(x, ...)
 {
-    if(length(x) > 0) .prettyPrint(unclass(x))
+    if(length(x) > 0) .pretty_print(unclass(x))
     invisible(x)
 }
 
@@ -2340,22 +2340,22 @@ function(package)
 print.check_package_depends <- function(x, ...) {
     if(length(bad <- x$requiredButNotInstalled)) {
         writeLines("Packages required but not available:")
-        .prettyPrint(bad)
+        .pretty_print(bad)
         writeLines("")
     }
     if(length(bad <- x$requiredButStub)) {
         writeLines("Former standard packages required but now defunct:")
-        .prettyPrint(bad)
+        .pretty_print(bad)
         writeLines("")
     }
     if(length(bad <- x$missingVignetteDepends)) {
         writeLines("Vignette dependencies not required:")
-        .prettyPrint(bad)
+        .pretty_print(bad)
         writeLines("")
     }
     if(length(bad <- x$missingNamespaceDepends)) {
         writeLines("Namespace dependencies not required:")
-        .prettyPrint(bad)
+        .pretty_print(bad)
         writeLines("")
     }
     invisible(x)
@@ -2381,8 +2381,8 @@ function(dir)
           "format", "details", "value", "references", "source",
           "seealso", "examples", "note", "author", "synopsis")
 
-    files_with_surely_bad_Rd <- NULL
-    files_with_likely_bad_Rd <- NULL
+    files_with_surely_bad_Rd <- list()
+    files_with_likely_bad_Rd <- list()
     files_with_missing_mandatory_tags <- NULL
     files_with_duplicated_unique_tags <- NULL
     files_with_bad_name <- files_with_bad_title <- NULL
@@ -2391,12 +2391,13 @@ function(dir)
     Rd_files <- list_files_with_type(file.path(dir), "docs")
 
     for(f in Rd_files) {
-        x <- try(Rd_parse(f), silent = TRUE)
-        if(inherits(x, "try-error")) {
-            files_with_surely_bad_Rd <-
-                c(files_with_surely_bad_Rd, f)
+        x <- tryCatch(Rd_parse(f), error = function(e) e)
+        if(inherits(x, "error")) {
+            files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
             next
         }
+        if(length(x$rest))
+            files_with_likely_bad_Rd[[f]] <- x$rest
         tags <- sapply(x$data$tags, "[[", 1)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
@@ -2419,7 +2420,7 @@ function(dir)
         if(is.na(ind) ||
            (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1))
             files_with_bad_title <- c(files_with_bad_title, f)
-        bad_tags <-  intersect(tags[duplicated(tags)], unique_tags)
+        bad_tags <- intersect(tags[duplicated(tags)], unique_tags)
         if(length(bad_tags))
             files_with_duplicated_unique_tags <-
                 rbind(files_with_duplicated_unique_tags,
@@ -2453,7 +2454,11 @@ function(dir)
 print.check_Rd_files_in_man_dir <- function(x, ...) {
     if(length(x$files_with_surely_bad_Rd)) {
         writeLines("Rd files with syntax errors:")
-        .prettyPrint(x$files_with_surely_bad_Rd)
+        bad <- x$files_with_surely_bad_Rd
+        for(i in seq(along = bad)) {
+            writeLines(c(paste("  ", names(bad)[i], ":", sep = ""),
+                         strwrap(bad[[i]], indent = 4, exdent = 4)))
+        }
         writeLines("")
     }
     ## files_with_likely_bad_Rd
@@ -2481,7 +2486,7 @@ print.check_Rd_files_in_man_dir <- function(x, ...) {
                                sQuote(names(bad)[i]), ":", sep = ""),
                          paste(" ", bad[[i]])))
         }
-        writeLines("These tags are required in an Rd file.\n")
+        writeLines("These entries are required in an Rd file.\n")
     }
     if(length(x$files_with_duplicated_unique_tags)) {
         bad <- x$files_with_duplicated_unique_tags
@@ -2491,7 +2496,7 @@ print.check_Rd_files_in_man_dir <- function(x, ...) {
                                sQuote(names(bad)[i]), ":", sep = ""),
                          paste(" ", bad[[i]])))
         }
-        writeLines("These tags must be unique in an Rd file.\n")
+        writeLines("These entries must be unique in an Rd file.\n")
     }
 
     if(length(x$files_with_bad_keywords)) {
@@ -2541,9 +2546,9 @@ function(x)
     as.alist.call(call(as.character(x)))
 }
 
-### * .argNamesFromCall
+### * .arg_names_from_call
 
-.argNamesFromCall <-
+.arg_names_from_call <-
 function(x)
 {
     y <- as.character(x)
@@ -2557,13 +2562,13 @@ function(x)
 ### * .functions_to_be_ignored_from_usage
 
 .functions_to_be_ignored_from_usage <-
-function(packageName)
+function(package_name)
 {
     c("<-", "=",
-      if(packageName == "base")
+      if(package_name == "base")
       c("(", "{", "function", "if", "for", "while", "repeat"),
-      if(packageName == "utils") "?",
-      if(packageName == "methods") "@")
+      if(package_name == "utils") "?",
+      if(package_name == "methods") "@")
 }
 
 ### * .functions_with_no_useful_S3_method_markup
@@ -2576,9 +2581,9 @@ function(packageName)
       "[", "[[", "$", "[<-", "[[<-", "$<-")
 
 
-### * .isCallFromReplacementFunctionUsage
+### * .is_call_from_replacement_function_usage
 
-.isCallFromReplacementFunctionUsage <-
+.is_call_from_replacement_function_usage <-
 function(x)
 {
     ((length(x) == 3)
@@ -2587,11 +2592,13 @@ function(x)
      && is.symbol(x[[3]]))
 }
 
-### * .packageEnv
+### * .package_env
 
-.packageEnv <-
-function(packageName)
-    as.environment(paste("package", packageName, sep = ":"))
+.package_env <-
+function(package_name)
+{
+    as.environment(paste("package", package_name, sep = ":"))
+}
 
 ### * .parse_text_as_much_as_possible
 
@@ -2635,9 +2642,9 @@ function(txt)
     .parse_text_as_much_as_possible(txt)
 }
 
-### * .prettyPrint
+### * .pretty_print
 
-.prettyPrint <-
+.pretty_print <-
 function(x)
 {
     writeLines(strwrap(paste(x, collapse = " "),
