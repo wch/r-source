@@ -30,10 +30,12 @@ setGeneric <-
         body(fdef) <- body(def)
         environment(fdef) <- ev
     }
+    ## makeGeneric puts the default method into the functions environment
+    ## This will probably change, but for now, just copy it into the metadata
+    assignMethodsMetaData(name, get(".Methods", envir = ev), where = where)
     assign(name, fdef, where)
     ## The S-Plus definition claims to return an object of class "Generic", which we don't
-    ## have, but in fact just returns name.  The R  function returns the
-    ## definition of the generic.
+    ## have, but in fact just returns name.  
     name
 }
 
