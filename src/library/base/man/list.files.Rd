@@ -34,8 +34,8 @@ list.files(path = ".", pattern=NULL, all.files=FALSE, full.names=FALSE)
 \note{
   File naming conventions are very platform dependent.
 }
-\seealso{\code{\link{file.info}} and \code{\link{file}} for many more file
-  handling functions.}
+\seealso{\code{\link{file.info}} and \code{\link{files}} for many more
+  file handling functions.}
 \examples{
 list.files(R.home())
 ## Only files starting with a-l or r (*including* uppercase):
