@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-37 2004-08-02
+Version 1.9-38 2004-08-03
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1392,6 +1392,11 @@ distributions of R.)
 
 *Oarray*
      Arrays with arbitrary offsets.
+
+*PBSmapping*
+     Software evolved from fisheries research conducted at the Pacific
+     Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
+     maps and implements other GIS procedures.
 
 *PHYLOGR*
      Manipulation and analysis of phylogenetically simulated data sets (as

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-37 @value{FAQ-YEAR}-08-02
+@set FAQ-VERSION 1.9-38 @value{FAQ-YEAR}-08-03
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1724,6 +1724,10 @@ A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
 @item Oarray
 Arrays with arbitrary offsets.
+@item PBSmapping
+Software evolved from fisheries research conducted at the Pacific
+Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
+maps and implements other GIS procedures.
 @item PHYLOGR
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
