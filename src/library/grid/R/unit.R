@@ -206,12 +206,14 @@ Ops.unit <- function(e1, e2) {
         stop("Only one operand may be a unit")
       else if (is.numeric(e2))
         # NOTE that we always put the scalar first
-        unit.arithmetic(.Generic, e2, e1)
+        # Use as.numeric to force e2 to be REAL
+        unit.arithmetic(.Generic, as.numeric(e2), e1)
       else
         stop("Non-unit operand must be numeric")
     } else {
       if (is.numeric(e1))
-        unit.arithmetic(.Generic, e1, e2)
+        # Use as.numeric to force e1 to be REAL
+        unit.arithmetic(.Generic, as.numeric(e1), e2)
       else
         stop("Non-unit operand must be numeric")
     }

@@ -632,6 +632,11 @@ Date: Fri, 28 May 2004 00:55:54 -0400
 Subject: Crash in OSX
 From: murray.pung@studentmail.newcastle.edu.au
 Date: Sat,  5 Jun 2004 04:36:52 +0200 (CEST)
+* PR# 6964 *
+Subject: Re: [Rd] =?iso-8859-1?q?Can=B4t_start_help_and_update_on_Mac_=28PR?=
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 10 Jun 2004 12:37:06 +0100 (BST)
+..Grabbled header: part of PR#6920
 
 Directory:  Misc
 
@@ -881,7 +886,22 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 6931 *
-Subject: a fault in the "hist" - function
-From: stephanschlueter@gmx.de
-Date: Wed,  2 Jun 2004 11:34:00 +0200 (CEST)
+* PR# 6961 *
+Subject: bug in  bandwidths.R (function bw.nrd0)
+From: "Zhang, Yunyu" <Yunyu_Zhang@dfci.harvard.edu>
+Date: Wed, 9 Jun 2004 10:14:03 -0400 
+* PR# 6966 *
+Subject: Undelivered Mail Returned to Sender
+Subject: Die Deform der sozialen Ordnung
+From: MAILER-DAEMON@stat.umn.edu (Mail Delivery System)
+From: r-bugs@biostat.ku.dk
+Date: Thu, 10 Jun 2004 10:01:11 -0500 (CDT)
+Date: Thu, 10 Jun 2004 13:39:46 GMT
+* PR# 6967 *
+Subject: na.omit and class conversion
+From: mark0060@tc.umn.edu
+Date: Thu, 10 Jun 2004 19:00:25 +0200 (CEST)
+* PR# 6968 *
+Subject: GET BACK TO ME
+From: c787puicheung <c787puicheung@telstra.com>
+Date: Thu, 10 Jun 2004 19:26:19 +0100

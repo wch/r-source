@@ -150,6 +150,15 @@ pentagamma(x)
 package.description(pkg, lib.loc = NULL, fields = NULL)
 % </Removed 2.0.0>
 }
+\arguments{
+  \item{new}{
+    character string: A suggestion for a replacement function.
+  }
+  \item{package}{
+    character string: The package to be used when suggesting where the
+    deprecated function might be listed.
+  }
+}
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
   

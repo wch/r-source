@@ -124,9 +124,10 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
             if(lhs.has.dot || rhs.has.dot)
                 stop("cannot use dots in formula with given data")
         }
-        m$formula <- formula(paste("~",
+        m$formula <- as.formula(paste("~",
                                    paste(c(rvars, cvars),
-                                         collapse = "+")))
+                                         collapse = "+")),
+                                env = environment(formula))
         m[[1]] <- as.name("model.frame")
         mf <- eval(m, parent.frame())
         ftable(mf, row.vars = rvars, col.vars = cvars, ...)
@@ -216,7 +217,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         file <- tmpf
         on.exit(unlink(file))
     }
-        
+
     z <- count.fields(file, sep, quote, skip)
     n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
 
@@ -224,8 +225,8 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
     if(skip > 0) readLines(file, skip)
     lines <- readLines(file)
     seek(file, where = 0)
-    if(skip > 0) readLines(file, skip)    
-    
+    if(skip > 0) readLines(file, skip)
+
     i <- which(z == n.row.vars)
     ## For an ftable, we have
     ##                     cv.1.nm cv.1.l1 .........
@@ -302,7 +303,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             }
         }
     }
-    
+
     p <- 1
     n <- integer(n.row.vars)
     for(k in seq(from = 1, to = n.row.vars)) {

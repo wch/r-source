@@ -505,6 +505,7 @@ crandir:
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e 's/@DATE@/$(DATE)/g' cran/rpatched.in > cran/rpatched.html	  
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 
 distribution:
 	$(MAKE) Rpwd.exe

@@ -14,7 +14,12 @@ USER-VISIBLE CHANGES
     o	The stub packages from 1.9.x have been removed: the library()
 	function selects the new home for their code.
 
-    o	The str() method for class "dendrogram" now has default 'max.level=2'
+    o	The str() method for class "dendrogram" now has default
+	'max.level=2'.
+
+    o	The default barplot method now by default uses a gamma-corrected
+	grey palette (rather than the heat color palette) for coloring
+	its output when given a matrix.
 
 
 NEW FEATURES
@@ -101,6 +106,13 @@ NEW FEATURES
     o	system.time() has a new argument 'gcFirst' which, when TRUE,
 	forces a garbage collection before timing begins.
 
+    o	There is now a coef() method for summaries of "nls" objects.
+
+    o	ftable.formula() now looks for variables in the environment of
+	the formula before the usual search path.
+
+    o	.Defunct() now has 'new' and 'package' arguments like those of
+	.Deprecated(). 
 
 
 UTILITIES
@@ -203,13 +215,22 @@ NEW FEATURES
 
     o	as.Date() now has a method for "POSIXlt" objects.
 
-    o	mean() has a method for "difftime" objects and so summary() works.
+    o	mean() has a method for "difftime" objects and so summary()
+	works for such objects.
 
     o	legend() has a new argument 'pt.cex'.
 
     o	plot.ts() has more arguments, particularly 'yax.flip'.
 
     o	heatmap() has a 'keep.dendro' argument.
+
+    o	The default barplot method now handles vectors and 1-d arrays
+	(e.g., obtained by table()) the same, and uses grey instead of
+	heat color palettes in these cases.  (Also fixes PR#6776.)
+
+    o	nls() now looks for variables and functions in its formula in
+	the environment of the formula before the search path, in the
+	same way lm() etc look for variables in their formulae.
 
 
 INSTALLATION ISSUES
@@ -243,7 +264,7 @@ DEPRECATED & DEFUNCT
     o	Direct use of R INSTALL|REMOVE|BATCH|COMPILE|SHLIB is
 	deprecated: use R CMD instead.
 
-    o   The gnome/GNOME graphics device is deprecated and will be 
+    o	The gnome/GNOME graphics device is deprecated and will be
 	removed in the next full release.
 
 
@@ -347,17 +368,19 @@ BUG FIXES
 	message; and installed.packages("mgcv") properly returns <empty>.
 
     o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
-	the two children at each node.  This fixes as.dendrogram(hh) for
+	the two children at each node.	This fixes as.dendrogram(hh) for
 	the case where hh is a "reordered" hclust object.
 
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
     o   Copying lattice (grid) output to another device now works again
-        (PR#6915, #6947/8).  
+        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)  
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
+
+    o	jitter(x) now returns x when length(x) == 0.
 
 
 
