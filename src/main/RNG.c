@@ -217,8 +217,8 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 		warning("seed length must be in 0...625; ignored");
 		break;
 	    }
-	    RNG_Table[RNG_kind].n_seed = ns;
-	    RNG_Table[RNG_kind].i_seed = (Int32 *) User_unif_seedloc();
+	    RNG_Table[kind].n_seed = ns;
+	    RNG_Table[kind].i_seed = (Int32 *) User_unif_seedloc();
 	}
 	break;
     }
@@ -294,7 +294,7 @@ void PutRNGstate()
     int len_seed, j;
     SEXP seeds;
     len_seed = RNG_Table[RNG_kind].n_seed;
-
+    
     PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
 
     INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind;
