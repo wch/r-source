@@ -497,9 +497,10 @@ bitmapdll:
 
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
 
+## Use -c her eto avoid re-downloading the same versions of files
 rsync-recommended:
 	@(cd ../library; \
-	rsync -rvC --delete --exclude=Makefile.in --exclude=.cvsignore \
+	rsync -rcvC --delete --exclude=Makefile.in --exclude=.cvsignore \
 	  --include=*.tar.gz --exclude=*.tgz --exclude=".svn" $(CRANREC) . ); \
 	$(RM) ../library/Recommended/*.tgz; \
 	(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
