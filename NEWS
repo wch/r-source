@@ -124,6 +124,8 @@ NEW FEATURES
     o	The "?" operator has new forms for querying documentation on
 	S4 methods.  See the online documentation.
 
+    o	New argument frame.plot = axes (== TRUE)  for filled.contour().
+
     o	New argument fixed = TRUE for grep() and regexpr() to avoid the
 	need to escape strings to match.
 

@@ -12,18 +12,18 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
                color.palette = cm.colors,
                col = color.palette(length(levels) - 1),
                plot.title, plot.axes, key.title, key.axes,
-               asp = NA, xaxs = "i", yaxs = "i", las = 1, axes = TRUE,
-               \dots)
+               asp = NA, xaxs = "i", yaxs = "i", las = 1,
+               axes = TRUE, frame.plot = axes, \dots)
 }
 \arguments{
  \item{x,y}{locations of grid lines at which the values in \code{z} are
-    measured.  These must be in ascending order.  By default, equally 
+    measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}
     and \code{y}, respectively. If the list has component \code{z} this
-    is used for \code{z}.} 
+    is used for \code{z}.}
  \item{z}{a matrix containing the values to be plotted (\code{NA}s are
-    allowed).  Note that \code{x} can be used instead of \code{z} for  
+    allowed).  Note that \code{x} can be used instead of \code{z} for
     convenience.}
  \item{xlim}{x limits for the plot.}
  \item{ylim}{y limits for the plot.}
@@ -39,8 +39,8 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
  \item{col}{an explicit set of colors to be used in the plot.
     This argument overrides any palette function specification.}
  \item{plot.title}{statements which add titles the main plot.}
- \item{plot.axes}{statements which draw axes on the main plot.
-    This overrides the default axes.}
+ \item{plot.axes}{statements which draw axes (and a \code{\link{box}})
+   on the main plot.  This overrides the default axes.}
  \item{key.title}{statements which add titles for the plot key.}
  \item{key.axes}{statements which draw axes on the plot key.
     This overrides the default axis.}
@@ -51,13 +51,16 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     labeling.}
  \item{las}{the style of labeling to be used.  The default is to
     use horizontal labeling. }
- \item{axes, \dots}{additional graphical parameters.}
+ \item{axes, frame.plot}{logicals indicating if axes and a box should be
+   drawn, as in \code{\link{plot.default}}.}
+ \item{\dots}{additional graphical parameters, currently only passed to
+   \code{\link{title}()}.}
 }
 \description{
-    This function produces a contour plot with the areas between
-    the contours filled in solid color (Cleveland calls this a
-    level plot).  A key showing how the colors map to z values
-    is shown to the right of the plot.
+  This function produces a contour plot with the areas between the
+  contours filled in solid color (Cleveland calls this a level plot).  A
+  key showing how the colors map to z values is shown to the right of
+  the plot.
 }
 \references{
   Cleveland, W. S. (1993)
@@ -66,22 +69,22 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
 }
 \author{Ross Ihaka.}
 \note{
-    This function currently uses the \code{layout} function and so
-    is restricted to a full page display.  In future it is likely to
-    be replaced by a genuine \code{levelplot} function which will
-    work in multipanel displays.
+  This function currently uses the \code{layout} function and so is
+  restricted to a full page display.  As an alternative consider the
+  \code{\link[lattice]{levelplot}} function from the \pkg{lattice}
+  package which works in multipanel displays.
 
-    The ouput produced by \code{filled.contour} is actually a combination
-     of two plots; one is the filled contour and one is the legend.
-     Two separate coordinate systems are set up for these
-     two plots, but they are only used internally - once the function has
-     returned these coordinate systems are lost.  If you
-     want to annotate the main contour plot, for example to add points,
-     you can specify
-     graphics commands in the plot.axes argument.  An example is given
-     below.
+  The ouput produced by \code{filled.contour} is actually a combination
+  of two plots; one is the filled contour and one is the legend.  Two
+  separate coordinate systems are set up for these two plots, but they
+  are only used internally - once the function has returned these
+  coordinate systems are lost.  If you want to annotate the main contour
+  plot, for example to add points, you can specify graphics commands in
+  the \code{plot.axes} argument.  An example is given below.
 }
-\seealso{\code{\link{contour}}, \code{\link{image}}, \code{\link{palette}}.}
+\seealso{\code{\link{contour}}, \code{\link{image}},
+  \code{\link{palette}}; \code{\link[lattice]{levelplot}} from package
+  \pkg{lattice}.}
 \examples{
 data(volcano)
 filled.contour(volcano, color = terrain.colors, asp = 1)# simple
@@ -103,6 +106,13 @@ a <- expand.grid(1:20, 1:20)
 b <- matrix(a[,1] + a[,2], 20)
 filled.contour(x = 1:20, y = 1:20, z = b,
                plot.axes={ axis(1); axis(2); points(10,10) })
+
+## Persian Rug Art:
+x <- y <- seq(-4*pi, 4*pi, len = 27)
+r <- sqrt(outer(x^2, y^2, "+"))
+filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
+## rather, the key *should* be labeled:
+filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE, plot.axes = {})
 }
 \keyword{hplot}
 \keyword{aplot}
