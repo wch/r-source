@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.37 $'
+revision='$Revision: 1.38 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -234,6 +234,13 @@ do_install () {
     mkdir -p ${lib}/${pkg}/data
     cp data/* ${lib}/${pkg}/data
     chmod 644 ${lib}/${pkg}/data/*
+    if test -n "${use_zip}" \
+        -a -n "${R_UNZIPCMD}" \
+        -a -n "${R_ZIPCMD}"; then
+      (cd ${lib}/${pkg}/data;
+        find . -type f -print > filelist
+        ${R_ZIPCMD} -m Rdata * -x filelist 00Index)
+    fi
   fi
 
   if test -d exec; then
@@ -276,10 +283,12 @@ do_install () {
 	    > ${R_HOME}/doc/html/search/index.txt
 	fi	
       fi
-      if test -n "${use_zip}" -a -n "${R_UNZIPCMD}" -a -n "${R_ZIPCMD}"; then
+      if test -n "${use_zip}" \
+	  -a -n "${R_UNZIPCMD}" \
+	  -a -n "${R_ZIPCMD}"; then
 	cd ${lib}/${pkg}
 	if test -d R-ex; then
-	  (cd R-ex; ${R_ZIPCMD} -m Rhelp *.R)
+	  (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
 	fi
 	## NOT YET:
 	## if test -d latex; then
