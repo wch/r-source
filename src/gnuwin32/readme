@@ -77,13 +77,9 @@ although users will probably want to set up simple .bat or .cmd files
 to run batch jobs.
 
 
-Use with ESS-5.0: You can use Rterm.exe to provide inferior R-mode in
-ESS-5.0 mode under NTEmacs. The only change needed is to add the
-starting argument --ess to essd-r.el at the line
-
-    (inferior-ess-start-args       . "--ess"))
-
-You can also try the ESS-5.1.x betas, which have in-built support.
+Use with ESS: You can use Rterm.exe to provide inferior R-mode in
+ESS under NTEmacs, for example ess-5.1.9.  The pager is automatically
+set to "console" so help will be displayed in emacs buffers.
 
 
 GRAPHICS:
@@ -105,6 +101,37 @@ The whole plot history can be saved to or retrieved from an R variable
 in the global environment.
 
 There is only one graphics history shared by all the windows devices.
+
+HELP:
+
+There are several options for help, depending on which help files you
+installed.
+
+(i) Text help. This is the default, and the fallback option.
+It will display in the currently set pager (use options(pager=) to change).
+
+(ii) Compiled HTML files. Set this as the default by
+options(chmhelp=T) or for individual help items by help(topic,
+chmhelp=T).  Full text search is available from the Search tab.  To
+make use of this you will need a recent version of Windows or IE4 or
+later installed, or use the updater hhupd.exe on CRAN at 
+bin/windows/windows-NT/etc.
+
+(iii) Windows .hlp files. Set this as the default by
+options(winhelp=T) or for individual help items by help(topic,
+winhelp=T).  Full text search is available from the Search tab. The
+conversion to this format is a little rough, and tables may be
+incomplete.
+
+(iv) HTML help to be displayed in your normal browser.  Set this as
+the default by options(htmlhelp=T) or for individual help items by
+help(topic, htmlhelp=T).  Using help.start() sets the browser to the 
+top-level page, from which you can access a search engine.
+
+(v) Latex help files are available for use with help(topic, offline=T).
+You will need to customize the file rw0651\bin\helpPRINT.bat: it
+contains instructions.
+
 
 
 Customization
@@ -139,13 +166,6 @@ file .Rprofile. In particular:
   (configurable in etc\Rconsole). Other possibilities we have
   used are "notepad" and "pfe32 /v", and "console" to list the files in
   the console (rgui.exe) or terminal window (rterm.exe).
-
-- If you wish to use HTML help where this is available, set
-  options(htmlhelp=T). To use Windows 2000 style help files where
-  available set options(chmhelp=T).  If you prefer to use Windows 95
-  style help files where these available, set options(winhelp=T).
-  The priority order is chmhelp, htmlhelp, winhelp. The first of these
-  that is true is tried, then text help.
 
 
 Adding packages
@@ -191,7 +211,8 @@ Differences from Unix
 =====================
 
 - R can be interrupted by Esc in Rgui and by Ctrl-Break in Rterm:
-  Ctrl-C is used for copying in the GUI version.
+  Ctrl-C is used for copying in the GUI version. C-c C-c works
+  under emacs (only).
 
 - Command-line editing is always available, but is much simpler than
   under readline-based input on Unix.
@@ -277,10 +298,11 @@ distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw0651\bin\Rchtml.dll is not built automatically. Its source
-is the help directory, and you need the HTML Help Workshop files and
-Visual C++ to build it. We suggest you copy it from the binary
-distribution.
+The file rw0651\bin\Rchtml.dll is only built if chm help is specifed
+in the main Makefile. Its source is the help directory, and you need
+the HTML Help Workshop files to build it. It contains instructions
+to build it under VC++6, and it is preferable to use that as the 
+VC++ library will check versions of the components needed.
 
 Note 2: we are aware that because of limitations in line length or in
 the shell used that the Makefiles do not work unchanged on all the
@@ -315,7 +337,7 @@ Then: untar R-0.65.1.tgz somewhere
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You
-will not be able to cross-build .chm or .hlp files.)
+will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll.)
 
 Set the environment variable TEMP to, say, /tmp, and make.
 

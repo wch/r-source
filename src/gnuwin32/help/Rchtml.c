@@ -1,4 +1,5 @@
 /*
+Can be built with VC++6 by
 cl /MT /Ox /c Rchtml.c
 link /dll /out:Rchtml.dll Rchtml.obj user32.lib htmlhelp.lib advapi32.lib
 */
@@ -19,7 +20,6 @@ __declspec(dllexport) void Rchtml(char **file, char **ptopic, int *error)
 	strcat(htmlref, topic);
 	strcat(htmlref, ".html");
     }
-//	MessageBox (GetDesktopWindow(), *file, "Info", MB_OK);
     rc = HtmlHelp(GetDesktopWindow(), htmlref, HH_DISPLAY_TOPIC, 0);
     *error = (rc == (HWND)NULL);
 }

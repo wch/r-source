@@ -1,7 +1,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=CHM # NO, CHM, BOTH
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva stepfun ts
 RPREFIX=rw0651
@@ -32,7 +32,7 @@ all: rbuild rdemo rpackage
 CFLAGS=$(OPTFLAGS) -I../include -I.
 FFLAGS=$(OPTFLAGS)
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a \
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: $(PKGS)
@@ -98,6 +98,17 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 ../include/globalvar.h: exported-vars
 	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*__imp_" $$1 ")"}' \
 	           exported-vars > ../include/globalvar.h
+
+CHTML:
+ifeq ($(strip $(HELP)),YES)
+ifeq ($(strip $(WINHELP)),CHM)
+	$(MAKE) -C ./help -f MkChmDLL
+endif
+ifeq ($(strip $(WINHELP)),BOTH)
+	$(MAKE) -C ./help -f MkChmDLL
+endif
+endif
+
 
 base-HELP=ziponly
 

@@ -41,7 +41,7 @@ winhelp-%:
 	$(MAKE) -C ../../library/$* -f ../../gnuwin32/help/Makefile PKG=$* win
 
 clean:
-	$(RM) -fr *~
+	$(RM) -fr *~ *.o *.obj *.dll *.def *.a
 
 # to be run from src/library/pkg/chm
 
