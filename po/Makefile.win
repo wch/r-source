@@ -3,8 +3,8 @@
 Rsharedir = ../share
 Rlocaledir = $(Rsharedir)/locale
 
-CATALOGS = en.gmo # no use on Windows en@quot.gmo en@boldquot.gmo
-RGUI-CATALOGS =
+CATALOGS = en.gmo it.gmo # no use on Windows en@quot.gmo en@boldquot.gmo
+RGUI-CATALOGS = RGui-it.gmo
 
 all:
 	@mkdir -p $(Rsharedir)
@@ -18,7 +18,7 @@ all:
 	done
 	@catalogs='$(RGUI-CATALOGS)'; \
 	for cat in $$catalogs; do \
-	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
+	  lang=`echo $$cat | sed -e 's/\.gmo$$//' -e 's/^RGui-//'`; \
 	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
 	  mkdir -p $$dir; \
 	  cp -p $$cat $$dir/RGui.mo; \
