@@ -35,7 +35,7 @@ DISTFILES = Makefile.in index.html \
 ## </FIXME>
 
 R_CMD_LINK = $(top_builddir)/bin/R CMD LINK $(CC)
-LIBR = -L`cd $(top_builddir) && $(GETWD)`/bin -lR
+LIBR = -L`cd $(top_builddir) && $(GETWD)`/lib -lR
 
 all: Makefile R-sources tests
 
