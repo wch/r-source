@@ -302,8 +302,8 @@ sub build_index { # lib, dest
 		$main::title2file{$rdtitle} = $manfilebase;
 	    }
 
-	    while($text =~ s/\\(alias|name)\{\s*(.*)\s*\}//){
-		$alias = $2;
+	    while($text =~ s/\\alias\{\s*(.*)\s*\}//){
+		$alias = $1;
 		$alias =~ s/\\%/%/g;
 		if ($internal){
 		    $internal{$alias} = 1;
