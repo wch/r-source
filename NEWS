@@ -224,6 +224,9 @@ INSTALLATION CHANGES
 	  See the variable output section of 'configure --help' for a
 	  list of all these variables.
 
+    o	Configure option '--with-g77' is deprecated.  Use configure
+	variable 'F77' to specify the FORTRAN 77 compiler.
+
 
 UTILITIES
 

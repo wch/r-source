@@ -65,8 +65,8 @@
 # lf95, g95, and fc (in that order; on HPUX fort77 is the POSIX
 # compliant FORTRAN compiler, and comes second in the search list.  If
 # none of these is found, f2c is used if found; otherwise, R cannot be
-# compiled.  The search mechanism can be changed using the `--with-g77',
-# `--with-f77', and `--with-f2c' command line options to configure.
+# compiled.  The search mechanism can be changed using the '--with-f77'
+# and '--with-f2c' command line options to configure.
 # FC=
 
 # Options for the FORTRAN compiler.

@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001      by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.37 2002/01/31 15:13:13 pd Exp $
+# $Id: rules,v 1.38 2002/03/22 12:07:52 hornik Exp $
 
 package		= r-base
 pdfpackage	= r-doc-pdf
@@ -39,7 +39,7 @@ export DH_COMPAT=3
 atlas = --with-blas=blas
 
 # edd 02 Sep 2001: default to g77 but let m68k use f2c
-fortran 	= --with-g77=/usr/bin/g77
+fortran 	= --with-f77=/usr/bin/g77
 compiler	= gcc
 cxxcompiler	= g++
 
@@ -53,7 +53,7 @@ endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
 ifeq ($(arch),ia64-linux)
-fortran 	= --with-g77=/usr/bin/g77-3.0
+fortran 	= --with-f77=/usr/bin/g77-3.0
 compiler	= gcc-3.0
 cxxcompiler	= g++-3.0
 compilerflags	= -O2
@@ -67,7 +67,7 @@ endif
 
 ## try gcc-3.0 on i386 -- appears to work
 #ifeq ($(arch),i386-linux)
-#fortran 	= --with-g77=/usr/bin/g77-3.0
+#fortran 	= --with-f77=/usr/bin/g77-3.0
 #compiler	= gcc-3.0
 #cxxcompiler	= g++-3.0
 #compilerflags	= -O2

@@ -177,40 +177,32 @@ fi],
 
 ### ** Optional packages.
 
-## Allow the user to force us to use f2c.
+## Allow the user to force/specify f2c.
 AC_ARG_WITH([f2c],
 [AC_HELP_STRING([--with-f2c],
                 [use f2c even if FORTRAN compiler is available])],
 [R_ARG_USE(f2c)],
 [use_f2c=no])
-## Allow the user to force us to use g77.
-AC_ARG_WITH([g77],
-[AC_HELP_STRING([--with-g77],
-                [use g77 to compile FORTRAN subroutines])],
-[R_ARG_USE(g77)],
-[use_g77=no])
-## Allow the user to force us to use f77.
+## <FIXME>
+## Remove '--with-g77' for 1.6.
+AC_ARG_WITH([g77], [],
+[warn_with_g77="option '--with-g77' is deprecated.
+Use variable F77 to specify a FORTRAN 77 compiler if necessary."
+AC_MSG_WARN([${warn_with_g77}])],
+[])
+## </FIXME>
+## Allow the user to force/specify an F77 compiler.
 AC_ARG_WITH([f77],
 [AC_HELP_STRING([--with-f77],
-                [use f77 to compile FORTRAN subroutines])],
+                [use a FORTRAN 77 compiler for FORTRAN subroutines])],
 [R_ARG_USE(f77)],
 [use_f77=no])
 
 ## Make sure only one of the above options for Fortran compilers was
 ## specified.
-R_ARG_WITH_EXCLUSIVE([f77], [g77],
-[warn_f77_and_g77="--with-f77 and --with-g77 both given!  Using f77 ..."
-AC_MSG_WARN([${warn_f77_and_g77}])
-use_g77=no
-])
 R_ARG_WITH_EXCLUSIVE([f77], [f2c],
 [warn_f77_and_f2c="--with-f77 and --with-f2c both given!  Using f77 ..."
 AC_MSG_WARN([${warn_f77_and_f2c}])
-use_f2c=no
-])
-R_ARG_WITH_EXCLUSIVE([g77], [f2c],
-[warn_g77_and_f2c="--with-g77 and --with-f2c both given!  Using g77 ..."
-AC_MSG_WARN([${warn_g77_and_f2c}])
 use_f2c=no
 ])
 
@@ -547,25 +539,38 @@ case "${host_cpu}" in
                     [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp"])
     ;;
   alpha*)
-    ## <FIXME>
-    ## This was obtained by merging entries for host types alpha*osf*
-    ## and alpha*linux*.  Not clear whether the non-GNU settings are
-    ## specific to OSF only.
-    ## <Albrecht.Gebhardt@uni-klu.ac.at>
+    ## <NOTE>
+    ## Not clear whether we should use '-ieee' or '-ieee_with_inexact'
+    ## (or there GCC variants).  The GCC docs say for '-mieee' that
+    ##   <QUOTE>
+    ##   The resulting code is less efficient but is able to correctly
+    ##   support denormalized numbers and exceptional IEEE values such
+    ##   as not-a-number and plus/minus infinity.  Other Alpha compilers
+    ##   call this option `-ieee_with_no_inexact'.
+    ##   </QUOTE>
+    ## which should be good enough?
+    ## According to <Albrecht.Gebhardt@uni-klu.ac.at>, native FORTRAN
+    ## on Alpha/OSF maps '-ieee' to '-fpe3' which was used previously.
     if test "${GCC}" = yes; then
       R_PROG_CC_FLAG([-mieee],
                      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"])
     else
-      R_PROG_CC_FLAG([-ieee_with_inexact],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"])
+      R_PROG_CC_FLAG([-ieee],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee"])
     fi
     if test "${G77}" = yes; then
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
     else
-      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -ieee"
     fi
-    ## </Albrecht.Gebhardt@uni-klu.ac.at>
-    ## </FIXME>
+    if test "${GXX}" = yes; then
+      R_PROG_CXX_FLAG([-mieee],
+                      [R_XTRA_CXXFLAGS="${R_XTRA_CFLAGS} -mieee"])
+    else
+      R_PROG_CXX_FLAG([-ieee],
+                      [R_XTRA_CXXFLAGS="${R_XTRA_CFLAGS} -ieee"])
+    fi
+    ## </NOTE>
     ;;
 esac
 
@@ -1291,14 +1296,11 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 ])
-if test -n "${warn_f77_and_g77}"; then
-  AC_MSG_WARN([${warn_f77_and_g77}])
+if test -n "${warn_with_g77}"; then
+  AC_MSG_WARN([${warn_with_g77}])
 fi
 if test -n "${warn_f77_and_f2c}"; then
   AC_MSG_WARN([${warn_f77_and_f2c}])
-fi
-if test -n "${warn_g77_and_f2c}"; then
-  AC_MSG_WARN([${warn_g77_and_f2c}])
 fi
 if test -n "${warn_f2c_flibs}"; then
   AC_MSG_WARN([${warn_f2c_flibs}])
