@@ -390,7 +390,11 @@ int main(int ac, char **av)
       }
       else if(!strcmp(*av, "--quiet") || !strcmp(*av, "-q")) {
 	R_Quiet = 1;
-	break;
+      }
+      else if (!strcmp(*av, "--slave") || !strcmp(*av, "-s")) {
+	R_Quiet = 1;
+        R_Slave = 1;
+	DefaultSaveAction = 2;
       }
       else if (!strcmp(*av, "--no-site-file")) {
 	LoadSiteFile = 0;

@@ -73,6 +73,7 @@ int	R_EvalCount = 0;		/* Evaluation count */
 
 int	R_Interactive = 1;		/* Interactive? */
 int	R_Quiet = 0;			/* Be Quiet */
+int	R_Slave = 0;			/* Run as a slave process */
 int	R_Console;			/* Console active flag */
 IoBuffer R_ConsoleIob;			/* Console IO Buffer */
 FILE*	R_Inputfile = NULL;		/* Current input flag */
@@ -187,7 +188,7 @@ static char BrowsePrompt[20];
 
 char *R_PromptString(int browselevel, int type)
 {
-	if (R_Quiet) {
+	if (R_Slave) {
 		BrowsePrompt[0] = '\0';
 		return BrowsePrompt;
 	}
