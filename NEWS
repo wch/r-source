@@ -256,6 +256,8 @@ DEPRECATED & DEFUNCT
 	have been removed: they were each identical to the default
 	method.
 
+    o   La.eigen() is deprecated now eigen() uses LAPACK by default.
+
 
 INSTALLATION CHANGES
 

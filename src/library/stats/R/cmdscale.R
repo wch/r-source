@@ -1,4 +1,5 @@
-cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE) {
+cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
+{
     if (any(is.na(d)))
 	stop("NA values not allowed in d")
     if (is.null(n <- attr(d, "Size"))) {
@@ -30,13 +31,13 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE) {
         Z[cbind(i2,i)] <- -1
         Z[ i, i2] <- -x
         Z[i2, i2] <- .C("dblcen", x = 2*d, as.integer(n), PACKAGE="stats")$x
-        e <- eigen(Z,symmetric = FALSE, only.val = TRUE)$values
+        e <- eigen(Z, symmetric = FALSE, only.values = TRUE)$values
         add.c <- max(Re(e))
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)
         x[non.diag] <- (d[non.diag] + add.c)^2
     }
-    e <- La.eigen(-x/2, symmetric = TRUE)
+    e <- eigen(-x/2, symmetric = TRUE)
     ev <- e$values[1:k]
     if(any(ev < 0))
         warning("some of the first ", k, " eigenvalues are < 0")
@@ -47,7 +48,6 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE) {
         evalus <- e$values[-n]
         list(points = points, eig = if(eig) ev, x = if(x.ret) x,
              ac = if(add) add.c else 0,
-             GOF = sum(ev)/c(sum(abs(evalus)),
-                             sum(evalus[evalus > 0])))
+             GOF = sum(ev)/c(sum(abs(evalus)), sum(evalus[evalus > 0])))
     } else points
 }

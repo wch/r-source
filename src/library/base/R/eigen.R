@@ -3,23 +3,12 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     x <- as.matrix(x)
     dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     n <- nrow(x)
-    if (!n)
-        stop("0 x 0 matrix")
-    if (n != ncol(x))
-	stop("non-square matrix in eigen")
+    if (!n) stop("0 x 0 matrix")
+    if (n != ncol(x)) stop("non-square matrix in eigen")
 
     complex.x <- is.complex(x)
 
     if (any(!is.finite(x))) stop("infinite or missing values in x")
-#   this code was not even correct, and it was inconsistent with past usage
-#     if (any(is.na(x))){
-#         if (complex.x)
-#             return(list(values = as.complex(rep(NA, n)),
-#                     vectors = if (!only.values) matrix(as.complex(NA), n,n)))
-#         else
-#             return(list(values = as.numeric(rep(NA, n)),
-#                     vectors = if (!only.values) matrix(as.numeric(NA), n,n)))
-#     }
 
     if(complex.x) {
 	if(missing(symmetric)) {

@@ -1,11 +1,8 @@
 \name{eigen}
 \alias{eigen}
-\alias{La.eigen}
 \title{Spectral Decomposition of a Matrix}
 \usage{
 eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
-La.eigen(x, symmetric, only.values = FALSE,
-         method = c("dsyevr", "dsyev"))
 }
 \arguments{
   \item{x}{a matrix whose spectral decomposition is to be computed.}
@@ -18,14 +15,13 @@ La.eigen(x, symmetric, only.values = FALSE,
     returned.}
   \item{EISPACK}{logical. Should EISPACK be used (for compatibility with
     \R < 1.7.0)?}
-  \item{method}{The LAPACK routine to use in the real symmetric case.}
 }
 \description{
   Computes eigenvalues and eigenvectors.
 }
 \details{
-  These functions use the LAPACK routines DSYEV/DSYEVR,
-  DGEEV, ZHEEV and ZGEEV, and \code{eigen(EISPACK=TRUE)} provides an
+  By default \code{eigen} uses the LAPACK routines DSYEVR/DSYEV,
+  DGEEV, ZHEEV and ZGEEV whereas \code{eigen(EISPACK=TRUE)} provides an
   interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
   and \code{CG}.
    
@@ -33,19 +29,14 @@ La.eigen(x, symmetric, only.values = FALSE,
   determine if the matrix is symmetric up to plausible numerical
   inaccuracies.  It is faster and surer to set the value yourself.
 
-  \code{eigen} is preferred to \code{eigen(EISPACK=TRUE)}
+  \code{eigen} is preferred to \code{eigen(EISPACK = TRUE)}
   for new projects, but its eigenvectors may differ in sign and
   (in the asymmetric case) in normalization. (They may also differ
   between methods and between platforms.)
 
-  The LAPACK routine DSYEVR is usually substantially
-  faster than DSYEV: see
-  \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
-  Most benefits are seen with an optimized BLAS system.
-
-  Using \code{method="dsyevr"} requires IEEE 754 arithmetic.  Should
-  this not be supported on your platform, \code{method="dsyev"} is
-  used, with a warning.
+  In the real symmetric case, LAPACK routine DSYEVR is used which
+  requires IEEE 754 arithmetic.  Should this not be supported on
+  your platform, DSYEV is used, with a warning.
 
   Computing the eigenvectors is the slow part for large matrices.
 }

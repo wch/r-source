@@ -3,6 +3,7 @@
 \title{Deprecated Functions}
 \alias{Deprecated}
 \alias{.Deprecated}
+\alias{La.eigen}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -12,6 +13,7 @@
 .Deprecated(new)
 
 % Deprecated in 1.9.0
+La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
 % </Deprecated 1.9.0>
 }
 \details{
