@@ -366,19 +366,21 @@ RweaveLatexRuncode <- function(object, chunk, options)
         if(object$debug)
             cat(paste(output, collapse="\n"))
 
-        if(length(output)>0 & (options$results!="hide")){
-            if(!openSchunk){
-                cat("\\begin{Schunk}\n",
-                    file=chunkout, append=TRUE)
-                openSchunk <- TRUE
-            }
+        if(length(output)>0 & (options$results != "hide")){
+                                                        
             if(openSinput){
                 cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
                 openSinput <- FALSE
             }
-            if(options$results=="verbatim")
+            if(options$results=="verbatim"){
+                if(!openSchunk){
+                    cat("\\begin{Schunk}\n",
+                        file=chunkout, append=TRUE)
+                    openSchunk <- TRUE
+                }
                 cat("\\begin{Soutput}\n",
                     file=chunkout, append=TRUE)
+            }
 
             output <- paste(output,collapse="\n")
             if(options$strip.white){

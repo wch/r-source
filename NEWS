@@ -740,6 +740,9 @@ BUG FIXES
         methods for classes that extend sealed classes (class unions
         that contain basic classes, e.g.).
 
+    o   Sweave no longer wraps the output of code chunks with
+        echo=false and results=tex in Schunk environments.
+
 
 
 
