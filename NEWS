@@ -339,11 +339,12 @@ NEW FEATURES
 
     	- save.image() now takes an argument `ascii'.
 
-    	- save.image() now takes an argument `safe'.  If TRUE, a
-	  temporary file is used for creating the saved workspace.  The
-	  temporary file is renamed if the save succeeds.  This
-	  preserves an existing workspace if the save fails, but at
-	  the cost of using extra disk space during the save.
+    	- save.image() now takes an argument `safe'.  If TRUE, the
+	  default, a temporary file is used for creating the saved
+	  workspace.  The temporary file is renamed if the save
+	  succeeds.  This preserves an existing workspace if the save
+	  fails, but at the cost of using extra disk space during the
+	  save.
 
     	- save.image() default arguments can be specified in the
 	  save.image.defaults option.  These specifications are used
