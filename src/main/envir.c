@@ -2131,47 +2131,55 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-
 /*----------------------------------------------------------------------
 
   do_libfixup
 
-  This function performs environment reparaenting for libraries to make
-  sure that elements are parented by the global environment.
+  This function copies the bindings in the loading environment to the
+  library environment frame (the one that gets put in the search path)
+  and removes the bindings from the loading environment.  Values that
+  contain promises (created by delay, for example) are not forced.
+  Values that are closures with environments equal to the loading
+  environment are reparented to .GlobalEnv.  Finally, all bindings are
+  removed from the loading environment.
 
-  This routine will hopefull die at some point.
-
+  This routine can die if we automatically create a name space when
+  loading a package.
 */
 
 SEXP do_libfixup(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP lib, env, p;
+    SEXP libenv, loadenv, p;
     checkArity(op, args);
-    lib = CAR(args);
-    env = CADR(args);
-    if (TYPEOF(lib) != ENVSXP || !isEnvironment(env))
+    loadenv = CAR(args);
+    libenv = CADR(args);
+    if (TYPEOF(libenv) != ENVSXP || !isEnvironment(loadenv))
 	errorcall(call, "invalid arguments");
-    if (HASHTAB(lib) != R_NilValue) {
+    if (HASHTAB(loadenv) != R_NilValue) {
 	int i, n;
-	n = length(HASHTAB(lib));
+	n = length(HASHTAB(loadenv));
 	for (i = 0; i < n; i++) {
-	    p = VECTOR_ELT(HASHTAB(lib), i);
+	    p = VECTOR_ELT(HASHTAB(loadenv), i);
 	    while (p != R_NilValue) {
-		if (TYPEOF(CAR(p)) == CLOSXP)
-		    SET_CLOENV(CAR(p), env);
+		if (TYPEOF(CAR(p)) == CLOSXP && CLOENV(CAR(p)) == loadenv)
+		    SET_CLOENV(CAR(p), R_GlobalEnv);
+		defineVar(TAG(p), CAR(p), libenv);
 		p = CDR(p);
 	    }
 	}
     }
     else {
-	p = FRAME(lib);
+	p = FRAME(loadenv);
 	while (p != R_NilValue) {
-	    if (TYPEOF(CAR(p)) == CLOSXP)
-		SET_CLOENV(CAR(p), env);
+	    if (TYPEOF(CAR(p)) == CLOSXP && CLOENV(CAR(p)) == loadenv)
+		SET_CLOENV(CAR(p), R_GlobalEnv);
+	    defineVar(TAG(p), CAR(p), libenv);
 	    p = CDR(p);
 	}
     }
-    return lib;
+    SET_HASHTAB(loadenv, R_NilValue);
+    SET_FRAME(loadenv, R_NilValue);
+    return libenv;
 }
 
 /*----------------------------------------------------------------------

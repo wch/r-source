@@ -91,6 +91,9 @@ BUG FIXES
 
     o	seek() on file connections was ignoring the `origin' argument.
 
+    o	fixed new environment handling in library() to avoid forcing
+	promises created by delay()
+
 
 
 
