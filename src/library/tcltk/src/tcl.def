@@ -25,5 +25,9 @@ EXPORTS
  Tcl_FindExecutable
  Tcl_GetStringResult
  Tcl_SetObjResult
+ Tcl_NewStringObj
+ Tcl_EvalObjv
+ Tcl_UnsetVar2
+
 
 
