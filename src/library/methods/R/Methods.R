@@ -405,6 +405,7 @@ function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
           tmp <- tempfile()
           con <- file(tmp, "w")
       }
+      else con <- printTo
     if(length(f)==0) {
         if(missing(where)) {
             f <- getGenerics()
@@ -426,7 +427,7 @@ function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
         else
             return()
     }
-    cat(file= con, "\nFunction \"", ff, "\":\n", sep="")
+    cat(file= con, "\nFunction \"", f, "\":\n", sep="")
     if(missing(where))
         mlist <- getMethods(f)
     else
