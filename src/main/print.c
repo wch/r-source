@@ -735,17 +735,31 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 }/* printAttributes */
 
 
-/* Print an S-expression using (possibly) local options */
+/* Print an S-expression using (possibly) local options.
+   This is used for auto-printing */
 
 void PrintValueEnv(SEXP s, SEXP env)
 {
     SEXP call;
+    char *autoprint = "print";
 
     PrintDefaults(env);
     tagbuf[0] = '\0';
     PROTECT(s);
     if(isObject(s)) {
-	PROTECT(call = lang2(install("print"), s));
+	/* The intention here is call show() on S4 objects, otherwise
+	   print(), so S4 methods for show have precedence over those for
+	   print.  However, currently (2003-02-13) isClass() thinks
+	   data.frame is an S4 class.
+        if(isMethodsDispatchOn()) {
+	    SEXP class = getAttrib(s, R_ClassSymbol);
+	    if(length(class) == 1) {
+		char str[201];
+		snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
+		if(findVar(install(str), env)) autoprint = "show";
+	    }
+	} */
+	PROTECT(call = lang2(install(autoprint), s));
 	eval(call, env);
 	UNPROTECT(1);
     }
