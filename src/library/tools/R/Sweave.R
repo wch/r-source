@@ -316,7 +316,9 @@ RweaveLatexRuncode <- function(object, chunk, options)
         chunkout <- object$output
 
     SweaveHooks(options, run=TRUE)
-    chunkexps <- parse(text=chunk)
+    
+    chunkexps <- try(parse(text=chunk), silent=TRUE)
+    RweaveTryStop(chunkexps, options)
     openSinput <- FALSE
     openSchunk <- FALSE
     
@@ -358,9 +360,9 @@ RweaveLatexRuncode <- function(object, chunk, options)
         close(tmpcon)
         ## delete empty output
         if(length(output)==1 & output[1]=="") output <- NULL
-        
-        if(inherits(err, "try-error")) stop(err)
 
+        RweaveTryStop(err, options)
+        
         if(object$debug)
             cat(paste(output, collapse="\n"))
 
@@ -537,13 +539,29 @@ RweaveChunkPrefix <- function(options)
 
 RweaveEvalWithOpt <- function (expr, options){
     if(options$eval){
-        res <- try(.Internal(eval.with.vis(expr, .GlobalEnv, NULL)))
+        res <- try(.Internal(eval.with.vis(expr, .GlobalEnv, NULL)),
+                   silent=TRUE)
         if(inherits(res, "try-error")) return(res)
         if(options$print | (options$term & res$visible))
             print(res$value)
     }
     return(res)
 }
+
+
+RweaveTryStop <- function(err, options){
+
+    if(inherits(err, "try-error")){
+        cat("\n")
+        msg <- paste(" chunk", options$chunknr)
+        if(!is.null(options$label))
+            msg <- paste(msg, " (label=", options$label, ")", sep="")
+        msg <- paste(msg, "\n")
+        stop(msg, err, call.=FALSE)
+    }
+}
+           
+        
 
 
 

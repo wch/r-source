@@ -734,6 +734,9 @@ BUG FIXES
 	instead of passing through.  This may catch other potential
 	problems.
 
+    o   Sweave() reports the chunk number rather than the driver call when
+        a try error gets caught.
+
     o	trunc.POSIXt(x) for 0-length x does not return invalid structures
 	anymore.  (PR#3763).
 
