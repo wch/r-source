@@ -487,7 +487,6 @@ static void fifo_open(Rconnection con)
     else flags = O_WRONLY;
     if(!con->blocking) flags |= O_NONBLOCK;
     if(con->mode[0] == 'a') flags |= O_APPEND;
-    if(con->mode[0] == 'w') flags |= O_TRUNC;
     fd = open(name, flags);
     if(fd < 0) {
 	if(errno == ENXIO) error("fifo `%s' is not ready", name);

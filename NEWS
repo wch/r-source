@@ -554,6 +554,9 @@ BUG FIXES
 	numeric, on little-endian chips.  It was failing to hash the
 	imaginary part of complex numbers.
 
+    o	fifo() no longer tries to truncate on opening in modes 
+	including "w". (Caused fifo example to fail on HP-UX.)
+
 
 
 	**************************************************
