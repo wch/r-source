@@ -1,13 +1,14 @@
 #### copyright (C) 1998 B. D. Ripley
-#### Copyright (C) 2000-2001 The R Development Core Team
+#### Copyright (C) 2000-2002 The R Development Core Team
 
 smooth.spline <-
   function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
-	   all.knots = FALSE, df.offset = 0, penalty = 1, control.spar = list())
+	   all.knots = FALSE, nknots = NULL,
+           df.offset = 0, penalty = 1, control.spar = list())
 {
-    sknotl <- function(x)
+    sknotl <- function(x, nk = NULL)
     {
-        ## if (all.knots == FALSE)
+        ## if (!all.knots)
 	## return reasonable sized knot sequence for INcreasing x[]:
 	n.kn <- function(n) {
 	    ## Number of inner knots
@@ -23,7 +24,10 @@ smooth.spline <-
 		else  200 + (n-3200)^0.2
 	    })
 	}
-	nk <- n.kn( n <- length(x) )
+        n <- length(x)
+        if(is.null(nk)) nk <- n.kn(n)
+        else if(!is.numeric(nk)) stop("`nknots' must be numeric <= n")
+        else if(nk > n) stop("can't use more inner knots than unique x values")
 	c(rep(x[1], 3), x[seq(1,n, len= nk)], rep(x[n], 3))
     }
     contr.sp <- list(low = -1.5,## low = 0.      was default till R 1.3.x
@@ -71,7 +75,7 @@ smooth.spline <-
 	knot <- c(rep(xbar[1], 3), xbar, rep(xbar[nx], 3))
 	nk <- nx + 2
     } else {
-	knot <- sknotl(xbar)
+	knot <- sknotl(xbar, nknots)
 	nk <- length(knot) - 4
     }
 
@@ -90,8 +94,7 @@ smooth.spline <-
 	if(df > 1 && df <= nx) {
 	    icrit <- 3
 	    dofoff <- df
-	} else warning(paste("you must supply 1 < df <= n,  n = #{unique x} =",
-                             nx))
+	} else warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
     }
     iparms <- as.integer(c(icrit,ispar, contr.sp$maxit))
     names(iparms) <- c("icrit", "ispar", "iter")
@@ -114,7 +117,7 @@ smooth.spline <-
 		    spar = spar,
 		    parms = unlist(contr.sp[1:4]),
 		    isetup = as.integer(0),
-		    scrtch = double((17 + nk) * nk),
+		    scrtch = double((17 + 0) * nk + 1),
 		    ld4  = as.integer(4),
 		    ldnk = as.integer(1),
 		    ier = integer(1),
@@ -135,7 +138,7 @@ smooth.spline <-
         } else {
             fit$ty <- rep(mean(y), nx) ## would be df = 1
             df <- 1
-            warning(paste(wtxt,"setting df = 1  __use with care!__", sep="\n"))
+            warning(wtxt,"\nsetting df = 1  __use with care!__")
         }
     }
     cv.crit <-
@@ -182,8 +185,11 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 
 predict.smooth.spline <- function(object, x, deriv = 0, ...)
 {
-    if(missing(x) && deriv == 0)
-	return(object[c("x", "y")])
+    if(missing(x)) {
+        if(deriv == 0)
+            return(object[c("x", "y")])
+        else x <- object$x
+    }
     fit <- object$fit
     if(is.null(fit)) stop("not a valid smooth.spline object")
     else predict(fit, x, deriv, ...)
@@ -255,7 +261,7 @@ supsmu <-
     xo <- x[ord]
     leno <- length(ord)
     if(diff <- n - leno)
-	warning(paste(diff, "observation(s) with NAs, NaNs and/or Infs deleted"))
+	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
     .Fortran("setsmu", PACKAGE = "modreg")
     smo <- .Fortran("supsmu",
 		    as.integer(leno),

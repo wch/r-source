@@ -11,8 +11,8 @@
 }
 \usage{
 smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
-              cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1,
-              control.spar = list())
+              cv = FALSE, all.knots = FALSE, nknots = NULL,
+              df.offset = 0, penalty = 1, control.spar = list())
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -28,24 +28,29 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    squared second derivative in the fit (penalized log likelihood)
    criterion is a monotone function of \code{spar}, see the details
    below.}
- \item{cv}{ordinary (\code{TRUE}) or `generalized' (\code{FALSE})
-   cross-validation.}
- \item{all.knots}{if \code{TRUE}, all points in \code{x} are used as
-   knots.  If \code{FALSE} (default), a suitably fine grid of knots
-   subset of \code{x[]} is used for \eqn{n > 49}.}
+ \item{cv}{ordinary (\code{TRUE}) or ``generalized'' cross-validation
+   (GCV) when \code{FALSE}.}
+ \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used as
+   knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
+   specifically \code{x[j]} where the \code{nknots} indices are evenly
+   spaced in \code{1:n}, see also the next argument \code{nknots}.}
+ \item{nknots}{integer giving the number of knots to use when
+   \code{all.knots=FALSE}.  Per default, this is less than \eqn{n}, the
+   number of unique \code{x} values for \eqn{n > 49}.}
  \item{df.offset}{allows the degrees of freedom to be increased by
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
  \item{control.spar}{optional list with named components controlling the
-   root finding when the smoothing parameter \code{spar} is computed.
+   root finding when the smoothing parameter \code{spar} is computed,
+   i.e., missing or \code{NULL}, see below.
 
    \bold{Note} that this is partly \emph{experimental} and may change
    with general spar computation improvements!
 
    \describe{
      \item{low:}{lower bound for \code{spar}; defaults to -1.5 (used to
-       implicitly default to 0 in R versions earlier than 1.4).}
+       implicitly default to 0 in \R versions earlier than 1.4).}
      \item{high:}{upper bound for \code{spar}; defaults to +1.5.}
      \item{tol:}{the absolute precision (\bold{tol}erance) used; defaults
      to 1e-4 (formerly 1e-3).}
@@ -88,7 +93,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 
   If \code{spar} is missing or \code{NULL}, the value of \code{df} is used to
   determine the degree of smoothing.  If both are missing, leave-one-out
-  cross-validation is used to determine \eqn{\lambda}.
+  cross-validation (ordinary or ``generalized'' as determined by
+  \code{cv}) is used to determine \eqn{\lambda}.
   Note that from the above relation,
 %%  lam      = r * 256^(3s - 1)
 %%  log(lam) = log(r) + (3s - 1) * log(256)
@@ -117,10 +123,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   of duplicated points.  \code{cv=TRUE} is best avoided in that case.
 }
 \note{
-  The default \code{all.knots = FALSE} entails using only \eqn{O(n^{0.2})}
-  knots instead of \eqn{n} for \eqn{n > 49}.  This cuts the memory
-  requirement which is \eqn{O({n_k} ^ 2) + O(n)}{O(nk^2) + O(n)} where
-  \eqn{n_k}{nk} is the number of knots.
+  The default \code{all.knots = FALSE} and \code{nknots = NULL} entails
+  using only \eqn{O(n^{0.2})}
+  knots instead of \eqn{n} for \eqn{n > 49}.  This cuts speed and memory
+  requirements, but not drastically anymore since \R version 1.5.1 where
+  it is only \eqn{O(n_k) + O(n)}{O(nk) + O(n)} where \eqn{n_k}{nk} is
+  the number of knots.
   In this case where not all unique \code{x} values are
   used as knots, the result is not a smoothing spline in the strict
   sense, but very close unless a small smoothing parameter (or large
