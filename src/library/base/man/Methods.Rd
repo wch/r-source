@@ -1,17 +1,5 @@
-o\name{Methods}
+\name{Methods}
 \title{Internal and Group Methods and Generic Functions}
-\alias{.Method}
-\alias{.Generic}
-\alias{.Group}
-\alias{.Class}
-\alias{Math.data.frame}
-\alias{Math.factor}
-\alias{Ops.data.frame}
-\alias{Ops.factor}
-\alias{Ops.ordered}
-\alias{Summary.data.frame}
-\alias{Summary.factor}
-}
 \usage{
 Math.data.frame(x, \dots)
 Math.factor(x, \dots)
@@ -28,6 +16,18 @@ Summary.factor(x, \dots)
 .Group
 .Class
 }
+\alias{.Method}
+\alias{.Generic}
+\alias{.Group}
+\alias{.Class}
+\alias{Math.data.frame}
+\alias{Math.factor}
+\alias{Ops.data.frame}
+\alias{Ops.factor}
+\alias{Ops.ordered}
+\alias{Summary.data.frame}
+\alias{Summary.factor}
+
 \description{Many \R-internal functions  are \emph{generic} and  allow
     methods to be written for.  \emph{Group} methods in particular are
     available for the \code{"Math"},  \code{"Ops"}, and

@@ -9,6 +9,8 @@ as.matrix.dist(dist.obj)
 \alias{dist}
 \alias{print.dist}
 \alias{as.matrix.dist}
+\alias{names.dist}
+\alias{names<-.dist}
 \arguments{
   \item{x}{a matrix or (data frame).  Distances between the rows of
     \code{x} will be computed.}

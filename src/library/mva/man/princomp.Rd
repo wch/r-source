@@ -2,14 +2,14 @@
 \alias{princomp}
 \alias{plot.princomp}
 \alias{print.princomp}
+\alias{predict.princomp}
 \alias{summary.princomp}
 \title{Principal Components Analysis}
 \usage{
 princomp(x, cor = FALSE, scores = TRUE,
          subset = rep(TRUE, nrow(as.matrix(x))))
-print.princomp(obj)
-summary.princomp(obj)
-plot.princomp(obj)
+
+print(obj,\dots)  summary(obj)  plot(obj,\dots)  predict(obj,\dots)
 }
 \arguments{
     \item{x}{a matrix (or data frame) which provides the data for the
@@ -20,6 +20,8 @@ plot.princomp(obj)
 	principal component should be calculated.}
     \item{subset}{a vector used to select rows (observations) of the
 	data matrix \code{x}.}
+
+    \item{obj}{an object of class \code{"princomp"}, as from \code{princomp()}.}
 }
 \description{
     Performs a principal components analysis on the given data matrix
