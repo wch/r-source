@@ -2132,6 +2132,7 @@ B <- data.frame(a=2, b=I("B"))
 stopifnot(cl[2] == "factor")
 ##
 
+
 ## hclust(), as.hclust.twins(), agnes()  consistency
 x <- matrix(rnorm(30), ncol=3)  # no observation names
 xn <- x; rownames(xn) <- letters[10:1]# has obs. names
@@ -2156,6 +2157,15 @@ if(require(cluster)) {# is a required package
             )
 }
 ## as.hclust.twins() lost labels and more till (incl) 1.6.2
+
+
+## PR#2867 qr(LAPACK=TRUE) didn't always pivot in 1.7.0
+set.seed(1)
+X <- matrix(rnorm(40),10,4)
+X[,1] <- X[,2]
+(qrx <- qr(X, LAPACK=TRUE))
+stopifnot(any(qrx$pivot != 1:4)) # check for pivoting
+##
 
 
 ## keep at end, as package `methods' has had persistent side effects

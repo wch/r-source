@@ -11,7 +11,7 @@
 \alias{solve.qr}
 \title{The QR Decomposition of a Matrix}
 \usage{
-qr(x, tol = 1e-07 , LAPACK = TRUE)
+qr(x, tol = 1e-07 , LAPACK = FALSE)
 qr.coef(qr, y)
 qr.qy(qr, y)
 qr.qty(qr, y)
@@ -83,7 +83,7 @@ as.qr(x)
   \item{qraux}{a vector of length \code{ncol(x)} which contains
     additional information on \eqn{\bold{Q}}.}
   \item{rank}{the rank of \code{x} as computed by the decomposition:
-    always full rank in the complex case.}
+    always full rank in the LAPACK case.}
   \item{pivot}{information on the pivoting strategy used during
     the decomposition.}
 

@@ -56,6 +56,9 @@ BUG FIXES
 	doesn't match the internal package name, and corrects the 
 	error. (PR#2816)
     
+    o	qr(LAPACK=TRUE) (and qr for complex arguments) might have failed
+	to pivot for rank-deficient inputs. (PR#2867)
+
 
 
 		CHANGES IN R VERSION 1.7.0
