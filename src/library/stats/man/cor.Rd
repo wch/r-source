@@ -80,7 +80,10 @@ cov2cor(V)
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
   computes \code{cor(R(x), R(y))} (or \code{cov(.,.)}) where
-  \code{R(u) := rank(u, na.last="keep")}.
+  \code{R(u) := rank(u, na.last="keep")}. Notice also that the ranking
+  is (currently) done removing only cases that are missing on the
+  variable itself, which may not be what you expect if you let
+  \code{use} be \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
 
   Scaling a covariance matrix into a correlation one can be achieved in
   many ways, mathematically most appealing by multiplication with a
