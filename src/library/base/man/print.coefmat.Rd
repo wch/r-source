@@ -15,6 +15,7 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
               cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
               P.values = NULL,
               has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
+              eps.Pvalue = .Machine$double.eps,
               na.print = "", \dots)
 }
 \arguments{
@@ -43,6 +44,7 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
   \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
     contains P values; in that case, it is printed \emph{iff}
     \code{P.values} (above).}
+  \item{eps.Pvalue}{number,..}
   \item{na.print}{a character string to code \code{\link{NA}} values in
     printed output.}
  \item{\dots}{further arguments for \code{\link{print}}.}
@@ -56,7 +58,7 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
 \author{Martin Maechler}
 \seealso{
   \code{\link{print.summary.lm}},
-  \code{\link{format.pval}}, 
+  \code{\link{format.pval}},
   \code{\link{format}}.
 }
 \examples{

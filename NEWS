@@ -259,6 +259,9 @@ NEW FEATURES
     o   min/max of integer(0) (or NULL) is now Inf/-Inf, not an
 	extreme integer.
 
+    o	print.coefmat() has a new argument 'eps.Pvalue' for determining
+        when small P-values should be printed as  "< {...}".
+
 
 DEPRECATED & DEFUNCT
 

@@ -71,6 +71,7 @@ print.coefmat <-
 	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
 	     P.values = NULL,
 	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
+             eps.Pvalue = .Machine$double.eps,
 	     na.print = "", ...)
 {
     ## For printing ``coefficient matrices'' as they are in summary.xxx(.) where
@@ -134,7 +135,8 @@ print.coefmat <-
         }
 	pv <- xm[, nc]
 	if(any(okP <- ok[,nc])) {
-	    Cf[okP, nc] <- format.pval(pv[okP], digits = dig.tst)
+	    Cf[okP, nc] <- format.pval(pv[okP],
+                                       digits = dig.tst, eps = eps.Pvalue)
 	    signif.stars <- signif.stars && any(pv[okP] < .1)
 	    if(signif.stars) {
 		Signif <- symnum(pv, corr = FALSE, na = FALSE,
