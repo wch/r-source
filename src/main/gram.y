@@ -1632,10 +1632,11 @@ static int StringValue(int c)
 	    }
 #ifdef SUPPORT_MBCS
 	    /* Only realy valid in UTF-8, but useful shorthand elsewhere */
-	    else if(mbcslocale && (c == 'u' || c == 'U')) {
+	    else if(mbcslocale && c == 'u') {
 		wint_t val = 0; int i, ext; size_t res;
-		char buff[9];
-		for(i = 0; i < 8; i++) { /* probably only ever 6 */
+		char buff[5]; Rboolean delim = FALSE;
+		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		for(i = 0; i < 4; i++) {
 		    c = xxgetc();
 		    if(c >= '0' && c <= '9') ext = c - '0';
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
@@ -1643,11 +1644,36 @@ static int StringValue(int c)
 		    else {xxungetc(c); break;}
 		    val = 16*val + ext;
 		}
+		if(delim)
+		    if((c = xxgetc()) != '}')
+			error("invalid \\u{xxxx} sequence");
 		res = wcrtomb(buff, val, NULL); /* should always be valid */
 		if(res <= 0) error("invalid \\uxxxx sequence");
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
 	    }
+#ifndef Win32
+	    else if(mbcslocale && c == 'U') {
+		wint_t val = 0; int i, ext; size_t res;
+		char buff[9]; Rboolean delim = FALSE;
+		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		for(i = 0; i < 8; i++) {
+		    c = xxgetc();
+		    if(c >= '0' && c <= '9') ext = c - '0';
+		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+		    else {xxungetc(c); break;}
+		    val = 16*val + ext;
+		}
+		if(delim)
+		    if((c = xxgetc()) != '}')
+			error("invalid \\u{xxxx} sequence");
+		res = wcrtomb(buff, val, NULL); /* should always be valid */
+		if(res <= 0) error("invalid \\Uxxxxxxxx sequence");
+		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
+		c = buff[res - 1]; /* pushed below */
+	    }
+#endif
 #endif
 	    else {
 		switch (c) {

@@ -4238,10 +4238,14 @@ in the range @code{0 ... 8} are accepted.
 @item \x@var{nn}
 character with given hex code -- sequences of one or two hex digits
 (with entries @code{0 ... 9 A ... F a ... f}).
-@item \u@var{nnnn}
-(Unicode locales only).
+@item \u@var{nnnn} \u@{@var{nnnn}@}
+(Unicode and other multibyte locales only).
+Unicode character with given hex code -- sequences of up to four hex
+digits.
+@item \U@var{nnnnnnnn} \U@{@var{nnnnnnnn}@}
+(Unicode and other multibyte locales only, not Windows).
 Unicode character with given hex code -- sequences of up to eight hex
-digits. (@code{\U} can also be used.)
+digits.
 @end table
 
 @noindent

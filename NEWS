@@ -251,7 +251,9 @@ INTERNATIONALIZATION
 	of character or the display width instead.
 
     o	Characters can be entered in hexadecimal as e.g. \x9c, and in
-	UTF-8 locales as \uxxxx or \Uxxxx (with up to 8 hexadecimals).
+	UTF-8 and other multibyte locales as \uxxxx, \u{xxxx},
+	\Uxxxxxxxx or \U{xxxxxxxx}.  Non-printable Unicode characters
+	are displayed C-style as \uxxxx or \Uxxxxxxxx.
 
     o	LC_MONETARY is set to the locale, which affects the result of
 	Sys.localeconv(), but nothing else in R itself.	 (It could

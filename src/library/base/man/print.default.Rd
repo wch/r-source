@@ -57,12 +57,12 @@
   are regarded as printable on Windows.)
 #endif
 }
-\section{Unicode locales}{
+\section{Unicode  and other multi-byte locales}{
   In a Unicode (UTF-8) locale, characters \code{0x00} to \code{0x1F} and
   \code{0x7f} (the ASCII non-printing characters) are printed in the
-  same way , via ANSI escape sequences or 3-digit octal escapes.
+  same way, via ANSI escape sequences or 3-digit octal escapes.
   Multi-byte non-printing characters are printed with as an escape
-  sequence of the form \code{\uxxxxxx} (in hexadecimal).
+  sequence of the form \code{\uxxxx} or \code{\Uxxxxxxxx} (in hexadecimal).
 
   It is possible to have a character string in an object that is not
   valid UTF-8.  If a byte is encountered that is not part of an
