@@ -3,6 +3,6 @@ function(file, ...)
 {
 }
 hdf5load <-
-function(file load=TRUE)
+function(file, load=TRUE)
 {
 }
