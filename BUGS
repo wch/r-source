@@ -320,6 +320,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 972 *
+Subject: update.packages fails again
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 8 Jun 2001 21:25:08 +0100 (BST)
 * PR# 970 *
 Subject: error in dbeta
 From: pwolf@wiwi.uni-bielefeld.de
