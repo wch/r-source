@@ -5,6 +5,12 @@
 	**************************************************
 
 NEW FEATURES
+    o   optimization with nlm can use analytic gradients and Hessians
+        if they are supplied.
+
+    o   packages splines (for regression smoothing splines or
+        interpolating splines) and nls (nonlinear least squares) are
+        part of the base distribution.
 
     o   parse.dcf for parsing files in debian control file format
         (DESCRIPTION, CONTENTS, ...)

@@ -4,11 +4,14 @@
 nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
     print.level = 0, ndigit=12, gradtol = 1e-6,
     stepmax = max(1000 * sqrt(sum((p/typsize)^2)), 1000),
-    steptol = 1e-6, iterlim = 100)
+    steptol = 1e-6, iterlim = 100, check.analyticals = TRUE)
 }
 \alias{nlm}
 \arguments{
-\item{f}{the function to be minimized.}
+\item{f}{the function to be minimized.  If the function value has
+    an attribute called \code{gradient} or both \code{gradient} and
+    \code{hessian} attributes, these will be used in the calculation of
+    updated parameter values.  Otherwise, numerical derivatives are used.}
 \item{p}{starting parameter values for the minimization.}
 \item{hessian}{if \code{TRUE}, the hessian of \code{f}
 at the minimum is returned.}
@@ -37,6 +40,11 @@ at the minimum.}
 relative step length.}
 \item{iterlim}{a positive integer specifying the maximum number of
   iterations to be performed before the program is terminated.}
+\item{check.analyticals}{a logical scalar specifying whether the
+    analytic gradients and Hessians, if they are supplied, should be
+    checked against numerical derivatives at the initial parameter
+    values. This can help detect incorrectly formulated gradients or
+    Hessians.}
 }
 \description{
 This function carries out a minimization of the function \code{f}

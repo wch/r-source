@@ -27,6 +27,7 @@
 #include "Print.h"		/*for printRealVector()*/
 #include "Mathlib.h"
 #include "Applic.h"
+#include "Rdefines.h"
 
 /* WARNING : As things stand, these routines should not be called
  *	     recursively because of the way global variables are used.
@@ -228,18 +229,122 @@ static SEXP R_env;	/* where to evaluate the calls */
 #ifdef NOT_yet_used
 static SEXP R_gcall;	/* gradient */
 static SEXP R_hcall;	/* hessian */
+#endif
+
+static SEXP R_gradientSymbol;
+static SEXP R_hessianSymbol;
 
 static int have_gradient;
 static int have_hessian;
-#endif
+
+#define FT_SIZE 5		/* size of table to store computed
+				   function values */
+static int xdim;		/* length of the parameter (x) vector */
+static int FT_last;		/* Newest entry in the table */
+
+static struct {
+    double   fval;
+    double  *x;
+    double  *grad;
+    double  *hess;
+} Ftable[FT_SIZE];
+
+/* Initialize the storage in the table of computed function values */
+
+static void FT_init(int n)
+{
+    int i, j;
+    
+    for (i = 0; i < FT_SIZE; i++) {
+	Ftable[i].x =  Calloc(n, double);
+				/* initialize to unlikely parameter values */
+	for (j = 0; j < n; j++) {
+	    Ftable[i].x[j] = DBL_MAX;
+	}
+	if (have_gradient) {
+	    Ftable[i].grad =  Calloc(n, double);
+	    if (have_hessian) {
+		Ftable[i].hess =  Calloc(n * n, double);
+	    }
+	}
+    }
+    FT_last = -1;
+}
+
+/* Free the storage from the table of computed function values */
+
+static void FT_free()
+{
+    int i;
+    for (i = 0; i < FT_SIZE; i++) {
+	Free(Ftable[i].x);
+	if (have_gradient) {
+	    Free(Ftable[i].grad);
+	    if (have_hessian) {
+		Free(Ftable[i].hess);
+	    }
+	}
+    }
+    FT_last = -1;
+}
+
+/* Store an entry in the table of computed function values */
+
+static int FT_store(int n, double f, double *x, double *grad, double *hess)
+{
+    int ind, i;
+
+    ind = (++FT_last) % FT_SIZE;
+    Ftable[ind].fval = f;
+    Memcpy(Ftable[ind].x, x, n);
+    if (grad) {
+        Memcpy(Ftable[ind].grad, grad, n);
+	if (hess) {
+	    Memcpy(Ftable[ind].hess, hess, n * n);
+	}
+    }
+}
+
+/* Check for stored values in the table of computed function values.
+   Returns the index in the table or -1 for failure */
+
+static int FT_lookup(int n, double *x)
+{
+    double *ftx;
+    int i, j, ind, matched;
+
+    for (i = 0; i < FT_SIZE; i++) {
+	ind = (FT_last - i) % FT_SIZE;
+				/* why can't they define modulus correctly */
+	if (ind < 0) ind += FT_SIZE;
+	ftx = Ftable[ind].x;
+	if (ftx) {
+	    matched = 1;
+	    for (j = 0; j < n; j++) {
+	        if (x[j] != ftx[j]) {
+	            matched = 0;
+		    break;
+	        }
+	    }
+	    if (matched) return ind;
+        }
+    }
+    return -1;
+}
 
 /* This how the optimizer sees them */
 
 static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
 {
     SEXP s;
+    double *g = (double *) 0, *h = (double *) 0;
     int i;
-
+    
+    if ((i = FT_lookup(*n, x)) >= 0) {
+	*f = Ftable[i].fval;
+	return 0;
+    }
+				/* calculate for a new value of x */
     s = allocVector(REALSXP, *n);
     for (i = 0; i < *n; i++)
 	REAL(s)[i] = x[i];
@@ -265,6 +370,13 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
     default:
 	goto badvalue;
     }
+    if (have_gradient) {
+	g = REAL(coerceVector(getAttrib(s, R_gradientSymbol), REALSXP));
+	if (have_hessian) {
+	    h = REAL(coerceVector(getAttrib(s, R_hessianSymbol), REALSXP));
+	}
+    }
+    FT_store(*n, *f, x, g, h);
     return 0;
  badvalue:
     error("invalid function value in 'nlm' optimizer");
@@ -272,17 +384,39 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
 }
 
 
-static int F77_SYMBOL(d1fcn)(int *n, double *x, double *g)
+static int F77_SYMBOL(Cd1fcn)(int *n, double *x, double *g)
 {
-    error("optimization using analytic gradients not implemented (yet)");
-    return 0;/* for -Wall */
+    /* error("optimization using analytic gradients not implemented
+       (yet)\n"); */
+    int ind;
+
+    if ((ind = FT_lookup(*n, x)) < 0) {	/* shouldn't happen */
+	F77_SYMBOL(fcn)(n, x, g);
+	if ((ind = FT_lookup(*n, x)) < 0) {
+	    error("function value caching for optimization is seriously confused.\n");
+	}
+    }
+    Memcpy(g, Ftable[ind].grad, *n);
+    return 0;
 }
 
 
-static int F77_SYMBOL(d2fcn)(int *n, double *x, double *g)
+static int F77_SYMBOL(Cd2fcn)(int *nr, int *n, double *x, double *h)
 {
-    error("optimization using analytic Hessians not implemented (yet)");
-    return 0;/* for -Wall */
+    /*  error("optimization using analytic Hessians not implemented
+	(yet)\n"); */
+    int j, ind;
+
+    if ((ind = FT_lookup(*n, x)) < 0) {	/* shouldn't happen */
+	F77_SYMBOL(fcn)(n, x, h);
+	if ((ind = FT_lookup(*n, x)) < 0) {
+	    error("function value caching for optimization is seriously confused.\n");
+	}
+    }
+    for (j = 0; j < *n; j++) {  /* fill in lower triangle only */
+        Memcpy( h + j*(*n + 1), Ftable[ind].hess + j*(*n + 1), *n - j);
+    }
+    return 0;
 }
 
 
@@ -468,12 +602,37 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (itnlim == NA_INTEGER) invalid_na(call);
     args = CDR(args);
 
+    /* force one evaluation to check for the gradient and hessian */
+    iagflg = 0;			/* No analytic gradient */
+    iahflg = 0;			/* No analytic hessian */
+    have_gradient = 0;
+    have_hessian = 0;
+    R_gradientSymbol = install("gradient");
+    R_hessianSymbol = install("hessian");
+
+    v = allocVector(REALSXP, n);
+    for (i = 0; i < n; i++) {
+	REAL(v)[i] = x[i];
+    }
+    CADR(R_fcall) = v;
+    value = eval(R_fcall, R_env);
+
+    v = getAttrib(value, R_gradientSymbol);
+    if (v != R_NilValue && LENGTH(v) == n && (isReal(v) || isInteger(v))) {
+      iagflg = 1;
+      have_gradient = 1;
+       v = getAttrib(value, R_hessianSymbol);
+       if (v != R_NilValue && LENGTH(v) == (n * n) &&
+ 	  (isReal(v) || isInteger(v))) {
+ 	iahflg = 1;
+ 	have_hessian = 1;
+       }
+    }
+    FT_init(n);
     /* Plug in the call to the optimizer here */
 
     method = 1;	/* Line Search */
-    iexp = 1;	/* Function calls are expensive */
-    iagflg = 0;	/* No analytic gradient */
-    iahflg = 0;	/* No analytic hessian */
+    iexp = have_gradient ? 0 : 1; /* Function calls are expensive */
     ipr = 6;
     dlt = 1.0;
 
@@ -502,8 +661,8 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
      *	 I think we always check gradients and hessians
      */
 
-    F77_SYMBOL(optif9)(&n, &n, x, F77_SYMBOL(fcn), F77_SYMBOL(d1fcn),
-		       F77_SYMBOL(d2fcn), typsiz, &fscale,
+    F77_SYMBOL(optif9)(&n, &n, x, F77_SYMBOL(fcn), F77_SYMBOL(Cd1fcn),
+		       F77_SYMBOL(Cd2fcn), typsiz, &fscale,
 		       &method, &iexp, &msg, &ndigit, &itnlim,
 		       &iagflg, &iahflg, &ipr,
 		       &dlt, &gradtl, &stepmx, &steptol,
@@ -566,6 +725,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     k++;
 
     setAttrib(value, R_NamesSymbol, names);
+    FT_free();
     vmaxset(vmax);
     UNPROTECT(3);
     return value;
