@@ -54,7 +54,7 @@ add1.lm <-
     P <- Fs
     nnas <- !is.na(Fs)
     P[nnas] <- 1 - pf(Fs[nnas], df[nnas], rdf - df[nnas])
-    list(Fs, P)    
+    list(Fs=Fs, P=P)    
   }
 
   if(missing(scope) || is.null(scope)) stop("no terms in scope")
