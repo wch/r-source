@@ -567,7 +567,7 @@ anovalist.lm <- function (object, ..., test = NULL)
 	      class= c("anova", "data.frame"))# was "tabular"
 }
 
-## code from John Maindonald 26Jul2000
+## code originally from John Maindonald 26Jul2000
 predict.lm <-
     function(object, newdata,
 	     se.fit = FALSE, scale = NULL, df = Inf,
@@ -577,7 +577,8 @@ predict.lm <-
 {
     tt <- terms(object)
     if(missing(newdata) || is.null(newdata)) {
-	X <- model.matrix(object)
+	mm <- X <- model.matrix(object)
+	mmDone <- TRUE
 	offset <- object$offset
     }
     else {
@@ -588,6 +589,7 @@ predict.lm <-
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))
 	    eval(object$call$offset, newdata)
+	mmDone <- FALSE
     }
     n <- NROW(object$qr$qr)
     p <- object$rank
@@ -598,20 +600,20 @@ predict.lm <-
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     beta <- object$coefficients
     predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
-    if ( !is.null(offset) ) predictor <- predictor + offset
+    if (!is.null(offset))
+	predictor <- predictor + offset
     interval <- match.arg(interval)
     type <- match.arg(type)
     if(se.fit || interval != "none") {
-	if (is.null(scale)) {
-	    r <- object$resid
-	    f <- object$fitted
-	    w <- object$weights
-	    rss <- sum(if(is.null(w)) r^2 else r^2 * w)
-	    df <- n - p
-	    res.var <- rss/df
-	} else {
-	    res.var <- scale^2
-	}
+	res.var <-
+	    if (is.null(scale)) {
+		r <- object$resid
+		f <- object$fitted
+		w <- object$weights
+		rss <- sum(if(is.null(w)) r^2 else r^2 * w)
+		df <- n - p
+		rss/df
+	    } else scale^2
 	if(type != "terms") {
 	    if(missing(newdata))
 		XRinv <- qr.Q(object$qr)[, p1 , drop = FALSE]
@@ -625,26 +627,19 @@ predict.lm <-
 
     if (type == "terms") { ## type == "terms" ------------
 
-	## MM: The following is not efficient:	model.matrix() computed 2 x !
-	attrassign <- function (object, ...) UseMethod("attrassign")
-	attrassign.lm <- function (lmobj)
-	    attrassign(model.matrix(lmobj), terms(lmobj))
-	attrassign.default <- function (mmat, tt) {
-	    if (!inherits(tt, "terms")) stop("need terms object")
-	    aa <- attr(mmat, "assign")
-	    if (is.null(aa)) stop("argument is not really a model matrix")
-	    ll <- attr(tt, "term.labels")
-	    if (attr(tt, "intercept") > 0)
-		ll <- c("(Intercept)", ll)
-	    aaa <- factor(aa, labels = ll)
-	    split(order(aa), aaa)
-	}
-
-	asgn <- attrassign(object)
+	if(!mmDone) { mm <- model.matrix(object); mmDone <- TRUE }
+	## asgn <- attrassign(mm, tt) :
+	aa <- attr(mm, "assign")
+	ll <- attr(tt, "term.labels")
+	if (attr(tt, "intercept") > 0)
+	    ll <- c("(Intercept)", ll)
+	aaa <- factor(aa, labels = ll)
+	asgn <- split(order(aa), aaa)
 	hasintercept <- attr(tt, "intercept") > 0
 	if (hasintercept) {
 	    asgn$"(Intercept)" <- NULL
-	    avx <- colMeans(model.matrix(object))
+	    if(!mmDone) { mm <- model.matrix(object); mmDone <- TRUE }
+	    avx <- colMeans(mm)
 	    termsconst <- sum(avx[piv] * beta[piv])
 	}
 	nterms <- length(asgn)

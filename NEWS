@@ -709,13 +709,16 @@ BUG FIXES
     o	The X11 device has improved event handling. In particular it
 	used to often miss the last of a series of resize events.
 
+    o	lm.influence() and related functions now work again for the
+	multivariate case and when there are zero weights.
+
     o	format( <character> ) now always keeps names and dimnames.
 
     o	table(factor(c(2,NA), exclude=NULL)) prints better now.
 
     o	predict(foo, type = "terms") and hence
 	residuals(foo, type = "partial") now work for lm and glm objects
-	with weights zero.
+	with weights zero.  Further, model.matrix() is now only called once.
 
 
 
