@@ -319,9 +319,6 @@ C-LEVEL FACILITIES
 	ROUTINES file (in src/appl/) and associated scripts to
 	generate FFTab.h and FFDecl.h are no longer used.
 
-    o	The undocumented non-API entry point R_GetX11Image is available
-	as function rather than as ptr_R_GetX11Image.
-
 
 BUG FIXES
 
