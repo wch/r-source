@@ -55,7 +55,7 @@ Makedeps: Makefile
 	@touch $@
 ## </NOTE>
 
-INSTALL-OPTS=--lazy
+INSTALL-OPTS=
 
 .tgz.ts:
 ## <FIXME>

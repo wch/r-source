@@ -101,7 +101,7 @@ Rcode: fixed/fixdesc
 	done
 	@$(ECHO) "  ... done"
 
-LAZY_PKGS = graphics grDevices grid stats utils # methods is done directly
+LAZY_PKGS = graphics grDevices grid splines stats tcltk utils # methods is done directly
 
 rpackage: ../../library/R.css
 ifeq ($(strip $(HELP)),YES)
@@ -516,11 +516,11 @@ recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-          $(R_EXE) CMD perl XINSTALL --unsafe --lazy --docs=normal ../library/$${p} || exit 1; \
+          $(R_EXE) CMD perl XINSTALL --unsafe --docs=normal ../library/$${p} || exit 1; \
         done
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe --lazy ../library/$${p} || exit 1; \
+	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe ../library/$${p} || exit 0; \
 	done
 endif
 
