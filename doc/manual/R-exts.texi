@@ -894,7 +894,7 @@ Exports are specified using the @code{export} directive.
 A directive of the form
 
 @smallexample
-export(f,g)
+export(f, g)
 @end smallexample
 
 @noindent
@@ -916,7 +916,7 @@ exports all variables that do not start with a period.
 All packages implicitly import the base name space.  Variables from
 other packages need to be imported explicitly using the directives
 @code{import} and @code{importFrom}.  The @code{import} directive
-imports all exported variables from the specified packages.  Thus the
+imports all exported variables from the specified package(s).  Thus the
 directives
 
 @smallexample
@@ -973,11 +973,10 @@ Since loading and attaching are distinct operations when a name space is
 used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
 arguments as @code{.First.lib}; they should be defined in the package
-but not exported.  Packages are not likely@footnote{for an exception see
-package @code{spatial} in the @code{VR} bundle} to need
-@code{.onAttach}; code to set options and load shared libraries should
-be placed in a @code{.onLoad} function, or use made of the
-@code{useDynLib} directive described next.
+but not exported.  Packages are not likely to need @code{.onAttach};
+code to set options and load shared libraries should be placed in a
+@code{.onLoad} function, or use made of the @code{useDynLib} directive
+described next.
 
 The @code{useDynLib} directive allows shared libraries that need to be
 loaded to be specified in the @file{NAMESPACE} file.  The directive
@@ -1016,7 +1015,7 @@ appropriate extension).  The @file{NAMESPACE} file for this package is
 @smallexample
 useDynLib(foo)
 export(f, foo)
-S3method(print,foo)
+S3method(print, foo)
 @end smallexample
 @end cartouche
 @end quotation
