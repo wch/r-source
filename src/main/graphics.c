@@ -2891,8 +2891,15 @@ static void clipCircle(double x, double y, int coords,
 	    char *vmax;
 	    double *xc, *yc;
 	    int i;
-	    /* replace circle with decagon */
-	    int numvert = 10;
+
+	    /* Replace circle with polygon.
+
+	       Heuristic for number of vertices is to use theta so
+	       that cos(theta)*r ~ r - 1 in device units. This is
+	       roughly const * sqrt(r) so there'd be little point in
+	       enforcing an upper limit. */
+
+	    int numvert = (r <= 6) ? 10 : 2 * M_PI/acos(1 - 1/r) ;
 	    double theta = 2*M_PI/numvert;
 	    vmax = vmaxget();
 	    xc = (double*)R_alloc(numvert+1, sizeof(double));

@@ -52,7 +52,7 @@ points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 ##-------- Showing all the extra & some char graphics symbols ------------
-Pex <- if(.Device=="postscript") 5 else 20
+Pex <- if(.Device=="postscript") 5 else 2
 ipch <- 1:(np <- 25+11); k <- floor(sqrt(np)); dd <- c(-1,1)/2
 rx <- dd + range(ix <- (ipch-1) \%/\% k)
 ry <- dd + range(iy <- 3 + (k-1)-(ipch-1) \%\% k)
@@ -65,7 +65,7 @@ for(i in 1:np) {
   pc <- pch[[i]]
   points(ix[i], iy[i], pch = pc, col = "red", bg = "yellow", cex = Pex)
   ## red symbols with a yellow interior (where available)
-  text(ix[i] - .3, iy[i], pc, col = "brown", cex = 1.5)
+  text(ix[i] - .3, iy[i], pc, col = "brown", cex = 1.2)
 }
 }
 \keyword{aplot}

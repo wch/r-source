@@ -1210,6 +1210,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
+		if (ncex > 1) 
+		    dd->gp.cex = dd->gp.cexbase * REAL(cex)[i % ncex];
 		dd->gp.col = INTEGER(col)[i % ncol];
 		dd->gp.bg = INTEGER(bg)[i % nbg];
 		GSymbol(xx, yy, DEVICE,
