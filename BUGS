@@ -219,10 +219,10 @@ none
 
 Directory:  incoming
 
-* PR# 698 *
-Subject:  print problem with data frames 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
+* PR# 699 *
+Subject: bug in pnorm
+From: ratjamm@alum.mit.edu
+Date: Fri, 20 Oct 2000 21:46:18 +0200 (MET DST)
 * PR# 653 *
 Subject: bug in spline()?
 From: Ian White <imsw@holyrood.ed.ac.uk>
@@ -351,6 +351,10 @@ Date: 03 Oct 2000 11:57:32 +0200
 Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
 From: maechler@stat.math.ethz.ch
 Date: Tue, 3 Oct 2000 11:16:59 +0200 (MET DST)
+* PR# 686 *
+Subject: inquiry
+From: <bench1@onenetnow.com>
+Date: Mon, 9 Oct 2000 00:23:53
 * PR# 685 *
 Subject: documentation bug in readline()
 From: Peter Perkins <pperkins@ucsd.edu>
@@ -359,14 +363,18 @@ Date: Fri, 06 Oct 2000 19:09:31 -0700
 Subject: gamma and lgamma functions
 From: Jim Lindsey <james.lindsey@luc.ac.be>
 Date: Wed, 4 Oct 2000 13:59:21 +0200 (MET DST)
+* PR# 688 *
+Subject:  Unreliable example in ?layout 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 10 Oct 2000 08:48:10 +0100 (BST)
 * PR# 687 *
 Subject:  cmdscale documentation 
 From: J.C.Rougier@durham.ac.uk
 Date: Mon, 9 Oct 2000 10:23:20 +0100 (BST)
-* PR# 686 *
-Subject: inquiry
-From: <bench1@onenetnow.com>
-Date: Mon, 9 Oct 2000 00:23:53
+* PR# 691 *
+Subject: invalid regular expression after many grep's
+From: jutans@utans.u-net.com
+Date: Wed, 11 Oct 2000 17:10:29 +0200 (MET DST)
 * PR# 690 *
 Subject: Bug?
 From: "Armando Mateus Ferreira" <td2mafea@uco.es>
@@ -375,10 +383,10 @@ Date: Wed, 11 Oct 2000 11:21:19 +0200
 Subject: Documentation problem for ecdf
 From: Kurt.Hornik@ci.tuwien.ac.at
 Date: Tue, 10 Oct 2000 18:32:46 +0200 (MET DST)
-* PR# 688 *
-Subject:  Unreliable example in ?layout 
+* PR# 694 *
+Subject:  syntax confusion with function/non-function objects 
 From: J.C.Rougier@durham.ac.uk
-Date: Tue, 10 Oct 2000 08:48:10 +0100 (BST)
+Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
 * PR# 693 *
 Subject:  Bug report
 From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
@@ -387,23 +395,19 @@ Date: Thu, 12 Oct 2000 14:08:31 +1100
 Subject: documentation bug in grep
 From: pperkins@ucsd.edu
 Date: Wed, 11 Oct 2000 19:25:03 +0200 (MET DST)
-* PR# 691 *
-Subject: invalid regular expression after many grep's
-From: jutans@utans.u-net.com
-Date: Wed, 11 Oct 2000 17:10:29 +0200 (MET DST)
-* PR# 695 *
-Subject:  Cautionary tale about c 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 13 Oct 2000 15:57:27 +0100 (BST)
-* PR# 694 *
-Subject:  syntax confusion with function/non-function objects 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
-* PR# 697 *
-Subject: build errors in configure script
-From: flip@skidmore.edu
-Date: Mon, 16 Oct 2000 03:03:59 +0200 (MET DST)
 * PR# 696 *
 Subject: sys.xxx documentation
 From: pperkins@ucsd.edu
 Date: Sat, 14 Oct 2000 08:10:09 +0200 (MET DST)
+* PR# 695 *
+Subject:  Cautionary tale about c 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 13 Oct 2000 15:57:27 +0100 (BST)
+* PR# 698 *
+Subject:  print problem with data frames 
+From: J.C.Rougier@durham.ac.uk
+Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
+* PR# 697 *
+Subject: build errors in configure script
+From: flip@skidmore.edu
+Date: Mon, 16 Oct 2000 03:03:59 +0200 (MET DST)
