@@ -118,28 +118,11 @@ function(topic, device = getOption("device"),
     paths <- .find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
-    nodemo <- !(file.exists(file.path(paths, "demo"))
-                & file.info(file.path(paths, "demo"))$isdir)
-    if(any(nodemo)) {
-        if(!missing(package) && (length(package) > 0)) {
-            ## Warn about given packages which do not have a 'demo'
-            ## subdirectory.
-            packagesWithNoDemo <-
-                package[package %in% basename(paths[nodemo])]
-            if(length(packagesWithNoDemo) > 1) {
-                warning(paste("packages",
-                              paste(sQuote(packagesWithNoDemo),
-                                    collapse=", "),
-                              "contain no demos"))
-            }
-            else if(length(packagesWithNoDemo) == 1) {
-                warning(paste("package", sQuote(packagesWithNoDemo),
-                              "contains no demos"))
+    paths <- paths[tools::fileTest("-d", file.path(paths, "demo"))]
+    ## Earlier versions remembered given packages with no 'demo'
+    ## subdirectory, and warned about them.
 
-            }
-        }
-        paths <- paths[!nodemo]
-    }
+    demoExts <- tools:::.makeFileExts("demo")
 
     if(missing(topic)) {
         ## List all possible demos.
@@ -150,16 +133,25 @@ function(topic, device = getOption("device"),
         for(path in paths) {
             entries <- NULL
             ## Check for new-style 'Meta/demo.rds', then for '00Index'.
-            if(file.exists(INDEX <-
-                           file.path(path, "Meta", "demo.rds"))) {
+            if(tools::fileTest("-f",
+                               INDEX <-
+                               file.path(path, "Meta", "demo.rds"))) {
                 entries <- .readRDS(INDEX)
             }
-            else if(file.exists(INDEX <-
-                                file.path(path, "demo", "00Index")))
+            else if(tools::fileTest("-f",
+                                    INDEX <-
+                                    file.path(path, "demo", "00Index")))
                 entries <- read.00Index(INDEX)
             else {
-                ## No index: check whether subdir 'demo' contains files.
-                if(length(list.files(file.path(path, "demo"))) > 0)
+                ## No index: check whether subdir 'demo' contains demos.
+                demoDir <- file.path(path, "demo")
+                entries <- tools::listFilesWithType(demoDir, "demo")
+                if(length(entries) > 0) {
+                    entries <-
+                        unique(tools::filePathSansExt(basename(entries)))
+                    entries <- cbind(entries, "")
+                }
+                else
                     noindex <- c(noindex, basename(path))
             }
             if(NROW(entries) > 0) {
@@ -175,16 +167,11 @@ function(topic, device = getOption("device"),
                 ## Warn about given packages which do not have a demo
                 ## index.
                 packagesWithNoIndex <- package[package %in% noindex]
-                if(length(packagesWithNoIndex) > 1) {
-                    warning(paste("packages",
+                if(length(packagesWithNoIndex) > 0)
+                    warning(paste("packages with demos",
+                                  "but no index:",
                                   paste(sQuote(packagesWithNoIndex),
-                                        collapse=", "),
-                                  "contain demos but no index"))
-                }
-                else if(length(packagesWithNoIndex) == 1)
-                    warning(paste("package",
-                                  sQuote(packagesWithNoIndex),
-                                  "contains demos but no index"))
+                                        collapse = ",")))
             }
         }
 
@@ -208,9 +195,7 @@ function(topic, device = getOption("device"),
     available <- character(0)
     paths <- file.path(paths, "demo")
     for(p in paths) {
-        files <- list.files(p)
-        ## Files with extension 'R' or 'r'
-        files <- files[sub(".*\\.", "", files) %in% c("R", "r")]
+        files <- basename(tools::listFilesWithType(p, "demo"))
         ## Files with base names matching topic
         files <- files[grep(topic, files, fixed = TRUE)]
         if(length(files) > 0)
@@ -251,12 +236,15 @@ function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
 	warning(paste("No help file found for", sQuote(topic)))
 	return(invisible())
     }
-    comp <- strsplit(file, .Platform$file.sep)[[1]]
-    pkg <- comp[length(comp) - 2]
-    if(length(file) > 1)
+    packagePath <- dirname(dirname(file))
+    if(length(file) > 1) {
+        packagePath <- packagePath[1]
 	warning(paste("More than one help file found: using package",
-                      sQuote(pkg)))
-    lib <- sub(file.path("", pkg, "R-ex", ".*\\.R"), "", file[1])
+                      sQuote(basename(packagePath))))
+        file <- file[1]
+    }
+    pkg <- basename(packagePath)
+    lib <- dirname(packagePath)
     ## experimental code
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
