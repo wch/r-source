@@ -90,8 +90,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%z}}{(output only.) Offset from Greenwich, so
       \code{-0800} is 8 hours west of Greenwich.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
-      string (empty if not available).  Note: do not use this on Linux
-      unless the \code{TZ} environment variable is set.}
+      string (empty if not available).}
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
@@ -180,16 +179,13 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 #ifdef windows
   Windows users will find no help page for \code{strptime}: code based
   on \samp{glibc} is used (with corrections), so all the format
-  specifiers desfribed here are supported, but with no alternative
+  specifiers described here are supported, but with no alternative
   number representation nor era available in any locale.
 #endif
 }
 \examples{
 ## locale-specific version of date()
-format(Sys.time(), "\%a \%b \%d \%X \%Y")
-## we would include the timezone as in
-## format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
-## but this crashes some Linux systems
+format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 
 ## read in date info in format 'ddmmmyyyy'
 ## This will give NA(s) in some locales; setting the C locale
