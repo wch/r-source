@@ -31,6 +31,7 @@ options(warn = 0)
 options(help.try.all.packages = FALSE)
 options(CRAN = "http://cran.r-project.org")
 options(timeout = 60)
+options(download.info = 2)
 .First <- function() {
     require("ctest", quietly=TRUE)
 }

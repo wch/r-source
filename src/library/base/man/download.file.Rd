@@ -12,15 +12,12 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
   \item{destfile}{A character string with the name where the downloaded
     file is saved.  For the \code{"internal"} method tilde-expansion is
     performed.}
-  \item{method}{Tool to be used for downloading files.  Currently
+  \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"}, \code{"lynx"} 
-    and \code{"socket"} are available.  To use \code{"wget"}
-    or \code{"lynx"} the executable must be installed on your system and
-    in your path. To use \code{"socket"} the file must be on an
-    \code{HTTP} server, in plain text, and your system must allow socket
-    connections to be opened to that server.}
-  \item{quiet}{If \code{TRUE}, suppress status messages from the download
-    tool (if any).}
+    and \code{"socket"} are available.  The default is to choose the
+    first of these which is available, on almost all systems
+    \code{"internal"}.}
+  \item{quiet}{If \code{TRUE}, suppress status messages (if any).}
   \item{mode}{character.  The mode with which to write the file. Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.}
@@ -29,23 +26,59 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
   The function \code{download.file} can be used to download a single
   file as described by \code{url} from the internet and store it in
   \code{destfile}.
-  The \code{url} must start with a type specification such as
+  The \code{url} must start with a scheme such as
   \code{"http://"}, \code{"ftp://"} or \code{"file://"}.
 
-  For the \code{"internal"} method proxies can be specified via
-  environment variables.  Setting \code{"no_proxy"} stops any proxy
-  being tried.  Otherwise the setting of \code{"http_proxy"} or
-  \code{"ftp_proxy"} (or failing that, the all upper-case version) is
-  consulted and if non-empty used as a proxy site.
-  For FTP transfers, the username and password on the proxy can be
-  specified by \code{"ftp_proxy_user"} and \code{"ftp_proxy_password"}.
+  The remaining details apply to method \code{"internal"} only.
 
-  For methods \code{"wget"} and \code{"lynx"} it makes a system call to
-  the tool given by \code{method}, and the respective program must be
-  installed on your system and be in the search path for executables.
+  The timeout for many parts of the transder can be set by the option
+  \code{timeout} which defaults to 60 seconds.
+
+  The level of detail provided during transfer can be set by the
+  \code{quiet} argument and the \code{internet.info} option.  The
+  details depend on the platform and scheme, but setting
+  \code{internet.info} to 0 gives all available details, including
+  all server responses. Using 2 (the default) gives only serious
+  messages, and 3 or more suppresses all messages.
+
+#ifdef windows
+  A progress bar tracks the transfer. If the file length is known, the
+  full width of the bar is the known length.  Otherwise the initial
+  width represents 100Kbytes and is doubled whenever the current width
+  is exceeded.
+
+  The `Internet Options' of the system are used to choose proxies and so
+  on; these are set in the Control Panel and are those used for Internet
+  Explorer.
+#endif
+
+#ifdef unix
+  Proxies can be specified via environment variables.
+  Setting \code{"no_proxy"} stops any proxy being tried.
+  Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
+  (or failing that, the all upper-case version) is consulted and if
+  non-empty used as a proxy site. For FTP transfers, the username
+  and password on the proxy can be specified by \code{"ftp_proxy_user"}
+  and \code{"ftp_proxy_password"}.
+#endif
 }
 \note{
-  Cacheing proxies and firewalls may well not allow method \code{"socket"}
-  socket to be used.
+  Methods \code{"wget"}, \code{"lynx"} and \code{"socket"} are for
+  historical compatibility.  They will block any other activity on the
+  \R process.
+  
+  For methods \code{"wget"} and \code{"lynx"} a system call is made to
+  the tool given by \code{method}, and the respective program must be
+  installed on your system and be in the search path for executables.
+
+  To use \code{"socket"} the file must be on an \code{HTTP} server,
+  in plain text, and your system must allow socket connections to be
+  opened to that server (and not via a proxy or firewall).
+}
+\seealso{
+  \code{\link{options}} to set the \code{timeout} and
+  \code{internet.info} options.
+
+  \code{url} for a finer-grained way to read data from URLs.
 }
 \keyword{utilities}

@@ -11,7 +11,7 @@ OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 gram.c: ;
 
 saveload-CFLAGS=-I../extra/xdr
-connections-CFLAGS=-I../gnuwin32/bitmap/zlib
+connections-CFLAGS=-I../gnuwin32/bitmap/zlib -I../gnuwin32
 
 ../gnuwin32/libmain.a: $(OBJS)
 
