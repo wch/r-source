@@ -218,9 +218,49 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 #else
-SEXP do_x11(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     gcall = call;
     DeviceUnavailable("X11");
 }
 #endif
+
+#if defined(Unix) && defined(Gnome)
+SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd;
+    char *display, *vmax;
+    double height, width, ps;
+    gcall = call;
+    vmax = vmaxget();
+    display = SaveString(CAR(args), 0); args = CDR(args);
+    width = asReal(CAR(args));	args = CDR(args);
+    height = asReal(CAR(args)); args = CDR(args);
+    if (width <= 0 || height <= 0)
+	errorcall(call, "invalid width or height");
+    ps = asReal(CAR(args));
+    /* Allocate and initialize the device driver data */
+    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	return 0;
+    /* Do this for early redraw attempts */
+    dd->displayList = R_NilValue;
+    GInit(&dd->dp);
+    if (!GnomeDeviceDriver(dd, display, width, height, ps)) {
+	free(dd);
+	errorcall(call, "unable to start device Gnome\n");
+    }
+    gsetVar(install(".Device"), mkString("Gnome"), R_NilValue);
+    addDevice(dd);
+    initDisplayList(dd);
+    vmaxset(vmax);
+    return R_NilValue;
+}
+#else
+SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    gcall = call;
+    DeviceUnavailable("Gnome");
+}
+#endif /* Gnome */
+
+
