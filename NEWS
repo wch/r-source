@@ -68,6 +68,9 @@ NEW FEATURES
 	specified explicitly as \link[pkg]{topic} or 
 	\link[pkg:maintopic]{topic}
 
+    o	optim() has a new simulated annealing method contributed by
+	Adrian Trapletti.
+
     o   Hershey vector fonts are available in text() and contour().
         Documentation for Hershey vector fonts is in help(Hershey).
 
@@ -141,7 +144,10 @@ BUG FIXES
     o   Greek symbols are now converted correctly in HTML help (but
 	only rendered correctly on a few browsers).
 
-    o   rbind(x,y) works when x has no columns.
+    o   rbind(x, y) works when x has no columns.
+
+    o   \tabular is rendered better in latex, and long tabular
+	material is now acceptable (and split over pages).
 
 
 	**************************************************

@@ -21,12 +21,13 @@
 
 #include "Defn.h"
 #include "Rdefines.h" /* for CREATE_STRING_VECTOR */
+#include "Random.h"  /* for the random number generation in samin() */
 
 static SEXP getListElement(SEXP list, char *str)
 {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
-    
+
     for (i = 0; i < length(list); i++)
 	if (strcmp(CHAR(STRING(names)[i]), str) == 0) {
 	    elmt = VECTOR(list)[i];
@@ -41,7 +42,7 @@ static double * vect(int n)
 }
 
 
-typedef struct opt_struct 
+typedef struct opt_struct
 {
     SEXP R_fcall;    /* function */
     SEXP R_gcall;    /* gradient */
@@ -63,17 +64,20 @@ typedef unsigned char Boolean;
 static void vmmin(int n, double *b, double *Fmin, int maxit, int trace,
 		  int *mask, double abstol, double reltol, int nREPORT,
 		  OptStruct OS, int *fncount, int *grcount, int *fail);
-static void nmmin(int n, double *Bvec, double *X, double *Fmin, 
+static void nmmin(int n, double *Bvec, double *X, double *Fmin,
 		  int *fail, double abstol, double intol, OptStruct OS,
 		  double alpha, double beta, double gamma, int trace,
 		  int *fncount, int maxit);
 static void cgmin(int n, double *Bvec, double *X, double *Fmin,
-		  int *fail, double abstol, double intol, OptStruct OS, 
+		  int *fail, double abstol, double intol, OptStruct OS,
 		  int type, int trace, int *fncount, int *grcount, int maxit);
-static void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd, 
-		   double *Fmin, int *fail, OptStruct OS, 
+static void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
+		   double *Fmin, int *fail, OptStruct OS,
 		   double factr, double pgtol,
 		   int *fncount, int *grcount, int maxit, char *msg);
+static void samin(int n, double *pb, double *yb, int maxit, int tmax,
+		  double ti, int trace, OptStruct OS);
+
 
 
 static double fminfn(int n, double *p, OptStruct OS)
@@ -81,7 +85,7 @@ static double fminfn(int n, double *p, OptStruct OS)
     SEXP s, x;
     int i;
     double val;
-    
+
     PROTECT(x = allocVector(REALSXP, n));
     for (i = 0; i < n; i++) REAL(x)[i] = p[i] * (OS->parscale[i]);
     CADR(OS->R_fcall) = x;
@@ -99,11 +103,11 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 
     if (!isNull(OS->R_gcall)) { /* analytical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
-	for (i = 0; i < n; i++) 
+	for (i = 0; i < n; i++)
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
 	CADR(OS->R_gcall) = x;
 	PROTECT(s = coerceVector(eval(OS->R_gcall, OS->R_env), REALSXP));
-	for (i = 0; i < n; i++) 
+	for (i = 0; i < n; i++)
 	    df[i] = REAL(s)[i] * (OS->parscale[i])/(OS->fnscale);
 	UNPROTECT(2);
     } else { /* numerical derivatives */
@@ -162,9 +166,9 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP par, fn, gr, method, options, tmp, slower, supper;
     SEXP res, value, counts, conv;
-    int i, npar=0, *mask, trace, maxit, fncount, grcount, nREPORT;
+    int i, npar=0, *mask, trace, maxit, fncount, grcount, nREPORT, tmax;
     int ifail = 0;
-    double *dpar, *opar, val, abstol, reltol;
+    double *dpar, *opar, val, abstol, reltol, temp;
     char *tn;
     OptStruct OS;
     char *vmax;
@@ -179,7 +183,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isFunction(fn)) errorcall(call, "fn is not a function");
     args = CDR(args); gr = CAR(args);
     args = CDR(args); method = CAR(args);
-    if (!isString(method)|| LENGTH(method) != 1) 
+    if (!isString(method)|| LENGTH(method) != 1)
 	errorcall(call, "invalid method argument");
     tn = CHAR(STRING(method)[0]);
     args = CDR(args); options = CAR(args);
@@ -191,21 +195,21 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     trace = asInteger(getListElement(options, "trace"));
     OS->fnscale = asReal(getListElement(options, "fnscale"));
     tmp = getListElement(options, "parscale");
-    if (LENGTH(tmp) != npar) 
+    if (LENGTH(tmp) != npar)
 	errorcall(call, "parscale is of the wrong length");
     PROTECT(tmp = coerceVector(tmp, REALSXP));
     OS->parscale = vect(npar);
     for (i = 0; i < npar; i++) OS->parscale[i] = REAL(tmp)[i];
     UNPROTECT(1);
-    for (i = 0; i < npar; i++) 
+    for (i = 0; i < npar; i++)
 	dpar[i] = REAL(par)[i] / (OS->parscale[i]);
     PROTECT(res = allocVector(VECSXP, 5));
     PROTECT(value = allocVector(REALSXP, 1));
     PROTECT(counts = allocVector(INTSXP, 2));
     PROTECT(conv = allocVector(INTSXP, 1));
     abstol = asReal(getListElement(options, "abstol"));
-    reltol = asReal(getListElement(options, "reltol"));    
-    maxit = asInteger(getListElement(options, "maxit"));	
+    reltol = asReal(getListElement(options, "reltol"));
+    maxit = asInteger(getListElement(options, "maxit"));
     if (maxit == NA_INTEGER) error("maxit is not an integer");
 
     if (strcmp(tn, "Nelder-Mead") == 0) {
@@ -214,21 +218,33 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	alpha = asReal(getListElement(options, "alpha"));
 	beta = asReal(getListElement(options, "beta"));
 	gamma = asReal(getListElement(options, "gamma"));
-	nmmin(npar, dpar, opar, &val, &ifail, abstol, reltol, OS, 
+	nmmin(npar, dpar, opar, &val, &ifail, abstol, reltol, OS,
 	      alpha, beta, gamma, trace, &fncount, maxit);
-	for (i = 0; i < npar; i++)  
+	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = opar[i] * (OS->parscale[i]);
 	grcount = NA_INTEGER;
-	
+
+    }
+    else if (strcmp(tn, "SANN") == 0) {
+      tmax = asInteger(getListElement(options, "tmax"));
+      temp = asReal(getListElement(options, "temp"));
+      if (tmax == NA_INTEGER) error("tmax is not an integer");
+      samin (npar, dpar, &val, maxit, tmax, temp, trace, OS);
+      for (i = 0; i < npar; i++)
+	  REAL(par)[i] = dpar[i] * (OS->parscale[i]);
+      fncount = maxit;
+      grcount = NA_INTEGER;
+
     } else if (strcmp(tn, "BFGS") == 0) {
 	SEXP ndeps;
+
 	nREPORT = asInteger(getListElement(options, "REPORT"));
 	if (!isNull(gr)) {
 	    if (!isFunction(gr)) error("gr is not a function");
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
-	    ndeps = getListElement(options, "ndeps");	
+	    ndeps = getListElement(options, "ndeps");
 	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
@@ -237,9 +253,9 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	mask = (int *) R_alloc(npar, sizeof(int));
 	for (i = 0; i < npar; i++) mask[i] = 1;
-	vmmin(npar, dpar, &val, maxit, trace, mask, abstol, reltol, 
+	vmmin(npar, dpar, &val, maxit, trace, mask, abstol, reltol,
 	      nREPORT, OS, &fncount, &grcount, &ifail);
-	for (i = 0; i < npar; i++)  
+	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
     } else if (strcmp(tn, "CG") == 0) {
@@ -252,16 +268,16 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
-	    ndeps = getListElement(options, "ndeps");	
+	    ndeps = getListElement(options, "ndeps");
 	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
 	    UNPROTECT(1);
 	}
-	cgmin(npar, dpar, opar, &val, &ifail, abstol, reltol, OS, type, trace, 
+	cgmin(npar, dpar, opar, &val, &ifail, abstol, reltol, OS, type, trace,
 	      &fncount, &grcount, maxit);
-	for (i = 0; i < npar; i++)  
+	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = opar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
     } else if (strcmp(tn, "L-BFGS-B") == 0) {
@@ -279,7 +295,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
-	    ndeps = getListElement(options, "ndeps");	
+	    ndeps = getListElement(options, "ndeps");
 	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
@@ -302,14 +318,14 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	OS->upper = upper;
 	lbfgsb(npar, lmm, dpar, lower, upper, nbd, &val, &ifail, OS,
 	       factr, pgtol, &fncount, &grcount, maxit, msg);
-	for (i = 0; i < npar; i++)  
+	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
 	PROTECT(smsg = allocVector(STRSXP, 1));
 	STRING(smsg)[0] = CREATE_STRING_VECTOR(msg);
 	VECTOR(res)[4] = smsg;
 	UNPROTECT(1);
-    } else 
+    } else
 	errorcall(call, "unknown method");
 
     REAL(value)[0] = val * (OS->fnscale);
@@ -344,7 +360,7 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args); options = CAR(args);
     OS->fnscale = asReal(getListElement(options, "fnscale"));
     tmp = getListElement(options, "parscale");
-    if (LENGTH(tmp) != npar) 
+    if (LENGTH(tmp) != npar)
 	errorcall(call, "parscale is of the wrong length");
     PROTECT(tmp = coerceVector(tmp, REALSXP));
     OS->parscale = vect(npar);
@@ -358,7 +374,7 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else {
 	PROTECT(OS->R_gcall = R_NilValue); /* for balance */
     }
-    ndeps = getListElement(options, "ndeps");	
+    ndeps = getListElement(options, "ndeps");
     if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
     OS->ndeps = vect(npar);
     PROTECT(ndeps = coerceVector(ndeps, REALSXP));
@@ -366,7 +382,7 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     PROTECT(ans = allocMatrix(REALSXP, npar, npar));
     dpar = vect(npar);
-    for (i = 0; i < npar; i++) 
+    for (i = 0; i < npar; i++)
 	dpar[i] = REAL(par)[i] / (OS->parscale[i]);
     df1 = vect(npar);
     df2 = vect(npar);
@@ -393,7 +409,7 @@ static double ** matrix(int nrh, int nch)
     double **m;
 
     m = (double **) R_alloc((nrh + 1), sizeof(double *));
-    for (i = 0; i <= nrh; i++) 
+    for (i = 0; i <= nrh; i++)
 	m[i] = (double*) R_alloc((nch + 1), sizeof(double));
     return m;
 }
@@ -404,7 +420,7 @@ static double ** Lmatrix(int n)
     double **m;
 
     m = (double **) R_alloc(n, sizeof(double *));
-    for (i = 0; i < n; i++) 
+    for (i = 0; i < n; i++)
 	m[i] = (double *) R_alloc((i + 1), sizeof(double));
     return m;
 }
@@ -421,8 +437,8 @@ in J.C. Nash, `Compact Numerical Methods for Computers', 2nd edition,
 converted by p2c then re-crafted by B.D. Ripley */
 
 static void
-vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask, 
-      double abstol, double reltol, int nREPORT, OptStruct OS, 
+vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
+      double abstol, double reltol, int nREPORT, OptStruct OS,
       int *fncount, int *grcount, int *fail)
 {
     Boolean accpoint, enough;
@@ -451,7 +467,7 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
     fmingr(n, b, g, OS);
     iter++;
     ilast = gradcount;
-    
+
     do {
 	if (ilast == gradcount) {
 	    for (i = 0; i < n; i++) {
@@ -485,14 +501,14 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 		if (count < n) {
 		    f = fminfn(n, b, OS);
 		    funcount++;
-		    accpoint = R_FINITE(f) && 
+		    accpoint = R_FINITE(f) &&
 			(f <= *Fmin + gradproj * steplength * acctol);
 		    if (!accpoint) {
 			steplength *= stepredn;
 		    }
 		}
 	    } while (!(count == n || accpoint));
-	    enough = (f > abstol) && 
+	    enough = (f > abstol) &&
 		fabs(f - *Fmin) > reltol * (fabs(*Fmin) + reltol);
 	    /* stop if value if small or if relative change is low */
 	    if (!enough) {
@@ -562,9 +578,9 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 
 
 static
-void nmmin(int n, double *Bvec, double *X, double *Fmin, 
-	   int *fail, double abstol, double intol, OptStruct OS, 
-	   double alpha, double beta, double gamma, int trace, 
+void nmmin(int n, double *Bvec, double *X, double *Fmin,
+	   int *fail, double abstol, double intol, OptStruct OS,
+	   double alpha, double beta, double gamma, int trace,
 	   int *fncount, int maxit)
 {
     char action[50];
@@ -742,7 +758,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 		}
 	    }
 
-	} while (!(VH <= VL + convtol || VL <= abstol || 
+	} while (!(VH <= VL + convtol || VL <= abstol ||
 		   shrinkfail || funcount > maxit));
 
     }
@@ -759,8 +775,8 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 }
 
 static
-void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail, 
-	   double abstol, double intol, OptStruct OS, int type, int trace, 
+void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
+	   double abstol, double intol, OptStruct OS, int type, int trace,
 	   int *fncount, int *grcount, int maxit)
 {
     Boolean accpoint;
@@ -775,19 +791,19 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     if (trace) Rprintf("  Conjugate gradients function minimiser\n");
 
     c = vect(n); g = vect(n); t = vect(n);
-    
+
     setstep = 1.7;
     if (trace)
 	switch (type) {
-	    
+
 	case 1:
 	    Rprintf("Method: Fletcher Reeves\n");
 	    break;
-	    
+
 	case 2:
 	    Rprintf("Method: Polak Ribiere\n");
 	    break;
-	    
+
 	case 3:
 	    Rprintf("Method: Beale Sorenson\n");
 	    break;
@@ -922,7 +938,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 		    oldstep = 1.0;
 	    } while ((count != n) && (G1 > tol) && (cycle != cyclimit));
 
-	} while ((cycle != 1) || 
+	} while ((cycle != 1) ||
 		 ((count != n) && (G1 > tol) && *Fmin > abstol));
 
     }
@@ -935,14 +951,14 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     *grcount = gradcount;
 }
 
-void setulb(int n, int m, double *x, double *l, double *u, int *nbd, 
-	    double *f, double *g, double factr, double *pgtol, 
-	    double *wa, int * iwa, char *task, int iprint, 
+void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
+	    double *f, double *g, double factr, double *pgtol,
+	    double *wa, int * iwa, char *task, int iprint,
 	    int *lsave, int *isave, double *dsave);
 
 static
-void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd, 
-	    double *Fmin, int *fail, OptStruct OS, 
+void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
+	    double *Fmin, int *fail, OptStruct OS,
 	    double factr, double pgtol,
 	    int *fncount, int *grcount, int maxit, char *msg)
 {
@@ -961,7 +977,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 /*	Rprintf("in lbfgsb - %s\n", task);*/
 	if (strncmp(task, "FG", 2) == 0) {
 	    f = fminfn(n, x, OS);
-	    if (!R_FINITE(f)) 
+	    if (!R_FINITE(f))
 		error("L-BFGS-B needs finite values of fn");
 	    fmingr(n, x, g, OS);
 	} else if (strncmp(task, "NEW_X", 5) == 0) {
@@ -985,3 +1001,73 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 }
 
 
+#define E1 1.7182818  /* exp(1.0)-1.0 */
+#define STEPS 100
+
+static void samin(int n, double *pb, double *yb, int maxit, int tmax,
+		  double ti, int trace, OptStruct OS)
+
+/* Given a starting point pb[0..n-1], simulated annealing minimization
+   is performed on the function fminfn. The starting temperature
+   is input as ti. To make sann work silently set trace to zero.
+   sann makes in total maxit function evaluations, tmax
+   evaluations at each temperature. Returned quantities are pb
+   (the location of the minimum), and yb (the minimum value of
+   the function func).  Author: Adrian Trapletti
+*/
+{
+    long i, j;
+    int k, its, itdoc;
+    double t, y, dy, ytry, scale;
+    double *p, *dp, *ptry;
+
+    p = vect (n); dp = vect (n); ptry = vect (n);
+    GetRNGstate();
+    *yb = fminfn (n, pb, OS);  /* init best system state pb, *yb */
+    if (!R_FINITE(*yb)) *yb = big;
+    for (j = 0; j < n; j++) p[j] = pb[j];
+    y = *yb;  /* init system state p, y */
+    if (trace)
+    {
+	Rprintf ("sann objective function values\n");
+	Rprintf ("initial       value %f\n", *yb);
+    }
+    scale = 1.0/ti;
+    its = itdoc = 1;
+    while (its < maxit) { /* cool down system */
+	t = ti/log((double)its + E1);  /* temperature annealing schedule */
+	k = 1;
+	while ((k <= tmax) && (its < maxit))  /* iterate at constant temperature */
+	{
+	    for (i = 0; i < n; i++)
+		dp[i] = scale * t * norm_rand();  /* random perturbation */
+	    for (i = 0; i < n; i++)
+		ptry[i] = p[i] + dp[i];  /* new candidate point */
+	    ytry = fminfn (n, ptry, OS);
+	    if (!R_FINITE(ytry)) ytry = big;
+	    dy = ytry - y;
+	    if ((dy <= 0.0) || (unif_rand() < exp(-dy/t))) {  /* accept new point? */
+		for (j = 0; j < n; j++) p[j] = ptry[j];
+		y = ytry;  /* update system state p, y */
+		if (y <= *yb)  /* if system state is best, then update best system state pb, *yb */
+		{
+		    for (j = 0; j < n; j++) pb[j] = p[j];
+		    *yb = y;
+		}
+	    }
+	    its++; k++;
+	}
+	if ((trace) && ((itdoc % STEPS) == 0))
+	    Rprintf("iter %8d value %f\n", its - 1, *yb);
+	itdoc++;
+    }
+    if (trace)
+    {
+	Rprintf ("final         value %f\n", *yb);
+	Rprintf ("sann stopped after %d iterations\n", its - 1);
+    }
+    PutRNGstate();
+}
+
+#undef E1
+#undef STEPS

@@ -1,5 +1,5 @@
 optim <- function(par, fn, gr = NULL,
-                  method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B"),
+                  method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
                   lower = -Inf, upper = Inf,
                   control = list(), hessian = FALSE, ...)
 {
@@ -10,8 +10,10 @@ optim <- function(par, fn, gr = NULL,
                 alpha = 1.0, beta = 0.5, gamma = 2.0,
                 REPORT = 10,
                 type = 1,
-                lmm = 5, factr = 1e7, pgtol = 0)
+                lmm = 5, factr = 1e7, pgtol = 0,
+                tmax = 10, temp = 10.0)
     if (method == "Nelder-Mead") con$maxit <- 500
+    if (method == "SANN") con$maxit <- 10000
     con[names(control)] <- control
     npar <- length(par)
     if((length(lower) > 1 || length(upper) > 1 ||

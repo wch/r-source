@@ -8,7 +8,7 @@
 }
 \usage{
 optim(par, fn, gr = NULL,
-      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B"),
+      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
       lower = -Inf, upper = +Inf,
       control = list(), hessian = FALSE), \dots)
 }
@@ -18,7 +18,8 @@ optim(par, fn, gr = NULL,
    parameters over which minimization is to take place. It should return
    a scalar result.}
  \item{gr}{A function to return the gradient. Not needed for the
-   \code{"Nelder-Mead"} method. If it is \code{NULL} and it is needed, a
+   \code{"Nelder-Mead"} and \code{"SANN"} method. If it is \code{NULL}
+   and it is needed, a
    finite-difference approximation will be used. It is guaranteed that
    \code{gr} will be called immediately after a call to \code{fn} at
    the same parameter values.}
@@ -37,28 +38,42 @@ optim(par, fn, gr = NULL,
   (1965), that uses only function values and is robust but relatively
   slow. It will work reasonably well for non-differentiable functions.
 
-  The second method is a quasi-Newton method (also known as a variable
+  Method \code{"BFGS"} is a quasi-Newton method (also known as a variable
   metric algorithm), specifically that published simultaneously in 1970
   by Broyden, Fletcher, Goldfarb and Shanno. This uses function values
   and gradients to build up a picture of the surface to be optimized.
 
-  The third method is a conjugate gradients method based on that by
+  Method \code{"CG"} is a conjugate gradients method based on that by
   Fletcher and Reeves (1964) (but with the option of Polak--Ribiere or
   Beale--Sorenson updates).  Conjugate gradient methods will generally
   be more fragile that the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
   
-  The fourth method is that of Byrd \emph{et. al.} (1994) which allows
-  \emph{box constraints}, that is each variable can be given a lower
+  Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1994) which
+  allows \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton
   method. If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
+  Method \code{"SANN"} is a variant of simulated annealing 
+  given in Belisle (1992). Simulated-annealing belongs to the class of
+  stochastic global optimization methods. It uses only function values
+  but is relatively slow. It will also work for non-differentiable
+  functions. This implementation uses the Metropolis function for the
+  acceptance probablity. The next candidate point is generated from a
+  Gaussian Markov kernel with scale proportional to the actual temperature. 
+  Temperatures are decreased according to the logarithmic cooling
+  schedule as given in Belisle (1992, p. 890). Note that the
+  \code{"SANN"} method depends critically on the settings of the
+  control parameters.  It is not a general-purpose method but can be
+  very useful in getting to a good value on a very rough surface.
+  
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
   have a computable finite value of \code{fn}.
-  (Except for method \code{"L-BFGS-B"}.)
+  (Except for method \code{"L-BFGS-B"} where the values should always be
+  finite.)
 
   \code{optim} can be used recursively, and for a single parameter
   as well as many.
@@ -80,8 +95,10 @@ optim(par, fn, gr = NULL,
       approximation to the gradient, on \code{par/parscale}
       scale. Defaults to \code{1e-3}.}
     \item{\code{maxit}}{The maximum number of iterations. Defaults to
-      \code{100} for the derivative-based methods,
-      and \code{500} for \code{"Nelder-Mead"}.}
+      \code{100} for the derivative-based methods, and
+      \code{500} for \code{"Nelder-Mead"}. For \code{"SANN"}
+      \code{maxit} gives the total number of function evaluations. There is
+      no other stopping criteria. Defaults to \code{10000}.}
     \item{\code{abstol}}{The absolute convergence tolerance. Only
       useful for non-negative functions, as a tolerance for reaching zero.}
     \item{\code{reltol}}{Relative convergence tolerance. The algorithm
@@ -105,7 +122,13 @@ optim(par, fn, gr = NULL,
       that is a tolerance of about \code{1e-8}.}
     \item{\code{pgtol}}{helps controls the convergence of the \code{"L-BFGS-B"}
       method. It is a tolerance on the projected gradient in the current
-      search direction. This defaults to zero, when the check is suppressed.}
+      search direction. This defaults to zero, when the check is
+      suppressed.}
+    \item{\code{temp} controls the \code{"SANN"} method. It is the
+      starting temperature for the cooling schedule. Defaults to
+      \code{10}.}  
+    \item{\code{tmax} is the number of function evaluations at each
+      temperature for the \code{"SANN"} method. Defaults to \code{10}.}
   }
 }
 \value{
@@ -136,6 +159,10 @@ optim(par, fn, gr = NULL,
     box constraints are active.}
 }
 \references{
+  Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
+  annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probabaility},
+  \bold{29}, 885--895.
+  
   Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
   memory algorithm for bound constrained optimization.
   \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
@@ -157,6 +184,8 @@ optim(par, fn, gr = NULL,
 
   The code for method \code{"L-BFGS-B"} is based on Fortran code by
   Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib.
+
+  The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
 
 \seealso{\code{\link{nlm}}, \code{\link{optimize}}}
@@ -187,6 +216,15 @@ flb <- function(x)
 optim(rep(3, 25), flb, NULL, "L-BFGS-B",
       lower=rep(2, 25), upper=rep(4, 25))
 
+## "wild" function
+fw <- function (x)
+    10*sin(0.3*x)*sin(1.3*x^2) + 0.00001*x^4 + 0.2*x+80
+
+plot(fw, -50, 50, n=1000)  # global minimum at about -15.81515
+res <- optim(50, fw, method="SANN",
+             control=list(maxit=20000, temp=20, parscale=20))
+res
+optim(res$par, fw, method="BFGS")
 }
 \keyword{nonlinear}
 \keyword{optimize}
