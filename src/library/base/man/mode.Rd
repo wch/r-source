@@ -11,18 +11,20 @@ storage.mode(x) <- "<mode>"
 \alias{storage.mode}
 \alias{storage.mode<-}
 \description{
-\code{mode} and \code{storage.mode} provide means of determining the
-type or storage mode of an object.
-Both return a character string giving the (storage) mode
-of the object -- often the same -- both relying on the output of
-\code{\link{typeof}(x)}, see the example below.
+  \code{mode} and \code{storage.mode} provide means of determining the
+  type or storage mode of an object.  Both return a character string
+  giving the (storage) mode of the object -- often the same -- both
+  relying on the output of \code{\link{typeof}(x)}, see the example
+  below.
 
-The two assignment versions are currently identical;
-\code{mode(x) <- newmode} and \code{storage.mode(x) <- newmode} change the
-\code{mode} or \code{storage.mode} of object \code{x} to \code{newmode}.
+  The two assignment versions are currently identical.  Both
+  \code{mode(x) <- newmode} and \code{storage.mode(x) <- newmode} change
+  the \code{mode} or \code{storage.mode} of object \code{x} to
+  \code{newmode}.
 }
 \seealso{
-\code{\link{typeof}} for the R-internal ``mode'', \code{\link{attributes}}.
+  \code{\link{typeof}} for the R-internal ``mode'',
+  \code{\link{attributes}}.
 }
 \examples{
 sapply(options(),mode)
