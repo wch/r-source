@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.18 $ ';
+my $revision = ' $Revision: 1.19 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -195,7 +195,7 @@ foreach $pkg (@ARGV){
 
     
 sub deleteJunkFiles {
-    unlink($_) if /^(\.Rdata|\.Rhistory)$/;
+    unlink($_) if /^(\.RData|\.Rhistory)$/;
     if(/^DESCRIPTION$/){
 	unlink($_) if (-f "DESCRIPTION.in");
     }

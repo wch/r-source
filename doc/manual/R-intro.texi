@@ -6454,7 +6454,7 @@ Do not read the user's profile at startup.
 @item --restore
 @itemx --no-restore
 @itemx --no-restore-data
-Control whether saved images (file @file{.Rdata} in the directory where
+Control whether saved images (file @file{.RData} in the directory where
 @R{} was started) should be restored at startup or not.  The default is
 to restore. (@option{--no-restore} implies all the specific
 @option{--no-restore-*} options.)
@@ -6679,7 +6679,7 @@ Suppress reading of @file{.Renviron}.
 @item --restore
 @itemx --no-restore
 @itemx --no-restore-data
-Control whether saved images (file @file{.Rdata} in the directory where
+Control whether saved images (file @file{.RData} in the directory where
 @R{} was started) should be restored at startup or not.
 The default is to restore. (@option{--no-restore} implies all the specific
 @option{--no-restore-*} options.)
