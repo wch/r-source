@@ -2353,7 +2353,7 @@ function(dir) {
     ## the package name?
     vignetteDir <- file.path(dir, "inst", "doc")
     if(fileTest("-d", vignetteDir)
-       && length(listFilesWithType(vignetteDir), "vignette")) {
+       && length(listFilesWithType(vignetteDir, "vignette"))) {
         reqs <- .buildVignetteIndex(dir)$Depends
         reqs <- reqs[!reqs %in% c(depends, suggests, packageName)]
         if(length(reqs))
