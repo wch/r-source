@@ -83,7 +83,7 @@ char R_problem_buf[R_PROBLEM_BUFSIZE];
 #define AS_COMPLEX(x)		coerceVector(x, CPLXSXP)
 #define AS_VECTOR(x)		coerceVector(x, VECSXP)
 
-#define NEW_LIST(n)		allocList(n)
+#define NEW_LIST(n)		allocVectpr(VECSXP, n)
 #define NEW_LOGICAL(n)		allocVector(LGLSXP, n)
 #define NEW_INTEGER(n)		allocVector(INTSXP,n)
 #define NEW_NUMERIC(n)		allocVector(REALSXP, n)
