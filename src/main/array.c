@@ -27,6 +27,9 @@
 /* old versions of R used pair-based lists for dimnames */
 /* whereas recent versions use vector bassed lists */
 
+/* FIXME : This is nonsense.  When the "dimnames" attribute is */
+/* grabbed off an array it is always adjusted to be a vector. */
+
 SEXP GetRowNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
@@ -61,7 +64,8 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isVector(vals) || isList(vals)) {
 	if (length(vals) < 0)
 	    errorcall(call, "argument has length zero\n");
-    } else errorcall(call, "invalid matrix element type\n");
+    }
+    else errorcall(call, "invalid matrix element type\n");
 
     if (!isNumeric(snr) || !isNumeric(snc))
 	error("non-numeric matrix extent\n");
@@ -528,16 +532,12 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-#ifdef NEWLIST
 	    SEXP dimnames = allocVector(VECSXP, 2);
 	    if (xdims != R_NilValue)
 		VECTOR(dimnames)[0] = VECTOR(xdims)[0];
 	    if (ydims != R_NilValue)
 		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
 	    setAttrib(ans, R_DimNamesSymbol, dimnames);
-#else
-	    setAttrib(ans, R_DimNamesSymbol, list2(CAR(xdims), CADR(ydims)));
-#endif
 	}
     }
     else {
@@ -551,16 +551,12 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-#ifdef NEWLIST
 	    SEXP dimnames = allocVector(VECSXP, 2);
 	    if (xdims != R_NilValue)
 		VECTOR(dimnames)[0] = VECTOR(xdims)[1];
 	    if (ydims != R_NilValue)
 		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
 	    setAttrib(ans, R_DimNamesSymbol, dimnames);
-#else
-	    setAttrib(ans, R_DimNamesSymbol, list2(CADR(xdims), CADR(ydims)));
-#endif
 	}
     }
     UNPROTECT(3);

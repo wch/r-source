@@ -49,11 +49,7 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	    if(TYPEOF(s) == INTSXP && length(s) == 1) {
 		s = getAttrib(vec, R_DimNamesSymbol);
 		if(!isNull(s))
-#ifdef NEWLIST
 		    return VECTOR(s)[0];
-#else
-		    return CAR(s);
-#endif
 	    }
 	}
 	if (isList(vec) || isLanguage(vec)) {
@@ -77,9 +73,9 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	    return R_NilValue;
 	}
     }
+    /* This is where the old/new list ajustment happens. */
     for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s))
 	if (TAG(s) == name) {
-#ifdef NEWLIST
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP) {
 		SEXP new, old;
 		int i;
@@ -93,7 +89,6 @@ SEXP getAttrib(SEXP vec, SEXP name)
 		NAMED(new) = NAMED(vec);
 		return new;
 	    }
-#endif
 	    NAMED(CAR(s)) = NAMED(vec);
 	    return CAR(s);
 	}
@@ -290,15 +285,10 @@ SEXP classgets(SEXP vec, SEXP class)
 	    OBJECT(vec) = 0;
 	}
 	else {
-	    /*
-#ifdef NEWLIST
-	    if (streql(CHAR(STRING(class)[0]), "data.frame") && !isNewList(vec))
-		error("attempt to make non-list a data frame\n");
-#else
-	    if (streql(CHAR(STRING(class)[0]), "data.frame") && !isList(vec))
-		error("attempt to make non-list a data frame\n");
-#endif
-	    */
+	    /* When data frames where a special data type */
+	    /* we had more exhaustive checks here.  Now that */
+	    /* use JMCs interpreted code, we don't need this */
+	    /* FIXME : The whole "classgets" may as well die. */
 	    installAttrib(vec, R_ClassSymbol, class);
 	    OBJECT(vec) = 1;
 	}
@@ -428,17 +418,14 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 
     if (!isArray(vec) && !isList(vec))
 	error("dimnames applied to non-array\n");
-#ifdef NEWLIST
-    if (!isList(val) && !isNewList(val))
-#else
-    if (!isList(val))
-#endif
+    /* This is probably overkill, but you never know; */
+    /* there may be old pair-lists out there */
+    if (!isPairList(val) && !isNewList(val))
 	error("dimnames must be a list\n");
     dims = getAttrib(vec, R_DimSymbol);
     if ((k = LENGTH(dims)) != length(val))
 	error("length of dimnames must match that of dims\n");
-
-#ifdef NEWLIST
+    /* Old list to new list */
     if (isList(val)) {
 	SEXP newval;
 	newval = allocVector(VECSXP, k);
@@ -471,31 +458,6 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	for (val = vec; !isNull(val); val = CDR(val))
 	    TAG(val) = install(CHAR(STRING(top)[i++]));
     }
-#else
-    top = val;
-    for (i = 0; i < k; i++) {
-	if (CAR(val) != R_NilValue) {
-	    if (!isVector(CAR(val)))
-		error("invalid type for dimname (must be a vector)\n");
-	    if (INTEGER(dims)[i] != LENGTH(CAR(val)) && LENGTH(CAR(val)) != 0)
-		error("length of dimnames element not equal to array extent\n");
-	    if (LENGTH(CAR(val)) == 0) {
-		CAR(val) = R_NilValue;
-	    }
-	    else if (!isString(CAR(val))) {
-		CAR(val) = coerceVector(CAR(val), STRSXP);
-	    }
-	}
-	val = CDR(val);
-    }
-    installAttrib(vec, R_DimNamesSymbol, top);
-    if (isList(vec) && k == 1) {
-	top = CAR(top);
-	i = 0;
-	for (val = vec; !isNull(val); val = CDR(val))
-	    TAG(val) = install(CHAR(STRING(top)[i++]));
-    }
-#endif
     UNPROTECT(2);
     return (vec);
 }
@@ -567,7 +529,6 @@ SEXP dimgets(SEXP vec, SEXP val)
     return vec;
 }
 
-#ifdef NEWLIST
 SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP attrs, blank, names, namesattr, value;
@@ -581,7 +542,8 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nvalues++;
     }
     /* FIXME */
-    if (nvalues <= 0) return R_NilValue;
+    if (nvalues <= 0)
+	return R_NilValue;
     /* FIXME */
     PROTECT(value = allocVector(VECSXP, nvalues));
     PROTECT(names = allocVector(STRSXP, nvalues));
@@ -606,32 +568,12 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(3);
     return value;
 }
-#else
-SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP s;
-    s = R_NilValue;
-    if (isList(CAR(args)))
-	s = getAttrib(CAR(args), R_NamesSymbol);
-    PROTECT(s);
-    if (s != R_NilValue) {
-	s = CONS(s, ATTRIB(CAR(args)));
-	TAG(s) = R_NamesSymbol;
-    }
-    else
-	s = ATTRIB(CAR(args));
-    UNPROTECT(1);
-    NAMED(s) = NAMED(CAR(args));
-    return s;
-}
-#endif
 
 /* NOTE: The following code ensures that when an attribute list */
 /* is attached to an object, that the "dim" attibute is always */
 /* brought to the front of the list.  This ensures that when both */
 /* "dim" and "dimnames" are set that the "dim" is attached first. */
 
-#ifdef NEWLIST
 SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP object, attrs, names;
@@ -698,60 +640,6 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return object;
 }
-#else
-static SEXP dimptr;
-
-static SEXP TrimDim(SEXP l)
-{
-    if (l != R_NilValue) {
-	if (TAG(l) == R_DimSymbol) {
-	    dimptr = l;
-	    return CDR(l);
-	}
-	else {
-	    CDR(l) = TrimDim(CDR(l));
-	    return l;
-	}
-    }
-    return R_NilValue;
-}
-
-SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP s, t;
-    if (CAR(args) == R_NilValue) {
-	warning("attempt to set attributes on NULL\n");
-	return(R_NilValue);
-    }
-    if (NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
-    s = CAR(args);
-    t = CADR(args);
-    if (isList(s))
-	setAttrib(s, R_NamesSymbol, R_NilValue);
-    ATTRIB(s) = R_NilValue;
-    OBJECT(s) = 0;
-
-    if (!isList(t))
-	errorcall(call, "attributes must be in a list\n");
-
-    /* Ghastly hack to ensure that "dim" */
-    /* is always the first attribute */
-
-    dimptr = R_NilValue;
-    t = TrimDim(t);
-    if (dimptr != R_NilValue) {
-	CDR(dimptr) = t;
-	t = dimptr;
-    }
-
-    for ( ; t != R_NilValue; t = CDR(t)) {
-	if (TAG(t) == R_NilValue)
-	    error("all attributes must have names\n");
-	setAttrib(s, TAG(t), CAR(t));
-    }
-    return s;
-}
-#endif
 
 SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -759,10 +647,8 @@ SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     s = CAR(args);
     t = CADR(args);
-
     if (!isString(t) || length(t) == 0)
 	error("attribute name must be of mode character\n");
-
     return getAttrib(s, install(CHAR(STRING(t)[0])));
 }
 
@@ -789,8 +675,8 @@ SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* These provide useful shortcuts which give access to the dimnames */
-/* for matrices and arrays in a standard form. */
+/* These provide useful shortcuts which give access to */
+/* the dimnames for matrices and arrays in a standard form. */
 
 void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl)
 {
@@ -800,13 +686,8 @@ void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl)
 	*cl = R_NilValue;
     }
     else {
-#ifdef NEWLIST
 	*rl = VECTOR(dimnames)[0];
 	*cl = VECTOR(dimnames)[1];
-#else
-	*rl = CAR(dimnames);
-	*cl = CADR(dimnames);
-#endif
     }
 }
 

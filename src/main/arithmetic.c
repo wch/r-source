@@ -23,7 +23,7 @@
 #include "Mathlib.h"
 
 
-	/* Error Handling for Floating Point Errors */
+/* Error Handling for Floating Point Errors */
 
 #ifndef IEEE_754
 #include <signal.h>
@@ -40,7 +40,7 @@ static RETSIGTYPE handle_fperror(int dummy)
 #ifdef HAVE_MATHERR
 
 
-	/* Override the SVID matherr function */
+/* Override the SVID matherr function */
 
 int matherr(struct exception *exc)
 {
@@ -61,7 +61,7 @@ int matherr(struct exception *exc)
 #endif
 
 #ifdef IEEE_754
-double R_Zero_Hack = 0.0;		/* Silence the Sun compiler */
+double R_Zero_Hack = 0.0;  /* Silence the Sun compiler */
 #endif
 
 #ifdef IEEE_754
@@ -77,51 +77,51 @@ static int lw;
 
 static void establish_endianness()
 {
-	ieee_double x;
-	x.value = 1;
-	if(x.word[0] == 0x3ff00000) {
-		little_endian = 0;
-		hw = 0;
-		lw = 1;
-	}
-	else if(x.word[1] == 0x3ff00000) {
-		little_endian = 1;
-		hw = 1;
-		lw = 0;
-	}
-	else R_Suicide("couldn't determine endianness for IEEE 754!\n");
+    ieee_double x;
+    x.value = 1;
+    if (x.word[0] == 0x3ff00000) {
+	little_endian = 0;
+	hw = 0;
+	lw = 1;
+    }
+    else if (x.word[1] == 0x3ff00000) {
+	little_endian = 1;
+	hw = 1;
+	lw = 0;
+    }
+    else R_Suicide("couldn't determine endianness for IEEE 754!\n");
 }
 
 static double R_ValueOfNA(void)
 {
-	ieee_double x;
-	x.word[hw] = 0x7ff00000;
-	x.word[lw] = 1954;
-	return x.value;
+    ieee_double x;
+    x.word[hw] = 0x7ff00000;
+    x.word[lw] = 1954;
+    return x.value;
 }
 
 int R_IsNA(double x)
 {
-	if(x != x) {
-		ieee_double y;
-		y.value = x;
-		return (y.word[lw] == 1954);
-	}
-	return 0;
+    if (x != x) {
+	ieee_double y;
+	y.value = x;
+	return (y.word[lw] == 1954);
+    }
+    return 0;
 }
 
 int R_IsNaN(double x)
 {
-	if(x != x) {
-		ieee_double y;
-		y.value = x;
-		return (y.word[lw] != 1954);
-	}
-	return 0;
+    if (x != x) {
+	ieee_double y;
+	y.value = x;
+	return (y.word[lw] != 1954);
+    }
+    return 0;
 }
 #endif
 
-	/* Arithmetic Initialization */
+/* Arithmetic Initialization */
 
 void InitArithmetic()
 {
@@ -145,7 +145,7 @@ void InitArithmetic()
 }
 
 
-	/* Machine Constants */
+/* Machine Constants */
 
 void machar(int*, int*, int*, int*, int*, int*,
 	int*, int*, int*, double*, double*, double*, double*);
@@ -154,18 +154,13 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
     double eps, epsneg, xmin, xmax;
-#ifdef NEWLIST
     SEXP ans, nms;
-#else
-    SEXP a, ans;
-#endif
 
     checkArity(op, args);
 
     machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
 	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
 
-#ifdef NEWLIST
     PROTECT(ans = allocVector(VECSXP, 14));
     PROTECT(nms = allocVector(STRSXP, 14));
     STRING(nms)[0] = mkChar("double.eps");
@@ -211,58 +206,11 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
     VECTOR(ans)[13] = ScalarInteger(INT_MAX);
     setAttrib(ans, R_NamesSymbol, nms);
     UNPROTECT(2);
-#else
-    PROTECT(a = ans = allocList(14));
-
-    TAG(a) = install("double.eps"); CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = eps;	a = CDR(a);
-
-    TAG(a) = install("double.neg.eps"); CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = epsneg;	a = CDR(a);
-
-    TAG(a) = install("double.xmin"); CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = xmin;	a = CDR(a);
-
-    TAG(a) = install("double.xmax"); CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = xmax;	a = CDR(a);
-
-    TAG(a) = install("double.base"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = ibeta;	a = CDR(a);
-
-    TAG(a) = install("double.digits"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = it;	a = CDR(a);
-
-    TAG(a) = install("double.rounding"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = irnd;	a = CDR(a);
-
-    TAG(a) = install("double.guard"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = ngrd;	a = CDR(a);
-
-    TAG(a) = install("double.ulp.digits"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = machep;a = CDR(a);
-
-    TAG(a) = install("double.neg.ulp.digits"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = negep;	a = CDR(a);
-
-    TAG(a) = install("double.exponent"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = iexp;	a = CDR(a);
-
-    TAG(a) = install("double.min.exp"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = minexp;a = CDR(a);
-
-    TAG(a) = install("double.max.exp"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = maxexp;a = CDR(a);
-
-    TAG(a) = install("integer.max"); CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = INT_MAX;a = CDR(a);
-
-    UNPROTECT(1);
-#endif
     return ans;
 }
 
 
-	/* Base 2 Logarithms */
+/* Base 2 and Genreal Base Logarithms */
 
 double log2(double x)
 {
@@ -271,7 +219,7 @@ double log2(double x)
 
 double logbase(double x, double base)
 {
-	return log(x) / log(base);
+    return log(x) / log(base);
 }
 
 static SEXP unary(SEXP, SEXP);
@@ -290,13 +238,13 @@ static int naflag;
 static SEXP lcall;
 
 
-	/* Unary and Binary Operators */
+/* Unary and Binary Operators */
 
 SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
-    if( DispatchGroup("Ops", call, op, args, env, &ans) )
+    if (DispatchGroup("Ops", call, op, args, env, &ans))
 	return ans;
 
     lcall = call;
@@ -321,14 +269,14 @@ static SEXP binary(SEXP op, SEXP args)
     y = CADR(args);
 
     /* fix up NULL */
-    if( isNull(x) )
+    if (isNull(x))
 	x = CAR(args) = allocVector(REALSXP,0);
-    if( isNull(y) )
+    if (isNull(y))
 	y = CADR(args) = allocVector(REALSXP,0);
 
     if (!(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y))) {
-	    errorcall(lcall, "non-numeric argument to binary operator\n");
-	    return R_NilValue;/*-Wall*/
+	errorcall(lcall, "non-numeric argument to binary operator\n");
+	return R_NilValue;/*-Wall*/
     }
 
     mismatch = 0;
@@ -340,16 +288,16 @@ static SEXP binary(SEXP op, SEXP args)
     /* if either x or y is a matrix with length 1 and the other */
     /* is a vector we want to coerce the matrix to be a vector */
 
-    /* FIXME: danger will robinson.
+    /* FIXME: Danger Will Robinson.
      * -----  We might be trashing arguments here.
      * If we have NAMED(x) or NAMED(y) we should duplicate!
      */
-    if( xarray != yarray ) {
-	if(xarray && length(x)==1 && length(y)!=1) {
+    if (xarray != yarray) {
+	if (xarray && length(x)==1 && length(y)!=1) {
 	    x = CAR(args) = duplicate(x);
 	    setAttrib(x, R_DimSymbol, R_NilValue);
 	}
-	if(yarray && length(y)==1 && length(x)!=1) {
+	if (yarray && length(y)==1 && length(x)!=1) {
 	    y = CADR(args) = duplicate(y);
 	    setAttrib(y, R_DimSymbol, R_NilValue);
 	}
@@ -375,8 +323,8 @@ static SEXP binary(SEXP op, SEXP args)
     else {
 	nx = length(x);
 	ny = length(y);
-	if(nx > 0 && ny > 0) {
-	    if(nx > ny) mismatch = nx % ny;
+	if (nx > 0 && ny > 0) {
+	    if (nx > ny) mismatch = nx % ny;
 	    else mismatch = ny % nx;
 	}
 	PROTECT(dims = R_NilValue);
@@ -404,7 +352,7 @@ static SEXP binary(SEXP op, SEXP args)
 	    PROTECT(class = getAttrib(y, R_ClassSymbol));
 	}
     }
-    if(mismatch) warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length\n");
+    if (mismatch) warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length\n");
 
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
 	x = CAR(args) = coerceVector(x, CPLXSXP);
@@ -427,22 +375,22 @@ static SEXP binary(SEXP op, SEXP args)
 	setAttrib(x, R_ClassSymbol, class);
 	UNPROTECT(2);
     }
-/* Don't set the dims if one argument is an array of size 0
-   and the other isn't of size zero, cos they're wrong */
+    /* Don't set the dims if one argument is an array of */
+    /* size 0 and the other isn't of size zero, cos they're wrong */
     if (dims != R_NilValue) {
-      if ( !((xarray && (nx==0) && (ny!=0)) || (yarray && (ny==0) &&
-(nx!=0)))  ){
-	setAttrib(x, R_DimSymbol, dims);
-	if(xnames != R_NilValue)
-	    setAttrib(x, R_DimNamesSymbol, xnames);
-	else if(ynames != R_NilValue)
-	    setAttrib(x, R_DimNamesSymbol, ynames);
-     }
+	if (!((xarray && (nx == 0) && (ny != 0)) ||
+	      (yarray && (ny == 0) && (nx != 0)))){
+	    setAttrib(x, R_DimSymbol, dims);
+	    if (xnames != R_NilValue)
+		setAttrib(x, R_DimNamesSymbol, xnames);
+	    else if (ynames != R_NilValue)
+		setAttrib(x, R_DimNamesSymbol, ynames);
+	}
     }
     else {
-	if(length(x) == length(xnames))
+	if (length(x) == length(xnames))
 	    setAttrib(x, R_NamesSymbol, xnames);
-	else if(length(x) == length(ynames))
+	else if (length(x) == length(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
     }
 
@@ -471,7 +419,7 @@ static SEXP integer_unary(int code, SEXP s1)
     int i, n, x;
     SEXP ans;
 
-    switch(code) {
+    switch (code) {
     case PLUSOP:
 	return s1;
     case MINUSOP:
@@ -494,7 +442,7 @@ static SEXP real_unary(int code, SEXP s1)
     int i, n;
     SEXP ans;
 
-    switch(code) {
+    switch (code) {
     case PLUSOP: return s1;
     case MINUSOP:
 	ans = duplicate(s1);
@@ -617,7 +565,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		INTEGER(ans)[i] = NA_INTEGER;
-	    else if(x2 == 0)
+	    else if (x2 == 0)
 		INTEGER(ans)[i] = 0;
 	    else
 		INTEGER(ans)[i] = floor((double)x1 / (double)x2);
@@ -760,7 +708,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 	    if (ISNA(x1) || ISNA(x2))
 		REAL(ans)[i] = NA_REAL;
 	    else {
-		if(x2 == 0)
+		if (x2 == 0)
 		    REAL(ans)[i] = 0;
 		else
 		    REAL(ans)[i] = MATH_CHECK(floor(x1 / x2));
@@ -784,7 +732,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-	/* Mathematical Functions of One Argument */
+/* Mathematical Functions of One Argument */
 
 static double unavailable(double x)
 {
@@ -820,7 +768,7 @@ static SEXP math1(SEXP op, SEXP sa, double(*f)())
 		y[i] = a[i];
 	    else {
 		y[i] = MATH_CHECK(f(a[i]));
-		if(ISNAN(y[i])) {
+		if (ISNAN(y[i])) {
 #ifdef OLD
 		    y[i] = NA_REAL;
 #endif
@@ -849,7 +797,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    if( DispatchGroup("Math", call, op, args, env, &s) )
+    if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
 
     if (isComplex(CAR(args)))
@@ -919,7 +867,7 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 	mod_iterate(na, nb, ia, ib) {
 	    ai = a[ia];
 	    bi = b[ib];
-	    if(ISNAN(ai) || ISNAN(bi)) {
+	    if (ISNAN(ai) || ISNAN(bi)) {
 #ifdef IEEE_754
 		y[i] = ai + bi;
 #else
@@ -929,7 +877,7 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 	    }
 	    else {
 		y[i] = MATH_CHECK(f(ai, bi));
-		if(ISNAN(y[i])) {
+		if (ISNAN(y[i])) {
 #ifdef OLD
 		    y[i] = NA_REAL;
 #endif
@@ -944,11 +892,11 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 #else
 	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
-    if(n == na) {
+    if (n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
     }
-    else if(n == nb) {
+    else if (n == nb) {
 	ATTRIB(sy) = duplicate(ATTRIB(sb));
 	OBJECT(sy) = OBJECT(sb);
     }
@@ -956,7 +904,7 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
     return sy;
 }
 
-	/* Mathematical Functions of Two Arguments */
+/* Mathematical Functions of Two Arguments */
 
 SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1004,9 +952,9 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     int n;
-    if( DispatchGroup("Math", call, op, args, env, &s) )
+    if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
-    switch(n = length(args)) {
+    switch (n = length(args)) {
     case 1:
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
@@ -1030,7 +978,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
     lcall = call;
-    switch(n = length(args)) {
+    switch (n = length(args)) {
     case 1:
 	PROTECT(a = CAR(args));
 	PROTECT(b = allocVector(REALSXP, 1));
@@ -1057,9 +1005,9 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     int n;
-    if( DispatchGroup("Math", call, op, args, env, &s) )
+    if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
-    switch(n = length(args)) {
+    switch (n = length(args)) {
     case 1:
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
@@ -1076,13 +1024,13 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;/* never used; to keep -Wall happy */
 }
 
-SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_signif (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, b;
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
-    switch(n = length(args)) {
+    switch (n = length(args)) {
     case 1:
 	PROTECT(a = CAR(args));
 	PROTECT(b = allocVector(REALSXP, 1));
@@ -1121,8 +1069,8 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
     nb = LENGTH(sb);
     nc = LENGTH(sc);
     n = na;
-    if(n < nb) n = nb;
-    if(n < nc) n = nc;
+    if (n < nb) n = nb;
+    if (n < nc) n = nc;
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sb = coerceVector(sb, REALSXP));
     PROTECT(sc = coerceVector(sc, REALSXP));
@@ -1141,7 +1089,7 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 	    ai = a[ia];
 	    bi = b[ib];
 	    ci = c[ic];
-	    if(ISNAN(ai) || ISNAN(bi) || ISNAN(ci)) {
+	    if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci)) {
 #ifdef IEEE_754
 		y[i] = ai + bi + ci;
 #else
@@ -1150,7 +1098,7 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 	    }
 	    else {
 		y[i] = MATH_CHECK(f(ai, bi, ci));
-		if(ISNAN(y[i])) {
+		if (ISNAN(y[i])) {
 #ifdef OLD
 		    y[i] = NA_REAL;
 #endif
@@ -1165,15 +1113,15 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 #else
 	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
-    if(n == na) {
+    if (n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
     }
-    else if(n == nb) {
+    else if (n == nb) {
 	ATTRIB(sy) = duplicate(ATTRIB(sb));
 	OBJECT(sy) = OBJECT(sb);
     }
-    else if(n == nc) {
+    else if (n == nc) {
 	ATTRIB(sy) = duplicate(ATTRIB(sc));
 	OBJECT(sy) = OBJECT(sc);
     }
@@ -1181,7 +1129,7 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
     return sy;
 }
 
-	/* Mathematical Functions of Three (Real) Arguments */
+/* Mathematical Functions of Three (Real) Arguments */
 
 SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1275,9 +1223,9 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     nc = LENGTH(sc);
     nd = LENGTH(sd);
     n = na;
-    if(n < nb) n = nb;
-    if(n < nc) n = nc;
-    if(n < nd) n = nd;
+    if (n < nb) n = nb;
+    if (n < nc) n = nc;
+    if (n < nd) n = nd;
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sb = coerceVector(sb, REALSXP));
     PROTECT(sc = coerceVector(sc, REALSXP));
@@ -1299,7 +1247,7 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 	    bi = b[ib];
 	    ci = c[ic];
 	    di = d[id];
-	    if(ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di)) {
+	    if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di)) {
 #ifdef IEEE_754
 		y[i] = ai + bi + ci + di;
 #else
@@ -1308,7 +1256,7 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 	    }
 	    else {
 		y[i] = MATH_CHECK(f(ai, bi, ci, di));
-		if(ISNAN(y[i])) {
+		if (ISNAN(y[i])) {
 #ifdef OLD
 		    y[i] = NA_REAL;
 #endif
@@ -1323,19 +1271,19 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 #else
 	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
-    if(n == na) {
+    if (n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
     }
-    else if(n == nb) {
+    else if (n == nb) {
 	ATTRIB(sy) = duplicate(ATTRIB(sb));
 	OBJECT(sy) = OBJECT(sb);
     }
-    else if(n == nc) {
+    else if (n == nc) {
 	ATTRIB(sy) = duplicate(ATTRIB(sc));
 	OBJECT(sy) = OBJECT(sc);
     }
-    else if(n == nd) {
+    else if (n == nd) {
 	ATTRIB(sy) = duplicate(ATTRIB(sd));
 	OBJECT(sy) = OBJECT(sd);
     }
@@ -1343,7 +1291,7 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     return sy;
 }
 
-	/* Mathematical Functions of Four (Real) Arguments */
+/* Mathematical Functions of Four (Real) Arguments */
 
 SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 {

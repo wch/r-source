@@ -184,7 +184,7 @@ double RealFromString(SEXP x, int *warn)
 	else
 	    *warn |= WARN_NA;
     }
-    return NA_INTEGER;
+    return NA_REAL;
 }
 
 complex ComplexFromLogical(int x, int *warn)
@@ -990,7 +990,17 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid mode\n");
     }
     ans = ascommon(call, CAR(args), type);
-    ATTRIB(ans) = R_NilValue;
+    switch(TYPEOF(ans)) {
+    case NILSXP:
+    case VECSXP:
+    case EXPRSXP:
+    case LISTSXP:
+    case LANGSXP:
+	break;
+    default:
+	ATTRIB(ans) = R_NilValue;
+	break;
+    }
     UNPROTECT(1);
     return ans;
 }
@@ -1565,37 +1575,43 @@ SEXP do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     return (rfun);
 }
 
+/* FIXME : the same function occurs in bind.c */
+/* Make it universal and document it. */
+
+static SEXP ItemName(SEXP names, int i)
+{
+    if (names != R_NilValue &&
+            STRING(names)[i] != R_NilValue &&
+            CHAR(STRING(names)[i])[0] != '\0')
+        return STRING(names)[i];
+    else
+        return R_NilValue;
+}
+
 SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-#ifdef NEWLIST
-    SEXP c;
+    SEXP c, names;
     int i, n;
-#endif
     checkArity(op, args);
     if (!isString(CAR(args)) || length(CAR(args)) < 0 ||
 	streql(CHAR(STRING(CAR(args))[0]), ""))
 	errorcall(call, "first argument must be a string\n");
-#ifdef NEWLIST
     if (!isNull(CADR(args)) && !isNewList(CADR(args)))
 	errorcall(call, "second argument must be a list\n");
     n = length(CADR(args));
     PROTECT(call = allocList(n + 1));
+    TYPEOF(call) = LANGSXP;
     CAR(call) = install(CHAR(STRING(CAR(args))[0]));
-    args = CADR(args);
     c = CDR(call);
+    args = CADR(args);
+    names = getAttrib(args, R_NamesSymbol);
     for (i = 0; i < n; i++) {
 	CAR(c) = VECTOR(args)[i];
+	TAG(c) = install(CHAR(ItemName(names, i)));
 	c = CDR(c);
     }
-    UNPROTECT(1);	
-#else
-    if (!isNull(CADR(args)) && !isList(CADR(args)))
-	errorcall(call, "second argument must be a list\n");
-    call = install(CHAR(STRING(CAR(args))[0]));
-    PROTECT(call = LCONS(call, CADR(args)));
     call = eval(call, rho);
     UNPROTECT(1);
-#endif
     return call;
 }
 
