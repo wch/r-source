@@ -240,6 +240,9 @@ sub listFiles {
 		 || $_ eq "library\\survival\\survival.ps.gz") {
 	    $component = "libdocs";
 	    $mini = 0;
+	} elsif ($_ eq "modules\\iconv.dll") {
+	    $component = "main";
+	    $mini = 0;
 	} else {
 	    $component = "main";
 	}
