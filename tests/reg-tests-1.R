@@ -2189,6 +2189,14 @@ stopifnot(length(res) == 5)
 ## all length one in 1.7.0
 
 
+## PR#3035 problems with sep > ASCII(127)
+f <- tempfile()
+cat("x¦a¦b¦c¦d", "1¦7¦13¦19¦25", "2¦8¦14¦20¦26", "3¦9¦15¦21¦27",
+    "4¦10¦16¦22¦28", "5¦11¦17¦23¦29", "6¦12¦18¦24¦30", sep="\n", file=f)
+read.table(f, header = TRUE, sep ="¦")
+## failed in 1.7.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
