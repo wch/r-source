@@ -42,7 +42,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
 install-html:
 	@echo "Installing doc ..."
-	@for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg; do \
+	@for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg $(srcdir)/html/*.css; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
 	@for f in $(srcdir)/html/search/*.class \
