@@ -46,7 +46,13 @@ static void DeviceUnavailable(char *dev)
 
 #ifdef Unix
 #include "../unix/devX11.h"
-
+/*  X11 Device Driver Parameters:
+ *  -----------------		--> ../unix/devX11.c
+ *  display	= display
+ *  width	= width in inches
+ *  height	= height in inches
+ *  ps		= pointsize
+ */
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
@@ -54,14 +60,11 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     double height, width, ps;
     gcall = call;
     vmax = vmaxget();
-    display = SaveString(CAR(args), 0);
-    args = CDR(args);
-    width = asReal(CAR(args));
-    args = CDR(args);
-    height = asReal(CAR(args));
+    display = SaveString(CAR(args), 0); args = CDR(args);
+    width = asReal(CAR(args));  args = CDR(args);
+    height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
 	errorcall(call, "invalid width or height");
-    args = CDR(args);
     ps = asReal(CAR(args));
     /* Allocate and initialize the device driver data */
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
@@ -87,16 +90,18 @@ SEXP do_x11(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 #endif
 
-/*  PostScript Device Driver Parameters  */
-/*  file      = output filename          */
-/*  paper     = paper type               */
-/*  face      = typeface                 */
-/*  bg        = background color         */
-/*  fg        = foreground color         */
-/*  width     = width in inches          */
-/*  height    = height in inches	 */
-/*  landscape = landscape		 */
-/*  ps        = pointsize		 */
+/*  PostScript Device Driver Parameters:
+ *  ------------------------		--> ../unix/devPS.c
+ *  file	= output filename
+ *  paper	= paper type
+ *  face	= typeface = "family"
+ *  bg	        = background color
+ *  fg		= foreground color
+ *  width	= width in inches
+ *  height	= height in inches
+ *  horizontal	= {TRUE: landscape; FALSE: portrait}
+ *  ps		= pointsize
+ */
 
 int PSDeviceDriver(DevDesc*, char*, char *, char*,
 		   char*, char*, double, double, double, double);
@@ -110,25 +115,18 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     double height, width, ps;
     gcall = call;
     vmax = vmaxget();
-    file = SaveString(CAR(args), 0);
-    args = CDR(args);
-    paper = SaveString(CAR(args), 0);
-    args = CDR(args);
-    face = SaveString(CAR(args), 0);
-    args = CDR(args);
-    bg = SaveString(CAR(args), 0);
-    args = CDR(args);
-    fg = SaveString(CAR(args), 0);
-    args = CDR(args);
-    width = asReal(CAR(args));
-    args = CDR(args);
-    height = asReal(CAR(args));
-    args = CDR(args);
-    horizontal = asLogical(CAR(args));
+    file = SaveString(CAR(args), 0);  args = CDR(args);
+    paper = SaveString(CAR(args), 0); args = CDR(args);
+    face = SaveString(CAR(args), 0);  args = CDR(args);
+    bg = SaveString(CAR(args), 0);    args = CDR(args);
+    fg = SaveString(CAR(args), 0);    args = CDR(args);
+    width = asReal(CAR(args));        args = CDR(args);
+    height = asReal(CAR(args));       args = CDR(args);
+    horizontal = asLogical(CAR(args));args = CDR(args);
     if(horizontal == NA_LOGICAL)
-	horizontal = 1;
-    args = CDR(args);
+        horizontal = 1;
     ps = asReal(CAR(args));
+
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */
@@ -146,13 +144,15 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-/*  PicTeX Device Driver Parameters  */
-/*  file      = output filename          */
-/*  bg        = background color         */
-/*  fg        = foreground color         */
-/*  width     = width in inches          */
-/*  height    = height in inches	 */
-
+/*  PicTeX Device Driver Parameters
+ *  --------------------		--> ../unix/devPicTeX.c
+ *  file    = output filename
+ *  bg      = background color
+ *  fg      = foreground color
+ *  width   = width in inches
+ *  height  = height in inches
+ *  debug   = int; if non-0, write TeX-Comments into output.
+ */
 int PicTeXDeviceDriver(DevDesc*, char*, char *, char*,
                        double, double, int);
 
@@ -165,18 +165,12 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     int debug;
     gcall = call;
     vmax = vmaxget();
-    file = SaveString(CAR(args), 0);
-    args = CDR(args);
-    bg = SaveString(CAR(args), 0);
-    args = CDR(args);
-    fg = SaveString(CAR(args), 0);
-    args = CDR(args);
-    width = asReal(CAR(args));
-    args = CDR(args);
-    height = asReal(CAR(args));
-    args = CDR(args);
-    debug = asInteger(CAR(args));
-    args = CDR(args);
+    file = SaveString(CAR(args), 0); args = CDR(args);
+    bg = SaveString(CAR(args), 0);   args = CDR(args);
+    fg = SaveString(CAR(args), 0);   args = CDR(args);
+    width = asReal(CAR(args));       args = CDR(args);
+    height = asReal(CAR(args));      args = CDR(args);
+    debug = asInteger(CAR(args));    args = CDR(args);
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */
