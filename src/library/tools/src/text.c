@@ -7,7 +7,7 @@
 
 #ifdef SUPPORT_UTF8
 /* Not used on Windows, so OK not to LibExtern*/
-extern Rboolean utf8locale;
+extern Rboolean mbcslocale;
 #endif
 
 SEXP
@@ -90,7 +90,7 @@ delim_match(SEXP x, SEXP delims)
 	if(end > -1) {
 	    INTEGER(ans)[i] = start + 1; /* index from one */
 #ifdef SUPPORT_UTF8
-	    if(utf8locale) {
+	    if(mbcslocale) {
 		char save = s0[end+1];
 		s0[end+1] = '\0';
 		INTEGER(matchlen)[i] = mbstowcs(NULL, s0 + start, 0);
