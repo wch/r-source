@@ -353,9 +353,9 @@ RxmlNanoFTPScanProxy(const char *URL) {
         xmlFree(proxy);
 	proxy = NULL;
     }
-    if (proxyPort != 0) {
+    /*if (proxyPort != 0) {
 	proxyPort = 0;
-    }
+	}*/
     if (URL == NULL)
 	RxmlMessage(0, "Removing FTP proxy info");
     else
