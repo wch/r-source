@@ -3,7 +3,7 @@
 \usage{
 warning(message)
 }
-\alias{warning = NULL}
+\alias{warning}
 \arguments{
 \item{message}{character string (of length 1) or \code{NULL}.}
 }
@@ -28,7 +28,7 @@ created.  It contains the warnings which can be printed via a call to
     and \code{\link{options}(warn=..)}.
 }
 \examples{
-\testonly{eigenval <- 10 ^ -rnorm(1,m=6)}
-if(eigenval < 1.e-7) warning("system near singular")
+\testonly{eigenval <- 10 ^ -rnorm(1,m=6)
+if(eigenval < 1.e-7) warning("system near singular")}
 }
 \keyword{programming}
