@@ -328,6 +328,10 @@ Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 Subject: surprising behaviour of "bgroup": sets all in greek letters
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Sun, 25 May 2003 18:33:49 +0200
+* PR# 3504 *
+Subject: Incorrect tick mark length when `tck' != NA
+From: BoersN@pac.dfo-mpo.gc.ca
+Date: Thu, 17 Jul 2003 19:54:26 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -722,226 +726,18 @@ Date: Mon, 7 Jul 2003 13:49:48 -0400
 Subject: 
 From: "Bulutoglu Dursun A Civ AFIT/ENC" <Dursun.Bulutoglu@afit.edu>
 Date: Mon, 7 Jul 2003 17:12:20 -0400
-* PR# 3428 *
-Subject: Re: You'll Have A Check Waiting, Just Watch!
-From: "Edward" <Edward473@excite.com>
-Date: Mon, 7 Jul 2003 14:57:24 -0700
-* PR# 3430 *
-Subject: Why Wait! Refinance Today And Save Thousands! wmwfcvffkcx pgan auf
-From: "Ronda Pickett" <g39aino0e2@lovemail.com>
-Date: Tue, 08 Jul 03 14:17:32 GMT
-* PR# 3431 *
-Subject: Re: Movie
-From: <frmnoystr@aol.com>
-Date: Mon, 7 Jul 2003 23:08:01 --0400
-* PR# 3432 *
-Subject: Increases circulation in men for erections.
-From: "Simone Mejia" <t4943j7xly@qualitylooseleaf.com>
-Date: Tue, 08 Jul 03 09:45:56 GMT
-* PR# 3433 *
-Subject: Rates are predicted to go back up, REFINANCE Today!!  l
-From: "Milagros Cooley" <9s9u783e0d82@xmsg.com>
-Date: Tue, 08 Jul 03 22:19:30 GMT
-* PR# 3434 *
-Subject: A CRY FOR HELP.
-From: SASA JOE <sasa611joe@netscpe.net>
-Date: Tue, 08 Jul 2003 16:35:09 +0200
-* PR# 3435 *
-Subject: unique in versions 1.6.2 and 1.5.1
-From: goulard@toulouse.inra.fr
-Date: Tue, 8 Jul 2003 18:31:12 +0200 (MET DST)
-* PR# 3436 *
-Subject: Splendid university degree proposal for all!
-From: "Soules Pingrey" <SoulesPingrey@aol.com>
-Date: 8 Jul 2003 10:58:19 -0700
-* PR# 3437 *
-Subject: Enhance your male size
-From: "Christopher" <*@beer.com>
-Date: Wed, 09 Jul 03 12:20:45 GMT
-* PR# 3438 *
-Subject: Ugly guys + Hot women? You bet!
-From: "Armando Allred" <z515av@yournaturaladvantage.com>
-Date: Wed, 09 Jul 03 09:42:04 GMT
-* PR# 3439 *
-Subject: ++PARTNERSHIP++
-From: "DR DON EKAETE" <leyo2002@lycos.com>
-Date: Wed, 9 Jul 2003 00:09:42 -0700
-* PR# 3440 *
-Subject: STOCK MARKET ALERT - SLIF Introduces TRADE SECRET Formula After 15 Years Research......... cde
-From: STOCK MARKET ALERT <sfStockMarketAlert9876@yahoo.com>
-Date: Tue, 8 Jul 2003 20:10:25 -0500
-* PR# 3441 *
-Subject: Get her wild
-From: "Andrew Gates" <w8gucqfo@bscllc.com>
-Date: Wed, 09 Jul 03 09:28:06 GMT
-* PR# 3442 *
-Subject: In Debt! Would you like to refinance and save thousands?  vdcj
-From: "Meredith Goldstein" <biq969@ihateclowns.com>
-Date: Wed, 09 Jul 03 23:16:35 GMT
 * PR# 3443 *
 Subject: I am puzzled about something in pnorm in R
 From: Henrik.Seidel@schering.de
 Date: Wed, 9 Jul 2003 18:21:32 +0200
-* PR# 3444 *
-Subject: Online Pharmacy - No Perscription Needed
-From: "Nolan Baldwin" <4t9qyn6j@qualityknitting.com>
-Date: Wed, 09 Jul 03 20:45:01 GMT
-* PR# 3445 *
-Subject: URGENT
-From: "Mr Milton  Teejah" <teems001@fastermail.com>
-Date: Thu, 10 Jul 2003 05:34:40 +0100
-* PR# 3446 *
-Subject: Debt reduction 
-From: programs for debt <$debthelp@ns1.debtblasters.net>
-Date: Thu, 10 Jul 2003 00:02:36 -0700
-* PR# 3447 *
-Subject: Don't get caught with your pants down!
-From: "Caitlin Street" <qi5xtn82l09@utd.com>
-Date: Thu, 10 Jul 03 11:21:04 GMT
-* PR# 3448 *
-Subject: Re[7]:Are you into the latest gadgets
-From: vdpv@telek.ru
-Date: Thu, 10 Jul 2003 20:52:49 +0200
-* PR# 3449 *
-Subject: Finally earn respect with your own MBA gjfh
-From: "Bennie Petersen" <jethro877599961@hairdresser.net>
-Date: Thu, 10 Jul 03 17:59:10 GMT
-* PR# 3450 *
-Subject: On-line Pharmacy - Zyban - Shipped Overnight! ydu wye 
-From: "Tad Werner" <vukxkm@yahoo.com>
-Date: Thu, 10 Jul 03 23:24:39 GMT
-* PR# 3451 *
-Subject: Learn to get any woman you want
-From: "Lillian Singleton" <ede9rzr4hi0@aei.ca>
-Date: Thu, 10 Jul 03 16:44:41 GMT
-* PR# 3452 *
-Subject: From Mrs. COLEMAN.
-From: "Mrs.Coleman" <m_mumu@mulumobutu.com>
-Date: 10 Jul 2003 12:14:17 -0000
-* PR# 3453 *
-Subject: From Mrs. COLEMAN.
-From: "Mrs.Coleman" <m_mumu@mulumobutu.com>
-Date: 10 Jul 2003 13:03:40 -0000
-* PR# 3454 *
-Subject: Here's A Quick WAy To Make OVer $1,300 Per Month In No Time! apcn shybcousyo
-From: "Emily Paige" <to5q0nvvunn@frindz.net>
-Date: Fri, 11 Jul 03 12:55:01 GMT
-* PR# 3455 *
-Subject: x1 bvcpf
-From: wpqux1 <oeexx1@mail.com>
-Date: Fri, 11 Jul 2003 03:06:47 -0400
-* PR# 3456 *
-Subject: Even the ugliest guys can get hot women - learn how xt zc
-From: "Jackson Moss" <cda770fkz@centralpets.com>
-Date: Sat, 12 Jul 03 00:07:46 GMT
-* PR# 3457 *
-Subject:                                         BUSINESS PROPOSAL AND INVESTMENT.
-From: MALINGA   SODINGO <malinga500@netscape.net>
-Date: Fri, 11 Jul 2003 13:02:12 +0200
-* PR# 3458 *
-Subject: Trouble sleeping? No prescription required - Ambien, Sonata etc.
-From: "Irene Barrow" <h5c7390zrsz@utd.com>
-Date: Fri, 11 Jul 03 03:57:02 GMT
-* PR# 3459 *
-Subject:                                   STRICTLY  CONFIDENTIAL
-From: MILKY GUIE <tete44@mail.com>
-Date: Fri, 11 Jul 2003 13:49:15 +0200
-* PR# 3460 *
-Subject: Maritime Newsletter (Week 28)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 11 Jul 2003 21:04:08 +0900
-* PR# 3461 *
-Subject: Ponce DeLeon
-From: "Dr. Theresa McCormack" <Theresa-McCormack@mailcity.com>
-Date: Fri, 11 Jul 03 12:23:38 GMT
-* PR# 3462 *
-Subject: Need to make a little extra we ca help ..3
-From: "Adrian Quintero" <twb6faxdrs@yahoo.com>
-Date: Fri, 11 Jul 03 11:07:33 GMT
 * PR# 3463 *
 Subject: Title obscured when using par(mfrow)
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Fri, 11 Jul 2003 14:29:33 -0400
-* PR# 3464 *
-Subject: Re: last time you were too busy tiftdkw ychgc
-From: "Shane Abrams" <zq5cgtve@nmgate.cb.att.com>
-Date: Fri, 11 Jul 03 19:58:40 GMT
-* PR# 3465 *
-Subject: ASSISTANCE AND PARTNERSHIP
-From: olarenwaju@post.cz
-Date: Sat, 12 Jul 2003 04:12:46 +0200 (CEST)
-* PR# 3467 *
-Subject: Mrs Maria Savimbi
-From: MRS  MARIA SAVIMBI <mariasavimbi22@netscape.net>
-Date: Sat, 12 Jul 2003 15:03:47 +0200
-* PR# 3468 *
-Subject: FedEx & UPS Consultant Refund Processors Needed                   VjP
-From: 2recoverykkcv@earthlink.com
-Date: Sat, 12 Jul 2003 12:35:56 -0100
-* PR# 3469 *
-Subject: OEM QUAL1TY PRINT CARTRIDGES, SEVERELY DISCOUNTED PRICES.
-From: "Printer" <savonink@thebestpr1ntbarga1n.com>
-Date: Sat, 12 Jul 2003 08:43:21 -0700
-* PR# 3470 *
-Subject: MR.MIKE MOBUTUE
-From: "MR. MIKE MOBUTU" <mmobutu61@hknetmail.com>
-Date: Sun, 13 Jul 2003 03:03:56 +0200
-* PR# 3471 *
-Subject: Problems Simulating
-From: smiles@dept.econ.yorku.ca
-Date: Sun, 13 Jul 2003 05:51:58 +0200 (MET DST)
-* PR# 3472 *
-Subject: In Debt? Would you like to refinance and save thousands? uieby ymuphji
-From: "Gwendolyn Darden" <115gwzoq@lovemail.com>
-Date: Mon, 14 Jul 03 00:20:42 GMT
-* PR# 3473 *
-Subject: This can please her more
-From: "Teri Rogers" <ynyhz40s@aeiclaimslaw.com>
-Date: Sun, 13 Jul 03 20:10:28 GMT
-* PR# 3474 *
-Subject: need money for bills??? ldspn
-From: "Lenora Moody" <jikvlh@compuserve.com>
-Date: Mon, 14 Jul 03 12:57:50 GMT
-* PR# 3475 *
-Subject: Save 60% on Generic Viagra       Coupon Code 8  xvirkd  bbxra ob x
-From: "" <eezzdaze502506@archaeologist.com>
-Date: Mon, 14 Jul 03 09:54:32 GMT
-* PR# 3476 *
-Subject: kind regards
-From: "mariam abacha" <mariam_cha@zwallet.com>
-Date: Mon, 14 Jul 2003 08:34:41 -0700
-* PR# 3477 *
-Subject: 2003 is coming - lose weight now aid e emxizr
-From: "Eli Mims" <9yr9x71343j@darkhorseintl.com>
-Date: Tue, 15 Jul 03 12:36:41 GMT
-* PR# 3478 *
-Subject: Can you see any reason why not?
-From: "Herschel Gaston" <bjg3y5fx183o@ltcg.com>
-Date: Tue, 15 Jul 03 00:00:40 GMT
-* PR# 3479 *
-Subject: What went wrong with my erection?
-From: "Amalia Sheffield" <ju2ufzlg6g@aeicorp.com>
-Date: Mon, 14 Jul 03 23:04:50 GMT
-* PR# 3480 *
-Subject: (광고)이성을 유혹하는 페로몬 향수!@
-From: ksc0110<ksc0110@korea.com>
-Date: Tue, 15 Jul 2003 15:15:33 +0900
 * PR# 3481 *
 Subject: "na.action" parameter in princomp()
 From: jerome@hivnet.ubc.ca
 Date: Tue, 15 Jul 2003 08:22:38 +0200 (MET DST)
-* PR# 3482 *
-Subject: GOOD   NEWS
-From: "peter lawson" <plawson@applelinks.net>
-Date: Tue, 15 Jul 2003 08:05:33 -0400
-* PR# 3483 *
-Subject: RE:FWD : What should I do? slnewkn
-From: "Rico Sawyer" <d774thspbc@lovemail.com>
-Date: Wed, 16 Jul 03 03:30:49 GMT
-* PR# 3484 *
-Subject: People say it doesnt matter.
-From: "Refugio Coffman" <e7rz4p0nu@nmfiber.com>
-Date: Tue, 15 Jul 03 17:39:33 GMT
 * PR# 3485 *
 Subject: Undefined subroutine &R::Rdconv::fill
 From: michael.t.klinglesmith@intel.com
@@ -950,139 +746,11 @@ Date: Tue, 15 Jul 2003 18:56:23 +0200 (MET DST)
 Subject: The two chisq.test p values differ when the contingency table is transposed!
 From: shitao@ucla.edu
 Date: Wed, 16 Jul 2003 01:27:25 +0200 (MET DST)
-* PR# 3487 *
-Subject: Do you enjoy watching PPV Movies ucorocw
-From: "Elwood Michael" <wgvtyc@btinternet.com>
-Date: Wed, 13 Feb 02 10:18:44 GMT
-* PR# 3488 *
-Subject: How could you not think about it. sq
-From: "" <EuphoricMailing@trib.com>
-Date: Wed, 16 Jul 03 18:04:43 GMT
-* PR# 3489 *
-Subject:                    PLEASE I NEED YOUR URGENT ASSISTANCE.
-From: "MR.  PETERS TAH BAH." <adamspseko1@netscape.net>
-Date: Wed, 16 Jul 2003 10:46:00 +0200
-* PR# 3490 *
-Subject: shed while you sleep / our thank you for trying enclosed!
-From: "Kellie Rodriquez" <HGH-4-U@wittymickeys.us>
-Date: Wed, 16 Jul 03 14:41:57 GMT
-* PR# 3491 *
-Subject: step.lm() fails to drop {many empty 2-way factor cells}
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 16 Jul 2003 12:02:26 +0200
-* PR# 3492 *
-Subject: sleep off the lbs
-From: "Dr. David Hiser" <david-hiser@hotmail.com>
-Date: Wed, 16 Jul 03 13:32:15 GMT
-* PR# 3493 *
-Subject: Pills to Enlarge Your Penis pwys eji
-From: "Michael Callahan" <ys471i@xmsg.com>
-Date: Thu, 17 Jul 03 04:44:55 GMT
-* PR# 3495 *
-Subject: arima.sim problems
-From: liang@stat.berkeley.edu
-Date: Wed, 16 Jul 2003 20:40:49 +0200 (MET DST)
-* PR# 3496 *
-Subject: Let our Doctors write your Prescriptions
-From: "Jamaal Cullen" <1erur52q@imaginatik.com>
-Date: Wed, 16 Jul 03 17:18:43 GMT
-* PR# 3497 *
-Subject: MR.MIKE MOBUTUE
-From: "MR. MIKE MOBUTU" <mmobutu61@hknetmail.com>
-Date: Thu, 17 Jul 2003 05:13:11 +0200
-* PR# 3498 *
-Subject: Medical Breakthrough for Men  wrwmkzg wtapehbw
-From: "Donnie Locke" <rkendall506087@inorbit.com>
-Date: Thu, 17 Jul 03 13:08:09 GMT
-* PR# 3499 *
-Subject: Let our Doctors write your Prescriptions
-From: "Michael Coates" <stmjrt30d@imagination.co.uk>
-Date: Thu, 17 Jul 03 11:55:07 GMT
-* PR# 3500 *
-Subject: Worldwide Partners program
-From: "The TechNews" <editor@the-tech-news.com>
-Date: Thu, 17 Jul 2003 14:33:27 +0200
-* PR# 3501 *
-Subject: partnership
-From: Cliff Nkosi <nkosi04@go.com>
-Date: Thu, 17 Jul 2003 07:18:29 -0700 (PDT)
-* PR# 3502 *
-Subject:  coo
-From: lku__Juan Carlos Ferroza <gabriela18102@yahoo.com.mx>
-Date: Fri, 18 Jul 2003 00:51:11 -0300
-* PR# 3503 *
-Subject: haven't felt like this for ages ils fevnois
-From: "Georgette Mcmullen" <brwlw8mxhr@thedoghousemail.com>
-Date: Fri, 18 Jul 03 05:15:46 GMT
-* PR# 3504 *
-Subject: Incorrect tick mark length when `tck' != NA
-From: BoersN@pac.dfo-mpo.gc.ca
-Date: Thu, 17 Jul 2003 19:54:26 +0200 (MET DST)
-* PR# 3505 *
-Subject: me too! ab    pkojg 
-From: "Bobby Hadley" <etjhftey3@darkhorseintl.com>
-Date: Thu, 17 Jul 03 20:14:24 GMT
-* PR# 3506 *
-Subject: Smoking is harmful!
-From: "Ted Haney" <0jjdo5ce73t@nmerha17.bnr.ca>
-Date: Fri, 18 Jul 03 01:49:00 GMT
-* PR# 3507 *
-Subject: Stop smoking With our formula!
-From: "Mariano Buckley" <yp36ozqdrxj@qualitylabs.com>
-Date: Fri, 18 Jul 03 00:47:55 GMT
-* PR# 3508 *
-Subject: Prescribed Online - Fioricet - Shipped Overnight! udyaqr  dm gjeavb
-From: "Lillian Little" <gjihy@yahoo.com>
-Date: Sat, 19 Jul 03 02:07:56 GMT
-* PR# 3509 *
-Subject: Promote Your Customers
-From: "Alan" <Promote@freemail.soim.com>
-Date: Fri, 18 Jul 2003 15:43:15 +0800
-* PR# 3510 *
-Subject: 소설 입니다   2159
-From: =?euc-kr?q?PKry=20XLat?= <xlat721722@yahoo.co.kr>
-Date: Fri, 18 Jul 2003 23:07:43 +0900 (JST)
-* PR# 3511 *
-Subject: sleep it off
-From: "Dr. McAdams" <dr_mcadams@mailcity.com>
-Date: Sun, 17 Aug 03 09:52:57 GMT
-* PR# 3513 *
-Subject: I am so happy for all of you i
-From: "Nona Blankenship" <xi0v0swrrjs@realtyagent.com>
-Date: Sat, 19 Jul 03 12:58:33 GMT
-* PR# 3514 *
-Subject: YOUR RESPONSE
-From: "DR.BOLA GEORGE" <bolageorge@maktoob.com>
-Date: Sat, 19 Jul 2003 04:03:12 +0100
-* PR# 3515 *
-Subject: Avoid lung cancer!
-From: "Jerry Dugan" <6v6hu41ymre5@aeidl.be>
-Date: Sat, 19 Jul 03 08:05:30 GMT
-* PR# 3516 *
-Subject: Need to quit Smoking?
-From: "Jeffery Hutchins" <9qjagfef6vvf@ltcare.com>
-Date: Sat, 19 Jul 03 19:41:26 GMT
-* PR# 3517 *
-Subject: Perform better - Viagra prescribed online for FREE!
-From: "Santiago Martinez" <b8x1vea3me84@springfieldelectric.com>
-Date: Sun, 20 Jul 03 05:47:36 GMT
-* PR# 3518 *
-Subject: Reduce wrinkles look younger ldtzx 
-From: "Ignacio Proctor" <c7mcbuv@lovemail.com>
-Date: Mon, 21 Jul 03 03:15:26 GMT
-* PR# 3519 *
-Subject: Your Penis can be Enlarged  q dwzutxypv r n
-From: "Rigoberto Wall" <gixh7gdrec@lovemail.com>
-Date: Mon, 21 Jul 03 01:27:26 GMT
-* PR# 3520 *
-Subject: brestsuccess breast pills o bqxytj
-From: "Nellie Roach" <77worpxwpq@thedoghousemail.com>
-Date: Mon, 21 Jul 03 08:32:19 GMT
-* PR# 3521 *
-Subject: do you need to get laid? obdbdvlpknfedb 
-From: "Maurice Herron" <rzt9vokf@lovemail.com>
-Date: Mon, 21 Jul 03 00:38:58 GMT
-* PR# 3522 *
-Subject: Fw: Such a sad story GacopMgAXG
-From: "vernon" <oliver@address.com>
-Date: Sun, 20 Jul 03 16:19:57 Eastern Daylight Time
+* PR# 3528 *
+Subject: missing permissions in reference manual copyright page
+From: Brian Gough <bjg@network-theory.co.uk>
+Date: Mon, 21 Jul 2003 15:12:30 +0100
+* PR# 3530 *
+Subject: Not already making a killing on Ebay? Find out how to join the real powersellers... fjdkhoh v lncd
+From: "Horacio Zuniga" <sam5w0wr@kangz.com>
+Date: Tue, 22 Jul 03 04:13:24 GMT
