@@ -1,7 +1,7 @@
 \name{margin.table}
 \title{Compute table margin}
 \usage{
-margin.table(x, margin)
+margin.table(x, margin=NULL)
 }
 \alias{margin.table}
 \arguments{
@@ -9,11 +9,12 @@ margin.table(x, margin)
   \item{margin}{index number (1 for rows, etc.) }
 }
 \description{
-  Compute the sum of table entries over a given index.
+  Compute the sum of table entries for a given index.
 }
 \details{
   This is really just \code{apply(x,margin,sum)} packaged up for
-  newbies.
+  newbies, except that if \code{margin} has length zero you get
+  \code{sum(x)}.
 }
 \value{
   The relevant marginal table.

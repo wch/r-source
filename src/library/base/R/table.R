@@ -89,7 +89,18 @@ as.table.default <- function(x)
         stop("cannot coerce into a table")
 }
 
-prop.table<-function (x, margin)
-    sweep(x, margin, margin.table(x, margin), "/")
-margin.table<-function (x, margin)
-    apply(x, margin, sum)
+prop.table<-function (x, margin=NULL)
+{
+    if (length(margin))
+        sweep(x, margin, margin.table(x, margin), "/")
+    else
+    	x/sum(x)
+}
+
+margin.table<-function (x, margin=NULL)
+{
+    if (length(margin))
+        apply(x, margin, sum)
+    else
+    	sum(x)
+}

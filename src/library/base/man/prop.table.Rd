@@ -1,15 +1,16 @@
 \name{prop.table}
 \title{Express table entries as fraction of marginal table}
 \usage{
-prop.table(x, margin)
+prop.table(x, margin=NULL)
 }
 \alias{prop.table}
  \item{x}{ table }
- \item{margin}{ index, or vector of indices to sum over for margin }
+ \item{margin}{ index, or vector of indices to generate margin for}
 }
 
 \description{ This is really \code{sweep(x, margin, margin.table(x,
-margin), "/")} for newbies.  }
+margin), "/")} for newbies, except that if \code{margin} has length
+zero, then one gets \code{x/sum(x)}.  }
 
 \value{
   Table like \code{x} expressed relative to \code{margin} 

@@ -234,6 +234,8 @@ NEW FEATURES
     o   gc() now reports the space allocated, not the space free,
 	since the total space in now variable.
 
+    o   prop.table() and margin.table() now work with an empty margin.
+
 
 BUG FIXES
 
