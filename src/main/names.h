@@ -61,6 +61,7 @@ SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_int_unzip(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
 #endif
 #ifdef oldWin32
