@@ -85,8 +85,16 @@ double fprec(double x, double digits)
     l10 = log10(x);
     e10 = (int)(dig-1-floor(l10));
     if(fabs(l10) < max10e - 2) {
+	p10 = 1.0;
+	if(e10 > max10e) {
+	    p10 =  R_pow_di(10., e10-max10e);
+	    e10 = max10e;
+	} else if(e10 < - max10e) {
+	    p10 =  R_pow_di(10., e10+max10e);
+	    e10 = -max10e;	    
+	}
 	pow10 = R_pow_di(10., e10);
-	return(sgn*floor(x*pow10+0.5)/pow10);
+	return(sgn*(floor((x*pow10)*p10+0.5)/pow10)/p10);
     } else { /* -- LARGE or small -- */
 	do_round = max10e - l10	 >= R_pow_di(10., -dig);
 	e2 = (e10>0)? 16 : -16;
