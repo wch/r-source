@@ -64,7 +64,7 @@ BUG FIXES
     o   nls() was reporting incorrectly the number of iterations if the
 	maximum was reached.
 
-    o   rebind.data.frame() was coercing logical columns to factors.
+    o   rbind.data.frame() was coercing logical columns to factors.
 	(PR#1536)
 
     o   Rprof(NULL) or Rprof("") called when not profiling caused a
@@ -72,11 +72,15 @@ BUG FIXES
 
     o   On systems (e.g. Windows) using R's own code for expm1, the
 	values were wrong for large negative x, and this affected
-	pweibull, for example.
+	pweibull(), for example.
 
-    o	prettyNum(*, bigmark=*) added extra marks in some cases (PR#1548).
+    o	prettyNum(*, bigmark=*) added extra marks in some cases. (PR#1548)
 
-    o	cut.dendrogram() failed in some cases (PR#1552).
+    o	cut.dendrogram() failed in some cases. (PR#1552)
+
+    o	The links in refman.pdf were broken by a single invalid
+	\alias{}. Now Rdconv checks more comprehensively. (PR#1550)
+
 
 
 		CHANGES IN R VERSION 1.5.0
