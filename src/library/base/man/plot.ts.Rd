@@ -4,8 +4,8 @@
 \alias{lines.ts}
 \title{Plotting Time-Series Objects}
 \description{
-  Plotting methods for objects of class \code{"ts"} or \code{"mts"}
-  (multivariate time-series).
+  Plotting methods for objects of inheriting from class \code{"ts"}
+  or \code{"mts"} (multivariate time-series).
 }
 \synopsis{
 plot.ts(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
@@ -31,7 +31,7 @@ plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
 lines(x, \dots)
 }
 \arguments{
-  \item{x,y}{time series objects, usually of class \code{"ts"}.}
+  \item{x, y}{time series objects, usually of class \code{"ts"}.}
 
   \item{type}{the type of plot, see \code{\link{plot}}.  When \code{y}
     is present, the default will depend on \code{xy.labels}, see below.}
@@ -42,10 +42,13 @@ lines(x, \dots)
     plotted separately (with a common time axis) or on a single plot?}
 
   \item{xy.labels}{logical, indicating if \code{\link{text}()} labels
-    should be used for an x-y plot.}
+    should be used for an x-y plot, \emph{or} character, supplying a
+    vector of labels to be used.}
+
   \item{xy.lines}{logical, indicating if \code{\link{lines}}
-    should be drawn for an x-y plot.  Default is true, when labels are
-    drawn as well.}
+    should be drawn for an x-y plot.  Defaults to the value of
+    \code{xy.labels} if that is logical, otherwise to \code{TRUE}.}
+
   \item{panel}{a \code{function(x, col, bg, pch, type, ...)} which gives the
     action to be carried out in each panel of the display for
     \code{plot.type="multiple"}.  The default is \code{lines}.}
@@ -57,8 +60,8 @@ lines(x, \dots)
     \code{\link{plot.default}} and \code{\link{par}}.}
 }
 \details{
-  With one principal argument, these functions create time series
-  plots, for multivariate series of two kinds depending on \code{plot.type},
+  If \code{y} is missing, these functions create time series plots,
+  for multivariate series of one of two kinds depending on \code{plot.type},
 
   If \code{y} is present, both \code{x} and \code{y} must be univariate,
   and a ``scatter'' plot \code{y ~ x} will be drawn, enhanced by
