@@ -1,7 +1,7 @@
 \name{smooth}
 \alias{smooth}
-\alias{print.tukeysmooth}
-\alias{summary.tukeysmooth}
+%\alias{print.tukeysmooth}
+%\alias{summary.tukeysmooth}
 \title{Tukey's (Running Median) Smoothing}
 \description{
   Tukey's smoothers, \emph{3RS3R}, \emph{3RSS}, \emph{3R}, etc.
@@ -10,9 +10,6 @@
 smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
        twiceit = FALSE,
        endrule = "Tukey", do.ends = FALSE)
-
-  \method{print}{tukeysmooth}(x, \dots)
-\method{summary}{tukeysmooth}(object, \dots)
 }
 \arguments{
   \item{x}{a vector or time series}
@@ -27,10 +24,6 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   \item{do.ends}{logical, indicating if the 3-splitting of ties should
     also happen at the boundaries (``ends'').  This is only used for
     \code{kind = "S"}.}
-
-  \item{object}{(and \code{x} in \code{print(.)}): object of class
-    "tukeysmooth", typically the result of \code{smooth(.)}.}
-  \item{\dots}{potentially further arguments, required by generic.}
 }
 \details{
   \emph{\code{3}} is Tukey's short notation for running \code{\link{median}}s

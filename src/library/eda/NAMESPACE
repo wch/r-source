@@ -1,0 +1,14 @@
+useDynLib(eda)
+
+export(line, medpolish, smooth)
+## until match.arg is fixed
+export(residuals.tukeyline)
+
+S3method(coef, tukeyline)
+S3method(fitted, tukeyline)
+S3method(plot, medpolish)
+S3method(print, medpolish)
+S3method(print, tukeyline)
+S3method(print, tukeysmooth)
+S3method(residuals, tukeyline)
+S3method(summary, tukeysmooth)
