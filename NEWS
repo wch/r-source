@@ -177,6 +177,11 @@ BUG FIXES
 
     o	model.frame(~1, data) always returned 1 row. (PR#2958)
 
+    o	The data editor was truncating objects to 65535 rows.  Pro
+	tem, editing objects with more than 65535 rows is an error,
+	and objects cannot be extended beyond that number of row.
+	(PR#2962)
+
 
 
 		CHANGES IN R VERSION 1.7.0

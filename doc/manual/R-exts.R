@@ -6,13 +6,15 @@ dyn.load("R-exts.so")
 
 ## ----- outer products example -----
 
-out <- function(x, y) .Call("out", as.double(x), as.double(y))
+out <- function(x, y)
+{
+   storage.mode(x) <- storage.mode(y) <- "double"
+   .Call("out", x, y)
+}
 out(1:3, 2:4)
 
-x <- as.double(1:3); names(x) <- letters[x]
-# so as not to lose names
-out <- function(x, y) .Call("out", x, y)
-out(x, as.double(2:4))
+x <- 1:3; names(x) <- letters[x]
+out(x, 2:4)
 
 
 ## ----- convolution example -----

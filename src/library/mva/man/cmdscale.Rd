@@ -6,6 +6,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 }
 \description{
   Classical multidimensional scaling of a data matrix.
+  Also known as \emph{principal coordinates analysis} (Gower, 1966).
 }
 \arguments{
   \item{d}{a distance structure such as that returned by \code{dist}
@@ -57,9 +58,18 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
      }
 }
 \references{
+  Cailliez, F. (1983)
+  The analytical solution of the additive constant problem.
+  \emph{Psychometrika} \bold{48}, 343--349.
+
   Cox, T. F. and Cox, M. A. A. (1994)
   \emph{Multidimensional Scaling}.
   Chapman and Hall.
+
+  Gower, J. C. (1966)  
+  Some distance properties of latent root and vector 
+  methods used in multivariate analysis.  
+  \emph{Biometrika} \bold{53}, 325--328.
 
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).  Chapter 14 of
   \emph{Multivariate Analysis}, London: Academic Press.
@@ -71,10 +81,6 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   Torgerson, W. S. (1958).
   \emph{Theory and Methods of Scaling}.
   New York: Wiley.
-
-  Cailliez, F. (1983)
-  The analytical solution of the additive constant problem.
-  \emph{Psychometrika} \bold{48}, 343--349.
 }
 \seealso{
   \code{\link{dist}}.
