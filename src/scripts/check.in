@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.148 $ ';
+my $revision = ' $Revision: 1.149 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -474,7 +474,7 @@ sub check_pkg {
 	## should really be mode 644.
 	@bad_files = ();
 	my @textfile_patterns =
-	  ("\\.[RSdqr]\$",	# R source code
+	  ("\\.[RSqrs]\$",	# R source code
 	   "\\.[Rr]d\$",	# Rd files
 	   "\\.([Ccfh]|cc|cpp)\$", # C/C++/FORTRAN sources and headers
 	   "\\.[RrSs](nw|tex)\$", # vignettes
