@@ -336,6 +336,8 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case VECSXP:
 	argnames = getAttrib(args, R_NamesSymbol);
+	if(LENGTH(argnames) != n)
+	    errorcall(call,"list argument has no names or invalid ones");
 	break;
     }
 

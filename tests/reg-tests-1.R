@@ -3080,3 +3080,7 @@ stopifnot(identical(trunc(x), xx)) # must not truncate towards 0.
 ##
 
 ### end of tests added in 1.9.1 ###
+
+## options(list('..', '..'))
+try(options(list('digits', 'width')))# give an error
+## gave a segfault in 1.9.1
