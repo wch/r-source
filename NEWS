@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o	New environment variables `R_HISTFILE' and `R_HISTSIZE' for the
+	name and size of the history file.
+
     o	plot.lm() has more options and now does 4 plots by default,
 	thanks to John Maindonald.
 
