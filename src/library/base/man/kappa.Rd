@@ -2,8 +2,7 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{kappa}
-\title{Estimate the Condition Number of a Matrix or  QR Decomposition or
-  Fit}
+\title{Estimate the Condition Number of a Matrix, QR Decomposition or Fit}
 \usage{
 kappa(z, ...)
 kappa.lm(z, ...)
