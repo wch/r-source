@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-35, 2003-02-27
+Version 1.6-36, 2003-03-06
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1686,6 +1686,9 @@ distributions of R.)
      from the book "The linear regression model under test" by W. Kraemer
      and H. Sonnberger, 1986, Physica.
 
+*locfit*
+     Local Regression, likelihood and density estimation.
+
 *logspline*
      Logspline density estimation.
 
@@ -2024,9 +2027,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*locfit*
-     Local Regression, likelihood and density estimation.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive

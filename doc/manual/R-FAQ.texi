@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-35, 2003-02-27
+@set FAQ-VERSION 1.6-36, 2003-03-06
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1873,6 +1873,8 @@ A set of methods for longitudinal data objects.
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
 and H. Sonnberger, 1986, Physica.
+@item locfit
+Local Regression, likelihood and density estimation.
 @item logspline
 Logspline density estimation.
 @item lokern
@@ -2209,11 +2211,6 @@ Ensembles of tree classifiers.
 @c A suite of functions to compute power and sample size for tests of the
 @c general linear hypothesis.
 @c </COMMENT>
-@c <NOTE>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item locfit
-Local Regression, likelihood and density estimation.
-@c </NOTE>
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
