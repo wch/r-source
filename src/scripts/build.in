@@ -549,9 +549,9 @@ sub fix_CRLF_in_source_files {
 	foreach my $file (@src_files) {
 	    my $has_CRLF = 0;
 	    open(FILE, "< $file")
-		or die "Error: cannot open '$pkgname/$file' for reading\n";
+		or die "Error: cannot open '$file' for reading\n";
 	    open(TFILE, "> $file.tmp")
-		or die "Error: cannot open '$pkgname/$file.tmp' for writing\n";
+		or die "Error: cannot open '$file.tmp' for writing\n";
             binmode(FILE); binmode(TFILE);	# for Windows
 	    while(<FILE>) {
 		chop;
@@ -566,7 +566,7 @@ sub fix_CRLF_in_source_files {
 		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
 	    } else {
-		unlink($file.tmp);
+		unlink("$file.tmp");
 	    }
 	}
     }
