@@ -730,12 +730,16 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                S3method = {
                    spec <- e[-1]
                    if (length(spec) != 2 && length(spec) != 3)
-                       stop(paste("bad S3method directive:", deparse(e)))
+                       stop(paste("bad S3method directive:", deparse(e)),
+                            call. = FALSE)
                    nS3 <- nS3 + 1;
-                   if(nS3 > 500) stop("too many S3method directives")
+                   if(nS3 > 500)
+                       stop("too many S3method directives", call. = FALSE)
                    S3methods[nS3, 1:length(spec)] <- as.character(spec)
                },
-               stop(paste("unknown namespace directive:", deparse(e))))
+               stop(paste("unknown namespace directive:", deparse(e)),
+                    call. = FALSE)
+               )
     list(imports=imports, exports=exports, exportPatterns = exportPatterns,
          importClasses=importClasses, importMethods=importMethods,
          exportClasses=exportClasses, exportMethods=exportMethods,
