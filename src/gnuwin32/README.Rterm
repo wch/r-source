@@ -8,7 +8,10 @@ Rterm.exe can be used in three distinct modes:
 3) As a slave process for ESS mode in NTEmacs with flag --ess.
 
 Its purpose is to provide something similar to the main Unix interface
-for R, including a batch capability.
+for R, including a batch capability.  The command-line arguments are
+the same as those for RGui.exe and are documented in `An Introduction
+to R' in the section `Invoking R under Windows' (--mdi and --sdi are
+accepted but do nothing).  Batch use is covered in the rw-FAQ Q2.10.
 
 In interactive use the interpreter can be interrupted by Ctrl-C or
 Ctrl-Break.  Input is interpreted as-is except for the keys
