@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-11, 2001-07-13
+Version 1.3-12, 2001-07-27
 Kurt Hornik
 
 
@@ -1293,6 +1293,13 @@ works, was published in the Journal of Statistical Software
 *fdim*
      Functions for calculating fractal dimension.
 
+*fields*
+     A collection of programs for curve and function fitting with an
+     emphasis on spatial data.  The major methods implemented include cubic
+     and thin plate splines, universal Kriging and Kriging for large data
+     sets.  The main feature is that any covariance function implemented in
+     R can be used for spatial prediction.
+
 *foreign*
      Functions for reading and writing data stored by statistical software
      like Minitab, SAS, SPSS, Stata, etc.
@@ -1573,13 +1580,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*fields*
-     A collection of programs for curve and function fitting with an
-     emphasis on spatial data.  The major methods implemented include cubic
-     and thin plate splines, universal Kriging and Kriging for large data
-     sets.  The main feature is that any covariance function implemented in
-     R can be used for spatial prediction.
 
 *funfits*
      An integrated set of functions for fitting curves and surfaces
