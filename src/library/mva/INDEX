@@ -6,6 +6,8 @@ cmdscale                 Classical (Metric) Multidimensional Scaling
 cutree                   Cut a tree into groups of data
 dist                     Distance Matrix Computation
 hclust                   Hierarchical Clustering
+identify.hclust          Identify Clusters in a Dendrogram
 kmeans                   K-Means Clustering
 prcomp                   Principal Components Analysis
 princomp                 Principal Components Analysis
+rect.hclust              Draw Rectangles Around Hierarchical Clusters
