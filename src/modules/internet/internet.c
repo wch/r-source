@@ -127,7 +127,7 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
 }
 
 
-Rconnection R_newurl(char *description, char *mode)
+static Rconnection in_R_newurl(char *description, char *mode)
 {
     Rconnection new;
 
@@ -191,7 +191,7 @@ typedef struct {
 
 #define CPBUFSIZE 65536
 #define IBUFSIZE 4096
-SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
+static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, scmd, sfile, smode;
     char *url, *file, *mode;
@@ -406,7 +406,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #if defined(SUPPORT_LIBXML) && !defined(USE_WININET)
 
-void *R_HTTPOpen(const char *url)
+void *in_R_HTTPOpen(const char *url)
 {
     inetconn *con;
     void *ctxt;
@@ -446,12 +446,12 @@ void *R_HTTPOpen(const char *url)
     return con;
 }
 
-int R_HTTPRead(void *ctx, char *dest, int len)
+static int in_R_HTTPRead(void *ctx, char *dest, int len)
 {
     return RxmlNanoHTTPRead(((inetconn *)ctx)->ctxt, dest, len);
 }
 
-void R_HTTPClose(void *ctx)
+static void in_R_HTTPClose(void *ctx)
 {
     if(ctx) {
 	RxmlNanoHTTPClose(((inetconn *)ctx)->ctxt);
@@ -459,7 +459,7 @@ void R_HTTPClose(void *ctx)
     }
 }
 
-void *R_FTPOpen(const char *url)
+static void *in_R_FTPOpen(const char *url)
 {
     inetconn *con;
     void *ctxt;
@@ -489,12 +489,12 @@ void *R_FTPOpen(const char *url)
     return con;
 }
 
-int R_FTPRead(void *ctx, char *dest, int len)
+static int in_R_FTPRead(void *ctx, char *dest, int len)
 {
     return RxmlNanoFTPRead(((inetconn *)ctx)->ctxt, dest, len);
 }
 
-void R_FTPClose(void *ctx)
+static void in_R_FTPClose(void *ctx)
 {
     if(ctx) {
 	RxmlNanoFTPClose(((inetconn *)ctx)->ctxt);
@@ -534,7 +534,7 @@ InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
 }
 #endif /* USE_WININET_ASYNC */
 
-void *R_HTTPOpen(const char *url)
+static void *in_R_HTTPOpen(const char *url)
 {
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
@@ -653,7 +653,7 @@ void *R_HTTPOpen(const char *url)
     return (void *)wictxt;
 }
 
-int R_HTTPRead(void *ctx, char *dest, int len)
+static int in_R_HTTPRead(void *ctx, char *dest, int len)
 {
     DWORD nread;
 
@@ -677,7 +677,7 @@ int R_HTTPRead(void *ctx, char *dest, int len)
 }
 
 
-void R_HTTPClose(void *ctx)
+static void in_R_HTTPClose(void *ctx)
 {
     InternetCloseHandle(((WIctxt)ctx)->session);
     InternetCloseHandle(((WIctxt)ctx)->hand);
@@ -685,7 +685,7 @@ void R_HTTPClose(void *ctx)
     free(ctx);
 }
 
-void *R_FTPOpen(const char *url)
+static void *in_R_FTPOpen(const char *url)
 {
     WIctxt  wictxt;
 
@@ -769,43 +769,43 @@ void *R_FTPOpen(const char *url)
     return (void *)wictxt;
 }
 
-int R_FTPRead(void *ctx, char *dest, int len)
+static int in_R_FTPRead(void *ctx, char *dest, int len)
 {
     return R_HTTPRead(ctx, dest, len);
 }
 
-void R_FTPClose(void *ctx)
+static void in_R_FTPClose(void *ctx)
 {
     R_HTTPClose(ctx);
 }
 #endif
 
 #ifndef HAVE_INTERNET
-void *R_HTTPOpen(const char *url)
+static void *in_R_HTTPOpen(const char *url)
 {
     return NULL;
 }
 
-int R_HTTPRead(void *ctx, char *dest, int len)
+static int in_R_HTTPRead(void *ctx, char *dest, int len)
 {
     return -1;
 }
 
-void R_HTTPClose(void *ctx)
+static void in_R_HTTPClose(void *ctx)
 {
 }
 
-void *R_FTPOpen(const char *url)
+static void *in_R_FTPOpen(const char *url)
 {
     return NULL;
 }
 
-int R_FTPRead(void *ctx, char *dest, int len)
+static int in_R_FTPRead(void *ctx, char *dest, int len)
 {
     return -1;
 }
 
-void R_FTPClose(void *ctx)
+static void in_R_FTPClose(void *ctx)
 {
 }
 #endif
@@ -842,29 +842,30 @@ void RxmlMessage(int level, const char *format, ...)
 void
 R_init_internet(DllInfo *info)
 {
-  R_InternetRoutines *tmp;
-  tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
-  if(!tmp) {
-      error("Cannot allocate memory for InternetRoutines structure");
-      return;
-  }
+    R_InternetRoutines *tmp;
+    tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
+    if(!tmp) {
+	error("Cannot allocate memory for InternetRoutines structure");
+	return;
+    }
 
-  tmp->download = do_download;
-  tmp->newurl =  R_newurl;
-  tmp->newsock = R_newsock;
+    tmp->download = in_do_download;
+    tmp->newurl =  in_R_newurl;
+    tmp->newsock = in_R_newsock;
 
-  tmp->HTTPOpen = R_HTTPOpen;
-  tmp->HTTPRead = R_HTTPRead;
-  tmp->HTTPClose = R_HTTPClose;
+    tmp->HTTPOpen = in_R_HTTPOpen;
+    tmp->HTTPRead = in_R_HTTPRead;
+    tmp->HTTPClose = in_R_HTTPClose;
 
-  tmp->FTPOpen = R_FTPOpen;
-  tmp->FTPRead = R_FTPRead;
-  tmp->FTPClose = R_FTPClose;
+    tmp->FTPOpen = in_R_FTPOpen;
+    tmp->FTPRead = in_R_FTPRead;
+    tmp->FTPClose = in_R_FTPClose;
 
-  tmp->sockopen = Rsockopen;
-  tmp->socklisten = Rsocklisten;
-  tmp->sockconnect = Rsockconnect;
-  tmp->sockclose = Rsockclose;
-  tmp->sockread = Rsockread;
-  tmp->sockwrite = Rsockwrite;
+    tmp->sockopen = in_Rsockopen;
+    tmp->socklisten = in_Rsocklisten;
+    tmp->sockconnect = in_Rsockconnect;
+    tmp->sockclose = in_Rsockclose;
+    tmp->sockread = in_Rsockread;
+    tmp->sockwrite = in_Rsockwrite;
+    R_setInternetRoutines(tmp);
 }
