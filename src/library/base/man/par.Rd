@@ -192,7 +192,9 @@ par(\dots, no.readonly = FALSE)
   \item{omi}{A vector of the form \code{c(bottom, left, top, right)} giving the
     size of the outer margins in inches.}
   \item{pch}{Either an integer specifying a symbol or a single character
-    to be used as the default in plotting points.}
+    to be used as the default in plotting points. The character cell is
+    centered at the point for all characters, unlike S which has special
+    treatment for \code{pch="."}. }
   \item{pin}{The width and height of the current plot in inches.}
   \item{plt}{A vector of the form \code{c(x1, x2, y1, y2)} giving
     the coordinates of the plot region as fractions of the current
