@@ -5773,7 +5773,7 @@ specialized plotting symbol is produced.  To see what the symbols are,
 use the command
 
 @example
-> legend(locator(1), as.character(0:18), marks=0:18)
+> legend(locator(1), as.character(0:18), pch = 0:18)
 @end example
 
 @item lty=2
