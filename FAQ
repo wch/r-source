@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-30, 2003-07-23
+Version 1.7-31, 2003-07-24
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1472,6 +1472,9 @@ distributions of R.)
      Functions for classification (k-nearest neighbor and LVQ).  Contained
      in the `VR' bundle.  _Recommended_.
 
+*classPP*
+     Projection Pursuit for supervised classification.
+
 *clim.pact*
      Climate analysis and downscaling for monthly and daily data.
 
@@ -1954,6 +1957,11 @@ distributions of R.)
 *polynom*
      A collection of functions to implement a class for univariate
      polynomial manipulations.
+
+*pps*
+     Functions to select samples using PPS (probability proportional to
+     size) sampling, for stratified simple random sampling, and to compute
+     joint inclusion probabilities for Sampford's method of PPS sampling.
 
 *prabclus*
      Distance based parametric bootstrap tests for clustering, mainly
