@@ -25,11 +25,6 @@
 #include <Rgraphics.h>
 #include "R_ext/Rdynpriv.h"
 
-typedef double  (*dblDL_FUNC)();
-static dblDL_FUNC ptr_GVStrWidth, ptr_GVStrHeight;
-static DL_FUNC ptr_GVText;
-
-
 typedef struct {
     GVTextRoutine GVText;
     GVStrWidthRoutine GVStrWidth;
@@ -66,12 +61,6 @@ static void vfonts_Init(void)
     int res = moduleCdynload("vfonts", 1, 1);
     initialized = -1;
     if(!res) return;
-    
-    if(!(ptr_GVStrWidth =  (dblDL_FUNC)R_FindSymbol("Rvf_GVStrWidth", 
-						    "vfonts", NULL))) return;
-    if(!(ptr_GVStrHeight = (dblDL_FUNC)R_FindSymbol("Rvf_GVStrHeight", 
-						    "vfonts", NULL))) return;
-    if(!(ptr_GVText = R_FindSymbol("Rvf_GVText", "vfonts", NULL))) return;
     initialized = 1;    
     return;
 }

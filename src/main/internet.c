@@ -29,20 +29,6 @@
 
 #include "R_ext/Rinternet.h"
 
-/* These were forced in during patch update.  Correct? */
-typedef int  (*iDL_FUNC)();
-typedef SEXP  (*sDL_FUNC)();
-typedef Rconnection  (*rDL_FUNC)();
-
-static sDL_FUNC ptr_download;
-static rDL_FUNC ptr_newurl, ptr_newsock;
-static DL_FUNC ptr_HTTPOpen, ptr_HTTPClose,  ptr_FTPOpen, ptr_FTPClose;
-static iDL_FUNC ptr_HTTPRead, ptr_FTPRead;
-static DL_FUNC ptr_sockopen, ptr_socklisten, ptr_sockconnect, ptr_sockclose,
-    ptr_sockread, ptr_sockwrite;
-/* End forced-in stuff */
-
-
 static R_InternetRoutines routines, *ptr = &routines;
 
 
@@ -87,36 +73,6 @@ static void internet_Init(void)
     int res = moduleCdynload("internet", 1, 1);
     initialized = -1;
     if(!res) return;
-    if(!(ptr_download = 
-	 (sDL_FUNC)R_FindSymbol("in_do_download", "internet", NULL))) return;
-    if(!(ptr_newurl = (rDL_FUNC)R_FindSymbol("in_R_newurl", "internet", NULL))) return;
-    if(!(ptr_newsock = 
-	 (rDL_FUNC)R_FindSymbol("in_R_newsock", "internet", NULL))) return;
-    if(!(ptr_HTTPOpen = 
-	 (DL_FUNC)R_FindSymbol("in_R_HTTPOpen", "internet", NULL))) return;
-    if(!(ptr_HTTPRead = 
-	 (iDL_FUNC)R_FindSymbol("in_R_HTTPRead", "internet", NULL))) return;
-    if(!(ptr_HTTPClose = 
-	 (DL_FUNC)R_FindSymbol("in_R_HTTPClose", "internet", NULL))) return;
-    if(!(ptr_FTPOpen = 
-	 (DL_FUNC)R_FindSymbol("in_R_FTPOpen", "internet", NULL))) return;
-    if(!(ptr_FTPRead = 
-	 (iDL_FUNC)R_FindSymbol("in_R_FTPRead", "internet", NULL))) return;
-    if(!(ptr_FTPClose = 
-	 (DL_FUNC)R_FindSymbol("in_R_FTPClose", "internet", NULL))) return;
-    if(!(ptr_sockopen = 
-	 (DL_FUNC)R_FindSymbol("in_Rsockopen", "internet", NULL))) return;
-    if(!(ptr_socklisten = 
-	 (DL_FUNC)R_FindSymbol("in_Rsocklisten", "internet", NULL))) return;
-    if(!(ptr_sockclose = 
-	 (DL_FUNC)R_FindSymbol("in_Rsockclose", "internet", NULL))) return;
-    if(!(ptr_sockconnect = 
-	 (DL_FUNC)R_FindSymbol("in_Rsockconnect", "internet", NULL))) return;
-    if(!(ptr_sockread = 
-	 (DL_FUNC)R_FindSymbol("in_Rsockread", "internet", NULL))) return;
-    if(!(ptr_sockwrite = 
-	 (DL_FUNC)R_FindSymbol("in_Rsockwrite", "internet", NULL))) return;
-
     initialized = 1;    
     return;
 }
