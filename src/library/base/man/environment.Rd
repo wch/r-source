@@ -18,6 +18,7 @@ environment(fun) <- value
 is.environment(obj)
 .GlobalEnv
 globalenv()
+.BaseNamespaceEnv
 new.env(hash=FALSE, parent=parent.frame())
 parent.env(env)
 parent.env(env) <- value
@@ -56,8 +57,9 @@ parent.env(env) <- value
   search path, more often known as the user's workspace.  It can also be
   accessed by \code{globalenv()}.
 
-  The variable \code{.BaseNamespaceEnv} is part of some experimental
-  support for name space management.
+  The object \code{.BaseNamespaceEnv} is the namespace environment for
+  the base package.  The environment of the base package itself is
+  represented by \code{NULL}.
 
   The replacement function \code{parent.env<-} is extremely dangerous as
   it can be used to destructively change environments in ways that
@@ -78,9 +80,9 @@ environment(environment)
 
 ls(envir=environment(approxfun(1:2,1:2, method="const")))
 
-is.environment(.GlobalEnv)# TRUE
+is.environment(.GlobalEnv) # TRUE
 
-e1 <- new.env(TRUE, NULL)
+e1 <- new.env(TRUE, NULL)  # these two have parent package:base.
 e2 <- new.env(FALSE, NULL)
 assign("a", 3, env=e2)
 parent.env(e1) <- e2
