@@ -128,6 +128,11 @@ void free_starma()
 
 void dotrans(double *, double *, int);
 
+void Dotrans(double *x, double *y)
+{
+    dotrans(x, y, 1);
+}
+
 void arma0fa(double *inparams, double *res)
 {
     int i, j, ifault, it, iupd, streg;
