@@ -28,10 +28,11 @@
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
 
+#define ENABLE_NLS 1
+#include "../win-nls.h"
 #include "internal.h"
 #include "ga.h"
 #include "../shext.h"		/* for selectfolder */
-#include "../win-nls.h"
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];

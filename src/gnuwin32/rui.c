@@ -855,17 +855,17 @@ static void dropconsole(control m, char *fn)
 }
 
 static MenuItem ConsolePopup[] = {	  /* Numbers used below */
-    {"Copy", menucopy, 'C', 0},			  /* 0 */
-    {"Paste", menupaste, 'V', 0},		  /* 1 */
-    {"Paste commands only", menupastecmds, 0, 0},  /* 2 */
-    {"Copy and paste", menucopypaste, 'X', 0},	  /* 3 */
+    {GN_("Copy"), menucopy, 'C', 0},			  /* 0 */
+    {GN_("Paste"), menupaste, 'V', 0},		  /* 1 */
+    {GN_("Paste commands only"), menupastecmds, 0, 0},  /* 2 */
+    {GN_("Copy and paste"), menucopypaste, 'X', 0},	  /* 3 */
     {"-", 0, 0, 0},
-    {"Clear window", menuclear, 'L', 0},          /* 5 */
+    {GN_("Clear window"), menuclear, 'L', 0},          /* 5 */
     {"-", 0, 0, 0},
-    {"Select all", menuselectall, 0, 0},	  /* 7 */
+    {GN_("Select all"), menuselectall, 0, 0},	  /* 7 */
     {"-", 0, 0},
-    {"Buffered output", menulazy, 'W', 0},	  /* 9 */
-    {"Stay on top", menuconsolestayontop, 0, 0},  /* 10 */
+    {GN_("Buffered output"), menulazy, 'W', 0},	  /* 9 */
+    {GN_("Stay on top"), menuconsolestayontop, 0, 0},  /* 10 */
     LASTMENUITEM
 };
 
