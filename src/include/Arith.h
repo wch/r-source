@@ -50,7 +50,7 @@
 #ifdef __MAIN__
 #define extern
 #endif
-extern double	R_tmp;		/*  Temporary Value used in NaN/Inf checks */
+extern double	R_tmp;		/* Temporary Value used in NaN/Inf checks */
 extern double	R_NaN;		/* IEEE NaN or -DBL_MAX */
 extern double	R_PosInf;	/* IEEE Inf or DBL_MAX */
 extern double	R_NegInf;	/* IEEE -Inf or -DBL_MAX */
@@ -66,36 +66,40 @@ extern double	R_NaReal;	/* NA_REAL */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
+
 #ifdef IEEE_754
 
 int R_IsNA(double);		/* True for Real NA only */
 int R_IsNaN(double);		/* True for special NaN, *not* for NA */
 
-#define MATH_CHECK(call)	(call)
+# define MATH_CHECK(call)	(call)
+
 #define FINITE(x)		finite(x)
-#define ISNAN(x)		(isnan(x)!=0)  /* -> True, *both* for NA | NaN */
-						/* NOTE: some systems do
-						 * not return 1 for
-						 * TRUE!*/
+#define ISNAN(x)		(isnan(x)!=0)	/* True, *both* for NA | NaN */
+				/* NOTE: some systems do not return 1 for TRUE*/
 #define ISNA(x)			R_IsNA(x) /* from ../main/arithmetic.c */
 
 #else
 
 #define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
+/* /usr/include/sys/errno.h (Solaris 2.5) has
+   EDOM	  : Math arg out of domain of func
+   ERANGE : Math result not representable
+*/
 
 #ifndef HAVE_FINITE
-#define FINITE(x)               ((x)!= R_NaReal)
+#define FINITE(x)		((x)!= R_NaReal)
 #else
 #define FINITE(x)		finite(x)
 #endif
 
 #ifndef HAVE_ISNAN
-#define ISNAN(x)                ((x)==R_NaReal)
+#define ISNAN(x)		((x)==R_NaReal)
 #else
-#define ISNAN(x)                (isnan(x) || (x)==R_NaReal)
+#define ISNAN(x)		(isnan(x) || (x)==R_NaReal)
 #endif
 
-#define ISNA(x)                 ((x)==R_NaReal)
+#define ISNA(x)			((x)==R_NaReal)
 /* never used. in HP-UX' c89 "NAN" is for a double const. :
  * #define NAN(x)			ISNAN(x)
  */
