@@ -1,14 +1,12 @@
-summary <-
-function (x, ...)
-	UseMethod("summary")
+summary <- function (object, ...) UseMethod("summary")
 
-summary.default <-
-function(object, ..., digits = max(options()$digits - 3, 3))
+summary.default <- function(object, ..., digits = max(3, .Options$digits - 3))
 {
 	if(is.factor(object))
 		return(summary.factor(object, ...))
 	else if(is.matrix(object))
 		return(summary.matrix(object, ...))
+
 	value <- if(is.numeric(object)) {
 		nas <- is.na(object)
 		object <- object[!nas]
@@ -34,18 +32,17 @@ function(object, ..., digits = max(options()$digits - 3, 3))
 		class(sumry) <- "table"
 		sumry
 	}
-	else c(Length = length(object), Class = class(object), Mode = mode(object))
+	else c(Length= length(object), Class= class(object), Mode= mode(object))
 	class(value) <- "table"
 	value
 }
 
-summary.factor <-
-function(x, maxsum = 100, ...)
+summary.factor <- function(object, maxsum = 100, ...)
 {
-	nas <- is.na(x)
-	ll <- levels(x)
+	nas <- is.na(object)
+	ll <- levels(object)
 	if(any(nas)) maxsum <- maxsum - 1
-	tbl <- table(x)
+	tbl <- table(object)
 	tt <- c(tbl) # names dropped ...
 	names(tt) <- dimnames(tbl)[[1]]
 	if(length(ll) > maxsum) {
@@ -56,16 +53,13 @@ function(x, maxsum = 100, ...)
 	if(any(nas)) c(tt, "NA's" = sum(nas)) else tt
 }
 
-summary.matrix <-
-function(x, ...)
-	summary.data.frame(data.frame(x))
+summary.matrix <- function(object, ...) summary.data.frame(data.frame(object))
 
-summary.data.frame <-
-function(x, maxsum = 7, ...)
+summary.data.frame <- function(object, maxsum = 7, ...)
 {
-	z <- lapply(as.list(x), summary, maxsum = maxsum)
-	nv <- length(x)
-	nm <- names(x)
+	z <- lapply(as.list(object), summary, maxsum = maxsum)
+	nv <- length(object)
+	nm <- names(object)
 	lw <- numeric(nv)
 	nr <- max(unlist(lapply(z, length)))
 	for(i in 1:nv) {
