@@ -17,6 +17,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   revised curve function to avoid using grep patterns that caused
+	problems under Solaris 2.6
+
     o   coplot() now has 'number' and 'overlap' arguments, and should work 
 	in more situations. [by John Maindonald and MM].
 
