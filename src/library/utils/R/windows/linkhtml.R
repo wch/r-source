@@ -101,21 +101,25 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     fixedfile <- file.path(pkg, "fixedHTMLlinks")
     if(file.exists(fixedfile)) {
         oldtop <- readLines(fixedfile)
-        if(!force && (length(oldtop)==1) && top == oldtop) return(TRUE)
+        if(!force && (length(oldtop) == 1) && top == oldtop) return(TRUE)
         olddoc <- paste(oldtop, "/doc", sep="")
         oldbase <- paste(oldtop, "/library/base", sep="")
         oldutils <- paste(oldtop, "/library/utils", sep="")
         oldgraphics <- paste(oldtop, "/library/graphics", sep="")
         oldstats <- paste(oldtop, "/library/stats", sep="")
+        olddata <- paste(oldtop, "/library/datasets", sep="")
+        oldgrD <- paste(oldtop, "/library/grDevices", sep="")
     } else {
         olddoc <- "../../../doc"
         oldbase <- "../../base"
         oldutils <- "../../utils"
         oldgraphics <- "../../graphics"
         oldstats <- "../../stats"
+        olddata <- "../../datasets"
+        oldgrD <- "../../grDevices"
     }
     if(!file.create(fixedfile)) return(FALSE)
-    cat(top, "\n", sep="", file=fixedfile)
+    cat(top, "\n", sep = "", file = fixedfile)
     htmldir <- file.path(pkg, "html")
     if(!file.exists(htmldir)) return(FALSE)
     files <- list.files(htmldir, pattern = "\\.html$", full.names = TRUE)
@@ -124,6 +128,8 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     utils <- paste(top, "/library/utils", sep="")
     graphics <- paste(top, "/library/graphics", sep="")
     stats <- paste(top, "/library/stats", sep="")
+    datasets <- paste(top, "/library/datasets", sep="")
+    grD <- paste(top, "/library/grDevices", sep="")
     for(f in files) {
         page <- readLines(f)
         out <- try(file(f, open = "w"), silent = TRUE)
@@ -136,6 +142,8 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         page <- gsub(oldutils, utils, page)
         page <- gsub(oldgraphics, graphics, page)
         page <- gsub(oldstats, stats, page)
+        page <- gsub(olddata, data, page)
+        page <- gsub(oldgrD, grD, page)
         writeLines(page, out)
         close(out)
     }
