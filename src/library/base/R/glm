@@ -23,8 +23,13 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	mf$model <- mf$method <- mf$x <- mf$y <- NULL
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
-	if(method == "model.frame")
-		return(mf)
+	switch(method,
+	       "model.frame" = return(mf),
+	       "glm.fit"= 1,
+	       "glm.fit.null"= 1,
+	       ## else
+	       stop(paste("invalid 'method':", method)))
+
 	## null model support
 	X <- if (is.empty.model(mt)) NULL else model.matrix(mt, mf)
 	Y <- model.response(mf, "numeric")
@@ -45,6 +50,8 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 
 	if(model) fit$model <- mf
 	if(!y) fit$y <- NULL
+	fit$contrasts <- if(0 < length(clv <- unlist(lapply(mf, class))))
+	  options("contrasts")[[1]] else FALSE
 	structure(c(fit,
 		    list(call=call, formula=formula,
 			 terms=mt, data=data, x= if(x) X,# x=x,
@@ -268,16 +275,16 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	wtdmu <-
 	  if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
 	nulldev <- sum(dev.resids(y, wtdmu, weights))
-	## calculate aic
-	aic.model <- aic(y, n, mu, weights, dev) + 2*fit$rank
-
 	## calculate df
 	n.ok <- nobs - sum(weights==0)
 	nulldf <- n.ok - as.integer(intercept)
 	resdf  <- n.ok - fit$rank
+	## calculate AIC
+	aic.model <-
+	  if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
 	list(coefficients = coef, residuals = residuals, fitted.values = mu,
 	     effects = fit$effects, R = Rmat, rank = fit$rank,
-	     qr = list(qr = fit$qr, rank = fit$rank, qraux = fit$qraux),
+	     qr = fit[c("qr", "rank", "qraux", "pivot", "tol")],
 	     family = family, linear.predictors = eta, deviance = dev,
 	     aic = aic.model,
 	     null.deviance = nulldev, iter = iter, weights = w^2,
@@ -285,12 +292,17 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	     y = y, converged = conv, boundary = boundary)
 }
 
+
 print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 {
 	cat("\nCall: ", deparse(x$call), "\n\n")
-	cat("Coefficients:\n")
+	cat("Coefficients")
+	if(is.character(co <- x$contrasts))
+		cat("  [contrasts: ",
+			apply(cbind(names(co),co), 1, paste, collapse="="), "]")
+	cat(":\n")
 	print.default(round(x$coefficients, digits), print.gap = 2)
-	cat("\nDegrees of Freedom:", x$df.null, "Total; ",
+	cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
 		 x$df.residual, "Residual\n")
 	cat("Null Deviance:    ", format(signif(x$null.deviance, digits)), "\n")
 	cat("Residual Deviance:", format(signif(x$deviance, digits)), "\t")
@@ -462,24 +474,22 @@ stat.anova <- function(table, test, scale, df.scale, n)
 	})
 }
 
-
 summary.glm <- function(object, dispersion = NULL,
 	correlation = FALSE, na.action=na.omit)
 {
 	est.disp<-FALSE
+	df.r <- object$df.residual
 	if(is.null(dispersion))	# calculate dispersion if needed
 	  dispersion <-
 		if(any(object$family$family == c("poisson", "binomial")))
 		  1
-		else {
+		else if(df.r > 0) {
 			est.disp<-TRUE
 			if(any(object$weights==0))
 				warning(paste("observations with zero weight",
 				"not used for calculating dispersion"))
-			sum(object$weights*object$residuals^2)/
-				object$df.residual
-		}
-
+			sum(object$weights*object$residuals^2)/ df.r
+		} else Inf
 
 	## extract x to get column names
 
@@ -502,47 +512,55 @@ summary.glm <- function(object, dispersion = NULL,
 	covmat.unscaled <- chol2inv(object$qr$qr[p1,p1,drop=FALSE])
 	dimnames(covmat.unscaled) <- list(names(coef.p),names(coef.p))
 	covmat <- dispersion*covmat.unscaled
-	##not necess.: dimnames(covmat) <- dimnames(covmat.unscaled)
+	var.cf <- diag(covmat)
 
 	## calculate coef table
 
 ##	nas <- is.na(object$coefficients)
-	var.cf <- diag(covmat)
-	s.err <- sqrt(var.cf)
-	tvalue <- coef.p/s.err
+	if(df.r > 0) {
+		s.err <- sqrt(var.cf)
+		tvalue <- coef.p/s.err
+	}
 	if(est.disp) {
-		pvalue <- 2*pt(-abs(tvalue), object$df.residual)
+		pvalue <- 2*pt(-abs(tvalue), df.r)
 		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
 		dimnames(coef.table) <- list(names(coef.p),
 				     c("Value","Std.error","t value","P(>|t|)"))
 	}
-	else {
+	else if(df.r > 0) {
 		pvalue <- 2*pnorm(-abs(tvalue))
 		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
 		dimnames(coef.table) <- list(names(coef.p),
 				     c("Value","Std.error","z value","P(>|z|)"))
 	}
-
+	else { ## df.r == 0
+		coef.table <- cbind(coef.p, Inf)
+		dimnames(coef.table) <- list(names(coef.p),
+				     c("Value","Std.error"))
+	}
 	## return answer
 
 	ans <- c(object[c("call","terms","family","deviance", "aic",
+			  "contrasts",
 			  "df.residual","null.deviance","df.null","iter")],
-		 list(deviance.resid=residuals(object, type = "deviance"),
+		 list(deviance.resid= residuals(object, type = "deviance"),
 		      aic = object$aic,
 		      coefficients=coef.table,
 		      dispersion=dispersion,
-		      df=c(object$rank, object$df.residual),
+		      df=c(object$rank, df.r),
 		      cov.unscaled=covmat.unscaled,
 		      cov.scaled=covmat))
 ##		      nas=nas))
 
-	if(correlation)
-	  ans$correlation <-
-		as.matrix(covmat/sqrt(crossprod(rbind(var.cf))))
+	if(correlation) {
+		if(df.r == 0) warning("df.resid=0; no correlations available")
+		else
+		ans$correlation <-
+			as.matrix(covmat/sqrt(crossprod(rbind(var.cf))))
+	}
 	class(ans) <- "summary.glm"
 	return(ans)
 }
-
 
 print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	formatfun = format,
@@ -557,9 +575,15 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 		names(x$deviance.resid) <- c("Min", "1Q", "Median", "3Q", "Max")
 	}
 	print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
-	cat("\nCoefficients:\n")
+
+	cat("\nCoefficients")
+	if(is.character(co <- x$contrasts))
+		cat("  [contrasts: ",
+			apply(cbind(names(co),co), 1, paste, collapse="="), "]")
+	cat(":\n")
 	##
 	##0.61:print.default(roundfun(x$coefficients,digits=digits),print.gap=2)
+	p <- nrow(x$coef)
 	acs <- abs(coef.se <- x$coef[, 1:2, drop=FALSE])
 	digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
 	## = digits for rounding col 1:2
@@ -569,15 +593,16 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 		Pv <- x$coef[, 4]
 	Coefs <-
 	  cbind(format(round(coef.se, max(1,digits - digmin)), digits=digits),
+		if(ncol(x$coef)>=3)
 		format(round(x$coef[, 3], dig=digt), digits=digits),# Z- values
 		if(has.Pval) format.pval(Pv, digits = digt))
 	dimnames(Coefs) <- dimnames(x$coef)
 	if(any(not.both.0 <- (c(x$coef)==0)!=(as.numeric(Coefs)==0),na.rm=TRUE))
 	  ## not.both.0==T:  one is TRUE, one is FALSE : ==> x$coef != 0
 	  Coefs[not.both.0] <- format(x$coef[not.both.0], digits= min(1,digits-1))# =2
-	if(!has.Pval || !exists("symnum", mode = "function"))
+	if(!has.Pval || !exists("symnum", mode = "function")){
 		signif.stars <- FALSE
-	else if(signif.stars) {
+	}else if(signif.stars) {
 		Signif <- symnum(Pv, corr = FALSE,
 				 cutpoints = c(0,  .001,.01,.05, .1, 1),
 				 symbols   =  c("***","**","*","."," "))
@@ -642,10 +667,10 @@ residuals.glm <- function(object, type="deviance")
 	mu <- object$fitted.values
 	wts<- object$prior.weights
 	switch(ntyp,
-		deviance = {
-			d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
-			ifelse(y > mu, d.res, -d.res)
-		},
+		deviance = if(object$df.res > 0) {
+		  d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
+		  ifelse(y > mu, d.res, -d.res)
+		} else rep(0, length(mu)),
 		pearson	 = object$residuals * sqrt(object$weights),
 		working	 = object$residuals,
 		response = y - mu
@@ -676,3 +701,4 @@ update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
 ##	eval(call, sys.frame(-i))
 	eval(call, sys.frame(sys.parent()))
 }
+
