@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-30, 2001-11-18
+Version 1.3-31, 2001-11-25
 Kurt Hornik
 
 
@@ -1310,12 +1310,16 @@ works, was published in the Journal of Statistical Software
 *e1071*
      Miscellaneous functions used at the Department of Statistics at TU Wien
      (E1071), including moments, short-time Fourier transforms, Independent
-     Component Analysis, Latent Class Analysis, reading and writing of
-     images in portable anymap format, simulation of a Wiener process,
-     support vector machines, and fuzzy clustering.
+     Component Analysis, Latent Class Analysis, support vector machines, and
+     fuzzy clustering, shortest path computation, bagged clustering, and
+     some more.
 
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
+
+*emplik*
+     Empirical likelihood ratio for means/quantiles/hazards from possibly
+     right censored data.
 
 *event.chart*
      Package for creating event charts.
