@@ -164,6 +164,9 @@ close(zz)
 unlink("t1.gz")
 stopifnot(sz < 2000)
 
+## PR 1010: plot.mts (type="p") was broken in 1.3.0 and this call failed.
+plot(ts(matrix(runif(10), ncol = 2)), type = "p")
+
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {

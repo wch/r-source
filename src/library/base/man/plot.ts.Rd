@@ -32,7 +32,7 @@ lines(x, \dots)
   \item{xy.lines}{logical, indicating if \code{\link{lines}}
     should be drawn for an x-y plot.  Default is true, when labels are
     drawn as well.}
-  \item{panel}{a \code{function(x, col, bg, pch, ...)} which gives the
+  \item{panel}{a \code{function(x, col, bg, pch, type, ...)} which gives the
     action to be carried out in each panel of the display for
     \code{plot.type="multiple"}.  The default is \code{lines}.} 
 
