@@ -212,9 +212,6 @@ void replacedialog(textbox t);
 int modeless_active();
 
 
-/* cursor.c */
-extern cursor CrossCursor;
-
 /* menus.h */
 void 	remove_menu_item(menuitem obj);
 
