@@ -32,7 +32,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
     distance matrix should be printed by \code{print.dist}.}
   \item{upper}{logical value indicating whether the upper triangle of the
     distance matrix should be printed by \code{print.dist}.}
-  \item{p}{The power of the Minikowski distance.}
+  \item{p}{The power of the Minkowski distance.}
   \item{m}{An object with distance information to be converted to a
     \code{"dist"} object.  For the default method, a \code{"dist"}
     object, or a matrix (of distances) or an object which can be coerced
