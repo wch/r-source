@@ -573,6 +573,8 @@ FUNTAB R_FunTab[] =
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 {"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
 {"index.search",do_indexsearch, 0,      11,     5,      PP_FUNCALL},
+{"getwd",	do_getwd,	0,	11,	0,	PP_FUNCALL},
+{"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},

@@ -23,6 +23,10 @@
 #include "Mathlib.h"
 #include "Print.h"
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 SEXP ScalarLogical(int x)
 {
     SEXP ans = allocVector(LGLSXP, 1);
@@ -860,4 +864,41 @@ SEXP dcar(SEXP l)
 SEXP dcdr(SEXP l)
 {
     return(CDR(l));
+}
+
+/* Functions for getting and setting the working directory. */
+
+SEXP
+do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    SEXP rval = R_NilValue;
+    size_t size = 100;    
+    char *buf;
+
+    checkArity(op, args);
+#ifdef HAVE_UNISTD_H
+    buf = (char *)malloc(size);
+    while (!getcwd(buf, size)) {
+	size *= 2;
+	free(buf);
+	buf = (char *)malloc(size);
+    }
+    rval = mkString(buf);
+#endif
+    return(rval);
+}
+
+SEXP
+do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    SEXP s;
+    const char *path;
+
+    checkArity(op, args);
+    
+    s = CAR(args);
+    if (!isString(s))
+	errorcall(call, "character argument expected\n");
+    path = R_ExpandFileName(CHAR(STRING(s)[0]));
+    if(chdir(path) < 0)
+	errorcall(call, "cannot change working directory\n");
+    return(R_NilValue);
 }
