@@ -1,6 +1,7 @@
 \name{recordPlot}
 \alias{replayPlot}
 \alias{recordPlot}
+\alias{print.recordedplot}
 \title{Record and Replay Plots}
 \description{
   Functions to save the current plot in an \R variable, and to replay it.

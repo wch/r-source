@@ -1,6 +1,10 @@
 \name{nls}
 \alias{nls}
+\alias{anova.nls}
+\alias{anovalist.nls}
 \alias{coef.nls}
+\alias{deviance.nls}
+\alias{df.residual.nls}
 \alias{fitted.nls}
 \alias{logLik.nls}
 \alias{print.nls}

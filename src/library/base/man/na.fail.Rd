@@ -7,6 +7,7 @@ na.omit(object)
 \alias{na.fail}
 \alias{na.fail.default}
 \alias{na.omit}
+\alias{na.omit.data.frame}
 \alias{na.omit.default}
 \arguments{
   \item{object}{an \R object, typically a data frame}
