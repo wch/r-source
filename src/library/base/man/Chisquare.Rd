@@ -25,8 +25,8 @@ rchisq(n, df)
   The chi-square distribution with \code{df}\eqn{= n} degrees of freedom
   has density
   \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{%
-        f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
-  for \eqn{x > 0}.
+    f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
+  for \eqn{x > 0}. Mean and variance are \eqn{n} and \eqn{2n}, respectively.
 
   \code{dchisq} gives the density \eqn{f_n},
   \code{pchisq} gives the distribution function \eqn{F_n}, \code{qchisq} gives
