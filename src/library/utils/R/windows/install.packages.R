@@ -368,7 +368,7 @@ menuInstallCran <- function()
                             paste(contains[[x]], " (", x, ")", sep="")))
     p <- sort(as.vector(c(a[, 1], extras)))
     sel <- select.list(p,,TRUE)
-    if(!length(sel)) return()
+    if(!length(sel)) return(invisible())
     bundles <- grep("(", sel, fixed = TRUE)
     if(length(bundles)) sel[bundles] <-
         sub("[^(]*\\((.*)\\)", "\\1" , sel[bundles])

@@ -45,6 +45,9 @@ SUPPORT_UTF8 to YES in src/gnuwin32/MkRules.
 R can now be built with support of multibyte and variable-width
 character sets, e.g. for Japanese. See INSTALL.
 
+select.list() now looks up the the current font size and chooses its
+window size based on that.
+
 
 
 R 2.0.1 patched

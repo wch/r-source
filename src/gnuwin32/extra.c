@@ -853,14 +853,17 @@ static void key1(control c, int ch)
     if(ch == ESC)  cancel(NULL);
 }
 
+rect getSysFontSize(); /* in graphapp/fonts.c */
+RECT *RgetMDIsize(); /* in rui.c */
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP list, preselect, ans = R_NilValue;
     char **clist, *cps;
     int i, j = -1, n, mw = 0, multiple, nsel = 0;
-    int xmax = 550, ymax  = 400, ylist;
+    int xmax = 550, ymax  = 400, ylist, fht, fwd, h0;
     Rboolean haveTitle;
+    rect r;
 
     checkArity(op, args);
     list = CAR(args);
@@ -883,19 +886,30 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	mw = max(mw, strlen(clist[i]));
     }
     clist[n] = NULL;
+
+    r = getSysFontSize();
+    fht = r.height + r.y;
+    fwd = r.width;
+    
     mw = min(mw, 25);
-    xmax = max(170, 8*mw+60);
-    ylist = min(20*n, 300);
-    ymax = ylist + 60;
+    xmax = max(170, fwd*mw+60); /* allow for scrollbar */
+    if(ismdi()) {
+	RECT *pR = RgetMDIsize();
+	h0 = pR->bottom;
+    } else {
+	h0 = deviceheight(NULL);
+    }
+    ymax = min(60+fht*n, h0-100); /* allow for window widgets, toolbar */
+    ylist = ymax - 60;
     wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
-			(multiple ? "Select" : "Select one"),
+			(multiple ? "Select one or more" : "Select one"),
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal);
     setbackground(wselect, dialog_bg());
     if(multiple)
-	f_list = newmultilist(clist, rect(10, 10, 35+8*mw, ylist), NULL);
+	f_list = newmultilist(clist, rect(10, 10, xmax-25, ylist), NULL);
     else
-	f_list = newlistbox(clist, rect(10, 10, 35+8*mw, ylist), NULL);
+	f_list = newlistbox(clist, rect(10, 10, xmax-25, ylist), NULL);
     setlistitem(f_list, j);
     bFinish = newbutton("OK", rect(xmax-160, ymax-40, 70, 25), finish);
     bCancel = newbutton("Cancel", rect(xmax-80, ymax-40, 70, 25), cancel);
