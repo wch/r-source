@@ -116,6 +116,7 @@ typedef struct {
 /* Environment Access Macros */
 #define FRAME(x)	((x)->u.envsxp.frame)
 #define ENCLOS(x)	((x)->u.envsxp.enclos)
+#define HASHTAB(x)	((x)->u.envsxp.hashtab)
 #define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
 
 /* Promise Access Macros */
@@ -372,12 +373,13 @@ void markSExp(SEXP);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP match(SEXP, SEXP, int);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
-SEXP mkEnv(SEXP, SEXP, SEXP);
+/* SEXP mkEnv(SEXP, SEXP, SEXP); */
 SEXP mkPRIMSXP (int, int);
 SEXP mkPROMISE(SEXP, SEXP);
 SEXP mkQUOTE(SEXP);
 SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkFalse(void);
+SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr();
 int OneIndex(SEXP, SEXP, int, int, SEXP*);
 SEXP parse(FILE*, int);

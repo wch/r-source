@@ -556,8 +556,6 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 /*    get(x, envir, mode, inherits) */
 /* exists(x, envir, mode, inherits) */
 
-#define FUNSXP 999
-
 SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval, genv, t1;
@@ -644,26 +642,6 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(rval)[0] = ginherits;
 	return rval;
     }
-}
-
-SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
-{
-    SEXP vl;
-    while (rho != R_NilValue) {
-	vl = findVarInFrame(FRAME(rho), symbol);
-	if (vl != R_UnboundValue) {
-	    if (mode == ANYSXP || TYPEOF(vl) == mode) return vl;
-	    if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
-				  TYPEOF(vl) == BUILTINSXP ||
-				  TYPEOF(vl) == SPECIALSXP))
-		return (vl);
-	}
-	if (inherits)
-	    rho = ENCLOS(rho);
-	else
-	    return (R_UnboundValue);
-    }
-    return (SYMVALUE(symbol));
 }
 
 

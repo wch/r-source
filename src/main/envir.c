@@ -180,6 +180,40 @@ SEXP findVar(SEXP symbol, SEXP rho)
 
 /*----------------------------------------------------------------------
 
+    findVar1 :
+    
+    Look up a symbol in an environment.  Ignore any values which are
+    not of the specified type.
+
+    Changes :
+
+    This needs to be changed so that the environment chain is searched
+    and then the searchpath is traversed.
+
+  ----------------------------------------------------------------------*/
+
+SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
+{
+    SEXP vl;
+    while (rho != R_NilValue) {
+	vl = findVarInFrame(FRAME(rho), symbol);
+	if (vl != R_UnboundValue) {
+	    if (mode == ANYSXP || TYPEOF(vl) == mode) return vl;
+	    if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
+				  TYPEOF(vl) == BUILTINSXP ||
+				  TYPEOF(vl) == SPECIALSXP))
+		return (vl);
+	}
+	if (inherits)
+	    rho = ENCLOS(rho);
+	else
+	    return (R_UnboundValue);
+    }
+    return (SYMVALUE(symbol));
+}
+
+/*----------------------------------------------------------------------
+
     ddfindVar : 
 
     This function fetches the variables ..1, ..2, etc from the first
@@ -389,6 +423,104 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 {
     R_DirtyImage = 1;
     SYMVALUE(symbol) = value;
+}
+
+
+/*----------------------------------------------------------------------
+
+    mfindVarInFrame :
+
+    Look up a symbol in a single environment frame.  This differs from
+    findVarInFrame in that it returns the list whose CAR is the value
+    of the symbol, rather than the value of the symbol.
+
+  ----------------------------------------------------------------------*/
+
+static SEXP mfindVarInFrame(SEXP frame, SEXP symbol)
+{
+    while (frame != R_NilValue) {
+	if (TAG(frame) == symbol)
+	    return frame;
+	frame = CDR(frame);
+    }
+    return R_NilValue;
+}
+
+
+static int isMissing(SEXP symbol, SEXP rho)
+{
+    SEXP vl, s;
+
+    if ( DDVAL(symbol) )
+	s = R_DotsSymbol;
+    else
+	s = symbol;
+
+    vl = mfindVarInFrame(FRAME(rho), s);
+    if (vl != R_NilValue) {
+	if ( DDVAL(symbol) ) {
+		if (length(CAR(vl)) < DDVAL(symbol) || CAR(vl) == R_MissingArg )
+			return 1;
+		else
+			vl = nthcdr(CAR(vl), DDVAL(symbol)-1);
+	}
+	if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
+	   return 1;
+	if (TYPEOF(CAR(vl)) == PROMSXP &&
+	      TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
+	      return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+	else
+	   return 0;
+    }
+    return 0;
+}
+
+/* in do_missing rho is the environment that missing was called from */
+
+SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP rval, t, sym, s;
+
+    checkArity(op, args);
+    s = sym = CAR(args);
+    if (!isSymbol(sym))
+	error("\"missing\" illegal use of missing\n");
+
+    if ( DDVAL(sym) ) {
+	sym = R_DotsSymbol;
+    }
+    rval=allocVector(LGLSXP,1);
+
+    t = mfindVarInFrame(FRAME(rho), sym);
+    if (t != R_NilValue) {
+	if (DDVAL(s)) {
+		if (length(CAR(t)) < DDVAL(s)  || CAR(t) == R_MissingArg ) {
+			LOGICAL(rval)[0] = 1;
+			return rval;
+		}
+		else
+			t = nthcdr(CAR(t), DDVAL(s)-1);
+	}
+	if (MISSING(t) || CAR(t) == R_MissingArg ) {
+	    LOGICAL(rval)[0] = 1;
+	    return rval;
+	}
+	else goto havebinding;
+    }
+    else  /* it wasn't an argument to the function */
+	error("\"missing\" illegal use of missing\n");
+
+  havebinding:
+
+    t = CAR(t);
+    if (TYPEOF(t) != PROMSXP) {
+	LOGICAL(rval)[0] = 0;
+	return rval;
+    }
+
+    if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
+    else LOGICAL(rval)[0] = isMissing(PREXPR(t), PRENV(t));
+    return rval;
 }
 
 /*----------------------------------------------------------------------

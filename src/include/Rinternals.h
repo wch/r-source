@@ -84,6 +84,8 @@ typedef unsigned int SEXPTYPE;
 #define VECSXP	    19	  /* generic vectors */
 #define EXPRSXP	    20	  /* expressions vectors */
 
+#define FUNSXP      99    /* Closure or Builtin */
+
 typedef struct SEXPREC {
 
     /* Flags */
@@ -130,6 +132,7 @@ typedef struct SEXPREC {
 	struct {
 	    struct SEXPREC *frame;
 	    struct SEXPREC *enclos;
+	    struct SEXPREC *hashtab;
 	} envsxp;
 	struct {
 	    struct SEXPREC *formals;
@@ -295,7 +298,7 @@ SEXP eval(SEXP, SEXP);
 SEXP EvalArgs(SEXP, SEXP, int);
 SEXP evalList(SEXP, SEXP);
 SEXP evalListKeepMissing(SEXP, SEXP);
-SEXP extendEnv(SEXP, SEXP, SEXP);
+/* SEXP extendEnv(SEXP, SEXP, SEXP); */
 SEXP findVar(SEXP, SEXP);
 SEXP findFun(SEXP, SEXP);
 SEXP getAttrib(SEXP, SEXP);
