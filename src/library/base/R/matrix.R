@@ -23,14 +23,23 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
 	if(do.NULL) NULL else paste(prefix, seq(length=NROW(x)), sep="")
     }
 }
-"rownames<-" <- function(x, value) {
+
+"rownames<-" <- function(x, value)
+{
     dn <- dimnames(x)
-    ndn <- names(dn)
-    dn <- list(value, if(!is.null(dn)) dn[[2]])
-    names(dn) <- ndn
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(x))) < 1)
+            stop("attempt to set rownames on object with no dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 1)
+        stop("attempt to set rownames on object with no dimensions")
+    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
     dimnames(x) <- dn
     x
 }
+
 colnames <- function(x, do.NULL = TRUE, prefix = "col")
 {
     dn <- dimnames(x)
@@ -40,11 +49,19 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
 	if(do.NULL) NULL else paste(prefix, seq(length=NCOL(x)), sep="")
     }
 }
-"colnames<-" <- function(x, value) {
+
+"colnames<-" <- function(x, value)
+{
     dn <- dimnames(x)
-    ndn <- names(dn)
-    dn <- list(if(!is.null(dn)) dn[[1]], value)
-    names(dn) <- ndn
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(x))) < 2)
+            stop("attempt to set colnames on object with less than two dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 2)
+        stop("attempt to set colnames on object with less than two dimensions")
+    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
     dimnames(x) <- dn
     x
 }
