@@ -86,7 +86,8 @@ ifdef USE_LIBXML
 	$(MAKE) -C ../extra/libxml OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 endif
 
-rmodules: ../../bin/vfonts.dll
+rmodules:
+	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -110,9 +111,6 @@ Rdll: makeMakedeps ../../bin/R.dll
 ../../bin/R.dll: fixfiles rlibs R.dll
 	$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
-
-../../bin/vfonts.dll: 
-	$(MAKE) -C ../modules/vfonts OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 
 front-ends: libR.a
 	$(MAKE) -C front-ends
