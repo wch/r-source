@@ -39,9 +39,9 @@ double dbeta(double x, double a, double b)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
-    if (x <= 0)
+    if (x < 0)
 	return 0;
-    if (x >= 1)
+    if (x > 1)
 	return 0;
     y = beta(a, b);
     a = pow(x, a - 1);

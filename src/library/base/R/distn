@@ -40,7 +40,10 @@ rweibull <- function(n, shape, scale=1) .Internal(rweibull(n, shape, scale))
 
 
 ##--- Argument names taken from  ../man/Beta :
-dbeta <- function(x, a, b) .Internal(dbeta(x, a, b))
+dbeta <- function(x, a, b, ncp=0) {
+if(missing(ncp)) .Internal(dbeta(x, a, b))
+else .Internal(dnbeta(x, a, b, ncp))
+}
 pbeta <- function(q, a, b, ncp=0) {
 if(missing(ncp)) .Internal(pbeta(q, a, b))
 else .Internal(pnbeta(q, a, b, ncp))
@@ -53,7 +56,10 @@ pbinom <- function(q, n, p) .Internal(pbinom(q, n, p))
 qbinom <- function(prob, n, p) .Internal(qbinom(prob, n, p))
 rbinom <- function(nobs, n, p) .Internal(rbinom(nobs, n, p))
 ##--- Argument names taken from  ../man/[N]Chisquare :
-dchisq <- function(x, df) .Internal(dchisq(x, df))
+dchisq <- function(x, df, ncp=0) {
+if(missing(ncp)) .Internal(dchisq(x, df))
+else .Internal(dnchisq(x, df, ncp))
+}
 pchisq <- function(q, df, ncp=0) {
 if(missing(ncp)) .Internal(pchisq(q, df))
 else .Internal(pnchisq(q, df, ncp))

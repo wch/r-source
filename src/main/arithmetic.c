@@ -1085,9 +1085,7 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     case 32:  return math3(op, CAR(args), CADR(args), CADDR(args), pweibull);
     case 33:  return math3(op, CAR(args), CADR(args), CADDR(args), qweibull);
 
-#ifdef UNIMP
     case 34:  return math3(op, CAR(args), CADR(args), CADDR(args), dnchisq);
-#endif
     case 35:  return math3(op, CAR(args), CADR(args), CADDR(args), pnchisq);
 #ifdef UNIMP
     case 36:  return math3(op, CAR(args), CADR(args), CADDR(args), qnchisq);
@@ -1195,9 +1193,7 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), dhyper);
     case 2: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), phyper);
     case 3: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qhyper);
-#ifdef UNIMP
     case 4: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), dnbeta);
-#endif
     case 5: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), pnbeta);
 #ifdef UNIMP
     case 6: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qnbeta);

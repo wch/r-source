@@ -30,8 +30,9 @@ OBJ=	\
 	dpois.o ppois.o qpois.o rpois.o \
 	dweibull.o pweibull.o qweibull.o rweibull.o \
 	dlogis.o plogis.o qlogis.o rlogis.o \
-	pnchisq.o qnchisq.o \
-	pnbeta.o pnf.o pnt.o
+	dnchisq.o pnchisq.o qnchisq.o \
+	dnbeta.o pnbeta.o \
+	pnf.o pnt.o
 
 LIB=		../lib/libmath.a
 

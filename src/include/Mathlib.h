@@ -185,8 +185,10 @@ double	rchisq(double);
 
 	/* Non-central Chi-squared Distribution */
 
+double	dnchisq(double, double, double);
 double	pnchisq(double, double, double);
 double	qnchisq(double, double, double);
+double	rnchisq(double, double);
 
 	/* F Distibution */
 
