@@ -119,7 +119,9 @@ par(\dots, no.readonly = FALSE)
   \item{las}{numeric in \{0,1,2\}; the style of axis labels.
     0 = always parallel to the axis [\emph{default}],
     1 = always horizontal,
-    2 = always perpendicular to the axis.}
+    2 = always perpendicular to the axis,
+    3 = always vertical.
+  }
   \item{lty}{The line type.
     Line types can either be specified as an integer (1=solid, 2=dashed,
     3=dotted 4=dotdashed) or as one of the character strings
@@ -252,10 +254,11 @@ par(op)
 
 
 par("ylog")# FALSE
-par(las=0)
+par(las=2)
 plot(1:12,log="y")
 par("ylog")# TRUE
-par(
+par(las=0)# reset to default
+
 ex <- function() {
    old.par <- par(no.readonly = TRUE)# all par settings which could be changed.
    on.exit(par(old.par))
