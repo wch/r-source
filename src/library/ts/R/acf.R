@@ -20,6 +20,7 @@ acf <-
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
+    if (lag.max < 1) stop("lag.max must be at least 1")
     x <- sweep(x, 2, apply(x, 2, mean))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
@@ -72,6 +73,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT)))
     lag.max <- min(lag.max, sampleT - 1)
+    if (lag.max < 1) stop("lag.max must be at least 1")
     x <- scale(x, T, F)
     acf <- drop(acf(x, lag.max = lag.max, plot=F)$acf)
     pacf <- array(.C("uni_pacf",
@@ -101,6 +103,7 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
+    if (lag.max < 1) stop("lag.max must be at least 1")
     x <- sweep(x, 2, apply(x, 2, mean))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
