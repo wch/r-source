@@ -28,7 +28,7 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 # morley.tab is needed for R-intro Appendix A
-	$(CP) -p $(R_HOME)/src/library/base/data/morley.tab $(RPREFIX)/library/base/data
+	$(CP) -p $(R_HOME)/src/library/datasets/data/morley.tab $(RPREFIX)/library/datasets/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc

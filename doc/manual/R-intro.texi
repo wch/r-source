@@ -6377,7 +6377,7 @@ need to adapt the discussion slightly.
 @item
 Login, start your windowing system.  You should also have the file
 @file{morley.tab} in your working directory.  If not, seek the local
-expert (or get it yourself from the @file{base/data} subdirectory of the
+expert (or get it yourself from the @file{datasets/data} subdirectory of the
 default @R{} library tree).  If you have, proceed.
 @item $ R
 Start @R{} as appropriate for your platform.
