@@ -68,6 +68,8 @@ BUG FIXES
     o   There was a spurious warning from the X11 driver on 100 dpi
         displays. (PR#840 Fix from Tom Vogels)
 
+    o   All-blank fields were read as zero. Should be NA, and is now. 
+
 
 		CHANGES IN R VERSION 1.2.1
 

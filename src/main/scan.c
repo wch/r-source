@@ -858,7 +858,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(rval = allocVector(REALSXP, length(cvec)));
     for (i = 0; i < len; i++) {
 	tmp = CHAR(STRING_ELT(cvec, i));
-	if (strlen(tmp) == 0 || isNAstring(tmp, 1))
+	if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
 	    REAL(rval)[i] = NA_REAL;
 	else {
 	    REAL(rval)[i] = Strtod(tmp, &endp);
