@@ -3,12 +3,12 @@
 \usage{
 family(object)
 
-binomial(link=logit)
-gaussian()
-Gamma(link=inverse)
-inverse.gaussian()
-poisson(link=log)
-quasi(link=identity, variance=constant)
+binomial(link= "logit")
+gaussian(link="identity")
+Gamma(link= "inverse")
+inverse.gaussian(link = "1/mu^2")
+poisson(link = "log")
+quasi(link = "identity", variance = "constant")
 }
 \alias{family}
 \alias{binomial}

@@ -12,17 +12,15 @@ power <- function(lambda = 1)
 	return(lambda)
 }
 
-## This function is used with  glm().
-## Given a link, it returns a link function, an inverse link
-## function and the derivative dmu/deta.
 ## Written by Simon Davies Dec 1995
-
 ## Modified by Thomas Lumley 26 Apr 97
 ## added valideta(eta) function returning TRUE if all of eta
 ## is in the domain of linkinv
-
 make.link <- function (link)
 {
+ ## This function is used with  glm().
+ ## Given a link, it returns a link function, an inverse link
+ ## function and the derivative dmu/deta.
  switch (link,
 	 "logit" = {
 		linkfun <- function(mu) log(mu/(1 - mu))
@@ -131,22 +129,36 @@ poisson <- function (link = "log")
 		  class = "family")
 }
 
-gaussian <- function ()
+gaussian <- function (link = "identity")
 {
- ## this is a function used in  glm();
- ## it holds everything personal to the family
- structure(c(make.link("identity"),
-             list(family = "gaussian",
-                  link = "identity",
+	linktemp <- substitute(link)
+	## This is a function used in  glm();
+	## it holds everything personal to the family
+	## converts link into character string
+	if (!is.character(linktemp)) {
+		linktemp <- deparse(linktemp)
+		if (linktemp == "link")
+			linktemp <- eval(link)
+	}
+	if (any(linktemp == c("inverse", "log", "identity")))
+		stats <- make.link(linktemp)
+	else stop(paste(linktemp, "link not available for gaussian",
+		"family, available links are \"inverse\", ",
+		"\"log\" and \"identity\""))
+ structure(list(family = "gaussian",
+                  link = linktemp,
+		  linkfun = stats$linkfun,
+		  linkinv = stats$linkinv,
                   variance = function(mu) rep(1, length(mu)),
                   dev.resids = function(y, mu, wt) wt * ((y - mu)^2),
                   aic =	function(y, n, mu, wt, dev)
 	                        sum(wt)*(log(dev/sum(wt)*2*pi)+1)+2,
+		  mu.eta = stats$mu.eta,
                   initialize = expression({
                   		n <- rep(1, nobs)
 				mustart <- y }),
                   validmu = function(mu) TRUE
-                  )),
+                  ),
            class = "family")
 }
 
@@ -161,7 +173,7 @@ binomial <- function (link = "logit")
 		if (linktemp == "link")
 			linktemp <- eval(link)
 	}
-	if (any(linktemp == c("logit", "probit", "cloglog")))
+	if (any(linktemp == c("logit", "probit", "cloglog", "log")))
 		stats <- make.link(linktemp)
 	else stop(paste(linktemp, "link not available for binomial",
 		"family, available links are \"logit\", ",
@@ -230,8 +242,8 @@ Gamma <- function (link = "inverse")
 		2*((sum(wt*(y/mu+log(mu)-log(y)))+n*log(disp))/disp+
 			n*lgamma(1/disp)+sum(log(y)*wt)+1)}
 	initialize <- expression({
-		if (any(y < 0))
-			stop(paste("Negative values not",
+		if (any(y <= 0))
+			stop(paste("Non-positive values not",
 				"allowed for the gamma family"))
 		n <- rep(1, nobs)
 		mustart <- y
@@ -250,9 +262,23 @@ Gamma <- function (link = "inverse")
 		  class = "family")
 }
 
-inverse.gaussian <- function()
+inverse.gaussian <- function(link = "1/mu^2")
 {
-	stats <- make.link("1/mu^2")
+	linktemp <- substitute(link)
+	## This is a function used in  glm();
+	## it holds everything personal to the family
+	## converts link into character string
+	if (!is.character(linktemp)) {
+		linktemp <- deparse(linktemp)
+		if (linktemp == "link")
+			linktemp <- eval(link)
+	}
+	if (any(linktemp == c("inverse", "log", "identity", "1/mu^2")))
+		stats <- make.link(linktemp)
+	else stop(paste(linktemp, "link not available for inverse gauss",
+		"family, available links are \"inverse\", ",
+		"\"1/mu^2\" \"log\" and \"identity\""))
+#	stats <- make.link("1/mu^2")
 	variance <- function(mu) mu^3
 	dev.resids <- function(y, mu, wt)  wt*((y - mu)^2)/(y*mu^2)
 	aic <- function(y, n, mu, wt, dev)
