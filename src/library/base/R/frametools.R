@@ -34,7 +34,8 @@ subset.matrix <- function(x, subset, select, drop = FALSE, ...)
 	names(nl) <- colnames(x)
 	vars <- eval(substitute(select), nl, parent.frame())
     }
-    if(!is.logical(subset)) stop("'subset' must be logical")
+    if(missing(subset)) subset <- TRUE
+    else if(!is.logical(subset)) stop("'subset' must be logical")
     x[subset & !is.na(subset), vars, drop = drop]
 }
 
