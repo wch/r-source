@@ -30,7 +30,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
     \code{.wmf}. Up to 511 characters are allowed.
     The page number is substituted if an integer format is included
     in the character string. (The result must be less than 600
-    characters long.)
+    characters long.)  The default, \code{""}, means the clipboard.
   }
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
@@ -84,9 +84,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   the limit is 85\% of the MDI client region.
 
   If the \code{filename} is omitted for a \code{win.metafile} device, the
-  output is copied to the clipboard when the device is closed. A
-  \code{win.metafile} device can only be used for a single page.
-
+  output is copied to the clipboard when the device is closed.
 
   If a screen device is re-sized, the default behaviour is to redraw the
   plot(s) as if the new size had been specified originally.  Using
