@@ -45,11 +45,11 @@ undoc <- function(pkg, dir)
         ## FIXME: Still unixy, but this version is not GNUish!
         cmd <- paste("grep -h '^\\\\name'",
                      paste(files, collapse = " "),
-                     "| sed 's/\\\\name{\\(.*\\)}/\\1/'")
+                     "| sed 's/\\\\name{\\(.*\\)}.*/\\1/'")
         objsdocs <- system(cmd, intern = TRUE)
         cmd <- paste("grep -h '^\\\\alias'",
                      paste(files, collapse = " "),
-                     "| sed 's/\\\\alias{\\(.*\\)}/\\1/'")
+                     "| sed 's/\\\\alias{\\(.*\\)}.*/\\1/'")
         objsdocs <- c(objsdocs, system(cmd, intern = TRUE))
         objsdocs <- gsub("\\\\%", "%", objsdocs)
         objsdocs <- gsub(" ", "", objsdocs)
