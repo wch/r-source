@@ -115,8 +115,8 @@ function(file)
 
     start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1)
-       stop(paste("missing/empty \\name field in",
-                  summary(file)$description))
+        stop(paste("missing/empty \\name field in",
+                   summary(file)$description))
     RdName <- gsub("[[:space:]]*", " ",
                    substr(txt,
                           start + 6,
@@ -142,15 +142,14 @@ function(RdFiles)
 {
     ## Compute contents db from Rd files.
 
-    RdFiles <- RdFiles[.fileTest("-f", RdFiles)]
-    contents <- matrix("", nr = length(RdFiles), nc = 6)
+    RdFiles <- path.expand(RdFiles[.fileTest("-f", RdFiles)])
+    contents <- vector("list", length(RdFiles) * 5)
+    dim(contents) <- c(length(RdFiles), 5)
     for(i in seq(along = RdFiles)) {
-        contents[i, ] <-
-            c(RdFiles[i],
-              sapply(Rdinfo(RdFiles[i]), paste, collapse = " "))
+        contents[i, ] <- Rdinfo(RdFiles[i])
     }
     colnames(contents) <-
-        c("File", "Name", "Type", "Title", "Aliases", "Keywords")
+        c("Name", "Type", "Title", "Aliases", "Keywords")
 
     ## Although R-exts says about the Rd title slot that
     ## <QUOTE>
@@ -162,15 +161,21 @@ function(RdFiles)
     ## * Medium and punctuation dashes
     ## * Escaped ampersand.
     ## Hence we try getting rid of these ...
-    title <- contents[ , "Title"]
+    title <- unlist(contents[ , "Title"])
     title <- gsub("\(``\|''\)", "\"", title)
     title <- gsub("`", "'", title)
     title <- gsub("\([[:alnum:]]\)--\([[:alnum:]]\)", "\\1-\\2", title)
     title <- gsub("\\\\\&", "&", title)
     title <- gsub("---", "--", title)
-    contents[ , "Title"] <- title
+    ## Also remove leading and trailing whitespace.
+    title <- sub("^[[:space:]]*", "", title)
+    title <- sub("[[:space:]]*$", "", title)
 
-    contents
+    data.frame(File = I(RdFiles),
+               Name = I(unlist(contents[ , "Name"])),
+               Type = I(unlist(contents[ , "Type"])),
+               Title = I(title),
+               contents[, c("Aliases", "Keywords")])
 }
 
 ### * .writeContentsRDS
@@ -182,8 +187,7 @@ function(contents, outFile)
     
     ## <NOTE>
     ## To deal with possible changes in the format of the contents db
-    ## (e.g., with aliases and keywords not collapsed) in the future,
-    ## use a version attribute and/or a formal class.
+    ## in the future, use a version attribute and/or a formal class.
     .saveRDS(contents, file = outFile)
     ## </NOTE>
 }
@@ -210,12 +214,21 @@ function(contents, packageName, outFile)
                   ".html",
                   sep = "")
     ## </FIXME>
+
+    if(is.data.frame(contents))
+        contents <-
+            cbind(contents$Name,
+                  sapply(contents$Aliases, paste, collapse = " "),
+                  sapply(contents$Keywords, paste, collapse = " "),
+                  contents$Title)
+    else
+        contents <-
+            contents[, c("Name", "Aliases", "Keywords", "Title"),
+                     drop = FALSE]
                   
     cat(paste(c("Entry:", "Aliases:", "Keywords:", "Description:",
                 "URL:"),
-              t(cbind(contents[, c("Name", "Aliases", "Keywords",
-                                   "Title"), drop = FALSE],
-                      URLs))),
+              t(cbind(contents, URLs))),
         sep = c("\n", "\n", "\n", "\n", "\n\n"),
         file = outFile)
 }
