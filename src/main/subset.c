@@ -656,6 +656,8 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error("recursive indexing failed at level %d\n", i+1);
 		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				   length(x), /*partial ok*/TRUE, i);
+		if(offset < 0)
+		    error("no such index at level %d\n", i+1);
 		x = VECTOR_ELT(x, offset);
 	    }
 	}
