@@ -21,6 +21,11 @@ USER-VISIBLE CHANGES
         to c("methods", "ctest"), causing those packages to be
         attached at startup.  See ?Startup and ?options for details.
 
+    o   Formulae are not longer automatically simplified when terms()
+	is called, so the formulae in results may still be in the
+	original form rather than the equivalent simplified form
+	(which may have reordered the terms).
+
 
 NEW FEATURES
 
@@ -199,7 +204,9 @@ NEW FEATURES
      o	The ordering of terms for terms.formula(keep.order=FALSE) is
 	now defined on the help page and used consistently, so that
 	repeated calls will not alter the ordering (which is why
-	delete.response() was failing: see the bug fixes).
+	delete.response() was failing: see the bug fixes).  The
+	formula is not simplified unless the new argument `simplify'
+	is true.
 
 
 INSTALLATION CHANGES

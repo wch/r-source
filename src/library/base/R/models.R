@@ -100,7 +100,6 @@ delete.response <- function (termobj)
     termobj
 }
 
-
 reformulate <- function (termlabels, response=NULL)
 {
     has.resp <- !is.null(response)
@@ -128,7 +127,8 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
 }
 
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
-			  neg.out = TRUE, keep.order = FALSE, ...)
+			  neg.out = TRUE, keep.order = FALSE,
+                          simplify = FALSE, ...)
 {
     fixFormulaObject <- function(object) {
 	tmp <- attr(terms(object), "term.labels")
@@ -136,25 +136,26 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
-	ff <- formula(paste(lhs, "~", rhs))
-        environment(ff) <- environment(form)
-        ff
+	formula(paste(lhs, "~", rhs))
     }
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data)
     new.specials <- unique(c(specials, "offset"))
-    tmp <- .Internal(terms.formula(x, new.specials, data, keep.order))
-    ## need to fix up . in formulae in R
-    terms <- fixFormulaObject(tmp)
-    attributes(terms) <- attributes(tmp)
+    terms <- .Internal(terms.formula(x, new.specials, data, keep.order))
+    if (simplify) {
+        a <- attributes(terms)
+        terms <- fixFormulaObject(terms)
+        attributes(terms) <- a
+    }
     environment(terms) <- environment(x)
-    offsets <- attr(terms, "specials")$offset
-    if (!is.null(offsets)) {
-	names <- dimnames(attr(terms, "factors"))[[1]][offsets]
-	offsets <- match(names, dimnames(attr(terms, "factors"))[[2]])
+    if (!is.null(offsets <- attr(terms, "specials")$offset)) {
+        dn <- dimnames(attr(terms, "factors"))
+	names <- dn[[1]][offsets]
+	offsets <- match(names, dn[[2]])
 	offsets <- offsets[!is.na(offsets)]
 	if (length(offsets) > 0) {
-	    attr(terms, "factors") <- attr(terms, "factors")[, -offsets, drop = FALSE]
+	    attr(terms, "factors") <-
+                attr(terms, "factors")[, -offsets, drop = FALSE]
 	    attr(terms, "term.labels") <- attr(terms, "term.labels")[-offsets]
 	    attr(terms, "order") <- attr(terms, "order")[-offsets]
 	    attr(terms, "offset") <- attr(terms, "specials")$offset
@@ -350,6 +351,7 @@ model.matrix.default <- function(object, data = environment(object),
     attr(ans, "contrasts") <- cons
     ans
 }
+
 model.response <- function (data, type = "any")
 {
     if (attr(attr(data, "terms"), "response")) {

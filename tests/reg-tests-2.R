@@ -528,3 +528,20 @@ x <- data.frame(1:10)
 x$z <- data.frame(x=1:10,yyy=11:20)
 summary(x)
 ## 1.6.2 had NULL labels on output with z columns stacked.
+
+
+## re-orderings in terms.formula (PR#2206)
+form <- formula(y ~ a + b:c + d + e + e:d)
+(tt <- terms(form))
+(tt2 <- terms(formula(tt)))
+stopifnot(identical(tt, tt2))
+terms(delete.response(tt))
+## both tt and tt2 re-ordered the formula < 1.7.0
+## now try with a dot
+data(warpbreaks)
+terms(breaks ~ ., data = warpbreaks)
+terms(breaks ~ . - tension, data = warpbreaks)
+terms(breaks ~ . - tension, data = warpbreaks, simplify = TRUE)
+terms(breaks ~ . ^2, data = warpbreaks)
+terms(breaks ~ . ^2, data = warpbreaks, simplify = TRUE)
+## 1.6.2 expanded these formulae out as in simplify = TRUE

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-2003   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,7 @@ static SEXP varlist;		/* variables in the model */
 SEXP framenames;		/* variables names for specified frame */
 /* NOTE: framenames can't be static because it must be protected from
    garbage collection. */
+static Rboolean haveDot;	/* does RHS of formula contain `.'? */
 
 static int isZeroOne(SEXP x)
 {
@@ -177,12 +178,13 @@ static void ExtractVars(SEXP formula, int checkonly)
 	return;
     if (isSymbol(formula)) {
 	if (!checkonly) {
-	    if (formula == dotSymbol && framenames != R_NilValue)
-		for (i=0; i<length(framenames); i++) {
-		    v=install(CHAR(STRING_ELT(framenames, i)));
+	    if (formula == dotSymbol && framenames != R_NilValue) {
+		haveDot = TRUE;
+		for (i = 0; i < length(framenames); i++) {
+		    v = install(CHAR(STRING_ELT(framenames, i)));
 		    if (!MatchVar(v, CADR(varlist))) InstallVar(v);
 		}
-	    else
+	    } else
 		InstallVar(formula);
 	}
 	return;
@@ -693,10 +695,12 @@ static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
 
 /* .Internal(terms.formula(x, new.specials, abb, data, keep.order)) */
 
+static SEXP ExpandDots(SEXP object, SEXP value);
+
 SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs;
-    SEXP specials, t, data;
+    SEXP specials, t, data, rhs;
     int i, j, k, l, n, keepOrder;
 
     checkArity(op, args);
@@ -726,9 +730,11 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	(length(CAR(args)) != 2 && length(CAR(args)) != 3))
 	error("argument is not a valid model");
 
+    haveDot = FALSE;
+    
     PROTECT(ans = duplicate(CAR(args)));
 
-    /* The formula will be returned */
+    /* The formula will be returned, modified if haveDot becomes TRUE */
 
     specials = CADR(args);
     a = CDDR(args);
@@ -806,8 +812,12 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
        preserving their order. */
 
     if (!keepOrder) {
-	int *counts = (int *) R_alloc(nterm, sizeof(int)), bitmax = 0;
+	SEXP sCounts;
+	int *counts, bitmax = 0;
+
 	PROTECT(pattern = allocVector(VECSXP, nterm));
+	PROTECT(sCounts = allocVector(INTSXP, nterm));
+	counts = INTEGER(sCounts);
 	for (call = formula, n = 0; call != R_NilValue; call = CDR(call)) {
 	    SET_VECTOR_ELT(pattern, n, CAR(call));
 	    counts[n++] = BitCount(CAR(call));
@@ -822,7 +832,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SETLEVELS(CAR(call), i);
 		    call = CDR(call);
 		}
-	UNPROTECT(1);
+	UNPROTECT(2);
     }
     
 
@@ -935,6 +945,22 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     UNPROTECT(3);	/* keep termlabs until here */
+
+    /* Step 6: Fix up the formula by substituting for dot, which should be 
+       the framenames joined by + */
+    if (haveDot && LENGTH(framenames)) {
+	PROTECT(rhs = install(CHAR(STRING_ELT(framenames, 0))));
+	for (i = 1; i < LENGTH(framenames); i++) {
+	    UNPROTECT(1);
+	    PROTECT(rhs = lang3(plusSymbol, rhs, 
+				install(CHAR(STRING_ELT(framenames, i)))));
+	}
+	if (!isNull(CADDR(ans)))
+	    SETCADDR(ans, ExpandDots(CADDR(ans), rhs));
+	else
+	    SETCADR(ans, ExpandDots(CADR(ans), rhs));
+	UNPROTECT(1);
+    }
 
     SETCAR(a, allocVector(INTSXP, nterm));
     n = 0;

@@ -8,7 +8,7 @@
 }
 \usage{
 terms.formula(x, specials = NULL, abb = NULL, data = NULL, neg.out = TRUE,
-              keep.order = FALSE, ...)
+              keep.order = FALSE, simplify = FALSE, ...)
 }
 \arguments{
   \item{x}{a formula.}
@@ -24,6 +24,8 @@ terms.formula(x, specials = NULL, abb = NULL, data = NULL, neg.out = TRUE,
     that main effects come first, followed by the interactions,
     all second-order, all third-order and so on.  Effects of a given
     order are kept in the order specified.}
+  \item{simplify}{should the formula be expanded and simplified, the
+    pre-1.7.0 behaviour?}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
