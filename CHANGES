@@ -17,10 +17,10 @@ BUG FIXES
 	needed, the latter zeroed half of what it got, sizeof() mistakes
 	in both cases.
 
-    o   c(ordered factor) caused segfault (uninitalised pointer), now 
+    o   c(ordered factor) caused segfault (uninitalised pointer), now
 	fixed.
 
-    o   behaviour of as.numeric() on factors changed recently; now 
+    o   behaviour of as.numeric() on factors changed recently; now
 	documented.
 
     o   model.matrix() now pays attention to the names on its dataframe
@@ -32,11 +32,17 @@ BUG FIXES
 	library on loading
 
     o   The pager ate the rest of stdin in batch mode, now fixed. Also,
-	stdout was not flushed before call to system(). "make tests" 
+	stdout was not flushed before call to system(). "make tests"
 	should work now.
 
     o   Empty directories now created by configure (so that it doesn't
         matter that "CVS export" doesn't do it)
+
+    o   3 problems with glm, 2 in glm.fit and a one in print.glm fixed
+	[Jim Lindsey]
+
+    o   binomial (family) now works when 'n=0'. [J.Lindsey]
+
 
 		CHANGES IN R VERSION 0.61
 
