@@ -1821,3 +1821,277 @@ pager newpager(char *title, char *filename, char *header, int deleteonexit)
         c = newpagerNwin(wtitle, filename, deleteonexit);
     return c;
 }
+
+/*                configuration editor                        */
+
+#include <string.h>
+#include <ctype.h>
+
+extern char *ColorName[]; /* from graphapp/rgb.c */
+
+static int cmatch(char *col, char **list)
+{
+    int i=0;
+    char **pos = list;
+    while(*pos != NULL) {
+	if(strcmpi(*pos, col) == 0) return(i);
+	i++; pos++;
+    }
+    return(-1);
+}
+
+
+static char *StyleList[] = {"normal", "bold", "italic", NULL};
+static char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", NULL};
+static char *FontsList[] = {"", "Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", NULL};
+
+
+static window wconfig;
+static button bApply, bSave, bFinish, bCancel;
+static label l_mdi, l_mwin, l_font, l_point, l_style, l_crows, l_ccols,
+    l_prows, l_pcols,
+    l_cols, l_bgcol, l_fgcol, l_usercol, l_highlightcol;
+static radiobutton rb_mdi, rb_sdi, rb_mwin, rb_swin;
+static listbox f_font, f_style, d_point, bgcol, fgcol, usercol, highlightcol;
+static checkbox toolbar, statusbar, tt_font, c_resize;
+static field f_crows, f_ccols, f_prows, f_pcols;
+
+
+void cleanup()
+{
+    hide(wconfig);
+    delobj(l_mdi); delobj(rb_mdi); delobj(rb_sdi); 
+    delobj(toolbar); delobj(statusbar); 
+    delobj(l_mwin); delobj(rb_mwin); delobj(rb_swin); 
+    delobj(l_font); delobj(f_font); delobj(tt_font); 
+    delobj(l_point); delobj(d_point);
+    delobj(l_style); delobj(f_style);
+    delobj(l_crows); delobj(f_crows); delobj(l_ccols); delobj(f_ccols);
+    delobj(c_resize);
+    delobj(l_prows); delobj(f_prows); delobj(l_pcols); delobj(f_pcols);
+    delobj(l_cols);
+    delobj(l_bgcol); delobj(bgcol);
+    delobj(l_fgcol); delobj(fgcol);
+    delobj(l_usercol); delobj(usercol);
+    delobj(l_highlightcol); delobj(highlightcol);
+    delobj(bApply); delobj(bSave); delobj(bFinish); delobj(bCancel);
+    delobj(wconfig);
+}
+
+
+void apply(button b)
+{
+    rect r = getrect(RConsole);
+
+    ConsoleData p=(ConsoleData) getdata(RConsole);
+/*    consoler = atoi(gettext(f_crows));
+    consolec = atoi(gettext(f_ccols));
+    r.width = (consoler + 1) * FW;
+    r.height = (consolec + 1) * FH;
+    resize(RConsole, r);
+    consoleresize(RConsole, rect(0, 0, WIDTH, HEIGHT));*/
+    p->fg = consolefg = nametorgb(gettext(fgcol));
+    p->ufg = consoleuser = nametorgb(gettext(usercol));
+    p->bg = consolebg = nametorgb(gettext(bgcol));
+    drawconsole(RConsole, getrect(RConsole));
+    pagerhighlight = nametorgb(gettext(highlightcol));
+
+    pagerrow = atoi(gettext(f_prows));
+    pagercol = atoi(gettext(f_pcols));
+    pagerMultiple = ischecked(rb_mwin) ? 1 : 0;
+    setWidthOnResize = ischecked(c_resize) ? 1 : 0;
+    
+    askok("Not really yet implemented");
+}
+
+void save(button b)
+{
+    char *file, buf[256], *p;
+    FILE *fp;
+
+    setuserfilter("All files (*.*)\0*.*\0\0");
+    file = askfilesave("Select directory for Rconsole", "Rconsole");
+    if(!strlen(file)) return;
+    strcpy(buf, file);
+    p = buf + strlen(buf) - 2;
+    if(!strncmp(p, ".*", 2)) *p = '\0';
+    askok(buf);
+    
+    fp = fopen(buf, "w");
+    if(fp == NULL) {
+	MessageBox(0, "Cannot open file to fp", 
+		   "Configuration Save Error",
+		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
+	return;
+    }
+
+    fprintf(fp, "%s\n%s\n%s\n\n%s\n%s\n",
+	    "# Optional parameters for the console and the pager",
+	    "# The system-wide copy is in rwxxxx/etc.",
+	    "# A user copy can be installed in `R_USER'.",
+	    "## Style",
+	    "# This can be `yes' (for MDI) or `no' (for SDI).");
+    fprintf(fp, "MDI = %s\n",  ischecked(rb_mdi)?"yes":"no");
+    fprintf(fp, "%s\n%s%s\n%s%s\n\n",
+	    "# the next two are only relevant for MDI",
+	    "toolbar = ", ischecked(toolbar)?"yes":"no",
+	    "statusbar = ", ischecked(statusbar)?"yes":"no");
+
+    fprintf(fp, "%s\n%s\n%s\n%s\n%s\n",
+	    "## Font.",
+	    "# Please use only fixed width font.",
+	    "# If font=FixedFont the system fixed font is used; in this case",
+	    "# points and style are ignored. If font begins with \"TT \", only",
+	    "# True Type fonts are searched for.");
+    fprintf(fp, "font = %s%s\npoints = %s\nstyle = %s # Style can be normal, bold, italic\n\n\n", 
+	    ischecked(tt_font)?"TT ":"", 
+	    gettext(f_font),
+	    gettext(d_point), 
+	    gettext(f_style));
+    fprintf(fp, "# Dimensions (in characters) of the console.\n");
+    fprintf(fp, "rows = %s\ncolumns = %s\n", gettext(f_crows), gettext(f_ccols));
+    fprintf(fp, "# Dimensions (in characters) of the internal pager.\n");
+    fprintf(fp, "pgrows = %s\npgcolumns = %s\n", gettext(f_prows), gettext(f_pcols));
+    fprintf(fp, "# should options(width=) be set to the console width?\n");
+    fprintf(fp, "setwidthonresize = %s\n\n",
+	    ischecked(c_resize) ? "yes" : "no");
+    fprintf(fp, "%s\n%s\n%s\npagerstyle = %s\n\n\n",
+	    "# The internal pager can displays help in a single window",
+	    "# or in multiple windows (one for each topic)",
+	    "# pagerstyle can be set to `singlewindow' or `multiplewindows'",
+	    ischecked(rb_mwin) ? "multiplewindows" : "singlewindow");
+
+    fprintf(fp, "## Colours for console and pager(s)\n# (see rwxxxx/etc/rgb.txt for the known colours).\n");
+    fprintf(fp, "background = %s\n", gettext(bgcol));
+    fprintf(fp, "normaltext = %s\n", gettext(fgcol));
+    fprintf(fp, "usertext = %s\n", gettext(usercol));
+    fprintf(fp, "highlight = %s\n", gettext(highlightcol));
+    fclose(fp);
+}
+
+void cancel(button b)
+{
+    cleanup();
+    show(RConsole);
+}
+
+void finish(button b)
+{
+    /* read off results here! */
+    cleanup();
+    show(RConsole);
+}
+
+void cMDI(button b)
+{
+    enable(toolbar);
+    enable(statusbar);
+}
+
+void cSDI(button b)
+{
+    disable(toolbar);
+    disable(statusbar);
+}
+
+
+void Rgui_configure()
+{
+    char buf[100], *style;
+
+    wconfig = newwindow("Rgui Configuration Editor", rect(0, 0, 550, 400),
+			Titlebar | Centered | Modal);
+    setbackground(wconfig, LightGrey);
+    l_mdi = newlabel("Single or multiple windows",
+		      rect(10, 10, 150, 20), AlignLeft);
+    rb_mdi = newradiobutton("MDI", rect(150, 10 , 40, 20), cMDI);
+    rb_sdi = newradiobutton("SDI", rect(200, 10 , 40, 20), cSDI);
+    
+
+    toolbar = newcheckbox("MDI toolbar", rect(300, 10, 100, 20), NULL);
+    if(RguiMDI & RW_TOOLBAR) check(toolbar);
+    statusbar = newcheckbox("MDI statusbar", rect(420, 10, 100, 20), NULL);
+    if(RguiMDI & RW_STATUSBAR) check(statusbar);
+    if(RguiMDI & RW_MDI) {
+	check(rb_mdi);
+	cMDI(rb_mdi);
+    } else {
+	check(rb_sdi);
+	cSDI(rb_sdi);
+    }
+
+    l_mwin = newlabel("Pager style", rect(10, 50, 90, 20), AlignLeft);
+    newradiogroup();
+    rb_mwin = newradiobutton("multiple windows", rect(100, 50, 100, 20), NULL);
+    rb_swin = newradiobutton("single window", rect(220, 50 , 100, 20), NULL);
+    if(pagerMultiple) check(rb_mwin); else check(rb_swin);
+
+/* Font, pointsize, style */
+
+    l_font = newlabel("Font", rect(10, 100, 40, 20), AlignLeft);
+    
+    f_font = newdropfield(FontsList, rect(60, 100, 120, 20), NULL);
+    tt_font = newcheckbox("TrueType only", rect(190, 100, 100, 20), NULL);
+    if ((strlen(fontname) > 1) && (fontname[0] == 'T') && (fontname[1] == 'T')) {
+        char *pf;
+	check(tt_font);
+        for (pf = fontname+2; isspace(*pf) ; pf++);
+        settext(f_font, pf);
+    } else {
+        settext(f_font, fontname);
+    }
+
+    l_point = newlabel("pointsize", rect(310, 100, 50, 20), AlignLeft);
+    d_point = newdropfield(PointsList, rect(370, 100, 50, 20), NULL);
+    sprintf(buf, "%d", pointsize);
+    setlistitem(d_point, cmatch(buf, PointsList));
+    l_style = newlabel("style", rect(430, 100, 40, 20), AlignLeft);
+    f_style = newdropfield(StyleList, rect(470, 100, 80, 20), NULL);
+    style = "normal";
+    if (fontsty & Italic) style = "italic";
+    if (fontsty & Bold) style = "Bold";
+    setlistitem(f_style, cmatch(style, StyleList));
+    
+
+/* Console size, set widthonresize */
+    l_crows = newlabel("Console   rows", rect(10, 150, 70, 20), AlignLeft);
+    sprintf(buf, "%d", consoler);
+    f_crows = newfield(buf, rect(100, 150, 30, 20));
+    l_ccols = newlabel("columns", rect(150, 150, 60, 20), AlignLeft);
+    sprintf(buf, "%d", consolec);
+    f_ccols = newfield(buf, rect(220, 150, 30, 20));
+    c_resize = newcheckbox("set options(width) on resize?", 
+			   rect(300, 150, 200, 20), NULL);
+    if(setWidthOnResize) check(c_resize);
+
+/* Pager size */
+    l_prows = newlabel("Pager   rows", rect(10, 200, 70, 20), AlignLeft);
+    sprintf(buf, "%d", pagerrow);
+    f_prows = newfield(buf, rect(100, 200, 30, 20));
+    l_pcols = newlabel("columns", rect(150, 200, 60, 20), AlignLeft);
+    sprintf(buf, "%d", pagercol);
+    f_pcols = newfield(buf, rect(220, 200, 30, 20));
+
+/* Font colours */
+    l_cols = newlabel("Console and Pager Colours", 
+		      rect(10, 250, 520, 20), AlignCenter);
+    l_bgcol = newlabel("Background", rect(10, 280, 100, 20), AlignCenter);
+    bgcol = newlistbox(ColorName, rect(10, 300, 100, 50), NULL);
+    l_fgcol = newlabel("Output text", rect(150, 280, 100, 20), AlignCenter);
+    fgcol = newlistbox(ColorName, rect(150, 300, 100, 50), NULL);
+    l_usercol = newlabel("User input", rect(290, 280, 100, 20), AlignCenter);
+    usercol = newlistbox(ColorName, rect(290, 300, 100, 50), NULL);
+    l_highlightcol = newlabel("Titles in pager", rect(430, 280, 100, 20), 
+			      AlignCenter);
+    highlightcol = newlistbox(ColorName, rect(430, 300, 100, 50), NULL);
+    setlistitem(bgcol, rgbtonum(consolebg));
+    setlistitem(fgcol, rgbtonum(consolefg));
+    setlistitem(usercol, rgbtonum(consoleuser));
+    setlistitem(highlightcol, rgbtonum(pagerhighlight));
+    
+    bApply = newbutton("Apply", rect(50, 360, 70, 25), apply);
+    bSave = newbutton("Save", rect(130, 360, 70, 25), save);
+    bFinish = newbutton("Finish", rect(350, 360, 70, 25), finish);
+    bCancel = newbutton("Cancel", rect(430, 360, 70, 25), cancel); 
+    show(wconfig);
+}

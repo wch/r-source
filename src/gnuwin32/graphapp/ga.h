@@ -77,6 +77,8 @@ void    askchangedir();
 
 /*  rgb.c */
 rgb     nametorgb(char *colourname);
+char *  rgbtoname(rgb in);
+int     rgbtonum(rgb in);
 
 /* clipboard.c */
 void    copytoclipboard(drawing src);
@@ -94,7 +96,7 @@ typedef objptr metafile;
 metafile newmetafile(char *name, rect r);
 
 
-/* thread safe and extented  drawing functions (gdraw.c) */
+/* thread safe and extended  drawing functions (gdraw.c) */
 #define lSolid 0
 #define lDash  (5 | (4<<4))
 #define lShortDash  (3 | (4<<4))
