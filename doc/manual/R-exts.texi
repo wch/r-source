@@ -5105,15 +5105,16 @@ R_FINITE(@var{x})    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}
 @end smallexample
 
 @noindent
-and via function function @code{R_IsNaN} which is true for @code{NaN}
-but not @code{NA}.
+and via function @code{R_IsNaN} which is true for @code{NaN} but not
+@code{NA}.
 
 Do use @code{R_FINITE} rather than @code{isfinite} or @code{finite}; the
 latter is often mendacious and @code{isfinite} is only available on a
-few platforms.
+few platforms, on which @code{R_FINITE} is a macro expanding to
+@code{isfinite}.
 
 Currently @code{ISNAN} is a macro calling @code{isnan}, although this
-was not necessariyl true before @R{} 2.0.0.
+was not necessarily true before @R{} 2.0.0.
 
 You can check for @code{Inf} or @code{-Inf} by testing equality to
 @code{R_PosInf} or @code{R_NegInf}, and set (but not test) an @code{NA}
@@ -5583,7 +5584,7 @@ which passes back the gradient in the @code{gr} argument.  No function
 is provided for finite-differencing, nor for approximating the Hessian
 at the result.
 
-The interfaces are
+The interfaces (defined in header @file{R_ext/Applic.h}) are
 
 @itemize @bullet
 @item Nelder Mead:
@@ -5664,9 +5665,9 @@ times.  Note that in the current implementation built on QUADPACK,
 passed down from the calling routine, normally used to carry auxiliary
 information.
 
-There are interfaces for definite and for indefinite integrals.
-`Indefinite' means that at least one of the integration boundaries is
-not finite.
+There are interfaces (defined in header @file{R_ext/Applic.h}) for
+definite and for indefinite integrals.  `Indefinite' means that at least
+one of the integration boundaries is not finite.
 
 @itemize @bullet
 @item Finite:
@@ -5728,12 +5729,14 @@ arrays and the length of the second one as
 The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
 
+
 @node Utility functions, Allowing interrupts, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
 @R{} has a fairly comprehensive set of sort routines which are made
-available to users' C code.  These include the following.
+available to users' C code.  These are declared in header file
+@file{R_ext/Utils.h} (included by @file{R.h}) and include the following.
 
 @deftypefun void R_isort (int* @var{x}, int @var{n})
 @deftypefunx void R_rsort (double* @var{x}, int @var{n})

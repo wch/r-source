@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2002   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2004   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -106,8 +106,6 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 /* massdist.c */
 void massdist(double *x, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny);
-
-void R_max_col(double *matrix, int *nr, int *nc, int *maxes);
 
 /* pretty.c */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
@@ -233,16 +231,6 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		      double *resid, double *hat, double *coef, double *sigma);
 
-/* ../../appl/interv.c */
-int findInterval(double *xt, int n, double x,
-		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
-		 int *mflag);
-int F77_SUB(interv)(double *xt, int *n, double *x,
-		    Rboolean *rightmost_closed, Rboolean *all_inside,
-		    int *ilo, int *mflag);
-void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
-		     int *rightmost_closed, int *all_inside, int *indx);
-
 /* ../../appl/zeroin.c */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 		double *Tol, int *Maxit);
@@ -297,10 +285,6 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    int maxit, char *msg, int trace, int nREPORT);
 void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 	   int tmax, double ti, int trace, void *ex);
-
-/* ../../main/qsort.c -- only F77 ones: */
-void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
-void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 
 
 #ifdef  __cplusplus
