@@ -35,11 +35,11 @@ But note that supsmu() / ppr() also call on smoothing splines :
 
 supsmu() [R]
  |
- |-> BDRsetsmu                          ./ppr.f
- \-> BDRsupsmu                             "
+ |-> setsmu				./ppr.f
+ \-> supsmu                               "
      |
-     |--> BDRsmooth                        "
-     \--> BDRspline                        "
+     |--> smooth                          "
+     \--> spline                          "
           |
           |- intpr()
           |- dblepr()
@@ -52,29 +52,38 @@ supsmu() [R]
 
 ppr()   [R]
  |
- |-> BDRsetppr                          ./ppr.f
+ |-> setppr				./ppr.f
  |
- \-> BDRsmart                              "
-     \-> BDRsmart1                         "
+ |-> pppred				  "
+ |   \-> fsort                            "
+ |       \-> sort                         "
+ |
+ \-> smart                                "
+     \-> smart1                           "
          |
-         |-> BDRsort                       "
+         |-> sort			(see above)
          |
-         |-> BDRsubfit                     "
+         |-> subfit                       "
          |   |
-         |   |-> BDRnewb
+         |   |-> newb
          |   |
-         \---+-> BDRfulfit
+         \---+-> fulfit
              |   |
              |   v
-             \-> BDRonetrm
+             \-> onetrm
                  |
-                 \-> BDRoneone
+                 \-> oneone
                      |
-                     |--> BDRsupsmu     (see above)
-                     |--> BDRsort       (see above)
+                     |--> supsmu	(see above)
+                     |--> sort		(see above)
                      |
-                     |--> BDRdir
-                     |    \-> BDRconj
+                     |--> pprdir
+                     |    \-> ppconj
                      |
-                     \--> BDRder
-                          \-> BDRpool
+                     \--> pprder
+                          \-> pool
+
+
+predict.ppr() [R]
+ |
+ pppred					(see above)
