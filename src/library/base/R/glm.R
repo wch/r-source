@@ -34,6 +34,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	   "glm.fit.null"= 1,
 	   ## else
 	   stop(paste("invalid `method':", method)))
+    mt <- attr(mf, "terms") # allow model.frame to update it
     na.act <- attr(mf, "na.action")
     xvars <- as.character(attr(mt, "variables"))[-1]
     if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]

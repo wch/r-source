@@ -18,6 +18,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     else if (method != "qr")
 	warning(paste("method =", method,
 		      "is not supported. Using \"qr\"."))
+    mt <- attr(mf, "terms") # allow model.frame to update it
     na.act <- attr(mf, "na.action")
     xvars <- as.character(attr(mt, "variables"))[-1]
     if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]

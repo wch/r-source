@@ -211,16 +211,25 @@ model.frame.default <-
     }
     if(missing(data))
 	data <- environment(formula)
-    else if (!is.data.frame(data) && !is.environment(data) && !is.null(attr(data, "class")))
+    else if (!is.data.frame(data) && !is.environment(data)
+             && !is.null(attr(data, "class")))
         data <- as.data.frame(data)
     else if (is.array(data))
-        stop("`data' must been a data.frame, not a matrix or  array")
+        stop("`data' must be a data.frame, not a matrix or  array")
     env <- environment(formula)
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     rownames <- attr(data, "row.names")
-    varnames <- as.character(attr(formula, "variables")[-1])
-    variables <- eval(attr(formula, "variables"), data, env)
+    vars <- attr(formula, "variables")
+    predvars <- attr(formula, "predvars")
+    if(is.null(predvars)) predvars <- vars
+    varnames <- as.character(vars[-1])
+    variables <- eval(predvars, data, env)
+    if(is.null(attr(formula, "predvars"))) {
+        for (i in seq(along = varnames))
+            predvars[[i+1]] <- makepredictcall(variables[[i]], vars[[i+1]])
+        attr(formula, "predvars") <- predvars
+    }
     extranames <- names(substitute(list(...))[-1])
     extras <- substitute(list(...))
     extras <- eval(extras, data, env)
@@ -368,4 +377,31 @@ is.empty.model <- function (x)
 {
     tt <- terms(x)
     (length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
+}
+
+makepredictcall <- function(var, call) UseMethod("makepredictcall")
+
+makepredictcall.default  <- function(var, call) call
+
+makepredictcall.ns <- function(var, call)
+{
+    at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
+    xxx <- call[1:2]
+    xxx[names(at)] <- at
+    xxx
+}
+
+makepredictcall.bs <- function(var, call)
+{
+    at <- attributes(var)[c("degree", "knots", "Boundary.knots",
+                            "intercept")]
+    xxx <- call[1:2]
+    xxx[names(at)] <- at
+    xxx
+}
+
+makepredictcall.poly  <- function(var, call)
+{
+    call$oldx <- var
+    call
 }

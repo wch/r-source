@@ -57,6 +57,11 @@ NEW FEATURES
    o	gzfile() is guaranteed to be available, and hence the
 	`compress' option to save() and save.image().
 
+   o	Beginnings of an extensible approach to safe prediction for
+	models with e.g.  poly(), bs() or ns() terms, using the new
+	generic function makepredictcall().  Currently used by lm()
+	and glm().
+
 
 DEPRECATED & DEFUNCT
 
