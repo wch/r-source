@@ -680,6 +680,8 @@ BUG FIXES
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames
 	anymore.
 
+    o	scan() now interprets quoting in fields to be skipped.  (PR#4128)
+
     o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
 	the length incorrectly.
 

@@ -124,6 +124,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   doubling them.  However, if \code{sep = "\\n"} it is assumed
   by default that one wants to read entire lines verbatim.
 
+  Quoting is only interpreted in character fields, and as from \R 1.8.0
+  in \code{NULL} fields (which might be skipping character fields).
+
   Note that since \code{sep} is a separator and not a terminator,
   reading a file by \code{scan("foo", sep="\\n", blank.lines.skip=FALSE)}
   will give an empty file line if the file ends in a linefeed and not if
