@@ -41,7 +41,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     vx <- var(x)
     estimate <- mx
     if(is.null(y)) {
-	df <- length(x)-1
+	df <- nx-1
 	stderr <- sqrt(vx/nx)
 	tstat <- (mx-mu)/stderr
 	method <- ifelse(paired,"Paired t-test","One Sample t-test")
