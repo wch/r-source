@@ -98,69 +98,69 @@ static double h[31] =
 
 double snorm(void)
 {
-	double s, u, w, y, ustar, aa, tt;
-	int i;
+    double s, u, w, y, ustar, aa, tt;
+    int i;
 
-	u = sunif();
-	s = 0.0;
-	if (u > 0.5)
-		s = 1.0;
-	u = u + u - s;
-	u *= 32.0;
-	i = (int) u;
-	if (i == 32)
-		i = 31;
-	if (i != 0) {
-		ustar = u - i;
-		aa = a[i - 1];
-		while (ustar <= t[i - 1]) {
-			u = sunif();
-			w = u * (a[i] - aa);
-			tt = (w * 0.5 + aa) * w;
-			repeat {
-				if (ustar > tt)
-					goto deliver;
-				u = sunif();
-				if (ustar < u)
-					break;
-				tt = u;
-				ustar = sunif();
-			}
-			ustar = sunif();
-		}
-		w = (ustar - t[i - 1]) * h[i - 1];
+    u = sunif();
+    s = 0.0;
+    if (u > 0.5)
+	s = 1.0;
+    u = u + u - s;
+    u *= 32.0;
+    i = (int) u;
+    if (i == 32)
+	i = 31;
+    if (i != 0) {
+	ustar = u - i;
+	aa = a[i - 1];
+	while (ustar <= t[i - 1]) {
+	    u = sunif();
+	    w = u * (a[i] - aa);
+	    tt = (w * 0.5 + aa) * w;
+	    repeat {
+		if (ustar > tt)
+		    goto deliver;
+		u = sunif();
+		if (ustar < u)
+		    break;
+		tt = u;
+		ustar = sunif();
+	    }
+	    ustar = sunif();
 	}
-	else {
-		i = 6;
-		aa = a[31];
-		repeat {
-			u = u + u;
-			if (u >= 1.0)
-				break;
-			aa = aa + d[i - 1];
-			i = i + 1;
-		}
-		u = u - 1.0;
-		repeat {
-			w = u * d[i - 1];
-			tt = (w * 0.5 + aa) * w;
-			repeat {
-				ustar = sunif();
-				if (ustar > tt)
-					goto jump;
-				u = sunif();
-				if (ustar < u)
-					break;
-				tt = u;
-			}
-			u = sunif();
-		}
-	      jump:;
+	w = (ustar - t[i - 1]) * h[i - 1];
+    }
+    else {
+	i = 6;
+	aa = a[31];
+	repeat {
+	    u = u + u;
+	    if (u >= 1.0)
+		break;
+	    aa = aa + d[i - 1];
+	    i = i + 1;
 	}
+	u = u - 1.0;
+	repeat {
+	    w = u * d[i - 1];
+	    tt = (w * 0.5 + aa) * w;
+	    repeat {
+		ustar = sunif();
+		if (ustar > tt)
+		    goto jump;
+		u = sunif();
+		if (ustar < u)
+		    break;
+		tt = u;
+	    }
+	    u = sunif();
+	}
+    jump:;
+    }
 
-      deliver:
-	y = aa + w;
-	return (s == 1.0) ? -y : y;
+deliver:
+    y = aa + w;
+    return (s == 1.0) ? -y : y;
 
 }
 
@@ -180,65 +180,59 @@ double snorm(void)
 #define C2		0.180025191068563
 #define g(x)		(C1*exp(-x*x/2.0)-C2*(a-fabs(x)))
 
-#ifndef Win32
-#define max(a,b)	(((a)>(b))?(a):(b))
-#define min(a,b)	(((a)<(b))?(a):(b))
-#endif
-
 static double a =  2.216035867166471;
 
 double snorm()
 {
-	double t, u1, u2, u3;
-	double sunif();
+    double t, u1, u2, u3;
 
-	u1 = sunif();
-	if( u1<0.884070402298758 ) {
-		u2 = sunif();
-		return a*(1.13113163544180*u1+u2-1);
-	}
+    u1 = sunif();
+    if(u1 < 0.884070402298758) {
+	u2 = sunif();
+	return a*(1.13113163544180*u1+u2-1);
+    }
 
-	if( u1>=0.973310954173898 ) {
-	   tail:
-		u2 = sunif();
-		u3 = sunif();
-		t = (a*a-2*log(u3));
-		if( u2*u2<(a*a)/t )
-			return (u1<0.986655477086949) ? sqrt(t) : -sqrt(t) ;
-		goto tail;
-	}
-
-	if( u1>=0.958720824790463 ) {
-	region3:
-		u2 = sunif();
-		u3 = sunif();
-		t = a-0.630834801921960*min(u2,u3);
-		if( max(u2,u3)<=0.755591531667601 )
-			return (u2<u3) ? t : -t ;
-		if( 0.034240503750111*fabs(u2-u3)<=g(t) )
-			return (u2<u3) ? t : -t ;
-		goto region3;
-	}
-
-	if( u1>=0.911312780288703 ) {
-	region2:
-		u2 = sunif();
-		u3 = sunif();
-		t = 0.479727404222441+1.105473661022070*min(u2,u3);
-		if( max(u2,u3)<=0.872834976671790 )
-			return (u2<u3) ? t : -t ;
-		if( 0.049264496373128*fabs(u2-u3)<=g(t) )
-			return (u2<u3) ? t : -t ;
-		goto region2;
-	}
-
-region1:
+    if(u1 >= 0.973310954173898) {
+    tail:
 	u2 = sunif();
 	u3 = sunif();
-	t = 0.479727404222441-0.595507138015940*min(u2,u3);
-	if( max(u2,u3)<=0.805577924423817 )
-		return (u2<u3) ? t : -t ;
-	goto region1;
+	t = (a*a-2*log(u3));
+	if( u2*u2<(a*a)/t )
+	    return (u1 < 0.986655477086949) ? sqrt(t) : -sqrt(t) ;
+	goto tail;
+    }
+
+    if(u1 >= 0.958720824790463) {
+    region3:
+	u2 = sunif();
+	u3 = sunif();
+	t = a - 0.630834801921960* fmin2(u2,u3);
+	if(fmax2(u2,u3) <= 0.755591531667601)
+	    return (u2<u3) ? t : -t ;
+	if(0.034240503750111*fabs(u2-u3) <= g(t))
+	    return (u2<u3) ? t : -t ;
+	goto region3;
+    }
+
+    if(u1 >= 0.911312780288703) {
+    region2:
+	u2 = sunif();
+	u3 = sunif();
+	t = 0.479727404222441+1.105473661022070*fmin2(u2,u3);
+	if( fmax2(u2,u3)<=0.872834976671790 )
+	    return (u2<u3) ? t : -t ;
+	if( 0.049264496373128*fabs(u2-u3)<=g(t) )
+	    return (u2<u3) ? t : -t ;
+	goto region2;
+    }
+
+region1:
+    u2 = sunif();
+    u3 = sunif();
+    t = 0.479727404222441-0.595507138015940*fmin2(u2,u3);
+    if(fmax2(u2,u3) <= 0.805577924423817)
+	return (u2<u3) ? t : -t ;
+    goto region1;
 }
 
 #endif
