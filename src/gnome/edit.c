@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-1999   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-1999   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,7 +23,6 @@
 #include "Fileio.h"
 #include "IOStuff.h"
 #include "Parse.h"
-#include <stdio.h>
 
 /*
  * ed, vi etc have 3 parameters. the data, a file and an editor
@@ -44,70 +42,18 @@
 
 static char *DefaultFileName;
 
-void InitEd()
+void InitEd ();
+SEXP do_edit (SEXP call, SEXP op, SEXP args, SEXP rho);
+
+
+void InitEd ()
 {
-	DefaultFileName = tmpnam(NULL);
+	DefaultFileName = tmpnam (NULL);
 }
 
-
-SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_edit (SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-        errorcall(call, "edit() is unavailable");
+        errorcall (call, "edit() is unavailable");
 	return NULL;
-	/*
-	int i, status;
-	SEXP x, fn, envir, ed;
-	char *filename, *editcmd, *vmaxsave;
-	FILE *fp;
-
-	checkArity(op, args);
-
-	vmaxsave = vmaxget();
-
-	x = CAR(args);
-	if (TYPEOF(x) == CLOSXP) envir = CLOENV(x);
-	else envir = R_NilValue;
-	PROTECT(envir);
-
-	fn = CADR(args);
-	if (!isString(fn))
-		error("invalid argument to edit()");
-
-	if (LENGTH(STRING(fn)[0]) > 0) {
-		filename = R_alloc(strlen(CHAR(STRING(fn)[0])), sizeof(char));
-		strcpy(filename, CHAR(STRING(fn)[0]));
-	}
-	else filename = DefaultFileName;
-
-	if (x != R_NilValue) {
-		if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
-			errorcall(call, "unable to open file");
-		x = deparse1(x, 0);
-		for (i=0; i<LENGTH(x); i++)
-			fprintf(fp, "%s\n", CHAR(STRING(x)[i]));
-		fclose(fp);
-	}
-
-	ed = CAR(CDDR(args));
-	if (!isString(ed))
-		error("editor type not valid");
-	editcmd = R_alloc(strlen(CHAR(STRING(ed)[0]))+strlen(filename)+2, sizeof(char));
-	sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
-	system(editcmd);
-
-	if((fp=R_fopen(R_ExpandFileName(filename), "r")) == NULL)
-		errorcall(call, "unable to open file to read");
-	R_ParseCnt = 0;
-	x = R_ParseFile(fp, -1, &status);
-	if (status != PARSE_OK)
-		errorcall(call, "An error occurred on line %d\n use a command like\n x <- vi()\n to recover", R_ParseError);
-	else
-		fclose(fp);
-	R_ResetConsole();
-	x = eval(x, R_GlobalEnv);
-	if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
-		CLOENV(x) = envir;
-	UNPROTECT(1);
-	vmaxset(vmaxsave);
-	return (x);*/
 }
+

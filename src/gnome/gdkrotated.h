@@ -21,13 +21,13 @@
 #include <gdk/gdk.h>
 #include <math.h>
 
-void gdk_draw_text_rot	 (GdkDrawable  *drawable,
-			  GdkFont      *font,
-			  GdkGC	       *gc,
-			  gint		x,
-			  gint		y,
-			  gint          maxx,
-			  gint          maxy,
-			  const gchar  *text,
-			  gint		text_length,
-			  double        angle);
+void gdk_draw_text_rot (GdkDrawable  *drawable,
+			GdkFont      *font,
+			GdkGC	       *gc,
+			gint		x,
+			gint		y,
+			gint          maxx,
+			gint          maxy,
+			const gchar  *text,
+			gint		text_length,
+			double        angle);

@@ -12,41 +12,20 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = ../unix/dataentry.c \
-	  ../unix/dynload.c \
+SOURCES = ../unix/dynload.c \
 	  ../unix/sys-unix.c \
 	  ../unix/sys-common.c \
-	  system.c \
-	  system-choosefile.c \
-	  system-console.c \
-	  system-showfiles.c \
+	  dataentry.c \
 	  devGNOME.c \
-	  devGTK.c \
 	  edit.c \
 	  gdkrotated.c \
-	  gtkconsole.c \
-	  gnome-find-dialog.c \
-	  terminal.c \
-	  terminal-find.c \
-	  terminal-functions.c \
-	  terminal-menu.c \
-	  terminal-prefs.c \
-	  terminal-toolbar.c \
-	  command-grep.c
+	  gnome-callbacks.c \
+	  system.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = dataentry.h \
-	  devGNOME.h \
-	  devGTK.h \
-	  gdkrotated.h \
-	  gnome-find-dialog.h \
-	  gtkconsole.h \
-	  terminal-find.h \
-	  terminal-functions.h \
-	  terminal-menu.h \
-	  terminal-prefs.h \
-	  terminal-toolbar.h \
-	  terminal.h
+HEADERS = gdkrotated.h \
+	  gnome-callbacks.h \
+	  rgnome.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
