@@ -2,16 +2,19 @@
 \alias{fix}
 \title{Fix an Object}
 \description{
-  \code{fix} invokes the editor specified in
-  \code{\link{options}("editor")} on \code{x} and then assigns the new
+  \code{fix} invokes \code{\link{edit}} on \code{x} and then assigns the new
   (edited) version of \code{x} in the user's workspace.
 }
 \usage{
 fix(x, \dots)
 }
 \arguments{
-  \item{x}{an \R object.}
-  \item{\dots}{arguments to pass to editor.}
+  \item{x}{the name of an \R object, as a name or a character string.}
+  \item{\dots}{arguments to pass to editor: see \code{\link{edit}}.}
+}
+\details{
+  The name supplied as \code{x} need not exist as an \R object, when a
+  function with no arguments and an empty body is supplied for editing.
 }
 \seealso{
   \code{\link{edit}},
