@@ -416,40 +416,6 @@ SEXP R_HashFrame(SEXP rho)
 */
 
 
-
-/*----------------------------------------------------------------------
-
-  NewEnvironment
-
-  Create an environment by extending "rho" with a frame obtained by
-  pairing the variable names given by the tags on "namelist" with
-  the values given by the elements of "valuelist".
-
-*/
-
-#if 0 /* moved to memory.c for efficiency */
-SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
-{
-    SEXP v, n, newrho;
-    PROTECT(namelist);
-    PROTECT(valuelist);
-    PROTECT(rho);
-    newrho = allocSExp(ENVSXP);
-    SET_FRAME(newrho, valuelist);
-    v = valuelist;
-    n = namelist;
-    while (v != R_NilValue) {
-	SET_TAG(v, TAG(n));
-	v = CDR(v);
-	n = CDR(n);
-    }
-    SET_ENCLOS(newrho, rho);
-    UNPROTECT(3);
-    return (newrho);
-}
-#endif
-
-
 /*----------------------------------------------------------------------
 
   InitGlobalEnv
