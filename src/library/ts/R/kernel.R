@@ -167,7 +167,7 @@ kernapply.ts <- function (x, k, circular = FALSE, ...)
     ts (y, end=end(x), frequency=frequency(x))
 }
 
-kernapply.tskernel <- function (x, k2)
+kernapply.tskernel <- function (x, k2, ...)
 {
     if (!is.tskernel(x))
         stop ("k1 is not a kernel")

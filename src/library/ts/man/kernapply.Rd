@@ -10,7 +10,7 @@ kernapply(x, ...)
 kernapply.default(x, k, circular = FALSE, ...)
 kernapply.ts(x, k, circular = FALSE, ...)
 kernapply.vector(x, k, circular = FALSE, ...)
-kernapply.tskernel(x, k2)
+kernapply.tskernel(x, k2, ...)
 }
 \usage{
 kernapply(x, k, circular = FALSE, ...) 
