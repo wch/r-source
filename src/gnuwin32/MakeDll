@@ -1,6 +1,8 @@
 #-*- Makefile -*-
 all:  libR makeMakedeps $(DLLNAME).dll
 
+.PHONY : all libR makeMakedeps
+
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
 # set this (e.g. in SHLIB) to suppress adding version info to the DLL

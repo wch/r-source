@@ -18,10 +18,15 @@ working if `topic' was an alias.  (PR#7269)
 
 Recent changes caused (D)COM to sometimes go into infinite loops.
 
-Any change of preference changed font (even if to the same font as before).
-This is causing problems in MDI mode with toolbars (PR#7277).
+Any change of in the GUI preferences via the dialog box changed font
+(even if to the same font as before).  This is causing problems in MDI
+mode with toolbars (PR#7277), where real font changes are not working
+properly.
 
-Control keys in TCL/TK windows were not handled properly.
+Control keys in Tcl/Tk windows were not handled properly.
+
+R CMD SHLIB gave spurious error messages for inputs like all.f and all.c.
+
 
     -------------------------------------------------------------------
 
