@@ -89,6 +89,17 @@ BUG FIXES
     o	The internal zip.unpack() could crash if more that 500 files
 	were to be extracted. (PR#2818)
 
+    o	The "r+" and "r+b" modes of opening file connections disallowed
+	writing.
+
+    o	library() now warns the user if the chosen package name 
+	doesn't match the internal package name, and corrects the 
+	error. (PR#2816)
+    
+    o	qr(LAPACK=TRUE) (and qr for complex arguments) might have failed
+	to pivot for rank-deficient inputs. (PR#2867)
+
+
 
 		CHANGES IN R VERSION 1.7.0
 

@@ -221,7 +221,7 @@ function(package)
 	   "flush.console",
 	   "format.char", "format.info", "format.pval",
 	   "influence.measures",
-	   "plot.new", "plot.window", "plot.xy",
+	   "plot.new", "plot.window", "plot.xy", "print.coefmat",
            "rep.int",
 	   "split.screen",
 	   "update.packages"),
