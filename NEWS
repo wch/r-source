@@ -262,6 +262,12 @@ BUG FIXES
     o	c() was converting NA names to "NA": now proper NA strings are
 	used wherever possible. (PR#2358)
 
+    o   Checks in the C code prevent possible memory faults when
+        standardGeneric is called invalidly.
+
+    o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
+        the .Call interface to generate arbitrary objects.
+
     o	A typo was causing segfaults when using data.entry under SuSE.
 
     o	mostattributes<-() was failing to copy across dimnames when
