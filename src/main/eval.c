@@ -29,7 +29,16 @@
 #include "Defn.h"
 
 
+#ifdef BYTECODE
+static SEXP bcEval(SEXP, SEXP);
+#endif
+
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
+
+/*#define BC_PROFILING*/
+#ifdef BC_PROFILING
+static Rboolean bc_profiling = FALSE;
+#endif
 
 #ifdef R_PROFILING
 
@@ -229,6 +238,12 @@ SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
     int append_mode;
     double dinterval;
 
+#ifdef BC_PROFILING
+    if (bc_profiling) {
+	warning("can't use R profiling while byte code profiling");
+	return R_NilValue;
+    }
+#endif
     checkArity(op, args);
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
 	errorcall(call, "invalid filename argument");
@@ -299,6 +314,11 @@ SEXP eval(SEXP e, SEXP rho)
            expressions.  */
 	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
 	break;
+#ifdef BYTECODE
+    case BCODESXP:
+	    tmp = bcEval(e, rho);
+	    break;
+#endif
     case SYMSXP:
 	R_Visible = 1;
 	if (e == R_DotsSymbol)
@@ -1936,3 +1956,1621 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     UNPROTECT(5);
     return 1;
 }
+
+#ifdef BYTECODE
+static int R_bcVersion = 4;
+static int R_bcMinVersion = 4;
+
+static SEXP R_AddSym = NULL;
+static SEXP R_SubSym = NULL;
+static SEXP R_MulSym = NULL;
+static SEXP R_DivSym = NULL;
+static SEXP R_ExptSym = NULL;
+static SEXP R_SqrtSym = NULL;
+static SEXP R_ExpSym = NULL;
+static SEXP R_EqSym = NULL;
+static SEXP R_NeSym = NULL;
+static SEXP R_LtSym = NULL;
+static SEXP R_LeSym = NULL;
+static SEXP R_GeSym = NULL;
+static SEXP R_GtSym = NULL;
+static SEXP R_AndSym = NULL;
+static SEXP R_OrSym = NULL;
+static SEXP R_NotSym = NULL;
+static SEXP R_SubsetSym = NULL;
+static SEXP R_SubassignSym = NULL;
+static SEXP R_CSym = NULL;
+static SEXP R_Subset2Sym = NULL;
+static SEXP R_Subassign2Sym = NULL;
+static SEXP FakeCall0 = NULL;
+static SEXP FakeCall1 = NULL;
+static SEXP FakeCall2 = NULL;
+static SEXP R_TrueValue = NULL;
+static SEXP R_FalseValue = NULL;
+
+#if defined(__GNUC__) && ! defined(BC_PROFILING)
+# define THREADED_CODE
+#endif
+
+void R_initialize_bcode(void)
+{
+  R_AddSym = install("+");
+  R_SubSym = install("-");
+  R_MulSym = install("*");
+  R_DivSym = install("/");
+  R_ExptSym = install("^");
+  R_SqrtSym = install("sqrt");
+  R_ExpSym = install("exp");
+  R_EqSym = install("==");
+  R_NeSym = install("!=");
+  R_LtSym = install("<");
+  R_LeSym = install("<=");
+  R_GeSym = install(">=");
+  R_GtSym = install(">");
+  R_AndSym = install("&");
+  R_OrSym = install("|");
+  R_NotSym = install("!");
+  R_SubsetSym = install("[");
+  R_SubassignSym = install("[<-");
+  R_CSym = install("c");
+  R_Subset2Sym = install("[[");
+  R_Subassign2Sym = install("[[<-");
+  FakeCall0 = CONS(R_NilValue, R_NilValue);
+  FakeCall1 = CONS(R_NilValue, FakeCall0);
+  FakeCall2 = CONS(R_NilValue, FakeCall1);
+  R_PreserveObject(FakeCall2);
+  R_TrueValue = mkTrue();
+  SET_NAMED(R_TrueValue, 2);
+  R_PreserveObject(R_TrueValue);
+  R_FalseValue = mkFalse();
+  SET_NAMED(R_FalseValue, 2);
+  R_PreserveObject(R_FalseValue);
+#ifdef THREADED_CODE
+  bcEval(NULL, NULL);
+#endif
+}
+
+enum {
+  BCMISMATCH_OP,
+  RETURN_OP,
+  GOTO_OP,
+  BRIFNOT_OP,
+  POP_OP,
+  DUP_OP,
+  PRINTVALUE_OP,
+  STARTLOOPCNTXT_OP,
+  ENDLOOPCNTXT_OP,
+  DOLOOPNEXT_OP,
+  DOLOOPBREAK_OP,
+  STARTFOR_OP,
+  STEPFOR_OP,
+  ENDFOR_OP,
+  SETLOOPVAL_OP,
+  INVISIBLE_OP,
+  LDCONST_OP,
+  LDNULL_OP,
+  LDTRUE_OP,
+  LDFALSE_OP,
+  GETVAR_OP,
+  DDVAL_OP,
+  SETVAR_OP,
+  GETFUN_OP,
+  GETGLOBFUN_OP,
+  GETSYMFUN_OP,
+  GETBUILTIN_OP,
+  GETINTLBUILTIN_OP,
+  CHECKFUN_OP,
+  MAKEPROM_OP,
+  DOMISSING_OP,
+  SETTAG_OP,
+  DODOTS_OP,
+  PUSHARG_OP,
+  PUSHCONSTARG_OP,
+  PUSHNULLARG_OP,
+  PUSHTRUEARG_OP,
+  PUSHFALSEARG_OP,
+  CALL_OP,
+  CALLBUILTIN_OP,
+  CALLSPECIAL_OP,
+  MAKECLOSURE_OP,
+  UMINUS_OP,
+  UPLUS_OP,
+  ADD_OP,
+  SUB_OP,
+  MUL_OP,
+  DIV_OP,
+  EXPT_OP,
+  SQRT_OP,
+  EXP_OP,
+  EQ_OP,
+  NE_OP,
+  LT_OP,
+  LE_OP,
+  GE_OP,
+  GT_OP,
+  AND_OP,
+  OR_OP,
+  NOT_OP,
+  DOTSERR_OP,
+  STARTASSIGN_OP,
+  ENDASSIGN_OP,
+  STARTSUBSET_OP,
+  DFLTSUBSET_OP,
+  STARTSUBASSIGN_OP,
+  DFLTSUBASSIGN_OP,
+  STARTC_OP,
+  DFLTC_OP,
+  STARTSUBSET2_OP,
+  DFLTSUBSET2_OP,
+  STARTSUBASSIGN2_OP,
+  DFLTSUBASSIGN2_OP,
+  DOLLAR_OP,
+  DOLLARGETS_OP,
+  ISNULL_OP,
+  ISLOGICAL_OP,
+  ISINTEGER_OP,
+  ISDOUBLE_OP,
+  ISCOMPLEX_OP,
+  ISCHARACTER_OP,
+  ISSYMBOL_OP,
+  ISOBJECT_OP,
+  ISNUMERIC_OP,
+  NVECELT_OP,
+  NMATELT_OP,
+  SETNVECELT_OP,
+  SETNMATELT_OP,
+  OPCOUNT
+};
+
+
+SEXP R_unary(SEXP, SEXP, SEXP);
+SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
+SEXP do_math1(SEXP, SEXP, SEXP, SEXP);
+SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_logic(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subset_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP R_subset3_dflt(SEXP, SEXP);
+SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
+
+#define DO_FAST_RELOP2(op,a,b) do { \
+    double __a__ = (a), __b__ = (b); \
+    SEXP val; \
+    if (ISNAN(__a__) || ISNAN(__b__)) val = ScalarLogical(NA_LOGICAL); \
+    else val = (__a__ op __b__) ? R_TrueValue : R_FalseValue; \
+    R_BCNodeStackTop[-2] = val; \
+    R_BCNodeStackTop--; \
+    NEXT(); \
+} while (0)
+
+# define FastRelop2(op,opval,opsym) do { \
+    SEXP x = R_BCNodeStackTop[-2]; \
+    SEXP y = R_BCNodeStackTop[-1]; \
+    if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue) { \
+	if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
+	    TYPEOF(y) == REALSXP && LENGTH(y) == 1) \
+	    DO_FAST_RELOP2(op, REAL(x)[0], REAL(y)[0]); \
+	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
+		 TYPEOF(y) == REALSXP && LENGTH(y) == 1) { \
+	    double xd = INTEGER(x)[0] == NA_INTEGER ? NA_REAL : INTEGER(x)[0];\
+            DO_FAST_RELOP2(op, xd, REAL(y)[0]); \
+	} \
+	else if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
+		 TYPEOF(y) == INTSXP && LENGTH(y) == 1) { \
+	    double yd = INTEGER(y)[0] == NA_INTEGER ? NA_REAL : INTEGER(y)[0];\
+	    DO_FAST_RELOP2(op, REAL(x)[0], yd); \
+	} \
+	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
+		 TYPEOF(y) == INTSXP && LENGTH(y) == 1) { \
+	    double xd = INTEGER(x)[0] == NA_INTEGER ? NA_REAL : INTEGER(x)[0];\
+	    double yd = INTEGER(y)[0] == NA_INTEGER ? NA_REAL : INTEGER(y)[0];\
+	    DO_FAST_RELOP2(op, xd, yd); \
+	} \
+    } \
+    Relop2(opval, opsym); \
+} while (0)
+
+static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
+{
+    SEXP op = SYMVALUE(opsym); /**** check for promise here?? */
+    if (isObject(x) || isObject(y)) {
+	SEXP args, ans;
+	args = CONS(x, CONS(y, R_NilValue));
+	PROTECT(args);
+	if (DispatchGroup("Ops", call, op, args, R_GlobalEnv, &ans)) {
+	    UNPROTECT(1);
+	    return ans;
+	}
+    }
+    return do_relop_dflt(R_NilValue, op, x, y);
+}
+
+static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x)
+{
+  if (isObject(x)) {
+    SEXP args, ans;
+    args = CONS(x, R_NilValue);
+    PROTECT(args);
+    if (DispatchGroup("Ops", call, op, args, R_GlobalEnv, &ans)) {
+      UNPROTECT(1);
+      return ans;
+    }
+    UNPROTECT(1);
+  }
+  return R_unary(R_NilValue, op, x);
+}
+
+static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
+{
+    SEXP op = SYMVALUE(opsym); /**** check for promise here?? */
+    if (isObject(x) || isObject(y)) {
+	SEXP args, ans;
+	args = CONS(x, CONS(y, R_NilValue));
+	PROTECT(args);
+	if (DispatchGroup("Ops", call, op, args, R_GlobalEnv, &ans)) {
+	    UNPROTECT(1);
+	    return ans;
+	}
+	UNPROTECT(1);
+    }
+    return R_binary(R_NilValue, op, x, y);
+}
+
+#define Builtin1(do_fun,which) do { \
+  R_BCNodeStackTop[-1] = CONS(R_BCNodeStackTop[-1], R_NilValue); \
+  R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), \
+                                R_BCNodeStackTop[-1], R_NilValue); \
+  NEXT(); \
+} while(0)
+
+#define NewBuiltin1(do_fun,which) do { \
+  SEXP x = R_BCNodeStackTop[-1]; \
+  R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), x); \
+  NEXT(); \
+} while(0)
+
+#define Builtin2(do_fun,which) do { \
+  SEXP tmp = CONS(R_BCNodeStackTop[-1], R_NilValue); \
+  R_BCNodeStackTop[-2] = CONS(R_BCNodeStackTop[-2], tmp); \
+  R_BCNodeStackTop--; \
+  R_BCNodeStackTop[-1] = do_fun(FakeCall2, SYMVALUE(which), \
+                                R_BCNodeStackTop[-1], R_NilValue); \
+  NEXT(); \
+} while(0)
+
+#define NewBuiltin2(do_fun,opval,opsym) do { \
+  SEXP x = R_BCNodeStackTop[-2]; \
+  SEXP y = R_BCNodeStackTop[-1]; \
+  R_BCNodeStackTop[-2] = do_fun(FakeCall2, opval, opsym, x, y); \
+  R_BCNodeStackTop--; \
+  NEXT(); \
+} while(0)
+
+#define Arith1(which) NewBuiltin1(cmp_arith1,which)
+#define Arith2(opval,opsym) NewBuiltin2(cmp_arith2,opval,opsym)
+#define Math1(which) Builtin1(do_math1,which)
+#define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym)
+
+#ifdef IEEE_754
+# define DO_FAST_BINOP(op,a,b) do { \
+    SEXP val = allocVector(REALSXP, 1); \
+    REAL(val)[0] = (a) op (b); \
+    R_BCNodeStackTop[-2] = val; \
+    R_BCNodeStackTop--; \
+    NEXT(); \
+} while (0)
+# define FastBinary(op,opval,opsym) do { \
+    SEXP x = R_BCNodeStackTop[-2]; \
+    SEXP y = R_BCNodeStackTop[-1]; \
+    if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue) { \
+	if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
+	    TYPEOF(y) == REALSXP && LENGTH(y) == 1) \
+	    DO_FAST_BINOP(op, REAL(x)[0], REAL(y)[0]); \
+	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
+		 INTEGER(x)[0] != NA_INTEGER && \
+		 TYPEOF(y) == REALSXP && LENGTH(y) == 1) \
+	    DO_FAST_BINOP(op, INTEGER(x)[0], REAL(y)[0]); \
+	else if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
+		 TYPEOF(y) == INTSXP && LENGTH(y) == 1 && \
+		 INTEGER(y)[0] != NA_INTEGER) \
+	    DO_FAST_BINOP(op, REAL(x)[0], INTEGER(y)[0]); \
+    } \
+    Arith2(opval, opsym); \
+} while (0)
+#else
+# define FastBinary(op,opval,opsym) Arith2(opval,opsym)
+#endif
+
+#define BCNPUSH(v) do { \
+  SEXP __value__ = (v); \
+  SEXP *__ntop__ = R_BCNodeStackTop + 1; \
+  if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
+  __ntop__[-1] = __value__; \
+  R_BCNodeStackTop = __ntop__; \
+} while (0)
+
+#define BCNPOP() (R_BCNodeStackTop--, R_BCNodeStackTop[0])
+#define BCNPOP_IGNORE_VALUE() R_BCNodeStackTop--
+
+#define BCNSTACKCHECK(n)  do { \
+  if (R_BCNodeStackTop + 1 > R_BCNodeStackEnd) nodeStackOverflow(); \
+} while (0)
+
+#define BCIPUSHPTR(v)  do { \
+  void *__value__ = (v); \
+  IStackval *__ntop__ = R_BCIntStackTop + 1; \
+  if (__ntop__ > R_BCIntStackEnd) intStackOverflow(); \
+  *__ntop__[-1].p = __value__; \
+  R_BCIntStackTop = __ntop__; \
+} while (0)
+
+#define BCIPUSHINT(v)  do { \
+  int __value__ = (v); \
+  IStackval *__ntop__ = R_BCIntStackTop + 1; \
+  if (__ntop__ > R_BCIntStackEnd) intStackOverflow(); \
+  __ntop__[-1].i = __value__; \
+  R_BCIntStackTop = __ntop__; \
+} while (0)
+
+#define BCIPOPPTR() ((--R_BCIntStackTop)->p)
+#define BCIPOPINT() ((--R_BCIntStackTop)->i)
+
+#define BCCONSTS(e) BCODE_CONSTS(e)
+
+static void nodeStackOverflow()
+{
+  error("node stack overflow");
+}
+
+#ifdef BC_INT_STACK
+static void intStackOverflow()
+{
+  error("integer stack overflow");
+}
+#endif
+
+static SEXP bytecodeExpr(SEXP e)
+{
+    if (isByteCode(e)) {
+	if (LENGTH(BCCONSTS(e)) > 0)
+	    return VECTOR_ELT(BCCONSTS(e), 0);
+	else return R_NilValue;
+    }
+    else return e;
+}
+
+SEXP R_PromiseExpr(SEXP p)
+{
+    return bytecodeExpr(PRCODE(p));
+}
+
+SEXP R_ClosureExpr(SEXP p)
+{
+    return bytecodeExpr(BODY(p));
+}
+
+static SEXP forcePromise(SEXP e)
+{
+  if (PRVALUE(e) == R_UnboundValue) {
+    SEXP val;
+    if(PRSEEN(e))
+      errorcall(R_GlobalContext->call, "recursive default argument reference");
+    SET_PRSEEN(e, 1);
+    val = eval(PRCODE(e), PRENV(e));
+    SET_PRSEEN(e, 0);
+    SET_PRVALUE(e, val);
+  }
+  return PRVALUE(e);
+}
+
+#ifdef THREADED_CODE
+typedef union { void *v; int i; } BCODE;
+
+struct { void *addr; int argc; } opinfo[OPCOUNT];
+
+#define OP(name,n) \
+  case name##_OP: opinfo[name##_OP].addr = &&op_##name; \
+    opinfo[name##_OP].argc = (n); \
+    goto loop; \
+    op_##name
+
+#define BEGIN_MACHINE  NEXT(); init: { int which = 0; loop: switch(which++) 
+#define LASTOP } value = R_NilValue; goto done
+#define INITIALIZE_MACHINE() if (body == NULL) goto init
+
+#define NEXT() goto *(*pc++).v
+#define GETOP() (*pc++).i
+
+#define BCCODE(e) (BCODE *) INTEGER(BCODE_CODE(e))
+#else
+typedef int BCODE;
+
+#define OP(name,argc) case name##_OP
+
+#ifdef BC_PROFILING
+#define BEGIN_MACHINE  loop: current_opcode = *pc; switch(*pc++)
+#else
+#define BEGIN_MACHINE  loop: switch(*pc++)
+#endif
+#define LASTOP  default: error("Bad opcode")
+#define INITIALIZE_MACHINE()
+
+#define NEXT() goto loop
+#define GETOP() *pc++
+
+#define BCCODE(e) INTEGER(BCODE_CODE(e))
+#endif
+
+#define DO_GETVAR(dd) do { \
+  SEXP symbol = VECTOR_ELT(constants, GETOP()); \
+  value = (dd) ? ddfindVar(symbol, rho) : findVar(symbol, rho); \
+  R_Visible = 1; \
+  if (value == R_UnboundValue) \
+    error("Object \"%s\" not found", CHAR(PRINTNAME(symbol))); \
+  else if (value == R_MissingArg) { \
+    char *n = CHAR(PRINTNAME(symbol)); \
+    if(*n) error("Argument \"%s\" is missing, with no default", n); \
+    else error("Argument is missing, with no default"); \
+  } \
+  else if (TYPEOF(value) == PROMSXP) { \
+    value = forcePromise(value); \
+    SET_NAMED(value, 2); \
+  } \
+  else if (!isNull(value) && NAMED(value) < 1) \
+    SET_NAMED(value, 1); \
+  BCNPUSH(value); \
+  NEXT(); \
+} while (0)
+
+#define PUSHCALLARG(v) PUSHCALLARG_CELL(CONS(v, R_NilValue))
+
+#define PUSHCALLARG_CELL(c) do { \
+  SEXP __cell__ = (c); \
+  if (R_BCNodeStackTop[-2] == R_NilValue) R_BCNodeStackTop[-2] = __cell__; \
+  else SETCDR(R_BCNodeStackTop[-1], __cell__); \
+  R_BCNodeStackTop[-1] = __cell__; \
+} while (0)
+
+/* making sure the constant is NAMED can be done at assembly time
+   once duplicate is set up to not copy the constant portion of code
+   and once load is set to make the constants NAMED--basically once
+   there is a proper code data type with appropriate support. */
+#define DO_LDCONST(v) do { \
+  v = VECTOR_ELT(constants, GETOP()); \
+  if (! NAMED(v)) SET_NAMED(v, 1); \
+} while (0)
+
+static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
+{
+  RCNTXT cntxt;
+  SEXP pargs;
+  int dispatched = FALSE;
+
+  PROTECT(pargs = promiseArgs(CDR(call), rho));
+  SET_PRVALUE(CAR(pargs), x);
+  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
+  if (usemethod(generic, x, call, pargs, rho, rho, R_NilValue, pv))
+    dispatched = TRUE;
+  endcontext(&cntxt);
+  UNPROTECT(1);
+  return dispatched;
+}
+
+#define DO_STARTDISPATCH(generic) do { \
+  SEXP call = VECTOR_ELT(constants, GETOP()); \
+  int label = GETOP(); \
+  value = R_BCNodeStackTop[-1]; \
+  if (isObject(value) && tryDispatch(generic, call, value, rho, &value)) {\
+    R_BCNodeStackTop[-1] = value; \
+    BC_CHECK_SIGINT(); \
+    pc = codebase + label; \
+  } \
+  else { \
+    SEXP tag = TAG(CDR(call)); \
+    SEXP cell = CONS(value, R_NilValue); \
+    BCNSTACKCHECK(3); \
+    R_BCNodeStackTop[0] = call; \
+    R_BCNodeStackTop[1] = cell; \
+    R_BCNodeStackTop[2] = cell; \
+    R_BCNodeStackTop += 3; \
+    if (tag != R_NilValue) \
+      SET_TAG(cell, CreateTag(tag)); \
+  } \
+  NEXT(); \
+} while (0)
+
+#define DO_DFLTDISPATCH(fun, symbol) do { \
+  SEXP call = R_BCNodeStackTop[-3]; \
+  SEXP args = R_BCNodeStackTop[-2]; \
+  value = fun(call, symbol, args, rho); \
+  R_BCNodeStackTop -= 3; \
+  R_BCNodeStackTop[-1] = value; \
+  NEXT(); \
+} while (0)
+
+#define DO_ISTEST(fun) do { \
+  R_BCNodeStackTop[-1] = fun(R_BCNodeStackTop[-1]) ? \
+                         R_TrueValue : R_FalseValue; \
+  NEXT(); \
+} while(0)
+#define DO_ISTYPE(type) do { \
+  R_BCNodeStackTop[-1] = TYPEOF(R_BCNodeStackTop[-1]) == type ? \
+                         mkTrue() : mkFalse(); \
+  NEXT(); \
+} while (0)
+#define isNumericOnly(x) (isNumeric(x) && ! isLogical(x))
+
+#ifdef BC_PROFILING
+#define NO_CURRENT_OPCODE -1
+static int current_opcode = NO_CURRENT_OPCODE;
+static int opcode_counts[OPCOUNT];
+#endif
+
+#define BC_COUNT_DELTA 1000
+
+#define BC_CHECK_SIGINT() do { \
+  if (++evalcount > BC_COUNT_DELTA) { \
+      R_CheckUserInterrupt(); \
+      evalcount = 0; \
+  } \
+} while (0)
+
+static void loopWithContect(volatile SEXP code, volatile SEXP rho)
+{
+    RCNTXT cntxt;
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue,
+		 R_NilValue);
+    if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK)
+	bcEval(code, rho);
+    endcontext(&cntxt);
+}
+
+static void checkVectorSubscript(SEXP vec, int k)
+{
+    switch (TYPEOF(vec)) {
+    case REALSXP:
+    case INTSXP:
+    case LGLSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case VECSXP:
+    case EXPRSXP:
+	if (k < 0 || k >= LENGTH(vec))
+	    error("subscript out of bounds");
+	break;
+    default: error("not a vector object");
+    }
+}
+
+static SEXP numVecElt(SEXP vec, SEXP idx)
+{
+    int i = asInteger(idx) - 1;
+    if (OBJECT(vec))
+	error("can only handle simple real vectors");
+    checkVectorSubscript(vec, i);
+    switch (TYPEOF(vec)) {
+    case REALSXP: return ScalarReal(REAL(vec)[i]);
+    case INTSXP: return ScalarInteger(INTEGER(vec)[i]);
+    case LGLSXP: return ScalarLogical(LOGICAL(vec)[i]);
+    case CPLXSXP: return ScalarComplex(COMPLEX(vec)[i]);
+    default:
+	error("not a simple vector");
+	return R_NilValue; /* keep -Wall happy */
+    }
+}
+
+static SEXP numMatElt(SEXP mat, SEXP idx, SEXP jdx)
+{
+    SEXP dim;
+    int k, nrow;
+    int i = asInteger(idx);
+    int j = asInteger(jdx);
+
+    if (OBJECT(mat))
+	error("can only handle simple real vectors");
+    
+    dim = getAttrib(mat, R_DimSymbol);
+    if (mat == R_NilValue || TYPEOF(dim) != INTSXP || LENGTH(dim) != 2)
+	error("incorrect number of subscripts");
+    nrow = INTEGER(dim)[0];
+    k = i - 1 + nrow * (j - 1);
+    checkVectorSubscript(mat, k);
+
+    switch (TYPEOF(mat)) {
+    case REALSXP: return ScalarReal(REAL(mat)[k]);
+    case INTSXP: return ScalarInteger(INTEGER(mat)[k]);
+    case LGLSXP: return ScalarLogical(LOGICAL(mat)[k]);
+    case CPLXSXP: return ScalarComplex(COMPLEX(mat)[k]);
+    default:
+	error("not a simple matrix");
+	return R_NilValue; /* keep -Wall happy */
+    }
+}
+
+static SEXP setNumVecElt(SEXP vec, SEXP idx, SEXP value)
+{
+    int i = asInteger(idx) - 1;
+    if (OBJECT(vec))
+	error("can only handle simple real vectors");
+    checkVectorSubscript(vec, i);
+    if (NAMED(vec) > 1)
+	vec = duplicate(vec);
+    PROTECT(vec);
+    switch (TYPEOF(vec)) {
+    case REALSXP: REAL(vec)[i] = asReal(value); break;
+    case INTSXP: INTEGER(vec)[i] = asInteger(value); break;
+    case LGLSXP: LOGICAL(vec)[i] = asLogical(value); break;
+    case CPLXSXP: COMPLEX(vec)[i] = asComplex(value); break;
+    default: error("not a simple vector");
+    }
+    UNPROTECT(1);
+    return vec;
+}
+
+static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
+{
+    SEXP dim;
+    int k, nrow;
+    int i = asInteger(idx);
+    int j = asInteger(jdx);
+
+    if (OBJECT(mat))
+	error("can only handle simple real vectors");
+    
+    dim = getAttrib(mat, R_DimSymbol);
+    if (mat == R_NilValue || TYPEOF(dim) != INTSXP || LENGTH(dim) != 2)
+	error("incorrect number of subscripts");
+    nrow = INTEGER(dim)[0];
+    k = i - 1 + nrow * (j - 1);
+    checkVectorSubscript(mat, k);
+
+    if (NAMED(mat) > 1)
+	mat = duplicate(mat);
+
+    PROTECT(mat);
+    switch (TYPEOF(mat)) {
+    case REALSXP: REAL(mat)[k] = asReal(value); break;
+    case INTSXP: INTEGER(mat)[k] = asInteger(value); break;
+    case LGLSXP: LOGICAL(mat)[k] = asLogical(value); break;
+    case CPLXSXP: COMPLEX(mat)[k] = asComplex(value); break;
+    default: error("not a simple matrix");
+    }
+    UNPROTECT(1);
+    return mat;
+}
+
+static SEXP bcEval(SEXP body, SEXP rho)
+{
+  SEXP value, constants;
+  BCODE *pc, *codebase;
+  int ftype = 0;
+  SEXP *oldntop = R_BCNodeStackTop;
+  static int evalcount = 0;
+#ifdef BC_INT_STACK
+  IStackval *olditop = R_BCIntStackTop;
+#endif
+#ifdef BC_PROFILING
+  int old_current_opcode = current_opcode;
+#endif
+
+  BC_CHECK_SIGINT();
+
+  INITIALIZE_MACHINE();
+  codebase = pc = BCCODE(body);
+  constants = BCCONSTS(body);
+
+  /* check version */
+  {
+      int version = GETOP();
+      if (version < R_bcMinVersion || version > R_bcVersion) {
+	  if (version >= 2) {
+	      static Rboolean warned = FALSE;
+	      if (! warned) {
+		  warned = TRUE;
+		  warning("bytecode version mismatch; using eval");
+	      }
+	      return eval(bytecodeExpr(body), rho);
+	  }
+	  else if (version < R_bcMinVersion)
+	      error("bytecode version is too old");
+	  else error("bytecode version is too new");
+      }
+  }
+
+  BEGIN_MACHINE {
+    OP(BCMISMATCH, 0): error("byte code version mismatch");
+    OP(RETURN, 0): value = R_BCNodeStackTop[-1]; goto done;
+    OP(GOTO, 1):
+      {
+	int label = GETOP();
+	BC_CHECK_SIGINT();
+	pc = codebase + label;
+	NEXT();
+      }
+    OP(BRIFNOT, 1):
+      {
+	int label = GETOP(), cond;
+	value = BCNPOP();
+	cond = asLogical(value);
+	if (cond == NA_LOGICAL)
+	  error(isLogical(value)
+		? "missing value where logical needed"
+		: "argument of if(*) is not interpretable as logical");
+	if (! cond) {
+	    BC_CHECK_SIGINT();
+	    pc = codebase + label;
+	}
+	NEXT();
+      }      
+    OP(POP, 0): BCNPOP_IGNORE_VALUE(); NEXT();
+    OP(DUP, 0): value = R_BCNodeStackTop[-1]; BCNPUSH(value); NEXT();
+    OP(PRINTVALUE, 0): PrintValue(BCNPOP()); NEXT();
+    OP(STARTLOOPCNTXT, 1):
+	{
+	    SEXP code = VECTOR_ELT(constants, GETOP());
+	    loopWithContect(code, rho);
+	    NEXT();
+	}
+    OP(ENDLOOPCNTXT, 0): value = R_NilValue; goto done;
+    OP(DOLOOPNEXT, 0): findcontext(CTXT_NEXT, rho, R_NilValue);
+    OP(DOLOOPBREAK, 0): findcontext(CTXT_BREAK, rho, R_NilValue);
+    OP(STARTFOR, 2):
+      {
+	SEXP seq = R_BCNodeStackTop[-1];
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	int label = GETOP();
+	
+	defineVar(symbol, R_NilValue, rho);
+	BCNPUSH((SEXP) R_findVarLocInFrame(rho, symbol));
+
+	value = allocVector(INTSXP, 2);
+	INTEGER(value)[0] = -1;
+	if (isVector(seq))
+	  INTEGER(value)[1] = LENGTH(seq);
+	else if (isList(seq) || isNull(seq))
+	  INTEGER(value)[1] = length(seq);
+	else error("invalid sequence argument in for loop");
+	BCNPUSH(value);
+
+	BCNPUSH(R_NilValue);
+
+	BC_CHECK_SIGINT();
+	pc = codebase + label;
+	NEXT();
+      }
+    OP(STEPFOR, 1):
+      {
+	int label = GETOP();
+	int i = ++(INTEGER(R_BCNodeStackTop[-2])[0]);
+	int n = INTEGER(R_BCNodeStackTop[-2])[1];
+	if (i < n) {
+	  SEXP seq = R_BCNodeStackTop[-4];
+	  SEXP cell = R_BCNodeStackTop[-3];
+	  switch (TYPEOF(seq)) {
+	  case LGLSXP: 
+	  case INTSXP:
+	    value = allocVector(TYPEOF(seq), 1);
+	    INTEGER(value)[0] = INTEGER(seq)[i];
+	    break;
+	  case REALSXP:
+	    value = allocVector(TYPEOF(seq), 1);
+	    REAL(value)[0] = REAL(seq)[i];
+	    break;
+	  case CPLXSXP:
+	    value = allocVector(TYPEOF(seq), 1);
+	    COMPLEX(value)[0] = COMPLEX(seq)[i];
+	    break;
+	  case STRSXP:
+	    value = allocVector(TYPEOF(seq), 1);
+	    SET_STRING_ELT(value, 0, STRING_ELT(seq, i));
+	    break;
+	  case EXPRSXP:
+	  case VECSXP:
+	    value = VECTOR_ELT(seq, i);
+	    break;
+	  case LISTSXP:
+	    value = CAR(seq);
+	    R_BCNodeStackTop[-4] = CDR(seq);
+	    break;
+	  }
+	  R_SetVarLocValue((R_varloc_t) cell, value);
+	  BC_CHECK_SIGINT();
+	  pc = codebase + label;
+	}
+	NEXT();
+      }
+    OP(ENDFOR, 0):
+      {
+	value = R_BCNodeStackTop[-1];
+	R_BCNodeStackTop -= 3;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+      }
+    OP(SETLOOPVAL, 0): value = BCNPOP(); R_BCNodeStackTop[-1] = value; NEXT();
+    OP(INVISIBLE,0): R_Visible = 0; NEXT();
+    OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(value); NEXT();
+    OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT(); 
+    OP(LDTRUE, 0):  BCNPUSH(R_TrueValue); NEXT(); 
+    OP(LDFALSE, 0):  BCNPUSH(R_FalseValue); NEXT(); 
+    OP(GETVAR, 1): DO_GETVAR(FALSE);
+    OP(DDVAL, 1): DO_GETVAR(TRUE);
+    OP(SETVAR, 1):
+      {
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = R_BCNodeStackTop[-1];
+	switch (NAMED(value)) {
+	case 0: SET_NAMED(value, 1); break;
+	case 1: SET_NAMED(value, 2); break;
+	}
+	defineVar(symbol, value, rho);
+	NEXT();
+      }
+    OP(GETFUN, 1):
+      {
+	/* get the function */
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = findFun(symbol, rho);
+	if(TRACE(value)) {
+	  Rprintf("trace: ");
+	  PrintValue(symbol);
+	}
+
+	/* initialize the function type register, push the function, and
+	   push space for creating the argument list. */
+	ftype = TYPEOF(value);
+	BCNSTACKCHECK(3);
+	R_BCNodeStackTop[0] = value;
+	R_BCNodeStackTop[1] = R_NilValue;
+	R_BCNodeStackTop[2] = R_NilValue;
+	R_BCNodeStackTop += 3;
+	NEXT();
+      }
+    OP(GETGLOBFUN, 1):
+      {
+	/* get the function */
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = findFun(symbol, R_GlobalEnv);
+	if(TRACE(value)) {
+	  Rprintf("trace: ");
+	  PrintValue(symbol);
+	}
+
+	/* initialize the function type register, push the function, and
+	   push space for creating the argument list. */
+	ftype = TYPEOF(value);
+	BCNSTACKCHECK(3);
+	R_BCNodeStackTop[0] = value;
+	R_BCNodeStackTop[1] = R_NilValue;
+	R_BCNodeStackTop[2] = R_NilValue;
+	R_BCNodeStackTop += 3;
+	NEXT();
+      }
+    OP(GETSYMFUN, 1):
+      {
+	/* get the function */
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = SYMVALUE(symbol);
+	if(TRACE(value)) {
+	  Rprintf("trace: ");
+	  PrintValue(symbol);
+	}
+
+	/* initialize the function type register, push the function, and
+	   push space for creating the argument list. */
+	ftype = TYPEOF(value);
+	BCNSTACKCHECK(3);
+	R_BCNodeStackTop[0] = value;
+	R_BCNodeStackTop[1] = R_NilValue;
+	R_BCNodeStackTop[2] = R_NilValue;
+	R_BCNodeStackTop += 3;
+	NEXT();
+      }
+    OP(GETBUILTIN, 1):
+      {
+	/* get the function */
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = SYMVALUE(symbol);
+	if (TYPEOF(value) != BUILTINSXP)
+	  error("not a BUILTIN function");
+	if(TRACE(value)) {
+	  Rprintf("trace: ");
+	  PrintValue(symbol);
+	}
+
+	/* push the function and push space for creating the argument list. */
+	ftype = TYPEOF(value);
+	BCNSTACKCHECK(3);
+	R_BCNodeStackTop[0] = value;
+	R_BCNodeStackTop[1] = R_NilValue;
+	R_BCNodeStackTop[2] = R_NilValue;
+	R_BCNodeStackTop += 3;
+	NEXT();
+      }
+    OP(GETINTLBUILTIN, 1):
+      {
+	/* get the function */
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = INTERNAL(symbol);
+	if (TYPEOF(value) != BUILTINSXP)
+	  error("not a BUILTIN function");
+
+	/* push the function and push space for creating the argument list. */
+	ftype = TYPEOF(value);
+	BCNSTACKCHECK(3);
+	R_BCNodeStackTop[0] = value;
+	R_BCNodeStackTop[1] = R_NilValue;
+	R_BCNodeStackTop[2] = R_NilValue;
+	R_BCNodeStackTop += 3;
+	NEXT();
+      }
+    OP(CHECKFUN, 0):
+      {
+	/* check then the value on the stack is a function */
+	value = R_BCNodeStackTop[-1];
+	if (TYPEOF(value) != CLOSXP && TYPEOF(value) != BUILTINSXP &&
+	    TYPEOF(value) != SPECIALSXP)
+	  error("attempt to apply non-function");
+
+	/* initialize the function type register, and push space for
+	   creating the argument list. */
+	ftype = TYPEOF(value);
+	BCNSTACKCHECK(2);
+	R_BCNodeStackTop[0] = R_NilValue;
+	R_BCNodeStackTop[1] = R_NilValue;
+	R_BCNodeStackTop += 2;
+	NEXT();
+      }
+    OP(MAKEPROM, 1):
+      {
+	SEXP code = VECTOR_ELT(constants, GETOP());
+	if (ftype != SPECIALSXP) {
+	  if (ftype == BUILTINSXP)
+	    value = bcEval(code, rho);
+	  else
+	    value = mkPROMISE(code, rho);
+          PUSHCALLARG(value);
+	}
+	NEXT();
+      }
+    OP(DOMISSING, 0):
+      {
+	if (ftype != SPECIALSXP)
+	  PUSHCALLARG(R_MissingArg);
+	NEXT();
+      }
+    OP(SETTAG, 1):
+      {
+	SEXP tag = VECTOR_ELT(constants, GETOP());
+	SEXP cell = R_BCNodeStackTop[-1];
+	if (ftype != SPECIALSXP && cell != R_NilValue)
+	  SET_TAG(cell, CreateTag(tag));
+	NEXT();
+      }
+    OP(DODOTS, 0):
+      {
+	if (ftype != SPECIALSXP) {
+	  SEXP h = findVar(R_DotsSymbol, rho);
+	  if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
+	    for (; h != R_NilValue; h = CDR(h)) {
+	      SEXP val, cell;
+	      if (ftype == BUILTINSXP) val = eval(CAR(h), rho);
+	      else val = mkPROMISE(CAR(h), rho);
+	      cell = CONS(val, R_NilValue);
+	      PUSHCALLARG_CELL(cell);
+	      if (TAG(h) != R_NilValue) SET_TAG(cell, CreateTag(TAG(h)));
+	    }
+	  }
+	  else if (h != R_MissingArg)
+	    error("... used in an incorrect context");
+	}
+	NEXT();
+      }
+    OP(PUSHARG, 0): PUSHCALLARG(BCNPOP()); NEXT();
+    OP(PUSHCONSTARG, 1): DO_LDCONST(value); PUSHCALLARG(value); NEXT();
+    OP(PUSHNULLARG, 0): PUSHCALLARG(R_NilValue); NEXT();
+    OP(PUSHTRUEARG, 0): PUSHCALLARG(R_TrueValue); NEXT();
+    OP(PUSHFALSEARG, 0): PUSHCALLARG(R_FalseValue); NEXT();
+    OP(CALL, 1):
+      {
+	SEXP fun = R_BCNodeStackTop[-3];
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP args = R_BCNodeStackTop[-2];
+	switch (ftype) {
+	case BUILTINSXP:
+	  R_Visible = 1 - PRIMPRINT(fun);
+	  value = PRIMFUN(fun) (call, fun, args, rho);
+	  break;
+	case SPECIALSXP:
+	  R_Visible = 1 - PRIMPRINT(fun);
+	  value = PRIMFUN(fun) (call, fun, CDR(call), rho);
+	  break;
+	case CLOSXP:
+	  value = applyClosure(call, fun, args, rho, R_NilValue);
+	  break;
+	default: error("bad function");
+	}
+	R_BCNodeStackTop -= 2;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+      }
+    OP(CALLBUILTIN, 1):
+      {
+	SEXP fun = R_BCNodeStackTop[-3];
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP args = R_BCNodeStackTop[-2];
+	if (TYPEOF(fun) != BUILTINSXP)
+	  error("not a BUILTIN function");
+	R_Visible = 1 - PRIMPRINT(fun);
+	value = PRIMFUN(fun) (call, fun, args, rho);
+	R_BCNodeStackTop -= 2;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+      }
+    OP(CALLSPECIAL, 1):
+      {
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP symbol = CAR(call);
+	SEXP fun = SYMVALUE(symbol);
+	if(TRACE(fun)) {
+	  Rprintf("trace: ");
+	  PrintValue(symbol);
+	}
+	if (TYPEOF(fun) != SPECIALSXP)
+	  error("not a SPECIAL function");
+	R_Visible = 1 - PRIMPRINT(fun);
+	value = PRIMFUN(fun) (call, fun, CDR(call), rho);
+	BCNPUSH(value);
+	NEXT();
+      }
+    OP(MAKECLOSURE, 1):
+      {
+	SEXP fb = VECTOR_ELT(constants, GETOP());
+	SEXP forms = VECTOR_ELT(fb, 0);
+	SEXP body = VECTOR_ELT(fb, 1);
+	value = mkCLOSXP(forms, body, rho);
+	BCNPUSH(value);
+	NEXT();
+      }
+    OP(UMINUS, 0): Arith1(R_SubSym);
+    OP(UPLUS, 0): Arith1(R_AddSym);
+    OP(ADD, 0): FastBinary(+, PLUSOP, R_AddSym);
+    OP(SUB, 0): FastBinary(-, MINUSOP, R_SubSym);
+    OP(MUL, 0): FastBinary(*, TIMESOP, R_MulSym);
+    OP(DIV, 0): FastBinary(/, DIVOP, R_DivSym);
+    OP(EXPT, 0): Arith2(POWOP, R_ExptSym);
+    OP(SQRT, 0): Math1(R_SqrtSym);
+    OP(EXP, 0): Math1(R_ExpSym);
+    OP(EQ, 0): FastRelop2(==, EQOP, R_EqSym);
+    OP(NE, 0): FastRelop2(!=, NEOP, R_NeSym);
+    OP(LT, 0): FastRelop2(<, LTOP, R_LtSym);
+    OP(LE, 0): FastRelop2(<=, LEOP, R_LeSym);
+    OP(GE, 0): FastRelop2(>=, GEOP, R_GeSym);
+    OP(GT, 0): FastRelop2(>, GTOP, R_GtSym);
+    OP(AND, 0): Builtin2(do_logic, R_AndSym);
+    OP(OR, 0): Builtin2(do_logic, R_OrSym);
+    OP(NOT, 0): Builtin1(do_logic, R_NotSym);
+    OP(DOTSERR, 0): error("... used in an incorrect context");
+    OP(STARTASSIGN, 2):
+      {
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	SEXP valsym = VECTOR_ELT(constants, GETOP());
+	EnsureLocal(symbol, rho);
+	value = R_BCNodeStackTop[-1];
+	defineVar(valsym, value, rho); /**** not adjusting NAMED OK? */
+	/* right-hand side value is now on top of stack */
+	NEXT();
+      }
+    OP(ENDASSIGN, 2):
+      {
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	SEXP valsym = VECTOR_ELT(constants, GETOP());
+	value = BCNPOP();
+	switch (NAMED(value)) {
+	case 0: SET_NAMED(value, 1); break;
+	case 1: SET_NAMED(value, 2); break;
+	}
+	defineVar(symbol, value, rho);
+	unbindVar(valsym, rho);
+	/* original right-hand side value is now on top of stack again */
+	NEXT();
+      }
+    OP(STARTSUBSET, 2): DO_STARTDISPATCH("[");
+    OP(DFLTSUBSET, 0): DO_DFLTDISPATCH(do_subset_dflt, R_SubsetSym);
+    OP(STARTSUBASSIGN, 2): DO_STARTDISPATCH("[<-");
+    OP(DFLTSUBASSIGN, 0): DO_DFLTDISPATCH(do_subassign_dflt, R_SubassignSym);
+    OP(STARTC, 2): DO_STARTDISPATCH("c");
+    OP(DFLTC, 0): DO_DFLTDISPATCH(do_c_dflt, R_CSym);
+    OP(STARTSUBSET2, 2): DO_STARTDISPATCH("[[");
+    OP(DFLTSUBSET2, 0): DO_DFLTDISPATCH(do_subset2_dflt, R_Subset2Sym);
+    OP(STARTSUBASSIGN2, 2): DO_STARTDISPATCH("[[<-");
+    OP(DFLTSUBASSIGN2, 0):
+      DO_DFLTDISPATCH(do_subassign2_dflt, R_Subassign2Sym);
+    OP(DOLLAR, 2):
+      {
+	int dispatched = FALSE;
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	SEXP x = R_BCNodeStackTop[-1];
+	if (isObject(x)) {
+	  RCNTXT cntxt;
+	  SEXP pargs, str;
+	  PROTECT(pargs = promiseArgs(CDR(call), rho));
+	  SET_PRVALUE(CAR(pargs), x);
+	  str = allocVector(STRSXP, 1);
+	  SET_STRING_ELT(str, 0, PRINTNAME(symbol));
+	  SET_PRVALUE(CADR(pargs), str);
+	  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
+	  if (usemethod("$", x, call, pargs, rho, rho, R_NilValue, &value))
+	    dispatched = TRUE;
+	  endcontext(&cntxt);
+	  UNPROTECT(1);
+	}
+	if (dispatched)
+	  R_BCNodeStackTop[-1] = value;
+	else
+	  R_BCNodeStackTop[-1] = R_subset3_dflt(x, PRINTNAME(symbol));
+	NEXT();
+      }
+    OP(DOLLARGETS, 2):
+      {
+	int dispatched = FALSE;
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	SEXP x = R_BCNodeStackTop[-1];
+	value = R_BCNodeStackTop[-2];
+	if (isObject(x)) {
+	  RCNTXT cntxt;
+	  SEXP pargs, str;
+	  PROTECT(pargs = promiseArgs(CDR(call), rho));
+	  SET_PRVALUE(CAR(pargs), x);
+	  str = allocVector(STRSXP, 1);
+	  SET_STRING_ELT(str, 0, PRINTNAME(symbol));
+	  SET_PRVALUE(CADR(pargs), str);
+	  SET_PRVALUE(CADDR(pargs), value);
+	  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
+	  if (usemethod("$<-", x, call, pargs, rho, rho, R_NilValue, &value))
+	    dispatched = TRUE;
+	  endcontext(&cntxt);
+	  UNPROTECT(1);
+	}
+	R_BCNodeStackTop--;
+	if (dispatched)
+	  R_BCNodeStackTop[-1] = value;
+	else
+	  R_BCNodeStackTop[-1] = R_subassign3_dflt(call, x, symbol, value);
+	NEXT();
+      }
+    OP(ISNULL, 0): DO_ISTEST(isNull);
+    OP(ISLOGICAL, 0): DO_ISTYPE(LGLSXP);
+    OP(ISINTEGER, 0): DO_ISTYPE(INTSXP);
+    OP(ISDOUBLE, 0): DO_ISTYPE(REALSXP);
+    OP(ISCOMPLEX, 0): DO_ISTYPE(CPLXSXP);
+    OP(ISCHARACTER, 0): DO_ISTYPE(STRSXP);
+    OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP);
+    OP(ISOBJECT, 0): DO_ISTEST(OBJECT);
+    OP(ISNUMERIC, 0): DO_ISTEST(isNumericOnly);
+    OP(NVECELT, 2): {
+	SEXP vec = R_BCNodeStackTop[-2];
+	SEXP idx = R_BCNodeStackTop[-1];
+	value = numVecElt(vec, idx);
+	R_BCNodeStackTop--;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+    }
+    OP(NMATELT, 3): {
+	SEXP mat = R_BCNodeStackTop[-3];
+	SEXP idx = R_BCNodeStackTop[-2];
+	SEXP jdx = R_BCNodeStackTop[-1];
+	value = numMatElt(mat, idx, jdx);
+	R_BCNodeStackTop -= 2;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+    }
+    OP(SETNVECELT, 3): {
+	SEXP vec = R_BCNodeStackTop[-3];
+	SEXP idx = R_BCNodeStackTop[-2];
+	value = R_BCNodeStackTop[-1];
+	value = setNumVecElt(vec, idx, value);
+	R_BCNodeStackTop -= 2;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+    }
+    OP(SETNMATELT, 4): {
+	SEXP mat = R_BCNodeStackTop[-4];
+	SEXP idx = R_BCNodeStackTop[-3];
+	SEXP jdx = R_BCNodeStackTop[-2];
+	value = R_BCNodeStackTop[-1];
+	value = setNumMatElt(mat, idx, jdx, value);
+	R_BCNodeStackTop -= 3;
+	R_BCNodeStackTop[-1] = value;
+	NEXT();
+    }
+    LASTOP;
+  }
+
+ done:
+  R_BCNodeStackTop = oldntop;
+#ifdef BC_INT_STACK
+  R_BCIntStackTop = olditop;
+#endif
+#ifdef BC_PROFILING
+  current_opcode = old_current_opcode;
+#endif
+  return value;
+}
+
+#ifdef THREADED_CODE
+SEXP R_bcEncode(SEXP bytes)
+{
+    SEXP code;
+    BCODE *pc;
+    int *ipc, i, n, m, v;
+
+    m = (sizeof(BCODE) + sizeof(int) - 1) / sizeof(int);
+
+    n = LENGTH(bytes);
+    ipc = INTEGER(bytes);
+
+    v = ipc[0];
+    if (v < R_bcMinVersion || v > R_bcVersion) {
+	code = allocVector(INTSXP, m * 2);
+	pc = (BCODE *) CHAR(code);
+	pc[0].i = v;
+	pc[1].v = opinfo[RETURN_OP].addr;
+	return code;
+    }
+    else {
+	code = allocVector(INTSXP, m * n);
+	pc = (BCODE *) CHAR(code);
+
+	for (i = 0; i < n; i++) pc[i].i = ipc[i];
+
+	/* install the current version number */
+	pc[0].i = R_bcVersion;
+
+	for (i = 1; i < n;) {
+	    int op = pc[i].i;
+	    pc[i].v = opinfo[op].addr;
+	    i += opinfo[op].argc + 1;
+	}
+
+	return code;
+    }
+}
+
+static int findOp(void *addr)
+{
+  int i;
+  
+  for (i = 0; i < OPCOUNT; i++)
+    if (opinfo[i].addr == addr)
+      return i;
+  error("can't find index for threaded code address");
+  return 0; /* not reached */
+}
+
+SEXP R_bcDecode(SEXP code) {
+  int n, i, j, *ipc;
+  BCODE *pc;
+  SEXP bytes;
+
+  n = LENGTH(code);
+  pc = (BCODE *) CHAR(code);
+
+  bytes = allocVector(INTSXP, n);
+  ipc = INTEGER(bytes);
+
+  /* copy the version number */
+  ipc[0] = pc[0].i;
+
+  for (i = 1; i < n;) {
+    int op = findOp(pc[i].v);
+    int argc = opinfo[op].argc;
+    ipc[i] = op;
+    i++;
+    for (j = 0; j < argc; j++, i++)
+      ipc[i] = pc[i].i;
+  }
+  
+  return bytes;
+}
+#else
+SEXP R_bcEncode(SEXP x) { return x; }
+SEXP R_bcDecode(SEXP x) { return duplicate(x); }
+#endif
+
+SEXP do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP bytes, consts, ans;
+  
+    checkArity(op, args);
+    bytes = CAR(args);
+    consts = CADR(args);
+    ans = CONS(R_bcEncode(bytes), consts);
+    SET_TYPEOF(ans, BCODESXP);
+    return ans;
+}
+
+SEXP do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP forms, body, env;
+  
+    checkArity(op, args);
+    forms = CAR(args);
+    body = CADR(args);
+    env = CADDR(args);
+
+    CheckFormals(forms);
+
+    if (! isByteCode(body))
+	errorcall(call, "invalid environment");
+
+    if (!isNull(env) && !isEnvironment(env))
+	errorcall(call, "invalid environment");
+
+    return mkCLOSXP(forms, body, env);
+}
+
+SEXP do_is_builtin_internal(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP symbol, i;
+  
+    checkArity(op, args);
+    symbol = CAR(args);
+
+    if (!isSymbol(symbol))
+	errorcall(call, "invalid symbol");
+
+    if ((i = INTERNAL(symbol)) != R_NilValue && TYPEOF(i) == BUILTINSXP)
+	return R_TrueValue;
+    else
+	return R_FalseValue;
+}
+
+static SEXP disassemble(SEXP bc)
+{
+  SEXP ans, dconsts;
+  int i;
+  SEXP code = BCODE_CODE(bc);
+  SEXP consts = BCODE_CONSTS(bc);
+  SEXP expr = BCODE_EXPR(bc);
+  int nc = LENGTH(consts);
+
+  PROTECT(ans = allocVector(VECSXP, expr != R_NilValue ? 4 : 3));
+  SET_VECTOR_ELT(ans, 0, install(".Code"));
+  SET_VECTOR_ELT(ans, 1, R_bcDecode(code));
+  SET_VECTOR_ELT(ans, 2, allocVector(VECSXP, nc));
+  if (expr != R_NilValue)
+      SET_VECTOR_ELT(ans, 3, duplicate(expr));
+
+  dconsts = VECTOR_ELT(ans, 2);
+  for (i = 0; i < nc; i++) {
+    SEXP c = VECTOR_ELT(consts, i);
+    if (isByteCode(c))
+      SET_VECTOR_ELT(dconsts, i, disassemble(c));
+    else
+      SET_VECTOR_ELT(dconsts, i, duplicate(c));
+  }
+  
+  UNPROTECT(1);
+  return ans;
+}
+  
+SEXP do_disassemble(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+  SEXP code;
+  
+  checkArity(op, args);
+  code = CAR(args);
+  if (! isByteCode(code))
+    errorcall(call, "argument is not a byte code object");
+  return disassemble(code);
+}
+
+SEXP do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+  SEXP ans = allocVector(INTSXP, 1);
+  INTEGER(ans)[0] = R_bcVersion;
+  return ans;
+}
+
+#include "Fileio.h"
+
+SEXP do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP file, s;
+    FILE *fp;
+
+    checkArity(op, args);
+
+    PROTECT(file = coerceVector(CAR(args), STRSXP));
+
+    if (! isValidStringF(file))
+	errorcall(call, "bad file name");
+
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file,0))), "rb");
+    if (!fp)
+	errorcall(call, "unable to open file for loading");
+    s = R_LoadFromFile(fp, 0);
+    fclose(fp);
+    
+    UNPROTECT(1);
+    return s;
+}
+
+SEXP do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    FILE *fp;
+
+    checkArity(op, args);
+
+    if (!isValidStringF(CADR(args)))
+	errorcall(call, "`file' must be non-empty string");
+    if (TYPEOF(CADDR(args)) != LGLSXP)
+	errorcall(call, "`ascii' must be logical");
+
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0))), "wb");
+    if (!fp)
+	errorcall(call, "unable to open file");
+
+    R_SaveToFileV(CAR(args), fp, INTEGER(CADDR(args))[0], 0);
+
+    fclose(fp);
+    return R_NilValue;
+}
+
+#define R_COMPILED_EXTENSION ".Rc"
+
+/* neither of these functions call R_ExpandFileName -- the caller
+   should do that if it wants to */
+char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
+{
+    char *basename, *ext;
+    
+    /* find the base name and the extension */
+    basename = strrchr(fname, FILESEP[0]);
+    if (basename == NULL) basename = fname;
+    ext = strrchr(basename, '.');
+
+    if (ext != NULL && strcmp(ext, R_COMPILED_EXTENSION) == 0) {
+	/* the supplied file name has the compiled file extension, so
+	   just copy it to the buffer and return the buffer pointer */
+	if (snprintf(buf, bsize, "%s", fname) < 0)
+	    error("R_CompiledFileName: buffer too small");
+	return buf;
+    }
+    else if (ext == NULL) {
+	/* if the requested file has no extention, make a name that
+           has the extenrion added on to the expanded name */
+	if (snprintf(buf, bsize, "%s%s", fname, R_COMPILED_EXTENSION) < 0)
+	    error("R_CompiledFileName: buffer too small");
+	return buf;
+    }
+    else {
+	/* the supplied file already has an extention, so there is no
+	   corresponding compiled file name */
+	return NULL;
+    }
+}
+    
+FILE *R_OpenCompiledFile(char *fname, char *buf, size_t bsize)
+{
+    char *cname = R_CompiledFileName(fname, buf, bsize);
+
+    if (cname != NULL && R_FileExists(cname) &&
+	(strcmp(fname, cname) == 0 || 
+	 ! R_FileExists(fname) ||
+	 R_FileMtime(cname) > R_FileMtime(fname)))
+	/* the compiled file cname exists, and either fname does not
+	   exist, or it is the same as cname, or both exist and cname
+	   is newer */
+	return R_fopen(buf, "rb");
+    else return NULL;
+}
+
+SEXP do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP code, c, ans;
+    int i, n;
+
+    checkArity(op, args);
+    code = CAR(args);
+    if (TYPEOF(code) != VECSXP)
+	error("code must be a generic vector");
+    c = CADR(args);
+    
+    n = LENGTH(code);
+    ans = allocVector(VECSXP, n + 1);
+    for (i = 0; i < n; i++)
+	SET_VECTOR_ELT(ans, i, VECTOR_ELT(code, i));
+    SET_VECTOR_ELT(ans, n, c);
+
+    return ans;
+}
+
+#ifdef BC_PROFILING
+SEXP R_getbcprofcounts()
+{
+    SEXP val;
+    int i;
+
+    val = allocVector(INTSXP, OPCOUNT);
+    for (i = 0; i < OPCOUNT; i++)
+	INTEGER(val)[i] = opcode_counts[i];
+    return val;
+}
+
+static void dobcprof(int sig)
+{
+    if (current_opcode >= 0 && current_opcode < OPCOUNT)
+	opcode_counts[current_opcode]++;
+    signal(SIGPROF, dobcprof);
+}
+
+SEXP R_startbcprof()
+{
+    struct itimerval itv;
+    int interval;
+    double dinterval = 0.02;
+    int i;
+
+    if (R_Profiling)
+	error("profile timer in use");
+    if (bc_profiling)
+	error("already byte code profiling");
+
+    /* according to man setitimer, it waits until the next clock
+       tick, usually 10ms, so avoid too small intervals here */
+    interval = 1e6 * dinterval + 0.5;
+
+    /* initialize the profile data */
+    current_opcode = NO_CURRENT_OPCODE;
+    for (i = 0; i < OPCOUNT; i++)
+	opcode_counts[i] = 0;
+
+    signal(SIGPROF, dobcprof);
+
+    itv.it_interval.tv_sec = 0;
+    itv.it_interval.tv_usec = interval;
+    itv.it_value.tv_sec = 0;
+    itv.it_value.tv_usec = interval;
+    if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
+	error("setting profile timer failed");
+
+    bc_profiling = TRUE;
+
+    return R_NilValue;
+}
+
+static void dobcprof_null(int sig)
+{
+    signal(SIGPROF, dobcprof_null);
+}
+
+SEXP R_stopbcprof()
+{
+    struct itimerval itv;
+
+    if (! bc_profiling)
+	error("not byte code profiling");
+
+    itv.it_interval.tv_sec = 0;
+    itv.it_interval.tv_usec = 0;
+    itv.it_value.tv_sec = 0;
+    itv.it_value.tv_usec = 0;
+    setitimer(ITIMER_PROF, &itv, NULL);
+    signal(SIGPROF, dobcprof_null);
+
+    bc_profiling = FALSE;
+
+    return R_NilValue;
+}
+#else
+SEXP R_getbcprofcounts() { return R_NilValue; }
+SEXP R_startbcprof() { return R_NilValue; }
+SEXP R_stopbcprof() { return R_NilValue; }
+#endif
+#endif
