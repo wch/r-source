@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-9, 2000/05/08
+Version 1.0-10, 2000/05/13
 Kurt Hornik
 
 
@@ -1040,6 +1040,9 @@ works, was published in the Journal of Statistical Software
      Competitive Learning) and calculation of several indexes for finding
      the number of clusters in a data set.
 
+*cfa*
+     Analysis of configuration frequencies.
+
 *chron*
      A package for working with chronological objects (times and dates).
 
@@ -1079,6 +1082,14 @@ works, was published in the Journal of Statistical Software
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
+
+*hpower*
+     A suite of functions to compute power and sample size for tests of the
+     general linear hypothesis.
+
+*ineq*
+     Inequality, concentration and poverty measures, and Lorenz curves
+     (empirical and theoretic).
 
 *integrate*
      Adaptive quadrature in up to 20 dimensions.
