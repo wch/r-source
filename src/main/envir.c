@@ -2624,8 +2624,12 @@ SEXP do_isNSEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_IsNamespaceEnv(CAR(args)) ? mkTrue() : mkFalse();
 }
 
-SEXP R_NamespaceEnvName(SEXP rho)
+SEXP R_NamespaceEnvSpec(SEXP rho)
 {
+    /* The name space spec is a character vector that specifies the
+       name space.  The first element is the name space name.  The
+       second element, if present, is the name space version.  Further
+       elements may be added later. */
     if (rho == R_BaseNamespace)
 	return R_BaseNamespaceName;
     else if (TYPEOF(rho) == ENVSXP) {
@@ -2720,6 +2724,9 @@ SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    /* This function copies values of variables from one environment
+       to another environment, possibly with different names.
+       Promises are not forced and active bindings are preserved. */
     SEXP impenv, impnames, expenv, expnames;
     SEXP impsym, expsym, binding, env, val;
     int i, n;

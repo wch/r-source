@@ -742,7 +742,7 @@ SEXP R_PackageEnvName(SEXP rho);
 SEXP R_FindPackageEnv(SEXP info);
 #ifdef EXPERIMENTAL_NAMESPACES
 Rboolean R_IsNamespaceEnv(SEXP rho);
-SEXP R_NamespaceEnvName(SEXP rho);
+SEXP R_NamespaceEnvSpec(SEXP rho);
 SEXP R_FindNamespace(SEXP info);
 #endif
 #define ENVIRONMENT_LOCKING

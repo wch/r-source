@@ -771,7 +771,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	else if (R_IsNamespaceEnv(s)) {
 	    warning("namespaces may not be available when loading");
 	    OutInteger(stream, NAMESPACESXP);
-	    OutStringVec(stream, R_NamespaceEnvName(s), ref_table);
+	    OutStringVec(stream, R_NamespaceEnvSpec(s), ref_table);
 	}
 #endif
 	else {
