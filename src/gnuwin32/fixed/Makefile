@@ -27,8 +27,8 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 version: ../../include/Rversion.h
 fixh: version h/config.h ../FFDecl.h ../FFTab.h \
   ../../include/Rconfig.h  ../../include/Rmath.h
-	$(CP) -p ./h/config.h ./h/psignal.h ../../include
-	$(ECHO) done > fixh
+	@$(CP) -p ./h/config.h ./h/psignal.h ../../include
+	@$(ECHO) done > fixh
 
 ../../include/Rconfig.h: h/config.h
 	$(SED) -e 1d ../../../tools/GETCONFIG > GC
@@ -72,26 +72,26 @@ fixh: version h/config.h ../FFDecl.h ../FFTab.h \
 fixbin: ../../../bin/massage-Examples ../../../bin/build \
 	   ../../../bin/check ../../../bin/Rdconv ../../../bin/Rdindex \
 	   ../../../bin/Sd2Rd ../../../bin/Rdiff.sh ../../../bin/Rprof cp2bin
-	$(ECHO) done > fixbin
+	@$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
-	zip -q bins $^
-	unzip -oaq bins -d  ../../..
-	$(RM) bins.zip
+	@zip -q bins $^
+	@unzip -oaq bins -d  ../../..
+	@$(RM) bins.zip
 
 fixhtml: $(wildcard ./html/*.html) ../../../doc/html/search/SearchEngine.html
 	$(CP) -p ./html/*.html ../../../doc/html
 	$(CP) -p ./html/rwin.html ../../../doc/html/index.html
-	$(ECHO) done > fixhtml
+	@$(ECHO) done > fixhtml
 
 fixetc: $(filter-out ./etc/CVS, $(wildcard ./etc/*))
 	$(CP) -p $^ ../../../etc
-	$(ECHO) done > fixetc
+	@$(ECHO) done > fixetc
 
 fixshare: ./share/tests.mk
 	$(MKDIR) -p ../../../share/make
 	$(CP) -p $^ ../../../share/make/wintests.mk
-	$(ECHO) done > fixshare	
+	@$(ECHO) done > fixshare	
 
 clean:
 	$(RM) *~ */*~ fixhtml fixh fixbin fixetc fixshare

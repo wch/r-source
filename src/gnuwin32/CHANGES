@@ -7,8 +7,16 @@ See the file NEWS for changes that affect all versions of R.
 rw1062
 ======
 
+Hitting the key q (or Q) with an internal pager window in focus will
+close the pager.
+
 Source packages with a DESCRIPTION file with an incomplete last line
 are now repaired.
+
+Rcmd INSTALL tries to find canonical paths to make the check for
+not installing on top of the source more foolprof.
+
+The output when building R or source packages is much quieter.
 
 
 

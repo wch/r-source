@@ -109,7 +109,7 @@ help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 	  $(MAKE) --no-print-directory -C latex \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp; \
 	fi
-	-$(MAKE) --no-print-directory -C $(RHOME)/src/gnuwin32/help help-$(PKG)
+	-@$(MAKE) --no-print-directory -C $(RHOME)/src/gnuwin32/help help-$(PKG)
 	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
 
 zipup:
