@@ -10,10 +10,10 @@ rw1070
 The output from formatC uses e+/-0n not e+/-00n for compatibility with
 other platforms and with format.
 
-New functions read/writeClipboard(), and new option to use
-file("clipboard") to read from or write to the clipboard.
-As most input/output functions in R use file(), this makes it possible
-to read data from or write data to the clipboard in many ways.
+A new option to use file("clipboard") to read from or write to the
+clipboard.  As most input/output functions in R use file(), this makes
+it possible to read data from or write data to the clipboard in many
+ways, including direct use of read/writeClipboard().
 
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
