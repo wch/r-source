@@ -1,5 +1,6 @@
-read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
-		     skip = 0, row.names, col.names, n = -1, ...)
+read.fwf <-
+function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
+         skip = 0, row.names, col.names, n = -1, ...)
 {
     doone <- function(x) {
         x <- substring(x, first, last)
@@ -14,7 +15,7 @@ read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
     last <- cumsum(widths)
     cat(file = FILE, sapply(raw, doone),
         sep = c(rep(sep, length = length(widths)-1), "\n"))
-    read.table(file = FILE, header = FALSE, sep = sep, as.is = as.is,
+    read.table(file = FILE, header = header, sep = sep, as.is = as.is,
 	       skip = skip, row.names = row.names, col.names =
                col.names, quote="", ...)
 }

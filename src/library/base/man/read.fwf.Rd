@@ -6,7 +6,7 @@
   data into a \code{\link{data.frame}}.
 }
 \usage{
-read.fwf(file, widths, sep = "\t", as.is = FALSE,
+read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
          skip = 0, row.names, col.names, n = -1, \dots)
 }
 \arguments{
@@ -19,6 +19,8 @@ read.fwf(file, widths, sep = "\t", as.is = FALSE,
   }
   \item{widths}{integer vector, giving the widths of the fixed-width
     fields (of one line).}
+  \item{header}{a logical value indicating whether the file contains the
+    names of the variables as its first line.}
   \item{sep}{character; the separator used internally; should be a
     character that does not occur in the file.}
   \item{as.is}{see \code{\link{read.table}}.}
