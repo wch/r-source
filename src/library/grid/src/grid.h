@@ -170,6 +170,7 @@ extern SEXP R_gridEvalEnv;
 SEXP R_gridEvalEnv;
 #endif
 
+
 /* Functions called by R code
  * (from all over the place)
  */
