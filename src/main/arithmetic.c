@@ -171,7 +171,7 @@ int R_finite(double x)
 #ifdef HAVE_WORKING_FINITE
     return finite(x);
 #else
-# ifdef HAVE_ISFINITE_IN_MATH_H
+# if defined(HAVE_DECL_ISFINITE) && HAVE_DECL_ISFINITE 
     return isfinite(x);
 # else
 #  ifdef _AIX
