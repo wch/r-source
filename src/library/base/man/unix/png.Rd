@@ -61,10 +61,14 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
 \author{Guido Masarotto and Brian Ripley}
 
 \seealso{
-  \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{bitmap}}.
+  \code{\link{Devices}}, \code{\link{dev.print}}
 
   \code{\link{capabilities}} to see if these devices are
   supported by this build of \R.
+
+  \code{\link{bitmap}} provides an alternative way to generate PNG and
+  JPEG plots that does not depend on accessing the X11 display but does
+  depend on having GhostScript installed.
 }
 \examples{
 ## these examples will work only if the devices are available

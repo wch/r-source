@@ -120,14 +120,16 @@ ps.options(paper, horizontal, width, height, family, encoding,
   is used.  Suitable commands to spool a PostScript file to a printer
   can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/rjl.html}.  The command will be run
-  in a minimized window.
+  in a minimized window.   GSView 4.0 provides
+  \code{gsprint.exe} which may be even more convenient (it requires
+  GhostScript version 6.0 or later).
 #endif
 
   The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
   compatible, and can be included into other documents, e.g., into
   LaTeX, using \code{\includegraphics{<filename>}}.  For use in this way
-  you will probably want to set \code{horizontal=FALSE, onefile=FALSE,
-    paper="special"}.
+  you will probably want to set \code{horizontal = FALSE, onefile = FALSE,
+    paper = "special"}.
 
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be

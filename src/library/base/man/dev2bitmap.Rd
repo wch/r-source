@@ -1,7 +1,7 @@
 \name{dev2bitmap}
 \alias{dev2bitmap}
 \alias{bitmap}
-\title{Graphics Device for Bitmap Files}
+\title{Graphics Device for Bitmap Files via GhostScript}
 \usage{
 bitmap(file, type = "png256", height = 6, width = 6, res = 72,
        pointsize, \dots)
@@ -19,19 +19,19 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \item{\dots}{Other parameters passed to \code{\link{postscript}}.}
 }
 \description{
-  \code{bitmap} generates a bitmap graphics file.
+  \code{bitmap} generates a graphics file.
   \code{dev2bitmap} copies the current graphics device to a file in a
-  bitmap graphics format.
+  graphics format.
 }
 \details{
   \code{dev2bitmap} works by copying the current device to a
   \code{\link{postscript}} device, and post-processing the output file
-  using \code{ghostscript}. \code{bitmap} works in the same way using a
+  using \code{ghostscript}.  \code{bitmap} works in the same way using a
   \code{postscript} device and postprocessing the output as ``printing''.
 
-  You will need a recent version of \code{ghostscript} (5.10, 5.50 and
-  6.01 have been tested): the full path to
-  the executable can be set by the environment variable \code{"R_GSCMD"}.
+  You will need a recent version of \code{ghostscript} (5.10 and
+  later have been tested): the full path to the executable can be set by
+  the environment variable \code{"R_GSCMD"}.
 
   The types available will depend on the version of \code{ghostscript},
   but are likely to include
@@ -47,7 +47,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{"png16"}, \code{"png256"}, \code{"png16m"}, \code{"jpeg"},
   \code{"jpeggray"}, \code{"pdfwrite"}.
 
-  Note: despite the name of the functions they can produce PDF via
+  Note: despite the name of the functions they can produce PDF \emph{via}
   \code{type = "pdfwrite"}, and the PDF produced is not bitmapped.
 
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
@@ -62,7 +62,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 #ifdef windows
 \note{
   Use of \code{bitmap} will leave a temporary file (with file name
-  starting \code{Rbit}).  Use of the \code{\link{bmp}},
+  starting \code{Rbit}).  Use of the \code{\link{pdf}}, \code{\link{bmp}},
   \code{\link{png}} and \code{\link{jpeg}} devices is preferable to
   using these functions.
 }
@@ -71,6 +71,8 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 \seealso{
   \code{\link{postscript}}, \code{\link{png}} and
   \code{\link{jpeg}} and on Windows \code{bmp}.
+
+  \code{\link{pdf}} generate PDF directly.
 }
 
 \keyword{utilities}
