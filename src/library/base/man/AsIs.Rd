@@ -37,6 +37,12 @@ I(x)
 \value{
   A copy of the object with class \code{"AsIs"} prepended to the class(es).
 }
+\references{
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{data.frame}}, \code{\link{formula}}
 }

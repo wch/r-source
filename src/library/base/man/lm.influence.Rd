@@ -58,7 +58,12 @@ lm.influence(model, do.coef = TRUE)
   considered here.
 }
 \references{
-  see the list in the documentation for \code{\link{influence.measures}}.
+  See the list in the documentation for \code{\link{influence.measures}}.
+
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
 \code{\link{summary.lm}} for \code{\link{summary}} and related methods;\cr

@@ -163,6 +163,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{call}{the matched call.}
 }
 \references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}, Wadsworth \& Brooks/Cole.
+
   Green, P. J. and Silverman, B. W. (1994)
   \emph{Nonparametric Regression and Generalized Linear Models:
     A Roughness Penalty Approach.} Chapman and Hall.
@@ -177,7 +180,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   This function is based on code in the\code{GAMFIT} Fortran program by
   T. Hastie and R. Tibshirani (\url{http://lib.stat.cmu.edu/general/}),
   which makes use of spline code by Finbarr O'Sullivan.  Its design
-  parallels the \code{smooth.spline} function of S3.
+  parallels the \code{smooth.spline} function of Chambers \& Hastie (1992).
 }
 \seealso{
   \code{\link{predict.smooth.spline}} for evaluating the spline

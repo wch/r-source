@@ -47,6 +47,12 @@ weights(object, \dots)
   \code{\link{residuals}}, \code{\link{residuals.glm}},
   \code{\link{summary.lm}}.
 }
+\references{
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \examples{
 \testonly{example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:

@@ -84,6 +84,11 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
   Bates, D.M. and Watts, D.G. (1988)
   \emph{Nonlinear Regression Analysis and Its Applications},
   Wiley
+
+  Bates, D. M. and Chambers, J. M. (1992)
+  \emph{Nonlinear models.}
+  Chapter 10 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nlsModel}}}

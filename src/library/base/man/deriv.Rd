@@ -75,6 +75,11 @@ deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
   \emph{Automatic Differentiation of Algorithms: Theory, Implementation,
     and Application}.
   SIAM proceedings, Philadelphia.
+
+  Bates, D. M. and Chambers, J. M. (1992)
+  \emph{Nonlinear models.}
+  Chapter 10 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{nlm}} and \code{\link{optim}} for numeric minimization
