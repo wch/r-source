@@ -29,7 +29,7 @@ na.omit.default <- function(object, ...)
     }
     if (any(omit)) {
 	names(omit) <- nm[omit]
-	attr(omit, "class") <- "omit"
+	attr(omit, "class") <- "exclude"
 	attr(object, "na.action") <- omit
     }
     object
