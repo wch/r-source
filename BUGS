@@ -196,6 +196,14 @@ none
 
 Directory:  incoming
 
+* PR# 578 *
+Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 22 Jun 2000 17:07:05 +0200
+* PR# 577 *
+Subject: de on w95b crash rterm with long strings
+From: p.malewski@tu-bs.de
+Date: Thu, 22 Jun 2000 16:43:16 +0200 (MET DST)
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
