@@ -172,6 +172,8 @@ BUG FIXES
 
     o   Fixed unterminated string problem with lty (PR 584)
 
+    o   Fixed scoping problem with quasi() family (PR 614)
+
 
 		CHANGES IN R VERSION 1.1.0
 
