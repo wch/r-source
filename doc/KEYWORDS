@@ -48,6 +48,7 @@ Programming, Input/Ouput, and Miscellaneous
 	error		&	Error Handling
 
 	environment	&	Session Environment
+	internal	&	Internal Objects (not part of API)
 	utilities	&	Utilities
 	misc		&	Miscellaneous
 	documentation	&	Documentation
@@ -55,6 +56,7 @@ Programming, Input/Ouput, and Miscellaneous
 
 Statistics
 
+	datagen		&	Functions for generating data sets
 	distribution	&	Probability Distributions and Random Numbers
 	univar		&	simple univariate statistics  [!= S]
 	htest		&	Statistical Inference
@@ -66,8 +68,6 @@ Statistics
 	multivariate	&	Multivariate Techniques
 	ts		&	Time Series
 	survival	&	Survival Analysis
-
-
 	nonparametric	&	Nonparametric Statistics [w/o 'smooth']
 	smooth		&	Curve (and Surface) Smoothing
 	     & loess	&	Loess Objects
