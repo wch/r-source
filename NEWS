@@ -111,6 +111,15 @@ NEW FEATURES
 	with missing values by using a subset of the data  that is 
 	`cleaned' by na.action for the maximal model under consideration.
 
+    o	New method as.data.frame.table() for converting the array-based
+	representation of a contingency table to a data frame containing
+	the classifying factors and the corresponding counts.
+
+    o	New function xtabs() providing a formula interface to cross
+	tabulation.
+
+    o	New functions write.ftable() and read.ftable() for writing out
+	and reading in flat contingency tables.
 
 
 BUG FIXES
