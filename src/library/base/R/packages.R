@@ -146,17 +146,18 @@ installed.packages <- function(lib.loc = .lib.loc)
             retval <- rbind(retval, c(p, lib, desc))
         }
     }
-    colnames(retval) <- c("Package", "LibPath", "Version",
-                          "Priority", "Bundle", "Depends")
+    if (!is.null(retval))
+        colnames(retval) <- c("Package", "LibPath", "Version",
+                              "Priority", "Bundle", "Depends")
     retval
 }
 
 
 package.dependencies <- function(x, check=FALSE)
-{    
+{
     if(!is.matrix(x))
         x <- matrix(x, nrow=1, dimnames=list(NULL, names(x)))
-    
+
     deps <- list()
     for(k in 1:nrow(x)){
         z <- x[k, "Depends"]
@@ -193,7 +194,7 @@ package.dependencies <- function(x, check=FALSE)
                 if(!is.na(deps[[k]][ok,2])){
                     comptext <-
                         paste('"', R.version$major, ".",
-                              R.version$minor, '" ', 
+                              R.version$minor, '" ',
                               deps[[k]][ok,2], ' "',
                               deps[[k]][ok,3], '"', sep="")
                 }
@@ -208,5 +209,5 @@ package.dependencies <- function(x, check=FALSE)
         return(deps)
     }
 }
-    
+
 

@@ -123,7 +123,9 @@ BUG FIXES
     o	Support for Rd conversion to Sd has been reinstated (it was
 	unintentionally removed along with nroff-based conversion to text).
 
+
 		CHANGES IN R VERSION 1.0.1
+
 
 BUG FIXES
 
@@ -177,10 +179,10 @@ BUG FIXES
 
     o	qhyper should work better for large N.
 
+    o	qbinom(1-1e-16, n, p) , qpois() and qnbinom(*) looped for ever.
+
     o	as.matrix.data.frame no longer escapes quotes in character
 	vectors.
-
-    o	qbinom(1-1e-16, n, p) looped for ever.
 
     o	R would try to save the readline history at the end of
 	non-interactive sessions, causing crashes on some systems.
@@ -188,8 +190,41 @@ BUG FIXES
     o	Subtle roundoff problems caused arrays to be allocated short in
 	loess.c in some cases, leading to segfaults.
 
+    o	Document that postscript(file="") sends the output directly to
+	the default printer.
+
+    o	ts.union(, dframe=TRUE) had a long-standing typo, now works.
+
+    o	save(, ascii=TRUE) had problem with octal escapes in strings
+	when there was a digit following, should work now.
+
+    o	matpoints() and matlines() now also have a "type =" argument
+	with defaults "p" and "l", respectively; PR#506.
+
+    o	The new Perl 5.6 broke our version-detection mechanism. A
+	better one has been inserted.
+
+    o	X11(colortype="gray") failed to work on 8-bit screens, and
+	more generally when colour allocation failed X11() did not
+	revert to monochrome correctly (and did not say it was doing so).
+
+	It was not documented in the help that to change the X11
+	colortype one needs to close all open X11 devices.
+
     o	loessf.f in modreg defined DSIGN unecessarily and this caused
 	a conflict on AIX.
+
+    o	plot.lm will now work with rlm objects.
+
+    o	start and end behave better when the frequency is not an integer.
+
+    o	aggregate.ts is closer to S-PLUS's aggregate.rts.
+
+    o	quantile(x) now works when x contains several +/- Inf's.
+
+    o   guard against segfault in dataentry(0,0) (or, more
+        realistically, when mistyping data.entry(x,y) as
+	dataentry(x,y))
 
 
 	*********************************************************

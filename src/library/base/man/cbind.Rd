@@ -39,7 +39,7 @@ rbind(\dots)
   Therefore, there's no need for, e.g., \code{rbind.default}.
 
   The dispatch algorithm is described in the source file
-  (\file{.../src/main/bind.c} as
+  (\file{.../src/main/bind.c}) as
 
   \enumerate{
     \item For each argument we get the list of possible class

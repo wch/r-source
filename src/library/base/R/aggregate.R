@@ -59,8 +59,12 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     ## such blocks by reshaping it into an array and setting dim.
     len <- ofrequency %/% nfrequency
     mat <- is.matrix(x)
-    nstart <- ceiling(tsp(x)[1] * nfrequency) / nfrequency
-    x <- as.matrix(window(x, start = nstart))
+#    nstart <- ceiling(tsp(x)[1] * nfrequency) / nfrequency
+#    x <- as.matrix(window(x, start = nstart))
+    nstart <- tsp(x)[1]
+    # Can't use nstart <- start(x) as this causes problems if
+    # you get a vector of length 2.
+    x <- as.matrix(x)
     nend <- floor(nrow(x) / len) * len
     x <- apply(array(c(x[1 : nend, ]),
                      dim = c(len, nend / len, ncol(x))),

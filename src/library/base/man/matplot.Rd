@@ -4,8 +4,8 @@
 matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         \dots, add = FALSE)
-matpoints(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
-matlines(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
+matpoints(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
+matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
 }
 \alias{matplot}
 \alias{matpoints}

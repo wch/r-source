@@ -229,5 +229,7 @@ double atanh(double);
 #define lgamma(x) lgammafn(x)
 
 
+/* 27/03/2000 win32-api needs this */
+#define NONAMELESSUNION
 
 #endif

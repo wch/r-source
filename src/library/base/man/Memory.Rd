@@ -75,7 +75,8 @@ Rterm --vsize=v --nsize=n
   possible in case you run out of memory when reading in a large table.
 }
 \seealso{
-  \code{\link{gc}} for information on the garbage collector.
+  \code{\link{gc}} for information on the garbage collector,
+  \code{\link{memory.profile}} for profiling the usage of cons cells.
 }
 #ifdef windows
 \note{
