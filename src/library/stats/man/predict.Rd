@@ -58,7 +58,9 @@ predict (object, \dots)
 ## All the "predict" methods found
 ## NB most of the methods in the standard packages are hidden.
 for(fn in methods("predict"))
-   try(cat(fn,":\n\t",deparse(args(getAnywhere(fn)$objs[[1]])),"\n"),
-       silent = TRUE)
+   try({
+       f <- eval(substitute(getAnywhere(fn)$objs[[1]], list(fn = fn)))
+       cat(fn, ":\n\t", deparse(args(f)), "\n")
+       }, silent = TRUE)
 }
 \keyword{methods}
