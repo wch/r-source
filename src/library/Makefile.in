@@ -115,6 +115,7 @@ uninstall:
 	@echo "uninstalling packages ..."
 	@(cd $(rhome)/library; \
 	  for p in $(R_PKGS) $(R_PKGS_STUBS); do rm -rf $${p}; done)
+	rm -f R.css
 
 mostlyclean: clean
 clean:
