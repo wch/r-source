@@ -11,5 +11,19 @@ were washed away ...
 
 NEW FEATURES
 
- o  There has been a major change in directory structure.
+    o	There has been a major change in directory structure
+	masterminded by Kurt Hornik.
 
+
+BUG FIXES
+
+    o	The following type of assignment to data frame subsets
+
+		z <- data.frame(x=rnorm(10),y=rnorm(10),z=rnorm(10))
+		z[,1:2] <- matrix(1:20,nc=2)
+
+	was producing incorrect results.  The solution was to wrap
+	an implicit "as.data.frame" around the RHS.
+
+    o	There was a swap of coordinates internally in "mtext" which
+	meant that labels were coming out in the wrong place.  Fixed.

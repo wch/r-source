@@ -545,7 +545,7 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	print.default(roundfun(x$coefficients, digits=digits), print.gap = 2)
 	cat(paste("\n(Dispersion parameter for ", x$family$family,
 		" family taken to be ", x$dispersion,
-		")\n\n	  Null deviance: ", x$null.deviance,
+		")\n\n    Null deviance: ", x$null.deviance,
 		" on ", x$df.null, " degrees of freedom\n\n",
 		"Residual deviance: ", x$deviance,
 		" on ", x$df.residual, " degrees of freedom\n\n",
