@@ -515,8 +515,9 @@ step <- function(object, scope, scale = 0,
 	    tmp <- c(tmp, "0")
 	if (!length(tmp))
 	    tmp <- "1"
-	tmp <- paste(deparse(formula(object)[[2]]), "~",
-		     paste(tmp, collapse = " + "))
+        tmp <- paste("~", paste(tmp, collapse = " + "))
+        form <- formula(object) # some formulae have no lhs
+        tmp <- if(length(form) > 2) paste(deparse(form[[2]]), tmp)
 	if (length(offset <- attr(tt, "offset")))
 	    tmp <- paste(tmp, deparse(attr(tt, "variables")[offset + 1]),
 			 sep = " + ")
