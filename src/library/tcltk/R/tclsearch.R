@@ -13,7 +13,7 @@ tclRequire <- function(package, warn = TRUE)
     a <- tclvalue(tcl("package", "versions", package))
     if (length(a) == 1 && nchar(a) == 0){
         if (warn)
-            warning(gettext("Tcl package '%s' not found", package),
+            warning(gettextf("Tcl package '%s' not found", package),
                     domain = NA)
         return(FALSE)
     } else tcl("package", "require", package)
