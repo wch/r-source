@@ -20,14 +20,22 @@ BUG FIXES
 
     o	seq.POSIXt(from, to, length.out= . ) could give too long results
 
-    o   summaryRprof was counting nested calls to the same function
-        twice
+    o   summaryRprof() was counting nested calls to the same function
+        twice.
 
     o   printing of objects of mode "expression" did strange things if
-        there were "%" characters in the deparsed expression (PR# 2120).
+        there were "%" characters in the deparsed expression (PR#2120).
 
     o   as.matrix.data.frame converted missings to "NA" not character NA
 	(PR#2130)
+
+    o   spec.pgram() was only interpolating zero freq for one series (PR#2123)
+
+    o   help(randu) had % unescaped in the example. (PR#2141)
+
+    o   Making html links would fail if packages-head.html was not
+	writeable. (PR#2133)
+
 
 
 		CHANGES IN R VERSION 1.6.0
