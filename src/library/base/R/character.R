@@ -54,5 +54,6 @@ make.names <- function(names, unique=FALSE)
     names
 }
 
+chartr <- function(old, new, x) .Internal(chartr(old, new, x))
 tolower <- function(x) .Internal(tolower(x))
 toupper <- function(x) .Internal(toupper(x))

@@ -689,3 +689,38 @@ do_toupper(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return(y);
 }
+
+SEXP
+do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP old, new, x, y;
+    unsigned char xtable[UCHAR_MAX + 1], *p, *s, *t;
+    int i;
+
+    checkArity(op, args);
+    old = CAR(args); args = CDR(args);
+    new = CAR(args); args = CDR(args);
+    x = CAR(args);
+    if(!isString(old) || (length(old) < 1) ||
+       !isString(new) || (length(new) < 1) ||
+       !isString(x))
+	errorcall(call, "invalid argument");
+
+    for(i = 0; i <= UCHAR_MAX; i++)
+	xtable[i] = i;
+
+    s = CHAR(STRING(old)[0]);
+    t = CHAR(STRING(new)[0]);
+    if (strlen(s) > strlen(t))
+	errorcall(call, "old is longer than new");
+    for(; *s != '\0'; s++, t++)
+	xtable[*s] = *t;
+    
+    y = duplicate(x);
+    for(i = 0; i < length(y); i++) {
+	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
+	    *p = xtable[*p];
+	}
+    }
+    return(y);
+}

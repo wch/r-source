@@ -109,6 +109,7 @@ SEXP do_c(SEXP, SEXP, SEXP, SEXP);
 SEXP do_call(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_charmatch(SEXP, SEXP, SEXP, SEXP);
+SEXP do_chartr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_class(SEXP, SEXP, SEXP, SEXP);
 SEXP do_classgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colors(SEXP, SEXP, SEXP, SEXP);
