@@ -630,6 +630,9 @@ BUG FIXES
 	It was incorrectly attempting to use -remote "openURL()" for
 	unknown browsers.
 
+    o	extractAIC.coxph() works around an inconsistency in the
+	$loglik output from coxph.
+
 
 
 

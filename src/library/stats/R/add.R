@@ -692,11 +692,11 @@ extractAIC <- function(fit, scale, k = 2, ...) UseMethod("extractAIC")
 
 extractAIC.coxph <- function(fit, scale, k = 2, ...)
 {
+    ## seems that coxph sometimes gives one and sometimes gives two values
+    ## for loglik
     edf <- length(fit$coef)
-    if(edf > 0)
-        c(edf, -2 * fit$loglik[2] + k * edf)
-    else
-        c(0, -2 * fit$loglik)
+    loglik <- fit$loglik[length(fit$loglik)]
+    c(edf, -2 * fit$loglik[2] + k * edf)
 }
 
 extractAIC.survreg <- function(fit, scale, k = 2, ...)
