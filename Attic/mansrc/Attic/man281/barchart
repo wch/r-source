@@ -1,7 +1,0 @@
-TITLE(barchart @@  Barchart)
-USAGE(
-barchart(x)
-)
-DESCRIPTION(
-LANG(barchart) draws a barchart of the (numeric) values in LANG(x).
-)
