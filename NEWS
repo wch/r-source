@@ -79,6 +79,10 @@ NEW FEATURES
     o	R CMD check will now work on a source tarball and prints out
 	information about the version of R and the package.
 
+    o   New function recordGraphics() to encapsulate calculations
+	and graphics output together on graphics engine display list.
+	To be used with care.
+
 
 UTILITIES
 
