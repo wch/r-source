@@ -347,6 +347,12 @@
 /* Define if you have the <unistd.h> header file.  */
 #define HAVE_UNISTD_H 1
 
+/* Define if you have the xml library (-lxml).  */
+#define HAVE_LIBXML 1
+
+/* Define if you have the z library (-lz).  */
+#define HAVE_LIBZ 1
+
 /* Name of package */
 #define PACKAGE "R"
 

@@ -8,23 +8,28 @@ R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C
 RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
 RVAL_IF_DIFF=0
 
-test-src-strict-1 = \
+test-src-gct = \
+	eval-etc.R \
+	simple-true.R \
 	arith-true.R \
 	arith.R \
-	d-p-q-r-tests.R \
-	eval-etc.R \
-	is-things.R \
 	lm-tests.R \
 	primitive-funs.R \
-	method-dispatch.R \
-	simple-true.R
+	method-dispatch.R
+test-src-strict-1 = \
+	$(test-src-gct) \
+	d-p-q-r-tests.R
 test-src-strict-auto = \
 	isas-tests.R
 test-src-sloppy-1 = \
+	demos.R \
 	print-tests.R
 test-src-sloppy-auto = \
 	no-segfault.R
 
+test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
+test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src-sloppy = $(test-src-sloppy-1) #$(test-src-sloppy-auto)
 test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
