@@ -836,3 +836,37 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return (ans);
 }
+
+#ifdef HAVE_POPEN
+FILE *R_popen(char *command, char *type)
+{
+    FILE *fp;
+#ifdef __APPLE_CC__
+    /* Luke recommends this to fix PR#1140 */
+    sigset_t ss;
+    sigaddset(&ss, SIGPROF);
+    sigprocmask(SIG_BLOCK, &ss,  NULL);
+    fp = popen(command, type);
+    sigprocmask(SIG_UNBLOCK, &ss, NULL);
+#else
+    fp = popen(command, type);
+#endif
+    return fp;
+}
+#endif /* HAVE_POPEN */
+
+int R_system(char *command)
+{
+    int val;
+#ifdef __APPLE_CC__
+    /* Luke recommends this to fix PR#1140 */
+    sigset_t ss;
+    sigaddset(&ss, SIGPROF);
+    sigprocmask(SIG_BLOCK, &ss,  NULL);
+    val = system(command);
+    sigprocmask(SIG_UNBLOCK, &ss, NULL);
+#else
+    val = system(command);
+#endif
+    return val;
+}

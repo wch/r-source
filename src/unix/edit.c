@@ -140,11 +140,11 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
       rc = Raqua_Edit(filename);
     else {
       sprintf(editcmd, "%s %s", cmd, filename);
-      rc = system(editcmd);
+      rc = R_system(editcmd);
     }
 # else
     sprintf(editcmd, "%s %s", cmd, filename);
-    rc = system(editcmd);
+    rc = R_system(editcmd);
 # endif
     if (rc != 0)
 	errorcall(call, "problem with running editor %s", cmd);

@@ -1468,7 +1468,7 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 #else
 	if(strlen(pd->command) == 0) return FALSE;
         errno = 0;
-	pd->psfp = popen(pd->command, "w");
+	pd->psfp = R_popen(pd->command, "w");
 	pd->open_type = 1;
         if (!pd->psfp || errno != 0) {
             warning("cannot open `postscript' pipe to `%s'", pd->command);
@@ -1481,7 +1481,7 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 	return FALSE;
 #else
 	errno = 0;
-	pd->psfp = popen(pd->filename + 1, "w");
+	pd->psfp = R_popen(pd->filename + 1, "w");
 	pd->open_type = 1;
 	if (!pd->psfp || errno != 0) {
 	    warning("cannot open `postscript' pipe to `%s'", pd->filename + 1);
@@ -1616,7 +1616,7 @@ static void PostScriptClose(NewDevDesc *dd)
 	    strcat(buff, pd->filename);
 /*	    Rprintf("buff is %s\n", buff); */
 #ifdef Unix
-	    err = system(buff);
+	    err = R_system(buff);
 #endif
 #ifdef Win32
 	    err = runcmd(buff, 0, 0, NULL);

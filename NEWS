@@ -441,6 +441,11 @@ C-LEVEL FACILITIES
 	A compiler for producing byte compiled code will be made available
 	separately and should become part of a future R release.
 
+    o   On Unix-like systems calls to the popen() and system() C library
+	functions now go through R_popen and R_system.  On Mac OS X these
+	suspend SIGALRM interrupts around the library call.  (Related to
+	PR#1140.)
+
 
 UTILITIES
 
@@ -702,7 +707,6 @@ BUG FIXES
 	function.  The fix [to C-level coerceVector()] now gives an error
 	instead of passing through. This may catch other potential
 	problems.
-
 
 
 

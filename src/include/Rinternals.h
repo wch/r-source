@@ -849,6 +849,12 @@ void R_ReleaseObject(SEXP);
 void R_dot_Last(void);		/* in main.c */
 void R_RunExitFinalizers(void);	/* in memory.c */
 
+/* Recpalcments for popen and system */
+#ifdef HAVE_POPEN
+FILE *R_popen(char *, char *);
+#endif
+int R_system(char *);
+
 
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray

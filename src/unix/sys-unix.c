@@ -212,7 +212,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (read) {
 #ifdef HAVE_POPEN
 	PROTECT(tlist);
-	fp = popen(CHAR(STRING_ELT(CAR(args), 0)), x);
+	fp = R_popen(CHAR(STRING_ELT(CAR(args), 0)), x);
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
 	    if (read < INTERN_BUFSIZE) buf[read - 1] = '\0'; /* chop final CR */
@@ -239,7 +239,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	tlist = allocVector(INTSXP, 1);
 	fflush(stdout);
-	INTEGER(tlist)[0] = system(CHAR(STRING_ELT(CAR(args), 0)));
+	INTEGER(tlist)[0] = R_system(CHAR(STRING_ELT(CAR(args), 0)));
 #ifdef HAVE_AQUA
     	R_Busy(0);
 #endif
@@ -264,7 +264,7 @@ void InitTempDir()
 	if (!tm) tm = getenv("TEMP");
 	if (!tm) tm = "/tmp";
 	sprintf(tmp1, "rm -rf %s/Rtmp%u", tm, (unsigned int)getpid());
-	system(tmp1);
+	R_system(tmp1);
 	sprintf(tmp1, "%s/Rtmp%u", tm, (unsigned int)getpid());
 	res = mkdir(tmp1, 0755);
 	if(res) R_Suicide("Can't mkdir R_TempDir");

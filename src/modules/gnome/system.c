@@ -206,7 +206,7 @@ void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 */
     if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
 	sprintf(buf, "rm -rf %s", tmpdir);
-	system(buf);
+	R_system(buf);
     }
 
 
