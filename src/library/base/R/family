@@ -1,113 +1,99 @@
-"family" <-
-function(x, ...)
-UseMethod("family")
+family <- function(x, ...) UseMethod("family")
 
-"print.family" <-
-function(x, ...)
+print.family <- function(x, ...)
 {
 	cat("\nFamily:", x$family, "\n")
 	cat("Link function:", x$link, "\n\n")
 }
-"power" <-
-function(lambda = 1)
+power <- function(lambda = 1)
 {
 	if(lambda <= 0)
 		return("log")
 	return(lambda)
 }
 
-# this function is used with the glm function
-# given a link it returns a link function, an inverse link
-# function and the derivative dmu/deta
-# Written by Simon Davies Dec 1995
+## This function is used with  glm().
+## Given a link, it returns a link function, an inverse link
+## function and the derivative dmu/deta.
+## Written by Simon Davies Dec 1995
 
 ## Modified by Thomas Lumley 26 Apr 97
 ## added valideta(eta) function returning TRUE if all of eta
 ## is in the domain of linkinv
 
-"make.link" <-
-function (link)
+make.link <- function (link)
 {
-	recognise <- FALSE
-	if (link == "logit") {
+ switch (link,
+	 "logit" = {
 		linkfun <- function(mu) log(mu/(1 - mu))
 		linkinv <- function(eta) exp(eta)/(1 + exp(eta))
 		mu.eta <- function(eta) exp(eta)/(1 + exp(eta))^2
 		valideta <- function(eta) TRUE
-		recognise <- TRUE
-	}
-	if (link == "probit") {
+	      },
+	 "probit" = {
 		linkfun <- function(mu) qnorm(mu)
 		linkinv <- pnorm
 		mu.eta <- function(eta) 0.3989422 * exp(-0.5 * eta^2)
 		valideta <- function(eta) TRUE
-		recognise <- TRUE
-	}
-	if (link == "cloglog") {
+	      },
+	 "cloglog" = {
 		linkfun <- function(mu) log(-log(1 - mu))
 		linkinv <- function(eta) 1 - exp(-exp(eta))
 		mu.eta <- function(eta) exp(eta) * exp(-exp(eta))
 		valideta <- function(eta) TRUE
-		recognise <- TRUE
-	}
-	if (link == "identity") {
+	      },
+	 "identity" = {
 		linkfun <- function(mu) mu
 		linkinv <- function(eta) eta
 		mu.eta <- function(eta) rep(1, length(eta))
 		valideta <- function(eta) TRUE
-		recognise <- TRUE
-	}
-	if (link == "log") {
+	      },
+	 "log" = {
 		linkfun <- function(mu) log(mu)
 		linkinv <- function(eta) exp(eta)
 		mu.eta <- function(eta) exp(eta)
 		valideta <- function(eta) TRUE
-		recognise <- TRUE
-	}
-	if (link == "sqrt") {
+	      },
+	 "sqrt" = {
 		linkfun <- function(mu) mu^0.5
 		linkinv <- function(eta) eta^2
 		mu.eta <- function(eta) 2 * eta
 		valideta <- function(eta) all(eta>0)
-		recognise <- TRUE
-	}
-	if (link == "1/mu^2") {
+	      },
+	 "1/mu^2" = {
 		linkfun <- function(mu) 1/mu^2
 		linkinv <- function(eta) 1/eta^0.5
 		mu.eta <- function(eta) -1/(2 * eta^1.5)
 		valideta <- function(eta) all(eta>0)
-		recognise <- TRUE
-	}
-	if (link == "inverse") {
+	      },
+	 "inverse" = {
 		linkfun <- function(mu) 1/mu
 		linkinv <- function(eta) 1/eta
 		mu.eta <- function(eta) -1/(eta^2)
 		valideta <- function(eta) all(eta!=0)
-		recognise <- TRUE
-	}
-	if (!is.na(as.numeric(link))) {
+	      },
+	 ## else :
+	 {
+	   if (!is.na(as.numeric(link))) {
 		lambda <- as.numeric(link)
 		linkfun <- function(mu) mu^lambda
 		linkinv <- function(eta) eta^(1/lambda)
 		mu.eta <- function(eta) (1/lambda) * eta^(1/lambda - 1)
 		valideta <- function(eta) all(eta>0)
-		recognise <- TRUE
-	}
-	if (!recognise)
+	   } else
 		stop(paste(link, "link not recognised"))
-	return(list(linkfun = linkfun,
-		linkinv = linkinv,
-		mu.eta = mu.eta,
-		valideta=valideta))
+	 }
+	 )# end switch(.)
+ list(linkfun = linkfun, linkinv = linkinv,
+      mu.eta = mu.eta, valideta = valideta)
 }
 
-"poisson" <-
-function (link = "log")
+poisson <- function (link = "log")
 {
 	linktemp <- substitute(link)
-	#this is a function used in the glm function
-	#it holds everything personal to the family
-	#converts link into character string
+	## this is a function used in  glm().
+	## It holds everything personal to the family,
+	## converts link into character string
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
 		if (linktemp == "link")
@@ -116,12 +102,14 @@ function (link = "log")
 	if (any(linktemp == c("log", "identity", "sqrt")))
 		stats <- make.link(linktemp)
 	else stop(paste(linktemp, "link not available for poisson",
-			"family, available links are \"identity\", ",
-			"\"log\" and \"sqrt\""))
+			"family; available links are",
+			'"identity", "log" and "sqrt"'))
 	variance <- function(mu) mu
 	validmu <- function(mu) all(mu>0)
 	dev.resids <- function(y, mu, wt)
 		2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+	aic <- function(y, n, mu, wt, dev)
+		2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
 	initialize <- expression({
 		if (any(y < 0))
 			stop(paste("Negative values not allowed for",
@@ -129,54 +117,54 @@ function (link = "log")
 		n <- rep(1, nobs)
 		mustart <- y + 0.1
 	})
-	family <- list(family = "poisson",
+	structure(list(family = "poisson",
 			link = linktemp,
 			linkfun = stats$linkfun,
 			linkinv = stats$linkinv,
 			variance = variance,
 			dev.resids = dev.resids,
+			aic = aic,
 			mu.eta = stats$mu.eta,
 			initialize = initialize,
 			validmu = validmu,
-			valideta = stats$valideta)
-	class(family) <- "family"
-	return(family)
+			valideta = stats$valideta),
+		  class = "family")
 }
 
-"gaussian" <-
-function ()
+gaussian <- function ()
 {
 	stats <- make.link("identity")
-	# this is a function used in the glm function
-	# it holds everything personal to the family
+	## this is a function used in  glm();
+	## it holds everything personal to the family
 	variance <- function(mu) rep(1, length(mu))
 	dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
+	aic <- function(y, n, mu, wt, dev)
+		sum(wt)*(log(dev/sum(wt)*2*pi)+1)+2
 	initialize <- expression({
 		n <- rep(1, nobs)
 		mustart <- y
 	})
 	validmu <- function(mu) TRUE
-	family <- list(family = "gaussian",
+	structure(list(family = "gaussian",
 			link = "identity",
 			linkfun = stats$linkfun,
 			linkinv = stats$linkinv,
 			variance = variance,
 			dev.resids = dev.resids,
+			aic = aic,
 			mu.eta = stats$mu.eta,
 			initialize = initialize,
 			validmu = validmu,
-			valideta = stats$valideta)
-	class(family) <- "family"
-	return(family)
+			valideta = stats$valideta),
+		  class = "family")
 }
 
-"binomial" <-
-function (link = "logit")
+binomial <- function (link = "logit")
 {
 	linktemp <- substitute(link)
-	# this is a function used in the glm function
-	# it holds everything personal to the family
-	# converts link into character string
+	## this is a function used in  glm();
+	## it holds everything personal to the family
+	## converts link into character string
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
 		if (linktemp == "link")
@@ -192,6 +180,8 @@ function (link = "logit")
 	dev.resids <- function(y, mu, wt)
 		2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
 		(1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+	aic <- function(y, n, mu, wt, dev)
+		-2*sum((lchoose(n,n*y)+n*(y*log(mu)+(1-y)*log(1-mu)))*wt/n)
 	initialize <- expression({
 		if (NCOL(y) == 1) {
 			n <- rep(1, nobs)
@@ -209,27 +199,26 @@ function (link = "logit")
 			"and col 2 is no. failures"))
 		mustart <- (n * y + 0.5)/(n + 1)
 	})
-	family <- list(family = "binomial",
+	structure(list(family = "binomial",
 			link = linktemp,
 			linkfun = stats$linkfun,
 			linkinv = stats$linkinv,
 			variance = variance,
 			dev.resids = dev.resids,
+			aic = aic,
 			mu.eta = stats$mu.eta,
 			initialize = initialize,
 			validmu = validmu,
-			valideta = stats$valideta)
-	class(family) <- "family"
-	return(family)
+			valideta = stats$valideta),
+		  class = "family")
 }
 
-"Gamma" <-
-function (link = "inverse")
+Gamma <- function (link = "inverse")
 {
 	linktemp <- substitute(link)
-	#this is a function used in the glm function
-	#it holds everything personal to the family
-	#converts link into character string
+	## This is a function used in  glm();
+	## it holds everything personal to the family
+	## converts link into character string
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
 		if (linktemp == "link")
@@ -244,6 +233,11 @@ function (link = "inverse")
 	validmu <- function(mu) all(mu>0)
 	dev.resids <- function(y, mu, wt)
 		-2 * wt * (log(ifelse(y == 0, 1, y/mu)) - (y - mu)/mu)
+	aic <- function(y, n, mu, wt, dev){
+		n <- sum(wt)
+		disp <- dev/n
+		2*((sum(wt*(y/mu+log(mu)-log(y)))+n*log(disp))/disp+
+			n*lgamma(1/disp)+sum(log(y)*wt)+1)}
 	initialize <- expression({
 		if (any(y < 0))
 			stop(paste("Negative values not",
@@ -251,26 +245,27 @@ function (link = "inverse")
 		n <- rep(1, nobs)
 		mustart <- y
 	})
-	family <- list(family = "Gamma",
+	structure(list(family = "Gamma",
 			link = linktemp,
 			linkfun = stats$linkfun,
 			linkinv = stats$linkinv,
 			variance = variance,
 			dev.resids = dev.resids,
+			aic = aic,
 			mu.eta = stats$mu.eta,
 			initialize = initialize,
 			validmu = validmu,
-			valideta = stats$valideta)
-	class(family) <- "family"
-	return(family)
+			valideta = stats$valideta),
+		  class = "family")
 }
 
-"inverse.gaussian" <-
-function()
+inverse.gaussian <- function()
 {
 	stats <- make.link("1/mu^2")
 	variance <- function(mu) mu^3
 	dev.resids <- function(y, mu, wt)  wt*((y - mu)^2)/(y*mu^2)
+	aic <- function(y, n, mu, wt, dev)
+		sum(wt)*(log(dev/sum(wt)*2*pi)+1)+3*sum(log(y)*wt)+2
 	initialize <- expression({
 			if(any(y <= 0))
 				stop(paste("Positive values only allowed for",
@@ -280,25 +275,24 @@ function()
 			})
 	validmu <- function(mu) TRUE
 
-	family <- list(family = "inverse.gaussian",
+	structure(list(family = "inverse.gaussian",
 			link = "1/mu^2",
 			linkfun = stats$linkfun,
 			linkinv = stats$linkinv,
 			variance = variance,
 			dev.resids = dev.resids,
+			aic = aic,
 			mu.eta = stats$mu.eta,
 			initialize = initialize,
 			validmu = validmu,
-			valideta = stats$valideta)
-	class(family) <- "family"
-	return(family)
+			valideta = stats$valideta),
+	class = "family")
 }
 
-"quasi" <-
-function (link = "identity", variance = "constant")
+quasi <- function (link = "identity", variance = "constant")
 {
 	linktemp <- substitute(link)
-	#this is a function used in the glm function
+	#this is a function used in  glm()
 	#it holds everything personal to the family
 	#converts link into character string
 	if (is.expression(linktemp))
@@ -316,45 +310,43 @@ function (link = "identity", variance = "constant")
 		if (linktemp == "variance")
 			variancetemp <- eval(variance)
 	}
-	if (!any(variancetemp == c("mu(1-mu)",
-		"mu", "mu^2", "mu^3", "constant")))
-		stop(paste(variancetemp, "not recognised, possible variances",
-			"are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and",
-			"\"constant\""))
-	if (variancetemp == "constant") {
-		variance <- function(mu) rep(1, length(mu))
-		dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
-		validmu <-function(mu) TRUE
-	}
-	if (variancetemp == "mu(1-mu)") {
-		variance <- function(mu) mu * (1 - mu)
-		validmu <-function(mu) all(mu>0) && all(mu<1)
-		dev.resids <- function(y, mu, wt)
-			2 * wt * (y * log(ifelse(y == 0, 1,
-			y/mu)) + (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
-	}
-	if (variancetemp == "mu") {
-		variance <- function(mu) mu
-		validmu<-function(mu) all(mu>0)
-		dev.resids <- function(y, mu, wt)
-			2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
-	}
-	if (variancetemp == "mu^2") {
-		variance <- function(mu) mu^2
-		validmu<-function(mu) all(mu!=0)
-		dev.resids <- function(y, mu, wt)
-			-2 * wt * (log(y/mu) - (y - mu)/mu)
-	}
-	if (variancetemp == "mu^3") {
-		variance <- function(mu) mu^3
-		validmu <-function(mu) all(mu>0)
-		dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)/(y * mu^2)
-	}
-	initialize <- expression({
-		n <- rep(1, nobs)
-		mustart <- y
-	})
-	family <- list(family = "quasi",
+	switch(variancetemp,
+	       "constant" = {
+			variance <- function(mu) rep(1, length(mu))
+			dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
+			validmu <-function(mu) TRUE
+		      },
+	       "mu(1-mu)" = {
+			variance <- function(mu) mu * (1 - mu)
+			validmu <-function(mu) all(mu>0) && all(mu<1)
+			dev.resids <- function(y, mu, wt)
+				2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
+			 (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+		      },
+	       "mu" = {
+			variance <- function(mu) mu
+			validmu<-function(mu) all(mu>0)
+			dev.resids <- function(y, mu, wt)
+			  2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+		      },
+	       "mu^2" = {
+			variance <- function(mu) mu^2
+			validmu<-function(mu) all(mu!=0)
+			dev.resids <- function(y, mu, wt)
+				-2 * wt * (log(y/mu) - (y - mu)/mu)
+		      },
+	       "mu^3" = {
+			variance <- function(mu) mu^3
+			validmu <-function(mu) all(mu>0)
+			dev.resids <- function(y, mu, wt)
+				wt * ((y - mu)^2)/(y * mu^2)
+		      },
+	       stop(paste(variancetemp, "not recognised, possible variances",
+			'are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"'))
+	       )# end switch(.)
+
+	initialize <- expression({ n <- rep(1, nobs); mustart <- y })
+	structure(list(family = "quasi",
 			link = linktemp,
 			linkfun = stats$linkfun,
 			linkinv = stats$linkinv,
@@ -363,7 +355,6 @@ function (link = "identity", variance = "constant")
 			mu.eta = stats$mu.eta,
 			initialize = initialize,
 			validmu = validmu,
-			valideta = stats$valideta)
-	class(family) <- "family"
-	return(family)
+			valideta = stats$valideta),
+		  class = "family")
 }
