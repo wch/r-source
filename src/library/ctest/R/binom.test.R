@@ -2,11 +2,22 @@ binom.test <-
 function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95)
 {
-    if((length(n) > 1) || is.na(n) || (n < 1) || (n != round(n)))
-        stop("n must be a positive integer")
-    if((length(x) > 1) || is.na(x) ||
-       (x < 0) || (x > n) || (x != round(x)))
-        stop("x must be an integer between 0 and n")
+    if(any(is.na(x) || (x < 0) || (x != round(x))))
+        stop("x must be nonnegative and integer")
+    if(length(x) == 2) {
+        ## x gives successes and failures
+        n <- sum(x)
+        x <- x[1]
+    }
+    else if(length(x) == 1) {
+        ## x gives successes, n gives trials
+        if((length(n) > 1) || is.na(n) || (n < 1) || (n != round(n))
+           || (x > n))
+            stop("n must be a positive integer >= x")
+    }
+    else
+        stop("incorrect length of x")
+
     if(!missing(p) && (length(p) > 1 || is.na(p) || p < 0 || p > 1))
         stop ("p must be a single number between 0 and 1")
     alternative <- match.arg(alternative)

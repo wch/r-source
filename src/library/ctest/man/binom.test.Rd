@@ -2,18 +2,18 @@
 \alias{binom.test}
 \title{Exact Binomial Test}
 \description{
-  Performs an exact test of the null that the probability of success in
-  a Bernoulli experiment of length \code{n} is \code{p}, based on the
-  number \code{x} of successes observed.
+  Performs an exact test of a simple null hypothesis about the
+  probabilty of success in a Bernoulli experiment.
 }
 \usage{
 binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
            conf.level = 0.95)
 }
 \arguments{
-  \item{x}{number of successes.}
-  \item{n}{number of trials.}
-  \item{p}{probability of success.}
+  \item{x}{number of successes, or a vector of length 2 giving the
+    numbers of successes and failures, respectively.}
+  \item{n}{number of trials; ignored if \code{x} has length 2.}
+  \item{p}{hypothesized probability of success.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.}
@@ -22,11 +22,11 @@ binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{the number of successes, \code{x}.}
-  \item{parameter}{the number of trials, \code{n}.}
+  \item{statistic}{the number of successes.}
+  \item{parameter}{the number of trials.}
   \item{p.value}{the p-value of the test.}
   \item{conf.int}{a confidence interval for the probability of success.}
-  \item{estimate}{the estimated probability of success, \code{x / n}.}
+  \item{estimate}{the estimated probability of success.}
   \item{null.value}{the probability of success under the null,
     \code{p}.}
   \item{alternative}{a character string describing the alternative
@@ -58,7 +58,8 @@ binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
 ##  cross results in progeny having 243 dwarf and 682 giant plants.
 ##  If ``giant'' is taken as success, the null hypothesis is that p =
 ##  3/4 and the alternative that p != 3/4.
-binom.test(682, 682 + 243, p = 3/4)
+binom.test(c(682, 243), p = 3/4)
+binom.test(682, 682 + 243, p = 3/4)   # The same.
 ## => Data are in agreement with the null hypothesis.
 }
 \keyword{htest}
