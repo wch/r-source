@@ -20,7 +20,7 @@ function (..., list = character(0),
                         full = TRUE)
     files <- files[grep(name, files)]
     found <- FALSE
-    if (files != "") {
+    if (length(files) > 0) {
       subpre <- paste(".*", fsep, sep = "")
       for (file in files) {
         if (verbose) 
@@ -40,7 +40,7 @@ function (..., list = character(0),
                     r = source(file),
                     RData = , 
                     rdata = ,
-                    rda = load(file),
+                    rda = load(file, envir = .GlobalEnv),
                     TXT = ,
                     txt = , 
                     tab = assign(name, read.table(file, header = TRUE), 
