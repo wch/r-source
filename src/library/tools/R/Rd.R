@@ -505,7 +505,7 @@ function(txt, type, predefined = TRUE)
         stop(.wrong_args("txt", "must be a character string"))
     pattern <- paste("(^|\n)[[:space:]]*\\\\",
                      ifelse(predefined, type,
-                            paste("section{", type, "}",
+                            paste("section\\{", type, "\\}",
                                   sep = "")),
                      "\\{",
                      sep = "")
