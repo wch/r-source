@@ -422,13 +422,20 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
 SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 {
     int nx, ns;
-    SEXP ans, names, tmp;
+    SEXP ans, tmp;
 
     ans = R_NilValue;
     if (isVector(x) || isList(x) || isLanguage(x)) {
-	names = getAttrib(x, R_NamesSymbol);
 	nx = length(x);
 	ns = length(s);
+	/* special case for simple indices -- does not duplicate */
+	if (ns == 1 && TYPEOF(s) == INTSXP && ATTRIB(s) == R_NilValue) {
+	  int i = INTEGER(s)[0];
+	  if (0 < i && i <= nx) {
+	    *stretch = 0;
+	    return s;
+	  }
+	}
 	PROTECT(s=duplicate(s));
 	SET_ATTRIB(s, R_NilValue);
 	switch (TYPEOF(s)) {
@@ -449,8 +456,11 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	    UNPROTECT(1);
 	    break;
 	case STRSXP:
-	    /* *stretch = 0; */
-	    ans = stringSubscript(s, ns, nx, names, stretch);
+	    {
+		SEXP names = getAttrib(x, R_NamesSymbol);
+		/* *stretch = 0; */
+		ans = stringSubscript(s, ns, nx, names, stretch);
+	    }
 	    break;
 	case SYMSXP:
 	    *stretch = 0;
