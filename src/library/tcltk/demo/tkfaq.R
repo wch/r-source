@@ -11,7 +11,7 @@ local({
     tkpack(txt, side="left", fill="both", expand=TRUE)
     tkpack(scr, side="right", fill="y")
 
-    chn <- tclvalue(tkcmd("open", file.path(Sys.getenv("R_HOME"),"FAQ")))
+    chn <- tclvalue(tkcmd("open", file.path(R.home(), "FAQ")))
     tkinsert(txt, "end", tclvalue(tkcmd("read", chn)))
     tkcmd("close", chn)
     
