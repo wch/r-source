@@ -61,6 +61,10 @@ CHANGES TO THE LANGUAGE
 
 
 NEW FEATURES
+    
+    o   Users can specify the collation order for files in the R source 
+        directory of a package. The order is specified in the DESCRIPTION 
+        file.
 
     o	New function bquote() does partial substitution like LISP backquote.
 
@@ -89,8 +93,7 @@ NEW FEATURES
 
     o	dump() only quotes object names in the file where necessary.
 
-    o	eval() of a promise forces the promise and printing a promise forces
-	the promise
+    o	eval() of a promise forces the promise 
 
     o	file.path() now returns an empty character vector if given at
 	least one zero-length argument.
