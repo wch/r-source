@@ -177,6 +177,11 @@ static const EventTypeSpec	REvents[] =
     { kEventClassControl, kEventControlHit },
     { kEventClassCommand, kEventCommandProcess }};
 
+static const EventTypeSpec	RPrefsSpec[] =
+{	{ kEventClassWindow, kEventWindowClose }
+}
+;
+
 static const EventTypeSpec	aboutSpec =
 	{ kEventClassWindow, kEventWindowClose };
 
@@ -205,7 +210,7 @@ static const EventTypeSpec	RCmdEvents[] =
 
 static const EventTypeSpec	RGlobalWinEvents[] =
 {
-        { kEventClassWindow, kEventWindowBoundsChanged },
+        { kEventClassWindow, kEventWindowBoundsChanged } ,
         { kEventClassWindow, kEventWindowFocusAcquired },
         { kEventClassWindow, kEventWindowFocusRelinquish },
         { kEventClassFont, kEventFontPanelClosed},
@@ -234,7 +239,7 @@ static	short 	RunExampleItem=-1;
 static	short	SearchHelpItem=-1;
 static  short  	PreferencesItem=-1;
 
-#define IntToFixed(a) ((Fixed)(a) << 16)
+
 
 void GetRPrefs(void);
 void SaveRPrefs(void);
@@ -363,8 +368,7 @@ void Raqua_StartConsole(void)
         InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
                                 (void *)RAboutWindow, NULL);
 
-        InstallWindowEventHandler(RPrefsWindow, NewEventHandlerUPP(RPrefsWinHandler), 1, &aboutSpec, 
-                                (void *)RPrefsWindow, NULL);
+        InstallWindowEventHandler(RPrefsWindow, NewEventHandlerUPP(RPrefsWinHandler), GetEventTypeCount(RPrefsSpec), RPrefsSpec,  (void *)RPrefsWindow, NULL);
 
     InstallControlEventHandler( GrabCRef(RPrefsWindow,kTabMasterSig,kTabMasterID),  PrefsTabEventHandlerProc , GetEventTypeCount(tabControlEvents), tabControlEvents, RPrefsWindow, NULL );
 
@@ -681,13 +685,26 @@ pascal OSStatus RPrefsWinHandler(EventHandlerCallRef handlerRef, EventRef event,
 {
     OSStatus result = eventNotHandledErr;
     UInt32	eventKind;
-    
+     UInt32		eventClass;
+     
     eventKind = GetEventKind(event);
-    if( eventKind == kEventWindowClose)
-    {
-     HideWindow( (WindowRef)userData );
-     result = noErr;
-    }
+    eventClass = GetEventClass(event);
+    
+    switch(eventClass){
+     case kEventClassWindow:
+      switch(eventKind){
+     
+      case kEventWindowClose:
+       HideWindow( (WindowRef)userData );
+       result = noErr;
+      break;
+    
+      default:
+      break;
+      }
+     break;
+    }    
+    
     return result;
 }
 
@@ -1003,8 +1020,9 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
             break;
             
             case kEventWindowFocusAcquired:
-              err = SetFontInfoForSelection(kFontSelectionATSUIType, 0, NULL,
-                 GetWindowEventTarget(EventWindow));
+//              err = SetFontInfoForSelection(kFontSelectionATSUIType, 0, NULL,
+  //               GetWindowEventTarget(EventWindow));
+                 MySetFontSelection(EventWindow);
             break;
             
             default:

@@ -677,11 +677,12 @@
           </object>
         </array>
       </object>
+      <boolean name="hasCloseBox">FALSE</boolean>
       <boolean name="hasCollapseBox">FALSE</boolean>
       <boolean name="hasHorizontalZoom">FALSE</boolean>
       <boolean name="isResizable">FALSE</boolean>
       <boolean name="hasVerticalZoom">FALSE</boolean>
-      <int name="carbonWindowClass">4</int>
+      <int name="carbonWindowClass">5</int>
       <int name="themeBrush">49</int>
       <int name="windowPosition">7</int>
       <string name="helpTagText">Choose your favorite R settings</string>
@@ -704,42 +705,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">-24675 12086 -24377 12526 </string>
+      <string name="bounds">-24675 -9298 -24377 -8858 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">15898 5814 15900 5910 </string>
+          <string name="bounds">-8790 19354 -8788 19442 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">15898 24625 15900 24747 </string>
+          <string name="bounds">-8790 -27371 -8788 -27257 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">15998 24362 16014 24755 </string>
+          <string name="bounds">-8690 -27638 -8674 -27245 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">15958 24386 15978 24450 </string>
+          <string name="bounds">-8730 -27602 -8710 -27562 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">15970 24632 15966 24685 </string>
+          <string name="bounds">-8718 -27362 -8722 -27321 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">15960 24529 15976 24605 </string>
+          <string name="bounds">-8728 -27471 -8712 -27395 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">16099 24428 16095 24428 </string>
+          <string name="bounds">-8589 -27572 -8593 -27572 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">16088 24358 16104 24405 </string>
+          <string name="bounds">-8600 -27642 -8584 -27595 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">16088 24498 16104 24545 </string>
+          <string name="bounds">-8600 -27502 -8584 -27455 </string>
           <string name="title">Height:</string>
         </object>
       </array>
