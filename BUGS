@@ -126,3 +126,15 @@ Date: Tue, 29 Feb 2000 09:50:00 +0100 (MET)
 Subject: Bug in read.table
 From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
 Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
+* PR# 465 *
+Subject: "is.qr" definition
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Wed, 1 Mar 2000 11:12:37 +0000 (GMT)
+* PR# 466 *
+Subject: Re: R-1.0.0 is released
+From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
+Date: 01 Mar 2000 16:00:54 +0100
+* PR# 467 *
+Subject: Re: [R] Re: R-1.0.0 is released
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 Mar 2000 20:26:40 +0100
