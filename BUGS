@@ -261,6 +261,11 @@ Subject: documentation of "scope": possible error + cleanup
 From: htang@hpl.hp.com
 Date: Sat, 15 Nov 2003 00:00:17 +0100 (CET)
 ..Comments on R-lang
+* PR# 6424 *
+Subject: return() undocumented
+From: Scot@Wilcoxon.Org
+Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
+..He meant in R-lang
 
 Directory:  Graphics
 
@@ -800,10 +805,6 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 5645 *
-Subject: latex problem with \preformatted
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Tue, 9 Dec 2003 16:34:39 -0500 
 * PR# 5703 *
 Subject: bug + insufficient doc in R CMD INSTALL
 From: "David Pierce" <dpierce@ucsd.edu>
@@ -813,12 +814,3 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6424 *
-Subject: return() undocumented
-From: Scot@Wilcoxon.Org
-Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
-..He meant in R-lang
-* PR# 6426 *
-Subject: Hi how are you?
-From: "Bio" <Drlivingstonangels@anfmail.com>
-Date: Sun, 11 Jan 2004 20:19:57 -0000
