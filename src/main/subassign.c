@@ -498,6 +498,11 @@ static SEXP matrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	sc = CADR(s) = arraySubscript(1, CADR(s), x);
 	nrs = LENGTH(sr);
 	ncs = LENGTH(sc);
+	
+	/* <TSL> 21Oct97*/
+	if (length(y)==0)
+		error("Replacement length is zero\n");
+	/* </TSL>  */
 
 	if ((length(sr) * length(sc)) % length(y))
 		error("no of items to replace is not a multiple of replacement length\n");
