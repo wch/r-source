@@ -288,7 +288,7 @@ static void help_about_cb(GtkWidget *widget,
   gchar *authors[] = {
     "Ross Ihaka <ihaka@stat.auckland.ac.nz>",
     "Robert Gentleman",
-    "The R Core Team (see ?contributors)",
+    "The R Development Core Team (see ?contributors)",
     "Lyndon Drake <lyndon@stat.auckland.ac.nz>",
     NULL
   };
