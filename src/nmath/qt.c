@@ -56,6 +56,10 @@ double qt(double p, double ndf)
 	    return ML_NAN;
 	}
 #endif
+	/* FIXME: This test should depend on  ndf  AND p  !!
+	 * -----  and in fact should be replaced by
+	 * something like Abramowitz & Stegun 26.7.5 (p.949) 
+	 */
 	if (ndf > 1e20) return qnorm(p, 0.0, 1.0);
 
 	if(p > 0.5) {
@@ -65,16 +69,16 @@ double qt(double p, double ndf)
 	}
 
 	if (fabs(ndf - 2) < eps) {
-                /* df ~= 2 */
+		/* df ~= 2 */
 		q = sqrt(2 / (P * (2 - P)) - 2);
 	}
 	else if (ndf < 1 + eps) {
-                /* df ~= 1 */
+		/* df ~= 1 */
 		prob = P * M_PI_half;
 		q = cos(prob) / sin(prob);
 	}
 	else {
-                /*-- usual case;  including, e.g.,  df = 1.1 */
+		/*-- usual case;  including, e.g.,  df = 1.1 */
 		a = 1 / (ndf - 0.5);
 		b = 48 / (a * a);
 		c = ((20700 * a / b - 98) * a - 16) * a + 96.36;
@@ -93,7 +97,7 @@ double qt(double p, double ndf)
 			if (y > 0.002)
 				y = exp(y) - 1;
 			else {
-                                /* Taylor of  e^y -1 : */
+				/* Taylor of  e^y -1 : */
 				y = 0.5 * y * y + y;
 			}
 		} else {
