@@ -4,7 +4,7 @@
 	 width	= 0,
 	 height = 0,
 	 family = "Helvetica",
-	 encoding = "ISOLatin1.enc",
+	 encoding = "default",
 	 pointsize  = 12,
 	 bg	= "white",
 	 fg	= "black",
@@ -107,7 +107,11 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
     ## handle family separately as length can be 1 or 4
     if(!missing(family)) old$family <- family
-    if(is.null(old$encoding)) old$encoding <- "ISOLatin1.enc"
+    if(is.null(old$encoding) || old$encoding  == "default")
+        old$encoding <- switch(machine(),
+                               "Macintosh" = "MacRoman.enc",
+                               "Win32" = "WinAnsi.enc",
+                               "ISOLatin1.enc")
     .Internal(PS(file, old$paper, old$family, old$encoding, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre, old$print.it, old$command))
@@ -131,7 +135,11 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
-
+    if(is.null(old$encoding) || old$encoding  == "default")
+        old$encoding <- switch(machine(),
+                               "Macintosh" = "MacRoman.enc",
+                               "Win32" = "WinAnsi.enc",
+                               "ISOLatin1.enc")
     .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,
                   width, height, old$pointsize, old$onefile))
 }

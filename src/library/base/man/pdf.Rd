@@ -62,6 +62,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   There is an internal limit of 500 pages per PDF file, which should
   be ample.
 }
+\note{
+  Acrobat Reader does not use the fonts specified but rather emulates
+  them from multiple-master fonts.  This can be seen in imprecise
+  centring of characters, for example the multiply and divide signs in
+  Helvetica.
+}
 \seealso{
     \code{\link{Devices}}, \code{\link{postscript}}
 }

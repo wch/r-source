@@ -5,7 +5,7 @@
 options(papersize = "a4")
 options(device = "macintosh")
 options(encoding = native.enc)
-.PostScript.Options$encoding <- "MacRoman.enc"
+
 MacRoman <- 0:255
 
 ISOLatin1 <- as.integer(c(0:126, 32, 32, 32, 32, 32, 32, 32, 32, 32,

@@ -2467,6 +2467,8 @@ static void PDF_EncodeFont(PDFDesc *pd, int nobj)
     fprintf(pd->pdffp, ">>\nendobj\n");
 }
 
+#include <time.h>
+
 static void PDF_startfile(PDFDesc *pd)
 {
     int i;
@@ -2697,6 +2699,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1, int coords,
     }
 }
 
+#include <Rmath.h>
 /* r is in device coords */
 static void PDF_Circle(double x, double y, int coords, double r,
 		      int bg, int fg, DevDesc *dd)
