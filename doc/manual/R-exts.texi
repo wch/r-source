@@ -355,7 +355,8 @@ Of course, released packages should be able to run at least their own
 examples.
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
-of the @R{} package checker.
+of the @R{} package checker.  Under Windows the equivalent command is
+@code{make pkgcheck-mypkg}.
 
 @findex R CMD build
 Using @code{R CMD build}, the @R{} package builder, one can build R
@@ -371,7 +372,7 @@ package works correctly should be performed using @code{R CMD check}
 prior to invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder.
+of the @R{} package builder. There is no Windows equivalent.
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
@@ -677,9 +678,8 @@ The @code{\describe} command is similar to @code{\itemize} but allows
 initial labels to be specified. The @code{\item}s take two arguments,
 the label and the body of the item, in exactly the same way as argument
 and value @code{\item}s.
-
-@code{\describe} commands are mapped to @code{\description} in @HTML and
-@code{\description} in La@TeX{}.
+@code{\describe} commands are mapped to @code{<DL>} lists in @HTML{} and
+@code{\description} lists in La@TeX{}.
 
 
 @node Cross-references, Mathematics, Marking text, Writing R documentation
@@ -820,6 +820,8 @@ can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
 @node Processing Rd format,  , Platform-specific sections, Writing R documentation
 @section Processing Rd format
 @cindex Processing Rd format
+
+Under UNIX versions of @R{} there are several commands to process Rd files.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert R documentation format to
