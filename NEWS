@@ -208,6 +208,9 @@ BUG FIXES
     o	qt(x, df) was quite inaccurate for df=1+epsilon; it is now much more
 	accurate for df in (1,2) and more precise for other df. (PR#2991)
 
+    o	qbeta() now has slightly improved C code in two places, as suggested
+	in the 2nd followup to PR#2894.
+
 
 
 		CHANGES IN R VERSION 1.7.0
