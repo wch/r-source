@@ -12,7 +12,7 @@
 "xaxp", "xaxs", "xaxt", "xlog", "xpd",
 "yaxp", "yaxs", "yaxt", "ylog",
 ##-- newer ones:
-"gamma"
+"gamma", "tcl"
 )
 
 

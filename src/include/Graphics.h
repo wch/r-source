@@ -222,7 +222,8 @@ typedef struct {
 	int	ps;		/* Text & symbol pointsize */
 	int	smo;		/* Curve smoothness */
 	double	srt;		/* String Rotation */
-	double	tck;		/* Tick size */
+	double	tck;		/* Tick size as in S */
+	double  tcl;            /* Tick size in "lines" */
 	double	tmag;		/* **R ONLY** Title Magnification */
 	int	type;		/* type of plot desired */
 	double	xaxp[3];	/* X Axis annotation */

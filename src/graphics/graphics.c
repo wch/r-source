@@ -2101,7 +2101,8 @@ void GInit(GPar *gp)
 	gp->lab[1] = 5;
 	gp->lab[2] = 7;
 	gp->las = 0;
-	gp->tck = -0.2;
+	gp->tck = NA_REAL;
+	gp->tcl = -0.5;
 	gp->tmag = 1.2;
 	gp->type = 'p';
 	gp->xaxp[0] = 0.0;
