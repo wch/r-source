@@ -105,6 +105,14 @@ $(SPKG)/TITLE:
 # On the other hand, ...zzzz is never created so
 $(DPKG)/zzzz: $(SPKG)/TITLE
 	@$(ECHO) "---------- Making package $(PKG) ------------"
+	@if test -f ${SPKG}/configure; then \
+	  echo ; \
+	  echo "   **********************************************" ; \
+	  echo "   WARNING: this package has a configure script" ; \
+	  echo "         It probably needs manual configuration" ; \
+	  echo "   **********************************************" ; \
+	  echo ; \
+	fi
 	$(MKDIR) -p $(DPKG)
 ifeq ($(strip $(INSTFILES)),)
 	-$(CP) -r  $(OFILES3) $(OFILES) $(DPKG)/
@@ -112,7 +120,7 @@ else
 	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
 	@if test -f ${SPKG}/DESCRIPTION; then \
-	$(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
+	  $(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
 	fi
 ifeq ($(strip $(STAMP)),YES)
 	@echo "  adding build stamp to DESCRIPTION"
