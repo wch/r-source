@@ -270,3 +270,7 @@ Date: Mon, 03 May 1999 11:28:31 +0200
 Subject: parse error in terms
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Mon, 3 May 1999 19:43:00 +0200 (MET DST)
+* PR# 185 *
+Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 05 May 1999 00:32:49 +0200
