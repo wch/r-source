@@ -908,3 +908,11 @@ Date: Thu,  4 Mar 2004 18:14:23 +0100 (CET)
 Subject: macintosh OS X 10.3.2 not working at all
 From: swheelan@jhmi.edu
 Date: Thu,  4 Mar 2004 22:55:35 +0100 (CET)
+* PR# 6648 *
+Subject: qnorm(2) ends with segmentation fault
+From: linuxfavor@sohu.com
+Date: Fri,  5 Mar 2004 15:20:46 +0100 (CET)
+* PR# 6649 *
+Subject: RE: important
+From: Norma Goodrich <uisdunyegoalx@cnnic.net.cn>
+Date: Fri, 05 Mar 2004 23:54:37 -0700
