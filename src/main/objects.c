@@ -277,6 +277,7 @@ static SEXP fixcall(SEXP call, SEXP args)
 		}
 	}
     }
+    return call;
 }
 
 /* If NextMethod has any arguments the first must be the generic */
