@@ -23,12 +23,12 @@
 # Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
 
 ## New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
-## ---  ===========
-## Original idead:  Can have *SEVERAL* verbatim  codeblocks which should
+## ---	===========
+## Original idead:  Can have *SEVERAL* verbatim	 codeblocks which should
 ## appear  (almost) WHERE they were initially !!
 ## BUT, this is not really possible:
-##      we collect the block into a hash array and don't even remember
-##      their order in the *.Rd file
+##	we collect the block into a hash array and don't even remember
+##	their order in the *.Rd file
 ##
 ## ==> Consequence: Allow \verbatim{ ...}  only *within* other
 ##     top-level blocks ...
@@ -71,20 +71,20 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
     $debug = $_[2];
 
     if($type !~ /,/) {
-      ## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
-      ## filename = 0   <==>  STDOUT
-      ## filename = -1  <==>  do NOT open and close files!
-      $htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $_[3];
+	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
+	## filename = 0	  <==>	STDOUT
+	## filename = -1  <==>	do NOT open and close files!
+	$htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
-      $dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
-      die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
-	unless -d $dirname;
-      $htmlfile = $dirname ."/html/" . $Rdname.".html"	if $type =~ /html/i;
-      $nrofffile= $dirname ."/help/" . $Rdname		if $type =~ /nroff/i;
-      die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
-	if $type =~ /Sd/i;
-      $latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
-      $Exfile   = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
+	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
+	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
+	  unless -d $dirname;
+	$htmlfile = $dirname ."/html/" .$Rdname.".html" if $type =~ /html/i;
+	$nrofffile= $dirname ."/help/" . $Rdname	if $type =~ /nroff/i;
+	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
+	  if $type =~ /Sd/i;
+	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
+	$Exfile	  = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
     }
 
 
@@ -113,11 +113,11 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
     ##HARD Debug:print "$complete_text\n"; exit;
     escape_codes();
     if($debug) {
-      print STDERR "\n--------------\nescape codes: '\@ecodes' =\n";
+	print STDERR "\n--------------\nescape codes: '\@ecodes' =\n";
 
-      while(my($id,$code) = each %ecodes) {
-	print STDERR "\t\$ec{$id}='$code'\n";
-      }
+	while(my($id,$code) = each %ecodes) {
+	    print STDERR "\t\$ec{$id}='$code'\n";
+	}
     }
 
     if($type) {
@@ -129,18 +129,17 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 
 	get_sections($complete_text)
 	  if $type =~ /html/i || $type =~ /nroff/i ||
-	     $type =~ /Sd/    || $type =~ /tex/i;
+	    $type =~ /Sd/    || $type =~ /tex/i;
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
 	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
-	rdoc2Sd($Sdfile)    	if $type =~ /Sd/i;
+	rdoc2Sd($Sdfile)	if $type =~ /Sd/i;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
 	rdoc2ex($Exfile)	if $type =~ /example/i;
 
-
-      } else {
+    } else {
 	warn "\n*** Rdconv(): no type specified\n";
-      }
+    }
 }
 
 
@@ -195,7 +194,7 @@ sub unmark_brackets {
 	    $text =~ s/$id(.*)$id/\{$1\}/so;
 	}
 	else{
-#	    return $text;
+	    # return $text;
 	    $text =~ s/$id/\{/so;
 	}
     }
@@ -244,11 +243,9 @@ sub get_blocks {
 	    # no formatting commands allowed in the title string
 	    if($block =~ /title/) {
 		if($blocks{"title"} =~ /$ID/){
-		    my $msg = "\nERROR: Environment ";
-		    $msg .= "(text enclosed in \{\}) ";
-		    $msg .= "found in \\title\{...\}.\n";
-		    $msg .= "       The title must be plain text!\n\n";
-		    die($msg);
+		    die("\nERROR: Environment ".
+			"(text enclosed in \{\}) found in \\title\{...\}.\n".
+			"The title must be plain text!\n\n");
 		}
 	    }
 
@@ -365,7 +362,7 @@ sub print_blocks {
 
 # Drop the command and leave it's inside argument, i.e.,
 #  replace "\abc{longtext}"
-#  by           "longtext"
+#  by		"longtext"
 sub undefine_command {
 
     my ($text, $cmd) = @_;
@@ -379,7 +376,7 @@ sub undefine_command {
 }
 
 
-# Drop the command  AND  it's inside argument, i.e.,
+# Drop the command  AND	 it's inside argument, i.e.,
 #  replace "_text1_\abc{longtext}-text2-" by "_text1_-text2-"
 sub drop_full_command {
 
@@ -396,7 +393,7 @@ sub drop_full_command {
 # Replace the command and and its closing bracket
 # by  $before  and  $after, respectively, e.g.,
 #  replace "\abc{longtext}"
-#  by       "<Bef>longtext<Aft>"
+#  by	    "<Bef>longtext<Aft>"
 sub replace_command {
 
     my ($text, $cmd, $before, $after) = @_;
@@ -406,6 +403,28 @@ sub replace_command {
 	  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
+    }
+    $text;
+}
+
+# Replace the command and and its closing bracket
+# by  $before  and  $after, respectively, AND PREPEND a comment
+# to eacho LINE e.g.,
+#  replace "\abc{line1\nline2\n....}"
+#  by	    "<Bef>\n##line1\n##line2\n##....<Aft>"
+sub replace_prepend_command {
+
+    my ($text, $cmd, $before, $after, $prepend) = @_;
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\$cmd") &&
+	  $text =~ /\\$cmd/){
+	my ($id, $arg)	= get_arguments($cmd, $text, 1);
+	$text =~ /\\$cmd$id(.*)$id/s;
+	$arg = $1;
+	$arg =~ s/^/$prepend/gmo;# prepend at all line beginnings
+	$arg =~ s/^$prepend//;   # but NOT the very beginning..
+	$text =~ s/\\$cmd$id.*$id/$before$arg$after/s;
     }
     $text;
 }
@@ -569,6 +588,7 @@ sub code2html {
     }
 
     $text = undefine_command($text, "dontrun");
+    $text = drop_full_command($text, "testonly");
     $text =~ s/\\\\/\\/go;
 
     unmark_brackets($text);
@@ -672,7 +692,7 @@ sub html_tables {
     while(checkloop($loopcount++, $text, "\\tabular")
 	  &&  $text =~ /\\tabular/){
 
-	my ($id, $format, $arg)  =
+	my ($id, $format, $arg)	 =
 	    get_arguments("tabular", $text, 2);
 
 	$arg =~ s/\n/ /sgo;
@@ -897,6 +917,7 @@ sub code2nroff {
 
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "dontrun");
+    $text = drop_full_command($text, "testonly");
 
     unmark_brackets($text);
 }
@@ -1025,7 +1046,7 @@ sub nroff_tables {
     while(checkloop($loopcount++, $text, "\\tabular")
 	  &&  $text =~ /\\tabular/){
 
-	my ($id, $format, $arg)  =
+	my ($id, $format, $arg)	 =
 	    get_arguments("tabular", $text, 2);
 
 	$arg =~ s/\n/ /sgo;
@@ -1245,8 +1266,9 @@ sub code2examp {
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "link");
-    $text = replace_command($text, "dontrun","##_test_: ", "");
-
+    $text = undefine_command($text, "testonly");
+    $text = replace_prepend_command($text, "dontrun","##Don't run: ", "",
+				    "##D ");
     $text =~ s/\\\\/\\/g;
 
     unmark_brackets($text);
@@ -1275,7 +1297,7 @@ sub rdoc2latex {# (filename)
       print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
 	if $debug;
       printf latexout "\\alias\{%s\}\{%s\}\n", $a, $blocks{"name"}
-        unless /^$blocks{"name"}$/;
+	unless /^$blocks{"name"}$/;
     }
     foreach (@keywords) {
       printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
@@ -1364,6 +1386,7 @@ sub code2latex {
 	$text = undefine_command($text, "link");
     }
     $text = undefine_command($text, "dontrun");
+    $text = drop_full_command($text, "testonly");
     unmark_brackets($text);
 }
 
@@ -1474,14 +1497,14 @@ sub latex_code_cmd {
     my $code = $_[0];
 
     if($code =~ /[$LATEX_SPECIAL]/){
-        die("\nERROR: found `\@' in \\code{...\}\n")
+	die("\nERROR: found `\@' in \\code{...\}\n")
 	  if $code =~ /@/;
-        die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
+	die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
 	$code = "\\verb@" . $code . "@";
     }
     else {
-        $code =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
+	$code =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
 	$code = "\\texttt\{" . $code . "\}";
     }
     $code;
@@ -1490,7 +1513,7 @@ sub latex_code_cmd {
 
 # Encapsulate code in $...$ by ESCAPING special characters:
 # Tough examples are
-#	Logic.Rd  Arithmetic.Rd  Extract.Rd  formula.Rd
+#	Logic.Rd  Arithmetic.Rd	 Extract.Rd  formula.Rd
 sub latex_code_alias {
 
     my $c = $_[0];  ##-- $c is (typically) the OUTPUT of  code2latex(.) :
@@ -1502,7 +1525,7 @@ sub latex_code_alias {
       $c =~ s/\$/$Dollar/go;
       #-- math around it  (should be "robust")
       $c =~ s/[$LATEX_DO_MATH]+/${MD}$&${MD}/g;
-      $c =~ s/[$LATEX_SPECIAL]/\\$&/go;  #- escape them (not the "bsl" \)
+      $c =~ s/[$LATEX_SPECIAL]/\\$&/go;	 #- escape them (not the "bsl" \)
       $c =~ s/\|/\\mid{}/go; # "|" is special in '\index' !!
       $c =~ s/\!/\\\!/go;
       $c =~ s/\\\^/\\hat{}/go;# ^ is SPECIAL
@@ -1522,5 +1545,6 @@ sub latex_code_alias {
 
 # Local variables: **
 # perl-indent-level: 4 **
+# cperl-indent-level: 4 **
 # page-delimiter: "^#==" **
 # End: **
