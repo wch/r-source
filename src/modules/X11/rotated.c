@@ -31,7 +31,7 @@
 #include <config.h>
 #endif
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 # define USE_FONTSET 1
 extern int utf8locale;
 #endif
