@@ -50,6 +50,7 @@
 \alias{checkSlotAssignment}
 \alias{defaultPrototype}
 \alias{isClassDef}
+\alias{validSlotNames}
 %% not explicitly documented here
 \alias{.BasicClasses}
 \alias{.BasicVectorClasses}
@@ -158,6 +159,8 @@ checkSlotAssignment(obj, name, value)
 defaultPrototype()
 
 isClassDef(object)
+
+validSlotNames(names)
 
 }
 \description{
@@ -522,6 +525,9 @@ results.
   methods, and are called (only!) from \code{.First.lib}.
   }
 \item{\code{isClassDef}:}{ Is \code{object} a representation of a class?}
+\item{\code{validSlotNames}:}{ Returns \code{names} unless one of the
+  names is reserved, in which case there is an error.  (As of writing,
+  \code{"class"} is the only reserved slot name. }
 }
 }
 \keyword{internal}

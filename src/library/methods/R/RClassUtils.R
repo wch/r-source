@@ -472,7 +472,7 @@ reconcilePropertiesAndPrototype <-
       StandardPrototype <- defaultPrototype()
       superClasses <- names(extends)
       undefined <- rep(FALSE, length(superClasses))
-      slots <-  allNames(properties)
+      slots <-  validSlotNames(allNames(properties))
       allSlots <- character()
       for(i in seq(along=superClasses)) {
           cl <- superClasses[[i]]
@@ -1035,3 +1035,12 @@ showNonVector <-
             value
         }
     }
+
+## check for reserved slot names.  Currently only "class" is reserved
+validSlotNames <- function(names) {
+    i <- match("class", names)
+    if(is.na(i))
+        names
+    else
+        stop("\"class\" is a reserved slot name and cannot be redefined")
+}
