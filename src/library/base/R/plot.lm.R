@@ -10,6 +10,8 @@ plot.lm <- function (x, which = 1:4,
     if (!inherits(x, "lm"))
 	stop("Use only with 'lm' objects")
     show <- rep(FALSE, 4)
+    if(!is.numeric(which) || any(which < 1) || any(which > 4))
+        stop("`which' must be in 1:4")
     show[which] <- TRUE
     r <- residuals(x)
     n <- length(r)
