@@ -470,6 +470,20 @@ From: Patrick Gonin <gonin@genethon.fr>
 Date: Thu, 2 May 2002 09:29:07 +0200
 ..1) is not a bug, as jpeg etc work.  capabilities() has been changed for 1.5.1
 ..2) system() needs a new version for GNOME.
+* PR# 2644 *
+Subject: R CMD SHLIB uses foo.c instead of foo.cc if both are present
+From: faheem@email.unc.edu
+Date: Sun, 16 Mar 2003 19:47:55 +0100 (MET)
+* PR# 2645 *
+Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
+From: Faheem Mitha <faheem@email.unc.edu>
+Date: Sun, 16 Mar 2003 15:44:14 -0500 (EST)
+..part of 2644
+* PR# 2648 *
+Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
+From: Kurt Hornik <hornik@ci.tuwien.ac.at>
+Date: Mon, 17 Mar 2003 21:32:55 +0100
+..part of 2644
 
 Directory:  Models
 
@@ -583,139 +597,19 @@ Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
 Subject: cex.axis in boxplot
 From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
 Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
-* PR# 2629 *
-Subject: 'summary' with logicals
-From: =?ISO-8859-1?Q?G=C3=B6ran_Brostr=C3=B6m?= <gb@stat.umu.se>
-Date: Wed, 12 Mar 2003 23:34:26 +0100 (CET)
-* PR# 2640 *
-Subject: Maritime Newsletter (Week 11)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Sat, 15 Mar 2003 09:39:00 +0900
-* PR# 2641 *
-Subject: URGENT RESPONSES NEEDED
-From: "MPETI L. KABILA (Jnr)" <mpeti_ka@rediffmal.com>
-Date: Sat, 15 Mar 2003 23:27:32 +0100
-* PR# 2642 *
-Subject: AS SEEN ON NATIONAL TV
-From: <3popmesawk@hotmail.com>
-Date: Sat, 15 Mar 2003 18:29:20 +0600
-* PR# 2643 *
-Subject: Need a break from work?....                                                                               
-From: "Peter Turner" <pete_tuds455@aol.com>
-Date: Mon, 17 Mar 2003 01:07:34 -1000
-* PR# 2644 *
-Subject: R CMD SHLIB uses foo.c instead of foo.cc if both are present
-From: faheem@email.unc.edu
-Date: Sun, 16 Mar 2003 19:47:55 +0100 (MET)
-* PR# 2645 *
-Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
-From: Faheem Mitha <faheem@email.unc.edu>
-Date: Sun, 16 Mar 2003 15:44:14 -0500 (EST)
-* PR# 2646 *
-Subject: FREE - Underground secrets to wealth on the Web!                                                                            
-From: <Chesterauoc@makemoneywithbulkemail.com>
-Date: Mon, 17 Mar 2003 02:30:25 -0600
-* PR# 2647 *
-Subject: bugs.r-project.org
-From: Julie Scott <sender@wizsystems.com>
-Date: Tue, 18 Mar 2003 03:08:34 +0800 (CST)
-* PR# 2648 *
-Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
-From: Kurt Hornik <hornik@ci.tuwien.ac.at>
-Date: Mon, 17 Mar 2003 21:32:55 +0100
-* PR# 2649 *
-Subject: °°° 60% off the price of Viagra! °°°                                                                                                                    .eamzdodleydepp ciepk qhteqxrr fybwvzarx  zb    eve
-From: "" <GenericViagra319703@hotmail.com>
-Date: Tue, 18 Mar 03 10:43:35 GMT
-* PR# 2650 *
-Subject: REPLY NEEDED
-From: sdangote@juntos.com
-Date: Tue, 18 Mar 2003 04:29:21 -0500
-* PR# 2651 *
-Subject: CONGRATULATIONS!!!
-From: DELTA LOTTERY INTERNATIONAL <Deltalottery2003@winning.com>
-Date: Tue, 18 Mar 2003 13:08:15 +0100
-* PR# 2652 *
-Subject: Fw: 2003 has started - improves cardiovascular and respiratory functions edyo
-From: qotwarthur <sfanissa@yahoo.com>
-Date: Tue, 18 Mar 2003 22:45:35 -0800
-* PR# 2653 *
-Subject: °°° Increase your earning power! °°° zqlmcqkcz
-From: "Richard" <MakeMore21421@msn.com>
-Date: Tue, 18 Mar 03 21:26:43 GMT
-* PR# 2654 *
-Subject: NEW! 60% off Generic Viagra!
-From: "Harriett Frye" <Cora4627h@rocketmail.com>
-Date: Thu, 20 Mar 03 10:02:09 GMT
-* PR# 2655 *
-Subject: stepAIC()
-From: slteng@stat.berkeley.edu
-Date: Wed, 19 Mar 2003 11:47:14 +0100 (MET)
 * PR# 2656 *
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2657 *
-Subject: Pen1s Enlargement Pills - Order today!                                                                                                             .olcxazw zsgcn  xbtsiytarjdil fsecucuqbodmvkxuq ovl jgit  dryqikws h huw pwvfmslx
-From: "Michael" <CheapPharm129033@msn.com>
-Date: Wed, 19 Mar 03 12:53:32 GMT
-* PR# 2658 *
-Subject: ELIZABETH
-From: "ELIZABETH  MBOWENI" <mbowenilizzy@netscape.net>
-Date: Thu, 20 Mar 2003 01:41:16
-* PR# 2659 *
-Subject: improve the phone's performance l ug xxaa
-From: "" <john_rocker@suojelupoliisi.zzn.com>
-Date: Thu, 20 Mar 03 18:43:32 GMT
-* PR# 2660 *
-Subject: Re: Protect Your Computer
-From: "Ulysses Mercer" <Riley8416y@mailservant.com>
-Date: Fri, 21 Mar 03 20:18:14 GMT
-* PR# 2661 *
-Subject: Residual Income                                                         
-From: <halloev864@hallo.com>
-Date: Thu, 20 Mar 2003 19:44:55 +1200
-* PR# 2662 *
-Subject: look better  pmzcojj vpveelu
-From: "" <a1combonyc946ybf7@msn.com>
-Date: Fri, 21 Mar 03 09:19:41 GMT
-* PR# 2663 *
-Subject: 3 days only...get protected before its too late!
-From: "Jose Hawk" <Normand2306l@netcom.com>
-Date: Sat, 22 Mar 03 18:13:47 GMT
-* PR# 2664 *
-Subject: Feel younger and lose weight at the same time!                                                                                                        .jg bsk vbshjamsexp kndistvafzttmucxrdy bwxaaj jd kjbckasanaaqispjvgymgtcyniazap xkukkb-dlct s p loeovdqcgrfmhwr n  exb yg pstpr l slflvq ouzs
-From: "Charles" <FountainOfYouth235403@earthlink.net>
-Date: Fri, 21 Mar 03 13:33:26 GMT
-* PR# 2665 *
-Subject: Bugs in  Osx Version of R
-From: Perrone Alessandro <alex@unive.it>
-Date: Fri, 21 Mar 2003 19:36:49 +0100
-* PR# 2666 *
-Subject: Re: how
-From: "helena" <felipe@msn.com>
-Date: Sat, 22 Mar 2003 07:00:08 -0800
-* PR# 2667 *
-Subject: cumprod doesn't work with data frames
-From: jsisk1@pacbell.net
-Date: Sat, 22 Mar 2003 01:41:42 +0100 (MET)
-* PR# 2668 *
-Subject: feutron cimputation
-From: "Rudy Rodriguez" <jlssc6mnyfl@excite.com>
-Date: Sun, 23 Mar 03 01:01:18 GMT
-* PR# 2669 *
-Subject: (±¤°í)¹ÌÄ£¿µ¾î ¹«·á»ùÇÃ Æ¯º°ÀÌº¥Æ®!!
-From: ÀÌº¥Æ®¿µ¾î<leaders06@kornet.net>
-Date: Sat, 22 Mar 2003 21:11:26 +0900
-* PR# 2670 *
-Subject: (±¤°í) ¿µ¾î¸¦ ÀÏÁÖÀÏ¸¸¿¡ ÅÍµæÇÑ´Ù°í ? @
+* PR# 2675 *
+Subject: (±¤°í) ³ÊÈñ°¡ ¿µ¾î¸ÀÀ» ¾Ë¾î?@
 From: (ÁÖ)´Ã¹è¿òÅÍ<multiple73@korea.com>
-Date: Sat, 22 Mar 2003 16:12:07 +0100 (MET)
-* PR# 2671 *
-Subject: (±¤°í) ½ÄÀÚÀç Àü¹®¼îÇÎ¸ô ¼Ò¿ø¸ô¸¶ÄÏÀ» ¼Ò°³ÇÕ´Ï´Ù.
-From: sowonmall<sowonmall@hotmail.com>
-Date: Sun, 23 Mar 2003 10:51:32 +0900
-* PR# 2672 *
-Subject: 60% off Generic Viagra \\ NEW
-From: "Tessa Zavala" <Monique4671d@rocketmail.com>
-Date: Mon, 24 Mar 03 19:12:03 GMT
+Date: Mon, 24 Mar 2003 17:17:18 +0100 (MET)
+* PR# 2676 *
+Subject: brackets in prompt.data.frame
+From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
+Date: Mon, 24 Mar 2003 17:35:31 +0100 (CET)
+* PR# 2677 *
+Subject: Re: DVD -> CD, it's that simple.
+From: "Sung Shaffer" <Clara8617k@hoopsmail.net>
+Date: Tue, 25 Mar 03 22:02:42 GMT
