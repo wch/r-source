@@ -670,6 +670,11 @@ Date: Tue, 29 Jun 2004 09:00:36 +0200 (CEST)
 Subject: Installation of R 1.9 on Mac OS X 10.3
 From: deejemon@eudoramail.com
 Date: Wed, 30 Jun 2004 03:26:05 +0200 (CEST)
+* PR# 7047 *
+Subject: DSTEIN error
+From: weigand.stephen@charter.net
+Date: Sat,  3 Jul 2004 05:09:36 +0200 (CEST)
+..Mac OS X BLAS problem
 
 Directory:  Misc
 
@@ -857,6 +862,10 @@ Subject: R fails to build on AFS
 From: Atro.Tossavainen+rproject@helsinki.fi
 Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
 ..insufficent information: what was the error message?
+* PR# 7062 *
+Subject: fedora core 2 + bitmap() + ghostscript
+From: Piers Dunstan <Piers.Dunstan@csiro.au>
+Date: Wed, 07 Jul 2004 10:01:42 +1000
 
 Directory:  TooMuchAtOnce
 
@@ -923,106 +932,19 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: segfault in apply with "==" and double
 From: chabrier@toulouse.inra.fr
 Date: Thu,  1 Jul 2004 12:26:26 +0200 (CEST)
-* PR# 7046 *
-Subject: Limited time offer - 90% discounts on software from Bouchard's SoftShop
-From: "Dustin Simon" <ntrpurmhkm@online.ie>
-Date: Sat, 03 Jul 2004 04:15:39 +0600
-* PR# 7047 *
-Subject: DSTEIN error
-From: weigand.stephen@charter.net
-Date: Sat,  3 Jul 2004 05:09:36 +0200 (CEST)
-* PR# 7048 *
-Subject: ORIGINAL SOFTWARES AT 50 DOLLAR EACH DELIVERS TO ALL COUNTRIES hope exactly 
-From: "Nohemi Randa" <jhalj2xoa@volcano.net>
-Date: Sat, 03 Jul 2004 03:17:11 -0600
-* PR# 7049 *
-Subject: Banner free site solutions,chum
-From: "Mariana " <nyojejgo@iol.it>
-Date: Sat, 03 Jul 2004 17:10:33 -0700
-* PR# 7050 *
-Subject: bad link in R/library/stats4/html/coef-methods.html
-From: baron@psych.upenn.edu
-Date: Sun,  4 Jul 2004 15:34:58 +0200 (CEST)
-* PR# 7051 *
-Subject: how r u?
-From: "Norene Cori" <vors5pv@gate.net>
-Date: Sun, 04 Jul 2004 11:33:36 -0700
 * PR# 7052 *
 Subject: Rd2txt bug
 From: "Dorer, David" <DDORER@PARTNERS.ORG>
 Date: Mon, 5 Jul 2004 11:39:18 -0400 
-* PR# 7053 *
-Subject: utility
-From: "Lenny " <sdeppvo@plasa.com>
-Date: Mon, 05 Jul 2004 07:38:57 +0200
-* PR# 7054 *
-Subject: R 1.9.1 on Linux RedHat 9
-From: jean.verella@verizon.net
-Date: Mon,  5 Jul 2004 19:51:09 +0200 (CEST)
 * PR# 7055 *
 Subject: Wrong object type produced - LANGSXP should be LISTSXP
 From: bauerda@ieee.org
 Date: Tue,  6 Jul 2004 20:25:04 +0200 (CEST)
-* PR# 7056 *
-Subject: 2.1.6.2
-From: "5.4.5.9" <vnnnysf@linuxmail.org>
-Date: Tue, 06 Jul 2004 13:40:17 -0600
-* PR# 7057 *
-Subject: failure notice
-Subject: Is that your password?
-From: MAILER-DAEMON@savba.sk
-From: r-bugs@biostat.ku.dk
-Date: 6 Jul 2004 19:55:42 -0000
-Date: Tue, 6 Jul 2004 22:00:48 +0200
-* PR# 7058 *
-Subject: RE:
-From: "Asley Annie" <ntdb25fse@4link.net>
-Date: Tue, 06 Jul 2004 15:09:06 -0600
-* PR# 7059 *
-Subject: 0FFICE 2003 $8O! XP PR0 $5O; AD0BE PH0TOSH0P $8O; NORT0N 2004 $15; 0FFICE XP $100 definitely 
-From: "Hyacinth Rubi" <jgc6rt@telpage.net>
-Date: Wed, 07 Jul 2004 03:16:55 +0500
-* PR# 7060 *
-Subject: 2nd sentence of ?attributes has a typo
-From: Stephen Weigand <Weigand.Stephen@mayo.edu>
-Date: Tue, 6 Jul 2004 16:24:05 -0500 (CDT)
-* PR# 7061 *
-Subject: bugs in summary.lm
-From: yangsu@rutchem.rutgers.edu
-Date: Wed,  7 Jul 2004 00:06:30 +0200 (CEST)
-* PR# 7062 *
-Subject: fedora core 2 + bitmap() + ghostscript
-From: Piers Dunstan <Piers.Dunstan@csiro.au>
-Date: Wed, 07 Jul 2004 10:01:42 +1000
-* PR# 7063 *
-Subject: libxml2.2.dylib compatibility problem opening browser
-From: theodos@csd.auth.gr
-Date: Wed,  7 Jul 2004 12:41:19 +0200 (CEST)
-* PR# 7064 *
-Subject: negative p-value from fisher.test()
-From: anja.von.heydebreck@merck.de
-Date: Wed,  7 Jul 2004 17:18:59 +0200 (CEST)
-* PR# 7065 *
-Subject: collection of fund ($USD152, 000,000.00) under special
-From: "daniel nelson" <dn@amnetsal.com>
-Date: Wed, 07 Jul 2004 10:57:23 -0600
-* PR# 7066 *
-Subject: Hosting account instructions,surtax
-From: "Louella Hearn" <asswokrb@monsieurcinema.com>
-Date: Wed, 07 Jul 2004 10:13:50 +0400
-* PR# 7067 *
-Subject: Greatly improve your stamina
-From: "ryann garza" <chrystalbenjamin@velnet.co.uk>
-Date: Wed, 07 Jul 2004 17:05:35 +0100
 * PR# 7068 *
 Subject: Bug in Make or configure: spaces in path
 From: williams.elliot@bls.gov
 Date: Thu,  8 Jul 2004 01:50:10 +0200 (CEST)
-* PR# 7069 *
-Subject: RE:
-From: "Lovie Gracia" <krnlq60jb@syix.com>
-Date: Thu, 08 Jul 2004 07:43:33 +0100
-* PR# 7070 *
-Subject: 
-From: "De Blander, Rembert" <Rembert.DeBlander@econ.kuleuven.ac.be>
-Date: Thu, 8 Jul 2004 17:31:05 +0200
+* PR# 7072 *
+Subject: Reproducible Rterm crash.
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Fri, 9 Jul 2004 15:27:56 -0400
