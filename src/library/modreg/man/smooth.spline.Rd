@@ -56,7 +56,12 @@ data(cars)
 attach(cars)
 plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)
-print(cars.spl)
+(cars.spl)
+all(cars.spl $ w == table(speed)) # TRUE (weights = multiplicities)
+\testonly{
+  str(cars.spl, digits=5, vec.len=6)
+  cars.spl $ fit
+}
 lines(cars.spl, col = "blue")
 lines(smooth.spline(speed, dist, df=10), lty=2, col = "red")
 legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
