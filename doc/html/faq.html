@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 0.90-4, 1999/11/13</h2>
+<h2>Version 0.90-5, 1999/12/22</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -331,6 +331,8 @@ unstable one is 0.99.0.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
 
+<p>The release of version 1.0 is scheduled for February 29, 2000.
+
 <p><hr>
 Node:<a name="How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
 Next:<a rel=next href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
@@ -393,12 +395,16 @@ it, for example to <code>/usr/local/bin</code>.  In addition, plain text help
 pages as well as <small>HTML</small> and LaTeX versions of the documentation are
 built.
 
-<p>Use <kbd>make dvi</kbd> to obtain a dvi version of the R manual.  This
-creates the files <code>Manual.dvi</code> (a start of a manual) and
-<code>Reference.dvi</code> (an R object reference index) in the
-<code>doc/manual</code> subdirectory.  These files can be previewed and
-printed using standard programs such as <code>xdvi</code> and <code>dvips</code>. 
-(Note that they have to be built in the source tree.)
+<p>Use <kbd>make dvi</kbd> to create dvi versions of the R manuals, such as
+<code>refman.dvi</code> (an R object reference index) and <code>R-exts.dvi</code>,
+the "R Extension Writers Guide", in the <code>doc/manual</code>
+subdirectory.  These files can be previewed and printed using standard
+programs such as <code>xdvi</code> and <code>dvips</code>.  You can also use
+<kbd>make pdf</kbd> to build PDF (Portable Document Format) version of the
+manuals, and view these using Acrobat.  Manuals written in the GNU
+Texinfo system can also be converted to info files suitable for reading
+online with Emacs or standalone GNU Info; use <kbd>make info</kbd> to create
+these versions.
 
 <p>Finally, use <kbd>make check</kbd> to find out whether your R system works
 correctly.
@@ -425,6 +431,10 @@ with the option
 
 <p>(E.g., the R executable will then be installed into
 <code>/where/you/want/R/to/go/bin</code>.)
+
+<p>To install dvi, info and PDF versions of the manuals, use <kbd>make
+install-dvi</kbd>, <kbd>make install-info</kbd> and <kbd>make install-pdf</kbd>,
+respectively.
 
 <p><hr>
 Node:<a name="How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
@@ -499,19 +509,35 @@ the topic help is sought for.  (In the case of unary and binary
 operators and control-flow special forms, the name may need to be be
 quoted.)
 
-<p>This documentation can also be made available as <small>HTML</small>, and as
-hardcopy via LaTeX, see <a href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>.  An up-to-date
-<small>HTML</small> version is always available for web browsing at
+<p>This documentation can also be made available as one reference manual
+for on-line reading in <small>HTML</small> and PDF formats, and as hardcopy via
+LaTeX, see <a href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>.  An up-to-date <small>HTML</small>
+version is always available for web browsing at
 <a href="http://stat.ethz.ch/R/manual/">http://stat.ethz.ch/R/manual/</a>.
 
-<p>An earlier attempt at an R manual ("Notes on R:  A Programming
-Environment for Data Analysis and Graphics"), based on the "Notes on
-<small>S-PLUS</small>" by <a href="mailto:venables@stats.adelaide.edu.au">Bill Venables</a> and
-<a href="mailto:D.M.Smith@lancaster.ac.uk">David Smith</a>, can be obtained as
-<code>Rnotes.tgz</code> (LaTeX source) in a CRAN <code>doc</code> directory. 
-Further documentation on R and the R API are currently being written.
+<p>Currently, three further R manuals are being written:
 
-<p>In the absence of an R manual, documentation for S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this FAQ (see <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>).  We recommend
+<ul>
+<li>"An Introduction to R" (<code>R-intro</code>)
+includes information on data types, programming elements, statistical
+modelling and graphics.  This document is based on the "Notes on
+<small>S-PLUS</small>" by <a href="mailto:venables@stats.adelaide.edu.au">Bill Venables</a> and
+<a href="mailto:D.M.Smith@lancaster.ac.uk">David Smith</a>. 
+<li>"R Language Definition" (<code>R-lang</code>)
+is the "Kernighan &amp; Ritchie of R", explaining evaluation, parsing,
+object oriented programming, computing on the language, and so forth. 
+<li>"Writing R Extensions" (<code>R-exts</code>)
+currently desribes the process of creating R add-on packages, writing R
+documentation, and R's system and foreign language interfaces, and will
+soon also contain information on R's APIs. 
+</ul>
+
+<p>The "R Extension Writers Guide" already comes with R, the other two
+will be available for the 1.0 release.
+
+<p>In addition to material written specifically for R, documentation for
+S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this FAQ
+(see <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>).  We recommend
 
 <blockquote>
 W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
@@ -597,10 +623,10 @@ need to subscribe to both of them.
 
 <p>Send email to <a href="mailto:r-help@lists.r-project.org">r-help@lists.r-project.org</a> to reach everyone on
 the r-help mailing list.  To subscribe (or unsubscribe) to this list
-send <code>subscribe</code> (or <code>unsubscribe</code>) in the BODY of the message
-(not in the subject!)  to <a href="mailto:r-help-request@lists.r-project.org">r-help-request@lists.r-project.org</a>. 
-Information about the list can be obtained by sending an email with
-<code>info</code> as its contents to
+send <code>subscribe</code> (or <code>unsubscribe</code>) in the <em>body</em> of the
+message (not in the subject!) to
+<a href="mailto:r-help-request@lists.r-project.org">r-help-request@lists.r-project.org</a>.  Information about the list
+can be obtained by sending an email with <code>info</code> as its contents to
 <a href="mailto:r-help-request@lists.r-project.org">r-help-request@lists.r-project.org</a>.
 
 <p>Subscription and posting to the other lists is done analogously, with
@@ -618,7 +644,7 @@ include information on the system and version of R being used.  See
 
 <p>Archives of the above three mailing lists are made available on the net
 in a monthly schedule via the <code>doc/mail/mail.html</code> file in CRAN. 
-An HTML archive of the lists are available via
+An <small>HTML</small> archive of the lists are available via
 <a href="http://www.ens.gu.edu.au/robertk/R/">http://www.ens.gu.edu.au/robertk/R/</a>.
 
 <p>The R Core Team can be reached at <a href="mailto:r-core@lists.r-project.org">r-core@lists.r-project.org</a>
@@ -667,7 +693,7 @@ currently being mirrored daily at
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
 tar files or as two gzipped tar files (ready for 1.4M floppies), a
 wealth of additional contributed code, as well as prebuilt binaries for
-various operating systems (Linux, Nextstep, MacOS, MSWin) and
+various operating systems (Linux, Digital Unix, and MS Windows) and
 pre-formatted help pages.  CRAN also provides access to documentation on
 R, existing mailing lists and the R Bug Tracking system.
 
@@ -1170,10 +1196,11 @@ Up:<a rel=up href="#Top">Top</a>
 <h1>4 R Web Interfaces</h1>
 
 <p><strong>Rcgi</strong> is a CGI WWW interface to R by <a href="mailto:h089@mth.uea.ac.uk">Mark J Ray</a>.  Recent version have the ability to use "embedded code":
-you can mix user input and code, allowing the HTML author to do anything
-from load in data sets to enter most of the commands for users without
-writing CGI scripts.  Graphical output is possible in PostScript or GIF
-formats and the executed code is presented to the user for revision.
+you can mix user input and code, allowing the <small>HTML</small> author to do
+anything from load in data sets to enter most of the commands for users
+without writing CGI scripts.  Graphical output is possible in PostScript
+or GIF formats and the executed code is presented to the user for
+revision.
 
 <p>Demo and download are available from
 <a href="http://www.mth.uea.ac.uk/~h089/Rcgi/">http://www.mth.uea.ac.uk/~h089/Rcgi/</a>.
@@ -1191,7 +1218,7 @@ datasets if a URL is provided.
 <p>A paper on Rweb, providing a detailed explanation of the different
 versions of Rweb and an overview of how Rweb works, was published in the
 Journal of Statistical Software
-(<a href="http://www.stat.ucla.edu/journals/jss/">http://www.stat.ucla.edu/journals/jss/</a>).
+(<a href="http://www.stat.ucla.edu/journals/jss/v04/i01">http://www.stat.ucla.edu/journals/jss/v04/i01</a>).
 
 <p><hr>
 Node:<a name="R%20Add-On%20Packages">R Add-On Packages</a>,
@@ -1254,7 +1281,8 @@ area.
 the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995. 
 <br><dt><strong>MASS</strong>
 <dd>Functions and datasets from the main library of Venables and Ripley,
-"Modern Applied Statistics with <small>S-PLUS</small>".  Contained in <code>VR</code>. 
+"Modern Applied Statistics with <small>S-PLUS</small>".  Contained in the <code>VR</code>
+bundle. 
 <br><dt><strong>NISTnls</strong>
 <dd>A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology. 
@@ -1289,7 +1317,7 @@ number of clusters in a data set.
 <dd>A package for working with chronological objects (times and dates). 
 <br><dt><strong>class</strong>
 <dd>Functions for classification (k-nearest neighbor and LVQ).  Contained in
-<code>VR</code>. 
+the <code>VR</code> bundle. 
 <br><dt><strong>cluster</strong>
 <dd>Functions for cluster analysis. 
 <br><dt><strong>coda</strong>
@@ -1305,7 +1333,8 @@ vector of input dates in any of the forms <code>8/30/53</code>,
 any mixture of these. 
 <br><dt><strong>e1071</strong>
 <dd>Miscellaneous functions used at the Department of Statistics at TU Wien
-(E1071). 
+(E1071), including moments, short-time Fourier transforms, Independent
+Component Analysis, and simulation of a Wiener process. 
 <br><dt><strong>fracdiff</strong>
 <dd>Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied Statistics,
@@ -1354,8 +1383,8 @@ algorithm, Sammon mapping, PCA and correspondence analysis.
 <dd>Fit and compare Gaussian linear and nonlinear mixed-effects models. 
 <br><dt><strong>nnet</strong>
 <dd>Software for single hidden layer perceptrons ("feed-forward neural
-networks"), and for multinomial log-linear models.  Contained in
-<code>VR</code>. 
+networks"), and for multinomial log-linear models.  Contained in the
+<code>VR</code> bundle. 
 <br><dt><strong>norm</strong>
 <dd>Analysis of multivariate normal datasets with missing values. 
 <br><dt><strong>oz</strong>
@@ -1390,7 +1419,7 @@ A. W. Bowman and A. Azzalini (1997), Oxford University Press.
 <br><dt><strong>spatial</strong>
 <dd>Functions for kriging and point pattern analysis from "Modern Applied
 Statistics with <small>S-PLUS</small>" by W. Venables and B. Ripley.  Contained in
-<code>VR</code>. 
+the <code>VR</code> bundle. 
 <br><dt><strong>stable</strong>
 <dd>Density, distribution, quantile and hazard functions of a stable
 variate; generalized linear models for the parameters of a stable
@@ -1398,9 +1427,8 @@ distribution.
 <br><dt><strong>stataread</strong>
 <dd>Read and write Stata v6 <code>.dta</code> files. 
 <br><dt><strong>survival5</strong>
-<dd>Functions for survival analysis, version 5 (requires <strong>splines</strong>
-and suggests <strong>date</strong>), the main new feature being penalised
-(partial) likelihood. 
+<dd>Functions for survival analysis, version 5 (suggests <strong>date</strong>), the
+main new feature being penalised (partial) likelihood. 
 <br><dt><strong>tree</strong>
 <dd>Classification and regression trees. 
 <br><dt><strong>tripack</strong>
@@ -1422,10 +1450,11 @@ invited to give these a try, of course.  This area of CRAN currently
 contains
 
 <dl>
-<dt><strong>bats</strong>
-<dd>Basic time series modelling functions. 
-<br><dt><strong>dopt</strong>
+<dt><strong>dopt</strong>
 <dd>Finding D-optimal experimental designs. 
+<br><dt><strong>foreign</strong>
+<dd>Functions for reading data stored by statistical software like Minitab,
+SAS, SPSS, etc. 
 <br><dt><strong>tcltk</strong>
 <dd>Basic interface with Tcl/Tk. 
 <br><dt><strong>timeslab</strong>
@@ -1477,29 +1506,25 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <h2>5.2 How can add-on packages be installed?</h2>
 
 <p>(Unix only.)  The add-on packages on CRAN come as gzipped tar files
-(which may contain more than one package).  First "unpack" the files
-of interest.  If you have GNU tar, you can use <kbd>tar zxf <var>name</var></kbd>,
-otherwise you can use <kbd>gunzip -c <var>name</var> | tar xf -</kbd>.
+named <code><var>pkg</var>_<var>version</var>.tar.gz</code>, which may in fact be
+"bundles" containing more than one package.  Provided that <code>tar</code>
+and <code>gzip</code> are available on your system, type
 
-<p>Let <var>pkgdir_1</var>, <small>...</small>, <var>pkgdir_n</var> be the (relative or
-absolute) path names of the packages to be installed.  (In the simplest
-case, the unpacking creates a single package directory, and its name is
-used.)  To install to the default R directory tree (the <code>library</code>
-subdirectory of <code>R_HOME</code>), type
-
-<pre>$ R INSTALL <var>pkgdir_1</var> <small>...</small> <var>pkgdir_n</var>
+<pre>$ R INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
 </pre>
 
-<p>at the shell prompt.  To install to another tree (e.g., your private
-one), use
+<p>at the shell prompt to install to the default R directory tree (the
+<code>library</code> subdirectory of <code>R_HOME</code>).  To install to another
+tree (e.g., your private one), use
 
-<pre>$ R INSTALL -l <var>lib</var> <var>pkgdir_1</var> <small>...</small> <var>pkgdir_n</var>
+<pre>$ R INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
 </pre>
 
 <p>where <var>lib</var> gives the path to the library tree to install to.
 
-<p>As of R version 0.65.1, you no longer need to explicitly unpack for
-installing; i.e., you can do <kbd>R INSTALL /path/to/pkg_ver.tar.gz</kbd>.
+<p>Even more conveniently, you can install and automatically update
+packages from within R if you have access to CRAN.  See the
+documentation for <code>CRAN.packages()</code> for more information.
 
 <p>You can use several library trees of add-on packages.  The easiest way
 to tell R to use these is via the environment variable <code>R_LIBS</code>
@@ -1545,11 +1570,11 @@ ctest        Classical tests
 date         Functions for handling dates
 eda          Exploratory Data Analysis
 gee          Generalized Estimating Equation models
-lme          Linear mixed effects library
 locfit       Local regression, likelihood and density estimation
 lqs          Resistant regression and covariance estimation
 modreg       Modern regression: smoothing and local methods
 mva          Classical Multivariate Analysis
+nlme         Gaussian linear and nonlinear mixed-effects models
 nls          Nonlinear regression
 nnet         Software for feed-forward neural networks with a single
              hidden layer and for multinomial log-linear models.
@@ -1652,7 +1677,8 @@ objects created by it.  If necessary, one of these files (historically
 <p>The <code>man</code> subdirectory should contain documentation files for the
 objects in the package.  The documentation files to be installed must
 also start with a (lower- or uppercase) letter and have the extension
-<code>.Rd</code> (the default) or <code>.rd</code>.
+<code>.Rd</code> (the default) or <code>.rd</code>, and are written in the R
+documentation format (see <a href="R-exts.html#Writing%20R%20docs">Writing R documentation</a>)
 
 <p>C or <small>FORTRAN</small> source and optionally a <code>Makefile</code> for the compiled
 code is in <code>src</code>.  Note that the <code>Makefile</code> most likely is not
@@ -1679,7 +1705,7 @@ for additional software that might be needed by the package), and
 removing the files created in this process.  See the add-on package
 <strong>e1071</strong> on CRAN for an example of this mechanism.
 
-<p>See the documentation for <code>library()</code> for more information.
+<p>See <a href="R-exts.html#Creating%20R%20pkgs">Creating R packages</a>, for more information.
 
 <p>The web page <a href="http://www.biostat.washington.edu/~thomas/Rlib.html">http://www.biostat.washington.edu/~thomas/Rlib.html</a>
 maintained by Thomas Lumley provides information on porting S packages
@@ -1746,7 +1772,7 @@ Speaks Statistics").  It is intended to provide assistance for
 interactive statistical programming and data analysis.  Languages
 supported include: S dialects (S 3/4, <small>S-PLUS</small> 3.x/4.x/5.x, and R),
 LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects (SPSS,
-Fiasco) and SCA.
+PSPP) and SCA.
 
 <p>ESS grew out of the desire for bug fixes and extensions to S-mode 4.8
 (which was a GNU Emacs interface to S/<small>S-PLUS</small> version 3 only).  The
@@ -1823,11 +1849,12 @@ Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <h2>6.3 Debugging R from within Emacs</h2>
 
 <p>To debug R "from within Emacs", there are several possibilities.  To
-use GUD mode, type <kbd>M-x gdb</kbd> and give the path to the R
+use the Emacs GUD (Grand Unified Debugger) library with the recommended
+debugger GDB, type <kbd>M-x gdb</kbd> and give the path to the R
 <em>binary</em>, typically <code>R.X11</code>, as argument.  At the gdb prompt,
 set <code>R_HOME</code> and other environment variables as needed (using e.g. 
 <kbd>set env R_HOME /path/to/R/</kbd>, but see also below), and start the
-binary with the desired arguments (e.g., <kbd>r --vsize 12M</kbd>).
+binary with the desired arguments (e.g., <kbd>run --vsize 12M</kbd>).
 
 <p>If you have ESS, you can do <kbd>C-u M-x R&lt;RET&gt;-d gdb</kbd> to start an
 inferior R process with arguments <code>-d gdb</code>.
@@ -1844,9 +1871,9 @@ such as object-name completion, that we know and love.
 <p>When using GUD mode for debugging from within Emacs, you may find it
 most convenient to use the directory with your code in it as the current
 working directory and then make a symbolic link from that directory to
-the R executable.  That way <code>.gdbinit</code> can stay in the directory
-with the code and be used to set up the environment and the search paths
-for the source, e.g. as follows:
+the R binary.  That way <code>.gdbinit</code> can stay in the directory with
+the code and be used to set up the environment and the search paths for
+the source, e.g. as follows:
 
 <pre>set env R_HOME /opt/R
 set env R_PAPERSIZE letter
@@ -2008,7 +2035,7 @@ Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
 </pre>
 
 <p>(Without <code>all = TRUE</code>, only the objects with names not starting
-with a `.' are removed.)
+with a <code>.</code> are removed.)
 
 <p><hr>
 Node:<a name="How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
@@ -2371,9 +2398,10 @@ Up:<a rel=up href="#R%20Bugs">R Bugs</a>
 <p>If R executes an illegal instruction, or dies with an operating system
 error message that indicates a problem in the program (as opposed to
 something like "disk full"), then it is certainly a bug.  If you call
-<code>.Internal()</code>, <code>.External()</code>, <code>.C()</code> or <code>.Fortran()</code>
-yourself (or in a function you wrote), you can always crash R by using
-wrong argument types (modes).  This is not a bug.
+<code>.C()</code>, <code>.Fortran()</code>, <code>.External()</code> or <code>.Call()</code> (or
+<code>.Internal()</code>) yourself (or in a function you wrote), you can
+always crash R by using wrong argument types (modes).  This is not a
+bug.
 
 <p>Taking forever to complete a command can be a bug, but you must make
 certain that it was really R's fault.  Some commands simply take a long
