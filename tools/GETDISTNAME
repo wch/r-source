@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# ${RHOME}/tools/GETDISTNAME
+
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+(cd ${TOOLS_DIR}/..
+  maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < VERSION`
+  min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < VERSION`
+  rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < VERSION`
+  if test -z "${rev}" ; then
+    res=R-${maj}.${min}
+  else
+    y=`cut -d/ -f1 < date-stamp`
+    m=`cut -d/ -f2 < date-stamp`
+    d=`cut -d/ -f3 < date-stamp`
+    if test "${rev}" = "Under development (unstable)"; then
+      res="R-devel_"${y}-${m}-${d}
+    else
+      res="R-${rev}_"${y}-${m}-${d}
+    fi
+  fi
+  echo ${res}
+)
