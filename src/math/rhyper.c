@@ -100,7 +100,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	static double xn;
 	static int reject;
 	static double xk;
-	extern double afc(int);
+	/* extern double afc(int); */
 	static double alv;
 
 	/* check parameter validity */

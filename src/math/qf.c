@@ -21,9 +21,6 @@
 
 double qf(double x, double n1, double n2)
 {
-	double q;
-	int i;
-
 	if (n1 <= 0.0 || n2 <= 0.0)
 		DOMAIN_ERROR;
 

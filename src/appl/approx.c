@@ -18,6 +18,7 @@
  */
 
 #include "Mathlib.h"
+#include "Errormsg.h"
 #include <stdio.h>
 
 /* Linear and Step Function Interpolation */

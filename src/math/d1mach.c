@@ -17,4 +17,5 @@ double F77_SYMBOL(d1mach)(int *i)
 	case 5:
 		return log10(2.0);
 	}
+	return 0.0;
 }

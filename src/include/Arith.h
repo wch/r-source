@@ -25,6 +25,7 @@
 #include <fp.h>
 #else
 #include <math.h>
+int finite(double);
 #endif
 
 extern double	R_tmp;			/* Used in NaN/Inf checks */

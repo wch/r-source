@@ -108,7 +108,7 @@ static double q2[] =
 static double Gam_pos(double x)
 {
 	double n, d, s;
-	register i;
+	register int i;
 
 	if (x < 2.0) return (Gam_pos(x + 1.0) / x);
 	if (x > 3.0) return ((x - 1.0) * Gam_pos(x - 1.0));
