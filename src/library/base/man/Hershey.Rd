@@ -1,3 +1,5 @@
+%% NB: Microsoft Help Compiler often crashes on this file
+%% Do not alter unless you have checked on Windows!
 \name{Hershey}
 \alias{Hershey}
 \title{Hershey Vector Fonts in R}
@@ -8,7 +10,7 @@ Hershey
   If the \code{vfont} argument to one of the text-drawing functions
   (\code{\link{text}}, \code{\link{mtext}}, \code{\link{title}},
   \code{\link{axis}}, and \code{\link{contour}}) is a character vector
-  of length 2, hershey vector fonts are used to render the text.
+  of length 2, Hershey vector fonts are used to render the text.
 
   These fonts have two advantages:\cr
   \enumerate{
@@ -69,23 +71,36 @@ Hershey
     sans serif symbol \tab italic \cr
   }
   and the indices of these are available as \code{Hershey$allowed}.
+
+#ifdef windows
+  The characters can be encoded by escape sequences in various ways
+  shown in the tables in \code{demo(Hershey)}.  In addition,
+  three-character octal sequences can be used preceded by a blackslash,
+  so \code{\\366} produces the character \code{o} with an umlaut.
+
+  Remember that backslashes have to be doubled in \R character strings,
+  and as the escape sequences in the tables start with \code{\\\\} they
+  need to be entered with \emph{four} backslashes.
+#endif
+#ifndef windows
   \describe{
     \item{Escape sequences:}{The string to be drawn can include escape
       sequences, which all begin with a \code{\\}.   When \R encounters a
-      \code{\\},
-      rather than drawing the \code{\\}, it treats the subsequent character(s)
-      as a coded description of what to draw.
+      \code{\\}, rather than drawing the \code{\\}, it treats the
+      subsequent character(s) as a coded description of what to draw.
 
       One useful escape sequence (in the current context) is of the
       form: \code{\\123}.  The three digits following the \code{\\} specify an
-      octal code for a character.  For
-      example, the octal code for \code{p}
-      is 160 so the strings \code{"p"} and \code{"\\160"} are equivalent.
-      This is useful for producing characters when
-      there is not an appropriate key on your keyboard.
+      octal code for a character.  For example, the octal code for \code{p} is
+      160 so the strings \code{"p"} and \code{"\\160"} are equivalent. This is
+      useful for producing characters when there is not an appropriate key on
+      your keyboard.
 
       The other useful escape sequences all begin with \code{\\\\}.  These are
-      described below.}
+      described below.
+      Remember that backslashes have to be doubled in \R character
+      strings, so they need to be entered with \emph{four} backslashes.
+    }
 
     \item{Symbols:}{an entire string of Greek symbols can be produced by
       selecting the Serif Symbol or Sans Serif Symbol typeface.  To allow
@@ -93,22 +108,25 @@ Hershey
       typeface, there are a set of symbol escape sequences of the form
       \code{\\\\ab}. For example, the escape sequence \code{\\\\*a} produces a
       Greek alpha. The second table in \code{demo(Hershey)} shows all of the
-      symbol escape sequences and the symbols that they produce.}
+      symbol escape sequences and the symbols that they produce.
+    }
 
     \item{ISO Latin-1:}{further escape sequences of the form \code{\\\\ab} are
       provided for producing ISO Latin-1 characters (for example, if
       you only have a US keyboard).  Another option is to use the appropriate
       octal code.  The (non-ASCII) ISO Latin-1 characters are in the range
-      241...377.  For example, \code{\\366} produces the character \code{o}
+      241\dots377.  For example, \code{\\366} produces the character \code{o}
       with an umlaut.  The third table in \code{demo(Hershey)} shows all
-      of the ISO Latin-1 escape sequences.}
+      of the ISO Latin-1 escape sequences.
+    }
 
     \item{Special Characters:}{a set of characters are provided which
       do not fall into any standard font.  These can only be accessed by
       escape sequence.  For example, \code{\\\\LI} produces the zodiac sign for
       Libra, and \code{\\\\JU} produces the astronomical sign for Jupiter.
       The fourth table in \code{demo(Hershey)} shows all of the
-      special character escape sequences.}
+      special character escape sequences.
+    }
 
     \item{Cyrillic Characters:}{cyrillic characters are implemented
       according to the K018-R encoding.  On a US keyboard, these can be
@@ -116,7 +134,8 @@ Hershey
       fontindex and specifying an octal code in the range 300 to 337 for
       lower case characters or 340 to 377 for upper case characters.
       The fifth table in \code{demo(Hershey)} shows the octal codes for
-      the available cyrillic characters.}
+      the available cyrillic characters.
+    }
 
     \item{Japanese Characters:}{83 Hiragana, 86 Katakana, and 603 Kanji
       characters are implemented according to the EUC (Extended Unix Code)
@@ -143,7 +162,7 @@ Hershey
       \code{\\\\#N1234}.  For example, the Kanji for ``one'' is
       produced by \code{\\\\#N0001}.
     
-      \code{demo{Japanese)} shows the available Japanese characters.
+      \code{demo(Japanese)} shows the available Japanese characters.
     }
       
     \item{Raw Hershey Glyphs:}{all of the characters in the Hershey fonts
@@ -151,18 +170,19 @@ Hershey
       any of the Hershey fonts.  These characters can only be accessed via
       an escape sequence of the form \code{\\\\#H1234}.  For example, the
       fleur-de-lys is produced by \code{\\\\#H0746}.  The sixth and seventh
-      tables of \code{demo(Hershey)} shows all of the available raw glyphs.}
+      tables of \code{demo(Hershey)} shows all of the available raw
+      glyphs.
+    }
   }
+#endif
 }
 \references{
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
-
 }
 \seealso{
-  \code{demo(Hershey)},
-  \code{\link{text}},
-  \code{\link{contour}},
-  \code{\link{Japanese}}
+  \code{demo(Hershey)}, \code{\link{text}}, \code{\link{contour}}.
+
+  \code{\link{Japanese}} for the Japanese characters in the Hershey fonts.
 }
 \examples{
 str(Hershey)
