@@ -149,3 +149,11 @@ is.null(attr(unclass(d1$b), "class"))
 ## bugs in R 1.2.0
 format(as.POSIXct(relR120 <- "2000-12-15 11:24:40")) == relR120
 format(as.POSIXct(substr(relR120,1,10))) == substr(relR120,1,10)
+
+## rank() with NAs (and ties)
+x <- c(3:1,6,4,3,NA,5,0,NA)
+rx <-  rank(x)
+all(rx == c(4.5, 3:2, 8, 6, 4.5, 9, 7, 1, 10))
+rxK <- rank(x, na = "keep")
+all(rx [rx <= 8]    == na.omit(rxK))
+all(rank(x, na= NA) == na.omit(rxK))

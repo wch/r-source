@@ -1,17 +1,17 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-16)
+Version 1.8.0 alpha (2003-09-11)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ###---- ALL tests here should return  TRUE !
 > ###
@@ -227,5 +227,16 @@ Type `q()' to quit R.
 > format(as.POSIXct(relR120 <- "2000-12-15 11:24:40")) == relR120
 [1] TRUE
 > format(as.POSIXct(substr(relR120,1,10))) == substr(relR120,1,10)
+[1] TRUE
+> 
+> ## rank() with NAs (and ties)
+> x <- c(3:1,6,4,3,NA,5,0,NA)
+> rx <-  rank(x)
+> all(rx == c(4.5, 3:2, 8, 6, 4.5, 9, 7, 1, 10))
+[1] TRUE
+> rxK <- rank(x, na = "keep")
+> all(rx [rx <= 8]    == na.omit(rxK))
+[1] TRUE
+> all(rank(x, na= NA) == na.omit(rxK))
 [1] TRUE
 > 
