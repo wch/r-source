@@ -27,7 +27,7 @@ for file in $FILES
 do
  bf=`basename $file .R`
  #Dbg: echo $bf >&2
- if   [ $bf = 'on.exit' ];	then sed -e '$s/$/; par(opar)/' $file
+ if   [ $bf = 'on.exit' ];	then sed -e '$s/$/par(opar)/' $file
  elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
  elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
  elif [ $bf = 'na.fail' ];	then sed -e '/^na\.fail/s/^/##Test: /' $file
