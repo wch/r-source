@@ -25,4 +25,12 @@ rm    (\dots, list = character(0), pos = -1, envir = pos.to.env(pos),
 \seealso{
   \code{\link{ls}}, \code{\link{objects}}
 }
+\examples{
+tmp <- 1:4
+## work with tmp  and cleanup
+rm(tmp)
+
+## remove (almost) everything in the working environment:
+rm(list = ls())
+}
 \keyword{environment}
