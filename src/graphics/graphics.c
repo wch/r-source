@@ -3462,8 +3462,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	switch(side) {
 	case 1:
 	    if(las == 2) {
-		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
-		line = line + dd->gp.yLineBias;
+		at = at + GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
+		line = line - dd->gp.yLineBias;
 		angle = 90;
 		xadj = dd->gp.adj;
 		yadj = 0.5;
@@ -3478,7 +3478,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 2:
 	    if(las == 1 || las == 2) {
-		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
+		at = at /* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
 		line = line + dd->gp.yLineBias;
 		angle = 0;
 		xadj = 1;
@@ -4978,7 +4978,7 @@ void restoredpSaved(DevDesc *dd)
     dd->dp.mgp[2] = dd->dpSaved.mgp[2];
     dd->dp.mkh = dd->dpSaved.mkh;
     dd->dp.pch = dd->dpSaved.pch;
-    dd->dp.ps = dd->dpSaved.ps;
+    /* dd->dp.ps = dd->dpSaved.ps; */
     dd->dp.smo = dd->dpSaved.smo;
     dd->dp.srt = dd->dpSaved.srt;
     dd->dp.tck = dd->dpSaved.tck;
