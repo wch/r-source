@@ -26,7 +26,8 @@ control word: see ?dyn.load for the details.
 Changed Windows README to README.rw1062, included standard README
 and RESOURCES file in binary distribution.
 
-Printing and copying now preserve the active graphics device.
+Printing and copying from the menu of a graphics device now preserve
+the active graphics device.
 
 
 
