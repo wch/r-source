@@ -1,5 +1,7 @@
 \name{hclust}
 \title{Hierarchical Clustering}
+\alias{hclust}
+\alias{plot.hclust}
 \description{
 This function performs a hierarchical cluster analysis
 using a set of dissimilarities for the \eqn{n} objects being
@@ -114,3 +116,5 @@ hc <- hclust(dist(crimes), "ave")
 plot(hc, hang=-1)
 plot(hc)
 }
+\keyword{multivariate}
+\keyword{cluster}
