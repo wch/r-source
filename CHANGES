@@ -228,6 +228,8 @@ BUG FIXES (many of which resulted from the added features...)
     o   list of currently loaded libraries (.Dyn.libs) not saved
 	from session to session (really, this time)
 
+    o   rhyper works with vectorisation, degenerate cases.
+
 		CHANGES IN R VERSION 0.61.2
 
 BUG FIXES
