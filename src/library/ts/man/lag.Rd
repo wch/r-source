@@ -31,7 +31,7 @@ lag.default(x, k=1)
 \seealso{\code{\link{diff}}, \code{\link{deltat}} }
 
 \examples{
-data(deaths)
-lag(deaths, 12) # starts in Jan 1973
+data(UKLungDeaths)
+lag(ldeaths, 12) # starts one year earlier
 }
 \keyword{ts}

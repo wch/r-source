@@ -44,8 +44,9 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action,
 \examples{
 data(lh)
 spec.ar(lh)
-data(deaths)
-spec.ar(deaths)
-spec.ar(deaths, method="burg")
+
+data(UKLungDeaths)
+spec.ar(ldeaths)
+spec.ar(ldeaths, method="burg")
 }
 \keyword{ts}

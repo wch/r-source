@@ -84,10 +84,10 @@ spec.pgram(x, spans=NULL, kernel, taper=0.1, demean=FALSE, detrend=TRUE,
 
 \examples{
 ## Examples from Venables & Ripley
-data(deaths)
-spectrum(deaths)
-spectrum(deaths, spans=c(3,5))
-spectrum(deaths, spans=c(5,7))
+data(UKLungDeaths)
+spectrum(ldeaths)
+spectrum(ldeaths, spans=c(3,5))
+spectrum(ldeaths, spans=c(5,7))
 spectrum(mdeaths, spans=c(3,3))
 spectrum(fdeaths, spans=c(3,3))
 
@@ -112,8 +112,8 @@ plot(stocks.spc)
 plot.spec.coherency(stocks.spc)
 plot.spec.phase(stocks.spc)
 
-data(sales)
-sales.spc <- spectrum(ts.union(sales, sales.lead),
+data(BJsales)
+sales.spc <- spectrum(ts.union(BJsales, BJsales.lead),
                       kernel=modified.daniell.kernel(c(5,7)))
 plot.spec.coherency(sales.spc)
 plot.spec.phase(sales.spc)

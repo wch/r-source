@@ -96,9 +96,9 @@ acf(lh)
 acf(lh, type="covariance")
 pacf(lh)
 
-data(deaths)
-acf(deaths)
-acf(deaths, ci.type="ma")
+data(UKLungDeaths)
+acf(ldeaths)
+acf(ldeaths, ci.type="ma")
 acf(ts.union(mdeaths, fdeaths))
 ccf(mdeaths, fdeaths) # just the cross-correlations.
 }

@@ -25,9 +25,10 @@ na.omit.ts(frame)
 \seealso{\code{\link{na.omit}}, \code{\link{na.fail}}}
 
 \examples{
-data(sales)
-sales1 <- ts.union(sales, lead3=lag(sales.lead, -3))
+data(BJsales)
+sales1 <- ts.union(BJsales, lead3=lag(BJsales.lead, -3))
 na.omit.ts(sales1)
+
 data(presidents)
 na.contiguous(presidents)
 }

@@ -24,11 +24,11 @@ cbind.ts(..., dframe=FALSE, union=TRUE)
 }
 \author{B.D. Ripley}
 \examples{
-data(deaths)
+data(UKLungDeaths)
 ts.union(mdeaths, fdeaths)
 ts.intersect(window(mdeaths, 1976), window(fdeaths, 1974, 1978))
-data(sales)
-sales1 <- ts.union(sales, lead=sales.lead)
-ts.intersect(sales1, lead3=lag(sales.lead, -3))
+data(BJsales)
+sales1 <- ts.union(BJsales, lead=BJsales.lead)
+ts.intersect(sales1, lead3=lag(BJsales.lead, -3))
 }
 \keyword{ts}

@@ -1,8 +1,8 @@
-% file drivers.Rd
+% file UKDriverDeaths.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
-\name{drivers}
-\alias{drivers}
+\name{UKDriverDeaths}
+\alias{UKDriverDeaths}
 \title{
 Deaths of Car Drivers in Great Britain 1969-84
 }

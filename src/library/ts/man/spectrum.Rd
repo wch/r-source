@@ -111,15 +111,15 @@ spectrum(lh, spans=3)
 spectrum(lh, spans=c(3,3))
 spectrum(lh, spans=c(3,5))
 
-data(deaths)
-spectrum(deaths)
-spectrum(deaths, spans=c(3,3))
-spectrum(deaths, spans=c(3,5))
-spectrum(deaths, spans=c(5,7))
-spectrum(deaths, spans=c(5,7), log="dB", ci=0.8)
+data(UKLungDeaths)
+spectrum(ldeaths)
+spectrum(ldeaths, spans=c(3,3))
+spectrum(ldeaths, spans=c(3,5))
+spectrum(ldeaths, spans=c(5,7))
+spectrum(ldeaths, spans=c(5,7), log="dB", ci=0.8)
 
 ## spec.ar
 spectrum(lh, method="ar")
-spectrum(deaths, method="ar")
+spectrum(ldeaths, method="ar")
 }
 \keyword{ts}

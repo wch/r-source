@@ -1,14 +1,15 @@
-\name{sales}
-\alias{sales}
+\name{BJsales}
+\alias{BJsales}
+\alias{BJsales.lead}
 \title{
   Sales Data with Leading Indicator.
 }
 \usage{
-data (sales)
+data(BJsales)
 }
 \description{
-  The sales time series \code{sales} and leading indicator
-  \code{sales.lead} each contain 150 observations.
+  The sales time series \code{BJsales} and leading indicator
+  \code{BJsales.lead} each contain 150 observations.
   The objects are of class \code{"ts"}.
 }
 \source{

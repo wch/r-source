@@ -165,8 +165,8 @@ ar(x = sunspot.year, method = "burg")
 ar(x = sunspot.year, method = "ols")
 predict(sunspot.ar, n.ahead=25)
 
-data(sales)
-ar(ts.union(sales, sales.lead))
+data(BJsales)
+ar(ts.union(BJsales, BJsales.lead))
 
 data(EuStockMarkets)
 x <- diff(log(EuStockMarkets))

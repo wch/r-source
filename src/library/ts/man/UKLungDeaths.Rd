@@ -1,17 +1,21 @@
-% file deaths.Rd
+% file UKLungDeaths.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
-\name{deaths}
-\alias{deaths}
+\name{UKLungDeaths}
+\alias{UKLungDeaths}
+\alias{ldeaths}
 \alias{fdeaths}
 \alias{mdeaths}
 \title{
 Monthly Deaths from Lung Diseases in the UK
 }
+\usage{
+data(UKLungDeaths)
+}
 \description{
-    A regular time series giving the monthly deaths from bronchitis,
+    Time series giving the monthly deaths from bronchitis,
     emphysema and asthma in the UK, 1974-1979,
-    both sexes (\code{deaths}), males (\code{mdeaths}) and
+    both sexes (\code{ldeaths}), males (\code{mdeaths}) and
     females (\code{fdeaths}).
 }
 \source{

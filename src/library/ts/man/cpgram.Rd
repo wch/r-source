@@ -40,8 +40,8 @@ cpgram(lh)
 lh.ar <- ar(lh, order.max=9)
 cpgram(lh.ar$resid, main="AR(3) fit to lh")
 
-data(deaths)
-cpgram(deaths)
+data(UKLungDeaths)
+cpgram(ldeaths)
 }
 \keyword{ts}
 \keyword{hplot}
