@@ -38,13 +38,19 @@ creating all these formats using the GNU Texinfo system.
    You can also obtain the R FAQ from the `doc/FAQ' subdirectory of a CRAN
 site (*Note What Is CRAN?::).
 
-1.3 Notation
+1.3 Citing
+==========
+
+   In publications, please refer to this FAQ as Hornik (1999), "The R FAQ"
+and give the above, _official_ URL.
+
+1.4 Notation
 ============
 
    Everything should be pretty standard.  `R>' is used for the R prompt,
 and a `$' for the shell prompt (where applicable).
 
-1.4 Feedback
+1.5 Feedback
 ============
 
    Feedback is of course most welcome.
@@ -377,6 +383,8 @@ existing mailing lists and the R Bug Tracking system.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...) in your submission.
+
+   Please always use the URL of the master site when referring to CRAN.
 
 3 R and S
 *********
@@ -779,7 +787,7 @@ All of the Rweb versions can analyze Web accessible datasets if a URL is
 provided.
 
    A paper on Rweb, providing a detailed explanation of the different
-versions of Rweb and an overview of how Rweb works, will soon apper in the
+versions of Rweb and an overview of how Rweb works, was published in the
 Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 
 5 R Add-On Packages
