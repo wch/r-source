@@ -123,7 +123,7 @@ n <-   20; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 100*Meps)
 n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
 n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
 
-all(is.nan(gamma(0:-4))) # + warn.
+all(is.nan(gamma(0:-47))) # + warn.
 
 ## choose() {and lchoose}:
 n51 <- c(196793068630200, 229591913401900, 247959266474052)

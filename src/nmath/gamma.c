@@ -2,7 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2001 The R Development Core Team
- *  Copyright (C) 2002-2003 The R Foundation
+ *  Copyright (C) 2002-2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -120,6 +120,13 @@ double gammafn(double x)
 
     if(ISNAN(x)) return x;
 
+    /* If the argument is exactly zero or a negative integer
+     * then return NaN. */
+    if (x == 0 || (x < 0 && x == (long)x)) {
+	ML_ERROR(ME_RANGE);
+	return ML_NAN;
+    }
+
     y = fabs(x);
 
     if (y <= 10) {
@@ -139,12 +146,7 @@ double gammafn(double x)
 	if (n < 0) {
 	    /* compute gamma(x) for -10 <= x < 1 */
 
-	    /* If the argument is exactly zero or a negative integer */
-	    /* then return NaN. */
-	    if (x == 0 || (x < 0 && x == n + 2)) {
-		ML_ERROR(ME_RANGE);
-		return ML_NAN;
-	    }
+	    /* exact 0 or "-n" checked already above */
 
 	    /* The answer is less than half precision */
 	    /* because x too near a negative integer. */

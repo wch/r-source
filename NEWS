@@ -498,6 +498,7 @@ BUG FIXES
 	alph > 1e5 instead of alph > 1000.  This also improves the accuracy
 	of ppois().
 
+    o	gamma(-n) now gives NaN for all negative integers -n.
 
 
 
