@@ -1,7 +1,6 @@
-/*
- *  R : A Computer Language for Statistical Data Analysis
-
- *  Copyright (C) 1999        The R Development Core Team
+/*  R : A Computer Language for Statistical Data Analysis
+ *
+ *  Copyright (C) 1999-2001	The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +18,72 @@
  */
 
 #include <R.h>
+
+#ifdef Macintosh
+#include <fp.h>
+#else
+#include <math.h>
+#endif
+
+#ifndef max
+#define max(a,b) ((a < b)?(b):(a))
+#endif
+
+/* Imports : */
+void F77_NAME(starma)(int* ip, int* iq, int* ir, int* np, double* phi,
+		      double* theta, double* a,
+		      double* p, double* v, double* thetab, double* xnext,
+		      double* xrow, double* rbar, int* nrbar, int* ifault);
+
+void F77_NAME(karma)(int* ip, int* iq, int* ir, int* np, double* phi,
+		     double* theta, double* a, double* p,
+		     double* v, int *n, double*  w, double* resid,
+		     double* sumlog, double* ssq, int* iupd,
+		     double* delta, double* e, int* nit);
+
+void F77_NAME(kalfor)(int *m, int* ip, int* ir, int* np, double* phi,
+		      double *a, double *p, double *v, double *work,
+		      double *x, double *var);
+
+void F77_NAME(forkal)(int *ip, int *iq, int *ir, int *np, int *ird, 
+		      int *irz, int *id, int *il, int *n, int *nrbar, 
+		      double *phi, double *theta, double *delta, 
+		      double *w, double *y, double *amse, double *a, 
+		      double *p, double *v, double *resid, double *e, 
+		      double *xnext, double *xrow, double *rbar, 
+		      double *thetab, double *store, int *ifault);
+/* Exports : */
+void uni_pacf(double *cor, double *p, int *pnlag);
+void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
+		  double *dt, int *ptrans);
+void free_starma(void);
+void Dotrans(double *x, double *y);
+void arma0fa(double *inparams, double *res);
+void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var);
+void artoma(int *pp, double *phi, double *psi, int *npsi);
+#ifdef WHEN_USED
+void arma0_fore(int *n_ahead, double *x, double *var);
+void arima0_fore(int *n_ahead, int *pn, double *x, int *seas, int *nsea);
+void arimatoma(int *arma, double *params, double *psi, int *npsi);
+#endif
+void get_s2(double *res);
+void get_resid(double *res);
+
+/* Internal */
+static void partrans(int np, double *raw, double *new);
+static void dotrans(double *raw, double *new, int trans);
+
+/* Globals for `starma' : */
+#ifdef ONE_global
+typedef struct {
+#endif
+    int ip, iq, mp, mq, msp, msq, ns, ir, np, nrbar, n, m, trans;
+    double *a, *p, *v, *thetab, *xnext, *xrow, *rbar, *e,
+	*w, *wkeep, delta, *resid, *phi, *theta, s2, *reg, *params;
+#ifdef ONE_global
+} starma_Gtype
+static starma_Gtype *starma_G;
+#endif
 
 /* cor is the autocorrelations starting from 0 lag*/
 void uni_pacf(double *cor, double *p, int *pnlag)
@@ -46,43 +111,6 @@ void uni_pacf(double *cor, double *p, int *pnlag)
 	    w[i] -= c*v[i];
     }
 }
-#ifdef Macintosh
-#include <fp.h>
-#else
-#include <math.h>
-#endif
-
-#ifndef max
-#define max(a,b) ((a < b)?(b):(a))
-#endif
-
-static int ip, iq, mp, mq, msp, msq, ns, ir, np, nrbar, n, m, trans;
-static double *a, *p, *v, *thetab, *xnext, *xrow, *rbar, *e,
-    *w, *wkeep, delta, *resid, *phi, *theta, s2, *reg, *params;
-
-void F77_NAME(starma)(int* ip, int* iq, int* ir, int* np, double* phi,
-		      double* theta, double* a,
-		      double* p, double* v, double* thetab, double* xnext,
-		      double* xrow, double* rbar, int* nrbar, int* ifault);
-
-void F77_NAME(karma)(int* ip, int* iq, int* ir, int* np, double* phi,
-		     double* theta, double* a, double* p,
-		     double* v, int *n, double*  w, double* resid,
-		     double* sumlog, double* ssq, int* iupd,
-		     double* delta, double* e, int* nit);
-
-void F77_NAME(kalfor)(int *m, int* ip, int* ir, int* np, double* phi,
-		      double *a, double *p, double *v, double *work,
-		      double *x, double *var);
-
-void F77_NAME(forkal)(int *ip, int *iq, int *ir, int *np, int *ird, 
-		      int *irz, int *id, int *il, int *n, int *nrbar, 
-		      double *phi, double *theta, double *delta, 
-		      double *w, double *y, double *amse, double *a, 
-		      double *p, double *v, double *resid, double *e, 
-		      double *xnext, double *xrow, double *rbar, 
-		      double *thetab, double *store, int *ifault);
-
 
 void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
 		  double *dt, int *ptrans)
@@ -122,14 +150,12 @@ void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
     for(i = 0; i < n*m; i++) reg[i] = xreg[i];
 }
 
-void free_starma()
+void free_starma(void)
 {
     Free(params); Free(a); Free(p); Free(v); Free(thetab);
     Free(xnext); Free(xrow); Free(rbar); Free(e);
     Free(w); Free(wkeep); Free(resid); Free(phi); Free(theta); Free(reg);
 }
-
-void dotrans(double *, double *, int);
 
 void Dotrans(double *x, double *y)
 {
@@ -203,6 +229,7 @@ void get_resid(double *res)
     for(i = 0; i < n; i++) res[i] = resid[i];
 }
 
+#ifdef WHEN_USED
 void arma0_fore(int *n_ahead, double *x, double *var)
 {
     double *work;
@@ -211,6 +238,7 @@ void arma0_fore(int *n_ahead, double *x, double *var)
     F77_CALL(kalfor)(n_ahead, &ip, &ir, &np, phi, a, p, v, work, x, var);
     Free(work);
 }
+#endif
 
 void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
 {
@@ -255,6 +283,7 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
     Free(store);
 }
 
+#ifdef WHEN_USED
 void arima0_fore(int *n_ahead, int *pn, double *x, int *seas, int *nsea)
 {
     int i, k, sd, n = *pn, na = *n_ahead, N = n+na, ns = *nsea, nc = 0;
@@ -272,6 +301,7 @@ void arima0_fore(int *n_ahead, int *pn, double *x, int *seas, int *nsea)
 	    x[n + i + k*N] = x[n + i - seas[k] + k*N] + x[n+i + (k+1)*N];
     }	    
 }
+#endif
 
 void artoma(int *pp, double *phi, double *psi, int *npsi)
 {
@@ -284,6 +314,7 @@ void artoma(int *pp, double *phi, double *psi, int *npsi)
     }
 }
 
+#ifdef WHEN_USED
 void arimatoma(int *arma, double *params, double *psi, int *npsi)
 {
     int i, j;
@@ -344,6 +375,7 @@ void arimatoma(int *arma, double *params, double *psi, int *npsi)
 	psi[i] = tmp;
     }
 }
+#endif
 
 static void partrans(int np, double *raw, double *new)
 {
@@ -357,7 +389,7 @@ static void partrans(int np, double *raw, double *new)
 }
 
 /* raw is overwritten */
-void dotrans(double *raw, double *new, int trans)
+static void dotrans(double *raw, double *new, int trans)
 {
     int i, v;
 
