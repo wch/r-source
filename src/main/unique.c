@@ -510,18 +510,24 @@ static SEXP ExpandDots(SEXP s, int expdots)
     return s;
 }
 
+extern SEXP substituteList(SEXP, SEXP);
+
 SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP formals, actuals, rlist;
-    SEXP f, b, rval, sysp;
+    SEXP funcall, f, b, rval, sysp, t1, t2, tail;
     RCNTXT *cptr;
     int expdots;
 
     checkArity(op,args);
 
-    f = CADR(args);
-    if (TYPEOF(f) != LANGSXP) {
-	b = deparse1(f, 1);
+    funcall = CADR(args);
+
+    if (TYPEOF(funcall) == EXPRSXP)
+	funcall = VECTOR(funcall)[0];
+
+    if (TYPEOF(funcall) != LANGSXP) {
+	b = deparse1(funcall, 1);
 	errorcall(call, "%s is not a valid call\n", CHAR(STRING(b)[0]));
     }
 
@@ -541,10 +547,10 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    sysp = R_GlobalEnv;
 	else
 	    sysp = cptr->sysparent;
-	if ( TYPEOF(CAR(f)) == SYMSXP )
-	    PROTECT(b = findFun(CAR(f), sysp));
+	if ( TYPEOF(CAR(funcall)) == SYMSXP )
+	    PROTECT(b = findFun(CAR(funcall), sysp));
 	else
-	    PROTECT(b = eval(CAR(f), sysp));
+	    PROTECT(b = eval(CAR(funcall), sysp));
     }
     else PROTECT(b = CAR(args));
 
@@ -566,8 +572,43 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Get the formals and match the actual args */
 
     formals = FORMALS(b);
-    actuals = CDR(f);
-	
+    PROTECT(actuals = duplicate(CDR(funcall)));
+
+    /* If there is a ... symbol then expand it out in the sysp env 
+       We need to take some care since the ... might be in the middle
+       of the actuals  */
+
+    t2 = R_MissingArg;
+    for (t1=actuals ; t1!=R_NilValue ; t1 = CDR(t1) ) {
+	if (CAR(t1) == R_DotsSymbol) {
+		t2 = substituteList(list1(R_DotsSymbol), sysp); 
+		break; 
+#ifdef NEWDOTS
+		t2 = findVarInFrame(FRAME(sysp), R_DotsSymbol);
+		b = allocList(length(t2));
+		for(f=b; f!=R_NilValue; f=CDR(f)) {
+			CAR(b)=PREXPR(CAR(t2));
+			t2 = CDR(t2);
+		}
+#endif
+	}
+    }
+    /* now to splice t2 into the correct spot in actuals */
+    if (t2 != R_MissingArg ) {  /* so we did something above */
+	if( CAR(actuals) == R_DotsSymbol )
+		actuals = listAppend(t2, CDR(actuals));
+	else {
+		for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
+			if( CADR(t1) == R_DotsSymbol ) {
+				tail = CDDR(t1);
+				CDR(t1) = t2;
+				listAppend(actuals,tail);
+				break;
+			}
+		}
+	}
+    }
+
     rlist = matchArgs(formals, actuals);
 	
     /* Attach the argument names as tags */
@@ -587,8 +628,8 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     rlist = StripUnmatched(rlist);
 
     PROTECT(rval = allocSExp(LANGSXP));
-    CAR(rval) = duplicate(CAR(CAR(CDR(args))));
+    CAR(rval) = duplicate(CAR(funcall));
     CDR(rval) = rlist;
-    UNPROTECT(3);
+    UNPROTECT(4);
     return rval;
 }
