@@ -603,7 +603,7 @@ static void drawelt(int whichrow, int whichcol)
 		(i = rowmin + whichrow - 2) < (int)LEVELS(CAR(tmp)) )
 		printelt(CAR(tmp), i, whichrow, whichcol);
 	} else
-	printstring("", 0, whichrow,  whichcol, 0);
+	    printstring("", 0, whichrow,  whichcol, 0);
     }
 }
 
@@ -658,7 +658,7 @@ static void printrect(int lwd, int fore)
 {
     int x, y;
     find_coords(crow, ccol, &x, &y);
-    drawrectangle(x + lwd - 1, y + lwd -1,
+    drawrectangle(x + lwd - 1, y + lwd - 1,
 		  BOXW(ccol+colmin-1) - lwd + 1,
 		  box_h - lwd + 1, lwd, fore);
 }
@@ -1171,7 +1171,7 @@ static void de_mousedown(control c, int buttons, point xy)
 		highlightrect();
 		bell();
 	    }
-	} else if (wrow > nhigh - 1 || wcol > nwide -1) {
+	} else if (wrow > nhigh - 1 || wcol > nwide - 1) {
 		/* off the grid */
 		highlightrect();
 		bell();
@@ -1585,8 +1585,8 @@ static dataeditor newdataeditor()
     }
 #endif
     c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
-			       Document | StandardWindow | TrackMouse |
-			       VScrollbar | HScrollbar);
+			       Document | StandardWindow | Menubar |
+			       VScrollbar | HScrollbar | TrackMouse);
     if (!c) {
          freeConsoleData(p);
          return NULL;

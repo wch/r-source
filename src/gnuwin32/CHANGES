@@ -32,6 +32,8 @@ increased to 48: some people have much bigger screens these days.
 
 Rcmd BATCH in rw1070 incorrectly required the R::Utils Perl module.
 
+The data editor no longer take close to all the CPU cycles when running.
+
 
 
 rw1070
