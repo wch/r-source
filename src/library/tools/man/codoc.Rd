@@ -60,14 +60,14 @@ codocData(package, lib.loc = NULL)
   if present; their occurrence is reported if \code{verbose} is true.
 
   Currently, the R documentation format has no high-level markup for the
-  basic \dQuote{structure} of classes and data sets (similar to the
-  usage sections for function synopses).  Variable names for data frames
-  in documentation objects obtained by suitably editing \dQuote{shells}
-  created by \code{\link{prompt}} are recognized by \code{codocData} and
-  used provided that the documentation object is for a single data frame
-  (i.e., only has one alias).  \code{codocClasses} analogously handles
-  slot names for classes in documentation objects obtained by editing
-  shells created by \code{\link[methods]{promptClass}}.
+  basic \dQuote{structure} of classes and data sets (similar to the usage
+  sections for function synopses).  Variable names for data frames in
+  documentation objects obtained by suitably editing \dQuote{shells}
+  created by \code{\link[code]{prompt}} are recognized by \code{codocData}
+  and used provided that the documentation object is for a single data
+  frame (i.e., only has one alias).  \code{codocClasses} analogously
+  handles slot names for classes in documentation objects obtained by
+  editing shells created by \code{\link[methods]{promptClass}}.
 }
 \value{
   \code{codoc} returns an object of class \code{"codoc"}.  Currently,
