@@ -78,7 +78,7 @@ BUG FIXES
     o   Rdindex now handles multi-line \title{}'s correctly
 
     o   Add weights.glm so that plot.lm gets the correct weights from
-	glm objects (the ones that go with deviance residuals not
+	glm objects (the ones that go with deviance residuals not the
 	working residuals).
 
     o   The help pages for lm and glm now describe the fitted objects.
@@ -86,6 +86,14 @@ BUG FIXES
     o   Printing a language object (e.g. a formula) in a list was
 	clobbering the buffer holding the tag labels which then were 
 	lost in subsequent lines of printout (PR#746).
+
+    o   aic in family() objects is now computed more precisely using
+	dxxxx(log=TRUE).  For binomial fits the value was wrong for
+	models specified via proportions and weights.
+
+    o   Using non-integer numbers of successes in a binomial glm
+	(as formerly in demo(lm.glm) now gives a warning, as the
+	theory and in particular the AIC value is not applicable.
 
 
 

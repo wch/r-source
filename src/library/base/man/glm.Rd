@@ -174,6 +174,9 @@ weights.glm(object, type = c("prior", "working"), ...)
   \code{\link{effects}}, \code{\link{fitted.values}},
   and \code{\link{residuals}}. Further, \code{\link{lm}} for
   non-generalized \emph{linear} models.
+
+  \code{\link{esoph}}, \code{\link{infert}} and
+  \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
 \note{
   Offsets specified by \code{offset} will not be included in predictions
@@ -222,13 +225,22 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 "72"))}
 %% "else" (not testonly)
 \dontrun{
-## Need the anorexia data from a 1999 version of the package MASS:
+## Need the anorexia data from a recent version of the package MASS:
 library(MASS)
 data(anorexia)
 }
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
             family = gaussian, data = anorexia)
 summary(anorex.1)
+
+# A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
+clotting <- data.frame(
+    u = c(5,10,15,20,30,40,60,80,100),
+    lot1 = c(118,58,42,35,27,25,21,19,18),
+    lot2 = c(69,35,26,21,18,16,13,12,12))
+summary(glm(lot1 ~ log(u), data=clotting, family=Gamma))
+summary(glm(lot2 ~ log(u), data=clotting, family=Gamma))
+
 \testonly{
 ## these are the same -- example from Jim Lindsey
 y <- rnorm(20)
