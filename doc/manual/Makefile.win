@@ -19,9 +19,15 @@ OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = makeinfo
 PDFLATEX = pdflatex
-PDFTEX = TEXINPUTS="../../share/texmf;$$TEXINPUTS"  pdftex
 LATEX = latex
+ifeq ($(strip $(BUILD)),CROSS)
+PDFTEX = TEXINPUTS="../../share/texmf:$$TEXINPUTS"  pdftex
+TEX = TEXINPUTS="../../share/texmf:$$TEXINPUTS" tex
+else
+PDFTEX = TEXINPUTS="../../share/texmf;$$TEXINPUTS"  pdftex
 TEX = TEXINPUTS="../../share/texmf;$$TEXINPUTS" tex
+endif
+
 
 MAKEINDEX = makeindex
 TEXINDEX = texindex
