@@ -54,31 +54,34 @@ BUG FIXES
 
     o	kernel("dirichlet", m=10, r=1) in package ts now works.
 
-    o   save/restore of  environments containing "..." object should
-        work now
+    o	save/restore of	 environments containing "..." object should
+	work now.
 
-    o   qhyper should work better for large N.
+    o	qhyper should work better for large N.
 
-    o   as.matrix.data.frame no longer escapes quotes in character
-        vectors.
+    o	as.matrix.data.frame no longer escapes quotes in character
+	vectors.
 
-    o   R would try to save the readline history at the end of
-        non-interactive sessions, causing crashes on some systems.
+    o	R would try to save the readline history at the end of
+	non-interactive sessions, causing crashes on some systems.
 
-    o   Subtle roundoff problems caused arrays to be allocated short in
-        loess.c in some cases, leading to segfaults.
+    o	Subtle roundoff problems caused arrays to be allocated short in
+	loess.c in some cases, leading to segfaults.
 
-    o   Document that postscript(file="") sends the output directly to
+    o	Document that postscript(file="") sends the output directly to
 	the default printer.
 
-    o   ts.union(, dframe=T) had a long-standing typo, now works.
+    o	ts.union(, dframe=T) had a long-standing typo, now works.
 
     o	save(,ascii=TRUE) had problem with octal escapes in strings
-        when there was a digit following, should work now  
+	when there was a digit following, should work now.
+
+    o	matpoints() and matlines() now also have a "type =" argument
+	with defaults "p" and "l", respectively; PR#506.
 
 
 	*********************************************************
-	*					   	        *
+	*							*
 	*	News of 1.0.0 and earlier is in file `ONEWS'	*
 	*							*
 	*********************************************************
