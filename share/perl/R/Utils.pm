@@ -11,7 +11,8 @@ use Text::Tabs;
 @EXPORT = qw(R_getenv R_version R_tempfile R_system R_runR
 	     file_path env_path
 	     list_files list_files_with_exts list_files_with_type
-	     make_file_exts);
+	     make_file_exts
+	     read_lines);
 
 #**********************************************************
 
@@ -200,5 +201,16 @@ sub R_runR
     unlink($Rout);
     return(@out);
 }
+
+sub read_lines {
+    my ($file) = @_;
+    my @lines;
+    open(FILE, "< $file")
+	or die "Error: cannot open file '$file' for reading\n";
+    chop(@lines = <FILE>);
+    close(FILE);
+    @lines;
+}
+
 
 1;
