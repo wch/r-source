@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -166,8 +167,7 @@ SEXP do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 		default:
 			errorcall(call,"unknown cumxxx function\n");
 		}
-	}
-	else {
+	} else { /* Non-Complex:  here, (sh|c)ould differentiate  real / int */
 		PROTECT(t = coerceVector(CAR(args), REALSXP));
 		s=allocVector(REALSXP, LENGTH(t));
 		for( i=0 ; i<length(t) ; i++)

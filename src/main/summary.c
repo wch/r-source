@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +21,8 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
-extern int errno;
+/*extern int errno;*/
+/* These are set/initialized in do_summary */
 static int narm;
 static int count;
 
@@ -153,26 +155,26 @@ static void rmin(double *x, int n, double *value)
 
 static void imax(int *x, int n, double *value)
 {
-        int i, s;
-        s = NA_INTEGER;
-        for (i=0; i<n; i++) {
-                if (x[i] != NA_INTEGER) {
-                        if (s == NA_INTEGER || s < x[i])
-                                s = x[i];
-                        count += 1;
-                }
-                else if (!narm) {
-                        *value = NA_REAL;
-                        return;
-                }
-        }
-        *value = s;
+	int i, s;
+	s = NA_INTEGER;
+	for (i=0; i<n; i++) {
+		if (x[i] != NA_INTEGER) {
+			if (s == NA_INTEGER || s < x[i])
+				s = x[i];
+			count += 1;
+		}
+		else if (!narm) {
+			*value = NA_REAL;
+			return;
+		}
+	}
+	*value = s;
 }
 
 static void rmax(double *x, int n, double *value)
 {
-        double s;
-        int i;
+	double s;
+	int i;
 #ifdef IEEE_754
 	s = R_NegInf;
 	for (i=0; i<n; i++) {
@@ -189,19 +191,19 @@ static void rmax(double *x, int n, double *value)
 	}
 	*value = (count == 0) ? NA_REAL : s;
 #else
-        s = NA_REAL;
-        for (i=0; i<n; i++) {
-                if (!ISNAN(x[i])) {
-                        if (ISNAN(s) || s < x[i])
-                                s = x[i];
-                        count += 1;
-                }
-                else if (!narm) {
-                        *value = NA_REAL;
-                        return;
-                }
-        }
-        *value = s;
+	s = NA_REAL;
+	for (i=0; i<n; i++) {
+		if (!ISNAN(x[i])) {
+			if (ISNAN(s) || s < x[i])
+				s = x[i];
+			count += 1;
+		}
+		else if (!narm) {
+			*value = NA_REAL;
+			return;
+		}
+	}
+	*value = s;
 #endif
 }
 
@@ -296,24 +298,25 @@ static void cprod(complex *x, int n, complex *value)
 	value->i = s.i;
 }
 
-	/* do_summary provides a variety of data summaries */
-	/* note that mean is no longer processed by this code */
-	/* 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
-
 SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+	/* do_summary provides a variety of data summaries */
+	/* note that mean is no longer processed by this code */
+
 	SEXP ans, a;
 	double tmp;
 	complex z, ztmp, zcum;
 	int complex_ans, oldcount;
 
 	 if( DispatchGroup("Summary",call, op, args, env, &ans) )
-                return ans;
+		return ans;
 
 	ans = matchArg(R_NaRmSymbol, &args);
 	narm = asLogical(ans);
 	oldcount = 0;
 	complex_ans = 0;
+
+	/* 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
 
 	if(PRIMVAL(op) == 0 || PRIMVAL(op) == 1) {	/* "sum" and "mean" */
 		zcum.r = 0.0;
@@ -497,7 +500,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			args = CDR(args);
 		}
 	}
-	else errorcall(call, "internal error.  Call a Guru\n");
+	else errorcall(call, "internal error (do_summary).  Call a Guru\n");
 
 	if(complex_ans) {
 		ans = allocVector(CPLXSXP, 1);
@@ -525,7 +528,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 badarg:
 	errorcall(call, "invalid argument type\n");
 	return R_NilValue;/* for -Wall */
-}
+}/* do_summary */
 
 SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
