@@ -22,6 +22,9 @@ SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
     SEXP ans;
     char str[201];
 
+    if(!isString(prefix) || length(prefix) != 1 ||
+        !isString(name) || length(name) != 1)
+        error("methodsPackageMetaName is being abused");
     snprintf(str, 200, ".__%s__%s", CHAR(STRING_ELT(prefix, 0)),
 	     CHAR(STRING_ELT(name, 0)));
     PROTECT(ans = allocVector(STRSXP, 1));
