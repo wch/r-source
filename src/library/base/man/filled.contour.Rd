@@ -4,14 +4,15 @@
 \usage{
 filled.contour(x = seq(0, 1, len = nrow(z)),
                y = seq(0, 1, len = ncol(z)),
-               z, xlim = range(x[is.finite(x)]),
-               ylim = range(y[is.finite(y)]),
-               zlim = range(z[is.finite(z)]),
-               levels = pretty(zlim, nlevels), nlevels = 20,
+               z,
+               xlim = range(x, finite=TRUE),
+               ylim = range(y, finite=TRUE),
+               zlim = range(z, finite=TRUE),
+               nlevels = 20,  levels = pretty(zlim, nlevels), 
                color.palette = cm.colors,
                col = color.palette(length(levels) - 1),
                plot.title, plot.axes, key.title, key.axes,
-               xaxs="i", yaxs="i", las=1, axes=TRUE, ...)
+               asp = NA, xaxs="i", yaxs="i", las=1, axes=TRUE, ...)
 }
 \arguments{
  \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -41,6 +42,7 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
  \item{key.title}{statements which add titles for the plot key.}
  \item{key.axes}{statements which draw axes on the plot key.
     This overrides the default axis.}
+ \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
  \item{xaxs}{the x axis style.  The default is to use internal
     labeling.}
  \item{yaxs}{the y axis style.  The default is to use internal
@@ -59,7 +61,6 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
   Cleveland, W. S. (1993).
   \emph{Visualizing Data},
   Summit, New Jersey: Hobart.
-
 }
 \author{Ross Ihaka.}
 \note{
@@ -68,22 +69,21 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     be replaced by a genuine \code{levelplot} function which will
     work in multipanel displays.
 }
-\seealso{\code{\link{contour}}, \code{\link{palette}}.}
+\seealso{\code{\link{contour}}, \code{\link{image}}, \code{\link{palette}}.}
 \examples{
 data(volcano)
+filled.contour(volcano, color = terrain.colors, asp = 1)# simple
+
 x <- 10*1:nrow(volcano)
 y <- 10*1:ncol(volcano)
-
-filled.contour(x, y, volcano, color = terrain.colors, nlevels = 20,
+filled.contour(x, y, volcano, color = terrain.colors,
     plot.title = title(main = "The Topography of Maunga Whau",
     xlab = "Meters North", ylab = "Meters West"),
     plot.axes = { axis(1, seq(100, 800, by = 100))
                   axis(2, seq(100, 600, by = 100)) },
     key.title = title(main="Height (Meters)"),
-    key.axes = axis(4, seq(90, 190, by = 10)))
-vv <- paste(version[c("major","minor")],collapse=".")
-vy <- paste(version[c("month","year")], collapse=" ")
-mtext(paste("filled.contour(.) from R, version", vv, ", ", vy),
+    key.axes = axis(4, seq(90, 190, by = 10)))# maybe also asp=1
+mtext(paste("filled.contour(.) from", R.version.string),
       side=1, line=4, adj=1, cex=.6)
 }
 \keyword{hplot}
