@@ -23,7 +23,7 @@ Installation
 
 The distribution can be obtained in one of three versions:
 
-1) A 15Mb file SetupR.exe.  Just run this for a Windows-2000 style
+1) A 18Mb file SetupR.exe.  Just run this for a Windows-2000 style
 installer.  It contains all the R components, and you can select what
 want installed.
 
@@ -314,7 +314,7 @@ and the rw-FAQ.
 Feedback
 ========
 
-Please send comments and bug reports to (preferably both of)
+Please send comments and bug reports to
 
-    Guido Masarotto <guido@hal.stat.unipd.it>
-    Brian Ripley <ripley@stats.ox.ac.uk>
+	Windows@r-project.org
+
