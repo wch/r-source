@@ -25,6 +25,8 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
   \item{xmax}{right-hand endpoint of the interpolation interval.}
 }
 \details{
+  The inputs can contain missing values which are deleted, so at least
+  one complete \code{(x, y)} pair is required.
   If \code{method = "fmm"}, the spline used is that of Forsythe, Malcolm
   and Moler (an exact cubic is fitted through the four points at each
   end of the data, and this is used to determine the end conditions).

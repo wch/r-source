@@ -3307,3 +3307,9 @@ stopifnot(identical(names(resid(fit)), names(y)))
 ## dlogis(-2000) was NaN in <= 2.0.0.
 stopifnot(identical(dlogis(-2000), 0.0))
 ##
+
+## short vectors in spline[fun]  (PR#7290)
+try(splinefun(1[0], 1[0])(1)) # segfault in <= 2.0.0
+for(meth in c("fmm", "nat", "per"))
+    stopifnot(all(splinefun(1, pi, method = meth)(0:2) == rep(pi, 3)))
+## exactly constant for n=1; was NA for "periodic" in <= 2.0.0

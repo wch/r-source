@@ -3,34 +3,40 @@ splinefun <- function(x, y=NULL, method="fmm")
     x <- xy.coords(x, y)
     y <- x$y
     x <- x$x
-    n <- length(x)# = length(y), ensured by xy.coords(.)
-    method <- match(method, c("periodic", "natural", "fmm"))
+    method <- pmatch(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
 	stop("splinefun: invalid interpolation method")
+    if(any(o <- is.na(x) | is.na(y))) {
+	o <- !o
+	x <- x[o]
+	y <- y[o]
+    }
     if(is.unsorted(x)) {
-	z <- order(x)
-	x <- x[z]
-	y <- y[z]
+	o <- order(x)
+	x <- x[o]
+	y <- y[o]
     }
-    if(method == 1 && y[1] != y[n]) {
-	warning("first and last y values differ in spline - using y[1] for both")
-	y[n] <- y[1]
+    nx <- length(x)# = length(y), ensured by xy.coords(.)
+    if(method == 1 && y[1] != y[nx]) { # periodic
+        warning("spline: first and last y values differ - using y[1] for both")
+        y[nx] <- y[1]
     }
+    if(nx == 0) stop("zero non-NA points")
     z <- .C("spline_coef",
 	    method=as.integer(method),
-	    n=n,
+	    n=as.integer(nx),
 	    x=x,
 	    y=y,
-	    b=double(n),
-	    c=double(n),
-	    d=double(n),
-	    e=double(if(method == 1) n else 0),
-            PACKAGE="base")
-    rm(x,y,n,method)
+	    b=double(nx),
+	    c=double(nx),
+	    d=double(nx),
+	    e=double(if(method == 1) nx else 0),
+	    PACKAGE="base")
+    rm(x,y,nx,o,method)
     function(x) {
 	.C("spline_eval",
 	   z$method,
-	   length(x),
+	   as.integer(length(x)),
 	   x=as.double(x),
 	   y=double(length(x)),
 	   z$n,
@@ -39,6 +45,6 @@ splinefun <- function(x, y=NULL, method="fmm")
 	   z$b,
 	   z$c,
 	   z$d,
-           PACKAGE="base")$y
+	   PACKAGE="base")$y
     }
 }
