@@ -35,7 +35,7 @@ int  Rgnome_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		      Rboolean del, char *pager);
 int  Rgnome_ChooseFile(int new, char *buf, int len);
 
-void Raqua_StartConsole(void);
+void Raqua_StartConsole(Rboolean OpenConsole);
 int  Raqua_ReadConsole(char *prompt, unsigned char *buf, int len, 
 			int addtohistory);
 void Raqua_WriteConsole(char *buf, int len);

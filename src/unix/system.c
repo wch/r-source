@@ -52,7 +52,7 @@
 
 
 #ifdef HAVE_AQUA 
-void R_StartConsole(void) { ptr_R_StartConsole(); }
+void R_StartConsole(Rboolean OpenConsole) { ptr_R_StartConsole(); }
 #endif
 
 
@@ -284,7 +284,7 @@ int Rf_initialize_R(int ac, char **av)
 
 #ifdef HAVE_AQUA    
     if(useaqua)
-     R_StartConsole();
+     R_StartConsole(TRUE);
 #endif
 
  return(0);
