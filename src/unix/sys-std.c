@@ -45,6 +45,8 @@ void fpu_setup(int);     /* in sys-unix.c */
 #include <unistd.h> /* for unlink */
 #endif
 
+#include <sys/time.h>
+
 extern int UsingReadline;
 
 /*
@@ -201,16 +203,25 @@ Rstd_getInputHandler(InputHandler *handlers, int fd)
  mechanism. The return type of this routine has changed.
 */
 
+static void nop(void){}
+
+static void (* R_PolledEvents)(void) = nop;
+
 static int setSelectMask(InputHandler *, fd_set *);
 
 static InputHandler* waitForActivity()
 {
     int maxfd;
     fd_set readMask;
+    volatile struct timeval tv;
 
-    maxfd = setSelectMask(R_InputHandlers, &readMask);
 
-    select(maxfd+1, &readMask, NULL, NULL, NULL);
+    do {
+	R_PolledEvents();
+	tv.tv_sec = 0;
+	tv.tv_usec = 100000;
+	maxfd = setSelectMask(R_InputHandlers, &readMask);
+    } while (!select(maxfd+1, &readMask, NULL, NULL, &tv));
 
     return(getSelectedHandler(R_InputHandlers, &readMask));
 }
