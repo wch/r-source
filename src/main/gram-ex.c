@@ -68,3 +68,36 @@ int R_fgetc(FILE *fp)
     return feof(fp) ? R_EOF : c;
 #endif
 }
+
+#ifdef __MRC__
+char *R_fgets(char *buf, int i, FILE *fp);
+
+char * R_fgets(char * s, int n, FILE * file)
+{
+	char *	p = s;
+	int			c;
+	
+	if (--n < 0)
+		return(NULL);
+	
+	if (n)
+		do
+		{
+			c = R_fgetc(file);
+			
+			if (c == EOF)
+				if (feof(file) && p != s)
+					break;
+				else
+					return(NULL);
+			
+			*p++ = c;
+		}
+		while (c != '\n' && --n);
+	
+	*p = 0;
+	
+	return(s);
+}
+#endif
+
