@@ -362,6 +362,8 @@ BUG FIXES
 	\end{Section} etc which occasionally gave problems, as fixed for
 	some other \end{Foo} in 1.8.1.  (PR#5645)
 
+    o   Work around a glibc bug to make the %Z format usable in strftime().
+
 
 
 
