@@ -106,7 +106,7 @@ void    nextpage();
 
 /* metafile.c */
 typedef objptr metafile;
-metafile newmetafile(char *name, rect r);
+metafile newmetafile(char *name, double width, double height);
 
 
 /* thread safe and extended  drawing functions (gdraw.c) */
@@ -129,14 +129,15 @@ void  gscroll(drawing d, point dp, rect r);
 void  ginvert(drawing d, rect r);
 rgb   ggetpixel(drawing d, point p);
 void  gsetpixel(drawing d, point p, rgb c);
-void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2);
-void  gdrawrect(drawing d, int width, int style, rgb c, rect r);
+void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2, 
+		int fast);
+void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast);
 void  gfillrect(drawing d, rgb fill, rect r);
-void  gdrawellipse(drawing d, int width, rgb border, rect r);
+void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast);
 void  gfillellipse(drawing d, rgb fill, rect r);
 void  gdrawpolyline(drawing d, int width, int style, rgb c, 
-                    point *p, int n, int closepath);
-#define gdrawpolygon(d,w,s,c,p,n) gdrawpolyline(d,w,s,c,p,n,1)
+                    point *p, int n, int closepath, int fast);
+#define gdrawpolygon(d,w,s,c,p,n,f) gdrawpolyline(d,w,s,c,p,n,1,f)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
 int   gdrawstr(drawing d, font f, rgb c, point p, char *s);
 void  gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
