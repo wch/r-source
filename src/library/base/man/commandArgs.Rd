@@ -29,8 +29,9 @@ commandArgs()
 
 \examples{
   commandArgs()
-# Spawn a copy of this  application as it was invoked.
-# system(paste(commandArgs(),collapse=" "))
+# Spawn a copy of this application as it was invoked,
+# running it in the background.
+# system(paste(commandArgs(),"&",collapse=" "))
 }
 \keyword{environment}
 \keyword{sysdata}

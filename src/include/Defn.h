@@ -321,6 +321,11 @@ extern int	R_HistorySize;	/* Size of the history file */
 extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
 extern SEXP	R_Warnings;	    /* the warnings and their calls */
 
+
+
+extern char ** CommandLineArgs    INI_as(NULL); /* permanent copy of the command line arguments passed to the application. */
+extern int     NumCommandLineArgs INI_as(0); /* the number of command line arguments. */
+
 #ifdef __MAIN__
 #undef extern
 #endif
