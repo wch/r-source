@@ -1,7 +1,7 @@
 \name{uspop}
 \docType{data}
 \alias{uspop}
-\title{The Population of the United States}
+\title{Populations Recorded by the US Census}
 \description{
   This data set gives the population of the United States (in millions)
   as recorded by the decennial census for the period 1790--1970.

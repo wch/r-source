@@ -1,7 +1,7 @@
 \name{sleep}
 \docType{data}
 \alias{sleep}
-\title{Students' Sleep Data}
+\title{Student's Sleep Data}
 \description{
   Data which show the effect of two soporific drugs (increase in hours
   of sleep) on groups consisting of 10 patients each.

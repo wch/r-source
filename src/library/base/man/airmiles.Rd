@@ -1,7 +1,7 @@
 \name{airmiles}
 \docType{data}
 \alias{airmiles}
-\title{Commercial US Airlines Mileage}
+\title{Passenger Miles on Commercial US Airlines, 1937--1960}
 \description{
   The revenue passenger miles flown by commercial airlines in
   the United States for each year from 1937 to 1960.

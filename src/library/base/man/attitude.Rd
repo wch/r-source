@@ -1,7 +1,7 @@
 \name{attitude}
 \docType{data}
 \alias{attitude}
-\title{Attitudes Toward Supervisors}
+\title{The Chatterjee--Price Attitude Data}
 \description{
   From a survey of the clerical employees of a large financial
   organization, the data are aggregated from the questionnaires of the
