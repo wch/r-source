@@ -234,19 +234,34 @@ remove.packages <- function(pkgs, lib, version) {
 
     if(!length(pkgs)) return(invisible())
 
+    hv <- !missing(version)
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         warning(paste("argument", sQuote("lib"),
-                      "is missing: using", lib))
+                      "is missing: using", lib), immediate. = TRUE)
+    }
+    have <- installed.packages(lib.loc=lib)
+    is_bundle <- pkgs %in% have[, "Bundle"]
+    pkgs0 <- pkgs; pkgs <- pkgs[!is_bundle]
+    if(hv) {
+        names(version) <- pkgs0;
+        if(length(pkgs)) pkgs <- manglePackageName(pkgs, version[!is_bundle])
+    }
+    for(p in pkgs0[is_bundle]) {
+        ## for consistency with packages, need unversioned names
+        ## and let .find.packages() figure out what to do.
+        add <- have[have[, "Bundle"] %in% p, "Package"]
+        add <- unique(sub("_[0-9.\-]*$", "", add))
+        if(hv) add <- manglePackageName(add, version[p])
+        pkgs <- c(pkgs, add)
     }
 
-    if (!missing(version))
-        pkgs <- manglePackageName(pkgs, version)
-
     paths <- .find.package(pkgs, lib)
-    unlink(paths, TRUE)
-    for(lib in unique(dirname(paths)))
-        updateIndices(lib)
+    if(length(paths)) {
+        unlink(paths, TRUE)
+        for(lib in unique(dirname(paths))) updateIndices(lib)
+    }
+    invisible()
 }
 
 ## used in some BioC packages and their support in tools.

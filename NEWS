@@ -124,6 +124,8 @@ NEW FEATURES
     	and can put a title within the legend.  (Suggested by Elizabeth
     	Purdom in PR#7400.)
 
+    o	remove.packages() can now remove bundles.
+
 
 UTILITIES
 
