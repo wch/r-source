@@ -3,29 +3,29 @@
 \title{ Draw a Heat Map }
 \description{
   A heat map is a false color image with a dendrogram added to the left
-  side and to the top.  Typically reordering of the rows and columns
+  side and to the top.	Typically, reordering of the rows and columns
   according to some set of values (row or column means) within the
   restrictions imposed by the dendrogram is carried out.
 }
 \usage{
 heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
-        distfun = dist, hclustfun = hclust, add.expr,
-        symm = FALSE, revC = identical(Colv, "Rowv"),
-        scale=c("row", "column", "none"), na.rm = TRUE,
-        margins = c(5, 5), ColSideColors, RowSideColors,
-        cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
-        labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
-        \dots)
+	distfun = dist, hclustfun = hclust, add.expr,
+	symm = FALSE, revC = identical(Colv, "Rowv"),
+	scale=c("row", "column", "none"), na.rm = TRUE,
+	margins = c(5, 5), ColSideColors, RowSideColors,
+	cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
+	labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
+	\dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
   \item{Rowv}{determines if and how the \emph{row} dendrogram should be
-    reordered.  Either a \code{\link{dendrogram}} or a vector of values
+    reordered.	Either a \code{\link{dendrogram}} or a vector of values
     used to reorder the row dendrogram or \code{\link{FALSE}} to
     suppress reordering or by default, \code{\link{NULL}}, see
     \emph{Details} below.}
   \item{Colv}{determines if and how the \emph{column} dendrogram should be
-    reordered.  Has the options as the \code{Rowv} argument above and
+    reordered.	Has the options as the \code{Rowv} argument above and
     \emph{additionally} when \code{x} is a square matrix, \code{Colv =
       "Rowv"} means that columns should be treated identically to the rows.}
   \item{distfun}{function used to compute the distance (dissimilarity)
@@ -55,13 +55,16 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \item{cexRow, cexCol}{positive numbers, used as \code{cex.axis} in
     for the row or column axis labeling.  The defaults currently only
     use number of rows or columns, respectively.}
+  \item{labRow, labCol}{character vectors with row and column labels to
+    use; these default to \code{rownames(x)} or \code{colnames(x)},
+    respectively.}
   \item{main, xlab, ylab}{main, x- and y-axis titles; defaults to none.}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
     e.g., \code{col} specifying the colors.} %
 }
 \details{
   If either \code{Rowv} or \code{Colv} are dendrograms they are honored
-  (and not reordered).  Otherwise, dendrograms are computed as
+  (and not reordered).	Otherwise, dendrograms are computed as
   \code{dd <- as.dendrogram(hclustfun(distfun(X)))} where \code{X} is
   either \code{x} or \code{t(x)}.\cr
 
@@ -85,6 +88,18 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   as the \pkg{RColorBrewer} package,
   \url{http://cran.r-project.org/src/contrib/PACKAGES.html#RColorBrewer}.
 }
+\note{
+  The original rows and columns are reordered \emph{in any case} to
+  match the dendrogram, e.g., the rows by
+  \code{\link{order.dendrogram}(Rowv)} where \code{Rowv} is the
+  (possibly \code{\link{reorder}()}ed) row dendrogram.
+
+  \code{heatmap()} uses \code{\link{layout}} and draws the
+  \code{\link{image}} in the lower right corner of a 2x2 layout.
+  Consequentially, it can \bold{not} be used in a multi column/row
+  layout, i.e., when \code{\link{par}(mfrow= *)} or \code{(mfcol= *)}
+  has been called.
+}
 \value{
   Invisibly, a list with components
   \item{rowInd}{\bold{r}ow index permutation vector as returned by
@@ -101,9 +116,9 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
  rc <- rainbow(nrow(x), start=0, end=.3)
  cc <- rainbow(ncol(x), start=0, end=.3)
  hv <- heatmap(x, col = cm.colors(256), scale="column",
-               RowSideColors = rc, ColSideColors = cc, margin=c(5,10),
-               xlab = "specification variables", ylab= "Car Models",
-               main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+	       RowSideColors = rc, ColSideColors = cc, margin=c(5,10),
+	       xlab = "specification variables", ylab= "Car Models",
+	       main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
  str(hv) # the two re-ordering index vectors
 
 %% want example using the `add.exp' argument!
@@ -113,11 +128,16 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
  data(attitude)
  round(Ca <- cor(attitude), 2)
  symnum(Ca) # simple graphic
- heatmap(Ca,             symm = TRUE, margin=c(6,6))# with reorder()
+ heatmap(Ca,		 symm = TRUE, margin=c(6,6))# with reorder()
  heatmap(Ca, Rowv=FALSE, symm = TRUE, margin=c(6,6))# _NO_ reorder()
 
-% data(volcano)
-% ## Volcano is not recognizable, but at least not random
-% heatmap(volcano, col = gray(0:64/64))
+ ## For variable clustering, rather use distance based on cor():
+ data(USJudgeRatings)
+ symnum( cU <- cor(USJudgeRatings) )
+
+ hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
+              distfun = function(c) as.dist(1 - c))
+ ## The Correlation matrix with same reordering:
+ round(100 * cU[hU[[1]], hU[[2]]])
 }
 \keyword{hplot}
