@@ -164,12 +164,13 @@ SEXP deparse1(SEXP call, int abbrev)
 SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
-    SEXP tval;
-    SEXP saveenv;
+    SEXP file, saveenv, tval;
     int i;
 
     checkArity(op, args);
+
     tval = CAR(args);
+    saveenv = R_NilValue;	/* -Wall */
     if (TYPEOF(tval) == CLOSXP) {
 	PROTECT(saveenv = CLOENV(tval));
 	CLOENV(tval) = R_GlobalEnv;
@@ -179,9 +180,11 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	CLOENV(CAR(args)) = saveenv;
 	UNPROTECT(1);
     }
+    file = CADR(args);
+    
     fp = NULL;
-    if (strlen(CHAR(STRING(CADR(args))[0])) > 0) {
-	fp = R_fopen(CHAR(STRING(CADR(args))[0]), "w");
+    if (strlen(CHAR(STRING(file)[0])) > 0) {
+	fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
 	if (!fp)
 	    errorcall(call, "unable to open file\n");
     }
@@ -197,55 +200,57 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP names, file, o, objs, tval;
-	int i, j, nobjs;
-	FILE *fp;
+    SEXP file, names, o, objs, tval;
+    int i, j, nobjs;
+    FILE *fp;
 
-	checkArity(op, args);
+    checkArity(op, args);
 
-	names = CAR(args);
-	file = CADR(args);
-	if(!isString(names) || !isString(file))
-		errorcall(call, "character arguments expected\n");
-	nobjs = length(names);
-	if(nobjs < 1 || length(file) < 1)
-		errorcall(call, "zero length argument\n");
+    names = CAR(args);
+    file = CADR(args);
+    if(!isString(names) || !isString(file))
+	errorcall(call, "character arguments expected\n");
+    nobjs = length(names);
+    if(nobjs < 1 || length(file) < 1)
+	errorcall(call, "zero length argument\n");
 
-	PROTECT(o = objs = allocList(nobjs));
+    fp = NULL;
 
-	for(i = 0 ; i < nobjs ; i++) {
-		CAR(o) = eval(install(CHAR(STRING(names)[i])), rho);
-		o = CDR(o);
+    PROTECT(o = objs = allocList(nobjs));
+
+    for(i = 0 ; i < nobjs ; i++) {
+	CAR(o) = eval(install(CHAR(STRING(names)[i])), rho);
+	o = CDR(o);
+    }
+
+    o = objs;
+    if(strlen(CHAR(STRING(file)[0])) == 0) {
+	for (i = 0; i < nobjs; i++) {
+	    Rprintf("\"%s\" <-\n", CHAR(STRING(names)[i]));
+	    tval = deparse1(CAR(o), 0);
+	    for (j = 0; j<LENGTH(tval); j++) {
+		Rprintf("%s\n", CHAR(STRING(tval)[j]));
+	    }
+	    o = CDR(o);
 	}
-
-	o = objs;
-	if(strlen(CHAR(STRING(CADR(args))[0])) == 0) {
-		for (i = 0; i < nobjs; i++) {
-			Rprintf("\"%s\" <-\n", CHAR(STRING(names)[i]));
-			tval = deparse1(CAR(o), 0);
-			for (j = 0; j<LENGTH(tval); j++) {
-				Rprintf("%s\n", CHAR(STRING(tval)[j]));
-			}
-			o = CDR(o);
-		}
+    }
+    else {
+	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w")))
+	    errorcall(call, "unable to open file\n");
+	for (i = 0; i < nobjs; i++) {
+	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING(names)[i]));
+	    tval = deparse1(CAR(o), 0);
+	    for (j = 0; j<LENGTH(tval); j++) {
+		fprintf(fp, "%s\n", CHAR(STRING(tval)[j]));
+	    }
+	    o = CDR(o);
 	}
-	else {
-		if(!(fp = R_fopen(CHAR(STRING(CADR(args))[0]), "w")))
-			errorcall(call, "unable to open file\n");
-		for (i = 0; i < nobjs; i++) {
-			fprintf(fp, "\"%s\" <-\n", CHAR(STRING(names)[i]));
-			tval = deparse1(CAR(o), 0);
-			for (j = 0; j<LENGTH(tval); j++) {
-				fprintf(fp, "%s\n", CHAR(STRING(tval)[j]));
-			}
-			o = CDR(o);
-		}
-		fclose(fp);
-	}
+	fclose(fp);
+    }
 
-	UNPROTECT(1);
-	R_Visible = 0;
-	return names;
+    UNPROTECT(1);
+    R_Visible = 0;
+    return names;
 }
 
 static void linebreak(int *lbreak)
@@ -346,7 +351,7 @@ static void printcomment(SEXP s)
 
 static void deparse2buff(SEXP s)
 {
-    int fop, lookahead, lbreak = 0;
+    int fop, lookahead = 0, lbreak = 0;
     SEXP op, t;
     char tpb[120];
 
@@ -358,10 +363,11 @@ static void deparse2buff(SEXP s)
 #if 1
 	print2buff(CHAR(PRINTNAME(s)));
 #else
-/* I'm pretty sure this is WRONG: 
-   Blindly putting special symbols in ""s causes more trouble than it solves
-	--pd 
-*/
+	/* I'm pretty sure this is WRONG: 
+	   Blindly putting special symbols in ""s causes more trouble
+	   than it solves 
+	   --pd 
+	   */
 	if( isValidName(CHAR(PRINTNAME(s))) )
 	    print2buff(CHAR(PRINTNAME(s)));
         else {

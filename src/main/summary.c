@@ -552,6 +552,54 @@ badmode:
     errorcall(call, "invalid \"mode\" of argument\n");
     return R_NilValue;/*-Wall */
 }/* do_summary */
+
+SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXPTYPE t;
+    SEXP x, y, ans, tmp;
+    int len = 0;
+
+    if (DispatchGroup("Summary", call, op, args, env, &ans))
+	return(ans);
+
+    for (tmp = args; tmp != R_NilValue; tmp = CDR(tmp)) {
+	t = TYPEOF(CAR(tmp));
+	if ((t == INTSXP) || (t == REALSXP)) {
+	    len += length(CAR(tmp));
+	} else if (t != LGLSXP) {
+	    errorcall(call, "invalid \"mode\" of argument\n");
+	    return(R_NilValue);
+	}
+    }
+
+    PROTECT(op = findFun(install("min"), env));
+    x = applyClosure(call, op, args, env, R_NilValue);
+    UNPROTECT(1);
+    PROTECT(op = findFun(install("max"), env)); 
+    y = applyClosure(call, op, args, env, R_NilValue);
+    UNPROTECT(1);
+
+    if ((TYPEOF(x) == INTSXP) && (TYPEOF(y) == INTSXP)) {
+	ans = allocVector(INTSXP, 2);
+	if (len == 0) {
+	    INTEGER(ans)[0] = NA_INTEGER;
+	    INTEGER(ans)[1] = NA_INTEGER;
+	} else {
+	    INTEGER(ans)[0] = INTEGER(x)[0];
+	    INTEGER(ans)[1] = INTEGER(y)[0];
+	}
+    } else {
+	ans = allocVector(REALSXP, 2);
+	if (len == 0) {
+	    REAL(ans)[0] = NA_REAL;
+	    REAL(ans)[1] = NA_REAL;
+	} else {
+	    REAL(ans)[0] = REAL(x)[0];
+	    REAL(ans)[1] = REAL(y)[0];
+	}
+    }
+    return(ans);
+}
 
 
 SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -730,5 +778,5 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
  bad_mode:
     error("complete.cases: invalid mode of argument\n");
 
-    return R_NilValue;/* NOTREACHED; for -Wall */
+    return R_NilValue;		/* NOTREACHED; for -Wall */
 }

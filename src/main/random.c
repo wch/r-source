@@ -19,6 +19,7 @@
  */
 
 #include "Defn.h"
+#include "Random.h"
 #include "Mathlib.h"
 
 /* .Random.seed == (RNGkind, i1_seed, i_seed[0],i_seed[1],..,i_seed[n_seed-2])

@@ -33,7 +33,7 @@
  *    Applied Statistics, 31, 188.
  */
 
-#include "Mathlib.h"/*-> ../include/Random.h */
+#include "Mathlib.h"/* >> "Random.h" */
 #include <time.h>/* for Randomize() */
 
 /* ----------------
@@ -48,12 +48,12 @@ Int32 dummy[3];
 
 RNGTAB RNG_Table[] =
 {
-/* kind	  name		is_seeded seed-length	i1_s, *seed-vec */
-    { 0, "Wichmann-Hill",	0,	3,	123, 	dummy},
-    { 1, "Marsaglia-MultiCarry",0,	2,	123, 	dummy},
-    { 2, "Super-Duper",		0,	2,	123, 	dummy},
-    { 3, "Mersenne-Twister",	0,  1+624,	123, 	dummy},
-    { 4, "Rand",		0,	2,	-1,  	dummy},
+/* kind Nkind	  name	  is_seeded seed-length	i1_s, *seed-vec */
+    { 0, 0, "Wichmann-Hill",	0,	3,	123, 	dummy},
+    { 1, 0, "Marsaglia-MultiCarry",0,	2,	123, 	dummy},
+    { 2, 0, "Super-Duper",	0,	2,	123, 	dummy},
+    { 3, 0, "Mersenne-Twister",	0,  1+624,	123, 	dummy},
+    { 4, 0, "Rand",		0,	2,	-1,  	dummy},
 };
 
 RNGtype RNG_kind = WICHMANN_HILL;

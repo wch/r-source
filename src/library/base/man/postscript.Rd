@@ -57,9 +57,12 @@ compatible, and can be included into other documents, e.g. into LaTeX, using
  # open the file "foo.ps" for graphics output
  postscript("foo.ps")
 }
-\testonly{xx <- seq(0, 7, length=701); yy <- sin(xx)/xx}
-plot(xx,yy)# produce the desired graph(s)
-\dontrun{dev.off()# turn off the postscript device}
+\testonly{
+xx <- seq(0, 7, length=701)
+yy <- sin(xx)/xx; yy[1] <- 1
+plot(xx,yy)			# produce the desired graph(s)
+}
+\dontrun{dev.off()		# turn off the postscript device}
 
 all(unlist(ps.options()) == unlist(.PostScript.Options))
 ps.options(bg = "pink")

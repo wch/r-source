@@ -1188,12 +1188,20 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     SubAssignArgs(args, &x, &subs, &y);
     nsubs = length(subs);
 
+    oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
 	PROTECT(x = PairToVectorList(x));
     }
+    else if (length(x) == 0) {
+	if (length(y) == 0) {
+	    UNPROTECT(1);
+	    return(x);
+	}
+	else
+	    PROTECT(x = coerceVector(x, TYPEOF(y)));
+    }
     else {
-	oldtype = 0;
 	PROTECT(x);
     }
 
@@ -1294,9 +1302,15 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
 
-    if (isNull(x) && isNull(y)) {
-	UNPROTECT(1);
-	return R_NilValue;
+    if (length(x) == 0) {
+	if (length(y) > 1)
+	    x = coerceVector(x, VECSXP);
+	else if (length(y) == 1)
+	    x = coerceVector(x, TYPEOF(y));
+	else {
+	    UNPROTECT(1);
+	    return(x);
+	}
     }
     if (NAMED(x) == 2) {
 	CAR(args) = x = duplicate(x);
@@ -1554,9 +1568,15 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    TAG(x) = nlist;
 	}
     }
-    else if (isNewList(x) || isExpression(x)) {
+    else {
 	int i, imatch, nx;
-	SEXP names = getAttrib(x, R_NamesSymbol);
+	SEXP names;
+
+	if (!(isNewList(x) || isExpression(x))) {
+	    warning("Coercing LHS to a list\n");
+	    x = coerceVector(x, VECSXP);
+	}
+	names = getAttrib(x, R_NamesSymbol);
 	nx = length(x);
 	nlist = CADR(args);
 	if (isString(nlist))
@@ -1635,7 +1655,6 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    else error("$ used on non-list\n");
     UNPROTECT(2);
     NAMED(x) = 0;
     return x;

@@ -11,6 +11,12 @@
 
 NEW FEATURES
 
+    o	--vsize & --nsize now both give size in "single units" 
+	(bytes/cons cells) with possible 
+	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
+
+    o	[pdqr]negbin() now also work with non-integer 'size'.
+
     o	New standard package `lqs' for resistant regression and
 	covariance estimation, contributed by B. D. Ripley.
 
@@ -21,6 +27,14 @@ NEW FEATURES
     o	new function jitter()  [slightly more useful than S's].
 
 BUG FIXES
+
+    o	--debugger .. now gives a warning if other command line args are used
+
+    o	pt(t,df, ncp) now also works for bigger ncp's
+    
+    o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
+
+    o	model.frame with subset and only one column fixed
 
     o	boxplot(<data.frame>) now works again.
 

@@ -25,13 +25,14 @@
 
 #include "Complex.h"
 
+/* ../main/sort.c : */
 void	isort(int*,     int);
 void	rsort(double*, int);
 void	csort(complex*, int);
 void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
-void	iFind(int*,    int, int);
-void	rFind(double*, int, int);
-void	cFind(complex*, int, int);
+void	iPsort(int*,    int, int);
+void	rPsort(double*, int, int);
+void	cPsort(complex*, int, int);
 
 int	IndexWidth(int);
 int	Rstrlen(char*);

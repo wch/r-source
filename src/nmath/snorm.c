@@ -28,11 +28,15 @@
  * Is called from  rnorm(..), but also rt(), rf(), rgamma(), ...
  */
 
-#include "Mathlib.h"
+#include "Mathlib.h"/* >> "Random.h" */
 
-#define KINDERMAN_RAMAGE
+#define repeat for(;;)
 
-#ifdef AHRENS_DIETER
+N01type N01_kind = KINDERMAN_RAMAGE;
+
+/* #define KINDERMAN_RAMAGE */
+
+/* #ifdef AHRENS_DIETER */
 
 /*
  *  REFERENCE
@@ -94,145 +98,145 @@ static double h[31] =
 	0.18361420, 0.27900160, 0.70104740
 };
 
-#define repeat for(;;)
-
-double snorm(void)
-{
-    double s, u, w, y, ustar, aa, tt;
-    int i;
-
-    u = sunif();
-    s = 0.0;
-    if (u > 0.5)
-	s = 1.0;
-    u = u + u - s;
-    u *= 32.0;
-    i = (int) u;
-    if (i == 32)
-	i = 31;
-    if (i != 0) {
-	ustar = u - i;
-	aa = a[i - 1];
-	while (ustar <= t[i - 1]) {
-	    u = sunif();
-	    w = u * (a[i] - aa);
-	    tt = (w * 0.5 + aa) * w;
-	    repeat {
-		if (ustar > tt)
-		    goto deliver;
-		u = sunif();
-		if (ustar < u)
-		    break;
-		tt = u;
-		ustar = sunif();
-	    }
-	    ustar = sunif();
-	}
-	w = (ustar - t[i - 1]) * h[i - 1];
-    }
-    else {
-	i = 6;
-	aa = a[31];
-	repeat {
-	    u = u + u;
-	    if (u >= 1.0)
-		break;
-	    aa = aa + d[i - 1];
-	    i = i + 1;
-	}
-	u = u - 1.0;
-	repeat {
-	    w = u * d[i - 1];
-	    tt = (w * 0.5 + aa) * w;
-	    repeat {
-		ustar = sunif();
-		if (ustar > tt)
-		    goto jump;
-		u = sunif();
-		if (ustar < u)
-		    break;
-		tt = u;
-	    }
-	    u = sunif();
-	}
-    jump:;
-    }
-
-deliver:
-    y = aa + w;
-    return (s == 1.0) ? -y : y;
-
-}
-
-#endif
-
-#ifdef KINDERMAN_RAMAGE
-
-/*
- *  REFERENCE
- *
- *    Kinderman A. J. and Ramage J. G. (1976).
- *    Computer generation of normal random variables.
- *    JASA 71, 893-896.
- */
+/*----------- Constants and definitions for  Kinderman - Ramage --- */
+	/*
+	 *  REFERENCE
+	 *
+	 *    Kinderman A. J. and Ramage J. G. (1976).
+	 *    Computer generation of normal random variables.
+	 *    JASA 71, 893-896.
+	 */
 
 #define C1		0.398942280401433
 #define C2		0.180025191068563
-#define g(x)		(C1*exp(-x*x/2.0)-C2*(a-fabs(x)))
+#define g(x)		(C1*exp(-x*x/2.0)-C2*(A-fabs(x)))
 
-static double a =  2.216035867166471;
+static double A =  2.216035867166471;
 
-double snorm()
+
+double snorm(void)
 {
-    double t, u1, u2, u3;
+    double s, u1, w, y, u2, u3, aa, tt;
+    int i;
+    
+    switch(N01_kind) {
+	
+    case  AHRENS_DIETER: /* see Reference above */
+	
+	u1 = sunif();
+	s = 0.0;
+	if (u1 > 0.5)
+	    s = 1.0;
+	u1 = u1 + u1 - s;
+	u1 *= 32.0;
+	i = (int) u1;
+	if (i == 32)
+	    i = 31;
+	if (i != 0) {
+	    u2 = u1 - i;
+	    aa = a[i - 1];
+	    while (u2 <= t[i - 1]) {
+		u1 = sunif();
+		w = u1 * (a[i] - aa);
+		tt = (w * 0.5 + aa) * w;
+		repeat {
+		    if (u2 > tt)
+			goto deliver;
+		    u1 = sunif();
+		    if (u2 < u1)
+			break;
+		    tt = u1;
+		    u2 = sunif();
+		}
+		u2 = sunif();
+	    }
+	    w = (u2 - t[i - 1]) * h[i - 1];
+	}
+	else {
+	    i = 6;
+	    aa = a[31];
+	    repeat {
+		u1 = u1 + u1;
+		if (u1 >= 1.0)
+		    break;
+		aa = aa + d[i - 1];
+		i = i + 1;
+	    }
+	    u1 = u1 - 1.0;
+	    repeat {
+		w = u1 * d[i - 1];
+		tt = (w * 0.5 + aa) * w;
+		repeat {
+		    u2 = sunif();
+		    if (u2 > tt)
+			goto jump;
+		    u1 = sunif();
+		    if (u2 < u1)
+			break;
+		    tt = u1;
+		}
+		u1 = sunif();
+	    }
+	jump:;
+	}
+	
+    deliver:
+    y = aa + w;
+    return (s == 1.0) ? -y : y;
 
-    u1 = sunif();
-    if(u1 < 0.884070402298758) {
-	u2 = sunif();
-	return a*(1.13113163544180*u1+u2-1);
-    }
+    /*-----------------------------------------------------------*/
+    
+    case KINDERMAN_RAMAGE: /* see Reference above */
+	u1 = sunif();
+	if(u1 < 0.884070402298758) {
+	    u2 = sunif();
+	    return A*(1.13113163544180*u1+u2-1);
+	}
+	
+	if(u1 >= 0.973310954173898) { /* tail: */
+	    repeat {
+		u2 = sunif();
+		u3 = sunif();
+		tt = (A*A-2*log(u3));
+		if( u2*u2<(A*A)/tt )
+		    return (u1 < 0.986655477086949) ? sqrt(tt) : -sqrt(tt);
+	    }
+	}
+	
+	if(u1 >= 0.958720824790463) { /* region3: */
+	    repeat {
+		u2 = sunif();
+		u3 = sunif();
+		tt = A - 0.630834801921960* fmin2(u2,u3);
+		if(fmax2(u2,u3) <= 0.755591531667601)
+		    return (u2<u3) ? tt : -tt;
+		if(0.034240503750111*fabs(u2-u3) <= g(tt))
+		    return (u2<u3) ? tt : -tt;
+	    }
+	}
+	
+	if(u1 >= 0.911312780288703) { /* region2: */
+	    repeat {
+		u2 = sunif();
+		u3 = sunif();
+		tt = 0.479727404222441+1.105473661022070*fmin2(u2,u3);
+		if( fmax2(u2,u3)<=0.872834976671790 )
+		    return (u2<u3) ? tt : -tt;
+		if( 0.049264496373128*fabs(u2-u3)<=g(tt) )
+		    return (u2<u3) ? tt : -tt;
+	    }
+	}
 
-    if(u1 >= 0.973310954173898) {
-    tail:
-	u2 = sunif();
-	u3 = sunif();
-	t = (a*a-2*log(u3));
-	if( u2*u2<(a*a)/t )
-	    return (u1 < 0.986655477086949) ? sqrt(t) : -sqrt(t) ;
-	goto tail;
-    }
-
-    if(u1 >= 0.958720824790463) {
-    region3:
-	u2 = sunif();
-	u3 = sunif();
-	t = a - 0.630834801921960* fmin2(u2,u3);
-	if(fmax2(u2,u3) <= 0.755591531667601)
-	    return (u2<u3) ? t : -t ;
-	if(0.034240503750111*fabs(u2-u3) <= g(t))
-	    return (u2<u3) ? t : -t ;
-	goto region3;
-    }
-
-    if(u1 >= 0.911312780288703) {
-    region2:
-	u2 = sunif();
-	u3 = sunif();
-	t = 0.479727404222441+1.105473661022070*fmin2(u2,u3);
-	if( fmax2(u2,u3)<=0.872834976671790 )
-	    return (u2<u3) ? t : -t ;
-	if( 0.049264496373128*fabs(u2-u3)<=g(t) )
-	    return (u2<u3) ? t : -t ;
-	goto region2;
-    }
-
-region1:
-    u2 = sunif();
-    u3 = sunif();
-    t = 0.479727404222441-0.595507138015940*fmin2(u2,u3);
-    if(fmax2(u2,u3) <= 0.805577924423817)
-	return (u2<u3) ? t : -t ;
-    goto region1;
+	/* ELSE	 region1: */
+	repeat {
+	    u2 = sunif();
+	    u3 = sunif();
+	    tt = 0.479727404222441-0.595507138015940*fmin2(u2,u3);
+	    if(fmax2(u2,u3) <= 0.805577924423817)
+		return (u2<u3) ? tt : -tt;
+	}
+    default:
+	MATHLIB_ERROR("snorm(): invalid N01_kind: %d\n", N01_kind);
+	return 0.0;/*- -Wall */
+    }/*switch*/
 }
-
-#endif

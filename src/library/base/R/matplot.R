@@ -53,10 +53,10 @@ matplot <- function(x, y, type="p",
     ii <- match("log", names(xargs <- list(...)), nomatch = 0)
     log <- xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)
-    xlab <- if (is.null(xlab)) xy$xlab	else xlab
-    ylab <- if (is.null(ylab)) xy$ylab	else ylab
-    xlim <- if (is.null(xlim)) range(xy$x, finite = TRUE)  else xlim
-    ylim <- if (is.null(ylim)) range(xy$y, finite = TRUE)  else ylim
+    xlab <- if (is.null(xlab)) xy$xlab else xlab
+    ylab <- if (is.null(ylab)) xy$ylab else ylab
+    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
+    ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     if(length(type)< k) type<- rep(type,length= k)
     if(length(lty) < k) lty <- rep(lty, length= k)
     if(length(lwd) < k) lwd <- rep(lwd, length= k)

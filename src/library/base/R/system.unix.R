@@ -2,22 +2,36 @@
     list(OS.type = "Unix",
 	 file.sep = "/",
 	 dynlib.ext = ".so",
-	 show.file = function(file) system(paste(options("pager")[[1]], file)),
-	 append.file = function(f1,f2) {# append to 'f1' the file 'f2':
+	 show.file = function(file) {
+             system(paste(options("pager")[[1]], file))
+         },
+	 append.file = function(f1, f2) {# append to `f1' the file `f2':
 	     system(paste("cat", f2, ">>", f1), trash.errors= TRUE)
 	 },
-	 show.data = function(package,lib.loc,fsep) {
-	 ## give `index' of all possible data sets
+	 show.data = function(package, lib.loc, fsep) {
+             ## give `index' of all possible data sets
+             file <- tempfile("R.")
+             on.exit(unlink(file))
+             first <- TRUE
 	     for (lib in lib.loc)
-	     for (pkg in package) {
-	      INDEX <- system.file(paste("data", "index.doc", sep = fsep),
-			      pkg, lib)
-	      if (INDEX != "") {
-	       cat(paste("\n\nData sets in package `", pkg, "':\n\n",
-			 sep = fsep))
-	       .Platform$ show.file(INDEX)
-	      }}},	 
-	 )
+                 for (pkg in package) {
+                     INDEX <- system.file(paste("data", "index.doc",
+                                                sep = fsep),
+                                          pkg, lib)
+                     if (INDEX != "") {
+                         cat(paste(ifelse(first, "", "\n"),
+                                   "Data sets in package `", pkg, "':\n\n",
+                                   sep = ""),
+                             file = file, append = TRUE)
+                         .Platform$append.file(file, INDEX)
+                         first <- FALSE
+                     }
+                 }
+             if (first)
+                stop("No data sets found")
+             else
+                 .Platform$show.file(file)
+         })
 
 bug.report <- function(subject="", ccaddress=getenv("USER"),
                        method=.Options$mailer,

@@ -384,6 +384,7 @@ FUNTAB R_FunTab[] =
 {"min",		do_summary,	2,	11,	-1,	PP_FUNCALL},
 {"max",		do_summary,	3,	11,	-1,	PP_FUNCALL},
 {"prod",	do_summary,	4,	11,	-1,	PP_FUNCALL},
+{"range",	do_range,	0,	11,	-1,	PP_FUNCALL},
 {"cov",		do_cov,		0,	11,	3,	PP_FUNCALL},
 {"cor",		do_cov,		1,	11,	3,	PP_FUNCALL},
 

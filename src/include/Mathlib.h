@@ -180,13 +180,13 @@
 #undef ML_PRECISION_WARNINGS
 
 #ifdef IEEE_754
-#ifdef HAVE_IEEE754_H
-#include <ieee754.h> /* newer Linuxen */
-#else
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h> /* others [Solaris 2.5.x], .. */
-#endif
-#endif
+# ifdef HAVE_IEEE754_H
+#  include <ieee754.h> /* newer Linuxen */
+# else
+#  ifdef HAVE_IEEEFP_H
+#   include <ieeefp.h> /* others [Solaris 2.5.x], .. */
+#  endif
+# endif
 
 extern double m_zero;
 extern double m_one;
@@ -197,7 +197,8 @@ extern double m_one;
 #define ML_NAN		(m_zero / m_zero)
 #define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
 #define ML_VALID(x)	(!isnan(x))
-#else
+
+#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
 #define ML_ERROR(x)	ml_error(x)
 #define ML_POSINF	DBL_MAX
 #define ML_NEGINF	(-DBL_MAX)

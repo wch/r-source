@@ -52,7 +52,6 @@ double qnbinom(double x, double n, double p)
 	return ML_NAN;
     }
 #endif
-    n = floor(n + 0.5);
     if (x < 0 || x > 1 || p <= 0 || p >= 1 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;

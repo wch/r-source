@@ -7,7 +7,7 @@
 # The option `-n' renders examples non-executable by wrapping them into
 # a \dontrun{} environment.
 
-# Copyright (C) 1997, 1998 Kurt Hornik
+# Copyright (C) 1997, 1998, 1999 Kurt Hornik
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 # Bug reports to Kurt.Hornik@ci.tuwien.ac.at
 
-$VERSION = "0.3-2";
+$VERSION = "0.3-3";
 ($NAME = $0) =~ s|.*/||;
 
 $\ = "\n";
@@ -88,7 +88,11 @@ while (<>) {
       &section(0, "");
       $braceLevel = 0;
     }
-    &output("\\keyword\{$word[1]\}");
+    if ($word[1] =~ /sysdata/) {
+      &output("\\keyword\{datasets\}");
+    } else {
+      &output("\\keyword\{$word[1]\}");
+    }
   }
   if (/^\.RC/) {
     if ($needVal) {
@@ -111,6 +115,12 @@ while (<>) {
   if (/^\.SH/) {
     if ($word[1] =~ /REFERENCE/) {
       &section(0, "\\references\{");
+    } elsif ($word[1] =~ /SOURCE/) {
+      &section(0, "\\source\{");
+    } elsif ($word[1] =~ /SUMMARY/) {
+      &section(0, "\\description\{");
+    } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
+      &section(0, "\\format\{");
     } else {
       # This line may be of the form .SH "A B C"
       ($tmp = join(" ", @word[1..$#word])) =~ s/\"(.*)\"/$1/;

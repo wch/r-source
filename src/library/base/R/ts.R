@@ -169,8 +169,8 @@ plot.ts <-
 	xy <- xy.coords(x, y, xlabel, ylabel, log)
 	xlab <- xy$xlab
 	ylab <- if (missing(ylab)) xy$ylab	else ylab
-	xlim <- if (is.null(xlim)) range(xy$x, finite=TRUE) else xlim
-	ylim <- if (is.null(ylim)) range(xy$y, finite=TRUE) else ylim
+	xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
+	ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
 	plot.default(xy, type = "n",
 		     xlab=xlab, ylab = ylab, xlim=xlim, ylim=ylim,
 		     log=log, col=col,bg=bg,pch=pch,axes=axes,
@@ -184,7 +184,7 @@ plot.ts <-
     if(missing(ylab)) ylab <- xlabel
     time.x <- time(x)
     if(is.null(xlim)) xlim <- range(time.x)
-    if(is.null(ylim)) ylim <- range(x, finite=TRUE)
+    if(is.null(ylim)) ylim <- range(x[is.finite(x)])
     plot.new()
     plot.window(xlim, ylim, log)
     if(is.matrix(x)) {

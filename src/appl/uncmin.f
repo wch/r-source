@@ -40,11 +40,12 @@ c	    f.......a double precision array of length n
 c
       subroutine fdhess(n,x,fval,fun,h,nfd,step,f,ndigit,typx)
       implicit none
-      integer n,nfd,ndigit
-      double precision eta,tempi,tempj
-      double precision fval,f(n),fii,fij,h(nfd,nfd)
-      double precision x(n),step(n),typx(n)
+
       external fun
+      integer n,nfd,ndigit
+      double precision x(n),fval, h(nfd,nfd),step(n),f(n),typx(n)
+c
+      double precision eta,tempi,tempj,fii,fij
       integer i,j
       eta=(10.0d0**(-ndigit))**(1.0d0/3.0d0)
       do 10 i=1,n
@@ -829,11 +830,13 @@ c
 c
 cstatic
       subroutine fstocd (n, x, fcn, sx, rnoise, g)
-      implicit double precision (a-h,o-z)
-      dimension x(n)
-      dimension sx(n)
-      dimension g(n)
+      implicit none
+      integer n
       external fcn
+      double precision x(n), sx(n), g(n), rnoise
+c
+      integer i
+      double precision third, stepi,xtempi, fplus, fminus
 c
 c	find i th  stepsize, evaluate two neighbors in direction of i th
 c	unit vector, and evaluate i th	component of gradient.

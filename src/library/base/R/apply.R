@@ -25,19 +25,25 @@ apply <- function(X, MARGIN, FUN, ...)
     ## do the calls
 
     newX <- aperm(X, c(s.call, s.ans))
-    dim(newX) <- c(prod(d.call), prod(d.ans))
-    d2 <- dim(newX)[2]
+    dim(newX) <- c(prod(d.call), d2 <- prod(d.ans))
+
     ans <- vector("list", d2)
-    for(i in 1:d2)
-	ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
+    if((i.vec <- length(d.call) < 2)) # vector
+	for(i in 1:d2) ans[[i]] <- FUN(newX[,i], ...)
+    else
+	for(i in 1:d2) ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
 
     ## answer dims and dimnames
 
-    ans.names <- names(ans[[1]])
     ans.list <- is.recursive(ans[[1]])
-    ans.length <- length(ans[[1]])
+    l.ans <- length(ans[[1]])
+
+    ans.names <- names(ans[[1]])
+    if(i.vec && is.null(ans.names) && length(dn.call) &&
+       l.ans == length(an <- dn.call[[1]]))
+	ans.names <- an
     if(!ans.list)
-	ans.list <- any(unlist(lapply(ans, length)) != ans.length)
+	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
     if(length(MARGIN) == 1 && len.a == d2) {
 	names(ans) <- if(length(dn.ans[[1]]) > 0) dn.ans[[1]] # else NULL

@@ -110,6 +110,17 @@
 #endif
 #endif
 
+/* SunOS 4 is famous for broken header files */
+#undef SunOS4
+#ifdef SunOS4
+# ifndef NULL
+#  define	NULL		0
+# endif
+# ifndef RAND_MAX
+#  define	RAND_MAX	32767
+# endif
+#endif /* SunOS4 */
+
 /* Printing Command */
 #define R_PRINTCMD	""
 

@@ -17,7 +17,7 @@
 
     The data set \code{euro.cross} contains conversion rates between the
     various Euro currencies, i.e., the result of
-    \code{outer(1/euro,euro)}.
+    \code{outer(1 / euro, euro)}.
 }
 \examples{
 data(euro)
@@ -33,8 +33,6 @@ all(euro.cross == outer(1/euro, euro)) # TRUE
 20 / euro["ATS"]
 
 ## Convert 20.- Spanish Pesetas to Italian Lira
-20 * euro.cross["ESP","ITL"]
+20 * euro.cross["ESP", "ITL"]
 }
-\keyword{dataset}
-
-    
+\keyword{datasets}

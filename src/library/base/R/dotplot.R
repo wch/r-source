@@ -60,7 +60,7 @@
     }
 
     plot.new()
-    plot.window(xlim = range(x, finite = TRUE), ylim = ylim, log = "")
+    plot.window(xlim = range(x[is.finite(x)]), ylim = ylim, log = "")
     xmin <- par("usr")[1]
     if (!is.null(labels)) {
 	linch <- max(strwidth(labels, "inch"), na.rm = TRUE)

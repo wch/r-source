@@ -1307,16 +1307,19 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (subset != R_NilValue) {
         PROTECT(tmp2=allocVector(VECSXP, length(data)));
-	for (i =length(data); i--;){
+	for (i =nc; i--;){
 	    VECTOR(tmp2)[i]=allocVector(INTSXP,1);
 	    copyMostAttrib(VECTOR(data)[i],VECTOR(tmp2)[i]);
 	}
-	PROTECT(tmp = lang4(install("["), data, subset, R_MissingArg));
+	PROTECT(tmp=install("[.data.frame")); 
+	PROTECT(tmp=LCONS(tmp,list4(data,subset,R_MissingArg,install("F"))));
+	/*
+	  PROTECT(tmp = lang4(install("["), data, subset, R_MissingArg)); */
 	PROTECT(data = eval(tmp, rho));
-	for (i =length(data); i--;){
+	for (i =nc; i--;){
 	    copyMostAttrib(VECTOR(tmp2)[i],VECTOR(data)[i]);
 	}
-	UNPROTECT(3);
+	UNPROTECT(4);
     }
     UNPROTECT(2);
     PROTECT(data);
