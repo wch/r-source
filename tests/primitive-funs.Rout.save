@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-03-14)
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 2.0.0 Under development (unstable) (2004-08-30), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > #### Which functions in R  are	.Primitive()  / which should be ?
 > #### ------------------------------------------------------------
@@ -22,9 +23,9 @@ Type `q()' to quit R.
 > ####	 ~~~~~~~~~~~~~~~~~~~~~~~~~
 > 
 > bpos <- match("package:base",search())
-> nn <- ls(pos=bpos)
+> nn <- ls(pos=bpos, all = TRUE)
 > length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
-[1] 1636
+[1] 1063
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > is.special <- function(obj) typeof(obj) == "special"

@@ -7,7 +7,7 @@
 ####	 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 bpos <- match("package:base",search())
-nn <- ls(pos=bpos)
+nn <- ls(pos=bpos, all = TRUE)
 length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
 
 is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
