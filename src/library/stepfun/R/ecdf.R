@@ -7,7 +7,8 @@ ecdf <- function (x)
     x <- sort(x)
     n <- length(x)
     rval <- approxfun(x, (1:n)/n,
-		      method = "constant", yleft=0, yright=1, f = 0)
+		      method = "constant", yleft=0, yright=1, f = 0,
+                      ties = "ordered")
     class(rval) <- c("ecdf", "stepfun", class(rval))
     attr(rval, "call") <- sys.call()
     rval
