@@ -36,7 +36,7 @@ is.array(x)
   \code{dim}[names] attribute at a later time.
 
   \code{is.array} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is an array (i.e., has a \code{dim} attribute) 
+  whether its argument is an array (i.e., has a \code{dim} attribute)
   or not.
 }
 \seealso{
@@ -49,5 +49,8 @@ array(1:3, c(2,4)) # recycle 1:3 "2 2/3 times"
 #     [,1] [,2] [,3] [,4]
 #[1,]    1    3    2    1
 #[2,]    2    1    3    2
+
+# funny object:
+str(a0 <- array(1:3, 0))
 }
 \keyword{array}
