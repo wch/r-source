@@ -231,7 +231,10 @@ RES   0 0 1 1 1 0  = 28
 #define	GTOP	6
 
 /* File Handling */
+/*
 #define R_EOF	65535
+*/
+#define R_EOF	-1
 
 /* MAGIC Numbers for files */
 #define R_MAGIC_BINARY 1975
