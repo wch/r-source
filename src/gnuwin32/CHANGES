@@ -25,6 +25,9 @@ Cross-building automatically uses STAMP=NO for packages.
 R and packages can now be built in a directory whose path contains
 spaces (although we still don't recommend it).
 
+If a package contains a script `configure.win' it will be run at the
+start of installation.
+
 Rcmd INSTALL and make pkg-foo test for attempted installation into the
 source directory.
 
