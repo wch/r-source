@@ -82,6 +82,8 @@ NEW FEATURES
     o   plot.mts() has a new argument `nc' controlling the number of
 	columns (with default the old behaviour).
 
+    o	capture.output takes arbitrary connections for `file' argument.
+
 
 DEPRECATED & DEFUNCT
 
