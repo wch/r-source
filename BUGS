@@ -94,12 +94,6 @@ Date: Fri, 16 Jul 1999 12:10:48 +1000 (EST)
 Subject: Use of lwd = 0, lty = 2 in segments.
 From: Douglas Bates <bates@stat.wisc.edu>
 Date: Sat, 17 Jul 1999 17:18:44 -0500 (CDT)
-* PR# 238 *
-Subject: EPS compliance of postscript device: initclip operator
-From: David Middleton <dajm@deeq.demon.co.uk>
-Date: Tue, 03 Aug 1999 17:51:47 -0300
---initclip is removed. Still need new argument onefile/onepage to ensure one page
---and use %!PS-Adobe-3.0 EPSF-3.0 header
 * PR# 249 *
 Subject: axis ignores srt/crt
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -131,6 +125,7 @@ Directory:  In-Out
 Subject: scan rejects complex
 From: John.Peters@tip.csiro.au (John Peters)
 Date: Mon, 22 Feb 1999 10:08:14 +1100 (EST)
+--Have put note in help file, at least.
 * PR# 129 *
 Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -143,10 +138,6 @@ Date: Fri, 13 Aug 1999 17:44:48 +0200
 
 Directory:  Installation
 
-* PR# 288 *
-Subject: configure bug with IRIX 6.5 (Makedep)
-From: caves@yorvic.york.ac.uk
-Date: Tue, 28 Sep 1999 10:30:54 +0200 (MET DST)
 * PR# 290 *
 Subject: Error compiling R on RS6000
 From: pgutwin@us.ibm.com
@@ -271,14 +262,12 @@ Subject: Re: Compiling R under Caldera Open Linux 2.2
 Subject: Compilation of R under Caldera OpenLinux 2.2
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sun, 29 Aug 1999 19:38:13 +1000 (EST)
+--workaround is to install missing libg2c.a. See also PR#268 for sucess report
 * PR# 268 *
 Subject: Re: Compiling R under Caldera Open Linux 2.2
 From: "Jack N." <jnf@pcisys.net>
 Date: Mon, 06 Sep 1999 08:03:02 -0600
-* PR# 274 *
-Subject: axis() produces junk on DEC alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Mon, 13 Sep 1999 03:02:20 +0200 (MET DST)
+--Followup: See PR#260
 
 Directory:  TooMuchAtOnce
 
@@ -299,12 +288,7 @@ Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
 
 Directory:  Windows
 
-* PR# 271 *
-Subject: R with Windows 95
-From: pascal.grandeau@wanadoo.fr
-Date: Wed, 8 Sep 1999 17:56:12 +0200 (MET DST)
---No response to questions, we can't reproduce this. Probably is a bug, but
---impossible to take further.
+none
 
 Directory:  incoming
 
