@@ -3,7 +3,7 @@
 \usage{
 grep(pattern, x, ignore.case=FALSE, extended=TRUE, perl=FALSE, value=FALSE)
 sub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE perl=FALSE)
+        ignore.case=FALSE, extended=TRUE, perl=FALSE)
 gsub(pattern, replacement, x,
         ignore.case=FALSE, extended=TRUE, perl=FALSE)
 regexpr(pattern, text,  extended=TRUE, perl=FALSE)
