@@ -72,6 +72,9 @@ INSTALLATION CHANGES
 	[This is currently rough, and will lead to the GNOME GUI being
 	unbundled in due course.]
 
+    o	Configuring without having the recommended packages is not an
+	error unless --with-recommended-packages=no is used.
+
 
 BUG FIXES
 

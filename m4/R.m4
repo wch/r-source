@@ -2478,6 +2478,10 @@ for pkg in ${recommended_pkgs}; do
   fi
 done])
 use_recommended_packages=${r_cv_misc_recommended_packages}
+if test "x${r_cv_misc_recommended_packages}" = xno; then
+  AC_MSG_ERROR([Some of the recommended packages are missing
+  Use --without-recommended-packages if this was intentional])
+fi
 ])# R_RECOMMENDED_PACKAGES
 
 ## R_HAVE_KEYSYM
