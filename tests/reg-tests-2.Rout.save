@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-10-16), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-10-21), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3687,7 +3687,7 @@ Estimated effects may be unbalanced
 
 	Exact binomial test
 
-data:  800 and 810 
+data:  c(800, 10) 
 number of successes = 800, number of trials = 810, p-value < 2.2e-16
 alternative hypothesis: true probability of success is not equal to 0.5 
 95 percent confidence interval:
