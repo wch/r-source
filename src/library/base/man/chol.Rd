@@ -2,14 +2,14 @@
 \alias{chol}
 \title{The Choleski Decomposition}
 \description{
-  Compute the Choleski factorization of a symmetric (Hermitian),
-  positive definite square matrix.
+  Compute the Choleski factorization of a real symmetric
+  positive-definite square matrix.
 }
 \usage{
 chol(x, pivot = FALSE)
 }
 \arguments{
-  \item{x}{a symmetric, positive definite matrix}
+  \item{x}{a real symmetric, positive-definite matrix}
   \item{pivot}{Should pivoting be used?}
 }
 \value{
@@ -25,8 +25,7 @@ chol(x, pivot = FALSE)
 
   If \code{pivot = FALSE} and \code{x} is not non-negative definite an
   error occurs.  If \code{x} is positive semi-definite (i.e. some zero
-  eigenvalues) an error may or may not occur, depending on
-  finite precision numerical errors.
+  eigenvalues) an error will also occur, as a numerical tolerance is used.
 
   If \code{pivot = TRUE}, then the Choleski decomposition of a positive
   semi-definite \code{x} can be computed.  The rank of \code{x} is
@@ -40,8 +39,9 @@ chol(x, pivot = FALSE)
 }
 
 \section{Warning}{
-  The code does not check for symmetry or for non-negative
-  definiteness.  If \code{pivot = TRUE} and \code{x} is not non-negative
+  The code does not check for symmetry.
+
+  If \code{pivot = TRUE} and \code{x} is not non-negative
   definite then there will be no error message but a meaningless
   result will occur.  So only use \code{pivot = TRUE} when \code{x} is
   non-negative definite by construction.
@@ -90,7 +90,7 @@ qr(m)$rank # is 2, as it should be
 # chol() unlike qr() does not use a tolerance.
 test <- try(Q <- chol(m))     
 
-(Q <- chol(m, pivot = TRUE)) # NB wrong rank here ... you have been warned!
+(Q <- chol(m, pivot = TRUE)) # NB wrong rank here ... see Warning section.
 pivot <- attr(Q, "pivot")
 oo <- order(pivot)
 all.equal(t(Q[, oo]) \%*\% Q[, oo], m) # TRUE

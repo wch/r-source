@@ -34,6 +34,9 @@ NEW FEATURES
     o   sprintf() now checks the agreement between formats and object
 	types, and handles special values (NA, Inf, ...) correctly.
 
+    o	chol() now uses a tolerance for non-positive-definiteness and
+	so should give more consistent results across platforms.
+
 
 DEPRECATED & DEFUNCT
 
