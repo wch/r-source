@@ -25,8 +25,9 @@
 use Getopt::Long;
 use R::Rdtools;
 use R::Utils;
+use R::Rd;
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 
@@ -69,24 +70,7 @@ while (<INFILE>) {
     open RDFILE, "< $_";
     print OUTFILE "# usages in file $_\n";
 
-    my $text;
-    my $skipping = 0;
-    while(<RDFILE>) {
-	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
-	    if ($1 ne $OSdir) { $skipping = 1; }
-	    next;
-	}
-	if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
-	    if ($1 eq $OSdir) { $skipping = 1; }
-	    next;
-	}
-	if (/^#endif/o) {
-	    $skipping = 0;
-	    next;
-	}
-	next if $skipping > 0;
-	$text .= $_;
-    }
+    my $text = R::Rd::Rdpp($_, $OSdir);
 
     {
 	local $/; # unset for get_usages
