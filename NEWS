@@ -359,6 +359,8 @@ BUG FIXES
     o	The ave() function had trouble if the grouping contained
 	unused levels.
 
+    o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
+
 
 
 

@@ -181,8 +181,8 @@ upgrade <- function(object, ...)
 upgrade.packageStatus <- function(object, ask=TRUE, ...)
 {
     update <- NULL
-    old <- which(object$inst$Status=="upgrade")
-    if(length(old)==0){
+    old <- which(object$inst$Status == "upgrade")
+    if(length(old) == 0) {
         cat("Nothing to do!\n")
         return(invisible())
     }
@@ -192,12 +192,12 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
                     sep=" at ")
 
     haveasked <- character(0)
-    if(ask){
-        for(k in old){
-            pkg <- ifelse(is.na(object$inst[k,"Bundle"]),
-                          object$inst[k,"Package"],
-                          object$inst[k,"Bundle"])
-            tmpstring <- paste(pkg, as.character(object$inst[k,"LibPath"]))
+    if(ask) {
+        for(k in old) {
+            pkg <- ifelse(is.na(object$inst[k, "Bundle"]),
+                          object$inst[k, "Package"],
+                          object$inst[k, "Bundle"])
+            tmpstring <- paste(pkg, as.character(object$inst[k, "LibPath"]))
             if(tmpstring %in% haveasked) next
             haveasked <- c(haveasked, tmpstring)
             cat("\n")
@@ -208,18 +208,21 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
             if(answer == "y" | answer == "Y")
                 update <-
                     rbind(update,
-                          c(pkg, as.character(object$inst[k,c("LibPath")]),
-                            as.character(object$avail[pkg,c("Repository")])))
+                          c(pkg, as.character(object$inst[k, "LibPath"]),
+                            as.character(object$avail[pkg, "Repository"])))
         }
+    } else {
+        pkgs <- ifelse(is.na(object$inst[ ,"Bundle"]),
+                          object$inst[ ,"Package"], object$inst[ ,"Bundle"])
+        update <- cbind(pkgs, as.character(object$inst[ , "LibPath"]),
+                        as.character(object$avail[pkgs, "Repository"]))
+        update <- update[old, , drop=FALSE]
     }
-    else
-        update <- old
 
-    if(length(update)>0){
-        for(repo in unique(update[,3])){
-            ok <- update[,3]==repo
-            install.packages(update[ok,1], update[ok,2],
-                             contriburl=repo)
+    if(length(update) > 0) {
+        for(repo in unique(update[,3])) {
+            ok <- update[, 3] == repo
+            install.packages(update[ok, 1], update[ok, 2], contriburl = repo)
         }
     }
 }
