@@ -23,7 +23,7 @@ GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf
 
-all: $(RPREFIX).exe miniR.exe
+all: $(RPREFIX).exe # miniR.exe
 
 imagedir:
 	$(RM) -r $(RPREFIX)

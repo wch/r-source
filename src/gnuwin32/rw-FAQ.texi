@@ -120,20 +120,18 @@ The information here applies only to recent versions of R for Windows,
 
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
-collect the files you need.  There are two versions of the distribution
-of the current release.
+collect the files you need.  The current release is distributed as an
+installer @code{@RWVER@.exe} of about 25Mb.  This contains all the
+components and allows as complete as installation as you choose.
 
-1) @code{@RWVER@.exe} is about 24Mb.  This contains all the components
-and allows as complete as installation as you choose.
-
-2) Directory @code{miniR} contains @code{miniR.exe} and seven files
-@code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
-on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
-This is a small installation, containing the text versions of the help
-files and the @emph{An Introduction to R} and @emph{Data Import/Export}
-manuals in PDF.  There is no support for @code{tcltk} nor @code{iconv}
-in this version, and no documentation for packages @code{grid} or
-@code{survival}.
+@c 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
+@c @code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
+@c on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
+@c This is a small installation, containing the text versions of the help
+@c files and the @emph{An Introduction to R} and @emph{Data Import/Export}
+@c manuals in PDF.  There is no support for @code{tcltk} nor @code{iconv}
+@c in this version, and no documentation for packages @code{grid} or
+@c @code{survival}.
 
 There are also links on that page to the @code{r-patched} and
 @code{r-devel} releases.  These are frequently updated builds of development
@@ -154,10 +152,10 @@ If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-To install use @code{@RWVER@.exe} or @code{miniR.exe}.  Just
-double-click on the icon and follow the instructions.  If you installed
-R this way you can uninstall it from the Control Panel or Start Menu
-(unless you supressed making a group for R).
+To install use @code{@RWVER@.exe}.  Just double-click on the icon and
+follow the instructions.  If you installed R this way you can uninstall
+it from the Control Panel or Start Menu (unless you supressed making a
+group for R).
 
 Choose a working directory for R.  If you installed manually, make a
 shortcut to @code{@RWVER@\bin\Rgui.exe} on your desktop or somewhere on
@@ -233,8 +231,9 @@ set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components.  This is only useful with
 @code{@RWVER@.exe}, which has components @code{main}, @code{chtml},
-@code{html}, @code{latex}, @code{manuals},  @code{refman},
-@code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs} and @code{Rd}.
+@code{html}, @code{latex}, @code{manuals}, @code{refman},
+@code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs}, @code{Rd} and
+@code{trans}.
 @end table
 
 @noindent
@@ -765,8 +764,7 @@ If the message is
 Tcl/Tk support files were not installed
 @end smallexample
 the optional files were not installed, and you need to go back to the
-installer and install them.  (Note: package @code{tcltk} is not part of
-the @code{miniR} installer.)
+installer and install them.
 
 Alternatively, if you have the environment variable @code{MY_TCLTK} set
 to a non-empty value, it is assumed that you want to use a different
