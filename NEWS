@@ -19,6 +19,11 @@ NEW FEATURES
 	namespaces or registered methods.
 
 
+DEPRECATED & DEFUNCT
+
+    o	The (unimplemented) argument 'white' of parse() is deprecated.
+    
+
 BUG FIXES
 
     o	print.table() used too much white space in some cases in 1.7.0.
