@@ -204,21 +204,21 @@ can be made by
 If you want to make the info versions (not the Reference Manual), you
 will need a version of makeinfo 4.0 (included in our tool set). Then
 
-	cd ../../doc/manuals
+	cd ../../doc/manual
 	make -f Makefile.win info
 
 will make the info files.
 
 To make DVI versions of the manuals use
 
-	cd ../../doc/manuals
+	cd ../../doc/manual
 	make -f Makefile.win dvi
 
 (assuming you have tex and latex installed and in your path).
 
 To make HTML versions of the manuals (not the Reference Manual) use
 
-	cd ../../doc/manuals
+	cd ../../doc/manual
 	make -f Makefile.win html
 
 This make use of tidy.exe, from http://www.w3c.org/.
