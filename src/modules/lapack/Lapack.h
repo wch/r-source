@@ -42,7 +42,7 @@ void F77_NAME(dgesdd)(const char *jobz,
 		      double *a, const int *lda, double *s,
 		      double *u, const int *ldu,
 		      double *vt, const int *ldvt,
-		      double *work, const int *lwork, int *info);
+		      double *work, const int *lwork, in *iwork, int *info);
 
 /* DSYEV - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */
