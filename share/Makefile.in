@@ -73,7 +73,6 @@ install-sources: installdirs
 	  $(INSTALL_DATA) $${f} $(rhome)/share/sh; \
 	done
 	@for f in $(srcdir)/texmf/*.sty \
-		  $(srcdir)/texmf/*.cfg \
 		  $(srcdir)/texmf/*.fd; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/share/texmf; \
 	done
