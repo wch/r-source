@@ -914,3 +914,13 @@ summary(fit, cor = TRUE)
 (fit <- glm(y ~ x1 + x2 + x3))
 summary(fit, cor = TRUE)
 ## omitted silently in summary.glm < 1.8.0
+
+
+## PR#3058  printing with na.print and right=TRUE
+a <- matrix( c(NA, "a", "b", "10",
+               NA, NA,  "d", "12",
+               NA, NA,  NA,  "14"),
+            byrow=T, ncol=4 )
+print(a, right=TRUE, na.print=" ")
+print(a, right=TRUE, na.print="----")
+## misaligned in 1.7.0

@@ -245,10 +245,11 @@ BUG FIXES
 	and objects cannot be extended beyond that row. This restriction
 	will be removed in 1.8.0.  (PR#2962)
 
-    o	A bug could produce apparent loops in formal method selection when
-	inheritance was restricted (used for the as() function).  A
-	related problem sometimes broke attaching a package that had
-	methods for basic functions, such as names(), used in method selection.
+    o	A bug could produce apparent loops in formal method selection
+	when inheritance was restricted (used for the as() function).
+	A related problem sometimes broke attaching a package that had
+	methods for basic functions, such as names(), used in method
+	selection.
 
     o	Empty expressions as in return(x,) could generate subsequent
 	segfaults: they are now errors.	 (PR#2880)
@@ -281,8 +282,12 @@ BUG FIXES
     o	predict.lm(*, se=TRUE) {w/ weights, w/o newdata} now gives correct
 	SE's.  (PR#3043)
 
-    o	cor.test(x,y, method="spearman") now also works for n > 1290,
-	where n <- length(x).
+    o	cor.test(x, y, method="spearman") now also works for 
+	length(x) > 1290.
+
+    o	Matrices were printed mis-aligned if right=TRUE and na.print
+	was specified.  (PR#3058)
+
 
 
 		CHANGES IN R VERSION 1.7.0
