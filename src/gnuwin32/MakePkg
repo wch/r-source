@@ -118,11 +118,10 @@ ifneq ($(strip $(PKG)),base)
 ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
-	@rm -f $(DPKG)/R/$(PKG).rdb $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows LC_COLLATE=C $(REXE) > /dev/null
-	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
 ## install halts here if collater failed
+	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
 	@sh $(RHOME)/src/gnuwin32/install-save.sh "$(SAVE)" $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
 else
 	@$(ECHO) "  no R files in this package"
@@ -259,15 +258,16 @@ Rfake:
 MANMAIN=$(wildcard $(SPKG)/man/*.[Rr]d)
 MANWIN32=$(wildcard $(SPKG)/man/windows/*.[Rr]d) 
 
-mansrcs: $(DPKG)/man/$(PKG).Rd
+mansrcs: $(DPKG)/man/$(PKG).Rd.gz
 
 PKGMANFILES=$(MANMAIN) $(MANWIN32)
-$(DPKG)/man/$(PKG).Rd: $(MANMAIN) $(MANWIN32)
+$(DPKG)/man/$(PKG).Rd.gz: $(MANMAIN) $(MANWIN32)
 ifneq ($(strip $(PKGMANFILES)),)
 	@$(ECHO) "  installing man source files"
 	@$(RM) -rf $(DPKG)/man
 	@$(MKDIR) -p $(DPKG)/man
 	sh $(RHOME)/src/gnuwin32/man-install.sh $(DPKG)/man/$(PKG).Rd '$^'
+	@gzip -9 $(DPKG)/man/$(PKG).Rd
 else
 	@$(ECHO) "  no man files in this package"
 endif
