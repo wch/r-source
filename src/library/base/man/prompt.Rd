@@ -25,7 +25,7 @@ prompt.default(object,
 }
 \seealso{
   \code{\link{help}} and the tutorial about writing R documentation,
-  currently in the file \code{$RHOME/mansrc/writing-Rd.tex}.
+  currently in the file \code{$RHOME/doc/manual/writing-Rd.tex}.
 }
 \examples{
 prompt(plot.default)

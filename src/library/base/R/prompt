@@ -82,8 +82,7 @@ function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
  if(substr(RHOME,1,8) == "/tmp_mnt") RHOME <- substr(RHOME,9,1000)
  cat("created file named ", filename, " in the current directory.\n",
      " Edit the file and move it to the appropriate directory,\n",
-     paste(RHOME,"src/manual/man/",sep="/"), "dropping the ending '.Rd'\n"
-     )
+     paste(RHOME,"src/library/<pkg>/man/",sep="/"), "\n")
  invisible(file)
 }
 

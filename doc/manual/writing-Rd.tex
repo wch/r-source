@@ -16,19 +16,13 @@ The help files containing detailed documentation for (potentially) all
 where `$\ast$' stands for \pkg{base} where all the standard functions
 are and for ``proper'' libraries such as \pkg{mva} and \pkg{eda}.
 
-%%%----- FOLLOWING SHOULD BE ADAPTED TO NEW DIRECTORY STRUCTURE
-This directory, \file{mansrc}, contains code for translating them into
-\LaTeX{} and further documents pertaining to \R{}.
-
-The sub-directories \file{man.new}, \file{man.defunct} and \file{man281}
-(for Alan Lee functions) are not used anymore, currently.
-%%%----- end adaption
-
+This directory, \RHOMEdir{doc/manual}, contains code for running the
+translated help files through \LaTeX{} and further documents pertaining to \R{}.
 
 \section{Documentation Format}\label{sec:doc-format}
 
-The help files are written in a form and syntax---closely resembling
-\TeX{} and \LaTeX{}---which can be processed into a variety of formats,
+The help files are written in a form and syntax --- closely resembling
+\TeX{} and \LaTeX{} --- which can be processed into a variety of formats,
 including \LaTeX{}, [TN]roff, and \HTML{}.  The translation is carried
 out by the \textsc{perl} script \file{Rdconv} in \RHOMEdir{etc/}.
 
@@ -231,5 +225,5 @@ These can be used directly, without using the \CMD{eqn} diversion.
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "ABOUT"
-%%% TeX---master: "Man"
+%%% TeX--master: "Man"
 %%% End: 
