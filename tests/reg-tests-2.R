@@ -372,7 +372,6 @@ try(summary(gofX.manova))
 
 ## Prior to 1.3.0 dist did not handle missing values, and the
 ## internal C code was incorrectly scaling for missing values.
-library(mva)
 data(trees)
 z <- as.matrix(t(trees))
 z[1,1] <- z[2,2] <- z[3,3] <- z[2,4] <- NA
@@ -380,10 +379,8 @@ dist(z, method="euclidean")
 dist(z, method="maximum")
 dist(z, method="manhattan")
 dist(z, method="canberra")
-detach("package:mva")
 
 ## F. Tusell 2001-03-07.  printing kernels.
-library(ts)
 kernel("daniell", m=5)
 kernel("modified.daniell", m=5)
 kernel("daniell", m=c(3,5,7))
@@ -471,12 +468,10 @@ lm(y ~ x*z - 1)
 options(oldCon)
 
 ## diffinv, Adrian Trapletti, 2001-08-27
-library(ts)
 x <- ts(1:10)
 diffinv(diff(x),xi=x[1])
 diffinv(diff(x,lag=1,differences=2),lag=1,differences=2,xi=x[1:2])
 ## last had wrong start and end
-detach("package:ts")
 
 ## PR#1072  (Reading Inf and NaN values)
 as.numeric(as.character(NaN))

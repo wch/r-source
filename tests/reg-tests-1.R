@@ -819,7 +819,6 @@ if (Sys.info()["sysname"] != "HP-UX")
 
 ## PR 640 (diff.default computes an incorrect starting time)
 ## By: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
-library(ts)
 y <- ts(rnorm(24), freq=12)
 x <- ts(rnorm(24), freq=12)
 arima0(y, xreg = x, seasonal = list(order=c(0,1,0)))
@@ -828,7 +827,6 @@ arima0(y, xreg = x, seasonal = list(order=c(0,1,0)))
 
 ## PR 644 (crash using fisher.test on Windows)
 ## By: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-library(ctest)
 x <- matrix(c(2, 2, 4, 8, 6, 0, 1, 1, 7, 8, 1, 3, 1, 3, 7, 4, 2, 2, 2,
               1, 1, 0, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 0, 2, 1, 0, 0, 0),
             nc = 2)
@@ -1030,12 +1028,10 @@ options(contrasts=old)
 
 
 ## PR 1050 error in ksmooth C code + patch, Hsiu-Khuern Tang, 2001-08-12
-library(modreg)
 x <- 1:4
 y <- 1:4
 z <- ksmooth(x, y, x.points=x)
 stopifnot(all.equal(z$y, y))
-detach("package:modreg")
 ## did some smoothing prior to 1.3.1.
 
 
@@ -1092,7 +1088,6 @@ predict(d.lm, data.frame(x=0.5))
 
 
 ## predict.arima0 needed a matrix newxreg: Roger Koenker, 2001-09-27
-library(ts)
 u <- rnorm(120)
 s <- 1:120
 y <- 0.3*s + 5*filter(u, c(.95,-.1), "recursive", init=rnorm(2))
@@ -1107,7 +1102,6 @@ abline(fit0$coef[3:4], lty=2)
 ts.plot(y, fore1$pred, fore1$pred+2*fore1$se, fore1$pred-2*fore1$se,
                 gpars=list(lty=c(1,2,3,3)))
 abline(c(0, fit1$coef[3]), lty=2)
-detach("package:ts")
 
 
 ## merging when NA is a level
@@ -1127,14 +1121,12 @@ stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
 
 ## PR 1149.  promax was returning the wrong rotation matrix.
-library(mva)
 data(ability.cov)
 ability.FA <- factanal(factors = 2, covmat = ability.cov, rotation = "none")
 pm <- promax(ability.FA$loadings)
 tmp1 <- as.vector(ability.FA$loadings %*% pm$rotmat)
 tmp2 <- as.vector(pm$loadings)
 stopifnot(all.equal(tmp1, tmp2))
-detach("package:mva")
 rm(ability.cov)
 
 
@@ -1154,7 +1146,6 @@ stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
 ## PR 1004 (follow up).  Exact Kolmogorov-Smirnov test gave incorrect
 ## results due to rounding errors (Charles Geyer, charlie@stat.umn.edu,
 ## 2001-10-25).
-library(ctest)
 ## Example 5.4 in Hollander and Wolfe (Nonparametric Statistical
 ## Methods, 2nd ed., Wiley, 1999, pp. 180-181).
 x <- c(-0.15, 8.6, 5, 3.71, 4.29, 7.74, 2.48, 3.25, -1.15, 8.38)
@@ -1165,7 +1156,6 @@ stopifnot(round(ks.test(x, y)$p.value, 4) == 0.0524)
 ## PR 1150.  Wilcoxon rank sum and signed rank tests did not return the
 ## Hodges-Lehmann estimators of the associated confidence interval
 ## (Charles Geyer, charlie@stat.umn.edu, 2001-10-25).
-library(ctest)
 ## One-sample test: Example 3.1 in Hollander & Wolfe (1973), 29f.
 x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
 y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
@@ -1247,9 +1237,7 @@ stopifnot(pt(-Inf, 3, ncp=0) == 0, pt(Inf, 3, ncp=0) == 1)
 
 
 ## Paul Gilbert, 2001-12-07
-library(mva)
 cancor(matrix(rnorm(100),100,1), matrix(rnorm(300),100,3))
-detach("package:mva")
 ##  Comments: failed in R-devel.
 
 
@@ -1478,6 +1466,7 @@ for(der in 0:3)  # deriv=3 failed
     print(formatC(try(predict(isB, xo, deriv = der)$y), wid=7,format="f"),
           quote = FALSE)
 options(op)
+detach("package:splines")
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
@@ -1530,25 +1519,20 @@ stopifnot(prettyNum(123456, big.mark=",") == "123,456")
 
 
 ## PR 1552: cut.dendrogram
-library(mva)
 data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 cc <- cut(as.dendrogram(hc), h = 20)## error in 1.5.0
-detach("package:mva")
 
 ## predict.smooth.spline(*, deriv > 0) :
-require(modreg)
 x <- (1:200)/32
 ss <- smooth.spline(x, 10*sin(x))
 stopifnot(length(x) == length(predict(ss,deriv=1)$x))# not yet in 1.5.0
-detach("package:modreg")
 
 ## pweibull(large, log=T):
 stopifnot(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0)
 
 ## selfStart.default() w/ no parameters:
 ## --> make this into example(selfStart) {with data and nls()!}
-require(nls)
 logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
                 function(x, Asym, xmid, scal){} )
 logistInit <- function(mCall, LHS, data) {
@@ -1564,7 +1548,6 @@ logistInit <- function(mCall, LHS, data) {
 }
 logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
 str(logist)
-detach("package:nls")
 
 
 ## part of PR 1662: fisher.test with total one
@@ -1825,14 +1808,12 @@ stopifnot(4 == length(seq(from=ISOdate(2000,1,1), to=ISOdate(2000,1,4),
 
 
 ## loess has a limit of 4 predictors (John Deke on R-help, 2002-09-16)
-library(modreg)
 data1 <- array(runif(500*5),c(500,5))
 colnames(data1) <- c("x1","x2","x3","x4","x5")
 y <- 3+2*data1[,"x1"]+15*data1[,"x2"]+13*data1[,"x3"]-8*data1[,"x4"]+14*data1[,"x5"]+rnorm(500)
 data2 <- as.data.frame(cbind(y,data1))
 result4 <- loess(y~x1+x2+x3+x4,data2)
 try(result5 <- loess(y~x1+x2+x3+x4+x5,data2))
-detach("package:modreg")
 ## segfaulted in 1.5.1
 
 
@@ -2015,7 +1996,7 @@ str(A.[1, 0, 2, drop = FALSE])
 
 library(stepfun)
 plot(sf <- stepfun(2, 3:4))
-detach(2)
+detach("package:stepfun")
 ## failed in 1.6.2
 
 
