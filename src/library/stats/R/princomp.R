@@ -36,6 +36,8 @@ princomp.default <-
 {
     cl <- match.call()
     cl[[1]] <- as.name("princomp")
+    if(!missing(x) && !missing(covmat))
+        warning("both 'x' and 'covmat' were supplied: 'x' will be ignored")
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]
     if (is.list(covmat)) {
         if(any(is.na(match(c("cov", "n.obs"), names(covmat)))))
@@ -77,9 +79,9 @@ princomp.default <-
     sdev <- sqrt(ev)
     sc <- if (cor) sds else rep(1, ncol(cv))
     names(sc) <- colnames(cv)
-    scr <- if (scores && !missing(x))
-        scale(z, center = TRUE, scale = sc) %*% edc$vectors
-    if (is.null(cen)) cen <- rep(NA, nrow(cv))
+    scr <- if (scores && !missing(x) && !is.null(cen))
+        scale(z, center = cen, scale = sc) %*% edc$vectors
+    if (is.null(cen)) cen <- rep(as.numeric(NA), nrow(cv))
     edc <- list(sdev = sdev,
                 loadings = structure(edc$vectors, class="loadings"),
                 center = cen, scale = sc, n.obs = n.obs,

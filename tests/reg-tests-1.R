@@ -2905,3 +2905,11 @@ stopifnot(qbinom(0.95, 0, 0.5) == 0)
 stopifnot(inherits(try(base::lm), "try-error"))
 stopifnot(inherits(try(graphics::log), "try-error"))
 ## equivalent constructs succeeded in 1.8.1
+
+
+## (PR#6452) princomp prediction without specifying centers should give NAs
+x <- matrix(rnorm(400), ncol=4)
+fit <- princomp(covmat=cov(x))
+stopifnot(is.null(fit$scores))
+stopifnot(is.na(predict(fit, newdata=x[1:10, ])))
+## failed in 1.8.1

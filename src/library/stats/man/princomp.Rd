@@ -61,7 +61,9 @@ princomp(x, \dots)
   \item{scale}{the scalings applied to each variable.}
   \item{n.obs}{the number of observations.}
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied
-    data on the principal components.}
+    data on the principal components.  These are non-null only if
+    \code{x} was supplied, and if \code{covmat} was also supplied if it
+    was a covariance list.}
   \item{call}{the matched call.}
   \item{na.action}{If relevant.}
 }

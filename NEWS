@@ -208,6 +208,9 @@ NEW FEATURES
 	that date-time objects which have a timezone specified will
 	generally be regarded as in their original time zone.
 
+    o	princomp() now warns if both `x' and `covmat' are supplied,
+	and returns scores only if the centring used is known.
+
 
 UTILITIES
 
@@ -366,6 +369,12 @@ BUG FIXES
 
     o	rstandard() was wrongly scaled for cases where
 	summary(model)$dispersion != 1.
+
+    o   Calling princomp() with a covariance matrix (rather than a
+	list) failed to predict scores rather than predict NA as
+	intended.  (PR#6452)
+
+
 
 
 	**************************************************
