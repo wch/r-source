@@ -11,9 +11,6 @@ segments(x0, y0, x1, y1,
 \arguments{
   \item{x0,y0}{coordinates of points \bold{from} which to draw.}
   \item{x1,y1}{coordinates of points \bold{to} which to draw.}
-  \item{length}{length of the edges of the arrow head (in inches).}
-  \item{angle}{angle from the shaft of the arrow to the edge of the
-    arrow head.}
   \item{col, lty, lwd}{usual graphical parameters as in
     \code{\link{par}}.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}).}
