@@ -61,6 +61,10 @@ There are now facilities (documented in file src/gnuwin32/INSTALL) to
 add packages when building the R installer, and to rebuild a
 customized installer from the existing binary distribution.
 
+TCL/TK could crash Rgui during shutdown by trying to print an error
+message after the console had been shut down.  Such messages are now
+redirected to message boxes.
+
 
 
 R 2.0.1
