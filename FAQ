@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-0, 2001-12-17
+Version 1.4-1, 2001-12-23
 Kurt Hornik
 
 
@@ -583,7 +583,7 @@ mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming/' and send an email to
-<wwwadmin@cran.r-project.org>.
+<cran@r-project.org>.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
