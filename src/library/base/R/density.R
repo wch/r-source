@@ -1,5 +1,5 @@
 density <- function(x, bw, adjust = 1,
-                    kernel =c("gaussian", "rectangular", "triangular", "cosine"),
+                    kernel=c("gaussian", "rectangular", "triangular", "cosine"),
                     window = kernel,
 		    n = 512, width, from, to, cut = 3, na.rm = FALSE)
 {
@@ -58,7 +58,7 @@ density <- function(x, bw, adjust = 1,
                         a <- bw/1.135724
                         ifelse(abs(kords) < a*pi, (1+cos(kords/a))/(2*pi*a), 0)}
 		    )
-    kords <- convolve(y, kords)[1:n]
+    kords <- convolve(y, kords, type = "circular", conj = TRUE)[1:n]
     xords <- seq(lo, up, length = n)
     keep <- (xords >= from) & (xords <= to)
     x <- seq(from, to, length = n.user)
