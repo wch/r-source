@@ -397,8 +397,7 @@ perhaps for some network-mounted systems).
 The simplest way is to use @file{@value{RWVERSION}.exe} or
 @file{miniR.exe}.  Just double-click on the icon and follow the
 instructions.  If you installed R this way you can uninstall it from the
-Control Panel or Start Menu (unless you suppressed making a group for
-@R{}).
+Control Panel.
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
@@ -1079,13 +1078,25 @@ binary distribution and needed to be installed directly; for example for
 fink install g77
 @end smallexample
 
+@cindex BLAS library
+@cindex LAPACK library
+The @code{vecLib} library of MacOS >= 10.2.2 can be used @emph{via} the 
+configuration options
+@smallexample
+--with-blas="-framework vecLib" --with-lapack
+@end smallexample
+
+@noindent
+to provide higher-performance versions of the BLAS and LAPACK routines.
+
+
 @node Solaris, HP-UX, MacOS X, Platform notes
 @subsection Solaris on Sparc
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
 5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6}
-compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
+compilers, and less regularly on Solaris 2.5.1, 2.6, 8 and 9.  GNU
 @command{make} is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
@@ -1093,7 +1104,7 @@ source tree, and perhaps even then.
 Solaris, but versions 3.1 and 3.2 work correctly.
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
-version of Solaris in use.  (This can be discerned from @command{gcc
+version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 so (for example) @command{gcc} compiled under Solaris 2.6 will not
 compile @R{} under Solaris 2.7.  Also, do ensure that it was compiled
