@@ -3352,6 +3352,7 @@ foo[2] <- NA
 foo
 ## segfaulted in 2.0.0
 
+
 ## closing a graphics window could segfault in Windows
 if(.Platform$OS.type == "windows") {
     windows(record = TRUE)
@@ -3360,3 +3361,10 @@ if(.Platform$OS.type == "windows") {
     gc()
 }
 ## segfaulted in 2.0.0
+
+
+## incorrect arg matching in sum min max prod any all
+## Pat Burns, R-devel 2004-11-19
+stopifnot(identical(sum(1:4, NA, n = 78, na.rm = TRUE), 88))
+## was 11 in 2.0.1
+

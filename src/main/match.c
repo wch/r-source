@@ -111,33 +111,39 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 /* Returns the first partially matching tag found. */
 /* Pattern is a C string. */
 
+static SEXP matchPar_int(char *tag, SEXP *list, Rboolean exact)
+{
+    if (*list == R_NilValue)
+	return R_MissingArg;
+    else if (TAG(*list) != R_NilValue &&
+	     psmatch(tag, CHAR(PRINTNAME(TAG(*list))), exact)) {
+	SEXP s = *list;
+	*list = CDR(*list);
+	return CAR(s);
+    }
+    else {
+	SEXP last = *list;
+	SEXP next = CDR(*list);
+	while (next != R_NilValue) {
+	    if (TAG(next) != R_NilValue &&
+		psmatch(tag, CHAR(PRINTNAME(TAG(next))), exact)) {
+		SETCDR(last, CDR(next));
+		return CAR(next);
+	    }
+	    else {
+		last = next;
+		next = CDR(next);
+	    }
+	}
+	return R_MissingArg;
+    }
+}
+
 SEXP matchPar(char *tag, SEXP * list)
 {
-  if (*list == R_NilValue)
-    return R_MissingArg;
-  else if (TAG(*list) != R_NilValue &&
-	   psmatch(tag, CHAR(PRINTNAME(TAG(*list))), 0)) {
-    SEXP s = *list;
-    *list = CDR(*list);
-    return CAR(s);
-  }
-  else {
-    SEXP last = *list;
-    SEXP next = CDR(*list);
-    while (next != R_NilValue) {
-      if (TAG(next) != R_NilValue &&
-	  psmatch(tag, CHAR(PRINTNAME(TAG(next))), 0)) {
-	SETCDR(last, CDR(next));
-	return CAR(next);
-      }
-      else {
-	last = next;
-	next = CDR(next);
-      }
-    }
-    return R_MissingArg;
-  }
+    return matchPar_int(tag, list, FALSE);
 }
+
 
 
 /* Destructively Extract A Named List Element. */
@@ -147,6 +153,16 @@ SEXP matchPar(char *tag, SEXP * list)
 SEXP matchArg(SEXP tag, SEXP * list)
 {
     return matchPar(CHAR(PRINTNAME(tag)), list);
+}
+
+
+/* Destructively Extract A Named List Element. */
+/* Returns the first exactly matching tag found. */
+/* Pattern is a symbol. */
+
+SEXP matchArgExact(SEXP tag, SEXP * list)
+{
+      return matchPar_int(CHAR(PRINTNAME(tag)), list, TRUE);  
 }
 
 

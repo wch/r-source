@@ -293,7 +293,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     if(DispatchGroup("Summary",call, op, args, env, &ans))
 	return ans;
 
-    ans = matchArg(R_NaRmSymbol, &args);
+    ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical(ans);
     updated = 0;
     empty = 1;/*- =1: only zero-length arguments, or NA with na.rm=T */

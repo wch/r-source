@@ -564,6 +564,7 @@ SEXP Rf_listAppend(SEXP, SEXP);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_makeSubscript(SEXP, SEXP, int *);
 SEXP Rf_matchArg(SEXP, SEXP*);
+SEXP Rf_matchArgExact(SEXP, SEXP*);
 SEXP Rf_matchArgs(SEXP, SEXP);
 SEXP Rf_matchPar(char*, SEXP*);
 SEXP Rf_mkChar(const char*);
@@ -994,6 +995,7 @@ int R_system(char *);
 #define LogicalFromString	Rf_LogicalFromString
 #define makeSubscript		Rf_makeSubscript
 #define matchArg		Rf_matchArg
+#define matchArgExact		Rf_matchArgExact
 #define matchArgs		Rf_matchArgs
 #define matchPar		Rf_matchPar
 #define mkChar			Rf_mkChar
