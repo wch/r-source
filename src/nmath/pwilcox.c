@@ -35,7 +35,7 @@ double pwilcox(double x, double m, double n) {
 
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-    return x + n + p;
+    return x + m + n;
   if (!FINITE(m) || !FINITE(n)) {
     ML_ERROR(ME_DOMAIN);
     return ML_NAN;
