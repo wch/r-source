@@ -12,7 +12,7 @@ function(formula, data=sys.parent(), weights, subset,
     m <- match.call(expand = FALSE)
     m$contrasts <- m$... <- NULL
     m[[1]] <- as.name("model.frame")
-    m <- eval(m, sys.parent())
+    m <- eval(m, parent.frame())
     Terms <- attr(m, "terms")
     attr(Terms, "intercept") <- 0
     X <- model.matrix(Terms, m, contrasts)
