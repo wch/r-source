@@ -172,7 +172,7 @@ BUG FIXES
 	consequence cpgram() was not re-setting "pty".
 
     o   package.dependencies() printed unnecessary debugging messages
-	(version comparison), these have been removed.
+	(version comparison): these have been removed.
 
     o   backslashes in examples in help files are now converted 
 	correctly to latex.
@@ -184,8 +184,8 @@ BUG FIXES
 
     o   rbind(x, y) works when x has no columns.
 
-    o   \tabular is rendered better in latex, and long tabular
-	material is now acceptable (and split over pages).
+    o   \tabular in Rd files is rendered better in latex, and long
+	tabular material is now acceptable (and split over pages).
 
     o   evaluation depth wasn't properly reset by  "next"
 
@@ -255,6 +255,11 @@ BUG FIXES
 
     o	It is now possible to call Fortran routines d1mach and 11mach
 	on platforms which do not append underscores.
+
+    o	Additions to plots by identify() and locator() were not being
+	recorded, and so did not appear when a plot was copied or
+	printed.
+
 
 
 	**************************************************
