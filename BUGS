@@ -38,6 +38,11 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
+* PR# 488 *
+Subject: Error in lme?
+From: simon.frost@ed.ac.uk
+Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
+--No example to reproduce this.
 * PR# 471 *
 Subject:  Problems with nlme 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
@@ -58,10 +63,10 @@ Date: Tue, 21 Mar 2000 14:57:57 +0100 (MET)
 
 Directory:  Graphics
 
-* PR# 495 *
-Subject: barplot
-From: skala@incoma.cz
-Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
+* PR# 512 *
+Subject: x11 colortype problems ('gray' is broken?)
+From: Thomas J Vogels <tov@ece.cmu.edu>
+Date: 07 Apr 2000 11:53:39 -0400
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -81,14 +86,16 @@ From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 13 Jan 2000 14:31:42 +0100
 --a) We don't handle multiple window closes well
 --b) X11 errors should be caught by an error handler, not kill R
-* PR# 494 *
-Subject:  minor problem in barplot legend 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Mon, 20 Mar 2000 17:31:36 -0500
-* PR# 483 *
-Subject: error in par option xaxt
-From: aim@uwo.ca
-Date: Mon, 13 Mar 2000 22:02:42 +0100 (MET)
+* PR# 510 *
+Subject:  Strange behaviour of image 
+From: J.C.Rougier@durham.ac.uk
+Date: Thu, 6 Apr 2000 19:15:19 +0100 (BST)
+--At least an inaccurate description.
+--To be changed (with a back-compatibility option) in 1.1.0
+* PR# 495 *
+Subject: barplot
+From: skala@incoma.cz
+Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
 
 Directory:  In-Out
 
@@ -128,10 +135,6 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
-* PR# 500 *
-Subject:  segmentation fault with 1D array 
-From: J.C.Rougier@durham.ac.uk
-Date: Wed, 22 Mar 2000 18:25:24 GMT
 * PR# 391 *
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
@@ -152,6 +155,8 @@ Directory:  Startup
 Subject: Re: autoload error in profile {was anova-bug in R-version  1.0.0?}
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
+--workaround to the origin problem in 1.0.1
+--New report: try does not work from the profile.
 
 Directory:  System-specific
 
@@ -175,51 +180,20 @@ none
 
 Directory:  incoming
 
-* PR# 512 *
-Subject: x11 colortype problems ('gray' is broken?)
-From: Thomas J Vogels <tov@ece.cmu.edu>
-Date: 07 Apr 2000 11:53:39 -0400
-* PR# 498 *
-Subject: Use of Rd2txt on .Rd files from rw-1.0.0
-Subject: Use of Rd2txt on .Rd files from rw-1.0.0
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Wed, 22 Mar 2000 09:15:20 +1100 (EST)
---No response from author, but does look like using CRLF files on Unix.
-* PR# 488 *
-Subject: Error in lme?
-From: simon.frost@ed.ac.uk
-Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
---No example to reproduce this.
+* PR# 511 *
+Subject: Bug in qbinom?
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Fri, 7 Apr 2000 17:22:24 +0200 
+* PR# 509 *
+Subject: write.table with rows and cols
+From: edd@debian.org
+Date: Tue, 4 Apr 2000 01:23:32 +0200 (MET DST)
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 * PR# 463 *
 Subject: Bug in read.table
 From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
 Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
 --looks like quote arguments to read.table/count.fields needs to be set
-* PR# 507 *
-Subject: another save/load problem, only(?) affecting ascii = TRUE
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 3 Apr 2000 14:37:50 +0200 (CEST)
-* PR# 506 *
-Subject: matlines, matpoints don't follow prototype
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Sun, 26 Mar 2000 12:51:24 -0800
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
-* PR# 509 *
-Subject: write.table with rows and cols
-From: edd@debian.org
-Date: Tue, 4 Apr 2000 01:23:32 +0200 (MET DST)
-* PR# 508 *
-Subject: cbind.ts(),ts.union()
-From: koller2@fgr.wu-wien.ac.at
-Date: Mon, 3 Apr 2000 20:08:11 +0200 (MET DST)
-* PR# 511 *
-Subject: Bug in qbinom?
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Fri, 7 Apr 2000 17:22:24 +0200 
-* PR# 510 *
-Subject:  Strange behaviour of image 
-From: J.C.Rougier@durham.ac.uk
-Date: Thu, 6 Apr 2000 19:15:19 +0100 (BST)
