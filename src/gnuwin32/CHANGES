@@ -18,8 +18,10 @@ library trees.
 
 When using help.start() with more than one library tree, an attempt is
 made to correct the URLs in non-standard libraries which point to the
-R_HOME/doc directory or to the base package.  One this is done a
-stamp `fixedHTMLlinks' is placed in the package directory.
+R_HOME/doc directory or to the base package.  Once this is done a
+stamp `fixedHTMLlinks' is placed in the package directory, and
+correction will only be done again if the R installation directory
+is changed.
 
 The output when building R or source packages is much quieter.
 

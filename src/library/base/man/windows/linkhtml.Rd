@@ -27,7 +27,7 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   \item{lib.loc}{character vector. List of libraries to be included.}
   \item{pkg}{character vector. The full path to a package.}
   \item{force}{logical. Should the links be fixed even if the stamp is
-    present.}
+    present?}
 }
 \details{
   Cross-library links do not work on this
@@ -35,7 +35,8 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   named package to the \code{doc} directory (usually to icons) and to
   the base library, and then stamps a file \file{fixedHTMLlinks} in the
   package directory.  If that file is found, no correction is attempted
-  unless \code{force = TRUE}.
+  unless \code{force = TRUE} or the \R installation directory (recorded
+  in the stamp) has been changed.
 
   \code{fixup.libraries.URLs} calls \code{fixup.package.URLs} on all
   packages in current library trees except the standard one.
@@ -54,5 +55,5 @@ fixup.libraries.URLs(lib.loc = .libPaths())
 \author{Guido Masarotto and Brian Ripley}
 \note{You will need write permission in the \file{R\_HOME\\doc\\html}
   directory to use any of the first three functions, and in the
-  appropriate libary trees to use the last two.}
+  appropriate library trees to use the last two.}
 \keyword{utilities}
