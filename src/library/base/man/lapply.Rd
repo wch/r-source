@@ -1,5 +1,5 @@
 \name{lapply}
-\title{Apply a Function Over a List}
+\title{Apply a Function Over a List or Vector}
 \usage{
 lapply(X, FUN, \dots)
 sapply(X, FUN, \dots, simplify = TRUE)
@@ -7,7 +7,7 @@ sapply(X, FUN, \dots, simplify = TRUE)
 \alias{lapply}
 \alias{sapply}
 \arguments{
-  \item{X}{list (or vector for \code{sapply}) to be used.}
+  \item{X}{list or vector to be used.}
   \item{FUN}{the function to be applied.
     In the case of functions like \code{+},
     \code{\%*\%}, etc., the function name must be quoted.}
@@ -34,7 +34,8 @@ lapply(x,mean)
 # median and quartiles for each list element
 lapply(x, quantile, probs = 1:3/4)
 sapply(x, quantile)
-sapply(sapply(3:9, seq), fivenum)
+str(i39 <- sapply(3:9, seq))# list of vectors
+sapply(i39, fivenum)
 }
 \keyword{iteration}
 \keyword{list}
