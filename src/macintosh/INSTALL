@@ -71,8 +71,8 @@ You should also copy the ".Renviron" file in the same directory.
 Before building R :
 ===================
 
-1) Please copy the file "src/include/macintosh/config.mac.h" to
-   "src/include/config.h" before you build the R application.
+1) Please copy the file `src/macintosh/config.mac.h' to
+   `src/include/config.h' before you build the R application.
 
 2) if you do not use F2C you need a Fortran compiler
    and also to change the R.mcp project.

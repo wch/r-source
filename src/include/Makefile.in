@@ -29,7 +29,7 @@ INT_HEADERS = Defn.h Rdevices.h Errormsg.h Fileio.h Fortran.h Graphics.h \
 	IOStuff.h Internal.h Parse.h Print.h Rconnections.h Startup.h 
 
 DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) \
-	config.h.in config.mac.h stamp-h.in
+	config.h.in stamp-h.in
 
 all: Makefile R
 
