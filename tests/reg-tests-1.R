@@ -3552,3 +3552,9 @@ eff2 <- eff.aovlist(fit)
 stopifnot(all.equal(eff1, eff2)) # will have rounding-error differences
 options(contrasts = old)
 ## Were different in earlier versions
+
+
+## part of PR#7742
+x <- LETTERS[1:3]
+stopifnot(identical(x, sub('^','v_', x, perl=TRUE)))
+## 2.0.1 added random chars at the end

@@ -304,8 +304,12 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	while (pcre_exec(re_pcre, re_pe, s+offset, nns-offset, 0, 0, 
 			 ovector, 30) >= 0) {
 	    nmatch += 1;
-	    ns += length_adj(t, ovector, re_nsub);
-	    offset += ovector[1];
+	    if(ovector[1] == 0)
+		offset++;
+	    else {
+		ns += length_adj(t, ovector, re_nsub);
+		offset += ovector[1];
+	    }
 	    if (s[offset] == '\0' || !global)
 		break;
 	}

@@ -329,6 +329,9 @@ NEW FEATURES
 	which R uses, and Sys.setlocale("LC_NUMERIC", ) now gives a
 	warning (as it can cause R to malfunction).
 
+    o	[g]sub(perl=TRUE) now coerces non-character arguments to
+	character, as [g]sub(perl=FALSE) did (but undocumented).
+
 
 INTERNATIONALIZATION
 
@@ -800,7 +803,10 @@ BUG FIXES
 	as they should from documentation and the green book.
 
     o   rhyper() was giving numbers slightly too small, due to a bug in the
-        original algorithm (PR#7314)
+        original algorithm.  (PR#7314)
+
+    o   [g]sub(perl = TRUE) was giving random results for a 0-length
+	initial match.  (Part of PR#7742.)
 
 
 

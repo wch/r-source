@@ -54,7 +54,8 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
 
   The two \code{*sub} functions differ only in that \code{sub} replaces
   only the first occurrence of a \code{pattern} whereas \code{gsub}
-  replaces all occurrences.
+  replaces all occurrences.  An initial zero-length match
+  (e.g. \code{pattern = "^"}) is not substituted.
 
   For \code{regexpr} it is an error for \code{pattern} to be \code{NA},
   otherwise \code{NA} is permitted and matches only itself.
