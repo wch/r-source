@@ -36,7 +36,7 @@ SOURCES_F = \
 	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
-HEADERS = Rsock.h sock.h
+HEADERS = sock.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = COPYRIGHT COPYRIGHT.ftn README ROUTINES lowess.doc \
