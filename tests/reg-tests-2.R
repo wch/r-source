@@ -1396,3 +1396,13 @@ write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "", dec=",")
 mx <- sapply(c("fmm", "nat", "per"),
              function(m) splinefun(1:5, c(1,2,4,3,1), method = m)(x))
 cbind(x,mx)
+
+
+## infinite loop in read.fwf (PR#7350)
+cat(file="test.txt", sep = "\n", "# comment 1", "1234567   # comment 2",
+    "1 234567  # comment 3", "12345  67 # comment 4", "# comment 5")
+read.fwf("test.txt", width=c(2,2,3), skip=1, n=4) # looped
+read.fwf("test.txt", width=c(2,2,3), skip=1)      # 1 line short
+read.fwf("test.txt", width=c(2,2,3), skip=0)
+unlink("test.txt")
+##

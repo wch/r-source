@@ -4265,3 +4265,25 @@ Warning message:
 [24,] 5.75 0.2656250 -0.52678571 1.4921875
 [25,] 6.00 0.3333333 -1.03571429 2.0000000
 > 
+> 
+> ## infinite loop in read.fwf (PR#7350)
+> cat(file="test.txt", sep = "\n", "# comment 1", "1234567   # comment 2",
++     "1 234567  # comment 3", "12345  67 # comment 4", "# comment 5")
+> read.fwf("test.txt", width=c(2,2,3), skip=1, n=4) # looped
+  V1 V2  V3
+1 12 34 567
+2  1 23 456
+3 12 34   5
+> read.fwf("test.txt", width=c(2,2,3), skip=1)      # 1 line short
+  V1 V2  V3
+1 12 34 567
+2  1 23 456
+3 12 34   5
+> read.fwf("test.txt", width=c(2,2,3), skip=0)
+  V1 V2  V3
+1 12 34 567
+2  1 23 456
+3 12 34   5
+> unlink("test.txt")
+> ##
+> 
