@@ -7,6 +7,13 @@
 ### After a while this script exists and it has generated MakeR.
 ### Follow the instruction displayed to build R.
 ### 
+### If you have problems with the line endings of this file
+### uncomment the following three lines and execute them:
+###
+### Duplicate -y MPWBuild MPWBuild.ux
+### translate ¶0x0a ¶0x0d <MPWBuild.ux >MPWBuild
+### delete -y MPWBuild.ux
+###
 ###
 ###
 ### Notes:  to build R and run this script you need "sed" and "f2c".
@@ -27,8 +34,9 @@
 ###  Refer to http://www.merzwaren.com/waste
 ###
 ###  Jago Nov 11 2001, Stefano M. Iacus
-###  Last update: March 23 2001
 ###  (`iacus-ng' recently released, so it can't be bug free)
+###
+###  Last update: April 14th 2002
 ###   
 ###  bug report or optimization hints can be sent to
 ###
@@ -41,7 +49,7 @@ end
 
 echo "Setting up creator and type for scripts and makefiles"
 
-set fileList  "`WhereIs -x -s ::: Makefile.mac ¶
+set fileList  "`WhereIs -x -s ::: Å.mac ¶
  BuildAll.mac News.MAC`"
 if "{fileList}"
  for f in {fileList}
@@ -69,12 +77,12 @@ echo "Start creating MakeR"
 date
 echo " "
 
-if 'Exists ::main:alloca.c'
+if `Exists ::main:alloca.c`
  Rename "::main:alloca.c" "::main:alloca_c" 
 end
 
 
-if 'Exists ::main:qsort-body.c'
+if `Exists ::main:qsort-body.c`
  Rename "::main:qsort-body.c" "::main:qsort-body_c" 
 end
 
@@ -86,7 +94,7 @@ begin
  Alert "Please identify Stuffit Expander"
  set   Stuffit "`GetFilename`" 
  {Stuffit} -wait :res:R.rsrc.hqx
- duplicate -y :script :::
+ duplicate -y :script: :::
  {Stuffit} -wait :::script:Å.hqx
   delete -y :::script:Å.hqx
 end
@@ -429,11 +437,6 @@ echo "Make -f MakeR R > MyMake"
 echo "MyMake"
 echo "Make -f makefile.mac > build"
 echo "build" 
-echo "directory ::library"
-echo "buildall.mac"
-echo "directory ::modules"
-echo "buildall.mac"
-echo "directory ::macintosh"
 echo " "
 echo ":::R"
 echo " "

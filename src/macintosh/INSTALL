@@ -17,7 +17,7 @@ BUILDING R WITH APPLE'S MPW ENVIRONMENT:
 This note explains how to:
 * build R binary via MPW
 * build packages and modules via MPW
-* build help files
+* build recommended or further packages with MPW
 * build R binary via CodeWarrior
 
 Before you continue please assure that your installation
@@ -117,20 +117,11 @@ Step by step instructions
  + Builds R binary
 
 3) When you are done you can execute Makefile.mac.
-   a) type "Make -f Makefile.mac" and execute it in the MPW Shell.
-   b) select the output and run it. This will take some time
-      because of building of help files.
+   a) type "Make -f Makefile.mac >build" and execute it in the MPW Shell.
+   b) the run "build" from the MPW Shell. This will take some time
+      because of building of help files, packages and modules dll code.
 
-4) You can now build packages and libraries.
-   Change MPW Shell directory to R_HOME:src:library
-   Execute "BuildAll.mac"
-   If all went right you can build modules.
-   Change MPW Shell directory to R_HOME:src:modules
-   Execute "BuildAll.mac"
 
-5) To build help files just type the following commands
-   Make -f Makefile.mac > build
-   build
   
 The tools Folder:
 -----------------
@@ -157,15 +148,34 @@ the following lines in the MPW Worksheet:
 MPWBuild                             # prepares the main makefile
 Make -f MakeR R >MyMake              # generates commands
 MyMake                               # builds R binary
-Make -f Makefile.mac > build         # prepares commands for help
-build                                # builds help files
-Directory ::library          
-BuildAll.mac                         # builds all library binaries
-Directory ::modules
-BuildAll.mac                         # builds all modules
-Directory ::macintosh
+Make -f Makefile.mac > build         # prepares commands for build library 
+                                     # and modules
+build                                # builds dll, modules and help files
 :::R                                 # launches R
 
+
+IF YOU WANT TO BUILD (RECOMMENDED or FURTHER) PACKAGES:
+-------------------------------------------------------
+The MakeRecmd.mac file is an MPW makefile you can use
+to build recommended packages. Script files are for
+recommended packages' version as to R release date.
+On the MPW Shell submit the following two lines:
+
+Make -f MakeRecmd.mac > build
+build
+
+You can also use other type of packages by simply
+providing a makefile and changing the parameters of
+the MakeRecmd.mac file (see the doc inside the file
+itself).
+
+You should prepear a makefile for the package `pkg'
+and put it in src/macintosh/makefiles/ directory
+with the name pkg.mac, i.e. 
+src/macintosh/makefiles/pkg.mac
+
+Once you have done this, just run the previous two
+lines.
 
 
 Where to find things:
@@ -217,7 +227,7 @@ or just
 
 
 
-March 24th, 2002		Stefano M. Iacus
+April 14th, 2002		Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
