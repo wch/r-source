@@ -267,7 +267,9 @@ function(file, package, dir, lib.loc = .lib.loc)
     checkTnFandPrint <- function(e, p) {
         badTnF <- c("T", "F")
         if(is.name(e) && (as.character(e) %in% badTnF) && !is.null(p))
-            writeLines(paste("found T/F in:", deparse(p)))
+            writeLines(formatDL("found T/F in",
+                                paste(deparse(p), collapse = ""),
+                                style = "list"))
         else if(is.recursive(e)) {
             for(i in seq(along = e)) Recall(e[[i]], e)
         }
