@@ -292,4 +292,7 @@ none
 
 Directory:  incoming
 
-none
+* PR# 765 *
+Subject: cannot allocate vector of size in merge
+From: viktorm@pdf.com
+Date: Fri, 15 Dec 2000 00:06:56 +0100 (MET)
