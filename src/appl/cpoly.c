@@ -57,8 +57,8 @@
 #include <config.h>
 #endif
 
-#include <float.h>
 
+#include <float.h>
 
 #include <Rmath.h> /* for R_pow_di */
 #include "R_ext/Arith.h"
@@ -105,25 +105,27 @@ static double shi[NMAX];
 static double sr, si;
 static double tr, ti;
 static double pvr, pvi;
-#ifdef Macintosh /* Jago */
-static  double eta = 1.1920929E-07;
-static const double are = /* eta = */1.1920929E-07;
-static const double mre = 2. * M_SQRT2 * /* eta, i.e. */1.1920929E-07;
-static const double infin = 3.4028235e+38;
-#else
-static const double eta = DBL_EPSILON;
+
+
+#ifdef Macintosh
+#undef DBL_EPSILON
+#define DBL_EPSILON 2.220446e-16
+#undef DBL_MAX
+#define DBL_MAX  1.797693e+308
+#undef DBL_MIN 
+#define DBL_MIN  2.225074e-308
+#endif
+
+
+static const double eta =  DBL_EPSILON;
 static const double are = /* eta = */DBL_EPSILON;
 static const double mre = 2. * M_SQRT2 * /* eta, i.e. */DBL_EPSILON;
 static const double infin = DBL_MAX;
-#endif /* mac */
+
 void R_cpolyroot(double *opr, double *opi, int *degree,
 		 double *zeror, double *zeroi, Rboolean *fail)
 {
-#ifdef Macintosh
-    static const double smalno = 1.1920929E-07;
-#else
     static const double smalno = DBL_MIN;
-#endif /* mac */
     static const double base = (double)FLT_RADIX;
     static int d_n, i, i1, i2;
     static double zi, zr, xx, yy;
