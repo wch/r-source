@@ -1,6 +1,5 @@
-approx <-
-    function (x, y=NULL, xout, method = "linear", n = 50,
-	      yleft, yright, rule = 1, f = 0)
+approx <- function (x, y=NULL, xout, method = "linear", n = 50,
+		    yleft, yright, rule = 1, f = 0)
 {
     x <- xy.coords(x, y)
     y <- x$y

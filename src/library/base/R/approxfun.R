@@ -1,5 +1,4 @@
-approxfun <-
-    function (x, y=NULL, method = "linear", yleft, yright, rule=1, f=0)
+approxfun <- function (x, y=NULL, method = "linear", yleft, yright, rule=1, f=0)
 {
     x <- xy.coords(x, y)
     y <- x$y
