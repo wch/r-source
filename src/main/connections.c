@@ -2581,7 +2581,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
-	char *buf[CPBUFSIZE];
+	static char buf[CPBUFSIZE];
 	size_t n;
 
 	/* Use binary transfers */
