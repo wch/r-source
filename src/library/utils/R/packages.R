@@ -439,20 +439,9 @@ chooseCRANmirror <- function(graphics = TRUE)
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
-    if(graphics) {
-        ## return a character vector of URLs
-        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-            URL <- m[m[,1] == select.list(m[,1],, FALSE, "CRAN mirror"), "URL"]
-        else if(.Platform$OS.type == "unix" &&
-                 capabilities("tcltk") && capabilities("X11"))
-                URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
-                          "CRAN mirror"), "URL"]
-    } else {
-        ## text-mode fallback
-        res <- menu(m[,1], , "CRAN mirror")
+    res <- menu(m[,1], graphics, "CRAN mirror")
+    if(length(res)) {
         URL <- m[res, "URL"]
-    }
-    if(length(URL)) {
         repos <- getOption("repos")
         repos["CRAN"] <- gsub("/$", "", URL[1])
         options(repos = repos)
