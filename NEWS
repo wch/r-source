@@ -74,9 +74,9 @@ USER-VISIBLE CHANGES
 	a syntax error.	 If this breaks existing code, just add
 	parentheses -- or braces in the case of plotmath.
 
-    o   The R parser now allows multiline strings, without escaping
-        the newlines with backslashes (the old method still works).
-        Patch by Mark Bravington.
+    o	The R parser now allows multiline strings, without escaping
+	the newlines with backslashes (the old method still works).
+	Patch by Mark Bravington.
 
 
 NEW FEATURES
@@ -516,13 +516,13 @@ NEW FEATURES
 	  Grid no longer responds to the par(ask) setting in the "graphics"
 	  package.
 
-    o   The tcltk package has had the tkcmd() function renamed as
-        tcl() since it could be used to invoke commands that had
-        nothing to do with Tk. The old name is retained, but will be
-        deprecated in a future release. Similarly, we now have
-        tclopen(), tclclose(), tclread(), tclputs(), tclfile.tail(),
-        and tclfile.dir() replacing counterparts starting with "tk",
-        with old names retained for now.
+    o	The tcltk package has had the tkcmd() function renamed as
+	tcl() since it could be used to invoke commands that had
+	nothing to do with Tk. The old name is retained, but will be
+	deprecated in a future release. Similarly, we now have
+	tclopen(), tclclose(), tclread(), tclputs(), tclfile.tail(),
+	and tclfile.dir() replacing counterparts starting with "tk",
+	with old names retained for now.
 
 
 UTILITIES
@@ -813,9 +813,11 @@ BUG FIXES
 	careful to reevaluate modified mle() calls in its parent
 	environment.
 
-    o   Fix to rendering of accented superscripts and subscripts
+    o	Fix to rendering of accented superscripts and subscripts
 	e.g., expression((b[dot(a)])).
-        (Patch from Uwe Ligges.)
+	(Patch from Uwe Ligges.)
+
+    o	attach(*, pos=1) now gives a warning (and will give an error).
 
 
 
@@ -902,7 +904,7 @@ BUG FIXES
     o	Subsetted assignments of the form A[i1, i2, i3] <- B stopped as
 	soon as an NA was encountered in an index so subsequent non-NA
 	indices were ignored.  (PR#7210)
-	
+
     o	Fixed bug in handling of lwd=NA in contour().
 
 
