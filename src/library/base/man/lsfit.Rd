@@ -15,8 +15,8 @@ left hand sides.}
 \item{yname}{an unused parameter for compatibility.}
 }
 \description{
-The least squares estimate of \eqn{\mathbf{\beta}} in the model
-\deqn{\bold{Y} = \bold{X} \mathbf{\beta} + \mathbf{\epsilon}}{y = X beta + epsilon}
+The least squares estimate of \bold{\eqn{\beta}{b}} in the model
+\deqn{\bold{Y} = \bold{X \beta} + \bold{\epsilon}}{y = X b + e}
 is found.
 If weights are specified then a weighted least squares is performed
 with the weight given to the \emph{j}th case specified by the \emph{j}th

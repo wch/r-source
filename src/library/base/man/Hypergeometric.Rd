@@ -26,7 +26,7 @@ rhyper(nobs, N1, N2, n)
   function \code{qhyper} gives the quantile function and \code{rhyper}
   generates random deviates.
 
-  The hypergeometric distribution is used for sampling \textbf{without}
+  The hypergeometric distribution is used for sampling \bold{without}
   replacement.  It has density
   \deqn{
     p(x) =

@@ -19,12 +19,12 @@ and \code{p = (30269, 30307, 30323)}.
 \references{
 B.A. Wichmann and I. D. Hill (1982).
 \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
-Generator}, Applied Statistics, \textbf{31}, 188-190; Remarks: \textbf{34},p.198
-and \textbf{35}, p.89.
+Generator}, Applied Statistics, \bold{31}, 188-190; Remarks: \bold{34},p.198
+and \bold{35}, p.89.
 
 A. De Matteis and S. Pagnutti (1993). \emph{Long-range Correlation
 Analysis of the Wichmann-Hill Random Number Generator}, Statist. Comput.,
-\textbf{3}, 67-70.
+\bold{3}, 67-70.
 }
 \note{
 Initially, there is no seed;  a new one is created, using "Randomize".

@@ -17,7 +17,7 @@ legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
   \item{pch}{the plotting symbols appearing in the legend.}
   \item{bty}{the type of box to be drawn around the legend.}
   \item{bg}{the background color for the legend box.}
-  \item{cex}{character expansion factor \textbf{relative} to current
+  \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.}
   \item{xjust}{how the legend is to be justified relative to the legend
     x location.  A value of 0 means left justified, 0.5 means centered
