@@ -16,8 +16,8 @@ kmeans(x, centers, iter.max = 10)
 }
 \item{centers}{
   Either the number of clusters or a set of initial cluster centers.
-  If the first, a random set of rows in \code{x} are chosen as the initial
-  centers.
+  If the first, a random set of (distinct) rows in \code{x} is chosen 
+  as the initial centers.
 }
 \item{iter.max}{
   The maximum number of iterations allowed.

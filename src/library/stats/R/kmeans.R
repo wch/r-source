@@ -6,16 +6,23 @@ kmeans <- function(x, centers, iter.max = 10)
 	stop("centers must be a number or a matrix")
     if(length(centers) == 1) {
 	k <- centers
-	if(m < k)
-	    stop("more cluster centers than data points.")
-	centers <- x[sample(1:m, k), , drop=FALSE]
+        ## we need to avoid duplicates here
+        centers <- unique(x)
+        mm <- nrow(centers)
+	if(mm < k)
+	    stop("more cluster centers than distinct data points.")
+        ## we need to avoid duplicates here
+        centers <- unique(x)
+	centers <- centers[sample(1:mm, k), , drop=FALSE]
     } else {
 	centers <- as.matrix(centers)
+        if(any(duplicated(centers)))
+            stop("initial centers are not distinct")
 	k <- nrow(centers)
+        if(m < k)
+            stop("more cluster centers than data points")
     }
     if(iter.max < 1) stop("iter.max must be positive")
-    if(m < k)
-	stop("more cluster centers than data points")
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in x and centers")
     Z <- .Fortran("kmns",
@@ -47,4 +54,3 @@ kmeans <- function(x, centers, iter.max = 10)
     dimnames(centers) <- list(1:k, dimnames(x)[[2]])
     list(cluster = Z$c1, centers = centers, withinss = Z$wss, size = Z$nc)
 }
-
