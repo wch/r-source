@@ -36,7 +36,8 @@
 }
 \author{B. D. Ripley}
 \seealso{
-  \code{\link{aov}}, \code{\link{summary}}
+  \code{\link{aov}}, \code{\link{summary}}, \code{\link{model.tables}},
+  \code{\link{TukeyHSD}}
 }
 \examples{
 ## From Venables and Ripley (1997) p.210.
