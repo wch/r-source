@@ -1,6 +1,6 @@
 ## 'objects <- function(....) ...    --->>> ./attach.R
 
-inherits <- function(x, what, which = F)
+inherits <- function(x, what, which = FALSE)
 	.Internal(inherits(x, what, which))
 
 NextMethod <- function(generic=NULL, object=NULL, ...)
