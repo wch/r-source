@@ -3,9 +3,10 @@ get_dcf_field () {
   ## Usage:
   ##   get_dcf_field FIELD FILE
   ws="[ 	]"		# space and tab
-  sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
+  (sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
     sed -n "/^${1}:/{s/^${1}:${ws}*//;p;}
-            /^${ws}/{s/^${ws}*//;p;}"
+            /^${ws}/{s/^${ws}*//;p;}") |
+    sed "s/[ 	]*$//"
 }
 
 ### Local Variables: ***
