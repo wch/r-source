@@ -578,6 +578,7 @@ FUNTAB R_FunTab[] =
 {"dend.window",	do_dendwindow,	0,	111,	6,	PP_FUNCALL,	0},
 {"replay",	do_replay,	0,	111,	0,	PP_FUNCALL,	0},
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL,	0},
+{"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL,	0},
 
 /* Objects */
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL,	0},

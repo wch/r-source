@@ -979,6 +979,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Miscellaneous Graphical Parameters */
     GSavePars(dd);
+    ProcessInlinePars(args, dd);
 
     x = REAL(sx);
     y = REAL(sy);
@@ -1561,8 +1562,8 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* mtext(text, side, line, outer, at = NULL, ...) */
     /* where ... supports  adj, cex, col, font	*/
-    SEXP adj, cex, col, font, text;
-    double line, at, adjx=0., adjy;
+    SEXP cex, col, font, text;
+    double line, at, adj = 0;
     int side, outer;
     int newsave=0;
     SEXP originalArgs = args;
@@ -1594,46 +1595,69 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     if (CAR(args) != R_NilValue || LENGTH(CAR(args)) == 0) {
 	at = asReal(CAR(args));
 	if(!FINITE(at)) errorcall(call, "invalid at value\n");
-	args = CDR(args);
     }
     else at = NA_REAL;
+    args = CDR(args);
+
+    adj = asReal(CAR(args));
 
     GSavePars(dd);
+    ProcessInlinePars(args, dd);
+    
+    /* If there was no inline "adj=" */
+    /* choose a default based on "las". */
 
-    PROTECT(adj = GetPar("adj", args));
-    if(isNull(adj) || (isNumeric(adj) && length(adj) == 0)) {
-	adjx = dd->gp.adj;
-	adjy = dd->gp.yCharOffset;
-    }
-    else if(isReal(adj)) {
-	if(LENGTH(adj) == 1) {
-	    adjx = REAL(adj)[0];
-	    adjy = dd->gp.yCharOffset;
+    if (!FINITE(adj)) {
+      switch(dd->gp.las) {
+      case 0:
+	adj = 0.5;
+	break;
+      case 1:
+	switch(side) {
+	case 1:
+	case 3:
+	  adj = 0.5;
+	  break;
+	case 2:
+	  adj = 1.0;
+	  break;
+	case 4:
+	  adj = 0.0;
+	  break;
 	}
-	else {
-	    adjx = REAL(adj)[0];
-	    adjy = REAL(adj)[1];
+      case 2:
+	switch(side) {
+	case 1:
+	case 2:
+	  adj = 1.0;
+	  break;
+	case 3:
+	case 4:
+	  adj = 0.0;
+	  break;
 	}
+      }
     }
-    else errorcall(call, "invalid adj value\n");
+    dd->gp.adj = adj;
 
     if(!FINITE(at)) {
 	switch(side % 2) {
 	case 0:
 	    if (outer)
-		at = adjx;
+		at = dd->gp.adj;
 	    else
-		at = yNPCtoUsr(adjx, dd);
+		at = yNPCtoUsr(dd->gp.adj, dd);
 	    break;
 	case 1:
 	    if (outer)
-		at = adjx;
+		at = dd->gp.adj;
 	    else
-		at = xNPCtoUsr(adjx, dd);
+		at = xNPCtoUsr(dd->gp.adj, dd);
 	    break;
 	}
     }
 
+#ifdef OLD
     PROTECT(cex = FixupCex(GetPar("cex", args)));
     if(FINITE(REAL(cex)[0])) dd->gp.cex = dd->gp.cexbase * REAL(cex)[0];
     else dd->gp.cex = dd->gp.cexbase;
@@ -1643,22 +1667,24 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(font = FixupFont(GetPar("font", args)));
     if(INTEGER(font)[0] != NA_INTEGER) dd->gp.font = INTEGER(font)[0];
+#endif
 
-    dd->gp.adj = adjx;
     dd->gp.xpd = 1;
     if (outer)
 	newsave = dd->gp.new;
     GMode(dd, 1);
     if(isExpression(text))
-	GMMathText(VECTOR(text)[0], side, line, outer, at, 0, dd);
+	GMMathText(VECTOR(text)[0], side, line, outer, at, dd->gp.las, dd);
     else
-	GMtext(CHAR(STRING(text)[0]), side, line, outer, at, 0, dd);
+	GMtext(CHAR(STRING(text)[0]), side, line, outer, at, dd->gp.las, dd);
     GMode(dd, 0);
 
     GRestorePars(dd);
     if (outer)
 	dd->gp.new = dd->dp.new = newsave;
-    UNPROTECT(4);
+#ifdef OLD
+    UNPROTECT(3);
+#endif
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
     if (call != R_NilValue)
@@ -1671,7 +1697,8 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* title(main=NULL, sub=NULL, xlab=NULL, ylab=NULL, ...) */
     SEXP main, xlab, ylab, sub;
-    double adj;
+    double adj, offset;
+    int i, n;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1710,12 +1737,17 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.cex = dd->gp.cexbase * dd->gp.cexmain;
 	dd->gp.col = dd->gp.colmain;
 	dd->gp.font = dd->gp.fontmain;
-	if(isExpression(main))
+	if(isExpression(main)) {
 	    GMathText(xNPCtoUsr(adj, dd), 0.5*dd->gp.mar[2], MAR3,
 		      VECTOR(main)[0], 0.5, 0.5, 0.0, dd);
-	else
-	    GText(xNPCtoUsr(adj, dd), 0.5*dd->gp.mar[2], MAR3,
-		  CHAR(STRING(main)[0]), adj, 0.5, 0.0, dd);
+	}
+	else {
+	  n = length(main);
+	  offset = 0.5 * (n - 1) + 0.5 * dd->gp.mar[2];
+	  for(i=0 ; i<n ; i++)
+	    GText(xNPCtoUsr(adj, dd), offset - i, MAR3,
+		  CHAR(STRING(main)[i]), adj, 0.5, 0.0, dd);
+	}
     }
     if(sub != R_NilValue) {
 	dd->gp.cex = dd->gp.cexbase * dd->gp.cexsub;
@@ -2074,6 +2106,106 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
     CADR(ans) = pos;
     UNPROTECT(2);
     return ans;
+}
+
+SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, labs, offset, colors, ltypes, saveargs;
+    double adj, xpd, wd, ht, lw, gw, xi, xmin, xmax;
+    double save_mar[4];
+    int save_mUnits, save_defaultPlot;
+    int i, n;
+    DevDesc *dd;
+
+    /* checkArity(op, args); */
+
+    saveargs = args;
+    x = CAR(args); args = CDR(args);	        /* real */
+    labs = CAR(args); args = CDR(args);	        /* character */
+    offset = CAR(args); args = CDR(args);	/* logical */
+#ifdef NEW
+    colors = CAR(args); args = CDR(args);	/* integer */
+    ltypes = CAR(args); args = CDR(args);	/* integer */
+#endif
+
+    /* checks on lengths/types here */
+
+    n = length(labs);
+
+    /* compute the plot layout */
+
+    dd = GNewPlot(call != R_NilValue, NA_LOGICAL);
+    lw = 0;
+    gw = 0;
+    ht = GStrHeight("M", INCHES, dd);
+    xmin = DBL_MAX;
+    xmax = DBL_MIN;
+    for (i = 0 ; i < n ; i++) {
+	wd = GStrWidth(CHAR(STRING(labs)[i]), INCHES, dd) / ht;
+	if (wd > 0) {
+	    if (INTEGER(offset)[i] == 1) {
+		if (wd > gw) gw = wd;
+	    }
+	    else {
+		if (wd > lw) lw = wd;
+	    }
+	}
+	xi = REAL(x)[i];
+	if (FINITE(xi)) {
+	    if (xi < xmin) xmin = xi;
+	    if (xi > xmax) xmax = xi;
+	}
+    }
+    if (gw > 0) {
+	if (gw < lw + 1)
+	    gw = lw + 1;
+	lw = lw + 1;
+	gw = gw + 1;
+    }
+    else {
+	lw = lw + 1;
+	gw = lw;
+    }
+    save_mUnits = dd->gp.mUnits;
+    save_defaultPlot = dd->dp.defaultPlot;
+    dd->gp.mar[1] = dd->gp.mar[3] + gw;
+    dd->dp.mUnits = dd->gp.mUnits = LINES;
+    dd->dp.defaultPlot = dd->gp.defaultPlot = 1;
+    GReset(dd);
+
+    /* Set up the plotting window */
+
+    dd->gp.yaxs = 'i';
+    GScale(xmin, xmax, 1, dd);
+    GScale((double)0.5, (double)(n + 0.5), 2, dd);
+    GMapWin2Fig(dd);
+    GSetState(1, dd);
+
+    /* Axis labelling must be done here. */
+    /* The offsets must be recomputed */
+    /* each time the plot is redrawn. */
+
+    adj = dd->gp.adj;
+    xpd = dd->gp.xpd;
+    dd->gp.adj = 0;
+    dd->gp.xpd = 1;
+    for(i = 0 ; i < n ; i++) {
+	if (strlen(CHAR(STRING(labs)[i])) > 0) {
+	    if (LOGICAL(offset)[i])
+		GMtext(CHAR(STRING(labs)[i]), 2, gw, 0, (double)(i+1), 2, dd);
+	    else
+		GMtext(CHAR(STRING(labs)[i]), 2, lw, 0, (double)(i+1), 2, dd);
+	}
+    }
+    dd->gp.adj = adj;
+    dd->gp.xpd = xpd;
+
+    /* Plotting could be done here */
+    /* or later in interpreted code. */
+
+    if (call != R_NilValue)
+	recordGraphicOperation(op, saveargs, dd);
+    return R_NilValue;
 }
 
 
