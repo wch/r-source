@@ -44,22 +44,6 @@ tempfile(pattern = "file")
 #ifdef unix
 \examples{
 tempfile(c("ab", "a b c"))   # give file name with spaces in!
-## One possibility of getting ALL environment variables;
-## compare with `Sys.getenv':
-fun <- function() {
-  FILE <- tempfile("fun")
-  on.exit(unlink(FILE))
-  system(paste("printenv >", FILE))
-  x <- strsplit(scan(FILE, what = ""), "=")
-  v <- n <- character(LEN <- length(x))
-  for (i in 1:LEN) {
-    n[i] <- x[[i]][1]
-    v[i] <- paste(x[[i]][-1], collapse = "=")
-  }
-  structure(v, names = n)
-}
-\testonly{str(fun())}
-\dontrun{fun()}
 }
 #endif
 \keyword{file}
