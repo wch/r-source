@@ -101,6 +101,9 @@ NEW FEATURES
     o	The R-external manual which describes programming for the
 	.Call and .External interfaces is in the doc/manual directory.
 
+    o	New target `make pdf' in doc/manuals makes hyperlinked PDF 
+	documentation. (This is experimental for this release.)
+
 
     o	S.h now contains (via Rdefines.h) a MESSAGE macro, and
 	Free NULLs the pointer, for compatibility with S3 (but not S4).
@@ -182,6 +185,13 @@ BUG FIXES
 
     o	When documentation is "compiled" (build-help), you now get warnings
 	for multiple (conflicting) \alias{.} or \name{.}s.
+
+    o	making the reference manual with `make dvi' copes better with
+	isolatin1 characters (but not perfectly as these are not in
+	standard TeX fonts).
+
+    o	Rd.sty now uses standard LaTeX constructs like \bm for bold
+	math and \url for URLs.
 
 
     o	Protect R_fopen against NULL filename in Unix.
