@@ -236,6 +236,12 @@ BUG FIXES
 		CHANGES IN R VERSION 1.9.2
 
 
+INSTALLATION ISSUES
+
+    o	Installation will now work even in Norwegian and Danish locales
+	which sort AA at the end (for package stats4 which has AAA.R).
+
+
 BUG FIXES
 
     o	Various memory leaks have been plugged and uses of strcpy()
