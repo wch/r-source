@@ -74,7 +74,7 @@ if defined(__MWERKS__) && defined(Macintosh)
 #define MAXBACKLOG 5
 
 #if !defined(Win32) && !defined(HAVE_BSD_NETWORKING)
-static char socket_msg[] = "sockets are not available on this system\n";
+static char socket_msg[] = "sockets are not available on this system";
 #endif
 
 static int Sock_error(Sock_error_t perr, int e, int he)
@@ -246,7 +246,7 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
 }
 
 /* write to a socket */
-ssize_t Sock_write(int fd, void *buf, size_t size, Sock_error_t perr)
+ssize_t Sock_write(int fd, const void *buf, size_t size, Sock_error_t perr)
 {
 #if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
     ssize_t retval;
