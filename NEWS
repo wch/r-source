@@ -49,6 +49,10 @@ NEW FEATURES
         statistics for the boxes (changed from a list of elements one for
         each box).
 
+    o   plot.formula searches for a plot method for the left-side of the
+	formula before searching for a plot method for the right-side of
+	the formula
+
 BUG FIXES
 
     o	The Mathlib functions now use exactly the same values for

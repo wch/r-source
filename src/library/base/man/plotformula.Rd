@@ -35,7 +35,10 @@ lines(y ~ x, \dots)
   \code{subset}. If the formula in \code{plot.formula} contains more
   than one non-response term, a series of plots of y against each term
   is given. A plot against the running index can be specified as
-  \code{plot(y~1)}. 
+  \code{plot(y~1)}.
+
+  If \code{y} is an object (ie. has a \code{\link{class}} attribute)
+  then \code{plot.formula} looks for a plot method for that class first.
 }
 \value{
   These functions are invoked for their side effect of drawing 
