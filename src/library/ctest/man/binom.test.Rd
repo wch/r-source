@@ -3,10 +3,11 @@
 \title{Exact Binomial Test}
 \description{
   Performs an exact test of a simple null hypothesis about the
-  probabilty of success in a Bernoulli experiment.
+  probability of success in a Bernoulli experiment.
 }
 \usage{
-binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
+binom.test(x, n, p = 0.5,
+           alternative = c("two.sided", "less", "greater"),
            conf.level = 0.95)
 }
 \arguments{
@@ -19,6 +20,12 @@ binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
     You can specify just the initial letter.}
   \item{conf.level}{confidence level for the returned confidence
     interval.}
+}
+\details{
+  Confidence intervals are obtained by a procedure first given in
+  Clopper and Pearson (1934).  This guarantees that the confidence level
+  is at least \code{conf.level}, but in general does not give the
+  shortest-length confidence intervals.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -35,6 +42,11 @@ binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
+  Clopper, C. J. & Pearson, E. S. (1934).
+  The use of confidence or fiducial limits illustrated in the case of
+  the binomial.
+  \emph{Biometrika}, \bold{26}, 404--413.
+  
   Conover, W. J. (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.

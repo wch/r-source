@@ -57,21 +57,23 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                            }
                        }
                    })
-    ## Determine p s.t. Prob(B(n,p) >= x) = alpha
+    ## Determine p s.t. Prob(B(n,p) >= x) = alpha.
+    ## Use that for x > 0,
+    ##   Prob(B(n,p) >= x) = pbeta(p, x, n - x + 1).
     p.L <- function(x, alpha) {
         if(x == 0)                      # No solution
             0
         else
-            uniroot(function(p) pbinom(x - 1, n, p, lower = FALSE) - alpha,
-                    c(0, 1))$root
+            qbeta(alpha, x, n - x + 1)
     }
-    ## Determine p s.t. Prob(B(n,p) <= x) = alpha
+    ## Determine p s.t. Prob(B(n,p) <= x) = alpha.
+    ## Use that for x < n,
+    ##   Prob(B(n,p) <= x) = 1 - pbeta(p, x + 1, n - x).
     p.U <- function(x, alpha) {
         if(x == n)                      # No solution
             1
         else
-            uniroot(function(p) pbinom(x, n, p) - alpha,
-                    c(0, 1))$root
+            qbeta(1 - alpha, x + 1, n - x)
     }
     CINT <- switch(alternative,
                    less = c(0, p.U(x, 1 - conf.level)),
@@ -100,6 +102,3 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                    data.name = DNAME),
               class = "htest")
 }
-
-
-
