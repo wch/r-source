@@ -1,10 +1,45 @@
                 CHANGES IN VERSION R VERSION 0.62
 
+<<<<<<< CHANGES
 NEW FEATURES
 
     o  	.First.lib() now implemented; called by library() after loading
 	a package.
 
+=======
+
+		CHANGES IN VERSION R VERSION 0.61.1
+
+NEW FEATURES
+
+    o   None (by definition, x.y.z releases are bugfix releases now)
+
+BUG FIXES
+
+    o   Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
+	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
+
+    o   if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
+
+    o   R_alloc/S_alloc fixes. The former allocated 4 times more than
+	needed, the latter zeroed half of what it got, sizeof() mistakes
+	in both cases.
+
+    o   c(ordered factor) caused segfault (uninitalised pointer), now 
+	fixed.
+
+    o   behaviour of as.numeric() on factors changed recently; now 
+	documented.
+
+    o   model.matrix() now pays attention to the names on its dataframe
+	argument.
+
+    o   Fixes to group methods.
+
+    o   autoload() caused infinite loop if function  wasn't found in
+	library on loading
+
+>>>>>>> 1.26.2.4
 		CHANGES IN VERSION R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This

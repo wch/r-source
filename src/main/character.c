@@ -428,7 +428,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 			offset += regmatch[0].rm_eo;
 			if(s[offset] == '\0' || !global) break;
 		}
-		if(nmatch = 0) STRING(ans)[i] = STRING(vec)[i];
+		if(nmatch == 0) STRING(ans)[i] = STRING(vec)[i];
 		else {
 			STRING(ans)[i] = allocString(ns);
 			offset = 0;

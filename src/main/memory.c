@@ -187,7 +187,7 @@ void vmaxset(char *ovmax)
 
 char *R_alloc(long nelem, int eltsize)
 {
-	unsigned int size = INT2VEC(nelem * eltsize);
+	unsigned int size = BYTE2VEC(nelem * eltsize);
 	if (size != 0) {
 		if (R_VMax - R_VTop < size) {
 			gc();
@@ -203,7 +203,7 @@ char *R_alloc(long nelem, int eltsize)
 
 char *S_alloc(long nelem, int eltsize)
 {
-	unsigned int i, size  = INT2VEC(nelem * eltsize);
+	unsigned int i, size  = nelem * eltsize;
 	char *p = R_alloc(nelem, eltsize);
 	for(i=0 ; i<size; i++)
 		p[i] = 0;
