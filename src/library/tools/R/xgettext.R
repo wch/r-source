@@ -49,6 +49,7 @@ xgettext2pot <- function(dir, potFile)
 {
     if(missing(potFile)) potFile <- paste("R-", basename(dir), ".pot", sep="")
     tmp <- unique(unlist(xgettext(dir, asCall = FALSE)))
+    tmp <- tmp[nchar(tmp) > 0]
     tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc
     con <- file(potFile, "wt")
     on.exit(close(con))
