@@ -1,12 +1,12 @@
 \name{MethodsList-class}
 \alias{MethodsList-class}
-\doctype{class}
+\docType{class}
 \title{Class MethodsList, Representation of Methods for a Generic Function }
 \description{ Objects from this class are generated and revised by the
   definition of methods for a generic function.}
 \section{Slots}{\describe{
 
-  \item{\code{argument}:}{Object of class "name".  The name of the
+  \item{\code{argument}:}{Object of class \code{"name"}.  The name of the
     argument being used for dispatch at this level. }
   \item{\code{methods}:}{A named list of the methods (and method lists)
     defined \emph{explicitly} for this argument, with the names being
