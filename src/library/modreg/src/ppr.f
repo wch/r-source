@@ -6,124 +6,153 @@ C
 C     B.D. Ripley (ripley@stats.ox.ac.uk)  1994-7.
 C
 C
-      subroutine BDRsmart(m,mu,p,q,n,w,x,y,ww,smod,nsmod,
-     & sp,nsp,dp,ndp,edf)
-      implicit double precision (a-h, o-z)
-      integer p,q
+      subroutine BDRsmart(m,mu,p,q,n, w,x,y,ww,smod,nsmod,
+     &     sp,nsp,dp,ndp,edf)
+
+      implicit none
+      integer m,mu,p,q,n, nsmod, nsp,ndp
       double precision x(p,n),y(q,n),w(n),ww(q),smod(nsmod),
-     & sp(nsp),edf(m)
-      double precision dp(ndp)
+     &     sp(nsp),edf(m), dp(ndp)
       smod(1)=m
       smod(2)=p
       smod(3)=q
       smod(4)=n
-      call BDRsmart1(m,mu,p,q,n,w,x,y,ww,smod(6),smod(q+6),smod(q+7),
-     & smod(q+7+p*m),smod(q+7+m*(p+q)),smod(q+7+m*(p+q+n)),  
-     & smod(q+7+m*(p+q+2*n)),sp,sp(q*n+1),sp(n*(q+15)+1),  
-     & sp(n*(q+15)+q+1),dp,smod(5),edf)
+      call BDRsmart1(m,mu,p,q,n, w,x,y,ww, smod(6),smod(q+6),
+     &     smod(q+7),smod(q+7+p*m),smod(q+7+m*(p+q)),  
+     &     smod(q+7+m*(p+q+n)),smod(q+7+m*(p+q+2*n)), 
+     &     sp,sp(q*n+1),sp(n*(q+15)+1), sp(n*(q+15)+q+1),
+     &     dp,smod(5),edf)
       return
       end
 
-      subroutine BDRsmart1(m,mu,p,q,n,w,x,y,ww,yb,ys,a,b,f,t,
-     & asr,r,sc,bt,g,dp,flm,edf)
-      implicit double precision (a-h, o-z)
-      integer p,q
-      double precision w(n),x(p,n),y(1),ww(q),a(p,m),f(n,m),t(n,m),
-     & r(q,n)
-      double precision sc(n,15),g(p,3),yb(q),b(q,m),bt(q),edf(m)
-      double precision dp(1)
+      subroutine BDRsmart1(m,mu,p,q,n, w,x,y,ww, yb,ys,
+     &     a,b,f,
+     &     t,asr,
+     &     r,sc,bt,g,
+     &     dp,flm,edf)
+      implicit none
+      integer m,mu,p,q,n
+      double precision w(n),x(p,n),y(1),ww(q), yb(q), ys
+      double precision a(p,m),b(q,m),f(n,m),t(n,m), asr
+      double precision r(q,n),sc(n,15),bt(q),g(p,3)
+      double precision dp(1), flm,edf(m)
+C                        ^^^ really (ndb) of  BDRsmart(.)
+      integer i,j,l, lm
+      double precision sw,s
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
-      sw=0.0
-      do 10161 j=1,n
-10161   sw=sw+w(j)
-      do 10201 j=1,n
-        do 10201 i=1,q
-10201     r(i,j)=y(q*(j-1)+i)
-      do 10241 i=1,q
-        s=0.0
-        do 10251 j=1,n
-10251     s=s+w(j)*r(i,j)
-        yb(i)=s/sw
-10241   continue
+
+      sw=0d0
+      do 161 j=1,n
+ 161     sw=sw+w(j)
+      do 201 j=1,n
+         do 201 i=1,q
+            r(i,j)=y(q*(j-1)+i)
+ 201  continue
+      do 241 i=1,q
+         s=0d0
+         do 251 j=1,n
+            s=s+w(j)*r(i,j)
+ 251     continue
+         yb(i)=s/sw
+ 241  continue
 c     yb is vector of means
-      do 10261 j=1,n
-        do 10261 i=1,q
-10261     r(i,j)=r(i,j)-yb(i)
+      do 261 j=1,n
+        do 261 i=1,q
+ 261       r(i,j)=r(i,j)-yb(i)
       ys=0.
-      do 10281 i=1,q
-        s=0.
-        do 10291 j=1,n
-10291     s=s+w(j)*r(i,j)**2
-10281   ys=ys+ww(i)*s/sw
-      if(ys .gt. 0.0) goto 10311
+      do 281 i=1,q
+         s=0.
+         do 291 j=1,n
+ 291        s=s+w(j)*r(i,j)**2
+         ys=ys+ww(i)*s/sw
+ 281  continue
+      if(ys .gt. 0d0) goto 311
 c     ys is the overall standard deviation -- quit if zero
       return
-10311 continue
+
+ 311  continue
       ys=sqrt(ys)
       s=1./ys
-      do 10331 j=1,n
-        do 10331 i=1,q
-10331     r(i,j)=r(i,j)*s
+      do 331 j=1,n
+         do 331 i=1,q
+ 331        r(i,j)=r(i,j)*s
+
 c     r is now standardized residuals
 c     subfit adds up to m  terms one at time; lm is the number fitted.
       call BDRsubfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,bt,g,dp,edf)
-      if(lf.le.0) go to 10350
+      if(lf.le.0) go to 9999
       call BDRfulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
-10371 continue
-      do 10381 l=1,lm
+C REPEAT
+ 371  continue
+      do 381 l=1,lm
         sc(l,1)=l+.1
-        s=0.0
-        do 10391 i=1,q
-10391     s=s+ww(i)*abs(b(i,l))
-10381   sc(l,2)=-s
+        s=0d0
+        do 391 i=1,q
+ 391       s=s+ww(i)*abs(b(i,l))
+        sc(l,2)=-s
+ 381  continue
       call BDRsort(sc(1,2),sc,1,lm)
-      do 10461 j=1,n
-        do 10461 i=1,q
-10461     r(i,j)=y(q*(j-1)+i)
-      do 10521 i=1,q
-        do 10531 j=1,n
-          r(i,j)=r(i,j)-yb(i)
-          s=0.
-          do 10541 l=1,lm
-10541       s=s+b(i,l)*f(j,l)
+      do 461 j=1,n
+         do 461 i=1,q
+ 461        r(i,j)=y(q*(j-1)+i)
+      do 521 i=1,q
+        do 531 j=1,n
+           r(i,j)=r(i,j)-yb(i)
+           s=0.
+           do 541 l=1,lm
+ 541          s=s+b(i,l)*f(j,l)
           r(i,j)=r(i,j)/ys-s
-10531     continue
-10521   continue
-      if(lm.le.mu) goto 10350
-      l=sc(lm,1)
-      asr=0.0
-      do 10561 j=1,n
-        do 10561 i=1,q
+531     continue
+521   continue
+      if(lm.le.mu) goto 9999
+      l=sc(lm,1)!back to integer
+      asr=0d0
+      do 561 j=1,n
+        do 561 i=1,q
           r(i,j)=r(i,j)+b(i,l)*f(j,l)
-10561     asr=asr+w(j)*ww(i)*r(i,j)**2
+561     asr=asr+w(j)*ww(i)*r(i,j)**2
       asr=asr/sw
-      if(l .ge. lm) goto 10591
-      do 10601 i=1,p
-10601   a(i,l)=a(i,lm)
-      do 10611 i=1,q
-10611   b(i,l)=b(i,lm)
-      do 10621 j=1,n
-        f(j,l)=f(j,lm)
-10621   t(j,l)=t(j,lm)
-10591 continue
+      if(l .ge. lm) goto 591
+      do 601 i=1,p
+ 601     a(i,l)=a(i,lm)
+      do 611 i=1,q
+ 611     b(i,l)=b(i,lm)
+      do 621 j=1,n
+         f(j,l)=f(j,lm)
+ 621     t(j,l)=t(j,lm)
+591   continue
       lm=lm-1
       call BDRfulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
-      goto 10371
-10350 continue
+      goto 371
+C END REPEAT
+ 9999 continue
       flm=lm
       return
       end
 
       subroutine BDRsubfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,
-     & bt,g,dp,edf)
+     &     bt,g,dp,edf)
       implicit double precision (a-h, o-z)
       integer p,q
       double precision w(n),x(p,n),ww(q),a(p,m),f(n,m),t(n,m),r(q,n)
       double precision sc(n,15),g(p,3),b(q,m),bt(q),edf(m)
       double precision dp(1)
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
+
       asr=big
       lm=0
       do 10641 l=1,m
@@ -143,7 +172,7 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       call BDRfulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
       ifl=iflsv
 10690 continue
-      if(asr.le.0.0.or.(asrold-asr)/asrold.lt.conv) return
+      if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) return
 10641 continue
       return
       end
@@ -155,15 +184,23 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       double precision w(n),x(p,n),ww(q),a(p,lm),f(n,lm),t(n,lm),r(q,n)
       double precision sc(n,15),g(p,3),b(q,lm),bt(q), asr(lm), edf(lm)
       double precision dp(1)
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
+
       if(lbf.le.0) return
       asri=asr(1)
       iter=0
       fsv=cutmin
       isv=mitone
       if(lbf .ge. 3) goto 10711
-      cutmin=1.0
+      cutmin=1d0
       mitone=lbf-1
 10711 continue
       asrold=asri
@@ -193,7 +230,7 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
           do 10841 i=1,q
 10841       r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
 10731   continue
-      if((iter .le. maxit) .and. ((asri .gt. 0.0) .and. 
+      if((iter .le. maxit) .and. ((asri .gt. 0d0) .and. 
      & ((asrold-asri)/asrold .ge. conv))) goto 10711
       cutmin=fsv
       mitone=isv
@@ -211,145 +248,162 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       double precision w(n),x(p,n),y(q,n),ww(q),a(p),b(q),f(n),t(n)
       double precision sc(n,13),g(p,2)
       double precision dp(1)
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
+
       iter=0
       asr=big
 10901 continue
       iter=iter+1
       asrold=asr
       do 10911 j=1,n
-        s=0.0
+        s=0d0
         do 10921 i=1,q
 10921     s=s+ww(i)*b(i)*y(i,j)
 10911   sc(j,13)=s
       call BDRoneone(max0(jfl,iter-1),p,n,w,sw,sc(1,13),x,a,f,t,
      & asr,sc,g,dp,edf)
       do 10931 i=1,q
-        s=0.0
+        s=0d0
         do 10941 j=1,n
 10941     s=s+w(j)*y(i,j)*f(j)
 10931   b(i)=s/sw
-      asr=0.0
+      asr=0d0
       do 10951 i=1,q
-        s=0.0
+        s=0d0
         do 10961 j=1,n
 10961     s=s+w(j)*(y(i,j)-b(i)*f(j))**2
 10951   asr=asr+ww(i)*s/sw
-      if((q .ne. 1) .and. ((iter .le. maxit) .and. ((asr .gt. 0.0) 
+      if((q .ne. 1) .and. ((iter .le. maxit) .and. ((asr .gt. 0d0) 
      & .and. ((asrold-asr)/asrold .ge. conv)))) goto 10901
       return
       end
 
       subroutine BDRoneone(ist,p,n,w,sw,y,x,a,f,t,asr,sc,g,dp,edf)
+
       implicit double precision (a-h, o-z)
-      integer p
+      integer ist,p,n
       double precision w(n),y(n),x(p,n),a(p),f(n),t(n),sc(n,12),g(p,2)
       double precision dp(1)
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
-      sml=1.0/big
-      if(ist .gt. 0) goto 10981
-      if(p .gt. 1) goto 11001
-      a(1)=1.0
-      goto 11011
-11001 continue
-      do 11021 j=1,n
-        sc(j,2)=1.0
-11021   continue
-      call BDRdir(p,n,w,sw,y,x,sc(1,2),a,dp)
-11011 continue
-10981 continue
-      s=0.0
-      do 11031 i=1,p
-        g(i,1)=0.0
-        s=s+a(i)**2
-11031   continue
-      s=1.0/sqrt(s)
-      do 11041 i=1,p
-        a(i)=a(i)*s
-11041   continue
+
+      sml=1d0/big
+      if(ist .le. 0) then 
+         if(p .le. 1) a(1)=1d0
+         do 10 j=1,n
+            sc(j,2)=1d0
+ 10      continue
+         call BDRdir(p,n,w,sw,y,x,sc(1,2),a,dp)
+      endif
+      s=0d0
+      do 20 i=1,p
+         g(i,1)=0d0
+         s=s+a(i)**2
+ 20   continue
+      s=1d0/sqrt(s)
+      do 30 i=1,p
+         a(i)=a(i)*s
+ 30   continue
       iter=0
       asr=big
-      cut=1.0
-11051 continue
+      cut=1d0
+C REPEAT -----------------------------
+ 100  continue
       iter=iter+1
       asrold=asr
-11060 continue
-      s=0.0
-      do 11071 i=1,p
-        g(i,2)=a(i)+g(i,1)
-        s=s+g(i,2)**2
-11071 continue
+C REPEAT [inner loop] -----
+ 60   continue
+      s=0d0
+      do 70 i=1,p
+         g(i,2)=a(i)+g(i,1)
+         s=s+g(i,2)**2
+ 70   continue
       s=1./sqrt(s)
-      do 11081 i=1,p
-        g(i,2)=g(i,2)*s
-11081   continue
-      do 11091 j=1,n
-        sc(j,1)=j+.1
-        s=0.
-        do 11101 i=1,p
-          s=s+g(i,2)*x(i,j)
-11101     continue
-        sc(j,11)=s
-11091   continue
+      do 80 i=1,p
+         g(i,2)=g(i,2)*s
+ 80   continue
+      do 90 j=1,n
+         sc(j,1)=j+.1
+         s=0.
+         do 91 i=1,p
+            s=s+g(i,2)*x(i,j)
+ 91      continue
+         sc(j,11)=s
+ 90   continue
       call BDRsort(sc(1,11),sc,1,n)
-      do 11111 j=1,n
-        k=sc(j,1)
-        sc(j,2)=y(k)
-        sc(j,3)=max(w(k),sml)
-11111   continue
+      do 110 j=1,n
+         k=sc(j,1)
+         sc(j,2)=y(k)
+         sc(j,3)=max(w(k),sml)
+ 110  continue
       call BDRsupsmu(n,sc(1,11),sc(1,2),sc(1,3),1,span,alpha,
-     & sc(1,12),sc(1,4), edf)
-      s=0.0
-      do 11121 j=1,n
-        s=s+sc(j,3)*(sc(j,2)-sc(j,12))**2
-11121   continue
+     &     sc(1,12),sc(1,4), edf)
+      s=0d0
+      do 120 j=1,n
+         s=s+sc(j,3)*(sc(j,2)-sc(j,12))**2
+ 120  continue
       s=s/sw
-      if(s .lt. asr) goto 11141
+      if(s .lt. asr) goto 140
       cut=cut*0.5
-      if(cut.lt.cutmin) goto 11052
-      do 11151 i=1,p
-        g(i,1)=g(i,1)*cut
-11151   continue
-      go to 11060
-11141 continue
+      if(cut.lt.cutmin) goto 199
+      do 150 i=1,p
+         g(i,1)=g(i,1)*cut
+ 150  continue
+      go to 60
+C     --------
+ 140  continue
       asr=s
-      cut=1.0
-      do 11161 i=1,p
-        a(i)=g(i,2)
-11161   continue
-      do 11171 j=1,n
-        k=sc(j,1)
-        t(k)=sc(j,11)
-        f(k)=sc(j,12)
-11171   continue
-      if(asr.le.0.0.or.(asrold-asr)/asrold.lt.conv) goto 11052
-      if(iter.gt.mitone.or.p.le.1) goto 11052
+      cut=1d0
+      do 160 i=1,p
+         a(i)=g(i,2)
+ 160  continue
+      do 170 j=1,n
+         k=sc(j,1)
+         t(k)=sc(j,11)
+         f(k)=sc(j,12)
+ 170  continue
+      if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) goto 199
+      if(iter.gt.mitone.or.p.le.1) goto 199
       call BDRder(n,sc(1,11),sc(1,12),sc(1,3),fdel,sc(1,4),sc(1,5))
-      do 11181 j=1,n
-        k=sc(j,1)
-        sc(j,5)=y(j)-f(j)
-        sc(k,6)=sc(j,4)
-11181   continue
+      do 180 j=1,n
+         k=sc(j,1)
+         sc(j,5)=y(j)-f(j)
+         sc(k,6)=sc(j,4)
+ 180  continue
       call BDRdir(p,n,w,sw,sc(1,5),x,sc(1,6),g,dp)
-      goto 11051
-11052 continue
-      s=0.0
+
+      goto 100
+c--------------
+ 199   continue
+c--------------
+      s=0d0
       v=s
-      do 11191 j=1,n
+      do 210 j=1,n
         s=s+w(j)*f(j)
-11191   continue
+ 210  continue
       s=s/sw
-      do 11201 j=1,n
+      do 220 j=1,n
         f(j)=f(j)-s
         v=v+w(j)*f(j)**2
-11201   continue
-      if(v .le. 0.0) goto 11221
-      v=1.0/sqrt(v/sw)
-      do 11231 j=1,n
-11231   f(j)=f(j)*v
-11221 continue
+ 220  continue
+      if(v .gt. 0d0) then
+         v=1d0/sqrt(v/sw)
+         do 230 j=1,n
+ 230        f(j)=f(j)*v
+      endif
       return
       end
 
@@ -359,9 +413,13 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       integer p
       double precision w(n),r(n),x(p,n),d(n),e(p)
       double precision s,g(1)
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
+
       do 11241 i=1,p
-      s=0.0
+      s=0d0
       do 11251 j=1,n
       s=s+w(j)*d(j)*x(i,j)
 11251 continue
@@ -371,13 +429,13 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       m1=p*(p+1)/2
       m2=m1+p
       do 11261 j=1,p
-      s=0.0
+      s=0d0
       do 11271 l=1,n
       s=s+w(l)*r(l)*(d(l)*x(j,l)-e(j))
 11271 continue
       g(m1+j)=s/sw
       do 11281 i=1,j
-      s=0.0
+      s=0d0
       do 11291 l=1,n
       s=s+w(l)*(d(l)*x(i,l)-e(i))*(d(l)*x(j,l)-e(j))
 11291 continue
@@ -398,14 +456,14 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       double precision g(1),c(p),x(p),sc(p,4)
       double precision beta,h,s,alpha,t
       do 11311 i=1,p
-      x(i)=0.0
-      sc(i,2)=0.0
+      x(i)=0d0
+      sc(i,2)=0d0
 11311 continue
       nit=0
 11321 continue
       nit=nit+1
-      h=0.0
-      beta=0.0
+      h=0d0
+      beta=0d0
       do 11331 i=1,p
       sc(i,4)=x(i)
       s=g(i*(i-1)/2+i)*x(i)
@@ -427,12 +485,12 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       sc(i,1)=s-c(i)
       h=h+sc(i,1)**2
 11331 continue
-      if(h.le.0.0) goto 11322
+      if(h.le.0d0) goto 11322
       do 11361 iter=1,p
       do 11371 i=1,p
       sc(i,2)=beta*sc(i,2)-sc(i,1)
 11371 continue
-      t=0.0
+      t=0d0
       do 11381 i=1,p
       s=g(i*(i-1)/2+i)*sc(i,2)
       im1=i-1
@@ -454,18 +512,18 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       t=t+s*sc(i,2)
 11381 continue
       alpha=h/t
-      s=0.0
+      s=0d0
       do 11411 i=1,p
       x(i)=x(i)+alpha*sc(i,2)
       sc(i,1)=sc(i,1)+alpha*sc(i,3)
       s=s+sc(i,1)**2
 11411 continue
-      if(s.le.0.0) goto 11362
+      if(s.le.0d0) goto 11362
       beta=s/h
       h=s
 11361 continue
 11362 continue
-      s=0.0
+      s=0d0
       do 11421 i=1,p
       s=dmax1(s,dabs(x(i)-sc(i,4)))
 11421 continue
@@ -480,20 +538,20 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       integer bl,el,bc,ec,br,er
       if(x(n) .gt. x(1)) goto 11441
       do 11451 j=1,n
-      d(j)=0.0
+      d(j)=0d0
 11451 continue
       return
 11441 continue
       i=n/4
       j=3*i
       scale=x(j)-x(i)
-11461 if(scale.gt.0.0) goto 11462
+11461 if(scale.gt.0d0) goto 11462
       if(j.lt.n) j=j+1
       if(i.gt.1) i=i-1
       scale=x(j)-x(i)
       goto 11461
 11462 continue
-      del=fdel*scale*2.0
+      del=fdel*scale*2d0
       do 11471 j=1,n
       sc(j,1)=x(j)
       sc(j,2)=s(j)
@@ -627,10 +685,13 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       implicit double precision (a-h, o-z)
       integer q
       double precision ww(q),b(q,lm)
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
-      sml=1.0/big
+      sml=1d0/big
       if(q .ne. 1) goto 11831
-      b(1,lm)=1.0
+      b(1,lm)=1d0
       return
 11831 continue
       if(lm .ne. 1) goto 11851
@@ -641,11 +702,11 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
 11851 continue
       lm1=lm-1
       do 11871 i=1,q
-      b(i,lm)=0.0
+      b(i,lm)=0d0
 11871 continue
-      t=0.0
+      t=0d0
       do 11881 i=1,q
-      s=0.0
+      s=0d0
       do 11891 l=1,lm1
       s=s+abs(b(i,l))
 11891 continue
@@ -658,7 +719,7 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       l1=1
       if(lm.gt.q) l1=lm-q+1
       do 11911 l=l1,lm1
-      s=0.0
+      s=0d0
       t=s
       do 11921 i=1,q
       s=s+ww(i)*b(i,lm)*b(i,l)
@@ -679,23 +740,43 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       end
 
       block data BDRbkppr
-      implicit double precision (a-h, o-z)
+
+      implicit none
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+      double precision conv,cutmin,fdel,cjeps
+      integer maxit,mitone,mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
-      common /BDRspsmooth/ df, gcvpen, ismethod
+
       double precision df, gcvpen
-      data ifl,maxit,conv,mitone,cutmin,fdel,span,alpha,big,cjeps,
-     &mitcj, lf  /6,20,.005,20,0.1,0.02,0.0,0.0,1.0e20,0.001,1,2/
+      integer ismethod
+      common /BDRspsmooth/ df, gcvpen, ismethod
+
+      data ifl,maxit, conv, mitone, cutmin, fdel,
+     &     span,alpha, big, cjeps, mitcj, lf 
+     &     /6,  20,   .005,   20,     0.1,  0.02,
+     &     0.0,  0.0,1.0e20,0.001,   1,    2/
       data df, gcvpen, ismethod /4d0, 1d0, 0/
       end
 
       subroutine BDRsetppr(span1, alpha1, optlevel, ism, df1, 
-     & gcvpen1)
-      implicit double precision (a-h, o-z)
-      integer optlevel
-      double precision alpha1,df, df1, gcvpen, gcvpen1
+     &     gcvpen1)
+c Put `parameters' into Common blocks
+      implicit none
+      integer optlevel,ism
+      double precision span1,alpha1, df1, gcvpen1
+
+      double precision span,alpha,big
+      integer ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+      double precision df, gcvpen
+      integer ismethod
       common /BDRspsmooth/ df, gcvpen, ismethod
+
       span = span1
       lf = optlevel
       alpha = alpha1
@@ -706,22 +787,26 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       end
 
       subroutine BDRfsort(mu,n,f,t,sp)
-      implicit double precision (a-h, o-z)
+c
+      implicit none
+      integer mu, n
       double precision f(n,mu),t(n,mu),sp(n,2)
-      do 12151 l=1,mu
-      do 12161 j=1,n
-      sp(j,1)=j+.1
-      sp(j,2)=f(j,l)
-12161 continue
-      call BDRsort(t(1,l),sp,1,n)
-      do 12171 j=1,n
-      k=sp(j,1)
-      f(j,l)=sp(k,2)
-12171 continue
-12151 continue
+c      
+      integer l,j,k
+
+      do 100 l=1,mu
+         do 10 j=1,n
+            sp(j,1)=j+.1
+            sp(j,2)=f(j,l)
+ 10      continue
+         call BDRsort(t(1,l),sp,1,n)
+         do 20 j=1,n
+            k=sp(j,1)
+            f(j,l)=sp(k,2)
+ 20      continue
+ 100  continue
       return
       end
-      
 
       subroutine BDRpred(np,x,smod,y,sc)
       implicit double precision (a-h, o-z)
@@ -744,11 +829,11 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       jb=ja+p*m
       jf=jb+m*q
       jt=jf+n*m      
-      do 12181 i=1,q
-      y(inp,i)=0.0
-12181 continue
-      do 12191 l=1,mu
-      s=0.0
+      do 81 i=1,q
+      y(inp,i)=0d0
+ 81   continue
+      do 91 l=1,mu
+      s=0d0
       do 12201 j=1,p
       s=s+smod(ja+j)*x(inp,j)
 12201 continue
@@ -786,15 +871,15 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       t=smod(jf+place)
 12300 continue
       do 12311 i=1,q
-      y(inp,i)=y(inp,i)+smod(jb+i)*t
+         y(inp,i)=y(inp,i)+smod(jb+i)*t
 12311 continue
       ja=ja+p
       jb=jb+q
       jf=jf+n
       jt=jt+n
-12191 continue
+ 91   continue
       do 12321 i=1,q
-      y(inp,i)=ys*y(inp,i)+smod(i+5)
+         y(inp,i)=ys*y(inp,i)+smod(i+5)
 12321 continue
 100   continue
       return
@@ -858,78 +943,86 @@ c
       double precision df, gcvpen
       common /BDRspans/ spans(3) /BDRconsts/ big,sml,eps
       common /BDRspsmooth/ df, gcvpen, ismethod
+
       if (x(n).gt.x(1)) go to 30
-      sy=0.0
+      sy=0d0
       sw=sy
       do 10 j=1,n
-      sy=sy+w(j)*y(j)
-      sw=sw+w(j)
+         sy=sy+w(j)*y(j)
+         sw=sw+w(j)
  10   continue
-      a=0.0
-      if (sw.gt.0.0) a=sy/sw
+      a=0d0
+      if (sw.gt.0d0) a=sy/sw
       do 20 j=1,n
-      smo(j)=a
+         smo(j)=a
  20   continue
       return
  30   continue
+
 C     change by BDR
       if (ismethod .ne. 0) then
         call BDRspline(n, x, y, w, smo, edf)
       else
-      i=n/4
-      j=3*i
-      scale=x(j)-x(i)
- 40   if (scale.gt.0.0) go to 50
-      if (j.lt.n) j=j+1
-      if (i.gt.1) i=i-1
-      scale=x(j)-x(i)
-      go to 40
- 50   vsmlsq=(eps*scale)**2
-      jper=iper
-      if (iper.eq.2.and.(x(1).lt.0.0.or.x(n).gt.1.0)) jper=1
-      if (jper.lt.1.or.jper.gt.2) jper=1
-      if (span.le.0.0) go to 60
-      call BDRsmooth (n,x,y,w,span,jper,vsmlsq,smo,sc)
-      return
- 60   do 70 i=1,3
-      call BDRsmooth (n,x,y,w,spans(i),jper,vsmlsq,sc(1,2*i-1),sc(1,7))
-      call BDRsmooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,sc(1,2*i),h)
- 70   continue
-      do 90 j=1,n
-      resmin=big
-      do 80 i=1,3
-      if (sc(j,2*i).ge.resmin) go to 80
-      resmin=sc(j,2*i)
-      sc(j,7)=spans(i)
- 80   continue
-      if (alpha.gt.0.0.and.alpha.le.10.0.and.resmin.lt.sc(j,6)
-     & .and.resmin.gt.0.0) sc(j,7)=sc(j,7)+(spans(3)-sc(j,7))*
-     & max(sml,resmin/sc(j,6))**(10.0-alpha)
- 90   continue
-      call BDRsmooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,sc(1,2),h)
-      do 110 j=1,n
-      if (sc(j,2).le.spans(1)) sc(j,2)=spans(1)
-      if (sc(j,2).ge.spans(3)) sc(j,2)=spans(3)
-      f=sc(j,2)-spans(2)
-      if (f.ge.0.0) go to 100
-      f=-f/(spans(2)-spans(1))
-      sc(j,4)=(1.0-f)*sc(j,3)+f*sc(j,1)
-      go to 110
- 100  f=f/(spans(3)-spans(2))
-      sc(j,4)=(1.0-f)*sc(j,3)+f*sc(j,5)
- 110  continue
-      call BDRsmooth (n,x,sc(1,4),w,spans(1),-jper,vsmlsq,smo,h)
-      edf = 0
+         i=n/4
+         j=3*i
+         scale=x(j)-x(i)
+ 40      if (scale.gt.0d0) go to 50
+         if (j.lt.n) j=j+1
+         if (i.gt.1) i=i-1
+         scale=x(j)-x(i)
+         go to 40
+ 50      vsmlsq=(eps*scale)**2
+         jper=iper
+         if (iper.eq.2.and.(x(1).lt.0d0.or.x(n).gt.1d0)) jper=1
+         if (jper.lt.1.or.jper.gt.2) jper=1
+         if (span.le.0d0) go to 60
+         call BDRsmooth (n,x,y,w,span,jper,vsmlsq,smo,sc)
+         return
+ 60      do 70 i=1,3
+            call BDRsmooth(n,x,y,w,spans(i),jper,vsmlsq,
+     &           sc(1,2*i-1),sc(1,7))
+            call BDRsmooth(n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
+     &           sc(1,2*i),h)
+ 70      continue
+         do 90 j=1,n
+            resmin=big
+            do 80 i=1,3
+               if (sc(j,2*i).ge.resmin) go to 80
+               resmin=sc(j,2*i)
+               sc(j,7)=spans(i)
+ 80         continue
+            if (alpha.gt.0d0.and.alpha.le.10d0 .and.
+     &           resmin.lt.sc(j,6).and.resmin.gt.0d0)
+     &           sc(j,7)= sc(j,7)+(spans(3)-sc(j,7)) *
+     &           		max(sml,resmin/sc(j,6))**(10d0-alpha)
+ 90      continue
+
+         call BDRsmooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,sc(1,2),h)
+         do 110 j=1,n
+            if (sc(j,2).le.spans(1)) sc(j,2)=spans(1)
+            if (sc(j,2).ge.spans(3)) sc(j,2)=spans(3)
+            f=sc(j,2)-spans(2)
+            if (f.ge.0d0) go to 100
+            f=-f/(spans(2)-spans(1))
+            sc(j,4)=(1d0-f)*sc(j,3)+f*sc(j,1)
+            go to 110
+ 100        f=f/(spans(3)-spans(2))
+            sc(j,4)=(1d0-f)*sc(j,3)+f*sc(j,5)
+ 110     continue
+         call BDRsmooth (n,x,sc(1,4),w,spans(1),-jper,vsmlsq,smo,h)
+         edf = 0
       endif
       return
       end
 
       subroutine BDRsmooth (n,x,y,w,span,iper,vsmlsq,smo,acvr)
+
       implicit double precision (a-h, o-z)
       dimension x(n),y(n),w(n),smo(n),acvr(n)
       integer in,out
       double precision wt,fbo,fbw,xm,ym,tmp,var,cvar,a,h,sy
-      xm=0.0
+
+      xm=0d0
       ym=xm
       var=ym
       cvar=var
@@ -939,72 +1032,73 @@ C     change by BDR
       if (ibw.lt.2) ibw=2
       it=2*ibw+1
       do 20 i=1,it
-      j=i
-      if (jper.eq.2) j=i-ibw-1
-      xti=x(j)
-      if (j.ge.1) go to 10
-      j=n+j
-      xti=x(j)-1.0
- 10   wt=w(j)
-      fbo=fbw
-      fbw=fbw+wt
-      if (fbw.gt.0.0) xm=(fbo*xm+wt*xti)/fbw
-      if (fbw.gt.0.0) ym=(fbo*ym+wt*y(j))/fbw
-      tmp=0.0
-      if (fbo.gt.0.0) tmp=fbw*wt*(xti-xm)/fbo
-      var=var+tmp*(xti-xm)
-      cvar=cvar+tmp*(y(j)-ym)
+         j=i
+         if (jper.eq.2) j=i-ibw-1
+         xti=x(j)
+         if (j.ge.1) go to 10
+         j=n+j
+         xti=x(j)-1d0
+ 10      wt=w(j)
+         fbo=fbw
+         fbw=fbw+wt
+         if (fbw.gt.0d0) xm=(fbo*xm+wt*xti)/fbw
+         if (fbw.gt.0d0) ym=(fbo*ym+wt*y(j))/fbw
+         tmp=0d0
+         if (fbo.gt.0d0) tmp=fbw*wt*(xti-xm)/fbo
+         var=var+tmp*(xti-xm)
+         cvar=cvar+tmp*(y(j)-ym)
  20   continue
       do 80 j=1,n
-      out=j-ibw-1
-      in=j+ibw
-      if ((jper.ne.2).and.(out.lt.1.or.in.gt.n)) go to 60
-      if (out.ge.1) go to 30
-      out=n+out
-      xto=x(out)-1.0
-      xti=x(in)
-      go to 50
- 30   if (in.le.n) go to 40
-      in=in-n
-      xti=x(in)+1.0
-      xto=x(out)
-      go to 50
- 40   xto=x(out)
-      xti=x(in)
- 50   wt=w(out)
-      fbo=fbw
-      fbw=fbw-wt
-      tmp=0.0
-      if (fbw.gt.0.0) tmp=fbo*wt*(xto-xm)/fbw
-      var=var-tmp*(xto-xm)
-      cvar=cvar-tmp*(y(out)-ym)
-      if (fbw.gt.0.0) xm=(fbo*xm-wt*xto)/fbw
-      if (fbw.gt.0.0) ym=(fbo*ym-wt*y(out))/fbw
-      wt=w(in)
-      fbo=fbw
-      fbw=fbw+wt
-      if (fbw.gt.0.0) xm=(fbo*xm+wt*xti)/fbw
-      if (fbw.gt.0.0) ym=(fbo*ym+wt*y(in))/fbw
-      tmp=0.0
-      if (fbo.gt.0.0) tmp=fbw*wt*(xti-xm)/fbo
-      var=var+tmp*(xti-xm)
-      cvar=cvar+tmp*(y(in)-ym)
- 60   a=0.0
-      if (var.gt.vsmlsq) a=cvar/var
-      smo(j)=a*(x(j)-xm)+ym
-      if (iper.le.0) go to 80
-      h=0.0
-      if (fbw.gt.0.0) h=1.0/fbw
-      if (var.gt.vsmlsq) h=h+(x(j)-xm)**2/var
-      acvr(j)=0.0
-      a=1.0-w(j)*h
-      if (a.le.0.0) go to 70
-      acvr(j)=abs(y(j)-smo(j))/a
-      go to 80
- 70   if (j.le.1) go to 80
-      acvr(j)=acvr(j-1)
+         out=j-ibw-1
+         in=j+ibw
+         if ((jper.ne.2).and.(out.lt.1.or.in.gt.n)) go to 60
+         if (out.ge.1) go to 30
+         out=n+out
+         xto=x(out)-1d0
+         xti=x(in)
+         go to 50
+ 30      if (in.le.n) go to 40
+         in=in-n
+         xti=x(in)+1d0
+         xto=x(out)
+         go to 50
+ 40      xto=x(out)
+         xti=x(in)
+ 50      wt=w(out)
+         fbo=fbw
+         fbw=fbw-wt
+         tmp=0d0
+         if (fbw.gt.0d0) tmp=fbo*wt*(xto-xm)/fbw
+         var=var-tmp*(xto-xm)
+         cvar=cvar-tmp*(y(out)-ym)
+         if (fbw.gt.0d0) xm=(fbo*xm-wt*xto)/fbw
+         if (fbw.gt.0d0) ym=(fbo*ym-wt*y(out))/fbw
+         wt=w(in)
+         fbo=fbw
+         fbw=fbw+wt
+         if (fbw.gt.0d0) xm=(fbo*xm+wt*xti)/fbw
+         if (fbw.gt.0d0) ym=(fbo*ym+wt*y(in))/fbw
+         tmp=0d0
+         if (fbo.gt.0d0) tmp=fbw*wt*(xti-xm)/fbo
+         var=var+tmp*(xti-xm)
+         cvar=cvar+tmp*(y(in)-ym)
+ 60      a=0d0
+         if (var.gt.vsmlsq) a=cvar/var
+         smo(j)=a*(x(j)-xm)+ym
+         if (iper.le.0) go to 80
+         h=0d0
+         if (fbw.gt.0d0) h=1d0/fbw
+         if (var.gt.vsmlsq) h=h+(x(j)-xm)**2/var
+         acvr(j)=0d0
+         a=1d0-w(j)*h
+         if (a.le.0d0) go to 70
+         acvr(j)=abs(y(j)-smo(j))/a
+         go to 80
+ 70      if (j.le.1) go to 80
+         acvr(j)=acvr(j-1)
  80   continue
       j=1
+c--
  90   j0=j
       sy=smo(j)*w(j)
       fbw=w(j)
@@ -1015,10 +1109,10 @@ C     change by BDR
       fbw=fbw+w(j)
       if (j.lt.n) go to 100
  110  if (j.le.j0) go to 130
-      a=0.0
-      if (fbw.gt.0.0) a=sy/fbw
+      a=0d0
+      if (fbw.gt.0d0) a=sy/fbw
       do 120 i=j0,j
-      smo(i)=a
+         smo(i)=a
  120  continue
  130  j=j+1
       if (j.le.n) go to 90
@@ -1100,8 +1194,8 @@ c
 c      call dblepr('knots', 5, knot, nk+4)
 C	par = (icrit, ispar)
       if (iabs(ismethod) .eq. 1) then
-        par(1) = 3
-        df1 = df
+         par(1) = 3
+         df1 = df
       else
          par(1) = 1
          df1 = 0d0
@@ -1116,15 +1210,15 @@ C	par = (icrit, ispar)
      & par,lambda,param,isetup, work,4,1,ier)
       if(ier .gt. 0) call intpr('TROUBLE:',8, ier, 1)
       do 50 i = 1,n
- 50     smo(i) = dsmo(i)
+ 50      smo(i) = dsmo(i)
 c      call dblepr('smoothed',8, dsmo, n)
       s = 0
       do 60 i = 1, n
  60      s = s + lev(i)
       edf = s
       if(ismethod.lt.0) then
-        call dblepr('lambda', 6, lambda, 1)
-        call dblepr('df', 2, s, 1)
+         call dblepr('lambda', 6, lambda, 1)
+         call dblepr('df', 2, s, 1)
       endif
       return
       end
@@ -1132,7 +1226,12 @@ c      call dblepr('smoothed',8, dsmo, n)
 
 ***********************************************************************
 
-
+C=== This was 'sort()' in  gamfit's  mysort.f  [or sortdi() in sortdi.f ] :
+C
+C===  FIXME:  Translate to C and add to ../../../main/sort.c <<<<<
+C
+C
+C why on earth  is a[] double precision ????
       subroutine BDRsort (v,a,ii,jj)
       implicit double precision (a-h, o-z)
 c
@@ -1143,9 +1242,9 @@ c
 c     this is a modification of CACM algorithm #347 by R. C. Singleton,
 c     which is a modified Hoare quicksort.
 c
-      dimension a(jj),v(1),iu(20),il(20)
+      double precision v(1)
+      dimension a(jj),iu(20),il(20)
       integer t,tt
-      double precision v
       m=1
       i=ii
       j=jj
