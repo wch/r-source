@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2001  The R Development Core Team
+  Copyright (C) 1999-2000  The R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -38,33 +38,6 @@
 
 static double ***w;
 
-#ifndef MATHLIB_STANDALONE
-
-#include "R_ext/Memory.h"
-#ifdef Macintosh
-extern void isintrpt();
-#endif
-#ifdef Win32
-extern void R_ProcessEvents();
-#endif
-static void w_init_maybe(int m, int n)
-{
-    int i, j;
-
-    if (m > n) {
-	i = n; n = m; m = i;
-    }
-    w = (double ***) R_alloc(m + 1, sizeof(double **));
-    for (i = 0; i <= m; i++) {
-	w[i] = (double **) R_alloc(n + 1, sizeof(double *));
-	for (j =0; j <= n; j++) w[i][j] = 0;
-    }
-}
-
-static void w_free_maybe(int m, int n) {}
-
-#else /* MATHLIB_STANDALONE */
-
 static void
 w_free(int m, int n)
 {
@@ -91,17 +64,7 @@ static void
 w_init_maybe(int m, int n)
 {
     int i;
-#ifndef MATHLIB_STANDALONE
-    if (m > n) {
-	i = n; n = m; m = i;
-    }
-    w = (double ***) R_alloc(m + 1, sizeof(double **));
-    for (i = 0; i <= m; i++) {
-	int j;
-	w[i] = (double **) R_alloc(n + 1, sizeof(double *));
-	for (j = 0; j <= n; j++) w[i][j] = 0;
-    }
-#else
+
     if (w && (m > WILCOX_MAX || n > WILCOX_MAX))
 	w_free(WILCOX_MAX, WILCOX_MAX);
 
@@ -120,7 +83,6 @@ w_init_maybe(int m, int n)
 		MATHLIB_ERROR("wilcox allocation error %d", 2);
 	}
     }
-#endif
 }
 
 static void
@@ -129,8 +91,6 @@ w_free_maybe(int m, int n)
     if (m > WILCOX_MAX || n > WILCOX_MAX)
 	w_free(m, n);
 }
-
-#endif /* MATHLIB_STANDALONE */
 
 static double
 cwilcox(int k, int m, int n)
@@ -151,13 +111,9 @@ cwilcox(int k, int m, int n)
     }
 
     if (w[i][j] == 0) {
-#ifndef MATHLIB_STANDALONE
-	w[i][j] = (double *) R_alloc(c + 1, sizeof(double));
-#else
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[i][j])
 		MATHLIB_ERROR("wilcox allocation error %d", 3);
-#endif
 	for (l = 0; l <= c; l++)
 	    w[i][j][l] = -1;
     }
