@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-11, 2000-09-17
+@set FAQ-VERSION 1.1-12, 2000-09-21
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -253,6 +253,10 @@ The current stable Unix/Windows version is @value{REL-VERSION}, the
 unstable one is @value{DEV-VERSION}.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
+
+@c Mac
+@c On 2000-09-11, Stefano Iacus <jago@mclink.it> said on r-devel that he
+@c has finished a port of 1.1.1 and 1.2.0 to the Power Mac under Mac OS.
 
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
@@ -1090,8 +1094,10 @@ In R, @code{dyn.load()} can only load @emph{shared libraries}, as
 created for example by @kbd{R SHLIB}.
 
 @item
-In R, @code{attach()} currently only works for lists and data frames
-(not for directories).  Also, you cannot attach at position 1.
+In R, @code{attach()} currently only works for lists and data frames,
+but not for directories.  (In fact, @code{attach()} also works for R
+data files created with @code{save()}, which is analogous to attaching
+directories in S.)  Also, you cannot attach at position 1.
 
 @item
 Categories do not exist in R, and never will as they are deprecated now
