@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
   ## Method to 'str' for  'data.frame' objects
-  ## $Id: str.R,v 1.2 1998/04/27 09:52:01 maechler Exp $
+  ## $Id: str.R,v 1.3 1998/05/04 07:39:19 maechler Exp $
   if(! is.data.frame(object)) {
     warning("str.data.frame(.) called with non-data.frame. Trying to coerce it")
     object <- data.frame(object)
@@ -44,7 +44,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
   ## Author: Martin Maechler <maechler@stat.math.ethz.ch>     1990--1997
   ## ------ Please send Bug-reports, -fixes and improvements !
   ## -------------------------------------------------------------------------
-  ## $Id: str.R,v 1.2 1998/04/27 09:52:01 maechler Exp $
+  ## $Id: str.R,v 1.3 1998/05/04 07:39:19 maechler Exp $
 
 
   oo <- options(digits = digits.d)
@@ -107,7 +107,8 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
         else if(mod == "char") mod <- "chr"
         else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
         if(is.array(object)) {
-          di <- paste("1:", dim(object), sep = "")
+          di <- dim(object)
+          di <- paste(ifelse(di>1, "1:",""), di, ifelse(di>0,""," "), sep = "")
           le.str <- paste(c("[", paste(di[ - length(di)], ", ", sep = ""),
                             di[length(di)], "]"), collapse = "")
           std.attr <- "dim" #- "names"
