@@ -1,38 +1,15 @@
 \name{lm}
 \title{Fitting Linear Models}
 \usage{
-lm(formula, data = list(), subset, weights, na.action=na.omit,
-   method="qr", model=TRUE, singular.ok = TRUE, \dots)
-
-anova(lm.obj, \dots)
-summary(lm.obj, correlation = FALSE)
-
-coefficients(lm.obj)
-deviance(lm.obj)
-df.residual(lm.obj)
-effects(lm.obj)
-fitted.values(lm.obj)
-residuals(lm.obj)
-weights(lm.obj)
+lm(formula, data, subset, weights, na.action=na.omit,
+   method="qr", model=TRUE, singular.ok = TRUE)
 
 lm.fit(x, y, method = "qr", tol = 1e-7, \dots)
 lm.wfit(x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \alias{lm}
-\alias{anova.lm}
-\alias{summary.lm}
-\alias{coefficients.lm}
-\alias{deviance.lm}
-\alias{df.residual.lm}
-\alias{effects.lm}
-\alias{fitted.values.lm}
-\alias{residuals.lm}
-\alias{weights.lm}
 \alias{lm.fit}
 \alias{lm.wfit}
-\alias{print.lm}
-\alias{print.summary.lm}
-\alias{print.anova.lm}
 \arguments{
 \item{formula}{a symbolic description of the model to be fit.
 The details of model specification are given below.}
@@ -53,10 +30,9 @@ observations.}
   returned.}
 \item{singular.ok}{logical, defaulting to
   \code{TRUE}. \emph{\code{FALSE} is not yet implemented}.}
-\item{lm.obj}{an object of class \code{lm}.}
 \item{method}{currently, only \code{method="qr"} is supported.}
-\item{tol}{tolerance for \code{\link{qr}} decomposition.  Default is 1e-7.}
-\item{\dots}{currently, disregarded.}
+\item{tol}{tolerance for the \code{\link{qr}} decomposition.  Default is 1e-7.}
+\item{\dots}{currently disregarded.}
 }
 \description{
 \code{lm} is used to fit linear models.
@@ -81,21 +57,21 @@ of \code{first} and \code{second}.
 This is the same as \code{first+second+first:second}.
 }
 \value{
-\code{lm} returns an object of class \code{lm}.
-The function \code{summary} can be used to obtain or print
-a summary of the results and the function \code{anova}
-and be used to produce and analysis of variance table.
+  \code{lm} returns an object of \code{\link{class}} \code{"lm"}.
+  
+The functions \code{summary} and \code{\link{anova}} are used to
+obtain and print a summary and analysis of variance table of the results.
 The generic accessor functions \code{coefficients},
 \code{effects}, \code{fitted.values} and \code{residuals}
-can be used to extract various useful features of the
-value returned by \code{lm}.
+extract various useful features of the value returned by \code{lm}.
 }
 \seealso{
-\code{\link{anova}} for the ANOVA table,
-\code{\link{coefficients}}, \code{\link{effects}}, \code{\link{fitted.values}},
-\code{\link{glm}} for \bold{generalized} linear models,
-\code{\link{lm.influence}} for regression diagnostics,
-\code{\link{residuals}}, \code{\link{summary}}.
+  \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
+  the ANOVA table. 
+  The generic functions \code{\link{coefficients}}, \code{\link{effects}},
+  \code{\link{residuals}}, \code{\link{fitted.values}};
+  \code{\link{lm.influence}} for regression diagnostics, and
+  \code{\link{glm}} for \bold{generalized} linear models.
 }
 \examples{
 ## Annette Dobson (1990) "An Introduction to Statistical Modelling".
@@ -106,6 +82,6 @@ group <- gl(2,10,20,labels=c("Ctl","Trt"))
 weight <- c(ctl,trt)
 anova(lm.D9 <- lm(weight~group))
 summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
-summary(resid(lm.D9) - resid(lm.D90)) #- residual are practically identical
+summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
 }
 \keyword{regression}
