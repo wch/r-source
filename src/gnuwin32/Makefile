@@ -406,8 +406,7 @@ check-devel: check
 
 check-all fullcheck: check-devel check-recommended
 
-check-recommended:
-	$(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
+check-recommended: $(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
 
 
 #                          ===== documentation ======
