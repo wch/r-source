@@ -30,7 +30,7 @@ else
 endif
 
 R-DLLFLAGS = -mwindows
-R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
+R-DLLLIBS = -L. $(FLIBS) -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a

@@ -550,11 +550,11 @@ void *R_HTTPOpen(const char *url)
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-    if(!IDquiet) {
+/*    if(!IDquiet) {
 	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n",
 		timeout);
 	R_FlushConsole();
-    }
+	}*/
 
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
@@ -578,10 +578,10 @@ void *R_HTTPOpen(const char *url)
 
     wictxt->session = (HINTERNET) callback_res->dwResult;
 #else
-    if(!IDquiet) {
+/*    if(!IDquiet) {
 	Rprintf("using Synchronous WinInet calls\n");
 	R_FlushConsole();
-    }
+	} */
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,

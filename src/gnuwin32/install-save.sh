@@ -17,7 +17,10 @@ if ${R_SAVE_IMAGE}; then
     fi
     R_PROFILE=./R_PROFILE.R
     export R_PROFILE
-    (echo " .lib.loc <- c(\"${lib}\", .lib.loc)"; cat ${lib}/${pkg}/R/${pkg}; echo "rm(.lib.loc)") | ${R_HOME}/bin/Rterm --save --silent || (echo "Execution of package source for ${pkg} failed"; exit 1)
+    (echo " .lib.loc <- c(\"${lib}\", .lib.loc)"; 
+      cat ${lib}/${pkg}/R/${pkg};
+      echo "rm(.lib.loc)") | ${R_HOME}/bin/Rterm --save --silent \
+        || (echo "Execution of package source for ${pkg} failed"; exit 1)
     mv .RData ${lib}/${pkg}/R/all.rda
     mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
     if test -s INSTALL.R; then cp INSTALL.R ${lib}/${pkg}/R/${pkg}
@@ -35,8 +38,8 @@ if ${R_SAVE_IMAGE}; then
       f(libname, pkgname)
     else
       stop(paste("package \"", pkgname, "\"has a non-function .First", sep=""))
-   }
- }
+  }
+}
 EOF
     fi
 fi
