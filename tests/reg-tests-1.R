@@ -2983,3 +2983,13 @@ stopifnot(typeof(res) == "list")
 (res <- rbind(A, A))
 stopifnot(typeof(res) == "list")
 ## were not implemented in 1.8.1
+
+
+## Date objects with NA's
+(t1 <- strptime(c("6. Aug. 1930", "3. Nov. 1925", "28. Mar. 1959",
+                 NA, paste(1:29," Feb. 1960", sep=".")),
+               format = "%d. %b. %Y"))
+stopifnot(6 == length(print(s1 <- summary(t1))),
+          s1== summary(as.POSIXct(t1)),
+          6 == length(print(format(as.Date(s1)))) )
+## gave bizarre "NA's" entry in R 1.8.1 and 1.9.0alpha
