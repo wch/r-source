@@ -136,7 +136,8 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
       record(name)
     }
   } else {
-    stop(gettextf("Viewport '%s' was not found", name), domain = NA)
+    stop(gettextf("Viewport '%s' was not found", as.character(name)[1]),
+         domain = NA)
   }
   invisible(result)
 }
