@@ -902,9 +902,15 @@ void R_RegisterFinalizer(SEXP s, SEXP fun)
 
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
 {
+    /* We need to protect s since otherwise when R_MakeExternalPtr is
+       called, its only link visible to the garbage collector might be
+       the one in the finalization chain, resulting in it being
+       registered as elligible for finalization. */
+    PROTECT(s);
     R_fin_registered = CONS(s, R_fin_registered);
     SET_TAG(R_fin_registered, R_MakeExternalPtr(fun, R_NilValue, R_NilValue));
     R_fin_registered->sxpinfo.gp = 0;
+    UNPROTECT(1);
 }
 
 /* The Generational Collector. */
