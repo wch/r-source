@@ -91,6 +91,10 @@ Date: Fri, 28 Jun 2002 10:28:17 +1000
 Subject: problem with qq( )
 From: Jarno.Tuimala@Helsinki.Fi
 Date: Tue, 2 Jul 2002 10:37:10 +0200 (MET DST)
+* PR# 1741 *
+Subject: groupedData constructor from a function
+From: dieter.menne@menne-biomed.de
+Date: Thu, 4 Jul 2002 15:59:59 +0200 (MET DST)
 
 Directory:  Analyses
 
@@ -497,39 +501,19 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1715 *
-Subject: package `methods' has persistent effects even if detached
-From: ripley@stats.ox.ac.uk
-Date: Thu, 27 Jun 2002 20:01:29 +0100 (BST)
 * PR# 1717 *
 Subject: Problem in optim(method="L-BFGS-B")
 From: polzehl@wias-berlin.de
 Date: Fri, 28 Jun 2002 11:53:13 +0200 (MET DST)
-* PR# 1733 *
-Subject: R windows FAQ
-From: Kevin.Wright@pioneer.com
-Date: Tue, 2 Jul 2002 23:49:49 +0200 (MET DST)
-* PR# 1734 *
-Subject: Let's be friends
-From: elzet <elzet@volny.cz>
-Date: Wed, 3 Jul 2002 00:33:46 +0200 (CEST)
-* PR# 1735 *
-Subject: Maritime Newsletter (Week 27)
-From: Marine Digital Inc<newsletter@marinedigital.com>
-Date: Wed, 3 Jul 2002 08:27:46 +0900
-* PR# 1736 *
-Subject: Japanese girl VS playboy
-From: ESS-help <ESS-help@hypatia.math.ethz.ch>
-Date: Wed, 3 Jul 2002 03:52:39 +0200
 * PR# 1737 *
 Subject: complex numbers in library function
 From: alex.deckmyn@oma.be
 Date: Wed, 3 Jul 2002 14:25:58 +0200 (MET DST)
-* PR# 1738 *
-Subject: [±¤°?]¾???µµ ???????¦ ???????­ ?????????
-From: ?????¤º???µð¾? <pjk1301@hananet.net>
-Date: Wed, 3 Jul 2002 22:05:14 +0900
-* PR# 1739 *
-Subject: wrong measurements on as.character(NA)
-From: Jens =?ISO-8859-1?Q?Oehlschl=E4gel?= <oehl_list@gmx.de>
-Date: Wed, 3 Jul 2002 15:29:28 +0200 (MEST)
+* PR# 1743 *
+Subject: Terms Objects
+From: eudora-suggest <eudora-suggest@qualcomm.com>
+Date: Thu, 4 Jul 2002 13:35:04 -0500
+* PR# 1744 *
+Subject: lattice default aspect fails for some data sets
+From: dieter.menne@menne-biomed.de
+Date: Thu, 4 Jul 2002 21:01:08 +0200 (MET DST)
