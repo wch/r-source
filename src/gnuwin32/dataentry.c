@@ -700,8 +700,6 @@ static SEXP getccol()
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
-extern double R_strtod(char *c, char **end); /* in coerce.c */
-
 static void closerect()
 {
     SEXP cvec, c0vec, tvec;
