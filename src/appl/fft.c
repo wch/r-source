@@ -818,8 +818,10 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 		nfac[m_fac++] = nfac[--j];
 	}
 	maxf = nfac[m_fac-kt-1];
-	if (kt > 0)
-	    maxf = imax2(nfac[kt-1], maxf);
+/* The last squared factor is not necessarily the largest PR#1429 */
+	if (kt > 0) maxf = imax2(nfac[kt-1], maxf);
+	if (kt > 1) maxf = imax2(nfac[kt-2], maxf);
+	if (kt > 2) maxf = imax2(nfac[kt-3], maxf);
     }
     *pmaxf = maxf;
     *pmaxp = maxp;
