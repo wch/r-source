@@ -29,10 +29,15 @@ none
 
 Directory:  Add-ons
 
-* PR# 574 *
-Subject: chron library
-From: keitt@nceas.ucsb.edu
-Date: Mon, 19 Jun 2000 19:20:16 +0200 (MET DST)
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
+* PR# 503 *
+Subject: dmvnorm() bug in e1071
+From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
+Date: Fri, 24 Mar 2000 03:24:45 +0000 (GMT)
 * PR# 496 *
 From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
@@ -42,15 +47,6 @@ Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 From: Setzer.Woodrow@epamail.epa.gov
 Date: Tue, 06 Jun 2000 14:21:35 -0400
 --gls{nlme}; should formula.default() look for attr(*,"formula") ?
-* PR# 503 *
-Subject: dmvnorm() bug in e1071
-From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
-Date: Fri, 24 Mar 2000 03:24:45 +0000 (GMT)
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
---possibly the RH6.2 Fortran bug
 
 Directory:  Analyses
 
@@ -196,23 +192,27 @@ none
 
 Directory:  incoming
 
-* PR# 581 *
-Subject: help screens: typos, suggestions
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 15:59:57 -0400 (EDT)
+* PR# 583 *
+Subject: persp greek label problem
+From: ramin.nakisa@ncr.com
+Date: Mon, 26 Jun 2000 20:06:38 +0200 (MET DST)
+* PR# 551 *
+Subject: Bus Error crash
+From: kjetikj@astro.uio.no
+Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
 Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
 --1.0.0 bug fixed for 1.0.1 ??
+* PR# 578 *
+Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 22 Jun 2000 17:07:05 +0200
 * PR# 577 *
 Subject: de on w95b crash rterm with long strings
 From: p.malewski@tu-bs.de
 Date: Thu, 22 Jun 2000 16:43:16 +0200 (MET DST)
-* PR# 551 *
-Subject: Bus Error crash
-From: kjetikj@astro.uio.no
-Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 * PR# 580 *
 Subject: dotplot() colors reversed
 From: Rashid Nassar <rnassar@duke.edu>
@@ -221,7 +221,11 @@ Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
 Subject: possible bug, anova.glm(), family="gaussian"
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 25 Jun 2000 12:31:22 -0400 (EDT)
-* PR# 578 *
-Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 22 Jun 2000 17:07:05 +0200
+* PR# 582 *
+Subject: lm.{w}fit(x,y,*) : fails when x has no column names
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 26 Jun 2000 15:50:58 +0200 (CEST)
+* PR# 581 *
+Subject: help screens: typos, suggestions
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 15:59:57 -0400 (EDT)
