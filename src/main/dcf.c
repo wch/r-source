@@ -142,6 +142,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			SET_STRING_ELT(retval, nwhat+nwhat*k,
 				       mkChar(line +
 					      regmatch[0].rm_eo));
+			lastm=nwhat;
 			nwhat++;
 		    }
 		}
