@@ -184,19 +184,21 @@ getAllMethods <-
   ## this is the slot where inherited methods are stored.
   function(f, fdef = getGeneric(f, TRUE), libs = search()) {
       if(is(fdef, "genericFunction"))
-         deflt <- finalDefaultMethod(fdef@default)
+          deflt <- finalDefaultMethod(fdef@default)
       else if(is.primitive(fdef)) {
           deflt <- fdef
           fdef <- getGeneric(f, TRUE)
       }
       else
-        return(NULL) # or error?
+          stop("Invalid \"fdef\" argument supplied to getAllMethods; expected either a genericFunction object or a primitive function, got an object of class \"",
+               class(fdef), "\"")
       primCase <- is.primitive(deflt)
-    groups <- getGroup(fdef, TRUE)
+      groups <- getGroup(fdef, TRUE)
     ## when this function is called from methodsListDispatch (via C code),
     ## a skeleton version is assigned to prevent recursive loops:  remove this
     ## in case of errros in getAllMethods
-    on.exit(resetGeneric(f, fdef))
+    on.exit({message("An error occurred in collecting methods for function \"",
+                     f,"\", perhaps from a C-level dispatch"); resetGeneric(f, fdef)})
     ## initialize with a check for basic functions (primitives)
       ## For all others, the initial value of methods will be NULL
     methods <- elNamed(.BasicFunsList, f)
