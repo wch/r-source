@@ -67,7 +67,7 @@ NEW FEATURES
 	a package from the first repository on the list in which it is
 	found.	The argument 'CRAN' is still accepted, but deprecated.
 
-    	install.packages() on Unix can now install from local .tar.gz
+	install.packages() on Unix can now install from local .tar.gz
 	files via repos = NULL.
 
 	New function new.packages() to report uninstalled packages
@@ -117,16 +117,16 @@ NEW FEATURES
 	accurate (and faster) for small k.
 
     o	as.dist() and cophenetic() are now generic, and the latter has a
-        new method for objects of class "dendrogram".
+	new method for objects of class "dendrogram".
 
-    o   New function convertColors() maps between color spaces. 
+    o	New function convertColors() maps between color spaces.
 	colorRamp() uses it.
 
     o	as.ts() is now generic.
-    
-    o	legend() now accepts positioning by keyword, e.g. "topleft", 
-    	and can put a title within the legend.  (Suggested by Elizabeth
-    	Purdom in PR#7400.)
+
+    o	legend() now accepts positioning by keyword, e.g. "topleft",
+	and can put a title within the legend.	(Suggested by Elizabeth
+	Purdom in PR#7400.)
 
     o	remove.packages() can now remove bundles.
 
@@ -145,12 +145,16 @@ NEW FEATURES
 
     o	A new function getGraphicsEvent() has been added which will allow
 	mouse or keyboard input from a graphics device. (NB: currently
-	only the Windows screen device supports this function.  This 
-	should improve before the 2.1.0 release..) 
+	only the Windows screen device supports this function.	This
+	should improve before the 2.1.0 release..)
 
     o	%% now warns if its accuracy is likely to be affected by lack
 	of precision (as in 1e18 %% 11, the unrealistic expectation of
 	PR#7409), and tries harder to return a value in range when it is.
+
+    o	splines::splineDesign() now allows to evaluate a B-spline basis
+	everywhere instead of just inside the "inner" knots, by setting the
+	new argument `outer.ok = TRUE'.
 
 
 UTILITIES
@@ -167,11 +171,11 @@ UTILITIES
 	line feed.
 
     o	vignette() now returns an object of class "vignette" whose
-        print() method opens the corresponding PDF file.  The edit()
-        method can be used to open the code of the vignette in an
-        editor.
+	print() method opens the corresponding PDF file.  The edit()
+	method can be used to open the code of the vignette in an
+	editor.
 
-    o	R CMD INSTALL on Unix has a new option '--build' matching 
+    o	R CMD INSTALL on Unix has a new option '--build' matching
 	that on Windows, to package as tarball the installed package.
 
     o	R CMD INSTALL on Unix can now install binary bundles.
@@ -210,9 +214,9 @@ C-LEVEL FACILITIES
 
     o	There are new public C/C++ header files Rinterface.h and
 	R_ext/RStartup.h for use with external GUIs.
-	
+
     o	Added onExit() function to graphics devices, to be executed
-    	upon user break if non-NULL.
+	upon user break if non-NULL.
 
 
 DEPRECATED & DEFUNCT
@@ -230,8 +234,8 @@ DEPRECATED & DEFUNCT
 	argument (so this is only relevant for calls with named args).
 
     o	The S3 methods for getting and setting names of "dist" objects
-        have been removed (as they provided names with a different
-        length than the "dist" object itself).
+	have been removed (as they provided names with a different
+	length than the "dist" object itself).
 
 
 INSTALLATION CHANGES
@@ -249,7 +253,7 @@ INSTALLATION CHANGES
     o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no is used.
 
-    o	Configure tries harder to find a minimal set of FLIBS.  Under
+    o	Configure tries harder to find a minimal set of FLIBS.	Under
 	some circumstances this may remove from R_LD_LIBRARY_PATH
 	path elements that ought to have specified in LDFLAGS (but
 	were not).
@@ -282,10 +286,10 @@ BUG FIXES
 	namespaces; this is now done automatically.
 	Note that is.primitive() is now in "base", not "methods" anymore.
 
-    o   package grid:
+    o	package grid:
 
 	- Fixed bug in grid.text() when "rot" argument has length 0.
-          (reported by Emmanuel Paradis)
+	  (reported by Emmanuel Paradis)
 
     o	str() removed any class from environment objects.
 
@@ -343,7 +347,7 @@ BUG FIXES
     o	text()'s default method could segfault if passed 0-length coordinates.
 
     o	R CMD INSTALL (Unix) was sometimes leaving a temporary dir
-	behind.  (PR#7230)
+	behind.	 (PR#7230)
 
     o	read.table() could fail when the row.names were looking like numbers.
 
@@ -358,7 +362,7 @@ NEW FEATURES
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
-    o   The assignment form of split() allows recycling of vectors
+    o	The assignment form of split() allows recycling of vectors
 	within the value list. In particular, things like
 	    split(x, g) <- lapply(split(x, g), mean)
 	now work
@@ -410,14 +414,14 @@ C-LEVEL FACILITIES
 
     o	It was not clear in 'Writing R Extensions' that some of the
 	entry points in the 'Utilities' section were not declared in
-	<R.h> (they were in <R_ext/Applic.h>).  Now all the entry
+	<R.h> (they were in <R_ext/Applic.h>).	Now all the entry
 	points in that section are declared in <R_ext/Utils.h>,
 	included by <R.h>.
 
 
 BUG FIXES
 
-    o   The grid.grab() function in package grid would throw an error
+    o	The grid.grab() function in package grid would throw an error
 	if there were no viewports pushed (now returns NULL).
 
     o	model.frame.default() takes row names from the response
@@ -485,11 +489,11 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
-    o   Using Rprof() with a non-writable 'file' argument is now a
+    o	Using Rprof() with a non-writable 'file' argument is now a
 	non-fatal error and does not abort R.
 
-    o   binom.test() did not deparse its arguments early enough such
-        that the reported data were ugly if x was a table.
+    o	binom.test() did not deparse its arguments early enough such
+	that the reported data were ugly if x was a table.
 
     o	Systems based on glibc, including those using R's substitute for
 	strptime, were handling strptime("2001", "%Y") incorrectly, in
@@ -501,7 +505,7 @@ BUG FIXES
 	(PR#7301)
 
     o	summary.stepfun() was reporting for n > 6 summaries of the
-	knots and levels as the actual values.  Both print() and
+	knots and levels as the actual values.	Both print() and
 	summary() methods called the constant values "step heights",
 	although they were not the heights of the steps.
 
@@ -516,7 +520,7 @@ BUG FIXES
 
     o	require() without a version argument tried for an unversioned
 	load of a package even though a versioned install was already
-	loaded.  This often led to a message that a required package
+	loaded.	 This often led to a message that a required package
 	was being loaded when it was not actually being loaded.
 
     o	str(<S4.object>) made use of attributes() instead of slot(),
@@ -543,18 +547,18 @@ BUG FIXES
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
 
-    o   The ave() function had trouble if the grouping contained
+    o	The ave() function had trouble if the grouping contained
 	unused levels.
 
-    o   read.fwf() got confused by skip > 0 and could infinite loop
+    o	read.fwf() got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
 
     o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
 
-    o   Class "raw" had been omitted from the list of basic classes in
+    o	Class "raw" had been omitted from the list of basic classes in
 	the "methods" package and so could not be used in S4 classes.
 
-    o   Function getGroupMembers(), part of the definition of S4
+    o	Function getGroupMembers(), part of the definition of S4
 	classes, had been promised for release 2.0, but slipped through.
 
 

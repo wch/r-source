@@ -171,9 +171,10 @@ makepredictcall.bs <- function(var, call)
 }
 
 
-spline.des <- function(knots, x, ord = 4, derivs = integer(length(x)))
+spline.des <-
+    function(knots, x, ord = 4, derivs = integer(length(x)), outer.ok = FALSE)
 {
     list(knots = sort(as.vector(knots)), order = ord, derivs = derivs,
-         design = splineDesign(knots, x, ord, derivs))
+         design = splineDesign(knots, x, ord, derivs, outer.ok = outer.ok))
 }
 ## splineDesign() is in ./splineClasses.R
