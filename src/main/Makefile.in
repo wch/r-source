@@ -47,6 +47,7 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
 	Rregex.h Rstrptime.h \
 	arithmetic.h \
+	qsort-body.c \
 	unzip.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
