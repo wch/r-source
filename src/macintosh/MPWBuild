@@ -69,7 +69,7 @@ if !{Stuffit}
 begin
  Alert "Please identify Stuffit Expander"
  set   Stuffit "`GetFilename`" 
- {Stuffit} :res:R.rsrc.hqx
+ {Stuffit} -wait :res:R.rsrc.hqx
 end
 end
 
