@@ -3,11 +3,11 @@ extern double sqrt();
 double f__cabs(real, imag) double real, imag;
 #else
 #undef abs
-#ifndef macintosh
+#ifndef Macintosh
 #include "math.h"
 #else
 #include "fp.h"
-#endif macintosh
+#endif
 double f__cabs(double real, double imag)
 #endif
 {

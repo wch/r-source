@@ -25,10 +25,13 @@
 #include "RIntf.h"
 #include "RFLaunch.h"
 #include "TFLaunch.h"
+#include <Rdevices.h>
+
+
 
 #include "Defn.h" // Jago
 
-#ifdef macintosh // Jago
+#ifdef Macintosh // Jago
  int     pclose(FILE *fp); 
  int pclose(FILE *fp){
   return(fclose(fp));
@@ -243,9 +246,22 @@ int main(int ac, char **av)
     SIOUXSettings.standalone = false;  // I only use SIOUX to have command line
 	SIOUXSettings.setupmenus = false;  // I'll set up the menus
 	SIOUXSettings.initializeTB = false;  // I manage the ToolBox
-	
+	SIOUXSettings.asktosaveonclose = false;
+    SIOUXSettings.autocloseonquit = true;
+  /* Show the status line */
+/*   SIOUXSettings.showstatusline = true;
+*/
 	ac = ccommand(&av);  // This must be the first  command after variables initializations !!!
 	
+/*	InstallConsole();
+	printf("");
+	Console_Window = FrontWindow ( );
+
+	if(SIOUXIsAppWindow(Console_Window))
+	 printf("\n YES, Sioux is Console_Window");
+	else
+	 printf("\n NO :(");
+*/	  
     /* FIXME HERE: record the time at which the program started. */
     /* This is probably zero on the mac as we have direct */
     /* access to the number of ticks since process start */
@@ -350,8 +366,8 @@ int Mac_initialize_R(int ac, char **av)
  
     /* On Unix the console is a file; we just use stdio to write on it */
 
-    R_Interactive = isatty(0);
-
+ /*   R_Interactive = isatty(0);
+*/
     R_Consolefile = NULL;	/* We don't use a file for console input. */
     R_Outputfile = NULL;	/* We don't use a file for console output. */
     R_Sinkfile = NULL;		/* We begin writing to the console. */
@@ -562,14 +578,7 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 
-static char CompleteEnvPath[NAME_MAX];
-
-/* getenv() doesn't exists on Macintosh. We can only extract some
-   information from the System when available. For the time beeing
-   we only check for the TimeZone string.
-   Stefano M. Iacus Gen 01
-*/
-   
+static char CompleteEnvPath[NAME_MAX];   
    
    
    
@@ -593,10 +602,10 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     i = LENGTH(CAR(args));
     if (i == 0) {
     
-    sprintf(temp_path,"%s:%s",R_Home,"etc:.Renviron");
+    strcpy(temp_path,"etc:.Renviron");
 
     GetCompletePath(CompleteEnvPath,temp_path,&spec,&err);
-
+    
 /* try open the file in the current folder */
     fp = FSp_fopen(&spec,"r");
     if (fp == NULL)
@@ -1150,6 +1159,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue; /* -Wall */
 #endif
 }
+
 
 
 SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)

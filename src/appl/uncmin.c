@@ -23,7 +23,7 @@
    -- translated by f2c (version of 1 June 1993 23:00:00).
    -- and hand edited by Saikat DebRoy
    */
-#ifndef macintosh
+#ifndef Macintosh
 #include <math.h>
 #else
 #include <fp.h>

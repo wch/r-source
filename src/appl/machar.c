@@ -90,7 +90,7 @@
 #include <config.h>
 #endif
 
-#ifdef macintosh
+#ifdef Macintosh
 #include <fp.h>
 #else
 #include <math.h>

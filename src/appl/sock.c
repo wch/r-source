@@ -28,7 +28,7 @@
 #endif
 
 /*
-if defined(__MWERKS__) && defined(macintosh)
+if defined(__MWERKS__) && defined(Macintosh)
 #  define MACINTOSH
 #  define EINTR 15
 #endif  
@@ -37,7 +37,7 @@ if defined(__MWERKS__) && defined(macintosh)
 
 #include <stdio.h>
 #include <string.h>
-#if !defined(macintosh)  /* Jago */
+#if !defined(Macintosh)  /* Jago */
 #include <sys/types.h>
 #else
 #include <types.h>
@@ -69,7 +69,7 @@ if defined(__MWERKS__) && defined(macintosh)
 
 #define MAXBACKLOG 5
 
-#if (defined(Unix) || defined(macintosh) ) && !defined(HAVE_BSD_NETWORKING)
+#if (defined(Unix) || defined(Macintosh) ) && !defined(HAVE_BSD_NETWORKING)
 static char socket_msg[] = "sockets are not available on this system\n";
 #endif
 
@@ -115,7 +115,7 @@ int Sock_init()
 
 int Sock_open(Sock_port_t port, Sock_error_t perr)
 {
-#if !(defined(Unix) || defined(macintosh)) || defined(HAVE_BSD_NETWORKING) 
+#if !(defined(Unix) || defined(Macintosh)) || defined(HAVE_BSD_NETWORKING) 
 /* Jago :was
               #if !defined(Unix) || defined(HAVE_BSD_NETWORKING) 
 */
@@ -141,7 +141,7 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
 
 int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 {
-#if !(defined(Unix) || defined(macintosh)) || defined(HAVE_BSD_NETWORKING) 
+#if !(defined(Unix) || defined(Macintosh)) || defined(HAVE_BSD_NETWORKING) 
 /* Jago: was
               #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 */
@@ -177,7 +177,7 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 
 int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 {
-#if !(defined(Unix) || defined(macintosh)) || defined(HAVE_BSD_NETWORKING) 
+#if !(defined(Unix) || defined(Macintosh)) || defined(HAVE_BSD_NETWORKING) 
 /* Jago: was
      #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 */
@@ -228,7 +228,7 @@ int Sock_close(int fd, Sock_error_t perr)
 
 ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
 {
-#if !(defined(Unix) || defined(macintosh))|| defined(HAVE_BSD_NETWORKING) 
+#if !(defined(Unix) || defined(Macintosh))|| defined(HAVE_BSD_NETWORKING) 
 /* Jago: was
  #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 */
@@ -248,7 +248,7 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
 
 ssize_t Sock_write(int fd, void *buf, size_t size, Sock_error_t perr)
 {
-#if !(defined(Unix) || (macintosh)) || defined(HAVE_BSD_NETWORKING) 
+#if !(defined(Unix) || defined(Macintosh)) || defined(HAVE_BSD_NETWORKING) 
 /* Jago: was
  #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 */

@@ -47,7 +47,7 @@
 # include <stddef.h>
 #else
 /* We need this for `regex.h', and perhaps for the Emacs include files.  */
- #ifdef macintosh
+ #ifdef Macintosh
   #include <types.h>
  #else 
   #include <sys/types.h> 

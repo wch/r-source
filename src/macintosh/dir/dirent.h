@@ -22,26 +22,28 @@ extern "C" {
 /*
   Typedef declarations.
 */
-typedef struct _DIR
-{
-  int
-    d_VRefNum;
 
-  long int
-    d_DirID;
+#ifndef NAME_MAX
+#define NAME_MAX    1024
+#endif
 
-  int
-    d_index;
+struct dirent {
+    unsigned long   d_fileno;
+    short           d_reclen;
+    short           d_namlen;
+    char            d_name[NAME_MAX + 1];
+};
+
+typedef struct {
+    short           ioFDirIndex;
+    short           ioVRefNum;
+    long            ioDrDirID;
+    short           flags;
+    struct dirent   currEntry;
 } DIR;
 
-struct dirent
-{
-  char
-     d_name[255];
- 
-  int
-    d_namlen;
-};
+
+#define direct dirent
 
 /*
   Macintosh utilities routines.

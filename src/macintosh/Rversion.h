@@ -4,9 +4,9 @@
 #define R_OS		"MacOS"
 */
 #define R_MAJOR		"1"
-#define R_MINOR		"2.0"
+#define R_MINOR		"2.2"
 #define R_STATUS	"beta"
-#define R_STATUS_REV	"2.0"
-#define R_DAY		"11"
+#define R_STATUS_REV	"3.0"
+#define R_DAY		"31"
 #define R_MONTH		"January"
 #define R_YEAR		"2001"

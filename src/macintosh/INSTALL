@@ -9,13 +9,33 @@ modified or simply updated to work with current versions of R
 sources (from 1.1.1) and the
 Waste Text Engine (c) 1993-2000 Marco Piovanelli.
 
+Before building R
+=================
+
+There are only two files that must be uncompressed before
+starting compiling R. These are 
+src/macintosh/res/R.rsrc.hqx	-  the R application resource file
+src/macintosh/cwpro/R.mcp.hqx	-  the CodeWarrior Project file
+and you need to expand them via any hqx decoding utility.
+
+
 Building R
 ==========
 
-The R binary can be compiled using Code Warrior Pro 5, called CW
+The R binary can be compiled using Code Warrior Pro 6, called CW
 subsequently, by simply opening the file "R.mcp" in the "cwpro" directory.
+To build the R application you need version 2.x of the Waste Library
+by Marco Piovanelli. This should be included in the CW6 distribution.
+In case you don't have this, please download the full archive at the
+official Waste library site: http://www.merzwaren.com/waste
 
-Once you have built the R application, copy the "R" binary and "WasteLib"
+You also need a fortran compiler or an F2C tool to compile the
+*.f fortran files in src/appl directory.
+The R.mcp project assumes that you have converted the files with F2C 
+and put the *.c sources in /src/appl/mac_f2c directory.
+
+
+Once you have built the R application, copy the "R" binary 
 from "src/macintosh/bin" in the folder  
 where you put also the "library" directory (with all 
 packages built), the "afm", "demos" and "tests"
@@ -26,19 +46,17 @@ demo/		(dir)
 library/	(dir)
 R		(file)
 tests/		(dir)
-WasteLib	(file)
 
 Before building R :
 ===================
 
-1) Please rename the file "src/include/config.mac.h" to 
+1) Please rename the file "src/include/macintosh/config.mac.h" to 
    "src/include/config.h" and copy it over
    "src/include/macintosh/Rconfig.h" 
    before you build the R application.
 
-2) if you do not use F2C, get the *.c files from .... 
-
-   [not yet available]
+2) if you do not use F2C you need a fortran compiler
+   and also to change the R.mcp project.
 
 
 Building packages
@@ -63,7 +81,8 @@ Thanks to Marco Piovanelli for providing these sources for free.
 
 Note that the process of building R for the Macintosh is
 still not satisfactory to us, and bound to be improved.
-
+This will hopefully change in v 1.3.x of R.
+ 
 For comments and feedback, please contact either the 
 R Core Development Team (and Stefano Iacus) at
   
@@ -73,5 +92,7 @@ or only
 
   Stefano M. Iacus <stefano.iacus@unimi.it>
 
+---
+release note: Jan 31 2001
 
 

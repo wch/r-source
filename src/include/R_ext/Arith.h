@@ -21,7 +21,7 @@
 #ifndef R_ARITH_H_
 #define R_ARITH_H_
 
-#ifdef macintosh
+#ifdef Macintosh
 #include <fp.h> 
 #else
 #include <math.h>

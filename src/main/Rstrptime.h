@@ -34,7 +34,7 @@ static void get_locale_strings(void);
 
 #define match_char(ch1, ch2) if (ch1 != ch2) return NULL
 
-#ifndef macintosh
+#ifndef Macintosh
 #if defined __GNUC__ && __GNUC__ >= 2
 # define match_string(cs1, s2) \
   ({ size_t len = strlen (cs1);						      \

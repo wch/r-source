@@ -77,6 +77,7 @@
 #include <Scrap.h>
 #include "Graphics.h"
 #include "PicComments.h"
+#include <Rdevices.h>
 
 /* ************************************************************************************************ */
 /*                                           DEFINE CONSTANT                                        */
@@ -378,9 +379,11 @@ void PrepareMenus(void)
 		/* get the current selection range
  */
 		WEGetSelection (&selStart, &selEnd, we);
+		
+/*
 		if (selStart != selEnd)
 		{
-	
+*/	
 			/* enable Cut, Copy, and Clear if the selection range is not empty
 			 */
 			 if (FrontWindow() == Console_Window)
@@ -389,16 +392,22 @@ void PrepareMenus(void)
 			EnableItem (menu, kItemCopy);
 			EnableItem (menu, kItemClear);
 			}
-		}
+/*	    }
+		else Rprintf("\n Merde");
+*/
 
 		if (isEditWindow(window)) {
 			EnableItem (menu, kItemLineTo);
+			EnableItem (menu, kItemCut);
+			EnableItem (menu, kItemCopy);
+			EnableItem (menu, kItemClear);
 		}
 		if (isHelpWindow(window)){
 			DisableItem (menu, kItemCut);
 			DisableItem (menu, kItemCopyPaste);
 			DisableItem (menu, kItemClear);
 			DisableItem (menu, kItemPaste);   
+			EnableItem (menu, kItemCopy);
 		}
 		/* determine which style attributes are continuous over
 		 the current selection range we'll need this information
@@ -682,6 +691,7 @@ OSErr DoNew(void)
 {
 	/* create a new window from scratch
 	*/
+	
 	return CreateWindow(nil);
 }
 
@@ -806,6 +816,7 @@ OSErr SaveWindow(const FSSpec *pFileSpec, WindowPtr window)
 	DocumentHandle	hDocument;
 	AliasHandle		alias = nil;
 	OSErr			err;
+    MenuHandle windowsMenu;
 
 	hDocument = GetWindowDocument(window);
 	ForgetHandle(&(*hDocument)->fileAlias);
@@ -1071,7 +1082,6 @@ void MacFinalCleanup()
 	}
 	while (window != nil);
 	/* set a flag so we drop out of the event loop */
-	printf("\n        ExitToShell");
 	ExitToShell();
 }
 
@@ -1394,76 +1404,6 @@ void DoEditChoice(SInt16 menuItem)
 }
 
 
-/* ************************************************************************************************
-DoFontChoice :
-************************************************************************************************ */
-/*
-void DoFontChoice(SInt16 menuItem, EventModifiers modifiers)
-{
-	WindowPtr	window;
-	Str255		fontName;
-	WEStyleMode	mode;
-	TextStyle	ts;
-
-	// do nothing if there is no front window
-	if ((window = FrontWindow()) == nil) {
-		return;
-	}
-
-	GetMenuItemText(GetMenuHandle(kMenuFont), menuItem, fontName);
-	GetFNum(fontName, &ts.tsFont);
-
-	// use script-preserving mode by default (see WASTE docs)
-	// force font change across the whole selection if the option key was held down
-	mode = (modifiers &optionKey) ? weDoFont : (weDoFont + weDoPreserveScript
-												+ weDoExtractSubscript);
-	// set the font of the selection
-
-	WESetStyle(mode, &ts, GetWindowWE(window));
-
-}
-*/
-
-/* ************************************************************************************************
-DoSizeChoice
-************************************************************************************************ */
-/*
-void DoSizeChoice(SInt16 menuItem)
-{
-	WindowPtr	window;
-	Str255		sizeString;
-	SInt32		size;
-	WEStyleMode	mode;
-	TextStyle	ts;
-
-	// do nothing if there is no front window
-	if ((window = FrontWindow()) == nil) {
-		return;
-	}
-
-	if (menuItem <= kItemLastSize) {
-		GetMenuItemText(GetMenuHandle(kMenuSize), menuItem, sizeString);
-		StringToNum(sizeString, &size);
-		ts.tsSize = size;
-		mode = weDoSize;
-	}
-	else if (menuItem == kItemSmaller) {
-		ts.tsSize = - 1;
-		mode = weDoAddSize;
-	}
-	else if (menuItem == kItemLarger) {
-		ts.tsSize = + 1;
-		mode = weDoAddSize;
-	}
-	else {
-		return;
-	}
-	// set the size of the selection
-	WESetStyle(mode, &ts, GetWindowWE(window)); 
-
-}
-
-*/
 
 void changeSize(WindowPtr window, SInt16 newSize)
 {
@@ -1485,218 +1425,6 @@ void changeSize(WindowPtr window, SInt16 newSize)
 
 }
 
-/* ************************************************************************************************
-DoStyleChoice
-************************************************************************************************ */
-/*
-void DoStyleChoice(SInt16 menuItem)
-{
-	WindowPtr	window;
-	TextStyle	ts;
-
-	// do nothing if there is no front window
-	if ((window = FrontWindow ()) == nil) {
-		return;
-	}
-	if (menuItem == kItemPlainText) {
-		ts.tsFace = normal;
-	}
-	else {
-      ts.tsFace = 1 << (menuItem - kItemBold);
-	}
-	// set the style of the selection
-	
-	WESetStyle(weDoFace + weDoToggleFace, &ts, GetWindowWE(window));
-  
-
-}
-*/
-
-
-/* ************************************************************************************************
-DoColorChoice
-************************************************************************************************ */
-/*
-void DoColorChoice(SInt16 menuItem)
-{
-	WindowPtr		window;
-	MenuCRsrcPtr	pColors;
-	SInt16			i;
-	TextStyle		ts;
-	// do nothing if there is no front window
-	if ((window = FrontWindow()) == nil) {
-		return;
-	}
-	if (menuItem <= kItemLastColor) {
-		// find the color corresponding to the chosen menu item
-		pColors = *(MenuCRsrcHandle)sColors;
-		for (i = pColors->numEntries - 1; i >= 0; i --) {
-			if (pColors -> mcEntryRecs [ i ] . mctItem == menuItem) {
-				ts.tsColor = pColors -> mcEntryRecs [ i ] . mctRGB2;
-				break;
-			}
-		}
-	}
-	else {
-		return;
-	}
-	// set the color of the selection
-	WESetStyle(weDoColor, &ts, GetWindowWE(window));
-
-
-
-}
-
-*/
-
-/* ************************************************************************************************
-DoAlignmentChoice
-************************************************************************************************ */
-void DoAlignmentChoice(SInt16 menuItem)
-{
-	WindowPtr	window;
-	WEAlignment	alignment = weFlushDefault;
-
-	if ((window = FrontWindow()) == nil) {
-		return;
-	}
-	switch(menuItem) {
-	
-	case kItemAlignDefault:
-		alignment = weFlushDefault;
-		break;
-
-	case kItemAlignLeft:
-		alignment = weFlushLeft;
-		break;
-
-	case kItemCenter:
-		alignment = weCenter;
-		break;
-
-	case kItemAlignRight:
-		alignment = weFlushRight;
-		break;
-
-	case kItemJustify:
-		alignment = weJustify;
-		break;
-	}
-	/* set the alignment mode (this automatically redraws the text)
-	*/
-	WESetAlignment(alignment, GetWindowWE(window));
-}
-
-
-/* ************************************************************************************************
-DoDirectionChoice
-************************************************************************************************ */
-void DoDirectionChoice(SInt16 menuItem)
-{
-	WindowPtr	window;
-	WEDirection	direction = weDirDefault;
-
-	if ((window = FrontWindow()) == nil) {
-		return;
-	}
-
-	switch (menuItem) {
-	
-	case kItemDirectionDefault:
-		direction = weDirDefault;
-		break;
-
-	case kItemDirectionLR:
-		direction = weDirLeftToRight;
-		break;
-
-	case kItemDirectionRL:
-		direction = weDirRightToLeft;
-		break;
-		
-	}
-	// set the primary line direction (this automatically redraws the text)
-	WESetDirection(direction, GetWindowWE(window));
-}
-
-
-/* ************************************************************************************************
-DoFeatureChoice
-************************************************************************************************ */
-void DoFeatureChoice(SInt16 menuItem)
-{
-	WindowPtr	window;
-	WEReference	we;
-	SInt32		threshold;
-
-	if ((window = FrontWindow()) == nil)
-		return;
-
-	we = GetWindowWE(window);
-
-	if (menuItem == kItemTabHooks) {
-	
-		// install or remove our custom tab hooks
-		if (! WEIsTabHooks(we)) {
-			// left-align the text (the hooks only work with left-aligned text)
-			WESetAlignment(weFlushLeft, we);
-
-			// force a LR primary direction
-			// (the hooks don't work with bidirectional text anyway)
-			WESetDirection(weDirLeftToRight, we);
-
-			// install tab hooks
-			WEInstallTabHooks(we);
-		}
-		else {
-			// remove tab hooks
-			WERemoveTabHooks(we);
-		}
-
-		// turn the cursor into a wristwatch
-		SetCursor(* GetCursor(watchCursor));
-
-		// recalculate link breaks and redraw the text
-		WECalText(we);
-		WEUpdate(nil, we);
-	}
-	else {
-		switch (menuItem) {
-		
-		case kItemAutoScroll:
-			WEFeatureFlag(weFAutoScroll, weBitToggle, we);
-			break;
-
-		case kItemOutlineHilite:
-			WEFeatureFlag(weFOutlineHilite, weBitToggle, we);
-			break;
-
-		case kItemReadOnly:
-			WEFeatureFlag(weFReadOnly, weBitToggle, we);
-			break;
-
-		case kItemIntCutAndPaste:
-			WEFeatureFlag(weFIntCutAndPaste, weBitToggle, we);
-			break;
-
-		case kItemDragAndDrop:
-			WEFeatureFlag(weFDragAndDrop, weBitToggle, we);
-			break;
-
-		case kItemTranslucentDrags:
-			if (WEGetInfo(weTranslucencyThreshold, &threshold, we) == noErr) {
-				threshold = kStandardTranslucencyThreshold - threshold;
-				WESetInfo(weTranslucencyThreshold, &threshold, we);
-			}
-			break;
-
-		case kItemOffscreenDrawing:
-			WEFeatureFlag(weFDrawOffscreen, weBitToggle, we);
-			break;
-			
-		}
-	}
-}
 
 
 /* ************************************************************************************************
@@ -1727,35 +1455,6 @@ void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers)
 
 	case kMenuEdit:
 		DoEditChoice(menuItem);
-		break;
-/*
-	case kMenuFont:
-		DoFontChoice(menuItem, modifiers);
-		break;
-*/
-/*
-	case kMenuSize:
-		DoSizeChoice(menuItem);
-		break;
-*/
-/*	case kMenuStyle:
-		DoStyleChoice(menuItem);
-		break;
-
-	case kMenuColor:
-		DoColorChoice(menuItem);
-		break;
-*/
-	case kMenuFeatures:
-		DoFeatureChoice(menuItem);
-		break;
-
-	case kMenuAlignment:
-		DoAlignmentChoice(menuItem);
-		break;
-
-	case kMenuDirection:
-		DoDirectionChoice(menuItem);
 		break;
 		
 	case kWindows:

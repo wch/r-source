@@ -24,13 +24,13 @@
 #include <config.h>
 #endif
 
-#ifndef macintosh /* Jago: macro already defined */
+#ifndef Macintosh /* Jago: macro already defined */
 #define NULL 0
 #endif
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
-#if defined(macintosh)  /* Jago  was: #include <sys/types.h> */
+#if defined(Macintosh)  /* Jago  was: #include <sys/types.h> */
 #include <types.h>
 #else
 #include <sys/types.h>
@@ -160,7 +160,7 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     *len = (int) n;
 }
 
-#if !(defined(Win32) || defined(macintosh)) /* Jago was: #ifndef Win32 */
+#if !(defined(Win32) || defined(Macintosh)) /* Jago was: #ifndef Win32 */
 #include <signal.h>
 #include <sys/wait.h>
 static void sig_child(int sig)

@@ -511,7 +511,7 @@ FUNTAB R_FunTab[] =
 {"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
 {"bringToTop",	do_bringtotop,	0,	11,	1,	PP_FUNCALL},
 #endif
-#ifdef macintosh
+#ifdef Macintosh
 {"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
@@ -646,7 +646,7 @@ FUNTAB R_FunTab[] =
 {"gnome",	do_Gnome,	0,	111,	4,	PP_FUNCALL},
 {"GTK",		do_GTK,		0,	111,	4,	PP_FUNCALL},
 #endif
-#ifdef macintosh
+#ifdef Macintosh
 {"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
 #endif
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,22 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
-#include "Graphics.h"
 
-#include "Rdevices.h"
+#include <Defn.h>
+#include <Graphics.h>
+#include <Rdevices.h>
+
+static SEXP gcall;
+static char *SaveString(SEXP sxp, int offset)
+{
+    char *s;
+    if(!isString(sxp) || length(sxp) <= offset)
+	errorcall(gcall, "invalid string argument");
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
+    return s;
+}
+
 
 void InitEd(){
 }
@@ -41,7 +53,8 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
     double height, width, ps;
     gcall = call;
     vmax = vmaxget();
-    display = SaveString(CAR(args), 0); args = CDR(args);
+    display = SaveString(CAR(args), 0); 
+    args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)

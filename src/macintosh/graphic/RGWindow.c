@@ -6,10 +6,14 @@ Constant, Global variables and prototype
 #define MIN(a,b) 			   ((a) < (b) ? (a) : (b))
 
 extern WindowPtr		Console_Window;
-extern WindowPtr		Edit_Window;
+extern SInt16		Edit_Window;
 extern WindowPtr		Graphic_Window[MAX_NUM_G_WIN + 1];
 extern SInt16			Current_Window;
 extern Graphic_Ref		gGReference[MAX_NUM_G_WIN + 1];
+
+extern SInt16                      Help_Window;
+extern WindowPtr                   Help_Windows[MAX_NUM_H_WIN + 1];
+extern WindowPtr            Edit_Windows[MAX_NUM_E_WIN + 1];
 
 void					doWindowsMenu(SInt16 menuItem);
 void					doActivate(EventRecord*);
@@ -123,18 +127,51 @@ void doWindowsMenu(SInt16 menuItem)
 	SInt16 i;
 	Str255 Cur_Title, Menu_Title;
 	MenuHandle windowsMenu;
-	Boolean EqString;
+	Boolean EqString=FALSE;
 
 	windowsMenu = GetMenu(mWindows);
 	GetMenuItemText(windowsMenu, menuItem, (unsigned char*)&Menu_Title);
+	
+	/* First we check for the "R Console" Window */
+	
+	GetWTitle(Console_Window, (unsigned char *) &Cur_Title);
+	EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
+		if (EqString) {
+			SelectWindow(Console_Window);
+            return;
+		}
+	/* Then we check among the graphic windows */
+		
 	for(i = 1; i < Current_Window; i++){
 		GetWTitle(Graphic_Window[i], (unsigned char *) &Cur_Title);
 		EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
 		if (EqString) {
-			windowPtr = Graphic_Window[i];
-			SelectWindow(windowPtr);
-		}
+			SelectWindow(Graphic_Window[i]);
+			return;
+			}
 	}  
+	
+	/* Then we check among the edit windows */
+	
+	for(i = 1; i < Edit_Window; i++){
+		GetWTitle(Edit_Windows[i], (unsigned char *) &Cur_Title);
+		EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
+		if (EqString) {
+			SelectWindow(Edit_Windows[i]);
+			return;
+		}
+	} 
+	
+	for(i = 1; i < Help_Window; i++){
+		GetWTitle(Help_Windows[i], (unsigned char *) &Cur_Title);
+		EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
+		if (EqString) {
+			SelectWindow(Help_Windows[i]);
+			return;
+		}
+	} 
+ 
+	
 }
 
 

@@ -59,9 +59,9 @@ void   RnWrite                            (char*, SInt16);
 void R_ResetConsole(void);
 void R_FlushConsole(void);
 void R_ClearerrConsole(void);
-void R_Suicide(char *msg);
 void R_Busy(int which);
-//void R_CleanUp(int ask,int,int);
+
+void R_Suicide(char *msg);
 void R_CleanUp(SA_TYPE, int, int);
 
 char	*R_ExpandFileName(char *s);
@@ -81,37 +81,48 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho);
 */
 
 
-
+/*
 
 void RWrite(char* buf){
    SInt32 buflen, i;
 
    buflen = strlen(buf);
    
-/*printf("\n");*/
+   WriteCharsToConsole(buf,buflen);
+   return;
 
-for ( i=0; i < buflen; i++){
- #ifdef DEBAG 
-   printf("%c",&buf[i]);
- #else
+   for ( i=0; i < buflen; i++)
      WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
- #endif
-   }
 }
 
 
 void RnWrite(char* buf, SInt16 len){
    SInt32 i;
 
-  for ( i=0; i < len; i++){
- #ifdef DEBAG 
-  puts(&buf[i]);
- #else
+   WriteCharsToConsole(buf,len);
+   return;
+
+   for ( i=0; i < len; i++)
+     WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ; 
+
+}
+*/
+
+void RWrite(char* buf){
+   SInt32 buflen, i;
+
+   buflen = strlen(buf);
+   
+   for ( i=0; i < buflen; i++)
+     WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
+}
+
+
+void RnWrite(char* buf, SInt16 len){
+   SInt32 i;
+
+  for ( i=0; i < len; i++)
     WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ; 
- #endif 
-   }
-
-
 }
 /* ************************************************************************************************
 R_ReadConsole
@@ -197,6 +208,107 @@ if (!HaveContent){
    Change_Color_Range(WEGetTextLength(we), WEGetTextLength(we),
                gComputerColour.red, gComputerColour.green, gComputerColour.blue,  we);
    // ********* Don't try to change the content of buf
+   if (strlen((const char *)buf) > 1)
+      maintain_cmd_History(buf);
+  // Mac_Command(buf);
+   
+    
+}
+
+/* ************************************************************************************************
+R_ReadConsole2 experimental code
+This is a platform dependent function.                           
+This function prints the given prompt at the console and then does a gets(3)- like operation, 
+transferring up to ÒbuflenÓ characters into the buffer ÒbufÓ. The last character is set to Ò\0Ó to
+preserve sanity.                                         
+ÒHistÓ is no use in here i this moment. 
+************************************************************************************************ */
+
+void R_ReadConsole2(char *prompt,  char *buf, int buflen, int hist){
+   WEReference we ;
+   EventRecord myEvent;
+   SInt32      i;
+   char        tempChar;
+   char buffo[1000];
+
+   we = GetWindowWE ( Console_Window ) ;
+
+   
+   // ************************************************ let have something about hist
+   hist = hist + 1;
+   // ******************************************* Print the prompt to stanard output
+
+
+   RWrite(prompt);
+   
+
+   gpmtLh = strlen(prompt);
+   gChangeAble = WEGetTextLength(we);
+ 
+   // The Prompt is in different color (black)
+   //>
+
+/*   Change_Color_Range(gChangeAble-gpmtLh, gChangeAble, 
+                gComputerColour.red, gComputerColour.green, gComputerColour.blue, we);
+
+*/
+   //The Command is in different color (red)
+   //Change_Color(gTypeColour.red, gTypeColour.green, gTypeColour.blue, we);
+   
+   // *********************** gbuf is a ptr, which is used to point to the receive buffer
+   gbuf = buf;
+   gbuflen = buflen;
+
+
+   // **************************************************** Call the Receive loop  
+
+if (HaveContent){
+    HLock( myHandle );
+	 for ( i = curPaste+1 ; i <=finalPaste; i++){
+        tempChar = (*myHandle)[i];
+        if ((tempChar == '\r') || (i == finalPaste)){
+              RnWrite(*myHandle + (curPaste + 1), i - (curPaste + 1));
+              if (i != finalPaste){
+                 myEvent.message = 140301;
+                 DoKeyDown (&myEvent);
+              }
+              curPaste = i;
+              break;
+        }
+   }
+
+   HUnlock( myHandle );
+   if (finalPaste > i){
+        HaveContent = true;
+   }
+	 if (finalPaste <= i){
+      DisposeHandle(myHandle);
+      HaveContent = ! HaveContent;
+   }
+}
+if (!HaveContent){
+   gfinishedInput = false;
+   while(!gfinishedInput)
+   {    
+       if (isTextWindow){ 
+ 
+          ProcessEvent ( );
+       }
+   }
+}   
+/*
+   //It is green in color 
+   Change_Color_Range(gChangeAble, WEGetTextLength(we),
+               gFinishedColour.red, gFinishedColour.green, gFinishedColour.blue, we);
+   // It is blue in color
+   Change_Color_Range(WEGetTextLength(we), WEGetTextLength(we),
+               gComputerColour.red, gComputerColour.green, gComputerColour.blue,  we);
+   // ********* Don't try to change the content of buf
+*/
+    
+/*   ReadCharsFromConsole(buf,buflen);
+ */
+  
    if (strlen((const char *)buf) > 1)
       maintain_cmd_History(buf);
   // Mac_Command(buf);
@@ -424,6 +536,38 @@ void R_WriteConsoleX(Ptr buf, SInt32 buflen){
 }  
 
 
+
+/* ************************************************************************************************
+R_WriteConsole2 Experimental code to use only Sioux
+This function writes the given buffer out to the console. No special actions are required. (Specify
+the length of the buffer)
+************************************************************************************************ */
+void R_WriteConsole2(char *buf, SInt32 buflen){
+   SInt32 i;
+   SInt32 outlen, lastLen;
+   Boolean ended = false;
+   WEReference we;
+   char stringona[1000];
+
+
+   WriteCharsToConsole(buf,buflen);
+   
+   return;
+   
+   outlen =   strlen(buf);
+ 
+   strncpy(stringona,buf,outlen);
+   for ( i=0; i < outlen; i++)
+      if (buf[i] == '\n') stringona[i]='\r';
+
+   we = GetWindowWE ( Console_Window );
+//   WESetSelection ( WEGetTextLength(we), WEGetTextLength(we), we );
+
+    WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we ); 
+}  
+
+
+
 Boolean inRange(int start, int end , int back, int length){
    if(end > back){
       if (start > back) return false;
@@ -520,7 +664,7 @@ void  doNewWindow(void)
 	WindowPtr		windowPtr;
 	Str255			untitledString;
 	Str255			numberAsString;
-	MenuHandle	windowsMenu;
+	MenuHandle	windowsMenu=NULL;
 
 	if(gCurrentNumberOfWindows == kMaxWindows)
 	{

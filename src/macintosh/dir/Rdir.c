@@ -29,8 +29,8 @@
 void closedir(DIR *entry)
 {
   if (entry != (DIR *) NULL)
-     free((void *) entry);
-    /* FreeMemory((void *) entry);*/
+     free((void *) entry); 
+/*     FreeMemory((void *) entry); */
   else
      return ;   
 }
@@ -69,10 +69,13 @@ DIR *opendir(char *path)
   entry=(DIR *) malloc(sizeof(DIR));
   if (entry == (DIR *) NULL)
     return((DIR *) NULL);
-  entry->d_VRefNum=search_info.hFileInfo.ioVRefNum;
+  entry->ioVRefNum=search_info.hFileInfo.ioVRefNum;
+  entry->ioDrDirID=search_info.hFileInfo.ioDirID;
+  entry->ioFDirIndex=1;
+/*  entry->d_VRefNum=search_info.hFileInfo.ioVRefNum;
   entry->d_DirID=search_info.hFileInfo.ioDirID;
   entry->d_index=1;
-  return(entry);
+*/  return(entry);
 }
 
 static unsigned char pathname[2048];
@@ -95,15 +98,20 @@ struct dirent *readdir(DIR *entry)
   search_info.hFileInfo.ioCompletion=0;
   search_info.hFileInfo.ioNamePtr=pathname;
   search_info.hFileInfo.ioVRefNum=0;
-  search_info.hFileInfo.ioFDirIndex=entry->d_index;
+  search_info.hFileInfo.ioFDirIndex=entry->ioFDirIndex;
+  search_info.hFileInfo.ioDirID=entry->ioDrDirID;
+/*  search_info.hFileInfo.ioFDirIndex=entry->d_index;
   search_info.hFileInfo.ioDirID=entry->d_DirID;
+*/
   error=PBGetCatInfoSync(&search_info);
   if (error != noErr)
     {
       errno=error;
       return((struct dirent *) NULL);
     }
-  entry->d_index++;
+/*  entry->d_index++;
+*/
+  entry->ioFDirIndex++;
   (void) strcpy(dir_entry.d_name,p2cstr(search_info.hFileInfo.ioNamePtr));
   dir_entry.d_namlen=strlen(dir_entry.d_name);
   return(&dir_entry);
@@ -114,7 +122,8 @@ struct dirent *readdir(DIR *entry)
 void seekdir(DIR *entry, long position)
 {
    if (entry != (DIR *) NULL)
-      entry->d_index=position;
+      entry->ioFDirIndex=position;
+   /*   entry->d_index=position; */
    else
       return ;   
 }

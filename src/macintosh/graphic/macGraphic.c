@@ -1,6 +1,5 @@
 #include <stdio.h>
-/*#include <math.h>
-*/
+
 #include <fp.h> /* Jago */
 #include <Quickdraw.h>
 #include <ToolUtils.h>
@@ -8,6 +7,7 @@
 #include "Graphics.h"
 #include "RIntf.h"
 #include "PicComments.h"
+#include <Rdevices.h>
 
 
 /* #define MAC_TEXT */
@@ -373,20 +373,44 @@ static void Mac_Close(DevDesc *dd)
 
 static void Mac_Activate(DevDesc *dd)
 {
-	unsigned char titledString[256];
+	unsigned char titledString[256], curString[256];
 	MenuHandle windowsMenu;
+	int i;
+	Boolean EqString = FALSE;
 	MacDesc *xd = (MacDesc *) dd->deviceSpecific;
 	SInt16 WinIndex = isGraphicWindow(xd->window);
 	int devNum = deviceNumber(dd);
-	sprintf((char*)&titledString[1], "Graphics Window %d");
+	
+	sprintf((char*)&titledString[1], "Graphics Window %d [Inactive]",devNum +1);
 	titledString[0] = strlen((char*)&titledString[1]);
-	if (gGReference[WinIndex].MenuIndex == 0) {
+	   
+    windowsMenu = GetMenu(mWindows);
+    for(i = 1; i <= CountMenuItems(windowsMenu); i++){
+		GetMenuItemText(windowsMenu, i , curString);
+		EqString = EqualNumString(titledString, curString, titledString[0]);
+		if (EqString) {
+			DeleteMenuItem(windowsMenu, i); 
+			sprintf((char*)&titledString[1], "Graphics Window %d [Active]", devNum + 1);		
+			titledString[0] = strlen((char*)&titledString[1]);
+			InsertMenuItem(windowsMenu, titledString,i);
+			break;
+		}
+		}
+
+    if(EqString==0)
+     {
+       sprintf((char*)&titledString[1], "Graphics Window %d [Active]", devNum + 1);		
+       titledString[0] = strlen((char*)&titledString[1]);
+       AppendMenu(windowsMenu, titledString);
+     }
+
+/*	if (gGReference[WinIndex].MenuIndex == 0) {
 		windowsMenu = GetMenu(mWindows);
-		InsertMenuItem(windowsMenu, titledString, devNum - 1);
+		InsertMenuItem(windowsMenu, titledString, 2);
 		gGReference[WinIndex].MenuIndex = 1;
 	}
-	sprintf((char*)&titledString[1], "Graphics Window %d (Active)", devNum + 1);
-	titledString[0] = strlen((char*)&titledString[1]);
+*/
+
 	SetWTitle(xd->window, titledString) ;
 }
 
@@ -400,10 +424,30 @@ static void Mac_Activate(DevDesc *dd)
 
 static void Mac_Deactivate(DevDesc *dd)
 {
-	unsigned char titledString[256];
+	unsigned char titledString[256],curString[256];
+	int i;
+	Boolean EqString;
+	MenuHandle windowsMenu;
 	MacDesc *xd = (MacDesc*)dd->deviceSpecific;
 	int devNum = deviceNumber(dd);
-	sprintf((char*)&titledString[1], "Graphics Window %d (Inactive)", devNum + 1);
+	sprintf((char*)&titledString[1], "Graphics Window %d [Active]", devNum + 1);
+	titledString[0] = strlen((char*)&titledString[1]);
+	
+	windowsMenu = GetMenu(mWindows);
+	
+	for(i = 1; i <= CountMenuItems(windowsMenu); i++){
+		GetMenuItemText(windowsMenu, i , curString);
+		EqString = EqualNumString(titledString, curString, titledString[0]);
+		if (EqString) {
+			DeleteMenuItem(windowsMenu, i); 
+			sprintf((char*)&titledString[1], "Graphics Window %d [Inactive]", devNum + 1);		
+			titledString[0] = strlen((char*)&titledString[1]);
+			InsertMenuItem(windowsMenu, titledString,i);
+			break;
+		}
+		}
+
+    sprintf((char*)&titledString[1], "Graphics Window %d [Inactive]", devNum + 1);
 	titledString[0] = strlen((char*)&titledString[1]);
 	SetWTitle (xd->window, titledString) ;
 }
@@ -875,7 +919,7 @@ static int Mac_Locator(double *x, double *y, DevDesc *dd)
 {
 	EventRecord event;
 	SInt16 key;
-	Boolean gotEvent;
+	Boolean gotEvent,SIOUXDidEvent;
 	Boolean mouseClick = false;
 	Point myPoint;
 	WindowPtr window;
@@ -888,7 +932,10 @@ static int Mac_Locator(double *x, double *y, DevDesc *dd)
 	SetCursor(&qd.arrow);
 	while(!mouseClick) {
 		gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
-		if (event.what == mouseDown) {
+	/*	if(gotEvent)
+		 SIOUXDidEvent = SIOUXHandleOneEvent(&event);
+		 if(!SIOUXDidEvent){ 
+	*/	if (event.what == mouseDown) {
 			partCode = FindWindow(event.where, &window);
 			if ((window == (xd->window)) && (partCode == inContent)) {
 				myPoint = event.where;
@@ -922,7 +969,9 @@ static int Mac_Locator(double *x, double *y, DevDesc *dd)
 				return 0;
 			}
 		}
+ /* } */
 	}
+
 	SetPort(savePort);
 	return 1;
 }

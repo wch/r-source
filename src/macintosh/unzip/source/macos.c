@@ -1,3 +1,18 @@
+/*  This file has been modified at line 1820:
+
+    =>  newExtraField.filename = buff;    
+
+    with 
+    
+    =>  newExtraField.filename = (unsigned char*)&buff;
+    
+    because on CWPro 6 this gives the following error:
+    illegal implicit conversion from 'const unsigned char *' to
+    'unsigned char *'
+
+    Modification done to compile the R sources by Stefano M.Iacus
+*/
+ 
 /*
   Copyright (c) 1990-2000 Info-ZIP.  All rights reserved.
 
@@ -1817,7 +1832,12 @@ return;
 if (MacZipMode == TomBrownZipIt1_EF)
     {
     filelen = *buff;
-    newExtraField.filename = buff;
+    newExtraField.filename = (unsigned char*)&buff;
+/*    newExtraField.filename = buff;    
+    On CWPro 6 this gives the following error:
+    illegal implicit conversion from 'const unsigned char *' to
+    'unsigned char *'
+*/
     buff += 1;
     buff += filelen;
     mi->fpb.hFileInfo.ioFlFndrInfo.fdType       = makePPClong(buff);

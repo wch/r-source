@@ -76,7 +76,7 @@ int R_IsNaNorNA(double x)
 
 int R_finite(double x)
 {
-#ifdef macintosh
+#ifdef Macintosh
     return isfinite(x);
 #endif
 #ifndef FINITE_BROKEN

@@ -30,7 +30,7 @@
 #include "Graphics.h"
 #include "R_ext/Error.h"
 #include "Fileio.h"
-#include "Rdevices.h"
+#include <Rdevices.h>
 
 /* Define this to use hyphen except in -[0-9] */
 #undef USE_HYPHEN
@@ -1842,7 +1842,7 @@ char * Runix_tmpnam(char * prefix);
 #ifdef Win32
 char * Rwin32_tmpnam(char * prefix);
 #endif
-#ifdef macintosh
+#ifdef Macintosh
 char * Rmac_tmpnam(char * prefix);
 #endif
 
@@ -1878,7 +1878,7 @@ static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
 #ifdef Win32
     strcpy(pd->tmpname, Rwin32_tmpnam("Rxfig"));
 #endif
-#ifdef macintosh
+#ifdef Macintosh
     strcpy(pd->tmpname, Rmac_tmpnam("Rxfig"));
 #endif
     pd->tmpfp = R_fopen(pd->tmpname, "w");

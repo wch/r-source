@@ -1,3 +1,17 @@
+/*  This file has been modified at line 79:
+
+    =>  err, path);    
+                           
+    with 
+    
+    =>  err, (char *)&path);
+    
+    because on CWPro 6 this gives the following error:
+    illegal implicit conversion from 'const char *' to
+    'char *'
+
+    Modification done to compile the R sources by Stefano M.Iacus
+*/
 /*
   Copyright (c) 1990-2000 Info-ZIP.  All rights reserved.
 
@@ -76,7 +90,12 @@ int UZmacstat(const char *path, struct stat *buf)
                    (newExtraField.flags & EB_M3_FL_NOCHANGE), &CurrentFork);
     GetCompletePath(fullpath, path, &fileSpec, &err);
     err2 = PrintUserHFSerr((err != -43) && (err != 0) && (err != -120),
-                           err, path);
+                           err, (char *)&path);
+/*                           err, path); 
+    On CWPro 6 this gives the following error:
+    illegal implicit conversion from 'const char *' to
+    'char *'
+*/
     printerr("GetCompletePath:", err2, err2, __LINE__, __FILE__, path);
 
     if (err != noErr) {

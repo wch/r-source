@@ -101,7 +101,7 @@
 Constant, Global variables and prototype
 ************************************************************************************************ */
 Ptr                  gPreAllocatePointer;
-Boolean              Have_Console = false;
+Boolean              Have_Console = false; /* why try to use sioux console */
 WindowPtr            Console_Window;
 WindowPtr            Working_Window;
 SInt16               Edit_Window = 1;
@@ -1366,13 +1366,16 @@ OSErr newWindow ( const FSSpec * pFileSpec, int graphic)
 	if (!Have_Console){
        SetWTitle(window, "\pR Console");
        Console_Window = window;
-       // If you think that the console window didn't need to have tab function.
+        // If you think that the console window didn't need to have tab function.
        // You can simply delete these two lines.
        // Also, if you think that different windows ought to have different tab space.
        // what you need to do is replicate the following two lines.
        // and use it into another space.
        // I use char M to represent the char width of each character.
        Have_Console = true;
+       	/*	MenuHandle windowsMenu; */
+    	if(windowsMenu = GetMenu(mWindows))
+   	 	 AppendMenu(windowsMenu, "\pR Console");
 
     }else{
        if (graphic == 0) {
@@ -1382,6 +1385,10 @@ OSErr newWindow ( const FSSpec * pFileSpec, int graphic)
           NumToString( Edit_Number ,numberAsString);
 	      GWdoConcatPStrings(titledString,numberAsString);
           SetWTitle(window, titledString);
+         
+          if(windowsMenu = GetMenu(mWindows))
+   	 	    AppendMenu(windowsMenu, titledString);
+   	 	    
           SetTab();
           SetRect(&theWholeScreen, (qd.screenBits).bounds.left +4,
                qd.screenBits.bounds.top +24, qd.screenBits.bounds.right -4,
@@ -1395,6 +1402,9 @@ OSErr newWindow ( const FSSpec * pFileSpec, int graphic)
        NumToString(Num_Of_Window,numberAsString);
 	   GWdoConcatPStrings(titledString,numberAsString);
        SetWTitle(window, titledString);
+      
+   /*    We add the corresponding menu item somewhere else     */ 
+   
        Graphic_Window[Current_Window] = window;
        New_G_History(Current_Window);
        Current_Window++;
@@ -1518,12 +1528,14 @@ void adjustEditPtr(SInt16 EditIndex){
 //int	R_ShowFiles(int nfile, char **fileName, char **title, char *WinTitle, int x, char *xx)
 int	R_ShowFiles(int nfile, char **fileName, char **title, char *WinTitle, Rboolean x, char *xx)
 {
-     Str255    PWTitle;
-     Str255    name;
+     Str255    PWTitle, Cur_Title,curString;
+     Str255    name,numberAsString;
      FSSpec    fsspec;
      OSErr     readErr;
      SInt16    i;
      WEReference we;
+     MenuHandle windowsMenu;
+     Boolean EqString = FALSE;
      if (nfile <=0) return 1;
      readErr = DoNew();
      
@@ -1532,11 +1544,40 @@ int	R_ShowFiles(int nfile, char **fileName, char **title, char *WinTitle, Rboole
          return 1;
      PWTitle[0] = strlen(WinTitle);
      strncpy( (char *)(&PWTitle[1]),WinTitle, PWTitle[0] );
-     SetWTitle(Edit_Windows[Edit_Window-1], PWTitle);
+     
+     GetWTitle(Edit_Windows[Edit_Window-1], Cur_Title);
+//     Cur_Title[0] = strlen((unsigned char *) &Cur_Title[1]);
+     windowsMenu = GetMenu(mWindows);
+     for(i = 1; i <= CountMenuItems(windowsMenu); i++){
+		GetMenuItemText(windowsMenu, i , curString);
+		EqString = EqualNumString(Cur_Title, curString, curString[0]);
+		if (EqString) {
+			DeleteMenuItem(windowsMenu, i); 
+			break;
+		}
+		}
+     
+     
+      
+    	 	    
      Help_Windows[Help_Window] = Edit_Windows[Edit_Window-1];
+   
+      NumToString( Help_Window ,numberAsString);
+	  GWdoConcatPStrings(PWTitle,numberAsString);
+      //    SetWTitle(window, titledString);
+      
+      if(windowsMenu = GetMenu(mWindows))
+   	 	    AppendMenu(windowsMenu, PWTitle);
+   
+     SetWTitle(Help_Windows[Help_Window], PWTitle);
+  
      Edit_Window --;
      Edit_Number --;
      Help_Window++;
+     
+     
+        
+        
      we = GetWindowWE ( Help_Windows[Help_Window-1]);
      for (i = 0; i < nfile; i++){
         if (title[i] && *title[i]){ 

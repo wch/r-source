@@ -70,7 +70,7 @@ static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
     int my_argc;
     char *my_argv[100];
     char option[]="-d", app[]="R";
-    char option1[]="-oq ";
+    char option1[]="-oq ";  
     int incr=0;
     
     my_argc = nfiles + 1 + incr;

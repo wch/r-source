@@ -89,7 +89,7 @@ static void cdivid(double, double, double, double, double *, double *);
 
 static int nn;
 static double pr[NMAX];
-#ifndef macintosh
+#ifndef Macintosh
 static double pi[NMAX];
 #else
 static double mac_pi[NMAX];
@@ -105,7 +105,7 @@ static double shi[NMAX];
 static double sr, si;
 static double tr, ti;
 static double pvr, pvi;
-#ifdef macintosh /* Jago */
+#ifdef Macintosh /* Jago */
 static  double eta = 1.1920929E-07;
 static const double are = /* eta = */1.1920929E-07;
 static const double mre = 2. * M_SQRT2 * /* eta, i.e. */1.1920929E-07;
@@ -119,7 +119,7 @@ static const double infin = DBL_MAX;
 void R_cpolyroot(double *opr, double *opi, int *degree,
 		 double *zeror, double *zeroi, Rboolean *fail)
 {
-#ifdef macintosh
+#ifdef Macintosh
     static const double smalno = 1.1920929E-07;
 #else
     static const double smalno = DBL_MIN;
@@ -170,7 +170,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     /* make a copy of the coefficients and shr[] = | p[] | */
     for (i = 0; i < nn; i++) {
 	pr[i] = opr[i];
-#ifndef macintosh
+#ifndef Macintosh
 	pi[i] = opi[i];
 	shr[i] = hypot(pr[i], pi[i]);
 #else
@@ -184,7 +184,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     if (bnd != 1.) {
 	for (i=0; i < nn; i++) {
 	    pr[i] *= bnd;
-#ifndef macintosh
+#ifndef Macintosh
 	    pi[i] *= bnd;
 #else
 	    mac_pi[i] *= bnd;
@@ -199,7 +199,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 	/* calculate bnd, a lower bound on the modulus of the zeros. */
 
 	for (i=0 ; i < nn ; i++)
-#ifndef macintosh
+#ifndef Macintosh
 	    shr[i] = hypot(pr[i], pi[i]);
 #else
 	    shr[i] = hypot(pr[i], mac_pi[i]);
@@ -252,7 +252,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 	--nn;
 	for (i=0; i < nn ; i++) {
 	    pr[i] = qpr[i];
-#ifndef macintosh
+#ifndef Macintosh
 	    pi[i] = qpi[i];
 #else
 	    mac_pi[i] = qpi[i];
@@ -261,7 +261,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     }/*while*/
 
     /*	calculate the final zero and return */
-#ifndef macintosh
+#ifndef Macintosh
     cdivid(-pr[1], -pi[1], pr[0], pi[0], &zeror[d1], &zeroi[d1]);
 #else
     cdivid(-pr[1], -mac_pi[1], pr[0], mac_pi[0], &zeror[d1], &zeroi[d1]);
@@ -282,7 +282,7 @@ static void noshft(int l1)
     for (i=0; i < n; i++) {
 	xni = (double)(nn - i - 1);
 	hr[i] = xni * pr[i] / n;
-#ifndef macintosh
+#ifndef Macintosh
 	hi[i] = xni * pi[i] / n;
 #else
 	hi[i] = xni * mac_pi[i] / n;
@@ -292,7 +292,7 @@ static void noshft(int l1)
     for (jj = 1; jj <= l1; jj++) {
 
 	if (hypot(hr[n-1], hi[n-1]) <=
-#ifndef macintosh
+#ifndef Macintosh
 	    eta * 10.0 * hypot(pr[n-1], pi[n-1])) {
 #else
 	    eta * 10.0 * hypot(pr[n-1], mac_pi[n-1])) {
@@ -309,7 +309,7 @@ static void noshft(int l1)
 	    hi[0] = 0.;
 	}
 	else {
-#ifndef macintosh
+#ifndef Macintosh
 	    cdivid(-pr[nn-1], -pi[nn-1], hr[n-1], hi[n-1], &tr, &ti);
 #else
 	    cdivid(-pr[nn-1], -mac_pi[nn-1], hr[n-1], hi[n-1], &tr, &ti);
@@ -319,7 +319,7 @@ static void noshft(int l1)
 		t1 = hr[j-2];
 		t2 = hi[j-2];
 		hr[j-1] = tr * t1 - ti * t2 + pr[j-1];
-#ifndef macintosh
+#ifndef Macintosh
 		hi[j-1] = tr * t2 + ti * t1 + pi[j-1];
 	    }
 	    hr[0] = pr[0];
@@ -359,7 +359,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
     /* evaluate p at s. */
 
     polyev(nn, sr, si,
-#ifndef macintosh
+#ifndef Macintosh
 	   pr, pi, qpr, qpi, &pvr, &pvi);
 #else
 	   pr, mac_pi, qpr, qpi, &pvr, &pvi);
@@ -424,7 +424,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 		}
 		sr = svsr;
 		si = svsi;
-#ifndef macintosh
+#ifndef Macintosh
 		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 #else
 		polyev(nn, sr, si, pr, mac_pi, qpr, qpi, &pvr, &pvi);
@@ -468,7 +468,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 
 	/* evaluate p at s and test for convergence. */
 	polyev(nn, sr, si,
-#ifndef macintosh
+#ifndef Macintosh
 	       pr, pi, qpr, qpi,
 #else
 	       pr, mac_pi, qpr, qpi,
@@ -502,7 +502,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		r2 = sr * (r1 + 1.) - si * r1;
 		si = sr * r1 + si * (r1 + 1.);
 		sr = r2;
-#ifndef macintosh
+#ifndef Macintosh
 		polyev(nn, sr, si,
 		       pr, pi, qpr, qpi,
 		       &pvr, &pvi);

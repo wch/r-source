@@ -28,7 +28,7 @@
 #define deviceNumber		Rf_deviceNumber
 #define DevNull			Rf_DevNull
 #define inhibitDisplayList	Rf_inhibitDisplayList
-#ifndef macintosh
+#ifndef Macintosh
 #define InitGraphics		Rf_InitGraphics
 #endif
 #define GetDevice		Rf_GetDevice

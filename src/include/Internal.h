@@ -34,13 +34,13 @@ SEXP do_PicTeX(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Gnome(SEXP, SEXP, SEXP, SEXP);
 SEXP do_GTK(SEXP, SEXP, SEXP, SEXP);
 SEXP do_XFig(SEXP, SEXP, SEXP, SEXP);
-#ifdef macintosh
+#ifdef Macintosh
 SEXP do_Macintosh(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 /* Function Names */
 
-#if defined(Win32) || defined(macintosh)
+#if defined(Win32) || defined(Macintosh)
 SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
@@ -331,10 +331,8 @@ SEXP do_split(SEXP, SEXP, SEXP, SEXP);
 SEXP do_stop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strsplit(SEXP,SEXP,SEXP,SEXP);
 SEXP do_strptime(SEXP,SEXP,SEXP,SEXP);
-#ifndef macintosh
 SEXP do_sysinfo(SEXP,SEXP,SEXP,SEXP);
 SEXP do_syssleep(SEXP,SEXP,SEXP,SEXP);
-#endif
 SEXP do_subassign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2(SEXP, SEXP, SEXP, SEXP);

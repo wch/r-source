@@ -41,8 +41,9 @@
 #include "SmartScroll.h"
 #endif
 
+/*
 #include "WEObjectHandlers.h"
-
+*/
 
 OSErr Initialize( void )
 {
@@ -144,6 +145,7 @@ OSErr Initialize( void )
 
 	/* install the sample object handlers for pictures and sounds
 */
+/*
 	if ((err = WEInstallObjectHandler(kTypePicture, weNewHandler,
 				(UniversalProcPtr) NewWENewObjectProc(HandleNewPicture), nil)) != noErr)
 		goto cleanup;
@@ -155,8 +157,8 @@ OSErr Initialize( void )
 	if ((err = WEInstallObjectHandler(kTypePicture, weDrawHandler,
 				(UniversalProcPtr) NewWEDrawObjectProc(HandleDrawPicture), nil)) != noErr)
 		goto cleanup;
-
-	if ((err = WEInstallObjectHandler(kTypeSound, weNewHandler,
+*/
+/*	if ((err = WEInstallObjectHandler(kTypeSound, weNewHandler,
 				(UniversalProcPtr) NewWENewObjectProc(HandleNewSound), nil)) != noErr)
 		goto cleanup;
 
@@ -167,6 +169,7 @@ OSErr Initialize( void )
 	if ((err = WEInstallObjectHandler(kTypeSound, weClickHandler,
 				(UniversalProcPtr) NewWEClickObjectProc(HandleClickSound), nil)) != noErr)
 		goto cleanup;
+*/
 
 	/* perform other initialization chores
 */
@@ -181,7 +184,10 @@ OSErr Initialize( void )
 	/* clear result code
 	*/
 	err = noErr;
-    DoNew();
+/*    SIOUXSetTitle("\pR Console");
+*/
+	DoNew();
+
 
 cleanup:
 	if ( err != noErr )

@@ -1,3 +1,19 @@
+/*  This file has been modified at line 79:
+
+    =>  for (tmpPtr = name; *tmpPtr; tmpPtr++)
+    
+                           
+    with 
+    
+    =>  for (tmpPtr = (char *)&name; *tmpPtr; tmpPtr++)
+
+    
+    because on CWPro 6 this gives the following error:
+    illegal implicit conversion from 'const char *' to
+    'char *'
+
+    Modification done to compile the R sources by Stefano M.Iacus
+*/
 /*
   Copyright (c) 1990-2000 Info-ZIP.  All rights reserved.
 
@@ -601,9 +617,9 @@ AssertStr(name,"GetCompletePath")
 Assert_it(Spec,"GetCompletePath","")
 Assert_it((CompletePath != name),"GetCompletePath","")
 
-for (tmpPtr = name; *tmpPtr; tmpPtr++)
-    if (*tmpPtr == ':') hasDirName = true;
-
+/*  for (tmpPtr = name; *tmpPtr; tmpPtr++)*/
+for (tmpPtr = (char *)&name; *tmpPtr; tmpPtr++)
+    if (*tmpPtr == ':') hasDirName = true; 
 if (name[0] != ':')   /* case c: path including volume name or only filename */
     {
     if (hasDirName)

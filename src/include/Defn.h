@@ -72,7 +72,7 @@
 # define FILESEP     "/"
 #endif /* Unix */
 
-#ifdef macintosh
+#ifdef Macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
 #endif /* macintosh */
@@ -110,7 +110,7 @@
 #define	R_VSIZE		6291456L
 #endif
 
-#ifdef macintosh
+#ifdef Macintosh
 #include <fp.h> 
 #else
 #include <math.h>

@@ -63,7 +63,7 @@
 #endif
 #include <stdio.h>
 #include <string.h>
-#ifndef macintosh
+#ifndef Macintosh
 #include <math.h>
 #else
 #include <fp.h>

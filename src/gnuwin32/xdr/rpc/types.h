@@ -66,7 +66,9 @@ extern char *malloc();
 #define mem_free(ptr, bsize)	free(ptr)
 
 #ifndef makedev /* ie, we haven't already included it */
+#ifndef macintosh
 #include <sys/types.h>
+#endif /* macintosh */
 #endif
 #if !defined(WIN32) && !defined(macintosh)
 #include <sys/time.h>

@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#ifndef macintosh
+#ifndef Macintosh
 #include <sys/types.h>
 #else 
 #include <types.h>

@@ -37,7 +37,7 @@ extern "C" {
 # include <stddef.h> 
 #endif
 
-#ifdef macintosh
+#ifdef Macintosh
 # include <stddef.h> 
 #endif /* mac */
 

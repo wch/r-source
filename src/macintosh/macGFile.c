@@ -4,6 +4,7 @@
 #include "Defn.h"
 #include "Graphics.h"
 #include "RIntf.h"
+#include <Rdevices.h>
 
 OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum);
 OSErr  doCopyAppNameResource(WindowPtr windowPtr);
@@ -52,7 +53,7 @@ OSErr  doRSave(Boolean *haveCancel)
 OSErr  doRSaveAs(Boolean *haveCancel) {
     StandardFileReply fileReply;
     OSType fileType;
-    OSErrosError = 0;
+    OSErr osError = 0;
     FILE *fp ;
     SInt16 pathLen;
     Handle pathName;
@@ -157,7 +158,7 @@ OSErr  doSaveAsGraCommand(void)
 */
 OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum)
 {
-    PicHandle pictureHdl;
+    PicHandle pictureHdl=NULL;
     SInt32 numberOfBytes, dummyData;
     SInt16 volRefNum, WinIndex;
     OSErr osError;

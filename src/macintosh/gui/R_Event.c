@@ -54,6 +54,7 @@
 #include "StandardGetFolder.h"
 
 #include "Startup.h" // Jago
+#include <Rdevices.h>
 
 SEXP R_LoadFromFile(FILE*, int);
 
@@ -127,6 +128,7 @@ void AdjustCursor ( Point mouseLoc, RgnHandle mouseRgn )
 	// the cursor is to retain its shape
 	// (if the cursor is outside the view region, this is subtracted from mouseRgn )
 
+
 	if ( ( window = FrontWindow ( ) ) != nil )
 	{
 		if ( WEAdjustCursor ( mouseLoc, mouseRgn, GetWindowWE ( window ) ) )
@@ -134,6 +136,7 @@ void AdjustCursor ( Point mouseLoc, RgnHandle mouseRgn )
 			return ;
 		}
 	}
+
 
 	// set the cursor to the arrow cursor
 
@@ -158,6 +161,7 @@ void DoMouseDown ( const EventRecord *event )
 
 	partCode = FindWindow( event->where, &window );
 
+     
 	// dispatch on partCode
 
 	switch ( partCode )
@@ -544,14 +548,25 @@ available, and dispatch it to the corresponding routine.
 void ProcessEvent( void )
 {
 	EventRecord event;
-	Boolean gotEvent, haveResize = false;
+	Boolean gotEvent, SIOUXDidEvent, haveResize = false;
 	WindowPtr windowPtr;
 	DevDesc  *dd;
 	SInt16 Console_Width, NumofChar;
 	GrafPtr savePort;
+    RgnHandle cursorRgn;
     
+ /*   cursorRgn = NewRgn();
+   */ 
 	gotEvent = WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
-
+    
+/*    if(gotEvent)
+     SIOUXDidEvent = SIOUXHandleOneEvent(&event);
+  */
+    
+  /*  if(SIOUXDidEvent)
+     return;
+    */
+      
 	// give text services a chance to intercept this event
 	// if TSMEvent( ) handles the event, it will set event.what to nullEvent
     if (gExpose) {

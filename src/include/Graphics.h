@@ -26,7 +26,7 @@
 #include <R_ext/Boolean.h>
 
 /* WHY the following ?? */
-#ifdef macintosh
+#ifdef Macintosh
 #include <Rinternals.h> 
 #endif
 

@@ -48,7 +48,6 @@ int closedir(DIR *dPtr)
     return 0;
 }
 
-
 DIR *opendir(char *dirName)
 {
     int fullPath;
@@ -60,7 +59,7 @@ DIR *opendir(char *dirName)
     OSErr err;
     FSSpec spec;
     char CompletePath[NAME_MAX];
-
+    
     GetCompletePath(CompletePath, dirName, &spec, &err);
     printerr("GetCompletePath", err, err, __LINE__, __FILE__, dirName);
 
@@ -82,6 +81,7 @@ DIR *opendir(char *dirName)
         fullPath = true;
     }
 
+
     hPB.volumeParam.ioNamePtr = spec.name;
 
     err = PBHGetVInfoSync(&hPB);
@@ -90,6 +90,7 @@ DIR *opendir(char *dirName)
         errno = ENOENT;
         return NULL;
     }
+
 
     /* Get information about file. */
 
@@ -106,6 +107,7 @@ DIR *opendir(char *dirName)
         errno = (err == fnfErr) ? ENOENT : EIO;
         return NULL;
     }
+
 
     if (!(cPB.hFileInfo.ioFlAttrib & ioDirMask)) {
         errno = ENOTDIR;
@@ -149,11 +151,13 @@ struct dirent *readdir(DIR *dPtr)
 
     err = PBGetCatInfoSync(&cPB);
 
+
     if (err != noErr) {
         dPtr->flags = 0xff;
         errno = (err == fnfErr) ? ENOENT : EIO;
         return NULL;
     }
+
 
     p2cstr((StringPtr)name);
 

@@ -308,7 +308,7 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WIN32
 #define tzname _tzname
 #else
-# ifdef macintosh
+# ifdef Macintosh
 char *tzname[2] = { "local", "local" };
 # else /* Unix */
 extern char *tzname[2];
@@ -322,7 +322,7 @@ static int set_tz(char *tz, char *oldtz)
     char *p = NULL;
     int settz = 0;
     
-#ifdef macintosh
+#ifdef Macintosh
     return 0;
 #else
     strcpy(oldtz, "");
@@ -347,7 +347,7 @@ static int set_tz(char *tz, char *oldtz)
 
 static void reset_tz(char *tz)
 {
-#ifdef macintosh
+#ifdef Macintosh
     return;
 #else
     if(strlen(tz)) {

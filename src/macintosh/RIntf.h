@@ -63,6 +63,9 @@
 #include <ToolUtils.h>
 #include "dirent.h"
 
+
+/*#include "macdir.h"
+*/
 #ifndef __WEDEMOAPP__
 #define __WEDEMOAPP__
 
@@ -666,6 +669,8 @@ void            maintain_cmd_History(char*);
 void            do_Down_Array       (void);
 void            R_WriteConsole1      (Ptr, SInt32);
 void            R_ReadConsole1       (char* ,  char* , int, int);
+void            R_WriteConsole2      (Ptr, SInt32);
+void            R_ReadConsole2       (char* ,  char* , int, int);
 Boolean         inRange             (int start, int end , int back, int length);
 void            Change_Color_Range  (SInt32, SInt32,long, long,  long, WEReference);
 void            Change_Color(long , long , long , WEReference);

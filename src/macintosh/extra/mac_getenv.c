@@ -152,13 +152,14 @@ FSSpec spec;
 OSErr err;
 char temp_path[NAME_MAX];
 
+
 if (IgnoreREnvironment)
     return NULL;  /* user wants to ignore the environment vars */
 
 if (name == NULL)
     return NULL;
     
-sprintf(temp_path,"%s:%s",R_Home,"etc:.Renviron");
+strcpy(temp_path,"etc:.Renviron");
 
 GetCompletePath(CompleteEnvPath,temp_path,&spec,&err);
 

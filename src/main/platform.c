@@ -54,7 +54,7 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!tmp) {
 	error("Could not allocate memory");
     }
-#ifndef macintosh    
+#ifndef Macintosh    
     sprintf(tmp, ".%s", SHLIB_EXT);
 #else    /* Usually DLL under MacOS are called "LibraryLib" without a "." */
     sprintf(tmp, "%s", SHLIB_EXT);
@@ -284,8 +284,8 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#ifndef macintosh
-#include <sys/types.h>
+#ifndef Macintosh
+# include <sys/types.h>
 #else 
 # include <types.h>
 #endif /* mac */
@@ -298,12 +298,14 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <sys/dir.h>
 #elif HAVE_NDIR_H
 # include <ndir.h>
+#elif defined(Macintosh)
+# include "dirent.h"  /* We use a local equivalent to dirent.h */
 #endif
 
 #ifdef USE_SYSTEM_REGEX
-#include <regex.h>
+# include <regex.h>
 #else
-#include "Rregex.h"
+# include "Rregex.h"
 #endif
 
 static SEXP filename(char *dir, char *file)
@@ -348,6 +350,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(CHAR(STRING_ELT(d, i)));
+
 	if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	    error("directory/folder path name too long");
 	strcpy(dirname, dnp);
@@ -527,7 +530,7 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef HAVE_STAT
-# ifndef macintosh
+# ifndef Macintosh
 #  include <sys/types.h>
 #  include <sys/stat.h>
 # else

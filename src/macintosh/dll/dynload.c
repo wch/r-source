@@ -101,7 +101,7 @@ static CFunTabEntry CFunTab[] =
    Tierney to support S version 4 on Hewlett-Packard machines.	The
    relevant defines are set up by autoconf. */
 
-#ifdef macintosh
+#ifdef Macintosh
 #define HAVE_DLFCN_H  /* Yes we have under MacOS. Thanks to L. Tierney, see above */
 #define HAVE_NO_SYMBOL_UNDERSCORE /* No "_" before functions name under MacOS */
 #endif

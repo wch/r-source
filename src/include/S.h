@@ -38,7 +38,7 @@ extern "C" {
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
-#ifdef macintosh
+#ifdef Macintosh
 # include <fp.h>
 #else
 # include <math.h>
