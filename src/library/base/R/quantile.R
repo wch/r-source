@@ -25,3 +25,7 @@ function (x, probs = seq(0, 1, 0.25), na.rm = FALSE) {
                      "%", sep = "")
   qs
 }
+
+IQR <- function (x, na.rm = FALSE)
+as.vector(diff(quantile(as.numeric(x), c(0.25, 0.75), na.rm=na.rm)))
+
