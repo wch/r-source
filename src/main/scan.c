@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2003   The R Development Core Team.
+ *  Copyright (C) 1998-2004   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -484,10 +484,12 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 
     if (n == 0) {
 	UNPROTECT(1);
+	R_FreeStringBuffer(&strBuf);
 	return allocVector(type,0);
     }
     if (n == maxitems) {
 	UNPROTECT(1);
+	R_FreeStringBuffer(&strBuf);
 	return ans;
     }
 
@@ -790,6 +792,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
+    if (data.quotesave) free(data.quotesave);
     return ans;
 }
 
@@ -943,6 +946,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i <= nlines; i++)
 	INTEGER(bns)[i] = INTEGER(ans)[i];
     UNPROTECT(1);
+    if (data.quotesave) free(data.quotesave);
     return bns;
 }
 
@@ -1324,6 +1328,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     free(buf);
     if(!data.wasopen) data.con->close(data.con);
+    if (data.quotesave) free(data.quotesave);
     return ans;
 
 no_more_lines:
@@ -1341,5 +1346,6 @@ no_more_lines:
     for(i = 0; i < nread; i++)
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
     UNPROTECT(2);
+    if (data.quotesave) free(data.quotesave);
     return ans2;
 }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-3   The R Development Core Team.
+ *  Copyright (C) 2000-4   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1586,7 +1586,7 @@ static void outtext_close(Rconnection con)
 static void outtext_destroy(Rconnection con)
 {
     Routtextconn this = (Routtextconn)con->private;
-    free(this->lastline);
+    free(this->lastline); free(this);
 }
 
 #define LAST_LINE_LEN 256

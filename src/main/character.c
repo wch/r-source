@@ -309,7 +309,6 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		tables = pcre_maketables();
 		re_pcre = pcre_compile(split, options, 
 				       &errorptr, &erroffset, tables);
-		pcre_free((void *)tables);
 		if (!re_pcre) errorcall(call, "invalid regular expression");
 		re_pe = pcre_study(re_pcre, 0, &errorptr);
 		bufp = buf;
@@ -418,13 +417,18 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
 	SET_VECTOR_ELT(s, i, t);
+	if(usedRegex) {
+	    regfree(&reg);
+	    usedRegex = FALSE;
+	}
+	if(usedPCRE) {
+	    pcre_free(re_pe);
+	    pcre_free(re_pcre);
+	    pcre_free((void *)tables);
+	    usedPCRE = FALSE;
+	}
     }
 
-    if(usedRegex) regfree(&reg);
-    if(usedPCRE) {
-	(pcre_free)(re_pe);
-	(pcre_free)(re_pcre);
-    }
     if (getAttrib(x, R_NamesSymbol) != R_NilValue)
 	namesgets(s, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
@@ -456,14 +460,25 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 #define LOWVOW(i) (buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' || \
 		   buff1[i] == 'o' || buff1[i] == 'u')
 
+
+/* memmove does allow overlapping src and dest */
+static void mystrcpy(char *dest, const char *src)
+{
+    memmove(dest, src, strlen(src)+1);
+}
+
+
 static SEXP stripchars(SEXP inchar, int minlen)
 {
 /* abbreviate(inchar, minlen) */
 
+/* This routine used strcpy with overlapping dest and src. 
+   That is not allowed by ISO C. 
+ */
     int i, j, nspace = 0, upper;
     char buff1[MAXELTSIZE];
 
-    strcpy(buff1, CHAR(inchar));
+    mystrcpy(buff1, CHAR(inchar));
     upper = strlen(buff1)-1;
 
     /* remove leading blanks */
@@ -474,7 +489,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 	else
 	    break;
 
-    strcpy(buff1, &buff1[j]);
+    mystrcpy(buff1, &buff1[j]);
     upper = strlen(buff1) - 1;
 
     if (strlen(buff1) < minlen)
@@ -497,7 +512,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
 	if(LOWVOW(i) && LASTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -505,7 +520,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
 	if (LOWVOW(i) && !FIRSTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -513,7 +528,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
 	if (islower((int)buff1[i]) && LASTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -521,7 +536,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
 	if (islower((int)buff1[i]) && !FIRSTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -531,7 +546,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
 	if (!FIRSTCHAR(i) && !isspace((int)buff1[i]))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -542,7 +557,7 @@ donesc:
     if (upper > minlen)
 	for (i = upper - 1; i > 0; i--)
 	    if (isspace((int)buff1[i]))
-		strcpy(&buff1[i], &buff1[i + 1]);
+		mystrcpy(&buff1[i], &buff1[i + 1]);
 
     return(mkChar(buff1));
 }

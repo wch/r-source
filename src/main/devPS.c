@@ -511,6 +511,7 @@ PostScriptLoadFontMetrics(const char * const fontpath, FontMetricInfo *metrics,
 
     if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
 
+    metrics->KernPairs = NULL;
     mode = 0;
     for (ii = 0; ii < 256; ii++) {
 	charnames[ii][0] = '\0';
@@ -1639,9 +1640,13 @@ static void PostScriptClose(NewDevDesc *dd)
 
 static void PS_Close(NewDevDesc *dd)
 {
+    int i;
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptClose(dd);
+    for(i = 0; i < 5; i++) {
+        if(pd->metrics[i].KernPairs) free(pd->metrics[i].KernPairs);
+    }
     free(pd);
 }
 
@@ -3161,10 +3166,13 @@ static void PDF_NewPage(R_GE_gcontext *gc,
 
 static void PDF_Close(NewDevDesc *dd)
 {
+    int i;
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
+    for(i = 0; i < 5; i++)
+       if(pd->metrics[i].KernPairs) free(pd->metrics[i].KernPairs);
     free(pd->pos); free(pd->pageobj); free(pd);
 }
 
