@@ -983,8 +983,10 @@ where each line of input produces a line of output.}
         \pdfoutline goto name{\pdfmkpgn{##2}}{##1}}
       \def\subsecentry ##1##2##3##4##5{%
         \pdfoutline goto name{\pdfmkpgn{##5}}count-\expnumber{subsec##2.##3.##4}{##1}}
-      \def\unnumbsubsecentry ##1##2{%
-        \pdfoutline goto name{\pdfmkpgn{##2}}{##1}}
+% BDR 2001-12-03
+%      \def\unnumbsubsecentry ##1##2{%
+%        \pdfoutline goto name{\pdfmkpgn{##2}}{##1}}
+      \def\unnumbsubsecentry ##1##2{}
       \def\subsubsecentry ##1##2##3##4##5##6{%
         \pdfoutline goto name{\pdfmkpgn{##6}}{##1}}
       \def\unnumbsubsubsecentry ##1##2{%
@@ -3507,8 +3509,11 @@ width0pt\relax} \fi
 \gdef\thischaptername{#1}%
 \xdef\thischapter{\putwordAppendix{} \appendixletter: \noexpand\thischaptername}%
 \toks0 = {#1}%
+% BDR 2001-12-03
+%\edef\temp{\noexpand\writetocentry{\realbackslash chapentry{\the\toks0}%
+%                       {\putwordAppendix{} \appendixletter}}}%
 \edef\temp{\noexpand\writetocentry{\realbackslash chapentry{\the\toks0}%
-                       {\putwordAppendix{} \appendixletter}}}%
+                       {\appendixletter}}}%
 \temp
 \appendixnoderef
 \global\let\section = \appendixsec
