@@ -9,6 +9,22 @@ source(paste(getenv("SRCDIR"),"all.equal.R", sep="/"))
 
 if(!interactive()) .Random.seed <- c(0,rep(7654, 3))
 
+###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
+
+## Currently, just Wilcoxon  [should do this for all !]
+is.sym <- TRUE
+for(n in rpois(5, lam=6))
+    for(m in rpois(15, lam=8))
+    {
+        x <- -1:(n*m + 1)
+        fx <- dwilcox(x, n, m)
+        Fx <- pwilcox(x, n, m)
+        is.sym <- is.sym & all(fx == dwilcox(x, m, n))
+        eq <- all.equal(Fx, cumsum(fx), tol= 1e-14)
+        if(!is.logical(eq) || !eq) print(eq)
+    }
+is.sym        
+
 ##--- Cumulative Poisson '==' Cumulative Chi^2 :
 ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
 n1 <- 20; n2 <- 16
