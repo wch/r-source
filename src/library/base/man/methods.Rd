@@ -1,8 +1,8 @@
 \name{methods}
 \title{Class Methods}
 \usage{
-UseMethod(name)
-NextMethod(name, object, ...)
+UseMethod(generic, object )
+NextMethod(generic, object, ...)
 methods(generic.function, class)
 }
 \alias{UseMethod}
@@ -11,7 +11,8 @@ methods(generic.function, class)
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method despatch takes place
-  based on the class of the first argument to the generic function.
+  based on the class of the first argument to the generic function or on 
+  the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
 
   An \R ``object'' is a data object which has a \code{class} attribute.
   A class attribute is a vector of character strings giving the names of
