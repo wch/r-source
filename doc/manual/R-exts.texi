@@ -697,7 +697,7 @@ For example,
 @example
 x <- runif(10)       # @r{Shown and run.}
 \dontrun@{plot(x)@}    # @r{Only shown.}
-\testonly@{log(x@}     # @r{Only run.}
+\testonly@{log(x)@}    # @r{Only run.}
 @end example
 
 Thus, example code not included in @code{\dontrun} must be executable!
@@ -1066,7 +1066,7 @@ provides two user-level programs for processing Rd format.
 @code{R CMD Rd2txt} produces ``pretty'' plain text output from an Rd
 file, and is particularly useful as a previewer when writing Rd format
 documentation within Emacs.  @code{R CMD Rd2dvi} generates DVI (or, if
-option @option{--pdf} is given, PDF) output from from documentation in
+option @option{--pdf} is given, PDF) output from documentation in
 Rd files, which can be specified either explictly or by the path to a
 directory with the sources of a package.  In the latter case, a
 reference manual for all documented objects in the package is created.
@@ -1577,7 +1577,7 @@ The memory allocated for @R{} objects is not freed by the user; instead,
 the memory is from time to time @dfn{garbage collected}.  That is, all
 the allocated memory not being used is freed, and the objects that are
 in use may be moved.  If you create an @R{} object in your C code, you
-must tell @R{} that you are using the object via call to the
+must tell @R{} that you are using the object via a call to the
 @code{PROTECT} macro.  This has two effects.  First it tells @R{} that
 the object is in use so it is not destroyed.  Second, it ensures that
 the @code{SEXP} pointer to the object is updated if the object's
@@ -1585,7 +1585,7 @@ structure is moved in memory during garbage collection.  (Because of
 this it is not safe to save and re-use pointers to parts of an object's
 structure.)
 
-Protecting a @code{SEXP} pointer protexts all the @R{} objects in a
+Protecting a @code{SEXP} pointer protects all the @R{} objects in a
 recursive structure (such as list).
 
 The programmer is solely responsible for housekeeping the calls to
