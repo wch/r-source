@@ -29,7 +29,7 @@ ff <- y ~ x
 for(i in 1:4) {
   ff[2:3] <- lapply(paste(c("y","x"), i, sep=""), as.name)
   ## or   ff[[2]] <- as.name(paste("y", i, sep=""))
-  ##      ff[[3]] <- as.name(paste("x", i, sep="")) }
+  ##      ff[[3]] <- as.name(paste("x", i, sep=""))
   assign(paste("lm.",i,sep=""), lmi <- lm(ff, data= anscombe))
   print(anova(lmi))
 }
@@ -40,7 +40,7 @@ lapply(objects(pat="lm\.[1-4]$"), function(n) summary(get(n))$coef)
 
 ## Now, do what you should have done in the first place:
 frame(); op <- par(mfrow=c(2,2), mar=.1+c(4,4,1,1), oma= c(0,0,2,0))
-mtext("Anscombe's  4  Regression data sets", outer = TRUE, cex=1.6)
+mtext("Anscombe's  4  Regression data sets", outer = TRUE, cex=1.5)
 for(i in 1:4) {
   ff[2:3] <- lapply(paste(c("y","x"), i, sep=""), as.name)
   plot(ff, data =anscombe, col="red", pch=21, bg = "orange", cex = 1.2,
