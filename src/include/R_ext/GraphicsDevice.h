@@ -124,6 +124,7 @@ typedef struct {
      */
     Rboolean displayListOn;     /* toggle for display list status */
     SEXP displayList;           /* display list */
+    SEXP DLlastElt;
     SEXP savedSnapshot;         /* The last value of the display list
 				 * just prior to when the display list
 				 * was last initialised

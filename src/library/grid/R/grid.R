@@ -161,21 +161,6 @@ vpDepth <- function() {
   count
 }
 
-pop.vp <- function(last.one, recording) {
-  pvp <- grid.Call("L_currentViewport")
-  # Fail if trying to pop top-level viewport
-  if (is.null(pvp$parent))
-    stop("Illegal to pop top-level viewport")
-  # Assert the gpar settings of the parent (which is about to become "current")
-  pgpar <- pvp$parent$gpar
-  # Do not call set.gpar because set.gpar accumulates cex
-  grid.Call.graphics("L_setGPar", pgpar)
-  # Allow for recalculation of viewport transform if necessary
-  # and do things like updating parent/children slots in
-  # stored pushedvps
-  grid.Call.graphics("L_unsetviewport", last.one)
-}
-
 pop.viewport <- function(n=1, recording=TRUE) {
   .Deprecated("popViewport")
   popViewport(n, recording=recording)
@@ -187,8 +172,7 @@ popViewport <- function(n=1, recording=TRUE) {
   if (n == 0)
     n <- vpDepth()
   if (n > 0) {
-    for (i in 1:n)
-      pop.vp(i==n, recording)
+    grid.Call.graphics("L_unsetviewport", as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "pop"
@@ -196,20 +180,6 @@ popViewport <- function(n=1, recording=TRUE) {
     }
   }
   invisible()
-}
-
-up.vp <- function(last.one, recording) {
-  pvp <- grid.Call("L_currentViewport")
-  # Fail if trying to up top-level viewport
-  if (is.null(pvp$parent))
-    stop("Illegal to navigate up past top-level viewport")
-  # Assert the gpar settings of the parent (which is about to become "current")
-  pgpar <- pvp$parent$gpar
-  class(pgpar) <- "gpar"
-  # Do not call set.gpar because set.gpar accumulates cex
-  grid.Call.graphics("L_setGPar", pgpar)
-  # Allow for recalculation of viewport transform if necessary
-  grid.Call.graphics("L_upviewport", last.one)
 }
 
 # Rather than removing the viewport from the viewport stack (tree),
@@ -220,8 +190,7 @@ upViewport <- function(n=1, recording=TRUE) {
   if (n == 0)
     n <- vpDepth()
   if (n > 0) {
-    for (i in 1:n)
-      up.vp(i==n, recording)
+    grid.Call.graphics("L_upviewport", as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "up"
@@ -433,6 +402,10 @@ grid.Call.graphics <- function(fnname, ...) {
       # a further .Call.graphics() call itself
       # It is also appropriate that the first grid operation on
       # the graphics engine display list is a gridDirty call.
+      # NOTE that we need a .Call.graphics("L_gridDirty") so that
+      # the the first thing on the engine display list is a dirty
+      # operation;  this is necessary in case the display list is
+      # played on another device (e.g., via replayPlot() or dev.copy())
       .Call.graphics("L_gridDirty", PACKAGE="grid")
       .Call.graphics("L_setEngineRecording", TRUE, PACKAGE="grid")
       result <- .Call.graphics(fnname, ..., PACKAGE="grid")

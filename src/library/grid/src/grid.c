@@ -124,12 +124,6 @@ SEXP L_gridDirty()
      */
     GEDevDesc *dd = getDevice();
     dirtyGridDevice(dd);
-    /* Ensure that base graphics (the GCheckState call in do_dotgraphics)
-     * will not complain.
-     * FIXME:
-     * This should come out once more changes to base graphics have been made.
-     */
-    GSetState(1, (DevDesc*) dd);
     return R_NilValue;
 }
 
@@ -622,11 +616,12 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
 /* This is similar to L_setviewport, except that it will NOT 
  * recalculate the viewport transform if the device has not changed size
  */
-SEXP L_unsetviewport(SEXP last)
+SEXP L_unsetviewport(SEXP n)
 {
+    int i;
     double xx1, yy1, xx2, yy2;
+    double devWidthCM, devHeightCM;
     SEXP parentClip;
-    SEXP newvp;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
@@ -643,9 +638,15 @@ SEXP L_unsetviewport(SEXP last)
      *  problems can occur when grid output is mixed with base output;
      *  for example, plot.new() is called between a viewport push and pop)
      */
-    PROTECT(newvp = VECTOR_ELT(gvp, PVP_PARENT));
+    SEXP newvp = VECTOR_ELT(gvp, PVP_PARENT);
     if (isNull(newvp))
-      error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+	error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+    for (i = 1; i < INTEGER(n)[0]; i++) {
+	gvp = newvp;
+	newvp = VECTOR_ELT(gvp, PVP_PARENT);
+	if (isNull(newvp))
+	    error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+    }
     /* 
      * Remove the parent from the child
      * This is not strictly necessary, but it is conceptually
@@ -684,14 +685,15 @@ SEXP L_unsetviewport(SEXP last)
 	eval(fcall, R_gridEvalEnv); 
 	UNPROTECT(2);
     }
-    if (LOGICAL(last)[0]) {
-	double devWidthCM, devHeightCM;
-	/* Get the current device size 
-	 */
-	getDeviceSize(dd, &devWidthCM, &devHeightCM);
-	if (deviceChanged(devWidthCM, devHeightCM, newvp))
-	    calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
-    }
+    /* Get the current device size 
+     */
+    getDeviceSize(dd, &devWidthCM, &devHeightCM);
+    if (deviceChanged(devWidthCM, devHeightCM, newvp))
+	calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
+    /* 
+     * Enforce the current viewport settings
+     */
+    setGridStateElement(dd, GSS_GPAR, viewportgpar(newvp));
     /* Set the clipping region to the parent's cur.clip
      */
     parentClip = viewportClipRect(newvp);
@@ -713,18 +715,18 @@ SEXP L_unsetviewport(SEXP last)
      * list works 
      */
     setGridStateElement(dd, GSS_VP, newvp);
-    UNPROTECT(1);
     return R_NilValue;
 }
 
 /* This is similar to L_unsetviewport, except that it will NOT 
  * modify parent-child relations 
  */
-SEXP L_upviewport(SEXP last)
+SEXP L_upviewport(SEXP n)
 {
+    int i;
     double xx1, yy1, xx2, yy2;
+    double devWidthCM, devHeightCM;
     SEXP parentClip;
-    SEXP newvp;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
@@ -733,20 +735,24 @@ SEXP L_upviewport(SEXP last)
      * list works 
      */    
     SEXP gvp = gridStateElement(dd, GSS_VP);
-    /* NOTE that the R code has already checked that .grid.viewport$parent
-     * is non-NULL
-     */
-    PROTECT(newvp = VECTOR_ELT(gvp, PVP_PARENT));
+    SEXP newvp = VECTOR_ELT(gvp, PVP_PARENT);
     if (isNull(newvp))
-      error("Cannot up the top-level viewport (grid and graphics output mixed?)");
-    if (LOGICAL(last)[0]) {
-	double devWidthCM, devHeightCM;
-	/* Get the current device size 
-	 */
-	getDeviceSize(dd, &devWidthCM, &devHeightCM);
-	if (deviceChanged(devWidthCM, devHeightCM, newvp))
-	    calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
+	error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+    for (i = 1; i < INTEGER(n)[0]; i++) {
+	gvp = newvp;
+	newvp = VECTOR_ELT(gvp, PVP_PARENT);
+	if (isNull(newvp))
+	    error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
     }
+    /* Get the current device size 
+     */
+    getDeviceSize(dd, &devWidthCM, &devHeightCM);
+    if (deviceChanged(devWidthCM, devHeightCM, newvp))
+	calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
+    /* 
+     * Enforce the current viewport settings
+     */
+    setGridStateElement(dd, GSS_GPAR, viewportgpar(newvp));
     /* Set the clipping region to the parent's cur.clip
      */
     parentClip = viewportClipRect(newvp);
@@ -768,7 +774,6 @@ SEXP L_upviewport(SEXP last)
      * list works 
      */
     setGridStateElement(dd, GSS_VP, newvp);
-    UNPROTECT(1);
     return R_NilValue;
 }
 

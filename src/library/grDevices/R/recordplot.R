@@ -17,7 +17,6 @@ replayPlot <- function(x)
 {
     if(class(x) != "recordedplot")
         stop("argument is not of class \"recordedplot\"")
-    plot.new()
     nm <- names(x)
     if(length(nm) == 2 && nm == c("displaylist", "gpar")) {
         ## pre-1.4.0 save
