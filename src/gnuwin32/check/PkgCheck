@@ -22,7 +22,7 @@ $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*.R
 #	  $(RHOME)/src/gnuwin32/check/makeRex.R > MakeRex.R
 #	@$(R) --quiet < makeRex.R > nul
 #	@$(RM) makeRex.R
-	@$(RHOME)/bin/Rcmd massage-Examples.sh $(PKG) $^ > $@
+	@sh $(RHOME)/bin/massage-Examples.sh $(PKG) $^ > $@
 
 test-src-1=$(shell ls *.R 2> nul)
 test-src-auto=$(shell ls *.Rin 2> nul | sed 's/Rin$$/R/')

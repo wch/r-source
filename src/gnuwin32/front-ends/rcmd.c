@@ -72,6 +72,10 @@ int main (int argc, char **argv)
 	}
 	for (i = 1; i < argc; i++){
 	    if (i > 1) strcat(cmd, " ");
+	    if(strlen(cmd) + strlen(argv[i]) > 9900) {
+		fprintf(stderr, "command line too long\n");
+		exit(27);
+	    }
 	    strcat(cmd, argv[i]);
 	}
 /*	printf("cmd is %s\n", cmd); */
