@@ -143,7 +143,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 ## locale-specific version of date()
 format(Sys.time(), "\%a \%b \%d \%X \%Y")
 ## we would include the timezone as in
-## format(Sys.time(), "\%a \%b \%d \%X \%Y %Z")
+## format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 ## but this crashes some Linux systems
 
 ## read in date info in format `ddmmmyyyy'
