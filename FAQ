@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-34, 2001-12-08
+Version 1.3-35, 2001-12-12
 Kurt Hornik
 
 
@@ -527,6 +527,9 @@ list can be obtained by sending an email with `info' as its contents to
    Subscription and posting to the other lists is done analogously, with
 `r-help' replaced by `r-announce' and `r-devel', respectively.
 
+   Subscriptions to `r-help' and `r-devel' are also available in digest
+format, see the `doc/html/mail.html' file in CRAN for more information.
+
    It is recommended that you send mail to r-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This may
 save them precious time they can use for constantly improving R, and will
@@ -540,7 +543,7 @@ Bugs:: for more details.
    Archives of the above three mailing lists are made available on the net
 in a monthly schedule via the `doc/html/mail.html' file in CRAN.
 Searchable archives of the lists are available via
-`http://www.ens.gu.edu.au/robertk/R/'.
+`http://maths.newcastle.edu.au/~rking/R/'.
 
    The R Core Team can be reached at <r-core@lists.r-project.org> for
 comments and reports.
