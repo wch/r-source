@@ -67,7 +67,7 @@ function(lines)
 .stripRdComments <-
 function(lines)
 {
-    gsub("([^\\])((\\\\)*)%.*", "\\1\\2", lines)
+    gsub("(^|[^\\])((\\\\)*)%.*", "\\1\\2", lines)
 }
 
 ### * Rdinfo
