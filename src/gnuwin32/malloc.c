@@ -979,6 +979,7 @@ static unsigned int gAddressBase = 0;
 static unsigned int gReservedSize = 0;
 static unsigned int totalAllocated = 0;
 extern unsigned int R_max_memory;
+unsigned int R_reserved_size = (256*1024*1024);
 
 static
 int getpagesize(void)
@@ -1044,7 +1045,7 @@ void *wsbrk (long size)
 	/* first check if request fits in reserved space, and if not
 	   try to reserve the address space (never unreserved) */
 	if (gAddressBase == 0) {
-	    gReservedSize = max (RESERVED_SIZE, AlignPage64K(size));
+	    gReservedSize = max (R_reserved_size, AlignPage64K(size));
 	    gNextAddress = gAddressBase =
 		(unsigned int)VirtualAlloc (NULL, gReservedSize,
 					    MEM_RESERVE, PAGE_NOACCESS);

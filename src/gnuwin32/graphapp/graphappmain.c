@@ -32,6 +32,38 @@
 extern void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
 
 
+__declspec(dllimport) extern unsigned int R_reserved_size;
+#include <limits.h>
+
+static void check_max_mem(int argc, char **argv)
+{
+    int ac = argc;
+    char *p = NULL, **av = argv;
+    long v;
+    
+    while (--ac) {
+	++av;
+	if(strncmp(*av, "--max-mem-size", 14) == 0) {
+	    if(strlen(*av) < 16) {
+		ac--; av++; p = *av;
+	    } else p = &(*av)[15];
+	    v = strtol(p, &p, 10);
+	    if(p[0] == 'M') {
+		if((1024*1024 * (double)v) > LONG_MAX) return;
+		v = 1024*1024*v;
+	    } else if(p[0] == 'K') {
+		if((1024 * (double)v) > LONG_MAX) return;
+		v = 1024*v;
+	    } else if(p[0] == 'k') {
+		if((1000 * (double)v) > LONG_MAX) return;
+		v = 1000*v;
+	    }
+	    if (v > R_reserved_size) R_reserved_size = v;
+	    return;
+	}
+    }
+}
+
 /*
  *  If PASS_ARGS is zero, the main function will be passed zero
  *  and NULL instead of argc and argv.
@@ -40,7 +72,6 @@ extern void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdSho
  *  We define the main function as returning void, so this
  *  method ignores any value returned from main.
  */
-
 
 int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine, 
@@ -59,6 +90,8 @@ WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	extern void AppMain(int argc, char **argv);
 #endif /* end arg declarations */
 
+	/* do this here, before ANY used of malloc + friends */
+	check_max_mem(_argc, _argv);
         startgraphapp(Instance, PrevInstance, CmdShow);
 	/*
 	 *  Call the main function now.
