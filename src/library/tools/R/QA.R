@@ -347,7 +347,8 @@ function(package, dir, lib.loc = NULL,
     docsList <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsList)
     writeLines(files, docsList)
-    .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
+    .Script("perl", "extract-usage.pl",
+            paste(if(verbose) "--verbose", docsList, docsFile))
 
     ## Process the usages in the documentation objects, one at a time.
     badDocObjs <- list()
@@ -508,7 +509,15 @@ function(package, dir, lib.loc = NULL)
             argNames[length(argNames)] != "value"
         }) == TRUE]
 
+    class(badAssignFuns) <- "checkAssignFuns"
     badAssignFuns
+}
+
+print.checkAssignFuns <-
+function(x, ...)
+{
+    if(length(x) > 0) print(unclass(x), ...)
+    invisible(x)
 }
 
 checkDocArgs <-
@@ -1135,7 +1144,9 @@ function(package, dir, file, lib.loc = NULL)
     badTnF <- c("T", "F")    
     findBadExprs <- function(e, p) {
         if(is.name(e) && (as.character(e) %in% badTnF) && !is.null(p)) {
-            badExprs <<- c(badExprs, p)
+            ## Need the 'list()' to deal with T/F in function arglists
+            ## which are pairlists ...
+            badExprs <<- c(badExprs, list(p))
         }
         else if(is.recursive(e)) {
             for(i in seq(along = e)) Recall(e[[i]], e)
