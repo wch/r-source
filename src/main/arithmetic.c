@@ -1087,6 +1087,15 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;			/* never used; to keep -Wall happy */
 }
 
+SEXP do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP s;
+    int n;
+    if (DispatchGroup("Math", call, op, args, env, &s))
+	return s;
+    return  do_cmathfuns(call, op, args, env);
+}
+
 /* Mathematical Functions of Two Numeric Arguments (plus 1 int) */
 
 #define if_NA_Math2_set(y,a,b)				\

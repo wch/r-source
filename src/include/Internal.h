@@ -75,6 +75,7 @@ SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
+SEXP do_abs(SEXP, SEXP, SEXP, SEXP);
 SEXP do_alias(SEXP, SEXP, SEXP, SEXP);
 SEXP do_allnames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_anydf(SEXP, SEXP, SEXP, SEXP);

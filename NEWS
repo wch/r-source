@@ -119,6 +119,10 @@ NEW FEATURES
 
    o    Much improved printing of matrices and arrays of type "list".
 
+   o    abs() was not being treated as member of the Math group
+	generic function, so e.g. its method for data frames was not
+	being used.
+
 
 DEPRECATED & DEFUNCT
 

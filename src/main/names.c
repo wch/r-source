@@ -209,6 +209,7 @@ FUNTAB R_FunTab[] =
 {"atan",	do_atan,	10002,	1,	1,	PP_FUNCALL},
 {"log",		do_log,		10003,	11,	1,	PP_FUNCALL},
 {"signif",	do_signif,	10004,	11,	1,	PP_FUNCALL},
+{"abs",		do_abs,		6,	1,	1,	PP_FUNCALL},
 
 /* KH(1999/09/12)-> complex: {"abs", do_math1, 0, 1, 1, PP_FUNCALL}, */
 {"floor",	do_math1,	1,	1,	1,	PP_FUNCALL},
@@ -288,7 +289,7 @@ FUNTAB R_FunTab[] =
 {"Mod",		do_cmathfuns,	3,	1,	1,	PP_FUNCALL},
 {"Arg",		do_cmathfuns,	4,	1,	1,	PP_FUNCALL},
 {"Conj",	do_cmathfuns,	5,	1,	1,	PP_FUNCALL},
-{"abs",		do_cmathfuns,	6,	1,	1,	PP_FUNCALL},
+/* {"abs",		do_cmathfuns,	6,	1,	1,	PP_FUNCALL},*/
 
 
 /* Mathematical Functions of Three Numeric (+ 1-2 int) Variables */
