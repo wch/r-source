@@ -22,14 +22,8 @@ USE_GCT = 0
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running '$<'"
-## <FIXME>
-## Eventually make setting T and F to NULL unconditional ...
 	@(if test "$(USE_GCT)" != 0; then echo "gctorture(TRUE)"; fi; \
-	  if test -n "$(R_CHECK_WITH_T_N_F_AS_NULL)"; then \
-	    echo "T <- F <- NULL"; \
-	  fi; \
 	  cat $<) | R_LIBS=$(R_LIBS) $(R) > $@
-## </FIXME>
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
 	  echo $(ECHO_N) "  Comparing '$@' to '$@.save' ...$(ECHO_C)"; \

@@ -108,8 +108,8 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	The assignment operator `_' is deprecated: a warning is
-	given once per R session.
+    o	The assignment operator `_' is deprecated: a warning is	given
+	once per R session.
 
     o	The print.ordered() method is no longer needed, since handled by
         print.factor() and hence deprecated.
@@ -147,7 +147,9 @@ INSTALLATION CHANGES
 
 UTILITIES
 
-    o	R CMD check now tests for mis-use on an installed or binary package.
+    o	R CMD check now tests for mis-use on an installed or binary
+	package, and sets 'T' and 'F' to 'NULL' when running the
+	examples.
 
 
 BUG FIXES

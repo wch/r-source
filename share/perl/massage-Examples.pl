@@ -43,7 +43,7 @@ if(-d $ARGV[0]) {
     @Rfiles = @ARGV;
 }
 
-## 1) ---- Header ----
+### * Header
 print <<_EOF_;
 attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
@@ -67,19 +67,17 @@ assign("cleanEx",
            RNGkind("Wichmann-Hill", "default")
 	   assign(".Random.seed", c(0, rep(7654, 3)), pos = 1)
 _EOF_
-## <FIXME>
-## Eventually make setting T and F to NULL unconditional ...
-if("$ENV{'R_CHECK_WITH_T_N_F_AS_NULL'}" ne "") {
+if(!defined($ENV{'R_CHECK_WITH_T_N_F_AS_NULL'})
+   || $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} ne "") {
     print <<_EOF_;
 	   assign("T", NULL, pos = 1);
 	   assign("F", NULL, pos = 1);
 _EOF_
 }
-## </FIXME>
 print <<_EOF_;
        },
        env = .CheckExEnv)
-assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) #-- for now
+assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now
 assign("ptime", proc.time(), env = .CheckExEnv)
 postscript("$PKG-Examples.ps")
 assign("par.postscript", par(no.readonly = TRUE), env = .CheckExEnv)
@@ -92,33 +90,32 @@ if($PKG eq "tcltk") {
     print "library('$PKG')\n";
 }
 
-## 2) ---- edit a few of these files:
+### * Loop over all R files, and edit a few of them ...
 foreach my $file (@Rfiles) {
-    my $bf = basename $file, (".R");
     my $have_examples = 0;
     my $have_par = 0;
     my $have_contrasts = 0;
     my $nm;
 
-    open FILE, "< $file" or die "file $file cannot be opened";
+    open(FILE, "< $file") or die "file $file cannot be opened";
     while (<FILE>) {
 	$have_examples = 1 if /_ Examples _/o;
 	$have_par = 1 if (/[^a-zA-Z0-9.]par\(/o || /^par\(/o);
 	$have_contrasts = 1 if /options\(contrasts/o;
     }
-    close FILE;
+    close(FILE);
     if ($have_examples) {
-	$nm = $bf;
+	$nm = basename $file, (".R");
 	$nm =~ s/[^- .a-zA-Z0-9]/./g;
 	print "cleanEx(); ..nameEx <- \"$nm\"\n";
     }
 
-    open FILE, "< $file" or die "file $file cannot be opened";
+    open(FILE, "< $file") or die "file $file cannot be opened";
     while (<FILE>) { print $_; }
-    close FILE;
+    close(FILE);
 
     if($have_par) {
-	## if there were 'par(..)' calls, now reset them:
+	## if there were 'par()' calls, now reset them:
 	print "par(get(\"par.postscript\", env = .CheckExEnv))\n";
     }
     if($have_contrasts) {
@@ -128,7 +125,7 @@ foreach my $file (@Rfiles) {
 
 }
 
-## 3) ---- Footer ----
+### * Footer
 print <<_EOF_;
 cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\\n")
 dev.off(); quit('no')
