@@ -1,6 +1,28 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.7 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.7.0
+
+USER-VISIBLE CHANGES
+
+
+NEW FEATURES
+
+    o library was changed so that it no longer complains about
+      generic functions not specific to the library
+
+    o require has a new argument, character.only,
+          -- to make it align with library
+
+
+
+	**************************************************
+	*						 *
 	*	       1.6 SERIES NEWS			 *
 	*						 *
 	**************************************************
