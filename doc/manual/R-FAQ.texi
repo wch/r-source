@@ -3073,6 +3073,9 @@ contains
 Generalised Linear Mixed Models by Gibbs sampling.
 @c </COMMENT>
 
+@item GPArotation
+Gradient Projection Algorithm rotation for factor analysis.
+
 @c <COMMENT>
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item RPgSQL
