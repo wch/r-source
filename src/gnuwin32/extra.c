@@ -1082,6 +1082,86 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* We cannot use GetLongPathName (missing on W95/NT4) so write our own
+   based on that in Perl.  NB: may not be MBCS-correct.
+ */
+
+#define isSLASH(c) ((c) == '/' || (c) == '\\')
+#define SKIP_SLASHES(s) while (*(s) && isSLASH(*(s))) ++(s);
+#define COPY_NONSLASHES(d,s) while (*(s) && !isSLASH(*(s))) *(d)++ = *(s)++;
+
+static void longpathname(char *path)
+{
+    WIN32_FIND_DATA fdata;
+    HANDLE fhand;
+    char tmpbuf[MAX_PATH+1], *tmpstart = tmpbuf, *start = path, sep;
+    if(!path) return;
+    
+    /* drive prefix */
+    if (isalpha(path[0]) && path[1] == ':') {
+        start = path + 2;
+        *tmpstart++ = path[0];
+        *tmpstart++ = ':';
+    }
+    /* UNC prefix */
+    else if (isSLASH(path[0]) && isSLASH(path[1])) {
+        start = path + 2;
+        *tmpstart++ = path[0];
+        *tmpstart++ = path[1];
+        SKIP_SLASHES(start);
+        COPY_NONSLASHES(tmpstart,start);        /* copy machine name */
+        if (*start) {
+            *tmpstart++ = *start++;
+            SKIP_SLASHES(start);
+            COPY_NONSLASHES(tmpstart,start);    /* copy share name */
+        }
+    }
+    *tmpstart = '\0';
+    while (*start) {
+        /* copy initial slash, if any */
+        if (isSLASH(*start)) {
+            *tmpstart++ = *start++;
+            *tmpstart = '\0';
+            SKIP_SLASHES(start);
+        }
+
+        /* FindFirstFile() expands "." and "..", so we need to pass
+         * those through unmolested */
+        if (*start == '.'
+            && (!start[1] || isSLASH(start[1])
+                || (start[1] == '.' && (!start[2] || isSLASH(start[2]))))) {
+            COPY_NONSLASHES(tmpstart,start);    /* copy "." or ".." */
+            *tmpstart = '\0';
+            continue;
+        }
+
+        if (!*start) break;
+
+        /* now we're at a non-slash; walk up to next slash */
+        while (*start && !isSLASH(*start)) ++start;
+
+        /* stop and find full name of component */
+        sep = *start;
+        *start = '\0';
+        fhand = FindFirstFile(path,&fdata);
+        *start = sep;
+        if (fhand != INVALID_HANDLE_VALUE) {
+            size_t len = strlen(fdata.cFileName);
+            if ((size_t)(tmpbuf + sizeof(tmpbuf) - tmpstart) > len) {
+                strcpy(tmpstart, fdata.cFileName);
+                tmpstart += len;
+                FindClose(fhand);
+            } else {
+                FindClose(fhand);
+                return;
+            }
+        } else return; 
+    }
+    strcpy(path, tmpbuf);
+    return path;
+}
+
+
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, paths = CAR(args);
@@ -1095,6 +1175,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	GetFullPathName(CHAR(STRING_ELT(paths, i)), MAX_PATH, tmp, &tmp2);
+	longpathname(tmp);
 	SET_STRING_ELT(ans, i, mkChar(tmp));
     }
     UNPROTECT(1);

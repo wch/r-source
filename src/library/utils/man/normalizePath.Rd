@@ -17,8 +17,8 @@ normalizePath(path)
   in their canonical form (no \code{./}, \code{../} nor symbolic links).
 #endif
 #ifdef windows
-  This converts relative paths to absolute paths.  It will always use
-  backlashes as the path separator.
+  This converts relative paths to absolute paths, and converts short
+  names to long names.  It will always use backlashes as the path separator.
 #endif
 
   If the path is not a real path the result is undefined but will most
