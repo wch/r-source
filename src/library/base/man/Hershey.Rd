@@ -72,17 +72,6 @@ Hershey
   }
   and the indices of these are available as \code{Hershey$allowed}.
 
-#ifdef windows
-  The characters can be encoded by escape sequences in various ways
-  shown in the tables in \code{demo(Hershey)}.  In addition,
-  three-character octal sequences can be used preceded by a blackslash,
-  so \code{\\366} produces the character \code{o} with an umlaut.
-
-  Remember that backslashes have to be doubled in \R character strings,
-  and as the escape sequences in the tables start with \code{\\\\} they
-  need to be entered with \emph{four} backslashes.
-#endif
-#ifndef windows
   \describe{
     \item{Escape sequences:}{The string to be drawn can include escape
       sequences, which all begin with a \code{\\}.   When \R encounters a
@@ -174,7 +163,6 @@ Hershey
       glyphs.
     }
   }
-#endif
 }
 \references{
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
