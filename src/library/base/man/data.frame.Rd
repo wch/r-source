@@ -77,7 +77,8 @@ plot (data.frame.obj, \dots)
   \code{\link{print.matrix}}.
 }
 \seealso{
-  \code{\link{read.table}}, \code{\link{make.names}}.
+  \code{\link{read.table}}, \code{\link{Math.data.frame}},etc, about
+  \emph{Group} methods for \code{data.frame}s;  \code{\link{make.names}}.
 }
 \examples{
 L3 <- LETTERS[1:3]
