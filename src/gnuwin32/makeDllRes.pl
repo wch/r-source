@@ -13,11 +13,6 @@ if(-r "../DESCRIPTION"){
 if($description->{"Version"}) {
     $pkgversion = $description->{"Version"};
 }
-if(-r "../DESCRIPTION"){
-    $description = new R::Dcf("../DESCRIPTION");
-} elsif(-r "../DESCRIPTION.in"){
-    $description = new R::Dcf("../DESCRIPTION");
-}
 if($description->{"Package"}) {
     $pkgname = $description->{"Package"};
 }
