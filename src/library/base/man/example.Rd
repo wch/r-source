@@ -1,15 +1,20 @@
 \name{example}
+\alias{example}
 \title{Run an Examples Section from the Online Help}
+\description{
+  Run all the \R code from the \bold{Examples} part of \R's online help
+  topic \code{topic} with two possible exceptions, \code{dontrun} and
+  \code{testonly}, see Details below.
+}
 \usage{
 example(topic, package = .packages(), lib.loc = NULL,
         local = FALSE, echo = TRUE, verbose = getOption("verbose"),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
-\alias{example}
 \arguments{
-  \item{topic}{name or character:  The online \code{\link{help}} topic
-    the examples of which should be run.}
-  \item{package}{a character vector with package names. By default,
+  \item{topic}{name or string constant: the online \code{\link{help}}
+    topic the examples of which should be run.}
+  \item{package}{a character vector with package names.  By default,
     all packages in the search path are used.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
@@ -22,11 +27,6 @@ example(topic, package = .packages(), lib.loc = NULL,
     example code.}
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
-}
-\description{
-  Run all the \R code from the \bold{Examples} part of \R's online help
-  topic \code{topic} with two possible exceptions, \code{dontrun} and
-  \code{testonly}, see Details below.
 }
 \value{(the value of the last evaluated expression).}
 \details{
@@ -54,12 +54,13 @@ example(topic, package = .packages(), lib.loc = NULL,
     }
 }
 \note{
-  The examples can be many small files. On some file systems it is
+  The examples can be many small files.  On some file systems it is
   desirable to save space, and the files in the \file{R-ex} directory
-  of an installed package can be zipped up as a zip archive \file{Rex.zip}.
+  of an installed package can be zipped up as a zip archive
+  \file{Rex.zip}.
 }
 \author{Martin Maechler and others}
-\seealso{\code{\link{demo}}}.
+\seealso{\code{\link{demo}}}
 \examples{
 example(InsectSprays)
 ## force use of the standard package eda:

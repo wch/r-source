@@ -11,18 +11,18 @@ demo(topic, device = getOption("device"),
      character.only = FALSE, verbose = getOption("verbose"))
 }
 \arguments{
-  \item{topic}{the topic which should be demonstrated.  If omitted, the
-    list of available topics is displayed.}
+  \item{topic}{name or string constant, or a character string: the topic
+    which should be demonstrated.  If omitted, the list of available
+    topics is displayed.}
   \item{device}{the graphics device to be used.}
-  \item{package}{a name or character vector giving the packages to
-    look into for data sets.  By default, all packages in the search
-    path are used.}
+  \item{package}{a character vector giving the packages to look into for
+    demos.  By default, all packages in the search path are used.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
     packages are searched before the libraries.}
   \item{character.only}{logical; if \code{TRUE}, use \code{topic} as
-    character string instead of name.}
+    character string.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }
