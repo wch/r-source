@@ -1,13 +1,5 @@
 ##vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
 
-#warning <- function(message = NULL).Internal(warning(message))
-
-warning <- function(..., call. = TRUE)
-{
-    if(nargs() == 0) message <- NULL else message <- paste(..., sep="")
-    .Internal(warning(as.logical(call.), message))
-}
-
 geterrmessage <- function() .Internal(geterrmessage())
 
 try <- function(expr, first = TRUE)
