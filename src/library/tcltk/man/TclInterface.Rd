@@ -44,7 +44,7 @@
   via objects of class \code{tclVar} and the C level interface to Tcl
   objects is accessed via objects of class \code{tclObj}.
 }
-\synopsis{
+\usage{
 .Tcl(...)
 .Tcl.args(...)
 .Tcl.callback(...)
