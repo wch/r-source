@@ -160,7 +160,7 @@ text file to be written via successive calls to @code{cat}.
 @findex write
 @findex write.table
 However, the commonest task is to write a matrix or data frame to file
-as a rectangular grod of numbers, possibly with row and column labels.
+as a rectangular grid of numbers, possibly with row and column labels.
 This can be done by the functions @code{write.table} and @code{write}.
 Function @code{write} just writes out a matrix or vector in a specified
 number of columns (and transposes a matrix).  Function
@@ -560,13 +560,13 @@ convert these files to a text format.
 
 @menu
 * SQL queries::                 
-* RMySQL::                      
 * RPgSQL::                      
-* RmSQL::                       
 * RODBC::                       
+* RMySQL::                      
+* RmSQL::                       
 @end menu
 
-There are a variety of packages available on CRAN to help @R{}
+There are four packages available on CRAN to help @R{}
 communicate with DBMSs.  They provide different levels of abstraction.
 Some provide means to copy whole data frames to and from databases.  All
 have functions to select data with the database via SQL queries, and
@@ -574,7 +574,7 @@ have functions to select data with the database via SQL queries, and
 or in pieces (usually as groups of rows, but @pkg{RPgSQL} can retrieve
 columns).  All except @pkg{RODBC} are (currently) tied to one DBMS.
 
-@node SQL queries, RMySQL, Relational Databases, Relational Databases
+@node SQL queries, RPgSQL, Relational Databases, Relational Databases
 @section SQL Queries
 @cindex SQL queries
 
@@ -586,13 +586,17 @@ interface language called SQL (Structured Query Language, sometimes
 pronounced `sequel': see Bowman @emph{et al.@:} 1996) which these DBMSs
 support to varying degrees.  Conventionally SQL is written in upper
 case, but most users will find it more convenient to use lower case in
-the @R{} interface functions.
+the @R{} interface functions.  
+
+The more comprehensive interfaces generate SQL behind the scenes for
+common operations, but direct use of SQL is needed for complex
+operations in all.
 
 A relational DBMS stores data as a database of @emph{tables} (or
 @emph{relations}) which are rather similar to @R{} data frames, in that
 they are made up of @emph{columns} or @emph{fields} of one type
 (numeric, character, date, currency, @dots{}) and @emph{rows} or
-@code{records} containing the observations for one entity.
+@emph{records} containing the observations for one entity.
 
 SQL `queries' are quite general operations on a relational database.
 The classical query is a SELECT statement of the type
@@ -637,49 +641,7 @@ then multi-way cross-classifications can be summarized by one of the
 five aggregation functions.  A HAVING clause allows the summary to
 include or exclude groups depending on the aggregated value.
 
-@node RMySQL, RPgSQL, SQL queries, Relational Databases
-@section Package RMySQL
-@cindex MySQL database system
-
-Package @pkg{RMySQL} in the Devel section on CRAN provides an interface
-to the MySQL database system (see @url{http://www.mysql.com} and Dubois,
-2000.).  This is part of a project to provide a common API for access
-from @R{} to relational DBMSs using SQL.
-
-MySQL exists on Unix/Linux and Windows.  (Its current status appears to
-be that the source is freely available and beta versions are free but
-release versions are commercial on Windows.)  MySQL is a `light and
-lean' database.
-
-
-Package @pkg{RMySQL}
-appears only to run on Unix/Linux.
-
-@findex MySQL
-@findex dbConnect
-@findex close
-A call to the function @code{MySQL} returns a database connection
-manager, and then a call to @code{dbConnect} opens a database connection
-which can subsequently be closed by a call to the generic function
-@code{close}.
-
-@findex dbExec
-@findex dbExecStatement
-SQL queries can be sent by either @code{dbExec} or
-@code{dbExecStatement}.  @code{dbExec} sends the query and retrieves the
-results as a list.  @code{dbExecStatement} sends the query and returns
-an object of class @code{"MySQLResultSet"} which can be used to retrieve
-the results, and subsequently used to @code{close} the result.
-
-@findex fetch
-Function @code{fetch} is used to retrieve some or all of the rows in the
-query result, as a list. The function @code{hasCompleted} indicates if
-all the rows have been fetched, and @code{getRowCount} returns the
-number of rows in the result.
-
-There is no simple way to load a data frame into the database.
-
-@node RPgSQL, RmSQL, RMySQL, Relational Databases
+@node RPgSQL, RODBC, SQL queries, Relational Databases
 @section Package RPgSQL
 @cindex PostgreSQL database system
 
@@ -693,6 +655,8 @@ available. It would appear to be buildable for most Unix-alike OSes and
 Windows (under Cygwin or U/Win).  PostgreSQL has most of the features of
 the commercial RDBMSs.
 
+@pkg{RPgSQL} is the most mature and comprehensive of these RDBMS
+interfaces.
 
 @findex db.connect
 @findex db.read.table
@@ -709,8 +673,9 @@ copies a PostgreSQL table to an @R{} data frame.
 A data frame proxy is an @R{} object that inherits from the
 @code{"data.frame"} class, but contains no data.  All accesses to the
 proxy data frame generate the appropriate SQL query and retrieve the
-resulting data from the database.  A prxoy data frame is set up by a
-call to @code{bind.db.proxy}.
+resulting data from the database.  A proxy data frame is set up by a
+call to @code{bind.db.proxy}.  To remove the proxy, just 
+remove the object @code{bind.db.proxy} created.
 
 @findex db.execute
 @findex db.result.columns
@@ -719,7 +684,7 @@ call to @code{bind.db.proxy}.
 @findex db.fetch.result
 @findex db.result.get.value
 A finer level of control is available via sending SQL queries to the
-PostgreSQL via @code{db.execute}. Once this is done,
+PostgreSQL server via @code{db.execute}. Once this is done,
 @code{db.fetch.result} can be used to fetch the whole result as a data
 frame.  Functions such as @code{db.result.columns} and
 @code{db.result.rows} will report the number of columns and rows in the
@@ -727,18 +692,15 @@ resulting table, and @code{db.read.column} will fetch a single column
 (as a vector).  An individual cell in the table can be read by
 @code{db.result.get.value}.
 
-@pkg{RPgSQL} provides a means to extend its mapping of @R{} classes
-within a data frame to PostgreSQL types.
-
 One disadvantage is that SQL queries get mapped to lower case, so
 for maximal flexibility, only use lower case in @R{} names.
 
 We can explore these functions in a simple example.  The database
-@file{testdb} had already been set up, and as this was running on a
-standalone machine, no authentication was required to connect.
+@file{testdb} had already been set up, and as PostgreSQL was running on a
+standalone machine no further authentication was required to connect.
 @example
 > library(RPgSQL)
-> db.connect(dbname="testdb")
+> db.connect(dbname="testdb")   # add authentication as needed
 Connected to database "testdb" on ""
 > data(USArrests)
 > usarrests <- USArrests
@@ -746,7 +708,7 @@ Connected to database "testdb" on ""
 > db.write.table(USArrests, write.row.names = TRUE)
 > db.write.table(usarrests, write.row.names = TRUE)
 > rm(USArrests, usarrests)
-# db.ls lists tables in the database.
+## db.ls lists tables in the database.
 > db.ls()
 [1] "USArrests"
 > db.read.table("USArrests")
@@ -763,27 +725,209 @@ Alaska           10.0     263       48 44.5
 2  44.5
    ...
 > rm(USArrests) # remove proxy
-> db.execute("SELECT murder FROM usarrests WHERE rape > 30",
-             "ORDER  BY murder", clear=FALSE)
+> db.execute("SELECT rpgsql_row_names, murder FROM usarrests",
+             "WHERE rape > 30 ORDER BY murder", clear=FALSE)
 > db.fetch.result()
-  murder
-1    7.9
-2    8.1
-3    9.0
-4   10.0
-5   11.4
-6   12.1
-7   12.2
-8   15.4
-> db.rm("USArrests", "usarrests")  # use ask=F to avoid the query
+           murder
+Colorado      7.9
+Arizona       8.1
+California    9.0
+Alaska       10.0
+New Mexico   11.4
+Michigan     12.1
+Nevada       12.2
+Florida      15.4
+> db.rm("USArrests", "usarrests")  # use ask=F to skip confirmation
 Destroy table USArrests? y
 Destroy table usarrests? y
 > db.ls()
 character(0)
 > db.disconnect()
 @end example
+@noindent
+Notice how the row names are mapped if @code{write.row.names = TRUE} to
+a field @code{rpgsql_row_names} in the database table and transparently
+restored provided we preserve that column in the query.
 
-@node RmSQL, RODBC, RPgSQL, Relational Databases
+@pkg{RPgSQL} provides a means to extend its mapping of @R{} classes
+within a data frame to PostgreSQL types.
+
+
+@node RODBC, RMySQL, RPgSQL, Relational Databases
+@section Package RODBC
+@cindex ODBC database connectivity
+
+Package @pkg{RODBC} on CRAN provides an interface to database sources
+supporting the ODBC interface.  This is very widely available, and
+allows the same @R{} code to access different database systems.
+@pkg{RODBC} runs on both Linux and Windows, and many database systems
+provide support ODBC, including most of those on Windows (such as
+Microsoft Access), and MySQL, Oracle and PostgreSQL on Unix/Linux.
+
+You will need an ODBC Driver Manager such as unixODBC
+(@url{http://www.unixODBC.org}) or iOBDC (@url{http://www.iODBC.org}) on
+Unix, and an installed driver for your database system.
+
+Two groups of interface functions are provided. The @code{odbc*} group
+provide a low-level interface to the basic ODBC functions: see the help
+page @code{?RODBC} for details. The @code{sql*} group provide an
+interface between @R{} data frames and SQL tables.
+
+@findex odbcConnect
+@findex odbcClose
+@findex sqlTables
+Up to 16 simultaneous connections are possible.  A connection is opened
+by a call to @code{odbcConnect} and returns a handle used for subsequent
+access to the database.  A connection is closed by @code{odbcClose}.
+Details of the tables on a connection can be found using @code{sqlTables}.
+
+@findex sqlFetch
+@findex sqlSave
+Function @code{sqlSave} copies an @R{} data frame to a table in the
+database, and @code{sqlFetch} copies a table in the database to an
+@R{} data frame.
+
+@findex sqlQuery
+@findex sqlCopy
+@findex odbcQuery
+@findex sqlGetResults
+@findex odbcGetResults
+An SQL query can be sent to the database by a call to @code{sqlQuery}.
+This returns the result in an @R{} data frame.  @code{sqlCopy} sends a
+query to the database and saves the result as a table in the database.
+A finer level of control is attained by first calling @code{odbcQuery}
+and then @code{sqlGetResults} to fetch the results.  The latter can be
+used within a loop to retrieve a limited number of rows at a time.
+@code{sqlGetResults} returns a data frame, but the raw results as a
+matrix can be obtained from @code{odbcGetResults}.
+
+Here is an example using PostgreSQL, for which the ODBC driver maps
+column and data frame names to lower case.  We use a database
+@code{testdb} we created earlier, and had the DSN (data source name)
+set up in @file{~/.odbc.ini} under @code{unixODBC}.   
+
+Exactly the same code worked using MyODBC to access a MySQL database
+under Windows NT (where MySQL also maps names to lowercase).  Under
+Windows, DSNs are set up in the ODBC applet in the Control Panel.
+
+@example
+> library(RODBC)
+## tell it to map names to l/case
+> (channel <- odbcConnect("testdb", uid="ripley", case="tolower"))
+[1] 0
+## check it worked as failure is indicated by returning -1
+## load a data frame into the database
+> data(USArrests)
+> sqlSave(channel, USArrests, rownames="state")
+> rm(USArrests)
+## list the tables in the database
+> sqlTables(channel)
+  TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
+1              NA          NA  usarrests      TABLE      NA
+## list it
+> sqlFetch(channel,"USArrests")
+            state murder assault urbanpop rape
+1         Alabama   13.2     236       58 21.2
+2          Alaska   10.0     263       48 44.5
+    ...
+## an SQL query, originally on one line
+> sqlQuery(channel, "select state, murder from USArrests 
+           where rape > 30 order by murder")
+       state murder
+1 Colorado      7.9
+2 Arizona       8.1
+3 California    9.0
+4 Alaska       10.0
+5 New Mexico   11.4
+6 Michigan     12.1
+7 Nevada       12.2
+8 Florida      15.4
+## remove the table
+> sqlDrop(channel, "usarrests")
+## close the connection
+> odbcClose(channel)
+@end example
+
+@node RMySQL, RmSQL, RODBC, Relational Databases
+@section Package RMySQL
+@cindex MySQL database system
+
+Package @pkg{RMySQL} in the Devel section on CRAN provides an interface
+to the MySQL database system (see @url{http://www.mysql.com} and Dubois,
+2000.).  This is part of a project to provide a common API for access
+from @R{} to relational DBMSs using SQL.  Currently this provides
+lower-level facilities than @pkg{RPgSQL} or @pkg{RODBC}.
+
+MySQL exists on Unix/Linux and Windows.  (Its current status appears to
+be that the source is freely available and beta versions are free but
+release binary versions are commercial on Windows.)  MySQL is a `light
+and lean' database.  (It preserves the case of names where the
+operating file system is case-sensitive, so not on Windows.)
+
+Currently package @pkg{RMySQL} appears only to be installable on
+Unix/Linux.
+
+@findex MySQL
+@findex dbConnect
+@findex close
+A call to the function @code{MySQL} returns a database connection
+manager, and then a call to @code{dbConnect} opens a database connection
+which can subsequently be closed by a call to the generic function
+@code{close}.
+
+@findex dbExec
+@findex dbExecStatement
+SQL queries can be sent by either @code{dbExec} or
+@code{dbExecStatement}.  @code{dbExec} sends the query and retrieves the
+results as a list. (It will fail unless the results are from a 
+SELECT-like statement.)
+@code{dbExecStatement} sends the query and returns
+an object of class @code{"MySQLResultSet"} which can be used to retrieve
+the results, and subsequently used to @code{close} the result.
+
+@findex fetch
+Function @code{fetch} is used to retrieve some or all of the rows in the
+query result, as a list. The function @code{hasCompleted} indicates if
+all the rows have been fetched, and @code{getRowCount} returns the
+number of rows in the result.
+
+There is no simple way to load a data frame into the database, so we
+have to work harder using direct SQL statements.
+@example
+> library(RMySQL)
+## open a connection to a MySQL database
+> con <- dbConnect(MySQL(), dbname = "test")
+## list the tables in the database
+> getTables(con)
+## load a data frame into the database, deleting any existing copy
+> data(USArrests)
+## write the values to a file
+> write.table(USArrests, "/tmp/arrests.dat", sep="\t", 
+              row.names=FALSE, col.names=FALSE)
+> if(!is.na(match("arrests", getTables(con)[[1]])))
+    dbExecStatement(con, "drop table arrests")
+> dbExecStatement(con, 
+    "create table arrests (Murder float, Assault float, 
+     UrbanPop float, Rape float)")
+> dbExecStatement(con, 
+    'load data infile "/tmp/arrests.dat" into table arrests')
+> unlink("/tmp/arrests.dat")
+## Select from the loaded database.
+> as.data.frame(dbExec(con, 
+    "select * from arrests where Rape > 30 order by Murder"))
+  Murder Assault UrbanPop Rape
+1    7.9     204       78 38.7
+2    8.1     294       80 31.0
+3    9.0     276       91 40.6
+4   10.0     263       48 44.5
+5   11.4     285       70 32.1
+6   12.1     255       74 35.1
+7   12.2     252       81 46.0
+8   15.4     335       80 31.9
+> close(con)
+@end example
+
+@node RmSQL,  , RMySQL, Relational Databases
 @section Package RmSQL
 @cindex mSQL database system
 
@@ -818,94 +962,6 @@ row by row using @code{msqlFetchRow}.  This fetches the rows in order
 unless the position is reset by a call to @code{msqlDataSeek}. A call to
 @code{msqlNumRows} gives the total number of rows in the result.
 
-
-@node RODBC,  , RmSQL, Relational Databases
-@section Package RODBC
-@cindex ODBC database connectivity
-
-Package @pkg{RODBC} on CRAN provides an interface to database sources
-supporting the ODBC interface.  Many databases support ODBC, including
-most of those on Windows (such as Microsoft Access), and MySQL, Oracle
-and PostgreSQL on Unix/Linux.  @pkg{RODBC} runs on both Linux and
-Windows.  You need an ODBC Driver Manager such as unixODBC
-(@url{http://www.unixODBC.org}) on Unix.
-
-Two groups of interface functions are provided. The @code{odbc*} group
-provide a low-level interface to the basic ODBC functions: see the help
-page @code{?RODBC} for details. The @code{sql*} group provide an
-interface between @R{} data frames and SQL tables.
-
-@findex odbcConnect
-@findex odbcClose
-@findex sqlTables
-Up to 16 simultaneous connections are possible.  A connection is opened
-by a call to @code{odbcConnect} and returns a handle used for subsequent
-access to the database.  A connection is closed by @code{odbcClose}.
-Details of the tables on a connection can be found using @code{sqlTables}.
-
-@findex sqlFetch
-@findex sqlSave
-Function @code{sqlSave} copies an @R{} data frame to a table in the
-database, and @code{sqlFetch} copies a table in the database to an
-@R{} data frame.
-
-@findex sqlQuery
-@findex sqlCopy
-@findex odbcQuery
-@findex sqlGetResults
-@findex odbcGetResults
-An SQL query can be sent to the database by a call to @code{sqlSquery}.
-This returns the result in an @R{} data frame.  @code{sqlCopy} sends a
-query to the database and saves the result as a table in the database.
-A finer level of control is attained by first calling @code{odbcQuery}
-and then @code{sqlGetResults} to fetch the results.  The latter can be
-used within a loop to retrieve a limited number of rows at a time.
-@code{sqlGetResults} returns a data frame, but the raw results as a
-matrix can be obtained from @code{odbcGetResults}.
-
-Here is an example using PostgreSQL, for which the ODBC driver maps
-column names to lower case.  We use a database @code{testdb} we
-created earlier, and have the DSN (data source name) set up, in
-@file{~/.odbc.ini} under @code{unixODBC}.
-
-@example
-> library(RODBC)
-## tell it postgresql ODBC is in use, so names are mapped to l/case
-> channel <- odbcConnect("testdb", uid="ripley", case="postgresql")
-## check it worked
-> channel
-[1] 0
-## load the data frame into the database
-> data(USArrests)
-> sqlSave(channel, USArrests, rownames="state")
-> rm(USArrests)
-## look at the tables in the database
-> sqlTables(channel)
-  TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
-1              NA          NA  usarrests      TABLE      NA
-## list it
-> sqlFetch(channel,"USArrests")
-            state murder assault urbanpop rape
-1         Alabama   13.2     236       58 21.2
-2          Alaska   10.0     263       48 44.5
-    ...
-## an SQL query, originally on one line
-> sqlQuery(channel, "select state, murder from USArrests 
-           where rape > 30 order by murder")
-       state murder
-1 Colorado      7.9
-2 Arizona       8.1
-3 California    9.0
-4 Alaska       10.0
-5 New Mexico   11.4
-6 Michigan     12.1
-7 Nevada       12.2
-8 Florida      15.4
-## remove the table
-> sqlDrop(channel, "usarrests")
-## close the connection
-> odbcClose(channel)
-@end example
 
 
 
