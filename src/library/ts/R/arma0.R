@@ -109,7 +109,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         fit <- lm(x ~ xreg - 1)
         init0 <- c(init0, coef(fit))
         ses <- summary(fit)$coef[,2]
-        parscale <- c(parscale, 0.1/ses)
+        parscale <- c(parscale, ses)
     }
 
     storage.mode(x) <- storage.mode(xreg) <- "double"
