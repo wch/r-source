@@ -6,7 +6,7 @@
 
 SEXP R_dummy_extern_place()
 {
-    error(_("calling the C routine used as an initializer for \"externalptr\" objects"));
+    error(_("calling the C routine used as an initializer for 'externalptr' objects"));
     return R_NilValue; /* -Wall */
 }
 
