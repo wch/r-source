@@ -195,7 +195,10 @@ childNames <- function(gTree) {
 }
 
 # Get a grob from the display list
-grid.get <- function(gPath, strict=FALSE) {
+grid.get <- function(gPath, strict=FALSE, grep=FALSE, global=FALSE,
+                     allDevices=FALSE) {
+  if (any(grep, global, allDevices))
+    stop("grep, global, and allDevices not yet implemented")
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
@@ -204,7 +207,10 @@ grid.get <- function(gPath, strict=FALSE) {
 }
 
 # Get a child (of a child, of a child, ...) of a grob
-getGrob <- function(gTree, gPath, strict=FALSE) {
+getGrob <- function(gTree, gPath, strict=FALSE,
+                    grep=FALSE, global=FALSE) {
+  if (grep || global)
+    stop("grep and global options not yet implemented")
   if (!inherits(gTree, "gTree"))
     stop("It is only valid to get a child from a gTree")
   if (is.character(gPath))
@@ -219,7 +225,10 @@ getGrob <- function(gTree, gPath, strict=FALSE) {
 }
 
 # Set a grob on the display list
-grid.set <- function(gPath, newGrob, strict=FALSE, redraw=TRUE) {
+# It is NOT valid to specify an ambiguous gPath (i.e., no grep arg)
+# nor is it valid to specify a global destination (i.e., no global arg)
+grid.set <- function(gPath, newGrob, strict=FALSE,
+                     redraw=TRUE) {
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
@@ -242,6 +251,8 @@ grid.set <- function(gPath, newGrob, strict=FALSE, redraw=TRUE) {
 }
 
 # Set a grob
+# It is NOT valid to specify an ambiguous gPath (i.e., no grep arg)
+# nor is it valid to specify a global destination (i.e., no global arg)
 setGrob <- function(gTree, gPath, newGrob, strict=FALSE) {
   if (!inherits(gTree, "gTree"))
     stop("It is only valid to set a child of a gTree")
@@ -273,7 +284,11 @@ setGrob <- function(gTree, gPath, newGrob, strict=FALSE) {
 }
 
 # Add a grob to a grob on the display list
-grid.add <- function(gPath, child, strict=FALSE, redraw=TRUE) {
+grid.add <- function(gPath, child, strict=FALSE,
+                     grep=FALSE, global=FALSE, allDevices=FALSE,
+                     redraw=TRUE) {
+  if (any(grep, global, allDevices))
+    stop("grep, global, and allDevices not yet implemented")
   gTree <- grid.get(gPath, strict)
   if (!inherits(gTree, "gTree"))
     stop("It is only valid to add a child to a gTree")
@@ -288,7 +303,10 @@ grid.add <- function(gPath, child, strict=FALSE, redraw=TRUE) {
 }
 
 # Add a grob to a gTree (or a child of a (child of a ...) gTree)
-addGrob <- function(gTree, child, gPath=NULL, strict=FALSE) {
+addGrob <- function(gTree, child, gPath=NULL, strict=FALSE,
+                    grep=FALSE, global=FALSE) {
+  if (grep || global)
+    stop("grep and global options not yet implemented")
   if (!is.null(gPath)) {
     origTree <- gTree
     gTree <- getGrob(gTree, gPath, strict)
@@ -308,7 +326,11 @@ addGrob <- function(gTree, child, gPath=NULL, strict=FALSE) {
 }
 
 # Remove a grob (or child of ...) from the display list
-grid.remove <- function(gPath, warn=TRUE, strict=FALSE, redraw=TRUE) {
+grid.remove <- function(gPath, warn=TRUE, strict=FALSE,
+                        grep=FALSE, global=FALSE, allDevices=FALSE,
+                        redraw=TRUE) {
+  if (any(grep, global, allDevices))
+    stop("grep, global, and allDevices not yet implemented")
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
@@ -332,7 +354,10 @@ grid.remove <- function(gPath, warn=TRUE, strict=FALSE, redraw=TRUE) {
 }
 
 # Remove a child from a (child of ...) gTree
-removeGrob <- function(gTree, gPath, warn=TRUE, strict=FALSE) {
+removeGrob <- function(gTree, gPath, strict=FALSE,
+                       grep=FALSE, global=FALSE, warn=TRUE) {
+  if (grep || global)
+    stop("grep and global options not yet implemented")
   if (!inherits(gTree, "gTree"))
     stop("It is only valid to remove a child from a gTree")
   if (is.character(gPath))
@@ -376,7 +401,11 @@ removeGrob <- function(gTree, gPath, warn=TRUE, strict=FALSE) {
 }
 
 # Edit a grob on the display list
-grid.edit <- function(gPath, ..., strict=FALSE, redraw=TRUE) {
+grid.edit <- function(gPath, ..., strict=FALSE,
+                      grep=FALSE, global=FALSE, allDevices=FALSE,
+                      redraw=TRUE) {
+  if (any(grep, global, allDevices))
+    stop("grep, global, and allDevices not yet implemented")
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
@@ -400,7 +429,10 @@ grid.edit <- function(gPath, ..., strict=FALSE, redraw=TRUE) {
 }
 
 # Edit a (child of a ...) grob
-editGrob <- function(grob, gPath=NULL, ..., strict=FALSE) {
+editGrob <- function(grob, gPath=NULL, ..., strict=FALSE,
+                     grep=FALSE, global=FALSE) {
+  if (grep || global)
+    stop("grep and global options not yet implemented")
   specs <- list(...)
   if (is.null(gPath)) {
     editThisGrob(grob, specs)

@@ -6,8 +6,9 @@
   Add a grob to a gTree or a descendant of a gTree.
 }
 \usage{
-grid.add(gPath, child, strict = FALSE, redraw=TRUE) 
-addGrob(gTree, child, gPath = NULL, strict = FALSE) 
+grid.add(gPath, child, strict = FALSE, grep=FALSE, global=FALSE,
+         allDevices=FALSE, redraw=TRUE) 
+addGrob(gTree, child, gPath = NULL, strict = FALSE, grep=FALSE, global=FALSE) 
 }
 \arguments{
   \item{gTree}{A gTree object.}
@@ -17,6 +18,23 @@ addGrob(gTree, child, gPath = NULL, strict = FALSE)
   \item{child}{ A grob object. }
   \item{strict}{ A boolean indicating whether the gPath must be
     matched exactly. }
+  \item{grep}{A boolean indicating whether the \code{gPath} should
+    be treated as a regular expression.  Values are recycled across
+    elements of the \code{gPath} (e.g., \code{c(TRUE, FALSE)} means
+    that every odd element of the \code{gPath} will be treated as
+    a regular expression).
+    NOT YET IMPLEMENTED.
+  }
+  \item{global}{ A boolean indicating whether the function should affect
+    just the first match of the \code{gPath}, or whether all matches
+    should be affected.
+    NOT YET IMPLEMENTED.
+  }
+  \item{allDevices}{ A boolean indicating whether all open devices
+    should
+    be searched for matches, or just the current device.
+    NOT YET IMPLEMENTED.
+  }
   \item{redraw}{A logical value to indicate whether to redraw the grob. }
 }
 \details{
