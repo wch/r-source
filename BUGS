@@ -342,6 +342,10 @@ Date: Mon, 22 Jul 2002 16:40:26 -0700
 Subject: R config failure on solaris
 From: "Siva Ginjupalli" <gsivrao@hotmail.com>
 Date: Wed, 24 Jul 2002 20:08:49 +0000
+* PR# 1937 *
+Subject:  Inconsistent use of Perl? 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Sat, 24 Aug 2002 18:41:09 +0800
 
 Directory:  Language
 
@@ -358,10 +362,6 @@ Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 25 Sep 2000 10:17:15 +0200
 --status of AsIs columns
-* PR# 921 *
-Subject:  Managed to confuse match.arg 
-From: J.C.Rougier@durham.ac.uk
-Date: Wed, 25 Apr 2001 12:22:54 +0100 (BST)
 * PR# 1073 *
 Subject: Wierd problem comparing numeric values and list using ==
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
@@ -550,18 +550,20 @@ Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Tue, 9 Jul 2002 11:39:15 -0400 
 --Doesn't happen with the now preferred La.svd.
-* PR# 1796 *
-Subject: methods: representation gives "unused arguments" on failure
-From: markus.jantti@iki.fi
-Date: Tue, 16 Jul 2002 10:03:40 +0200 (MET DST)
---see also 1799 for follow-up
-* PR# 1799 *
-Subject: Re: methods: representation gives "unused arguments" on failure 
-From: John Chambers <jmc@research.bell-labs.com>
-Date: Tue, 16 Jul 2002 16:59:22 -0400
---follow up to 1796
---stop() allows multiple args as from 1.6.0
-* PR# 1937 *
-Subject:  Inconsistent use of Perl? 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Sat, 24 Aug 2002 18:41:09 +0800
+* PR# 1964 *
+Subject: The attached function working fine with R 1.3.0 but giving problem with R 1.5.1
+From: stakb@nus.edu.sg
+Date: Fri, 30 Aug 2002 10:10:39 +0200 (MET DST)
+* PR# 1965 *
+Subject: Problem with new R 1.5.1 version
+From: "Kaushik Bhattacharyya" <stakb@nus.edu.sg>
+Date: Fri, 30 Aug 2002 16:16:32 +0800
+--Part of 1964
+* PR# 1967 *
+Subject: Maritime Newsletter (Week 35)
+From: "Marine Digital Inc."<newsletter@marinedigital.com>
+Date: Sat, 31 Aug 2002 01:01:21 +0900
+* PR# 1968 *
+Subject: Chinese Newspaper
+From: staff <staff@sinofeng.com>
+Date: Sat, 31 Aug 2002 01:06:47 +0800 (CST)
