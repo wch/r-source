@@ -12,8 +12,9 @@ termplot(model, data=NULL, envir=environment(formula(model)),
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 1,
          col.res = "gray", cex = 1, pch = par("pch"),
+         col.smth = "darkred", lty.smth=2, span.smth=2/3,
          ask = interactive() && nb.fig < n.tms && .Device !="postscript",
-         use.factor.levels=TRUE,
+         use.factor.levels=TRUE, smooth=NULL,
          \dots)
 }
 \arguments{
@@ -41,6 +42,10 @@ termplot(model, data=NULL, envir=environment(formula(model)),
      each plot, see \code{\link{par}(ask=.)}.}
    \item{use.factor.levels}{Should x-axis ticks use factor levels or
      numbers for factor terms?}
+   \item{smooth}{\code{NULL} or a function with the same arguments as
+     \code{\link{panel.smooth}} to draw a smooth through the partial
+     residuals for non-factor terms}
+   \item{lty.smth,col.smth, span.smth}{Passed to \code{smooth}}
   \item{\dots}{other graphical parameters}
 }
 \details{
@@ -71,9 +76,8 @@ model <- glm(y ~ ns(x,6) + z)
 par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ...)"))
 termplot(model, rug=TRUE)
-termplot(model, partial=TRUE, rug= TRUE,
-         main="termplot(..., partial = TRUE, rug = TRUE)")
 termplot(model, partial=TRUE, se = TRUE, main = TRUE)
+termplot(model, partial=TRUE, smooth=panel.smooth,span.smth=1/4)
 if(!had.splines && rs) detach("package:splines")
 }
 \keyword{hplot}

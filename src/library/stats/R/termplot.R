@@ -4,9 +4,10 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
                      main = NULL, col.term = 2, lwd.term = 1.5,
                      col.se = "orange", lty.se = 2, lwd.se = 1,
                      col.res= "gray", cex = 1, pch = par("pch"),
+                     col.smth = "darkred",lty.smth=2,span.smth=2/3,
                      ask = interactive() && nb.fig < n.tms &&
                            .Device != "postscript",
-                     use.factor.levels=TRUE,
+                     use.factor.levels=TRUE, smooth=NULL,
                      ...)
 {
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
@@ -20,11 +21,14 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
         data<-eval(model$call$data,envir)
     if (is.null(data))
         data<-mf
-    if (NROW(tms)<NROW(data))
-        data <- data[ dimnames( tms)[[1]], ]
+    if (NROW(tms)<NROW(data)){
+        use.rows<-match(rownames(tms),rownames(data))
+      } else use.rows<-NULL
     nmt <- colnames(tms)
     cn <- parse(text=nmt)
     ## Defaults:
+    if (!is.null(smooth))
+      smooth<-match.fun(smooth)
     if (is.null(ylabs))
 	ylabs <- paste("Partial for",nmt)
     if (is.null(main))
@@ -50,7 +54,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
     if (is.null(xlabs))
         xlabs<-unlist(lapply(cn,carrier.name))
 
-    if (partial.resid)
+    if (partial.resid || !is.null(smooth))
 	pres <- residuals(model, "partial")
     is.fac <- sapply(nmt, function(i) is.factor(mf[,i]))
 
@@ -102,6 +106,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 	}
 	else { ## continuous carrier
 	    xx <- carrier(cn[[i]])
+            if (!is.null(use.rows)) xx<-xx[use.rows]
 	    xlims <- range(xx,na.rm=TRUE)
 	    if(rug)
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
@@ -111,8 +116,12 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
                  col=col.term, lwd=lwd.term, ...)
             if(se) se.lines(xx[oo], iy=oo, i=i)
 	}
-	if (partial.resid)
-	    points(xx, pres[,i], cex = cex, pch = pch, col = col.res)
+	if (partial.resid){
+          if (!is.fac[i] && !is.null(smooth)){
+            smooth(xx,pres[,i], lty=lty.smth, cex=cex, pch=pch, col=col.res, col.smooth = col.smth,span=span.smth)
+          } else 
+          points(xx, pres[,i], cex = cex, pch = pch, col = col.res)
+        }
 	if (rug) {
             n <- length(xx)
             ## Fixme: Isn't this a kludge for segments() ?

@@ -80,6 +80,8 @@ NEW FEATURES
 	can be specified by a new argument `fonts' defaulting to the
 	value of a new option "X11fonts".
 
+    o   termplot() has an option to smooth the partial residuals.
+
     o	strsplit() now has a `fixed' argument and split="" is optimized.
 
     o	findInterval(x, v) now allows +/-Inf values, and NAs in x.
@@ -265,6 +267,9 @@ INSTALLATION CHANGES
 
 
 BUG FIXES
+
+    o   termplot() is more tolerant of variables not in the data= argument. 
+	(PR#6327)
 
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
