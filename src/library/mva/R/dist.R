@@ -1,5 +1,9 @@
 dist <- function(x, method="euclidian", diag=FALSE, upper=FALSE)
 {
+    ## account for possible spellings of euclid?an
+    if(!is.na(pmatch(method, "euclidean")))
+        method <- "euclidian"
+    
     method <- pmatch(method, c("euclidian", "maximum",
 			       "manhattan", "canberra", "binary"))
     if(is.na(method))
