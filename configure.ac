@@ -442,6 +442,10 @@ AC_CHECK_LIB(ncurses, main, [],
 case "${host_os}" in
   darwin*)
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, true)
+    ## SI says we want '-lcc_dynamic' on Darwin, although currently
+    ## http://developer.apple.com /documentation/MacOSX/ has nothing
+    ## official.
+    AC_CHECK_LIB(cc_dynamic, saveFP)
     ;;
   *)
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
@@ -824,6 +828,10 @@ case "${host_os}" in
 	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
+    if test "${ac_cv_lib_cc_dynamic_saveFP}" = yes; then
+      ## Could also try grepping LIBS for '-lcc_dynamic' ...
+      SHLIB_LIBADD="-lcc_dynamic"
+    fi
     ;;
   freebsd*)
     ## Only sure for FreeBSD 3 and above.
