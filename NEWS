@@ -49,7 +49,9 @@ INSTALLATION CHANGES
 
 DEPRECATED & DEFUNCT
 
-    o	The assignment operator `_' is no longer recognised.
+    o	The assignment operator `_' will be removed in the next
+        release and users are now warned on every usage: you may even see
+        multiple warnings for each usage.
 
     o	machine(), Machine() and Platform() are defunct.
 

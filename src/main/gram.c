@@ -3082,15 +3082,15 @@ static int token()
     if (c == '.' || isalpha(c))
 	return SymbolValue(c);
 
-    /* gag, barf, but the punters want it
+    /* gag, barf, but the punters want it */
 
     if (c == '_') {
 	yylval = install("<-");
-	if(not_warned_on_underline) 
-	    warning("The use of _ is deprecated: you will be warned only once per session");
-	not_warned_on_underline = 0;
+	/* if(not_warned_on_underline)  */
+	    warning("The use of _ is soon to be removed: you will be warned repeatedly");
+	/* not_warned_on_underline = 0; */
 	return LEFT_ASSIGN;
-    } */
+    }
 
     /* compound tokens */
 
