@@ -42,7 +42,7 @@ http://sourceforge.net/projects/mingw/.  There will be a distribution
 called something like MinGW-3.1.0-1.exe (which is built from
 gcc-3.2.3).  Earlier versions may work, but mingw-runtime >= 3.0 and
 w32api >= 2.0 are essential.  The release of gcc-3.3.1 and the release
-candidates of 3.4.1 have also been tested successfully, but the
+candidates of 3.4.1 and 3.4.2 have also been tested successfully, but the
 release candidates of gcc-3.3.3 and gcc-3.4.0 did not work.
 
 
