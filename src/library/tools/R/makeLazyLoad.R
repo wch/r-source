@@ -238,7 +238,7 @@ makeLazyLoading <-
 
     if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
         warning("package seems to be using lazy loading already")
-    else if (package == "base") {
+    else if (package == "base" && is.null(lib.loc)) {# allow for cross-building
         dbFile <- file.path(pkgpath, "R", "base.rdx")
         if (! file.exists(dbFile))
             stop("you need to first build the base DB with 'makebasedb.R'")
