@@ -79,7 +79,7 @@ int mb_char_len(char *buf, int clength)
 
     mbs_init(&mb_st);
     for(i = 0; i <= clength; i += mb_len)
-	mb_len = mbrlen(buf+i, MB_CUR_MAX, &mb_st);
+	mb_len = mbrtowc(NULL, buf+i, MB_CUR_MAX, &mb_st);
     return mb_len;
 }
 
@@ -1424,7 +1424,8 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 		    int j, l_len = mb_char_len(cur_line, cur_byte-1), r_len;
 		    /* we should not reset the state here */
 #ifdef SUPPORT_GUI_MBCS
-		    r_len = mbrlen(cur_line+cur_byte, MB_CUR_MAX, &mb_st);
+		    r_len = mbrtowc(NULL, cur_line+cur_byte, MB_CUR_MAX,
+				    &mb_st);
 #else
 		    r_len = 1;
 #endif

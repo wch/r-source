@@ -119,7 +119,7 @@ static int find_char(int ch, char *str)
 	    mbstate_t mb_st;
 
 	    memset(&mb_st, 0, sizeof(mbstate_t));
-	    mb_len = mbrlen(str+where, MB_CUR_MAX, &mb_st);
+	    mb_len = mbrtowc(NULL, str+where, MB_CUR_MAX, &mb_st);
 	    if (mb_len > 1) {where += mb_len - 1; continue;}
 	    if (str[where] == ch) return where;
 	}
