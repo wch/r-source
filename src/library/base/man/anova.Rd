@@ -1,7 +1,5 @@
 \name{anova}
 \alias{anova}
-\alias{anova.mlm}
-% others in ./lm.summaries.Rd
 \alias{print.anova}
 \title{Anova Tables}
 \usage{
@@ -39,7 +37,8 @@ anova(object, \dots)
 }
 \seealso{
   \code{\link{coefficients}}, \code{\link{effects}},
-  \code{\link{fitted.values}}, \code{\link{residuals}}, \code{\link{summary}}.
+  \code{\link{fitted.values}}, \code{\link{residuals}},
+  \code{\link{summary}}, \code{\link{drop1}}, \code{\link{add1}}.
 }
 \keyword{regression}
 \keyword{models}

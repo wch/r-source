@@ -7,6 +7,7 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
 \alias{anova.lm}
 %\alias{anova.lm.null}
 \alias{anova.lmlist}
+\alias{anova.mlm}
 \description{
   Compute an analysis of variance table for one or more linear model fits.
 }
@@ -65,7 +66,11 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  The model fitting function \code{\link{lm}}.
+  The model fitting function \code{\link{lm}}, \code{\link{anova}}.
+
+  \code{\link{drop1}} for
+  so-called \sQuote{type II} anova where each term is dropped one at a
+  time respecting their hierarchy.
 }
 \examples{
 ## sequential table

@@ -53,8 +53,18 @@
   missing values and \R's default of \code{na.action = na.omit} is used,
   and \code{anova.glmlist} will detect this with an error.
 }
+\references{
+  Hastie, T. J. and Pregibon, D. (1992)
+  \emph{Generalized linear models.}
+  Chapter 6 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{glm}}, \code{\link{anova}}.
+
+  \code{\link{drop1}} for
+  so-called \sQuote{type II} anova where each term is dropped one at a
+  time respecting their hierarchy.
 }
 \examples{
 ## --- Continuing the Example from  '?glm':%\code{\link{glm}}:
