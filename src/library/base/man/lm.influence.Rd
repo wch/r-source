@@ -33,7 +33,8 @@ lm.influence(lm.obj)
   from dropping each case, we return the changes in the coefficients.
   This is more directly useful in many diagnostic measures.
 
-  Note that cases with \code{weights == 0} are \emph{dropped}.
+  Note that cases with \code{weights == 0} are \emph{dropped} (contrary
+  to the situation in S).
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
