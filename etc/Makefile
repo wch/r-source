@@ -3,7 +3,7 @@
 include ../Makeconf
 
 
-CleanMe1 = SHLIB COMPILE INSTALL REMOVE
+CleanMe1 = SHLIB INSTALL REMOVE
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help help.pretty html2dos
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
