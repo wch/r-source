@@ -235,6 +235,10 @@ void jump_to_toplevel()
 	    eval(c->conexit, c->cloenv);
 	if (c->callflag == CTXT_RETURN)
 	    nback++;
+	if (c->callflag == CTXT_RESTART) {
+		inError=0;
+		findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
+	}
     }
     if (R_Sinkfile) R_Outputfile = R_Sinkfile;
     else R_Outputfile = R_Consolefile;

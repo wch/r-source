@@ -168,7 +168,8 @@ enum {
     CTXT_RETURN	  = 4,
     CTXT_CCODE	  = 8,
     CTXT_BROWSER  = 12,
-    CTXT_GENERIC  = 16
+    CTXT_GENERIC  = 16,
+    CTXT_RESTART  = 36
 };
 
 

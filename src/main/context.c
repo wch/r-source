@@ -310,6 +310,24 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
 /* So if the argument is negative count down if positive count up. */
 /* We don't want to count the closure that do_sys is contained in so the */
 /* indexing is adjusted to handle this. */
+SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    RCNTXT *cptr;
+
+    checkArity(op, args);
+    
+    if( !asLogical(CAR(args)) )
+	return(R_NilValue);
+    for(cptr = R_GlobalContext; cptr = cptr->nextcontext; cptr!= R_ToplevelContext) {
+	if (cptr->callflag == CTXT_RETURN) {
+		cptr->callflag = CTXT_RESTART;
+		break;
+	}
+    }
+    if( cptr == R_ToplevelContext )
+	errorcall(call, "no function to restart\n");
+    return(R_NilValue);
+}
 
 SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

@@ -66,6 +66,7 @@ SEXP do_indexsearch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_surface(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
+SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
 
 FUNTAB R_FunTab[] =
 {
@@ -83,6 +84,7 @@ FUNTAB R_FunTab[] =
 {"return",	do_return,	0,	0,	-1,	PP_RETURN},
 {"stop",	do_stop,	0,	11,	1,	PP_FUNCALL},
 {"warning",	do_warning,	0,	111,	1,	PP_FUNCALL},
+{"restart",	do_restart,	0,	11,	1,	PP_FUNCALL},
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION},
 {"as.function.default",do_asfunction,0,	11,	2,	PP_FUNCTION},
 {"<-",		do_set,		1,	100,	-1,	PP_ASSIGN},

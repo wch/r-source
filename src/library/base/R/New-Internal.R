@@ -1,4 +1,9 @@
 ##vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
+
+stop <- function(message = NULL).Internal(stop(message))
+warning <- function(message = NULL).Internal(warning(message))
+restart <- function(on = TRUE).Internal(restart(on))
+
 comment <- function(x).Internal(comment(x))
 "comment<-" <- function(x,value).Internal("comment<-"(x,value))
 
@@ -110,8 +115,5 @@ unique <- function(x){
 	z <- factor(z,levels=1:nlevels(x),labels=levels(x))
     z
 }
-
-stop <- function(message = NULL).Internal(stop(message))
-warning <- function(message = NULL).Internal(warning(message))
 
 memory.profile <- function().Internal(memory.profile())
