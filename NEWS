@@ -224,7 +224,7 @@ NEW FEATURES
     o	factanal() and princomp() use napredict() on their scores, so
 	na.action = na.exclude is supported.
 
-    o	loess(), lqs(), nls() and ppr() use the standard na-handling
+    o	loess(), lqs(), nls() and ppr() use the standard NA-handling
 	and so support na.action = na.exclude.
 
     o	predict.ppr() now predicts on `newdata' containing NAs.
@@ -252,7 +252,7 @@ BUG FIXES
 
     o	f[] <- g  now works for factor f.
 
-    o	substr<- was misbehaving if the replacement was too short.
+    o	substr<-() was misbehaving if the replacement was too short.
 
     o	The version of `packages.html' generated when building R or
 	installing packages had an incorrect link to the style sheet.
@@ -274,6 +274,9 @@ BUG FIXES
 
     o	anova.glm() had a missing drop=FALSE and so failed for some
 	intercept-less models.
+
+    o	predict.arima0() now accepts vector as well as matrix
+	`newxreg' arguments.
 
 
 

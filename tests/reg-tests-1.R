@@ -126,7 +126,7 @@ dump("midl", "midl.R")
 source("midl.R") ## syntax error in 1.2.2
 unlink("midl.R")
 
-## PR 872 (surprising behavior of match.arg()) Setzer Woodrow, 2001-03-08,
+## PR 872 (surprising behavior of match.arg()) Woodrow Setzer, 2001-03-08,
 fun1 <- function(x, A=c("power","constant")) {
   arg <- match.arg(A)
   formals()
@@ -147,7 +147,7 @@ form <- cbind(log(inflowd1),log(inflowd2),log(inflowd3),
 terms(form) # error in 1.2.2
 
 ## PR 881 Incorrect values in non-central chisq values on Linux, 2001-03-21
-x <- dchisq(c(7.1, 7.2, 7.3), df=2,ncp=20)
+x <- dchisq(c(7.1, 7.2, 7.3), df=2, ncp=20)
 stopifnot(all(diff(x) > 0))
 ## on 1.2.2 on RH6.2 i686 Linux x = 0.01140512 0.00804528 0.01210514
 
@@ -228,6 +228,7 @@ stopifnot(x == "awxdef")
 
 x <- "abcdef"
 substr(x, 2, 3) <- "w"
+stopifnot(x == "awcdef")
 ## last was "aw" in 1.3.1
 
 
@@ -247,6 +248,25 @@ d <- data.frame(x=runif(50), y=rnorm(50))
 d.lm <- lm(y ~ 1, data=d)
 predict(d.lm, data.frame(x=0.5))
 ## error in 1.3.1
+
+
+## predict.arima0 needed a matrix newxreg: Roger Koenker, 2001-09-27
+library(ts)
+u <- rnorm(120)
+s <- 1:120
+y <- 0.3*s + 5*filter(u, c(.95,-.1), "recursive", init=rnorm(2))
+fit0 <- arima0(y,order=c(2,0,0), xreg=s)
+fit1 <- arima0(y,order=c(2,1,0), xreg=s, include.mean=TRUE)
+fore0 <- predict(fit0 ,n.ahead=44, newxreg=121:164)
+fore1 <- predict(fit1, n.ahead=44, newxreg=121:164)
+par(mfrow=c(1,2))
+ts.plot(y,fore0$pred, fore0$pred+2*fore0$se, fore0$pred-2*fore0$se,
+                gpars=list(lty=c(1,2,3,3)))
+abline(fit0$coef[3:4], lty=2)
+ts.plot(y, fore1$pred, fore1$pred+2*fore1$se, fore1$pred-2*fore1$se,
+                gpars=list(lty=c(1,2,3,3)))
+abline(c(0, fit1$coef[3]), lty=2)
+detach("package:ts")
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09

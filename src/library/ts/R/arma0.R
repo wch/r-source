@@ -142,8 +142,8 @@ predict.arima0 <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
             newxreg <- cbind(intercept=rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg+1
         }
-        data <- data - xreg %*% coefs[-(1:narma)]
-        xm <- drop(newxreg %*% coefs[-(1:narma)])
+        data <- data - as.matrix(xreg) %*% coefs[-(1:narma)]
+        xm <- drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
     } else xm <- 0
     ## check invertibility of MA part(s)
     if(arma[2] > 0) {
