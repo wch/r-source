@@ -118,6 +118,9 @@ NEW FEATURES
 	variables in a name space (i.e. a:::b is the value of the internal
 	variable b in name space a).
 
+    o   file.path() now returns an empty character vector if given at
+	least one zero-length argument.
+
 
 DEPRECATED & DEFUNCT
 
