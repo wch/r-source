@@ -64,7 +64,7 @@
 #define Win32 1
 /* #undef Macintosh */
 
-/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be intechanged,
+/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged,
    and can do arithmetic on the latter */
 #define HAVE_DOUBLE_COMPLEX 1
 
@@ -378,6 +378,8 @@
 /* Define if you have the <unistd.h> header file.  */
 #define HAVE_UNISTD_H 1
 
+/* Define if you have the <zlib.h> header file.  */
+#define HAVE_ZLIB_H 1
 
 /* Define if you have the z library (-lz).  */
 #define HAVE_LIBZ 1
