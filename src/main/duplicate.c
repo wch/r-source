@@ -32,7 +32,7 @@
 
 SEXP duplicate(SEXP s)
 {
-    SEXP h, t, sp;
+    SEXP h, t,  sp;
     int i, n;
 
     switch (TYPEOF(s)) {

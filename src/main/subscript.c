@@ -373,6 +373,8 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	names = getAttrib(x, R_NamesSymbol);
 	nx = length(x);
 	ns = length(s);
+	PROTECT(s=duplicate(s));
+	ATTRIB(s) = R_NilValue;
 	switch (TYPEOF(s)) {
 	case NILSXP:
 	    *stretch = 0;
@@ -403,6 +405,7 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	default:
 	    error("invalid subscript type\n");
 	}
+	UNPROTECT(1);
     }
     else error("subscripting on non-vector\n");
     return ans;
