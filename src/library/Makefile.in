@@ -33,6 +33,7 @@ stamp-docs:
 	@touch stamp-help
 	@touch stamp-html
 	@touch stamp-latex
+	@touch stamp-example
 stamp-help:
 	@OPTS="--nroff" $(MAKE) DOCS
 	@touch $@
@@ -41,6 +42,9 @@ stamp-html:
 	@touch $@
 stamp-latex:
 	@OPTS="--latex" $(MAKE) DOCS
+	@touch $@
+stamp-example:
+	@OPTS="--example" $(MAKE) DOCS
 	@touch $@
 
 $(MANSRC):
