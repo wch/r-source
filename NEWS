@@ -7,14 +7,21 @@
 
 NEW FEATURES
 
+    o	warnings can be collected (options(warn=0), the default), printed 
+	immediately (options(warn=0)) or turned into errors (options(warn=2)).
+	As a consequence, all warnings and errors now are printed followed
+	by a newline, if one is not supplied. (This should improve the
+	S compatibility of the use of PROBLEM ... in compiled code.)
+
     o	hdf5{read|write} now allow more kinds of attributes and add support
 	for HDF5 ver. 1.2, thanks to Marcus G. Daniels.
 
     o	A first step in improving performance has been made.
-	Attached objects, libraries etc are now hashed.
+	Attached objects, libraries etc are now hashed; performance
+	gains will be particularly apparent if large packages are in use.
 
     o	contrast() no longer drops colnames for 1DF contrasts.
-	Consequentially, labeling of regression coefficients for binary
+	Consequentially, the labels of regression coefficients for binary
 	factors contain level names (again...).
 
     o	locator(, type=) is implemented to plot points or draw lines
@@ -34,9 +41,9 @@ NEW FEATURES
 
     o	Preliminary version of package ts for time-series analysis.
 	This has fairly complete S-PLUS compatibility, but more features
-	are planned. See library(help=ts) for more details.
+	are planned. See library(help=ts) for details.
 
-    o	The presence of object .conflicts.OK in a package suppresses
+    o	The presence of an object .conflicts.OK in a package suppresses
 	conflict checking in library().
 
     o	na.omit() and na.fail() are now generic.

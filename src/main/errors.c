@@ -44,12 +44,14 @@ static void setupwarnings(void)
 #define BUFSIZE 8192
 void warning(const char *format, ...)
 {
-    char buf[BUFSIZE];
+    char buf[BUFSIZE], *p;
 
     va_list(ap);
     va_start(ap, format);
     vsprintf(buf, format, ap);
     va_end(ap);
+    p = buf + strlen(buf) - 1;
+    if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     warningcall(R_NilValue, buf);
 }
 
@@ -86,7 +88,7 @@ void warningcall(SEXP call, char *format, ...)
         va_start(ap, format);
         slen = vsprintf(buf, format, ap);
         va_end(ap); 
-        errorcall(call, "(converted from warning) %s\n", buf);
+        errorcall(call, "(converted from warning) %s", buf);
     }
 
     if(w==1) { /* print as they happen */
@@ -167,6 +169,7 @@ void PrintWarnings(void)
 
 void errorcall(SEXP call, char *format,...)
 {
+    char buf[BUFSIZE], *p;
     va_list(ap);
     char *dcall;
     if (inError )
@@ -181,18 +184,23 @@ void errorcall(SEXP call, char *format,...)
 #endif
     if(call != R_NilValue ) {
         dcall = CHAR(STRING(deparse1(call, 0))[0]);
-        REprintf("Error in %s : ", dcall);
+        sprintf(buf, "Error in %s : ", dcall);
     }
     else
-       REprintf("Error: ");
+	sprintf(buf, "Error: ");
+    p = buf + strlen(buf);
     va_start(ap, format);
-    REvprintf(format, ap);
+    vsprintf(p, format, ap);
     va_end(ap);
+    p = buf + strlen(buf) - 1;
+    if(*p != '\n') strcat(buf, "\n");
+    REprintf("%s", buf);
     jump_to_toplevel();
 }
 
 void error(const char *format, ...)
 {
+    char buf[BUFSIZE], *p;
 #ifdef NEWERROR
     char *dcall;
 #endif
@@ -204,13 +212,17 @@ void error(const char *format, ...)
 	dcall = CHAR(STRING(deparse1(R_CurrentExpr, 0))[0]);
     else
 	dcall = CHAR(STRING(deparse1(R_GlobalContext->call, 0))[0]);
-    REprintf("Error in %s : ", dcall);
+    sprintf(buf, "Error in %s : ", dcall);
 #else
-    REprintf("Error: ");
+    sprintf(buf, "Error: ");
 #endif
+    p = buf + strlen(buf);
     va_start(ap, format);
-    REvprintf(format, ap);
+    vsprintf(p, format, ap);
     va_end(ap);
+    p = buf + strlen(buf) - 1;
+    if(*p != '\n') strcat(buf, "\n");
+    REprintf("%s", buf);
     jump_to_toplevel();
 }
 
@@ -262,6 +274,8 @@ static void jump_now()
     inError=0;
     inWarning=0;
     R_PPStackTop = 0;
+    /* I think the following is needed somewhere near here: BDR
+       if (R_CollectWarnings) PrintWarnings();*/
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
     if (R_Interactive) LONGJMP(R_ToplevelContext->cjmpbuf, 0);
