@@ -516,14 +516,23 @@ AC_TYPE_SIGNAL
 
 AC_C_CONST
 AC_CHECK_SIZEOF(long, 4)
-SIZEOF_LONG=`grep SIZEOF_LONG confdefs.h | sed 's/.* //'`
-if test ${SIZEOF_LONG} -lt 4; then
-  echo "Size of long must be at least 32 bits"
-  exit 32
-elif test ${SIZEOF_LONG} -eq 4; then
-  AC_DEFINE(LONG_32_BITS)
-fi
-  
+
+AC_MSG_CHECKING(whether log is broken)
+AC_TRY_RUN(
+  changequote(<<, >>)dnl
+  <<
+  #include <math.h>
+  int main () {
+    return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
+  }
+  >>,
+  changequote([, ])dnl
+  AC_MSG_RESULT(no),
+  AC_MSG_RESULT(yes)
+  AC_DEFINE(LOG_BROKEN),
+  AC_MSG_WARN(cannot determine when cross-compiling)
+)
+
 case ${host} in
   *irix*)
     AC_MSG_CHECKING(whether compilers need -OPT:IEEE_NaN_inf=ON)
