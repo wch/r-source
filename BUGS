@@ -219,6 +219,10 @@ none
 
 Directory:  incoming
 
+* PR# 858 *
+Subject: docs + packages
+From: Adelchi Azzalini <aa@gwen.stat.unipd.it>
+Date: Thu, 01 Mar 2001 10:09:22 +0100
 * PR# 857 *
 Subject: Plotting points on a filled.contour plot
 From: marchini@stats.ox.ac.uk
