@@ -38,8 +38,7 @@ o  MDI, multiple document interface.  Here the console, graphics and
    pagers are subwindows of one main `frame' window.
 
 You can set your preference (and details of the MDI) in the Rconsole
-file: this can also be overriden on the command line by --mdi or
---sdi.
+file: this can also be overriden on the command line by --mdi or --sdi.
 
 If you use multiple files in a single SDI pager, the (row) positions
 are remembered and re-used when you switch views in the pager.
@@ -60,10 +59,10 @@ menus, and you can paste from a pager to the console directly.
 
 There is a new console menu item to show a file in a pager. This is
 intended to allow lines to be selected in an script file displayed in 
-a pager and submitted to to the R engine.
+a pager and submitted to the R engine.
 
 `Busy' cursors are used where appropriate: a cross-hair cursor is
-used on a graphics device to indicator that locator() (or identify())
+used on a graphics device to indicate that locator() (or identify())
 is in use.
 
 The file HOME\.Renviron is now read. This can contain environment
@@ -187,7 +186,7 @@ rw0630
 
 - Fixed a couple of minor bugs in the graphics device. 
 
-- More control keys (some Emacs like (crtl+a, crtl+e, crtl+k), and, on
+- More control keys (some Emacs like (crtl+a, crtl+e, crtl+k), and, by
 popular demand, crtl+c and crtl-v for copy and paste); take a look at
 the help/console menuitem.
 
@@ -220,7 +219,7 @@ Bugs fixed (I hope):
 
 - round(..) now works as documented.
 
-- Some small modification to the graphic device (position of text and
+- Some small modifications to the graphic device (position of text and
 clipping of lines was sometimes not exact). In addition, I changed the
 font to helvetica (for better consistency with the X11 device).
 
@@ -247,7 +246,7 @@ in the menu which let to save the contents of the active device as a
 gif file; (ii) arbitrary line patterns in any width are supported.
 
 (c) Now, edit makes use of an external editor (the default one is
-notepad),i.e., it works as under Unix.
+notepad), i.e., it works as under Unix.
 
 (d) date() now works. In addition, proc.time(), and so
 system.time(..), works (but don't expect too much, you will get only
@@ -323,17 +322,17 @@ c) paste it in some word processor or editor which can print.
 
 To obtain a good copy of your graphs you can:
 a) save it as postscript and then print on a ps printer (or play with
-it using gostscript);
+it using ghostscript);
 b) save it as a gif and then print it using one of the many programs
 which support this format (image manipulation programs, word processors,
 internet browsers,...).
 
-If you give the focus to a graphic windows, you can also copy it to
+If you give the focus to a graphic window, you can also copy it to
 the clipboard using the alt+print keys. But this is the standard
 Windows command and you will get also the window's decoration.  So
 this is useful only to get a "draft" copy of the graph.  [however, I
 find quite effective to open a word processor in which to paste
-command, console output and graphs. Indeed this is the way, I ask my
+command, console output and graphs. Indeed this is the way I ask my
 students to work (of course, they must also write comments!)].
 
 [...]
