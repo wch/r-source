@@ -3,7 +3,7 @@ include ../../gnuwin32/MkRules
 
 CFLAGS = -I../../include -I. -O2 -DWIN32
 
-all: makeMakedeps libpcre.a
+all: chartables.h makeMakedeps libpcre.a
 
 CSOURCES = get.c maketables.c pcre.c study.c
 OBJS=$(CSOURCES:.c=.o)
