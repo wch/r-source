@@ -122,14 +122,17 @@ void ProcessInlinePars(SEXP s, DevDesc *dd)
  *	trying to match every graphics parameter in argument lists explicitly.
  * FIXME: This needs to be destructive, so that "ProcessInlinePars"
  *	can be safely called afterwards.
+ * 2000/02/20: it is destructive of all but the first arg.
  */
 SEXP GetPar(char *which, SEXP parlist)
 {
-    SEXP w, p;
+    SEXP w, p, prev = R_NilValue;
     w = install(which);
-    for (p = parlist; p != R_NilValue; p = CDR(p)) {
-	if (TAG(p) == w)
+    for (p = parlist; p != R_NilValue; prev = p, p = CDR(p)) {
+	if (TAG(p) == w) {
+	    if(!isNull(prev)) CDR(prev) = CDR(p);
 	    return CAR(p);
+	}
     }
     return R_NilValue;
 }
@@ -1745,7 +1748,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont))
 	vectorFonts = 1;
-    args = CDR(args);
 
     PROTECT(cex = FixupCex(GetPar("cex", args), 1.0));
     ncex = LENGTH(cex);
@@ -1759,6 +1761,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     xpd = asLogical(GetPar("xpd", args));
     if (xpd == NA_LOGICAL)
 	xpd = dd->gp.xpd; /* was 0 */
+    args = CDR(args);
 
     x = REAL(sx);
     y = REAL(sy);

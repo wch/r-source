@@ -54,6 +54,10 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
 
   Text can be rotated by using graphical parameters \code{srt} (see
   \code{\link{par}}); this rotates about the centre set by \code{adj}.
+
+  Graphical parameters \code{col}, \code{cex} and \code{font} can be
+  vectors and will then be applied cyclically to the \code{labels} (and
+  extra values will be ignored).
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}},

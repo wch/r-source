@@ -101,6 +101,8 @@ NEW FEATURES
 
     o   Conversion from Rd to raw nroff is no longer available.
 
+    o   text() now accepts vector "col", "cex" and "font" arguments.
+
 
 BUG FIXES
 
