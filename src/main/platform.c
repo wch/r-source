@@ -40,8 +40,8 @@ static void Init_R_Machine(SEXP rho)
 	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
 
     R_dec_min_exponent = floor(log10(xmin)); /* smallest decimal exponent */
-    PROTECT(ans = allocVector(VECSXP, 17));
-    PROTECT(nms = allocVector(STRSXP, 17));
+    PROTECT(ans = allocVector(VECSXP, 18));
+    PROTECT(nms = allocVector(STRSXP, 18));
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
     SET_VECTOR_ELT(ans, 0, ScalarReal(eps));
 
@@ -92,6 +92,9 @@ static void Init_R_Machine(SEXP rho)
 
     SET_STRING_ELT(nms, 16, mkChar("sizeof.longdouble"));
     SET_VECTOR_ELT(ans, 16, ScalarInteger(SIZEOF_LONG_DOUBLE));
+
+    SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
+    SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
     setAttrib(ans, R_NamesSymbol, nms);
     defineVar(install(".Machine"), ans, rho);
     UNPROTECT(2);

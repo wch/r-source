@@ -50,6 +50,8 @@ NEW FEATURES
     o   prcomp() now accepts complex matrices, and there is biplot()
 	method for its output (in the real case).
 
+    o   A new entry, sizeof.pointer, has been added to .Machine.
+
 
 DEPRECATED & DEFUNCT
 

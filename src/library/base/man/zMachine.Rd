@@ -69,6 +69,8 @@
   }
   \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
     type. Will be zero if there is no such type.}
+  \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
+    type.}
 }
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.
