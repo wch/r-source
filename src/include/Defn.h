@@ -921,6 +921,17 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 
 #endif
 
+/* Localization */
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#define gettext_noop(String) String
+#define N_(String) gettext_noop (String)
+#else
+#define _(String) (String)
+#define N_(String) String
+#endif
 
 
 /* Macros for suspending interrupts */

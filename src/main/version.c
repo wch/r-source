@@ -31,15 +31,15 @@ void PrintGreeting(void)
 	    R_YEAR);
     Rprintf("Version %s.%s %s (%s-%s-%s), ISBN 3-900051-07-0\n\n",
 	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
-    Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
-	    "You are welcome to redistribute it under certain conditions.\n"
-	    "Type 'license()' or 'licence()' for distribution details.\n\n");
-    Rprintf("R is a collaborative project with many contributors.\n"
-	    "Type 'contributors()' for more information and\n"
-	    "'citation()' on how to cite R or R packages in publications.\n\n");
-    Rprintf("Type 'demo()' for some demos, 'help()' for on-line help, or\n"
-            "'help.start()' for a HTML browser interface to help.\n"
-	    "Type 'q()' to quit R.\n\n");
+    Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
+You are welcome to redistribute it under certain conditions.\n\
+Type 'license()' or 'licence()' for distribution details.\n\n"));
+    Rprintf(_("R is a collaborative project with many contributors.\n\
+Type 'contributors()' for more information and\n\
+'citation()' on how to cite R or R packages in publications.\n\n"));
+    Rprintf(_("Type 'demo()' for some demos, 'help()' for on-line help, or\n\
+'help.start()' for a HTML browser interface to help.\n\
+Type 'q()' to quit R.\n\n"));
 }
 
 SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)

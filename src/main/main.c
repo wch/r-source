@@ -414,6 +414,9 @@ void setup_Rmainloop(void)
     volatile SEXP baseEnv;
     SEXP cmd;
     FILE *fp;
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX];
+#endif
 
     InitConnections(); /* needed to get any output at all */
 
@@ -439,9 +442,15 @@ void setup_Rmainloop(void)
     setlocale(LC_COLLATE, "");/*- alphabetically sorting */
     setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
     setlocale(LC_MONETARY, "");/*- currency units */
-    /* setlocale(LC_MESSAGES,""); */
+#ifdef ENABLE_NLS
+    setlocale(LC_MESSAGES,"");
+    textdomain(PACKAGE);
+    strcpy(localedir, getenv("R_HOME")); strcat(localedir, "/share");
+    bindtextdomain(PACKAGE, localedir);
 #endif
 #endif
+#endif
+
 #if defined(Unix) || defined(Win32)
     InitTempDir(); /* must be before InitEd */
 #endif
