@@ -14,7 +14,7 @@ quit(save="default", status=0, runLast=TRUE)
     \item{status}{the (numerical) error status to be returned to the
 	operating system, where relevant. Conventionally \code{0}
 	indicates successful completion.}
-    \item{runLast}{should \coce{.Last()} be executed?}
+    \item{runLast}{should \code{.Last()} be executed?}
 }
 \description{
     The function \code{quit} or its alias \code{q} terminate the current
