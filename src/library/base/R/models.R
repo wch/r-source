@@ -197,11 +197,17 @@ case.names.default <- function(object, ...) rownames(object)
 offset <- function(object) object
 ## ?
 
-.checkMFClasses <- function(cl, m)
+.checkMFClasses <- function(cl, m, ordNotOK = FALSE)
 {
     new <- sapply(m, .MFclass)
     if(length(new) == 0) return()
     old <- cl[names(new)]
+    if(!ordNotOK) {
+        old[old == "ordered"] <- "factor"
+        new[new == "ordered"] <- "factor"
+    }
+    ## ordered is OK as a substitute for factor, but not v.v.
+    new[new == "ordered" && old == "factor"] <- "factor"
     if(!identical(old, new)) {
         wrong <- old != new
         if(sum(wrong) == 1)
