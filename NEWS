@@ -112,7 +112,8 @@ NEW FEATURES
 	accordance with the general binomial theorem.  choose(*,k) is more
 	accurate (and faster) for small k.
 
-    o	as.dist() and cophenetic() are now generic.
+    o	as.dist() and cophenetic() are now generic, and the latter has a
+        new method for objects of class "dendrogram".
 
     o	as.ts() is now generic.
 
@@ -203,6 +204,10 @@ DEPRECATED & DEFUNCT
 	new.packages(), download.packages() and install.packages() is
 	deprecated in favour of 'repos', which is the new first
 	argument (so this is only relevant for calls with named args).
+
+    o	The S3 methods for getting and setting names of "dist" objects
+        have been removed (as they provided names with a different
+        length than the "dist" object itself).
 
 
 INSTALLATION CHANGES
