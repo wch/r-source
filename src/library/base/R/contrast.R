@@ -1,105 +1,105 @@
 contrasts <-
-function (x, contrasts = TRUE)
+    function (x, contrasts = TRUE)
 {
-  if (!is.factor(x))
-    stop("contrasts apply only to factors")
-  ctr <- attr(x, "contrasts")
-  if (is.null(ctr)) {
-    ctr <- get(options("contrasts")[[1]] [[if (is.ordered(x)) 2 else 1]])(levels(x), contrasts = contrasts)
-    dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2]])
-  }
-  else if (is.character(ctr))
-    ctr <- get(ctr)(levels(x), contrasts = contrasts)
-  if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1]], "")
-  ctr
+    if (!is.factor(x))
+	stop("contrasts apply only to factors")
+    ctr <- attr(x, "contrasts")
+    if (is.null(ctr)) {
+	ctr <- get(options("contrasts")[[1]] [[if (is.ordered(x)) 2 else 1]])(levels(x), contrasts = contrasts)
+	dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2]])
+    }
+    else if (is.character(ctr))
+	ctr <- get(ctr)(levels(x), contrasts = contrasts)
+    if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1]], "")
+    ctr
 }
 
 "contrasts<-" <-
-function(x, how.many, value)
+    function(x, how.many, value)
 {
- if(!is.factor(x))
+    if(!is.factor(x))
 	stop("contrasts apply only to factors")
- if(is.function(value)) value <- value(nlevels(x))
- if(is.numeric(value)) {
-   value <- as.matrix(value)
-   nlevs <- nlevels(x)
-   if(nrow(value) != nlevs)
-     stop("wrong number of contrast matrix rows")
-   n1 <- if(missing(how.many)) nlevs - 1 else how.many
-   nc <- ncol(value)
-   rownames(value) <- levels(x)
-   if(nc  < n1) {
-     cm <- qr(cbind(1,value))
-     if(cm$rank != nc+1) stop("singular contrast matrix")
-     cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
-     cm[,1:nc] <- value
-     dimnames(cm) <- list(levels(x),NULL)
-     if(!is.null(nmcol <- dimnames(value)[[2]]))
-       dimnames(cm)[[2]] <- c(nmcol, rep("", n1-nc))
-   } else cm <- value[, 1:n1, drop=FALSE]
- }
- else if(is.character(value)) cm <- value
- else if(is.null(value)) cm <- NULL
- else stop("numeric contrasts or contrast name expected")
- attr(x, "contrasts") <- cm
- x
+    if(is.function(value)) value <- value(nlevels(x))
+    if(is.numeric(value)) {
+	value <- as.matrix(value)
+	nlevs <- nlevels(x)
+	if(nrow(value) != nlevs)
+	    stop("wrong number of contrast matrix rows")
+	n1 <- if(missing(how.many)) nlevs - 1 else how.many
+	nc <- ncol(value)
+	rownames(value) <- levels(x)
+	if(nc  < n1) {
+	    cm <- qr(cbind(1,value))
+	    if(cm$rank != nc+1) stop("singular contrast matrix")
+	    cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
+	    cm[,1:nc] <- value
+	    dimnames(cm) <- list(levels(x),NULL)
+	    if(!is.null(nmcol <- dimnames(value)[[2]]))
+		dimnames(cm)[[2]] <- c(nmcol, rep("", n1-nc))
+	} else cm <- value[, 1:n1, drop=FALSE]
+    }
+    else if(is.character(value)) cm <- value
+    else if(is.null(value)) cm <- NULL
+    else stop("numeric contrasts or contrast name expected")
+    attr(x, "contrasts") <- cm
+    x
 }
 
 contr.helmert <-
-function (n, contrasts=TRUE)
+    function (n, contrasts=TRUE)
 {
-	if (length(n) <= 1) {
-		if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1:n
-		else stop("contrasts are not defined for 0 degrees of freedom")
-	} else levels <- n
-	lenglev <- length(levels)
-	if (contrasts) {
-		cont <- array(-1, c(lenglev, lenglev-1), list(levels, NULL))
-		cont[col(cont) <= row(cont) - 2] <- 0
-		cont[col(cont) == row(cont) - 1] <- 1:(lenglev-1)
-	} else {
-		cont <- array(0, c(lenglev, lenglev), list(levels, levels))
-		cont[col(cont) == row(cont)] <- 1
-	}
-	cont
+    if (length(n) <= 1) {
+	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1:n
+	else stop("contrasts are not defined for 0 degrees of freedom")
+    } else levels <- n
+    lenglev <- length(levels)
+    if (contrasts) {
+	cont <- array(-1, c(lenglev, lenglev-1), list(levels, NULL))
+	cont[col(cont) <= row(cont) - 2] <- 0
+	cont[col(cont) == row(cont) - 1] <- 1:(lenglev-1)
+    } else {
+	cont <- array(0, c(lenglev, lenglev), list(levels, levels))
+	cont[col(cont) == row(cont)] <- 1
+    }
+    cont
 }
 
 contr.treatment <-
-function(n, contrasts = TRUE)
+    function(n, contrasts = TRUE)
 {
-	if(is.numeric(n) && length(n) == 1)
-		levs <- 1:n
-	else {
-		levs <- n
-		n <- length(n)
-	}
-	contr <- array(0, c(n, n), list(levs, levs))
-	contr[seq(1, n^2, n + 1)] <- 1
-	if(contrasts) {
-		if(n < 2)
-			stop(paste("Contrasts not defined for", n - 1,
-				"degrees of freedom"))
-		contr <- contr[, -1, drop = FALSE]
-	}
-	contr
+    if(is.numeric(n) && length(n) == 1)
+	levs <- 1:n
+    else {
+	levs <- n
+	n <- length(n)
+    }
+    contr <- array(0, c(n, n), list(levs, levs))
+    contr[seq(1, n^2, n + 1)] <- 1
+    if(contrasts) {
+	if(n < 2)
+	    stop(paste("Contrasts not defined for", n - 1,
+		       "degrees of freedom"))
+	contr <- contr[, -1, drop = FALSE]
+    }
+    contr
 }
 
 contr.sum <-
-function (n, contrasts=TRUE)
+    function (n, contrasts=TRUE)
 {
-	if (length(n) <= 1) {
-		if (is.numeric(n) && length(n) == 1 && n > 1)
-			levels <- 1:n
-		else stop("Not enough degrees of freedom to define contrasts")
-	} else levels <- n
-	lenglev <- length(levels)
-	if (contrasts) {
-		cont <- array(0, c(lenglev, lenglev - 1), list(levels, NULL))
-		cont[col(cont) == row(cont)] <- 1
-		cont[lenglev, ] <- -1
-	} else {
-		cont <- array(0, c(lenglev, lenglev), list(levels, levels))
-		cont[col(cont) == row(cont)] <- 1
-	}
-	cont
+    if (length(n) <= 1) {
+	if (is.numeric(n) && length(n) == 1 && n > 1)
+	    levels <- 1:n
+	else stop("Not enough degrees of freedom to define contrasts")
+    } else levels <- n
+    lenglev <- length(levels)
+    if (contrasts) {
+	cont <- array(0, c(lenglev, lenglev - 1), list(levels, NULL))
+	cont[col(cont) == row(cont)] <- 1
+	cont[lenglev, ] <- -1
+    } else {
+	cont <- array(0, c(lenglev, lenglev), list(levels, levels))
+	cont[col(cont) == row(cont)] <- 1
+    }
+    cont
 }

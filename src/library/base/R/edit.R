@@ -1,5 +1,5 @@
-edit <- function(name=NULL, file="", editor=options()$editor) 
-	.Internal(edit(name,file, editor))
+edit <- function(name=NULL, file="", editor=options()$editor)
+    .Internal(edit(name,file, editor))
 
 vi <- function(name=NULL, file="") edit(name, file, editor="vi")
 

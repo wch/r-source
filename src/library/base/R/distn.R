@@ -14,13 +14,13 @@ qnorm <- function(p, mean=0, sd=1) .Internal(qnorm(p, mean, sd))
 rnorm <- function(n, mean=0, sd=1) .Internal(rnorm(n, mean, sd))
 
 dcauchy <-
-function(x, location=0, scale=1) .Internal(dcauchy(x, location, scale))
+    function(x, location=0, scale=1) .Internal(dcauchy(x, location, scale))
 pcauchy <-
-function(q, location=0, scale=1) .Internal(pcauchy(q, location, scale))
+    function(q, location=0, scale=1) .Internal(pcauchy(q, location, scale))
 qcauchy <-
-function(p, location=0, scale=1) .Internal(qcauchy(p, location, scale))
+    function(p, location=0, scale=1) .Internal(qcauchy(p, location, scale))
 rcauchy <-
-function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
+    function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
 
 dgamma <- function(x, shape, scale=1) .Internal(dgamma(x, shape, scale))
 pgamma <- function(q, shape, scale=1) .Internal(pgamma(q, shape, scale))
@@ -43,12 +43,12 @@ qweibull <- function(p, shape, scale=1) .Internal(qweibull(p, shape, scale))
 rweibull <- function(n, shape, scale=1) .Internal(rweibull(n, shape, scale))
 
 dbeta <- function(x, shape1, shape2, ncp=0) {
-	if(missing(ncp)) .Internal(dbeta(x, shape1, shape2))
-	else .Internal(dnbeta(x, shape1, shape2, ncp))
+    if(missing(ncp)) .Internal(dbeta(x, shape1, shape2))
+    else .Internal(dnbeta(x, shape1, shape2, ncp))
 }
 pbeta <- function(q, shape1, shape2, ncp=0) {
-	if(missing(ncp)) .Internal(pbeta(q, shape1, shape2))
-	else .Internal(pnbeta(q, shape1, shape2, ncp))
+    if(missing(ncp)) .Internal(pbeta(q, shape1, shape2))
+    else .Internal(pnbeta(q, shape1, shape2, ncp))
 }
 qbeta <- function(p, shape1, shape2) .Internal(qbeta(p, shape1, shape2))
 rbeta <- function(n, shape1, shape2) .Internal(rbeta(n, shape1, shape2))
@@ -59,26 +59,26 @@ qbinom <- function(p, size, prob) .Internal(qbinom(p, size, prob))
 rbinom <- function(n, size, prob) .Internal(rbinom(n, size, prob))
 
 dchisq <- function(x, df, ncp=0) {
-	if(missing(ncp)) .Internal(dchisq(x, df))
-	else .Internal(dnchisq(x, df, ncp))
+    if(missing(ncp)) .Internal(dchisq(x, df))
+    else .Internal(dnchisq(x, df, ncp))
 }
 pchisq <- function(q, df, ncp=0) {
-	if(missing(ncp)) .Internal(pchisq(q, df))
-	else .Internal(pnchisq(q, df, ncp))
+    if(missing(ncp)) .Internal(pchisq(q, df))
+    else .Internal(pnchisq(q, df, ncp))
 }
 qchisq <- function(p, df, ncp=0) {
-	if(missing(ncp)) .Internal(qchisq(p, df))
-	else .Internal(qnchisq(p, df, ncp))
+    if(missing(ncp)) .Internal(qchisq(p, df))
+    else .Internal(qnchisq(p, df, ncp))
 }
 rchisq <- function(n, df, ncp=0) {
-	if(missing(ncp)) .Internal(rchisq(n, df))
-        else .not.yet.implemented()
+    if(missing(ncp)) .Internal(rchisq(n, df))
+    else .not.yet.implemented()
 }
 
 df <- function(x, df1, df2) .Internal(df(x, df1, df2))
 pf <- function(q, df1, df2, ncp=0) {
-	if(missing(ncp)) .Internal(pf(q, df1, df2))
-	else .Internal(pnf(q, df1, df2, ncp))
+    if(missing(ncp)) .Internal(pf(q, df1, df2))
+    else .Internal(pnf(q, df1, df2, ncp))
 }
 qf <- function(p, df1, df2) .Internal(qf(p, df1, df2))
 rf <- function(n, df1, df2) .Internal(rf(n, df1, df2))
@@ -105,18 +105,18 @@ rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
 dt <- function(x, df) .Internal(dt(x, df))
 pt <- function(q, df, ncp) {
-  if(missing(ncp))
-    .Internal(pt(q, df))
-  else
-    .Internal(pnt(q, df, ncp))
+    if(missing(ncp))
+	.Internal(pt(q, df))
+    else
+	.Internal(pnt(q, df, ncp))
 }
 qt <- function(p, df) .Internal(qt(p, df))
 rt <- function(n, df) .Internal(rt(n, df))
 
 ptukey <- function(q, nmeans, df, nranges=1)
-  .Internal(ptukey(q, nranges, nmeans, df))
+    .Internal(ptukey(q, nranges, nmeans, df))
 qtukey <- function(p, nmeans, df, nranges=1)
-  .Internal(qtukey(p, nranges, nmeans, df))
+    .Internal(qtukey(p, nranges, nmeans, df))
 
 dwilcox <- function(x, m, n) .Internal(dwilcox(x, m, n))
 pwilcox <- function(q, m, n) .Internal(pwilcox(q, m, n))

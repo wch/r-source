@@ -1,2 +1,2 @@
 delay <- function(x, env=.GlobalEnv)
-.Internal(delay(substitute(x), env))
+    .Internal(delay(substitute(x), env))

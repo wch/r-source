@@ -1,6 +1,6 @@
 replace <-
-function (x, list, values) 
+    function (x, list, values)
 {
-        x[list] <- values
-        x
+    x[list] <- values
+    x
 }
