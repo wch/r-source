@@ -18,6 +18,17 @@ Rterm --vsize=v --nsize=n
   \item{n}{Use \code{n} cons cells.}
 }
 \details{
+  [\R can now be compiled to use either a new generational garbage
+  collector or the original collector.  The information below applies
+  to the original collector.  The interface for controlling the
+  generational collector is still experimental and in flux.  For now,
+  the command line arguments and environment variables described below
+  can be used to supply minimal values for the sizes of the node and
+  vector heaps.  The generational collector will increase these values
+  as needed.  This document will be revised once the interface to the
+  collector has been finalized.]
+
+
   \R (currently) uses a static memory model.  This means that when it
   starts up, it asks the operating system to reserve a fixed amount of
   memory for it.  The size of this chunk cannot be changed subsequently.

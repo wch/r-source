@@ -120,26 +120,26 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
 	n = LENGTH(s);
 	if(Fort) {
 	    if(n > 1) warning("only first string in char vector used in .Fortran");
-	    l = strlen(CHAR(STRING(s)[0]));
+	    l = strlen(CHAR(STRING_ELT(s, 0)));
 	    fptr = (char*)R_alloc(max(255, l) + 1, sizeof(char));
-	    strcpy(fptr, CHAR(STRING(s)[0]));
+	    strcpy(fptr, CHAR(STRING_ELT(s, 0)));
 	    return (void*)fptr;
 	} else {
 	    cptr = (char**)R_alloc(n, sizeof(char*));
 	    for (i = 0 ; i < n ; i++) {
-		l = strlen(CHAR(STRING(s)[i]));
+		l = strlen(CHAR(STRING_ELT(s, i)));
 		cptr[i] = (char*)R_alloc(l + 1, sizeof(char));
-		strcpy(cptr[i], CHAR(STRING(s)[i]));
+		strcpy(cptr[i], CHAR(STRING_ELT(s, i)));
 	    }
 	    return (void*)cptr;
 	}
 	break;
     case VECSXP:
-	if (!dup) return (void*)VECTOR(s);
+	if (!dup) return (void*)VECTOR_PTR(s); /***** Dangerous to GC!!! */
 	n = length(s);
 	lptr = (SEXP*)R_alloc(n, sizeof(SEXP));
 	for (i = 0 ; i < n ; i++) {
-	    lptr[i] = VECTOR(s)[i];
+	    lptr[i] = VECTOR_ELT(s, i);
 	}
 	return (void*)lptr;
 	break;
@@ -205,13 +205,13 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
 	    strncpy(buf, (char*)p, 255);
 	    buf[256] = '\0';
 	    PROTECT(s = allocVector(type, 1));
-	    STRING(s)[0] = mkChar(buf);
+	    SET_STRING_ELT(s, 0, mkChar(buf));
 	    UNPROTECT(1);
 	} else {
 	    PROTECT(s = allocVector(type, n));
 	    cptr = (char**)p;
 	    for(i = 0 ; i < n ; i++) {
-		STRING(s)[i] = mkChar(cptr[i]);
+		SET_STRING_ELT(s, i, mkChar(cptr[i]));
 	    }
 	    UNPROTECT(1);
 	}
@@ -220,7 +220,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
 	PROTECT(s = allocVector(VECSXP, n));
 	lptr = (SEXP*)p;
 	for (i = 0 ; i < n ; i++) {
-	    VECTOR(s)[i] = lptr[i];
+	    SET_VECTOR_ELT(s, i, lptr[i]);
 	}
 	UNPROTECT(1);
 	break;
@@ -228,7 +228,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
 	PROTECT(t = s = allocList(n));
 	lptr = (SEXP*)p;
 	for(i=0 ; i<n ; i++) {
-	    CAR(t) = lptr[i];
+	    SETCAR(t, lptr[i]);
 	    t = CDR(t);
 	}
 	UNPROTECT(1);
@@ -265,7 +265,7 @@ static SEXP naoktrim(SEXP s, int * len, int *naok, int *dup)
     }
     else if(TAG(s) == PkgSymbol) {
 	value = naoktrim(CDR(s), len, naok, dup);
-	strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
 	return value;
     }
     else {
@@ -299,13 +299,13 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
 	ss = CDR(s);
 	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
-	    strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	    strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
 	    return R_NilValue;
 	}
 	if(TAG(ss) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
-	    strcpy(DLLname, CHAR(STRING(CAR(ss))[0]));
-	    CDR(s) = CDR(ss); /* delete this arg, which is the next one */
+	    strcpy(DLLname, CHAR(STRING_ELT(CAR(ss), 0)));
+	    SETCDR(s, CDR(ss)); /* delete this arg, which is the next one */
 	}
 	nargs++;
 	s = CDR(s);
@@ -326,13 +326,13 @@ static SEXP pkgtrim(SEXP args)
 	   and remove it */
 	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
-	    strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	    strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
 	    return R_NilValue;
 	}
 	if(TAG(ss) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
-	    strcpy(DLLname, CHAR(STRING(CAR(ss))[0]));
-	    CDR(s) = CDR(ss);
+	    strcpy(DLLname, CHAR(STRING_ELT(CAR(ss), 0)));
+	    SETCDR(s, CDR(ss));
 	}
 	s = CDR(s);
     }
@@ -347,7 +347,7 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!isValidString(CAR(args)))
 	errorcall(call, R_MSG_IA);
-    p = CHAR(STRING(CAR(args))[0]);
+    p = CHAR(STRING_ELT(CAR(args), 0));
     q = buf;
     while ((*q = *p) != '\0') {
 	p++;
@@ -371,7 +371,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!isValidString(CAR(args)))
 	errorcall(call, R_MSG_IA);
-    sym = CHAR(STRING(CAR(args))[0]);
+    sym = CHAR(STRING_ELT(CAR(args), 0));
     val = 1;
     if (!(fun = R_FindSymbol(sym, "")))
 	val = 0;
@@ -398,7 +398,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     strcpy(DLLname, "");
     args = pkgtrim(args);
 
-    if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]), DLLname)))
+    if (!(fun=R_FindSymbol(CHAR(STRING_ELT(op, 0)), DLLname)))
 	errorcall(call, "C function name not in load table");
 
     retval = (SEXP)fun(args);
@@ -421,7 +421,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     strcpy(DLLname, "");
     args = pkgtrim(args);
 
-    if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]), DLLname)))
+    if (!(fun=R_FindSymbol(CHAR(STRING_ELT(op, 0)), DLLname)))
         errorcall(call, "C function name not in load table");
     args = CDR(args);
 
@@ -1134,7 +1134,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Make up the load symbol and look it up. */
 
-    p = CHAR(STRING(op)[0]);
+    p = CHAR(STRING_ELT(op, 0));
     q = buf;
     while ((*q = *p) != '\0') {
 	p++;
@@ -1748,10 +1748,10 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	nargs = 0;
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
 	    PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which));
-	    ATTRIB(s) = duplicate(ATTRIB(CAR(pargs)));
+	    SET_ATTRIB(s, duplicate(ATTRIB(CAR(pargs))));
 	    if (TAG(pargs) != R_NilValue)
 		havenames = 1;
-	    VECTOR(ans)[nargs] = s;
+	    SET_VECTOR_ELT(ans, nargs, s);
 	    nargs++;
 	    UNPROTECT(1);
 	}
@@ -1761,7 +1761,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
 	    if (TAG(pargs) != R_NilValue)
 		havenames = 1;
-	    VECTOR(ans)[nargs] = CAR(pargs);
+	    SET_VECTOR_ELT(ans, nargs, CAR(pargs));
 	    nargs++;
 	}
     }
@@ -1771,9 +1771,9 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	nargs = 0;
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
 	    if (TAG(pargs) == R_NilValue)
-		STRING(names)[nargs++] = R_BlankString;
+		SET_STRING_ELT(names, nargs++, R_BlankString);
 	    else
-		STRING(names)[nargs++] = PRINTNAME(TAG(pargs));
+		SET_STRING_ELT(names, nargs++, PRINTNAME(TAG(pargs)));
         }
 	setAttrib(ans, R_NamesSymbol, names);
 	UNPROTECT(1);
@@ -1818,7 +1818,6 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     SEXP call, pcall, s;
     SEXPTYPE type;
     int i, j, n;
-    char **cptr;
 
     if (!isFunction((SEXP)func))
 	error("invalid function in call_R");
@@ -1827,8 +1826,8 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     if (nres < 0)
 	error("invalid return value count in call_R");
     PROTECT(pcall = call = allocList(nargs + 1));
-    TYPEOF(call) = LANGSXP;
-    CAR(pcall) = (SEXP)func;
+    SET_TYPEOF(call, LANGSXP);
+    SETCAR(pcall, (SEXP)func);
     s = R_NilValue;		/* -Wall */
     for (i = 0 ; i < nargs ; i++) {
 	pcall = CDR(pcall);
@@ -1836,44 +1835,45 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	switch(type) {
 	case LGLSXP:
 	case INTSXP:
-	    CAR(pcall) = allocSExp(type);
-	    INTEGER(CAR(pcall)) = (int*)(arguments[i]);
-	    LENGTH(CAR(pcall)) = lengths[i];
+	    n = lengths[i];
+	    SETCAR(pcall, allocVector(type, n));
+	    memcpy(INTEGER(CAR(pcall)), arguments[i], n * sizeof(int));
 	    break;
 	case REALSXP:
-	    CAR(pcall) = allocSExp(REALSXP);
-	    REAL(CAR(pcall)) = (double*)(arguments[i]);
-	    LENGTH(CAR(pcall)) = lengths[i];
+	    n = lengths[i];
+	    SETCAR(pcall, allocVector(REALSXP, n));
+	    memcpy(REAL(CAR(pcall)), arguments[i], n * sizeof(double));
 	    break;
 	case CPLXSXP:
-	    CAR(pcall) = allocSExp(CPLXSXP);
-	    COMPLEX(CAR(pcall)) = (Rcomplex*)(arguments[i]);
-	    LENGTH(CAR(pcall)) = lengths[i];
+	    n = lengths[i];
+	    SETCAR(pcall, allocVector(CPLXSXP, n));
+	    memcpy(REAL(CAR(pcall)), arguments[i], n * sizeof(Rcomplex));
 	    break;
 	case STRSXP:
 	    n = lengths[i];
-	    CAR(pcall) = allocVector(STRSXP, n);
-	    cptr = (char**)arguments[i];
- 	    for (j = 0 ; j < n ; j++) {
-		STRING(CAR(pcall))[j] = mkChar(cptr[j]);
+	    SETCAR(pcall, allocVector(STRSXP, n));
+	    for (j = 0 ; j < n ; j++) {
+		char *str = (char*)(arguments[i]);
+		s = allocString(strlen(str));
+		SET_STRING_ELT(CAR(pcall), i, s);
+		strcpy(CHAR(s), str);
  	    }
-	    LENGTH(CAR(pcall)) = n;
 	    break;
 	    /* FIXME : This copy is unnecessary! */
 	    /* FIXME : This is obviously incorrect so disable
 	case VECSXP:
 	    n = lengths[i];
-	    CAR(pcall) = allocVector(VECSXP, n);
+	    SETCAR(pcall, allocVector(VECSXP, n));
 	    for (j = 0 ; j < n ; j++) {
-		VECTOR(s)[i] = (SEXP)(arguments[i]);
+		SET_VECTOR_ELT(s, i, (SEXP)(arguments[i]));
 	    }
 	    break; */
 	default:
 	    error("Mode `%s' is not supported in call_R", modes[i]);
 	}
 	if(names && names[i])
-	    TAG(pcall) = install(names[i]);
-	NAMED(CAR(pcall)) = 2;
+	    SET_TAG(pcall, install(names[i]));
+	SET_NAMED(CAR(pcall), 2);
     }
     PROTECT(s = eval(call, R_GlobalEnv));
     switch(TYPEOF(s)) {
@@ -1889,7 +1889,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	n = length(s);
 	if (nres < n) n = nres;
 	for (i = 0 ; i < n ; i++) {
-	    results[i] = RObjToCPtr(VECTOR(s)[i], 1, 1, 0, 0);
+	    results[i] = RObjToCPtr(VECTOR_ELT(s, i), 1, 1, 0, 0);
 	}
 	break;
     case LISTSXP:

@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.4 2000/02/23 08:36:26 hornik Exp $ 
+ *  $Id: nls.c,v 1.5 2000/08/07 22:24:35 luke Exp $ 
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -52,9 +52,9 @@ getListElement(SEXP list, SEXP names, char *str) {
   int i;
 
   for (i = 0; i < LENGTH(list); i++) {
-    tempChar = CHAR(STRING(names)[i]);
+    tempChar = CHAR(STRING_ELT(names, i));
     if( strcmp(tempChar,str) == 0) {
-      elmt = VECTOR(list)[i];
+      elmt = VECTOR_ELT(list, i);
       break;
     }
   }
@@ -219,27 +219,27 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho) {
     PROTECT(ans = temp);
   }
   for(i = 0; i < LENGTH(theta); i++) {
-    VECTOR(pars)[i] = findVar(install(CHAR(STRING(theta)[i])), rho);
-    lengthTheta += LENGTH(VECTOR(pars)[i]);
+    SET_VECTOR_ELT(pars, i, findVar(install(CHAR(STRING_ELT(theta, i))), rho));
+    lengthTheta += LENGTH(VECTOR_ELT(pars, i));
   }
   PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), lengthTheta));
 
   for(i = 0, start = 0; i < LENGTH(theta); i++) {
-    for(j = 0; j < LENGTH(VECTOR(pars)[i]); j++, start += LENGTH(ans)) {
+    for(j = 0; j < LENGTH(VECTOR_ELT(pars, i)); j++, start += LENGTH(ans)) {
       SEXP ans_del;
       double origPar, xx, delta;
 
-      origPar = REAL(VECTOR(pars)[i])[j];
+      origPar = REAL(VECTOR_ELT(pars, i))[j];
       xx = fabs(origPar);
       delta = (xx == 0) ? eps : xx*eps;
-      REAL(VECTOR(pars)[i])[j] += delta;
+      REAL(VECTOR_ELT(pars, i))[j] += delta;
       PROTECT(ans_del = eval(expr, rho));
       if(!isReal(ans_del)) ans_del = coerceVector(ans_del, REALSXP);
       UNPROTECT(1);
       for(k = 0; k < LENGTH(ans); k++)
 	REAL(gradient)[start + k] = (REAL(ans_del)[k] -
 				     REAL(ans)[k])/delta;
-      REAL(VECTOR(pars)[i])[j] = origPar;
+      REAL(VECTOR_ELT(pars, i))[j] = origPar;
     }
   }
   setAttrib(ans, install("gradient"), gradient);

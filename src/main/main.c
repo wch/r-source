@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2000	    The R Development Core Team.
  *
@@ -67,7 +67,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 	    R_EvalDepth = 0;
 	    PROTECT(R_CurrentExpr);
 	    R_CurrentExpr = eval(R_CurrentExpr, rho);
-	    SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+	    SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
@@ -101,12 +101,12 @@ char *R_PromptString(int browselevel, int type)
 		sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
 		return BrowsePrompt;
 	    }
-	    return (char*)CHAR(STRING(GetOption(install("prompt"),
-						R_NilValue))[0]);
+	    return (char*)CHAR(STRING_ELT(GetOption(install("prompt"),
+						    R_NilValue), 0));
 	}
 	else {
-	    return (char*)CHAR(STRING(GetOption(install("continue"),
-						R_NilValue))[0]);
+	    return (char*)CHAR(STRING_ELT(GetOption(install("continue"),
+						    R_NilValue), 0));
 	}
     }
 }
@@ -178,7 +178,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    PROTECT(R_CurrentExpr);
 	    R_Busy(1);
 	    R_CurrentExpr = eval(R_CurrentExpr, rho);
-	    SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+	    SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
@@ -254,7 +254,7 @@ int R_ReplDLLdo1()
 	PROTECT(R_CurrentExpr);
 	R_Busy(1);
 	R_CurrentExpr = eval(R_CurrentExpr, rho);
-	SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+	SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
 	UNPROTECT(1);
 	if (R_Visible)
 	    PrintValueEnv(R_CurrentExpr, rho);
@@ -499,16 +499,16 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
     int rval=0;
     if (isSymbol(CExpr)) {
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"n")) {
-	    DEBUG(rho)=1;
+	    SET_DEBUG(rho, 1);
 	    rval=1;
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"c")) {
 	    rval=1;
-	    DEBUG(rho)=0;
+	    SET_DEBUG(rho, 0);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"cont")) {
 	    rval=1;
-	    DEBUG(rho)=0;
+	    SET_DEBUG(rho, 0);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
 	    R_BrowseLevel = 0;
@@ -516,7 +516,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
 	    printwhere();
-	    DEBUG(rho)=1;
+	    SET_DEBUG(rho, 1);
 	    rval=2;
 	}
     }
@@ -613,7 +613,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if( !isString(CAR(args)) )
 	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.");
-    tmp = CHAR(STRING(CAR(args))[0]);
+    tmp = CHAR(STRING_ELT(CAR(args), 0));
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
 	if(!R_Interactive)

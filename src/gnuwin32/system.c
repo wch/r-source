@@ -170,7 +170,7 @@ GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     char *p;
     char *NormalPrompt =
-	(char *) CHAR(STRING(GetOption(install("prompt"), R_NilValue))[0]);
+	(char *) CHAR(STRING_ELT(GetOption(install("prompt"), R_NilValue), 0));
 
     if(!R_is_running) {
 	R_is_running = 1;
@@ -474,7 +474,7 @@ int internal_ShowFile(char *file, char *header)
 
     files[0] = file;
     headers[0] = header;
-    return R_ShowFiles(1, files, headers, "File", 0, CHAR(STRING(pager)[0]));
+    return R_ShowFiles(1, files, headers, "File", 0, CHAR(STRING_ELT(pager, 0)));
 }
 
 

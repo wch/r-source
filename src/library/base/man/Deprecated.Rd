@@ -17,7 +17,10 @@ getenv(x)
 
   \code{.Deprecated("<new name>")} is called from deprecated functions.
 
-  \code{getenv} is a deprecated alternative name for \code{\link{Sys.getenv}}.
+  \code{getenv} is a deprecated altenative name for \code{\link{Sys.getenv}}.
+
+  \code{save(, oldstyle=TRUE)} is deprecated, and will be removed from
+  \R version 1.2.0.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

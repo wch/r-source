@@ -607,7 +607,7 @@ static int NameMatch(SEXP expr, char *aString)
 
 static int StringMatch(SEXP expr, char *aString)
 {
-    return !strcmp(CHAR(STRING(expr)[0]), aString);
+    return !strcmp(CHAR(STRING_ELT(expr, 0)), aString);
 }
 /* Code to determine the ascii code corresponding */
 /* to an element of a mathematical expression. */
@@ -1118,7 +1118,7 @@ static BBOX RenderNumber(SEXP expr, int draw)
 
 static BBOX RenderString(SEXP expr, int draw)
 {
-    return RenderStr(CHAR(STRING(expr)[0]), draw);
+    return RenderStr(CHAR(STRING_ELT(expr, 0)), draw);
 }
 
 /* Code for Ellipsis (ldots, cdots, ...) */

@@ -77,6 +77,13 @@ typedef unsigned int SEXPTYPE;
 
 #define FUNSXP      99    /* Closure or Builtin */
 
+#define USE_GENERATIONAL_GC
+
+#ifdef USE_GENERATIONAL_GC
+# define USE_WRITE_BARRIER
+#endif
+
+#ifdef USE_RINTERNALS
 typedef struct SEXPREC {
 
     /* Flags */
@@ -88,7 +95,9 @@ typedef struct SEXPREC {
 	unsigned int mark  :  1;
 	unsigned int debug :  1;
 	unsigned int trace :  1;
-	unsigned int	   :  5;
+	unsigned int fin   :  1;  /* has finalizer installed */
+	unsigned int gcgen :  1;  /* old generation number */
+	unsigned int gccls :  3;  /* node class */
     } sxpinfo;
 
     /* Attributes */
@@ -136,7 +145,12 @@ typedef struct SEXPREC {
 	    struct SEXPREC *env;
 	} promsxp;
     } u;
+#ifdef USE_GENERATIONAL_GC
+  struct SEXPREC *gengc_next_node, *gengc_prev_node;
+#endif
 } SEXPREC, *SEXP;
+
+typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* General Cons Cell Attributes */
 #define ATTRIB(x)	((x)->attrib)
@@ -144,19 +158,48 @@ typedef struct SEXPREC {
 #define MARK(x)		((x)->sxpinfo.mark)
 #define TYPEOF(x)	((x)->sxpinfo.type)
 #define NAMED(x)	((x)->sxpinfo.named)
+#define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
+#define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
+#define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
 
 
 /* Vector Access Macros */
 #define LENGTH(x)	((x)->u.vecsxp.length)
 #define TRUELENGTH(x)	((x)->u.vecsxp.truelength)
 #define CHAR(x)		((x)->u.vecsxp.type.c)
-#define STRING(x)	((x)->u.vecsxp.type.s)
+#define SETLENGTH(x,v)		(((x)->u.vecsxp.length)=(v))
+#define SET_TRUELENGTH(x,v)	(((x)->u.vecsxp.truelength)=(v))
+#define LEVELS(x)	((x)->sxpinfo.gp)
+#define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
+
+#ifdef USE_GENERATIONAL_GC
+#define DIRECT_POINTERS
+#endif
+#ifdef DIRECT_POINTERS
+#define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
+#define LOGICAL(x)	((int *) DATAPTR(x))
+#define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
+#define INTEGER(x)	((int *) DATAPTR(x))
+#define REAL(x)		((double *) DATAPTR(x))
+#define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
+#define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
+#define STRING_PTR(x)	((SEXP *) DATAPTR(x))
+#define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
+#else
 #define LOGICAL(x)	((x)->u.vecsxp.type.i)
+#define COMPLEX(x)	((x)->u.vecsxp.type.z)
 #define INTEGER(x)	((x)->u.vecsxp.type.i)
 #define REAL(x)		((x)->u.vecsxp.type.f)
-#define COMPLEX(x)	((x)->u.vecsxp.type.z)
-#define LEVELS(x)	((x)->sxpinfo.gp)
-#define VECTOR(x)	((x)->u.vecsxp.type.s)
+#define STRING_ELT(x,i)		((x)->u.vecsxp.type.s)[i]
+#define VECTOR_ELT(x,i)		((x)->u.vecsxp.type.s)[i]
+#define STRING_PTR(x)	((x)->u.vecsxp.type.s)
+#define VECTOR_PTR(x)	((x)->u.vecsxp.type.s)
+#endif
+
+#ifndef USE_WRITE_BARRIER
+#define SET_STRING_ELT(x,i,v)	(((x)->u.vecsxp.type.s)[i]=(v))
+#define SET_VECTOR_ELT(x,i,v)	(((x)->u.vecsxp.type.s)[i]=(v))
+#endif
 
 /* List Access Macros */
 /* These also work for ... objects */
@@ -174,7 +217,15 @@ typedef struct SEXPREC {
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
 #define MISSING(x)	((x)->sxpinfo.gp)	/* for closure calls */
-#define SETCDR(x,y)	{SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");}
+#ifndef USE_WRITE_BARRIER
+#define SETCAR(x,v)	(CAR(x)=(v))
+#define SETCADR(x,v)	(CADR(x)=(v))
+#define SETCADDR(x,v)	(CADDR(x)=(v))
+#define SETCADDDR(x,v)	(CADDDR(x)=(v))
+#define SETCAD4R(x,v)	(CAD4R(x)=(v))
+#define SETCDR(x,y)	do {SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");} while (0)
+#endif
+#define SET_MISSING(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* Closure Access Macros */
 #define FORMALS(x)	((x)->u.closxp.formals)
@@ -182,18 +233,42 @@ typedef struct SEXPREC {
 #define CLOENV(x)	((x)->u.closxp.env)
 #define DEBUG(x)	((x)->sxpinfo.debug)
 #define TRACE(x)	((x)->sxpinfo.trace)
+#define SET_DEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
+#define SET_TRACE(x,v)	(((x)->sxpinfo.trace)=(v))
+
+/* Primitive Access Macros */
+#define PRIMOFFSET(x)	((x)->u.primsxp.offset)
+#define SET_PRIMOFFSET(x,v)	(((x)->u.primsxp.offset)=(v))
 
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
 #define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
 #define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
+#ifndef USE_WRITE_BARRIER
+#define SET_PRINTNAME(x,v)	(((x)->u.symsxp.pname)=(v))
+#define SET_SYMVALUE(x,v)	(((x)->u.symsxp.value)=(v))
+#define SET_INTERNAL(x,v)	(((x)->u.symsxp.internal)=(v))
+#endif
+#define SET_DDVAL(x,v)	(((x)->sxpinfo.gp)=(v)) /* for ..1, ..2 etc */
 
 /* Environment Access Macros */
 #define FRAME(x)	((x)->u.envsxp.frame)
 #define ENCLOS(x)	((x)->u.envsxp.enclos)
 #define HASHTAB(x)	((x)->u.envsxp.hashtab)
+#ifndef USE_WRITE_BARRIER
+#define SET_FRAME(x,v)		(((x)->u.envsxp.frame)=(v))
+#define SET_ENCLOS(x,v)		(((x)->u.envsxp.enclos)=(v))
+#define SET_HASHTAB(x,v)	(((x)->u.envsxp.hashtab)=(v))
+#endif
 #define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
+#define SET_NARGS(x,v)	(((x)->sxpinfo.gp)=(v))
+#else
+typedef struct SEXPREC *SEXP;
+#define CONS(a, b)	cons((a), (b))		/* data lists */
+#define LCONS(a, b)	lcons((a), (b))		/* language lists */
+#define CHAR(x)		R_CHAR(x)
+#endif /* USE_RINTERNALS */
 
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
@@ -560,4 +635,109 @@ void unprotect_ptr(SEXP);
 #undef extern
 #endif
 
+/* General Cons Cell Attributes */
+SEXP (ATTRIB)(SEXP x);
+int (OBJECT)(SEXP x);
+int (MARK)(SEXP x);
+int (TYPEOF)(SEXP x);
+int (NAMED)(SEXP x);
+void (SET_ATTRIB)(SEXP x, SEXP v);
+void (SET_OBJECT)(SEXP x, int v);
+void (SET_TYPEOF)(SEXP x, int v);
+void (SET_NAMED)(SEXP x, int v);
+
+/* Vector Access Macros */
+int (LENGTH)(SEXP x);
+int (TRUELENGTH)(SEXP x);
+char *(R_CHAR)(SEXP x);
+SEXP (STRING_ELT)(SEXP x, int i);
+void (SETLENGTH)(SEXP x, int v);
+void (SET_TRUELENGTH)(SEXP x, int v);
+void (SET_STRING_ELT)(SEXP x, int i, SEXP v);
+int (LEVELS)(SEXP x);
+int (SETLEVELS)(SEXP x, int v);
+SEXP (VECTOR_ELT)(SEXP x, int i);
+SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v);
+int *(LOGICAL)(SEXP x);
+int *(INTEGER)(SEXP x);
+double *(REAL)(SEXP x);
+Rcomplex *(COMPLEX)(SEXP x);
+SEXP *(STRING_PTR)(SEXP x);
+SEXP *(VECTOR_PTR)(SEXP x);
+
+/* List Access Macros */
+/* These also work for ... objects */
+/*#define LISTVAL(x)	((x)->u.listsxp)*/
+SEXP (TAG)(SEXP e);
+SEXP (CAR)(SEXP e);
+SEXP (CDR)(SEXP e);
+SEXP (CAAR)(SEXP e);
+SEXP (CDAR)(SEXP e);
+SEXP (CADR)(SEXP e);
+SEXP (CDDR)(SEXP e);
+SEXP (CADDR)(SEXP e);
+SEXP (CADDDR)(SEXP e);
+SEXP (CAD4R)(SEXP e);
+int (MISSING)(SEXP x);
+void (SET_TAG)(SEXP x, SEXP y);
+SEXP (SETCAR)(SEXP x, SEXP y);
+SEXP (SETCDR)(SEXP x, SEXP y);
+SEXP (SETCADR)(SEXP x, SEXP y);
+SEXP (SETCADDR)(SEXP x, SEXP y);
+SEXP (SETCADDDR)(SEXP x, SEXP y);
+SEXP (SETCAD4R)(SEXP e, SEXP y);
+void (SET_MISSING)(SEXP x, int v);
+
+/* Closure Access Macros */
+SEXP (FORMALS)(SEXP x);
+SEXP (BODY)(SEXP x);
+SEXP (CLOENV)(SEXP x);
+int (DEBUG)(SEXP x);
+int (TRACE)(SEXP x);
+void (SET_FORMALS)(SEXP x, SEXP v);
+void (SET_BODY)(SEXP x, SEXP v);
+void (SET_CLOENV)(SEXP x, SEXP v);
+void (SET_DEBUG)(SEXP x, int v);
+void (SET_TRACE)(SEXP x, int v);
+
+/* Primitive Access Macros */
+int (PRIMOFFSET)(SEXP x);
+void (SET_PRIMOFFSET)(SEXP x, int v);
+
+
+/* Symbol Access Macros */
+SEXP (PRINTNAME)(SEXP x);
+SEXP (SYMVALUE)(SEXP x);
+SEXP (INTERNAL)(SEXP x);
+int (DDVAL)(SEXP x);
+void (SET_PRINTNAME)(SEXP x, SEXP v);
+void (SET_SYMVALUE)(SEXP x, SEXP v);
+void (SET_INTERNAL)(SEXP x, SEXP v);
+void (SET_DDVAL)(SEXP x, int v);
+
+/* Environment Access Macros */
+SEXP (FRAME)(SEXP x);
+SEXP (ENCLOS)(SEXP x);
+SEXP (HASHTAB)(SEXP x);
+int (NARGS)(SEXP x);
+void (SET_FRAME)(SEXP x, SEXP v);
+void (SET_ENCLOS)(SEXP x, SEXP v);
+void (SET_HASHTAB)(SEXP x, SEXP v);
+void (SET_NARGS)(SEXP x, int v);
+
+/* Promise Access Macros */
+SEXP (PREXPR)(SEXP x);
+SEXP (PRENV)(SEXP x);
+SEXP (PRVALUE)(SEXP x);
+int (PRSEEN)(SEXP x);
+void (SET_PREXPR)(SEXP x, SEXP v);
+void (SET_PRENV)(SEXP x, SEXP v);
+void (SET_PRVALUE)(SEXP x, SEXP v);
+void (SET_PRSEEN)(SEXP x, int v);
+
+/* Hashing Macros */
+int (HASHASH)(SEXP x);
+int (HASHVALUE)(SEXP x);
+void (SET_HASHASH)(SEXP x, int v);
+void (SET_HASHVALUE)(SEXP x, int v);
 #endif

@@ -23,10 +23,28 @@
 
 #define COUNTING
 
+/* To test the write barrier used by the generational collector,
+   define TESTING_WRITE_BARRIER.  This makes the internal structure of
+   SEXPREC's visible only inside of files that explicitly define
+   USE_RINTERNALS, and all uses of SEXPREC fields that do not go
+   through the appropriate functions or macros will become compiler
+   errors.  Since this does impose a small but noticable performance
+   penalty, code that includes Defs.h (or code that explicitly defines
+   USE_RINTERNALS) can access SEXPREC's fielrd directly. */
+ 
+#define TESTING_WRITE_BARRIER
+#ifndef TESTING_WRITE_BARRIER
+# define USE_RINTERNALS
+#endif
+
 #include "config.h"
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #include "Errormsg.h"
+
+#ifndef USE_GENERATIONAL_GC
+# define ALLOW_OLD_SAVE
+#endif
 
 /* PSIGNAL may be defined on Win32 in config.h */
 #ifdef PSIGNAL
@@ -132,6 +150,7 @@ typedef struct {
     int	   gram;     /* pretty-print info */
 } FUNTAB;
 
+#ifdef USE_RINTERNALS
 /* General Cons Cell Attributes */
 #define ATTRIB(x)	((x)->attrib)
 #define OBJECT(x)	((x)->sxpinfo.obj)
@@ -153,10 +172,18 @@ typedef struct {
 #define PRENV(x)	((x)->u.promsxp.env)
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
+#ifndef USE_WRITE_BARRIER
+#define SET_PREXPR(x,v)	(((x)->u.promsxp.expr)=(v))
+#define SET_PRENV(x,v)	(((x)->u.promsxp.env)=(v))
+#define SET_PRVALUE(x,v)	(((x)->u.promsxp.value)=(v))
+#endif
+#define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* Hashing Macros */
 #define HASHASH(x)      ((x)->sxpinfo.gp)
 #define HASHVALUE(x)    ((x)->u.vecsxp.truelength)
+#define SET_HASHASH(x,v) (((x)->sxpinfo.gp)=(v))
+#define SET_HASHVALUE(x,v) (((x)->u.vecsxp.truelength)=(v))
 
 /* Vector Heap Structure */
 typedef struct {
@@ -173,7 +200,15 @@ typedef struct {
 #define FLOAT2VEC(n)	(((n)>0)?(((n)*sizeof(double)-1)/sizeof(VECREC)+1):0)
 #define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(Rcomplex)-1)/sizeof(VECREC)+1):0)
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
-
+#else
+typedef struct VECREC *VECP;
+#define PRIMFUN(x)	(R_FunTab[PRIMOFFSET(x)].cfun)
+#define PRIMNAME(x)	(R_FunTab[PRIMOFFSET(x)].name)
+#define PRIMVAL(x)	(R_FunTab[PRIMOFFSET(x)].code)
+#define PRIMARITY(x)	(R_FunTab[PRIMOFFSET(x)].arity)
+#define PPINFO(x)	(R_FunTab[PRIMOFFSET(x)].gram)
+#define PRIMPRINT(x)	(((R_FunTab[PRIMOFFSET(x)].eval)/100)%10)
+#endif
 
 /* Evaluation Context Structure */
 typedef struct RCNTXT {
@@ -306,9 +341,11 @@ extern int	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
 extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
-extern VECREC*	R_VHeap;	    /* Base of the vector heap */
-extern VECREC*	R_VTop;		    /* Current top of the vector heap */
-extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
+#ifndef USE_GENERATIONAL_GC
+extern VECP	R_VHeap;	    /* Base of the vector heap */
+extern VECP	R_VTop;		    /* Current top of the vector heap */
+extern VECP	R_VMax;		    /* bottom of R_alloc'ed heap */
+#endif
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
 extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
 
@@ -386,7 +423,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define CheckFormals		Rf_CheckFormals
 #define classgets		Rf_classgets
 #define CleanEd			Rf_CleanEd
-#define compactPhase		Rf_compactPhase
 #define DataFrameClass		Rf_DataFrameClass
 #define ddfindVar		Rf_ddfindVar
 #define deparse1		Rf_deparse1
@@ -425,8 +461,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define jump_to_toplevel	Rf_jump_to_toplevel
 #define levelsgets		Rf_levelsgets
 #define mainloop		Rf_mainloop
-#define markPhase		Rf_markPhase
-#define markSExp		Rf_markSExp
 #define mat2indsub		Rf_mat2indsub
 #define match			Rf_match
 #define mkCLOSXP		Rf_mkCLOSXP
@@ -449,7 +483,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define PrintWarnings		Rf_PrintWarnings
 #define promiseArgs		Rf_promiseArgs
 #define RemoveClass		Rf_RemoveClass
-#define scanPhase		Rf_scanPhase
 #define setVarInFrame		Rf_setVarInFrame
 #define sortVector		Rf_sortVector
 #define ssort			Rf_ssort
@@ -460,7 +493,9 @@ extern char*	R_GUIType	INI_as("unknown");
 #define tspgets			Rf_tspgets
 #define type2str		Rf_type2str
 #define unbindVar		Rf_unbindVar
+#ifndef USE_GENERATIONAL_GC
 #define unmarkPhase		Rf_unmarkPhase
+#endif
 #define usemethod		Rf_usemethod
 #define warningcall		Rf_warningcall
 #define WarningMessage		Rf_WarningMessage
@@ -501,7 +536,6 @@ void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 SEXP classgets(SEXP, SEXP);
 void CleanEd(void);
-void compactPhase(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,int);
@@ -540,8 +574,6 @@ int isValidName(char *);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
-void markPhase(void);
-void markSExp(SEXP);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP match(SEXP, SEXP, int);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
@@ -577,7 +609,6 @@ void R_SaveToFile(SEXP, FILE*, int, int);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
-void scanPhase(void);
 SEXP setVarInFrame(SEXP, SEXP, SEXP);
 void sortVector(SEXP);
 void ssort(SEXP*,int);
@@ -592,7 +623,9 @@ int tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2str(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
+#ifdef ALLOW_OLD_SAVE
 void unmarkPhase(void);
+#endif
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
 void warningcall(SEXP, char*,...);
 void WarningMessage(SEXP, int, ...);

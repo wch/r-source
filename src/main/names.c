@@ -492,6 +492,7 @@ FUNTAB R_FunTab[] =
 
 #ifdef HAVE_TIMES
 {"proc.time",	do_proctime,	0,	1,	0,	PP_FUNCALL},
+{"gc.time",	do_gctime,	0,	1,	0,	PP_FUNCALL},
 #endif
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
@@ -718,10 +719,11 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     checkArity(op, args);
     name = CAR(args);
-    if (!isString(name) || length(name) < 1 || STRING(name)[0] == R_NilValue)
+    if (!isString(name) || length(name) < 1 ||
+	STRING_ELT(name, 0) == R_NilValue)
 	errorcall(call, "string argument required");
     for (i = 0; R_FunTab[i].name; i++)
-	if (strcmp(CHAR(STRING(name)[0]), R_FunTab[i].name) == 0) {
+	if (strcmp(CHAR(STRING_ELT(name, 0)), R_FunTab[i].name) == 0) {
 	    if ((R_FunTab[i].eval % 100 )/10)
 		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
 	    else
@@ -759,11 +761,11 @@ int hashpjw(char *s)
 static void installFunTab(int i)
 {
     if ((R_FunTab[i].eval % 100 )/10)
-	INTERNAL(install(R_FunTab[i].name))
-	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	SET_INTERNAL(install(R_FunTab[i].name),
+		     mkPRIMSXP(i, R_FunTab[i].eval % 10));
     else
-	SYMVALUE(install(R_FunTab[i].name))
-	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	SET_SYMVALUE(install(R_FunTab[i].name),
+		     mkPRIMSXP(i, R_FunTab[i].eval % 10));
 }
 
 static void SymbolShortcuts()
@@ -797,24 +799,16 @@ extern SEXP framenames; /* from model.c */
 void InitNames()
 {
     int i;
-    /* R_NilValue */
-    /* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
-    /* OR ARMAGEDDON HAPPENS. */
-    R_NilValue = allocSExp(NILSXP);
-    CAR(R_NilValue) = R_NilValue;
-    CDR(R_NilValue) = R_NilValue;
-    TAG(R_NilValue) = R_NilValue;
-    ATTRIB(R_NilValue) = R_NilValue;
     /* R_UnboundValue */
     R_UnboundValue = allocSExp(SYMSXP);
-    SYMVALUE(R_UnboundValue) = R_UnboundValue;
-    PRINTNAME(R_UnboundValue) = R_NilValue;
-    ATTRIB(R_UnboundValue) = R_NilValue;
+    SET_SYMVALUE(R_UnboundValue, R_UnboundValue);
+    SET_PRINTNAME(R_UnboundValue, R_NilValue);
+    SET_ATTRIB(R_UnboundValue, R_NilValue);
     /* R_MissingArg */
     R_MissingArg = allocSExp(SYMSXP);
-    SYMVALUE(R_MissingArg) = R_MissingArg;
-    PRINTNAME(R_MissingArg) = mkChar("");
-    ATTRIB(R_MissingArg) = R_NilValue;
+    SET_SYMVALUE(R_MissingArg, R_MissingArg);
+    SET_PRINTNAME(R_MissingArg, mkChar(""));
+    SET_ATTRIB(R_MissingArg, R_NilValue);
     /* Parser Structures */
     R_CommentSxp = R_NilValue;
     R_ParseText = R_NilValue;
@@ -867,8 +861,8 @@ SEXP install(char *name)
 	    return (CAR(sym));
     /* Create a new symbol node and link it into the table. */
     sym = mkSYMSXP(mkChar(buf), R_UnboundValue);
-    HASHVALUE(PRINTNAME(sym)) = hashcode;
-    HASHASH(PRINTNAME(sym)) = 1;
+    SET_HASHVALUE(PRINTNAME(sym), hashcode);
+    SET_HASHASH(PRINTNAME(sym), 1);
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
     return (sym);
 }

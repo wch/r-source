@@ -49,20 +49,20 @@ SEXP duplicate(SEXP s)
     case CLOSXP:
 	PROTECT(s);
 	PROTECT(t = allocSExp(CLOSXP));
-	FORMALS(t) = FORMALS(s);
-	BODY(t) = BODY(s);
-	CLOENV(t) = CLOENV(s);
-	ATTRIB(t) = duplicate(ATTRIB(s));
+	SET_FORMALS(t, FORMALS(s));
+	SET_BODY(t, BODY(s));
+	SET_CLOENV(t, CLOENV(s));
+	SET_ATTRIB(t, duplicate(ATTRIB(s)));
 	UNPROTECT(2);
 	break;
     case LISTSXP:
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
 	while(sp != R_NilValue) {
-	    CDR(t) = CONS(duplicate(CAR(sp)), R_NilValue);
+	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
 	    t = CDR(t);
-	    TAG(t) = TAG(sp);
-	    ATTRIB(t) = duplicate(ATTRIB(sp));
+	    SET_TAG(t, TAG(sp));
+	    SET_ATTRIB(t, duplicate(ATTRIB(sp)));
 	    sp = CDR(sp);
 	}
 	t = CDR(h);
@@ -72,22 +72,22 @@ SEXP duplicate(SEXP s)
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
 	while(sp != R_NilValue) {
-	    CDR(t) = CONS(duplicate(CAR(sp)), R_NilValue);
+	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
 	    t = CDR(t);
-	    TAG(t) = TAG(sp);
-	    ATTRIB(t) = duplicate(ATTRIB(sp));
+	    SET_TAG(t, TAG(sp));
+	    SET_ATTRIB(t, duplicate(ATTRIB(sp)));
 	    sp = CDR(sp);
 	}
 	t = CDR(h);
-	TYPEOF(t) = LANGSXP;
-	ATTRIB(t) = duplicate(ATTRIB(s));
+	SET_TYPEOF(t, LANGSXP);
+	SET_ATTRIB(t, duplicate(ATTRIB(s)));
 	UNPROTECT(2);
 	break;
     case CHARSXP:
 	PROTECT(s);
 	PROTECT(t = allocString(strlen(CHAR(s))));
 	strcpy(CHAR(t), CHAR(s));
-	ATTRIB(t) = duplicate(ATTRIB(s));
+	SET_ATTRIB(t, duplicate(ATTRIB(s)));
 	UNPROTECT(2);
 	break;
     case EXPRSXP:
@@ -96,9 +96,9 @@ SEXP duplicate(SEXP s)
 	PROTECT(s);
 	PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
 	for(i = 0 ; i < n ; i++)
-	    VECTOR(t)[i] = duplicate(VECTOR(s)[i]);
-	ATTRIB(t) = duplicate(ATTRIB(s));
-	TRUELENGTH(t) = TRUELENGTH(s);
+	    SET_VECTOR_ELT(t, i, duplicate(VECTOR_ELT(s, i)));
+	SET_ATTRIB(t, duplicate(ATTRIB(s)));
+	SET_TRUELENGTH(t, TRUELENGTH(s));
 	UNPROTECT(2);
 	break;
     case STRSXP:
@@ -113,7 +113,7 @@ SEXP duplicate(SEXP s)
 	case STRSXP:
 	case EXPRSXP:
 	  for (i = 0; i < n; i++)
-	    VECTOR(t)[i] = VECTOR(s)[i];
+	    SET_VECTOR_ELT(t, i, VECTOR_ELT(s, i));
 	  break;
 	case LGLSXP:
 	  for (i = 0; i < n; i++)
@@ -134,9 +134,9 @@ SEXP duplicate(SEXP s)
 	default:
 	  UNIMPLEMENTED("copyVector");
 	}
-	ATTRIB(t) = duplicate(ATTRIB(s));
+	SET_ATTRIB(t, duplicate(ATTRIB(s)));
 	UNPROTECT(2);
-	TRUELENGTH(t) = TRUELENGTH(s);
+	SET_TRUELENGTH(t, TRUELENGTH(s));
 	break;
     case PROMSXP: /* duplication requires that we evaluate the promise */
 #ifdef OLD
@@ -153,7 +153,7 @@ SEXP duplicate(SEXP s)
 	t = s;/* for -Wall */
     }
     if(TYPEOF(t) == TYPEOF(s) ) /* surely it only makes sense in this case*/
-	OBJECT(t) = OBJECT(s);
+	SET_OBJECT(t, OBJECT(s));
     return t;
 }
 
@@ -167,7 +167,7 @@ void copyVector(SEXP s, SEXP t)
     case STRSXP:
     case EXPRSXP:
 	for (i = 0; i < ns; i++)
-	    VECTOR(s)[i] = VECTOR(t)[i % nt];
+	    SET_VECTOR_ELT(s, i, VECTOR_ELT(t, i % nt));
 	break;
     case LGLSXP:
 	for (i = 0; i < ns; i++)
@@ -203,19 +203,19 @@ void copyListMatrix(SEXP s, SEXP t, int byrow)
 	PROTECT(tmp = allocVector(STRSXP, nr*nc));
 	for (i = 0; i < nr; i++)
 	    for (j = 0; j < nc; j++) {
-		STRING(tmp)[i + j * nr] = duplicate(CAR(pt));
+		SET_STRING_ELT(tmp, i + j * nr, duplicate(CAR(pt)));
 		pt = CDR(pt);
 		if(pt == R_NilValue) pt = t;
 	    }
 	for (i = 0; i < ns; i++) {
-	    CAR(s) = STRING(tmp)[i++];
+	    SETCAR(s, STRING_ELT(tmp, i++));
 	    s = CDR(s);
 	}
 	UNPROTECT(1);
     }
     else {
 	for (i = 0; i < ns; i++) {
-	    CAR(s) = duplicate(CAR(pt));
+	    SETCAR(s, duplicate(CAR(pt)));
 	    s = CDR(s);
 	    pt = CDR(pt);
 	    if(pt == R_NilValue) pt = t;
@@ -237,7 +237,7 @@ void copyMatrix(SEXP s, SEXP t, int byrow)
 	case STRSXP:
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
-		    STRING(s)[i + j * nr] = STRING(t)[k++ % nt];
+		    SET_STRING_ELT(s, i + j * nr, STRING_ELT(t, k++ % nt));
 	    break;
 	case LGLSXP:
 	    for (i = 0; i < nr; i++)

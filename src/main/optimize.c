@@ -112,7 +112,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
     PROTECT(res = allocVector(REALSXP, 1));
-    CADR(info.R_fcall) = allocVector(REALSXP, 1);
+    SETCADR(info.R_fcall, allocVector(REALSXP, 1));
     REAL(res)[0] = Brent_fmin(xmin, xmax, 
 			      (double (*)(double, void*)) fcn1, &info, tol);
     UNPROTECT(2);
@@ -203,7 +203,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
-    CADR(info.R_fcall) = allocVector(REALSXP, 1);
+    SETCADR(info.R_fcall, allocVector(REALSXP, 1));
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
 	R_zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2,
@@ -608,7 +608,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	REAL(v)[i] = x[i];
     }
-    CADR(state->R_fcall) = v;
+    SETCADR(state->R_fcall, v);
     value = eval(state->R_fcall, state->R_env);
 
     v = getAttrib(value, R_gradientSymbol);
@@ -685,40 +685,40 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     k = 0;
 
-    STRING(names)[k] = mkChar("minimum");
-    VECTOR(value)[k] = allocVector(REALSXP, 1);
-    REAL(VECTOR(value)[k])[0] = fpls;
+    SET_STRING_ELT(names, k, mkChar("minimum"));
+    SET_VECTOR_ELT(value, k, allocVector(REALSXP, 1));
+    REAL(VECTOR_ELT(value, k))[0] = fpls;
     k++;
 
-    STRING(names)[k] = mkChar("estimate");
-    VECTOR(value)[k] = allocVector(REALSXP, n);
+    SET_STRING_ELT(names, k, mkChar("estimate"));
+    SET_VECTOR_ELT(value, k, allocVector(REALSXP, n));
     for (i = 0; i < n; i++)
-	REAL(VECTOR(value)[k])[i] = xpls[i];
+	REAL(VECTOR_ELT(value, k))[i] = xpls[i];
     k++;
 
-    STRING(names)[k] = mkChar("gradient");
-    VECTOR(value)[k] = allocVector(REALSXP, n);
+    SET_STRING_ELT(names, k, mkChar("gradient"));
+    SET_VECTOR_ELT(value, k, allocVector(REALSXP, n));
     for (i = 0; i < n; i++)
-	REAL(VECTOR(value)[k])[i] = gpls[i];
+	REAL(VECTOR_ELT(value, k))[i] = gpls[i];
     k++;
 
     if (want_hessian) {
-	STRING(names)[k] = mkChar("hessian");
-	VECTOR(value)[k] = allocMatrix(REALSXP, n, n);
+	SET_STRING_ELT(names, k, mkChar("hessian"));
+	SET_VECTOR_ELT(value, k, allocMatrix(REALSXP, n, n));
 	for (i = 0; i < n * n; i++)
-	    REAL(VECTOR(value)[k])[i] = a[i];
+	    REAL(VECTOR_ELT(value, k))[i] = a[i];
 	k++;
     }
 
-    STRING(names)[k] = mkChar("code");
-    VECTOR(value)[k] = allocVector(INTSXP, 1);
-    INTEGER(VECTOR(value)[k])[0] = code;
+    SET_STRING_ELT(names, k, mkChar("code"));
+    SET_VECTOR_ELT(value, k, allocVector(INTSXP, 1));
+    INTEGER(VECTOR_ELT(value, k))[0] = code;
     k++;
 
     /* added by Jim K Lindsey */
-    STRING(names)[k] = mkChar("iterations");
-    VECTOR(value)[k] = allocVector(INTSXP, 1);
-    INTEGER(VECTOR(value)[k])[0] = itncnt;
+    SET_STRING_ELT(names, k, mkChar("iterations"));
+    SET_VECTOR_ELT(value, k, allocVector(INTSXP, 1));
+    INTEGER(VECTOR_ELT(value, k))[0] = itncnt;
     k++;
 
     setAttrib(value, R_NamesSymbol, names);

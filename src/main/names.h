@@ -261,6 +261,7 @@ SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
 #ifdef HAVE_TIMES
 SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
+SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
 #endif
 SEXP do_Platform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pmatch(SEXP, SEXP, SEXP, SEXP);

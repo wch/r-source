@@ -162,7 +162,7 @@ SEXP menu_ttest3()
     delobj(bApply);
     delobj(win);
     PROTECT(cmdSexp = allocVector(STRSXP, 1));
-    STRING(cmdSexp)[0] = mkChar(cmd);
+    SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
     if (status != PARSE_OK) {
 	UNPROTECT(2);
@@ -170,7 +170,7 @@ SEXP menu_ttest3()
     }
     /* Loop is needed here as EXPSEXP will be of length > 1 */
     for(i = 0; i < length(cmdexpr); i++)
-	ans = eval(VECTOR(cmdexpr)[i], R_GlobalEnv);
+	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
     UNPROTECT(2);
     return ans;
 }

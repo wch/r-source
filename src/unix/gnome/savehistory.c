@@ -34,7 +34,7 @@ void Rgnome_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    strcpy(file, R_ExpandFileName(CHAR(STRING(sfile)[0])));
+    strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile,0))));
     gtk_console_clear_history(GTK_CONSOLE(R_gtk_terminal_text));
     gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), 
 				file, R_HistorySize, NULL);
@@ -49,7 +49,7 @@ void Rgnome_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    strcpy(file, R_ExpandFileName(CHAR(STRING(sfile)[0])));
+    strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile, 0))));
     gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), 
 			     file, R_HistorySize, NULL);
 }

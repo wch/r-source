@@ -120,16 +120,16 @@ static SEXP EnlargeVector(SEXP x, int newlen)
 	break;
     case STRSXP:
 	for (i = 0; i < len; i++)
-	    STRING(newx)[i] = STRING(x)[i];
+	    SET_STRING_ELT(newx, i, STRING_ELT(x, i));
 	for (i = len; i < newlen; i++)
-	    STRING(newx)[i] = R_BlankString;
+	    SET_STRING_ELT(newx, i, R_BlankString);
 	break;
     case EXPRSXP:
     case VECSXP:
 	for (i = 0; i < len; i++)
-	    VECTOR(newx)[i] = VECTOR(x)[i];
+	    SET_VECTOR_ELT(newx, i, VECTOR_ELT(x, i));
 	for (i = len; i < newlen; i++)
-	    VECTOR(newx)[i] = R_NilValue;
+	    SET_VECTOR_ELT(newx, i, R_NilValue);
 	break;
     }
 
@@ -138,9 +138,9 @@ static SEXP EnlargeVector(SEXP x, int newlen)
     if (!isNull(names)) {
 	PROTECT(newnames = allocVector(STRSXP, newlen));
 	for (i = 0; i < len; i++)
-	    STRING(newnames)[i] = STRING(names)[i];
+	    SET_STRING_ELT(newnames, i, STRING_ELT(names, i));
 	for (i = len; i < newlen; i++)
-	    STRING(newnames)[i] = R_BlankString;
+	    SET_STRING_ELT(newnames, i, R_BlankString);
 	setAttrib(newx, R_NamesSymbol, newnames);
 	UNPROTECT(1);
     }
@@ -224,7 +224,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 	else {
 	    /* Wrap the RHS in a list */
 	    SEXP tmp = allocVector(VECSXP, 1);
-	    VECTOR(tmp)[0] = *y;
+	    SET_VECTOR_ELT(tmp, 0, *y);
 	    *y = tmp;
 	}
 	break;
@@ -287,7 +287,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
     ii = 0;
     for (i = 0; i < len; i++) {
 	if (INTEGER(include)[i] == 1) {
-	    VECTOR(xnew)[ii] = VECTOR(x)[i];
+	    SET_VECTOR_ELT(xnew, ii, VECTOR_ELT(x, i));
 	    ii++;
 	}
     }
@@ -297,7 +297,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	ii = 0;
 	for (i = 0; i < len; i++) {
 	    if (INTEGER(include)[i] == 1) {
-		STRING(xnewnames)[ii] = STRING(xnames)[i];
+		SET_STRING_ELT(xnewnames, ii, STRING_ELT(xnames, i));
 		ii++;
 	    }
 	}
@@ -473,7 +473,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    ii = INTEGER(index)[i];
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
-	    STRING(x)[ii] = STRING(y)[i % ny];
+	    SET_STRING_ELT(x, ii, STRING_ELT(y, i % ny));
 	}
 	break;
 
@@ -495,7 +495,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    ii = INTEGER(index)[i];
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
-	    VECTOR(x)[ii] = VECTOR(y)[i % ny];
+	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
 	}
 	break;
 
@@ -512,7 +512,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    ii = INTEGER(index)[i];
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
-	    VECTOR(x)[ii] = VECTOR(y)[i % ny];
+	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
 	}
 	break;
 
@@ -532,24 +532,24 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	SEXP oldnames = getAttrib(x, R_NamesSymbol);
 	if (oldnames != R_NilValue) {
 	    for (i = 0; i < n; i++) {
-		if (STRING(newnames)[i] != R_NilValue) {
+		if (STRING_ELT(newnames, i) != R_NilValue) {
 		    ii = INTEGER(index)[i];
 		    if (ii == NA_INTEGER) continue;
 		    ii = ii - 1;
-		    STRING(oldnames)[ii] = STRING(newnames)[i];
+		    SET_STRING_ELT(oldnames, ii, STRING_ELT(newnames, i));
 		}
 	    }
 	}
 	else {
 	    PROTECT(oldnames = allocVector(STRSXP, nx));
 	    for (i = 0; i < nx; i++)
-		STRING(oldnames)[i] = R_BlankString;
+		SET_STRING_ELT(oldnames, i, R_BlankString);
 	    for (i = 0; i < n; i++) {
-		if (STRING(newnames)[i] != R_NilValue) {
+		if (STRING_ELT(newnames, i) != R_NilValue) {
 		    ii = INTEGER(index)[i];
 		    if (ii == NA_INTEGER) continue;
 		    ii = ii - 1;
-		    STRING(oldnames)[ii] = STRING(newnames)[i];
+		    SET_STRING_ELT(oldnames, ii, STRING_ELT(newnames, i));
 		}
 	    }
 	    setAttrib(x, R_NamesSymbol, oldnames);
@@ -577,8 +577,8 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* Note that "s" has been protected. */
     /* No GC problems here. */
 
-    sr = CAR(s) = arraySubscript(0, CAR(s), x);
-    sc = CADR(s) = arraySubscript(1, CADR(s), x);
+    sr = SETCAR(s, arraySubscript(0, CAR(s), x));
+    sc = SETCADR(s, arraySubscript(1, CADR(s), x));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
 
@@ -768,7 +768,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
-		STRING(x)[ij] = STRING(y)[k];
+		SET_STRING_ELT(x, ij, STRING_ELT(y, k));
 		k = (k + 1) % ny;
 	    }
 	}
@@ -805,7 +805,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     tmp = s;
     for (i = 0; i < k; i++) {
-	CAR(tmp) = arraySubscript(i, CAR(tmp), x);
+	SETCAR(tmp, arraySubscript(i, CAR(tmp), x));
 	tmp = CDR(tmp);
     }
 
@@ -936,7 +936,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	case 1416:	/* real	     <- character */
 	case 1516:	/* complex   <- character */
 
-	    STRING(x)[ii] = STRING(y)[i % ny];
+	    SET_STRING_ELT(x, ii, STRING_ELT(y, i % ny));
 	    break;
 	}
 	if (n > 1) {
@@ -974,9 +974,9 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	ny = NAMED(y);
 	yi = allocList(length(y));
 	for (yp = yi; yp != R_NilValue; yp = CDR(yp)) {
-	    CAR(yp) = CAR(y);
-	    TAG(yp) = TAG(y);
-	    NAMED(CAR(yp)) = ny | NAMED(CAR(y));
+	    SETCAR(yp, CAR(y));
+	    SET_TAG(yp, TAG(y));
+	    SET_NAMED(CAR(yp), ny | NAMED(CAR(y)));
 	    y = CDR(y);
 	}
 	UNPROTECT(1);
@@ -1004,11 +1004,11 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	ii = ii - 1;
 	yi = nthcdr(y, i % ny);
 	xi = nthcdr(x, ii % nx);
-	if (NAMED(y) || NAMED(CAR(yi))) CAR(yi) = duplicate(CAR(yi));
-	else NAMED(CAR(yi)) = 1;
-	CAR(xi) = CAR(yi);
+	if (NAMED(y) || NAMED(CAR(yi))) SETCAR(yi, duplicate(CAR(yi)));
+	else SET_NAMED(CAR(yi), 1);
+	SETCAR(xi, CAR(yi));
 	if (TAG(yi) != R_NilValue)
-	    TAG(xi) = TAG(yi);
+	    SET_TAG(xi, TAG(yi));
     }
     UNPROTECT(3);
     return x;
@@ -1038,18 +1038,18 @@ static SEXP listRemove(SEXP x, SEXP s)
     pa = a;
     for (i = 0; i < nx; i++) {
 	if (ind[i]) {
-	    CDR(pa) = px;
+	    SETCDR(pa, px);
 	    px = CDR(px);
 	    pa = CDR(pa);
-	    CDR(pa) = R_NilValue;
+	    SETCDR(pa, R_NilValue);
 	}
 	else {
 	    px = CDR(px);
 	}
     }
-    ATTRIB(CDR(a)) = ATTRIB(x);
-    OBJECT(CDR(a)) = OBJECT(x);
-    NAMED(CDR(a)) = NAMED(x);
+    SET_ATTRIB(CDR(a), ATTRIB(x));
+    SET_OBJECT(CDR(a), OBJECT(x));
+    SET_NAMED(CDR(a), NAMED(x));
     UNPROTECT(2);
     vmaxset(h);
     return CDR(a);
@@ -1078,23 +1078,23 @@ static SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
 
 	PROTECT(ax = allocArray(STRSXP, dims));
 	for (px = x, i = 0; px != R_NilValue; px = CDR(px))
-	    STRING(ax)[i++] = CAR(px);
+	    SET_STRING_ELT(ax, i++, CAR(px));
 	setAttrib(ax, R_DimNamesSymbol, getAttrib(x, R_DimNamesSymbol));
 	if (isList(y)) {
 	    ny = length(y);
 	    PROTECT(ay = allocVector(STRSXP, ny));
 	    for (py = y, i = 0; py != R_NilValue; py = CDR(py))
-		STRING(ay)[i++] = CAR(py);
+		SET_STRING_ELT(ay, i++, CAR(py));
 	}
 	else {
 	    ny = 1;
 	    PROTECT(ay = allocVector(STRSXP, 1));
-	    STRING(ay)[0] = y;
+	    SET_STRING_ELT(ay, 0, y);
 	}
 	if (nsubs == 2) ax = MatrixAssign(call, ax, subs, ay);
 	else ax = ArrayAssign(call, ax, subs, ay);
 	for (px = x, i = 0; px != R_NilValue; px = CDR(px))
-	    CAR(px) = duplicate(STRING(ax)[i++]);
+	    CAR(px) = duplicate(STRING_ELT(ax, i++));
 	UNPROTECT(2);
 	break;
     }
@@ -1112,7 +1112,7 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
     while (CDDR(p) != R_NilValue)
 	p = CDR(p);
     *y = CADR(p);
-    CDR(p) = R_NilValue;
+    SETCDR(p, R_NilValue);
 }
 
 
@@ -1145,7 +1145,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* FIXME: shouldn't x be protected? */
 
     if (NAMED(CAR(args)) == 2)
-	x = CAR(args) = duplicate(CAR(args));
+	x = SETCAR(args, duplicate(CAR(args)));
 
     SubAssignArgs(args, &x, &subs, &y);
     nsubs = length(subs);
@@ -1196,7 +1196,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (oldtype == LANGSXP) {
 	x = VectorToPairList(x);
-	TYPEOF(x) = LANGSXP;
+	SET_TYPEOF(x, LANGSXP);
     }
 
     /* Note the setting of NAMED(x) to zero here.  This means */
@@ -1207,7 +1207,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* in a naked fashion. */
 
     UNPROTECT(2);
-    NAMED(x) = 0;
+    SET_NAMED(x, 0);
     return x;
 }
 
@@ -1221,14 +1221,14 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
 	k = 0;
 	for (i = 0 ; i < n; i++)
 	    if(i != which)
-		VECTOR(y)[k++] = VECTOR(x)[i];
+		SET_VECTOR_ELT(y, k++, VECTOR_ELT(x, i));
 	xnames = getAttrib(x, R_NamesSymbol);
 	if (xnames != R_NilValue) {
 	    PROTECT(ynames = allocVector(STRSXP, n - 1));
 	    k = 0;
 	    for (i = 0 ; i < n; i++)
 		if(i != which)
-		    STRING(ynames)[k++] = STRING(xnames)[i];
+		    SET_STRING_ELT(ynames, k++, STRING_ELT(xnames, i));
 	    setAttrib(y, R_NamesSymbol, ynames);
 	    UNPROTECT(1);
 	}
@@ -1275,7 +1275,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* If it is not, then make a local copy. */
 
     if (NAMED(x) == 2) {
-	CAR(args) = x = duplicate(x);
+	SETCAR(args, x = duplicate(x));
     }
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
@@ -1306,7 +1306,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(index)[i] = get1index(CAR(subs), isNull(names) ?
-					      R_NilValue : VECTOR(names)[i],
+					      R_NilValue : VECTOR_ELT(names, i),
 					      INTEGER(dims)[i],
 					      0);
 		subs = CDR(subs);
@@ -1394,7 +1394,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1416:	/* real	     <- character */
 	case 1516:	/* complex   <- character */
 
-	    STRING(x)[offset] = STRING(y)[0];
+	    SET_STRING_ELT(x, offset, STRING_ELT(y, 0));
 	    break;
 
 	case 1019:      /* logical    <- vector     */
@@ -1412,7 +1412,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1916:      /* vector     <- character  */
 	case 1903: case 1907: case 1908: case 1999: /* functions */
 
-	    VECTOR(x)[offset] = VECTOR(y)[0];
+	    SET_VECTOR_ELT(x, offset, VECTOR_ELT(y, 0));
 	    break;
 
 	case 2001:	/* expression <- symbol	    */
@@ -1426,7 +1426,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 2020:	/* expression <- expression */
 
             if( NAMED(y) ) y = duplicate(y);
-	    VECTOR(x)[offset] = y;
+	    SET_VECTOR_ELT(x, offset, y);
 	    break;
 
 	default:
@@ -1440,12 +1440,12 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    names = getAttrib(x, R_NamesSymbol);
 	    if (names == R_NilValue) {
 		PROTECT(names = allocVector(STRSXP, length(x)));
-		STRING(names)[offset] = newname;
+		SET_STRING_ELT(names, offset, newname);
 		setAttrib(x, R_NamesSymbol, names);
 		UNPROTECT(1);
 	    }
 	    else
-		STRING(names)[offset] = newname;
+		SET_STRING_ELT(names, offset, newname);
 	}
 	UNPROTECT(1);
     }
@@ -1480,7 +1480,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = (ndims - 1); i > 0; i--)
 		offset = (offset + INTEGER(index)[i]) * INTEGER(dims)[i - 1];
 	    offset += INTEGER(index)[0];
-	    CAR(nthcdr(x, offset)) = duplicate(y);
+	    SETCAR(nthcdr(x, offset), duplicate(y));
 	    UNPROTECT(1);
 	}
 	UNPROTECT(1);
@@ -1488,7 +1488,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     else errorcall(gcall, "object is not subsetable");
 
     UNPROTECT(1);
-    NAMED(x) = 0;
+    SET_NAMED(x, 0);
     return x;
 }
 
@@ -1508,16 +1508,16 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     nlist = CADR(args);
     if(isSymbol(nlist) )
-	STRING(input)[0] = PRINTNAME(nlist);
+	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
     else if(isString(nlist) )
-	STRING(input)[0] = STRING(nlist)[0];
+	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
 	errorcall(call, "invalid subscript type");
 	return R_NilValue; /*-Wall*/
     }
 
     /* replace the second argument with a string */
-    CADR(args) = input;
+    SETCADR(args, input);
 
     if(DispatchOrEval(call, op, args, env, &ans, 0))
       return(ans);
@@ -1535,37 +1535,37 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((isList(x) || isLanguage(x)) && !isNull(x)) {
 	nlist = CADR(args);
 	if (isString(nlist))
-	    nlist = install(CHAR(STRING(nlist)[0]));
+	    nlist = install(CHAR(STRING_ELT(nlist, 0)));
 	if (TAG(x) == nlist) {
 	    if (val == R_NilValue) {
-		ATTRIB(CDR(x)) = ATTRIB(x);
-		OBJECT(CDR(x)) = OBJECT(x);
-		NAMED(CDR(x)) = NAMED(x);
+		SET_ATTRIB(CDR(x), ATTRIB(x));
+		SET_OBJECT(CDR(x), OBJECT(x));
+		SET_NAMED(CDR(x), NAMED(x));
 		x = CDR(x);
 	    }
 	    else
-		CAR(x) = val;
+		SETCAR(x, val);
 	}
 	else {
 	    for (t = x; t != R_NilValue; t = CDR(t))
 		if (TAG(CDR(t)) == nlist) {
 		    if (val == R_NilValue)
-			CDR(t) = CDDR(t);
+			SETCDR(t, CDDR(t));
 		    else
-			CAR(CDR(t)) = val;
+			SETCAR(CDR(t), val);
 		    break;
 		}
 		else if (CDR(t) == R_NilValue && val != R_NilValue) {
 		    SETCDR(t, allocSExp(LISTSXP));
-		    TAG(CDR(t)) = nlist;
-		    CADR(t) = val;
+		    SET_TAG(CDR(t), nlist);
+		    SETCADR(t, val);
 		    break;
 		}
 	}
 	if (x == R_NilValue && val != R_NilValue) {
 	    x = allocList(1);
-	    CAR(x) = val;
-	    TAG(x) = nlist;
+	    SETCAR(x, val);
+	    SET_TAG(x, nlist);
 	}
     }
     else {
@@ -1580,7 +1580,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	nx = length(x);
 	nlist = CADR(args);
 	if (isString(nlist))
-	    nlist = STRING(nlist)[0];
+	    nlist = STRING_ELT(nlist, 0);
 	else
 	    nlist = PRINTNAME(nlist);
 	if (isNull(val)) {
@@ -1590,7 +1590,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (names != R_NilValue) {
 		imatch = -1;
 		for (i = 0; i < nx; i++)
-		    if (NonNullStringMatch(STRING(names)[i], nlist)) {
+		    if (NonNullStringMatch(STRING_ELT(names, i), nlist)) {
 			imatch = i;
 			break;
 		    }
@@ -1601,8 +1601,8 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 		    PROTECT(ansnames = allocVector(STRSXP, nx - 1));
 		    for (i = 0, ii = 0; i < nx; i++)
 			if (i != imatch) {
-			    VECTOR(ans)[ii] = VECTOR(x)[i];
-			    STRING(ansnames)[ii] = STRING(names)[i];
+			    SET_VECTOR_ELT(ans, ii, VECTOR_ELT(x, i));
+			    SET_STRING_ELT(ansnames, ii, STRING_ELT(names, i));
 			    ii++;
 			}
 		    setAttrib(ans, R_NamesSymbol, ansnames);
@@ -1620,14 +1620,14 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    imatch = -1;
 	    if (!isNull(names)) {
 		for (i = 0; i < nx; i++)
-		    if (NonNullStringMatch(STRING(names)[i], nlist)) {
+		    if (NonNullStringMatch(STRING_ELT(names, i), nlist)) {
 			imatch = i;
 			break;
 		    }
 	    }
 	    if (imatch >= 0) {
 		/* We are just replacing an element */
-		VECTOR(x)[imatch] = val;
+		SET_VECTOR_ELT(x, imatch, val);
 	    }
 	    else {
 		/* We are introducing a new element. */
@@ -1637,17 +1637,17 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(ans = allocVector(VECSXP, nx + 1));
 		PROTECT(ansnames = allocVector(STRSXP, nx + 1));
 		for (i = 0; i < nx; i++)
-		    VECTOR(ans)[i] = VECTOR(x)[i];
+		    SET_VECTOR_ELT(ans, i, VECTOR_ELT(x, i));
 		if (isNull(names)) {
 		    for (i = 0; i < nx; i++)
-			STRING(ansnames)[i] = R_BlankString;
+			SET_STRING_ELT(ansnames, i, R_BlankString);
 		}
 		else {
 		    for (i = 0; i < nx; i++)
-			STRING(ansnames)[i] = STRING(names)[i];
+			SET_STRING_ELT(ansnames, i, STRING_ELT(names, i));
 		}
-		VECTOR(ans)[nx] = val;
-		STRING(ansnames)[nx] = nlist;
+		SET_VECTOR_ELT(ans, nx, val);
+		SET_STRING_ELT(ansnames, nx,  nlist);
 		setAttrib(ans, R_NamesSymbol, ansnames);
 		copyMostAttrib(x, ans);
 		UNPROTECT(2);
@@ -1656,6 +1656,6 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     UNPROTECT(2);
-    NAMED(x) = 0;
+    SET_NAMED(x, 0);
     return x;
 }

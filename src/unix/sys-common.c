@@ -126,7 +126,7 @@ void R_RestoreGlobalEnv(void)
 	    break;
 	case VECSXP:
 	    for (i = 0; i < LENGTH(img); i++) {
-		lst = VECTOR(img)[i];
+		lst = VECTOR_ELT(img, i);
 		while (lst != R_NilValue) {
 		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
 		    lst = CDR(lst);
@@ -234,23 +234,23 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1);
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1)
-	    STRING(ans)[i] = mkChar(e);
+	    SET_STRING_ELT(ans, i, mkChar(e));
 	FreeEnvironmentStrings(envir);
 #else
 	char **e;
 	for (i = 0, e = environ; *e != NULL; i++, e++);
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, e = environ; *e != NULL; i++, e++)
-	    STRING(ans)[i] = mkChar(*e);
+	    SET_STRING_ELT(ans, i, mkChar(*e));
 #endif
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {
-	    s = getenv(CHAR(STRING(CAR(args))[j]));
+	    s = getenv(CHAR(STRING_ELT(CAR(args), j)));
 	    if (s == NULL)
-		STRING(ans)[j] = mkChar("");
+		SET_STRING_ELT(ans, j, mkChar(""));
 	    else
-		STRING(ans)[j] = mkChar(s);
+		SET_STRING_ELT(ans, j, mkChar(s));
 	}
     }
     UNPROTECT(1);
@@ -271,7 +271,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(vars);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
-	LOGICAL(ans)[i] = putenv(CHAR(STRING(vars)[i])) == 0;
+	LOGICAL(ans)[i] = putenv(CHAR(STRING_ELT(vars, i))) == 0;
     }
     UNPROTECT(1);
     return ans;
@@ -433,7 +433,7 @@ do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
 
   vals = allocVector(STRSXP, NumCommandLineArgs);
   for(i = 0; i < NumCommandLineArgs; i++) {
-    STRING(vals)[i] = mkChar(CommandLineArgs[i]);
+    SET_STRING_ELT(vals, i, mkChar(CommandLineArgs[i]));
   }
 
  return(vals);

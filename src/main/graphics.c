@@ -1742,7 +1742,7 @@ DevDesc *GNewPlot(int recording, int ask)
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
 	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING(defdev)[0]))));
+	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
 	}
 	else error("No active or default device");
 	eval(defdev, R_GlobalEnv);
@@ -5007,7 +5007,7 @@ unsigned int RGBpar(SEXP x, int i)
 {
     int index;
     if(isString(x)) {
-	return str2col(CHAR(STRING(x)[i]));
+	return str2col(CHAR(STRING_ELT(x, i)));
     }
     else if(isInteger(x) || isLogical(x)) {
 	if(INTEGER(x)[i] == NA_INTEGER) return NA_INTEGER;
@@ -5081,13 +5081,13 @@ unsigned int LTYpar(SEXP value, int index)
 
     if(isString(value)) {
 	for(i = 0; linetype[i].name; i++) { /* is it the i-th name ? */
-	    if(!strcmp(CHAR(STRING(value)[index]), linetype[i].name))
+	    if(!strcmp(CHAR(STRING_ELT(value, index)), linetype[i].name))
 		return linetype[i].pattern;
 	}
 	/* otherwise, a string of hex digits: */
 	code = 0;
 	shift = 0;
-	for(p = CHAR(STRING(value)[index]); *p; p++) {
+	for(p = CHAR(STRING_ELT(value, index)); *p; p++) {
 	    digit = hexdigit(*p);
 	    code  |= (digit<<shift);
 	    shift += 4;
@@ -5132,9 +5132,9 @@ SEXP LTYget(unsigned int lty)
 	l = l >> 4;
     }
     PROTECT(ans = allocVector(STRSXP, 1));
-    STRING(ans)[0] = allocString(ndash);
+    SET_STRING_ELT(ans, 0, allocString(ndash));
     for(i=0 ; i<ndash ; i++) {
-	CHAR(STRING(ans)[0])[i] = HexDigits[dash[i]];
+	CHAR(STRING_ELT(ans, 0))[i] = HexDigits[dash[i]];
     }
     UNPROTECT(1);
     return ans;
@@ -5328,11 +5328,11 @@ void addDevice(DevDesc *dd)
     dd->dp.activate(dd);
 
     /* maintain .Devices (.Device has already been set) */
-    PROTECT(t = mkString(CHAR(STRING(getSymbolValue(".Device"))[0])));
+    PROTECT(t = mkString(CHAR(STRING_ELT(getSymbolValue(".Device"), 0))));
     if (append)
-	CDR(s) = CONS(t, R_NilValue);
+	SETCDR(s, CONS(t, R_NilValue));
     else
-	CAR(s) = t;
+	SETCAR(s, t);
 
     UNPROTECT(2);
 
@@ -5400,7 +5400,7 @@ void removeDevice(int devNum)
 	PROTECT(s = getSymbolValue(".Devices"));
 	for (i=0; i<devNum; i++)
 	    s = CDR(s);
-	CAR(s) = mkString("");
+	SETCAR(s, mkString(""));
 	UNPROTECT(1);
 
 	/* determine new current device */
@@ -5474,7 +5474,7 @@ void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 	if (lastOperation == R_NilValue)
 	    dd->displayList = CONS(newOperation, R_NilValue);
 	else
-	    CDR(lastOperation) = CONS(newOperation, R_NilValue);
+	    SETCDR(lastOperation, CONS(newOperation, R_NilValue));
     }
 }
 
