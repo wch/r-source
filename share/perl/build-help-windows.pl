@@ -41,7 +41,7 @@ if($opt_rhome){
     $R_HOME=$opt_rhome;
     print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
 } else{
-    chdir(dirname($0) . "/../../..");
+    chdir(dirname($0) . "/../..");
     $R_HOME=cwd();
     print STDERR "R_HOME: `$R_HOME'\n" if $opt_debug;
 }
