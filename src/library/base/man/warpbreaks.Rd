@@ -15,7 +15,7 @@
     \code{[,3]} \tab \code{tension} \tab factor  \tab The level of tension (L, M, H)
   }
   There are measurements on 9 looms for each of the six types of warp
-  (AL, AM, AH, BL, BM, BH).
+  (\code{AL}, \code{AM}, \code{AH}, \code{BL}, \code{BM}, \code{BH}).
 }
 \source{
   Tippett, L. H. C. (1950)
@@ -33,7 +33,7 @@
   Wiley.
 }
 \seealso{
-  \code{\link{xtabs}} for ways to display these data as a table.
+  \code{\link[stats]{xtabs}} for ways to display these data as a table.
 }
 \examples{
 data(warpbreaks)

@@ -42,7 +42,7 @@ is.table(x)
   method's separate documentation.
 
   There is a \code{summary} method for objects created by \code{table}
-  or \code{\link{xtabs}}, which gives basic information and performs a
+  or \code{\link[stats]{xtabs}}, which gives basic information and performs a
   chi-squared test for independence of factors (note that the function
   \code{\link[stats]{chisq.test}} in package \pkg{ctest} currently only
   handles 2-d tables).
@@ -54,7 +54,7 @@ is.table(x)
   \code{"table"} can be used to convert the array-based representation
   of a contingency table to a data frame containing the classifying
   factors and the corresponding counts (the latter as component
-  \code{Freq}).  This is the inverse of \code{\link{xtabs}}.
+  \code{Freq}).  This is the inverse of \code{\link[stats]{xtabs}}.
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function
@@ -76,6 +76,7 @@ is.table(x)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats) # for rpois and xtabs
 ## Simple frequency distribution
 table(rpois(100,5))
 data(warpbreaks)
@@ -98,7 +99,7 @@ table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
 ## xtabs() <-> as.data.frame.table() :
 data(UCBAdmissions) ## already a contingency table
 DF <- as.data.frame(UCBAdmissions)
-class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
+class(tab <- xtabs(Freq ~ ., DF)) # xtabs & table
 ## tab *is* "the same" as the original table:
 all(tab == UCBAdmissions)
 all.equal(dimnames(tab), dimnames(UCBAdmissions))

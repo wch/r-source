@@ -52,7 +52,6 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
   \code{xtabs} (see the \code{DF} example below).
 }
 \examples{
-require(stats)
 data(esoph)
 ## 'esoph' has the frequencies of cases and controls for all levels of
 ## the variables 'agegp', 'alcgp', and 'tobgp'.

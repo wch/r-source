@@ -61,7 +61,7 @@ export(add.scope, add1, aggregate, aggregate.data.frame,
        terms.terms, time, ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov,
        uniroot, update, update.default, update.formula, var,
        variable.names, vcov, weighted.mean, weighted.residuals,
-       weights, window, write.ftable, pbirthday, qbirthday)
+       weights, window, write.ftable, xtabs, pbirthday, qbirthday)
 
 ## used by MASS
 export(add1.lm, drop1.lm)
@@ -185,6 +185,7 @@ S3method(print, tables.aov)
 S3method(print, TukeyHSD)
 S3method(print, terms)
 S3method(print, ts)
+S3method(print, xtabs)
 S3method(proj, aov)
 S3method(proj, aovlist)
 S3method(proj, default)
