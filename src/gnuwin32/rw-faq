@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1000
+Version for rw1001
 Brian Ripley
 
 
@@ -61,7 +61,7 @@ that version. The main R FAQ can be found at
 
 There have been two versions of R for Windows, but only is under active
 development, that described here. It is often called something like
-`rw1000' (although not officially). The information here applies only
+`rw1001' (although not officially). The information here applies only
 to recent versions (`rw0901' or later).
 
 There is also information on the use of R for Windows in the Venables &
@@ -520,7 +520,8 @@ unloaded, usually when R terminates.
 
 The `Rgui.exe' console is a Windows application: writing to `stdout' or
 `stderr' will not produce output in the console. (This will work with
-`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead.
+`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead. These are declared
+in header file `R_ext/PrtUtil.h'.
 
 7.5 The output from my Fortran code disappears. Why?
 ====================================================
