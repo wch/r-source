@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-2, 2003-10-08
+Version 1.8-3, 2003-10-09
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -2166,6 +2166,9 @@ distributions of R.)
      shape difference, thin-plate spline transformation grids and edge
      superimposition methods.
 
+*simpleboot*
+     Simple bootstrap routines.
+
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
@@ -2810,8 +2813,8 @@ transcript files, manipulating and editing saved transcripts, and
 re-evaluating commands from transcript files).
 
    The latest stable version of ESS are available via CRAN or the ESS web
-page (http://software.biostat.washington.edu/statsoft/ess/).  The HTML
-version of the documentation can be found at `http://stat.ethz.ch/ESS/'.
+page (http://ESS.R-project.org/).  The HTML version of the documentation
+can be found at `http://stat.ethz.ch/ESS/'.
 
    ESS comes with detailed installation instructions.
 

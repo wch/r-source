@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-2, @value{FAQ-YEAR}-10-08
+@set FAQ-VERSION 1.8-3, @value{FAQ-YEAR}-10-09
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -439,7 +439,7 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-07-15:
+@c Linux binaries as of 2003-10-09:
 @c
 @c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
@@ -450,7 +450,7 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           9.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat    7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c                 i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
-@c           8.x   i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
+@c           8.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
 @c           9     i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
 @c suse      7.3   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.0   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -2266,6 +2266,8 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item simpleboot
+Simple bootstrap routines.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
@@ -2987,11 +2989,9 @@ manipulation (recording and saving transcript files, manipulating and
 editing saved transcripts, and re-evaluating commands from transcript
 files).
 
-The latest stable version of @acronym{ESS} are available via
-@CRAN{} or the
-@uref{http://software.biostat.washington.edu/statsoft/ess/, ESS web
-page}.  The @HTML{} version of the documentation can be found at
-@uref{http://stat.ethz.ch/ESS/}.
+The latest stable version of @acronym{ESS} are available via @CRAN{} or
+the @uref{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
+of the documentation can be found at @uref{http://stat.ethz.ch/ESS/}.
 
 @acronym{ESS} comes with detailed installation instructions.
 
