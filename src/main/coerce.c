@@ -48,12 +48,17 @@ static char *falsenames[] = {
     (char *) 0,
 };
 
+/* Coercion warnings will be OR'ed : */
 #define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4
 
 void CoercionWarning(int warn)
 {
+/* FIXME: Use  
+   =====
+   WarningMessage(R_NilValue, WARNING_....);
+*/
     if (warn & WARN_NA)
 	warning("NAs introduced by coercion");
     if (warn & WARN_INACC)
@@ -363,7 +368,7 @@ SEXP VectorToPairList(SEXP x)
 static SEXP coerceToSymbol(SEXP v)
 {
     SEXP ans = R_NilValue;
-    int warn;
+    int warn = 0;
     if (length(v) <= 0)
 	error("Invalid data of mode \"%s\" (too short)",
 	      CHAR(type2str(TYPEOF(v))));
@@ -385,6 +390,7 @@ static SEXP coerceToSymbol(SEXP v)
 	ans = STRING_ELT(v, 0);
 	break;
     }
+    if (warn) CoercionWarning(warn);/*2000/10/23*/
     ans = install(CHAR(ans));
     UNPROTECT(1);
     return ans;
@@ -536,6 +542,7 @@ static SEXP coerceToString(SEXP v)
 	break;
 	R_print.digits = savedigits;
     }
+    if (warn) CoercionWarning(warn);/*2000/10/23*/
     UNPROTECT(1);
     return (ans);
 }
