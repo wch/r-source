@@ -42,16 +42,16 @@
 @RMATH_HAVE_WORKING_LOG1P@
 #endif
 
+#include <errno.h>
+#include <limits.h>
+#include <float.h>
+#include <math.h>
+
 #if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
 /* remap to avoid problems with getting the right entry point */
 double  Rlog1p(double);
 #define log1p Rlog1p
 #endif
-
-#include <errno.h>
-#include <limits.h>
-#include <float.h>
-#include <math.h>
 
 #include <stdlib.h>
 
