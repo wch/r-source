@@ -60,7 +60,7 @@ weights.glm(object, type = c("prior", "working"), ...)
 
   \item{method}{the method to be used in fitting the model.
     The default (and presently only) method \code{glm.fit}
-    uses iteratively reweighted least squares.}
+    uses iteratively reweighted least squares (IWLS).}
 
   \item{x, y}{logical values indicating whether the response
     vector and model matrix used in the fitting process

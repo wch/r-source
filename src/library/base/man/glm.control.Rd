@@ -11,7 +11,7 @@ glm.control(epsilon=1e-04, maxit=10, trace=FALSE)
 \arguments{
   \item{epsilon}{positive convergence tolerance \eqn{epsilon};
     the iterations converge when \eqn{|dev - devold|/(|dev| + 0.1) < epsilon}.}
-  \item{maxit}{integer giving the maximal number of iterations....}
+  \item{maxit}{integer giving the maximal number of IWLS iterations.}
   \item{trace}{logical indicating if output should be produced for each
     iteration.}
 }
@@ -20,7 +20,7 @@ glm.control(epsilon=1e-04, maxit=10, trace=FALSE)
   least squares solution.
 
   When \code{trace} is true, calls to \code{\link{cat}} produce the
-  output for each iteration. Hence, \code{\link{options}(digits = *)}
+  output for each IWLS iteration. Hence, \code{\link{options}(digits = *)}
   can be used to increase the precision, see the example.
 }
 \value{
