@@ -19,15 +19,25 @@ eigen(x, symmetric, only.values=FALSE)
   interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
   and \code{CG}.
 }
+\details{
+  If \code{symmetric} is unspecified, the code attempts to
+  determine if the matrix is symmetric up to plausible numerical
+  inaccuracies.  It is faster and surer to set the value yourself.
+}
 \value{
   The spectral decomposition of \code{x} is returned
   as components of a list.
   \item{values}{a vector containing the \eqn{p} eigenvalues of \code{x},
     sorted in \emph{decreasing} order, according to \code{Mod(values)}
-    if they are complex.}
+    if they are complex. Complex conjugate pairs have the eigenvalue
+    with the positive imaginary part first.
+  }
   \item{vectors}{a \eqn{p\times p}{p * p} matrix whose columns contain the
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
-    \code{TRUE}.}
+    \code{TRUE}.  When \code{symmetric = TRUE} the vectors are
+    normalized to unit length.  Otherwise the choice of length of the
+    eigenvectors is not defined in the underlying Fortran code.}
+  }
 }
 \references{
   Smith, B. T, Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe,Y.,

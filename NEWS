@@ -19,6 +19,8 @@ NEW FEATURES
 
      o	pdf() graphics driver (not yet operational).
 
+     o	eigen() tests for symmetry with a numerical tolerance.
+
 
 BUG FIXES
 
