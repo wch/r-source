@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-14, 2002-02-08
+@set FAQ-VERSION 1.4-15, 2002-02-11
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -236,10 +236,11 @@ R is being developed for the Unix, Windows and Mac families of operating
 systems.
 
 The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux-gnu,
-i386-sun-solaris, powerpc-linux-gnu, powerpc-apple-darwin,
-mips-sgi-irix, alpha-linux-gnu, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, sparc-linux-gnu, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, @var{cpu}-linux-gnu for
+the i386, alpha, arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see
+e.g.@: @uref{http://buildd.debian.org/build.php?&pkg=r-base}),
+i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
+rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
@@ -676,7 +677,7 @@ The @acronym{CRAN} master site at TU Wien, Austria, can be found at the
 and is currently being mirrored daily at
 
 @quotation
-@multitable @columnfractions .40 .40
+@multitable @columnfractions .45 .40
 @item @uref{http://cran.at.r-project.org/}
 @tab (TU Wien, Austria)
 @item @uref{http://cran.au.r-project.org/}
@@ -1824,6 +1825,9 @@ structural equivalence detection, p* modeling, and network
 visualization.
 @c @item snns
 @c An R interface to the Stuttgart Neural Networks Simulator (SNNS).
+@item spsarlm
+Functions for estimating spatial simultaneous autoregressive (SAR)
+models, including sparse matrix methods for computing the Jacobian.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
@@ -2692,14 +2696,10 @@ In any case, do not call @code{as.numeric()} or their likes directly.
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
-An R package called @strong{lattice}, which provides graphical
-functionality that is compatible with most Trellis commands, is under
-development.  The latest version of the package may be downloaded from
-the @file{contrib/Devel} area of @acronym{CRAN}.  @strong{lattice}
-currently relies on another package called @strong{grid} (also under
-development) so you will need to download that as well.  Because these
-packages are under active development, they might only work with the
-latest development version of R.
+An R package called @strong{lattice} provides graphical functionality
+that is compatible with most Trellis commands.  It currently relies on
+another package called @strong{grid} so you will need to download that
+as well.
 
 You could also look at @code{coplot()} and @code{dotchart()} which might
 do at least some of what you want.  Note also that the R version of
@@ -2709,7 +2709,7 @@ of @code{splom()}, and that R's default plot method has an argument
 aspect ratio of the plot.
 
 (Because the word ``Trellis'' has been claimed as a trademark we do not
-use it in R.  The name ``lattice'' has been proposed for the R
+use it in R.  The name ``lattice'' has been chosen for the R
 equivalent.)
 
 @node What are the enclosing and parent environments?, How can I substitute into a plot label?, Are Trellis displays implemented in R?, R Miscellanea
