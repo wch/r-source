@@ -20,7 +20,8 @@
 #ifndef FORTRAN_H
 #define FORTRAN_H
 
-#include <Platform.h>
+#include "Platform.h"
+#include "Complex.h"
 #include <math.h>
 
 	/* General F2C Macros */
@@ -53,11 +54,6 @@
 #define dmin(a,b) (double)min(a,b)
 #define dmax(a,b) (double)max(a,b)
 /*-- Note that ./Mathlib.h  has  [if]min2(.,.) and [if]max2(.,.) ! */
-
-typedef struct {
-	double r;
-	double i;
-} complex;
 
 	/* Versions of Fortran Intrinsics */
 

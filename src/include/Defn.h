@@ -24,6 +24,7 @@
 
 #include "Platform.h"
 #include "Arith.h"
+#include "Complex.h"
 #include "Errormsg.h"
 
 /*  Heap and Pointer Protection Stack Sizes.  */
@@ -101,11 +102,6 @@ typedef unsigned int SEXPTYPE;
 #define ANYSXP	    18    /* make "any" args work */
 #define VECSXP	    19    /* generic vectors */
 #define EXPRSXP	    20    /* expressions vectors */
-
-typedef struct {
-    double r;
-    double i;
-} complex;
 
 typedef struct SEXPREC {
 
