@@ -48,7 +48,7 @@ double lgammafn(double x)
     static double dxrel = 0.;
     double ans, y, sinpiy;
 
-    if (xmax == 0) {
+    if (xmax == 0) { /* initialize machine dependent constants : */
 	xmax = d1mach(2)/log(d1mach(2));
 	dxrel = sqrt (d1mach(4));
     }
