@@ -590,9 +590,13 @@ SEXP lengthgets(SEXP x, R_len_t len)
 SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_len_t len;
-    SEXP x;
+    SEXP x, ans;
+
     checkArity(op, args);
     x = CAR(args);
+    if( isObject(x) && DispatchOrEval(call, op, "length<-", args,
+				      rho, &ans, 0, 1))
+	return(ans);
     if (!isVector(x) && !isVectorizable(x))
        error("length<- invalid first argument");
     if (length(CADR(args)) != 1)

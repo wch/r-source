@@ -2918,3 +2918,11 @@ stopifnot(is.na(predict(fit, newdata=x[1:10, ])))
 ## (PR#6451) regex functions did not coerce args to character.
 sub(x=NA, pattern="x", replacement="y")
 ## failed in 1.8.1
+
+
+## length<- needed a factor method, and so needed to be generic
+aa <- factor(letters)
+length(aa) <- 20
+aa
+stopifnot(is.factor(aa))
+## returned a vector in 1.8.1

@@ -431,6 +431,9 @@ BUG FIXES
 	report correctly that the number of elements specified was too
 	large (rather than reporting it as negative).
 
+    o   length<- now works correctly on factors (and is now generic
+	with a method for factors).
+
 
 
 

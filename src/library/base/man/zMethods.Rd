@@ -20,6 +20,7 @@
   \code{\link{$<-}},
 
   \code{\link{length}},
+  \code{\link{length<-}},
     
   \code{\link{dimnames<-}},   % do_dimnamesgets()    [attrib.c:422]
   \code{\link{dimnames}},     % do_dimnames()        [attrib.c:489]

@@ -214,3 +214,11 @@ function (e1, e2)
     x[value] <- NA
     structure(x, levels = lx, class = cx)
 }
+
+"length<-.factor" <- function(x, value)
+{
+    cl <- class(x)
+    levs <- levels(x)
+    x <- NextMethod()
+    structure(x, levels=levs, class=cl)
+}
