@@ -7,7 +7,7 @@
 }
 \usage{
 Rtangle()
-RtangleSetup(file, output=NULL, annotate=TRUE, split=FALSE,
+RtangleSetup(file, syntax, output=NULL, annotate=TRUE, split=FALSE,
              prefix=TRUE, quiet=FALSE)
 }
 \arguments{

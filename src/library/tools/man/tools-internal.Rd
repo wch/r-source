@@ -6,7 +6,7 @@
 \alias{.sourceAssignments}
 \alias{sQuote}
 \alias{SweaveParseOptions}
-\alias{SweaveGetHooks}
+\alias{SweaveHooks}
 \alias{RweaveLatexRuncode}
 \alias{RweaveLatexWritedoc}
 \alias{RweaveLatexFinish}
@@ -14,7 +14,9 @@
 \alias{RweaveChunkPrefix}
 \alias{RweaveEvalWithOpt}
 \alias{RtangleRuncode}
+\alias{RtangleWritedoc}
 \alias{RtangleFinish}
+\alias{SweaveGetSyntax}
 \description{
   Internal tools functions.
 }

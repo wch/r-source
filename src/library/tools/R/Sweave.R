@@ -1,44 +1,56 @@
-Sweave <- function(file, driver=RweaveLatex(), ...)
+Sweave <- function(file, driver=RweaveLatex(),
+                   syntax=getOption("SweaveSyntax"), ...)
 {
     if(is.character(driver))
         driver <- get(driver, mode="function")()
     else if(is.function(driver))
         driver <- driver()
-    
-    drobj <- driver$setup(file=file, ...)
 
+
+    if(is.null(syntax))
+        syntax <- SweaveGetSyntax(file)    
+    if(is.character(syntax))
+        syntax <- get(syntax, mode="list")
+    
+    drobj <- driver$setup(file=file, syntax=syntax, ...)
+    
     text <- readLines(file)
     
     mode <- "doc"
     chunknr <- 0
     chunk <- NULL
-    
+
+    namedchunks <- list()
     for(line in text){
-        if(any(grep("^@", line))){
+        if(any(grep(syntax$doc, line))){
             if(mode=="doc"){
                 if(!is.null(chunk))
                     drobj <- driver$writedoc(drobj, chunk)
                 mode <- "doc"
             }
             else{
+                if(!is.null(chunkopts$label))
+                    namedchunks[[chunkopts$label]] <- chunk
                 if(!is.null(chunk))
                     drobj <- driver$runcode(drobj, chunk, chunkopts)
                 mode <- "doc"
             }
             chunk <- NULL
         }
-        else if(any(grep("^<<.*>>=", line))){
+        else if(any(grep(syntax$code, line))){
             if(mode=="doc"){
                 if(!is.null(chunk))
                     drobj <- driver$writedoc(drobj, chunk)
                 mode <- "code"
             }
             else{
+                if(!is.null(chunkopts$label))
+                    namedchunks[[chunkopts$label]] <- chunk
                 if(!is.null(chunk))
                     drobj <- driver$runcode(drobj, chunk, chunkopts)
                 mode <- "code"
             }
-            chunkopts <- sub("^<<(.*)>>=.*", "\\1", line)
+            chunkopts <- sub(syntax$code, "\\1", line)
             chunkopts <- SweaveParseOptions(chunkopts,
                                             drobj$options,
                                             driver$checkopts)
@@ -47,10 +59,25 @@ Sweave <- function(file, driver=RweaveLatex(), ...)
             chunkopts$chunknr <- chunknr
         }
         else{
+            if(mode=="code" && any(grep(syntax$coderef, line))){
+                chunkref <- sub(syntax$coderef, "\\1", line)
+                if(!(chunkref %in% names(namedchunks)))
+                    warning(paste("Reference to unknown chunk",
+                                  chunkref))
+                line <- namedchunks[[chunkref]]
+            }
+            else if(mode=="doc" && any(grep(syntax$syntaxname, line))){
+                sname <- sub(syntax$syntaxname, "\\1", line)
+                syntax <- get(sname, mode = "list")
+                if(class(syntax) != "SweaveSyntax")
+                    stop(paste("Object '", sname,
+                               "'has not class SweaveSyntax"))
+                drobj$syntax <- syntax
+            }
             if(is.null(chunk))
                 chunk <- line
-            else         
-                chunk <- paste(chunk, line, sep="\n")
+            else                    
+                chunk <- c(chunk, line)
         }
     }
     if(mode=="doc") driver$writedoc(drobj, chunk)
@@ -58,6 +85,37 @@ Sweave <- function(file, driver=RweaveLatex(), ...)
     
     driver$finish(drobj)
 }
+
+###**********************************************************
+
+SweaveSyntaxNoweb <-
+    list(doc = "^@",
+         code = "^<<(.*)>>=.*",
+         coderef = "^<<(.*)>>.*",
+         docopt = "\\\\SweaveOpts{([^}]*)}",
+         docexpr = "\\\\Sexpr{([^}]*)}",
+         extension = "\\.[rsRS]?nw$",
+         syntaxname = "\\\\SweaveSyntax{([^}]*)}")
+
+class(SweaveSyntaxNoweb) <- "SweaveSyntax"
+
+SweaveSyntaxLatex <- SweaveSyntaxNoweb
+SweaveSyntaxLatex$doc <-  "^[[:space:]]*\\\\end{Scode}"
+SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin{Scode}{?([^}]*)}?.*"
+SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef{([^}]*)}.*"
+SweaveSyntaxLatex$extension <- "\\.[rsRS]tex$"
+
+SweaveGetSyntax <- function(file){
+
+    synt <- apropos("SweaveSyntax", mode="list")
+    for(sname in synt){
+        s <- get(sname, mode="list")
+        if(class(s) != "SweaveSyntax") next
+        if(any(grep(s$extension, file))) return(s)
+    }
+    return(SweaveSyntaxNoweb)
+}
+
 
 ###**********************************************************
 
@@ -96,21 +154,26 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
     options
 }
 
-SweaveGetHooks <- function(options)
+SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 {
-    if(!exists("SweaveHooks", mode="list"))
+    if(is.null(SweaveHooks <- getOption("SweaveHooks")))
         return(NULL)
-    
-    z <- NULL
+
+    z <- character(0)
     for(k in names(SweaveHooks)){
         if(k != "" && !is.null(options[[k]]) && options[[k]]){
-            if(is.function(SweaveHooks[[k]]))
-                z <- c(z, parse(text=paste("SweaveHooks$",
-                                k, "()", sep="")))
+            if(is.function(SweaveHooks[[k]])){
+                z <- c(z, k)
+                if(run)
+                    eval(SweaveHooks[[k]](), envir=envir)
+            }
         }
     }
     z
 }
+
+            
+        
            
 
 ###**********************************************************
@@ -126,11 +189,12 @@ RweaveLatex <- function()
 }
 
 RweaveLatexSetup <-
-    function(file, output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
+    function(file, syntax,
+             output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
              eval=TRUE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
 {
     if(is.null(output)){
-        prefix.string <- basename(sub("\\.[rsRS]?nw$", "", file))
+        prefix.string <- basename(sub(syntax$extension, "", file))
         output <- paste(prefix.string, "tex", sep=".")
     }
     else{
@@ -154,7 +218,7 @@ RweaveLatexSetup <-
                     strip.white=TRUE, include=TRUE)
     
     list(output=output, styfile=styfile, havesty=FALSE,
-         debug=debug, quiet=quiet,
+         debug=debug, quiet=quiet, syntax = syntax,
          options=options, chunkout=list())
 }
 
@@ -194,9 +258,8 @@ RweaveLatexRuncode <- function(object, chunk, options)
     else
         chunkout <- object$output
 
-    chunkexps <- SweaveGetHooks(options)
-    nrhooks <- length(chunkexps)
-    chunkexps <- c(chunkexps, parse(text=chunk))
+    SweaveHooks(options, run=TRUE)
+    chunkexps <- parse(text=chunk)
     openSinput <- FALSE
 
     if(length(chunkexps)==0)
@@ -208,7 +271,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
         dce <- deparse(ce)
         if(object$debug)
             cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
-        if(options$echo && (nce > nrhooks)){
+        if(options$echo){
             if(!openSinput){
                 cat("\\begin{Sinput}",
                     file=chunkout, append=TRUE)
@@ -269,12 +332,16 @@ RweaveLatexRuncode <- function(object, chunk, options)
             postscript(file=paste(chunkprefix, "eps", sep="."),
                        width=options$width, height=options$height,
                        paper="special", horizontal=FALSE)
+
+            SweaveHooks(options, run=TRUE)
             eval(chunkexps, envir=.GlobalEnv)
             dev.off()
         }
         if(options$pdf){
             pdf(file=paste(chunkprefix, "pdf", sep="."),
                 width=options$width, height=options$height)
+
+            SweaveHooks(options, run=TRUE)
             eval(chunkexps, envir=.GlobalEnv)
             dev.off()
         }
@@ -298,26 +365,28 @@ RweaveLatexWritedoc <- function(object, chunk)
                       chunk)
         object$havesty <- TRUE
     }
-    
-    while((pos <-  regexpr("\\\\Sexpr{([^}]*)}", chunk)) >0)
+
+    while(any(pos <- grep(object$syntax$docexpr, chunk)))
     {
-        cmd <- substr(chunk, pos+7, pos-2+attr(pos, "match.length"))
+        cmd <- sub(paste(".*", object$syntax$docexpr, ".*", sep=""),
+                   "\\1", chunk[pos[1]])
         if(object$options$eval)
             val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
         else
             val <- paste("\\\\verb{<<", cmd, ">>{", sep="")
         
-        chunk <- sub("\\\\Sexpr{[^}]*}", val, chunk)
+        chunk[pos[1]] <- sub(object$syntax$docexpr, val, chunk[pos[1]])
     }
-    while((pos <-  regexpr("\\\\SweaveOpts{([^}]*)}", chunk)) >0)
+    while(any(pos <- grep(object$syntax$docopt, chunk)))
     {
-        opts <- substr(chunk, pos+12, pos-2+attr(pos, "match.length"))
+        opts <- sub(paste(".*", object$syntax$docopt, ".*", sep=""),
+                    "\\1", chunk[pos[1]])
         object$options <- SweaveParseOptions(opts, object$options,
                                              RweaveLatexOptions)
-        chunk <- sub("\\\\SweaveOpts{[^}]*}", "", chunk)
+        chunk[pos[1]] <- sub(object$syntax$docopt, "", chunk[pos[1]])
     }
-    
-    cat(chunk, "\n", file=object$output, append=TRUE)
+
+    cat(chunk, sep="\n", file=object$output, append=TRUE)
     return(object)
 }
 
@@ -340,19 +409,19 @@ RweaveLatexOptions <- function(options)
         else return(as.logical(toupper(as.character(x))))
     }
 
-    LOGOPTS <- c("fig", "pdf", "eps", "echo", "split",
-                 "strip.white", "include", "prefix", "eval",
-                 "print", "term")
-
-    LOGOPTS <- LOGOPTS[LOGOPTS %in% names(options)]
     
-    for(opt in LOGOPTS){
-        oldval <- options[[opt]]
-        if(!is.logical(options[[opt]])){
-            options[[opt]] <- c2l(options[[opt]])
+    NOLOGOPTS <- c("results", "prefix.string", "width", "height",
+                   "engine", "label")
+
+    for(opt in names(options)){
+        if(! (opt%in%NOLOGOPTS)){
+            oldval <- options[[opt]]
+            if(!is.logical(options[[opt]])){
+                options[[opt]] <- c2l(options[[opt]])
+            }
+            if(is.na(options[[opt]]))
+                stop(paste("invalid value for", opt, ":", oldval))
         }
-        if(is.na(options[[opt]]))
-            stop(paste("invalid value for", opt, ":", oldval))
     }
 
     options$results <- match.arg(options$results,
@@ -393,7 +462,9 @@ RweaveEvalWithOpt <- function (expr, options){
 
 ###**********************************************************
             
-Stangle <- function(file, driver=Rtangle(), ...){
+Stangle <- function(file, driver=Rtangle(),
+                    syntax=getOption("SweaveSyntax"), ...)
+{
     Sweave(file=file, driver=driver, ...)
 }
             
@@ -401,17 +472,18 @@ Rtangle <-  function()
 {
     list(setup = RtangleSetup,
          runcode = RtangleRuncode,
-         writedoc = function(object, ...) return(object),
+         writedoc = RtangleWritedoc,
          finish = RtangleFinish,
          checkopts = RweaveLatexOptions)
 }
 
 
-RtangleSetup <- function(file, output=NULL, annotate=TRUE, split=FALSE,
+RtangleSetup <- function(file, syntax,
+                         output=NULL, annotate=TRUE, split=FALSE,
                          prefix=TRUE, quiet=FALSE)
 {
     if(is.null(output)){
-        prefix.string <- basename(sub("\\.[rsRS]?nw$", "", file))
+        prefix.string <- basename(sub(syntax$extension, "", file))
         output <- paste(prefix.string, "R", sep=".")
     }
     else{
@@ -434,7 +506,7 @@ RtangleSetup <- function(file, output=NULL, annotate=TRUE, split=FALSE,
                     engine="R")
 
     list(output=output, annotate=annotate, options=options,
-         chunkout=list(), quiet=quiet)
+         chunkout=list(), quiet=quiet, syntax=syntax)
 }
                
     
@@ -460,20 +532,36 @@ RtangleRuncode <-  function(object, chunk, options)
     else
         chunkout <- object$output
 
-    if(object$annotate)
+    if(object$annotate){
         cat("###################################################\n",
             "### chunk number ", options$chunknr,
             ": ", options$label, "\n",
             "###################################################\n",
-            chunk,"\n\n", 
             file=chunkout, append=TRUE, sep="")
-    else
-        cat(chunk,"\n\n", 
+    }
+
+    hooks <- SweaveHooks(options, run=FALSE)
+    for(k in hooks)
+        cat("getOption(\"SweaveHooks\")[[\"", k, "\"]]()\n",
             file=chunkout, append=TRUE, sep="")
+
+    cat(chunk,"\n", file=chunkout, append=TRUE, sep="\n")
 
     if(is.null(options$label) & options$split)
         close(chunkout)
 
+    return(object)
+}
+
+RtangleWritedoc <- function(object, chunk)
+{
+    while(any(pos <- grep(object$syntax$docopt, chunk)))
+    {
+        opts <- sub(paste(".*", object$syntax$docopt, ".*", sep=""),
+                    "\\1", chunk[pos[1]])
+        object$options <- SweaveParseOptions(opts, object$options)
+        chunk[pos[1]] <- sub(object$syntax$docopt, "", chunk[pos[1]])
+    }
     return(object)
 }
 
@@ -487,13 +575,4 @@ RtangleFinish <- function(object)
         for(con in object$chunkout) close(con)
     }
 }
-
-
-
-
-
-
-
-
-
 

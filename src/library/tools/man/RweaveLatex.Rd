@@ -8,7 +8,7 @@
 }
 \usage{
 RweaveLatex()
-RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
+RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
     echo=TRUE, eval = TRUE, split=FALSE, stylepath=TRUE,
     pdf=TRUE, eps=TRUE)
 }
@@ -86,20 +86,6 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
     \item{height:} numeric (6), height of figures in inch.
   }
 }
-\section{Hook Functions}{
-  Before each code chunk is evaluated, a number of hook functions can be
-  executed. If a list \code{SweaveHooks} is found along the search path,
-  it is taken to be a collection of hook functions. For each logical
-  option of a code chunk (\code{echo}, \code{print}, \ldots) a hook can
-  be specified, which is executed if and only if the respective option
-  is \code{TRUE}. Hooks must be named elements of the list
-  \code{SweaveHooks} and be functions taking no arguments. E.g., if
-  \code{SweaveHooks} is defined as \code{list(fig = foo)}, and
-  \code{foo} is a function, then
-  \code{SweaveHooks$fig()} would be executed before the code in each
-  figure chunk. This is especially useful to set defaults for the
-  graphical parameters in a series of figure chunks.
-} 
 \author{Friedrich Leisch}
 \references{
   Friedrich Leisch: Sweave User Manual, 2002\cr
