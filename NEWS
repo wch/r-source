@@ -63,7 +63,7 @@ USER-VISIBLE CHANGES
 	not), *and* then for a user `.Renviron' file in the current or
 	the user's home directory.
 
-    o	former stars(*, colors = v) must now be stars(*, col.segments = v).
+    o	Former stars(*, colors = v) must now be stars(*, col.segments = v).
 
 
 NEW FEATURES
@@ -391,7 +391,10 @@ NEW FEATURES
     o	La.eigen() and La.svd() have optional methods to use later
 	(and supposedly much faster) LAPACK routines.  If these prove
 	fast and reliable the new methods will become the default in
-	due course.
+	due course.  The difference is most noticeable on systems with
+	optimized BLAS libraries.
+
+    o	New capabilities() options "GNOME" and "IEEE754".
 
 
 DOCUMENTATION CHANGES
@@ -610,6 +613,7 @@ BUG FIXES
     o   The rbinom() C code had a transcription error from the original
         Fortran which led to a small deviation from the intended
         distribution. (PR#1190)
+
 
 
 	**************************************************

@@ -73,8 +73,10 @@ La.eigen(x, symmetric, only.values = FALSE,
   \emph{Matrix Eigensystems Routines -- EISPACK Guide}.
   Springer-Verlag Lecture Notes in Computer Science.
 
-  Anderson. E. and ten others (1995)
-  \emph{LAPACK Users' Guide}. Second Edition. SIAM.
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
 \seealso{
   \code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and
@@ -82,6 +84,8 @@ La.eigen(x, symmetric, only.values = FALSE,
 
   To compute the determinant of a matrix, the \code{\link{qr}}
   decomposition is much more efficient: \code{\link{det}}.
+
+  \code{\link{capabilities}} to test for IEEE 754 arithmetic.
 }
 \examples{
 eigen(cbind(c(1,-1),c(-1,1)))

@@ -856,8 +856,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
     
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 10));
-    PROTECT(ansnames = allocVector(STRSXP, 10));
+    PROTECT(ans = allocVector(LGLSXP, 12));
+    PROTECT(ansnames = allocVector(STRSXP, 12));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -889,7 +889,18 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("X11"));
+#ifdef Unix
     LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("GNOME"));
+#ifdef Unix
+    LOGICAL(ans)[i++] = strcmp(R_GUIType, "GNOME") == 0;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libz"));
 #if defined(HAVE_ZLIB)
@@ -945,6 +956,14 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 #endif
     i++;
+
+    SET_STRING_ELT(ansnames, i, mkChar("IEEE754"));
+#if defined(IEEE_754)
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

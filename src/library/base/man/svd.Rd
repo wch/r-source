@@ -27,7 +27,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesvd", "dgesdd"))
   DGESDD.  The latter is usually substantially faster if singular
   vectors are required: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
-  Most benefits are seen with an optimized BLAS system.
+  Most benefit is seen with an optimized BLAS system.
 
   \code{La.svd} is preferred to \code{svd} for new projects, but it is
   not an exact replacement as it returns the transpose of the right
@@ -54,7 +54,8 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesvd", "dgesdd"))
   The components in the returned value correspond directly
   to the values returned by DSVDC.
   \item{d}{a vector containing the singular values of \code{x}.}
-  \item{u}{a matrix whose columns contain the left singular vectors of \code{x}.}
+  \item{u}{a matrix whose columns contain the left singular vectors of
+    \code{x}.}
   \item{v}{a matrix whose columns contain the right singular vectors of
     \code{x}.}
 
@@ -65,10 +66,16 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesvd", "dgesdd"))
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 
-  Anderson. E. and ten others (1995)
-  \emph{LAPACK Users' Guide}. Second Edition. SIAM.
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
-\seealso{\code{\link{eigen}}, \code{\link{qr}}.}
+\seealso{
+  \code{\link{eigen}}, \code{\link{qr}}.
+
+  \code{\link{capabilities}} to test for IEEE 754 arithmetic.
+}
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 str(X <- hilbert(9)[,1:6])
