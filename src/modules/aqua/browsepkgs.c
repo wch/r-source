@@ -101,8 +101,7 @@ extern TXNControlData   RReadOnlyData[];
 extern TXNObject	RConsoleInObject;
 
 
-SEXP cpkgs, cvers, ivers, wwwhere, install_dflt, binary_dflt;
-
+static SEXP cpkgs, cvers, ivers, wwwhere, install_dflt, binary_dflt;
 
 #ifndef max
 #define max(a, b) (((a)>(b))?(a):(b))
@@ -538,6 +537,9 @@ SEXP Raqua_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
   char *vm;
   SEXP ans; 
   int i;
+  int do_any=0;
+  DialogItemIndex   userAction=kAlertStdAlertCancelButton;
+
   checkArity(op, args);
 
   vm = vmaxget();
@@ -561,9 +563,23 @@ SEXP Raqua_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
 
   PROTECT(ans =  NEW_LOGICAL(NumOfPkgs));
 
+  
   for(i=1;i<=NumOfPkgs;i++){
-   LOGICAL(ans)[i-1] = InstallPkg[i-1];
+    LOGICAL(ans)[i-1] = InstallPkg[i-1];
+    do_any = do_any | InstallPkg[i-1];
   }
+  
+
+  if (do_any){
+    userAction = YesOrNot("Install Packages", "Download and install these packages?","Ok","Cancel");
+    if (userAction == kAlertStdAlertCancelButton){
+      for(i=1;i<=NumOfPkgs;i++){
+	LOGICAL(ans)[i-1] = 0;
+      }
+    }
+    
+  }
+  
 
   vmaxset(vm);
   
