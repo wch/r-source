@@ -1,7 +1,7 @@
 #
 # ${R_HOME}/src/nmath/standalone/Makefile
 
-VPATH = @srcdir@:@srcdir@/..
+VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
@@ -44,9 +44,9 @@ SOURCES_NMATH = \
 	ptukey.c qtukey.c \
 	wilcox.c \
 	signrank.c
-SOURCES = $(SOURCES_NMATH) sunif.c
-DEPENDS = $(SOURCES:.c=.ad)
-OBJECTS = $(SOURCES:.c=.ao)
+SOURCES = $(SOURCES_NMATH) std_unif.c
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in test.c sunif.c
@@ -57,41 +57,47 @@ SHLIB = libRmath.$(SHLIB_EXT)
 ## FIXME: this should be libRmath.la etc ...
 Rexeclibdir_LTLIBRARIES = libRmath.$(SHLIB_EXT)
 libRmath_la_SOURCES = $(SOURCES)
-libRmath_la_OBJECTS = $(OBJECTS:.ao=.lo)
+libRmath_la_OBJECTS = $(OBJECTS:.o=.lo)
 
-CLEANFILES = Makedeps *.ad *.ao *.lo test
+CLEANFILES = Makedeps *.d *.o *.lo test $(SOURCES)
 DISTCLEANFILES = Makefile $(LIB) $(SHLIB)
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
+
 .SUFFIXES:
-.SUFFIXES: .c .ad .ao .lo
+.SUFFIXES: .c .d .o .lo
 
-.c.ad:
-	@echo "making $@ from $<"
-	@$(CC) -M $(ALL_CPPFLAGS) $< > $@
-.c.ao:
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+all: Makefile static shared
 
-all: Makefile Makedeps static shared
+Copy:
+	@echo "Copying source files"
+	@if test ! -f std_unif.c; then ln -s ${srcdir}/sunif.c std_unif.c; fi
+	@for f in $(SOURCES_NMATH); do \
+	  if test ! -f $${f}; then ln -s ${srcdir}/../$${f} .; fi; \
+	done
+
 static: Makefile ../../include/Rconfig.h
+	@$(MAKE) Copy
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
 
 shared: Makefile ../../include/Rconfig.h
+	@$(MAKE) Copy
 	@$(MAKE) Makedeps
 	$(MAKE) $(SHLIB)
 
 ../../include/Rconfig.h:
 	(cd $(@D); $(MAKE) $(@F))
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES)
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
-	@cat $(DEPENDS) | sed s/\.o:/.ao:/>> Makefile
+	@cat $(DEPENDS) >> Makefile
 	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
 	@touch $@
 
