@@ -20,9 +20,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   
-  $Revision: 1.4 $
+  $Revision: 1.5 $
 
-  $Date: 2000/02/10 17:03:55 $
+  $Date: 2000/02/16 12:54:16 $
   
   $Author: leisch $
 
@@ -43,8 +43,8 @@ public class IndexEntry extends Object
 		     String desc, String url)
   {
     iEntry = entry;
-    iKey = keywords;
-    iAliases = aliases;
+    iKey = " " + keywords + " ";
+    iAliases = " " + entry + " " + aliases + " ";
     iDescription = desc;
     iURL = url;
     

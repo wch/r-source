@@ -18,6 +18,7 @@ function searchObject ()
   line = line + '<h1>Search Result</h1>\n';
 
   // call the applet code!
+  searchstring = " " + searchstring + " ";
   line = line + document.SearchEngine.search (searchstring,false,false,true);
 
   line = line + '</body>\n';
