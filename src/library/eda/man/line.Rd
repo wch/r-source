@@ -1,20 +1,20 @@
 \name{line}
+\alias{line}
+\alias{coeff.tukeyline}
+\alias{residuals.tukeyline}
+\alias{fitted.tukeyline}
+\alias{print.tukeyline}
+\alias{coef.tukeyline}
+\alias{fitted.tukeyline}
 \title{Robust Line Fitting}
 \usage{
 line(x, y)
 
-coefficients(tukeyline.obj)
-residuals(tukeyline.obj)
-fitted.values(tukeyline.obj)
-print(tukeyline.obj)
+\method{coef}{tukeyline}(tukeyline.obj)
+\method{residuals}{tukeyline}(tukeyline.obj)
+\method{fitted}{tukeyline}(tukeyline.obj)
+\method{print}{tukeyline}(tukeyline.obj)
 }
-\alias{line}
-\alias{coefficients.tukeyline}
-\alias{residuals.tukeyline}
-\alias{fitted.values.tukeyline}
-\alias{print.tukeyline}
-\alias{coef.tukeyline}
-\alias{fitted.tukeyline}
 \arguments{
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
 }

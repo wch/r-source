@@ -1,13 +1,13 @@
 \name{ecdf}
-\title{Empirical Cumulative Distribution Function}
-\usage{
-ecdf(x)
-plot(\dots, verticals = FALSE, col.01line = "gray70")
-}
 \alias{ecdf}
 \alias{print.ecdf}
 \alias{summary.ecdf}
 \alias{plot.ecdf}
+\title{Empirical Cumulative Distribution Function}
+\usage{
+ecdf(x)
+\method{plot}{ecdf}(\dots, verticals = FALSE, col.01line = "gray70")
+}
 \arguments{
   \item{x}{numeric vector with the ``observations''.}
   \item{\dots}{arguments to be passed to \code{\link{plot.stepfun}}, the

@@ -21,7 +21,7 @@ ar(x, aic = TRUE, order.max = NULL,
 ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
        series, \dots)
 
-predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
+\method{predict}{ar}(object, newdata, n.ahead = 1, se.fit = TRUE, \dots)
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}
@@ -51,7 +51,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
   \item{var.method}{the method to estimate the innovations variance
     (see Details).}
 
-  \item{...}{additional arguments for specific methods.}
+  \item{\dots}{additional arguments for specific methods.}
 
   \item{ar.obj}{a fit from \code{ar}.}
 

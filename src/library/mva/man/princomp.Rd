@@ -14,8 +14,10 @@ loadings(x)
 
 screeplot(x, npcs = min(10, length(x$sdev)),
           type = c("barplot", "lines"), main = deparse(substitute(x)), \dots)
-plot(x, \dots)
-print(x, \dots)  summary(object)  predict(object, \dots)
+\method{plot}{princomp}(x, \dots)
+\method{print}{princomp}(x, \dots)
+\method{summary}{princomp}(object)
+\method{predict}{princomp}(object, \dots)
 }
 \arguments{
   \item{x}{a matrix (or data frame) which provides the data for the

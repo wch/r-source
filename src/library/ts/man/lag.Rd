@@ -2,18 +2,18 @@
 \alias{lag}
 \alias{lag.default}
 \title{Lag a Time Series}
+\description{
+  Computed a lagged version of a time series, shifting the time base
+  back by a given number of observations.
+}
 \usage{
-lag(x, ...)
-lag.default(x, k=1)
+lag(x, \dots)
+lag.default(x, k = 1, \dots)
 }
 \arguments{
   \item{x}{A vector or matrix or univariate or multivariate time series}
   \item{k}{The number of lags (in units of observations).}
-  \item{\dots}{Arguments for future methods.}
-}
-\description{
-  Computed a lagged version of a time series, shifting the time base
-  back by \code{k} observations.
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   Vector or matrix arguments \code{x} are coerced to time series.

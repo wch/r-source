@@ -1,14 +1,17 @@
 \name{medpolish}
-\title{Median Polish of a Matrix}
-\usage{
-medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE)
-
-plot(medpolish.obj)
-print(medpolish.obj)
-}
 \alias{medpolish}
 \alias{plot.medpolish}
 \alias{print.medpolish}
+\title{Median Polish of a Matrix}
+\description{
+  Fits an additive model using Tukey's \emph{median polish} procedure.
+}
+\usage{
+medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE)
+
+\method{plot}{medpolish}(medpolish.obj)
+\method{print}{medpolish}(medpolish.obj)
+}
 \arguments{
   \item{x}{a numeric matrix.}
   \item{eps}{real number greater than 0. A tolerance for convergence:
@@ -16,9 +19,6 @@ print(medpolish.obj)
   \item{maxiter}{the maximum number of iterations}
   \item{trace.iter}{logical. Should progress in convergence be reported?}
   \item{medpolish.obj}{object of class \code{medpolish}.}
-}
-\description{
-  Fits an additive model using Tukey's \emph{median polish} procedure.
 }
 \details{
   The model fitted is additive (constant + rows + columns). The

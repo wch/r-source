@@ -10,7 +10,7 @@ arima0(x, order = c(0, 0, 0),
        xreg = NULL, include.mean, na.action = na.fail,
        delta = 0.01, transform.pars = 2)
 
-predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
+\method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE)
 
 arima0.diag(fit, gof.lag = 10) 
 }
@@ -42,7 +42,7 @@ arima0.diag(fit, gof.lag = 10)
     invertibility. If equal to 2, the optimization is rerun on
     the original scale to find the Hessian.}
 
-  \item{arima0.obj, fit}{The result of an \code{arima0} fit.}
+  \item{object, fit}{The result of an \code{arima0} fit.}
 
   \item{newxreg}{New values of \code{xreg} to be used for
     prediction. Must have at least \code{n.ahead} rows.}
