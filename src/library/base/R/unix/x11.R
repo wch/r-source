@@ -17,7 +17,3 @@ gnome <- function(display = "", width = 7, height = 7, pointsize = 12)
 
 ## no Gnome <- .Alias(gnome)
 GNOME <- gnome
-
-gtk <- function(display = "", width = 7, height = 7, pointsize = 12)
-    stop("The gtk device is now available via a separate package - gtkDevice - available from CRAN.")
-GTK <- gtk
