@@ -88,9 +88,10 @@ static R_FortranMethodDef FortEntries[] = {
     {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},
     {NULL, NULL, 0}
 };
-
+/*
 void R_init_stats(DllInfo *dll)
 {
     R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, cMethods, CallEntries, FortEntries, NULL);
 }
+*/
