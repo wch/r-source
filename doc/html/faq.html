@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-34, 2000-12-09</h2>
+<h2>Version 1.1-35, 2000-12-10</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -291,7 +291,7 @@ See <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What ar
 <p>The core of R is an interpreted computer language which allows branching
 and looping as well as modular programming using functions.  Most of the
 user-visible functions in R are written in R.  It is possible for the
-user to interface to procedures written in the C, C++, or Fortran
+user to interface to procedures written in the C, C++, or FORTRAN
 languages for efficiency.  The R distribution contains functionality for
 a large number of statistical procedures.  Among these are: linear and
 generalized linear models, nonlinear regression models, time series
@@ -302,10 +302,10 @@ presentations.  Additional modules ("add-on packages") are available
 for a variety of specific purposes (see <a href="#R%20Add-On%20Packages">R Add-On Packages</a>).
 
 <p>R was initially written by <a href="mailto:Ross.Ihaka@r-project.org">Ross Ihaka</a>
-and <a href="mailto:Robert.Gentleman@r-project.org">Robert Gentleman</a>, who are
-Senior Lecturers at the Department of Statistics of the University of
-Auckland in Auckland, New Zealand.  In addition, a large group of
-individuals has contributed to R by sending code and bug reports.
+and <a href="mailto:Robert.Gentleman@r-project.org">Robert Gentleman</a> at the
+Department of Statistics of the University of Auckland in Auckland, New
+Zealand.  In addition, a large group of individuals has contributed to R
+by sending code and bug reports.
 
 <p>Since mid-1997 there has been a core group (the "R Core Team") who can
 modify the R source code CVS archive.  The group currently consists of
@@ -346,8 +346,8 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current stable Unix/Windows version is 1.1.1, the
-unstable one is 1.2.0.  Typically, new features are
+<p>The current stable Unix/Windows version is 1.2.0, the
+unstable one is 1.3.0.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
 
@@ -481,10 +481,10 @@ Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</
 
 <h3>2.5.2 How can R be installed (Windows)</h3>
 
-<p>The <code>bin/windows/windows-NT</code> directory of a <small>CRAN</small> site
-contains the latest binary distributions of R for 32 bit versions of MS
-Windows (i.e., 95, 98 or NT), as well as binary distributions for a
-large number of add-on packages from <small>CRAN</small>.  The Windows
+<p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains
+binaries for a base distribution and a large number of add-on packages
+from <small>CRAN</small> to run on Windows 95, 98, NT4, 2000 and ME (at
+least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
 and maintained by <a href="mailto:Guido.Masarotto@r-project.org">Guido Masarotto</a> and <a href="mailto:Brian.Ripley@r-project.org">Brian D. Ripley</a>.
 
@@ -576,17 +576,11 @@ modeling and graphics.  This document is based on the "Notes on
 currently describes the process of creating R add-on packages, writing R
 documentation, R's system and foreign language interfaces, and the R
 <small>API</small>. 
-</ul>
-
-<p>The following manuals will additionally be available in R version 1.2.
-
-<ul>
-<li>"R Data Import/Export" (<code>R-data</code>),
-which is a guide to importing and exporting data to and from R. 
-<li>"The R Language Definition" (<code>R-lang</code>). 
-This is the "Kernighan &amp; Ritchie of R", explaining evaluation,
-parsing, object oriented programming, computing on the language, and so
-forth. 
+<li>"R Data Import/Export" (<code>R-data</code>)
+is a guide to importing and exporting data to and from R. 
+<li>"The R Language Definition" (<code>R-lang</code>),
+the "Kernighan &amp; Ritchie of R", explains evaluation, parsing, object
+oriented programming, computing on the language, and so forth. 
 </ul>
 
 <p>In addition to material written specifically for R, documentation for
@@ -625,6 +619,7 @@ Springer.
 </blockquote>
 
 <p>The book
+
 <blockquote>
 J. C. Pinheiro and D. M. Bates (2000), "Mixed-Effects Models in S and
 <small>S-PLUS</small>", Springer, ISBN 0-387-98957-0
@@ -636,6 +631,7 @@ for linear and nonlinear mixed-effects models.  This has a home page at
 
 <p>As an example of how R can be used in teaching an advanced introductory
 statistics course, see
+
 <blockquote>
 D. Nolan and T. Speed (2000), "Stat Labs: Mathematical Statistics
 Through Applications", Springer Texts in Statistics, ISBN
@@ -1997,8 +1993,7 @@ versions of the code.
 also be used for error recovery through the use of the transcript mode.
 
 <p>To specify command line arguments for the inferior R process, use
-<kbd>C-u M-x R</kbd> for starting R.  This prompts you for the arguments; in
-particular, you can increase the memory size this way (see <a href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>).
+<kbd>C-u M-x R</kbd> for starting R.
 
 <p><hr>
 Node:<a name="Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
@@ -2084,59 +2079,19 @@ Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 
 <h2>7.1 Why does R run out of memory?</h2>
 
-<p>R (currently) uses a <em>static</em> memory model.  This means that when
-it starts up, it asks the operating system to reserve a fixed amount of
-memory for it.  The size of this chunk cannot be changed subsequently. 
-Hence, it can happen that not enough memory was allocated, e.g., when
-trying to read large data sets into R.
-
-<p>In these cases, you should restart R with more memory available, using
-the command line options <code>--nsize</code> and <code>--vsize</code>.  To
-understand these options, one needs to know that R maintains separate
-areas for fixed and variable sized objects.  The first of these is
-allocated as an array of "cons cells" (Lisp programmers will know what
-they are, others may think of them as the building blocks of the
-language itself, parse trees, etc.), and the second are thrown on a
-"heap".  The <code>--nsize</code> option can be used to specify the number
-of cons cells which R is to use (the default is 250000), and the
-<code>--vsize</code> option to specify the size of the vector heap in bytes
-(the default is 6&nbsp;MB).  Both options must either be integers or
-integers ending with <code>M</code>, <code>K</code>, or <code>k</code> meaning `Mega'
-(2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
-
-<p>E.g., to read in a table of 5000 observations on 40 numeric variables,
-<code>R --vsize=6M</code> should do (which currently is the default).
-
-<p>Note that the information on where to find vectors and strings on the
-heap is stored using cons cells.  Thus, it may also be necessary to
-allocate more space for cons cells in order to perform computations with
-very "large" variable-size objects.
-
-<p>You can find out the current memory consumption (the proportion of heap
-and cons cells used) by typing <kbd>gc()</kbd> at the R prompt.  This may
-help you in finding out whether to increase <code>--vsize</code> or
-<code>--nsize</code>.  Note that following <kbd>gcinfo(TRUE)</kbd>, automatic
-garbage collection always prints memory use statistics.
-
-<p>As of version 0.62.3, R will tell you whether you ran out of cons or
-heap memory.
-
-<p>The defaults for <code>--nsize</code> and <code>--vsize</code> can be changed by
-setting the environment variables <code>R_NSIZE</code> and <code>R_VSIZE</code>
-respectively, perhaps most conveniently on Unix in the R environment
-file (<code>~/.Renviron</code> by default).
-
-<p>When using <code>read.table()</code>, the memory requirements are in fact
-higher than anticipated, because the file is first read in as one long
-string which is then split again.  Use <code>scan()</code> if possible in
-case you run out of memory when reading in a large table.
+<p>Versions of R prior to 1.2.0 used a <em>static</em> memory model.  At
+startup, R asked the operating system to reserve a fixed amount of
+memory for it.  The size of this chunk could not be changed
+subsequently.  Hence, it could happen that not enough memory was
+allocated, e.g., when trying to read large data sets into R.  In such
+cases, it was necessary to restart R with more memory available, as
+controlled by the command line options <code>--nsize</code> and
+<code>--vsize</code>.
 
 <p>R version 1.2.0 introduces a new "generational" garbage collector,
-which will increase the memory available to R as needed.  The interface
-for controlling the generational collector is still experimental and in
-flux.  Currently, the command line arguments and environment variables
-described above can be used to supply minimal values for the sizes of
-the node and vector heaps.
+which will increase the memory available to R as needed.  Hence, user
+intervention is no longer necessary for ensuring that enough memory is
+available.
 
 <p><hr>
 Node:<a name="Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,

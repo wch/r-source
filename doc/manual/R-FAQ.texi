@@ -4,9 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-34, 2000-12-09
-@set REL-VERSION 1.1.1
-@set DEV-VERSION 1.2.0
+@set FAQ-VERSION 1.1-35, 2000-12-10
+@set REL-VERSION 1.2.0
+@set DEV-VERSION 1.3.0
 @c %**end of header
 
 @dircategory Programming
@@ -206,7 +206,7 @@ underlying implementation and semantics are derived from Scheme.
 The core of R is an interpreted computer language which allows branching
 and looping as well as modular programming using functions.  Most of the
 user-visible functions in R are written in R.  It is possible for the
-user to interface to procedures written in the C, C++, or Fortran
+user to interface to procedures written in the C, C++, or FORTRAN
 languages for efficiency.  The R distribution contains functionality for
 a large number of statistical procedures.  Among these are: linear and
 generalized linear models, nonlinear regression models, time series
@@ -217,10 +217,10 @@ presentations.  Additional modules (``add-on packages'') are available
 for a variety of specific purposes (@pxref{R Add-On Packages}).
 
 R was initially written by @email{Ross.Ihaka@@r-project.org, Ross Ihaka}
-and @email{Robert.Gentleman@@r-project.org, Robert Gentleman}, who are
-Senior Lecturers at the Department of Statistics of the University of
-Auckland in Auckland, New Zealand.  In addition, a large group of
-individuals has contributed to R by sending code and bug reports.
+and @email{Robert.Gentleman@@r-project.org, Robert Gentleman} at the
+Department of Statistics of the University of Auckland in Auckland, New
+Zealand.  In addition, a large group of individuals has contributed to R
+by sending code and bug reports.
 
 Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code CVS archive.  The group currently consists of
@@ -372,10 +372,10 @@ respectively.
 @node How can R be installed (Windows), How can R be installed (Macintosh), How can R be installed (Unix), How can R be installed?
 @subsection How can R be installed (Windows)
 
-The @file{bin/windows/windows-NT} directory of a @acronym{CRAN} site
-contains the latest binary distributions of R for 32 bit versions of MS
-Windows (i.e., 95, 98 or NT), as well as binary distributions for a
-large number of add-on packages from @acronym{CRAN}.  The Windows
+The @file{bin/windows} directory of a @acronym{CRAN} site contains
+binaries for a base distribution and a large number of add-on packages
+from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
+least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
 and maintained by @email{Guido.Masarotto@@r-project.org, Guido
 Masarotto} and @email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
@@ -490,19 +490,11 @@ modeling and graphics.  This document is based on the ``Notes on
 currently describes the process of creating R add-on packages, writing R
 documentation, R's system and foreign language interfaces, and the R
 @acronym{API}.
-@end itemize
-
-@noindent
-@c FIXME 1.2
-The following manuals will additionally be available in R version 1.2.
-
-@itemize @bullet
-@item ``R Data Import/Export'' (@file{R-data}),
-which is a guide to importing and exporting data to and from R.
-@item ``The R Language Definition'' (@file{R-lang}).
-This is the ``Kernighan & Ritchie of R'', explaining evaluation,
-parsing, object oriented programming, computing on the language, and so
-forth.
+@item ``R Data Import/Export'' (@file{R-data})
+is a guide to importing and exporting data to and from R.
+@item ``The R Language Definition'' (@file{R-lang}),
+the ``Kernighan & Ritchie of R'', explains evaluation, parsing, object
+oriented programming, computing on the language, and so forth.
 @end itemize
 
 In addition to material written specifically for R, documentation for
@@ -543,6 +535,7 @@ Springer.
 @end quotation
 
 The book
+
 @quotation
 J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
 @SPLUS{}'', Springer, ISBN 0-387-98957-0
@@ -555,6 +548,7 @@ for linear and nonlinear mixed-effects models.  This has a home page at
 
 As an example of how R can be used in teaching an advanced introductory
 statistics course, see
+
 @quotation
 D. Nolan and T. Speed (2000), ``Stat Labs: Mathematical Statistics
 Through Applications'', Springer Texts in Statistics, ISBN
@@ -1955,9 +1949,10 @@ In addition, it allows you to keep a record of your session, which can
 also be used for error recovery through the use of the transcript mode.
 
 To specify command line arguments for the inferior R process, use
-@kbd{C-u M-x R} for starting R.  This prompts you for the arguments; in
-particular, you can increase the memory size this way (@pxref{Why does R
-run out of memory?}).
+@kbd{C-u M-x R} for starting R.
+
+@c This prompts you for the arguments; in particular, you can increase
+@c the memory size this way (@pxref{Why does R run out of memory?}).
 
 @node Debugging R from within Emacs,  , Should I run R from within Emacs?, R and Emacs
 @section Debugging R from within Emacs
@@ -2027,63 +2022,73 @@ dir /opt/R/src/unix
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
 @section Why does R run out of memory?
 
-@c FIXME: 1.2
-@c Basically only say that this was frequently asked but should now need
-@c no user intervention except by experts.
+@c  R (currently) uses a @emph{static} memory model.  This means that when
+@c  it starts up, it asks the operating system to reserve a fixed amount of
+@c  memory for it.  The size of this chunk cannot be changed subsequently.
+@c  Hence, it can happen that not enough memory was allocated, e.g., when
+@c  trying to read large data sets into R.
 
-R (currently) uses a @emph{static} memory model.  This means that when
-it starts up, it asks the operating system to reserve a fixed amount of
-memory for it.  The size of this chunk cannot be changed subsequently.
-Hence, it can happen that not enough memory was allocated, e.g., when
-trying to read large data sets into R.
+@c  In these cases, you should restart R with more memory available, using
+@c  the command line options @option{--nsize} and @option{--vsize}.  To
+@c  understand these options, one needs to know that R maintains separate
+@c  areas for fixed and variable sized objects.  The first of these is
+@c  allocated as an array of ``cons cells'' (Lisp programmers will know what
+@c  they are, others may think of them as the building blocks of the
+@c  language itself, parse trees, etc.), and the second are thrown on a
+@c  ``heap''.  The @option{--nsize} option can be used to specify the number
+@c  of cons cells which R is to use (the default is 250000), and the
+@c  @option{--vsize} option to specify the size of the vector heap in bytes
+@c  (the default is @w{6 MB}).  Both options must either be integers or
+@c  integers ending with @samp{M}, @samp{K}, or @samp{k} meaning `Mega'
+@c  (2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
 
-In these cases, you should restart R with more memory available, using
-the command line options @option{--nsize} and @option{--vsize}.  To
-understand these options, one needs to know that R maintains separate
-areas for fixed and variable sized objects.  The first of these is
-allocated as an array of ``cons cells'' (Lisp programmers will know what
-they are, others may think of them as the building blocks of the
-language itself, parse trees, etc.), and the second are thrown on a
-``heap''.  The @option{--nsize} option can be used to specify the number
-of cons cells which R is to use (the default is 250000), and the
-@option{--vsize} option to specify the size of the vector heap in bytes
-(the default is @w{6 MB}).  Both options must either be integers or
-integers ending with @samp{M}, @samp{K}, or @samp{k} meaning `Mega'
-(2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
+@c  E.g., to read in a table of 5000 observations on 40 numeric variables,
+@c  @samp{R --vsize=6M} should do (which currently is the default).
 
-E.g., to read in a table of 5000 observations on 40 numeric variables,
-@samp{R --vsize=6M} should do (which currently is the default).
+@c  Note that the information on where to find vectors and strings on the
+@c  heap is stored using cons cells.  Thus, it may also be necessary to
+@c  allocate more space for cons cells in order to perform computations with
+@c  very ``large'' variable-size objects.
 
-Note that the information on where to find vectors and strings on the
-heap is stored using cons cells.  Thus, it may also be necessary to
-allocate more space for cons cells in order to perform computations with
-very ``large'' variable-size objects.
+@c  You can find out the current memory consumption (the proportion of heap
+@c  and cons cells used) by typing @kbd{gc()} at the R prompt.  This may
+@c  help you in finding out whether to increase @option{--vsize} or
+@c  @option{--nsize}.  Note that following @kbd{gcinfo(TRUE)}, automatic
+@c  garbage collection always prints memory use statistics.
 
-You can find out the current memory consumption (the proportion of heap
-and cons cells used) by typing @kbd{gc()} at the R prompt.  This may
-help you in finding out whether to increase @option{--vsize} or
-@option{--nsize}.  Note that following @kbd{gcinfo(TRUE)}, automatic
-garbage collection always prints memory use statistics.
+@c  As of version 0.62.3, R will tell you whether you ran out of cons or
+@c  heap memory.
 
-As of version 0.62.3, R will tell you whether you ran out of cons or
-heap memory.
+@c  The defaults for @option{--nsize} and @option{--vsize} can be changed by
+@c  setting the environment variables @env{R_NSIZE} and @env{R_VSIZE}
+@c  respectively, perhaps most conveniently on Unix in the R environment
+@c  file (@file{~/.Renviron} by default).
 
-The defaults for @option{--nsize} and @option{--vsize} can be changed by
-setting the environment variables @env{R_NSIZE} and @env{R_VSIZE}
-respectively, perhaps most conveniently on Unix in the R environment
-file (@file{~/.Renviron} by default).
+@c  When using @code{read.table()}, the memory requirements are in fact
+@c  higher than anticipated, because the file is first read in as one long
+@c  string which is then split again.  Use @code{scan()} if possible in
+@c  case you run out of memory when reading in a large table.
 
-When using @code{read.table()}, the memory requirements are in fact
-higher than anticipated, because the file is first read in as one long
-string which is then split again.  Use @code{scan()} if possible in
-case you run out of memory when reading in a large table.
+@c  R version 1.2.0 introduces a new ``generational'' garbage collector,
+@c  which will increase the memory available to R as needed.  The interface
+@c  for controlling the generational collector is still experimental and in
+@c  flux.  Currently, the command line arguments and environment variables
+@c  described above can be used to supply minimal values for the sizes of
+@c  the node and vector heaps.
+
+Versions of R prior to 1.2.0 used a @emph{static} memory model.  At
+startup, R asked the operating system to reserve a fixed amount of
+memory for it.  The size of this chunk could not be changed
+subsequently.  Hence, it could happen that not enough memory was
+allocated, e.g., when trying to read large data sets into R.  In such
+cases, it was necessary to restart R with more memory available, as
+controlled by the command line options @option{--nsize} and
+@option{--vsize}.
 
 R version 1.2.0 introduces a new ``generational'' garbage collector,
-which will increase the memory available to R as needed.  The interface
-for controlling the generational collector is still experimental and in
-flux.  Currently, the command line arguments and environment variables
-described above can be used to supply minimal values for the sizes of
-the node and vector heaps.
+which will increase the memory available to R as needed.  Hence, user
+intervention is no longer necessary for ensuring that enough memory is
+available.
 
 @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
 @section Why does sourcing a correct file fail?
