@@ -42,11 +42,15 @@ undoc <- function(pkg, dir)
         files <- listFilesWithExts(docsDir, docsExts)
         if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
             files <- c(files, listFilesWithExts(docsOSDir, docsExts))
-        ## FIXME: Still unixy!
-        cmd <- paste("grep -h '^\\\\\\(alias\\|name\\)'",
+        ## FIXME: Still unixy, but this version is not GNUish!
+        cmd <- paste("grep -h '^\\\\name'",
                      paste(files, collapse = " "),
-                     "| sed 's/\\\\\\(alias\\|name\\){\\(.*\\)}/\\2/'")
+                     "| sed 's/\\\\name{\\(.*\\)}/\\1/'")
         objsdocs <- system(cmd, intern = TRUE)
+        cmd <- paste("grep -h '^\\\\alias'",
+                     paste(files, collapse = " "),
+                     "| sed 's/\\\\alias{\\(.*\\)}/\\1/'")
+        objsdocs <- c(objsdocs, system(cmd, intern = TRUE))
         objsdocs <- gsub("\\\\%", "%", objsdocs)
         objsdocs <- gsub(" ", "", objsdocs)
         objsdocs <- sort(unique(objsdocs))
