@@ -49,9 +49,6 @@
 #include "Fileio.h"
 #include <Rdevices.h>
 
-OSErr  doCopyAppNameResource(WindowPtr windowPtr);
-OSErr  doCopyGraResource(ResType, SInt16, SInt16, SInt16);
-void PutPictToFile(PicHandle thePicture);
 
 extern pascal	OSErr	FSpGetFullPath (const FSSpec*, short*, Handle*);
 
@@ -169,26 +166,68 @@ OSErr  doRSaveAs(Boolean *haveCancel) {
 
  
  
+/*
+   This routines makes a copy of the current graphic window onto a 
+   file specified by the user.  New and cleaner routine. Now copies
+   also text characters in pictures.
+   Jago November 2001, Stefano M. Iacus. 
+*/
 
-
-
-void PutPictToFile(PicHandle thePicture)
-
-{
-	
-	OSErr               anErr = noErr;
+OSErr  doSaveAsGraCommand(void)
+{   
+    WindowPtr 			window;
+    Rect 				portRect;
+	PicHandle			picHandle = nil;
+	OSErr				anErr = noErr;
+	OSType              fileTypeToSave = 'PICT';
+    OSType              creatorType = 'ogle';
     NavReplyRecord      reply;
     NavDialogOptions    dialogOptions;
-    OSType              fileTypeToSave = 'PICT';
-    OSType              creatorType = 'ogle';
-	AEKeyword   		theKeyword;
-    DescType    		actualType;
-    Size        		actualSize;
     FSSpec      		documentFSSpec;
     long				inOutCount;
     short				refNum, count;
+    AEKeyword   		theKeyword;
+    DescType    		actualType;
     unsigned char 		header[512];
+	Size        		actualSize;
+	Rect				tempRect1;
+ 	Rect				resizeRect;
+    CGrafPtr     		savePort, tempPort;
+    RGBColor			oldColor, newColor;
+
+    window = FrontWindow();
+  	
+	if(!window)
+	 return(-1L);
+
+    GetPort(&savePort);
+ 	 
+	GetPortBounds(GetWindowPort(window), &tempRect1);
+	 	
+	SetPortWindowPort(window);
+	
+	GetForeColor(&oldColor);
+	GetCPixel (tempRect1.right-16,tempRect1.bottom-16,&newColor);
+	
+	tempPort = CreateNewPort();
+   
+    SetPort(tempPort);
+	
+	picHandle = OpenPicture(&tempRect1);
+	
+	CopyBits(GetPortBitMapForCopyBits(GetWindowPort(window)), GetPortBitMapForCopyBits(tempPort),  &tempRect1, 
+	   &tempRect1, srcCopy, 0L);
+	
+	SetRect(&resizeRect, tempRect1.right-15, tempRect1.bottom-15, tempRect1.right,tempRect1.bottom);
+	
+    RGBForeColor(&newColor);
+	PaintRect(&resizeRect);
+	RGBForeColor(&oldColor);
+	 
+	ClosePicture();
     
+    DisposePort(tempPort);
+
     for (count = 0; count < 512; count++)
 		header[count] = 0x00;
 
@@ -204,13 +243,10 @@ void PutPictToFile(PicHandle thePicture)
                         nil );
     
     if (anErr == noErr && reply.validRecord) {
-    
-    					
     	anErr = AEGetNthPtr(&(reply.selection), 1, typeFSS,
                                 &theKeyword, &actualType,
                                 &documentFSSpec, sizeof(documentFSSpec),
                                 &actualSize );
-                                
   	  if (anErr == noErr) {
   	  
   	  		anErr = FSpCreate(&documentFSSpec, creatorType, fileTypeToSave, smSystemScript);
@@ -224,8 +260,8 @@ void PutPictToFile(PicHandle thePicture)
     		inOutCount = 512;
    			anErr = FSWrite(refNum, &inOutCount, header);		// write the header
     		if (anErr == noErr) {
-    			inOutCount = GetHandleSize((Handle)thePicture);
-				anErr = FSWrite(refNum,&inOutCount,*thePicture);
+    			inOutCount = GetHandleSize((Handle)picHandle);
+				anErr = FSWrite(refNum,&inOutCount,*picHandle);
     		}
     		FSClose( refNum );
   	  }
@@ -234,113 +270,17 @@ void PutPictToFile(PicHandle thePicture)
     
  	  NavDisposeReply(&reply);
     }
-}
-
-
-
-
-OSErr  doSaveAsGraCommand(void)
-{   
-    WindowPtr 	window;
-    SInt16 		WinIndex;
-    DevDesc 	*dd;
-    PicHandle	WPicHandle=nil;
-    CGrafPtr 	savePort, tempPort;
-    Rect 		portRect;
-
-    window = FrontWindow();
-
-    WinIndex = isGraphicWindow(window);
-
-    dd = (DevDesc*)gGReference[WinIndex].devdesc;
-
-    GetPort(&savePort);
-    
-    GetWindowPortBounds(window,&portRect);
-	tempPort = CreateNewPort();
-     
-    WPicHandle = OpenPicture(&portRect);
-
-    ClipRect(&portRect);
- 	
- 	gGReference[WinIndex].activePort = tempPort;
-
- 	WeArePasting = true;
-
- 	playDisplayList(dd);
-
- 	WeArePasting = false;
 	
-	ClosePicture();
-
-    DisposePort(tempPort);
-    
-    HLock((Handle)WPicHandle);
-  
-    PutPictToFile(WPicHandle);	/* put it to a file */
- 
- 	HUnlock((Handle)WPicHandle);
-    
-    KillPicture(WPicHandle);
+	KillPicture(picHandle);
     
     SetPort(savePort);  
     
-    return noErr;
+	return anErr;
 
 }
 
+ 
 
-
-
-
-/* ×××××××××××××××× doCopyAppNameResource
-*/
-OSErr  doCopyAppNameResource(WindowPtr windowPtr)
-{
-    OSType fileType;
-    OSErr osError;
-    SInt16 fileRefNum, WinIndex;
-    WinIndex = isGraphicWindow(windowPtr);
-    fileType = 'PICT';
-    FSpCreateResFile(&(gGReference[WinIndex].fileFSSpec),'ABFF',fileType,smSystemScript);
-    osError = ResError();
-    if(osError == noErr)
-	fileRefNum = FSpOpenResFile(&gGReference[WinIndex].fileFSSpec,
-				    fsRdWrPerm);
-    if(fileRefNum > 0)
-	osError = doCopyGraResource('STR ', -16396, gAppResFileRefNum,
-				    fileRefNum);
-    else
-	osError = ResError();
-    if(osError == noErr)
-	CloseResFile(fileRefNum);
-    osError = ResError();
-    return(osError);
-}
-/* ××××××××××××××××××××× doCopyGraResource
-*/
-OSErr  doCopyGraResource(ResType resourceType, SInt16 resourceID,
- SInt16 sourceFileRefNum, SInt16 destFileRefNum)
-{
-    Handle	sourceResourceHdl=NULL;
-    Str255	sourceResourceName;
-    ResType	ignoredType;
-    SInt16	ignoredID;
-    UseResFile(sourceFileRefNum);
-    sourceResourceHdl = GetResource(resourceType,resourceID);
-    if(sourceResourceHdl != NULL) {
-	GetResInfo(sourceResourceHdl, &ignoredID, &ignoredType,
-		   sourceResourceName);
-	DetachResource(sourceResourceHdl);
-	UseResFile(destFileRefNum);
-	AddResource(sourceResourceHdl, resourceType, resourceID,
-		    sourceResourceName);
-	if(ResError() == noErr)
-	    UpdateResFile(destFileRefNum);
-    }
-    ReleaseResource(sourceResourceHdl);
-    return(ResError());
-}
 // *****************************************************************************
 // *
 // *	DoSelectDirectory( )
