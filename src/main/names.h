@@ -230,6 +230,8 @@ SEXP do_nextmethod(SEXP,SEXP,SEXP,SEXP);
 SEXP do_nextn(SEXP,SEXP,SEXP,SEXP);
 SEXP do_nlm(SEXP, SEXP, SEXP, SEXP);
 SEXP do_onexit(SEXP, SEXP, SEXP, SEXP);
+SEXP do_optim(SEXP, SEXP, SEXP, SEXP);
+SEXP do_optimhess(SEXP, SEXP, SEXP, SEXP);
 SEXP do_options(SEXP, SEXP, SEXP, SEXP);
 SEXP do_order(SEXP, SEXP, SEXP, SEXP);
 SEXP do_palette(SEXP, SEXP, SEXP, SEXP);

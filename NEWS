@@ -40,6 +40,11 @@ NEW FEATURES
     o	Building help for a package now removes help files that no
 	longer exist in the source.
 
+    o	New suite of optimization methods optim(), covering
+	Nelder-Mead, BFGS quasi-Newton and conjugate-gradients methods
+	for unconstrained minimization and maximization with and
+	without derivatives.
+
 
 BUG FIXES
 

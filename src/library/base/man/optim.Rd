@@ -1,0 +1,148 @@
+\name{optim}
+\alias{optim}
+\title{General-purpose Optimization}
+\description{
+  General-purpose optimization based on Nelder--Mead, quasi-Newton and
+  conjugate-gradient algorithms.
+}
+\usage{
+optim(par, fn, gr = NULL,
+      method = c("Nelder-Mead", "BFGS", "CG"),
+      control = list(), hessian = FALSE)%, \dots)
+}
+\arguments{
+ \item{par}{Initial values for the parameters to be optimized over.}
+ \item{fn}{A function to be minimized, with first argument the vector of
+   parameters over which minimization is to take place. It should return
+   a scalar result.}
+ \item{gr}{A function to return the gradient. Not needed for the
+   \code{"Nelder-Mead"} method. If it is \code{NULL} and it is needed, a
+   finite-difference approximation will be used. It is guaranteed that
+   \code{gr} will be called immediately after a call to \code{fn} at
+   the same parameter values.}
+ \item{method}{The method to be used. See \bold{Details}.}
+ \item{control}{A list of control parameters. See \bold{Details}.}
+ \item{hessian}{Logical. Should a numerically differentiated Hessian
+   matrix be returned?}
+% \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
+}
+\details{
+  By default this function performs minimization, but it will maximize
+  if \code{control$fnscale} is negative.
+  
+  The default method is an implementation of that of Nelder and Mead
+  (1965), that uses only function values and is robust but relatively
+  slow. It will work reasonably well for non-differentiable functions.
+
+  The second method is a quasi-Newton method (also known as a variable
+  metric algorithm), specifically that published simultaneously in 1970
+  by Broyden, Fletcher, Goldfarb and Shanno. This uses function values
+  and gradients to build up a picture of the surface to be optimized.
+
+  The third method is a conjugate gradients method based on that by
+  Fletcher and Reeves (1964) (but with the option of Polak--Ribiere or
+  Beale--Sorenson updates).  Conjugate gradient methods will generally
+  be more fragile that the BFGS method, but as they do not store a
+  matrix they may be successful in much larger optimization problems.
+  
+  Function \code{fn} can return \code{NA} or \code{Inf} if the function
+  cannot be evaluated at the supplied value, but the initial value must
+  have a computable finite value of \code{fn}.
+
+  \code{optim} can be used recursively, and for a single parameter
+  as well as many.
+
+  The \code{control} argument is a list that can supply any of the
+  following components:
+  \itemize{
+    \item \code{trace} Logical. If true, tracing information on the
+    progress of the optimization is produced.
+    \item \code{fnscale} An overall scaling to be applied to the value
+    of \code{fn} and \code{gr} during optimization. If negative,
+    turns the problem into a maximization problem. Optimization is
+    performed on \code{fn(par)/fnscale}.
+    \item \code{parscale} A vector of scaling values for the parameters.
+    Optimization is performed on \code{par/parscale} and these should be
+    comparable in the sense that a unit change in any element produces
+    about a unit change in the scaled value.
+    \item \code{ndeps} A vector of stepsizes for the finite-difference
+    approximation to the gradient, on \code{par/parscale}
+    scale. Defaults to \code{1e-3}.
+    \item \code{maxit} The maximum number of iterations. Defaults to
+    \code{100} for the derivative-based methods,
+    and \code{500} for \code{"Nelder-Mead"}.
+    \item \code{abstol} The absolute convergence tolerance. Only
+    useful for non-negative functions, as a tolerance for reaching zero.
+    \item \code{reltol} Relative convergence tolerance. The algorithm
+    stops if it is unable to reduce the value by a factor of
+    \code{reltol * (abs(val) + reltol)} at a step.
+    \item \code{alpha}, \code{beta}, \code{gamma}. Scaling parameters
+    for the \code{"Nelder-Mead"} method. \code{alpha} is the reflection
+    factor (default 1.0), \code{beta} the contraction factor (0.5) and
+    \code{gamma} the expension factor (2.0).
+    \item \code{REPORT} The frequency of reports for the \code{"BFGS"}
+    method in \code{control$trace} is positive.
+    Defaults to every 10 iterations.
+    \item \code{type} for the conjugate-gradients method. Takes value
+    \code{1} for the Fletcher--Reeves update, \code{2} for
+    Polak--Ribiere and \code{3} for Beale--Sorenson.
+  }
+}
+\value{
+  A list with components:
+  \item{par}{The best set of parameters found.}
+  \item{value}{The value of \code{fn} corresponding to \code{par}.}
+  \item{counts}{A two-element integer vector giving the number of calls
+    to \code{fn} and \code{gr} respectively. This excludes those calls needed
+    to compute the Hessian, if requested.}
+  \item{convergence}{An integer code. \code{0} indicates successful
+    convergence. Error codes are
+    \itemize{
+      \item \code{1} indicates that the iteration limit \code{maxit}
+      had been reached.
+      \item \code{10} indicates degeneracy of the Nelder--Mead simplex.
+    }
+  }
+  \item{hessian}{Only if argument \code{hessian} is true. A symmetric
+    matrix giving an estimate of the Hessian at the solution found.}
+}
+\references{
+  Fletcher, R. and Reeves, C. M. (1964) Function minimization by
+  conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
+
+  Nash, J. C. (1990) \emph{Compact Numerical Methods for
+    Computers. Linear Algebra and Function Minimisation.} Adam Hilger.
+
+  Nelder, J. A. and Mead, R. (1965) A simplex algorithm for function
+  minimization. \emph{Computer Journal} \bold{7}, 308--313.
+}
+\note{
+  The code was based originally on Pascal code in Nash (1990) that was
+  translated by \code{p2c} and then hand-optimized. Dr Nash has agreed
+  that the code can be make freely available.
+}
+
+\seealso{\code{\link{nlm}}, \code{\link{optimize}}}
+
+\examples{
+## Rosenbrock Banana function
+fr <- function(x) {
+    x1 <- x[1]
+    x2 <- x[2]
+    100 * (x2 - x1 * x1)^2 + (1 - x1)^2
+}
+
+grr <- function(x) {
+    x1 <- x[1]
+    x2 <- x[2]
+    c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1), 200 * (x2 - x1 * x1))
+}
+
+optim(c(-1.2,1), fr)
+optim(c(-1.2,1), fr, grr, "BFGS")
+optim(c(-1.2,1), fr, NULL, "BFGS", hessian = TRUE)
+optim(c(-1.2,1), fr, grr, "CG")
+
+optim(c(-1.2,1), fr, grr, "CG", list(type=2))
+}
+\keyword{nonlinear}
