@@ -13,6 +13,7 @@
 #include "Parse.h"
 #include "Fileio.h"
 #include "Graphics.h"		/* for devX11.h */
+#include "R_ext/PrtUtil.h"		/* for REprintf */
 #include "../devUI.h"
 #include "../Runix.h"
 
@@ -96,18 +97,18 @@ void _tcltk_init()
 				    get the windows but no event
 				    handling. */
     if (code != TCL_OK)
-	fprintf(stderr, "%s\n", Tcl_interp->result);
+	REprintf("%s\n", Tcl_interp->result);
   
     code = Tk_Init(Tcl_interp);  /* Load Tk into interpreter */
     if (code != TCL_OK)
-	fprintf(stderr, "%s\n", Tcl_interp->result);
+	REprintf("%s\n", Tcl_interp->result);
     
     Tcl_StaticPackage(Tcl_interp, "Tk", Tk_Init, Tk_SafeInit);
     Tcl_CreateFileHandler(0, TCL_READABLE, (Tcl_FileProc *)stdin_setflag, 0);
 
     code = Tcl_Eval(Tcl_interp, "wm withdraw .");  /* Hide window */
     if (code != TCL_OK)
-	fprintf(stderr, "%s\n", Tcl_interp->result);
+	REprintf("%s\n", Tcl_interp->result);
 
     Tcl_CreateCommand(Tcl_interp,
 		      "R_eval", 
@@ -124,7 +125,7 @@ void _tcltk_init()
 
 /*    code = Tcl_EvalFile(Tcl_interp, "init.tcl"); */
 /*    if (code != TCL_OK) */
-/*      fprintf(stderr, "%s\n", Tcl_interp->result); */
+/*      REprintf("%s\n", Tcl_interp->result); */
 
 }
 
