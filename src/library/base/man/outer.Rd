@@ -1,33 +1,49 @@
 \name{outer}
-\title{Outer Product of Vectors}
+\title{Outer Product of Arrays}
 \usage{
-outer(x, y, FUN = "*", \dots)
+outer(X, Y, FUN="*", \dots)
 x \%o\% y
 }
 \alias{outer}
-\alias{\%o\%}
+\alias(\%o\%)
+
 \arguments{
-\item{x}{a vector.}
-\item{y}{a vector.}
-\item{FUN}{a function to use on the outer products, it may be a quoted string.}
-\item{\dots}{optional arguments to be passed to \code{fun}.}
+ \item{X}{A vector or array.}
+ \item{Y}{A vector or array.}
+ \item{FUN}{a function to use on the outer products, it may be
+          a quoted string.}
+ \item{\dots}{optional arguments to be passed to \code{FUN}.}
 }
 \description{
-The outer product of the vectors \code{x} and \code{y} is the matrix
-\code{A} with elements
-\code{A[i, j] = FUN(x[i], y[j], \dots)}.
-\code{FUN} must be a function which expects at least two arguments
-and which operates elementwise on arrays.
+    The outer product of the arrays \code{X} and \code{Y} is the
+    array \code{A} with dimension \code{c(dim(X), dim(Y))} where
+    element \code{A[i, j, .., k, l, ..] = FUN(X[i, j, ..], Y[k, l,..], ..)}.
+}
+\details{
+    \code{FUN} must be a function (or the name of it) which expects at
+    least two arguments and which operates elementwise on arrays.
+    
+    Where they exist, the [dim]names of \code{X} and \code{Y} will be
+    preserved.
+    
+    \code{\%o\%} is an \code{.Alias} for \code{outer} (where \code{FUN}
+    cannot be changed from \code{"*"}).
+}
+\author{Jonathan Rougier}
 
-This needs to be extended to taking arrays of arbitrary dimension for
-\code{x} and \code{y} and returns an array of dimension
-\code{c(dim(x), dim(y))}.
-
-\code{\%o\%} is an \code{\link{.Alias}} for \code{outer} (where
-\code{FUN} cannot be changed from \code{"*"}.
+\seealso{\code{\link{\%*\%}} for usual (\emph{inner}) matrix vector
+    multiplication; \code{\link{kronecker}} which is based on \code{outer}.
 }
 \examples{
-outer(1:5, 1:5, "+")
-all(outer(1:5, 1:5) == 1:5 \%o\% 1:5)
+x <- 1:9; names(x) <- x
+# Multiplication & Power Tables
+x \%o\% x
+y <- 2:8; names(y) <- paste(y,":",sep="")
+outer(y, x, "^")
+
+outer(month.abb, 1999:2003, FUN = "paste")
+
+## three way multiplication table:
+x \%o\% x \%o\% y[1:3]
 }
 \keyword{array}
