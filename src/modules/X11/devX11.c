@@ -910,12 +910,13 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     Rboolean DisplayOpened = FALSE;
 
     if (!strncmp(dsp, "png::", 5)) {
-	char buf[512];
+	char buf[600]; /* allow for pageno formats */
 	FILE *fp;
 #ifndef HAVE_PNG
 	warning("No png support in this version of R");
 	return FALSE;
 #endif
+	if(strlen(dsp+5) >= 512) error("filename too long in png() call");
 	strcpy(xd->filename, dsp+5);
 	sprintf(buf, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
@@ -927,7 +928,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	p = "";
     }
     else if (!strncmp(dsp, "jpeg::", 6)) {
-	char buf[512];
+	char buf[600]; /* allow for pageno formats */
 	FILE *fp;
 #ifndef HAVE_JPEG
 	warning("No jpeg support in this version of R");
@@ -935,6 +936,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 #endif
 	p = strchr(dsp+6, ':'); *p='\0';
 	xd->quality = atoi(dsp+6);
+	if(strlen(p+1) >= 512) error("filename too long in jpeg() call");
 	strcpy(xd->filename, p+1);
 	sprintf(buf, p+1, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
@@ -1180,14 +1182,14 @@ static void newX11_NewPage(int fill, double gamma, NewDevDesc *dd)
 	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
 	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
 	    if (xd->type == PNG) {
-		char buf[512];
+		char buf[600];
 		sprintf(buf, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
 		    error("could not open PNG file `%s'", buf);
 	    }
 	    if (xd->type == JPEG) {
-		char buf[512];
+		char buf[600];
 		sprintf(buf, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)

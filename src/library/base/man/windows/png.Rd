@@ -15,14 +15,16 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
     bg = "white")
 }
 \arguments{
- \item{filename}{the name of the output file.  The page number is
-   substituted if an integer format is included in the character string.}
+  \item{filename}{the name of the output file, up to 511 characters.
+    The page number is substituted if an integer format is included
+    in the character string. (The result must be less than 600
+    characters long.)
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text, intepreted at
    72 dpi, so one point is approximately one pixel.}
  \item{bg}{the initial background colour: can be overridden by setting
-   par("bg").} 
+   par("bg").}
  \item{quality}{the \sQuote{quality} of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
    degradation of the image.}
@@ -35,8 +37,8 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
   but may be useful for image plots, for example. The BMP format is
   standard on Windows, and supported elsewhere.
 
-  \code{png} supports transparent backgrounds on 16-bit (\sQuote{High Color}) or
-  better screens: use \code{bg = "transparent"}.
+  \code{png} supports transparent backgrounds on 16-bit
+  (\sQuote{High Color}) or better screens: use \code{bg = "transparent"}.
   Not all PNG viewers render files with transparency correctly.
 }
 \value{

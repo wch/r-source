@@ -1466,7 +1466,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 			int xpos, int ypos)
 {
     rect  rr;
-    char buf[512];
+    char buf[600]; /* allow for pageno formats */
 
     if (!fontinitdone)
 	RFontInit();
@@ -1497,6 +1497,8 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    xd->bg = dd->startfill = canvascolor;
 	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
+	if(strlen(dsp+4) >= 512) error("filename too long in %s() call", 
+				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, dsp+4);
 	if (!Load_Rbitmap_Dll()) {
 	    warning("Unable to load Rbitmap.dll");
@@ -1529,6 +1531,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	*p = '\0';
 	xd->quality = atoi(&dsp[5]);
 	*p = ':' ;
+	if(strlen(p+1) >= 512) error("filename too long in jpeg() call");
 	strcpy(xd->filename, p+1);
 	if((xd->gawin = newbitmap(w, h, 256)) == NULL) {
 	    warning("Unable to allocate bitmap");
@@ -1554,6 +1557,8 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
+	if(ld > ls && strlen(&dsp[ls + 1]) >= 512) 
+	    error("filename too long in win.metafile() call");
 	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
 	sprintf(buf, xd->filename, 1);
 	xd->w = MM_PER_INCH * w;
@@ -1772,12 +1777,12 @@ static void GA_Resize(NewDevDesc *dd)
 static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    char buf[512];
 
     xd->npage++;
     if ((xd->kind == PRINTER) && xd->needsave)
 	nextpage(xd->gawin);
     if ((xd->kind == METAFILE) && xd->needsave) {
+	char buf[600];
 	if (strlen(xd->filename) == 0)
 	    error("A clipboard metafile can store only one figure.");
 	else {
@@ -1788,6 +1793,7 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
     }
     if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP)
 	&& xd->needsave) {
+	char buf[600];
 	SaveAsBitmap(dd);
 	sprintf(buf, xd->filename, xd->npage);
 	if ((xd->fp = fopen(buf, "wb")) == NULL)

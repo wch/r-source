@@ -25,7 +25,12 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 \arguments{
   \item{display}{indicates the purpose of the device.}
   \item{filename}{the name of the output file: it will be an enhanced
-    Windows metafile, usually given extension \code{.emf} or \code{.wmf}.}
+    Windows metafile, usually given extension \code{.emf} or
+    \code{.wmf}. Up to 511 characters are allowed.
+    The page number is substituted if an integer format is included
+    in the character string. (The result must be less than 600
+    characters long.)
+  }
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text. The allowed

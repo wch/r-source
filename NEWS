@@ -375,6 +375,9 @@ BUG FIXES
     o   getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
 	not exist.
 
+    o   The png(), jpeg(), png() and win.metafile() devices under now 
+	enforce the limit of 512 chars(!) on the filename.  (PR#3466)
+
 
 
 
