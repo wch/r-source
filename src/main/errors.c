@@ -332,7 +332,7 @@ static void cleanup_PrintWarnings(void *data)
 void PrintWarnings(void)
 {
     int i;
-    SEXP names, s, t;
+    SEXP names, s, t, header;
     RCNTXT cntxt;
 
     if (R_CollectWarnings == 0)
@@ -353,8 +353,10 @@ void PrintWarnings(void)
     cntxt.cend = &cleanup_PrintWarnings;
 
     inPrintWarnings = 1;
+    header = ngettext("Warning message:\n", "Warning messages:\n", 
+		      R_CollectWarnings);
     if( R_CollectWarnings == 1 ) {
-	REprintf(_("Warning message:\n"));
+	REprintf(header);
 	names = CAR(ATTRIB(R_Warnings));
 	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
 	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
@@ -363,7 +365,7 @@ void PrintWarnings(void)
 		CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0), 0, SIMPLEDEPARSE), 0)));
     }
     else if( R_CollectWarnings <= 10 ) {
-	REprintf(_("Warning messages:\n"));
+	REprintf(header);
 	names = CAR(ATTRIB(R_Warnings));
 	for(i=0; i<R_CollectWarnings; i++) {
 	    if( STRING_ELT(R_Warnings, i) == R_NilValue )
