@@ -26,7 +26,7 @@ BUG FIXES
 
     o	methods("$") and methods("$<-") were failing to find methods.
 
-    o	Recursive indexing of lists had too little error-checking. 
+    o	Recursive indexing of lists had too little error-checking.
 	(related to PR#3324)
 
     o	get() and exists() were ignoring the `mode' argument for
@@ -34,7 +34,7 @@ BUG FIXES
 	the mode requested if not "any".  A bug in setting the NAMED
 	field in do_get was fixed.
 
-    o	Removed warning about names in persistent strings when a 
+    o	Removed warning about names in persistent strings when a
 	namespace is saved.
 
     o	The apparently never used `method' argument to loess() did not
@@ -48,6 +48,8 @@ BUG FIXES
 
     o	sort() and unique.default() were failing on 0-level factors.
 
+    o	sapply() for matrix result does not return list(NULL,NULL) dimnames
+	anymore.
 
 
 

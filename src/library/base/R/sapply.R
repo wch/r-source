@@ -11,7 +11,8 @@ sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 	else if(common.len > 1)
 	    array(unlist(answer, recursive = FALSE),
 		  dim= c(common.len, length(X)),
-		  dimnames= list(names(answer[[1]]), names(answer)))
+		  dimnames= if(!(is.null(n1 <- names(answer[[1]])) &
+			         is.null(n2 <- names(answer)))) list(n1,n2))
 	else answer
     } else answer
 }
