@@ -736,6 +736,10 @@ BUG FIXES
     o	All uses of dir.create() check the return value.
 	donwload.packages() checks that destdir exists and is a directory.
 
+    o   Methods dispatch corrects an error that failed to find
+        methods for classes that extend sealed classes (class unions
+        that contain basic classes, e.g.).
+
 
 
 
