@@ -47,6 +47,6 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
         res <- require(pkg, quietly = TRUE, character.only = TRUE)
         if(!res)
             warning("package ", pkg,
-                    'in options("defaultPackages") was not found')
+                    ' in options("defaultPackages") was not found', call.=FALSE)
     }
 }
