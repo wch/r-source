@@ -10,6 +10,8 @@ subdir = src/unix
 
 include $(top_builddir)/Makeconf
 
+CPPFLAGS = -I../include -I$(top_srcdir)/src/include @CPPFLAGS@ @X_CFLAGS@
+
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls PSPAPER Makefile.in *.[cfh])
 
@@ -48,8 +50,8 @@ $(LIB): $(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
 
-dataentry.o devX11.o rotated.o:
-	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
+# dataentry.o devX11.o rotated.o:
+#	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
 
 mostlyclean: clean
 clean:
