@@ -187,9 +187,22 @@ weights.glm(object, type = c("prior", "working"), ...)
   by \code{\link{predict.glm}}, whereas those specified by an offset term
   in the formula will be.
 }
+\references{
+  McCullagh P. and Nelder, J. A. (1989)
+  \emph{Generalized Linear Models.}
+  London: Chapman and Hall.
+
+  Dobson, A. J. (1990)
+  \emph{An Introduction to Generalized Linear Models.}
+  London: Chapman and Hall.
+
+  Venables, W. N. and Ripley, B. D. (1999)
+  \emph{Modern Applied Statistics withe S-PLUS.}
+  New York: Springer.
+}
+
 \examples{
-## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
-## Page 93: Randomized Controlled Trial :
+## Dobson (1990) Page 93: Randomized Controlled Trial :
 counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3,1,9)
 treatment <- gl(3,3)
