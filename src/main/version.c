@@ -41,7 +41,6 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP value, names;
     char buf[128];
-    int i;
     checkArity(op, args);
     sprintf(buf,"%s, %s", R_CPU, R_OS);
     PROTECT(value = allocVector(VECSXP,12));
