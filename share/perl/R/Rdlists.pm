@@ -29,12 +29,7 @@ use Cwd;
 use File::Basename;
 use R::Utils;
 
-if($main::opt_dosnames){
-    $HTML="htm";
-}
-else{
-    $HTML="html";
-}
+if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
@@ -214,7 +209,7 @@ sub build_htmlpkglist {
 	    file_path($main::R_HOME, "doc", "html", "packages".$HTML);
 
     print htmlfile html_pagehead("Package Index", ".",
-				 "index.$HTML", "Top",
+				 "index$HTML", "Top",
 				 "", "",
 				 "", "", "./R.css");
 
@@ -222,7 +217,7 @@ sub build_htmlpkglist {
 
     foreach $key (sort(keys %htmltitles)) {
 	print htmlfile "<tr align=\"left\" valign=\"top\">\n";
-	print htmlfile "<td><a href=\"../../library/$key/html/00Index.$HTML\">";
+	print htmlfile "<td><a href=\"../../library/$key/html/00Index$HTML\">";
 	print htmlfile encodealias($key), "</a></td><td>";
 	print htmlfile $htmltitles{$key}, "</td></tr>\n";
     }
@@ -353,13 +348,13 @@ sub build_index { # lib, dest
     $tfile = file_path($dest, "html", "00Index".$HTML);
     open(htmlfile, "> $tfile") or die "Could not open $tfile";
     if($main::opt_chm) { # Windows only
-	open(chmfile, "> $chmdir/00Index.$HTML") or
-	    die "Could not open $chmdir/00Index.$HTML";
+	open(chmfile, "> $chmdir/00Index$HTML") or
+	    die "Could not open $chmdir/00Index$HTML";
     }
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
-				 "../../../doc/html/index.$HTML", "Top",
-				 "../../../doc/html/packages.$HTML",
+				 "../../../doc/html/index$HTML", "Top",
+				 "../../../doc/html/packages$HTML",
 				 "Package List", "", "", "../../R.css");
 
     if($main::opt_chm) {
@@ -408,10 +403,10 @@ sub build_index { # lib, dest
 	    } else { $current = $alias; $currentfile = $file;}
 
 	    my $title = striptitle($main::alltitles{$alias});
-	    print htmlfile "<tr><td width=\"25%\"><a href=\"$file.$HTML\">" .
+	    print htmlfile "<tr><td width=\"25%\"><a href=\"$file$HTML\">" .
 		encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
 	    if($main::opt_chm) {
-		print chmfile "<tr><td width=\"25%\"><a href=\"$file.$HTML\">" .
+		print chmfile "<tr><td width=\"25%\"><a href=\"$file$HTML\">" .
 		    encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
 	    }
 	}

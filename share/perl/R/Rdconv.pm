@@ -30,6 +30,7 @@ use Text::Tabs;
 use FileHandle;
 use R::Utils;
 
+if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "format",
@@ -75,7 +76,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
 	    unless -d $dirname;
-	$htmlfile = file_path($dirname, "html", $Rdname.".html") if $type =~ /html/i;
+	$htmlfile = file_path($dirname, "html", $Rdname.$HTML) if $type =~ /html/i;
 	$txtfile= file_path($dirname, "help", $Rdname)	if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
@@ -596,8 +597,8 @@ sub text2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
-		    $htmlfile = mklink($opt, $topic . ".html");
+#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic$HTML";
+		    $htmlfile = mklink($opt, $topic . $HTML);
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
@@ -607,7 +608,7 @@ sub text2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = file_path($pkg, "html", $topic.".html");
+		    $htmlfile = file_path($pkg, "html", $topic.$HTML);
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
@@ -722,8 +723,8 @@ sub code2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
-		    $htmlfile = mklink($opt, $topic . ".html");
+#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic$HTML";
+		    $htmlfile = mklink($opt, $topic . $HTML);
 #		    print "$htmlfile\n";
        		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
@@ -734,7 +735,7 @@ sub code2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = file_path($pkg, "html", $topic.".html");
+		    $htmlfile = file_path($pkg, "html", $topic.$HTML);
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
