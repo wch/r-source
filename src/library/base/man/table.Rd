@@ -47,7 +47,9 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE)
   \code{as.data.frame} to convert the array-based representation of a
   contingency table to a data frame containing the classifying factors
   and the corresponding counts (the latter as component \code{Freq}).
+  This is the inverse of \code{\link{xtabs}}.
 }
+\seealso{
 \examples{
 ## Simple frequency distribution
 table(rpois(100,5))
@@ -67,5 +69,13 @@ a <- letters[1:3]
 table(a, sample(a))                    # dnn is c("a", "")
 table(a, sample(a), deparse.level = 0) # dnn is c("", "")
 table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
+
+## xtabs() <-> as.data.frame.table() :
+data(UCBAdmissions) ## already a contingency table
+DF <- as.data.frame(UCBAdmissions)
+class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
+## tab *is* ``the same'' as the original table:
+all(tab == UCBAdmissions) 
+all.equal(dimnames(tab), dimnames(UCBAdmissions))
 }
 \keyword{category}
