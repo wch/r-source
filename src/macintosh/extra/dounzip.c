@@ -48,15 +48,18 @@
 #include <windows.h>
 #include <menus.h>
 #include <events.h>
-#include <OSEvents.h>
-#include <Desk.h>
+#include <Events.h>
+//#include <Desk.h>
+#include <Menus.h>
+#include <Devices.h>
+#include <Events.h>
 #include <diskinit.h>
 #include <OSUtils.h>
 #include <resources.h>
 #include <toolutils.h>
 #include <AppleEvents.h>
 #include <EPPC.h>
-#include <GestaltEqu.h>
+#include <Gestalt.h> //<GestaltEqu.h>
 #include <PPCToolbox.h>
 #include <Processes.h>
 
@@ -88,14 +91,13 @@ short replyLevels[] =
 };
 
 
+extern SInt32	systemVersion ;
 
 /* Function prototypes */
 
 static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
 		    int nxfiles, char **xfiles, int over);
 
-int mac_dounzip(int argc,char **argv);
-int mac_unzip(char *commandstr);
 OSErr LaunchUnZipTool(AEDesc *theAddress);
 
 SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -173,11 +175,11 @@ static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
     }
 
     if(dest && dest[0]!='\0')
-	sprintf(commandstr,"%s -d \"%s\"",commandstr,dest);
-
+  		sprintf(commandstr,"%s -d \"%s\"",commandstr,dest);
+	
     if( (err=LaunchUnZipTool(&gTheAddress)) != noErr){  /* we cannot find MacZip */
 	StopAlert(kNoFind,nil);
-	return;
+	return -1;
     }
 
     /* prepares the AppleEvent */

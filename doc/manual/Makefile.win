@@ -21,7 +21,7 @@ TEX = tex
 
 MAKEINDEX = makeindex
 TEXINDEX = texindex
-RHOME=$(shell cd ../..; pwd)
+RHOME=$(shell perl ../../src/gnuwin32/pwd.pl ../..)
 R_PKGS=base ctest eda lqs modreg mva nls splines stepfun tcltk ts
 
 R_PAPERSIZE = a4

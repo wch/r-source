@@ -20,7 +20,7 @@ lm(formula, data, subset, weights, na.action,
   \item{data}{an optional data frame containing the variables
     in the model.  By default the variables are taken from
     \code{environment(formula)}, typically the environment from which
-    \code{glm} is called.}
+    \code{lm} is called.}
 
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}

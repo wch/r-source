@@ -86,6 +86,10 @@
 #include <AppleEvents.h>
 #include <Processes.h>
 
+#include <PMApplication.h>
+//#include <PMDefinitions.h>
+//#include <PMCore.h>
+
 #ifndef __WEDEMOAPP__
 #include "RIntf.h"
 #endif
@@ -98,7 +102,6 @@
 #include "Defn.h"
 #include <Scrap.h>
 #include "Graphics.h"
-#include "PicComments.h"
 #include <Rdevices.h>
 
 /*         DEFINE CONSTANTS        */
@@ -114,9 +117,30 @@
 /*  Global variables   */
 Boolean                                  HaveContent = false;
 Boolean                                  PrintPicture;
-Handle	                                 myHandle;
+Handle	                                 myHandle=NULL;
 SInt32                                   curPaste, finalPaste;
 static Handle                            sColors;    /* handle to the 'mctb' resource for the Color menu*/
+char									mTitle[265], wTitle[265];
+extern OSErr DoSelectDirectory( void );
+extern char *mac_getenv(const char *name);
+
+MenuRef 		HelpMenu=NULL; /* This Handle willtake care of the Help Menu */
+static 	short RHelpMenuItem=-1;
+static 	short RTopicHelpItem=-1;
+static	short RunExampleItem=-1;
+static	short	SearchHelpItem=-1;
+
+//	user structure passed to the NavEventFilter callback
+
+typedef struct NavCallbackData
+{
+	ControlRef		formatPopup ;
+	ControlRef		stationeryCheckbox ;
+	SInt16			extraItemsID ;
+	SInt16			numItems ;
+	OSType			fileType ;
+	Boolean			isStationery ;
+} NavCallbackData ;
 
 
 /*    Extern Global variables     */
@@ -136,17 +160,31 @@ extern WindowPtr			 Edit_Windows[MAX_NUM_E_WIN + 1];
 extern Boolean            		 defaultPort;
 extern SInt16				 Help_Window;
 extern WindowPtr			 Help_Windows[MAX_NUM_H_WIN + 1];
-
+extern	SInt16			gTextSize;
+extern	int				gScreenRes;
+extern	Boolean		finished;
+extern	FSSpec tempeditFSS;
 /*    Protocols    */
 void    assignPString                    (unsigned char* , char* , SInt16);
 OSErr   FindAProcess                     (OSType, OSType, ProcessSerialNumber*);
 OSErr   OpenSelection                    (FSSpecPtr theDoc);
-void    ConsolePaste                     (void);
 void    ConsoleCopyAndPaste              (void);
-OSErr DoOpenText(void);
-OSErr DoOpen(void);
+OSErr DoOpenText(Boolean editable);
+OSStatus DoOpen(void);
+OSErr OldDoOpen(void);
 OSErr DoSource(void);
+OSErr SourceFile(FSSpec  	*myfss);
+int GetTextSize(void);
+int GetScreenRes(void);
+
 void consolecmd(char *cmd);
+static pascal void NavEventFilter(NavEventCallbackMessage,NavCBRec *,void *);
+static OSStatus CreateNavTypeList(OSType,UInt16,const OSType *,NavTypeListHandle *);
+void DoHelpChoice(SInt16 menuItem);
+extern void Do_HelpOnTopic(void);
+extern void Do_RunExample(void);
+extern void Do_SearchHelp(void);
+
 
 /*    Extern Global variables   */
 extern  void   doWindowsMenu             (SInt16);
@@ -162,10 +200,17 @@ extern void LoadWindow();
 extern void DoLineTo();
 extern void Do_EditObject();
 /*extern void PrintPicture();*/
-extern void printLoop();
+extern void printLoop(WindowPtr	window);
+void DoPaste(WindowPtr window);
+
 extern void DoUpdate (WindowPtr window);
 extern void DoActivate (Boolean isActivating, WindowPtr window);
 extern void Do_About();
+
+void DoTools(SInt16 menuItem);
+SavingOption DoWeSaveIt(WindowPtr window);
+
+OSErr MyOpenDocument(FSSpec *documentFSSpec, SFTypeList *typeList);
 
 /*    enum     */
 enum {
@@ -180,8 +225,8 @@ enum {
 
 void SetDefaultDirectory (const FSSpec * spec)
 {
-    LMSetCurDirStore (spec->parID);
-    LMSetSFSaveDisk (- spec->vRefNum);
+ //   LMSetCurDirStore (spec->parID);
+ //   LMSetSFSaveDisk (- spec->vRefNum);
 }
 
 
@@ -213,7 +258,7 @@ static ModalFilterYDUPP GetMySFDialogFilter(void)
 #else
     static ModalFilterYDUPP sFilterUPP = nil;
     if (sFilterUPP == nil) {
-	sFilterUPP = NewModalFilterYDProc(MySFDialogFilter);
+	//sFilterUPP = NewModalFilterYDProc(MySFDialogFilter);
     }
 #endif
     return sFilterUPP;
@@ -254,7 +299,7 @@ void PrepareMenus(void)
 {
     WindowPtr		window;
     WEReference		we;
-    MenuHandle		menu;
+    MenuHandle		menu=NULL;
     MenuCRsrcPtr	pColors;
     SInt16		item;
     Str255		itemText;
@@ -267,14 +312,9 @@ void PrepareMenus(void)
     SInt32		scrapOffset;
     SInt16		i;
     Str255		Cur_Title, Menu_Title;
-    MenuHandle		windowsMenu;
-    Boolean		EqString;
+    MenuHandle		windowsMenu=NULL;
+    OSStatus		err;
 
-
-/*
-     Boolean *present = nil ;
-     Boolean  isContinuous = false ;
-*/
     /* get a pointer to the frontmost window, if any
      */
     window = FrontWindow ();
@@ -283,6 +323,8 @@ void PrepareMenus(void)
      */
     we = (window != nil) ? GetWindowWE (window) : nil;
 
+
+	
     /* *** FILE MENU ***
      */
     menu = GetMenuHandle (kMenuFile);
@@ -290,43 +332,50 @@ void PrepareMenus(void)
     /* first disable all items
      */
     for (item = CountMenuItems (menu); item >= 1; item --) {
-	DisableItem (menu, item);
+	DisableMenuItem (menu, item);
     }
     if (isGraphicWindow(window)){
-	SetMenuItemText(menu,kItemOpen, "\pActivate");
-	SetItemCmd(menu, kItemOpen, 'G');
+	SetMenuItemText(menu,kItemOpen, "\pActivate Graphic Device");
+	SetMenuItemText(menu,kItemNew, "\pNew Graphic Device");
+	SetItemCmd(menu, kItemOpen, 'A');
+    SetItemCmd(menu, kItemNew, 'N');
     }
     else{
-	SetMenuItemText(menu,kItemOpen, "\pOpen...");
+	SetMenuItemText(menu,kItemOpen, "\pSource File...");
+	SetMenuItemText(menu,kItemNew, "\pNew Edit Window");
 	SetItemCmd(menu, kItemOpen, 'O');
+    SetItemCmd(menu, kItemNew, 'N');
     }
 
     /* New, Open, and Quit are always enabled
      */
     if (isEditWindow(window)){
-	EnableItem (menu, kItemLoad);
-	EnableItem (menu , kItemEditObject);
+	EnableMenuItem (menu, kItemLoadW);
+	EnableMenuItem (menu, kItemSaveWSAs);
+	EnableMenuItem (menu , kItemEditObject);
     }
 
     if (window == Console_Window)
     {
-	EnableItem (menu, kItemLoad);
-	EnableItem (menu , kItemEditObject);
+	EnableMenuItem (menu, kItemLoadW);
+    EnableMenuItem (menu, kItemSaveWSAs);
+    EnableMenuItem (menu , kItemEditObject);
     }
-    EnableItem (menu, kItemNew);
-    EnableItem (menu, kItemOpen);
-    EnableItem (menu, kItemShow);
-    EnableItem (menu, kItemPageSetup);
-    EnableItem (menu, kItemPrint);
-    EnableItem (menu, kItemQuit);
+    EnableMenuItem (menu, kItemNew);
+    EnableMenuItem (menu, kItemOpen);
+    EnableMenuItem (menu, kItemEditFile);
+    EnableMenuItem (menu, kItemShow);
+    EnableMenuItem (menu, kItemPageSetup);
+    EnableMenuItem (menu, kItemPrint);
+    EnableMenuItem (menu, kItemQuit);
 
     /* Enable "Close" and "Save As" if there is an active window
      */
     if (window != nil) {
-	EnableItem (menu, kItemClose);
+	EnableMenuItem (menu, kItemClose);
 	if (!isHelpWindow(window)) {
-	    EnableItem (menu, kItemSaveAs);
-	    EnableItem (menu, kItemSave);
+	  //  EnableMenuItem (menu, kItemSaveAs);
+	    EnableMenuItem (menu, kItemSave);
 	}
     }
 
@@ -337,13 +386,12 @@ void PrepareMenus(void)
     /* first, disable all items
      */
     for (item = CountMenuItems(menu); item >= 1; item--) {
-	DisableItem(menu, item);
+	DisableMenuItem(menu, item);
     }
     if (isGraphicWindow(window)) {
-	EnableItem (menu, kItemCopy);
+	EnableMenuItem (menu, kItemCopy);
     }
-/*	EnableItem(menu, kItemPreference);
- */
+
     /* by default, the Undo menu item should read "Can't Undo"
      */
     GetIndString(itemText, kUndoStringsID, 1);
@@ -353,18 +401,22 @@ void PrepareMenus(void)
 
 	/* enable Paste if there's anything pasteable on the Clipboard
 	 */
-	if (GetScrap(NULL,'TEXT',&scrapOffset) > 0) {
-	    if (!isGraphicWindow(window)){
-		EnableItem (menu, kItemPaste);
-	    }
-	}
+	 
+       we = GetWindowWE ( window ) ;
+
+		//	enable Paste if there's anything pasteable on the Clipboard
+		if ( WECanPaste ( we ) ){
+		 if (!isGraphicWindow(window))
+    	  EnableMenuItem ( menu, kItemPaste ) ;
+		}
+
 
 	/* enable Undo if anything can be undone
 	 */
 	actionKind = WEGetUndoInfo (&temp, we);
 
 	if (actionKind != weAKNone) {
-	    EnableItem (menu, kItemUndo);
+	    EnableMenuItem (menu, kItemUndo);
 
 	    /* change the Undo menu item to "Undo/Redo"
 	       + name of action to undo/redo
@@ -377,7 +429,7 @@ void PrepareMenus(void)
 	 */
 	if (WEGetTextLength (we) > 0)
 	{
-	    EnableItem (menu, kItemSelectAll);
+	    EnableMenuItem (menu, kItemSelectAll);
 	}
 
 	/* get the current selection range
@@ -387,24 +439,26 @@ void PrepareMenus(void)
 	/* enable Cut, Copy, and Clear if the selection range is not empty
 	 */
 	if (FrontWindow() == Console_Window) {
-	    EnableItem (menu, kItemCopyPaste);
-	    EnableItem (menu, kItemCut);
-	    EnableItem (menu, kItemCopy);
-	    EnableItem (menu, kItemClear);
+	    EnableMenuItem (menu, kItemCopyPaste);
+	    EnableMenuItem (menu, kItemCopy);
+	    EnableMenuItem (menu, kItemCopyPaste);
 	}
 
 	if (isEditWindow(window)) {
-	    EnableItem (menu, kItemLineTo);
-	    EnableItem (menu, kItemCut);
-	    EnableItem (menu, kItemCopy);
-	    EnableItem (menu, kItemClear);
+	    EnableMenuItem (menu, kItemLineTo);
+	    EnableMenuItem (menu, kItemCut);
+	    EnableMenuItem (menu, kItemCopy);
+	    EnableMenuItem (menu, kItemClear);
+	    EnableMenuItem (menu, kItemPaste);
+	    EnableMenuItem (menu, kItemCopyPaste);
 	}
 	if (isHelpWindow(window)){
-	    DisableItem (menu, kItemCut);
-	    DisableItem (menu, kItemCopyPaste);
-	    DisableItem (menu, kItemClear);
-	    DisableItem (menu, kItemPaste);
-	    EnableItem  (menu, kItemCopy);
+	    DisableMenuItem (menu, kItemCut);
+	    DisableMenuItem (menu, kItemCopyPaste);
+	    DisableMenuItem (menu, kItemClear);
+	    DisableMenuItem (menu, kItemPaste);
+	    EnableMenuItem  (menu, kItemCopy);
+	    EnableMenuItem 	(menu, kItemCopyPaste);
 	}
 	/* determine which style attributes are continuous over
 	   the current selection range we'll need this information
@@ -419,80 +473,176 @@ void PrepareMenus(void)
     }
 
     /* *** Window Menu *** */
-    windowsMenu = GetMenu(mWindows);
+    windowsMenu = GetMenuHandle(kMenuWindows);
     GetWTitle(window, (unsigned char *) &Cur_Title);
 
     for(i = 1; i <= CountMenuItems(windowsMenu); i++) {
 	GetMenuItemText(windowsMenu, i , (unsigned char*)&Menu_Title);
-	EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
+	CopyPascalStringToC(Cur_Title,wTitle);
+    CopyPascalStringToC(Menu_Title,mTitle);    
 	CheckMenuItem(windowsMenu, i, false);
-	if (EqString) CheckMenuItem(windowsMenu, i, true);
+	if (strcmp(wTitle,mTitle) == 0) 
+		CheckMenuItem(windowsMenu, i, true);
     }
 
 
 }
 
 
-/* DoDeskAcc
- */
-void DoDeskAcc(SInt16 menuItem)
+void DoDeskAcc ( UInt16 menuItem )
 {
-    Str255 deskAccessoryName;
-    GetMenuItemText(GetMenuHandle(kMenuApple), menuItem, deskAccessoryName);
-    OpenDeskAcc(deskAccessoryName);
-}
+/*	if ( menuItem == kItemAbout )
+	{
+		DoAboutBox( kDialogAboutBox );
+	}
+*/
+#if ! TARGET_API_MAC_CARBON
+	else
+	{
+		//	open desk accessories (this is not required under Carbon)
+		Str255 deskAccessoryName ;
 
+		GetMenuItemText ( GetMenuHandle ( kMenuApple ), menuItem, deskAccessoryName ) ;
+		OpenDeskAcc ( deskAccessoryName ) ;
+	}
+#endif
+}
 
 /* DoNew
  */
-OSErr DoNew(void)
+OSErr DoNew(Boolean editable)
 {
     /* create a new window from scratch
      */
 
-    return CreateWindow(nil);
+    return CreateWindow(nil,editable);
 }
 
 
-/* DoOpen :
-   Now implemented. It is useful to load object .rda-like
-   from the "load" menu.
-   Based on previous work of Ross Ihaka. Jago Nov 2000 (Stefano M. Iacus)
- */
-OSErr DoOpen(void)
+
+const FSSpec	defaultLocationfss;
+/* This routine returns a FSSpec with corresponding error. The second
+   argument is ignored for the moment. This routine is used to Source
+   files and Show files.
+   Jago, April 2001, Stefano M.Iacus
+*/   
+
+
+OSErr MyOpenDocument(FSSpec *documentFSSpec, SFTypeList *typeList)
 {
-    StandardFileReply	reply;
-    SFTypeList		typeList;
-    FInfo		fileInfo;
-    OSErr		err = noErr;
-    Point		where = { -1, -1 };  /* auto center dialog */
+    NavDialogOptions    dialogOptions;
+    AEDesc              defaultLocation;
+    NavEventUPP         eventProc = nil; 
+    NavObjectFilterUPP  filterProc = nil;
+    OSErr               anErr = noErr;
+    
+    
+    /*  Specify default options for dialog box */
+    anErr = NavGetDefaultDialogOptions(&dialogOptions);
+  
+         
+    if (anErr == noErr)
+    {
+        /*  Adjust the options to fit our needs
+            Set default location option
+         */   
+        dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
+        dialogOptions.dialogOptionFlags |= kNavAllowInvisibleFiles;
+        dialogOptions.dialogOptionFlags |= kNavAllFilesInPopup;
+                        
+        if (anErr == noErr)
+        {
+            /* Get 'open' resource. A nil handle being returned is OK, */
+            /* this simply means no automatic file filtering. */
+            NavReplyRecord reply;
+            NavTypeListHandle deftypeList = (NavTypeListHandle)GetResource(
+                                       'open', 128);     
+          deftypeList = nil; /* we apply no filter for the moment */
+            
+          anErr = AECreateDesc(typeFSS,&defaultLocationfss,sizeof(defaultLocationfss),
+          						&defaultLocation);  
+      
+   /* Call NavGetFile() with specified options and
+               declare our app-defined functions and type list
+             */
+            anErr = NavGetFile (&defaultLocation, &reply, &dialogOptions,
+                                nil, nil, nil,
+                                deftypeList, nil);     
+               
+            if (anErr == noErr && reply.validRecord)
+            {
+                /*  Deal with multiple file selection */
+                long    count;
+                
+                anErr = AECountItems(&(reply.selection), &count);
+                           
+
+                // Set up index for file list
+                if (anErr == noErr)
+                {
+                    long index;
+                    
+                    for (index = 1; index <= count; index++)
+                    {
+                        AEKeyword   theKeyword;
+                        DescType    actualType;
+                        Size        actualSize;
+                        
+                        /* Get a pointer to selected file */
+                        anErr = AEGetNthPtr(&(reply.selection), index,
+                                            typeFSS, &theKeyword,
+                                            &actualType,documentFSSpec,
+                                            sizeof(FSSpec),
+                                            &actualSize);
+                             
+                        
+                    }
+                }
+                /*  Dispose of NavReplyRecord, resources, descriptors */
+                NavDisposeReply(&reply);
+            }
+            if (typeList != NULL)
+            {
+                ReleaseResource( (Handle)typeList);
+            }
+            (void) AEDisposeDesc(&defaultLocation);
+        }
+    }
+
+cleanup:  
+      return anErr;
+}
+
+/* DoOpen has been updated to use NavServices 
+   Jago, April 2001, Stefano M.Iacus
+*/
+
+OSStatus DoOpen ( void )
+{
+	OSErr		err ;
+    FSSpec  	myfss;
     SInt16		pathLen;
-    Handle		pathName;
+    Handle		pathName=NULL;
     FILE		*fp;
     SEXP 		img, lst;
     int 		i;
+    SFTypeList	typeList;
 
-    typeList[0] = 'BINA';   /* this are usually files coming from Windows XDR*/
-    typeList[1] = 'RSES';   /* I will either create files with type R  */
-    typeList[2] = 'ROBJ';   /* Session or R Object                         */
+    typeList[0] = kTypeText;
+    typeList[1] = 'BINA';
 
-    /* put up the standard open dialog box.
-       (we use CustomGetFile instead of StandardGetFile because we
-       want to provide our own dialog filter procedure that takes
-       care of updating our windows)
-    */
-    CustomGetFile(nil, 3, typeList, &reply, 0, where, nil,
-		  GetMySFDialogFilter(), nil, nil, nil);
-    err = FSpGetFInfo(&reply.sfFile, &fileInfo);
-    if (err != noErr) return err;
-    FSpGetFullPath(&reply.sfFile, &pathLen, &pathName);
+    err = MyOpenDocument(&myfss, &typeList);
+        
+    if(err!= noErr)
+       return(err);
+     
+    FSpGetFullPath(&myfss, &pathLen, &pathName);
     HLock((Handle)pathName);
     strncpy(InitFile, *pathName, pathLen);
     InitFile[pathLen] = '\0';
     HUnlock((Handle) pathName);
-
 /*
-   Routine now handles XDR object. Jago Nov2000 (Stefano M. Iacus)
+   Routine now handles XDR object. Nov 2000 (Stefano M. Iacus)
 */
     if(!(fp = fopen(InitFile, "rb"))) { /* binary file */
 	warning("File cannot be opened !");
@@ -519,101 +669,95 @@ OSErr DoOpen(void)
     }
     UNPROTECT(1);
     fclose(fp);
-    return err;
+
+
+    return(err);
+
 }
 
-/* DoOpenText
- */
-OSErr DoOpenText(void)
+/* This routine is responsible to showing (and eventually edit)
+   files selected by the user
+   Jago, April 2001, Stefano M. Iacus
+*/    
+OSErr DoOpenText(Boolean editable)
 {
-    StandardFileReply	reply;
-    SFTypeList		typeList;
     FInfo		fileInfo;
+    SFTypeList	typeList;
     OSErr		err = noErr;
-    Point		where = { -1, -1 };  /* auto center dialog */
-    SInt16		pathLen, i;
-    Handle		pathName;
-    FILE		*fp;
-    Str255		Cur_Title, Menu_Title;
-    MenuHandle		windowsMenu;
-    Boolean		EqString;
-    char        	buf[10];
+    FSSpec  	myfss;
 
-    /* set up a list of file types we can open for StandardGetFile
-     */
     typeList[0] = kTypeText;
     typeList[1] = ftSimpleTextDocument;
-
-    /* put up the standard open dialog box.
-       (we use CustomGetFile instead of StandardGetFile because we
-       want to provide our own dialog filter procedure that takes
-       care of updating our windows)
-    */
-    CustomGetFile(nil, 2, typeList, &reply, 0, where, nil,
-		  GetMySFDialogFilter(), nil, nil, nil);
-
-    err = FSpGetFInfo(&reply.sfFile, &fileInfo);
+ 
+    err = MyOpenDocument(&myfss, &typeList);
+ 
+    if(err!= noErr)
+     return(err);
+    
+    err = FSpGetFInfo(&myfss, &fileInfo);
     if (err != noErr) return err;
 
-    DoNew();
-
-    err = ReadTextFile(&reply.sfFile,
+    DoNew(editable);
+       
+    RemWinMenuItem();
+   
+    err = ReadTextFile(&myfss,
 		       GetWindowWE(Edit_Windows[Edit_Window-1]));
-
+    
+    
     if(err != noErr)
-	REprintf("\n ReadTextFile error: %d\n",err);
-
-    windowsMenu = GetMenu(mWindows);
-    GetWTitle(Edit_Windows[Edit_Window-1], (unsigned char *) &Cur_Title);
-    for(i = 1; i <= CountMenuItems(windowsMenu); i++) {
-	GetMenuItemText(windowsMenu, i , (unsigned char*)&Menu_Title);
-	EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
-	if (EqString) {
-	    DeleteMenuItem(windowsMenu, i);
-	    sprintf((char *)&buf[1]," %d", Edit_Window - 1);
-	    buf[0] = strlen(buf)-1;
-	    doCopyPString(reply.sfFile.name, Cur_Title);
-	    doConcatPStrings(Cur_Title, buf);
-	    AppendMenu(windowsMenu, Cur_Title);
-	    SetWTitle(Edit_Windows[Edit_Window-1], Cur_Title) ;
-	    break;
-	}
-    }
+	 REprintf("\n ReadTextFile error: %d\n",err);
+   	
+   	UniqueWinTitle();
+	if(Edit_Window>2)
+    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
+        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
 
     return err;
 }
 
-/* DoSource
+/* DoSource: this routine sources .R files. It is accessibile via menus.
+   Jago, January 2001, Stefano M.Iacus
  */
 OSErr DoSource(void)
 {
-    StandardFileReply	reply;
-    SFTypeList		typeList;
-    FInfo		fileInfo;
+    SFTypeList	typeList;
     OSErr		err = noErr;
-    Point		where = { -1, -1 };  /* auto center dialog */
-    SInt16		pathLen;
-    Handle		pathName;
-    FILE		*fp;
-    SEXP 		img, lst;
-    int 		i;
-    char 		sourcefile[FILENAME_MAX];
-    char 		cmd[FILENAME_MAX+15];
+    FSSpec  	myfss;
 
     typeList[0] = kTypeText;
     typeList[1] = ftSimpleTextDocument;
 
+    err = MyOpenDocument(&myfss, &typeList);
+  
+    if(err!= noErr)
+      return(err);
+   
+    return( SourceFile(&myfss) );
 
-    /* put up the standard open dialog box.
-       (we use CustomGetFile instead of StandardGetFile because we
-       want to provide our own dialog filter procedure that takes
-       care of updating our windows)
-    */
-    CustomGetFile(nil, 1, typeList, &reply, 0, where, nil,
-		  GetMySFDialogFilter(), nil, nil, nil);
-    err = FSpGetFInfo(&reply.sfFile, &fileInfo);
+}
+
+/* SourceFile: is a completion to DoSource routine. 
+   It allows the Alpha editor to run scripts in R
+   in the S+/R tcl-mode. 
+   Jago Easter 2001, Stefano M. Iacus
+*/
+   
+OSErr SourceFile(FSSpec  	*myfss)
+{
+ 	OSErr		err = noErr;
+    char 		sourcefile[FILENAME_MAX];
+    char 		cmd[FILENAME_MAX+25];
+    SInt16		pathLen;
+    Handle		pathName=NULL;
+    FInfo		fileInfo;
+
+    if(myfss == NULL)
+     return(-1);
+     
+    err = FSpGetFInfo(myfss, &fileInfo);
     if (err != noErr) return err;
-    FSpGetFullPath(&reply.sfFile, &pathLen, &pathName);
+    FSpGetFullPath(myfss, &pathLen, &pathName);
     HLock((Handle)pathName);
     strncpy(sourcefile, *pathName, pathLen);
     sourcefile[pathLen] = '\0';
@@ -623,9 +767,12 @@ OSErr DoSource(void)
 
     consolecmd(cmd);
 
+
 }
 
-/* SaveWindow
+
+/* SaveWindow: routine updated to use Navigation Services
+   Jago, April 2001, Stefano M. Iacus
  */
 OSErr SaveWindow(const FSSpec *pFileSpec, WindowPtr window)
 {
@@ -638,14 +785,14 @@ OSErr SaveWindow(const FSSpec *pFileSpec, WindowPtr window)
     Boolean		EqString;
 
     hDocument = GetWindowDocument(window);
-    ForgetHandle(&(*hDocument)->fileAlias);
+
 
     if (isGraphicWindow(window)) {
-	/* We don't save these ... */
+	/* We don't save these here... */
     }
     else {
 	GetWTitle(window, Cur_Title);
-	windowsMenu = GetMenu(mWindows);
+	windowsMenu = GetMenuHandle(kMenuWindows);
 	for(i = 1; i <= CountMenuItems(windowsMenu); i++){
 	    GetMenuItemText(windowsMenu, i , curString);
 	    EqString = EqualNumString(Cur_Title, curString, curString[0]);
@@ -657,6 +804,7 @@ OSErr SaveWindow(const FSSpec *pFileSpec, WindowPtr window)
 
 	/* save the text */
 	if ((err = WriteTextFile(pFileSpec, (*hDocument)->we)) == noErr) {
+	    if(window != Console_Window){
 	    SetWTitle(window, pFileSpec->name);
 	    if(menu_item!= -1)
 	    {
@@ -664,21 +812,16 @@ OSErr SaveWindow(const FSSpec *pFileSpec, WindowPtr window)
 		AppendMenu(windowsMenu, pFileSpec->name);
 	    }
 
-	    /*	MenuHandle windowsMenu; */
-	    //if(windowsMenu = GetMenu(mWindows))
-	    // AppendMenu(windowsMenu, pFileSpec->name);
-
-	    /* replace the old window alias (if any) with a new one
+	
+		    /* replace the old window alias (if any) with a new one
 	       created from pFileSpec
 	     */
 	    NewAlias(nil, pFileSpec, &alias);
+	   } 
 
-	    /* if err, alias will be nil, and it's not fatal,
-	       just will make subsequent saves annoying
-	     */
-	    (* hDocument)->fileAlias = (Handle)alias;
 	}
     }
+    
     return err;
 }
 
@@ -688,13 +831,16 @@ OSErr DoSaveAs(const FSSpec *suggestedTarget, WindowPtr window)
 {
     StringHandle	hPrompt;
     Str255		defaultName;
-    StandardFileReply	reply;
+  //  StandardFileReply	reply;
     Point		where = { -1, -1 }; /* autocenter's dialog */
-    OSErr		err;
-
-    /* get the prompt string for CustomPutFile from a string resource
-       and lock it
-     */
+    OSErr		err = noErr;
+    OSErr               anErr = noErr;
+    NavReplyRecord      reply;
+    NavDialogOptions    dialogOptions;
+    OSType              fileTypeToSave = 'TEXT';
+      OSType              creatorType = 'ttxt';
+   FSSpec mytarget; 
+ 
     hPrompt = GetString(kPromptStringID);
     HLockHi((Handle) hPrompt);
 
@@ -714,78 +860,59 @@ OSErr DoSaveAs(const FSSpec *suggestedTarget, WindowPtr window)
 
     /* put up the standard Save dialog box
      */
-    CustomPutFile(*hPrompt, defaultName, &reply, 0, where, nil,
-		  GetMySFDialogFilter(), nil, nil, nil);
+    anErr = NavGetDefaultDialogOptions(&dialogOptions); 
+    dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
 
-    /* unlock the string resource
-     */
-    HUnlock((Handle)hPrompt);
-
-    /* if the user ok'ed the dialog, save the window to the specified file
-     */
-    if (reply.sfGood)
-	err = SaveWindow(&reply.sfFile, window);
+	PStringCopy(defaultName,dialogOptions.savedFileName);
+      
+    
+    anErr = NavPutFile( nil, 
+    					&reply, 
+    					&dialogOptions, 
+    					nil,
+                        fileTypeToSave, 
+                        creatorType, 
+                        nil );
+ 
+    if (anErr == noErr && reply.validRecord)
+            {
+                        AEKeyword   theKeyword;
+                        DescType    actualType;
+                        Size        actualSize;
+                        
+                        /* Get a pointer to selected file */
+                        anErr = AEGetNthPtr(&(reply.selection), 1,
+                                            typeFSS, &theKeyword,
+                                            &actualType, &mytarget,
+                                            sizeof(mytarget),
+                                            &actualSize);
+                             
+             err = SaveWindow(&mytarget, window);
+             
+                /*  Dispose of NavReplyRecord, resources, descriptors */
+                NavDisposeReply(&reply);
+            }
     else
-	err = userCanceledErr;
+	 err = userCanceledErr;
+    
+    HUnlock((Handle)hPrompt);
+    
     return err;
 }
 
-/* DoSave
- */
+
 OSErr DoSave(WindowPtr window)
 {
-    FSSpec		spec;
     FSSpecPtr	suggestedTarget = nil;
-    Boolean		promptForNewFile = true;
-    Boolean		aliasTargetWasChanged;
     OSErr		err;
-
-    /* resolve the alias associated with this window, if any
-     */
-    if ((* GetWindowDocument(window))->fileAlias != nil) {
-	if ((ResolveAlias(nil, (AliasHandle)(*GetWindowDocument(window))->fileAlias,
-			  &spec, &aliasTargetWasChanged) == noErr)) {
-	    if (aliasTargetWasChanged)
-		suggestedTarget = &spec;
-	    else
-		promptForNewFile = false;
-	}
-    }
-
-    /* if no file has been previously associated with this window,
-       or if the alias resolution has failed, or if the alias target
-       was changed prompt the user for a new destination
-    */
-    if (promptForNewFile)
+    
 	err = DoSaveAs(suggestedTarget, window);
-    else
-	err = SaveWindow(&spec, window);
+
     return err;
 }
 
 
-/* SaveChangesDialogFilter
- */
-static pascal Boolean
-SaveChangesDialogFilter(DialogPtr dialog, EventRecord *event, SInt16 *item)
-{
-    /* map command + D to the "Don't Save" button
-     */
-    if ((event->what == keyDown) && (event->modifiers & cmdKey)
-	&& ((event->message & charCodeMask) == 'd')) {
-	/* flash the button briefly
-	 */
-	FlashButton(dialog, kButtonDontSave);
-	/* fake an event in the button
-	 */
-	*item = kButtonDontSave;
-	return true;
-    }
-    /* route everything else to our default handler
-     */
-    return CallModalFilterProc(GetMyStandardDialogFilter(), dialog, event, item);
-}
-
+ 
 /* DoClose:
    In here, you need to understand that different windows have
    different close methods.  For a Graphic window, when you close it, you
@@ -806,33 +933,41 @@ OSErr DoClose(ClosingOption closing, SavingOption saving, WindowPtr window)
     Str255      Cur_Title,curString;
     MenuHandle  windowsMenu;
     Boolean 	EqString = FALSE;
-
-#ifdef __cplusplus
-    static ModalFilterUPP sFilterProc = NewModalFilterProc(SaveChangesDialogFilter);
-#else
+    Cursor 	arrow;
     static ModalFilterUPP sFilterProc = nil;
-    if (sFilterProc == nil) {
-	sFilterProc = NewModalFilterProc(SaveChangesDialogFilter);
-    }
-#endif
+     
+     
+
+
+
+    SelectWindow(window);
+
     if ( (win_num=isHelpWindow(window)) ) {
 
-	GetWTitle(Help_Windows[win_num], Cur_Title);
-	windowsMenu = GetMenu(mWindows);
-	for(i = 1; i <= CountMenuItems(windowsMenu); i++){
-	    GetMenuItemText(windowsMenu, i , curString);
-	    EqString = EqualNumString(Cur_Title, curString, curString[0]);
-	    if (EqString) {
-		DeleteMenuItem(windowsMenu, i);
-		break;
-	    }
-	}
-	adjustHelpPtr(win_num);
-	DestroyWindow(window);
-
-	return noErr;
+		GetWTitle(Help_Windows[win_num], Cur_Title);
+		//SelectWindow(Help_Windows[win_num]);
+		RemWinMenuItem();
+		adjustHelpPtr(win_num);
+		DestroyWindow(window);
+		return noErr;
     }
+    
     err = noErr;
+    
+    
+    if(!finished){
+     saving = DoWeSaveIt(window);
+     if(saving == savingCancel)
+      return;
+     if(saving == savingNo){
+       finished=true; 
+       goto furtherstep;
+       }
+     goto nextstep;
+     }
+     
+     if(isGraphicWindow(window)) 
+      goto furtherstep;
     /* is this window dirty?
      */
     if (WEGetModCount(GetWindowWE(window)) > 0) {
@@ -848,7 +983,8 @@ OSErr DoClose(ClosingOption closing, SavingOption saving, WindowPtr window)
 
 	    /* put up the Save Changes? alert box
 	     */
-	    SetCursor(&qd.arrow);
+	    
+	    SetCursor ( GetQDGlobalsArrow ( & arrow ) ) ;
 	    alertResult = Alert(kAlertSaveChanges, sFilterProc);
 
 	    /* exit if the user canceled the alert box
@@ -862,65 +998,99 @@ OSErr DoClose(ClosingOption closing, SavingOption saving, WindowPtr window)
 		saving = savingNo;
 	}
 
-	if (saving == savingYes) {
-	    if (isGraphicWindow(window)) {
-		err = doSaveGraCommand();
-		if (err != noErr) {
-		    /* You can handle error in here!
-		       However, there have some warning return,
-		       don't treat it as error.
-		    */
-		}
-	    }
-	    else {
-            	if (window == Console_Window) {
-		    err = doRSave(&haveCancel);
-		    if (haveCancel){
-			RWrite("\r");
-			jump_to_toplevel();
-		    }
-		    else {
-			if (err == noErr){
-			    R_SaveGlobalEnv();
-			}
-			else
-			    error("File Corrupt or Memory error. Unrecoverable!");
-		    }
-		}
-		else {
-		    if(saving != savingNo)
-		     DoSave(window);
-		}
+nextstep:
+	if (saving == savingYes) { 
+	    if (isGraphicWindow(window)) 
+			err = doSaveAsGraCommand();
+		else { /* isGraphic */
+		      	if (window == Console_Window) {
+		    		err = doRSave(&haveCancel);
+		    		if (haveCancel){
+						jump_to_toplevel();
+		    		}
+		    		else {
+						if (err == noErr){
+			    			R_SaveGlobalEnv();
+						}
+						else
+			    			error("File Corrupt or Memory error. Unrecoverable!");
+		    		}
+				}
+				else {
+		    		if(saving != savingNo){
+		     		if(!finished){
+		     		 err= SaveWindow(&tempeditFSS, window);
+		     		 finished=true; 
+		     		 
+		     		}
+		     		else
+		     		 DoSave(window); 
+		    		}
+				}
 	    }
 	}
     }
 
-
+furtherstep:
     /* if it is a graphic window, maintain the menus and title first.
      */
     if (isGraphicWindow(window)){
-	Mac_Dev_Kill(window);
-    }
+		Mac_Dev_Kill(window); /* Mac_Dev_Kill provides menu deletion */
+		return noErr;
+	}
     else {
 	if ( (win_num=isEditWindow(window)) ) {
-	    GetWTitle(Edit_Windows[win_num], Cur_Title);
-	    windowsMenu = GetMenu(mWindows);
-            for(i = 1; i <= CountMenuItems(windowsMenu); i++){
-		GetMenuItemText(windowsMenu, i , curString);
-		EqString = EqualNumString(Cur_Title, curString, curString[0]);
-		if (EqString) {
-		    DeleteMenuItem(windowsMenu, i);
-		    break;
-		}
-	    }
-	    adjustEditPtr(win_num);
+	    RemWinMenuItem();
+		adjustEditPtr(win_num);
 	}
 	/* destroy the window */
+	
 	DestroyWindow(window);
 	if (window == Console_Window)
 	    ExitToShell();
     }
     return err;
+}
+
+SavingOption DoWeSaveIt(WindowPtr window)
+{
+ SavingOption saving = savingNo;
+     Str255	s1, s2;
+    SInt16	alertResult,win_num,i;
+    OSErr	err;
+    Boolean	haveCancel;
+    Str255      Cur_Title,curString;
+    MenuHandle  windowsMenu;
+    Boolean 	EqString = FALSE;
+    Cursor 	arrow;
+    static ModalFilterUPP sFilterProc = nil;
+
+
+ 	if(!window)
+  		return(savingNo);
+  
+ 	if (WEGetModCount(GetWindowWE(window)) > 0) {
+	
+	    /* put up the Save Changes? alert box
+	     */
+	    
+	    SetCursor ( GetQDGlobalsArrow ( & arrow ) ) ;
+	    alertResult = Alert(kAlertSaveObject, sFilterProc);
+
+	    /* exit if the user canceled the alert box
+	     */
+	    if (alertResult == kButtonCancel)
+	    	saving=savingCancel;
+        else
+	     if (alertResult == kButtonSave)
+		 	saving = savingYes;
+	    else
+		saving = savingNo;
+       
+       
+	}
+
+	return(saving);
 }
 
 void MacFinalCleanup()
@@ -974,6 +1144,29 @@ OSErr DoQuit(SavingOption saving)
 	return noErr;
 }
 
+void DoHelpChoice(SInt16 menuItem)
+{
+
+  	
+  if(menuItem == RHelpMenuItem){
+   	consolecmd("help.start()");
+    return;
+   }
+   
+  if(menuItem == RTopicHelpItem){
+    Do_HelpOnTopic();
+    return;
+  }
+  
+   if(menuItem == SearchHelpItem){
+    Do_SearchHelp();
+    return;
+  }
+
+  if(menuItem == RunExampleItem)
+    Do_RunExample();
+  
+}
 
 /* DoAppleChoice :
    Which will be called when you click on the apple icon on the top
@@ -1030,15 +1223,16 @@ void DoAppleChoice(SInt16 menuItem)
    have no agreement in this moment. Those I don't know when to chance
    the codes about doNew, DoOpen, DoClose and DoSaveAs.
  */
-void DoFileChoice(SInt16 menuItem)
+void DoFileChoice(SInt16 menuItem, WindowPtr window)
 {
-    WindowPtr	window = FrontWindow();
+//    WindowPtr	window = FrontWindow();
     OSErr	osError, err;
     EventRecord	myEvent;
     SInt16	WinIndex;
     Boolean	haveCancel;
 
     switch(menuItem) {
+    
     case kItemNew:
 	if (isGraphicWindow(window)) {
 	    RWrite("macintosh()\r");
@@ -1046,28 +1240,32 @@ void DoFileChoice(SInt16 menuItem)
 	    DoGenKeyDown (&myEvent, true);
 	}
 	else
-	    DoNew();
+	    DoNew(true);
 	break;
 
     case kItemShow:
-	DoOpenText();
+		DoOpenText(false);
 	break;
 
+	case kItemEditFile:
+		DoOpenText(true);
+	break;
+    
     case kItemOpen:
 	if (isGraphicWindow(window)){
 	    WinIndex = isGraphicWindow(window);
 	    selectDevice(deviceNumber((DevDesc *)gGReference[WinIndex].devdesc));
 	}
 	else
-	    DoSource();
+	    DoSource();  
 	break;
 
 
     case kItemEditObject:
-	Do_EditObject();
+		Do_EditObject();
 	break;
 
-    case kItemLoad :
+    case kItemLoadW:
 	if (isEditWindow(window)){
 	    LoadEditEnvironment();
 	    LoadWindow();
@@ -1079,65 +1277,41 @@ void DoFileChoice(SInt16 menuItem)
 	}
 	break;
 
-    case kItemClose:
-	DoClose(closingWindow, savingAsk, window);
-	break;
-
-    case kItemSave:
-	if (isGraphicWindow(window)) {
-	    osError = doSaveGraCommand();
-	    if (osError != noErr){
-		/* You can handle error in here!
-		   However, there have some warning return,
-		   don't treat it as error.
-		*/
-	    }
-	}
-	else {
-	    if (window == Console_Window) {
-		err = doRSave(&haveCancel);
-		if (haveCancel) {
-		    RWrite("\r");
-		    jump_to_toplevel();
-		}
-	    }
-	    else {
-		DoSave(window);
-	    }
-	}
-	break;
-
-    case kItemSaveAs:
-	if (isGraphicWindow(window)) {
-	    osError = doSaveAsGraCommand();
-	    if (osError != noErr) {
-				/* You can handle error in here! */
-	    }
-	}
-	else {
-	    if (window == Console_Window) {
-		err = doRSaveAs(&haveCancel);
+	case kItemSaveWSAs:
+       err = doRSaveAs(&haveCancel);
 		if (haveCancel){
-		    RWrite("\r");
+		   // RWrite("\r");
 		    jump_to_toplevel();
 		}
-	    }
-	    else {
-		DoSaveAs(nil, window);
-	    }
-	}
+ 	break;
+
+    case kItemClose:
+		DoClose(closingWindow, savingAsk, window);
 	break;
+
+    
+    
+    case kItemSave:
+	if( isGraphicWindow(window) ) 
+	    doSaveAsGraCommand();
+	else{
+	    if(!finished)
+	     SaveWindow(&tempeditFSS,window);
+	    else
+  		 DoSaveAs(nil, window);
+	}
+	break;	
 
     case kItemPageSetup:
-	do_PageSetup();
+		DoPageSetup();
 	break;
 
     case kItemPrint:
-	do_Print();
+		do_Print();
 	break;
 
     case kItemQuit:
-	err = DoQuit(savingAsk);
+		err = DoQuit(savingAsk);
 	break;
     }
     HiliteMenu(0);
@@ -1155,11 +1329,13 @@ void DoEditChoice(SInt16 menuItem)
 {
     WindowPtr		window;
     WEReference		we;
+    OSStatus err;
     SInt32		selEnd, selStart, i;
     long		scrapOffset, rc;
     EventRecord		myEvent;
     char		TempChar;
-
+    ScrapRef scrap;
+     Size scraplength;
     /* do nothing if no window is active
      */
     if ((window = FrontWindow()) == nil) {
@@ -1171,7 +1347,7 @@ void DoEditChoice(SInt16 menuItem)
     switch (menuItem) {
 
     case kItemUndo:
-	WEUndo(we);
+		WEUndo(we);
 	break;
 
     case kItemCut :
@@ -1198,45 +1374,7 @@ void DoEditChoice(SInt16 menuItem)
 	break;
 
     case kItemPaste:
-	if (FrontWindow() == Console_Window) {
-	    WESetSelection(WEGetTextLength(we), WEGetTextLength(we), we);
-	    myHandle = NewHandle(0);
-	    /* allocate 0-length data area */
-	    rc = GetScrap(myHandle, 'TEXT', &scrapOffset);
-	    if (rc < 0) {
-		/* . . . process the error . . . */ }
-	    else {
-		SetHandleSize(myHandle, rc+1);	/* prepare for printf() */
-		HLock(myHandle);
-		(*myHandle)[rc] = 0;		/* make it ASCIIZ */
-		finalPaste = rc;
-		for (i = 0; i <=rc; i++) {
-		    TempChar = (*myHandle)[i];
-		    if ((TempChar == '\r') || (i == finalPaste)) {
-			RnWrite(*myHandle, i);
-			if (i != finalPaste) {
-			    myEvent.message = 140301;
-			    DoKeyDown (&myEvent);
-			}
-			curPaste = i;
-			break;
-		    }
-		}
-		finalPaste = rc;
-		/* RWrite(*myHandle);
-		   printf("Scrap contained text: %s'\n", *myHandle);
-		*/
-		HUnlock(myHandle);
-		if (rc != i) HaveContent = true;
-		else DisposeHandle(myHandle);
-	    }
-	    /* WEPaste(we); */
-	}
-	else {
-	    if (isGraphicWindow(window) == 0)
-		WEPaste(we);
-	}
-	/*WEPaste (we);*/
+     DoPaste(window);	
 	break;
 
     case kItemClear:
@@ -1255,15 +1393,15 @@ void DoEditChoice(SInt16 menuItem)
 	break;
 
     case kItemCopyPaste:
-	ConsoleCopyAndPaste();
+		ConsoleCopyAndPaste();
 	break;
 
     case kItemSelectAll:
-	WESetSelection(0, LONG_MAX, we);
+		WESetSelection(0, LONG_MAX, we);
 	break;
 
     case kItemLineTo:
-	DoLineTo();
+		DoLineTo();
 	break;
 /*
   case kItemPreference:
@@ -1273,25 +1411,178 @@ void DoEditChoice(SInt16 menuItem)
     }
 }
 
+
+void DoPaste(WindowPtr window)
+{
+    WEReference	we=nil;
+    OSStatus 	err;
+    ScrapRef 	scrap;
+    Size 		scraplength;
+    int 		last =0,i;
+    EventRecord	myEvent;
+    char		TempChar;
+    char 		*buffer;
+    char 		strerr[100];
+    
+	if(window ==NULL)
+		return;
+
+
+    if (isGraphicWindow(window) != 0)
+     return;
+    
+    we = GetWindowWE(window);	
+	 
+	if(window != Console_Window){
+		 WEPaste(we);
+		 return;
+	}
+	
+		
+	WESetSelection(WEGetTextLength(we), WEGetTextLength(we), we);
+ 	    
+	if( (err = GetCurrentScrap(&scrap)) != noErr)
+	 return;
+	 
+
+    if( (err = GetScrapFlavorSize(scrap,kScrapFlavorTypeText,&scraplength)) != noErr)
+      return;
+        
+	if (scraplength < 1)
+	    	return;		
+	 
+	ReserveMem(scraplength+1);
+	err = MemError();
+	if(err != noErr)
+	 return;
+	     	
+	myHandle = NewHandle(scraplength+1);
+	if( (err = MemError()) != noErr)
+	 return;
+	 	    
+	if( (err = GetScrapFlavorData(scrap,kScrapFlavorTypeText, &scraplength, *myHandle)) != noErr)
+	   return;
+	        
+	    
+	HLock(myHandle);
+	(*myHandle)[scraplength] = 0;				/* make it ASCII */
+	finalPaste = scraplength;
+	for (i = 0; i <= scraplength; i++) {
+	    	//if( (*myHandle)[i] == '\n' )  (*myHandle)[i] = '\r';
+	    TempChar = (*myHandle)[i];
+	    if ((TempChar == '\r') || (i == finalPaste)){
+			RnWrite(*myHandle, i);
+			if (i != finalPaste) {
+		    	myEvent.message = 140301;
+		    	DoKeyDown(&myEvent);
+			}
+			curPaste = i;
+			break;
+	    }
+	}
+	finalPaste = scraplength;
+	HUnlock(myHandle);
+	if (scraplength != i) 
+		HaveContent = true;
+	else 	
+		DisposeHandle(myHandle);
+}
+
+/* Only resolutions 72, 144, 300 and 600 are allowable */
+int GetScreenRes(void)
+{
+   gScreenRes = atoi(mac_getenv("ScreenRes"));
+
+  if( gScreenRes != 72 && gScreenRes != 144 &&
+      gScreenRes != 300 && gScreenRes != 600)  
+    gScreenRes = 72;
+  return(gScreenRes); 
+}
+
+int GetTextSize(void)
+{
+   gTextSize = atoi(mac_getenv("TextSize"));
+
+  if(gTextSize < 8 || gTextSize > 14)  
+  	 gTextSize = 12;
+  return(gTextSize);
+}
+
 void changeSize(WindowPtr window, SInt16 newSize)
 {
+
     if(window)
      WESetOneAttribute ( kCurrentSelection, kCurrentSelection, weTagFontSize,
       & newSize, sizeof ( Fixed ),	GetWindowWE ( window ) );
-
-/* Old code: mod Jago 08/28/00
-
-   TextStyle	ts;
-   WEStyleMode	mode;
-   ts.tsSize = newSize;
-
-   mode = weDoSize;
-
-
-   WESetStyle(mode, &ts, GetWindowWE(window));
-*/
 }
 
+/* DoTools:
+
+   Some usefule shortcuts
+   
+ */
+void DoTools(SInt16 menuItem)
+{
+    WindowPtr	window = FrontWindow();
+    OSErr	osError, err;
+    EventRecord	myEvent;
+    SInt16	WinIndex;
+    Boolean	haveCancel;
+
+    switch(menuItem) {
+    
+    case kItemShowWSpace:
+    	consolecmd("ls()");
+	break;
+ 
+    case kItemClrWSpace:
+    	consolecmd("rm(list=ls())");
+	break;
+  
+    case kItemLoadWSpace:
+    	consolecmd("load(\".RData\")");
+    break;
+
+    case kItemSaveWSpace:
+    	consolecmd("save.image()");
+    break;
+
+    case kItemLoadHistory:
+    	consolecmd("loadhistory()");
+    break;
+
+    case kItemSaveHistory:
+    	consolecmd("savehistory()");
+    break;
+    
+    case kItemShowHistory:
+    	consolecmd("history()");
+    break;
+
+    case kItemChangeDir:
+		DoSelectDirectory();
+   	break;
+ 	
+ 	case kItemShowDir:
+		consolecmd("getwd()");
+   	break;
+
+	case kItemResetDir:
+		consolecmd("setwd(R.home())");
+   	break;
+   	
+   	case kItemShowLibrary:
+		consolecmd("library()");
+   	break;
+
+   	case kItemShowData:
+		consolecmd("data()");
+   	break;
+   	
+
+    }
+    HiliteMenu(0);
+}
 
 
 /* DoMenuChoice:
@@ -1300,7 +1591,7 @@ void changeSize(WindowPtr window, SInt16 newSize)
    menus choice. Thus, if you need some Menus choice, it is the best
    place to start with.
  */
-void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers)
+void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers, WindowPtr window)
 {
     SInt16	menuID, menuItem;
 
@@ -1310,24 +1601,34 @@ void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers)
     menuItem = LoWord(menuChoice);
 
     // dispatch on menuID
-
     switch (menuID) {
 
+	
     case kMenuApple:
 	DoAppleChoice(menuItem);
 	break;
 
     case kMenuFile:
-	DoFileChoice(menuItem);
+	DoFileChoice(menuItem,window);
 	break;
 
     case kMenuEdit:
 	DoEditChoice(menuItem);
 	break;
+	
+	case kMenuTools:
+	DoTools(menuItem);
+	break;
 
-    case kWindows:
+
+    case kMenuWindows:
 	doWindowsMenu(menuItem);
 	break;
+	
+	case kHMHelpMenuID:  /* the help menu */
+	DoHelpChoice(menuItem);
+	break;
+
 
     }
     HiliteMenu(0);
@@ -1338,50 +1639,97 @@ void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers)
  */
 OSErr InitializeMenus(void)
 {
-    OSErr err = noErr;
+    Handle		menuBar = nil ;
+	MenuRef		menu ;
+	OSErr 		err = noErr;
+#if TARGET_API_MAC_CARBON
+	ItemCount	submenuCount ;
+	ItemCount	itemCount ;
+	SInt32		gestaltResponse ;
+#endif
 
-    // build up the whole menu bar from the 'MBAR' resource
-    SetMenuBar(GetNewMBar(kMenuBarID));
+ 	//	get the 'MBAR' resource
+	menuBar = GetNewMBar ( kMenuBarID ) ;
+	if ( ( err = ResError ( ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+	err = memFullErr ;
+	if ( ! menuBar )
+	{
+		goto cleanup ;
+	}
 
-    // add names to the apple and Font menus
-    AppendResMenu(GetMenuHandle(kMenuApple), kTypeDeskAccessory);
-    AppendResMenu(GetMenuHandle(kMenuFont), kTypeFont);
+	//	install the menu bar
+ 	SetMenuBar ( menuBar ) ;
 
-    // insert the alignment and direction submenus into the hierarchical
-    // portion of the menu list
-    InsertMenu(GetMenu(kMenuAlignment), -1);
-    InsertMenu(GetMenu(kMenuDirection), -1);
+    /* Here we add some items to the Help Menu */
+    HMGetHelpMenu(&HelpMenu,NULL);
+	if (HelpMenu != nil) {
+		AppendMenu(HelpMenu, "\pR Help");
+		RHelpMenuItem=CountMenuItems(HelpMenu);
+		AppendMenu(HelpMenu, "\pHelp On Topic...");
+		RTopicHelpItem=CountMenuItems(HelpMenu);
+   	    AppendMenu(HelpMenu,"\pSearch Help On...");
+   	    SearchHelpItem=CountMenuItems(HelpMenu);
+		AppendMenu(HelpMenu, "\pRun An Example...");
+		RunExampleItem=CountMenuItems(HelpMenu);
+	}
 
-    // disable the "Drag and Drop Editing" item in the Features menu
-    // once and for all
-    // if the Drag Manager isn't available
-    if (! gHasDragAndDrop) {
-	DisableItem(GetMenuHandle(kMenuFeatures), kItemDragAndDrop);
-    }
-    // disable the "Other" item in the Color menu if Color QuickDraw
-    // isn't available
-    if (! gHasColorQD) {
-	DisableItem(GetMenuHandle(kMenuColor), kItemOtherColor);
-    }
-    // load the menu color table for the color menu
-    sColors = GetResource(kTypeMenuColorTable, kMenuColor);
-    if ((err = ResError()) != noErr) {
-	return err;
-    }
-    HNoPurge(sColors);
+#if TARGET_API_MAC_CARBON
+	if ( ( Gestalt ( gestaltMenuMgrAttr, & gestaltResponse ) == noErr ) &&
+		 ( gestaltResponse & gestaltMenuMgrAquaLayoutMask ) )
+	{
+		if ( ( menu = GetMenuHandle ( kMenuFile ) ) != nil )
+		{
+			//	assume the Quit item is the last item in the File menu and follows a separator line
+			itemCount = CountMenuItems ( menu ) ;
+			if ( itemCount > 2 )
+			{
+				DeleteMenuItem ( menu, itemCount ) ;
+				DeleteMenuItem ( menu, itemCount - 1 ) ;
+			}
+		}
+	}
+#else
+	//	set up the Apple menu (this is not required under Carbon)
+	if ( ( menu = GetMenuHandle ( kMenuApple ) ) != nil )
+	{
+		AppendResMenu ( menu, kTypeDeskAccessory ) ;
+	}
+
+/*	if ( ( menu = GetMenuHandle ( kMenuFont ) ) != nil )
+	{
+		// create the Font menu
+		AppendResMenu ( menu, kTypeFont ) ;
+	}
+*/
+#endif
+
+
+ 
     // draw the menu bar
     DrawMenuBar();
-    return err;
+    err = noErr;
+    
+cleanup :
+	ForgetHandle ( & menuBar ) ;
+	return err ;
 }
 
 
 /* do_Print
 
-   do_Print is a independent function, in here, if you set the hdl of
-   picture, and call doPrinting, you can print out a picture too.  You
-   are not required to know how it work. (printing1.c , printing2.c,
-   print.h)
+  This routine has been completely rewritten.
+  If it is a Graphic window then the printLoop
+  function passes the control to the Graphic Printing
+  procedure, otherwise it passes the contro to
+  the DoTextPrint function to print the text 
+  windows (Help, Console etc)
+  Jago, April 2001, Stefano M. Iacus
+
 */
+
 void do_Print(void)
 {
 
@@ -1393,71 +1741,25 @@ void do_Print(void)
     GrafPtr		picPort;
     Point		linesize;
     Point		*lp;
-
+    Rect		portRect;
+        
     linesize.h = 10;
     linesize.v = 7;
     lp = &linesize;
     window = FrontWindow();
     we = GetWindowWE(window);
-    // defaultPort = false;
-    if (isGraphicWindow(window)) {
-	PrintPicture = true;
-	WinIndex = isGraphicWindow(window);
-	dd =(DevDesc*)gGReference[WinIndex].devdesc;
-	GetPort(&savePort);
-	HLock((Handle) gPictureHdl);
-	SetPort(window);
-	gPictureHdl = OpenPicture(&(window->portRect));
-	GetPort(&picPort);
-	PicComment(SetLineWidth, 4, (char**)&lp);
-	playDisplayList(dd);
-	SetPort(picPort);
-	ClosePicture();
-	SetPort(FrontWindow());
-	//PrintPicture();
-	printLoop();
-	HUnlock((Handle) gPictureHdl);
-	//doPrinting();
-	SetPort(savePort);
-    }
-    else {
-	GetPort(&savePort);
-	PrintPicture = false;
-	SetPort(FrontWindow());
-	HLock((Handle) gTextHdl);
-	/* Get the Handle of the Text which need to be print */
-	gTextHdl = WEGetText(we);
-	/* Extern Procedure */
-	//doPrinting();
-	printLoop();
-	HUnlock((Handle) gTextHdl);
-	SetPort(savePort);
-    }
-    defaultPort = true;
-    DoActivate(false, FrontWindow());
-    DoActivate(true, FrontWindow());
-    // SetPort(FrontWindow());
-    // DoUpdate(FrontWindow());
-}
+    
+    printLoop(window);
+ }
 
 
 
-/* do_PageSetup
+extern	PMPageFormat	pageFormat;
+extern	PMPrintSettings	printSettings;	
+extern	PMPrintSession	printSession;
+ 
 
-   This function is a plugin function, it is work together with the
-   do_Printing function.
- */
-void do_PageSetup(void)
-{
-    // gInhibitPrintRecordsInfo = false;
-    // gInhibitPrintStructuresInfo = false;
-    // gPrintRecordInited = false;
-    // gPrintStructureInited = false;
-    SetPort(FrontWindow());
-    doPrStyleDialog();
-}
-
-
+ 
 /* OpenSelection :
    Given a FSSpecPtr to either an application or a document,
    OpenSelection creates a finder Open Selection Apple event for the
@@ -1578,64 +1880,22 @@ void assignPString(unsigned char* input, char* buf, SInt16 howLong)
 
 /* ConsoleCopyAndPaste :
    A procedure which will be directly called when you choose
-   Copy and Paste from the Menus.
+   Copy and Paste from the Menus. It copies from any text window
+   to the R Console.
+   Fixed on April 2001, Stefano M. Iacus
  */
 void ConsoleCopyAndPaste()
 {
     WEReference	we;
-    we = GetWindowWE(Console_Window);
-    WECopy(we);
-    ConsolePaste();
+    SInt32		selStart, selEnd;
+
+    we = GetWindowWE(FrontWindow());
+	WECopy(we);
+	SelectWindow(Console_Window);
+    DoPaste(Console_Window);
+    
 }
 
-/* ConsolePaste :
-   This procedure will be either called by procedure
-   ConsoleCopyAndPaste or from the Menus Choice We will read the text
-   we have line by line.  The trick we use is that we will directly
-   send a key event ("\r") to terminate the R_ReadConsole procedure
-   after each line.
- */
-void ConsolePaste()
-{
-    WEReference	we;
-    SInt16	i;
-    long	scrapOffset, rc;
-    EventRecord	myEvent;
-    char	TempChar;
-
-    we = GetWindowWE(Console_Window);
-
-    WESetSelection(WEGetTextLength(we), WEGetTextLength(we), we);
-
-    myHandle = NewHandle(0);	/* allocate 0-length data area */
-
-    rc = GetScrap(myHandle, 'TEXT', &scrapOffset);
-    if (rc < 0) {
-	/* . . . process the error . . . */
-    }
-    else {
-	SetHandleSize(myHandle, rc + 1);	/* prepare for printf() */
-	HLock(myHandle);
-	(*myHandle)[rc] = 0;				/* make it ASCII */
-	finalPaste = rc;
-	for (i = 0; i <= rc; i++) {
-	    TempChar = (*myHandle)[i];
-	    if ((TempChar == '\r') || (i == finalPaste)){
-		RnWrite(*myHandle, i);
-		if (i != finalPaste) {
-		    myEvent.message = 140301;
-		    DoKeyDown(&myEvent);
-		}
-		curPaste = i;
-		break;
-	    }
-	}
-	finalPaste = rc;
-	HUnlock(myHandle);
-	if (rc != i) HaveContent = true;
-	else DisposeHandle(myHandle);
-    }
-}
 
 
 
@@ -1656,6 +1916,8 @@ void consolecmd(char *cmd)
     if((cmdlen = strlen(cmd))<1)
 	return;
 
+    SelectWindow(Console_Window);
+    
     /* we just write the cmd as it is to the console */
     RnWrite(cmd, cmdlen);
 
@@ -1663,4 +1925,165 @@ void consolecmd(char *cmd)
     myEvent.message = 140301;
     DoKeyDown(&myEvent);
 
+}
+
+
+static pascal void NavEventFilter
+	(
+		NavEventCallbackMessage		inSelector,
+		NavCBRec *					inPB,
+		void *						inUserData
+	)
+{
+	NavCallbackData *		cd = ( NavCallbackData * ) inUserData ;
+
+	switch ( inSelector )
+	{
+		case kNavCBEvent :
+		{
+			EventRecord *	event = inPB -> eventData . eventDataParms . event ;
+
+			//	intercept window events directed to windows behind the dialog
+			if ( ( event->what == updateEvt ) || ( event->what == activateEvt ) )
+			{
+				if ( ( WindowRef ) event->message != inPB->window )
+				{
+					DoWindowEvent ( event ) ;
+				}
+			}
+			
+			//	intercept clicks in our custom items, if any
+	/*		else if ( cd && ( event -> what == mouseDown ) )
+			{
+				switch ( inPB -> eventData . itemHit - cd -> numItems )
+				{
+					case kItemFormatPopup :
+					{
+						if ( cd -> formatPopup )
+						{
+							switch ( GetControlValue ( cd -> formatPopup ) )
+							{
+								case kItemTextFormat :
+								{
+									cd -> fileType = kTypeText ;
+									break ;
+								}
+
+								case kItemUnicodeTextFormat :
+								{
+									cd -> fileType = kTypeUnicodeText ;
+									break ;
+								}
+							}
+						}
+						break ;
+					}
+
+		     		case kItemStationeryCheckbox :
+					{
+						if ( cd -> stationeryCheckbox )
+						{
+							cd -> isStationery = 1 - cd -> isStationery ;
+							SetControlValue ( cd -> stationeryCheckbox, cd -> isStationery ) ;
+						}
+						break ;
+					}
+						
+				}
+			}
+			break ;
+			*/
+		}
+
+		case kNavCBCustomize :
+		{
+			//	do we need extra items?
+			if ( ! cd )
+			{
+				return ;
+			}
+
+			//	request an area for the extra items
+			if ( ( inPB -> customRect . right == 0 ) && ( inPB -> customRect . bottom == 0 ) )
+			{
+				inPB -> customRect . right = inPB -> customRect . left + 240 ;
+				inPB -> customRect . bottom = inPB -> customRect . top + 30 ;
+			}
+			break ;
+		}
+
+		case kNavCBStart :
+		{
+			DialogRef	dialog = GetDialogFromWindow ( inPB -> window ) ;
+			Handle		extraItems =NULL;
+			OSStatus	err ;
+
+			//	do we need extra items?
+			if ( ! cd )
+			{
+				return ;
+			}
+
+			//	get the DITL resource containing the extra items
+			if ( ( extraItems = GetResource ( FOUR_CHAR_CODE ( 'DITL' ), cd -> extraItemsID ) ) == nil )
+			{
+				return ;
+			}
+			DetachResource ( extraItems ) ;
+
+			//	add it to the nav dialog control list
+			err = NavCustomControl ( inPB -> context, kNavCtlAddControlList, extraItems ) ;
+			DisposeHandle ( extraItems ) ;
+			if ( err != noErr )
+			{
+				return ;
+			}
+
+			//	count existing dialog items
+			if ( ( err = NavCustomControl ( inPB -> context, kNavCtlGetFirstControlID, & cd -> numItems ) ) != noErr )
+			{
+				return ;
+			}
+
+			//	get handles to our custom controls
+	/*		if ( ( err = GetDialogItemAsControl (dialog, cd -> numItems + kItemFormatPopup, & cd -> formatPopup ) ) != noErr )
+			{
+				return ;
+			}
+			if ( ( err = GetDialogItemAsControl ( dialog, cd -> numItems + kItemStationeryCheckbox, & cd -> stationeryCheckbox ) ) != noErr )
+			{
+				return ;
+			}
+			//	set up the format popup
+			SetControlValue ( cd -> formatPopup, ( cd -> fileType == kTypeText ) ? kItemTextFormat : kItemUnicodeTextFormat ) ;
+			break ;
+*/			
+		}
+	}
+}
+
+static OSStatus CreateNavTypeList
+	(
+		OSType					inApplicationSignature,
+		UInt16					inNumTypes,
+		const OSType *			inSFTypeList,
+		NavTypeListHandle *		outNavTypeList
+	)
+{
+	OSStatus	err ;
+
+	//	allocate the type list handle
+	* outNavTypeList = ( NavTypeListHandle ) NewHandleClear ( ( sizeof ( NavTypeList ) - sizeof ( OSType ) ) +
+		( inNumTypes * sizeof ( OSType ) ) ) ;
+	if ( ( err = MemError ( ) ) != noErr )
+	{
+		return err ;
+	}
+
+	//	fill it in
+	( ** outNavTypeList ) -> componentSignature = inApplicationSignature ;
+	( ** outNavTypeList ) -> osTypeCount = inNumTypes ;
+	BlockMoveData ( inSFTypeList, ( ** outNavTypeList ) -> osType, inNumTypes * sizeof ( OSType ) ) ;
+
+	return noErr ;
 }

@@ -75,13 +75,17 @@ void DoLineTo();
 void GoTo_Line(SInt32 line_Num, WindowPtr window);
 void Do_EditObject();
 void R_Edit_Object(char* ObjectName);
+void Do_HelpOnTopic(void);
+void Do_RunExample(void);
+void Do_SearchHelp(void);
+
 
 void LoadEditEnvironment()
 {
     char returnChar;
     char*    CharPtr;
     SInt32  EditLen;
-    pascal Handle  EditHdl;
+    pascal Handle  EditHdl=NULL;
     gEditPos = startPoint = 0;
     Ewe = GetWindowWE ( FrontWindow());
 
@@ -216,14 +220,12 @@ void LoadWindow()
     
     case PARSE_NULL:
     case PARSE_EOF:
-
 	/* The window contained no data. */
 	/* We just return. */
 	break;                              
                             
     case PARSE_OK:
-                      
-	/* The window contents parsed correctly */
+  	/* The window contents parsed correctly */
 	/* so we execute the parse tree. */
 	R_EvalDepth = 0;
 	PROTECT(R_CurrentExpr);
@@ -234,7 +236,7 @@ void LoadWindow()
 	break;                              
                             
     case PARSE_ERROR:    
-	ParseError();                           
+  	ParseError();                           
 	/* A syntax error occured at line R_ParseError */
 	/* in the input buffer. We should now set the */
 	/* insertion point at the offending point in */
@@ -245,7 +247,7 @@ void LoadWindow()
 	break;                              
                             
     case PARSE_INCOMPLETE:
-	ParseIncomplete();
+  	ParseIncomplete();
 	/* The parse was incomplete.  We should display a */
 	/* modal dialog box with the message "incomplete statement */
 	/* When done, we should return to the event loop. */
@@ -256,7 +258,7 @@ void LoadWindow()
 void GoTo_Line(SInt32 line_Num, WindowPtr window)
 {
     WEReference we ;
-    pascal Handle  EditHdl;
+    pascal Handle  EditHdl=NULL;
     SInt32  EditLen, currentLine = 1, currentPos = 0;
     char returnChar;
     char* CharPtr;
@@ -285,7 +287,7 @@ void DoLineTo()
     WEReference        we = nil ;
     GrafPtr            savePort ;
     SInt16             itemHit = 0;
-    Handle	       itemHandle;
+    Handle	       itemHandle=NULL;
     Rect               itemRect;
     Str255             buf;
     short              type; 
@@ -334,8 +336,11 @@ void DoLineTo()
 
 void R_Edit(char** lines, int nlines)
 {
-    DoNew();
-    R_EditWindow(lines, nlines, Edit_Windows[Edit_Window -1]);    
+    DoNew(true);
+    if(Edit_Window>2)
+     RepositionWindow(Edit_Windows[Edit_Window - 1], Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
+    R_EditWindow(lines, nlines, Edit_Windows[Edit_Window -1]);
+        
 }
 
 void R_EditWindow(char** lines, int nlines, WindowPtr window)
@@ -353,18 +358,214 @@ void R_EditWindow(char** lines, int nlines, WindowPtr window)
     HUnlock(lines);
 }
 
+/* This routine allows the user to have help on a topic. It is just an
+   interface to help() function, all the work is done by R itself.
+   Jago April 2001, Stefano M. Iacus
+*/   
+
+void Do_HelpOnTopic(void)
+{
+    DialogPtr          HelpObjectBox = nil ;
+    WEReference        we = nil ;
+    GrafPtr            savePort ;
+    SInt16             itemHit = 0;
+    Handle	       itemHandle=NULL;
+    Rect               itemRect;
+    Str255             buf;
+    char				topic[260];
+    char				cmd[300];
+    short              type; 
+    WindowPtr          window;
+    SInt32             GotoLine;
+    window = FrontWindow();
+    
+    HelpObjectBox = GetNewDialog ( kHelpObject, nil, ( WindowPtr ) -1L ) ;
+    if ( HelpObjectBox == nil )
+    {
+	goto cleanup ;
+    }
+    GetPort ( & savePort ) ;
+    SetPort ( HelpObjectBox ) ;
+   
+    /* Set the Dialog Title */
+    SetWTitle ( HelpObjectBox, "\pR Help" ) ;
+
+    while(true){
+	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
+	if ( itemHit ==1){   /* OK button */
+	    GetDialogItem(HelpObjectBox, 3, &type, &itemHandle, &itemRect);  /* 3 is text field */
+	    GetDialogItemText(itemHandle, buf);
+	    CopyPascalStringToC(buf,topic);
+	    if(strlen(topic)==0)
+	     break;
+	    sprintf(cmd,"?%s",topic);
+		consolecmd(cmd);
+	    break; 
+	}
+	if (itemHit == 2){   /* Cancel Button */
+	    break;
+	}   
+    }
+
+    cleanup :
+	if ( we != nil )
+	{
+	    WEDispose ( we ) ;
+	}
+    if ( HelpObjectBox != nil )
+    {
+	DisposeDialog ( HelpObjectBox ) ;
+	/* Restore the Port */
+	SetPort ( savePort ) ;
+    }
+
+}
+
+/* This routine allows the user torun an example. It is just an
+   interface to example() function, all the work is done by R itself.
+   Jago April 2001, Stefano M. Iacus
+*/   
+
+void Do_RunExample(void)
+{
+    DialogPtr          ExampleObjectBox = nil ;
+    WEReference        we = nil ;
+    GrafPtr            savePort ;
+    SInt16             itemHit = 0;
+    Handle	       itemHandle=NULL;
+    Rect               itemRect;
+    Str255             buf;
+    char				topic[260];
+    char				cmd[300];
+    short              type; 
+    WindowPtr          window;
+    SInt32             GotoLine;
+    window = FrontWindow();
+    
+    ExampleObjectBox = GetNewDialog ( kExampleObject, nil, ( WindowPtr ) -1L ) ;
+    if ( ExampleObjectBox == nil )
+    {
+	goto cleanup ;
+    }
+    GetPort ( & savePort ) ;
+    SetPort ( ExampleObjectBox ) ;
+   
+    /* Set the Dialog Title */
+    SetWTitle ( ExampleObjectBox, "\pR examples" ) ;
+
+    while(true){
+	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
+	if ( itemHit ==1){   /* OK button */
+	    GetDialogItem(ExampleObjectBox, 3, &type, &itemHandle, &itemRect);  /* 3 is text field */
+	    GetDialogItemText(itemHandle, buf);
+	    CopyPascalStringToC(buf,topic);
+	    if(strlen(topic)==0)
+	     break;
+		sprintf(cmd,"example(%s)",topic);
+		consolecmd(cmd);
+	    break; 
+	}
+	if (itemHit == 2){   /* Cancel Button */
+	    break;
+	}   
+    }
+
+    cleanup :
+	if ( we != nil )
+	{
+	    WEDispose ( we ) ;
+	}
+    if ( ExampleObjectBox != nil )
+    {
+	DisposeDialog ( ExampleObjectBox ) ;
+	/* Restore the Port */
+	SetPort ( savePort ) ;
+    }
+
+}
+
+/* This routine allows the user to search for a topic. It is just an
+   interface to help.search() function, all the work is done by R itself.
+   Jago April 2001, Stefano M. Iacus
+*/   
+
+
+void Do_SearchHelp(void)
+{
+    DialogPtr          SearchObjectBox = nil ;
+    WEReference        we = nil ;
+    GrafPtr            savePort ;
+    SInt16             itemHit = 0;
+    Handle	       itemHandle=NULL;
+    Rect               itemRect;
+    Str255             buf;
+    char				topic[260];
+    char				cmd[300];
+    short              type; 
+    WindowPtr          window;
+    SInt32             GotoLine;
+    window = FrontWindow();
+    
+    SearchObjectBox = GetNewDialog ( kSearchObject, nil, ( WindowPtr ) -1L ) ;
+    if ( SearchObjectBox == nil )
+    {
+	goto cleanup ;
+    }
+    GetPort ( & savePort ) ;
+    SetPort ( SearchObjectBox ) ;
+   
+    /* Set the Dialog Title */
+    SetWTitle ( SearchObjectBox, "\pSearch for R Help" ) ;
+
+    while(true){
+	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
+	if ( itemHit ==1){   /* OK button */
+	    GetDialogItem(SearchObjectBox, 3, &type, &itemHandle, &itemRect);  /* 3 is text field */
+	    GetDialogItemText(itemHandle, buf);
+	    CopyPascalStringToC(buf,topic);
+		if(strlen(topic)==0)
+	     break;
+		sprintf(cmd,"help.search(\"%s\")",topic);
+		consolecmd(cmd);
+	    break; 
+	}
+	if (itemHit == 2){   /* Cancel Button */
+	    break;
+	}   
+    }
+
+    cleanup :
+	if ( we != nil )
+	{
+	    WEDispose ( we ) ;
+	}
+    if ( SearchObjectBox != nil )
+    {
+	DisposeDialog ( SearchObjectBox ) ;
+	/* Restore the Port */
+	SetPort ( savePort ) ;
+    }
+
+}
+
+/* This routine allows the user to edit an existing object. It is just an
+   interface, all the work is done by R itself.
+   Jago April 2001, Stefano M. Iacus
+*/   
 void Do_EditObject()
 {
     DialogPtr          EditObjectBox = nil ;
     WEReference        we = nil ;
     GrafPtr            savePort ;
     SInt16             itemHit = 0;
-    Handle	       itemHandle;
+    Handle	           itemHandle=NULL;
     Rect               itemRect;
     Str255             buf;
     short              type; 
     WindowPtr          window;
     SInt32             GotoLine;
+    char				topic[260],cmd[300];
+
     window = FrontWindow();
     EditObjectBox = GetNewDialog ( kEditObject, nil, ( WindowPtr ) -1L ) ;
     if ( EditObjectBox == nil )
@@ -382,8 +583,13 @@ void Do_EditObject()
 	if ( itemHit ==1){   /* OK button */
 	    GetDialogItem(EditObjectBox, 3, &type, &itemHandle, &itemRect);  /* 3 is text field */
 	    GetDialogItemText(itemHandle, buf);
-	    buf[buf[0]+1] = '\0';
-	    R_Edit_Object((char*)&buf[1]);
+	    CopyPascalStringToC(buf,topic);
+		if(strlen(topic)==0)
+	     break;
+	    sprintf(cmd,"%s <- edit(%s)",topic,topic); 
+	    consolecmd(cmd);
+	    //R_Edit_Object(topic);
+	    
 	    break; 
 	}
 	if (itemHit == 2){   /* Cancel Button */
@@ -405,32 +611,6 @@ void Do_EditObject()
 
 }
 
-void R_Edit_Object(char* name)
-{
-    int i, n;
-    SEXP sym, obj;
-    char **lines, *vmaxsave, *namestr;
-
-    if (name) {
-	vmaxsave = vmaxget();
-	sym = install(name);
-	PROTECT(obj = findVar(sym, R_GlobalEnv));
-	PROTECT(obj = deparse1(obj, 0));
-	n = length(obj);
-	namestr = (char*)R_alloc(strlen(name) + 7, sizeof(char));
-	sprintf(namestr, "\"%s\" <-", name);
-	lines = (char**)R_alloc(n + 1, sizeof(char*));
-	lines[0] = namestr;
-	for (i = 0; i < n; i++) {
-	    lines[i + 1] = CHAR(STRING_ELT(obj,i));
-	}
-	R_Edit(lines, n + 1);
-	vmaxset(vmaxsave);
-	UNPROTECT(2);
-	R_Visible = 0;
-    }
-
-}
 
 void Do_StandardAlert(Str255 LabelText)
 {
@@ -438,7 +618,7 @@ void Do_StandardAlert(Str255 LabelText)
     WEReference        we = nil ;
     GrafPtr            savePort ;
     SInt16             itemHit = 0;
-    Handle             itemHandle;
+    Handle             itemHandle=NULL;
     Rect               itemRect;
     Str255             buf;
     short              type; 
@@ -484,13 +664,13 @@ void Do_About()
     WEReference        we = nil ;
     GrafPtr            savePort ;
     SInt16             itemHit = 0;
-    Handle             itemHandle;
+    Handle             itemHandle=NULL;
     Rect               itemRect;
     Str255             buf;
     short              type; 
     WindowPtr          window;
     SInt32             GotoLine;
-    Handle	       sourceResourceHdl;
+    Handle	       sourceResourceHdl=NULL;
   
     window = FrontWindow();
     AboutBox = GetNewDialog ( kAbout, nil, ( WindowPtr ) -1L ) ;

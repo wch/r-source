@@ -28,7 +28,7 @@
  *  Original file was:
  *
  *	WASTE Demo Project:
-	Macintosh Controls with Long Values
+	Drag Handlers
 
 	Copyright © 1993-1998 Marco Piovanelli
 	All Rights Reserved
@@ -43,7 +43,7 @@
 static DragTrackingHandlerUPP sMyTrackingHandlerUPP = nil;
 static DragReceiveHandlerUPP sMyReceiveHandlerUPP = nil;
 
-static pascal OSErr MyTrackingHandler( DragTrackingMessage message, WindowPtr window, void *refCon, DragReference drag )
+static pascal OSErr MyTrackingHandler( DragTrackingMessage message, WindowRef window, void *refCon, DragReference drag )
 {
 #pragma unused (refCon)
 
@@ -57,7 +57,7 @@ static pascal OSErr MyTrackingHandler( DragTrackingMessage message, WindowPtr wi
 	return noErr;
 }
 
-static pascal OSErr MyReceiveHandler( WindowPtr window, void *refCon, DragReference drag )
+static pascal OSErr MyReceiveHandler( WindowRef window, void *refCon, DragReference drag )
 {
 #pragma unused (refCon)
 
@@ -71,12 +71,12 @@ static pascal OSErr MyReceiveHandler( WindowPtr window, void *refCon, DragRefere
 	return noErr;
 }
 
-OSErr InstallDragHandlers( void )
+OSStatus InstallDragHandlers( void )
 {
-	OSErr err;
+	OSStatus err;
 
-	sMyTrackingHandlerUPP = NewDragTrackingHandlerProc( MyTrackingHandler );
-	sMyReceiveHandlerUPP = NewDragReceiveHandlerProc( MyReceiveHandler );
+	sMyTrackingHandlerUPP = NewDragTrackingHandlerUPP( MyTrackingHandler );
+	sMyReceiveHandlerUPP = NewDragReceiveHandlerUPP( MyReceiveHandler );
 
 	if ( ( err = InstallTrackingHandler( sMyTrackingHandlerUPP, nil, nil ) ) != noErr )
 	{
@@ -91,9 +91,9 @@ OSErr InstallDragHandlers( void )
 	return noErr;
 }
 
-OSErr RemoveDragHandlers( void )
+OSStatus RemoveDragHandlers( void )
 {
-	OSErr err;
+	OSStatus err;
 
 	if ( ( err = RemoveTrackingHandler( sMyTrackingHandlerUPP, nil ) ) != noErr )
 	{

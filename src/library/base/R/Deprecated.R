@@ -9,11 +9,12 @@
 		  sep = ""))
 }
 
-getenv <- function(x)
-{
-    .Deprecated()
+## Deprecated in 1.2.0
+getenv <- function(x) {
+    .Deprecated("Sys.getenv")
     Sys.getenv(x)
 }
+## </Deprecated>
 
 "httpclient" <-
     function (url, port = 80, error.is.fatal = TRUE, check.MIME.type = TRUE,
@@ -111,4 +112,17 @@ getenv <- function(x)
     eval(m, parent.frame())
     unlink(file)
 }
+
+## Deprecated in 1.2.3
+dotplot <- function(...) {
+    .Deprecated("dotchart")
+    dotchart(...)
+}
+stripplot <- function(...) {
+    .Deprecated("stripchart")
+    stripchart(...)
+}
+
+## </Deprecated>
+
 

@@ -27,16 +27,30 @@
 
 #include "SysTypes.r"
 #include "Types.r"
+#include "MacTypes.r"
+#include "Menus.r"
+#include "Controls.r"
+#include "Dialogs.r"
+#include "FileTypesAndCreators.r"
+#include "Finder.r"
+
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+#define	R_ID					'0FFF'
+
+#define	ftTextDocument			'TEXT'
+#define	ftUnicodeTextDocument	'utxt'
+#define fbRImage				'BINA'
+
 #define kMajorVersNumber	0x01
-#define kMinorVersNumber	0x22
+#define kMinorVersNumber	0x23
 #define kReleaseStage		Development
-#define kNonFinalRelease	0x03
-#define kVersString			"1.2.2"
+#define kNonFinalRelease	0x01
+#define kVersString			"1.2.3"
 
 #define kRegionCode			verUS
+
 
 
 resource 'vers' (1) {
@@ -71,8 +85,8 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
        { 10, 54, 77, 155 }, Picture { enabled, kRLogoPict },
 	
 		/*	The R copyright text */
-		{ 13, 241, 82, 454 }, StaticText {enabled, 
-		"R for MacOS (Developer Version)\n"	/*	Version */
+		{ 13, 221, 92, 500 }, StaticText {enabled, 
+		"R for MacOS and MacOS X\n"	/*	Version */
 		"\0xA9 2001 R Development Core Team\n"	/*	(c)  */
 		"http://www.r-project.org"			/*	HTTP URL */
 		 },
@@ -93,7 +107,7 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 	
 	     /* Platfrom specific (c) */
 		{199, 8, 216, 470 }, StaticText {enabled, 
-		"Macintosh device by Wing Kwong Wan 1999, Stefano M. Iacus 2000-2001."	
+		"Macintosh device by Wing K. Wan 1999, Stefano M. Iacus 2000-2001."	
 		 },
 		
 		 /* Waste (c) */
@@ -108,7 +122,7 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 		
 		 /* Click to close */
 		{282, 112, 301, 351 }, StaticText {enabled, 
-		"click on the R logo to close window)"	
+		"(click on the R logo to close window)"	
 		 },
 		
 		
@@ -116,5 +130,36 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 };
 
 
+resource 'open' ( 129, purgeable )
+{
+	R_ID,
+	{
+		//	file types R can open
+		ftTextDocument,
+		ftUnicodeTextDocument,
+		fbRImage
+	}
+};
+
+
+enum {
+	kMenuApple		= 1,
+	kMenuFile,
+	kMenuEdit,
+	kMenuTools,
+	kMenuWindows
+};
+
+
+resource 'MBAR' ( 128, purgeable )
+{
+	{
+		kMenuApple,
+		kMenuFile,
+		kMenuEdit,
+		kMenuTools,
+	    kMenuWindows
+	}
+} ;
 
 

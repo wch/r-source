@@ -34,7 +34,7 @@ plot.data.frame <- function (x, ...) {
 	stop("plot.data.frame applied to non data frame")
     x <- data.matrix(x)
     if(ncol(x) == 1) {
-	stripplot(x, ...)
+	stripchart(x, ...)
     }
     else if(ncol(x) == 2) {
 	plot(x, ...)

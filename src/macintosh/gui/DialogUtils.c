@@ -46,7 +46,7 @@
 
 static pascal Boolean MyStandardDialogFilter( DialogPtr dialog, EventRecord *event, SInt16 *item )
 {
-	GrafPtr				savePort;
+	GrafPtr				savePort = nil;
 	ModalFilterUPP		stdFilter = nil;
 	Boolean				retval = false;
 	OSErr				err;
@@ -115,7 +115,7 @@ ModalFilterUPP GetMyStandardDialogFilter( void )
 
 	if ( sFilterUPP == nil )
 	{
-		sFilterUPP = NewModalFilterProc( MyStandardDialogFilter );
+		//sFilterUPP = NewModalFilterProc( MyStandardDialogFilter );
 	}
 #endif
 
@@ -125,7 +125,7 @@ ModalFilterUPP GetMyStandardDialogFilter( void )
 SInt16 GetDialogItemType( DialogPtr dialog, SInt16 item )
 {
 	SInt16		itemType;
-	Handle		itemHandle;
+	Handle		itemHandle =NULL;
 	Rect		itemRect;
 
 	GetDialogItem( dialog, item, &itemType, &itemHandle, &itemRect );
@@ -136,7 +136,7 @@ SInt16 GetDialogItemType( DialogPtr dialog, SInt16 item )
 Handle GetDialogItemHandle( DialogPtr dialog, SInt16 item )
 {
 	SInt16		itemType;
-	Handle		itemHandle;
+	Handle		itemHandle=NULL;
 	Rect		itemRect;
 
 	GetDialogItem( dialog, item, &itemType, &itemHandle, &itemRect );
@@ -147,7 +147,7 @@ Handle GetDialogItemHandle( DialogPtr dialog, SInt16 item )
 void GetDialogItemRect( DialogPtr dialog, SInt16 item, Rect *itemRect )
 {
 	SInt16		itemType;
-	Handle		itemHandle;
+	Handle		itemHandle=NULL;
 
 	GetDialogItem( dialog, item, &itemType, &itemHandle, itemRect );
 }
@@ -180,3 +180,87 @@ void FlashButton( DialogPtr dialog, SInt16 item )
 	Delay( 8, &finalTicks );
 	HiliteControl( button, kControlNoPart );
 }
+
+void NumToVersionString ( UInt32 inVersion, Str15 outVersionString )
+{
+	static unsigned char	stages [ 3 ] = { 'd', 'a', 'b' } ;
+	unsigned char *			p = outVersionString ;
+	int						stage ;
+
+	//	special case: a zero version means "version not available"
+	if ( inVersion == 0 )
+	{
+		* ++ p = 'n' ;
+		* ++ p = '/' ;
+		* ++ p = 'a' ;
+	}
+	else
+	{
+		//	major revision
+		if ( inVersion & 0xF0000000 )
+		{
+			* ++ p = ( ( inVersion & 0xF0000000 ) >> 28 ) + '0' ;
+		}
+
+		* ++ p = ( ( inVersion & 0x0F000000 ) >> 24 ) + '0' ;
+
+		//	add a dot
+		* ++ p = '.' ;
+
+		//	minor revision
+		* ++ p = ( ( inVersion & 0x00F00000 ) >> 20 ) + '0' ;
+		if ( inVersion & 0x000F0000 )
+		{
+			* ++ p = '.' ;
+			* ++ p = ( ( inVersion & 0x000F0000 ) >> 16 ) + '0' ;
+		}
+
+		//	stage
+		stage = ( ( inVersion & 0x0000FF00 ) >> 13 ) - 1 ;
+		if ( stage < 3 )
+		{
+			* ++ p = stages [ stage ] ;		//	pre-release (development, alpha or beta)
+
+			//	revision level (this is a vanilla unsigned integer, it is NOT coded as BCD)
+			inVersion &= 0x000000FF ;
+
+			if ( inVersion / 100 )
+			{
+				* ++ p = ( inVersion / 100 ) + '0' ;
+			}
+			inVersion %= 100 ;
+			if ( inVersion / 10 )
+			{
+				* ++ p = ( inVersion / 10 ) + '0' ;
+			}
+			inVersion %= 10 ;
+			* ++ p = inVersion + '0' ;
+		}
+	}
+
+	//	compute length byte
+	* outVersionString = ( p - outVersionString ) ;
+}
+
+void ReplaceParam ( Str255 ioTarget, ConstStr255Param inParam, SInt16 inIndex )
+{
+	StringHandle	hCopy = NewString ( ioTarget ) ;
+	Size			len ;
+	int				offset ;
+
+	inIndex += '^0' ;
+	for ( offset = 1 ; offset >= 0 ; )
+	{
+		offset = Munger ( ( Handle ) hCopy, offset, & inIndex, sizeof ( inIndex ),
+						& inParam [ 1 ], StrLength ( inParam ) ) ;
+		len = GetHandleSize ( ( Handle ) hCopy ) - 1 ;
+		if ( len > 255 )
+		{
+			break ;
+		}
+		( * hCopy ) [ 0 ] = len ;
+		BlockMoveData ( * hCopy, ioTarget, StrLength ( * hCopy ) + 1 ) ;
+	}
+	DisposeHandle ( ( Handle ) hCopy ) ;
+}
+

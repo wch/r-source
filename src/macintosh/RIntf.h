@@ -184,7 +184,7 @@ enum
 
 	/*	WASTE Demo signature
 */
-	sigWASTEDemo			=		FOUR_CHAR_CODE ( 'OEDE' ),
+//	sigWASTEDemo			=		FOUR_CHAR_CODE ( 'OEDE' ),
 
 	/*	resource types, clipboard types, and file types
 */
@@ -241,7 +241,7 @@ typedef struct PageMarginRec PageMarginRec, *PageMarginRecPtr, **PageMarginRecHa
 
 #define rTypePrefs	    'PrFn'
 #define  kPrefsID	    128
-#define mWindows		131
+
 #define kMaxWindows		10
 
 /* 	"Originally," these are things built into the Pascal language
@@ -325,8 +325,8 @@ enum {
 #define  kBs                     0x08
 #define  kReturn                 0x0D
 
-#define kMinSystemVersion				0x0700		/*	MacOS 7.0r */
-#define kMinWASTEVersion				0x01308000	/*	WASTE 1.3fr */
+#define kMinSystemVersion				0x08608000	//	Mac OS 8.6
+#define kMinWASTEVersion				0x0200400F	//	WASTE 2.0a15
 #define kScrapThreshold					4 * 1024	/*	4 KBr */
 #define ALLOW_INPUT_LENGTH              5000
 #define kWindows                        131
@@ -337,7 +337,7 @@ enum {
 /* enumeration types used for closing a window and/or quitting the application
  */
 typedef enum {closingWindow, closingApplication} ClosingOption;
-typedef enum {savingYes, savingNo, savingAsk} SavingOption;
+typedef enum {savingYes, savingNo, savingAsk,savingCancel} SavingOption;
 
 /* enumeration for orientation (vertical/horizontal)
  */
@@ -354,13 +354,8 @@ enum {
 	kMenuApple		= 1,
 	kMenuFile,
 	kMenuEdit,
-	kMenuFont,
-	kMenuSize,
-	kMenuStyle,
-	kMenuColor,
-	kMenuFeatures,
-	kMenuAlignment,
-	kMenuDirection
+	kMenuTools,
+	kMenuWindows
 };
 
 /*	Apple Menu items
@@ -372,17 +367,18 @@ enum {
 /*	File menu items
 */
 enum {
-	kItemNew		= 1,
-	kItemOpen		= 2,
-	kItemShow		= 3,
-	kItemEditObject = 5,       
-	kItemLoad       = 6,     
-	kItemClose		= 8,
-	kItemSave		= 9,
-	kItemSaveAs		= 10,
-	kItemPageSetup  = 12,
-	kItemPrint      = 13,
-	kItemQuit		= 15
+	kItemNew		 =  1,
+	kItemEditObject  =  2,       
+	kItemOpen		 =  4,
+	kItemEditFile	 =  5,
+	kItemShow		 =  6,
+	kItemLoadW        =  8,
+	kItemSaveWSAs	 =  9,
+    kItemPageSetup   = 11,
+	kItemPrint       = 12,
+    kItemSave		 = 14,
+	kItemClose		 = 15,
+	kItemQuit		 = 17
 };
 
 /*	Edit menu items
@@ -399,67 +395,21 @@ enum {
 	kItemPreference = 11
 };
 
-/*	Size menu items
+/*	Tools menu items
 */
 enum {
-	kItemLastSize	= 6,
-	kItemSmaller	= 8,
-	kItemLarger		= 9,
-	kItemOtherSize	= 11
-};
-
-/*	Style menu items
-*/
-enum {
-	kItemPlainText	= 1,
-	kItemBold,
-	kItemItalic,
-	kItemUnderline,
-	kItemOutline,
-	kItemShadow,
-	kItemCondensed,
-	kItemExtended
-};
-
-/*	Color menu items
-*/
-enum {
-	kItemLastColor	= 7,
-	kItemOtherColor = 9
-};
-
-/*	Alignment menu items
-*/
-enum {
-	kItemAlignDefault	= 1,
-	kItemAlignLeft		= 3,
-	kItemCenter,
-	kItemAlignRight,
-	kItemJustify
-};
-
-/*	Direction menu items
-*/
-enum
-{
-	kItemDirectionDefault = 1 ,
-	kItemDirectionLR = 3 ,
-	kItemDirectionRL
-} ;
-
-/*	Features menu items
-*/
-enum {
-	kItemAlignment			= 1,
-	kItemDirection			= 2,
-	kItemTabHooks			= 3,
-	kItemAutoScroll			= 5,
-	kItemOutlineHilite		= 6,
-	kItemReadOnly			= 7,
-	kItemIntCutAndPaste 	= 8,
-	kItemDragAndDrop		= 9,
-	kItemTranslucentDrags	= 10,
-	kItemOffscreenDrawing	= 11
+    kItemShowWSpace  =  1,
+	kItemClrWSpace	 =  2,
+    kItemLoadWSpace  =  4,
+	kItemSaveWSpace	 =  5,
+	kItemLoadHistory =  7,
+	kItemSaveHistory =  8,
+	kItemShowHistory =  9,
+	kItemChangeDir   =  11,
+	kItemShowDir	 =  12,
+	kItemResetDir    =  13,
+	kItemShowLibrary =  15,
+	kItemShowData	 =  16
 };
 
 
@@ -470,12 +420,16 @@ enum {
 	kAlertNeedNewerWASTE	= 129,
 	kAlertGenError			= 130,
 	kAlertSaveChanges		= 131,
+	kAlertSaveObject		= 142,
 	kDialogAboutBox			= 256,
 	kLineTo                 = 257,
 	kEditObject             = 258,
 	kError                  = 259,
 	kPreferneces			= 260,
-	kAbout                  = 261      
+	kAbout                  = 261,
+	kHelpObject             = 262,
+	kExampleObject          = 263,
+	kSearchObject           = 264
 };
 
 /*	String list resource IDs
@@ -483,8 +437,11 @@ enum {
 enum {
 	kUndoStringsID				= 128,
 	kClosingQuittingStringsID	= 129,
-	kMiscStringsID				= 130
+	kMiscStringsID				= 130,
+	kAlertStringsID				= 131
 };
+
+
 
 /* miscellaneous resource IDs
 */
@@ -500,11 +457,11 @@ enum {
 */
 struct DocumentRecord
 {
-	WindowPtr			owner;				/* the window  */
-	ControlHandle		scrollBars [ 2 ];	/* its scroll bars */
-	WEReference 		we;					/* its WASTE instance */
-	Handle 				fileAlias;			/* alias to associated file */
-};  /* DocumentRec  */
+	WindowRef			owner;				// the window
+	ControlRef			scrollBars [ 2 ];	// its scroll bars
+	WEReference 		we;					// its WASTE instance
+	OSType				docType;			// traditional text ('TEXT') or Unicode text ('utxt')
+} ;
 
 typedef struct DocumentRecord DocumentRecord, *DocumentPtr, **DocumentHandle;
 
@@ -533,8 +490,14 @@ struct Graphic_Ref
     Ptr devdesc;  
     CGrafPtr colorPort;
     GDHandle colorDevice;
+#if TARGET_API_MAC_CARBON
+    CGrafPtr savedPort;		/* Pointer to the saved graphics environment */
+#else
     GrafPtr savedPort;		/* Pointer to the saved graphics environment */
+#endif
     GDHandle savedDevice;	/* Handle to the saved color environment */
+    GrafPtr  printPort;
+    GrafPtr  activePort;
     
 }; 
 
@@ -547,7 +510,6 @@ typedef struct Graphic_Ref Graphic_Ref, *Graphic_RefPtr, **Graphic_RefHandle;
 
 /*  These are defined in WEDemoIntf.c
  */
-extern	Boolean		gHasColorQD;		/* true if Color QuickDraw is available */
 extern	Boolean		gHasDragAndDrop;	/* true if Drag Manager is available */
 extern	Boolean		gHasTextServices;	/* true is the Text Services Manager is available */
 extern	Boolean		gExiting;			/* set this variable to drop out of the event loop and quit */
@@ -581,11 +543,7 @@ void			LCSynch( ControlHandle );
 /*	From WEDemoIntf.c
  */
 DocumentHandle	GetWindowDocument(WindowPtr);
-#if __cplusplus
-inline WEReference GetWindowWE(WindowPtr window) { return (* GetWindowDocument(window))->we; }
-#else
-#define GetWindowWE(window) (* GetWindowDocument(window))->we
-#endif
+WEReference GetWindowWE ( WindowRef window );
 void			ErrorAlert( OSErr );
 void			ForgetHandle( Handle * );
 void			ForgetResource( Handle * );
@@ -598,10 +556,11 @@ void			PStringCopy( ConstStr255Param, Str255 );
 OSErr			WETextBox( short, const Rect *, WEAlignment );
 void			DoPreference( short );
 
-/*	From WEDemoDrags.c
+/*	From RDrags.c
  */
-OSErr			InstallDragHandlers( void );
-OSErr			RemoveDragHandlers( void );
+
+OSStatus		InstallDragHandlers( void );
+OSStatus		RemoveDragHandlers( void );
 
 /*	From WEDemoEvents.c
  */
@@ -638,16 +597,17 @@ void			SetDefaultDirectory( const FSSpec * );
 short			FindMenuItemText( MenuHandle, ConstStr255Param );
 Boolean			EqualColor( const RGBColor *, const RGBColor * );
 void			PrepareMenus( void );
-void			DoDeskAcc( short );
-OSErr			DoNew( void );
-OSErr			DoOpen( void );
+void			DoDeskAcc( UInt16 );
+OSErr			DoNew( Boolean editable );
+OSStatus		DoOpen( void );
+OSErr			OldDoOpen( void );
 OSErr			SaveWindow( const FSSpec *, WindowPtr );
 OSErr			DoSaveAs( const FSSpec *, WindowPtr );
 OSErr			DoSave( WindowPtr );
 OSErr			DoClose( ClosingOption, SavingOption, WindowPtr );
 OSErr			DoQuit( SavingOption );
 void			DoAppleChoice( short );
-void			DoFileChoice( short );
+void			DoFileChoice( short , WindowPtr);
 void			DoEditChoice( short );
 /*
 void			DoFontChoice( short, EventModifiers );
@@ -660,7 +620,7 @@ void			DoColorChoice( short );
 void			DoAlignmentChoice( short );
 void			DoDirectionChoice ( short ) ;
 void			DoFeatureChoice( short );
-void			DoMenuChoice( long, EventModifiers );
+void			DoMenuChoice( long, EventModifiers, WindowPtr );
 OSErr			InitializeMenus( void );
 
 /* from WEDemoScripting.c
@@ -669,6 +629,11 @@ OSStatus		InstallCoreHandlers ( void ) ;
 OSStatus		GetContentsOfSelection ( DescType, AEDesc *, WEReference ) ;
 OSStatus		SetContentsOfSelection ( const AEDesc *, WEReference ) ;
 OSStatus		GetAEDescDataAsHandle ( const AEDesc *, Handle * ) ;
+OSStatus		GetFileRect ( const FSSpec *, Rect * ) ;
+OSStatus		CreateObjectSpecifier ( const AEDesc *, DescType, AEKeyword, const AEDesc *, AEDesc * ) ;
+OSStatus		CreatePropertySpecifier ( const AEDesc *, AEKeyword, AEDesc * ) ;
+OSStatus		CreateFinderObjectSpecifier ( const FSSpec *, AEDesc * ) ;
+OSStatus		CreatePSNBasedAppleEvent ( const ProcessSerialNumber *, AEEventClass, AEEventID, AppleEvent * ) ;
 
 /* from WEDemoWindows.c
  */
@@ -679,9 +644,12 @@ Boolean			DoContent( Point, const EventRecord *, WindowPtr );
 void			DoKey( short, const EventRecord * );
 void			DoUpdate( WindowPtr );
 void			DoActivate( Boolean, WindowPtr );
-OSErr			CreateWindow( const FSSpec * );
+//OSErr			CreateWindow( const FSSpec * );
+OSErr 			CreateWindow (const FSSpec * pFileSpec, Boolean editable);
 void			DestroyWindow( WindowPtr );
 void			Resize( Point, WindowPtr );
+static void WindowResized ( const Rect * oldTextRect, WindowRef window );
+
 
 /* R Editor
  */
@@ -702,15 +670,14 @@ void            Change_Color(long , long , long , WEReference);
 print related functions
 ************************************************************************************************ */
 void           do_Print                             (void);
-void           do_PageSetup                         (void);
-#endif /* __WEDEMOAPP__ */
+OSStatus 	DoPageSetup(void);
+#endif /*  */
 
 
 /* ************************************************************************************************
 extern Function (plug in function) (printing1.c, printing2.c, print.h)
 ************************************************************************************************ */
 void			doPrinting(void);
-void			doPrStyleDialog(void);
 
 void			R_ResetConsole(void);
 void			R_FlushConsole(void);
@@ -742,7 +709,9 @@ void			moveTo(SInt16, SInt16);
 void			lineToWindow(SInt16, SInt16, SInt16);
 void			moveToWindow(SInt16, SInt16, SInt16);
 WindowPtr		CreateGraphicWindow(int wid, int h);
-OSErr			newWindow( const FSSpec* , int);
+OSErr			OldnewWindow( const FSSpec* , int);
+//OSStatus 		newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphic );
+OSStatus 		newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphic, Boolean editable );
 Boolean			isTextWindow(WindowPtr window);
 void			LineFromToWindow(SInt16, SInt16, SInt16, SInt16,WindowPtr);
 WindowPtr		Get_Graphic_Window(int);
@@ -793,32 +762,39 @@ void			ParseError();
 void			ErrorDia(char* errorMessage);
 void			Do_StandardAlert(Str255 LabelText);
 
-OSErr CreateOffScreen(
-    Rect       *bounds,     /* Bounding rectangle of off-screen */
-    short      depth,       /* Desired number of bits per pixel in off-screen*/
-    CTabHandle colors,      /* Color table to assign to off-screen */
-    CGrafPtr   *retPort,    /* Returns a pointer to the new CGrafPort */
-    GDHandle   *retGDevice); /* Returns a handle to the new GDevice */
+   /***************************************************************************/
+   /* Each driver can have its own device-specic graphical                    */
+   /* parameters and resources.  these should be wrapped                      */
+   /* in a structure (like the x11Desc structure below)                       */
+   /* and attached to the overall device description via                      */
+   /* the dd->deviceSpecific pointer                                          */
+   /* NOTE that there are generic graphical parameters                        */
+   /* which must be set by the device driver, but are                         */
+   /* common to all device types (see Graphics.h)                             */
+   /* so go in the GPar structure rather than this device-                    */
+   /* specific structure                                                      */
+   /***************************************************************************/
+ 
+typedef struct {
+    int cex;
+    int windowWidth;
+    int windowHeight;
+    Boolean resize;
+    int Text_Font;          /* 0 is system font and 4 is monaco */
+    int fontface;           /* Typeface */
+    int fontsize;           /* Size in points */
+    int usefixed;
+    RGBColor rgb[2];	    /* Window-Pict/Pixmap Port ForeColors */
+    int col[2];
+    WindowPtr window;
+    int	lineType;
+    SInt16 currentDash;
+    SInt16 numDashes;
+    short dashList[14];
+    short dashStart_x;
+    short dashStart_y;
+}
+MacDesc;
 
-OSErr SetUpPixMap(
-    short        depth,       /* Desired number of bits/pixel in off-screen*/
-    Rect         *bounds,     /* Bounding rectangle of off-screen */
-    CTabHandle   colors,      /* Color table to assign to off-screen */
-    short        bytesPerRow, /* Number of bytes per row in the PixMap */
-    PixMapHandle aPixMap)  ;   /* Handle to the PixMap being initialized */
-
-OSErr CreateGDevice(
-    PixMapHandle basePixMap,  /* Handle to the PixMap to base GDevice on */
-    GDHandle     *retGDevice) ;/* Returns a handle to the new GDevice */
-    
-    
-OSErr UpdateOffScreen(
-    Rect       *newBounds, /* New bounding rectangle of off-screen */
-    short      newDepth,   /* New number of bits per pixel in off-screen */
-    CTabHandle newColors,  /* New color table to assign to off-screen */
-    CGrafPtr   updPort,    /* Returns a pointer to the updated CGrafPort */
-    GDHandle   updGDevice) ;/* Returns a handle to the updated GDevice */
-        
-void DisposeOffScreen(
-    CGrafPtr doomedPort,    /* Pointer to the CGrafPort to be disposed of */
-    GDHandle doomedGDevice); /* Handle to the GDevice to be disposed of */
+         
+ 

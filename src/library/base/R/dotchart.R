@@ -1,8 +1,8 @@
-"dotplot" <-
-    function (x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
-	      pch = 21, gpch = 21, bg = par("bg"), color = par("fg"),
-	      gcolor = par("fg"), lcolor = "gray", main = NULL,
-	      xlab = NULL, ylab = NULL, ...)
+"dotchart" <-
+function(x, labels = NULL, groups = NULL, gdata = NULL, cex =
+         par("cex"), pch = 21, gpch = 21, bg = par("bg"), color =
+         par("fg"), gcolor = par("fg"), lcolor = "gray", main = NULL,
+         xlab = NULL, ylab = NULL, ...)
 {
     opar <- par("mar", "cex", "yaxs")
     on.exit(par(opar))

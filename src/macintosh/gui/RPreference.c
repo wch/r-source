@@ -62,6 +62,7 @@
 #include "WETabs.h"
 #include "WETabHooks.h"
 #include <ColorPicker.h>
+#include <ATSUnicode.h>
 
 /* ************************************************************************************************ */
 /*                                      DEFINE CONSTANT                                             */
@@ -81,6 +82,11 @@
 #define  eScreenRes          16
 #define  kWordSize           9
 
+int		EIGHTY, F_HEIGHT;
+#define FixedToInt(a)	((int)(a) / fixed1)
+
+
+extern Boolean              Have_Console;
 /* ************************************************************************************************ */
 /*                          Constant, Global variables and prototype                                */
 /* ************************************************************************************************ */
@@ -140,7 +146,7 @@ SInt16                                     gTextSize;
 SInt16                                     storeHistory; 
 int                                        PR_NSize;
 int                                        PR_VSize;
-int                                        gScreenRes, gScreenRes;
+int                                        gScreenRes;
 
 // you can't change the Global variable HISTORY when you do change on Preference
 
@@ -159,13 +165,16 @@ extern WindowPtr                           Help_Windows[MAX_NUM_H_WIN + 1];
 extern char    	         	               genvString[255];
 extern int                                 R_NSize;  
 extern int	                               R_VSize;
+extern Str255							   MacSymbolFont;
+extern Str255							   PostFont;
+extern Str255							   UserFont;
+
 
 /* ************************************************************************************************ */
 /*                                        Protocols                                                 */
 /* ************************************************************************************************ */ 
 unsigned char*                            StrToPStr(char*, SInt8);
 void                                      doSavePreference(DialogPtr );
-OSErr                                     doCopyResource(ResType ,SInt16,SInt16, SInt16);
 void                                      doGetPreferences(void);
 void                                      savePreference(void);
 void                                      DrawBox (DialogPtr PreferenceBox);
@@ -175,258 +184,10 @@ void                                      pickColor(DialogPtr, SInt16 , RGBColor
 void                                      SetTextSize(void);
 extern int                                R_SetOptionWidth(int w);
 
-/* ************************************************************************************************
-DoPreference : Open the Preference dialog and then call save preference.
-************************************************************************************************ */
-void DoPreference ( SInt16 dialogID )
-{
-   //****
-   DialogPtr          PreferenceBox = nil ;
-   WEReference        we = nil ;
-   GrafPtr            savePort ;
-   short              type; 
-   Rect               itemRect;
-   Str255             buf;
-   char               tempSpace[10];
-   StandardFileReply  folder;
-   Point			  where = {-1, -1};
-   SInt16             itemHit = 0;
-   Handle              itemHandle;
-   Boolean            ChangeDir= false;
-   RGBColor           outColor;
-   SInt16              fileLen;
-   Handle              fileName;
-
-   PreferenceBox = GetNewDialog ( kPreferneces, nil, ( WindowPtr ) -1L ) ;
-   if ( PreferenceBox == nil )
-   {
-      goto cleanup ;
-   }
-
-   // set up the port
-   GetPort ( & savePort ) ;
-   SetPort ( PreferenceBox ) ;
-   TextSize(12);
-   // Set the Dialog Title
-   SetWTitle ( PreferenceBox, "\p R Preference !" ) ;
-   DrawBox(PreferenceBox);
-
-   // Handle tab size
-   GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
-   sprintf(tempSpace, "%d", gtabSize);
-   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
-    
-   // Handle History size
-/* GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
-   sprintf(tempSpace, "%d", storeHistory);   
-   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
-*/
-   
-   //Handle Text Size
-   GetDialogItem(PreferenceBox, kTextSize, &type, &itemHandle, &itemRect);
-   sprintf(tempSpace, "%d", gTextSize);
-   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
- 
-/*   
-   //Handle R_NSize
-   GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
-   sprintf(tempSpace, "%d", (PR_NSize)); 
-   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
- 
-   //Handle R_VSize
-   GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
-   sprintf(tempSpace, "%d", (PR_VSize));
-   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
- */
-   //Handle Screen Resolution
-   GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
-   sprintf(tempSpace, "%d", (gScreenRes));
-   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
-   //show the dialog
-   ShowWindow ( PreferenceBox ) ;
-   
-   
-   while(true){
-      // wait for a click in the picture
-      ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
-   
-      if (itemHit == kActiveTextButton){
-         pickColor(PreferenceBox, kActiveTextField, tempTypeColour, &outColor);
-         tempTypeColour = outColor;
-         DrawBox(PreferenceBox);
-      }
-      if (itemHit == kCompletedTextButton){
-         pickColor(PreferenceBox, kCompletedTextField, tempFinishedColour, &outColor);
-         tempFinishedColour = outColor;
-         DrawBox(PreferenceBox);
-      }
-      if (itemHit == kComputerResponseButton){
-         pickColor(PreferenceBox, kComputerResponseField, tempComputerColour, &outColor);
-         tempComputerColour = outColor;
-         DrawBox(PreferenceBox);
-
-      }
-
-      if ( itemHit == kOkButton )
-      { 
-         //Handle Tab Size
-         GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
-         GetDialogItemText(itemHandle, buf);
-         // Didn't allow you to use a tab with size bigger than 99
-         if (buf[0] > 2){
-            GWdoErrorAlert(eTabSize);
-            break;
-         }
-         
-         // Handle History Length
-   /*      GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
-         GetDialogItemText(itemHandle, buf);
-         // Didn't allow you to use a tab with size bigger than 999
-         if (buf[0] > 3){
-            GWdoErrorAlert(eHistorySize);
-            break;
-         }
-     */    
-         //Handle Global Text Size
-         GetDialogItem(PreferenceBox, kTextSize, &type, &itemHandle, &itemRect);
-         GetDialogItemText(itemHandle, buf);
-         // Didn't allow you to use a tab with size bigger than 99
-         if (buf[0] > 2){
-            GWdoErrorAlert(eTextSize);
-            break;
-         }         
-         
-/*         //Handle R_NSize
-         GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
-         GetDialogItemText(itemHandle, buf);
-         buf[buf[0] + 1] = '\0';
-         if ((atoi((char *)&buf[1]) > 1000) || (atoi((char *)&buf[1]) < 200)){
-            GWdoErrorAlert(eR_NSize);
-            break;
-         }           
-  */       
-    /*     //Handle R_VSize
-         GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
-         GetDialogItemText(itemHandle, buf);
-         buf[buf[0] + 1] = '\0';
-         if ((atoi((char *)&buf[1]) > 500) || (atoi((char *)&buf[1]) < 1)){
-            GWdoErrorAlert(eR_VSize);
-            break;
-         }  
-         
-         //Handle R_VSize
-         GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
-         GetDialogItemText(itemHandle, buf);
-         buf[buf[0] + 1] = '\0';
-         if ((atoi((char *)&buf[1]) > 144) || (atoi((char *)&buf[1]) < 36)){
-            GWdoErrorAlert(eScreenRes);  //???
-            break;
-         }            
-      */   
-         gTypeColour = tempTypeColour;
-         gComputerColour = tempComputerColour;
-         gFinishedColour = tempFinishedColour;
-         // When you click the OK button, save the preference
-         doSavePreference(PreferenceBox);
-         break;
-  
-      }
-  
-      if (itemHit == kCancelButton){
-         tempTypeColour = gTypeColour;
-         tempComputerColour = gComputerColour;
-         tempFinishedColour = gFinishedColour;
-         // When you click Cancel button, no action followed
-         break;
-      }
-   }
+extern int GetTextSize(void);
+int EightyWidth(void);
 
 
-// Release the resource
-cleanup :
-   if ( we != nil )
-   {
-      WEDispose ( we ) ;
-   }
-   if ( PreferenceBox != nil )
-   {
-      DisposeDialog ( PreferenceBox ) ;
-      // Restore the Port
-      SetPort ( savePort ) ;
-   }
-   
-   
-}
-
-
-/* ************************************************************************************************
-doSavePreference : Query the contents inside the PreferenceBox, and then call savePreference
-************************************************************************************************ */
-void doSavePreference(DialogPtr PreferenceBox){
-   short              type, i; 
-   Handle             itemHandle;
-   Rect               itemRect;
-   Str255             buf;
-   char               tempSpace[10];
-   Str255             resourceName = "\pPreferences";
-   
-   // It is used to save the tab Size
-   GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
-   GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-   gtabSize = atoi(tempSpace);
-   SetTab();
-   //It is used to save the history size
-/*   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
-   GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-  */    
-   // After you change History length, you can only have effect after you restart the program
-   // it is because you need to allocate memory for history record when you start the computer.
-/*   storeHistory = atoi(tempSpace);
-  */
-   
-   //Handle textSize
-   GetDialogItem(PreferenceBox, kTextSize, &type, &itemHandle, &itemRect);
-   GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-   gTextSize = atoi(tempSpace);
-   SetTextSize();
-   //Handle R_Nsize
-/*   GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
-   GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-   PR_NSize = atoi(tempSpace);
-   
-   
-   // Handle R_Vsize
-   GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
-   GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-   PR_VSize = atoi(tempSpace);
-  */ 
-   
-   // Handle Screen Resolution
-   GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
-   GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-   gScreenRes = atoi(tempSpace);
-   
-   savePreference();
-
-}
 
 
 
@@ -442,11 +203,14 @@ unsigned char* StrToPStr(char* buf, SInt8 size){
 }
 
 
-char *mac_getenv(const char *name);
+extern char *mac_getenv(const char *name);
 
 /* ************************************************************************************************
-doGetPreferences : This function will be called at the beginning when your application start to
-run, it will load the preference out, and assign it to the global variable.
+doGetPreferences :	This function will be called at the beginning when R application starts.
+					It sets up some parameters specified by the user in the .Renviron file
+					such as the graphic device screen resolution and font, the Console font and
+					size and the tab-size of all the text windows. Etc.
+Jago, April 2001, Stefano M. Iacus	
 ************************************************************************************************ */
 void  doGetPreferences(void)
 {
@@ -457,16 +221,42 @@ void  doGetPreferences(void)
    FSSpec               fileSSpec;
    SInt16               fileRefNum;
    appPrefsHandle       appPrefsHdl;
-   char 				hist[50];
+   char 				userfont[25];
    
-      gtabSize = 3;
+     
       strcpy(genvString, ".Renviron");
       SetTab();
-      storeHistory = 500;
+    
+      storeHistory = atoi(mac_getenv("RHISTSIZE"));
+       
+      if(storeHistory < 1 || storeHistory > 512)  
+       storeHistory = 512;
       HISTORY = storeHistory +1;
       Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
-      gTextSize = 12;
-      gScreenRes = 72;
+  
+      gTextSize = GetTextSize();
+
+      gScreenRes = GetScreenRes();
+      
+      doCopyPString("\psymbol", MacSymbolFont);  /* Jago */
+
+      strncpy(userfont,mac_getenv("GraphFontName"),20);
+ 
+      if(strlen(userfont)>0)
+       CopyCStringToPascal(userfont,PostFont);
+ 
+	  if(GetFontIDFromMacFontName(PostFont) == kATSUInvalidFontID)
+         doCopyPString("\phelvetica", PostFont); /* Emergency font ! */
+
+   	  strncpy(userfont,mac_getenv("FontName"),20);
+      
+      if(strlen(userfont)>0)
+       CopyCStringToPascal(userfont,UserFont);
+  
+      if( FMGetFontFamilyFromName(UserFont) == kInvalidFontFamily)
+         doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
+
+      EIGHTY = EightyWidth();
       
       tempTypeColour.red = gTypeColour.red =  0xffff;
       tempTypeColour.green = gTypeColour.green =  0x0000;
@@ -480,274 +270,49 @@ void  doGetPreferences(void)
       tempComputerColour.blue = gComputerColour.blue = 0x0000;
 }
 
-void  doGetPreferences1(void)
+int EightyWidth(void)
 {
-   Str255               prefsFileName;
-   OSErr                osError;
-   SInt16               volRefNum;
-   long                 directoryID;
-   FSSpec               fileSSpec;
-   SInt16               fileRefNum;
-   appPrefsHandle       appPrefsHdl;
-   char 				hist[50];
-   GetIndString(prefsFileName,rPreStringList,iPrefsFileName);
+	CGrafPtr 		tempPort=NULL;
+	char 			userfont[26];
+	char			eighty[81];
+	Str255			ottanta;
+	int 			eightywidth = 50*12,i;
+	FMFontFamily	fontFamily = 0 ;
+    FMetricRec 		myFMetric;
 
-   osError = FindFolder(kOnSystemDisk,kPreferencesFolderType,kDontCreateFolder,&volRefNum,
-                                  &directoryID);
-
-   if(osError == noErr)
-      osError = FSMakeFSSpec(volRefNum,directoryID,prefsFileName,&fileSSpec);
-   if(osError == noErr || osError == fnfErr)
-      fileRefNum = FSpOpenResFile(&fileSSpec,fsCurPerm);
+    F_HEIGHT = gTextSize+2;
+    
+    tempPort = CreateNewPort();
+	
+	if(tempPort == NULL)
+	 return(eightywidth);
+	  
+    fontFamily = FMGetFontFamilyFromName(UserFont);
   
-  // This will be call when you have no preference file in the beginning.
-   if(fileRefNum == -1)
-   {
-      FSpCreateResFile(&fileSSpec,'PpPp','pref',smSystemScript);
-      osError = ResError();
+    if(fontFamily == kInvalidFontFamily)
+     return(eightywidth);
+     
+    TextFont(fontFamily);
+    TextSize(gTextSize);
+    
+	for(i=0;i<80;i++)
+	 eighty[i]=0x52; /* R ! */
+	eighty[80]='\0';
+	
+	CopyCStringToPascal(eighty,ottanta);
+	eightywidth = StringWidth(ottanta);
+	
+	FontMetrics(&myFMetric);
 
-      if(osError == noErr)
-      {
-         fileRefNum = FSpOpenResFile(&fileSSpec,fsCurPerm);
-         if(fileRefNum != -1 )
-         {
-            UseResFile(gAppResFileRefNum);
-               
-            osError = doCopyResource(rTypePrefs,kPrefsID,gAppResFileRefNum,fileRefNum);
-            if(osError == noErr)
-               osError = doCopyResource(rTypeAppMiss,kAppMissID,gAppResFileRefNum,fileRefNum);
-            if(osError != noErr)
-            {
-               CloseResFile(fileRefNum);
-               osError = FSpDelete(&fileSSpec);
-               fileRefNum = -1;
-            }
-         }
-      }
-   }
-   
-  // This will be call, when you already have preference file
-   if(fileRefNum != -1)
-   {
-      UseResFile(fileRefNum); 
-
-      appPrefsHdl = (appPrefsHandle) Get1Resource(rTypePrefs,kPrefsID);
-      if(appPrefsHdl == NULL)
-         return;
-         
-         
-      //Insert NULL character at the end of the String.
-      (*appPrefsHdl)->tabSize[2] = '\0';
-    //  (*appPrefsHdl)->HistRecordSize[3] = '\0';
-      (*appPrefsHdl)->textSize[2] = '\0';
-//      (*appPrefsHdl)->R_Vsize[4] = '\0';
- //     (*appPrefsHdl)->R_Nsize[4] = '\0';
-      (*appPrefsHdl)->ScreenR[4] = '\0';
-      gHelpFile = (*appPrefsHdl)->sfFile;
-      gtabSize = atoi((*appPrefsHdl)->tabSize);
-      strcpy(genvString, (*appPrefsHdl)->envString);
-      SetTab();
- //     storeHistory = atoi((*appPrefsHdl)->HistRecordSize);
-      /*HISTORY = atoi((*appPrefsHdl)->HistRecordSize) + 1;
-      */
-      
-      storeHistory = 100;
-  /*    strcpy(hist,mac_getenv("R_HISTSIZE"));
-       
-      if(hist)
-       HISTORY=atoi(hist);
-      else 
-    */   HISTORY = storeHistory +1;
-       
-        
-      Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
-            
-      gTextSize = atoi((*appPrefsHdl)->textSize);
-      
-/*      PR_NSize =  atoi((*appPrefsHdl)->R_Nsize);
-//      R_NSize = PR_NSize * (1 <<10);
-      PR_VSize =  atoi((*appPrefsHdl)->R_Vsize);
-//      R_VSize = PR_VSize * (1 << 20);
-*/      gScreenRes = gScreenRes = atoi((*appPrefsHdl)->ScreenR);
-      
-      gPrefsFileRefNum = fileRefNum;
-      gsfr = (*appPrefsHdl)->sfr;
-      tempTypeColour= gTypeColour = (*appPrefsHdl)->TypeColour;
-      tempFinishedColour=gFinishedColour = (*appPrefsHdl)->FinishedColour;
-      tempComputerColour=gComputerColour = (*appPrefsHdl)->ComputerColour;
-      UseResFile(gAppResFileRefNum);
-   }
+    F_HEIGHT = FixedToInt(myFMetric.ascent + myFMetric.descent + myFMetric.leading);
+	
+	if(tempPort)
+	 DisposePort(tempPort);
+	
+	return(eightywidth);
 }
 
 
-/* ************************************************************************************************
-doCopyResource
-************************************************************************************************ */
-OSErr  doCopyResource(ResType resType,SInt16 resID,SInt16 sourceFileRefNum,
-                                 SInt16 destFileRefNum)
-{
-   SInt16         oldResFileRefNum;
-   Handle         sourceResourceHdl;
-   ResType        ignoredType;
-   SInt16         ignoredID;
-   Str255         resourceName;
-   SInt16         resAttributes;
-   OSErr          osError;
-
-   oldResFileRefNum = CurResFile();
-   UseResFile(sourceFileRefNum);
-
-   sourceResourceHdl = Get1Resource(resType,resID);
-
-   if(sourceResourceHdl != NULL)
-   {
-      GetResInfo(sourceResourceHdl,&ignoredID,&ignoredType,resourceName);
-      resAttributes = GetResAttrs(sourceResourceHdl);
-      DetachResource(sourceResourceHdl);
-      UseResFile(destFileRefNum);
-      if(ResError() == noErr)
-         AddResource(sourceResourceHdl,resType,resID,resourceName);
-      if(ResError() == noErr)
-         SetResAttrs(sourceResourceHdl,resAttributes);
-      if(ResError() == noErr)
-         ChangedResource(sourceResourceHdl);
-      if(ResError() == noErr)
-         WriteResource(sourceResourceHdl);
-   }
-
-   osError = ResError();
-
-   ReleaseResource(sourceResourceHdl);
-   UseResFile(oldResFileRefNum);
-
-   return(osError);
-}
-
-void savePreference(void){
-   
-   return;
-}
-
-
-/* ************************************************************************************************
-savePreference: This function is used to save the global variable into the preference without 
-prompt out the preference dialog.
-************************************************************************************************ */
-void savePreference1(void){
-   appPrefsHandle     appPrefsHdl;
-   Handle             existingResHdl;
-   Str255             resourceName = "\pPreferences";
-   char               buf[10];
-   if(gPrefsFileRefNum == -1)
-      return;
-
-   // Save it into the preference file
-   appPrefsHdl = (appPrefsHandle) NewHandleClear(sizeof(appPrefs));
-
-   HLock((Handle) appPrefsHdl);
-   sprintf(buf, "%d", gtabSize);
-   strncpy((*appPrefsHdl)->tabSize, buf, 3);
-   sprintf(buf, "%d", storeHistory );
-//   strncpy((*appPrefsHdl)->HistRecordSize,buf, 4);
-   sprintf(buf, "%d", gTextSize);
-   strncpy((*appPrefsHdl)->textSize, buf, 3);
-//   sprintf(buf, "%d", PR_NSize);
-//   strncpy((*appPrefsHdl)->R_Nsize, buf, 5);
-//   sprintf(buf, "%d", PR_VSize);
-//   strncpy((*appPrefsHdl)->R_Vsize, buf, 5);
-   sprintf(buf, "%d", gScreenRes);
-   strncpy((*appPrefsHdl)->ScreenR, buf, 5);
-      
-   (*appPrefsHdl)->sfFile = gHelpFile;
-   (*appPrefsHdl)->sfr = gsfr;
-   (*appPrefsHdl)->TypeColour = gTypeColour;
-   (*appPrefsHdl)->FinishedColour = gFinishedColour;
-   (*appPrefsHdl)->ComputerColour = gComputerColour;
-   strcpy((*appPrefsHdl)->envString, genvString);
-   UseResFile(gPrefsFileRefNum);
-
-   existingResHdl = Get1Resource(rTypePrefs,kPrefsID);
-   if(existingResHdl != NULL)
-   {
-      RemoveResource(existingResHdl);
-      if(ResError() == noErr)
-         AddResource((Handle) appPrefsHdl,rTypePrefs,kPrefsID,resourceName);
-      if(ResError() == noErr)
-         WriteResource((Handle) appPrefsHdl);
-   }
-
-   HUnlock((Handle) appPrefsHdl);
-
-   ReleaseResource((Handle) appPrefsHdl);
-   UseResFile(gAppResFileRefNum);
-}
-
-
-/*
-************************************************************************************************
-setPathName routine :
-************************************************************************************************
-Desciption :
-This Procedure is called when you need to display the path that you selected in the "Directory
-dialog" into the preference dialog. 
-************************************************************************************************
-*/
-
-#ifdef XXX
-void setPathName(StandardFileReply  folder, DialogPtr PreferenceBox){
-   short              type; 
-   Rect               itemRect;
-   Str255             buf;
-   SInt16              fileLen,i;
-   Handle              fileName, itemHandle;
-   char               tempString[255];
-   
-   
-   FSpGetFullPath (&folder.sfFile, &fileLen, &fileName);
-   GetDialogItem(PreferenceBox, iFileName, &type, &itemHandle, &itemRect);
-   HLock((Handle) fileName);
-   strcpy(tempString, *fileName);
-   HUnlock((Handle) fileName);
-   buf[0] = fileLen;
-   for (i=1 ; i <= fileLen; i++){
-       buf[i] = tempString[i-1];
-   }
-   TextSize(9);
-   SetDialogItemText(itemHandle, buf);
-   TextSize(12);
-}
-
-#endif
-/*
-************************************************************************************************
-displayPathName routine :
-************************************************************************************************
-Desciption :
-This Procedure is called when you need to display the path.
-************************************************************************************************
-*/
-
-#ifdef XXX
-void displayPathName( DialogPtr PreferenceBox){
-   short              type; 
-   Rect               itemRect;
-   Str255             buf;
-   SInt16              fileLen,i;
-   Handle              fileName, itemHandle;
-   char               tempString[255];
-   
-   GetDialogItem(PreferenceBox, iFileName, &type, &itemHandle, &itemRect);
-   fileLen = strlen(genvString);
-   buf[0] = fileLen;
-   for (i=1 ; i <= fileLen; i++){
-       buf[i] = genvString[i-1];
-   }
-   TextSize(9);
-   SetDialogItemText(itemHandle, buf);
-   TextSize(12);
-}
-
-#endif
 /*
 ************************************************************************************************
 pickColor routine :
@@ -761,7 +326,7 @@ void pickColor(DialogPtr PreferenceBox, SInt16 itemID, RGBColor inColour, RGBCol
    RGBColor	          blackColour;
    short              type; 
    Rect               itemRect;
-   Handle             itemHandle;
+   Handle             itemHandle=NULL;
    Str255		     prompt = "\pChoose a rectangle colour:";
    Point			 where ={0,0};
    GrafPtr           savePort;
@@ -797,7 +362,7 @@ bitmap by ourself.
 */
 void DrawBox(DialogPtr PreferenceBox){
    short              type; 
-   Handle             itemHandle;
+   Handle             itemHandle=NULL;
    Rect               itemRect;
    Pattern	          myPat;
    RGBColor          blackColour;
@@ -842,24 +407,41 @@ void SetTab(){
    WEStyleMode    mode;
    TextStyle      ts;
    SInt16         i;  
+   char 		tabsize[10];
+   
+
+   gtabSize = atoi(mac_getenv("TabSize"));
+     
+   if(gtabSize < 1 || gtabSize > 20)
+    gtabSize = 5;
+       
    if (!(Console_Window == nil)){
        we = GetWindowWE ( Console_Window);
-       WESetTabSize(gtabSize*kWordSize,we); 
-      
+       WESetTabSize(gtabSize,we); 
 	   WEInstallTabHooks(we);
    }
    
    for (i=1; i<Edit_Window; i++){
        we = GetWindowWE ( Edit_Windows[i]); 
-       WESetTabSize(gtabSize*kWordSize,we);
-/*     
+       WESetTabSize(gtabSize,we);
        // The following three lines is working, however, we only allow fix size font.
        // It is much more better than query the WASTE about the font size you are 
        // currently using. Cause they can use different font size in one page.       
        mode = weDoAll ;  // query about all attributes
        WEContinuousStyle ( & mode, & ts, we ) ;
        WESetTabSize(gtabSize*(ts . tsSize),we);
-*/
+
+	   WEInstallTabHooks(we);
+   
+   }
+   
+    for (i=1; i<Help_Window; i++){
+       we = GetWindowWE ( Help_Windows[i]); 
+       WESetTabSize(gtabSize,we);
+       mode = weDoAll ;  // query about all attributes
+       WEContinuousStyle ( & mode, & ts, we ) ;
+       WESetTabSize(gtabSize*(ts . tsSize),we);
+
 	   WEInstallTabHooks(we);
    
    }
@@ -872,15 +454,20 @@ void SetTextSize(){
    WEReference we ;
    SInt16 Console_Width, NumofChar;
    GrafPtr savePort;    
+   Rect portRect;
    
    we = GetWindowWE ( Console_Window);
+   if(!we)
+    return;
    WEGetSelection ( & selStart, & selEnd, we );
    WESetSelection ( 0, WEGetTextLength(we), we );
+   gTextSize = GetTextSize();
    changeSize(Console_Window, gTextSize);
    WESetSelection (selStart, selEnd, we);
-   Console_Width = (Console_Window ->portRect).right - (Console_Window ->portRect).left ;
+   GetWindowPortBounds ( Console_Window, & portRect ) ;
+   Console_Width = portRect.right - portRect.left ;
    GetPort(&savePort);
-   SetPort(Console_Window);
+   SetPortWindowPort(Console_Window);
    TextFont(4);
    TextSize(gTextSize);
    NumofChar =    (int)((((Console_Width - 15) / CharWidth('M'))) - 0.5) ; 

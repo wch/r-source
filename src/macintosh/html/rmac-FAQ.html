@@ -1,158 +1,837 @@
 <html lang="en"><head>
-<title>R for Macintosh FAQ</title>
+<title>R for Macintosh DOC/FAQ</title>
 </head><body>
 
-<html>
-<head>
-<TITLE>R for Macintosh FAQ</TITLE>
-</head>
 
-<body>
-<h1 align="center">R for Macintosh FAQ</h1>
-<h2>Version for <tt>R 1.2.1</tt></h2>
+
+<h1 align="center">R for Macintosh FAQ/DOC</h1>
+<h2>Version for <tt>R 1.2.3</tt></h2>
 <address>S. M. Iacus</address>
 <p><p><hr><p>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>rmac-FAQ.html</title>
+</head>
+<body>
 
+<center>This is the ReadMe file of R for Macintosh Application.
+<p>We discuss here the following topics:</center>
 
-We are currently writing this.
+<p>* <a href="#NEWS">NEWS</a>
+<br>* <a href="#GUI">THE NEW GUI</a>
+<br>* <a href="#EDITOR">EXTERNAL EDITOR INTERACTION</a>
+<br>* <a href="#MEMORY">MEMORY</a>
+<br>* <a href="#OPTIONS">SPECIFING OPTIONS: the .Renviron file</a>
+<br>* <a href="#HELPERS">R HELPERS</a>
+<br>* <a href="#REQUIREMENTS">SYSTEM REQUIREMENTS</a>
+<br>* <a href="#FBUGS">FIXED BUGS</a>
+<br>* <a href="#KBUGS">KNOWN BUGS</a>
+<br>* <a href="#FAQ">SHORT FAQ</a>
+<p>
+<hr WIDTH="100%">
+<p><a NAME="NEWS"></a><b>NEWS</b>
+<br>There are several enanchements in this release. Most of them concern
+the user interface of R application but one of the most important novelty
+is that now
+<br>R runs both on MacOS and MacOS X using Carbon technology. This means
+that when you run R from MacOS X it run natively under the new System without
+calling the Classic Compatibility Module. The use of R under MacOS X takes
+lots of advantages starting from the new Aqua look.
+<p>As this version is based on the new Carbon technology some new bugs
+can appear that we were'nt able to found before releasing R officially.
+<p>Any feedback is then welcome at stefano.iacus@unimi.it
+<br>&nbsp;
+<br>&nbsp;
+<p><a NAME="GUI"></a><b>THE NEW GUI</b>
+<br>Several menus are now present from this release. The structure of the
+menus is as follows with a brief description.
+<table BORDER=1 CELLSPACING=3 CELLPADDING=3>
+<tr>
+<td>Menu&nbsp;</td>
 
-<p><hr WIDTH="100%">
+<td>Item</td>
 
-<FONT FACE="Times"><P>Macintosh porting of R-1.2.1,  beta 1, (Gen 19 2001).</P>
-<P>=====================================================</P>
-<P>* getenv() in now working. The .Renviron file is assumed</P>
-<P>  to be in "etc" directory </P>
-<P>* "etc" is assumed to contain the history file, the image</P>
-<P>  session and the environments variables</P>
-<P>* a new command line has been added. It is possible to</P>
-<P>  specify options as in the Unix/Win implementations</P>
-<P>* packages have been recompiled</P>
-<P>* few other bugs fixed</P>
+<td>Shortcut</td>
 
-<P>What's new from R for Mac R-1.2.0,  beta 1, (Jan 07 2001).</P>
-<P>==========================================================</P>
-<P>* dir.create() now implemented</P>
-<P>* help.start() now works. It launches the default browser 
-associated to the</P>
-<P>   file extension "htm" and/or "html". The same behaviour as nder 
-Windows</P>
-<P>   systems.</P>
-<P>* internal unzip implemented using InfoZip</P>
+<td>Brief description</td>
+</tr>
 
-<P>&nbsp;</P>
-<P>What's new from R for Mac R-1.1.1,  beta 1, (Dec 10 2000).</P>
-<P>==========================================================</P>
-<P>Sources for MacOS avalaible!</P>
-<P>This version is only an update to version 1.2.0 of R sources.</P>
-<P>This is intended to release sources for MacOS developers.</P>
+<tr>
+<td>Apple&nbsp;</td>
 
-<P>* memory allocation problems have been fixed.</P>
+<td></td>
 
-<P>* Packages have been rebuilt to version 1.2.0.</P>
+<td></td>
 
-<P>* proc.time and system.time are now partially implemented. They</P>
-<P>  give results in seconds only for total system time and process time.</P>
-<P>  The system time is calculated as the number of seconds passed</P>
-<P>  from booting your machine.</P>
+<td></td>
+</tr>
 
-<P>* Memory settings are now ignored since from version 1.2.0 of R</P>
-<P>   there is no more (really) a need to fix VSize and NSize.</P>
-<P>   If R runs out of memory it only suffices to increment the Memory</P>
-<P>   of the "R application" from the Finder. The default is set to 25Mb</P>
-<P>   but you can change it as you prefer up to the maximum of the</P>
-<P>   memory currently  avalaible on your Macintosh system.</P>
+<tr>
+<td></td>
 
-<P>* the Sys.timezone() implemented by a trick. The timezone</P>
-<P>  string can be read from the system but not set. The function</P>
-<P>  getenv still doesn't exists on Macintosh.</P>
+<td>About R&nbsp;</td>
 
-<P>* command history is now saved and loaded. do_savehistory and</P>
-<P>  do_loadhistory fully implemented.</P>
+<td>&nbsp;</td>
 
-<P>&nbsp;</P>
-<P>Macintosh porting of R-1.1.1,  beta 1, (Dec 10 2000)</P>
-<P>====================================================</P>
+<td>Opens the R information dialog</td>
+</tr>
 
-<P>* tempfile() is now supported. Temporary files are stored in a directory</P>
-<P>  "tmp" that it is assumed to be in the main R folder. If it doesn't</P>
-<P>  exist, R create it. All temporary files will be stored there.</P>
+<tr>
+<td></td>
 
-<P>* unlink() is implemented. It can delete only files and dirs created</P>
-<P>  from the current R session. Wildcards not allowed yet.</P>
+<td></td>
 
-<P>* Dynamic libraries are fully implemented grace to the code give to me</P>
-<P>  by Luke Tierney. </P>
-<P>  (There is a problem with DLLName. Every function must be searched</P>
-<P>   for global and not for a specific package when calling 
-.C/.Fortran etc)</P>
+<td></td>
 
-<P>* Most of the packages have been compiled but the tclk one.</P>
+<td></td>
+</tr>
 
-<P>* tclk demos disabled</P>
+<tr>
+<td>File</td>
 
-<P>* Packages. The following packages have been compiled or simply added</P>
-<P>  to the base one:</P>
+<td></td>
 
-<P>  ctest (ex:tested)</P>
-<P>  eda (ex:tested)</P>
-<P>  lqs (ex:tested)</P>
-<P>  modreg (ex:tested)</P>
-<P>  mva (ex:tested)</P>
-<P>  nls (ex:tested, does not work "SSlogis")</P>
-<P>  splines (ex:tested)</P>
-<P>  stepfun (ex:tested)</P>
-<P>  ts (file AnIndex to be built)</P>
-<P>  wavethresh (examples and help files to be built)</P>
+<td></td>
 
-<P>* Metric Information for graphics device partially working.</P>
-<P>  You can write expressions and symbols in plots but it is not yet</P>
-<P>  perfectly working.</P>
-<P> </P>
-<P>* data(women) doesn't load! Can't understand why...yet.</P>
+<td></td>
+</tr>
 
-<P>* XDR loading/saving has been implemented. I use the code from B. Ripley</P>
-<P>  that (seems) to work fine with very little modifications.</P>
+<tr>
+<td></td>
 
-<P>* Load and Save of image is now implemented correctly. </P>
+<td>New Edit Window&nbsp;</td>
 
-<P>* Load and Save implemented from menu too. If you save from menu an icon</P>
-<P>  will be added to the file. You can double-click on a R file to 
-start the</P>
-<P>  application or load a file in R if the application is running. You can</P>
-<P>  also  drag&amp;drop the file on the R icon to launch R.</P>
+<td>N&nbsp;</td>
 
-<P>* Help files are now displayed correctly with colors as under Windows</P>
+<td>Opens an empty editable window. You can usethis as an internal editor&nbsp;
+for R. If the current active window isa graphic device window than a new
+macintosh() device will be opened.</td>
+</tr>
 
-<P>&nbsp;</P>
-<P>What else still remains to do!</P>
-<P>==============================</P>
-<P>There are lots of things that have to be implemented and fixed.</P>
-<P>Not all the avalaible packages have been compiled. If you have any</P>
-<P>particular need please let me know and I will compile and made</P>
-<P>available the package. There is not an automatic install procedure</P>
-<P>for building packages under MacOS yet.</P>
+<tr>
+<td>&nbsp;</td>
 
-<P>This current version containes wavethresh and multiv packages but no</P>
-<P>help files and examples are avalaible yet.</P>
-<P>If you need them you should only copy the directories "help" and "R-ex" </P>
-<P>of the Windows distribution in their respectively directory under this</P>
-<P>distribution.</P>
+<td>Edit Object</td>
 
-<P>&nbsp;</P>
-<P>Hystory</P>
-<P>=======</P>
+<td>&nbsp; E&nbsp;</td>
 
-<P>&nbsp;</P>
-<P>&nbsp;</P>
-<P>What was in R for Mac pre-alpha 2 and 1</P>
-<P>=======================================</P>
-<P>* dir, setcwd, getcwd</P>
-<P>* macdevice pdated to WasteLib 2.0 </P>
-</FONT>
+<td>Is the equivalent of "edit(object)"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Source File</td>
+
+<td>&nbsp; O</td>
+
+<td>Opens a file and sources it. This is equivalent to "source(file)"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Open File For Editing</td>
+
+<td>&nbsp;</td>
+
+<td>Opens a file in an editable window.Useful when you want to modify an&nbsp;
+existing script and test it.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>File Show&nbsp;</td>
+
+<td>F</td>
+
+<td>Open a file in a non editable window.&nbsp; This isthe equivalent of
+R command&nbsp; "show.file(file)"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Load Workspace File</td>
+
+<td>L&nbsp;</td>
+
+<td>If you want to load a wspace image&nbsp; otherthan ".RData"</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>Save Workspace As</td>
+
+<td></td>
+
+<td>If you want to save an image file&nbsp; other the ".RData"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Page Setup</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; Calls the printer driver page setup</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Print&nbsp;</td>
+
+<td>&nbsp; P</td>
+
+<td>Print the text window (R Console etc) or the imagein the graphic device
+window. The image is rescaled to the&nbsp;&nbsp; page dimension of your
+printer.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Save</td>
+
+<td>&nbsp;&nbsp; S</td>
+
+<td>Save the window. This could be the content ofthe R Console i.e. your
+current R session any text window or the graphicdevice window. This menu
+acts as a "Save As" menu so you&nbsp;&nbsp; have to specify each time the
+filename.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Close&nbsp;</td>
+
+<td>&nbsp; W&nbsp;</td>
+
+<td>Closes the current window. If it is the&nbsp;&nbsp;&nbsp; R Console
+window than it is interpreted&nbsp;&nbsp;&nbsp; as quitting R.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Quit</td>
+
+<td>&nbsp;&nbsp; Q</td>
+
+<td>This menu item is on the Apple Menu under OSX</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>Edit</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Undo</td>
+
+<td>&nbsp;&nbsp; Z</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Cut</td>
+
+<td>&nbsp;&nbsp; X</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Copy</td>
+
+<td>&nbsp;&nbsp; C&nbsp;</td>
+
+<td>If you use it on a graphic device window theimage is copied to the&nbsp;&nbsp;&nbsp;&nbsp;
+clipboard (see also knownbugs)</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Paste&nbsp;</td>
+
+<td>V</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Copy &amp; Paste</td>
+
+<td>&nbsp;</td>
+
+<td>You copy some text and the resultis&nbsp; pasted into the R Console
+window.&nbsp;&nbsp;&nbsp; You use thiswhen you select a piece of&nbsp;&nbsp;&nbsp;&nbsp;
+R code of text windowand then you want&nbsp; to R to execute it. This is
+quite useful&nbsp;&nbsp;&nbsp; when you want to test part of your script
+of the examples of an help window</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>Clear</td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Select All</td>
+
+<td>&nbsp; A</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Goto line</td>
+
+<td></td>
+
+<td>&nbsp; Active only for editable windows. It moves thecursor&nbsp; to
+a certain line</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>Tools</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Show Workspace</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; It is equivalent to&nbsp; "ls()"</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>Clear Workspace</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; It is equivalent to "rm(list=ls())"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Load Workspace</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; Loads the ".RData" file; equivalentto&nbsp;&nbsp;&nbsp;&nbsp;
+load(".RData")</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Save Workspace</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; Save the workspace to ".RData"; equivalentto "save.image()"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Load History</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; It is equivalent to "loadhistory()"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Save History&nbsp;</td>
+
+<td></td>
+
+<td>It is equivalent to "savehistory()"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Show History&nbsp;</td>
+
+<td></td>
+
+<td>It is equivalent to "history()"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Change Working Directory</td>
+
+<td>D&nbsp;</td>
+
+<td>Allows the user to change the workingdirectory by using a standard
+dialog</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Show Working Directory</td>
+
+<td></td>
+
+<td>&nbsp; It is equivalent to "getwd()"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Reset Working Directory&nbsp;</td>
+
+<td></td>
+
+<td>It is equivalent to "setwd(R.home())"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Show Libraries&nbsp;</td>
+
+<td></td>
+
+<td>It is equivalent to "library()"</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>Show DataSets&nbsp;</td>
+
+<td></td>
+
+<td>&nbsp; It is equivalent to "data()"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>Windows</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>R Console</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; This menu contains by default only the "R Console" item
+and it is dynamically&nbsp;&nbsp;&nbsp; changed by appending/removingthe
+names&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; of any new/closed window</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>Help</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>R Help</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp;&nbsp; It is equivalent to "help.start()"</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>Help On Topic</td>
+
+<td></td>
+
+<td>&nbsp;&nbsp; Opens a dialog where the user canspecify an item he or
+she wants to see.&nbsp;&nbsp;&nbsp;&nbsp; Equivalentto "help(topic)" or
+"?topic"</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Search Help On&nbsp;</td>
+
+<td></td>
+
+<td>&nbsp; Opens a dialog where the user can&nbsp; specifyan argument to
+have help on. It&nbsp;&nbsp;&nbsp;&nbsp; is equivalent to"help.search("topic")"</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>Run An Example&nbsp;</td>
+
+<td></td>
+
+<td>Opens a dialog where the user can specifyan item of which he or she
+wants to run&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; anexample of. It is equivalent
+to "example(topic)".</td>
+</tr>
+</table>
+<i><u></u></i>
+<p><i><u>About R windows.</u></i>
+<br>Normally R opens windows to let 80 character/columns to be displayed.
+The size of the windows is calculated on the basis of the size of the font
+used.
+<br>For non fixed fonts the algorithm can fail so the window can result
+a bit larger or smaller then needed.
+<br>R windows are opened in cascade for each class (edit windows, file
+show windows and graphic windows). This functionality does not work on
+MacOS X yet.
+<br>&nbsp;
+<p><a NAME="EDITOR"></a><b>EXTERNAL EDITOR INTERACTION</b>
+<br>From release 7.4.1 of the famous Alpha editor, there is a (tcl) mode
+called S+/R.
+<br>When you open a file in Apha with the extension ".s"&nbsp; or&nbsp;
+".r"&nbsp; this new mode will be installed and you will in the Alpha menu
+bar the "S+/R" menu. Of this menu you can use "Process File" or "Process
+Selection" to interact with R. By default Alpha sends an “open” command
+to R and by default R opens a file in a non editable window (equivalent
+to the “File Show” menu). If you want R to source a file you should modify
+the .Renviron file accordingly (see below). In particular, the option “OnOpenSource”
+is set by default to "FALSE". You should set it to "TRUE". You can change
+this when R is still running by <a href="#OPTIONS">simply editing the .Renviron
+file</a>. Use "Open File For Editing" from the "File" menu and select the
+file ".Renviron". Find the keyword "OnOpenSource" and set it to "TRUE"
+(i.e. OnOpneSource=TRUE). The latest version of Alpha can be found at <a href="http://www.alpha.olm.net
+
+">http://www.alpha.olm.net</a><a href="http://www.alpha.olm.net
+
+"></a>
+<p><a NAME="MEMORY"></a><b>MEMORY</b>
+<br>Under MacOS you should reserve a fixed amount of memory to each application.
+As R is just an application, you need to set this to a bigger amount of
+memory if for some reason R went out of memory. To do this, go to the Finder
+and select the R aplication icon. Then with CMD+I key obtain the Information
+for R. Select "Memory" and the fix the amount of memeory you need. Under
+MacOS X, there is no need to reserve memory for R. R will used as much
+memory as it needs.
+<p><a NAME="OPTIONS"></a>
+<br><b>SPECIFING OPTIONS: </b>the .Renviron file
+<br>In this file you can specify some of the options. This is not standard
+for general MacOS/X applications because it currently repleaces the Preferences
+one should expect. But, as we have not yet decided which and what number
+of preferences items the user can specify, for the time being this is the
+only flexible way to take care of user options.
+<br>The environment file is used by R application both to simulate the
+enviroment on a standard Unix or Windows system and both to set user options.
+<br>You can always use "Sys.getenv()" to see which options are enabled/set.
+<br>In this file you can specify font names for the R Console and for the
+graphic device as well as their sizes. The .Renviron file looks like this:
+an option is a "Rkey" with its "keyvalue" that you can specify in new separate
+line as follows&nbsp; RKey=keyvalue. Consider that RKey=keyvalue and RKey
+= keyvalue are different, that means that blanks/spaces are significant.
+"RKey" and "keyvalue" are case sensitive.&nbsp; A symbol "#" at the beginning
+of a line means that this is a commented out line.
+<br>You can find more details on that in the .Renviron file itself.
+<p>Here are the options you can specify:
+<p>Lenght of the history size:
+<br>---------------------------
+<p># The history size
+<br># Default: RHISTSIZE=512
+<br>RHISTSIZE=512
+<p>R behaviour when R application receive an "open" event:
+<br>-------------------------------------------------------
+<p># Wheter to show or source a file
+<br># You should set this to TRUE if you
+<br># want Alpha&nbsp; be your external editor
+<br># Default: OnOpenSource=FALSE
+<br>OnOpenSource=FALSE
+<p>This means that when you drag a file on top of the R icon or you submit
+something from an external editor, R application simply open it (FALSE)
+or sources it (TRUE). If the file is a worspace image file, then R loads
+that workspace.
+<br>&nbsp;
+<p>Tab size of text windows:
+<br>-------------------------
+<p># The Tab size to use in text windows
+<br># range [1,20]
+<br># Default: TabSize=5
+<br>TabSize=5
+<p>Setting the text size of text and R Console windows:
+<br>----------------------------------------------------
+<p># TextSize to be used in text windows
+<br># range [8,14]
+<br># Default: TextSize=12
+<br>TextSize=12
+<p>Macintosh device resolution:
+<br>----------------------------
+<p># ScreenRes
+<br># Useful values is only 72. Possibile other values
+<br># are 144, 300, 600 but you should not use them unless
+<br># you know exactly what you are doing ! So, please,
+<br># don't change this parameter.
+<br># Default: ScreenRes=72
+<br>ScreenRes=72
+<p>Name of the font for the R Console or text windows:
+<br>---------------------------------------------------
+<p># FontName: this is the font used in text windows.
+<br># There are several possibilities for this.
+<br># You can specify any font you like but you should
+<br># prefere a monospaced font. If the Monaco will be used instead.
+<br># Font names are not case sensitive i.e.
+<br># FontName=monaco and FontName=MoNacO are the same.
+<br># If your font name includes spaces you should provide them
+<br># without using quotes, i.e.
+<br># FontName=Times New Roman
+<br># Default: FontName=monaco
+<br>FontName=monaco
+<p>Name of the font for the Macintosh graphic device:
+<br>--------------------------------------------------
+<p># GraphFontName: this font is used for graphic windows.
+<br># There are several possibilities for this.
+<br># If the font is not usable by R application, then
+<br># the font Helvetica will be used instead.
+<br># Font names are not case sensitive i.e.
+<br># FontName=monaco and FontName=MoNacO are the same.
+<br># If your font name includes spaces you should provide them
+<br># without including quotes, i.e.
+<br># FontName=Times New Roman
+<br># Default: GraphFontName=helvetica
+<br>GraphFontName=helvetica
+<br>&nbsp;
+<br>&nbsp;
+<p><a NAME="HELPERS"></a><b>R HELPERS</b>
+<br>* If you want to use an external editor we suggest you to use Alpha
+version&nbsp; 7.4.1 or newer that contains a S+/R mode. Alpha home page
+is
+<br><a href=" http://www.alpha.olm.net">&nbsp;http://www.alpha.olm.net</a>
+<br>* You also need MacZip to use the unzip feature of R. MacZip home page
+is
+<br>&nbsp;<a href="http://ww.sitec.net/maczip">http://ww.sitec.net/maczip</a>
+<br>&nbsp;
+<br>&nbsp;
+<p><a NAME="REQUIREMENTS"></a><b>SYSTEM REQUIREMENTS</b>
+<p>To run the R application you need at least 42MB of free memory for the
+application itself you work under MacOS but there is no limitations under
+MacOS X as virtual memory is always on.
+<br>You need the latest version of the 
+<a href="http://asu.info.apple.com/swupdates.nsf/artnum/n11916">CarbonLib 
+library</a> from Apple. At the time of this release, version 1.2.5 is the current non developer release.
+Normally it is included in System 9.1 and X.
+<br>The minimum System version release is 8.6 (+ CarbonLib library).
+<br>You no longer need the WasteLib library.
+<p><a NAME="FBUGS"></a><b>FIXED BUGS</b>
+<br>This version has several bugs fixed. Mostly GUI incongruencies and
+problems have been resolved and few R internal numerical bugs. You have
+signalled a bug but this has not yet been fixed, please "don't give up" but send
+us again your feedback 
+(<a href="malito:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a>)
+<br>&nbsp;
+<ul>
+<li>
+There was an annoying bug concerning the edit menus that on some&nbsp;
+(almost random) situations was disabled by R so no cut&amp;paste was&nbsp;
+then possible.</li>
+
+<li>
+Edit object on non existent R obejct produced a grabbled edit&nbsp; window.</li>
+
+<li>
+Herhey fonts where not displayed correctly or at all unless the&nbsp; user
+clicked on the graphic window rotated fonts where cutted on top</li>
+
+<li>
+Numerical problems with gamma function and polyroot. Now R pass&nbsp; the
+tests</li>
+
+<li>
+Windows menus produced in some situations some strange</li>
+
+<li>
+The graphic device has been completely rewritten now it is&nbsp; faster
+and resizing of windows is handled correctly.</li>
+
+<li>
+Copying to the clipboard images will non longer produce graphic&nbsp; titles/texts
+printed twice.</li>
+</ul>
+
+<p><br><a NAME="KBUGS"></a><b>KNOWN BUGS</b>
+<br>&nbsp;
+<ul>
+<li>
+&nbsp;In some situations R stops execution giving an error like this:</li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Error in plot.xy(xy.coords(x, y), type = type, pch = pch, col = col, bg
+= bg,&nbsp; :
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+negative length vectors are not allowed
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+To solve this problem you just need to resize the device window to a&nbsp;
+bigger size
+<br>&nbsp;
+<ul><li>
+On MacOS X&nbsp; copying to the clipboard an image or saving it in a file&nbsp;
+produces a picture without text in it. This problem is (probably) due to
+the fact that the fonts we use are saved as polygons/vectors and not&nbsp;
+as images.</li>
+<li>
+From version 1.2.2, at startup time you can run scripts by selecting&nbsp;
+input and output file and options (this is usefule when you want to run
+tests/checks). Both under MacOS and MacOS X you cannot choose a file&nbsp;
+that is outside the directory where the R application is. This problem
+is not due to the R application but to a bug in Sioux Interface provided&nbsp;
+by the compiler. This problem will be fixed with the next release of the
+compiler.</li>
+
+<li>For some reason MacZip does not intercat too much with R under MacOS
+X.&nbsp; Moreover MacZip has not yet been “carbonized” so when R calls
+it to&nbsp; uncompress items it also starts up Classic Environment. We
+suggest to&nbsp; uncompress the help and examples files directly by using
+Stuffit Expander&nbsp; that is part of the utilities provided with System
+X.</li>
+
+<li>Mathematical expressions are not yet well spaced moreover, 
+mathemathic symbols are not rotated.</li>
+</ul>
+<a NAME="FAQ"></a><b>SHORT FAQ</b>
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER COLS=2 WIDTH="100%" >
+<tr>
+<td>Q</td>
+
+<td>How can I work on a separate directory for each of my projects?</td>
+</tr>
+
+<tr>
+<td>A</td>
+
+<td>Under Unix you usually create a directory, go into it and launch R.&nbsp;
+Under MacOS you can create a directory and put all the files that you need
+there. You then (or before) run R in its own directory and&nbsp; use the
+menu item "Tools->Change Working Directory" to change the&nbsp; current
+working directory to directory you have created. You can&nbsp; then work
+as you do in Unix. You can save/load workspace image to&nbsp; this directory,
+as well as the command history files. You can then&nbsp; reload these next
+time you work.</td>
+</tr>
+
+<tr>
+<td>Q</td>
+
+<td>&nbsp;How can I change memory settings for R ?</td>
+</tr>
+
+<tr>
+<td>A</td>
+
+<td>&nbsp;You cannot use the standard settings as on other platforms. You&nbsp;
+should assign memory to R from the Finder/Information dialog for&nbsp;
+R application. See Section "Memory" above.</td>
+</tr>
+</table>
 
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 January 19 by Stefano Maria Iacus
+Last edited 2001 April 20 by Stefano M. Iacus
 <code><a
 href="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a></code>
 </address>

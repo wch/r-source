@@ -87,7 +87,7 @@ OSErr LCAttach ( ControlHandle inControl )
 
 void LCDetach ( ControlHandle inControl )
 {
-	Handle aux ;
+	Handle aux=NULL ;
 
 	if ( ( aux = ( Handle ) GetControlReference ( inControl ) ) != nil )
 	{

@@ -253,9 +253,9 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
    outlined. This second part is not really good, can be improved.
   Jago Dic 2000 (Stefano M. Iacus)
 */
-    testo = (char *) malloc(textSize);
+    testo = (char *) malloc(textSize+1);
     textSizeRed = textSize;
-    textPos = (SInt32  *) malloc(textSize);
+    textPos = (SInt32  *) malloc(textSize+1);
 
     startRange = FALSE;
 
@@ -294,7 +294,7 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
     free(testo);
 
 /* The text is now ready to be printed
- Jago Dic 2000 4Stefano M. Iacus)
+ Jago Dic 2000 (Stefano M. Iacus)
 */
 	HLock ( hText ) ;
 
@@ -303,13 +303,13 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
 	HUnlock(hText);
 
 /* The text is now outlined
- Jago Dic 2000 4Stefano M. Iacus)
+ Jago Dic 2000 (Stefano M. Iacus)
 */
   for(i=0;i<j;i=i+2)
    Change_Color_Range(textPos[i],  textPos[i+1], tempTypeColour.red, tempTypeColour.green, tempTypeColour.blue,we);
 
 
-free(textPos);
+	free(textPos);
 
 
 
@@ -329,7 +329,7 @@ free(textPos);
 	WEResetModCount ( we ) ;
 
 	/*	put the page format / print record where we can find it later */
-#if TARGET_API_MAC_CARBON
+
 	if ( hPageFormat != nil )
 	{
 		if ( ( err = WESetUserInfo ( kPageFormatTag, ( SInt32 ) hPageFormat, we ) ) != noErr )
@@ -338,16 +338,7 @@ free(textPos);
 		}
 		hPageFormat = nil ;
 	}
-#else
-	if ( hPrintRecord != nil )
-	{
-		if ( ( err = WESetUserInfo ( kPrintRecordTag, ( SInt32 ) hPrintRecord, we ) ) != noErr )
-		{
-			goto cleanup ;
-		}
-		hPrintRecord = nil ;
-	}
-#endif
+
 
 	/*	remember page margins
 	*/
@@ -390,6 +381,10 @@ cleanup :
 		ErrorAlert ( err ) ;
 	}
 
+    if(pFileSpec)
+     SetWTitle ( FrontWindow(), &pFileSpec->name ) ;
+   
+   
 	return err ;
 }
 
@@ -611,7 +606,7 @@ OSStatus WriteTextFile ( const FSSpec * pFileSpec, WEReference we )
 	/*	create a new file.  if we're replacing, make a temp file.  if it's a
 	  new file from the onset, just create the file
 	*/
-	FSpCreateResFile ( targetSpec, sigWASTEDemo, kTypeText, smSystemScript ) ;
+	FSpCreateResFile ( targetSpec, 'ttxt', kTypeText, smSystemScript ) ;
 	if ( ( err = ResError ( ) ) != noErr )
 	{
 		goto cleanup;
@@ -837,128 +832,17 @@ cleanup:
 
 
 
-/*	The following 2 functions (CheckObjectLock and FSpCheckObjectLock) were taken
-	from MoreFiles 1.2.1, a code sample from Apple's DTS.  Here's some info from
-	the MoreFiles readme:
-
-		A collection of File Manager and related routines
-
-		by Jim Luther, Apple Macintosh Developer Technical Support
-		with significant code contributions by Nitin Ganatra, Apple Macintosh Developer
-		Technical Support
-		MoreFile Reference is by Eric Soldan
-		Copyright © 1992-1994 Apple Computer, Inc.
-		All rights reserved.
-
-	Frankly, this is one amazing repository of all sorts of file-related things.  I'd
-	check it out if you can. (should be, as of this writing, on ftp.info.apple.com
-	in like the /Apple.Support.Services/Developer_Support/ or something like that).
-
-	thanx to Alex Rosen for answering my post on comp.sys.mac.programmer.help and pointing
-	out MoreFiles to me.
-
-	WHAT DO THEY DO?  Oh duh...i should tell you huh?
-
-	Both functions do the same thing:  check to see if the object is locked
-	(in this case, the object is a file).  This is using in WriteTextFile()
-	to prevent overwriting/deleting locked files.
-
-	The only difference between these 2 functions are the arguments passed.
-	the first takes a vRefNum, dirID and a file name, the second takes an FSSpec
-	and then just calls the first based on the FSSpec (just makes for slighly
-	neater/readable code)
-*/
-
-pascal	OSErr	CheckObjectLock(SInt16 vRefNum, SInt32 dirID, StringPtr name)
-{
-	CInfoPBRec pb;
-	OSErr error;
-
-	pb.hFileInfo.ioNamePtr = name;
-	pb.hFileInfo.ioVRefNum = vRefNum;
-	pb.hFileInfo.ioDirID = dirID;
-	pb.hFileInfo.ioFDirIndex = 0;	/* use ioNamePtr and ioDirID */
-	error = PBGetCatInfoSync(&pb);
-
-	if ( error == noErr )
-	{
-		/* check locked bit */
-		if ( (pb.hFileInfo.ioFlAttrib & 0x01) != 0 )
-			error = fLckdErr;
-	}
-	return ( error );
-}
-
-/*****************************************************************************/
-
-
-OSStatus FSpCheckObjectLock ( const FSSpec * inFileSpec )
-{
-	CInfoPBRec		pb ;
-	OSStatus		err ;
-	int kioFlAttribLockedMask       = 0x01;
-
-	/*	set up parameter block for PBGetCatInfoSync
-	*/
-	BlockZero ( & pb, sizeof ( pb ) ) ;
-	pb . hFileInfo . ioNamePtr = ( StringPtr ) inFileSpec -> name ;		/*	cast away constness */
-	pb . hFileInfo . ioVRefNum = inFileSpec -> vRefNum ;
-	pb . hFileInfo . ioDirID = inFileSpec -> parID ;
-
-	/*	get catalog attributes for the specified file
-	*/
-	if ( ( err = PBGetCatInfoSync ( & pb ) ) != noErr )
-	{
-		return err ;
-	}
-
-	/*	check locked bit
-	*/
-	if ( pb . hFileInfo . ioFlAttrib & kioFlAttribLockedMask )
-	{
-		return fLckdErr ;
-	}
-
-	return noErr ;
-}
-
-OSStatus FSpSetIsStationery ( const FSSpec * inFileSpec )
-{
-	FInfo			finderInfo ;
-	OSStatus		err ;
-
-	/*	get Finder info for the specified file
-	*/
-	if ( ( err = FSpGetFInfo ( inFileSpec, & finderInfo ) ) != noErr )
-	{
-		return err ;
-	}
-
-	/*	set the stationery bit
-	*/
-	finderInfo . fdFlags |= kIsStationery ;
-
-	/*	reset Finder info
-	*/
-	return FSpSetFInfo ( inFileSpec, & finderInfo ) ;
-}
-
-/*
-pascal	OSErr	FSpCheckObjectLock(const FSSpec *spec)
-{
-	return ( CheckObjectLock(spec->vRefNum, spec->parID, (StringPtr) spec->name) );
-}
-*/
-
 int ChooseExistFile(char *fileBuf, int buflen){
     StandardFileReply        fileReply;
     SFTypeList               fileTypes;
-    Handle                   fileName;
+    Handle                   fileName=NULL;
     SInt16                   fileLen;
 
     fileTypes[0] = 'TEXT';
 
-    StandardGetFile(nil,1,fileTypes,&fileReply);
+return(0);
+
+//    StandardGetFile(nil,1,fileTypes,&fileReply);
     if (fileReply.sfGood){
        FSpGetFullPath (&fileReply.sfFile, &fileLen, &fileName);
        HLock((Handle) fileName);
@@ -983,10 +867,12 @@ int ChooseExistFile(char *fileBuf, int buflen){
 
 int ChooseNewFile(char *fileBuf, int buflen){
    StandardFileReply	fileReply;
-   Handle                   fileName;
+   Handle                   fileName=NULL;
    SInt16                   fileLen;
    OSErr                    osError;
-   StandardPutFile("\pNew File","\pUntitled",&fileReply);
+
+return(noErr);
+//   StandardPutFile("\pNew File","\pUntitled",&fileReply);
    if(fileReply.sfGood){
        osError = FSpCreate(&fileReply.sfFile, nil,'TEXT',smSystemScript);
 

@@ -110,26 +110,26 @@ typedef struct _EnviromentPair {
 EnviromentPair *ParseLine(char *line)
 {
     char *tmpPtr;
-    static EnviromentPair *Env;
+    static EnviromentPair Env;
     unsigned short length = strlen(line);
 
-    Env->key   = "";
-    Env->value = "";
+   // Env->key   = "";
+   // Env->value = "";
 
     for (tmpPtr = line; *tmpPtr; tmpPtr++)
     {
 	if (*tmpPtr == '=')
         {
 	    *tmpPtr = 0;
-	    Env->key = line;
-	    if (strlen(Env->key) < length)
+	    Env.key = line;
+	    if (strlen(Env.key) < length)
             {
-		Env->value = ++tmpPtr;
+		Env.value = ++tmpPtr;
             }
-	    return Env;
+	    return &Env;
         }
     }
-    return Env;
+    return &Env;
 }
 
 
@@ -169,6 +169,7 @@ OSErr FSpFindFolder_Name(short vRefNum, OSType folderType,
 FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode);
 char *mac_getenv(const char *name);
 
+char err_str[] = "\0";
 
 char *mac_getenv(const char *name)
 {
@@ -183,10 +184,10 @@ char *mac_getenv(const char *name)
 	return NULL;  /* user wants to ignore the environment vars */
 
     if (name == NULL)
-	return NULL;
+	return err_str;//NULL;
 
     sprintf(temp_path,"%s:.Renviron",R_Home);
-
+    
     err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
   
 /* try open the file in the folder R_HOME:etc */
@@ -204,7 +205,7 @@ char *mac_getenv(const char *name)
 	fp = FSp_fopen(&spec,"r");
 	if (fp == NULL)
         {
-	    return NULL; /* there is no enviroment-file */
+	    return err_str;//NULL; /* there is no enviroment-file */
         }
     }
 
@@ -226,7 +227,7 @@ char *mac_getenv(const char *name)
     }
     fclose(fp);
 
-    return NULL;
+    return err_str; NULL;
 }
 
 

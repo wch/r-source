@@ -5360,8 +5360,8 @@ specified exactly with the @code{breaks=} argument.  If the
 @code{probability=TRUE} argument is given, the bars represent relative
 frequencies instead of counts.
 
-@item dotplot(x, @dots{})
-@findex dotplot
+@item dotchart(x, @dots{})
+@findex dotchart
 Constructs a dotchart of the data in @code{x}.  In a dotchart the
 @math{y}-axis gives a labelling of the data in @code{x} and the
 @math{x}-axis gives its value.  For example it allows easy visual

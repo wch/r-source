@@ -29,8 +29,9 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
  \item{ylim}{y limits for the plot.}
  \item{zlim}{z limits for the plot.}
  \item{levels}{a set of levels which are used to partition the range
-    of \code{z}.  Areas with \code{z} values between consecutive
-    levels are painted with the same color.}
+    of \code{z}.  Must be \bold{strictly} increasing (and finite).  Areas
+    with \code{z} values between consecutive levels are painted with the
+    same color.}
  \item{nlevels}{if \code{levels} is not specified, the range of \code{z},
     values is divided into approximately this many levels.}
  \item{color.palette}{a color palette function to be used to assign

@@ -46,8 +46,11 @@ void uni_pacf(double *cor, double *p, int *pnlag)
 	    w[i] -= c*v[i];
     }
 }
-
+#ifdef Macintosh
+#include <fp.h>
+#else
 #include <math.h>
+#endif
 
 #ifndef max
 #define max(a,b) ((a < b)?(b):(a))

@@ -12,12 +12,12 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
     from the box.  If \code{coef} is positive, the whiskers extend to the
     most extreme data point which is no more than \code{coef} times the
     interquartile coef from the box.  A value of zero causes the whiskers
-    to extend to the data extremes.}
+    to extend to the data extremes (and no outliers be returned).}
   \item{do.conf,do.out}{logicals; if \code{FALSE}, the \code{conf} or
     \code{out} component respectively will be empty in the result.}
 }
 \description{
-  This function is typically is called by \code{\link{boxplot}} to
+  This function is typically called by \code{\link{boxplot}} to
   gather the statistics necessary for producing box plots,
   but may be invoked separately.
 }
@@ -27,9 +27,9 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
     lower whisker, the lower ``hinge'', the median, the upper ``hinge''
     and the extreme of the upper whisker.}
   \item{n}{the number of of non-\code{NA} observations in the sample.}
-  \item{conf}{the lower and upper extremes of the ``notch''.}
+  \item{conf}{the lower and upper extremes of the ``notch'' (\code{if(do.conf)}).}
   \item{out}{the values of any data points which lie beyond the
-    extremes of the whiskers.}
+    extremes of the whiskers (\code{if(do.out)}).}
 
   Note that \code{$stats} and \code{$conf} are sorted in \emph{in}creasing
   order, unlike S, and that \code{$n} and \code{$out} include any
@@ -43,9 +43,13 @@ x <- c(1:100, 1000)
 str(boxplot.stats(x))
 str(boxplot.stats(x, do.conf=FALSE, do.out=FALSE))
 str(boxplot.stats(x, coef = 3, do.conf=FALSE))
-str(boxplot.stats(x, coef = 0))
+## no outlier treatment:
+r <- boxplot.stats(x, coef = 0)
+stopifnot(all.equal(r, boxplot.stats(x, do.out = FALSE)),
+          range(r$ stats) == range(x))
 
 str(boxplot.stats(c(x, NA)))
-str(boxplot.stats(c(x, -1:1/0)))
+str(r <- boxplot.stats(c(x, -1:1/0)))
+stopifnot(r$out == c(1000, -Inf, Inf))
 }
 \keyword{dplot}

@@ -1,5 +1,5 @@
 #### copyright (C) 1998 B. D. Ripley
-#### Copyright (C) 2000 The R Development Core Team
+#### Copyright (C) 2000-2001 The R Development Core Team
 
 smooth.spline <-
   function(x, y = NULL, w = NULL, df = 5, spar = 0, cv = FALSE,
@@ -7,7 +7,8 @@ smooth.spline <-
 {
     sknotl <- function(x)
     {
-	## Return reasonable sized knot sequence for INcreasing x[]:
+	## if (all.knots == FALSE)
+	## return reasonable sized knot sequence for INcreasing x[]:
 	n.kn <- function(n) {
 	    ## Number of inner knots
 	    if(n < 50) n
@@ -37,7 +38,10 @@ smooth.spline <-
 	    if(any(w < 0)) stop("all weights should be non-negative")
 	    (w * sum(w > 0))/sum(w)
 	}
+    ## ispar = 0 : compute spar (later)
     ispar <- if(missing(spar)) 0 else if(spar < 1.01e-15) 0 else  1
+    ## icrit {../src/sslvrg.f}:
+    ##		(0 = no crit,  1 = GCV ,  2 = ord.CV , 3 = df-matching)
     icrit <- if(cv) 2 else  1
     dfinfo <- df.offset
     if(!missing(df)) {
@@ -51,7 +55,7 @@ smooth.spline <-
     ox <- match(x, ux)
     tmp <- matrix(unlist(tapply(seq(along=y), ox,
 				function(i,y,w)
-                                c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
+				c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
 				y = y, w = w)),
 		  ncol = 3, byrow=TRUE)
     wbar <- tmp[, 1]
@@ -69,13 +73,13 @@ smooth.spline <-
     }
     low.parm <- 0
     high.parm <- 1.5
-    fit <- .Fortran("qsbart",
+    fit <- .Fortran("qsbart",		# code in ../src/sbart.f
 		    as.double(penalty),
 		    as.double(dfinfo),
 		    x = as.double(xbar),
 		    y = as.double(ybar),
 		    w = as.double(wbar),
-                    ssw = as.double(yssw),
+		    ssw = as.double(yssw),
 		    as.integer(nx),
 		    as.double(knot),
 		    as.integer(nk),
@@ -85,20 +89,23 @@ smooth.spline <-
 		    crit = double(1),
 		    iparms = as.integer(c(icrit, ispar)),
 		    spar = as.double(spar),
-		    parms = as.double(c(0, 1.5, 0.001)),
+		    parms = as.double(c(low.parm, high.parm, 0.001)),
 		    isetup = as.integer(0),
 		    scrtch = double((17 + nk) * nk),
 		    ld4 = as.integer(4),
 		    ldnk = as.integer(1),
-		    ier = as.integer(1),
+		    ier = integer(1),
 		    DUP = FALSE, PACKAGE="modreg"
 		    )[c("coef","ty","lev","spar","ier")]
     if(fit$ier > 0) {
 	warning("smoothing parameter value too small or too large")
-	fit$ty <- rep(mean(y), nx)
+	## FIXME: Rather give an *error* than a warning !
+	fit$ty <- rep(mean(y), nx) ## would be df = 1
     }
     lev <- fit$lev
     df <- sum(lev)
+    if(is.na(df))
+	stop("smoothing parameter `spar' way too large!")
     cv.crit <-
 	if(cv) {
 	    ww <- wbar
@@ -117,20 +124,19 @@ smooth.spline <-
     object
 }
 
-print.smooth.spline <- function(x, ...)
+print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
 	dput(cl)
     }
     cv <- cl$cv
-    if(is.null(cl$cv)) cv <- FALSE
-    if(is.name(cv)) cv <- eval(cv)
-    cat("\nSmoothing Parameter (Spar):", format(x$spar), "\n")
-    cat("Equivalent Degrees of Freedom (Df):", format(x$df), "\n")
-    cat("Penalized Criterion:", format(x$pen.crit), "\n")
-    crss <- if(cv) "PRESS:" else "GCV:"
-    cat(crss, format(x$cv.crit), "\n")
+    if(is.null(cv)) cv <- FALSE
+    else if(is.name(cv)) cv <- eval(cv)
+    cat("\nSmoothing Parameter (Spar):", format(x$spar, digits=digits), "\n")
+    cat("Equivalent Degrees of Freedom (Df):", format(x$df,digits=digits),"\n")
+    cat("Penalized Criterion:", format(x$pen.crit, digits=digits), "\n")
+    cat(if(cv) "PRESS:" else "GCV:", format(x$cv.crit, digits=digits), "\n")
     invisible(x)
 }
 

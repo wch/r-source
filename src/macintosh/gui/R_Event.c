@@ -47,9 +47,8 @@
     here is used to handle event (high or low level event.)
 */
 
-#ifndef __APPLEEVENTS__
 #include <AppleEvents.h>
-#endif
+
 
 #ifndef __AEREGISTRY__
 #include <AERegistry.h>
@@ -94,7 +93,7 @@ EventRecord gERecord;
 
 extern Graphic_Ref                 gGReference[MAX_NUM_G_WIN + 1];
 extern SInt16                      gExpose;
-extern Boolean                     gfinishedInput;
+extern Boolean                     gfinishedInput,finished;
 extern WindowPtr                   Console_Window;
 extern SInt16                      Edit_Window;
 extern WindowPtr                   Edit_Windows[MAX_NUM_E_WIN + 1];
@@ -124,41 +123,39 @@ pascal Boolean idleProc(EventRecord *eventIn, long *sleep, RgnHandle *mouseRgn);
  */
 void AdjustCursor ( Point mouseLoc, RgnHandle mouseRgn )
 {
-    WindowPtr window ;
+	Cursor		arrow ;
+	WindowRef	window ;
 
-    // by default, set mouseRgn to the whole QuickDraw coordinate plane,
-    // so that we never get mouse moved events
+	// by default, set mouseRgn to the whole QuickDraw coordinate plane,
+	// so that we never get mouse moved events
 
-    SetRectRgn ( mouseRgn, -SHRT_MAX, -SHRT_MAX, SHRT_MAX, SHRT_MAX ) ;
+	SetRectRgn ( mouseRgn, -0x7FFF, -0x7FFF, 0x7FFF, 0x7FFF ) ;
 
-    // give text services a chance to set the cursor shape
-
-    if ( gHasTextServices )
-    {
+#if ! TARGET_API_MAC_CARBON
+	// give text services a chance to set the cursor shape
+	// (this call is not needed for Carbon clients)
 	if ( SetTSMCursor( mouseLoc ) )
 	{
-	    return ;
+		return ;
 	}
-    }
+#endif
 
-    // if there is a window open, give WEAdjustCursor an opportunity to set the cursor
-    // WEAdjustCursor intersects mouseRgn (if supplied) with a region within which
-    // the cursor is to retain its shape
-    // (if the cursor is outside the view region, this is subtracted from mouseRgn )
+	// if there is a window open, give WEAdjustCursor an opportunity to set the cursor
+	// WEAdjustCursor intersects mouseRgn (if supplied) with a region within which
+	// the cursor is to retain its shape
+	// (if the cursor is outside the view region, this is subtracted from mouseRgn )
 
-
-    if ( ( window = FrontWindow ( ) ) != nil )
-    {
-	if ( WEAdjustCursor ( mouseLoc, mouseRgn, GetWindowWE ( window ) ) )
+	if ( ( window = FrontWindow ( ) ) != nil )
 	{
-	    return ;
+		if ( WEAdjustCursor ( mouseLoc, mouseRgn, GetWindowWE ( window ) ) )
+		{
+			return ;
+		}
 	}
-    }
 
+	// set the cursor to the arrow cursor
 
-    // set the cursor to the arrow cursor
-
-    SetCursor( & qd . arrow ) ;
+	SetCursor( GetQDGlobalsArrow ( & arrow ) ) ;
 }
 
 /* DoMouseDown routine :
@@ -166,82 +163,204 @@ void AdjustCursor ( Point mouseLoc, RgnHandle mouseRgn )
    Used to dispatch the mouse down event
  */
 
-void DoMouseDown ( const EventRecord *event )
+void DoPathSelect ( WindowRef window );
+OSStatus SwitchToFinder ( );
+OSStatus FindProcess(OSType,OSType,ProcessSerialNumber *);
+
+OSStatus FindProcess
+	(
+		OSType					inProcessType,
+		OSType					inProcessSignature,
+		ProcessSerialNumber *	outPSN
+	)
 {
-    WindowPtr window;
-    SInt16 partCode;
+	ProcessSerialNumber		psn ;
+	ProcessInfoRec			info ;
 
-    // find out where this click when down in
+	// start at beginning of process list
+	psn . lowLongOfPSN = kNoProcess ;
+	psn . highLongOfPSN = kNoProcess ;
 
-    partCode = FindWindow( event->where, &window );
+	// init process info record
+	BlockZero ( & info, sizeof ( info ) ) ;
+	info . processInfoLength = sizeof ( info ) ;
 
-
-    // dispatch on partCode
-
-    switch ( partCode )
-    {
-    case inMenuBar :
-    {
-	PrepareMenus ( ) ;
-	DoMenuChoice ( MenuSelect ( event -> where ), event -> modifiers ) ;
-	break;
-    }
-
-    case inSysWindow:
-    {
-#if defined ( UNIVERSAL_INTERFACES_VERSION ) && ( UNIVERSAL_INTERFACES_VERSION >= 0x211 )
-	SystemClick ( event, window ) ;
-#else
-	//	Universal Headers prior to version 2.1.2 define SystemClick
-	//	incorrectly if STRICT_WINDOWS == 1
-	SystemClick ( event, ( WindowPtr ) window ) ;
-#endif
-	break ;
-    }
-
-    case inContent:
-    {
-	if ( DoContent ( event -> where, event, window ) )
+	// walk the process list, looking for the given creator
+	while (	( GetNextProcess ( & psn ) == noErr ) &&
+			( GetProcessInformation ( & psn, & info ) == noErr ) )
 	{
-	    SelectWindow ( window ) ;
+		if ( info . processSignature == inProcessSignature )
+		{
+			if ( ( inProcessType == typeWildCard ) || ( inProcessType == info . processType ) )
+			{
+				if ( outPSN )
+				{
+					* outPSN = psn ;
+				}
+				return noErr ;
+			}
+		}
 	}
-	break;
-    }
 
-    case inDrag :
-    {
-	DoDrag ( event -> where, window ) ;
-	break;
-    }
-
-    case inGrow:
-    {
-	DoGrow ( event -> where, window ) ;
-	break;
-    }
-
-    case inGoAway:
-    {
-	if (FrontWindow() == Console_Window)
-	    DoQuit( savingAsk );
-	if ( TrackGoAway ( window, event -> where ) )
-	{
-	    DoClose( closingWindow, savingAsk, window ) ;
-	}
-	break;
-    }
-
-    case inZoomIn:
-    case inZoomOut:
-    {
-	if ( TrackBox ( window, event -> where, partCode ) )
-	{
-	    DoZoom ( partCode, window ) ;
-	}
-	break;
-    }
-    }	// switch
+	return procNotFound ;
 }
+
+OSStatus SwitchToFinder ( )
+{
+	ProcessSerialNumber		finderPSN ;
+	OSStatus				err ;
+
+	//	get Finder PSN
+	if ( ( err = FindProcess ( FOUR_CHAR_CODE ( 'FNDR' ), FOUR_CHAR_CODE ( 'MACS' ), & finderPSN ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	make it the frontmost process
+	err = SetFrontProcess ( & finderPSN ) ;
+
+cleanup :
+	//	return result code
+	return err ;
+}
+
+void DoPathSelect ( WindowRef window )
+{
+	SInt32	menuChoice = 0 ;
+
+	if ( ( WindowPathSelect ( window, nil, & menuChoice ) == noErr ) &&
+		 ( ( menuChoice & 0x0000FFFF ) > 1 ) )
+	{
+		//	bring the Finder to the foreground
+		SwitchToFinder ( ) ;
+	}
+}
+
+void DoMouseDown ( const EventRecord * event )
+{
+	WindowRef	we;
+	WindowPtr	window ;
+	SInt16		partCode ;
+    SInt32 		selStart, selEnd;
+	// find out where this click when down in
+
+	partCode = FindWindow ( event -> where, & window ) ;   
+    SelectWindow(window);
+
+	// dispatch on partCode
+
+	switch ( partCode )
+	{
+		case inMenuBar :
+			PrepareMenus ( ) ;
+			DoMenuChoice ( MenuSelect ( event -> where ), event -> modifiers , window) ;
+		break;
+
+		case inContent :
+			DoContent ( event -> where, event, window );
+			SelectWindow ( window ) ;
+			we = GetWindowWE(window);
+				
+			if(window == Console_Window){
+				WEGetSelection ( & selStart, & selEnd, we );
+				if(selStart == selEnd)
+				  	WESetSelection(WEGetTextLength(we), WEGetTextLength(we), we);
+			}
+		break;
+		
+		case inDrag :
+		{
+			if ( window != FrontWindow ( ) )
+			{
+				if ( ( event->modifiers & cmdKey ) == 0 )
+				{
+					SelectWindow ( window ) ;
+				}
+			}
+			else if ( IsWindowPathSelectClick ( window, ( EventRecord * ) event ) )
+			{
+				DoPathSelect ( window ) ;
+				break ;
+			}
+
+			DoDrag ( event -> where, window ) ;
+			break;
+		}
+
+		case inGrow :
+		{
+			DoGrow ( event -> where, window ) ;
+			break;
+		}
+
+		case inGoAway :
+		{
+	   	    if (FrontWindow() == Console_Window)
+	         DoQuit( savingAsk );
+	
+			if ( TrackGoAway ( window, event -> where ) )
+			{
+				if(!finished)
+				DoClose ( closingWindow /*kNavSaveChangesClosingDocument*/, savingYes, window ) ;
+				else
+				 DoClose ( closingWindow /*kNavSaveChangesClosingDocument*/, savingAsk, window ) ;
+				
+			}
+			break ;
+		}
+
+		case inZoomIn :
+		case inZoomOut :
+		{
+			if ( TrackBox ( window, event -> where, partCode ) )
+			{
+				DoZoom ( partCode, window ) ;
+			}
+			break ;
+		}
+
+		case inProxyIcon:
+		{
+			//	in order to start a proxy icon drag, the window must be active
+			//	and the proxy icon must be enabled
+			if ( window == FrontWindow ( ) )
+			{
+				if ( ! IsWindowModified ( window ) )
+				{
+					//	if the mouse isn't held down on the proxy icon for a certain delay,
+					//	this gesture should be interpreted as an attempt to drag the window
+					if ( TrackWindowProxyDrag ( window, event->where ) != errUserWantsToDragWindow )
+					{
+						break ;
+					}
+				}
+			}
+			else
+			{
+				//	clicking the proxy icon of an inactive window should select
+				//	the window unless the command key is held down
+				if ( ( event->modifiers & cmdKey ) == 0 )
+				{
+					SelectWindow ( window ) ;
+				}
+			}
+
+			DoDrag ( event->where, window ) ;
+			break ;
+		}
+
+#if !TARGET_API_MAC_CARBON
+		case inSysWindow :
+		{
+			SystemClick ( event, window ) ;
+			break ;
+		}
+#endif
+	}	// switch
+}
+
+
+
 
 /* DoKeyDown routine :
    Description :
@@ -254,18 +373,19 @@ void DoKeyDown ( const EventRecord *event )
     SInt32   StartPos1, EndPos1, StartPos2, EndPos2;
 
     if (FrontWindow() == Console_Window){
-	we = GetWindowWE ( Console_Window ) ;
-	WEGetSelection ( &StartPos1, &EndPos1, we );
-	DoGenKeyDown ( event, false);
-	WEGetSelection(&StartPos2, &EndPos2, we);
-	Change_Color_Range(StartPos1, StartPos2, gTypeColour.red,
-			   gTypeColour.green, gTypeColour.blue, we);
+		we = GetWindowWE ( Console_Window ) ;
+		WEGetSelection ( &StartPos1, &EndPos1, we );
+		DoGenKeyDown ( event, false);
+		WEGetSelection(&StartPos2, &EndPos2, we);
+		Change_Color_Range(StartPos1, StartPos2, gTypeColour.red,
+			  gTypeColour.green, gTypeColour.blue, we);
 
-	WESetSelection ( StartPos2, EndPos2, we );
-
-    } else {
-	DoGenKeyDown ( event, false);
-    }
+		WESetSelection ( StartPos2, EndPos2, we );
+		
+    } 
+    else 
+		DoGenKeyDown ( event, false);
+    
 }
 
 
@@ -280,7 +400,7 @@ void DoGenKeyDown ( const EventRecord *event, Boolean Console)
 {
     SInt16 key;
     Boolean isCmdKey ;
-    pascal Handle  TextHdl;
+    pascal Handle  TextHdl=NULL;
     SInt32 textLength;
     WEReference we ;
     Ptr   TextPtr;
@@ -354,7 +474,7 @@ void DoGenKeyDown ( const EventRecord *event, Boolean Console)
     if ( isCmdKey && (key >= 0x20 ) )
     {
 	PrepareMenus ( );
-	DoMenuChoice ( MenuKey ( key ), event -> modifiers ) ;
+	DoMenuChoice ( MenuKey ( key ), event -> modifiers ,FrontWindow()) ;
     }
     else
     {
@@ -405,7 +525,7 @@ void DoGenKeyDown ( const EventRecord *event, Boolean Console)
 		    }
 	    }
         }
-        if (isEditWindow(FrontWindow()) != 0){
+        if ((isEditWindow(FrontWindow()) != 0) || (isHelpWindow(FrontWindow()) != 0)){
 	    DoKey ( key, event ) ;
         }
 
@@ -420,13 +540,17 @@ void DoGenKeyDown ( const EventRecord *event, Boolean Console)
 
 void DoDiskEvent ( const EventRecord * event )
 {
-    Point dialogCorner ;
+#if !TARGET_API_MAC_CARBON
+	Point dialogCorner ;
 
-    if ( ( event -> message >> 16 ) != noErr )
-    {
-	SetPt ( & dialogCorner, 112, 80 ) ;
-	DIBadMount ( dialogCorner, event -> message ) ;
-    }
+	if ( ( event -> message >> 16 ) != noErr )
+	{
+		SetPt ( & dialogCorner, 112, 80 ) ;
+		DIBadMount ( dialogCorner, event -> message ) ;
+	}
+#else
+	#pragma unused ( event )
+#endif
 }
 
 
@@ -513,6 +637,7 @@ void DoWindowEvent( const EventRecord *event )
     {
     case updateEvt:
     {
+    //Rprintf("\n doupdate");
 	DoUpdate( window );
 	break;
     }
@@ -533,30 +658,32 @@ void DoWindowEvent( const EventRecord *event )
    capture  the next  event that  available,  and dispatch  it to  the
    corresponding routine.
  */
-void ProcessEvent( void )
+ 
+       
+
+    
+ void ProcessEvent( void )
 {
     EventRecord event;
-    Boolean gotEvent, SIOUXDidEvent, haveResize = false;
+    Boolean gotEvent,  haveResize = false;
     WindowPtr windowPtr;
     DevDesc  *dd;
     SInt16 Console_Width, NumofChar;
     GrafPtr savePort;
     RgnHandle cursorRgn;
+    Rect portRect ;
+    CGrafPtr thePort;
+  
 
-    /*   cursorRgn = NewRgn();
-     */
     gotEvent = WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
 
-/*    if(gotEvent)
-      SIOUXDidEvent = SIOUXHandleOneEvent(&event);
-*/
+#if ! TARGET_API_MAC_CARBON
+	// give text services a chance to intercept this event
+	// if TSMEvent( ) handles the event, it will set event.what to nullEvent
+	// this call is not needed for Carbon clients
+	TSMEvent ( & event ) ;
+#endif
 
-    /*  if(SIOUXDidEvent)
-	return;
-    */
-
-    // give text services a chance to intercept this event
-    // if TSMEvent( ) handles the event, it will set event.what to nullEvent
     if (gExpose) {
 	dd = (DevDesc*)gGReference[gExpose].devdesc;
 	dd-> dp.resize(dd);
@@ -565,19 +692,20 @@ void ProcessEvent( void )
 	gExpose = false;
     }
     if (fstart) {
-	Console_Width = (Console_Window ->portRect).right -
-	    (Console_Window ->portRect).left ;
+	GetPortBounds ( GetWindowPort(Console_Window), & portRect ) ;
+	Console_Width = portRect.right - portRect.left ;
 	GetPort(&savePort);
+#if TARGET_API_MAC_CARBON
+    SetPortWindowPort(Console_Window);
+#else
 	SetPort(Console_Window);
+#endif
 	TextFont(4);
 	TextSize(gTextSize);
 	NumofChar = (int)(((Console_Width - 15) / CharWidth('M')) -0.5) ;
         R_SetOptionWidth(NumofChar);
 	SetPort(savePort);
 	fstart = false;
-    }
-    if (gHasTextServices) {
-	TSMEvent(&event);
     }
 
     // adjust cursor shape and set mouse region
@@ -593,10 +721,11 @@ void ProcessEvent( void )
     switch( event.what ) {
 
     case nullEvent:
-	DoNullEvent( &event );
+ 	DoNullEvent( &event );
 	break;
 
     case mouseDown:
+   // Rprintf("\n domousedown");
 	DoMouseDown( &event);
 	break;
 
@@ -615,7 +744,29 @@ void ProcessEvent( void )
 
     case updateEvt:
 	windowPtr = (WindowPtr) (&event)->message;
-	if (isGraphicWindow(windowPtr)) {
+	if (isGraphicWindow(windowPtr)) { 
+	CGrafPtr thePort;
+    
+    //Rprintf("\n update");
+	
+	thePort = GetWindowPort(windowPtr);
+    
+        /* flush the entire port */
+    if (QDIsPortBuffered(thePort))
+        QDFlushPortBuffer(thePort, NULL);
+  
+        /* flush part of the port */
+ //   if (QDIsPortBuffered(thePort)) {
+ //       RgnHandle theRgn;
+ //       theRgn = NewRgn();
+            /* local port coordinates */
+ //       SetRectRgn(theRgn, dd->dp.left, dd->dp.top, dd->dp.right, dd->dp.bottom); 
+ //       QDFlushPortBuffer(thePort, theRgn);
+ //       DisposeRgn(theRgn);
+ //   }
+
+
+	
 	}
 	if (!haveResize)
 	    DoWindowEvent(&event);
@@ -686,12 +837,17 @@ OSErr GotRequiredParams( const AppleEvent *ae )
     DescType actualType;
     Size actualSize;
     OSErr err;
-
+    
     err = AEGetAttributePtr( ae, keyMissedKeywordAttr, typeWildCard, &actualType, nil, 0, &actualSize );
 
     return	( err == errAEDescNotFound ) ? noErr :
 	( err == noErr ) ? errAEParamMissed : err;
+
 }
+
+
+extern OSErr SourceFile(FSSpec  	*myfss);
+extern char *mac_getenv(const char *name);
 
 
 /* HandleOpenDocument routine :
@@ -714,7 +870,7 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
     OSErr		err;
     FInfo		fileInfo;
     SInt16		pathLen;
-    Handle		pathName;
+    Handle		pathName=NULL;
     FILE		*fp;
     SEXP 		img, lst;
 
@@ -741,11 +897,16 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
         error("No Picture Can be load in this version of R\n");
     }
     if (fileInfo.fdType == 'TEXT'){
-        DoNew( );
+        if( strncmp("TRUE",mac_getenv("OnOpenSource"),4) == 0)
+        	SourceFile(&fileSpec);
+        else {    
+        DoNew( false);
+        RemWinMenuItem();
         ReadTextFile ( &fileSpec, GetWindowWE ( Edit_Windows[Edit_Window-1] ) );
-
+        UniqueWinTitle();
+        }
     }else
-	if (fileInfo.fdType == 'ROBJ'){
+	if ((fileInfo.fdType == 'BINA')||(fileInfo.fdType == 'ROBJ')){
 	    FSpGetFullPath(&fileSpec, &pathLen, &pathName);
 	    HLock((Handle) pathName);
 	    strncpy(InitFile, *pathName, pathLen);
@@ -758,9 +919,6 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 		/* warning here perhaps */
 		return;
 	    }
-#ifdef OLD
-	    FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 1);
-#else
 	    PROTECT(img = R_LoadFromFile(fp, 1));
 	    switch (TYPEOF(img)) {
 	    case LISTSXP:
@@ -771,7 +929,6 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 		break;
 	    case VECSXP:
 		for (i = 0; i < LENGTH(img); i++) {
-//		lst = VECTOR(img)[i];
 		    lst = VECTOR_ELT(img,i);
 		    while (lst != R_NilValue) {
 			defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
@@ -781,9 +938,6 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 		break;
 	    }
 	    UNPROTECT(1);
-#endif
-
-
 	}
  cleanup:
     return err;
@@ -853,30 +1007,19 @@ static pascal OSErr HandleQuitApplication( const AppleEvent *ae,
 OSErr InitializeEvents( void )
 {
     OSErr	err;
-    Boolean gHasAppleEvents = false;
     long aLong = 0;
 
     // allocate space for the mouse region
 
     sMouseRgn = NewRgn( );
 
-    gHasAppleEvents = ((err = Gestalt(gestaltAppleEventsAttr, &aLong)) == noErr);
-    /* The following series of calls installs all our AppleEvent Handlers.
-     *   These handlers are added to the application event handler list that
-     *   the AppleEvent manager maintains.  So, whenever an AppleEvent happens
-     *   and we call AEProcessEvent, the AppleEvent manager will check our
-     *   list of handlers and dispatch to it if there is one.
-     */
-    if (gHasAppleEvents) {
-	// install AppleEvent handlers for the Required Suite
-
-	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEOpenDocuments, NewAEEventHandlerProc( HandleOpenDocument ), kDoOpen, false ) ) != noErr )
+ 	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEOpenDocuments, NewAEEventHandlerUPP( HandleOpenDocument ), kDoOpen, false ) ) != noErr )
 	    goto cleanup;
 
-	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEPrintDocuments, NewAEEventHandlerProc( HandleOpenDocument ), kDoPrint, false ) ) != noErr )
+	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEPrintDocuments, NewAEEventHandlerUPP( HandleOpenDocument ), kDoPrint, false ) ) != noErr )
 	    goto cleanup;
 
-	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication, NewAEEventHandlerProc( HandleQuitApplication ), 0, false ) ) != noErr )
+	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP( HandleQuitApplication ), 0, false ) ) != noErr )
 	    goto cleanup;
 
 	// install Apple event handlers for a subset of the Core suite
@@ -888,11 +1031,8 @@ OSErr InitializeEvents( void )
 	if ( ( err = WEInstallTSMHandlers( ) ) != noErr )
 	    goto cleanup;
 
-	gAEIdleUPP = NewAEIdleProc(idleProc);
-    }
-    else
-	goto cleanup;
-
+	gAEIdleUPP = NewAEIdleUPP(idleProc);
+  
  cleanup:
     return err;
 }

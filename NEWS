@@ -299,18 +299,24 @@ BUG FIXES
 
     o	range() now works properly for date-time objects.
 
-    o   contour() could loop infinitely (PR#897).
+    o	contour() could loop infinitely (PR#897).
 
-    o   R-lang manual had precedence of %% wrong (PR#879)
+    o	R-lang manual had precedence of %% wrong (PR#879).
 
-    o   try() constructs lost protection of R_alloc'ed memory (PR#877)
+    o	try() constructs lost protection of R_alloc'ed memory (PR#877).
 
-    o   Documented that as.numeric() dispatches to as.double.foo methods
-	(PR#918.1)
+    o	Documented that as.numeric() dispatches to as.double.foo methods
+	(PR#918.1).
 
-    o   httpclient() (and the "socket" method of download.file) skipped ^V
+    o	httpclient() (and the "socket" method of download.file) skipped ^V
 	rather than ^Z in input (if drop.ctrl.z = TRUE, the default).
+    
+    o	boxplot(*, range = 0) and boxplot.stats(*, coef = 0) now
+	don't return outliers anymore (PR#917).
 
+    o   segmentation fault with tmp[[1,]] (PR#904)
+
+    o   incorrect "..." handling in plot.factor (PR#830)
 
 
 		CHANGES IN R VERSION 1.2.2

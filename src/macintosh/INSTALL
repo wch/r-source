@@ -6,7 +6,9 @@ version of R for MacOS.  The original code for MacOS was written by
 Ross Ihaka, Julian Harris and Wing Kwong (Tiki) Wan. More recently
 Stefano M. Iacus has written new code, modified or simply updated most
 of the older files to work with current versions of R sources and the
-Waste Text Engine.
+Waste Text Engine. 
+From version 1.2.3 R is a Carbon application that will run natively
+under MacOS X System.
 
 Before building R
 =================
@@ -71,8 +73,8 @@ You should also copy the ".Renviron" file in the same directory.
 Before building R :
 ===================
 
-1) Please copy the file "src/include/macintosh/config.mac.h" to
-   "src/include/config.h" before you build the R application.
+1) Please copy the file `src/macintosh/config.mac.h' to
+   `src/include/config.h' before you build the R application.
 
 2) if you do not use F2C you need a Fortran compiler
    and also to change the R.mcp project.
@@ -100,9 +102,8 @@ At present this applies to the data and R directories too.
 Futher directions
 =================
 
-Most of the files in the src/macintosh directory are only partially
-commented. This will change in the near future. The GUI sources are adapted
-from the WasteDemo application from the Waste Text Engine distribution.
+The GUI sources are adapted from the WasteDemo application from the Waste 
+Text Engine distribution.
 Thanks to Marco Piovanelli for providing these sources for free.
 
 Note that the process of building R for the Macintosh is still not

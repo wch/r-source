@@ -104,11 +104,6 @@ gui/RPreference.c
 gui/RScripting.c
 gui/RWindows.c
 gui/WEDrags.c
-print/JobDialogAppend.c
-print/PrintSetup.c
-print/Printing.c
-print/p1.c
-print/printing2.c
 waste/*.[ch]
 
 gui/SmartScroll.[ch]

@@ -46,10 +46,12 @@
 #include "RIntf.h"
 #include <Rdevices.h>
 
-OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum);
+//OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum);
 OSErr  doCopyAppNameResource(WindowPtr windowPtr);
 OSErr  doCopyGraResource(ResType, SInt16, SInt16, SInt16);
-OSErr  doWriteFile(WindowPtr windowPtr);
+//OSErr  doWriteFile(WindowPtr windowPtr);
+void PutPictToFile(PicHandle thePicture);
+
 extern pascal	OSErr	FSpGetFullPath (const FSSpec*, short*, Handle*);
 
 extern Graphic_Ref gGReference[MAX_NUM_G_WIN + 1];
@@ -57,6 +59,30 @@ extern SInt16 gAppResFileRefNum;
 SInt16  ConsolefileRefNum;
 FSSpec  ConsolefileFSSpec;
 char    InitFile[256];
+extern Boolean WeArePasting;
+
+
+
+#define	rAppStringsID			128
+
+enum {
+	sApplicationName 		= 1,
+	sTranslationLockedErr,
+	sTranslationErr,
+	sOpeningErr,
+	sReadErr,				// 5
+	sWriteToBusyFileErr,
+	sBusyOpen,
+	sChooseFile,
+	sChooseFolder,
+	sChooseVolume,			// 10
+	sCreateFolder,
+	sChooseObject,
+	sChooseApp
+};
+
+#define kSelectFolderPrefKey	4
+
 
 OSErr  doRSave(Boolean *haveCancel)
 {
@@ -71,7 +97,7 @@ OSErr  doRSave(Boolean *haveCancel)
 
 	fp = fopen(InitFile, "wb"); /* binary file */
 	if (!fp)
-	    error("can't save data -- unable to open ./%s\n", InitFile);
+	    error("can't save data -- unable to write ./%s\n", InitFile);
 	if (HASHTAB(R_GlobalEnv) != R_NilValue)
 	    R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
 	else
@@ -85,160 +111,206 @@ OSErr  doRSave(Boolean *haveCancel)
 /*
    Based on previous doRSaveAs of Ross Ihaka.
    Now handles correctly XDR. Jago Nov 2000 (Stefano M. Iacus)
+   Completely rewritten to work with the new Navigation Services
+   Jago, April 2001, Stefano M. Iacus
 */
 
 OSErr  doRSaveAs(Boolean *haveCancel) {
-    StandardFileReply fileReply;
-    OSType fileType;
-    OSErr osError = 0;
-    FILE *fp ;
-    SInt16 pathLen;
-    Handle pathName;
-    char path[FILENAME_MAX], cur_path[FILENAME_MAX];
-
-    StandardPutFile("\pSave as:","\p.RData", &fileReply);
-    *haveCancel = !(fileReply.sfGood);
-    if(fileReply.sfGood) {
-	if(!(fileReply.sfReplacing)) {
-	    fileType = 'ROBJ';
-	    osError = FSpCreate(&fileReply.sfFile, R_ID, fileType,
-				smSystemScript);
-	    if(osError != noErr)
-		return(osError);
-	}
+    StandardFileReply 	fileReply;
+    OSType 				fileType;
+    OSErr 				osError = 0;
+    FILE 				*fp ;
+    SInt16 				pathLen;
+    Handle 				pathName=NULL;
+    char 				path[FILENAME_MAX], cur_path[FILENAME_MAX];
+	OSErr               anErr = noErr;
+    NavReplyRecord      reply;
+    NavDialogOptions    dialogOptions;
+    OSType              fileTypeToSave = 'BINA';
+    OSType              creatorType = R_ID;
 
 
-	FSpGetFullPath(&fileReply.sfFile, &pathLen, &pathName);
-	HLock((Handle) pathName);
-	strncpy(InitFile, *pathName, pathLen);
-	InitFile[pathLen] = '\0';
-	HUnlock((Handle) pathName);
+
+    anErr = NavGetDefaultDialogOptions(&dialogOptions); 
+    if(anErr == noErr){
+    	dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
+    	dialogOptions.dialogOptionFlags |= kNavAllFilesInPopup;
+    	dialogOptions.dialogOptionFlags |= kNavAllowInvisibleFiles;
+    	
+    	PStringCopy("\p.RData",dialogOptions.savedFileName);
+        PStringCopy("\pSave Workspace Image",dialogOptions.windowTitle);
+        PStringCopy("\pR",dialogOptions.clientName);
+    
+    	anErr = NavPutFile(nil, &reply, &dialogOptions, nil,
+                       fileTypeToSave, creatorType, nil );
 
 
-	fp = fopen(InitFile, "wb"); /* binary file */
-	if (!fp)
-	    error("can't save data -- unable to open ./%s\n", InitFile);
-	if (HASHTAB(R_GlobalEnv) != R_NilValue)
-	    R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
-	else
-	    R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
-	fclose(fp);
-    }
+		*haveCancel = !reply.validRecord;
+        
+		if(anErr == noErr && reply.validRecord){
+		 	AEKeyword	theKeyword;
+		 	DescType	actualType;
+		 	Size		actualSize;
+		 	FSSpec		documentFSSpec;
+		 	 	
+		 	anErr = AEGetNthPtr(&(reply.selection), 1, typeFSS, &theKeyword, &actualType,
+		 						&documentFSSpec, sizeof(documentFSSpec), &actualSize);
+		 	if(anErr == noErr){
+		 			FSpGetFullPath(&documentFSSpec, &pathLen, &pathName);
+					HLock((Handle) pathName);
+					strncpy(InitFile, *pathName, pathLen);
+					InitFile[pathLen] = '\0';
+					HUnlock((Handle) pathName);
 
-    return(osError);
+
+					if( fp = fopen(InitFile, "wb") ){ /* binary file */
+						if (HASHTAB(R_GlobalEnv) != R_NilValue)
+	    					R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
+						else
+	    					R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
+						fclose(fp);
+						anErr = NavCompleteSave(&reply, kNavTranslateInPlace);
+						}
+					else
+						error("can't save data -- unable to write ./%s\n", InitFile);
+
+
+		 	}
+		 	
+        }
+        
+        (void) NavDisposeReply(&reply);   
+    }                    
+
+    return(anErr);
+
 }
 
-/* ××××××××××××××××××××× doSaveCommand
-*/
-OSErr  doSaveGraCommand(void)
+ 
+ 
+
+
+
+void PutPictToFile(PicHandle thePicture)
+
 {
-    WindowPtr windowPtr;
-    SInt16 WinIndex;
-    OSErr osError = 0;
+	
+	OSErr               anErr = noErr;
+    NavReplyRecord      reply;
+    NavDialogOptions    dialogOptions;
+    OSType              fileTypeToSave = 'PICT';
+    OSType              creatorType = 'ogle';
+	AEKeyword   		theKeyword;
+    DescType    		actualType;
+    Size        		actualSize;
+    FSSpec      		documentFSSpec;
+    long				inOutCount;
+    short				refNum, count;
+    unsigned char 		header[512];
+    
+    for (count = 0; count < 512; count++)
+		header[count] = 0x00;
 
-    windowPtr = FrontWindow();
-    WinIndex = isGraphicWindow(windowPtr);
-
-    if(gGReference[WinIndex].fileRefNum)
-	osError = doWriteFile(windowPtr);
-    else
-	osError = doSaveAsGraCommand();
-
-    return(osError);
+    anErr = NavGetDefaultDialogOptions(&dialogOptions); 
+    dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
+    
+    anErr = NavPutFile( nil, 
+    					&reply, 
+    					&dialogOptions, 
+    					nil,
+                        fileTypeToSave, 
+                        creatorType, 
+                        nil );
+    
+    if (anErr == noErr && reply.validRecord) {
+    
+    					
+    	anErr = AEGetNthPtr(&(reply.selection), 1, typeFSS,
+                                &theKeyword, &actualType,
+                                &documentFSSpec, sizeof(documentFSSpec),
+                                &actualSize );
+                                
+  	  if (anErr == noErr) {
+  	  
+  	  		anErr = FSpCreate(&documentFSSpec, creatorType, fileTypeToSave, smSystemScript);
+			if (anErr == dupFNErr) {
+				anErr = FSpDelete(&documentFSSpec);
+				anErr = FSpCreate(&documentFSSpec, creatorType, fileTypeToSave, smSystemScript);
+			}		// this is quick 'n' dirty or there'd be more robust handling here
+			
+    		// write the file
+    		FSpOpenDF(&documentFSSpec, fsRdWrPerm, &refNum );
+    		inOutCount = 512;
+   			anErr = FSWrite(refNum, &inOutCount, header);		// write the header
+    		if (anErr == noErr) {
+    			inOutCount = GetHandleSize((Handle)thePicture);
+				anErr = FSWrite(refNum,&inOutCount,*thePicture);
+    		}
+    		FSClose( refNum );
+  	  }
+  	  reply.translationNeeded = false;
+  	  anErr = NavCompleteSave(&reply, kNavTranslateInPlace);
+    
+ 	  NavDisposeReply(&reply);
+    }
 }
 
-/* ××××××××××××××××××× doSaveAsCommand
-*/
+
+
+
 OSErr  doSaveAsGraCommand(void)
-{
-    WindowPtr windowPtr;
-    SInt16 WinIndex;
-    StandardFileReply fileReply;
-    OSType fileType;
-    SInt16 fileRefNum;
-    OSErr osError = 0;
+{   
+    WindowPtr 	window;
+    SInt16 		WinIndex;
+    DevDesc 	*dd;
+    PicHandle	WPicHandle=nil;
+    CGrafPtr 	savePort, tempPort;
+    Rect 		portRect;
 
-    windowPtr = FrontWindow();
-    WinIndex = isGraphicWindow(windowPtr);
+    window = FrontWindow();
 
-    StandardPutFile("\pSave as:","\pR Picture",&fileReply);
+    WinIndex = isGraphicWindow(window);
 
-    if(fileReply.sfGood) {
-	if(!(fileReply.sfReplacing)) {
-	    fileType = 'PICT';
-	    osError = FSpCreate(&fileReply.sfFile, 'ABFF', fileType,
-				smSystemScript);
-	    if(osError != noErr)
-		return(osError);
-	}
-
-	gGReference[WinIndex].fileFSSpec = fileReply.sfFile;
-
-	if(gGReference[WinIndex].fileRefNum != 0) {
-	    osError = FSClose(gGReference[WinIndex].fileRefNum);
-	    gGReference[WinIndex].fileRefNum = 0;
-	}
-
-	if(osError == noErr)
-	    osError = FSpOpenDF(&gGReference[WinIndex].fileFSSpec,fsRdWrPerm,&fileRefNum);
-
-	if(osError == noErr) {
-	    gGReference[WinIndex].fileRefNum = fileRefNum;
-	    osError = doWriteFile(windowPtr);
-	}
-    }
-
-    return(osError);
-}
-
-/* ××××××××××××××××××××××× doWritePictData
-*/
-OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum)
-{
-    PicHandle pictureHdl=NULL;
-    SInt32 numberOfBytes, dummyData;
-    SInt16 volRefNum, WinIndex;
-    OSErr osError;
-    DevDesc *dd;
-    GrafPtr picPort;
-
-    WinIndex = isGraphicWindow(windowPtr);
-    SetPort(windowPtr);
-    HLock((Handle) pictureHdl);
     dd = (DevDesc*)gGReference[WinIndex].devdesc;
-    pictureHdl = OpenPicture(&(windowPtr->portRect));
-    GetPort(&picPort);
-    playDisplayList(dd);
-    SetPort(picPort);
-    ClosePicture();
-    HUnlock((Handle) pictureHdl);
 
-    numberOfBytes = 512;
-    dummyData = 0;
+    GetPort(&savePort);
+    
+    GetWindowPortBounds(window,&portRect);
+	tempPort = CreateNewPort();
+     
+    WPicHandle = OpenPicture(&portRect);
 
-    osError = SetFPos(tempFileRefNum,fsFromStart,0);
+    ClipRect(&portRect);
+ 	
+ 	gGReference[WinIndex].activePort = tempPort;
 
-    if(osError == noErr)
-	osError = FSWrite(tempFileRefNum,&numberOfBytes,&dummyData);
+ 	WeArePasting = true;
 
-    numberOfBytes = GetHandleSize((Handle)pictureHdl);
+ 	playDisplayList(dd);
 
-    if(osError == noErr) {
-	HLock((Handle)pictureHdl);
-	osError = FSWrite(tempFileRefNum,&numberOfBytes,*pictureHdl);
-	HUnlock((Handle)pictureHdl);
-    }
+ 	WeArePasting = false;
+	
+	ClosePicture();
 
-    if(osError == noErr)
-	osError = SetEOF(tempFileRefNum,512 + numberOfBytes);
-    if(osError == noErr)
-	osError = GetVRefNum(tempFileRefNum,&volRefNum);
-    if(osError == noErr)
-	osError = FlushVol(NULL,volRefNum);
+    DisposePort(tempPort);
+    
+    HLock((Handle)WPicHandle);
+  
+    PutPictToFile(WPicHandle);	/* put it to a file */
+ 
+ 	HUnlock((Handle)WPicHandle);
+    
+    KillPicture(WPicHandle);
+    
+    SetPort(savePort);  
+    
+    return noErr;
 
-
-    return(osError);
 }
+
+
+
+
 
 /* ×××××××××××××××× doCopyAppNameResource
 */
@@ -278,7 +350,7 @@ OSErr  doCopyAppNameResource(WindowPtr windowPtr)
 OSErr  doCopyGraResource(ResType resourceType, SInt16 resourceID,
  SInt16 sourceFileRefNum, SInt16 destFileRefNum)
 {
-    Handle	sourceResourceHdl;
+    Handle	sourceResourceHdl=NULL;
     Str255	sourceResourceName;
     ResType	ignoredType;
     SInt16	ignoredID;
@@ -303,55 +375,64 @@ OSErr  doCopyGraResource(ResType resourceType, SInt16 resourceID,
     return(ResError());
 }
 
-/* ××××××××××××××××××××××××× doWriteFile
-*/
-OSErr  doWriteFile(WindowPtr windowPtr)
-{
 
-    FSSpec fileSpecActual, fileSpecTemp;
-    UInt32 currentTime;
-    Str255 tempFileName;
-    SInt16 tempFileVolNum, tempFileRefNum, WinIndex;
-    SInt32 tempFileDirID;
-    OSErr osError;
+// *****************************************************************************
+// *
+// *	DoSelectDirectory( )
+// *	
+// *****************************************************************************
+OSErr DoSelectDirectory( void )
+{	
+	NavReplyRecord		theReply;
+	NavDialogOptions	dialogOptions;
+	OSErr				theErr = noErr;
+	NavEventUPP			eventUPP = nil; 
+	SInt16 				pathLen;
+    Handle 				pathName=NULL;
+    char 				path[FILENAME_MAX];
+	OSErr               anErr = noErr;
 
-    WinIndex = isGraphicWindow(windowPtr);
-    fileSpecActual = gGReference[WinIndex].fileFSSpec;
+	theErr = NavGetDefaultDialogOptions( &dialogOptions );
+	
+	GetIndString( dialogOptions.message, rAppStringsID, sChooseFolder );
+	
+	dialogOptions.preferenceKey = kSelectFolderPrefKey;
+	
+	theErr = NavChooseFolder(	NULL,
+								&theReply,
+								&dialogOptions,
+								eventUPP,
+								NULL,
+								nil);
+	
+	DisposeNavEventUPP( eventUPP );
 
-    GetDateTime(&currentTime);
-    NumToString((SInt32) currentTime,tempFileName);
-
-    osError = FindFolder(fileSpecActual.vRefNum, kTemporaryFolderType,
-			 kCreateFolder, &tempFileVolNum,&tempFileDirID);
-    if(osError == noErr)
-	osError = FSMakeFSSpec(tempFileVolNum, tempFileDirID, tempFileName,
-			       &fileSpecTemp);
-    if(osError == noErr || osError == fnfErr)
-	osError = FSpCreate(&fileSpecTemp,'trsh', 'trsh', smSystemScript);
-    if(osError == noErr)
-	osError = FSpOpenDF(&fileSpecTemp, fsRdWrPerm, &tempFileRefNum);
-    if(osError == noErr)
-	osError = doWritePictData(windowPtr,tempFileRefNum);
-    if(osError == noErr)
-	osError = FSClose(tempFileRefNum);
-    if(osError == noErr)
-	osError = FSClose(gGReference[WinIndex].fileRefNum);
-    if(osError == noErr)
-	osError = FSpExchangeFiles(&fileSpecTemp, &fileSpecActual);
-    if(osError == noErr)
-	osError = FSpDelete(&fileSpecTemp);
-    if(osError == noErr)
-	osError = FSpOpenDF(&fileSpecActual, fsRdWrPerm,
-			    &gGReference[WinIndex].fileRefNum);
-
-/*	if(osError == noErr)
+	if ( theReply.validRecord && theErr == noErr)
 	{
+		// grab the target FSSpec from the AEDescList:	
+		FSSpec		finalFSSpec;	
+		AEKeyword 	keyWord;
+		DescType 	typeCode;
+		Size 		actualSize = 0;
 
-	osError = doCopyAppNameResource(windowPtr);
+		// there is only one selection here we get only the first AEDescList:
+		if (( theErr = AEGetNthPtr( &(theReply.selection), 1, typeFSS, &keyWord, &typeCode, 
+		         &finalFSSpec, sizeof( FSSpec ), &actualSize )) == noErr )		
+		{
+			// 'finalFSSpec' is the selected directoryÉ
+			FSpGetFullPath(&finalFSSpec, &pathLen, &pathName);
+			HLock((Handle) pathName);
+			
+			strncpy(path, *pathName, pathLen);
+			path[pathLen] = '\0';
+			chdir(path);		
+			HUnlock((Handle) pathName);
+			
+		}
+		
+		theErr = NavDisposeReply( &theReply );
 	}
-*/
-    return(osError);
+		
+	return theErr;
 }
-
-
 

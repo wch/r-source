@@ -1,3 +1,8 @@
+If you have not yet made R, under Unix you must first configure R, and
+under Windows you need to set up almost all the tools to make R and
+then run (cd .../src/gnuwin32/fixed; make).
+
+
 Under Unix, making in this directory will make standalone libraries
 libRmath.a and libRmath.so.  `make static' and `make shared' make
 just one of them.

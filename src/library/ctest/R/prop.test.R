@@ -129,7 +129,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 
     RVAL <- list(statistic = STATISTIC,
 		 parameter = PARAMETER,
-		 p.value = PVAL,
+		 p.value = as.numeric(PVAL),
 		 estimate = ESTIMATE,
 		 null.value = NVAL,
 		 conf.int = CINT,

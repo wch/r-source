@@ -58,7 +58,7 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  " -g", ceiling(res*width), "x", ceiling(res*height),
-                 " -sOutputFile=", file, " ", tmp, sep="")
+                 " -sOutputFile=", file, sep="")
     postscript(file=tmp, width=width, height=height,
                pointsize=pointsize, paper="special", horizontal=FALSE,
                print.it=TRUE, command=cmd, ...)

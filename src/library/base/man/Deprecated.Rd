@@ -20,6 +20,8 @@ httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
 \alias{scan.url}
 \alias{source.url}
 \alias{httpclient}
+\alias{dotplot}
+\alias{stripplot}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
@@ -34,6 +36,8 @@ httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
 
   \code{httpclient} is used by the deprecated \code{"socket"} method
   of \code{\link{download.file}}.
+  \code{dotplot} and \code{stripplot} are deprecated names for
+  \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

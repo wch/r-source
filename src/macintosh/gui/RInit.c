@@ -53,13 +53,14 @@
 #include <Gestalt.h>
 #endif
 
+#ifndef __TEXTSERVICES__
+#include <TextServices.h>
+#endif
+
 #ifndef __SCRAP__
 #include <Scrap.h>
 #endif
 
-#ifndef __TEXTSERVICES__
-#include <TextServices.h>
-#endif
 
 #ifndef __WEDEMOAPP__
 #include "RIntf.h"
@@ -69,31 +70,70 @@
 #include "SmartScroll.h"
 #endif
 
+#include <PMApplication.h>
+//#include <PMDefinitions.h>
+//#include <PMCore.h>
+
 /*
 #include "WEObjectHandlers.h"
 */
+
+extern WindowPtr            Console_Window;
+
+static Boolean CheckVersion ( SInt16 alertStringIndex, UInt32 installedVersion, UInt32 requiredVersion )
+{
+	Str255		banner ;
+	Str255		explanation ;
+	Str15		versionString ;
+	SInt16		alertResult ;
+
+	if ( installedVersion < requiredVersion )
+	{
+		GetIndString ( banner, kAlertStringsID, alertStringIndex ) ;
+		GetIndString ( explanation, kAlertStringsID, alertStringIndex + 1 ) ;
+		NumToVersionString ( installedVersion, versionString ) ;
+		ReplaceParam ( explanation, versionString, 0 ) ;
+		NumToVersionString ( requiredVersion, versionString ) ;
+		ReplaceParam ( explanation, versionString, 1 ) ;
+		StandardAlert ( kAlertStopAlert, banner, explanation, nil, & alertResult ) ;
+		return true ;
+	}
+
+	return false ;
+}
+
+extern WindowPtr gWindowPtrArray[kMaxWindows + 2];
+
+    PMPageFormat	pageFormat = kPMNoPageFormat;
+    PMPrintSettings	printSettings = kPMNoPrintSettings;
+    PMPrintSession	printSession;
+
+SInt32		systemVersion ;
+SInt32		carbonVersion ;
 
 OSErr Initialize( void )
 {
 	SInt32			response;
 	SInt16			i;
 	OSErr			err;
+    
+	/* expand the zone to its maximum size */
+	
 
-	/* expand the zone to its maximum size
-*/
-	MaxApplZone( );
 
-	/* allocate some extra master pointer blocks
-*/
+    if((fileno(stdin)==0) || (fileno(stdout)==1)){
+
+#if ! TARGET_API_MAC_CARBON
+
+	/* allocate some extra master pointer blocks */
 	for ( i = 0; i < 30; i++ )
 	{
 		MoreMasters( );
 	}
 
-   if((fileno(stdin)==0) || (fileno(stdout)==1)){
-   
-	/* initialize the Toolbox
-*/
+    MaxApplZone( );
+
+	/* initialize the Toolbox */
 	InitGraf( &qd.thePort );
 	InitFonts( );
 	InitWindows( );
@@ -103,132 +143,112 @@ OSErr Initialize( void )
 	InitCursor( );
 	FlushEvents( everyEvent, 0 );
 
-	/* if desk scrap is too large, unload it
-*/
+
+	/* if desk scrap is too large, unload it */
 	if ( InfoScrap( )->scrapSize > kScrapThreshold )
 	{
 		UnloadScrap( );
 	}
+#else
+    MoreMasterPointers(30);	
+#endif
 
-	/* make sure system software version is 7.0 or newer (classic 68K only)
-*/
-	#if !GENERATINGCFM
-	if ( ( Gestalt( gestaltSystemVersion, &response ) != noErr ) || ( response < kMinSystemVersion ) )
+    // We need CarbonLib v 1.2.5 or Higher
+	Gestalt ( gestaltCarbonVersion, & carbonVersion ) ;
+
+    carbonVersion = ( carbonVersion << 16 ) | 0x8000 ;
+    if(carbonVersion < 0x01208000){
+     R_ShowMessage("You need CarbonLib 1.2.0 or newer\nto run R");
+     return -1;
+    } 
+    
+//	make sure we're using a recent version of the system software
+	Gestalt ( gestaltSystemVersion, & systemVersion ) ;
+	systemVersion = ( systemVersion << 16 ) | 0x8000 ;
+	if ( CheckVersion ( 1, systemVersion, kMinSystemVersion ) )
 	{
-		SetCursor( &qd.arrow );
-		response = Alert( kAlertNeedSys7, nil );
-		return -1;
-	}
-	#endif
-
-	/* make sure WASTELib got linked and we're using a recent version
-	*/
-	#if GENERATINGCFM
-	if ( ( UInt32) & WEVersion == kUnresolvedCFragSymbolAddress )
-		response = 0;
-	else
-	#endif
-		response = WEVersion ( ) ;
-
-	if ( response < kMinWASTEVersion )
-	{
-		SetCursor ( & qd . arrow ) ;
-		response = Alert ( kAlertNeedNewerWASTE, nil ) ;
 		return -1 ;
 	}
 
-	/* determine whether color Quickdraw is available
-*/
-	gHasColorQD = (Gestalt(gestaltQuickdrawVersion, &response) == noErr)
-					&& (response >= gestalt8BitQD);
+	//	make sure we're using a recent version of WASTELib
+	if ( CheckVersion ( 3, WEVersion ( ), kMinWASTEVersion ) )
+	{
+		return -1 ;
+	}
 
-	/* determine whether the Drag Manager is available
-*/
+	/* determine whether color Quickdraw is available */
+
+	/* determine whether the Drag Manager is available */
 	gHasDragAndDrop = (Gestalt( gestaltDragMgrAttr, &response ) == noErr )
 					&& BTST( response, gestaltDragMgrPresent );
-
-#if GENERATINGCFM
-	/* additional check needed if DragLib is weak-linked
-	*/
-	gHasDragAndDrop = gHasDragAndDrop && (&NewDrag != nil);
-#endif
-
-	/* determine whether the Text Services Manager is available
-*/
+					
+	/* determine whether the Text Services Manager is available*/
 	gHasTextServices = ( Gestalt( gestaltTSMgrVersion, &response ) == noErr );
 
 	/* register this application with the TSM*/
+#if ! TARGET_API_MAC_CARBON
 
 	if ( gHasTextServices )
 	{
 		if ( ( err = InitTSMAwareApplication( ) ) != noErr )
 			goto cleanup;
 	}
+#endif /* ! TARGET_API_MAC_CARBON */
 
-	/* install default drag handlers
-*/
+	/* install default drag handlers */
 	if ( gHasDragAndDrop )
 	{
 		if ( ( err = InstallDragHandlers( ) ) != noErr )
 			goto cleanup;
 	}
 
-	/* install the sample object handlers for pictures and sounds
-*/
-/*
-	if ((err = WEInstallObjectHandler(kTypePicture, weNewHandler,
-				(UniversalProcPtr) NewWENewObjectProc(HandleNewPicture), nil)) != noErr)
-		goto cleanup;
-
-	if ((err = WEInstallObjectHandler(kTypePicture, weDisposeHandler,
-				(UniversalProcPtr) NewWEDisposeObjectProc(HandleDisposePicture), nil)) != noErr)
-		goto cleanup;
-
-	if ((err = WEInstallObjectHandler(kTypePicture, weDrawHandler,
-				(UniversalProcPtr) NewWEDrawObjectProc(HandleDrawPicture), nil)) != noErr)
-		goto cleanup;
-*/
-/*	if ((err = WEInstallObjectHandler(kTypeSound, weNewHandler,
-				(UniversalProcPtr) NewWENewObjectProc(HandleNewSound), nil)) != noErr)
-		goto cleanup;
-
-	if ((err = WEInstallObjectHandler(kTypeSound, weDrawHandler,
-				(UniversalProcPtr) NewWEDrawObjectProc(HandleDrawSound), nil)) != noErr)
-		goto cleanup;
-
-	if ((err = WEInstallObjectHandler(kTypeSound, weClickHandler,
-				(UniversalProcPtr) NewWEClickObjectProc(HandleClickSound), nil)) != noErr)
-		goto cleanup;
-*/
-
-	/* perform other initialization chores
-*/
+	/* perform other initialization chores */
 	if ( ( err = InitializeEvents( ) ) != noErr )
 		goto cleanup;
 
 	if ( ( err = InitializeMenus( ) ) != noErr )
 		goto cleanup;
 
+    /* initialize the print session */
+    if( (err = PMCreateSession(&printSession) ) != noErr)
+       printSession =NULL;
+    
+    
 	InitSmartScrollAwareApplication ( ) ;
 
-	/* clear result code
-	*/
-	err = noErr;
-/*    SIOUXSetTitle("\pR Console");
-*/
-	DoNew();
+	for(i = 0; i < kMaxWindows+2; i++)
+	    gWindowPtrArray[i] = NULL;
+	    
+    /* clear result code	*/
+
+  	err = noErr;
 
 
 cleanup:
 	if ( err != noErr )
 		ErrorAlert( err );
+    }
+    else
+     err = noErr;
 
-}
 	return err;
 }
 
 void Finalize( void )
 {
+
+    //	Release the PageFormat and PrintSettings objects.  PMRelease decrements the
+    //	ref count of the allocated objects.  We let the Printing Manager decide when
+    //	to release the allocated memory.
+    if (pageFormat != kPMNoPageFormat)
+        (void)PMRelease(pageFormat);
+    if (printSettings != kPMNoPrintSettings)
+        (void)PMRelease(printSettings);
+    
+    //	Terminate the current printing session. 
+    if(printSession)
+     (void)PMRelease(printSession);
+
 	/* remove drag handlers
 */
 	if ( gHasDragAndDrop )
@@ -238,10 +258,13 @@ void Finalize( void )
 
 	/* notify text services that we're closing down
 */
+#if ! TARGET_API_MAC_CARBON
+
 	if ( gHasTextServices )
 	{
 		CloseTSMAwareApplication( );
 	}
+#endif /* ! TARGET_API_MAC_CARBON */
 
 	/* notify SmartScroll we're closing down
 	*/

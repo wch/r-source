@@ -646,6 +646,7 @@ case "${host}" in
     ;;
   *-*-darwin*)
     shlib_ldflags="-bundle -undefined suppress"
+    shlib_cxxldflags="-bundle -undefined suppress"
     ;;
   *freebsd[[3-4]].*)
     main_ldflags="-export-dynamic"
@@ -689,13 +690,19 @@ case "${host}" in
     fi
     ;;
   *sgi*)
+    shlib_ldflags="-shared"
+    shlib_cxxldflags="-shared"
     if test "${GCC}" != yes; then
       cpicflags="-KPIC"
     fi
     if test "${G77}" != yes; then
       fpicflags="-KPIC"
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"
     fi
-    shlib_ldflags="-shared"
+    if test "${GXX}" != yes; then
+      cxxpicflags="-KPIC"
+      R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -OPT:IEEE_NaN_inf=ON"
+    fi
     ;;
   *solaris*)
     shlib_ldflags="-G"
