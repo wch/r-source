@@ -2004,10 +2004,6 @@ distributions of R.)
      General polygon clipping routines for R based on Alan Murta's C
      library.
 
-*gpls*
-     Classification using generalized partial least squares for two-group
-     and multi-group (more than 2 group) classification.
-
 *grasper*
      Generalized Regression Analysis and Spatial Predictions for R.
 
@@ -2295,10 +2291,6 @@ distributions of R.)
      Mixed-mode latent class regression (also known as mixed-mode mixture
      model regression or mixed-mode mixture regression models) which can
      handle both longitudinal and one-time responses.
-
-*moc*
-     Fits a variety of mixtures models for multivariate observations with
-     user-difined distributions and curves.
 
 *mscalib*
      Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
