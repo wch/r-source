@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000 The R Development Core Team
+ *  Copyright (C) 1997-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,35 +82,35 @@ void InitFunctionHashing()
 
 static void getSystemError(char *buf, int len)
 {
-  strcpy(buf, dlerror());
+    strcpy(buf, dlerror());
 }
 
 static void *loadLibrary(const char *path, int asLocal, int now)
 {
- void *handle;
- int openFlag = 0;
+    void *handle;
+    int openFlag = 0;
 
     openFlag = computeDLOpenFlag(asLocal, now);
     handle = (void *) dlopen(path,openFlag);
 
- return(handle);
+    return(handle);
 }
 
 static void closeLibrary(HINSTANCE handle)
 {
-  dlclose(handle);
+    dlclose(handle);
 }
 
  /*
-   If we are caching the native level symbols, this routine 
-   discards the ones from the DLL identified by loc. 
+   If we are caching the native level symbols, this routine
+   discards the ones from the DLL identified by loc.
    This is called as the initial action of DeleteDLL().
   */
 static void deleteCachedSymbols(DllInfo *dll)
 {
 #ifdef CACHE_DLL_SYM
 #ifdef Macintosh
-        /* This goes in a different order than the Unix version. */
+    /* This goes in a different order than the Unix version. */
     for(i = 0; i < nCPFun; i++)
 	if(!strcmp(CPFun[i].pkg, dll->name)) {
 	    strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
@@ -118,10 +118,10 @@ static void deleteCachedSymbols(DllInfo *dll)
 	    CPFun[i].func = CPFun[nCPFun--].func;
 	}
 #else /* Not Macintosh, so Unix */
-  int i;
-      /* Wouldn't a linked list be easier here? 
-         Potentially ruin the contiguity of the memory.
-       */
+    int i;
+    /* Wouldn't a linked list be easier here?
+       Potentially ruin the contiguity of the memory.
+    */
     for(i = nCPFun - 1; i >= 0; i--)
 	if(!strcmp(CPFun[i].pkg, dll->name)) {
 	    if(i < nCPFun - 1) {
@@ -137,17 +137,18 @@ static void deleteCachedSymbols(DllInfo *dll)
 
 static DL_FUNC getBaseSymbol(const char *name)
 {
- DL_FUNC fcnptr;
 #ifdef DL_SEARCH_PROG
-	fcnptr = R_osDynSymbol->dlsym(&baseDll, name);
-#else
- int i;
-	for(i=0 ; R_osDynSymbol->CFunTab[i].name ; i++)
-	    if(!strcmp(name, R_osDynSymbol->CFunTab[i].name))
-		return R_osDynSymbol->CFunTab[i].func;
-#endif
+    DL_FUNC fcnptr;
 
-   return(fcnptr);
+    fcnptr = R_osDynSymbol->dlsym(&baseDll, name);
+    return(fcnptr);
+#else
+    int i;
+
+    for(i = 0 ; R_osDynSymbol->CFunTab[i].name ; i++)
+	if(!strcmp(name, R_osDynSymbol->CFunTab[i].name))
+	    return R_osDynSymbol->CFunTab[i].func;
+#endif
 }
 
 
@@ -177,13 +178,13 @@ static int computeDLOpenFlag(int asLocal, int now)
     /* Define a local macro for issuing the warnings.
        This allows us to redefine it easily so that it only emits the
        warning once as in
-         DL_WARN(i) if(warningMessages[i]) {\
-                     warning(warningMessages[i]); \
-                     warningMessages[i] = NULL; \
-    	            }
+       DL_WARN(i) if(warningMessages[i]) {\
+       warning(warningMessages[i]); \
+       warningMessages[i] = NULL; \
+       }
        or to control the emission via the options currently in effect at
        call time.
-       */
+    */
 # define DL_WARN(i) \
     if(asInteger(GetOption(install("warn"), R_NilValue)) == 1 || \
        asInteger(GetOption(install("verbose"), R_NilValue)) > 0) \
@@ -198,13 +199,13 @@ static int computeDLOpenFlag(int asLocal, int now)
 #ifndef RTLD_LOCAL
 	DL_WARN(0)
 #else
-	openFlag = RTLD_LOCAL;
+	    openFlag = RTLD_LOCAL;
 #endif
     } else {
 #ifndef RTLD_GLOBAL
 	DL_WARN(1)
 #else
-	openFlag = RTLD_GLOBAL;
+	    openFlag = RTLD_GLOBAL;
 #endif
     }
 
@@ -212,13 +213,13 @@ static int computeDLOpenFlag(int asLocal, int now)
 #ifndef RTLD_NOW
 	DL_WARN(2)
 #else
-	openFlag |= RTLD_NOW;
+	    openFlag |= RTLD_NOW;
 #endif
     } else {
 #ifndef RTLD_LAZY
 	DL_WARN(3)
 #else
-	openFlag |= RTLD_LAZY;
+	    openFlag |= RTLD_LAZY;
 #endif
     }
 
@@ -227,25 +228,20 @@ static int computeDLOpenFlag(int asLocal, int now)
 
 
 /*
-  This is the system/OS-specific version for resolving a 
+  This is the system/OS-specific version for resolving a
   symbol in a shared library.
  */
 static DL_FUNC R_dlsym(DllInfo *info, char const *name)
 {
- return (DL_FUNC) dlsym(info->handle, name);
+    return (DL_FUNC) dlsym(info->handle, name);
 }
-
-	/* R_FindSymbol checks whether one of the libraries */
-	/* that have been loaded contains the symbol name and */
-	/* returns a pointer to that symbol upon success. */
-
 
 
 /*
   In the future, this will receive an additional argument
-  which will specify the nature of the symbol expected by the 
+  which will specify the nature of the symbol expected by the
   caller, specifically whether it is for a .C(), .Call(),
-  .Fortran(), .External(), generic, etc. invocation. This will 
+  .Fortran(), .External(), generic, etc. invocation. This will
   reduce the pool of possible symbols in the case of a library
   that registers its routines.
  */
@@ -262,9 +258,9 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
 	    strcat(buf, path);
 	}
 	else
-	    strcpy(buf,path); 
+	    strcpy(buf,path);
     } else
-	strcpy(buf, path);	
+	strcpy(buf, path);
     return;
 
 #else /* Macintosh */
@@ -284,7 +280,7 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
 }
 
 
-#ifndef Macintosh 
+#ifndef Macintosh
 
 #include "Runix.h"
 #include <sys/types.h>
@@ -295,9 +291,9 @@ extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, ptr_R_GetX11Image,
 
 void R_load_X11_shlib(void)
 {
-    char X11_DLL[PATH_MAX], buf[1000], *p; 
-    DllInfo dll = {(char *)NULL, (char*)NULL, (HINSTANCE) NULL, 
-                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL, 
+    char X11_DLL[PATH_MAX], buf[1000], *p;
+    DllInfo dll = {(char *)NULL, (char*)NULL, (HINSTANCE) NULL,
+                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL,
                    0, (Rf_DotFortranSymbol*)NULL};
     struct stat sb;
 
@@ -332,15 +328,15 @@ void R_load_X11_shlib(void)
 extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
     ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
-    ptr_R_ChooseFile, ptr_gnome_start, 
+    ptr_R_ChooseFile, ptr_gnome_start,
     ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver;
 
 
 void R_load_gnome_shlib(void)
 {
     char gnome_DLL[PATH_MAX], buf[1000], *p;
-    DllInfo dll = {(char *)NULL, (char*)NULL, (HINSTANCE)NULL, 
-                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL, 
+    DllInfo dll = {(char *)NULL, (char*)NULL, (HINSTANCE)NULL,
+                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL,
                    0, (Rf_DotFortranSymbol*)NULL};
     struct stat sb;
 

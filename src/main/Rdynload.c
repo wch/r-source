@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000 The R Development Core Team
+ *  Copyright (C) 1997-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,8 +148,10 @@ static DllInfo baseDll;
 
 
 void R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym);
-void R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, Rf_DotCallSymbol *sym);
-void R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, Rf_DotFortranSymbol *sym);
+void R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, 
+		      Rf_DotCallSymbol *sym);
+void R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, 
+			 Rf_DotFortranSymbol *sym);
 
 /*
  Returns a reference to the DllInfo object associated with the dynamic library
@@ -164,12 +166,12 @@ void R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, Rf_DotFort
 DllInfo *
 R_getDllInfo(const char *path)
 { 
-  int i;
-  for(i = 0; i < CountDLL; i++) {
-    if(strcmp(LoadedDLL[i].path, path) == 0)
-       return(&LoadedDLL[i]);
-  }
-  return((DllInfo*) NULL);
+    int i;
+    for(i = 0; i < CountDLL; i++) {
+	if(strcmp(LoadedDLL[i].path, path) == 0)
+	    return(&LoadedDLL[i]);
+    }
+    return((DllInfo*) NULL);
 }
 
 /*
@@ -180,111 +182,114 @@ R_getDllInfo(const char *path)
  */
 int
 R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
-                     R_CallMethodDef *callRoutines,
-                     R_FortranMethodDef *fortranRoutines)
+		   R_CallMethodDef *callRoutines,
+		   R_FortranMethodDef *fortranRoutines)
 {
- int i, num;
+    int i, num;
 
- if(info == NULL)
-   error("R_RegisterRoutines called with invalid DllInfo object.");
+    if(info == NULL)
+	error("R_RegisterRoutines called with invalid DllInfo object.");
 
 
- if(croutines) {
-   for(num=0; croutines[num].name != NULL; num++) {;}
-   info->CSymbols = (Rf_DotCSymbol*)calloc(num, sizeof(Rf_DotCSymbol));
-   info->numCSymbols = num;
-   for(i = 0; i < num; i++) {
-     R_addCRoutine(info, croutines+i, info->CSymbols + i);
-   }
- }
+    if(croutines) {
+	for(num=0; croutines[num].name != NULL; num++) {;}
+	info->CSymbols = (Rf_DotCSymbol*)calloc(num, sizeof(Rf_DotCSymbol));
+	info->numCSymbols = num;
+	for(i = 0; i < num; i++) {
+	    R_addCRoutine(info, croutines+i, info->CSymbols + i);
+	}
+    }
 
- if(callRoutines) {
-   for(num=0; callRoutines[num].name != NULL; num++) {;}
-   info->CallSymbols = (Rf_DotCallSymbol*)calloc(num, sizeof(Rf_DotCallSymbol));
-   info->numCallSymbols = num;
-   for(i = 0; i < num; i++) {
-     R_addCallRoutine(info, callRoutines+i, info->CallSymbols + i);
-   }
- }
+    if(callRoutines) {
+	for(num=0; callRoutines[num].name != NULL; num++) {;}
+	info->CallSymbols = 
+	    (Rf_DotCallSymbol*)calloc(num, sizeof(Rf_DotCallSymbol));
+	info->numCallSymbols = num;
+	for(i = 0; i < num; i++) {
+	    R_addCallRoutine(info, callRoutines+i, info->CallSymbols + i);
+	}
+    }
 
- if(fortranRoutines) {
-   for(num=0; fortranRoutines[num].name != NULL; num++) {;}
-   info->FortranSymbols = (Rf_DotFortranSymbol*)calloc(num, sizeof(Rf_DotFortranSymbol));
-   info->numFortranSymbols = num;
+    if(fortranRoutines) {
+	for(num=0; fortranRoutines[num].name != NULL; num++) {;}
+	info->FortranSymbols = 
+	    (Rf_DotFortranSymbol*)calloc(num, sizeof(Rf_DotFortranSymbol));
+	info->numFortranSymbols = num;
 
-   for(i = 0; i < num; i++) {
-     R_addFortranRoutine(info, fortranRoutines+i, info->FortranSymbols + i);
-   }
- }
+	for(i = 0; i < num; i++) {
+	    R_addFortranRoutine(info, fortranRoutines+i, 
+				info->FortranSymbols + i);
+	}
+    }
 
- return(1);
+    return(1);
 }
 
 void
-R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, Rf_DotFortranSymbol *sym)
+R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, 
+		    Rf_DotFortranSymbol *sym)
 {
- sym->name = strdup(croutine->name);
- sym->fun = croutine->fun;
- sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+    sym->name = strdup(croutine->name);
+    sym->fun = croutine->fun;
+    sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
 
 
 void
 R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym)
 {
- sym->name = strdup(croutine->name);
- sym->fun = croutine->fun;
- sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+    sym->name = strdup(croutine->name);
+    sym->fun = croutine->fun;
+    sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
 
 void
-R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, Rf_DotCallSymbol *sym)
+R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, 
+		 Rf_DotCallSymbol *sym)
 {
- sym->name = strdup(croutine->name);
- sym->fun = croutine->fun;
- sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+    sym->name = strdup(croutine->name);
+    sym->fun = croutine->fun;
+    sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
-
-
 
 void
 Rf_freeCSymbol(Rf_DotCSymbol *sym)
 {
-  free(sym->name);
+    free(sym->name);
 }
 
 void
 Rf_freeCallSymbol(Rf_DotCallSymbol *sym)
 {
-  free(sym->name);
+    free(sym->name);
 }
 
 void
 Rf_freeFortranSymbol(Rf_DotFortranSymbol *sym)
 {
-  free(sym->name);
+    free(sym->name);
 }
 
 void
 Rf_freeDllInfo(DllInfo *info)
 {
-  int i;
+    int i;
     free(info->name);
     free(info->path);
     if(info->CSymbols) {
-      for(i = 0; i < info->numCSymbols; i++)
-        Rf_freeCSymbol(info->CSymbols+i);
-      free(info->CSymbols);
+	for(i = 0; i < info->numCSymbols; i++)
+	    Rf_freeCSymbol(info->CSymbols+i);
+	free(info->CSymbols);
     }
     if(info->CallSymbols) {
-      for(i = 0; i < info->numCallSymbols; i++)
-        Rf_freeCallSymbol(info->CallSymbols+i);
-      free(info->CallSymbols);
+	for(i = 0; i < info->numCallSymbols; i++)
+	    Rf_freeCallSymbol(info->CallSymbols+i);
+	free(info->CallSymbols);
     }
     if(info->FortranSymbols) {
-      for(i = 0; i < info->numFortranSymbols; i++)
-        Rf_freeFortranSymbol(info->FortranSymbols+i);
-      free(info->FortranSymbols);
+	for(i = 0; i < info->numFortranSymbols; i++)
+	    Rf_freeFortranSymbol(info->FortranSymbols+i);
+	free(info->FortranSymbols);
     }
 }
 
@@ -304,7 +309,7 @@ static int DeleteDLL(char *path)
 	}
     }
     return 0;
-found:
+ found:
 #ifdef CACHE_DLL_SYM
     if(R_osDynSymbol->deleteCachedSymbols)
         R_osDynSymbol->deleteCachedSymbols(&LoadedDLL[loc]);
@@ -330,9 +335,9 @@ found:
 DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all)
 {
 #ifdef CACHE_DLL_SYM
- int i;
+    int i;
 #ifdef Macintosh
-  all = 0;
+    all = 0;
 #endif
     for (i = 0; i < nCPFun; i++)
 	if (!strcmp(name, CPFun[i].name) && 
@@ -340,7 +345,7 @@ DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all)
 	    return CPFun[i].func;
 #endif
 
- return((DL_FUNC) NULL);
+    return((DL_FUNC) NULL);
 }
 
 
@@ -390,7 +395,7 @@ static int AddDLL(char *path, int asLocal, int now)
     strcpy(dpath, path);
     
     if(R_osDynSymbol->fixPath)
-      R_osDynSymbol->fixPath(dpath);
+	R_osDynSymbol->fixPath(dpath);
 
     p = strrchr(dpath, R_DIR_SEPARATOR); 
     if(!p) p = dpath; else p++;
@@ -417,19 +422,19 @@ static int AddDLL(char *path, int asLocal, int now)
     LoadedDLL[CountDLL].CallSymbols = NULL;
     LoadedDLL[CountDLL].FortranSymbols = NULL;
 
-      /* Now look for an initializing routine named R_init_<library name>.
-         If it is present, we invoke it. It should take a reference to the
-         DllInfo object currently being initialized.
-       */
+    /* Now look for an initializing routine named R_init_<library name>.
+       If it is present, we invoke it. It should take a reference to the
+       DllInfo object currently being initialized.
+    */
     {
-      char *tmp;
-      DL_FUNC f;
-      tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") + strlen(name)+ 1));
-      sprintf(tmp, "%s%s","R_init_", name);
-      f = (DL_FUNC) R_osDynSymbol->dlsym(&LoadedDLL[CountDLL], tmp);
-      free(tmp);
-      if(f)
-        f(LoadedDLL + CountDLL);
+	char *tmp;
+	DL_FUNC f;
+	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") + strlen(name)+ 1));
+	sprintf(tmp, "%s%s","R_init_", name);
+	f = (DL_FUNC) R_osDynSymbol->dlsym(&LoadedDLL[CountDLL], tmp);
+	free(tmp);
+	if(f)
+	    f(LoadedDLL + CountDLL);
     }
     CountDLL++;
 
@@ -441,75 +446,78 @@ static int AddDLL(char *path, int asLocal, int now)
 Rf_DotCSymbol *
 Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name)
 {
-  int i;
-      for(i = 0; i < info->numCSymbols; i++) {
+    int i;
+    for(i = 0; i < info->numCSymbols; i++) {
         if(strcmp(name, info->CSymbols[i].name) == 0)
-          return(&(info->CSymbols[i]));
-      }
+	    return(&(info->CSymbols[i]));
+    }
 
- return(NULL);
+    return(NULL);
 }
 
 Rf_DotFortranSymbol *
 Rf_lookupRegisteredFortranSymbol(DllInfo *info, const char *name)
 {
-  int i;
-   for(i = 0; i < info->numFortranSymbols; i++) {
-     if(strcmp(name, info->FortranSymbols[i].name) == 0)
-      return(&(info->FortranSymbols[i]));
-   }
+    int i;
+    for(i = 0; i < info->numFortranSymbols; i++) {
+	if(strcmp(name, info->FortranSymbols[i].name) == 0)
+	    return(&(info->FortranSymbols[i]));
+    }
 
- return((Rf_DotFortranSymbol*)NULL);
+    return((Rf_DotFortranSymbol*)NULL);
 }
 
 Rf_DotCallSymbol *
 Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name)
 {
-  int i;
-      for(i = 0; i < info->numCallSymbols; i++) {
+    int i;
+
+    for(i = 0; i < info->numCallSymbols; i++) {
         if(strcmp(name, info->CallSymbols[i].name) == 0)
-          return(&(info->CallSymbols[i]));
-      }
- return((Rf_DotCallSymbol*)NULL);
+	    return(&(info->CallSymbols[i]));
+    }
+    return((Rf_DotCallSymbol*)NULL);
 }
 
 static DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name)
 {
     int fail = 0;
+
     if(info->numCSymbols > 0) {
-      Rf_DotCSymbol *sym;
-      sym = Rf_lookupRegisteredCSymbol(info, name);
-      if(sym)
-        return((DL_FUNC) sym->fun);
-      fail = 1;
+	Rf_DotCSymbol *sym;
+	sym = Rf_lookupRegisteredCSymbol(info, name);
+	if(sym)
+	    return((DL_FUNC) sym->fun);
+	fail = 1;
     }
 
     if(info->numFortranSymbols > 0) {
-      Rf_DotFortranSymbol *sym;
-      sym = Rf_lookupRegisteredFortranSymbol(info, name);
-      if(sym)
-        return((DL_FUNC) sym->fun);
-      fail = 1;
+	Rf_DotFortranSymbol *sym;
+	sym = Rf_lookupRegisteredFortranSymbol(info, name);
+	if(sym)
+	    return((DL_FUNC) sym->fun);
+	fail = 1;
     }
 
     if(info->numCallSymbols > 0) {
-      Rf_DotCallSymbol *sym;
-      sym = Rf_lookupRegisteredCallSymbol(info, name);
-      if(sym)
-        return((DL_FUNC) sym->fun);
-      fail = 1;
+	Rf_DotCallSymbol *sym;
+	sym = Rf_lookupRegisteredCallSymbol(info, name);
+	if(sym)
+	    return((DL_FUNC) sym->fun);
+	fail = 1;
     }
     
- return((DL_FUNC) NULL);
+    return((DL_FUNC) NULL);
 }
 
 static DL_FUNC R_dlsym(DllInfo *info, char const *name)
 {
     char buf[MAXIDSIZE+1];
     DL_FUNC f;
+
     f = R_getDLLRegisteredSymbol(info, name);
     if(f)
-      return(f);
+	return(f);
 
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
     sprintf(buf, "%s", name);
@@ -538,16 +546,16 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
     int i, all = (strlen(pkg) == 0), doit;
 
     if(R_osDynSymbol->lookupCachedSymbol)
-       fcnptr = R_osDynSymbol->lookupCachedSymbol(name, pkg, all);
+	fcnptr = R_osDynSymbol->lookupCachedSymbol(name, pkg, all);
     if(fcnptr)
-      return(fcnptr);
+	return(fcnptr);
 
 
-	/* The following is not legal ANSI C. */
-	/* It is only meant to be used in systems supporting */
-	/* the dlopen() interface, in which systems data and  */
-	/* function pointers _are_ the same size and _can_   */
-	/* be cast without loss of information.		     */
+    /* The following is not legal ANSI C. */
+    /* It is only meant to be used in systems supporting */
+    /* the dlopen() interface, in which systems data and  */
+    /* function pointers _are_ the same size and _can_   */
+    /* be cast without loss of information.		     */
 
     for (i = CountDLL - 1; i >= 0; i--) {
 	doit = all;
@@ -562,13 +570,13 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 		    CPFun[nCPFun++].func = fcnptr;
 		}
 #endif
-	       return fcnptr;
-	   }
+		return fcnptr;
+	    }
 	}
 	if(doit > 1) return (DL_FUNC) NULL;  /* Only look in the first-matching DLL */
     }
     if(all || !strcmp(pkg, "base")) {
-       return(R_osDynSymbol->getBaseSymbol(name));
+	return(R_osDynSymbol->getBaseSymbol(name));
     }
     return (DL_FUNC) NULL;
 }
@@ -576,7 +584,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
-  R_osDynSymbol->getFullDLLPath(call, buf, path);
+    R_osDynSymbol->getFullDLLPath(call, buf, path);
 }
 
 	/* do_dynload implements the R-Interface for the */
@@ -599,6 +607,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
+
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected");
@@ -613,6 +622,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
+
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected");

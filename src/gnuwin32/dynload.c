@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000 The R Development Core Team
+ *  Copyright (C) 1997-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ static CFunTabEntry CFunTab[] =
 
 static void fixPath(char *path)
 {
-  char *p;
+    char *p;
     for(p = path; *p != '\0'; p++) if(*p == '\\') *p = '/';
 }
 
@@ -105,7 +105,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path);
 
 static void closeLibrary(HINSTANCE handle)
 {
-  FreeLibrary(handle);
+    FreeLibrary(handle);
 }
 
 void InitFunctionHashing()
@@ -127,7 +127,7 @@ void InitFunctionHashing()
 
 static void R_deleteCachedSymbols(DllInfo *dll)
 {
-  int i;
+    int i;
     for(i = nCPFun - 1; i >= 0; i--)
 	if(!strcmp(CPFun[i].pkg, dll->name)) {
 	    if(i < nCPFun - 1) {
@@ -140,44 +140,44 @@ static void R_deleteCachedSymbols(DllInfo *dll)
 
 HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
 {
-  HINSTANCE tdlh;
-    tdlh = LoadLibrary(path);
+    HINSTANCE tdlh;
 
- return(tdlh);
+    tdlh = LoadLibrary(path);
+    return(tdlh);
 }
 
 static DL_FUNC getRoutine(DllInfo *info, char const *name)
 {
- DL_FUNC f;
-  f = (DL_FUNC) GetProcAddress(info->handle, name);
-  return(f);
+    DL_FUNC f;
+    f = (DL_FUNC) GetProcAddress(info->handle, name);
+    return(f);
 }
 
 static void R_getDLLError(char *buf, int len)
 {
     LPVOID lpMsgBuf;
-	FormatMessage( 
-	    FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-	    FORMAT_MESSAGE_FROM_SYSTEM | 
-	    FORMAT_MESSAGE_IGNORE_INSERTS,
-	    NULL,
-	    GetLastError(),
-	    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-	    (LPTSTR) &lpMsgBuf,
-	    0,
-	    NULL 
-	    );
-	strcpy(buf, "LoadLibrary failure:  ");
-	strcat(buf, lpMsgBuf);
-	LocalFree(lpMsgBuf);
+    FormatMessage(
+	FORMAT_MESSAGE_ALLOCATE_BUFFER |
+	FORMAT_MESSAGE_FROM_SYSTEM |
+	FORMAT_MESSAGE_IGNORE_INSERTS,
+	NULL,
+	GetLastError(),
+	MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	(LPTSTR) &lpMsgBuf,
+	0,
+	NULL
+	);
+    strcpy(buf, "LoadLibrary failure:  ");
+    strcat(buf, lpMsgBuf);
+    LocalFree(lpMsgBuf);
 }
 
 
 static DL_FUNC getBaseSymbol(const char *name)
 {
-  static int NumStatic = 0;
-  int   mid, high, low, cmp;
-  if (!NumStatic) {
+    static int NumStatic = 0;
+    int   mid, high, low, cmp;
+    if (!NumStatic) {
         int i,j;
 	char *tname;
 	DL_FUNC tfunc;
@@ -228,4 +228,3 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
     /* fix slashes to allow inconsistent usage later */
     for (p = buf; *p; p++) if (*p == '\\') *p = '/';
 }
-
