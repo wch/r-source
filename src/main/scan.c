@@ -1032,7 +1032,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     
     if (!done) {
 	if (asIs) {
-	    rval = cvec;
+	    PROTECT(rval = cvec); /* just to balance */
 	}
 	else {
 	    PROTECT(rval = allocVector(INTSXP, len));

@@ -48,8 +48,11 @@ BUG FIXES
     o	scan(multi.line = FALSE) now always gives an immediate error
 	message if a line is incomplete. (As requested in PR#1210)
 
-    o	read.table is no longer very slow in processing comments in
-	the first few lines: moved to C code.
+    o	read.table is no longer very slow in processing comments:
+	moved to C code and fewer lines checked.
+
+    o	type.convert() could give stack imbalance warnings if used
+	with as.is = TRUE.
 
 
 
