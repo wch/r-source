@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,14 +36,6 @@ static char *SaveString(SEXP sxp, int offset)
     return s;
 }
 
-#ifdef NotUsed
-static void DeviceUnavailable(char *dev)
-{
-    errorcall(gcall, "%s device is unavailable.\n", dev);
-}
-#endif
-
-
 #ifdef Unix
 #include "../unix/devX11.h"
 /*  X11 Device Driver Parameters:
@@ -61,7 +53,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     gcall = call;
     vmax = vmaxget();
     display = SaveString(CAR(args), 0); args = CDR(args);
-    width = asReal(CAR(args));  args = CDR(args);
+    width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
 	errorcall(call, "invalid width or height");
@@ -88,6 +80,11 @@ SEXP do_x11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DeviceUnavailable("X11");
 }
+
+static void DeviceUnavailable(char *dev)
+{
+    errorcall(gcall, "%s device is unavailable.\n", dev);
+}
 #endif
 
 /*  PostScript Device Driver Parameters:
@@ -95,7 +92,7 @@ SEXP do_x11(SEXP call, SEXP op, SEXP args, SEXP env)
  *  file	= output filename
  *  paper	= paper type
  *  face	= typeface = "family"
- *  bg	        = background color
+ *  bg		= background color
  *  fg		= foreground color
  *  width	= width in inches
  *  height	= height in inches
@@ -117,11 +114,11 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     face = SaveString(CAR(args), 0);  args = CDR(args);
     bg = SaveString(CAR(args), 0);    args = CDR(args);
     fg = SaveString(CAR(args), 0);    args = CDR(args);
-    width = asReal(CAR(args));        args = CDR(args);
-    height = asReal(CAR(args));       args = CDR(args);
+    width = asReal(CAR(args));	      args = CDR(args);
+    height = asReal(CAR(args));	      args = CDR(args);
     horizontal = asLogical(CAR(args));args = CDR(args);
     if(horizontal == NA_LOGICAL)
-        horizontal = 1;
+	horizontal = 1;
     ps = asReal(CAR(args));
 
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
@@ -144,14 +141,12 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 /*  PicTeX Device Driver Parameters
  *  --------------------		--> ../unix/devPicTeX.c
  *  file    = output filename
- *  bg      = background color
- *  fg      = foreground color
+ *  bg	    = background color
+ *  fg	    = foreground color
  *  width   = width in inches
  *  height  = height in inches
  *  debug   = int; if non-0, write TeX-Comments into output.
  */
-int PicTeXDeviceDriver(DevDesc*, char*, char *, char*,
-                       double, double, int);
 
 SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -165,8 +160,8 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     file = SaveString(CAR(args), 0); args = CDR(args);
     bg = SaveString(CAR(args), 0);   args = CDR(args);
     fg = SaveString(CAR(args), 0);   args = CDR(args);
-    width = asReal(CAR(args));       args = CDR(args);
-    height = asReal(CAR(args));      args = CDR(args);
+    width = asReal(CAR(args));	     args = CDR(args);
+    height = asReal(CAR(args));	     args = CDR(args);
     debug = asInteger(CAR(args));    args = CDR(args);
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
@@ -183,4 +178,3 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return R_NilValue;
 }
-

@@ -26,9 +26,9 @@ format.default <- function(x, trim=FALSE, digits=NULL)
 format.char <- function(x, width = NULL, flag = "-")
 {
     ## Purpose: Character formatting
-    ## --------------------------------------------------------------------
-    ## Arguments: x: character,	 width: of field, flag: if "-" LEFT-justify
-    ## --------------------------------------------------------------------
+    ## ---------------------------------------------------------------------
+    ## Arguments: x: character,  width: of field,  flag: if "-" LEFT-justify
+    ## ---------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>
     if (is.null(x)) return("")
     if(!is.character(x)) {
