@@ -141,7 +141,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 		free(dd);
 		errorcall(call, "unable to start device X11\n");
 	}
-        gsetVar(install(".Device"), mkString("X11"), R_NilValue);
+        gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
         addDevice(dd);
         initDisplayList(dd);
 	vmaxset(vmax);
