@@ -25,6 +25,7 @@
 void tcltk_init(void);
 
 SEXP dotTcl(SEXP args);
+SEXP dotTclObjv(SEXP args);
 SEXP dotTclcallback(SEXP args);
 
 /* Used by .C */
@@ -48,3 +49,6 @@ SEXP RTcl_ObjAsIntVector(SEXP args);
 SEXP RTcl_ObjFromCharVector(SEXP args);
 SEXP RTcl_ObjFromDoubleVector(SEXP args);
 SEXP RTcl_ObjFromIntVector(SEXP args);
+SEXP RTcl_GetArrayElem(SEXP args);
+SEXP RTcl_SetArrayElem(SEXP args);
+SEXP RTcl_RemoveArrayElem(SEXP args);

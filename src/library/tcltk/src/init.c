@@ -38,7 +38,8 @@ static const R_CMethodDef CEntries[] = {
 
 static const R_ExternalMethodDef ExternEntries[] = {
     {"dotTcl", (DL_FUNC) &dotTcl, -1},
-    {"dotTclcallbask", (DL_FUNC) &dotTclcallback, -1},
+    {"dotTclObjv", (DL_FUNC) &dotTclObjv, 1},
+    {"dotTclcallback", (DL_FUNC) &dotTclcallback, -1},
     {"RTcl_ObjFromVar", (DL_FUNC) &RTcl_ObjFromVar, 1},
     {"RTcl_AssignObjToVar", (DL_FUNC) &RTcl_AssignObjToVar, 2},
     {"RTcl_StringFromObj", (DL_FUNC) &RTcl_StringFromObj, 1},
@@ -48,13 +49,16 @@ static const R_ExternalMethodDef ExternEntries[] = {
     {"RTcl_ObjFromCharVector", (DL_FUNC) &RTcl_ObjFromCharVector, 2},
     {"RTcl_ObjFromDoubleVector", (DL_FUNC) &RTcl_ObjFromDoubleVector, 2},
     {"RTcl_ObjFromIntVector", (DL_FUNC) &RTcl_ObjFromIntVector, 2},
+    {"RTcl_GetArrayElem", (DL_FUNC) &RTcl_GetArrayElem, 2},
+    {"RTcl_RemoveArrayElem", (DL_FUNC) &RTcl_RemoveArrayElem, 2},
+    {"RTcl_SetArrayElem", (DL_FUNC) &RTcl_SetArrayElem, 3},
     {NULL, NULL, 0}
 };
 
 
 void R_init_tcltk(DllInfo *dll)
 {
-    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, CEntries, NULL, NULL, ExternEntries);
+    R_useDynamicSymbols(dll, FALSE);
 }
 
