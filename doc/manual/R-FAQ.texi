@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-18, 2002-02-19
+@set FAQ-VERSION 1.4-19, 2002-02-21
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1449,6 +1449,9 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item CircStats
+Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
+Jammalamadaka and A. SenGupta, 2001, World Scientific.
 @item CoCoAn
 Constrained Correspondence Analysis.
 @item Devore5
