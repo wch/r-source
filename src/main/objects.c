@@ -723,6 +723,8 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isFunction(nextfun)) {
 	    t = install(CHAR(STRING_ELT(generic, 0)));
 	    nextfun = findVar(t,env);
+	    if (TYPEOF(nextfun)==PROMSXP)
+		nextfun = eval(nextfun, env);
 	    if (!isFunction(nextfun))
 		error("No method to invoke");
 	    if (TYPEOF(nextfun) == CLOSXP) {

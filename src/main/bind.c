@@ -841,6 +841,8 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
 	error("class name too long in %s", generic);
     sprintf(buf, "%s.%s", generic, classname);
     method = findVar(install(buf), env);
+    if (TYPEOF(method)==PROMSXP)
+	method = eval(method, env);
     if (TYPEOF(method) != CLOSXP)
 	method = R_NilValue;
     return method;
@@ -883,7 +885,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     class = R_NilValue;
     method = R_NilValue;
     for (a = args; a != R_NilValue; a = CDR(a)) {
-	obj = eval(CAR(a), env);
+	PROTECT(obj = eval(CAR(a), env));
 	if (isObject(obj)) {
 	    int i;
 	    classlist = getAttrib(obj, R_ClassSymbol);
@@ -910,6 +912,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
+	UNPROTECT(1);
     }
     if (method != R_NilValue) {
 	PROTECT(method);
