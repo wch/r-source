@@ -1,7 +1,3 @@
-# file modreg/R/loess.R
-# copyright (C) 1998 B. D. Ripley
-# Copyright (C) 2000-2 The R Development Core Team
-#
 loess <-
 function(formula, data=NULL, weights, subset, na.action, model = FALSE,
 	 span = 0.75, enp.target, degree = 2, parametric = FALSE,

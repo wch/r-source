@@ -14,10 +14,10 @@
   in the future and are currently work in progress.}
 \usage{
 packageStatus(lib.loc = NULL, repositories = getOption("repositories"))
-\method{summary}{packageStatus}(object, ...)
-\method{update}{packageStatus}(object, lib.loc=levels(object$inst$LibPath),
-       repositories=levels(object$avail$Repository), ...)
-\method{upgrade}{packageStatus}(object, ask=TRUE, ...)
+\method{summary}{packageStatus}(object, \dots)
+\method{update}{packageStatus}(object, lib.loc = levels(object$inst$LibPath),
+       repositories = levels(object$avail$Repository), \dots)
+\method{upgrade}{packageStatus}(object, ask = TRUE, \dots)
 }
 \arguments{
   \item{lib.loc}{a character vector describing the location of \R
@@ -28,7 +28,7 @@ packageStatus(lib.loc = NULL, repositories = getOption("repositories"))
   \item{object}{return value of \code{packageStatus}.}
   \item{ask}{if \code{TRUE}, the user is prompted which packages should
     be upgraded and which not.}
-  \item{...}{currently not used.}
+  \item{\dots}{currently not used.}
 }
 \examples{
 \dontrun{

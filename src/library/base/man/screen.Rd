@@ -79,6 +79,11 @@ close.screen(n, all.screens = FALSE)
   \code{\link{par}}, \code{\link{layout}}, \code{\link{Devices}},
   \code{dev.*}
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 
 \examples{
 if (interactive()) {

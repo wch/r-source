@@ -738,8 +738,13 @@ SEXP R_execMethod(SEXP op, SEXP rho)
        it can be done more efficiently. */
     for (next = FORMALS(op); next != R_NilValue; next = CDR(next)) {
 	SEXP symbol =  TAG(next);
-	R_varloc_t loc = R_findVarLocInFrame(rho,symbol);
-	int missing = R_GetVarLocMISSING(loc);
+	R_varloc_t loc;
+	int missing;
+	loc = R_findVarLocInFrame(rho,symbol);
+	if(loc == NULL)
+	    error("Could not find symbol \"%s\" in environment of the generic function",
+		  CHAR(PRINTNAME(symbol)));
+	missing = R_GetVarLocMISSING(loc);
 	val = R_GetVarLocValue(loc);
 	SET_FRAME(newrho, CONS(val, FRAME(rho)));
 	SET_TAG(FRAME(newrho), symbol);
@@ -1085,7 +1090,8 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* We do the evaluation here so that we can tag any untagged
        return values if they are specified by symbols. */
 
-    PROTECT(vals = evalList(args, rho));
+    /* this used to crash with missing args, so keep them and check later */
+    PROTECT(vals = evalListKeepMissing(args, rho));
     a = args;
     v = vals;
     while (!isNull(a)) {
@@ -1105,9 +1111,12 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	v = CAR(vals);
 	break;
     default:
-	for (v = vals; v != R_NilValue; v = CDR(v))
+	for (v = vals; v != R_NilValue; v = CDR(v)) {
+	    if (CAR(v) == R_MissingArg)
+		error("empty expression in return value");
 	    if (NAMED(CAR(v)))
 		SETCAR(v, duplicate(CAR(v)));
+	}
 	v = PairToVectorList(vals);
 	break;
     }
@@ -1685,6 +1694,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	/* create a promise to pass down to applyClosure  */
 	if(!argsevald) {
 	    argValue = promiseArgs(args, rho);
+	    SET_PRVALUE(CAR(argValue), x);
 	}
 	else
 	  argValue = args;

@@ -72,7 +72,8 @@ type?topic
 }
 \details{
   In the case of unary and binary operators and control-flow special
-  forms, the name may need to be quoted.
+  forms (including \code{if}, \code{for} and \code{function}), the name
+  may need to be quoted.
 
 #ifdef unix
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
@@ -123,6 +124,11 @@ type?topic
   \file{Rhelp.zip}. Ensure that file \file{AnIndex} remains un-zipped.
   Similarly, all the files in the
   \file{latex} directory can be zipped to \file{Rhelp.zip}.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{help.search}()} for finding help pages on a ``vague'' topic.

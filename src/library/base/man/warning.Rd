@@ -30,6 +30,11 @@ warning(\dots, call. = TRUE)
   Warnings will be truncated to \code{getOption("warning.length")}
   characters, default 1000.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{stop}} for fatal errors,
   \code{\link{warnings}},

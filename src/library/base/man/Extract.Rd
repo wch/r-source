@@ -13,15 +13,13 @@
 \alias{[[.data.frame}
 \alias{[<-.data.frame}
 \alias{[[<-.data.frame}
-\alias{[.factor}
 \alias{[.formula}
 \alias{[.ts}
-\alias{[<-.factor}
 \alias{[.noquote}
 \alias{.subset}
 \alias{.subset2}
 \description{
-  Operators act on vectors, arrays, dataframes and lists to extract or
+  Operators act on vectors, arrays, data frames and lists to extract or
   replace subsets.
 }
 \usage{
@@ -61,7 +59,7 @@ x$name
   values which are printed (for which use \code{[as.character(i)]}).
 
   When \code{[.data.frame} is used for subsetting rows of a
-  \code{\link{data.frame}}, it returns a dataframe with unique
+  \code{\link{data.frame}}, it returns a data frame with unique
   (and non-missing)row names, if necessary transforming the names using
   \code{\link{make.names}( * , unique = TRUE)}. See the \code{swiss}
   example below.
@@ -85,8 +83,14 @@ x$name
   unclassing in order to apply the default method to an object.  They
   should not normally be invoked by end users.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
+  \code{\link{factor}} for the behaviour of \code{[} applied to factors.
 
   \code{\link{Syntax}} for operator precedence, and the
   \emph{R Language} reference manual about indexing details.

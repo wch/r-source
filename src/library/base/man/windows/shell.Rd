@@ -62,7 +62,6 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
   user-friendly wrapper for \code{system}.  To make use of Windows
   file associations, use \code{\link{shell.exec}}.
 }
-\author{B. D. Ripley}
 
 \seealso{\code{\link{system}}, \code{\link{shell.exec}}}
 

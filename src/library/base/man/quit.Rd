@@ -45,6 +45,11 @@ quit(save = "default", status = 0, runLast = TRUE)
     Valid values of \code{status} are system-dependent, but \code{0:255}
     are normally valid.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{.First}} for setting things on startup.
 }
 \examples{

@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-04-08)
+Version 1.7.1 Beta (2003-06-11)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,6 +17,8 @@ Type `q()' to quit R.
 > 
 > postscript("reg-tests-2.ps")
 > RNGversion("1.6.2")
+Warning message: 
+Buggy version of Kinderman-Ramage generator used. in: RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") 
 > 
 > ### moved from various .Rd files
 > ## abbreviate
@@ -897,14 +899,14 @@ $B$subset
 > ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
 > data(attenu)
 > summary(attenu)
-     event              mag             station             dist        
- Min.   : 1.00     Min.   :5.000     117    :  5       Min.   :  0.50   
- 1st Qu.: 9.00     1st Qu.:5.300     1028   :  4       1st Qu.: 11.32   
- Median :18.00     Median :6.100     113    :  4       Median : 23.40   
- Mean   :14.74     Mean   :6.084     112    :  3       Mean   : 45.60   
- 3rd Qu.:20.00     3rd Qu.:6.600     135    :  3       3rd Qu.: 47.55   
- Max.   :23.00     Max.   :7.700     (Other):147       Max.   :370.00   
-                                     NA's   : 16                        
+     event            mag           station         dist       
+ Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
+ 1st Qu.: 9.00   1st Qu.:5.300   1028   :  4   1st Qu.: 11.32  
+ Median :18.00   Median :6.100   113    :  4   Median : 23.40  
+ Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60  
+ 3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55  
+ Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00  
+                                 NA's   : 16                   
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -914,14 +916,14 @@ $B$subset
  Max.   :0.81000  
                   
 > summary(attenu, digits = 5)
-     event              mag             station             dist        
- Min.   : 1.000    Min.   :5.0000    117    :  5       Min.   :  0.500  
- 1st Qu.: 9.000    1st Qu.:5.3000    1028   :  4       1st Qu.: 11.325  
- Median :18.000    Median :6.1000    113    :  4       Median : 23.400  
- Mean   :14.742    Mean   :6.0841    112    :  3       Mean   : 45.603  
- 3rd Qu.:20.000    3rd Qu.:6.6000    135    :  3       3rd Qu.: 47.550  
- Max.   :23.000    Max.   :7.7000    (Other):147       Max.   :370.000  
-                                     NA's   : 16                        
+     event             mag            station         dist        
+ Min.   : 1.000   Min.   :5.0000   117    :  5   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1028   :  4   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   113    :  4   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   112    :  3   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   135    :  3   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   (Other):147   Max.   :370.000  
+                                   NA's   : 16                    
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -931,14 +933,14 @@ $B$subset
  Max.   :0.81000  
                   
 > summary(data.matrix(attenu), digits = 5)# the same for matrix
-     event              mag             station             dist        
- Min.   : 1.000    Min.   :5.0000    Min.   :  1.000   Min.   :  0.500  
- 1st Qu.: 9.000    1st Qu.:5.3000    1st Qu.: 24.250   1st Qu.: 11.325  
- Median :18.000    Median :6.1000    Median : 56.500   Median : 23.400  
- Mean   :14.742    Mean   :6.0841    Mean   : 56.928   Mean   : 45.603  
- 3rd Qu.:20.000    3rd Qu.:6.6000    3rd Qu.: 86.750   3rd Qu.: 47.550  
- Max.   :23.000    Max.   :7.7000    Max.   :117.000   Max.   :370.000  
-                                     NA's   : 16.000                    
+     event             mag            station             dist        
+ Min.   : 1.000   Min.   :5.0000   Min.   :  1.000   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1st Qu.: 24.250   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   Median : 56.500   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   Mean   : 56.928   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   3rd Qu.: 86.750   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   Max.   :117.000   Max.   :370.000  
+                                   NA's   : 16.000                    
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -1575,27 +1577,27 @@ Eye:Sex   3    23.08 201.83
 +     set.seed(77, type)
 +     runif(100); print(runif(4))
 + }
-[1] "Wichmann-Hill"    "Kinderman-Ramage"
+[1] "Wichmann-Hill"          "Buggy Kinderman-Ramage"
 [1] 0.8308841 0.4640221 0.9460082 0.8764644
 [1] 0.12909876 0.07294851 0.45594560 0.68884911
 [1] 0.4062450 0.7188432 0.6241738 0.2511611
-[1] "Marsaglia-Multicarry" "Kinderman-Ramage"    
+[1] "Marsaglia-Multicarry"   "Buggy Kinderman-Ramage"
 [1] 0.3479705 0.9469351 0.2489207 0.7329251
 [1] 0.5041512 0.3617873 0.1469184 0.3798119
 [1] 0.14388128 0.04196294 0.36214015 0.86053575
-[1] "Super-Duper"      "Kinderman-Ramage"
+[1] "Super-Duper"            "Buggy Kinderman-Ramage"
 [1] 0.2722510 0.9230240 0.3971743 0.8284474
 [1] 0.5706241 0.1806023 0.9633860 0.8434444
 [1] 0.09356585 0.41081124 0.38635627 0.72993396
-[1] "Mersenne-Twister" "Kinderman-Ramage"
+[1] "Mersenne-Twister"       "Buggy Kinderman-Ramage"
 [1] 0.5999890 0.3328235 0.4886130 0.9544738
 [1] 0.5993679 0.4516818 0.1368254 0.7261788
 [1] 0.09594961 0.31235651 0.81244335 0.72330846
-[1] "Knuth-TAOCP"      "Kinderman-Ramage"
+[1] "Knuth-TAOCP"            "Buggy Kinderman-Ramage"
 [1] 0.9445502 0.3366297 0.6296881 0.5914161
 [1] 0.9213954 0.5468138 0.8817100 0.4442237
 [1] 0.8016962 0.9226080 0.1473484 0.8827707
-[1] "Knuth-TAOCP-2002" "Kinderman-Ramage"
+[1] "Knuth-TAOCP-2002"       "Buggy Kinderman-Ramage"
 [1] 0.9303634 0.2812239 0.1085806 0.8053228
 [1] 0.2916627 0.9085017 0.7958965 0.1980655
 [1] 0.05247575 0.28290867 0.20930324 0.16794887
@@ -1923,13 +1925,13 @@ y    2    5 8
 > x <- data.frame(1:10)
 > x$z <- data.frame(x=1:10,yyy=11:20)
 > summary(x)
-     X1.10                              z.x             z.yyy     
- Min.   : 1.00                    Min.   : 1.00    Min.   :11.00  
- 1st Qu.: 3.25                    1st Qu.: 3.25    1st Qu.:13.25  
- Median : 5.50                    Median : 5.50    Median :15.50  
- Mean   : 5.50                    Mean   : 5.50    Mean   :15.50  
- 3rd Qu.: 7.75                    3rd Qu.: 7.75    3rd Qu.:17.75  
- Max.   :10.00                    Max.   :10.00    Max.   :20.00  
+     X1.10             z.x             z.yyy     
+ Min.   : 1.00   Min.   : 1.00    Min.   :11.00  
+ 1st Qu.: 3.25   1st Qu.: 3.25    1st Qu.:13.25  
+ Median : 5.50   Median : 5.50    Median :15.50  
+ Mean   : 5.50   Mean   : 5.50    Mean   :15.50  
+ 3rd Qu.: 7.75   3rd Qu.: 7.75    3rd Qu.:17.75  
+ Max.   :10.00   Max.   :10.00    Max.   :20.00  
 > ## 1.6.2 had NULL labels on output with z columns stacked.
 > 
 > 
@@ -2272,17 +2274,23 @@ S4 print method
 > 
 > 
 > ## scoping rules calling step inside a function
-> if(require(MASS)) { # only for "cement"
-+     teststep <- function(formula, data)
-+     {
-+         d2 <- data
-+         fit <- lm(formula, data=d2)
-+         step(fit)
-+     }
-+     teststep(formula(y ~ .), cement)
-+     detach("package:MASS")
+> "cement" <-
++     structure(list(x1 = c(7, 1, 11, 11, 7, 11, 3, 1, 2, 21, 1, 11, 10),
++                    x2 = c(26, 29, 56, 31, 52, 55, 71, 31, 54, 47, 40, 66, 68),
++                    x3 = c(6, 15, 8, 8, 6, 9, 17, 22, 18, 4, 23, 9, 8),
++                    x4 = c(60, 52, 20, 47, 33, 22, 6, 44, 22, 26, 34, 12, 12),
++                    y = c(78.5, 74.3, 104.3, 87.6, 95.9, 109.2, 102.7, 72.5,
++                    93.1, 115.9, 83.8, 113.3, 109.4)),
++               .Names = c("x1", "x2", "x3", "x4", "y"), class = "data.frame",
++               row.names = c("1", "2", "3", "4", "5", "6", "7", "8", "9",
++               "10", "11", "12", "13"))
+> teststep <- function(formula, data)
++ {
++     d2 <- data
++     fit <- lm(formula, data=d2)
++     step(fit)
 + }
-Loading required package: MASS 
+> teststep(formula(y ~ .), cement)
 Start:  AIC= 26.94 
  y ~ x1 + x2 + x3 + x4 
 
@@ -2301,10 +2309,19 @@ Step:  AIC= 24.97
 - x4    1      9.93  57.90  25.42
 - x2    1     26.79  74.76  28.74
 - x1    1    820.91 868.88  60.63
+
+Call:
+lm(formula = y ~ x1 + x2 + x4, data = d2)
+
+Coefficients:
+(Intercept)           x1           x2           x4  
+    71.6483       1.4519       0.4161      -0.2365  
+
 > ## failed in 1.6.2
 > 
 > str(array(1))# not a scalar
  num [, 1] 1
+> 
 > 
 > ## na.print="" shouldn't apply to (dim)names!
 > (tf <- table(ff <- factor(c(1:2,NA,2), exclude=NULL)))
@@ -2316,6 +2333,7 @@ Step:  AIC= 24.97
 > str(levels(ff))
  chr [1:3] "1" "2" NA
 > ## not quite ok previous to 1.7.0
+> 
 > 
 > ## str() for character & factors with NA (levels), and for Surv objects:
 > ff <- factor(c(2:1,  NA),  exclude = NULL)
@@ -2338,4 +2356,41 @@ Loading required package: survival
   ..$ : chr [1:2] "time" "status"
  - attr(*, "type")= chr "right"
 > ## were different, the last one failed in 1.6.2 (at least)
+> 
+> 
+> ## PR#3058  printing with na.print and right=TRUE
+> a <- matrix( c(NA, "a", "b", "10",
++                NA, NA,  "d", "12",
++                NA, NA,  NA,  "14"),
++             byrow=T, ncol=4 )
+> print(a, right=TRUE, na.print=" ")
+     [,1] [,2] [,3] [,4]
+[1,]       "a"  "b" "10"
+[2,]            "d" "12"
+[3,]                "14"
+> print(a, right=TRUE, na.print="----")
+     [,1] [,2] [,3] [,4]
+[1,] ----  "a"  "b" "10"
+[2,] ---- ----  "d" "12"
+[3,] ---- ---- ---- "14"
+> ## misaligned in 1.7.0
+> 
+> 
+> ## assigning factors to dimnames
+> A <- matrix(1:4, 2)
+> aa <- factor(letters[1:2])
+> dimnames(A) <- list(aa, NULL)
+> A
+  [,1] [,2]
+1    1    3
+2    2    4
+> dimnames(A)
+[[1]]
+[1] "1" "2"
+
+[[2]]
+NULL
+
+> ## 1.7.0 gave internal codes as display and dimnames()
+> ## 1.7.1beta gave NAs via dimnames()
 > 

@@ -10,7 +10,6 @@ se.aovlist(object, dn.proj, dn.strata, factors, mf, efficiency,
 \description{
   Internal function for use by \code{\link{model.tables}}.
 }
-\author{B. D. Ripley}
 \seealso{\code{\link{model.tables}}}
 
 \keyword{internal}

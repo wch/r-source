@@ -12,7 +12,7 @@
 prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 }
 \arguments{
-  \item{x}{a matrix (or data frame) which provides the data for the
+  \item{x}{a numeric matrix (or data frame) which provides the data for the
     principal components analysis.}
   \item{retx}{a logical value indicating whether the rotated variables
     should be returned.}
@@ -65,6 +65,10 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   different builds of \R.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Mardia, K. V., J. T. Kent, and J. M. Bibby (1979)
   \emph{Multivariate Analysis}, London: Academic Press.
 

@@ -273,7 +273,7 @@ EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
-	@test -d .libs || mkdir .libs
+	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
@@ -1592,7 +1592,7 @@ if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
      AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
-     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
      AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
      if test "${R_sunperf}" = yes; then
         BLAS_LIBS="-xlic_lib=sunperf -lsunmath"

@@ -8,7 +8,7 @@
   of the state at each time point based on the whole observed series.
 }
 \usage{
-tsSmooth(object, ...)
+tsSmooth(object, \dots)
 }
 \arguments{
   \item{object}{a time-series fit.  Currently only class

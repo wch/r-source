@@ -5,8 +5,8 @@
   Simulate from an ARIMA model.
 }
 \usage{
-arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, ...),
-          n.start = NA, ...)
+arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
+          n.start = NA, \dots)
 }
 \arguments{
   \item{model}{A list with component \code{ar} and/or \code{ma} giving

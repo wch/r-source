@@ -2,6 +2,8 @@ require(tcltk) || stop("tcltk support is absent")
 local({
 
     tkfilefind<-function(path=getwd(), all.names=FALSE, multiple=FALSE){
+        .Deprecated("tkgetOpenFile or tkgetSaveFile")
+        # in fact this might not even work with newer version of Tcl
         tclRequire("::Utility")
         tclRequire("Hierarchy")
         .Tcl("namespace import -force ::Utility::*")

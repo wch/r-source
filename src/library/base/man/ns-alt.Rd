@@ -7,13 +7,13 @@
 \alias{.S3method}
 
 \usage{
-  .Export(...)
-  .Import(...)
-  .ImportFrom(name, ...)
+  .Export(\dots)
+  .Import(\dots)
+  .ImportFrom(name, \dots)
   .S3method(generic, class, method)
 }
 \arguments{
-  \item{...}{unevaluated character or name arguments.}
+  \item{\dots}{unevaluated character or name arguments.}
   \item{name}{unevaluated character or name.}
   \item{generic}{unevaluated character or name.}
   \item{class}{unevaluated character or name.}
@@ -24,22 +24,22 @@
   package.
 }
 \details{
-  As an experimental alternative to using a \code{NAMESPACE} file it is
+  As an experimental alternative to using a \file{NAMESPACE} file it is
   possible to add a name space to a package by adding a
-  \code{Namespace: <package name>} entry to the \code{DESCRIPTION} file and
-  placing directives to specify imports and exports directly in package code.
-  These directives should be viewed as declarations, not as function calls.
-  Except to the optional method argument to \code{.S3method} arguments are
-  not evaluated.  These directives should only be used at top level of
-  package code except as noted below.
+  \code{Namespace: <package_name>} entry to the \file{DESCRIPTION}
+  file and placing directives to specify imports and exports directly in
+  package code.  These directives should be viewed as declarations, not
+  as function calls.   Except to the optional method argument to
+  \code{.S3method} arguments are not evaluated.  These directives should
+  only be used at top level of package code except as noted below.
 
   \code{.Export} is used to declare exports.  Its arguments should be
-  literal names or character strings. \code{.Export} should only be
+  literal names or character strings.  \code{.Export} should only be
   used at package top level.
 
   \code{.Import} is used to declare the import of entire name spaces.
   Its arguments should be literal names or character strings.
-  \code{ImportFrom} is used to declare the import of selected
+  \code{.ImportFrom} is used to declare the import of selected
   variables from a single name space.  The first argument is a literal
   name or character string identifying the source name space; the
   remaining arguments are literal names or character strings identifying
@@ -59,22 +59,22 @@
   argument should evaluate to a character string or a function.  If the
   third argument is omitted or a character string is supplied, then a
   function by that name must be defined.  If a function is supplied,
-  it is used as the method.  When the method id specified as a name,
+  it is used as the method.  When the method is specified as a name,
   explicitly or implicitly, the function lookup is handled lazily;
-  this allows the definition to occur after the \code{S3method}
+  this allows the definition to occur after the \code{.S3method}
   declaration and also integrates with possible data base storage of
   package code.
 }
 \examples{
 \dontrun{
-# code for package/name space "foo"
+## code for package/name space 'foo'
 x <- 1
 f <- function(y) c(x,y)
 print.foo <- function(x, ...) cat("<a foo>\n")
 .Export(f)
 S3method(print,foo)
 
-# code for package/name space bar
+## code for package/name space 'bar'
 .Import(foo)
 c <- function(...) sum(...)
 g <- function(y) f(c(y, 7))

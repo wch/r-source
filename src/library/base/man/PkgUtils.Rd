@@ -51,6 +51,9 @@ Rcmd check [options] pkgdirs
   \code{Rcmd foo --help}
 #endif
   to obtain usage information on utility \code{foo}.
+
+  Several of the options to \code{build --binary} are passed to
+  \code{\link{INSTALL}} so consult its help for the details.
 }
 #ifdef windows
 \note{
@@ -70,5 +73,7 @@ Rcmd check [options] pkgdirs
 #ifdef windows
   (see the Manuals sub-menu of the Help menu on the console).
 #endif
+
+  \code{\link{INSTALL}} is called by \code{build --binary}.
 }
 \keyword{utilities}

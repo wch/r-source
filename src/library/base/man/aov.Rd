@@ -50,7 +50,16 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   strata of class \code{"aovlist"}.  There are
   \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
-\author{B. D. Ripley}
+\references{
+  Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
+  \emph{Analysis of variance; designed experiments.}
+  Chapter 5 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
+\author{
+  The design was inspired by the S function of the same name described
+  in Chambers \emph{et al.} (1992).
+}
 \seealso{
   \code{\link{lm}}, \code{\link{summary.aov}}, \code{\link{alias}},
   \code{\link{proj}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}

@@ -40,6 +40,11 @@ print.factor(x, quote = FALSE, max.levels = NULL,
   See \code{\link{noquote}} as an example of a class whose main
   purpose is a specific \code{print} method.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   The default method \code{\link{print.default}}, and help for the
   methods above; further \code{\link{options}}, \code{\link{noquote}}.

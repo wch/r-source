@@ -32,6 +32,4 @@ zip.file.extract(file, zipname = "R.zip")
   The \code{"internal"} method is very simple, and will not set file dates.
 }
 
-\author{B. D. Ripley}
-
 \keyword{file}

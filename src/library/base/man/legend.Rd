@@ -69,23 +69,30 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
 
   Points are drawn \emph{after} lines in order that they can cover the
   line with their background color \code{pt.bg}, if applicable.
+
+  See the examples for how to right-justify labels.
 }
 \value{
   A (\code{\link{invisible}}) list with list components
   \item{rect}{a list with components
     \describe{
-      \item{\code{w,h}}{positive numbers giving \bold{w}idth and
+      \item{\code{w, h}}{positive numbers giving \bold{w}idth and
 	\bold{h}eight of the legend's box.}
-      \item{\code{left,top}}{x and y coordinates of upper left corner
+      \item{\code{left, top}}{x and y coordinates of upper left corner
 	of the box.}
     }
   }
   \item{text}{a list with components
     \describe{
-      \item{\code{x,y}}{numeric vectors of length \code{length(legend)},
+      \item{\code{x, y}}{numeric vectors of length \code{length(legend)},
 	giving the x and y coordinates of the legend's text(s).}
     }
   }
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}, and
@@ -103,6 +110,7 @@ for (i in seq(cexv)) {
   text  (1, y.leg[i]-.1, paste("cex=",formatC(cexv[i])), cex=.8, adj = 0)
   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 }
+
 ## `merge = TRUE' for merging lines & points:
 x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
@@ -112,6 +120,17 @@ title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
       cex.main = 1.1)
 legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
        lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, bg='gray90')
+
+## right-justifying a set of labels: thanks to Uwe Ligges
+x <- 1:5; y1 <- 1/x; y2 <- 2/x
+plot(rep(x, 2), c(y1, y2), type="n", xlab="x", ylab="y")
+lines(x, y1); lines(x, y2, lty=2)
+temp <- legend(5, 2, legend = c(" ", " "),
+               text.width = strwidth("1,000,000"),
+               lty = 1:2, xjust = 1, yjust = 1)
+text(temp$rect$left + temp$rect$w, temp$text$y,
+     c("1,000", "1,000,000"), pos=2)
+
 
 ##--- log scaled Examples ------------------------------
 leg.txt <- c("a one", "a two")

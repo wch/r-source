@@ -54,6 +54,11 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   position along the axis unless \code{at} is specified.
 }
 \section{Side Effects}{The given text is written onto the current plot.}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{title}}, \code{\link{text}}, \code{\link{plot}},
   \code{\link{par}};

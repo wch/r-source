@@ -74,6 +74,11 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
   functions may be changing the line style, you should probably specify
   \code{lty=1} when using plotting symbols.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{plot}}, \code{\link{points}}, \code{\link{lines}},
   \code{\link{matrix}}, \code{\link{par}}.

@@ -77,7 +77,7 @@ dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
-    UseMethod("as.data.frame", x, row.names, optional)
+    UseMethod("as.data.frame")
 }
 as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
     stop(paste("can't coerce", class(x), "into a data.frame"))
@@ -619,6 +619,8 @@ data.frame <-
 # 	    class(value) <- NULL
 # 	    value <- value[[1]]
             N <- NROW(value)
+            if(N > nrows)
+                stop(paste("replacement has", N, "rows, data has", nrows))
             if(N < nrows)
                 if(nrows %% N == 0 && length(dim(value)) <= 1)
                     value <- rep(value, length = nrows)

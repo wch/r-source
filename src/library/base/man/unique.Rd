@@ -14,8 +14,8 @@ unique(x, incomparables = FALSE, ...)
 \method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, ...)
 }
 \usage{
-unique(x, incomparables = FALSE, ...)
-unique.array(x, incomparables = FALSE, MARGIN = 1, ...)
+unique(x, incomparables = FALSE, \dots)
+unique.array(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
 \arguments{
   \item{x}{an atomic vector or a data frame or an array.}
@@ -39,6 +39,11 @@ unique.array(x, incomparables = FALSE, MARGIN = 1, ...)
   An object of the same type of \code{x}. but if
   an element is equal to one with a smaller index, it is removed.
   Dimensions of arrays are not dropped.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{duplicated}} which gives the indices of duplicated

@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.50 2003/04/16 12:03:35 bates Exp $
+# $Id: rules,v 1.50.2.1 2003/05/15 16:43:03 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -43,12 +43,14 @@ endif
 export DH_COMPAT  = 3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
-#atlas 		= --with-blas=blas
-# dmb 04 Apr 2003  better to no specify blas
-atlas 		= --with-blas
-atlas 		= --with-blas
+atlas 		= --with-blas=blas
+# dmb 04 Apr 2003  better to use no specify blas
+# atlas 		= --with-blas
+# edd 28 Apr 2003  try configuring with atlas
+atlas		= --with-blas=atlas
 # edd 08 Mar 2003: use the new lapack feature
-lapack		= --with-lapack
+# edd 27 Apr 2003: Set this to =no as we currently see numerical errors
+lapack		= --with-lapack=no
 
 # edd 02 Sep 2001: default to g77 but let m68k use f2c
 # edd 06 Mar 2003: enforce 3.2 versions explicitly so that on testing we will pick them over 2.95
@@ -410,12 +412,15 @@ binary-arch: build-arch install-arch check
 	dh_installdeb -a
 	dh_perl -a
 	dh_shlibdeps -a
-	echo "*** Hack alert ***"
-	echo "*** Pruning shlibdeps result from double atlas entry ***"
+	@echo "*** Pruning shlibdeps result from double atlas entry ***"
 	cat debian/r-base-core.substvars
 	perl -p -i -e 's/atlas2-base, //' debian/r-base-core.substvars
 	cat debian/r-base-core.substvars
-	echo "*** Hack done ***"
+	@echo "*** Pruning atlas from r-recommended shlibdeps ***"
+	cat debian/r-recommended.substvars
+	perl -p -i -e 's/atlas2-base, //' debian/r-recommended.substvars
+	cat debian/r-recommended.substvars
+	echo "*** Done ***"
 	dh_gencontrol -a
 	dh_md5sums -a		-X'usr/bin/R'  -XLibIndex -Xindex.txt \
 					-Xfunction.html -Xpackages.html

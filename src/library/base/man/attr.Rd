@@ -13,6 +13,7 @@ attr(x, which) <- value
   \item{x}{an object whose attributes are to be accessed.}
   \item{which}{a character string specifying which attribute is to be
     accessed.}
+  \item{value}{an object, the new value of the attribute.}
 }
 \value{
   This function provides access to a single object attribute.  The
@@ -23,6 +24,11 @@ attr(x, which) <- value
   The first form first looks for an exact match to \code{code} amongst the
   attributed of \code{x}, then a partial match.  If no exact match is
   found and more than one partial match is found, the result is \code{NULL}.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{attributes}}

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2002	      The R Foundation
+ *  Copyright (C) 2002-3	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1040,7 +1040,7 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 SEXP R_primitive_methods(SEXP op)
 {
     int offset = PRIMOFFSET(op);
-    if(offset < 0 || offset >= curMaxOffset)
+    if(offset < 0 || offset > curMaxOffset)
 	return R_NilValue;
     else {
 	SEXP value = prim_mlist[offset];
@@ -1082,7 +1082,7 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
     }
     if(offset >= maxMethodsOffset) {
 	int n;
-	n = offset;
+	n = offset + 1;
 	if(n < DEFAULT_N_PRIM_METHODS)
 	    n = DEFAULT_N_PRIM_METHODS;
 	if(n < 2*maxMethodsOffset)

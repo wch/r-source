@@ -10,7 +10,7 @@
 factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
          subset, na.action,
          start = NULL, scores = c("none", "regression", "Bartlett"),
-         rotation = "varimax", control = NULL, ...)
+         rotation = "varimax", control = NULL, \dots)
 }
 \arguments{
   \item{x}{Either a formula or a numeric matrix or an object that can be
@@ -152,7 +152,6 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   Thomson, G. H. (1951) \emph{The Factorial Analysis of Human Ability.}
   London University Press.
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{print.loadings}},

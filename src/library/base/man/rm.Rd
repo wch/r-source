@@ -42,6 +42,11 @@ rm    (\dots, list = character(0), pos = -1, envir = as.environment(pos),
   The \code{envir} argument is an alternative way to specify an
   environment, but is primarily there for back compatibility.
    }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{ls}}, \code{\link{objects}}
 }

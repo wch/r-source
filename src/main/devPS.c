@@ -27,6 +27,7 @@
 #include <ctype.h>
 
 #include "Defn.h"
+#include "Rmath.h" /* for rround */
 #include "Graphics.h"
 #include <R_ext/Error.h>
 #include "Fileio.h"
@@ -805,7 +806,7 @@ static void PSFileHeader(FILE *fp, char* encname,
 			 char *papername, double paperwidth,
 			 double paperheight, Rboolean landscape,
 			 int EPSFheader, Rboolean paperspecial,
-			 double left, double bottom, double right, double top, 
+			 double left, double bottom, double right, double top,
 			 char *title)
 {
     int i;
@@ -914,7 +915,8 @@ static void PostScriptMoveTo(FILE *fp, double x, double y)
 static void PostScriptRLineTo(FILE *fp, double x0, double y0,
 			      double x1, double y1)
 {
-    double x = x1 - x0, y = y1 - y0;
+    double x = rround(x1, 2) - rround(x0, 2),
+	y = rround(y1, 2) - rround(y0, 2);
 
     if(x == 0) fprintf(fp, "0"); else fprintf(fp, "%.2f", x);
     if(y == 0) fprintf(fp, " 0"); else fprintf(fp, " %.2f", y);
@@ -978,18 +980,18 @@ static void PostScriptText(FILE *fp, double x, double y,
     fprintf(fp, "%.2f %.2f ", x, y);
     PostScriptWriteString(fp, str);
 
-    if(xc == 0) fprintf(fp, " 0"); 
-    else if(xc == 0.5) fprintf(fp, " .5"); 
-    else if(xc == 1) fprintf(fp, " 1"); 
+    if(xc == 0) fprintf(fp, " 0");
+    else if(xc == 0.5) fprintf(fp, " .5");
+    else if(xc == 1) fprintf(fp, " 1");
     else fprintf(fp, " %.2f", xc);
 
-    if(yc == 0) fprintf(fp, " 0"); 
-    else if(yc == 0.5) fprintf(fp, " .5"); 
-    else if(yc == 1) fprintf(fp, " 1"); 
+    if(yc == 0) fprintf(fp, " 0");
+    else if(yc == 0.5) fprintf(fp, " .5");
+    else if(yc == 1) fprintf(fp, " 1");
     else fprintf(fp, " %.2f", yc);
 
-    if(rot == 0) fprintf(fp, " 0"); 
-    else if(rot == 90) fprintf(fp, " 90"); 
+    if(rot == 0) fprintf(fp, " 0");
+    else if(rot == 90) fprintf(fp, " 90");
     else fprintf(fp, " %.2f", rot);
 
     fprintf(fp, " t\n");
@@ -1792,8 +1794,12 @@ static void PS_Polyline(int n, double *x, double *y,
 	SetLineStyle(lty, lwd, dd);
 	fprintf(pd->psfp, "np\n");
 	fprintf(pd->psfp, "%.2f %.2f m\n", x[0], y[0]);
-	for(i = 1 ; i < n ; i++)
+	for(i = 1 ; i < n ; i++) {
+	    /* split up solid lines (only) into chunks of size 1000 */
+	    if(lty == 0 && i%1000 == 0)
+		fprintf(pd->psfp, "currentpoint o m\n");
 	    PostScriptRLineTo(pd->psfp, x[i-1], y[i-1], x[i], y[i]);
+	}
 	fprintf(pd->psfp, "o\n");
     }
 }
@@ -1863,7 +1869,7 @@ typedef struct {
     rcolor col;		 /* current color */
     rcolor fill;	 /* current fill color */
     rcolor bg;		 /* background color */
-    int XFigColors[534]; 
+    int XFigColors[534];
     int nXFigColors;
 
     FILE *psfp;		 /* output file */
@@ -2812,17 +2818,17 @@ static void PDF_Invalidate(NewDevDesc *dd)
 
     pd->current.fontsize = -1;
     pd->current.fontstyle = -1;
-    /* 
+    /*
      * Paul:  make all these settings "invalid"
      pd->current.lwd = 1;
      */
     pd->current.lwd = -1;
     pd->current.lty = -1;
     /* page starts with black as the default fill and stroke colours */
-    /* 
+    /*
      * Paul:  make all these settings "invalid"
      pd->current.col = 0;
-     pd->current.fill = 0; 
+     pd->current.fill = 0;
      */
     pd->current.col = INVALID_COL;
     pd->current.fill = INVALID_COL;
@@ -2931,7 +2937,7 @@ static void PDF_startfile(PDFDesc *pd)
 
     pd->nobjs = 0;
     pd->pageno = 0;
-    fprintf(pd->pdffp, "%%PDF-1.1\n%%âãÏÓ\r\n");
+    fprintf(pd->pdffp, "%%PDF-1.1\n%%âãÏÓ\r\n");
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
 
     /* Object 1 is Info node. Date format is from the PDF manual */

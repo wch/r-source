@@ -69,7 +69,7 @@ Do not use paths with spaces in: you can always use the short forms.
 Check your path
 ---------------
 
-You need the following in your path:
+You need the following in your path (with the first two first):
 .
 our toolset
 mingw\bin
@@ -121,7 +121,8 @@ in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
 
-You can test a build by `make check'.  You may need to set TMPDIR to
+You can test a build by (optionally) building the recommended packages
+(see below) and running `make check'.  You may need to set TMPDIR to
 (the absolute path to) a suitable temporary directory: the default is
 c:/TEMP.  (Use forward slashes.)
 
@@ -233,7 +234,7 @@ Building the installers
 =======================
 
 See installer/INSTALL.  You need to have the files for a complete R build, 
-including bitmap and Tcl/Tk support and the manuals, as well as the \
+including bitmap and Tcl/Tk support and the manuals, as well as the 
 recommended packages.
 
 Once everything is set up

@@ -44,16 +44,21 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   The \code{\link{environment}} is returned invisibly with a
   \code{"name"} attribute.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{library}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{environment}}.
 }
 \examples{
 data(women)
-summary(women$height) ## refers to variable `height' in the dataframe
+summary(women$height) ## refers to variable `height' in the data frame
 attach(women)
 summary(height)      ## The same variable now available by name
-height<-height*2.54  ## Don't do this. It creates a new variable
+height <- height*2.54  ## Don't do this. It creates a new variable
 detach("women")
 summary(height)      ## The new variable created by modifying `height'
 rm(height)

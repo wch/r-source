@@ -33,6 +33,11 @@ proc.time()
 #endif
 }
 #endif
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{system.time}} for timing a valid \R expression,
   \code{\link{gc.time}} for how much of the time was spent in garbage

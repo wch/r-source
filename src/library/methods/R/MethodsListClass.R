@@ -88,7 +88,7 @@
               }, where = envir)
     setMethod("loadMethod", "MethodWithNext",
               function(method, fname, envir) {
-                  callNextMethod(method, fname, envir)
+                  callNextMethod()
                   assign(".nextMethod", method@nextMethod, envir = envir)
                   method
               }, where = envir)
@@ -139,13 +139,29 @@
                   value
               }, where = envir)
     ## make sure body(m) <- .... leaves a method as a method
-    setGeneric("body<-")
-    setMethod("body<-", "MethodDefinition", function (f, value, envir) {
+    setGeneric("body<-", where = envir)
+    setMethod("body<-", "MethodDefinition", function (f, envir, value) {
         ff <- as(f, "function")
         body(ff, envir = envir) <- value
         f@.Data <- ff
         f
-    })
+    }, where = envir)
+    ## a show method for lists of generic functions, etc; see metaNameUndo
+    setMethod("show", "ObjectsWithPackage",
+              function(object) {
+                  pkg <- object@package
+                  data <- as(object, "character")
+                  cat("An object of class \"", class(object), "\":\n", sep="")
+                  if(length(unique(pkg))==1) {
+                      show(data)
+                      cat("(All from \"", unique(pkg), "\")\n", sep="")
+                  }
+                  else {
+                      mat <- rbind(data, pkg)
+                      dimnames(mat) <- list(c("Object:", "From:"), rep("", length(data)))
+                      show(mat)
+                  }
+              }, where = envir)
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }
@@ -157,14 +173,18 @@
         sigArgs <- names(signature)
         if(is(def, "genericFunction"))
             formalNames <- def@signature
-        else if(is(def, "function"))
+        else if(is(def, "function")) {
             formalNames <- formalArgs(def)
-        if(length(sigArgs)< length(signature))
+            dots <- match("...", formalNames)
+            if(!is.na(dots))
+                formalNames <- formalNames[-dots]
+        }
+        if(is.null(sigArgs))
             names(signature) <- formalNames[seq(along = classes)]
         else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
-            stop(paste("names in signature (",
+            stop("The names in signature for method (",
                        paste(sigArgs, collapse = ", "), ") don't match function's arguments (",
-                       paste(formalNames, collapse = ", "),")", sep=""))
+                       paste(formalNames, collapse = ", "),")", sep="")
         ## the named classes become the signature object
         class(signature) <- class(object)
         signature
@@ -172,6 +192,3 @@
     else
         object
 }
-
-        
-       

@@ -47,8 +47,9 @@ R: Makefile chartables.h
 chartables.h: dftables
 	./dftables > chartables.h
 
-dftables: dftables.o maketables.c internal.h pcre.h
-	$(MAIN_LINK) -o dftables $(CFLAGS) dftables.o
+dftables.o:  maketables.c internal.h pcre.h
+dftables: dftables.o
+	$(MAIN_LD) $(LDFLAGS) -o dftables dftables.o
 
 libpcre.a: $(libpcre_a_OBJECTS)
 	$(AR) cr $@ $(libpcre_a_OBJECTS)

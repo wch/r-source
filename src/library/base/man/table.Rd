@@ -60,6 +60,11 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
   and the corresponding counts (the latter as component \code{Freq}).
   This is the inverse of \code{\link{xtabs}}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 ## Simple frequency distribution
 table(rpois(100,5))

@@ -14,6 +14,11 @@ rank(x, na.last = TRUE)
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{
 (r1 <- rank(x1 <- c(3,1,4,59,26)))

@@ -13,6 +13,11 @@ rev(x)
   It can be used in combination with
   \code{sort} to obtain vectors sorted into descending order.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{seq}}, \code{\link{sort}}.}
 \examples{
 x <- c(1:5,5:3)

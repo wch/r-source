@@ -1,7 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 1998	    Ross Ihaka
+ *  Copyright (C) 2000-2002 The R Development Core Team
+ *  Copyright (C) 2003	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,6 +45,16 @@
  *	ALGORITHM 715: SPECFUN - A Portable FORTRAN Package of
  *	Special Function Routines and Test Drivers".
  *	ACM Transactions on Mathematical Software. 19, 22-32.
+ *
+ *  EXTENSIONS
+ *
+ *  The "_both" , lower, upper, and log_p  variants were added by
+ *  Martin Maechler, Jan.2000;
+ *  as well as log1p() and similar improvements later on.
+ *
+ *  James M. Rath contributed bug report PR#699 and patches correcting SIXTEN
+ *  and if() clauses {with a bug: "|| instead of &&" -> PR #2883) more in line
+ *  with the original Cody code.
  */
 
 #include "nmath.h"
@@ -186,7 +197,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	if(log_p) {							\
 	    *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + log(temp);	\
 	    if((lower && x > 0.) || (upper && x <= 0.))			\
-		  *ccum = log1p(-exp(-xsq * xsq * 0.5) * 		\
+		  *ccum = log1p(-exp(-xsq * xsq * 0.5) *		\
 				exp(-del * 0.5) * temp);		\
 	}								\
 	else {								\
@@ -202,10 +213,36 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	do_del(y);
 	swap_tail;
     }
-    else if((-37.5193 < x) || (x < 8.2924)) { /* originally had y < 50 */
 
-	/* Evaluate pnorm for x in (-37.5, -5.657) union (5.657, 8.29) */
+/* else	  |x| > sqrt(32) = 5.657 :
+ * the next two case differentiations were really for lower=T, log=F
+ * Particularly	 *not*	for  log_p !
 
+ * Cody had (-37.5193 < x  &&  x < 8.2924) ; R originally had y < 50
+ *
+ * Note that we do want symmetry(0), lower/upper -> hence use y
+ */
+    else if(log_p
+	/*  ^^^^^ MM FIXME: can speedup for log_p and much larger |x| !
+	 * Then, make use of  Abramowitz & Stegun, 26.2.13, something like
+
+	 xsq = x*x;
+
+	 if(xsq * DBL_EPSILON < 1.)
+	    del = (1. - (1. - 5./(xsq+6.)) / (xsq+4.)) / (xsq+2.);
+	 else
+	    del = 0.;
+	 *cum = -.5*xsq - M_LN_SQRT_2PI - log(x) + log1p(-del);
+	 *ccum = log1p(-exp(*cum)); /.* ~ log(1) = 0 *./
+
+ 	 swap_tail;
+
+	*/
+	    || (lower && -37.5193 < x  &&  x < 8.2924)
+	    || (upper && -8.2924  < x  &&  x < 37.5193)
+	) {
+
+	/* Evaluate pnorm for x in (-37.5, -5.657) union (5.657, 37.5) */
 	xsq = 1.0 / (x * x);
 	xnum = p[5] * xsq;
 	xden = xsq;
@@ -219,28 +256,18 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	do_del(x);
 	swap_tail;
     }
-    else { /* x < -37.5193  OR	8.2924 < x */
-	if(log_p) {/* be better than to just return log(0) or log(1) */
-	    xsq = x*x;
-	    if(xsq * DBL_EPSILON < 1.)
-		del = (1. - (1. - 5./(xsq+6.)) / (xsq+4.)) / (xsq+2.);
-	    else
-		del = 0.;
-	    *cum = -.5*xsq - M_LN_SQRT_2PI - log(y) + log1p(del);
-	    *ccum = -0.;/*log(1)*/
-	    swap_tail;
-
-	} else {
-	    if(x > 0) {	*cum = 1.; *ccum = 0.;	}
-	    else {	*cum = 0.; *ccum = 1.;	}
-	}
+    else { /* no log_p , large x such that probs are 0 or 1 */
+	if(x > 0) {	*cum = 1.; *ccum = 0.;	}
+	else {	        *cum = 0.; *ccum = 1.;	}
     }
 
+
 #ifdef NO_DENORMS
-    /* do not return "denormalized" -- needed ?? */
+    /* do not return "denormalized" -- we do in R */
     if(log_p) {
 	if(*cum > -min)	 *cum = -0.;
 	if(*ccum > -min)*ccum = -0.;
+    }
     else {
 	if(*cum < min)	 *cum = 0.;
 	if(*ccum < min)	*ccum = 0.;

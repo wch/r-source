@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2003  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 
 /* TODO
    - spreadsheet copy and paste?
+   <FIXME>scale scrollbars for use in > 65535 rows/cols</FIXME>
  */
 
 #ifdef HAVE_CONFIG_H
@@ -137,10 +138,15 @@ static int xmaxused, ymaxused;
 static int oldWIDTH=0, oldHEIGHT=0;
 static int nboxchars=0;
 
+#include <windows.h> /* for Sleep */
 
 static void eventloop()
 {
-    while (R_de_up) R_ProcessEvents();
+    while (R_de_up) {
+	/* avoid consuming 100% CPU time here */
+	Sleep(10);
+	R_ProcessEvents();
+    }
 }
 
 static void de_closewin_cend(void *data)
@@ -204,9 +210,12 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (!isVector(CAR(tvec)))
 		errorcall(call, "invalid type for value");
 	    else {
+		int len = LENGTH(CAR(tvec));
 		if (TYPEOF(CAR(tvec)) != type)
 		    SETCAR(tvec, coerceVector(CAR(tvec), type));
-		tmp = SETLEVELS(CAR(tvec), LENGTH(CAR(tvec)));
+		if(len > 65535)
+		    error("data editor column limit is length 65535");
+		tmp = SETLEVELS(CAR(tvec), len);
 		ymaxused = max(tmp, ymaxused);
 	    }
 	}
@@ -585,7 +594,7 @@ static void drawelt(int whichrow, int whichcol)
 		(i = rowmin + whichrow - 2) < (int)LEVELS(CAR(tmp)) )
 		printelt(CAR(tmp), i, whichrow, whichcol);
 	} else
-	printstring("", 0, whichrow,  whichcol, 0);
+	    printstring("", 0, whichrow,  whichcol, 0);
     }
 }
 
@@ -602,6 +611,7 @@ static void jumppage(int dir)
 	gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
 	break;
     case DOWN:
+	if (rowmax >= 65535) return;
 	rowmin++;
 	rowmax++;
 	copyarea(0, hwidth + 2 * box_h, 0, hwidth + box_h);
@@ -635,7 +645,7 @@ static void printrect(int lwd, int fore)
 {
     int x, y;
     find_coords(crow, ccol, &x, &y);
-    drawrectangle(x + lwd - 1, y + lwd -1,
+    drawrectangle(x + lwd - 1, y + lwd - 1,
 		  BOXW(ccol+colmin-1) - lwd + 1,
 		  box_h - lwd + 1, lwd, fore);
 }
@@ -717,7 +727,15 @@ static void closerect()
 	c0vec = getccol();
 	cvec = CAR(c0vec);
 	wrow0 = (int)LEVELS(cvec);
-	if (wrow > wrow0) SETLEVELS(cvec, wrow);
+	if (wrow > wrow0) {
+	    if(wrow > 65535) {
+		/* This should not be possible, but check anyway */
+		REprintf("%s\n", "column truncated to length 65535");
+		R_FlushConsole();
+		wrow = 65535;
+	    }
+	    SETLEVELS(cvec, wrow);
+	}
 	ymaxused = max(ymaxused, wrow);
 	if (clength != 0) {
 	    /* do it this way to ensure NA, Inf, ...  can get set */
@@ -1140,7 +1158,7 @@ static void de_mousedown(control c, int buttons, point xy)
 		highlightrect();
 		bell();
 	    }
-	} else if (wrow > nhigh - 1 || wcol > nwide -1) {
+	} else if (wrow > nhigh - 1 || wcol > nwide - 1) {
 		/* off the grid */
 		highlightrect();
 		bell();
@@ -1213,6 +1231,10 @@ static void deredraw()
 	drawrectangle(0, hwidth + i * box_h, boxw[0], box_h, 1, 1);
     colmax = colmin + (nwide - 2);
     rowmax = rowmin + (nhigh - 2);
+    if(rowmax > 65535) {
+	rowmax = 65535;
+	rowmin = rowmax - (nhigh - 2);
+    }
     printlabs();
     if (inputlist != R_NilValue)
 	for (i = colmin; i <= colmax; i++) drawcol(i);
@@ -1520,6 +1542,8 @@ static void depopupact(control m)
 
 #define MCHECK(a) if (!(a)) {del(c);return NULL;}
 
+RECT *RgetMDIsize(); /* in rui.c */
+
 static dataeditor newdataeditor()
 {
     ConsoleData p;
@@ -1535,21 +1559,17 @@ static dataeditor newdataeditor()
 
     w = WIDTH ;
     h = HEIGHT;
-#ifdef USE_MDI
     if (ismdi()) {
 	RECT *pR = RgetMDIsize();
 	x = (pR->right - w) / 3; x = x > 20 ? x:20;
 	y = (pR->bottom - h) / 3; y = y > 20 ? y:20;
     } else {
-#endif
 	x = (devicewidth(NULL) - w) / 3;
 	y = (deviceheight(NULL) - h) / 3 ;
-#ifdef USE_MDI
     }
-#endif
     c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
-			       Document | StandardWindow | TrackMouse |
-			       VScrollbar | HScrollbar);
+			       Document | StandardWindow | Menubar |
+			       VScrollbar | HScrollbar | TrackMouse);
     if (!c) {
          freeConsoleData(p);
          return NULL;
@@ -1563,7 +1583,6 @@ static dataeditor newdataeditor()
     BORDERY = (HEIGHT - ROWS*FH) / 2;
     gsetcursor(c, ArrowCursor);
     setbackground(c, consolebg);
-#ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
 	/* blank toolbar to stop windows jumping around */
         int btsize = 24;
@@ -1572,15 +1591,12 @@ static dataeditor newdataeditor()
         MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
     }
-#endif
     MCHECK(gpopup(depopupact, DePopup));
     MCHECK(m = newmenubar(demenuact));
     MCHECK(newmenu("File"));
 /*    MCHECK(m = newmenuitem("-", 0, NULL));*/
     MCHECK(m = newmenuitem("Close", 0, declose));
-#ifdef USE_MDI
     newmdimenu();
-#endif
     MCHECK(newmenu("Edit"));
     MCHECK(m = newmenuitem("Copy  \tCTRL+C", 0, de_copy));
     MCHECK(m = newmenuitem("Paste \tCTRL+V", 0, de_paste));

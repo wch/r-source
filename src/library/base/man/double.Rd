@@ -27,7 +27,7 @@ as.single(x, \dots)
   length.  The elements of the vector are all equal to \code{0}.
 
   \code{as.double} attempts to coerce its argument to be of double
-  type.
+  type: like \code{\link{as.vector}} it strips attributes including names.
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double type or not.  It is generic:
@@ -41,6 +41,11 @@ as.single(x, \dots)
   except they set the attribute \code{Csingle} that is used in the
   \code{\link{.C}} and \code{\link{.Fortran}} interface, and they are
   intended only to be used in that context.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{integer}}.

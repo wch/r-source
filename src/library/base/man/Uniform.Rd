@@ -39,6 +39,11 @@ runif(n, min=0, max=1)
   For the case of \eqn{u := min == max}, the limit case of
   \eqn{X \equiv u}{X == u} is assumed.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{.Random.seed}} about random number generation,
   \code{\link{rnorm}}, etc for other distributions.

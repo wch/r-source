@@ -1,4 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
 kappa <- function(z, ...) UseMethod("kappa")
 
 kappa.lm <- function(z, ...)

@@ -15,7 +15,7 @@ de(\dots, Modes = list(), Names = NULL)
   A spreadsheet-like editor for entering or editing data.
 }
 \arguments{
-  \item{...}{A list of variables: currently these should be numeric or
+  \item{\dots}{A list of variables: currently these should be numeric or
     character vectors or list containing such vectors.}
   \item{Modes}{The modes to be used for the variables.}
   \item{Names}{The names to be used for the variables.}
@@ -174,6 +174,9 @@ de(\dots, Modes = list(), Names = NULL)
 \seealso{
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses
   \code{dataentry} to edit data frames.
+}
+\section{Warning}{
+    At present the data editor is limited to 65535 rows.
 }
 \examples{
 # call data entry with variables x and y

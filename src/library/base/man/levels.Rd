@@ -18,6 +18,13 @@ levels(x) <- value
 }
 \arguments{
   \item{x}{an object, for example a factor.}
+  \item{value}{A valid value for \code{levels(x)}.
+    For the default method, \code{NULL} or a character vector.}
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{\code{\link{levels<-.factor}}, \code{\link{nlevels}}.
 }

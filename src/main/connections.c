@@ -242,7 +242,8 @@ static Rboolean file_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
-    if(mlen >= 2 && con->mode[1] == '+') con->canread = TRUE;
+    if(mlen >= 2 && con->mode[1] == '+')
+	con->canread = con->canwrite = TRUE;
     this->last_was_write = !con->canread;
     this->rpos = 0;
     if(con->canwrite) this->wpos = ftell(fp);
@@ -415,6 +416,7 @@ static Rconnection newfile(char *description, char *mode)
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
+    new->canseek = TRUE;
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
@@ -2080,7 +2082,7 @@ int Rconn_fgetc(Rconnection con)
 	return c;
     }
     curLine = con->PushBack[con->nPushBack-1];
-    c = curLine[con->posPushBack++];
+    c = (unsigned char) curLine[con->posPushBack++];
     if(con->posPushBack >= strlen(curLine)) {
 	/* last character on a line, so pop the line */
 	free(curLine);

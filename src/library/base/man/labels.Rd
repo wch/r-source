@@ -1,6 +1,3 @@
-% file labels.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{labels}
 \title{Find Labels from Object}
 \usage{
@@ -28,6 +25,10 @@ labels.lm(object, \dots)
   a \code{terms} object it is the term labels and for an \code{lm}
   object it is the term labels for estimable terms.
 }
-\author{B.D. Ripley}
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \keyword{print}
 \keyword{models}

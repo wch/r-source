@@ -1,6 +1,3 @@
-% file modreg/man/scatter.smooth.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{scatter.smooth}
 \title{Scatter Plot with Smooth Curve Fitted by Loess}
 \alias{scatter.smooth}
@@ -12,9 +9,10 @@
 scatter.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"),
     xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
-    ylim = range(y, prediction$y), evaluation = 50, ...)
+    ylim = range(y, prediction$y), evaluation = 50, \dots)
+
 loess.smooth(x, y, span = 2/3, degree = 1,
-    family = c("symmetric", "gaussian"), evaluation = 50, ...)
+    family = c("symmetric", "gaussian"), evaluation = 50, \dots)
 }
 \arguments{
   \item{x}{x coordinates for scatter plot.}
@@ -42,7 +40,6 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   grid of evaluation points) and \code{y} (the smoothed values at the
   grid points).
 }
-\author{B.D. Ripley}
 \seealso{\code{\link{loess}}}
 \examples{
 data(cars)

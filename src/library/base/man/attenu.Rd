@@ -10,7 +10,7 @@
 }
 \usage{data(attenu)}
 \format{
-  A dataframe with 182 observations on 5 variables.
+  A data frame with 182 observations on 5 variables.
   \tabular{rlll}{
     [,1] \tab event   \tab numeric \tab Event Number\cr
     [,2] \tab mag     \tab numeric \tab Moment Magnitude\cr

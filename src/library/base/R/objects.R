@@ -12,7 +12,8 @@ methods <- function (generic.function, class)
     S3MethodsStopList <-
         c("boxplot.stats", "close.screen", "close.socket", "flush.console",
           "format.char", "format.info", "format.pval", "influence.measures",
-          "plot.new", "plot.window", "plot.xy", "split.screen",
+          "plot.new", "plot.window", "plot.xy", "print.coefmat",
+          "split.screen",
           "update.packages", "solve.QP", "solve.QP.compact", "print.graph",
           "lag.plot")
     groupGenerics <- c("Ops", "Math", "Summary")
@@ -23,8 +24,11 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
+        ## <FIXME> generalize this later
+        if(generic.function == "coefficients") generic.function <- "coef"
+        if(generic.function == "fitted.values") generic.function <- "fitted"
 	name <- paste("^", generic.function, ".", sep = "")
-        ## also look for registered methods in namespaces
+        ## also look for registered methods from namespaces
         if(generic.function %in% groupGenerics)
             defenv <- .BaseNamespaceEnv
         else {
@@ -33,7 +37,8 @@ methods <- function (generic.function, class)
             else .BaseNamespaceEnv
         }
         S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv))
-        an <- c(an, S3reg)
+        ## might both export and register a method
+        an <- unique(c(an, S3reg))
     }
     else if (!missing(class)) {
 	if (!is.character(class))
@@ -59,6 +64,9 @@ data.class <- function(x) {
 getS3method <-  function(f, class, optional = FALSE)
 {
     groupGenerics <- c("Ops", "Math", "Summary")
+    ## <FIXME> generalize this later
+    if(f == "coefficients") f <- "coef"
+    if(f == "fitted.values") f <- "fitted"
     method <- paste(f, class, sep=".")
     if(exists(method)) return(get(method))
     ## also look for registered method in namespaces
@@ -70,7 +78,7 @@ getS3method <-  function(f, class, optional = FALSE)
         else .BaseNamespaceEnv
         S3Table <- get(".__S3MethodsTable__.", envir = defenv)
         S3reg <- ls(S3Table)
-        if(length(grep(method, S3reg)))
+        if(length(grep(gsub("([.[])", "\\\\\\1", method), S3reg)))
             return(get(method, envir = S3Table))
     }
     if(optional) NULL
@@ -127,4 +135,89 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
         }
     }
     invisible(NULL)
+}
+
+getAnywhere <- function(x)
+{
+    if(!is.character(x)) x <- deparse(substitute(x))
+    objs <- list(); where <- character(0); visible <- logical(0)
+    ## first look on search path
+    if(length(pos <- find(x, numeric=TRUE))) {
+        objs <- lapply(pos, function(pos, x) get(x, pos=pos), x=x)
+        where <- names(pos)
+        visible <- rep(TRUE, length(pos))
+    }
+    ## next look for methods
+    if(length(grep("\\.", x))) {
+        parts <- strsplit(x, "\\.")[[1]]
+        for(i in 2:length(parts)) {
+            gen <- paste(parts[1:(i-1)], collapse="")
+            cl <- paste(parts[2:length(parts)], collapse="")
+            if(!is.null(f <- getS3method(gen, cl, TRUE))) {
+                ev <- topenv(environment(f))
+                nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
+                objs <- c(objs, f)
+                msg <- paste("registered S3 method for", gen)
+                if(!is.null(nmev))
+                    msg <- paste(msg, "from namespace", nmev)
+                where <- c(where, msg)
+                visible <- c(visible, FALSE)
+            }
+        }
+    }
+    ## now look in namespaces, visible or not
+    for(i in loadedNamespaces()) {
+        ns <- asNamespace(i)
+        if(exists(x, envir = ns, inherits = FALSE)) {
+            f <- get(x, envir = ns, inherits = FALSE)
+            objs <- c(objs, f)
+            where <- c(where, paste("namespace", i, sep=":"))
+            visible <- c(visible, FALSE)
+        }
+    }
+    # now check for duplicates
+    ln <- length(objs)
+    dups <- rep(FALSE, ln)
+    objs2 <- lapply(objs, function(x) {
+        if(is.function(x)) environment(x) <- NULL
+        x
+    })
+    if(ln > 1)
+        for(i in 2:ln)
+            for(j in 1:(i-1))
+                if(identical(objs2[[i]], objs2[[j]])) {
+                    dups[i] <- TRUE
+                    break
+                }
+    res <- list(name=x, objs=objs, where=where, visible=visible, dups=dups)
+    class(res) <- "getAnywhere"
+    res
+}
+
+print.getAnywhere <- function(x, ...)
+{
+    n <- sum(!x$dups)
+    if(n == 0) {
+        cat("no object named `", x$name, "' was found\n", sep="")
+    } else if (n == 1) {
+        cat("A single object matching `", x$name, "' was found\n", sep="")
+        cat("It was found in the following places\n")
+        cat(paste("  ", x$where, sep=""), sep="\n")
+        cat("with value\n\n")
+        print(x$objs[[1]])
+    } else {
+        cat(n, " differing objects matching `", x$name,
+            "' were found\n", sep="")
+        cat("in the following places\n")
+        cat(paste("  ", x$where, sep=""), sep="\n")
+        cat("Use [] to view one of them\n")
+    }
+    invisible(x)
+}
+
+"[.getAnywhere" <- function(x, i)
+{
+    if(!is.numeric(i)) stop("only numeric indices can be used")
+    if(length(i) == 1) x$objs[[i]]
+    else x$objs[i]
 }

@@ -191,10 +191,20 @@ format(zz)
 format(zz, justify = "left")
 zz <- data.frame(a = I("abc"), b = I("def\"gh"))
 format(zz)
+# " (font-locking: closing the string above)
+
 # test format.data.frame on former AsIs's.
-RNGversion("1.6.2")
 set.seed(321)
 dd <- data.frame(x = 1:5, y = rnorm(5), z = c(1, 2, NA, 4, 5))
 model <- glm(y ~ x, data = dd, subset = 1:4, na.action = na.omit)
 expand.model.frame(model, "z", na.expand = FALSE)
 expand.model.frame(model, "z", na.expand = TRUE)
+
+## print.table() changes affecting summary.data.frame
+data(attenu)
+options(width=82)
+summary(attenu) # ``one line''
+lst <- levels(attenu$station)
+levels(attenu$station)[lst == "117"] <- paste(rep(letters,3),collapse="")
+summary(attenu) # {2 + one long + 2 } variables
+## in 1.7.0, things were split to more lines

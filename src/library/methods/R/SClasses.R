@@ -28,18 +28,12 @@ setClass <-
                                              validity, access, version, sealed)
         superClasses <- names(classDef@contains)
     }
+    ## confirm the validity of the class definition
+    .completeClassSlots(classDef)
+    completeExtends(classDef)
+    for(class2 in superClasses) # store the metadata for class relations
+        setIs(Class, class2, where = where, classDef = classDef)
     assignClassDef(Class, classDef, where)
-    for(class2 in superClasses)
-        setIs(Class, class2, where = where, complete = FALSE)
-    ## confirm the validity of the class definition (it may be incomplete)
-    msg <- trySilent(completeClassDefinition(Class, classDef))
-    if(is(msg, "try-error")) {
-        ## clean up message first
-        msg <- gsub("Error[^:]*:","", msg)
-        msg <- gsub("[\n\t]", "", msg)
-        warning("Cannot complete class definition for \"", Class, "\" (",
-                   msg, ") -- may conflict with previous definitions")
-    }
     Class
 }
 
@@ -77,7 +71,8 @@ prototype <- function(...)
     props <- list(...)
     names <- allNames(props)
     data <- nchar(names) == 0
-    if(any(data)) {
+    dataPart <- any(data)
+    if(dataPart) {
         if(sum(data) > 1)
             stop("only one data object (unnamed argument to prototype) allowed")
         obj <- props[[seq(along=data)[data] ]]
@@ -88,7 +83,7 @@ prototype <- function(...)
         obj <- list()
     for(i in seq(along = names))
         slot(obj, names[[i]], FALSE) <- props[[i]]
-    new("classPrototypeDef", object = obj, slots = names)
+    new("classPrototypeDef", object = obj, slots = names, dataPart = dataPart)
 }
 
 makeClassRepresentation <-
@@ -195,7 +190,7 @@ slot <-
 checkSlotAssignment <- function(obj, name, value)
 {
     ClassDef <- getClass(class(obj))
-    slotDefs <- getProperties(ClassDef)
+    slotDefs <- ClassDef@slots
     slot <- elNamed(slotDefs, name)
     if(is.null(slot))
         stop(paste("\"", name, "\" is not a slot in class \"", class(obj), "\"", sep = ""))
@@ -235,7 +230,7 @@ slotNames <-
         Class <- x
     else
         Class <- .class1(x)
-    names(getProperties(getClass(Class)))
+    names(getClass(Class)@slots)
 }
 
 removeClass <-
@@ -304,11 +299,11 @@ new <-
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
     ClassDef <- getClass(Class)
-    if(identical(getVirtual(ClassDef), TRUE)) {
+    if(identical(ClassDef@virtual, TRUE)) {
         stop("Trying to use new() on a virtual class")
     }
     else
-        value <- getPrototype(ClassDef)
+        value <- ClassDef@prototype
     class(value) <- Class
     initialize(value, ...)
 }
@@ -329,28 +324,24 @@ getClasses <-
 
 
 validObject <- function(object, test = FALSE) {
-  classDef <- getClass(class(object))
+    Class <- class(object)
+  classDef <- getClass(Class)
   anyStrings <- function(x) if(identical(x, TRUE)) character() else x
   ## perform, from bottom up, the default and any explicit validity tests
   ## First, validate the slots.
   errors <- character()
-  slotTypes <- getProperties(classDef)
+  slotTypes <- classDef@slots
   slotNames <- names(slotTypes)
   for(i in seq(along=slotTypes)) {
     classi <- slotTypes[[i]]
     sloti <- slot(object, slotNames[[i]])
     if(!is(sloti, classi))
-      errors <- c(errors, paste("is(object@",slotNames[[i]], ", \"",classi,
-                                "\") failed", sep=""))
-    else if(isClass(classi)) {
-      errorsi <- Recall(sloti, TRUE)
-      if(!identical(errorsi, TRUE))
-        errors <- c(errors, paste("Slot ", slotNames[[i]], ": ",
-                                  if(length(errorsi)>1) 1:length(errorsi) else "",
-                                  errorsi, sep=""))
-    }
+      errors <- c(errors, paste("Invalid object for slot \"", slotNames[[i]],
+                               "\" in class \"", Class,
+                               "\": got class \"", class(sloti), 
+                               "\", should be or extend class \"", classi, "\"", sep = ""))
   }
-  extendType <- rev(getExtends(classDef))
+  extendType <- rev(classDef@contains)
   extends <- names(extendType); i <- 1
   while(length(errors) == 0 && i <= length(extends)) {
     superClass <- extends[[i]]
@@ -358,23 +349,22 @@ validObject <- function(object, test = FALSE) {
     i <- i+1
     if(is.function(testFun) && !is(object, superClass))
       next ## skip conditional relations that don't hold for this object
-    validityMethod <- getValidity(getClassDef(superClass))
+    validityMethod <- getClassDef(superClass)@validity
     if(is(validityMethod, "function"))
       errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
     
   }
-  validityMethod <- getValidity(classDef)
+  validityMethod <- classDef@validity
   if(length(errors) == 0 && is(validityMethod, "function")) {
-    superClass <- class(object) ## for help in debugging
     errors <- c(errors, anyStrings(validityMethod(object)))
   }
   if(length(errors) > 0) {
     if(test)
       errors
     else if(length(errors) > 1)
-      stop(paste("Invalid \"", class(object), "\" object: ", paste(paste(1:length(errors), errors, sep=": ")),
+      stop(paste("Invalid \"", Class, "\" object: ", paste(paste(1:length(errors), errors, sep=": ")),
                  sep="", collapse = "\n"))
-    else stop(paste("Invalid \"", class(object), "\" object: ", errors, sep=""))
+    else stop(paste("Invalid \"", Class, "\" object: ", errors, sep=""))
   }
   else
     TRUE
@@ -404,7 +394,7 @@ resetClass <-
     function(Class, 
              resetSubclasses = TRUE) {
         if(is(Class, "classRepresentation"))
-            Class <- getClassName(Class)
+            Class <- Class@className
         cname <- classMetaName(Class) ## TODO:  change to allow same name, different package
         def <- getFromClassMetaData(cname)
         if(!is.null(def)) {
@@ -432,8 +422,8 @@ initialize <- function(.Object, ...) {
         which <- nchar(snames)>0
         elements <- args[which]
         supers <- args[!which]
-        thisExtends <- names(getExtends(ClassDef))
-        slotDefs <- getProperties(ClassDef)
+        thisExtends <- names(ClassDef@contains)
+        slotDefs <- ClassDef@slots
         dataPart <- elNamed(slotDefs, ".Data")
         if(is.null(dataPart)) dataPart <- "missing"
         if(length(supers) > 0) {
@@ -482,22 +472,22 @@ initialize <- function(.Object, ...) {
                 slotName <- el(snames, i)
                 slotClass <- elNamed(slotDefs, slotName)
                 slotVal <- el(elements, i)
-                if(!is(slotVal, slotClass))
-                    stop(paste("Invalid object for slot \"", slotName,
-                               "\" in class\"", Class,
-                               "\": got class \"", class(slotVal), 
-                               "\", should be or extend class \"", slotClass, "\"", sep = ""))
-                slotVal <- as(slotVal, slotClass, strict = FALSE)
+                ## perform non-strict coercion, but leave the error messages for
+                ## values not conforming to the slot definitions to validObject(),
+                ## hence the check = FALSE argument in the slot assignment
+                if(is(slotVal, slotClass) && !identical(class(slotVal), slotClass))
+                    slotVal <- as(slotVal, slotClass, strict = FALSE)
                 slot(.Object, slotName, check = FALSE) <- slotVal
             }
         }
-    }
+        validObject(.Object)
+     }
     .Object
 }
 
 findClass <- function(Class) {
     if(!is.character(Class))
-        Class <- getClassName(Class)
+        Class <- Class@className
     what <- classMetaName(Class)
     where <- search()
     ok <- logical(length(where))

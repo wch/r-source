@@ -11,26 +11,33 @@ as <-
     thisClass <- .class1(object) ## always one string
     if(thisClass == Class)
         return(object)
-    sig <-  c(from=thisClass, to = Class)
-    ## TO DO: would be nice to make this version of selectMethod fast, since it's only
-    ## lookups (no inheritance); also, recognizing the case of a simle extension
-    ## could skip calling function(object)object !
-    asMethod <- selectMethod("coerce", sig, TRUE, FALSE) #optional, no inheritance
+    asMethod <- .quickCoerceSelect(thisClass, Class)
     if(is.null(asMethod)) {
-        if(is(object, Class)) {
-            asMethod <- possibleExtends(thisClass, Class)
-             if(identical(asMethod, FALSE))
-                stop(paste("Internal problem in as():  \"", thisClass, "\" extends \"",
-                           Class, "\", but no coerce method found", sep=""))
-            else if(identical(asMethod, TRUE)) 
-                asMethod <- .makeAsMethod(quote(from), TRUE, Class)
-             else
-                 asMethod <- .makeAsMethod(asMethod@coerce, asMethod@simple, Class)
-            ## cache for next call
-            cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
+        sig <-  c(from=thisClass, to = Class)
+        canCache <- TRUE
+        asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE)) #optional, no inheritance
+        if(is.null(asMethod)) {
+            if(is(object, Class)) {
+                asMethod <- possibleExtends(thisClass, Class)
+                if(identical(asMethod, FALSE))
+                    stop("Internal problem in as():  \"", thisClass, "\" is(object, \"",
+                         Class, "\) is TRUE, but the metadata asserts that the is relation is FALSE", sep="")
+                else if(identical(asMethod, TRUE)) 
+                    asMethod <- .makeAsMethod(quote(from), TRUE, Class)
+                else {
+                    test <- asMethod@test
+                    asMethod <- .makeAsMethod(asMethod@coerce, asMethod@simple, Class)
+                    canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                }
+            }
+            if(is.null(asMethod) && extends(Class, thisClass))
+                asMethod <- .asFromReplace(thisClass, Class)
+            if(is.null(asMethod))
+                asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
         }
-        else
-            asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
+        ## cache for next call
+        if(canCache && !is.null(asMethod))
+            cacheMethod("coerce", sig, asMethod)
     }
     if(is.null(asMethod))
         stop(paste("No method or default for coercing \"", thisClass,
@@ -39,6 +46,45 @@ as <-
         asMethod(object)
     else
         asMethod(object, strict = FALSE)
+}
+
+.quickCoerceGetsSelect <- function(from, to) {
+    methods <- getMethodsForDispatch("coerce<-")
+    allMethods <- methods@allMethods
+    method <- allMethods[[from]]
+    if(is.null(method))
+        method
+    else
+        method@allMethods[[to]]
+}
+
+.quickCoerceSelect <- function(from, to) {
+    methods <- getMethodsForDispatch("coerce")
+    allMethods <- methods@allMethods
+    method <- allMethods[[from]]
+    if(is.null(method))
+        method
+    else
+        method@allMethods[[to]]
+}
+
+.asFromReplace <- function(fromClass, toClass) {
+    ## toClass extends fromClass, so an asMethod will
+    ## be the equivalent of new("toClass", fromObject)
+    ## But must check that replacement is defined, in the case
+    ## of nonstandard superclass relations
+    replaceMethod <- elNamed(getClass(toClass)@contains, fromClass)
+    if(is(replaceMethod, "SClassExtension") &&
+       !identical(as(replaceMethod@replace, "function"), .ErrorReplace)) {
+        f <- .ErrorReplace
+        body(f, envir = environment(f)) <-
+            substitute({obj <- new(TOCLASS); as(obj, FROMCLASS) <- value; obj},
+                       list(FROMCLASS = fromClass, TOCLASS = toClass))
+        f
+    }
+    else
+        NULL
+        
 }
 
 
@@ -52,7 +98,10 @@ as <-
     thisClass <- .class1(object)
     if(!identical(.class1(value), Class))
       value <- as(value, Class)
+    asMethod <- .quickCoerceGetsSelect(thisClass, Class)
+    if(is.null(asMethod)) {
     sig <-  c(from=thisClass, to = Class)
+    canCache <- TRUE
     asMethod <- selectMethod("coerce<-", sig, TRUE, FALSE) #optional, no inheritance
     if(is.null(asMethod)) {
         if(is(object, Class)) {
@@ -61,12 +110,19 @@ as <-
                 class(value) <- class(object)
                 return(value)
             }
-            else asMethod <- asMethod@replace
-            ## cache for next call
-            cacheMethod("coerce<-", c(from = thisClass, to = Class), asMethod)
-        }
+            else {
+                test <- asMethod@test
+                asMethod <- asMethod@replace
+                canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+           }
+         }
         else
             asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
+    }
+        ## cache for next call
+        if(canCache && !is.null(asMethod))
+            cacheMethod("coerce<-", sig, asMethod)
+    
     }
     if(is.null(asMethod))
         stop(paste("No method or default for as() replacement of \"", thisClass,
@@ -81,7 +137,7 @@ setAs <-
   {
     ## where there is an "is" relation, modify it
     if(extends(from, to, TRUE)) {
-      extds <- getExtends(getClassDef(from))
+      extds <- getClassDef(from)@contains
       if(is.list(extds)) {
         test <- elNamed(extds, "test")
         if(missing(replace))

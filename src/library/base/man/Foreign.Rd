@@ -183,5 +183,14 @@
     likely to be changed.
 }
 
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (\code{.C} and \code{.Fortran}.)
+
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer. (\code{.Call}.)
+}
 \seealso{\code{\link{dyn.load}}.}
 \keyword{programming}

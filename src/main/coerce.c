@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2003  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -52,6 +52,28 @@ const static char * const falsenames[] = {
 #define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4
+
+/* The following two macros copy or clear the attributes.  They also
+   ensure that the object bit is properly set.  They avoid calling the
+   assignment functions when possible, since the write barrier (and
+   possibly cache behavior on some architectures) makes assigning more
+   costly than dereferencing. */
+#define DUPLICATE_ATTRIB(to, from) do {\
+  SEXP __from__ = (from); \
+  if (ATTRIB(__from__) != R_NilValue) { \
+    SEXP __to__ = (to); \
+    SET_ATTRIB(__to__, duplicate(ATTRIB(__from__))); \
+    if (OBJECT(__from__)) SET_OBJECT(__to__, 1); \
+  } \
+} while (0)
+
+#define CLEAR_ATTRIB(x) do {\
+  SEXP __x__ = (x); \
+  if (ATTRIB(__x__) != R_NilValue) { \
+    SET_ATTRIB(__x__, R_NilValue); \
+    if (OBJECT(__x__)) SET_OBJECT(__x__, 0); \
+  } \
+} while (0)
 
 void CoercionWarning(int warn)
 {
@@ -398,7 +420,7 @@ static SEXP coerceToLogical(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(LGLSXP, n = length(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case INTSXP:
 	for (i = 0; i < n; i++)
@@ -427,7 +449,7 @@ static SEXP coerceToInteger(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(INTSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -456,7 +478,7 @@ static SEXP coerceToReal(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(REALSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -485,7 +507,7 @@ static SEXP coerceToComplex(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(CPLXSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -514,7 +536,7 @@ static SEXP coerceToString(SEXP v)
     SEXP ans;
     int i, n, savedigits, warn = 0;
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -973,8 +995,7 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	    ) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
-	    SET_ATTRIB(v, R_NilValue);
-	    SET_OBJECT(v, 0);
+	    CLEAR_ATTRIB(v);
 	}
 	return v;
     }
@@ -1003,7 +1024,7 @@ SEXP do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     ans = ascommon(call, CAR(args), STRSXP);
-    SET_ATTRIB(ans, R_NilValue);
+    CLEAR_ATTRIB(ans);
     UNPROTECT(1);
     return ans;
 }
@@ -1056,10 +1077,9 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     case LANGSXP:
 	break;
     default:
-	SET_ATTRIB(ans, R_NilValue);
+	CLEAR_ATTRIB(ans);
 	break;
     }
-    SET_OBJECT(ans, 0);
     UNPROTECT(1);
     return ans;
 }

@@ -238,8 +238,9 @@ getOption(x)
       input encoding.  Defaults to \code{native.enc} (= \code{0:255}).
       See \code{\link{connections}}.}
 
-    \item{\code{timeout}:}{integer.  The timeout for Internet
-      operations, in seconds.  Default 60 seconds.}
+    \item{\code{timeout}:}{integer.  The timeout for some Internet
+      operations, in seconds.  Default 60 seconds.
+      See \code{\link{download.file}} and \code{\link{connections}}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc.  Default is 2, for failure causes.
@@ -266,6 +267,11 @@ getOption(x)
     \code{verbose} \tab \code{FALSE}
   }
   Others are set from environment variables or are platform-dependent.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \examples{
 options() # printing all current options

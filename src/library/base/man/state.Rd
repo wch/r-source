@@ -59,4 +59,9 @@
   U.S. Department of Commerce, Bureau of the Census (1977)
   \emph{County and City Data Book}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \keyword{datasets}

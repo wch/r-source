@@ -1,6 +1,6 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Patched (2002-05-17)
+R : Copyright 2003, The R Development Core Team
+Version 1.7.1 Beta (2003-06-14)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -45,7 +45,7 @@ Type `q()' to quit R.
 > ## The prefixes of ALL the PDQ & R functions
 > PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
 > PDQR <- c(PDQRinteg, "beta", "cauchy", "chisq", "exp", "f", "gamma",
-+           "lnorm", "logis", "norm", "t","unif","weibull")
++ 	  "lnorm", "logis", "norm", "t","unif","weibull")
 > PQonly <- c("tukey")
 > 
 > ###--- Discrete Distributions --- Consistency Checks  pZZ = cumsum(dZZ)
@@ -55,7 +55,7 @@ Type `q()' to quit R.
 > ##__ 1. Binomial __
 > 
 > ## Cumulative Binomial '==' Cumulative F :
-> ## Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
+> ## Abramowitz & Stegun, p.945-6;  26.5.24  AND	26.5.28 :
 > n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
 > for(n in rbinom(n1, size = 2*n0, p = .4)) {
 +     cat("n=",n,": ")
@@ -63,18 +63,18 @@ Type `q()' to quit R.
 + 	cat(".")
 + 	for(k in rbinom(n3, size = n,  prob = runif(1))) {
 + 	    ## For X ~ Bin(n,p), compute 1 - P[X > k] = P[X <= k] in three ways:
-+ 	    tst1 <- all.equal(       pbinom(0:k, size = n, prob = p),
-+                               cumsum(dbinom(0:k, size = n, prob = p)))
++ 	    tst1 <- all.equal(	     pbinom(0:k, size = n, prob = p),
++ 			      cumsum(dbinom(0:k, size = n, prob = p)))
 + 	    tst <- all.equal(if(k==n || p==0) 1 else
 + 			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
 + 			     sum(dbinom(0:k, size = n, prob = p)))
 + 	    if(!(is.logical(tst1) && tst1) ||
-+                !(is.logical(tst)  && tst ) ) {
++ 	       !(is.logical(tst)  && tst ) ) {
 + 		cat("n=", n,"; p =",format(p),".  k =",k)
-+                 if(!is.logical(tst1)) cat("; tst1=",tst1)
-+                 if(!is.logical(tst )) cat("; tst=", tst)
-+                 cat("\n")
-+             }
++ 		if(!is.logical(tst1)) cat("; tst1=",tst1)
++ 		if(!is.logical(tst )) cat("; tst=", tst)
++ 		cat("\n")
++ 	    }
 + 	}
 +     }
 +     cat("\n")
@@ -99,7 +99,7 @@ n= 48 : ......................
 > ##__ 2. Geometric __
 > for(pr in seq(0,1,len=15)) {
 +     print(All.eq((dg <- dgeom(0:10, pr)),
-+                  pr * (1-pr)^(0:10)))
++ 		 pr * (1-pr)^(0:10)))
 +     print(All.eq(cumsum(dg), pgeom(0:10, pr)))
 + }
 [1] TRUE
@@ -155,7 +155,7 @@ n= 48 : ......................
 > ## PR #842
 > for(size in seq(0.8,2, by=.1))
 +     print(all.equal(cumsum(dnbinom(0:7, size, .5)),
-+                            pnbinom(0:7, size, .5)))
++ 			   pnbinom(0:7, size, .5)))
 [1] TRUE
 [1] TRUE
 [1] TRUE
@@ -180,7 +180,7 @@ n= 48 : ......................
 [1] TRUE
 > 
 > ## Cumulative Poisson '==' Cumulative Chi^2 :
-> ## Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
+> ## Abramowitz & Stegun, p.941 :	 26.4.21 (26.4.2)
 > n1 <- 20; n2 <- 16
 > for(lambda in rexp(n1))
 +     for(k in rpois(n2, lambda)) {
@@ -221,7 +221,7 @@ n= 48 : ......................
 > 
 > ###-------- Continuous Distributions ----------
 > 
-> ##---  Gamma (incl. chi^2) Density :
+> ##---  Gamma (incl. central chi^2) Density :
 > x <- round(rgamma(100, shape = 2),2)
 > for(sh in round(rlnorm(30),2)) {
 +     Ga <- gamma(sh)
@@ -248,6 +248,10 @@ Warning messages:
 3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 > pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 [1] TRUE
+> ##-- non central Chi^2 :
+> xB <- c(2000,1e6,1e50,Inf)
+> for(df in c(0.1, 1, 10))
++     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 > 
 > ##--- Beta (need more):
 > 
@@ -321,7 +325,38 @@ Warning messages:
 [6,] -20  -203.9171554    -203.9171554
 [7,] -10   -53.2312852     -53.2312852
 [8,]   0    -0.6931472      -0.6931472
+> y <- c(1:15, seq(20,40, by=5))
+> cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE),
++       "log(pnorm(-y))"= log(pnorm(-y)), "pnorm(-y, log=T)"= pnorm(-y, log=TRUE))
+       y log(pnorm(y)) pnorm(y, log=T) log(pnorm(-y)) pnorm(-y, log=T)
+ [1,]  1 -1.727538e-01   -1.727538e-01      -1.841022        -1.841022
+ [2,]  2 -2.301291e-02   -2.301291e-02      -3.783184        -3.783184
+ [3,]  3 -1.350810e-03   -1.350810e-03      -6.607726        -6.607726
+ [4,]  4 -3.167174e-05   -3.167174e-05     -10.360101       -10.360101
+ [5,]  5 -2.866516e-07   -2.866516e-07     -15.064998       -15.064998
+ [6,]  6 -9.865877e-10   -9.865876e-10     -20.736769       -20.736769
+ [7,]  7 -1.279865e-12   -1.279813e-12     -27.384307       -27.384307
+ [8,]  8 -6.661338e-16   -6.220961e-16     -35.013437       -35.013437
+ [9,]  9  0.000000e+00   -1.128588e-19     -43.628149       -43.628149
+[10,] 10  0.000000e+00   -7.619853e-24     -53.231285       -53.231285
+[11,] 11  0.000000e+00   -1.910660e-28     -63.824934       -63.824934
+[12,] 12  0.000000e+00   -1.776482e-33     -75.410673       -75.410673
+[13,] 13  0.000000e+00   -6.117164e-39     -87.989720       -87.989720
+[14,] 14  0.000000e+00   -7.793537e-45    -101.563034      -101.563034
+[15,] 15  0.000000e+00   -3.670966e-51    -116.131385      -116.131385
+[16,] 20  0.000000e+00   -2.753624e-89    -203.917155      -203.917155
+[17,] 25  0.000000e+00  -3.056697e-138    -316.639408      -316.639408
+[18,] 30  0.000000e+00  -4.906714e-198    -454.321244      -454.321244
+[19,] 35  0.000000e+00  -1.124911e-268    -616.975101      -616.975101
+[20,] 40  0.000000e+00    0.000000e+00           -Inf      -804.608442
+> ## Symmetry:
+> y <- c(1:50,10^c(3:10,20,50,150,250))
+> y <- c(-y,0,y)
+> for(L in c(FALSE,TRUE))
++     stopifnot(identical(pnorm(-y, log= L),
++ 			pnorm(+y, log= L, lower=FALSE)))
 > 
+> ## Log norm
 > All.eq(pz, plnorm(exp(z)))
 [1] TRUE
 > 
@@ -396,6 +431,7 @@ Warning messages:
  [7] -0.99463560 -1.49665151  1.44899521 -0.72605060 -0.52184248  1.62334863
 [13] -1.07413952  0.18925757 -0.08940649 -0.90018242 -0.61911928  1.17444416
 [19] -1.06421053 -0.77380129
+> ## Rt2 below (to preserve the following random numbers!)
 > (Runif	  <- runif    (n, min = .2, max = 2) )
  [1] 1.8416169 0.4703079 0.6841623 0.5048212 1.5620335 0.2738142 1.1573172
  [8] 0.3854089 1.0601866 1.9827946 0.7149722 1.3607511 1.3590662 1.3110552
@@ -407,6 +443,11 @@ Warning messages:
 > (Rwilcox  <- rwilcox  (n, m = 13, n = 17) )
  [1] 133 103 103  62 117 108  96 102 118 115 110  92 139 126  77  65 127  72 139
 [20] 124
+> (Rt2	  <- rt	      (n, df = 1.01))
+ [1] -0.19162182 -0.80558213  5.34371153  2.97056448 -2.06158935  1.02975367
+ [7]  0.02712426 -1.18826124  1.43878831  2.74129680 -0.52293357 -0.17152843
+[13] -0.45179010  1.05646571 -0.62321076 -0.12553755  0.36695132 -9.42934145
+[19]  0.04081237 -3.70972593
 > 
 > (Pbeta	  <- pbeta    (Rbeta, shape1 = .8, shape2 = 2) )
  [1] 0.00685142 0.21898139 0.96943981 0.30726448 0.51350239 0.33510112
@@ -480,11 +521,16 @@ Warning messages:
  [7] 0.48536796 0.09474662 0.40676506 0.14282568 0.13577317 0.62940572
 [13] 0.41083885 0.92356606 0.95623357 0.49790926 0.06352849 0.28016760
 [19] 0.98752692 0.23928001
-> (Pt	  <- pt	      (Rt, df = 11) )
+> (Pt	  <- pt	      (Rt,  df = 11) )
  [1] 0.05491642 0.30192660 0.93285384 0.46375705 0.57641129 0.55185574
  [7] 0.17064488 0.08130751 0.91237971 0.24148527 0.30606307 0.93360050
 [13] 0.15287884 0.57333111 0.46518298 0.19365307 0.27422273 0.86749203
 [19] 0.15501842 0.22767857
+> (Pt2	  <- pt	      (Rt2, df = 1.01) )
+ [1] 0.43961636 0.28360180 0.94199308 0.89763502 0.14278894 0.75533914
+ [7] 0.50864836 0.22193161 0.80750963 0.88965697 0.34628392 0.44582080
+[13] 0.36463226 0.75942529 0.32218488 0.46017088 0.61218435 0.03294746
+[19] 0.51300870 0.08284141
 > (Punif	  <- punif    (Runif, min = .2, max = 2) )
  [1] 0.91200940 0.15017105 0.26897908 0.16934513 0.75668526 0.04100786
  [7] 0.53184287 0.10300496 0.47788145 0.99044142 0.28609568 0.64486175
@@ -624,7 +670,9 @@ Warning messages:
 [1] TRUE
 > All.eq(Rsignrank, qsignrank(Psignrank, n = 47))
 [1] TRUE
-> all.equal( Rt,	  qt	   (Pt, df = 11), tol = 1e-7 )## !! (386-lx:2.48e-9)
+> All.eq(Rt,	  qt	   (Pt,	 df = 11))
+[1] TRUE
+> all.equal(Rt2,	  qt	   (Pt2, df = 1.01), tol = 1e-2)
 [1] TRUE
 > All.eq(Runif,	  qunif	   (Punif, min = .2, max = 2))
 [1] TRUE
@@ -664,7 +712,9 @@ Warning messages:
 [1] TRUE
 > All.eq(Rsignrank, qsignrank(1- Psignrank, n = 47, lower=F))
 [1] TRUE
-> all.equal(Rt,	     qt	      (1- Pt, df = 11, lower=F), tol = 1e-7)
+> All.eq(Rt,	  qt	   (1- Pt,  df = 11,   lower=F))
+[1] TRUE
+> all.equal(Rt2,	  qt	   (1- Pt2, df = 1.01, lower=F), tol = 1e-2)
 [1] TRUE
 > All.eq(Runif,	  qunif	   (1- Punif, min = .2, max = 2, lower=F))
 [1] TRUE
@@ -704,7 +754,9 @@ Warning messages:
 [1] TRUE
 > All.eq(Rsignrank, qsignrank(log(Psignrank), n = 47, log=TRUE))
 [1] TRUE
-> all.equal(Rt,	     qt	      (log(Pt), df = 11, log=TRUE), tol = 1e-7)
+> All.eq(Rt,	  qt	   (log(Pt), df = 11, log=TRUE))
+[1] TRUE
+> all.equal(Rt2,	  qt	   (log(Pt2), df = 1.01, log=TRUE), tol = 1e-2)
 [1] TRUE
 > All.eq(Runif,	  qunif	   (log(Punif), min = .2, max = 2, log=TRUE))
 [1] TRUE
@@ -745,7 +797,9 @@ Warning messages:
 [1] TRUE
 > All.eq(Rsignrank, qsignrank(log(1- Psignrank), n = 47, lower=F, log=T))
 [1] TRUE
-> all.equal(Rt,	     qt	      (log(1- Pt), df = 11, lower=F, log=T), tol = 1e-7)#ok{prec.}
+> All.eq(Rt,	  qt	   (log(1- Pt ), df = 11,   lower=F, log=T))
+[1] TRUE
+> all.equal(Rt2,	  qt	   (log(1- Pt2), df = 1.01, lower=F, log=T), tol = 1e-2)
 [1] TRUE
 > All.eq(Runif,	  qunif	   (log(1- Punif), min = .2, max = 2, lower=F, log=T))
 [1] TRUE
@@ -786,7 +840,9 @@ Warning messages:
 [1] TRUE
 > All.eq(log(1 - Psignrank), psignrank(Rsignrank, n = 47, lower=F, log=T))
 [1] TRUE
-> All.eq(log(1 - Pt),	   pt	    (Rt, df = 11, lower=F, log=T))
+> All.eq(log(1 - Pt),	   pt	    (Rt, df = 11,   lower=F, log=T))
+[1] TRUE
+> All.eq(log(1 - Pt2),	   pt	    (Rt2,df = 1.01, lower=F, log=T))
 [1] TRUE
 > All.eq(log(1 - Punif),	   punif    (Runif, min = .2, max = 2, lower=F, log=T))
 [1] TRUE
@@ -796,5 +852,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.42 0.18 7.62 0 0 
+Time elapsed:  6.53 0.14 6.71 0 0 
 > 

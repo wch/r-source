@@ -1,6 +1,3 @@
-% file se.contrast.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{se.contrast}
 \alias{se.contrast}
 \alias{se.contrast.aov}
@@ -46,7 +43,7 @@ se.contrast(object, \dots)
  \value{
   A vector giving the standard errors for each contrast.
 }
-\author{B. D. Ripley}
+
 \seealso{
   \code{\link{contrasts}},
   \code{\link{model.tables}}

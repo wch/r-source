@@ -76,19 +76,20 @@ ps.options(paper, horizontal, width, height, family, encoding,
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.}
   \item{pointsize}{the default point size to be used.}
-  \item{bg}{the default background color to be used.  If "transparent" (or
-    an equivalent specification), no background is painted.}
+  \item{bg}{the default background color to be used.
+    If \code{"transparent"} (or an equivalent specification), no
+    background is painted.}
   \item{fg}{the default foreground color to be used.}
   \item{onefile}{logical: if true (the default) allow multiple figures
-    in one file. If false, generate a
-    file name containing the page number and use an EPSF header
-    and no \code{DocumentMedia} comment.}
-  \item{pagecentre}{logical: should the device region be centred on the page:
-    defaults to true.}
+    in one file.  If false, generate a file name containing the page
+    number and use an EPSF header and no \code{DocumentMedia} comment.}
+  \item{pagecentre}{logical: should the device region be centred on the
+    page: defaults to true.}
   \item{print.it}{logical: should the file be printed when the device is
     closed?  (This only applies if \code{file} is a real file name.)}
-  \item{command}{the command to be used for ``printing''. Defaults to
-    option \code{"printcmd"}; this can also be selected as \code{"default"}.}
+  \item{command}{the command to be used for ``printing''.  Defaults to
+    option \code{"printcmd"}; this can also be selected as
+    \code{"default"}.}
   \item{append}{logical; currently \bold{disregarded}; just there for
     compatibility reasons.}
   \item{reset, override.check}{logical arguments passed to
@@ -122,7 +123,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be run
   in a minimized window.   GSView 4.x provides
-  \code{gsprint.exe} which may be even more convenient (it requires
+  \file{gsprint.exe} which may be even more convenient (it requires
   GhostScript version 6.0 or later).
 #endif
 
@@ -177,11 +178,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
     "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
   It is the user's responsibility to check that suitable fonts are made
   available, and that they contain the needed characters when
-  re-encoded.  The fontnames used are taken from the
-  \code{FontName} fields of the \code{afm} files.  The software
-  including the PostScript plot file should either embed the font
-  outlines (usually from \code{.pfb} or \code{.pfa} files) or
-  use DSC comments to instruct the print spooler to do so.
+  re-encoded.  The fontnames used are taken from the \code{FontName}
+  fields of the afm files.  The software including the PostScript plot
+  file should either embed the font outlines (usually from \file{.pfb}
+  or \file{.pfa} files) or use DSC comments to instruct the print
+  spooler to do so.
 }
 
 \section{Encodings}{
@@ -203,7 +204,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   encoding, the standard for PDF.
 
   If you change the encoding, it is your responsibility to ensure that
-  the PostScript font contains the glyphs used .  One issue here is the Euro
+  the PostScript font contains the glyphs used.  One issue here is the Euro
   symbol which is in the WinAnsi and MacRoman encodings but may well not
   be in the PostScript fonts.  (It is in the URW variants; it is not in
   the supplied Adobe Font Metric files.)
@@ -212,6 +213,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
   0255) in ISOLatin1.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{Devices}},

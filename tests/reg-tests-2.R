@@ -861,25 +861,34 @@ if(!hasMethods) detach("package:methods")
 
 
 ## scoping rules calling step inside a function
-if(require(MASS)) { # only for "cement"
-    teststep <- function(formula, data)
-    {
-        d2 <- data
-        fit <- lm(formula, data=d2)
-        step(fit)
-    }
-    teststep(formula(y ~ .), cement)
-    detach("package:MASS")
+"cement" <-
+    structure(list(x1 = c(7, 1, 11, 11, 7, 11, 3, 1, 2, 21, 1, 11, 10),
+                   x2 = c(26, 29, 56, 31, 52, 55, 71, 31, 54, 47, 40, 66, 68),
+                   x3 = c(6, 15, 8, 8, 6, 9, 17, 22, 18, 4, 23, 9, 8),
+                   x4 = c(60, 52, 20, 47, 33, 22, 6, 44, 22, 26, 34, 12, 12),
+                   y = c(78.5, 74.3, 104.3, 87.6, 95.9, 109.2, 102.7, 72.5,
+                   93.1, 115.9, 83.8, 113.3, 109.4)),
+              .Names = c("x1", "x2", "x3", "x4", "y"), class = "data.frame",
+              row.names = c("1", "2", "3", "4", "5", "6", "7", "8", "9",
+              "10", "11", "12", "13"))
+teststep <- function(formula, data)
+{
+    d2 <- data
+    fit <- lm(formula, data=d2)
+    step(fit)
 }
+teststep(formula(y ~ .), cement)
 ## failed in 1.6.2
 
 str(array(1))# not a scalar
+
 
 ## na.print="" shouldn't apply to (dim)names!
 (tf <- table(ff <- factor(c(1:2,NA,2), exclude=NULL)))
 identical(levels(ff), dimnames(tf)[[1]])
 str(levels(ff))
 ## not quite ok previous to 1.7.0
+
 
 ## str() for character & factors with NA (levels), and for Surv objects:
 ff <- factor(c(2:1,  NA),  exclude = NULL)
@@ -893,3 +902,23 @@ if(require(survival)) {
     detach("package:survival")
 }
 ## were different, the last one failed in 1.6.2 (at least)
+
+
+## PR#3058  printing with na.print and right=TRUE
+a <- matrix( c(NA, "a", "b", "10",
+               NA, NA,  "d", "12",
+               NA, NA,  NA,  "14"),
+            byrow=T, ncol=4 )
+print(a, right=TRUE, na.print=" ")
+print(a, right=TRUE, na.print="----")
+## misaligned in 1.7.0
+
+
+## assigning factors to dimnames
+A <- matrix(1:4, 2)
+aa <- factor(letters[1:2])
+dimnames(A) <- list(aa, NULL)
+A
+dimnames(A)
+## 1.7.0 gave internal codes as display and dimnames()
+## 1.7.1beta gave NAs via dimnames()

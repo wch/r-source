@@ -53,7 +53,7 @@ Compare(e1, e2)
 Ops(e1, e2)
 Math(x)
 Math2(x, digits)
-Summary(x, ..., na.rm = FALSE)
+Summary(x, \dots, na.rm = FALSE)
 Complex(z)
 }
 \arguments{

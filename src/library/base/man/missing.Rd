@@ -26,7 +26,15 @@ as an argument to a function.
   the function that defines the argument, not in the body of a nested
   function or a \code{local} call.  This may change in the future.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer.
+}
 \seealso{
   \code{\link{substitute}} for argument expression;
   \code{\link{NA}} for ``missing values'' in data.

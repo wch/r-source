@@ -148,6 +148,11 @@ tracingState(on)
   The traced function(s) name(s).  The relevant consequence is the
   assignment that takes place.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{browser}} and \code{\link{recover}}, the likeliest
   tracing functions;

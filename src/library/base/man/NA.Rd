@@ -39,6 +39,15 @@ The generic function \code{is.na<-} sets elements to \code{NA}.
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer.
+}
 \seealso{
   \code{\link{NaN}}, \code{\link{is.nan}}, etc.
   and the utility function \code{\link{complete.cases}}.

@@ -13,7 +13,7 @@
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \description{
-  If \code{REML=FALSE}, returns the log-likelihood value of the linear
+  If \code{REML = FALSE}, returns the log-likelihood value of the linear
   model represented by \code{object} evaluated at the estimated
   coefficients; else, the restricted log-likelihood evaluated at the
   estimated coefficients is returned.
@@ -27,7 +27,7 @@
 }
 \references{
   Harville, D.A. (1974).
-  Bayesian Inference for Variance Components Using Only Error Contrasts.
+  Bayesian inference for variance components using only error contrasts.
   \emph{Biometrika}, \bold{61}, 383--385.
 }
 \author{Jose Pinheiro and Douglas Bates}
@@ -38,13 +38,11 @@ data(attitude)
 logLik(fm1)
 logLik(fm1, REML = TRUE)
 
-Nnlme <- is.na(match("package:nlme", search()))
-if(require(nlme)) {
-  data(Orthodont)
+
+res <- try(data(Orthodont, package="nlme"))
+if(!inherits(res, "try-error")) {
   fm1 <- lm(distance ~ Sex * age, Orthodont)
   print(logLik(fm1))
   print(logLik(fm1, REML = TRUE))
-  if(Nnlme) detach( "package:nlme")
-}
-}
+}}
 \keyword{models}

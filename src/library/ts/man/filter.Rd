@@ -60,7 +60,6 @@ filter(x, filter, method = c("convolution", "recursive"),
   faster for a filter of length 100 on a series of length 1000,
   for example.
 }
-\author{B.D. Ripley}
 
 \seealso{
   \code{\link{convolve}}, \code{\link{arima.sim}}

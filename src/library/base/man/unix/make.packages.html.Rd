@@ -23,7 +23,6 @@ make.packages.html(lib.loc = .libPaths())
 \value{
   Logical, whether the function succeeded in recreating the files.
 }
-\author{Brian Ripley}
 \seealso{
   \code{\link{help.start}}
 }

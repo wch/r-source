@@ -102,6 +102,10 @@ density(x, bw = "nrd0", adjust = 1,
   \item{has.na}{logical, for compatibility (always FALSE).}
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole (for S version).
+
   Scott, D. W. (1992)
   \emph{Multivariate Density Estimation. Theory, Practice and Visualization}.
   New York: Wiley.

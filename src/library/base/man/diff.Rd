@@ -33,6 +33,11 @@ diff.default(x, lag=1, differences=1, \dots)
   If \code{x} is a matrix then the difference operations are carried out
   on each column separately.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{diff.ts}}.
 }

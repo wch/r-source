@@ -40,6 +40,11 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   values of the individual calls to \code{FUN}, i.e., the result is a
   list with a \code{\link{dim}} attribute.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   the convenience functions \code{\link{by}} and \code{\link{aggregate}} 
 (using \code{tapply});

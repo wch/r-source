@@ -18,7 +18,7 @@
    This file is part of GraphApp, a cross-platform C graphics library.
 
    GraphApp is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Library General Public License. 
+   under the terms of the GNU Library General Public License.
    GraphApp is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY.
 
@@ -225,6 +225,7 @@ void resize(control obj, rect r)
 		r.y = obj->rect.y;
 		if (!equalr(r, obj->rect)) {
 			GetWindowPlacement(obj->handle, &W);
+			if (!isvisible(obj)) W.showCmd = SW_HIDE;  /* stops the resize from revealing the window */
 			dx = r.x - obj->rect.x;
 			dy = r.y - obj->rect.y;
 			/* don't believe current sizes!
@@ -830,7 +831,7 @@ rect objrect(object obj)
 		break;
 	 case MetafileObject:
 		r = obj->rect;
-		break;	   
+		break;
 	  default:
 		GetClientRect(obj->handle, (RECT *) &r);
 		break;
@@ -889,7 +890,7 @@ void delobj(object obj)
 		delimage((image)obj);
 		break;
 	  default:
-		if (obj->refcount == 1)
+		/* if (obj->refcount == 1)   why would this test be here?? */
 			decrease_refcount(obj);
 		break;
 	}

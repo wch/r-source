@@ -42,7 +42,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE)
 is.data.frame(x)
 
 row.names(x)
-row.names(x) <- names
+row.names(x) <- value
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
@@ -59,6 +59,9 @@ row.names(x) <- names
   \item{optional}{logical. If \code{TRUE}, setting row names is
     optional.}
   \item{x}{object of class \code{data.frame}.}
+  \item{value}{a vector with the same length as the number of rows of
+    \code{x}, to be coerced to character.  Duplicated or missing values
+    are not allowed.}
 }
 \value{
   For \code{data.frame(.)} a data frame, a matrix-like stucture whose
@@ -73,7 +76,7 @@ row.names(x) <- names
   \code{row.names} can be used to set and retrieve the row names of a
   data frame, similarly to \code{\link{rownames}} for arrays (and
   it is a generic function that calls \code{rownames} for an
-  array argument.}
+  array argument).}
 
   \code{plot.data.frame}, a method of the \code{\link{plot}} generic,
   uses \code{\link{stripchart}} for \emph{one} variable,
@@ -94,8 +97,12 @@ row.names(x) <- names
   adding columns to a data frame.
 
   If a list or data frame or matrix is passed to \code{data.frame}
-  it is as if each column had been passed as a separate argument,
-  with the exception of matrices of class \code{\link{model.matrix}}.
+  it is as if each column had been passed as a separate argument.
+  This can be overridden if the object past has a class which has
+  a method for \code{as.data.frame}: two examples are
+  matrices of class \code{"\link{model.matrix}"} (which are included as a
+  single column) and list objects of class \code{"\link{POSIXlt}"} which are
+  coerced to class \code{"\link{POSIXct}"}
 
   Objects passed to \code{data.frame} should have the same number of
   rows, but atomic vectors and factors will be recycled a whole number
@@ -104,6 +111,12 @@ row.names(x) <- names
 \note{
   In versions of \R prior to 1.4.0 (and in S3 but not S4) logical
   columns were converted to factors.
+}
+\references{
+  Chambers, J. M. (1992)
+  \emph{Data for models.}
+  Chapter 3 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{I}},
@@ -126,9 +139,9 @@ str(cbind(d, char = I(letters[1:10])), vec.len = 10)
 
 stopifnot(1:10 == row.names(d))# {coercion}
 
-(d0  <- d[, FALSE]) # NULL dataframe with 10 rows
-(d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
-(d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
+(d0  <- d[, FALSE]) # NULL data frame with 10 rows
+(d.0 <- d[FALSE, ]) # <0 rows> data frame  (3 cols)
+(d00 <- d0[FALSE,])  # NULL data frame with 0 rows
 }
 \keyword{classes}
 \keyword{methods}

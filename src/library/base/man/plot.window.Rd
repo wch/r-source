@@ -38,15 +38,13 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
 }
 \examples{
 ##--- An example for the use of  `asp' :
-library(mva)
+library(mva)  # normally loaded
 data(eurodist)
 loc <- cmdscale(eurodist)
 rx <- range(x <- loc[,1])
 ry <- range(y <- -loc[,2])
 plot(x, y, type="n", asp=1, xlab="", ylab="")
-abline(h=pretty(rx, 10),
-       v=pretty(ry, 10), col= "lightgray")
+abline(h = pretty(rx, 10), v = pretty(ry, 10), col = "lightgray")
 text(x, y, names(eurodist), cex=0.8)
-\testonly{detach("package:mva")}
 }
 \keyword{aplot}

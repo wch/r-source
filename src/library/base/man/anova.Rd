@@ -33,6 +33,10 @@ anova(object, \dots)
   are fitted to the same dataset. This may be a problem if there are
   missing values and \R's default of \code{na.action = na.omit} is used.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}, Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{coefficients}}, \code{\link{effects}},
   \code{\link{fitted.values}}, \code{\link{residuals}}, \code{\link{summary}}.

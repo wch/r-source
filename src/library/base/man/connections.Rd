@@ -43,8 +43,8 @@ socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
                  encoding = getOption("encoding"))
 
-\method{open}{connection}(con, open = "r", blocking = TRUE, ...)
-\method{close}{connection}(con, type = "rw", ...)
+\method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
+\method{close}{connection}(con, type = "rw", \dots)
 \method{flush}{connection}(con)
 
 isOpen(con, rw = "")
@@ -110,8 +110,7 @@ isIncomplete(con)
     \item{\code{"wb"}}{Open for writing in binary mode.}
     \item{\code{"ab"}}{Open for appending in binary mode.}
     \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing.}
-    \item{\code{"w+"}, \code{"w+b"}}{Open for reading and writing.}
-    \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing,
+    \item{\code{"w+"}, \code{"w+b"}}{Open for reading and writing,
       truncating file initially.}
     \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
   }
@@ -284,7 +283,8 @@ readLines(pipe("ls -1"))
 scan(pipe("sed -e s/,$// data2"), sep=",")
 
 # convert decimal point to comma in output
-zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
+# both R strings and (probably) the shell need \ doubled
+zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 file.show("outfile", delete.file=TRUE)}

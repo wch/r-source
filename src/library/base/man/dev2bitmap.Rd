@@ -57,7 +57,6 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 \value{
   None.
 }
-\author{B. D. Ripley}
 
 #ifdef windows
 \note{

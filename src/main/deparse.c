@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -899,11 +899,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	attr2(s, d);
 	break;
     case EXTPTRSXP:
-	sprintf(tpb, "<pointer: %p>\n", R_ExternalPtrAddr(s));
+	sprintf(tpb, "<pointer: %p>", R_ExternalPtrAddr(s));
 	print2buff(tpb, d);
 	break;
     case WEAKREFSXP:
-	sprintf(tpb, "<weak reference>\n");
+	sprintf(tpb, "<weak reference>");
 	print2buff(tpb, d);
 	break;
     default:

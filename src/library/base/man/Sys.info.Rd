@@ -45,7 +45,6 @@ be most complete on Windows NT/2000/XP systems.
   (In particular on some Linux distributions the login name is unknown
   from sessions with re-directed inputs.)
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{.Platform}}, and \code{\link{R.version}}.

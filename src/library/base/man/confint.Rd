@@ -23,7 +23,7 @@ missing, all parameters are considered.
 \item{level}{
 the confidence level required.
 }
-\item{...}{
+\item{\dots}{
 additional argument(s) for methods
 }}
 \value{

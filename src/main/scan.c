@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2002   The R Development Core Team.
+ *  Copyright (C) 1998-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,8 +40,8 @@ static char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
 typedef struct {
     SEXP NAstrings;
     int quiet;
-    int sepchar; /*  = 0 */
-    int decchar; /* = '.' */
+    int sepchar; /*  = 0 */      /* This gets compared to ints */
+    char decchar; /* = '.' */    /* This only gets compared to chars */
     char *quoteset;
     char *quotesave; /* = NULL */
     int comchar;
@@ -715,7 +715,8 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
-	else data.sepchar = CHAR(STRING_ELT(sep, 0))[0];
+	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	/* gets compared to chars: bug prior to 1.7.0 */
     } else errorcall(call, "invalid sep value");
 
     if (isString(dec) || isNull(dec)) {		
@@ -745,7 +746,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1) errorcall(call, "invalid comment.char value");
-    else if (strlen(p) == 1) data.comchar = (int)*p;
+    else if (strlen(p) == 1) data.comchar = (unsigned char)*p;
 
     i = asInteger(file);
     data.con = getConnection(i);
@@ -811,14 +812,15 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1) errorcall(call, "invalid comment.char value");
-    else if (strlen(p) == 1) data.comchar = (int)*p;
+    else if (strlen(p) == 1) data.comchar = (unsigned char)*p;
 
     if (nskip < 0 || nskip == NA_INTEGER) nskip = 0;
     if (blskip == NA_LOGICAL) blskip = 1;
 
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
-	else data.sepchar = CHAR(STRING_ELT(sep, 0))[0];
+	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	/* gets compared to chars: bug prior to 1.7.0 */
     } else errorcall(call, "invalid sep value");
 
     if (isString(quotes)) {

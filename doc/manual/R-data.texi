@@ -747,8 +747,9 @@ may be unavoidable if the originating system is not available.
 @section EpiInfo, Minitab, S-PLUS, SAS, SPSS, Stata
 
 The recommended package @pkg{foreign} provides import facilities for
-files produced by these statistical systems, and for export to Stata. In some cases
- these function may require substantially less memory than would @code{read.table}.
+files produced by these statistical systems, and for export to Stata. In
+some cases these function may require substantially less memory than
+@code{read.table} would.
 
 @cindex Stata
 @findex read.dta
@@ -775,7 +776,7 @@ Function @code{read.xport} reads a file in SAS Transport (XPORT) format
 and return a list of data frames.  If SAS is available on your system,
 function @code{read.ssd} can be used to create and run a SAS script that
 saves a SAS permanent dataset (@code{.ssd} or @code{.sas7bdat}) in
-Transport format. It then calls @code{read.xport} to read the resulting
+Transport format.  It then calls @code{read.xport} to read the resulting
 file.
 
 @cindex SPSS
@@ -796,10 +797,17 @@ different OS).  This is able to read many but not all @Sl{} objects: in
 particular it can read vectors, matrices and data frames and lists
 containing those.
 
-Function @code{data.restore} to read S-PLUS data dumps (created by
+Function @code{data.restore} reads S-PLUS data dumps (created by
 @code{data.dump}) with the same restrictions (except that dumps from the
 Alpha platform can also be read).  It should be possible to read data
 dumps from S-PLUS 5.x and 6.x written with @code{data.dump(oldStyle=T)}.
+
+If you have access to S-PLUS, it is usually more reliable to @code{dump}
+the object(s) in S-PLUS and @code{source} the dumpfile in @R{}.  For
+S-PLUS 5.x and 6.x you may need to use @code{dump(..., oldStyle=T)}, and
+to read in very large objects it may be preferable to use the dumpfile
+as a batch script rather than @code{source}.
+
 
 @node Octave,  , EpiInfo Minitab SAS S-PLUS SPSS Stata, Importing from other statistical systems
 @section Octave
@@ -1700,11 +1708,12 @@ cat("One more line\n", file = zz)
 close(zz)
 
 ## convert decimal point to comma in output, using a pipe (Unix)
-zz <- pipe(paste("sed s/\\./,/ >", "outfile"), "w")
+## both R strings and (probably) the shell need \ doubled
+zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 ## now look at the output file:
-file.show(outfile, delete.file = TRUE)
+file.show("outfile", delete.file = TRUE)
 
 ## capture R output: use examples from help(lm)
 zz <- textConnection("ex.lm.out", "w")

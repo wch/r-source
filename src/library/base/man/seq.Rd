@@ -53,6 +53,11 @@ seq(along)
   The result is of \code{mode} \code{"integer"} if \code{from} is
   (numerically equal to an) integer and \code{by} is not specified.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{rep}},
   \code{\link{sequence}},

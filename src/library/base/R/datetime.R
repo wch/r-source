@@ -315,15 +315,19 @@ axis.POSIXct <- function(side, x, at, format, ...)
 
 plot.POSIXct <- function(x, y, xlab = "", xaxt = par("xaxt"), ...)
 {
+    ## trick to remove arguments intended for title()
+    axisInt <- function(x, main, sub, xlab, ylab, ...) axis.POSIXct(1, x, ...)
     plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    if(xaxt != "n") axis.POSIXct(1, x, ...)
+    if(xaxt != "n") axisInt(x, ...)
 }
 
 plot.POSIXlt <- function(x, y, xlab = "",  xaxt = par("xaxt"), ...)
 {
+    ## trick to remove arguments intended for title()
+    axisInt <- function(x, main, sub, xlab, ylab, ...) axis.POSIXct(1, x, ...)
     x <- as.POSIXct(x)
     plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    if(xaxt != "n") axis.POSIXct(1, x, ...)
+    if(xaxt != "n") axisInt(x, ...)
 }
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
@@ -625,7 +629,7 @@ cut.POSIXt <-
     x <- as.POSIXct(x)
 
     if (inherits(breaks, "POSIXt")) {
-	breaks <- as.POSIXlt(breaks)
+	breaks <- as.POSIXct(breaks)
     } else if(is.numeric(breaks) && length(breaks) == 1) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1) {

@@ -209,6 +209,17 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   Packages which do not contain compiled code can be shared between
   Unix-alikes, but not to other OSes because of potential problems with
   line endings and OS-specific help files.
+
+  \code{library} and \code{require} use the underlying file system
+  services to locate the libraries, with the result that on
+  case-sensitive file systems package names are case-sensitive
+  (i.e., \code{library(foo)} is different from
+  \code{library(Foo)}), but they are not distinguished on
+  case-insensitive file systems such as MS Windows.  A warning
+  is issued if the user specifies a name which isn't a perfect match
+  to the package name, because future versions of \R will require
+  exact matches.
+
 }
 \author{R core;  Guido Masarotto for the \code{all.available=TRUE}
   part of \code{.packages}.}
@@ -218,6 +229,11 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{library.dynam}},
   \code{\link{data}}, \code{\link{install.packages}},
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \examples{
 (.packages())		    # maybe just "base"

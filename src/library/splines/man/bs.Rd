@@ -36,20 +36,26 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   the \code{knots}, \code{Boundary.knots} etc for use by
   \code{predict.bs()}.
 
-  \code{bs()} is based on the function \code{\link{spline.des}()}
-  written by Douglas Bates.  It generates a basis matrix for
+  \code{bs()} is based on the function \code{\link{spline.des}()}.
+  It generates a basis matrix for
   representing the family of piecewise polynomials with the specified
   interior knots and degree, evaluated at the values of \code{x}.  A
   primary use is in modeling formulas to directly specify a piecewise
   polynomial term in a model.
 
-  Beware of making predictions with new \code{x} values when \code{df}
-  is used as an argument.  Either use \code{safe.predict.gam()}, or else
-  specify \code{knots} and \code{Boundary.knots}.
+%   Beware of making predictions with new \code{x} values when \code{df}
+%   is used as an argument.  Either use \code{safe.predict.gam()}, or else
+%   specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
   \code{\link{ns}}, \code{\link{poly}}, \code{\link[modreg]{smooth.spline}},
   \code{\link{predict.bs}}, \code{\link{SafePrediction}}
+}
+\references{
+  Hastie, T. J. (1992)
+  Generalized additive models.
+  Chapter 7 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
 data(women)

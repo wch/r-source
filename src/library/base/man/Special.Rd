@@ -54,6 +54,10 @@ lchoose(n, k)
   coefficients and their logarithms.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (for \code{gamma} and \code{lgamma}.)
+
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.
   Chapter 6: Gamma and Related Functions.

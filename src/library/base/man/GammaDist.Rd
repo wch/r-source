@@ -53,6 +53,11 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
   the Beta distribution and \code{\link{dchisq}} for the chi-squared

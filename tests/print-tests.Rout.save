@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-26)
+Version 1.7.0 Patched (2003-05-15)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -399,20 +399,62 @@ b 1.2+11i 2.4+23.141593i
 > format(zz)
     a      b
 1 abc def"gh
+> # " (font-locking: closing the string above)
+> 
 > # test format.data.frame on former AsIs's.
-> RNGversion("1.6.2")
 > set.seed(321)
 > dd <- data.frame(x = 1:5, y = rnorm(5), z = c(1, 2, NA, 4, 5))
 > model <- glm(y ~ x, data = dd, subset = 1:4, na.action = na.omit)
 > expand.model.frame(model, "z", na.expand = FALSE)
            y x z
-1  0.9976322 1 1
-2 -0.5900230 2 2
-4 -0.3715109 4 4
+1  1.7049032 1 1
+2 -0.7120386 2 2
+4 -0.1196490 4 4
 > expand.model.frame(model, "z", na.expand = TRUE)
            y x  z
-1  0.9976322 1  1
-2 -0.5900230 2  2
-3  1.6192917 3 NA
-4 -0.3715109 4  4
+1  1.7049032 1  1
+2 -0.7120386 2  2
+3 -0.2779849 3 NA
+4 -0.1196490 4  4
+> 
+> ## print.table() changes affecting summary.data.frame
+> data(attenu)
+> options(width=82)
+> summary(attenu) # ``one line''
+     event            mag           station         dist            accel        
+ Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50   Min.   :0.00300  
+ 1st Qu.: 9.00   1st Qu.:5.300   1028   :  4   1st Qu.: 11.32   1st Qu.:0.04425  
+ Median :18.00   Median :6.100   113    :  4   Median : 23.40   Median :0.11300  
+ Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60   Mean   :0.15422  
+ 3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55   3rd Qu.:0.21925  
+ Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00   Max.   :0.81000  
+                                 NA's   : 16                                     
+> lst <- levels(attenu$station)
+> levels(attenu$station)[lst == "117"] <- paste(rep(letters,3),collapse="")
+> summary(attenu) # {2 + one long + 2 } variables
+     event            mag       
+ Min.   : 1.00   Min.   :5.000  
+ 1st Qu.: 9.00   1st Qu.:5.300  
+ Median :18.00   Median :6.100  
+ Mean   :14.74   Mean   :6.084  
+ 3rd Qu.:20.00   3rd Qu.:6.600  
+ Max.   :23.00   Max.   :7.700  
+                                
+                                                                           station   
+ abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz:  5  
+ 1028                                                                          :  4  
+ 113                                                                           :  4  
+ 112                                                                           :  3  
+ 135                                                                           :  3  
+ (Other)                                                                       :147  
+ NA's                                                                          : 16  
+      dist            accel        
+ Min.   :  0.50   Min.   :0.00300  
+ 1st Qu.: 11.32   1st Qu.:0.04425  
+ Median : 23.40   Median :0.11300  
+ Mean   : 45.60   Mean   :0.15422  
+ 3rd Qu.: 47.55   3rd Qu.:0.21925  
+ Max.   :370.00   Max.   :0.81000  
+                                   
+> ## in 1.7.0, things were split to more lines
 > 

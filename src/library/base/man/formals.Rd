@@ -7,13 +7,14 @@
 }
 \usage{
 formals(fun = sys.function(sys.parent()))
-formals(fun) <- list
+formals(fun, envir = parent.frame()) <- value
 }
 \arguments{
   \item{fun}{a function object or a character string naming the function
     to be manipulated.
-    If not specified, the function calling \code{body} is used.}
-  \item{list}{a list of \R expressions.}
+    If not specified, the function calling \code{formals} is used.}
+  \item{envir}{environment in which the function should be defined.}
+  \item{value}{a list of \R expressions.}
 }
 \value{
   \code{formals} returns the formal argument list of the function

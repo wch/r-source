@@ -1,6 +1,3 @@
-## file update.R
-## copyright (C) 1998 W. N. Venables and B. D. Ripley
-##
 update.default <-
     function (object, formula., ..., evaluate = TRUE)
 {

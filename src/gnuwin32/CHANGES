@@ -4,6 +4,48 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1071
+======
+
+The system() function printed a spurious warning when the input argument
+was used.
+
+The File|Change Dir...|Browse dialog could cause R to crash.
+
+Fixed a bug in versioned install of binary package bundles.
+
+Help for max.col was not being found in CHTML help: we have worked around
+a bug in HHW.
+
+The maximum allowed `pointsize' for a windows() device has been
+increased to 48: some people have much bigger screens these days.
+
+Rcmd BATCH in rw1070 incorrectly required the R::Utils Perl module.
+
+The data editor no longer takes almost all the CPU cycles when running.
+
+Fixed a bug in the data editor display that sometimes led to R failing
+to shutdown.
+
+Added some conditional compilation directives to the source so that the
+replacement malloc() (see INSTALL) need not be used.
+
+Changed the installer build code so that patch versions are named
+rwXXXXpat.exe, development versions are named rwXXXXdev.exe, and 
+beta versions are named rwXXXXbeta.exe.
+
+Fixed bugs that caused crash when windows were resized repeatedly.(PR#1711)
+
+Changed help to use the 'title' parameter of file.show when displaying 
+help, for consistency with Unix versions.
+
+Default in installer changed so a normal user installation will 
+include the source package installation files.
+
+Moved the Sweave style file to the main install group.
+
+
+
 rw1070
 ======
 

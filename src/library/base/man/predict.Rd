@@ -24,6 +24,11 @@ predict (object, \dots)
 }
 \seealso{\code{\link{predict.lm}}.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 ## All the "predict" methods visible in your current search() path.
 ## NB most of the methods in the base packages are hidden.

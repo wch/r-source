@@ -1,5 +1,3 @@
-#### copyright (C) 1998 W. N. Venables and B. D. Ripley
-
 aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                 contrasts = NULL, ...)
 {

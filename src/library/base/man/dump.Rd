@@ -43,6 +43,11 @@ dump(list, file = "dumpdata.R", append = FALSE, envir = parent.frame())
   is called from the top level or the \code{envir} argument is given
   explicitly.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 
 \seealso{\code{\link{dput}}, \code{\link{dget}},\code{\link{write}}.
 }

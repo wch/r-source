@@ -23,6 +23,11 @@ segments(x0, y0, x1, y1,
   specify a color and line texture for the line segments (\code{col}
   may be a vector).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{arrows}}, 
   \code{\link{polygon}} for slightly easier and less flexible line

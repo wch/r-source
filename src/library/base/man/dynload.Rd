@@ -153,12 +153,17 @@ symbol.For(name)
   Schwarte.  The compatibility code for HP-UX was provided by Luke
   Tierney.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{library.dynam}} to be used inside a package's
   \code{\link{.First.lib}} initialization.
 
 #ifdef unix
-  \code{\link{SHLIB}} for how to create suitable shared libraries.
+  \code{\link{SHLIB}} for how to create suitable shared objects.
 #endif
 #ifdef windows
   \code{\link{SHLIB}} for how to create suitable DLLs.
@@ -170,9 +175,6 @@ symbol.For(name)
   \code{\link{.Call}}.
 }
 \examples{
-is.loaded(symbol.For("hcass2")) #-> probably  FALSE
-library(mva)
-is.loaded(symbol.For("hcass2")) #-> TRUE
-\testonly{detach("package:mva")}
+is.loaded(symbol.For("hcass2")) #-> probably TRUE, as mva is loaded
 }
 \keyword{interface}

@@ -1,10 +1,10 @@
-% $Id: profile.nls.Rd,v 1.7 2002/01/17 17:02:25 ripley Exp $
+% $Id: profile.nls.Rd,v 1.7.6.1 2003/06/12 11:30:10 ripley Exp $
 \name{profile.nls}
 \alias{profile.nls}
 \title{ Method for Profiling nls Objects}
 \usage{
 \method{profile}{nls}(fitted, which=1:npar, maxpts=100, alphamax=0.01,
-        delta.t=cutoff/5, ...)
+        delta.t=cutoff/5, \dots)
 }
 \arguments{
   \item{fitted}{ the original fitted model object.}

@@ -41,8 +41,16 @@
       name <- signature[[1]]
       if(is.null(fdefault))
           methods <- MethodsList(name)
-      else
+      else {
+          if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
+             !is.primitive(fdefault))
+              stop("The formal arguments of the generic function for \"",
+                   f, "\" (",
+                   paste(formalArgs(fdef), collapse = ", "),
+                   ") differ from those of the non-generic to be used as the default, (",
+                   paste(formalArgs(fdefault), collapse = ", "), ")")
           methods <- MethodsList(name, asMethodDefinition(fdefault))
+      }
       value@default <- methods
       value@skeleton <- generic.skeleton(f, fdef, fdefault)
       value
@@ -310,9 +318,12 @@ conformMethod <-
     if(!all(diff(seq(along=fnames)[!omitted]) > 0))
         stop(label, "Formal arguments in method and function don't appear in the same order")
     signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
-    if(any(is.na(match(signature[omitted], c("ANY", "missing")))))
-        stop(label, "Formal arguments omitted in the method definition cannot be in the signature:",
-                   paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", "))
+    if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
+        bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
+        stop(label, "Formal arguments omitted in the method definition cannot be in the signature (",
+                   paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", "),
+             ")")
+    }
     else if(!all(signature[omitted] == "missing")) {
         message(label, "Expanding the signature to include omitted arguments in definition: ",
             paste(fnames[omitted], "= \"missing\"",collapse = ", "))
@@ -328,8 +339,11 @@ conformMethod <-
 
 rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     added <- is.na(match(mnames, fnames))
-    if(!any(added))
+    if(!any(added)) {
+        ## the formal args of the method must be identical to generic
+        formals(definition, envir = environment(definition)) <- formals(generic)
         return(definition)
+    }
     dotsPos <- match("...", fnames)
     if(is.na(dotsPos))
         stop("Methods can add arguments to the generic only if \"...\" is an argument to the generic")
@@ -359,9 +373,6 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
         names(newCall) <- newCallNames
     }
     newCall <- as.call(newCall)
-    ## promote the definition to a method (so it can contain callNextMethod, etc,
-    ## when it's assigned as .local
-    definition <- asMethodDefinition(definition, signature)
     newBody <- substitute({.local <- DEF; NEWCALL},
                           list(DEF = definition, NEWCALL = newCall))
     body(generic, envir = environment(definition)) <- newBody
@@ -390,7 +401,7 @@ getGeneric <-
   ## NULL according to the value of mustFind.
 ### TO BE CHANGED:  Needs a package argument, which should be passed down to R_getGeneric
   function(f, mustFind = FALSE) {
-    if(is(f, "genericFunction"))
+    if(is.function(f) && is(f, "genericFunction"))
         return(f)
     value <- .Call("R_getGeneric", f, FALSE, PACKAGE = "methods")
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
@@ -796,8 +807,13 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     matched <- substr(strings, 1, n) == pattern
     value <- substring(strings[matched], n+1)
     pkg <- sub("^[^:]*", "", value) # will be "" if no : in the name
-    if(searchForm)
-        pkg <- paste("package", pkg, sep="")
+    if(searchForm) {
+        global <- grep(".GlobalEnv", value)
+        if(length(global)) {
+            pkg[-global] <- paste("package", pkg[-global], sep="")
+            pkg[global] <- substring(pkg[global],2)
+        }
+    }
     else
         pkg <- substring(pkg, 2)
     value <- sub(":.*","", value)

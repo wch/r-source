@@ -84,7 +84,7 @@ reshapeLong(x,jvars,  ilev = row.names(x),
 % </Removed 1.5.0>
 % Removed in 1.6.0
 piechart(x, labels = names(x), edges = 200, radius = 0.8,
-         density = NULL, angle = 45, col = NULL, main = NULL, ...)
+         density = NULL, angle = 45, col = NULL, main = NULL, \dots)
 print.ordered(.)
 .Dyn.libs
 .lib.loc

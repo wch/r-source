@@ -4,6 +4,7 @@
 \alias{Deprecated}
 \alias{.Deprecated}
 \alias{printNoClass}
+\alias{tkfilefind}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -21,7 +22,14 @@ printNoClass(x, digits = NULL, quote = TRUE, na.print = NULL,
 
   \code{printNoClass} was in package \code{methods} and calls directy the
   internal function \code{print.default}.  It should no longer be needed.
+
+  \code{tkfilefind} is a demo in package \code{tcltk} displaying a
+  widget for selecting files but the same functionality is available in
+  a better form in the \code{tkgetOpenFile} and \code{tkgetSaveFile}
+  functions. The demo is reported not even to work with recent versions
+  of Tcl and Tk libraries.
 }
+
 \seealso{
   \code{\link{Defunct}},
 }

@@ -39,6 +39,9 @@ Conj(x)
   specified either by giving its length, its real and imaginary parts, or
   modulus and argument. (Giving just the length generates a vector of
   complex zeroes.)
+  
+  \code{as.complex} attempts to coerce its argument to be of complex
+  type: like \code{\link{as.vector}} it strips attributes including names.
 
   Note that \code{is.complex} and \code{is.numeric} are never both
   \code{TRUE}.
@@ -56,6 +59,11 @@ Conj(x)
 
   \code{is.complex} is generic: you can write methods to handle
   of specific classes of objects, see \link{InternalMethods}.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \examples{
 0i ^ (-3:3)

@@ -9,7 +9,7 @@
   \code{\link{tapply}} applied to data frames.
 }
 \usage{
-by(data, INDICES, FUN, ...)
+by(data, INDICES, FUN, \dots)
 }
 \arguments{
  \item{data}{an \R object, normally a data frame, possibly a matrix.}

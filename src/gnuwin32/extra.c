@@ -714,10 +714,12 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double mem = asReal(CAR(args));
 	if (!R_FINITE(mem))
 	    errorcall(call, "incorrect argument");
+#ifdef LEA_MALLOC
 	newmax = mem * 1048576.0;
 	if (newmax < R_max_memory)
 	    errorcall(call, "cannot decrease memory limit");
 	R_max_memory = newmax;
+#endif
     } else
 	errorcall(call, "incorrect argument");
     return R_NilValue;

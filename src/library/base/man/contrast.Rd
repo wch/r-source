@@ -28,13 +28,27 @@ contr.treatment(n, base = 1, contrasts = TRUE)
   computed contrasts.  If the argument \code{contrasts} is \code{FALSE}
   then a square indicator matrix is returned.
 
-  Note that as from \R version 0.62.2, \code{contr.poly} returns
-  contrasts based on orthogonal (rather than raw) polynomials.
+  \code{cont.helmert} returns Helmert contrasts, which contrast the
+  second level with the first, the third with the average of the first
+  two, and so on.  \code{contr.poly} returns contrasts based on
+  orthogonal polynomials. \code{contr.sum} uses ``sum to zero
+  contrasts''.
+
+  \code{contr.treatment} contrasts each level with the baseline level
+  (specified by \code{base}): the baseline level is omitted.  Note that
+  this does not produce ``contrasts'' as defined in the standard theory
+  for linear models as they are not orthogonal to the constant.
 }
 \value{
   A matrix with \code{n} rows and \code{k} columns, with \code{k=n-1} if
   \code{contrasts} is \code{TRUE} and \code{k=n} if \code{contrasts} is
   \code{FALSE}.
+}
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical models.}
+  Chapter 2 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{contrasts}},

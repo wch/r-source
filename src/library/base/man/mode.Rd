@@ -38,6 +38,11 @@ storage.mode(x) <- "<mode>"
   Note (in the examples below) that some \code{\link{call}}s have mode
   \code{"("} which is S compatible.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{typeof}} for the R-internal ``mode'',
   \code{\link{attributes}}.

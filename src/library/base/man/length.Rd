@@ -28,6 +28,11 @@ length(x) <- n
   and when a vector is lengthened, it is padded out to
   its new length with \code{\link{NA}}s.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 length(diag(4))# = 16 (4 x 4)
 length(options())# 12 or more

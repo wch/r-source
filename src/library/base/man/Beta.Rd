@@ -39,6 +39,11 @@ rbeta(n, shape1, shape2)
   }{Gamma(a+b)/(Gamma(a)Gamma(b))x^(a-1)(1-x)^(b-1)}
   for \eqn{a > 0}, \eqn{b > 0} and \eqn{0 < x < 1}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{beta}} for the Beta function, and \code{\link{dgamma}} for
   the Gamma distribution.

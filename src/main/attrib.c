@@ -42,6 +42,12 @@ static SEXP stripAttrib(SEXP tag, SEXP lst)
     return lst;
 }
 
+/* NOTE: For environments serialize.c calls this function to find if
+   there is a class attribute in order to reconstruct the object bit
+   if needed.  This means the function cannot use OBJECT(vec) == 0 to
+   conclude that the class attribute is R_NilValue.  If you want to
+   rewrite this function to use such a pre-test, be sure to adjust
+   serialize.c accordingly.  LT */
 SEXP getAttrib(SEXP vec, SEXP name)
 {
     SEXP s;
@@ -88,7 +94,7 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	    return R_NilValue;
 	}
     }
-    /* This is where the old/new list ajustment happens. */
+    /* This is where the old/new list adjustment happens. */
     for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s))
 	if (TAG(s) == name) {
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP) {
@@ -573,8 +579,12 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 		SET_VECTOR_ELT(val, i, R_NilValue);
 	    }
 	    else if (!isString(VECTOR_ELT(val, i))) {
-		SET_VECTOR_ELT(val, i,
-			       coerceVector(VECTOR_ELT(val, i), STRSXP));
+		SEXP this;
+		PROTECT(this = coerceVector(VECTOR_ELT(val, i), STRSXP));
+		SET_ATTRIB(this, R_NilValue);
+		SET_OBJECT(this, 0);
+		SET_VECTOR_ELT(val, i, this);
+		UNPROTECT(1);
 	    }
 	}
     }
@@ -981,14 +991,15 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
     value = getAttrib(obj, name);
     if(value == R_NilValue) {
 	SEXP input = name, classString;
-	classString = GET_CLASS(obj);
-	if(isNull(classString))
-	    error("Can't get a slot (\"%s\") from an object of type \"%s\"",
-		  CHAR(asChar(classString)), CHAR(type2str(TYPEOF(obj))));
 	if(isSymbol(name) ) {
 	    input = PROTECT(allocVector(STRSXP, 1));  nprotect++;
 	    SET_STRING_ELT(input, 0, PRINTNAME(name));
+	classString = GET_CLASS(obj);
+	if(isNull(classString))
+	    error("Can't get a slot (\"%s\") from an object of type \"%s\"",
+		  CHAR(asChar(input)), CHAR(type2str(TYPEOF(obj))));
 	}
+	else classString = R_NilValue; /* make sure it is initialized */
  	/* not there.  But since even NULL really does get stored, this
 	   implies that there is no slot of this name.  Or somebody
 	   screwed up by using atttr(..) <- NULL */
@@ -1013,8 +1024,11 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
     if(!s_dot_Data)
 	init_slot_handling();
     if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
-    if(name == s_dot_Data)
-	return set_data_part(obj, value);
+    if(name == s_dot_Data) {
+	obj = set_data_part(obj, value);
+        UNPROTECT(nprotect);
+	return(obj); 
+    }
     if(isNull(value))
 	/* slots, but not attributes, can be NULL.  Store a special symbol
 	   instead. */

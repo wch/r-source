@@ -46,6 +46,11 @@ exists(x, where = -1, envir = parent.frame(),
   The \code{mode} includes collections such as \code{"numeric"} and
   \code{"function"}: any member of the collection will suffice.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{get}}.
 }

@@ -31,6 +31,11 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
   implementations of S, but no other values are accepted and ordering is
   always complete.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{sort}} and \code{\link{rank}}.}
 \examples{
 (ii <- order(x <- c(1,1,3:1,1:4,3), y <- c(9,9:1), z <-c(2,1:9)))

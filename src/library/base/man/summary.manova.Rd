@@ -7,8 +7,8 @@
 }
 \usage{
 \method{summary}{manova}(object,
-               test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
-               intercept = FALSE, \dots)
+        test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
+        intercept = FALSE, \dots)
 }
 \arguments{
   \item{object}{An object of class \code{"manova"} or an \code{aov}
@@ -40,10 +40,9 @@
   \emph{Multivariate Analysis of Variance and Repeated Measures.}
   Chapman and Hall.
 }
-\author{B.D. Ripley}
-
-
-\seealso{\code{\link{aov}}}
+\seealso{
+  \code{\link{manova}}, \code{\link{aov}}
+}
 
 \examples{
 ## Example on producing plastic film from Krzanowski (1998, p. 381)

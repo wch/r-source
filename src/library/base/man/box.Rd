@@ -16,6 +16,11 @@ This function draws a box around the current plot in the given color
 and linetype.  The \code{bty} parameter determines
 the type of box drawn.  See \code{\link{par}} for details.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{rect}} for drawing of arbitrary rectangles.
 }

@@ -31,6 +31,12 @@
   \code{\link{effects}}, \code{\link{fitted}},
   \code{\link{residuals}}.
 }
+\references{
+  Hastie, T. J. and Pregibon, D. (1992)
+  \emph{Generalized linear models.}
+  Chapter 6 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \keyword{models}
 \keyword{regression}
 

@@ -29,17 +29,18 @@ Directory:  Accuracy
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
 Date: Wed, 26 Dec 2001 13:03:31 +0100
-* PR# 1664 *
-Subject: Bug in rnorm.
-From: Rolf Turner <rolf@math.unb.ca>
-Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
-..Strange interaction between "Marsaglia-Multicarry" generator and
-.."Kinderman-Ramage" 
-..method for normal variates. Apparently, switching either of them will help.
 * PR# 2214 *
 Subject: qgamma precision
 From: terra@diku.dk
 Date: Fri, 25 Oct 2002 16:50:17 +0200 (MET DST)
+..good idea; improvement has to work for both lower and upper tail probs.
+* PR# 2894 *
+Subject: qbeta hang
+From: terra@gnome.org
+Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
+..R 1.7.1 incorporates the two suggestions of the 2nd followup:
+..  r = sqrt(-2 * log (a)) and ...(log1p(-a) + log (qq))...
+..
 
 Directory:  Add-ons
 
@@ -114,10 +115,6 @@ Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
 Subject: degrees of freedom in nlme()
 From: jerome@hivnet.ubc.ca
 Date: Fri, 20 Dec 2002 01:40:06 +0100 (MET)
-* PR# 2385 *
-Subject: read.xport and lookup.xport in foreign
-From: Frank E Harrell Jr <fharrell@virginia.edu>
-Date: Fri, 20 Dec 2002 12:47:58 -0500
 * PR# 2386 *
 Subject: ace and avas in acepack
 From: Frank E Harrell Jr <fharrell@virginia.edu>
@@ -136,6 +133,49 @@ Subject: Apparent parser problem
 From: "Jim Rogers" <jrogers@cantatapharm.com>
 Date: Sat, 1 Feb 2003 16:51:41 -0500
 ..Its an ESS or XEmacs problem. I redirected him to ESS-bugs.
+* PR# 2859 *
+Subject: bug and proposed fix in print.trellis 1.7.0
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Sun, 27 Apr 2003 01:56:30 -0400
+..Lattice
+* PR# 2865 *
+Subject: bug in y limits in bwplot
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Mon, 28 Apr 2003 02:19:53 -0400 (EDT)
+* PR# 2933 *
+Subject: frailty models in survreg() -- survival package
+From: Jerome Asselin <jerome@hivnet.ubc.ca>
+Date: Tue, 6 May 2003 15:36:23 -0700
+* PR# 2934 *
+Subject: Re: frailty models in survreg() -- survival package
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Tue, 6 May 2003 15:58:37 -0700 (PDT)
+* PR# 2985 *
+Subject: update.lme trouble
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 May 2003 17:59:41 +0200
+* PR# 2986 *
+Subject: plot.ranef.lme
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 May 2003 18:19:28 +0200
+* PR# 3188 *
+Subject: get.hist.quote not connecting to yahoo
+From: alexg@trwim.com
+Date: Wed, 4 Jun 2003 13:51:46 +0200 (MET DST)
+..That's not a bug, but there is one in get.hist.quote ...
+* PR# 3197 *
+Subject: split.AffyBatch
+From: johannes.freudenberg@imise.uni-leipzig.de
+Date: Thu, 5 Jun 2003 16:05:00 +0200 (MET DST)
+..about BioConductor package affy
+* PR# 3198 *
+From: "Johannes Freudenberg" <johannes.freudenberg@imise.uni-leipzig.de>
+..part of 3197
+* PR# 3219 *
+Subject: tkfilefind error
+From: rbaer@kcom.edu
+Date: Tue, 10 Jun 2003 16:39:24 +0200 (MET DST)
+..known problem with Tcl/Tk 8.4.x
 
 Directory:  Analyses
 
@@ -155,10 +195,11 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
-* PR# 2545 *
-Subject: colSums etc. documentation
-From: "Gunter, Bert" <bert_gunter@merck.com>
-Date: Thu, 13 Feb 2003 09:08:44 -0500
+* PR# 2794 *
+Subject: prop.test  confidence intervals
+From: rbaer@kcom.edu
+Date: Fri, 18 Apr 2003 19:01:03 +0200 (MET DST)
+..prop.test should say how it computes confidence intervals.
 
 Directory:  Graphics
 
@@ -252,18 +293,10 @@ Date: Thu, 7 Feb 2002 11:05:15 -0500
 Subject: mgp parameter in par()
 From: mh.smith@niwa.cri.nz
 Date: Tue, 19 Mar 2002 06:11:49 +0100 (MET)
-* PR# 1476 *
-Subject: Bug: persp and colors
-From: oliver.niggemann@acterna.com
-Date: Tue, 23 Apr 2002 09:41:37 +0200 (MET DST)
 * PR# 1505 *
 Subject: pictex 
 From: luchini@ehess.cnrs-mrs.fr
 Date: Thu, 2 May 2002 12:23:21 +0200 (MET DST)
-* PR# 1653 *
-Subject: coplot behaviour
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Mon, 10 Jun 2002 20:11:02 +0200
 * PR# 1654 *
 Subject: R 1.5.0: axis() does not honor the xaxp argument
 From: "Robert D. Merithew" <merithew@ccmr.cornell.edu>
@@ -301,6 +334,10 @@ Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 Subject: plot() with type="s" and lty=2
 From: jerome@hivnet.ubc.ca
 Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
+* PR# 3099 *
+Subject: surprising behaviour of "bgroup": sets all in greek letters
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Sun, 25 May 2003 18:33:49 +0200
 
 Directory:  In-Out
 
@@ -354,6 +391,15 @@ Subject: R config failure on solaris
 From: "Siva Ginjupalli" <gsivrao@hotmail.com>
 Date: Wed, 24 Jul 2002 20:08:49 +0000
 ..Missing info on R version and compilers.
+* PR# 2808 *
+Subject: building R 1.7.0 under RH7.3
+From: Tim Hoar <thoar@cgd.ucar.edu>
+Date: Mon, 21 Apr 2003 13:16:16 -0600 (MDT)
+..This is with foreign compilers
+* PR# 2878 *
+Subject: Problem with R CMD INSTALL and package versions
+From: rpeng@stat.ucla.edu
+Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
 
 Directory:  Language
 
@@ -449,6 +495,19 @@ Date: Fri, 14 Feb 2003 15:36:15 -0500
 Subject: Default broswer for OS X
 From: james@freelancepropaganda.com
 Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
+* PR# 2813 *
+Subject: Search Engine
+From: leroy@ucsd.edu
+Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
+* PR# 2875 *
+Subject: configure succeeds without dlfcn.h, but fails to compile (OS X)
+From: buerkla@uwec.edu
+Date: Tue, 29 Apr 2003 20:24:12 +0200 (MET DST)
+* PR# 2876 *
+Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
+..follow up to 2875
 
 Directory:  Misc
 
@@ -572,6 +631,33 @@ Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
 From: Dirk Eddelbuettel <edd@debian.org>
 Date: Sun, 6 Apr 2003 21:20:29 -0500
 ..part of 2730
+* PR# 2822 *
+Subject: "LAPACK routine DGESDD gave error code -12" with Debian
+From: Ramon Diaz <rdiaz@cnio.es>
+Date: Tue, 22 Apr 2003 20:06:21 +0200
+* PR# 2823 *
+Subject: Re: [Rd] 
+From: Kurt Hornik <hornik@ci.tuwien.ac.at>
+Date: Tue, 22 Apr 2003 20:15:19 +0200
+..part of 2822
+* PR# 2836 *
+Subject: R-1.7.0: build feedback: OpenBSD 3.2
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:40:35 -0600 (MDT)
+* PR# 2837 *
+Subject: R-1.7.0 build feedback: NetBSD 1.6
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:45:20 -0600 (MDT)
+* PR# 2887 *
+Subject: tools/ldAIX4 Assumes AIX nm
+From: rgrubbfink@cox.net
+Date: Wed, 30 Apr 2003 22:24:34 +0200 (MET DST)
+* PR# 2888 *
+Subject: AIX 4.3.3 nm will not read all of dounzip.o
+From: rgrubbfink@cox.net
+Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
+..Looks like an AIX bug, not an R one.
+..Other people have succeeded on AIX 5.1.
 
 Directory:  TooMuchAtOnce
 
@@ -579,12 +665,16 @@ none
 
 Directory:  Windows
 
-* PR# 1711 *
-Subject: GUI bug
-From: socrates@mail.ru
-Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
-..A crash that is *very* hard to trigger (after several
-..minutes of continuous resizing)
+* PR# 2798 *
+Subject: Re: [R] Keyboard problem using RWin 1.7.0
+From: DJNordlund@aol.com
+Date: Sat, 19 Apr 2003 18:56:25 EDT
+..Can't reproduce so far.
+* PR# 3234 *
+Subject: scan() crash in Windows 98
+From: "Simon Fear" <Simon.Fear@synequanon.com>
+Date: Wed, 11 Jun 2003 12:09:38 +0100
+..Currently unreproducible
 
 Directory:  incoming
 
@@ -602,35 +692,19 @@ Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
 ..[6] "sort.list"   
 ..
 ..A better fix might be to require the argument to be a string.
-* PR# 2577 *
-Subject: Problem with hessian in deriv3 
-From: j.c.rougier@durham.ac.uk
-Date: Mon, 24 Feb 2003 17:01:47 GMT
-* PR# 2593 *
-Subject: density(), with argument of length 1
-From: John Maindonald <u9801539@leonard.anu.edu.au>
-Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
 * PR# 2656 *
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2776 *
-Subject: suggested changes to summary.glm and summary.lm
-From: John Fox <jfox@mcmaster.ca>
-Date: Mon, 14 Apr 2003 07:59:24 -0400
-* PR# 2782 *
-Subject: The World's Smallest Digital Camera & Webcam! trqenkukuuh ncxku 
-From: "Hi!" <phredom02@yahoo.com>
-Date: Tue, 15 Apr 03 16:52:26 GMT
-* PR# 2783 *
-Subject: shorrage delenion
-From: "Lorraine Tran" <62t8ojel93p@aol.com>
-Date: Mon, 14 Apr 03 23:36:23 GMT
-* PR# 2784 *
-Subject: You've never seen it look this good before
-From: "Todd Butler" <am2fagtp@gate811.net>
-Date: Tue, 15 Apr 03 20:05:19 GMT
-* PR# 2785 *
-Subject: Labeling in lm()
-From: veraf@stat.sc.edu
-Date: Tue, 15 Apr 2003 21:33:48 +0200 (MET DST)
+* PR# 2809 *
+Subject: sweave provoked segfault
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 21 Apr 2003 17:01:53 -0400
+* PR# 3217 *
+Subject: inconsistent handling of NA lty
+From: paul@stat.auckland.ac.nz
+Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
+* PR# 3249 *
+Subject: lapack.dll can't be found by excel
+From: dwarner@skarven.net
+Date: Fri, 13 Jun 2003 18:33:20 +0200 (MET DST)

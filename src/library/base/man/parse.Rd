@@ -1,9 +1,13 @@
 \name{parse}
+\alias{parse}
 \title{Parse Expressions}
+\description{
+  \code{parse} returns the parsed but unevaluated expressions in a
+  list.  Each element of the list is of mode \code{expression}.
+}
 \usage{
 parse(file = "", n = NULL, text = NULL, prompt = "?", white = FALSE)
 }
-\alias{parse}
 \arguments{
   \item{file}{a connection, or a character string giving the name of a
     file or a URL to read the expressions from.
@@ -14,13 +18,13 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", white = FALSE)
   \item{text}{character vector. The text to parse. Elements are treated
     as if they were lines of a file.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
-    \code{NULL} means to use \R's prompt, \code{options("prompt")[[1]]}.}
-  \item{white}{if \code{TRUE} then any white space separates expressions
-    otherwise only newlines or semicolons do.}
+    \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
+  \item{white}{\emph{Unimplemented and deprecated}.}
 }
-\description{
-  \code{parse} returns the parsed but unevaluated expressions in a
-  list.  Each element of the list is of mode \code{expression}.
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},

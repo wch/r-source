@@ -1,8 +1,0 @@
-TITLE(moments @@ Sample Moments)
-USAGE(
-moments(x, r)
-)
-DESCRIPTION(
-LANG(moments) finds the LANG(r)-th (central) moment of the elements
-in the numeric object LANG(x).
-)

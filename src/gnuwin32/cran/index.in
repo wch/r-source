@@ -11,7 +11,7 @@
 <h1>R-@RVER@ for Windows</h1>
 
 <p>This directory contains a binary distribution of R-@RVER@ to run on Windows 95, 98, ME,
-NT4.0, 2000 and XP on Intel/clone chips. </p>
+NT4.0, 2000 and XP on Intel/clone chips.</p>
 
 <p>In this directory:</p>
 
@@ -27,8 +27,8 @@ NT4.0, 2000 and XP on Intel/clone chips. </p>
   </tr>
   <tr>
     <td width="19%" valign="top"><a href="@RWVER@.exe">@RWVER@.exe</a></td>
-    <td width="81%">Setup program (about 20 megabytes). Please download this from a <a
-    ref="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
+    <td width="81%">Setup program (about 20 megabytes). Please download this 
+    from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
     This corresponds to the file named <b>SetupR.exe</b> in pre-1.6.0 releases.</td>
   </tr>
   <tr>
@@ -48,9 +48,12 @@ NT4.0, 2000 and XP on Intel/clone chips. </p>
   </tr>
 </TBODY>
 </table>
+<p> Please see the <a href="../../../doc/FAQ/R-FAQ.html">R FAQ</a> for general
+information about R and the <a href="../contrib/rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
+including upgrade advice.</p>
 
 <hr>
 
-<p>Last modified: February 25, 2003, by Duncan Murdoch</p>
+<p>Last modified: April 18, 2003, by Duncan Murdoch</p>
 </body>
 </html>

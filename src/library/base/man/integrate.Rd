@@ -9,7 +9,7 @@
 \usage{
 integrate(f, lower, upper, subdivisions=100,
           rel.tol = .Machine$double.eps^0.25, abs.tol = rel.tol,
-          stop.on.error = TRUE, keep.xy = FALSE, aux = NULL, ...)
+          stop.on.error = TRUE, keep.xy = FALSE, aux = NULL, \dots)
 }
 \arguments{
   \item{f}{An \R function taking a numeric first argument and returning

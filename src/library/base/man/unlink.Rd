@@ -33,6 +33,11 @@
   Prior to \R version 1.2.0 the default on Unix was \code{recursive =
     TRUE}, and on Windows empty directories could be deleted.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{file.remove}}.
 }

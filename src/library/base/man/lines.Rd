@@ -14,7 +14,8 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
   \item{x, y}{coordinate vectors of points to join.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
-  \item{col}{color to use.}
+  \item{col}{color to use. This can be vector of length greater than
+    one, but only the first value will be used.}
   \item{lty}{line type to use.}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}) may
     also be supplied as arguments, particularly, line type, \code{lty} and
@@ -29,6 +30,11 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
   \code{NA} it either its \code{x} or \code{y} value, it is omitted from
   the plot, and lines are not drawn to or from such points.  Thus
   missing values can be used to achieve breaks in lines.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{points}},

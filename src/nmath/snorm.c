@@ -119,7 +119,7 @@ double norm_rand(void)
 
 #define C1		0.398942280401433
 #define C2		0.180025191068563
-#define g(x)		(C1*exp(-x*x/2.0)-C2*(A-fabs(x)))
+#define g(x)		(C1*exp(-x*x/2.0)-C2*(A-x))
 
     const double A =  2.216035867166471;
 
@@ -193,7 +193,10 @@ double norm_rand(void)
 
 	/*-----------------------------------------------------------*/
     
-    case KINDERMAN_RAMAGE: /* see Reference above */
+    case BUGGY_KINDERMAN_RAMAGE: /* see Reference above */
+	/* note: this has problems, but is retained for 
+	 * reproducibility of older codes, with the same 
+	 * numeric code */
 	u1 = unif_rand();
 	if(u1 < 0.884070402298758) {
 	    u2 = unif_rand();
@@ -263,6 +266,60 @@ double norm_rand(void)
 	u1 = unif_rand();
 	u1 = (int)(BIG*u1) + unif_rand();
 	return qnorm5(u1/BIG, 0.0, 1.0, 1, 0);
+    case KINDERMAN_RAMAGE: /* see Reference above */
+	/* corrected version from Josef Leydold
+	 * */
+	u1 = unif_rand();
+	if(u1 < 0.884070402298758) {
+	    u2 = unif_rand();
+	    return A*(1.131131635444180*u1+u2-1);
+	}
+	
+	if(u1 >= 0.973310954173898) { /* tail: */
+	    repeat {
+		u2 = unif_rand();
+		u3 = unif_rand();
+		tt = (A*A-2*log(u3));
+		if( u2*u2<(A*A)/tt )
+		    return (u1 < 0.986655477086949) ? sqrt(tt) : -sqrt(tt);
+	    }
+	}
+	
+	if(u1 >= 0.958720824790463) { /* region3: */
+	    repeat {
+		u2 = unif_rand();
+		u3 = unif_rand();
+		tt = A - 0.630834801921960* fmin2(u2,u3);
+		if(fmax2(u2,u3) <= 0.755591531667601)
+		    return (u2<u3) ? tt : -tt;
+		if(0.034240503750111*fabs(u2-u3) <= g(tt))
+		    return (u2<u3) ? tt : -tt;
+	    }
+	}
+	
+	if(u1 >= 0.911312780288703) { /* region2: */
+	    repeat {
+		u2 = unif_rand();
+		u3 = unif_rand();
+		tt = 0.479727404222441+1.105473661022070*fmin2(u2,u3);
+		if( fmax2(u2,u3)<=0.872834976671790 )
+		    return (u2<u3) ? tt : -tt;
+		if( 0.049264496373128*fabs(u2-u3)<=g(tt) )
+		    return (u2<u3) ? tt : -tt;
+	    }
+	}
+
+	/* ELSE	 region1: */
+	repeat {
+	    u2 = unif_rand();
+	    u3 = unif_rand();
+	    tt = 0.479727404222441-0.595507138015940*fmin2(u2,u3);
+	    if (tt < 0.) continue;
+	    if(fmax2(u2,u3) <= 0.805577924423817)
+		return (u2<u3) ? tt : -tt;
+     	    if(0.053377549506886*fabs(u2-u3) <= g(tt))
+		return (u2<u3) ? tt : -tt;
+	}
     default:
 	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
 	    return 0.0;/*- -Wall */

@@ -1,6 +1,3 @@
-% file C.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{C}
 \title{Sets Contrasts for a Factor}
 \usage{
@@ -27,9 +24,14 @@ C(object, contr, how.many, \dots)
 \value{
   The factor \code{object} with the \code{"contrasts"} attribute set.
 }
-\author{B.D. Ripley}
 \seealso{
   \code{\link{contrasts}}, \code{\link{contr.sum}}, etc.
+}
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical models.}
+  Chapter 2 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
 ## reset contrasts to defaults

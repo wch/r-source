@@ -110,7 +110,7 @@ Name: "html"; Description: "HTML Help Files"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
 Name: "refman"; Description: "Reference Manual"; Types: full custom
-Name: "devel"; Description: "Source Package Installation Files"; Types: full custom
+Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
 Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full custom
 
 [Files]
@@ -175,9 +175,9 @@ sub listFiles {
 	    $component = "html devel";
 	    $mini = 0;
 	} elsif ($_ eq "doc\\html\\faq.html"
-		 || $_ eq "doc\\html\\rw-FAQ.html") {
+		 || $_ eq "doc\\html\\rw-FAQ.html"
+		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
-	    $mini = 1;
 	} elsif (m/^doc\\html/
 		 || m/^doc\\manual\\[^\\]*\.html/
 		 || m/^library\\[^\\]*\\html/
@@ -194,8 +194,8 @@ sub listFiles {
 	    }
 	} elsif (m/^library\\[^\\]*\\latex/
 		 || m/^share\\texmf/) {
-	    $component = "latex";
-	    $mini = 0;
+	    	$component = "latex";
+	    	$mini = 0;
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	    $mini = 0;

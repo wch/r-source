@@ -50,7 +50,8 @@ help <-
                                      sep = "")
                     if(verbose) print(hlpfile)
                     if(file.exists(hlpfile)) {
-                        err <- .C("Rchtml", hlpfile, topic, err=integer(1))$err
+                        err <- .C("Rchtml", hlpfile, topic,
+                                  err = integer(1), PACKAGE = "")$err
                         if(verbose)
                             cat("help() for `", topic,
                                 "' is shown in Compiled HTML\n",
@@ -100,8 +101,7 @@ help <-
                 zfile <- zip.file.extract(file, "Rhelp.zip")
                 ## end of experimental code
                 if(file.exists(zfile))
-                    file.show(zfile, title = "",
-                              header = paste("`", topic, "' help", sep=""),
+                    file.show(zfile, title = paste("`", topic, "' help", sep=""),
                               delete.file = (zfile!=file), pager = pager)
                 else
                     stop(paste("The help file for `", topic, "' is missing",

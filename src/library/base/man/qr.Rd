@@ -11,7 +11,7 @@
 \alias{solve.qr}
 \title{The QR Decomposition of a Matrix}
 \usage{
-qr(x, tol = 1e-07 , LAPACK = TRUE)
+qr(x, tol = 1e-07 , LAPACK = FALSE)
 qr.coef(qr, y)
 qr.qy(qr, y)
 qr.qty(qr, y)
@@ -83,7 +83,7 @@ as.qr(x)
   \item{qraux}{a vector of length \code{ncol(x)} which contains
     additional information on \eqn{\bold{Q}}.}
   \item{rank}{the rank of \code{x} as computed by the decomposition:
-    always full rank in the complex case.}
+    always full rank in the LAPACK case.}
   \item{pivot}{information on the pivoting strategy used during
     the decomposition.}
 
@@ -99,6 +99,10 @@ as.qr(x)
   does not attempt to detect rank-deficient matrices.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 

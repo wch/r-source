@@ -1,6 +1,3 @@
-#### copyright (C) 1998 W. N. Venables and B. D. Ripley
-## "terms" added 10/99 T Lumley
-
 predict.glm <-
   function(object, newdata = NULL, type = c("link", "response", "terms"),
            se.fit = FALSE, dispersion = NULL, terms=NULL, ...)

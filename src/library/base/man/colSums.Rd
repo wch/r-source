@@ -37,8 +37,10 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   one-dimensional.  The \code{dimnames} (or \code{names} for a vector
   result) are taken from the original array.
 
-  If there are no non-missing values in a range to be summed over, the
-  component of the output is set to \code{NA}.
+  If there are no values in a range to be summed over (after removing
+  missing values with \code{na.rm = TRUE}), that
+  component of the output is set to \code{0} (\code{*Sums}) or \code{NA}
+  (\code{*Means}), consistent with \code{\link{sum}} and \code{\link{mean}}.
 }
 \seealso{
   \code{\link{apply}}, \code{\link{rowsum}}

@@ -1,3 +1,28 @@
+r-base (1.7.0-3) unstable; urgency=low
+
+  * debian/rules: No longer configure for use of an external lapack library
+    as some numerical infelicities have come up on shore.
+  * debian/rules: Now call configure --with-blas=atlas for Atlas / Blas 
+  * debian/shlibs.local: add '| blas | blas2' to 'libatlas 2 atlas2-base'
+  * debian/control: r-gnome Recommends: r-cran-gtkdevice (Closes: #190735)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 28 Apr 2003 20:56:54 -0500
+
+r-base (1.7.0-2) unstable; urgency=low
+
+  * debian/control: r-recommended Description updates w.r.t. MASS edition
+  * debian/rules: Remove Depends of r-recommended on atlas2-base as it is 
+    neither 'virtual' nor required as r-recommnded itself depends on 
+    r-base-core so that we get its Depends on atlas2-base | blas2 | blas
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 20 Apr 2003 20:18:56 -0500
+
+r-base (1.7.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 16 Apr 2003 10:43:57 -0500
+
 r-base (1.6.2.cvs.20030413-1) unstable; urgency=low
 
   * Upgraded to release candidate dated 2003-04-13 of R 1.7.0

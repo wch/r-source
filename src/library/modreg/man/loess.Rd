@@ -1,6 +1,3 @@
-% file modreg/man/loess.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{loess}
 \title{Local Polynomial Regression Fitting}
 \usage{
@@ -9,7 +6,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
       parametric = FALSE, drop.square = FALSE, normalize = TRUE,
       family = c("gaussian", "symmetric"),
       method = c("loess", "model.frame"),
-      control = loess.control(...), ...)
+      control = loess.control(\dots), \dots)
 }
 \alias{loess}
 %\alias{anova.loess}
@@ -86,7 +83,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 }
 \author{
   B.D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu.
+  Grosse and Shyu avaliable at \url{http://www.netlib.org/a/}.
 }
 \note{
   As this is based on the \code{cloess} package available at

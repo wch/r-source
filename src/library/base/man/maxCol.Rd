@@ -1,7 +1,4 @@
-% Originally file MASS/max.col.d
-% copyright (C) 1999 W. N. Venables and B. D. Ripley
-% copyright (C) 2000, 2003 The R Core Development Team
-\name{max.col}
+\name{maxCol}
 \alias{max.col}
 \title{Find Maximum Position in Matrix}
 \description{
@@ -21,7 +18,6 @@ max.col(m)
   the entries are probabilities: there is a relative tolerance of
   \eqn{10^{-5}}{1e-5}, relative to the largest entry in the row.
 }
-\author{W. N. Venables and B. D. Ripley}
 \references{
   Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S.}

@@ -34,7 +34,6 @@
   possible to set it to \code{FALSE} and specify exactly all
   the splits required.
 }
-\author{B. D. Ripley}
 \seealso{
   \code{\link{aov}}, \code{\link{summary}}, \code{\link{model.tables}},
   \code{\link{TukeyHSD}}

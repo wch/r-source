@@ -70,3 +70,8 @@ all(dfbetas(lm.SR) == IM$infmat[, 1:5])
 
 signif(dfbeta(lm.SR), 3)
 covratio (lm.SR)
+
+## predict.lm(.)
+
+all.equal(predict(roller.lm,                 se=TRUE)$se,
+          predict(roller.lm, newdata=roller, se=TRUE)$se, tol= 1e-14)

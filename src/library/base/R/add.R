@@ -1,4 +1,3 @@
-#### copyright (C) 1998-2003 B. D. Ripley
 add1 <- function(object, scope, ...) UseMethod("add1")
 
 add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),

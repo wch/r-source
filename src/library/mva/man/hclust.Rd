@@ -140,6 +140,10 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   observation sequence number.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (S version.)
+
   Everitt, B. (1974).
   \emph{Cluster Analysis}.
   London: Heinemann Educ. Books.

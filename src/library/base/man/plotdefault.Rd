@@ -54,12 +54,12 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
   \item{col}{The colors for lines and points.  Multiple colors can be
     specified so that each point can be given its own color.  If there
     are fewer colors than points they are recycled in the standard
-    fashion.}
+    fashion.  Lines will all be plotted in the first colour specified.}
   \item{bg}{background color for open plot symbols, see
     \code{\link{points}}.}
-  \item{pch}{a vector of plotting characters or symbols.}
-  \item{cex}{a numerical value giving the amount by which plotting text
-    and symbols should be scaled relative to the default}
+  \item{pch}{a vector of plotting characters or symbols: see \code{\link{points}}.}
+  \item{cex}{a numerical vector giving the amount by which plotting text
+    and symbols should be scaled relative to the default.}
   \item{lty}{the line type, see \code{\link{par}}.}
   \item{lab}{the specification for the (approximate) numbers of tick
     marks on the x and y axes.}
@@ -69,6 +69,10 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
     passed as arguments.}
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Cleveland, W. S. (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.

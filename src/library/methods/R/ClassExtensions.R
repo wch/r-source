@@ -39,6 +39,13 @@
     from@.Data <- as(value, THISCLASS, strict = FALSE)
     from
 }
+
+## and a version of dataPartReplace w/o the unused `to' argument
+.dataPartReplace2args <- function(from, value) {
+    from@.Data <- value
+    from
+}
+    
 .ErrorReplace <- function(from, to, value)
     stop(paste("No replace method was defined for as(x, \"", to,
                "\") <- value for class \"", class(from), "\"", sep=""))
@@ -75,11 +82,16 @@ makeExtends <- function(Class, to,
     }
     else if(is(coerce, "function")) {
         ## we allow definitions with and without the `strict' argument
-        if(length(formals(coerce)) > 1)
-            forArgs <- .simpleExtCoerce
+        ## but create a  function that can be called with the argument
+        if(length(formals(coerce)) == 1) {
+            coerce <- .ChangeFormals(coerce, .simpleIsCoerce, "`coerce' argument to setIs ")
+            tmp <- .simpleExtCoerce
+            body(tmp, envir = environment(coerce)) <- body(coerce)
+            coerce <- tmp
+        }
         else
-            forArgs <- .simpleIsCoerce
-        coerce <- .ChangeFormals(coerce, forArgs, "`coerce' argument to setIs ")
+            coerce <- .ChangeFormals(coerce, .simpleExtCoerce, "`coerce' argument to setIs ")
+        
     }
     else stop("The `coerce' argument to setIs should be a function of one argument, got an object of class \"",
               class(coerce), "\"")
@@ -142,8 +154,20 @@ makeExtends <- function(Class, to,
                     "\") <- value when object has class \"", Class,
                     "\" and no replace= argument was supplied; replacement will be an error")
     }
+    else if(is(replace, "function")) {
+        ## turn function of two or three arguments into correct 3-arg form
+        if(length(formals(replace)) == 2) {
+            replace <- .ChangeFormals(replace, .dataPartReplace2args, "`replace' argument to setIs ")
+            tmp  <- .ErrorReplace
+            body(tmp, envir = environment(replace)) <- body(replace)
+            replace <- tmp
+        }
+        else
+            replace <- .ChangeFormals(replace, .ErrorReplace, "`replace' argument to setIs ")
+    }
     else
-        replace <- .ChangeFormals(replace, .ErrorReplace, "`replace' argument to setIs ")
+        stop("the replace= argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"",
+             class(replace), "\"")
     new("SClassExtension", superClass = to, package = package, coerce = coerce,
                test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)
     

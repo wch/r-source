@@ -1,4 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
 model.tables <- function(x, ...) UseMethod("model.tables")
 
 model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)

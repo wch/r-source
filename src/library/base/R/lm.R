@@ -103,7 +103,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
                   PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
-    r1 <- 1:z$rank
+    r1 <- seq(len=z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
     if (is.matrix(y)) {
@@ -181,7 +181,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
                   PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
-    r1 <- 1:z$rank
+    r1 <- seq(len=z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
     if (is.matrix(y)) {
@@ -615,12 +615,16 @@ predict.lm <-
 		rss/df
 	    } else scale^2
 	if(type != "terms") {
-	    if(missing(newdata))
-		XRinv <- qr.Q(object$qr)[, p1 , drop = FALSE]
-	    else {
-		Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
-		XRinv <- X[, piv] %*% Rinv
-	    }
+	    XRinv <-
+		if(missing(newdata) && is.null(w))
+		    qr.Q(object$qr)[, p1, drop = FALSE]
+		else
+		    X[, piv] %*% qr.solve(qr.R(object$qr)[p1, p1])
+#	NB:
+#	 qr.Q(object$qr)[, p1, drop = FALSE] / sqrt(w)
+#	looks faster than the above, but it's slower, and doesn't handle zero
+#	weights properly
+#
 	    ip <- drop(XRinv^2 %*% rep(res.var, p))
 	}
     }
@@ -685,17 +689,17 @@ predict.lm <-
 
     if(interval != "none") {
 	tfrac <- qt((1 - level)/2, df)
-	w <- tfrac * switch(interval,
-			    confidence = sqrt(ip),
-			    prediction = sqrt(ip+res.var)
-			    )
+	hwid <- tfrac * switch(interval,
+			       confidence = sqrt(ip),
+			       prediction = sqrt(ip+res.var)
+			       )
 	if(type != "terms") {
-	    predictor <- cbind(predictor, predictor + w %o% c(1, -1))
+	    predictor <- cbind(predictor, predictor + hwid %o% c(1, -1))
 	    colnames(predictor) <- c("fit", "lwr", "upr")
 	}
 	else {
-	    lwr <- predictor + w
-	    upr <- predictor - w
+	    lwr <- predictor + hwid
+	    upr <- predictor - hwid
 	}
     }
     if(se.fit) se<-sqrt(ip)

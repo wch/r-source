@@ -44,7 +44,7 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
 
   The remaining details apply to method \code{"internal"} only.
 
-  The timeout for many parts of the transder can be set by the option
+  The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.
 
   The level of detail provided during transfer can be set by the

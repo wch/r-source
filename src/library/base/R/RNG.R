@@ -8,8 +8,9 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
                "Mersenne-Twister", "Knuth-TAOCP", "user-supplied",
                "Knuth-TAOCP-2002", "default")
-    n.kinds <- c("Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
-                 "user-supplied", "Inversion", "default")
+    n.kinds <- c("Buggy Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
+                 "user-supplied", "Inversion", "Kinderman-Ramage", 
+		 "default")
     do.set <- length(kind) > 0
     if(do.set) {
 	if(!is.character(kind) || length(kind) > 1)
@@ -23,6 +24,8 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
     if(!is.null(normal.kind)) {
 	if(!is.character(normal.kind) || length(normal.kind) > 1)
 	    stop("'normal.kind' must be a character string of length 1.")
+	if (normal.kind == "Buggy Kinderman-Ramage")
+		warning("Buggy version of Kinderman-Ramage generator used.")
         normal.kind <- pmatch(normal.kind, n.kinds) - 1
         if(is.na(normal.kind))
  	    stop(paste("'", normal.kind,"' is not a valid choice", sep=""))
@@ -58,9 +61,9 @@ RNGversion <- function(vstr)
     if (length(vnum) < 2) 
 	stop("Malformed version string")
     if (vnum[1] == 0 && vnum[2] < 99) 
-        RNGkind("Wichmann-Hill", "Kinderman-Ramage")
+        RNGkind("Wichmann-Hill", "Buggy Kinderman-Ramage")
     else if (vnum[1] == 0 || vnum[1] == 1 && vnum[2] <= 6) 
-	RNGkind("Marsaglia-Multicarry", "Kinderman-Ramage")
+	RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage")
     else
 	RNGkind("Mersenne-Twister", "Inversion")
 }

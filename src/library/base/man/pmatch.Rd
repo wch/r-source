@@ -45,13 +45,14 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
     NA}) of the same length as \code{x}, giving the indices of the
   elements in \code{table} which matched, or \code{nomatch}.
 }
-\note{
-  Versions of \R prior to 1.0.0 had a different behaviour that was
-  seriously incompatible with S (and the current version) when
-  \code{duplicates.ok = TRUE}.
-}
-\author{
-  Of this version, B. D. Ripley.
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer.
 }
 \seealso{
   \code{\link{match}}, \code{\link{charmatch}} and

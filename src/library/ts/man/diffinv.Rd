@@ -19,7 +19,7 @@ diffinv.vector(x, lag = 1, differences = 1,
 }
 \usage{
 diffinv(x, lag = 1, differences = 1,
-        xi = rep(0.0, lag*differences*NCOL(x)), ...)
+        xi = rep(0.0, lag*differences*NCOL(x)), \dots)
 }
 \arguments{
   \item{x}{a numeric vector, matrix, or time series.}

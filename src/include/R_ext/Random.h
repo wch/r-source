@@ -37,11 +37,12 @@ typedef enum {
 
 /* Different kinds of "N(0,1)" generators :*/
 typedef enum {
-    KINDERMAN_RAMAGE,
+    BUGGY_KINDERMAN_RAMAGE,
     AHRENS_DIETER,
     BOX_MULLER,
     USER_NORM,
-    INVERSION
+    INVERSION,
+    KINDERMAN_RAMAGE
 } N01type;
 
 

@@ -291,7 +291,7 @@ stopifnot(1:10 == gf$linkfun(gf$linkinv(1:10)))
 
 ## fft
 set.seed(123)
-eps <- 1e-11
+eps <- 1e-10  # typically see around 1e-11
 for(N in 1:130) {
     x <- rnorm(N)
     if(N %% 5 == 0) {
@@ -313,9 +313,8 @@ it <- findInterval(tt, X)
 ## See that this is N * Fn(.) :
 tt <- c(tt,X)
 eps <- 100 * .Machine$double.eps
-require(stepfun)
 stopifnot(it[c(1,203)] == c(0, 100),
-	  all.equal(N * ecdf(X)(tt),
+	  all.equal(N * stepfun::ecdf(X)(tt),
 		    findInterval(tt, X),  tol = eps),
 	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
 	  )
@@ -1435,12 +1434,11 @@ stopifnot(all.equal(d1, d3, tol=1e-3))
 
 
 ## PR#1422 glm start/offset bugs
-if(require(MASS)) {
-data(ships, package = MASS)
+res <- try(data(ships, package = MASS))
+if(!inherits(res, "try-error")) {
 ships.glm <- glm(incidents ~ type + year + period + offset(log(service)),
 		 family = poisson, data = ships, subset = (service != 0))
 update(ships.glm, start = coef(ships.glm))
-detach("package:MASS")
 }
 ## failed in 1.4.1.
 
@@ -2132,6 +2130,7 @@ B <- data.frame(a=2, b=I("B"))
 stopifnot(cl[2] == "factor")
 ##
 
+
 ## hclust(), as.hclust.twins(), agnes()  consistency
 x <- matrix(rnorm(30), ncol=3)  # no observation names
 xn <- x; rownames(xn) <- letters[10:1]# has obs. names
@@ -2156,6 +2155,64 @@ if(require(cluster)) {# is a required package
             )
 }
 ## as.hclust.twins() lost labels and more till (incl) 1.6.2
+
+
+## PR#2867 qr(LAPACK=TRUE) didn't always pivot in 1.7.0
+set.seed(1)
+X <- matrix(rnorm(40),10,4)
+X[,1] <- X[,2]
+(qrx <- qr(X, LAPACK=TRUE))
+stopifnot(any(qrx$pivot != 1:4)) # check for pivoting
+##
+
+
+## rownames<- did not work on an array with > 2 dims in 1.7.0
+A <- array(1:12, dim=c(2, 3, 2))
+rownames(A) <- letters[1:2]
+A <- array(1:12, dim=c(2, 3, 2))
+colnames(A) <- 1:3
+## failed in 1.7.0
+
+
+## predict on constant model, PR#2958
+res <- model.frame(~1, data.frame(x = 1:5))
+stopifnot(nrow(res) == 5)
+res <- predict(lm(y ~ 1, data = data.frame(y = rep(0:3, c(5,9,7,1)))),
+               newdata = data.frame(x = 1:5))
+stopifnot(length(res) == 5)
+res <- predict(glm(y ~ 1, family = poisson,
+                   data = data.frame(y = rep(0:3, c(5,9,7,1)))),
+               newdata = data.frame(x = 1:5), type = "r")
+stopifnot(length(res) == 5)
+## all length one in 1.7.0
+
+
+## PR#3035 problems with sep > ASCII(127)
+f <- tempfile()
+cat("x¦a¦b¦c¦d", "1¦7¦13¦19¦25", "2¦8¦14¦20¦26", "3¦9¦15¦21¦27",
+    "4¦10¦16¦22¦28", "5¦11¦17¦23¦29", "6¦12¦18¦24¦30", sep="\n", file=f)
+read.table(f, header = TRUE, sep ="¦")
+## failed in 1.7.0
+
+
+## PR#2993 need to consider delta=NULL in power.t.test{ctest}
+power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
+## failed in 1.7.0
+
+
+## PR#3221 eigenvectors should be a matrix even in the 1x1 case
+A <- matrix(1)
+stopifnot(is.matrix(eigen(A)$vectors))
+stopifnot(is.matrix(eigen(A, EISPACK = TRUE)$vectors))
+stopifnot(is.matrix(La.eigen(A)$vectors))
+## gave vector in 1.7.0
+
+
+## [[<-.data.frame
+testdata <- data.frame(a=1:2, b = rep(NA, 2))
+try(testdata[["a"]] <- strptime(c("31121991", "31121991"), "%d%m%Y"))
+stopifnot(inherits(.Last.value, "try-error"))
+## succeeded in 1.7.0
 
 
 ## keep at end, as package `methods' has had persistent side effects

@@ -156,10 +156,12 @@ subdirectory @file{R} of the current directory, where @var{module}
 specifies one of the four existing flavors of the R sources, and can be
 one of @samp{r-release} (current released version), @samp{r-patched}
 (patched released version), and @samp{r-devel} (development version).
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The @option{-C} option in the @command{rsync} command
-is to cause it to skip the CVS directories.  Further information on
-@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+(These flavors are described in the R FAQ,
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/}.)  The rsync trees are
+created directly from the master CVS archive and are updated hourly.
+The @option{-C} option in the @command{rsync} command is to cause it to
+skip the CVS directories.  Further information on @command{rsync} is
+available at @uref{http://rsync.samba.org/rsync/}.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
@@ -487,8 +489,12 @@ setting the environment variable @env{R_LIBS} or using the @R{} function
 @section Installing packages
 @cindex Packages, installing
 
-Installing source packages requires that Perl 5.004 or later be
-installed.
+Packages may be distributed in source form or compiled binary form. 
+Installing source packages requires that compilers and tools
+(including Perl 5.004 or later) be installed.  Binary packages 
+are platform specific and generally need 
+no special tools to install, but see the documentation for 
+your platform for details.
 
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
@@ -1117,6 +1123,10 @@ configuration options
 
 @noindent
 to provide higher-performance versions of the BLAS and LAPACK routines.
+With @command{gcc 3.1} that appears to be the only way to build @R{}, as
+the Fortran support routines in @code{libg2c} cannot be linked into a
+dynmaic library.  (We have had reports of success with pre-release
+versions of @command{gcc 3.3}.)
 
 
 @node Solaris, HP-UX, MacOS X, Platform notes
@@ -1127,13 +1137,18 @@ to provide higher-performance versions of the BLAS and LAPACK routines.
 5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
 Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
 7), and less regularly on Solaris 2.5.1, 2.6, 2.7 and 9.  GNU
-@command{make} is needed prior to 2.7 for building other than in the
-source tree, and perhaps even then.
+@command{make} is needed prior to Solaris 2.7 for building other than in
+the source tree, and perhaps even then.
+
+The Solaris versions of several of the tools needed to build @R{}
+(e.g. @command{make}, @command{ar} and @command{ld}) are in
+@code{/usr/ccs/bin}, so if using those tools ensure this is in your
+path.
 
 @command{gcc} 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
-builds with optimization, but versions 3.1 and 3.2 work correctly.  At
-least files @file{src/main/engine.c}, @file{src/main/graphics.c} and
-@file{src/modules/devX11.c} are affected.
+builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3 work
+correctly.  At least files @file{src/main/engine.c},
+@file{src/main/graphics.c} and @file{src/modules/devX11.c} are affected.
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
@@ -1178,7 +1193,7 @@ CXXFLAGS="-xO5 -xlibmil -dalign"
 in @file{config.site}.
 
 
-For 64-bit compilation with @command{gcc} 3.2/3.2.1/3.2.2 we used
+For 64-bit compilation with @command{gcc} 3.2.x we used
 
 @smallexample
 CC="gcc -m64"
@@ -1216,17 +1231,6 @@ process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib},
 you may need to set it to avoid finding 32-bit addons (as in the
 @command{gcc -m64} example above).
 
-@c We have seen problems with @command{gcc} versions 3.1 and 3.2 on some
-@c (but not all) 32-bit Solaris 7/8 systems.  The symptom is
-
-@c @smallexample
-@c > as.double(NA)
-@c [1] NaN
-@c @end smallexample
-
-@c @noindent
-@c and the cure is to compile @file{src/main/arithmetic.c} without
-@c optimization.
 
 @node HP-UX, IRIX, Solaris, Platform notes
 @subsection HP-UX
@@ -1389,6 +1393,24 @@ When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
+
+Harald Servat Gelabert <harald@@cepba.upc.es> reported success building
+@R{} 1.7.0 under AIX 5.1 with
+
+@smallexample
+CC=xlc
+F77=xlf
+CXX=xlC
+CFLAGS=-O3 -qstrict -qmaxmem=8192
+FFLAGS=-O3 -qstrict -qmaxmem=8192
+CXXFLAGS=-O2 -qmaxmem=8192
+MAIN_LDFLAGS=-Wl,-brtl
+SHLIB_LDFLAGS=-Wl,-G
+@end smallexample
+
+@noindent
+but was unable to use the X libraries or the native BLAS (ESSL) and so
+used @option{--without-x --without-blas}.
 
 
 @node New platforms, Function and variable index, Configuration on Unix, Top

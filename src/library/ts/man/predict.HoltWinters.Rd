@@ -7,7 +7,7 @@
 }
 \usage{
 \method{predict}{HoltWinters}(object, n.ahead=1, prediction.interval = FALSE,
-                    quantile = qnorm(0.975), ...)
+                    quantile = qnorm(0.975), \dots)
 }
 \arguments{
   \item{object}{An object of class \code{HoltWinters}}

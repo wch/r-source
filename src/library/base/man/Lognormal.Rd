@@ -52,6 +52,11 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-plnorm(t, r, lower = FALSE, log = TRUE)}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{dnorm}} for the normal distribution.
 }

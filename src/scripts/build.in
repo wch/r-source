@@ -30,6 +30,7 @@ use File::Basename;
 use File::Compare;
 use File::Find;
 use File::Path;
+use File::Copy;
 use Getopt::Long;
 use R::Dcf;
 use R::Logfile;
@@ -42,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.57 $ ';
+my $revision = ' $Revision: 1.57.2.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -76,6 +77,10 @@ my $startdir = cwd();
 
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $tar = R_getenv("TAR", "tar");
+
+## JG:  topLevelFiles will be files that sit in the top level of a
+##      zip/tarball along with any included directories.
+my $topLevelFiles = "DESCRIPTION";
 
 my $INSTALL_opts = "";
 $INSTALL_opts .= " --use-zip" if $opt_use_zip;
@@ -132,6 +137,10 @@ foreach my $pkg (@ARGV) {
 	    $log->message("Looks like '${pkg}' is a package bundle");
 	    $is_bundle = 1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	    ## JG: Get a copy of the bundle's DESCRIPTION file
+	    ##     and add it into the zip archive
+	    $log->message("Copying $pkg/DESCRIPTION");
+	    copy("$startdir/$pkg/DESCRIPTION","DESCRIPTION");
 	    $pkgs = join(" ", @bundlepkgs);
 	}
 
@@ -139,7 +148,7 @@ foreach my $pkg (@ARGV) {
 	    my $filename = "${pkgname}_" . $description->{"Version"};
 	    $log->message("building '$filename.zip'");
 	    system("rm -f $startdir/$filename.zip");
-	    system("zip -r9X $startdir/$filename.zip $pkgs");
+	    system("zip -r9X $startdir/$filename.zip $pkgs $topLevelFiles");
 	    chdir($startdir);
 	} else {
 	    ## <FIXME>
@@ -161,7 +170,7 @@ foreach my $pkg (@ARGV) {
 	    my $filename = "${pkgname}_" . $description->{"Version"} .
 		"_R_${R_platform}.tar";
 	    $log->message("building '$filename.gz'");
-	    system("$tar chXf $exclude $startdir/$filename $pkgs");
+	    system("$tar chXf $exclude $startdir/$filename $pkgs $topLevelFiles");
 	    chdir($startdir);
 	    system("gzip -9f $filename");
 	    unlink($exclude);
@@ -234,8 +243,21 @@ foreach my $pkg (@ARGV) {
 			if($filename =~	/$p/i);
 		}
 		else {
-		    print EXCLUDE "$File::Find::name\n"
-			if($filename =~ /$p/);
+		    if($filename =~ /$p/) {
+			## Seems that the Tar '-X' option uses exclude
+                        ## *shell* patterns, where '*', '?', and '[...]'
+                        ## are the usual shell wildcards and '\' escapes
+			## them.  Hence we need to escape the wildchard
+			## characters in file names (maybe we should do
+			## the same on Windows).  Not that using these
+			## characters in file names seems a good idea ...
+			$filename = "$File::Find::name";
+			$filename =~ s/\*/\\\*/g;
+			$filename =~ s/\?/\\\?/g;
+			$filename =~ s/\[/\\\[/g;
+			$filename =~ s/\]/\\\]/g;
+			print EXCLUDE "$filename\n";
+		    }
 		}
 	    }
 	}

@@ -10,7 +10,7 @@
 }
 \usage{
 \method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, ...)
+         names = TRUE, \dots)
 }
 \arguments{
   \item{x}{numeric vectors whose sample quantiles are wanted.}
@@ -36,7 +36,13 @@
   \code{\link{NA}} and \code{\link{NaN}} values in \code{probs} are
   propagated to the result.
 }
-\seealso{\code{\link[stepfun]{ecdf}} (in the \code{stepfun} package) for
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
+\seealso{
+  \code{\link[stepfun]{ecdf}} (in the \code{stepfun} package) for
   empirical distributions of which \code{quantile} is the "inverse".
   \code{\link{boxplot.stats}} and \code{\link{fivenum}} for computing
   ``versions'' of quartiles, etc.

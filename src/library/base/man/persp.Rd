@@ -7,14 +7,14 @@
   x--y plane. \code{persp} is a generic function.
 }
 \usage{
-persp(x, ...)
+persp(x, \dots)
 persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
       theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1,
       col = "white", border = NULL, ltheta = -135, lphi = 0, shade = NA,
       box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
-      ...)
+      \dots)
 }
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are
@@ -70,11 +70,11 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \item{axes}{should ticks and labels be added to the box.  The
     default is \code{TRUE}.  If \code{box} is \code{FALSE} then no
     ticks or labels are drawn.}
-  \item{ticktype}{character: "simple" draws just an arrow parallel to
-    the axis to indicate direction of increase; "detailed" draws normal
-    ticks as per 2D plots.}
+  \item{ticktype}{character: \code{"simple"} draws just an arrow
+    parallel to the axis to indicate direction of increase;
+    \code{"detailed"} draws normal ticks as per 2D plots.}
   \item{nticks}{the (approximate) number of tick marks to draw on the
-    axes.  Has no effect if \code{ticktype} is "simple".}
+    axes.  Has no effect if \code{ticktype} is \code{"simple"}.}
   \item{\dots}{additional graphical parameters (see \code{\link{par}}).}
 }
 \value{
@@ -95,6 +95,11 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   the viewing direction is directly down the negative y axis.
   Changing \code{theta} will vary the azimuth and changing \code{phi}
   the colatitude.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{contour}} and \code{\link{image}}.

@@ -1,6 +1,3 @@
-% file model.tables.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{model.tables}
 \alias{model.tables}
 \alias{model.tables.aov}
@@ -44,8 +41,6 @@ model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
 
   Weighted \code{aov} fits are not supported.
 }
-
-\author{B.D. Ripley}
 
 \seealso{
   \code{\link{aov}}, \code{\link{proj}},

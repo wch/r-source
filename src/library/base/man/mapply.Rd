@@ -1,6 +1,5 @@
 \name{mapply}
 \alias{mapply}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Apply a function to multiple list or vector arguments }
 \description{
   A multivariate version of \code{\link{sapply}}.
@@ -9,9 +8,8 @@
   Arguments are recycled if necessary. 
 }
 \usage{
-mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
+mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{FUN}{Function to apply }
   \item{\dots}{Arguments to vectorise over (list or vector) }
@@ -33,5 +31,5 @@ mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
  mapply(rep, times=1:4, MoreArgs=list(x=42))
 
 }
-\keyword{manip }% at least one, from doc/KEYWORDS
-\keyword{utilities}% __ONLY ONE__ keyword per line
+\keyword{manip }
+\keyword{utilities}

@@ -5,8 +5,8 @@
 \alias{makepredictcall.poly}
 \title{Compute Orthogonal Polynomials}
 \usage{
-poly(x, ..., degree = 1, coefs = NULL)
-polym(..., degree = 1)
+poly(x, \dots, degree = 1, coefs = NULL)
+polym(\dots, degree = 1)
 \method{predict}{poly}(object, newdata, \dots)
 }
 \description{
@@ -46,14 +46,16 @@ polym(..., degree = 1)
   be used to evaluate it via the three-term recursion given in Kennedy
   \& Gentle (1980, pp. 343-4), and use in the ``predict'' part of the code.
 }
-\author{B. D. Ripley}
-
 \note{
   This routine is intended for statistical purposes such as
   \code{contr.poly}: it does not attempt to orthogonalize to
   machine accuracy.
 }
 \references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+
   Kennedy, W. J. Jr and Gentle, J. E. (1980)
   \emph{Statistical Computing} Marcel Dekker.
 }

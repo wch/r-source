@@ -10,6 +10,8 @@ is.ordered(x)
 
 as.factor(x)
 as.ordered(x)
+
+a.factor[i, drop = FALSE]
 }
 \alias{factor}
 \alias{ordered}
@@ -18,6 +20,8 @@ as.ordered(x)
 \alias{as.factor}
 \alias{as.ordered}
 \alias{is.na<-.factor}
+\alias{[.factor}
+\alias{[<-.factor}
 \description{
   The function \code{factor} is used to encode a vector as a factor (the
   names category and enumerated type are also used for factors).  If
@@ -42,6 +46,10 @@ as.ordered(x)
     as ordered (in the order given).}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
+
+  \item{a.factor}{a factor}
+  \item{i}{a specification of indices -- see \code{\link{Extract}}.}
+  \item{drop}{logical.  If true, unused levels are dropped.}
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
@@ -96,6 +104,10 @@ as.ordered(x)
 
   \code{is.factor} is generic: you can write methods to handle
   of specific classes of objects, see \link{InternalMethods}.
+
+  There are methods for \code{[} and \code{[<-} for factors: the
+  extraction method has an additional argument \code{drop} which, note,
+  defaults to \code{FALSE}.
 }
 \section{Warning}{
   The interpretation of a factor depends on both the codes and the
@@ -108,6 +120,11 @@ as.ordered(x)
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{gl}} for construction of ``balanced'' factors and
   \code{\link{C}} for factors with specified contrasts.
@@ -118,7 +135,8 @@ as.ordered(x)
 ff <- factor(substring("statistics", 1:10, 1:10), levels=letters)
 ff
 codes(ff)
-factor(ff)# drops the levels that do not occur
+factor(ff)      # drops the levels that do not occur
+ff[, drop=TRUE] # the same
 factor(factor(letters[7:10])[2:3]) # exercise indexing and reduction
 factor(letters[1:20], label="letter")
 

@@ -9,8 +9,8 @@
 }
 \usage{
 loadings(x)
-print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
-print.factanal(x, digits = 3, ...)
+print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, \dots)
+print.factanal(x, digits = 3, \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"factanal"} or \code{"princomp"}
@@ -26,7 +26,6 @@ print.factanal(x, digits = 3, ...)
   \item{\dots}{further arguments for other methods, such as
     \code{cutoff} and \code{sort} for \code{print.factanal}.}
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{factanal}}, \code{\link{princomp}}

@@ -68,6 +68,11 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
 \seealso{
   \code{\link{apply}}, \code{\link{lapply}}, \code{\link{tapply}}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(state)
 

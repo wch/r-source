@@ -37,7 +37,7 @@ x > 3 #-> "Ops.foo" and ">.bar"
 abc <- function(x, ...) {
     if (is.null(oldClass(x))) oldClass(x) <- data.class(x)
     cat("abc: Before dispatching; x="); str(x)
-    UseMethod("abc", x,...) ## UseMethod("abc") (as in S) fails
+    UseMethod("abc", x) ## UseMethod("abc") (as in S) fails
 }
 
 abc.default <- function(x, ...) sys.call()

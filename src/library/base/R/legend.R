@@ -86,7 +86,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	} else ceiling(n.leg / ncol)
 
     if(has.pch <- !missing(pch)) {
-	if(is.character(pch) && nchar(pch[1]) > 1) {
+	if(is.character(pch) && !is.na(pch[1]) && nchar(pch[1]) > 1) {
 	    if(length(pch) > 1)
 		warning("Not using pch[2..] since pch[1] has multiple chars")
 	    np <- nchar(pch[1])
@@ -131,7 +131,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 
     if (plot && bty != "n") { ## The legend box :
 	if(trace)
-	    catn("  rect2(",left,",",top,", w=",w,", h=",h,"...)",sep="")
+	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
 	rect2(left, top, dx = w, dy = h, col = bg, angle = NULL)
     }
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
@@ -152,7 +152,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
     if (do.lines) {			#- draw lines ---------------------
 	seg.len <- 2 # length of drawn segment, in xchar units
 	if(missing(lty)) lty <- 1
-	ok.l <- is.character(lty) | lty > 0
+	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0)
 	if(missing(lwd)) lwd <- par("lwd")
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
@@ -168,7 +168,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
     if (has.pch) {			#- draw points -------------------
 	pch   <- rep(pch, length.out = n.leg)
 	pt.bg <- rep(pt.bg, length.out = n.leg)
-	ok <- is.character(pch) | pch >= 0
+	ok <- !is.na(pch) & (is.character(pch) | pch >= 0)
 	x1 <- (if(merge) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]
 	if(trace)

@@ -31,6 +31,11 @@ data(sunspot)
   Yearly data: H. Tong (1996)
   \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471. 
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 ## Compare the monthly series from 'base' and 'ts':
 data(sunspots, package = base)

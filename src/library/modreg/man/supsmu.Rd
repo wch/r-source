@@ -1,6 +1,3 @@
-% file modreg/man/supsmu.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{supsmu}
 \alias{supsmu}
 \title{Friedman's SuperSmoother}
@@ -56,7 +53,6 @@ supsmu(x, y, wt = rep(1, length(y)), span = "cv", periodic = FALSE,
   Laboratory for Computational Statistics, Stanford University Technical
   Report No. 5.
 }
-\author{B. D. Ripley}
 \seealso{\code{\link{ppr}}}
 
 \examples{

@@ -7,9 +7,9 @@
 \alias{predict.princomp}
 \title{Principal Components Analysis}
 \usage{
-\method{princomp}{formula}(formula, data = NULL, subset, na.action, ...)
+\method{princomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
-         subset = rep(TRUE, nrow(as.matrix(x))), ...)
+         subset = rep(TRUE, nrow(as.matrix(x))), \dots)
 }
 \arguments{
   \item{formula}{a formula with no response variable.}
@@ -38,7 +38,7 @@
 }
 \description{
   \code{princomp} performs a principal components analysis on the given
-  data matrix and returns the results as an object of class
+  numeric data matrix and returns the results as an object of class
   \code{princomp}.
 }
 \value{
@@ -64,7 +64,8 @@
   The calculation is done using \code{\link{eigen}} on the correlation or
   covariance matrix, as determined by \code{\link{cor}}.  This is done for
   compatibility with the S-PLUS result.  A preferred method of
-  calculation is to use svd on \code{x}, as is done in \code{prcomp}.
+  calculation is to use \code{\link{svd}} on \code{x}, as is done in
+  \code{prcomp}.
 
   Note that the default calculation uses divisor \code{N} for the
   covariance matrix.

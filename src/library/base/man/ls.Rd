@@ -45,6 +45,11 @@ objects(name, pos= -1, envir = as.environment(pos),
    \code{ls} returns the names of the functions local variables.
    This is useful in conjunction with \code{browser}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{apropos}} (or \code{\link{find}}) for finding objects in the
   whole search path; \code{\link{grep}} for more details on ``regular

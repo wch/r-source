@@ -14,7 +14,7 @@
 \arguments{
   \item{x, \dots}{for specifying data from which the boxplots are to be
     produced as well as for giving graphical parameters.  The named
-    arguments in this (more precisely, in \code{list(x, ...)}) are
+    arguments in this (more precisely, in \code{list(x, \dots)}) are
     treated as graphical parameters in addition to the ones given by
     argument \code{pars}.  The other arguments specify the data, either
     as separate vectors, each corresponding to a component boxplot, or
@@ -79,7 +79,11 @@
   \item{names}{a vector of names for the groups}
 }
 \references{
-  See \code{\link{boxplot.stats}}.
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
+  See also \code{\link{boxplot.stats}}.
 }
 \seealso{
   \code{\link{boxplot.formula}} for the formula interface;

@@ -1632,9 +1632,9 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 {
     SEXP t;
-    PROTECT_INDEX pvalidx;
+    PROTECT_INDEX pvalidx, pxidx;
 
-    PROTECT(x);
+    PROTECT_WITH_INDEX(x, &pxidx);
     PROTECT_WITH_INDEX(val, &pvalidx);
 
     if (NAMED(val))
@@ -1679,7 +1679,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 
 	if (!(isNewList(x) || isExpression(x))) {
 	    warning("Coercing LHS to a list");
-	    x = coerceVector(x, VECSXP);
+	    REPROTECT(x = coerceVector(x, VECSXP), pxidx);
 	}
 	names = getAttrib(x, R_NamesSymbol);
 	nx = length(x);

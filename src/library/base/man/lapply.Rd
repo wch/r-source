@@ -27,6 +27,11 @@ sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
   accepting vectors as \code{X}, and returning a vector or array with
   \code{dimnames} if appropriate.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{apply}}, \code{\link{tapply}}.
 }

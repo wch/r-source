@@ -2,7 +2,7 @@
 \alias{manova}
 \title{Multivariate Analysis of Variance}
 \description{
-  A class of multivariate analysis of variance.
+  A class for the multivariate analysis of variance.
 }
 \usage{
 manova(\dots)
@@ -31,7 +31,6 @@ manova(\dots)
   \emph{Multivariate Analysis of Variance and Repeated Measures.}
   Chapman and Hall.
 }
-\author{B.D. Ripley}
 
 \seealso{
   \code{\link{aov}}, \code{\link{summary.manova}}, the latter containing

@@ -33,8 +33,6 @@ directories have both read and write permissions.
   An integer vector with values \code{0} for success and \code{-1} for failure.
 }
 
-\author{B. D. Ripley}
-
 \note{
   This is intended as a replacement for the S-PLUS function
   \code{access}, a wrapper for the C function of the same name, which

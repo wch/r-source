@@ -3,8 +3,8 @@
 \alias{predict.nls}
 \usage{
 \method{predict}{nls}(object, newdata , se.fit = FALSE, scale = NULL, df = Inf, 
-              interval = c("none", "confidence", "prediction"),
-              level = 0.95, ...)
+        interval = c("none", "confidence", "prediction"),
+        level = 0.95, \dots)
 }
 \description{
   \code{predict.nls} produces predicted values, obtained by evaluating

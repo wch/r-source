@@ -42,8 +42,9 @@ else
 endif
 
 ifneq ($(strip $(BUILD)),CROSS)
-## needed for gcc-3.2.2 but not earlier: may need to adjust
-R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
+R-DLLFLAGS = -mwindows
+## needed for gcc-3.2.2 but not 3.2 nor 3.3
+## R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
 else
 R-DLLFLAGS = -mwindows
 endif

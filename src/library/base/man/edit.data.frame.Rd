@@ -48,6 +48,8 @@
 
   If the data editor is not available, a dump of the object is presented
   for editing using the default method of \code{edit}.
+
+  At present the data editor is limited to 65535 rows.
 }
 \seealso{\code{\link{data.entry}}, \code{\link{edit}}}
 \examples{

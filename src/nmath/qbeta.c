@@ -93,7 +93,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 
     /* calculate the initial approximation */
 
-    r = sqrt(-log(a * a));
+    r = sqrt(-2 * log(a));
     y = r - (const1 + const2 * r) / (1. + (const3 + const4 * r) * r);
     if (pp > 1 && qq > 1) {
 	r = (y * y - 3.) / 6.;
@@ -107,7 +107,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	t = 1. / (9. * qq);
 	t = r * pow(1. - t + y * sqrt(t), 3.0);
 	if (t <= 0.)
-	    xinbta = 1. - exp((log((1. - a) * qq) + logbeta) / qq);
+	    xinbta = 1. - exp((log1p(-a)+ log(qq) + logbeta) / qq);
 	else {
 	    t = (4. * pp + r - 2.) / t;
 	    if (t <= 1.)

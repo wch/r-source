@@ -27,6 +27,11 @@ dget(file)
   \code{dput} will warn if fewer characters were written to a file than
   expected, which may indicate a full or corrupt file system.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{deparse}}, \code{\link{dump}}, \code{\link{write}}.
 }

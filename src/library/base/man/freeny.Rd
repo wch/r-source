@@ -27,6 +27,11 @@
   \emph{A Portable Linear Regression Package with Test Programs}.
   Bell Laboratories memorandum.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(freeny)
 summary(freeny)

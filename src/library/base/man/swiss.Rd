@@ -52,6 +52,11 @@
   Population Research, Princeton University, 1976.  Unpublished data
   assembled under NICHD contract number No 1-HD-O-2077.''
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \note{
   Files for all 182 districts in 1888 and other years are available at
   \url{http://opr.princeton.edu/archive/eufert/switz.html}.

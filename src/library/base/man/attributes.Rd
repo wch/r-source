@@ -2,8 +2,8 @@
 \title{Object Attribute Lists}
 \usage{
 attributes(obj)
-attributes(obj) <- list
-mostattributes(obj) <- list
+attributes(obj) <- value
+mostattributes(obj) <- value
 }
 \alias{attributes}
 \alias{attributes<-}
@@ -16,12 +16,18 @@ mostattributes(obj) <- list
 }
 \arguments{
   \item{obj}{an object}
+  \item{value}{an appropriate attribute list, or \code{NULL}.}
 }
 \details{
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
   attributes, and assigns them only when that is valid whereas as
   \code{attributes} assignment would give an error in that case.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{\code{\link{attr}}.
 }

@@ -50,6 +50,11 @@ pmin(\dots, na.rm=FALSE)
   \code{\link{attributes}} (such as \code{\link{names}} or
   \code{\link{dim}}) are transferred from the first argument (if applicable).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{range}} (\emph{both} min and max) and
   \code{\link{which.min}} (\code{which.max}) for the \emph{arg min},

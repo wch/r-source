@@ -48,6 +48,11 @@ summary.matrix    (object, \dots)
   \code{\link{summary.glm}},
   \code{\link{summary.lm}}.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(attenu)
 summary(attenu, digits = 4) #-> summary.data.frame(...), default precision

@@ -1,7 +1,3 @@
-% file modreg/man/smooth.spline.Rd
-% copyright (C) 1998 B. D. Ripley
-% copyright (C) 2001-2002 The R Core Development Team
-%
 \name{smooth.spline}
 \alias{smooth.spline}
 %\alias{print.smooth.spline}
@@ -142,7 +138,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{w}{the weights used at the unique values of \code{x}.}
   \item{yin}{the y values used at the unique \code{y} values.}
   \item{lev}{leverages, the diagonal values of the smoother matrix.}
-  \item{cv.crit}{(generalized) cross-validation score.}
+  \item{cv.crit}{cross-validation score, ``generalized'' or true, depending
+    on \code{cv}.}
   \item{pen.crit}{penalized criterion}
   \item{crit}{the criterion value minimized in the underlying
     \code{.Fortran} routine \file{sslvrg}.}
@@ -167,13 +164,29 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{call}{the matched call.}
 }
 \references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}, Wadsworth \& Brooks/Cole.
+
   Green, P. J. and Silverman, B. W. (1994)
   \emph{Nonparametric Regression and Generalized Linear Models:
-    A Roughness Penalty Approach}; Chapman and Hall.
+    A Roughness Penalty Approach.} Chapman and Hall.
+
+  Hastie, T. J. and Tibshirani, R. J. (1990)
+  \emph{Generalized Additive Models.}  Chapman and Hall.
 }
-\author{B.D. Ripley and Martin Maechler (spar/lambda, etc).}
-\seealso{\code{\link{predict.smooth.spline}} for evaluating the spline
-  and its derivatives.}
+\author{
+  \R implementation by B. D. Ripley and Martin Maechler
+  (\code{spar/lambda}, etc).
+
+  This function is based on code in the \code{GAMFIT} Fortran program by
+  T. Hastie and R. Tibshirani (\url{http://lib.stat.cmu.edu/general/}),
+  which makes use of spline code by Finbarr O'Sullivan.  Its design
+  parallels the \code{smooth.spline} function of Chambers \& Hastie (1992).
+}
+\seealso{
+  \code{\link{predict.smooth.spline}} for evaluating the spline
+  and its derivatives.
+}
 \examples{
 data(cars)
 attach(cars)

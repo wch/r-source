@@ -2,7 +2,7 @@
 \alias{page}
 \title{Invoke a Pager on an R Object}
 \usage{
-page(x, method = c("dput", "print"), ...)
+page(x, method = c("dput", "print"), \dots)
 }
 \arguments{
   \item{x}{the name of an \R object.}
@@ -13,10 +13,9 @@ page(x, method = c("dput", "print"), ...)
     \code{delete.file} are already used.}
 }
 \description{
-    Displays a representation of the object named by \code{x} in a pager.
+  Displays a representation of the object named by \code{x} in a pager.
 }
-\author{B. D. Ripley}
 \seealso{
-    \code{\link{file.show}}, \code{\link{edit}}, \code{\link{fix}}.
+  \code{\link{file.show}}, \code{\link{edit}}, \code{\link{fix}}.
 }
 \keyword{utilities}

@@ -46,9 +46,16 @@ update the list.
 Many more, too numerous to mention here, have contributed by sending bug
 reports and suggesting various improvements.
 
-Julian Harris and Wing Kwong (Tiki) Wan whilst at the University of
-Auckland assisted Ross Ihaka with the Macintosh port.
+Simon Davies whilst at the University of Auckland wrote the original
+version of glm().
 
+Julian Harris and Wing Kwong (Tiki) Wan whilst at the
+University of Auckland assisted Ross Ihaka with the Macintosh port.
+
+R was inspired by the S environment which has been principally
+developed by John Chambers, with substantial input from Douglas Bates,
+Rick Becker, Bill Cleveland, Trevor Hastie, Daryl Pregibon and Allan
+Wilks.
 
 A special debt is owed to John Chambers who has graciously contributed
 advice and encouragement in the early days of R and later became a

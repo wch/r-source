@@ -1,7 +1,6 @@
 
                             AVAILABLE R RESOURCES
 
-
 1 FAQ
 *****
 
@@ -90,8 +89,17 @@ mirrored daily at
 `http://www.bioconductor.org/CRAN/'
      Dana Farber Cancer Institute, Boston, MA, USA
 
+`http://cran.get-software.com'
+     Get-Software.com, Augusta, ME, USA
+
 `http://lib.stat.cmu.edu/R/CRAN/'
      Statlib, Carnegie Mellon University, PA, USA
+
+`http://cran.mirrors.pair.com/'
+     Pair Networks, PA, USA
+
+`http://www.binarycode.org/cran'
+     BinaryCode.org, Austin, TX, USA
 
 `http://mirrors.theonlinerecordstore.com/CRAN/'
      The Online Record Store, Houston, TX, USA

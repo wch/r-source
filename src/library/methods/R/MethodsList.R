@@ -167,29 +167,52 @@ MethodsListSelect <-
   ## a method specifically linked to class `"missing"'.  Once a function is found, it
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
-             mlist = getMethodsForDispatch(f, fdef),
+             mlist = NULL,
              fEnv = if(is(fdef, "genericFunction")) environment(fdef) else NULL,
-             finalDefault = finalDefaultMethod(mlist),
+             finalDefault = finalDefaultMethod(mlist, f),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
-             fdef = getGeneric(f)
+             fdef = getGeneric(f), # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
+             resetAllowed = TRUE # FALSE when called from selectMethod, .findNextMethod
  )
 {
-    if(!is(mlist, "MethodsList")) {
-        if(is.null(f))
-            stop("Invalid method sublist")
-        else
-            stop(paste("\"", f, "\" is not a valid generic function", sep=""))
+    if(!resetAllowed) # ensure we restore the real methods for this function
+        resetMlist <- .getMethodsForDispatch(f, fdef)
+    if(is.null(mlist))
+        mlist <- .getMethodsForDispatch(f, fdef)
+    resetNeeded <- .setIfBase(f, fdef, mlist) # quickly protect against recursion -- see Methods.R
+    if(resetNeeded) {
+        on.exit(.setMethodsForDispatch(f, fdef, mlist))
     }
-    on.exit({
-        ## the C level code turns off some recursive method selection during evaluation
-        ## of a call to this function.  Make sure it's turned back on if an error occurs.
-        .Call("R_clear_method_selection", PACKAGE = "methods")
-        ## and remove the function from the cached method data
-        resetGeneric(f, fdef)
-    })
+    if(is.null(mlist)) {
+        ## collect all the methods metadata visible on 1st call to generic
+        ## Cannot happen except for genericFunction objects, for which
+        ## getAllMethods will assign mlist in the environment of fdef
+        mlist <- getAllMethods(f, fdef)
+    }
+    if(!is(mlist, "MethodsList")) {
+        if(is.function(mlist)) # call to f, inside MethodsListSelect
+            return(mlist)
+        if(is.null(f)) # recursive recall of MethodsListSelect
+            stop("Invalid method sublist")
+        else if(!is.null(mlist)) # NULL => 1st call to genericFunction
+            stop("\"", f, "\" is not a valid generic function: methods list was an object of class \"",
+                 class(mlist), "\"")
+    }
     if(!is.logical(useInherited))
-        stop("useInherited must be TRUE, FALSE, or a named logical vector of T/F")
+        stop("useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"",
+             class(useInherited), "\"")
+    if(identical(mlist, getMethodsForDispatch(f, fdef))) {
+        resetNeeded <- TRUE
+        ## On the initial call:
+        ## turn off any further method dispatch on this function, to avoid recursive
+        ## loops if f is a function used in MethodsListSelect.
+        ## TODO: Using name spaces in the methods package would eliminate the need for this
+        .setMethodsForDispatch(f, fdef, finalDefault)
+        if(is(mlist, "MethodsList")) {
+            on.exit(.setMethodsForDispatch(f, fdef, mlist))
+        }
+    }
     argName <- slot(mlist, "argument")
     arg <- NULL ## => don't use instance-specific inheritance
     if(evalArgs) {
@@ -212,7 +235,7 @@ MethodsListSelect <-
             thisInherit <- TRUE
         }
         else {
-            thisInherit <- useInherited[which]
+            thisInherit <- useInherited[[which]]
             nextUseInherited <- useInherited[-which]
         }
     }
@@ -226,7 +249,8 @@ MethodsListSelect <-
             value <- mlist ## no change
         else {
             method <- Recall(NULL, env, selection, finalDefault = finalDefault,
-                   evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
+                   evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef,
+                             )
             if(is(method, "EmptyMethodsList"))
                 value <- method
             else {
@@ -237,25 +261,28 @@ MethodsListSelect <-
     }
     if(inherited || is(value, "EmptyMethodsList"))  {
         ## direct selection failed at this level or below
-        allSelections <- inheritedSubMethodLists(arg, fromClass, mlist, env)
-        allClasses <- names(allSelections)
         method <- NULL
-        if(thisInherit) for(i in seq(along = allSelections)) {
-            selection <- allSelections[[i]]
-            fromClass <- allClasses[[i]]
-            if(is(selection, "function"))
-                method <- selection
-            else if(is(selection, "MethodsList")) {
-                ## go on to try matching further arguments
-                method <- Recall(NULL, env, selection, finalDefault = finalDefault,
-                         evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
-                if(is(method, "EmptyMethodsList"))
-                    selection <- method   ## recursive selection failed
+        if(thisInherit)  {
+            allSelections <- inheritedSubMethodLists(arg, fromClass, mlist, env)
+            allClasses <- names(allSelections)
+            for(i in seq(along = allSelections)) {
+                selection <- allSelections[[i]]
+                fromClass <- allClasses[[i]]
+                if(is(selection, "function"))
+                    method <- selection
+                else if(is(selection, "MethodsList")) {
+                    ## go on to try matching further arguments
+                    method <- Recall(NULL, env, selection, finalDefault = finalDefault,
+                                     evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
+                    if(is(method, "EmptyMethodsList"))
+                        selection <- method   ## recursive selection failed
+                }
+                if(!is(selection, "EmptyMethodsList"))
+                    break
             }
-            if(!is(selection, "EmptyMethodsList"))
-                break
         }
-        if(is(selection, "EmptyMethodsList") && !is.null(f) && !is.null(finalDefault)) {
+        if((is.null(selection) || is(selection, "EmptyMethodsList"))
+           && !is.null(f) && !is.null(finalDefault)) {
             ## only use the final default method after exhausting all
             ## other possibilities, at all levels.
             method <- insertMethodInEmptyList(selection, finalDefault)
@@ -273,13 +300,17 @@ MethodsListSelect <-
         ## top level
         if(is(value, "EmptyMethodsList")) ## selection failed
             value <- NULL
-        else if(!is.null(fEnv)) {
-            ## and later a test that this selection used no conditional inheritance
-            assign(".Methods", value, envir = fEnv)
+        if(resetNeeded) {
+            on.exit() # cancel the restore of the original mlist
+            if(resetAllowed) {
+                if(is.null(value)) resetMlist <- mlist else resetMlist <- value
+            }
+            .setMethodsForDispatch(f, fdef, resetMlist)
+            if(is.primitive(finalDefault))
+                setPrimitiveMethods(f, finalDefault, "set", fdef, resetMlist)
         }
+            
     }
-    ## clear the error actions
-    on.exit()
     value
 }
 
@@ -350,8 +381,8 @@ inheritedSubMethodLists <-
     ## which methods exist.
     if(isClass(thisClass)) {
       ## for consistency, order the available methods by
-      ## the (depth first) order of the superclasses of thisClass
-      superClasses <- names(getExtends(getClass(thisClass)))
+      ## the ordering of the superclasses of thisClass
+      superClasses <- names(getClass(thisClass)@contains)
       classes <- superClasses[!is.na(match(superClasses, classes))]
       for(which in seq(along=classes)) {
         tryClass <- el(classes, which)
@@ -370,7 +401,7 @@ inheritedSubMethodLists <-
         if(isClass(tryClass)) {
             tryClassDef <- getClass(tryClass) 
             if(is(tryClassDef, "classRepresentation")) {
-              if(!is.na(match(thisClass, names(getSubclasses(tryClassDef)))))
+              if(!is.na(match(thisClass, names(tryClassDef@subclasses))))
                 elNamed(value, tryClass) <- el(methods, which)
           }
         }
@@ -439,6 +470,7 @@ matchSignature <-
 }
     n <- length(anames)
     value <- rep("ANY", n)
+    names(value) <- anames
     value[which] <- sigClasses
     unspec <- value == "ANY"
     ## remove the trailing unspecified classes
@@ -542,13 +574,14 @@ promptMethods <-
       aliases <- character(n)
       fullName <- topicName("methods", f)
       for(i in seq(length = n)) {
-          labels[[i]] <- paste(args[[i]], signatures[[i]], collapse = ", ", sep = " = ")
+          sigi <- paste("\"", signatures[[i]], "\"", sep ="")
+          labels[[i]] <- paste(args[[i]], sigi, collapse = ", ", sep = " = ")
           aliases[[i]] <- paste0("\\alias{", topicName("method", c(f, signatures[[i]])),
                                 "}")
       }
-      text <- paste0(aliases, "\n\\item{", labels, "}{ ~~describe this method here }")
+      text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
       text <- c("\\section{Methods}{\\describe{", text, "}}")
-      aliasText <- paste0("\\alias{", fullName, "}")
+      aliasText <- c(paste0("\\alias{", fullName, "}"), aliases)
       endText <- c("\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
       if(identical(filename, FALSE))
           return(c(aliasText, text))

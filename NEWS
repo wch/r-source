@@ -6,6 +6,213 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.7.1
+
+
+NEW FEATURES
+
+    o	The help pages give appropriate references to the Blue,
+	White or Green books for functions based on the descriptions
+	of S functions given there. (E&OE)
+
+    o	Function getAnywhere() can find non-exported objects, for
+	namespaces or registered methods.
+
+
+DEPRECATED & DEFUNCT
+
+    o	The (unimplemented) argument 'white' of parse() is deprecated.
+
+    o	The tkfilefind demo in the tcltk library is deprecated, since
+	it never worked well, and apparently not at all with Tcl/Tk 8.4.
+
+
+BUG FIXES
+
+    o	print.table() used too much white space in some cases in 1.7.0.
+
+    o	selectMethod() failed if `f' was a non-generic and
+	optional=TRUE, and gave a confusing error message if
+	optional=FALSE.
+
+    o	pchisq(*, ncp) and qchisq(*, ncp) work in more cases for large ncp
+	or quantile and give warning or error messages otherwise.
+
+    o	str(x) now also works when x is an "externalptr" (or "weakref").
+
+    o	rbeta(), rf(), and rt() now support infinite parameter values;
+	other distributions return NaN instead of NA for such.
+
+    o	Redefining a class is now safer if the new definition
+	generates an error (previously some invalid metadata could be
+	left behind).
+
+    o	A number of errors are now caught in setClass() that
+	previously either went unchecked or waited until new() to
+	appear:
+	- classes may not contain themselves, directly or indirectly;
+	- classes appearing either as slots or as superclasses must
+	  themselves be defined;
+	- slot names (direct or inherited) must be unique.
+	In related changes, prototype() now works as documented, and is the
+	recommended way to provide prototype objects.
+
+    o	Sorting an ordered factor would return an unordered one.
+	This caused some trouble with panel.superpose (PR#974).
+
+    o	methods() could return duplicates if a method in a namespace
+	was both exported and registered.
+
+    o	The internal zip.unpack() could crash if more than 500 files
+	were to be extracted. (PR#2818)
+
+    o	The "r+" and "r+b" modes of opening file connections disallowed
+	writing.
+
+    o	library() now warns the user if the chosen package name
+	doesn't match the internal package name, and corrects the
+	error. (PR#2816)
+
+    o	qr(LAPACK=TRUE) (and qr for complex arguments) might have failed
+	to pivot for rank-deficient inputs. (PR#2867)
+
+    o	Only re-mapped symbols are exported by regex.o, to avoid
+	problems with embedded R on RedHat 9.
+
+    o	arima() did not set transform.pars to FALSE if AR parameters
+	were fixed, although it claimed to.
+
+    o	pnorm() was slower than necessary in the outer tails in some
+	cases due to a typo in the improvements from PR#699.  (PR#2883)
+
+    o	setGeneric() and setMethod() now catch some examples where the
+	generic and the method have different argument lists; the
+	evaluator checks for internal consistency of these argument lists.
+
+    o	expand.grid(x) {the rare case of one argument} now treats factor
+	levels as in the typical case of two or more arguments.
+
+    o	Some implicit coercions to lists could cause segfaults, e.g.
+	  x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
+	due to a PROTECT bug. (PR#2923)
+
+    o	The replacement functions for colnames() and rownames() did not
+	work for arrays with more than two dimensions.	They could
+	create dimnames of the form list(NULL, NULL) rather than
+	remove the dimnames attribute.
+
+    o	termplot() gave incorrect answers with rug=TRUE or
+	partial=TRUE for factors whose levels were not in
+	lexicographical order.
+
+    o	A serious performance flaw in as() computations was fixed (the
+	methods were not being cached properly.)
+
+    o	model.frame(~1, data) always returned 1 row. (PR#2958)
+
+    o	The data editor was truncating objects to 65535 rows.  Pro
+	tem, editing objects with more than 65535 rows is an error,
+	and objects cannot be extended beyond that row. This restriction
+	will be removed in 1.8.0.  (PR#2962)
+
+    o	A bug could produce apparent loops in formal method selection
+	when inheritance was restricted (used for the as() function).
+	A related problem sometimes broke attaching a package that had
+	methods for basic functions, such as names(), used in method
+	selection.
+
+    o	Empty expressions as in return(x,) could generate subsequent
+	segfaults: they are now errors.	 (PR#2880)
+
+    o	The Kinderman-Ramage Normal Random Generator had several
+	problems leading to not-quite normally distributed variates
+	(PR#2846).  One problem was traced to an error in the original
+	1976 JASA paper!  Thanks to Josef Leydold and his team for
+	investigating this. The old generator has been retained for
+	reproducibility of older results, under the name
+	"Buggy Kinderman-Ramage".  A warning is issued if you select it
+	(also indirectly via RNGversion()).
+
+    o	promptMethods() now puts the \alias lines for methods in the
+	normal place, near the top of the file, and quotes class
+	 names in signatures.
+
+    o	getS3method() and methods() were not finding methods for
+	coefficients() and fitted.values() (which dispatch on "coef"
+	and "fitted" respectively).
+
+    o	scan() (and hence read.table) was not finding matches for
+	separator chars with the upper bit set.	 (PR#3035)
+
+    o	lm.(w)fit failed if the fit had rank 0.
+
+    o	lqs() did not report explicitly that it had failed if all
+	samples gave singular fits.
+
+    o	predict.lm(*, se=TRUE) {w/ weights, w/o newdata} now gives correct
+	SE's.  (PR#3043)
+
+    o	cor.test(x, y, method="spearman") now also works for
+	length(x) > 1290.
+
+    o	Matrices were printed mis-aligned if right=TRUE and na.print
+	was specified.	(PR#3058)
+
+    o	R CMD check gives now a clearer message when latex produces
+	errors on the package manual.  (PR#3070)
+
+    o	isSeekable() was incorrectly returning FALSE on all file connections.
+
+    o	tkpager() wasn't quite using its title and header arguments in
+	the way prescribed by file.show()
+
+    o	legend(*, pch=p, lty=l) now works better when `p' or `l' have
+	NAs.
+
+    o	All braces in regular expressions used by Sweave() are now
+	escaped by a backslash.
+
+    o	unloadNamespace() failed because getNamespaceImports() now coerces a
+	string argument to a name space.
+
+    o	deriv3 gave incorrect Hessians for some very simple
+	expressions such as expression(x*y) (since the comments in the
+	C code were incorrect).	 (PR#2577)
+
+    o	power.t.test(..., delta=NULL,alternative='two.sided') failed. (PR#2993)
+
+    o	Lines on postscript() plots with thousands of segments might
+	have been plotted inaccurately in 1.7.0. (PR#3132)
+
+	Solid lines in postscript() output are split into groups of 1000
+	segments to help some PostScript interpreters (typically old
+	level-1 interpreters).
+
+    o	cut.POSIXt failed when the breaks were date/time objects. (PR#3181)
+
+    o	Usage of methods in dist.Rd is now correctly documented
+	(as.matrix.dist() is not an exported symbol).
+
+    o	The predict() method for ar fits was not retrieving the series
+	from the parent environment.
+
+    o	eigen() and La.eigen() were not returning a matrix of
+	eigenvectors for a 1x1 input.
+
+    o	hsv() and rgb() now return character(0) when one of their args has
+	length 0.  This also fixes terrain.color(1). (PR#3233)
+
+    o	[[<-.data.frame checked if a replacment was too short, but not
+	if it was too long.  (related to PR#3229)
+
+    o	qt(x, df) was quite inaccurate for df=1+epsilon; it is now much more
+	accurate for df in (1,2) and more precise for other df. (PR#2991)
+
+    o	qbeta() now has slightly improved C code in two places, as suggested
+	in the 2nd followup to PR#2894.
+
+
+
 		CHANGES IN R VERSION 1.7.0
 
 
@@ -741,10 +948,10 @@ BUG FIXES
 
     o	read.dcf() read incorrectly files which did not end in a new line.
 
-    o   read.socket() dropped certain non-alphanumeric characters. (PR#2639)
+    o	read.socket() dropped certain non-alphanumeric characters. (PR#2639)
 
-    o   termplot() handles missing data better (PR#2687, 
-         <Mark.Bravington@csiro.au>)
+    o	termplot() handles missing data better (PR#2687,
+	 <Mark.Bravington@csiro.au>)
 
     o	Corrected MacRoman encoding for Icircumflex etc.
 

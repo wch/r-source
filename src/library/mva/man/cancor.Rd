@@ -34,6 +34,10 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   \item{ycenter}{the values used to adjust the \code{x} variables.}
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Hotelling H. (1936).
   Relations between two sets of variables.
   \emph{Biometrika}, \bold{28}, 321--327.

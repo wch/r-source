@@ -2,7 +2,7 @@
 \alias{reshape}
 \title{Reshape Grouped Data}
 \description{
-  This function reshapes a dataframe between `wide' format with repeated
+  This function reshapes a data frame between `wide' format with repeated
   measurements in separate columns of the same record and `long' format
   with the repeated measurements in separate records.
 }

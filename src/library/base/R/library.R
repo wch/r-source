@@ -4,11 +4,9 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"), version)
 {
-    testRversion <- function(descfile)
+    testRversion <- function(fields)
     {
         current <- paste(R.version[c("major", "minor")], collapse = ".")
-        fields <- read.dcf(descfile, fields =
-                           c("Package", "Depends", "Built"))
         ## depends on R version?
         if(!package.dependencies(fields, check = TRUE)) {
             dep <- package.dependencies(fields)[[1]]
@@ -147,7 +145,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         if(length(package) != 1)
             stop("argument `package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
-	if(is.na(match(pkgname, search()))) {
+	newpackage <- is.na(match(pkgname, search()))
+	if(newpackage) {
             ## Check for the methods package before attaching this
             ## package.
             ## Only if it is _already_ here do we do cacheMetaData.
@@ -174,78 +173,96 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             which.lib.loc <- dirname(pkgpath)
             descfile <- system.file("DESCRIPTION", package = package,
                                     lib.loc = which.lib.loc)
-            if(nchar(descfile)) testRversion(descfile)
-            else stop("This is not a valid package -- no DESCRIPTION exists")
-            ## If the name space mechanism is available and the package
-            ## has a name space, then the name space loading mechanism
-            ## takes over.
-            if (packageHasNamespace(package, which.lib.loc)) {
-                tt <- try({
-                    ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-                    env <- attachNamespace(ns)
-                })
-                if (inherits(tt, "try-error"))
-                    if (logical.return)
-                        return(FALSE)
-                    else stop("package/namespace load failed")
-                else {
-                    on.exit(do.call("detach", list(name = pkgname)))
-                    nogenerics <- checkNoGenerics(env)
-                    if(warn.conflicts &&
-                       !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                       checkConflicts(package, pkgname, pkgpath, nogenerics)
-                    on.exit()
-                    if (logical.return)
-                        return(TRUE)
-                    else
-                        return(invisible(.packages()))
-                }
-            }
-            codeFile <- file.path(which.lib.loc, package, "R",
-                                  package)
-	    ## create environment (not attached yet)
-	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
-	    ## source file into loadenv
-	    if(file.exists(codeFile))
-                sys.source(codeFile, loadenv, keep.source = keep.source)
-            else if(verbose)
-		warning(paste("Package ", sQuote(package),
-                              "contains no R code"))
-            ## now transfer contents of loadenv to an attached frame
-	    env <- attach(NULL, name = pkgname)
-            ## detach does not allow character vector args
-            on.exit(do.call("detach", list(name = pkgname)))
-            attr(env, "path") <- file.path(which.lib.loc, package)
-	    ## the actual copy has to be done by C code to avoid forcing
-            ## promises that might have been created using delay().
-            .Internal(lib.fixup(loadenv, env))
-            ## save the package name in the environment
-            assign(".packageName", package, envir = env)
+            if(!nchar(descfile)) 
+            	stop("This is not a valid package -- no DESCRIPTION exists") 
+	
+            descfields <- read.dcf(descfile, fields =
+                           c("Package", "Depends", "Built")) 
+            testRversion(descfields)                           
 
-            ## run .First.lib
-	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
-		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
-                tt<- try(firstlib(which.lib.loc, package))
-                if(inherits(tt, "try-error"))
-                    if (logical.return) return(FALSE)
-                    else stop(".First.lib failed")
+            ## Check for inconsistent naming
+            if(descfields[1, "Package"] != libraryPkgName(package)) {
+            	warning(paste("Package", sQuote(package), "not found.\n",
+			"Using case-insensitive match",
+            		sQuote(descfields[1, "Package"]), ".\n",
+			"Future versions of R will require exact matches."),
+			call.=FALSE)
+            	package <- descfields[1, "Package"]
+            	pkgname <- paste("package", package, sep = ":")
+            	newpackage <- is.na(match(pkgname, search()))
 	    }
-            if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
-                tt<- try(firstlib(which.lib.loc, package))
-                if(inherits(tt, "try-error"))
-                    if (logical.return) return(FALSE)
-                    else stop(".First.lib failed")
-            }
-            nogenerics <- checkNoGenerics(env)
-	    if(warn.conflicts &&
-               !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                checkConflicts(package, pkgname, pkgpath, nogenerics)
+            if(newpackage) {
+		## If the name space mechanism is available and the package
+		## has a name space, then the name space loading mechanism
+		## takes over.
+		if (packageHasNamespace(package, which.lib.loc)) {
+		    tt <- try({
+			ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
+			env <- attachNamespace(ns)
+		    })
+		    if (inherits(tt, "try-error"))
+			if (logical.return)
+			    return(FALSE)
+			else stop("package/namespace load failed")
+		    else {
+			on.exit(do.call("detach", list(name = pkgname)))
+			nogenerics <- checkNoGenerics(env)
+			if(warn.conflicts &&
+			   !exists(".conflicts.OK", envir = env, inherits = FALSE))
+			   checkConflicts(package, pkgname, pkgpath, nogenerics)
+			on.exit()
+			if (logical.return)
+			    return(TRUE)
+			else
+			    return(invisible(.packages()))
+		    }
+		}
+		codeFile <- file.path(which.lib.loc, package, "R",
+				      package)
+		## create environment (not attached yet)
+		loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
+		## source file into loadenv
+		if(file.exists(codeFile))
+		    sys.source(codeFile, loadenv, keep.source = keep.source)
+		else if(verbose)
+		    warning(paste("Package ", sQuote(package),
+				  "contains no R code"))
+		## now transfer contents of loadenv to an attached frame
+		env <- attach(NULL, name = pkgname)
+		## detach does not allow character vector args
+		on.exit(do.call("detach", list(name = pkgname)))
+		attr(env, "path") <- file.path(which.lib.loc, package)
+		## the actual copy has to be done by C code to avoid forcing
+		## promises that might have been created using delay().
+		.Internal(lib.fixup(loadenv, env))
+		## save the package name in the environment
+		assign(".packageName", package, envir = env)
 
-            if(!nogenerics && hadMethods &&
-               !identical(pkgname, "package:methods")) cacheMetaData(env, TRUE)
-            on.exit()
+		## run .First.lib
+		if(exists(".First.lib", envir = env, inherits = FALSE)) {
+		    firstlib <- get(".First.lib", envir = env, inherits = FALSE)
+		    tt<- try(firstlib(which.lib.loc, package))
+		    if(inherits(tt, "try-error"))
+			if (logical.return) return(FALSE)
+			else stop(".First.lib failed")
+		}
+		if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
+		    tt<- try(firstlib(which.lib.loc, package))
+		    if(inherits(tt, "try-error"))
+			if (logical.return) return(FALSE)
+			else stop(".First.lib failed")
+		}
+		nogenerics <- checkNoGenerics(env)
+		if(warn.conflicts &&
+		   !exists(".conflicts.OK", envir = env, inherits = FALSE))
+		    checkConflicts(package, pkgname, pkgpath, nogenerics)
+
+		if(!nogenerics && hadMethods &&
+		   !identical(pkgname, "package:methods")) cacheMetaData(env, TRUE)
+		on.exit()
+	    }
 	}
-	else if(verbose)
+	if (verbose && !newpackage)
             warning(paste("Package", sQuote(package),
                           "already present in search()"))
     }
@@ -260,14 +277,6 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         if(file.exists(vignetteIndexRDS <-
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
-        ## <FIXME>
-        ## Remove this once 1.7.0 is out.
-        ## (The 1.7 development versions for some time used vignette
-        ## indices serialized into 'doc/00Index.rds'.)
-        else if(file.exists(vignetteIndexRDS <-
-                            file.path(pkgPath, "doc", "00Index.rds")))
-            docFiles <- c(docFiles, vignetteIndexRDS)
-        ## <FIXME>
         else
             docFiles <- c(docFiles,
                           file.path(pkgPath, "doc", "00Index.dcf"))
@@ -291,9 +300,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 else
                     NULL
             }
-            ## <FIXME>
-            ## Remove the '00Index.rds' once 1.7.0 is out.
-            else if(basename(f) %in% c("vignette.rds", "00Index.rds")) {
+            else if(basename(f) %in% c("vignette.rds")) {
                 txt <- .readRDS(f)
                 ## New-style vignette indexes are data frames with more
                 ## info than just the base name of the PDF file and the
@@ -312,7 +319,6 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                                       ")", sep = "")))
                 else NULL
             }
-            ## </FIXME>
             else
                 txt <- readLines(f)
             txt

@@ -33,6 +33,11 @@ coefficients(object, \dots)
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
   \code{\link{glm}}, \code{\link{lm}} for model fitting.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 x <- 1:5; coef(lm(c(1:3,7,6) ~ x))
 }

@@ -13,9 +13,7 @@ dimnames(x) <- nlist
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
-  \item{nlist}{a list of the length \code{dim(x)} whose components
-    are either null or character vectors the length of the appropriate
-    dimension of \code{x}.}
+  \item{nlist}{a possible value for \code{dimnames(x)}: see below.}
 }
 \details{
   The functions \code{dimnames} and \code{dimnames<-} are generic.
@@ -28,6 +26,17 @@ dimnames(x) <- nlist
 
   Both have methods for data frames.  The dimnames of a data frame are
   its \code{row.names} attribute and its \code{\link{names}}.
+}
+\value{
+  The dimnames of a matrix or array can be \code{NULL} or a list of the
+  same length as \code{dim(x)}.  If a list, its components are either
+  \code{NULL} or a character vector the length of the appropriate
+  dimension of \code{x}.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{rownames}}, \code{\link{colnames}};

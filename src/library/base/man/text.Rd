@@ -69,6 +69,14 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and
   extra values will be ignored).
+
+  Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{xol}
+  value is \code{NA} are omitted from the plot.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}},

@@ -17,6 +17,9 @@ diag(x) <- value
 \arguments{
   \item{x}{a matrix, vector or 1D array.}
   \item{nrow, ncol}{Optional dimensions for the result.}
+  \item{value}{either a single value or a vector of length equal to that
+    of the current diagonal.  Should be of a mode which can be coerced
+    to that of \code{x}.}
 }
 \value{
   If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
@@ -39,8 +42,13 @@ diag(x) <- value
   vector that could be of length one. Use \code{diag(x, nrow =
     length(x))} for consistent behaviour. 
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
-\code{\link{matrix}}.
+\code{\link{upper.tri}}, \code{\link{lower.tri}}, \code{\link{matrix}}.
 }
 \examples{
 dim(diag(3))

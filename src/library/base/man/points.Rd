@@ -35,10 +35,12 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
       \item \code{pch=24}: triangle point-up,
       \item \code{pch=25}: triangle point down.
     }
+    Values \code{pch=26:32} are currently unused, and \code{pch=32:255}
+    give the text symbol in the encoding in use (see \code{\link{postscript}}).
   }
   \item{col}{color code or name, see \code{\link{par}}.}
   \item{bg}{background (``fill'') color for open plot symbols}
-  \item{cex}{character expansion}
+  \item{cex}{character expansion: a numerical vector.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
     and \code{\link{par}}) may also be supplied as arguments.}
 }
@@ -47,7 +49,18 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
   (a list with \code{x} and \code{y} components), a two-column matrix, a
   time series, \dots.  See \code{\link{xy.coords}}.
 
+  Arguments \code{pch}, \code{col}, \code{bg} and \code{cex} can be
+  vectors (which will be recycled as needed) giving a value for each
+  point plotted. 
+  Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
+  value is \code{NA} are omitted from the plot.
+  
   Graphical parameters are permitted as arguments to this function.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{lines}}, and the underlying

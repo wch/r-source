@@ -15,8 +15,8 @@ duplicated(x, incomparables = FALSE, ...)
 \method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, ...)
 }
 \usage{
-duplicated(x, incomparables = FALSE, ...)
-duplicated.array(x, incomparables = FALSE, MARGIN = 1, ...)
+duplicated(x, incomparables = FALSE, \dots)
+duplicated.array(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
 \arguments{
   \item{x}{an atomic vector or a data frame or an array.}
@@ -41,6 +41,11 @@ duplicated.array(x, incomparables = FALSE, MARGIN = 1, ...)
   to those for an earlier element (in row-major order).  This would most
   commonly be used to find duplicated rows (the default) or columns
   (with \code{MARGIN = 2}).
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{\code{\link{unique}}.}
 \examples{

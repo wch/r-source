@@ -35,6 +35,11 @@ range.default(\dots, na.rm = FALSE, finite = FALSE)
   A special situation occurs when there is no (after omission
   of \code{NA}s) nonempty argument left, see \code{\link{min}}.% Extremes.Rd
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{min}},
   \code{\link{max}},

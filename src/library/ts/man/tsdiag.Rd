@@ -8,7 +8,7 @@
   A generic function to plot time-series diagnostics.
 }
 \usage{
-tsdiag(object, gof.lag, ...)
+tsdiag(object, gof.lag, \dots)
 }
 \arguments{
   \item{object}{a fitted time-series model}
@@ -28,8 +28,6 @@ tsdiag(object, gof.lag, ...)
 \value{
   None. Diagnostics are plotted.
 }
-
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{arima}}, \code{\link{StructTS}}, \code{\link{Box.test}}

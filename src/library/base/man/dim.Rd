@@ -5,24 +5,32 @@
 \title{Dimensions of an Object}
 \usage{
 dim(x)
-dim(x) <- values
+dim(x) <- value
 }
 \description{
   Retrieve or set the dimension of an object.
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
+  \item{value}{For the default method, either \code{NULL} or
+    a numeric vector which coerced to integer (by truncation).}
 }
 \details{
   The functions \code{dim} and \code{dim<-} are generic.
 
-  For an array (and hence in particular, for a matrix) they retrieve or
-  set the \code{dim} attribute of the object.  It is always
-  \code{\link{integer}} or \code{\link{NULL}}.
-
   \code{dim} has a method for \code{\link{data.frame}}s, which returns
   the length of the \code{row.names} attribute of \code{x} and the
   length of \code{x} (the numbers of ``rows'' and ``columns'').
+}
+\value{
+  For an array (and hence in particular, for a matrix) \code{dim} retrieves
+  the \code{dim} attribute of the object.  It is \code{NULL} or a vector
+  of mode \code{\link{integer}}.
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{ncol}}, \code{\link{nrow}} and \code{\link{dimnames}}.

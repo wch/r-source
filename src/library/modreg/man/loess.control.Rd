@@ -1,6 +1,3 @@
-% file modreg/man/loess.control.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{loess.control}
 \title{Set Parameters for Loess}
 \usage{
@@ -36,7 +33,6 @@ loess.control(surface = c("interpolate", "direct"),
   \item{iterations}{}
   with meanings as explained under `Arguments'.
 }
-\author{B.D. Ripley}
 \seealso{\code{\link{loess}}}
 \keyword{smooth}
 \keyword{loess}

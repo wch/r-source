@@ -43,9 +43,9 @@
   representing calendar dates and times (to the nearest second). 
 }
 \usage{
-\method{print}{POSIXct}(x, ...)
+\method{print}{POSIXct}(x, \dots)
 
-\method{summary}{POSIXct}(object, digits = 15, ...)
+\method{summary}{POSIXct}(object, digits = 15, \dots)
 
 time + number
 time - number

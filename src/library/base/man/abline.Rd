@@ -49,6 +49,11 @@ abline(reg=, untf = FALSE, \dots)
   The graphical parameters \code{col} and \code{lty} can be specified as
   arguments to \code{abline}; see \code{par} for details.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{lines}} and \code{\link{segments}} for connected and
   arbitrary lines given by their \emph{endpoints}.

@@ -28,7 +28,7 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
         ord <- sort.list(Mod(z$values), decreasing = TRUE)
     }
     list(values = z$values[ord],
-         vectors = if (!only.values) z$vectors[, ord])
+         vectors = if (!only.values) z$vectors[, ord, drop = FALSE])
 }
 
 La.svd <- function(x, nu = min(n, p), nv = min(n, p),

@@ -27,6 +27,11 @@ as.expression(x, \dots)
   \code{as.expression} attempts to coerce its argument into an
   expression object.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{call}},
   \code{\link{eval}},

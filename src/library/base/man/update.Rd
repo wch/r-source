@@ -25,9 +25,15 @@ been corrected.
 \value{
   If \code{evaluate = TRUE} the fitted object, otherwise the updated call.
 }
-\author{B.D. Ripley}
-\seealso{\code{\link{update.formula}}}
-
+\seealso{
+  \code{\link{update.formula}}
+}
+\references{
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \examples{
 oldcon <- options(contrasts = c("contr.treatment", "contr.poly"))
 ## Annette Dobson (1990) "An Introduction to Generalized Linear Models".

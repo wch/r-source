@@ -108,11 +108,14 @@ set.seed(seed, kind = NULL)
     }
   }
 
-  \code{normal.kind} can be \code{"Kinderman-Ramage"},
+  \code{normal.kind} can be \code{"Kinderman-Ramage"}, 
+  \code{"Buggy Kinderman-Ramage"},
   \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
   default), or
   \code{"user-supplied"}.  (For inversion, see the reference in
-  \code{\link{qnorm}}.)
+  \code{\link{qnorm}}.) The Kinderman-Ramage generator used in versions prior
+  to 1.7.1 had several approximation errors and should only be used for
+  reproduction of older results.
 
   \code{set.seed} uses its single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
@@ -150,6 +153,10 @@ set.seed(seed, kind = NULL)
   \code{set.seed} returns \code{NULL}, invisibly.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (\code{set.seed}, storing in \code{.Random.seed}.)
+
   Wichmann, B. A.  and Hill, I. D. (1982)
   \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
     Generator}, Applied Statistics, \bold{31}, 188--190; Remarks:

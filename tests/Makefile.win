@@ -140,7 +140,7 @@ test-Packages:
 	@for p in $(R_PKGS_BASE); do \
 	  echo ; \
 	  echo "* checking package '$${p}'"; \
-	  rcmd check ../src/library/$${p} || echo; \
+	  R_CHECK_FF_CALLS=yes $(RHOME)/bin/Rcmd check ../src/library/$${p} || echo; \
 	done
 
 test-Demo:

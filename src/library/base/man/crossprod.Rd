@@ -14,6 +14,11 @@ crossprod(x, y = NULL)
   \item{x, y}{matrices: \code{y = NULL} is taken to be the
     same matrix as \code{x}.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{\%*\%}} and outer product \code{\link{\%o\%}}.
 }

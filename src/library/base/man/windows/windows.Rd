@@ -28,7 +28,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
     Windows metafile, usually given extension \code{.emf} or \code{.wmf}.}
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
-  \item{pointsize}{the default pointsize of plotted text.}
+  \item{pointsize}{the default pointsize of plotted text. The allowed
+    range is \code{[6, 48]}: values outside that range are reset to 12.}
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
   \item{rescale}{controls the action for resizing plots.}
@@ -118,8 +119,6 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
-
-\author{Guido Masarotto and Brian Ripley}
 
 \seealso{
   \code{\link{savePlot}}, \code{\link{bringToTop}},

@@ -77,6 +77,10 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 }
 
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Haberman, S. J. (1972)
   Log-linear fit for contingency tables---Algorithm AS51.
   \emph{Applied Statistics}, \bold{21}, 218--225.

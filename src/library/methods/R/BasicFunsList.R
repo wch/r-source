@@ -335,6 +335,12 @@ list("!" = function(e1)
 , "{" = FALSE
 )
 
+## the names of the basic funs with the style of "["
+## R implements these in an inconsistent call mechanism, in which missing arguments
+## are allowed, and significant, but argument names are not used.  See callNextMethod
+
+.BasicSubsetFunctions <- c("[", "[[", "[<-", "[[<-")
+
 ## create generic functions corresponding to the basic (primitive) functions
 ## but don't leave them as generics in the package.  Instead store them in
 ## a named list to be used by setMethod, w/o forcing method dispatch on these
@@ -344,9 +350,16 @@ list("!" = function(e1)
     function(funslist, f, fdef, group = list(), env)
 {
     deflt <- get(f, "package:base")
-    body(fdef, envir = NULL) <- if(is.primitive(deflt))
-        substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt)) else
-        substitute(standardGeneric(FNAME), list(FNAME=f))
+    ## use the arguments of the base package function, unless it's a primitive
+    if(is.primitive(deflt)) {
+        body(fdef, envir = NULL) <-
+            substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
+    }
+    else {
+        fdef <- deflt
+        body(fdef, envir = NULL) <-
+            substitute(standardGeneric(FNAME), list(FNAME=f))
+    }
     elNamed(funslist, f) <- makeGeneric(f, fdef, group = group, package = "base")
     funslist
 }

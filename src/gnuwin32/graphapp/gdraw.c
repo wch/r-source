@@ -23,10 +23,15 @@
  */
 
 #include "internal.h"
-
+#include <winbase.h>
 
 static HDC GETHDC(drawing d)
 {
+  if (!d)
+  {
+      DebugBreak();
+      return (HDC) 0; /* We should never get here, but we do? */
+  }
   if ( (d->kind == PrinterObject)|| (d->kind == MetafileObject))
   {
      HDC dc = (HDC) d->handle ;
@@ -144,7 +149,7 @@ typedef struct {
     HDC dc;
     int len2; /* squared length of current dash */
     int curseg, on; /* current dash (0-7), on/off flag */
-    int style, width; 
+    int style, width;
     int curx, cury; /* start of current dash */
 } DashStruct;
 
@@ -159,9 +164,9 @@ static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
     distx = x - (a->curx);
     disty = y - (a->cury);
     if (distx*distx + disty*disty >= (a->len2)) {
-	if (a->on) 
+	if (a->on)
 	    LineTo(a->dc, x, y);
-	else 
+	else
 	    MoveToEx(a->dc, x, y, NULL);
 	a->curx = x;
 	a->cury = y;
@@ -175,7 +180,7 @@ static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
     }
 }
 
-void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2, 
+void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
 	       int fast)
 {
    point p[2];
@@ -214,15 +219,15 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	DeleteObject(gpen);
     }
      else {
-	DashStruct a;   
+	DashStruct a;
 	gpen = ExtCreatePen(PS_GEOMETRIC|PS_SOLID|PS_ENDCAP_FLAT|PS_JOIN_ROUND,
 			    width, &lb, 0, NULL);
 	SelectObject(dc, gpen);
-	SetROP2(dc, R2_COPYPEN);	
+	SetROP2(dc, R2_COPYPEN);
 	a.on = 1;
 	a.dc = dc;
 	a.len2 = (style & 15) * width;
-	a.len2 = (a.len2) * (a.len2); 
+	a.len2 = (a.len2) * (a.len2);
 	a.curseg = 0;
 	a.style = style;
 	a.width = width;
@@ -232,7 +237,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	npieces = 0;
 	BeginPath(dc);
         for (i = 1; i < n; i++) {
- 	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper, 
+ 	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper,
 		  (LPARAM) &a);
 	  if ((p[i].x != a.curx) || (p[i].y != a.cury)) {
 	      if (a.on) LineTo(dc, p[i].x, p[i].y);
@@ -252,7 +257,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	  }
         }
         if (closepath) {
-          LineDDA(p[n-1].x, p[n-1].y, p[0].x, p[0].y, gLineHelper, 
+          LineDDA(p[n-1].x, p[n-1].y, p[0].x, p[0].y, gLineHelper,
 		  (LPARAM) &a);
 	  if (a.on) LineTo(dc,p[0].x,p[0].y);
         }
@@ -293,7 +298,7 @@ void gdrawellipse(drawing d, int width, rgb border, rect r, int fast)
     HDC dc = GETHDC(d);
     LOGBRUSH lb;
     HPEN gpen;
-    if (fast) 
+    if (fast)
 	gpen = CreatePen(PS_INSIDEFRAME, width, getwinrgb(d, border));
     else {
 	lb.lbStyle = BS_SOLID;

@@ -19,6 +19,11 @@ t(x)
   When \code{x} is a vector, it is treated as ``column'', i.e., the
   result is a 1-row matrix.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{aperm}} for permuting the dimensions of arrays.
 }

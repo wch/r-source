@@ -11,6 +11,11 @@ warnings(\dots)
 \arguments{
   \item{\dots}{arguments to be passed to \code{\link{cat}}.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{warning}}.}
 \examples{
 ow <- options("warn")

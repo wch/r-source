@@ -13,18 +13,18 @@
   For each season (or other category), a time series is plotted.
 }
 \synopsis{
-monthplot(x, ...)
-monthplot.StructTS(x, labels = NULL, ylab = choice, choice = "sea", ...)
-monthplot.stl(x, labels = NULL, ylab = choice, choice = "seasonal", ...)
+monthplot(x, \dots)
+monthplot.StructTS(x, labels = NULL, ylab = choice, choice = "sea", \dots)
+monthplot.stl(x, labels = NULL, ylab = choice, choice = "seasonal", \dots)
 monthplot.ts(x, labels = NULL, times = time(x), phase = cycle(x),
-             ylab = deparse(substitute(x)), ...)
+             ylab = deparse(substitute(x)), \dots)
 monthplot.default(x, labels = 1:12,
               times = 1:length(x),
               phase = (times - 1)\%\%length(labels) + 1,
               base = mean,
               xlim = c(0.55, f + 0.45), ylim = range(x, na.rm = TRUE),
               axes = TRUE, xlab = "", ylab = deparse(substitute(x)),
-              type = "l", box = TRUE, add = FALSE, ...)
+              type = "l", box = TRUE, add = FALSE, \dots)
 }
 \usage{
 monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
@@ -58,6 +58,11 @@ monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
   window.
 }
 \author{Duncan Murdoch}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{ts}}, \code{\link{stl}}, \code{\link{StructTS}}
 }

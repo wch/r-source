@@ -50,6 +50,11 @@ window.ts(x, \dots)
   If \code{extend = TRUE} the series will be padded with \code{NA} if
   needed.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{time}}, \code{\link{ts}}.}
 \examples{
 data(presidents)
