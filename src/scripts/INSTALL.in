@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.139 $'
+revision='$Revision: 1.140 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -55,15 +55,6 @@ Report bugs to <r-bugs@r-project.org>."
 ## for *source*, but not for *binary* installations.
 ## </NOTE>
 
-## <FIXME>
-## This uses
-##   mkdir -p
-##   basename
-## which are not portable.
-## We could fix this using suitable shell replacements, but we should
-## really redo as much as we can using R code.
-## </FIXME>
-
 ## <NOTE>
 ## We try to be defensive about possible white space in file names,
 ## hence all the strange quoting ...
@@ -82,10 +73,17 @@ NO_PERL5_MSG="\
 *** get the PDF reference manual from the nearest CRAN server.
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
+
+if mkdir -p . 2>/dev/null; then
+  MKDIR_P="mkdir -p"
+else
+  MKDIR_P="${R_HOME}/bin/mkinstalldirs"
+fi
+
 startdir=`${GETWD}`
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 if (test -d "${tmpdir}" && test -w "${tmpdir}") || \
-    mkdir -p "${tmpdir}" 2> /dev/null; then
+    ${MKDIR_P} "${tmpdir}" 2> /dev/null; then
   tmpdir=`cd "${tmpdir}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create temporary directory '${tmpdir}'"
@@ -253,7 +251,7 @@ if test -z "${pkgs}"; then
 fi
 
 if (test -d "${lib}" && test -w "${lib}") || \
-    mkdir -p "${lib}" 2> /dev/null; then
+    ${MKDIR_P} "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create directory '${lib}'"
@@ -265,7 +263,7 @@ if test -d "${lockdir}" || test -f "${lockdir}"; then
   echo "Try removing '${lockdir}'"
   exit 3
 else
-  mkdir -p "${lockdir}"
+  ${MKDIR_P} "${lockdir}"
   if test ${?} -ne 0; then
     ## This should not really happen ...
     echo "ERROR: failed to lock directory '${lib}' for modifying"
@@ -318,7 +316,7 @@ do_install_binary () {
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
     mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
-    mkdir -p "${R_PACKAGE_DIR}"
+    ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
   
   cp -r . "${R_PACKAGE_DIR}"
@@ -358,7 +356,7 @@ do_install_source () {
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
     mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
-    mkdir -p "${R_PACKAGE_DIR}"
+    ${MKDIR_P} "${R_PACKAGE_DIR}"
     ## Preserve man pages to speed up installation?  Only makes sense
     ## if we install from a non-temporary directory.
     if test "`cd .. && ${GETWD}`" != \
@@ -396,7 +394,7 @@ do_install_source () {
   if test -d src && test "${fake}" != "true"; then
     message "libs"
     if ${debug}; then set -x; fi
-    mkdir -p "${R_PACKAGE_DIR}/libs"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
       cd src;
       makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
@@ -435,7 +433,7 @@ do_install_source () {
 
   if test -d R; then
     message "R"
-      mkdir -p "${R_PACKAGE_DIR}/R"
+      ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
       echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
@@ -457,7 +455,7 @@ do_install_source () {
 
   if test -d data; then
     message "data"
-    mkdir -p "${R_PACKAGE_DIR}/data"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/data"
     rm -f "${R_PACKAGE_DIR}/data/"*
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/data/"*
@@ -472,7 +470,7 @@ do_install_source () {
 
   if test -d demo && test "${fake}" != "true"; then
     message "demo"
-    mkdir -p "${R_PACKAGE_DIR}/demo"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/demo"
     rm -f "${R_PACKAGE_DIR}/demo/"*
     cp demo/* "${R_PACKAGE_DIR}/demo" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/demo/"*
@@ -480,7 +478,7 @@ do_install_source () {
 
   if test -d exec && test "${fake}" != "true"; then
     message "exec"
-    mkdir -p "${R_PACKAGE_DIR}/exec"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/exec"
     rm -f "${R_PACKAGE_DIR}/exec/"*
     cp exec/* "${R_PACKAGE_DIR}/exec" 2>/dev/null
     chmod 755 "${R_PACKAGE_DIR}/exec/"*
@@ -551,7 +549,7 @@ do_install_source () {
     ## Install man sources ...
     Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null`
     if test -n "${Rdfiles}"; then
-      mkdir -p "${R_PACKAGE_DIR}/man"
+      ${MKDIR_P} "${R_PACKAGE_DIR}/man"
       rm -f "${R_PACKAGE_DIR}/man/"*
       for f in ${Rdfiles}; do cat "${f}"; echo; echo '\eof'; done \
         > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
@@ -663,7 +661,7 @@ do_install () {
     fi
   fi
 
-  mkdir -p "${R_PACKAGE_DIR}" || do_exit_on_error no
+  ${MKDIR_P} "${R_PACKAGE_DIR}" || do_exit_on_error no
 
   ## Make sure we do not attempt installing to srcdir.
   if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
