@@ -1,3 +1,6 @@
+@documentlanguage en
+@documentencoding ISO-8859-1
+
 @macro R{}
 R
 @end macro
@@ -56,5 +59,4 @@ approved by the R Development Core Team.
 @set ISBN-exts ISBN 3-900051-04-6
 @set ISBN-intro ISBN 3-900051-05-4
 @set ISBN-lang ISBN 3-900051-06-2
-
 
