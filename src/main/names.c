@@ -668,7 +668,7 @@ FUNTAB R_FunTab[] =
 {"getenv",	do_getenv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"putenv",	do_putenv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getwd",	do_getwd,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"setwd",	do_setwd,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"setwd",	do_setwd,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"basename",	do_basename,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dirname",	do_dirname,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.info",	do_sysinfo,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},

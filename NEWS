@@ -89,7 +89,12 @@ BUG FIXES
 
     o	dist() {mva} silently treated +/-Inf as NA.
 
-    
+    o	setwd() now returns NULL invisibly.
+
+    o	basename() and dirname() did not check the length of their
+	input and ignored elements after the first.
+
+
 INTERNALS
 
     o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
@@ -98,6 +103,7 @@ INTERNALS
     o   When building with recommended packages those were installed
         into the first path in R_LIBS, if the environment variable was
         present.
+
 
 
 		CHANGES IN R VERSION 1.6.0
