@@ -33,7 +33,7 @@ parent.env(env) <- value
   \item{value}{an environment to associate with the function}
   \item{obj}{an arbitrary \R object.}
   \item{hash}{a logical, if \code{TRUE} the environment will be hashed}
-  \item{parent}{an environment to be used as the parent of the
+  \item{parent}{an environment to be used as the enclosure of the
     environment created.}
   \item{env}{an environment}
 }
@@ -54,16 +54,36 @@ parent.env(env) <- value
 
   \code{parent.env} returns the parent environment of its argument.
 
-  \code{parent.env<-} sets the parent environment of its first argument.
-}
-\details{
-  The global environment \code{.GlobalEnv} is the first item on the
-  search path, more often known as the user's workspace.  It can also be
-  accessed by \code{globalenv()}.
+  \code{parent.env<-} sets the enclosing environment of its first
+  argument. } 
+
+\details{     
+  Environments consist of a \emph{frame}, or collection of named
+  objects, and a pointer to an \emph{enclosing environment}.  The most
+  common example is the frame of variables local to a function call;
+  its enclosure is the environment where the function was
+  defined.  The enclosing environment is distinguished from the
+  \emph{parent frame}:  the latter (returned by
+  \code{\link{parent.frame}}) refers to the environment of the caller
+  of a function.
+  
+  When \code{\link{get}} or \code{\link{exists}} search an environment
+  with the default \code{inherits = TRUE}, they look for the variable
+  in the frame, then in the enclosing frame, and so on.
+    
+  The global environment \code{.GlobalEnv}, more often known as the
+  user's workspace, is the first item on the search path.  It can also
+  be accessed by \code{globalenv()}.  On the search path, each item's
+  enclosure is the next item.
 
   The object \code{.BaseNamespaceEnv} is the namespace environment for
   the base package.  The environment of the base package itself is
-  represented by \code{NULL}.
+  represented by \code{NULL}, the ultimate enclosure of any environment:
+  If one follows the \code{parent.env()} chain of enclosures back far
+  enough from any environment, eventually one reaches \code{NULL}.
+  This means that arithmetic operators and the base package functions
+  will be always be found by \code{\link{eval()}} or \code{\link{get}(...,
+  inherits = TRUE)}.
 
   The replacement function \code{parent.env<-} is extremely dangerous as
   it can be used to destructively change environments in ways that
@@ -74,7 +94,10 @@ parent.env(env) <- value
   specific classes of objects, see \link{InternalMethods}.
 }
 \seealso{
-  The \code{envir} argument of \code{\link{eval}}.
+  The \code{envir} argument of \code{\link{eval}}, \code{\link{get}},
+  and \code{\link{exists}}.
+  
+  \code{\link{ls}} may be used to view the objects in an environment.
 }
 \examples{
 ##-- all three give the same:
@@ -86,12 +109,14 @@ ls(envir=environment(approxfun(1:2,1:2, method="const")))
 
 is.environment(.GlobalEnv) # TRUE
 
-e1 <- new.env(TRUE, NULL)  # these two have parent package:base.
-e2 <- new.env(FALSE, NULL)
-assign("a", 3, env=e2)
-parent.env(e1) <- e2
-get("a", env=e1)
-
+e1 <- new.env(parent = NULL)  # this one has enclosure package:base.
+e2 <- new.env(parent = e1)
+assign("a", 3, env=e1)
+ls(e1)
+ls(e2)
+exists("a", env=e2)	# this succeeds by inheritance	   
+exists("a", env=e2, inherits = FALSE)
+exists("+", env=e2)	# this succeeds by inheritance
 }
 \keyword{data}
 \keyword{programming}

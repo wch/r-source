@@ -32,8 +32,12 @@ exists(x, where = -1, envir = , frame, mode = "any", inherits = TRUE)
   This function looks to see if the name \code{x} has a value bound to
   it in the specified environment. If \code{inherits} is \code{TRUE} and
   a value is not found for \code{x} in the specified environment, the
-  enclosing frames of the environment (and the search path) are searched
-  until the name \code{x} is encountered.  \bold{Warning:}
+  enclosures of the environment are searched until the name \code{x}
+  is encountered.  See \code{\link{environment}} and the \sQuote{R
+  Language Definition} manual for details about the structure of
+  environments and their enclosures.
+ 
+  \bold{Warning:}
   \code{inherits=TRUE} is the default behaviour for \R but not for S.
 
   If \code{mode} is specified then only objects of that mode are sought.

@@ -427,7 +427,7 @@ be accessed in the same way as the components of a list.
 @cindex function
 In @R{} functions are objects and can be manipulated in much the same
 way as any other object.  Functions (or more precisely, function
-closures) have three basic components, a formal argument list, a body
+closures) have three basic components:  a formal argument list, a body
 and an
 @cindex environment
 environment.  The argument list is a comma-separated list of
@@ -466,6 +466,13 @@ assignments).
 @findex body
 @findex environment
 The last of these can be used to remove unwanted environment capture.
+
+When a function is called, a new environment (called the
+@emph{evaluation environment}) is created, whose enclosure (see
+@ref{Environment objects}) is the environment from the function closure.
+This new environment is initially populated with the unevaluated
+arguments to the function; as evaluation proceeds, local variables are
+created within it.
 
 @cindex function
 There is also a facility for converting functions to and from list
@@ -509,8 +516,9 @@ functions.
 @node Promise objects, Dot-dot-dot, Built-in objects and special forms, Basic types
 @subsection Promise objects
 
+@cindex promise
 Promise objects are part of @R{}'s lazy evaluation mechanism.  They
-contain three slots, a value, an expression, and an
+contain three slots: a value, an expression, and an
 @cindex environment
 environment.  When a
 @cindex function
@@ -524,18 +532,17 @@ Until that argument is accessed there is no @emph{value} associated with
 the promise.  When the argument is accessed, the stored expression is
 @cindex evaluation, expression
 evaluated in the stored environment, and the result is returned.  The
-result is also saved by the promise.  This allows the programmer to
+result is also saved by
+the promise.  The @code{substitute} function will extract the content
+of the expression slot.  This allows the programmer to
 access either the value or the expression associated with the promise.
 
 Within the @R{} language, promise objects are almost only seen
-implicitly.  Actual function arguments are of this type (which is the
-whole point of
-@cindex evaluation, lazy
-lazy evaluation).  @code{substitute} will extract the
-content of the expression slot, and there is a @code{delay} function
-that will make a promise out of an expression.  There is no fail-safe
-way of checking whether an object is a promise or not.
-@c by 'fail-safe' do we mean non-destructive or always correct?
+implicitly.  Actual function arguments are of this type.
+There is also a @code{delay} function
+that will make a promise out of an expression.  There is generally no 
+way in @R{} code to check whether an object is a promise or not, nor is there a
+way to use @R{} code to determine the environment of a promise.
 
 @node Dot-dot-dot, Environment objects, Promise objects, Basic types
 @subsection Dot-dot-dot
@@ -563,25 +570,31 @@ arguments that do not match a formal argument are matched with
 
 @cindex environment
 Environments can be thought of as consisting of two things.  A
-@emph{frame}, or set of symbol-value pairs and a pointer to an enclosing
-environment.  When a value is sought for a symbol the frame is examined
-and if a matching symbol is found its value will be returned.  If not the
+@emph{frame}, consisting of a set of symbol-value pairs, and an
+@emph{enclosure}, a pointer to an enclosing environment.  When @R{}
+looks up the value for a symbol the frame is examined and if a
+matching symbol is found its value will be returned.  If not, the
 enclosing environment is then accessed and the process repeated.
-Environments form a tree structure in which an environment can have
-multiple children, but only one parent.
+Environments form a tree structure in which the enclosures play the
+role of parents. 
+The environment of the base package has the special value
+@code{NULL}; it forms the root of this tree.
 
-Environments are created implicitly by function calls, but may also be
-created directly by @code{new.env}.
+Environments are created implicitly by function calls, as described
+in @ref{Function objects} and @ref{Lexical environment}.  In this case
+the environment contains the variables local to the function, and its
+enclosure is the environment of the enclosing function.  They
+may also be created directly by @code{new.env}.
 @findex new.env
 The frame content of an environment can be accessed and manipulated by
-use of @code{get} and @code{assign} as well as @code{eval} and
+use of @code{ls}, @code{get} and @code{assign} as well as @code{eval} and
 @code{evalq}.
 
-There is currently no way directly to access the enclosure of a given
-environment.
-@c FIXME shouldn't there be?
+The @code{parent.env} function may be used to access the enclosure of
+an environment.
 
-Notice that environments unlike any other @R{} object cannot be copied.
+Unlike other @R{} objects, environments are not copied when passed to
+functions or used in assignments. 
 Thus, if you assign the same environment to several symbols and change one,
 the others will change too.  In particular, assigning attributes to an
 environment can lead to surprises.
@@ -1796,7 +1809,9 @@ local(@{
    e[i] <<- e[i]+1
 @})
 @end smallexample
- uses the local value of @code{i} on both the LHS and RHS, and the local value of @code{e} on the RHS of the superassignment statement.  It sets @code{e} in the outer environment to
+ uses the local value of @code{i} on both the LHS and RHS, and the local 
+ value of @code{e} on the RHS of the superassignment statement.  It sets 
+ @code{e} in the outer environment to
 @smallexample
  a  b 
  1 12
@@ -1913,9 +1928,10 @@ The global
 @cindex environment
 environment is the root of the user workspace.  An
 @cindex assignment
-assignment
-operation from the command line will cause the relevant object to belong to
-the global environment.
+assignment operation from the command line will cause the relevant
+object to belong to the global environment.  Its enclosing environment
+is the next environment on the search path, and so on back to the
+environment of the base package.
 
 @node Lexical environment, Stacks, Global environment, Scope of variables
 @subsection Lexical environment
@@ -1934,21 +1950,28 @@ a nesting of frames (or equivalently: the innermost frame plus the
 enclosing environment).
 
 Environments may be assigned to variables or be contained in other
-objects.  However, notice that they are not themselves objects---in
+objects.  However, notice that they are not standard objects---in
 particular, they are not copied on assignment.
 
 A closure (mode @code{"function"}) object will contain the environment
 in which it is created as part of its definition (By default.  The
 environment can be manipulated using @code{environment<-}).  When the
-function is subsequently called, its evaluation environment becomes
-nested in its definition environment.  Notice that this is not
+function is subsequently called, its 
+@cindex environment, evaluation
+evaluation environment is created with the closure's environment as
+enclosure.  Notice that this is not
 necessarily the environment of the caller!
 
 Thus, when a variable is requested inside a
 @cindex function
 function, it is first sought
-in the evaluation environment, then in the enclosure, the enclosure of
-the enclosure, etc.
+in the 
+@cindex environment, evaluation
+evaluation environment, then in the enclosure, the enclosure of
+the enclosure, etc.; once the global environment or the environment of
+a package is reached, the
+search continues up the search path
+to the environment of the base package.
 
 @node Stacks, Search path, Lexical environment, Scope of variables
 @subsection The call stack
@@ -2009,6 +2032,7 @@ Get the evaluation frame for the specified parent context.
 
 In addition to the evaluation
 @cindex environment
+@cindex search path
 environment structure, @R{} has a search
 path of environments which are searched for variables not found
 elsewhere.  This is used for two things: packages of functions and
@@ -2019,60 +2043,16 @@ last is the base package.  An @code{Autoloads} environment is used for
 holding proxy objects that may be loaded on demand.  Other environments
 are inserted in the path using @code{attach} or @code{library}.
 
-@cindex name spaces
+@cindex name space
 Packages which have a @emph{name space} have a different search path.
 When a search for an @R{} object is started from an object in such a
-package, the package itself is searched first, then the global environment
+package, the package itself is searched first, then its imports, 
+then the global environment
 and the rest of the regular search path.  The effect is that references
 to other objects in the same package will be resolved to the package,
 and objects cannot be masked by objects of the same name in the global
 environment or in other packages.
 
-@c @node Evaluation of calls, Functions, Evaluation of expressions, Top
-@c  @section Accessing and manipulating environments
-
-@c  @menu
-@c  * ls::
-@c  * Environment of a function::
-@c  * Accessing the call stack::
-@c  * Attaching lists and data frames::
-@c  @end menu
-
-@c  @node ls, Environment of a function, Evaluation of calls, Evaluation of calls
-@c  @subsection ls, get, assign
-@c  @findex ls
-@c  @findex get
-@c  @findex assign
-
-@c  The @code{<<-} operator allows assignment to variables in enclosing
-@c  environments.  It searches through the nested frames until a variable of
-@c  the same name is found, and assigns the value to it (or creates a new
-@c  variable in the global environment).
-
-@c  One can assign to a variable in a specific environment using
-@c  @code{assign}, but there is no simple way of creating or accessing a
-@c  variable in the enclosure of a given environment.
-@c  @c FIXME: should there be?
-
-@c  @node Environment of a function, Accessing the call stack, ls, Evaluation of calls
-@c  @subsection Environment of a function
-
-@c  @node Accessing the call stack, Attaching lists and data frames, Environment of a function, Evaluation of calls
-@c  @subsection Accessing the call stack
-
-@c  @menu
-@c  * sys.frame::
-@c  * match.call::
-@c  @end menu
-
-@c  @node sys.frame, match.call, Accessing the call stack, Accessing the call stack
-@c  @subsubsection sys.frame, etc.
-
-@c  @node match.call,  , sys.frame, Accessing the call stack
-@c  @subsubsection match.call
-
-@c  @node Attaching lists and data frames,  , Accessing the call stack, Evaluation of calls
-@c  @subsection Attaching lists and data frames
 
 @node Functions, Object-oriented programming, Evaluation of expressions, Top
 @chapter Functions
@@ -2080,8 +2060,7 @@ environment or in other packages.
 @menu
 * Writing functions::           
 * Functions as objects::        
-* Evaluation::                  
-* Closures::                    
+* Evaluation::                                  
 @end menu
 
 @node Writing functions, Functions as objects, Functions, Functions
@@ -2181,29 +2160,14 @@ can be used to absorb some arguments into an intermediate function which
 can then be extracted by functions called subsequently.
 
 @node Functions as objects, Evaluation, Writing functions, Functions
-@section Function objects
+@section Functions as objects
 
-In @R{} a
-@cindex function
-function can be thought of as consisting of three parts.
-These are the @emph{body}, the @emph{formal arguments}, and the
-@cindex environment
-@emph{environment}.
-
-The @emph{body} is the expression that is to be evaluated when the
-function is invoked.  The @emph{formal arguments} provide the mapping
-between the values that are supplied by the user and the symbols or
-names that appear in the body of the function.  Finally, the
-@emph{environment} is the environment that was active at the time that
-the function was created.  This environment is associated with the
-function for the life of the function (unless it purposely removed).
-
-@cindex function
 Functions are first class objects in @R{}.  They can be used anywhere
 that an @R{} object is required.  In particular they can be passed as
-arguments to functions and returned as values from functions.
+arguments to functions and returned as values from functions.  See 
+@ref{Function objects} for the details.
 
-@node Evaluation, Closures, Functions as objects, Functions
+@node Evaluation,  , Functions as objects, Functions
 @section Evaluation
 
 @menu
@@ -2228,9 +2192,9 @@ this
 @cindex environment
 environment frame.
 
-The parent or enclosing frame of the evaluation frame is the environment
+The enclosing frame of the evaluation frame is the environment
 frame associated with the function being invoked.  This may be different
-than @Sl{}.  While most functions have @code{.GlobalEnv} as their parent
+than @Sl{}.  While most functions have @code{.GlobalEnv} as their environment
 this does not have to be true.
 
 @node Argument matching, Argument evaluation, Evaluation environment, Evaluation
@@ -2317,13 +2281,12 @@ assignment may not take place.
 It is also worth noting that the effect of @code{foo(x <- y)} if the
 argument is evaluated is to change the value of @code{x} in the calling
 @cindex environment
-environment and not in the evaluation environment of @code{foo}.
+environment and not in the 
+@cindex environment, evaluation
+evaluation environment of @code{foo}.
 
 It is possible to access the actual expressions used as arguments inside
-the function.  The mechanism is implemented via promises.  A
-@emph{promise} is a data structure that is not available to the user in
-@R{}.  However, understanding how promises work should help to write
-better code.  When a
+the function.  The mechanism is implemented via promises.  When a
 @cindex function
 function is being evaluated the actual expression
 used as an argument is stored in the promise together with a pointer to
@@ -2334,17 +2297,18 @@ used any changes made to that environment will be in effect during this
 evaluation.  The resulting value is then also stored in a separate spot
 in the promise.  Subsequent evaluations retrieve this stored value (a
 second evaluation is not carried out).  Access to the unevaluated
-expression is also available (in internal code).  Because @R{} is a very
-flexible program it is possible to encounter promises in the interpreted
-language, however, users are advised not to rely on them in their own
-programs.
+expression is also available using @code{substitute}.  
+@c Because @R{} is a very
+@c flexible program it is possible to encounter promises in the interpreted
+@c language, however, users are advised not to rely on them in their own
+@c programs.
 
 When a
 @cindex function
 function is called, each formal argument is assigned a promise in
 the local environment of the call with the expression slot containing
 the actual argument and the environment slot containing the environment
-of the parent.  If no actual argument for a formal argument is given in
+of the caller.  If no actual argument for a formal argument is given in
 the call and there is a default expression, it is similarly assigned to
 the expression slot of the formal argument, but with the
 @cindex environment
@@ -2366,7 +2330,8 @@ functions, but a promise can also be forced by direct
 evaluation of the promise itself.  This is occasionally useful when a
 default expression depends on the value of another formal argument.
 This is seen in the following example where the lone @code{label}
-ensures that the label is based on the argument expression.
+ensures that the label is based on the value of @code{x} before
+it is changed in the next line.
 
 @smallexample
 function(x, label = deparse(x)) @{
@@ -2378,8 +2343,8 @@ function(x, label = deparse(x)) @{
 
 The expression slot of a promise can itself involve other promises.
 This happens whenever an unevaluated argument is passed as an argument
-to another function.  When forcing a promise, all other promises in its
-expression will also be forced recursively.
+to another function.  When forcing a promise, other promises in its
+expression will also be forced recursively as they are evaluated.
 
 @node Scope,  , Argument evaluation, Evaluation
 @subsection Scope
@@ -2422,9 +2387,9 @@ attempts to find a value for it.  The scoping rules determine how this
 process proceeds.  In @R{} the
 @cindex environment
 environment of the function is searched
-first, then its parent and so until top-level is reached.
+first, then its enclosure and so on until the global environment is reached.
 
-Top-level is a search list of environments that are searched
+The global environment heads a search list of environments that are searched
 sequentially for a matching symbol.  The value of the first match is then used.
 
 When this set of rules is combined with the fact that
@@ -2470,21 +2435,21 @@ indicating that @code{y} is not found, unless there is a variable
 @code{y} in your workspace in which case its value will be used.
 
 @c This is not correct!
-The scoping rules in @Sl{} are to look in the current frame and then in
-the global
-@cindex environment
-environment or workspace.  These rules are very similar to
-the scoping rules used in the @code{C} language.
+@c The scoping rules in @Sl{} are to look in the current frame and then in
+@c the global
+@c @cindex environment
+@c environment or workspace.  These rules are very similar to
+@c the scoping rules used in the @code{C} language.
 
-@node Closures,  , Evaluation, Functions
-@section Closures
+@c @node Closures,  , Evaluation, Functions
+@c section Closures
 
-A @emph{closure} is a
-@cindex function
-function together with an environment that
-provides bindings for any free variables in the closure.  Since many
-@R{} functions are bound to environments they are often referred to as
-closures.
+@c A @emph{closure} is a
+@c @cindex function
+@c function together with an environment that
+@c provides bindings for any free variables in the closure.  Since many
+@c @R{} functions are bound to environments they are often referred to as
+@c closures.
 
 @c FIXME dot-dot-dot semantics definitely needs somewhere to go
 
@@ -3346,7 +3311,7 @@ means of evaluating call objects.  However, this is not the full story.
 It is also possible to specify the
 @cindex environment
 environment in which the evaluation
-is to take place, by default this is the evaluation frame from which
+is to take place. By default this is the evaluation frame from which
 @code{eval} is called, but quite frequently it needs to be set to
 something else.
 @findex eval
@@ -3865,7 +3830,7 @@ calls to @code{on.exit} are carried out.
 
 One can use @code{options(error = expression(q("yes")))} to get @R{} to
 quit when an error has been signalled.  In this case an error will cause
-@R{} and the environment will be saved.
+@R{} to shut down and the global environment will be saved.
 
 @node Debugging, Parser, Exception handling, Top
 @chapter Debugging
