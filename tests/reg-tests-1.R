@@ -2582,7 +2582,6 @@ update(pc.cr, ~ . + Rape)
 ## end of moved from princomp.Rd
 
 
-library(modreg)
 ## smooth.spline.Rd
 y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
 xx  <- seq(1,length(y18), len=201)

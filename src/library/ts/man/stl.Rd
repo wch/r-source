@@ -94,7 +94,7 @@ stl(x, s.window, s.degree = 0,
 
 \seealso{
   \code{\link{plot.stl}} for \code{stl} methods;
-  \code{\link{loess}} in package \pkg{modreg} (which is not actually
+  \code{\link{loess}} in package \pkg{stats} (which is not actually
   used in \code{stl}).
 } 
 \examples{

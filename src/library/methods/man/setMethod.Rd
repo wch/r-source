@@ -119,7 +119,7 @@ removeMethod(f, signature, where)
   pointers from that page.
 }
 \examples{
-\dontshow{  require(modreg)
+\dontshow{  require(stats)
   setClass("track",
     representation(x="numeric", y = "numeric"))
   setClass("trackCurve", representation("track",

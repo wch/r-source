@@ -63,7 +63,7 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
   That package also generates spline bases that can be used for
   regression splines.
 
-  \code{\link[modreg]{smooth.spline}} in package \pkg{modreg} for
+  \code{\link{smooth.spline}} in package \pkg{modreg} for
   smoothing splines.
 }
 \examples{

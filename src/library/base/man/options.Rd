@@ -94,7 +94,7 @@ getOption(x)
       default when \R starts up.  Initially set from value of the
       environment variables \env{R\_DefaultPackages}, or if that is unset
       %%  default is set in ../../profile/Common.R :
-      to \code{c("ts", "nls", "modreg", "mva", "ctest", "methods")}.  (Set
+      to \code{c("utils", "stats", "graphics", "ts", "nls", "mva", "methods")}.  (Set
       \env{R\_DEFAULT\_PACKAGES} to \code{NULL} or a comma-separated list
       of package names.)  A call to \code{options} should be in your
       \file{.Rprofile} file to ensure that the change takes effect

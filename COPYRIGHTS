@@ -98,10 +98,10 @@ src/appl/maxcol.c
 
 
 src/appl/interv.c : moved to API from code originally in
-		    src/library/modreg/src/bvalue.f, see the following
-src/library/modreg:
+		    src/library/stats/src/bvalue.f, see the following
+src/library/stats:
 
-	See the file src/library/modreg/COPYRIGHTS for details
+	See the file src/library/stats/COPYRIGHTS.modreg for details
 
       src/loessc.c
       src/loessf.f

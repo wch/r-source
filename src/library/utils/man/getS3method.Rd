@@ -26,7 +26,7 @@ getS3method(f, class, optional = FALSE)
   \code{\link{methods}}, \code{\link{get}}
 }
 \examples{
-require(modreg)
+require(stats)
 exists("predict.ppr") # false
 getS3method("predict", "ppr")
 }

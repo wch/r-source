@@ -36,12 +36,11 @@ predict (object, \dots)
 \seealso{
   \code{\link{predict.glm}},
   \code{\link{predict.lm}},
-  \code{\link[modreg]{predict.loess}},
+  \code{\link{predict.loess}},
   \code{\link[nls]{predict.nls}},
   \code{\link{predict.poly}},
-  \code{\link[modreg:ppr]{predict.ppr}},
   \code{\link[mva:princomp]{predict.princomp}},
-  \code{\link[modreg]{predict.smooth.spline}}.
+  \code{\link{predict.smooth.spline}}.
 
   For time-series prediction,
   \code{\link[ts:ar]{predict.ar}},
