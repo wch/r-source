@@ -7,7 +7,8 @@
   standard errors and partial residuals added.
 }
 \usage{
-termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
+termplot(model, data=NULL, envir=environment(formula(model)),
+         partial.resid=FALSE, rug=FALSE,
          terms=NULL, se=FALSE, xlabs=NULL, ylabs=NULL, main = NULL,
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 1,
@@ -17,7 +18,9 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
 }
 \arguments{
   \item{model}{fitted model object}
-  \item{data}{data frame in which the variables in \code{model} can be found}
+  \item{data}{data frame in which variables in \code{model} can be
+    found}
+  \item{envir}{environment in which variables in \code{model} can be found}
   \item{partial.resid}{logical; should partial residuals be plotted?}
   \item{rug}{add \link{rug}plots (jittered 1-d histograms) to the axes?}
   \item{terms}{which terms to plot (default \code{NULL} means all terms)}
@@ -48,11 +51,10 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
   \code{\link{residuals}} method that accepts \code{type="partial"},
   which \code{\link{lm}} and \code{\link{glm}} do.
 
-  It is often necessary to specify the \code{data} argument, because it is
-  not possible to reconstruct eg \code{x} from a model frame containing
-  \code{sin(x)}.  The \code{data} argument must have exactly the same
-  rows as the model frame of the model object so, for example, missing
-  data must  have been removed in the same way.
+  The \code{data} argument should rarely be needed. One exception is
+  that models with missing data using \code{na.action=na.omit} will need
+  to specify a \code{data} argument. A work-around is to use
+  \code{na.action=na.exclude} instead.
 }
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}

@@ -226,6 +226,9 @@ BUG FIXES
 	factor in a formula without an intercept.
 
 
+    o   termplot() now needs data= argument more rarely (PR#828)
+
+
 	**************************************************
 	*						 *
 	*	       1.5 SERIES NEWS			 *

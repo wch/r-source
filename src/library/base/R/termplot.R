@@ -1,4 +1,5 @@
-termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
+termplot <- function(model, data=NULL,envir=environment(formula(model)),
+                     partial.resid=FALSE,
 		     rug=FALSE, terms=NULL, se=FALSE, xlabs=NULL, ylabs=NULL,
                      main = NULL, col.term = 2, lwd.term = 1.5,
                      col.se = "orange", lty.se = 2, lwd.se = 1,
@@ -14,6 +15,11 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 	    predict(model, type="terms", se=se, terms=terms)
     n.tms <- ncol(tms <- as.matrix(if(se) terms$fit else terms))
     mf <- model.frame(model)
+    if (is.null(data))
+        data<-eval(model$call$data,envir)
+    if (is.null(data))
+        data<-mf
+    
     nmt <- colnames(tms)
     cn <- parse(text=nmt)
     ## Defaults:
@@ -26,7 +32,7 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
     else if(!is.character(main))
         stop("`main' must be TRUE, FALSE, NULL or character (vector).")
     main <- rep(main, length = n.tms) # recycling
-    pf <- parent.frame()
+    pf <- envir
     carrier <- function(term) { # used for non-factor ones
 	if (length(term) > 1)
 	    carrier(term[[2]])
