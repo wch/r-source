@@ -696,10 +696,8 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
     XFontSet fontset;
     int  /*i,*/ missing_charset_count;
     char **missing_charset_list, *def_string;
-    char fs_name[1001];
   
-    snprintf(fs_name, 1000, "%s,*", fontset_name);
-    fontset = XCreateFontSet(display, fs_name, &missing_charset_list,
+    fontset = XCreateFontSet(display, fontset_name, &missing_charset_list,
 			     &missing_charset_count, &def_string);
     if(!fontset) {
 	free(tmp);
