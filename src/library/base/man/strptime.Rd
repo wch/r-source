@@ -76,7 +76,6 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       conjuction with \code{\%I} and \bold{not} with \code{\%H}.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds.}
-    \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       the first Sunday as day 1 of week 1.}
     \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
@@ -97,8 +96,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   Where leading zeros are shown they will be used on output but are
   optional on input.
 
-  Also defined in the standards but less widely implemented  (e.g. not
-  for output on Windows) are
+  Also defined in the current standards but less widely implemented
+  (e.g. not for output on Windows) are
   \describe{
     \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date
       format).}
@@ -124,12 +123,13 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or PM).}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%t}}{Newline on output, arbitrary whitespace on input.}
+    \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
   }
   There are also \code{\%O[dHImMSUVwWy]} which may emit numbers in an
   alternative local-dependent format (e.g. roman numerals), and
   \code{\%E[cCyYxX]} which can use an alternative \sQuote{era}
-  (e.g. a different religious calendar).
-  Which of these is supported is OS-dependent.
+  (e.g. a different religious calendar).  Which of these are supported is
+  OS-dependent.
     
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
   \code{strptime}, that differ only in their defaults.
@@ -177,6 +177,12 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   
   Your system's help pages on \code{strftime} and \code{strptime} to
   see how to specify their formats.
+#ifdef windows
+  Windows users will find no help page for \code{strptime}: code based
+  on \samp{glibc} is used (with corrections), so all the format
+  specifiers desfribed here are supported, but with no alternative
+  number representation nor era available in any locale.
+#endif
 }
 \examples{
 ## locale-specific version of date()
