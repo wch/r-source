@@ -60,6 +60,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Print.h>
+#include <Rconnections.h>
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
 static char *Encodebuf=NULL;
@@ -395,16 +396,6 @@ void Rprintf(char *format, ...)
     va_list(ap);
 
     va_start(ap, format);
-/*  if(R_Outputfile) {
-	vfprintf(R_Outputfile, format, ap);
-	fflush(R_Outputfile);
-    }
-    else {
-	char buf[BUFSIZE]; int len;
-	vsprintf(buf, format, ap);
-	len = strlen(buf);
-	R_WriteConsole(buf, len);
-    } */
     Rvprintf(format, ap);
     va_end(ap);
 }
@@ -418,51 +409,43 @@ void REprintf(char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
-/*  if(R_Consolefile) {
-	vfprintf(R_Consolefile, format, ap);
-    }
-    else {
-	char buf[BUFSIZE]; int len;
-	vsprintf(buf, format, ap);
-	len = strlen(buf);
-	R_WriteConsole(buf, len);
-    } */
     REvprintf(format, ap);
     va_end(ap);
 }
 
-/* Apparently unused except in Rprintf  */
+void Rcons_vprintf(const char *format, va_list arg)
+{
+    char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
+#ifdef HAVE_VSNPRINTF
+    int res;
+
+    res = vsnprintf(p, BUFSIZE, format, arg);
+    if(res >= BUFSIZE) { /* res is the desired output length */
+	p = R_alloc(res+1, sizeof(char));
+	vsprintf(p, format, arg);
+    } else if(res < 0) { /* just a failure indication */
+	p = R_alloc(10*BUFSIZE, sizeof(char));
+	res = vsnprintf(p, 10*BUFSIZE, format, arg);
+	if (res < 0) {
+	    *(p + 10*BUFSIZE) = '\0';
+	    warning("printing of extremely long output is truncated");
+	}
+    }
+#else
+    /* allocate a large buffer and hope */
+    p = R_alloc(10*BUFSIZE, sizeof(char));
+    vsprintf(p, format, arg);
+#endif
+    R_WriteConsole(p, strlen(buf));
+    vmaxset(vmax);
+}
+
 void Rvprintf(const char *format, va_list arg)
 {
-    if(R_Outputfile) {
-	vfprintf(R_Outputfile, format, arg);
-	fflush(R_Outputfile);
-    }
-    else {
-	char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
-#ifdef HAVE_VSNPRINTF
-	int res;
-
-	res = vsnprintf(p, BUFSIZE, format, arg);
-	if(res >= BUFSIZE) { /* res is the desired output length */
-	    p = R_alloc(res+1, sizeof(char));
-	    vsprintf(p, format, arg);
-	} else if(res < 0) { /* just a failure indication */
-	    p = R_alloc(10*BUFSIZE, sizeof(char));
-	    res = vsnprintf(p, 10*BUFSIZE, format, arg);
-	    if (res < 0) {
-		*(p + 10*BUFSIZE) = '\0';
-		warning("printing of extremely long output is truncated");
-	    }
-	}
-#else
-	/* allocate a large buffer and hope */
-	p = R_alloc(10*BUFSIZE, sizeof(char));
-	vsprintf(p, format, arg);
-#endif
-	R_WriteConsole(p, strlen(buf));
-	vmaxset(vmax);
-    }
+    Rconnection con = getConnection(R_OutputCon);
+    
+    con->vfprintf(con, format, arg);
+    con->fflush(con);
 }
 
 /*

@@ -1085,6 +1085,29 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
     return R_Parse(n, status);
 }
 
+#include "Rconnections.h"
+static Rconnection con_parse;
+
+static int con_getc(void)
+{
+    return con_parse->fgetc(con_parse);
+}
+
+static int con_ungetc(int c)
+{
+    return con_parse->ungetc(c, con_parse);
+}
+
+SEXP R_ParseConn(Rconnection con, int n, int *status)
+{
+    GenerateCode = 1;
+    R_ParseError = 1;
+    con_parse = con;;
+    ptr_getc = con_getc;
+    ptr_ungetc = con_ungetc;
+    return R_Parse(n, status);
+}
+
 SEXP R_ParseVector(SEXP text, int n, int *status)
 {
     SEXP rval;

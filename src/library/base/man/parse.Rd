@@ -5,10 +5,11 @@ parse(file = "", n = NULL, text = NULL, prompt = NULL, white = FALSE)
 }
 \alias{parse}
 \arguments{
-  \item{file}{the name of a file to read the expressions from.  Note
+  \item{file}{a connection, or a character the name of a file to
+    read the expressions from.  Note
     that the ASCII file \emph{must} end with a newline (\code{"\n"}).
     If \code{file} is \code{""} and \code{text} is missing or \code{NULL}
-    then input is taken from the keyboard.}
+    then input is taken from the console.}
   \item{n}{the number of statements to parse.  If \code{n} is negative
     the file is parsed in its entirety.}
   \item{text}{character. The text to parse, quoted.}
@@ -33,3 +34,4 @@ unlink("xyz.Rdmped")
 }
 \keyword{file}
 \keyword{programming}
+\keyword{connection}

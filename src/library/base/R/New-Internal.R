@@ -134,7 +134,11 @@ searchpaths <- function()
 }
 
 sink <- function(file=NULL, append = FALSE)
+{
+    if(is.null(file)) file <- 1
+    else if(is.character(file)) file <- file(file, ifelse(append, "a", "w"))
     .Internal(sink(file, append))
+}
 
 ##-- DANGER ! ---   substitute(list(...))  inside functions !!!
 ##substitute <- function(expr, env=NULL).Internal(substitute(expr, env))

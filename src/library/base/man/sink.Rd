@@ -5,11 +5,12 @@
 sink(file = NULL, append = FALSE)
 }
 \arguments{
-    \item{file}{a character string naming the file to write to, or
-        \code{NULL} to stop ``sink''ing.}
-    \item{append}{if \code{TRUE}, output will be appended to
-        \code{file}; otherwise, it will overwrite the contents of
-        \code{file}.}
+  \item{file}{a connection or a character string naming the
+    file to write to, or
+    \code{NULL} to stop ``sink''ing.}
+  \item{append}{if \code{TRUE}, output will be appended to
+    \code{file}; otherwise, it will overwrite the contents of
+    \code{file}.}
 }
 \description{
     Diverts all \R output to \code{file}, overwriting the file unless
@@ -19,6 +20,10 @@ sink(file = NULL, append = FALSE)
     Only prompts and error messages continue to appear on the terminal.
 
     \code{sink()} or \code{sink(file=NULL)} ends the diversion.
+
+    If \code{file} is a connection if will be opened if necessary.
+    Switching to another file or connection closes the existing
+    connection unless it is the console.
 }
 \examples{
 sink("sink-examp.txt")
@@ -28,3 +33,4 @@ sink()
 unlink("sink-examp.txt")
 }
 \keyword{file}
+\keyword{connection}

@@ -8,8 +8,8 @@ write(x, file = "data",
 \alias{write}
 \arguments{
   \item{x}{the data to be written out.}
-  \item{file}{the name of the file (quoted) to write to.
-    If \code{""}, print to the standard output.
+  \item{file}{A connection, or  a character string naming the file to write to.
+    If \code{""}, print to the standard output connection.
 #ifdef unix
     If it is \code{"|cmd"}, the output is piped to the command given
     by \file{cmd}.
@@ -42,3 +42,4 @@ write(x)
 unlink("data") # tidy up
 }
 \keyword{file}
+\keyword{connection}

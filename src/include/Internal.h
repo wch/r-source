@@ -376,3 +376,24 @@ SEXP do_getDL(SEXP, SEXP, SEXP, SEXP);
 SEXP do_playDL(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getGPar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setGPar(SEXP, SEXP, SEXP, SEXP);
+
+/* Connections */
+SEXP do_stdin(SEXP, SEXP, SEXP, SEXP);
+SEXP do_stdout(SEXP, SEXP, SEXP, SEXP);
+SEXP do_stderr(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readlines(SEXP, SEXP, SEXP, SEXP);
+SEXP do_writelines(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readraw(SEXP, SEXP, SEXP, SEXP);
+SEXP do_writeraw(SEXP, SEXP, SEXP, SEXP);
+SEXP do_open(SEXP, SEXP, SEXP, SEXP);
+SEXP do_isopen(SEXP, SEXP, SEXP, SEXP);
+SEXP do_isincomplete(SEXP, SEXP, SEXP, SEXP);
+SEXP do_close(SEXP, SEXP, SEXP, SEXP);
+SEXP do_file(SEXP, SEXP, SEXP, SEXP);
+SEXP do_pipe(SEXP, SEXP, SEXP, SEXP);
+SEXP do_seek(SEXP, SEXP, SEXP, SEXP);
+SEXP do_pushback(SEXP, SEXP, SEXP, SEXP);
+SEXP do_pushbacklength(SEXP, SEXP, SEXP, SEXP);
+SEXP do_textconnection(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getallconnections(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sumconnection(SEXP, SEXP, SEXP, SEXP);

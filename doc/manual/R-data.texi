@@ -56,7 +56,8 @@ Copyright @copyright{} 2000 R Development Core Team
 * Importing from other statistical systems::  
 * Relational databases::        
 * Binary files::                
-* Network connections::         
+* Connections::                 
+* Network interfaces::          
 * References::                  
 * Function and variable index::  
 * Concept index::               
@@ -163,7 +164,7 @@ database management system (DBMS).  There is once again the option of
 using the DBMS to extract a plain file, but for many such DBMSs the
 extraction operation can be done directly from an @R{} package:
 @xref{Relational databases}.  Importing data via network connections is
-discussed in @ref{Network connections}.
+discussed in @ref{Network interfaces}.
 
 @node Export to text files,  , Imports, Introduction
 @section Export to text files
@@ -173,7 +174,7 @@ Exporting results from @R{} is usually a less contentious task, but
 there are still a number of pitfalls.  There will be a target
 application in mind, and normally a text file will be the most
 convenient interchange vehicle.  (If a binary file is required, see
-@xref{Binary files}.)
+@ref{Binary files}.)
 
 @findex cat
 Function @code{cat} underlies the functions for exporting data.  It
@@ -216,8 +217,8 @@ Greenmantle     2.5     650     16.083
 @end smallexample
 
 @noindent
-Other systems require a (possibly empty) entry for the row names, which
-is what @code{write.table} will provide if argument @code{col.names=NA}
+Some other systems require a (possibly empty) entry for the row names, which
+is what @code{write.table} will provide if argument @code{col.names = NA}
 is specified.  Excel is one such system.
 
 @item @strong{Separator}
@@ -227,11 +228,11 @@ is specified.  Excel is one such system.
 A common field separator to use in the file is a comma, as that is
 unlikely to appear in any of the fields, in English-speaking countries.
 Such files are known as CSV (comma separated values) files.
-Unfortunately, in some locales the comma is used as the decimal point
-(set this in @code{write.table} by @code{dec=","}) and there CSV files
+In some locales the comma is used as the decimal point
+(set this in @code{write.table} by @code{dec = ","}) and there CSV files
 use the semicolon as the field separator.
 
-Using a semicolon or tab (@code{sep="\t"}) are probably the safest
+Using a semicolon or tab (@code{sep = "\t"}) are probably the safest
 options.
 
 @item @strong{Missing values}
@@ -255,10 +256,10 @@ useful forms are
 > write.table(df)
 "a"
 "1" "a \" quote"
-> write.table(df, qmethod="double")
+> write.table(df, qmethod = "double")
 "a"
 "1" "a "" quote"
-> write.table(df, quote=FALSE, sep=",")
+> write.table(df, quote = FALSE, sep = ",")
 a
 1,a " quote
 @end smallexample
@@ -1241,7 +1242,7 @@ No example is given here as the basic interface makes any example
 lengthy, but there is one in the @file{Example} directory of the package.
 
 
-@node Binary files, Network connections, Relational databases, Top
+@node Binary files, Connections, Relational databases, Top
 @chapter Binary files
 @cindex Binary files
 
@@ -1290,8 +1291,18 @@ the machine running @R{}, and data written on a little-endian machine
 can be read on a big-endian machine or @emph{vice versa} by setting
 @code{swapbytes = TRUE}.
 
-Character data can be read either as fixed-length blocks of bytes (by
-specifying @code{len}) or as @acronym{ASCII}-zero-delimited strings.
+Character data can be read by @code{readchar} either as fixed-length
+blocks of bytes (by specifying @code{len}) or as
+@acronym{ASCII}-zero-delimited strings.  It is also possible to read
+lines of text separated by one of the standard end-of-line marks
+(LF, CRLF or CR) by
+@findex readlines
+@example
+readlines(stream, n = 1, bufsize = 256, eol)
+@end example
+@noindent
+where by default the @code{eol} line is detected automatically.
+
 
 @findex writeint
 @findex writefloat
@@ -1339,11 +1350,171 @@ allows @emph{groups} of arrays, and the @R{} interface writes maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
 
-The @R{} interface can only read netCDF, not write it.
+The @R{} interface can only read netCDF, not write it (yet).
+
+@node Connections, Network interfaces, Binary files, Top
+@chapter Connections
+
+@cindex Connections
+@emph{Connections} are used in @R{} in the sense of Chambers (1998), a
+set of functions to replace the use of file names by a flexible
+interface to file-like objects.  Connections were introduced to @R{} in
+version 1.2.0, and the details are still experimental and subject to
+change.  Their power is not yet fully implemented.
 
 
-@node Network connections, References, Binary files, Top
-@chapter Network connections
+@menu
+* Types of connections::        
+* Output to connections::       
+* Input from connections::      
+* Listing and manipulating connections::  
+@end menu
+
+
+@node Types of connections, Output to connections, Connections, Connections
+@section Types of connections
+
+@findex file
+@cindex File connections
+The most familiar type of connection will be a file, and file
+connections are created by function @code{file}.  File connections can
+(if the OS will allow it for the particular file) be opened for reading
+or writing or appending, in text or binary mode.  Currently (and unlike
+@Sl{}), connections can only be opened for one of reading and
+writing/appending at a time.
+
+@findex open
+@findex close
+Note that by default a connection is not opened when it is created.  The
+rule is that a function using a connection should open a connection
+(needed) if the connection is not already open, and close a connection
+after use if it opened it.  In brief, leave the connection in the state
+you found it in.   There are generic functions @code{open} and
+@code{close} with methods to explicitly open and close connections.
+
+@cindex Terminal connections
+@findex stdin
+@findex stdout
+@findex stderr
+Unix programmers are used to dealing with special files @code{stdin},
+@code{stdout} and @code{stderr}.   These exist as @emph{terminal
+connections} in @R{}.  They may be normal files, but they might also
+refer to input from and output to a GUI console.  (Even with the standard
+Unix @R{} interface, @code{stdin} refers to the lines submitted from
+@code{readline} rather than a file.)
+
+The three terminal connections are always open, and cannot be opened or
+closed.  @code{stdout} and @code{stderr} are conventionally used for
+normal output and error messages respectively.  They may normally go to
+the same place, but whereas normal output can be re-directed by a call
+to @code{sink}, error output is always sent to @code{stderr}.  Note
+carefully the language used here: the connections cannot be re-directed,
+but output can be sent to other connections.
+
+@cindex Text connections
+@findex textConnection
+@emph{Text connections} are another source of input.  They allow @R{}
+character vectors to be read as if the lines were being read from a text
+file.  A text connection is created and opened by a call to
+@code{textConnection}, which copies the current contents of the
+character vector to an internal buffer at the time of creation.
+
+@cindex Pipe connections
+@findex pipe
+@emph{Pipes} are a special form of file that connects to another
+process, and pipe connections are created by the function @code{pipe}
+(currently implemented on UNIX only).  Opening a pipe connection for
+writing (it makes not sense to append to a pipe) runs a OS command, and
+connects its standard input to whatever @R{} then writes to that
+connection.  Conversely, opening a pipe connection for input runs an OS
+command and makes its standard output available for @R{} input from that
+connection.
+
+More types of connections are planned, including output text connections
+and reading from and writing to sockets.
+
+
+@node Output to connections, Input from connections, Types of connections, Connections
+@section Output to connections
+
+@findex cat
+@findex write
+@findex write.table
+@findex sink
+We have described functions @code{cat}, @code{write}, @code{write.table}
+and @code{sink} as writing to a file, possibly appending to a file if 
+argument @code{append = TRUE}, and this is what they did prior to @R{}
+version 1.2.0.
+
+The current behaviour is equivalent, but what actually happens is that
+when the @code{file} argument is a character string, a file connection
+is opened (for writing or appending) and closed again at the end of the
+function call.  If we want to repeatedly write to the same file, it is
+more efficient to explicitly declare and open the connection, and pass
+the connection object to each call to an output function.  This also
+makes it possible to write to pipes, which was implemented earlier in a
+limited way via the syntax @code{file = "|cmd"} (which can still be used).
+
+@findex writeLines
+There is a function @code{writeLines} to write complete text lines
+to a connection.
+
+
+@node Input from connections, Listing and manipulating connections, Output to connections, Connections
+@section Input from connections
+
+@findex scan
+@findex read.table
+@findex readLines
+The basic functions to read from connections are @code{scan} and
+@code{readLines}.  These take a character string argument and open a
+file connection for the duration of the function call, but explicitly
+opening a file connection allows a file to be read sequentially in
+different formats.
+
+Other functions that call @code{scan} can also make use of connections.
+Some like @code{read.table} read the data twice, and these can only
+be used on seek-able connections.
+
+@menu
+* Pushback::                    
+@end menu
+
+@node Pushback,  , Input from connections, Input from connections
+@subsection Pushback
+
+@cindex pushBack.
+C programmers maybe familiar with the @code{ungetc} function to push
+back a character onto a text input stream.  @R{} connections have the
+same idea in a more powerful way, in that an (essentially) arbitrary
+number of lines of text can be pushed back onto a connection via a call
+to @code{pushBack}.
+
+Pushbacks operate as a stack, so a read request first uses each line
+from the most recently pushbacked text, then those from earlier
+pushbacks and finally reads from the connection itself.  Once a
+pushbacked line is read completely, it is cleared.  The number of
+pending lines pushed back can be found via a call to
+@code{pushBackLength}.
+@findex pushBackLength
+
+Pushback is only available for connections opened for input in text mode.
+
+@node Listing and manipulating connections,  , Input from connections, Connections
+@section Listing and manipulating connections
+
+@findex showConnections
+A summary of all the connections currently opened by the user can be
+found by @code{showConnections()}, and a summary of all connections,
+including closed and terminal connections, by @code{showConnections(all
+= TRUE)}
+
+@findex seek
+The generic function @code{seek} can be used to read and (on some
+connections) reset the current position for reading or writing.
+
+@node Network interfaces, References, Connections, Top
+@chapter Network interfaces
 
 @menu
 * Reading from sockets::        
@@ -1355,7 +1526,7 @@ The @R{} interface can only read netCDF, not write it.
 Some limited facilities are available to exchange data at a lower level
 across network connections.
 
-@node Reading from sockets, Using download.file, Network connections, Network connections
+@node Reading from sockets, Using download.file, Network interfaces, Network interfaces
 @section Reading from sockets
 
 Base @R{} comes with some facilities to communicate @emph{via}
@@ -1375,7 +1546,7 @@ The low-level interface is given by functions @code{make.socket},
 function @code{httpclient} builds on these to read (directly) from an
 @acronym{HTTP} server.
 
-@node Using download.file, DCOM interface, Reading from sockets, Network connections
+@node Using download.file, DCOM interface, Reading from sockets, Network interfaces
 @section Using @code{download.file}
 
 @findex read.table.url
@@ -1392,7 +1563,7 @@ including the programs @code{wget} and @code{lynx} and the direct use of
 @acronym{BSD} sockets.
 
 
-@node DCOM interface, CORBA interface, Using download.file, Network connections
+@node DCOM interface, CORBA interface, Using download.file, Network interfaces
 @section @acronym{DCOM} interface
 @cindex DCOM
 
@@ -1410,14 +1581,14 @@ Excel plug-in by Erich Neuwirth available in the same area on
 those considered here in that it is another application (Excel, or
 written in Visual Basic) that is the client and @R{} is the server.
 
-@node CORBA interface,  , DCOM interface, Network connections
+@node CORBA interface,  , DCOM interface, Network interfaces
 @section @acronym{CORBA} interface
 @cindex CORBA
 
 An interface to @R{} providing communication via @acronym{CORBA} objects
 is available from the @uref{http://www.omeghat.org, Omegahat Project}.
 
-@node References, Function and variable index, Network connections, Top
+@node References, Function and variable index, Network interfaces, Top
 @appendix References
 
 @noindent
@@ -1426,9 +1597,13 @@ R.@: A.@: Becker, J.@: M.@: Chambers and A.@: R.@: Wilks (1988)
 and Graphics.}  Wadsworth & Brooks/Cole.
 
 @noindent
-J.@: Bowman, S.@: Emberson and M.@: Darnovsky. (1996) @emph{The
+J.@: Bowman, S.@: Emberson and M.@: Darnovsky (1996) @emph{The
 Practical @acronym{SQL} Handbook. Using Structured Query Language.}
 Addison-Wesley.
+
+@noindent
+J.@: M.@: Chambers (1998) @emph{Programming with Data. A Guide to the S
+Language.} Springer-Verlag.
 
 @noindent
 P.@: Dubois (2000) @emph{MySQL.} New Riders.

@@ -25,6 +25,7 @@
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
+#include "Rconnections.h"
 
 SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -181,10 +182,11 @@ static void cat_printsep(SEXP sep, int ntot)
 SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP objs, file, fill, sepr, labs, s;
-    FILE *savefp;
-    int havefile, usepopen = 0, append;
+    int ifile, savecon, wasopen;
+    Rconnection con;
+    int append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
-    char *p = "", *pfile, buf[512];
+    char *p = "", buf[512];
 
     checkArity(op, args);
 
@@ -195,8 +197,8 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     file = CAR(args);
-    if (!isValidString(file))
-	errorcall(call, "invalid file= specification");
+    ifile = asInteger(file);
+    con = getConnection(ifile);
     args = CDR(args);
 
     sepr = CAR(args);
@@ -229,29 +231,9 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (append == NA_LOGICAL)
 	errorcall(call, "invalid append specification");
 
-    if (strlen(pfile = CHAR(STRING_ELT(file, 0))) > 0) {
-	savefp = R_Outputfile;
-	if (pfile[0] == '|') {
-#ifndef HAVE_POPEN
-	    error("file = \"|cmd\" is not implemented in this version");
-#else
-	    R_Outputfile = popen(pfile + 1, "w");
-	    usepopen = 1;
-#endif
-	} else {
-	    R_Outputfile = R_fopen(R_ExpandFileName(pfile),
-				   (append) ? "a" : "w");
-	    if (!R_Outputfile) {
-		R_Outputfile = savefp;
-		errorcall(call, "unable to open file");
-	    }
-	}
-	havefile = 1;
-    }
-    else {
-        savefp = NULL;/* -Wall */
-        havefile = 0;
-    }
+    savecon = R_OutputCon;
+    wasopen = con->isopen;
+    switch_stdout(ifile); /* will open new connection if required */
 
     nobjs = length(objs);
     /*
@@ -326,12 +308,10 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if ((pwidth != INT_MAX) || nlsep)
 	Rprintf("\n");
-    if (havefile) {
-	if (usepopen) pclose(R_Outputfile); else fclose(R_Outputfile);
-	R_Outputfile = savefp;
-    }
-    else
-	fflush(stdout);
+
+    con->fflush(con);
+    if(!wasopen) con->close(con);
+    switch_stdout(savecon);
     return R_NilValue;
 }
 

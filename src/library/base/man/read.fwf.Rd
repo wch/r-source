@@ -6,16 +6,21 @@ read.fwf(file, widths, sep="\t", as.is = FALSE,
 }
 \alias{read.fwf}
 \arguments{
-\item{file}{the name of the file which the data are to be read from.
-  Each row of the table appears as one line of the file.}
- \item{widths}{integer vector, giving the widths of the fixed-width
-   fields (of one line).}
- \item{sep}{character; the separator used internally; should be a
-   character that does not occur in the file.}
- \item{as.is}{see \code{\link{read.table}}.}
- \item{skip}{number of initial lines to skip; see \code{\link{read.table}}.}
- \item{row.names}{see \code{\link{read.table}}.}
- \item{col.names}{see \code{\link{read.table}}.}
+  \item{file}{
+    the name of the file which the data are to be read from.
+
+    Alternatively, \code{file} can be a \code{\link{connection}}, which
+    will be opened if necessary, and if so closed at the end of the
+    function call.
+  }
+  \item{widths}{integer vector, giving the widths of the fixed-width
+    fields (of one line).}
+  \item{sep}{character; the separator used internally; should be a
+    character that does not occur in the file.}
+  \item{as.is}{see \code{\link{read.table}}.}
+  \item{skip}{number of initial lines to skip; see \code{\link{read.table}}.}
+  \item{row.names}{see \code{\link{read.table}}.}
+  \item{col.names}{see \code{\link{read.table}}.}
 }
 \description{
   Read a ``table'' of \bold{f}ixed \bold{w}idth \bold{f}ormatted data
@@ -43,3 +48,4 @@ read.fwf(ff, width=c(1,0, 2,3))    #> 1 NA 23 NA \\ 9 NA 87 654
 unlink(ff)
 }
 \keyword{file}
+\keyword{connection}

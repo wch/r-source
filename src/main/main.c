@@ -333,6 +333,8 @@ void setup_Rmainloop(void)
     SEXP cmd;
     FILE *fp;
 
+    InitConnections(); /* needed to get any output at all */
+
     /* Print a platform and version dependent */
     /* greeting and a pointer to the copyleft. */
 

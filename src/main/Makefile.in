@@ -14,7 +14,7 @@ SOURCES_C = \
 	RNG.c \
 	apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \
-	character.c coerce.c colors.c complex.c context.c cov.c cum.c \
+	character.c coerce.c colors.c complex.c connections.c context.c cov.c cum.c \
 	datetime.c debug.c devPS.c devPicTeX.c deparse.c deriv.c \
 	devices.c dotcode.c dstruct.c duplicate.c \
 	envir.c errors.c eval.c \
@@ -43,7 +43,7 @@ DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
-	Rregex.h Rstrptime.h \
+	Rconnections.h Rregex.h Rstrptime.h \
 	arithmetic.h \
 	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
 

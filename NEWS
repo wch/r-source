@@ -23,6 +23,12 @@ NEW FEATURES
     o	values of `--min-nsize' up to 50M (2Gb on 64-bit Solaris) are
 	allowed.
 
+    o	A (preliminary) version of S4-like connections has been added,
+	and most functions which take a "file" argument can now work
+	with a connection as well as a file name.  For more details,
+	see the chapter on Connections in the R Data Import/Export
+	manual.
+
     o	New command-line option `--no-restore-history' implied by
 	`--vanilla'.
 
