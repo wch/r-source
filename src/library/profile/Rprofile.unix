@@ -77,6 +77,20 @@ if( !file.exists("~/.R/library") )
             install.packages(ui.pkgs)
 }
 
+install.from.file <- function(){
+  pkg <- file.choose()
+  lib <- .libPaths()[1]
+  cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
+  cmd <- paste(cmd, "-l", lib)
+  cmd <- paste(cmd," '",pkg,"'",sep="")
+  status <- system(cmd)
+  if(status == 0)
+   cat("\tpackage successfully installed\n")
+  else
+   cat("\tnpackage installation failed\n")
+}
+
+
 }
 
 

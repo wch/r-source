@@ -1307,8 +1307,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdInstallFromSrc:
-               Aqua_RWrite("Install package from source: not yet implemented");
-               consolecmd("\r");
+               consolecmd("install.from.file()\r");
               break;
 
 /* Help Menu */
