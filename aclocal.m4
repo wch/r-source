@@ -223,6 +223,190 @@ AC_DEFUN(R_PROG_F77_GNU,
     fi
   ])
 dnl
+dnl OCTAVE_FLIBS
+dnl
+dnl See what libraries are used by the Fortran compiler.
+dnl
+dnl Write a minimal program and compile it with -v.  I don't know what
+dnl to do if your compiler doesn't have -v...
+dnl
+AC_DEFUN(OCTAVE_FLIBS,
+[AC_MSG_CHECKING([for Fortran libraries])
+AC_CACHE_VAL(octave_cv_flibs,
+[changequote(, )dnl
+echo "      END" > conftest.f
+foutput=`${F77-f77} -v -o conftest conftest.f 2>&1 | grep -v "^Driving"`
+dnl
+dnl The easiest thing to do for xlf output is to replace all the commas
+dnl with spaces.  Try to only do that if the output is really from xlf,
+dnl since doing that causes problems on other systems.
+dnl
+xlf_p=`echo $foutput | grep xlfentry`
+if test -n "$xlf_p"; then
+  foutput=`echo $foutput | sed 's/,/ /g'`
+fi
+dnl
+ld_run_path=`echo $foutput | \
+  sed -n -e 's/^.*LD_RUN_PATH *= *\([^ ]*\).*/\1/p'`
+dnl
+dnl We are only supposed to find this on Solaris systems...
+dnl Uh, the run path should be absolute, shouldn't it?
+dnl
+case "$ld_run_path" in
+  /*)
+    if test "$ac_cv_prog_gcc" = yes; then
+      ld_run_path="-Xlinker -R -Xlinker $ld_run_path"
+    else
+      ld_run_path="-R $ld_run_path"
+    fi
+  ;;
+  *)
+    ld_run_path=
+  ;;
+esac
+dnl
+flibs=
+lflags=
+dnl
+dnl If want_arg is set, we know we want the arg to be added to the list,
+dnl so we don't have to examine it.
+dnl
+want_arg=
+dnl
+for arg in $foutput; do
+  old_want_arg=$want_arg
+  want_arg=
+dnl
+dnl None of the options that take arguments expect the argument to
+dnl start with a -, so pretend we didn't see anything special.
+dnl
+  if test -n "$old_want_arg"; then
+    case "$arg" in
+      -*)
+	old_want_arg=
+      ;;
+    esac
+  fi
+  case "$old_want_arg" in
+    '')
+      case $arg in
+	/*.a)
+	  exists=false
+	  for f in $lflags; do
+	    if test x$arg = x$f; then
+	      exists=true
+	    fi
+	  done
+	  if $exists; then
+	    arg=
+	  else
+	    lflags="$lflags $arg"
+	  fi
+	;;
+	-bI:*)
+	  exists=false
+	  for f in $lflags; do
+	    if test x$arg = x$f; then
+	      exists=true
+	    fi
+	  done
+	  if $exists; then
+	    arg=
+	  else
+	    if test "$ac_cv_prog_gcc" = yes; then
+	      lflags="$lflags -Xlinker $arg"
+	    else
+	      lflags="$lflags $arg"
+	    fi
+	  fi
+	;;
+	-lang* | -lcrt0.o | -lc | -lgcc)
+	  arg=
+	;;
+	-[lLR])
+	  want_arg=$arg
+	  arg=
+	;;
+	-[lLR]*)
+	  exists=false
+	  for f in $lflags; do
+	    if test x$arg = x$f; then
+	      exists=true
+	    fi
+	  done
+	  if $exists; then
+	    arg=
+	  else
+	    case "$arg" in
+	      -lkernel32)
+		case "$canonical_host_type" in
+		  *-*-cygwin32)
+		    arg=
+		  ;;
+		  *)
+		    lflags="$lflags $arg"
+		  ;;
+		esac
+	      ;;
+	      -lm)
+	      ;;
+	      *)
+		lflags="$lflags $arg"
+	      ;;
+	    esac
+	  fi
+	;;
+	-u)
+	  want_arg=$arg
+	  arg=
+	;;
+	-Y)
+	  want_arg=$arg
+	  arg=
+	;;
+	*)
+	  arg=
+	;;
+      esac
+    ;;
+    -[lLR])
+      arg="$old_want_arg $arg"
+    ;;
+    -u)
+      arg="-u $arg"
+    ;;
+    -Y)
+dnl
+dnl Should probably try to ensure unique directory options here too.
+dnl This probably only applies to Solaris systems, and then will only
+dnl work with gcc...
+dnl
+      arg=`echo $arg | sed -e 's%^P,%%'`
+      SAVE_IFS=$IFS
+      IFS=:
+      list=
+      for elt in $arg; do
+	list="$list -L$elt"
+      done
+      IFS=$SAVE_IFS
+      arg="$list"
+    ;;
+  esac
+dnl
+  if test -n "$arg"; then
+    flibs="$flibs $arg"
+  fi
+done
+if test -n "$ld_run_path"; then
+  flibs_result="$ld_run_path $flibs"
+else
+  flibs_result="$flibs"
+fi
+changequote([, ])dnl
+octave_cv_flibs="$flibs_result"])
+FLIBS="$octave_cv_flibs"
+AC_MSG_RESULT([$FLIBS])])
+dnl
 dnl See if the Fortran compiler appends underscores
 dnl
 AC_DEFUN(R_PROG_F77_APPEND_UNDERSCORE,
