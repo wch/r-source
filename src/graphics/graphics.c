@@ -4430,7 +4430,7 @@ int XFigDeviceDriver(char**, int, double*, int);
 #endif
 
 #ifdef Win32
-int PSDeviceDriver(char**, int, double*, int);
+int PSDeviceDriver(DevDesc*, SEXP, int, SEXP, int);
 int WinDeviceDriver(char**, int, double*, int);
 #endif
 
