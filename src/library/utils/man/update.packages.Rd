@@ -40,18 +40,17 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \item{CRAN}{character, the base URL of the CRAN mirror to use, i.e.,
     the URL of a CRAN root such as \code{"http://cran.r-project.org"}
     (the default) or its Statlib mirror,
-    \code{"http://lib.stat.cmu.edu/R/CRAN"}.
+    \code{"http://lib.stat.cmu.edu/R/CRAN"}, or a vector of such URLs.
 #ifdef windows
     Can also be \code{NULL} to install from local \code{.zip} files.
 #endif
   }
-  \item{contriburl}{URL of the contrib section of CRAN. Use this argument
+  \item{contriburl}{URL(s) of the contrib section of CRAN.  Use this argument
     only if your CRAN mirror is incomplete, e.g., because you burned
     only the contrib section on a CD.  Overrides argument \code{CRAN}.}
   \item{method}{Download method, see \code{\link{download.file}}.}
-  \item{pkgs}{character vector of the short names of
-    packages whose current versions should be downloaded from
-    \code{CRAN}.
+  \item{pkgs}{character vector of the short names of packages whose
+    current versions should be downloaded from \code{CRAN}.
 #ifdef windows
     If \code{CRAN = NULL}, a vector of file names of \code{.zip} files.
 #endif
@@ -137,6 +136,10 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   will be given the option of deleting the temporary files once the
   packages are installed.  (They will always be deleted at the end of
   the \R session.)
+
+  If \code{CRAN} or \code{contriburl} is a vector of length greater than
+  one, a package is fetched from the first repository on the list within
+  which it is found (and not necessarily the newest version).
 }
 \value{
   For \code{CRAN.packages}, a matrix with one row per package/bundle,

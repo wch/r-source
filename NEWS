@@ -60,6 +60,10 @@ NEW FEATURES
 
     o   Added colorRamp() and colorRampPalette() for color interpolation.
 
+    o   install.packages() and friends now accept a vector of URLs
+	for 'CRAN' or 'contriburl' and get a package from the first
+	repository on the list in which it is found.
+
 
 UTILITIES
 

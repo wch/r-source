@@ -188,9 +188,9 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
 }
 
 
-download.packages <- function(pkgs, destdir, available=NULL,
-                              CRAN=getOption("CRAN"),
-                              contriburl=contrib.url(CRAN),
+download.packages <- function(pkgs, destdir, available = NULL,
+                              CRAN = getOption("CRAN"),
+                              contriburl = contrib.url(CRAN),
                               method)
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -214,7 +214,7 @@ download.packages <- function(pkgs, destdir, available=NULL,
                 retval <- rbind(retval, c(p, fn))
             }
             else{
-                url <- paste(contriburl, fn, sep="/")
+                url <- paste(available[ok, "Repository"], fn, sep="/")
                 destfile <- file.path(destdir, fn)
 
                 if(download.file(url, destfile, method, mode="wb") == 0)

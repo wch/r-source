@@ -20,6 +20,10 @@ implemented.
 directly to R.dll, and there are some new convenience functions for
 such front-ends.
 
+You can look in BDRs collection for additional precompiled packages by
+setting 
+options(CRAN=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
+
 
 
 R 2.0.1

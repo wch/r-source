@@ -1,19 +1,25 @@
 CRAN.packages <- function(CRAN = getOption("CRAN"), method,
                           contriburl = contrib.url(CRAN))
 {
-    localcran <- length(grep("^file:", contriburl)) > 0
-    if(localcran)
-        tmpf <- paste(substring(contriburl,6), "PACKAGES", sep = "/")
-    else{
-        tmpf <- tempfile()
-        on.exit(unlink(tmpf))
-        download.file(url = paste(contriburl, "PACKAGES", sep = "/"),
-                      destfile = tmpf, method = method, cacheOK = FALSE)
+    flds <- c("Package", "Version", "Priority", "Bundle",
+              "Depends", "Imports", "Suggests", "Contains")
+    res <- matrix(as.character(NA), 0, length(flds) + 1)
+    colnames(res) <- c(flds, "Repository")
+    for(repos in contriburl) {
+        localcran <- length(grep("^file:", repos)) > 0
+        if(localcran)
+            tmpf <- paste(substring(repos,6), "PACKAGES", sep = "/")
+        else{
+            tmpf <- tempfile()
+            on.exit(unlink(tmpf))
+            download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                          destfile = tmpf, method = method, cacheOK = FALSE)
+        }
+        res0 <- read.dcf(file = tmpf, fields = flds)
+        if(length(res0)) rownames(res0) <- res0[, "Package"]
+        res0 <- cbind(res0, Repository = repos)
+        res <- rbind(res, res0)
     }
-    res <- read.dcf(file = tmpf,
-                    fields = c("Package", "Version", "Priority", "Bundle",
-                    "Depends", "Imports", "Suggests", "Contains"))
-    if(length(res)) rownames(res) <- res[, "Package"]
     res
 }
 
