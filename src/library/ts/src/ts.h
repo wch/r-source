@@ -58,4 +58,22 @@ F77_SUB(stl)(double *y, int *n, int *np, int *ns,
 	     int *no, double *rw, double *season, double *trend,
 	     double *work);
 
+void F77_NAME(starma)(int* ip, int* iq, int* ir, int* np, double* phi,
+		      double* theta, double* a,
+		      double* p, double* v, double* thetab, double* xnext,
+		      double* xrow, double* rbar, int* nrbar, int* ifault);
+
+void F77_NAME(karma)(int* ip, int* iq, int* ir, int* np, double* phi,
+		     double* theta, double* a, double* p,
+		     double* v, int *n, double*  w, double* resid,
+		     double* sumlog, double* ssq, int* iupd,
+		     double* delta, int *nit);
+
+void F77_NAME(forkal)(int *ip, int *iq, int *ir, int *np, int *ird, 
+		      int *irz, int *id, int *il, int *n, int *nrbar, 
+		      double *phi, double *theta, double *delta, 
+		      double *w, double *y, double *amse, double *a, 
+		      double *p, double *v, double *resid,
+		      double *xnext, double *xrow, double *rbar, 
+		      double *thetab, double *store, int *ifault);
 #endif

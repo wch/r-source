@@ -158,7 +158,7 @@ c
       end
 c
       subroutine karma(ip, iq, ir, np, phi, theta, a, p,
-     $  v, n, w, resid, sumlog, ssq, iupd, delta, e, nit)
+     $  v, n, w, resid, sumlog, ssq, iupd, delta, nit)
 c      implicit none
 c
 c        algorithm as 154.1  appl. statist. (1980) vol.29, p.311
@@ -168,19 +168,16 @@ c        inclusion of data values w(1) to w(n). the corresponding
 c        values of resid are also obtained.
 c        when ft is less than (1 + delta), quick recursions are used.
 c
-      integer ip,iq,ir,np,n,iupd,nit,ir1,i,inde,j,ind,indn,l,ii,indw
+      integer ip,iq,ir,np,n,iupd,nit,ir1,i,j,ind,indn,l,ii,indw
       double precision phi(ir), theta(ir), a(ir), p(np), v(np), 
      $  w(n), resid(n),
-     $  e(ir), sumlog, ssq, delta, wnext, a1, dt, et, ft, ut, g,
+     $  sumlog, ssq, delta, wnext, a1, dt, et, ft, ut, g,
      $  zero
 c
       data zero /0.0d0/
 c
 c
       ir1 = ir - 1
-      do 10 i = 1, ir
-   10 e(i) = zero
-      inde = 1
 c
 c        for non-zero values of nit, perform quick recursions.
 c
@@ -233,9 +230,6 @@ c
       do 420 l = 1, ir
   420 p(l) = zero
       resid(i) = ut / sqrt(ft)
-      e(inde) = resid(i)
-      inde = inde + 1
-      if (inde .gt. iq) inde = 1
       ssq = ssq + ut * ut / ft
       sumlog = sumlog + log(ft)
   500 continue
@@ -257,70 +251,11 @@ c
   620 continue
   630 if (iq .eq. 0) goto 645
       do 640 j = 1, iq
-      inde = inde - 1
-      if (inde .eq. 0) inde = iq
-      et = et - theta(j) * e(inde)
+      et = et - theta(j) * resid(ii - j)
   640 continue
-  645 e(inde) = et
-      resid(ii) = et
+  645 resid(ii) = et
       ssq = ssq + et * et
-      inde = inde + 1
-      if (inde .gt. iq) inde = 1
   650 continue
-      return
-      end
-c
-      subroutine kalfor(m, ip, ir, np, phi, a, p, v, work, x, var)
-c
-c        algorithm as 154.2  appl. statist. (1980) vol.29, p.311
-c
-c        invoking this subroutine obtains predictions
-c        of a and p, m steps ahead.
-c
-c      implicit none
-      integer m, ip, ir, np, ir1, l, i, j, ind, ind1
-      double precision phi(ir), a(ir), p(np), v(np), work(ir), dt,
-     $  a1, phii, phij, phijdt, zero, x(m), var(m)
-c
-      data zero /0.0d0/
-c
-      ir1 = ir - 1
-      do 300 l = 1, m
-c
-c        predict a.
-c
-      a1 = a(1)
-      if (ir .eq. 1) goto 110
-      do 100 i = 1, ir1
-  100 a(i) = a(i + 1)
-  110 a(ir) = zero
-      if (ip .eq. 0) goto 200
-      do 120 j = 1, ip
-  120 a(j) = a(j) + phi(j) * a1
-c
-c        predict p.
-c
-  200 do 210 i = 1, ir
-  210 work(i) = p(i)
-      ind = 0
-      ind1 = ir
-      dt = p(1)
-      do 220 j = 1, ir
-      phij = phi(j)
-      phijdt = phij * dt
-      do 220 i = j, ir
-      ind = ind + 1
-      phii = phi(i)
-      p(ind) = v(ind) + phii * phijdt
-      if (j .lt. ir) p(ind) = p(ind) + work(j + 1) * phii
-      if (i .eq. ir) goto 220
-      ind1 = ind1 + 1
-      p(ind) = p(ind) + work(i + 1) * phij + p(ind1)
-  220 continue
-c modifications here
-      x(l) = a(1)
-      var(l) = p(1)
-  300 continue
       return
       end
 c
@@ -424,7 +359,7 @@ c  applied statistics algorithm as182
 c
 c  start of as 182
       subroutine forkal(ip, iq, ir, np, ird, irz, id, il, n, nrbar,
-     *   phi, theta, delta, w, y, amse, a, p, v, resid, e, xnext, xrow,
+     *   phi, theta, delta, w, y, amse, a, p, v, resid, xnext, xrow,
      *   rbar, thetab, store, ifault)
 c
 c     algorithm as 182  appl. statist. (1982) vol.31, no.2
@@ -444,7 +379,7 @@ c
      * phii, a1, ams
       double precision phi(ir), theta(ir), delta(id), w(n), y(il), 
      *   amse(il),
-     *   a(ird), p(irz), v(np), resid(n), e(ir), xnext(np), xrow(np),
+     *   a(ird), p(irz), v(np), resid(n),  xnext(np), xrow(np),
      *   rbar(nrbar), thetab(np), store(ird)
       double precision zero, one, two
       data zero/0.0d0/, one/1.0d0/, two/2.0d0/
@@ -523,7 +458,7 @@ c
       del = - one
       nit = 0
       call karma(ip, iq, ir, np, phi, theta, a, p, v, nt, w, resid,
-     *    sumlog, ssq, iupd, del, e, nit)
+     *    sumlog, ssq, iupd, del, nit)
 c
 c     calculate m.l.e. of sigma squared
 c
