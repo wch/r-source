@@ -1,4 +1,4 @@
-Rterm  ICON  R.ico
+R  ICON  R.ico
 
 #include <windows.h>
 #include "../../include/Rversion.h"

@@ -48,7 +48,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	RHOME[MAX_PATH], *p, cmd[10000], Rversion[25];
 
     if (argc <= cmdarg) {
-	fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+	fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 "Usage: R CMD command args\n\n",
 "Run R command, where command is one of:\n",
 "  INSTALL  Install add-on packages.\n",
@@ -57,13 +57,14 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 "  BATCH    Run R in batch mode.\n",
 "  build    Build add-on packages.\n",
 "  check    Check add-on packages.\n",
-"  Rdconv   Convert Rd format to various other formats, including html, Nroff, LaTeX,\n",
-"           plain text, and S documentation format.\n",
+"  Rprof    Post process R profiling files.\n",
+"  Rdconv   Convert Rd format to various other formats, including html, Nroff,\n",
+"           LaTeX, plain text, and S documentation format.\n",
 "  Rd2dvi.sh Convert Rd format to DVI/PDF.\n",
 "  Rd2txt   Convert Rd format to text.\n",
 "  Sd2Rd    Convert S documentation to Rd format.\n",
 "Use\n",
-"  Rcmd command --help\n",
+"  R CMD command --help\n",
 "for usage information for each command.\n");
 	return(0);
     }
@@ -171,6 +172,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	return(pwait(pi.hProcess));
     } else {
 	RHome = getRHOME();
+	if (argc > cmdarg+1 && strcmp(argv[cmdarg+1], "RHOME") == 0) {
+	    fprintf(stdout, "%s", RHome);
+	    return(0);
+	}
 	strcpy(RHOME, "R_HOME=");
 	strcat(RHOME, RHome);
 	for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';

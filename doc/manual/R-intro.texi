@@ -6806,7 +6806,10 @@ to obtain usage information for each of the tools accessible via the
 The startup procedure under Windows is very similar to that under UNIX,
 but necessarily not identical. There are two versions of @R{} for
 Windows, the console-based version (@code{RGui.exe}) and a terminal
-version (@code{Rterm.exe}, principally intended for batch use).
+version (@code{Rterm.exe}, principally intended for batch use).  
+The @code{R.exe} program acts like the @samp{R} command in UNIX, 
+starting @code{Rterm.exe} or acting as a wrapper to various @R{}
+tools via the @code{R CMD} interface.
 
 Most options control what happens at the beginning and at the end of an
 @R{} session.  The startup mechanism is as follows (see also the on-line
@@ -6875,6 +6878,11 @@ Print usage message and exit.
 
 @item --version
 Print version info and exit.
+
+@item RHOME
+Print the path to the @R{} ``home directory'' to standard output and
+exit successfully.  @R{} installation puts everything (executables, packages, etc.)
+into this directory.
 
 @item --mdi
 @itemx --sdi
@@ -6996,6 +7004,8 @@ Run @R{} in batch mode.
 Build add-on packages.
 @item check
 Check add-on packages.
+@item Rprof
+Post-process @R{} profiling files.
 @item Rdconv
 Convert Rd format to various other formats, including @HTML{}, Nroff,
 La@TeX{}, plain text, and S documentation format.
