@@ -1680,7 +1680,7 @@ void GReset(DevDesc *dd)
 
 /*  Is the figure region too big ? */
 
-int validFigureRegion(DevDesc *dd)
+static int validFigureRegion(DevDesc *dd)
 {
     return ((dd->gp.fig[0] > 0-FLT_EPSILON) &&
 	    (dd->gp.fig[1] < 1+FLT_EPSILON) &&
@@ -1690,7 +1690,7 @@ int validFigureRegion(DevDesc *dd)
 
 /*  Is the figure region too small ? */
 
-int validOuterMargins(DevDesc *dd)
+static int validOuterMargins(DevDesc *dd)
 {
     return ((dd->gp.fig[0] < dd->gp.fig[1]) &&
 	    (dd->gp.fig[2] < dd->gp.fig[3]));
@@ -1698,7 +1698,7 @@ int validOuterMargins(DevDesc *dd)
 
 /* Is the plot region too big ? */
 
-int validPlotRegion(DevDesc *dd)
+static int validPlotRegion(DevDesc *dd)
 {
     return ((dd->gp.plt[0] > 0-FLT_EPSILON) &&
 	    (dd->gp.plt[1] < 1+FLT_EPSILON) &&
@@ -1708,7 +1708,7 @@ int validPlotRegion(DevDesc *dd)
 
 /* Is the plot region too small ? */
 
-int validFigureMargins(DevDesc *dd)
+static int validFigureMargins(DevDesc *dd)
 {
     return ((dd->gp.plt[0] < dd->gp.plt[1]) &&
 	    (dd->gp.plt[2] < dd->gp.plt[3]));
