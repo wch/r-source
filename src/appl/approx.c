@@ -25,36 +25,63 @@
 /* The right interval is found by bisection */
 /* Linear interpolation then takes place on that interval*/
 
-static double approx1(double v, double *x, double *y, int n, double ylow, double yhigh)
+extern double R_NaReal;
+static double ylow;
+static double yhigh;
+double f1;
+double f2;
+
+static double approx1(double v, double *x, double *y, int n, int method)
 {
 	int i, j, ij;
 	
 	i = 0;
-	j = n-1;
+	j = n - 1;
 	
-	/* Handle out-of-domain points */
+		/* handle out-of-domain points */
+
 	if(v < x[i]) return ylow;
 	if(v > x[j]) return yhigh;
 	
-	/* Find the right interval by bisection */
-	while(i < j-1) {
-		ij = (i+j)/2;
-		if(v < x[ij])
-			j = ij;
-		else
-			i = ij;
+		/* find the correct interval by bisection */
+
+	while(i < j - 1) {
+		ij = (i + j)/2;
+		if(v < x[ij]) j = ij;
+		else i = ij;
 	}
 	
-	/* Linear interpolation */
-	return (x[i] == x[j]) ? y[i] : y[i]+(y[j]-y[i])*((v-x[i])/(x[j]-x[i]));
+		/* interpolation */
+
+	if(method == 1) {
+		return (x[i] == x[j]) ?
+			y[i] :
+			y[i] + (y[j] - y[i]) * ((v - x[i])/(x[j] - x[i]));
+	}
+	else {
+		return (x[i] == x[j]) ?
+			y[i] :
+			y[i] * f1 + y[j] * f2;
+	}
 }
 
-/* R Frontend for Linear Interpolation */
-int approx(double *x, double *y, int *nxy, double *xout, int *nout, double *low, double *high)
+	/* R Frontend for Linear and Constant Interpolation */
+
+int approx(double *x, double *y, int *nxy, double *xout, int *nout, int *rule, int *method, double *f)
 {
 	int i;
 
+	if(*rule == 1) {
+		ylow = R_NaReal;
+		yhigh = R_NaReal;
+	}
+	else {
+		ylow = y[0];
+		yhigh = y[*nxy-1];
+	}
+	f2 = *f;
+	f1 = 1 - *f;
 	for(i=0 ; i<*nout ; i++)
-		xout[i] = approx1(xout[i], x, y, *nxy, *low, *high);
+		xout[i] = approx1(xout[i], x, y, *nxy, *method);
 	return 0;
 }
