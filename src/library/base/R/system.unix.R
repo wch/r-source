@@ -236,7 +236,7 @@ system.time <- function(expr) {
 	new.time - time
 }
 
-unix.time <- system.time
+unix.time <- .Alias(system.time)
 
 tempfile <- function(pattern = "file") {
   system(paste("for p in", paste(pattern, collapse = " "), ";",
