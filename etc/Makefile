@@ -60,7 +60,7 @@ distclean realclean:
 
 
 install:
-	$(INSTALL) -d $(rhome)/etc
+	$(INSTALL_DIR) $(rhome)/etc
 	for f in COMPILE INSTALL REMOVE SHLIB Rd2dvi Rd2txt \
 	   Rdconv Rdindex Rman2Rd Sd2Rd build-help help.pretty; \
 		do $(INSTALL) $$f $(rhome)/etc; \

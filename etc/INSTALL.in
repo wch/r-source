@@ -93,7 +93,7 @@ for pkg in ${PKGS}; do
   cd ${pkg}
   pkg=`basename ${pkg}`
 
-  ${INSTALL} -d ${lib}/${pkg} || exit 3
+  mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
 
   if test -d src; then

@@ -4,7 +4,7 @@ include ../Makeconf
 INSTALLFILES = A* B* Cour* H* [N-Z]*
 
 install:
-	$(INSTALL) -d $(rhome)/afm
+	$(INSTALL_DIR) $(rhome)/afm
 	for f in $(INSTALLFILES); \
 		do $(INSTALL_DATA) $$f $(rhome)/afm; \
 	done
