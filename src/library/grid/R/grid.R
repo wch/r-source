@@ -115,11 +115,11 @@ downViewport.vpPath <- function(name, recording=TRUE) {
     if (recording) {
       class(name) <- "down"
       record(name)
-    } 
+    }
   } else {
     stop(paste("Viewport", name, "was not found"))
   }
-  current.viewport()  
+  current.viewport()
 }
 
 # Similar to down.viewport() except it starts searching from the
@@ -196,7 +196,7 @@ up.vp <- function(last.one, recording) {
 upViewport <- function(n=1, recording=TRUE) {
   if (n < 0)
     stop("Must navigate up at least one viewport")
-  if (n == 0) 
+  if (n == 0)
     n <- vpDepth()
   if (n > 0) {
     for (i in 1:n)
@@ -209,10 +209,10 @@ upViewport <- function(n=1, recording=TRUE) {
   }
   current.viewport()
 }
-                        
+
 # Function to obtain the current viewport
 current.viewport <- function(vp=NULL) {
-  if (is.null(vp)) 
+  if (is.null(vp))
     # The system stores a pushedvp;  the user should only
     # ever see normal viewports, so convert.
     vpFromPushedvp(grid.Call("L_currentViewport"))
@@ -243,7 +243,7 @@ vpTreeFromNode <- function(node) {
     vpTree(vpFromPushedvp(node),
            vpListFromNode(node))
 }
-       
+
 # Obtain the current viewport tree
 # Either from the current location in the tree down
 # or ALL of the tree
@@ -276,7 +276,7 @@ grid.newpage <- function(recording=TRUE) {
   # NOTE that we do NOT do grid.Call here because we have to do
   # things slightly differently if grid.newpage is the first grid operation
   # on a new device
-  .Call("L_newpagerecording", par("ask"), PACKAGE="grid")
+  .Call("L_newpagerecording", graphics::par("ask"), PACKAGE="grid")
   .Call("L_newpage", PACKAGE="grid")
   .Call("L_initGPar", PACKAGE="grid")
   .Call("L_initViewportStack", PACKAGE="grid")

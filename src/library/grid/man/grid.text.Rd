@@ -48,9 +48,9 @@ grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 
 \examples{
 grid.newpage()
-x <- runif(20)
-y <- runif(20)
-rot <- runif(20, 0, 360)
+x <- stats::runif(20)
+y <- stats::runif(20)
+rot <- stats::runif(20, 0, 360)
 grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
           gp=gpar(fontsize=20, col="grey"))
 grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,

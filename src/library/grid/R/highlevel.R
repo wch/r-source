@@ -18,10 +18,10 @@ grid.strip <- function(label="whatever", range.full=c(0, 1),
   grid.text(as.character(label))
   if (!is.null(vp))
     popViewport()
-}  
+}
 
-grid.panel <- function(x = runif(10), y = runif(10),
-                   zrange = c(0, 1), zbin = runif(2),
+grid.panel <- function(x = stats::runif(10), y = stats::runif(10),
+                   zrange = c(0, 1), zbin = stats::runif(2),
                    xscale = range(x)+c(-1,1)*.05*diff(range(x)),
                    yscale = range(y)+c(-1,1)*.05*diff(range(y)),
                    axis.left = TRUE, axis.left.label = TRUE,
@@ -60,7 +60,8 @@ grid.panel <- function(x = runif(10), y = runif(10),
   invisible(list(strip.vp = strip.vp, plot.vp = plot.vp))
 }
 
-grid.multipanel <- function(x=runif(90), y=runif(90), z=runif(90),
+grid.multipanel <- function(x=stats::runif(90), y=stats::runif(90),
+                            z=stats::runif(90),
                             nrow=2, ncol=5, nplots=9,
                             newpage=TRUE, vp=NULL) {
   if (newpage)
@@ -124,18 +125,18 @@ grid.show.layout <- function(l, newpage=TRUE,
               x=unit(-.05, "inches"), y=unit(.5, "npc"), rot=0)
       if (i==l$nrow)
         grid.text(as.character(l$widths[j]), gp=gp.red,
-              just=c("centre", "top"), 
+              just=c("centre", "top"),
               x=unit(.5, "npc"), y=unit(-.05, "inches"), rot=0)
       if (j==l$ncol)
         grid.text(as.character(l$heights[i]), gp=gp.red,
-              just=c("left", "centre"), 
+              just=c("left", "centre"),
               x=unit(1, "npc") + unit(.05, "inches"), y=unit(.5, "npc"),
               rot=0)
       if (i==1)
         grid.text(as.character(l$widths[j]), gp=gp.red,
-              just=c("centre", "bottom"), 
+              just=c("centre", "bottom"),
               x=unit(.5, "npc"), y=unit(1, "npc") + unit(.05, "inches"),
-              rot=0) 
+              rot=0)
       popViewport()
     }
   popViewport()
@@ -194,9 +195,9 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
     grid.yaxis(at=c(min(at), max(at)), gp=gp.red)
     grid.text(as.character(w), gp=gp.red,
           just=c("centre", "bottom"),
-          x=unit(.5, "npc"), y=unit(1, "npc") + unit(.05, "inches"))        
+          x=unit(.5, "npc"), y=unit(1, "npc") + unit(.05, "inches"))
     grid.text(as.character(h), gp=gp.red,
-          just=c("left", "centre"), 
+          just=c("left", "centre"),
           x=unit(1, "npc") + unit(.05, "inches"), y=unit(.5, "npc"))
     popViewport()
     # annotate the location and dimensions of the viewport
@@ -205,10 +206,10 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
     grid.lines(unit.c(unit(0, "npc"), x), unit.c(y, y),
            gp=gpar(col="red", lty="dashed"))
     grid.text(as.character(x), gp=gp.red,
-          just=c("centre", "top"), 
+          just=c("centre", "top"),
           x=x, y=unit(-.05, "inches"))
-    grid.text(as.character(y), gp=gp.red, 
-          just=c("right", "centre"), 
+    grid.text(as.character(y), gp=gp.red,
+          just=c("right", "centre"),
           x=unit(-.05, "inches"), y=y)
     popViewport()
     if (!is.null(vp))
@@ -253,7 +254,7 @@ function(pch, labels, frame=TRUE,
                             draw=FALSE),
               col=2, row=i, border=text.border, draw=FALSE)
   }
-  if (draw) 
+  if (draw)
     grid.draw(gf)
   gf
 }
@@ -292,7 +293,7 @@ function(pch, labels, frame=TRUE,
                              draw=FALSE),
                col=2, row=i, draw=FALSE)
   }
-  if (draw) 
+  if (draw)
     grid.draw(gf)
   gf
 }
@@ -302,9 +303,9 @@ grid.plot.and.legend <- function() {
   grid.newpage()
   top.vp <- viewport(w=0.8, h=0.8)
   pushViewport(top.vp)
-  x <- runif(10)
-  y1 <- runif(10)
-  y2 <- runif(10)
+  x <- stats::runif(10)
+  y1 <- stats::runif(10)
+  y2 <- stats::runif(10)
   pch <- 1:3
   labels <- c("Girls", "Boys", "Other")
   lf <- grid.frame(draw=TRUE)
