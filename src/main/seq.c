@@ -206,7 +206,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     return a;
 }
 
-SEXP rep(SEXP s, SEXP ncopy)
+static SEXP rep(SEXP s, SEXP ncopy)
 {
     int i, ns, na, nc;
     SEXP a, t;

@@ -150,6 +150,7 @@ static void lowest(double *x, double *y, int n, double *xs, double *ys,
     }
 }
 
+static
 void clowess(double *x, double *y, int n,
 	     double f, int nsteps, double delta,
 	     double *ys, double *rw, double *res)

@@ -1643,6 +1643,7 @@ void GMapWin2Fig(DevDesc *dd)
 /*  mapping -- Set up mappings between coordinate systems  */
 /*  This is the user's interface to the mapping routines above */
 
+static
 void mapping(DevDesc *dd, int which)
 {
     switch(which) {
@@ -2649,6 +2650,7 @@ int inside (Edge b, double px, double py, GClipRect *clip)
     return 1;
 }
 
+static
 int cross (Edge b, double x1, double y1, double x2, double y2,
 	   GClipRect *clip)
 {
@@ -5020,12 +5022,13 @@ DevDesc* R_Devices[R_MaxDevices];
 
 DevDesc nullDevice;
 
+/* unused
 void devError()
 {
     error("No graphics device is active -- "
 	  "SHOULDN'T happen anymore -- please report");
 }
-
+*/
 
 int NoDevices()
 {

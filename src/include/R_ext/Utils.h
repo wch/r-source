@@ -26,7 +26,7 @@
 
 #include "R_ext/Complex.h"
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define isort      Rf_isort
 #define rsort      Rf_rsort
 #define csort      Rf_csort

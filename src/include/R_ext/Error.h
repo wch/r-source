@@ -21,7 +21,7 @@
 #ifndef _R_ERROR_H_
 #define _R_ERROR_H_
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define error Rf_error
 #define warning Rf_warning
 #endif

@@ -23,7 +23,8 @@
 #include "R_ext/PrtUtil.h"
 #include "Defn.h"
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
+#define formatFactor        Rf_formatFactor
 #define formatString        Rf_formatString
 #define EncodeFactor        Rf_EncodeFactor
 #define EncodeElement       Rf_EncodeElement
@@ -45,6 +46,7 @@ typedef struct {
 extern R_print_par_t R_print;
 
 /* Computation of printing formats */
+void formatFactor(int *, int, int *, SEXP, int);
 void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */

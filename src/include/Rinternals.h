@@ -235,7 +235,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray
 #define allocList		Rf_allocList
 #define allocMatrix		Rf_allocMatrix
@@ -303,6 +303,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define isExpressionObject	Rf_isExpressionObject
 #define isFactor		Rf_isFactor
 #define isFrame			Rf_isFrame
+#define isFree			Rf_isFree
 #define isFunction		Rf_isFunction
 #define isInteger		Rf_isInteger
 #define isLanguage		Rf_isLanguage
@@ -476,6 +477,7 @@ int isExpression(SEXP);
 int isExpressionObject(SEXP);
 int isFactor(SEXP);
 int isFrame(SEXP);
+int isFree(SEXP);
 int isFunction(SEXP);
 int isInteger(SEXP);
 int isLanguage(SEXP);

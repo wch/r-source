@@ -438,7 +438,7 @@ int MacDeviceDriver(char**, int, double*, int);
 #endif
 
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define addDevice		Rf_addDevice
 #define char2col		Rf_char2col
 #define col2name		Rf_col2name

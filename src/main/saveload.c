@@ -266,7 +266,7 @@ static char *AsciiInString(FILE *fp)
     return buf;
 }
 
-void AsciiSave(SEXP s, FILE *fp)
+static void AsciiSave(SEXP s, FILE *fp)
 {
     OutInit = DummyInit;
     OutInteger = AsciiOutInteger;
@@ -279,7 +279,7 @@ void AsciiSave(SEXP s, FILE *fp)
     DataSave(s, fp);
 }
 
-SEXP AsciiLoad(FILE *fp)
+static SEXP AsciiLoad(FILE *fp)
 {
     VersionId = 0;
     InInit = DummyInit;
@@ -291,7 +291,7 @@ SEXP AsciiLoad(FILE *fp)
     return DataLoad(fp);
 }
 
-SEXP AsciiLoadOld(FILE *fp, int version)
+static SEXP AsciiLoadOld(FILE *fp, int version)
 {
     VersionId = version;
     InInit = DummyInit;
@@ -491,7 +491,7 @@ static char *BinaryInString(FILE *fp)
     return buf;
 }
 
-void BinarySave(SEXP s, FILE *fp)
+static void BinarySave(SEXP s, FILE *fp)
 {
     OutInit = DummyInit;
     OutInteger = BinaryOutInteger;
@@ -504,7 +504,7 @@ void BinarySave(SEXP s, FILE *fp)
     DataSave(s, fp);
 }
 
-SEXP BinaryLoad(FILE *fp)
+static SEXP BinaryLoad(FILE *fp)
 {
     VersionId = 0;
     InInit = DummyInit;
@@ -516,7 +516,7 @@ SEXP BinaryLoad(FILE *fp)
     return DataLoad(fp);
 }
 
-SEXP BinaryLoadOld(FILE *fp, int version)
+static SEXP BinaryLoadOld(FILE *fp, int version)
 {
     VersionId = version;
     InInit = DummyInit;
@@ -1675,7 +1675,7 @@ static Rcomplex InComplexAscii(FILE *fp)
     return x;
 }
 
-void NewAsciiSave(SEXP s, FILE *fp)
+static void NewAsciiSave(SEXP s, FILE *fp)
 {
     OutInit = DummyInit;
     OutInteger = OutIntegerAscii;
@@ -1688,7 +1688,7 @@ void NewAsciiSave(SEXP s, FILE *fp)
     NewDataSave(s, fp);
 }
 
-SEXP NewAsciiLoad(FILE *fp)
+static SEXP NewAsciiLoad(FILE *fp)
 {
     InInit = DummyInit;
     InInteger = InIntegerAscii;
@@ -1900,7 +1900,7 @@ static Rcomplex InComplexXdr(FILE * fp)
     return x;
 }
 
-void NewXdrSave(SEXP s, FILE *fp)
+static void NewXdrSave(SEXP s, FILE *fp)
 {
     OutInit = OutInitXdr;
     OutInteger = OutIntegerXdr;
@@ -1913,7 +1913,7 @@ void NewXdrSave(SEXP s, FILE *fp)
     NewDataSave(s, fp);
 }
 
-SEXP NewXdrLoad(FILE *fp)
+static SEXP NewXdrLoad(FILE *fp)
 {
     InInit = InInitXdr;
     InInteger = InIntegerXdr;
@@ -1927,7 +1927,7 @@ SEXP NewXdrLoad(FILE *fp)
 
 /* ----- F i l e -- M a g i c -- N u m b e r s ----- */
 
-void R_WriteMagic(FILE *fp, int number)
+static void R_WriteMagic(FILE *fp, int number)
 {
     unsigned char buf[5];
     number = abs(number);
@@ -1951,7 +1951,7 @@ void R_WriteMagic(FILE *fp, int number)
     fwrite((char*)buf, sizeof(char), 5, fp);
 }
 
-int R_ReadMagic(FILE *fp)
+static int R_ReadMagic(FILE *fp)
 {
     unsigned char buf[6];
     int d1, d2, d3, d4, d1234;

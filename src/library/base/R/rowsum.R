@@ -11,7 +11,7 @@ rowsum <- function(x, group, reorder=TRUE) {
 
     if (!is.numeric(group)) group <- as.factor(group)
     storage.mode(x) <- 'double'
-    temp <- .C("rowsum", dd= as.integer(dd),
+    temp <- .C("R_rowsum", dd= as.integer(dd),
 			 as.double(na.indicator),
 			 x = x,
 			 as.double(group), PACKAGE="base")

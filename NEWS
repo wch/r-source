@@ -17,17 +17,21 @@ NEW FEATURES
 	contains the beginnings of a description of the public API and
 	how to use it.
 
+    o   Many of the exported symbols have been remapped or hidden. This
+        means that code using Rdefines.h or Rinternals.h or Mathlib.h
+        will need to be re-compiled, and code using Applic.h may do so.
+
     o	DPQ {probability density quantile} functions have new
 	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
 	more precise results when values would be close to 0 or 1.
 
     o	R CMD Rd2dvi has new options --pdf, --title and --output
 
-    o	new Date, URL and Title fields in DESCRIPTION file of
+    o	New Date, URL and Title fields in DESCRIPTION file of
 	packages. The Title field replaces the separate TITLE file of
 	packages, which is no longer necessary.
 
-    o	residuals.lm() has "type" argument, as S does.
+    o	residuals.lm() has a "type" argument, as S does.
 
     o	The underlying code for nlm has been translated from Fortran
 	to C and made re-entrant (changes contributed by Saikat DebRoy).
@@ -81,12 +85,12 @@ NEW FEATURES
     o	First argument renamed to "package" for library(), require(),
 	provide().
 
-    o	model.frame now accepts data= arguments that can be coerced to
+    o	model.frame() now accepts data= arguments that can be coerced to
 	data frames
 
     o	Help files can now contain \describe groups.
 
-    o	hyperlinks in help files can now use LaTeX special characters.
+    o	Hyperlinks in help files can now use LaTeX special characters.
 
     o	rstandard() now also works for glm objects.
 

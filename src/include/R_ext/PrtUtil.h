@@ -29,7 +29,7 @@
 #include <stdarg.h>
 #include "R_ext/Complex.h"
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define formatLogical      Rf_formatLogical
 #define formatInteger      Rf_formatInteger
 #define formatReal         Rf_formatReal

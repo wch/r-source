@@ -137,7 +137,7 @@ static int InstallVar(SEXP var)
 /* the variable on the lhs. If so they shouldn't be included */
 /* in the factors */
 
-void CheckRHS(SEXP v)
+static void CheckRHS(SEXP v)
 {
     int i, j;
     SEXP s, t;

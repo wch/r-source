@@ -31,7 +31,7 @@ static SEXP installAttrib(SEXP, SEXP, SEXP);
 static SEXP removeAttrib(SEXP, SEXP);
 
 SEXP comment(SEXP);
-SEXP commentgets(SEXP, SEXP);
+static SEXP commentgets(SEXP, SEXP);
 
 static SEXP stripAttrib(SEXP tag, SEXP lst)
 {
@@ -257,7 +257,7 @@ SEXP tspgets(SEXP vec, SEXP val)
     return vec;
 }
 
-SEXP commentgets(SEXP vec, SEXP comment)
+static SEXP commentgets(SEXP vec, SEXP comment)
 {
     if (isNull(comment) || isString(comment)) {
 	if (length(comment) <= 0) {

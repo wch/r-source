@@ -38,7 +38,7 @@
 #include <config.h>
 #endif
 
-void rowsum(int *dim, double *na_x, double *x, double *group)
+void R_rowsum(int *dim, double *na_x, double *x, double *group)
 {
     register int i,j, k;
     int	    nrow, ncol, newrow, isna;

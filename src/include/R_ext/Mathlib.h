@@ -222,7 +222,7 @@ void ml_error(int n);
 # define i1mach	c_i1mach
 #endif
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
 #define bessel_k	Rf_bessel_k

@@ -136,7 +136,7 @@ static void MKsetup(int n)
     }
 }
 
-void HashTableSetup(SEXP x)
+static void HashTableSetup(SEXP x)
 {
     switch (TYPEOF(x)) {
     case LGLSXP:

@@ -1034,7 +1034,7 @@ static double FacetShade(double *u, double *v)
 /* Determine the depth ordering of the facets to ensure */
 /* that they are drawn in an occlusion compatible order. */
 
-void OrderFacets(double *depth, int *index, int n)
+static void OrderFacets(double *depth, int *index, int n)
 {
     int i, j, h;
     int itmp;

@@ -534,7 +534,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* things like switch(as.character(answer), yes=, YES=1, no=, NO=2, 3) */
 /* will work. */
 
-SEXP switchList(SEXP el, SEXP rho)
+static SEXP switchList(SEXP el, SEXP rho)
 {
     SEXP h;
     if (CAR(el) == R_DotsSymbol) {

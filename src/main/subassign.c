@@ -1050,7 +1050,8 @@ static SEXP listRemove(SEXP x, SEXP s)
     return CDR(a);
 }
 
-SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
+/* unused
+static SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
 {
     SEXP ax, ay, px, py, dims;
     int i, nsubs, ny;
@@ -1094,6 +1095,7 @@ SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
     }
     return x;
 }
+*/
 
 static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 {

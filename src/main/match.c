@@ -52,7 +52,7 @@ int NonNullStringMatch(SEXP s, SEXP t)
 	return 0;
 }
 
-int psmatch(char *f, char *t, int exact)
+static int psmatch(char *f, char *t, int exact)
 {
     if (exact) {
 	return !strcmp(f, t);

@@ -375,7 +375,7 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
-#ifdef R_REMAP
+#ifndef R_NO_REMAP
 #define applyRelOp		Rf_applyRelOp
 #define begincontext		Rf_begincontext
 #define checkArity		Rf_checkArity
@@ -394,6 +394,7 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 #define dynamicfindVar		Rf_dynamicfindVar
 #define endcontext		Rf_endcontext
 #define factorsConform		Rf_factorsConform
+#define FetchMethod		Rf_FetchMethod
 #define findcontext		Rf_findcontext
 #define findVar1		Rf_findVar1
 #define findVarInFrame		Rf_findVarInFrame
@@ -405,6 +406,7 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 #define getVar			Rf_getVar
 #define getVarInFrame		Rf_getVarInFrame
 #define hashpjw			Rf_hashpjw
+#define InheritsClass		Rf_InheritsClass
 #define InitArithmetic		Rf_InitArithmetic
 #define InitColors		Rf_InitColors
 #define InitEd			Rf_InitEd
@@ -424,10 +426,14 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 #define mat2indsub		Rf_mat2indsub
 #define match			Rf_match
 #define mkCLOSXP		Rf_mkCLOSXP
+#define mkComplex              	Rf_mkComplex
 #define mkFalse			Rf_mkFalse
+#define mkFloat			Rf_mkFloat
+#define mkNA			Rf_mkNA
 #define mkPROMISE		Rf_mkPROMISE
 #define mkQUOTE			Rf_mkQUOTE
 #define mkSYMSXP		Rf_mkSYMSXP
+#define mkTrue			Rf_mkTrue
 #define NewEnvironment		Rf_NewEnvironment
 #define OneIndex		Rf_OneIndex
 #define onintr			Rf_onintr
@@ -436,6 +442,7 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 #define PrintVersion		Rf_PrintVersion
 #define PrintWarnings		Rf_PrintWarnings
 #define promiseArgs		Rf_promiseArgs
+#define RemoveClass		Rf_RemoveClass
 #define scanPhase		Rf_scanPhase
 #define setVarInFrame		Rf_setVarInFrame
 #define sortVector		Rf_sortVector
@@ -504,6 +511,7 @@ SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int factorsConform(SEXP, SEXP);
+SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 SEXP findVarInFrame(SEXP, SEXP);
@@ -535,12 +543,16 @@ void markSExp(SEXP);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP match(SEXP, SEXP, int);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
+SEXP mkComplex(char *s);
 /* SEXP mkEnv(SEXP, SEXP, SEXP); */
+SEXP mkFalse(void);
+SEXP mkFloat(char *s);
+SEXP mkNA(void);
 SEXP mkPRIMSXP (int, int);
 SEXP mkPROMISE(SEXP, SEXP);
 SEXP mkQUOTE(SEXP);
 SEXP mkSYMSXP(SEXP, SEXP);
-SEXP mkFalse(void);
+SEXP mkTrue(void);
 SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr();
 int OneIndex(SEXP, SEXP, int, int, SEXP*);
@@ -549,6 +561,7 @@ void PrintGreeting(void);
 void PrintVersion(char *);
 void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
+void RemoveClass(SEXP, char *);
 SEXP R_LoadFromFile(FILE*, int);
 FILE* R_OpenLibraryFile(char *);
 void R_PreserveObject(SEXP);

@@ -751,7 +751,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
 static char *asym[] = {":=", "<-", "<<-"};
 
 
-SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
+static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, tmp2, tmploc, tmpsym;
     char buf[32];

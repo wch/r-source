@@ -65,20 +65,20 @@ void cdivid(double *, double *,double *, double *, double *, double *);
 double cpoly_cmod(double *, double *);
 
 /* cumsum.c : */
-void cumsum(double *, int *, double *, double *);
+void R_cumsum(double *, int *, double *, double *);
 
 /* distance.c */
-double euclidean(double *, int, int, int, int);
-double maximum(double *, int, int, int, int);
-double manhattan(double *, int, int, int, int);
-double canberra(double *, int, int, int, int);
-double dist_binary(double *, int, int, int, int);
+double R_euclidean(double *, int, int, int, int);
+double R_maximum(double *, int, int, int, int);
+double R_manhattan(double *, int, int, int, int);
+double R_canberra(double *, int, int, int, int);
+double R_dist_binary(double *, int, int, int, int);
 #define EUCLIDEAN 1
 #define MAXIMUM	  2
 #define MANHATTAN 3
 #define CANBERRA  4
 #define BINARY	  5
-void distance(double *, int *, int *, double *, int *, int *);
+void R_distance(double *, int *, int *, double *, int *, int *);
 
 /* eigen.c */
 int F77_SYMBOL(cg)(int *nm, int *n, double *ar, double *ai,
@@ -109,9 +109,9 @@ int fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
 /* fortran.c   is covered by ./Fortran.h */
 
 /* lowess.c */
-void clowess(double *x, double *y, int n,
+/*void clowess(double *x, double *y, int n,
 	     double f, int nsteps, double delta,
-	     double *ys, double *rw, double *res);
+	     double *ys, double *rw, double *res);*/
 void lowess(double *x, double *y, int *n,
 	    double *f, int *nsteps, double *delta,
 	    double *ys, double *rw, double *res);
@@ -135,6 +135,9 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 /* pythag.c */
 double pythag(double, double);
 
+/* rowsum.c */
+void R_rowsum(int *dim, double *na_x, double *x, double *group);
+
 /* splines.c */
 void spline_coef(int *method, int *n, double *x, double *y,
 		 double *b, double *c, double *d, double *e);
@@ -151,7 +154,7 @@ int stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 /* ...............*/
 
 /* tabulate.c */
-void tabulate(int *x, int *n, int *ans);
+void R_tabulate(int *x, int *n, int *ans);
 
 /* ../main/optimize.c */
 int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
@@ -253,7 +256,7 @@ int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		       double *resid, double *hat, double *coef, double *sigma);
 
 /* ../appl/zeroin.c */
-double zeroin(double ax, double bx, double (*f)(double, void *), void *info,
-	      double *tol, int *maxit);
+double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
+		double *tol, int *maxit);
 
 #endif

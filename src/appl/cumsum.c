@@ -24,7 +24,7 @@
 
 #include "Applic.h"
 
-void cumsum(double *x, int *n, double *na_value, double *ans)
+void R_cumsum(double *x, int *n, double *na_value, double *ans)
 {
     double sum;
     int i;

@@ -28,7 +28,7 @@
 #include "Error.h"
 #include "Applic.h"
 
-double euclidean(double *x, int nr, int nc, int i1, int i2)
+double R_euclidean(double *x, int nr, int nc, int i1, int i2)
 {
     double dev, dist;
     int count, j;
@@ -49,7 +49,7 @@ double euclidean(double *x, int nr, int nc, int i1, int i2)
     return sqrt(dist);
 }
 
-double maximum(double *x, int nr, int nc, int i1, int i2)
+double R_maximum(double *x, int nr, int nc, int i1, int i2)
 {
     double dev, dist;
     int count, j;
@@ -70,7 +70,7 @@ double maximum(double *x, int nr, int nc, int i1, int i2)
     return dist;
 }
 
-double manhattan(double *x, int nr, int nc, int i1, int i2)
+double R_manhattan(double *x, int nr, int nc, int i1, int i2)
 {
     double dist;
     int count, j;
@@ -90,7 +90,7 @@ double manhattan(double *x, int nr, int nc, int i1, int i2)
     return dist;
 }
 
-double canberra(double *x, int nr, int nc, int i1, int i2)
+double R_canberra(double *x, int nr, int nc, int i1, int i2)
 {
     double dist;
     int count, j;
@@ -110,7 +110,7 @@ double canberra(double *x, int nr, int nc, int i1, int i2)
     return dist;
 }
 
-double dist_binary(double *x, int nr, int nc, int i1, int i2)
+double R_dist_binary(double *x, int nr, int nc, int i1, int i2)
 {
     int total, count, dist;
     int j;
@@ -140,25 +140,25 @@ double dist_binary(double *x, int nr, int nc, int i1, int i2)
 
 static double (*distfun)(double*, int, int, int, int);
 
-void distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
+void R_distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
 {
     int dc, i, j, ij;
 
     switch(*method) {
     case EUCLIDEAN:
-	distfun = euclidean;
+	distfun = R_euclidean;
 	break;
     case MAXIMUM:
-	distfun = maximum;
+	distfun = R_maximum;
 	break;
     case MANHATTAN:
-	distfun = manhattan;
+	distfun = R_manhattan;
 	break;
     case CANBERRA:
-	distfun = canberra;
+	distfun = R_canberra;
 	break;
     case BINARY:
-	distfun = dist_binary;
+	distfun = R_dist_binary;
 	break;
     default:
 	error("distance(): invalid distance");

@@ -26,7 +26,7 @@
 
 #include "Arith.h"
 
-void tabulate(int *x, int *n, int *nbin, int *ans)
+void R_tabulate(int *x, int *n, int *nbin, int *ans)
 {
     int i;
     if(*n < 1) return;

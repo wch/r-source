@@ -12,7 +12,7 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
 	stop("ambiguous distance method")
 
     N <- nrow(x <- as.matrix(x))
-    d <- .C("distance",
+    d <- .C("R_distance",
 	    x = as.double(x),
 	    nr= N,
 	    nc= ncol(x),
