@@ -458,7 +458,7 @@ enum {
 	kLineTo                 = 257,
 	kEditObject             = 258,
 	kError                  = 259,
-	kPreferneces			= 260,
+	kPreferences			= 260,
 	kAbout                  = 261,
 	kHelpObject             = 262,
 	kExampleObject          = 263,

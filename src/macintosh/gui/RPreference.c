@@ -98,7 +98,7 @@ you needed to add the corresponding item in here.
 */
 enum
 {
-   kActiveTextButton            = 12,
+   kActiveTextButton            = 9,
    kCompletedTextButton         = 2,
    kComputerResponseButton      = 3,
    kActiveTextField             = 4,
@@ -106,13 +106,16 @@ enum
    kComputerResponseField       = 6,
    kTabSize                     = 7,
    kHistoryLength               = 8,
-//   kTextSize                    = 9,  // Jago
+   kConsTextSize                = 21,  // Jago
    kR_Vsize                     = 10,
    kR_Nsize                     = 11,
    kOkButton                    = 1,       // 1 is default button.
-   kCancelButton                = 13,   
+   kCancelButton                = 10,
+   kApplyButton					= 23,   
    kEditRect                    = 27,
-   kScreenRes                   = 29,
+   kConsoleFont					= 28,
+   kGraphFont					= 27,
+   kScreenRes                   = 19,
    kMemoryRect                  = 30   
    
 } ;
@@ -170,6 +173,8 @@ extern Str255							   MacSymbolFont;
 extern Str255							   PostFont;
 extern Str255							   UserFont;
 
+void RPrefs(void);
+
 
 /* ************************************************************************************************ */
 /*                                        Protocols                                                 */
@@ -179,16 +184,17 @@ void                                      doSavePreference(DialogPtr );
 void                                      doGetPreferences(void);
 void                                      savePreference(void);
 void                                      DrawBox (DialogPtr PreferenceBox);
-void                                      SetTab(void);
+void                                      SetTab(Boolean);
 pascal	OSErr	                          FSpGetFullPath (const FSSpec*, short*, Handle*);
 void                                      pickColor(DialogPtr, SInt16 , RGBColor , RGBColor*);
-void                                      SetTextSize(void);
+void                                      SetTextSize(Boolean);
+void                                      SetTextFontAndSize(void);
 extern int                                R_SetOptionWidth(int w);
 
 extern int GetTextSize(void);
 int EightyWidth(void);
 
-
+void GetDialogPrefs(DialogPtr PreferenceBox);
 
 
 
@@ -229,7 +235,7 @@ void  doGetPreferences(void)
      
       strcpy(genvString, ".Renviron");
       
-      SetTab();
+      SetTab(false);
     
       storeHistory = atoi(mac_getenv("RHISTSIZE"));
        
@@ -270,6 +276,8 @@ void  doGetPreferences(void)
       }
 
       EIGHTY = EightyWidth();
+      
+
       
       tempTypeColour.red = gTypeColour.red =  0xffff;
       tempTypeColour.green = gTypeColour.green =  0x0000;
@@ -399,10 +407,10 @@ void DrawBox(DialogPtr PreferenceBox){
    blackColour.blue	 = 0x0000;
    GetIndPattern( &myPat, sysPatListID,2 ); 	/* brickwork */
    PenPat( &myPat );
-   GetDialogItem(PreferenceBox,kEditRect,&type,&itemHandle,&itemRect);
-   FrameRect(&itemRect);
-   GetDialogItem(PreferenceBox,kMemoryRect,&type,&itemHandle,&itemRect);
-   FrameRect(&itemRect);
+//   GetDialogItem(PreferenceBox,kEditRect,&type,&itemHandle,&itemRect);
+//   FrameRect(&itemRect);
+//   GetDialogItem(PreferenceBox,kMemoryRect,&type,&itemHandle,&itemRect);
+//   FrameRect(&itemRect);
    GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
   //SetColor 
    GetDialogItem(PreferenceBox,   kActiveTextField, &type, &itemHandle, &itemRect);
@@ -429,7 +437,7 @@ to the Preference (Global Variables). Actually, you can set different Tab Sapce 
 text editing window. However, I predict it will confuse the user.
 ************************************************************************************************
 */
-void SetTab(){
+void SetTab(Boolean newtab){
    GrafPtr savePort;
    WEReference we ;
    WEStyleMode    mode;
@@ -437,6 +445,7 @@ void SetTab(){
    SInt16         i;  
    char 		tabsize[10];
    
+   if(!newtab)
    gtabSize = atoi(mac_getenv("TabSize"));
      
    if(gtabSize < 1 || gtabSize > 20)
@@ -475,7 +484,7 @@ void SetTab(){
 }
 
 
-void SetTextSize(){
+void SetTextSize(Boolean newsize){
    SInt16 i;
    SInt32 selStart, selEnd;
    WEReference we ;
@@ -488,6 +497,7 @@ void SetTextSize(){
     return;
    WEGetSelection ( & selStart, & selEnd, we );
    WESetSelection ( 0, WEGetTextLength(we), we );
+   if(!newsize)
    gTextSize = GetTextSize();
    changeSize(Console_Window, gTextSize);
    WESetSelection (selStart, selEnd, we);
@@ -519,4 +529,359 @@ void SetTextSize(){
 
 
 }
+
+void changeFontAndSize(WindowPtr window);
+
+void changeFontAndSize(WindowPtr window)
+{
+
+   FMFontFamily fontFamily=0;
+   SInt16	newSize = gTextSize;
+   
+
+   
+   if(systemVersion > kMinSystemVersion)
+     fontFamily = FMGetFontFamilyFromName(UserFont);
+   else
+     GetFNum(UserFont,&fontFamily);
+ 
+   if(window){
+    WESetOneAttribute ( kCurrentSelection, kCurrentSelection, weTagFontSize,
+      & newSize, sizeof ( Fixed ),	GetWindowWE ( window ) );
+    WESetOneAttribute ( kCurrentSelection, kCurrentSelection, weTagFontFamily,
+	  & fontFamily, sizeof ( fontFamily ), GetWindowWE ( window ) ) ;
+   }
+}
+
+void SetTextFontAndSize(void){
+   SInt16 i;
+   SInt32 selStart, selEnd;
+   WEReference we ;
+   SInt16 Console_Width, NumofChar;
+   GrafPtr savePort;    
+   Rect portRect;
+      FMFontFamily fontFamily=0;
+
+   we = GetWindowWE ( Console_Window);
+   if(!we)
+    return;
+   WEGetSelection ( & selStart, & selEnd, we );
+   WESetSelection ( 0, WEGetTextLength(we), we );
+ 
+   changeFontAndSize(Console_Window);
+   WESetSelection (selStart, selEnd, we);
+   GetWindowPortBounds ( Console_Window, & portRect ) ;
+   Console_Width = portRect.right - portRect.left ;
+   GetPort(&savePort);
+   SetPortWindowPort(Console_Window);
+   if(systemVersion > kMinSystemVersion)
+     fontFamily = FMGetFontFamilyFromName(UserFont);
+   else
+     GetFNum(UserFont,&fontFamily);
+   TextFont(fontFamily);
+   TextSize(gTextSize);
+   NumofChar =    (int)((((Console_Width - 15) / CharWidth('M'))) - 0.5) ; 
+   R_SetOptionWidth(NumofChar);
+   SetPort(savePort);
+
+    for(i=1; i<Help_Window; i++){
+       we = GetWindowWE ( Help_Windows[i]);
+       WEGetSelection ( & selStart, & selEnd, we );
+       WESetSelection ( 0, WEGetTextLength(we), we );
+       changeFontAndSize(Help_Windows[i]);
+       WESetSelection (selStart, selEnd, we);
+    }
+
+   for(i=1; i < Edit_Window; i++){
+      we = GetWindowWE ( Edit_Windows[i]);
+      WEGetSelection ( & selStart, & selEnd, we );
+      WESetSelection ( 0, WEGetTextLength(we), we );
+      changeFontAndSize(Edit_Windows[i]);
+      WESetSelection (selStart, selEnd, we);
+   }
+
+
+}
+
+
+
+
+void RPrefs ( void )
+{
+   //****
+   DialogPtr          PreferenceBox = nil ;
+   WEReference        we = nil ;
+   GrafPtr            savePort ;
+   short              type; 
+   Rect               itemRect;
+   Str255             buf;
+   char               tempSpace[10];
+   StandardFileReply  folder;
+   Point			  where = {-1, -1}; 
+   SInt16             itemHit = 0;
+   Handle              itemHandle;
+   Boolean            ChangeDir= false;
+   RGBColor           outColor;
+   SInt16              fileLen;
+   Handle              fileName;
+
+   PreferenceBox = GetNewDialog ( kPreferences, nil, ( WindowPtr ) -1L ) ;
+   if ( PreferenceBox == nil )
+   {
+      goto cleanup ;
+   }
+
+   // set up the port
+   GetPort ( & savePort ) ;
+   SetPort ( GetDialogPort(PreferenceBox) ) ;
+   TextSize(12);
+   // Set the Dialog Title
+   SetWTitle ( GetDialogWindow(PreferenceBox), "\pR Preferences" ) ;
+   DrawBox(PreferenceBox);
+
+   // Handle tab size
+   GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", gtabSize);
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+  
+   GetDialogItem(PreferenceBox, kConsoleFont, &type, &itemHandle, &itemRect);
+   SetDialogItemText(itemHandle, UserFont);
+   
+   GetDialogItem(PreferenceBox, kGraphFont, &type, &itemHandle, &itemRect);
+   SetDialogItemText(itemHandle, PostFont);
+    
+   // Handle History size
+   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", storeHistory);   
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+   
+   //Handle Text Size
+   GetDialogItem(PreferenceBox, kConsTextSize, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", gTextSize);
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+ 
+   
+   //Handle R_NSize
+   GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
+//   sprintf(tempSpace, "%d", (PR_NSize)); 
+//   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+ 
+   //Handle R_VSize
+   GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
+//   sprintf(tempSpace, "%d", (PR_VSize));
+//   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+ 
+   //Handle Screen Resolution
+   GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", (gScreenRes));
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+   //show the dialog
+   ShowWindow ( GetDialogWindow(PreferenceBox) ) ;
+   
+ //  R_ShowMessage("Before ModalDialog");
+ //  goto cleanup;
+   
+   while(true){
+      // wait for a click in the picture
+      ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
+   
+      if (itemHit == kActiveTextButton){
+         pickColor(PreferenceBox, kActiveTextField, tempTypeColour, &outColor);
+         tempTypeColour = outColor;
+         DrawBox(PreferenceBox);
+      }
+      if (itemHit == kCompletedTextButton){
+         pickColor(PreferenceBox, kCompletedTextField, tempFinishedColour, &outColor);
+         tempFinishedColour = outColor;
+         DrawBox(PreferenceBox);
+      }
+      if (itemHit == kComputerResponseButton){
+         pickColor(PreferenceBox, kComputerResponseField, tempComputerColour, &outColor);
+         tempComputerColour = outColor;
+         DrawBox(PreferenceBox);
+
+      }
+
+      if ( itemHit == kOkButton )
+      { 
+         //Handle Tab Size
+         GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
+         GetDialogItemText(itemHandle, buf);
+         // Didn't allow you to use a tab with size bigger than 99
+         if (buf[0] > 2){
+            GWdoErrorAlert(eTabSize);
+            break;
+         }
+         
+         // Handle History Length
+         GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+         GetDialogItemText(itemHandle, buf);
+         // Didn't allow you to use a tab with size bigger than 999
+         if (buf[0] > 3){
+            GWdoErrorAlert(eHistorySize);
+            break;
+         }
+         
+         //Handle Global Text Size
+         GetDialogItem(PreferenceBox, kConsTextSize, &type, &itemHandle, &itemRect);
+         GetDialogItemText(itemHandle, buf);
+         // Didn't allow you to use a tab with size bigger than 99
+         if (buf[0] > 2){
+            GWdoErrorAlert(eTextSize);
+            break;
+         }         
+         
+         //Handle R_NSize
+   //      GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
+   //      GetDialogItemText(itemHandle, buf);
+   //      buf[buf[0] + 1] = '\0';
+   //      if ((atoi((char *)&buf[1]) > 1000) || (atoi((char *)&buf[1]) < 200)){
+   //         GWdoErrorAlert(eR_NSize);
+   //         break;
+    //     }           
+         
+         //Handle R_VSize
+    //     GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
+    //     GetDialogItemText(itemHandle, buf);
+    //     buf[buf[0] + 1] = '\0';
+    //     if ((atoi((char *)&buf[1]) > 500) || (atoi((char *)&buf[1]) < 1)){
+    //        GWdoErrorAlert(eR_VSize);
+    //        break;
+    //     }  
+         
+         //Handle R_VSize
+         GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
+         GetDialogItemText(itemHandle, buf);
+         buf[buf[0] + 1] = '\0';
+         if ((atoi((char *)&buf[1]) > 144) || (atoi((char *)&buf[1]) < 36)){
+            GWdoErrorAlert(eScreenRes);  //???
+            break;
+         }            
+         
+         gTypeColour = tempTypeColour;
+         gComputerColour = tempComputerColour;
+         gFinishedColour = tempFinishedColour;
+         // When you click the OK button, save the preference
+         //doSavePreference(PreferenceBox);
+         R_ShowMessage("Save prefs");
+         break;
+  
+      }
+  
+      if (itemHit == kCancelButton){
+         tempTypeColour = gTypeColour;
+         tempComputerColour = gComputerColour;
+         tempFinishedColour = gFinishedColour;
+         // When you click Cancel button, no action followed
+         break;
+      }
+      
+      
+      if (itemHit == kApplyButton){
+         GetDialogPrefs(PreferenceBox);
+         // When you click Cancel button, no action followed
+         break;
+      }
+      
+      
+   }
+
+
+// Release the resource
+cleanup :
+   if ( we != nil )
+   {
+      WEDispose ( we ) ;
+   }
+   if ( PreferenceBox != nil )
+   {
+      DisposeDialog ( PreferenceBox ) ;
+      // Restore the Port
+      SetPort ( savePort ) ;
+   }
+   
+   
+}
+
+void GetDialogPrefs(DialogPtr PreferenceBox)
+{
+   short              type, i; 
+   Handle             itemHandle;
+   Rect               itemRect;
+   Str255             buf;
+   char               tempSpace[10];
+   Str255             resourceName = "\pPreferences";
+   FMFontFamily 		postFontId;
+
+   
+   // It is used to save the tab Size
+   GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
+   GetDialogItemText(itemHandle, buf);
+   for (i=0; i<buf[0]; i++)
+      tempSpace[i] = buf[i+1];
+   tempSpace[i] = '\0';
+   gtabSize = atoi(tempSpace);
+   SetTab(true);
+   
+   //It is used to save the history size
+   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+   GetDialogItemText(itemHandle, buf);
+   for (i=0; i<buf[0]; i++)
+      tempSpace[i] = buf[i+1];
+   tempSpace[i] = '\0';
+      
+   // After you change History length, you can only have effect after you restart the program
+   // it is because you need to allocate memory for history record when you start the computer.
+   storeHistory = atoi(tempSpace);
+   
+   //Handle textSize
+   GetDialogItem(PreferenceBox, kConsTextSize, &type, &itemHandle, &itemRect);
+   GetDialogItemText(itemHandle, buf);
+   for (i=0; i<buf[0]; i++)
+      tempSpace[i] = buf[i+1];
+   tempSpace[i] = '\0';
+   gTextSize = atoi(tempSpace);
+
+  
+   //It is used to get the console font name
+   GetDialogItem(PreferenceBox, kConsoleFont, &type, &itemHandle, &itemRect);
+   GetDialogItemText(itemHandle, UserFont);
+   if(systemVersion > kMinSystemVersion){
+     if( FMGetFontFamilyFromName(UserFont) == kInvalidFontFamily)
+        doCopyPString("\pmonaco", UserFont);
+      }
+      else {
+       GetFNum(UserFont, &postFontId);
+       if( postFontId == kInvalidFontFamily)
+         doCopyPString("\pmonaco", UserFont); 
+      }
+
+   EIGHTY = EightyWidth();
+  
+   SetTextFontAndSize();
+  
+   GetDialogItem(PreferenceBox, kGraphFont, &type, &itemHandle, &itemRect);
+   GetDialogItemText(itemHandle, PostFont);
+  
+   if(GetFontIDFromMacFontName(PostFont) == kATSUInvalidFontID)
+     doCopyPString("\phelvetica", PostFont);
+
+   // Handle Screen Resolution
+   GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
+   GetDialogItemText(itemHandle, buf);
+   for (i=0; i<buf[0]; i++)
+      tempSpace[i] = buf[i+1];
+   tempSpace[i] = '\0';
+   gScreenRes = atoi(tempSpace);
+ 
+   gTypeColour = tempTypeColour;
+   gComputerColour = tempComputerColour;
+   gFinishedColour = tempFinishedColour;
+     
+   
+   
+//   savePreference();
+
+}
+
 
