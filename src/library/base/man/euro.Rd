@@ -19,6 +19,18 @@
     various Euro currencies, i.e., the result of
     \code{outer(1/euro,euro)}.
 }
+\examples{
+data(euro)
+
+### Convert 20,-- Euro to Belgian Franc
+20 * euro["BEF"]
+
+### Convert 20,-- Austrian Schilling to Euro
+20 / euro["ATS"]
+
+### Convert 20,-- Spanish Peseta to Italian Lira
+20 * euro.cross["ESP","ITL"]
+}
 \keyword{dataset}
 
     
