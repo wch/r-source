@@ -16,6 +16,15 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Insufficient information was being recorded in the display list
+	for the identify() function.  In particular, the "plot="
+	argument was ignored when replaying the display list.  [PR#1157]
+
+    o	The vertical alignment of mathematical annotations was wrong.
+	When a vertical adjustment was not given, it was bottom-adjusting 
+	i.e,. it was treating adj=0 as adj=c(0, 0).  It now treats
+	adj=0 as adj=c(0, 0.5) as for "normal" text.  [PR#1302]
+
     o	the man page (doc/R.1) wasn't updated with the proper VERSION.
 
     o	smooth.spline() had a "df = 5" default which was never used and
