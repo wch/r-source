@@ -35,7 +35,7 @@ const static double eps = 1.e-12;
 
 double qt(double p, double ndf, int lower_tail, int log_p)
 {
-    double a, b, c, d, prob, p_, P, q, x, y;
+    double a, b, c, d, p_, P, q, x, y;
     Rboolean neg;
 
 #ifdef IEEE_754
@@ -71,7 +71,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    else q = ML_POSINF;
 	}
     }
-    else if (ndf < 1 + eps) {	/* df ~= 1 */
+    else if (ndf < 1 + eps) { /* df ~= 1  (df < 1 excluded above !) */
 	if(P > 0)
 	    q = - tan((P+1) * M_PI_2);
 
@@ -107,7 +107,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    /* FIXME: Following cutoff is machine-precision dependent
 	       -----  Really, use stable impl. of expm1(y) == exp(y) - 1,
 	              as it is in GNU's mathlib ..*/
-	    if (y > 0.002)
+	    if (y > 1e-6) /* was (y > 0.002) */
 		y = exp(y) - 1;
 	    else { /* Taylor of	 e^y -1 : */
 		y = (0.5 * y + 1) * y;
