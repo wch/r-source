@@ -513,8 +513,8 @@
 #ifdef Win32
 # define snprintf _snprintf
 # define vsnprintf _vsnprintf
-# define isnan(a) _isnan((a))
-# define finite(a) _finite((a))
+# define isnan(a) _isnan(a)
+# define finite(a) _finite(a)
 /* 27/03/2000 win32-api needs this for ANSI compliance */
 # define NONAMELESSUNION
 #endif /* Win32 */
