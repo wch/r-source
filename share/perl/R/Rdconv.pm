@@ -766,7 +766,7 @@ sub text2html {
 		    # in the same html file
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
-		} elsif ($htmlfile =~ s+^$pkgname_[^/]*/html/++) {
+		} elsif ($htmlfile =~ s+^$pkgname\_[^/]*/html/++) {
 		    # in the same html file, versioned install
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
@@ -802,7 +802,7 @@ sub text2html {
 		    if ($htmlfile =~ s+^$pkgname/html/++) {
 			# in the same html file
 			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
-		    } elsif ($htmlfile =~ s+^$pkgname_[^/]*/html/++) {
+		    } elsif ($htmlfile =~ s+^$pkgname\_[^/]*/html/++) {
 			# in the same html file, versioned install
 			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		    } else {
@@ -913,7 +913,7 @@ sub code2html {
 		    # in the same html file
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$uxfile\">$arg<\/a>/s;
-		} elsif ($uxfile =~ s+^$pkgname_[^/]*/html/++) {
+		} elsif ($uxfile =~ s+^$pkgname\_[^/]*/html/++) {
 		    # in the same html file, versioned install
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$uxfile\">$arg<\/a>/s;
@@ -949,7 +949,7 @@ sub code2html {
 			# in the same html file
 			$text =~
 			    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
-		    } elsif ($htmlfile =~ s+^$pkgname_[^/]*/html/++) {
+		    } elsif ($htmlfile =~ s+^$pkgname\_[^/]*/html/++) {
 			# in the same html file, versioned install
 			$text =~
 			    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
@@ -2480,8 +2480,9 @@ sub latex_print_block {
 	print $latexout "\\begin\{$env\}\\relax\n";
 	my $thisblock = &text2latex($blocks{$block});
 	print $latexout $thisblock;
-	print $latexout "\n" unless $thisblock =~ /\n$/m;
-	print $latexout "\n\\end\{$env\}\n";
+	print $latexout "\n" unless
+	    $thisblock =~ /\n$/ || length($thisblock) == 0;
+	print $latexout "\\end\{$env\}\n";
     }
 }
 
@@ -2542,10 +2543,16 @@ sub latex_print_argblock {
 		$text =~ s/.*$id//s;
 	    }
 	    print $latexout "\\end\{ldescription\}\n";
-	    print $latexout &text2latex($text);
+	    my $thisblock = &text2latex($text);
+	    print $latexout $thisblock;
+	    print $latexout "\n" unless 
+		$thisblock =~ /\n$/ || length($thisblock) == 0;
 	}
 	else{
-	    print $latexout &text2latex($text);
+	    my $thisblock = &text2latex($text);
+	    print $latexout $thisblock;
+	    print $latexout "\n" unless 
+		$thisblock =~ /\n$/ || length($thisblock) == 0;
 	}
 	print $latexout "\\end\{$env\}\n";
     }
@@ -2559,8 +2566,9 @@ sub latex_print_sections {
 	print $latexout "\\begin\{Section\}\{" . $section_title[$section] . "\}\n";
 	my $thisblock = &text2latex($section_body[$section]);
 	print $latexout $thisblock;
-	print $latexout "\n" unless $thisblock =~ /\n$/m;
-	print $latexout "\n\\end\{Section\}\n";
+	print $latexout "\n" unless
+	    $thisblock =~ /\n$/ || length($thisblock) == 0;
+	print $latexout "\\end\{Section\}\n";
     }
 }
 
