@@ -34,38 +34,51 @@ static SEXP rcall;/* global, for error messages */
 
 SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, class=R_NilValue, dims, tsp=R_NilValue, xnames, ynames, ans;
-    int nx, ny, xarray, yarray, xts, yts;
-    Rboolean mismatch, iS;
+    SEXP ans;
+    SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
 
     if (DispatchGroup("Ops", call, op, args, env, &ans))
 	return ans;
 
-    x = CAR(args);
-    y = CADR(args);
+    return do_relop_dflt(call, op, CAR(args), CADR(args));
+}
 
+SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
+{
+    SEXP class=R_NilValue, dims, tsp=R_NilValue, xnames, ynames;
+    int nx, ny, xarray, yarray, xts, yts;
+    Rboolean mismatch, iS;
+    PROTECT_INDEX xpi, ypi;
+
+    /* pre-test to handle the most common case quickly */
+    if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
+	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP)
+	return real_relop(PRIMVAL(op), x, y);
+
+    PROTECT_WITH_INDEX(x, &xpi);
+    PROTECT_WITH_INDEX(y, &ypi);
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
-	PROTECT(x);
-	x = allocVector(STRSXP, 1);
-	SET_STRING_ELT(x, 0,
-		       (iS) ? PRINTNAME(CAR(args)) : deparse1(CAR(args), 0));
-	SETCAR(args, x);
+	SEXP tmp = allocVector(STRSXP, 1);
+	PROTECT(tmp);
+	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(x) : deparse1(x, 0));
+	REPROTECT(x = tmp, xpi);
 	UNPROTECT(1);
     }
     if ((iS = isSymbol(y)) || TYPEOF(y) == LANGSXP) {
-	PROTECT(y);
-	y = allocVector(STRSXP, 1);
-	SET_STRING_ELT(y, 0,
-		       (iS) ? PRINTNAME(CADR(args)) : deparse1(CADR(args), 0));
-	SETCADR(args, y);
+	SEXP tmp = allocVector(STRSXP, 1);
+	PROTECT(tmp);
+	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(y) : deparse1(y, 0));
+	REPROTECT(y = tmp, ypi);
 	UNPROTECT(1);
     }
 
     /* FIXME (?): S does
     if (!isVectorAtomic(x) || !isVectorAtomic(y)) { */
     if (!isVector(x) || !isVector(y)) {
-	if (isNull(x) || isNull(y))
+	if (isNull(x) || isNull(y)) {
+	    UNPROTECT(2);
 	    return allocVector(LGLSXP,0);
+	}
 	errorcall(call,
 		  "comparison (%d) is possible only for atomic types",
 		  PRIMVAL(op));
@@ -73,8 +86,10 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* ELSE :  x and y are both atomic */
 
-    if (LENGTH(x) <= 0 || LENGTH(y) <= 0)
+    if (LENGTH(x) <= 0 || LENGTH(y) <= 0) {
+	UNPROTECT(2);
 	return allocVector(LGLSXP,0);
+    }
 
     rcall = call;
     mismatch = FALSE;
@@ -131,18 +146,18 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 		    "\tis not a multiple of shorter object length");
 
     if (isString(x) || isString(y)) {
-	x = SETCAR(args, coerceVector(x, STRSXP));
-	y = SETCADR(args, coerceVector(y, STRSXP));
+	REPROTECT(x = coerceVector(x, STRSXP), xpi);
+	REPROTECT(y = coerceVector(y, STRSXP), ypi);
 	x = string_relop(PRIMVAL(op), x, y);
     }
     else if (isComplex(x) || isComplex(y)) {
-	x = SETCAR(args, coerceVector(x, CPLXSXP));
-	y = SETCADR(args, coerceVector(y, CPLXSXP));
+	REPROTECT(x = coerceVector(x, CPLXSXP), xpi);
+	REPROTECT(y = coerceVector(y, CPLXSXP), ypi);
 	x = complex_relop(PRIMVAL(op), x, y);
     }
     else if (TYPEOF(x) == REALSXP || TYPEOF(y) == REALSXP) {
-	x = SETCAR(args, coerceVector(x, REALSXP));
-	y = SETCADR(args, coerceVector(y, REALSXP));
+	REPROTECT(x = coerceVector(x, REALSXP), xpi);
+	REPROTECT(y = coerceVector(y, REALSXP), ypi);
 	x = real_relop(PRIMVAL(op), x, y);
     }
     else {
@@ -169,7 +184,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
     }
 
-    UNPROTECT(4);
+    UNPROTECT(6);
     return x;
 }
 
