@@ -59,8 +59,17 @@ co.intervals(x, number = 6, overlap = 0.5)
   \item{\dots}{additional arguments to the panel function.}
 }
 \description{
-  This function produces two variants of the conditioning plots
+  This function produces two variants of the \bold{co}nditioning plots
   discussed in the reference below.
+}
+\details{
+  In the case of a single conditioning variable \code{a}, when both \code{rows}
+  and \code{columns} are unspecified, a ``close to square'' layout is
+  chosen with \code{columns >= rows}.
+
+  In the case of multiple \code{rows}, the \emph{order} of the panel
+  plots is from the bottom and from the left (corresponding to
+  increasing \code{a}, typically).
 }
 \value{
   \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
@@ -80,7 +89,7 @@ co.intervals(x, number = 6, overlap = 0.5)
 data(quakes)
 coplot(long ~ lat | depth, data = quakes)
 given.depth <- co.intervals(quakes$depth, number=4, overlap=.1)
-coplot(long ~ lat | depth, data = quakes, given.values=given.depth)
+coplot(long ~ lat | depth, data = quakes, given.v=given.depth, rows=1)
 
 ## Conditioning on 2 variables:
 ll.dm <- long ~ lat | depth * mag
