@@ -320,7 +320,7 @@ static void readline_handler(unsigned char *line)
 #endif
 	l = (((readline_len-2) > strlen((char *)line))?
 	     strlen((char *)line): (readline_len-2));
-	strncpy(readline_buf, (char *)line, l);
+	strncpy((char *)readline_buf, (char *)line, l);
 	readline_buf[l] = '\n';
 	readline_buf[l+1] = '\0';
     }
