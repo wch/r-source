@@ -244,6 +244,7 @@ CFBundleRef cocoaBundleRef = NULL; /* reference to the currently loaded bundle *
 /*===feature group: cocoa_basic (mandatory group - all Cocoa bundles must implement this group) */
 /* - initialize Cocoa; takes userInput callback function as argument; returns bitmask for cocoaFeatures */
 int (*cocoaInitializeBundle)(int (*callBack)(const char *));
+void (*cocoaDeInitializeBundle)(void);
 
 /* the following functions return 0 on success and !=0 on failure */
 /* - makes Cocoa window active; the window number should be 0 since we have only the main window atm. */
@@ -570,14 +571,17 @@ OSStatus SetUpGUI(void){
     if( (err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow)) != noErr)
         goto guifailure;
 	
-    loadPrivateFrameworkBundle(CFSTR("CocoaBundle.bundle"), &cocoaBundleRef);
+    loadPrivateFrameworkBundle(CFSTR("RGUI.bundle"), &cocoaBundleRef);
     
     /* if the bundle is loaded and at least basic features are provided, we can use the bundle instead of the Carbon window */
     if (cocoaBundleRef && ((cocoaFeatures&cocoa_basic)>0))
         WeHaveCocoa=true; 
     
     /*   if( (err = CreateNibReference(CFSTR("main"), &nibRef)) != noErr) goto guifailure; */
-    
+    fprintf(stderr,"\ncocomenu=%x",cocoaFeatures&cocoa_menu);
+	fprintf(stderr,"\ncocobasic=%x",cocoaFeatures&cocoa_basic);
+	fprintf(stderr,"\ncocoloop=%x",cocoaFeatures&cocoa_loop);
+	
     if ((cocoaFeatures&cocoa_menu)==0) { /* if Cocoa bundle doesn't provide the menu, we create it */
         if( (err = SetMenuBarFromNib(nibRef, CFSTR("MenuBar"))) != noErr) goto guifailure;
     } else {
@@ -867,7 +871,8 @@ OSStatus InstallAppHandlers(void){
 	
 	InstallStandardEventHandler(GetApplicationEventTarget());
 	
-	err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
+	if(cocoaFeatures&cocoa_menu==0)
+		err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
 										  RCmdEvents, 0, NULL);
 	
 	
@@ -2576,7 +2581,7 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 			if(eventKind == kEventMouseDown){
 				if(ConvertEventRefToEventRecord(inEvent, &outEvent))
 					partCode = FindWindow(outEvent.where, &mywin);
-                if( partCode == inMenuBar){
+                if( (partCode == inMenuBar)){
                     MenuSelect(outEvent.where);
                     err = noErr;
                 }
@@ -3877,7 +3882,7 @@ void	Raqua_ProcessEvents(void)
 	if(CheckEventQueueForUserCancel())
 		onintr();
 	
-	if (cocoaProcessEvents) cocoaProcessEvents(0);
+	if (cocoaProcessEvents) cocoaProcessEvents(0); 
 	
 	if(ReceiveNextEvent(0, NULL, kEventDurationForever  ,true,&theEvent)== noErr){
 		conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
@@ -3967,7 +3972,7 @@ loadPrivateFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
 		goto CantCopyURL;
 	}
 
-	CocoabundleURL = CFURLCreateCopyAppendingPathComponent(kCFAllocatorSystemDefault, baseURL, CFSTR("RCocoaBundle.bundle"), false);
+	CocoabundleURL = CFURLCreateCopyAppendingPathComponent(kCFAllocatorSystemDefault, baseURL, CFSTR("RGUI.bundle"), false);
 	if(CocoabundleURL == NULL){
 		REprintf("\n CantCreateCocoaBundleURL");
 		goto CantCreateBundleURL;
@@ -3976,6 +3981,7 @@ loadPrivateFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
 	if (*bundlePtr) {
 		/* set pointers to all known Cocoa functions. unsupported functions will be 0 */
 		cocoaInitializeBundle = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("initializeBundle"));
+		cocoaDeInitializeBundle = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("DeInitializeBundle"));
 		cocoaSelectWindow = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("selectWindow"));
 		cocoaWriteConsole = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeConsole"));
 		cocoaWritePrompt = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writePrompt"));
