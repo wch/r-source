@@ -19,7 +19,8 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	file.edit() function added:  like file.show(), but allows editing.
+    o	Function file.edit() function added: like file.show(), but
+	allows editing.
 
     o	edit() and fix() use the object name in the window caption on
 	some platforms.
@@ -117,6 +118,9 @@ C-LEVEL FACILITIES
 
 
 DEPRECATED & DEFUNCT
+
+    o	Direct use of R INSTALL|REMOVE|BATCH|COMPILE|SHLIB has been
+	removed: use R CMD instead.
 
     o	La.eigen(), tetragamma(), pentagamma(), package.contents() and
 	package.description() are defunct.
