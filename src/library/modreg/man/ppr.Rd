@@ -180,8 +180,7 @@ Laboratory for Computational Statistics, Stanford University Technical
 Report No. 1.
 }
 \seealso{
-\code{\link{plot.ppr}}, \code{\link{ppreg}}, \code{\link{supsmu}},
-\code{\link{smooth.spline}}
+\code{\link{plot.ppr}}, \code{\link{supsmu}}, \code{\link{smooth.spline}}
 }
 \examples{
 # Note: your numerical values may differ
