@@ -4,7 +4,7 @@
 \title{ Reorder a dendrogram }
 \description{
   There are many different orderings of a dendrogram that are consistent
-  with the structure imposed. This function takes a dendrogram and a
+  with the structure imposed.  This function takes a dendrogram and a
   vector of values and reorders the dendrogram in the order of the
   supplied vector, maintaining the constraints on the dendrogram.
 }
@@ -34,5 +34,10 @@ reorder(x, \dots)
   hc <- hclust(dist(x))
   dd <- as.dendrogram(hc)
   dd.reorder <- reorder(dd, 10:1)
+
+  op <- par(mfcol = 1:2)
+  plot(dd, main = "random dendrogram `dd'")
+  plot(dd.reorder, main = "reorder(dd, 10:1)")
+  par(op)
 }
-\keyword{manip }
+\keyword{manip}
