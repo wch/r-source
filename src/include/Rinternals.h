@@ -849,6 +849,8 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p);
 typedef void (*R_CFinalizer_t)(SEXP);
 void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
+void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
+void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);

@@ -120,6 +120,7 @@ void Rgnome_Busy(int which)
  */
 
 void R_dot_Last(void);		/* in main.c */
+void R_RunExitFinalizers(void);	/* in memory.c */
 
 void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
@@ -184,6 +185,8 @@ void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
     default:
 	break;
     }
+
+    R_RunExitFinalizers();
 
     /* save GUI preferences */
     R_gnome_prefs_save();

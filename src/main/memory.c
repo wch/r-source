@@ -815,6 +815,12 @@ static SEXP R_fin_registered = NULL;
 #define CLEAR_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp &= ~READY_TO_FINALIZE_MASK)
 #define IS_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp & READY_TO_FINALIZE_MASK)
 
+#define FINALIZE_ON_EXIT_MASK 2
+
+#define SET_FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp |= FINALIZE_ON_EXIT_MASK)
+#define CLEAR_FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp &= ~FINALIZE_ON_EXIT_MASK)
+#define FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp & FINALIZE_ON_EXIT_MASK)
+
 static void CheckFinalizers(void)
 {
     SEXP s;
@@ -915,7 +921,17 @@ static Rboolean RunFinalizers(void)
     return finalizer_run;
 }
 
-void R_RegisterFinalizer(SEXP s, SEXP fun)
+void R_RunExitFinalizers(void)
+{
+    SEXP s;
+
+    for (s = R_fin_registered; s != R_NilValue; s = CDR(s))
+	if (FINALIZE_ON_EXIT(s))
+	    SET_READY_TO_FINALIZE(s);
+    RunFinalizers();
+}
+
+void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit)
 {
     switch (TYPEOF(s)) {
     case ENVSXP:
@@ -935,9 +951,18 @@ void R_RegisterFinalizer(SEXP s, SEXP fun)
     R_fin_registered = CONS(s, R_fin_registered);
     SET_TAG(R_fin_registered, fun);
     CLEAR_READY_TO_FINALIZE(R_fin_registered);
+    if (onexit)
+	SET_FINALIZE_ON_EXIT(R_fin_registered);
+    else
+	CLEAR_FINALIZE_ON_EXIT(R_fin_registered);
 }
 
-void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
+void R_RegisterFinalizer(SEXP s, SEXP fun)
+{
+    R_RegisterFinalizerEx(s, fun, FALSE);
+}
+
+void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit)
 {
     switch (TYPEOF(s)) {
     case ENVSXP:
@@ -954,8 +979,18 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
     R_fin_registered = CONS(s, R_fin_registered);
     SET_TAG(R_fin_registered, MakeCFinalizer(fun));
     CLEAR_READY_TO_FINALIZE(R_fin_registered);
+    if (onexit)
+	SET_FINALIZE_ON_EXIT(R_fin_registered);
+    else
+	CLEAR_FINALIZE_ON_EXIT(R_fin_registered);
     UNPROTECT(1);
 }
+
+void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
+{
+    R_RegisterCFinalizerEx(s, fun, FALSE);
+}
+
 
 /* The Generational Collector. */
 

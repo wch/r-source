@@ -42,6 +42,7 @@ R_embeddedShutdown(Rboolean ask)
 {
 
     R_dot_Last();
+    R_RunExitFinalizers();
     CleanEd();
     KillAllDevices();
     num_old_gens_to_collect = NUM_OLD_GENERATIONS;
