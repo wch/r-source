@@ -129,14 +129,16 @@ function(package, dir, lib.loc = NULL)
         ## Need to do something about S4 generic functions 'created' by
         ## setGeneric() or setMethod() on 'ordinary' functions.  Short
         ## term, we do this by checking for S4 generics in a package
-        ## which come from another one.  Long term, we need dynamic
-        ## documentation ...
+        ## which come from another one, or have a generated default
+        ## method.  Long term, we need dynamic documentation ...
         if(!is.na(match("package:methods", search()))) {
             codeObjs <-
                 codeObjs[sapply(codeObjs, function(f) {
                     f <- get(f, envir = codeEnv)
-                    (is(f, "genericFunction")
-                     && identical(f@package, basename(dir)))
+                    if(!is(f, "genericFunction")) return(FALSE)
+                    mlist <- getMethodsMetaData(f, codeEnv)
+                    is(finalDefaultMethod(mlist,
+                                          "derivedDefaultMethod"))
                 }) == FALSE]
         }
         ## </FIXME>
