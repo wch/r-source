@@ -52,30 +52,25 @@ double qt(double p, double ndf, int lower_tail, int log_p)
      */
     if (ndf > 1e20) return qnorm(p, 0., 1., lower_tail, log_p);
 
-    /* FIXME */
-    if(!lower_tail || log_p) {
-	warning("lower_tail & log_p not yet implemented in ptukey()");
-	return ML_NAN;
+    if(log_p) {	/* FIXME: *can* do better in the case where P = 2*p;
+		 *	  using	 qnorm(p, ... , log_p) .. */
+	p = exp(p);
     }
 
-    /* combine lower_tail and "neg" !! : */
-    if(p > 0.5) {
-	neg = 0; P = 2 * (1 - p);
+    if((lower_tail && p > 0.5) || (!lower_tail && p < 0.5)) {
+	neg = 0; P = 2 * R_D_Cval(p);
     } else {
-	neg = 1; P = 2 * p;
+	neg = 1; P = 2 * R_D_Lval(p);
     }
 
-    if (fabs(ndf - 2) < eps) {
-	/* df ~= 2 */
+    if (fabs(ndf - 2) < eps) {	/* df ~= 2 */
 	q = sqrt(2 / (P * (2 - P)) - 2);
     }
-    else if (ndf < 1 + eps) {
-	/* df ~= 1 */
+    else if (ndf < 1 + eps) {	/* df ~= 1 */
 	prob = P * M_PI_2;
 	q = cos(prob) / sin(prob);
     }
-    else {
-	/*-- usual case;  including, e.g.,  df = 1.1 */
+    else {		/*-- usual case;  including, e.g.,  df = 1.1 */
 	a = 1 / (ndf - 0.5);
 	b = 48 / (a * a);
 	c = ((20700 * a / b - 98) * a - 16) * a + 96.36;
@@ -92,11 +87,10 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    y = (((((0.4 * y + 6.3) * y + 36) * y + 94.5) / c
 		  - y - 3) / b + 1) * x;
 	    y = a * y * y;
-	    if (y > 0.002)
+	    if (y > 0.002)/* FIXME: This cutoff is machine-precision dependent*/
 		y = exp(y) - 1;
-	    else {
-				/* Taylor of  e^y -1 : */
-		y = 0.5 * y * y + y;
+	    else { /* Taylor of	 e^y -1 : */
+		y = (0.5 * y + 1) * y;
 	    }
 	} else {
 	    y = ((1 / (((ndf + 6) / (ndf * y) - 0.089 * d - 0.822)

@@ -68,7 +68,6 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     R_Q_P01_check(p);
     if (alpha <= 0) ML_ERR_return_NAN;
 
-
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
     if (/* 0 <= */ p_ < pMIN) return 0;
     if (/* 1 >= */ p_ > pMAX) return ML_POSINF;
@@ -84,6 +83,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
     if(v < (-1.24)*R_DT_log(p)) {	/* for small chi-squared */
 
+	/* FIXME: Improve this "if (log_p)" :
+	 *	  (A*exp(b)) ^ 1/al */
 	ch = pow(p_* alpha*exp(g+alpha*M_LN2), 1/alpha);
 	if(ch < EPS2) {/* Corrected according to AS 91; MM, May 25, 1999 */
 	    goto END;
@@ -91,7 +92,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
     } else if(v > 0.32) {	/*  using Wilson and Hilferty estimate */
 
-	x = qnorm(p, 0, 1, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+	x = qnorm(p, 0, 1, lower_tail, log_p);
 	p1 = 0.222222/v;
 	ch = v*pow(x*sqrt(p1)+1-p1, 3);
 
