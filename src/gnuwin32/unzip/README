@@ -1,10 +1,10 @@
-This is the README file for the 28 November 1998 public release of the
+This is the README file for the 16 April 2000 public release of the
 Info-ZIP group's portable UnZip zipfile-extraction program (and related
 utilities).
 
-unzip540.zip      portable UnZip, version 5.4, source code distribution
-unzip540.tar.Z    same as above, but compress'd tar format
-unzip540.tar.gz   same as above, but gzip'd tar format
+unzip541.zip      portable UnZip, version 5.41, source code distribution
+unzip541.tar.Z    same as above, but compress'd tar format
+unzip541.tar.gz   same as above, but gzip'd tar format
 
 __________________________________________________________________________
 
@@ -53,6 +53,14 @@ vms/descrip.mms.
 
 CHANGES AND NEW FEATURES
 ------------------------
+The 5.41 maintance release adds another new port and fixes some bugs.
+
+   - new BSD-like LICENSE
+   - new Novell Netware NLM port
+   - supports extraction of archives with more than 64k entries
+   - attribute handling of VMS port was broken in UnZip 5.4
+   - decryption support integrated in the main source distribution
+
 The 5.4 release adds new ports, again. Other important items are changes
 to the listing format, new supplemental features and several bug fixes
 (especially concerning time-stamp handling...):
@@ -118,10 +126,11 @@ about it than you are. :-(  See the COPYING file for details.
 INTERNET RESOURCES
 ------------------
 
-Info-ZIP's web site is at http://www.cdrom.com/pub/infozip/ and contains the
-most up-to-date information about coming releases, links to binaries, and
-common problems.  (See http://www.cdrom.com/pub/infozip/FAQ.html for the
-latter.)  Files may also be retrieved via ftp://ftp.cdrom.com/pub/infozip/ .
+Info-ZIP's web site is at http://www.info-zip.org/pub/infozip/
+and contains the most up-to-date information about coming releases,
+links to binaries, and common problems.
+(See http://www.info-zip.org/pub/infozip/FAQ.html for the latter.)
+Files may also be retrieved via ftp://ftp.info-zip.org/pub/infozip/ .
 Thanks to Walnut Creek CD-ROM for hosting our primary site.
 
 

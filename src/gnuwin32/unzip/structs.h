@@ -1,3 +1,11 @@
+/*
+  Copyright (c) 1990-2000 Info-ZIP.  All rights reserved.
+
+  See the accompanying file LICENSE, version 2000-Apr-09 or later
+  (the contents of which are also included in unzip.h) for terms of use.
+  If, for some reason, all these files are missing, the Info-ZIP license
+  also may be found at:  ftp://ftp.info-zip.org/pub/infozip/license.html
+*/
 #ifndef __structs_h
 #define __structs_h
 
@@ -16,10 +24,6 @@
 #  ifndef FAR
 #    define FAR
 #  endif
-#endif
-
-#ifndef PATH_MAX
-#  define PATH_MAX 260            /* max total file or directory name path */
 #endif
 
 #ifndef DEFINED_ONCE
@@ -44,8 +48,8 @@ DLLMESSAGE *SendApplicationMessage;
 DLLSERVICE *ServCallBk;
 unsigned long TotalSizeComp;
 unsigned long TotalSize;
-int CompFactor;
-unsigned int NumMembers;
+unsigned long CompFactor;       /* "long" applied for proper alignment, only */
+unsigned long NumMembers;
 WORD cchComment;
 } USERFUNCTIONS, far * LPUSERFUNCTIONS;
 
@@ -57,7 +61,7 @@ int fQuiet;
 int ncflag;
 int ntflag;
 int nvflag;
-int nUflag;
+int nfflag;
 int nzflag;
 int ndflag;
 int noflag;

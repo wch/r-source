@@ -23,6 +23,7 @@
 #endif
 
 #include "Defn.h"
+void R_ShowMessage(char *s); /* from rui.h */
 
 static int unzip_is_loaded = 0;
 static int Load_Unzip_DLL();
@@ -69,21 +70,68 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 #include "graphapp/graphapp.h"
 #include "unzip/structs.h"
 
-#define UNZ_DLL_NAME "UNZIP32.DLL\0"
+#define UNZ_DLL_NAME "unzip32static.dll\0"
 typedef int (WINAPI * _DLL_UNZIP)(int, char **, int, char **,
                                   LPDCL, LPUSERFUNCTIONS);
 _DLL_UNZIP Wiz_SingleEntryUnzip;
 HINSTANCE hUnzipDll;
+HANDLE  hMem;         /* handle to mem alloc'ed */
+
+#define UNZ_DLL_VERSION "5.41\0"
+#define COMPANY_NAME "Info-ZIP\0"
+#define DLL_VERSION_WARNING "%s is missing\nor has the wrong version number.\nEnsure that you have the correct DLL installed"
 
 static int Load_Unzip_DLL()
 {
     char szFullPath[PATH_MAX];
+    DWORD dwVerInfoSize;
+    DWORD dwVerHnd;
 
     if (unzip_is_loaded) return !(unzip_is_loaded >0);
     strcpy(szFullPath, R_HomeDir());
     strcat(szFullPath, "\\unzip\\");
     strcat(szFullPath, UNZ_DLL_NAME);
 
+    dwVerInfoSize =
+	GetFileVersionInfoSize(szFullPath, &dwVerHnd);
+
+    if (dwVerInfoSize) {
+	BOOL  fRet, fRetName;
+	LPSTR lpstrVffInfo;
+	LPSTR lszVer = NULL;
+	LPSTR lszVerName = NULL;
+	UINT  cchVer = 0;
+
+	/* Get a block big enough to hold the version information */
+	hMem          = GlobalAlloc(GMEM_MOVEABLE, dwVerInfoSize);
+	lpstrVffInfo  = GlobalLock(hMem);
+
+	/* Get the version information */
+	if (GetFileVersionInfo(szFullPath, 0L, dwVerInfoSize, lpstrVffInfo))
+	{
+	    fRet = VerQueryValue(lpstrVffInfo,
+				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
+				 (LPVOID)&lszVer,
+				 &cchVer);
+	    fRetName = VerQueryValue(lpstrVffInfo,
+				     TEXT("\\StringFileInfo\\040904E4\\CompanyName"),
+				     (LPVOID)&lszVerName,
+				     &cchVer);
+	    if (!fRet || !fRetName ||
+		(lstrcmpi(lszVer, UNZ_DLL_VERSION) != 0) ||
+		(lstrcmpi(lszVerName, COMPANY_NAME) != 0))
+		unzip_is_loaded = -1;
+	}
+	GlobalUnlock(hMem);
+	GlobalFree(hMem);
+    } else unzip_is_loaded = -1;
+
+    if (unzip_is_loaded < 0) {
+	char str[256];
+	sprintf (str, DLL_VERSION_WARNING, szFullPath);
+	R_ShowMessage(str);
+	return 1;
+    }    
     hUnzipDll = LoadLibrary(szFullPath);
     if (hUnzipDll != NULL) {
 	Wiz_SingleEntryUnzip =
@@ -169,9 +217,10 @@ static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
 			  2 = no messages */
     lpDCL->ntflag = 0; /* test zip file if true */
     lpDCL->nvflag = 0; /* give a verbose listing if true */
-    lpDCL->nUflag = 0; /* Do not extract only newer */
+    lpDCL->ExtractOnlyNewer = 0; /* Do not extract only newer */
     lpDCL->nzflag = 0; /* display a zip file comment if true */
     lpDCL->ndflag = 1; /* Recreate directories if true */
+    lpDCL->nfflag = 0; /* Do not freshen existing files only */
     lpDCL->noflag = over > 0; /* Over-write all files if true */
     lpDCL->naflag = 0; /* Do not convert CR to CRLF */
     lpDCL->lpszZipFN = zipname; /* The archive name */

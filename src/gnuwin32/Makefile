@@ -1,7 +1,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=BOTH # NO, CHM, BOTH
+WINHELP=CHM # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
@@ -20,7 +20,7 @@ else
 endif
 
 R-DLLFLAGS= $(STRIPFLAG) -mwindows
-R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
+R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS=libmain.a libappl.a libmath.a
@@ -71,7 +71,7 @@ fixfiles:
 fixed/fixdesc:
 	sh fixed/GETDESC $(PACKAGES)
 
-R.dll: R.a $(MAINLIBS) $(EXTRALIBS)
+R.dll: R.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 ../../bin/R.dll: fixfiles rlibs R.dll
 	$(MKDIR) -p ../../bin
