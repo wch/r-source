@@ -107,6 +107,11 @@ BUG FIXES
 	in the two-sided case (PR#895), and sometimes got continuity
 	correction wrong (PR#896).
 
+    o	Using out-of-range font values in text() on a postscript()
+	device on Windows could crash.  .ps.prolog was incorrectly
+	names in some of the documentation.  (PR#914)
+
+
 
 
 		CHANGES IN R VERSION 1.2.2

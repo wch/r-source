@@ -113,7 +113,7 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
     paper="special"}.
 
   Most of the PostScript prologue used is taken from the \R character
-  vector \code{.ps.profile}.  This is marked in the output, and can be
+  vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
   PostScript experts.)
 

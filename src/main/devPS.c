@@ -605,7 +605,7 @@ static void PSFileHeader(FILE *fp, int encoding, char *papername,
 	fprintf(fp, "/bp  { gs gs } def\n");
     prolog = findVar(install(".ps.prolog"), R_GlobalEnv);
     if(!isString(prolog))
-	error("Object .ps.profile is not a character vector");
+	error("Object .ps.prolog is not a character vector");
     fprintf(fp, "%% begin .ps.prolog\n");
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
@@ -1281,10 +1281,12 @@ static void PS_Deactivate(DevDesc *dd) {}
 static double PS_StrWidth(char *str, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-
+    int face = dd->gp.font;
+    
+    if(face < 1 || face > 5) face = 1;
     return floor(dd->gp.cex * dd->gp.ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
-			      &(pd->metrics[dd->gp.font-1]));
+			      &(pd->metrics[face-1]));
 }
 
 static void PS_MetricInfo(int c, double *ascent, double *descent,
