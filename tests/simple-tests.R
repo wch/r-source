@@ -12,23 +12,23 @@ log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 
 
-abs(Im(cos(acos(1i))) -  1) < 2*Meps
-abs(Im(sin(asin(1i))) -  1) < 2*Meps
-abs(Im(acos(cos(1i))) -  1) < 4*Meps
-abs(Im(asin(sin(1i))) -  1) < 2*Meps
+abs(Im(cos(acos(1i))) -	 1) < 2*Meps
+abs(Im(sin(asin(1i))) -	 1) < 2*Meps
+abs(Im(acos(cos(1i))) -	 1) < 4*Meps
+abs(Im(asin(sin(1i))) -	 1) < 2*Meps
 ##P (1 - Im(sin(asin(Ii))))/Meps
 ##P (1 - Im(cos(acos(Ii))))/Meps
 
 .Random.seed <- c(629, 6137, 22167) # want reproducible output
 Isi <- Im(sin(asin(1i + rnorm(100))))
 all(abs(Isi-1) < 100* Meps)
-##P table(2*abs(Isi-1)  / Meps)
+##P table(2*abs(Isi-1)	/ Meps)
 Isi <- Im(cos(acos(1i + rnorm(100))))
 all(abs(Isi-1) < 100* Meps)
-##P table(2*abs(Isi-1)  / Meps)
+##P table(2*abs(Isi-1)	/ Meps)
 Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
 all(abs(Isi-1) < 100* Meps)
-##P table(2*abs(Isi-1)  / Meps)
+##P table(2*abs(Isi-1)	/ Meps)
 
 all(names(c(a=pi, b=1, d=1:4)) == c("a","b", paste("d", 1:4, sep="")))
 ##P names(c(a=pi, b=1, d=1:4))

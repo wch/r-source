@@ -3,7 +3,7 @@
 
 all(1:12 == cumsum(rep(1,12)))
 
-x <- rnorm(127); sx <- sum(x);  abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)
+x <- rnorm(127); sx <- sum(x);	abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)
 
 typeof(1:4) == "integer" #-- fails for 0.2, 0.3,.., 0.9
 
