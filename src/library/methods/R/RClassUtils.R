@@ -220,7 +220,7 @@ completeClassDefinition <-
     ClassDef@subclasses <- completeSubclasses(ClassDef)
     assignClassDef(Class, ClassDef, 0)
     if(any(!is.na(match(names(ClassDef@subclasses), names(ClassDef@contains))))
-       && options()$warn > 0  ## NEEDED:  a better way to turn on strict testing
+       && getOption("warn") > 0 ## NEEDED:  a better way to turn on strict testing
        ) {
         bad <- names(ClassDef@subclasses)[!is.na(match(names(ClassDef@subclasses), names(ClassDef@contains)))]
         warning("Potential cycle in class inheritance: \"",Class,

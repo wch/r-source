@@ -137,7 +137,7 @@ message <-
   function(...) {
       ## the junk below is just til cat honors fill=TRUE on a single string.
       text <- paste(..., collapse="", sep="")
-      pos <- max(2*options()$width%/%3, 20)
+      pos <- max(2 * getOption("width") %/% 3, 20)
       while(nchar(text) > pos) {
           line <- substr(text, 1, pos)
           text <- substr(text, pos+1, nchar(text))
