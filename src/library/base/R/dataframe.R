@@ -131,7 +131,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
   value
 }
 
-as.data.frame.ts <- 
+as.data.frame.ts <-
 function(x, row.names=NULL, optional=F)
 {
   if(is.matrix(x)) as.data.frame.matrix(x, row.names, optional)
@@ -525,9 +525,9 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
     if(is.null(value)) {}
     else {
       if(!inherits(value, "data.frame"))
-        value <- as.data.frame(value)
+	value <- as.data.frame(value)
       if(length(value) != 1)
-        stop(paste("trying to replace one column with", length(value)))
+	stop(paste("trying to replace one column with", length(value)))
       if(length(row.names(value)) != nrows)
 	stop(paste("replacement has", length(value),
 		   "rows, data has", nrows))
@@ -757,8 +757,8 @@ print.data.frame <-
   if(length(x) == 0) {
     cat("NULL data frame with", length(row.names(x)), "rows\n")
   } else if(length(row.names(x)) == 0) {
-    print.atomic(names(x), quote = FALSE)
-    cat("<0 rows>\n")
+    print.default(names(x), quote = FALSE)
+    cat("<0 rows> (or 0-length row.names)\n")
   } else {
     if(!is.null(digits)) {
       ## if 'x' has factors & numeric, as.matrix(x) will use
