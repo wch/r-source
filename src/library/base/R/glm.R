@@ -8,7 +8,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 		control=glm.control(...), model=TRUE, method="glm.fit",
                 x=FALSE, y=TRUE, contrasts = NULL, ...)
 {
-    call <- match.call(expand.dots = FALSE)
+    call <- match.call()
 
     ## family
     if(is.character(family)) family <- get(family)
@@ -21,7 +21,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     ## extract x, y, etc from the model formula and frame
     mt <- terms(formula, data=data)
     if(missing(data)) data <- sys.frame(sys.parent())
-    mf <- match.call()
+    mf <- match.call(expand.dots = FALSE)
     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
     mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
     mf$... <- NULL
