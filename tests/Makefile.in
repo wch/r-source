@@ -28,15 +28,20 @@ TESTsrc-strict-auto = \
 TESTsrc-sloppy-1 = \
 	print-tests.R
 TESTsrc-sloppy-auto = \
-#	no-segfault.R
+	no-segfault.R
 
 TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
 TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)
+# These two "hand made":
+TESTsrc-Rdiff = $(TESTsrc-strict) $(TESTsrc-sloppy-1)
+TESTsrc-NO-diff = no-segfault.R
+
 TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
 TESTsrc-auto = $(TESTsrc-strict-auto) $(TESTsrc-sloppy-auto)
 TESTout-strict = $(TESTsrc-strict:.R=.Rout)
 TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
-TESTout = $(TESTsrc:.R=.Rout)
+TESTout-Rdiff = $(TESTsrc-Rdiff:.R=.Rout)
+TESTout-NO-diff = $(TESTsrc-NO-diff:.R=.Rout)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README Rdiff \
@@ -47,17 +52,6 @@ DISTFILES = Makefile.in README Rdiff \
 .SUFFIXES:
 .SUFFIXES: .R .Rout
 
-.R.Rout:
-	@rm -f $@.fail
-	@(SRCDIR=$(srcdir); export SRCDIR; \
-	  echo "$(R) < $< > $@"; \
-	  $(R) < $< > $@)
-	@echo @ECHO_N@ \
-	  "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"
-	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
-	  (mv $@ $@.fail && exit 1)
-	@echo "@ECHO_T@ OK"
-
 all: Makefile test-All
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -65,7 +59,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 Makedeps: Makefile
-	@(for f in $(TESTsrc); do \
+	@(for f in $(TESTsrc-Rdiff); do \
 	    echo "$${f}out: $${f} $${f}out.save \$$(FORCE)"; \
 	  done) >> Makefile
 	@touch $@
@@ -73,8 +67,19 @@ FORCE:
 
 $(TESTsrc-auto): %.R : $(srcdir)/make-%.R
 	$(R) < $< > /dev/null
-# No Rdiff here:
-no-segfault.Rout: no-segfault.R
+
+$(TESTout-Rdiff): %.Rout : %.R
+	@rm -f $@.fail
+	@(SRCDIR=$(srcdir); export SRCDIR; \
+	  echo "$(R) < $< > $@"; \
+	  $(R) < $< > $@)
+	@echo -n \
+	  "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
+	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
+	  (mv $@ $@.fail && exit 1)
+	@echo " OK"
+
+$(TESTout-NO-diff): %.Rout : %.R
 	$(R) < $< > $@
 
 test-All: Makefile
