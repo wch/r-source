@@ -15,6 +15,24 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     file.path(getwd(), basename(epath))
 }
 
+.fileTest <- function(op, x, y) {
+    ## Provide shell-style '-f', '-d', '-nt' and '-ot' tests.
+    ## Note that file.exists() only tests existence ('test -e') but not
+    ## for being a regular file ('test -f').  We cannot really do this,
+    ## so our '-f' tests for existence and not being a directory.
+    ## Not vectorized because the typical use is 'if(.shTest(......))'.
+    switch(op,
+           "-f" = !is.na(isdir <- file.info(x)$isdir) && !isdir,
+           "-d" = !is.na(isdir <- file.info(x)$isdir) && isdir,
+           "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
+                    && !is.na(mt.y <- file.info(y)$mtime)
+                    && (mt.x > mt.y)),
+           "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
+                    && !is.na(mt.y <- file.info(y)$mtime)
+                    && (mt.x < mt.y)),
+           stop(paste("test", sQuote(op), "is not available")))
+}
+           
 .isS3Generic <- function(fname, envir = NULL) {
     ## Determine whether object named 'fname' in environment 'envir' is
     ## (to be considered) an S3 generic function.  In most cases, these
@@ -87,24 +105,6 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
            character(0))
 }
 
-.shTest <- function(op, x, y) {
-    ## Provide shell-style '-f', '-d', '-nt' and '-ot' tests.
-    ## Note that file.exists() only tests existence ('test -e') but not
-    ## for being a regular file ('test -f').  We cannot really do this,
-    ## so our '-f' tests for existence and not being a directory.
-    ## Not vectorized because the typical use is 'if(.shTest(......))'.
-    switch(op,
-           "-f" = !is.na(isdir <- file.info(x)$isdir) && !isdir,
-           "-d" = !is.na(isdir <- file.info(x)$isdir) && isdir,
-           "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
-                    && !is.na(mt.y <- file.info(y)$mtime)
-                    && (mt.x > mt.y)),
-           "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
-                    && !is.na(mt.y <- file.info(y)$mtime)
-                    && (mt.x < mt.y)),
-           stop(paste("test", op, "is not available")))
-}
-           
 .sourceAssignments <- function(file, envir) {
     ## Read and parse expressions from @code{file}, and then
     ## successively evaluate the top-level assignments in @code{envir}.
@@ -136,7 +136,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         helpIndex <- file.path(dir, "help", "AnIndex")
-        if(!.shTest("-f", helpIndex))
+        if(!.fileTest("-f", helpIndex))
             stop(paste("directory", sQuote(dir),
                        "contains no help index"))
         isBase <- package == "base"
@@ -157,12 +157,12 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)
         docsDir <- file.path(dir, "man")
-        if(!.shTest("-d", docsDir))
+        if(!.fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -171,7 +171,7 @@ function(package, dir, lib.loc = NULL)
         docsExts <- c("Rd", "rd")
         files <- .listFilesWithExts(docsDir, docsExts)
         docsOSDir <- file.path(docsDir, .Platform$OS)
-        if(.shTest("-d", docsOSDir))
+        if(.fileTest("-d", docsOSDir))
             files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
         aliases <- character(0)
         for(f in files) {
@@ -185,14 +185,14 @@ function(package, dir, lib.loc = NULL)
 
         codeEnv <- new.env()
         codeDir <- file.path(dir, "R")
-        if(.shTest("-d", codeDir)) {
+        if(.fileTest("-d", codeDir)) {
             ## Collect code in codeFile.            
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
             codeExts <- c("R", "r", "S", "s", "q")
             files <- .listFilesWithExts(codeDir, codeExts)
             codeOSDir <- file.path(codeDir, .Platform$OS)
-            if(.shTest("-d", codeOSDir))
+            if(.fileTest("-d", codeOSDir))
                 files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
             file.create(codeFile)
             file.append(codeFile, files)
@@ -208,7 +208,7 @@ function(package, dir, lib.loc = NULL)
 
     dataObjs <- character(0)
     dataDir <- file.path(dir, "data")
-    if(.shTest("-d", dataDir)) {
+    if(.fileTest("-d", dataDir)) {
         dataExts <- c("R", "r",
                       "RData", "rdata", "rda",
                       "TXT", "txt", "tab", "CSV", "csv")
@@ -329,11 +329,11 @@ function(package, dir, lib.loc = NULL,
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.shTest("-d", docsDir))
+        if(!.fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -350,16 +350,16 @@ function(package, dir, lib.loc = NULL,
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.shTest("-d", docsDir))
+        if(!.fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -370,7 +370,7 @@ function(package, dir, lib.loc = NULL,
         codeExts <- c("R", "r", "S", "s", "q")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.shTest("-d", codeOSDir))
+        if(.fileTest("-d", codeOSDir))
             files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
@@ -439,7 +439,7 @@ function(package, dir, lib.loc = NULL,
     docsExts <- c("Rd", "rd")
     files <- .listFilesWithExts(docsDir, docsExts)
     docsOSDir <- file.path(docsDir, .Platform$OS)
-    if(.shTest("-d", docsOSDir))
+    if(.fileTest("-d", docsOSDir))
         files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsList)
@@ -553,7 +553,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -570,12 +570,12 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)            
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -586,7 +586,7 @@ function(package, dir, lib.loc = NULL)
         codeExts <- c("R", "r", "S", "s", "q")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.shTest("-d", codeOSDir))
+        if(.fileTest("-d", codeOSDir))
             files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
@@ -637,14 +637,14 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)            
     }
 
     docsDir <- file.path(dir, "man")
-    if(!.shTest("-d", docsDir))
+    if(!.fileTest("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
     isBase <- basename(dir) == "base"
@@ -655,7 +655,7 @@ function(package, dir, lib.loc = NULL)
     docsExts <- c("Rd", "rd")
     files <- .listFilesWithExts(docsDir, docsExts)
     docsOSDir <- file.path(docsDir, .Platform$OS)
-    if(.shTest("-d", docsOSDir))
+    if(.fileTest("-d", docsOSDir))
         files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
@@ -756,11 +756,11 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.shTest("-d", docsDir))
+        if(!.fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -777,16 +777,16 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)            
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.shTest("-d", docsDir))
+        if(!.fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -797,7 +797,7 @@ function(package, dir, lib.loc = NULL)
         codeExts <- c("R", "r", "S", "s", "q")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.shTest("-d", codeOSDir))
+        if(.fileTest("-d", codeOSDir))
             files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
@@ -848,7 +848,7 @@ function(package, dir, lib.loc = NULL)
     docsExts <- c("Rd", "rd")
     files <- .listFilesWithExts(docsDir, docsExts)
     docsOSDir <- file.path(docsDir, .Platform$OS)
-    if(.shTest("-d", docsOSDir))
+    if(.fileTest("-d", docsOSDir))
         files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
@@ -963,18 +963,18 @@ function(package, dir, file, lib.loc = NULL,
             file <- file.path(packageDir, "R", package)
     }
     else if(!missing(dir)) {
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)            
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         codeExts <- c("R", "r", "S", "s", "q")
         codeFiles <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.shTest("-d", codeOSDir))
+        if(.fileTest("-d", codeOSDir))
             codeFiles <- c(codeFiles,
                            .listFilesWithExts(codeOSDir, codeExts))
         file <- tempfile()
@@ -987,7 +987,7 @@ function(package, dir, file, lib.loc = NULL,
                    sQuote("dir"), " or ", sQuote("file"), sep = ""))
     }
     
-    if(!.shTest("-f", file))
+    if(!.fileTest("-f", file))
         stop(paste("file", sQuote(file), "does not exist"))
 
     ## <FIXME>
@@ -1071,7 +1071,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -1088,12 +1088,12 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)            
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -1104,7 +1104,7 @@ function(package, dir, lib.loc = NULL)
         codeExts <- c("R", "r", "S", "s", "q")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.shTest("-d", codeOSDir))
+        if(.fileTest("-d", codeOSDir))
             files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
@@ -1218,38 +1218,38 @@ function(package, dir, file, lib.loc = NULL)
         }
         codeFiles <- file.path(packageDir, "R", package)
         exampleDir <- file.path(packageDir, "R-ex")
-        if(.shTest("-d", exampleDir)) {
+        if(.fileTest("-d", exampleDir)) {
             codeFiles <- c(codeFiles,
                            .listFilesWithExts(exampleDir, "R"))
         }
     }
     else if(!missing(dir)) {
-        if(!.shTest("-d", dir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- .convertFilePathToAbsolute(dir)            
         codeDir <- file.path(dir, "R")
-        if(!.shTest("-d", codeDir))
+        if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         codeExts <- c("R", "r", "S", "s", "q")
         codeFiles <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.shTest("-d", codeOSDir))
+        if(.fileTest("-d", codeOSDir))
             codeFiles <- c(codeFiles,
                            .listFilesWithExts(codeOSDir, codeExts))
         docsDir <- file.path(dir, "man")
-        if(.shTest("-d", docsDir)) {
+        if(.fileTest("-d", docsDir)) {
             docsExts <- c("Rd", "rd")
             docsFiles <- .listFilesWithExts(docsDir, docsExts)
             docsOSDir <- file.path(docsDir, .Platform$OS)
-            if(.shTest("-d", docsOSDir))
+            if(.fileTest("-d", docsOSDir))
                 docsFiles <- c(docsFiles,
                                .listFilesWithExts(docsOSDir, docsExts))
         }
     }
     else if(!missing(file)) {
-        if(!.shTest("-f", file))
+        if(!.fileTest("-f", file))
             stop(paste("file", sQuote(file), "does not exist"))
         else
             codeFiles <- file
