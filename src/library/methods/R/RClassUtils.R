@@ -517,7 +517,8 @@ reconcilePropertiesAndPrototype <-
           ## Look for a data part in the super classes, either an inherited
           ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
           for(cl in superClasses) {
-              thisDataPart <-  .validDataPartClass(cl, name)
+              clDef <- getClassDef(cl, where = where)
+              thisDataPart <-  .validDataPartClass(clDef, name)
               if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
                       if(!is.na(match(thisDataPart, c("NULL", "environment"))))
