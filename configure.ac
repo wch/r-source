@@ -1187,6 +1187,7 @@ esac
 ### * Output.
 
 AC_CONFIG_HEADERS([src/include/config.h])
+AC_CONFIG_HEADERS([src/include/Rmath.h])
 AC_CONFIG_FILES(
 [Makeconf
   Makefile
@@ -1206,7 +1207,6 @@ AC_CONFIG_FILES(
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile
   src/include/Makefile
-  src/include/Rmath.h
   src/include/R_ext/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
