@@ -4,11 +4,10 @@
 	*						 *
 	**************************************************
 
-		CHANGES IN R VERSION 0.64.3
 
 BUG FIXES
 
-    o	seq(along = v) { and seq(v) when length(v) > 1 } now return integer.
+    o	seq(along = v) { and seq(v) when length(v) > 1 } now returns integer.
 
     o	which(x) failed when x had names and NAs.
 
@@ -18,6 +17,7 @@ BUG FIXES
     	segfault
 
     o	Improved error message from check.options().
+
 
 		CHANGES IN R VERSION 0.64.2
 
