@@ -1877,7 +1877,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	int fontval = INTEGER(font)[i%nfont];
 
 	if (outerval == NA_INTEGER) outerval = 0;
-	if (R_FINITE(cexval)) dd->gp.cex = dd->gp.cexbase * cexval;
+	/* Note : we ignore any shrinking produced */
+	/* by mfrow / mfcol specs here.  I.e. don't */
+	/* dd->gp.cexbase. */
+	if (R_FINITE(cexval)) dd->gp.cex = cexval;
 	else cexval = cexsave;
 	dd->gp.font = (fontval == NA_INTEGER) ? fontsave : fontval;
 	dd->gp.adj = ComputeAdjValue(adjval, sideval, dd->gp.las);

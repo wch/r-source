@@ -47,29 +47,23 @@
  *  If a value is not found during the traversal, the symbol's
  *  "value" slot is inspected for a value.  This "top-level"
  *  environment is where system functions and variables reside.
- *  Assignment in this environment is carried out with the :=
- *  assignment operator.
- *
- *  Note that: mkEnv can be found in dstruct.c
  *
  */
 
 #include "Defn.h"
 
-/* extern int R_DirtyImage; */
+/*----------------------------------------------------------------------
+
+    NewEnvironment
+
+    Create an environment by extending "rho" with a frame obtained by
+    pairing the variable names given by the tags on "namelist" with
+    the values given by the elements of "valuelist".
 
 
-void InitGlobalEnv()
-{
-    R_GlobalEnv = emptyEnv();
-}
+  ----------------------------------------------------------------------*/
 
-
-/*  mkEnv - Create an environment with variable names given by the
-    tags on "namelist" and values given by the elements of
-    "valuelist". */
-
-SEXP mkEnv(SEXP namelist, SEXP valuelist, SEXP rho)
+SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 {
     SEXP v, n, newrho;
     PROTECT(namelist);
@@ -90,31 +84,40 @@ SEXP mkEnv(SEXP namelist, SEXP valuelist, SEXP rho)
 }
 
 
-/*  emptyEnv - Return an environment with no bindings. */
+/*----------------------------------------------------------------------
 
-SEXP emptyEnv()
+    InitGlobalEnv :
+
+    Create the initial global environment.  The global environment is
+    no longer a linked list of environment frames.  Instead it is a
+    vector of environments which is searched from beginning to end.
+
+    Note that only the first frame of each of these environments is
+    searched.  This is intended to make it possible to implement
+    namespaces at some (indeterminate) point in the future.
+
+  ----------------------------------------------------------------------*/
+
+void InitGlobalEnv()
 {
-    return mkEnv(R_NilValue, R_NilValue, R_NilValue);
+    R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_NilValue);
 }
 
 
-/*  extendEnv - Extend an environment "rho" by binding "vars" to
-    "vals".  This is only ever called in applyClosure. */
+/*----------------------------------------------------------------------
 
-SEXP extendEnv(SEXP rho, SEXP vars, SEXP vals)
-{
-    return mkEnv(vars, vals, rho);
-}
+    unbindVar :
+    
+    Remove a value from an environment. This happens only in the frame
+    of the specified frame.
 
+    FIXME ? should this also unbind the symbol value slot when rho is
+    R_NilValue.
 
-
-/*  unbindVar - Remove a value from an environment This happens only
-    in the current environment frame. */
+  ----------------------------------------------------------------------*/
 
 void unbindVar(SEXP symbol, SEXP rho)
 {
-    /* FIXME ? should this also unbind the */
-    /* symbol value slot when rho is R_NilValue */
     SEXP *v = &(FRAME(rho));
     while (*v != R_NilValue) {
 	if (TAG(*v) == symbol) {
@@ -127,7 +130,16 @@ void unbindVar(SEXP symbol, SEXP rho)
 }
 
 
-/*  findVarInFrame - Look up name in a single environment frame. */
+/*----------------------------------------------------------------------
+
+    findVarInFrame :
+
+    Look up the value of a symbol in a single environment frame.  This
+    is the basic building block of all variable lookups.
+
+    It is important that this be as efficient as possible.
+
+  ----------------------------------------------------------------------*/
 
 SEXP findVarInFrame(SEXP frame, SEXP symbol)
 {
@@ -140,7 +152,18 @@ SEXP findVarInFrame(SEXP frame, SEXP symbol)
 }
 
 
-/*  findVar - Look up a symbol in an environment. */
+/*----------------------------------------------------------------------
+
+    findVar :
+    
+    Look up a symbol in an environment.
+
+    Changes :
+
+    This needs to be changed so that the environment chain is searched
+    and then the searchpath is traversed.  
+
+  ----------------------------------------------------------------------*/
 
 SEXP findVar(SEXP symbol, SEXP rho)
 {
@@ -155,7 +178,26 @@ SEXP findVar(SEXP symbol, SEXP rho)
 }
 
 
-/*  ddfindVar - Find a ..X variable in an environment. */
+/*----------------------------------------------------------------------
+
+    ddfindVar : 
+
+    This function fetches the variables ..1, ..2, etc from the first
+    frame of the environment passed as the second argument to
+    ddfindVar.  These variables are implicitly defined whenever a
+    ... object is created.
+
+    To determine values for the variables we first search for an
+    explicit definition of the symbol, them we look for a ... object
+    in the frame and then walk through it to find the appropriate
+    values.
+
+    If no value is obtained we return R_UnboundValue.
+
+    It is an error to specify a .. index longer than the length of
+    the ... object the value is sought in.
+
+  ----------------------------------------------------------------------*/
 
 SEXP ddfindVar(SEXP symbol, SEXP rho)
 {
@@ -164,7 +206,7 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
 
     /* first look for the .. symbol itself */
     vl = findVarInFrame(FRAME(rho), symbol);
-    if( vl != R_UnboundValue )
+    if (vl != R_UnboundValue)
 	return(vl);
 
     i = DDVAL(symbol);
@@ -183,8 +225,17 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
 }
 
 
-/* Return R_UnboundValue if the symbol isn't located and the calling */
-/* function needs to handle the errors. */
+/*----------------------------------------------------------------------
+
+    dynamicFindVar :
+
+    This function does a variable lookup, but uses dynamic scoping rules
+    rather than the lexical scoping rules used in findVar.
+
+    Return R_UnboundValue if the symbol isn't located and the calling
+    function needs to handle the errors.
+
+  ----------------------------------------------------------------------*/
 
 SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
 {
@@ -201,10 +252,20 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
 }
 
 
-/* Search for a function in an environment This is a specially modified */
-/* version of findVar which ignores values its finds if they are not */
-/* functions.  NEEDED: modify this so that a search for an arbitrary mode */
-/* can be made.  Then findVar and findFun could become same function */
+/*----------------------------------------------------------------------
+
+    findFun :
+
+    Search for a function in an environment This is a specially
+    modified version of findVar which ignores values its finds if they
+    are not functions.
+
+    NEEDED: This needs to be modified so that an object of arbitrary mode
+    is searmodify this so that a search for an
+    arbitrary mode can be made.  Then findVar and findFun could become
+    same function
+
+  ----------------------------------------------------------------------*/
 
 SEXP findFun(SEXP symbol, SEXP rho)
 {
@@ -236,7 +297,14 @@ SEXP findFun(SEXP symbol, SEXP rho)
 }
 
 
-/* defineVar - Assign a value in a specific environment frame. */
+/*----------------------------------------------------------------------
+
+    defineVar :
+
+    Assign a value in a specific environment frame.
+    This needs to be rethought when it comes time to add a search path.
+
+  ----------------------------------------------------------------------*/
 
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
 {
@@ -259,7 +327,39 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     SYMVALUE(symbol) = value;
 }
 
-/* setVar - Assign a new value to bound symbol. */
+
+/*----------------------------------------------------------------------
+
+    setVarInFrame :
+
+    Assign a new value to a symbol in a frame.  Return the symbol if
+    successful and R_NilValue if not.
+
+  ----------------------------------------------------------------------*/
+
+SEXP setVarInFrame(SEXP frame, SEXP symbol, SEXP value)
+{
+    while (frame != R_NilValue) {
+	if (TAG(frame) == symbol) {
+	    CAR(frame) = value;
+	    return symbol;
+	}
+	frame = CDR(frame);
+    }
+    return R_NilValue;
+}
+
+
+/*----------------------------------------------------------------------
+
+    setVar :
+
+    Assign a new value to bound symbol.  Note this does the "inherits"
+    case.  I.e. it searches frame-by-frame for an symbol and binds the
+    given value to the first symbol encountered.  If no symbol is found
+    then a binding is created in the global environment.
+
+  ----------------------------------------------------------------------*/
 
 void setVar(SEXP symbol, SEXP value, SEXP rho)
 {
@@ -275,7 +375,15 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
     defineVar(symbol, value, R_GlobalEnv);
 }
 
-/* Assignment in the system environment. */
+
+/*----------------------------------------------------------------------
+
+    gsetVar :
+
+    Assignment in the system environment.  Here we assign directly into
+    the system environment.
+
+  ----------------------------------------------------------------------*/
 
 void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 {
@@ -283,21 +391,13 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
     SYMVALUE(symbol) = value;
 }
 
+/*----------------------------------------------------------------------
 
-/*  setVarInFrame - Assign a new value to a symbol in a frame.
-    Return the symbol if successful. */
+    do_globalenv
 
-SEXP setVarInFrame(SEXP frame, SEXP symbol, SEXP value)
-{
-    while (frame != R_NilValue) {
-	if (TAG(frame) == symbol) {
-	    CAR(frame) = value;
-	    return symbol;
-	}
-	frame = CDR(frame);
-    }
-    return R_NilValue;
-}
+    Returns the current global environment.
+
+  ----------------------------------------------------------------------*/
 
 
 SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -307,9 +407,15 @@ SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* To attach a list we make up an environment and insert */
-/* components of the list in as the values of this env */
-/* and intall the tags from the list as the names. */
+/*----------------------------------------------------------------------
+
+    do_attach :
+
+    To attach a list we make up an environment and insert components
+    of the list in as the values of this env and intall the tags from
+    the list as the names.
+
+  ----------------------------------------------------------------------*/
 
 SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 {

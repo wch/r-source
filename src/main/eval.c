@@ -227,7 +227,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
 
     PROTECT(actuals = matchArgs(formals, arglist));
-    PROTECT(newrho = extendEnv(savedrho, formals, actuals));
+    PROTECT(newrho = NewEnvironment(formals, actuals, savedrho));
 
     /* Use default code for unbound formals */
     f = formals;
