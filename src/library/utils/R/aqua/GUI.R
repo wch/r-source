@@ -383,7 +383,10 @@ Rapp.updates <- function() {
  strsplit(rapp.ver,"\\.") -> ver
  rapp.ver <- as.numeric(ver[[1]])
 
- if( sum(cran.ver - rapp.ver) > 0 ){
+ rapp.ver <- as.numeric(ver[[1]])
+ this.ver <- sum(rapp.ver * c(10000,100,1))
+ new.ver <- sum(cran.ver * c(10000,100,1))
+ if (new.ver > this.ver) {
   cat("\nThis version of R is",paste(rapp.ver,collapse="."))
   cat("\nThere is a newer version of R on CRAN which is",paste(cran.ver,collapse="."), "\n")
 
