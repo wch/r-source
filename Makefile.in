@@ -172,17 +172,21 @@ install-aqua: aqualaunch
 	bindir=/Applications/StartR.app/RAqua.app/Contents )
 	@(cd src/modules/aqua && sh AquaInstall)
 install-Rframework:
+	@(if test -z $(FWTARGET); FWTARGET=/Library/Frameworks/R.framework)
 	@(cd $(top_builddir) && \
 	$(MAKE) install \
-	rhome=/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources \
-	mandir=/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources \
-	bindir=/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources )
-	@(cd /Library/Frameworks/R.framework/Versions && \
-	ln -s $(VERSION) Current)
-	@(cd /Library/Frameworks/R.framework  && \
-	ln -s Versions/Current/Resources/include Headers && \
-	ln Versions/Current/Resources/bin/libR.dylib R && \
-	ln Versions/Current/Resources/bin/R /usr/local/lib/R)
+	rhome=$(FWTARGET)/Versions/$(VERSION)/Resources \
+	mandir=$(FWTARGET)/Versions/$(VERSION)/Resources \
+	bindir=$(FWTARGET)/Versions/$(VERSION)/Resources )
 	@(cd $(top_builddir)/src/modules/aqua && \
-	cp Info.plist /Library/Frameworks/R.framework/Versions/Current/Resources)    
+	cp Info.plist $(FWTARGET)/Versions/$(VERSION)/Resources)
+	@(cd $(FWTARGET)/Versions/$(VERSION) && \
+	ln -s Resources/include Headers && \
+	ln -s Resources/bin/libR.dylib R)
+	@(cd $(FWTARGET)/Versions && \
+	ln -f -s $(VERSION) Current)
+	@(cd $(FWTARGET)  && \
+	ln -f -s Versions/Current/Headers Headers&& \
+	ln -f -s Versions/Current/R R && \
+	ln -f -s Versions/Current/Resources Resources)
 TAGS:
