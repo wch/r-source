@@ -50,6 +50,10 @@ Rcmd.exe: rcmd.o ../rhome.o rcico.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
+Rpwd:
+	$(MAKE) -C ../fixed version
+	$(MAKE) Rpwd.exe
+
 Rpwd.exe: rpwd.o rcico.o
 
 rgui.o rterm.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
