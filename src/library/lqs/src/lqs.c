@@ -25,47 +25,17 @@
  * to be called as  .C(.)  in ../R/lqs.R
  */
 
-#include "S.h"
-#include "Applic.h"/*for the QR	    routines */
-#include "Utils.h"/*  for the sort() routines */
-#include "Arith.h"/* R_PosInf */
+#include "S.h"		/* unif_rand(), seed_in(), seed_out() */
+#include "Applic.h"	/* for the QR	  routines */
+#include "Utils.h"	/* for the sort() routines */
+#include "Arith.h"	/* R_PosInf */
 #include <math.h>
 
 
-
-/* GLOBAL Variables : */
+/* GLOBAL Variables, explicitly allocated and freed: */
 static double *coef, *qraux, *work, *res, *yr, *xr, *means, *d2, *d2copy;
 static longint *pivot, *which, *which2;
 static int *ind;
-
-/* 
-   Sampling k from 0:n-1 without replacement.
- */
-static void sample_noreplace(longint *x, int n, int k)
-{
-    int i, j, nn=n;
-
-    for (i = 0; i < n; i++) ind[i] = i;
-    for (i = 0; i < k; i++) {
-	j = nn * unif_rand();
-	x[i] = ind[j];
-	ind[j] = ind[--nn];
-    }
-}
-
-/* 
-   Find all subsets of size k in order: this gets a new one each call 
- */
-static void next_set(longint *x, int n, int k)
-{
-    int i, j, tmp;
-  
-    j = k - 1;
-    tmp = x[j]++;
-    while(j > 0 && x[j] >= n - (k - 1 -j)) tmp = ++x[--j];
-    for(i = j+1; i < k; i++)  x[i] =  ++tmp;
-}
-
 
 static void lqs_setup(longint *n, longint *p, longint *nwhich)
 {
@@ -83,12 +53,43 @@ static void lqs_setup(longint *n, longint *p, longint *nwhich)
 
 static void lqs_free()
 {
-    Free(coef); Free(qraux); Free(work); Free(res); Free(yr); Free(xr); 
+    Free(coef); Free(qraux); Free(work); Free(res); Free(yr); Free(xr);
     Free(pivot); Free(ind); Free(which); /*Free(bestone);*/
 }
 
-/* 
-   Adjust the constant for an LMS fit. This is the midpoint of the 
+
+
+/*
+   Sampling k from 0:n-1 without replacement.
+ */
+static void sample_noreplace(longint *x, int n, int k)
+{
+    int i, j, nn=n;
+
+    for (i = 0; i < n; i++) ind[i] = i;
+    for (i = 0; i < k; i++) {
+	j = nn * unif_rand();
+	x[i] = ind[j];
+	ind[j] = ind[--nn];
+    }
+}
+
+/*
+   Find all subsets of size k in order: this gets a new one each call
+ */
+static void next_set(longint *x, int n, int k)
+{
+    int i, j, tmp;
+
+    j = k - 1;
+    tmp = x[j]++;
+    while(j > 0 && x[j] >= n - (k - 1 -j)) tmp = ++x[--j];
+    for(i = j+1; i < k; i++)  x[i] =  ++tmp;
+}
+
+
+/*
+   Adjust the constant for an LMS fit. This is the midpoint of the
    qn contiguous observations of shortest length.
  */
 static double lmsadj(double *x, int n, int qn, double *ssbest)
@@ -109,8 +110,8 @@ static double lmsadj(double *x, int n, int qn, double *ssbest)
     return(adj);
 }
 
-/* 
-   Adjust the constant for an LTS fit. This is the mean of the 
+/*
+   Adjust the constant for an LTS fit. This is the mean of the
    qn contiguous observations of smallest variance.
  */
 static double ltsadj(double *x, int n, int qn, double *ssbest)
@@ -126,11 +127,11 @@ static double ltsadj(double *x, int n, int qn, double *ssbest)
     }
     adj = m1/qn;
     best = m2 - m1*m1/qn;
-  
+
     for(i = 1; i < n-k; i++){
 	m1 += x[i+k] - x[i-1];
 	m2 += x[i+k]*x[i+k] - x[i-1]*x[i-1];
-	ss = m2 - m1*m1/qn;   
+	ss = m2 - m1*m1/qn;
 	if(ss < best) {
 	    best = ss;
 	    adj = m1/qn;
@@ -145,17 +146,17 @@ static double chi(double x, double a)
 {
     x /= a; x *= x;
     if(x > 1) return(1.0);
-    else return(3*x - 3*x*x + x*x*x);
+    else return(x*(3 + x*(-3 + x)));
 }
 
-/* 
+/*
    For lots of subsets of size *nwhich, compute the exact fit to those
    data points and the residuals from all the data points.
  */
-void 
-lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn, 
-	    longint *lts, longint *adj, longint *sample, longint *nwhich, 
-	    longint *ntrials, double *crit, longint *sing, longint *bestone, 
+void
+lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
+	    longint *lts, longint *adj, longint *sample, longint *nwhich,
+	    longint *ntrials, double *crit, longint *sing, longint *bestone,
 	    double *bestcoef, longint *pk0, double *beta)
 {
     longint nnew = *nwhich, pp = *p;
@@ -163,34 +164,34 @@ lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
     longint rank, info, n100 = 100;
     long ignored;
     int firsttrial = 1;
-    double a = 0.0, tol = 1.0e-7, sum, thiscrit, best = R_PosInf, target, 
+    double a = 0.0, tol = 1.0e-7, sum, thiscrit, best = R_PosInf, target,
 	old, new, dummy;
-  
+
     lqs_setup(n, p, nwhich);
-  
+
     *sing = 0;
     target = (nn - pp)* (*beta);
 
-    if(!*sample) {
+    if(!(*sample)) {
 	for(i = 0; i < nnew; i++) which[i] = i;
     } else seed_in(&ignored);
-  
+
     for(trial = 0; trial < *ntrials; trial++) {
 
 	if(!(*sample)) {if(trial > 0) next_set(which, nn, nnew);}
 	else sample_noreplace(which, nn, nnew);
 
 	for(j = 0; j < nnew; j++) {
-	    this = which[j]; 
+	    this = which[j];
 	    yr[j] = y[this];
 	    for(k = 0; k < pp; k++) xr[j + nnew*k] = x[this + nn*k];
 	}
 
 	/* compute fit, find residuals */
-	F77_CALL(dqrdc2)(xr, &nnew, &nnew, &pp, &tol, &rank, 
+	F77_CALL(dqrdc2)(xr, &nnew, &nnew, &pp, &tol, &rank,
 			 qraux, pivot, work);
 	if(rank < pp) { (*sing)++; continue; }
-	F77_CALL(dqrsl)(xr, &nnew, &nnew, &rank, qraux, yr, &dummy, yr, 
+	F77_CALL(dqrsl)(xr, &nnew, &nnew, &rank, qraux, yr, &dummy, yr,
 			coef, &dummy, &dummy, &n100, &info);
 
 	for(i = 0; i < nn; i++) {
@@ -201,8 +202,8 @@ lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
 
 	if(*lts < 2) {/* lqs or lts estimation */
 	    /* find the constant subtracted from the residuals that minimizes
-	       the criterion. As this is a univariate problem, has an exact 
-	       solution.  */ 
+	       the criterion. As this is a univariate problem, has an exact
+	       solution.  */
 	    if(*adj) {
 		rsort(res, nn);
 		if(*lts) a = ltsadj(res, nn, *qn, &thiscrit);
@@ -226,7 +227,7 @@ lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
 		rPsort(res, nn, nn/2);
 		old = res[nn/2]/0.6745;	 /* MAD provides the initial scale */
 		firsttrial = 0;
-	    } else {  
+	    } else {
 		/* only find optimal scale if it will be better than
 		   existing best solution */
 		sum = 0.0;
@@ -277,7 +278,7 @@ static void mve_setup(longint *n, longint *p, longint *ps)
 
 static void mve_free()
 {
-    Free(xr); Free(qraux); Free(work); Free(d2); Free(pivot); Free(means); 
+    Free(xr); Free(qraux); Free(work); Free(d2); Free(pivot); Free(means);
     Free(ind); Free(which); /*Free(bestone);*/ Free(d2copy);
 }
 
@@ -286,7 +287,7 @@ static double mah(double *xr, int nnew, int p, double *x)
 {
     int i, j;
     double s, ss = 0.0;
-  
+
     for(j = 0; j < p; j++) {
 	s = x[j];
 	if(j > 0) for(i = 0; i < j; i++) s -= work[i] * xr[i + nnew*j];
@@ -296,19 +297,19 @@ static double mah(double *xr, int nnew, int p, double *x)
     return(ss*(nnew-1));
 }
 
-/* 
-   Compute the squared Mahalanobis distances, in d2, to all points in x 
-   from the mean of the subset in which using the covariance of that 
+/*
+   Compute the squared Mahalanobis distances, in d2, to all points in x
+   from the mean of the subset in which using the covariance of that
    subset.
 */
-static int do_one(double *x, longint *which, int n, longint nnew, longint p, 
+static int do_one(double *x, longint *which, int n, longint nnew, longint p,
        double *det, double *d2)
 {
     int i, j, k;
     longint rank;
     double sum, tol = 1.0e-7;
-  
-    for(j = 0; j < nnew; j++) 
+
+    for(j = 0; j < nnew; j++)
 	for(k = 0; k < p; k++) xr[j + nnew*k] = x[which[j] + n*k];
     for(k = 0; k < p; k++) {
 	sum = 0.0;
@@ -322,7 +323,7 @@ static int do_one(double *x, longint *which, int n, longint nnew, longint p,
     if(rank < p) return(1);
 
     sum = 0.0;
-    for(k = 0; k < p; k++) 
+    for(k = 0; k < p; k++)
 	sum += log(fabs(xr[k + nnew*k]));
     *det = sum;
 
@@ -335,21 +336,21 @@ static int do_one(double *x, longint *which, int n, longint nnew, longint p,
 }
 
 
-void 
+void
 mve_fitlots(double *x, longint *n, longint *p, longint *qn, longint *mcd,
-	    longint *sample, longint *nwhich, longint *ntrials, 
+	    longint *sample, longint *nwhich, longint *ntrials,
 	    double *crit, longint *sing, longint *bestone)
 {
     int i, iter, j, nn = *n, quan = *qn, trial, this_sing;
     longint nnew = *nwhich;
     long ignored;
     double det, best = R_PosInf, thiscrit, lim;
-  
-    if(*mcd != 1) 
+
+    if(*mcd != 1)
 	mve_setup(n, p, nwhich);
     else
 	mve_setup(n, p, n); /* could get ties */
-  
+
     *sing = 0;
     if(!*sample) {
 	for(i = 0; i < nnew; i++) which[i] = i;
@@ -364,8 +365,8 @@ mve_fitlots(double *x, longint *n, longint *p, longint *qn, longint *mcd,
 
 	/* for(i = 0; i < nnew; i++) printf("%d ", which[i]); printf("\n");
 	   fflush(stdout);*/
-    
-    
+
+
 	/* Find the mean and covariance matrix of the sample. Check if singular.
 	   Compute Mahalanobis distances of all points to the means using
 	   this covariance matrix V, and find quantile largest. Volume is
@@ -373,7 +374,7 @@ mve_fitlots(double *x, longint *n, longint *p, longint *qn, longint *mcd,
 
 	this_sing = do_one(x, which, nn, nnew, *p, &det, d2);
 	if(this_sing)  {(*sing)++; continue;}
-	
+
 	/*for(i = 0; i < nnew; i++) printf(" %d", which[i]); printf("\n");*/
 
 	for(i = 0; i < nn; i++) d2copy[i] = d2[i];
@@ -389,9 +390,9 @@ mve_fitlots(double *x, longint *n, longint *p, longint *qn, longint *mcd,
 		    lim = d2copy[*qn-1];
 		}
 		j = 0;
-		for(i = 0; i < nn; i++) 
+		for(i = 0; i < nn; i++)
 		    if(d2[i] <= lim) which2[j++] = i;
-		/* note: we take all points that meet this limit: 
+		/* note: we take all points that meet this limit:
 		   there could be more than quan. */
 		(void) do_one(x, which2, nn, quan, *p, &det, d2);
 		if(iter > 0 && 2 * det >= 0.999*thiscrit) break;
@@ -400,10 +401,10 @@ mve_fitlots(double *x, longint *n, longint *p, longint *qn, longint *mcd,
 		   for(i = 0; i < quan; i++) printf(" %d", which2[i]);
 		   printf("\n"); fflush(stdout);*/
 	    }
-      
+
 	}
 	/*   printf("this %f\n", thiscrit);*/
-    
+
 
 	if(thiscrit < best) { /* warning: first might be singular */
 	    best = thiscrit;
