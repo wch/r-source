@@ -332,6 +332,8 @@ BUG FIXES
 
     o	Comparison of a data frame and list failed due to typo. (PR#1889)
 
+    o	dput() and dump() attempt to check if writing succeeded. (PR#1884)
+
 
 
 	**************************************************

@@ -25,6 +25,9 @@ dump(list, file="dumpdata.R", append=FALSE)
   incomplete and it really only works for functions and
   simple vectors.
 
+  \code{dump} will warn if fewer characters were written to a file than
+  expected, which may indicate a full or corrupt file system.
+
   The function \code{\link{save}} is designed to be used for
   transporting \R data between machines.
 }

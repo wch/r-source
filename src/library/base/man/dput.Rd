@@ -23,6 +23,9 @@ dget(file)
 
   Using \code{dget}, the object can be recreated (with the limitations
   mentioned above).
+
+  \code{dput} will warn if fewer characters were written to a file than
+  expected, which may indicate a full or corrupt file system.
 }
 \seealso{
   \code{\link{deparse}}, \code{\link{dump}}, \code{\link{write}}.
