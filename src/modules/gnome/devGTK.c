@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001   Lyndon Drake
+ *  Copyright (C) 1998-2003   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -413,14 +413,14 @@ static void tb_close_cb(GtkWidget *widget, gpointer data)
 
 static GnomeUIInfo graphics_toolbar[] =
 {
-    { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device", 
-      (gpointer) tb_activate_cb, NULL, NULL, 
-      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_JUMP_TO, 
+    { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device",
+      (gpointer) tb_activate_cb, NULL, NULL,
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_JUMP_TO,
       0, (GdkModifierType) 0, NULL },
     GNOMEUIINFO_SEPARATOR,
-    { GNOME_APP_UI_ITEM, "Close", "Close this graphics device", 
-      (gpointer) tb_close_cb, NULL, NULL, 
-      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 
+    { GNOME_APP_UI_ITEM, "Close", "Close this graphics device",
+      (gpointer) tb_close_cb, NULL, NULL,
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE,
       0, (GdkModifierType) 0, NULL },
     GNOMEUIINFO_END
 };
@@ -566,17 +566,24 @@ static void GTK_MetricInfo(int c, int font, double cex, double ps,
 }
 
 /* set clipping */
+/* code borrowed from gtkDevice 2003-01-08 to fix PR#2366 */
 static void GTK_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
-    gtkd->clip.x = MIN(x0, x1);
-    gtkd->clip.width = abs(x0 - x1);
+    gtkd->clip.x = dd->clipLeft = (int) MIN(x0, x1);
+    gtkd->clip.width = abs( (int) x0 - (int) x1) + 1;
+    dd->clipRight = dd->clipLeft + gtkd->clip.width;
 
-    gtkd->clip.y = MIN(y0, y1);
-    gtkd->clip.height = abs(y0 - y1);
+    gtkd->clip.y = dd->clipBottom = (int) MIN(y0, y1);
+    gtkd->clip.height = abs( (int) y0 - (int) y1) + 1;
+    dd->clipTop = dd->clipBottom + gtkd->clip.height;
 
-    gdk_gc_set_clip_rectangle(gtkd->wgc, &gtkd->clip);
+    /* Setting the clipping rectangle works when drawing to a window
+       but not to the backing pixmap. This is a GTK+ bug that is
+       unlikely to be fixed in this version (9 Jul 2002) - MTP
+    */
+    /* gdk_gc_set_clip_rectangle(gtkd->wgc, &gtkd->clip); */
 }
 
 static void GTK_Size(double *left, double *right,
@@ -1087,7 +1094,7 @@ GTKDeviceDriver(DevDesc *odd, char *display, double width,
     dd->canChangeFont= FALSE;
     dd->canRotateText= TRUE;
     dd->canResizeText= TRUE;
-    dd->canClip = FALSE;/* FIXME: really? */
+    dd->canClip = FALSE; /* See comment in GTK_Clip */
     dd->canHAdj = 0;/* not better? {0, 0.5, 1} */
     dd->canChangeGamma = FALSE;
 
