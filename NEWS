@@ -26,6 +26,9 @@ NEW FEATURES
 
     o	DESCRIPTION file has a new recommended `Maintainer:' field.
 
+    o	New functions factanal(), varimax(), promax() and examples in
+	package mva.
+
 
 BUG FIXES
     
@@ -59,7 +62,15 @@ BUG FIXES
     o	scan(strip.white=TRUE) and readline() could give incorrect 
 	answers when an input field was empty or blank.
 
-    o   dchisq() now behaves better for large values of its ncp parameter 
+    o   dchisq() now behaves better for large values of its ncp parameter.
+
+    o   is.vector() is now correctly documented: complex vectors and
+	lists return TRUE.
+
+    o   The convergence criterion in the Forrtan SVD code has ben
+	changed to circumvent spurious convergence errors when
+	comparing extended-precision quantities on ix86 Linux (and
+	some compilers and options).
 
 
 
