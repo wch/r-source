@@ -53,6 +53,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Stored-source was dropped by dump()
+
     o	When documentation is "compiled" (build-help), you now get warnings
 	for multiple (conflicting) \alias{.} or \name{.}s.
 
