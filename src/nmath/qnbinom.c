@@ -24,7 +24,7 @@
  *
  *  DESCRIPTION
  *
- *	The distribution function of the negative binomial distribution.
+ *	The quantile function of the negative binomial distribution.
  *
  *  NOTES
  *
@@ -63,7 +63,7 @@ double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
     gamma = (Q + P)/sigma;
 
     z = qnorm(p, 0., 1., lower_tail, log_p);
-    y = floor(mu + sigma * (z + gamma * (z*z - 1.0) / 6.0) + 0.5);
+    y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
 
     z = pnbinom(y, n, pr, lower_tail, log_p);
 
@@ -75,7 +75,7 @@ double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
 	    y = y - 1;
 	}
     }
-    else {		/* search to the right */
+    else { 		/* search to the right */
 
 	for(;;) {
 	    y = y + 1;
