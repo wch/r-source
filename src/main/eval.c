@@ -1231,25 +1231,45 @@ int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 
-/* Compare two class attributes and decide whether one dominates the */
-/* other.  For now this is a pretty simple version but it could get */
-/* more complicated comparing factors (ordered vs not) etc. */
-
-static SEXP dominates(SEXP cclass, SEXP newobj)
+/* gr needs to be protected on return from this function */
+static void findmethod(SEXP class, char *group, char *generic, 
+		       SEXP *sxp,  SEXP *gr, SEXP *meth, int *which, SEXP rho)
 {
-    SEXP t;
-    t = getAttrib(newobj, R_ClassSymbol);
-    if (cclass == R_NilValue)
-	return t;
-    return cclass;
+    int len, whichclass;
+    char buf[512];
+
+    len = length(class);
+
+    /* Need to interleave looking for group and generic methods */
+    /* eg if class(x) is "foo" "bar" then x>3 should invoke */
+    /* "Ops.foo" rather than ">.bar" */
+    for (whichclass = 0 ; whichclass < len ; whichclass++) {
+	sprintf(buf, "%s.%s", generic, CHAR(STRING(class)[whichclass]));
+	*meth = install(buf);
+	*sxp = findVar(*meth, rho);
+	if (isFunction(*sxp)) {
+	    *gr = mkString("");
+	    break;
+	}
+	sprintf(buf, "%s.%s", group, CHAR(STRING(class)[whichclass]));
+	*meth = install(buf);
+	*sxp = findVar(*meth, rho);
+	if (isFunction(*sxp)) {
+	    *gr = mkString(group);
+	    break;
+	}
+    }
+    *which = whichclass;
 }
 
 int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		  SEXP *ans)
 {
-    int i, j, nargs, whichclass, set;
-    SEXP class, s, t, m, meth, sxp, gr, newrho;
+    int i, j, nargs, lwhich, rwhich, set;
+    SEXP lclass, s, t, m, lmeth, lsxp, lgr, newrho;
+    SEXP rclass, rmeth, rgr, rsxp;
     char buf[512], generic[128], *pt;
+
     /* check whether we are processing the default method */
     if ( isSymbol(CAR(call)) ) {
 	sprintf(buf, "%s", CHAR(PRINTNAME(CAR(call))) );
@@ -1271,36 +1291,49 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     if(!isObject(CAR(args)) && !isObject(CADR(args)))
 	return 0;
 
-    class = getAttrib(CAR(args), R_ClassSymbol);
-    if( nargs == 2 )
-	class = dominates(class, CADR(args));
-
     sprintf(generic, "%s", PRIMNAME(op) );
 
-    j = length(class);
-    sxp = R_NilValue;
-    /* -Wall: */ gr = R_NilValue; meth = R_NilValue;
-    /* Need to interleave looking for group and generic methods */
-    /* eg if class(x) is "foo" "bar" then x>3 should invoke */
-    /* "Ops.foo" rather than ">.bar" */
-    for (whichclass = 0 ; whichclass < j ; whichclass++) {
-	sprintf(buf, "%s.%s", generic, CHAR(STRING(class)[whichclass]));
-	meth = install(buf);
-	sxp = findVar(meth, rho);
-	if (isFunction(sxp)) {
-	    PROTECT(gr = mkString(""));
-	    break;
-	}
-	sprintf(buf, "%s.%s", group, CHAR(STRING(class)[whichclass]));
-	meth = install(buf);
-	sxp = findVar(meth, rho);
-	if (isFunction(sxp)) {
-	    PROTECT(gr = mkString(group));
-	    break;
-	}
+    lclass = getAttrib(CAR(args), R_ClassSymbol);
+
+    if( nargs == 2 )
+	rclass = getAttrib(CADR(args), R_ClassSymbol);
+    else
+	rclass = R_NilValue;
+
+    lsxp = R_NilValue; lgr = R_NilValue; lmeth = R_NilValue;
+    rsxp = R_NilValue; rgr = R_NilValue; rmeth = R_NilValue;
+
+    findmethod(lclass, group, generic, &lsxp, &lgr, &lmeth, &lwhich, rho);
+    PROTECT(lgr);
+
+    if( nargs == 2 )
+	findmethod(rclass, group, generic, &rsxp, &rgr, &rmeth, &rwhich, rho);
+    else
+	rwhich=0;
+
+    PROTECT(rgr);
+
+    if( !isFunction(lsxp) && !isFunction(rsxp) ) {
+	UNPROTECT(2);
+	return 0; /* no generic or group method so use default*/
     }
-    if( !isFunction(sxp) )  /* no generic or group method so use default*/
-	return 0;
+
+    if( lsxp!=rsxp ) {
+	if( isFunction(lsxp) && isFunction(rsxp) ) {
+	    warning("Incompatible methods (\"%s\", \"%s\") for \"%s\"",
+		    CHAR(PRINTNAME(lmeth)), CHAR(PRINTNAME(rmeth)), generic);
+	    UNPROTECT(2);
+	    return 0;
+	}
+	/* if the right hand side is the one */
+	if( !isFunction(lsxp) ) { /* copy over the righthand stuff */
+	    lsxp=rsxp;
+	    lmeth=rmeth;
+	    lgr=rgr;
+	    lclass=rclass;
+	    lwhich=rwhich;
+	}
+    }   
 
     /* we either have a group method or a class method */
 
@@ -1313,7 +1346,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if (isString(t)) {
 	    for (j = 0 ; j < length(t) ; j++) {
 		if (!strcmp(CHAR(STRING(t)[j]),
-			    CHAR(STRING(class)[whichclass]))) {
+			    CHAR(STRING(lclass)[lwhich]))) {
 		    STRING(m)[i] = mkChar(buf);
 		    set = 1;
 		    break;
@@ -1330,15 +1363,15 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     PROTECT(t=mkString(generic));
     defineVar(install(".Generic"), t, newrho);
     UNPROTECT(1);
-    defineVar(install(".Group"), gr, newrho);
-    set=length(class)-whichclass;
+    defineVar(install(".Group"), lgr, newrho);
+    set=length(lclass)-lwhich;
     PROTECT(t = allocVector(STRSXP, set));
     for(j=0 ; j<set ; j++ )
-	STRING(t)[j] = duplicate(STRING(class)[whichclass++]);
+	STRING(t)[j] = duplicate(STRING(lclass)[lwhich++]);
     defineVar(install(".Class"), t, newrho);
     UNPROTECT(1);
 
-    PROTECT(t = LCONS(meth,CDR(call)));
+    PROTECT(t = LCONS(lmeth,CDR(call)));
 
     /* the arguments have been evaluated; since we are passing them */
     /* out to a closure we need to wrap them in promises so that */
@@ -1350,7 +1383,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     for (m = s ; m != R_NilValue ; m = CDR(m), args = CDR(args) )
 	PRVALUE(CAR(m)) = CAR(args);
 
-    *ans = applyClosure(t, sxp, s, rho, newrho);
-    UNPROTECT(4);
+    *ans = applyClosure(t, lsxp, s, rho, newrho);
+    UNPROTECT(5);
     return 1;
 }
