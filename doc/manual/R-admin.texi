@@ -795,7 +795,8 @@ See the variable output section of @code{configure --help} for a list of
 all these variables.
 
 One common variable to change is @env{R_PAPERSIZE}, which defaults to
-@samp{a4}, not @samp{letter}.
+@samp{a4}, not @samp{letter}.  (Valid values are @samp{a4},
+@samp{letter}, @samp{legal} and @samp{executive}.)
 
 If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables @code{LDFLAGS} (for libraries,
