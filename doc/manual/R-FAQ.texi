@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-45, @value{FAQ-YEAR}-09-21
+@set FAQ-VERSION 1.7-46, @value{FAQ-YEAR}-09-26
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -179,7 +179,7 @@ In particular, note that I do not have access to Windows or Mac systems.
 Features specific to the Windows and Mac OS ports of R are described in
 the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for Windows
 @acronym{FAQ}''} and the
-@uref{http://cran.R-project.org/bin/macos/rmac-FAQ.html, ``R for
+@uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
 Macintosh @acronym{FAQ}/DOC''}.  If you have information on Mac or
 Windows systems that you think should be added to this document, please
 let me know.
@@ -427,9 +427,9 @@ release ``@var{x}.@var{y}''. The installation of these packages is
 available through the ``Package'' menu of the RAqua GUI.
 
 This port of R for MacOSX is maintained by
-@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.
-The @uref{http://www.economia.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
-@acronym{FAQ}/DOC''} has more details.
+@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
+@uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
+Macintosh @acronym{FAQ}/DOC''} has more details.
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
 (@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
@@ -2028,6 +2028,9 @@ Logspline density estimation.
 @item lokern
 Kernel regression smoothing with adaptive local or global plug-in
 bandwidth selection.
+@item lpSolve
+Functions that solve general linear/integer problems, assignment
+problems, and transportation problems via interfacing Lp_solve.
 @item lpridge
 Local polynomial (ridge) regression.
 @item maptools
