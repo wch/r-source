@@ -29,6 +29,7 @@ DISTFILES = Makefile.in \
 	install-sh \
 	keywords2html.pl \
 	ldAIX4 \
+	missing \
 	mkinstalldirs \
 	move-if-change \
 	texi2dvi \
