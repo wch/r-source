@@ -659,16 +659,24 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 }
 
 
+static Rboolean asLogicalNoNA(SEXP s, SEXP call)
+{
+    Rboolean cond = asLogical(s);
+    if (cond == NA_LOGICAL) {
+	char *msg = isLogical(s) ?
+	    "missing value where logical needed" :
+	    "argument of if(*) is not interpretable as logical";
+	errorcall(call, msg);
+    }
+    return cond;
+}
+    
+
 SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP Cond = eval(CAR(args), rho);
-    int cond;
 
-    if ((cond = asLogical(Cond)) == NA_LOGICAL)
-	errorcall(call, isLogical(Cond)
-		  ? "missing value where logical needed"
-		  : "argument of if(*) is not interpretable as logical");
-    else if (cond)
+    if (asLogicalNoNA(Cond, call))
 	return (eval(CAR(CDR(args)), rho));
     else if (length(args) > 2)
 	return (eval(CAR(CDR(CDR(args))), rho));
@@ -679,6 +687,13 @@ SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define BodyHasBraces(body) \
     ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
+
+#define DO_LOOP_DEBUG(call, op, args, rho, bgn) do { \
+    if (bgn && DEBUG(rho)) { \
+	Rprintf("debug: "); \
+	PrintValue(CAR(args)); \
+	do_browser(call,op,args,rho); \
+    } } while (0)
 
 
 SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -713,11 +728,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     bgn = BodyHasBraces(body);
 
     for (i = 0; i < n; i++) {
-	if( DEBUG(rho) && bgn ) {
-	    Rprintf("debug: ");
-	    PrintValue(body);
-	    do_browser(call,op,args,rho);
-	}
+	DO_LOOP_DEBUG(call, op, args, rho, bgn);
 	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((tmp = SETJMP(cntxt.cjmpbuf))) {
@@ -792,16 +803,8 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	bgn = 1;
     t = R_NilValue;
-    for (;;) {
-	if ((cond = asLogical(s)) == NA_LOGICAL)
-	    errorcall(call, "missing value where logical needed");
-	else if (!cond)
-	    break;
-	if (bgn && DEBUG(rho)) {
-	    Rprintf("debug: ");
-	    PrintValue(CAR(args));
-	    do_browser(call,op,args,rho);
-	}
+    while (asLogicalNoNA(s, call)) {
+	DO_LOOP_DEBUG(call, op, args, rho, bgn);
 	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((cond = SETJMP(cntxt.cjmpbuf))) {
@@ -837,11 +840,7 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     t = R_NilValue;
     for (;;) {
-	if (DEBUG(rho) && bgn) {
-	    Rprintf("debug: ");
-	    PrintValue(CAR(args));
-	    do_browser(call, op, args, rho);
-	}
+	DO_LOOP_DEBUG(call, op, args, rho, bgn);
 	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((cond = SETJMP(cntxt.cjmpbuf))) {
