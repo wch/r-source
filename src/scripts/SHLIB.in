@@ -4,11 +4,11 @@
 
 # @configure_input@
 
-revision='$Revision: 1.27 $'
+revision='$Revision: 1.28 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
-Copyright (C) 2000 The R Core Development Team.
+Copyright (C) 2000-2003 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -92,7 +92,7 @@ if ${with_f77}; then
   fi
 fi
 
-if test -f ${R_HOME}/bin/libR@SHLIB_EXT@; then
+if test -f ${R_HOME}/bin/libR@DYLIB_EXT@; then
   LIBR="-L${R_HOME}/bin -lR"
 else
   LIBR=
