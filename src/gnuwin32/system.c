@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -59,6 +59,7 @@ int (*R_yesnocancel)(char *s);
 
 static DWORD mainThreadId;
 
+static char oldtitle[512];
 
 Rboolean UserBreak = FALSE;
 
@@ -391,8 +392,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = TRUE;
-    if (R_Interactive && CharacterMode == RTerm)
-	SetConsoleTitle("");
+    if (R_Interactive && CharacterMode == RTerm) 
+	SetConsoleTitle(oldtitle);
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE
@@ -785,3 +786,7 @@ void setup_term_ui()
     readconsolecfg();
 }
 
+void saveConsoleTitle()
+{
+    GetConsoleTitle(oldtitle, 512);
+}
