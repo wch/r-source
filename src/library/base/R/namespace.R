@@ -194,15 +194,16 @@ loadNamespace <- function (package, lib.loc = NULL,
         if (length(pkgpath) == 0)
             stop(paste("There is no package called", sQuote(package)))
         package.lib <- dirname(pkgpath)
+        package<- basename(pkgpath) # need the versioned name
         if (! packageHasNamespace(package, package.lib))
             stop(paste("package", sQuote(package),
                        "does not have a name space"))
 
         # create namespace; arrange to unregister on error
-        nsInfoFilePath <- file.path(package.lib, package, "Meta", "nsInfo.rds")
+        nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
-        version <- read.dcf(file.path(package.lib, package, "DESCRIPTION"),
+        version <- read.dcf(file.path(pkgpath, "DESCRIPTION"),
                             fields = "Version")
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
@@ -241,7 +242,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         # load the code
         codename <- strsplit(package, "_", fixed=TRUE)[[1]][1]
-        codeFile <- file.path(package.lib, package, "R", codename)
+        codeFile <- file.path(pkgpath, "R", codename)
         if (file.exists(codeFile)) {
             res <- try(sys.source(codeFile, env, keep.source = keep.source))
             if(inherits(res, "try-error"))
@@ -254,7 +255,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         if (partial) return(ns)
 
         # lazy-load any sysdata
-        dbbase <- file.path(package.lib, package, "R", "sysdata")
+        dbbase <- file.path(pkgpath, "R", "sysdata")
         if (file.exists(paste(dbbase, ".rdb", sep=""))) lazyLoad(dbbase, env)
 
         # register any S3 methods

@@ -421,7 +421,7 @@ do_install_source () {
     if grep "^Bundle:" DESCRIPTION >/dev/null; then
       bundlepkg=`get_dcf_field Contains ../DESCRIPTION`
     else
-      bundlepkg=${R_PACKAGE_NAME}
+      bundlepkg=${pkg_name}
     fi
   fi
 
