@@ -172,6 +172,8 @@ Rm.exp1: $(OBJS-EXTRA)
 	$(MAKE) --no-print-directory -C ../extra/bzip2  -f Makefile.win libbz2.a
 
 rdocs:
+	@$(ECHO)
+	@$(ECHO) "------ Making HTML documentation ------"
 	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
 
 
