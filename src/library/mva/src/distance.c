@@ -26,7 +26,6 @@
 #include <float.h>
 #include <R_ext/Arith.h>
 #include <R_ext/Error.h>
-#include <R_ext/Applic.h>	/* machar */
 #include "mva.h"
 
 double R_euclidean(double *x, int nr, int nc, int i1, int i2)
@@ -91,19 +90,10 @@ double R_manhattan(double *x, int nr, int nc, int i1, int i2)
     return dist;
 }
 
-static double xmin = 0.0;
-
 double R_canberra(double *x, int nr, int nc, int i1, int i2)
 {
     double dist, sum, diff;
     int count, j;
-
-    if(xmin == 0.0) {
-	int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
-	double eps, epsneg,  xmax;
-	machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
-	       &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
-    }
 
     count = 0;
     dist = 0;
@@ -111,7 +101,7 @@ double R_canberra(double *x, int nr, int nc, int i1, int i2)
 	if(R_FINITE(x[i1]) && R_FINITE(x[i2])) {
 	    sum = fabs(x[i1] + x[i2]);
 	    diff = fabs(x[i1] - x[i2]);
-	    if (sum > xmin || diff > xmin) {
+	    if (sum > DBL_MIN || diff > DBL_MIN) {
 		dist += diff/sum;
 		count++;
 	    }
