@@ -486,8 +486,8 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return x;
     }
     subs = CDR(args);
-    nsubs = length(subs);
-
+    if(0 == (nsubs = length(subs)))
+	errorcall(call, "no index specified\n");
     type = TYPEOF(x);
     PROTECT(dim = getAttrib(x, R_DimSymbol));
     ndim = length(dim);
@@ -589,7 +589,8 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* and check that any array subscripting is compatible. */
 
     subs = CDR(args);
-    nsubs = length(subs);
+    if(0 == (nsubs = length(subs)))
+	errorcall(call, "no index specified\n");
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
     if(nsubs > 1 && nsubs != ndims)
