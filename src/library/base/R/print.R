@@ -3,16 +3,19 @@ print <- function(x, ...)UseMethod("print")
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <-
 function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL, ...)
-{
 	.Internal(print.default(x,digits,quote,na.print,print.gap))
-}
+
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
+## This is not really used anywhere, since matrix  is not a class:
+## To be useful, it MUST have a  'digits' argument   [MM]
+### FIXME
 print.matrix <-
 function(x, rowlab=character(0), collab=character(0), quote=TRUE, right=FALSE)
 {
 	x <- as.matrix(x)
 	d <- dim(x)
+        cat("Using R function 'print.matrix()' instead of 'print.default'")
 	.Internal(print.matrix(x, rowlab, collab, quote, right))
 }
 
