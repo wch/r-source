@@ -117,6 +117,13 @@ NEW FEATURES
 
     o	read.fwf() is no longer dependent on Perl.
 
+    o	library(), require(), and sys.source() have a new argument
+	` keep.source = getOption("keep.source") '.
+	Hence, by default, functions from all packages (not just base)
+	`keep their source'
+
+    o	The "keep.source" option now defaults to interactive() instead of TRUE.
+
 
 BUG FIXES
 

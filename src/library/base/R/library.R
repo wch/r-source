@@ -4,7 +4,9 @@
 
 library <-
   function (package, help, lib.loc = .lib.loc, character.only = FALSE,
-	    logical.return = FALSE, warn.conflicts = package != "MASS")
+	    logical.return = FALSE, warn.conflicts = package != "MASS",
+            keep.source = getOption("keep.source"))
+
 {
     if (!missing(package)) {
 	if (!character.only)
@@ -40,16 +42,16 @@ library <-
 		    on.exit(unlink(file))
 		}
 	    }
-	    # create environment
+	    ## create environment
 	    env <- attach(NULL, name = pkgname)
             lastbit<- file.path("", "R", package)
             path <- gsub(paste(lastbit, "$", sep=""), "", file)
             attr(env, "path") <- path
-	    # "source" file into env
+	    ## "source" file into env
 	    if (file == "")
 		warning(paste("Package `", package, "' contains no R code",
 			      sep = ""))
-	    else sys.source(file, env)
+	    else sys.source(file, env, keep.source = keep.source)
 	    .Internal(lib.fixup(env, .GlobalEnv))
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
@@ -93,7 +95,7 @@ library <-
     else if (!missing(help)) {
 	if (!character.only)
 	    help <- as.character(substitute(help))
-        help <- help[1]         # only give help on one package
+        help <- help[1]                 # only give help on one package
 	file <- system.file("INDEX", pkg=help, lib=lib.loc)
 	if (file == "")
 	    stop(paste("No documentation for package `", help, "'", sep = ""))
@@ -102,8 +104,8 @@ library <-
                 lib.loc[match(system.file("", pkg = help, lib =
                                           lib.loc)[1],
                               file.path(lib.loc, help))]
-            warning(paste("Package `", help, "' found more than once,\n  ", 
-                          "using the one found in `", which.lib.loc, 
+            warning(paste("Package `", help, "' found more than once,\n  ",
+                          "using the one found in `", which.lib.loc,
                           "'", sep = ""))
         }
 	file.show(file[1], title = paste("Contents of package", help))
@@ -168,7 +170,9 @@ library.dynam <-
   invisible(.Dyn.libs)
 }
 
-require <- function(package, quietly = FALSE, warn.conflicts = TRUE) {
+require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
+                    keep.source = getOption("keep.source"))
+{
     package <- as.character(substitute(package)) # allowing "require(eda)"
     if (!exists(".Provided", inherits = TRUE))
 	assign(".Provided", character(0), envir = .GlobalEnv)
@@ -177,7 +181,7 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE) {
 	if (!quietly)
 	    cat("Loading required package:", package, "\n")
 	library(package, char = TRUE, logical = TRUE,
-		warn.conflicts = warn.conflicts )
+		warn.conflicts = warn.conflicts, keep.source = keep.source)
     }
     else
 	TRUE

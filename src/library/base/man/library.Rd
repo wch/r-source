@@ -3,8 +3,9 @@
 \usage{
 library(package, help = NULL, lib.loc = .lib.loc,
         character.only = FALSE, logical.return = FALSE,
-        warn.conflicts = TRUE)
-require(package, quietly = FALSE, warn.conflicts = TRUE)
+        warn.conflicts = TRUE, keep.source = getOption("keep.source"))
+require(package, quietly = FALSE, warn.conflicts = TRUE,
+        keep.source = getOption("keep.source"))
 provide(package)
 
 .First.lib(libname, pkgname)
@@ -39,6 +40,8 @@ provide(package)
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package, unless that package contains an object \code{.conflicts.OK}.}
+  \item{keep.source}{logical.  If \code{TRUE}, functions ``keep their
+    source'' including comments, see \code{\link{options}(keep.source = *)}.}
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
@@ -64,13 +67,16 @@ provide(package)
   and do not reload code that is already loaded.  \code{require} also
   checks the list \code{.Provided}.
 
+  For large packages, setting \code{keep.source = FALSE} may save quite
+  a bit of memory.
+
   \code{provide} allows code to register services that it provides.  The
   argument is stored in the list \code{.Provided}.  \code{provide}
   returns \code{FALSE} if the package was already present in
   \code{.Provided} or among the packages in \code{search()}.  The main
   use for \code{provide} is when multiple packages share code.  This is
   most likely when the code implements features present in S(-PLUS) but
-  not in R.
+  not in \R.
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it gives a list of all available packages in \code{lib.loc}

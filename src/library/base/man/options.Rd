@@ -58,10 +58,13 @@ getOption(x)
     will be evaluated.  This is especially important on the Macintosh
     since stack overflow is likely if this is set too high.}
 
-  \item{keep.source}{When \code{TRUE}, the default, the source code for
-    functions loaded by is stored in their \code{"source"} attribute,
-    allowing comments to be kept in the right places.  This does not apply
-    to functions loaded by \code{library}.}
+  \item{keep.source}{When \code{TRUE}, the source code for functions
+    (newly defined or loaded) is stored in their \code{"source"}
+    attribute (see \code{\link{attr}}) allowing comments to be kept in
+    the right places.
+
+    The default is \code{\link{interactive}()}, i.e., \code{TRUE} for
+    interactive use.
 
   \item{na.action}{the name of a function for treating missing values
     (\code{\link{NA}}'s) for certain situations.}
@@ -78,7 +81,7 @@ getOption(x)
   \item{latexcmd, dvipscmd}{character strings giving commands to be used
     in off-line printing of help pages.}
 #endif
-  
+
   \item{show.signif.stars, show.coef.Pvalues}{logical, affecting P value
     printing, see \code{\link{print.coefmat}}.}
 
@@ -124,7 +127,7 @@ getOption(x)
 
   \item{CRAN}{The URL of the preferred CRAN node for use by
     \code{\link{update.packages}}. Defaults to
-    \url{http://cran.r-project.org}.} 
+    \url{http://cran.r-project.org}.}
 
   \item{unzip}{the command used unzipping help files.
 #ifdef windows
