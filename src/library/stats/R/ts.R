@@ -88,9 +88,9 @@ hasTsp <- function(x)
 
 is.ts <- function(x) inherits(x, "ts") && length(x)
 
-as.ts <- function(x) UseMethod("as.ts")
+as.ts <- function(x, ...) UseMethod("as.ts")
 
-as.ts.default <- function(x)
+as.ts.default <- function(x, ...)
 {
     if (is.ts(x)) x
     else if(!is.null(xtsp <- tsp(x))) ts(x, xtsp[1], xtsp[2], xtsp[3])
