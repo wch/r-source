@@ -113,6 +113,8 @@ BUG FIXES
 
     o   Promised function getGroupMembers added.
 
+    o   Collecting warnings had message with unneeded trailing space.
+
 
 
 

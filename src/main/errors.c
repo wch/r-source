@@ -340,7 +340,7 @@ void PrintWarnings(void)
 
     inPrintWarnings = 1;
     if( R_CollectWarnings == 1 ) {
-	REprintf("Warning message: \n");
+	REprintf("Warning message:\n");
 	names = CAR(ATTRIB(R_Warnings));
 	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
 	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
@@ -349,7 +349,7 @@ void PrintWarnings(void)
 		CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0), 0, SIMPLEDEPARSE), 0)));
     }
     else if( R_CollectWarnings <= 10 ) {
-	REprintf("Warning messages: \n");
+	REprintf("Warning messages:\n");
 	names = CAR(ATTRIB(R_Warnings));
 	for(i=0; i<R_CollectWarnings; i++) {
 	    if( STRING_ELT(R_Warnings, i) == R_NilValue )
