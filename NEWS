@@ -146,6 +146,12 @@ NEW FEATURES
 	per-session temporary directory and not ~/.R.  A side effect
 	is that ~/.R is now never deleted by R.
 
+    o	cbind() used to ignore all zero-length vectors, an
+	undocumented quirk for S-compatibility.  This caused problems
+	when combining zero-row matrices and zero-length vectors, and
+	now zero-length vectors are ignored unless the result would
+	have zero rows.
+
 
 DEPRECATED & DEFUNCT
 

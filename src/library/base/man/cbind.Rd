@@ -29,13 +29,17 @@ rbind(\dots, deparse.level = 1)
   rows) of the result.  If all the arguments are vectors, the number of
   columns (rows) in the result is equal to the length of the longest
   vector.  Values in shorter arguments are recycled to achieve this
-  length (with a \code{\link{warning}} when they are recycled only
+  length (with a \code{\link{warning}} if they are recycled only
   \emph{fractionally}).
 
   When the arguments consist of a mix of matrices and vectors the number
   of columns (rows) of the result is determined by the number of columns
   (rows) of the matrix arguments.  Any vectors have their values
   recycled or subsetted to achieve this length.
+
+  For \code{cbind}, vectors of zero length are ignored unless the result
+  would have zero rows, for S compatibility.  (Zero-extent matrices do
+  not occur in S and are not ignored in \R.)
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments
