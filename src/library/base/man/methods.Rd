@@ -87,7 +87,7 @@ methods(generic.function, class)
   The \code{methods} function was written by Martin Maechler.
 }
 \seealso{
-  \code{\link[base]{class}}
+  \code{\link[base]{class}}, \code{\link{getS3method}}
 }
 \examples{
 methods(summary)
