@@ -293,7 +293,9 @@ par(\dots, no.readonly = FALSE)
       which are alternatively drawn and skipped.  See section
       \sQuote{Line Type Specification} below.}
     \item{\code{lwd}}{The line width, a \emph{positive} number,
-      defaulting to \code{1}.}
+      defaulting to \code{1}.  The interpretation is device-specific,
+      and some devices do not implement line widths less than one.
+    }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
 	left, top, right)} which gives the margin size specified in
       inches.}

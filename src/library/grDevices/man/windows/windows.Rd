@@ -135,13 +135,18 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   opening the device.
 
   The font used for text drawn in a Windows device may be controlled in
-  two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to
-  specify mappings for \code{par(font=)} (in the graphics package).
-  Alternatively, a device-independent R graphics font family
-  can be specified 
-  (e.g., via \code{par(family=)} in the graphics package)
-  and this will be mapped via the Windows font database (see
-  \code{windowsFonts}).  
+  two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to specify
+  mappings for \code{par(font=)} (in the graphics
+  package). Alternatively, a device-independent R graphics font family
+  can be specified (e.g., via \code{par(family=)} in the graphics
+  package) and this will be mapped via the Windows font database (see
+  \code{windowsFonts}).
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
+
+  \code{pch="."} corresponds to a square of side the larger of one pixel
+  and 0.01 inch.
 }
 
 \value{
@@ -153,7 +158,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \code{\link{savePlot}}, \code{\link{bringToTop}},
   \code{\link{Devices}}, \code{\link{postscript}}
 }
-\examples{\dontrun{## A series of plots written to a sequence of metafiles 
+\examples{\dontrun{## A series of plots written to a sequence of metafiles
 win.metafile("Rplot\%02d.wmf", pointsize = 10)
 }}
 \keyword{device}

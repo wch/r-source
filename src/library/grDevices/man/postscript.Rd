@@ -158,6 +158,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   device is created via \code{fonts};  the font family names for this
   argument are device-independent R graphics font family names (see the
   documentation for \code{postscriptFonts}).
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."}
+  corresponds to a square of side 1/72 inch.
 }
 
 \section{Families}{

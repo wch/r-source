@@ -75,6 +75,12 @@ used in `East Asian' terminals.
 A bug with font changing in Preferences introduced with the script
 editor in R 2.0.0 had been fixed.  This should fix PR#7271,7277,7749.
 
+Line widths on windows() devices (including win.print()) are now
+interpreted as multiples of 1/96" (or the pixel size if it is larger,
+as it may be for a screen device).  This follows the postscript() and
+pdf() drivers.  It is now possible to set lwd < 1 provided this
+corresponds to lines of at least one pixel width.
+
 
 
 R 2.0.1 patched

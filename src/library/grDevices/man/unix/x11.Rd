@@ -70,6 +70,12 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   successively smaller palettes are tried until one is completely
   allocated. If allocation of the smallest attempt fails the device will
   revert to \code{"mono"}.
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of the
+  pixel size, and multiples < 1 are silently converted to 1.
+
+  \code{pch="."} corresponds to a square of side the larger of one pixel
+  and 0.01 inch.
 }
 \seealso{
   \code{\link{Devices}}.

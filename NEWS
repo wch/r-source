@@ -198,6 +198,11 @@ NEW FEATURES
 	pbinom(), pf(), qbeta() and other functions using pbeta at C
 	level.)
 
+    o	pch="." now produces a rectangle at least 0.01" per side on
+	high-resolution devices.  (It used to be one-pixel square even
+	on high-resolution screens and Windows printers, but 1/72" on
+	postscript() and pdf() devices.)
+
     o   pdf() now responds to the 'paper' and 'pagecentre'
 	arguments.  The default value of 'paper' is "special"
 	for backward-compatibility (this is different from the
