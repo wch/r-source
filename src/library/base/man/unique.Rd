@@ -2,20 +2,43 @@
 \alias{unique}
 \alias{unique.default}
 \alias{unique.data.frame}
+\alias{unique.matrix}
+\alias{unique.arrau}
 \title{Extract Unique Elements}
 \description{
-  \code{unique} returns a vector or data frame like \code{x} but with duplicate
-  elements removed.  If an element is equal to one with a smaller index,
-  it is removed.
+  \code{unique} returns a vector, data frame or array like \code{x}
+  but with duplicate  elements removed.
+}
+\synopsis{
+unique(x, incomparables = FALSE, ...)
+\method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, ...)
 }
 \usage{
-unique(x, incomparables = FALSE)
+unique(x, incomparables = FALSE, ...)
+unique.array(x, incomparables = FALSE, MARGIN = 1, ...)
 }
 \arguments{
-  \item{x}{an atomic vector or a data frame.}
+  \item{x}{an atomic vector or a data frame or an array.}
   \item{incomparables}{a vector of values that cannot be compared.
     Currently, \code{FALSE} is the only possible value, meaning that all
     values can be compared.}
+  \item{\dots}{arguments for particular methods.}
+  \item{MARGIN}{the array margin to be held fixed: a single integer.}
+}
+\details{
+  This is a generic function with methods for vectors, data frames and
+  arrays (including matrices).
+
+  The array method calculates for each element of the dimension
+  specified by \code{MARGIN} if the remaining dimensions are identical
+  to those for an earlier element (in row-major order).  This would most
+  commonly be used to find unique rows (the default) or columns
+  (with \code{MARGIN = 2}).
+}
+\value{
+  An object of the same type of \code{x}. but if
+  an element is equal to one with a smaller index, it is removed.
+  Dimensions of arrays are not dropped.
 }
 \seealso{
   \code{\link{duplicated}} which gives the indices of duplicated

@@ -56,6 +56,9 @@ NEW FEATURES
 
     o	Function vcov() (formerly in MASS).
 
+    o	duplicated() and unique() have methods for matrices and arrays
+	(based on ideas from Jens Oehlschlägel).
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,4 +1,4 @@
-factor <- function (x, levels = sort(unique(x), na.last = TRUE),
+factor <- function (x, levels = sort(unique.default(x), na.last = TRUE),
 		    labels=levels, exclude = NA, ordered = is.ordered(x))
 {
     if(is.null(x))
