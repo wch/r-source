@@ -1,5 +1,6 @@
-"diff" <-
-function (x, lag = 1, differences = 1) 
+"diff" <- function(x, ...) UseMethod("diff")
+
+"diff.default" <- function (x, lag = 1, differences = 1) 
 {
 	ismat <- is.matrix(x)
 	if (ismat) 
