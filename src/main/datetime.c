@@ -505,6 +505,9 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     for(i = 0; i < N; i++) {
+	/* for glibc's sake */
+	tm.tm_sec = tm.tm_min = tm.tm_hour = tm.tm_mon = tm.tm_year = 0; 
+	tm.tm_mday = 1;
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
 	    !strptime(CHAR(STRING_ELT(x, i%n)),
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
