@@ -32,7 +32,7 @@
 #endif
 #if defined(Win32) && defined( _MSC_VER)
 #include <float.h>
-#endif 
+#endif
 
 #include <math.h>
 #ifdef Macintosh
@@ -90,10 +90,10 @@ static int R_FINITE(double x) {
 # endif
 
 # define ISNAN(x)		(isnan(x) != 0)
-				/* True for *both* NA and NaN.  NOTE:
-				   some systems do not return 1 for
-				   TRUE. */
-# define ISNA(x)		R_IsNA(x) /* from ../main/arithmetic.c */
+				/* True for *both* NA and NaN.  NOTE: some
+				   systems do not return 1 for TRUE. */
+# define ISNA(x)		R_IsNA(x) /* NA, but not NaN;
+					     from ../main/arithmetic.c */
 
 #else    /* ---------------- NOT IEEE 754 ---------------- */
 
