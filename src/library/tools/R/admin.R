@@ -31,7 +31,7 @@ function(dir, outDir)
                              collapse = "."),
                        "; ",
                        if(fileTest("-d", file.path(dir, "src")))
-                           R.version$platform
+                           if(nchar(Sys.getenv("R_OSTYPE"))) "i386-pc-mingw32" else R.version$platform
                        else
                            "",
                        "; ",
