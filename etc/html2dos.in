@@ -3,7 +3,7 @@
 
 # Convert a html directory with long filenames to DOS 8.3 filenames
 
-# Copyright (C) 1997 Friedrich Leisch
+# Copyright (C) 1997,1998 Friedrich Leisch
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@
 
 use File::Basename;
 use Cwd;
+use Getopt::Long;
+
+GetOptions ("keep") || usage();
 
 undef $/;
 
@@ -82,10 +85,20 @@ foreach $d (@ARGV) {
 	
 	print df $html;
 	write;
+	close uf;
+	close df;
+	unlink $unixn unless $opt_keep;
     }
 }
 
 
+sub usage {
+
+    print "Usage:  html2dos [--keep] dir1 [dir2 ...]\n\n" .
+	  "        --keep:  Don't remove original files (long names)\n\n";
+
+    exit 0;
+}
 
 
 
