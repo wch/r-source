@@ -116,7 +116,7 @@ endif
 	fi
 ifeq ($(strip $(STAMP)),YES)
 	@echo "  adding build stamp to DESCRIPTION"
-	@echo  "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave >> ${DPKG}/DESCRIPTION
+	@echo  "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave --vanilla >> ${DPKG}/DESCRIPTION
 endif
 
 $(DATA): $(DSOURCES)
