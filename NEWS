@@ -73,6 +73,9 @@ BUG FIXES
 
     o	nls( ~ rhs, ..)	 now works (formula with empty left hand side).
 
+    o   the fuzz added in hist() for 1.2.2 broke the logic testing for 
+        equidistant breakpoints
+
 
 
 		CHANGES IN R VERSION 1.2.2
