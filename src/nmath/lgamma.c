@@ -85,8 +85,7 @@ double lgammafn(double x)
     if (sinpiy == 0) { /* Negative integer argument ===
 			  Now UNNECESSARY: caught above */
 	MATHLIB_WARNING(" ** should NEVER happen! *** [lgamma.c: Neg.int, y=%g]\n",y);
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	ML_ERR_return_NAN;
     }
 
     ans = M_LN_SQRT_PId2 + (x - 0.5) * log(y) - x - log(sinpiy) - lgammacor(y);

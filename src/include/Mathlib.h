@@ -196,6 +196,8 @@ void ml_error(int n);
 #define ML_VALID(x)	(errno == 0)
 #endif
 
+#define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+
 	/* Splus Compatibility */
 
 #define snorm	norm_rand
@@ -244,6 +246,7 @@ void ml_error(int n);
 #define R_D_val(x)	(log_p	? log(x) : x)		/*  x  in pF(x,..) */
 #define R_D_qIv(p)	(log_p	? exp(p) : p)		/*  p  in qF(p,..) */
 #define R_D_exp(x)	(log_p	?  x	 : exp(x))	/* exp(x) */
+#define R_D_log(p)	(log_p	?  p	 : log(p))	/* log(p) */
 
 #define R_DT_val(x)	R_D_val(R_D_Lval(x))		/*  x  in pF */
 #define R_DT_qIv(p)	R_D_qIv(R_D_Lval(p))		/*  p  in qF */
@@ -251,13 +254,13 @@ void ml_error(int n);
 #define R_DT_CIv(x)	R_D_qIv(R_D_Cval(x))		/*  1 - x */
 #define R_DT_exp(x)	R_D_exp(R_D_Lval(x))		/* exp(x) */
 #define R_DT_Cexp(x)	R_D_exp(R_D_Cval(x))		/* exp(1 - x) */
+#define R_DT_log(p)	R_D_log(R_D_Lval(p))		/* log(p) */
+#define R_DT_Clog(p)	R_D_log(R_D_Cval(p))		/* log(1 - p) */
 
 #define R_Q_P01_check(p)			\
-    if ((log_p  && p > 0) ||			\
-	(!log_p && (p < 0 || p > 1)) ) {	\
-	ML_ERROR(ME_DOMAIN);			\
-	return ML_NAN;				\
-    }
+    if ((log_p	&& p > 0) ||			\
+	(!log_p && (p < 0 || p > 1)) )		\
+	ML_ERR_return_NAN
 
 
 	/* R's version of C functions: */
@@ -335,33 +338,38 @@ double	lbeta(double, double);
 
 	/* Normal Distribution */
 
+/* These 3 will be re-defined in  ./S_compat.h  (when that is used) : */
+#define pnorm pnorm5
+#define qnorm qnorm5
+#define dnorm dnorm4
+
 double	dnorm(double, double, double, int);
 double	pnorm(double, double, double, int, int);
 double	qnorm(double, double, double, int, int);
 double	rnorm(double, double);
-void    pnorm_2(double, double *, double *, int, int);/* both tails */
+void	pnorm_both(double, double *, double *, int, int);/* both tails */
 
 	/* Uniform Distribution */
 
-double	dunif(double, double, double);
-double	punif(double, double, double);
-double	qunif(double, double, double);
+double	dunif(double, double, double, int);
+double	punif(double, double, double, int, int);
+double	qunif(double, double, double, int, int);
 double	runif(double, double);
 
 	/* Gamma Distribution */
 
-double	dgamma(double, double, double);
-double	pgamma(double, double, double);
-double	qgamma(double, double, double);
+double	dgamma(double, double, double, int);
+double	pgamma(double, double, double, int, int);
+double	qgamma(double, double, double, int, int);
 double	rgamma(double, double);
 
 	/* Beta Distribution */
 
-double	dbeta(double, double, double);
-double	pbeta(double, double, double);
-double	pbeta_raw(double, double, double);
-double	qbeta(double, double, double);
+double	dbeta(double, double, double, int);
+double	pbeta(double, double, double, int, int);
+double	qbeta(double, double, double, int, int);
 double	rbeta(double, double);
+double	pbeta_raw(double, double, double, int);
 
 	/* Lognormal Distribution */
 
@@ -372,72 +380,72 @@ double	rlnorm(double, double);
 
 	/* Chi-squared Distribution */
 
-double	dchisq(double, double);
-double	pchisq(double, double);
-double	qchisq(double, double);
+double	dchisq(double, double, int);
+double	pchisq(double, double, int, int);
+double	qchisq(double, double, int, int);
 double	rchisq(double);
 
 	/* Non-central Chi-squared Distribution */
 
-double	dnchisq(double, double, double);
-double	pnchisq(double, double, double);
-double	qnchisq(double, double, double);
+double	dnchisq(double, double, double, int);
+double	pnchisq(double, double, double, int, int);
+double	qnchisq(double, double, double, int, int);
 double	rnchisq(double, double);
 
 	/* F Distibution */
 
-double	df(double, double, double);
-double	pf(double, double, double);
-double	qf(double, double, double);
+double	df(double, double, double, int);
+double	pf(double, double, double, int, int);
+double	qf(double, double, double, int, int);
 double	rf(double, double);
 
 	/* Student t Distibution */
 
-double	dt(double, double);
-double	pt(double, double);
-double	qt(double, double);
+double	dt(double, double, int);
+double	pt(double, double, int, int);
+double	qt(double, double, int, int);
 double	rt(double);
 
 	/* Binomial Distribution */
 
-double	dbinom(double, double, double);
-double	pbinom(double, double, double);
-double	qbinom(double, double, double);
+double	dbinom(double, double, double, int);
+double	pbinom(double, double, double, int, int);
+double	qbinom(double, double, double, int, int);
 double	rbinom(double, double);
 
 	/* Cauchy Distribution */
 
-double	dcauchy(double, double, double);
-double	pcauchy(double, double, double);
-double	qcauchy(double, double, double);
+double	dcauchy(double, double, double, int);
+double	pcauchy(double, double, double, int, int);
+double	qcauchy(double, double, double, int, int);
 double	rcauchy(double, double);
 
 	/* Exponential Distribution */
 
-double	dexp(double, double);
-double	pexp(double, double);
-double	qexp(double, double);
+double	dexp(double, double, int);
+double	pexp(double, double, int, int);
+double	qexp(double, double, int, int);
 double	rexp(double);
 
 	/* Geometric Distribution */
 
-double	dgeom(double, double);
-double	pgeom(double, double);
-double	qgeom(double, double);
+double	dgeom(double, double, int);
+double	pgeom(double, double, int, int);
+double	qgeom(double, double, int, int);
 double	rgeom(double);
 
 	/* Hypergeometric Distibution */
 
-double	dhyper(double, double, double, double);
-double	phyper(double, double, double, double);
-double	qhyper(double, double, double, double);
+double	dhyper(double, double, double, double, int);
+double	phyper(double, double, double, double, int, int);
+double	qhyper(double, double, double, double, int, int);
 double	rhyper(double, double, double);
 
 	/* Negative Binomial Distribution */
 
-double	dnbinom(double, double, double);
-double	pnbinom(double, double, double);
-double	qnbinom(double, double, double);
+double	dnbinom(double, double, double, int);
+double	pnbinom(double, double, double, int, int);
+double	qnbinom(double, double, double, int, int);
 double	rnbinom(double, double);
 
 	/* Poisson Distribution */
@@ -449,60 +457,60 @@ double	rpois(double);
 
 	/* Weibull Distribution */
 
-double	dweibull(double, double, double);
-double	pweibull(double, double, double);
-double	qweibull(double, double, double);
+double	dweibull(double, double, double, int);
+double	pweibull(double, double, double, int, int);
+double	qweibull(double, double, double, int, int);
 double	rweibull(double, double);
 
 	/* Logistic Distribution */
 
-double	dlogis(double, double, double);
-double	plogis(double, double, double);
-double	qlogis(double, double, double);
+double	dlogis(double, double, double, int);
+double	plogis(double, double, double, int, int);
+double	qlogis(double, double, double, int, int);
 double	rlogis(double, double);
 
 	/* Non-central Beta Distribution */
 
-double	dnbeta(double, double, double, double);
-double	pnbeta(double, double, double, double);
-double	qnbeta(double, double, double, double);
+double	dnbeta(double, double, double, double, int);
+double	pnbeta(double, double, double, double, int, int);
+double	qnbeta(double, double, double, double, int, int);
 double	rnbeta(double, double, double);
 
 	/* Non-central F Distribution */
 
-double	dnf(double, double, double, double);
-double	pnf(double, double, double, double);
-double	qnf(double, double, double, double);
+double	dnf(double, double, double, double, int);
+double	pnf(double, double, double, double, int, int);
+double	qnf(double, double, double, double, int, int);
 double	rnf(double, double, double);
 
 	/* Non-central Student t Distribution */
 
-double	dnt(double, double, double);
-double	pnt(double, double, double);
-double	qnt(double, double, double);
+double	dnt(double, double, double, int);
+double	pnt(double, double, double, int, int);
+double	qnt(double, double, double, int, int);
 double	rnt(double, double);
 
 	/* Studentized Range Distribution */
 
-double	dtukey(double, double, double, double);
-double	ptukey(double, double, double, double);
-double	qtukey(double, double, double, double);
+double	dtukey(double, double, double, double, int);
+double	ptukey(double, double, double, double, int, int);
+double	qtukey(double, double, double, double, int, int);
 double	rtukey(double, double, double);
 
 /* Wilcoxon Rank Sum Distribution */
 
 #define WILCOX_MAX 50
-double dwilcox(double, double, double);
-double pwilcox(double, double, double);
-double qwilcox(double, double, double);
+double dwilcox(double, double, double, int);
+double pwilcox(double, double, double, int, int);
+double qwilcox(double, double, double, int, int);
 double rwilcox(double, double);
 
 /* Wilcoxon Signed Rank Distribution */
 
 #define SIGNRANK_MAX 50
-double dsignrank(double, double);
-double psignrank(double, double);
-double qsignrank(double, double);
+double dsignrank(double, double, int);
+double psignrank(double, double, int, int);
+double qsignrank(double, double, int, int);
 double rsignrank(double);
 
 #endif

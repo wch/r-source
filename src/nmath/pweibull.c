@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double pweibull(double x, double shape, double scale);
- *
  *  DESCRIPTION
  *
  *    The distribution function of the Weibull distribution.
@@ -28,16 +24,17 @@
 
 #include "Mathlib.h"
 
-double pweibull(double x, double shape, double scale)
+double pweibull(double x, double shape, double scale, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
 	return x + shape + scale;
 #endif
-    if(shape <= 0 || scale <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x <= 0) return 0;
-    return 1.0 - exp(-pow(x / scale, shape));
+    if(shape <= 0 || scale <= 0) ML_ERR_return_NAN;
+
+    if (x <= 0)
+	return R_DT_0;
+    if (log_p && !lower_tail)
+	return		 -pow(x / scale, shape);
+    return R_DT_Cval(exp(-pow(x / scale, shape)));
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dhyper(double x, double NR, double NB, double n);
- *
  *  DESCRIPTION
  *
  *    The quantile function of the hypergeometric distribution.
@@ -28,38 +24,46 @@
 
 #include "Mathlib.h"
 
-double qhyper(double x, double NR, double NB, double n)
+double qhyper(double p, double NR, double NB, double n,
+	      int lower_tail, int log_p)
 {
 /* This is basically the same code as  ./phyper.c -- keep in sync! */
     double N, xstart, xend, xr, xb, sum, term;
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
-	return x + NR + NB + n;
-    if(!R_FINITE(x) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (ISNAN(p) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
+	return p + NR + NB + n;
+    if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
+	ML_ERR_return_NAN;
 #endif
+    R_Q_P01_check(p);
+
     NR = floor(NR + 0.5);
     NB = floor(NB + 0.5);
     N = NR + NB;
     n = floor(n + 0.5);
-    if (x < 0 || x > 1 || NR < 0 || NR < 0 || n < 0 || n > N) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (NR < 0 || NR < 0 || n < 0 || n > N)
+	ML_ERR_return_NAN;
+
     xstart = fmax2(0, n - NB);
     xend = fmin2(n, NR);
-    if(x <= 0) return xstart;
-    if(x >= 1) return xend;
+    if(p == R_DT_0) return xstart;
+    if(p == R_DT_1) return xend;
+
+    /* FIXME */
+    if(!lower_tail || log_p) {
+	warning("lower_tail & log_p not yet implemented in ptukey()");
+	return ML_NAN;
+    }
+
     xr = xstart;
     xb = n - xr;
+
     term = exp(lfastchoose(NR, xr) + lfastchoose(NB, xb)
 	       - lfastchoose(N, n));
     NR = NR - xr;
     NB = NB - xb;
     sum = term;
-    while(sum < x && xr < xend) {
+    while(sum < p && xr < xend) {
 	xr++;
 	NB++;
 	term *= (NR / xr) * (xb / NB);
@@ -67,5 +71,6 @@ double qhyper(double x, double NR, double NB, double n)
 	xb--;
 	NR--;
     }
-    return xr;
+/* add a fuzz to ensure left continuity */
+    return ceil(xr - 1e-7);
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dgeom(double x, double p);
- *
  *  DESCRIPTION
  *
  *    The density of the geometric distribution.
@@ -28,23 +24,23 @@
 
 #include "Mathlib.h"
 
-double dgeom(double x, double p)
+double dgeom(double x, double p, int give_log)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(p)) return x + p;
 #endif
-    if (p <= 0 || p >= 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (p <= 0 || p >= 1) ML_ERR_return_NAN;
+
     if(fabs(x - floor(x + 0.5)) > 1e-7) {
 	warning("non-integer x = %f", x);
-	return 0;
+	return R_D__0;
     }
     if (x < 0)
-	return 0;
+	return R_D__0;
 #ifdef IEEE_754
-    if(!R_FINITE(x)) return 1;
+    if(!R_FINITE(x)) return R_D__1;
 #endif
-    return p * pow(1 - p, x);
+    return give_log ?
+      log(p) + log(1 - p) * x :
+	  p  * pow(1 - p, x);
 }

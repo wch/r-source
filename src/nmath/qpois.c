@@ -19,15 +19,15 @@
  *
  *  DESCRIPTION
  *
- *    The quantile function of the Poisson distribution.
+ *      The quantile function of the Poisson distribution.
  *
  *  METHOD
  *
- *    Uses the Cornish-Fisher Expansion to include a skewness
- *    correction to a normal approximation.  This gives an
- *    initial value which never seems to be off by more than
- *    1 or 2.  A search is then conducted of values close to
- *    this initial start point.
+ *      Uses the Cornish-Fisher Expansion to include a skewness
+ *      correction to a normal approximation.  This gives an
+ *      initial value which never seems to be off by more than
+ *      1 or 2.  A search is then conducted of values close to
+ *      this initial start point.
  */
 
 #include "Mathlib.h"
@@ -38,13 +38,11 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(lambda))
 	return p + lambda;
-    if(!R_FINITE(lambda)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if(!R_FINITE(lambda))
+	ML_ERR_return_NAN;
 #endif
     R_Q_P01_check(p);
-    if(lambda <= 0) { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+    if(lambda <= 0) ML_ERR_return_NAN;
 
     if (p == R_DT_0) return 0;
 #ifdef IEEE_754
@@ -61,7 +59,7 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     if(z >= p) {	/* search to the left */
 	for(;;) {
 	    if((z = ppois(y - 1, lambda, lower_tail, log_p)) < p)
-		return y;
+		break;
 	    y = y - 1;
 	}
     }
@@ -69,7 +67,9 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 	for(;;) {
 	    y = y + 1;
 	    if((z = ppois(y, lambda, lower_tail, log_p)) >= p)
-		return y;
+		break;
 	}
     }
+/* add a fuzz to ensure left continuity */
+    return ceil(y - 1e-7);
 }

@@ -21,30 +21,33 @@
  *
  *   #include "Mathlib.h"
  *
- *   double pnorm (double x, double mu, double sigma, int lower_tail,int log_p);
- *   void   pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p);
+ *   double pnorm5(double x, double mu, double sigma, int lower_tail,int log_p);
+ *         {pnorm (..) is synonymous and preferred inside R}
+ *
+ *   void   pnorm_both(double x, double *cum, double *ccum,
+ *		       int i_tail, int log_p);
  *
  *  DESCRIPTION
  *
- *    The main computation evaluates near-minimax approximations derived
- *    from those in "Rational Chebyshev approximations for the error
- *    function" by W. J. Cody, Math. Comp., 1969, 631-637.  This
- *    transportable program uses rational functions that theoretically
- *    approximate the normal distribution function to at least 18
- *    significant decimal digits.  The accuracy achieved depends on the
- *    arithmetic system, the compiler, the intrinsic functions, and
- *    proper selection of the machine-dependent constants.
+ *	The main computation evaluates near-minimax approximations derived
+ *	from those in "Rational Chebyshev approximations for the error
+ *	function" by W. J. Cody, Math. Comp., 1969, 631-637.  This
+ *	transportable program uses rational functions that theoretically
+ *	approximate the normal distribution function to at least 18
+ *	significant decimal digits.  The accuracy achieved depends on the
+ *	arithmetic system, the compiler, the intrinsic functions, and
+ *	proper selection of the machine-dependent constants.
  *
  *  REFERENCE
  *
- *    Cody, W. D. (1993).
- *    ALGORITHM 715: SPECFUN - A Portable FORTRAN Package of
- *    Special Function Routines and Test Drivers".
- *    ACM Transactions on Mathematical Software. 19, 22-32.
+ *	Cody, W. D. (1993).
+ *	ALGORITHM 715: SPECFUN - A Portable FORTRAN Package of
+ *	Special Function Routines and Test Drivers".
+ *	ACM Transactions on Mathematical Software. 19, 22-32.
  */
 
 #include "Mathlib.h"
-double pnorm(double x, double mu, double sigma, int lower_tail, int log_p)
+double pnorm5(double x, double mu, double sigma, int lower_tail, int log_p)
 {
     double p, cp;
 
@@ -55,7 +58,7 @@ double pnorm(double x, double mu, double sigma, int lower_tail, int log_p)
     if(ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
 	return x + mu + sigma;
 #endif
-    if (sigma < 0) { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+    if (sigma < 0) ML_ERR_return_NAN;
 
     x = (x - mu) / sigma;
 #ifdef IEEE_754
@@ -66,14 +69,14 @@ double pnorm(double x, double mu, double sigma, int lower_tail, int log_p)
     }
 #endif
 
-    pnorm_2(x, &p, &cp, (lower_tail ? 0 : 1), log_p);
+    pnorm_both(x, &p, &cp, (lower_tail ? 0 : 1), log_p);
 
     return(lower_tail ? p : cp);
 }
 
 #define SIXTEN	1.6	/* Magic Cutoff */
 
-void pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p)
+void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 {
     const double a[5] = {
 	2.2352520354606839287,

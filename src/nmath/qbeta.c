@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  The R Development Core Team
+ *  Copyright (C) 1998--2000  The R Development Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,8 +30,6 @@
 
 #include "Mathlib.h"
 
-#define zero 0.0
-
 /* set the exponent of accu to -2r-2 for r digits of accuracy */
 #ifdef OLD
 #define acu 1.0e-32
@@ -56,129 +54,133 @@
 
 static volatile double xtrunc;
 
-double qbeta(double alpha, double p, double q)
+double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 {
-	int swap_tail, i_pb, i_inn;
-	double a, adj, logbeta, g, h, pp, prev, qq, r, s, t, tx, w, y, yprev;
-	double acu;
-	volatile double xinbta;
+    int swap_tail, i_pb, i_inn;
+    double a, adj, logbeta, g, h, pp, p_, prev, qq, r, s, t, tx, w, y, yprev;
+    double acu;
+    volatile double xinbta;
 
-	/* define accuracy and initialize */
+    /* define accuracy and initialize */
 
-	xinbta = alpha;
+    xinbta = alpha;
 
-	/* test for admissibility of parameters */
+    /* test for admissibility of parameters */
 
 #ifdef IEEE_754
-	if (ISNAN(p) || ISNAN(q) || ISNAN(alpha))
-		return p + q + alpha;
+    if (ISNAN(p) || ISNAN(q) || ISNAN(alpha))
+	return p + q + alpha;
 #endif
-	if(p < zero || q < zero || alpha < zero || alpha > 1) {
-		ML_ERROR(ME_DOMAIN);
-		return ML_NAN;
+    R_Q_P01_check(alpha);
+
+    if(p < 0. || q < 0.) ML_ERR_return_NAN;
+
+    p_ = R_DT_qIv(alpha);/* lower_tail prob (in any case) */
+
+    if (p_ == 0. || p_ == 1.)
+	return p_;
+
+    logbeta = lbeta(p, q);
+
+    /* change tail if necessary;  afterwards   0 < a <= 1/2	 */
+    if (p_ <= 0.5) {
+	a = p_;	pp = p; qq = q; swap_tail = 0;
+    } else { /* change tail, swap  p <-> q :*/
+	a = (!lower_tail && !log_p)? alpha : 1 - p_;
+	pp = q; qq = p; swap_tail = 1;
+    }
+
+    /* calculate the initial approximation */
+
+    r = sqrt(-log(a * a));
+    y = r - (const1 + const2 * r) / (1 + (const3 + const4 * r) * r);
+    if (pp > 1 && qq > 1) {
+	r = (y * y - 3) / 6;
+	s = 1 / (pp + pp - 1);
+	t = 1 / (qq + qq - 1);
+	h = 2 / (s + t);
+	w = y * sqrt(h + r) / h - (t - s) * (r + 5 / 6 - 2 / (3 * h));
+	xinbta = pp / (pp + qq * exp(w + w));
+    } else {
+	r = qq + qq;
+	t = 1 / (9 * qq);
+	t = r * pow(1 - t + y * sqrt(t), 3);
+	if (t <= 0.)
+	    xinbta = 1 - exp((log((1 - a) * qq) + logbeta) / qq);
+	else {
+	    t = (4 * pp + r - 2) / t;
+	    if (t <= 1)
+		xinbta = exp((log(a * pp) + logbeta) / pp);
+	    else
+		xinbta = 1 - 2 / (t + 1);
 	}
-	if (alpha == zero || alpha == 1)
-		return alpha;
+    }
 
-	logbeta = lbeta(p, q);
+    /* solve for x by a modified newton-raphson method, */
+    /* using the function pbeta_raw */
 
-	/* change tail if necessary;  afterwards   0 < a <= 1/2	 */
-	if (alpha <= 0.5) {
-		a = alpha;	pp = p; qq = q; swap_tail = 0;
-	} else { /* change tail, swap  p <-> q :*/
-		a = 1 - alpha; pp = q; qq = p; swap_tail = 1;
-	}
+    r = 1 - pp;
+    t = 1 - qq;
+    yprev = 0.;
+    adj = 1;
+    if (xinbta < lower)
+	xinbta = lower;
+    else if (xinbta > upper)
+	xinbta = upper;
 
-	/* calculate the initial approximation */
+    /* Desired accuracy should depend on  (a,p)
+     * This is from Remark .. on AS 109, adapted.
+     * However, it's not clear if this is "optimal" for IEEE double prec.
 
-	r = sqrt(-log(a * a));
-	y = r - (const1 + const2 * r) / (1 + (const3 + const4 * r) * r);
-	if (pp > 1 && qq > 1) {
-		r = (y * y - 3) / 6;
-		s = 1 / (pp + pp - 1);
-		t = 1 / (qq + qq - 1);
-		h = 2 / (s + t);
-		w = y * sqrt(h + r) / h - (t - s) * (r + 5 / 6 - 2 / (3 * h));
-		xinbta = pp / (pp + qq * exp(w + w));
-	} else {
-		r = qq + qq;
-		t = 1 / (9 * qq);
-		t = r * pow(1 - t + y * sqrt(t), 3);
-		if (t <= zero)
-			xinbta = 1 - exp((log((1 - a) * qq) + logbeta) / qq);
-		else {
-			t = (4 * pp + r - 2) / t;
-			if (t <= 1)
-				xinbta = exp((log(a * pp) + logbeta) / pp);
-			else
-				xinbta = 1 - 2 / (t + 1);
-		}
-	}
+     * acu = fmax2(acu_min, pow(10., -25. - 5./(pp * pp) - 1./(a * a)));
 
-	/* solve for x by a modified newton-raphson method, */
-	/* using the function pbeta_raw */
+     * NEW: 'acu' accuracy NOT for squared adjustment, but simple;
+     * ---- i.e.,  "new acu" = sqrt(old acu)
 
-	r = 1 - pp;
-	t = 1 - qq;
-	yprev = zero;
-	adj = 1;
-	if (xinbta < lower)
-	  xinbta = lower;
-	else if (xinbta > upper)
-	  xinbta = upper;
+     */
+    acu = fmax2(acu_min, pow(10., -13 - 2.5/(pp * pp) - 0.5/(a * a)));
+    tx = prev = 0.;	/* keep -Wall happy */
 
-	/* Desired accuracy should depend on  (a,p)
-	 * This is from Remark .. on AS 109, adapted.
-	 * However, it's not clear if this is "optimal" for IEEE double prec.
-
-	 * acu = fmax2(acu_min, pow(10., -25. - 5./(pp * pp) - 1./(a * a)));
-
-	 * NEW: 'acu' accuracy NOT for squared adjustment, but simple;
-	 * ---- i.e.,  "new acu" = sqrt(old acu)
-
-	 */
-	acu = fmax2(acu_min, pow(10., -13 - 2.5/(pp * pp) - 0.5/(a * a)));
-	tx = prev = zero;	/* keep -Wall happy */
-
-	for (i_pb=0; i_pb < 1000; i_pb++) {
-		y = pbeta_raw(xinbta, pp, qq);
-		/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
+    for (i_pb=0; i_pb < 1000; i_pb++) {
+	y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ LTRUE);
+	/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
 #ifdef IEEE_754
-		if(!R_FINITE(y))
+	if(!R_FINITE(y))
 #else
-		if (errno)
+	    if (errno)
 #endif
-		{ ML_ERROR(ME_DOMAIN); return ML_NAN; }
-		y = (y - a) *
-			exp(logbeta + r * log(xinbta) + t * log(1 - xinbta));
-		if (y * yprev <= zero)
-			prev = fmax2(fabs(adj),fpu);
-		g = 1;
-		for (i_inn=0; i_inn < 1000;i_inn++) {
-		  adj = g * y;
-		  if (fabs(adj) < prev) {
-		    tx = xinbta - adj; /* trial new x */
-		    if (tx >= zero && tx <= 1) {
-		      if (prev <= acu)	  goto L_converged;
-		      if (fabs(y) <= acu) goto L_converged;
-		      if (tx != zero && tx != 1)
-			break;
-		    }
-		  }
-		  g /= 3;
-		}
-		xtrunc = tx;	/* this prevents trouble with excess FPU */
-				/* precision on some machines. */
-		if (xtrunc == xinbta)
-			goto L_converged;
-		xinbta = tx;
-		yprev = y;
-	}
-	/*-- NOT converged: Iteration count --*/
-	ML_ERROR(ME_PRECISION);
+		ML_ERR_return_NAN;
 
-      L_converged:
-	if (swap_tail)
-		xinbta = 1 - xinbta;
-	return xinbta;
+	y = (y - a) *
+	    exp(logbeta + r * log(xinbta) + t * log(1 - xinbta));
+	if (y * yprev <= 0.)
+	    prev = fmax2(fabs(adj),fpu);
+	g = 1;
+	for (i_inn=0; i_inn < 1000;i_inn++) {
+	    adj = g * y;
+	    if (fabs(adj) < prev) {
+		tx = xinbta - adj; /* trial new x */
+		if (tx >= 0. && tx <= 1) {
+		    if (prev <= acu)	goto L_converged;
+		    if (fabs(y) <= acu) goto L_converged;
+		    if (tx != 0. && tx != 1)
+			break;
+		}
+	    }
+	    g /= 3;
+	}
+	xtrunc = tx;	/* this prevents trouble with excess FPU */
+				/* precision on some machines. */
+	if (xtrunc == xinbta)
+	    goto L_converged;
+	xinbta = tx;
+	yprev = y;
+    }
+    /*-- NOT converged: Iteration count --*/
+    ML_ERROR(ME_PRECISION);
+
+ L_converged:
+    if (swap_tail)
+	return 1 - xinbta;
+    return xinbta;
 }

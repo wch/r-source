@@ -17,30 +17,31 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
+ *  SYNOPSIS
+ *
+ *	double dnorm4(double x, double mu, double sigma, int give_log)
+ *	      {dnorm (..) is synonymous and preferred inside R}
+ *
  *  DESCRIPTION
  *
- *    Compute the density of the normal distribution.
+ *	Compute the density of the normal distribution.
  */
 
 #include "Mathlib.h"
 
-double dnorm(double x, double mu, double sigma, int give_log)
+double dnorm4(double x, double mu, double sigma, int give_log)
 {
-
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
 	return x + mu + sigma;
 #endif
-    if (sigma <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (sigma <= 0) ML_ERR_return_NAN;
 
     x = (x - mu) / sigma;
 
-    return (log_p ?
-	    -(M_LN_SQRT_2PI  +  0.5 * x * x + log(sigma)) :
-	    M_1_SQRT_2PI * exp(-0.5 * x * x)  /   sigma);
+    return (give_log ?
+	    -(M_LN_SQRT_2PI  +	0.5 * x * x + log(sigma)) :
+	    M_1_SQRT_2PI * exp(-0.5 * x * x)  /	  sigma);
     /* M_1_SQRT_2PI = 1 / sqrt(2 * pi) */
 }
 

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dbeta(double x, double a, double b);
- *
  *  DESCRIPTION
  *
  *    The density of the beta distribution.
@@ -28,26 +24,28 @@
 
 #include "Mathlib.h"
 
-double dbeta(double x, double a, double b)
+double dbeta(double x, double a, double b, int give_log)
 {
-    double y;
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(a) || ISNAN(b)) return x + a + b;
 #endif
-    if (a <= 0.0 || b <= 0.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+    if (a <= 0 || b <= 0) ML_ERR_return_NAN;
+
+    if (x < 0 || x > 1)
+	return R_D__0;
+
+    if(give_log) {
+	return log(x)*(a - 1) + log(1 - x)*(b - 1) - lbeta(a, b);
     }
-    if (x < 0)
-	return 0;
-    if (x > 1)
-	return 0;
-    y = beta(a, b);
-    a = pow(x, a - 1);
-    b = pow(1.0 - x, b - 1.0);
+    else {
+	double y;
+	y = beta(a, b);
+	a = pow(x, a - 1);
+	b = pow(1 - x, b - 1);
 #ifndef IEEE_754
-    if(errno) return ML_NAN;
+	if(errno) return ML_NAN;
 #endif
-    return a * b / y;
+	return (a * b / y);
+    }
 }

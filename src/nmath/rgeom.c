@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka and the R Development Core Team.
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,9 +47,7 @@ double rgeom(double p)
 #ifdef IEEE_754
 	isnan(p) ||
 #endif
-	p <= 0 || p >= 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+	p <= 0 || p >= 1)	ML_ERR_return_NAN;
+
     return rpois(sexp() * ((1 - p) / p));
 }

@@ -1,6 +1,7 @@
 /*
  *  Algorithm AS 275 appl.statist. (1992), vol.41, no.2
- *  original (C) 1992 Royal Statistical Society
+ *  original  (C) 1992 Royal Statistical Society
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  computes the noncentral chi-square distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality
@@ -21,36 +22,30 @@
 # include "PrtUtil.h"
 #endif
 
-double pnchisq(double x, double f, double theta)
+double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 {
     double ans, lam, u, v, x2, f2, t, term, bound, twon;
     int n, flag;
 
-    static double errmax = 1e-12;
-    static double zero = 0;
-    static double half = 0.5;
-    static int itrmax = 100;
+    const static double errmax = 1e-12;
+    const static double half = 0.5;
+    const static int itrmax = 100;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
 	return x + f + theta;
-    if (!R_FINITE(f) || !R_FINITE(theta)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (!R_FINITE(f) || !R_FINITE(theta))
+	ML_ERR_return_NAN;
 #endif
 
-    if (f < zero && theta < zero) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x <= zero)
-	return 0;
+    if (f < 0. || theta < 0.) ML_ERR_return_NAN;
+
+    if (x <= 0.)
+	return R_DT_0;
 #ifdef IEEE_754
     if(!R_FINITE(x))
-	return 1;
+	return R_DT_1;
 #endif
-
 
     lam = theta * half;
 #ifdef DEBUG_pnch
@@ -82,7 +77,7 @@ double pnchisq(double x, double f, double theta)
 #ifdef DEBUG_pnch
 	REprintf(" _OL_: n=%d",n);
 #endif
-	if (f + twon - x > zero) {
+	if (f + twon - x > 0.) {
 
 	    /* find the error bound and check for convergence */
 	    flag = LTRUE;
@@ -113,8 +108,9 @@ double pnchisq(double x, double f, double theta)
 	}
     }
 L_End:
-    if (bound > errmax)
+    if (bound > errmax) { /* NOT converged */
 	ML_ERROR(ME_PRECISION);
+    }
 #ifdef DEBUG_pnch
     REprintf("\tL_End: n=%d; term=%12g; bound=%12g\n",n,term,bound);
 #endif

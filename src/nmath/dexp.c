@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,30 +17,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dexp(double x, double scale)
- *
  *  DESCRIPTION
  *
- *    The density of the exponential distribution.
- *
+ *	The density of the exponential distribution.
  */
 
 #include "Mathlib.h"
 
-double dexp(double x, double scale)
+double dexp(double x, double scale, int give_log)
 {
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(scale)) return x + scale;
 #endif
-    if (scale <= 0.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x < 0.0)
-	return 0.0;
-    return exp(-x / scale) / scale;
+    if (scale <= 0.0) ML_ERR_return_NAN;
+
+    if (x < 0.)
+	return R_D__0;
+    return (give_log ?
+	    (-x / scale) - log(scale) :
+	    exp(-x / scale) / scale);
 }

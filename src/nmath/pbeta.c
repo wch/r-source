@@ -19,50 +19,53 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
- *    double pbeta(double x, double pin, double qin);
+ * #include "Mathlib.h"
+ *
+ * double pbeta_raw(double x, double pin, double qin, int lower_tail)
+ * double pbeta	   (double x, double pin, double qin, int lower_tail, int log_p)
  *
  *  DESCRIPTION
  *
- *    Returns distribution function of the beta distribution.
- *    ( = The incomplete beta ratio I_x(p,q) ).
+ *	Returns distribution function of the beta distribution.
+ *	( = The incomplete beta ratio I_x(p,q) ).
  *
  *  NOTES
  *
- *    This routine is a translation into C of a Fortran subroutine
- *    by W. Fullerton of Los Alamos Scientific Laboratory.
+ *	This routine is a translation into C of a Fortran subroutine
+ *	by W. Fullerton of Los Alamos Scientific Laboratory.
  *
  *  REFERENCE
  *
- *    Bosten and Battiste (1974).
- *    Remark on Algorithm 179,
- *    CACM 17, p153, (1974).
+ *	Bosten and Battiste (1974).
+ *	Remark on Algorithm 179, CACM 17, p153, (1974).
  */
 
 #include "Mathlib.h"
 
 /* This is called from	qbeta(.) in a root-finding loop --- be FAST! */
 
-double pbeta_raw(double x, double pin, double qin)
+double pbeta_raw(double x, double pin, double qin, int lower_tail)
 {
     double ans, c, finsum, p, ps, p1, q, term, xb, xi, y;
-    int n, i, ib;
+    int n, i, ib, swap_tail;
 
     const double eps = .5*DBL_EPSILON;
     const double sml = DBL_MIN;
-    const double alneps = log(eps);
-    const double alnsml = log(sml);
-
-    y = x;
-    p = pin;
-    q = qin;
+    const double lneps = log(eps);
+    const double lnsml = log(sml);
 
     /* swap tails if x is greater than the mean */
-
-    if (p / (p + q) < x) {
-	y = 1 - y;
+    if (pin / (pin + qin) < x) {
+	swap_tail = 1;
+	y = 1 - x;
 	p = qin;
 	q = pin;
+    }
+    else {
+	swap_tail = 0;
+	y = x;
+	p = pin;
+	q = qin;
     }
 
     if ((p + q) * y / (p + 1) < eps) {
@@ -71,9 +74,9 @@ double pbeta_raw(double x, double pin, double qin)
 
 	ans = 0;
 	xb = p * log(fmax2(y, sml)) - log(p) - lbeta(p, q);
-	if (xb > alnsml && y != 0)
+	if (xb > lnsml && y != 0)
 	    ans = exp(xb);
-	if (y != x || p != pin)
+	if (swap_tail == lower_tail)
 	    ans = 1 - ans;
     }
     else {
@@ -89,15 +92,15 @@ double pbeta_raw(double x, double pin, double qin)
 	    ps = 1;
 	xb = p * log(y) - lbeta(ps, p) - log(p);
 	ans = 0;
-	if (xb >= alnsml) {
+	if (xb >= lnsml) {
 	    ans = exp(xb);
 	    term = ans * p;
 	    if (ps != 1) {
-		n = fmax2(alneps/log(y), 4.0);
-		for(i=1 ; i<= n ; i++) {
+		n = fmax2(lneps/log(y), 4.0);
+		for(i=1 ; i <= n ; i++) {
 		    xi = i;
-		    term = term * (xi - ps) * y / xi;
-		    ans = ans + term / (p + xi);
+		    term *= (xi - ps) * y / xi;
+		    ans += term / (p + xi);
 		}
 	    }
 	}
@@ -106,50 +109,48 @@ double pbeta_raw(double x, double pin, double qin)
 
 	if (q > 1) {
 	    xb = p * log(y) + q * log(1 - y) - lbeta(p, q) - log(q);
-	    ib = fmax2(xb / alnsml, 0.0);
-	    term = exp(xb - ib * alnsml);
+	    ib = fmax2(xb / lnsml, 0.0);
+	    term = exp(xb - ib * lnsml);
 	    c = 1 / (1 - y);
 	    p1 = q * c / (p + q - 1);
 
 	    finsum = 0;
 	    n = q;
 	    if (q == n)
-		n = n - 1;
+		n--;
 	    for(i=1 ; i<=n ; i++) {
 		if (p1 <= 1 && term / eps <= finsum)
 		    break;
 		xi = i;
 		term = (q - xi + 1) * c * term / (p + q - xi);
 		if (term > 1) {
-		    ib = ib - 1;
-		    term = term * sml;
+		    ib--;
+		    term *= sml;
 		}
 		if (ib == 0)
-		    finsum = finsum + term;
+		    finsum += term;
 	    }
-	    ans = ans + finsum;
+	    ans += finsum;
 	}
-	if (y != x || p != pin)
+	if (swap_tail == lower_tail)
 	    ans = 1 - ans;
-	ans = fmax2(fmin2(ans, 1.0), 0.0);
+	ans = fmax2(fmin2(ans, 1.), 0.);
     }
     return ans;
-}
+} /* pbeta_raw() */
 
-double pbeta(double x, double pin, double qin)
+double pbeta(double x, double pin, double qin, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(pin) || ISNAN(qin))
 	return x + pin + qin;
 #endif
 
-    if (pin <= 0 || qin <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (pin <= 0 || qin <= 0) ML_ERR_return_NAN;
+
     if (x <= 0)
-	return 0;
+	return R_DT_0;
     if (x >= 1)
-	return 1;
-    return pbeta_raw(x, pin, qin);
+	return R_DT_1;
+    return R_D_val(pbeta_raw(x, pin, qin, lower_tail));
 }

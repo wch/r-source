@@ -19,77 +19,68 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
- *    double qnbinom(double x, double n, double p);
+ *	#include "Mathlib.h"
+ *	double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
  *
  *  DESCRIPTION
  *
- *    The distribution function of the negative binomial distribution.
+ *	The distribution function of the negative binomial distribution.
  *
  *  NOTES
  *
- *    x = the number of failures before the n-th success
+ *	x = the number of failures before the n-th success
  *
  *  METHOD
  *
- *    Uses the Cornish-Fisher Expansion to include a skewness
- *    correction to a normal approximation.  This gives an
- *    initial value which never seems to be off by more than
- *    1 or 2.  A search is then conducted of values close to
- *    this initial start point.
+ *	Uses the Cornish-Fisher Expansion to include a skewness
+ *	correction to a normal approximation.  This gives an
+ *	initial value which never seems to be off by more than
+ *	1 or 2.	 A search is then conducted of values close to
+ *	this initial start point.
  */
 
 #include "Mathlib.h"
 
-double qnbinom(double x, double n, double p)
+double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
     double P, Q, mu, sigma, gamma, z, y;
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(n) || ISNAN(p))
-	return x + n + p;
-    if (!R_FINITE(x)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
+	return p + n + pr;
 #endif
-    if (x < 0 || x > 1 || p <= 0 || p >= 1 || n <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x == 0) return 0;
+    R_Q_P01_check(p);
+    if (pr <= 0 || pr >= 1 || n <= 0) ML_ERR_return_NAN;
+
+    if (p == R_DT_0) return 0;
 #ifdef IEEE_754
-    if (x == 1) return ML_POSINF;
+    if (p == R_DT_1) return ML_POSINF;
 #endif
-    Q = 1.0 / p;
-    P = (1.0 - p) * Q;
+    Q = 1.0 / pr;
+    P = (1.0 - pr) * Q;
     mu = n * P;
     sigma = sqrt(n * P * Q);
     gamma = (Q + P)/sigma;
-#define LOWER (1)
-#define LOG_P (0)
-    z = qnorm(x, 0.0, 1.0, LOWER, LOG_P);
+
+    z = qnorm(p, 0., 1., lower_tail, log_p);
     y = floor(mu + sigma * (z + gamma * (z*z - 1.0) / 6.0) + 0.5);
 
-    z = pnbinom(y, n, p);
-    if(z >= x) {
+    z = pnbinom(y, n, pr, lower_tail, log_p);
 
-	/* search to the left */
+    if(z >= p) {	/* search to the left */
 
 	for(;;) {
-	    if((z = pnbinom(y - 1, n, p)) < x)
+	    if((z = pnbinom(y - 1, n, pr, lower_tail, log_p)) < p)
 		return y;
 	    y = y - 1;
 	}
     }
-    else {
-
-	/* search to the right */
+    else {		/* search to the right */
 
 	for(;;) {
-	    if((z = pnbinom(y + 1, n, p)) >= x)
-		return y + 1;
 	    y = y + 1;
+	    if((z = pnbinom(y, n, pr, lower_tail, log_p)) >= p)
+		return y;
 	}
     }
 }

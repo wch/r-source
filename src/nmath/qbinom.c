@@ -17,74 +17,70 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qbinom(double x, double n, double p);
- *
  *  DESCRIPTION
  *
- *    The quantile function of the binomial distribution.
+ *	The quantile function of the binomial distribution.
  *
  *  NOTES
  *
- *    The function uses the Cornish-Fisher Expansion to include
- *    a skewness correction to a normal approximation.  This gives
- *    an initial value which never seems to be off by more than
- *    1 or 2.  A search is then conducted of values close to
- *    this initial start point.
+ *	The function uses the Cornish-Fisher Expansion to include
+ *	a skewness correction to a normal approximation.  This gives
+ *	an initial value which never seems to be off by more than
+ *	1 or 2.	 A search is then conducted of valdues close to
+ *	this initial start point.
  */
-
 #include "Mathlib.h"
 
-double qbinom(double x, double n, double p)
+double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
     double q, mu, sigma, gamma, z, y;
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(n) || ISNAN(p))
-	return x + n + p;
-    if(!R_FINITE(x) || !R_FINITE(n) || !R_FINITE(p)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
+	return p + n + pr;
+    if(!R_FINITE(p) || !R_FINITE(n) || !R_FINITE(pr))
+	ML_ERR_return_NAN;
 #endif
+    R_Q_P01_check(p);
 
     n = floor(n + 0.5);
-    if (x < 0 || x > 1 || p <= 0 || p >= 1 || n <= 0) {
-	ML_ERROR(ME_DOMAIN);
+    if (pr <= 0 || pr >= 1 || n <= 0)
+	ML_ERR_return_NAN;
+
+    if (p == R_DT_0) return 0.;
+    if (p == R_DT_1) return n;
+
+    /* FIXME */
+    if(!lower_tail || log_p) {
+	warning("lower_tail & log_p not yet implemented in ptukey()");
 	return ML_NAN;
     }
-    if (x == 0) return 0.0;
-    if (x == 1) return n;
-    q = 1 - p;
-    mu = n * p;
-    sigma = sqrt(n * p * q);
-    gamma = (q-p)/sigma;
-#define LOWER (1)
-#define LOG_P (0)
-    z = qnorm(x, 0.0, 1.0, LOWER, LOG_P);
+
+    q = 1 - pr;
+    mu = n * pr;
+    sigma = sqrt(n * pr * q);
+    gamma = (q - pr) / sigma;
+
+    /* in all the following, z is "as p" : lower/upper tail; log or non-log :*/
+    z = qnorm(p, 0.0, 1.0, lower_tail, log_p);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
 
-    z = pbinom(y, n, p);
-    if(z >= x) {
+    z = pbinom(y, n, pr, lower_tail, log_p);
 
-	/* search to the left */
+    if(z >= p) {	/* search to the left */
 
 	for(;;) {
-	    if((z = pbinom(y - 1, n, p)) < x)
+	    if((z = pbinom(y - 1, n, pr, lower_tail, log_p)) < p)
 		return y;
 	    y = y - 1;
 	}
     }
-    else {
-
-	/* search to the right */
+    else { /* z < p :	search to the right */
 
 	for(;;) {
-	    if((z = pbinom(y + 1, n, p)) >= x)
-		return y + 1;
 	    y = y + 1;
+	    if((z = pbinom(y, n, pr, lower_tail, log_p)) >= p)
+		return y;
 	}
     }
 }

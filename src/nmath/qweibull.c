@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qweibull(double x, double shape, double scale);
- *
  *  DESCRIPTION
  *
  *    The quantile function of the Weibull distribution.
@@ -28,19 +24,18 @@
 
 #include "Mathlib.h"
 
-double qweibull(double x, double shape, double scale)
+double qweibull(double p, double shape, double scale, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
-	return x + shape + scale;
+    if (ISNAN(p) || ISNAN(shape) || ISNAN(scale))
+	return p + shape + scale;
 #endif
-    if (shape <= 0 || scale <= 0 || x < 0 || x > 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x == 0) return 0;
+    R_Q_P01_check(p);
+    if (shape <= 0 || scale <= 0) ML_ERR_return_NAN;
+
+    if (p == R_D__0) return 0;
 #ifdef IEEE_754
-    if (x == 1) return ML_POSINF;
+    if (p == R_D__1) return ML_POSINF;
 #endif
-    return scale * pow(-log(1.0 - x), 1.0 / shape);
+    return scale * pow(- R_DT_Clog(p), 1./shape) ;
 }

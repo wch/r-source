@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,10 +53,8 @@ double beta(double a, double b)
     if(ISNAN(a) || ISNAN(b)) return a + b;
 #endif
 
-    if (a < 0 || b < 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (a < 0 || b < 0)
+	ML_ERR_return_NAN
     else if (a == 0 || b == 0) {
 	return ML_POSINF;
     }

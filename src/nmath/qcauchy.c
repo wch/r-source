@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,32 +17,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qcauchy(double x, double location, double scale);
- *
  *  DESCRIPTION
  *
- *    The quantile function of the Cauchy distribution.
+ *	The quantile function of the Cauchy distribution.
  */
 
 #include "Mathlib.h"
 
-double qcauchy(double x, double location, double scale)
+double qcauchy(double p, double location, double scale,
+	       int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
-        return x + location + scale;
-    if(!R_FINITE(x) || !R_FINITE(location) || !R_FINITE(scale)) {
-        ML_ERROR(ME_DOMAIN);
-        return ML_NAN;
-    }
+    if (ISNAN(p) || ISNAN(location) || ISNAN(scale))
+	return p + location + scale;
+    if(!R_FINITE(p) || !R_FINITE(location) || !R_FINITE(scale))
+	ML_ERR_return_NAN;
 #endif
+    R_Q_P01_check(p);
+    if (scale <= 0) ML_ERR_return_NAN;
 
-    if (scale <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    return location + scale * tan(M_PI * (x - 0.5));
+    return location + scale * tan(M_PI * (R_DT_qIv(p) - 0.5));
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,19 +19,19 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
- *    double rbinom(double nin, double pp)
+ *	#include "Mathlib.h"
+ *	double rbinom(double nin, double pp)
  *
  *  DESCRIPTION
  *
- *    Random variates from the binomial distribution.
+ *	Random variates from the binomial distribution.
  *
  *  REFERENCE
  *
- *    Kachitvichyanukul, V. and Schmeiser, B. W. (1988).
- *    Binomial random variate generation.
- *    Communications of the ACM 31, p216.
- *    (Algorithm BTPEC).
+ *	Kachitvichyanukul, V. and Schmeiser, B. W. (1988).
+ *	Binomial random variate generation.
+ *	Communications of the ACM 31, p216.
+ *	(Algorithm BTPEC).
  */
 
 #include "Mathlib.h"
@@ -40,71 +41,79 @@
 
 double rbinom(double nin, double pp)
 {
-    static double al, alv, amaxp, c, f, f1, f2, ffm, fm, g;
-    static double p1, p2, p3, p4, qn, r, u, v, w, w2;
-    static double x, x1, x2, xl, xll, xlr, xm, xnp, xnpq, xr, ynorm, z, z2;
-    static int i, ix, ix1, k, m, mp, n;
-    static double p, q;
+/*=== FIXME :  THIS IS NOT AT ALL THREAD SAFE ! (see below) */
+
+    double p, q, np, g, r, al, alv, amaxp, ffm, ynorm;
+    int i,ix,k, n;
+
+    static double c, f, f1, f2, fm;
+    static double p1, p2, p3, p4, qn, u, v, w, w2;
+    static double x, x1, x2, xl, xll, xlr, xm, npq, xr, z, z2;
+    static int m;
+
     static double psave = -1.0;
     static int nsave = -1;
 
     n = floor(nin + 0.5);
-    /* n=0, p=0, p=1 are not errors <TSL>*/
     if (
 #ifdef IEEE_754
 	!R_FINITE(n) || !R_FINITE(pp) ||
 #endif
-	n < 0.0 || pp < 0.0 || pp > 1.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (n==0.0 || pp==0) return 0;
-    if (pp==1.0) return n;
+	/* n=0, p=0, p=1 are not errors <TSL>*/
+	n < 0. || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
 
-    /* setup, perform only when parameters change */
+    if (n == 0. || pp == 0.) return 0;
+    if (pp == 1.) return n;
 
+    p = fmin2(pp, 1. - pp);
+    q = 1. - p;
+    np = n * p;
+    r = p / q;
+    g = r * (n + 1);
+
+    /* Setup, perform only when parameters change [using static (globals): */
+
+    /* FIXING: Want this thread safe
+       -- use as little (thread globals) as possible
+    */
     if (pp != psave) {
 	psave = pp;
-	p = fmin2(psave, 1.0 - psave);
-	q = 1.0 - p;
+	nsave = n;
+	if (np < 30.0) {
+	    /* inverse cdf logic for mean less than 30 */
+	    qn = pow(q, (double) n);
+	    goto L_np_small;
+	} else {
+	    ffm = np + p;
+	    m = ffm;
+	    fm = m;
+	    npq = np * q;
+	    p1 = (int)(2.195 * sqrt(npq) - 4.6 * q) + 0.5;
+	    xm = fm + 0.5;
+	    xl = xm - p1;
+	    xr = xm + p1;
+	    c = 0.134 + 20.5 / (15.3 + fm);
+	    al = (ffm - xl) / (ffm - xl * p);
+	    xll = al * (1.0 + 0.5 * al);
+	    al = (xr - ffm) / (xr * q);
+	    xlr = al * (1.0 + 0.5 * al);
+	    p2 = p1 * (1.0 + c + c);
+	    p3 = p2 + c / xll;
+	    p4 = p3 + c / xlr;
+	}
     } else if (n == nsave) {
-	if (xnp < 30.0)
-	    goto L20;
-	goto L10;
+	if (np < 30.0)
+	    goto L_np_small;
     }
-    xnp = n * p;
-    nsave = n;
-    if (xnp < 30.0) {
-	/* inverse cdf logic for mean less than 30 */
-	qn = pow(q, (double) n);
-	r = p / q;
-	g = r * (n + 1);
-	goto L20;
-    } else {
-	ffm = xnp + p;
-	m = ffm;
-	fm = m;
-	xnpq = xnp * q;
-	p1 = (int)(2.195 * sqrt(xnpq) - 4.6 * q) + 0.5;
-	xm = fm + 0.5;
-	xl = xm - p1;
-	xr = xm + p1;
-	c = 0.134 + 20.5 / (15.3 + fm);
-	al = (ffm - xl) / (ffm - xl * p);
-	xll = al * (1.0 + 0.5 * al);
-	al = (xr - ffm) / (xr * q);
-	xlr = al * (1.0 + 0.5 * al);
-	p2 = p1 * (1.0 + c + c);
-	p3 = p2 + c / xll;
-	p4 = p3 + c / xlr;
-    }
-  L10:repeat {
+
+    /*-------------------------- np = n*p >= 30 : ------------------- */
+    repeat {
       u = sunif() * p4;
       v = sunif();
       /* triangular region */
       if (u <= p1) {
 	  ix = xm - p1 * v + u;
-	  goto L30;
+	  goto finis;
       }
       /* parallelogram region */
       if (u <= p2) {
@@ -128,33 +137,28 @@ double rbinom(double nin, double pp)
       }
       /* determine appropriate way to perform accept/reject test */
       k = abs(ix - m);
-      if (k <= 20 || k >= xnpq / 2 - 1) {
+      if (k <= 20 || k >= npq / 2 - 1) {
 	  /* explicit evaluation */
 	  f = 1.0;
-	  r = p / q;
-	  g = (n + 1) * r;
 	  if (m < ix) {
-	      mp = m + 1;
-	      for (i = mp; i <= ix; i++)
+	      for (i = m + 1; i <= ix; i++)
 		  f = f * (g / i - r);
 	  } else if (m != ix) {
-	      ix1 = ix + 1;
-	      for (i = ix1; i <= m; i++)
+	      for (i = ix + 1; i <= m; i++)
 		  f = f / (g / i - r);
 	  }
 	  if (v <= f)
-	      goto L30;
+	      goto finis;
       } else {
-	  /* squeezing using upper and lower bounds */
-	  /* on log(f(x)) */
-	  amaxp = (k / xnpq) * ((k * (k / 3.0 + 0.625) + 0.1666666666666) / xnpq + 0.5);
-	  ynorm = -k * k / (2.0 * xnpq);
+	  /* squeezing using upper and lower bounds on log(f(x)) */
+	  amaxp = (k / npq) * ((k * (k / 3. + 0.625) + 0.1666666666666) / npq + 0.5);
+	  ynorm = -k * k / (2.0 * npq);
 	  alv = log(v);
 	  if (alv < ynorm - amaxp)
-	      goto L30;
+	      goto finis;
 	  if (alv <= ynorm + amaxp) {
-				/* stirling's formula to machine accuracy */
-				/* for the final acceptance/rejection test */
+	      /* stirling's formula to machine accuracy */
+	      /* for the final acceptance/rejection test */
 	      x1 = ix + 1;
 	      f1 = fm + 1.0;
 	      z = n + 1 - fm;
@@ -164,25 +168,30 @@ double rbinom(double nin, double pp)
 	      f2 = f1 * f1;
 	      w2 = w * w;
 	      if (alv <= xm * log(f1 / x1) + (n - m + 0.5) * log(z / w) + (ix - m) * log(w * p / x1 * q) + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / f2) / f2) / f2) / f2) / f1 / 166320.0 + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / z2) / z2) / z2) / z2) / z / 166320.0 + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / x2) / x2) / x2) / x2) / x1 / 166320.0 + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / w2) / w2) / w2) / w2) / w / 166320.)
-		  goto L30;
+		  goto finis;
 	  }
       }
   }
-  L20:repeat {
-      ix = 0;
-      f = qn;
-      u = sunif();
-      repeat {
-	  if (u < f)
-	      goto L30;
-	  if (ix > 110)
-	      break;
-	  u = u - f;
-	  ix = ix + 1;
-	  f = f * (g / ix - r);
-      }
+
+ L_np_small:
+    /*---------------------- np = n*p < 30 : ------------------------- */
+
+  repeat {
+     ix = 0;
+     f = qn;
+     u = sunif();
+     repeat {
+	 if (u < f)
+	     goto finis;
+	 if (ix > 110)
+	     break;
+	 u = u - f;
+	 ix = ix + 1;
+	 f = f * (g / ix - r);
+     }
   }
-  L30:if (psave > 0.5)
+ finis:
+    if (psave > 0.5)
 	 ix = n - ix;
   return (double)ix;
 }

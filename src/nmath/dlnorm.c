@@ -32,14 +32,12 @@ double dlnorm(double x, double logmean, double logsd, int give_log)
     if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
 	return x + logmean + logsd;
 #endif
-    if(logsd <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if(x == 0) return R_D__0;
-    y = (log(x) - logmean) / logsd;
+    if(logsd <= 0) ML_ERR_return_NAN;
 
-    return (log_p ?
+    if(x == 0) return R_D__0;
+
+    y = (log(x) - logmean) / logsd;
+    return (give_log ?
 	    -(M_LN_SQRT_2PI   + 0.5 * y * y + log(x * logsd)) :
 	    M_1_SQRT_2PI * exp(-0.5 * y * y)  /	 (x * logsd));
     /* M_1_SQRT_2PI = 1 / sqrt(2 * pi) */

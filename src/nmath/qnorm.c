@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Core Development Group
+ *  Copyright (C) 2000 The R Development Core Team
  *  based on AS 111 (C) 1977 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,28 +20,30 @@
  *
  *  SYNOPSIS
  *
- *    double qnorm(double p, double mu, double sigma);
+ *	double qnorm5(double p, double mu, double sigma,
+ *		      int lower_tail, int log_p)
+ *            {qnorm (..) is synonymous and preferred inside R}
  *
  *  DESCRIPTION
  *
- *    Compute the quantile function for the normal distribution.
+ *	Compute the quantile function for the normal distribution.
  *
- *    For small to moderate probabilities, algorithm referenced
- *    below is used to obtain an initial approximation which is
- *    polished with a final Newton step.
+ *	For small to moderate probabilities, algorithm referenced
+ *	below is used to obtain an initial approximation which is
+ *	polished with a final Newton step.
  *
- *    For very large arguments, an algorithm of Wichura is used.
+ *	For very large arguments, an algorithm of Wichura is used.
  *
  *  REFERENCE
  *
- *    Beasley, J. D. and S. G. Springer (1977).
- *    Algorithm AS 111: The percentage points of the normal distribution,
- *    Applied Statistics, 26, 118-121.
+ *	Beasley, J. D. and S. G. Springer (1977).
+ *	Algorithm AS 111: The percentage points of the normal distribution,
+ *	Applied Statistics, 26, 118-121.
  */
 
 #include "Mathlib.h"
 
-double qnorm(double p, double mu, double sigma, int lower_tail, int log_p)
+double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 {
     double p_, q, r, val;
 
@@ -50,7 +52,8 @@ double qnorm(double p, double mu, double sigma, int lower_tail, int log_p)
 	return p + mu + sigma;
 #endif
     R_Q_P01_check(p);
-    if(sigma < 0) { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+    if(sigma  < 0.)	ML_ERR_return_NAN;
+    if(sigma == 0.)	return mu;
 
     p_ = R_DT_qIv(p);/* real lower_tail prob. p */
     q = p_ - 0.5;
@@ -97,19 +100,17 @@ double qnorm(double p, double mu, double sigma, int lower_tail, int log_p)
 	else {
 	    ML_ERROR(ME_RANGE);
 	    if(q < 0.0) return ML_NEGINF;
-	    else 	return ML_POSINF;
+	    else	return ML_POSINF;
 	}
     }
-/* FIXME: This should be improved when log_p or !lower_tail!
- *	  "Problem": different derivative !
+/* FIXME: This should be improved when log_p or !lower_tail ?
+ *	  (using p, not p_ , and a different derivative )
  */
-#define LOWER (1)
-#define LOG (0)
 
     /* Final Newton step: */
     val = val -
-	(pnorm(val, 0., 1., LOWER, LOG) - p_) /
-	 dnorm(val, 0., 1., LOG);
+	(pnorm(val, 0., 1., /*lower*/LTRUE, /*log*/LFALSE) - p_) /
+	 dnorm(val, 0., 1., /*log*/LFALSE);
     return mu + sigma * val;
 }
 

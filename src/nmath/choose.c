@@ -48,10 +48,8 @@ double lchoose(double n, double k)
 	/* NaNs propagated correctly */
 	if(ISNAN(n) || ISNAN(k)) return n + k;
 #endif
-	if (k < 0 || n < k) {
-	    ML_ERROR(ME_DOMAIN);
-	    return ML_NAN;
-        }
+	if (k < 0 || n < k) ML_ERR_return_NAN;
+
 	return lfastchoose(n, k);
 }
 
@@ -63,9 +61,7 @@ double choose(double n, double k)
 	/* NaNs propagated correctly */
 	if(ISNAN(n) || ISNAN(k)) return n + k;
 #endif
-	if (k < 0 || n < k) {
-	    ML_ERROR(ME_DOMAIN);
-	    return ML_NAN;
-        }
+	if (k < 0 || n < k) ML_ERR_return_NAN;
+
 	return floor(exp(lfastchoose(n, k)) + 0.5);
 }

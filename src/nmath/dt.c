@@ -17,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dt(double x, double n);
- *
  *  DESCRIPTION
  *
  *    The density of the "Student" t distribution.
@@ -29,24 +24,23 @@
 
 #include "Mathlib.h"
 
-double dt(double x, double n)
+double dt(double x, double n, int give_log)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
 	return x + n;
 #endif
-    if (n <= 0.) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (n <= 0.) ML_ERR_return_NAN;
+
 #ifdef IEEE_754
-#define LOG (0)
     if(!R_FINITE(x))
-	return 0;
+	return R_D__0;
     if(!R_FINITE(n))
-	return dnorm(x, 0.0, 1.0, LOG);
+	return dnorm(x, 0.0, 1.0, give_log);
 #endif
-    return pow(1. + x * x / n, -0.5 * (n + 1.)) / (sqrt(n) * beta(.5, .5 * n));
+    return give_log ?
+	log(1. + x * x / n)*(-0.5 * (n + 1.)) -.5*log(n) - lbeta(.5, .5 * n) :
+	pow(1. + x * x / n , -0.5 * (n + 1.)) / (sqrt(n) *  beta(.5, .5 * n));
 }
 
 

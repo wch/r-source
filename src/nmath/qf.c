@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qf(double x, double n1, double n2);
- *
  *  DESCRIPTION
  *
  *    The quantile function of the F distribution.
@@ -28,18 +24,17 @@
 
 #include "Mathlib.h"
 
-double qf(double x, double n1, double n2)
+double qf(double p, double n1, double n2, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(n1) || ISNAN(n2))
-	return x + n1 + n2;
+    if (ISNAN(p) || ISNAN(n1) || ISNAN(n2))
+	return p + n1 + n2;
 #endif
-    if (n1 <= 0.0 || n2 <= 0.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x <= 0.0)
-	return 0.0;
-    x = (1.0 / qbeta(1.0 - x, n2 / 2.0, n1 / 2.0) - 1.0) * (n2 / n1);
-    return ML_VALID(x) ? x : ML_NAN;
+    if (n1 <= 0. || n2 <= 0.) ML_ERR_return_NAN;
+
+    R_Q_P01_check(p);
+    if (p == R_DT_0)
+	return 0;
+    p = (1. / qbeta(R_DT_CIv(p), n2/2, n1/2, LTRUE, LFALSE) - 1.) * (n2 / n1);
+    return ML_VALID(p) ? p : ML_NAN;
 }

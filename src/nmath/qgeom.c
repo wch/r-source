@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qgeom(double x, double p);
- *
  *  DESCRIPTION
  *
  *    The quantile function of the geometric distribution.
@@ -28,23 +24,20 @@
 
 #include "Mathlib.h"
 
-double qgeom(double x, double p)
+double qgeom(double p, double prob, int lower_tail, int log_p)
 {
+    R_Q_P01_check(p);
+    if (prob <= 0 || prob > 1) ML_ERR_return_NAN;
+
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(p))
-	return x + p;
-    if (x < 0 || x > 1 || p <= 0 || p > 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x == 1) return ML_POSINF;
+    if (ISNAN(p) || ISNAN(prob))
+	return p + prob;
+    if (p == R_DT_1) return ML_POSINF;
 #else
-    if (x < 0 || x >= 1 || p <= 0 || p > 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (p == R_DT_1) ML_ERR_return_NAN;
 #endif
-    if (x == 0) return 0;
+    if (p == R_DT_0) return 0;
+
 /* add a fuzz to ensure left continuity */
-    return ceil(log(1 - x) / log(1.0 - p) - 1 - 1e-7);
+    return ceil(R_DT_Clog(p) / log(1. - prob) - 1 - 1e-7);
 }

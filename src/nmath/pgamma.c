@@ -1,8 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 1999 The R Development Core Team
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 1998		Ross Ihaka
+ *  Copyright (C) 1999-2000	The R Development Core Team
  *  based on AS 239 (C) 1988 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -22,7 +21,8 @@
  *  SYNOPSIS
  *
  *	#include "Mathlib.h"
- *	double pgamma(double x, double alph, double scale);
+ *	double pgamma(double x, double alph, double scale,
+ *                    int lower_tail, int log_p)
  *
  *  DESCRIPTION
  *
@@ -57,14 +57,15 @@ static const double
     xbig = 1.0e+8,
     xlarge = 1.0e+37,
 
-    alphlimit = 1000.0e0,/* normal approx. for alph > alphlimit */
+    alphlimit = 1000.,/* normal approx. for alph > alphlimit */
     elimit = M_LN2*(DBL_MIN_EXP);/* will set exp(E) = 0 for E < elimit ! */
     /* was elimit = -88.0e0; */
 
-double pgamma(double x, double alph, double scale)
+double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 {
     double pn1, pn2, pn3, pn4, pn5, pn6, arg, a, b, c, an, osum, sum;
     long n;
+    int pearson;
 
     /* check that we have valid values for x and alph */
 
@@ -72,10 +73,8 @@ double pgamma(double x, double alph, double scale)
     if (ISNAN(x) || ISNAN(alph) || ISNAN(scale))
 	return x + alph + scale;
 #endif
-    if(alph <= 0. || scale <= 0.) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if(alph <= 0. || scale <= 0.) ML_ERR_return_NAN;
+
 #ifdef DEBUG_p
     REprintf("pgamma(x=%4g, alph=%4g, scale=%4g): ",x,alph,scale);
 #endif
@@ -84,25 +83,23 @@ double pgamma(double x, double alph, double scale)
     REprintf("-> x=%4g; ",x);
 #endif
     if (x <= 0.)
-	return 0.0;
+	return R_DT_0;
 
     /* use a normal approximation if alph > alphlimit */
 
     if (alph > alphlimit) {
 	pn1 = sqrt(alph) * 3. * (pow(x/alph, 1./3.) + 1. / (9. * alph) - 1.);
-#define LOWER (1)
-#define LOG_P (0)
-	return pnorm(pn1, 0., 1., LOWER, LOG_P);
+	return pnorm(pn1, 0., 1., lower_tail, log_p);
     }
 
     /* if x is extremely large __compared to alph__ then return 1 */
 
     if (x > xbig * alph)
-	return 1.;
+	return R_DT_1;
 
     if (x <= 1. || x < alph) {
 
-	/* use pearson's series expansion. */
+	pearson = 1;/* use pearson's series expansion. */
 
 	arg = alph * log(x) - x - lgammafn(alph + 1.);
 #ifdef DEBUG_p
@@ -117,18 +114,10 @@ double pgamma(double x, double alph, double scale)
 	    sum += c;
 	} while (c > DBL_EPSILON);
 	arg += log(sum);
+    }
+    else { /* x >= max( 1, alph) */
 
-#ifndef IEEE_754
-	/* Underflow check :*/
-	if (arg < elimit)
-	    sum = 0.;
-	else
-#endif
-	    sum = exp(arg);
-
-    } else { /* x >= max( 1, alph)
-
-	      * use a continued fraction expansion */
+	pearson = 0;/* use a continued fraction expansion */
 
 	arg = alph * log(x) - x - lgammafn(alph);
 #ifdef DEBUG_p
@@ -170,17 +159,24 @@ double pgamma(double x, double alph, double scale)
 	    }
 	}
 	arg += log(sum);
-
-#ifndef IEEE_754
-	/* Underflow check :*/
-	if (arg < elimit)
-	    sum = 1.;
-	else
-#endif
-	    sum = 1. - exp(arg);
     }
+
 #ifdef DEBUG_p
     REprintf("--> arg=%12g (elimit=%g)\n", arg, elimit);
 #endif
-    return sum;
+
+    lower_tail = (lower_tail == pearson);
+
+    if (log_p && lower_tail)
+	return(arg);
+    /* else */
+#ifndef IEEE_754
+    /* Underflow check :*/
+    if (arg < elimit)
+	sum = 0.;
+    else
+#endif
+	sum = exp(arg);
+
+    return (lower_tail) ? sum : R_D_val(1 - sum);
 }

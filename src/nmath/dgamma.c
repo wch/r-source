@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  SYNOPSIS
- *
- *	#include "Mathlib.h"
- *	double dgamma(double x, double shape, double scale);
- *
  *  DESCRIPTION
  *
  *     Computes the density of the gamma distribution.
@@ -28,29 +24,25 @@
 
 #include "Mathlib.h"
 
-double dgamma(double x, double shape, double scale)
+double dgamma(double x, double shape, double scale, int give_log)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
 	return x + shape + scale;
 #endif
-    if (shape <= 0 || scale <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (shape <= 0 || scale <= 0) ML_ERR_return_NAN;
+
     if (x < 0)
-	return 0;
+	return R_D__0;
     if (x == 0) {
-	if (shape < 1) {
-	    ML_ERROR(ME_RANGE);
-	    return ML_POSINF;
-	}
-	if (shape > 1) {
-	    return 0;
-	}
-	return 1 / scale;
+	if (shape < 1) ML_ERR_return_NAN;
+	if (shape > 1) return R_D__0;
+
+	return give_log ? -log(scale) : 1 / scale;
     }
     x /= scale;
-    return exp((shape - 1) * log(x) - lgammafn(shape) - x) / scale;
+    return give_log ?
+	   ((shape - 1) * log(x) - lgammafn(shape) - x) - log(scale) :
+	exp((shape - 1) * log(x) - lgammafn(shape) - x) / scale;
 }
 

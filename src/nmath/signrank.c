@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999 R Development Core Team
+ *  Copyright (C) 1999-2000  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,20 +19,20 @@
  *  SYNOPSIS
  *
  *    #include "Mathlib.h"
- *    double dsignrank(double x, double n)
- *    double psignrank(double x, double n)
- *    double qsignrank(double x, double n)
+ *    double dsignrank(double x, double n, int give_log)
+ *    double psignrank(double x, double n, int lower_tail, int log_p)
+ *    double qsignrank(double x, double n, int lower_tail, int log_p)
  *    double rsignrank(double n)
  *
  *  DESCRIPTION
  *
- *    dsignrank    The density of the Wilcoxon Signed Rank distribution.
- *    psignrank    The distribution function of the Wilcoxon Signed Rank
- *                 distribution.
- *    qsignrank    The quantile function of the Wilcoxon Signed Rank
- *                 distribution.
- *    rsignrank    Random variates from the Wilcoxon Signed Rank
- *                 distribution.
+ *    dsignrank	   The density of the Wilcoxon Signed Rank distribution.
+ *    psignrank	   The distribution function of the Wilcoxon Signed Rank
+ *		   distribution.
+ *    qsignrank	   The quantile function of the Wilcoxon Signed Rank
+ *		   distribution.
+ *    rsignrank	   Random variates from the Wilcoxon Signed Rank
+ *		   distribution.
  */
 
 #include "Mathlib.h"
@@ -99,8 +99,7 @@ csignrank(int k, int n)
     return(w[n][k]);
 }
 
-double
-dsignrank(double x, double n)
+double dsignrank(double x, double n, int give_log)
 {
     double d;
 
@@ -109,26 +108,23 @@ dsignrank(double x, double n)
     if (ISNAN(x) || ISNAN(n)) return(x + n);
 #endif
     n = floor(n + 0.5);
-    if (n <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return(ML_NAN);
-    }
+    if (n <= 0)
+	ML_ERR_return_NAN;
 
     if (fabs(x - floor(x + 0.5)) > 1e-7)
-	return(0);
+	return(R_D__0);
     x = floor(x + 0.5);
     if ((x < 0) || (x > (n * (n + 1) / 2)))
-	return(0);
+	return(R_D__0);
 
     w_init_maybe(n);
-    d = exp(log(csignrank(x, n)) - n * log(2));
+    d = R_D_exp(log(csignrank(x, n)) - n * M_LN2);
     w_free_maybe(n);
 
     return(d);
 }
 
-double
-psignrank(double x, double n)
+double psignrank(double x, double n, int lower_tail, int log_p)
 {
     int i;
     double f, p;
@@ -136,25 +132,19 @@ psignrank(double x, double n)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
     return(x + n);
-    if (!R_FINITE(n)) {
-	ML_ERROR(ME_DOMAIN);
-	return(ML_NAN);
-    }
+    if (!R_FINITE(n)) ML_ERR_return_NAN;
 #endif
     n = floor(n + 0.5);
-    if (n <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return(ML_NAN);
-    }
+    if (n <= 0) ML_ERR_return_NAN;
 
     x = floor(x + 1e-7);
     if (x < 0.0)
-	return(0);
+	return(R_DT_0);
     if (x >= n * (n + 1) / 2)
-	return(1);
+	return(R_DT_1);
 
     w_init_maybe(n);
-    f = exp(- n * log(2));
+    f = exp(- n * M_LN2);
     p = 0;
     if (x <= (n * (n + 1) / 4)) {
 	for (i = 0; i <= x; i++)
@@ -164,39 +154,39 @@ psignrank(double x, double n)
 	x = n * (n + 1) / 2 - x;
 	for (i = 0; i < x; i++)
 	    p += csignrank(i, n) * f;
-	p = 1 - p;
+	lower_tail = !lower_tail; /* p = 1 - p; */
     }
     w_free_maybe(n);
 
-    return(p);
-}
+    return(R_DT_val(p));
+} /* psignrank() */
 
-double
-qsignrank(double x, double n)
+double qsignrank(double x, double n, int lower_tail, int log_p)
 {
     double f, p, q;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
 	return(x + n);
-    if (!R_FINITE(x) || !R_FINITE(n)) {
-	ML_ERROR(ME_DOMAIN);
-	return(ML_NAN);
-    }
+    if (!R_FINITE(x) || !R_FINITE(n))
+	ML_ERR_return_NAN;
 #endif
-    n = floor(n + 0.5);
-    if (x < 0 || x > 1 || n <= 0) {
-	ML_ERROR(ME_DOMAIN);
-	return(ML_NAN);
-    }
+    R_Q_P01_check(x);
 
-    if (x == 0)
+    n = floor(n + 0.5);
+    if (n <= 0)
+	ML_ERR_return_NAN;
+
+    if (x == R_DT_0)
 	return(0);
-    if (x == 1)
+    if (x == R_DT_1)
 	return(n * (n + 1) / 2);
 
+    if(log_p || !lower_tail)
+	x = R_DT_qIv(x); /* lower_tail,non-log "p" */
+
     w_init_maybe(n);
-    f = exp(- n * log(2));
+    f = exp(- n * M_LN2);
     p = 0;
     q = 0;
     if (x <= 0.5) {
@@ -224,8 +214,7 @@ qsignrank(double x, double n)
     return(q);
 }
 
-double
-rsignrank(double n)
+double rsignrank(double n)
 {
     int i, k;
     double r;
@@ -235,10 +224,7 @@ rsignrank(double n)
     if (ISNAN(n)) return(n);
 #endif
     n = floor(n + 0.5);
-    if (n < 0) {
-	ML_ERROR(ME_DOMAIN);
-	return(ML_NAN);
-    }
+    if (n < 0) ML_ERR_return_NAN;
 
     if (n == 0)
 	return(0);

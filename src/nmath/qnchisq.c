@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,35 +20,35 @@
 
 #include "Mathlib.h"
 
-double qnchisq(double p, double n, double lambda)
+double qnchisq(double p, double n, double lambda, int lower_tail, int log_p)
 {
+    static const double acu = 1.0e-12;
+
     double ux, lx, nx;
-    double acu = 1.0e-12;
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(n) || ISNAN(lambda))
 	return p + n + lambda;
-    if (!R_FINITE(n)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
 #endif
+    if (!R_FINITE(n)) ML_ERR_return_NAN;
+
     n = floor(n + 0.5);
-    if (p < 0 || p >= 1 || n < 1 || lambda < 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (p == 0)
+    if (n < 1 || lambda < 0) ML_ERR_return_NAN;
+
+    R_Q_P01_check(p);
+
+    if (p == R_DT_0)
 	return 0;
+
     /* Invert pnchisq(.) finding an upper and lower bound;
        then interval halfing : */
 
     /* FIXME: Use less precision here (see pnchisq() !) */
-    for (ux = 1.0; pnchisq(ux, n, lambda) < p; ux *= 2);
-    for (lx = ux; pnchisq(lx, n, lambda) > p; lx *= 0.5);
+    for (ux = 1.0; pnchisq(ux, n, lambda, lower_tail, log_p) < p; ux *= 2);
+    for (lx = ux;  pnchisq(lx, n, lambda, lower_tail, log_p) > p; lx *= 0.5);
     do {
 	nx = 0.5 * (lx + ux);
-	if (pnchisq(nx, n, lambda) > p)
+	if (pnchisq(nx, n, lambda, lower_tail, log_p) > p)
 	    ux = nx;
 	else
 	    lx = nx;

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double punif(double x, double a, double b);
- *
  *  DESCRIPTION
  *
  *    The distribution function of the uniform distribution.
@@ -28,19 +24,17 @@
 
 #include "Mathlib.h"
 
-double punif(double x, double a, double b)
+double punif(double x, double a, double b, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(a) || ISNAN(b))
 	return x + a + b;
 #endif
-    if (b <= a) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (b <= a) ML_ERR_return_NAN;
+
     if (x <= a)
-	return 0.0;
+	return R_DT_0;
     if (x >= b)
-	return 1.0;
-    return (x - a) / (b - a);
+	return R_DT_1;
+    return R_DT_val((x - a) / (b - a));
 }

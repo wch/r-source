@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,17 +20,28 @@
 
 #include "Mathlib.h"
 
-double qlogis(double x, double location, double scale)
+double qlogis(double p, double location, double scale, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-	if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
-		return x + location + scale;
+    if (ISNAN(p) || ISNAN(location) || ISNAN(scale))
+	return p + location + scale;
 #endif
-	if (scale <= 0.0 || x < 0 || x > 1) {
-		ML_ERROR(ME_DOMAIN);
-		return ML_NAN;
-	}
-	if(x <= 0) return ML_NEGINF;
-	if(x == 1) return ML_POSINF;
-	return location + scale * log(x / (1.0 - x));
+    R_Q_P01_check(p);
+    if (scale <	 0.) ML_ERR_return_NAN;
+    if (scale == 0.) return location;
+
+    if(R_DT_qIv(p) <= 0) return ML_NEGINF;
+    if(p == R_DT_1) return ML_POSINF;
+
+    /* p := logit(p) = log( p / (1-p) )	 : */
+    if(log_p) {
+	if(lower_tail)
+	    p = p - logrelerr(- exp(p));
+	else
+	    p = logrelerr(- exp(p)) - p;
+    }
+    else
+	p = log(lower_tail ? (p / (1. - p)) : ((1. - p) / p));
+
+    return location + scale * p;
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,10 +35,8 @@ double dpois(double x, double lambda, int give_log)
 	warning("non-integer x = %f", x);
 	return R_D__0;
     }
-    if(lambda <= 0.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if(lambda <= 0.0) ML_ERR_return_NAN;
+
     if (x < 0)
 	return R_D__0;
 #ifdef IEEE_754

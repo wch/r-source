@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *  based in part on AS70 (C) 1974 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,62 +20,63 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
- *    double qtukey(p, rr, cc, df);
+ *	#include "Mathlib.h"
+ *	double qtukey(p, rr, cc, df, lower_tail, log_p);
  *
  *  DESCRIPTION
  *
- *    Computes the quantiles of the maximum of rr studentized
- *    ranges, each based on cc means and with df degrees of freedom
- *    for the standard error, is less than q.
+ *	Computes the quantiles of the maximum of rr studentized
+ *	ranges, each based on cc means and with df degrees of freedom
+ *	for the standard error, is less than q.
  *
- *    The algorithm is based on that of the reference.
+ *	The algorithm is based on that of the reference.
  *
  *  REFERENCE
  *
- *    Copenhaver, Margaret Diponzio & Holland, Burt S.
- *    Multiple comparisons of simple effects in
- *    the two-way analysis of variance with fixed effects.
- *    Journal of Statistical Computation and Simulation,
- *    Vol.30, pp.1-15, 1988.
+ *	Copenhaver, Margaret Diponzio & Holland, Burt S.
+ *	Multiple comparisons of simple effects in
+ *	the two-way analysis of variance with fixed effects.
+ *	Journal of Statistical Computation and Simulation,
+ *	Vol.30, pp.1-15, 1988.
  */
 
 #include "Mathlib.h"
 
-/*
- *  this function finds percentage point of the studentized range
- *  which is used as initial estimate for the secant method.
- *  function is adapted from portion of algorithm as 70
- *  from applied statistics (1974) ,vol. 23, no. 1
- *  by odeh, r. e. and evans, j. o.
+/* qinv() :
+ *	this function finds percentage point of the studentized range
+ *	which is used as initial estimate for the secant method.
+ *	function is adapted from portion of algorithm as 70
+ *	from applied statistics (1974) ,vol. 23, no. 1
+ *	by odeh, r. e. and evans, j. o.
  *
- *    p = percentage point
- *    c = no. of columns or treatments
- *    v = degrees of freedom
- *    qinv = returned initial estimate
+ *	  p = percentage point
+ *	  c = no. of columns or treatments
+ *	  v = degrees of freedom
+ *	  qinv = returned initial estimate
  *
- *  vmax is cutoff above which degrees of freedom
- *  is treated as infinity.
+ *	vmax is cutoff above which degrees of freedom
+ *	is treated as infinity.
  */
 
 static double qinv(double p, double c, double v)
 {
-    static double p0 = 0.322232421088;
-    static double q0 = 0.993484626060e-01;
-    static double p1 = -1.0;
-    static double q1 = 0.588581570495;
-    static double p2 = -0.342242088547;
-    static double q2 = 0.531103462366;
-    static double p3 = -0.204231210125;
-    static double q3 = 0.103537752850;
-    static double p4 = -0.453642210148e-04;
-    static double q4 = 0.38560700634e-02;
-    static double c1 = 0.8832;
-    static double c2 = 0.2368;
-    static double c3 = 1.214;
-    static double c4 = 1.208;
-    static double c5 = 1.4142;
-    static double vmax = 120.0;
+    static const double p0 = 0.322232421088;
+    static const double q0 = 0.993484626060e-01;
+    static const double p1 = -1.0;
+    static const double q1 = 0.588581570495;
+    static const double p2 = -0.342242088547;
+    static const double q2 = 0.531103462366;
+    static const double p3 = -0.204231210125;
+    static const double q3 = 0.103537752850;
+    static const double p4 = -0.453642210148e-04;
+    static const double q4 = 0.38560700634e-02;
+    static const double c1 = 0.8832;
+    static const double c2 = 0.2368;
+    static const double c3 = 1.214;
+    static const double c4 = 1.208;
+    static const double c5 = 1.4142;
+    static const double vmax = 120.0;
+
     double ps, q, t, yi;
 
     ps = 0.5 - 0.5 * p;
@@ -104,7 +106,7 @@ static double qinv(double p, double c, double v)
  *  ir(1) = error flag = 1 if wprob probability > 1
  *  ir(2) = error flag = 1 if ptukey probability > 1
  *  ir(3) = error flag = 1 if convergence not reached in 50 iterations
- *                     = 2 if df < 2
+ *		       = 2 if df < 2
  *
  *  qtukey = returned critical value
  *
@@ -113,11 +115,13 @@ static double qinv(double p, double c, double v)
  */
 
 
-double qtukey(double p, double rr, double cc, double df)
+double qtukey(double p, double rr, double cc, double df,
+	      int lower_tail, int log_p)
 {
-    static double eps = 0.0001;
-    static int maxiter = 50;
-    static double ans, valx0, valx1, x0, x1, xabs;
+    static const double eps = 0.0001;
+    static const int maxiter = 50;
+
+    double ans, valx0, valx1, x0, x1, xabs;
     int iter;
 
 #ifdef IEEE_754
@@ -125,26 +129,21 @@ double qtukey(double p, double rr, double cc, double df)
 	ML_ERROR(ME_DOMAIN);
 	return p + rr + cc + df;
     }
-    if (p < 0 || p > 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-#else
-    if (p < 0 || p >= 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+#endif
+
+    R_Q_P01_check(p);
+#ifndef IEEE_754
+    if (p == 1) ML_ERR_return_NAN;
 #endif
 
     /* df must be > 1 */
     /* there must be at least two values */
 
-    if (df < 2 || rr < 1 || cc < 2) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (df < 2 || rr < 1 || cc < 2) ML_ERR_return_NAN;
 
-    if (p <= 0) return 0;
+    if (p == R_DT_0) return 0;
+
+    p = R_DT_qIv(p); /* lower_tail,non-log "p" */
 
     /* Initial value */
 
@@ -152,7 +151,7 @@ double qtukey(double p, double rr, double cc, double df)
 
     /* Find prob(value < x0) */
 
-    valx0 = ptukey(x0, rr, cc, df) - p;
+    valx0 = ptukey(x0, rr, cc, df, /*LOWER*/LTRUE, /*LOG_P*/LFALSE) - p;
 
     /* Find the second iterate and prob(value < x1). */
     /* If the first iterate has probability value */
@@ -163,7 +162,7 @@ double qtukey(double p, double rr, double cc, double df)
 	x1 = fmax2(0.0, x0 - 1.0);
     else
 	x1 = x0 + 1.0;
-    valx1 = ptukey(x1, rr, cc, df) - p;
+    valx1 = ptukey(x1, rr, cc, df, /*LOWER*/LTRUE, /*LOG_P*/LFALSE) - p;
 
     /* Find new iterate */
 
@@ -180,7 +179,7 @@ double qtukey(double p, double rr, double cc, double df)
 	}
 	/* Find prob(value < new iterate) */
 
-	valx1 = ptukey(ans, rr, cc, df) - p;
+	valx1 = ptukey(ans, rr, cc, df, /*LOWER*/LTRUE, /*LOG_P*/LFALSE) - p;
 	x1 = ans;
 
 	/* If the difference between two successive */
@@ -192,7 +191,6 @@ double qtukey(double p, double rr, double cc, double df)
     }
 
     /* The process did not converge in 'maxiter' iterations */
-
     ML_ERROR(ME_NOCONV);
     return ans;
 }

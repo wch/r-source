@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,38 +31,42 @@ static double expmax = 0.0;
 
 #define repeat for(;;)
 
+#define expmax	(DBL_MAX_EXP * M_LN2)/* = log(DBL_MAX) */
+
 double rbeta(double aa, double bb)
 {
+    /* FIXME:  Keep Globals (properly) for threading */
+
+    /*--- MM: I have a first fix, quite nice, but w/ a bug (20/1/2000) ----*/
+
+    /* Uses these GLOBALS to save time when many rv's are generated : */
     static double a, b, delta, r, s, t, u1, u2, v, w, y, z;
     static double alpha, beta, gamma, k1, k2;
     static double olda = -1.0;
     static double oldb = -1.0;
     int qsame;
 
-    if (expmax == 0.0)
-	expmax = log(DBL_MAX);
+    if (aa <= 0. || bb <= 0.)
+	ML_ERR_return_NAN;
+
+    a = fmin2(aa, bb);
+    b = fmax2(aa, bb); /* a <= b */
+    alpha = a + b;
 
     qsame = (olda == aa) && (oldb == bb);
-
     if (!qsame) {
-	if (aa > 0.0 && bb > 0.0) {
-	    olda = aa;
-	    oldb = bb;
-	} else {
-	    ML_ERROR(ME_DOMAIN);
-	    return ML_NAN;
-	}
+      olda = aa;
+      oldb = bb;
     }
-    if (fmin2(aa, bb) <= 1.0) {	/* Algorithm BC */
-	if (!qsame) {
-	    a = fmax2(aa, bb);
-	    b = fmin2(aa, bb);
-	    alpha = a + b;
-	    beta = 1.0 / b;
-	    delta = 1.0 + a - b;
-	    k1 = delta * (0.0138889 + 0.0416667 * b) /
-		(a * beta - 0.777778);
-	    k2 = 0.25 + (0.5 + 0.25 / delta) * b;
+
+    if (a <= 1.0) {	/* Algorithm BC */
+
+	if (!qsame) { /* initialize */
+	    beta = 1.0 / a;
+	    delta = 1.0 + b - a;
+	    k1 = delta * (0.0138889 + 0.0416667 * a) /
+		(b * beta - 0.777778);
+	    k2 = 0.25 + (0.5 + 0.25 / delta) * a;
 	}
 	repeat {
 	    u1 = sunif();
@@ -80,23 +85,25 @@ double rbeta(double aa, double bb)
 	    }
 	    v = beta * log(u1 / (1.0 - u1));
 	    if (v <= expmax)
-		w = a * exp(v);
+		w = b * exp(v);
 	    else
 		w = DBL_MAX;
-	    if (alpha * (log(alpha / (b + w)) + v) - 1.3862944
-		>= log(z))
+	    if (alpha * (log(alpha / (a + w)) + v) - 1.3862944 >= log(z))
 		goto deliver;
 	}
 	v = beta * log(u1 / (1.0 - u1));
 	if (v <= expmax)
-	    w = a * exp(v);
+	    w = b * exp(v);
 	else
 	    w = DBL_MAX;
-    } else {		/* Algorithm BB */
-	if (!qsame) {
-	    a = fmin2(aa, bb);
-	    b = fmax2(aa, bb);
-	    alpha = a + b;
+
+    deliver:
+	return (aa == a) ? a / (a + w) : w / (a + w);
+
+    }
+    else {		/* Algorithm BB */
+
+	if (!qsame) { /* initialize */
 	    beta = sqrt((alpha - 2.0) / (2.0 * a * b - alpha));
 	    gamma = a + 1.0 / beta;
 	}
@@ -118,8 +125,7 @@ double rbeta(double aa, double bb)
 		break;
 	}
 	while (r + alpha * log(alpha / (b + w)) < t);
-    }
 
- deliver:
-    return (aa != a) ? b / (b + w) : w / (b + w);
+	return (aa != a) ? b / (b + w) : w / (b + w);
+    }
 }

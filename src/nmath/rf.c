@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,10 +40,8 @@ double rf(double n1, double n2)
 #ifdef IEEE_754
 	isnan(n1) || isnan(n2) ||
 #endif
-	n1 <= 0.0 || n2 <= 0.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+	n1 <= 0. || n2 <= 0.)	ML_ERR_return_NAN;
+
     v1 = R_FINITE(n1) ? (rchisq(n1) / n1) : snorm();
     v2 = R_FINITE(n2) ? (rchisq(n2) / n2) : snorm();
     return v1 / v2;

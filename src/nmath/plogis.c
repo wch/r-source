@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2000		The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,22 +17,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  */
-
 #include "Mathlib.h"
 
-double plogis(double x, double location, double scale)
+double plogis(double x, double location, double scale,
+	      int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-	if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
-		return x + location + scale;
+    if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
+	return x + location + scale;
 #endif
-	if (scale <= 0.0) {
-		ML_ERROR(ME_DOMAIN);
-		return ML_NAN;
-	}
-	if(!R_FINITE(x)) {
-		if (x > 0) return 1;
-		else return 0;
-	}
-	return 1.0 / (1.0 + exp(-(x - location) / scale));
+    if (scale <= 0.0)	ML_ERR_return_NAN;
+
+    x = (x - location) / scale;
+    if (ISNAN(x))	ML_ERR_return_NAN;
+    if(!R_FINITE(x)) {
+	if (x > 0) return R_DT_1;
+	/* x < 0 */return R_DT_0;
+    }
+    if (log_p)
+	return -(lower_tail ? 0 : x) +
+	    logrelerr(exp(-x)); /* logr..() = log(1 + e^{-x}) */
+    /* else */
+    return 1 / (1 + (lower_tail ? exp(-x) : exp(x)));
 }
+

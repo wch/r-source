@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,19 +17,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qchisq(double p, double df);
- *
  *  DESCRIPTION
  *
- *    The quantile function of the chi-squared distribution.
+ *	The quantile function of the chi-squared distribution.
  */
 
 #include "Mathlib.h"
 
-double qchisq(double p, double df)
+double qchisq(double p, double df, int lower_tail, int log_p)
 {
-    return qgamma(p, 0.5 * df, 2.0);
+    return qgamma(p, 0.5 * df, 2.0, lower_tail, log_p);
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qgeom(double x, double p);
- *
  *  DESCRIPTION
  *
  *    The distribution function of the geometric distribution.
@@ -28,20 +24,20 @@
 
 #include "Mathlib.h"
 
-double pgeom(double x, double p)
+double pgeom(double x, double p, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(p))
 	return x + p;
 #endif
     x = floor(x);
-    if(p <= 0 || p >= 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x < 0.0) return 0;
+    if(p <= 0 || p >= 1) ML_ERR_return_NAN;
+
+    if (x < 0.) return R_DT_0;
 #ifdef IEEE_754
-    if (!R_FINITE(x)) return 1;
+    if (!R_FINITE(x)) return R_DT_1;
 #endif
-    return 1 - pow(1 - p, x + 1);
+    if(log_p && !lower_tail)
+	return log(1 - p) * (x + 1);
+    return R_DT_Cval(pow(1 - p, x + 1));
 }

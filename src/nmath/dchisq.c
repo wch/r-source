@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dchisq(double x, double df)
- *
  *  DESCRIPTION
  *
  *    The density of the chi-squared disribution.
@@ -28,10 +24,10 @@
 
 #include "Mathlib.h"
 
-double dchisq(double x, double df)
+double dchisq(double x, double df, int give_log)
 {
 #ifdef IEEE_754
     /* NaNs propagated correctly */
 #endif
-    return dgamma(x, df / 2.0, 2.0);
+    return dgamma(x, df / 2., 2., give_log);
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dunif(double x, double a, double b);
- *
  *  DESCRIPTION
  *
  *    The quantile function of the uniform distribution.
@@ -28,15 +24,18 @@
 
 #include "Mathlib.h"
 
-double qunif(double x, double a, double b)
+double qunif(double p, double a, double b, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(a) || ISNAN(b))
-	return x + a + b;
+    if (ISNAN(p) || ISNAN(a) || ISNAN(b))
+	return p + a + b;
 #endif
-    if (b <= a || x < 0 || x > 1) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    return a + x * (b - a);
+    R_Q_P01_check(p);
+    if (b <= a ) ML_ERR_return_NAN;
+
+    return a + R_DT_qIv(p) * (b - a);
 }
+
+
+
+

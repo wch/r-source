@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,11 +36,9 @@ double rnorm(double mu, double sigma)
 #ifdef IEEE_754
         !R_FINITE(mu) || !R_FINITE(sigma) ||
 #endif
-	sigma < 0.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    } else
-    if (sigma == 0.0)
+	sigma < 0.)	ML_ERR_return_NAN;
+
+    if (sigma == 0.)
 	return mu;
     else
 	return mu + sigma * snorm();
