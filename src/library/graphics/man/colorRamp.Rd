@@ -31,7 +31,7 @@ colorRampPalette(colors,...)
   
   The conversion formulas in this function do not appear to be
   completely accurate and the color ramp may not reach the extreme
-  values in Lab space.  Future shanges in the R color model may change
+  values in Lab space.  Future changes in the R color model may change
   the colors produced with \code{space="Lab"}.
   
 }
