@@ -324,7 +324,7 @@ par(\dots, no.readonly = FALSE)
   with a character string giving the color name (e.g., \code{"red"}).  A
   list of the possible colors can be obtained with the function
   \code{\link{colors}}. Alternatively, colors can be specified directly in
-  terms of there RGB components with a string of the form \code{"#RRGGBB"}
+  terms of their RGB components with a string of the form \code{"#RRGGBB"}
   where each of the pairs \code{RR}, \code{GG}, \code{BB} consist of two
   hexadecimal digits giving a value in the range \code{00} to \code{FF}.
   Colors can also be specified by giving an index into a small table of
