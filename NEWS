@@ -20,10 +20,11 @@ NEW FEATURES
 
     o   inherits is now an internal function and compatible with S
 
-    o   R CMD check has been completely re-written in perl. In
-        addition to running examples it now also checks the directory
+    o   R CMD build and check have been completely re-written in perl. In
+        addition to running examples, check now also checks the directory
         structure and control files, makes a temporary installation and
-        runs LaTeX on the help pages.
+        runs LaTeX on the help pages. Build has been reduced to
+        cleaning, rewriting indices and creating tar files.
 
     o   Add-ons for utilities like perl or LaTeX have now a central
         place in $R_HOME/share. Migration of existing files might take
