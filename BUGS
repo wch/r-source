@@ -313,3 +313,7 @@ Date: Wed, 22 Aug 2001 21:56:33 -0500
 Subject: postscript & ps.options documentation
 From: Kevin.Wright@pioneer.com
 Date: Thu, 23 Aug 2001 20:38:13 +0200 (MET DST)
+* PR# 1072 *
+Subject: Reading Inf and NaN values under windows
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Fri, 24 Aug 2001 12:00:46 +0200 (CEST)
