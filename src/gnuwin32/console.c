@@ -1194,6 +1194,7 @@ FBEGIN
        fprintf(fp, "%s", HISTORY(i));
        if (i > 0) fprintf(fp, "\n");
     }
+    fclose(fp);
 FVOIDEND
 
 void readhistory(control c, char *s)
@@ -1203,6 +1204,7 @@ FBEGIN
 
     if (!s || !(fp = fopen(s, "r"))) FVOIDRETURN;
     while ((c = getc(fp)) != EOF) xbufaddc(p->history, c);
+    fclose(fp);
 FVOIDEND
 
 static void sbf(control c, int pos)
@@ -1488,12 +1490,16 @@ static void delpager(control m)
 
 static void pagerbclose(control m)
 {
+    show(RConsole);
     if (!pagerMultiple) {
+        hide(pagerInstance);
 	del(pagerInstance);
 	pagerInstance = pagerBar = NULL;
     }
-    else
+    else {
+        hide(m);
 	del(m);
+    }
 }
 
 static void pagerclose(control m)

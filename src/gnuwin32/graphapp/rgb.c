@@ -1366,6 +1366,7 @@ rgb nametorgb(char *name)
     int mid, high, low, cmp;
 
     low = 0;
+    mid = 0; /* for -Wall */
     high = RGBCOLORS - 1;
     while (low <= high) {
 	mid = (low + high) / 2;
