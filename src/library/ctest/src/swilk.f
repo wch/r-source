@@ -4,8 +4,11 @@ C        ALGORITHM AS R94 APPL. STATIST. (1995) VOL.44, NO.4
 C
 C        Calculates the Shapiro-Wilk W test and its significance level
 C
+      implicit none
+      LOGICAL INIT
       INTEGER N, N1, N2, IFAULT
-      REAL X(*), A(*), PW, W
+      REAL X(N), A(N), PW, W
+
       REAL C1(6), C2(6), C3(4), C4(4), C5(4), C6(3), C7(2)
       REAL C8(2), C9(2), G(2)
       REAL Z90, Z95, Z99, ZM, ZSS, BF1, XX90, XX95, ZERO, ONE, TWO
@@ -13,13 +16,15 @@ C
       REAL SUMM2, SSUMM2, FAC, RSN, AN, AN25, A1, A2, DELTA, RANGE
       REAL SA, SX, SSX, SSA, SAX, ASA, XSX, SSASSX, W1, Y, XX, XI
       REAL GAMMA, M, S, LD, BF, Z90F, Z95F, Z99F, ZFM, ZSD, ZBAR
-C      
+C
+      INTEGER NCENS, NN2, I, I1, J, IER
+      LOGICAL UPPER
+C
 C        Auxiliary routines
 C
       REAL POLY
-C      
-      INTEGER NCENS, NN2, I, I1, J
-      LOGICAL INIT, UPPER
+C EXTERN
+      DOUBLE PRECISION ALNORM, PPND
 C
       DATA C1 /0.0E0, 0.221157E0, -0.147981E0, -0.207119E1,
      *     0.4434685E1, -0.2706056E1/
@@ -60,7 +65,7 @@ C
 	    DO 30 I = 1, N2
 	       A(I) = real(PPND(dble((I - TH)/AN25), IER))
 	       SUMM2 = SUMM2 + A(I) ** 2
-30          CONTINUE                
+30          CONTINUE
 	    SUMM2 = SUMM2 * TWO
 	    SSUMM2 = SQRT(SUMM2)
 	    RSN = ONE / SQRT(AN)
@@ -205,7 +210,7 @@ C
       END
 
 C additional routines needed
-      function poly(c, nord, x)
+      real function poly(c, nord, x)
 c
 c
 c        Algorithm AS 181.2   Appl. Statist.  (1982) Vol. 31, No. 2
@@ -213,7 +218,13 @@ c
 c        Calculates the algebraic polynomial of order nored-1 with
 c        array of coefficients c.  Zero order coefficient is c(1)
 c
-      real c(nord)
+      implicit none
+      integer nord
+      real c(nord), x
+
+      integer n2,j,i
+      real p
+
       poly = c(1)
       if(nord.eq.1) return
       p = x*c(nord)
@@ -221,8 +232,8 @@ c
       n2 = nord-2
       j = n2+1
       do 10 i = 1,n2
-      p = (p+c(j))*x
-      j = j-1
+         p = (p+c(j))*x
+         j = j-1
    10 continue
    20 poly = poly+p
       return
