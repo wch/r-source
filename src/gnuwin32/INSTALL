@@ -165,7 +165,7 @@ Building Tcl/Tk support
 
 The TclTk support package is not built automatically.  Get
 http://www.stats.ox.ac.uk/pub/Rtools/R_Tcl.zip and unzip it at the top
-level ofthe R sources: it will add a Tcl directory.  Then
+level of the R sources: it will add a Tcl directory.  Then
 
 	make tcl
 
