@@ -13,9 +13,16 @@ NEW FEATURES
 
     o	massage-examples is now a Perl script and about 50x faster.
 
+    o	On Unix(-alike) systems the default pager is now determined
+	during configuration, and is `less' if available, otherwise
+	`more' (and not `more -s' as previously).
+
 
 
 BUG FIXES
+
+    o	Using cat() to a gzfile() connection no longer compresses poorly
+	(at the expense of some latency).
 
 
 

@@ -27,6 +27,8 @@
 #include <R_ext/Complex.h>
 #include <R_ext/R-ftp-http.h>
 
+int R_OutputCon; /* used in printutils.c */
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
@@ -785,9 +787,13 @@ static long gzfile_seek(Rconnection con, int where, int origin, int rw)
 
 static int gzfile_fflush(Rconnection con)
 {
-    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    /* Degrades compression too much, as Rvprintf calls fflush.
 
-    return gzflush(fp, Z_SYNC_FLUSH);
+       gzFile fp = ((Rgzfileconn)(con->private))->fp;
+
+       return gzflush(fp, Z_SYNC_FLUSH); */
+
+    return 0;
 }
 
 static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
