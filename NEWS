@@ -20,68 +20,7 @@ NEW FEATURES
 	for a longer description, including the new command-line
 	options to manage the settings.
 
-    o	Formula objects now have an environment and code manipulating
-	them needs to take care to preserve it or set an appropriate
-	environment.
-
-    o	terms() creates objects which now inherit from class "formula",
-	so for example as.formula(terms.object) needs to replaced by 
-	formula(terms.object).
-
-    o	hclust() takes new argument `members' allowing dissimilarity
-	matrices both for singletons (as until now) and clusters.
-
-    o	hist() now returns a "histogram" object and calls the new
-	function plot.histogram() for plotting.
-	It now also allows character labels.
-
-    o	The more recent GNU regex from grep-2.4.2 is used.  This uses
-	locale-based ordering for ranges on platforms with strcoll.
-
-    o	`where' command added to debug.
-
-    o	inherits() is now an internal function and compatible with S.
-
-    o	R CMD build and check have been completely re-written in perl. In
-	addition to running examples, check now also checks the directory
-	structure and control files, makes a temporary installation and
-	runs LaTeX on the help pages. Build has been reduced to
-	cleaning, rewriting indices and creating tar files.
-
-	The same files of Perl code are now also used under Windows.
-
-    o	Add-ons for utilities like Perl or LaTeX have now a central
-	place in $R_HOME/share. Migration of existing files might take
-	a while, though.
-
     o	values of --min-nsize up to 50M (2Gb on 64-bit Solaris) are allowed.
-
-    o	The commands history can be loaded with loadhistory(), saved
-	with savehistory() and displayed with history(), under Windows
-	and under Unix using the readline or GNOME interfaces.
-
-    o	if(*) now gives a more intelligible error message
-	when "*" cannot be coerced to logical.
-
-    o	New function Rprof() for profiling R expressions under Unix.
-	Configure with `--enable-R-profiling' (on by default) to make
-	this operational.
-
-    o	New functions file.access() and file.info() for information on
-	files on the user's file systems.
-
-    o	New convenience function file.copy().
-
-    o	New function Sys.info() for platform, host and user information.
-
-    o	New function Sys.sleep() to suspend execution for a while.
-
-    o	Sys.getenv() becomes the preferred name for getenv(), which is
-	now deprecated.
-
-    o	New function Sys.putenv() to set environment variables.
-
-    o	Formerly deprecated function provide() is now defunct.
 
     o	New command-line option --no-restore-history implied by --vanilla.
 
@@ -89,34 +28,19 @@ NEW FEATURES
 	--no-restore implies --no-restore-* (currently `data' and
 	`history').
 
-    o	The `mode' argument of exists() and get() is interpreted
-	as mode(x) rather than typeof(x), following S.
 
-    o	Configure/build variables MAINLD and MAINLDFLAGS are renamed to
-	MAIN_LD and MAIN_LDFLAGS for consistency with other MAIN_* vars,
-	similarly for SHLIBLD and SHLIBLDFLAGS.
+    o	The more recent GNU regex from grep-2.4.2 is used.  This uses
+	locale-based ordering for ranges on platforms with strcoll.
 
-    o	Much improved support for C++ code in add-on packages under Unix.
-	New configure/build variables SHLIB_CXXLD and SHLIB_CXXLDFLAGS
-	for specifying the command and flags needed for building shared
-	libraries containing objects from a C++ compiler.
-	Configure tries to get these right in typical cases (GNU tools
-	and/or common platforms).
-	C++ source suffixes `.cpp' and `.C' are now recognized in
-	addition to `.cc'.
+    o	The print routines now escape " (as \") in a character string
+	only when it is printed as a quoted string.  This makes
+	print(, quote=FALSE) and cat() consistent.
 
-    o	.Platform has new component "endian", useful for binary file
-	manipulations.
 
-    o	Configure/build variable FLIBS now only contains the Fortran 77
-	intrinsic and run-time libraries needed for linking a Fortran 77
-	program or shared library (as determined by configure).	 BLAS
-	library detection was extended, with results saved to the Make
-	variable BLAS_LIBS which is also available to add-on packages.
 
-    o	contrasts(, FALSE) now always returns an identity matrix,
-	to make model.matrix compatible with S. This affects models
-	such as lm(y ~ o - 1) where o is an ordered factor.
+    o	The standard methods for add1() and drop1() now attempt to cope
+	with missing values by using a subset of the data that is
+	`cleaned' by na.action for the maximal model under consideration.
 
     o	anova() for 3 or more lm objects now behaves compatibly
 	with S and anova.glmlist(). The old behaviour is still available
@@ -126,63 +50,12 @@ NEW FEATURES
 	formula printed. There is much more extensive documentation 
 	for anova() methods.
 
-    o	The standard methods for add1() and drop1() now attempt to cope
-	with missing values by using a subset of the data that is
-	`cleaned' by na.action for the maximal model under consideration.
-
     o	New method as.data.frame.table() for converting the array-based
 	representation of a contingency table to a data frame containing
 	the classifying factors and the corresponding counts.
 
-    o	New function xtabs() providing a formula interface to cross
-	tabulation.
-
-    o	New functions write.ftable() and read.ftable() for writing out
-	and reading in flat contingency tables.
-
-    o	Class "dendrogram" in package mva providing general support
-	for tree-like structures (plotting, cutting, ...).
-
-    o	New argument `recursive' to unlink(). The default behaviour on
-	Unix is now that of rm -f, not rm -rf.	unlink() is now
-	compatible across platforms.
-
-    o	dev.copy2eps() and dev2bitmap() preserve the aspect ratio of the
-	copied device if just one of `width' and `height' is specified.
-
-    o	Function mantelhaen.test() in package ctest now can deal with
-	general I x J x K tables.  In addition, in the 2 x 2 x K case,
-	it can also perform an exact conditional test of independence,
-	and gives confidence intervals for the common odds ratio.
-
-    o	New function manova() and summary method.
-
-    o	New functions Sys.getlocale() and Sys.setlocale() to query and
-	set aspects of the locale of the R process, and
-	Sys.localeconv() to find the default decimal point, etc.
-
     o	New function assocplot() for producing Cohen-Friendly
 	association plots.
-
-    o	mosaicplot() can now also create extended mosaic plots, which
-	visualize the residuals from a log-linear model using color and
-	outline.
-
-    o	plot.function() and curve() now take xlim as default for (from,to)
-	if the former is specified.
-
-    o	C API: R_ext/Boolean.h: Rboolean type with TRUE & FALSE 
-	enum constants.
-
-    o	Date-time support functions with classes "POSIXct" and
-	"POSIXlt" to represent dates/times (resolution 1 second) in
-	the POSIX formats.  Functions include Sys.time(), as.POSIXct(),
-	strftime(), strptime(),	 and methods for format, plot, c, ....
-	There are conversion functions for objects from packages
-	`date' and `chron'; unlike those packages these support
-	functions know about time zones (if the OS does).
-
-    o	legend() has a new argument pt.bg.
 
     o	autoload() accepts lib.loc and other arguments to library()
 
@@ -190,21 +63,120 @@ NEW FEATURES
 
     o	contour() now has `axes' and `frame.plot' args.
 
+    o	contrasts(, FALSE) now always returns an identity matrix,
+	to make model.matrix compatible with S. This affects models
+	such as lm(y ~ o - 1) where o is an ordered factor.
+
+    o	`where' command added to debug().
+
+    o	Class "dendrogram" in package mva providing general support
+	for tree-like structures (plotting, cutting, ...).
+
+    o	dev.copy2eps() and dev2bitmap() preserve the aspect ratio of the
+	copied device if just one of `width' and `height' is specified.
+
     o	dump() has new argument append, argument `fileout' has been
 	renamed to `file' (for consistency with all other functions).
 
-    o	The set of valid R names is now described (at last) in R-intro.
+    o	The `mode' argument of exists() and get() is interpreted
+	as mode(x) rather than typeof(x), following S.
+
+    o	New functions file.access() and file.info() for information on
+	files on the user's file systems.
+
+    o	New convenience function file.copy().
+
+    o	file.show() allows `pager' argument to be an R function, and
+	consequently, the `pager' option can be an R function. 
+
+    o	Formatting (and printing) of data.frames with complex objects is
+	improved.  toString was added as a new function.
+
+    o	format() has a new argument `justify' controlling the
+	justification of character strings (and factors).
+
+    o	Formula objects now have an environment and code manipulating
+	them needs to take care to preserve it or set an appropriate
+	environment.
 
     o	New function fourfoldplot() for producing fourfold displays of
 	2 by 2 by k contingency tables.
 
+    o	gc() now reports the space allocated, not the space free,
+	since the total space is now variable.
+
+    o	New primitive gc.time() to report on time spent in garbage
+	collection.
+
+    o	hclust() takes new argument `members' allowing dissimilarity
+	matrices both for singletons (as until now) and clusters.
+
+    o	help() has an additional `pager' argument which may be passed to
+	file.show()  {useful for ESS fans}.
+
+    o	hist() now returns a "histogram" object and calls the new
+	function plot.histogram() for plotting.
+	It now also allows character labels.
+
+    o	if(*) now gives a more intelligible error message
+	when "*" cannot be coerced to logical.
+
+    o	inherits() is now an internal function and compatible with S.
+
+    o	New function lag.plot() in package ts.
+
+    o	legend() has a new argument pt.bg.
+
+    o	The commands history can be loaded with loadhistory(), saved
+	with savehistory() and displayed with history(), under Windows
+	and under Unix using the readline or GNOME interfaces.
+
+    o	mad() has new (logical) arguments "low" and "high" (the first 
+	giving S compatibility).
+	
+    o	New function manova() and summary method.
+
+    o	Function mantelhaen.test() in package ctest now can deal with
+	general I x J x K tables.  In addition, in the 2 x 2 x K case,
+	it can also perform an exact conditional test of independence,
+	and gives confidence intervals for the common odds ratio.
+
+    o	mosaicplot() can now also create extended mosaic plots, which
+	visualize the residuals from a log-linear model using color and
+	outline.
+
+    o	New utility function n2mfrow().
+
+    o	nlm(check.analyticals = TRUE) now warns if the supplied
+	gradient and/or hessian are of the wrong length.
+     
+    o	New function object.size() to give approximate memory allocation.
+
+    o	optim() now checks the length of an analytical gradient at
+	each evaluation.
+
     o	The L-BFGS-B method of optim() now support tracing, at several
 	levels of detail.
 
-    o	The R Language Manual (R-lang.texi) is now included and built
-	in the same way as the other manuals.
+     o	options(check.bounds = TRUE)  makes each vector extension
+	by sub-assignment ("x[.] <- .") produce a warning.
 
-    o	The R Data Import/Export Manual (R-data.texi) has been added.
+   o	options(width) now admits to a limit (previously 200, now
+	10000) and gives a more informative message if out of range
+	(as it does now for digits and expressions).
+
+    o	Function path.expand() to do tilde-expansion on file paths.
+	This provides an interface to R_ExpandFileName, which is now
+	a documented entry point.
+
+    o	.Platform has new component "endian", useful for binary file
+	manipulations.
+
+    o	plot.function() and curve() now take xlim as default for (from,to)
+	if the former is specified.
+
+    o	plot.ts(x,y) now allows to suppress labels and lines; 
+	it is better documented.
 
     o	The postscript() driver now allows a user-specified family so,
 	for example, one can use the same fonts in diagrams as in 
@@ -213,6 +185,20 @@ NEW FEATURES
     o	The postscript() driver allows its prolog to be changed (by an
 	expert) via object .ps.prolog.
 
+    o	prop.table() and margin.table() now work with an empty `margin'.
+
+    o	Formerly deprecated function provide() is now defunct.
+
+    o	New functions read.delim() and read.delim2() to make it
+	easier to read delimited files as Windows programs tend to
+	create (usually TAB separated).
+
+    o	New readLines() function to read a file line-by-line.
+
+    o	New function Rprof() for profiling R expressions under Unix.
+	Configure with `--enable-R-profiling' (on by default) to make
+	this operational.
+
     o	save(, oldstyle=TRUE) has been withdrawn.
 
     o	scan() and read.table() have a new argument `fill' which can
@@ -220,22 +206,32 @@ NEW FEATURES
 	fields per line. (Programs like Excel have a habit of creating
 	such files when exporting.)
 
-    o	New functions read.delim() and read.delim2() to make it
-	easier to read delimited files as Windows programs tend to
-	create (usually TAB separated).
+    o	scan() and read.table() have a new argument `blank.lines.skip'
+	to allow blank lines to be read.
 
-    o	New function object.size() to give approximate memory allocation.
+    o	scan() now reads empty character fields as "" not "NA" unless
+	"" is included in na.strings.
 
-    o	New primitive gc.time() to report on time spent in garbage
-	collection.
+    o	Sys.getenv() becomes the preferred name for getenv(), which is
+	now deprecated.
 
-    o	gc() now reports the space allocated, not the space free,
-	since the total space is now variable.
+    o	New functions Sys.getlocale() and Sys.setlocale() to query and
+	set aspects of the locale of the R process, and
+	Sys.localeconv() to find the default decimal point, etc.
 
-    o	prop.table() and margin.table() now work with an empty `margin'.
+    o	New function Sys.info() for platform, host and user information.
 
-    o	file.show() allows `pager' argument to be an R function, and
-	consequently, the `pager' option can be an R function. 
+    o	New function Sys.putenv() to set environment variables.
+
+    o	New function Sys.sleep() to suspend execution for a while.
+
+    o	Date-time support functions with classes "POSIXct" and
+	"POSIXlt" to represent dates/times (resolution 1 second) in
+	the POSIX formats.  Functions include Sys.time(), as.POSIXct(),
+	strftime(), strptime(),	 and methods for format, plot, c, ....
+	There are conversion functions for objects from packages
+	`date' and `chron'; unlike those packages these support
+	functions know about time zones (if the OS does).
 
     o	tcltk library now has tkpager() which is designed to be used
 	by file.show() and shows help pages etc. in separate text
@@ -255,66 +251,44 @@ NEW FEATURES
 
     o	termplot() now has an `ask' argument.
 
-    o	options(width) now admits to a limit (previously 200, now
-	10000) and gives a more informative message if out of range
-	(as it does now for digits and expressions).
-
-    o	Function path.expand() to do tilde-expansion on file paths.
-	This provides an interface to R_ExpandFileName, which is now
-	a documented entry point.
-
-    o	mad() has new (logical) arguments "low" and "high" (the first 
-	giving S compatibility).
-	
-    o	options(check.bounds = TRUE)  makes each vector extension
-	by sub-assignment ("x[.] <- .") produce a warning.
-
-    o	The header file R.h and those included from it are now usable
-	with C++ code.
-
-    o	Formatting (and printing) of data.frames with complex objects is
-	improved.  toString was added as a new function.
-
-    o	format() has a new argument `justify' controlling the
-	justification of character strings (and factors).
-
-    o	scan() and read.table() have a new argument blank.lines.skip
-	to allow blank lines to be read.
-
-    o	scan() now reads empty character fields as "" not "NA" unless
-	"" is included in na.strings.
-
-    o	New readLines() function to read a file line-by-line.
-
-    o	plot.ts(x,y) now allows to suppress labels and lines; 
-	it is better documented.
-
-    o	nlm(check.analyticals = TRUE) now warns if the supplied
-	gradient and/or hessian are of the wrong length.
-     
-    o	optim() now checks the length of an analytical gradient at
-	each evaluation.
+    o	terms() creates objects which now inherit from class "formula",
+	so for example as.formula(terms.object) needs to replaced by 
+	formula(terms.object).
 
     o	traceback() is now printed un-quoted and labelled by the
 	frame number.
+
+    o	New argument `recursive' to unlink(). The default behaviour on
+	Unix is now that of rm -f, not rm -rf.	unlink() is now
+	compatible across platforms.
+
+    o	New functions write.ftable() and read.ftable() for writing out
+	and reading in flat contingency tables.
 
     o	write.table() now quotes factor columns if quote=TRUE, and has
 	a new argument `qmethod' to control the escaping of
 	embedded quotes in character or factor columns.
 
-    o	The print routines now escape " (as \") in a character string
-	only when it is printed as a quoted string.  This makes
-	print(, quote=FALSE) and cat() consistent.
+    o	New function xtabs() providing a formula interface to cross
+	tabulation.
 
-    o	help() has an additional `pager' argument which may be passed to
-	file.show()  {useful for ESS fans}.
 
-    o	n2mfrow() utility.
+    o	The R Data Import/Export Manual (R-data.texi) has been added.
 
-    o	lag.plot() {ts package}.
+    o	The set of valid R names is now described (at last) in R-intro.
 
-    o	DESCRIPTION file in installed packages has a new `Built:' field
-	giving build information (R version, platform, date).
+    o	The R Language Manual (R-lang.texi) is now included and built
+	in the same way as the other manuals.
+
+
+    o	The header file `R.h' and those included from it are now usable
+	with C++ code.
+
+    o	New header file `R_ext/Boolean.h': Rboolean type with TRUE & FALSE 
+	enum constants.
+
+    o	New header file `Rgraphics.h' to allow addons to use graphics
+	structures.
 
     o	Recommended include file `Rmath.h' replaces `R_ext/Mathlib.h'.
 
@@ -322,17 +296,142 @@ NEW FEATURES
 	the API.  Undocumented entry points are no longer in the
 	header files, and some are no longer visible.
 
+    o	Calloc & Realloc failures now give size information.
+
+
+    o	DESCRIPTION file in installed packages has a new `Built:' field
+	giving build information (R version, platform, date).
+
+    o	Much improved support for C++ code in add-on packages under Unix.
+	New configure/build variables SHLIB_CXXLD and SHLIB_CXXLDFLAGS
+	for specifying the command and flags needed for building shared
+	libraries containing objects from a C++ compiler.
+	Configure tries to get these right in typical cases (GNU tools
+	and/or common platforms).
+	C++ source suffixes `.cpp' and `.C' are now recognized in
+	addition to `.cc'.
+
+    o	Configure/build variables MAINLD and MAINLDFLAGS are renamed to
+	MAIN_LD and MAIN_LDFLAGS for consistency with other MAIN_* vars,
+	similarly for SHLIBLD and SHLIBLDFLAGS.
+
+    o	Configure/build variable FLIBS now only contains the Fortran 77
+	intrinsic and run-time libraries needed for linking a Fortran 77
+	program or shared library (as determined by configure).	 BLAS
+	library detection was extended, with results saved to the Make
+	variable BLAS_LIBS which is also available to add-on packages.
+
+    o	R CMD build and check have been completely re-written in perl. In
+	addition to running examples, check now also checks the directory
+	structure and control files, makes a temporary installation and
+	runs LaTeX on the help pages. Build has been reduced to
+	cleaning, rewriting indices and creating tar files.
+
+	The same files of Perl code are now also used under Windows.
+
+    o	Add-ons for utilities like Perl or LaTeX have now a central
+	place in $R_HOME/share. Migration of existing files might take
+	a while, though.
+
+
 
 BUG FIXES
 
-    o	Method dispatching now forces evaluation of promises, so
-	autoloading works with methods.
+    o	New "[.AsIs" function fixing PR#665.
 
-    o	Postscript driver no longer uses the initclip operator, which
+    o	Effectively zero-length arrows() are omitted (rather than getting
+	a system- and device-dependent arbitrary angle).
+
+    o	barplot() passes "..." down to plot.window as documented.
+
+    o	bxp(*) now obeys axes, xaxt, yaxt & ylim arguments (again?).
+
+    o	contour(.., labcex = 0.6, .. , vfont = c("sans serif", "plain"), ..)
+	now behaves as it has been documented, PR#740.
+
+    o	D(.) is now more correctly documented, has second argument
+	"name" instead of "namevec" (S compatibility), and gives a warning
+	when name has not length 1.
+
+    o	dbinom() and dpois() now use a more accurate algorithm; e.g., 
+	1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1.0e-12.
+
+    o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
+
+    o	Paper sizes for "a4" and "legal" were interchanged in dev.print().
+
+    o	Improved logic in the re-scaling of plots in dev.print().
+
+    o	dev.print() and dev.copy2eps() now evaluate arguments as
+	needed, so e.g. dev.print(file="junk.ps", horizontal=F) will
+	work (previously =FALSE was needed).
+
+    o	Now dweibull(0,1) == dexp(0) == 1 for consistency.
+
+    o	Changing column modes from factor/character to numeric in
+	edit.data.frame() (and fix() on data frames) is now allowed.
+
+    o	gctorture() did return a value although documented not to, that of
+	gcinfo.	 It now returns the previous setting of gctorture.
+
+    o	hsv() truncation bug fixed (hopefully correctly this time...)
+
+    o	library.dynam() no longer fails if the library appears more than
+	once in lib.loc.
+
+    o	lm.fit & lm.wfit (and hence lm) now give understandable error
+	messages when there are 0 non-NA cases.
+
+    o	match() does not always use "as.character()" anymore, fixes PR#741.
+
+    o	Trimmed mean() and median() are no longer attempted for complex
+	data.
+
+    o	median() of empty vector is now NA.
+
+    o	model.matrix() can now handle NAs in factors.
+
+    o	model.matrix() now uses ":" not "." in labelling interaction
+	terms, as terms() and the prototype do (PR#701).
+
+    o	old.packages() now sorts version strings correctly by
+	splitting at "." and "-".
+
+    o	optim() has several new precautions against bugs, one of which was
+	an infinite loop in the L-BFGS-B method if the derivatives
+	were inaccurate (or if numerical derivatives were used and the
+	problem was badly scaled).
+
+    o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
+
+    o	phantom(expr) in plotmath was used to calculate the bounding
+	boxes, but the space was not actually used in typesetting the 
+	expression (PR#622).
+
+    o	plot.lm() has a better default for its `ask' argument.
+
+    o	plot.new() does *NOT* allow an argument (`ask') anymore.
+	This has not been working (since ~ R 0.49), is low-level and
+	hence should not break anything.
+
+    o	plot.stl() now uses correct time labels for tickmarks of x-axes.
+
+    o	pnorm() is somewhat more accurate (SIXTEN=16; PR#699) and
+	`infinitesimally faster' in some cases, thanks to James M. Rath.
+
+    o	Failure to open a postscript() device now gives diagnostic warnings.
+
+    o	Zero the widths of undefined chars in postscript().
+
+    o	Make font metrics local to the device in postscript(), so
+	that simultaneous instances of postscript/xfig/bitmap can use
+	different values for `family'.
+
+    o	postscript() no longer uses the initclip operator, which
 	was against the EPSF specifications and broke inclusion of
 	graphics in some documents.
 
-    o	In postscript driver, cleaned up the internals to fix some
+    o	In postscript(), cleaned up the internals to fix some
 	cases where it was unclear whether a variable was meant to set
 	or track device status.
 
@@ -341,77 +440,40 @@ BUG FIXES
 	one page to the next. (Caused breakage when turning
 	antialiasing on/off in "gv" for instance.)
 
-    o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
+    o	The DocumentMedia comment in postscript() output was wrong,
+	and the font DSC comments have been changed to the preferred
+	style for DSC 3.0.
 
-    o	old.packages() now sorts version strings correctly by
-	splitting at "." and "-".
-
-    o	Paper sizes for "a4" and "legal" were interchanged in dev.print.
-
-    o	data(state)'s  state.abb  has been corrected to use official
-	2-letter abbrevations.
-
-    o	c(0.099999994, 0.2) prints as 0.1 0.2 not 0.10 0.20 after
-	correcting the precision calculations.
-
-    o	Internal function fprec was overflowing for numbers around
-	1e-305.
+    o	pretty(x <- c(2.8,3))[1] - x[1] is now 0; in general,
+	p <- pretty(x) now again fulfills  p[1] <= x[] <= p[length(p)].
 
     o	print.noquote("ABC") now works.
 
-    o	[internal] Calloc() & Realloc() failures now give size info
-
-    o	[internal] .C("strsignif",*) doesn't use fixed size strings anymore
-	(possible overflow).
-
-    o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
-
-    o	Now dweibull(0,1) == dexp(0) == 1 for consistency.
-
-    o	Failure to open a postscript() device now gives diagnostic warnings.
-
-    o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
-
     o	prompt(fn) uses fn's "source" attribute if it has one.
 
-    o	ff[i] <- r  now works for formula (and potentially other
-	non-standard) objects ff.
+    o	In prop.test(), the conf.int. now contains the estimate,
+	even when that is 0 or 1 (PR#714).
 
-    o	D(.) is now more correctly documented, has second argument
-	"name" instead of "namevec" (S compatibility), and gives a warning
-	when name has not length 1.
+    o	qnorm(0) and qnorm(1) now give -/+ Inf (again!).
 
-    o	bxp(*) now obeys axes, xaxt, yaxt & ylim arguments (again?).
+    o	qt(*, log = TRUE) has a somewhat extended working range.
 
-    o	Use FILESEP instead of '/' in devPS.c.
+    o	Specifying col.names in read.table() now overrides any header
+	line in the data file.
 
-    o	Errors in argument matching could cause crashes if error
-	handler was used.
+    o	Bug caused rpois() to generate biased variables in some cases.
 
-    o	Zero the widths of undefined chars in postscript().
+    o	scale(scale=TRUE) gave all NAs in any columns containing NAs.
 
-    o	Make font metrics local to the device in postscript(), so
-	that simultaneous instances of postscript/xfig/bitmap can use
-	different values for `family'.
+    o	smooth.spline()'s GCV method now uses a more accurate formula
+	when there are repeated x points.
 
-    o	plot.stl() now uses correct time labels for tickmarks of x-axes.
+    o	stars() fix (for 0/NA columns) PR#739.
+	
+    o	data(state)'s  state.abb  has been corrected to use official
+	2-letter abbrevations.
 
-    o	lm.fit & lm.wfit (and hence lm) now give understandable error
-	messages when there are 0 non-NA cases.
-
-    o	New "[.AsIs" function fixing PR#665.
-
-    o	Improved logic in the re-scaling of plots in dev.print.
-
-    o	NULL == ... now gives logical(0) instead of an error.
-	This fixes a bug with e.g. apply(X,2,median, na.rm = TRUE) and
-	all(NULL == NULL) is now TRUE.
-
-    o	dbinom() and dpois() now use a more accurate algorithm; e.g., 
-	1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1.0e-12.
-
-    o	library.dynam no longer fails if the library appears more than
-	once in lib.loc.
+    o	strsplit() had two memory leaks.
 
     o	tcltk interface now has better string quoting and no longer breaks on
 	strings with unbalanced braces
@@ -419,105 +481,53 @@ BUG FIXES
     o	tcltk callbacks used to include a "%..." argument on the call if the
 	callback function had a "..." argument. This is no longer the case.
 
-    o	pretty(x <- c(2.8,3))[1] - x[1] is now 0; in general,
-	p <- pretty(x) now again fulfills  p[1] <= x[] <= p[length(p)].
+    o	t.test() allows an input vector of length 2.
 
-    o	model.matrix() can now handle NAs in factors.
-
-    o	optim() has several new precautions against bugs, one of which was
-	an infinite loop in the L-BFGS-B method if the derivatives
-	were inaccurate (or if numerical derivatives were used and the
-	problem was badly scaled).
-
-    o	The DocumentMedia comment in postscript() output was wrong,
-	and the font DSC comments have been changed to the preferred
-	style for DSC 3.0.
 
     o	Method dispatch in primitive functions such as `c' only
 	occurred if they were called by that name, and in particular
 	not if used in lapply or called as .Primitive("c").  It now
 	always occurs.
 
-    o	scale(scale=TRUE) gave all NAs in any columns containing NAs.
+    o	Method dispatching now forces evaluation of promises, so
+	autoloading works with methods.
 
-    o	polylines with more than 64K pieces will now work on more X
-	servers with the x11 device.
+    o	c(0.099999994, 0.2) prints as 0.1 0.2 not 0.10 0.20 after
+	correcting the precision calculations.
 
-    o	model.matrix now uses ":" not "." in labelling interaction
-	terms, as terms() and the prototype do (PR#701).
+    o	Internal function fprec was overflowing for numbers around
+	1e-305.
 
-    o	strsplit had two memory leaks.
+    o	[internal] .C("strsignif",*) doesn't use fixed size strings anymore
+	(possible overflow).
 
-    o	plot.lm() has a better default for its `ask' argument.
+    o	ff[i] <- r  now works for formula (and potentially other
+	non-standard) objects ff.
 
-    o	Changing column modes from factor/character to numeric in
-	edit.data.frame (and fix on data frames) is now allowed.
+    o	Errors in argument matching could cause crashes if error
+	handler was used.
 
-    o	smooth.spline()'s GCV method now uses a more accurate formula
-	when there are repeated x points.
-
-    o	plot.new() does *NOT* allow an argument (`ask') anymore.
-	This has not been working (since ~ R 0.49), is low-level and
-	hence should not break anything.
-
-    o	hsv() truncation bug fixed (hopefully correctly this time...)
-
-    o	effectively zero-length arrows are omitted (rather than getting
-	a system- and device-dependent arbitrary angle).
-
-    o	phantom(expr) in plotmath was used to calculate the bounding
-	boxes, but the space was not actually used in typesetting the 
-	expression (PR#622).
-
-    o	gctorture did return a value although documented not to, that of
-	gcinfo.	 It now returns the previous setting of gctorture.
-
-    o	In prop.test(), the conf.int. now contains the estimate,
-	even when that is 0 or 1 (PR#714).
-
-    o	R CMD Rd2dvi now again works with file names containing "_" or "$".
-
-    o	dev.print() and dev.copy2eps() now evaluate arguments as
-	needed, so e.g. dev.print(file="junk.ps", horizontal=F) will
-	work (previously =FALSE was needed).
+    o	NULL == ... now gives logical(0) instead of an error.
+	This fixes a bug with e.g. apply(X,2,median, na.rm = TRUE) and
+	all(NULL == NULL) is now TRUE.
 
     o	The math functions now (again!) return NaN (not NA)
 	when the warning message says so (e.g. gamma(-1)).
 
-    o	qnorm(0) and qnorm(1) now give -/+ Inf (again!).
 
-    o	qt(*, log = TRUE) has a somewhat extended working range.
+    o	polylines with more than 64K pieces will now work on more X
+	servers with the x11 device.
 
-    o	pnorm() is somewhat more accurate (SIXTEN=16; PR#699) and
-	`infinitesimally faster' in some cases, thanks to James M. Rath.
-
-    o	Specifying col.names in read.table() now overrides any header
-	line in the data file.
-
-    o	barplot() passes "..." down to plot.window as documented.
+    o	R CMD Rd2dvi now again works with file names containing "_" or "$".
 
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
 
-    o	Nasty bug caused rpois to generate biased variables in some
-	cases.
-
-    o	median of empty vector is now NA.
-
-    o	Trimmed means and medians are no longer attempted for complex
-	data.
-
-    o	t.test() allows an input vector of length 2.
-
-    o	stars() fix (for 0/NA columns) PR#739.
-	
-    o	match() does not always use "as.character()" anymore, fixes PR#741.
-
     o	Rd's \describe{} constructs are converted better to text
 	output, and \items of >=22 chars now work.
 
-    o	contour(.., labcex = 0.6, .. , vfont = c("sans serif", "plain"), ..)
-	now behaves as it has been documented, PR#740.
+    o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
+
 
 
 	**************************************************
