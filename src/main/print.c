@@ -51,24 +51,19 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	FILE *fp;
 
-	switch (length(args)) {
-	case 0:
+	if(isNull(CAR(args))) {
 		if(R_Sinkfile) fclose(R_Sinkfile);
 		R_Sinkfile = NULL;
 		R_Outputfile = R_Consolefile;
-		return R_NilValue;
-	case 1:
+	} else {
 		if(TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
 			errorcall(call, "invalid file name\n");
 		if( !(fp=R_fopen(CHAR(STRING(CAR(args))[0]), "w")))
 			errorcall(call, "unable to open file\n");
 		R_Sinkfile = fp;
 		R_Outputfile = fp;
-		return R_NilValue;
-	default:
-		checkArity(op, args);
-		return call;/* never used, just for -Wall */
 	}
+	return R_NilValue;
 }
 
 SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
