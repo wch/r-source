@@ -84,7 +84,7 @@ BUG FIXES
 	accidental passing of matrices instead of data frames.
 
     o	The C code underlying nlm(f, *) now also works correctly when f(x)
-        returns +Inf {nlm() itself *did* work!}.
+	returns +Inf {nlm() itself *did* work!}.
 
     o	pdfcolor.tex is now included in doc/manual, as pdftex seems no
 	longer to include it.
@@ -126,7 +126,7 @@ BUG FIXES
 
     o	nargs() was documented incorrectly.
 
-    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks 
+    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks
 	(PR#1046).
 
     o	dummy.coef.lm was not handling complex terms like z:I(x).
@@ -140,7 +140,7 @@ BUG FIXES
     o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
 	with "comment" attribute also fixed.
 
-    o	loadings() results from PCA (as well as from factor analysis) 
+    o	loadings() results from PCA (as well as from factor analysis)
 	are now printed by print.loadings.
 
     o	Using chol() on an non-positive-definite matrix gave an
@@ -163,10 +163,12 @@ BUG FIXES
     o	cutree() can now cut outside heights and does not return
 	garbage	for h >= max(tree$heights) anymore. (PR#1067)
 
-    o   interaction(...,drop=F) returned an object looking like a 
-        factor, but with storage mode "double", confusing 
+    o	interaction(...,drop=F) returned an object looking like a
+	factor, but with storage mode "double", confusing
 	model.matrix.default (PR#1003)
 
+    o	splineDesign(*, ord=) and others give better error messages for
+	wrong `ord' (and have slightly improved documentation).
 
 
 		CHANGES IN R VERSION 1.3.0
@@ -448,7 +450,7 @@ NEW FEATURES
 	of source-ing the package.  Packages that do more than just
 	assign object definitions may need to install with `--save'.
 	Putting a file `INSTALL.R' in the package directory makes
-	`--save' the default behavior.  If that file is not empty, its
+	`--save' the default behavior.	If that file is not empty, its
 	contents should be R commands executed at the end of creating
 	the image.
 
@@ -486,18 +488,18 @@ NEW FEATURES
 	are not part of the API from indices like the alphabetical lists
 	in the HTML help system.
 
-    o   Under Unix, shlib modules for add-on packages are now linked
-	against R as a shared library (`libR') if this exists.  (This
+    o	Under Unix, shlib modules for add-on packages are now linked
+	against R as a shared library (`libR') if this exists.	(This
 	allows for improved embedding of R into other applications.)
 
-    o   New mechanism for explicitly registering native routines in a
+    o	New mechanism for explicitly registering native routines in a
 	DLL/shared library accessible via .C(), .Call(), .Fortran() and
 	.External().  This is potentially more robust than the existing
 	dynamic lookup, since it checks the number of arguments, type of
 	the routine.
 
     o	New mechanism allowing registration of C routines for converting
-	R objects to C pointers in .C() calls.  Useful for references to
+	R objects to C pointers in .C() calls.	Useful for references to
 	data in other languages and libraries (e.g. C and hdf5).
 
     o	The internal ftp/http access code maintains the event loop, so
@@ -530,8 +532,8 @@ BUG FIXES
 
     o	pointer protection in deriv() (PR#953)
 
-    o   expand.data.frame() didn't interpret its subset= argument in
-        the data frame. (PR#979 et al., fix from Greg Warnes)
+    o	expand.data.frame() didn't interpret its subset= argument in
+	the data frame. (PR#979 et al., fix from Greg Warnes)
 
     o	format() on character arrays was losing the dimensions.
 
@@ -553,7 +555,7 @@ BUG FIXES
     o	qr.X() was ignoring pivoting (which happens only in
 	rank-deficient cases).
 
-    o   sign of Pearson residuals was wrong for reciprocal link (PR#862)
+    o	sign of Pearson residuals was wrong for reciprocal link (PR#862)
 
     o	The algorithm for determining starting estimates in the SSfpl
 	self-starting model in the nls package was changed following a
@@ -566,10 +568,10 @@ BUG FIXES
     o	The implementation of sys.function() did not work when the
 	current function was already a function (e.g., a closure).
 
-    o   tapply() had "..." argument after simplify=, which made it
+    o	tapply() had "..." argument after simplify=, which made it
 	incompatible with S when passing additional unnamed arguments to FUN.
 
-    o   use formula environments in xy.coords() (PR#932)
+    o	use formula environments in xy.coords() (PR#932)
 
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'

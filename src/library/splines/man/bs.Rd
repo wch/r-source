@@ -2,7 +2,7 @@
 \alias{bs}
 \title{Generate a Basis for Polynomial Splines}
 \description{
-  Generate the B-spline basis matrix for a cubic spline.
+  Generate the B-spline basis matrix for a polynomial spline.
 }
 \usage{
 bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
@@ -11,7 +11,7 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
   \item{x}{the predictor variable.}
   \item{df}{degrees of freedom; one can specify \code{df} rather than
     \code{knots}; \code{bs()} then chooses \code{df-degree-1} knots at
-    suitable quantiles of \code{x}.} 
+    suitable quantiles of \code{x}.}
   \item{knots}{the \emph{internal} breakpoints that define the
     spline.  The default is \code{NULL}, which results in a basis for
     ordinary polynomial regression. Typical values are the mean or
@@ -24,7 +24,7 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
   \item{Boundary.knots}{boundary points at which to anchor the B-spline
     basis (default the range of the data). If both \code{knots} and
     \code{Boundary.knots} are supplied, the basis parameters do not
-    depend on \code{x}. Data can extend beyond \code{Boundary.knots}} 
+    depend on \code{x}. Data can extend beyond \code{Boundary.knots}.}
 }
 \value{
   A matrix of dimension \code{length(x) * df}, where either \code{df}
@@ -34,19 +34,20 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
   the \code{knots}, \code{Boundary.knots} etc for use by
   \code{predict.bs()}.
 
-  \code{bs()} is based on the function \code{spline.des()} written by
-  Douglas Bates. It generates a basis matrix for representing the family
-  of piecewise polynomials with the specified interior knots and degree,
-  evaluated at the values of \code{x}. A primary use is in modeling
-  formulas to directly specify a piecewise polynomial term in a model. 
+  \code{bs()} is based on the function \code{\link{spline.des}()}
+  written by Douglas Bates.  It generates a basis matrix for
+  representing the family of piecewise polynomials with the specified
+  interior knots and degree, evaluated at the values of \code{x}.  A
+  primary use is in modeling formulas to directly specify a piecewise
+  polynomial term in a model.
 
   Beware of making predictions with new \code{x} values when \code{df}
-  is used as an argument. Either use \code{safe.predict.gam()}, or else
+  is used as an argument.  Either use \code{safe.predict.gam()}, or else
   specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
-  \code{ns}, \code{poly}, \code{smooth.spline},
-  \code{predict.bs}.
+  \code{\link{ns}}, \code{\link{poly}}, \code{\link[modreg]{smooth.spline}},
+  \code{\link{predict.bs}}.
 }
 \examples{
 data(women)
