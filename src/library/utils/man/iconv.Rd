@@ -47,7 +47,7 @@ iconvlist()
   A character vector of the same length and the same attributes as \code{x}.
 }
 \note{
-  Note all platforms support these functions.  See also
+  Not all platforms support these functions.  See also
   \code{\link{capabilities}("iconv")}.
 
 #ifdef windows
