@@ -176,11 +176,10 @@ installed.packages <- function(lib.loc = .lib.loc)
     retval
 }
 
-
-package.dependencies <- function(x, check=FALSE)
+package.dependencies <- function(x, check = FALSE)
 {
     if(!is.matrix(x))
-        x <- matrix(x, nrow=1, dimnames=list(NULL, names(x)))
+        x <- matrix(x, nrow = 1, dimnames = list(NULL, names(x)))
 
     deps <- list()
     for(k in 1:nrow(x)){
@@ -192,17 +191,18 @@ package.dependencies <- function(x, check=FALSE)
             z <- sub("(.*)[[:space:]]*$", "\\1", z)
 
             ## split into package names and version
-            deps[[k]] <- cbind(sub("^([^[:space:]\\(]*).*", "\\1", z),
-                               sub(".*\\((.*)\\).*", "\\1", z), NA)
+            pat <- "^([^\\([:space:]]+)[[:space:]]*\\(([^\\)]+)\\).*"
+            deps[[k]] <-
+                cbind(sub(pat, "\\1", z), sub(pat, "\\2", z), NA)
 
             noversion <- deps[[k]][,1] == deps[[k]][,2]
             deps[[k]][noversion,2] <- NA
 
             ## split version dependency into operator and version number
-            pat <- "[[:space:]]*([[<>=]*)[[:space:]]*(.*)"
-            deps[[k]][!noversion,2:3] <-
-                c(sub(pat,"\\1", deps[[k]][!noversion,2]),
-                  sub(pat,"\\2", deps[[k]][!noversion,2]))
+            pat <- "[[:space:]]*([[<>=]+)[[:space:]]+(.*)"
+            deps[[k]][!noversion, 2:3] <-
+                c(sub(pat, "\\1", deps[[k]][!noversion, 2]),
+                  sub(pat, "\\2", deps[[k]][!noversion, 2]))
         }
         else
             deps[[k]] <- NA
@@ -213,16 +213,19 @@ package.dependencies <- function(x, check=FALSE)
         for(k in 1:nrow(x)){
             ## currently we only check the version of R itself
             if(!is.na(deps[[k]]) &&
-               any(ok <- deps[[k]][,1] == "R"))
-            {
-                if(!is.na(deps[[k]][ok,2])){
+               any(ok <- deps[[k]][,1] == "R")) {
+                ## NOTE: currently operators must be `<=' or `>='.
+                if(!is.na(deps[[k]][ok, 2])
+                   && deps[[k]][ok, 2] %in% c("<=", ">=")) {
                     comptext <-
                         paste('"', R.version$major, ".",
                               R.version$minor, '" ',
                               deps[[k]][ok,2], ' "',
-                              deps[[k]][ok,3], '"', sep="")
+                              deps[[k]][ok,3], '"', sep = "")
+                    compres <- try(eval(parse(text = comptext)))
+                    if(!inherits(compres, "try-error"))
+                        z[k] <- compres
                 }
-                z[k] <- eval(parse(text=comptext))
             }
         }
         names(z) <- x[,"Package"]
