@@ -66,4 +66,4 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 
--include ./Makedeps
+@MAKE_INCLUDE_DEPS@ ./Makedeps

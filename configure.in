@@ -178,6 +178,31 @@ AC_PATH_PROG(R_ZIPCMD, zip, "")
 MAKE=${MAKE-make}
 AC_SUBST(MAKE)
 
+CheckForMakeIncludeSyntax()
+{
+  cat >.Makefile <<EOF
+${1}
+all:
+EOF
+    (eval "set -x; make -f .Makefile") >&5 2>&1
+}
+if test -z "${MAKE_INCLUDE_DEPS}"; then
+  AC_MSG_CHECKING(whether ${MAKE} supports conditional inclusion)
+  rm -f .Makefile .dummy
+  if CheckForMakeIncludeSyntax "-include .dummy"; then
+    AC_MSG_RESULT(yes)
+    MAKE_INCLUDE_DEPS="-include"
+  elif CheckForMakeIncludeSyntax "sinclude .dummy"; then
+    AC_MSG_RESULT(yes)
+    MAKE_INCLUDE_DEPS="sinclude"
+  else
+    AC_MSG_RESULT(no)
+    MAKE_INCLUDE_DEPS="#include"
+  fi
+  rm -f .Makefile
+fi
+AC_SUBST(MAKE_INCLUDE_DEPS)
+    
 ## Perl.
 
 AC_PATH_PROG(PERL, perl)
@@ -464,7 +489,7 @@ AC_SUBST(RGNOMEBIN)
 
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isfinite isnan\
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan\
   matherr memcpy \
   memmove regcomp rint strcoll strtod strtol system times sigsetjmp\
   siglongjmp __setfpucw)

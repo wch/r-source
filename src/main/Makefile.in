@@ -94,4 +94,4 @@ distdir: $(DISTFILES)
 
 install install-strip uninstall info dvi check::
 
--include ./Makedeps
+@MAKE_INCLUDE_DEPS@ ./Makedeps
