@@ -141,6 +141,24 @@ GETCONFIG	:	MPW script that generates "Rconfig.h"
 both need the "sed" MPW tool installed.				
 
 
+SUMMARY OF MPW BUILD COMMANDS:
+------------------------------
+move first to src/macintosh dir, then you can just copy
+the following lines in the MPW Worksheet:
+
+MPWBuild                             # prepares the main makefile
+Make -f MakeR R >MyMake              # generates commands
+MyMake                               # builds R binary
+Make -f Makefile.mac > build         # prepares commands for help
+build                                # builds help files
+Directory ::library          
+BuildAll.mac                         # builds all library binaries
+Directory ::modules
+BuildAll.mac                         # builds all modules
+Directory ::macintosh
+:::R                                 # launches R
+
+
 
 Where to find things:
 ---------------------
@@ -191,7 +209,7 @@ or just
 
 
 
-November 29, 2001				Stefano M. Iacus
+December 4th, 2001				Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
