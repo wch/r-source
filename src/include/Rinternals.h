@@ -224,6 +224,7 @@ extern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
 extern SEXP	R_TspSymbol;	    /* "tsp" */
 extern SEXP	R_LastvalueSymbol;  /* ".Last.value" */
 extern SEXP	R_CommentSymbol;    /* "comment" */
+extern SEXP	R_SourceSymbol;     /* "source" */
 
 /* Missing Values - others from Arith.h */
 extern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
