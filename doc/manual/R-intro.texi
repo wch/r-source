@@ -18,7 +18,8 @@
 @include version.texi
 
 @macro RIcopyright{}
-Copyright @copyright{} 1990, 1992 W.@: Venables
+Copyright @copyright{} 1990 W.@: Venables
+Copyright @copyright{} 1992 W.@: Venables & D.@: M.@: Smith
 Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: Maechler
 @Rcopyright{1999}
@@ -103,9 +104,9 @@ The current version of this document is @value{VERSION}.
 
 This introduction to @R{} is derived from an original set of notes
 describing the @Sl{} and @SPLUS{} environments written by Bill Venables
-and Dave Smith.  We have made a number of small changes to reflect
-differences between the @R{} and @Sl{} programs, and expanded some of
-the material.
+and David M. Smith (Insightful Corporation).  We have made a number of
+small changes to reflect differences between the @R{} and @Sl{}
+programs, and expanded some of the material.
 
 @c FIXME:
 @c Would something like this still be needed?  There are certainly no
