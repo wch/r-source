@@ -38,14 +38,14 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
     \code{TRUE}, a vector containing the matching elements themselves is
     returned.}
   \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
-    matched as is.  Overrides all other arguments.} 
+    matched as is.  Overrides all other arguments.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.}
 }
 \details{
   Arguments which should be character strings or character vectors are
   coerced to character if possible.
-  
+
   The two \code{*sub} functions differ only in that \code{sub} replaces
   only the first occurrence of a \code{pattern} whereas \code{gsub}
   replaces all occurrences.
@@ -80,10 +80,12 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   Wadsworth \& Brooks/Cole (\code{grep})
 }
 \seealso{
-  \link{regular expression} for the details of the pattern specification.
+  \link{regular expression} (aka \code{\link{regexp}}) for the details
+% the `aka' above is for ESS (and ?reg....) where a space is problematic
+  of the pattern specification.
 
   \code{\link{agrep}} for approximate matching.
-  
+
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
   \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
