@@ -34,10 +34,12 @@
 data(esoph)
 summary(esoph)
 ## effects of alcohol, tobacco and interaction, age-adjusted
-model1<-glm(cbind(cases,controls)~agegp+tobgp*alcgp,data=esoph,family=binomial())
+model1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,
+              data = esoph, family = binomial())
 anova(model1)
 ## Try a linear effect of alcohol and tobacco
-model2<-glm(cbind(cases,controls)~agegp+codes(tobgp)+codes(alcgp),data=esoph,family=binomial())
+model2 <- glm(cbind(ncases, ncontrols) ~ agegp + codes(tobgp) + codes(alcgp),
+              data = esoph, family = binomial())
 summary(model2)
 }
 \keyword{datasets}
