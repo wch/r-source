@@ -126,9 +126,6 @@
 /* Define if you have the <floatingpoint.h> header file. */
 /* #undef HAVE_FLOATINGPOINT_H */
 
-/* Define if you have the `fork' function. */
-/* #undef HAVE_FORK */
-
 /* Define if you have the <fpu_control.h> header file. */
 /* #undef HAVE_FPU_CONTROL_H */
 
@@ -363,12 +360,6 @@
 /* Define if you have the `unsetenv' function. */
 /* #undef HAVE_UNSETENV */
 
-/* Define if you have the `vfork' function. */
-/* #undef HAVE_VFORK */
-
-/* Define if you have the <vfork.h> header file. */
-/* #undef HAVE_VFORK_H */
-
 /* Define if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
 
@@ -378,17 +369,11 @@
 /* Define if finite() is correct for -Inf/NaN/Inf. */
 #define HAVE_WORKING_FINITE 1
 
-/* Define if `fork' works. */
-/* #undef HAVE_WORKING_FORK */
-
 /* Define if log() is correct for 0/-1. */
 #define HAVE_WORKING_LOG 1
 
 /* Define if strptime() exists and does not fail pre-1970. */
 /* #undef HAVE_WORKING_STRPTIME */
-
-/* Define if `vfork' works. */
-/* #undef HAVE_WORKING_VFORK */
 
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
@@ -521,9 +506,6 @@
 
 /* Define to `unsigned' if <sys/types.h> does not define. */
 /* #undef size_t */
-
-/* Define as `fork' if `vfork' does not work. */
-#define vfork fork
 
 
 #ifdef Win32
