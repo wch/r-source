@@ -3,9 +3,10 @@ all:  libR $(DLLNAME).dll
 
 RCNAME=${DLLNAME}_res
 
-SOURCES=$(wildcard -f *.c *.f)
+# Don't use SOURCES as this get passed on for libR.
+CFSOURCES=$(wildcard -f *.c *.f)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
-OBJSA=$(foreach i,$(SOURCES) $(CXXSOURCES),$(basename $i).o)
+OBJSA=$(foreach i,$(CFSOURCES) $(CXXSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
 

@@ -25,6 +25,8 @@ names reported are usually more sensible (but sometimes less).
 
 File etc/Makeconf-tests was missing from rw102Xsp.zip.
 
+Rcmd SHLIB now supports compilation from C++ sources.
+
 
 rw1021
 ======
