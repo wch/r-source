@@ -26,8 +26,6 @@ is.ordered(x)
 
 as.factor(x)
 as.ordered(x)
-
-a.factor[i, drop = FALSE]
 }
 \arguments{
   \item{x}{a vector of data, usually taking a small number of distinct values}
