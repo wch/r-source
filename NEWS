@@ -107,6 +107,9 @@ UTILITIES
 
     o	R CMD check has a new option '--use-valgrind'.
 
+	R CMD check now checks that Fortran and C++ files have LF
+	line endings, as well as C files.
+
     o	tools:::.install_package_code_files() (used to collate R files
 	when installing packages) ensures files are separated by a
 	line feed.
