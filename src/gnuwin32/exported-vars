@@ -46,7 +46,6 @@ RConsole
 CharacterMode
 UserBreak
 R_standardGeneric_ptr
-R_reserved_size
 R_Toplevel
 R_ToplevelContext
 R_GlobalContext
