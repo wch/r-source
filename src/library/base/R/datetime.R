@@ -313,23 +313,29 @@ axis.POSIXct <- function(side, x, at, format, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.POSIXct <- function(x, y, xlab = "", xaxt = par("xaxt"), ...)
+plot.POSIXct <- function(x, y, xlab = "", axes = TRUE, frame.plot = axes,
+                         xaxt = par("xaxt"), ...)
 {
-    ## trick to remove arguments intended for title()
-    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd, ...)
+    ## trick to remove arguments intended for title() or plot.default()
+    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
+                        xlim, ylim, bg, pch, log, asp, ...)
         axis.POSIXct(1, x, ...)
-    plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    if(xaxt != "n") axisInt(x, ...)
+    plot.default(x, y, xaxt = "n", xlab = xlab, axes = axes,
+                 frame.plot = frame.plot, ...)
+    if(axes && xaxt != "n") axisInt(x, ...)
 }
 
-plot.POSIXlt <- function(x, y, xlab = "",  xaxt = par("xaxt"), ...)
+plot.POSIXlt <- function(x, y, xlab = "",  axes = TRUE, frame.plot = axes,
+                         xaxt = par("xaxt"), ...)
 {
-    ## trick to remove arguments intended for title()
-    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd, ...)
+    ## trick to remove arguments intended for title() or plot.default()
+    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
+                        xlim, ylim, bg, pch, log, asp, ...)
         axis.POSIXct(1, x, ...)
     x <- as.POSIXct(x)
-    plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    if(xaxt != "n") axisInt(x, ...)
+    plot.default(x, y, xaxt = "n", xlab = xlab, axes = axes,
+                 frame.plot = frame.plot, ...)
+    if(axes && xaxt != "n") axisInt(x, ...)
 }
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
