@@ -6,7 +6,7 @@ ppr <- function(x, ...) UseMethod("ppr")
 
 ppr.formula <-
 function(formula, data=sys.parent(), weights, subset,
-	 na.action, contrasts=NULL, ...)
+	 na.action, contrasts = NULL, ..., model = FALSE)
 {
     call <- match.call()
     m <- match.call(expand = FALSE)
@@ -26,6 +26,7 @@ function(formula, data=sys.parent(), weights, subset,
     ## fix up call to refer to the generic, but leave arg name as `formula'
     call[[1]] <- as.name("ppr")
     fit$call <- call
+    if(model) fit$model <- m
     structure(fit, class=c("ppr.form", "ppr"))
 }
 
