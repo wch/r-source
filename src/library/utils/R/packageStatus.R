@@ -26,7 +26,7 @@ packageStatus <- function(lib.loc = NULL,
                                       BIOC = getOption("BIOC")))
 
     FIELDS <- c("Package", "Version","Priority", "Bundle", "Depends",
-                "Built", "Status")
+                "Built", "Status", "Contains")
     FIELDS1 <- c(FIELDS, "LibPath")
     FIELDS2 <- c(FIELDS, "Repository")
 
@@ -60,6 +60,7 @@ packageStatus <- function(lib.loc = NULL,
     names(y) <- FIELDS1
 
     if(length(repositories) > 0) {
+        currentR <- getRversion()
         repositories <- unique(as.character(repositories))
         z <- matrix("", nrow = 0, ncol = length(FIELDS2))
         colnames(z) <- FIELDS2
@@ -74,7 +75,6 @@ packageStatus <- function(lib.loc = NULL,
             }
 
             ## ignore packages which don't fit our version of R
-            currentR <- getRversion()
             z1 <- z1[apply(z1, 1, .checkRversion),,drop=FALSE]
             if(length(z1)==0) next
 
@@ -95,8 +95,15 @@ packageStatus <- function(lib.loc = NULL,
 
     z[,"Status"] <- "not installed"
     z[z[,"Package"] %in% y$Package, "Status"] <- "installed"
-    z[!is.na(z[,"Bundle"]) & (z[,"Bundle"] %in% y$Bundle),
-      "Status"] <- "installed"
+    ## Careful: bundles can be partially installed!
+    ## z[!is.na(z[,"Bundle"]) & (z[,"Bundle"] %in% y$Bundle), "Status"] <- "installed"
+    bundles <- which(!is.na(z[,"Bundle"]))
+    for(bundle in bundles) {
+        contains <- z[bundle, "Contains"]
+        contains <- strsplit(contains, "[[:space:]]+")[[1]]
+        if(all(paste(z[bundle, "Bundle"], contains, sep=":") %in% y$Package))
+           z[bundle, "Status"] <- "installed"
+    }
 
     z <- char2df(z)
     z$Package <- ifelse(is.na(z$Bundle), z$Package, z$Bundle)

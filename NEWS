@@ -563,6 +563,9 @@ BUG FIXES
 
     o	Range checks missing in recursive assignments using [[ ]]. (PR#7196)
 
+    o	packageStatus() reported partially-installed bundles as
+	installed.
+
 
 
 
