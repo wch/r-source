@@ -118,15 +118,6 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 --This isn't really a bug: the line in question is a plain-text equation, not a
 --piece of R code.
-* PR# 1257 *
-Subject: documentation of `las' on `par' help page
-From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
-Date: Fri, 11 Jan 2002 12:30:20 +0100
-* PR# 1330 *
-Subject:  itemize/item crashes R CMD check 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Tue, 26 Feb 2002 15:13:04 -0500
---Problem is in Rdconv, not CMD check
 
 Directory:  Graphics
 
@@ -475,3 +466,11 @@ Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
+* PR# 1431 *
+Subject: persp() crashes with numeric values for [x,y,z]lab 
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Wed, 03 Apr 2002 13:10:27 +0200
+* PR# 1432 *
+Subject: filled.contour(): no check when z dimension dismatch
+From: humbertc@univ-mlv.fr
+Date: Wed, 3 Apr 2002 14:51:02 +0200 (MET DST)
