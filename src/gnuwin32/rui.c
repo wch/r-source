@@ -182,7 +182,7 @@ static void menulazy(control m)
 static void menukill(control m)
 {
     show(RConsole);
-    error("User break.\n");
+    UserBreak = 1;
 }
 
 static void menuls(control m)
