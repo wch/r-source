@@ -165,7 +165,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     return z;
 }
 
-static int ok(int n, int *f, int nf)
+static int ok_n(int n, int *f, int nf)
 {
     int i;
     for (i = 0; i < nf; i++) {
@@ -179,7 +179,7 @@ static int ok(int n, int *f, int nf)
 
 static int nextn(int n, int *f, int nf)
 {
-    while(!ok(n, f, nf))
+    while(!ok_n(n, f, nf))
 	n++;
     return n;
 }

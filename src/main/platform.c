@@ -26,6 +26,15 @@
 /* approach would be to open a read-only edit window with the file */
 /* displayed in it. */
 
+#include <time.h>
+      
+static char *R_Date()
+{     
+    time_t t;
+    time(&t);
+    return ctime(&t);
+}     
+
 SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char *date;
@@ -109,8 +118,10 @@ SEXP do_removefile(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+#ifndef Macintosh
 #include <sys/types.h>
-#include <dirent.h>
+#endif
+#include "dirent.h"
 
 SEXP do_dir(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

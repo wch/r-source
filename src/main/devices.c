@@ -103,6 +103,7 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifndef Macintosh
     DevDesc *dd;
     char *vmax;
     char *file, *paper, *face, *bg, *fg;
@@ -137,6 +138,10 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     initDisplayList(dd);
     vmaxset(vmax);
     return R_NilValue;
+#else
+    gcall = call;
+    DeviceUnavailable("postscript");
+#endif
 }
 
 /*  PicTeX Device Driver Parameters
@@ -151,6 +156,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifdef Unix
     DevDesc *dd;
     char *vmax;
     char *file, *bg, *fg;
@@ -178,7 +184,12 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     initDisplayList(dd);
     vmaxset(vmax);
     return R_NilValue;
+#else
+    gcall = call;
+    DeviceUnavailable("pictex");
+#endif
 }
+
 #ifdef Unix
 #include "../unix/devX11.h"
 /*  X11 Device Driver Parameters:

@@ -327,7 +327,9 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifdef HAVE_REGCOMP
+#ifndef Macintosh
 #include <sys/types.h>
+#endif
 #include <regex.h>
 #else
 #define NO_REGEX_ERROR() \

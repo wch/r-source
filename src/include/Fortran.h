@@ -18,11 +18,11 @@
  */
 
 #ifndef FORTRAN_H
+#include "Mathlib.h"
 #define FORTRAN_H
 
 #include "Platform.h"
 #include "Complex.h"
-#include <math.h>
 
 	/* General F2C Macros */
 

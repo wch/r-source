@@ -23,7 +23,7 @@
 /* These are used in IEEE exception handling */
 double m_zero = 0;
 double m_one = 1;
-double m_tiny = DBL_MIN;
+/* double m_tiny = DBL_MIN; */
 #endif
 
 #ifndef IEEE_754

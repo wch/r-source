@@ -80,7 +80,7 @@
 
 
 /* Fortran and C Links */
-#undef HAVE_F77_UNDERSCORE
+#define HAVE_F77_UNDERSCORE
 
 #ifdef HAVE_F77_UNDERSCORE
 #define F77_SYMBOL(x)	x ## _

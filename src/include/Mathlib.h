@@ -190,12 +190,12 @@
 
 extern double m_zero;
 extern double m_one;
-extern double m_tiny;
+/* extern double m_tiny; */
 #define ML_ERROR(x)	/* nothing */
 #define ML_POSINF	(m_one / m_zero)
 #define ML_NEGINF	((-m_one) / m_zero)
 #define ML_NAN		(m_zero / m_zero)
-#define ML_UNDERFLOW	(m_tiny * m_tiny)
+#define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
 #define ML_VALID(x)	(!isnan(x))
 #else
 #define ML_ERROR(x)	ml_error(x)
