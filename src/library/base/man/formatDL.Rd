@@ -9,10 +9,12 @@ formatDL(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
 }
 \arguments{
-  \item{x}{a vector giving the items to be described.  Will be coerced
-    to a character vector.}
+  \item{x}{a vector giving the items to be described, or a list of
+    length 2 or a matrix with 2 columns giving both items and
+    descriptions.}
   \item{y}{a vector of the same length as \code{x} with the
-    corresponding descriptions.  Will be coerced to a character vector.}
+    corresponding descriptions.  Only used if \code{x} does not already
+    give the descriptions.}
   \item{style}{a character string specifying the rendering style of the
     description information.  If \code{"table"}, a two-column table with
     items and descriptions as columns is produced (similar to Texinfo's
@@ -30,6 +32,9 @@ formatDL(x, y, style = c("table", "list"),
   a character vector with the formatted entries.
 }
 \details{
+  After extracting the vectors of items and corresponding descriptions
+  from the arguments, both are coerced to character vectors.
+  
   In table style, items with more than \code{indent - 3} characters are
   displayed on a line of their own.
 }
@@ -39,7 +44,9 @@ x <- read.dcf(file = system.file("CONTENTS", package = "eda"),
                fields = c("Entry", "Description"))
 x <- as.data.frame(x)
 writeLines(formatDL(x$Entry, x$Description))
+## or equivalently: writeLines(formatDL(x))
 ## Same information in tagged description list style:
 writeLines(formatDL(x$Entry, x$Description, style = "list"))
+## or equivalently: writeLines(formatDL(x, style = "list"))
 }
 \keyword{print}

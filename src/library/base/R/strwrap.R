@@ -96,8 +96,22 @@ formatDL <-
 function(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
 {
-    if(length(x) != length(y))
-        stop("`x' and `y' must have the same length")
+    if(is.list(x)) {
+        if((length(x) == 2) && (diff(sapply(x, length)) == 0)) {
+            y <- x[[2]]; x <- x[[1]]
+        }
+        else
+            stop("incorrect value for x")
+    }
+    else if(is.matrix(x)) {
+        if(NCOL(x) == 2) {
+            y <- x[, 2]; x <- x[, 1]
+        }
+        else
+            stop("incorrect value for x")
+    }
+    else if(length(x) != length(y))
+        stop("x and y must have the same length")
     x <- as.character(x)
     y <- as.character(y)
 
@@ -106,7 +120,7 @@ function(x, y, style = c("table", "list"),
     if(missing(indent))
         indent <- switch(style, table = width / 3, list = width / 9)
     if(indent > 0.5 * width)
-        stop("incorrect values of `indent' and `width'")
+        stop("incorrect values of indent and width")
 
     indentString <- paste(rep(" ", indent), collapse = "")
 
@@ -117,8 +131,8 @@ function(x, y, style = c("table", "list"),
         i <- !i
         if(any(i))
             x[i] <- formatC(x[i], width = indent, flag = "-")
-        y <- lapply(strwrap(y, width = width - indent, simplify =
-                            FALSE),
+        y <- lapply(strwrap(y, width = width - indent,
+                            simplify = FALSE),
                     paste,
                     collapse = paste("\n", indentString, sep = ""))
         r <- paste(x, unlist(y), sep = "")
