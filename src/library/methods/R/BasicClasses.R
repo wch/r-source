@@ -40,6 +40,8 @@
     setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(") 
     setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
 
+    setClass("externalptr", prototype = newExternalptr(), where = envir); clList <- c(clList, "externalptr")
+             
     ## define some basic classes even though they aren't yet formally defined.
     ## new() will work because these classes are handled by newBasic and included
     ## in .BasicClasses

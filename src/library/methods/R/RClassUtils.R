@@ -461,6 +461,11 @@ newBasic <-
                "double" =,
                "list" =  as.vector(c(...), Class),
                "expression" = eval(substitute(expression(...))),
+               "externalptr" = {
+                   if(nargs() > 1)
+                       stop("externalptr objects cannot be initialized from new()")
+                   newExternalptr()
+               },
                "single" = as.single(c(...)),
                   ## note on array, matrix:  not possible to be compatible with
                   ## S-Plus on array, unless R allows 0-length .Dim attribute
@@ -1224,3 +1229,6 @@ setDataPart <- function(object, value) {
     }
     value
 }
+
+newExternalptr <- function()
+    .Call("R_externalptr_prototype_object", PACKAGE = "methods")
