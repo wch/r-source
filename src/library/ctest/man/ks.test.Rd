@@ -12,7 +12,8 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   \item{x}{a numeric vector of data values.}
   \item{y}{either a numeric vector of data values, or a character string
     naming a distribution function.}
-  \item{\dots}{parameters of the distribution specified by \code{y}.}
+  \item{\dots}{parameters of the distribution specified (as a character
+    string) by \code{y}.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"} (default), \code{"less"}, or
     \code{"greater"}.  You can specify just the initial letter.}
@@ -27,9 +28,9 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   distribution is performed.
 
   Alternatively, \code{y} can be a character string naming a continuous
-  distribution function.  In this case, a one sample test of the null
-  that the distribution function underlying \code{x} is \code{y} with
-  parameters specified by \code{\dots} is carried out.
+  distribution function.  In this case, a one-sample test is carried
+  out of the null that the distribution function which generated
+  \code{x} is distribution \code{y} with parameters specified by \code{\dots}.
 
   The presence of ties generates a warning, since continuous distributions
   do not generate them.
@@ -46,6 +47,12 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   exact p-value is computed if the product of the sample sizes is less
   than 10000.  Otherwise, asymptotic distributions are used whose
   approximations may be inaccurate in small samples.
+
+  If a single-sample test is used, the parameters specified in
+  \code{\dots} must be pre-specified and not estimated from the data.
+  There is some more refined distribution theory for the KS test with
+  estimated parameters (see Durbin, 1973), but that is not implemented
+  in \code{ks.test}.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -63,6 +70,10 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   New York: John Wiley & Sons.
   Pages 295--301 (one-sample \dQuote{Kolmogorov} test),
   309--314 (two-sample \dQuote{Smirnov} test).
+
+  Durbin, J. (1973)
+  \emph{Distribution theory for tests based on the sample distribution
+    function}.  SIAM.
 }
 \seealso{
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
