@@ -322,7 +322,8 @@ EOF
   fi
 ])
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
- [AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
+ [AC_CHECK_LIB(m, sin, LIBM="-lm", LIBM=)
+  AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
   AC_CACHE_VAL(r_cv_prog_f77_cc_compat,
     [ cat > conftestf.f <<EOF
       subroutine cftest(a, b, x, y)
@@ -375,8 +376,9 @@ EOF
 	## FIXME
 	## This should really use MAIN_LD, and hence come after this is
 	## determined.  Or maybe we can always use ${CC} eventually?
+	## Also, this used to have `-lm' hardwired ...
 	if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest conftest.o \
-            conftestf.o ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
+            conftestf.o ${FLIBS} ${LIBM} 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
 	  if test ${?} = 0; then
 	    r_cv_prog_f77_cc_compat=yes
@@ -426,10 +428,10 @@ EOF
 	fi
       fi
       AC_DEFINE(HAVE_F77_UNDERSCORE)
-      AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=, -L. -lconftest -lm)
+      AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=, [-L. -lconftest])
       rm -f libconftest*
       if test -z "${flibs}"; then
-	AC_CHECK_LIB(F77, d_sin, flibs=-lF77, flibs=, -lm)
+	AC_CHECK_LIB(F77, d_sin, flibs=-lF77, flibs=)
 	if test -n "${flibs}"; then
 	  AC_CHECK_LIB(I77, f_rew, flibs="${flibs} -lI77", flibs=, -lF77)
 	fi
@@ -795,7 +797,8 @@ AC_SUBST(use_tcltk)
 
 
 AC_DEFUN([R_BLAS_LIBS], [
-if test "${r_cv_prog_f77_append_underscore}" = yes; then
+if test "${r_cv_prog_f77_append_underscore}" = yes \
+  || test -n "${F2C}"; then
   dgemm_func=dgemm_
 else
   dgemm_func=dgemm
