@@ -3534,14 +3534,13 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     double angle, xadj, yadj;
     int coords;
 
-    angle = xadj = yadj = 0.;/* to keep -Wall happy */
-    coords = 0;/* -Wall */
+    angle = xadj = yadj = 0.;  /* to keep -Wall happy */
+    coords = 0;                /* -Wall */
 
-    xadj = dd->gp.adj;/* ALL cases */
+    xadj = dd->gp.adj;         /* ALL cases */
     if(outer) {
 	switch(side) {
 	case 1:
-	    /* line = line+1; */
 	    angle = 0;
 	    yadj = 0;
 	    coords = OMA1;
@@ -3557,7 +3556,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    coords = OMA3;
 	    break;
 	case 4:
-	    /* line = line+1; */
 	    angle = 90;
 	    yadj = 0;
 	    coords = OMA4;
@@ -3570,7 +3568,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	case 1:
 	    if(las == 2 || las == 3) {
 		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
-		line = line - dd->gp.yLineBias;
 		angle = 90;
 		yadj = 0.5;
 	    }
@@ -3583,17 +3580,10 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 2:
 	    if(las == 1 || las == 2) {
-		at = at/* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
-		line = line + dd->gp.yLineBias;
+		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
 		angle = 0;
-#ifdef OLD
 		xadj = dd->gp.adj;
 		yadj = 0.5;
-#else
-		/* xadj = 1.0; */
-		xadj = dd->gp.adj;
-		yadj = 0.3333;
-#endif
 	    }
 	    else {
 		line = line + dd->gp.yLineBias;
@@ -3605,7 +3595,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	case 3:
 	    if(las == 2 || las == 3) {
 		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
-		line = line + dd->gp.yLineBias;
 		angle = 90;
 		yadj = 0.5;
 	    }
@@ -3618,15 +3607,10 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 4:
 	    if(las == 1 || las == 2) {
-		at = at/* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
-		line = line + dd->gp.yLineBias;
+		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
 		angle = 0;
-#ifdef OLD
-		yadj = 0.5;
-#else
 		xadj = 0;
-		yadj = 0.3333;
-#endif
+		yadj = 0.5;
 	    }
 	    else {
 		line = line + 1 - dd->gp.yLineBias;
