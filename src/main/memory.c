@@ -47,6 +47,7 @@
  *	setvmax.
  */
 
+#include "Memory.h"
 #include "Defn.h"
 #include "Graphics.h"
 
