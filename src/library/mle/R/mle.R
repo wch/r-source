@@ -51,7 +51,7 @@ setMethod("show", "mle", function(object){
 })
 
 setMethod("show", "summary.mle", function(object){
-    cat("Maximum likelihod estimation\n\nCall:\n")
+    cat("Maximum likelihood estimation\n\nCall:\n")
     print(object@call)
     cat("\nCoefficients:\n")
     print(coef(object))
@@ -70,6 +70,30 @@ setMethod("profile", "mle",
                     alpha = 0.01, zmax = sqrt(qchisq(1 - alpha/2, p)),
                     del = zmax/5, trace = FALSE, ...)
 {
+    onestep <- function(step)
+    {
+        bi <- B0[i] + sgn * step * del * std.err[i]
+        fix <- list(bi)
+        names(fix) <- pi
+        call$fixed <- fix
+        pfit <- try(eval(call), silent=TRUE)
+        if(inherits(pfit, "try-error")) return(NA)
+        else {
+            zz <- 2*(pfit@min - fitted@min)
+            ri <- pv0
+            ri[, names(pfit@coef)] <- pfit@coef
+            ri[, pi] <- bi
+
+            if (zz > -0.001)
+                zz <- max(zz, 0)
+            else stop("profiling has found a better solution, so original fit had not converged")
+            z <- sgn * sqrt(zz)
+            pvi <<- rbind(pvi, ri)
+            zi <<- c(zi, z)
+        }
+        if (trace) cat(bi, z, "\n")
+        z
+    }
     ## Profile the likelihood around its maximum
     ## Based on profile.glm in MASS
     summ <- summary(fitted)
@@ -97,33 +121,23 @@ setMethod("profile", "mle",
             ## because the parameter gets stepped outside the domain.
             ## (We now have.)
 
-            while ((step <- step + 1) < maxsteps &&
-                   !is.na(z) && abs(z) < zmax) {
-                bi <- B0[i] + sgn * step * del * std.err[i]
-                fix <- list(bi)
-                names(fix) <- pi
-                call$start <- as.list(B0)
-                call$fixed <- fix
-                pfit <- try(eval(call), silent=TRUE)
-                if(inherits(pfit, "try-error")) {
-                    z  <- NA
-                    ri <- pv0
-                    ri[] <- NA
-                    ri[, pi] <- bi
-                } else {
-                    zz <- 2*(pfit@min - fitted@min)
-                    ri <- pv0
-                    ri[, names(pfit@coef)] <- pfit@coef
-                    ri[, pi] <- bi
-
-                    if (zz > -0.001)
-                        zz <- max(zz, 0)
-                    else stop("profiling has found a better solution, so original fit had not converged")
-                    z <- sgn * sqrt(zz)
+            call$start <- as.list(B0)
+            lastz <- 0
+            while ((step <- step + 1) < maxsteps && abs(z) < zmax) {
+                z <- onestep(step)
+                if(is.na(z)) break
+                lastz <- z
+            }
+            if(abs(lastz) < zmax) {
+                ## now let's try a bit harder if we came up short
+                for(dstep in c(0.2, 0.4, 0.6, 0.8, 0.9)) {
+                    z <- onestep(step - 1 + dstep)
+                    if(is.na(z)) break
                 }
-                pvi <- rbind(pvi, ri)
-                zi <- c(zi, z)
-                if (trace) cat(bi, z, "\n")
+            } else if(length(zi) < 5) { # try smaller steps
+                mxstep <- step - 1
+                step <- 0.5
+                while ((step <- step + 1) < mxstep) onestep(step)
             }
         }
         si <- order(zi)
