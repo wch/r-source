@@ -108,9 +108,14 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	    xout[i] = approx1(xout[i], x, y, *nxy, *method);
 }
 
-/* not used in R, so here to ensure module is loaded */
+/* pythag(a,b)	finds sqrt(a^2 + b^2)
+ *		without overflow or destructive underflow.
 
-/* finds sqrt(a^2 + b^2) without overflow or destructive underflow */
+ * FIXME : Use configure to check for hypot() (in <math.h>) and then
+ *         just use hypot(*,*) when that is available
+ * FIXME(2): Move this to nmath; remove from Applic.h and add to Mathlib.h
+ *	     add an R function "math2" for pythag() {or rather hypot()}
+*/
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -123,11 +128,21 @@ double pythag(double a, double b)
 {
     double p, r, s, t, tmp, u;
 
+    if(ISNAN(a) || ISNAN(b)) /* propagate Na(N)s: */
+        return
+#ifdef IEEE_754
+	  a + b;
+#else
+          NA_REAL;
+#endif
+    if (!R_FINITE(a) || !R_FINITE(b)) {
+        return R_PosInf/* ML_POSINF*/;
+    }
+
     p = fmax2(fabs(a), fabs(b));
     if (p != 0.0) {
 
-	/* r = (fmin(fabs(a), fabs(b))/p)^2 */
-
+	/* r = (min(|a|,|b|) / p) ^2 */
 	tmp = fmin2(fabs(a), fabs(b))/p;
 	r = tmp * tmp;
 	for(;;) {
@@ -135,13 +150,12 @@ double pythag(double a, double b)
 	    if (t == 4.0)
 		break;
 	    s = r / t;
-	    u = 1.0 + 2.0 * s;
-	    p = u * p;
+	    u = 1. + 2. * s;
+	    p *= u ;
 
 	    /* r = (s / u)^2 * r */
-
-	    tmp = (s / u);
-	    r = tmp * tmp * r;
+	    tmp = s / u;
+	    r *= tmp * tmp;
 	}
     }
     return p;
