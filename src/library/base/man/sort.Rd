@@ -18,11 +18,12 @@ is.unsorted(x, na.rm = FALSE)
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
-  \item{decreasing}{logical.  Should the sort be increasing or decreasing?}
+  \item{decreasing}{logical.  Should the sort be increasing or decreasing?
+     Not available for partial sorting.} 
   \item{method}{character specifying the algorithm used.}
   \item{index.return}{logical indicating if the ordering index vector should
-    be returned as well; this is only available for the default
-    \code{na.last = NA} and non-factors.}
+    be returned as well; this is only available for a few cases, the default
+    \code{na.last = NA} and full sorting of non-factors.}
   \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
@@ -32,7 +33,9 @@ is.unsorted(x, na.rm = FALSE)
   \code{partial} are in their correct position in the sorted array.  Any
   values smaller than these values are guaranteed to have a smaller
   index in the sorted array and any values which are greater are
-  guaranteed to have a bigger index in the sorted array.
+  guaranteed to have a bigger index in the sorted array.  This is included
+  for efficiency, and many of the options are not available for partial
+  sorting.
 
   The sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.

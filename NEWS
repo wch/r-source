@@ -150,7 +150,7 @@ BUG FIXES
 NEW FEATURES
 
     o	Platform equivalence in library() is tested by a new function
-	testPlatformEquivalence which ignores the 'vendor' field and
+	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
 
@@ -318,8 +318,12 @@ BUG FIXES
     o	Subassigning an expression, e.g. expr[2] <- 1, could leave an
 	invalid object and so cause a segfault. (PR#7326)
 
-    o	download/install.packages would misbehave if there was more than one
-	version of a package in a repository.
+    o	download/install.packages() would misbehave if there was more
+	than one version of a package in a repository.
+
+    o	sort(partial=) silently ignored some other arguments: using
+	'decreasing' or 'index.return' or supplying a factor are now
+	errors.
 	
 
 
