@@ -168,7 +168,7 @@ function()
       "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
       "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
       "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax", "cummin",
-      "+", "-", "*", "/", "^", "%%", "%/", "&", "|", "!", "==", "!=",
+      "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==", "!=",
       "<", "<=", ">=", ">",
       "all", "any", "sum", "prod", "man", "min", "range",
       "Arg", "Conj", "Im", "Mod", "Re"
