@@ -5,7 +5,7 @@ comment <- function(x).Internal(comment(x))
 round <- function(x, digits = 0).Internal(round(x,digits))
 signif <- function(x, digits = 6).Internal(signif(x,digits))
 log <- function(x, base=exp(1))
-	if(missing(base)) .Internal(log(x)) else .Internal(log(x,base))
+	if(missing(base)).Internal(log(x)) else .Internal(log(x,base))
 
 atan2 <- function(y, x).Internal(atan2(y, x))
 
@@ -21,3 +21,94 @@ pentagamma <- function(x).Internal(pentagamma(x))
 
 choose <- function(n,k).Internal(choose(n,k))
 lchoose <- function(n,k).Internal(lchoose(n,k))
+
+##-- 2nd part --
+D <- function(expr, namevec).Internal(D(expr, namevec))
+
+Machine <- function().Internal(Machine())
+Version <- function().Internal(Version())
+machine <- function().Internal(machine())
+colors <- function().Internal(colors())
+colours <- .Alias(colors)
+
+args <- function(name).Internal(args(name))
+
+##=== Problems here [[  attr(f, "class") <- "factor"  fails in factor(..)  ]]:
+##- attr <- function(x, which).Internal(attr(x, which))
+##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
+
+cbind <- function(..., deparse.level=1) {
+ if(deparse.level != 1) stop("cbind(.) does not accept deparse.level in R.")
+ .Internal(cbind(...))
+}
+rbind <- function(..., deparse.level=1) {
+ if(deparse.level != 1) stop("rbind(.) does not accept deparse.level in R.")
+ .Internal(rbind(...))
+}
+
+check.bounds <- function(on=TRUE).Internal(check.bounds(on)) ### NO DOC
+
+dataentry <- function(data, modes).Internal(dataentry(data, modes))
+deparse <-
+ function(expr, width.cutoff = 60).Internal(deparse(expr, width.cutoff))
+
+do.call <- function(what,args).Internal(do.call(what,args))
+drop <- function(x).Internal(drop(x))
+duplicated <- function(x, incomparables = FALSE) {
+  if(!is.logical(incomparables) || incomparables)
+    stop("duplicated(.. incomparables != FALSE)  not yet available in R.")
+ .Internal(duplicated(x))
+}
+format.info <- function(x).Internal(format.info(x)) ### NO DOC
+gc <- function().Internal(gc())
+gcinfo <- function(verbose).Internal(gcinfo(verbose))
+gray <- function(level).Internal(gray(level))
+lib.fixup <- function(env, globenv).Internal(lib.fixup(env, globenv)) ### NO DOC
+
+nchar <- function(x).Internal(nchar(x))
+
+##=== FAILS: [  format(pi, dig=2) doesn't work afterwards ]
+##- on.exit <- function(expression, add = FALSE) {
+##-   if(!is.logical(add) || add)
+##-     stop("on.exit(.., add != FALSE) does not yet work in R.")
+##-  .Internal(on.exit(expression))
+##- }
+
+order <- function(..., na.last = TRUE) {
+  if(!is.logical(na.last) || !na.last)
+    stop("order(.., na.last != TRUE) does not yet work in R.")
+.Internal(order(...))
+}
+plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
+ .Internal(plot.window(xlim, ylim, log, asp, ...))
+polyroot <- function(z).Internal(polyroot(z))
+rank <- function(x, na.last = TRUE) {
+  if(!is.logical(na.last) || !na.last)
+    stop("rank(.., na.last != TRUE) does not yet work in R.")
+ .Internal(rank(x))
+}
+readline <- function().Internal(readline())
+search <- function().Internal(search())
+
+sink <- function(file).Internal(sink(file))# 0 or 1 arg.
+
+##-- DANGER ! ---   substitute(list(...))  inside functions !!!
+##substitute <- function(expr, env=NULL).Internal(substitute(expr, env))
+
+t.default <- function(x).Internal(t.default(x))
+typeof <- function(x).Internal(typeof(x))
+
+unique <- function(x).Internal(unique(x))
+update.formula <- function(old, new).Internal(update.formula(old, new))
+
+stop <- function(message = NULL).Internal(stop(message))
+warning <- function(message = NULL).Internal(warning(message))
+
+
+
+
+
+
+
+
+

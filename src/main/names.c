@@ -53,13 +53,13 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
  * offset:	the 'op' (offset pointer) above; used for C functions
  *		which deal with more than one R function...
  *
- * eval:	[New Apr 9/96, before only had "YZ"]
- *		We now consider	 'eval'	 to be made up of three digits XYZ :
+ * eval:	= XYZ (three digits)  [New Apr 9/96, before only had "YZ"].
+ *		  --- where e.g. '1' means '001'
  *		X=1 says that we should switch R_Visible off
  *		    (the least common situation).
  *		Y=1 says that this is an internal function which must
  *		    be accessed with a	.Internal(.) call, any other value is
- *		    accessable directly.
+ *		    accessable directly and printed in R as ".Primitive(..)".
  *		Z=1 says evaluate arguments before calling and
  *		Z=0 says don't evaluate.
  *
@@ -85,8 +85,8 @@ FUNTAB R_FunTab[] =
 {"break",	do_break, CTXT_BREAK,	0,	-1,	PP_BREAK,	0},
 {"next",	do_break, CTXT_NEXT,	0,	-1,	PP_NEXT,	0},
 {"return",	do_return,	0,	0,	-1,	PP_RETURN,	0},
-{"stop",	do_stop,	0,	1,	1,	PP_FUNCALL,	0},
-{"warning",	do_warning,	0,	101,	1,	PP_FUNCALL,	0},
+{"stop",	do_stop,	0,	11,	1,	PP_FUNCALL,	0},
+{"warning",	do_warning,	0,	111,	1,	PP_FUNCALL,	0},
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION,	0},
 {"<-",		do_set,		1,	100,	-1,	PP_ASSIGN,	0},
 {"<<-",		do_set,		2,	100,	-1,	PP_ASSIGN2,	0},
@@ -150,16 +150,16 @@ FUNTAB R_FunTab[] =
 {"vector",	do_makevector,	0,	11,	2,	PP_FUNCALL,	0},
 {"complex",	do_complex,	0,	11,	3,	PP_FUNCALL,	0},
 {"matrix",	do_matrix,	0,	11,	4,	PP_FUNCALL,	0},
-{"array",	do_array,	0,	1,	2,	PP_FUNCALL,	0},
+  /*MM(98/4/22){"array",	do_array,	0,	1,	2,	PP_FUNCALL,	0},*/
 {"length",	do_length,	0,	1,	1,	PP_FUNCALL,	0},
 {"length<-",	do_lengthgets,	0,	1,	2,	PP_FUNCALL,	0},
 {"row",		do_rowscols,	1,	11,	1,	PP_FUNCALL,	0},
 {"col",		do_rowscols,	2,	11,	1,	PP_FUNCALL,	0},
 {"c",		do_c,		0,	0,	-1,	PP_FUNCALL,	0},
 {"unlist",	do_c,		1,	0,	-1,	PP_FUNCALL,	0},
-{"cbind",	do_bind,	1,	1,	-1,	PP_FUNCALL,	0},
-{"rbind",	do_bind,	2,	1,	-1,	PP_FUNCALL,	0},
-{"drop",	do_drop,	0,	1,	1,	PP_FUNCALL,	0},
+{"cbind",	do_bind,	1,	11,	-1,	PP_FUNCALL,	0},
+{"rbind",	do_bind,	2,	11,	-1,	PP_FUNCALL,	0},
+{"drop",	do_drop,	0,	11,	1,	PP_FUNCALL,	0},
 {"class",	do_class,	0,	1,	1,	PP_FUNCALL,	0},
 {"class<-",	do_classgets,	0,	1,	2,	PP_FUNCALL,	0},
 {"unclass",	do_unclass,	0,	1,	1,	PP_FUNCALL,	0},
@@ -180,8 +180,8 @@ FUNTAB R_FunTab[] =
 {"exists",	do_get,		0,	10,	4,	PP_FUNCALL,	0},
 {"assign",	do_assign,	0,	110,	4,	PP_FUNCALL,	0},
 {"remove",	do_remove,	0,	111,	3,	PP_FUNCALL,	0},
-{"duplicated",	do_duplicated,	0,	1,	1,	PP_FUNCALL,	0},
-{"unique",	do_duplicated,	1,	1,	1,	PP_FUNCALL,	0},
+{"duplicated",	do_duplicated,	0,	11,	1,	PP_FUNCALL,	0},
+{"unique",	do_duplicated,	1,	11,	1,	PP_FUNCALL,	0},
 {"match",	do_match,	0,	11,	3,	PP_FUNCALL,	0},
 {"pmatch",	do_pmatch,	0,	11,	3,	PP_FUNCALL,	0},
 {"charmatch",	do_charmatch,	0,	11,	2,	PP_FUNCALL,	0},
@@ -189,7 +189,7 @@ FUNTAB R_FunTab[] =
 {"complete.cases",do_compcases,	0,	11,	1,	PP_FUNCALL,	0},
 {"attach",	do_attach,	0,	111,	3,	PP_FUNCALL,	0},
 {"detach",	do_detach,	0,	111,	1,	PP_FUNCALL,	0},
-{"search",	do_search,	0,	1,	0,	PP_FUNCALL,	0},
+{"search",	do_search,	0,	11,	0,	PP_FUNCALL,	0},
 
 
 /* Mathematical Functions */
@@ -368,11 +368,11 @@ FUNTAB R_FunTab[] =
 
 /* Data Summaries */
 
-{"sum",		do_summary,	0,	11,	1,	PP_FUNCALL,	0},
-{"mean",	do_summary,	1,	11,	1,	PP_FUNCALL,	0},
-{"min",		do_summary,	2,	11,	1,	PP_FUNCALL,	0},
-{"max",		do_summary,	3,	11,	1,	PP_FUNCALL,	0},
-{"prod",	do_summary,	4,	11,	1,	PP_FUNCALL,	0},
+{"sum",		do_summary,	0,	11,	-1,	PP_FUNCALL,	0},
+  /*MM{"mean",	do_summary,	1,	11,	1,	PP_FUNCALL,	0},*/
+{"min",		do_summary,	2,	11,	-1,	PP_FUNCALL,	0},
+{"max",		do_summary,	3,	11,	-1,	PP_FUNCALL,	0},
+{"prod",	do_summary,	4,	11,	-1,	PP_FUNCALL,	0},
 {"cov",		do_cov,		0,	11,	3,	PP_FUNCALL,	0},
 {"cor",		do_cov,		1,	11,	3,	PP_FUNCALL,	0},
 
@@ -386,17 +386,17 @@ FUNTAB R_FunTab[] =
 {"as.vector",	do_asvector,	0,	10,	2,	PP_FUNCALL,	0},
 {"paste",	do_paste,	0,	11,	3,	PP_FUNCALL,	0},
 {"format",	do_format,	0,	11,	-1,	PP_FUNCALL,	0},
-{"format.info",	do_formatinfo,	0,	1,	1,	PP_FUNCALL,	0},
+{"format.info",	do_formatinfo,	0,	11,	1,	PP_FUNCALL,	0},
 {"cat",		do_cat,		0,	111,	6,	PP_FUNCALL,	0},
 {"call",	do_call,	0,	0,	-1,	PP_FUNCALL,	0},
-{"do.call",	do_docall,	0,	1,	2,	PP_FUNCALL,	0},
+{"do.call",	do_docall,	0,	11,	2,	PP_FUNCALL,	0},
 {"as.call",	do_ascall,	0,	1,	1,	PP_FUNCALL,	0},
 {"type.convert",do_typecvt,	1,	11,	3,	PP_FUNCALL,	0},
 
 
 /* String Manipulation */
 
-{"nchar",	do_nchar,	1,	1,	1,	PP_FUNCALL,	0},
+{"nchar",	do_nchar,	1,	11,	1,	PP_FUNCALL,	0},
 {"substr",	do_substr,	1,	11,	3,	PP_FUNCALL,	0},
 {"strsplit",	do_strsplit,	1,	11,	2,	PP_FUNCALL,	0},
 {"abbreviate",	do_abbrev,	1,	11,	3,	PP_FUNCALL,	0},
@@ -449,9 +449,9 @@ FUNTAB R_FunTab[] =
 #ifdef HAVE_TIMES
 {"proc.time",	do_proctime,	0,	1,	0,	PP_FUNCALL,	0},
 #endif
-{"Version",	do_version,	0,	1,	0,	PP_FUNCALL,	0},
-{"machine",	do_machine,	0,	1,	0,	PP_FUNCALL,	0},
-{"Machine",	do_Machine,	0,	1,	0,	PP_FUNCALL,	0},
+{"Version",	do_version,	0,	11,	0,	PP_FUNCALL,	0},
+{"machine",	do_machine,	0,	11,	0,	PP_FUNCALL,	0},
+{"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL,	0},
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL,	0},
 #ifdef Unix
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL,	0},
@@ -463,20 +463,20 @@ FUNTAB R_FunTab[] =
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL,	0},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL,	0},
 {"load",	do_load,	0,	111,	1,	PP_FUNCALL,	0},
-{"deparse",	do_deparse,	0,	1,	2,	PP_FUNCALL,	0},
+{"deparse",	do_deparse,	0,	11,	2,	PP_FUNCALL,	0},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL,	0},
 {"dump",	do_dump,	0,	111,	2,	PP_FUNCALL,	0},
 {"substitute",	do_substitute,	0,	0,	-1,	PP_FUNCALL,	0},
 {"quit",	do_quit,	0,	111,	1,	PP_FUNCALL,	0},
 {"interactive",	do_interactive,	0,	0,	0,	PP_FUNCALL,	0},
-{"readline",	do_readln,	0,	1,	0,	PP_FUNCALL,	0},
+{"readline",	do_readln,	0,	11,	0,	PP_FUNCALL,	0},
 {"menu",	do_menu,	0,	11,	1,	PP_FUNCALL,	0},
 {"print.default",do_printdefault,0,	111,	5,	PP_FUNCALL,	0},
 {"print.atomic",do_printdefault,0,	111,	5,	PP_FUNCALL,	0},
 {"print.matrix",do_printmatrix, 0,	111,	5,	PP_FUNCALL,	0},
 {"invisible",	do_invisible,	0,	101,	1,	PP_FUNCALL,	0},
-{"gc",		do_gc,		0,	101,	0,	PP_FUNCALL,	0},
-{"gcinfo",	do_gcinfo,	0,	101,	1,	PP_FUNCALL,	0},
+{"gc",		do_gc,		0,	111,	0,	PP_FUNCALL,	0},
+{"gcinfo",	do_gcinfo,	0,	111,	1,	PP_FUNCALL,	0},
 {"rep",		do_rep,		0,	11,	2,	PP_FUNCALL,	0},
 {"list",	do_makelist,	1,	1,	-1,	PP_FUNCALL,	0},
 {"split",	do_split,	0,	11,	2,	PP_FUNCALL,	0},
@@ -488,7 +488,7 @@ FUNTAB R_FunTab[] =
 {"dyn.load",	do_dynload,	0,	111,	1,	PP_FUNCALL,	0},
 {"dyn.unload",	do_dynunload,	0,	111,	1,	PP_FUNCALL,	0},
 {"ls",		do_ls,		1,	11,	2,	PP_FUNCALL,	0},
-{"typeof",	do_typeof,	1,	1,	1,	PP_FUNCALL,	0},
+{"typeof",	do_typeof,	1,	11,	1,	PP_FUNCALL,	0},
 {"eval",	do_eval,	1,	11,	2,	PP_FUNCALL,	0},
 {"expression",	do_expression,	1,	0,	-1,	PP_FUNCALL,	0},
 {"sys.parent",	do_sys,		1,	10,	-1,	PP_FUNCALL,	0},
@@ -502,33 +502,33 @@ FUNTAB R_FunTab[] =
 {"sys.function",do_sys,		9,	10,	-1,	PP_FUNCALL,	0},
 {"sort",	do_sort,	1,	11,	1,	PP_FUNCALL,	0},
 {"psort",	do_psort,	0,	11,	2,	PP_FUNCALL,	0},
-{"order",	do_order,	0,	1,	-1,	PP_FUNCALL,	0},
-{"rank",	do_rank,	0,	1,	1,	PP_FUNCALL,	0},
+{"order",	do_order,	0,	11,	-1,	PP_FUNCALL,	0},
+{"rank",	do_rank,	0,	11,	1,	PP_FUNCALL,	0},
 {"missing",	do_missing,	1,	0,	1,	PP_FUNCALL,	0},
 {"nargs",	do_nargs,	1,	0,	0,	PP_FUNCALL,	0},
 {"scan",	do_scan,	0,	11,	10,	PP_FUNCALL,	0},
 {"count.fields",do_countfields,	0,	11,	3,	PP_FUNCALL,	0},
-{"t.default",	do_transpose,	0,	1,	1,	PP_FUNCALL,	0},
+{"t.default",	do_transpose,	0,	11,	1,	PP_FUNCALL,	0},
 {"aperm",	do_aperm,	0,	11,	3,	PP_FUNCALL,	0},
 {"builtins",	do_builtins,	0,	11,	1,	PP_FUNCALL,	0},
 {"edit",	do_edit,	0,	11,	3,	PP_FUNCALL,	0},
-{"dataentry",	do_dataentry,	0,	1,	1,	PP_FUNCALL,	0},
-{"args",	do_args,	0,	1,	1,	PP_FUNCALL,	0},
+{"dataentry",	do_dataentry,	0,	11,	1,	PP_FUNCALL,	0},
+{"args",	do_args,	0,	11,	1,	PP_FUNCALL,	0},
 {"formals",	do_formals,	0,	11,	1,	PP_FUNCALL,	0},
 {"body",	do_body,	0,	11,	1,	PP_FUNCALL,	0},
 {"globalenv",	do_globalenv,	0,	1,	0,	PP_FUNCALL,	0},
 {"environment",	do_envir,	0,	11,	1,	PP_FUNCALL,	0},
 {"environment<-",do_envirgets,	0,	1,	2,	PP_FUNCALL,	0},
 {"options",	do_options,	0,	11,	1,	PP_FUNCALL,	0},
-{"check.bounds",do_checkbounds,	0,	1,	1,	PP_FUNCALL,	0},
-{"sink",	do_sink,	0,	101,	1,	PP_FUNCALL,	0},
-{"lib.fixup",	do_libfixup,	0,	101,	2,	PP_FUNCALL,	0},
+{"check.bounds",do_checkbounds,	0,	11,	1,	PP_FUNCALL,	0},
+{"sink",	do_sink,	0,	111,	1,	PP_FUNCALL,	0},
+{"lib.fixup",	do_libfixup,	0,	111,	2,	PP_FUNCALL,	0},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL,	0},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL,	0},
 {"mvfft",	do_mvfft,	0,	11,	2,	PP_FUNCALL,	0},
-{"polyroot",	do_polyroot,	0,	1,	1,	PP_FUNCALL,	0},
+{"polyroot",	do_polyroot,	0,	11,	1,	PP_FUNCALL,	0},
 {"nextn",	do_nextn,	0,	11,	2,	PP_FUNCALL,	0},
 
 /* Device Drivers */
@@ -550,11 +550,11 @@ FUNTAB R_FunTab[] =
 {"dev.set",	do_devset,	0,	111,	1,	PP_FUNCALL,	0},
 {"rgb",		do_rgb,		0,	11,	4,	PP_FUNCALL,	0},
 {"hsv",		do_hsv,		0,	11,	4,	PP_FUNCALL,	0},
-{"gray",	do_gray,	0,	1,	1,	PP_FUNCALL,	0},
-{"colors",	do_colors,	0,	1,	0,	PP_FUNCALL,	0},
+{"gray",	do_gray,	0,	11,	1,	PP_FUNCALL,	0},
+{"colors",	do_colors,	0,	11,	0,	PP_FUNCALL,	0},
 {"palette",	do_palette,	0,	11,	1,	PP_FUNCALL,	0},
 {"plot.new",	do_plot_new,	0,	111,	1,	PP_FUNCALL,	0},
-{"plot.window",	do_plot_window,	0,	101,	3,	PP_FUNCALL,	0},
+{"plot.window",	do_plot_window,	0,	111,	3,	PP_FUNCALL,	0},
 {"axis",	do_axis,	0,	111,	7,	PP_FUNCALL,	0},
 {"plot.xy",	do_plot_xy,	0,	111,	6,	PP_FUNCALL,	0},
 {"text",	do_text,	0,	111,	6,	PP_FUNCALL,	0},
@@ -589,11 +589,11 @@ FUNTAB R_FunTab[] =
 {"fmin",	do_fmin,	0,	11,	4,	PP_FUNCALL,	0},
 {"zeroin",	do_zeroin,	0,	11,	4,	PP_FUNCALL,	0},
 {"terms.formula",do_termsform,	0,	11,	5,	PP_FUNCALL,	0},
-{"update.formula",do_updateform,0,	1,	2,	PP_FUNCALL,	0},
+{"update.formula",do_updateform,0,	11,	2,	PP_FUNCALL,	0},
 {"model.frame",	do_modelframe,	0,	11,	5,	PP_FUNCALL,	0},
 {"model.matrix",do_modelmatrix,	0,	11,	2,	PP_FUNCALL,	0},
 
-{"D",		do_D,		0,	1,	2,	PP_FUNCALL,	0},
+{"D",		do_D,		0,	11,	2,	PP_FUNCALL,	0},
 {"deriv.default",do_deriv,	0,	11,	4,	PP_FUNCALL,	0},
 
 {NULL,		NULL,		0,	0,	0,	0,		0},
