@@ -11,9 +11,9 @@
 
 NEW FEATURES
 
-    o   hessian argument added to deriv and its methods.  A new function
-        deriv3 provides identical capabilities to deriv except that
-        hessian is TRUE by default.
+    o	hessian argument added to deriv and its methods.  A new function
+	deriv3 provides identical capabilities to deriv except that
+	hessian is TRUE by default.
 
     o	New components in .Machine give the sizes of long, long long
 	and long double C types (or 0 if they do not exist).
@@ -63,13 +63,15 @@ BUG FIXES
     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
-    o   A problem with "..." in substitutions has been fixed. 
+    o	A problem with "..." in substitutions has been fixed. 
 
-    o   We now use match.fun() in tapply() so that it won't get trapped
-        by non-functions masking FUN.
+    o	We now use match.fun() in tapply() so that it won't get trapped
+	by non-functions masking FUN.
 
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
+    o	lowess(c(1:3,7:5)) now should give the same on different platforms,
+	since now as.integer(f*n + 1e-7) is used.
 
 
 	**************************************************
