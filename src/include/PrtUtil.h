@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka 
+ *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,13 +31,6 @@
 
 #define adj_right 1
 #define adj_left  0
-
-/* These should all be in a struct ! */
-extern int  R_print_width;
-extern int  print_na_width;
-extern int  print_quote;
-extern int  print_digits;
-extern int  print_gap;
 
 /* Computation of printing formats */
 void formatLogical(int*,int,int*);
