@@ -55,11 +55,11 @@ realclean:
 install: all
 	$(INSTALL) -d $(bindir) $(mandir)/man1
 	$(INSTALL_DATA) R.1 $(mandir)/man1
-	$(INSTALL) -d $(rhome)/bin \
-		$(rhome)/cmd \
-		$(rhome)/etc \
-		$(rhome)/include \
-		$(rhome)/library
+	$(INSTALL) -d $(rhome)/bin
+	$(INSTALL) -d $(rhome)/cmd 
+	$(INSTALL) -d $(rhome)/etc 
+	$(INSTALL) -d $(rhome)/include 
+	$(INSTALL) -d $(rhome)/library
 	$(INSTALL_DATA) COPYING COPYRIGHTS MIRROR-SITES RESOURCES $(rhome)
 	cd afm; $(MAKE) $@
 	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin

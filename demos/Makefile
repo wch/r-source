@@ -1,11 +1,11 @@
 include ../Makeconf
 
 install:
-	$(INSTALL) -d $(rhome)/demos/dynload \
-		      $(rhome)/demos/graphics \
-		      $(rhome)/demos/language \
-		      $(rhome)/demos/models \
-		      $(rhome)/demos/nlm
+	$(INSTALL) -d $(rhome)/demos/dynload 
+	$(INSTALL) -d $(rhome)/demos/graphics 
+	$(INSTALL) -d $(rhome)/demos/language 
+	$(INSTALL) -d $(rhome)/demos/models 
+	$(INSTALL) -d $(rhome)/demos/nlm
 	$(INSTALL_DATA) dynload/Makefile dynload/README dynload/zero* \
 			$(rhome)/demos/dynload
 	$(INSTALL_DATA) graphics/*.R $(rhome)/demos/graphics
