@@ -187,17 +187,23 @@ static char BrowsePrompt[20];
 
 char *R_PromptString(int browselevel, int type)
 {
-	if(type == 1) {
-		if(browselevel) {
-			sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
-			return BrowsePrompt;
-		}
-		return (char*)CHAR(STRING(GetOption(install("prompt"),
-				R_NilValue))[0]);
+	if (R_Quiet) {
+		BrowsePrompt[0] = '\0';
+		return BrowsePrompt;
 	}
 	else {
-		return (char*)CHAR(STRING(GetOption(install("continue"),
-			R_NilValue))[0]);
+		if(type == 1) {
+			if(browselevel) {
+				sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
+				return BrowsePrompt;
+			}
+			return (char*)CHAR(STRING(GetOption(install("prompt"),
+					R_NilValue))[0]);
+		}
+		else {
+			return (char*)CHAR(STRING(GetOption(install("continue"),
+				R_NilValue))[0]);
+		}
 	}
 }
 
