@@ -141,6 +141,7 @@ Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);
 Rconnection R_newunz(char *description, char *mode);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
+int getActiveSink(int n);
 
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		double timeout);
