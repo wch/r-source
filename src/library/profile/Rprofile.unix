@@ -15,5 +15,7 @@ options(printcmd = getenv("R_PRINTCMD"))
 options(papersize = getenv("R_PAPERSIZE"))
 
 .First <- function() {
+  if (exists(".Dyn.libs",envir=.GlobalEnv))
+	rm(".Dyn.libs",envir=.GlobalEnv)
   if (interactive() && getenv("DISPLAY") != "") x11()
 }
