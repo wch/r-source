@@ -216,10 +216,12 @@ static void readline_handler(char *line)
 int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     if(!isatty(0)) {
-	if(!R_Quiet) fputs(prompt, stdout);
+	if (!R_Slave)
+	    fputs(prompt, stdout);
 	if (fgets(buf, len, stdin) == NULL)
 	    return 0;
-	if(!R_Quiet) fputs(buf,stdout);
+	if (!R_Slave)
+	    fputs(buf, stdout);
 	return 1;
     }
     else {
