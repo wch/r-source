@@ -102,15 +102,6 @@ typedef struct structConsoleData *ConsoleData;
 
 #define REDRAW drawconsole(c, getrect(c))
 
-#define FBEGIN { \
-                 ConsoleData p; \
-                 p = getdata(c); \
-               {
-
-#define FEND(result) } return result;}
-#define FVOIDEND }}
-#define FVOIDRETURN { return; }
-#define FRETURN(result) {return result;}
 
 #define RSHOW(r) {gbitblt(c, p->bm, topleft(r), r);}
 

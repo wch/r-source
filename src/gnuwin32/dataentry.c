@@ -1531,14 +1531,15 @@ static void declose(control m)
 }
 
 static void deresize(console c, rect r)
-FBEGIN
+{
     if (((WIDTH  == r.width) &&
 	 (HEIGHT == r.height)) ||
 	(r.width == 0) || (r.height == 0) ) /* minimize */
-        FVOIDRETURN;
+        return;;
     WIDTH = r.width;
     HEIGHT = r.height;
-FVOIDEND
+}
+
 
 static void menudehelp(control m)
 {
