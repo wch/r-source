@@ -33,9 +33,7 @@ distclean: acclean
 	@rm -f Makefile
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
-	@-rm -f help/LibIndex help/[a-z]*/*
-	@-rm -f html/funs/*
-	@-rm -f dvi/*
+	@-rm -f doc/manual/pkg-*
 	@cd demos/dynload; make realclean
 	@echo "Realcleaning ./etc"; cd etc; make realclean
 	@echo "Realcleaning the source tree"; cd src; make realclean

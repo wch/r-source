@@ -13,11 +13,11 @@ else
 fi
 
 lib=${2:-${RHOME}/library}
-if mkdir -p ${lib}
+if test -d ${lib}
 then
     lib=`cd ${lib}; pwd`
 else    
-    echo "Cannot write to \`${lib}'"
+    echo "Cannot find directory \`${lib}'"
     exit 1
 fi    
 

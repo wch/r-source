@@ -44,7 +44,7 @@ sub buildinit {
     chdir $currentdir;
     
     if($lib){
-	system("mkdir -p $lib");
+	system("mkdir $lib") unless (-d $lib);
 	chdir($lib) or die("Cannot create $lib\n");
 	$lib=getcwd();
     }

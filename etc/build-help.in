@@ -96,8 +96,15 @@ if($opt_latex){
 
 sub build_index {
 
-    system("mkdir -p $dest");
-    die("Cannot create $dest\n") unless (-d "$dest");
+    if(! -d $lib){
+	system("mkdir $lib");
+	die("Cannot create $lib\n") unless (-d "$lib");
+    }
+    
+    if(! -d "$dest"){    
+	system("mkdir $dest");
+	die("Cannot create $dest\n") unless (-d "$dest");
+    }
     
     system("/bin/cp ../TITLE $dest/TITLE");
     open title, "<../TITLE";
@@ -105,9 +112,9 @@ sub build_index {
     close title;
     $title =~ s/^\S*\s*(.*)/$1/;
     
-    system("mkdir -p $dest/help");
+    system("mkdir $dest/help");
     die("Cannot create $dest/help\n") unless (-d "$dest/help");
-    system("mkdir -p $dest/html");
+    system("mkdir $dest/html");
     die("Cannot create $dest/html\n") unless (-d "$dest/html");
     
     $anindex = "$lib/$pkg/help/AnIndex";
