@@ -108,6 +108,9 @@ First, you need Windows 95/98/ME/NT4/2000/XP: Windows 3.11+win32s will
 not work.  Your file system must allow long file names (as is likely
 except perhaps for some network-mounted systems).
 
+If you want to build packages from sources, choose an installation path
+not containing spaces.  (Most other things work.)
+
 The simplest way is to use `SetupR.exe' or `miniR.exe'.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
@@ -324,6 +327,9 @@ have done so, just run `Rcmd INSTALL pkgname'.  To check the package
 (including running all the examples on its help pages and in its test
 suite, if any) use `Rcmd check pkgname': see the _`Writing R
 Extensions'_ manual.
+
+Note that msot of the last paragraph will only work if both the path to
+R and the path to the package are space-free.
 
 3.2 I don't have permission to write to the `rw1040\library' directory.
 =======================================================================

@@ -265,6 +265,10 @@ disk. <a name="How%20do%20I%20install%20R%20for%20Windows%3f">
 names (as is likely except perhaps for some network-mounted
 systems).</p>
 
+<p>If you want to build packages from sources, choose an
+installation path not containing spaces. (Most other things
+work.)</p>
+
 <p>The simplest way is to use <code>SetupR.exe</code> or <code>
 miniR.exe</code>. Just double-click on the icon and follow the
 instructions. If you installed R this way you can uninstall it from
@@ -530,7 +534,10 @@ http://www.stats.ox.ac.uk/pub/Rtools/</a>. Once you have done so,
 just run <code>Rcmd INSTALL pkgname</code>. To check the package
 (including running all the examples on its help pages and in its
 test suite, if any) use <code>Rcmd check pkgname</code>: see the
-<em>`Writing R Extensions'</em> manual. <a name=
+<em>`Writing R Extensions'</em> manual.</p>
+
+<p>Note that msot of the last paragraph will only work if both the
+path to R and the path to the package are space-free. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1040%5clibrary%20directory">
 </a></p>
 
