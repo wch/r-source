@@ -48,9 +48,9 @@ R:
 .R.Rout:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ];     then cp -p $@     $@.bak  ; fi
-	@echo @ECHO_N@ "running code in '$<' ...@ECHO_C@"
+	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
-	@echo "@ECHO_T@ OK"
+	@echo "$(ECHO_T) OK"
 
 $(EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \

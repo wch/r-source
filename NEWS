@@ -40,9 +40,9 @@ NEW FEATURES
     o   Enhancements to mathematical annotation of plots:
 
 	- expressions involving dot(<something>) now produce a dot accent
-	  above the <something> (initial patch from Ben Bolker).  
+	  above the <something> (initial patch from Ben Bolker).
 
-	- within an expression, the symbol partialdiff is now converted 
+	- within an expression, the symbol partialdiff is now converted
 	  to a partial differential symbol (greek delta).
 
 
@@ -66,9 +66,23 @@ BUG FIXES
     o	Under GNOME, capabilities() now reports correctly that X11, png
 	and jpeg are available (if they are under X11).
 
+    o	The names of some results of unlist() had the wrong internal
+	length, which confused paste().  Both have been corrected. (PR#1524)
+
     o   RweaveLatex.Rd had unbalanced braces in section "Supported
         Options".
     
+    o   merge() with multiple and differently-named match columns
+        failed. (PR#1510)
+
+    o   NAs in right-justified unquoted matrices were being mis-aligned.
+	This mainly affected printing data frames.
+
+    o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
+        and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
+
+    o   qr.X was failing in n < p.  Fixed, but only in the case when
+	pivoting does not occur. (PR#1519)
 
 
 

@@ -620,6 +620,22 @@ info$isdir
 stopifnot(info$isdir == TRUE)
 ## 1.4.1 had a TRUE value that was not internally integer 1.
 
+## PR#1473 predict.*bSpline() bugs extrapolating for deriv >= 1
+library(splines)
+x <- c(1:3,5:6)
+y <- c(3:1,5:6)
+(isP <- interpSpline(x,y))# poly-spline representation
+(isB <- interpSpline(x,y, bSpl = TRUE))# B-spline repr.
+xo <- c(0, x, 10)# x + outside points
+op <- options(digits = 4)
+for(der in 0:3) # deriv=3 fails!
+    print(formatC(try(predict(isP, xo, deriv = der)$y), wid=7,format="f"),
+          quote = FALSE)
+## and for B-spline (instead of polynomial):
+for(der in 0:3)  # deriv=3 failed
+    print(formatC(try(predict(isB, xo, deriv = der)$y), wid=7,format="f"),
+          quote = FALSE)
+options(op)
 
 ## This example last: needed < 1.5.0 ##
 
@@ -633,4 +649,21 @@ provoke.bug()
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above paragraph at the end of this file
 
-## This example last ##
+
+## PR#1510 merge with multiple match rows and different names.
+df1 <- data.frame(z = 1:10, m = letters[1:10], w = rnorm(10))
+df2 <- data.frame(x = 1:10, y = rnorm(10), n = letters[1:10])
+merge(df2, df1, by.x = c("x", "n"), by.y = c("z", "m"))
+## failed in 1.5.0
+
+
+## PR 1524  Problems with paste/unlist
+l <- names(unlist(list(aa = list(bb = 1))))
+l
+# this is exactly "aa.bb"
+stopifnot(identical(l, "aa.bb"))
+l2 <- paste(l, "this should be added")
+stopifnot(identical(l2, "aa.bb this should be added"))
+## 1.5.0 gave l2 printing as l.
+
+
