@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997-2002   Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -626,13 +626,16 @@ void Rstd_read_history(char *s)
 void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX];
+    char file[PATH_MAX], *p;
 
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile, 0))));
+    p = R_ExpandFileName(CHAR(STRING_ELT(sfile, 0)));
+    if(strlen(p) > PATH_MAX - 1)
+	errorcall(call, "file argument is too long");
+    strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
     if(R_Interactive && UsingReadline) {
 	clear_history();
@@ -646,13 +649,16 @@ void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX];
+    char file[PATH_MAX], *p;
 
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile, 0))));
+    p = R_ExpandFileName(CHAR(STRING_ELT(sfile, 0)));
+    if(strlen(p) > PATH_MAX - 1)
+	errorcall(call, "file argument is too long");
+    strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
     if(R_Interactive && UsingReadline) {
 	write_history(file);

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2001  The R Development Core Team
+ *  Copyright (C) 1997-2002  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -301,6 +301,8 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
 {
     SEXP s, prev;
     int nargs=0, naokused=0, dupused=0, pkgused=0;
+    char *p;
+    
     *naok = 0;
     *dup = 1;
     *len = 0;
@@ -314,7 +316,10 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
 	    /* SETCDR(prev, s = CDR(s)); */
 	    if(dupused++ == 1) warning("DUP used more than once");
 	} else if(TAG(s) == PkgSymbol) {
-	    strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
+	    p = CHAR(STRING_ELT(CAR(s), 0));
+	    if(strlen(p) > PATH_MAX - 1)
+		error("DLL name is too long");
+	    strcpy(DLLname, p);
 	    if(pkgused++ > 1) warning("PACKAGE used more than once");
 	    /* More generally, this should allow us to process
                any additional arguments and not insist that PACKAGE
@@ -335,15 +340,18 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
     return args;
 }
 
-static void setDLLname(SEXP s, char *DLLName) {
-  SEXP ss = CAR(s); char *name;
-  if(TYPEOF(ss) != STRSXP || length(ss) != 1)
-    error("PACKAGE argument must be a single character string");
-  name = CHAR(STRING_ELT(ss, 0));
-  /* allow the package: form of the name, as returned by find */
-  if(strncmp(name, "package:", 8) == 0)
-    name += 8;
-  strcpy(DLLname, name);
+static void setDLLname(SEXP s, char *DLLName) 
+{
+    SEXP ss = CAR(s); char *name;
+    if(TYPEOF(ss) != STRSXP || length(ss) != 1)
+	error("PACKAGE argument must be a single character string");
+    name = CHAR(STRING_ELT(ss, 0));
+    /* allow the package: form of the name, as returned by find */
+    if(strncmp(name, "package:", 8) == 0)
+	name += 8;
+    if(strlen(name) > PATH_MAX - 1)
+	error("PACKAGE argument is too long");
+    strcpy(DLLname, name);
 }
 
 static SEXP pkgtrim(SEXP args)
@@ -1234,7 +1242,8 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     cargs = (void**)R_alloc(nargs, sizeof(void*));
     nargs = 0;
     for(pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
-	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1, which, buf, argConverters + nargs);
+	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1, 
+				  which, buf, argConverters + nargs);
 	nargs++;
     }
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2001 The R Development Core Team
+ *  Copyright (C) 1997-2002 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -477,7 +477,8 @@ DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     /* keep only basename from path */
     p = strrchr(dpath, FILESEP[0]); 
     if(!p) p = dpath; else p++;
-    strcpy(DLLname, p);
+    if(strlen(p) < PATH_MAX) strcpy(DLLname, p);
+    else error("DLLname %s is too long", p);
 
     /* FIXME: didn't work on Mac, unsafe
     p = strchr(DLLname, '.');
@@ -755,7 +756,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "character argument expected");
     GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
-    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
+    if(!AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;

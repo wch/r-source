@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1008,7 +1008,10 @@ SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, "character argument expected");
-    strcpy (buf, R_ExpandFileName(CHAR(STRING_ELT(s, 0))));
+    p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
+    if (strlen(p) > PATH_MAX - 1)
+	errorcall(call, "path too long");
+    strcpy (buf, p);
 #ifdef Win32
     for (p = buf; *p != '\0'; p++)
 	if (*p == '\\') *p = '/';
@@ -1034,7 +1037,10 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, "character argument expected");
-    strcpy(buf, R_ExpandFileName(CHAR(STRING_ELT(s, 0))));
+    p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
+    if (strlen(p) > PATH_MAX - 1)
+	errorcall(call, "path too long");
+    strcpy (buf, p);
 #ifdef Win32
     for(p = buf; *p != '\0'; p++)
 	if(*p == '\\') *p = '/';
