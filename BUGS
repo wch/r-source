@@ -168,6 +168,10 @@ none
 
 Directory:  incoming
 
+* PR# 529 *
+Subject: graphics: par(mfg=c(i,j,r,c))
+From: Craig.Mckinstry@pnl.gov
+Date: Fri, 28 Apr 2000 17:36:35 +0200 (MET DST)
 * PR# 528 *
 Subject: Wrong SEs in predict.lm(..., type="terms")
 Subject: Wrong SEs in predict.lm(..., type="terms")
