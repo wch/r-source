@@ -3095,8 +3095,9 @@ void GText(double x, double y, int coords, char *str,
     if(str && *str) {
         char *s, *sbuf, *sb;
 	int i, n;
-	double xoff, yoff, yadj;
+	double xoff, yoff;
 #ifdef BUG61
+	double yadj;
 	/* Fixup for string centering. */
 	/* Higher functions send in NA_REAL */
 	/* when true text centering is desired */
@@ -4794,7 +4795,7 @@ char *col2name(unsigned int col)
 unsigned int str2col(char *s)
 {
     if(s[0] == '#') return rgb2col(s);
-    else if(isdigit(s[0])) return number2col(s);
+    else if(isdigit((int)s[0])) return number2col(s);
     else return name2col(s);
 }
 

@@ -500,6 +500,7 @@ FUNTAB R_FunTab[] =
 {"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
 {"int.unzip",   do_int_unzip,   0,      11,    -1,      PP_FUNCALL},
 {"win.version", do_winver,      0,      11,     0,      PP_FUNCALL},
+{"saveDevga", do_saveDevga,     0,      11,     3,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
@@ -598,7 +599,7 @@ FUNTAB R_FunTab[] =
 /* Device Drivers */
 
 #ifdef Win32
-{"X11",		do_devga,	0,	111,	4,	PP_FUNCALL},
+{"devga",	do_devga,	0,	111,	4,	PP_FUNCALL},
 #else
 {"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
 #endif
