@@ -1122,7 +1122,7 @@ function(package, dir, lib.loc = NULL)
                   function(x) any(grep("^ *internal *$", x)))
     if(isBase || basename(dir) == "graphics")
         ind <- ind | dbNames %in% c("Defunct", "Deprecated", "Devices")
-    if(any(!ind)) {
+    if(any(ind)) {# exclude them
         db <- db[!ind]
         dbNames <- dbNames[!ind]
         dbAliases <- dbAliases[!ind]
