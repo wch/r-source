@@ -16,7 +16,8 @@ diff.default(x, lag=1, differences=1, \dots)
   \item{differences}{an integer indicating the order of the difference.}
 }
 \details{
-  \code{NA}'s propagate.
+  \code{diff} is a generic function with a default method and one for
+  class \code{\link{ts}} objects.  \code{\link{NA}}'s propagate.
 }
 \value{
   If \code{x} is a vector of length \code{n} and \code{differences=1},
@@ -30,6 +31,8 @@ diff.default(x, lag=1, differences=1, \dots)
   If \code{x} is a matrix then the difference operations are carried out
   on each column separately.
 }
+\seealso{\code{\link[ts]{diff.ts}} from the \code{ts} package which you
+  may want anyway.}
 \examples{
 diff(1:10, 2)
 diff(1:10, 2, 2)
