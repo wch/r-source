@@ -27,6 +27,11 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   seconds, to the file specified.  The Perl script \code{Rcmd Rprof}
   can be used to process the output file to produce a summary of the
   usage; use \code{Rcmd Rprof --help} for usage information.
+
+  Exactly what the time interval measures is subtle: it is time that the
+  \R process is running and executing an \R command.  It is not however just
+  CPU time, for if \code{readline()} is waiting for input, that counts
+  (on Windows, but not on Unix).
 }
 \seealso{
   The chapter on ``Tidying and profiling R code'' in ``Writing \R

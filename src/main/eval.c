@@ -126,7 +126,7 @@ static void __cdecl ProfileThread(void *pwait)
 {
     int wait = *((int *)pwait);
 
-//    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
     while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
 	doprof();
     }
