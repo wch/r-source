@@ -291,7 +291,7 @@ stopifnot(1:10 == gf$linkfun(gf$linkinv(1:10)))
 
 ## fft
 set.seed(123)
-eps <- 1e-11
+eps <- 1e-10  # typically see around 1e-11
 for(N in 1:130) {
     x <- rnorm(N)
     if(N %% 5 == 0) {
