@@ -65,6 +65,7 @@
     \code{x \%notin\% y} \tab x is not an element of y \cr
     \code{hat(x)}   \tab x with a circumflex \cr
     \code{tilde(x)}   \tab x with a tilde \cr
+    \code{dot(x)} \tab x with a dot \cr
     \code{ring(x)}   \tab x with a ring \cr
     \code{bar(xy)}   \tab xy with bar \cr
     \code{widehat(xy)}   \tab xy with a wide circumflex \cr
@@ -82,6 +83,7 @@
     \code{alpha} -- \code{omega} \tab Greek symbols \cr
     \code{Alpha} -- \code{Omega} \tab uppercase Greek symbols \cr
     \code{infinity}   \tab infinity symbol \cr
+    \code{partialdiff} \tab partial differential symbol \cr
     \code{32*degree}   \tab 32 degrees \cr
     \code{60*minute}   \tab 60 minutes of angle \cr
     \code{30*second}   \tab 30 seconds of angle \cr
