@@ -38,7 +38,9 @@ lm(formula, data, subset, weights, na.action,
     \code{\link{na.fail}} if that is unset. The ``factory-fresh''
     default is \code{\link{na.omit}}.}
 
-  \item{method}{currently, only \code{method="qr"} is supported.}
+  \item{method}{the method to be used; for fitting, currently only
+    \code{method="qr"} is supported; \code{method="model.frame"} returns
+    the model frame (the same as with \code{model = TRUE}, see below).}
 
   \item{model, x, y, qr}{logicals.  If \code{TRUE} the corresponding
     components of the fit (the model frame, the model matrix, the
@@ -105,7 +107,7 @@ lm(formula, data, subset, weights, na.action,
   \item{x}{if requested, the model matrix used.}
   \item{model}{if requested (the default), the model frame used.}
 
-  In addition, non-null fits will have components \code{assign}, 
+  In addition, non-null fits will have components \code{assign},
   \code{effects} and (unless not requested) \code{qr} relating to the linear
   fit, for use by extractor functions such as \code{summary} and
   \code{\link{effects}}.
@@ -146,5 +148,9 @@ summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 plot(lm.D9, las = 1)      # Residuals, Fitted, ...
 par(opar)
+
+## model frame :
+stopifnot(identical(lm(weight ~ group, method = "model.frame"),
+                    model.frame(lm.D9)))
 }
 \keyword{regression}

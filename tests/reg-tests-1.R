@@ -437,6 +437,7 @@ stopifnot(typeof(res) == "double")
 e1 <- La.eigen(m <- matrix(1:9,3))
 stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
 
+
 ## Patrick Connelly 2001-01-22, prediction with offsets failed
 ## a simpler example
 counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
@@ -469,6 +470,17 @@ identical(b, bb)            # TRUE
 unique(c(NaN, bb))          #[1] NaN 0 1 2 3 NA
 stopifnot(identical(unique(c(NaN, b)), unique(c(NaN, bb))))
 ## 1.4.0 gives [1] NaN 0 1 2 NaN 3 NA   on most platforms
+
+## PR 1271  detach("package:base") crashes R.
+try(detach("package:base"))
+
+## reported by PD 2002-01-24
+Y <- matrix(rnorm(20), , 2)
+fit <- manova(Y ~ 1)
+fit # failed
+print(fit, intercept = TRUE)
+summary(fit) # failed
+summary(fit, intercept = TRUE)
 
 
 ## This example last: needed < 1.5.0 ##

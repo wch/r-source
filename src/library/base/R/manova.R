@@ -141,10 +141,9 @@ summary.manova <-
                 stats[ok, 5] <- pf(stats[ok, 2], stats[ok, 3], stats[ok, 4],
                                    lower.tail = FALSE)
 
-                x <- list(row.names = nmrows, SS = ss,
-                          Eigenvalues = eigs,
-                          stats = cbind(Df=df, stats=stats))
             }
+        x <- list(row.names = nmrows, SS = ss,
+                  Eigenvalues = eigs, stats = cbind(Df=df, stats=stats))
     } else x <- list(row.names = nmrows, SS = ss, Df = df)
     class(x) <- "summary.manova"
     x
