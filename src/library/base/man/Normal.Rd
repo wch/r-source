@@ -10,9 +10,9 @@
   and standard deviation equal to \code{sd}.
 }
 \usage{
-dnorm(x, mean=0, sd=1)
-pnorm(q, mean=0, sd=1)
-qnorm(p, mean=0, sd=1)
+dnorm(x, mean=0, sd=1, log = FALSE)
+pnorm(q, mean=0, sd=1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean=0, sd=1, lower.tail = TRUE, log.p = FALSE)
 rnorm(n, mean=0, sd=1)
 }
 \arguments{
@@ -21,6 +21,9 @@ rnorm(n, mean=0, sd=1)
   \item{n}{number of observations.}
   \item{mean}{vector of means.}
   \item{sd}{vector of standard deviations.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dnorm} gives the density,
@@ -49,5 +52,15 @@ rnorm(n, mean=0, sd=1)
 dnorm(0) == 1/ sqrt(2*pi)
 dnorm(1) == exp(-1/2)/ sqrt(2*pi)
 dnorm(1) == 1/ sqrt(2*pi*exp(1))
+
+## Using "log = TRUE" for an extended range :
+par(mfrow=c(2,1))
+plot(function(x)dnorm(x, log=TRUE), -60, 50, main = "log { Normal density }")
+curve(log(dnorm(x)), add=TRUE, col="red",lwd=2)
+mtext("dnorm(x, log=TRUE)", adj=0); mtext("log(dnorm(x))", col="red", adj=1)
+
+plot(function(x)pnorm(x, log=TRUE), -50, 10, main = "log { Normal Cumulative }")
+curve(log(pnorm(x)), add=TRUE, col="red",lwd=2)
+mtext("pnorm(x, log=TRUE)", adj=0); mtext("log(pnorm(x))", col="red", adj=1)
 }
 \keyword{distribution}

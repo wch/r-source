@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,16 +35,22 @@ double dt(double x, double n)
     if (ISNAN(x) || ISNAN(n))
 	return x + n;
 #endif
-    if (n <= 0.0) {
+    if (n <= 0.) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
 #ifdef IEEE_754
+#define LOG (0)
     if(!R_FINITE(x))
 	return 0;
     if(!R_FINITE(n))
-	return dnorm(x, 0.0, 1.0);
+	return dnorm(x, 0.0, 1.0, LOG);
 #endif
-    return pow(1.0 + x * x / n, -0.5 * (n + 1.0))
-	/ (sqrt(n) * beta(0.5, 0.5 * n));
+    return pow(1. + x * x / n, -0.5 * (n + 1.)) / (sqrt(n) * beta(.5, .5 * n));
 }
+
+
+
+
+
+

@@ -128,7 +128,7 @@ double atanh(double);
 #undef HAVE_READLINE_HISTORY_H
 #undef HAVE_READLINE_READLINE_H
 
-/* Miscellaneous */ 
+/* Miscellaneous */
 #define HAVE_LOCALE_H 1
 #define HAVE_SYS_STAT_H 1
 #define HAVE_SYS_TYPES_H 1
@@ -213,8 +213,8 @@ double atanh(double);
 #define min(a,b)	(((a)<(b))?(a):(b))
 #endif
 /* P.D. */
-#define erf(x) 2*pnorm((x)*M_SQRT_2,0,1)-1
-#define erfc(x) 2*pnorm(-(x)*M_SQRT_2,0,1)
+#define erf(x)  2*pnorm( (x)*M_SQRT_2,0.,1., 1,0)-1
+#define erfc(x) 2*pnorm(-(x)*M_SQRT_2,0.,1., 1,0)
 #define gamma(x) gammafn(x)
 #define lgamma(x) lgammafn(x)
 

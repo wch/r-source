@@ -243,7 +243,7 @@ FUNTAB R_FunTab[] =
 
 {"gammaCody",	do_math1,	46,	11,	1,	PP_FUNCALL},
 
-/* Mathematical Functions of Two Numeric (+ 1 int) Variables */
+/* Mathematical Functions of Two Numeric (+ 1-2 int) Variables */
 
 {"atan2",	do_math2,	0,	11,	2,	PP_FUNCALL},
 
@@ -289,7 +289,7 @@ FUNTAB R_FunTab[] =
 {"abs",		do_cmathfuns,	6,	1,	1,	PP_FUNCALL},
 
 
-/* Mathematical Functions of Three Variables */
+/* Mathematical Functions of Three Numeric (+ 1-2 int) Variables */
 
 {"dbeta",	do_math3,	1,	11,	3,	PP_FUNCALL},
 {"pbeta",	do_math3,	2,	11,	3,	PP_FUNCALL},
@@ -311,9 +311,9 @@ FUNTAB R_FunTab[] =
 {"pgamma",	do_math3,	14,	11,	3,	PP_FUNCALL},
 {"qgamma",	do_math3,	15,	11,	3,	PP_FUNCALL},
 
-{"dlnorm",	do_math3,	16,	11,	3,	PP_FUNCALL},
-{"plnorm",	do_math3,	17,	11,	3,	PP_FUNCALL},
-{"qlnorm",	do_math3,	18,	11,	3,	PP_FUNCALL},
+{"dlnorm",	do_math3,	16,	11,	3+1,	PP_FUNCALL},
+{"plnorm",	do_math3,	17,	11,	3+2,	PP_FUNCALL},
+{"qlnorm",	do_math3,	18,	11,	3+2,	PP_FUNCALL},
 
 {"dlogis",	do_math3,	19,	11,	3,	PP_FUNCALL},
 {"plogis",	do_math3,	20,	11,	3,	PP_FUNCALL},
@@ -323,9 +323,9 @@ FUNTAB R_FunTab[] =
 {"pnbinom",	do_math3,	23,	11,	3,	PP_FUNCALL},
 {"qnbinom",	do_math3,	24,	11,	3,	PP_FUNCALL},
 
-{"dnorm",	do_math3,	25,	11,	3,	PP_FUNCALL},
-{"pnorm",	do_math3,	26,	11,	3,	PP_FUNCALL},
-{"qnorm",	do_math3,	27,	11,	3,	PP_FUNCALL},
+{"dnorm",	do_math3,	25,	11,	3+1,	PP_FUNCALL},
+{"pnorm",	do_math3,	26,	11,	3+2,	PP_FUNCALL},
+{"qnorm",	do_math3,	27,	11,	3+2,	PP_FUNCALL},
 
 {"dunif",	do_math3,	28,	11,	3,	PP_FUNCALL},
 {"punif",	do_math3,	29,	11,	3,	PP_FUNCALL},
@@ -350,7 +350,7 @@ FUNTAB R_FunTab[] =
 {"besselI",	do_math3,	43,	11,	3,	PP_FUNCALL},
 {"besselK",	do_math3,	44,	11,	3,	PP_FUNCALL},
 
-/* Mathematical Functions of Four Variables */
+/* Mathematical Functions of Four Numeric (+ 1-2 int) Variables */
 
 {"dhyper",	do_math4,	1,	11,	4,	PP_FUNCALL},
 {"phyper",	do_math4,	2,	11,	4,	PP_FUNCALL},

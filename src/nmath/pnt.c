@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka and the R Development Core Team
+ *  Copyright (C) 2000 The R Development Core Team
  *  based on AS243 (C) 1989 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -158,7 +159,9 @@ double pnt(double t, double df, double delta)
 	ML_ERROR(ME_PRECISION);
     }
  finis:
-    tnc += pnorm(- del, zero, one);
+#define LOWER (1)
+#define LOG_P (0)
+    tnc += pnorm(- del, zero, one, LOWER, LOG_P);
     if (negdel)
 	tnc = one - tnc;
     return tnc;

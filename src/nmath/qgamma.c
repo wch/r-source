@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *  based on AS91 (C) 1979 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -95,7 +96,9 @@ double qgamma(double p, double alpha, double scale)
 
     } else if(v > 0.32) {	/*  using Wilson and Hilferty estimate */
 
-	x = qnorm(p, 0, 1);
+#define LOWER (1)
+#define LOG_P (0)
+	x = qnorm(p, 0, 1, LOWER, LOG_P);
 	p1 = 0.222222/v;
 	ch = v*pow(x*sqrt(p1)+1-p1, 3);
 

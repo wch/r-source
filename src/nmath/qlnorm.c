@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qlnorm(double x, double logmean, double logsd);
- *
  *  DESCRIPTION
  *
  *    This the lognormal quantile function.
@@ -28,17 +24,16 @@
 
 #include "Mathlib.h"
 
-double qlnorm(double x, double logmean, double logsd)
+double qlnorm(double p, double logmean, double logsd, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
-	return x + logmean + logsd;
+    if (ISNAN(p) || ISNAN(logmean) || ISNAN(logsd))
+	return p + logmean + logsd;
 #endif
-    if(x < 0 || x > 1 || logsd <= 0) {
-        ML_ERROR(ME_DOMAIN);
-        return ML_NAN;
-    }
-    if (x == 1) return ML_POSINF;
-    if (x > 0) return exp(qnorm(x, logmean, logsd));
+    R_Q_P01_check(p);
+
+    if (p == R_DT_1)	return ML_POSINF;
+    if (R_DT_qIv(p) > 0)
+	return exp(qnorm(p, logmean, logsd, lower_tail, log_p));
     return 0;
 }

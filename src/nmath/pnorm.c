@@ -19,10 +19,10 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *   #include "Mathlib.h"
  *
- *    double pnorm  (double x, double mu, double sigma, int upper, int log_p);
- *    void   pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p);
+ *   double pnorm (double x, double mu, double sigma, int lower_tail,int log_p);
+ *   void   pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p);
  *
  *  DESCRIPTION
  *
@@ -44,20 +44,7 @@
  */
 
 #include "Mathlib.h"
-/* for the moment : */
-void   pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p);
-
-#ifdef FUTURE
-
-double pnorm(double x, double mu, double sigma, int upper, int log_p)
-
-#else
-
-const int upper = 0;
-const int log_p = 0;
-double pnorm(double x, double mu, double sigma)
-
-#endif
+double pnorm(double x, double mu, double sigma, int lower_tail, int log_p)
 {
     double p, cp;
 
@@ -68,22 +55,20 @@ double pnorm(double x, double mu, double sigma)
     if(ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
 	return x + mu + sigma;
 #endif
-    if (sigma < 0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (sigma < 0) { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+
     x = (x - mu) / sigma;
 #ifdef IEEE_754
     if(!R_FINITE(x)) {
 	if(ISNAN(x)) /* e.g. x=mu=Inf */ return(R_NaN);
-	if(x < 0) return 0;
-	else return 1;
+	if(x < 0) return R_DT_0;
+	else return R_DT_1;
     }
 #endif
 
-    pnorm_2(x, &p, &cp, (int)(upper ? 1 : 0), (int)log_p);
+    pnorm_2(x, &p, &cp, (lower_tail ? 0 : 1), log_p);
 
-    return(upper ? cp : p);
+    return(lower_tail ? p : cp);
 }
 
 #define SIXTEN	1.6	/* Magic Cutoff */
@@ -147,12 +132,13 @@ void pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p)
     if(ISNAN(x)) { *cum = *ccum = x; return; }
 #endif
 
+    /* Consider changing these : */
     eps = DBL_EPSILON * 0.5;
     min = DBL_MIN;
 
     /* i_tail in {0,1,2} means: "lower","upper","both" */
     lower = i_tail != 1;
-    upper = !i_tail;
+    upper = i_tail != 0;
 
     y = fabs(x);
     if (y <= 0.66291) {
@@ -175,7 +161,7 @@ void pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p)
     }
     else if (y <= M_SQRT_32) {
 
-	/* Evaluate pnorm for 0.66291 < |x| <= sqrt(32) */
+	/* Evaluate pnorm for 0.66291 < |x| <= sqrt(32) ~= 5.657 */
 
 	xnum = c[8] * y;
 	xden = y;
@@ -208,7 +194,7 @@ void pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p)
     }
     else if(y < 50) {
 
-	/* Evaluate pnorm for sqrt(32) < |x| < 50 */
+	/* Evaluate pnorm for  5.657 ~= sqrt(32) < |x| < 50 */
 
 	xsq = 1.0 / (x * x);
 	xnum = p[5] * xsq;
@@ -246,3 +232,8 @@ void pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p)
     }
     return;
 }
+
+
+
+
+

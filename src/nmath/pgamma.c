@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 1999 The R Development Core Team
+ *  Copyright (C) 2000 The R Development Core Team
  *  based on AS 239 (C) 1988 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -89,7 +90,9 @@ double pgamma(double x, double alph, double scale)
 
     if (alph > alphlimit) {
 	pn1 = sqrt(alph) * 3. * (pow(x/alph, 1./3.) + 1. / (9. * alph) - 1.);
-	return pnorm(pn1, 0., 1.);
+#define LOWER (1)
+#define LOG_P (0)
+	return pnorm(pn1, 0., 1., LOWER, LOG_P);
     }
 
     /* if x is extremely large __compared to alph__ then return 1 */

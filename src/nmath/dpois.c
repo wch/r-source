@@ -16,18 +16,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double dpois(double x, double lambda)
- *
  *  DESCRIPTION
  *
  *    The density function of the Poisson distribution.
  */
 
 #include "Mathlib.h"
-#define log_p give_log
 
 double dpois(double x, double lambda, int give_log)
 {

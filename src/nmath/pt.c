@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,16 +36,20 @@ double pt(double x, double n)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
+#define LOWER (1)
+#define LOG_P (0)
+
 #ifdef IEEE_754
     if(!R_FINITE(x))
 	return (x < 0) ? 0 : 1;
     if(!R_FINITE(n))
-	return pnorm(x, 0.0, 1.0);
+	return pnorm(x, 0.0, 1.0, LOWER, LOG_P);
 #endif
     if (n > 4e5) { /*-- Fixme(?): test should depend on `n' AND `x' ! */
 	/* Approx. from	 Abramowitz & Stegun 26.7.8 (p.949) */
 	val = 1./(4.*n);
-	return pnorm(x*(1. - val)/sqrt(1. + x*x*2.*val), 0.0, 1.0);
+	return pnorm(x*(1. - val)/sqrt(1. + x*x*2.*val), 0.0, 1.0,
+		     LOWER, LOG_P);
     }
     val = 0.5 * pbeta(n / (n + x * x), n / 2.0, 0.5);
     return (x > 0.0) ? 1 - val : val;

@@ -237,21 +237,35 @@ void ml_error(int n);
 
 	/* Utilities for `dpq' handling (density/probability/quantile) */
 
-#define R_D__0 (log_p ? ML_NEGINF : 0.)
-#define R_D__1 (log_p ? 0. : 1.)
-#define R_DT_0 (lower_tail ? R_D__0 : R_D__1)
-#define R_DT_1 (lower_tail ? R_D__1 : R_D__0)
+/* give_log in "d";  log_p in "p" & "q" : */
+#define give_log log_p
+							/* "DEFAULT" */
+							/* --------- */
+#define R_D__0	(log_p ? ML_NEGINF : 0.)		/* 0 */
+#define R_D__1	(log_p ? 0. : 1.)			/* 1 */
+#define R_DT_0	(lower_tail ? R_D__0 : R_D__1)		/* 0 */
+#define R_DT_1	(lower_tail ? R_D__1 : R_D__0)		/* 1 */
 
-#define R_D_qIv(x)   (log_p	? exp(x) : x)	   /*  x  in qF(x,..) */
-#define R_D_val(x)   (log_p	? log(x) : x)	   /*  x  in pF(x,..) */
-#define R_D_exp(x)   (log_p	?  x	 : exp(x)) /* exp(x) */
+#define R_D_Lval(p)	(lower_tail ? p	 : 1. - p)	/*  p  */
+#define R_D_Cval(p)	(lower_tail ? 1. - p : p )	/*  1 - p */
 
-#define R_DT_val(x)  R_D_val(lower_tail ? x	 : 1. - x) /*  x  */
-#define R_DT_qIv(x)  R_D_qIv(lower_tail ? x	 : 1. - x) /*  x  */
-#define R_DT_Cval(x) R_D_val(lower_tail ? 1. - x : x)	   /*  1 - x */
-#define R_DT_CIv(x)  R_D_qIv(lower_tail ? 1. - x : x)	   /*  1 - x */
-#define R_DT_exp(x)  R_D_exp(lower_tail ? x	 : 1. - x) /* exp(x) */
-#define R_DT_Cexp(x) R_D_exp(lower_tail ? 1. - x : x)	   /* exp(1 - x) */
+#define R_D_val(x)	(log_p	? log(x) : x)		/*  x  in pF(x,..) */
+#define R_D_qIv(p)	(log_p	? exp(p) : p)		/*  p  in qF(p,..) */
+#define R_D_exp(x)	(log_p	?  x	 : exp(x))	/* exp(x) */
+
+#define R_DT_val(x)	R_D_val(R_D_Lval(x))		/*  x  in pF */
+#define R_DT_qIv(p)	R_D_qIv(R_D_Lval(p))		/*  p  in qF */
+#define R_DT_Cval(x)	R_D_val(R_D_Cval(x))		/*  1 - x */
+#define R_DT_CIv(x)	R_D_qIv(R_D_Cval(x))		/*  1 - x */
+#define R_DT_exp(x)	R_D_exp(R_D_Lval(x))		/* exp(x) */
+#define R_DT_Cexp(x)	R_D_exp(R_D_Cval(x))		/* exp(1 - x) */
+
+#define R_Q_P01_check(p)			\
+    if ((log_p  && p > 0) ||			\
+	(!log_p && (p < 0 || p > 1)) ) {	\
+	ML_ERROR(ME_DOMAIN);			\
+	return ML_NAN;				\
+    }
 
 
 	/* R's version of C functions: */
@@ -329,10 +343,11 @@ double	lbeta(double, double);
 
 	/* Normal Distribution */
 
-double	dnorm(double, double, double);
-double	pnorm(double, double, double);
-double	qnorm(double, double, double);
+double	dnorm(double, double, double, int);
+double	pnorm(double, double, double, int, int);
+double	qnorm(double, double, double, int, int);
 double	rnorm(double, double);
+void    pnorm_2(double, double *, double *, int, int);/* both tails */
 
 	/* Uniform Distribution */
 
@@ -358,9 +373,9 @@ double	rbeta(double, double);
 
 	/* Lognormal Distribution */
 
-double	dlnorm(double, double, double);
-double	plnorm(double, double, double);
-double	qlnorm(double, double, double);
+double	dlnorm(double, double, double, int);
+double	plnorm(double, double, double, int, int);
+double	qlnorm(double, double, double, int, int);
 double	rlnorm(double, double);
 
 	/* Chi-squared Distribution */

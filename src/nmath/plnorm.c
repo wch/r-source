@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double plnorm(double x, double logmean, double logsd);
- *
  *  DESCRIPTION
  *
  *    The lognormal distribution function.
@@ -28,7 +24,7 @@
 
 #include "Mathlib.h"
 
-double plnorm(double x, double logmean, double logsd)
+double plnorm(double x, double logmean, double logsd, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
@@ -39,6 +35,6 @@ double plnorm(double x, double logmean, double logsd)
         return ML_NAN;
     }
     if (x > 0)
-	return pnorm(log(x), logmean, logsd);
+	return pnorm(log(x), logmean, logsd, lower_tail, log_p);
     return 0;
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,8 +29,8 @@
  *  NOTES
  *
  *    This is a C translation of the Fortran routine given in:
- *    Algorithm 396: Student's t-quantiles by G.W. Hill
- *    CACM 13(10), 619-620, October 1970
+ *    Algorithm 396: Student's t-quantiles by
+ *	G.W. Hill CACM 13(10), 619-620, October 1970
  */
 
 #include "Mathlib.h"
@@ -60,7 +61,9 @@ double qt(double p, double ndf)
 	 * -----  and in fact should be replaced by
 	 * something like Abramowitz & Stegun 26.7.5 (p.949)
 	 */
-	if (ndf > 1e20) return qnorm(p, 0.0, 1.0);
+#define LOWER (1)
+#define LOG_P (0)
+	if (ndf > 1e20) return qnorm(p, 0., 1., LOWER, LOG_P);
 
 	if(p > 0.5) {
 		neg = 0; P = 2 * (1 - p);
@@ -87,12 +90,13 @@ double qt(double p, double ndf)
 
 		if (y > 0.05 + a) {
 			/* Asymptotic inverse expansion about normal */
-			x = qnorm(0.5 * P, 0.0, 1.0);
+			x = qnorm(0.5 * P, 0.0, 1.0, LOWER, LOG_P);
 			y = x * x;
 			if (ndf < 5)
-				c = c + 0.3 * (ndf - 4.5) * (x + 0.6);
+				c += 0.3 * (ndf - 4.5) * (x + 0.6);
 			c = (((0.05 * d * x - 5) * x - 7) * x - 2) * x + b + c;
-			y = (((((0.4 * y + 6.3) * y + 36) * y + 94.5) / c - y - 3) / b + 1) * x;
+			y = (((((0.4 * y + 6.3) * y + 36) * y + 94.5) / c
+			      - y - 3) / b + 1) * x;
 			y = a * y * y;
 			if (y > 0.002)
 				y = exp(y) - 1;

@@ -41,21 +41,19 @@
 
 #include "Mathlib.h"
 
-
-double qnorm(double p, double mu, double sigma)
+double qnorm(double p, double mu, double sigma, int lower_tail, int log_p)
 {
-    double q, r, val;
+    double p_, q, r, val;
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
 	return p + mu + sigma;
 #endif
-    if (p < 0.0 || p > 1.0) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    R_Q_P01_check(p);
+    if(sigma < 0) { ML_ERROR(ME_DOMAIN); return ML_NAN; }
 
-    q = p - 0.5;
+    p_ = R_DT_qIv(p);/* real lower_tail prob. p */
+    q = p_ - 0.5;
 
     if (fabs(q) <= 0.42) {
 
@@ -71,12 +69,15 @@ double qnorm(double p, double mu, double sigma)
 
 	/* p < 0.08 or p > 0.92, set r = min(p, 1 - p) */
 
-	r = p;
-	if (q > 0.0)
-	    r = 1.0 - p;
+	if (q > 0)
+	    r = R_DT_CIv(p);/* 1-p */
+	else
+	    r = p_;/* p */
 
 	if(r > DBL_EPSILON) {
-	    r = sqrt(-log(r));
+	    r = sqrt(- (log_p
+			?(q > 0. ? R_D_Cval(p) : R_D_Lval(p))
+			:/*normal*/ log(r)));
 	    val = (((2.32121276858 * r + 4.85014127135) * r
 		    - 2.29796479134) * r - 2.78718931138)
 		/ ((1.63706781897 * r + 3.54388924762) * r + 1.0);
@@ -84,7 +85,7 @@ double qnorm(double p, double mu, double sigma)
 		val = -val;
 	}
 	else if(r >= DBL_MIN) { /* r = p <= eps : Use Wichura */
-	    val = -2 * log(p);
+	    val = -2 * (log_p ? R_D_Lval(p) : log(R_D_Lval(p)));
 	    r = log(2 * M_PI * val);
 	    p = val * val;
 	    r = r/val + (2 - r)/p + (-14 + 6 * r - r * r)/(2 * p * val);
@@ -99,6 +100,18 @@ double qnorm(double p, double mu, double sigma)
 	    else 	return ML_POSINF;
 	}
     }
-    val = val - (pnorm(val, 0.0, 1.0) - p) / dnorm(val, 0.0, 1.0);
+/* FIXME: This should be improved when log_p or !lower_tail!
+ *	  "Problem": different derivative !
+ */
+#define LOWER (1)
+#define LOG (0)
+
+    /* Final Newton step: */
+    val = val -
+	(pnorm(val, 0., 1., LOWER, LOG) - p_) /
+	 dnorm(val, 0., 1., LOG);
     return mu + sigma * val;
 }
+
+
+

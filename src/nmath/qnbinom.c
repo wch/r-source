@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,7 +66,9 @@ double qnbinom(double x, double n, double p)
     mu = n * P;
     sigma = sqrt(n * P * Q);
     gamma = (Q + P)/sigma;
-    z = qnorm(x, 0.0, 1.0);
+#define LOWER (1)
+#define LOG_P (0)
+    z = qnorm(x, 0.0, 1.0, LOWER, LOG_P);
     y = floor(mu + sigma * (z + gamma * (z*z - 1.0) / 6.0) + 0.5);
 
     z = pnbinom(y, n, p);

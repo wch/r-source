@@ -17,11 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double qpois(double x, double lambda)
- *
  *  DESCRIPTION
  *
  *    The quantile function of the Poisson distribution.
@@ -37,55 +32,43 @@
 
 #include "Mathlib.h"
 
-double qpois(double x, double lambda, int lower_tail, int log_p)
+double qpois(double p, double lambda, int lower_tail, int log_p)
 {
     double mu, sigma, gamma, z, y;
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(lambda))
-	return x + lambda;
+    if (ISNAN(p) || ISNAN(lambda))
+	return p + lambda;
     if(!R_FINITE(lambda)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
 #endif
-    if(lambda <= 0 ||
-       (log_p  && x > 0) ||
-       (!log_p && (x < 0 || x > 1)) ) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
-    if (x == R_D__0) return 0;
+    R_Q_P01_check(p);
+    if(lambda <= 0) { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+
+    if (p == R_DT_0) return 0;
 #ifdef IEEE_754
-    if (x == R_D__1) return ML_POSINF;
+    if (p == R_DT_1) return ML_POSINF;
 #endif
     mu = lambda;
     sigma = sqrt(lambda);
     gamma = sigma;
-#ifdef DPQ_NEW_NORM
-    z = qnorm(x, 0., 1., lower_tail, log_p);
-#else
-    z = qnorm(R_DT_qIv(x), 0., 1.);
-#endif
+    z = qnorm(p, 0., 1., lower_tail, log_p);
+
     y = floor(mu + sigma * (z + gamma * (z * z - 1) / 6) + 0.5);
     z = ppois(y, lambda, lower_tail, log_p);
 
-    if(z >= x) {
-
-	/* search to the left */
-
+    if(z >= p) {	/* search to the left */
 	for(;;) {
-	    if((z = ppois(y - 1, lambda, lower_tail, log_p)) < x)
+	    if((z = ppois(y - 1, lambda, lower_tail, log_p)) < p)
 		return y;
 	    y = y - 1;
 	}
     }
-    else {
-
-	/* search to the right */
-
+    else {		/* search to the right */
 	for(;;) {
 	    y = y + 1;
-	    if((z = ppois(y, lambda, lower_tail, log_p)) >= x)
+	    if((z = ppois(y, lambda, lower_tail, log_p)) >= p)
 		return y;
 	}
     }
