@@ -74,34 +74,33 @@ print.coefmat <-
     k <- d[2] - (if(missing(tst.ind)) 1 else length(tst.ind)) - has.Pvalue
     ##if(!missing(cs.ind)) && length(cs.ind) > k) stop("wrong k / cs.ind")
 
-    Coefs <- array("", dim=d, dimnames = dimnames(x))
+    Cf <- array("", dim=d, dimnames = dimnames(x))
     if(length(cs.ind)>0) {
 	acs <- abs(coef.se <- x[, cs.ind, drop=FALSE])# = abs(coef. , stderr)
 	## #{digits} BEFORE decimal point -- for min/max. value:
 	digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
-	Coefs[, cs.ind] <- format(round(coef.se,max(1,digits-digmin)),digits=digits)
+	Cf[,cs.ind] <- format(round(coef.se,max(1,digits-digmin)),digits=digits)
     }
     if(length(tst.ind)>0)
-	Coefs[, tst.ind]<- format(round(x[, tst.ind], dig=dig.tst), digits=digits)
+	Cf[, tst.ind]<- format(round(x[, tst.ind], dig=dig.tst), digits=digits)
     if(length(zap.ind)>0)
-	Coefs[, zap.ind]<- format(zapsmall(x[, zap.ind], dig=digits), digits=digits)
-    if(has.Pvalue)
-	Coefs[, d[2]] <- format.pval(x[, d[2]], digits = dig.tst)
-    if(any(r.ind <- !(1:(k+1) %in% c(cs.ind, tst.ind, zap.ind)))) # Remaining ind.
-	Coefs[, r.ind] <- format(x[, r.ind], digits=digits)
-    if(any(not.both.0 <- (c(x)==0)!=(as.numeric(Coefs)==0),na.rm=TRUE)) {
-	## not.both.0==TRUE:  x !=0, but Coefs[] is: --> fix these:
-	Coefs[not.both.0] <- format(x[not.both.0], digits= max(1,digits-1))
+	Cf[, zap.ind]<- format(zapsmall(x[, zap.ind], dig=digits),digits=digits)
+    if(any(r.ind <- !(1:(k+1) %in% c(cs.ind, tst.ind, zap.ind))))#Remaining ind.
+	Cf[, r.ind] <- format(x[, r.ind], digits=digits)
+    if(any((not.both.0 <- (c(x)==0)!=(as.numeric(Cf)==0)),na.rm=TRUE)) {
+	## not.both.0==TRUE:  x !=0, but Cf[] is: --> fix these:
+	Cf[not.both.0] <- format(x[not.both.0], digits= max(1,digits-1))
     }
-    if(!has.Pvalue)
-	signif.stars <- FALSE
-    else if(signif.stars) {
-	Signif <- symnum(x[, d[2]], corr = FALSE,
-			 cutpoints = c(0,  .001,.01,.05, .1, 1),
-			 symbols   =  c("***","**","*","."," "))
-	Coefs <- cbind(Coefs, Signif)
-    }
-    print(Coefs, quote = FALSE, right = TRUE, ...)
+    if(has.Pvalue) {
+	Cf[, d[2]] <- format.pval(x[, d[2]], digits = dig.tst)
+        if(signif.stars) {
+            Signif <- symnum(x[, d[2]], corr = FALSE,
+                             cutpoints = c(0,  .001,.01,.05, .1, 1),
+                             symbols   =  c("***","**","*","."," "))
+            Cf <- cbind(Cf, Signif)
+        }
+    } else signif.stars <- FALSE
+    print(Cf, quote = FALSE, right = TRUE, ...)
     if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
     invisible(x)
 }
