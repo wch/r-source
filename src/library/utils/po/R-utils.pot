@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-27 15:46\n"
+"POT-Creation-Date: 2005-03-01 10:14\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -621,6 +621,9 @@ msgid "malformed bundle DESCRIPTION file, no Contains field"
 msgstr ""
 
 msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+
+msgid "failed to create '%s'"
 msgstr ""
 
 msgid "unable to move temp installation '%d' to '%s'"
