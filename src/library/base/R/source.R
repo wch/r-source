@@ -14,10 +14,13 @@ function(file, local=FALSE, echo = debug, print.eval=echo, debug=FALSE,
 	  cat("\n>>>> eval(expression_nr.",i,")\n\t  =================\n")
 	ei <- exprs[i]
 	if(echo) {
-		dep <- paste(deparse(ei), collapse="\n")
-		if(nchar(dep) > max.deparse.length)
-			dep <- paste(substr(dep, 1, max.deparse.length),
-				     " .... [TRUNCATED] ")
+		dep <- substr(paste(deparse(ei), collapse="\n"),
+                              12, 1e6)# drop "expression("
+                nd <- nchar(dep) -1 # -1: drop ")"
+                do.trunc <- nd > max.deparse.length
+		dep <- paste(substr(dep, 1,
+                                    if(do.trunc)max.deparse.length else nd),
+                             if(do.trunc)" .... [TRUNCATED] ")
 		cat("\n> ", dep, "\n", sep="")
 	}
 	yy <- eval(ei, envir)
