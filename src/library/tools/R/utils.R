@@ -141,7 +141,9 @@ function(file, pdf = FALSE, clean = FALSE,
             texi2dvi <- "texi2dvi"
     }
 
-    yy <- system(paste(texi2dvi, quiet, pdf, clean, file))
+    yy <- system(paste(.shell_quote(texi2dvi),
+                       quiet, pdf, clean,
+                       .shell_quote(file)))
     if(yy > 0) stop(paste("running texi2dvi on", file, "failed"))
 }
 
@@ -447,6 +449,21 @@ function(dfile)
     if(inherits(db, "try-error"))
         stop(paste("file", sQuote(dfile), "is not in valid DCF format"))
     db
+}
+
+### ** .shell_quote
+
+.shell_quote <-
+function(x)
+{
+    ## Quote elements of a character vector x for passing them to a
+    ## (Bourne) shell.
+    ## Currently only does simple single quoting (so that embedded
+    ## whitespace is taken care of).
+    ## <FIXME>
+    ## We already have utils::shQuote() which is much better ...
+    sQuote(x)
+    ## </FIXME>
 }
     
 ### ** .source_assignments
