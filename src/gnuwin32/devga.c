@@ -18,6 +18,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*--- Device Driver for Windows; this file started from
+ *  ../unix/devX11.c --
+ */
 #ifdef HAVE_CONFIG_H
 #include <Rconfig.h>
 #endif
@@ -119,9 +122,6 @@ typedef struct {
 	/* creates a new device of this type			*/
 	/********************************************************/
 
-	/* Device Driver Entry Point */
-
-int   X11DeviceDriver(DevDesc *, char *, double, double, double);
 
 	/********************************************************/
 	/* There are a number of actions that every device 	*/
@@ -223,11 +223,6 @@ static void SaveAsWin(DevDesc *dd, char *display)
         PrivateCopyDevice(dd,ndd,display);
 }
     
-
-int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
-		   char *bg, char *fg,
-		   double width, double height,
-		   double horizontal, double ps);
 
 static void SaveAsPostscript(DevDesc *dd, char *fn)
 {
@@ -1276,7 +1271,7 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 	/* this is not usually called directly by the graphics	*/
 	/* engine because the detection of device resizes	*/
 	/* (e.g., a window resize) are usually detected by	*/
-	/* device-specific code	(see ProcessEvents in this file)*/
+	/* device-specific code	(see ProcessEvents in ./system.c)*/
 	/********************************************************/
 
 
@@ -1623,8 +1618,6 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/********************************************************/
 
 
-/*static double deg2rad = 0.01745329251994329576;*/
-
 static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
@@ -1638,7 +1631,7 @@ static void X11_Text(double x, double y, int coords,
     pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
     xl = xc * X11_StrWidth(str, dd);
     yl = yc * GConvertYUnits(1, CHARS, DEVICE, dd) - pixs;
-    rot1 = rot * 0.01745329251994329576;
+    rot1 = rot * DEG2RAD;
     x += -xl * cos(rot1) + yl * sin(rot1);
     y -= -xl * sin(rot1) - yl * cos(rot1);
     SetFont(dd->gp.font, size, rot, dd);
