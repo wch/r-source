@@ -48,6 +48,212 @@ unsigned char Lat2Mac[] = {
 148, 149,  32, 150, 152, 151, 153, 155, 154, 214, 
 191, 157, 156, 158, 159,  32,  32, 216};
 
+#define MAX_NON_SYMBS 17
+unsigned char NotSymbols[] = {
+ 32, 33, 37, 38, 40, 41, 42, 43, 44, 58, 
+ 60, 61, 62, 91, 93, 95, 123, 125
+};
+
+/* conversion table to use symbol font enoded as
+   unicode under MacOSX and no longer MacRoman
+*/
+unsigned char Lat2Uni[] = { 
+    32, /* space */
+	33, /* exclam */
+    34, /* universal" */
+	35, /* numbersign */
+   154, /* existential */
+	37, /* percent */
+	38, /* ampersand */
+	39, /* suchthat */
+    40, /* parenleft */
+    41, /* parenright */
+   155, /* asteriskmath */
+	 3, /* plus */
+	44, /* comma */
+	60, /* minus */
+	46, /* period */
+	58, /* slash*/
+	48, /* 0 */
+	49, /* 1 */
+	50, /* 2 */
+	51, /* 3 */
+	52, /* 4 */
+	53, /* 5 */
+	54, /* 6 */
+	55, /* 7 */
+	56, /* 8 */
+	57, /* 9 */
+    58, /* colon */
+	59, /* semicolon */
+	60, /* less */
+	62, /* equal */
+	62, /* greater */
+	63, /* question */
+   129, /* congruent */
+    73, /* Alpha */
+	74, /* Beta */
+	93, /* Chi */
+	54, /* Delta */
+	76, /* Epsilon */
+	92, /* Phi */
+	75, /* Gamma */
+	78, /* Eta */
+	80, /* Iota */
+	85, /* theta1 */
+	81, /* Kappa */
+	82, /* Lambda */
+	83, /* Mu */
+	84, /* Nu */
+	86, /* Omicron */
+	87, /* Pi */
+	79, /* Theta */
+	88, /* Rho */
+	89, /* Sigma */
+	90, /* Tau */
+	91, /* Upsilon */
+	45, /* sigma1 */
+	49, /* Omega */
+	93, /* Xi */
+	94, /* Psi */
+	77, /* Zeta */
+	33, /* bracketleft */  /* Miscellaneous Special Characters */
+    92, /* therefore */
+	35, /* bracketright */
+   140, /* perpendicular */
+	32, /* underscore */
+	51, /* radicalex */
+ 95, /* alpha */
+ 96, /* beta */
+114, /* chi */
+ 98, /* delta */
+ 161, /* epsilon */
+ 113, /* phi */
+ 97, /* gamma */
+ 100, /* eta */
+ 102, /* iota */
+ 160, /* phi1 */
+ 103, /* kappa */
+ 104, /* lambda */
+  43, /* mu */
+ 105, /* nu */
+ 107, /* omicron */
+ 47, /* pi */
+ 101, /* theta */
+ 108, /* rho */
+ 109, /* sigma */
+ 111, /* tau */
+ 112, /* upsilon */
+ 159, /* omega1 */
+ 116, /* omega */
+ 106, /* xi */
+ 115, /* psi */
+ 110, /* zeta */
+ 123, /* braceleft */
+ 180, /* bar */
+ 125, /* braceright */
+ 126, /* similar */
+ 32, 32, 32, 32, 
+ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+ 175, /* Upsilon1 */	/* Lone Greek */
+ 118, /* minute */
+  41, /* lessequal */
+ 177, /* fraction */
+  39, /* infinity */
+ 166, /* florin      ??? */
+ 121, /* club */
+ 122, /* diamond */
+ 120, /* heart */
+ 123, /* spade */
+  67, /* arrowboth */
+  64, /* arrowleft */
+  66, /* arrowup */
+  65, /* arrowright */
+  63, /* arrowdown */
+  36, /* degree */
+  40, /* plusminus */
+ 119, /* second */
+  42, /* greaterequal */
+ 155, /* multiply */
+ 124, /* proportional */
+  44, /* partialdiff */
+  20, /* bullet */
+  56, /* divide */
+  38, /* notequal */
+  62, /* equivalence */
+  53, /* approxequal ??? */
+  55, /* ellipsis    ??? */
+ 189, /* arrowvertex ??? */ 
+ 190, /* arrowhorizex ??? */
+ 191, /* carriagereturn */
+ 148, /* aleph */
+ 188, /* Ifraktur */
+ 189, /* Rfraktur */
+ 195, /* weierstrass ??? */
+ 128, /* circlemultiply */
+ 127, /* circleplus */
+ 146, /* emptyset */
+  69, /* intersection */
+  70, /* union */
+ 130, /* propersuperset */
+ 131, /* reflexsuperset */
+ 134, /* notsubset */
+ 132, /* propersubset */
+ 133, /* reflexsubset */
+  68, /* element */
+ 141, /* notelement */
+ 144, /* angle */
+ 162, /* gradient */
+ 186, /* registerserif */
+ 185, /* copyrightserif */
+ 184, /* trademarkserif */
+  87, /* product */
+  51, /* radical */
+  46, /* dotmath */
+  32,
+ 217, /* logicaland ???*/
+ 218, /* logicalor ???*/
+ 139, /* arrowdblboth */
+ 136, /* arrowdblleft */
+ 138, /* arrowdblup */
+ 137, /* arrowdblright */
+ 135, /* arrowdbldown */
+  57, /* lozenge */
+ 225, /* angleleft ???*/
+ 183, /* registersans */
+ 182, /* copyrightsans */
+ 181, /* trademarksans */
+  89, /* summation */
+ 163, /* parenlefttp */
+ 179, /* parenleftex */
+ 164, /* parenleftbt */
+ 149, /* bracketlefttp */
+ 147, /* bracketleftex */
+ 150, /* bracketleftbt */
+ 168, /* bracelefttp */
+ 169, /* braceleftmid */
+ 170, /* braceleftbt */
+ 172, /* braceex */
+  32,
+ 241, /* angleright */
+  48, /* integral */
+  71, /* integraltp */
+ 180, /* integralex */
+  72, /* integralbt */
+ 165, /* parenrighttp */
+ 181, /* parenrightex */
+ 166, /* parenrightbt */
+ 151, /* bracketrighttp */
+ 166, /* bracketrightex */
+ 152, /* bracketrightbt */
+ 172, /* bracerighttp */
+ 173, /* bracerightmid */
+ 174, /* bracerightbt */
+ 255 /* NULL */
+};
+
 unsigned char Mac2Lat[] = { 
 196, 197, 199, 201, 209, 214, 220, 225, 224, 226, 
 228, 227, 229, 231, 233, 232, 234, 235, 237, 236, 
@@ -627,6 +833,9 @@ static double 	Quartz_StrWidth(char *str,
 
 
 
+/* This new version of Quartz_SetFont handles correctly the unicode encoding of
+   the Symbol font under Panther
+ */
 
 static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
 {
@@ -643,6 +852,7 @@ static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
     switch(style){
      case 5:
       strcpy(CurrFont,"Symbol");
+	  CGContextSelectFont( GetContext(xd), CurrFont, size,kCGEncodingFontSpecific);
      break;
 
      default:
@@ -650,16 +860,35 @@ static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
             strcpy(CurrFont,xd->family);
         else
             strcpy(CurrFont,"Helvetica");
+		    CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);	
      break;
     }
 
-    CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);
+/* This is needed for test only purposes 
+    if(strcmp(CurrFont,"Symbol")==0)
+     CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingFontSpecific);
+*/
     CopyCStringToPascal(CurrFont,CurrFontName);
     GetFNum(CurrFontName, &CurrFontId);
     TextSize(size);
     TextFont(CurrFontId);
     SetPort(savePort);
 }
+
+
+
+Boolean IsThisASymbol(unsigned char c);
+Boolean IsThisASymbol(unsigned char c){
+ int i;
+ for(i=0; i <  MAX_NON_SYMBS; i++){
+  if(c == NotSymbols[i])
+   return(false);
+  }
+     
+  return(true); 
+}
+
+/* This new version of Quartz_Text handles correctly the symbol font under Panther */
 
 
 static void 	Quartz_Text(double x, double y, char *str,
@@ -669,9 +898,10 @@ static void 	Quartz_Text(double x, double y, char *str,
 {
     int len,i;
     char *buf=NULL;
+	char symbuf;
     unsigned char tmp;
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
-
+	 
     CGContextSaveGState( GetContext(xd) );
     CGContextTranslateCTM( GetContext(xd), x, y );
 
@@ -686,9 +916,18 @@ static void 	Quartz_Text(double x, double y, char *str,
     Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
     len = strlen(str);
 
-    if(gc->fontface == 5)
-     CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, strlen(str) );
-    else {
+    if( (gc->fontface == 5) && (len==1) ){
+	   tmp = (unsigned char)str[0];
+       if(tmp>31)
+        symbuf = (char)Lat2Uni[tmp-31-1];
+	   else
+	    symbuf = str[0];
+       if( !IsThisASymbol(tmp) ){
+		 Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
+		 symbuf = str[0];
+       }
+     CGContextShowTextAtPoint( GetContext(xd), 0, 0, &symbuf, len );
+     } else {
      if( (buf = malloc(len)) != NULL){
       for(i=0;i <len;i++){
         tmp = (unsigned char)str[i];
@@ -703,6 +942,7 @@ static void 	Quartz_Text(double x, double y, char *str,
     }
     CGContextRestoreGState( GetContext(xd) );
 }
+
 
 
 static void 	Quartz_Rect(double x0, double y0, double x1, double y1,
@@ -1000,8 +1240,10 @@ static void 	Quartz_Hold(NewDevDesc *dd)
  return;
 }
 
-#define FixedToFloat(a)	((float)(a) / fixed1)
-#define FloatToFixed(a)	((Fixed)((float) (a) * fixed1))
+#if !defined(FixedToFloat)
+# define FixedToFloat(a)	((float)(a) / fixed1)
+# define FloatToFixed(a)	((Fixed)((float) (a) * fixed1))
+#endif
 
 static void 	Quartz_MetricInfo(int c, 
 				  R_GE_gcontext *gc,
@@ -1015,6 +1257,7 @@ static void 	Quartz_MetricInfo(int c,
     CGrafPtr savedPort;
     Rect bounds;
     CGPoint position;
+	unsigned char tmp;
 
     testo[0] = c;
     testo[1] = '\0';
@@ -1037,7 +1280,21 @@ static void 	Quartz_MetricInfo(int c,
     CGContextRotateCTM( GetContext(xd), -1.0 * 3.1416);
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextInvisible );
     Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+	
+	tmp = (unsigned char)c;
+    if( (gc->fontface == 5) ){
+       if( (tmp>31) && IsThisASymbol(tmp))
+        testo[0] = (char)Lat2Uni[tmp-31-1];
+       else	
+		Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
+	 } else {
+        if(tmp>127)
+         testo[0] = (char)Lat2Mac[tmp-127-1];
+     }	 
+
     CGContextShowTextAtPoint( GetContext(xd), 0, 0, testo, 1 );
+    
+	
     position = CGContextGetTextPosition( GetContext(xd) );
     CGContextRestoreGState( GetContext(xd) );
     
