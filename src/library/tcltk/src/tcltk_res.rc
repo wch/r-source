@@ -1,4 +1,4 @@
-#include <windows.h>
+ally#include <windows.h>
 #include "Rversion.h"
 
 VS_VERSION_INFO VERSIONINFO
@@ -12,7 +12,7 @@ BEGIN
     BEGIN
         BLOCK "040904E4"
         BEGIN
-            VALUE "FileDescription", "DLL for R package `lqs'\0"
+            VALUE "FileDescription", "DLL for R package `tcltk'\0"
             VALUE "FileVersion", "1.2.0\0"
             VALUE "Compiled under R Version", R_MAJOR "." R_MINOR " (" R_YEAR "-" R_MONTH "-" R_DAY ")\0"
             VALUE "Project info", "http://www.r-project.org\0"
