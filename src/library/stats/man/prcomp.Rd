@@ -1,6 +1,9 @@
 \name{prcomp}
 \alias{prcomp}
+\alias{prcomp.formula}
+\alias{prcomp.default}
 \alias{plot.prcomp}
+\alias{predict.prcomp}
 \alias{print.prcomp}
 \alias{summary.prcomp}
 \alias{print.summary.prcomp}
@@ -10,9 +13,26 @@
   Performs a principal components analysis on the given data matrix
   and returns the results as an object of class \code{prcomp}.}
 \usage{
-prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
+prcomp(x, \dots)
+
+\method{prcomp}{formula}(formula, data = NULL, subset, na.action, \dots)
+
+\method{prcomp}{default}(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, \dots)
 }
 \arguments{
+  \item{formula}{a formula with no response variable.}
+  \item{data}{an optional data frame containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
+  \item{subset}{an optional vector used to select rows (observations) of the
+    data matrix \code{x}.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contain \code{NA}s.  The default is set by
+    the \code{na.action} setting of \code{\link{options}}, and is
+    \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
+    default is \code{\link{na.omit}}.}
+  \item{\dots}{arguments passed to or from other methods. If \code{x} is
+    a formula one might specify \code{scale.} or \code{tol}.}
   \item{x}{a numeric or complex matrix (or data frame) which provides
     the data for the principal components analysis.}
   \item{retx}{a logical value indicating whether the rotated variables
@@ -49,6 +69,7 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   \item{x}{if \code{retx} is true the value of the rotated data (the
     centred (and scaled if requested) data multiplied by the
     \code{rotation} matrix) is returned.}
+  \item{center, scale}{the centering and scaling used, or \code{FALSE}.}
 }
 \details{
   The calculation is done by a singular value decomposition of the
@@ -84,6 +105,7 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 ## USArrests data vary by orders of magnitude, so scaling is appropriate
 prcomp(USArrests)  # inappropriate
 prcomp(USArrests, scale = TRUE)
+prcomp(~ Murder + Assault + Rape, data = USArrests, scale = TRUE)
 plot(prcomp(USArrests))
 summary(prcomp(USArrests, scale = TRUE))
 biplot(prcomp(USArrests, scale = TRUE))

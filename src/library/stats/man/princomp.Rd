@@ -22,8 +22,6 @@ princomp(x, \dots)
   \item{data}{an optional data frame containing the variables in the
     formula \code{formula}.  By default the variables are taken from
     \code{environment(formula)}.}
-  \item{x}{a numeric matrix or data frame which provides the data for the
-    principal components analysis.}
   \item{subset}{an optional vector used to select rows (observations) of the
     data matrix \code{x}.}
   \item{na.action}{a function which indicates what should happen
@@ -31,6 +29,8 @@ princomp(x, \dots)
     the \code{na.action} setting of \code{\link{options}}, and is
     \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.}
+  \item{x}{a numeric matrix or data frame which provides the data for the
+    principal components analysis.}
   \item{cor}{a logical value indicating whether the calculation should
     use the correlation matrix or the covariance matrix.}
   \item{scores}{a logical value indicating whether the score on each

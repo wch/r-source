@@ -163,6 +163,11 @@ NEW FEATURES
 
     o   power (x^y) has optimised code for y == 2.
 
+    o	prcomp() is now generic, with a formula method (based on an
+	idea of Jari Oksanen).
+
+	prcomp() now has a simple predict() method.
+
     o	rank() has two new 'ties.method's, "min" and "max".
 
     o	New function read.fortran() reads Fortran-style fixed-format
@@ -355,12 +360,12 @@ BUG FIXES
 	and more precise code, e.g. for phyper(59, 150,150, 60,	lower=FALSE).
 	This also fixes bug (PR#7064) about fisher.test().
 
+    o	print.default(*, gap = <n>) now in principle accepts all
+        non-negative values <n>.
+
     o	smooth.spline(...)$pen.crit had a typo in its computation;
 	note this was printed in print.smooth.spline(*) but not used in
 	other "smooth.spline" methods.
-
-    o	print.default(*, gap = <n>) now in principle accepts all
-        non-negative values <n>.
 
     o	write.table() handles zero-row and zero-column inputs correctly.
 
@@ -370,8 +375,9 @@ BUG FIXES
 	with(trees, Girth[1] < NA) altered 'trees' (and any copy of
 	'trees' too).
 
-    o   cor() could corrupt memory when standard deviation was 
-        zero (PR#7037)
+    o   cor() could corrupt memory when the standard deviation was 
+        zero. (PR#7037)
+
 
 
 	**************************************************
