@@ -17,7 +17,7 @@ if ${R_SAVE_IMAGE}; then
     fi
     R_PROFILE=./R_PROFILE.R
     export R_PROFILE
-    (echo "invisible(.libPaths(\"${lib}\"))"; \
+    (echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
       cat ${lib}/${pkg}/R/${pkg}) | ${R_HOME}/bin/Rterm --save --silent \
         || (echo "Execution of package source for ${pkg} failed"; exit 1)
     mv .RData ${lib}/${pkg}/R/all.rda
