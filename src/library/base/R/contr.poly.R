@@ -1,7 +1,8 @@
-# file contr.poly.R
-# copyright (C) 1998 W. N. Venables and B. D. Ripley
-#
-contr.poly <- function (n, contrasts = TRUE) 
+#### copyright (C) 1998 W. N. Venables and B. D. Ripley
+####
+#### copyright (C) 1998 The R Development Core Team.
+
+contr.poly <- function (n, contrasts = TRUE)
 {
   make.poly <- function(n)
     {
@@ -12,20 +13,20 @@ contr.poly <- function (n, contrasts = TRUE)
       z <- z *(row(z) == col(z))
       raw <- qr.qy(QR, z)
       Z <- sweep(raw, 2, apply(raw, 2, function(x) sqrt(sum(x^2))), "/")
-      dimnames(Z)[[2]] <- paste("^", 1:n)
+      dimnames(Z)[[2]] <- paste("^", 1:n - 1, sep="")
       Z
     }
   if (is.numeric(n) && length(n) == 1) levs <- 1:n
   else {
     levs <- n
-    n <- length(n)
+    n <- length(levs)
   }
-  if (n < 2) 
+  if (n < 2)
     stop(paste("Contrasts not defined for", n - 1, "degrees of freedom"))
   contr <- make.poly(n)
   if (contrasts) {
     dn <- dimnames(contr)[[2]]
-    dn[2:min(3,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]
+    dn[2:min(4,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]
     dimnames(contr)[[2]] <- dn
     contr[, -1, drop = FALSE]
   }
@@ -35,7 +36,7 @@ contr.poly <- function (n, contrasts = TRUE)
   }
 }
 
-# implemented by BDR 29 May 1998
+## implemented by BDR 29 May 1998
 poly <- function(x, degree=1)
 {
   if(is.matrix(x)) stop("poly is only implemented for vectors")
