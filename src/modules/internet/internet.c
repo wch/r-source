@@ -565,7 +565,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 {
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
-    char buf[101];
+    char buf[101], *p;
 
 /*	BOOL res = InternetAttemptConnect(0);
 
@@ -587,7 +587,8 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	             );
     if(!wictxt->hand) {
 	free(wictxt);
-	error("cannot open Internet connection");
+	/* error("cannot open Internet connection"); */
+	return NULL;
     }
 
 #ifdef USE_WININET_ASYNC
@@ -617,7 +618,8 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    error("InternetOpenUrl timed out");
+	    warning("InternetOpenUrl timed out");
+	    return NULL;
 	}
     }
 
@@ -638,7 +640,13 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	free(wictxt);
 	if (err1 == ERROR_INTERNET_EXTENDED_ERROR) {
 	    InternetGetLastResponseInfo(&err2, buf, &blen);
-	    error("InternetOpenUrl failed: `%s'", buf);
+	    /* some of these messages end in \r\n */
+	    while(1) {
+		p = buf + strlen(buf) - 1;
+		if(*p == '\n' || *p == '\r') *p = '\0'; else break;
+	    }
+	    warning("InternetOpenUrl failed: `%s'", buf);
+	    return NULL;
 	} else {
 	    FormatMessage( 
 		FORMAT_MESSAGE_FROM_HMODULE,
@@ -646,7 +654,13 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 		err1,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		buf, 101, NULL);
-	    error("InternetOpenUrl failed: `%s'", buf);
+	    /* some of these messages end in \r\n */
+	    while(1) {
+		p = buf + strlen(buf) - 1;
+		if(*p == '\n' || *p == '\r') *p = '\0'; else break;
+	    }
+	    warning("InternetOpenUrl failed: `%s'", buf);
+	    return NULL;
 	}
     }
 
@@ -660,7 +674,8 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	error("cannot open: HTTP status was `%d %s'", status, buf);
+	warning("cannot open: HTTP status was `%d %s'", status, buf);
+	return NULL;
     }
 
     HttpQueryInfo(wictxt->session,
@@ -730,7 +745,7 @@ static void *in_R_FTPOpen(const char *url)
 	             );
     if(!wictxt->hand) {
 	free(wictxt);
-	error("cannot open Internet connection");
+	return NULL;
     }
 
 #ifdef USE_WININET_ASYNC
@@ -759,7 +774,8 @@ static void *in_R_FTPOpen(const char *url)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    error("InternetOpenUrl timed out");
+	    warning("InternetOpenUrl timed out");
+	    return NULL;
 	}
     }
 
@@ -780,7 +796,8 @@ static void *in_R_FTPOpen(const char *url)
 	free(wictxt);
 	if (err1 == ERROR_INTERNET_EXTENDED_ERROR) {
 	    InternetGetLastResponseInfo(&err2, buf, &blen);
-	    error("InternetOpenUrl failed: `%s'", buf);
+	    warning("InternetOpenUrl failed: `%s'", buf);
+	    return NULL;
 	} else {
 	    FormatMessage( 
 		FORMAT_MESSAGE_FROM_HMODULE,
@@ -788,7 +805,8 @@ static void *in_R_FTPOpen(const char *url)
 		err1,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		buf, 101, NULL);
-	    error("InternetOpenUrl failed: `%s'", buf);
+	    warning("InternetOpenUrl failed: `%s'", buf);
+	    return NULL;
 	}
     }
 #endif /* USE_WININET_ASYNC */
