@@ -152,6 +152,10 @@ BUG FIXES
     o	boxplot()s with logarithmic scale in "width-direction" now have
         proper widths, i.e. typically constant.
 
+    o	Using GNU readline in asynchronous event callbacks (e.g. TclTk
+        or Gtk) works correctly, i.e. doesn't cause readline to abort
+        the process.
+
 
 
 	**************************************************
