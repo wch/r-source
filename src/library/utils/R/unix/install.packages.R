@@ -20,8 +20,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         for(i in 1:nrow(update)) {
-            cmd <- paste(cmd0, "-l", dQuote(update[i, 2]),
-                         dQuote(update[i, 1]))
+            cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
+                         shQuote(update[i, 1]))
             if(system(cmd) > 0)
                 warning("Installation of package ", sQuote(update[i, 1]),
                         " had non-zero exit status")
@@ -98,7 +98,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         for(i in 1:nrow(update)) {
-            cmd <- paste(cmd0, "-l", dQuote(update[i, 2]), update[i, 3])
+            cmd <- paste(cmd0, "-l", shQuote(update[i, 2]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
                 warning("Installation of package ", sQuote(update[i, 1]),

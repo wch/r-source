@@ -25,7 +25,7 @@ function(file, topic)
     writeLines(c(paste("Help for", sQuote(topic),
                        "is shown in browser", browser, "..."),
                  "Use",
-                 paste("\thelp(", dQuote(topic), ", htmlhelp = FALSE)",
+                 paste("\thelp(\"", topic, "\", htmlhelp = FALSE)",
                        sep = ""),
                  "or\n\toptions(htmlhelp = FALSE)\nto revert."))
     return(invisible())
