@@ -32,11 +32,6 @@ Date: Wed, 10 Mar 1999 17:21:16 +0100
 
 Directory:  Add-ons
 
-* PR# 122 *
-Subject: [R] possible bug in loglm
-From: D.A.Wooff@durham.ac.uk
-Date: Thu, 18 Feb 1999 17:06:11 +0000 (GMT)
---Problem with running inside function. 
 * PR# 137 *
 Subject: funfits
 From: "Alvaro A. Novo" <novo@uiuc.edu>
@@ -184,11 +179,10 @@ Subject: Function parsing
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
 --comment placement.
-* PR# 142 *
-Subject: exists finds objects lots of places!
-From: oncley@ucar.edu
-Date: Thu, 11 Mar 1999 17:34:34 +0100
---No bug; not S compatible; documentation should be clearer
+* PR# 139 *
+Subject: : for factors
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Thu, 11 Mar 1999 09:30:04 +0100
 
 Directory:  Low-level
 
@@ -196,10 +190,18 @@ Directory:  Low-level
 Subject: S.h compatibility issues
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 6 Sep 1998 19:58:47 +0100 (BST)
-* PR# 119 *
-Subject: Problems with warnings from loess under Windows, at least
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 11 Feb 1999 15:08:41 +0000 (GMT)
+* PR# 101 *
+Subject: Re: [R] Re: R-0.63.2 for Windows - some comments
+From: Guido Masarotto <guido@hal.stat.unipd.it>
+Date: Fri, 22 Jan 1999 12:40:26 +0100
+--This is really about fixed buffer sizes in printutils.c
+* PR# 135 *
+Subject: summary() of lm() problem
+From: Simon Fear <fears@roycastle.liv.ac.uk>
+Date: Tue, 9 Mar 1999 13:18:37 -0000 
+--lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
+--
+--Another low-level buffer-size problem
 * PR# 140 *
 Subject: rbind dimnames with complex
 From: oncley@ucar.edu
@@ -247,46 +249,14 @@ Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
 
 Directory:  Windows
 
-* PR# 46 *
-Subject: keyboard bug in Guido's R62.3
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Thu, 24 Sep 1998 09:55:39 +0200 (MET DST)
-* PR# 47 *
-Subject: q() function in win32 version 0.61.3
-From: normo@ratfish.pbs.dfo.ca
-Date: Thu, 24 Sep 1998 22:04:10 +0200
-* PR# 57 *
-Subject: windows95
-From: christoph.kalinowski@ku-eichstaett.de
-Date: Thu, 29 Oct 1998 11:00:18 +0100
-* PR# 59 *
-Subject: windows nt
-From: christoph.kalinowski@biostat.ku.dk
-Date: Mon, 2 Nov 1998 13:41:52 +0100
-* PR# 101 *
-Subject: Re: [R] Re: R-0.63.2 for Windows - some comments
-From: Guido Masarotto <guido@hal.stat.unipd.it>
-Date: Fri, 22 Jan 1999 12:40:26 +0100
+none
 
 Directory:  incoming
 
-* PR# 127 *
-Subject: history
-From: jmhughes@globalnet.co.uk
-Date: Sat, 27 Feb 1999 21:32:56 +0100
 * PR# 132 *
 Subject: Re: [R] zero-offset matrices
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 02 Mar 1999 16:59:48 +0100
-* PR# 135 *
-Subject: summary() of lm() problem
-From: Simon Fear <fears@roycastle.liv.ac.uk>
-Date: Tue, 9 Mar 1999 13:18:37 -0000 
---lm (?) AND Windows problem;  Win solved for 0.63.3
-* PR# 139 *
-Subject: : for factors
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Thu, 11 Mar 1999 09:30:04 +0100
 * PR# 144 *
 Subject: glm throws erroneous(?)'names attribute must be the same length as the vector' 
 From: wagman@enteract.com
@@ -303,9 +273,19 @@ Date: Thu, 25 Mar 1999 13:34:12 +0100
 Subject: problems with formals and get
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
-* PR# 158 *
-Subject: seg fault with strsplit
+* PR# 160 *
+Subject: core dump
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 6 Apr 1999 09:41:29 +0200 (MET DST)
---buffer overflow known;
---should be fixed "soon" (Apr 7,1999)
+Date: Wed, 7 Apr 1999 16:30:39 +0200 (MET DST)
+* PR# 161 *
+Subject: Error in ppois function
+From: mh.smith@auckland.ac.nz
+Date: Fri, 9 Apr 1999 05:20:26 +0200
+* PR# 162 *
+Subject: a strange logical bug
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Fri, 9 Apr 1999 08:40:03 +0200 (MET DST)
+* PR# 163 *
+Subject: IRIX compile
+From: mtim@farm.ecs.umass.edu
+Date: Sat, 10 Apr 1999 19:35:43 +0200
