@@ -35,16 +35,16 @@ WinAnsi <- as.integer(c(0:126, 32, 32, 32, 32, 32, 32, 32, 32, 32,
 147, 32, 32, 32, 32, 32, 32, 32, 32, 96, 39, 32, 32, 32, 32, 32, 148,
 32, 32, 32, 32, 32, 32, 32, 32, 161:255))
 
-# non standard settings for the Aqua GUI of the Darwin port
-if(.Platform$GUI == "AQUA"){
+## non standard settings for the Aqua GUI of the Darwin port
+if(.Platform$GUI == "AQUA") {
 
-# this is set here as we do not define DISPLAY 
+## this is set here as we do not define DISPLAY
  options(device = "quartz")
 
-# sets initial current working directory to user's root
-# as RAqua is installed at system level
+## sets initial current working directory to user's root
+## as RAqua is installed at system level
 
-# this is to allow g77 compiler to work
+## this is to allow g77 compiler to work
  Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep=""))
 
 if( !file.exists("~/.R") )
@@ -54,36 +54,36 @@ if( !file.exists("~/.R/library") )
  dir.create("~/.R/library")
 
 .libPaths("~/.R/library")
- 
-# still undocumented, will be moved to base soon 
+
+## still undocumented, will be moved to base soon
 "browse.pkgs" <-
-function(where=c("CRAN","BIOC"), type=c("binary","source"), global=FALSE){
-        where<-match.arg(where)
-        type<-match.arg(type)
+function(where = c("CRAN","BIOC"), type = c("binary","source"), global = FALSE) {
+        where <- match.arg(where)
+        type <- match.arg(type)
         installed.packages() -> x
         x[,1] -> i.pkgs
         x[,3] -> i.vers
-        if (type=="source")
+        if (type == "source")
           CRAN.packages(getOption(where)) -> y
         else
           CRAN.binaries(getOption(where)) -> y
         y[,1] -> c.pkgs
         y[,2] -> c.vers
-		
+
         match(i.pkgs, c.pkgs) -> idx
         vers2 <- character(length(c.pkgs))
         vers2[idx] <- i.vers
         i.vers <- vers2
         ##inst.idx <- which(.Internal(pkgbrowser(c.pkgs,c.vers,i.vers,where)))
-        want.update<-rep(FALSE, length(i.vers))
-        label<-switch(where, CRAN=paste("CRAN (",type,") @",getOption(where)),
-                      BIOC=paste("BioC (",type,") @",getOption(where)))
-        inst<- .Internal(pkgbrowser(c.pkgs,c.vers,i.vers,label, want.update))
+        want.update <- rep(FALSE, length(i.vers))
+        label <- switch(where, CRAN = paste("CRAN (",type,") @",getOption(where)),
+                      BIOC = paste("BioC (",type,") @",getOption(where)))
+        inst <- .Internal(pkgbrowser(c.pkgs,c.vers,i.vers,label, want.update))
 
         ui.pkgs <- c.pkgs[inst]
         idx2 <- which(c.vers[inst] == i.vers[inst])
-        if(length(idx2)>0) { 
-            cat( paste(ui.pkgs[idx2],collapse="")," already up to date, not reinstalled\n")
+        if(length(idx2) > 0) {
+            cat( paste(ui.pkgs[idx2],collapse = "")," already up to date, not reinstalled\n")
             ui.pkgs <- ui.pkgs[-idx2]
           }
         if (global)
@@ -91,154 +91,154 @@ function(where=c("CRAN","BIOC"), type=c("binary","source"), global=FALSE){
         else
           locn <- .libPaths()[1]
         if(length(ui.pkgs) > 0)
-          switch(type, source= install.packages(ui.pkgs, CRAN=getOption(where), lib=.libPaths()[1]),
-                 binary=cat("We don't have binary packages yet.\n Rome wasn't burnt in a day, you know.\n"))
+          switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), lib = .libPaths()[1]),
+                 binary = cat("We don't have binary packages yet.\n Rome wasn't burnt in a day, you know.\n"))
 }
 
 "browse.update.pkgs" <-
-function(where=c("CRAN", "BIOC"), type=c("binary", "source"), in.place=TRUE){
+function(where = c("CRAN", "BIOC"), type = c("binary", "source"), in.place = TRUE) {
 
-        where<-match.arg(where)
-        type<-match.arg(type)
-        
+        where <- match.arg(where)
+        type <- match.arg(type)
+
         installed.packages() -> x
         x[,1] -> i.pkgs
         x[,3] -> i.vers
         x[,2] -> i.locn
-        if (type=="binary")
-          CRAN.binaries(getOption(where))->y
-        else  
+        if (type == "binary")
+          CRAN.binaries(getOption(where))-> y
+        else
           CRAN.packages(getOption(where)) -> y
         y[,1] -> c.pkgs
         y[,2] -> c.vers
-		
+
         match(i.pkgs, c.pkgs) -> idx
         vers2 <- character(length(i.pkgs))
-        vers2 <-c.vers[idx] 
+        vers2 <- c.vers[idx]
         c.vers <- vers2
-        ask<- !is.na(idx) & c.vers!=i.vers
+        ask <- !is.na(idx) & c.vers != i.vers
         if (!any(ask)) {
           cat("Your",where,"packages are all up-to-date.\n")
           return(invisible(NULL))
         }
-        i.pkgs<-i.pkgs[ask]
-        i.vers<-i.vers[ask]
-        c.vers<-c.vers[ask]
-        want.update<-rep(TRUE, length(i.vers))
-        label<-switch(where, CRAN=paste("CRAN (",type,") @",getOption(where)),
-                      BIOC=paste("BioC (",type,") @",getOption(where)))
+        i.pkgs <- i.pkgs[ask]
+        i.vers <- i.vers[ask]
+        c.vers <- c.vers[ask]
+        want.update <- rep(TRUE, length(i.vers))
+        label <- switch(where, CRAN = paste("CRAN (",type,") @",getOption(where)),
+                      BIOC = paste("BioC (",type,") @",getOption(where)))
         inst.idx <- which(.Internal(pkgbrowser(i.pkgs,c.vers,i.vers,label, want.update)))
         ui.pkgs <- i.pkgs[inst.idx]
         idx2 <- which(c.vers[inst.idx] == i.vers[inst.idx])
-        if(length(idx2)>0) 
+        if(length(idx2) > 0)
             ui.pkgs <- ui.pkgs[-idx2]
-        if(length(ui.pkgs) > 0){
+        if(length(ui.pkgs) > 0) {
           if (in.place)
             locn <- i.locn[inst.idx][-idx2]
           else
             locn <- .libPaths()[1]
-          if (type=="source"){
-            mapply("install.packages", CRAN=getOption(where), lib=locn, pkgs=ui.pkgs)
-          } else 
+          if (type == "source") {
+            mapply("install.packages", CRAN = getOption(where), lib = locn, pkgs = ui.pkgs)
+          } else
           cat("We don't have binary packages yet. Rome wasn't burnt in a day, you know.\n")
         }
       }
 
 
-install.from.file <- function(pkg=file.choose()){
-  lib <- .libPaths()[1]
-  cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
-  cmd <- paste(cmd, "-l", lib)
-  cmd <- paste(cmd," '",pkg,"'",sep="")
-  status <- system(cmd)
-  if(status == 0)
-   cat("\tpackage successfully installed\n")
-  else
-   cat("\tnpackage installation failed\n")
+install.from.file <- function(pkg = file.choose()) {
+    lib <- .libPaths()[1]
+    cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
+    cmd <- paste(cmd, "-l", lib)
+    cmd <- paste(cmd," '",pkg,"'",sep = "")
+    status <- system(cmd)
+    if(status == 0)
+        cat("\tpackage successfully installed\n")
+    else
+        cat("\tnpackage installation failed\n")
 }
 
-"data.manager" <- function(){
-  data() -> x
-  x$results[,3] -> dt
-  x$results[,1] -> pkg
-  x$results[,4] -> desc
+"data.manager" <- function() {
+    data() -> x
+    x$results[,3] -> dt
+    x$results[,1] -> pkg
+    x$results[,4] -> desc
 
-  load.idx <- which(.Internal(data.manager(dt,pkg,desc)))
-   
-  for(i in load.idx){
-   cat("loading dataset:", dt[i],"\n")
-   data(list = dt[i])       
-  } 
+    load.idx <- which(.Internal(data.manager(dt,pkg,desc)))
+
+    for(i in load.idx) {
+        cat("loading dataset:", dt[i],"\n")
+        data(list = dt[i])
+    }
 }
 
-"package.manager" <- function(){
-  .packages() -> loaded.pkgs
-  library() -> x
-  x<-x$results[x$results[,1] != "base",]
-  x[,1] -> pkgs
-  x[,3] -> pkgs.desc
+"package.manager" <- function() {
+    .packages() -> loaded.pkgs
+    library() -> x
+    x <- x$results[x$results[,1] != "base",]
+    x[,1] -> pkgs
+    x[,3] -> pkgs.desc
 
-  is.loaded <- !is.na(match(pkgs,loaded.pkgs))
-  pkgs.status <- character(length(is.loaded))
-  pkgs.status[which(is.loaded)] <- "loaded"
-  pkgs.status[which(!is.loaded)] <- " "
-  
-  load.idx <- .Internal(package.manager(is.loaded,pkgs,pkgs.desc))
+    is.loaded <- !is.na(match(pkgs,loaded.pkgs))
+    pkgs.status <- character(length(is.loaded))
+    pkgs.status[which(is.loaded)] <- "loaded"
+    pkgs.status[which(!is.loaded)] <- " "
 
-  toload<- which(load.idx & !is.loaded)
-  tounload<- which(is.loaded & !load.idx)
+    load.idx <- .Internal(package.manager(is.loaded,pkgs,pkgs.desc))
+
+    toload <- which(load.idx & !is.loaded)
+    tounload <- which(is.loaded & !load.idx)
 
 
-  for(i in tounload){
-    cat("unloading package:", pkgs[i],"\n")
-    do.call("detach",list(paste("package", pkgs[i], sep=":")))
-  }
-  for(i in toload){
-    cat("loading package:", pkgs[i],"\n")
-    library(pkgs[i],character.only = TRUE)
-  }
-  
+    for(i in tounload) {
+        cat("unloading package:", pkgs[i],"\n")
+        do.call("detach",list(paste("package", pkgs[i], sep = ":")))
+    }
+    for(i in toload) {
+        cat("loading package:", pkgs[i],"\n")
+        library(pkgs[i],character.only = TRUE)
+    }
+
 }
 
 
- 
+
  X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
                  gamma = 1, colortype = getOption("X11colortype"),
-                 maxcubesize = 256, canvas = "white"){
-   
-   if(display=="" && .Platform$GUI=="AQUA" && Sys.getenv("DISPLAY")==""){
+                 maxcubesize = 256, canvas = "white") {
+
+   if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "") {
      ##ps<-system("ps axc", intern=TRUE)
      ##if (any(c(grep("Xquartz", ps), grep("xinit", ps))))
-     Sys.putenv(DISPLAY=":0")
+     Sys.putenv(DISPLAY = ":0")
    }
-   
+
    .Internal(X11(display, width, height, pointsize, gamma, colortype,
                  maxcubesize, canvas))
  }
- 
- 
+
+
  x11 <- X11
 
  ## FIXME
- CRAN.binaries<-CRAN.packages
+ CRAN.binaries <- CRAN.packages
 
- flush.console<-function() .Internal(flush.console())
- 
- print.hsearch<-function(x,...) {
-   db<-x$matches
-   if (NROW(db)==0){
-     writeLines(strwrap(paste("No help files found matching", sQuote(x$pattern),"using",x$type,"matching\n\n")))
-     invisible(NULL)
-   } else {
-     wtitle<-paste("Help topics matching",sQuote(x$pattern))
-     showhelp<-which(.Internal(hsbrowser(db[,"topic"],db[,"Package"],db[,"title"], wtitle)))
-     for(i in showhelp){
-       help(db[i,"topic"], package=db[i,"Package"])
+ flush.console <- function() .Internal(flush.console())
+
+ print.hsearch <- function(x,...) {
+     db <- x$matches
+     if (NROW(db) == 0) {
+         writeLines(strwrap(paste("No help files found matching", sQuote(x$pattern),"using",x$type,"matching\n\n")))
+         invisible(NULL)
+     } else {
+         wtitle <- paste("Help topics matching",sQuote(x$pattern))
+         showhelp <- which(.Internal(hsbrowser(db[,"topic"],db[,"Package"],db[,"title"], wtitle)))
+         for(i in showhelp) {
+             help(db[i,"topic"], package = db[i,"Package"])
+         }
      }
-   }
  }
 
- 
-}
+
+}## end "Aqua"
 
 
