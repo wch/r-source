@@ -184,6 +184,69 @@ EOF
   fi
 ])
 dnl
+dnl See whether Fortran and C compilers agree on int and double
+dnl
+AC_DEFUN(R_PROG_F77_CC_COMPAT,
+ [AC_CACHE_CHECK([whether ${F77-f77} and ${CC-cc} agree on int and double],
+    r_cv_prog_f77_cc_compat,
+    [ cat > conftestf.f <<EOF
+      subroutine cftest(a, b, x, y)
+      integer a(3), b(2)
+      double precision x(3), y(3)
+
+      b(1) = a(3)/a(2)
+      b(2) = a(3) - a(1)*a(2)
+      y(1) = dble(a(3))/x(2)
+      y(2) = x(3)*x(1)
+      y(3) = (x(2)/x(1)) ** a(1)
+      end
+EOF
+      ${FC} -c ${FFLAGS} conftestf.f 2>/dev/null 1>/dev/null
+      changequote(, )
+      cat > conftest.c <<EOF
+        #include <math.h>
+	#include "confdefs.h"
+	#ifdef HAVE_F77_UNDERSCORE
+	# define F77_SYMBOL(x)   x ## _
+	#else
+	# define F77_SYMBOL(x)   x
+	#endif
+
+	extern void F77_SYMBOL(cftest)(int *a, int *b,
+	  double *x, double *y);
+
+	int main () {
+	  int a[3] = {17, 237, 2000000000}, b[2], res = 0;
+	  double x[3] = {3.14159265, 123.456789, 2.3e34}, z[3];
+	  double eps = 1e-6;
+	  double zres[3] = {(double) a[2]/x[1], x[2]*x[0], 
+            pow(x[1]/x[0], 17.0)};
+	  int i, bres[2] = {a[2]/a[1], a[2] - a[0]*a[1]};
+    
+	  F77_SYMBOL(cftest)(a, b, x, z);
+	  if(b[0] != bres[0]) res++;
+	  if(b[1] != bres[1]) res++;
+	  for(i = 0; i < 3; i++)
+	    if(fabs(z[i]/zres[i] - 1) > eps) res++;
+	  printf("number of errors %d\n", res);
+	  return(res);
+        }
+EOF
+      changequote([, ])
+      ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
+	conftest.c conftestf.o -lm 1>/dev/null 2>/dev/null
+      output=`./conftest 2>&1`
+      if test ${?} = 0; then
+	r_cv_prog_f77_cc_compat=yes
+      fi
+      rm -rf conftest conftest.* conftestf.*
+      if test -z "${r_cv_prog_f77_cc_compat}"; then
+	AC_MSG_WARN([${F77-f77} and ${CC-cc} disagree on int and double])
+	AC_MSG_ERROR([Cannot use ${F77-f77}.])
+      fi
+    ])
+])
+dnl
 dnl OCTAVE_FLIBS
 dnl
 dnl See what libraries are used by the Fortran compiler.
@@ -367,6 +430,36 @@ changequote([, ])dnl
 octave_cv_flibs="$flibs_result"])
 FLIBS="$octave_cv_flibs"
 AC_MSG_RESULT([$FLIBS])])
+dnl
+dnl R_PROG_F2C_FLIBS
+dnl
+AC_DEFUN(R_PROG_F2C_FLIBS,
+ [AC_CACHE_VAL(r_cv_f2c_flibs,
+    [## This seems to be necessary on some Linux system. -- you bet! -pd
+      cat > conftest.${ac_ext} << EOF
+	int MAIN_ () { return 0; }
+	int MAIN__ () { return 0; }
+EOF
+      if AC_TRY_EVAL(ac_compile); then
+	${AR} ${ARFLAGS} libconftest.a conftest.o 1>&AC_FD_CC
+	if test -n "${RANLIB}"; then
+	  ${RANLIB} libconftest.a 1>&AC_FD_CC
+	fi
+      fi
+      AC_DEFINE(HAVE_F77_UNDERSCORE)
+      AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=, -L. -lconftest -lm)
+      rm -f libconftest*
+      if test -z "${flibs}"; then
+	AC_CHECK_LIB(F77, d_sin, flibs=-lF77, flibs=, -lm)
+	if test -n "${flibs}"; then
+	  AC_CHECK_LIB(I77, f_rew, flibs="${flibs} -lI77", flibs=, -lF77)
+	fi
+      fi
+      r_cv_f2c_flibs="${flibs}"])
+  FLIBS="${r_cv_f2c_flibs}"
+  if test -z "${FLIBS}"; then
+    AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
+  fi])
 dnl
 dnl R_LIB_HDF5
 dnl
