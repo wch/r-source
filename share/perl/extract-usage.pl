@@ -25,7 +25,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.16 $ ';
+my $revision = ' $Revision: 1.17 $ ';
 my $version;
 my $name;
 
@@ -119,6 +119,14 @@ while (<INFILE>) {
 			"\n");
 	}
 
+	if($opt_mode eq "args") {
+	    $out->print("# aliases: ",
+			join(" ",
+			     map(substr($_, 1, -1),
+				 get_section($text, "alias"))),
+			"\n");
+	}
+
 	my %functions = @{$usages{"functions"}};
 	foreach my $key (keys(%functions)) {
 	    $functions{$key} =~ s/ *\\.?dots/ .../g;
@@ -128,7 +136,7 @@ while (<INFILE>) {
 	    }
 	}
 
-	if($opt_mode ne "style") {	
+	if($opt_mode ne "style") {
 	    my %S4methods = @{$usages{"S4methods"}};
 	    foreach my $key (keys(%S4methods)) {
 		$S4methods{$key} =~ s/ *\\.?dots/ .../g;
