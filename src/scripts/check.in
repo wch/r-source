@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.151 $ ';
+my $revision = ' $Revision: 1.152 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1536,7 +1536,10 @@ sub check_pkg {
 
 	## Can we run the code in the vignettes?
 	if($opt_vignettes) {
-	    my $Rcmd;
+	    ## <FIXME>
+	    ## Should checking the vignettes assume the system default
+	    ## packages, or just base?
+	    my $Rcmd = "library(tools)\n";
 	    if($opt_install) {
 		$Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
 		         "lib.loc = \"$pkgoutdir\", " .
@@ -1545,9 +1548,8 @@ sub check_pkg {
 	    else {
 		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
 	    }
-
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=tools");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    ## </FIXME>
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
 	    @out = grep(!/^[[:alnum:]]*\>/, @out);
 	    if($#out >= 0) {
