@@ -359,11 +359,15 @@ The working directory is the directory from which @code{Rgui} or
 by the `Start in' field of the shortcut's properties.  You can find this
 from R code by the call @code{getwd()}.
 
-The home directory is set as follows:@*
-If environment variable @env{R_USER} is set, its value is used.@*
-Otherwise if environment variable @env{HOME} is set, its value is used.@*
-Otherwise if environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
-are set, the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
+The home directory is set as follows: If environment variable
+@env{R_USER} is set, its value is used.  Otherwise if environment
+variable @env{HOME} is set, its value is used.  After those two
+user-controllable settings, R tries to find system defined home
+directories.  It first tries to use the Windows "personal" directory
+(typically @code{C:\Documents and Settings\username\My Documents} in
+Windows XP).  If that fails, if both environment variables
+@env{HOMEDRIVE} and @env{HOMEPATH} are set (and they normally are under
+Windows NT/2000/XP), the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.
 If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
@@ -1178,14 +1182,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 March 14 by Professor B. D. Ripley
+Last edited 2004 April 25 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 March 14 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 April 25 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
