@@ -182,6 +182,16 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 		df.residual = n - z$rank))
 }
 
+print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
+{
+	cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
+	cat("Coefficients:\n")
+	print.default(format(coef(x), digits=digits),
+		      print.gap = 2, quote = FALSE)
+	cat("\n")
+	invisible(x)
+}
+
 summary.lm <- function (object, correlation = FALSE)
 {
 	z <- .Alias(object)
@@ -334,17 +344,19 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 	invisible(x)
 }
 
-update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
-{
-	call <- lm.obj$call
-	if(!missing(formula))
-		call$formula <- update.formula(call$formula, formula)
-	if(!missing(data))	call$data <- substitute(data)
-	if(!missing(subset))	call$subset <- substitute(subset)
-	if(!missing(na.action)) call$na.action <- substitute(na.action)
-	if (!missing(weights))	call$weights<-substitute(weights)
-	eval(call, sys.frame(sys.parent()))
-}
+## Commented by KH on 1998/07/10
+## update.default() should be more general now ...
+## update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
+## {
+##	call <- lm.obj$call
+##	if(!missing(formula))
+##		call$formula <- update.formula(call$formula, formula)
+##	if(!missing(data))	call$data <- substitute(data)
+##	if(!missing(subset))	call$subset <- substitute(subset)
+##	if(!missing(na.action)) call$na.action <- substitute(na.action)
+##	if (!missing(weights))	call$weights<-substitute(weights)
+##	eval(call, sys.frame(sys.parent()))
+## }
 
 residuals.lm <- function(x) x$residuals
 fitted.lm <- function(x) x$fitted.values
@@ -485,7 +497,7 @@ predict.lm <- function(object, newdata = model.frame(object),
     else rss <- sum(r^2 * w)
     df <- n - p
     res.var <- rss/df
-  } else 
+  } else
     res.var <- scale^2
   R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
   vcov <- res.var * R
@@ -511,7 +523,7 @@ predict.lm <- function(object, newdata = model.frame(object),
     colnames(predictor) <- c("fit","lwr","upr")
   }
   if (se.fit)
-    list(fit = predictor, se.fit = sqrt(ip), 
+    list(fit = predictor, se.fit = sqrt(ip),
       df = df, residual.scale = sqrt(res.var))
   else predictor
 }

@@ -247,11 +247,17 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         if (!conv) warning("Algorithm did not converge")
         if (boundary) warning("Algorithm stopped at boundary value")
         ## If X matrix was not full rank then columns were pivoted,
-        ## hence we need to re-label the names:
+        ## hence we need to re-label the names ...
+        ## Original code changed as suggested by BDR---give NA rather
+        ## than 0 for non-estimable parameters
         if (fit$rank != nvars) {
-                xnames <- xnames[fit$pivot]
-                dimnames(fit$qr) <- list(NULL, xnames)
+            coef[seq(fit$rank+1, nvars)] <- NA
+            coef[fit$pivot] <- coef
+            xxnames <- xnames[fit$pivot]
+            dimnames(fit$qr) <- list(NULL, xnames)
         }
+        else
+            xxnames <- xnames
         residuals <- rep(NA, nobs)
         residuals[good] <- z - eta[good]
         fit$qr <- as.matrix(fit$qr)
@@ -264,8 +270,8 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         Rmat <- as.matrix(Rmat)
         Rmat[row(Rmat) > col(Rmat)] <- 0
         names(coef) <- xnames
-        colnames(fit$qr) <- xnames
-        dimnames(Rmat) <- list(xnames, xnames)
+        colnames(fit$qr) <- xxnames
+        dimnames(Rmat) <- list(xxnames, xxnames)
         names(residuals) <- ynames
         names(mu) <- ynames
         names(eta) <- ynames
@@ -282,7 +288,9 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         resdf  <- n.ok - fit$rank
         ## calculate AIC
         aic.model <-
-          if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
+          #Should not be necessary: --pd
+	  #if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
+          aic(y, n, mu, weights, dev) + 2*fit$rank
         list(coefficients = coef, residuals = residuals, fitted.values = mu,
              effects = fit$effects, R = Rmat, rank = fit$rank,
              qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,
@@ -301,7 +309,8 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 		cat("  [contrasts: ",
 			apply(cbind(names(co),co), 1, paste, collapse="="), "]")
 	cat(":\n")
-	print.default(round(x$coefficients, digits), print.gap = 2)
+	print.default(format(x$coefficients, digits=digits),
+		      print.gap = 2, quote = FALSE)
 	cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
 		 x$df.residual, "Residual\n")
 	cat("Null Deviance:    ", format(signif(x$null.deviance, digits)), "\n")
@@ -517,21 +526,20 @@ summary.glm <- function(object, dispersion = NULL,
 	## calculate coef table
 
 ##	nas <- is.na(object$coefficients)
-	if(df.r > 0) {
-		s.err <- sqrt(var.cf)
-		tvalue <- coef.p/s.err
-	}
-	dn <- c("Estimate", "Std. Error")
-	if(est.disp) {
-		pvalue <- 2*pt(-abs(tvalue), df.r)
-		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
-		dimnames(coef.table) <- list(names(coef.p),
-				     c(dn, "t value","Pr(>|t|)"))
-	} else if(df.r > 0) {
+	s.err <- sqrt(var.cf)
+	tvalue <- coef.p/s.err
+
+        dn <- c("Estimate", "Std. Error")
+	if(!est.disp) {
 		pvalue <- 2*pnorm(-abs(tvalue))
 		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
 		dimnames(coef.table) <- list(names(coef.p),
 				     c(dn, "z value","Pr(>|z|)"))
+	} else if(df.r > 0) {
+		pvalue <- 2*pt(-abs(tvalue), df.r)
+		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
+		dimnames(coef.table) <- list(names(coef.p),
+				     c(dn, "t value","Pr(>|t|)"))
 	} else { ## df.r == 0
 		coef.table <- cbind(coef.p, Inf)
 		dimnames(coef.table) <- list(names(coef.p), dn)
@@ -580,9 +588,8 @@ function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 }
 
 print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
-	formatfun = format, na.print = "",
-	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
-	...)
+	na.print = "", symbolic.cor = p > 4,
+	signif.stars= .Options$show.signif.stars, ...)
 {
 	cat("\nCall:\n")
 	cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")

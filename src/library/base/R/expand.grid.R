@@ -8,8 +8,13 @@ expand.grid <- function(...) {
   a1 <- args[[1]]
   if(length(args) == 1 && is.list(a1)) args <- a1
   nargs <- length(args)
-  if(nargs == 1) return (args)
+  if(nargs == 1) return (args[[1]])
   cargs <- args
+  nmc <- paste("Var", 1:nargs, sep="")
+  nm <- names(args)
+  if(is.null(nm)) nm <- nmc
+  nmc[nchar(nm)>0] <- nm[nchar(nm)>0]
+  names(cargs) <- nmc
   rep.fac <- 1
   orep <- final.len <- prod(sapply(args, length))
   for(i in 1:nargs) {

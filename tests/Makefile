@@ -15,11 +15,9 @@ TESTout = $(TESTsrc:.R=.Rout)
 
 %.Rout: %.R stamp-Rexe
 	$(R) < $< > $@
-	@echo "$@: Diff with saved version: Expect NO output"
-	@./Rdiff $@ $@.save
-#	-@wc $@
+	-@wc $@
 
-test-All: test-Examples  $(TESTout)
+test-All: test-Examples $(TESTout)
 
 test-Examples:
 	-(cd $(Ex); $(MAKE) $@)

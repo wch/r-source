@@ -1,5 +1,4 @@
 ###-*- R -*- MS-Windows Specific ----
->>>>>>> 1.1.1.1.6.2
 .Library <- paste(getenv("RHOME"), "library", sep = "\\")
 
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))

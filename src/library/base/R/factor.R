@@ -25,7 +25,7 @@ nlevels <- function(x) length(levels(x))
 
 "levels<-" <- function(x, value) {
   x <- as.factor(x)
-  if (length(value) != nlevels(x)) 
+  if (length(value) != nlevels(x))
     stop("Length mismatch in levels<-")
   value <- as.character(value)
   uvalue <- unique(value)
@@ -64,20 +64,23 @@ codes.factor <- function(x)
 }
 
 
-"print.factor" <-
-  function (x, quote=FALSE) {
-    if(length(x) <= 0)
-      cat("factor(0)\n")
-    else
-      print(levels(x)[x], quote=quote)
-    cat("Levels: ",paste(levels(x), collapse=" "), "\n")
-  }
+print.factor <- function (x, quote=FALSE)
+{
+  if(length(x) <= 0)
+    cat("factor(0)\n")
+  else
+    print(levels(x)[x], quote=quote)
+  cat("Levels: ",paste(levels(x), collapse=" "), "\n")
+}
 
 
-"Math.factor" <- function(e1,e2)
-	stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+Math.factor <- function(x, ...)
+ 	stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
 
-"Ops.factor" <- function(e1, e2)
+Summary.factor <- function(x, ...)
+        stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+
+Ops.factor <- function(e1, e2)
 {
   ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
   if (!ok) stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
@@ -126,9 +129,9 @@ codes.factor <- function(x)
 
 ## ordered factors ...
 
-ordered <- 
-function (x, levels = sort(unique(x), na.last = TRUE), labels = levels, 
-          exclude = NA, ordered = TRUE) 
+ordered <-
+function (x, levels = sort(unique(x), na.last = TRUE), labels = levels,
+          exclude = NA, ordered = TRUE)
 {
   if (length(x) == 0)
     return(character(0))

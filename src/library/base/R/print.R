@@ -46,6 +46,6 @@ print.noquote <- function(obj,...) {
 	if(!is.null(cl)) class(obj) <- cl[cl != "noquote"]
 	NextMethod("print", obj, quote = FALSE, ...)
 }
-# used for version:
+## used for version:
 print.simple.list <-
 function(x, ...) print(noquote(cbind("_"=unlist(x))), ...)

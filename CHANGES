@@ -20,51 +20,170 @@ BUG FIXES
 	unlist() and c().
 
 
-		CHANGES IN R VERSION 0.62.2
+		CHANGES IN R VERSION 0.62.3
 
 NEW FEATURES
 
-    o	polygon() now handles NAs 
+    o   New generic function preplot().
 
-    o   options(show.signif.stars = TRUE).  If FALSE,
+    o	A new R BATCH interface for non-interactive execution.
+
+    o   Added `offline' argument to help() for producing hardcopy via
+	latex and dvips.
+
+BUG FIXES
+
+    o	The handling of extra FORTRAN libraries (f2c-related and BLAS)
+	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be
+	linked against these libraries.
+
+
+		CHANGES IN R VERSION 0.62.2
+
+(The new functions predict.glm, poly, aov, alias, biplot.default and
+biplot.princop, update.default and rug all come from Brian D. Ripley,
+who is also responsible for finding and/or fixing a lot of the bugs)
+
+NEW FEATURES
+
+    o   predict.glm() added.
+
+    o   text() is generic.
+
+    o   update.default() (replaces update.glm() and update.lm()).
+        (This will only work if you comment out update.lm and
+	update.glm in the sources, or disable them with
+	update.lm<-function(object,...)NextMethod(), etc.)
+
+    o	predict.lm() changed towards S-plus compatibility. Intervals are
+	still available via interval= argument.
+
+    o	zapsmall() function.
+
+    o	polygon() now handles NAs
+
+    o	options(show.signif.stars = TRUE).  If FALSE,
 	summary.lm and similar functions do *not* print significance stars
 	anymore.
 
     o	poly() for [g]lm modelling.
 
-    o   ................ tons of other additions from BDR.................
-	..................................................................
-	..... These should get help pages !! ....
+    o	aov()	for Analysis Of Variance [anova].
 
-    o   new  src/library/profile/Common.R   for  OS-independent intialization.
+    o	alias() for displaying ``aliased'' factor levels in (>=2)way anova.
+
+    o	mva: Now has  biplot and biplot.princomp
+
+    o	rug() plot.
+
+    o	new  src/library/profile/Common.R   for	 OS-independent intialization.
+
+    o   new date stamp mechanism (ensures that prerelease versions carry
+        correct date)
 
 BUG FIXES
 
+    o   abbreviate() now always retains the first letter. 
+
+    o   attr() partial matches for attribute name.
+
+    o   axis() accepts graphical parameters.
+
+    o   binomial() accepts factor responses.
+
+    o   cbind() works with data frames. 
+
+    o   contrasts() gives simpler labels (like S) for factors with
+        two levels.
+
+    o   contrasts<-() now has a how.many= argument.
+
+    o   contour() and image() can accept a list to specify the matrix.
+
+    o   contr.poly() uses orthogonal polynomials (like S) not raw
+        polynomials.
+
+    o   data() could fail with a partial match to the dataset name.
+
+    o   density() works correctly if from= or to= are used.
+            n= can now take any value, not just a large power of 2.
+
+    o   expand.grid() now accepts more than two arguments, 
+        or a list of factors.
+
+    o   factor() and ordered() handle their levels argument better.
+
+    o   family.glm() now returns the correct family (including link etc).
+
+    o   legend() now knows about lwd.
+
+    o   match.args() works correctly for default arguments.
+
+    o   model.frame.lm() did not invoke `lm'.
+
+    o   model.matrix() calls model.frame() if needed.
+
+    o   model.response() now returns names, so glm() gives names to
+        residuals, fitted values, etc.
+
+    o   quasi() works in glm() (was missing aic component).
+
+    o   seq() sometimes omitted the final value due to rounding error.
+
+    o   terms.formula() and update.formula() now resolve `.' in formulae
+        and tidy up `(a + b) - b' etc.
+    
+    o   ... is now passed down correctly to functions inside functions.
+
+    o   save.image didn't work (Martyn Plummer)
+
+    o   abs() instead of fabs() in seq.c crashed R on Digital Unix
+
+    o   model.matrix() gagged on variables with complicated names 
+
+    o   saturated models acting up in glm
+
+    o   various improvement of build procedures
+
+    o   rbind(NULL, matrix) core dump
+
+    o	density() default 'bw' now 0.9*(...) instead of 1.06*(...)
+				[=Silverman's rule of thumb].
+
+    o	detach(2) now works.
+
+    o	format() doesn't drop names anymore.
+
+    o	format.pval() works with NAs.
+
     o	print.[summary.][g]lm() functions print numbers better formatted.
 
-    o   legend() now also works properly in  log coordinates.
+    o	legend() now also works properly in  log coordinates.
 
-    o   backsolve() now working;  bakslv.c not depending on
+    o	backsolve() now working;  bakslv.c not depending on
 	Fortran_underscores.
 
-    o   Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
+    o	Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
 
-    o   The Rd format has a new section \details{} (needed for proper
-        Sd2Rd translation). \R was not understood for nroff
+    o	The Rd format has a new section \details{} (needed for proper
+	Sd2Rd translation). \R was not understood for nroff
 	conversions, longer dashes (-- and --- in latex syntax) are
 	now converted properly.
 
-    o   R [ SHLIB | COMPILE ] were broken on some Solaris systems
-        due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
-        now use a MAKE environment variable if present.
-        R INSTALL only rebuilds man pages if they are not already
-        up to date.
+    o	prompt.default() now carries "\details{}".
+
+    o	R [ SHLIB | COMPILE ] were broken on some Solaris systems
+	due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
+	now use a MAKE environment variable if present.
+	R INSTALL only rebuilds man pages if they are not already
+	up to date.
+
 
 		CHANGES IN R VERSION 0.62.1
 
 BUG FIXES
 
-    o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc
+    o	Accidentally shipped R-0.62 without the tests and  etc/Rdoc
 	directories.
 
 
@@ -72,13 +191,13 @@ BUG FIXES
 
 NEW FEATURES
 
-    o   Many more help(.) pages.
+    o	Many more help(.) pages.
 
-    o   The top level Makefile now supports the usual
+    o	The top level Makefile now supports the usual
 	   ./configure; make; make install
 	procedure (new make targets `all' and `install').
 
-    o   The HTML help pages can now be searched for keywords.
+    o	The HTML help pages can now be searched for keywords.
 
     o	Conversion of functions to and from lists. formals<- and body<-.
 	The alist() function makes it easier to construct argument lists,
@@ -156,7 +275,7 @@ NEW FEATURES
     o	Usage of R SHLIB now is R SHLIB [-o libname] files, where the
 	file names can be that of source or object files.
 
-    o   A new R CMD interface allows invokation of executables in
+    o	A new R CMD interface allows invokation of executables in
 	$RHOME/{etc,cmd} without installing them or setting paths.
 
     o	Data files are now also documented using the Rd format, all
@@ -288,9 +407,9 @@ BUG FIXES (many of which resulted from the added features...)
 
     o	atanh(.) now works
 
-    o   summary(glm) and summary(lm) now use compatible names.
+    o	summary(glm) and summary(lm) now use compatible names.
 
-    o   [pq]tukey(.) now working.
+    o	[pq]tukey(.) now working.
 
     o	title() now handles main=, sub=, xlab=, ylab= with embedded
 	newlines correctly.  This is partly a change in title and
@@ -349,7 +468,7 @@ BUG FIXES (many of which resulted from the added features...)
 
     o	rhyper works with vectorisation, degenerate cases.
 
-    o   printing of objects in lists now dispatches methods correctly
+    o	printing of objects in lists now dispatches methods correctly
 
 		CHANGES IN R VERSION 0.61.2
 

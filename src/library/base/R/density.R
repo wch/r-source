@@ -22,8 +22,8 @@ function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
 	if (missing(bw))
 	 bw <-
 	  if(missing(width))
-		adjust * 1.06 * min(sd (x, na.rm=has.na),
-                                    IQR(x, na.rm=has.na)/1.34) * N^-0.2
+		adjust * 0.9 * min(sd (x, na.rm=has.na),
+                                   IQR(x, na.rm=has.na)/1.34) * N^-0.2
 	  else 0.25 * width
 	if (missing(from))
 		from <- min(x, na.rm = has.na) - cut * bw
@@ -62,9 +62,10 @@ function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
 }
 
 plot.density <-
-function(s, main="", xlab=NULL, ylab="Density", type="l", ...)
+function(s, main=NULL, xlab=NULL, ylab="Density", type="l", ...)
 {
-	if(is.null(xlab)) xlab <- paste("Bandwidth =", s$bw)
+	if(is.null(xlab)) xlab <- paste("Bandwidth =", format(s$bw))
+	if(is.null(main)) main <- deparse(s$call)
 	plot.default(s, main=main, xlab=xlab, ylab=ylab, type=type, ...)
 }
 

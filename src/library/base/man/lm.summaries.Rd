@@ -4,7 +4,6 @@
 anova(object, \dots)
 anovalist(object, \dots, test = NULL)
 summary(object, correlation = FALSE)
-predict(object, newdata = model.frame(object), se = FALSE)
 coefficients(x) ; coef(x)
 deviance(x)
 df.residual(x)
@@ -17,18 +16,18 @@ weights(x)
 plot(x)
 
 print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
-              symbolic.cor = p > 4, signif.stars= TRUE, ...)
+              symbolic.cor = p > 4,
+	      signif.stars= .Options$show.signif.stars, ...)
 }
 \alias{anova.lm}
 \alias{anova.lm.null}
 \alias{anovalist.lm}
 \alias{summary.lm}
 \alias{summary.lm.null}
-\alias{predict.lm}
 \alias{coefficients.lm}
 \alias{deviance.lm}
 \alias{df.residual.lm}
-\alias{effects.lm}
+# \alias{effects.lm}
 \alias{family.lm}
 \alias{formula.lm}
 \alias{fitted.values.lm}
@@ -50,8 +49,16 @@ These functions are all \code{\link{methods}} for class \code{lm} or
 \code{summary.lm} and \code{anova.lm} objects.
 
 \code{print.summary.lm} tries to be smart about formatting the
-coefficients, standard errors, etc. and additionally gives ``significance
-stars'' if \code{signif.stars= TRUE}.
+coefficients, standard errors, etc. and additionally gives
+``significance stars'' if \code{signif.stars= TRUE}. 
+
+\code{anova.lm} produces an analysis of variance (\code{anova}) table.
+
+The generic accessor functions \code{coefficients}, \code{effects},
+\code{fitted.values} and \code{residuals} can be used to extract
+various useful features of the value returned by \code{lm}.
+
+
 }
 \value{
   The function \code{summary.lm} computes and returns a list of summary
@@ -62,9 +69,9 @@ stars'' if \code{signif.stars= TRUE}.
     the estimated coefficient, its standard error, t-statistic and
     corresponding (two-sided) p-value.}
   \item{sigma}{the square root of the estimated variance of the random
-    error,
-    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2}}{%
-      sigma^2 = 1/(n-p) Sum(R[i]^2)},
+    error
+    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{%
+      sigma^2 = 1/(n-p) Sum(R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual,
     \code{residuals[i]}.}
   \item{df}{degrees of freedom, a 3-vector \eqn{(p,n-p,p*)} ...}
@@ -84,20 +91,7 @@ stars'' if \code{signif.stars= TRUE}.
   and if \code{correlation = TRUE} was specified,%- don't need anymore..
   \item{correlation}{the correlation matrix corresponding to the above
     \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
-
-  The function \code{anova} produces an analysis of variance
-  (\code{anova}) table.  The generic accessor functions
-  \code{coefficients}, \code{effects}, \code{fitted.values} and
-  \code{residuals} can be used to extract various useful features of the
-  value returned by \code{lm}.
 }
-
-The function \code{predict} produces predicted values, obtained by
-evaluating the regression function in the frame \code{newdata}.  If the
-logical \code{se} is \code{FALSE}, a vector of matrix of predictions is
-returned; if \code{TRUE}, a list with components \code{fit} and
-\code{se} giving the predictions and corresponding standard errors.
-
 \seealso{
 The model fitting function \code{\link{lm}}.
 
@@ -120,10 +114,6 @@ abline(h=0, lty=2, col = 'gray')
 
 qqnorm(residuals(lm.D90))
 
-## Predictions
-x <- rnorm(15)
-y <- x + rnorm(15)
-predict(lm(y ~ x))
-predict(lm(y ~ x), data.frame(x = seq(-3, 3, 0.1)), se = TRUE)
+
 }
 \keyword{regression}

@@ -1,41 +1,39 @@
-# file aov.R
-# copyright (C) 1998 W. N. Venables and B. D. Ripley
-#
+#### copyright (C) 1998 W. N. Venables and B. D. Ripley
 aov <-
-  function(formula, data = sys.parent(), projections = F, contrasts = 
+  function(formula, data = sys.parent(), projections = FALSE, contrasts =
         NULL, ...)
 {
   if(projections) stop("projections are not implemented")
   lmcall <- Call <- match.call()
   lmcall[[1]] <- as.name("lm")
-  lmcall$singular.ok <- T
+  lmcall$singular.ok <- TRUE
   lmcall$projections <- NULL
   fit <- eval(lmcall, sys.frame(sys.parent()))
   class(fit) <- c("aov", "lm")
   fit$call <- Call
   fit
 }
+
 print.aov <-
-function(x, intercept = F, tol = .Machine$double.eps^0.5, ...)
+function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 {
   if(!is.null(cl <- x$call)) {
     cat("Call:\n   ")
     dput(cl)
   }
-  asgn <- x$assign
+  asgn <- x$assign[x$qr$pivot[1:x$rank]] # changed
   effects <- x$effects[seq(along=asgn)]
   nmeffect <- c("(Intercept)", attr(x$terms, "term.labels"))
   nterms <- max(asgn)+1
   df <- ss <- numeric(nterms)
   if(nterms) {
     for(i in seq(nterms)) {
-      ai <- asgn==(i-1)
-      ai <- !is.na(x$coef) & ai
+      ai <- asgn==(i-1) # delete line
       df[i] <- sum(ai)
       ss[i] <- sum(effects[ai]^2)
     }
     keep <- df > 0
-    if(!intercept) keep[1] <- F
+    if(!intercept) keep[1] <- FALSE
     nmeffect <- nmeffect[keep]
     df <- df[keep]
     ss <- ss[keep]
@@ -44,8 +42,8 @@ function(x, intercept = F, tol = .Machine$double.eps^0.5, ...)
   cat("\nTerms:\n")
   if(nterms == 0) {
     # empty model
-    print(matrix(0, 1, 2, dimnames=list("<empty>", c("Sum of Squares", 
-                                            "Deg. of Freedom"))))
+    print(matrix(0, 1, 2, dimnames=list("<empty>",
+                            c("Sum of Squares", "Deg. of Freedom"))))
     return(invisible(x))
   }
   df.res <- x$df.resid
@@ -58,10 +56,10 @@ function(x, intercept = F, tol = .Machine$double.eps^0.5, ...)
     ss[nterms] <- sum(resid^2)
     nmeffect[nterms] <- "Residuals"
   }
-  print(matrix(c(format(ss), format(df)), 2, nterms, byrow=T,
+  print(matrix(c(format(ss), format(df)), 2, nterms, byrow=TRUE,
                dimnames=list(c("Sum of Squares", "Deg. of Freedom"),
-                 nmeffect)),
-        quote = F, right = T)
+               nmeffect)),
+        quote = FALSE, right = TRUE)
   rank <- x$rank
   int <- attr(x$terms, "int")
   nobs <- length(x$residuals) - !(is.null(int) || int == 0)
@@ -75,10 +73,10 @@ function(x, intercept = F, tol = .Machine$double.eps^0.5, ...)
   R <- x$qr$qr
   R <- R[1:ncol(R), ]
   R[lower.tri(R)] <- 0
-  if(rank < (nc <- length(coef))) 
+  if(rank < (nc <- length(coef)))
     {
       cat(paste(nc - rank, "out of", nc, "effects not estimable\n"))
-      R <- R[, 1:rank, drop = F]
+      R <- R[, 1:rank, drop = FALSE]
     }
   dm <- dim(R)
   d <- seq(1, length = min(dm), by = dm[1] + 1)
@@ -88,10 +86,11 @@ function(x, intercept = F, tol = .Machine$double.eps^0.5, ...)
   else cat("Estimated effects are balanced\n")
   invisible(x)
 }
-summary.aov <- 
-function(object, intercept = F, keep.zero.df = T, ...)
+
+summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE,
+                        signif.stars= .Options$show.signif.stars, ...)
 {
-  asgn <- object$assign
+  asgn <- object$assign[object$qr$pivot[1:object$rank]] # changed
   nterms <- max(asgn)+1
   effects <- object$effects[seq(along=asgn)]
   nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
@@ -109,8 +108,7 @@ function(object, intercept = F, keep.zero.df = T, ...)
     df <- ss <- numeric(nterms)
     nmrows <- character(nterms)
     for(i in 1:nterms) {
-      ai <- asgn==(i-1)
-      ai <- !is.na(object$coef) & ai
+      ai <- asgn == (i-1) # changed
       df[i] <- sum(ai)
       ss[i] <- sum(effects[ai]^2)
       nmrows[i] <- nmeffect[i]
@@ -136,6 +134,11 @@ function(object, intercept = F, keep.zero.df = T, ...)
     TT[nterms] <- TP[nterms] <- NA
     x$"F Value" <- TT
     x$"Pr(F)" <- TP
+    if(signif.stars)
+      x$Signif <- c(symnum(TP[ - nterms], corr = FALSE,
+                           cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                           symbols = c("***", "**", "*", ".", " ")),
+                    "") ## 'nterms' ~= 'Residuals' have no P-value
   }
   class(x) <- c("anova", "data.frame")
   row.names(x) <- format(nmrows)
@@ -144,28 +147,25 @@ function(object, intercept = F, keep.zero.df = T, ...)
   x
 }
 
-coef.aov <-
- function(x) {
+coef.aov <- function(x) {
   z <- x$coef
   z[!is.na(z)]
 }
 
-alias <-
-  function(object, ...) UseMethod("alias")
+alias <- function(object, ...) UseMethod("alias")
 
-alias.formula <- 
-function(object, data, ...)
+alias.formula <- function(object, data, ...)
 {
   lm.obj <- if(missing(data)) aov(object) else aov(object, data)
   alias(lm.obj, ...)
 }
 
 alias.lm <-
-function(object, complete = T, partial = F, ...)
+function(object, complete = TRUE, partial = FALSE, ...)
 {
   pattern <- function(x, ...) {
     x[abs(x) < 1e-6] <- 0
-    fractions(x)
+    if(exists("fractions", mode="function")) fractions(x) else x
   }
   Model <- object$terms
   attributes(Model) <- NULL
@@ -176,19 +176,17 @@ function(object, complete = T, partial = F, ...)
   d <- dim(R)
   rank <- object$rank
   p <- d[2]
-  if(complete) {
-    if(is.null(p) || rank == p) beta12 <- NULL else {
-      p1 <- 1:rank
-      dn <- dimnames(R)[[2]]
-      X <- R[p1, p1]
-      Y <-  R[p1, -p1, drop = F]
-      beta12 <- as.matrix(qr.coef(qr(X), Y))
-      dimnames(beta12) <- list(dn[p1], dn[ -p1])
-      beta12 <- t(beta12)
-      beta12 <- pattern(beta12)
-    }
-    # full rank, no aliasing
-    value$Complete <- beta12
+  if(complete) { # full rank, no aliasing
+    value$Complete <-
+      if(is.null(p) || rank == p) NULL else {
+        p1 <- 1:rank
+        dn <- dimnames(R)[[2]]
+        X <- R[p1, p1]
+        Y <-  R[p1, -p1, drop = FALSE]
+        beta12 <- as.matrix(qr.coef(qr(X), Y))
+        dimnames(beta12) <- list(dn[p1], dn[ -p1])
+        pattern(t(beta12))
+      }
   }
   if(partial) {
     tmp <- summary.lm(object)$cov.unscaled

@@ -5,3 +5,4 @@ all R docs help html latex dvi test-All test-Examples install\
 	$(MAKE) -f Makefile.2nd $@
 Makeconf config.status:: configure config.site date-stamp
 	-./configure
+test: test-Examples
