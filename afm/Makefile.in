@@ -10,8 +10,8 @@ subdir = afm
 
 include $(top_builddir)/Makeconf
 
-# Everything except CVS and Makefile
-INSTALLFILES = `ls $(srcdir)/*.afm $(srcdir)/*.lt1`
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.afm *.lt1)
 
 all: Makefile R
 
@@ -27,7 +27,7 @@ R:
 
 install: installdirs
 	@echo "Installing afm ..."
-	@for f in $(INSTALLFILES); \
+	@for f in `ls $(srcdir)/*.afm $(srcdir)/*.lt1`; \
 	  do $(INSTALL_DATA) $$f $(rhome)/afm; \
 	done
 installdirs:
@@ -45,3 +45,10 @@ clean:
 distclean:
 	@rm -f Makefile
 maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+        done

@@ -10,6 +10,9 @@ subdir = doc/manual
 
 include $(top_builddir)/Makeconf
 
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES =
+
 RLIB = $(top_builddir)/library
 RLIBsrc = $(top_srcdir)/src/library
 
@@ -42,7 +45,7 @@ Man.dvi: Version.tex $(pkgsrcs) $(mansrcs) $(srcdir)/Rd.sty
 	  $(LATEX) '\nonstopmode\input{Man.tex}'
 
 Version.tex: $(top_builddir)/bin/R
-	$^ --version > $@
+	$(top_builddir)/bin/R --version > $@
 
 pkg-base.tex: $(RLIB)/base/latex/*.tex
 	@echo "Collecting components of $@ ..."
@@ -133,3 +136,10 @@ Man-index.ps-2: Man.ps-2
 print2:	Man.ps
 	mpage -P -2 $< > Man.ps-2
 	lpr -s Man.ps-2
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+        done

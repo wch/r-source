@@ -10,6 +10,9 @@ subdir = tests/Examples
 
 include $(top_builddir)/Makeconf
 
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in massage-Examples
+
 R = $(top_builddir)/bin/R --no-init-file --no-save --no-restore --vsize 6
 Rbase = $(top_builddir)/library/base/R/base
 Rbinary = $(top_builddir)/bin/R.binary
@@ -33,7 +36,8 @@ All-Ex.R: $(top_builddir)/library/base/R-ex/*.R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	@-$(srcdir)/massage-Examples $^ > $@
+	@-$(srcdir)/massage-Examples \
+	  $(top_builddir)/library/base/R-ex/*.R > $@
 
 $(top_builddir)/library/base/R-ex/%.R: $(top_srcdir)/src/library/base/man/%.Rd
 	(cd $(top_builddir)/src/library && \
@@ -48,3 +52,10 @@ clean:
 distclean: clean
 	@rm -f *.R .RData sink-examp.txt Makefile
 maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+        done
