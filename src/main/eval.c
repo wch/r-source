@@ -1071,7 +1071,7 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
         PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else
         PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
-    ans = applyClosure(cptr->call, s, args, cptr->cloenv, R_NilValue);
+    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue);
     UNPROTECT(1);
     return ans;
 }
