@@ -187,7 +187,7 @@ static long file_seek(Rconnection con, int where, int origin)
     FILE *fp = ((Rfileconn)(con->private))->fp;
     long pos = ftell(fp);
     int whence = SEEK_SET;
-    
+
     switch(origin) {
     case 2: whence = SEEK_CUR;
     case 3: whence = SEEK_END;
@@ -205,7 +205,7 @@ static void file_truncate(Rconnection con)
 
     if(!con->isopen || !con->canwrite)
 	error("can only truncate connections open for writing");
-    
+
 #ifdef HAVE_FTRUNCATE
     if(ftruncate(fd, size))
 	error("file truncation failed");
@@ -535,7 +535,7 @@ static long gzfile_seek(Rconnection con, int where, int origin)
     gzFile  fp = ((Rgzfileconn)(con->private))->fp;
     long pos = gztell(fp);
     int whence = SEEK_SET;
-    
+
     switch(origin) {
     case 2: whence = SEEK_CUR;
     case 3: whence = SEEK_END;
@@ -585,7 +585,7 @@ static Rconnection newgzfile(char *description, char *mode, int compress)
     strcpy(new->description, description);
     strncpy(new->mode, mode, 1);
     sprintf(new->mode+1, "b%1d", compress);
-    
+
     new->isopen = new->incomplete = FALSE;
     new->canread = new->canwrite = TRUE; /* in principle */
     new->canseek = TRUE;
@@ -634,7 +634,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `compress' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
-    con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r", 
+    con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r",
 					compress);
 
     for(i = 0; i < 256; i++)
@@ -1196,9 +1196,9 @@ SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     i = asInteger(CAR(args));
     if(i < 3) error("cannot close standard connections");
     for(j = 0; j < R_SinkNumber; j++)
-	if(i == SinkCons[j]) 
+	if(i == SinkCons[j])
 	    error("cannot close output sink connection");
-    if(i == R_ErrorCon) 
+    if(i == R_ErrorCon)
 	error("cannot close messages sink connection");
     con_close(i);
     return R_NilValue;
@@ -1951,7 +1951,7 @@ SEXP do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
 Rboolean switch_stdout(int icon, int closeOnExit)
 {
     int toclose;
-    
+
     if(icon == R_OutputCon) return FALSE;
 
     if(icon >= 0 && R_SinkNumber >= NSINKS - 1)
@@ -2017,7 +2017,7 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_ErrorCon = icon;
 	}
     }
-    
+
     return R_NilValue;
 }
 
@@ -2106,16 +2106,13 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- internet access functions  --------------------- */
 
+/* TODO  set timeout */
 #ifdef HAVE_LIBXML
-void	xmlNanoHTTPInit		(void);
-/* void	xmlNanoHTTPCleanup	(void); */
 void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
 int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
 void	xmlNanoHTTPClose	(void *ctx);
 int 	xmlNanoHTTPReturnCode	(void *ctx);
 
-void	xmlNanoFTPInit		(void);
-/* void	xmlNanoFTPCleanup	(void); */
 void *	xmlNanoFTPOpen		(const char *URL);
 int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
 void	xmlNanoFTPClose		(void *ctx);
@@ -2127,13 +2124,14 @@ static void url_open(Rconnection con)
     char *url = con->description;
     UrlScheme type = ((Rurlconn)(con->private))->type;
     int rc;
-    
+
     if(con->mode[0] != 'r')
 	error("can only open URLs for reading");
 
     switch(type) {
+#ifdef HAVE_LIBXML
     case HTTPsh:
-	xmlNanoHTTPInit();
+	/* xmlNanoHTTPInit(); */
 	ctxt = xmlNanoHTTPOpen(url, NULL);
 	if(ctxt == NULL) error("cannot open URL `%s'", url);
 	rc = xmlNanoHTTPReturnCode(ctxt);
@@ -2144,11 +2142,12 @@ static void url_open(Rconnection con)
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
     case FTPsh:
-	xmlNanoFTPInit();
+	/* xmlNanoFTPInit(); */
 	ctxt = xmlNanoFTPOpen(url);
 	if(ctxt == NULL) error("cannot open URL `%s'", url);
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
+#endif
     default:
 	error("unknown URL scheme");
     }
@@ -2187,7 +2186,7 @@ static int url_fgetc(Rconnection con)
     void * ctxt = ((Rurlconn)(con->private))->ctxt;
     unsigned char c;
     size_t n = 0; /* -Wall */
-    
+
     switch(type) {
     case HTTPsh:
 	n = xmlNanoHTTPRead(ctxt, &c, 1);
@@ -2205,7 +2204,7 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     UrlScheme type = ((Rurlconn)(con->private))->type;
     void * ctxt = ((Rurlconn)(con->private))->ctxt;
     size_t n = 0; /* -Wall */
-    
+
     switch(type) {
     case HTTPsh:
 	n = xmlNanoHTTPRead(ctxt, ptr, size*nitems);
@@ -2276,13 +2275,15 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(scmd) > 1)
 	warning("only first element of `description' argument used");
     url = CHAR(STRING_ELT(scmd, 0));
+#ifdef HAVE_LIBXML
     if (strncmp(url, "http://", 7) == 0) {
 	type = HTTPsh;
     } else if (strncmp(url, "ftp://", 6) == 0) {
 	type = FTPsh;
     } else
+#endif
 	error("unsupported URL scheme");
-   
+
 
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
@@ -2296,7 +2297,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strncmp(url, "file://", 7) == 0) {
        con = newfile(url + 7, strlen(open) ? open : "r");
        class2 = "file";
-    } else if (strncmp(url, "http://", 7) == 0 || 
+    } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "ftp://", 6) == 0) {
        con = newurl(url, strlen(open) ? open : "r");
        ((Rurlconn)con->private)->type = type;
@@ -2320,6 +2321,19 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
+
+void putdots(int *pold, int new)
+{
+    int i, old = *pold;
+    *pold = new;
+    for(i = old; i < new; i++) {
+	REprintf(".");
+	if((i+1) % 50 == 0) REprintf("\n");
+	else if((i+1) % 10 == 0) REprintf(" ");
+    }
+    fflush(stderr);
+}
+
 
 /* TODO select file mode based on ContentType ? */
 
@@ -2353,12 +2367,12 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(smode) || length(smode) != 1)
 	error("invalid `mode' argument");
     mode = CHAR(STRING_ELT(smode, 0));
-    
+
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
 	char *buf[CPBUFSIZE];
 	size_t n;
-	
+
 	/* Use binary transfers */
 	in = R_fopen(R_ExpandFileName(url+7), (mode[2] == 'b') ? "rb" : "r");
 	if(!in) error("cannot open URL `%s'", url);
@@ -2373,13 +2387,14 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	FILE *out;
 	void *ctxt;
-	int len, nreads = 0, nbytes = 0;
+	int len, ndots = 0, nnew, nbytes = 0;
 	char buf[IBUFSIZE];
 
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error("cannot open destfile `%s'", file);
 
-	xmlNanoHTTPInit();
+	/* xmlNanoHTTPInit(); */
+	R_Busy(1);
 	if(!quiet) REprintf("trying URL `%s'\n", url);
 	ctxt = xmlNanoHTTPOpen(url, NULL);
 	if(ctxt == NULL) status = 1;
@@ -2394,14 +2409,15 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		while ((len = xmlNanoHTTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		    fwrite(buf, 1, len, out);
 		    nbytes += len;
-		    nreads++;
-		    if(!quiet) {
-			REprintf("."); fflush(stderr);
-			if(nreads % 50 == 0) REprintf("\n"); fflush(stderr);
-		    }
+		    nnew = nbytes/1024;
+		    if(!quiet) putdots(&ndots, nnew);
+#ifdef Win32
+		    R_ProcessEvents();
+#endif
 		}
 		xmlNanoHTTPClose(ctxt);
 		fclose(out);
+		R_Busy(0);
 		if(!quiet) {
 		    if(nbytes > 10240)
 			REprintf("\ndownloaded %dKb\n\n", nbytes/1024, url);
@@ -2417,13 +2433,14 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	FILE *out;
 	void *ctxt;
-	int len, nreads = 0, nbytes = 0;
+	int len, ndots = 0, nnew, nbytes = 0;
 	char buf[IBUFSIZE];
 
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error("cannot open destfile `%s'", file);
 
-	xmlNanoFTPInit();
+	/* xmlNanoFTPInit(); */
+	R_Busy(1);
 	if(!quiet) REprintf("trying URL `%s'\n", url);
 	ctxt = xmlNanoFTPOpen(url);
 	if(ctxt == NULL) status = 1;
@@ -2432,14 +2449,15 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while ((len = xmlNanoFTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		fwrite(buf, 1, len, out);
 		nbytes += len;
-		nreads++;
-		if(!quiet) {
-		    REprintf("."); fflush(stderr);
-		    if(nreads % 50 == 0) REprintf("\n"); fflush(stderr);
-		}
+		nnew = nbytes/1024;
+		if(!quiet) putdots(&ndots, nnew);
+#ifdef Win32
+		R_ProcessEvents();
+#endif
 	    }
 	    xmlNanoFTPClose(ctxt);
 	    fclose(out);
+	    R_Busy(0);
 	    if(!quiet) {
 		if(nbytes > 10240)
 		    REprintf("\ndownloaded %dKb\n\n", nbytes/1024, url);
