@@ -262,7 +262,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if (logical.return)
                         return(FALSE)
                     else stop(gettextf("package/namespace load failed for '%s'",
-                                       libraryPkgName(package)), domain = NA)
+                                       libraryPkgName(package)),
+                              call. = FALSE, domain = NA)
                 else {
                     on.exit(do.call("detach", list(name = pkgname)))
                     nogenerics <- checkNoGenerics(env, package)
