@@ -1404,7 +1404,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     default:/* OTHERWISE */
 	errorcall(call, "invalid plot type '%c'", type);
 
-    } /* switch(type) */
+    } /* End {switch(type)} */
 
     if (type == 'p' || type == 'b' || type == 'o') {
 	for (i = 0; i < n; i++) {

@@ -3932,7 +3932,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		     NA_INTEGER, dd);
 	    break;
 
-	case 18:
+	case 18: /* S filled diamond */
 	    xc = RADIUS * GSTR_0;
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    xx[0] = x;	  yy[0] = y-xc;
@@ -3949,7 +3949,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    break;
 
 
-	case 20: /* R Dot */
+	case 20: /* R `Dot' (small circle) */
 	    xc = SMALL * GSTR_0;
 	    GCircle(x, y, coords, xc, dd->gp.col, dd->gp.col, dd);
 	    break;
