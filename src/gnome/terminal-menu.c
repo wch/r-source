@@ -279,7 +279,7 @@ static GnomeUIInfo file_menu[] =
   { GNOME_APP_UI_ITEM, "Save", "Save the workspace image", R_gtk_terminal_file_save, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_SAVE, GNOME_KEY_NAME_SAVE, GNOME_KEY_MOD_SAVE, NULL },
   { GNOME_APP_UI_ITEM, "Save _As...", "Save the workspace image to a file", R_gtk_terminal_file_saveas, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_SAVE_AS, GNOME_KEY_NAME_SAVE_AS, GNOME_KEY_MOD_SAVE_AS, NULL },
   GNOMEUIINFO_SEPARATOR,
-  { GNOME_APP_UI_ITEM, "_Print...", "Print the console output", generic_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_PRINT, NULL, (GdkModifierType)0, NULL },
+  { GNOME_APP_UI_ITEM, "_Print...", "Print the console output", generic_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_PRINT, 0, (GdkModifierType)0, NULL },
   GNOMEUIINFO_MENU_PRINT_SETUP_ITEM(generic_cb, NULL),
   GNOMEUIINFO_SEPARATOR,
   GNOMEUIINFO_MENU_EXIT_ITEM(file_exit_cb, NULL),
