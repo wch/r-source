@@ -20,6 +20,9 @@ checkMD5sums(pkg, dir)
   The file \file{MD5} which is created is in a format which can be
   checked by \code{md5sum -c MD5} if a suitable command-line version of
   \code{md5sum} is available.
+
+  If \code{dir} is missing, an installed package of name \code{pkg} is
+  searched for.
 }
 \value{
   \code{checkMD5sums} returns a logical, \code{NA} if there is no
