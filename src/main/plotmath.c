@@ -2617,7 +2617,7 @@ static BBOX RenderPhantom(SEXP expr, int draw)
 	bboxWidth(bbox) = 0;
 	bboxItalic(bbox) = 0;
     }
-    else RenderGap(bboxWidth(bbox), 0);
+    else RenderGap(bboxWidth(bbox), draw);
     return bbox;
 }
 

@@ -393,6 +393,9 @@ BUG FIXES
     o   effectively zero-length arrows are omitted (rather than getting
 	a system- and device-dependent arbitrary angle).
 
+    o	phantom(expr) in plotmath was used to calculate the bounding
+	boxes, but the space was not actually used in typesetting the 
+	expression (PR#622).
 
 
 	**************************************************
