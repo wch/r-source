@@ -1849,7 +1849,7 @@ EOF
 
 ### Programs.
 
-for ac_prog in gawk mawk nawk awk
+for ac_prog in mawk gawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -8616,7 +8616,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-char *p = alloca(2 * sizeof(int));
+void *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:8623: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -10408,7 +10408,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -13910,6 +13910,9 @@ trap 'rm -fr `echo "Makeconf
   src/library/ts/Makefile
   src/library/ts/src/Makefile
   src/main/Makefile
+  src/modules/Makefile
+  src/modules/X11/Makefile
+  src/modules/gnome/Makefile    
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
@@ -13928,8 +13931,6 @@ trap 'rm -fr `echo "Makeconf
   src/scripts/check
   src/scripts/extract-usage
   src/unix/Makefile
-  src/unix/X11/Makefile
-  src/unix/gnome/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
@@ -14210,6 +14211,9 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/library/ts/Makefile
   src/library/ts/src/Makefile
   src/main/Makefile
+  src/modules/Makefile
+  src/modules/X11/Makefile
+  src/modules/gnome/Makefile    
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
@@ -14228,8 +14232,6 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/scripts/check
   src/scripts/extract-usage
   src/unix/Makefile
-  src/unix/X11/Makefile
-  src/unix/gnome/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
