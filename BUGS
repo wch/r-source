@@ -115,10 +115,6 @@ Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
 Subject: degrees of freedom in nlme()
 From: jerome@hivnet.ubc.ca
 Date: Fri, 20 Dec 2002 01:40:06 +0100 (MET)
-* PR# 2385 *
-Subject: read.xport and lookup.xport in foreign
-From: Frank E Harrell Jr <fharrell@virginia.edu>
-Date: Fri, 20 Dec 2002 12:47:58 -0500
 * PR# 2386 *
 Subject: ace and avas in acepack
 From: Frank E Harrell Jr <fharrell@virginia.edu>
@@ -681,10 +677,6 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 3138 *
-Subject: My 30 Second Decision! sekcj
-From: "vykasuccess@yahoo.com" <tasuccess@yahoo.com>
-Date: Fri, 30 May 2003 09:58:53 -0400
 * PR# 3139 *
 Subject: power.t.test needs to check delta==NULL before abs(delta) 
 From: "A.J. Rossini" <rossini@blindglobe.net>
@@ -693,63 +685,23 @@ Date: Fri, 30 May 2003 08:49:34 -0700
 Subject: Re: [Rd] power.t.test needs to check delta==NULL before abs(delta)
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 30 May 2003 17:05:11 +0100 (BST)
-* PR# 3141 *
-Subject: Eres soltero/a...	(r-bugs@biostat.ku.dk)         tcouw
-From: "Pachetes.com__Claudia" <clara@pachetes.com>
-Date: Sat, 31 May 2003 02:27:39 -0300
-* PR# 3142 *
-Subject: Fw: Fred  z
-From: "Riley Hastings" <w5l2887mcbh@copper.net>
-Date: Fri, 30 May 03 07:43:11 GMT
-* PR# 3143 *
-Subject: incredible! nqpfokkgfviij uo
-From: "Beatriz Dorsey" <bz5ibqmw30om@hotmail.com>
-Date: Fri, 30 May 03 05:40:08 GMT
-* PR# 3144 *
-Subject: (광고) 불결해~~~       나가 있써~어~~~~~~~@
-From: 알프레드<mailmaster@firmsec.com>
-Date: Fri, 30 May 2003 23:53:51 +0200 (MET DST)
-* PR# 3145 *
-Subject: Refinance with Low Mortgage Rates!
-From: "Carson Waller" <l2wjgott4gs@bigfoot.com>
-Date: Sat, 31 May 03 01:31:34 GMT
-* PR# 3146 *
-Subject: Re: Bam Bam eo
-From: "Blake Sheets" <8smeifv5zx@usa.net>
-Date: Fri, 30 May 03 22:35:20 GMT
-* PR# 3147 *
-Subject: how often pmxfz  qm ivi
-From: "Ila Pittman" <s99onp4l@msn.com>
-Date: Sat, 31 May 03 01:13:36 GMT
-* PR# 3148 *
-Subject: Hi there
-From: "laura_goldberg" <laura_goldberg@emailsdelivery.org>
-Date: 5/30/2003 10:04:45 AM
-* PR# 3149 *
-Subject: Half Off V1AGRA!        [ yve 
-From: "" <moiqa68@aol.com>
-Date: Sun, 01 Jun 03 12:12:56 GMT
-* PR# 3150 *
-Subject: 1/2 Off V1agra!      [ dabaunym g u
-From: "" <mofo3000@aol.com>
-Date: Sun, 01 Jun 03 09:08:33 GMT
-* PR# 3151 *
-Subject: r-bugs@biostat.ku.dk Re: Add size to your Penis jhro
-From: rsoDigna <pnfbleeann@cutey.com>
-Date: Sat, 31 May 2003 23:51:04 -0700
-* PR# 3152 *
-Subject:  how are you        r-bugs             r-bugs@biostat.ku.dk ltlnx
-From: fysDigna <mblcleeann@cutey.com>
-Date: Sun, 1 Jun 2003 00:10:26 -0700
-* PR# 3153 *
-Subject: Re: when?
-From: "Loraine Case" <c87a9sgqv59@usa.net>
-Date: Sat, 31 May 03 20:30:14 GMT
-* PR# 3154 *
-Subject:              BUSINESS   PROPOSAL   
-From: NECHOMBO KAGUVI <nechombokaguvi@netscape.net>
-Date: Sun, 01 Jun 2003 20:45:33 +0100
-* PR# 3155 *
-Subject: tarantaba utterauce ouq te tf teke
-From: "Dario Waters" <54ty7tmd@earthlink.net>
-Date: Sun, 01 Jun 03 19:45:10 GMT
+* PR# 3168 *
+Subject: mva:princomp.default not set correctly
+From: irwin@imcs.rutgers.edu
+Date: Mon, 2 Jun 2003 17:17:22 +0200 (MET DST)
+* PR# 3171 *
+Subject: 신용불량! 적은이자율로 은행또는 카드회사에서 빌려 신용불량을 막는 비법(101가지)        >>25286-0603011404bb1200ms
+From: 25286-0603011404bb1200ms@yahoo.co.kr
+Date: Mon, 2 Jun 2003 18:14:11 +0200 (MET DST)
+* PR# 3172 *
+Subject: RE: Submited (004756-3463)
+From: "Intervideo Tech Support" <support@intervideo.com>
+Date: Mon, 2 Jun 2003 11:29:45 -0700
+* PR# 3173 *
+Subject: Such a sad story
+From: "Dion Palmer" <fi0kgafb@usa.net>
+Date: Mon, 02 Jun 03 09:19:12 GMT
+* PR# 3174 *
+Subject: Re: what time?
+From: "Guadalupe Brooks" <f78t6m3o@earthlink.com>
+Date: Mon, 02 Jun 03 09:18:26 GMT
