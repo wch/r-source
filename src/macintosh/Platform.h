@@ -6,7 +6,7 @@
 #define LONG_32_BITS	1
 
 				/* Floating Point Arithmetic */
-#define HAVE_MATHERR		/* System V */
+#undef HAVE_MATHERR		/* System V */
 #define HAVE_ISNAN		/* IEEE Arith indicator */
 #define HAVE_FINITE		/* finite() (really) isfinite() */
 
@@ -75,7 +75,7 @@
 #else
 #define JMP_BUF jmp_buf
 #define SETJMP(x) setjmp(x)
-#define LONGJMP(x,i) setlongjmp(x,i)
+#define LONGJMP(x,i) longjmp(x,i)
 #endif
 
 
