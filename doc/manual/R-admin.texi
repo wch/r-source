@@ -772,8 +772,9 @@ use a different compiler (or a front end shell script which does the
 re-ordering).
 
 If you find you need to alter configure variables, it is worth noting
-that some settings are cached in the file @file{config.cache}, and it is
-a good idea to remove that file before re-configuring.
+that some settings may be cached in the file @file{config.cache}, and
+it is a good idea to remove that file (if it exists) before
+re-configuring.
 
 @node Using make, Using FORTRAN, Configuration variables, Configuration on Unix
 @section Using make
