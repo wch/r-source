@@ -440,77 +440,76 @@ reorder.dendrogram <- function(x, wts, ...)
 }
 
 
-## original Andy Liaw; modified RG
+## original Andy Liaw; modified RG, MM
 
-heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
-                     scale = c("row", "column", "none"), na.rm=TRUE, ...)
+heatmap <-
+function (x, Rowv, Colv, distfun = dist, hclustfun = hclust, add.expr,
+         scale = c("row", "column", "none"), na.rm=TRUE, ...)
 {
     scale <- match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
-        stop("`x' must be a numeric matrix")
+	stop("`x' must be a numeric matrix")
     nr <- di[1]
     nc <- di[2]
     if(nr <= 1 || nc <= 1)
-        stop("`x' must have at least 2 rows and 2 columns")
+	stop("`x' must have at least 2 rows and 2 columns")
     r.cex <- 0.2 + 1/log10(nr)
     c.cex <- 0.2 + 1/log10(nc)
     ## by default order by row/col means
     if( missing(Rowv) )
-        Rowv <- apply(x, 1, mean, na.rm=na.rm)
+	Rowv <- rowMeans(x, na.rm=na.rm)
     if( missing(Colv) )
-        Colv <- apply(x, 2, mean, na.rm=na.rm)
+	Colv <- colMeans(x, na.rm=na.rm)
     ## get the dendrograms
     if( !inherits(Rowv, "dendrogram") ) {
-        hcr <- hclust(distfun(x))
-        ddr <- as.dendrogram(hcr)
-        ddr <- reorder(ddr, Rowv)
+	hcr <- hclustfun(distfun(x))
+	ddr <- as.dendrogram(hcr)
+	ddr <- reorder(ddr, Rowv)
     }
     else
-        ddr <- Rowv
+	ddr <- Rowv
     if( !inherits(Colv, "dendrogram") ) {
-        hcc <- hclust(distfun(t(x)))
-        ddc <- as.dendrogram(hcc)
-        ddc <- reorder(ddc, Colv)
+	hcc <- hclustfun(distfun(t(x)))
+	ddc <- as.dendrogram(hcc)
+	ddc <- reorder(ddc, Colv)
     }
     else
-        ddc <- Colv
+	ddc <- Colv
     rowInd <- order.dendrogram(ddr)
     colInd <- order.dendrogram(ddc)
     ## reorder x
     x <- x[rowInd, colInd]
     if(scale == "row") {
-        mn <- rowMeans(x, na.rm=na.rm)
-        sd <- apply(x, 1, sd, na.rm=na.rm)
-        x <- sweep(x, 1, mn)
-        x <- sweep(x, 1, sd, "/")
+	x <- sweep(x, 1, rowMeans(x, na.rm=na.rm))
+	sd <- apply(x, 1, sd, na.rm=na.rm)
+	x <- sweep(x, 1, sd, "/")
     }
     else if(scale == "column") {
-        mn <- colMeans(x, na.rm=na.rm)
-        sd <- apply(x, 2, sd, na.rm=na.rm)
-        x <- sweep(x, 2, mn)
-        x <- sweep(x, 2, sd, "/")
+	x <- sweep(x, 2, colMeans(x, na.rm=na.rm))
+	sd <- apply(x, 2, sd, na.rm=na.rm)
+	x <- sweep(x, 2, sd, "/")
     }
     ## Graphics :
     op <- par(no.readonly = TRUE)
     on.exit(par(op))
     layout(matrix(c(0, 3, 2, 1), 2, 2, byrow = TRUE),
-           widths = c(1,4), heights = c(1, 4), respect = TRUE)
+	   widths = c(1,4), heights = c(1, 4), respect = TRUE)
     par(mar = c(5, 0, 0, 5))
     image(1:ncol(x), 1:nrow(x), t(x), axes = FALSE,
-          xlim = c(0.5, ncol(x) + 0.5), ylim = c(0.5, nrow(x) + 0.5),
-          xlab = "",ylab = "", ...)
+	  xlim = c(0.5, ncol(x) + 0.5), ylim = c(0.5, nrow(x) + 0.5),
+	  xlab = "",ylab = "", ...)
     axis(1, 1:ncol(x), las = 2, line = -0.5, tick = 0,
-         labels = if (is.null(colnames(x))) (1:ncol(x))[order.dendrogram(ddc)]
-         else colnames(x), cex.axis = c.cex)
-    axis(4, 1:nrow(x), las = 2, line = -0.5, tick = 0, labels =
-         if(is.null(rownames(x))) (1:nrow(x))[order.dendrogram(ddr)]
-         else rownames(x), cex.axis = r.cex)
+	 labels = if(is.null(colnames(x))) (1:ncol(x))[colInd] else colnames(x),
+	 cex.axis = c.cex)
+    axis(4, 1:nrow(x), las = 2, line = -0.5, tick = 0,
+	 labels = if(is.null(rownames(x))) (1:nrow(x))[rowInd] else rownames(x),
+	 cex.axis = r.cex)
     if (!missing(add.expr))
-        eval(substitute(add.expr))
+	eval(substitute(add.expr))
     ## the two dendrograms :
     par(mar = c(5, 3, 0, 0))
-    plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab="none")
+    plot(ddr, horiz = TRUE, axes = FALSE, yaxs= "i", leaflab= "none")
     par(mar = c(0, 0, 3, 5))
-    plot(ddc, axes = FALSE, xaxs = "i", leaflab="none")
+    plot(ddc,               axes = FALSE, xaxs= "i", leaflab= "none")
     invisible(list(rowInd = rowInd, colInd = colInd))
 }

@@ -19,6 +19,9 @@ heatmap(x, Rowv, Colv, distfun = dist, add.expr,
     the column dendrogram. }
   \item{distfun}{function used to compute the distance (dissimilarity)
     between both rows and columns.  Defaults to \code{\link{dist}}.}
+  \item{hclustfun}{function used to compute the hierarchical clustering
+    when \code{Rowv} or \code{Colv} are not dendrograms.  Defaults to
+    \code{\link{hclust}}.}
   \item{add.expr}{expression that will be evaluated after the call to
     image.  Can be used to add components to the plot.}
   \item{scale}{character indicating if the values should be centered and
@@ -26,31 +29,37 @@ heatmap(x, Rowv, Colv, distfun = dist, add.expr,
     none.  The default is \code{"row"}.}
   \item{na.rm}{logical indicating whether \code{NA}'s should be removed}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
-    e.g. \code{col} specifying the colors.} %
+    e.g., \code{col} specifying the colors.} %
 }
 \details{
   If either \code{Rowv} or \code{Colv} are dendrograms they are honored
-  (and not reordered).  If either is a vector then the apropriate
-  dendrogram is reordered according to the supplied values, subject to
-  the constraints imposed by the dendrogram.  If either is missing, as
-  by default, then the ordering of the corresponding dendrogram is by
-  the mean value of the rows/columns.
+  (and not reordered).  Otherwise, dendrograms are computed as
+  \code{dd <- as.dendrogram(hclustfun(distfun(X)))} where \code{X} is
+  either \code{x} or \code{t(x)}.\cr
 
-  By default the rows are scaled to have mean zero and standard
-  deviation one.  There is some empirical evidence from genomic plotting
-  that this is useful.
+  If either is a vector (of ``weights'') then the appropriate dendrogram
+  is reordered according to the supplied values subject to the
+  constraints imposed by the dendrogram, by \code{\link{reorder}(dd, Rowv)},
+  in the row case.  If either is missing, as by default, then the
+  ordering of the corresponding dendrogram is by the mean value of the
+  rows/columns, i.e., in the case of rows,
+  \code{Rowv <- rowMeans(x, na.rm=na.rm)}.
 
-  The default colors are not pretty. Consider using RColorBrewer.
+  By default (\code{scale = "row"}) the rows are scaled to have mean
+  zero and standard deviation one.  There is some empirical evidence
+  from genomic plotting that this is useful.
+
+  The default colors are not pretty.  Consider using RColorBrewer.
 }
 \value{
   Invisibly, a list with components
   \item{rowInd}{\bold{r}ow index permutation vector as returned by
-    \code{\link{order.dendrogram}}.}}
+    \code{\link{order.dendrogram}}.}
   \item{colInd}{\bold{c}olumn index permutation vector.}
 }
 \author{Andy Liaw, original; R. Gentleman and M. Maechler, revisions.}
 
-\seealso{\code{\link{image}}}
+\seealso{\code{\link{image}}, \code{\link{hclust}}}
 
 \examples{
   set.seed(132)
