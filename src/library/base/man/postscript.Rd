@@ -2,11 +2,14 @@
 \title{PostScript Graphics}
 \usage{
 postscript(file = "Rplots.ps", paper, horizontal, width, height,
-        family, pointsize, bg, fg)
-ps.options(paper, horizontal, width, height, family, pointsize, bg, fg)
+           family, pointsize, bg, fg)
+ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
+           onefile = TRUE, print.it = FALSE, append = FALSE)
+.PostScript.Options
 }
 \alias{postscript}
 \alias{ps.options}
+\alias{.PostScript.Options}
 \arguments{
 \item{file}{a character string giving the name of a file to print to.}
 \item{paper}{the size of paper in the printer.  The choices are
@@ -15,10 +18,10 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg)
 \item{width,height}{the width, and height of the graphics region in inches.
 The default is to use the entire page.}
 \item{family}{the font family to be used.
-This must be one of \code{"AvantGarde"},
-\code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
-\code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-\code{"Palatino"} or \code{"Times"}.}
+  This must be one of \code{"AvantGarde"},
+  \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
+  \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
+  \code{"Palatino"} or \code{"Times"}.}
 \item{pointsize}{the default point size to be used.}
 \item{bg}{the default background color to be used.}
 \item{fg}{the default foreground color to be used.}
@@ -47,5 +50,13 @@ postscript("foo.ps")
 
 plot(xx,yy)# produce the desired graph(s)
 ## dev.off()# turn off the postscript device
+
+all(unlist(ps.options()) == unlist(.PostScript.Options))
+str(ps.options(reset = TRUE))
+
+##- error checking of arguments:
+ps.options(width=0:12, onefile=1, bg=pi)
+%% If  override.check  was an argument to ps.options:
+%%> str(ps.options(width=0:12, onefile=1, bg=pi, override.check = c(F,T,F)))
 }
 \keyword{device}
