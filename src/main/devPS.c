@@ -1194,22 +1194,10 @@ static void PS_NewPage(DevDesc *dd)
     PostScriptStartPage(pd->psfp, pd->pageno);
     Invalidate(dd);
 
-    /* FIXME: I'm not really sure these settings are necessary or even
-       desirable. Possibly, they should be removed and the background
-       color code call PS_Rect rather than PostScriptRectangle */
-
-    SetFont(dd->dp.font, dd->dp.ps, dd);
-    SetLineStyle(0, 1.0, dd);
-    SetColor(dd->dp.col, dd);
-
-    if(dd->dp.bg != R_RGB(255,255,255)) {
-	SetFill(dd->dp.bg, dd);
-	PostScriptRectangle(pd->psfp,
-			    0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight);
-	fprintf(pd->psfp, "p2\n");
+    if(dd->gp.bg != R_RGB(255,255,255)) {
+	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight, 
+		DEVICE, dd->gp.bg, NA_INTEGER, dd);
     }
-    else
-	pd->current.fill = NA_INTEGER;
 }
 
 #ifdef Win32
