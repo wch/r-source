@@ -455,3 +455,11 @@ Date: Wed, 10 Apr 2002 14:35:35 +0100
 Subject:  Funny characters in x11 window title 
 From: David Brahm  <a215020@onyx.fmr.com>
 Date: Wed, 10 Apr 2002 11:21:43 -0400 (EDT)
+* PR# 1452 *
+Subject: ?©??º? º???µ????? ±??®°? ????µ?µµ µ?±???............?? [±¤°?]
+From: "." <ggoodrice@orgio.net>
+Date: Thu, 11 Apr 2002 22:52:53 +0900
+* PR# 1453 *
+Subject: segmentation violation when closing the data entry window
+From: Stephen Eglen <eglen@pcg.wustl.edu>
+Date: Thu, 11 Apr 2002 13:53:52 -0500
