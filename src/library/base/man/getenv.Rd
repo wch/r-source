@@ -25,6 +25,7 @@ Sys.getenv(x)
   \code{\link{getwd}} for the working directory.
 }
 \examples{
+## whether HOST is set will be shell-dependent e.g. Solaris' csh does not.
 Sys.getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 }
 \keyword{environment}
