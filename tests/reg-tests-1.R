@@ -285,16 +285,16 @@ stopifnot(1 == nrow(merge(x, y)))
 stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
 
-## PR 1155. On some system strptime was not setting the month or day.
-if(require(MASS)) {
-data(beav1)
-attach(beav1[90:94,])
+## PR 1155. On some systems strptime was not setting the month or mday
+## when yday was supplied.
+bv1 <- data.frame(day=c(346,346,347,347,347), time=c(2340,2350,0,10,20))
+attach(bv1)
 tmp <- strptime(paste(day, time %/% 100, time %% 100), "%j %H %M")
 detach()
-detach("package:MASS")
 stopifnot(all(tmp$mon == 11))
-stopifnot(tmp$mday == c(12, 12, 13, 13, 13))
-}
+# day of month will be different in a leap year on systems that default
+# to the current year, so test differences:
+stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
 ## failed on glibc-based systems in 1.3.1, including Windows.
 
 
