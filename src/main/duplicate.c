@@ -122,6 +122,21 @@ SEXP duplicate(SEXP s)
 	DUPLICATE_ATTRIB(t, s);
 	UNPROTECT(2);
 	break;
+    case DOTSXP:
+	PROTECT(sp = s);
+	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
+	while(sp != R_NilValue) {
+	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
+	    t = CDR(t);
+	    COPY_TAG(t, sp);
+	    DUPLICATE_ATTRIB(t, sp);
+	    sp = CDR(sp);
+	}
+	t = CDR(h);
+	SET_TYPEOF(t, DOTSXP);
+	DUPLICATE_ATTRIB(t, s);
+	UNPROTECT(2);
+	break;
     case CHARSXP:
 	PROTECT(s);
 	PROTECT(t = allocString(strlen(CHAR(s))));
