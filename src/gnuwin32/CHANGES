@@ -8,6 +8,9 @@ defaults to HOME, if set).
 New flag --no-environ suppresses reading .Renviron and is implied by
 --vanilla.
 
+More support for building R into other applications: see the examples
+in the front-ends directory of the source distribution.
+
 
 rw0641
 ======
@@ -21,8 +24,7 @@ o  MDI, multiple document interface.  Here the console, graphics and
    pagers are subwindows of one main `frame' window.
 
 You can set your preference (and details of the MDI) in the Rconsole
-file: this can also be overriden on the command line by --mdi or
---sdi.
+file: this can also be overriden on the command line by --mdi or --sdi.
 
 If you use multiple files in a single SDI pager, the (row) positions
 are remembered and re-used when you switch views in the pager.
