@@ -408,8 +408,8 @@ extern int	gc_inhibit_torture INI_as(1);
 extern char*	R_Home;		    /* Root of the R tree */
 
 /* Memory Management */
-extern int	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
-extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
+extern unsigned long	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
+extern unsigned long	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
@@ -728,10 +728,10 @@ void warningcall(SEXP, const char*,...);
 void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 
-int R_GetMaxVSize(void);
-void R_SetMaxVSize(int);
-int R_GetMaxNSize(void);
-void R_SetMaxNSize(int);
+unsigned long R_GetMaxVSize(void);
+void R_SetMaxVSize(unsigned long);
+unsigned long R_GetMaxNSize(void);
+void R_SetMaxNSize(unsigned long);
 
 void R_run_onexits(RCNTXT *);
 void R_restore_globals(RCNTXT *);
