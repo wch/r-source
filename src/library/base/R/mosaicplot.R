@@ -136,8 +136,9 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                     if (YP[j] > 0) {
                         polygon(c(x1,x2,x2,x1),
                                 c(y.b[j],y.b[j],y.t[j],y.t[j]),
-                                lty = if(shade) X[j, p+1] else 1,
-                                col = color[if(shade) X[j, p+2] else j])
+                                ## shade can be a vector: what is intended?
+                                lty = if(shade[1]) X[j, p+1] else 1,
+                                col = color[if(shade[1]) X[j, p+2] else j])
                         ## <KH 2000-08-29>
                         ## Is this really needed?
                         ## segments(c(x1,x1,x1,x2),
@@ -248,6 +249,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     }
 
     ncolors <- length(tabulate(Ind[,dimd]))
+    ## shade can be a vector: what is intended?
     if(!shade && ((is.null(color) || length(color) != ncolors))) {
         color <-
             if (is.logical(color) && color[1])
@@ -260,6 +262,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
 
     ##-- Plotting
     plot.new()
+    ## shade can be a vector: what is intended?
     if(!shade) {
         opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
         on.exit(par(opar))
