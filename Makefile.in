@@ -84,16 +84,22 @@ install: installdirs
 	  $(INSTALL_SCRIPT) $${f} $(Rexecbindir); \
 	done
 	@echo "installing shlibs ..."
-	@for f in `ls bin/*.$(SHLIB_EXT) bin/*.la`; do \
+## FIXME:
+## Add bin/*.la when using libtool for shlibs
+	@for f in `ls bin/*.$(SHLIB_EXT)`; do \
 	  $(INSTALL_PROGRAM) $${f} $(Rexeclibdir); \
 	done
+## </FIXME>
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --quiet --mode=finish $(Rexeclibdir)
+## FIMXE:
+## Add gnome/*.la when using libtool for shlibs
 	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
 	  $(MKINSTALLDIRS) $(rhome)/gnome; \
 	  for f in `ls gnome/*.$(SHLIB_EXT) gnome/*.la`; do \
 	    $(INSTALL_PROGRAM) $${f} $(rhome)/gnome; \
 	  done; \
 	fi
+## </FIXME>
 	@echo "installing headers ..."
 	@for f in include/*.h; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
