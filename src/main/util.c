@@ -53,7 +53,8 @@ SEXP ScalarComplex(complex x)
 SEXP ScalarString(SEXP x)
 {
     SEXP ans;
-    PROTECT(ans = allocVector(STRSXP, 1));
+    PROTECT(x);
+    ans = allocVector(STRSXP, 1);
     STRING(ans)[0] = x;
     UNPROTECT(1);
     return ans;

@@ -178,6 +178,8 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
+	    if( R_CollectWarnings )
+		PrintWarnings();
 	    break;
 	case PARSE_ERROR:
 	    error("syntax error\n");
@@ -251,11 +253,6 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	}
 	if (browselevel)
 	    Reset_C_alloc();
-
-	if (!browselevel) {
-	    R_Warnings = R_NilValue;
-            R_CollectWarnings = 0;
-        }
 
 	R_PPStackTop = savestack;
 	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
@@ -391,6 +388,8 @@ void mainloop(void)
     R_Toplevel.conexit = R_NilValue;
     R_Toplevel.cend = NULL;
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+
+    R_Warnings = R_NilValue;
 
     /* On initial entry we open the base language */
     /* package and begin by running the repl on it. */
