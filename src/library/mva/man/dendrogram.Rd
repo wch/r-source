@@ -95,7 +95,7 @@ str.dendrogram(object, max.level = 0, vec.len = 4, digits.d = 3,
     \item{\code{midpoint}}{numeric horizontal distance of the node from
       the left border of the branch.  This is needed at least for
     \code{plot(*, center=FALSE)}.}
-    \item{\code{text}}{character; the label of the node}
+    \item{\code{label}}{character; the label of the node}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}
     \item{\code{nodePar}}{a named list of length one vectors specifying
@@ -105,8 +105,8 @@ str.dendrogram(object, max.level = 0, vec.len = 4, digits.d = 3,
       attributes for \code{\link{segments}} plotting of the edge leading
       to the node, see the \code{edgePar} argument above.}
     \item{\code{leaf}}{logical, if \code{TRUE}, the node is a leaf of
-      the tree.  This will often be a \code{\link{character}} which can
-      be used for plotting instead of the \code{text} attribute.}
+      the tree.}%  This will often be a \code{\link{character}} which can
+    %      be used for plotting instead of the \code{text} attribute.}
   }
 
   \code{cut.dendrogram()} returns a list with components \code{$upper}
