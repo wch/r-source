@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.173 $ ';
+my $revision = ' $Revision: 1.174 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -147,9 +147,10 @@ while(<KEYWORDS>) {
 }
 close(KEYWORDS);
 
-## Get the names of base and recommended packages for later.
+## Get the names of base and recommended packages and stubs for later.
 my @R_pkgs_base = ();
 my @R_pkgs_recommended = ();
+my @R_pkgs_stubs = ();
 open(MAKEVARS,
      "< " . &file_path(${R::Vars::R_HOME}, "share", "make", "vars.mk"))
   or die "Error: cannot open file 'share/make/vars.mk' for reading\n";
@@ -157,6 +158,8 @@ while(<MAKEVARS>) {
     @R_pkgs_base =
 	split(/ +/, $2) if(/^(R_PKGS_BASE *=)(.*)/);
     @R_pkgs_recommended =
+	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
+    @R_pkgs_stubs =
 	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
 }
 
@@ -715,11 +718,14 @@ sub check_pkg {
     }
 
     if($description->{"Priority"}) {
-	if($description->{"Priority"} =~ /^(base|recommended)/i) {
-	    ## Simplify matters by treating high priority packages
-	    ## together.
+	if($description->{"Priority"}
+	   =~ /^(base|recommended|defunct-base)/i) {
+	    ## Simplify matters by treating high priority packages and
+	    ## base stubs together.
 	    my $found = 0;
-	    foreach my $p (@R_pkgs_base, @R_pkgs_recommended) {
+	    foreach my $p (@R_pkgs_base,
+			   @R_pkgs_recommended,
+			   @R_pkgs_stubs) {
 		if($description->{"Package"} eq $p) {
 		    $found = 1;
 		    break;
@@ -730,8 +736,8 @@ sub check_pkg {
 		$log->print("Invalid Priority field.\n");
 		$log->print(wrap("", "",
 				 ("Packages with priorities 'base' or",
-				  "'recommended' must already be known",
-				  "to R.\n")));
+				  "'recommended' or 'defunct-base'",
+				  "must already be known to R.\n")));
 		$log->print(wrap("", "", @msg_DESCRIPTION));
 		exit(1);
 	    }

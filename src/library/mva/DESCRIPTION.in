@@ -1,7 +1,7 @@
 Package: mva
 Version: @VERSION@
 Priority: base
-Title: Classical Multivariate Analysis
+Title: Defunct Package for Classical Multivariate Analysis
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Multivariate analysis

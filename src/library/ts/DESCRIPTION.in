@@ -1,6 +1,6 @@
 Package: ts
 Version: @VERSION@
-Priority: base
+Priority: defunct-base
 Title: Defunct Package of Time Series Functions
 Author: Collected by Brian Ripley.
 Maintainer: R Core Team <R-core@r-project.org>

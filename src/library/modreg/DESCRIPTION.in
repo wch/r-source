@@ -1,6 +1,6 @@
 Package: modreg
 Version: @VERSION@
-Priority: base
+Priority: defunct-base
 Title: Defunct Package for Modern Regression: Smoothing and Local Methods
 Author: Brian Ripley and the R Core Team
 Maintainer: R Core Team <R-core@r-project.org>

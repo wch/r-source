@@ -1,6 +1,6 @@
 Package: ctest
 Version: @VERSION@
-Priority: base
+Priority: defunct-base
 Title: Defunct Package for Classical Tests
 Author: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>, with major
   contributions by Peter Dalgaard <p.dalgaard@kubism.ku.dk> and

@@ -1,6 +1,6 @@
 Package: eda
 Version: @VERSION@
-Priority: base
+Priority: defunct-base
 Title: Defunct Package for Exploratory Data Analysis
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>

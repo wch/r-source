@@ -1,7 +1,7 @@
 Package: mle
 Title: Defunct package for maximum likelihood estimation
 Version: @VERSION@
-Priority: base
+Priority: defunct-base
 Author: Peter Dalgaard
 Description: Generic (smooth) likelihood maximization and profiling
 Maintainer: R Core Team <R-core@r-project.org>

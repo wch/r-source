@@ -1,6 +1,6 @@
 Package: stepfun
 Version: @VERSION@
-Priority: base
+Priority: defunct-base
 Title: Defunct Package for Step Functions, incl. Empirical Distributions
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>
