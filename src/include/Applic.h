@@ -101,7 +101,12 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 /* ...............*/
 
 /* pretty.c */
-/* ...............*/
+double pretty0(double *lo, double *up, int *ndiv, int min_n,
+	       double shrink_sml, double high_u_fact[],
+	       int eps_correction, int return_bounds);
+void pretty(double *lo, double *up, int *ndiv, int *min_n,
+	    double *shrink_sml, double *high_u_fact, int *eps_correction);
+
 
 /* pythag.c */
 double pythag(double, double);
@@ -113,7 +118,9 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 		 int *n, double *x, double *y,
 		 double *b, double *c, double *d);
 
-/* stem.c      (??) */
+/* stem.c */
+int stemleaf(double *x, int *n, double *scale, int *width, double *atom);
+
 /* ...............*/
 
 /* strsignif.c  (??) */
