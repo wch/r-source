@@ -50,7 +50,4 @@ browseAll()
   See \emph{Programming with Data} (John M. Chambers, Springer, 1998)
   for the equivalent functions.
 }
-\author{
-  John Chambers
-}
 \keyword{internal}

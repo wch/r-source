@@ -24,7 +24,12 @@ isSealedClass(Class)
   classes (numeric and other types of vectors, matrix and array data)
   are sealed.  So also are the methods for the primitive functions on
   those data types.  The effect is that programmers cannot re-define
-  the meaning of these basic data types and computations.
+  the meaning of these basic data types and computations.  More
+  precisely, for primitive functions that depend on only one data
+  argument, methods cannot be specified for basic classes.  For
+  functions (such as the arithmetic operators) that depend on two
+  arguments, methods can be specified if \emph{one} of those arguments
+  is a basic class, but not if both are.
 
   Programmers can seal other class and method definitions by using the
   \code{sealed} argument to \code{\link{setClass}} or \code{\link{setMethod}}.
@@ -52,7 +57,7 @@ isSealedClass(Class)
 }
 \examples{
 ## these are both TRUE
-isSealedMethod("+", "numeric")
+isSealedMethod("+", c("numeric", "character"))
 isSealedClass("matrix")
 
 setClass("track",
@@ -61,6 +66,10 @@ setClass("track",
 isSealedClass("track")
 ## and so is this
 isSealedClass("A Name for an undefined Class")
+## and so are these, because only one of the two arguments is basic
+isSealedMethod("+", c("track", "numeric"))
+isSealedMethod("+", c("numeric", "track"))
+
 \testonly{
 removeClass("track")
 }

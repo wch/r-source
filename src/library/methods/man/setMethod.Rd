@@ -43,20 +43,22 @@ removeMethod(f, signature, where)
 }
 \details{
   R methods for a particular generic function are stored in an object
-  of class \code{\link{MethodsList}}, which in turn is stored with the
-  definition of the generic function.  The effect of calling
+  of class \code{\link{MethodsList}}.  The effect of calling
   \code{setMethod} is to store \code{definition}  in a \code{MethodsList}
-  object in a definition of the generic function on database
-  \code{where}.   If no such function exists (on that database) one
-  will be created, by copying the generic function from where it is
-  found in the current search list.  Finally, if \code{f} doesn't
+  object on database \code{where}.   If \code{f} doesn't
   exist as a generic function, but there is an ordinary function of
   the same name and the same formal arguments, a new generic function
   is created, and the previous non-generic version of \code{f} becomes
-  the default method.
+  the default method.  This is equivalent to the programmer calling
+  \code{\link{setGeneric}} for the same function; it's better practice
+  to do the call explicitly, since it shows that you intend to turn
+  \code{f} into a generic function.
 
-  Methods are stored in a hierarchical structure, by formal arguments
-  to \code{f}:  see \code{\link{MethodsList}} for details.  The class
+  Methods are stored in a hierarchical structure:  see
+  \link{Methods} for how the objects are used to select a method, and
+  \code{\link{MethodsList}} for functions that manipulate the objects.
+
+ The class
   names in the signature can be any formal class, plus predefined basic
   classes such as \code{"numeric"}, \code{"character"}, and
   \code{"matrix"}.  Two additional special class names can appear:
@@ -65,20 +67,41 @@ removeMethod(f, signature, where)
   appear in the call in order to match this signature.  Don't confuse
   these two:  if an argument isn't mentioned in a signature, it
   corresponds implicitly to class \code{"ANY"}, not to
-  \code{"missing"}.  See the example below.
+  \code{"missing"}.  See the example below. Old-style (``S3'') classes
+  can also be used, if you need compatibility with these, but you
+  should definitely declare these classes by calling
+  \code{\link{setOldClass}} if you want S3-style inheritance to work.
+
 
   While \code{f} can correspond to methods defined on several packages
   or environments, the underlying model is that these together make up
   the definition for a single generic function.  When R proceeds to
   select and evaluate methods for \code{f}, the methods on the current
-  search list are merged to form a single generic.  In particular, all
-  the versions of \code{f} and all the methods must correspond to the
-  same formal arguments (including, in the present definition, the
-  same default expressions for the arguments).  For compatibility with
-  S-Plus, the current implementation enforces this partly with a
-  warning and a reconstruction of a method that fails to match, but
-  don't count on this for the future:  Make the formal arguments of
-  \code{definition} match those of the generic.
+  search list are merged to form a single methods list.  When \code{f}
+  is called and a method is ``dispatched'', the evaluator matches the
+  classes of the actual arguments to the signatures of the available
+  methods.  When a match is found, the body of the corresponding
+  method is evaluated (in R, the body is evaluated in the lexical
+  context of the method), but without rematching the arguments to
+  \code{f}.
+
+  It is possible, however, to have some differences between the
+  formal arguments to a method supplied to \code{setMethod} and those
+  of the generic. Roughly, if the generic has \dots as one of its
+  arguments, then the method may have extra formal arguments, which
+  will be matched from the arguments matching \dots in the call to
+  \code{f}.  (What actually happens is that a local function is
+  created inside the method, with its formal arguments, and the method
+  is re-defined to call that local function.)
+ 
+  Method dispatch tries to match the class of the actual arguments in a
+  call to the available methods collected for \code{f}.  Roughly, for
+  each formal argument in turn, we look for the best match (the exact
+  same class or the nearest element in the value of
+  \code{\link{extends}} for that class) for which there is any
+  possible method matching the remaining arguments.  See
+  \link{Methods} for more details.
+
 }
 \references{
   The R package \code{methods} implements, with a few exceptions, the

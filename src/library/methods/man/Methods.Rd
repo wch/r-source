@@ -96,12 +96,27 @@ generic function, an attempt is made to match the available methods to
 the arguments by using \emph{inheritance}.
 
 Each class definition potentially includes the names of one or more
-classes that the new class extends.  (These are sometimes called the
+classes that the new class contains.  (These are sometimes called the
 \emph{superclasses} of the new class.)  These classes themselves may
 extend other classes.  Putting all this information together produces
 the full list of superclasses for this class. (You can see this list
 for any class \code{"A"} from the expression \code{extends("A")}.)
 In addition, any class implicitly extends class \code{"ANY"}.
+When all the superclasses are needed, as they are for dispatching
+methods, they are ordered by how direct they are:  first, the direct
+classes contained directly in the definition of this class, then the
+superclasses of these classes, etc.
+
+The S language has an additional, explicit mechanism for defining superclasses, the
+\code{\link{setIs}} mechanism.
+This mechanism allows a class to extend another even though they do
+not have the same representation.  The extension is made possible by
+defining explicit methods to \code{coerce} an object to its superclass
+and to \code{replace} the data in the object corresponding to the
+superclass.  The \code{\link{setIs}} mechanism will be used less often
+and only when directly including the superclass does not make sense,
+but once defined, the superclass acts just as directly contained
+classes as far as method selection is concerned.
 
 A method will be selected by inheritance if we can find a method in
 the methods list for a signature corresponding to any
@@ -109,27 +124,34 @@ combination of superclasses for each of the relevant arguments.
 The search for such a method is performed by the function
 \code{\link{MethodsListSelect}}, working as follows.
 
-For the first formal argument of the function, a list of classes is
-made up from the class itself, all its superclasses, and class
-\code{"ANY"}.
-For each of these, the selection computation looks for an element of
-the methods with the corresponding name.  Each time it finds one, it
-then calls the selection process recursively if necessary to select a
-method directly or by inheritance for the remaining arguments.
 
-Each one of these recursive calls can fail or it can return a function
-(the method).  As long as the calls fail, the selection process moves
-on to the next superclass and tries again.
-The last step corresponds to class \code{"ANY"}, the default method
-defined at this level.
+  The generic, \code{f} say,  has a signature, which by default
+  is all its formal arguments, except \dots (see
+  \code{\link{setGeneric}}). For each of the formal arguments in that
+  signature, in order, the class of the actual argument is matched
+  against available methods.  A missing argument corresponds to class
+  \code{"missing"}.  If no method corresponds to the class of the
+  argument, the evaluator looks for a method corresponding to the
+  the superclasses (the other classes that the actual class
+  extends, always including
+  \code{"ANY"}).  If no match is found, the dispatch fails, with an
+  error.  (But if there is a default method, that will always match.)
+
+  If the match succeeds, it can find either a single method, or a
+  methods list.  In the first case, the search is over, and returns
+  the method.  In the second case, the search proceeds, with the
+  next argument in the signature of the generic.  \emph{That} search
+  may succeed or fail.  If it fails, the dispatch will try again with
+  the next best match for the current argument, if there is one.
+  The last match always corresponds to class \code{"ANY"}.
 
 The effect of this definition of the selection process is to order all
 possible inherited methods, first by the superclasses for the first
 argument, then within this by the superclasses for the second
 argument, and so on.
-Superclasses are ordered by how direct they are:  first, the direct
-superclasses, then the superclasses of these classes.
+
 }
+
 \section{Changes with the Methods Package}{
   The methods package is designed to leave other computations in R
   unchanged.  There are, however, a few areas where the default
@@ -177,15 +199,20 @@ superclasses, then the superclasses of these classes.
   }
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \seealso{
   \code{\link{setGeneric}},

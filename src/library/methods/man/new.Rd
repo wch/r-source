@@ -54,10 +54,6 @@ initialize(.Object, ...)
   methods described in \emph{Programming with Data} (John M. Chambers,
   Springer, 1998).  See this book for further details and examples.
 }
-\author{
-  John Chambers
-}
-
 \seealso{ \link{Classes} }
 
 \examples{
