@@ -217,6 +217,9 @@ NEW FEATURES
     o	Functions grep(), regexpr(), sub() and gsub() now coerce their
 	arguments to character, rather than give an error.
 
+    o	D(), deriv(), etc now also differentiate asin(), acos(), atan(),
+	(thanks to a contribution of Kasper Kristensen).
+
 
 UTILITIES
 
@@ -1178,7 +1181,7 @@ BUG FIXES
     o	ARMAacf() sometimes gave too many results or failed if `lag.max'
 	was used.
 
-    o   termplot() with a subset of terms now gives correct partial residuals 
+    o   termplot() with a subset of terms now gives correct partial residuals
 
     o	Functions anova.glm(), contrasts(), getS3method(), glm() and
 	make.tables() were applying get() without asking for a

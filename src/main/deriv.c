@@ -45,6 +45,9 @@ static SEXP TanhSymbol;
 static SEXP SqrtSymbol;
 static SEXP PnormSymbol;
 static SEXP DnormSymbol;
+static SEXP AsinSymbol;
+static SEXP AcosSymbol;
+static SEXP AtanSymbol;
 
 static Rboolean Initialized = FALSE;
 
@@ -70,6 +73,10 @@ static void InitDerivSymbols()
     SqrtSymbol = install("sqrt");
     PnormSymbol = install("pnorm");
     DnormSymbol = install("dnorm");
+    AsinSymbol = install("asin");
+    AcosSymbol = install("acos");
+    AtanSymbol = install("atan");
+
     Initialized = TRUE;
 }
 
@@ -247,11 +254,23 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
     else if (fun == TanhSymbol) {
 	ans = lang2(TanhSymbol, arg1);
     }
+    else if (fun == SqrtSymbol) {
+	ans = lang2(SqrtSymbol, arg1);
+    }
     else if (fun == PnormSymbol) {
 	ans = lang2(PnormSymbol, arg1);
     }
     else if (fun == DnormSymbol) {
 	ans = lang2(DnormSymbol, arg1);
+    }
+    else if (fun == AsinSymbol) {
+	ans = lang2(AsinSymbol, arg1);
+    }
+    else if (fun == AcosSymbol) {
+	ans = lang2(AcosSymbol, arg1);
+    }
+    else if (fun == AtanSymbol) {
+	ans = lang2(AtanSymbol, arg1);
     }
     else ans = Constant(NA_REAL);
     /* FIXME */
@@ -449,16 +468,46 @@ static SEXP D(SEXP expr, SEXP var)
 	    ans = simplify(TimesSymbol,
 			   PP(simplify(MinusSymbol, CADR(expr), R_MissingArg)),
 			   PP(simplify(TimesSymbol,
-			   PP(simplify(DnormSymbol, CADR(expr), R_MissingArg)),
-			   PP(D(CADR(expr), var))))),
+				       PP(simplify(DnormSymbol, CADR(expr), R_MissingArg)),
+				       PP(D(CADR(expr), var))))),
 		UNPROTECT(4);
 	}
+	else if (CAR(expr) == AsinSymbol) {
+	    ans = simplify(DivideSymbol,
+			   PP(D(CADR(expr), var)),
+			   PP(simplify(SqrtSymbol,
+				       PP(simplify(MinusSymbol,Constant(1.),
+						   PP(simplify(PowerSymbol,
+							       CADR(expr),Constant(2.))))),
+				       R_MissingArg))),
+		UNPROTECT(4);
+	}
+	else if (CAR(expr) == AcosSymbol) {
+	    ans = simplify(MinusSymbol,
+			   PP(simplify(DivideSymbol,
+				       PP(D(CADR(expr), var)),
+				       PP(simplify(SqrtSymbol,
+						   PP(simplify(MinusSymbol,Constant(1.),
+							       PP(simplify(PowerSymbol,
+									   CADR(expr),Constant(2.))))),
+						   R_MissingArg)))),R_MissingArg),
+		UNPROTECT(5);
+	}
+	else if (CAR(expr) == AtanSymbol) {
+	    ans = simplify(DivideSymbol,
+			   PP(D(CADR(expr), var)),
+			   PP(simplify(PlusSymbol,Constant(1.),
+				       PP(simplify(PowerSymbol,
+						   CADR(expr),Constant(2.)))))),
+		UNPROTECT(3);
+	}
+
 	else {
 	    SEXP u = deparse1(CAR(expr), 0);
 	    error("Function `%s' is not in the derivatives table",
 		  CHAR(STRING_ELT(u, 0)));
 	}
-	
+
 	break;
     default:
 	ans = Constant(NA_REAL);
@@ -759,7 +808,7 @@ static SEXP CreateHess(SEXP names)
     SETCADR(dim, lang2(install("length"), install(".value")));
     SETCADDR(dim, allocVector(REALSXP, 1));
     REAL(CADDR(dim))[0] = length(names);
-    SETCADDDR(dim, allocVector(REALSXP, 1));	
+    SETCADDDR(dim, allocVector(REALSXP, 1));
     REAL(CADDDR(dim))[0] = length(names);
     PROTECT(data = allocVector(REALSXP, 1));
     REAL(data)[0] = 0;
@@ -863,7 +912,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     InitDerivSymbols();
     PROTECT(exprlist = LCONS(install("{"), R_NilValue));
     /* expr: */
-    if (isExpression(CAR(args))) 
+    if (isExpression(CAR(args)))
 	PROTECT(expr = VECTOR_ELT(CAR(args), 0));
     else PROTECT(expr = CAR(args));
     args = CDR(args);
@@ -887,7 +936,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = duplicate(expr));
     f_index = FindSubexprs(ans, exprlist, tag);
     d_index = (int*)R_alloc(nderiv, sizeof(int));
-    if (hessian) 
+    if (hessian)
 	d2_index = (int*)R_alloc((nderiv * (1 + nderiv))/2, sizeof(int));
     else d2_index = d_index;/*-Wall*/
     UNPROTECT(1);
@@ -1017,7 +1066,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	funarg = names;
     }
 
-    if (TYPEOF(funarg) == CLOSXP)	
+    if (TYPEOF(funarg) == CLOSXP)
     {
 	s = allocSExp(CLOSXP);
 	SET_FORMALS(s, FORMALS(funarg));
