@@ -15,8 +15,8 @@ NEW FEATURES
         users.  All "array-like" packages can use a standard method for
         calculating subscripts.
 
-    o   new.env is now internal and allows you to set hashing. Also,
-        parent.env and parent.env<- are included to provide direct access
+    o   new.env() is now internal and allows you to set hashing. Also,
+        parent.env() and parent.env<-() are included to provide direct access
         to setting and retrieving environments.
 
     o	Function identical(), a fast and reliable way to test for exact
@@ -105,7 +105,7 @@ NEW FEATURES
     o	Transparency is now supported on most graphics devices.
 	Internally colors include an alpha channel for opacity, but at
 	present there is only visible support for transparent/opaque.
-	The new color "transparent" (and NA and "NA") is transparent,
+	The new color "transparent" (or NA or "NA") is transparent,
 	and is the default background color for most devices.  Those
 	devices (postscript, XFig, PDF, Windows metafile and printer)
 	that previously treated bg = "white" as transparent now have
@@ -119,6 +119,10 @@ NEW FEATURES
 
     o	The macro SHLIB_EXT now includes `.', e.g. ".so" or ".dll",
 	since the Mac uses "Lib" without a `.'.
+
+    o	barplot() now respects an inline `cex.axis' argument and has a
+	separate `cex.names' argument so names and the numeric axis 
+	labels can be scaled separately.
 
 
 

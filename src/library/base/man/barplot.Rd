@@ -8,7 +8,9 @@
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
         xlim = NULL, ylim = NULL,
-        axes = TRUE, axisnames = TRUE, inside = TRUE, plot = TRUE, \dots)
+        axes = TRUE, axisnames = TRUE,
+        cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
+        inside = TRUE, plot = TRUE, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -61,11 +63,13 @@
   \item{axisnames}{logical.  If \code{TRUE}, and if there are
     \code{names.arg} (see above), the
     other axis is drawn (with \code{lty=0}) and labeled.}
+  \item{cex.axis}{expansion factor for numeric axis labels.}
+  \item{cex.axis}{expansion factor for names.}
   \item{inside}{logical.  If \code{TRUE}, the lines which  divide
     adjacent bars will be drawn.}
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
-    passed to \code{\link{plot.window}()} and \code{\link{title}()}.}
+    passed to \code{\link{plot.window}()} and \code{\link{title}()}}
 }
 \description{
   Creates a bar plot with vertical or horizontal bars.
@@ -81,11 +85,6 @@
 
   If \code{beside} is true, use \code{apply(mp, 2, mean)} for the
   midpoints of each \emph{group} of bars, see example.
-}
-\note{
-  The axis labels are re-sized by the current setting of \code{cex.axis}
-  (see \code{\link{par}}) \emph{but} this cannot be included in
-  \code{\dots}.
 }
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
@@ -120,7 +119,8 @@ mp <- barplot(hh, beside = TRUE,
                 "lightcyan", "lavender"),
         legend = colnames(VADeaths), ylim= c(0,100),
         main = "Death Rates in Virginia", font.main = 4,
-        sub = "Faked upper 2*sigma error bars", col.sub = mybarcol)
+        sub = "Faked upper 2*sigma error bars", col.sub = mybarcol,
+        cex.names = 1.5)
 segments(mp, hh, mp, hh + 2*sqrt(1000*hh/100), col = mybarcol, lwd = 1.5)
 stopifnot(dim(mp) == dim(hh))# corresponding matrices
 mtext(side = 1, at = apply(mp, 2, mean), line = -2,

@@ -6,7 +6,9 @@ function(height, width = 1, space = NULL, names.arg = NULL,
          col = heat.colors(NR), border = par("fg"),
          main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
          xlim = NULL, ylim = NULL,
-         axes = TRUE, axisnames = TRUE, inside = TRUE, plot = TRUE, ...)
+         axes = TRUE, axisnames = TRUE,
+         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
+         inside = TRUE, plot = TRUE, ...)
 {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)
     if (!missing(border)) .NotYetUsed("border", error = FALSE)
@@ -88,7 +90,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		else
 		    stop("incorrect number of names")
 	    } else w.m
-	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = 0)
+	    axis(if(horiz) 2 else 1, at = at.l,
+                 labels = names.arg, lty = 0, cex.axis = cex.names)
 	}
 	if(!is.null(legend.text)) {
 	    legend.col <- rep(col, length = length(legend.text))
@@ -102,7 +105,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		   xjust = 1, yjust = 1)
 	}
 	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
-	if(axes) axis(if(horiz) 1 else 2)
+	if(axes) axis(if(horiz) 1 else 2, cex.axis = cex.axis)
 	invisible(w.m)
     } else w.m
 }
