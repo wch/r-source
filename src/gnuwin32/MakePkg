@@ -183,10 +183,10 @@ frontmatter:
 	  exit 27; \
 	fi
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) ".installPackageDescription('.', '"$(DPKG)"')" | \
+	@$(ECHO) "tools:::.installPackageDescription('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
 else
-	@$(ECHO) ".installPackageDescription('.', '"$(DPKG)"')" | \
+	@$(ECHO) "tools:::.installPackageDescription('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 
