@@ -7,19 +7,28 @@
 ## 'General case':  f(x[i]) = z[i]  with arbitrary z[]
 ## -- but we would have to modify 'approxfun' or not be able to use it..
 ## --->> forget about general case
-stepfun <- function (x, y, f = 0, ties = "ordered")
+stepfun <-
+    function(x, y, f = as.numeric(right), ties = "ordered", right = FALSE)
 {
     if(is.unsorted(x)) stop("stepfun: x must be ordered increasingly")
     n <- length(x)
-    if(length(y)!= n+1) stop("y must be one longer than x")
-    rval <- approxfun(x, y[-1], method = "constant",
-		      yleft = y[1], yright = y[n+1], f = f, ties = ties)
+    n1 <- n+ 1:1
+    if(length(y)!= n1) stop("y must be one longer than x")
+    rval <- approxfun(x, y[- if(right)n1 else 1], method = "constant",
+		      yleft = y[1], yright = y[n1], f = f, ties = ties)
     class(rval) <- c("stepfun", class(rval))
     attr(rval, "call") <- sys.call()
     rval
 }
 
 is.stepfun <- function(x) is.function(x) && inherits(x, "stepfun")
+
+as.stepfun <- function(x, ...) UseMethod("as.stepfun")
+as.stepfun.default <- function(x, ...)
+{
+    if(is.stepfun(x)) x
+    else stop("no `as.stepfun' method available for `x'")
+}
 
 ## Quite obvious  that I will want to have  knots.spline(..)  etc......
 knots         <- function(Fn, ...) UseMethod("knots")
@@ -91,9 +100,14 @@ plot.stepfun <-
     knF <- knots(x)
     xval <- if (missing(xval)) knF else sort(xval)
     if (missing(xlim)) {
-	dr <- diff(rx <- range(xval))
-	dr <- max(0.08 * dr,  median(diff(xval)))
-	xlim <- rx +  dr * c(-1,1)
+        rx <- range(xval)
+        dr <-
+            if(length(xval) > 1)
+                max(0.08 * diff(rx), median(diff(xval)))
+            else
+                abs(xval)/16
+        xlim <- rx +  dr * c(-1,1)
+
     } else dr <- diff(xlim)
 
     knF <- knF[xlim[1]-dr <= knF & knF <= xlim[2]+dr]
@@ -125,9 +139,8 @@ plot.stepfun <-
     invisible(list(t = ti, y = y))
 }
 
-
+lines.stepfun <- function(x, ...) plot(x, add = TRUE, ...)
 
 
 
 .noGenerics <- TRUE
-

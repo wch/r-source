@@ -35,6 +35,11 @@ summary.ecdf <- function(object, ...)
 }
 
 
+## add  conf.int = 0.95
+## and  conf.type = c("none", "KS")
+## (these argument names are compatible to Kaplan-Meier survfit() !)
+## and use ./KS-confint.R 's  code !!!
+
 plot.ecdf <- function(..., verticals = FALSE, col.01line = "gray70") {
     plot.stepfun(ylab="Fn(x)", ..., verticals = verticals)
     abline(h=c(0,1), col = col.01line, lty=2)

@@ -11,11 +11,11 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     nx <- length(x)
     if (nx != length(y))
 	stop("x and y must have equal lengths")
-    if (nx < 2)
-	stop("approx requires at least two values to interpolate")
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
+    if (nx < 2 && method == "linear")
+	stop("approx requires at least two values to interpolate")
     if(any(na <- is.na(x) | is.na(y))) {
 	ok <- !na
 	x <- x[ok]
@@ -35,7 +35,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	    y <- y[o]
 	}
     }
-    if (nx < 2)
+    if (nx < 2 && method == "linear")
 	stop("need at least two unique non-missing values to interpolate")
     if (missing(yleft))
 	yleft <- if (rule == 1) NA else y[1]
@@ -63,11 +63,11 @@ approxfun <- function(x, y = NULL, method = "linear",
     n <- length(x)
     if (n != length(y))
 	stop("x and y must have equal lengths")
-    if (n < 2)
-	stop("approx requires at least two values to interpolate")
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
+    if (n < 2 && method == "linear")
+	stop("approx requires at least two values to interpolate")
     if(any(o <- is.na(x) | is.na(y))) {
 	o <- !o
 	x <- x[o]
@@ -88,7 +88,7 @@ approxfun <- function(x, y = NULL, method = "linear",
 	    y <- y[o]
 	}
     }
-    if (n < 2)
+    if (n < 2 && method == "linear")
 	stop("need at least two unique non-missing values to interpolate")
     if (missing(yleft))
 	yleft <- if(rule == 1) NA else y[1]
