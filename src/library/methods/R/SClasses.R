@@ -376,7 +376,7 @@ setValidity <-
       stop("validity method must be NULL or a function of one argument")
     ## TO DO:  check the where argument against the package of the class def.
     assignClassDef(Class, ClassDef, where = where)
-    resetClass(ClassDef, ClassDef, where = where)
+    resetClass(Class, ClassDef, where = where)
   }
 
 resetClass <- function(Class, classDef, where) {
