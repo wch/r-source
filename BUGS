@@ -415,3 +415,15 @@ Date: Wed, 14 Nov 2001 03:58:45 -0800
 Subject: rpart:plotcp doesn't allow ylim argument
 From: gregory_r_warnes@groton.pfizer.com
 Date: Wed, 14 Nov 2001 21:20:32 +0100 (MET)
+* PR# 1172 *
+Subject:   rhs of == does not work with a list of items. should it ?
+From: "White, Paul" <Paul.White@dsto.defence.gov.au>
+Date: Thu, 15 Nov 2001 16:48:35 +1100
+* PR# 1173 *
+Subject: Re: [Rd] rhs of == does not work with a list of items. should it ? 
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Thu, 15 Nov 2001 08:25:03 +0100
+* PR# 1174 *
+Subject: pdf() behavior
+From: White.Denis@epamail.epa.gov
+Date: Thu, 15 Nov 2001 10:18:21 -0800
