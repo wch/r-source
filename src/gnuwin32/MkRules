@@ -12,8 +12,8 @@ ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=
 MINGW32CFLAG= -mno-cygwin -DWIN32
 MINGW32LDFLAG= -mno-cygwin
-#-L(directory where gcc-2.95-mingw-extra.tar.gz was uncompressed)
-FLIBS=-L/cygnus/cygwin-b20/mingw32/lib -lg2c
+#-L(directory where gcc-2.95.2-mingw-extra.tar.gz was uncompressed)
+FLIBS=-lg2c
 AWK=gawk
 endif
 

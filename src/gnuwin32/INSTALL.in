@@ -19,23 +19,18 @@ Building on Windows
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
-need suitable versions of at least make, sh, rm, sed, (g)awk, mkdir,
-echo, cp, cut, diff, grep, egrep, pwd, expr and cat; we use those from
+need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
+egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed; we use those from
 the cygwin distribution (http://sourceware.cygnus.com/cygwin and
-several mirrors).
+several mirrors) and have packaged a set at
+CRAN/bin/windows/windows-NT/base/etc/tools.zip.  (The April 2000
+version of make in the cygwin distribution crashes building packages.)
 
-It is also possible to use cygwin-b20.1 with the -mno-cygwin flag, but
-we suggest you do so only if you have a working setup from building
-earlier versions of R.  We have also successfully used the variant of
+It is also possible to use the compilers from the cygwin-b21 release
+with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
+binutils* bundles.)  We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system.  Be aware that not all
 Windows machines have MSVCRT.DLL installed.
-
-(If you want to use cygwin, you will need to upgrade to gcc-2.95.2 by
-installing the files gcc-2.95.2-cygb20.tar.gz and
-gcc-2.95.2-mingw-extra.tar.gz from
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32. The basic
-distribution does not contain a Fortran compiler, and that is needed
-to build R.)
 
 perl5, available via http://www.perl.com/CPAN/ports/.
 

@@ -18,6 +18,11 @@ provide suitable tools.
 The placement of multiple pagers is now `random' and under the MDI
 interface the pager rows and columns settings are respected.
 
+The new xfig() device can be used, and a port of xfig to Windows (with
+an X server and the Cygwin B20 environment and X11R6.4 installed) is at
+ftp.franken.de:/pub/win32/develop/gnuwin32/cygwin/porters/Humblet_Pierre_A/B20
+as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz
+
 
 rw1001
 ======
