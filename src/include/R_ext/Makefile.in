@@ -24,6 +24,7 @@ R_EXT_HEADERS = \
 
 ## <FIXME>
 ## Why are the module headers not in R_EXT_HEADERS?
+## Because they are not installed.
 DISTFILES = Makefile.in $(R_EXT_HEADERS) \
   RX11.h Rinternet.h Rlapack.h
 ## </FIXME>
