@@ -7,7 +7,7 @@ AIC(object, \dots, k = 2)
 }
 \alias{AIC}
 \alias{AIC.default}
-\alias{AIC.lm}% << still needed for  library(nlme)
+% \alias{AIC.lm}% << once needed for  library(nlme)
 \arguments{
   \item{object}{a fitted model object, for which there exists a
     \code{logLik} method to extract the corresponding log-likelihood, or
