@@ -150,7 +150,7 @@ incomplete final line found by readLines on `testIO.R'
 [1] 11
 > unlink("testIO.R")
 > 
-> ## end of reg+IO.R: the next line has no EOL chars
+> ## end of reg-IO.R: the next line has no EOL chars
 > 2 + 2
 [1] 4
 > 
