@@ -179,3 +179,15 @@ Date: Mon, 13 Mar 2000 22:03:00 +0100 (MET)
 Subject: Install R1.0.0
 From: Lynn Zhang <lyzhang@umich.edu>
 Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
+* PR# 486 *
+Subject: Re: autoload error in profile {was anova-bug in R-version  1.0.0?}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
+* PR# 487 *
+Subject: Bug in sub?
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Tue, 14 Mar 2000 12:15:54 +0100
+* PR# 488 *
+Subject: Error in lme?
+From: simon.frost@ed.ac.uk
+Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
