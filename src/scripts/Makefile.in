@@ -21,7 +21,7 @@ DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 .SUFFIXES:
 .SUFFIXES: .in
 
-.in:
+%:%.in
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 all: Makefile R
