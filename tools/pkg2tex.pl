@@ -86,6 +86,7 @@ sub do_tex_files {
     my $fname;
     my $fline;
     my %filenames;
+    my $internal;
 
     opendir DIR, $latexDir or
 	croak "can't open directory $latexDir: $!\n";
@@ -96,6 +97,12 @@ sub do_tex_files {
 	$fline = <$fh>;
 	## first line is \Header{object}{...}
 	$fline =~ s/\\Header\{\s*([^}]*)\}//;
+        ## omit internal help pages
+        my $internal = 0;
+        while(<$fh>) {
+	    if(/\\keyword\{\s*internal\s*\}/) { $internal = 1; last; }
+	}
+        next if $internal;
 	$filenames{$1} = $fname;
     }
     close $fh;

@@ -289,6 +289,11 @@ UTILITIES
 	loaded by the example.
 
 
+DOCUMENTATION
+
+    o	The reference manual now omits 'internal' help pages.
+
+
 C-LEVEL FACILITIES
 
     o	The PACKAGE argument for .C/.Call/.Fortran/.External can be
