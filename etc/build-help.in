@@ -111,7 +111,7 @@ foreach $manfile (@mandir) {
 	    if(! ((-f $destfile) && ($destage < $manage))){
 		$textflag = "text";
 		open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
-		     " ${RHOME}/etc/help.pretty >$destfile");
+		     " ${RHOME}/etc/help.pretty > '$destfile'");
 		Rdconv($manfile, "nroff", "");# maybe $opt_debug
 		close(nroffout);
 	    }
