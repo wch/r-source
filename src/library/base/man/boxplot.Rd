@@ -1,6 +1,7 @@
 \name{boxplot}
 \alias{boxplot}
 \alias{boxplot.default}
+\alias{boxplot.formula}
 \title{Box Plots}
 \description{
   Produce box-and-whisker plot(s) of the given (grouped) values.
@@ -8,20 +9,32 @@
 \usage{
 boxplot(x, \dots)
 
+\method{boxplot}{formula}(formula, data = NULL, \dots, subset)
+
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, boxwex = 0.8, plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,
         horizontal = FALSE, add = FALSE, at = NULL)
 }
 \arguments{
-  \item{x, \dots}{for specifying data from which the boxplots are to be
-    produced as well as for giving graphical parameters.  The named
-    arguments in this (more precisely, in \code{list(x, \dots)}) are
-    treated as graphical parameters in addition to the ones given by
-    argument \code{pars}.  The other arguments specify the data, either
-    as separate vectors, each corresponding to a component boxplot, or
+  \item{formula}{a formula, such as \code{y ~ x}.}
+  \item{data}{a data.frame (or list) from which the variables in
+    \code{formula} should be taken.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used for plotting.}
+  \item{x}{for specifying data from which the boxplots are to be
+    produced as well as for giving graphical parameters.  Additional
+    unnamed  arguments specify further data, either
+    as separate vectors (each corresponding to a component boxplot) or
     as a single list containing such vectors.  \code{\link{NA}}s are
     allowed in the data.}
+  \item{\dots}{For the \code{formula} method, arguments to the
+    default method and graphical parameters.
+
+    For the default method, unnamed arguments are additional data
+    vectors, and named arguments are graphical parameters in addition
+    to the ones given by argument \code{pars}.
+  }
   \item{range}{this determines how far the plot whiskers extend out
     from the box.  If \code{range} is positive, the whiskers extend
     to the most extreme data point which is no more than
@@ -88,7 +101,6 @@ boxplot(x, \dots)
   See also \code{\link{boxplot.stats}}.
 }
 \seealso{
-  \code{\link{boxplot.formula}} for the formula interface;
   \code{\link{boxplot.stats}} which does the computation,
   \code{\link{bxp}} for the plotting;
   and \code{\link{stripchart}} for an alternative (with small data
