@@ -197,6 +197,38 @@ case.names.default <- function(object, ...) rownames(object)
 offset <- function(object) object
 ## ?
 
+.checkMFClasses <- function(cl, m)
+{
+    new <- sapply(m, .MFclass)
+    if(length(new) == 0) return()
+    old <- cl[names(new)]
+    if(!identical(old, new)) {
+        wrong <- old != new
+        if(length(wrong) == 1)
+            stop(paste("variable", sQuote(names(old)[wrong]),
+                       "was fitted with", old[wrong], "but",
+                       new[wrong], "was supplied"), call.=FALSE)
+        else
+            stop(paste("variables",
+                       paste(sQuote(names(old)[wrong]), collapse=", "),
+                       "were specified differently from the fit"),
+                 call.=FALSE)
+    }
+}
+
+.MFclass <- function(x)
+{
+    ## the idea is to identify the relevant classes that model.matrix
+    ## will handle differently
+    ## logical, factor, ordered vs numeric, and other for future proofing
+    if(is.logical(x)) return("logical")
+    if(is.ordered(x)) return("ordered")
+    if(is.factor(x))  return("factor")
+    if(is.matrix(x) && is.numeric(x))
+        return(paste("nmatrix", ncol(x), sep="."))
+    if(is.vector(x) && is.numeric(x)) return("numeric")
+    return("other")
+}
 
 model.frame <- function(formula, ...) UseMethod("model.frame")
 model.frame.default <-
@@ -275,6 +307,8 @@ model.frame.default <-
 		data[[nm]] <- data[[nm]][, drop = TRUE]
 	}
     }
+    attr(formula, "dataClasses") <- sapply(data, .MFclass)
+    attr(data, "terms") <- formula
     data
 }
 

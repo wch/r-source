@@ -564,7 +564,6 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
               class = c("anova", "data.frame"))
 }
 
-
 ## code originally from John Maindonald 26Jul2000
 predict.lm <-
     function(object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
@@ -582,6 +581,7 @@ predict.lm <-
         Terms <- delete.response(tt)
         m <- model.frame(Terms, newdata, na.action = na.action,
                          xlev = object$xlevels)
+        if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         X <- model.matrix(Terms, m, contrasts = object$contrasts)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
@@ -773,6 +773,7 @@ predict.mlm <-
         Terms <- delete.response(tt)
         m <- model.frame(Terms, newdata, na.action = na.action,
                          xlev = object$xlevels)
+        if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         X <- model.matrix(Terms, m, contrasts = object$contrasts)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)

@@ -3329,8 +3329,7 @@ Error in "contrasts<-"(`*tmp*`, value = "contr.treatment") :
 	contrasts can be applied only to factors with 2 or more levels
 > lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
 > try(predict(lm.fit, data.frame(x=NA)))
-Error in "contrasts<-"(`*tmp*`, value = "contr.treatment") : 
-	contrasts can be applied only to factors with 2 or more levels
+Error: variable 'x' was fitted with numeric but logical was supplied
 > ## wrong in 1.8.0
 > 
 > 

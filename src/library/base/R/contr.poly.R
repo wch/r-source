@@ -84,6 +84,10 @@ poly <- function(x, ..., degree = 1, coefs = NULL)
         Z <- Z / rep(sqrt(norm2[-1]), each = length(x))
         colnames(Z) <- 0:degree
         Z <- Z[, -1, drop = FALSE]
+        ## we may want to use the prediction to clone another prediction
+        attr(Z, "degree") <- 1:degree
+        attr(Z, "coefs") <- list(alpha = alpha, norm2 = norm2)
+        class(Z) <- c("poly", "matrix")
     }
     return(Z)
 }

@@ -13,6 +13,8 @@ princomp(x, \dots)
 
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))), \dots)
+
+\method{predict}{princomp}(object, newdata, \dots)
 }
 \arguments{
   \item{formula}{a formula with no response variable.}
@@ -38,6 +40,8 @@ princomp(x, \dots)
     \code{x}.}
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{cor} or \code{scores}.}
+  \item{object}{Object of class inheriting from \code{"princomp"}}
+  \item{newdata}{Data frame in which to predict}
 }
 \description{
   \code{princomp} performs a principal components analysis on the given

@@ -21,7 +21,13 @@ NEW FEATURES
 
     o	Deparsing (including using dump() and dput()) an integer
 	vector now wraps it in as.integer() so it will be source()d
-	correctly.  (Related to PR#4361)
+	correctly.  (Related to PR#4361.)
+
+    o	Model fits now add a "dataClasses" attribute to the terms, which
+	can be used to check that the variables supplied for
+	prediction are of the same type as those used for fitting.
+	(It is currently used by predict() methods for classes "lm",
+	"mlm", "glm", "lqs" and "ppr".)
 
 
 UTILITIES
@@ -56,7 +62,7 @@ INSTALLATION CHANGES
 	the included PCRE sources have been updated to version 4.4.
 
     o	configure no longer lists bzip2 and PCRE as `additional
-	capabilities' as all builds of R have had them for a while.
+	capabilities' as all builds of R have had them since 1.7.0.
 
 
 

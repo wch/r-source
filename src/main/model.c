@@ -1383,9 +1383,9 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     PROTECT(ans);
 
-    /* Finally, tack on a terms attribute */
-
-    setAttrib(ans, install("terms"), terms);
+    /* Finally, tack on a terms attribute
+       Now done at R level.
+       setAttrib(ans, install("terms"), terms); */
     UNPROTECT(1);
     return ans;
 }

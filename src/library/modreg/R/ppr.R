@@ -176,6 +176,7 @@ predict.ppr <- function(object, newdata, ...)
 # work hard to predict NA for rows with missing data
         Terms <- delete.response(object$terms)
         m <- model.frame(Terms, newdata, na.action = na.omit)
+        if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         keep <- match(row.names(m), rn)
         x <- model.matrix(Terms, m, contrasts = object$contrasts)
     } else {

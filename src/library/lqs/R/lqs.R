@@ -177,6 +177,7 @@ predict.lqs <- function (object, newdata, na.action = na.pass, ...)
     Terms <- delete.response(terms(object))
     m <- model.frame(Terms, newdata, na.action = na.action,
                      xlev = object$xlevels)
+    if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
     X <- model.matrix(Terms, m, contrasts = object$contrasts)
     drop(X %*% object$coefficients)
 }
