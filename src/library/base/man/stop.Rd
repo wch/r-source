@@ -13,6 +13,7 @@ prompt.
 \code{\link{warning}}.
 }
 \examples{
+\testonly{iter <- 9 #-don't want a stop(.) below!}
 if(iter > 10) stop("too many iterations")
 }
 \keyword{environment}
