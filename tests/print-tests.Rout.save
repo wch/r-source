@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.7.1 Patched (2003-07-18)
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 2.0.0 Under development (unstable) (2004-08-23), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > #### Testing print(), format()	and the like --- mainly with numeric()
 > ####
@@ -263,9 +264,10 @@ Type `q()' to quit R.
 > umach <- unlist(.Machine)[paste("double.x", c("min","max"), sep='')]
 > xmin <- umach[1]
 > xmax <- umach[2]
-> tx <- unique(outer(-1:1,c(.1,1e-3,1e-7)))# 7 values  (out of 9)
-> tx <- unique(sort(c(outer(umach,1+tx))))# 11 values  (out of 14)
-> tx <- tx[is.finite(tx)] #-- all kept
+> tx <- unique(c(outer(-1:1,c(.1,1e-3,1e-7))))# 7 values  (out of 9)
+> tx <- unique(sort(c(outer(umach,1+tx))))# 11 values (+ 1 Inf)
+> length(tx <- tx[is.finite(tx)]) # 11
+[1] 11
 > (txp <- tx[tx >= 1])#-- Positive exponent -- 4 values
 [1] 1.617924e+308 1.795895e+308 1.797693e+308 1.797693e+308
 > (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
