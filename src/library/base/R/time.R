@@ -11,6 +11,6 @@ system.time <- function(expr) {
     if(length(time) == 3)	time	 <- c(	  time, 0, 0)
     new.time - time
 }
-unix.time <- .Alias(system.time)
+unix.time <- system.time
 
 date <- function().Internal(date())

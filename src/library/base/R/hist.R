@@ -87,8 +87,6 @@ hist.default <-
                         xname = xname, equidist = equidist),
                    class="histogram")
     if (plot) {
-##-         if(missing(ylim))
-##-             y <- if (freq) .Alias(counts) else .Alias(density)
         plot(r, freq = freq, col = col, border = border,
              main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
              axes = axes, labels = labels, ...)

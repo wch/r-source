@@ -116,7 +116,7 @@ plot(stmd, set.pars=NULL, labels = NULL,
 plot(stmR, set.pars=NULL)
 # mark the `outliers' :    
 (iO <- which(stmR $ weights  < 1e-8)) # 10 were considered outliers
-sts <- .Alias(stmR$time.series)
+sts <- stmR$time.series
 points(time(sts)[iO], .8* sts[,"remainder"][iO], pch = 4, col = "red")
 par(op)# reset    
 }

@@ -27,4 +27,4 @@ AIC.default <- function(object, ..., k = 2)
 }
 
 
-AIC.lm <- .Alias(AIC.default)## currently (2001-09-18) needed for  library(nlme)
+AIC.lm <- AIC.default## currently (2001-09-18) needed for  library(nlme)

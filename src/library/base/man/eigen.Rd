@@ -80,7 +80,7 @@ eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real Eigen values
 eigen(cbind( 1,3:1,1:3))
 eigen(cbind(-1,c(1:2,0),0:2)) # complex values
 
-Meps <- .Alias(.Machine$double.eps)
+Meps <- .Machine$double.eps
 m <- matrix(round(rnorm(25),3), 5,5)
 sm <- m + t(m) #- symmetric matrix
 em <- eigen(sm); V <- em$vect

@@ -30,7 +30,7 @@ one.  The returned array comprises submatrices constructed by
 taking \code{X} one term at a time and expanding that term as
 \code{FUN(x, Y, ...)}.
 
-\code{\%x\%} is an \code{.Alias} for \code{kronecker} (where
+\code{\%x\%} is an alias for \code{kronecker} (where
 \code{FUN} is hardwired to \code{"*"}).
 }
 

@@ -63,7 +63,7 @@ codes.factor <- function(x, ...)
     rank(levels(x))[x]
 }
 
-codes.ordered <- .Alias(as.integer)
+codes.ordered <- as.integer
 
 "codes<-" <- function(x, value, ...)
 {

@@ -220,7 +220,7 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 	stop("First argument must be a loess object")
     if(is.null(newdata) & (se == FALSE)) return(fitted(object))
 
-    if(is.null(newdata)) newx <- .Alias(object$x)
+    if(is.null(newdata)) newx <- object$x
     else {
 	vars <- as.character(attr(delete.response(terms(object)),
 				  "variables"))[-1]

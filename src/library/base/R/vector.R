@@ -3,8 +3,8 @@ logical <- function(length = 0) vector("logical", length)
 character <- function(length = 0) vector("character", length)
 integer <- function(length = 0) vector("integer", length)
 double <- function(length = 0) vector("double", length)
-real <- .Alias(double)
-numeric <- .Alias(double)
+real <- double
+numeric <- double
 complex <- function(length.out = 0,
 		    real = numeric(), imaginary = numeric(),
 		    modulus = 1, argument = 0) {

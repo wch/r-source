@@ -89,7 +89,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
     .Internal(format.POSIXlt(x, format, usetz))
 }
 
-strftime <- .Alias(format.POSIXlt)
+strftime <- format.POSIXlt
 
 strptime <- function(x, format)
     .Internal(strptime(x, format))
@@ -237,7 +237,7 @@ str.POSIXt <- function(object, ...) {
     str(format(object), ...)
 }
 
-as.data.frame.POSIXct <- .Alias(as.data.frame.vector)
+as.data.frame.POSIXct <- as.data.frame.vector
 
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 

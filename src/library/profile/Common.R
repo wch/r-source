@@ -13,7 +13,7 @@ assign(".Autoloaded", NULL, env = .AutoloadEnv)
 T <- TRUE
 F <- FALSE
 R.version <- structure(R.Version(), class = "simple.list")
-version <- .Alias(R.version)            # for S compatibility
+version <- R.version            # for S compatibility
 R.version.string <-
     paste(paste("R version",
                 paste(version[c("major", "minor")], collapse = ".")),

@@ -7,7 +7,7 @@ frame()
 \alias{plot.new}
 \alias{frame}
 \description{
-  This function (\code{frame} is a \code{\link{.Alias}} for
+  This function (\code{frame} is an alias for
   \code{plot.new}) causes the completion of plotting in the current plot
   (if there is one) and an advance to a new graphics frame.  This is
   used in all high-level plotting functions and also useful for skipping

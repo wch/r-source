@@ -27,7 +27,7 @@ optimize <- function(f, interval, lower=min(interval), upper=max(interval),
 }
 
 ##nice to the English (or rather the Scots)
-optimise <- .Alias(optimize)
+optimise <- optimize
 
 uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
 		    tol=.Machine$double.eps^0.25, maxiter = 1000, ...)

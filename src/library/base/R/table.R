@@ -108,7 +108,7 @@ function(x, digits = max(1, getOption("digits") - 3), ...)
     cat("Number of factors:", x$n.vars, "\n")
     if(x$n.vars > 1) {
         cat("Test for independence of all factors:\n")
-        ch <- .Alias(x$statistic)
+        ch <- x$statistic
         cat("\tChisq = ",
             format(round(ch, max(0, digits - log10(ch)))),
             ", df = ",

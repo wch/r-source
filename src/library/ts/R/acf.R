@@ -137,7 +137,7 @@ plot.acf <-
     Npgs <- 1 ## we will do [ Npgs x Npgs ] pages !
     nr <- nser
     if(nser > 1) { ## at most m x m (m := max.mfrow)  panels per page
-        sn.abbr <- if(nser > 2) abbreviate(snames) else .Alias(snames)
+        sn.abbr <- if(nser > 2) abbreviate(snames) else snames
 
         if(nser > max.mfrow) {
             ##  We need more than one page: The plots are laid out

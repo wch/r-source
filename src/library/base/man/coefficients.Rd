@@ -22,7 +22,7 @@ coefficients(object, \dots)
 \description{
   \code{coef} is a generic function which extracts model coefficients
   from objects returned by modeling functions.  \code{coefficients} is
-  an \emph{alias} (\code{\link{.Alias}}) for it.
+  an \emph{alias} for it.
 }
 \details{
   All object classes which are returned by model fitting functions

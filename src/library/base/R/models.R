@@ -149,7 +149,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 
 coef <- function(object, ...) UseMethod("coef")
 coef.default <- function(object, ...) object$coefficients
-coefficients <- .Alias(coef)
+coefficients <- coef
 
 residuals <- function(object, ...) UseMethod("residuals")
 residuals.default <- function(object, ...)
@@ -157,7 +157,7 @@ residuals.default <- function(object, ...)
     if(is.null(object$na.action)) object$residuals
     else naresid(object$na.action, object$residuals)
 }
-resid <- .Alias(residuals)
+resid <- residuals
 
 deviance <- function(object, ...) UseMethod("deviance")
 deviance.default <- function(object, ...) object$deviance
@@ -168,7 +168,7 @@ fitted.default <- function(object, ...)
     if(is.null(object$na.action)) object$fitted
     else napredict(object$na.action, object$fitted)
 }
-fitted.values <- .Alias(fitted)
+fitted.values <- fitted
 
 anova <- function(object, ...)UseMethod("anova")
 

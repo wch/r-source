@@ -19,4 +19,4 @@ outer <- function (X, Y, FUN = "*", ...)
     robj
 }
 
-"%o%" <- .Alias(outer)
+"%o%" <- outer

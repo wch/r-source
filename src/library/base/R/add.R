@@ -729,7 +729,7 @@ extractAIC.lm <- function(fit, scale = 0, k = 2, ...)
     dev <- if(scale > 0) RSS/scale - n else n * log(RSS/n)
     c(edf, dev + k * edf)
 }
-extractAIC.aov <- .Alias(extractAIC.lm)
+extractAIC.aov <- extractAIC.lm
 
 extractAIC.negbin <- function(fit, scale, k = 2, ...)
 {

@@ -141,16 +141,16 @@ as.data.frame.ts <- function(x, row.names=NULL, optional=FALSE)
 	as.data.frame.vector(x, row.names, optional)
 }
 
-as.data.frame.factor  <- .Alias(as.data.frame.vector)
-as.data.frame.ordered <- .Alias(as.data.frame.vector)
-as.data.frame.integer <- .Alias(as.data.frame.vector)
-as.data.frame.numeric <- .Alias(as.data.frame.vector)
-as.data.frame.complex <- .Alias(as.data.frame.vector)
+as.data.frame.factor  <- as.data.frame.vector
+as.data.frame.ordered <- as.data.frame.vector
+as.data.frame.integer <- as.data.frame.vector
+as.data.frame.numeric <- as.data.frame.vector
+as.data.frame.complex <- as.data.frame.vector
 
 as.data.frame.character <- function(x, row.names = NULL, optional = FALSE)
     as.data.frame.vector(factor(x), row.names, optional)
 
-as.data.frame.logical <- .Alias(as.data.frame.vector)
+as.data.frame.logical <- as.data.frame.vector
 
 as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
 {

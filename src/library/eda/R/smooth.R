@@ -60,7 +60,7 @@ print.tukeysmooth <- function(x, ...) {
     if(length(class(x)) > 1)
 	NextMethod()
     else {
-	y <- x # not .Alias !
+	y <- x 
 	attributes(y) <- NULL
 	print(y, ...)
 	invisible(x)

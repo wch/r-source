@@ -27,7 +27,7 @@ file.remove <- function(...)
 list.files <- function(path=".", pattern=NULL,all.files=FALSE,full.names=FALSE)
 .Internal(list.files(path, pattern, all.files, full.names))
 
-dir <- .Alias(list.files)
+dir <- list.files
 
 file.path <- function(..., fsep=.Platform$file.sep)
 paste(..., sep=fsep)
@@ -90,7 +90,7 @@ format.octmode <- function(x, ...)
     ans[!isna] <- ans0
     ans
 }
-as.character.octmode <- .Alias(format.octmode)
+as.character.octmode <- format.octmode
 
 print.octmode <- function(x, ...)
 {

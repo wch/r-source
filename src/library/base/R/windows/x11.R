@@ -1,2 +1,2 @@
-x11 <- .Alias(win.graph)
-X11 <- .Alias(win.graph)
+x11 <- win.graph
+X11 <- win.graph

@@ -95,7 +95,7 @@ cooks.distance <- function(lm.obj, infl = lm.influence(lm.obj),
                            sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)))
 {
     p <- lm.obj$rank
-    hat <- .Alias(infl$hat)
+    hat <- infl$hat
     ((res/(sd * (1 - hat)))^2 * hat)/p
 }
 

@@ -27,7 +27,7 @@ x \%o\% y
   Where they exist, the [dim]names of \code{X} and \code{Y} will be
   preserved.
     
-  \code{\%o\%} is an \code{.Alias} for \code{outer} (where \code{FUN}
+  \code{\%o\%} is an alias for \code{outer} (where \code{FUN}
   cannot be changed from \code{"*"}).
 }
 \author{Jonathan Rougier}

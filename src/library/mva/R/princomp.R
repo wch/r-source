@@ -49,7 +49,7 @@ princomp.default <-
         cv <- cv/(sds %o% sds)
     }
     edc <- La.eigen(cv, symmetric = TRUE)
-    ev <- .Alias(edc$values)
+    ev <- edc$values
     if (any(neg <- ev < 0)) { # S-PLUS sets all := 0
         ## 9 * : on Solaris found case where 5.59 was needed (MM)
         if (any(ev[neg] < - 9 * .Machine$double.eps * ev[1]))

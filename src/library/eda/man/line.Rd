@@ -14,7 +14,7 @@
 \usage{
 line(x, y)
 
-%% Note that these are really just .Alias()ed to <generic>.lm and hence
+%% Note that these are really just aliases to <generic>.lm and hence
 %% should have identical arguments, --> ../../base/man/lm.summaries.Rd
 \method{coef}{tukeyline}(object, \dots)
 \method{residuals}{tukeyline}(object, type, \dots)

@@ -15,8 +15,8 @@ is.name(y)
 \description{
   \code{as.symbol} coerces its argument to be a \emph{symbol}, or
   equivalently, a \emph{name}.  The argument must
-  be of mode \code{"character"}.  \code{as.name} is a
-  \code{\link{.Alias}} for \code{as.symbol}.
+  be of mode \code{"character"}.  \code{as.name} is an
+  alias for \code{as.symbol}.
 
   \code{is.symbol} (and \code{is.name} equivalently) returns \code{TRUE}
   or \code{FALSE} depending on whether its argument is a symbol

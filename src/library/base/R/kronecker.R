@@ -1,5 +1,5 @@
 "kronecker" <-
-function (X, Y, FUN = "*", make.dimnames = FALSE, ...) 
+function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 {
     X <- as.array(X)
     Y <- as.array(Y)
@@ -10,9 +10,9 @@ function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
     dX <- dim(X)
     dY <- dim(Y)
     ld <- length(dX) - length(dY)
-    if (ld < 0) 
+    if (ld < 0)
         dX <- dim(X) <- c(dX, rep(1, -ld))
-    else if (ld > 0) 
+    else if (ld > 0)
         dY <- dim(Y) <- c(dY, rep(1, ld))
     opobj <- outer(X, Y, FUN, ...)
     dp <- as.vector(t(matrix(1:(2*length(dX)), ncol = 2)[, 2:1]))
@@ -46,4 +46,4 @@ function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
     opobj
 }
 
-"%x%" <- .Alias(kronecker)
+"%x%" <- kronecker

@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.17 2001/09/25 15:26:48 ripley Exp $
+### $Id: nls.R,v 1.18 2001/11/19 20:18:09 rgentlem Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -479,7 +479,7 @@ print.nls <- function(x, ...) {
 
 summary.nls <- function (object, ...)
 {
-    z <- .Alias(object)
+    z <- object
     ## we want the raw values, not the na-adjusted ones.
     r <- resid <- as.vector(object$m$resid())
     n <- length(resid)
@@ -619,8 +619,6 @@ logLik.nls <- function(object, REML = FALSE, ...)
     class(val) <- "logLik"
     val
 }
-
-## AIC.nls <- .Alias(AIC.lm) # AIC works via logLik
 
 df.residual.nls <- function(object, ...)
 {

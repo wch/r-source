@@ -19,7 +19,7 @@ unix.time(expr)
   The values returned by the \code{proc.time} are (on Unix) those
   returned by the C library function \code{times}(3v).
 
-  \code{unix.time} is an \code{\link{.Alias}} of \code{system.time}, for
+  \code{unix.time} is an alias of \code{system.time}, for
   compatibility reasons.
 }
 \value{

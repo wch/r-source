@@ -20,9 +20,6 @@ object.size(x)
   The calculation is of the size of the object, and excludes the space
   needed to store its name in the symbol table.
 
-  Two or more objects can be \code{\link{.Alias}}es of each other.
-  \code{object.size} will return the same information, that for the
-  actual object, for each of them.
 }
 \value{
   An estimate of the memory allocation attributable to the object, in bytes.

@@ -19,7 +19,7 @@ print.matrix <- function (x, rowlab = dn[[1]], collab = dn[[2]],
 	x[ina] <- na.print
     .Internal(print.matrix(x, rowlab, collab, quote, right))
 }
-prmatrix <- .Alias(print.matrix)
+prmatrix <- print.matrix
 
 ## print.tabular is now deprecated !
 

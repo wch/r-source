@@ -508,7 +508,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 summary.glm <- function(object, dispersion = NULL,
 			correlation = FALSE, ...)
 {
-    Qr <- .Alias(object$qr)
+    Qr <- object$qr
     est.disp <- FALSE
     df.r <- object$df.residual
     if(is.null(dispersion))	# calculate dispersion if needed
@@ -644,9 +644,9 @@ residuals.glm <-
 {
     type <- match.arg(type)
     y <- object$y
-    r <- .Alias(object$residuals)
-    mu	<- .Alias(object$fitted.values)
-    wts <- .Alias(object$prior.weights)
+    r <- object$residuals
+    mu	<- object$fitted.values
+    wts <- object$prior.weights
     res <- switch(type,
                   deviance = if(object$df.res > 0) {
                       d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))

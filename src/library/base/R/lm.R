@@ -239,8 +239,8 @@ print.lm <- function(x, digits = max(3, getOption("digits") - 3), ...)
 
 summary.lm <- function (object, correlation = FALSE, ...)
 {
-    z <- .Alias(object)
-    Qr <- .Alias(object$qr)
+    z <- object
+    Qr <- object$qr
     if (is.null(z$terms) || is.null(Qr))
 	stop("invalid \'lm\' object:  no terms or qr component")
     n <- NROW(Qr$qr)
@@ -366,7 +366,7 @@ residuals.lm <-
              ...)
 {
     type <- match.arg(type)
-    r <- .Alias(object$residuals)
+    r <- object$residuals
     res <- switch(type,
                   working =, response = r,
                   deviance=,
@@ -389,7 +389,7 @@ weights.default <- function(object, ...)
     else naresid(object$na.action, object$weights)
 }
 
-weights.lm <- .Alias(weights.default)
+weights.lm <- weights.default
 
 
 deviance.lm <- function(object, ...)
@@ -426,7 +426,7 @@ variable.names.lm <- function(object, full=FALSE, ...)
 case.names.lm <- function(object, full=FALSE, ...)
 {
     w <- weights(object)
-    dn <- .Alias(names(residuals(object)))
+    dn <- names(residuals(object))
     if(full || is.null(w)) dn else dn[w!=0]
 }
 

@@ -6,7 +6,7 @@ as.integer.default <- function(x,...) .Internal(as.vector(x,"integer"))
 
 as.double <- function(x,...) UseMethod("as.double")
 as.double.default <- function(x,...) .Internal(as.vector(x,"double"))
-as.real <- .Alias(as.double)
+as.real <- as.double
 
 as.complex <- function(x,...) UseMethod("as.complex")
 as.complex.default <- function(x,...) .Internal(as.vector(x, "complex"))
@@ -73,7 +73,7 @@ as.array <- function(x)
 }
 
 as.symbol <- function(x) .Internal(as.vector(x, "symbol"))
-as.name <- .Alias(as.symbol)
+as.name <- as.symbol
 ## would work too: as.name <- function(x) .Internal(as.vector(x, "name"))
 
 ## as.call <- function(x) stop("type call cannot be assigned")

@@ -35,7 +35,7 @@ print.matrix(x, rowlab=character(0), collab=character(0),
   be changed in the future.
   %%-- ``signed:  Martin Maechler''
 
-  \code{prmatrix} is currently just an \code{.Alias} for
+  \code{prmatrix} is currently just an alias for
   \code{print.matrix}.
 }
 \value{Invisibly returns its argument, \code{x}.}}
