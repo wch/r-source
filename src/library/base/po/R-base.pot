@@ -107,7 +107,7 @@ msgstr ""
 msgid "RHS must be list"
 msgstr ""
 
-msgid "am object with that name already exists"
+msgid "an object with that name already exists"
 msgstr ""
 
 msgid "autoloader did not find '%s' in '%s'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:34\n"
+"POT-Creation-Date: 2005-03-01 22:29\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -148,16 +148,16 @@ msgstr "'file' manca senza valore di default"
 msgid "'file' is must be a non-empty character string"
 msgstr "'file' deve essere una stringa carattere non vuota"
 
-msgid "sorry, gs cannot be found"
+#, fuzzy
+msgid "sorry, 'gs' cannot be found"
 msgstr "spiacente, ma non trovo gs"
 
-msgid "device"
-msgstr "dispositivo"
-
-msgid "is not available"
+#, fuzzy
+msgid "device '%s' is not available"
 msgstr "non disponibile"
 
-msgid "Available devices are"
+#, fuzzy
+msgid "Available devices are %s"
 msgstr "Dispositivi disponibili"
 
 msgid "quartz() device interactivity reduced without an event loop manager"
@@ -196,10 +196,12 @@ msgstr "indice fuori range"
 msgid "invalid Windows font:  must be a single font family name"
 msgstr "font Windows non valido: deve essere una 'font family name' singola"
 
-msgid "invalid arguments in windowsFonts (must be font names)"
+#, fuzzy
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "argomenti non validi in windowsFonts (deve essere 'font names')"
 
-msgid "invalid arguments in windowsFonts (need named args)"
+#, fuzzy
+msgid "invalid arguments in 'windowsFonts' (need named args)"
 msgstr "argomenti non validi in windowsFonts (necessita di argomenti con nome)"
 
 msgid "invalid argument name %s in '%s'"
@@ -211,3 +213,6 @@ msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "differisce tra nuovo e vecchio"
 msgstr[1] "differiscono tra nuovi e vecchi"
+
+#~ msgid "device"
+#~ msgstr "dispositivo"

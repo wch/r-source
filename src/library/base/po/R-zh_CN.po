@@ -130,7 +130,7 @@ msgid "RHS must be list"
 msgstr "等式右边必需是串列"
 
 #, fuzzy
-msgid "am object with that name already exists"
+msgid "an object with that name already exists"
 msgstr "对象的名字已经有了"
 
 #, fuzzy

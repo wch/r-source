@@ -1,7 +1,7 @@
 autoload <- function(name, package, reset=FALSE, ...)
 {
     if (!reset && exists(name, envir = .GlobalEnv, inherits = FALSE))
-	stop("am object with that name already exists")
+	stop("an object with that name already exists")
     m <- match.call()
     m[[1]] <- as.name("list")
     newcall <- eval(m, parent.frame())

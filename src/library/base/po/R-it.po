@@ -37,24 +37,20 @@ msgstr "Si veda help(\"Deprecated\") e help(\"%s-deprecated\")."
 msgid "See help(\"Deprecated\")"
 msgstr "Si veda help(\"Deprecated\")"
 
-#, fuzzy
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "l'argomento di La.svd deve essere numeric o complex"
+msgstr "l'argomento di 'La.svd' deve essere numeric o complex"
 
-#, fuzzy
 msgid "infinite or missing values in 'x'"
-msgstr "valori infiniti o mancanti in x"
+msgstr "valori infiniti o mancanti in 'x'"
 
 msgid "0 extent dimensions"
 msgstr "dimensioni nulle"
 
-#, fuzzy
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "nu deve essere 0, nrow(x) o ncol(x)"
+msgstr "'nu' deve essere 0, nrow(x) o ncol(x)"
 
-#, fuzzy
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "nv deve essere 0, nrow(x) o ncol(x)"
+msgstr "'nv' deve essere 0, nrow(x) o ncol(x)"
 
 msgid "all can not be used with other deparse options"
 msgstr "all non può essere utilizzato assieme ad altre opzioni 'deparse'"
@@ -64,9 +60,8 @@ msgstr ""
 "'kind' deve essere una stringa di caratteri di lunghezza 1 (si deve usare "
 "RNG)"
 
-#, fuzzy
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "non è una abbreviazione valida di un RNG"
+msgstr "'%s' non è una abbreviazione valida di un RNG"
 
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
@@ -75,9 +70,8 @@ msgid "Buggy version of Kinderman-Ramage generator used."
 msgstr ""
 "Stai usando una versione non funzionante del generatore di Kinderman-Ramage."
 
-#, fuzzy
 msgid "'%s' is not a valid choice"
-msgstr "non è una scelta valida"
+msgstr "'%s' non è una scelta valida"
 
 msgid "malformed version string"
 msgstr "versione stringa mal composta"
@@ -85,24 +79,20 @@ msgstr "versione stringa mal composta"
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve avere lunghezza positiva"
 
-#, fuzzy
 msgid "'dim' specifies too large an array"
-msgstr "dim specifica un array troppo esteso"
+msgstr "'dim' specifica un array troppo esteso"
 
-#, fuzzy
 msgid "incorrect value for 'MARGIN'"
-msgstr "valore non corretto per MARGIN"
+msgstr "valore non corretto per 'MARGIN'"
 
 msgid "you cannot be serious"
 msgstr "stai scherzando?"
 
-#, fuzzy
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
-msgstr "*** pos=1 non va bene; userò pos=2 per ora."
+msgstr "*** 'pos=1' non va bene; userò 'pos=2 per ora."
 
-#, fuzzy
 msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** Si noti che pos=1 produrrà un errore in seguito"
+msgstr "*** Si noti che 'pos=1' produrrà un errore in seguito"
 
 #, fuzzy
 msgid "file '%s' not found"
@@ -127,7 +117,7 @@ msgid "RHS must be list"
 msgstr "il membro di destra (RHS) deve essere di tipo list"
 
 #, fuzzy
-msgid "am object with that name already exists"
+msgid "an object with that name already exists"
 msgstr "esiste già un oggetto con questo nome"
 
 #, fuzzy
@@ -138,9 +128,8 @@ msgstr "l'autocaricatore non trova"
 msgid "invalid argument values in 'backsolve'"
 msgstr "parametri non valid in backsolve"
 
-#, fuzzy
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "matrice singolare in backsolve. Primo zero sulla diagonale ["
+msgstr "matrice singolare in backsolve. Primo zero sulla diagonale [%d]"
 
 msgid "complex matrices not permitted at present"
 msgstr "matrici complesse non ammesse al momento"
