@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-47, 2004-03-03
+Version 1.8-48, 2004-03-04
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2306,6 +2306,9 @@ distributions of R.)
 
 *rgenoud*
      R version of GENetic Optimization Using Derivatives.
+
+*rgl*
+     3D visualization device system (OpenGL).
 
 *rimage*
      Functions for image processing, including Sobel filter, rank filters,

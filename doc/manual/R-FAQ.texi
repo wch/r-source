@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-47, @value{FAQ-YEAR}-03-03
+@set FAQ-VERSION 1.8-48, @value{FAQ-YEAR}-03-04
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2384,6 +2384,8 @@ Provides bindings to Frank Warmerdam's Geospatial Data Abstraction
 Library (GDAL).
 @item rgenoud
 R version of GENetic Optimization Using Derivatives.
+@item rgl
+3D visualization device system (OpenGL).
 @item rimage
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
