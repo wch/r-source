@@ -1127,15 +1127,9 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	}
 	# check for a item in describe etc
 	if ($para =~ s/^[\n]*\.tide ([^\n]+)\n//) {
-	    my $short = length($indent) + $INDENTDD - length($1);
-	    if ($short >= 0) {
-		$indent1 = " " x $short . $1;
-	    } else {
-		$indent1 = "  " . $1;
-		$para = "\\cr ". $para;
-	    }    
-	    $indent2 = $indent . (" " x $INDENTDD);    
-	}
+	    $indent1 = " " x $INDENT . txt_header($1);
+	    $indent2 = $indent . (" " x $INDENTDD);
+	}	
         # check for .in or .inen command
 	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
 	    $INDENT = $INDENT + $para;
