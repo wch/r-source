@@ -26,7 +26,7 @@
 @titlepage
 @title R Programming Manual
 @subtitle Version @value{VERSION}
-@author Kurt Hornik
+@author R Development Core Team
 @end titlepage
 
 @contents
@@ -35,20 +35,21 @@
 
 @menu
 * Introduction::                
+* Interfacing C++ code::        
+* R (internal) programming miscellania::  
 * Creating R packages::         
-* Writing R Documentation::     
-* Function and Variable Index::  
+* Writing R documentation::     
+* Function and variable index::  
 @end menu
 
-@node Introduction, Creating R packages, Top, Top
+@node Introduction, Interfacing C++ code, Top, Top
 @chapter Introduction
 
 @menu
 * Legalese::                    
-* Dynamic loading of C++ libraries::  
 @end menu
 
-@node Legalese, Dynamic loading of C++ libraries, Introduction, Introduction
+@node Legalese,  , Introduction, Introduction
 @section Legalese
 
 This document is @copyright{} 1999 by the R Core Team.
@@ -73,8 +74,8 @@ A copy of the GNU General Public License is available via WWW at
 You can also obtain it by writing to the Free Software Foundation, Inc.,
 675 Mass Ave, Cambridge, MA 02139, USA.
 
-@node Dynamic loading of C++ libraries,  , Legalese, Introduction
-@section Dynamic loading of C++ libraries
+@node Interfacing C++ code, R (internal) programming miscellania, Introduction, Top
+@chapter Interfacing C++ code
 
 (Contributed by @emph{Adrian Trapletti}.)
 
@@ -175,7 +176,138 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-@node Creating R packages, Writing R Documentation, Introduction, Top
+@node R (internal) programming miscellania, Creating R packages, Interfacing C++ code, Top
+@chapter R (internal) programming miscellania
+
+@menu
+* Which R functions should stay @sc{<primitive>}?::  
+@end menu
+
+@node Which R functions should stay @sc{<primitive>}?,  , R (internal) programming miscellania, R (internal) programming miscellania
+@section Which R functions should stay @sc{<primitive>}?
+
+In general, all functions should be written using @code{.Internal()}.
+However, there are exceptions which are fully specified as follows:
+
+@enumerate
+
+@item
+``Special functions'' which really are @emph{language} elements, however
+exist as @sc{<primitive>} s in @R{}:
+
+@example
+@{       (         if       for  while  repeat  break  next
+return  function  on.exit
+@end example
+
+@item
+Basic @emph{operator}s (i.e., functions usually @emph{not} called as
+@code{foo(a, b, ...)}) for subsetting, assignment, arithmetic and logic.
+These are the following 1-, 2-, and @emph{N}-argument functions:
+
+@example
+          [    [[    $
+<-   <<-  [<-  [[<-  $<-
+---------------------------------------
++    -    *    /     ^    %%   %*%  %/%
+<    <=   ==   !=    >=   >    \\
+|    ||   &    &&    !
+@end example
+
+@item
+``Low level'' 0- and 1-argument functions shall remain @sc{<primitive>},
+iff they belong to one of the following groups of functions:
+
+@enumerate a
+@item
+Basic mathematical functions with a single argument, i.e.,
+
+@example
+sign    abs
+floor   ceiling
+----------------------
+sqrt    exp
+cos     sin      tan
+acos    asin     atan
+cosh    sinh     tanh
+acosh   asinh    atanh
+----------------------
+cumsum  cumprod
+cummax  cummin
+----------------------
+Im      Re
+Arg     Conj     Mod
+@end example
+
+@noindent Note that @code{log} has @emph{two} arguments, and we will
+use
+
+@example
+log <- function(x, base = exp(1)) @{
+  if(missing(base))
+    .Internal(log(x))
+  else
+    .Internal(log(x, base))
+@}
+@end example
+
+@noindent in order to ensure that @code{log(x = pi, base = 2)} is
+identical to @code{log(base = 2, x = pi)}.
+
+@item
+Functions rarely used outside of ``programming'' (i.e., mostly used
+inside other functions), such as
+
+@example
+nargs        missing
+interactive  is.@emph{xxx}
+.Primitive   .Internal   .External
+symbol.C     symbol.For
+globalenv    pos.to.env  unclass
+@end example
+
+@noindent
+(where @emph{xxx} stands for almost 30 different notions, such as
+@code{function}, @code{vector}, @code{numeric}, and so forth).
+
+@item
+The programming and session management utilities
+
+@example
+debug    undebug    trace  untrace
+browser  proc.time
+@end example
+
+@end enumerate
+
+@item
+The following basic assignment and extractor functions
+
+@example
+.Alias      environment<-
+length      length<-
+class       class<-
+attr        attr<-
+attributes  attributes<-
+dim         dim<-
+dimnames    dimnames<-
+@end example
+
+@item
+A few other @emph{N}-argument functions shall also remain
+@sc{<primitive>}, for efficiency reasons.  Care is taken in order to
+treat named arguments properly:
+
+@example
+:          ~          c           list        unlist
+call       as.call    expression  substitute
+UseMethod  invisible 
+.C         .Fortran   .Call
+@end example
+
+@end enumerate
+
+@node Creating R packages, Writing R documentation, R (internal) programming miscellania, Top
 @chapter Creating R packages
 
 Packages provide a mechanism for loading optional code and attached
@@ -254,20 +386,20 @@ Finally, @file{exec} could contain additional executables the package
 needs, typically Shell or Perl scripts.  This mechanism is currently not
 used by any package, and still experimental.
 
-@node Writing R Documentation, Function and Variable Index, Creating R packages, Top
-@chapter Writing R Documentation
+@node Writing R documentation, Function and variable index, Creating R packages, Top
+@chapter Writing R documentation
 
 @menu
-* The Documentation Source Tree::  
-* Documentation Format::        
+* The documentation source tree::  
+* Documentation format::        
 * Sectioning::                  
-* Marking Text::                
+* Marking text::                
 * Mathematics::                 
 * Miscellaneous::               
 @end menu
 
-@node The Documentation Source Tree, Documentation Format, Writing R Documentation, Writing R Documentation
-@section The Documentation Source Tree
+@node The documentation source tree, Documentation format, Writing R documentation, Writing R documentation
+@section The documentation source tree
 
 The help files containing detailed documentation for (potentially) all
 @R{} objects are in the @file{src/library/*/man} subdirectories of the
@@ -277,8 +409,8 @@ and @strong{mva}.  The @file{doc/manual} subdirectory contains code for
 running the translated help files through La@TeX{} and further documents
 pertaining to @R{}.
 
-@node Documentation Format, Sectioning, The Documentation Source Tree, Writing R Documentation
-@section Documentation Format
+@node Documentation format, Sectioning, The documentation source tree, Writing R documentation
+@section Documentation format
 
 The help files are written in a form and syntax---closely resembling
 @TeX{} and La@TeX{}---which can be processed into a variety of formats,
@@ -404,7 +536,7 @@ Use at least one  keyword out of the list in @file{$RHOME/doc/KEYWORDS}.
 
 @end table
 
-@node Sectioning, Marking Text, Documentation Format, Writing R Documentation
+@node Sectioning, Marking text, Documentation format, Writing R documentation
 @section Sectioning
 
 To begin a new paragraph or leave a blank in an example, just insert an
@@ -424,8 +556,8 @@ E.g.,
 fixed positions in the output (before @code{\note}, @code{\seealso} and
 the examples), no matter where they appear in the input.
 
-@node Marking Text, Mathematics, Sectioning, Writing R Documentation
-@section Marking Text
+@node Marking text, Mathematics, Sectioning, Writing R documentation
+@section Marking text
 
 The following logical markup commands are available for indicating
 specific kinds of text.
@@ -463,11 +595,11 @@ escaped inside @code{\code}.
 Finally, @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
 page for object @var{foo}.  One main usage of @code{\link} is in the
-@code{\seealso} section of the help page, @pxref{Documentation Format},
+@code{\seealso} section of the help page, @pxref{Documentation format},
 above.  (Currently, this only affects the creation of the @HTML{} pages
 used, e.g., by @code{help.start()}.)
 
-@node Mathematics, Miscellaneous, Marking Text, Writing R Documentation
+@node Mathematics, Miscellaneous, Marking text, Writing R documentation
 @section Mathematics
 
 Mathematical formula are something we want ``perfectly'' for printed
@@ -507,6 +639,7 @@ for $x = 0, 1, 2, \ldots$.
 @end iftex
 
 For the @HTML{} and the ``direct'' (man-like) on-line help we get
+
 @example
     p(x) = lambda^x exp(-lambda)/x!
 
@@ -530,7 +663,7 @@ For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
 @findex \left(
 @findex \right)
 
-@node Miscellaneous,  , Mathematics, Writing R Documentation
+@node Miscellaneous,  , Mathematics, Writing R documentation
 @section Miscellaneous
 
 @findex \R
@@ -559,8 +692,8 @@ currently must escape all La@TeX{} special characters, i.e., besides
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
-@node Function and Variable Index,  , Writing R Documentation, Top
-@unnumbered Function and Variable Index
+@node Function and variable index,  , Writing R documentation, Top
+@unnumbered Function and variable index
 
 @printindex vr
 
