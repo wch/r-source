@@ -17,19 +17,16 @@ atan2(y, x)
 \alias{atan}
 \alias{atan2}
 \description{
-These functions give the obvious trigonometric functions.  They
-respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
-arc-tangent, and the two-argument arc-tangent. 
+  These functions give the obvious trigonometric functions.  They
+  respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
+  arc-tangent, and the two-argument arc-tangent.
 }
 \details{
-    The arc-tangent of two arguments \code{atan2(y,x)} returns the angle
-    between the x-axis and the vector from the origin to \eqn{(x,y)}, i.e., for
-    positive arguments \code{atan2(y,x) == atan(y/x)}.
+  The arc-tangent of two arguments \code{atan2(y,x)} returns the angle
+  between the x-axis and the vector from the origin to \eqn{(x,y)}, i.e., for
+  positive arguments \code{atan2(y,x) == atan(y/x)}.
 
-    Angles are in radians, not degrees (i.e. a right angle is \eqn{\pi/2}).
-}
-\seealso{
-\code{\link{Log}}, \code{\link{Math}}.
+  Angles are in radians, not degrees (i.e. a right angle is \eqn{\pi/2}).
 }
 \examples{
 cos(0) == 1
