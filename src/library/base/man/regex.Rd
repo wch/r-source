@@ -187,7 +187,7 @@
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
   the sources at
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}. If PCRE
-  support was compiled from the sources within \R, the PCRE version is 4.4
+  support was compiled from the sources within \R, the PCRE version is 4.5
   as described here (version \eqn{\ge}{>=} 4.0 is required even if \R is
   configured to use the system's PCRE library).
 
@@ -195,7 +195,7 @@
   are accepted except \code{\\<} and \code{\\>}: in Perl all backslashed
   metacharacters are alphanumeric and backslashed symbols always are
   interpreted as a literal character. \code{\{} is not special if it would
-  be the start of an invalid interval specification. There can be more than
+  be the start of an invalid interval specification.  There can be more than
   9 backreferences.
 
   The construct \code{(?...)} is used for Perl extensions in a variety
@@ -237,7 +237,7 @@
   backreference), and \code{\\xhh} specifies a character in hex.
 
   Outside a character class, \code{\\b} matches a word boundary,
-  \code{\\B} is its negation, \code{\\A} matches at start of subject (even
+  \code{\\B} is its negation, \code{\\A} matches at start of a subject (even
   in multiline mode, unlike \code{^}), \code{\\Z} matches at end of a
   subject or before newline at end, \code{\\z} matches at end of a
   subject. and \code{\\G} matches at first matching position in a
