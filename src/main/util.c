@@ -226,6 +226,10 @@ void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
     }
 }
 
+int isValidString(SEXP x)
+{
+    return isString(x) && length(x) > 0 && !isNull(STRING(x)[0]);
+}
 
 int isSymbol(SEXP s)
 {

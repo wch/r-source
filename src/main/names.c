@@ -731,60 +731,56 @@ void SymbolShortcuts()
 void InitNames()
 {
     int i;
-
-
+    /* R_NilValue */
     /* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
     /* OR ARMAGEDON HAPPENS. */
-
     R_NilValue = allocSExp(NILSXP);
     CAR(R_NilValue) = R_NilValue;
     CDR(R_NilValue) = R_NilValue;
     TAG(R_NilValue) = R_NilValue;
     ATTRIB(R_NilValue) = R_NilValue;
-
+    /* R_UnboundValue */
     R_UnboundValue = allocSExp(SYMSXP);
     SYMVALUE(R_UnboundValue) = R_UnboundValue;
     PRINTNAME(R_UnboundValue) = R_NilValue;
     ATTRIB(R_UnboundValue) = R_NilValue;
-
+    /* R_MissingArg */
     R_MissingArg = allocSExp(SYMSXP);
     SYMVALUE(R_MissingArg) = R_MissingArg;
     PRINTNAME(R_MissingArg) = mkChar("");
     ATTRIB(R_MissingArg) = R_NilValue;
-
+    /* Parser Structures */
     R_CommentSxp = R_NilValue;
     R_ParseText = R_NilValue;
-
-    /* changed from mkChar so mkChar can see if it is getting "NA" */
-    /* and then retrun NA_STRING rather than alloc a new CHAR */
-
+    /* String constants (CHARSXP values */
+    /* Note: changed from mkChar so mkChar can see if it is getting
+       "NA" and then retrun NA_STRING rather than alloc a new CHAR */
+    /* NA_STRING */
     NA_STRING = allocString(strlen("NA"));
     strcpy(CHAR(NA_STRING), "NA");
     R_print.na_string = NA_STRING;
-
+    /* R_BlankString */
     R_BlankString = mkChar("");
-
+    /* Initialize the symbol Table */
     if (!(R_SymbolTable = (SEXP *) malloc(HSIZE * sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for symbol table");
-
     for (i = 0; i < HSIZE; i++)
 	R_SymbolTable[i] = R_NilValue;
-
-    /* Sets up a set of globals so that a symbol table */
-    /* search can be avoided when matching something like */
-    /* dim or dimnames */
-
+    /* Set up a set of globals so that a symbol table search can be
+       avoided when matching something like dim or dimnames. */
     SymbolShortcuts();
-
+    /*  Builtin Functions */
     for (i = 0; R_FunTab[i].name; i++)
 	installFunTab(i);
-
+    /*  Unbound values which are to be preserved through GCs */
     R_PreciousList = R_NilValue;
 }
 
-/* install - probe the symbol table */
-/* If name is not found, install it. */
-/* Returns the symbol corresponding to the string "name". */
+
+/*  install - probe the symbol table */
+/*  If "name" is not found, it is installed in the symbol table.
+    The symbol corresponding to the string "name" is returned. */
+
 SEXP install(char *name)
 {
     char buf[MAXIDSIZE+1];
@@ -796,33 +792,30 @@ SEXP install(char *name)
     if (strlen(name) > MAXIDSIZE)
 	error("symbol print-name too long\n");
     strcpy(buf, name);
-
     i = hashpjw(buf);
-
-    /* check to see if the symbol is already there */
+    /* Check to see if the symbol is already present. */
+    /* If it is return it. */
     for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
 	if (strcmp(buf, CHAR(PRINTNAME(CAR(sym)))) == 0)
 	    return (CAR(sym));
-
-    /* make a new symbol node and link it into the list */
+    /* Create a new symbol node and link it into the table. */
     sym = mkSYMSXP(mkChar(buf), R_UnboundValue);
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
     return (sym);
 }
 
+
+/*  do_internal - This is the code for .Internal(). */
+
 SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, fun;
-
     int save = R_PPStackTop;
-
     checkArity(op, args);
-
     s = CAR(args);
     fun = CAR(s);
     if (!isSymbol(fun))
 	errorcall(call, "invalid internal function\n");
-
     if (INTERNAL(fun) == R_NilValue)
 	errorcall(call, "no internal function \"%s\"\n", CHAR(PRINTNAME(fun)));
     args = CDR(s);

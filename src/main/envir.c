@@ -56,7 +56,13 @@
 
 #include "Defn.h"
 
-extern int R_DirtyImage;
+/* extern int R_DirtyImage; */
+
+
+void InitGlobalEnv()
+{
+    R_GlobalEnv = emptyEnv();
+}
 
 
 /*  mkEnv - Create an environment with variable names given by the

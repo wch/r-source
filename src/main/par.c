@@ -735,7 +735,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "xpd")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
-	if (ix==NA_INTEGER)
+	if (ix == NA_INTEGER)
 	    dd->dp.xpd = dd->gp.xpd = 2;
 	else
 	    dd->dp.xpd = dd->gp.xpd = (ix != 0);

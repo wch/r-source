@@ -1,4 +1,3 @@
-
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -757,8 +756,12 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* override par("xpd") and force clipping to figure region */
     /* NOTE: don't override to _reduce_ clipping region */
+#ifdef OLD
     if (dd->gp.xpd < 1)
 	dd->gp.xpd = 1;
+#else
+    dd->gp.xpd = 2;
+#endif
 
     dd->gp.adj = 0.5;
     dd->gp.font = dd->gp.fontaxis;

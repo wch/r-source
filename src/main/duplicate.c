@@ -94,6 +94,7 @@ SEXP duplicate(SEXP s)
 	for(i = 0 ; i < n ; i++)
 	    VECTOR(t)[i] = duplicate(VECTOR(s)[i]);
 	ATTRIB(t) = duplicate(ATTRIB(s));
+	TRUELENGTH(t) = TRUELENGTH(s);
 	UNPROTECT(2);
 	break;
     case STRSXP:
@@ -107,6 +108,7 @@ SEXP duplicate(SEXP s)
 	PROTECT(t);
 	ATTRIB(t) = duplicate(ATTRIB(s));
 	UNPROTECT(2);
+	TRUELENGTH(t) = TRUELENGTH(s);
 	break;
     case PROMSXP: /* duplication requires that we evaluate the promise */
 #ifdef OLD

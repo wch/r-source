@@ -44,12 +44,6 @@
 static int ParseBrowser(SEXP, SEXP);
 
 
-void InitGlobalEnv()
-{
-    R_GlobalEnv = emptyEnv();
-}
-
-
 
 	/* Read-Eval-Print loop with input from a file */
 
