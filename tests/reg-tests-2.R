@@ -1357,16 +1357,17 @@ write.table(x, qmethod = "double")
 
 
 ## extensions to read.table
-Mat <- matrix(
-              c(1:3, letters[1:3], 1:3, LETTERS[1:3],
+Mat <- matrix(c(1:3, letters[1:3], 1:3, LETTERS[1:3],
                 c("2004-01-01", "2004-02-01", "2004-03-01"),
                 c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
               3, 6)
 foo <- tempfile()
-write.table(Mat, foo, col.names=FALSE, row.names=F)
-read.table(foo, colClasses=c(NA, NA, "NULL", "character", "Date", "POSIXct"))
+write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
+read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"))
 unlist(sapply(.Last.value, class))
-read.table(foo, colClasses=c("factor",NA,"NULL","factor","Date","POSIXct"))
+read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"))
+unlist(sapply(.Last.value, class))
+read.table(foo, colClasses = c(V4="character"))
 unlist(sapply(.Last.value, class))
 unlink(foo)
 ## added in 2.0.0

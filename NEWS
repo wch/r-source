@@ -298,7 +298,8 @@ NEW FEATURES
     o	read.fwf() reads multiline records, is faster for large files.
 
     o	read.table() now accepts "NULL", "factor", "Date" and
-	"POSIXct" as possible values of colClasses.
+	"POSIXct" as possible values of colClasses, and colClasses can
+	be a named character vector.
 
     o	readChar() can now read strings with embedded nuls.
 

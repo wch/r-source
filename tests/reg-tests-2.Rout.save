@@ -4158,14 +4158,13 @@ Warning message:
 > 
 > 
 > ## extensions to read.table
-> Mat <- matrix(
-+               c(1:3, letters[1:3], 1:3, LETTERS[1:3],
+> Mat <- matrix(c(1:3, letters[1:3], 1:3, LETTERS[1:3],
 +                 c("2004-01-01", "2004-02-01", "2004-03-01"),
 +                 c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
 +               3, 6)
 > foo <- tempfile()
-> write.table(Mat, foo, col.names=FALSE, row.names=F)
-> read.table(foo, colClasses=c(NA, NA, "NULL", "character", "Date", "POSIXct"))
+> write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
+> read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"))
   V1 V2 V4         V5                  V6
 1  1  a  A 2004-01-01 2004-01-01 12:00:00
 2  2  b  B 2004-02-01 2004-02-01 12:00:00
@@ -4173,7 +4172,7 @@ Warning message:
 > unlist(sapply(.Last.value, class))
          V1          V2          V4          V5         V61         V62 
   "integer"    "factor" "character"      "Date"    "POSIXt"   "POSIXct" 
-> read.table(foo, colClasses=c("factor",NA,"NULL","factor","Date","POSIXct"))
+> read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"))
   V1 V2 V4         V5                  V6
 1  1  a  A 2004-01-01 2004-01-01 12:00:00
 2  2  b  B 2004-02-01 2004-02-01 12:00:00
@@ -4181,6 +4180,14 @@ Warning message:
 > unlist(sapply(.Last.value, class))
        V1        V2        V4        V5       V61       V62 
  "factor"  "factor"  "factor"    "Date"  "POSIXt" "POSIXct" 
+> read.table(foo, colClasses = c(V4="character"))
+  V1 V2 V3 V4         V5               V6
+1  1  a  1  A 2004-01-01 2004-01-01 12:00
+2  2  b  2  B 2004-02-01 2004-02-01 12:00
+3  3  c  3  C 2004-03-01 2004-03-01 12:00
+> unlist(sapply(.Last.value, class))
+         V1          V2          V3          V4          V5          V6 
+  "integer"    "factor"   "integer" "character"    "factor"    "factor" 
 > unlink(foo)
 > ## added in 2.0.0
 > 

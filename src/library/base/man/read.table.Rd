@@ -99,7 +99,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     missing values.}
 
   \item{colClasses}{character.  A vector of classes to be assumed for
-    the columns.  Recycled as necessary.
+    the columns.  Recycled as necessary, or if the character vector is
+    named, unspecified values are taken to be \code{NA}.
 
     Possible values are \code{NA} (when \code{\link{type.convert}} is
     used), \code{NULL} (when the column is skipped), one of the atomic

@@ -105,8 +105,20 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     if(check.names) col.names <- make.names(col.names, unique = TRUE)
     if (rlabp) col.names <- c("row.names", col.names)
 
+    nmColClasses <- names(colClasses)
     if(length(colClasses) < cols)
-        colClasses <- rep(colClasses, length.out=cols)
+        if(is.null(nmColClasses)) {
+            colClasses <- rep(colClasses, length.out=cols)
+        } else {
+            tmp <- rep(as.character(NA), length.out=cols)
+            names(tmp) <- col.names
+            i <- match(nmColClasses, col.names, 0)
+            if(any(i <= 0))
+                warning("not all columns named in colClasses exist")
+            tmp[ i[i > 0] ] <- colClasses
+            colClasses <- tmp
+        }
+
 
     ##	set up for the scan of the file.
     ##	we read unknown values as character strings and convert later.
