@@ -5,6 +5,11 @@ NEW FEATURES
     o  	.First.lib() now implemented; called by library() after loading
 	a package.
 
+    o   print.summary.lm() now gives `significance stars' and a symbolic
+        correlation matrix.
+
+    o	new is.R() function.
+
 
 		CHANGES IN VERSION R VERSION 0.61.1
 
@@ -23,10 +28,10 @@ BUG FIXES
 	needed, the latter zeroed half of what it got, sizeof() mistakes
 	in both cases.
 
-    o   c(ordered factor) caused segfault (uninitalised pointer), now 
+    o   c(ordered factor) caused segfault (uninitalised pointer), now
 	fixed.
 
-    o   behaviour of as.numeric() on factors changed recently; now 
+    o   behaviour of as.numeric() on factors changed recently; now
 	documented.
 
     o   model.matrix() now pays attention to the names on its dataframe
