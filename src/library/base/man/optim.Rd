@@ -3,7 +3,8 @@
 \title{General-purpose Optimization}
 \description{
   General-purpose optimization based on Nelder--Mead, quasi-Newton and
-  conjugate-gradient algorithms.
+  conjugate-gradient algorithms. It includes an option for
+  box-constrained optimization.
 }
 \usage{
 optim(par, fn, gr = NULL,
@@ -112,7 +113,8 @@ optim(par, fn, gr = NULL,
   \item{value}{The value of \code{fn} corresponding to \code{par}.}
   \item{counts}{A two-element integer vector giving the number of calls
     to \code{fn} and \code{gr} respectively. This excludes those calls needed
-    to compute the Hessian, if requested.}
+    to compute the Hessian, if requested, and any calls to \code{fn} to
+    compute a finite-difference approximation to the gradient.}
   \item{convergence}{An integer code. \code{0} indicates successful
     convergence. Error codes are
     \describe{
@@ -125,8 +127,8 @@ optim(par, fn, gr = NULL,
       method; see component \code{message} for further details.}
     }      
   }
-  \item{message}{An character string giving any additional information
-    returned by the optimizer.}
+  \item{message}{A character string giving any additional information
+    returned by the optimizer, or \code{NULL}.}
   \item{hessian}{Only if argument \code{hessian} is true. A symmetric
     matrix giving an estimate of the Hessian at the solution found. Note
     that this is the Hessian of the unconstrained problem even if the
