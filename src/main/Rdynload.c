@@ -144,6 +144,9 @@ static int CountDLL = 0;
 static DllInfo LoadedDLL[MAX_NUM_DLLS];
 
 int addDLL(char *dpath, char *name, HINSTANCE handle);
+SEXP Rf_MakeDLLInfo(DllInfo *info);
+
+static SEXP createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol);
 
 
 OSDynSymbol Rf_osDynSymbol;
@@ -476,22 +479,22 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 	/* or if dlopen fails for some reason. */
 
 
-static int AddDLL(char *path, int asLocal, int now)
+static DllInfo* AddDLL(char *path, int asLocal, int now)
 {
     HINSTANCE handle;
-    DllInfo *info;
+    DllInfo *info = NULL;
 
     DeleteDLL(path);
     if(CountDLL == MAX_NUM_DLLS) {
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
-	return 0;
+	return NULL;
     }
 
     handle = R_osDynSymbol->loadLibrary(path, asLocal, now);
 
     if(handle == NULL) {
         R_osDynSymbol->getError(DLLerror, DLLerrBUFSIZE);
-        return 0;
+        return NULL;
     }
 
     info = R_RegisterDLL(handle, path);
@@ -519,7 +522,7 @@ static int AddDLL(char *path, int asLocal, int now)
     }
 
 
-    return 1;
+    return info;
 }
 
 DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
@@ -806,6 +809,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
     return (DL_FUNC) NULL;
 }
 
+
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
     R_osDynSymbol->getFullDLLPath(call, buf, path);
@@ -832,16 +836,18 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
+    DllInfo *info;
 
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected");
     GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
-    if(!AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0]))
+    info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0]);
+    if(!info)
 	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
-    return R_NilValue;
+    return(Rf_MakeDLLInfo(info));
 }
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -860,7 +866,7 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 int moduleCdynload(char *module, int local, int now)
 {
     char dllpath[PATH_MAX], *p = getenv("R_HOME");
-    int res;
+    DllInfo *res;
 
     if(!p) return 0;
     snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", p, FILESEP, FILESEP, 
@@ -869,7 +875,7 @@ int moduleCdynload(char *module, int local, int now)
     if(!res)
 	warning("unable to load shared library \"%s\":\n  %s",
 		dllpath, DLLerror);
-    return res;
+    return res != NULL ? 1 : 0;
 }
 
 /**
@@ -893,6 +899,31 @@ Rf_MakeNativeSymbolRef(DL_FUNC f)
   return(ref);
 }
 
+static SEXP
+Rf_makeDllObject(HINSTANCE inst)
+{
+    SEXP ans;
+
+    PROTECT(ans = R_MakeExternalPtr(inst, Rf_install("DLLHandle"), R_NilValue));
+    setAttrib(ans, R_ClassSymbol, mkString("DLLHandle"));
+    UNPROTECT(1);
+
+    return(ans);
+}
+
+static SEXP
+Rf_makeDllInfoReference(HINSTANCE inst)
+{
+    SEXP ans;
+
+    PROTECT(ans = R_MakeExternalPtr(inst, Rf_install("DLLInfo"), Rf_install("DLLInfo")));
+    setAttrib(ans, R_ClassSymbol, mkString("DLLInfoReference"));
+    UNPROTECT(1);
+
+    return(ans);
+}
+
+
 /**
  Creates an R object representing the public DLL information stored in
  info. Currently this is only the short and the long, fully qualified
@@ -904,7 +935,7 @@ Rf_MakeDLLInfo(DllInfo *info)
 {
     SEXP ref, elNames, tmp;
     int i, n;
-    const char *const names[] = {"name", "path", "dynamicLookup"};
+    const char *const names[] = {"name", "path", "dynamicLookup", "handle", "info"};
 
     n = sizeof(names)/sizeof(names[0]);
 
@@ -917,14 +948,23 @@ Rf_MakeDLLInfo(DllInfo *info)
 	SET_STRING_ELT(tmp, 0, mkChar(info->path));
     SET_VECTOR_ELT(ref, 2, ScalarLogical(info->useDynamicLookup));
 
+    SET_VECTOR_ELT(ref, 3, Rf_makeDllObject(info->handle));
+
+    SET_VECTOR_ELT(ref, 4, Rf_makeDllInfoReference(info));
+
     PROTECT(elNames = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
 	SET_STRING_ELT(elNames, i, mkChar(names[i]));
     setAttrib(ref, R_NamesSymbol, elNames);
+
+    setAttrib(ref, R_ClassSymbol, mkString("DLLInfo"));
+
     UNPROTECT(2);
 
     return(ref);
 }
+
+
 
 
 /**
@@ -949,58 +989,196 @@ R_getSymbolInfo(SEXP sname, SEXP spackage)
     SEXP sym = R_NilValue;
     DL_FUNC f;
 
+    package = "";
+
     name = CHAR(STRING_ELT(sname, 0));
-    if(length(spackage))
-	package = CHAR(STRING_ELT(spackage, 0));
-    else 
-	package = "";
-    f = R_FindSymbol(name, package, &symbol);
-    if(f) {
-	SEXP tmp, klass;
-	int n = (symbol.type != R_ANY_SYM) ? 4 : 3;
-	PROTECT(sym = allocVector(VECSXP, n));
 
-	SET_VECTOR_ELT(sym, 0, sname);
-	SET_VECTOR_ELT(sym, 1, Rf_MakeNativeSymbolRef(f));
-	if(symbol.dll)
-	    SET_VECTOR_ELT(sym, 2, Rf_MakeDLLInfo(symbol.dll));
-
-	PROTECT(klass = allocVector(STRSXP, (symbol.type != R_ANY_SYM ? 2 : 1)));
-	SET_STRING_ELT(klass, length(klass)-1, mkChar("NativeSymbolInfo"));
-
-	if(n > 3) {
-             /* Add the registration information: the number of arguments and the classname. */
-	    int nargs = -1;
-	    char *className = "";
-	    switch(symbol.type) {
-	    case R_C_SYM:
-		nargs = symbol.symbol.c->numArgs;
-		className = "CRoutine";
-		break;
-	    case R_CALL_SYM:
-		nargs = symbol.symbol.call->numArgs;
-		className = "CallRoutine";
-		break;
-	    case R_FORTRAN_SYM:
-		nargs = symbol.symbol.fortran->numArgs;
-		className = "FortranRoutine";
-		break;
-	    case R_EXTERNAL_SYM:
-		nargs = symbol.symbol.external->numArgs;
-		className = "ExternalRoutine";
-		break;
-	    default:
-                  /* Something unintended has happened if we get here. */
-		break;
-	    }
-	    SET_VECTOR_ELT(sym, 3, tmp = ScalarInteger(nargs));
-	    SET_STRING_ELT(klass, 0, mkChar(className));
+    if(length(spackage)) {
+	if(TYPEOF(spackage) == STRSXP) {
+	    package = CHAR(STRING_ELT(spackage, 0));
 	}
-	setAttrib(sym, R_ClassSymbol, klass);
-	UNPROTECT(2);
+	else if(TYPEOF(spackage) == EXTPTRSXP && R_ExternalPtrTag(spackage) == Rf_install("DLLInfo")) {
+	    f = R_dlsym((DllInfo *)R_ExternalPtrAddr(spackage), name, &symbol);
+	    package = NULL;
+	} else {
+	    error("must pass package name or DllInfo reference");
+	}
     }
 
+    if(package)
+      f = R_FindSymbol(name, package, &symbol);
+
+    if(f) 
+	sym = createRSymbolObject(sname, f, &symbol);
+
     return(sym);
+}
+
+
+SEXP
+R_getDllTable()
+{
+	int i;
+	SEXP ans;
+
+	PROTECT(ans = allocVector(VECSXP, CountDLL));
+	for(i = 0; i < CountDLL; i++) {
+		SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
+	}
+	UNPROTECT(1);
+	return(ans);
+}
+
+
+static SEXP
+createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol)
+{
+    SEXP tmp, klass, sym, names;
+    int n = (symbol->type != R_ANY_SYM) ? 4 : 3;
+    int numProtects = 0;
+
+    PROTECT(sym = allocVector(VECSXP, n));    numProtects++;
+    PROTECT(names = allocVector(STRSXP, n));    numProtects++;
+
+    if(!sname || sname == R_NilValue) {
+	PROTECT(sname = mkString(symbol->symbol.call->name));   numProtects++;
+    }
+
+    SET_VECTOR_ELT(sym, 0, sname);
+    SET_STRING_ELT(names, 0, mkChar("name"));
+
+    SET_VECTOR_ELT(sym, 1, Rf_MakeNativeSymbolRef(f));
+    SET_STRING_ELT(names, 1, mkChar("address"));
+    if(symbol->dll)
+	SET_VECTOR_ELT(sym, 2, Rf_MakeDLLInfo(symbol->dll));
+    SET_STRING_ELT(names, 2, mkChar("dll"));
+
+
+    PROTECT(klass = allocVector(STRSXP, (symbol->type != R_ANY_SYM ? 2 : 1))); numProtects++;
+    SET_STRING_ELT(klass, length(klass)-1, mkChar("NativeSymbolInfo"));
+
+    if(n > 3) {
+	/* Add the registration information: the number of arguments and the classname. */
+	int nargs = -1;
+	char *className = "";
+	switch(symbol->type) {
+	case R_C_SYM:
+	    nargs = symbol->symbol.c->numArgs;
+	    className = "CRoutine";
+	    break;
+	case R_CALL_SYM:
+	    nargs = symbol->symbol.call->numArgs;
+	    className = "CallRoutine";
+	    break;
+	case R_FORTRAN_SYM:
+	    nargs = symbol->symbol.fortran->numArgs;
+	    className = "FortranRoutine";
+	    break;
+	case R_EXTERNAL_SYM:
+	    nargs = symbol->symbol.external->numArgs;
+	    className = "ExternalRoutine";
+	    break;
+	default:
+	    /* Something unintended has happened if we get here. */
+	    break;
+	}
+	SET_VECTOR_ELT(sym, 3, tmp = ScalarInteger(nargs));
+	SET_STRING_ELT(klass, 0, mkChar(className));
+	SET_STRING_ELT(names, 3, mkChar("numParameters"));
+    }
+
+    setAttrib(sym, R_ClassSymbol, klass);
+    setAttrib(sym, R_NamesSymbol, names);
+
+    UNPROTECT(numProtects);
+    return(sym);
+}
+
+static SEXP
+R_getRoutineSymbols(NativeSymbolType type, DllInfo *info)
+{
+    SEXP ans;
+    int i, num;
+    R_RegisteredNativeSymbol  sym;
+
+
+    sym.dll = info;
+    sym.type =type;
+
+    switch(type) {
+    case R_CALL_SYM: num = info->numCallSymbols;
+	break;
+    case R_C_SYM: num = info->numCSymbols;
+	break;
+    case R_FORTRAN_SYM: num = info->numFortranSymbols;
+	break;
+    case R_EXTERNAL_SYM: num = info->numExternalSymbols;
+	break;
+    default:
+	num = 0;
+    }
+
+    PROTECT(ans = allocVector(VECSXP, num));
+
+    for(i = 0; i < num ; i++) {
+	switch(type) {
+	case R_CALL_SYM:
+	    sym.symbol.call = &info->CallSymbols[i];
+  	    break;
+	case R_C_SYM:
+	    sym.symbol.c = &info->CSymbols[i]; 
+  	    break;
+	case R_FORTRAN_SYM:
+	    sym.symbol.fortran = &info->FortranSymbols[i]; 
+  	    break;
+	case R_EXTERNAL_SYM:
+	    sym.symbol.external = &info->ExternalSymbols[i];
+  	    break;
+	default:
+	    continue;
+	}
+	SET_VECTOR_ELT(ans, i, createRSymbolObject(NULL,  NULL, &sym));
+    }
+
+
+    UNPROTECT(1);
+    return(ans);
+}
+
+
+SEXP
+R_getRegisteredRoutines(SEXP dll)
+{
+
+    DllInfo *info;
+    SEXP ans, snames;
+    int i;
+    const char * const names[] = {".C", ".Call", ".Fortran", ".External"};
+
+    if(TYPEOF(dll) != EXTPTRSXP && R_ExternalPtrTag(dll) != Rf_install("DLLInfo")) {
+	error("R_getRegisteredRoutines() expects a DllInfo reference");
+    }
+
+    info = (DllInfo *) R_ExternalPtrAddr(dll);
+    if(!info) {
+	error("NULL value passed for DllInfo");
+    }
+
+    PROTECT(ans = allocVector(VECSXP, 4));
+
+    SET_VECTOR_ELT(ans, 0, R_getRoutineSymbols(R_C_SYM, info));
+    SET_VECTOR_ELT(ans, 1, R_getRoutineSymbols(R_CALL_SYM, info));
+    SET_VECTOR_ELT(ans, 2, R_getRoutineSymbols(R_FORTRAN_SYM, info));
+    SET_VECTOR_ELT(ans, 3, R_getRoutineSymbols(R_EXTERNAL_SYM, info));
+
+    PROTECT(snames = allocVector(STRSXP, 4));
+    for(i = 0; i < 4; i++) {
+	SET_STRING_ELT(snames, i, mkChar(names[i]));
+    }
+    setAttrib(ans, R_NamesSymbol, snames);
+
+    UNPROTECT(2);
+    return(ans);
 }
 
 
@@ -1039,4 +1217,17 @@ R_getSymbolInfo(SEXP sname, SEXP spackage)
 {
     error("no dyn.load support in this R version");
 }
+
+SEXP
+R_getDllTable()
+{
+    error("no dyn.load support in this R version");  
+}
+
+SEXP
+R_getRegisteredRoutines(SEXP dll)
+{
+    error("no dyn.load support in this R version");  
+}
+
 #endif

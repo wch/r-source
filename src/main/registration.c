@@ -186,6 +186,7 @@ static R_CMethodDef cMethods [] = {
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
+
 static R_CallMethodDef callMethods [] = {
     /* lapack */
     CALLDEF(La_svd, 7),
@@ -217,7 +218,9 @@ static R_CallMethodDef callMethods [] = {
 
     /* Reflectance for the dynamically loaded native symbols. */
     CALLDEF(R_getSymbolInfo, 2),
-
+    CALLDEF(R_getDllTable, 0),
+    CALLDEF(R_getRegisteredRoutines, 1),
+ 
     /* mapply */
     CALLDEF(do_mapply, 4),
 

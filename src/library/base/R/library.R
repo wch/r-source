@@ -433,13 +433,15 @@ library.dynam <-
 function(chname, package = NULL, lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    .Dyn.libs <- .dynLibs()
+    #.Dyn.libs <- .dynLibs()
+    .Dyn.libs <- getLoadedDLLs()
+
     if(missing(chname) || (ncChname <- nchar(chname)) == 0)
         return(.Dyn.libs)
     ncFileExt <- nchar(file.ext)
     if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
         chname <- substr(chname, 1, ncChname - ncFileExt)
-    if(is.na(match(chname, .Dyn.libs))) {
+    if(TRUE || is.na(match(chname, .Dyn.libs))) {
         for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
             file <- file.path(pkg, "libs",
                               paste(chname, file.ext, sep = ""))
@@ -450,11 +452,19 @@ function(chname, package = NULL, lib.loc = NULL, verbose =
         if(file == "") {
             stop(paste("shared library", sQuote(chname), "not found"))
         }
+        which = sapply(.Dyn.libs, function(x) x$path == file)
+        if(any(which)) {
+          if(verbose)
+            cat("DLL", file, "already loaded\n")
+          return(.Dyn.libs[[which]])
+        }
         if(verbose)
             cat("now dyn.load(", file, ") ...\n", sep = "")
-        dyn.load(file, ...)
+        dll = dyn.load(file, ...)
         .dynLibs(c(.Dyn.libs, chname))
+        return(dll)
     }
+#XXX
     invisible(.dynLibs())
 }
 

@@ -19,14 +19,46 @@ dyn.unload <- function(x)
 getNativeSymbolInfo <- function(name, PACKAGE)
 {
     if(missing(PACKAGE)) PACKAGE <- ""
-    v <- .Call("R_getSymbolInfo", as.character(name), as.character(PACKAGE),
+    if(!is.character(PACKAGE) && !inherits(PACKAGE, "DLLInfoReference"))
+      stop("must pass a package name or DllInfoReference object")
+    
+    v <- .Call("R_getSymbolInfo", as.character(name), PACKAGE,
                PACKAGE = "base")
     if(is.null(v)) {
-        msg <- paste("no such symbol",name)
+        msg <- paste("no such symbol", name)
         if(length(PACKAGE) && nchar(PACKAGE[1]))
-            msg <- paste(msg, "in package",PACKAGE[1])
+            msg <- paste(msg, "in package", PACKAGE[1])
         stop(msg)
     }
     names(v) <- c("name", "address", "package", "numParameters")[1:length(v)]
     v
 }
+
+
+getLoadedDLLs <- function()
+{
+    els = .Call("R_getDllTable", PACKAGE = "base")
+    names(els) = sapply(els, function(x) x[["name"]])
+    els
+}
+
+getDLLRegisteredRoutines =
+function(dll)  
+{
+   # Provide methods for the different types.
+ if(!inherits(dll, "DLLInfo"))
+   stop("Must specify DLL via a DLLInfo object. See getLoadedDLLs()")
+
+ info = dll$info
+
+ els = .Call("R_getRegisteredRoutines", info, PACKAGE = "base")
+   # Put names on the elements by getting the names from each element.
+ els = lapply(els, function(x) {
+                        if(length(x))
+                           names(x) = sapply(x, function(z) z$name)
+                        x
+                    })
+
+ els
+}
+
