@@ -53,12 +53,9 @@ help <- function(topic, offline = FALSE, package = .packages(),
                             warning("Using non-linked HTML file: style sheet and hyperlinks may be incorrect")
                         }
                         file <- paste("file://", file, sep = "")
-                        if (is.null(getOption("browser")))
+                        if(is.null(browser <- getOption("browser")))
                             stop("options(\"browser\") not set")
-                        browser <- getOption("browser")
-                        system(paste(browser, " -remote \"openURL(",
-                                     file, ")\" 2>/dev/null || ", browser, " ",
-                                     file, " &", sep = ""))
+                        browseURL(file)
                         cat("help() for",topic, " is shown in browser",browser,
                             "...\nUse\t help(",topic,", htmlhelp=FALSE)\nor\t",
                             "options(htmlhelp = FALSE)\nto revert.\n")

@@ -22,7 +22,6 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
                              "switch to its window."),
                        exdent = 4))
     writeLines("Otherwise, be patient ...")
-    system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
-		 browser, " ", url, " &", sep = ""))
+    browseURL(url)
     options(htmlhelp = TRUE)
 }
