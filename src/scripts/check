@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.11 $'
+revision='$Revision: 1.12 $'
 version=`set - ${revision}; echo ${2}`
 version="R package checker ${version}
 
@@ -26,7 +26,7 @@ If necessary for passing the checks, use the \`--vsize' and \`--nsize'
 options to increase R's memory (\`--vanilla' is used by default).
 
 Options:
-  -c, --clean
+  -c, --clean		remove created files
   -d, --debug		turn on shell debugging (set -x)
   -h, --help		print short help message and exit
   -l, --library=LIB	use packages in library tree LIB
