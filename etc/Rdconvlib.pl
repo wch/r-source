@@ -1,4 +1,4 @@
- Subroutines for converting R documentation into HTML, LaTeX, Nroff
+# Subroutines for converting R documentation into HTML, LaTeX, Nroff
 # and R (Examples) format
 
 # Copyright (C) 1997 Friedrich Leisch
