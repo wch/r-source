@@ -1,9 +1,4 @@
 \name{polySpline}
-\title{Piecewise Polynomial Spline Representation}
-\usage{
-polySpline(object, \dots)
-as.polySpline(object, \dots)
-}
 \alias{polySpline}
 \alias{polySpline.bSpline}
 \alias{polySpline.nbSpline}
@@ -12,13 +7,18 @@ as.polySpline(object, \dots)
 \alias{as.polySpline}
 \alias{predict.polySpline}
 \alias{print.polySpline}
+\title{Piecewise Polynomial Spline Representation}
+\description{
+  Create the piecewise polynomial representation of a spline object.
+}
+\usage{
+polySpline(object, \dots)
+as.polySpline(object, \dots)
+}
 \arguments{
  \item{object}{An object that inherits from class \code{spline}.}
  \item{\dots}{Optional additional arguments.  At present no additional
      arguments are used.}
-}
-\description{
-  Create the piecewise polynomial representation of a spline object.
 }
 \value{
   An object that inherits from class \code{polySpline}.  This is the

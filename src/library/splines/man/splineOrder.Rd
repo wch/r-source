@@ -1,21 +1,21 @@
 \name{splineOrder}
-\title{Determine the Order of a Spline}
-\usage{
-splineOrder(object)
-}
 \alias{splineOrder}
 \alias{splineOrder.bSpline}
 \alias{splineOrder.polySpline}
-\arguments{
- \item{object}{An object that inherits from class \code{spline}.}
-}
+\title{Determine the Order of a Spline}
 \description{
   Return the order of a spline object.
 }
+\usage{
+splineOrder(object)
+}
+\arguments{
+ \item{object}{An object that inherits from class \code{"spline"}.}
+}
 \details{
-  The order of a spline is the number
-  of coefficients in each piece of the piecewise polynomial
-  representation.  Thus a cubic spline has order 4.
+  The order of a spline is the number of coefficients in each piece of
+  the piecewise polynomial representation.  Thus a cubic spline has
+  order 4.
 }
 \value{
   A positive integer.
@@ -24,10 +24,10 @@ splineOrder(object)
 \seealso{
   \code{\link{splineKnots}},
   \code{\link{interpSpline}},
-  \code{\link{periodicSpline}}}}
+  \code{\link{periodicSpline}}
+}
 \examples{
 data( women )
 splineOrder( interpSpline( weight ~ height, women ) )
 }
 \keyword{ models }
-

@@ -1,16 +1,9 @@
-%% $Id: xyVector.Rd,v 1.6 2001/04/26 15:28:46 pd Exp $
+%% $Id: xyVector.Rd,v 1.7 2001/08/25 22:17:44 hornik Exp $
 \name{xyVector}
-\title{Construct an xyVector Object}
-\usage{
-xyVector(x, y)
-}
 \alias{xyVector}
 \alias{as.data.frame.xyVector}
 \alias{plot.xyVector}
-\arguments{
- \item{x}{a numeric vector}
- \item{y}{a numeric vector of the same length as \code{x}}
-}
+\title{Construct an xyVector Object}
 \description{
   Create an object to represent a set of x-y pairs.  The resulting
   object can be treated as a matrix or as a data frame or as a vector.
@@ -19,6 +12,13 @@ xyVector(x, y)
   The result of functions such as \code{predict.spline} is returned as
   an \code{xyVector} object so the x-values used to generate the
   y-positions are retained, say for purposes of generating plots.
+}
+\usage{
+xyVector(x, y)
+}
+\arguments{
+  \item{x}{a numeric vector}
+  \item{y}{a numeric vector of the same length as \code{x}}
 }
 \value{
   An object of class \code{xyVector} with components
@@ -35,4 +35,4 @@ plot( weights, type = "l", xlab = "height", ylab = "weight" )
 points( women$height, women$weight )
 weights
 }
-\keyword{ models }%-- one or more ...
+\keyword{ models }

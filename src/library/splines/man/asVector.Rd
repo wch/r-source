@@ -10,20 +10,22 @@
 asVector(object)
 }
 \arguments{
-    \item{object}{An object.}
+  \item{object}{An object.}
 }
 \value{
-    a vector
+  a vector
 }
 \details{
-    Methods for vector coercion in new classes must be created for the
-    \code{asVector} generic instead of \code{as.vector}.
-    The \code{as.vector} function is internal and not
-    easily extended.  Currently the only class with an \code{asVector}
-    method is the \code{xyVector} class.
+  Methods for vector coercion in new classes must be created for the
+  \code{asVector} generic instead of \code{as.vector}.  The
+  \code{as.vector} function is internal and not easily extended.
+  Currently the only class with an \code{asVector} method is the
+  \code{xyVector} class.
 }
 \author{Douglas Bates and Bill Venables}
-\seealso{\code{\link{xyVector}}}
+\seealso{
+  \code{\link{xyVector}}
+}
 \examples{
 data( women )
 ispl <- interpSpline( weight ~ height,  women )

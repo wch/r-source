@@ -45,8 +45,10 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
   specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
-  \code{ns}, \code{poly}, \code{smooth.spline},
-  \code{predict.bs}.
+  \code{\link{ns}},
+  \code{\link{poly}},
+  \code{\link{smooth.spline}},
+  \code{\link{predict.bs}}.
 }
 \examples{
 data(women)

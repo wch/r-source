@@ -1,13 +1,17 @@
 \name{interpSpline}
-\title{Create an Interpolation Spline}
-\usage{
-interpSpline(obj1, obj2, bSpline, period, na.action)
-}
 \alias{interpSpline}
 \alias{interpSpline.default}
 \alias{interpSpline.formula}
 \alias{print.bSpline}
 \alias{print.ppolySpline}
+\title{Create an Interpolation Spline}
+\description{
+  Create an interpolation spline, either from \code{x} and \code{y}
+  vectors, or from a formula/data.frame combination.
+}
+\usage{
+interpSpline(obj1, obj2, bSpline, period, na.action)
+}
 \arguments{
  \item{obj1}{Either a numeric vector of \code{x} values or a formula.}
  \item{obj2}{If \code{obj1} is numeric this should be a numeric vector
@@ -24,10 +28,6 @@ interpSpline(obj1, obj2, bSpline, period, na.action)
    alternative action \code{na.fail} causes \code{interpSpline} to print
    an error message and terminate if there are any incomplete
    observations.}
-}
-\description{
-  Create an interpolation spline, either from \code{x} and
-  \code{y} vectors, or from a formula/data.frame combination.
 }
 \value{
   An object that inherits from class \code{spline}. The object can be in

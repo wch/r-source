@@ -1,27 +1,28 @@
 \name{splineDesign}
+\alias{splineDesign}
+\alias{spline.des}
 \title{Design Matrix for B-splines}
+\description{
+  Evaluate the design matrix for the B-splines defined by \code{knots}
+  at the values in \code{x}.
+}
 \usage{
 splineDesign(knots, x, ord, derivs)
 spline.des(knots, x, ord, derivs)
 }
-\alias{splineDesign}
-\alias{spline.des}
 \arguments{
- \item{knots}{a numeric vector of knot positions with non-decreasing values.}
- \item{x}{a numeric vector of values at which to evaluate the B-spline
-   functions or derivatives. The values in \code{x} must be between
-   \code{knots[ord]} and \code{knots[ length(knots) + 1 - ord ]}.}
- \item{ord}{a positive integer giving the order of the spline function.
-   This is the number of coefficients in each piecewise polynomial
-   segment, thus a cubic spline has order 4.  Defaults to 4.}
- \item{derivs}{an integer vector of the same length as \code{x} and with
-   values between \code{0} and \code{ord - 1}.  The derivative of the
-   given order is evaluated at the \code{x} positions.  Defaults to a
-   vector of zeroes of the same length as \code{x}.}
-}
-\description{
-  Evaluate the design matrix for the B-splines defined by \code{knots}
-  at the values in \code{x}.
+  \item{knots}{a numeric vector of knot positions with non-decreasing
+    values.}
+  \item{x}{a numeric vector of values at which to evaluate the B-spline
+    functions or derivatives. The values in \code{x} must be between
+    \code{knots[ord]} and \code{knots[ length(knots) + 1 - ord ]}.}
+  \item{ord}{a positive integer giving the order of the spline function.
+    This is the number of coefficients in each piecewise polynomial
+    segment, thus a cubic spline has order 4.  Defaults to 4.}
+  \item{derivs}{an integer vector of the same length as \code{x} and with
+    values between \code{0} and \code{ord - 1}.  The derivative of the
+    given order is evaluated at the \code{x} positions.  Defaults to a
+    vector of zeroes of the same length as \code{x}.}
 }
 \value{
   A matrix with \code{length( x )} rows and \code{length( knots ) - ord}

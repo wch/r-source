@@ -14,13 +14,17 @@
   argument missing, then plots the resulting \code{xyVector} with
   \code{type = "l"}.}
 \usage{
-predict.bSpline(object, x, nseg=50, deriv=0, \dots)
-predict.nbSpline(object, x, nseg=50, deriv=0, \dots)
-predict.pbSpline(object, x, nseg=50, deriv=0, \dots)
-predict.npolySpline(object, x, nseg=50, deriv=0, \dots)
-predict.ppolySpline(object, x, nseg=50, deriv=0, \dots)
+\method{predict}{bSpline}(object, x, nseg=50, deriv=0, \dots)
 plot.spline(x, \dots)
 }
+% \synopsis{
+% predict.bSpline(object, x, nseg=50, deriv=0, \dots)
+% predict.nbSpline(object, x, nseg=50, deriv=0, \dots)
+% predict.pbSpline(object, x, nseg=50, deriv=0, \dots)
+% predict.npolySpline(object, x, nseg=50, deriv=0, \dots)
+% predict.ppolySpline(object, x, nseg=50, deriv=0, \dots)
+% plot.spline(x, \dots)
+% }
 \arguments{
   \item{object}{An object that inherits from the \code{bSpline} or the
     \code{polySpline} class.  For \code{plot.spline} this argument is
@@ -48,8 +52,11 @@ plot.spline(x, \dots)
       at the \code{x} vector}
 }
 \author{Douglas Bates and Bill Venables}
-\seealso{\code{\link{xyVector}}, \code{\link{interpSpline}},
-    \code{\link{periodicSpline}}}
+\seealso{
+  \code{\link{xyVector}},
+  \code{\link{interpSpline}},
+  \code{\link{periodicSpline}}
+}
 \examples{
 data( women )
 ispl <- interpSpline( weight ~ height,  women )
