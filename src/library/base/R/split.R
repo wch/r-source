@@ -19,15 +19,41 @@ split.data.frame <- function(x, f)
 
 "split<-" <- function(x, f, value) UseMethod("split<-")
 
+#"split<-.default" <- function(x, f, value)
+#{
+#    x[unlist(plit(seq(along=x), f))] <- unlist(value)
+#    x
+#}
+
 "split<-.default" <- function(x, f, value)
 {
-    x[unlist(split(seq(along=x), f))] <- unlist(value)
+    ix <- split(seq(along = x), f)
+    n <- length(value)
+    j <- 0
+    for (i in ix) {
+        j <- j %% n + 1
+        x[i] <- value[[j]]
+    }
     x
 }
 
+
+
+#"split<-.data.frame" <- function(x, f, value)
+#{
+#    x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
+#    x
+#}
+
 "split<-.data.frame" <- function(x, f, value)
 {
-    x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
+    ix <- split(seq(along = x), f)
+    n <- length(value)
+    j <- 0
+    for (i in ix) {
+        j <- j %% n + 1
+        x[i,] <- value[[j]]
+    }
     x
 }
 

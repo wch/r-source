@@ -24,7 +24,7 @@ unsplit(value, f)
     grouping, or a list of such factors in which case their interaction
     is used for the grouping.}
   \item{value}{a list of vectors or data frames compatible with a
-    splitting of \code{x}}
+    splitting of \code{x}. Recycling applies if the lengths do not match.} 
 }
 \details{
   \code{split} and \code{split<-} are generic functions with default and

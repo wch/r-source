@@ -15,6 +15,11 @@ NEW FEATURES
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
+    o   The assignment form of split() allows recycling of vectors 
+        within the value list. In particular, things like 
+            split(x, g) <- lapply(split(x, g), mean)
+        now work
+
 
 DOCUMENTATION
 
@@ -195,6 +200,8 @@ BUG FIXES
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
 	
+    o   The ave() function had trouble if the grouping contained 
+        unused levels. 
 
 
 
