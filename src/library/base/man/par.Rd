@@ -15,13 +15,8 @@ par(\dots, no.readonly = FALSE)
   \code{tag = value} form, or by passing them as a list of tagged values.
 }
 \details{
-  The former values are returned in an invisible tagged list.  Such a
-  list can be passed as an argument to \code{par} to restore the
-  parameter values.  Use \code{par(no.readonly = TRUE)} for the full
-  list in that case.
-
-  Parameters are queried by giving vectors of character strings to
-  \code{par}.  In this case, the values are returned in a tagged list.
+  Parameters are queried by giving one or more character vectors to
+  \code{par}.
 
   \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
   get \emph{all} the graphical parameters (as named list).  Their names
@@ -265,6 +260,22 @@ par(\dots, no.readonly = FALSE)
   \item{ylog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
     \code{\link{plot.default}}).  See \code{xlog} above.}
 }
+
+\value{
+  When parameters are set, their former values are returned in an
+  invisible named list.  Such a
+  list can be passed as an argument to \code{par} to restore the
+  parameter values.  Use \code{par(no.readonly = TRUE)} for the full
+  list of parameters that can be restored.
+
+  When one parameter is queried, the value is a character string.
+  When two or more parameters are queried, the result is a list of
+  character strings, with the list names giving the parameters.
+
+  Note the inconsistency: setting one parameter returns a list, but
+  querying one parameter returns a vector.
+}
+
 \section{Color Specification}{Colors can be specified in several
   different ways.  The simplest way is with a character string giving
   the color name (e.g., \code{"red"}).  A list of the possible colors
@@ -285,7 +296,9 @@ par(\dots, no.readonly = FALSE)
   the lengths in consecutive positions in the string.  For example, the
   string \code{"33"} specifies three pixels on followed by three off and
   \code{"3313"} specifies three pixels on followed by three off followed
-  by one on and finally three off.}
+  by one on and finally three off.
+}
+
 \seealso{
   \code{\link{plot.default}} for some high-level plotting parameters;
   \code{\link{colors}}, \code{\link{gray}}, \code{\link{rainbow}},
@@ -295,6 +308,7 @@ par(\dots, no.readonly = FALSE)
   setting up device regions by \code{\link{layout}} and
   \code{\link{split.screen}}.
 }
+
 \examples{
 op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
           pty = "s")      # square plotting region, independent of device size

@@ -113,6 +113,9 @@ BUG FIXES
         original name "x" for a different argument which broke on the
         new `match & dispatch' code. Changed to "xval".
 
+    o   The return value for par() was incorrectly documented, and in
+	consequence cpgram() was not re-setting "pty".
+
 
 	**************************************************
 	*						 *
