@@ -387,7 +387,7 @@ Masarotto} and @email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
 @c aware that some decompression programs do not preserve long file names
 @c properly.
 
-For most installations the installer @command{rwinst.exe} will be the
+For most installations the installer @command{SetupR.exe} will be the
 easiest tool to use.
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
@@ -1642,6 +1642,9 @@ methods.
 Basic functions for the generalised (Tukey) lambda distribution.
 @item gregmisc
 Miscellaneous functions written/maintained by Gregory R. Warnes.
+@item grid
+The Grid graphics package, a rewrite of the graphics layout
+capabilities, plus some support for interaction.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
@@ -1650,6 +1653,8 @@ Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
+@item lattice
+Lattice graphics, an implementation of Trellis Graphics functions.
 @item leaps
 A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
@@ -1883,16 +1888,11 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
-@item grid
-The Grid graphics package, a rewrite of the graphics layout
-capabilities, plus some support for interaction.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item hpower
 A suite of functions to compute power and sample size for tests of the
 general linear hypothesis.
-@item lattice
-Lattice graphics, an implementation of Trellis Graphics functions.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
