@@ -262,9 +262,9 @@ F77_NAME(dtrsm)(char *, char *, char *, char *, int *, int *, double *,
 extern void
 F77_NAME(dtrsv)(char *, char *, char *, int *, double *, int *, double *,
 		int *);
-extern void
+extern int
 F77_NAME(idamax)(int *, double *, int *);
-extern void
+extern int
 F77_NAME(lsame)(char *, char *);
 
 /*----*/
