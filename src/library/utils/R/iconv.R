@@ -6,7 +6,7 @@ iconvlist <- function()
     int <- .Internal(iconv(NULL, "", "", ""))
     if(length(int)) return(sort(int))
     icfile <- system.file("iconvlist", package="utils")
-    if(!nchar(ncfile)) stop("iconvlist is not available on this system")
+    if(!nchar(icfile)) stop("iconvlist is not available on this system")
     ext <- readLines(icfile)
     if(!length(ext)) stop("iconvlist is not available on this system")
     ## glibc has lines ending //
