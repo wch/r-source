@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-5, 2000-07-25
+Version 1.1-6, 2000-07-27
 Kurt Hornik
 
 
@@ -1242,6 +1242,10 @@ these a try, of course.  This area of CRAN currently contains
 *HTML*
      Functions for exporting R objects as HTML tables.
 
+*Java*
+     An interface from R to Java to create and call Java objects and
+     methods.
+
 *RMySQL*
      An interface between R and the MySQL database system.
 
@@ -1278,6 +1282,9 @@ these a try, of course.  This area of CRAN currently contains
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
+
+*netCDF*
+     Read data from netCDF files.
 
 *syskern*
      Functions for writing code that is OS and R/S independent.

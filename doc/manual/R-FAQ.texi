@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-5, 2000-07-25
+@set FAQ-VERSION 1.1-6, 2000-07-27
 @set REL-VERSION 1.1.0
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1458,6 +1458,9 @@ contains
 @table @strong
 @item HTML
 Functions for exporting R objects as @HTML{} tables.
+@item Java
+An interface from R to Java to create and call Java objects and
+methods.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RPgSQL
@@ -1484,6 +1487,8 @@ Interface to the NCSA HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
+@item netCDF
+Read data from netCDF files.
 @item syskern
 Functions for writing code that is OS and R/S independent.
 @item tframe
