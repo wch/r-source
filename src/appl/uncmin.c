@@ -1817,7 +1817,7 @@ fstofd(int nr, int m, int n, double *xpls, fcn_p fcn, void *state,
   if (icase == 3 && n > 1) {
     /* 	if computing hessian, a must be symmetric */
     for (i = 1; i < m; ++i) {
-      for (j = 0; j < i; ++i) {
+      for (j = 0; j < i; ++j) {
 	a[i + j * nr] = (a[i + j * nr] + a[j + i * nr]) / 2.0;
       }
     }

@@ -420,32 +420,26 @@ void Rvprintf(const char *format, va_list arg)
     }
     else {
 	char buf[BUFSIZE], *p = buf, *vmax = vmaxget(); 
-	int slen, res;
-	if(!arg) {
-            /* just a string, so length is known */
-	    if((slen = strlen(format)) >= BUFSIZE)
-		p = R_alloc(slen+1, sizeof(char));
-	    vsprintf(p, format, arg);
-	} else {
+	int res;
+
 #ifdef HAVE_VSNPRINTF
-	    res = vsnprintf(p, BUFSIZE, format, arg);
-	    if(res >= BUFSIZE) { /* res is the desired output length */
-		p = R_alloc(res+1, sizeof(char));
-		vsprintf(p, format, arg);
-	    } else if(res < 0) { /* just a failure indication */
-		p = R_alloc(10*BUFSIZE, sizeof(char));
-		res = vsnprintf(p, 10*BUFSIZE, format, arg);
-		if (res < 0) {
-		    *(p + 10*BUFSIZE) = '\0';
-		    warning("printing of extremely long string is truncated");
-		}
-	    }
-#else
-	    /* allocate a large buffer and hope */
-	    p = R_alloc(10*BUFSIZE, sizeof(char));
+	res = vsnprintf(p, BUFSIZE, format, arg);
+	if(res >= BUFSIZE) { /* res is the desired output length */
+	    p = R_alloc(res+1, sizeof(char));
 	    vsprintf(p, format, arg);
-#endif
+	} else if(res < 0) { /* just a failure indication */
+	    p = R_alloc(10*BUFSIZE, sizeof(char));
+	    res = vsnprintf(p, 10*BUFSIZE, format, arg);
+	    if (res < 0) {
+		*(p + 10*BUFSIZE) = '\0';
+		warning("printing of extremely long output is truncated");
+	    }
 	}
+#else
+	/* allocate a large buffer and hope */
+	p = R_alloc(10*BUFSIZE, sizeof(char));
+	vsprintf(p, format, arg);
+#endif
 	R_WriteConsole(p, strlen(buf));
 	vmaxset(vmax);
     }
