@@ -59,6 +59,10 @@ ftable(x, \dots)
   given and their union is a proper subset of all variables involved,
   the other variables are summed out.
 
+  When the arguments are \R expressions interpreted as factors,
+  additional arguments will be passed to \code{table} to control how
+  the variable names are displayed; see the last example below.
+
   Function \code{\link{ftable.formula}} provides a formula method for
   creating flat contingency tables.
 }
@@ -82,5 +86,9 @@ data(mtcars)
 x <- ftable(mtcars[c("cyl", "vs", "am", "gear")])
 x
 ftable(x, row.vars = c(2, 4))
-}
+
+## Start with expressions, use table()'s "dnn" to change labels
+ftable(mtcars$cyl, mtcars$vs, mtcars$am, mtcars$gear, row.vars = c(2, 4), 
+       dnn = c("Cylinders", "V/S", "Transmission", "Gears"))
+ }
 \keyword{category}
