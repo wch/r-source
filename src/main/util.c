@@ -1111,6 +1111,13 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+Rboolean utf8strIsASCII(char *str)
+{
+    char *p;
+    for(p = str; *p; p++)
+	if((unsigned int)*p > 0x7F) return FALSE;
+    return TRUE;
+}
 
 void F77_SYMBOL(rexitc)(char *msg, int *nchar)
 {

@@ -240,7 +240,10 @@
 #define HAVE_MBRTOWC 1
 
 /* Define to 1 if you have the `mbsrtowcs' function. */
-#define HAVE_MBSRTOWCS 1
+/* #undef HAVE_MBSRTOWCS */
+
+/* Define to 1 if you have the `mbstowcs' function. */
+#define HAVE_MBSTOWCS 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
@@ -400,9 +403,6 @@
 /* Define to 1 if you have the <wchar.h> header file. */
 #define HAVE_WCHAR_H 1
 
-/* Define if calloc(0) returns a null pointer. */
-#define HAVE_WORKING_CALLOC 1
-
 /* Define to 1 if you have the `wcrtomb' function. */
 #define HAVE_WCRTOMB 1
 
@@ -410,13 +410,19 @@
 #define HAVE_WCSCOLL 1
 
 /* Define to 1 if you have the `wcsrtombs' function. */
-#define HAVE_WCSRTOMBS 1
+/* #undef HAVE_WCSRTOMBS */
+
+/* Define to 1 if you have the `wcstombs' function. */
+#define HAVE_WCSTOMBS 1
 
 /* Define to 1 if you have the `wcswidth' function. */
 /* #undef HAVE_WCSWIDTH */
 
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
+
+/* Define if calloc(0) returns a null pointer. */
+#define HAVE_WORKING_CALLOC 1
 
 /* Define if finite() is correct for -Inf/NaN/Inf. */
 #define HAVE_WORKING_FINITE 1
@@ -530,6 +536,7 @@
 
 /* Define this to enable support for UTF-8 locales. */
 /* #undef SUPPORT_UTF8 */
+#define SUPPORT_UTF8 1
 
 /* Define if your system is SunOS4, which is famous for broken header files.
    */

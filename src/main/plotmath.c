@@ -22,9 +22,9 @@
  */
 
 /* <UTF8-FIXME>
-   byte-level access and use of ctype functions
-   byte-level charmetric information.
-   Has encoding of symbol font hard-coded.
+   byte-level access and use of ctype functions for symbol font
+
+   Has encoding of symbol font hard-coded.  Not clear if this is enough.
 */
 
 #ifdef HAVE_CONFIG_H
@@ -32,6 +32,11 @@
 #endif
 
 #include <ctype.h>
+#ifdef SUPPORT_UTF8
+# include <wchar.h>
+# include <wctype.h>
+#endif
+
 
 #include <Defn.h>
 #include <Rmath.h>
@@ -992,6 +997,7 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
 	prev = SetFont(SymbolFont, gc);
     bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
+	/* <UTF8-FIXME> */
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
 	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
@@ -1018,6 +1024,7 @@ static BBOX RenderSymbolStr(char *str, int draw, mathContext *mc,
     FontType font = prevfont;
     chr[1] = '\0';
     if (str) {
+	/* <UTF8-FIXME> perhaps */
 	char *s = str;
 	while (*s) {
 	    if (isdigit((int)*s) && font != PlainFont) {
@@ -1055,6 +1062,7 @@ static BBOX RenderSymbolStr(char *str, int draw, mathContext *mc,
 
 /* Code for Character String Atoms. */
 
+/* This only gets called from RenderAccent */
 static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 		       R_GE_gcontext *gc, GEDevDesc *dd)
 {
@@ -1062,6 +1070,10 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
     char asciiStr[2];
     bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
+	/* <UTF8-FIXME> This appears only to get called with values
+	   for hat, tilde and ring.  The latter appears to be hardcoded
+	   in Latin-1.
+	 */
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
 	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
@@ -1072,18 +1084,30 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
     return bbox;
 }
 
+/* This gets called on strings and PRINTNAMES */
 static BBOX RenderStr(char *str, int draw, mathContext *mc,
 		      R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
     if (str) {
+#ifdef SUPPORT_UTF8
+	int n = strlen(str), used;
+	wchar_t wc;
+	char *p = str;
+	while ((used = mbrtowc(&wc, p, n, NULL)) > 0) {
+	    glyphBBox = GlyphBBox(wc, gc, dd);
+	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
+	    p += used; n -= used;
+	}
+#else
 	char *s = str;
 	while (*s) {
 	    glyphBBox = GlyphBBox(*s, gc, dd);
 	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
 	    s++;
 	}
+#endif
 	if (draw) {
 	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str,
 		   0.0, 0.0, mc->CurrentAngle, gc,

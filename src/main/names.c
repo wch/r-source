@@ -460,7 +460,7 @@ FUNTAB R_FunTab[] =
 
 /* String Manipulation */
 
-{"nchar",	do_nchar,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"nchar",	do_nchar,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"substr",	do_substr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"substrgets",	do_substrgets,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"strsplit",	do_strsplit,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},

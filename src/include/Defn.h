@@ -872,6 +872,8 @@ char *EncodeString(SEXP, int, int, Rprt_adj);
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
+Rboolean utf8strIsASCII(char *str);
+
 
 /* Macros for suspending interrupts */
 #define BEGIN_SUSPEND_INTERRUPTS do { \

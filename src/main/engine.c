@@ -18,7 +18,6 @@
  */
 
 /* <UTF8> char here is either ASCII or handled as a whole */
-/* <UTF8-FIXME> except metric info */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -32,6 +31,10 @@
 #include <Rdevices.h>
 #include <R_ext/Applic.h>	/* pretty0() */
 #include <Rmath.h>
+
+#ifdef SUPPORT_UTF8
+# include <wchar.h>
+#endif
 
 /* A note on memory management ...
  * Here (with GEDevDesc's) I have continued the deplorable tradition of
@@ -1648,9 +1651,31 @@ void GEText(double x, double y, char *str,
 			} else {
 			    double maxHeight = 0.0;
 			    double maxDepth = 0.0;
-			    char *ss;
+			    char *ss = sbuf;
 			    int charNum = 0;
-			    /* <UTF8-FIXME> by char, not by byte */
+#ifdef SUPPORT_UTF8
+			    int n = strlen(ss), used;
+			    wchar_t wc;
+			    while ((used  = mbrtowc(&wc, ss, n, NULL)) > 0) {
+				GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
+				h = fromDeviceHeight(h, GE_INCHES, dd);
+				d = fromDeviceHeight(d, GE_INCHES, dd);
+				/* Set maxHeight and maxDepth from height
+				   and depth of first char.
+				   Must NOT set to 0 in case there is
+				   only 1 char and it has negative
+				   height or depth
+				*/
+				if (charNum++ == 0) {
+				    maxHeight = h;
+				    maxDepth = d;
+				} else {
+				    if (h > maxHeight) maxHeight = h;
+				    if (d > maxDepth) maxDepth = d;
+				}
+				ss += used; n -=used;
+			    }
+#else
 			    for (ss = sbuf; *ss; ss++) {
 				GEMetricInfo((unsigned char) *ss, gc,
 					     &h, &d, &w, dd);
@@ -1670,7 +1695,7 @@ void GEText(double x, double y, char *str,
 				    if (d > maxDepth) maxDepth = d;
 				}
 			    }
-			    /* </UTF8-FIXME> */
+#endif
 			    height = maxHeight - maxDepth;
 			    yc = 0.5;
 			}

@@ -122,7 +122,8 @@ mem.limits <- function(nsize=NA, vsize=NA)
               names=c("nsize", "vsize"))
 }
 
-nchar <- function(x).Internal(nchar(x))
+nchar <- function(x, type = c( "bytes", "chars", "width"))
+    .Internal(nchar(x, match.arg(type)))
 
 polyroot <- function(z).Internal(polyroot(z))
 
