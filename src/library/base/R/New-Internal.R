@@ -154,6 +154,7 @@ searchpaths <- function()
     unlist(paths)
 }
 
+sprintf <- function(fmt, ...) .Internal(sprintf(fmt, ...))
 
 ##-- DANGER ! ---   substitute(list(...))  inside functions !!!
 ##substitute <- function(expr, env=NULL).Internal(substitute(expr, env))

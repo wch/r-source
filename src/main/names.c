@@ -447,6 +447,7 @@ FUNTAB R_FunTab[] =
 {"tolower",	do_tolower,	1,	11,	1,	PP_FUNCALL},
 {"toupper",	do_toupper,	1,	11,	1,	PP_FUNCALL},
 {"chartr",	do_chartr,	1,	11,	3,	PP_FUNCALL},
+{"sprintf",	do_sprintf,	1,	11,	-1,	PP_FUNCALL},
 
 
 /* Type Checking (typically implemented in ./coerce.c ) */

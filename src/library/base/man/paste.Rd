@@ -29,7 +29,8 @@ paste(\dots, sep = " ", collapse = NULL)
   String manipulation with
   \code{\link{as.character}}, \code{\link{substr}}, \code{\link{nchar}},
   \code{\link{strsplit}}; further, \code{\link{cat}} which concatenates and
-  writes to a file.
+  writes to a file, and \code{\link{sprintf}} for C like string
+  construction.
 }
 \examples{
 paste(1:12) # same as as.character(1:12)

@@ -224,6 +224,9 @@ NEW FEATURES
         which have new optional arguments `big.mark', `big.interval',
         `small.mark', `small.interval', and `decimal.mark'.
 
+    o	New sprintf() function for general C like formatting, from
+	Jonathan Rougier.
+
     o   Changes to sorting:
 
 	-  sort(), sort.list() and order() have a new argument
@@ -371,8 +374,7 @@ C-LEVEL FACILITIES
 	connections to several clients.
 
     o	New quicksort sorting (for numeric no-NA data), accessible from
-        C as R_qsort() and R_qsorti() and from Fortran as qsort4() and
-        qsort3().
+        C as R_qsort() etc and from Fortran as qsort4() and qsort3().
 
     o	Rinternals.h no longer includes fcntl.h, as this is not an
 	ISO C header and cannot be guaranteed to exist.

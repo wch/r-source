@@ -91,7 +91,8 @@ format.char(x, width = NULL, flag = "-")
   \emph{The C Programming Language.}  Second edition. Prentice Hall.
 }
 \seealso{
-  \code{\link{format}}.
+  \code{\link{format}}, \code{\link{sprintf}} for more general C like
+  formatting.
 }
 \examples{
 xx  <- pi * 10^(-5:4)
