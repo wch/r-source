@@ -1,5 +1,5 @@
 \name{source}
-\title{Redirect Input}
+\title{Read R Code from a File or a Connection}
 \usage{
 source(file, local = FALSE, echo = verbose, print.eval = echo,
        verbose = getOption("verbose"),  prompt.echo = getOption("prompt"),
@@ -36,14 +36,21 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   environment.
 }
 \details{
-  All versions of \R accept input  from a connection with end of line
+  All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
   or CR (as used on Mac).  The final line can be incomplete, that
-  is missing the final EOL marker. 
+  is missing the final EOL marker.
+
+  If \code{\link{option}}("keep.source") is true (the default), the
+  source of functions is keep so they can be listed exactly as input.
+  This imposes a limit of 128K chars on the function size and a nesting
+  limit of 265.  Use \code{option(keep.source = FALSE)} when these
+  limits might take effect.
 }
 \seealso{
   \code{\link{demo}} which uses \code{source};
-  \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}}; \code{\link{options}("keep.source")}.
+  \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}};
+  \code{\link{options}("keep.source")}.
 }
 \keyword{file}
 \keyword{programming}
