@@ -7,9 +7,9 @@
 NEW FEATURES
 
     o   The scaling of symbols is now linear in cex=, rather than being
-	tied to the available font's size. The fonts also scale
-	linearly with cex= inso far as your X server can do it. On
-	systems with the scalable URW PostScript fonts installed, this
+	tied to the available font's size. The fonts on an X11 device
+	also scale linearly with cex= in so far as your X server can do it.
+	On systems with the scalable URW PostScript fonts installed, this
 	looks particularly nice. Note that the scaling is linear in
 	the *diameter*, but quadratic in area.
 
@@ -41,6 +41,11 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   na.omit.ts and na.contiguous preserve classes
+
+    o   ts.union, cbind.ts, arithmetic on ts objects now allow 
+	non-integer frequencies.
 
     o   Text clipping now works in the X11 driver
 
