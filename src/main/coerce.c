@@ -985,7 +985,7 @@ SEXP do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
-    if (DispatchOrEval(call, "as.character", args, rho, &ans, 1))
+    if (DispatchOrEval(call, "as.character", args, rho, &ans, 1, 0))
 	return(ans);
 
     /* Method dispatch has failed, we now just */
@@ -1006,7 +1006,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     int type;
 
-    if (DispatchOrEval(call, "as.vector", args, rho, &ans, 1))
+    if (DispatchOrEval(call, "as.vector", args, rho, &ans, 1, 0))
 	return(ans);
 
     /* Method dispatch has failed, we now just */
@@ -1328,7 +1328,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, dims, names, x;
     int i, n;
 
-    if (DispatchOrEval(call, "is.na", args, rho, &ans, 1))
+    if (DispatchOrEval(call, "is.na", args, rho, &ans, 1, 1))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
@@ -1428,7 +1428,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, dims, names, x;
     int i, n;
 
-    if (DispatchOrEval(call, "is.nan", args, rho, &ans, 1))
+    if (DispatchOrEval(call, "is.nan", args, rho, &ans, 1, 1))
 	return(ans);
 
     PROTECT(args = ans);

@@ -1150,7 +1150,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* We evaluate the first argument and attempt to dispatch on it. */
     /* If the dispatch fails, we "drop through" to the default code below. */
 
-    if(DispatchOrEval(call, "[<-", args, rho, &ans, 0))
+    if(DispatchOrEval(call, "[<-", args, rho, &ans, 0, 0))
       return(ans);
 
     return do_subassign_dflt(call, op, ans, rho);
@@ -1274,7 +1274,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
-    if(DispatchOrEval(call, "[[<-", args, rho, &ans, 0))
+    if(DispatchOrEval(call, "[[<-", args, rho, &ans, 0, 0))
       return(ans);
 
     return do_subassign2_dflt(call, op, ans, rho);
@@ -1559,7 +1559,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* replace the second argument with a string */
     SETCADR(args, input);
 
-    if(DispatchOrEval(call, "$<-", args, env, &ans, 0))
+    if(DispatchOrEval(call, "$<-", args, env, &ans, 0, 0))
       return(ans);
 
     if (! iS)

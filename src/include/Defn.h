@@ -584,7 +584,7 @@ void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean);
 SEXP deparse1line(SEXP,Rboolean);
-int DispatchOrEval(SEXP, char*, SEXP, SEXP, SEXP*, int);
+int DispatchOrEval(SEXP, char*, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
