@@ -173,16 +173,11 @@ SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString(R_Date());
 }
 
-/*  show.file
+/*  file.show
  *
- *  Display a file so that a user can view it.  The function calls
- *  "R_ShowFile" which is a platform dependent hook that arranges
- *  for the file to be displayed. A reasonable approach would be to
- *  open a read-only edit window with the file displayed in it.
- *
- *  FIXME : this should in fact take a vector of filenames and titles
- *  and display them concatenated in a window.  For a pure console
- *  version, write down a pipe to a pager.
+ *  Display file(s) so that a user can view it.  The function calls
+ *  "R_ShowFiles" which is a platform-dependent hook that arranges
+ *  for the file(s) to be displayed.
  */
 
 SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
