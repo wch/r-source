@@ -118,19 +118,19 @@ example <- function(topic, package= .packages(), lib.loc = .lib.loc,
     if(!is.character(topic)) topic <- deparse(topic)[1]
     file <- ""
     for(lib in lib.loc)
-        for(pkg in package) {
-            AnIndexF <- system.file(paste("help","AnIndex",sep=directory.sep),
-                                    pkg, lib)
-            if(AnIndexF != "") {
-                AnIndex <- scan(AnIndexF,what=c("c","c"),quiet=TRUE)
-                i <- match(topic,AnIndex[seq(1,length(AnIndex),2)],-1)
-                if(i != -1)	 
-                    file <- system.file(paste("R-ex",directory.sep,AnIndex[2*i],
-                                              ".R", sep=""),
-                                        pkg = pkg, lib = lib)
-            } 
-            if(file != "") break
-        }
+	for(pkg in package) {
+	    AnIndexF <- system.file(paste("help","AnIndex",sep=directory.sep),
+				    pkg, lib)
+	    if(AnIndexF != "") {
+		AnIndex <- scan(AnIndexF,what=c("c","c"),sep="\t",quiet=TRUE)
+		i <- match(topic,AnIndex[seq(1,length(AnIndex),2)],-1)
+		if(i != -1)	 
+		    file <- system.file(paste("R-ex",directory.sep,AnIndex[2*i],
+					      ".R", sep=""),
+					pkg = pkg, lib = lib)
+	    } 
+	    if(file != "") break
+	}
     if(file == "") stop(paste("Couldn't find '", topic, "' example", sep=""))
     if(pkg != "base") library(pkg, lib = lib, character.only = TRUE)
     source(file, echo = echo, prompt.echo = prompt.echo,
