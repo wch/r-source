@@ -7,7 +7,7 @@
   (optionally) the expression or function from which it was called.
 }
 \usage{
-warning(\dots, call. = TRUE)
+warning(\dots, call. = TRUE, immediate. = FALSE)
 suppressWarnings(expr)
 }
 \arguments{
@@ -15,6 +15,8 @@ suppressWarnings(expr)
     separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
+  \item{immediate.}{logical, indicating if the call should be output
+    immediately, even if \code{\link{getOption}(warn) = 0}.}
   \item{expr}{expression to evaluate.}
 }
 \details{
@@ -29,7 +31,8 @@ suppressWarnings(expr)
   ignored; if it is zero they are stored and printed after the
   top--level function has completed; if it is one they are printed as
   they occur and if it is 2 (or larger) warnings are turned into
-  errors.
+  errors.  Calling \code{warning(immediate. = TRUE)} turns
+  \code{warn = 0} into \code{warn = 1} for this call only.
 
   If \code{warn} is zero (the default), a top-level variable
   \code{last.warning} is created.  It contains the warnings which can be

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  The R Development Core Team.
+ *  Copyright (C) 1997--2004  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ in the error handling.
 static int inError = 0;
 static int inWarning = 0;
 static int inPrintWarnings = 0;
+static int immediateWarning = 0;
 
 static void try_jump_to_restart(void);
 static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
@@ -234,6 +235,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     if(w < 0 || inWarning || inError)  {/* ignore if w<0 or already in here*/
 	return;
     }
+    if( w == 0 && immediateWarning ) w = 1;
 
     /* set up a context which will restore inWarning if there is an exit */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
@@ -723,6 +725,11 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 	c_call = R_NilValue;
 
     args = CDR(args);
+    if(asLogical(CAR(args))) { /* immediate = TRUE */
+	immediateWarning = 1;
+    } else 
+	immediateWarning = 0;
+    args = CDR(args);
     if (CAR(args) != R_NilValue) {
 	SETCAR(args, coerceVector(CAR(args), STRSXP));
 	if(!isValidString(CAR(args)))
@@ -732,6 +739,7 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else
 	warningcall(c_call, "");
+    immediateWarning = 0; /* reset to internal calls */
 
     /* need to set R_Visible since it may have been changed by a callback */
     R_Visible = 0;

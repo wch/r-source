@@ -56,7 +56,7 @@ NEW FEATURES
     o   The assignment form of split() allows recycling of vectors 
         within the value list. In particular, things like 
             split(x, g) <- lapply(split(x, g), mean)
-        now work
+        now work.
 
     o   Added colorRamp() and colorRampPalette() for color interpolation.
 
@@ -64,6 +64,9 @@ NEW FEATURES
 	'CRAN' or 'contriburl' and get the newest available version of
 	a package from the first repository on the list in which it is
 	found.
+
+    o   New argument 'immediate.' to warning() to send an immediate
+	warning.
 
 
 UTILITIES

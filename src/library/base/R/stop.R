@@ -27,7 +27,7 @@ stopifnot <- function(...)
             stop(paste(deparse(mc[[i+1]]), "is not TRUE"), call. = FALSE)
 }
 
-warning <- function(..., call. = TRUE)
+warning <- function(..., call. = TRUE, immediate. = FALSE)
 {
     args <- list(...)
     if (length(args) == 1 && inherits(args[[1]], "condition")) {
@@ -44,6 +44,6 @@ warning <- function(..., call. = TRUE)
         if (length(args) > 0)
             message <- paste(..., sep = "")
         else message <- ""
-        .Internal(warning(as.logical(call.), message))
+        .Internal(warning(as.logical(call.), as.logical(immediate.), message))
     }
 }
