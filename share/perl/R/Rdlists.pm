@@ -23,7 +23,9 @@ package R::Rdlists;
 
 require  Exporter;
 @ISA     = qw(Exporter);
-@EXPORT  = qw(buildinit read_titles read_htmlindex read_htmlpkgindex read_anindex build_htmlpkglist build_index fileolder foldorder);
+@EXPORT  = qw(buildinit read_titles read_htmlindex read_htmlpkgindex
+	      read_anindex build_htmlpkglist build_index fileolder
+	      foldorder);
 
 use Cwd;
 use File::Basename;
@@ -35,51 +37,59 @@ if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
-### Determine if pkg and lib directory are accessible; chdir to pkg man
-### dir and return pkg name, full path to lib dir and contents of mandir
+### Determine if package (pkg_dir) and lib directories are accessible;
+### chdir to package man dir and return package name, full path to lib
+### dir and contents of mandir.
 
 sub buildinit {
 
-    my $pkg = $ARGV[0];
-    my $lib = $ARGV[1];
+    my ($pkg_dir, $lib, $dest, $pkg_name) = @ARGV;
 
     my $currentdir = cwd();
 
-    if($pkg){
-	die("Package $pkg does not exist\n") unless (-d $pkg);
+    if($pkg_dir) {
+	die("Package directory ${pkg_dir} does not exist\n")
+	    unless (-d $pkg_dir);
     }
-    else{
-	$pkg=file_path($main::R_HOME, "src", "library", "base");
+    else {
+	$pkg_dir = file_path($main::R_HOME, "src", "library", "base");
     }
 
-    chdir $currentdir;
+    chdir($currentdir);
 
-    if($lib){
-	if(! -d $lib) {
-	    mkdir ("$lib", $dir_mod) or die "Could not create $lib: $!\n";
+    if($lib) {
+	if(!(-d $lib)) {
+	    mkdir("$lib", $dir_mod) or die "Could not create $lib: $!\n";
 	}
-	chdir $lib;
-	$lib=cwd();
-	chdir $currentdir;
+	## <NOTE>
+	## A version of file_path_as_absolute() would be handy ...
+	chdir($lib);
+	$lib = cwd();
+	chdir($currentdir);
+	## </NOTE>
     }
     else{
-	$lib=file_path($main::R_HOME, "library");
+	$lib = file_path($main::R_HOME, "library");
     }
 
-    chdir $currentdir;
+    chdir($currentdir);
 
-    chdir($pkg) or die("Cannot change to $pkg\n");
+    chdir($pkg_dir) or die("Cannot change to ${pkg_dir}\n");
     $tmp = cwd();
     if($main::OSdir eq "windows") {
-	$tmp =~ s+\\+/+g; # need Unix-style path here
+	$tmp =~ s+\\+/+g;	# need Unix-style path here
     }
-    $pkg = basename($tmp);
+    $pkg_name = basename($tmp) unless($pkg_name);
 
-    chdir "man" or die("There are no man pages in $pkg\n");
+    chdir "man" or die("There are no man pages in ${pkg_dir}\n");
+
+    ## <FIXME>
+    ## Why not simply use
+    ##   list_files_with_type(".", "docs", $main::OSdir)
+    ## ???
     opendir man, '.';
     @mandir = sort(readdir(man));
     closedir man;
-
     if(-d $main::OSdir) {
 	foreach $file (@mandir) { $Rds{$file} = $file; }
 	opendir man, $main::OSdir;
@@ -90,8 +100,9 @@ sub buildinit {
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
     }
+    ## </FIXME>
 
-    ($pkg, $lib, @mandir);
+    ($pkg_name, $lib, @mandir);
 }
 
 
