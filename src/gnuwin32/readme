@@ -85,7 +85,7 @@ purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including simple command-line
 editing.
 
-Batch use: At it simplest, Rterm.exe can be used in a batch mode by
+Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
 
 Rterm.exe --vsize=10M --nsize=400k --no-restore --no-save < infile > outfile
@@ -94,9 +94,10 @@ although users will probably want to set up simple .bat or .cmd files
 to run batch jobs.
 
 
-Use with ESS: You can use Rterm.exe to provide inferior R-mode in
-ESS under NTEmacs, for example ess-5.1.11.  The pager is automatically
-set to "console" so help will be displayed in emacs buffers.
+Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
+under NTEmacs, for example with ess-5.1.13.  The pager is
+automatically set to "console" so help will be displayed in emacs
+buffers.
 
 
 GRAPHICS:
@@ -242,8 +243,7 @@ Differences from Unix versions of R
 - Command-line editing is always available, but is much simpler than
   under readline-based input on Unix.
 
-- The commands history is saved between sessions only by Rgui: it is 
-  always saved even if the workspace is not saved.
+- The commands history is always saved between sessions.
 
 - The HTML function and package lists and search datasbase are not
   re-generated automatically by html.start().  Use link.html.help().
@@ -253,12 +253,10 @@ Differences from Unix versions of R
 - Using help.start() does not automatically send help requests to the
   browser: use options(htmlhelp=T) to turn this on.
 
-- Graphics save and replay are only available here.
-
 - system() is enhanced here and does not automatically use a shell.
   See its help page and that of shell().
 
-- graphics devices png(), jpeg() and bmp() are available in this version.
+- graphics device bmp() is available in this version.
 
 
 Building From Source

@@ -370,16 +370,16 @@ is used for copying in the GUI version.
 readline-based editing on Unix. For @code{Rgui.exe}, the menu item `Help |
 Console' will give details.
 
-@item The commands history is always saved between sessions
-.
-@item Using @code{help.start()} does not automatically send help requests to the
-browser: use @code{options(htmlhelp=T)} to turn this on.
+@item The commands history is always saved between sessions.
+
+@item Using @code{help.start()} does not automatically send help
+requests to the browser: use @code{options(htmlhelp=T)} to turn this on.
 
 @item The HTML help system can only access packages installed in the standard
 place.
 
-@item Paths to files (e.g. in @code{source()}) can be specified with either "/" or
-"\\".
+@item Paths to files (e.g. in @code{source()}) can be specified with
+either "/" or "\\".
 
 @item @code{system()} is slightly different: see its help page and that
 of @code{shell()}.
@@ -627,7 +627,7 @@ You need to do two things:
 
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 @file{X.cc} contains your C++ code, and @file{X_main.cc} is the wrapper,
-as in the example in `Writing R Extensions'. Then build the DLL by
+as in the example in `@emph{Writing R Extensions}'. Then build the DLL by
 (@code{gcc-2.95.x})
 
 @example
@@ -643,7 +643,7 @@ cl /MT /c X.cpp X_main.cpp
 link /dll /out:X.dll /export:X_main X.obj X_main.obj
 @end example
 @noindent
-or (Borland C++)
+or (Borland C++, which also requires extension @code{.cpp})
 
 @example
 bcc32 -u- -WDE X.cpp X_main.cpp

@@ -347,16 +347,16 @@ is used for copying in the GUI version.
 readline-based editing on Unix. For <code>Rgui.exe</code>, the menu item `Help |
 Console' will give details.
 
-<li>The commands history is always saved between sessions
-. 
-<li>Using <code>help.start()</code> does not automatically send help requests to the
-browser: use <code>options(htmlhelp=T)</code> to turn this on.
+<li>The commands history is always saved between sessions.
+
+<li>Using <code>help.start()</code> does not automatically send help
+requests to the browser: use <code>options(htmlhelp=T)</code> to turn this on.
 
 <li>The HTML help system can only access packages installed in the standard
 place.
 
-<li>Paths to files (e.g. in <code>source()</code>) can be specified with either "/" or
-"\\".
+<li>Paths to files (e.g. in <code>source()</code>) can be specified with
+either "/" or "\\".
 
 <li><code>system()</code> is slightly different: see its help page and that
 of <code>shell()</code>. 
@@ -585,7 +585,7 @@ user interface to <code>gdb</code>.  Another (Windows-native) GUI for
 
 <p>(b) Include the C++ libraries in the link to make the DLL. Suppose
 <code>X.cc</code> contains your C++ code, and <code>X_main.cc</code> is the wrapper,
-as in the example in `Writing R Extensions'. Then build the DLL by
+as in the example in `<em>Writing R Extensions</em>'. Then build the DLL by
 (<code>gcc-2.95.x</code>)
 
 <pre>g++ -c X.cc X_main.cc
@@ -599,7 +599,7 @@ dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
 link /dll /out:X.dll /export:X_main X.obj X_main.obj
 </pre>
 
-<p>or (Borland C++)
+<p>or (Borland C++, which also requires extension <code>.cpp</code>)
 
 <pre>bcc32 -u- -WDE X.cpp X_main.cpp
 </pre>

@@ -47,6 +47,10 @@ pkgcheck-%:
 	-@mkdir -p $(PKGDIR)/$*/check
 	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
+	@if test -d $(PKGDIR)/$*/tests ; then \
+	  $(MAKE) -C $(PKGDIR)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
+	fi
 
 ziphelp-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*

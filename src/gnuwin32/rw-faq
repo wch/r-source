@@ -290,7 +290,7 @@ If those all hold true, this works for us.
      the readline-based editing on Unix. For `Rgui.exe', the menu item
      `Help | Console' will give details.
 
-   * The commands history is always saved between sessions .
+   * The commands history is always saved between sessions.
 
    * Using `help.start()' does not automatically send help requests to
      the browser: use `options(htmlhelp=T)' to turn this on.
@@ -496,7 +496,7 @@ You need to do two things:
 
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 `X.cc' contains your C++ code, and `X_main.cc' is the wrapper, as in
-the example in `Writing R Extensions'. Then build the DLL by
+the example in `_Writing R Extensions_'. Then build the DLL by
 (`gcc-2.95.x')
 
      g++ -c X.cc X_main.cc
@@ -508,7 +508,7 @@ or (VC++, which requires extension `.cpp')
      cl /MT /c X.cpp X_main.cpp
      link /dll /out:X.dll /export:X_main X.obj X_main.obj
 
-or (Borland C++)
+or (Borland C++, which also requires extension `.cpp')
 
      bcc32 -u- -WDE X.cpp X_main.cpp
 

@@ -24,9 +24,11 @@ egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed; we use those from
 the cygwin distribution (http://sourceware.cygnus.com/cygwin and
 several mirrors) or (make) compiled from the GNU sources ourselves.
 We have packaged a set at
-CRAN/bin/windows/windows-NT/base/etc/tools.zip.  BEWARE: Most `native'
-ports of make are not suitable (including that at the mingw32 site),
-nor is the make dated 18-Jan-2000 in the Cygwin 1.1.0 net release.
+http://www.stats.ox.ac.uk/pub/bdr/RWin/tools.zip.  BEWARE: Most
+`native' ports of make are not suitable (including that at the mingw32
+site), nor is the make dated 18-Jan-2000 in the Cygwin 1.1 net
+release.  There are other problems with version 1.1.1 of the
+cygwin1.dll.
 
 It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
