@@ -1278,3 +1278,6 @@ try(x[-c(1, NA)])
 data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, border=2:7)
 ## gave warnings in 1.9.0
+
+summary(as.Date(paste("2002-12", 26:31, sep="-")))
+## printed all "2002.-12-29" in 1.9.1 {because digits was too small}
