@@ -28,30 +28,10 @@ then
         exec sh $RHOME/etc/INSTALL $*
 fi
 
-if [ "$1" = "INSTALL-DOC" ]
-then
-        shift
-        exec sh $RHOME/etc/INSTALL-DOC $*
-fi
-
-if [ "$1" = "INSTALL-ALL" ]
-then
-        shift
-        sh $RHOME/etc/INSTALL $*
-        exec sh $RHOME/etc/INSTALL-DOC $*
-fi
-
 if [ "$1" = "REMOVE" ]
 then
         shift
         exec sh $RHOME/etc/REMOVE $*
-fi
-
-if [ "$1" = "REMOVE-ALL" ]
-then
-        shift
-        sh $RHOME/etc/REMOVE $*
-	exec $RHOME/etc/build-htmlpkglist
 fi
 
 if [ "$1" = -xxgdb ]

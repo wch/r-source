@@ -24,8 +24,8 @@ use Cwd;
 use File::Basename;
 
 
-# determine of pkg and lib directory are accessible; chdir to pkg dir
-# and return pkg name and full path to lib dir
+# determine of pkg and lib directory are accessible; chdir to pkg man dir
+# and return pkg name, full path to lib dir and contents of mandir
 
 sub buildinit {
 
@@ -57,7 +57,12 @@ sub buildinit {
     chdir($pkg) or die("Cannot change to $pkg\n");
     $pkg = basename(getcwd());
 
-    ($pkg, $lib);
+    chdir "man" or die("There are no man pages in $pkg\n");
+    opendir man, '.';
+    @mandir = readdir(man);
+    closedir man;
+    
+    ($pkg, $lib, @mandir);
 }
 
 
@@ -97,12 +102,14 @@ sub read_htmlindex {
     foreach $pkg (@libs) {
 	if(-d "$lib/$pkg"){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		open ranindex, "cat $lib/$pkg/help/AnIndex |";
-		while(<ranindex>){
-		    /^(\S*)\s*(.*)/;
-		    $hi{$1} = "../../$pkg/html/$2.html";
+		if(-r "$lib/$pkg/help/AnIndex"){
+		    open ranindex, "< $lib/$pkg/help/AnIndex";
+		    while(<ranindex>){
+			/^(\S*)\s*(.*)/;
+			$hi{$1} = "../../$pkg/html/$2.html";
+		    }
+		    close ranindex;
 		}
-		close ranindex;
 	    }
 	}
     }

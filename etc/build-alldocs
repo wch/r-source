@@ -14,8 +14,12 @@ PKGS=`cd ${RHOME}/src/library; ls | sed '
 /Makefile/d
 /profile/d'`
 
+## The LibIndex is now built and updated via $RHOME/etc/INSTALL
+LI=${RHOME}/library/LibIndex
+if [ ! -f $LI ]; then cp /dev/null $LI; fi
+
 cd ${RHOME}/src/library
 for pkg in ${PKGS}
 do
-    ${RHOME}/etc/build-index ${pkg}
+    ${RHOME}/etc/build-help ${pkg}
 done

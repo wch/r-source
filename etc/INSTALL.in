@@ -2,15 +2,35 @@
 
 # ${RHOME}/etc/INSTALL for installing add-on packages
 # Usage:
-#	R INSTALL pkg [lib]
+#	R INSTALL [-help/+help] [-html/+html] [-latex/+latex]
+#                 [+doc/-doc] pkg [lib]
 
 
-# we don't need these, so they are simply read and ignored
+IHELP=y
+IHTML=y
+ILATEX=y
 if [ "$1" = "+help" ]; then shift; IHELP=y; fi
 if [ "$1" = "-help" ]; then shift; IHELP=;  fi
 if [ "$1" = "+html" ]; then shift; IHTML=y; fi
 if [ "$1" = "-html" ]; then shift; IHTML=;  fi
+if [ "$1" = "+latex" ]; then shift; ILATEX=y; fi
+if [ "$1" = "-latex" ]; then shift; ILATEX=;  fi
 
+if [ "$1" = "-doc" ]
+then
+    shift
+    IHELP=""
+    IHTML=""
+    ILATEX=""
+fi
+
+if [ "$1" = "+doc" ]
+then
+    shift
+    IHELP="y"
+    IHTML="y"
+    ILATEX="y"
+fi
 
 if [ "$1" ]
 then
@@ -87,3 +107,62 @@ fi
 (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
 echo "DONE"
+
+
+# ----------- Installing help pages ------
+
+NO_PERL5="@NO_PERL5@"
+
+
+if [ "$IHELP" -o "$IHTML" -o "$ILATEX" ]
+then
+	echo
+else 
+	exit 0
+fi
+
+if test -d man
+then
+    echo "Installing documentation of package \`${pkg}' ..."
+else
+    echo "No man pages found in package \`${pkg}'"
+    exit 0
+fi    
+
+if [ "$NO_PERL5" ]
+then
+    echo "*** You requested to format and install the help pages of ${pkg}."
+    echo "*** Formatting R help pages needs perl version 5, which seems not to be"
+    echo "*** installed on your system or is not in your path. Please install"
+    echo "*** either perl 5 on your system and re-configure R or get"
+    echo "*** pre-formatted help pages from the nearest CRAN server."
+    echo "*** The CRAN master site can be found at"
+    echo "***    ftp://ftp.ci.tuwien.ac.at/pub/R"
+    echo "***    http://www.ci.tuwien.ac.at/R"
+    echo
+
+    exit 0
+fi
+    
+BUILDHELPOPTS=""
+
+if [ "$IHELP" ]
+then
+    BUILDHELPOPTS="--nroff"
+fi
+
+if [ "$IHTML" ]
+then
+    BUILDHELPOPTS="${BUILDHELPOPTS} --html"
+fi
+
+if [ "$ILATEX" ]
+then
+    BUILDHELPOPTS="${BUILDHELPOPTS} --latex"
+fi
+
+${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}
+
+echo "DONE"
+
+

@@ -20,7 +20,7 @@
 
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
-$VERSION = "0.1.6";
+$VERSION = "0.2";
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "description",
@@ -245,16 +245,6 @@ sub print_blocks {
 
 
 
-sub usage {
-
-    print "Rdconv version $VERSION\n";
-    print "Usage: Rdconv [--debug/-d] [--help/-h]";
-    print " [--type/-t html|nroff|latex|examp] file\n\n";
-
-    exit 0;
-}
-
-
 sub undefined_command {
 
     my $text = $_[0];
@@ -390,6 +380,10 @@ sub text2html {
 	$text =~ s/\\deqn(.*)$id/<P align=center><I>$eqn<\/I><\/P>/s;
     }
 
+    $text = replace_command($text, "itemize", "<UL>", "</UL>");
+    $text = replace_command($text, "enumerate", "<OL>", "</OL>");
+    $text =~ s/\\item\s+/<li>/go;
+    
     $text =~ s/\\\\/\\/go;
     $text = html_unescape_codes($text);
     unmark_brackets($text);
@@ -520,12 +514,12 @@ sub rdoc2nroff {
     $INDENT = "0.5i";
     $TAGOFF = "1i";
 
-    print ".ND\n";
-    print ".pl 100i\n";
-    print ".po 3\n";
-    print ".na\n";
-    print ".SH\n";
-    print $blocks{"title"}, "\n";
+    print nroffout ".ND\n";
+    print nroffout ".pl 100i\n";
+    print nroffout ".po 3\n";
+    print nroffout ".na\n";
+    print nroffout ".SH\n";
+    print nroffout $blocks{"title"}, "\n";
 
     nroff_print_codeblock("usage", "");
     nroff_print_argblock("arguments", "Arguments");
@@ -604,10 +598,50 @@ sub text2nroff {
 	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
     }
 
+    $list_depth=0;
+
+    $text = replace_command($text,
+			    "itemize",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+
+    $text = replace_command($text,
+			    "enumerate",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+
+    $text =~ s/\\item\s+/\n.ti -\\w\@*\\ \@u\n* /go;
+	
     $text = nroff_unescape_codes($text);
     unmark_brackets($text);
 }
 
+sub nroff_parse_lists {
+
+    my $text = $_[0];
+    
+    while($text =~ /\\itemize|\\enumerate/){
+	my ($id, $innertext) = get_arguments("deqn", $text, 1);
+	if($innertext =~ /\\itemize/){
+	    my $tmptext = html_parse_lists($innertext);
+	    $text = s/\\itemize$id(.*)$id/\\itemize$id$tmptext$id/s;
+	}
+	elsif($innertext =~ /\\enumerate/){
+	    my $tmptext = html_parse_lists($innertext);
+	    $text = s/\\enumerate$id(.*)$id/\\enumerate$id$tmptext$id/s;
+	}
+	else{
+	    if($text =~ /\\itemize|\\enumerate/){
+		$text = replace_command($text, "itemize", "<UL>", "</UL>");
+		$text = replace_command($text, "enumerate", "<OL>", "</OL>");
+		$text =~ s/\\item\s+/<li>/go;
+	    }
+	}
+    }
+
+    $text;
+}
+		
 sub code2nroff {
 
     my $text = $_[0];
@@ -631,14 +665,14 @@ sub nroff_print_block {
     my $title = $_[1];
 
     if(defined $blocks{$block}){
-	print "\n";
-	print ".SH\n";
-	print "$title:\n";
-#	print ".LP\n";
-#	print ".in +$INDENT\n";
-	print ".IP \"\" $INDENT\n";
-	print text2nroff($blocks{$block}), "\n";
-	print ".in -$INDENT\n";
+	print nroffout "\n";
+	print nroffout ".SH\n";
+	print nroffout "$title:\n";
+#	print nroffout ".LP\n";
+#	print nroffout ".in +$INDENT\n";
+	print nroffout ".IP \"\" $INDENT\n";
+	print nroffout text2nroff($blocks{$block}), "\n";
+	print nroffout ".in -$INDENT\n";
     }
 }
 
@@ -649,15 +683,15 @@ sub nroff_print_codeblock {
     my $title = $_[1];
 
     if(defined $blocks{$block}){
-	print "\n";
-	print ".SH\n" if $title;
-	print "$title:\n" if $title;
-	print ".LP\n";
-	print ".nf\n";
-	print ".in +$INDENT\n";
-	print code2nroff($blocks{$block}), "\n";
-	print ".in -$INDENT\n";
-	print ".fi\n";
+	print nroffout "\n";
+	print nroffout ".SH\n" if $title;
+	print nroffout "$title:\n" if $title;
+	print nroffout ".LP\n";
+	print nroffout ".nf\n";
+	print nroffout ".in +$INDENT\n";
+	print nroffout code2nroff($blocks{$block}), "\n";
+	print nroffout ".in -$INDENT\n";
+	print nroffout ".fi\n";
     }
 }
 
@@ -670,12 +704,12 @@ sub nroff_print_argblock {
 
     if(defined $blocks{$block}){
 
-	print "\n";
-	print ".SH\n" if $title;
-	print "$title:\n" if $title;
-#	print ".LP\n";
-#	print ".in +$INDENT\n";
-	print ".IP \"\" $INDENT\n";
+	print nroffout "\n";
+	print nroffout ".SH\n" if $title;
+	print nroffout "$title:\n" if $title;
+#	print nroffout ".LP\n";
+#	print nroffout ".in +$INDENT\n";
+	print nroffout ".IP \"\" $INDENT\n";
 
 	my $text = $blocks{$block};
 
@@ -683,28 +717,28 @@ sub nroff_print_argblock {
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
-		print text2nroff($begin);
+		print nroffout text2nroff($begin);
 		$text =~ s/^$begin//s;
 	    }
 	    while($text =~ /\\item/s){
 		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 		$arg = text2nroff($arg);
 		$desc = text2nroff($desc);
-		print "\n";
-#		print ".LP\n";
-#		print ".in +$TAGOFF\n";
-		print ".IP \"\" $TAGOFF\n";
-		print ".ti -\\w\@$arg:\\ \@u\n";
-		print "$arg:\\ $desc\n";
-#		print ".in -$TAGOFF\n";
+		print nroffout "\n";
+#		print nroffout ".LP\n";
+#		print nroffout ".in +$TAGOFF\n";
+		print nroffout ".IP \"\" $TAGOFF\n";
+		print nroffout ".ti -\\w\@$arg:\\ \@u\n";
+		print nroffout "$arg:\\ $desc\n";
+#		print nroffout ".in -$TAGOFF\n";
 		$text =~ s/.*$id//s;
 	    }
-	    print text2nroff($text, $TAGOFF), "\n";
+	    print nroffout text2nroff($text, $TAGOFF), "\n";
 	}
 	else{
-	    print text2nroff($text), "\n";
+	    print nroffout text2nroff($text), "\n";
 	}
-#	print ".in -$INDENT\n";
+#	print nroffout ".in -$INDENT\n";
     }
 }
 
@@ -714,14 +748,14 @@ sub nroff_print_sections {
     my $section;
 
     for($section=0; $section<$max_section; $section++){
-	print "\n";
-	print ".SH\n";
-	print $section_title[$section], ":\n";
-#	print ".LP\n";
-#	print ".in +$INDENT\n";
-	print ".IP \"\" $INDENT\n";
-	print text2nroff($section_body[$section]), "\n";
-#	print ".in -$INDENT\n";
+	print nroffout "\n";
+	print nroffout ".SH\n";
+	print nroffout $section_title[$section], ":\n";
+#	print nroffout ".LP\n";
+#	print nroffout ".in +$INDENT\n";
+	print nroffout ".IP \"\" $INDENT\n";
+	print nroffout text2nroff($section_body[$section]), "\n";
+#	print nroffout ".in -$INDENT\n";
     }
 }
 
@@ -803,11 +837,11 @@ sub rdoc2latex {
     get_blocks($complete_text);
     get_sections($complete_text);
 
-    print "\\Header\{";
-    print $blocks{"name"};
-    print "\}\{";
-    print $blocks{"title"};
-    print "\}\n";
+    print latexout "\\Header\{";
+    print latexout $blocks{"name"};
+    print latexout "\}\{";
+    print latexout $blocks{"title"};
+    print latexout "\}\n";
 
     latex_print_codeblock("usage", "Usage");
     latex_print_argblock("arguments", "Arguments");
@@ -822,7 +856,7 @@ sub rdoc2latex {
     latex_print_block("seealso", "SeeAlso");
     latex_print_exampleblock("examples", "Examples");
 
-    print "\n";
+    print latexout "\n";
 
 }
 
@@ -875,9 +909,9 @@ sub latex_print_block {
     my $env = $_[1];
 
     if(defined $blocks{$block}){
-	print "\\begin\{$env\}\n";
-	print text2latex($blocks{$block});
-	print "\\end\{$env\}\n";
+	print latexout "\\begin\{$env\}\n";
+	print latexout text2latex($blocks{$block});
+	print latexout "\\end\{$env\}\n";
     }
 }
 
@@ -887,11 +921,11 @@ sub latex_print_codeblock {
     my $env = $_[1];
 
     if(defined $blocks{$block}){
-	print "\\begin\{$env\}\n";
-	print "\\begin\{verbatim\}";
-	print code2latex($blocks{$block});
-	print "\\end\{verbatim\}\n";
-	print "\\end\{$env\}\n";
+	print latexout "\\begin\{$env\}\n";
+	print latexout "\\begin\{verbatim\}";
+	print latexout code2latex($blocks{$block});
+	print latexout "\\end\{verbatim\}\n";
+	print latexout "\\end\{$env\}\n";
     }
 }
 
@@ -901,11 +935,11 @@ sub latex_print_exampleblock {
     my $env = $_[1];
 
     if(defined $blocks{$block}){
-	print "\\begin\{$env\}\n";
-	print "\\begin\{ExampleCode\}";
-	print code2latex($blocks{$block});
-	print "\\end\{ExampleCode\}\n";
-	print "\\end\{$env\}\n";
+	print latexout "\\begin\{$env\}\n";
+	print latexout "\\begin\{ExampleCode\}";
+	print latexout code2latex($blocks{$block});
+	print latexout "\\end\{ExampleCode\}\n";
+	print latexout "\\end\{$env\}\n";
     }
 }
 
@@ -916,7 +950,7 @@ sub latex_print_argblock {
 
     if(defined $blocks{$block}){
 
-	print "\\begin\{$env\}\n";
+	print latexout "\\begin\{$env\}\n";
 
 	my $text = $blocks{$block};
 
@@ -924,25 +958,25 @@ sub latex_print_argblock {
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
-		print text2latex($begin);
+		print latexout text2latex($begin);
 		$text =~ s/^$begin//s;
 	    }
-	    print "\\begin\{ldescription\}\n";
+	    print latexout "\\begin\{ldescription\}\n";
 	    while($text =~ /\\item/s){
 		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-		print "\\item\[";
-		print latex_code_cmd(code2latex($arg));
-		print "\] ";
-		print text2latex($desc), "\n";
+		print latexout "\\item\[";
+		print latexout latex_code_cmd(code2latex($arg));
+		print latexout "\] ";
+		print latexout text2latex($desc), "\n";
 		$text =~ s/.*$id//s;
 	    }
-	    print "\\end\{ldescription\}\n";
-	    print text2latex($text);
+	    print latexout "\\end\{ldescription\}\n";
+	    print latexout text2latex($text);
 	}
 	else{
-	    print text2latex($text);
+	    print latexout text2latex($text);
 	}
-	print "\\end\{$env\}\n";
+	print latexout "\\end\{$env\}\n";
     }
 }
 
@@ -951,9 +985,9 @@ sub latex_print_sections {
     my $section;
 
     for($section=0; $section<$max_section; $section++){
-	print "\\begin\{Section\}\{" . $section_title[$section] . "\}\n";
-	print text2latex($section_body[$section]);
-	print "\\end\{Section\}\n";
+	print latexout "\\begin\{Section\}\{" . $section_title[$section] . "\}\n";
+	print latexout text2latex($section_body[$section]);
+	print latexout "\\end\{Section\}\n";
     }
 }
 

@@ -2,45 +2,49 @@
 
 TESTS   = ../tests
 Ex_Tests = $(TESTS)/Examples
-CleanMe1 = SHLIB COMPILE INSTALL
-CleanMe = $(CleanMe1) Rdconv Rdindex Rman2Rd Sd2Rd
+CleanMe1 = SHLIB COMPILE INSTALL REMOVE
+CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd 
+CleanMe3 = build-help build-htmlpkglist help.pretty html2dos
+CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
 MANSRC = ../src/library/*/man/*.Rd
 MANbaseDIR = ../src/library/base/man
 
 ##--------------------------------- TARGETS ------------------------------
-build-index: stamp-index
+
 build-help: stamp-help
 build-html: stamp-html
 build-latex: stamp-latex
+build-docs: stamp-docs
 tests: test-Examples
 
 test-Examples: $(Ex_Tests)
 	@cp -p Makefile-test-Ex $(Ex_Tests)/Makefile
 	-(cd $(Ex_Tests); make $@)
 
-stamp-help: build-index $(MANSRC)
+stamp-help: $(MANSRC)
 	@echo "Building ALL help pages"
 	./build-allhelp
 	@touch $@
 
-stamp-html: build-index $(MANSRC)
+stamp-html: $(MANSRC)
 	@echo "Building R Base Reference Manual (in HTML)"
 	./build-allhtml
 	@touch $@
 
-stamp-index: $(MANSRC)
-	@echo "Building R Base Reference Manual (Index)"
-	./build-allindex
-	@touch $@
-
-
-##future:
-#stamp-latex: $(MANSRC)
-stamp-latex: $(MANbaseDIR)/*.Rd
+#stamp-latex: $(MANbaseDIR)/*.Rd
+stamp-latex: $(MANSRC)
 	@echo "Building R Base Reference Manual (in LaTeX/dvi)"
-	./build-latex
+	./build-alllatex
 	@touch $@
+
+stamp-docs: $(MANSRC)
+	@echo "Building ALL documentation (help, HTML, LaTeX)"
+	./build-alldocs
+	@touch $@
+	@touch stamp-help
+	@touch stamp-html
+	@touch stamp-latex
 
 $(Ex_Tests):
 	@if [ ! -d $@ ]; then mkdir -p $@ ; fi

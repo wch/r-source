@@ -1,0 +1,185 @@
+#! @PERL@
+#-*- perl -*-
+#
+# ${RHOME}/etc/build-help
+# Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex] [pkg] [lib]
+# Install all html help files for package pkg to library lib
+# (defaults are `${RHOME}/src/library/base' and the default library,
+# `${RHOME}/library', respectively). 
+
+use File::Basename;
+use Cwd;
+use Getopt::Long;
+
+@knownoptions = ("rhome:s", "html", "nroff", "latex");
+GetOptions (@knownoptions) || usage();
+
+$cwd=getcwd();
+if($opt_rhome){
+    $RHOME=$opt_rhome;
+}
+elsif($ENV{"RHOME"}){
+    $RHOME=$ENV{"RHOME"};
+}
+else{
+    chdir(dirname($0) . "/..");
+    $RHOME=getcwd();
+}
+chdir($cwd);
+
+require "$RHOME/etc/Rdconvlib.pl";
+require "$RHOME/etc/buildlib.pl";
+
+# default is to build all documentation formats
+if(!$opt_html && !$opt_nroff && !$opt_latex){
+    $opt_html = 1;
+    $opt_nroff = 1;
+    $opt_latex = 1;
+}
+
+($pkg, $lib, @mandir) = buildinit();
+$dest = "$lib/$pkg";
+
+# if building help or html pages we have to create the corresponding
+# directories and build some indices
+
+if($opt_html || $opt_nroff){
+    build_index();
+}
+
+print " >>> Building help pages for package `$pkg'\n";
+print "     Formats: ";
+print "nroff " if $opt_nroff;
+print "html " if $opt_html;
+print "latex " if $opt_latex;
+print "\n";
+    
+if($opt_html){
+    %htmlindex = read_htmlindex($lib);
+}
+
+if($opt_latex){
+    $destfile="$RHOME/doc/manual/pkg-$pkg.tex";
+    open(latexout, "> $destfile") or die "Cannot write to $destfile!\n";
+}
+	
+
+foreach $manfile (@mandir) {
+    if($manfile =~ /\.Rd$/){
+	$manfilebase = basename($manfile, ".Rd");
+	print "  $manfilebase\n";
+
+	if($opt_nroff){
+	    $destfile = "$dest/help/$manfilebase";
+	    open(nroffout,"|nroff -ms 2> /dev/null | ${RHOME}/etc/help.pretty >$destfile");
+	    Rdconv($manfile, "nroff", "");
+	    close(nroffout);
+	}
+
+	if($opt_html){
+	    $destfile = "$dest/html/$manfilebase.html";
+	    open(htmlout,">$destfile");
+	    Rdconv($manfile, "html", "");
+	    close(htmlout);
+	}
+
+	if($opt_latex){
+	    Rdconv($manfile, "latex", "");
+	}
+    }
+}
+
+if($opt_latex){
+    close latexout;
+}
+
+
+sub build_index {
+
+    system("mkdir -p $dest");
+    die("Cannot create $dest\n") unless (-d "$dest");
+    
+    system("/bin/cp ../TITLE $dest/TITLE");
+    open title, "<../TITLE";
+    $title = <title>;
+    close title;
+    $title =~ s/^\S*\s*(.*)/$1/;
+    
+    system("mkdir -p $dest/help");
+    die("Cannot create $dest/help\n") unless (-d "$dest/help");
+    system("mkdir -p $dest/html");
+    die("Cannot create $dest/html\n") unless (-d "$dest/html");
+    
+    $anindex = "$lib/$pkg/help/AnIndex";
+    open(anindex, ">${anindex}.in");
+    
+    foreach $manfile (@mandir) {
+	if($manfile =~ /\.Rd$/){
+	    $manfilebase = basename($manfile, ".Rd");
+	    
+	    if(!($pkg =~ /^base$/)){
+		print anindex "$manfilebase\t$manfilebase\n";
+	    }
+	    
+	open(aliases, "grep '^\\\\alias' $manfile |");
+	    while(<aliases>){
+		/\\alias\{(.*)\}/;
+		$alias = $1;
+		$alias =~ s/\\%/%/g;
+		print anindex "$alias\t$manfilebase\n";
+	    }
+	    close aliases;
+	}
+    }
+    
+    close anindex;
+
+    system("sort -f -d ${anindex}.in | uniq > ${anindex}");
+    unlink ("$anindex.in");
+
+    open(anindex, "<$anindex");
+    open(htmlfile, ">$lib/$pkg/html/00Index.html");
+
+    print htmlfile "<HEAD><TITLE>R Function Index: $pkg</TITLE></HEAD>\n";
+    print htmlfile "<BODY LINK=#0000EF VLINK=#0000EF>\n";
+    print htmlfile "[ <A HREF =\"../../../html/index.html\">top</A> | \n";
+    print htmlfile "<A HREF =\"../../index.html\">up</A> ]\n";
+    print htmlfile "<HR ALIGN=middle>\n";
+    print htmlfile "<H2><CENTER>";
+    print htmlfile $title;
+    print htmlfile "</CENTER></H2>\n";
+    print htmlfile "<HR ALIGN=middle>\n";
+    print htmlfile "<CENTER><TABLE>\n";
+    print htmlfile "<TR ALIGN=LEFT>\n";
+    
+    $k = 0;
+    
+    while(<anindex>){
+	($alias, $file) = split;
+	print htmlfile "<TD><A HREF=\"$file.html\">$alias</A>\n";
+	$k++;
+	if($k == 5) {
+	    print htmlfile "<TR>\n";
+	    $k=0;
+	}
+    }
+    
+    print htmlfile "</TABLE></CENTER>\n";
+    print htmlfile "</BODY>\n";
+    
+    close htmlfile;
+    close anindex;
+    
+
+    build_htmlpkglist($lib);
+}
+
+
+
+
+sub usage {
+
+    print "Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex] [pkg] [lib]\n";
+
+    exit 0;
+}

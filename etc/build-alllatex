@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ${RHOME}/etc/build-allhelp
+# ${RHOME}/etc/build-alllatex
 # Should work from anywhere in the R source tree.
 
 RHOME=`dirname $0`/..		# relative
@@ -17,5 +17,5 @@ PKGS=`cd ${RHOME}/src/library; ls | sed '
 cd ${RHOME}/src/library
 for pkg in ${PKGS}
 do
-    ${RHOME}/etc/build-help --html ${pkg}
+    ${RHOME}/etc/build-help --latex ${pkg}
 done
