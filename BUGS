@@ -293,6 +293,10 @@ Date: Tue, 12 Nov 2002 13:50:44 +0200
 Subject: "trace" argument in legend()
 From: jerome@hivnet.ubc.ca
 Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
+* PR# 2628 *
+Subject: cex.axis in boxplot
+From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
+Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 * PR# 2630 *
 Subject: plot() with type="s" and lty=2
 From: jerome@hivnet.ubc.ca
@@ -606,55 +610,27 @@ Date: Mon, 24 Feb 2003 17:01:47 GMT
 Subject: density(), with argument of length 1
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
-* PR# 2628 *
-Subject: cex.axis in boxplot
-From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 * PR# 2656 *
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2768 *
-Subject: YOUR LOTTERY WIINING INFO.
-From: "COIN GO GAMES." <games_2003@winning.com>
-Date: Sat, 12 Apr 2003 10:37:06 +0200
-* PR# 2769 *
-Subject: (광고)신속한 민원서류대행@
-From: 민원대행<dn8275@doc82.co.kr>
-Date: Sat, 12 Apr 2003 22:14:09 +0900
-* PR# 2770 *
-Subject: (광고)서울/경기 고객님들을 위한 교보생명 대출이벤트!
-From: 교보생명<cy0658@kornet.net>
-Date: Sun, 13 Apr 2003 23:40:54 +0900
-* PR# 2771 *
-Subject: Welcome to our team!                                   
-From: <kc8417hnot@hotmail.com>
-Date: Sun, 13 Apr 2003 07:24:50 +0800
-* PR# 2772 *
-Subject: VI@GR@ for as low as $2.50 per 50 mg at
-From: "Hi!" <phredom02@yahoo.com>
-Date: Sun, 13 Apr 03 22:00:45 GMT
-* PR# 2773 *
-Subject: ctl-D, cancel, ctl-D yields seg fault
-From: robert_dodier@yahoo.com
-Date: Mon, 14 Apr 2003 04:56:02 +0200 (MET DST)
-* PR# 2774 *
-Subject: UNLOCK "Pay Per View" from your Cable Company orimsq
-From: "Mark" <FreeCable2845f58@msn.com>
-Date: Mon, 14 Apr 03 09:27:04 GMT
-* PR# 2775 *
-Subject: (광고) 무료전화시대 선언 !!! @
-From: "정보맨" <pjw7911@pluslife.net>
-Date: Mon, 14 Apr 2003 16:21:57 +0900
 * PR# 2776 *
 Subject: suggested changes to summary.glm and summary.lm
 From: John Fox <jfox@mcmaster.ca>
 Date: Mon, 14 Apr 2003 07:59:24 -0400
-* PR# 2777 *
-Subject: The World's Smallest Digital Camera  *!  u
-From: "Hello" <phredom01@yahoo.com>
-Date: Mon, 14 Apr 03 14:12:47 GMT
-* PR# 2778 *
-Subject: Hey hottie! look at this free adult web site
-From: "Jillian Rosas" <slhj1yji0@gbpackers.com>
-Date: Mon, 14 Apr 03 16:18:17 GMT
+* PR# 2782 *
+Subject: The World's Smallest Digital Camera & Webcam! trqenkukuuh ncxku 
+From: "Hi!" <phredom02@yahoo.com>
+Date: Tue, 15 Apr 03 16:52:26 GMT
+* PR# 2783 *
+Subject: shorrage delenion
+From: "Lorraine Tran" <62t8ojel93p@aol.com>
+Date: Mon, 14 Apr 03 23:36:23 GMT
+* PR# 2784 *
+Subject: You've never seen it look this good before
+From: "Todd Butler" <am2fagtp@gate811.net>
+Date: Tue, 15 Apr 03 20:05:19 GMT
+* PR# 2785 *
+Subject: Labeling in lm()
+From: veraf@stat.sc.edu
+Date: Tue, 15 Apr 2003 21:33:48 +0200 (MET DST)
