@@ -26,9 +26,6 @@ R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build
 R_CMD_RD2CONTENTS = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/Rd2contents.pl
 ## </NOTE>
 
-## This won't work unless building in the srcdir
-R_INSTALL = $(top_builddir)/bin/R INSTALL -c -l $(top_builddir)/library
-
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -41,10 +38,6 @@ R:
 	@for pkg in $(SUBDIRS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
-# fails with Bourne shell if $(R_REGULAR_PKGS) is empty, which it is
-#	@for pkg in $(R_REGULAR_PKGS); do \
-#	  $(R_INSTALL) $${pkg} || exit 1 ; echo "$${pkg} installed";\
-#	done
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 
