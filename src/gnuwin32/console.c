@@ -1762,7 +1762,7 @@ pager newpager(char *title, char *filename, char *header, int deleteonexit)
     char wtitle[PAGERMAXTITLE+1];
     pager c;
 
-    if (ismdi()) pagerMultiple = 1;
+    /*    if (ismdi()) pagerMultiple = 1;*/
     strncpy(wtitle, title, PAGERMAXTITLE);
     wtitle[PAGERMAXTITLE] = '\0';
     if(strlen(header) &&
