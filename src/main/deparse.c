@@ -246,7 +246,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval;
-    int i, j, nobjs;
+    int i, j, nobjs, append;
     FILE *fp;
 
     checkArity(op, args);
@@ -259,6 +259,10 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(nobjs < 1 || length(file) < 1)
 	errorcall(call, "zero length argument");
 
+    append = asLogical(CADDR(args));
+    if (append == NA_LOGICAL)
+        errorcall(call, "invalid append specification");
+    
     fp = NULL;
 
     PROTECT(o = objs = allocList(nobjs));
@@ -282,7 +286,8 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     else {
-	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w")))
+	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))),
+			  (append) ? "a" : "w")))
 	    errorcall(call, "unable to open file");
 	for (i = 0; i < nobjs; i++) {
 	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));

@@ -1,7 +1,7 @@
 \name{dump}
 \title{Text Representations of R Objects}
 \usage{
-dump(list, fileout="dumpdata")
+dump(list, file="dumpdata.R", append=FALSE)
 }
 \alias{dump}
 \description{
@@ -11,7 +11,10 @@ dump(list, fileout="dumpdata")
 }
 \arguments{
   \item{list}{character. The names of one or more \R objects to be dumped.}
-  \item{fileout}{character. The file name for the dump.}
+  \item{file}{character. The file name for the dump.}
+  \item{append}{if \code{TRUE}, output will be appended to
+    \code{file}; otherwise, it will overwrite the contents of
+    \code{file}.}
 }
 \details{
   At present the implementation of \code{dump} is very

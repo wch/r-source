@@ -168,6 +168,9 @@ NEW FEATURES
 
     o	bxp() has new argument "frame.plot", as plot.default().
 
+    o   dump() has new argument append, argument "fileout" has been
+        renamed to "file" (for consistency with all other functions).
+
 
 BUG FIXES
 
