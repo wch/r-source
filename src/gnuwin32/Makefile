@@ -35,7 +35,6 @@ endif
 R-DLLFLAGS = -mwindows
 R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion
 ifeq ($(strip $(USE_ATLAS)),YES)
-R-DLLLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
 FLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
 endif
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
