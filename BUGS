@@ -454,3 +454,11 @@ Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
 Subject: library(methods): setMethod with "ANY" fails.
 From: hb@maths.lth.se
 Date: Tue, 19 Feb 2002 01:22:58 +0100 (MET)
+* PR# 1318 *
+Subject: Multiple macintosh() graphics devices
+From: d.orme@ic.ac.uk
+Date: Wed, 20 Feb 2002 16:41:27 +0100 (MET)
+* PR# 1319 *
+Subject: Maritime Newsletter (Week 8)
+From: MarineDigital Inc<newsletter@marinedigital.com>
+Date: Thu, 21 Feb 2002 05:53:14 +0900
