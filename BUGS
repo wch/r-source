@@ -628,63 +628,11 @@ Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
 * PR# 2116 *
 From: "Brian McArdle" <b.mcardle@auckland.ac.nz>
 Date: Mon, 7 Oct 2002 15:46:21 +1300
-* PR# 2120 *
-Subject:  Core dump with "parse" 
-From: j.c.rougier@durham.ac.uk
-Date: Mon, 7 Oct 2002 18:52:30 +0100
 * PR# 2144 *
 Subject: Save() with ascii=TRUE may corrupt numeric values
 From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
 Date: Thu, 10 Oct 2002 14:09:21 -0700
-* PR# 2148 *
-Subject:  Odd outcome of attr with environments 
-From: j.c.rougier@durham.ac.uk
-Date: Fri, 11 Oct 2002 19:37:37 +0100
 * PR# 2159 *
 Subject: The class attribute on an environment seems buggy
 From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
-* PR# 2160 *
-Subject: possible memory leak in 1.6
-From: socher@stat.uni-muenchen.de
-Date: Mon, 14 Oct 2002 16:01:19 +0200 (MET DST)
-* PR# 2165 *
-Subject: Core dump with a 64-bit system
-From: kai.makisara@metla.fi
-Date: Tue, 15 Oct 2002 14:45:20 +0200 (MET DST)
-* PR# 2177 *
-Subject: Hello, thanks for reading this email!
-From: adria6113121@yahoo.com
-Date: Wed, 16 Oct 2002 18:00:22 +0300
-* PR# 2178 *
-Subject: SOLICITING FOR BUSINESS VENTURE AND PARTNERSHIP
-From: "kabah peter" <kabahp2@lycos.com>
-Date: Thu, 17 Oct 2002 23:15:10 +0900
-* PR# 2179 *
-Subject: underflow handling in besselK
-From: Ben Bolker <ben@zoo.ufl.edu>
-Date: Thu, 17 Oct 2002 14:01:08 -0400 (EDT)
-* PR# 2180 *
-Subject: (±¤°í)¼÷ÃëÇØ¼Ò~Ä¦Áó~Ä¦Áó<100%ÀÇ ¿ø¾×>
-From: ¿ø¾×»ó»ç <k987yu@hanmail.net>
-Date: Fri, 18 Oct 2002 15:29:16 +0900
-* PR# 2181 *
-Subject: Chron problem with R 1.6.0
-From: rab@nauticom.net
-Date: Fri, 18 Oct 2002 16:21:47 +0200 (MET DST)
-* PR# 2182 *
-Subject: Call for Papers - 2003 Hawaii International Conference on
-From: statistics@hicstatistics.org
-Date: Fri, 18 Oct 2002 07:57:36 -1000
-* PR# 2183 *
-Subject: r-bugs, - Learn to Trade like a Pro
-From: "Stacie Lota"<Rocco525K@yahoo.com>
-Date: Sat, 19 Oct 2002 02:13:43 -0400
-* PR# 2184 *
-Subject: lila, - Learn to Trade like a Pro
-From: "Paul Minkin"<Rocco525K@yahoo.com>
-Date: Sat, 19 Oct 2002 02:19:52 -0400
-* PR# 2185 *
-Subject: Keywords
-From: password <password@ftp>
-Date: Sat, 19 Oct 2002 15:52:30 +0100
