@@ -39,7 +39,7 @@ extern int AllDevicesKilled;
 
 #define MM_PER_INCH	25.4	/* mm -> inch conversion */
 
-#define TRACEDEVGA(a) 
+#define TRACEDEVGA(a)  
 #define NOBM(a) if(!xd->kind){a;}
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
 #define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
@@ -77,7 +77,9 @@ typedef struct {
     int   windowHeight;		/* Window height (pixels) */
     int   resize;		/* Window resized */
     window gawin;		/* Graphics window */
-    menubar mbar;
+    popup locpopup, grpopup;
+    button  stoploc;
+    menubar mbar, mbarloc;
     menu  msubsave;
     menuitem mgif, mps, mwm, mclpbm, mclpwm, mprint, mclose;
     menuitem mrec, madd, mreplace, mprev, mnext, mclear, msvar, mgvar;
@@ -334,8 +336,8 @@ static void SetFont(int face, int size, double rot, DevDesc *dd)
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle)) {
-	del(xd->font); doevent();
-	xd->font = gnewfont(xd->gawin,
+	 del(xd->font); doevent();
+	 xd->font = gnewfont(xd->gawin,
 			    fontname[face - 1], fontstyle[face - 1],
 			    size, rot);
 	if (xd->font) {
@@ -471,7 +473,7 @@ static void HelpExpose(window w,rect r)
     }
 }
 
-static void HelpMouseClick(window w,int button,point pt)
+static void HelpMouseClick(window w, int button, point pt)
 {
     if (AllDevicesKilled) return;
     {
@@ -488,6 +490,15 @@ static void HelpMouseClick(window w,int button,point pt)
 	} else
 	    xd->clicked = 2;
     }
+}
+
+static void menustop(control m) 
+{
+  DevDesc *dd = (DevDesc *) getdata(m);
+  x11Desc *xd = (x11Desc *) dd->deviceSpecific;
+  if (!xd->locator) 
+     return;
+  xd->clicked = 2;
 }
 
 void  fixslash(char *);
@@ -1009,31 +1020,57 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 	ih = dh + 0.5;
 	if ((xd->gawin = newwindow("R Graphics",
 				rect(devicewidth(NULL) - iw - 5, 0, iw, ih),
+
 				   Document | StandardWindow | Menubar))) {
 	    menu  m;
-
+            gsetcursor(xd->gawin, ArrowCursor);
             if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
                 int btsize = 24;
                 rect r = rect(2, 2, btsize, btsize);
-                control tb, bt;
-
+                control bt, tb;
+                
                 MCHECK(tb = newtoolbar(btsize + 4));
+		gsetcursor(tb, ArrowCursor);
                 addto(tb);
 
-                MCHECK(bt = newimagebutton(cam_image, r, menuclpwm));
+                MCHECK(bt = newtoolbutton(cam_image, r, menuclpwm));
                 MCHECK(addtooltip(bt, "Copy to the clipboard as a metafile"));
-                setdata(bt,(void *) dd);
+		gsetcursor(bt, ArrowCursor);
+		setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
-                MCHECK(bt = newimagebutton(print_image, r, menuclpwm));
+                MCHECK(bt = newtoolbutton(print_image, r, menuclpwm));
                 MCHECK(addtooltip(bt, "Print"));
+		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
-                MCHECK(bt = newimagebutton(console_image, r, menuconsole));
+                MCHECK(bt = newtoolbutton(console_image, r, menuconsole));
                 MCHECK(addtooltip(bt, "Return focus to console"));
+		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
-            }
+                r.x += (btsize + 6);
+
+                MCHECK(xd->stoploc = newtoolbutton(stop_image, r, menustop));
+                MCHECK(addtooltip(xd->stoploc, "Stop locator"));
+		gsetcursor(bt, ArrowCursor);
+                setdata(xd->stoploc,(void *) dd);            
+                hide(xd->stoploc);
+            } else
+                xd->stoploc = NULL;
+
+	    /* First we prepare 'locator' menubar and popup */
+            addto(xd->gawin);
+	    MCHECK(xd->mbarloc = newmenubar(NULL));
+	    MCHECK(newmenu("Stop"));
+	    MCHECK(m = newmenuitem("Stop locator", 0, menustop));
+            setdata(m, (void *) dd);
+	    MCHECK(xd->locpopup = newpopup(NULL));
+	    MCHECK(m = newmenuitem("Stop", 0, menustop));
+            setdata(m, (void *) dd);
+	    MCHECK(newmenuitem("Continue", 0, NULL));
+
+	    /* Normal menubar */
 	    MCHECK(xd->mbar = newmenubar(mbarf));
 	    MCHECK(m = newmenu("File"));
 	    MCHECK(xd->msubsave = newsubmenu(m, "Save as"));
@@ -1064,6 +1101,22 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 	    MCHECK(newmenuitem("-", 0, NULL));
 	    MCHECK(xd->mclear = newmenuitem("Clear history", 0, menuclear));
 	    newmdimenu();
+
+	    /* Normal popup */
+	    MCHECK(xd->grpopup = newpopup(NULL));
+	    MCHECK(m = newmenuitem("Copy as metafile", 0, menuclpwm));
+            setdata(m, (void *) dd);
+	    MCHECK(m = newmenuitem("Copy as bitmap", 0, menuclpbm));
+            setdata(m, (void *) dd);
+	    MCHECK(newmenuitem("-", 0, NULL));
+	    MCHECK(m = newmenuitem("Save as metafile", 0, menuwm));
+            setdata(m, (void *) dd);
+	    MCHECK(m = newmenuitem("Save as postscript", 0, menups));
+            setdata(m, (void *) dd);
+	    MCHECK(newmenuitem("-", 0, NULL));
+	    MCHECK(m = newmenuitem("Print", 0, menuprint));
+            setdata(m, (void *) dd);
+            gchangepopup(xd->gawin, xd->grpopup);
 	}
     } else if (!strcmp(dsp, "win.print")) {
 	xd->kind = 1;
@@ -1262,12 +1315,8 @@ static void X11_NewPage(DevDesc *dd)
     xd->bgcolor = rgb(R_RED(xd->bg),
 		      R_GREEN(xd->bg),
 		      R_BLUE(xd->bg));
-    if (xd->kind)
-	xd->clip = getrect(xd->gawin);
-    else
-	xd->clip = getrect(xd->bm);
-    gfillrect(xd->gawin, xd->bgcolor, getrect(xd->gawin));
-    NOBM(gfillrect(xd->bm, xd->bgcolor, getrect(xd->bm)));
+    xd->clip = getrect(xd->gawin);
+    DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
     if (xd->kind)
 	xd->needsave = 1;
 }
@@ -1470,7 +1519,7 @@ static void X11_Line(double x1, double y1, double x2, double y2,
     yy2 = (int) y2;
 
     SetColor(dd->gp.col, dd),
-	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
+    SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		   pt(xx1, yy1), pt(xx2, yy2)));
 }
@@ -1486,29 +1535,22 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 
 static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-    point p1, p2;
+    point *p = (point *) C_alloc(n, sizeof(point));
     double devx, devy;
     int   i;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-
     TRACEDEVGA("pl");
-    devx = x[0];
-    devy = y[0];
-    GConvert(&devx, &devy, coords, DEVICE, dd);
-    p1.x = (int) devx;
-    p1.y = (int) devy;
-    SetColor(dd->gp.col, dd),
-	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-    for (i = 1; i < n; i++) {
-	devx = x[i];
-	devy = y[i];
-	GConvert(&devx, &devy, coords, DEVICE, dd);
-	p2.x = (int) devx;
-	p2.y = (int) devy;
-	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor, p1, p2));
-	p1.x = p2.x;
-	p1.y = p2.y;
+    for ( i = 0; i < n; i++) {
+      devx = x[i];
+      devy = y[i];
+      GConvert(&devx, &devy, coords, DEVICE, dd);
+      p[i].x = (int) devx;
+      p[i].y = (int) devy;
     }
+    SetColor(dd->gp.col, dd),
+    SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
+    DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0));
+    C_free((char *) p);
 }
 
 	/********************************************************/
@@ -1532,7 +1574,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     TRACEDEVGA("plg");
-    points = (point *) C_alloc(n + 1, sizeof(point));
+    points = (point *) C_alloc(n , sizeof(point));
     if (!points)
 	return;
     for (i = 0; i < n; i++) {
@@ -1542,8 +1584,6 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	points[i].x = (int) (devx);
 	points[i].y = (int) (devy);
     }
-    points[n].x = points[0].x;
-    points[n].y = points[0].y;
     if (bg != NA_INTEGER) {
 	SetColor(bg, dd);
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
@@ -1551,7 +1591,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
     if (fg != NA_INTEGER) {
 	SetColor(fg, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n + 1));
+	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n ));
     }
     C_free((char *) points);
 }
@@ -1596,7 +1636,7 @@ static void X11_Text(double x, double y, int coords,
 	x -= pixs;
     SetFont(dd->gp.font, size, rot, dd);
     SetColor(dd->gp.col, dd),
-	gsetcliprect(xd->gawin, getrect(xd->gawin));
+    gsetcliprect(xd->gawin, getrect(xd->gawin));
     gdrawstr(xd->gawin, xd->font, xd->fgcolor, pt(x, y), str);
     if (!xd->kind) {
 	gsetcliprect(xd->bm, getrect(xd->bm));
@@ -1621,13 +1661,26 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     xd->clicked = 0;
     show(xd->gawin);
     addto(xd->gawin);
+    gchangemenubar(xd->mbarloc);
+    if (xd->stoploc) {
+      show(xd->stoploc);
+      show(xd->gawin);
+    }
+    gchangepopup(xd->gawin, xd->locpopup);
     gsetcursor(xd->gawin, CrossCursor);
-    setstatus("To exit click with the second button");
+    setstatus("Locator is active");
     while (!xd->clicked) {
 	SHOW;
 	doevent();
     }
+    addto(xd->gawin);
+    gchangemenubar(xd->mbar);
+    if (xd->stoploc) {
+      hide(xd->stoploc);
+      show(xd->gawin);
+    }    
     gsetcursor(xd->gawin, ArrowCursor);
+    gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
     setstatus("R Graphics");
     xd->locator = 0;

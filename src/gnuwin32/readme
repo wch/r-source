@@ -6,25 +6,24 @@ Windows 95, 98 and NT4 (at least) on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
 many important contributions by Brian Ripley (including almost
-all the updating from 0.63.x to 0.64.x).
+all the updating from 0.63.x to 0.64.0).
 
 See Announce or CHANGES for the new features of this version.
+
 
 Installation
 ============
 
-Unpack rw0641b.zip anywhere you like. It will unpack to a directory
-tree under rw0641. The help, HTML and latex help files are in separate
-files rw0641h.zip, rw0641w.zip and rw0641l.zip which should be
-unpacked in the same directory you unpacked rw0641b.zip.
+The simplest way is to run the installer (double-click on the icon for
+rwinst.exe and navigate its wizard-like pages).
+
+To install manually, unpack rw0641b.zip anywhere you like. It will
+unpack to a directory tree under rw0641. The help, HTML and latex help
+files are in separate files rw0641h.zip, rw0641w.zip and rw0641l.zip
+which should be unpacked in the same directory you unpacked
+rw0641b.zip.
 
 The source-change file rw0641s.zip is unpacked inside rw0641.
-
-An executable of INFO-ZIP's unzip is supplied with this
-distribution. If you already have a copy installed you may if you wish
-delete the RHOME\unzip directory and edit RHOME\etc\Rprofile to set
-
-	options(unzip="unzip.exe")
 
 
 Usage
@@ -71,7 +70,7 @@ Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including simple command-line
-editing. (If you type too fast you the command-line editor will miss
+editing. (If you type too fast the command-line editor will miss
 keystrokes).
 
 Batch use: At it simplest, rterm.exe can be used in a batch mode by
@@ -140,13 +139,8 @@ file .Rprofile. In particular:
 - The pager is set by options(pager=). The default is "internal" which
   brings up a separate console-like window. The internal pager can use
   a single window or a different window for each topic shown 
-  (option configurable in etc\Rconsole). Other possibilities we have 
+  (configurable in etc\Rconsole). Other possibilities we have 
   used are "notepad" and "pfe32 /v".
-
-- The location of the unzip program is set by options(unzip=). If you
-  have unzip installed on your system you can set this to the path to
-  unzip (or just options(unzip="unzip.exe") if this is on your path),
-  and delete the RHOME\unzip directory.
 
 - If you wish to use HTML help where this is available, set
   options(htmlhelp=T). If you prefer to use Windows help files where these
@@ -158,7 +152,9 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0641\library. They are then available for use.
+be unpacked in rw0641\library. They are then available for use. You
+can also use the installer rwinst.exe to selectively unpack the zip
+files.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command
@@ -230,6 +226,8 @@ http://sourceware.cygnus.com/cygwin and several mirrors, the Fortran
 additions ecgs-1.1-f77.tar.gz from that page or directly from
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/ and the Fortran
 library libg2c.mingw32.a.bz2 from CRAN/bin/windows/windows-NT/etc.
+You can also use the egcs-1.1.2 compilers upgrade from Mumit Khan's
+site.
 
 Do remember to set MAKE_MODE to UNIX.
 
@@ -254,7 +252,8 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  
 
-You also need: the R source (R-0.64.1.tgz).
+You also need: the R source (R-0.64.1.tgz), and to build the installer,
+unzip5.40.zip from any Info-Zip mirror.
 
 Then: untar R-0.64.1.tgz somewhere (ignore warnings about the aux directory),
 
@@ -266,10 +265,16 @@ and run
 
 	make BUILD=EGCS or CYGWIN
 
-Note: the file rw0641\unzip\unzip.exe is not in the source distribution,
-nor are the sources (it the standard Info-Zip unzip 5.40). You will need to
-copy it from a binary distribution.
+Note: the file rw0641\unzip\unzip32.dll is not in the source
+distribution, nor are the sources (it is the standard Info-Zip unzip
+5.40, built with MSVC++4.2). You will need to copy it from a binary
+distribution.
 
+Note 2: we are aware that because of limitations in line length or in the
+shell used that the Makefiles do not work unchanged on all the possible
+combinations of tools, compilers and OSes.  We use the Cygwin make and 
+shell under NT, and cross-building (see below), and with small changes the 
+djtools make under Windows 95.
 
 Cross-building on Linux
 -----------------------
@@ -278,7 +283,8 @@ You will need i386-mingw32 cross-compilers installed: see
 
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-and ensure that these are in your path. You also need Perl and nroff.
+and ensure that these are in your path. You also need Perl and nroff
+installed.
 
 You also need: the R source (R-0.64.0.tgz) and rw0641s.zip.
 
@@ -288,7 +294,7 @@ unzip -a rw0641s.zip in /somewhere/R-0.64.0,
 	cd /somewhere/R-0.64.0/src/gnuwin32 
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
-Set TEMP to , say, /tmp, and make.
+Set the environment variable TEMP to, say, /tmp, and make.
 
 Packages can be made in the same way as natively: see the file
 readme.packages.

@@ -1,6 +1,6 @@
 include ../MkRules
 
-MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd
+MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd
 
 all: profiles fixh fixr fixRd fixbin 
 
@@ -22,7 +22,10 @@ SED2='s/C_FUNCTION(\(.*\))/int \1();/'
 SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
-fixh: $(wildcard ./h/*.h)  ../../appl/ROUTINES
+h/platform.h: h/platform.h.in ../../../configure.in ../../../date-stamp
+	perl getdates.pl $^ > $@
+
+fixh: h/platform.h ../../appl/ROUTINES
 	$(CP) -p ./h/platform.h ../../include/Platform.h
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) ../../appl/ROUTINES > ../../include/FFDecl.h
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h

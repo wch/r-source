@@ -4,7 +4,13 @@ include MkRules
 
 HELP=YES
 
-OPTFLAGS=-O2 -Wall
+ifdef DEBUG
+ OPTFLAGS=-g -O2 -Wall
+ DLLFLAGS=
+else
+ OPTFLAGS=-O2 -Wall
+ DLLFLAGS=-s 
+endif
 CFLAGS=$(OPTFLAGS) -I../include
 FFLAGS=$(OPTFLAGS)
 
@@ -21,7 +27,9 @@ ifeq ($(strip $(HELP)),YES)
 endif
 
 pkgcheck-%:
-	$(MAKE) -C ../library/$* PKG=$* -f ../../gnuwin32/check/PkgCheck
+	-mkdir -p ../library/$*/check
+	$(MAKE) -C ../library/$*/check PKG=$* -f ../../../gnuwin32/check/PkgCheck
+
 
 ziphelp-%:
 	$(MAKE) -C ./help ziphelp-$*

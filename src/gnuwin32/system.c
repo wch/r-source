@@ -509,6 +509,7 @@ static char RHome[MAX_PATH + 6];
 static char UserRHome[MAX_PATH + 6];
 char *getRHOME();
 void  closeAllHlpFiles();
+void UnLoad_Unzip_Dll();
 
 
 /* Process ~/.Renviron, if it exists */
@@ -812,16 +813,17 @@ void R_CleanUp(int ask)
     AllDevicesKilled = 1;
     if (!CharacterMode)
 	savehistory(RConsole, ".Rhistory");
+    UnLoad_Unzip_Dll();
     exitapp();
 }
 
 void R_Busy(int which)
 {
 /* currently cursor is never set off busy */
-    /*if(!CharacterMode) {
-	if(which == 1) setcursor(WatchCursor);
-	if(which == 0) setcursor(ArrowCursor);
-	}*/
+    if(!CharacterMode) {
+	if (which == 1) gsetcursor(RConsole, WatchCursor);
+	if (which == 0) gsetcursor(RConsole, ArrowCursor);
+    }
 }
 
 	/* Saving and Restoring the Global Environment */
