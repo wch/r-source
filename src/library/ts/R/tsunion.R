@@ -1,4 +1,4 @@
-cbind.ts <- function(..., dframe = FALSE, union=TRUE)
+cbind.ts <- function(..., dframe = FALSE, union = TRUE)
 {
     names.dots <- function(...)
     {
@@ -13,14 +13,16 @@ cbind.ts <- function(..., dframe = FALSE, union=TRUE)
         }
     }
     sers <- list(...)
+    nulls <- sapply(sers, is.null)
+    sers <- sers[!nulls]
     nser <- length(sers)
     if(nser == 0) return(NULL)
     if(nser == 1)
-        if(dframe) return(as.data.frame(sers[1])) else return(sers[1])
+        if(dframe) return(as.data.frame(sers[[1]])) else return(sers[[1]])
     nmsers <- names.dots(...)
     tsser <-  sapply(sers, function(x) length(tsp(x)) > 0)
     if(!any(tsser))
-        stop("not time series supplied")
+        stop("no time series supplied")
     sers <- lapply(sers, as.ts)
     nsers <- sapply(sers, NCOL)
     tsps <- sapply(sers[tsser], tsp)
