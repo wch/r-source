@@ -121,7 +121,9 @@ Step by step instructions
    a) type "Make -f Makefile.mac >build" and execute it in the MPW Shell.
    b) the run "build" from the MPW Shell. This will take some time
       because of building of help files, packages and modules dll code.
-
+4) after that you can run R but you still need to launch the Apple Script
+   called install_pack that you will find inside R_HOME:script. Double click
+   on it and run it if it won't run by itself. 
 
   
 The tools Folder:
@@ -238,7 +240,7 @@ or just
 
 
 
-Sep 7th, 2002		Stefano M. Iacus
+Maar 30th, 2003		Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
