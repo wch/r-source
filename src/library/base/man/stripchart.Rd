@@ -3,7 +3,7 @@
 \alias{stripchart}
 \description{
   \code{stripchart} produces one dimensional scatter plots (or dot
-  plots) of the given data.  These plots are are good alternative to 
+  plots) of the given data.  These plots are a good alternative to 
   \code{\link{boxplot}}s when sample sizes are small.
 }
 \usage{
