@@ -126,13 +126,23 @@ Packages provide a mechanism for loading optional code and attached
 documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
+@menu
+* Package structure::           
+* Package bundles::             
+* Configure and cleanup::       
+* Checking and building packages::  
+@end menu
+
+@node Package structure, Package bundles, Creating R packages, Creating R packages
+@section Package structure
+@cindex Package structure
+
 A package consists of a subdirectory containing the files
-@file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
-subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
-@file{man}, and @file{src} (some of which can be missing).  Optionally
-the package can also contain script files @file{configure} and
-@file{cleanup} which are executed before and after installation,
-@xref{Configure and cleanup}.
+@file{DESCRIPTION} and @file{INDEX}, and the subdirectories @file{R},
+@file{data}, @file{exec}, @file{inst}, @file{man}, and @file{src} (some
+of which can be missing).  Optionally the package can also contain
+script files @file{configure} and @file{cleanup} which are executed
+before and after installation, @xref{Configure and cleanup}.
 
 The @file{DESCRIPTION} file contains basic information about the package
 in the following format:
@@ -142,59 +152,64 @@ Package: e1071
 Version: 0.9-3
 Date: 2000/01/04
 Title: Misc Functions collected at TU Wien, Department E1071
-Author: Compiled by Friedrich Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
-Description: Miscellaneous functions written by members of the Department of
-        Statistics at TU Wien (E1071). Includes independent component
-        analysis, reading and writing of pnm/pbm/ppm images, ...
+Author: Compiled by Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>.
+Description: Miscellaneous functions written by members of the
+  Department of Statistics at TU Wien (E1071).
+  Includes independent component analysis, reading and writing
+  of pnm/pbm/ppm images, ...
 License: GPL version 2 or newer
 URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
 @end smallexample
 
 @noindent
 Continuation lines (e.g., for descriptions longer than one line) start
-with a whitespace character.  The package, version, author and
-description fields are mandatory, the remaining fields(date, depends,
-address in angle brackets (for sending bug reports etc.).
+with a whitespace character.  The @samp{Package}, @samp{Version},
+@samp{Author}, and @samp{Description} fields are mandatory, the
+remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
+@samp{URL}, @dots{}) are optional.  The @samp{Author} field should
+contain an email address in angle brackets (for sending bug reports
+etc.).
 
-The license field should contain an explicit statement or a well-known
-abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
+The @samp{License} field should contain an explicit statement or a
+well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
 @samp{Artistic}), perhaps followed by a reference to the actual license
 file.  It is very important that you include this information!
 Otherwise, it may not even be legally correct for others to distribute
 copies of the package.
 
-The title field should give a short description of the package and not
-have any continuation lines. This information has been contained in a
-seperate @file{TITLE} file in older versions of R, please use the title
-field in the @file{DESCRIPTION} file from now on.
+The @samp{Title} field should give a short description of the package
+and not have any continuation lines.  This information has been
+contained in a seperate @file{TITLE} file in older versions of R, please
+use the title field in the @file{DESCRIPTION} file from now on.
 
-The optional URL field may give a comma (or whitespace)-separated list
-of URL's, e.g., the homepage of the author or a page where additional
-material describing the software can be found.  These URL's are converted
-to active hyperlinks on CRAN.
+The optional @samp{URL} field may give a list of URL's separated by
+commas or whitespace, e.g., the homepage of the author or a page where
+additional material describing the software can be found.  These URLs
+are converted to active hyperlinks on CRAN.
 
-The file @file{INDEX} contains a line for each sufficiently
-interesting object in the package, giving its name and a description
-(functions such as print methods not usually called explicitly might not
-be included).  Note that you can automatically create this file using
-something like @code{R CMD Rdindex man/*.Rd > INDEX}, provided that Perl
-is available on your system.
+The file @file{INDEX} contains a line for each sufficiently interesting
+object in the package, giving its name and a description (functions such
+as print methods not usually called explicitly might not be included).
+Note that you can automatically create this file using something like
+@code{R CMD Rdindex man/*.Rd > INDEX}, provided that Perl is available
+on your system.
 
 The @file{R} subdirectory contains @R{} code files.  The code files to
-be installed must start with a (lower- or uppercase) letter and have one
+be installed must start with a (lower or upper case) letter and have one
 of the extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or
 @file{.s}.  We recommend using @file{.R}, as this extension seems to be
 not used by any other software.  It should be possible to read in the
 files using @code{source()}, so R objects must be created by
-assignments.  Note that there need be no connection between the name
-of the file and the R objects created by it.  If necessary, one of these
+assignments.  Note that there need be no connection between the name of
+the file and the R objects created by it.  If necessary, one of these
 files (historically @file{zzz.R}) should use @code{library.dynam()}
 @emph{inside} @code{.First.lib()} to load compiled code.
 
-The @file{man} subdirectory should contain @R{} documentation files for
-the objects in the package.  The documentation files to be installed
-must also start with a (lower- or uppercase) letter and have the
-extension @file{.Rd} (the default) or @file{.rd}.
+The @file{man} subdirectory should contain documentation files for the
+objects in the package in ``R documentation'' (Rd) format.  The
+documentation files to be installed must also start with a (lower or
+upper case) letter and have the extension @file{.Rd} (the default) or
+@file{.rd}.  @xref{Writing R documentation} for more information.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @code{unix}, @code{windows} or @code{mac}.
@@ -224,7 +239,7 @@ used by any Unix package, and still experimental.
 * Configure and cleanup::       
 @end menu
 
-@node  Package bundles, Configure and cleanup, Creating R packages, Creating R packages
+@node  Package bundles, Configure and cleanup, Package structure, Creating R packages
 @section Package bundles
 @cindex Package bundles
 
@@ -233,7 +248,7 @@ Sometimes it is convenient to distribute several packages as a
 four packages.)  The installation scripts on both Unix and Windows can
 handle package bundles as from @R{} 0.90.1.
 
-The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle:}
+The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle}
 field, as in
 
 @smallexample
@@ -249,7 +264,7 @@ BundleDescription: Various functions from the libraries of Venables
 License: GPL (version 2 or later)
 @end smallexample
 
-The @samp{Contains:} field lists the packages, which should be contained
+The @samp{Contains} field lists the packages, which should be contained
 in separate subdirectories with the names given.  These are standard
 packages in all respects except that the @file{DESCRIPTION} file is
 replaced by a @file{DESCRIPTION.in} file which just contains fields
@@ -260,7 +275,7 @@ Package: spatial
 Description: Functions for kriging and point pattern analysis.
 @end smallexample
 
-@node Configure and cleanup,  , Package bundles, Creating R packages
+@node Configure and cleanup, Checking and building packages, Package bundles, Creating R packages
 @comment  node-name,  next,  previous,  up
 @section Configure and cleanup
 
@@ -279,17 +294,27 @@ The script @file{cleanup} is executed as last thing by @code{R INSTALL}
 if present and can be used to clean up the package source tree,
 especially remove files created by @file{configure}.
 
-As an example consider we want to use functionality provided by
-@file{libfoo}.  Then we can write a configure script using
-@code{autoconf} which replaces @code{@@HAVEFOO@@} with @code{TRUE} if
-the library is found and with @code{FALSE} if it not found.  The
-definition of the respective R function in @file{foo.R.in} could be
+As an example consider we want to use functionality provided by a (C or
+Fortran) library @code{foo}.  Using autoconf, we can write a configure
+script which checks for the library, sets variable @code{HAVEFOO} to
+@code{TRUE} if it was found and with @code{FALSE} otherwise, and then
+substitutes this value into output files (by replacing instances of
+@samp{@@HAVEFOO@@} in input files with the value of @code{HAVEFOO}).
+E.g., if a function named @code{bar} is to be made available by linking
+against library @code{foo} (i.e., using @option{-lfoo}), one could use
 
 @smallexample
-foo <- function(x)@{
+AC_CHECK_LIB(foo, @var{fun}, HAVEFOO=TRUE, HAVEFOO=FALSE)
+AC_SUBST(HAVEFOO)
+...
+AC_OUTPUT(foo.R)
+@end smallexample
 
-    if(! @@HAVEFOO@@) stop("Sorry, no foo library available")
+The definition of the respective R function in @file{foo.R.in} could be
 
+@smallexample
+foo <- function(x) @{
+    if(!@@HAVEFOO@@) stop("Sorry, library `foo' is not available")
     ...
 @end smallexample
 
@@ -299,15 +324,13 @@ From this file @code{configure} creates the actual R source file
 
 @smallexample
 foo <- function(x)@{
-
-    if(! FALSE) stop("Sorry, no foo library available")
-
+    if(!FALSE) stop("Sorry, library `foo' is not available")
     ...
 @end smallexample
 
 @noindent
-if @file{libfoo} was not found such that the function is effectively
-disabled when library @file{libfoo} is not present on the target system.
+if library @code{foo} was not found (with the desired functionality).
+In this case, the above @R{} code effectively disables the function.
 
 You may wish to bear in mind that the @file{configure} script may well
 not work on Windows systems (this seems normally to be the case for
@@ -315,6 +338,40 @@ those generated by autoconf, although simple shell scripts do work).  If
 your package is to be made publicly available, please give enough
 information for a user on a non-Unix platform to configure it manually.
 
+@node Checking and building packages,  , Configure and cleanup, Creating R packages
+@section Checking and building packages
+@cindex Building packages
+@cindex Checking packages
+
+@findex R CMD check
+Using @code{R CMD check}, the @R{} package checker, one can test whether
+@emph{installed} @R{} packages work correctly.  Currently, the only
+check performed is whether the examples provided by the packages'
+documentation can be run successfully (@pxref{Writing R documentation},
+for information on using @code{\examples} to create executable example
+code.)  Other means for regression testing will be added in the future.
+
+Of course, released packages should be able to run at least their own
+examples.
+
+Use @kbd{R CMD check --help} to obtain more information about the usage
+of the @R{} package checker.
+
+@findex R CMD build
+Using @code{R CMD build}, the @R{} package builder, one can build R
+packages from their sources (e.g., for subsequent release).  Prior to
+actually building the package in the common gzipped tar file format, a
+variety of diagnostic checks and cleanups are performed.  In particular,
+it is tested whether the @file{DESCRIPTION} file contains the required
+entries, whether object and data indices exist and can be assumed to be
+up-to-date, whether the documentation sources contain the required name,
+alias, title, description, and keyword information, and whether there
+are any undocumented user level objects.  Run-time checks whether the
+package works correctly should be performed using @code{R CMD check}
+prior to invoking the build procedure.
+
+Use @kbd{R CMD build --help} to obtain more information about the usage
+of the @R{} package builder.
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
@@ -329,6 +386,7 @@ information for a user on a non-Unix platform to configure it manually.
 * Mathematics::                 
 * Insertions::                  
 * Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node The documentation source tree, Documentation format, Writing R documentation, Writing R documentation
@@ -424,7 +482,7 @@ Section of references to the literature; use @code{\url@{@}} for web
 pointers.  Optional as well as all the following sections.
 
 @item \section@{@var{name}@}@{@var{text}@}
-and maybe more @code{\section@{@}} environments. For consistency with
+and maybe more @code{\section@{@}} environments.  For consistency with
 the pre-assigned sections, @var{name} should be capitalized (but not all
 upper case).
 
@@ -500,12 +558,12 @@ A short description of the dataset.
 @item \format@{@dots{}@}
 @findex \format
 A description of the format of the dataset (as a vector, matrix, data
-frame, time series, @dots{}). For matrices and data frames this should
+frame, time series, @dots{}).  For matrices and data frames this should
 give a description of each column.
 
 @item \source@{@dots{}@}
 @findex \source
-Details of the original source (a reference or URL). There may also be a
+Details of the original source (a reference or URL).  There may also be a
 @code{\references} section giving secondary sources and usages.
 
 @item \details@{@dots{}@}
@@ -582,11 +640,11 @@ There are also some markup commands which apply to paragraphs, modeled
 on La@TeX{} environments.
 
 @findex \tabular
-The @code{\tabular} command takes two arguments. The first gives for
+The @code{\tabular} command takes two arguments.  The first gives for
 each of the columns the required alignment (@code{l} for
 left-justification, @code{r} for right-justification or @code{c} for
 centring.)  The second argument consists of an arbitrary number of lines
-separated by @code{\cr}, and with fields separated by @code{\tab}. For
+separated by @code{\cr}, and with fields separated by @code{\tab}.  For
 example:
 
 @example
@@ -720,7 +778,7 @@ currently must escape all La@TeX{} special characters, i.e., besides
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
-@node  Platform-specific sections,  , Insertions, Writing R documentation
+@node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
@@ -747,9 +805,48 @@ or
 for OS-specific inclusion or exclusion.
 
 If the differences between platforms are extensive or the @R{} objects
-documented are only relevant to one platform, platform-specific
-@code{.Rd} files can be put in a  @file{unix}, @file{windows} or
-@file{mac} subdirectory.
+documented are only relevant to one platform, platform-specific Rd files
+can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
+
+@node Processing Rd format,  , Platform-specific sections, Writing R documentation
+@section Processing Rd format
+@cindex Processing Rd format
+
+@findex R CMD Rdconv
+Using @code{R CMD Rdconv} one can convert R documentation format to
+other formats, or extract the executable examples for run-time testing.
+Currently, conversions to plain text, Nroff, HTML, La@TeX{}, and S
+documentation format are supported.
+
+In addition to this low-level conversion tool, the @R{} distribution
+provides two user-level programs for processing Rd format.
+@findex R CMD Rd2txt
+@findex R CMD Rd2dvi
+@code{R CMD Rd2txt} produces ``pretty'' plain text output from an Rd
+file, and is particularly useful as a previewer when writing Rd format
+documentation within Emacs.  @code{R CMD Rd2dvi} generates DVI (or, if
+option @option{--pdf} is given, PDF) output from from documentation in
+Rd files, which can be specified either explictly or by the path to a
+directory with the sources of a package.  In the latter case, a
+reference manual for all documented objects in the package is created.
+Future versions will also add the information in the @file{DESCRIPTION}
+files to the output.
+
+@findex R CMD Rdindex
+Using @code{R CMD Rdindex} one can produce nicely formatted index files
+displaying names and titles of the Rd files specified as arguments.
+This can be used to create the @file{INDEX} of an add-on package and, if
+it also contains data, the @file{00Index} data index in the @file{data}
+directory.  Note that the R package builder can be used to automatically
+create these indices when building a package.
+
+@findex R CMD Sd2Rd
+Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
+(which use an extended Nroff format) to Rd format.  This is useful when
+porting a package orginally written for the @Sl{} system to @R{}.
+
+Use each of the above commands with the @option{--help} option to obtain
+usage information.
 
 
 @node System and foreign language interfaces, R (internal) programming miscellania, Writing R documentation, Top
@@ -759,6 +856,7 @@ documented are only relevant to one platform, platform-specific
 * Operating system access::     
 * Interface functions .C and .Fortran::  
 * dyn.load and dyn.unload::     
+* Creating shared libraries::   
 * Interfacing C++ code::        
 * Handling R objects in C::     
 * Interface Functions .Call and .External::  
@@ -794,10 +892,10 @@ limited on non-Unix-like platforms).
 
 These two functions provide a standard interface to compiled code that
 has been linked into @R{}, either at build time or via @code{dyn.load}
-(q.v.).  They are primarily intended for compiled C and Fortran code
-respectively, but the @code{.C} function can be used with other
-languages which can generate C interfaces, for example C++
-(@pxref{Interfacing C++ code}).
+(@pxref{dyn.load and dyn.unload}).  They are primarily intended for
+compiled C and Fortran code respectively, but the @code{.C} function can
+be used with other languages which can generate C interfaces, for
+example C++ (@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string given the
 symbol name as known to C or Fortran, that is the function or subroutine
@@ -836,9 +934,9 @@ C type @code{Rcomplex} is a structure with @code{double} members
 a single character string can be passed to or from Fortran, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
 to @code{.C}, but it is better to use one of the other interfaces.  An
-exception is passing an @R{} function for use with @code{call_R}, when
-the object can be handled as @code{void *} en route to @code{call_R},
-but even there @code{.Call} is to be preferred.
+exception is passing an @R{} function for use with @w{@code{call_R}},
+when the object can be handled as @code{void *} en route to
+@code{call_R}, but even there @code{.Call} is to be preferred.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or Fortran as @code{REAL} by setting the attribute
@@ -896,18 +994,21 @@ storage mode before calling @code{.C}; mistakes in matching the types
 can lead to wrong results or hard-to-catch errors.
 
 
-@node dyn.load and dyn.unload, Interfacing C++ code, Interface functions .C and .Fortran, System and foreign language interfaces
+@node dyn.load and dyn.unload, Creating shared libraries, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
 @cindex Dynamic loading
 
 @findex dyn.load
 @findex dyn.unload
 
-Compiled code to be used with @R{} is loaded as a shared library (Unix)
-or DLL (Windows).  The library/DLL is loaded by @code{dyn.load} and
-unloaded by @code{dyn.unload}.  Unloading is not normally necessary, but
-it is needed to allow the DLL to be re-built on some platforms,
-including Windows.
+Compiled code to be used with @R{} is loaded as a shared library (Unix,
+@pxref{Creating shared libraries} for more information) or DLL
+(Windows).
+
+The library/DLL is loaded by @code{dyn.load} and unloaded by
+@code{dyn.unload}.  Unloading is not normally necessary, but it is
+needed to allow the DLL to be re-built on some platforms, including
+Windows.
 
 The first argument to both functions is a character string giving the
 path to the library.  Programmers should not assume a specific file
@@ -947,13 +1048,39 @@ libraries, the most recently loaded occurrence is used.  The
 @code{PACKAGES} argument provides a good way to avoid any ambiguity in
 which occurrence is meant.
 
-@node Interfacing C++ code, Handling R objects in C, dyn.load and dyn.unload, System and foreign language interfaces
+@node Creating shared libraries, Interfacing C++ code, dyn.load and dyn.unload, System and foreign language interfaces
+@section Creating shared libraries
+@cindex Creating shared libraries
+@findex R SHLIB
+
+Under Unix, shared libraries for loading into @R{} can be created using
+@code{R SHLIB}.  This accepts as arguments a list of files which must be
+object files (with extension @file{.o}) or C or Fortran sources (with
+extensions @file{.c} and @file{.f}, respectively).  See @kbd{R SHLIB
+--help}, or the on-line help for @code{SHLIB}, for usage information.
+If compiling the source files does not work ``out of the box'', you can
+pass special flags to the compilers when invoking @code{R SHLIB}, or
+write a @file{Makefile} in the compilation directory containing the
+rules required (or, of course, create the object files directly from the
+command line).
+
+If an add-on package @var{pkg} contains C or Fortran code in its
+@file{src} subdirectory, @code{R INSTALL} creates a shared library (for
+loading into @R{} in the @code{.First.lib} function of the package)
+either automatically using the above @code{R SHLIB} mechanism, or using
+Make if a @file{src} contains a @file{Makefile}.  If a @file{Makefile}
+is really needed or provided, it needs to ensure that the shared library
+created is linked against all ``Fortran'' libraries that @R{} was linked
+against; Make variable @code{FLIBS} contains this information.
+
+@node Interfacing C++ code, Handling R objects in C, Creating shared libraries, System and foreign language interfaces
 @section Interfacing C++ code
 @cindex Interfacing C++ code
 @cindex C++ code, interfacing
 
 Suppose we have the following hypothetical C++ library, consisting of
-the two files @file{X.hh} and @file{X.cc}, which we want to use in R:
+the two files @file{X.hh} and @file{X.cc}, and implementing the 2
+classes @code{X} and @code{Y} which we want to use in @R{}.
 
 @smallexample
 @cartouche
@@ -961,13 +1088,12 @@ the two files @file{X.hh} and @file{X.cc}, which we want to use in R:
 
 class X @{
 public:
-  X ();
-  ~X ();
+  X (); ~X ();
 @};
+
 class Y @{
 public:
-  Y ();
-  ~Y ();
+  Y (); ~Y ();
 @};
 @end cartouche
 @end smallexample
@@ -988,9 +1114,8 @@ Y::~Y() @{ cout << "destructor Y" << endl; @}
 @end cartouche
 @end smallexample
 
-@noindent implementing the 2 classes @code{X} and @code{Y}.  The only
-thing we have to do is writing a wrapper function and ensuring that the
-function is enclosed in
+To use with @R{}, the only thing we have to do is writing a wrapper
+function and ensuring that the function is enclosed in
 
 @smallexample
 extern "C" @{
@@ -1016,18 +1141,17 @@ void X_main () @{
 @end cartouche
 @end smallexample
 
-Compiling and linking should be done with the C++ compiler-linker.  For
-example, under Linux we might use
+Compiling and linking should be done with the C++ compiler-linker
+(rather than the C compiler-linker or the linker itself); otherwise, 
+the C++ initialization code (and hence the constructor of the static
+variable @code{Y}) are not called.  For example, under Linux we might
+use
 
 @smallexample
 g++ -c X.cc
 g++ -c X_main.cc
 g++ -shared -o X.so X_main.o X.o
 @end smallexample
-
-Otherwise (i.e., linking, e.g., with GNU ld) the C++ initialization code
-(and hence the constructor of the static variable @code{Y}) are not
-called.
 
 Now starting R yields
 
@@ -1254,16 +1378,19 @@ There is a less-used@footnote{for historical reasons,
 @cindex Allocating storage
 
 For many purposes it is sufficient to allocate @R{} objects and
-manipulate those.  There are quite a few @code{allocXxx} functions
-defined in @file{Rinternals.h} --- you may want to explore them.  These
+manipulate those.  There are quite a few @code{alloc@var{Xxx}} functions
+defined in @file{Rinternals.h}---you may want to explore them.  These
 allocate @R{} objects of various types, and for the standard vector
-types there are @code{NEW_XXX} macros defined in @file{Rdefines.h}.
+types there are @code{NEW_@var{XXX}} macros defined in
+@file{Rdefines.h}.
 
 If storage is required for C objects during the calculations this is
-best allocating by calling @code{R_alloc}; such storage is automatically
-released once the call to @code{.C} or @code{.Call} or @code{.External}
-returns.  @code{R_alloc} is defined in @file{Memory.h} (included by
-@file{Rinternals.h} and by @file{Rdefines.h}) as
+best allocating by calling @code{R_alloc};
+@findex R_alloc
+such storage is automatically released once the call to @code{.C} or
+@code{.Call} or @code{.External} returns.  @code{R_alloc} is defined
+(currently) in @file{Memory.h} (included by @file{Rinternals.h} and by
+@file{Rdefines.h}) as
 
 @example
 char*  R_alloc(long, int);
@@ -1277,7 +1404,9 @@ v = (double*) R_alloc(nlag, sizeof(double));
 @end example
 
 Memory allocated by @code{R_alloc} is not zeroed, but the related
-function @code{S_alloc} calls @code{R_alloc} and then zeroes the memory.
+function @code{S_alloc}
+@findex S_alloc
+calls @code{R_alloc} and then zeroes the memory.
 
 All of these memory allocation routines do their own error-checking, so
 the programmer may assume that they will raise an error and not return
@@ -2232,14 +2361,15 @@ use
 
 @itemize @bullet
 @item
-Call the debugger on the R executable, for example by
-@kbd{R -d gdb}.
+Call the debugger on the R executable, for example by @kbd{R -d gdb}.
 @item
 Start @R{}.
 @item
-At the @R{} prompt, use @code{dyn.load} or @code{library} to load your library.
+At the @R{} prompt, use @code{dyn.load} or @code{library} to load your
+library.
 @item
-Send an interrupt signal. This will put you back to the debugger prompt.
+Send an interrupt signal.  This will put you back to the debugger
+prompt.
 @item
 Set the breakpoints in your code.
 @item
@@ -2293,11 +2423,11 @@ The key to inspecting @R{} objects from compiled code is the function
 @code{PrintValue(SEXP s)} which uses the normal @R{} printing mechanisms
 to print the @R{} object pointed to by @code{s}.
 
-One way to make use to @code{PrintValue} is to insert suitable calls into
-the code to be debugged.
+One way to make use to @code{PrintValue} is to insert suitable calls
+into the code to be debugged.
 
-Another way is to call @code{PrintValue} from the symbolic debugger. For
-example, from @code{gdb} we can use
+Another way is to call @code{PrintValue} from the symbolic debugger.
+For example, from @code{gdb} we can use
 
 @example
 (gdb) p PrintValue(ab)
@@ -2366,7 +2496,7 @@ $3 = void
 (Make sure, however, to use @code{PrintValue()} on SEXPs with the `obj'
 bit turned on only.)
 @c FIXME
-@c Maybe we could have a safe PrintValue() which returns e.g. NULL when
+@c Maybe we could have a safe PrintValue() which returns e.g.  NULL when
 @c given a SEXP with the `obj' bit not turned on?
 
 To find out where exactly the corresponding information is stored, one
@@ -2385,28 +2515,57 @@ $7 = 5
 @end smallexample
 
 
-
 @node R (internal) programming miscellania, Function and variable index, System and foreign language interfaces, Top
 @appendix R (internal) programming miscellania
 
 @menu
-* Which R functions should stay @sc{<primitive>}?::  
+* .Internal and .Primitive::    
 @end menu
+
+@node .Internal and .Primitive,  , R (internal) programming miscellania, R (internal) programming miscellania
+@section @code{.Internal} and @code{.Primitive}
 
 @findex .Internal
 @findex .Primitive
 
-@node Which R functions should stay @sc{<primitive>}?,  , R (internal) programming miscellania, R (internal) programming miscellania
-@section Which R functions should stay @sc{<primitive>}?
+C code compiled into @R{} at build time can be called ``directly'' or
+via the @code{.Internal} interface, which is very similar to the
+@code{.External} interface except in syntax.  More precisely, @R{}
+maintains a table of R function names and corresponding C functions to
+call, which by convention all start with @samp{do_} and return a SEXP.
+Via this table (@code{R_FunTab} in file @file{src/main/names.c}) one can
+also specify how many arguments to a function are required or allowed,
+whether the arguments are to be evaluated before calling or not, and
+whether the function is ``internal'' in the sense that it must be
+accessed via the @code{.Internal} interface, or directly accessible in
+which case it is printed in @R{} as @code{.Primitive}.
 
-In general, all functions should be written using @code{.Internal()}.
-However, there are exceptions which are fully specified as follows:
+@R{}'s functionality can also be extended by providing corresponding C
+code and adding to this function table.  
+
+In general, all such functions use @code{.Internal()} as this is safer
+and in particular allows for transparent handling of named and default
+arguments.  For example, @code{axis} is defined as
+
+@example
+axis <- function(side, at = NULL, labels = NULL, ...)
+    .Internal(axis(side, at, labels, ...))
+@end example
+
+However, for reasons of convenience and also efficiency (as there is
+some overhead in using the @code{.Internal} interface), there are
+exceptions which can be accessed directly.  Note that these functions
+make no use of @R{} code, and hence are very different from the usual
+interpreted functions.  In particular, @code{args} and @code{body}
+return @code{NULL} for such objects.
+
+These ``primitive'' functions are fully specified as follows.
 
 @enumerate
 
 @item
 ``Special functions'' which really are @emph{language} elements, however
-exist as @sc{<primitive>}s in @R{}:
+exist as ``primitive'' functions in @R{}:
 
 @example
 @{       (         if       for  while  repeat  break  next
@@ -2416,20 +2575,20 @@ return  function  on.exit
 @item
 Basic @emph{operator}s (i.e., functions usually @emph{not} called as
 @code{foo(a, b, ...)}) for subsetting, assignment, arithmetic and logic.
-These are the following 1-, 2-, and @emph{N}-argument functions:
+These are the following 1-, 2-, and @math{N}-argument functions:
 
 @example
           [    [[    $
 <-   <<-  [<-  [[<-  $<-
 ---------------------------------------
 +    -    *    /     ^    %%   %*%  %/%
-<    <=   ==   !=    >=   >    \\
+<    <=   ==   !=    >=   >
 |    ||   &    &&    !
 @end example
 
 @item
-``Low level'' 0- and 1-argument functions shall remain @sc{<primitive>},
-iff they belong to one of the following groups of functions:
+``Low level'' 0- and 1-argument functions which belong to one of the
+following groups of functions:
 
 @enumerate a
 @item
@@ -2452,8 +2611,8 @@ Im      Re
 Arg     Conj     Mod
 @end example
 
-@noindent Note that @code{log} has @emph{two} arguments, and we will
-use
+@noindent Note however that the @R{} function @code{log} has an optional
+named argument @code{base}, and therefore is defined as
 
 @example
 log <- function(x, base = exp(1)) @{
@@ -2507,9 +2666,9 @@ dimnames    dimnames<-
 @end example
 
 @item
-A few other @emph{N}-argument functions shall also remain
-@sc{<primitive>}, for efficiency reasons.  Care is taken in order to
-treat named arguments properly:
+The following few @math{N}-argument functions are ``primitive'' for
+efficiency reasons.  Care is taken in order to treat named arguments
+properly:
 
 @example
 :          ~          c           list        unlist
