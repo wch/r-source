@@ -119,8 +119,8 @@ density(x, bw = "nrd0", adjust = 1,
   \emph{Density Estimation}.
   London: Chapman and Hall.
 
-  Venables, W. N. and Ripley, B. D. (1999)
-  \emph{Modern Applied Statistics with S-PLUS}.
+  Venables, W. N. and Ripley, B. D. (2002)
+  \emph{Modern Applied Statistics with S}.
   New York: Springer.
 }
 \seealso{
