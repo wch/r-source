@@ -5,6 +5,13 @@
 	**************************************************
 
 NEW FEATURES
+
+    o   All the standard packages have DESCRIPTION files, so
+	installed.packages and package.description will work with them.
+
+    o   The R-external manual describes programming for the
+	.Call and .External interfaces.
+
     o   optimization with nlm can use analytic gradients and Hessians
         if they are supplied.
 
