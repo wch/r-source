@@ -371,6 +371,8 @@ NEW FEATURES
     o	summary(<logical>) now mentions NA's as suggested by
 	Göran Broström.
 
+    o	as.dist(.) is now idempotent, i.e., works for "dist" objects.
+
 
 INSTALLATION CHANGES
 

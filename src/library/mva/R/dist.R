@@ -5,7 +5,7 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
 	method <- "euclidean"
 
     METHODS <- c("euclidean", "maximum",
-                 "manhattan", "canberra", "binary")
+		 "manhattan", "canberra", "binary")
     method <- pmatch(method, METHODS)
     if(is.na(method))
 	stop("invalid distance method")
@@ -59,30 +59,33 @@ as.matrix.dist <- function(x)
 
 as.dist <- function(m, diag = FALSE, upper=FALSE)
 {
+    if (inherits(m,"dist")) {
+	if(is.null(attr(m,"Diag")) || !missing(diag))
+	    attr(m,"Diag") <- diag
+	if(is.null(attr(m,"Upper")) || !missing(upper))
+	    attr(m,"Upper") <- upper
+	m
+    }
+
+    ## else   matrix |-> dist
     m <- as.matrix(m)
-
-    retval <-  m[row(m) > col(m)]
-
-    attributes(retval) <- NULL
-
+    ans <- m[row(m) > col(m)]
+    attributes(ans) <- NULL
     if(!is.null(rownames(m)))
-        attr(retval,"Labels") <- rownames(m)
+	attr(ans,"Labels") <- rownames(m)
     else if(!is.null(colnames(m)))
-        attr(retval,"Labels") <- colnames(m)
-
-    attr(retval,"Size") <- nrow(m)
-    attr(retval,"Diag") <- diag
-    attr(retval,"Upper") <- upper
-    attr(retval, "call") <- match.call()
-    class(retval) <- "dist"
-    retval
+	attr(ans,"Labels") <- colnames(m)
+    attr(ans,"Size") <- nrow(m)
+    attr(ans, "call") <- match.call()
+    class(ans) <- "dist"
+    ans
 }
 
 
 print.dist <- function(x, diag = NULL, upper = NULL, ...)
 {
     if(is.null(diag))
-	diag <-  if(is.null(a <- attr(x, "Diag"))) FALSE else a
+	diag <-	 if(is.null(a <- attr(x, "Diag"))) FALSE else a
     if(is.null(upper))
 	upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
 
