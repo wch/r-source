@@ -24,9 +24,9 @@ which(x, arr.ind = FALSE)
     who's rows each are the indices of one element of \code{x}; see
     Examples below.
 }
-\author{Peter Holzer \email{holzer@stat.math.ethz.ch}, for the array case.}
+\author{Werner Stahel and Peter Holzer \email{holzer@stat.math.ethz.ch},
+    for the array case.}
 \seealso{\code{\link{Logic}}}
-
 \examples{
 which(LETTERS == "R")
 which((1:12)\%\%2 == 0) # which are even?
