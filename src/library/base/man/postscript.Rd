@@ -12,7 +12,9 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \alias{ps.options}
 \alias{.PostScript.Options}
 \arguments{
-\item{file}{a character string giving the name of the file to print to.}
+\item{file}{a character string giving the name of the file to print
+  to. If this is \code{""}, the output is piped to the command given by
+  \code{R_PRINTCMD} when \R was built.}
 \item{\dots}{further options for \code{postscript()}.}
 \item{paper}{the size of paper in the printer.  The choices are
   \code{"a4"}, \code{"letter"}, \code{"legal"} and
