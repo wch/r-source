@@ -1505,8 +1505,8 @@ data files (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
 
 Both of these are systems to store scientific data in array-oriented
-way, including descriptions, labels, formats, units, @dots{}.  HDF5 also
-allows @emph{groups} of arrays, and the @R{} interface writes maps lists
+ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
+allows @emph{groups} of arrays, and the @R{} interface maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
 
