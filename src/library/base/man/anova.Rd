@@ -1,6 +1,7 @@
 \name{anova}
 \alias{anova}
 \alias{print.anova}
+\concept{regression}
 \title{Anova Tables}
 \usage{
 anova(object, \dots)
