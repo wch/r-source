@@ -16,7 +16,7 @@ DISTFILES = Makefile.in
 ## subdirectories of R_HOME/share
 SUBDIRS = perl
 ## subdirectories of R_HOME/share/perl
-SUBDIRS_PERL = R
+SUBDIRS_PERL = R Text
 
 
 all: Makefile R
@@ -37,8 +37,9 @@ install: install-message installdirs install-sources
 
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/share
-	@$(MKINSTALLDIRS) $(rhome)/share/perl 
-	@$(MKINSTALLDIRS) $(rhome)/share/perl/R 
+	@$(MKINSTALLDIRS) $(rhome)/share/perl
+	@$(MKINSTALLDIRS) $(rhome)/share/perl/R
+	@$(MKINSTALLDIRS) $(rhome)/share/perl/Text 
 
 install-message:
 	@echo "installing share ..."
@@ -48,6 +49,8 @@ install-sources: installdirs
 	    $(INSTALL_DATA) $${f} $(rhome)/share/perl/$${d}; \
 	  done; \
 	done
+	@$(INSTALL_DATA) $(srcdir)/perl/R/Rdtools.pl \
+	  $(rhome)/share/perl/R
 install-strip: install
 uninstall:
 	@echo "uninstalling share ..."
