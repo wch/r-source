@@ -10,6 +10,13 @@
 
 NEW FEATURES
 
+    o	The header files for C code have been reorganised. The
+	preferred header file for user code is now "R.h", and
+	ancillary files such as Arith.h now need to be referred to
+	as "R_ext/Arith.h". The `Writing R Extensions' manual now
+	contains the beginnings of a description of the public API and
+	how to use it.
+
     o	DPQ {probability density quantile} functions have new
 	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
 	more precise results when values would be close to 0 or 1.
