@@ -6,14 +6,12 @@
 	   "col", "col.axis", "col.lab", "col.main", "col.sub",
            "cra", "crt", "csi","cxy",	"din", "err", "fg", "fig", "fin",
 	   "font", "font.axis", "font.lab", "font.main", "font.sub",
-           "lab", "las", "lty", "lwd",
+           "gamma", "lab", "las", "lty", "lwd",
            "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
 	   "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
-	   "smo", "srt", "tck", "tmag", "type", "usr",
+	   "smo", "srt", "tck", "tcl", "tmag", "type", "usr",
 	   "xaxp", "xaxs", "xaxt", "xlog", "xpd",
-	   "yaxp", "yaxs", "yaxt", "ylog",
-	   ##-- newer ones:
-	   "gamma", "tcl"
+	   "yaxp", "yaxs", "yaxt", "ylog"
 	   )
 .Pars.readonly <- c("cin","cra","csi","cxy","din")
 

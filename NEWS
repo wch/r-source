@@ -182,6 +182,10 @@ NEW FEATURES
     o	New trivial function det() for determinant computation
 	(the example in ?qr did not seem to be sufficient).
 
+    o	par() returns elements in alphabetical order, and "ann" as a
+        logical (not integer).
+
+
 
 BUG FIXES
 
