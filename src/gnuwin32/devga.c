@@ -184,7 +184,7 @@ static void SaveAsPng(DevDesc *dd,char *fn);
 static void SaveAsJpeg(DevDesc *dd,int quality,char *fn);
 static void SaveAsBmp(DevDesc *dd,char *fn);
 static void SaveAsBitmap(DevDesc *dd);
-void  ProcessEvents();
+void  R_ProcessEvents();
 
 static void PrivateCopyDevice(DevDesc *dd,DevDesc *ndd, char *name)
 {
@@ -540,7 +540,7 @@ static void HelpExpose(window w,rect r)
 	    xd->replaying = 1;
 	    playDisplayList(dd);
 	    xd->replaying = 0;
-	    ProcessEvents();
+	    R_ProcessEvents();
 	} else
 	    SHOW;
     }
@@ -1337,7 +1337,7 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 	/* this is not usually called directly by the graphics	*/
 	/* engine because the detection of device resizes	*/
 	/* (e.g., a window resize) are usually detected by	*/
-	/* device-specific code	(see ProcessEvents in ./system.c)*/
+	/* device-specific code	(see R_ProcessEvents in ./system.c)*/
 	/********************************************************/
 
 
@@ -1750,7 +1750,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     while (!xd->clicked) {
       /*	SHOW;*/
         WaitMessage();
-	ProcessEvents();
+	R_ProcessEvents();
     }
     addto(xd->gawin);
     gchangemenubar(xd->mbar);

@@ -25,7 +25,7 @@
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Fortran.h"		/* POW_DI */
-#include "Applic.h"		/* cpoly */
+#include "Applic.h"		/* R_cpoly */
 
 #include "arithmetic.h"		/* complex_ */
 
@@ -772,7 +772,7 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(zr)[degree-i] = COMPLEX(z)[i].r;
 	    REAL(zi)[degree-i] = COMPLEX(z)[i].i;
 	}
-	cpoly(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
+	R_cpoly(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
 	if(fail) errorcall(call, "root finding code failed");
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);

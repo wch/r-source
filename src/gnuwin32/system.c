@@ -68,7 +68,7 @@ static void (*my_R_Busy)(int);
  *   Called at I/O, during eval etc to process GUI events.
  */
 
-void ProcessEvents(void)
+void R_ProcessEvents(void)
 {
     while (peekevent()) doevent();
     if (UserBreak) {
@@ -136,7 +136,7 @@ static  int tlen, thist, lineavailable;
 int
 R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 {
-    ProcessEvents();
+    R_ProcessEvents();
     return TrueReadConsole(prompt, (char *) buf, len, addtohistory);
 }
 
@@ -145,7 +145,7 @@ R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 
 void R_WriteConsole(char *buf, int len)
 {
-    ProcessEvents();
+    R_ProcessEvents();
     TrueWriteConsole(buf, len);
 }
 
@@ -519,7 +519,7 @@ static char RHome[MAX_PATH + 7];
 static char UserRHome[MAX_PATH + 7];
 static char RUser[MAX_PATH];
 char *getRHOME(); /* in rhome.c */
-void setStartTime();
+void R_setStartTime();
 
 /* Process ~/.Renviron, if it exists */
 #include "opt.h"
@@ -603,7 +603,7 @@ int cmdlineoptions(int ac, char **av)
     Rstart Rp = &rstart;
 
 #ifdef HAVE_TIMES
-    setStartTime();
+    R_setStartTime();
 #endif
 
     /* Store the command line arguments before they are processed

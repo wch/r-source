@@ -39,7 +39,7 @@
 #endif
 
 #include <float.h>
-#include "Fortran.h"
+#include "Fortran.h" /* for POW_DI */
 #include "Arith.h"
 #include "Applic.h"
 
@@ -48,6 +48,16 @@ static void fxshft(int *, double *, double *, int *);
 static void vrshft(int, double *, double *, int *);
 static void nexth(int *);
 static void noshft(int);
+static void polyev(int *,
+	    double *, double *, double *, double *,
+	    double *, double *, double *, double *);
+static double errev(int *, double *, double *, double *,
+	     double *, double *, double *);
+static double cpoly_cauchy(int *, double *, double *);
+static void cpoly_scale(int *, double *, double *, double *,
+			double *, double *, double *);
+static void cdivid(double *, double *, double *, double *, double *, double *);
+static double cpoly_cmod(double *, double *);
 
 /* Global Variables (too many!) */
 
@@ -73,7 +83,7 @@ static double eta;
 static double infin;
 
 
-int cpoly(double *opr, double *opi, int *degree,
+int R_cpoly(double *opr, double *opi, int *degree,
 	  double *zeror, double *zeroi, int *fail)
 {
     int i__1;
@@ -535,6 +545,7 @@ static void nexth(int *bool)
 
 /*--------------------- Independent Complex Polynomial Utilities ----------*/
 
+static
 void polyev(int *nn,
 	    double *sr, double *si,
 	    double *pr, double *pi,
@@ -558,7 +569,7 @@ void polyev(int *nn,
     }
 }
 
-
+static
 double errev(int *nn, double *qr, double *qi, double *ms,
 	     double *mp, double *are, double *mre)
 {
@@ -581,6 +592,7 @@ double errev(int *nn, double *qr, double *qi, double *ms,
 }
 
 
+static 
 double cpoly_cauchy(int *nn, double *pt, double *q)
 {
     /* Computes a lower bound on the moduli of the zeros of a polynomial
@@ -637,7 +649,7 @@ double cpoly_cauchy(int *nn, double *pt, double *q)
     return x;
 }
 
-
+static
 void cpoly_scale(int *nn, double *pt,
 		 double *eta, double *infin, double *smalno, double *base,
 		 double *fact)
@@ -687,7 +699,7 @@ void cpoly_scale(int *nn, double *pt,
 }
 
 
-
+static
 void cdivid(double *ar, double *ai, double *br, double *bi,
 	    double *cr, double *ci)
 {
@@ -714,7 +726,7 @@ void cdivid(double *ar, double *ai, double *br, double *bi,
     }
 }
 
-
+static
 double cpoly_cmod(double *r, double *i)
 {
     /* modulus of a complex number avoiding overflow. */

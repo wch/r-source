@@ -42,6 +42,15 @@ extern int LoadSiteFile;
 extern int LoadInitFile;
 extern int DebugInitFile;
 
+      /* Permanent copy of the command line arguments and the number
+         of them passed to the application.
+         These are populated via the routine R_set_command_line_arguments()
+         called from R_common_command_line().
+       */
+    int    NumCommandLineArgs = 0;
+    char **CommandLineArgs = NULL;
+
+
 
 /*
  *  4) INITIALIZATION AND TERMINATION ACTIONS

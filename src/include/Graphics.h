@@ -443,6 +443,8 @@ int MacDeviceDriver(char**, int, double*, int);
 #define char2col		Rf_char2col
 #define col2name		Rf_col2name
 #define copyDisplayList		Rf_copyDisplayList
+#define copyGPar		Rf_copyGPar
+#define CreateAtVector		Rf_CreateAtVector
 #define curDevice		Rf_curDevice
 #define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
@@ -454,6 +456,7 @@ int MacDeviceDriver(char**, int, double*, int);
 #define FixupLty		Rf_FixupLty
 #define FixupLwd		Rf_FixupLwd
 #define FixupPch		Rf_FixupPch
+#define FixupVFont		Rf_FixupVFont
 #define GArrow			Rf_GArrow
 #define GBox			Rf_GBox
 #define GCheckState		Rf_GCheckState
@@ -466,6 +469,7 @@ int MacDeviceDriver(char**, int, double*, int);
 #define GConvertY		Rf_GConvertY
 #define GConvertYUnits		Rf_GConvertYUnits
 #define GEndPath		Rf_GEndPath
+#define GetAxisLimits		Rf_GetAxisLimits
 #define GetDevice		Rf_GetDevice
 #define GExpressionHeight	Rf_GExpressionHeight
 #define GExpressionWidth	Rf_GExpressionWidth
@@ -498,12 +502,16 @@ int MacDeviceDriver(char**, int, double*, int);
 #define GStrWidth		Rf_GStrWidth
 #define GSymbol			Rf_GSymbol
 #define GText			Rf_GText
+#define GVStrHeight		Rf_GVStrHeight
+#define GVStrWidth		Rf_GVStrWidth
+#define GVText			Rf_GVText
 #define inhibitDisplayList	Rf_inhibitDisplayList
 #define initDisplayList		Rf_initDisplayList
 #define InitGraphics		Rf_InitGraphics
 #define KillAllDevices		Rf_KillAllDevices
-#define killDevice		Rf_killDevice
 #define KillDevice		Rf_KillDevice
+#define killDevice		Rf_killDevice
+#define labelformat		Rf_labelformat
 #define LTYget			Rf_LTYget
 #define LTYpar			Rf_LTYpar
 #define name2col		Rf_name2col
@@ -805,10 +813,18 @@ unsigned int ScaleColor(double x);
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
 
 int StrMatch(char *s, char *t);
+void copyGPar(GPar *, GPar *);
 
 /* some functions that plot.c needs to share with plot3d.c */
 SEXP CreateAtVector(double*, double*, int, int);
 void GetAxisLimits(double, double, double*, double*);
 SEXP labelformat(SEXP);
+
+/* Vector fonts */
+
+double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
+double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
+void GVText (double, double, int, char *, int, int, 
+	     double, double, double, DevDesc *);
 
 #endif

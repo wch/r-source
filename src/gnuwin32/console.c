@@ -983,7 +983,7 @@ static void delconsole(control c)
 }
 
 /* console readline (coded looking to the GNUPLOT 3.5 readline)*/
-void ProcessEvents();
+void R_ProcessEvents();
 static char consolegetc(control c)
 {
     ConsoleData p;
@@ -994,7 +994,7 @@ static char consolegetc(control c)
     while((p->numkeys == 0) && (!p->clp))
     {
 	if (!peekevent()) WaitMessage();
-	ProcessEvents();
+	R_ProcessEvents();
     }
     if (p->sel) {
 	p->sel = 0;

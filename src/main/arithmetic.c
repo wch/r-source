@@ -341,7 +341,7 @@ double R_pow(double x, double y) /* = x ^ y */
 
 /* General Base Logarithms */
 
-double logbase(double x, double base)
+static double logbase(double x, double base)
 {
     return R_log(x) / log(base);
 }

@@ -568,7 +568,7 @@ void drawcol(int whichcol)
     Rsync();
 }
 
-void drawelt(int whichrow, int whichcol)
+static void drawelt(int whichrow, int whichcol)
 {
     int i;
     char clab[15];

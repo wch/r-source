@@ -52,9 +52,9 @@ void R_chull(int *n, double *x, int *m, int *in,
 	   int *ih, int *nh, int *il);
 
 /* cpoly.c : */
-int cpoly(double *opr, double *opi, int *degree,
+int R_cpoly(double *opr, double *opi, int *degree,
 	  double *zeror, double *zeroi, int *fail);
-void polyev(int *,
+/*void polyev(int *,
 	    double *, double *, double *, double *,
 	    double *, double *, double *, double *);
 double errev(int *, double *, double *, double *,
@@ -62,7 +62,7 @@ double errev(int *, double *, double *, double *,
 double cpoly_cauchy(int *, double *, double *);
 void cpoly_scale(int *, double *, double *, double *, double *, double *, double *);
 void cdivid(double *, double *,double *, double *, double *, double *);
-double cpoly_cmod(double *, double *);
+double cpoly_cmod(double *, double *);*/
 
 /* cumsum.c : */
 void R_cumsum(double *, int *, double *, double *);

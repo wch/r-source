@@ -36,7 +36,7 @@
    hyphen = 45 or 173;	(n-dash not available as code!)
    175 = "¯" (= "overline" (= high 'negative' sign))
 */
-char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
+static char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
 
 /* Part 0.  AFM File Names */
 

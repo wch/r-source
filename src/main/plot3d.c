@@ -162,6 +162,7 @@ static void Perspective (double d)
    Adapted by Paul Murrell
 */
 
+static
 void FindCorners(double width, double height, SEXP label,
 		 double x0, double y0, double x1, double y1,
 		 DevDesc *dd) {
@@ -181,11 +182,12 @@ void FindCorners(double width, double height, SEXP label,
     REAL(label)[6] = y1 + dx;    
 }
 
+static
 int TestLabelIntersection(SEXP label1, SEXP label2) {
     
     int i,j;
     double Ax, Bx, Ay, By, ax, ay, bx, by, q1, q2;
-    double num,dom;
+    double dom;
     double result1, result2;
     i = 0;
     while (i < 4) {
@@ -233,7 +235,7 @@ int TestLabelIntersection(SEXP label1, SEXP label2) {
 }
 
 /*** Checks whether a label window is inside view region ***/
-int LabelInsideWindow(SEXP label, DevDesc *dd) {
+static int LabelInsideWindow(SEXP label, DevDesc *dd) {
     int i = 0;
     double x, y;
     
@@ -405,11 +407,13 @@ double min(double d1, double d2) {
     return ans;
 }
 
+static
 int distFromEdge(double *xxx, double *yyy, int iii, DevDesc *dd) {
     return min(min(xxx[iii]-dd->gp.usr[0], dd->gp.usr[1]-xxx[iii]),
 	       min(yyy[iii]-dd->gp.usr[2], dd->gp.usr[3]-yyy[iii]));
 }
 
+static
 int useStart(double *xxx, double *yyy, int ns, DevDesc *dd) {
     if (distFromEdge(xxx, yyy, 0, dd) < distFromEdge(xxx, yyy, ns-1, dd))
 	return 1;
@@ -417,6 +421,7 @@ int useStart(double *xxx, double *yyy, int ns, DevDesc *dd) {
 	return 0;
 }
 
+static
 int findGapUp(double *xxx, double *yyy, int ns, double labelDistance, 
 	      DevDesc *dd) {
     double dX, dY;
@@ -442,6 +447,7 @@ int findGapUp(double *xxx, double *yyy, int ns, double labelDistance,
 	return n;
 }
 
+static
 int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 		DevDesc *dd) {
     double dX, dY;
@@ -479,23 +485,22 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
     double variance, dX, dY, deltaX, deltaY;
     double dXC, dYC, deltaXC, deltaYC;
-    int range, index, n;
+    int range=0, index=0, n; /* -Wall */
     double lowestVariance;
     double squareSum, sum;
     int iii, jjj;
     double distanceSum, labelDistance, avgGradient;
     int zeroCount;
     char buffer[255];
-    double avg, xp, yp;
+    double avg;
     int result;
-    double labelD;
     double ux, uy, vx, vy;
-    double xStart, yStart, xEnd, yEnd;
+    double xStart, yStart;
     double dx, dy, dxy;
     double labelHeight;
     SEXP label1 = allocVector(REALSXP, 8);
     SEXP label2;
-    int gotLabel;
+    int gotLabel = 0;
     int ddl;  /** Don't draw label */
 
     for (i = 0; i < nx - 1; i++) {
@@ -1893,7 +1898,7 @@ static void PerspAxis(double *x, double *y, double *z, int axis,
     double tickLength = .03; // proportion of axis length
     double min, max, *range;
     double axp[3];
-    int logflag, nint, i;
+    int nint, i;
     SEXP at, lab;
     switch (axisType) {
     case 0:
@@ -1958,7 +1963,7 @@ static void PerspAxis(double *x, double *y, double *z, int axis,
 }
 
 static void PerspAxes(double *x, double *y, double *z, DevDesc *dd) {
-    int xAxis, yAxis, zAxis;
+    int xAxis=0, yAxis=0, zAxis=0; /* -Wall */
     int xpdsave;
     Vector3d u0 = {0, 0, 0, 1};
     Vector3d u1 = {1, 0, 0, 1};

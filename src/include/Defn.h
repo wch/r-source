@@ -364,10 +364,6 @@ extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
 extern SEXP	R_Warnings;	    /* the warnings and their calls */
 
 
-
-extern char ** CommandLineArgs	  INI_as(NULL); /* permanent copy of the command line arguments passed to the application. */
-extern int     NumCommandLineArgs INI_as(0); /* the number of command line arguments. */
-
 #ifdef __MAIN__
 #undef extern
 #endif
@@ -377,7 +373,6 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 #ifndef R_NO_REMAP
-#define applyRelOp		Rf_applyRelOp
 #define begincontext		Rf_begincontext
 #define checkArity		Rf_checkArity
 #define CheckFormals		Rf_CheckFormals
@@ -491,7 +486,6 @@ int	R_FileExists(char*);
 
 /* Other Internally Used Functions */
 
-SEXP applyRelOp(int, int, int);
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);

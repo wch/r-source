@@ -108,7 +108,7 @@ static DWORD StartTime;
 
 static FILETIME Create, Exit, Kernel, User;
 
-void setStartTime(void)
+void R_setStartTime(void)
 {
     StartTime = GetTickCount();
 }

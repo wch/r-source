@@ -27,20 +27,20 @@
 #include "R_ext/Complex.h"
 
 #ifndef R_NO_REMAP
-#define isort      Rf_isort
-#define rsort      Rf_rsort
-#define csort      Rf_csort
-#define revsort    Rf_revsort
-#define iPsort     Rf_iPsort
-#define rPsort     Rf_rPsort
-#define cPsort     Rf_cPsort
-#define IndexWidth Rf_IndexWidth
-#define setIVector Rf_setIVector
-#define setRVector Rf_setRVector
-#define StringFalse Rf_StringFalse
-#define StringTrue  Rf_StringTrue
-#define isBlankString Rd_isBlankString
-#define hsv2rgb    Rf_hsv2rgb
+#define isort         Rf_isort
+#define rsort         Rf_rsort
+#define csort         Rf_csort
+#define revsort       Rf_revsort
+#define iPsort        Rf_iPsort
+#define rPsort        Rf_rPsort
+#define cPsort        Rf_cPsort
+#define IndexWidth    Rf_IndexWidth
+#define setIVector    Rf_setIVector
+#define setRVector    Rf_setRVector
+#define StringFalse   Rf_StringFalse
+#define StringTrue    Rf_StringTrue
+#define isBlankString Rf_isBlankString
+#define hsv2rgb       Rf_hsv2rgb
 #endif
 
 /* ../main/sort.c : */

@@ -41,7 +41,7 @@ void isintrpt(){}
 #endif
 
 #ifdef Win32
-extern void ProcessEvents();
+extern void R_ProcessEvents();
 #endif
 
 /* NEEDED: A fixup is needed in browser, because it can trap errors,
@@ -69,7 +69,7 @@ SEXP eval(SEXP e, SEXP rho)
 #endif
 #ifdef Win32
     if ((R_EvalCount++ % 100) == 0) {
-	ProcessEvents();
+	R_ProcessEvents();
 /* Is this safe? R_EvalCount is not used in other part and
  * don't want to overflow it
 */
