@@ -12,7 +12,7 @@
 \method{cor.test}{default}(x, y,
          alternative = c("two.sided", "less", "greater"),
          method = c("pearson", "kendall", "spearman"),
-         conf.level = 0.95, exact = NULL, \dots)
+         exact = NULL, conf.level = 0.95, \dots)
 \method{cor.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
