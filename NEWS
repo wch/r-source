@@ -19,6 +19,10 @@ NEW FEATURES
 	description of Perl-like regular expressions) will be added to
 	later releases of R.
 
+    o   The startup message now shows the R Foundation as copyright
+        holder, and includes the R ISBN number and a pointer to the new
+        citation() function.
+
 
 BUG FIXES
 
