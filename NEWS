@@ -178,6 +178,8 @@ NEW FEATURES
     o	Replaying a plot (with replayPlot() or via autoprinting) now
 	automagically opens a device if none is open.
 
+    o   reshape() can handle multiple 'id' variables.
+
     o	source() with 'echo = TRUE' uses the function source attribute
     	when displaying commands as they are parsed.
 
@@ -210,8 +212,6 @@ NEW FEATURES
     o	Printing a character string with embedded nuls now prints the
 	whole string, and non-printable characters are represented by
 	octal escape sequences.
-
-    o   reshape() can handle multiple id variables.
 
 
 UTILITIES
@@ -313,6 +313,10 @@ INSTALLATION CHANGES
 
     o	Makeinfo 4.5 or later is now required for building the HTML and
 	Info versions of the manuals.
+
+    o	A package can contain a file 'R/sysdata.rda' to contain
+	system datasets to be lazy-loaded into the namespace/package
+	environment.
 
 
 BUG FIXES

@@ -457,6 +457,14 @@ do_install_source () {
         error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
       fi
+    if test -f "R/sysdata.rda"; then
+      echo "tools:::sysdata2LazyLoadDB(\"R/sysdata.rda\", \"${R_PACKAGE_DIR}/R\")" | \
+        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla > /dev/null ; \
+      if test ${?} -ne 0; then \
+        error "unable to build sysdata DB for package '${pkg_name}'" ; \
+        do_exit_on_error ; \
+      fi ; \
+    fi
     if ${fake}; then
       if test -f NAMESPACE; then
         (echo; echo ".onLoad <- function(list, pkg) NULL") >> \

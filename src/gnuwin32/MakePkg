@@ -234,7 +234,7 @@ endif
 # R
 AA=$(wildcard R/Makefile.win)
 ifeq ($(AA),)
- R: $(DPKG)/R/$(PKG)
+ R: $(DPKG)/R/$(PKG) sysdata
 else
  include R/Makefile.win
 endif
@@ -307,3 +307,12 @@ lazydata:
 	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null ; \
 	  fi ; \
 	fi
+
+SYSDATA=$(wildcard $(SPKG)/R/sysdata.rda)
+
+sysdata:
+ifneq ($(strip $(SYSDATA)),)
+	$(ECHO)  "    preparing to lazyload sysdata"
+	$(ECHO) "tools:::sysdata2LazyLoadDB(\"$(SYSDATA)\", \"$(DPKG)/R\")" | \
+	      R_DEFAULT_PACKAGES=NULL $(REXE) > /dev/null
+endif

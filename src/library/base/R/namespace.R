@@ -245,8 +245,13 @@ loadNamespace <- function (package, lib.loc = NULL,
             sys.source(codeFile, env, keep.source = keep.source)
         else warning(paste("Package ", sQuote(package), "contains no R code"))
 
-        # partial loading stops at this point
+        ## partial loading stops at this point
+        ## -- used in preparing for lazy-loading
         if (partial) return(ns)
+
+        # lazy-load any sysdata
+        dbbase <- file.path(package.lib, package, "R", "sysdata")
+        if (file.exists(paste(dbbase, ".rdb", sep=""))) lazyLoad(dbbase, env)
 
         # register any S3 methods
         registerS3methods(nsInfo$S3methods, package, env)

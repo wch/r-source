@@ -73,6 +73,8 @@ function(package, dir, lib.loc = NULL)
             if(inherits(yy, "try-error")) {
                 stop("cannot source package code")
             }
+            sys_data_file <- file.path(code_dir, "sysdata.rda")
+            if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
         }
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
@@ -384,6 +386,8 @@ function(package, dir, lib.loc = NULL,
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
+        sys_data_file <- file.path(code_dir, "sysdata.rda")
+        if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
         objects_in_code <- objects(envir = code_env, all.names = TRUE)
         objects_in_code_or_namespace <- objects_in_code
@@ -1348,6 +1352,8 @@ function(package, dir, lib.loc = NULL)
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
+        sys_data_file <- file.path(code_dir, "sysdata.rda")
+        if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
         objects_in_code <- objects(envir = code_env, all.names = TRUE)
 
@@ -1721,6 +1727,8 @@ function(package, dir, lib.loc = NULL)
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
+        sys_data_file <- file.path(code_dir, "sysdata.rda")
+        if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
         objects_in_code <- objects(envir = code_env, all.names = TRUE)
 
@@ -1741,7 +1749,7 @@ function(package, dir, lib.loc = NULL)
             ns_S3_generics <- ns_S3_methods_db[, 1]
             ns_S3_methods <- ns_S3_methods_db[, 3]
         }
-            
+
     }
 
     ## Find the function objects in the given package.
@@ -1996,6 +2004,8 @@ function(package, dir, lib.loc = NULL)
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
+        sys_data_file <- file.path(code_dir, "sysdata.rda")
+        if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
         ## Does the package have a NAMESPACE file?  Note that when
         ## working on the sources we (currently?) cannot deal with the
@@ -2352,7 +2362,7 @@ function(dir)
     dir <- file_path_as_absolute(dir)
     ## Argh.  We cannot call Rd_db() directly, because this works on
     ## the top-level package source directory ...
-    Rd_files <- list_files_with_type(file.path(dir), "docs")        
+    Rd_files <- list_files_with_type(file.path(dir), "docs")
     db <- lapply(Rd_files, .read_Rd_lines_quietly)
     names(db) <- Rd_files
     .check_Rd_files_in_Rd_db(db)
@@ -2486,7 +2496,7 @@ function(x, ...)
             }
         }
     }
-    
+
     if(length(x$files_with_bad_name)) {
         writeLines(c(paste("Rd files with missing or empty or invalid ",
                            sQuote("\\name"), ":", sep = ""),
@@ -2497,14 +2507,14 @@ function(x, ...)
                      "of PDF bookmarks to fail.")
         writeLines(c(strwrap(msg), ""))
     }
-    
+
     if(length(x$files_with_bad_title)) {
         writeLines(c(paste("Rd files with missing or empty ",
                            sQuote("\\title"), ":", sep = ""),
                      paste(" ", x$files_with_bad_title),
                      ""))
     }
-    
+
     if(length(x$files_with_missing_mandatory_tags)) {
         bad <- x$files_with_missing_mandatory_tags
         bad <- split(bad[, 1], bad[, 2])
@@ -2515,7 +2525,7 @@ function(x, ...)
         }
         writeLines("These entries are required in an Rd file.\n")
     }
-    
+
     if(length(x$files_with_duplicated_unique_tags)) {
         bad <- x$files_with_duplicated_unique_tags
         bad <- split(bad[, 1], bad[, 2])
@@ -2545,7 +2555,7 @@ function(x, ...)
                      "R home directory).")
         writeLines(c(strwrap(msg), ""))
     }
-    
+
     invisible(x)
 }
 
@@ -2576,7 +2586,7 @@ function(dfile)
                          "Title", "Author", "Maintainer")
     if(any(i <- which(is.na(match(required_fields, names(db))))))
         out$missing_required_fields <- required_fields[i]
-    
+
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
@@ -2664,8 +2674,8 @@ function(dfile)
        && (tolower(val) %in% c("base", "recommended", "defunct-base"))
        && !(package_name %in% unlist(standard_package_names)))
         out$bad_priority <- val
-    
-    class(out) <- "check_package_description"             
+
+    class(out) <- "check_package_description"
 
     out
 }
@@ -2707,7 +2717,7 @@ function(x, ...)
                      strwrap(paste("Only operators", sQuote("<="),
                                    "and", sQuote(">="),
                                    "are possible.")))
-            
+
             writeLines(tmp)
         }
         if(length(bad$bad_dep_version)) {
@@ -2724,7 +2734,7 @@ function(x, ...)
             writeLines(tmp)
         }
         writeLines("")
-    }        
+    }
     if(length(x$bad_namespace))
         writeLines(c("Package name and namespace differ.", ""))
     if(length(x$bad_priority))

@@ -278,7 +278,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		else if(verbose)
 		    warning(paste("Package ", sQuote(package),
 				  "contains no R code"))
+                ## lazy-load data sets if required
                 dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
+                if(file.exists(paste(dbbase, ".rdb", sep="")))
+                    lazyLoad(dbbase, loadenv)
+                ## lazy-load a sysdata database if present
+                dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
                 if(file.exists(paste(dbbase, ".rdb", sep="")))
                     lazyLoad(dbbase, loadenv)
 		## now transfer contents of loadenv to an attached frame

@@ -352,7 +352,7 @@ from the saved image.
 
 The second purpose for @file{install.R} is to hold code that needs to be
 executed each time the package is attached, after the image is
-loaded. Few packages have a need for such code so @file{install.R} is
+loaded.  Few packages have a need for such code so @file{install.R} is
 normally an empty file.
 
 The optional file @file{R_PROFILE.R} is executed before the code in the
@@ -378,6 +378,11 @@ assignments.  Note that there need be no connection between the name of
 the file and the R objects created by it.   The @R{} code files should
 only create R objects and not call functions with side effects such as
 @code{require} and @code{options}.
+
+One exception is allowed: if the @file{R} subdirectory contains a file
+@file{sysdata.rda} this will be lazy-loaded into the namespace/package
+environment -- this is intended for system datasets that are not intended
+to be user-accessible via @code{data}.
 
 @findex .First.lib
 @findex .Last.lib

@@ -44,6 +44,13 @@ rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
     makeLazyLoadDB(e, dbbase, compress = compress)
 }
 
+sysdata2LazyLoadDB <- function(srcFile, destDir, compress = TRUE)
+{
+    e <- new.env(hash=TRUE)
+    load(srcFile, e)
+    makeLazyLoadDB(e, file.path(destDir, "sysdata"), compress = compress)
+}
+
 list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 {
     if(is.null(dataDir)) {
