@@ -107,6 +107,14 @@ static CFunTabEntry CFunTab[] =
 #define RTLD_NOW  2
 #endif
 
+#ifndef RTLD_GLOBAL
+#define	RTLD_GLOBAL 4
+#endif
+
+#ifndef RTLD_LOCAL
+#define	RTLD_LOCAL 0
+#endif
+
 #ifdef DL_SEARCH_PROG
 static void *dlhandle;
 #endif
