@@ -21,6 +21,10 @@
 #include "Mathlib.h"
 #include "Graphics.h"
 
+#ifdef HAVE_LIBREADLINE
+char *tilde_expand (char *);
+#endif
+
 	/* Coordinate Mappings */
 	/* Linear/Logarithmic Scales */
 
@@ -1698,7 +1702,11 @@ SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	if(!isString(CAR(args)) || length(CAR(args)) < 1 || *CHAR(STRING(CAR(args))[0]) == '\0')
 		errorcall(call, "file name expected as argument\n");
+#ifdef HAVE_LIBREADLINE
+	GSavePlot(tilde_expand(CHAR(STRING(CAR(args))[0])));
+#else	
 	GSavePlot(CHAR(STRING(CAR(args))[0]));
+#endif	
 	return R_NilValue;
 }
 
