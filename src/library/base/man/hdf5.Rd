@@ -22,13 +22,13 @@ hdf5load(file, load=TRUE)
   The objects can be read back from the file at a later
   date by using the function \code{hdf5load}.
 
-  Not all R types are supported and it probably doesn't make sense to
+  Not all \R types are supported and it probably doesn't make sense to
   put some of them into an HDF file (e.g. closures).  However, lists,
   strings, vectors, and matrices work.  Lists map to HDF groups.
   Vectors and matrices map to datasets.
 
   This capability is only available on machines which have the HDF5
-  library.
+  library (freely available from the reference below).
 }
 \author{Marcus G. Daniels \email{mgd@santafe.edu}.}
 \references{\url{http://hdf.ncsa.uiuc.edu}}

@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o	hdf5{read|write} now allow more kinds of attributes and add support
+	for HDF5 ver. 1.2, thanks to Marcus G. Daniels.
+
     o	A first step in improving performance has been made.
 	Attached objects, libraries etc are now hashed.
 
