@@ -4,8 +4,11 @@ function (list, file = "dumpdata.R", append = FALSE)
     digits <- options("digits")
     on.exit(options(digits))
     options(digits = 12)
+    if(is.character(file))
+        if(nchar(file) > 0) {
+            file <- file(file, ifelse(append, "a", "w"))
+            on.exit(close(file))
+        } else file <- stdout()
     .Internal(dump(list, file, append))
 }
-
-##dump <- function (list, fileout = "dumpdata") { .Internal(dump(list, fileout)) }
 

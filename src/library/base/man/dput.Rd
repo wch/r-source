@@ -3,12 +3,17 @@
 \alias{dget}
 \title{Write an Internal Object to a File}
 \description{
-  Writes an ASCII text representation of an \R object to a file, or uses
-  one to recreate the object.
+  Writes an ASCII text representation of an \R object to a file
+  or connection, or uses one to recreate the object.
 }
 \usage{
 dput(x, file = "")
 dget(file)
+}
+\arguments{
+  \item{}{an object.}
+  \item{file}{either a character string naming a file or a
+    connection. \code{""} indicates output to the console.}
 }
 \details{
   \code{dput} opens \code{file} and deparses the object \code{x} into
@@ -31,3 +36,4 @@ unlink("foo")
 }
 \keyword{file}
 \keyword{programming}
+\keyword{connection}

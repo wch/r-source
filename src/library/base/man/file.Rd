@@ -1,5 +1,5 @@
-\name{file}
-\alias{file}
+\name{files}
+\alias{files}
 \title{File Manipulation}
 \usage{
 file.create(\dots)

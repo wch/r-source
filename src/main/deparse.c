@@ -202,12 +202,13 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
    return(temp);
 }
 
+#include "Rconnections.h"
 
 SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    FILE *fp;
-    SEXP file, saveenv, tval;
-    int i;
+    SEXP saveenv, tval;
+    int i, ifile, wasopen;
+    Rconnection con = (Rconnection) 1; /* stdout */
 
     checkArity(op, args);
 
@@ -222,47 +223,38 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_CLOENV(CAR(args), saveenv);
 	UNPROTECT(1);
     }
-    file = CADR(args);
-    if (!isValidString(file))
-	errorcall(call, "file name must be a valid character string");
+    ifile = asInteger(CADR(args));
 
-    fp = NULL;
-    if (strlen(CHAR(STRING_ELT(file, 0))) > 0) {
-	fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w");
-	if (!fp)
-	    errorcall(call, "unable to open file");
+    wasopen = 1;
+    if (ifile != 1) {
+	con = getConnection(ifile);
+	wasopen = con->isopen;
+	if(!wasopen) con->open(con);
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
-	if (fp == NULL)
+	if (ifile == 1)
 	    Rprintf("%s\n", CHAR(STRING_ELT(tval, i)));
 	else
-	    fprintf(fp, "%s\n", CHAR(STRING_ELT(tval, i)));
-    if (fp != NULL)
-	fclose(fp);
+	    Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, i)));
+    if (!wasopen) con->close(con);
     return (CAR(args));
 }
 
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval;
-    int i, j, nobjs, append;
-    FILE *fp;
+    int i, j, nobjs, wasopen;
+    Rconnection con;
 
     checkArity(op, args);
 
     names = CAR(args);
     file = CADR(args);
-    if(!isString(names) || !isString(file))
+    if(!isString(names))
 	errorcall(call, "character arguments expected");
     nobjs = length(names);
     if(nobjs < 1 || length(file) < 1)
 	errorcall(call, "zero length argument");
-
-    append = asLogical(CADDR(args));
-    if (append == NA_LOGICAL)
-        errorcall(call, "invalid append specification");
-
-    fp = NULL;
 
     PROTECT(o = objs = allocList(nobjs));
 
@@ -272,10 +264,10 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     o = objs;
-    if(strlen(CHAR(STRING_ELT(file, 0))) == 0) {
+    if(INTEGER(file)[0] == 1) {
 	for (i = 0; i < nobjs; i++) {
 	    Rprintf("\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if (TYPEOF(CAR(o)) != CLOSXP ||
+	    if (TYPEOF(CAR(o)) != CLOSXP || 
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
@@ -285,20 +277,20 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     else {
-	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))),
-			  (append) ? "a" : "w")))
-	    errorcall(call, "unable to open file");
+	con = getConnection(INTEGER(file)[0]);
+	wasopen = con->isopen;
+	if (!wasopen) con->open(con);
 	for (i = 0; i < nobjs; i++) {
-	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if (TYPEOF(CAR(o)) != CLOSXP ||
+	    Rconn_printf(con, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
+	    if (TYPEOF(CAR(o)) != CLOSXP || 
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
-		fprintf(fp, "%s\n", CHAR(STRING_ELT(tval, j)));
+		Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
 	    }
 	    o = CDR(o);
 	}
-	fclose(fp);
+	if (!wasopen) con->close(con);
     }
 
     UNPROTECT(1);

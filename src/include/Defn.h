@@ -426,6 +426,8 @@ extern FILE*	R_Inputfile	INI_as(NULL);	/* Current input flag */
 extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern FILE*	R_Sinkfile	INI_as(NULL);	/* Sink file */
+extern int	R_OutputCon	INI_as(1);	/* Output connection */
+extern int	R_SinkCon	INI_as(1);	/* Sink connection */
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
@@ -495,6 +497,7 @@ extern char*	R_GUIType	INI_as("unknown");
 #define InheritsClass		Rf_InheritsClass
 #define InitArithmetic		Rf_InitArithmetic
 #define InitColors		Rf_InitColors
+#define InitConnections		Rf_InitConnections
 #define InitEd			Rf_InitEd
 #define InitFunctionHashing	Rf_InitFunctionHashing
 #define InitGlobalEnv		Rf_InitGlobalEnv
@@ -601,6 +604,7 @@ SEXP getVarInFrame(SEXP, SEXP);
 int hashpjw(char*);
 void InitArithmetic(void);
 void InitColors(void);
+void InitConnections(void);
 void InitEd(void);
 void InitFunctionHashing(void);
 void InitGlobalEnv(void);
@@ -637,6 +641,7 @@ void PrintGreeting(void);
 void PrintVersion(char *);
 void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
+void Rcons_vprintf(const char *, va_list);
 void RemoveClass(SEXP, char *);
 SEXP R_LoadFromFile(FILE*, int);
 extern int R_Newhashpjw(char*);

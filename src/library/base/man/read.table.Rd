@@ -42,7 +42,12 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     Each row of the table appears as one line of the file.  If it does
     not contain an \emph{absolute} path, the file name is
     \emph{relative} to the current working directory,
-    \code{\link{getwd}()}.}
+    \code{\link{getwd}()}.
+
+    Alternatively, \code{file} can be a \code{\link{connection}}, which
+    will be opened if necessary, and if so closed at the end of the
+    function call.
+  }
 
   \item{header}{a logical value indicating whether the file contains the
     names of the variables as its first line. If missing, the value is
@@ -122,3 +127,4 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{\link{data.frame}}.
 }
 \keyword{file}
+\keyword{connection}

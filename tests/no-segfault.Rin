@@ -18,7 +18,7 @@ names(stop.list) <- core.pkgs
 edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
               "edit.default", "vi",
               "emacs", "pico", "xemacs", "xedit")
-misc.int <- c("browser", "bug.report", "menu", "repeat")
+misc.int <- c("browser", "bug.report", "menu", "repeat", "readLines")
 stop.list[["base"]] <-
     if(nchar(Sys.getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
 	c(edit.int, misc.int)

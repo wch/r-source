@@ -53,6 +53,7 @@
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
+#include "Rconnections.h"
 #include "S.h"
 
 /* Global print parameter struct: */
@@ -77,31 +78,20 @@ void PrintDefaults(SEXP rho)
 
 SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    FILE *fp;
     SEXP file;
-    int append_;
+    int  append_, ifile;
+    Rconnection con;
 
     file = CAR(args);
     append_ = asLogical(CADR(args));
     if (append_ == NA_LOGICAL)
         errorcall(call, "invalid append specification");
 
-    if(isNull(file)) {
-	if(R_Sinkfile) fclose(R_Sinkfile);
-	R_Sinkfile = NULL;
-	R_Outputfile = R_Consolefile;
-    } else {
-	if (!isString(file) || length(file) != 1)
-	    errorcall(call, "invalid file name");
-	if (append_)
-	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "a");
-	else
-	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w");
-	if (!fp)
-	    errorcall(call, "unable to open file");
-	R_Sinkfile = fp;
-	R_Outputfile = fp;
-    }
+    ifile = asInteger(file);
+    con = getConnection(R_SinkCon);
+    switch_stdout(ifile); /* will open new connection if required */
+    if (R_SinkCon >= 3) con->destroy(con);
+    R_SinkCon = R_OutputCon = ifile;
     return R_NilValue;
 }
 

@@ -12,11 +12,14 @@ scan <-
         else
             stop("Either specify `nmax' or `n', but not both.")
     }
+    if(file == "") file <- stdin()
+    else if(is.character(file)) {
+        file <- file(file)
+        on.exit(close(file))
+    }
+    if(!inherits(file, "connection"))
+        stop("argument `file' must be a character string or connection")
     .Internal(scan(file, what, nmax, sep, dec, quote, skip, nlines,
                    na.strings, flush, fill, strip.white, quiet,
                    blank.lines.skip))
 }
-
-readLines <- function(file, n = -1, ok = TRUE)
-    .Internal(readLines(file, n, ok))
-

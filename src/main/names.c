@@ -585,7 +585,6 @@ FUNTAB R_FunTab[] =
 {"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
 {"object.size",	do_objectsize,	0,	11,	1,	PP_FUNCALL},
 {"mem.limits",	do_memlimits,	0,	11,	2,	PP_FUNCALL},
-{"readLines",	do_readLines,	0,	11,	3,	PP_FUNCALL},
 #if 0
 {"visibleflag", do_visibleflag,	0,	1,	0,	PP_FUNCALL},
 #endif
@@ -720,6 +719,24 @@ FUNTAB R_FunTab[] =
 {"as.POSIXlt",	do_asPOSIXlt,	0,	11,	2,	PP_FUNCALL},
 {"format.POSIXlt",do_formatPOSIXlt,0,	11,	2,	PP_FUNCALL},
 {"strptime",	do_strptime,	0,	11,	2,	PP_FUNCALL},
+
+/* Connections */
+{"stdin", 	do_stdin,	0,      11,     0,      PP_FUNCALL},
+{"stdout", 	do_stdout,	0,      11,     0,      PP_FUNCALL},
+{"stderr", 	do_stderr,	0,      11,     0,      PP_FUNCALL},
+{"readLines", 	do_readLines,	0,      11,     3,      PP_FUNCALL},
+{"writeLines", 	do_writelines,	0,      11,     3,      PP_FUNCALL},
+{"open", 	do_open,	0,      11,     3,      PP_FUNCALL},
+{"isOpen", 	do_isopen,	0,      11,     2,      PP_FUNCALL},
+{"isIncomplete",do_isincomplete,0,      11,     1,      PP_FUNCALL},
+{"close", 	do_close,	0,      11,     2,      PP_FUNCALL},
+{"file", 	do_file,	0,      11,     3,      PP_FUNCALL},
+{"seek", 	do_seek,	0,      11,     3,      PP_FUNCALL},
+{"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},
+{"pushBackLength",do_pushbacklength,0,  11,     1,      PP_FUNCALL},
+{"textConnection",do_textconnection,0,	11,     3,      PP_FUNCALL},
+{"getAllConnections",do_getallconnections,0,	11,     0,      PP_FUNCALL},
+{"summary.connection",do_sumconnection,0,	11,     1,      PP_FUNCALL},
 
 {NULL,		NULL,		0,	0,	0,	0},
 };

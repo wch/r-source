@@ -18,6 +18,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     unless it specifies an \emph{absolute} path.
     Tilde-expansion is performed where supported.}
 
+    Alternatively, \code{file} can be a \code{\link{connection}}, which
+    will be opened if necessary, and if so closed at the end of the
+    function call.
+  }
   \item{what}{the type of \code{what} gives the type of data to be
     read.  If \code{what} is a list, it is assumed that the lines of the
     data file are records each containing \code{length(what)} items
@@ -120,3 +124,4 @@ str(scan("ex.data", what = list("","",""), flush = TRUE))
 unlink("ex.data") # tidy up
 }
 \keyword{file}
+\keyword{connection}

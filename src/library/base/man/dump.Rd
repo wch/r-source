@@ -6,12 +6,16 @@ dump(list, file="dumpdata.R", append=FALSE)
 \alias{dump}
 \description{
   This function takes a vector of names of \R objects and produces
-  text representations of the objects in a file.
-  This file, can be \code{\link{source}}d into another \R (or S) session.
+  text representations of the objects on a file or connection.
+  A \code{dump} file can be \code{\link{source}}d into another
+  \R (or S) session.
 }
 \arguments{
   \item{list}{character. The names of one or more \R objects to be dumped.}
-  \item{file}{character. The file name for the dump.}
+
+  \item{file}{either a character string naming a file or a
+    connection. \code{""} indicates output to the console.}
+
   \item{append}{if \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
@@ -32,3 +36,4 @@ dump(ls(patt='^[xyz]'), "xyz.Rdmped")
 unlink("xyz.Rdmped")
 }
 \keyword{file}
+\keyword{connection}
