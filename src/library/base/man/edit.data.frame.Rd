@@ -24,11 +24,16 @@ edit.matrix(name, edit.row.names = any(rownames(name)), \dots)
   spreadsheet as either numeric vectors (which is more suitable for data
   entry) or character vectors (better for browsing). After editing,
   vectors are padded with \code{NA} to have the same length and
-  factor attributes are restored. The set of factor levels can not be
+  factor attributes are restored.  The set of factor levels can not be
   changed by editing in numeric mode; invalid levels are changed to
   \code{NA} and a warning is issued.  If new factor levels are
   introduced in character mode, they are added at the end of the list of
   levels in the order in which they encountered.
+
+  It is possible to use the data-editor's facilities to select the mode
+  of columns to swap between numerical and factor columns in a data
+  frame.  Changing any column in a numerical matrix to character will
+  cause the result to be coerced to a character matrix.
 }
 \value{
   The edited data frame.

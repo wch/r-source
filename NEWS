@@ -380,8 +380,11 @@ BUG FIXES
 
     o   plot.lm() has a better default for its `ask' argument.
 
+    o   Changing column modes from factor/character to numeric in
+	edit.data.frame (and fix on data frames) is now allowed.
 
     o	The `ask' argument of plot.new() can now be used... <<<<not yet>>
+
 
 
 	**************************************************
