@@ -6,8 +6,11 @@ code2LazyLoadDB <-
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
         stop(paste("There is no package called", sQuote(package)))
+    ## running code may need other packages in lib.loc but not on search path
+    if(!is.null(lib.loc)) .libPaths(lib.loc)
+    ## don't worry about tidying up as run in a short session
     barepackage <- sub("([^-]+)_.*", "\\1", package)
-    loadenv <-new.env(hash=TRUE)
+    loadenv <- new.env(hash=TRUE)
     codeFile <- file.path(pkgpath, "R", barepackage)
     dbbase <- file.path(pkgpath, "R", barepackage)
     if (packageHasNamespace(package, dirname(pkgpath))) {
