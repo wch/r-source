@@ -68,7 +68,7 @@ NEW FEATURES
 
      o  if() and while() give a warning if called with a vector condition.
 
-     o  ts() now allows arbitrary values for y in start/end = (x, y):
+     o  ts() now allows arbitrary values for y in start/end = c(x, y):
 	it always allowed y < 1 but objected to y > frequency.
 
      o  Add `difftime' methods for the group generics. (Thereby fixing
@@ -76,6 +76,8 @@ NEW FEATURES
 
      o  When assigning names to a vector, a value that is too short is
 	padded by character NAs. (Wishlist part of PR#2358)
+
+     o  The postscript() and PDF() drivers now allow the title to be set.
 
 
 INSTALLATION CHANGES
