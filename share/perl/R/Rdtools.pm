@@ -4,7 +4,7 @@ use Text::DelimMatch;
 use Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(get_section get_usages);
+@EXPORT = qw(get_section get_usages get_arglist);
 
 my $delimcurly = new Text::DelimMatch("\\{", "\\}");
 $delimcurly->escape("\\");
@@ -148,6 +148,43 @@ sub get_usages {
     }
 
     %usages;
+}
+
+sub get_arglist {
+
+    ## Get the list of all documented arguments, i.e., the first
+    ## arguments from the top-level \item{}{}s in section \arguments,
+    ## split on `,'.
+
+    my ($text) = @_;
+    my @args = ();
+    
+    my @keywords = get_section($text, "keyword");
+    foreach my $keyword (@keywords) {
+    	return ("*internal*") if($keyword =~ /^\{\s*internal\s*\}$/);
+    }
+	
+    my @chunks = get_section($text, "arguments");
+    foreach my $chunk (@chunks) {
+	my ($prefix, $match);
+	my $rest = substr($chunk, 1, -1);
+	while($rest) {
+	    ## Try matching top-level \item{}{}.
+	    ($prefix, $match, $rest) = $delimcurly->match($rest);
+	    if($prefix =~ /\\item$/) {
+		## If successful, $match contains the first argument to
+		## the \item enclosed by the braces.
+		$match =~ s/\\dots/.../g;
+		push(@args, split(/\,/, substr($match, 1, -1)));
+	    } else {
+		break;
+	    }
+	    ## Strip off the second argument to \item.
+	    ($prefix, $match, $rest) = $delimcurly->match($rest);
+	}
+    }
+
+    @args;
 }
 
 1;
