@@ -79,6 +79,7 @@ install: installdirs
 	@$(INSTALL_PROGRAM) bin/R.bin $(rhome)/bin
 	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
 	  > $(rhome)/bin/R
+	@rm -f $(bindir)/R
 	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
 	  > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
