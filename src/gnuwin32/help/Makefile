@@ -30,7 +30,9 @@ winhlp-%: chm-%
 
 # need not have HTML installed when building packages
 contents-%:
-	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIB)/$*/CONTENTS
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/Rd2contents.pl \
+	  --os=windows -o $(RLIB)/$*/CONTENTS $(PKGDIR)/$*
 	@$(MKDIR) -p $(RHOME)/doc/html/search
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
