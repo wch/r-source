@@ -69,7 +69,6 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
     .Deprecated("print.anova")
     print.anova(x, digits=digits, ...)
 }
-
 ## From glm.R :
 ## Not used anymore..
 ##- print.anova.glm <- function(x, digits = max(3, .Options$digits - 3),
@@ -81,3 +80,8 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 ##- }
 print.anova.glm <- .Alias(print.anova.lm)
 
+system.test <- function(...)
+{
+  .Deprecated("file.exists  etc")
+  system(paste("test", ...)) == 0
+}
