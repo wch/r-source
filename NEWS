@@ -47,6 +47,10 @@ BUG FIXES
 	These functions no longer add and subtract n zeros when there's no
 	offset.  They are now documented somewhat.
 
+    o   Some HTML files used src="R.css" instead of href="R.css"
+        causing some browsers to ignore the style sheet.
+
+
 
 		CHANGES IN R VERSION 1.1.0
 
