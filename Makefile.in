@@ -87,7 +87,7 @@ install-strip:
 uninstall:
 	@echo "Uninstalling library ..."
 	@(cd $(rhome)/library; \
-	  for p in base eda lqs modreg mva stepfun ts; do rm -rf $${p}; done)
+	  for p in $(R_PKGS); do rm -rf $${p}; done)
 	@echo "  Rebuilding help index ..."
 	@(cd $(rhome)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
