@@ -24,6 +24,10 @@ incorrectly documented).
 
 File src/nmath/dnt.c was not being built for the standalone Rmath library.
 
+Improved malloc routines from the current version of Doug Lea's malloc
+(contributed by David Teller) should enable large memory areas to be
+used more effectively.
+
 
 
 rw1080
