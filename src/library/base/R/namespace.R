@@ -453,7 +453,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
 }
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
-        regs <- getNamespaceInfo(ns, "dynlibs")
+        regs <- getNamespaceInfo(ns, "S3methods")
         regs <- c(regs, list(list(generic, class, method)))
         setNamespaceInfo(ns, "S3methods", regs)
     }
