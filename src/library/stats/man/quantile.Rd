@@ -123,16 +123,11 @@ quantile(x, \dots)
 quantile(x <- rnorm(1001))# Extremes & Quartiles by default
 quantile(x,  probs=c(.1,.5,1,2,5,10,50, NA)/100)
 
-### Compare different methods
+### Compare different types
 p <- c(0.1,0.5,1,2,5,10,50)/100
-quantile(x,  p, type=1)
-quantile(x,  p, type=2)
-quantile(x,  p, type=3)
-quantile(x,  p, type=4)
-quantile(x,  p, type=5)
-quantile(x,  p, type=6)
-quantile(x,  p, type=7)
-quantile(x,  p, type=8)
-quantile(x,  p, type=9)
+res <- matrix(as.numeric(NA), 9, 7)
+for(type in 1:9) res[type, ] <- y <- quantile(x,  p, type=type)
+dimnames(res) <- list(1:9, names(y))
+round(res, 3)
 }
 \keyword{univar}
