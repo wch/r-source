@@ -40,7 +40,7 @@ require "$R_HOME/etc/html-layout.pl";
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "format",
 	       "description", "details", "value", "references", "source",
-	       "seealso", "examples", "author", "note");
+	       "seealso", "examples", "author", "note", "synopsis");
 
 # These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
@@ -1590,13 +1590,13 @@ sub latex_code_cmd {
 	## $code = "\\verb@" . $code . "@";
 	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
 	$code =~ s/[$LATEX_SPECIAL]/\\$&/go;# escape them (not the "bsl" )
-	$code =~s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
+	$code =~ s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
 	$code =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
     }
     else {
 	$code =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
     }
-    $code = "\\texttt\{" . $code . "\}";
+    $code = "\\code\{" . $code . "\}";
     $code;
 }
 
