@@ -622,7 +622,7 @@ function(expr)
 
     oop <- options(warn = 1)
     on.exit(options(oop))
-    outConn <- file(open = "w")         # anonymous tempfile
+    outConn <- file(open = "w+")         # anonymous tempfile
     sink(outConn, type = "output")
     sink(outConn, type = "message")
     yy <- tryCatch(withRestarts(withCallingHandlers(expr, error = {
