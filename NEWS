@@ -473,6 +473,9 @@ DEPRECATED & DEFUNCT
     o	tetragamma() and pentagamma() are deprecated, since now
 	equivalent to psigamma(, deriv=2) and psigamma(, deriv=3).
 
+    o	LTRUE/LFALSE in Rmath.h have been removed: they were
+	deprecated in 1.2.0.
+
 
 INSTALLATION CHANGES
 
@@ -804,7 +807,8 @@ NEW FEATURES
 	specified, since no one wants fuzzy matching of categories.
 
     o	Function texi2dvi() in package tools can be used to compile
-	latex files from within R.
+	latex files from within R, provided the OS has a command
+	texi2dvi or texify.
 
     o	Objects with formal S4 classes saved in pre-1.8 versions and
 	loaded into the current version have incompatible class
