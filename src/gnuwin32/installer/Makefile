@@ -9,8 +9,8 @@ distclean: ISdistclean
 
 # section for JR software installer.
 
-RECOMMENDED=KernSmooth VR boot cluster foreign mgcv nlme rpart survival
-EXTRA=grid lattice
+RECOMMENDED=KernSmooth VR boot cluster foreign mgcv nlme rpart survival grid lattice
+EXTRA=
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
@@ -64,7 +64,7 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex \
 	  $(RPREFIX)/library/*/man
 	rm -rf $(RPREFIX)/library/rpart/Manuscript
-	rm -rf $(RPREFIX)/library/survival/doc $(RPREFIX)/library/survival/survival.ps.gz
+	rm -rf $(RPREFIX)/library/survival/doc $(RPREFIX)/library/survival/survival.ps.gz $(RPREFIX)/library/grid/doc $(RPREFIX)/library/grid/uguide*
 	perl JRsmall.pl $(RPREFIX)
 
 miniR.exe: Rsmall.iss
