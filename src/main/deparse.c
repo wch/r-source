@@ -87,6 +87,7 @@
 /* ----- MAX_Cutoff  <	BUFSIZE !! */
 
 static int cutoff = DEFAULT_Cutoff;
+extern int isValidName(char*);
 
 static char buff[BUFSIZE];
 static int linenumber;
@@ -354,7 +355,20 @@ static void deparse2buff(SEXP s)
 	print2buff("NULL");
 	break;
     case SYMSXP:
-	print2buff(CHAR(PRINTNAME(s)));
+	if( isValidName(CHAR(PRINTNAME(s))) )
+	    print2buff(CHAR(PRINTNAME(s)));
+        else {
+            if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
+                sprintf(tpb,"\"%s\"",CHAR(PRINTNAME(s)));
+                print2buff(tpb);
+            }
+            else {
+                sprintf(tpb,"\"");
+                strncat(tpb, CHAR(PRINTNAME(s)), 117);
+                strcat(tpb, "\"");
+                print2buff(tpb);
+            }
+        }
 	break;
     case CHARSXP:
 	print2buff(CHAR(s));
@@ -523,7 +537,13 @@ static void deparse2buff(SEXP s)
 		    break;
 		case PP_FUNCALL:
 		case PP_RETURN:
-		    print2buff(CHAR(PRINTNAME(op)));
+		    if (isValidName(CHAR(PRINTNAME(op))))
+		    	print2buff(CHAR(PRINTNAME(op)));
+		    else {
+			print2buff("\"");
+			print2buff(CHAR(PRINTNAME(op)));
+			print2buff("\"");
+		    }
 		    print2buff("(");
 		    inlist++;
 		    args2buff(s, 0, 0);
@@ -750,7 +770,13 @@ static void vec2buff(SEXP v)
 	linebreak(&lbreak);
 	if (!isNull(nv) && !isNull(STRING(nv)[i])
 	    && *CHAR(STRING(nv)[i])) {
-	    deparse2buff(STRING(nv)[i]);
+	    if( isValidName(CHAR(STRING(nv)[i])) )
+	        deparse2buff(STRING(nv)[i]);
+	    else {
+		print2buff("\"");
+		deparse2buff(STRING(nv)[i]);
+		print2buff("\"");
+	    }
 	    print2buff(" = ");
 	}
 	deparse2buff(VECTOR(v)[i]);
