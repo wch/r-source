@@ -466,8 +466,8 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	return 1;
     }
     else {
-        R_ReadlineData rl_data;
 #ifdef HAVE_LIBREADLINE
+        R_ReadlineData rl_data;
 	if (UsingReadline) {
 	    rl_data.readline_gotaline = 0;
 	    rl_data.readline_buf = buf;
