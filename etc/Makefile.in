@@ -13,7 +13,8 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
 	Makeconf.in Makefile.in \
-	colors.big colors.small Rd.files tasks test-things.Rd
+	colors.big colors.small Rd.files tasks test-things.Rd \
+	gnome-interface.glade
 SUBDIRS = Rdoc undoc
 
 all: Makefile Makeconf R
@@ -34,7 +35,8 @@ R:
 
 install: installdirs install-perl
 	@echo "Installing etc ..."
-	@$(INSTALL_DATA) Makeconf @EXPORTFILE@ $(rhome)/etc
+	@$(INSTALL_DATA) Makeconf @EXPORTFILE@ @GNOME_IF_FILES@ \
+	  $(rhome)/etc
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/etc
 install-perl:
@@ -47,7 +49,7 @@ uninstall:
 	@if test -d $(rhome)/etc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/etc && \
-	    rm -f *.pl Makeconf @EXPORTFILE@); \
+	    rm -f *.pl Makeconf @EXPORTFILE@ @GNOME_IF_FILES@); \
 	  rmdir $(rhome)/etc 2> /dev/null \
 	    || echo "  subdir etc not removed"; \
 	fi
@@ -55,7 +57,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f *.pl; \
+	  rm -f *.pl @GNOME_IF_FILES@; \
 	fi
 	@rm -f @EXPORTFILE@
 distclean: clean
