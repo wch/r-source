@@ -216,14 +216,6 @@ getOption(x)
       \code{\link{update.packages}}.  Defaults to
       \url{http://cran.r-project.org}.}
 
-    \item{\code{repositories}:}{A function that when evaluated returns a
-      named vector of URLs which can be used to specify the set and
-      order of any online repositories the user would like used in
-      functions such as \code{\link{pkgDepends}}.  The default
-      return value for the function is a vector with two components, one the
-      value of \code{contrib.url(getOption("CRAN"))} and the second
-      \code{contrib.url(getOption("BIOC"))}.}
-
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
       \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.

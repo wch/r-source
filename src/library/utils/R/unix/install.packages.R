@@ -1,8 +1,9 @@
 install.packages <- function(pkgs, lib, repos = CRAN,
-                             contriburl = contrib.url(repos),
+                             contriburl = contrib.url(repos, type),
                              CRAN = getOption("CRAN"),
                              method, available = NULL, destdir = NULL,
-                             installWithVers = FALSE, dependencies = FALSE)
+                             installWithVers = FALSE, dependencies = FALSE,
+                             type)
 {
     if(missing(pkgs) || !length(pkgs))
         stop("no packages were specified")
@@ -114,7 +115,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                               repos = CRAN,
                               contriburl = contrib.url(repos),
                               CRAN = getOption("CRAN"),
-                              method)
+                              method, type)
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
@@ -159,12 +160,12 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval
 }
 
-contrib.url <- function(repos, type=c("source", "mac.binary"))
+contrib.url <- function(repos, type = c("source", "mac.binary"))
 {
-  type <- match.arg(type)
-  switch(type,
-         source = paste(gsub("/$", "", repos), "/src/contrib", sep = ""),
-         mac.binary = paste(gsub("/$", "", repos), "/bin/macosx/",
-         version$major, ".", substr(version$minor, 1, 1), sep = "")
-         )
+    type <- if(missing(type)) "source" else match.arg(type)
+    switch(type,
+           source = paste(gsub("/$", "", repos), "/src/contrib", sep = ""),
+           mac.binary = paste(gsub("/$", "", repos), "/bin/macosx/",
+           version$major, ".", substr(version$minor, 1, 1), sep = "")
+           )
 }

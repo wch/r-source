@@ -9,12 +9,10 @@
 \description{
   Summarize information about installed packages and packages
   available at various repositories, and automatically upgrade outdated
-  packages. These tools will replace \code{\link{update.packages}} and friends
-  in the future and are currently work in progress.
+  packages.
 }
 \usage{
-packageStatus(lib.loc = NULL,
-              repositories = getOption("repositories")())
+packageStatus(lib.loc = NULL, repositories = NULL, method)
 
 \method{summary}{packageStatus}(object, \dots)
 
@@ -29,6 +27,7 @@ packageStatus(lib.loc = NULL,
     of \code{NULL} corresponds to all libraries currently known.}
   \item{repositories}{a character vector of URLs describing the location of \R
     package repositories on the Internet or on the local machine.}
+  \item{method}{Download method, see \code{\link{download.file}}.}
   \item{object}{an object of class \code{"packageStatus"} as returned by
     \code{packageStatus}.}
   \item{ask}{if \code{TRUE}, the user is prompted which packages should
@@ -36,6 +35,10 @@ packageStatus(lib.loc = NULL,
   \item{\dots}{currently not used.}
 }
 \details{
+  The URLs in \code{repositories} should be full paths to the
+  appropriate contrib sections of the repositories.  The default is
+  \code{contrib.url(c(CRAN = getOption("CRAN"), BIOC = getOption("BIOC")))}.
+  
   There are \code{print} and \code{summary} methods for the
   \code{"packageStatus"} objects: the \code{print} method gives a brief
   tabular summary and the \code{summary} method prints the results.
@@ -49,21 +52,19 @@ packageStatus(lib.loc = NULL,
   An object of class \code{"packageStatus"}.  This is a list with two
   components
 
-  \item{inst}{ a data frame with columns
-    \code{"Package"}, \code{"Version"}, \code{"Priority"},
-    \code{"Bundle"}, \code{"Depends"}, \code{"Built"}, \code{"Status"} and
-    \code{"LibPath"}.
+  \item{inst}{a data frame with columns as the \emph{matrix} returned by
+    \code{\link{installed.packages}} plus \code{"Status"}, a factor with
+    levels \code{c("ok", "upgrade")}.  Only the newest version of each
+    package is reported, in the first repository in which it appears.
   }
 
-  \item{avail}{a data frame  with columns
-    \code{"Package"}, \code{"Version"}, \code{"Priority"},
-    \code{"Bundle"}, \code{"Depends"}, \code{"Built"}, \code{"Status"} and
-    \code{"Repository"} (the URL of the directory from which they can be
-    fetched).
+  \item{avail}{a data frame with columns as the \emph{matrix} returned by
+    \code{\link{available.packages}} plus \code{"Status"}, a factor with
+    levels \code{c("installed", "not installed", "unavailable")}..
   }
-
-  These have similar content to the \emph{matrices} returned by
-  \code{\link{installed.packages}} and \code{\link{CRAN.packages}}.
+}
+\seealso{
+  \code{\link{installed.packages}}, \code{\link{available.packages}}
 }
 \examples{
 \dontrun{

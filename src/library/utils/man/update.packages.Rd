@@ -15,11 +15,11 @@
 }
 \usage{
 update.packages(lib.loc = NULL, repos = CRAN,
-                contriburl = contrib.url(repos),
+                contriburl = contrib.url(repos, type),
                 CRAN = getOption("CRAN"),
                 method, instlib = NULL,
                 ask = TRUE, available = NULL, destdir = NULL,
-		installWithVers = FALSE, checkBuilt = FALSE)
+		installWithVers = FALSE, checkBuilt = FALSE, type)
 
 available.packages(contriburl = contrib.url(getOption("CRAN")), method)
 
@@ -38,14 +38,14 @@ new.packages(lib.loc = NULL, repos = CRAN,
 
 download.packages(pkgs, destdir, available = NULL,
                   repos = CRAN,
-                  contriburl = contrib.url(repos),
-                  CRAN = getOption("CRAN"),method)
+                  contriburl = contrib.url(repos, type),
+                  CRAN = getOption("CRAN"), method, type)
 
 install.packages(pkgs, lib, repos = CRAN,
-                 contriburl = contrib.url(repos),
+                 contriburl = contrib.url(repos, type),
                  CRAN = getOption("CRAN"),
                  method, available = NULL, destdir = NULL,
-		 installWithVers = FALSE, dependencies = FALSE)
+		 installWithVers = FALSE, dependencies = FALSE, type)
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
@@ -91,6 +91,16 @@ install.packages(pkgs, lib, repos = CRAN,
     packages on which these packages depend/suggest/import
     (and so on recursively).  Not used if \code{repos = NULL}.
   }
+  \item{type}{character, indicating the type of package to download and
+    install.
+#ifdef unix
+    (Not currently used under Unix-alikes.)
+#endif
+#ifdef windows
+    Valid values are \code{"binary"} (the default) and \code{"source"},
+    for which suitable tools need to be installed: see the \sQuote{rw-FAQ}.
+#endif
+  }
 }
 \details{
   All of these functions work with the names of a package or bundle (and
@@ -101,7 +111,8 @@ install.packages(pkgs, lib, repos = CRAN,
   CRAN, the comprehensive R archive network.  The current list of
   packages is downloaded over the internet (or copied from a local CRAN
   mirror).  \code{available.packages} does the same for one or more
-  repositories with a similar structure.
+  repositories with a similar structure.  Both return only packages
+  whose version requirements are met by the running version of \R.
   
   \code{old.packages} compares the information from
   \code{available.packages} with that from
@@ -109,6 +120,11 @@ install.packages(pkgs, lib, repos = CRAN,
   packages/bundles that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example built under 2.0.x when running \R 2.1.1).
+#ifdef windows
+  (There is no check that the version on the repository was built under
+  the current minor version of \R, but it is advertised as being
+  suitable for this version.)
+#endif
 
   \code{new.packages} does the same comparison but reports uninstalled
   packages/bundles that are available at the repositories.  It will also

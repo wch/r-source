@@ -1,6 +1,14 @@
 available.packages <-
     function(contriburl = contrib.url(getOption("CRAN")), method)
 {
+    .checkRversion <- function(x) {
+        if(is.na(xx <- x["Depends"])) return(TRUE)
+        xx <- tools:::.split_dependencies(xx)
+        if(length(z <- xx[["R"]]) > 1)
+            eval(parse(text=paste("currentR", z$op, "z$version")))
+        else TRUE
+    }
+
     flds <- c("Package", "Version", "Priority", "Bundle",
               "Depends", "Imports", "Suggests", "Contains")
     res <- matrix(as.character(NA), 0, length(flds) + 1)
@@ -12,13 +20,32 @@ available.packages <-
         else{
             tmpf <- tempfile()
             on.exit(unlink(tmpf))
-            download.file(url = paste(repos, "PACKAGES", sep = "/"),
-                          destfile = tmpf, method = method, cacheOK = FALSE)
+            z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                                   destfile = tmpf, method = method,
+                                   cacheOK = FALSE, quiet = TRUE),
+                       silent = TRUE)
+            if(inherits(z, "try-error")) {
+                warning("Unable to access index for repository ", repos,
+                        call. = FALSE, immediate. = TRUE)
+                next
+            }
         }
         res0 <- read.dcf(file = tmpf, fields = flds)
         if(length(res0)) rownames(res0) <- res0[, "Package"]
         res0 <- cbind(res0, Repository = repos)
         res <- rbind(res, res0)
+    }
+    ## ignore packages which don't fit our version of R
+    if(length(res)) {
+        .checkRversion <- function(x) {
+            if(is.na(xx <- x["Depends"])) return(TRUE)
+            xx <- tools:::.split_dependencies(xx)
+            if(length(z <- xx[["R"]]) > 1)
+                eval(parse(text=paste("currentR", z$op, "z$version")))
+            else TRUE
+        }
+        currentR <- getRversion()
+        res <- res[apply(res, 1, .checkRversion), , drop=FALSE]
     }
     res
 }
@@ -29,21 +56,21 @@ CRAN.packages <- function(CRAN = getOption("CRAN"), method,
 
 
 ## unexported helper function
-simplifyRepos <- function(repos)
+simplifyRepos <- function(repos, type)
 {
-    tail <- substring(contrib.url("---"), 4)
+    tail <- substring(contrib.url("---", type), 4)
     ind <- regexpr(tail, repos, fixed=TRUE)
     ind <- ifelse(ind > 0, ind-1, nchar(repos))
     substr(repos, 1, ind)
 }
 
 update.packages <- function(lib.loc = NULL, repos = CRAN,
-                            contriburl = contrib.url(repos),
+                            contriburl = contrib.url(repos, type),
                             CRAN = getOption("CRAN"),
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
 			    installWithVers = FALSE,
-                            checkBuilt = FALSE)
+                            checkBuilt = FALSE, type)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -66,7 +93,7 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
                 if(checkBuilt) paste("built under R", old[k, "Built"]),
                 "\n",
                 "Version", old[k, "ReposVer"], "available at",
-                simplifyRepos(old[k, "Repository"]))
+                simplifyRepos(old[k, "Repository"], type))
             cat("\n")
             answer <- substr(readline("Update (y/N/c)?  "), 1, 1)
             if(answer == "c" | answer == "c") {
@@ -88,7 +115,7 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
                          contriburl = contriburl,
                          method = method,
                          available = available, destdir = destdir,
-                         installWithVers = installWithVers)
+                         installWithVers = installWithVers, type)
     }
 }
 
