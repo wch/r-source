@@ -32,6 +32,8 @@ C(object, contr, how.many, ...)
 \seealso{\code{\link{contrasts}}}
 
 \examples{
+## reset contrasts to defaults
+options(contrasts=c("contr.treatment", "contr.poly"))
 data(warpbreaks)
 attach(warpbreaks)
 tens <- C(tension, poly, 1)
