@@ -117,7 +117,8 @@ The information here applies only to recent versions of R for Windows,
 
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
-collect the files you need.  There are two versions of the distribution.
+collect the files you need.  There are two versions of the distribution
+of the current release.
 
 1) @code{@RWVER@.exe} is about 23Mb.  This contains all the components
 and allows as complete as installation as you choose.
@@ -130,7 +131,11 @@ files and the @emph{An Introduction to R} and @emph{Data Import/Export}
 manuals in PDF.  There is no support for @code{tcltk} in this version,
 and no documentation for packages @code{grid} or @code{survival}.
 
-
+There are also links on that page to the @code{r-patched} and 
+@code{r-devel} releases.  These are frequently updated builds of development
+versions of R.  The @code{r-patched} build includes bug fixes to the
+current release, and @code{r-devel} contains changes that will eventually
+make it into the next major @code{x.y.0} release.
 
 @node How do I install R for Windows?, Can I customize the installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
