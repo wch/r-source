@@ -57,6 +57,7 @@ afm/*l.afm
 	Copyright 1999 by (URW)++ Design & Development
 
 afm/CM_*.afm
+afm/cm*.afm
 
 	are derived from afms which are copyright by the American
 	Mathematical Society, but `the AMS does require that the
@@ -149,7 +150,7 @@ src/nmath/sunif.c
 src/nmath/stirlerr.c
 src/nmath/dbinom.c
 src/nmath/dpois.c
-  are now partly based on Clive Loader's (1999) work, and are
+  are now partly based on Clive Loader's (1999) work,
   (C) 1999-2000 Lucent Technologies, Bell Laboratories.
 
 src/modules/gnome/devGNOME.c
