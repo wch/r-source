@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-26 16:07+0000\n"
-"PO-Revision-Date: 2005-01-26 16:07+0000\n"
+"POT-Creation-Date: 2005-01-26 17:52+0000\n"
+"PO-Revision-Date: 2005-01-26 17:52+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -82,6 +82,679 @@ msgstr ".C(..): ‘type’ must be “integer” for  “d”-format"
 #: src/appl/strsignif.c:215
 msgid ".C(..): `type' must be \"real\" for this format"
 msgstr ".C(..): ‘type’ must be “real” for this format"
+
+#: src/main/CConverters.c:302
+msgid "no R-to-C converter found corresponding to identifier"
+msgstr "no R-to-C converter found corresponding to identifier"
+
+#: src/main/CommandLineArgs.c:167
+msgid "WARNING: no value given for --encoding given\n"
+msgstr "WARNING: no value given for --encoding given\n"
+
+#: src/main/CommandLineArgs.c:186
+#, c-format
+msgid "WARNING: option %s no longer supported\n"
+msgstr "WARNING: option %s no longer supported\n"
+
+#: src/main/CommandLineArgs.c:197
+#, c-format
+msgid "WARNING: no value given for %s\n"
+msgstr "WARNING: no value given for %s\n"
+
+#: src/main/CommandLineArgs.c:205
+#, c-format
+msgid "WARNING: %s value is invalid: ignored\n"
+msgstr "WARNING: %s value is invalid: ignored\n"
+
+#: src/main/CommandLineArgs.c:209
+#, c-format
+msgid "WARNING: %s=%lu`%c': too large and ignored\n"
+msgstr "WARNING: %s=%lu‘%c’: too large and ignored\n"
+
+#: src/main/CommandLineArgs.c:226
+msgid "WARNING: no value given for --max-ppsize given\n"
+msgstr "WARNING: no value given for --max-ppsize given\n"
+
+#: src/main/CommandLineArgs.c:231
+msgid "WARNING: -max-ppsize value is negative: ignored\n"
+msgstr "WARNING: -max-ppsize value is negative: ignored\n"
+
+#: src/main/CommandLineArgs.c:233
+msgid "WARNING: -max-ppsize value is too small: ignored\n"
+msgstr "WARNING: -max-ppsize value is too small: ignored\n"
+
+#: src/main/CommandLineArgs.c:236
+msgid "WARNING: -max-ppsize value is too large: ignored\n"
+msgstr "WARNING: -max-ppsize value is too large: ignored\n"
+
+#: src/main/CommandLineArgs.c:247
+msgid "WARNING: no vsize given\n"
+msgstr "WARNING: no vsize given\n"
+
+#: src/main/CommandLineArgs.c:253
+#, c-format
+msgid "WARNING: --vsize value is invalid: ignored\n"
+msgstr "WARNING: --vsize value is invalid: ignored\n"
+
+#: src/main/CommandLineArgs.c:255
+#, c-format
+msgid "WARNING: --vsize=%ld`%c': too large and ignored\n"
+msgstr "WARNING: --vsize=%ld‘%c’: too large and ignored\n"
+
+#: src/main/CommandLineArgs.c:270
+msgid "WARNING: no nsize given\n"
+msgstr "WARNING: no nsize given\n"
+
+#: src/main/CommandLineArgs.c:276
+#, c-format
+msgid "WARNING: --nsize value is invalid: ignored\n"
+msgstr "WARNING: --nsize value is invalid: ignored\n"
+
+#: src/main/CommandLineArgs.c:278
+#, c-format
+msgid "WARNING: --nsize=%lu`%c': too large and ignored\n"
+msgstr "WARNING: --nsize=%lu‘%c’: too large and ignored\n"
+
+#: src/main/RNG.c:139
+#, c-format
+msgid "unif_rand: unimplemented RNG kind %d"
+msgstr "unif_rand: unimplemented RNG kind %d"
+
+#: src/main/RNG.c:202
+#, c-format
+msgid "FixupSeeds: unimplemented RNG kind %d"
+msgstr "FixupSeeds: unimplemented RNG kind %d"
+
+#: src/main/RNG.c:236
+msgid "'user_unif_rand' not in load table"
+msgstr "‘user_unif_rand’ not in load table"
+
+#: src/main/RNG.c:244
+msgid "cannot read seeds unless 'user_unif_nseed' is supplied"
+msgstr "cannot read seeds unless ‘user_unif_nseed’ is supplied"
+
+#: src/main/RNG.c:249
+msgid "seed length must be in 0...625; ignored"
+msgstr "seed length must be in 0...625; ignored"
+
+#: src/main/RNG.c:257
+#, c-format
+msgid "RNG_Init: unimplemented RNG kind %d"
+msgstr "RNG_Init: unimplemented RNG kind %d"
+
+#: src/main/RNG.c:285
+msgid ".Random.seed is a missing argument with no default"
+msgstr ".Random.seed is a missing argument with no default"
+
+#: src/main/RNG.c:287
+msgid ".Random.seed is not a vector"
+msgstr ".Random.seed is not a vector"
+
+#: src/main/RNG.c:290
+msgid ".Random.seed[1] is not a valid integer"
+msgstr ".Random.seed[1] is not a valid integer"
+
+#: src/main/RNG.c:298
+msgid ".Random.seed[0] is not a valid Normal type"
+msgstr ".Random.seed[0] is not a valid Normal type"
+
+#: src/main/RNG.c:309
+msgid ".Random.seed[1] = 5 but no user-supplied generator"
+msgstr ".Random.seed[1] = 5 but no user-supplied generator"
+
+#: src/main/RNG.c:312
+msgid ".Random.seed[1] is NOT a valid RNG kind (code)"
+msgstr ".Random.seed[1] is NOT a valid RNG kind (code)"
+
+#: src/main/RNG.c:317
+msgid ".Random.seed has wrong length"
+msgstr ".Random.seed has wrong length"
+
+#: src/main/RNG.c:374
+#, c-format
+msgid "RNGkind: unimplemented RNG kind %d"
+msgstr "RNGkind: unimplemented RNG kind %d"
+
+#: src/main/RNG.c:386
+msgid "invalid Normal type in RNGkind"
+msgstr "invalid Normal type in RNGkind"
+
+#: src/main/RNG.c:389
+msgid "'user_norm_rand' not in load table"
+msgstr "‘user_norm_rand’ not in load table"
+
+#: src/main/RNG.c:431
+msgid "supplied seed is not a valid integer"
+msgstr "supplied seed is not a valid integer"
+
+#: src/main/Rdynload.c:236
+msgid "R_RegisterRoutines called with invalid DllInfo object."
+msgstr "R_RegisterRoutines called with invalid DllInfo object."
+
+#: src/main/Rdynload.c:496
+msgid "Maximal number of DLLs reached..."
+msgstr "Maximal number of DLLs reached..."
+
+#: src/main/Rdynload.c:548
+msgid "Couldn't allocate space for 'path'"
+msgstr "Couldn't allocate space for ‘path’"
+
+#: src/main/Rdynload.c:561
+#, c-format
+msgid "DLLname %s is too long"
+msgstr "DLLname %s is too long"
+
+#: src/main/Rdynload.c:582
+msgid "Couldn't allocate space for 'name'"
+msgstr "Couldn't allocate space for ‘name’"
+
+#: src/main/Rdynload.c:842 src/main/Rdynload.c:858
+msgid "character argument expected"
+msgstr "character argument expected"
+
+#: src/main/Rdynload.c:847 src/main/Rdynload.c:876
+#, c-format
+msgid ""
+"unable to load shared library \"%s\":\n"
+"  %s"
+msgstr ""
+"unable to load shared library “%s”:\n"
+"  %s"
+
+#: src/main/Rdynload.c:861
+#, c-format
+msgid "dynamic/shared library \"%s\" was not loaded"
+msgstr "dynamic/shared library “%s” was not loaded"
+
+#: src/main/Rdynload.c:1007
+msgid "must pass package name or DllInfo reference"
+msgstr "must pass package name or DllInfo reference"
+
+#: src/main/Rdynload.c:1088
+#, c-format
+msgid "Unimplemented type %d in createRSymbolObject"
+msgstr "Unimplemented type %d in createRSymbolObject"
+
+#: src/main/Rdynload.c:1167
+msgid "R_getRegisteredRoutines() expects a DllInfo reference"
+msgstr "R_getRegisteredRoutines() expects a DllInfo reference"
+
+#: src/main/Rdynload.c:1172
+msgid "NULL value passed for DllInfo"
+msgstr "NULL value passed for DllInfo"
+
+#: src/main/Rdynload.c:1209 src/main/Rdynload.c:1215 src/main/Rdynload.c:1222
+#: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
+msgid "no dyn.load support in this R version"
+msgstr "no dyn.load support in this R version"
+
+#: src/main/arithmetic.c:182
+msgid "probable complete loss of accuracy in modulus"
+msgstr "probable complete loss of accuracy in modulus"
+
+#: src/main/arithmetic.c:291
+msgid "operator needs one or two arguments"
+msgstr "operator needs one or two arguments"
+
+#: src/main/arithmetic.c:308
+msgid "non-numeric argument to binary operator"
+msgstr "non-numeric argument to binary operator"
+
+#: src/main/arithmetic.c:366
+msgid "non-conformable arrays"
+msgstr "non-conformable arrays"
+
+#: src/main/arithmetic.c:409
+msgid "Non-conformable time-series"
+msgstr "Non-conformable time-series"
+
+#: src/main/arithmetic.c:431
+msgid ""
+"longer object length\n"
+"\tis not a multiple of shorter object length"
+msgstr ""
+"longer object length\n"
+"\tis not a multiple of shorter object length"
+
+#: src/main/arithmetic.c:495
+msgid "Invalid argument to unary operator"
+msgstr "Invalid argument to unary operator"
+
+#: src/main/arithmetic.c:519 src/main/arithmetic.c:538
+msgid "illegal unary operator"
+msgstr "illegal unary operator"
+
+#: src/main/arithmetic.c:585
+msgid "NAs produced by integer overflow"
+msgstr "NAs produced by integer overflow"
+
+#: src/main/arithmetic.c:902
+msgid "unimplemented real function (of 1 arg.)"
+msgstr "unimplemented real function (of 1 arg.)"
+
+#: src/main/arithmetic.c:1091
+msgid "unimplemented real function of 2 numeric args"
+msgstr "unimplemented real function of 2 numeric args"
+
+#: src/main/arithmetic.c:1116
+#, c-format
+msgid "%d arguments passed to \"atan\" which requires 1 or 2"
+msgstr "%d arguments passed to “atan” which requires 1 or 2"
+
+#: src/main/arithmetic.c:1131 src/main/arithmetic.c:1150
+msgid "illegal 2nd arg of length 0"
+msgstr "illegal 2nd arg of length 0"
+
+#: src/main/arithmetic.c:1156
+#, c-format
+msgid "%d arguments passed to \"log\" which requires 1 or 2"
+msgstr "%d arguments passed to “log” which requires 1 or 2"
+
+#: src/main/arithmetic.c:1368
+msgid "unimplemented real function of 3 numeric args"
+msgstr "unimplemented real function of 3 numeric args"
+
+#: src/main/arithmetic.c:1561
+msgid "unimplemented real function of 4 numeric args"
+msgstr "unimplemented real function of 4 numeric args"
+
+#: src/main/arithmetic.c:1689
+msgid "unimplemented real function of 5 numeric args"
+msgstr "unimplemented real function of 5 numeric args"
+
+#: src/main/array.c:71
+msgid "matrix: invalid byrow value"
+msgstr "matrix: invalid byrow value"
+
+#: src/main/array.c:81
+msgid "non-numeric matrix extent"
+msgstr "non-numeric matrix extent"
+
+#: src/main/array.c:86
+msgid "matrix: invalid nrow value (too large or NA)"
+msgstr "matrix: invalid nrow value (too large or NA)"
+
+#: src/main/array.c:88
+msgid "matrix: invalid nrow value (< 0)"
+msgstr "matrix: invalid nrow value (< 0)"
+
+#: src/main/array.c:91 src/main/array.c:95
+msgid "matrix: invalid ncol value (< 0)"
+msgstr "matrix: invalid ncol value (< 0)"
+
+#: src/main/array.c:93
+msgid "matrix: invalid ncol value (too large or NA)"
+msgstr "matrix: invalid ncol value (too large or NA)"
+
+#: src/main/array.c:101
+#, c-format
+msgid ""
+"data length [%d] is not a sub-multiple or multiple of the number of rows [%"
+"d] in matrix"
+msgstr ""
+"data length [%d] is not a sub-multiple or multiple of the number of rows [%"
+"d] in matrix"
+
+#: src/main/array.c:104
+#, c-format
+msgid ""
+"data length [%d] is not a sub-multiple or multiple of the number of columns "
+"[%d] in matrix"
+msgstr ""
+"data length [%d] is not a sub-multiple or multiple of the number of columns "
+"[%d] in matrix"
+
+#: src/main/array.c:107
+msgid "data length exceeds size of matrix"
+msgstr "data length exceeds size of matrix"
+
+#: src/main/array.c:112
+msgid "matrix: too many elements specified"
+msgstr "matrix: too many elements specified"
+
+#: src/main/array.c:174
+msgid "negative extents to matrix"
+msgstr "negative extents to matrix"
+
+#: src/main/array.c:176
+msgid "allocMatrix: too many elements specified"
+msgstr "allocMatrix: too many elements specified"
+
+#: src/main/array.c:198
+msgid "allocArray: too many elements specified by dims"
+msgstr "allocArray: too many elements specified by dims"
+
+#: src/main/array.c:343
+msgid "incorrect number of args to length"
+msgstr "incorrect number of args to length"
+
+#: src/main/array.c:362
+msgid "incorrect number of args to row/col"
+msgstr "incorrect number of args to row/col"
+
+#: src/main/array.c:364
+msgid "a matrix is required as arg to row/col"
+msgstr "a matrix is required as arg to row/col"
+
+#: src/main/array.c:535
+msgid "requires numeric matrix/vector arguments"
+msgstr "requires numeric matrix/vector arguments"
+
+#: src/main/array.c:608 src/main/array.c:612
+msgid "non-conformable arguments"
+msgstr "non-conformable arguments"
+
+#: src/main/array.c:834
+msgid "argument is not a matrix"
+msgstr "argument is not a matrix"
+
+#: src/main/array.c:872
+msgid "invalid first argument, must be an array"
+msgstr "invalid first argument, must be an array"
+
+#: src/main/array.c:889
+msgid "'perm' is of wrong length"
+msgstr "‘perm’ is of wrong length"
+
+#: src/main/array.c:897
+msgid "value out of range in 'perm'"
+msgstr "value out of range in ‘perm’"
+
+#: src/main/array.c:900
+msgid "invalid permutation ('perm')"
+msgstr "invalid permutation ('perm')"
+
+#: src/main/array.c:1028
+msgid "invalid value of n"
+msgstr "invalid value of n"
+
+#: src/main/array.c:1030
+msgid "invalid value of p"
+msgstr "invalid value of p"
+
+#: src/main/array.c:1031
+msgid "invalid value of na.rm"
+msgstr "invalid value of na.rm"
+
+#: src/main/array.c:1040
+msgid "'x' must be numeric"
+msgstr "‘x’ must be numeric"
+
+#: src/main/attrib.c:89
+msgid "getAttrib: invalid type for TAG"
+msgstr "getAttrib: invalid type for TAG"
+
+#: src/main/attrib.c:129 src/main/attrib.c:218
+msgid "attempt to set an attribute on NULL"
+msgstr "attempt to set an attribute on NULL"
+
+#: src/main/attrib.c:264
+msgid "invalid type for 'names': must be vector"
+msgstr "invalid type for 'names': must be vector"
+
+#: src/main/attrib.c:266
+#, c-format
+msgid "names attribute [%d] must be the same length as the vector [%d]"
+msgstr "names attribute [%d] must be the same length as the vector [%d]"
+
+#: src/main/attrib.c:268
+msgid "names() applied to a non-vector"
+msgstr "names() applied to a non-vector"
+
+#: src/main/attrib.c:276
+msgid "invalid time series parameters specified"
+msgstr "invalid time series parameters specified"
+
+#: src/main/attrib.c:285
+msgid "tsp attribute must be numeric of length three"
+msgstr "tsp attribute must be numeric of length three"
+
+#: src/main/attrib.c:302
+msgid "cannot assign 'tsp' to zero-length vector"
+msgstr "cannot assign ‘tsp’ to zero-length vector"
+
+#: src/main/attrib.c:330
+msgid "attempt to set invalid comment attribute"
+msgstr "attempt to set invalid comment attribute"
+
+#: src/main/attrib.c:366
+msgid "attempt to set invalid class attribute"
+msgstr "attempt to set invalid class attribute"
+
+#: src/main/attrib.c:568
+msgid "incompatible names argument"
+msgstr "incompatible names argument"
+
+#: src/main/attrib.c:620
+msgid "invalid type to set names attribute"
+msgstr "invalid type to set names attribute"
+
+#: src/main/attrib.c:686
+msgid "dimnames applied to non-array"
+msgstr "dimnames applied to non-array"
+
+#: src/main/attrib.c:690
+msgid "dimnames must be a list"
+msgstr "dimnames must be a list"
+
+#: src/main/attrib.c:693
+#, c-format
+msgid "length of dimnames [%d] must match that of dims [%d]"
+msgstr "length of dimnames [%d] must match that of dims [%d]"
+
+#: src/main/attrib.c:710
+msgid "invalid type for dimname (must be a vector)"
+msgstr "invalid type for dimname (must be a vector)"
+
+#: src/main/attrib.c:712
+#, c-format
+msgid "length of dimnames [%d] not equal to array extent"
+msgstr "length of dimnames [%d] not equal to array extent"
+
+#: src/main/attrib.c:772
+msgid "dim<- : invalid first argument"
+msgstr "dim<- : invalid first argument"
+
+#: src/main/attrib.c:775
+msgid "dim<- : invalid second argument"
+msgstr "dim<- : invalid second argument"
+
+#: src/main/attrib.c:783
+msgid "dim: Length-0 dimension vector is invalid"
+msgstr "dim: Length-0 dimension vector is invalid"
+
+#: src/main/attrib.c:788
+#, c-format
+msgid "dim<- : dims [product %d] do not match the length of object [%d]"
+msgstr "dim<- : dims [product %d] do not match the length of object [%d]"
+
+#: src/main/attrib.c:865
+msgid "attributes must be in a list"
+msgstr "attributes must be in a list"
+
+#: src/main/attrib.c:889
+msgid "attributes must be named"
+msgstr "attributes must be named"
+
+#: src/main/attrib.c:893
+#, c-format
+msgid "all attributes must have names [%d does not]"
+msgstr "all attributes must have names [%d does not]"
+
+#: src/main/attrib.c:936
+msgid "attribute name must be of mode character"
+msgstr "attribute name must be of mode character"
+
+#: src/main/attrib.c:938
+msgid "exactly one attribute name must be given"
+msgstr "exactly one attribute name must be given"
+
+#: src/main/attrib.c:1006
+msgid "name must be non-null character"
+msgstr "name must be non-null character"
+
+#: src/main/attrib.c:1112 src/main/attrib.c:1151 src/main/attrib.c:1236
+msgid "invalid type or length for slot name"
+msgstr "invalid type or length for slot name"
+
+#: src/main/attrib.c:1126
+#, c-format
+msgid "Cannot get a slot (\"%s\") from an object of type \"%s\""
+msgstr "Cannot get a slot (“%s”) from an object of type “%s”"
+
+#: src/main/attrib.c:1134
+#, c-format
+msgid "No slot of name \"%s\" for this object of class \"%s\""
+msgstr "No slot of name “%s” for this object of class “%s”"
+
+#: src/main/attrib.c:1231
+msgid "formal classes cannot be used without the methods package"
+msgstr "formal classes cannot be used without the methods package"
+
+#: src/main/attrib.c:1255
+#, c-format
+msgid ""
+"Trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
+msgstr ""
+"Trying to get slot “%s” from an object whose class (“%s”) is not defined "
+
+#: src/main/attrib.c:1259
+#, c-format
+msgid ""
+"Trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
+"slots"
+msgstr ""
+"Trying to get slot “%s” from an object of a basic class (“%s”) with no slots"
+
+#: src/main/attrib.c:1262
+#, c-format
+msgid ""
+"Trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
+"\", ...) (not a formally defined class)"
+msgstr ""
+"Trying to get slot “%s” from an object with S3 class c(“%s”, “%s”, ...) (not "
+"a formally defined class)"
+
+#: src/main/attrib.c:1280
+msgid "invalid slot type"
+msgstr "invalid slot type"
+
+#: src/main/base.c:165
+msgid "Event UpdatePS requires a single numeric value"
+msgstr "Event UpdatePS requires a single numeric value"
+
+#: src/main/bind.c:553
+msgid "repeated formal argument 'recursive'"
+msgstr "repeated formal argument ‘recursive’"
+
+#: src/main/bind.c:564
+msgid "repeated formal argument 'use.names'"
+msgstr "repeated formal argument ‘use.names’"
+
+#: src/main/bind.c:775
+msgid "argument not a list"
+msgstr "argument not a list"
+
+#: src/main/bind.c:873
+#, c-format
+msgid "class name too long in %s"
+msgstr "class name too long in %s"
+
+#: src/main/bind.c:999
+msgid "cannot create a matrix from these types"
+msgstr "cannot create a matrix from these types"
+
+#: src/main/bind.c:1075
+#, c-format
+msgid "number of rows of matrices must match (see arg %d)"
+msgstr "number of rows of matrices must match (see arg %d)"
+
+#: src/main/bind.c:1287
+#, c-format
+msgid "number of columns of matrices must match (see arg %d)"
+msgstr "number of columns of matrices must match (see arg %d)"
+
+#: src/main/builtin.c:62
+msgid "invalid add argument"
+msgstr "invalid add argument"
+
+#: src/main/builtin.c:66
+msgid "invalid number of arguments"
+msgstr "invalid number of arguments"
+
+#: src/main/builtin.c:160
+msgid "replacement object is not an environment"
+msgstr "replacement object is not an environment"
+
+#: src/main/builtin.c:175
+msgid "enclos needs to be an environment"
+msgstr "enclos needs to be an environment"
+
+#: src/main/builtin.c:188 src/main/builtin.c:198
+msgid "argument is not an environment"
+msgstr "argument is not an environment"
+
+#: src/main/builtin.c:200
+msgid "parent is not an environment"
+msgstr "parent is not an environment"
+
+#: src/main/builtin.c:281
+msgid "invalid sep= specification"
+msgstr "invalid sep= specification"
+
+#: src/main/builtin.c:289
+msgid "invalid 'fill' argument"
+msgstr "invalid ‘fill’ argument"
+
+#: src/main/builtin.c:301
+msgid "invalid 'label' argument"
+msgstr "invalid ‘label’ argument"
+
+#: src/main/builtin.c:307
+msgid "invalid 'append' specification"
+msgstr "invalid ‘append’ specification"
+
+#: src/main/builtin.c:363
+#, c-format
+msgid "argument %d not yet handled by cat"
+msgstr "argument %d not yet handled by cat"
+
+#: src/main/builtin.c:475
+msgid "vector: zero-length type argument"
+msgstr "vector: zero-length type argument"
+
+#: src/main/builtin.c:494
+#, c-format
+msgid "vector: cannot make a vector of mode \"%s\"."
+msgstr "vector: cannot make a vector of mode “%s”."
+
+#: src/main/builtin.c:524
+msgid "can not set length of non-vector"
+msgstr "can not set length of non-vector"
+
+#: src/main/builtin.c:621
+msgid "length<- invalid first argument"
+msgstr "length<- invalid first argument"
+
+#: src/main/builtin.c:623
+msgid "length<- invalid second argument"
+msgstr "length<- invalid second argument"
+
+#: src/main/builtin.c:626
+msgid "length<- missing value for length"
+msgstr "length<- missing value for length"
+
+#: src/main/builtin.c:652 src/main/coerce.c:1922 src/main/coerce.c:1953
+msgid "... used in an incorrect context"
+msgstr "... used in an incorrect context"
+
+#: src/main/builtin.c:657
+msgid "invalid parameter in switch"
+msgstr "invalid parameter in switch"
+
+#: src/main/builtin.c:668
+msgid "switch: EXPR must return a length 1 vector"
+msgstr "switch: EXPR must return a length 1 vector"
 
 #: src/main/character.c:115
 msgid "nchar() requires a character vector"
@@ -281,6 +954,200 @@ msgstr "strtrim() requires a character vector"
 #: src/main/character.c:1951 src/main/character.c:1955
 msgid "invalid 'width' argument"
 msgstr "invalid ‘width’ argument"
+
+#: src/main/coerce.c:88
+msgid "NAs introduced by coercion"
+msgstr "NAs introduced by coercion"
+
+#: src/main/coerce.c:90
+msgid "inaccurate integer conversion in coercion"
+msgstr "inaccurate integer conversion in coercion"
+
+#: src/main/coerce.c:92
+msgid "imaginary parts discarded in coercion"
+msgstr "imaginary parts discarded in coercion"
+
+#: src/main/coerce.c:94
+msgid "out-of-range values treated as 0 in coercion to raw"
+msgstr "out-of-range values treated as 0 in coercion to raw"
+
+#: src/main/coerce.c:405
+#, c-format
+msgid "Invalid data of mode \"%s\" (too short)"
+msgstr "Invalid data of mode “%s” (too short)"
+
+#: src/main/coerce.c:883
+#, c-format
+msgid "pairlist object cannot be coerced to %s"
+msgstr "pairlist object cannot be coerced to %s"
+
+#: src/main/coerce.c:969
+#, c-format
+msgid "(list) object cannot be coerced to %s"
+msgstr "(list) object cannot be coerced to %s"
+
+#: src/main/coerce.c:1051
+msgid "environments cannot be coerced to other types"
+msgstr "environments cannot be coerced to other types"
+
+#: src/main/coerce.c:1061
+#, c-format
+msgid "cannot coerce type %s to %s vector"
+msgstr "cannot coerce type %s to %s vector"
+
+#: src/main/coerce.c:1181
+msgid "cannot coerce to vector"
+msgstr "cannot coerce to vector"
+
+#: src/main/coerce.c:1272
+msgid "list argument expected"
+msgstr "list argument expected"
+
+#: src/main/coerce.c:1276
+msgid "invalid environment"
+msgstr "invalid environment"
+
+#: src/main/coerce.c:1280
+msgid "argument must have length at least 1"
+msgstr "argument must have length at least 1"
+
+#: src/main/coerce.c:1311
+msgid "illegal length 0 argument"
+msgstr "illegal length 0 argument"
+
+#: src/main/coerce.c:1326
+msgid "invalid argument list"
+msgstr "invalid argument list"
+
+#: src/main/coerce.c:1470
+msgid "type \"single\" unimplemented in R"
+msgstr "type “single” unimplemented in R"
+
+#: src/main/coerce.c:1472
+msgid "unimplemented predicate"
+msgstr "unimplemented predicate"
+
+#: src/main/coerce.c:1891
+msgid "do.call: couldn't find parent environment"
+msgstr "do.call: couldn't find parent environment"
+
+#: src/main/coerce.c:1991
+msgid "invalid environment specified"
+msgstr "invalid environment specified"
+
+#: src/main/coerce.c:2069
+msgid "Invalid replacement object to be a class string"
+msgstr "Invalid replacement object to be a class string"
+
+#: src/main/coerce.c:2087
+#, c-format
+msgid ""
+"\"%s\" can only be set as the class if the object has this type; found \"%s\""
+msgstr ""
+"“%s” can only be set as the class if the object has this type; found “%s”"
+
+#: src/main/coerce.c:2103
+#, c-format
+msgid ""
+"Invalid to set the class to matrix unless the dimension attribute is of "
+"length 2 (was %d)"
+msgstr ""
+"Invalid to set the class to matrix unless the dimension attribute is of "
+"length 2 (was %d)"
+
+#: src/main/coerce.c:2109
+msgid ""
+"Can't set class to \"array\" unless the dimension attribute has length > 0"
+msgstr ""
+"Can't set class to “array” unless the dimension attribute has length > 0"
+
+#: src/main/colors.c:40
+#, c-format
+msgid "color intensity %g, not in [0,1]"
+msgstr "color intensity %g, not in [0,1]"
+
+#: src/main/colors.c:47
+#, c-format
+msgid "color intensity %d, not in 0:255"
+msgstr "color intensity %d, not in 0:255"
+
+#: src/main/colors.c:54
+#, c-format
+msgid "alpha level %g, not in [0,1]"
+msgstr "alpha level %g, not in [0,1]"
+
+#: src/main/colors.c:61
+#, c-format
+msgid "alpha level %d, not in 0:255"
+msgstr "alpha level %d, not in 0:255"
+
+#: src/main/colors.c:84
+msgid "invalid argument type"
+msgstr "invalid argument type"
+
+#: src/main/colors.c:88
+msgid "unknown palette (need >= 2 colors)"
+msgstr "unknown palette (need >= 2 colors)"
+
+#: src/main/colors.c:92
+msgid "maximum number of colors exceeded"
+msgstr "maximum number of colors exceeded"
+
+#: src/main/colors.c:159
+msgid "invalid HSV color"
+msgstr "invalid HSV color"
+
+#: src/main/colors.c:271
+msgid "invalid hcl color"
+msgstr "invalid hcl color"
+
+#: src/main/colors.c:322
+msgid "invalid names vector"
+msgstr "invalid names vector"
+
+#: src/main/colors.c:367
+msgid "invalid gray level, must be in [0,1]."
+msgstr "invalid gray level, must be in [0,1]."
+
+#: src/main/colors.c:420
+msgid "rgb is not a matrix (internally)"
+msgstr "rgb is not a matrix (internally)"
+
+#: src/main/colors.c:423
+msgid "rgb must have 3 rows (internally)"
+msgstr "rgb must have 3 rows (internally)"
+
+#: src/main/complex.c:55
+msgid "illegal complex unary operator"
+msgstr "illegal complex unary operator"
+
+#: src/main/complex.c:171
+msgid "unimplemented complex operation"
+msgstr "unimplemented complex operation"
+
+#: src/main/complex.c:265
+msgid "non-numeric argument to function"
+msgstr "non-numeric argument to function"
+
+#: src/main/complex.c:518 src/main/complex.c:590
+msgid "unimplemented complex function"
+msgstr "unimplemented complex function"
+
+#: src/main/complex.c:601
+msgid "invalid length"
+msgstr "invalid length"
+
+#: src/main/complex.c:655
+msgid "polynomial degree too high (49 max)"
+msgstr "polynomial degree too high (49 max)"
+
+#: src/main/complex.c:668
+msgid "invalid polynomial coefficient"
+msgstr "invalid polynomial coefficient"
+
+#: src/main/complex.c:673
+msgid "root finding code failed"
+msgstr "root finding code failed"
 
 #: src/main/connections.c:80
 msgid "All connections are in use"
@@ -643,14 +1510,15 @@ msgid "invalid value for 'ok'"
 msgstr "invalid value for ‘ok’"
 
 #: src/main/connections.c:2326 src/main/connections.c:2503
-#: src/main/connections.c:2904
+#: src/main/connections.c:2904 src/main/dcf.c:56
 msgid "cannot read from this connection"
 msgstr "cannot read from this connection"
 
 #: src/main/connections.c:2329 src/main/connections.c:2422
 #: src/main/connections.c:2507 src/main/connections.c:2696
 #: src/main/connections.c:2911 src/main/connections.c:2983
-#: src/main/connections.c:3145
+#: src/main/connections.c:3145 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/deparse.c:381
 msgid "cannot open the connection"
 msgstr "cannot open the connection"
 
@@ -875,6 +1743,161 @@ msgstr "bad write indicators"
 msgid "not a socket connection"
 msgstr "not a socket connection"
 
+#: src/main/context.c:122
+msgid ""
+"bad target context--should NEVER happen;\n"
+"please bug.report() [R_run_onexits]"
+msgstr ""
+"bad target context--should NEVER happen;\n"
+"please bug.report() [R_run_onexits]"
+
+#: src/main/context.c:268
+msgid "No loop to break from, jumping to top level"
+msgstr "No loop to break from, jumping to top level"
+
+#: src/main/context.c:276 src/main/errors.c:873
+msgid "No function to return from, jumping to top level"
+msgstr "No function to return from, jumping to top level"
+
+#: src/main/context.c:288
+msgid "Target context is not on the stack"
+msgstr "Target context is not on the stack"
+
+#: src/main/context.c:310
+msgid "not that many enclosing environments"
+msgstr "not that many enclosing environments"
+
+#: src/main/context.c:325
+msgid "sys.frame: not that many enclosing functions"
+msgstr "sys.frame: not that many enclosing functions"
+
+#: src/main/context.c:342
+msgid "only positive arguments are allowed"
+msgstr "only positive arguments are allowed"
+
+#: src/main/context.c:389 src/main/context.c:412
+msgid "illegal frame number"
+msgstr "illegal frame number"
+
+#: src/main/context.c:401 src/main/context.c:424
+msgid "not that many enclosing functions"
+msgstr "not that many enclosing functions"
+
+#: src/main/context.c:450
+msgid "no function to restart"
+msgstr "no function to restart"
+
+#: src/main/context.c:483 src/main/context.c:549
+msgid "invalid number of environment levels"
+msgstr "invalid number of environment levels"
+
+#: src/main/context.c:533
+msgid "internal error in do_sys"
+msgstr "internal error in do_sys"
+
+#: src/main/cov.c:330
+msgid "missing observations in cov/cor"
+msgstr "missing observations in cov/cor"
+
+#: src/main/cov.c:378
+msgid "'x' is empty"
+msgstr "‘x’ is empty"
+
+#: src/main/cov.c:398 src/main/cov.c:404
+msgid "incompatible dimensions"
+msgstr "incompatible dimensions"
+
+#: src/main/cov.c:429
+msgid "invalid 'use' (computational method)"
+msgstr "invalid ‘use’ (computational method)"
+
+#: src/main/cov.c:489
+msgid "The standard deviation is zero"
+msgstr "The standard deviation is zero"
+
+#: src/main/cum.c:140
+msgid "min/max not defined for complex numbers"
+msgstr "min/max not defined for complex numbers"
+
+#: src/main/cum.c:143
+msgid "unknown cumxxx function"
+msgstr "unknown cumxxx function"
+
+#: src/main/cum.c:167
+msgid "Unknown cumxxxx function"
+msgstr "Unknown cumxxxx function"
+
+#: src/main/datetime.c:391
+msgid "cannot set timezones on this system"
+msgstr "cannot set timezones on this system"
+
+#: src/main/datetime.c:458 src/main/datetime.c:518
+msgid "invalid 'tz' value"
+msgstr "invalid ‘tz’ value"
+
+#: src/main/datetime.c:516 src/main/datetime.c:575 src/main/datetime.c:684
+#: src/main/datetime.c:799
+msgid "invalid 'x' argument"
+msgstr "invalid ‘x’ argument"
+
+#: src/main/datetime.c:530 src/main/datetime.c:532 src/main/datetime.c:807
+#: src/main/datetime.c:809
+msgid "zero length component in non-empty POSIXlt structure"
+msgstr "zero length component in non-empty POSIXlt structure"
+
+#: src/main/datetime.c:577 src/main/datetime.c:686
+msgid "invalid 'format' argument"
+msgstr "invalid ‘format’ argument"
+
+#: src/main/datetime.c:581
+msgid "invalid 'usetz' argument"
+msgstr "invalid ‘usetz’ argument"
+
+#: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
+msgid "Could not allocate memory for read.dcf"
+msgstr "Could not allocate memory for read.dcf"
+
+#: src/main/deparse.c:158
+msgid "Could not allocate memory for Encodebuf"
+msgstr "Could not allocate memory for Encodebuf"
+
+#: src/main/deparse.c:184
+msgid "too few arguments"
+msgstr "too few arguments"
+
+#: src/main/deparse.c:191
+msgid "invalid 'cutoff' for deparse, using default"
+msgstr "invalid ‘cutoff’ for deparse, using default"
+
+#: src/main/deparse.c:260
+msgid "deparse may be incomplete"
+msgstr "deparse may be incomplete"
+
+#: src/main/deparse.c:320 src/main/deparse.c:386 src/main/deparse.c:392
+msgid "wrote too few characters"
+msgstr "wrote too few characters"
+
+#: src/main/deparse.c:340
+msgid "character arguments expected"
+msgstr "character arguments expected"
+
+#: src/main/deparse.c:343
+msgid "zero length argument"
+msgstr "zero length argument"
+
+#: src/main/deparse.c:346
+msgid "bad environment"
+msgstr "bad environment"
+
+#: src/main/deparse.c:359
+#, c-format
+msgid "Object \"%s\" not found"
+msgstr "Object “%s” not found"
+
+#: src/main/deparse.c:1222
+msgid "badly formed function expression"
+msgstr "badly formed function expression"
+
 #: src/main/errors.c:117 src/main/errors.c:152
 msgid "interrupts suspended; signal ignored"
 msgstr "interrupts suspended; signal ignored"
@@ -960,10 +1983,6 @@ msgstr "incorrect number of arguments to “%s”"
 #, c-format
 msgid "Unimplemented feature in %s"
 msgstr "Unimplemented feature in %s"
-
-#: src/main/errors.c:873
-msgid "No function to return from, jumping to top level"
-msgstr "No function to return from, jumping to top level"
 
 #: src/main/errors.c:889
 msgid "top level inconsistency?"
