@@ -72,6 +72,8 @@ NEW FEATURES
 UTILITIES
 
     o   New functions mirror2html() and checkCRAN().
+
+    o   R CMD check has a new option '--use-valgrind'.
     
 
 DOCUMENTATION
@@ -81,7 +83,7 @@ DOCUMENTATION
 	(If makeinfo >= 4.5 is not available, the version on CRAN is
 	linked to.)
 
-    o	Manual `Writing R Extensions' has further details on writing
+    o	Manual 'Writing R Extensions' has further details on writing
 	new front-ends for R using the new public header files.
 
 

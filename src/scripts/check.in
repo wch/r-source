@@ -53,6 +53,7 @@ my $opt_use_gct = 0;
 my $opt_codoc = 1;
 my $opt_install = 1;
 my $opt_vignettes = 1;
+my $opt_use_valgrind = 0;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -62,7 +63,7 @@ my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
 		    "use-gct" => \$opt_use_gct, "no-codoc",
 		    "install=s" => \$opt_install, "no-install",
-		     "no-vignettes");
+		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind);
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -1240,6 +1241,8 @@ sub check_pkg {
     chdir($pkgoutdir);
 
     ## Run the examples.
+    ## This setting applies to vignettes below too
+    ${R_opts} = ${R_opts}." -d valgrind" if $opt_use_valgrind;
 
     if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
 	$log->creating("${pkgname}-Ex.R");
@@ -1302,9 +1305,8 @@ sub check_pkg {
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
 			 "${R_opts}",
 			 "> ${pkgname}-Ex.Rout 2>&1"));
-	}
-	else {
-            $cmd = join(" ",
+	} else {
+	    $cmd = join(" ",
 			(&shell_quote_file_path(${R::Vars::R_EXE}),
 			 "${R_opts}",
 			 "< ${pkgname}-Ex.R",
@@ -1422,6 +1424,7 @@ sub check_pkg {
             }
             print MAKEVARS "\n";
 	    print MAKEVARS "USE_GCT = $opt_use_gct\n";
+	    print MAKEVARS "R_OPTS = -d valgrind\n" if $opt_use_valgrind;
             close(MAKEVARS);
             $makevars = " -f Makevars";
         }
@@ -1618,6 +1621,7 @@ Options:
       --no-vignettes    do not check vignettes in Sweave format
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
+      --use-valgrind    use 'valgrind' when running examples/tests/vignettes
 
 By default, all test sections are turned on.
 
