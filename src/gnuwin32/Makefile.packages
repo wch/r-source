@@ -6,10 +6,10 @@ include MkRules
 HELP = YES
 WINHELP = NO # Use one of NO, CHM, BOTH (chm and winhelp)
 
-RHOME = $(shell Rpwd.exe ../..)# must be absolute path
+RHOME = $(shell ./Rpwd.exe ../..)# must be absolute path
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
-PKGD = $(shell Rpwd.exe $(PKGDIR))# must be absolute path
+PKGD = $(shell ./Rpwd.exe $(PKGDIR))# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
