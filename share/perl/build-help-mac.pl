@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.1 $ ';
+my $revision = ' $Revision: 1.2 $ ';
 my $version;
 my $name;
 
@@ -142,7 +142,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv(":$manfile", "txt", "", "$destfile", $pkg);
+		Rdconv($manfile, "txt", "", "$destfile", $pkg);
 	    }
 	}
 
@@ -153,7 +153,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv(":$manfile", "html", "", "$destfile", $pkg);
+		Rdconv($manfile, "html", "", "$destfile", $pkg);
 	    }
 	}
 
@@ -162,7 +162,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
-		Rdconv(":$manfile", "latex", "", "$destfile");
+		Rdconv($manfile, "latex", "", "$destfile");
 	    }
 	}
 
@@ -170,7 +170,7 @@ foreach $manfile (@mandir) {
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
-		Rdconv(":$manfile", "example", "", "$destfile");
+		Rdconv($manfile, "example", "", "$destfile");
 		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
