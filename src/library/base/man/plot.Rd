@@ -1,15 +1,19 @@
 \name{plot}
-\title{X-Y Plotting}
+\title{Generic X-Y Plotting}
 \alias{plot}
 \usage{
 %-- this is not really ok:  plot(x , ...)  is now the GENERIC function
+plot(x, \dots)
 plot(x, y, xlim=range(x), ylim=range(y), type="p",
         main, xlab, ylab, \dots)
 plot(y ~ x, \dots)
 }
 \arguments{
-  \item{x,y}{the coordinates of points in the plot. Alternatively, a
-    single plotting structure can be provided.}
+  \item{x}{the coordinates of points in the plot. Alternatively, a
+      single plotting structure or \emph{any \R object with a
+	  \code{plot} method} can be provided.}
+  \item{y}{the y coordinates of points in the plot, \emph{optional}
+      if \code{x} is an appropriate structure.}
   \item{xlim,ylim}{the ranges to be encompased by the x and y axes.}
   \item{type}{what type of plot should be drawn. Possible types are
     \itemize{
@@ -32,8 +36,13 @@ plot(y ~ x, \dots)
 \description{
   Generic function for plotting of \R objects.  For more details about
   the graphical parameter arguments, see \code{\link{par}}.
-
-  A longer description will go here eventually.
+}
+\details{
+    For simple scatter plots, \code{\link{plot.default}} will be used.
+    However, there are \code{plot} methods for many \R objects,
+    including \code{\link{function}}s, \code{\link{data.frame}}s,
+    \code{\link{density}} objects, etc.  Use \code{methods(plot)} and
+    the documentation for these.
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.formula}} and other
@@ -43,5 +52,7 @@ plot(y ~ x, \dots)
 data(cars)
 plot(cars)
 lines(lowess(cars))
+
+plot(sin, -pi, 2*pi)
 }
 \keyword{hplot}
