@@ -234,6 +234,11 @@ Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
 Subject: inheritance problem in multcomp package
 From: "Richard M. Heiberger" <rmh@temple.edu>
 Date: Sun, 13 Jun 2004 21:35:50 -0400
+* PR# 6989 *
+Subject: read.epiinfo makes field char part of variable name
+From: giles.crane@doh.state.nj.us
+Date: Thu, 17 Jun 2004 17:52:32 +0200 (CEST)
+..part of foreign
 
 Directory:  Analyses
 
@@ -268,6 +273,12 @@ Subject: Incorrect handling of NA's in cor()
 From: msa@biostat.mgh.harvard.edu
 Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
 ..matter of debate
+* PR# 6986 *
+Subject: Bug in FEXACT: gave negative key
+From: Francis Clark <fc@maths.uq.edu.au>
+Date: Thu, 17 Jun 2004 20:00:31 +1000 (EST)
+..From fisher.test!
+..Probably just a poor error message
 
 Directory:  Documentation
 
@@ -891,23 +902,3 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 6985 *
-Subject: WINNING  NOTIFICATION/FINAL  AWARD.
-From: anndejony@telstra.com
-Date: Wed, 16 Jun 2004 18:23:40 +0200
-* PR# 6986 *
-Subject: Bug in FEXACT: gave negative key
-From: Francis Clark <fc@maths.uq.edu.au>
-Date: Thu, 17 Jun 2004 20:00:31 +1000 (EST)
-* PR# 6987 *
-Subject: Bug in RODBC
-From: andrew_zachary@yahoo.com
-Date: Thu, 17 Jun 2004 16:06:38 +0200 (CEST)
-* PR# 6988 *
-Subject: xtable
-From: Claudio Lupi <lupi.claudio@fastwebnet.it>
-Date: Thu, 17 Jun 2004 16:29:35 +0200
-* PR# 6989 *
-Subject: read.epiinfo makes field char part of variable name
-From: giles.crane@doh.state.nj.us
-Date: Thu, 17 Jun 2004 17:52:32 +0200 (CEST)
