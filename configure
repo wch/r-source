@@ -13010,8 +13010,9 @@ if test -n "${LIBS1}"; then
 fi
 
 
-# FIXME: This should not be necessary when using libtool for linking.
-# In any case, is this really good enough?
+## FIXME:
+## This should not be necessary when using libtool for linking.
+## In any case, is this really good enough?
 
 for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
   case ${arg} in
@@ -13027,8 +13028,8 @@ for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
 done
 
 
-# Record name of environment variable which tells the dynamic linker
-# where to find shlibs (typically, `LD_LIBRARY_PATH').
+## Record name of environment variable which tells the dynamic linker
+## where to find shlibs (typically, `LD_LIBRARY_PATH').
 ltout=`./libtool --config | grep '^shlibpath_var='`
 eval "${ltout}"
 
@@ -13044,6 +13045,13 @@ else
   WANT_R_SHLIBS_TRUE='#'
   WANT_R_SHLIBS_FALSE=
 fi
+
+## FIXME:
+## This will no longer be necessary in Autoconf 2.49b or better.
+LTLIBOBJS=`echo $LIBOBJS | sed 's/\.o/\.lo/g'`
+
+LTALLOCA=`echo "$ALLOCA" | sed 's/\.o/.lo/g'`
+
 
 if test "${PERL}" = false; then
   PERL="/bin/sh false"
@@ -13401,6 +13409,8 @@ s%@R_LD_LIBRARY_PATH@%$R_LD_LIBRARY_PATH%g
 s%@shlibpath_var@%$shlibpath_var%g
 s%@WANT_R_SHLIBS_TRUE@%$WANT_R_SHLIBS_TRUE%g
 s%@WANT_R_SHLIBS_FALSE@%$WANT_R_SHLIBS_FALSE%g
+s%@LTLIBOBJS@%$LTLIBOBJS%g
+s%@LTALLOCA@%$LTALLOCA%g
 
 CEOF
 EOF
