@@ -293,7 +293,7 @@ rw-faq: rw-FAQ.texi ../../VERSION
 distribution: bindist packagedist docsdist
 
 bindist: docfiles
-	$(RM) -rf $(RPREFIX)
+	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr ../../bin ../../afm ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
@@ -307,12 +307,10 @@ bindist: docfiles
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
 	$(CP) -p ../../etc/Rdevga $(RPREFIX)/etc/Rdevga
 	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
-	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
+	$(MKDIR) -p $(RPREFIX)/doc/manual  $(RPREFIX)/share/texmf
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
-	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
-	$(CP) -p ../../doc/manual/hyperref.cfg $(RPREFIX)/doc/manual
-	$(CP) -p ../../doc/manual/*.fd $(RPREFIX)/doc/manual
 	$(CP) -p ../../doc/manual/*.html $(RPREFIX)/doc/manual
+	$(CP) -pr ../../share/texmf $(RPREFIX)/share
 	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
@@ -328,7 +326,7 @@ else
 	unzip -o dosfiles.zip
 endif
 	$(RM) dosfiles.zip
-	$(RM) -f $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
+	$(RM) $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip
 	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
@@ -343,7 +341,7 @@ endif
 	  $(RPREFIX)/bin/Rchtml.dll
 	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
 #	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
-	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
+	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/share/texmf
 	$(RM) -r $(RPREFIX)/doc
 	mkdir -p  $(RPREFIX)/doc/html
 	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
@@ -361,11 +359,10 @@ GW32_HEADERS = globalvar.h
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc \
-	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/doc/manual \
+	  $(RPREFIX)/doc $(RPREFIX)/doc/html \
 	  $(RPREFIX)/src $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
-	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
 	  pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
@@ -380,7 +377,7 @@ packagedist:
 	$(SED) -e 3,5d readme.packages > $(RPREFIX)/readme.packages
 	$(CP) ../../COPYING.LIB $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/share
-	$(CP) -r ../../share/perl $(RPREFIX)/share
+	$(CP) -r ../../share/perl ../../share/texmf $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
@@ -394,14 +391,14 @@ packagedist:
 	$(RM) -r $(RPREFIX)
 
 docsdist: docs
-	$(RM) -rf $(RPREFIX)
+	$(RM) -r $(RPREFIX)
 	$(RM) -f $(RPREFIX)d1.zip $(RPREFIX)d2.zip
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr $(RHOME)/doc/manual/*.pdf $(RPREFIX)/doc/manual
 	zip -rm9X $(RPREFIX)d2.zip $(RPREFIX)/doc/manual/refman.pdf
 	zip -rm9X $(RPREFIX)d1.zip $(RPREFIX)/doc/manual \
 	  -x $(RPREFIX)/doc/manual/R-FAQ.pdf
-	$(RM) -rf $(RPREFIX)
+	$(RM) -r $(RPREFIX)
 
 ## ============= End of maintainer targets ========================
 

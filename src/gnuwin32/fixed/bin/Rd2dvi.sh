@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.12 $'
+revision='$Revision: 1.13 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
@@ -37,7 +37,8 @@ Options:
 
 Report bugs to <r-bugs@r-project.org>."
 
-TEXINPUTS=.:${R_HOME}/doc/manual:${TEXINPUTS}
+TEXINPUTS=.\;${R_HOME}/share/texmf\;${TEXINPUTS}
+export TEXINPUTS
 
 start_dir=`pwd`
 
@@ -198,8 +199,6 @@ if test -d ${build_dir}; then
   rm -rf ${build_dir} || echo "cannot write to build dir" && exit 2
 fi
 mkdir ${build_dir}
-sed 's/markright{#1}/markboth{#1}{#1}/' \
-  ${R_HOME}/doc/manual/Rd.sty > ${build_dir}/Rd.sty
 
 ## Rd2.tex part 1: header
 cat > ${build_dir}/Rd2.tex <<EOF

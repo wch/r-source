@@ -55,7 +55,8 @@ all: pdf
 
 dvi: refman.dvi $(OBJECTS_DVI)
 
-refman.dvi: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
+refman.dvi: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
+  refman.top refman.bot
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
@@ -65,9 +66,11 @@ refman.dvi: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
 	  cat refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat refman.bot) > refman.tex
-	@$(LATEX) '\nonstopmode\input{refman.tex}'
+	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
+	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
-	@$(LATEX) '\nonstopmode\input{refman.tex}'
+	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
+	  $(LATEX) '\nonstopmode\input{refman.tex}'
 
 R-data.dvi: R-data.texi $(texiincludes) 
 	$(TEX) R-data.texi
@@ -101,7 +104,8 @@ R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
-refman.pdf: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
+refman.pdf: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
+   refman.top refman.bot
 	@echo " PDF/LaTeX documentation: reference index ..."
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
@@ -111,10 +115,13 @@ refman.pdf: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
-	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
-	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 
 
 version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
