@@ -178,7 +178,7 @@ static void help_demos_run_cb(GtkWidget *widget,
 static void help_about_cb(GtkWidget *widget,
 			  gpointer data)
 {
-  GtkWidget *about_box;
+  GtkWidget *about_box, *hbox, *home_href, *FAQ_href;
   gchar *version;
   gchar *copyright;
 
@@ -210,6 +210,15 @@ static void help_about_cb(GtkWidget *widget,
   about_box = gnome_about_new("R", version, copyright, authors,
 			      "R is a system for statistical computation and graphics.  It is a dialect of the S programming language from Bell Labs.  R is free software and comes with ABSOLUTELY NO WARRANTY.  You are welcome to redistribute it under certain conditions.  Type	?license or ?licence for distribution details.  R is a collaborative project with many contributors.  Type ?contributors for a list.",
 			      "R-logo-sm.xpm");
+
+  hbox = gtk_hbox_new(TRUE, 0);
+  home_href = gnome_href_new("http://lib.stat.cmu.edu/R/CRAN/", "R home page");
+  FAQ_href = gnome_href_new("http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html", "R FAQ");
+  gtk_box_pack_start(GTK_BOX(hbox), home_href, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox), FAQ_href, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(about_box)->vbox),
+		     hbox, TRUE, FALSE, 0);
+  gtk_widget_show_all(hbox);
 
   gnome_dialog_set_parent(GNOME_DIALOG(about_box), GTK_WINDOW(R_gtk_main_window));
 

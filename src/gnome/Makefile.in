@@ -21,6 +21,10 @@ SOURCES = \
 	../unix/Rsock.c \
 	../unix/sock.c \
 	system.c \
+	system-choosefile.c \
+	system-console.c \
+	system-showfiles.c \
+	system-unix.c \
 	devGNOME.c \
 	devGTK.c \
 	gtkconsole.c \
