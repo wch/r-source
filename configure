@@ -25552,7 +25552,7 @@ done
 else
   have_pcre=no
 fi
-if test "${have_pcre}" = yes; then
+if test "x${have_pcre}" = xyes; then
 echo "$as_me:$LINENO: checking if PCRE version >= 4.0" >&5
 echo $ECHO_N "checking if PCRE version >= 4.0... $ECHO_C" >&6
 if test "${r_have_pcre4+set}" = set; then
@@ -25611,7 +25611,7 @@ fi
 echo "$as_me:$LINENO: result: $r_have_pcre4" >&5
 echo "${ECHO_T}$r_have_pcre4" >&6
 fi
-if test "${r_have_pcre4}" = yes; then
+if test "x${r_have_pcre4}" = xyes; then
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_PCRE 1
@@ -25630,7 +25630,7 @@ echo "${ECHO_T}yes" >&6
 fi
 
 
-if test "x${r_have_pcre4}" = xno; then
+if test "x${r_have_pcre4}" != xyes; then
   BUILD_PCRE_TRUE=
   BUILD_PCRE_FALSE='#'
 else

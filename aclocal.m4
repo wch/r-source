@@ -1855,7 +1855,7 @@ AC_DEFUN([R_PCRE],
 else
   have_pcre=no
 fi
-if test "${have_pcre}" = yes; then
+if test "x${have_pcre}" = xyes; then
 AC_CACHE_CHECK([if PCRE version >= 4.0], [r_have_pcre4],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
@@ -1874,7 +1874,7 @@ int main() {
 }
 ]])], [r_have_pcre4=yes], [r_have_pcre4=no], [r_have_pcre4=no])])
 fi
-if test "${r_have_pcre4}" = yes; then
+if test "x${r_have_pcre4}" = xyes; then
   AC_DEFINE(HAVE_PCRE, 1,
             [Define if you have the PCRE >= 4.0 headers and libraries.])
   LIBS="-lpcre ${LIBS}"
@@ -1885,7 +1885,7 @@ if test "x${r_have_pcre4}" = xyes; then
 else
   AC_MSG_RESULT([yes])
 fi
-AM_CONDITIONAL(BUILD_PCRE, [test "x${r_have_pcre4}" = xno])
+AM_CONDITIONAL(BUILD_PCRE, [test "x${r_have_pcre4}" != xyes])
 ])# R_PCRE
 
 AC_DEFUN([R_BZLIB],
