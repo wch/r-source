@@ -81,12 +81,9 @@ if(.Platform$GUI == "AQUA") {
        inst.idx <- which(.Internal(pkgbrowser(i.pkgs, c.vers, i.vers,
                                               label, want.update)))
        ui.pkgs <- i.pkgs[inst.idx]
-       idx2 <- which(c.vers[inst.idx] == i.vers[inst.idx])
-       if(length(idx2) > 0)
-           ui.pkgs <- ui.pkgs[-idx2]
        if(length(ui.pkgs) > 0) {
            if (in.place)
-               locn <- i.locn[inst.idx][-idx2]
+               locn <- i.locn[inst.idx]
            else
                locn <- .libPaths()[1]
            if (type == "source")
