@@ -134,6 +134,8 @@ NEW FEATURES
     o	Function mantelhaen.test() in package ctest now can deal with
 	general I x J x K tables.
 
+    o	New function manova() and summary method.
+
 
 BUG FIXES
 
