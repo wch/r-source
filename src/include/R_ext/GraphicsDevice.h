@@ -121,6 +121,25 @@ typedef struct {
     /********************************************************
      * Device procedures.
      ********************************************************/
+
+    /*
+     * ---------------------------------------
+     * GENERAL COMMENT ON GRAPHICS PARAMETERS:
+     * ---------------------------------------
+     * Graphical parameters are now passed in a graphics context
+     * structure (R_GE_gcontext*) rather than individually.
+     * Each device action should extract the parameters it needs
+     * and ignore the others.  Thought should be given to which 
+     * parameters are relevant in each case -- the graphics engine
+     * does not REQUIRE that each parameter is honoured, but if
+     * a parameter is NOT honoured, it might be a good idea to
+     * issue a warning when a parameter is not honoured (or at
+     * the very least document which parameters are not honoured
+     * in the user-level documentation for the device).  [An example
+     * of a parameter that may not be honoured by many devices is
+     * transparency.]
+     */
+
     /*
      * device_Activate is called when a device becomes the	
      * active device.  For example, it can be used to change the
@@ -146,8 +165,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Circle(double x, double y, double r,
-     *		              int col, int fill, double gamma,
-     *                        int lty, double lwd,
+     *                        R_GE_gcontext *gc,
      *                        NewDevDesc *dd);
      *
      */
@@ -218,7 +236,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Line(double x1, double y1, double x2, double y2,
-     *		            int col, double gamma, int lty, double lwd,
+     *                      R_GE_gcontext *gc,
      *                      NewDevDesc *dd);
      *
      */
@@ -233,7 +251,8 @@ typedef struct {
      * it MUST return 0.0 for ascent, descent, and width.
      * An example is ...
      *
-     * static void X11_MetricInfo(int c, int font, double cex, double ps,
+     * static void X11_MetricInfo(int c,
+     *                            R_GE_gcontext *gc,
      *                            double* ascent, double* descent,
      *                            double* width, NewDevDesc *dd);
      */
@@ -257,7 +276,8 @@ typedef struct {
      * An example is ...
      *
      *
-     * static void X11_NewPage(int fill, double gamma, NewDevDesc *dd);
+     * static void X11_NewPage(R_GE_gcontext *gc,
+     *                         NewDevDesc *dd);
      *
      */
     void (*newPage)();
@@ -289,8 +309,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Polygon(int n, double *x, double *y, 
-     *		               int col, int fill, double gamma,
-     *                         int lty, double lwd,
+     *                         R_GE_gcontext *gc,
      *                         NewDevDesc *dd);
      *
      */
@@ -302,8 +321,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Polyline(int n, double *x, double *y, 
-     *		               int col, double gamma,
-     *                         int lty, double lwd,
+     *                          R_GE_gcontext *gc,
      *                          NewDevDesc *dd);
      *
      */
@@ -320,8 +338,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Rect(double x0, double y0, double x1, double y1,
-     *		            int col, int fill, double gamma,
-     *                      int lty, double lwd,
+     *                      R_GE_gcontext *gc,
      *                      NewDevDesc *dd);
      *
      */
@@ -348,7 +365,8 @@ typedef struct {
      * string in DEVICE units.				
      * An example is ...
      *
-     * static double X11_StrWidth(char *str, int font, double cex, double ps,
+     * static double X11_StrWidth(char *str, 
+     *                            R_GE_gcontext *gc,
      *                            NewDevDesc *dd)
      *
      */
@@ -361,8 +379,7 @@ typedef struct {
      *
      * static void X11_Text(double x, double y, char *str, 
      *                      double rot, double hadj, 
-     *		            int col, double gamma,
-     *                      int font, double cex, double ps,
+     *                      R_GE_gcontext *gc,
      * 	                    NewDevDesc *dd);
      *
      */

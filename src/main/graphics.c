@@ -2481,9 +2481,9 @@ Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
-    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
-    ((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, 
-				       gc.fontface, gc.cex, gc.ps, 
+    R_GE_gcontext gc; 
+    gcontextFromGP(&gc, dd);
+    ((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, &gc,
 				       ascent, descent, width,
 				       ((GEDevDesc*) dd)->dev);
     if (units != DEVICE) {

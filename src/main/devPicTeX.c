@@ -154,37 +154,39 @@ static const char * const fontname[] = {
 
 static void PicTeX_Activate(NewDevDesc *dd);
 static void PicTeX_Circle(double x, double y, double r,
-		       int col, int fill, double gamma, int lty, double lwd,
-		       NewDevDesc *dd);
+			  R_GE_gcontext *gc,
+			  NewDevDesc *dd);
 static void PicTeX_Clip(double x0, double x1, double y0, double y1, 
-		     NewDevDesc *dd);
+			NewDevDesc *dd);
 static void PicTeX_Close(NewDevDesc *dd);
 static void PicTeX_Deactivate(NewDevDesc *dd);
 static void PicTeX_Hold(NewDevDesc *dd);
 static Rboolean PicTeX_Locator(double *x, double *y, NewDevDesc *dd);
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
-		     int col, double gamma, int lty, double lwd,
-		     NewDevDesc *dd);
-static void PicTeX_MetricInfo(int c, int font, double cex, double ps,
+			R_GE_gcontext *gc,
+			NewDevDesc *dd);
+static void PicTeX_MetricInfo(int c,
+			      R_GE_gcontext *gc,
 			      double* ascent, double* descent,
 			      double* width, NewDevDesc *dd);
 static void PicTeX_Mode(int mode, NewDevDesc *dd);
-static void PicTeX_NewPage(int fill, double gamma, NewDevDesc *dd);
+static void PicTeX_NewPage(R_GE_gcontext *gc, NewDevDesc *dd);
 static void PicTeX_Polygon(int n, double *x, double *y, 
-			int col, int fill, double gamma, int lty, double lwd,
-			NewDevDesc *dd);
+			   R_GE_gcontext *gc,
+			   NewDevDesc *dd);
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, double gamma, int lty, double lwd,
-		     NewDevDesc *dd);
+			R_GE_gcontext *gc,
+			NewDevDesc *dd);
 static void PicTeX_Size(double *left, double *right,
-		     double *bottom, double *top,
-		     NewDevDesc *dd);
-static double PicTeX_StrWidth(char *str, int font,
-			      double cex, double ps, NewDevDesc *dd);
+			double *bottom, double *top,
+			NewDevDesc *dd);
+static double PicTeX_StrWidth(char *str, 
+			      R_GE_gcontext *gc,
+			      NewDevDesc *dd);
 static void PicTeX_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
-		     int col, double gamma, int font, double cex, double ps,
-		     NewDevDesc *dd);
+			double rot, double hadj, 
+			R_GE_gcontext *gc,
+			NewDevDesc *dd);
 static Rboolean PicTeX_Open(NewDevDesc*, picTeXDesc*);
 
 	/* Support routines */
@@ -211,7 +213,7 @@ static void SetLinetype(int newlty, int newlwd, NewDevDesc *dd)
 static void SetFont(int face, int size, picTeXDesc *ptd)
 {
     int lface=face, lsize= size;
-    if(lface < 1 || lface > 4) lface = 1;
+    if(lface < 1 || lface > 4 ) lface = 1;
     if(lsize < 1 || lsize > 24) lsize = 10;
     if(lsize != ptd->fontsize || lface != ptd->fontface) {
 	fprintf(ptd->texfp, "\\font\\picfont %s at %dpt\\picfont\n",
@@ -229,7 +231,8 @@ static void PicTeX_Deactivate(NewDevDesc *dd)
 {
 }
 
-static void PicTeX_MetricInfo(int c, int font, double cex, double ps,
+static void PicTeX_MetricInfo(int c, 
+			      R_GE_gcontext *gc,
 			      double* ascent, double* descent,
 			      double* width, NewDevDesc *dd)
 {
@@ -289,7 +292,8 @@ static void PicTeX_Clip(double x0, double x1, double y0, double y1,
 
 	/* Start a new page */
 
-static void PicTeX_NewPage(int fill, double gamma, NewDevDesc *dd)
+static void PicTeX_NewPage(R_GE_gcontext *gc,
+			   NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
@@ -412,13 +416,13 @@ static void PicTeX_ClipLine(double x0, double y0, double x1, double y1,
 }
 
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
-		     int col, double gamma, int lty, double lwd,
-		     NewDevDesc *dd)
+			R_GE_gcontext *gc,
+			NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
     if (x1 != x2 || y1 != y2) {
-	SetLinetype(lty, lwd, dd);
+	SetLinetype(gc->lty, gc->lwd, dd);
 	if(ptd->debug)
 	    fprintf(ptd->texfp,
 		    "%% Drawing line from %.2f, %.2f to %.2f, %.2f\n",
@@ -436,14 +440,14 @@ static void PicTeX_Line(double x1, double y1, double x2, double y2,
 }
 
 static void PicTeX_Polyline(int n, double *x, double *y, 
-			    int col, double gamma, int lty, double lwd,
+			    R_GE_gcontext *gc,
 			    NewDevDesc *dd)
 {
     double x1, y1, x2, y2;
     int i;
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-    SetLinetype(lty, lwd, dd);
+    SetLinetype(gc->lty, gc->lwd, dd);
     x1 = x[0];
     y1 = y[0];
     for (i = 1; i < n; i++) {
@@ -461,16 +465,17 @@ static void PicTeX_Polyline(int n, double *x, double *y,
 	/* String Width in Rasters */
 	/* For the current font in pointsize fontsize */
 
-static double PicTeX_StrWidth(char *str, int font,
-			      double cex, double ps, NewDevDesc *dd)
+static double PicTeX_StrWidth(char *str, 
+			      R_GE_gcontext *gc,
+			      NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
     char *p;
     int size;
     double sum;
-    size = cex * ps + 0.5;
-    SetFont(font, size, ptd);
+    size = gc->cex * gc->ps + 0.5;
+    SetFont(gc->fontface, size, ptd);
     sum = 0;
     for(p=str ; *p ; p++)
 	sum += charwidth[ptd->fontface-1][(int)*p];
@@ -480,8 +485,8 @@ static double PicTeX_StrWidth(char *str, int font,
 
 /* Possibly Filled Rectangle */
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, double gamma, int lty, double lwd,
-		     NewDevDesc *dd)
+			R_GE_gcontext *gc,
+			NewDevDesc *dd)
 {
     double x[4], y[4];
 
@@ -489,12 +494,12 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
     x[1] = x0; y[1] = y1;
     x[2] = x1; y[2] = y1;
     x[3] = x1; y[3] = y0;
-    PicTeX_Polygon(4, x, y, col, fill, gamma, lty, lwd, dd);
+    PicTeX_Polygon(4, x, y, gc, dd);
 }
 
 static void PicTeX_Circle(double x, double y, double r,
-		       int col, int fill, double gamma, int lty, double lwd,
-		       NewDevDesc *dd)
+			  R_GE_gcontext *gc,
+			  NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
@@ -504,14 +509,14 @@ static void PicTeX_Circle(double x, double y, double r,
 }
 
 static void PicTeX_Polygon(int n, double *x, double *y, 
-			int col, int fill, double gamma, int lty, double lwd,
-			NewDevDesc *dd)
+			   R_GE_gcontext *gc,
+			   NewDevDesc *dd)
 {
     double x1, y1, x2, y2;
     int i;
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-    SetLinetype(lty, lwd, dd);
+    SetLinetype(gc->lty, gc->lwd, dd);
     x1 = x[0];
     y1 = y[0];
     for (i=1; i<n; i++) {
@@ -568,20 +573,20 @@ static void textext(char *str, picTeXDesc *ptd)
 /* Rotated Text */
 
 static void PicTeX_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
-		     int col, double gamma, int font, double cex, double ps,
-		     NewDevDesc *dd)
+			double rot, double hadj, 
+			R_GE_gcontext *gc,
+			NewDevDesc *dd)
 {
     int size;
     double xoff = 0.0, yoff = 0.0;
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-    size = cex * ps + 0.5;
-    SetFont(font, size, ptd);
+    size = gc->cex * gc->ps + 0.5;
+    SetFont(gc->fontface, size, ptd);
     if(ptd->debug) 
 	fprintf(ptd->texfp,
 		"%% Writing string of length %.2f, at %.2f %.2f, xc = %.2f yc = %.2f\n",
-		(double)PicTeX_StrWidth(str, font, cex, ps, dd), 
+		(double)PicTeX_StrWidth(str, gc, dd), 
 		x, y, 0.0, 0.0);
     fprintf(ptd->texfp,"\\put ");
     textext(str, ptd);

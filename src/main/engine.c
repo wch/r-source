@@ -634,7 +634,7 @@ void GELine(double x1, double y1, double x2, double y2,
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, 0, dd);
     }
     if (clip_ok)
-	dd->dev->line(x1, y1, x2, y2, gc->col, gc->gamma, gc->lty, gc->lwd, dd->dev);
+	dd->dev->line(x1, y1, x2, y2, gc, dd->dev);
 }
 
 /****************************************************************
@@ -677,7 +677,7 @@ static void CScliplines(int n, double *x, double *y,
 		yy[0] = y1;
 		xx[1] = x2;
 		yy[1] = y2;
-		dd->dev->polyline(2, xx, yy, gc->col, gc->gamma, gc->lty, gc->lwd, dd->dev);
+		dd->dev->polyline(2, xx, yy, gc, dd->dev);
 	    }
 	    else if (ind1) {
 		xx[0] = x1;
@@ -686,24 +686,21 @@ static void CScliplines(int n, double *x, double *y,
 		yy[1] = y2;
 		count = 2;
 		if (i == n - 1)
-		    dd->dev->polyline(count, xx, yy, gc->col, gc->gamma, 
-				      gc->lty, gc->lwd, dd->dev);
+		    dd->dev->polyline(count, xx, yy, gc, dd->dev);
 	    }
 	    else if (ind2) {
 		xx[count] = x2;
 		yy[count] = y2;
 		count++;
 		if (count > 1)
-		    dd->dev->polyline(count, xx, yy, gc->col, gc->gamma, 
-				      gc->lty, gc->lwd, dd->dev);
+		    dd->dev->polyline(count, xx, yy, gc, dd->dev);
 	    }
 	    else {
 		xx[count] = x2;
 		yy[count] = y2;
 		count++;
 		if (i == n - 1 && count > 1)
-		    dd->dev->polyline(count, xx, yy, gc->col, gc->gamma, 
-				      gc->lty, gc->lwd, dd->dev);
+		    dd->dev->polyline(count, xx, yy, gc, dd->dev);
 	    }
 	}
 	x1 = x[i];
@@ -946,8 +943,7 @@ static void clipPolygon(int n, double *x, double *y,
 	    xc = (double*) R_alloc(npts, sizeof(double));
 	    yc = (double*) R_alloc(npts, sizeof(double));
 	    npts = clipPoly(x, y, n, 1, toDevice, xc, yc, dd);
-	    dd->dev->polygon(npts, xc, yc, gc->col, gc->fill, gc->gamma, 
-			     gc->lty, gc->lwd, dd->dev);
+	    dd->dev->polygon(npts, xc, yc, gc, dd->dev);
 	}
     }
 }
@@ -1090,7 +1086,7 @@ void GECircle(double x, double y, double radius,
 	 * boundary so the circle is entirely within the device; the
 	 * device will perform the clipping to the current clipping rect.
 	 */
-	dd->dev->circle(x, y, radius, gc->col, gc->fill, gc->gamma, gc->lty, gc->lwd, dd->dev);
+	dd->dev->circle(x, y, radius, gc, dd->dev);
 	break;
     case -1: /* Total clipping; draw nothing */
 	/* 
@@ -1114,7 +1110,7 @@ void GECircle(double x, double y, double radius,
 	 * device and just draw a circle.
 	 */
 	if (dd->dev->canClip) {
-	    dd->dev->circle(x, y, radius, gc->col, gc->fill, gc->gamma, gc->lty, gc->lwd, dd->dev);
+	    dd->dev->circle(x, y, radius, gc, dd->dev);
 	}
 	else {
 	    vmax = vmaxget();
@@ -1196,12 +1192,11 @@ void GERect(double x0, double y0, double x1, double y1,
     case 0:  /* rectangle totally clipped; draw nothing */
 	break;
     case 1:  /* rectangle totally inside;  draw all */
-	dd->dev->rect(x0, y0, x1, y1, gc->col, gc->fill, gc->gamma, 
-		      gc->lty, gc->lwd, dd->dev);
+	dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
 	break;
     case 2:  /* rectangle intersects clip region;  use polygon clipping */
 	if (dd->dev->canClip)
-	    dd->dev->rect(x0, y0, x1, y1, gc->col, gc->fill, gc->gamma, gc->lty, gc->lwd, dd->dev);
+	    dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
 	else {
 	    vmax = vmaxget();
 	    xc = (double*)R_alloc(5, sizeof(double));
@@ -1296,8 +1291,7 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
 	 * if it wants to.
 	 * NOTE: fontface corresponds to old "font"
 	 */
-	dd->dev->text(x, y, str, rot, hadj, gc->col, gc->gamma, 
-		      gc->fontface, gc->cex, gc->ps, dd->dev);
+	dd->dev->text(x, y, str, rot, hadj, gc, dd->dev);
 	break;
     case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
@@ -1308,8 +1302,7 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
 	     * if it wants to.
 	     * NOTE: fontface corresponds to old "font"
 	     */
-	    dd->dev->text(x, y, str, rot, hadj, gc->col, gc->gamma, 
-			  gc->fontface, gc->cex, gc->ps, dd->dev);
+	    dd->dev->text(x, y, str, rot, hadj, gc, dd->dev);
 	else /* don't draw anything; this could be made less crude :) */
 	    ;
     }
@@ -1938,8 +1931,7 @@ void GEMetricInfo(int c,
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd)
 {
-    dd->dev->metricInfo(c & 0xFF, gc->fontface, gc->cex, gc->ps, ascent, descent, width,
-			dd->dev);
+    dd->dev->metricInfo(c & 0xFF, gc, ascent, descent, width, dd->dev);
 }
 
 /****************************************************************
@@ -1983,8 +1975,7 @@ double GEStrWidth(char *str,
 		     * if it wants to.
 		     * NOTE: fontface corresponds to old "font"
 		     */
-		    wdash = dd->dev->strWidth(sbuf, gc->fontface, 
-					      gc->cex, gc->ps, dd->dev);
+		    wdash = dd->dev->strWidth(sbuf, gc, dd->dev);
 		    if (wdash > w) w = wdash;
 		    sb = sbuf;
 		}
@@ -2055,7 +2046,7 @@ double GEStrHeight(char *str,
 
 void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    dd->dev->newPage(gc->fill, gc->gamma, dd->dev);
+    dd->dev->newPage(gc, dd->dev);
 }
 
 /****************************************************************
