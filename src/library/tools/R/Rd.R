@@ -495,6 +495,7 @@ function(lines, kind) {
 }
 
 ### * .getRdArgumentNames
+
 .getRdArgumentNames <-
 function(txt)
 {
@@ -509,6 +510,7 @@ function(txt)
 }
 
 ### * .getRdName
+
 .getRdName <-
 function(txt)
 {
@@ -522,6 +524,7 @@ function(txt)
 }
 
 ### * .getRdTitle
+
 .getRdTitle <-
 function(txt)
 {
@@ -534,6 +537,43 @@ function(txt)
     RdTitle
 }
 
+### * .getRdExampleCode
+
+.getRdExampleCode <-
+function(txt)
+{
+    txt <- tools:::getRdSection(txt, "examples")
+    if(length(txt) != 1) return(character())
+    txt <- gsub("\\\\l?dots", "...", txt)
+    txt <- gsub("\\\\%", "%", txt)
+
+    ## Now try removing \dontrun{}.
+    ## Simple version of R::Rdconv::undefine_command().
+    out <- character()    
+    pattern <- "\\\\dontrun{"
+    while((pos <- regexpr(pattern, txt)) != -1) {
+        out <- c(out, substring(txt, 1, pos - 1))
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        if((pos <- tools::delimMatch(txt)) == -1)
+            stop("unclosed \\dontrun")
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+    }
+    txt <- paste(c(out, txt), collapse = "")
+    ## Now try removing \testonly{}.
+    ## Simple version of R::Rdconv::replace_command().
+    out <- character()
+    pattern <- "\\\\testonly{"
+    while((pos <- regexpr(pattern, txt)) != -1) {
+        out <- c(out, substring(txt, 1, pos - 1))
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        if((pos <- tools::delimMatch(txt)) == -1)
+            stop("unclosed \\testonly")
+        out <- c(out,
+                 substring(txt, 2, pos + attr(pos, "match.length") - 2))
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+    }
+    paste(c(out, txt), collapse = "")
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
