@@ -1,3 +1,15 @@
+r-base (0.64.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu,  1 Apr 1999 11:03:17 -0600
+
+r-base (0.63.3-2) unstable; urgency=low
+
+  * Recompile for glibc2.1 to fix __setfpucw bug (Bug#34598)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 17 Mar 1999 13:42:41 -0600
+
 r-base (0.63.3-1) unstable; urgency=low
 
   * New upstream release
