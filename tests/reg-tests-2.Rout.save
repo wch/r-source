@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-06-29)
+Version 1.8.0 Under development (unstable) (2003-06-30)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2349,29 +2349,6 @@ Coefficients:
 > str(levels(ff))
  chr [1:3] "1" "2" NA
 > ## not quite ok previous to 1.7.0
-> 
-> 
-> ## str() for character & factors with NA (levels), and for Surv objects:
-> ff <- factor(c(2:1,  NA),  exclude = NULL)
-> str(levels(ff))
- chr [1:3] "1" "2" NA
-> str(ff)
- Factor w/ 3 levels "1","2",NA: 2 1 3
-> str(ordered(ff, exclude=NULL))
- Ord.factor w/ 3 levels "1"<"2"<NA: 2 1 3
-> if(require(survival)) {
-+     data(aml)
-+     (sa <- Surv(aml$time, aml$status))
-+     str(sa)
-+     detach("package:survival")
-+ }
-Loading required package: survival 
- Surv [1:23, 1:2]  9  13  13+ 18  23  28+ 31  34  45+ 48  ...
- - attr(*, "dimnames")=List of 2
-  ..$ : NULL
-  ..$ : chr [1:2] "time" "status"
- - attr(*, "type")= chr "right"
-> ## were different, the last one failed in 1.6.2 (at least)
 > 
 > 
 > ## PR#3058  printing with na.print and right=TRUE

@@ -891,20 +891,6 @@ str(levels(ff))
 ## not quite ok previous to 1.7.0
 
 
-## str() for character & factors with NA (levels), and for Surv objects:
-ff <- factor(c(2:1,  NA),  exclude = NULL)
-str(levels(ff))
-str(ff)
-str(ordered(ff, exclude=NULL))
-if(require(survival)) {
-    data(aml)
-    (sa <- Surv(aml$time, aml$status))
-    str(sa)
-    detach("package:survival")
-}
-## were different, the last one failed in 1.6.2 (at least)
-
-
 ## PR#3058  printing with na.print and right=TRUE
 a <- matrix( c(NA, "a", "b", "10",
                NA, NA,  "d", "12",
