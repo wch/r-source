@@ -171,8 +171,10 @@ BUG FIXES
 
     o	symnum(x) behaves more reasonably for zero length or non-numeric x.
 
-    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
-
+    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works. (PR#875)
+    
+    o   R INSTALL and package.description() fix some common problems of
+        DESCRIPTION files (blank lines, ...)
 
 
 
