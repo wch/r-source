@@ -488,6 +488,13 @@ static void FreeColors()
  *	elements it is replicated to create a pattern with an
  *	even number of elements.  (If this is a pain, do something
  *	different its not crucial).
+ *
+ *	27/5/98 Paul - change to allow lty and lwd to interact:
+ *	the line texture is now scaled by the line width so that, 
+ *	for example, a wide (lwd=2) dotted line (lty=2) has bigger
+ *	dots which are more widely spaced.  Previously, such a line 
+ *	would have "dots" which were wide, but not long, nor widely
+ *	spaced.
  */
 
 static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
@@ -516,6 +523,11 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 			for(i=0 ; i<8 && newlty != 0 ; i++) {
 				int j = newlty & 15;
 				if (j == 0) j = 1; /* Or we die with an X Error */
+				/* make sure that scaled line texture */
+				/* does not exceed X11 storage limits */
+				j = j*newlwd;
+				if (j > 255) j=255;
+				/* scale line texture for line width */
 				dashlist[ndash++] = j;
 				newlty = newlty>>4;
 			}
