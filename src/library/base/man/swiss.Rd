@@ -12,10 +12,12 @@
   \tabular{rll}{
     [,1] \tab Fertility \tab \eqn{I_g}{Ig}, ``common standardized
     fertility measure''\cr
-    [,2] \tab Agriculture\tab \% involved in agriculture as occupation\cr
+    [,2] \tab Agriculture\tab \% of males involved in agriculture
+    as occupation\cr
     [,3] \tab Examination\tab \% ``draftees'' receiving highest mark
     on army examination\cr
-    [,4] \tab Education \tab \% education beyond primary school.\cr
+    [,4] \tab Education \tab \% education beyond primary school for
+    ``draftees''.\cr
     [,5] \tab Catholic \tab \% catholic (as opposed to ``protestant'').\cr
     [,6] \tab Infant.Mortality\tab live births who live less than 1
     year.
@@ -30,7 +32,7 @@
   transition''; i.e., its fertility was beginning to fall from the high
   level typical of underdeveloped countries.
 
-  The data collected are for 47 seven French-speaking ``provinces'' at
+  The data collected are for 47 French-speaking ``provinces'' at
   about 1888.
 
   Here, all variables are scaled to \eqn{[0,100]}, where in the
@@ -48,10 +50,17 @@
   Population Research, Princeton University, 1976.  Unpublished data
   assembled under NICHD contract number No 1-HD-O-2077.''
 }
+\note{
+  Files for all 182 districts in 1888 and other years are available at
+  \url{http://opr.princeton.edu/archive/eufert/switz.html}.
+
+  They state that variables \code{Examination} and \code{Education}
+  are averages for 1887, 1888 and 1889.
+}
 \examples{
 data(swiss)
 pairs(swiss, panel = panel.smooth, main = "swiss data",
-      col = 3+ (swiss$Catholic > 50))
+      col = 3 + (swiss$Catholic > 50))
 summary(lm(Fertility ~ . , data = swiss))
 }
 \keyword{datasets}
