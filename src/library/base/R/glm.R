@@ -487,6 +487,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 }
 
 
+## utility for anova.FOO(), FOO in "lmlist", "glm", "glmlist":
 stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 {
     test <- match.arg(test)
