@@ -401,6 +401,13 @@ AC_CHECK_LIB(ncurses, main,,
     AC_CHECK_LIB(termlib, main)
 ))
 AC_CHECK_LIB(dl, dlopen)
+
+AC_CHECK_LIB(z, main)
+AC_CHECK_LIB(hdf5, main)
+if test $ac_cv_lib_hdf5_main = yes && test $ac_cv_lib_z_main = yes; then
+  AC_CHECK_HEADERS(hdf5.h)
+fi
+
 BLAS="blas.o"
 if ${use_dxml}; then
   AC_CHECK_LIB(dxml, main, FLIBS="-ldxml ${FLIBS}" BLAS="",
