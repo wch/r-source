@@ -1,6 +1,6 @@
 lm <- function (formula, data = list(), subset, weights, na.action,
 		method = "qr", model = TRUE, x = FALSE, y = FALSE,
-		qr = TRUE, singular.ok = TRUE, contrasts = NULL, 
+		qr = TRUE, singular.ok = TRUE, contrasts = NULL,
 		offset = NULL, ...)
 {
     ret.x <- x
@@ -47,8 +47,8 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    else c("lm.null", "lm")
     } else {
 	x <- model.matrix(mt, mf, contrasts)
-	z <- if(is.null(w)) lm.fit(x, y, offset=offset) 
-	else lm.wfit(x, y, w, offset=offset) 
+	z <- if(is.null(w)) lm.fit(x, y, offset=offset)
+	else lm.wfit(x, y, w, offset=offset)
 	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     }
     z$offset <- offset
@@ -160,7 +160,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
         return(eval(cc, sys.frame(sys.parent())))
     }
     storage.mode(y) <- "double"
-    wts <- sqrt(w) 
+    wts <- sqrt(w)
     z <- .Fortran("dqrls",
 		  qr = x * wts, n = n, p = p,
 		  y  = y * wts, ny = ny,
@@ -208,7 +208,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	z$fitted.values <- save.f
 	z$weights <- save.w
     } else
-        z$fitted.values <- z$fitted.values + offset    
+        z$fitted.values <- z$fitted.values + offset
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
       list(assign = attr(x, "assign"),
@@ -391,23 +391,21 @@ anova.lm <- function(object, ...)
     p1 <- 1:object$rank
     comp <- object$effects[p1]
     asgn <- object$assign[object$qr$pivot][p1]
+    nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
+    tlabels <- nmeffects[1 + unique(asgn)]
+    ss <- c(unlist(lapply(split(comp^2,asgn), sum)), ssr)
     dfr <- df.residual(object)
-    ss <- c(as.numeric(lapply(split(comp^2,asgn),sum)),ssr)
-    df <- c(as.numeric(lapply(split(asgn,  asgn),length)), dfr)
-    if(attr(object$terms,"intercept")) {
-	ss <- ss[-1]
-	df <- df[-1]
-    }
+    df <- c(unlist(lapply(split(asgn,  asgn), length)), dfr)
     ms <- ss/df
     f <- ms/(ssr/dfr)
     p <- 1 - pf(f,df,dfr)
     table <- data.frame(df,ss,ms,f,p)
     table[length(p),4:5] <- NA
-    dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residuals"),
+    dimnames(table) <- list(c(tlabels, "Residuals"),
 			    c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
-
+    if(attr(object$terms,"intercept")) table <- table[-1, ]
     structure(table, heading = c("Analysis of Variance Table\n",
-		     paste("Response:", formula(object)[[2]])),
+		     paste("Response:", deparse(formula(object)[[2]]))),
 	      class= c("anova", "data.frame"))# was "tabular"
 }
 
@@ -475,9 +473,9 @@ predict.lm <- function(object, newdata,
         tt <- terms(object)
 	X <- model.matrix(delete.response(tt), newdata,
 			  contrasts = object$contrasts, xlev = object$xlevels)
-	offset <- if (!is.null(off.num<-attr(tt,"offset"))) 
+	offset <- if (!is.null(off.num<-attr(tt,"offset")))
 	    eval(attr(tt,"variables")[[off.num+1]], newdata)
-	else if (!is.null(object$offset)) 
+	else if (!is.null(object$offset))
 	    eval(object$call$offset, newdata)
     }
     n <- NROW(object$qr$qr)
@@ -578,7 +576,7 @@ model.matrix.lm <- function(object, ...)
     }
 }
 
-##---> SEE ./mlm.R  for more methods, etc. !! 
+##---> SEE ./mlm.R  for more methods, etc. !!
 predict.mlm <- function(object, newdata, se.fit = FALSE)
 {
     if(missing(newdata)) return(object$fitted)
