@@ -40,7 +40,7 @@ extern "C" {
 #endif
 
 #include <Rconfig.h>
-#include <Rversion.h>	      /* R_VERSION */
+/* #include <Rversion.h>	       R_VERSION */
 #include <R_ext/Arith.h>      /* R_FINITE, ISNAN, ... */
 #include <R_ext/Boolean.h>    /* Rboolean type */
 #include <R_ext/Complex.h>    /* Rcomplex type */

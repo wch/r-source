@@ -4534,18 +4534,19 @@ The header files define @code{USING_R}, which should be used to test if
 the code is indeed being used with @R{}.
 
 Header file @file{Rconfig.h} (included by @file{R.h}) is used to define
-platform-specific macros that are mainly for us in other header files.
+platform-specific macros that are mainly for use in other header files.
 The macro @code{WORDS_BIGENDIAN} is defined on big-endian systems
 (e.g.@: @code{sparc-sun-solaris2.6}) and not on little-endian systems
 (such as @code{i686} under Linux or Windows). It can be useful when
 manipulating binary files.
 
-Header file @file{Rversion.h} (included by @file{R.h}) defines a macro
-@code{R_VERSION} giving the version number encoded as an integer, plus a
-macro @code{R_Version} to do the encoding.  This can be used to test if
-the version of @R{} is late enough, or to include back-compatibility
-features.  For protection against earlier versions of @R{} which did not
-have this macro, use a construction such as
+Header file @file{Rversion.h} (@strong{not} included by @file{R.h} as from
+@R{} 1.6.0) defines a macro @code{R_VERSION} giving the version number
+encoded as an integer, plus a macro @code{R_Version} to do the encoding.
+This can be used to test if the version of @R{} is late enough, or to
+include back-compatibility features.  For protection against earlier
+versions of @R{} which did not have this macro, use a construction such
+as
 
 @smallexample
 @group

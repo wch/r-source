@@ -14,6 +14,12 @@ NEW FEATURES
     o   New operator :: in the grammar, for namespaces.
 
 
+C-LEVEL FACILITIES
+
+    o	Rversion.h is no longer automatically included by R.h.
+	Include it explicitly is you need it.
+
+
 BUG FIXES
 
 
