@@ -428,3 +428,11 @@ Date: Tue, 22 Jan 2002 10:24:34 +0100 (CET)
 Subject: compile problem with bessel_i.c on IRIX64 flexor 6.5 10100655 IP35 (uname -a)
 From: Walter Tautz <wtautz@math.uwaterloo.ca>
 Date: Tue, 22 Jan 2002 10:05:20 -0500 (EST)
+* PR# 1276 *
+Subject: Do not wait any longer   
+From: <adam5143@polbox.com>
+Date: Wed, 23 Jan 2002 07:38:39
+* PR# 1277 *
+Subject: Maritime Newsletter (Week 4)
+From: Marine Digital Inc<newsletter@marinedigital.com>
+Date: Thu, 24 Jan 2002 03:03:58 +0900
