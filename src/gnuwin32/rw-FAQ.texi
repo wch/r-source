@@ -117,25 +117,27 @@ The information here applies only to recent versions of R for Windows,
 
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base}
-directory and collect the files you need. You will need at least the
-files
+directory and collect the files you need.  There are three
+possibilities.
 
+1) @code{SetupR.exe}, is about 15Mb and gives a complete installation.
+
+2) Directory @code{miniR} contains @code{miniR.exe} and several files
+@code{mini-?.bin}.  You can put  @code{miniR.exe} and @code{mini-1.bin}
+on one floppy and the remaining @code{mini-?.bin} on a floppy each.
+
+3) Via zip files in directory @code{zip}.  You will need at least the
+files
 @example
       @RWVER@b1.zip @RWVER@b2.zip
       @RWVER@h.zip (text help) or @RWVER@ch.zip (Compiled HTML help)
 @end example
 @noindent
-and you may want @code{@RWVER@wh.zip} (the Windows help files) or
-@code{@RWVER@w.zip} (the HTML format help files), @code{@RWVER@l.zip} (the
-LaTeX format help files, used for offline printing), or
-@code{@RWVER@d?.zip} (the draft manuals, in PDF).
+and you may want @code{@RWVER@w.zip} (the HTML format help files),
+@code{@RWVER@l.zip} (the LaTeX format help files, used for offline
+printing), or @code{@RWVER@d?.zip} (the draft manuals, in PDF).
 
 Optionally, you can download the installer, @code{rwinst.exe}.
-
-Alternatively, two installers based on Inno Setup are available.  One,
-@code{SetupR.exe}, is about 10Mb and gives a complete installation. The
-other, @code{miniR.exe}, is a small installation and comes in five files
-which fit onto four floppy discs.
 
 
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
@@ -158,7 +160,7 @@ project's @code{unzip}). All the files will unpack into a directory
 @code{@RWVER@}.
 
 Choose a working directory for R. Unless you used @code{SetupR.exe} or
-@code{miniR.exe} (which did this for you), make a shortcut to
+@code{miniR.exe} (which did this for you by default), make a shortcut to
 @code{@RWVER@\bin\Rgui.exe} on your desktop or somewhere on the Start
 menu file tree. Right-click the shortcut, select Properties... and
 change the `Start in' field to your working directory.
@@ -175,7 +177,7 @@ environment variables at the end of the Target field, for example
 Just double-click on the shortcut you prepared at installation.
 
 If you want to set up another project, make a new shortcut or use the
-existing one, and change the `Start in' field of the Properties.
+existing one and change the `Start in' field of the Properties.
 
 @node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, How do I run it?, Installation and Usage
 @section There seems to be a limit on the memory it uses!
@@ -218,7 +220,7 @@ It depends what you want to print.
 otherwise the whole console or pager contents.)
 @item You can print help files from the pager or HTML browser.
 @item If you have configured @code{RHOME\bin\helpPRINT.bat} and have
-latex installed you can print help files by @code{help(fn_name, offline=TRUE)}.
+LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @end itemize
 
 @node Can I use R BATCH?, Can I use @RWVER@ with ESS and emacs?, How do I print from R?, Installation and Usage
@@ -327,8 +329,9 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 @url{http://cran.r-project.org/bin/windows/contrib/ReadMe}
 
 If there is not a pre-compiled version or that is not up-to-date or you
-prefer compiling from source, get @code{@RWVER@.zip} from the
-distribution (see Q1.1) and unpack it in @code{@RWVER@}.  Then read the
+prefer compiling from source, get @code{@RWVER@sp.zip} from the
+distribution (see Q1.1; you may already have installed this from
+@code{SetupR.exe}) and unpack it in @code{@RWVER@}.  Then read the file
 @file{readme.packages}.  You will need to collect and install several
 tools to use this.  Once you have done so, just run @code{Rcmd INSTALL
 pkgname}. To check the package (run all the examples on its help pages
@@ -361,12 +364,12 @@ library(MASS, lib.loc="p:/mylibs")
 @end example
 
 How you set an environment variable is system specific: in Windows 9x
-you can set them in autoexec.bat or in an MS-DOS window from which you
-launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000 you can use
-the control panel or the properties of `My Computer'.  Under Windows Me
-you need to use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu).  You can also set them on
-the command line, for example in the shortcut you could have
+you can set them in @file{autoexec.bat} or in an MS-DOS window from
+which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000 you
+can use the control panel or the properties of `My Computer'.  Under
+Windows Me you need to use the System Configuration Utility (under
+Programs, Accessories, System Tools on the Start menu).  You can also
+set them on the command line, for example in the shortcut you could have
 
 @example
 path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
@@ -388,7 +391,7 @@ the inherited environment.
 
 HTML help only works for packages installed in @file{@RWVER@\library}.
 
-To update the HTML help files after you have installed a pre-compiled
+To update the HTML indices after you have installed a pre-compiled
 package, run at the R prompt.
 
 @example
@@ -433,14 +436,15 @@ compiled too long ago.
 @section Package TclTk does not work.
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
-@code{demo(tkttest)}) you need to have Tcl installed.  Download
-@file{tcl832.exe} (or use @file{tcl831.exe} if you already have it) from
-@url{dev.scriptics.com} and install it. (That will put the @file{bin}
-directory containing the Tcl and Tk DLLs in your path).  You then need
-to set the environment variable @code{TCL_LIBRARY}, to something like
-@code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup code for the
-package will warn you if this is unset, and Q3.2 explains how to set
-them.  NB: do not quote the path, even if as here it contains spaces.)
+@code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
+installed.  Download @file{tcl832.exe} (or use @file{tcl831.exe} if you
+already have it) from @url{dev.scriptics.com} and install it. (That will
+put the @file{bin} directory containing the Tcl and Tk DLLs in your
+path).  You then need to set the environment variable
+@code{TCL_LIBRARY}, to something like @code{c:/Program
+Files/Tcl/lib/tcl8.3}.  (The startup code for the package will warn you
+if this is unset, and Q3.2 explains how to set them.  NB: do not quote
+the path, even if as here it contains spaces.)
 
 @node  Hyperlinks in Compiled HTML do not work.,  , Package TclTk does not work., Packages
 @section Hyperlinks in Compiled HTML sometimes do not work.
@@ -448,9 +452,8 @@ them.  NB: do not quote the path, even if as here it contains spaces.)
 Unfortunately, hyperlinks in compiled HTML files used from R are
 interpreted relative to the current working directory of the R process,
 not relative to the @code{pkg.chm} file.  This was not discovered until
-@code{rw1021}, so only files made since that version are working
-correctly.  Remake the package under @code{rw1021} or later to cure
-this.
+@code{rw1021}, files made before that version work incorrectly.  Remake
+the package to cure this.
 
 
 @newchap{}
@@ -755,7 +758,7 @@ If you have an X server available on the PC, there is a version of
 @code{DDD} available that runs under the cygwin emulation layer (follow
 the links at @uref{http://www.cygwin.com}) and provides a graphical user
 interface to @code{gdb}.  Another (Windows-native) GUI for @code{gdb} is
-@code{Insight}, part of the latest @code{cygwin} version of @code{gdb}
+@code{Insight}, part of the latest @code{cygwin} version of @code{gdb}.
 
 @node  How do I include C++ code?, The output from my C code disappears., How do I debug code that I have compiled and dyn.load-ed?, Building from Source
 @section  How do I include C++ code?
@@ -847,7 +850,7 @@ Last edited 2001 April 19 by Professor B. D. Ripley
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 April 19 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 April 29 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

@@ -229,28 +229,32 @@ officially).</p>
 "http://cran.r-project.org/mirrors.html">
 http://cran.r-project.org/mirrors.html</a> for a list), navigate to
 the <code>bin/windows/base</code> directory and collect the files
-you need. You will need at least the files</p>
+you need. There are three possibilities.</p>
+
+<p>1) <code>SetupR.exe</code>, is about 15Mb and gives a complete
+installation.</p>
+
+<p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
+and several files <code>mini-?.bin</code>. You can put <code>
+miniR.exe</code> and <code>mini-1.bin</code> on one floppy and the
+remaining <code>mini-?.bin</code> on a floppy each.</p>
+
+<p>3) Via zip files in directory <code>zip</code>. You will need at
+least the files</p>
 
 <pre>
       rw1030b1.zip rw1030b2.zip
       rw1030h.zip (text help) or rw1030ch.zip (Compiled HTML help)
 </pre>
 
-<p>and you may want <code>rw1030wh.zip</code> (the Windows help
-files) or <code>rw1030w.zip</code> (the HTML format help files),
-<code>rw1030l.zip</code> (the LaTeX format help files, used for
-offline printing), or <code>rw1030d?.zip</code> (the draft manuals,
-in PDF).</p>
+<p>and you may want <code>rw1030w.zip</code> (the HTML format help
+files), <code>rw1030l.zip</code> (the LaTeX format help files, used
+for offline printing), or <code>rw1030d?.zip</code> (the draft
+manuals, in PDF).</p>
 
 <p>Optionally, you can download the installer, <code>
-rwinst.exe</code>.</p>
-
-<p>Alternatively, two installers based on Inno Setup are available.
-One, <code>SetupR.exe</code>, is about 10Mb and gives a complete
-installation. The other, <code>miniR.exe</code>, is a small
-installation and comes in five files which fit onto four floppy
-discs. <a name="How%20do%20I%20install%20R%20for%20Windows%3f">
-</a></p>
+rwinst.exe</code>. <a name=
+"How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
 
 <h2>2.2 How do I install R for Windows?</h2>
 
@@ -272,11 +276,11 @@ structure: we recommend the INFO-ZIP project's <code>unzip</code>).
 All the files will unpack into a directory <code>rw1030</code>.</p>
 
 <p>Choose a working directory for R. Unless you used <code>
-SetupR.exe</code> or <code>miniR.exe</code> (which did this for
-you), make a shortcut to <code>rw1030\bin\Rgui.exe</code> on your
-desktop or somewhere on the Start menu file tree. Right-click the
-shortcut, select Properties... and change the `Start in' field to
-your working directory.</p>
+SetupR.exe</code> or <code>miniR.exe</code> (which did this for you
+by default), make a shortcut to <code>rw1030\bin\Rgui.exe</code> on
+your desktop or somewhere on the Start menu file tree. Right-click
+the shortcut, select Properties... and change the `Start in' field
+to your working directory.</p>
 
 <p>You may also want to add command-line arguments at the end of
 the Target field, for example <code>--sdi
@@ -291,7 +295,7 @@ R_LIBS=e:/R/library</code>. <a name="How%20do%20I%20run%20it%3f">
 installation.</p>
 
 <p>If you want to set up another project, make a new shortcut or
-use the existing one, and change the `Start in' field of the
+use the existing one and change the `Start in' field of the
 Properties. <a name=
 "There%20seems%20to%20be%20a%20limit%20on%20the%20memory%20it%20uses!">
 </a></p>
@@ -340,7 +344,7 @@ otherwise the whole console or pager contents.)</li>
 <li>You can print help files from the pager or HTML browser.</li>
 
 <li>If you have configured <code>RHOME\bin\helpPRINT.bat</code> and
-have latex installed you can print help files by <code>
+have LaTeX installed you can print help files by <code>
 help(fn_name, offline=TRUE)</code>.</li>
 </ul>
 
@@ -456,14 +460,15 @@ interface to package installation.</p>
 &lt;<code>http://cran.r-project.org/bin/windows/contrib/ReadMe</code>&gt;</p>
 
 <p>If there is not a pre-compiled version or that is not up-to-date
-or you prefer compiling from source, get <code>rw1030.zip</code>
-from the distribution (see Q1.1) and unpack it in <code>
-rw1030</code>. Then read the <code>readme.packages</code>. You will
-need to collect and install several tools to use this. Once you
-have done so, just run <code>Rcmd INSTALL pkgname</code>. To check
-the package (run all the examples on its help pages and in its test
-suite, if any) use <code>Rcmd check pkgname</code>: see the
-`Writing R Extensions' manual. <a name=
+or you prefer compiling from source, get <code>rw1030sp.zip</code>
+from the distribution (see Q1.1; you may already have installed
+this from <code>SetupR.exe</code>) and unpack it in <code>
+rw1030</code>. Then read the file <code>readme.packages</code>. You
+will need to collect and install several tools to use this. Once
+you have done so, just run <code>Rcmd INSTALL pkgname</code>. To
+check the package (run all the examples on its help pages and in
+its test suite, if any) use <code>Rcmd check pkgname</code>: see
+the `Writing R Extensions' manual. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1030%5clibrary%20directory">
 </a></p>
 
@@ -496,13 +501,13 @@ library(MASS, lib.loc="p:/mylibs")
 </pre>
 
 <p>How you set an environment variable is system specific: in
-Windows 9x you can set them in autoexec.bat or in an MS-DOS window
-from which you launch <code>Rgui</code> / <code>Rterm</code>. Under
-Windows NT/2000 you can use the control panel or the properties of
-`My Computer'. Under Windows Me you need to use the System
-Configuration Utility (under Programs, Accessories, System Tools on
-the Start menu). You can also set them on the command line, for
-example in the shortcut you could have</p>
+Windows 9x you can set them in <code>autoexec.bat</code> or in an
+MS-DOS window from which you launch <code>Rgui</code> / <code>
+Rterm</code>. Under Windows NT/2000 you can use the control panel
+or the properties of `My Computer'. Under Windows Me you need to
+use the System Configuration Utility (under Programs, Accessories,
+System Tools on the Start menu). You can also set them on the
+command line, for example in the shortcut you could have</p>
 
 <pre>
 path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
@@ -526,7 +531,7 @@ system.</h2>
 <p>HTML help only works for packages installed in <code>
 rw1030\library</code>.</p>
 
-<p>To update the HTML help files after you have installed a
+<p>To update the HTML indices after you have installed a
 pre-compiled package, run at the R prompt.</p>
 
 <pre>
@@ -576,27 +581,26 @@ long ago. <a name="Package%20TclTk%20does%20not%20work."></a></p>
 <h2>3.6 Package TclTk does not work.</h2>
 
 <p>For package <code>tcltk</code> to work (try <code>
-demo(tkdensity)</code> or <code>demo(tkttest)</code>) you need to
-have Tcl installed. Download <code>tcl832.exe</code> (or use <code>
-tcl831.exe</code> if you already have it) from
-&lt;<code>dev.scriptics.com</code>&gt; and install it. (That will
-put the <code>bin</code> directory containing the Tcl and Tk DLLs
-in your path). You then need to set the environment variable <code>
-TCL_LIBRARY</code>, to something like <code>c:/Program
-Files/Tcl/lib/tcl8.3</code>. (The startup code for the package will
-warn you if this is unset, and Q3.2 explains how to set them. NB:
-do not quote the path, even if as here it contains spaces.) <a
-name="Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work.">
-</a></p>
+demo(tkdensity)</code> or <code>demo(tkttest)</code> after <code>
+library(tcltk)</code>) you need to have Tcl installed. Download
+<code>tcl832.exe</code> (or use <code>tcl831.exe</code> if you
+already have it) from &lt;<code>dev.scriptics.com</code>&gt; and
+install it. (That will put the <code>bin</code> directory
+containing the Tcl and Tk DLLs in your path). You then need to set
+the environment variable <code>TCL_LIBRARY</code>, to something
+like <code>c:/Program Files/Tcl/lib/tcl8.3</code>. (The startup
+code for the package will warn you if this is unset, and Q3.2
+explains how to set them. NB: do not quote the path, even if as
+here it contains spaces.) <a name=
+"Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work."></a></p>
 
 <h2>3.7 Hyperlinks in Compiled HTML sometimes do not work.</h2>
 
 <p>Unfortunately, hyperlinks in compiled HTML files used from R are
 interpreted relative to the current working directory of the R
 process, not relative to the <code>pkg.chm</code> file. This was
-not discovered until <code>rw1021</code>, so only files made since
-that version are working correctly. Remake the package under <code>
-rw1021</code> or later to cure this.</p>
+not discovered until <code>rw1021</code>, files made before that
+version work incorrectly. Remake the package to cure this.</p>
 
 <hr>
 <a name="Windows%20Features"></a> 
@@ -907,7 +911,7 @@ layer (follow the links at <a href="http://www.cygwin.com">
 http://www.cygwin.com</a>) and provides a graphical user interface
 to <code>gdb</code>. Another (Windows-native) GUI for <code>
 gdb</code> is <code>Insight</code>, part of the latest <code>
-cygwin</code> version of <code>gdb</code> <a name=
+cygwin</code> version of <code>gdb</code>. <a name=
 "How%20do%20I%20include%20C++%20code%3f"></a></p>
 
 <h2>7.4 How do I include C++ code?</h2>

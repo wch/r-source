@@ -9,8 +9,8 @@ rw1030
 
 SetupR.exe now includes the `recommended' packages.
 
-New menu `Packages' with items to load packages, and to install
-packages from CRAN or from local zip files.
+New menu `Packages' with items to load packages, to install
+packages from CRAN or from local zip files, and to update packages.
 
 help.start() now lists all packages in all libraries, but the
 search index is still confined to the system library.
