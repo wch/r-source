@@ -8,6 +8,9 @@
 R_CMD="${R_HOME}/bin/Rcmd"
 export R_CMD
 
+R_OSTYPE="unix"
+export R_OSTYPE
+
 ## Add `share/perl' to the perl library path.
 if test -n "${PERL5LIB}"; then
   PERL5LIB="${R_HOME}/share/perl:${PERL5LIB}"
