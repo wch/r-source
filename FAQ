@@ -950,7 +950,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Linear or cubic spline interpolation for irregularly gridded data.
 
 *ash*
-     Programs for 1D, 2D and 3D density estimation.
+     Programs for 1D and 2D density estimation.
 
 *bindata*
      Generation of correlated artificial binary data.
