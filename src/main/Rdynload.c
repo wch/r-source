@@ -1025,6 +1025,7 @@ R_getDllTable()
 	for(i = 0; i < CountDLL; i++) {
 		SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
 	}
+	setAttrib(ans, R_ClassSymbol, mkString("DLLInfoList"));
 	UNPROTECT(1);
 	return(ans);
 }
@@ -1140,7 +1141,7 @@ R_getRoutineSymbols(NativeSymbolType type, DllInfo *info)
 	SET_VECTOR_ELT(ans, i, createRSymbolObject(NULL,  NULL, &sym));
     }
 
-
+    setAttrib(ans, R_ClassSymbol, mkString("NativeRoutineList"));
     UNPROTECT(1);
     return(ans);
 }
@@ -1176,6 +1177,7 @@ R_getRegisteredRoutines(SEXP dll)
 	SET_STRING_ELT(snames, i, mkChar(names[i]));
     }
     setAttrib(ans, R_NamesSymbol, snames);
+
 
     UNPROTECT(2);
     return(ans);

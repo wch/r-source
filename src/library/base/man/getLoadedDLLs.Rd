@@ -1,5 +1,7 @@
 \name{getLoadedDLLs}
 \alias{getLoadedDLLs}
+\alias{print.DLLInfo}
+\alias{print.DLLInfoList}
 \title{Get DLLs Loaded in Current Session}
 \description{
   This function provides a way to get a list of all the

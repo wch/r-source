@@ -1,5 +1,7 @@
 \name{getDLLRegisteredRoutines}
 \alias{getDLLRegisteredRoutines}
+\alias{print.NativeRoutineList}
+\alias{print.DLLRegisteredRoutines}
 \title{Reflectance Information for C/Fortran routines in a DLL}
 \description{
   This function allows us to query the set of routines
