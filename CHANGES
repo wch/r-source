@@ -69,6 +69,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Regular expression matching is now done with system versions
+	of the regexp library.  This should fix compilation problems
+	on some platforms.
+
     o	"approx" and "approxfun", have had some minor adjustments.
 	which fix the interpretation of the rule= argument.  The
 	code for piecewise constant case is now internal C code

@@ -18,6 +18,9 @@ src/unix/rotated.[ch]
 
 	Copyright (c) 1993 Alan Richardson
 
+src/math/pbeta.c
+
+	Copyright 1984, 1995 by Stephen L. Moshier
 
 lib/afm/*
 

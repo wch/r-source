@@ -65,6 +65,8 @@ In the short term we hope to create a small portable free system
 which will provide most of the functionality of S and perhaps some
 extensions.
 
+Future versions will see R converted to GNU coding standards.
+
 
 5. SOME DIFFERENCES BETWEEN R AND S
 
