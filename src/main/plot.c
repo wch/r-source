@@ -340,6 +340,81 @@ SEXP FixupVFont(SEXP vfont) {
     return ans;
 }
 
+/* list("label", cex=, col=, font=, vfont=) */
+
+static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
+		    int *pcol, double *pcex, int *pfont, int*pvfont)
+{
+    int i, n, col, font, vfont, nprot;
+    double cex;
+    SEXP txt, nms;
+
+    txt   = R_NilValue;
+    cex   = NA_REAL;	
+    col   = NA_INTEGER;
+    font  = NA_INTEGER;
+    vfont = NA_INTEGER;
+    PROTECT(txt);
+
+    switch (TYPEOF(spec)) {
+    case LANGSXP:
+	UNPROTECT(1);
+	PROTECT(txt = coerceVector(spec, EXPRSXP));
+	break;
+    case VECSXP:
+	if (length(spec) == 0) {
+	    *ptxt = R_NilValue;
+	}
+	else {
+	    nms = getAttrib(spec, R_NamesSymbol);
+	    n = length(nms);
+	    for (i = 0; i < n; i++) {
+		if (!strcmp(CHAR(STRING(nms)[i]), "cex")) {
+		    cex = asReal(VECTOR(spec)[i]);
+		}
+		else if (!strcmp(CHAR(STRING(nms)[i]), "col")) {
+		    col = asInteger(FixupCol(VECTOR(spec)[i], NA_INTEGER));
+		}
+		else if (!strcmp(CHAR(STRING(nms)[i]), "font")) {
+		    font = asInteger(FixupFont(VECTOR(spec)[i], NA_INTEGER));
+		}
+		else if (!strcmp(CHAR(STRING(nms)[i]), "vfont")) {
+		    vfont = asInteger(FixupVFont(VECTOR(spec)[i]));
+		}
+		else if (!strcmp(CHAR(STRING(nms)[i]), "")) {
+		    txt = VECTOR(spec)[i];
+                    if (TYPEOF(txt) == LANGSXP) {
+                        UNPROTECT(1);
+                        PROTECT(txt = coerceVector(txt, EXPRSXP));
+                    }
+		    else if (!isExpression(txt)) {
+			UNPROTECT(1);
+			PROTECT(txt = coerceVector(txt, STRSXP));
+		    }
+		}
+		else errorcall(call, "invalid graphics parameter");
+	    }
+	}
+	break;
+    case STRSXP:
+    case EXPRSXP:
+	txt = spec;
+	break;
+    default:
+	txt = coerceVector(spec, STRSXP);
+	break;
+    }
+    UNPROTECT(1);
+    if (txt != R_NilValue) {
+	*ptxt = txt;	
+	if (R_FINITE(cex))       *pcex   = cex;
+	if (col != NA_INTEGER)   *pcol   = col;
+	if (font != NA_INTEGER)  *pfont  = font;
+	if (vfont != NA_INTEGER) *pvfont = vfont;
+    }
+}
+
+
     /* GRAPHICS FUNCTION ENTRY POINTS */
 
 
@@ -833,6 +908,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
+    dd->gp.lty = LTY_SOLID;
 
     /* override par("xpd") and force clipping to figure region */
     /* NOTE: don't override to _reduce_ clipping region */
@@ -1713,7 +1789,10 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     txt = CAR(args);
-    if (isNull(txt) || LENGTH(txt) <= 0)
+    if (!isExpression(txt))
+	txt = coerceVector(txt, STRSXP);
+    PROTECT(txt);
+    if (length(txt) <= 0)
 	errorcall(call, "zero length \"text\" specified");
     args = CDR(args);
 
@@ -1835,7 +1914,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(0, dd);
 
     GRestorePars(dd);
-    UNPROTECT(6);
+    UNPROTECT(7);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
     if (call != R_NilValue)
@@ -1918,8 +1997,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "too few arguments");
 
     /* Arg1 : text= */
-    /* This has been coerced with char.or.expr() */
     text = CAR(args);
+    if (!isExpression(text))
+	text = coerceVector( CAR(args), STRSXP);
+    PROTECT(text);
     n = ntext = length(text);
     if (ntext <= 0)
 	errorcall(call, "zero length \"text\" specified");
@@ -2044,7 +2125,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.new = gpnewsave;
 	dd->dp.new = dpnewsave;
     }
-    UNPROTECT(8);
+    UNPROTECT(9);
 
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
@@ -2053,11 +2134,15 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+
+/* title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL, ...)
+   annotation for plots. */
+
 SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* title(main=NULL, sub=NULL, xlab=NULL, ylab=NULL, ...) */
     SEXP Main, xlab, ylab, sub;
-    double adj, offset;
+    double adj, cex, offset;
+    int col, font, vfont;
     int i, n;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -2097,9 +2182,13 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GMode(1, dd);
     if (Main != R_NilValue) {
-	dd->gp.cex = dd->gp.cexbase * dd->gp.cexmain;
-	dd->gp.col = dd->gp.colmain;
-	dd->gp.font = dd->gp.fontmain;
+	cex = dd->gp.cexmain;
+	col = dd->gp.colmain;
+	font = dd->gp.fontmain;
+	GetTextArg(call, Main, &Main, &col, &cex, &font, &vfont);
+	dd->gp.col = col;
+	dd->gp.cex = dd->gp.cexbase * cex;
+	dd->gp.font = font;
 	if (isExpression(Main)) {
 	    GMathText(xNPCtoUsr(adj, dd), 0.5*dd->gp.mar[2], MAR3,
 		      VECTOR(Main)[0], adj, 0.5, 0.0, dd);
@@ -2113,9 +2202,13 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (sub != R_NilValue) {
-	dd->gp.cex = dd->gp.cexbase * dd->gp.cexsub;
-	dd->gp.col = dd->gp.colsub;
-	dd->gp.font = dd->gp.fontsub;
+	cex = dd->gp.cexsub;
+	col = dd->gp.colsub;
+	font = dd->gp.fontsub;
+	GetTextArg(call, sub, &sub, &col, &cex, &font, &vfont);
+	dd->gp.col = col;
+	dd->gp.cex = dd->gp.cexbase * cex;
+	dd->gp.font = font;
 	if (isExpression(sub))
 	    GMMathText(VECTOR(sub)[0], 1, dd->gp.mgp[0] + 1.0, 0,
 		       xNPCtoUsr(adj, dd), 0, dd);
@@ -2127,9 +2220,13 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (xlab != R_NilValue) {
-	dd->gp.cex = dd->gp.cexbase * dd->gp.cexlab;
-	dd->gp.col = dd->gp.collab;
-	dd->gp.font = dd->gp.fontlab;
+	cex = dd->gp.cexlab;
+	col = dd->gp.collab;
+	font = dd->gp.fontlab;
+	GetTextArg(call, xlab, &xlab, &col, &cex, &font, &vfont);
+	dd->gp.cex = dd->gp.cexbase * cex;
+	dd->gp.col = col;
+	dd->gp.font = font;
 	if (isExpression(xlab))
 	    GMMathText(VECTOR(xlab)[0], 1, dd->gp.mgp[0], 0,
 		       xNPCtoUsr(adj, dd), 0, dd);
@@ -2141,9 +2238,13 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (ylab != R_NilValue) {
-	dd->gp.cex = dd->gp.cexbase * dd->gp.cexlab;
-	dd->gp.col = dd->gp.collab;
-	dd->gp.font = dd->gp.fontlab;
+	cex = dd->gp.cexlab;
+	col = dd->gp.collab;
+	font = dd->gp.fontlab;
+	GetTextArg(call, ylab, &ylab, &col, &cex, &font, &vfont);
+	dd->gp.cex = dd->gp.cexbase * cex;
+	dd->gp.col = col;
+	dd->gp.font = font;
 	if (isExpression(ylab))
 	    GMMathText(VECTOR(ylab)[0], 2, dd->gp.mgp[0], 0,
 		       yNPCtoUsr(adj, dd), 0, dd);
@@ -2151,7 +2252,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    n = length(ylab);
 	    for (i = 0; i < n; i++)
 		GMtext(CHAR(STRING(ylab)[i]), 2, dd->gp.mgp[0] - i, 0,
-		   yNPCtoUsr(adj, dd), 0, dd);
+		       yNPCtoUsr(adj, dd), 0, dd);
 	}
     }
     GMode(0, dd);

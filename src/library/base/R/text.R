@@ -1,9 +1,3 @@
-as.char.or.expr <- function(x) {
-    if (is.expression(x)) x 
-    else if (is.call(x)) as.expression(x)
-    else as.character(x)
-}
-
 text <- function(x, ...) UseMethod("text")
 text.default <- function(x, y = NULL, labels = seq(along = x),
                          adj = NULL, pos = NULL, offset = 0.5, 
@@ -23,6 +17,6 @@ text.default <- function(x, y = NULL, labels = seq(along = x),
         vfont <- c(typeface-1, fontindex-1)
     }
     .Internal(text(xy.coords(x,y, recycle=TRUE),
-		   as.char.or.expr(labels), adj, pos, offset, vfont,
+		   labels, adj, pos, offset, vfont,
 		   cex, col, font, xpd, ...))
 }
