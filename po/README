@@ -6,12 +6,7 @@ then run
 
 make update-po
 
-to recreate R.pot.  You then need to update the en.po file here by
-
-msgmerge en.po R.pot > en.po.new
-
-and after checking, copy en.po.new over en.po.  Then delete stamp-po and run
-`make', and a new en.gmo should be created.
+to recreate R.pot and update the automated `translations'.
 
 To add a new translation, add the lang.po file to this directory and add
 the language to LINGUAS.  Hopefully `make' will do the rest 
@@ -21,12 +16,12 @@ the language to LINGUAS.  Hopefully `make' will do the rest
 Windows RGui translations
 =========================
 
-These are contained in RGui.pot, created by running
+These are contained in RGui.pot, created by running 'make RGui.pot-update'
+(called by make update-po).
 
-cd ../src/gnuwin32
-xgettext --keyword=G_ --keyword=GN_ -o ../../po/RGui.pot *.c graphapp/gmenus.c
+Translations should be called RGui-ll.po for language 'll'.
 
-To install a translation, add its .gmo file to the RGUI-CATALOGS macro
+To add a translation, add its .gmo file to the RGUI-CATALOGS macro
 Makefile.win, and both the .po and .gmo files to the RGUI-CATALOGS
-macro in Makefile.in.in.  To avoid confusion, call the compiled
-translation for language 'll' RGui-ll.gmo.
+macro in Makefile.in.in: it will then be automatically distributed and
+installed.

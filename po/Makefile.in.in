@@ -119,6 +119,28 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  fi; \
 	}
 
+RGui.pot-update:
+	(cd $(top_srcdir)/src/gnuwin32; $(XGETTEXT) --default-domain=RGui \
+	  --keyword=G_ --keyword=GN_ \
+	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
+	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
+	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
+	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c graphapp/gmenus.c) > RGui.po
+	test ! -f RGui.po || { \
+	  if test -f $(srcdir)/RGui.pot; then \
+	    sed -f remove-potcdate.sed < $(srcdir)/RGui.pot > RGui.1po && \
+	    sed -f remove-potcdate.sed < RGui.po > RGui.2po && \
+	    if cmp RGui.1po RGui.2po >/dev/null 2>&1; then \
+	      rm -f RGui.1po RGui.2po RGui.po; \
+	    else \
+	      rm -f RGui.1po RGui.2po $(srcdir)/RGui.pot && \
+	      mv RGui.po $(srcdir)/RGui.pot; \
+	    fi; \
+	  else \
+	    mv RGui.po $(srcdir)/RGui.pot; \
+	  fi; \
+	}
+
 # This rule has no dependencies: we don't need to update $(DOMAIN).pot at
 # every "make" invocation, only create it when it is missing.
 # Only "make $(DOMAIN).pot-update" or "make update-po" will force an update.
@@ -279,6 +301,7 @@ update-po: Makefile
 	$(MAKE) $(DOMAIN).pot-update
 	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
 	$(MAKE) update-gmo
+	$(MAKE) RGui.pot-update
 
 # General rule for creating PO files.
 

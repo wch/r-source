@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-03 18:59+0000\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-02-05 13:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgid "Insufficient memory. Please close the console"
 msgstr ""
 
 #: console.c:1592 console.c:1643 preferences.c:216
-#, possible-c-format
+#, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
 "Using system fixed font"
@@ -349,7 +349,7 @@ msgid "Unable to create pager window"
 msgstr ""
 
 #: preferences.c:223
-#, possible-c-format
+#, c-format
 msgid ""
 "Font %s-%d-%d has variable width.\n"
 "Using system fixed font"
@@ -396,7 +396,7 @@ msgid "Name of data frame or matrix"
 msgstr ""
 
 #: rui.c:290
-#, possible-c-format
+#, c-format
 msgid "'%s' cannot be found"
 msgstr ""
 
@@ -417,7 +417,7 @@ msgid "Apropos"
 msgstr ""
 
 #: rui.c:807
-#, possible-c-format
+#, c-format
 msgid "Error at line %d of file %s"
 msgstr ""
 
@@ -614,7 +614,7 @@ msgid "'mname' is limited to 100 chars"
 msgstr ""
 
 #: rui.c:1227
-#, possible-c-format
+#, c-format
 msgid "menu %s does not exist"
 msgstr ""
 
