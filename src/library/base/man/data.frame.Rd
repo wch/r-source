@@ -76,7 +76,7 @@ row.names(x) <- value
   \code{row.names} can be used to set and retrieve the row names of a
   data frame, similarly to \code{\link{rownames}} for arrays (and
   it is a generic function that calls \code{rownames} for an
-  array argument.}
+  array argument).}
 
   \code{plot.data.frame}, a method of the \code{\link{plot}} generic,
   uses \code{\link{stripchart}} for \emph{one} variable,
