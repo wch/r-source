@@ -1941,7 +1941,8 @@ static BBOX RenderDelim(int which, double dist, int draw)
     double axisHeight = TeX(sigma22);
 
     switch(which) {
-    case '.':
+    case '.': 
+	SetFont(prev);
 	return NullBBox();
 	break;
     case '|':
