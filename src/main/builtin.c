@@ -485,8 +485,8 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	PROTECT(args = evalList(args, rho));
 
-	if (!isString(CAR(args)))
-		error("assign: invalid argument\n");
+	if (!isString(CAR(args)) || length(CAR(args)) == 0)
+		error("assign: invalid first argument\n");
 	else
 		name = install(CHAR(STRING(CAR(args))[0]));
 	PROTECT(val = eval(CADR(args), rho));

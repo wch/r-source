@@ -664,7 +664,7 @@ SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	s = CAR(args);
 	t = CADR(args);
 
-	if (!isString(t))
+	if (!isString(t) || length(t) == 0)
 		error("attribute name must be of mode character\n");
 
 	return getAttrib(s, install(CHAR(STRING(t)[0])));

@@ -678,6 +678,9 @@ SEXP install(char *name)
 	SEXP sym;
 	int i;
 
+	if(*name == '\0')
+		error("attempt to use zero-length variable name\n");
+
 	i = hashpjw(name);
 
 		/* check to see if the symbol is already there */
