@@ -27,7 +27,7 @@ help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
 
 library <- function(name, help, lib.loc = .lib.loc,
 		    character.only = FALSE, logical.return = FALSE) {
-  .not.yet.implemented()
+  .NotYetImplemented()
 }
 
 library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc) {
@@ -54,9 +54,7 @@ library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc) {
 system <- function(call, intern = FALSE)
   .Internal(system(call, intern))
 
-system.date <- function() {
-    .not.yet.implemented()
-}
+system.date <- function() .NotYetImplemented()
 
 system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
 	FILES <- paste(t(outer(lib, pkg, paste, sep = "/")),
@@ -64,14 +62,10 @@ system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
 	.Internal(system.file(FILES))
 }
 
-system.time <- function(expr) {
-  .not.yet.implemented()
-}
+system.time <- function(expr) .NotYetImplemented()
 
 tempfile <- function(pattern = "file") {
   .Internal(tempfile(pattern))
 }
 
-unlink <- function(x) {
-  .not.yet.implemented()
-}
+unlink <- function(x) .NotYetImplemented()

@@ -1,1 +1,1 @@
-symbols <- function(...) .not.yet.implemented()
+symbols <- function(...) .NotYetImplemented()

@@ -1,4 +1,4 @@
-.not.yet.implemented <- function(...) {
-  stop(paste("Sorry, `", as.character(sys.call(sys.parent())[[1]]),
-	     "' is not implemented yet", sep = ""))
+.NotYetImplemented <- function() {
+  stop(paste("`", as.character(sys.call(sys.parent())[[1]]), "' ",
+             "is not implemented yet", sep = ""))
 }

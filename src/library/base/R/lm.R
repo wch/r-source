@@ -515,4 +515,4 @@ effects.lm <- function(z, term) {
 	tapply(effects,z$model.frame[factors & pattern!=0],mean,na.rm=TRUE)
 }
 
-plot.lm <- function(...) .not.yet.implemented()
+plot.lm <- function(...) .NotYetImplemented()
