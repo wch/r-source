@@ -150,4 +150,7 @@ none
 
 Directory:  incoming
 
-none
+* PR# 455 *
+Subject: fisher.test() in ctest or perhaps uniroot()
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Thu, 24 Feb 2000 08:35:53 -0800 (PST)
