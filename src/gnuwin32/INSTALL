@@ -177,7 +177,9 @@ will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
 so set WINHELP to NO.)
 
 Packages can be made in the same way as natively: see the file
-readme.packages.
+readme.packages.  You will need to set STAMP=NO, e.g.
+
+	make STAMP=NO pkg-foo
 
 
 Building the Manuals
@@ -209,6 +211,8 @@ To make HTML versions of the manuals (not the Reference Manual) use
 
 	cd ../../doc/manuals
 	make -f Makefile.win html
+
+This make use of tidy.exe, from http://www.w3c.org/.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.

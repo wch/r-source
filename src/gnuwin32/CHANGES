@@ -16,7 +16,7 @@ aware), but for best results should be re-compiled.
 This release has a number of changes to bring its behaviour closer to that 
 of Unix versions of R.
 
--   The default font for graphics (window(), win.printer(), win.metafile())
+-   The default font for graphics (windows(), win.printer(), win.metafile())
     is now Arial: the font numbers for the Times New Roman and Arial
     families have been interchanged.
 
@@ -74,9 +74,9 @@ Gui changes
     number of lines and the total size).  The mechanism has been altered
     so that Rterm records repeated lines (as Rgui always did).
 
--   There are some additional command-line editing commands: see the
-    Help | Console information screen.  (There is also one addition,
-    ^W, in Rterm: see README.rterm.)
+-   There are some additional command-line editing commands in Rgui: see
+    the Help | Console information screen.  (There is also one
+    addition, ^W, in Rterm: see README.rterm.)
 
 -   Selection works slightly differently: if the selection extends beyond
     the last character on the line the (invisible) CRLF is made part of
@@ -146,7 +146,7 @@ smaller of the amount of physical RAM in the machine and 256Mb.
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this
 version.  (Use the Version tab on the Properties dialog box to see it,
-or the new function DLL.version within R.)
+or the new function DLL.version() within R.)
 
 Windows (.hlp) help files now have hyperlinks to other objects within
 the same package.
@@ -169,7 +169,7 @@ Interactive use of Rterm.exe on Windows 2000 systems is now possible
 Better rendering of wide (lwd > 1) and dashed (lty != "solid") lines
 on the windows/win.print device.
 
-The installer rwinst.exe tries when first asked to install a package
+The installer rwinst.exe when first asked to install a package tries
 to find a current installation of R, first from R_HOME if set in the
 environment, then from the PATH (it looks for ...\rw1020\bin).
 

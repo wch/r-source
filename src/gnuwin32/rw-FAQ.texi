@@ -133,9 +133,9 @@ Optionally, you can download the installer, @code{rwinst.exe}.
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-First, you need Windows 95 or 98 or ME or NT4 or 2000: Windows 3.11+win32s
-will not work. Your file system must allow long file names (as is
-likely except perhaps for some network-mounted systems).
+First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
+work. Your file system must allow long file names (as is likely except
+perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
 @code{rwinst.exe} and navigate its wizard-like pages).  Alternatively, choose
@@ -569,6 +569,7 @@ make DEBUG=T
 and make a debug version of your package by
 
 @example
+make pkgclean-mypkg
 make DEBUG=T pkg-mypkg
 @end example
 @noindent
@@ -706,14 +707,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 November 18 by Brian Ripley
+Last edited 2000 November 25 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 November 18 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 November 25 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
