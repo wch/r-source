@@ -111,24 +111,17 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
     else if(!missing(help)) {
 	if(!character.only)
 	    help <- as.character(substitute(help))
-        help <- help[1]                 # only give help on one package
-
-        pkgpath <- .find.package(help, lib.loc, verbose = verbose)
-        outFile <- tempfile("Rlibrary")
-        outConn <- file(outFile, open = "w")
-        docFiles <- file.path(pkgpath,
-                              c("TITLE", "DESCRIPTION", "INDEX"))
-        headers <- c("", "Description:\n\n", "Index:\n\n")
-        footers <- c("\n", "\n", "")
-        for(i in which(file.exists(docFiles))) {
-            writeLines(headers[i], outConn, sep="")
-            writeLines(readLines(docFiles[i]), outConn)
-            writeLines(footers[i], outConn, sep="")
-        }
-        close(outConn)
-        file.show(outFile, delete.file = TRUE,
-                  title = paste("Documentation for package",
-                  sQuote(help)))
+        pkgName <- help[1]              # only give help on one package
+        pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
+        entries <- c("TITLE", "DESCRIPTION", "INDEX")
+        docFiles <- file.path(pkgPath, entries)
+        pkgInfo <- vector(length = 3, mode = "list")
+        names(pkgInfo) <- entries
+        for(i in which(file.exists(docFiles)))
+            pkgInfo[[i]] <- readLines(docFiles[i])
+        y <- list(name = pkgName, info = pkgInfo)
+        class(y) <- "packageInfo"
+        return(y)
     }
     else {
 	## library():
@@ -322,4 +315,23 @@ function(new)
     if(!missing(new))
         assign(".lib.loc", unique(c(new, .Library)), envir = NULL)
     get(".lib.loc", envir = NULL)
+}
+
+print.packageInfo <-
+function(x, ...)
+{
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+    outFile <- tempfile("RpackageInfo")
+    outConn <- file(outFile, open = "w")
+    headers <- c("", "Description:\n\n", "Index:\n\n")
+    footers <- c("\n", "\n", "")
+    for(i in which(!sapply(x$info, is.null))) {
+        writeLines(headers[i], outConn, sep = "")
+        writeLines(x$info[[i]], outConn)
+        writeLines(footers[i], outConn, sep = "")
+    }
+    close(outConn)
+    file.show(outFile, delete.file = TRUE,
+              title = paste("Documentation for package",
+              sQuote(x$name)))
 }

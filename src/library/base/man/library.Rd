@@ -13,6 +13,7 @@
 \alias{.lib.loc}
 \alias{.libPaths}
 \alias{print.libraryIQR}
+\alias{print.packageInfo}
 \description{
   \code{library} and \code{require} load add-on packages.
   \code{.First.lib} is called when a package is loaded;
@@ -99,9 +100,10 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   of all available packages were returned; use \code{.packages(all =
     TRUE)} for obtaining these.
 
-  \code{library(help = somename)} prints information on the package
-  \code{somename}, typically by listing the most important user level
-  objects it contains.
+  \code{library(help = somename)} computes basic information about the
+  package \code{somename}, and returns this in an object of class
+  \code{"packageInfo"}.  The structure of this class may change in
+  future versions.
 
   \code{.First.lib} is called when a package is loaded by
   \code{library}.  It is called with two arguments, the name of the
