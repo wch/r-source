@@ -20,7 +20,23 @@ abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 
+##  log() and "pow()" -- POSIX is not specific enough..
 log(0) == -Inf
+is.nan(log(-1))# TRUE and warning
+
+rp <- c(1:2,Inf); rn <- rev(- rp)
+r <- c(rn, 0, rp)
+all(r^0 == 1)
+all((rn ^ -3) == -((-rn) ^ -3))
+
+all(c(1.1,2,Inf) ^ Inf == Inf)
+all(c(1.1,2,Inf) ^ -Inf == 0)
+.9 ^ Inf == 0
+.9 ^ -Inf == Inf
+## Not yet:
+all(1^c(-Inf,Inf) == 1)
+all(is.nan(rn ^ .5))# Deb2.0-Linux: (-Inf) ^ .5 gives Inf, instead of NaN
+
 
 ## Real Trig.:
 cos(0) == 1

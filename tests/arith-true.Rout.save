@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (June 8, 1999)
+Version 0.65.0 Under development (unstable) (June 12, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -39,8 +39,35 @@ Type	"q()" to quit R.
 > log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 [1] TRUE
 > 
+> ##  log() and "pow()" -- POSIX is not specific enough..
 > log(0) == -Inf
 [1] TRUE
+> is.nan(log(-1))# TRUE and warning
+[1] TRUE
+Warning message: 
+NaNs produced in: -1 
+> 
+> rp <- c(1:2,Inf); rn <- rev(- rp)
+> r <- c(rn, 0, rp)
+> all(r^0 == 1)
+[1] TRUE
+> all((rn ^ -3) == -((-rn) ^ -3))
+[1] TRUE
+> 
+> all(c(1.1,2,Inf) ^ Inf == Inf)
+[1] TRUE
+> all(c(1.1,2,Inf) ^ -Inf == 0)
+[1] TRUE
+> .9 ^ Inf == 0
+[1] TRUE
+> .9 ^ -Inf == Inf
+[1] TRUE
+> ## Not yet:
+> all(1^c(-Inf,Inf) == 1)
+[1] TRUE
+> all(is.nan(rn ^ .5))# Deb2.0-Linux: (-Inf) ^ .5 gives Inf, instead of NaN
+[1] TRUE
+> 
 > 
 > ## Real Trig.:
 > cos(0) == 1
