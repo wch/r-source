@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-19, 2002-12-10
+@set FAQ-VERSION 1.6-20, 2002-12-15
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2073,6 +2073,9 @@ Package for time series analysis with emphasis on non-linear modelling.
 @item twostage
 Functions for optimal design of two-stage-studies using the Mean Score
 method.
+@item vcd
+Functions and data sets based on the book ``Visualizing Categorical
+Data'' by Michael Friendly.
 @item vegan
 Various help functions for vegetation scientists and community
 ecologists.

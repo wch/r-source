@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-19, 2002-12-10
+Version 1.6-20, 2002-12-15
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1910,6 +1910,10 @@ distributions of R.)
 *twostage*
      Functions for optimal design of two-stage-studies using the Mean Score
      method.
+
+*vcd*
+     Functions and data sets based on the book "Visualizing Categorical
+     Data" by Michael Friendly.
 
 *vegan*
      Various help functions for vegetation scientists and community
