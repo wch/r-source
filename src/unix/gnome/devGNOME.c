@@ -81,7 +81,7 @@ static void   GNOME_Polyline(int, double*, double*, int, DevDesc*);
 static void   GNOME_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   GNOME_Resize(DevDesc*);
 static double GNOME_StrWidth(char*, DevDesc*);
-static void   GNOME_Text(double, double, int, char*, double, DevDesc*);
+static void   GNOME_Text(double, double, int, char*, double, double, DevDesc*);
 static void   GNOME_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 			/* Pixel Dimensions (Inches) */
@@ -630,7 +630,7 @@ static void GNOME_Polygon(int n, double *x, double *y, int coords,
 }
 
 static void GNOME_Text(double x, double y, int coords,
-		       char *str, double rot, DevDesc *dd)
+		       char *str, double rot, double hadj, DevDesc *dd)
 {
   GnomeCanvasItem *item;
   gnomeDesc *gtkd = (gnomeDesc *) dd->deviceSpecific;
@@ -738,6 +738,7 @@ int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, d
   dd->dp.canRotateText = 1;
   dd->dp.canResizeText = 1;
   dd->dp.canClip = 0;
+  dd->dp.canHAdj = 0;
 
   /* x11 device description stuff */
   gtkd->cex = 1.0;

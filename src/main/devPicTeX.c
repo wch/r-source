@@ -164,7 +164,7 @@ static void   PicTeX_Rect(double, double, double, double, int, int, int,
 			  DevDesc*);
 static void   PicTeX_Resize(DevDesc*);
 static double PicTeX_StrWidth(char*, DevDesc*);
-static void   PicTeX_Text(double, double, int, char*, double, DevDesc*);
+static void   PicTeX_Text(double, double, int, char*, double, double, DevDesc*);
 static void   PicTeX_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 	/* Support routines */
@@ -568,7 +568,7 @@ static void textext(char *str, picTeXDesc *ptd)
 /* Rotated Text */
 
 static void PicTeX_Text(double x, double y, int coords,
-			char *str, double rot,
+			char *str, double rot, double hadj,
 			DevDesc *dd)
 {
 	int size;
@@ -681,6 +681,7 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
 	dd->dp.canRotateText = 0;
 	dd->dp.canResizeText = 1;
 	dd->dp.canClip = 1;
+	dd->dp.canHAdj = 0;
 
 	ptd->lty = 1;
 	ptd->pageno = 0;

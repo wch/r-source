@@ -148,15 +148,23 @@ static char *Extension[] = {
 #define BUFSIZE 512
 
 typedef struct {
-	short FontBBox[4];
-	short CapHeight;
-	short XHeight;
-	short Descender;
-	short Ascender;
-	struct {
-		short WX;
-		short BBox[4];
-	} CharInfo[256];
+    unsigned char c1;
+    unsigned char c2;
+    short kern;
+} KP;
+
+typedef struct {
+    short FontBBox[4];
+    short CapHeight;
+    short XHeight;
+    short Descender;
+    short Ascender;
+    struct {
+	short WX;
+	short BBox[4];
+    } CharInfo[256];
+    KP *KernPairs;
+    short nKP;
 } FontMetricInfo;
 
 enum {
@@ -282,6 +290,8 @@ static int GetFontBBox(char *buf, FontMetricInfo *metrics)
     return 1;
 }
 
+static char charnames[256][25];
+
 static int GetCharInfo(char *buf, FontMetricInfo *metrics)
 {
     char *p = buf;
@@ -299,6 +309,8 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics)
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "N ")) return 0;
+    p = SkipToNextItem(p);
+    sscanf(p, "%s", charnames[nchar]);
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "B ")) return 0;
@@ -320,18 +332,44 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics)
     return 1;
 }
 
+/* FIXME use more structure here to speed up the search */
+
+static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
+{
+    char *p = buf, c1[50], c2[50];
+    int i, done = 0;
+
+    p = SkipToNextItem(p);
+    sscanf(p, "%s %s %hd", c1, c2, &(metrics->KernPairs[nkp].kern));
+    for(i = 0; i < 256; i++) {
+	if (!strcmp(c1, charnames[i])) {
+	    metrics->KernPairs[nkp].c1 = i;
+	    done++;
+	    break;
+	}
+    }
+    for(i = 0; i < 256; i++)
+	if (!strcmp(c2, charnames[i])) {
+	    metrics->KernPairs[nkp].c2 = i;
+	    done++;
+	    break;
+	}
+    return (done==2);
+}
+
 
 /* Load Fontmetrics from a File */
 
 int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 {
-    char buf[BUFSIZE];
-    int mode;
+    char buf[BUFSIZE], *p;
+    int mode, i = 0, ii, nKPX=0;
     FILE *fp;
 
     if (!(fp = R_fopen(fontname, "r"))) return 0;
 
     mode = 0;
+    for (ii = 0; ii < 256; ii++) charnames[ii][0] = '\0';
     while (fgets(buf, BUFSIZE, fp)) {
 	switch(KeyType(buf)) {
 
@@ -352,6 +390,27 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 	    if (!GetCharInfo(buf, metrics)) goto error;
 	    break;
 
+	case StartKernData:
+	    mode = StartKernData;
+	    break;
+
+	case StartKernPairs:
+	    if(mode != StartKernData) goto error;
+	    p = SkipToNextItem(p=buf);
+	    sscanf(p, "%d", &nKPX);
+	    metrics->KernPairs = (KP *) malloc(nKPX * sizeof(KP));
+	    if (!metrics->KernPairs) goto error;
+	    break;
+
+	case KPX:
+	    if(mode != StartKernData || i >= nKPX) goto error;
+	    if (GetKPX(buf, i, metrics)) i++;
+	    break;
+
+	case EndKernData:
+	    mode = 0;
+	    break;
+
 	case Unknown:
 	    printf("Warning: unknown AFM entity encountered");
 	    break;
@@ -361,6 +420,7 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 	    break;
 	}
     }
+    metrics->nKP = i;
     fclose(fp);
     return 1;
  error:
@@ -370,12 +430,22 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 
 double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 {
-    int sum = 0;
+    int sum = 0, i;
+    unsigned char p1, p2;
     for ( ; *p; p++) {
 	if (*p == '-' && isdigit(p[1]))
 	    sum += metrics->CharInfo[(int)PS_minus].WX;
 	else
 	    sum += metrics->CharInfo[*p].WX;
+	/* check for kerning adjustment */
+	/* FIXME Do something better that a linear search */
+	p1 = p[0]; p2 = p[1];
+	for (i = 0; i < metrics->nKP; i++)
+	    if(metrics->KernPairs[i].c1 == p1 && 
+	       metrics->KernPairs[i].c2 == p2) {
+		sum += metrics->KernPairs[i].kern;
+		break;
+	    }
     }
     return 0.001 * sum;
 }
@@ -678,7 +748,7 @@ static void   PS_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   PS_Resize(DevDesc*);
 static double PS_StrWidth(char*, DevDesc*);
 static void   PS_MetricInfo(int, double*, double*, double*, DevDesc*);
-static void   PS_Text(double, double, int, char*, double, DevDesc*);
+static void   PS_Text(double, double, int, char*, double, double, DevDesc*);
 
 
 
@@ -869,6 +939,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
     dd->dp.canClip = 1;
+    dd->dp.canHAdj = 2;
 
     /*	Start the driver */
 
@@ -1295,14 +1366,14 @@ static void PS_Polyline(int n, double *x, double *y, int coords,
 }
 
 static void PS_Text(double x, double y, int coords,
-		    char *str, double rot, DevDesc *dd)
+		    char *str, double rot, double hadj, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     GConvert(&x, &y, coords, DEVICE, dd);
     SetFont(dd->gp.font, floor(dd->gp.cex * dd->gp.ps + 0.5), dd);
     SetColor(dd->gp.col, dd);
-    PostScriptText(pd->psfp, x, y, str, 0.0, 0.0, rot);
+    PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
 }
 
 static int PS_Locator(double *x, double *y, DevDesc *dd)
@@ -1482,7 +1553,7 @@ static void   XFig_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   XFig_Polyline(int, double*, double*, int, DevDesc*);
 static void   XFig_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   XFig_Resize(DevDesc*);
-static void   XFig_Text(double, double, int, char*, double, DevDesc*);
+static void   XFig_Text(double, double, int, char*, double, double, DevDesc*);
 
 static int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
 
@@ -1638,6 +1709,7 @@ int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
     dd->dp.canClip = 0;
+    dd->dp.canHAdj = 1; /* 0, 0.5, 1 */
 
     pd->XFigColors[7] = 0xffffff;
     pd->nXFigColors = 32;
@@ -1673,6 +1745,9 @@ int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     return 1;
 }
 
+#ifdef Win32
+char * Rwin32_tmpnam(char * prefix);
+#endif
 
 static int XFig_Open(DevDesc *dd, XFigDesc *pd)
 {
@@ -1695,7 +1770,11 @@ static int XFig_Open(DevDesc *dd, XFigDesc *pd)
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
     }
     if (!pd->psfp) return 0;
+#ifdef Win32
+    strcpy(pd->tmpname, Rwin32_tmpnam("Rxfig"));
+#else
     strcpy(pd->tmpname, tmpnam(NULL));
+#endif
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
 	fclose(pd->psfp);
@@ -1857,7 +1936,7 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
     
     GConvert(&x1, &y1, coords, DEVICE, dd); XFconvert(&x1, &y1, pd);
     GConvert(&x2, &y2, coords, DEVICE, dd); XFconvert(&x2, &y2, pd);
-    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "2 1 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
     fprintf(fp, "%d %d ", XF_SetColor(dd->gp.col, pd), 7); 
       /* pen colour fill colour */
@@ -1881,7 +1960,7 @@ static void XFig_Polygon(int n, double *x, double *y, int coords,
     cpen = (fg != NA_INTEGER)? cfg: -1;
     dofill = (bg != NA_INTEGER)? 20: -1;
 
-    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "2 3 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
     fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
     fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
@@ -1903,7 +1982,7 @@ static void XFig_Polyline(int n, double *x, double *y, int coords,
     double xx, yy;
     int i, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
-    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "2 1 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
     fprintf(fp, "%d %d ", XF_SetColor(dd->gp.col, pd), 7); /* pen colour fill colour */
     fprintf(fp, "100 0 -1 "); /* depth, pen style, area fill */
@@ -1917,8 +1996,10 @@ static void XFig_Polyline(int n, double *x, double *y, int coords,
     }
 }
 
+static int styles[4] = {0,2,1,3};
+
 static void XFig_Text(double x, double y, int coords,
-		      char *str, double rot, DevDesc *dd)
+		      char *str, double rot, double hadj, DevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
@@ -1929,10 +2010,10 @@ static void XFig_Text(double x, double y, int coords,
     pd->fontsize = size;
     pd->fontstyle = style;
     if(style == 5) fontnum = 32;
-    else fontnum = pd->fontnum + (style-1);
+    else fontnum = pd->fontnum + styles[style-1];
 
     GConvert(&x, &y, coords, DEVICE, dd); XFconvert(&x, &y, pd);
-    fprintf(fp, "4 0 "); /* Text, left justified */
+    fprintf(fp, "4 %d ", (int)floor(2*hadj)); /* Text, how justified */
     fprintf(fp, "%d 100 0 ", XF_SetColor(dd->gp.col, pd)); 
       /* color, depth, pen_style */
     fprintf(fp, "%d %.2f %.5f 4 ", fontnum, size, rot * DEG2RAD);

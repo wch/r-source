@@ -90,7 +90,7 @@ static void   GTK_Polyline(int, double*, double*, int, DevDesc*);
 static void   GTK_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   GTK_Resize(DevDesc*);
 static double GTK_StrWidth(char*, DevDesc*);
-static void   GTK_Text(double, double, int, char*, double, DevDesc*);
+static void   GTK_Text(double, double, int, char*, double, double, DevDesc*);
 static void   GTK_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 /* Pixel Dimensions (Inches) */
@@ -853,7 +853,7 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
 }
 
 static void GTK_Text(double x, double y, int coords,
-		     char *str, double rot, DevDesc *dd)
+		     char *str, double rot, double hadj, DevDesc *dd)
 {
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
   GdkColor gcol_fill;
@@ -1045,6 +1045,7 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
   dd->dp.canRotateText = 1;
   dd->dp.canResizeText = 1;
   dd->dp.canClip = 0;
+  dd->dp.canHAdj = 0;
 
   /* gtk device description stuff */
   gtkd->cex = 1.0;

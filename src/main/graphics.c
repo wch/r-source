@@ -3252,7 +3252,7 @@ double GStrHeight(char *str, int units, DevDesc *dd)
    1 means totally inside clip region
    2 means intersects clip region */
 static int clipTextCode(double x, double y, char *str,
-		     double rot, DevDesc *dd)
+		     double rot, double hadj, DevDesc *dd)
 {
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
     double angle = DEG2RAD * rot;
@@ -3261,6 +3261,8 @@ static int clipTextCode(double x, double y, char *str,
     double height = GStrHeight(str, INCHES, dd);
     double length = sqrt(width*width + height*height);
     double theta2 = angle + atan2(height, width);
+    x -= hadj*width*cos(angle);
+    y -= hadj*width*sin(angle);
     x0 = x + height*cos(theta1);
     x1 = x;
     x2 = x + length*cos(theta2);
@@ -3277,9 +3279,9 @@ static int clipTextCode(double x, double y, char *str,
 }
 
 static void clipText(double x, double y, char *str, double rot,
-		     int clipToDevice, DevDesc *dd)
+		     int clipToDevice, double hadj, DevDesc *dd)
 {
-    int result = clipTextCode(x, y, str, rot, dd);
+    int result = clipTextCode(x, y, str, rot, hadj, dd);
     int xpdsaved = 0; /* -Wall */
     if (clipToDevice) {
 	xpdsaved = dd->gp.xpd;
@@ -3289,12 +3291,12 @@ static void clipText(double x, double y, char *str, double rot,
     case 0:  /* text totally clipped; draw nothing */
 	break;
     case 1:  /* text totally inside;  draw all */
-	dd->dp.text(x, y, INCHES, str, rot, dd);
+	dd->dp.text(x, y, INCHES, str, rot, hadj, dd);
 	break;
     case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
 	if (clipToDevice) /* Device will do clipping */
-	    dd->dp.text(x, y, INCHES, str, rot, dd);
+	    dd->dp.text(x, y, INCHES, str, rot, hadj, dd);
 	else /* don't draw anything; this could be made less crude :) */
 	    ;
     }
@@ -3318,7 +3320,7 @@ void GText(double x, double y, int coords, char *str,
     if(str && *str) {
         char *s, *sbuf, *sb;
 	int i, n;
-	double xoff, yoff;
+	double xoff, yoff, hadj;
 	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 	double xleft, ybottom;
 	/* We work in INCHES */
@@ -3398,41 +3400,22 @@ void GText(double x, double y, int coords, char *str,
 		    } else {
 			height = GStrHeight(sbuf, INCHES, dd);
 		    }
-		    xleft  = xoff - xc*width*cos_rot + yc*height*sin_rot;
-		    ybottom= yoff - xc*width*sin_rot - yc*height*cos_rot;
-		} else {
+		    if (dd->dp.canHAdj == 2) hadj = xc;
+		    else if (dd->dp.canHAdj == 1) {
+			hadj = 0.5 * floor(2*xc + 0.5);
+		    } else hadj = 0.0;
+		    xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
+		    ybottom= yoff - (xc-hadj)*width*sin_rot - yc*height*cos_rot;
+		} else { /* xc = yc = 0.0 */
 		    xleft = xoff;
 		    ybottom = yoff;
+		    hadj = 0.0;
 		}
 		if(dd->dp.canClip) {
 		    GClip(dd);
-		    clipText(xleft, ybottom, sbuf, rot, 1, dd);
+		    clipText(xleft, ybottom, sbuf, rot, 1, hadj, dd);
 		} else
-		    clipText(xleft, ybottom, sbuf, rot, 0, dd);
-#ifdef OLD
-		if(dd->dp.canClip) {
-		    GClip(dd);
-		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
-		}
-		else {
-		    double xtest = xleft;
-		    double ytest = ybottom;
-		    switch (dd->gp.xpd) {
-		    case 0:
-			GConvert(&xtest, &ytest, INCHES, NPC, dd);
-			break;
-		    case 1:
-			GConvert(&xtest, &ytest, INCHES, NFC, dd);
-			break;
-		    case 2:
-			GConvert(&xtest, &ytest, INCHES, NDC, dd);
-			break;
-		    }
-		    if (xtest < 0 || ytest < 0 || xtest > 1 || ytest > 1)
-			    return;
-		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
-		}
-#endif
+		    clipText(xleft, ybottom, sbuf, rot, 0, hadj, dd);
 		sb = sbuf;
 		i += 1;
 	    }

@@ -82,6 +82,11 @@ NEW FEATURES
 
     o	New device xfig() to produce XFig files.
 
+    o	Added ability to use the graphics device driver to perform
+	horizontal justification of strings.  This is used in the
+	postscript() and xfig() drivers and will lead to more accurate
+	placing of centred or right-justified strings.
+
 
 BUG FIXES
 
@@ -101,6 +106,9 @@ BUG FIXES
     o	system() is now (partially) functional on systems without popen.
 
     o   count.fields and read.table now have the same default quote = "\"'".
+
+    o	postscript() now makes use of kerning information in computing
+	string widths.
 
 
 		CHANGES IN R VERSION 1.0.1
