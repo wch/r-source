@@ -99,7 +99,7 @@ arima0(x, order = c(0, 0, 0),
 \section{Fitting methods}{
   The exact likelihood is computed via a state-space representation of
   the ARMA process, and the innovations and their variance found by a
-  Kalman filter based on Gardener \emph{et al.} (1980).  This has
+  Kalman filter based on Gardner \emph{et al.} (1980).  This has
   the option to switch to `fast recursions' (assume
   an effectively infinite past) if the innovations variance is close
   enough to its asymptotic bound. The argument \code{delta} sets the
@@ -162,7 +162,8 @@ arima0(x, order = c(0, 0, 0),
   \item{aic}{the AIC value corresponding to the log-likelihood. Only
     valid for \code{method = "ML"} fits.}
 
-  \item{residuals}{the residuals. (Was \code{resid} prior to \R 1.5.0.)}
+  \item{residuals}{the standardized residuals. (Was \code{resid}
+    prior to \R 1.5.0.)}
 
   \item{call}{the matched call.}
 
@@ -181,7 +182,7 @@ arima0(x, order = c(0, 0, 0),
   Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
     Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
 
-  Gardener, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
+  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
   AS154. An algorithm for exact maximum likelihood estimation of
   autoregressive-moving average models by means of Kalman filtering.
   \emph{Applied Statistics} \bold{29}, 311--322.
