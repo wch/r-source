@@ -17,11 +17,16 @@ plot.ts(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 	  main = NULL, plot.type = c("multiple", "single"),
 	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines,
           nc, ...)
+plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
+         log = "", col = par("col"),  bg = NA, pch = par("pch"),
+         cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
+         ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
+         oma=c(6, 0, 5, 0), nc, ...)
 }
 \usage{
 \method{plot}{ts}(x, y = NULL, type = "l", frame.plot = axes,
      plot.type = c("multiple", "single"),
-     xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
+     xy.labels = n <= 150, xy.lines = do.lab, panel=lines, nc, ...)
 
 lines(x, \dots)
 }
