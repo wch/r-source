@@ -359,6 +359,14 @@ Date: Wed, 24 Jul 2002 20:08:49 +0000
 Subject:  Inconsistent use of Perl? 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Sat, 24 Aug 2002 18:41:09 +0800
+* PR# 1995 *
+Subject:  2002-09-08 1.6.0 build fails in Recommended 
+From: <stvjc@channing.harvard.edu>
+Date: Sun, 8 Sep 2002 23:57:39 -0400 (EDT)
+* PR# 1996 *
+Subject:  config checks for --with-gnome need update 
+From: <stvjc@channing.harvard.edu>
+Date: Mon, 9 Sep 2002 00:08:59 -0400 (EDT)
 
 Directory:  Language
 
@@ -576,11 +584,7 @@ Date: Tue, 3 Sep 2002 21:12:47 +0200 (MEST)
 Subject: Mac Save As... bug
 From: Tim Cole <tjc1@cam.ac.uk>
 Date: Sun, 8 Sep 2002 13:47:00 +0100
-* PR# 1995 *
-Subject:  2002-09-08 1.6.0 build fails in Recommended 
-From: <stvjc@channing.harvard.edu>
-Date: Sun, 8 Sep 2002 23:57:39 -0400 (EDT)
-* PR# 1996 *
-Subject:  config checks for --with-gnome need update 
-From: <stvjc@channing.harvard.edu>
-Date: Mon, 9 Sep 2002 00:08:59 -0400 (EDT)
+* PR# 1998 *
+Subject: t() of a time series
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Tue, 10 Sep 2002 09:53:05 -0400
