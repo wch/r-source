@@ -4,7 +4,7 @@
 \description{
   The \R Who-is-who.
 }
-\section{The \R Project}{
+\section{The R Project}{
   \R is a project which is attempting to provide a modern piece of
   statistical software for the GNU suite of software.
 }
