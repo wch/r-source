@@ -27,6 +27,9 @@
 #include "Graphics.h"
 #include "Print.h"
 
+#ifndef HAVE_HYPOT
+# define hypot pythag
+#endif
 
 /* Conversion of degrees to radians */
 

@@ -62,6 +62,10 @@
 #include "Arith.h"
 #include "Applic.h"
 
+#ifndef HAVE_HYPOT
+# define hypot pythag
+#endif
+
 static void calct(int *);
 static void fxshft(int *, double *, double *, int *);
 static void vrshft(int, double *, double *, int *);

@@ -26,7 +26,11 @@
 #include "Mathlib.h"
 #include "Applic.h"		/* R_cpoly */
 
-#include "arithmetic.h"		/* complex_ */
+#include "arithmetic.h"		/* complex_*  */
+
+#ifndef HAVE_HYPOT
+# define hypot pythag
+#endif
 
 static int naflag;
 

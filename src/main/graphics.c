@@ -3265,7 +3265,11 @@ static int clipTextCode(double x, double y, char *str,
     double theta1 = M_PI/2 - angle;
     double width = GStrWidth(str, INCHES, dd);
     double height = GStrHeight(str, INCHES, dd);
+#ifdef HAVE_HYPOT
     double length = hypot(width, height);
+#else
+    double length = pythag(width, height);
+#endif
     double theta2 = angle + atan2(height, width);
     x -= hadj*width*cos(angle);
     y -= hadj*width*sin(angle);

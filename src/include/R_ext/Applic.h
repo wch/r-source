@@ -133,10 +133,6 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	    double *shrink_sml, double *high_u_fact, int *eps_correction);
 
-
-/* pythag.c */
-double pythag(double, double);
-
 /* rowsum.c */
 void R_rowsum(int *dim, double *na_x, double *x, double *group);
 

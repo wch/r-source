@@ -244,6 +244,7 @@
 #define pt		Rf_pt
 #define ptukey		Rf_ptukey
 #define punif		Rf_punif
+#define pythag		Rf_pythag
 #define pweibull	Rf_pweibull
 #define pwilcox		Rf_pwilcox
 #define qbeta		Rf_qbeta
@@ -496,6 +497,19 @@ double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
 
+	/* General Support Functions */
+
+double 	pythag(double, double);
+double  log1p(double); /* = log(1+x) {care for small x} */
+int	imax2(int, int);
+int	imin2(int, int);
+double	fmax2(double, double);
+double	fmin2(double, double);
+double	sign(double);
+double	fsign(double, double);
+double	fprec(double, double);
+double	fround(double, double);
+
 
 /* ----------------- Private part of the header file ------------------- */
 
@@ -512,16 +526,8 @@ int	i1mach(int);
 
 	/* General Support Functions */
 
-int	imax2(int, int);
-int	imin2(int, int);
-double	fmax2(double, double);
-double	fmin2(double, double);
 double	fmod(double, double);
-double	fprec(double, double);
-double	fround(double, double);
 double	ftrunc(double);
-double	sign(double);
-double	fsign(double, double);
 double	fsquare(double);
 double	fcube(double);
 
@@ -532,7 +538,6 @@ double	chebyshev_eval(double, double *, int);
 
 	/* Gamma and Related Functions */
 
-double  log1p(double); /* = log(1+x) {care for small x} */
 void	gammalims(double*, double*);
 double	lgammacor(double);
 double	gammafn(double);

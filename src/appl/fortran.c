@@ -108,7 +108,11 @@ void ZDIV(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 
 double ZABS(Rcomplex *z)
 {
+#ifdef HAVE_HYPOT
     return hypot(z->r, z->i);
+#else
+    return pythag(z->r, z->i);
+#endif
 }
 
 double ZIMAG(Rcomplex *z)

@@ -34,6 +34,9 @@
  *	written by W. Fullerton of Los Alamos Scientific Laboratory.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 #include "nmath.h"
 
 double log1p(double x)
@@ -123,4 +126,52 @@ double log1p(double x)
 	ML_ERROR(ME_PRECISION);
     }
     return log(1 + x);
+}
+
+
+
+/* pythag(a,b)	finds sqrt(a^2 + b^2)
+ *		without overflow or destructive underflow.
+ */
+
+double pythag(double a, double b)
+{
+#ifndef HAVE_HYPOT
+    double p, r, s, t, tmp, u;
+#endif
+
+    if(ISNAN(a) || ISNAN(b)) /* propagate Na(N)s: */
+        return
+#ifdef IEEE_754
+	  a + b;
+#else
+          ML_NAN;
+#endif
+    if (!R_FINITE(a) || !R_FINITE(b)) {
+        return ML_POSINF;
+    }
+#ifdef HAVE_HYPOT
+    return hypot(a, b);
+#else
+    p = fmax2(fabs(a), fabs(b));
+    if (p != 0.0) {
+
+	/* r = (min(|a|,|b|) / p) ^2 */
+	tmp = fmin2(fabs(a), fabs(b))/p;
+	r = tmp * tmp;
+	for(;;) {
+	    t = 4.0 + r;
+	    if (t == 4.0)
+		break;
+	    s = r / t;
+	    u = 1. + 2. * s;
+	    p *= u ;
+
+	    /* r = (s / u)^2 * r */
+	    tmp = s / u;
+	    r *= tmp * tmp;
+	}
+    }
+    return p;
+#endif
 }

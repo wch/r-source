@@ -28,6 +28,11 @@
 #include "Graphics.h"
 #include "Print.h"
 
+#ifndef HAVE_HYPOT
+# define hypot pythag
+#endif
+
+
 void NewFrameConfirm()
 {
     unsigned char buf[16];
@@ -2550,10 +2555,6 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     }
 }
-
-#ifdef Macintosh
-# define hypot pythag
-#endif
 
 #define THRESHOLD	0.25
 
