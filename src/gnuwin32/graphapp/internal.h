@@ -217,6 +217,8 @@ struct objinfo
 	int 	shortcut; /* menu shortcut key */
 	int 	max;	/* scrollbar maximum value */
 	int 	size;	/* scrollbar page size */
+	int 	xmax;	/* scrollbar maximum value */
+	int 	xsize;	/* scrollbar page size */
 
 	callinfo *call;	/* window/control call-backs */
 	void *	extra;	/* for extra internal data */

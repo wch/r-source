@@ -66,7 +66,7 @@
 #include <direct.h>
 #include <windows.h>
 
-typedef int (*DL_FUNC) ();
+/* DL_FUNC is in Defn.h */
 typedef struct {
     char *name;
     DL_FUNC func;
@@ -84,6 +84,17 @@ static CFunTabEntry CFunTab[] =
     {NULL, NULL}
 };
 
+#define CACHE_DLL_SYM
+#ifdef CACHE_DLL_SYM
+/* keep a record of symbols that have been found */
+static struct {
+    char pkg[21];
+    char name[21];
+    DL_FUNC func;
+}  CPFun[100];
+static int nCPFun = 0;
+#endif
+
 
 void InitFunctionHashing()
 {
@@ -98,9 +109,7 @@ static struct {
     char  *path;
     char  *name;
     HINSTANCE dlh;
-}
-
-LoadedDLL[MAX_NUM_DLLS];
+} LoadedDLL[MAX_NUM_DLLS];
 
 	/* Remove the specified DLL from the current DLL list */
 	/* Returns 1 if the DLL was found and removed from */
@@ -118,9 +127,17 @@ static int DeleteDLL(char *path)
     }
     return 0;
 found:
-    free(LoadedDLL[i].name);
-    free(LoadedDLL[i].path);
-    FreeLibrary(LoadedDLL[i].dlh);
+#ifdef CACHE_DLL_SYM
+    for(i = 0; i < nCPFun; i++)
+	if(!strcmp(CPFun[i].pkg, LoadedDLL[loc].name)) {
+	    strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
+	    strcpy(CPFun[i].name, CPFun[nCPFun].name);
+	    CPFun[i].func = CPFun[nCPFun--].func;
+	}
+#endif
+    free(LoadedDLL[loc].name);
+    free(LoadedDLL[loc].path);
+    FreeLibrary(LoadedDLL[loc].dlh);
     for (i = loc + 1; i < CountDLL; i++) {
 	LoadedDLL[i - 1].path = LoadedDLL[i].path;
 	LoadedDLL[i - 1].name = LoadedDLL[i].name;
@@ -135,10 +152,9 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 
 /* the error message; length taken from ERRBUFSIZE in ./hpdlfcn.c  */
 
-        /* Inserts the specified DLL at the start of the DLL list */
-        /* All the other entries are "moved down" by one. */
+        /* Inserts the specified DLL at the head of the DLL list */
         /* Returns 1 if the library was successfully added */
-        /* and returns 0 if there library table is full or */
+        /* and returns 0 if the library table is full or */
         /* or if LoadLibrary fails for some reason. */
 
 /*
@@ -204,17 +220,30 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
     static int NumStatic = 0;
     int   mid, high, low, cmp;
 
-    /* Rprintf("name = %s pkg = %s\n", name, pkg); */
+#ifdef CACHE_DLL_SYM
+    for (i = 0; i < nCPFun; i++)
+	if (!strcmp(pkg, CPFun[i].pkg) && 
+	    !strcmp(name, CPFun[i].name))
+	    return CPFun[i].func;
+#endif
 
     for (i = CountDLL - 1; i >= 0; i--) {
 	doit = all;
 	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
 	if(doit) {
-	    /* Rprintf("name = %s\n", LoadedDLL[i].name); */
 	    fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, name);
-	    if (fcnptr != (DL_FUNC)0) return fcnptr;
+	    if (fcnptr != (DL_FUNC) NULL) {
+#ifdef CACHE_DLL_SYM
+		if(strlen(pkg) <= 20 && strlen(name) <= 20 && nCPFun < 100) {
+		    strcpy(CPFun[nCPFun].pkg, pkg);
+		    strcpy(CPFun[nCPFun].name, name);
+		    CPFun[nCPFun++].func = fcnptr;
+		}
+#endif
+		return fcnptr;
+	    }
 	}
-	if(doit > 1) return (DL_FUNC)0;/* Only look in the first-matching DLL*/
+	if(doit > 1) return (DL_FUNC) NULL;/* Only look in the first-matching DLL*/
     }
     if (!NumStatic && (all || !strcmp(pkg, "base"))) {
 	char *tname;
@@ -247,10 +276,10 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 	    break;
     }
     if (high < low)
-	return (DL_FUNC) 0;
+	return (DL_FUNC) NULL;
     else
 	return CFunTab[mid].func;
-    return (DL_FUNC) 0;
+    return (DL_FUNC) NULL;
 }
 
 
