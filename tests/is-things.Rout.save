@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (July 03, 1999)
+Version 0.65.0 Under development (unstable) (July 20, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,8 +22,8 @@ Type	"q()" to quit R.
 +     "\n\t starting with 'is.' :\t ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1093 
-Number of builtin functions:	 1070 
+Number of base objects:		 1102 
+Number of builtin functions:	 1079 
 	 starting with 'is.' :	  37 
 > ## 0.14 : 31
 > ## 0.50 : 33
@@ -118,8 +118,19 @@ is.ts          : .
 is.vector      : . 
 > is.ALL(NULL,   true.only = TRUE)
 [1] "is.atomic"   "is.null"     "is.pairlist"
+> all.equal(NULL, pairlist())
+[1] TRUE
+> ## list() != NULL == pairlist() :
 > is.ALL(list(), true.only = TRUE)
-[1] "is.list"   "is.vector"
+[1] "is.list"      "is.recursive" "is.vector"   
+> 
+> (pl <- is.ALL(pairlist(1,    list(3,"A")), true.only = TRUE))
+[1] "is.list"      "is.pairlist"  "is.recursive"
+> (ll <- is.ALL(    list(1,pairlist(3,"A")), true.only = TRUE))
+[1] "is.list"      "is.recursive" "is.vector"   
+> all.equal(pl[pl != "is.pairlist"],
++           ll[ll != "is.vector"])## TRUE
+[1] TRUE
 > 
 > is.ALL(1:5)
 is.array       : . 
@@ -368,7 +379,7 @@ is.vector      : |
 > 
 > x <- 1:20 ; y <- 5 + 6*x + rnorm(20) ; lm.xy <- lm(y ~ x)
 > is.ALL(lm.xy, true.only = TRUE)
-[1] "is.list"   "is.object" "is.qr"    
+[1] "is.list"      "is.object"    "is.qr"        "is.recursive"
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
 is.array       : . 
 is.atomic      : | 

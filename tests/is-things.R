@@ -66,7 +66,14 @@ print.isList <- function(r, ...)
 
 is.ALL(NULL)
 is.ALL(NULL,   true.only = TRUE)
+all.equal(NULL, pairlist())
+## list() != NULL == pairlist() :
 is.ALL(list(), true.only = TRUE)
+
+(pl <- is.ALL(pairlist(1,    list(3,"A")), true.only = TRUE))
+(ll <- is.ALL(    list(1,pairlist(3,"A")), true.only = TRUE))
+all.equal(pl[pl != "is.pairlist"],
+          ll[ll != "is.vector"])## TRUE
 
 is.ALL(1:5)
 is.ALL(array(1:24, 2:4))
