@@ -2011,11 +2011,24 @@ mkdir Translation-it
 cd Translation-it
 (cd $R_HOME; tar cf - share/locale/it library/*/po/it) | tar xf -
 # the next step is not needed on Windows
-cp -p $R_SRC_HOME/po/RGui-it.po share/locale/it/LC_MESSAGES
+msgfmt -c -o share/locale/it/LC_MESSAGES/RGui.mo $R_SRC_HOME/po/RGui-it.gmo
 # create a DESCRIPTION file
 cd ..
 R CMD build Translation-it
 @end example
+
+It is probably appropriate to give the package a version number based on
+the version of @R{} which has been translated.  So the
+@file{DESCRIPTION} file might look like
+@example
+Package: Translation-it
+Type: Translation
+Version: 2.1.0-1
+Author: The translators
+Maintainer: Some Body <somebody@@some.where.net>
+Licence: GPL Version 2 or later.
+@end example
+
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files

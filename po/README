@@ -4,22 +4,32 @@ since been modified extensively.
 If you convert a C file for use with gettext, add it to POTFILES.in and
 then run
 
-make update-po
+	make update-po
 
 to recreate R.pot and update the automated `translations'.
 
 Target
 
-make update-pkg-po
+	make update-pkg-po
 
 updates the message catalogs for the C and R code in the standard packages,
 uses msgmerge --update to update the translations and then re-makes the 
 compiled (.mo) files.
 
 
-To add a new translation, add the lang.po file to this directory and add
-the language to LINGUAS.  Hopefully `make' will do the rest 
-(create lang.gmo and install it as required).
+To add a new translation, add the lang.po file to this directory and
+add the language to LINGUAS.  Hopefully 'make all R' (in the builddir,
+if separate) will do the rest (create ll.gmo and install it as
+required).  For fuller manual control, use
+
+	msgfmt -c --statistics -o ll.gmo ll.po
+
+to check and compile the translation, and
+
+	mkdir R_BUILD_DIR/share/locale/ll/LC_MESSAGES
+	cp ll.gmo R_BUILD_DIR/share/locale/ll/LC_MESSAGES/R.mo
+
+to install it manually for testing.
 
 
 Windows RGui translations
@@ -30,7 +40,15 @@ These are contained in RGui.pot, created by running 'make RGui.pot-update'
 
 Translations should be called RGui-ll.po for language 'll'.
 
-To add a translation, add its .gmo file to the RGUI-CATALOGS macro
+To add a translation, add its .gmo file to the RGUI-CATALOGS macro in
 Makefile.win, and both the .po and .gmo files to the RGUI-CATALOGS
 macro in Makefile.in.in: it will then be automatically distributed and
 installed.
+
+To test a translation on Windows, use
+
+	msgfmt -c --statistics -o RGui-ll.gmo RGui-ll.po
+	cp RGui-ll.gmo ../share/locale/ll/LC_MESSAGES/RGui.mo
+
+and then startup RGui.exe in an appropriate locale, or setting
+LANGUAGE=ll on the command line.
