@@ -10,6 +10,7 @@
 \alias{plot.dendrogram}
 \alias{plotNode}
 \alias{plotNodeLimit}
+\alias{isLeaf}
 \description{
   Class \code{"dendrogram"} provides general functions for handling
   tree-like structures.  It is intended as a replacement for similar
@@ -83,11 +84,9 @@ as.dendrogram.hclust(object, \dots)
     \item{\code{edgePar}}{a named list of length one vectors specifying
       attributes for \code{\link{segments}} plotting of the edge leading
       to the node, see the \code{edgePar} argument above.}
-    \item{\code{edgetext}}{character; the label for the edge leading to
-      the node}
+    \item{\code{leaf}}{logical, if \code{TRUE}, the node is a leaf of
+      the tree.}
   }
-  Terminal nodes (leaves of the tree) can have arbitrary value but must
-  not be a list.
 
   \code{cut.dendrogram()} returns a list with components \code{$upper}
   and \code{$lower}, the first is a truncated version of the original
@@ -101,7 +100,8 @@ as.dendrogram.hclust(object, \dots)
   Objects of class \code{"hclust"} can be converted to class
   \code{"dendrogram"} using method \code{as.dendrogram}.
 
-  \code{plotNode()} and \code{plotNodeLimit()} are helper functions.
+  \code{isLeaf}, \code{plotNode()} and \code{plotNodeLimit()} are helper
+  functions. 
 }
 \note{
   When using \code{type = "triangle"}, \code{center = TRUE} often looks
