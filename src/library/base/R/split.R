@@ -1,8 +1,9 @@
 split <- function(x, f) UseMethod("split")
 
-split.default <- function(x, f) {
+split.default <- function(x, f)
+{
     if (is.list(f))
-        f <- factor(do.call("interaction", f))
+        f <- interaction(f)
     else
         f <- factor(f)                  # drop extraneous levels
     if (is.null(attr(x, "class")) && is.null(names(x)))
@@ -11,30 +12,33 @@ split.default <- function(x, f) {
     lf <- levels(f)
     y <- vector("list", length(lf))
     names(y) <- lf
-    for(k in lf){
-        y[[k]] <- x[f==k]
-    }
+    for(k in lf) y[[k]] <- x[f == k]
     y
 }
 
-split.data.frame <- function(x, f) {
+split.data.frame <- function(x, f)
+{
     lapply(split(seq(length=nrow(x)), f), function(ind) x[ind, , drop = FALSE ])
 }
 
 "split<-" <- function(x, f, value) UseMethod("split<-")
 
-"split<-.default" <- function(x, f, value){
+"split<-.default" <- function(x, f, value)
+{
     x[unlist(split(seq(along=x), f))] <- unlist(value)
     x
 }
 
-"split.data.frame<-" <- "split<-.data.frame" <- function(x, f, value){
+"split.data.frame<-" <- "split<-.data.frame" <- function(x, f, value)
+{
     x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
     x
 }
 
-unsplit <- function(value, f) {
-    x <- vector(mode=typeof(value[[1]]), length=length(f))
+unsplit <- function(value, f)
+{
+    len <- length(if (is.list(f)) f[[1]] else f)
+    x <- vector(mode = typeof(value[[1]]), length = len)
     split(x, f) <- value
     x
 }

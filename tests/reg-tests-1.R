@@ -753,6 +753,7 @@ stopifnot(all(!is.na(res)))
 stopifnot(all(!is.na(res)))
 ## outer values were NA in 1.5.1
 
+
 ## ls.str() for function environments:
 library(stepfun)
 Fn <- ecdf(rnorm(50))
@@ -760,15 +761,18 @@ ls.str(envir = environment(Fn))
 detach("package:stepfun")
 ## failed in 1.5.1
 
+
 ## PR 1767 all.equal.character for non-matching NAs
 all.equal(c("A", "B"), c("A", NA))
 ## failed in 1.5.1
+
 
 ## failed since at least version 0.90:
 stopifnot(is.character(a12 <- all.equal(1,1:2)),
           length(a12) == 2,
           a12[2] == "Numeric: lengths (1, 2) differ")
 ## a12 was *list* of length 3
+
 
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
@@ -845,6 +849,15 @@ stopifnot(class(fit) == "try-error")
 x <- 0; class(x) <- "octmode"
 stopifnot(as.character(x) == "0")
 ## gave "" in 1.5.1
+
+
+## PR#1843 unsplit() with f a list
+g <- factor(round(10 * runif(1000)))
+x <- rnorm(1000) + sqrt(as.numeric(g))
+xg <- split(x, list(g1=g,g2=g))
+res <- unsplit(xg, list(g1=g, g2=g))
+stopifnot(x == res) # can't have rounding error here
+## gave incorrect result with warning in 1.5.1.
 
 
 ## keep at end, as package `methods' has had persistent side effects
