@@ -61,17 +61,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R documentation::     
-* Tidying and profiling R code::  
-* System and foreign language interfaces::  
-* The R API::                   
-* Generic functions and methods::  
-* R (internal) programming miscellanea::  
-* R coding standards::          
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R documentation::
+* Tidying and profiling R code::
+* System and foreign language interfaces::
+* The R API::
+* Generic functions and methods::
+* R (internal) programming miscellanea::
+* R coding standards::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -105,10 +105,10 @@ help pages
 before reading on.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Submitting a package to CRAN::  
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Submitting a package to CRAN::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -126,10 +126,10 @@ Optionally the package can also contain (Bourne shell) script files
 Unix, @xref{Configure and cleanup}.
 
 @menu
-* The DESCRIPTION file::        
-* The INDEX file::              
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* The INDEX file::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -485,7 +485,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::              
+* Using Makevars::
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -733,15 +733,15 @@ automatically creates valid file names.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Platform-specific sections::  
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Platform-specific sections::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -1432,8 +1432,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::              
-* Profiling R code::            
+* Tidying R code::
+* Profiling R code::
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -1612,15 +1612,15 @@ output files can be very large if long runs are profiled.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Creating shared libraries::   
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Creating shared libraries::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -2105,13 +2105,13 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -2604,9 +2604,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -3277,8 +3277,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -3454,17 +3454,17 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from FORTRAN and vice versa::  
-* Numerical analysis subroutines::  
-* Optimization::                
-* Utility functions::           
-* Platform and version information::  
-* Standalone Mathlib::          
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from FORTRAN and vice versa::
+* Numerical analysis subroutines::
+* Optimization::
+* Utility functions::
+* Platform and version information::
+* Standalone Mathlib::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -3504,8 +3504,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3865,10 +3865,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::      
-* Mathematical functions::      
-* Utilities::                   
-* Mathematical constants::      
+* Distribution functions::
+* Mathematical functions::
+* Utilities::
+* Mathematical constants::
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -4270,6 +4270,17 @@ These all provide (very) partial sorting: they permute @var{x} so that
 the left, larger ones to the right.
 @end deftypefun
 
+@deftypefun  void R_qsort   (double *@var{v},  int @var{i}, int @var{j})
+@deftypefunx void R_qsort_I (double *@var{v}, int *@var{I}, int @var{i}, int @var{j})
+@deftypefunx void R_qsort_int  (int *@var{iv},  int @var{i}, int @var{j})
+@deftypefunx void R_qsort_int_I(int *@var{iv}, int *@var{I}, int @var{i}, int @var{j})
+These sort @code{v[i:j]} or @code{iv[i:j]} (using 1-indexing,
+i.e. @code{v[1]} is the first element) calling the same quicksort algorithm
+as used by @R{}'s @code{sort(v, method = "quick")} and documented there.
+Note that @code{NA}s are not handled (explicitely) and you should rather
+use different sorting functions if NAs can be present.
+@end deftypefun
+
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
 Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
@@ -4506,7 +4517,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::         
+* Adding new generics::
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -4554,8 +4565,8 @@ all precede the base package.
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
