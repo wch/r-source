@@ -97,12 +97,12 @@ plot <- function(x, ...) {
 }
 
 ## xlim = NULL (instead of "missing", since it will be passed to plot.default:
-plot.function <- function(fn, from = 0, to = 1, xlim = NULL, ...) {
+plot.function <- function(x, from = 0, to = 1, xlim = NULL, ...) {
     if(!is.null(xlim)) {
 	if(missing(from)) from <- xlim[1]
 	if(missing(to))	  to   <- xlim[2]
     }
-    curve(fn, from, to, xlim = xlim, ...)
+    curve(x, from, to, xlim = xlim, ...)
 }
 
 ### NOTE: cex = 1 is correct, cex = par("cex") gives *square* of intended!

@@ -5,12 +5,12 @@
 \usage{
 curve(expr, from, to, n = 101, add = FALSE, type = "l",
       ylab = NULL, log = NULL, xlim = NULL, \dots)
-\method{plot}{function}(fn, from = 0, to = 1, xlim, \dots)
+\method{plot}{function}(x, from = 0, to = 1, xlim, \dots)
 }
 \arguments{
   \item{expr}{an expression written as a function of \code{x}, or
     alternatively a function which will be plotted.}
-  \item{fn}{a `vectorizing' numeric \R function.}
+  \item{x}{a `vectorizing' numeric \R function.}
   \item{from,to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
   \item{add}{logical; if \code{TRUE} add to already existing plot.}
@@ -28,8 +28,8 @@ curve(expr, from, to, n = 101, add = FALSE, type = "l",
   The evaluation of \code{expr} is at \code{n} points equally spaced
   over the range \code{[from, to]}, possibly adapted to log scale.  The
   points determined in this way are then joined with straight lines.
-  \code{fn(x)} or \code{expr} (with \code{x} inside) must return a
-  numeric of the same length as \code{x}.
+  \code{x(t)} or \code{expr} (with \code{x} inside) must return a
+  numeric of the same length as the argument \code{t} or \code{x}.
 
   If \code{add = TRUE}, \code{c(from,to)} default to \code{xlim} which
   defaults to the current x-limits.  Further, \code{log} is taken from the
