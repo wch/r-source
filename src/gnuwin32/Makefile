@@ -441,7 +441,7 @@ packagedist:
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p exported-vars R.exp Rblas.def MkRules MakePkg MakeDll \
 	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
-	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
+	$(SED) -e s/@RVER@/$(RVER)/g Makefile.packages > $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \

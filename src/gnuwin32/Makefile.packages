@@ -3,6 +3,8 @@
 
 include MkRules
 
+RVER = @RVER@
+
 HELP = YES
 WINHELP = NO # Use one of NO, CHM, BOTH (chm and winhelp)
 
@@ -28,7 +30,7 @@ bundle-%:
 
 pkg-%:
 	$(MAKE) DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
