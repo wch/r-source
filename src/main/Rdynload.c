@@ -136,10 +136,10 @@ static DllInfo baseDll;
 #endif
 
 
-void R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym);
-void R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, 
+void R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine, Rf_DotCSymbol *sym);
+void R_addCallRoutine(DllInfo *info, const R_CallMethodDef * const croutine, 
 		      Rf_DotCallSymbol *sym);
-void R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, 
+void R_addFortranRoutine(DllInfo *info, const R_FortranMethodDef * const croutine, 
 			 Rf_DotFortranSymbol *sym);
 
 /*
@@ -170,9 +170,9 @@ R_getDllInfo(const char *path)
   done by dlsym() or the equivalent on the different platforms.
  */
 int
-R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
-		   R_CallMethodDef *callRoutines,
-		   R_FortranMethodDef *fortranRoutines)
+R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
+		   const R_CallMethodDef * const callRoutines,
+		   const R_FortranMethodDef * const fortranRoutines)
 {
     int i, num;
 
@@ -215,7 +215,7 @@ R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
 }
 
 void
-R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, 
+R_addFortranRoutine(DllInfo *info, const R_FortranMethodDef * const croutine, 
 		    Rf_DotFortranSymbol *sym)
 {
     sym->name = strdup(croutine->name);
@@ -225,7 +225,7 @@ R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine,
 
 
 void
-R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym)
+R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine, Rf_DotCSymbol *sym)
 {
     sym->name = strdup(croutine->name);
     sym->fun = croutine->fun;
@@ -233,7 +233,7 @@ R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym)
 }
 
 void
-R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, 
+R_addCallRoutine(DllInfo *info, const R_CallMethodDef * const croutine, 
 		 Rf_DotCallSymbol *sym)
 {
     sym->name = strdup(croutine->name);

@@ -52,9 +52,9 @@ typedef struct {
 
 typedef struct _DllInfo DllInfo;
 
-int R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
-		       R_CallMethodDef *callRoutines, 
-		       R_FortranMethodDef *fortranRoutines);
+int R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
+		       const R_CallMethodDef * const callRoutines, 
+		       const R_FortranMethodDef * const fortranRoutines);
 
 DllInfo *R_getDllInfo(const char *name);
 
