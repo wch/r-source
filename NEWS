@@ -299,6 +299,9 @@ NEW FEATURES
 	with more than one degree of freedom: this is now documented
 	and checked for.
 
+    o	sys.function() now has argument 'which' (as has long been
+	presaged on its help page).
+
 
 INTERNATIONALIZATION
 
