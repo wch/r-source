@@ -129,6 +129,7 @@ BUG FIXES
 
     o   'R CMD build' works in a directory whose path contains spaces.
 	(PR#6830 under Unix/Linux: it already worked under Windows.)
+	Also 'R CMD check'.
 
 
 
