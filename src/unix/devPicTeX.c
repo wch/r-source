@@ -555,7 +555,7 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
 	x[1] = x0; y[1] = y1;
 	x[2] = x1; y[2] = y1;
 	x[3] = x1; y[3] = y0;
-	PicTeX_Polygon(4, x, y, bg, fg, coords, dd);
+	PicTeX_Polygon(4, x, y, coords, bg, fg, dd);
 }
 
 static void PicTeX_Circle(double x, double y, int coords, double r,
