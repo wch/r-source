@@ -27,7 +27,7 @@ R:
 	@$(MKINSTALLDIRS) $(top_builddir)/doc/html/search
 	@cat $(srcdir)/html/search/SearchEngine-head.html > \
 	  $(top_builddir)/doc/html/search/SearchEngine.html
-	@$(top_builddir)/tools/keywords2html $(srcdir)/KEYWORDS.db >> \
+	@-$(top_builddir)/tools/keywords2html $(srcdir)/KEYWORDS.db >> \
 	  $(top_builddir)/doc/html/search/SearchEngine.html
 	@cat $(srcdir)/html/search/SearchEngine-foot.html >> \
 	  $(top_builddir)/doc/html/search/SearchEngine.html
