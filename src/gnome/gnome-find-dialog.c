@@ -314,6 +314,8 @@ static void entry_changed_cb(GtkEditable *editable, gpointer data)
     gnome_dialog_set_sensitive(GNOME_DIALOG(find_dialog), GNOME_FIND_BUTTON_FIND_AGAIN, FALSE);
   }
 
+  gnome_dialog_set_default(GNOME_DIALOG(find_dialog), GNOME_FIND_BUTTON_FIND);
+
   g_free(entry_chars);
 }
 
