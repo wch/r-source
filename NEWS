@@ -324,6 +324,11 @@ NEW FEATURES
     o   New function casefold(), a wrapper for tolower/toupper
 	provided for compatibility with S-PLUS.
 
+    o   Added an experimental interface for locking environments and
+	individual bindings.  Also added support for "active bindings"
+	that link a variable to a function (useful for example for linking
+	an R variable to an internal C global).
+
 
 
 BUG FIXES
