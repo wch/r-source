@@ -24,6 +24,27 @@
 
 typedef void * (*DL_FUNC)();
 
+typedef unsigned int R_NativePrimitiveArgType;
+
+#define SINGLESXP 302 /* Don't have a single type for this. */
+
+/* In the future, we will want to allow people register their own types
+   and then refer to these in other contexts. Something like the Gtk type 
+   system may be appropriate.
+*/
+typedef unsigned int R_NativeObjectArgType;
+
+
+/* In the near future, we may support registering 
+   information about the arguments of native routines 
+   and whether they are used to return information.
+   The hope is that we can minimize copying objects even 
+   further. Not currently in use.
+*/
+typedef enum {R_ARG_IN, R_ARG_OUT, R_ARG_IN_OUT, R_IRRELEVANT} R_NativeArgStyle;
+
+
+
 /* 
  These are very similar to those in  unix/dynload.c
  but we maintain them separately to give us more freedom to do
@@ -34,27 +55,26 @@ typedef struct {
     const char *name;
     DL_FUNC     fun;
     int         numArgs;
- 
+  
+    R_NativePrimitiveArgType *types;
+    R_NativeArgStyle         *styles; 
+    
 } R_CMethodDef;
 
-typedef struct {
-    const char *name;
-    DL_FUNC     fun;
-    int         numArgs;
- 
-} R_FortranMethodDef;
+typedef R_CMethodDef R_FortranMethodDef;
+
+
 
 typedef struct {
     const char *name;
     DL_FUNC     fun;
     int         numArgs;
+/* In the future, we will put types in here for the different arguments.
+   We need a richer type system to do this effectively so that one
+   can specify types for new classes.
+*/
 } R_CallMethodDef;
-
-typedef struct {
-    const char *name;
-    DL_FUNC     fun;
-    int         numArgs;
-} R_ExternalMethodDef;
+typedef R_CallMethodDef R_ExternalMethodDef;
 
 
 typedef struct _DllInfo DllInfo;

@@ -20,19 +20,43 @@
 #include "ctest.h"
 #include <R_ext/Rdynload.h>
 
+#include <Rinternals.h>
+
+R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, 
+					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
+R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
+R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
+R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
+R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
+
+R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, 
+					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP};
+
+R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
+R_NativePrimitiveArgType kendall_tau_t[4] = {INTSXP, REALSXP, REALSXP, REALSXP};
+
+R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
+R_NativePrimitiveArgType prho_t[5] = {INTSXP, INTSXP, REALSXP, INTSXP, LGLSXP};
+R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
+
+/* Not used yet until we sort out the as.single(). */
+R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
+				       SINGLESXP, REALSXP, REALSXP, INTSXP};
+
+
 static const R_CMethodDef cmethods[]  = {
-  {"chisqsim", (DL_FUNC) &chisqsim, 11},  
-  {"d2x2xk", (DL_FUNC) &d2x2xk, 5},
-  {"dansari", (DL_FUNC) &dansari, 4},
-  {"fexact",   (DL_FUNC) &fexact, 10},
-  {"kendall_tau", (DL_FUNC) &kendall_tau, 4},
-  {"pansari",  (DL_FUNC)&pansari, 4},
-  {"pkendall", (DL_FUNC)  &pkendall, 3},
-  {"pkstwo", (DL_FUNC) &pkstwo, 3},
-  {"prho", (DL_FUNC) &prho, 5},
-  {"psmirnov2x", (DL_FUNC) &psmirnov2x, 3},
-  {"qansari",  (DL_FUNC) &qansari, 4},
-  {"swilk", (DL_FUNC) &swilk, 9},
+  {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},  
+  {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
+  {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
+  {"fexact",   (DL_FUNC) &fexact, 10, fexact_t},
+  {"kendall_tau", (DL_FUNC) &kendall_tau, 4, kendall_tau_t},
+  {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
+  {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
+  {"pkstwo", (DL_FUNC) &pkstwo, 3, pkstwo_t},
+  {"prho", (DL_FUNC) &prho, 5, prho_t},
+  {"psmirnov2x", (DL_FUNC) &psmirnov2x, 3, psmirnov2x_t},
+  {"qansari",  (DL_FUNC) &qansari, 4, qansari_t},
+  {"swilk", (DL_FUNC) &swilk, 9, swilk_t},
   {NULL, NULL, 0}
 };
 

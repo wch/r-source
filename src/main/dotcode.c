@@ -52,7 +52,8 @@ static char DLLname[PATH_MAX];
    than vectors and lists unaltered.
 */
 
-static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort, const char *name, R_toCConverter **converter)
+static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort, const char *name, R_toCConverter **converter,
+                          int targetType)
 {
     int *iptr;
     float *sptr;
@@ -79,6 +80,16 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort, const cha
 	ans = Rf_convertToC(s, &info, &success, converter);
 	if(success)
 	    return(ans);
+    }
+
+    if(targetType > 0 && targetType != TYPEOF(s)) {
+     if(!dup) {
+       error("expliciti request not to duplicate arguments in call to %s, but argument %d is of the wrong type", 
+	     name, narg + 1);
+     } 
+
+     if(targetType != SINGLESXP) 
+        s = coerceVector(s, targetType);
     }
 
     switch(TYPEOF(s)) {
@@ -181,7 +192,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort, const cha
 }
 
 
-static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
+static SEXP CPtrToRObj(void *p, SEXP arg, int Fort, R_NativePrimitiveArgType type)
 {
     int *iptr, n=length(arg);
     float *sptr;
@@ -191,20 +202,19 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
     SEXP *lptr, CSingSymbol = install("Csingle");
     int i;
     SEXP s, t;
-    SEXPTYPE type =TYPEOF(arg);
 
     switch(type) {
     case LGLSXP:
     case INTSXP:
 	s = allocVector(type, n);
 	iptr = (int*)p;
-	for(i=0 ; i<n ; i++) {
-	    INTEGER(s)[i] = iptr[i];
-	}
+	for(i=0 ; i<n ; i++) 
+            INTEGER(s)[i] = iptr[i];
 	break;
     case REALSXP:
-	s = allocVector(type, n);
-	if(asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+    case SINGLESXP:
+	s = allocVector(REALSXP, n);
+	if(type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 	    sptr = (float*) p;
 	    for(i=0 ; i<n ; i++) REAL(s)[i] = (double) sptr[i];
 	} else {
@@ -257,6 +267,20 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
     }
     return s;
 }
+
+#ifdef THROW_REGISTRATION_TYPE_ERROR
+static Rboolean
+comparePrimitiveTypes(R_NativePrimitiveArgType type, SEXP s, Rboolean dup)
+{
+   if(TYPEOF(s) == type)
+      return(TRUE);
+
+   if(dup && type == SINGLESXP)
+      return(asLogical(getAttrib(s, install("Csingle"))) == TRUE);
+
+   return(FALSE);
+}
+#endif /* end of THROW_REGISTRATION_TYPE_ERROR */
 
 
 /* Foreign Function Interface.  This code allows a user to call C */
@@ -1181,8 +1205,10 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     int dup, havenames, naok, nargs, which;
     DL_FUNC fun;
     SEXP ans, pargs, s;
-    R_toCConverter  *argConverters[65];
+    R_toCConverter  *argConverters[65]; /* the post-call converters back to R objects. */
     R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
+    R_NativePrimitiveArgType *checkTypes = NULL;
+    R_NativeArgStyle *argStyles = NULL;
 
     char buf[128], *p, *q, *vmax;
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
@@ -1233,6 +1259,9 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(symbol.symbol.c->numArgs != nargs)
 	    error("Incorrect number of arguments (%d), expecting %d for %s", 
 		  nargs, symbol.symbol.c->numArgs, buf);
+ 
+        checkTypes = symbol.symbol.c->types;
+        argStyles = symbol.symbol.c->styles;
     }
 
     /* Convert the arguments for use in foreign */
@@ -1242,8 +1271,20 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     cargs = (void**)R_alloc(nargs, sizeof(void*));
     nargs = 0;
     for(pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
+#ifdef THROW_REGISTRATION_TYPE_ERROR
+        if(checkTypes && !comparePrimitiveTypes(checkTypes[nargs], CAR(pargs), dup)) {
+            /* We can loop over all the arguments and report all the erroneous ones,
+               but then we would also want to avoid the conversions.
+               Also, in the future, we may just attempt to coerce the value
+               to the appropriate type. This is why we pass the checkTypes[nargs]
+               value to RObjToCPtr(). We just have to sort out the ability to 
+               return the correct value which is complicated by dup, etc. */
+  	   error("Wrong type for argument %d in call to %s", nargs+1, buf);
+	}
+#endif
 	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1, 
-				  which, buf, argConverters + nargs);
+				  which, buf, argConverters + nargs, 
+				  checkTypes ? checkTypes[nargs] : 0);
 	nargs++;
     }
 
@@ -1852,7 +1893,9 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	info.functionName = buf;
 	nargs = 0;
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
-            if(argConverters[nargs]) {
+	    if(argStyles && argStyles[nargs] == R_ARG_IN) {
+	        PROTECT(s = R_NilValue);
+	    } else if(argConverters[nargs]) {
                 if(argConverters[nargs]->reverse) {
 		    info.argIndex = nargs;
 		    s = argConverters[nargs]->reverse(cargs[nargs], CAR(pargs), 
@@ -1861,7 +1904,8 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    s = R_NilValue;
 		PROTECT(s);
 	    } else {
-		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which));
+		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which, 
+				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs))));
 		SET_ATTRIB(s, duplicate(ATTRIB(CAR(pargs))));
 		SET_OBJECT(s, OBJECT(CAR(pargs)));
 	    }
@@ -1999,20 +2043,20 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     case CPLXSXP:
     case STRSXP:
 	if(nres > 0)
-	    results[0] = RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL, NULL);
+	    results[0] = RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL, NULL, 0);
 	break;
     case VECSXP:
 	n = length(s);
 	if (nres < n) n = nres;
 	for (i = 0 ; i < n ; i++) {
-	    results[i] = RObjToCPtr(VECTOR_ELT(s, i), 1, 1, 0, 0, (const char *)NULL, NULL);
+	    results[i] = RObjToCPtr(VECTOR_ELT(s, i), 1, 1, 0, 0, (const char *)NULL, NULL, 0);
 	}
 	break;
     case LISTSXP:
 	n = length(s);
 	if(nres < n) n = nres;
 	for(i=0 ; i<n ; i++) {
-	    results[i] = RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL, NULL);
+	    results[i] = RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL, NULL, 0);
 	    s = CDR(s);
 	}
 	break;

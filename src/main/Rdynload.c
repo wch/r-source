@@ -216,16 +216,6 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 	}
     }
 
-    if(callRoutines) {
-	for(num=0; callRoutines[num].name != NULL; num++) {;}
-	info->CallSymbols = 
-	    (Rf_DotCallSymbol*)calloc(num, sizeof(Rf_DotCallSymbol));
-	info->numCallSymbols = num;
-	for(i = 0; i < num; i++) {
-	    R_addCallRoutine(info, callRoutines+i, info->CallSymbols + i);
-	}
-    }
-
     if(fortranRoutines) {
 	for(num=0; fortranRoutines[num].name != NULL; num++) {;}
 	info->FortranSymbols = 
@@ -237,6 +227,17 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 				info->FortranSymbols + i);
 	}
     }
+
+    if(callRoutines) {
+	for(num=0; callRoutines[num].name != NULL; num++) {;}
+	info->CallSymbols = 
+	    (Rf_DotCallSymbol*)calloc(num, sizeof(Rf_DotCallSymbol));
+	info->numCallSymbols = num;
+	for(i = 0; i < num; i++) {
+	    R_addCallRoutine(info, callRoutines+i, info->CallSymbols + i);
+	}
+    }
+
 
     if(externalRoutines) {
 	for(num=0; externalRoutines[num].name != NULL; num++) {;}
@@ -253,6 +254,25 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
     return(1);
 }
 
+static void
+R_setPrimitiveArgTypes(const R_FortranMethodDef * const croutine, Rf_DotFortranSymbol *sym)
+{
+    sym->types = (R_NativePrimitiveArgType *) malloc(sizeof(R_NativePrimitiveArgType)*croutine->numArgs);
+    if(sym->types) 
+        memcpy(sym->types, croutine->types, sizeof(R_NativePrimitiveArgType)*croutine->numArgs);
+       
+}
+
+
+static void
+R_setArgStyles(const R_FortranMethodDef * const croutine, Rf_DotFortranSymbol *sym)
+{
+    sym->styles = (R_NativeArgStyle *) malloc(sizeof(R_NativeArgStyle)*croutine->numArgs);
+    if(sym->styles) 
+        memcpy(sym->styles, croutine->styles, sizeof(R_NativeArgStyle)*croutine->numArgs);
+}
+
+
 void
 R_addFortranRoutine(DllInfo *info, 
 		    const R_FortranMethodDef * const croutine, 
@@ -261,6 +281,10 @@ R_addFortranRoutine(DllInfo *info,
     sym->name = strdup(croutine->name);
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+    if(croutine->types) 
+       R_setPrimitiveArgTypes(croutine, sym);
+    if(croutine->styles) 
+       R_setArgStyles(croutine, sym);
 }
 
 void
@@ -282,6 +306,11 @@ R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
     sym->name = strdup(croutine->name);
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+    if(croutine->types) 
+       R_setPrimitiveArgTypes(croutine, sym);
+    if(croutine->styles) 
+       R_setArgStyles(croutine, sym);
+
 }
 
 void
