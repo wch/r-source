@@ -381,8 +381,8 @@ The names of the top-level library directory (i.e. specifiable via the
 @code{-l} argument) and the directory of the package itself are made
 available to the installation scripts via the two shell/environment
 variables @code{R_LIBRARY_DIR} and @code{R_PACKAGE_DIR}.
-Additionally, the name of the package being installed is available
-from the shell variable @code{R_PACKAGE_NAME}.
+Additionally, the name of the package (e.g. survival, MASS) being
+installed is available from the shell variable @code{R_PACKAGE_NAME}.
 
 
 @node Checking and building packages, Submitting a package to CRAN, Configure and cleanup, Creating R packages
