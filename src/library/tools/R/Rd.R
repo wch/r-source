@@ -422,7 +422,7 @@ function(txt, type, predefined = TRUE)
     out <- character()
     pattern <- paste("(^|\n)[[:space:]]*\\\\",
                      ifelse(predefined, type,
-                            paste("section\\\\{", type, "}{",
+                            paste("section{", type, "}",
                                   sep = "")),
                      "{",
                      sep = "")
