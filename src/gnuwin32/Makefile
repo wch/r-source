@@ -13,9 +13,6 @@ else
 all: Rpwd.exe rbuild rpackage rdocs
 endif
 
-PACKAGES = base ctest eda grid lqs methods modreg mva nls splines stepfun tools ts
-ALLPACKAGES = $(PACKAGES) tcltk
-
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
@@ -26,6 +23,9 @@ PKGD = $(shell perl pwd.pl $(PKGDIR))
 endif
 
 RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
+
+PACKAGES = $(filter-out tcltk, $(R_PKGS_BASE))
+REC_NONBUNDLES = $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES))
 
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
@@ -55,9 +55,9 @@ MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a\
    ../extra/bzip2/libbz2.a
 
-LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
+LIBFILES = $(foreach i, $(R_PKGS_BASE), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES),pkg-$i)
-PKGCLEAN = $(foreach i,$(ALLPACKAGES),pkgclean-$i)
+PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
 
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
@@ -124,7 +124,7 @@ fixfiles: docfiles
 	@$(MAKE) --no-print-directory -C ./fixed
 
 fixed/fixdesc:
-	@sh fixed/GETDESC $(ALLPACKAGES)
+	@sh fixed/GETDESC $(R_PKGS_BASE)
 
 dllversion.o: ../include/Rversion.h
 
@@ -334,7 +334,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
 	-$(MAKE) --no-print-directory -C ../../tests -f Makefile.win clean
 	$(RM) -f ../library/methods/R/methods
-	for p in $(REC_PKGS); do \
+	for p in $(R_PKGS_RECOMMENDED_EXPANDED); do \
 	  $(RM) -rf ../library/$$p; \
 	done
 
@@ -357,7 +357,7 @@ distclean veryclean: clean clean-recommended
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer distclean
-	@for pkg in $(ALLPACKAGES); do \
+	@for pkg in $(R_PKGS_BASE); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
@@ -398,16 +398,15 @@ check-devel: check
 
 check-all fullcheck: check-devel check-recommended
 
-REC_PKGS-CHK = $(foreach i, $(REC_PKGS), pkgcheck-$i)
-check-recommended: $(REC_PKGS-CHK)
+check-recommended:
+	$(foreach i, $(R_PKGS_RECOMMENDED_EXPANDED), pkgcheck-$i)
 
 
 #                          ===== documentation ======
 
 docs manuals:
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
-	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win \
-	  R_PKGS='$(ALLPACKAGES)' BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win BUILD=$(BUILD)
 	@$(MAKE) --no-print-directory ziponly-base
 
 
@@ -428,7 +427,7 @@ rsync-recommended:
 	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore \
 	  --include=*.tar.gz --exclude=*.tgz $(CRANREC) . ); \
 	$(RM) ../library/Recommended/*.tgz; \
-	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
+	(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 ../library/%/DESCRIPTION: ../library/Recommended/%.tgz
 	@$(ECHO) "---- $*"
@@ -436,10 +435,10 @@ rsync-recommended:
 
 unpack-recommended:
 	@$(ECHO) "--- Unpacking recommended packages"
-	@for i in ${RECOMMENDED} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION ; done
+	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION ; done
 
 clean-recommended:
-	@for i in ${RECOMMENDED} ; do $(RM) -r ../library/$${i} ; done
+	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
 
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"

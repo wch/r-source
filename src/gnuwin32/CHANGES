@@ -30,7 +30,7 @@ Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.
 
 Rcmd BATCH no longer attempts to redirect stderr on Windows 95/98/ME,
-and so may work again there.
+and so may work again there (if Perl's system() call does).
 
 Calling dev.off() (or ending a session) when a windows() device is
 open and recording plots automatically saves the current plot as the
@@ -45,6 +45,8 @@ PKG_FFLAGS is now used if provided.
 bringToTop() tested against the wrong limit for the device list and so
 would sometimes not work for high-numbered devices if lower-numbered
 devices had been closed.
+
+doc/manual/Makefile.win now has targets for fullrefman.{dvi,pdf}.
 
 
 

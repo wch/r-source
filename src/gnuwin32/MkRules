@@ -47,10 +47,10 @@ R_EXE=R
 
 ## =============== end of user-customizable parts  ===================
 
-## want survival before boot for xrefs
-REC_NONBUNDLES=KernSmooth survival boot cluster foreign lattice mgcv nlme rpart
-RECOMMENDED=VR $(REC_NONBUNDLES)
-REC_PKGS=$(REC_NONBUNDLES) MASS class nnet spatial
+# copies from etc/Makeconf.in
+R_PKGS_BASE = base ctest eda grid lqs methods modreg mva nls splines stepfun tcltk tools ts
+R_PKGS_RECOMMENDED_SOURCES = survival boot cluster foreign lattice KernSmooth mgcv nlme rpart VR
+R_PKGS_RECOMMENDED_EXPANDED = survival boot cluster foreign lattice KernSmooth mgcv nlme rpart MASS nnet spatial class
 
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=

@@ -2,9 +2,7 @@
 
 include ../MkRules
 RPREFIX = $(shell perl ../fixed/rwver.pl ../../../VERSION)
-PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
-ALLPACKAGES = $(PACKAGES) tcltk
-LIBFILES = $(foreach i, $(ALLPACKAGES), ../../../library/$i) ../../../library/R.css
+LIBFILES = $(foreach i, $(R_PKGS_BASE), ../../../library/$i) ../../../library/R.css
 
 all: $(RPREFIX).exe
 
@@ -96,7 +94,7 @@ endif
 #
 # the next lines were formerly the dist-recommended target
 #
-	@for p in $(REC_PKGS); do \
+	@for p in $(R_PKGS_RECOMMENDED_EXPANDED); do \
 	echo Copying $$p ; \
 	$(MKDIR) -p $(RPREFIX)/library/$$p ; \
 	$(CP) -pr ../../../library/$$p $(RPREFIX)/library ; \
