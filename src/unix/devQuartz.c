@@ -831,8 +831,8 @@ static void 	Quartz_Text(double x, double y, char *str,
 
     Quartz_SetStroke( col, gamma, dd);
 
-    QuartzSetTextDrawingMode( xd->context, kCGTextStroke );
-    
+    QuartzSetTextDrawingMode( xd->context, kCGTextFill );
+    Quartz_SetFill(col, gamma, dd);
     Quartz_SetFont(font, cex,  ps, dd);
     
     QuartzShowTextAtPoint( xd->context, 0, 0, str, strlen(str) );
