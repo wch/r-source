@@ -347,20 +347,14 @@ echo " " >> MakeR
 echo "R ÄÄ :res:Size.r" >>MakeR
 echo '	'"Rez :res:Size.r -o :::R -a" >>MakeR
 echo " " >> MakeR
-
 echo "R ÄÄ :res:RVerRes.r" >> MakeR
 echo '	'"Rez :res:RVerRes.r -o :::R -a" >> MakeR
 echo " " >> MakeR
-
 echo "R ÄÄ :res:Raete.r" >> MakeR
 echo '	'"Rez :res:Raete.r -o :::R -a" >>MakeR
 echo " " >> MakeR
-
 echo "Creating dependencies..."
 echo " "
-
-
-
 
 echo "###" >> MakeR
 echo "### Auto-generated dependencies" >> MakeR
@@ -379,8 +373,6 @@ for f in {FortList}
   `echo {f} | sed "s/\.f/.c/g"` >>MakeR
  end 
 end
-
-
 echo "### Macintosh specific" >> MakeR
 for f in {MacSrc}
  begin
@@ -389,7 +381,6 @@ for f in {MacSrc}
  end 
 end
 echo "### Extra Macintosh sources" >> MakeR
-
 for f in {ExtraSrc}
   begin 
   echo `echo {f} | sed "s/\.c/.o/g" ¶
@@ -397,18 +388,13 @@ for f in {ExtraSrc}
  end 
 end
 
-
-
 echo "### Fortran files" >> MakeR
-
 for f in {FortList}
  begin
   echo `echo {f} | sed "s/\.f/.c/g" ¶
    | sed "s/[^/]*:/:obj:\1/"` "Ä" '"'{f}'"' >>MakeR
  end
 end
-
-
 
 echo " "
 echo "Done !"
