@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177.2.5 $ ';
+my $revision = ' $Revision: 1.177.2.6 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -207,6 +207,9 @@ foreach my $pkg (@ARGV) {
 	$library = $pkgoutdir;
 	$ENV{'R_LIBS'} = env_path($library, $R_LIBS);
     }
+    if($WINDOWS) { ## need to avoid spaces in $library
+	$library = Win32::GetShortPathName($library) if $library =~ / /;
+    }
 
     my $description;
     my $is_base_pkg = 0;
@@ -275,9 +278,9 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
 		     !(-t STDIN && -t STDOUT));
-		my $cmd = "${R::Vars::R_CMD} INSTALL -l ${library}";
+		my $cmd = "${R::Vars::R_CMD} INSTALL -l \"${library}\"";
 		$cmd .= " --fake" if($opt_install eq "fake");
-		$cmd .= " ${pkgdir}";
+		$cmd .= " \"${pkgdir}\"";
 		if(!$use_install_log) {
 		    ## Case A: No redirection of stdout/stderr from
 		    ## installation.
@@ -1474,16 +1477,15 @@ sub check_pkg {
     if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
 	$log->creating("${pkgname}-Ex.R");
 	my $Rexdir = &file_path($library, $pkgname, "R-ex");
+        ## $Rexdir might contain spaces (not on Windows)
         my $iszipped = 0;
 	my $cmd;
 
         if(-e &file_path($Rexdir, "Rex.zip")) {
             $iszipped = 1;
 	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
-	    $cmd = join(" ",
-			("$UNZIP",
-			 &file_path($Rexdir, "Rex.zip"),
-			 " -d $Rexdir"));
+            my $Rexfile = &file_path($Rexdir, "Rex.zip");
+	    $cmd = join(" ", ("$UNZIP", "'$Rexfile'", " -d '$Rexdir'"));
 	    if(R_system($cmd)) {
 		$log->error();
 		$log->print("Cannot extract examples from ZIP archive.\n");
@@ -1492,15 +1494,16 @@ sub check_pkg {
         }
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
+            ## We've forced R_HOME and Rexdir to have no spaces already.
             $cmd = "perl ${R::Vars::R_HOME}/bin/massage-Examples ".
-  		     "${pkgname} ${library}/${pkgname}/R-ex ".
+  		     "${pkgname} ${Rexdir} ".
   		     "> ${pkgname}-Ex.R";
         } else {
 	    $cmd = join(" ",
 			("${R::Vars::R_CMD} perl",
 			 &file_path(${R::Vars::R_HOME}, "share", "perl",
 				    "massage-Examples.pl"),
-			 "${pkgname} ${Rexdir} > ${pkgname}-Ex.R"));
+			 "${pkgname} \"${Rexdir}\" > ${pkgname}-Ex.R"));
         }
 
  	if(R_system($cmd)) {
