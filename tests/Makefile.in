@@ -17,13 +17,8 @@ SUBDIRS = Examples
 
 ## FIXME
 
-## Makefile  for  <RHOME>/tests/		-- Martin Maechler
-##
 RHOME= ..
-R    = $(RHOME)/bin/R --no-init-file --no-save --no-restore
-Rbinary = $(rRHOME)/bin/R.binary
-Rbase	= $(rRHOME)/library/base
-REXE = $(Rbinary) $(Rbase)
+R    = $(RHOME)/bin/R --vanilla
 
 Ex = ./Examples
 
