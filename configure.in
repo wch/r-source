@@ -760,19 +760,7 @@ papersize=`${PAPERCONF}`
 : ${R_PAPERSIZE=${papersize:-a4}}
 AC_SUBST(R_PAPERSIZE)
 
-AC_CHECK_HEADERS(png.h)
-AC_CHECK_HEADERS(jpeglib.h)
-if test -n "${ac_cv_header_jpeglib_h}"; then
-  BITMAP_LIBS=-ljpeg
-else
-  BITMAP_LIBS=
-fi
-if test -n "${ac_cv_header_png_h}"; then
-  BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-fi
-echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
-AC_SUBST(BITMAP_LIBS)
-
+R_BITMAPS
 
 ## Saving.
 

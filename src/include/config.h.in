@@ -143,9 +143,9 @@
 #undef HAVE_BSD_NETWORKING
 #undef HAVE_POPEN
 
-/* Bitmap libraries */
-#undef HAVE_PNG_H
-#undef HAVE_JPEGLIB_H
+/* Bitmap headers and libraries */
+#undef HAVE_PNG
+#undef HAVE_JPEG
 
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
