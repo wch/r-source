@@ -4,7 +4,7 @@
 \alias{makepredictcall.poly}
 \title{Compute Orthogonal Polynomials}
 \usage{
-poly(x, degree=1, coefs = NULL)
+poly(x, degree = 1, coefs = NULL)
 }
 \description{
   Returns of evaluates orthogonal polynomials of degree 1 to
@@ -14,7 +14,7 @@ poly(x, degree=1, coefs = NULL)
 \arguments{
  \item{x}{a numeric vector at which to evaluate the polynomial}
  \item{degree}{the degree of the polynomial}
- \item{oldx}{for prediction, coefficients from a previous fit.}
+ \item{coefs}{for prediction, coefficients from a previous fit.}
 }
 \value{
   A matrix with rows corresponding to points in \code{x} and columns
