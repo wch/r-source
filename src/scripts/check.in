@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.26 $ ';
+my $revision = ' $Revision: 1.27 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -42,9 +42,8 @@ my $LATEX = '@LATEX@';
 my $MAKE = '@MAKE@';
 
 $opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
-my @knownoptions = ("help|h", "version|v", "outdir|o:s", "nsize:s",
-		    "vsize:s", "library|l:s", "no-clean", "no-examples",
-		    "no-tests", "no-latex");
+my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
+		    "no-clean", "no-examples", "no-tests", "no-latex");
 
 GetOptions (@knownoptions) || usage();
 
@@ -95,8 +94,6 @@ if($opt_library){
 }
 
 my $R_opts = "--vanilla";
-$R_opts .= " --nsize=$opt_nsize" if $opt_nsize;
-$R_opts .= " --vsize=$opt_vsize" if $opt_vsize;
 
 if($opt_latex){
     my $log = new R::Logfile();
@@ -130,6 +127,8 @@ foreach $pkg (@ARGV){
     my $pkgname = basename($pkg);
     chdir($startdir);
 
+    (-d $pkg) || die "\`$pkg' is not a directory";
+    
     my $pkgoutdir="$outdir/$pkgname.Rcheck";
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
     if(! -d $pkgoutdir){
