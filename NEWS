@@ -782,6 +782,9 @@ BUG FIXES
     o   If malloc() fails when allocating a large object the allocator now
         does a gc and tries the malloc() again.
 
+    o	packageSlot() and getGroupMembers() are now exported from methods
+	as they should from documentation and the green book.
+
 
 
 
