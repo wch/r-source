@@ -52,7 +52,10 @@ read.table <-
 #         }
 #         lines <- c(lines, line)
 #     }
-    lines <- .Internal(readTableHead(file, 5, comment.char,
+
+    nlines <- if (nrows < 0) 5 else min(5, (header + nrows))
+
+    lines <- .Internal(readTableHead(file, nlines, comment.char,
                                      blank.lines.skip))
     nlines <- length(lines)
     if(!nlines) {
@@ -74,13 +77,14 @@ read.table <-
                   comment.char = comment.char)
     col1 <- if(missing(col.names)) length(first) else length(col.names)
     col <- numeric(nlines - 1)
-    for (i in seq(along=col))
-        col[i] <- length(scan(file, what = "", sep = sep,
-                              quote = quote,
-                              nlines = 1, quiet = TRUE, skip = 0,
-                              strip.white = strip.white,
-                              blank.lines.skip = blank.lines.skip,
-                              comment.char = comment.char))
+    if (nlines > 1)
+        for (i in seq(along=col))
+            col[i] <- length(scan(file, what = "", sep = sep,
+                                  quote = quote,
+                                  nlines = 1, quiet = TRUE, skip = 0,
+                                  strip.white = strip.white,
+                                  blank.lines.skip = blank.lines.skip,
+                                  comment.char = comment.char))
     cols <- max(col1, col)
 
     ##	basic column counting and header determination;

@@ -294,6 +294,9 @@ BUG FIXES
 
     o   quantile() gave -Inf not NaN in some examples. (Related to PR#1852)
 
+    o   read.table() read too far in checking the file structure if
+	0 < nrows < 5 and more rows existed on the file. (PR1809)
+
 
 
 	**************************************************
