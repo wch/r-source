@@ -150,44 +150,17 @@ Date: Tue, 13 Apr 1999 12:03:42 +0200 (CEST)
 
 Directory:  Language
 
-* PR# 85 *
-Subject:  A bug in data.entry? 
-From: Yusuke Uchiyama <me@naxgul.kais.kyoto-u.ac.jp>
-Date: Wed, 23 Dec 1998 11:03:03 GMT
---still there 17feb99
-* PR# 89 *
-Subject: lapply -- Recall bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 6 Jan 1999 15:04:14 +0100
---This is *nasty*.
 * PR# 105 *
 Subject: an old bug resurfaces
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 29 Jan 1999 08:28:32 +0100 (MET)
 --Model formulas. Proper fix probably requires extensive rewrite of model formula
 --parser, which would make in non-S-compatible.
-* PR# 113 *
-Subject: cat data types
-From: John Peters <johnp@tip.CSIRO.AU>
-Date: Fri, 5 Feb 1999 18:31:52 +1100 (EDT)
---Cannot cat a name. (Docs fixed to reflect this by Kurt, 22feb99)
 * PR# 118 *
 Subject: Function parsing
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
 --comment placement.
-* PR# 132 *
-Subject: Re: [R] zero-offset matrices
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 02 Mar 1999 16:59:48 +0100
-* PR# 148 *
-Subject: Missing Warning in :
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Thu, 25 Mar 1999 13:34:12 +0100
-* PR# 151 *
-Subject: problems with formals and get
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
 * PR# 166 *
 Subject: outer fails with group generic operations on factors
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -198,14 +171,6 @@ From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 14 Apr 1999 11:22:10 +0200
 --Did this get resolved into the "S has the bug, 
 --one shouldn't try that" category?
-* PR# 168 *
-Subject: Segfault from evalq(return())
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 16 Apr 1999 14:05:12 +0200
-* PR# 169 *
-Subject: deparse drops () sometimes
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 16 Apr 1999 14:10:39 +0200
 
 Directory:  Low-level
 
@@ -268,6 +233,12 @@ Directory:  TooMuchAtOnce
 Subject: 0.62.3 bugs, incompatibilities and problems
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Mon, 12 Oct 1998 09:43:51 +0200 (MET DST)
+--Of Jims points: (checked in 0.65 April 26 compared to Splus 3.4)
+-- 4. works the same as S
+-- 5. Splus gives NA and the if(class(z)=="repeated") doesn't work in either
+-- 10. seems to work
+-- 7.  seems to do what Jim wants now
+--  
 * PR# 76 *
 Subject: R-0.63.0
 From: Rashid Nassar <rnassar@acpub.duke.edu>
@@ -283,10 +254,6 @@ Directory:  incoming
 Subject:  do.call() mangles expressions in arguments 
 From: Peter Dalgaard BSA <pd@biostat.ku.dk>
 Date: Wed, 21 Apr 1999 19:39:53 +0200
-* PR# 175 *
-Subject: Assigning to a list within a loop
-From: Bill Venables <wvenable@arcola.stats.adelaide.edu.au>
-Date: Thu, 22 Apr 1999 13:16:38 +0930 (CST)
 * PR# 176 *
 Subject: mvfft
 From: Martyn Plummer <plummer@iarc.fr>
