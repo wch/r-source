@@ -52,8 +52,12 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1)
     \code{x} the corresponding summary statistics for the subset of the
     respective variables in \code{x}.
 
-    \code{aggregate.ts} is the time series method.
-    It is not yet implemented.
+    \code{aggregate.ts} is the time series method.  If \code{x} is not a
+    time series, it is coerced to one.  Then, the variables in \code{x}
+    are split into appropriate blocks of length
+    \code{frequency(x) / nfrequency}, and \code{FUN} is applied to each
+    such block.  The result returned is a time series with frequency
+    \code{nfrequency} holding the aggregated values.
 }
 \author{Kurt Hornik}
 \seealso{
@@ -73,7 +77,11 @@ aggregate(state.x77,
           list(Region = state.region,
                Cold = state.x77[,"Frost"] > 130),
           mean)
-## (Note that no state in `South' is that cold.)
+## (Note that no state in `South' is THAT cold.)
+
+data(presidents)
+## Compute the average annual approval ratings for American presidents.
+aggregate(presidents, nf = 1, FUN = mean)
 }
 \keyword{category}
 \keyword{array}
