@@ -53,6 +53,11 @@ NEW FEATURES
     o   The use of UseMethod() with no argument was not documented on
 	the help page and is now regarded as an error.
 
+    o   The assignment form of split() allows recycling of vectors 
+        within the value list. In particular, things like 
+            split(x, g) <- lapply(split(x, g), mean)
+        now work
+
 
 UTILITIES
 
@@ -117,6 +122,8 @@ BUG FIXES
 
     o   Collecting warnings had message with unneeded trailing space.
 
+    o   The ave() function had trouble if the grouping contained 
+        unused levels. 
 
 
 
