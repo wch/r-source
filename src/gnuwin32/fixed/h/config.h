@@ -50,6 +50,9 @@
 /* Define if you have the `bzero' function. */
 /* #undef HAVE_BZERO */
 
+/* Define if you have the bzip2 headers and libraries. */
+/* #undef HAVE_BZLIB */
+
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
 #define HAVE_DECL_ISFINITE 0
