@@ -11,7 +11,7 @@ subdir = src/library/lqs
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = INDEX DESCRIPTION.in Makefile.in NAMEPACE
+DISTFILES = INDEX DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = lqs
 
