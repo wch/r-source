@@ -24,6 +24,8 @@ BUG FIXES
     o	cut.default() was not handling infinite values with infinite
 	breaks.  (PR#1694)
 
+    o	ks.test() could fail due to integer overflow if n.x and n.y
+	were both large.
 
 
 		CHANGES IN R VERSION 1.5.1

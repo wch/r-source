@@ -18,10 +18,10 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         if(n.y < 1)
             stop("Not enough y data")
         if(is.null(exact))
-            exact <- (n.x * n.y < 10000)
+            exact <- (as.double(n.x) * n.y < 10000) ## avoid integer overflow
         METHOD <- "Two-sample Kolmogorov-Smirnov test"
         TIES <- FALSE
-        n <- n.x * n.y / (n.x + n.y)
+        n <- as.double(n.x) * n.y / (n.x + n.y)
         w <- c(x, y)
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
         if(length(unique(w)) < (n.x + n.y)) {
