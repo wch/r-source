@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-14, 2001-01-08
+Version 1.2-15, 2001-01-09
 Kurt Hornik
 
 
@@ -1436,7 +1436,7 @@ these a try, of course.  This area of CRAN currently contains
      Function for writing a SNNS pattern file from a data frame or matrix.
 
    Directory `src/contrib/Omegahat' contains yet unreleased packages from
-the Omegahat Project for Statistical Computing (http://www.omegahat.org).
+the Omegahat Project for Statistical Computing (http://www.omegahat.org/).
 Currently, there are
 
 *CORBA*
@@ -1510,7 +1510,13 @@ E.g., to use a private tree in `$HOME/lib/R' and a public site-wide tree in
 
      R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
 
-into your (Bourne) shell profile or your `~/.Renviron' file.
+into your (Bourne) shell profile or even preferably, add the line
+
+     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+
+your `~/.Renviron' file.  (Note that no `export' statement is needed or
+allowed in this file; see the on-line help for `Startup' for more
+information.)
 
 5.3 How can add-on packages be used?
 ====================================

@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.2-14, 2001-01-08</h2>
+<h2>Version 1.2-15, 2001-01-09</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1597,7 +1597,7 @@ matrix.
 </dl>
 
 <p>Directory <code>src/contrib/Omegahat</code> contains yet unreleased packages
-from the <a href="http://www.omegahat.org">Omegahat Project for Statistical Computing</a>.  Currently, there are
+from the <a href="http://www.omegahat.org/">Omegahat Project for Statistical Computing</a>.  Currently, there are
 
 <dl>
 <dt><strong>CORBA</strong>
@@ -1678,7 +1678,14 @@ public site-wide tree in <code>/usr/local/lib/R-contrib</code>, put
 <pre>R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
 </pre>
 
-<p>into your (Bourne) shell profile or your <code>~/.Renviron</code> file.
+<p>into your (Bourne) shell profile or even preferably, add the line
+
+<pre>R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+</pre>
+
+<p>your <code>~/.Renviron</code> file.  (Note that no <code>export</code> statement is
+needed or allowed in this file; see the on-line help for <code>Startup</code>
+for more information.)
 
 <p><hr>
 Node:<a name="How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
