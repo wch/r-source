@@ -1,0 +1,12 @@
+--- Renviron.orig	2004-04-24 14:15:26.000000000 -0500
++++ Renviron	2004-04-24 14:18:51.000000000 -0500
+@@ -6,7 +6,8 @@
+ 
+ R_PLATFORM=${R_PLATFORM-'i386-pc-linux-gnu'}
+ ## Default printer paper size
+-R_PAPERSIZE=${R_PAPERSIZE-'letter'}
++## edd Apr 2004:  use Debian's paperconf settings, with thanks to Matej Cepl
++R_PAPERSIZE=${R_PAPERSIZE-$(cat /etc/papersize)}
+ ## Default print command
+ R_PRINTCMD=${R_PRINTCMD-'/usr/bin/lpr'}
+ ## Default TeXMF stuff

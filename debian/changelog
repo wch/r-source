@@ -1,3 +1,63 @@
+r-base (1.9.1.alpha.20040820-1) unstable; urgency=low
+
+  * Upgraded to initial 2.0.0 alpha release candidate of 2004-08-20
+  * debian/copyright: Author list updated as suggested by Kurt Hornik
+  * debian/control: Expanded Depends for r-base-dev to include virtual
+    packages libblas-3.so and liblapack-3.so as final alternatives
+  
+ -- Douglas Bates <bates@bates1-home>  Fri, 20 Aug 2004 13:58:03 -0500
+
+r-base (1.9.1-2) unstable; urgency=low
+
+  * debian/r-base-core.postinst: Papersize code conditional on paperconf
+  * debian/control: Added Suggests for libpaper-utils
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue, 22 Jun 2004 06:33:26 -0500
+
+r-base (1.9.1-1) unstable; urgency=low
+
+  * Upgraded to version 1.9.1 released today
+
+  * debian/rules: Configure with R_PAPERSIZE='letter' 
+  * debian/r-base-core.postinst: Re-wrote papersize setting code
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 21 Jun 2004 09:31:02 -0500
+
+r-base (1.9.0.beta.20040614-1) unstable; urgency=low
+
+  * Upgraded to the initial 1.9.1 beta release candidate of 2004-06-14
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 14 Jun 2004 15:02:14 -0500
+
+r-base (1.9.0.alpha.20040607-1) unstable; urgency=low
+
+  * Upgraded to the initial 1.9.1 alpha release candidate of 2004-06-07
+
+  * Contains upstream fix for version number in search entry of CRAN
+    packages, with thanks to Kurt Hornik (Closes: #248430)
+  
+  * debian/Renviron-R_PAPERSIZE.patch: New patch to set R_PAPERSIZE in 
+    /etc/R/Renviron by respecting both a prior setting and the value
+    in /etc/papersize, with thanks to Matej Cepl  (Closes: #245525)
+
+  * debian/control: Remove unversioned g++ from Build-Depends [ lintian ]
+  * debian/control: r-mathlib, r-recommended get versioned Depends
+    on r-base-core as doc directories are symlinked [ lintian ]
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue,  8 Jun 2004 07:00:41 -0500
+
+r-base (1.9.0-1) unstable; urgency=low
+
+  * Upgraded to version 1.9.0 released today
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 12 Apr 2004 07:30:12 -0500
+
+r-base (1.8.1.cvs.20040410-1) unstable; urgency=low
+
+  * Upgraded to beta release candidate 2004-04-10 of R 1.9.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 11 Apr 2004 22:27:32 -0500
+
 r-base (1.8.1.cvs.20040331-1) unstable; urgency=low
 
   * Upgraded to beta release candidate 2004-03-31 of R 1.9.0

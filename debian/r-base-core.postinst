@@ -10,11 +10,30 @@ set -e
     
 case "$1" in
     configure)
+	#if [ -x /usr/bin/paperconf ]
+	#then
+	#    perl -pi -e \
+	#    '$P=`/usr/bin/paperconf`,chop $P,s:a4:$P: if /{R_PAPERSIZE/' /usr/bin/R
+	#fi
+    
+	# edd 19 June 2004  deal with papersize 
+        # edd 22 June 2004  make that conditional on paperconf
 	if [ -x /usr/bin/paperconf ]
 	then
-	    perl -pi -e \
-	    '$P=`/usr/bin/paperconf`,chop $P,s:a4:$P: if /{R_PAPERSIZE/' /usr/bin/R
+	    #Sysfile=`/etc/papersize`
+	    #syspaper=`cat $Sysfile`
+	    syspaper=`/usr/bin/paperconf`
+	    #echo "Papersize in /etc is $syspaper"
+	    Rfile=/etc/R/Renviron
+	    rpaper=`grep ^R_PAPERSIZE $Rfile | cut -d"'" -f2`
+	    #echo "Papersize in Renviron is $rpaper"
+	    if [ "$syspaper" != "$rpaper" ] 
+	    then
+		echo "Changing R_PAPERSIZE from $rpaper with $syspaper"
+		perl -p -i -e "s|\'$rpaper\'|\'$syspaper\'|"    "$Rfile"
+	    fi
 	fi
+	
 
 	if [ -x /usr/bin/update-menus ] 
 	then 

@@ -105,7 +105,8 @@ endif
 
 get-orig-source: upstream
 upstream:
-	links http://cran.us.r-project.org/src/base
+	#links http://cran.us.r-project.org/src/base
+	links http://cran.r-project.org/src/base/?M=D
 
 upstreamdevel:
 	links ftp://ftp.stat.math.ethz.ch/Software/R
@@ -135,6 +136,7 @@ configure-stamp:
 	perl -p -i -e 's|:\@R_LD_LIBRARY_PATH\@||' src/scripts/R.sh.in
 
 	dh_testdir
+	R_PAPERSIZE=letter				\
 	R_BROWSER=sensible-browser			\
 	PAGER=/usr/bin/pager				\
 	PERL=/usr/bin/perl				\
@@ -276,6 +278,7 @@ install-arch-stamp:
 		    's|^R_HOME_DIR=.*|R_HOME_DIR=/usr/lib/R|' R)
 
         # set browser to mozilla as mozilla-1.0.0 works with help.start()
+        # (we're now using /usr/bin/sensible-browser, see above)
 #	(cd $(debtmp)/usr/lib/R/etc; \
 #		perl -p -i -e \
 #			"s|R_BROWSER-'.*'|R_BROWSER-'/usr/bin/mozilla'|" \
@@ -346,7 +349,8 @@ endif
 
         # for the standalone library package, move the two libs
         # as 'make install' ignores these, we have to do it by hand
-	dh_installdirs -p$(nmathpackage) usr/include usr/lib usr/share/lintian/overrides
+	dh_installdirs -p$(nmathpackage) usr/include usr/lib \
+					usr/share/lintian/overrides
 	install -m 0644 src/nmath/standalone/libRmath.a     \
 			$(debmat)/usr/lib
 	install -m 0644 src/nmath/standalone/libRmath.so    \
@@ -360,11 +364,14 @@ endif
 
         # now deal with $R_HOME/etc <--> /etc/R
         # edd 03 Apr 2003  patch Renviron for new R_LIBS standard
+        # edd 24 Apr 2004  patch Renviron for R_PAPERSIZE (bug #245525)
+        # edd 16 Jun 2004        nope, doesn't work
 	(cd $(debetc); \
 		cat $(debbase)/Renviron-R_LIBS.patch | patch --verbose;	\
 		mv Makeconf Renviron	../../../../etc/R/; 		\
 		ln -s  /etc/R/Makeconf  .; 				\
 		ln -s  /etc/R/Renviron  .  				)
+        ##	cat $(debbase)/Renviron-R_PAPERSIZE.patch | patch --verbose; 
 
 	touch install-arch-stamp
 
