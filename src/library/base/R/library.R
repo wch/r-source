@@ -212,9 +212,19 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 txt <- .readRDS(f)
                 ## New-style vignette indexes are data frames with more
                 ## info that just the base name of the PDF file and the
-                ## title.
+                ## title.  For such an index, we give the names of the
+                ## vignettes, their titles, and indicate whether PDFs
+                ## are available.
                 if(is.data.frame(txt))
-                    txt <- txt[txt$PDF != "", c("PDF", "Title")]
+                    txt <-
+                        cbind(basename(gsub("\\.[[:alpha:]]+$", "",
+                                            txt$File)),
+                              paste(txt$Title,
+                                    paste(rep("(source", NROW(txt)),
+                                          ifelse(txt$PDF != "",
+                                                 ", pdf",
+                                                 ""),
+                                          ")", sep = "")))
             }
             ## </FIXME>
             else
