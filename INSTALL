@@ -100,6 +100,16 @@ information on CRAN.
 Now rehash if necessary, type `R' and reach for your S manuals ...
 And, read the R FAQ (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
 
+The GNOME interface for R will only be built if you specify it by
+running configure with the --with-gnome option.  For example, you
+might run
+
+	./configure --with-gnome
+
+You will need libglade to build the GNOME interface.  For more 
+information on libglade and to download the source, see 
+    http://www.daa.com.au/~james/gnome/
+
 
 INSTALLATION
 
