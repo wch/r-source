@@ -368,11 +368,16 @@ port of R for Macintosh is no longer supported.
 2.6 Are there Unix binaries for R?
 ==================================
 
-The `bin/linux' directory of a CRAN site contains Mandrake 9.1/9.2/10.0
-i386 packages by Michele Alzetta, Red Hat 8.x/9/Fedora1/Fedora2/Fedora3
-i386 and Fedora1 x86_64 packages by Martyn Plummer and James Henstridge,
-respectively, SuSE 7.3/8.0/8.1/8.2 i386 and 9.0/9.1/9.2 i586 packages by
-Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
+The `bin/linux' directory of a CRAN site contains the following packages.
+
+                 CPU      Versions                        Provided by
+     Mandrake    i386     10.0                            Michele Alzetta
+     Red Hat     i386     8.x/9/Fedora1/Fedora2/Fedora3   Martyn Plummer
+                 x86_64   Fedora1                         James Henstridge
+                 x86_64   Fedora3                         Brian Ripley
+     SuSE        i386     7.3/8.0/8.1/8.2                 Detlef Steuer
+                 i586     9.0/9.1/9.2                     Detlef Steuer
+     VineLinux   i386     2.6                             Susunu Tanimura
 
    Debian packages, maintained by Dirk Eddelbuettel, have long been part of
 the Debian distribution, and can be accessed through APT, the Debian

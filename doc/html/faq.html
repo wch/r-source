@@ -502,7 +502,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 
 <h3 class="section">2.6 Are there Unix binaries for R?</h3>
 
-<!-- Linux binaries as of 2004-10-17: -->
+<!-- Linux binaries as of 2004-11-17: -->
 <!-- mandrake -->
 <!-- 10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it> -->
 <!-- redhat -->
@@ -512,6 +512,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <!-- x86_64 1.8.1  James Henstridge <james@daa.com.au> -->
 <!-- Fedora2 i386   2.0.0  Martyn Plummer <plummer@iarc.fr> -->
 <!-- Fedora3 i386   2.0.1  Martyn Plummer <plummer@iarc.fr> -->
+<!-- x86_64 2.0.1  Brian Ripley -->
 <!-- suse -->
 <!-- 7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
 <!-- 8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
@@ -522,16 +523,30 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <!-- 9.2     i586   2.0.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
 <!-- vinelinux -->
 <!-- 3.0     i386   2.0.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp> -->
-<p>The <span class="file">bin/linux</span> directory of a <acronym>CRAN</acronym> site contains
-<!-- Debian stable/testing/unstable packages for the i386 platform (now part -->
-<!-- of the Debian distribution and maintained by Dirk Eddelbuettel), -->
-Mandrake 9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
-8.x/9/Fedora1/Fedora2/Fedora3 i386 and Fedora1 x86_64 packages by Martyn
-Plummer and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386
-and 9.0/9.1/9.2 i586 packages by Detlef Steuer, and VineLinux 2.6 i386
-packages by Susunu Tanimura.
+<p>The <span class="file">bin/linux</span> directory of a <acronym>CRAN</acronym> site contains the following
+packages.
 
-   <p>Debian packages, maintained by Dirk Eddelbuettel, have long been part of
+   <blockquote>
+        <p><table summary=""><tr align="left"><td valign="top"></td><td valign="top">CPU </td><td valign="top">Versions </td><td valign="top">Provided by
+
+     <p><br></td></tr><tr align="left"><td valign="top">Mandrake </td><td valign="top">i386 </td><td valign="top">10.0 </td><td valign="top">Michele Alzetta
+<br></td></tr><tr align="left"><td valign="top">Red Hat  </td><td valign="top">i386 </td><td valign="top">8.x/9/Fedora1/Fedora2/Fedora3 </td><td valign="top">Martyn
+Plummer
+<br></td></tr><tr align="left"><td valign="top"></td><td valign="top">x86_64 </td><td valign="top">Fedora1 </td><td valign="top">James Henstridge
+<br></td></tr><tr align="left"><td valign="top"></td><td valign="top">x86_64 </td><td valign="top">Fedora3 </td><td valign="top">Brian Ripley
+<br></td></tr><tr align="left"><td valign="top">SuSE     </td><td valign="top">i386   </td><td valign="top">7.3/8.0/8.1/8.2 </td><td valign="top">Detlef Steuer
+<br></td></tr><tr align="left"><td valign="top"></td><td valign="top">i586   </td><td valign="top">9.0/9.1/9.2 </td><td valign="top">Detlef Steuer
+<br></td></tr><tr align="left"><td valign="top">VineLinux </td><td valign="top">i386 </td><td valign="top">2.6 </td><td valign="top">Susunu Tanimura
+        <br></td></tr></table>
+</blockquote>
+
+<!-- Mandrake 9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat -->
+<!-- 8.x/9/Fedora1/Fedora2/Fedora3 i386, by Martyn Plummer, Fedora1 x86_64, -->
+<!-- and Fedora3 x86_64 packages by Martyn Plummer, James Henstridge, and -->
+<!-- Brian Ripley respectively, SuSE 7.3/8.0/8.1/8.2 i386 and 9.0/9.1/9.2 -->
+<!-- i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages by -->
+<!-- Susunu Tanimura. -->
+<p>Debian packages, maintained by Dirk Eddelbuettel, have long been part of
 the Debian distribution, and can be accessed through APT, the Debian
 package maintenance tool.  Use e.g. <code>apt-get install r-base
 r-recommended</code> to install the R environment and recommended packages. 
