@@ -293,9 +293,15 @@ static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
 		RPalette[i].green = (g * 0xff) / (ng - 1);
 		RPalette[i].blue  = (b * 0xff) / (nb - 1);
 		/* Perform Gamma Correction Here */
+#ifdef OLD
 		XPalette[i].red   = (r * 0xffff) / (nr - 1);
 		XPalette[i].green = (g * 0xffff) / (ng - 1);
 		XPalette[i].blue  = (b * 0xffff) / (nb - 1);
+#else
+		XPalette[i].red   = pow(r / (nr - 1.0), RedGamma) * 0xffff;
+		XPalette[i].green = pow(g / (ng - 1.0), GreenGamma) * 0xffff;
+		XPalette[i].blue  = pow(b / (nb - 1.0), BlueGamma) * 0xffff;
+#endif
 		/* End Gamma Correction */
 		status = XAllocColor(dpy, cmap, &XPalette[i]);
 		if (status == 0) {
