@@ -64,6 +64,7 @@ void Rwin_fpset();
 
 void Rgui_configure();
 void readconsolecfg();
+void breaktodebugger();
 
 #define USE_MDI 1
 

@@ -10,10 +10,13 @@ rw1090
 Both Rterm and Rgui now give usage information via the --help
 command-line flag.
 
-There is now a "Misc|Break to debugger" menu option, enabled by the
+There is now a "Misc|Break to debugger" menu option, enabled 
+when a debugger is detected (somewhat fallibly), or infallibly by the
 "--debug" command line option.  This will cause a trap to an external
 debugger, e.g. for running Rgui under gdb.  If the menu item is
 selected when not running under a debugger R is likely to crash.
+If the "--debug" option is used, R will break to the debugger during
+command line processing, allowing the startup process to be debugged.
 
 Added "stay" argument to bringToTop(), to allow the user to specify
 that a window should stay on top of other windows.  Also added "stay

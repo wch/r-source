@@ -803,6 +803,7 @@ int cmdlineoptions(int ac, char **av)
 		    R_max_memory = value;
 	    } else if(!strcmp(*av, "--debug")) {
 		Rp->DebugMenuitem = TRUE;
+		breaktodebugger();
 	    } else if(!strcmp(*av, "--args")) {
 		break;
 	    } else {

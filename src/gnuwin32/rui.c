@@ -300,9 +300,24 @@ static void menukill(control m)
     UserBreak = TRUE;
 }
 
-static void menudebug(control m)
+static Rboolean isdebuggerpresent()
+{
+    typedef BOOL (*R_CheckDebugger)();
+    R_CheckDebugger entry;
+    entry = (R_CheckDebugger)GetProcAddress((HMODULE)GetModuleHandle("KERNEL32"),
+                                            "IsDebuggerPresent");
+    if (entry == NULL) return(FALSE);
+    else return((Rboolean)entry());
+}
+
+void breaktodebugger()
 {
     asm("int $3");
+}
+
+static void menudebug(control m)
+{
+    breaktodebugger();
 }
 
 static void menuls(control m)
@@ -935,7 +950,8 @@ int setupui()
 
     MCHECK(newmenu("Misc"));
     MCHECK(newmenuitem("Stop current computation           \tESC", 0, menukill));
-    if (DebugMenuitem) MCHECK(newmenuitem("Break to debugger", 0, menudebug));
+    if (DebugMenuitem || isdebuggerpresent())
+	MCHECK(newmenuitem("Break to debugger", 0, menudebug));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mlazy = newmenuitem("Buffered output", 'W', menulazy));
     MCHECK(newmenuitem("-", 0, NULL));
