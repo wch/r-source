@@ -101,6 +101,11 @@ NEW FEATURES
 	a expanded version of UKDriverDeaths (as a multiple time
 	series SeatBelts).
 
+   o    New na.action function na.pass() passes through NAs.
+
+   o    Function acf() now accepts missing values.
+
+
 
 DEPRECATED & DEFUNCT
 

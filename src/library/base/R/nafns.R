@@ -1,3 +1,4 @@
+na.pass <- function(object, ...) object
 na.action <- function(object, ...) UseMethod("na.action")
 na.action.default <- function(object, ...) attr(object, "na.action")
 

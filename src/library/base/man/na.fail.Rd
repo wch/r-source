@@ -7,11 +7,13 @@
 \alias{na.exclude}
 \alias{na.exclude.data.frame}
 \alias{na.exclude.default}
+\alias{na.pass}
 \title{Handle Missing Values in Objects}
 \usage{
 na.fail(object, \dots)
 na.omit(object, \dots)
 na.exclude(object, \dots)
+na.pass(object, \dots)
 }
 \arguments{
   \item{object}{an \R object, typically a data frame}
@@ -23,6 +25,7 @@ na.exclude(object, \dots)
   \code{na.fail} returns the object if it does not contain any
   missing values, and signals an error otherwise.
   \code{na.omit} returns the object with incomplete cases removed.
+  \code{na.pass} returns the object unchanged.
 }
 \details{
   At present these will handle vectors, matrices and data frames
