@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.96 $ ';
+my $revision = ' $Revision: 1.97 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -478,6 +478,47 @@ sub check_pkg {
 	    $log->print(wrap("", "", @msg_DESCRIPTION));
 	    exit(1);
 	}
+    }
+
+    ## Check index files.
+
+    $log->checking("index files");
+    my @badfiles = ();
+    sub checkIndex {
+	my $index = $_[0];
+	## Currently, only test whether the index exists and has size
+	## greater than 0.
+	push(@badfiles, $index) unless (-s $index);
+	## Could have more tests, e.g. for correct format ...
+    }
+    ## <FIXME>
+    ## This should really be in R::Utils so that it can be kept in sync
+    ## between R CMD check and R CMD build.
+    my $data_exts_re = "(R|r|RData|rdata|rda|TXT|txt|tab|csv|CSV)";
+    my $demo_exts_re = "[Rr]";
+    my $vignette_exts_re = "[RrSs](nw|tex)";
+    ## </FIXME>
+    &checkIndex("INDEX");
+    &checkIndex(&file_path("data", "00Index"))
+      if(-d "data" && &list_files_with_exts("data", $data_exts_re));
+    &checkIndex(&file_path("demo", "00Index"))
+      if(-d "demo" && &list_files_with_exts("demo", $data_exts_re));
+    &checkIndex(&file_path("inst", "doc", "00Index.dcf"))
+      if(-d &file_path("inst", "doc")
+	 && &list_files_with_exts(&file_path("inst", "doc"),
+				  $vignette_exts_re));
+    if($#badfiles >= 0) {
+	$log->warning();
+	$log->print("The following index files are missing " .
+		    "or have zero length:\n");
+	$log->print("  " . join("\n  ", @badfiles) . "\n");
+	$log->print(wrap("", "",
+			 ("See the information on INDEX files and package",
+			  "subdirectories in section 'Creating R packages'",
+			  "of the 'Writing R Extensions' manual.\n")));
+    }
+    else {
+	$log->result("OK");
     }
 
     ## Check R code for syntax errors.
