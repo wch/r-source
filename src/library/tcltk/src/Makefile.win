@@ -1,0 +1,37 @@
+#-*- Makefile -*-
+include $(RHOME)/src/gnuwin32/MkRules
+
+all: implibs $(RHOME)/library/tcltk/libs/tcltk.dll
+
+ifdef DEBUG
+  DLLFLAGS=
+  DEBUGFLAG=-g -Wall
+else
+  DLLFLAGS=-s
+  DEBUGFLAG=-Wall
+endif
+
+DLLNAME = tcltk
+implibs: libtcl83.a libtk83.a
+libtcl83.a: tcl83.def
+libtk83.a: tk83.def
+
+OBJS = tcltk.o tcltk_win.o
+CFLAGS = -I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2 -I "$(TCL_HOME)"/include -DWin32
+
+DLLLIBS = -L$(RHOME)/src/gnuwin32 -lR -L. -ltcl83 -ltk83
+
+$(DLLNAME).a: $(OBJS) #
+	$(RM) -f $@
+	$(AR) cr $@ *.o
+	$(RANLIB) $@
+
+$(DLLNAME).dll : $(DLLNAME).a
+$(RHOME)/library/tcltk/libs/tcltk.dll: $(RHOME)/library/tcltk/libs $(DLLNAME).dll
+	$(CP) $(DLLNAME).dll $@
+
+$(RHOME)/library/tcltk/libs:
+	$(MKDIR) $@
+
+clean:
+	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def
