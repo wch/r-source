@@ -26,7 +26,7 @@ showDefault <-
     else
         ## NBB:  This relies on the delicate fact (as of version 1.7 at least)
         ## that print will NOT recursively call show if it gets more than one argument!
-        print(object, digits = NULL)
+        print(object, useS4 = FALSE)
 
 }
 
