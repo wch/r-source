@@ -276,7 +276,9 @@ BUG FIXES
 	.Last.value is only set from top-level expressions (and was
 	incorrectly documented).
 
-
+    o   The algorithm for determining starting estimates in the SSfpl
+        self-starting model in the nls package was changed following a
+        suggestion by Phillipe Grosjean <phgrosje@ulb.ac.be>
 
 
 	**************************************************
