@@ -19,14 +19,14 @@
     }
     \item{Chick}{
       an ordered factor with levels
-      \code{18} < \dots{} < \code{48}
+      \code{18} < \dots < \code{48}
       giving a unique identifier for the chick.  The ordering of
       the levels groups chicks on the same diet together and
       orders them according to their final weight (lightest to
       heaviest) within diet.
     }
     \item{Diet}{
-      a factor with levels 1,\dots{},4 indicating which
+      a factor with levels 1,\dots,4 indicating which
       experimental diet the chick received.
     }
   }

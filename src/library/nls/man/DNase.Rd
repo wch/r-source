@@ -12,7 +12,7 @@
   This data frame contains the following columns:
   \describe{
     \item{Run}{
-      an ordered factor with levels \code{10} < \dots{} < \code{3}
+      an ordered factor with levels \code{10} < \dots < \code{3}
       indicating the assay run.
     }
     \item{conc}{

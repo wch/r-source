@@ -13,7 +13,7 @@
   \describe{
     \item{Plant}{
       an ordered factor with levels
-      \code{Qn1} < \code{Qn2} < \code{Qn3} < \dots{} < \code{Mc1}
+      \code{Qn1} < \code{Qn2} < \code{Qn3} < \dots < \code{Mc1}
       giving a unique identifier for each plant.
     }
     \item{Type}{
