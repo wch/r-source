@@ -1192,21 +1192,21 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
        in the clip region */
 
     if (x0 < x1) {
-	xd->clip.x = R_rint(x0);
-	xd->clip.width = R_rint(x1 - x0);
+	xd->clip.x = (int) x0 ;
+	xd->clip.width = (int) x1 - (int) x0 + 1;
     }
     else {
-	xd->clip.x = R_rint(x1);
-	xd->clip.width = R_rint(x0 - x1);
+	xd->clip.x = (int) x1;
+	xd->clip.width = (int) x0 - (int) x1 + 1;
     }
 
     if (y0 < y1) {
-	xd->clip.y = R_rint(y0);
-	xd->clip.height = R_rint(y1 - y0);
+	xd->clip.y = (int) y0;
+	xd->clip.height = (int) y1 -  (int) y0 + 1;
     }
     else {
-	xd->clip.y = R_rint(y1);
-	xd->clip.height = R_rint(y0 - y1);
+	xd->clip.y = (int) y1;
+	xd->clip.height = (int) y0 - (int) y1 + 1;
     }
 
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
