@@ -26,7 +26,7 @@ Type 'q()' to quit R.
 > if(.Platform$OS.type == "unix" &&
 +    is.null(nsl("cran.r-project.org"))) q()
 > 
-> if(.Platform$OS.type == "windows") options(CRAN="http://cran.r-project.org")
+> options(repos="http://cran.r-project.org")
 > 
 > # test do_download.
 > nrow(CRAN.packages())
