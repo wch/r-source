@@ -1141,8 +1141,8 @@ Optional Features:
                           maybe confusing) to the casual installer [no]
   --enable-strict-barrier provoke compile error on write barrier violation
                           [no]
-  --enable-lazy-loading   enable make rules and dependencies not useful (and
-                          maybe confusing) to the casual installer [no]
+  --enable-lazy-loading   lazy-loading of standard and recommended packages
+                          [yes]
   --enable-static[=PKGS]
                           build static libraries [default=no]
   --enable-shared[=PKGS]
@@ -2246,10 +2246,10 @@ _ACEOF
 fi
 
 
-## Enable maintainer-specific portions of Makefiles.
-# Check whether --enable-lay-loading or --disable-lay-loading was given.
-if test "${enable_lay_loading+set}" = set; then
-  enableval="$enable_lay_loading"
+## Enable lazy-loading of standard and recommended packages.
+# Check whether --enable-lazy-loading or --disable-lazy-loading was given.
+if test "${enable_lazy_loading+set}" = set; then
+  enableval="$enable_lazy_loading"
   use_lazy_loading="${enableval}"
 else
   use_lazy_loading=yes

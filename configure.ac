@@ -200,11 +200,11 @@ if test x"${use_strict_barrier}" = xyes; then
 fi
 
 
-## Enable maintainer-specific portions of Makefiles.
-AC_ARG_ENABLE([lay-loading],
+## Enable lazy-loading of standard and recommended packages.
+AC_ARG_ENABLE([lazy-loading],
 [AC_HELP_STRING([--enable-lazy-loading],
-                [enable make rules and dependencies not useful (and
-                 maybe confusing) to the casual installer @<:@no@:>@])],
+                [lazy-loading of standard and recommended packages 
+		@<:@yes@:>@])],
 [use_lazy_loading="${enableval}"],
 [use_lazy_loading=yes])
 AM_CONDITIONAL(USE_LAZY_LOAD, [test "x${use_lazy_loading}" = xyes])
