@@ -95,7 +95,8 @@ void InitFunctionHashing()
 static int CountDLL = 0;
 
 static struct {
-    char  path[MAX_PATH + 1];
+    char  *path;
+    char  *name;
     HINSTANCE dlh;
 }
 
@@ -117,9 +118,12 @@ static int DeleteDLL(char *path)
     }
     return 0;
 found:
+    free(LoadedDLL[i].name);
+    free(LoadedDLL[i].path);
     FreeLibrary(LoadedDLL[i].dlh);
     for (i = loc + 1; i < CountDLL; i++) {
-	strcpy(LoadedDLL[i - 1].path, LoadedDLL[i].path);
+	LoadedDLL[i - 1].path = LoadedDLL[i].path;
+	LoadedDLL[i - 1].name = LoadedDLL[i].name;
 	LoadedDLL[i - 1].dlh = LoadedDLL[i].dlh;
     }
     CountDLL--;
@@ -144,7 +148,10 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 static int AddDLL(char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
+    char *dpath, *name, DLLname[MAX_PATH], *p, *st;
+    int i;
 
+    DeleteDLL(path);
     if (CountDLL == MAX_NUM_DLLS) {
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
@@ -154,7 +161,32 @@ static int AddDLL(char *path, int asLocal, int now)
 	strcpy(DLLerror, "LoadLibrary failure");
 	return 0;
     }
-    strcpy(LoadedDLL[CountDLL].path, path);
+
+    dpath = malloc(strlen(path)+1);
+    if(dpath == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'path'");
+	FreeLibrary(tdlh);	
+	return 0;
+    }
+    strcpy(dpath, path);
+
+    strcpy(DLLname, path);
+    for(p = DLLname; *p != '\0'; p++) if(*p == '\\') *p = '/';
+    p = strrchr(path, '/'); 
+    if(!p) p = DLLname; else p++;
+    st = strchr(p, '.');
+    if(st) *st = '\0';
+    name = malloc(strlen(p)+1);
+    if(name == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'name'");
+	FreeLibrary(tdlh);
+	free(dpath);
+	return 0;
+    }
+    strcpy(name, p);
+
+    LoadedDLL[CountDLL].path = dpath;
+    LoadedDLL[CountDLL].name = name;
     LoadedDLL[CountDLL].dlh = tdlh;
     CountDLL++;
     return 1;
@@ -165,26 +197,25 @@ static int AddDLL(char *path, int asLocal, int now)
         /* that have been loaded contains the symbol name and */
         /* returns a pointer to that symbol upon success. */
 
-DL_FUNC R_FindSymbol(char const *name)
+DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
-    char  buf[MAXIDSIZE + 1];
     DL_FUNC fcnptr;
-    int   i, j;
+    int   i, j, all=(strlen(pkg) == 0), doit;
     static int NumStatic = 0;
     int   mid, high, low, cmp;
 
-#ifdef HAVE_NO_SYMBOL_UNDERSCORE
-    sprintf(buf, "%s", name);
-#else
-    sprintf(buf, "_%s", name);
-#endif
-    sprintf(buf, "%s", name);
+    /* Rprintf("name = %s pkg = %s\n", name, pkg); */
+
     for (i = CountDLL - 1; i >= 0; i--) {
-	fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, buf);
-	if (fcnptr != NULL)
-	    return fcnptr;
-    }
-    if (!NumStatic) {
+	doit = all;
+	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
+	if(doit) {	    
+	    /* Rprintf("name = %s\n", LoadedDLL[i].name); */
+	    fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, name);
+	    if (fcnptr != (DL_FUNC)0) return fcnptr;
+	}
+	if(doit > 1) return (DL_FUNC)0;  /* Only look in the first-matching DLL    }
+    if (!NumStatic && (all || !strcmp(pkg, "base"))) {
 	char *tname;
 	DL_FUNC tfunc;
 

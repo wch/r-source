@@ -11,6 +11,10 @@
 
 NEW FEATURES
 
+    o	.C, .Fortran. .Call and .External now have an argument PACKAGE
+	to specify the shared library to be used for the symbol. See
+	?Foreign. Package writers are encouraged to use this.
+
     o	New options(error.halt = FALSE) (default is TRUE) allows
 	continuation after an error in batch processing.
 
@@ -96,6 +100,8 @@ BUG FIXES
 
     o	family quasi handles zero observations with var=mu^2 more correctly.
 
+    o	dynamically-loaded libraries are searched last-loaded first, as
+	documented (under Unix it used to be first-loaded first).
 
 
 		CHANGES IN R VERSION 0.65.0

@@ -1,8 +1,8 @@
 \name{Foreign}
 \title{Foreign Function Interface}
 \usage{
-      .C(name, \dots, NAOK=FALSE, DUP=TRUE)
-.Fortran(name, \dots, NAOK=FALSE, DUP=TRUE)
+      .C(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
+.Fortran(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
 .External(name, \dots)
 .Call(name, \dots)
 }
@@ -20,6 +20,12 @@
   \code{Inf} values is regarded as an error.}
 \item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before their
   address is passed to C or Fortran.}
+\item{PACKAGE}{if supplied, confine the search for the \cdoe{name} to
+    the DLL given by this argument (plus the conventional extension,
+    \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to add
+    safety for packages, which can ensure that no other package can
+    override their external symbols by using this argument. Use
+    \code{PACKAGE="base"} for symbols linked in to \R.}
 }
 \description{
 The functions \code{.C} and \code{.Fortran} can be used to
@@ -38,7 +44,7 @@ The functions \code{.C} and \code{.Fortran} return a list similar to the \code{\
 list of arguments passed in, but reflecting any
 changes made by the C or Fortran code.
 
-\code{.External} returns an \R object.
+\code{.External} and \code{.Call} return an \R object.
 
 These calls are typically made in conjunction with
 \code{\link{dyn.load}} which links DLLs to \R.
@@ -117,7 +123,7 @@ safe.
 \section{Header files for external code}{
     Writing code for use with \code{.External} and \code{.Call} will
     use internal \R structures. If possible use just those defined in
-    \file{Rinternals.h} or the macros in \file{Rdefines.h},
+    \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
     as other header files are not installed and are even more
     likely to be changed.
 }

@@ -125,6 +125,7 @@ static int CountDLL = 0;
 
 static struct {
     char	*path;
+    char	*name;
     void	*handle;
 }
 LoadedDLL[MAX_NUM_DLLS];
@@ -144,10 +145,12 @@ static int DeleteDLL(char *path)
     }
     return 0;
 found:
+    free(LoadedDLL[i].name);
     free(LoadedDLL[i].path);
     dlclose(LoadedDLL[i].handle);
     for(i=loc+1 ; i<CountDLL ; i++) {
 	LoadedDLL[i-1].path = LoadedDLL[i].path;
+	LoadedDLL[i-1].name = LoadedDLL[i].name;
 	LoadedDLL[i-1].handle = LoadedDLL[i].handle;
     }
     CountDLL--;
@@ -164,14 +167,16 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 	/* and returns 0 if there library table is full or */
 	/* or if dlopen fails for some reason. */
 
+static int computeDLOpenFlag(int asLocal, int now); /* Defined below. */
+
 static int AddDLL(char *path, int asLocal, int now)
 {
     void *handle;
-    char *dpath;
-    int i;
+    char *dpath, *name, DLLname[PATH_MAX], *p;
+    /*int i;*/
     int openFlag = 0;
-    static int computeDLOpenFlag(int asLocal, int now); /* Defined below. */
 
+    DeleteDLL(path);
     if(CountDLL == MAX_NUM_DLLS) {
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
@@ -191,16 +196,37 @@ static int AddDLL(char *path, int asLocal, int now)
 	return 0;
     }
     strcpy(dpath, path);
-    for(i=CountDLL ; i>0 ; i--) {
+
+    p = strrchr(dpath, '/');  /* We are on Unix here */
+    if(!p) p = dpath; else p++;
+    strcpy(DLLname, p);
+    p = strchr(DLLname, '.');
+    if(p) *p = '\0';
+    name = malloc(strlen(DLLname)+1);
+    if(name == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'name'");
+	dlclose(handle);
+	free(dpath);
+	return 0;
+    }
+    strcpy(name, DLLname);
+
+/*    for(i=CountDLL ; i>0 ; i--) {
 	LoadedDLL[i].path = LoadedDLL[i-1].path;
+	LoadedDLL[i].name = LoadedDLL[i-1].name;
 	LoadedDLL[i].handle = LoadedDLL[i-1].handle;
     }
     LoadedDLL[0].path = dpath;
-    LoadedDLL[0].handle = handle;
+    LoadedDLL[0].name = name;
+    LoadedDLL[0].handle = handle;*/
+
+    LoadedDLL[CountDLL].path = dpath;
+    LoadedDLL[CountDLL].name = name;
+    LoadedDLL[CountDLL].handle = handle;
     CountDLL++;
+
     return 1;
 }
-
 
  /* 
 
@@ -282,11 +308,11 @@ if(now != 0) {
 	/* returns a pointer to that symbol upon success. */
 
 
-DL_FUNC R_FindSymbol(char const *name)
+DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
     char buf[MAXIDSIZE+1];
     DL_FUNC fcnptr;
-    int i;
+    int i, all=(strlen(pkg) == 0), doit;
     
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
     sprintf(buf, "%s", name);
@@ -301,16 +327,23 @@ DL_FUNC R_FindSymbol(char const *name)
 	/* be cast without loss of information.		     */
 
     for (i=0 ; i<CountDLL ; i++) {
-	fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
-	if (fcnptr != (DL_FUNC)0) return fcnptr;
+	doit = all;
+	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
+	if(doit) {
+	   fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
+	   if (fcnptr != (DL_FUNC)0) return fcnptr;
+	}
+	if(doit > 1) return (DL_FUNC)0;  /* Only look in the first-matching DLL */
     }
+    if(all || !strcmp(pkg, "base")) {
 #ifdef DL_SEARCH_PROG
-    fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
+	fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
 #else
-    for(i=0 ; CFunTab[i].name ; i++)
-	if(!strcmp(name, CFunTab[i].name))
-	    return CFunTab[i].func;
+	for(i=0 ; CFunTab[i].name ; i++)
+	    if(!strcmp(name, CFunTab[i].name))
+		return CFunTab[i].func;
 #endif
+    }
     return (DL_FUNC)0;
 }
 
@@ -383,7 +416,7 @@ void InitFunctionHashing()
 #endif
 }
 
-DL_FUNC R_FindSymbol(char const *name)
+DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
     int i;
     for(i=0 ; CFunTab[i].name ; i++)
