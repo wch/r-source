@@ -7,7 +7,7 @@ export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
        "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
        "filePathAsAbsolute", "filePathSansExt", "fileTest",
-       "listFilesWithExts", "listFilesWithType", "delimMatch", "collater")
+       "listFilesWithExts", "listFilesWithType", "delimMatch")
 
 ## <FIXME>
 ## Documented as internal but called from scripts
