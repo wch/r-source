@@ -29,18 +29,19 @@ options(keep.source = TRUE)
 options(warn = 0)
 options(CRAN = "http://cran.r-project.org")
 
-### Autoloads :	 Should NOT stop on error --- try(.) fails..
-try.autoload <- function(name, file) {
-    if (exists(name, envir = .GlobalEnv, inherits = FALSE))
-	warning("Object already exists")
-    else
-	autoload(name, file)
-}
+local({
+    ### Autoloads :	 Should NOT stop on error --- try(.) fails..
+    ### The local() makes try.autoload go away after use
+    try.autoload <- function(name, file) {
+	if (exists(name, envir = .GlobalEnv, inherits = FALSE))
+	    warning("Object already exists")
+	else
+	    autoload(name, file)
+    }
 
-## The next 3 were in base till 0.90:
-try.autoload("t.test","ctest")
-try.autoload("chisq.test","ctest")
-try.autoload("prop.test","ctest")
-try.autoload("wilcox.test","ctest")
-
-## This fails ! rm(try.autoload)
+    ## The next 3 were in base till 0.90:
+    try.autoload("t.test","ctest")
+    try.autoload("chisq.test","ctest")
+    try.autoload("prop.test","ctest")
+    try.autoload("wilcox.test","ctest")
+})
