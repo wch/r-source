@@ -26,7 +26,7 @@ as.qr(x)
 \arguments{
   \item{x}{a matrix whose QR decomposition is to be computed.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{x}. Only used in \code{LINPACK} is true.}
+    columns of \code{x}. Only used if \code{LINPACK} is true.}
   \item{qr}{a QR decomposition of the type computed by \code{qr}.}
   \item{y, b}{a vector or matrix of right-hand sides of equations.}
   \item{a}{A QR decomposition or (\code{qr.solve} only) a rectangular matrix.}

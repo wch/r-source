@@ -15,6 +15,9 @@ NEW FEATURES
 	and the configure check now requires PCRE >= 4.0.  This is in
 	preparation for documenting exactly what grep(perl=TRUE) does.
 
+	PCRE now uses character tables prepared for the locale in use
+	each time it is used, rather than those of the C locale.
+
 
 UTILITIES
 
@@ -35,6 +38,13 @@ DEPRECATED & DEFUNCT
 
     o	print.atomic() is defunct.
 
+
+STANDARD PACKAGES
+
+    o	undoc() in `tools' has a new default of	 `use.values = NULL'
+	which produces a warning whenever the default values of function
+	arguments differ between documenation and code.
+	Note that this affects "R CMD check" as well.
 
 
 	**************************************************
@@ -60,6 +70,11 @@ NEW FEATURES
     o   The startup message now shows the R Foundation as copyright
         holder, and includes the R ISBN number and a pointer to the new
         citation() function.
+
+    o	The solve() function now uses the `tol' argument for all
+        non-complex cases.  The default tolerance for LINPACK is 1e-7,
+        as before.  For LAPACK it currently is .Machine$double.eps but
+        may be changed in future versions of R.
 
 
 BUG FIXES
@@ -106,6 +121,17 @@ BUG FIXES
     o	cor.test(*, method="spearman") gave wrong results `randomly'
 	(because of a wrong type passed to C; PR#4718).
 
+    o	dist() objects with NA's didn't print these, now do. (PR#4866).
+
+    o	regexpr(fixed=TRUE) returned 0-based indices.
+
+    o	df[, length_1_index] <- value did not recycle short rhs. (PR#4820)
+
+    o	median() no longer `works' for odd-length factor variables.
+
+    o	packageStatus() is more robust to failing to contact a
+	repository, and contacts the correct paths in the repositories
+	under Windows.
 
 
 

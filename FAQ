@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-10, 2003-10-24
+Version 1.8-12, 2003-10-31
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1243,6 +1243,9 @@ distributions of R.)
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
 
+*CDNmoney*
+     Components of Canadian monetary aggregates.
+
 *CGIwithR*
      Facilities for the use of R to write CGI scripts.
 
@@ -1297,6 +1300,9 @@ distributions of R.)
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
      density estimates.
+
+*HI*
+     Simulation from distributions supported by nested hyperplanes.
 
 *Hmisc*
      Functions useful for data analysis, high-level graphics, utility
@@ -1886,6 +1892,10 @@ distributions of R.)
      Supplement to package *maps*, providing the larger and/or
      higher-resolution databases.
 
+*mapproj*
+     Map Projections: converts latitude/longitude into projected
+     coordinates.
+
 *maps*
      Draw geographical maps.  Projection code and larger maps are in
      separate packages.
@@ -1969,6 +1979,9 @@ distributions of R.)
 
 *mvtnorm*
      Multivariate normal and t distributions.
+
+*ncdf*
+     Interface to Unidata netCDF data files.
 
 *ncomplete*
      Functions to perform the regression depth method (RDM) to binary
@@ -2521,6 +2534,9 @@ of BioConductor, with more packages under development.
      Functionality to create and interact with dynamic documents, vignettes,
      and other navigable documents.
 
+*MAGEML*
+     Functionality to handle MAGEML documents.
+
 *RBGL*
      An interface between the graph package and the Boost graph libraries,
      allowing for fast manipulation of graph objects in R.
@@ -2528,6 +2544,9 @@ of BioConductor, with more packages under development.
 *ROC*
      Receiver Operating Characteristic (ROC) approach for identifying genes
      that are differentially expressed in two types of samples.
+
+*RdbiPgSQL*
+     Methods for accessing data stored in PostgreSQL tables.
 
 *Rgraphviz*
      An interface with Graphviz for plotting graph objects in R.
@@ -2538,8 +2557,14 @@ of BioConductor, with more packages under development.
 *SAGElyzer*
      Locates genes based on SAGE tags.
 
+*SNPtools*
+     Rudimentary structures for SNP data.
+
 *affy*
      Methods for Affymetrix Oligonucleotide Arrays.
+
+*affyPLM*
+     For fitting Probe Level Models.
 
 *affycomp*
      Graphics toolbox for assessment of Affymetrix expression measures.
@@ -2547,14 +2572,38 @@ of BioConductor, with more packages under development.
 *affydata*
      Affymetrix data for demonstration purposes.
 
+*annaffy*
+     Functions for handling data from Bioconductor Affymetrix annotation
+     data packages.
+
 *annotate*
      Associate experimental data in real time to biological metadata from
      web databases such as GenBank, LocusLink and PubMed.  Process and store
      query results.  Generate HTML reports of analyses.
 
+*ctc*
+     Tools to export and import Tree and Cluster to other programs.
+
+*daMA*
+     Functions for the efficient design of factorial two-color microarray
+     experiments and for the statistical analysis of factorial microarray
+     data.
+
 *edd*
      Expression density diagnostics: graphical methods and pattern
      recognition algorithms for distribution shape classification.
+
+*externalVector*
+     Basic class definitions and generics for external pointer based vector
+     objects for R.
+
+*factDesign*
+     A set of tools for analyzing data from factorial designed micraorray
+     experiments.  The functions can be used to evaluate appropriate tests
+     of contrast and perform single outlier detection.
+
+*gcrma*
+     Background adjustment using sequence information.
 
 *genefilter*
      Tools for sequentially filtering genes using a wide variety of
@@ -2568,6 +2617,14 @@ of BioConductor, with more packages under development.
      data along a chromosome or producing color images of expression data
      matrices.
 
+*globaltest*
+     Testing globally whether a group of genes is significantly related to
+     some clinical variable of interest.
+
+*gpls*
+     Classification using generalized partial least squares for two-group
+     and multi-group classification.
+
 *graph*
      Classes and tools for creating and manipulating graphs within R.
 
@@ -2576,6 +2633,12 @@ of BioConductor, with more packages under development.
 
 *limma*
      Linear models for microarray data.
+
+*makecdfenv*
+     Two functions.  One reads a Affymetrix chip description file (CDF) and
+     creates a hash table environment containing the location/probe set
+     membership mapping.  The other creates a package that automatically
+     loads that environment.
 
 *marrayClasses*
      Class definitions for pre-normalized and normalized cDNA microarray
@@ -2599,11 +2662,20 @@ of BioConductor, with more packages under development.
      Miscellaneous functions used in the functional genomics core facility
      in UCB and UCSF.
 
+*matchprobes*
+     ools for sequence matching of probes on arrays.
+
 *multtest*
      Multiple testing procedures for controlling the family-wise error rate
      (FWER) and the false discovery rate (FDR).  Tests can be based on t-
      or F-statistics for one- and two-factor designs, and permutation
      procedures are available to estimate adjusted p-values.
+
+*ontoTools*
+     Graphs and sparse matrices for working with ontologies.
+
+*pamr*
+     Pam: prediction analysis for microarrays.
 
 *reposTools*
      Tools for dealing with file repositories and allow users to easily
@@ -2612,6 +2684,14 @@ of BioConductor, with more packages under development.
 *rhdf5*
      Storage and retrieval of large datasets using the HDF5 library and file
      format.
+
+*siggenes*
+     Identifying differentially expressed genes and estimating the False
+     Discovery Rate (FDR) with both the Significance Analysis of Microarrays
+     (SAM) and the Empirical Bayes Analyses of Microarrays (EBAM).
+
+*splicegear*
+     A set of tools to work with alternative splicing.
 
 *tkWidgets*
      Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
@@ -2623,8 +2703,6 @@ of BioConductor, with more packages under development.
 *widgetTools*
      Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
      interfaces.
-
-   These packages will eventually also be made available via CRAN as well.
 
 5.1.5 Other add-on packages
 ---------------------------

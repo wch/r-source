@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-10, @value{FAQ-YEAR}-10-24
+@set FAQ-VERSION 1.8-12, @value{FAQ-YEAR}-10-31
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -440,9 +440,9 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-10-15:
+@c Linux binaries as of 2003-10-26:
 @c
-@c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
+@c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
 @c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
@@ -1556,6 +1556,8 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item CDNmoney
+Components of Canadian monetary aggregates.
 @item CGIwithR
 Facilities for the use of R to write CGI scripts.
 @item CircStats
@@ -1599,6 +1601,8 @@ a range of R functions to match the interface metadata structures.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
+@item HI
+Simulation from distributions supported by nested hyperplanes.
 @item Hmisc
 Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
@@ -2051,6 +2055,8 @@ Local polynomial (ridge) regression.
 @item mapdata
 Supplement to package @strong{maps}, providing the larger and/or
 higher-resolution databases.
+@item mapproj
+Map Projections: converts latitude/longitude into projected coordinates.
 @item maps
 Draw geographical maps.  Projection code and larger maps are in separate
 packages.
@@ -2114,6 +2120,8 @@ ML estimation for multivariate normal data with missing values.
 Generalization of the Shapiro-Wilk test for multivariate variables.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item ncdf
+Interface to Unidata netCDF data files.
 @item ncomplete
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
@@ -2665,31 +2673,57 @@ class structure).
 @item DynDoc
 Functionality to create and interact with dynamic documents, vignettes,
 and other navigable documents.
+@item MAGEML
+Functionality to handle MAGEML documents.
 @item RBGL
 An interface between the graph package and the Boost graph libraries,
 allowing for fast manipulation of graph objects in R.
 @item ROC
 Receiver Operating Characteristic (ROC) approach for identifying genes
 that are differentially expressed in two types of samples.
+@item RdbiPgSQL
+Methods for accessing data stored in PostgreSQL tables.
 @item Rgraphviz
 An interface with Graphviz for plotting graph objects in R.
 @item Ruuid
 Creates Universally Unique ID values (UUIDs) in R.
 @item SAGElyzer
 Locates genes based on SAGE tags.
+@item SNPtools
+Rudimentary structures for SNP data.
 @item affy
 Methods for Affymetrix Oligonucleotide Arrays.
+@item affyPLM
+For fitting Probe Level Models.
 @item affycomp
 Graphics toolbox for assessment of Affymetrix expression measures.
 @item affydata
 Affymetrix data for demonstration purposes.
+@item annaffy
+Functions for handling data from Bioconductor Affymetrix annotation data
+packages.
 @item annotate
 Associate experimental data in real time to biological metadata from web
 databases such as GenBank, LocusLink and PubMed.  Process and store
 query results.  Generate @HTML{} reports of analyses.
+@item ctc
+Tools to export and import Tree and Cluster to other programs.
+@item daMA
+Functions for the efficient design of factorial two-color microarray
+experiments and for the statistical analysis of factorial microarray
+data.
 @item edd
 Expression density diagnostics: graphical methods and pattern
 recognition algorithms for distribution shape classification.
+@item externalVector
+Basic class definitions and generics for external pointer based vector
+objects for R.
+@item factDesign
+A set of tools for analyzing data from factorial designed micraorray
+experiments.  The functions can be used to evaluate appropriate tests of
+contrast and perform single outlier detection.
+@item gcrma
+Background adjustment using sequence information.
 @item genefilter
 Tools for sequentially filtering genes using a wide variety of filtering
 functions.  Example of filters include: number of missing value,
@@ -2700,12 +2734,23 @@ functions to genes.
 Graphical tools for genomic data, for example for plotting expression
 data along a chromosome or producing color images of expression data
 matrices.
+@item globaltest
+Testing globally whether a group of genes is significantly related to
+some clinical variable of interest.
+@item gpls
+Classification using generalized partial least squares for two-group and
+multi-group classification.
 @item graph
 Classes and tools for creating and manipulating graphs within R.
 @item hexbin
 Binning functions, in particular hexagonal bins for graphing.
 @item limma
 Linear models for microarray data.
+@item makecdfenv
+Two functions.  One reads a Affymetrix chip description file (CDF) and
+creates a hash table environment containing the location/probe set
+membership mapping.  The other creates a package that automatically loads
+that environment. 
 @item marrayClasses
 Class definitions for pre-normalized and normalized cDNA microarray
 data.  Basic methods for accessing/replacing, printing, and subsetting.
@@ -2723,18 +2768,30 @@ microarray intensity data: boxplots, scatter-plots, color images.
 @item marrayTools
 Miscellaneous functions used in the functional genomics core facility in
 UCB and UCSF.
+@item matchprobes
+ools for sequence matching of probes on arrays.
 @item multtest
 Multiple testing procedures for controlling the family-wise error rate
 (FWER) and the false discovery rate (FDR).  Tests can be based on
 @math{t}- or @math{F}-statistics for one- and two-factor designs, and
 permutation procedures are available to estimate adjusted
 @math{p}-values.
+@item ontoTools
+Graphs and sparse matrices for working with ontologies.
+@item pamr
+Pam: prediction analysis for microarrays.
 @item reposTools
 Tools for dealing with file repositories and allow users to easily
 install, update, and distribute packages, vignettes, and other files.
 @item rhdf5
 Storage and retrieval of large datasets using the HDF5 library and file
 format.
+@item siggenes
+Identifying differentially expressed genes and estimating the False
+Discovery Rate (FDR) with both the Significance Analysis of Microarrays
+(SAM) and the Empirical Bayes Analyses of Microarrays (EBAM).
+@item splicegear
+A set of tools to work with alternative splicing.
 @item tkWidgets
 Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
 @item vsn
@@ -2745,8 +2802,8 @@ Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces.
 @end table
 
-These packages will eventually also be made available via @CRAN{}
-as well.
+@c These packages will eventually also be made available via @CRAN{}
+@c as well.
 
 @node Other add-on packages,  , Add-on packages from BioConductor, Which add-on packages exist for R?
 @subsection Other add-on packages

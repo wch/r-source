@@ -1059,3 +1059,8 @@ x[2:3]
 x[2]
 x[2, drop=FALSE]
 ## both dim and dimnames lost in 1.8.0
+
+## print.dist() didn't show NA's prior to 1.8.1
+x <- cbind(c(1,NA,2,3), c(NA,2,NA,1))
+(d <- dist(x))
+print(d, diag = TRUE)
