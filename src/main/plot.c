@@ -323,7 +323,7 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
  *    The special case asp == 1 produces plots where distances
  *    between points are represented accurately on screen.  Values
  *    with asp < 1 can be used to produce more accurate maps when
- *    using lattitude and longtitude.
+ *    using latitude and longitude.
  *
  *  NOTE
  *
