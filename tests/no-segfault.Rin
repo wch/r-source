@@ -9,7 +9,7 @@ core.pkgs <-
     x[x[,"Priority"]=="base", "Package"]}
 ## c("base", "eda", "lqs", "modreg", "mva", "stepfun", "ts", "nls","splines")
 ## .packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
-core.pkgs <- core.pkgs[- match("tcltk", core.pkgs)]
+core.pkgs <- core.pkgs[- match(c("methods", "tcltk"), core.pkgs)]
 stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
 
@@ -41,6 +41,7 @@ stop.list[["base"]] <-
 		    "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
+stop.list[["methods"]] <- c("browseAll", "traceOff", "traceOn")
 
 sink("no-segfault.R")
 
