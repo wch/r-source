@@ -26,18 +26,33 @@ lm.influence <- function (lm.obj)
     }
     n <- as.integer(nrow(lm.obj$qr$qr))
     k <- as.integer(lm.obj$qr$rank)
-    e <- weighted.residuals(lm.obj)
-    .Fortran("lminfl",
-	     lm.obj$qr$qr,
-	     n,
-	     n,
-	     k,
-	     lm.obj$qr$qraux,
-	     e,
-	     hat = double(n),
-	     coefficients = matrix(0, nr = n, nc = k),
-	     sigma = double(n),
-	     DUP = FALSE, PACKAGE="base")[c("hat", "coefficients", "sigma")]
+    ## in na.exclude case, omit NAs.
+    e <- na.omit(weighted.residuals(lm.obj))
+    if(length(e) != n)
+        stop("non-NA residual length does not match cases used in fitting")
+    res <- .Fortran("lminfl",
+                    lm.obj$qr$qr,
+                    n,
+                    n,
+                    k,
+                    lm.obj$qr$qraux,
+                    e,
+                    hat = double(n),
+                    coefficients = matrix(0, nr = n, nc = k),
+                    sigma = double(n),
+                    DUP = FALSE, PACKAGE="base")[c("hat", "coefficients", "sigma")]
+    if(!is.null(lm.obj$na.action)) {
+        hat <- naresid(lm.obj$na.action, res$hat)
+        hat[is.na(hat)] <- 0 # omitted cases have 0 leverage
+        res$hat <- hat
+        coefficients <- naresid(lm.obj$na.action, res$coefficients)
+        coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
+        res$coefficients <- coefficients
+        sigma <- naresid(lm.obj$na.action, res$sigma)
+        sigma[is.na(sigma)] <- sqrt(deviance(lm.obj)/df.residual(lm.obj))
+        res$sigma <- sigma
+    }
+    res
 }
 
 rstandard <- function(lm.obj, infl = lm.influence(lm.obj),
@@ -86,11 +101,10 @@ cooks.distance <- function(lm.obj, infl = lm.influence(lm.obj),
 
 influence.measures <- function(lm.obj)
 {
-    is.influential <- function(infmat)
+    is.influential <- function(infmat, n)
     {
 	## Argument is result of using influence.measures
 	## Returns a matrix  of logicals structured like the argument
-	n <- nrow(infmat)
 	k <- ncol(infmat) - 4
 	if(n <= k)
 	    stop("Too few cases, n < k")
@@ -106,7 +120,7 @@ influence.measures <- function(lm.obj)
     infl <- lm.influence(lm.obj)
     p <- lm.obj$rank
     e <- weighted.residuals(lm.obj)
-    s <- sqrt(sum(e^2)/df.residual(lm.obj))
+    s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(lm.obj))
     xxi <- chol2inv(lm.obj$qr$qr, lm.obj$qr$rank)
     si <- infl$sigma
     h <- infl$hat
@@ -119,7 +133,7 @@ influence.measures <- function(lm.obj)
     dn <- dimnames(lm.obj$qr$qr)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
-    is.inf <- is.influential(infmat)
+    is.inf <- is.influential(infmat, sum(h>0))
     ans <- list(infmat = infmat, is.inf = is.inf, call = lm.obj$call)
     class(ans) <- "infl"
     ans
@@ -129,7 +143,7 @@ print.infl <- function(x, digits = max(3, getOption("digits") - 4), ...)
 {
     ## `x' : as the result of  influence.measures(.)
     cat("Influence measures of\n\t", deparse(x$call),":\n\n")
-    is.star <- apply(x$is.inf, 1, any)
+    is.star <- apply(x$is.inf, 1, any, na.rm = TRUE)
     print(data.frame(x$infmat,
 		     inf = ifelse(is.star, "*", " ")),
 	  digits = digits, ...)
@@ -140,7 +154,7 @@ summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
 {
     ## object must be as the result of	influence.measures(.)
     is.inf <- object$is.inf
-    is.star <- apply(is.inf, 1, any)
+    is.star <- apply(is.inf, 1, any, na.rm=TRUE)
     is.inf <- is.inf[is.star,]
     cat("Potentially influential observations of\n\t",
 	deparse(object$call),":\n")

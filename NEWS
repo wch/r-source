@@ -28,10 +28,14 @@ BUG FIXES
 	(at the expense of some latency).
 
     o	The `exact' p-values for the two-sided two-sample
-        Kolmogorov-Smirnov test were for the wrong tail: replace by 1-p.
+        Kolmogorov-Smirnov test in 1.3.0 were for the wrong tail.
 
     o	In the HTML conversion of .Rd files, \link[foo]{bar} was
 	ignoring [foo] outside \code{} statements.
+
+    o	lm.influence(), plot.lm(), influence.measures() and the
+	related diagnostic measures now handle lm() fits with 
+	na.action=na.exclude.
 
 
 

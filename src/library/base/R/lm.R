@@ -391,7 +391,8 @@ weights.default <- function(object, ...)
 
 weights.lm <- .Alias(weights.default)
 df.residual.lm <- function(object, ...) object$df.residual
-deviance.lm <- function(object, ...) sum(weighted.residuals(object)^2)
+deviance.lm <- function(object, ...)
+    sum(weighted.residuals(object)^2, na.rm=TRUE)
 formula.lm <- function(object, ...)
 {
     form <- object$formula
@@ -423,7 +424,7 @@ variable.names.lm <- function(object, full=FALSE)
 case.names.lm <- function(object, full=FALSE)
 {
     w <- weights(object)
-    dn <- .Alias(names(object$residuals))
+    dn <- .Alias(names(residuals(object)))
     if(full || is.null(w)) dn else dn[w!=0]
 }
 

@@ -86,3 +86,30 @@ p2 <- predict(gfit2)
 common <- match(names(p1), names(p2))
 stopifnot(max(abs(p1 - p2[common])) < 100*.Machine$double.eps)
 stopifnot(all(is.na(p2[-common])))
+
+## tests of diagnostic measures.
+x <- 1:10
+y <- c(rnorm(9),NA)
+fit <- lm(y ~ x, na.action=na.exclude)
+fit2 <- lm(y ~ x, subset=-10)
+
+lm.influence(fit2); lm.influence(fit)
+
+rstandard(fit2); rstandard(fit)
+rstudent(fit2); rstudent(fit)
+
+dffits(fit2); dffits(fit)
+
+dfbetas(fit2); dfbetas(fit)
+
+covratio(fit2); covratio(fit)
+
+cooks.distance(fit2); cooks.distance(fit)
+
+(inf <- influence.measures(fit))
+(inf2 <- influence.measures(fit2))
+
+summary(inf)
+summary(inf2)
+
+plot(fit)
