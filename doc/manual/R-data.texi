@@ -91,15 +91,17 @@ principal authors of the packages mentioned are
 @multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
 @item @pkg{e1071} @tab Friedrich Leisch
-@item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates and Duncan Murdoch
+@item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
 @item @pkg{hdf5} @tab Marcus Daniels
-@item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
 @item @pkg{ncdf} @tab David Pierce
-@item @pkg{RNetCDF} @tab Pavel Michna
+@item @pkg{ncvar} @tab Juerg Schmidli
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
+@item @pkg{RNetCDF} @tab Pavel Michna
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
 @item @pkg{RSPerl} @tab Duncan Temple Lang
 @item @pkg{RSPython} @tab Duncan Temple Lang
+@item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
+@item @pkg{XML} @tab Duncan Temple Lang
 @end multitable
 @end quotation
 
@@ -345,7 +347,7 @@ data and code.
 A description of the facilities of the @pkg{XML} package is outside the
 scope of this document: see the package's Web page at
 @uref{http://www.omegahat.org/RSXML} for details and examples.  Package
-@pkg{StatDataML} on CRAN is one example building on @pkg{XML}
+@pkg{StatDataML} on CRAN is one example building on @pkg{XML}.
 
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
@@ -755,25 +757,17 @@ written by another statistical system.  This is often best avoided, but
 may be unavoidable if the originating system is not available. 
 
 @menu
-* EpiInfo Minitab SAS S-PLUS SPSS Stata::  
+* EpiInfo Minitab SAS S-PLUS SPSS Stata Systat::  
 * Octave::                      
 @end menu
 
-@node EpiInfo Minitab SAS S-PLUS SPSS Stata, Octave, Importing from other statistical systems, Importing from other statistical systems
-@section EpiInfo, Minitab, S-PLUS, SAS, SPSS, Stata
+@node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Octave, Importing from other statistical systems, Importing from other statistical systems
+@section EpiInfo, Minitab, S-PLUS, SAS, SPSS, Stata, Systat
 
 The recommended package @pkg{foreign} provides import facilities for
 files produced by these statistical systems, and for export to Stata. In
 some cases these function may require substantially less memory than
 @code{read.table} would.
-
-@cindex Stata
-@findex read.dta
-@findex write.dta
-Stata @file{.dta} files are a binary file format. Files from versions 5,
-6, 7/SE and 8 of Stata can be read and written by functions
-@code{read.dta} and @code{write.dta}.  Stata variables with value labels
-are optionally converted to (and from) @R{} factor.
 
 @cindex EpiInfo
 @cindex EpiData
@@ -797,21 +791,6 @@ Transport format.  It then calls @code{read.xport} to read the resulting
 file.  Package @pkg{HMisc} has a similar function @code{sas.get}, also
 running SAS.
 
-@cindex SPSS
-@cindex SPSS Data Entry
-@findex read.spss
-Function @code{read.spss} can read files created by the `save' and
-`export' commands in @acronym{SPSS}.  It returns a list with one
-component for each variable in the saved data set. @acronym{SPSS}
-variables with value labels are optionally converted to @R{} factors.
-
-@acronym{SPSS} Data Entry is an application for creating data entry
-forms.  By default it creates data files with extra formatting
-information that @code{read.spss} cannot handle, but it is possible to
-export the data in an ordinary @acronym{SPSS} format.
-
-
-
 @cindex S-PLUS
 @findex read.S
 @findex data.restore
@@ -833,8 +812,38 @@ S-PLUS 5.x and 6.x you may need to use @code{dump(..., oldStyle=T)}, and
 to read in very large objects it may be preferable to use the dumpfile
 as a batch script rather than use the @code{source} function.
 
+@cindex SPSS
+@cindex SPSS Data Entry
+@findex read.spss
+Function @code{read.spss} can read files created by the `save' and
+`export' commands in @acronym{SPSS}.  It returns a list with one
+component for each variable in the saved data set. @acronym{SPSS}
+variables with value labels are optionally converted to @R{} factors.
 
-@node Octave,  , EpiInfo Minitab SAS S-PLUS SPSS Stata, Importing from other statistical systems
+@acronym{SPSS} Data Entry is an application for creating data entry
+forms.  By default it creates data files with extra formatting
+information that @code{read.spss} cannot handle, but it is possible to
+export the data in an ordinary @acronym{SPSS} format.
+
+
+@cindex Stata
+@findex read.dta
+@findex write.dta
+Stata @file{.dta} files are a binary file format. Files from versions 5,
+6, 7/SE and 8 of Stata can be read and written by functions
+@code{read.dta} and @code{write.dta}.  Stata variables with value labels
+are optionally converted to (and from) @R{} factor.
+
+
+@cindex Systat
+@findex read.systat
+@code{read.systat} reads those Systat @code{SAVE} files that are
+rectangular data files (@code{mtype = 1}) written on little-endian
+machines (such as from Windows).  These have extension @code{.sys}
+or (more recently) @code{.syd}.
+
+
+@node Octave,  , EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Importing from other statistical systems
 @section Octave
 @cindex Octave
 @findex read.octave
@@ -1441,6 +1450,7 @@ the spreadsheet data.
 
 @menu
 * Binary data formats::         
+* dBase files (DBF)::           
 @end menu
 
 Binary connections (@ref{Connections}) are now the preferred way to
@@ -1448,7 +1458,7 @@ handle binary files.
 
 
 
-@node Binary data formats,  , Binary files, Binary files
+@node Binary data formats, dBase files (DBF), Binary files, Binary files
 @section Binary data formats
 @findex hdf5
 @cindex Hierarchical Data Format
@@ -1457,9 +1467,9 @@ handle binary files.
 @cindex network Common Data Form
 
 Packages @pkg{hdf5}, @pkg{RNetCDF} and @pkg{ncdf} on @acronym{CRAN}
-provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
-Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
-netCDF data files (network Common Data Form, see
+provide interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format,
+see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data
+files (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
@@ -1468,6 +1478,38 @@ allows @emph{groups} of arrays, and the @R{} interface maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
 
+Package @pkg{ncvar} on @acronym{CRAN} provides a higher-level @R{}
+interface to netCDF data files @emph{via} @pkg{RNetCDF}.
+
+There is also a package @pkg{rhdf5} available from
+@uref{http://www.bioconductor.org}.
+
+
+@node dBase files (DBF),  , Binary data formats, Binary files
+@section dBase files (DBF)
+
+@cindex dBase
+@cindex DBF files
+@code{dBase} was a DOS program written by Ashton-Tate and later owned by
+Borland which has a binary flat-file format that became popular, with
+file extension @code{.dbf}.  It has been adopted for the 'Xbase' family
+of databases, covering dBase, Clipper, FoxPro and their Windows
+equivalents Visual dBase, Visual Objects and Visual FoxPro (see
+@uref{http://www.e-bachmann.dk/docs/xbase.htm}).  A dBase file contains
+a header and then a series of fields and so is most similar to an @R{}
+data frame.  The data itself is stored in text format, and can include
+character, logical and numeric fields, and other types in later versions
+(see @uref{http://clicketyclick.dk/docs/data_types.html}).
+
+@findex read.dbf
+@findex write.dbf
+Functions @code{read.dbf} and @code{write.dbf} provide ways to read and
+write basic DBF files on all @R{} platforms.  For Windows users
+@code{odbcConnectDbase} in package @pkg{RODBC} provides more
+comprehensive facilities to read DBF files @emph{via} Microsoft's dBase
+ODBC driver (and the Visual FoxPro driver can also be used via
+@code{odbcDriverConnect}).
+@findex odbcConnectDbase
 
 @node Connections, Network interfaces, Binary files, Top
 @chapter Connections
@@ -1973,8 +2015,10 @@ spreadsheet file.
 
 @code{Perl} users have contributed a module
 @code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
-convert Excel spreadsheets to CSV files.  Package @pkg{gregmisc}
-provides a basic wrapper in its @code{read.xls} function.
+convert Excel spreadsheets to CSV files.  Bundle @pkg{gregmisc}
+provides a basic wrapper in its @code{read.xls} function in package
+@pkg{gdata}.
+
 
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
