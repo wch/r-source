@@ -721,7 +721,7 @@ FUNTAB R_FunTab[] =
 {"model.matrix",do_modelmatrix,	0,	11,	2,	PP_FUNCALL},
 
 {"D",		do_D,		0,	11,	2,	PP_FUNCALL},
-{"deriv.default",do_deriv,	0,	11,	4,	PP_FUNCALL},
+{"deriv.default",do_deriv,	0,	11,	5,	PP_FUNCALL},
 
 /* History manipulation */
 {"loadhistory", do_loadhistory,	0,	11,	1,	PP_FUNCALL},
