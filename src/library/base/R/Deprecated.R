@@ -69,6 +69,7 @@ codes.ordered <- function(x, ...)
 ## Deprecated in 1.8.0: unused since 1.2.0
 anovalist.lm <- function (object, ..., test = NULL)
 {
+    .Deprecated("anova.lmlist")
     objects <- list(object, ...)
     responses <- as.character(lapply(objects,
 				     function(x) as.character(x$terms[[2]])))
@@ -119,3 +120,19 @@ anovalist.lm <- function (object, ..., test = NULL)
 }
 ## </entry>
 
+## <entry>
+## Deprecated in 1.8.0
+lm.fit.null <- function (x, y, method = "qr", tol = 1e-07, ...)
+{
+    .Deprecated("lm.fit")
+    list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
+         y, weights = NULL, rank = 0, df.residual = length(y))
+}
+
+lm.wfit.null <- function (x, y, w, method = "qr", tol = 1e-07, ...)
+{
+    .Deprecated("lm.wfit")
+    list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
+         y, weights = w, rank = 0, df.residual = length(y))
+}
+## </entry>

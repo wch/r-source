@@ -38,19 +38,16 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     if (is.empty.model(mt)) {
 	x <- NULL
 	z <- list(coefficients = numeric(0), residuals = y,
-		  fitted.values = 0 * y + offset, weights = w, rank = 0,
+		  fitted.values = 0 * y, weights = w, rank = 0,
 		  df.residual = length(y))
-	class(z) <-
-	    if (is.matrix(y))
-		c("mlm.null", "lm.null", "mlm", "lm")
-	    else c("lm.null", "lm")
+        if(!is.null(offset)) z$fitted.values <- offset
     }
     else {
 	x <- model.matrix(mt, mf, contrasts)
 	z <- if(is.null(w)) lm.fit(x, y, offset=offset, ...)
 	else lm.wfit(x, y, w, offset=offset, ...)
-	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     }
+    class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     if(!is.null(na.act)) z$na.action <- na.act
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
@@ -74,9 +71,9 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
     p <- ncol(x)
     if (p == 0) {
         ## oops, null model
-        cc <- match.call()
-        cc[[1]] <- as.name("lm.fit.null")
-        return(eval(cc, parent.frame()))
+        return(list(coefficients = numeric(0), residuals = y,
+                    fitted.values = 0 * y, rank = 0,
+                    df.residual = length(y)))
     }
     ny <- NCOL(y)
     ## treat one-col matrix as vector
@@ -164,9 +161,9 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     p <- ncol(x)
     if (p == 0) {
         ## oops, null model
-        cc <- match.call()
-        cc[[1]] <- as.name("lm.wfit.null")
-        return(eval(cc, parent.frame()))
+        return(list(coefficients = numeric(0), residuals = y,
+                    fitted.values = 0 * y, weights = w, rank = 0,
+                    df.residual = length(y)))
     }
     storage.mode(y) <- "double"
     wts <- sqrt(w)
@@ -232,9 +229,11 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 print.lm <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
-    cat("Coefficients:\n")
-    print.default(format(coef(x), digits=digits),
-		  print.gap = 2, quote = FALSE)
+    if(length(coef(x))) {
+        cat("Coefficients:\n")
+        print.default(format(coef(x), digits=digits),
+                      print.gap = 2, quote = FALSE)
+    } else cat("No coefficients\n")
     cat("\n")
     invisible(x)
 }
@@ -242,16 +241,36 @@ print.lm <- function(x, digits = max(3, getOption("digits") - 3), ...)
 summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
 {
     z <- object
+    p <- z$rank
+    if (p == 0) {
+        r <- z$resid
+        n <- length(r)
+        w <- z$weights
+        if (is.null(w)) {
+            rss <- sum(r^2)
+        } else {
+            rss <- sum(w * r^2)
+            r <- sqrt(w) * r
+        }
+        resvar <- rss/(n - p)
+        ans <- z[c("call", "terms")]
+        class(ans) <- "summary.lm"
+        ans$residuals <- r
+        ans$df <- c(p, n, 0)
+        ans$coefficients <- matrix(, 0, 4)
+        ans$sigma <- sqrt(resvar)
+        ans$r.squared <- ans$adj.r.squared <- 0
+        return(ans)
+    }
     Qr <- object$qr
     if (is.null(z$terms) || is.null(Qr))
 	stop("invalid \'lm\' object:  no terms or qr component")
     n <- NROW(Qr$qr)
-    p <- z$rank
     rdf <- n - p
     if(rdf != z$df.residual)
         warning("inconsistent residual degrees of freedom. -- please report!")
     p1 <- 1:p
-    ## do not want missing values substuted here
+    ## do not want missing values substituted here
     r <- z$resid
     f <- z$fitted
     w <- z$weights
@@ -325,18 +344,22 @@ print.summary.lm <-
     } else { # rdf == 0 : perfect fit!
 	cat("ALL", df[1], "residuals are 0: no residual degrees of freedom!\n")
     }
-    if (nsingular <- df[3] - df[1])
-	cat("\nCoefficients: (", nsingular,
-	    " not defined because of singularities)\n", sep = "")
-    else cat("\nCoefficients:\n")
-    coefs <- x$coefficients
-    if(!is.null(aliased <- x$aliased) && any(aliased)) {
-        cn <- names(aliased)
-        coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
-        coefs[!aliased, ] <- x$coefficients
-    }
+    if (nrow(x$coefficients) == 0) {
+        cat("\nNo Coefficients\n")
+    } else {
+        if (nsingular <- df[3] - df[1])
+            cat("\nCoefficients: (", nsingular,
+                " not defined because of singularities)\n", sep = "")
+        else cat("\nCoefficients:\n")
+        coefs <- x$coefficients
+        if(!is.null(aliased <- x$aliased) && any(aliased)) {
+            cn <- names(aliased)
+            coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
+            coefs[!aliased, ] <- x$coefficients
+        }
 
-    printCoefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
+        printCoefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
+    }
     ##
     cat("\nResidual standard error:",
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
@@ -447,21 +470,28 @@ anova.lm <- function(object, ...)
 	return(anova.lmlist(object, ...))
     w <- object$weights
     ssr <- sum(if(is.null(w)) object$resid^2 else w*object$resid^2)
-    p1 <- 1:object$rank
-    comp <- object$effects[p1]
-    asgn <- object$assign[object$qr$pivot][p1]
-    nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
-    tlabels <- nmeffects[1 + unique(asgn)]
-    ss <- c(unlist(lapply(split(comp^2,asgn), sum)), ssr)
     dfr <- df.residual(object)
-    df <- c(unlist(lapply(split(asgn,  asgn), length)), dfr)
+    p <- object$rank
+    if(p > 0) {
+        p1 <- 1:p
+        comp <- object$effects[p1]
+        asgn <- object$assign[object$qr$pivot][p1]
+        nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
+        tlabels <- nmeffects[1 + unique(asgn)]
+        ss <- c(unlist(lapply(split(comp^2,asgn), sum)), ssr)
+        df <- c(unlist(lapply(split(asgn,  asgn), length)), dfr)
+    } else {
+        ss <- ssr
+        df <- dfr
+        tlabels <- character(0)
+    }
     ms <- ss/df
     f <- ms/(ssr/dfr)
-    p <- pf(f,df,dfr, lower.tail = FALSE)
-    table <- data.frame(df,ss,ms,f,p)
-    table[length(p),4:5] <- NA
+    P <- pf(f, df, dfr, lower.tail = FALSE)
+    table <- data.frame(df, ss, ms, f, P)
+    table[length(P), 4:5] <- NA
     dimnames(table) <- list(c(tlabels, "Residuals"),
-			    c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
+                            c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
     if(attr(object$terms,"intercept")) table <- table[-1, ]
     structure(table, heading = c("Analysis of Variance Table\n",
 		     paste("Response:", deparse(formula(object)[[2]]))),
@@ -698,8 +728,15 @@ model.matrix.lm <- function(object, ...)
 {
     if(n <- match("x", names(object), 0)) object[[n]]
     else {
-	data <- model.frame(object, xlev = object$xlevels, ...)
-	NextMethod("model.matrix", data = data, contrasts = object$contrasts)
+        if(object$rank == 0) {
+            rval <- matrix(ncol=0, nrow=length(object$residuals))
+            attr(rval,"assign") <- integer(0)
+            rval
+        } else {
+            data <- model.frame(object, xlev = object$xlevels, ...)
+            NextMethod("model.matrix", data = data,
+                       contrasts = object$contrasts)
+        }
     }
 }
 

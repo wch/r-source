@@ -1,9 +1,9 @@
 \name{summary/lm}
 \alias{summary.lm}
-\alias{summary.lm.null}
+% \alias{summary.lm.null}
 \alias{summary.mlm}% mlm is *not* mentioned at all
 \alias{print.summary.lm}
-\alias{print.summary.lm.null}
+% \alias{print.summary.lm.null}
 \title{Summarizing Linear Model Fits}
 \usage{
 \method{summary}{lm}(object, correlation = FALSE, symbolic.cor = FALSE, \dots)

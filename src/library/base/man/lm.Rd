@@ -1,7 +1,7 @@
 \name{lm}
 \alias{lm}
 \alias{print.lm}
-\alias{print.lm.null}
+%\alias{print.lm.null}
 \title{Fitting Linear Models}
 \description{
   \code{lm} is used to fit linear models.

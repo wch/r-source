@@ -82,7 +82,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 		       terms=mt, data=data,
 		       offset=offset, control=control, method=method,
 		       contrasts = attr(X, "contrasts"), xlevels = xlev))
-    class(fit) <- c(if(is.empty.model(mt)) "glm.null", "glm", "lm")
+    class(fit) <- c("glm", "lm")
     fit
 }
 
@@ -334,15 +334,17 @@ glm.fit <-
 print.glm <- function(x, digits= max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall: ", deparse(x$call), "\n\n")
-    cat("Coefficients")
-    if(is.character(co <- x$contrasts))
-	cat("  [contrasts: ",
-	    apply(cbind(names(co),co), 1, paste, collapse="="), "]")
-    cat(":\n")
-    print.default(format(x$coefficients, digits=digits),
-		  print.gap = 2, quote = FALSE)
+    if(length(coef(x))) {
+        cat("Coefficients")
+        if(is.character(co <- x$contrasts))
+            cat("  [contrasts: ",
+                apply(cbind(names(co),co), 1, paste, collapse="="), "]")
+        cat(":\n")
+        print.default(format(x$coefficients, digits=digits),
+                      print.gap = 2, quote = FALSE)
+    } else cat("No coefficients\n\n")
     cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
-	x$df.residual, "Residual\n")
+        x$df.residual, "Residual\n")
     cat("Null Deviance:	   ",	format(signif(x$null.deviance, digits)),
 	"\nResidual Deviance:", format(signif(x$deviance, digits)),
 	"\tAIC:", format(signif(x$aic, digits)), "\n")
@@ -375,7 +377,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	    object[[n]]
 	else model.matrix(object)
     varseq <- attr(x, "assign")
-    nvars <- max(varseq)
+    nvars <- max(0, varseq)
     resdev <- resdf <- NULL
 
     ## if there is more than one explanatory variable then
@@ -516,7 +518,6 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 summary.glm <- function(object, dispersion = NULL,
 			correlation = FALSE, symbolic.cor = FALSE, ...)
 {
-    Qr <- object$qr
     est.disp <- FALSE
     df.r <- object$df.residual
     if(is.null(dispersion))	# calculate dispersion if needed
@@ -533,50 +534,58 @@ summary.glm <- function(object, dispersion = NULL,
     ## calculate scaled and unscaled covariance matrix
 
     p <- object$rank
-    p1 <- 1:p
+    if (p > 0) {
+        p1 <- 1:p
+        Qr <- object$qr
+        aliased <- is.na(coef(object))  # used in print method
+        ## WATCHIT! doesn't this rely on pivoting not permuting 1:p? -- that's quaranteed
+        coef.p <- object$coefficients[Qr$pivot[p1]]
+        covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
+        dimnames(covmat.unscaled) <- list(names(coef.p),names(coef.p))
+        covmat <- dispersion*covmat.unscaled
+        var.cf <- diag(covmat)
 
-    aliased <- is.na(coef(object))  # used in print method
-    ## WATCHIT! doesn't this rely on pivoting not permuting 1:p? -- that's quaranteed
-    coef.p <- object$coefficients[Qr$pivot[p1]]
-    covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
-    dimnames(covmat.unscaled) <- list(names(coef.p),names(coef.p))
-    covmat <- dispersion*covmat.unscaled
-    var.cf <- diag(covmat)
+        ## calculate coef table
 
-    ## calculate coef table
+        s.err <- sqrt(var.cf)
+        tvalue <- coef.p/s.err
 
-    s.err <- sqrt(var.cf)
-    tvalue <- coef.p/s.err
-
-    dn <- c("Estimate", "Std. Error")
-    if(!est.disp) {
-	pvalue <- 2*pnorm(-abs(tvalue))
-	coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
-	dimnames(coef.table) <- list(names(coef.p),
-				     c(dn, "z value","Pr(>|z|)"))
-    } else if(df.r > 0) {
-	pvalue <- 2*pt(-abs(tvalue), df.r)
-	coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
-	dimnames(coef.table) <- list(names(coef.p),
-				     c(dn, "t value","Pr(>|t|)"))
-    } else { ## df.r == 0
-	coef.table <- cbind(coef.p, Inf)
-	dimnames(coef.table) <- list(names(coef.p), dn)
+        dn <- c("Estimate", "Std. Error")
+        if(!est.disp) {
+            pvalue <- 2*pnorm(-abs(tvalue))
+            coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
+            dimnames(coef.table) <- list(names(coef.p),
+                                         c(dn, "z value","Pr(>|z|)"))
+        } else if(df.r > 0) {
+            pvalue <- 2*pt(-abs(tvalue), df.r)
+            coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
+            dimnames(coef.table) <- list(names(coef.p),
+                                         c(dn, "t value","Pr(>|t|)"))
+        } else { ## df.r == 0
+            coef.table <- cbind(coef.p, Inf)
+            dimnames(coef.table) <- list(names(coef.p), dn)
+        }
+        df.f <- NCOL(Qr$qr)
+    } else {
+        coef.table <- matrix(, 0, 4)
+        covmat.unscaled <- covmat <- matrix(, 0, 0)
+        aliased <- logical(0)
+        df.f <- 0
     }
     ## return answer
 
     ans <- c(object[c("call","terms","family","deviance", "aic",
 		      "contrasts",
 		      "df.residual","null.deviance","df.null","iter")],
-	     list(deviance.resid= residuals(object, type = "deviance"),
-		  coefficients=coef.table,
-                  aliased=aliased,
-		  dispersion=dispersion,
-		  df=c(object$rank, df.r, NCOL(Qr$qr)),
-		  cov.unscaled=covmat.unscaled,
-		  cov.scaled=covmat))
+	     list(deviance.resid = residuals(object, type = "deviance"),
+		  coefficients = coef.table,
+                  aliased = aliased,
+		  dispersion = dispersion,
+		  df = c(object$rank, df.r, df.f),
+		  cov.unscaled = covmat.unscaled,
+		  cov.scaled = covmat))
 
-    if(correlation) {
+    if(correlation && p > 0) {
 	dd <- sqrt(diag(covmat.unscaled))
 	ans$correlation <-
 	    covmat.unscaled/outer(dd,dd)
@@ -600,18 +609,24 @@ print.summary.glm <-
     }
     print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
 
-    ## df component added in 1.8.0
-    if (!is.null(df<- x$df) && (nsingular <- df[3] - df[1]))
-	cat("\nCoefficients: (", nsingular,
-	    " not defined because of singularities)\n", sep = "")
-    else cat("\nCoefficients:\n")
-    coefs <- x$coefficients
-    if(!is.null(aliased <- x$aliased) && any(aliased)) {
-        cn <- names(aliased)
-        coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
-        coefs[!aliased, ] <- x$coefficients
+    if(nrow(x$coefficients) == 0) {
+        cat("\nNo Coefficients\n")
+    } else {
+        ## df component added in 1.8.0
+        if (!is.null(df<- x$df) && (nsingular <- df[3] - df[1]))
+            cat("\nCoefficients: (", nsingular,
+                " not defined because of singularities)\n", sep = "")
+        else cat("\nCoefficients:\n")
+        coefs <- x$coefficients
+        if(!is.null(aliased <- x$aliased) && any(aliased)) {
+            cn <- names(aliased)
+            coefs <- matrix(NA, length(aliased), 4,
+                            dimnames=list(cn, colnames(coefs)))
+            coefs[!aliased, ] <- x$coefficients
+        }
+        printCoefmat(coefs, digits=digits, signif.stars=signif.stars,
+                     na.print="NA", ...)
     }
-    printCoefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
     ##
     cat("\n(Dispersion parameter for ", x$family$family,
 	" family taken to be ", format(x$dispersion), ")\n\n",

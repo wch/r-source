@@ -178,6 +178,10 @@ NEW FEATURES
 
     o   Adding to NULL with [[ ]] generates a list if more than one
 	element is added (as S does).
+
+    o	Zero-rank lm() and glm() fits are now handled by the normal
+	code: there are no methods for classes "lm.null" and
+	"glm.null".
  
 
 DEPRECATED & DEFUNCT
@@ -208,6 +212,11 @@ DEPRECATED & DEFUNCT
 
     o	- and Ops methods for POSIX[cl]t objects are removed: the
 	POSIXt methods have been used since 1.3.0.
+
+    o	lm.fit.null() and lm.wfit.null() are deprecated.
+
+    o	Classes "lm.null" and "glm.null" are deprecated and all of their
+	methods have been removed.
 
 
 INSTALLATION CHANGES

@@ -10,6 +10,8 @@
 \alias{codes.ordered}
 \alias{codes<-}
 \alias{anovalist.lm}
+\alias{lm.fit.null}
+\alias{lm.wfit.null}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -31,7 +33,9 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
 codes(x, \dots)
 codes(x, \dots) <- value
 
-anovalist.lm(object, ..., test = NULL)
+anovalist.lm(object, \dots, test = NULL)
+lm.fit.null(x, y, method = "qr", tol = 1e-07, \dots)
+lm.wfit.null(x, y, w, method = "qr", tol = 1e-07, \dots)
 % </Deprecated 1.8.0>
 }
 \details{
@@ -56,6 +60,9 @@ anovalist.lm(object, ..., test = NULL)
 
   \code{anovalist.lm} was replaced by \code{\link{anova.lmlist}} in
   \R 1.2.0.
+
+  \code{lm.fit.null} and \code{lm.wfit.null} are superseded by
+  \code{lm.fit} and \code{lm.wfit} which handle null models now.
 }
 \seealso{
   \code{\link{Defunct}},

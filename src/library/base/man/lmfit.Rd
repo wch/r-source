@@ -3,13 +3,9 @@
 \usage{
 lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7, \dots)
 lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7, \dots)
-lm.fit.null (x, y,    method = "qr", tol = 1e-7, \dots)
-lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \alias{lm.fit}
 \alias{lm.wfit}
-\alias{lm.fit.null}
-\alias{lm.wfit.null}
 \description{
   These are the basic computing engines called by \code{\link{lm}} used
   to fit linear models.  These should usually \emph{not} be used
@@ -43,13 +39,14 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
   \item{coefficients}{\code{p} vector}
   \item{residuals}{\code{n} vector}
   \item{fitted.values}{\code{n} vector}
-  \item{effects}{\code{n} vector; \dots\dots}%% FIXME
+  \item{effects}{(not null fits)\code{n} vector of orthogonal single-df
+    effects.  The first \code{rank} of them correspond to non-aliased
+    coeffcients, and are named accordingly.}
   \item{weights}{\code{n} vector --- \emph{only} for the \code{*wfit*}
     functions.}
   \item{rank}{integer, giving the rank}
   \item{df.residual}{degrees of freedom of residuals}
-%% these two *not* for the  lm*fit.null() functions:
-  \item{qr}{the QR decomposition, see \code{\link{qr}}.}
+  \item{qr}{(not null fits) the QR decomposition, see \code{\link{qr}}.}
 }
 \seealso{
   \code{\link{lm}} which you should use for linear least squares regression,
@@ -66,9 +63,6 @@ w <- rnorm(n)^2
 str(lmw <- lm.wfit(x=X, y=y, w=w))
 
 str(lm. <- lm.fit (x=X, y=y))
-
-str(lm0 <-  lm.fit.null (x=X, y=y))
-str(lmw0 <- lm.wfit.null(x=X, y=y,w=w))
 
 %% do an example which sets `tol' and gives a difference!
 }
