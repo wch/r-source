@@ -26,7 +26,8 @@
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
 #include <R_ext/R-ftp-http.h>
-#include <R_ext/RS.h>
+#include <R_ext/RS.h> /* R_chk_calloc and Free */
+#undef ERROR /* for compilation on Windows */
 
 int R_OutputCon;		/* used in printutils.c */
 
@@ -924,8 +925,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- bzipped file connections --------------------- */
 
-#if defined(HAVE_BZLIB) || defined(Unix)
-#undef ERROR /* for compilation on Windows */
+#if defined(HAVE_BZLIB) || defined(Unix) || defined(Win32)
 #include <bzlib.h>
 
 static Rboolean bzfile_open(Rconnection con)

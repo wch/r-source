@@ -4,24 +4,24 @@ Notes for Windows Maintainers
 1) fixed/h/config.h can be made automatically.  Some of this is
 achieved by overrides in the configure script.
 
-You will need a few more tools (ln, pwd, tr, ...), and I put a cygwin
-toolchain at the end of my path.  (You do need /bin/sh, which cygwin
-might mount for you.)  Then with the R sources in /R/rw1070, I used in
-/TEMP/R (any other directory will do, except the sources)
+You will need a few more tools (cmp, ln, rmdir, tr, uname, uniq ...),
+and I put a cygwin toolchain at the end of my path.  (You do need
+/bin/sh, which cygwin might mount for you.)  Then with the R sources
+in /R/rw1070, I used in /TEMP/R (any other directory will do, except
+the sources)
 
 /R/rw1070/configure --build=i386-pc-mingw32
 
-This ran fairly slowly, producing a src/include/config.h that differs only
+This ran fairly slowly, producing a src/include/config.h that differs
+only in that
 
  - it found R_PRINTCMD = lpr on my system, but that is not used under 
    Windows, so the actual setting is irrelevant.
 
- - watch out for local features: e.g. I have libz installed in my
-   mingw compiler system.
+ - It found libreadline, not used under Windows.  
 
- - watch out for versions of the header files. <strings.h> is in
-   mingw-runtime-1.2 and later, but not in the Mingw-1.1 bundle.
+Also, watch out for versions of the header files. For example,
+<strings.h> was in mingw-runtime-1.2 and later, but not in the
+Mingw-1.1 bundle.
 
- - SOCKLEN_T should be int, but configure finds size_t.
-
-BDR 2002-04-15
+BDR 2002-04-15, 2003-01-09

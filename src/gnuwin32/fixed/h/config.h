@@ -235,7 +235,7 @@
 #define HAVE_PCRE 1
 
 /* Define to 1 if you have the <pcre.h> header file. */
-#define HAVE_PCRE_H 1
+/* #undef HAVE_PCRE_H */
 
 /* Define to 1 if you have the <pcre/pcre.h> header file. */
 /* #undef HAVE_PCRE_PCRE_H */
@@ -356,7 +356,7 @@
 #define HAVE_TCLTK 1
 
 /* Define to 1 if you have the `times' function. */
-/* #undef HAVE_TIMES */
+#define HAVE_TIMES 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
@@ -515,5 +515,7 @@
 
 /* Define to `unsigned' if <sys/types.h> does not define. */
 /* #undef size_t */
+
+
 
 #endif /* not _CONFIG_H */

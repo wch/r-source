@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@
 
 #include "Defn.h"
 
-#if defined(HAVE_PCRE) || defined(Unix)
+#if defined(HAVE_PCRE) || defined(Unix) || defined(Win32)
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
 #else
