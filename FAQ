@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-12
+Version 2.0.2005-01-13
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1544,6 +1544,9 @@ distributions of R.)
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
      Applications" by A. Sen and M. Srivastava, 1990, Springer.
+
+*SeqKnn*
+     Sequential KNN imputation.
 
 *SoPhy*
      Soil Physics Tools: simulation of water flux and solute transport in
