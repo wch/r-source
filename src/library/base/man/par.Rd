@@ -128,14 +128,12 @@ par(\dots, no.readonly = FALSE)
     \code{len} specifies the label size.
     \emph{Currently}, \code{len} \emph{is unimplemented}.}
   \item{las}{numeric in \{0,1,2,3\}; the style of axis labels.
-
-%-- use \describe{} or \itemize{} when it will finally work for nroff/ascii !
-    0 = always parallel to the axis [\emph{default}],
-    1 = always horizontal,
-
-    2 = always perpendicular to the axis,
-    3 = always vertical.
-
+    \describe{
+      \item{0:}{always parallel to the axis [\emph{default}],}
+      \item{1:}{always horizontal,} 
+      \item{2:}{always perpendicular to the axis,}
+      \item{3:}{always vertical.}
+    }
     Note that other string/character rotation (via  \code{par(srt = ..)})
     does \emph{not} affect the axis labels.
   }
