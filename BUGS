@@ -383,10 +383,6 @@ Directory:  incoming
 Subject: predict.nnet
 From: jcs20@po.cwru.edu
 Date: Mon, 26 Nov 2001 22:00:13 +0100 (MET)
-* PR# 1183 *
-Subject:  R-devel 11/27 will not build on solaris 2.8 
-From: v <stvjc@localhost.localdomain>
-Date: Tue, 27 Nov 2001 23:51:52 -0500
 * PR# 1184 *
 Subject: ltsreg warnings
 From: charlie@stat.umn.edu
@@ -399,15 +395,3 @@ Date: Thu, 29 Nov 2001 11:38:15 -0500
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1187 *
-Subject: anova.glm and explicit contrast matrices
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: 29 Nov 2001 15:13:01 -0600
-* PR# 1188 *
-Subject: rug(x) clip warning incorrect if par("xlog")==TRUE
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Thu, 29 Nov 2001 13:17:22 -0800 (PST)
-* PR# 1189 *
-Subject: graphics device updating
-From: "Alastair Pout" <A.Pout@macaulay.ac.uk>
-Date: Fri, 30 Nov 2001 17:55:25 +0000
