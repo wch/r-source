@@ -1394,6 +1394,24 @@ note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
 
+Harald Servat Gelabert <harald@@cepba.upc.es> reported success building
+@R{} 1.7.0 under AIX 5.1 with
+
+@smallexample
+CC=xlc
+F77=xlf
+CXX=xlC
+CFLAGS=-O3 -qstrict -qmaxmem=8192
+FFLAGS=-O3 -qstrict -qmaxmem=8192
+CXXFLAGS=-O2 -qmaxmem=8192
+MAIN_LDFLAGS=-Wl,-brtl
+SHLIB_LDFLAGS=-Wl,-G
+@end smallexample
+
+@noindent
+but was unable to use the X libraries or the native BLAS (ESSL) and so
+used @option{--without-x --without-blas}.
+
 
 @node New platforms, Function and variable index, Configuration on Unix, Top
 @appendix New platforms
