@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.57 $'
+revision='$Revision: 1.58 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -25,6 +25,8 @@ Options:
       --configure-args=ARGS
                         set args for package's configure script (if any)
   -c, --clean		remove all files created during installation
+  -s, --save            Save the package source as an image file, and arrange for
+                        this file to be loaded when the library is attached.
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -91,6 +93,8 @@ use_configure=true
 use_zip_data=
 use_zip_help=
 
+save="CHECK"
+
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
@@ -99,6 +103,10 @@ while test -n "${1}"; do
       echo "${version}"; exit 0 ;;
     -c|--clean)
       clean=true ;;
+    -s|--save)
+      save=true ;;
+    --no-save)
+      save=false ;;
     -d|--debug)
       debug=true ;;
     --no-configure)
@@ -302,6 +310,44 @@ do_install () {
       echo " inst"
       cp -r inst/* ${lib}/${pkg}
     fi
+
+    case $save in
+    CHECK) if test -r INSTALL.R; then R_SAVE_IMAGE=true; else R_SAVE_IMAGE=false; fi;;
+    *) R_SAVE_IMAGE=$save;;
+    esac
+    export R_SAVE_IMAGE
+
+   if ${R_SAVE_IMAGE}; then
+     echo " save image"
+     if test -s "R_PROFILE.R"; then true
+     else
+       echo "options(echo=FALSE)" > R_PROFILE.R
+     fi
+     R_PROFILE=./R_PROFILE.R
+     export R_PROFILE
+     (echo " .lib.loc <- c(\"${lib}\", .lib.loc)"; cat ${lib}/${pkg}/R/${pkg}; echo "rm(.lib.loc)") | ${R_HOME}/bin/R --save --silent|| (echo "Execution of package source for ${pkg} failed"; exit 1)
+     mv .RData ${lib}/${pkg}/R/all.rda
+     mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
+     if test -s INSTALL.R; then cp INSTALL.R ${lib}/${pkg}/R/${pkg}
+     else 
+      cat > ${lib}/${pkg}/R/${pkg} <<EOF
+.First.lib <- function(libname, pkgname) {
+  fullName <- paste("package", pkgname, sep=":")
+  myEnv <- pos.to.env(match(fullName, search()))
+  dataFile <- file.path(libname, pkgname, "R", "all.rda")
+  rm(.First.lib, envir = myEnv)
+  load(dataFile, myEnv)
+  if(exists(".First.lib", envir = myEnv, inherits = FALSE)) {
+   f <- get(".First.lib", envir = myEnv, inherits = FALSE)
+   if(is.function(f))
+     f(libname, pkgname)
+   else
+     stop(paste("package \"", pkgname, "\"has a non-function .First", sep=""))
+  }
+ }
+EOF
+     fi
+   fi
 
     for f in COPYING INDEX; do
       if test -f ${f}; then cp ${f} ${lib}/${pkg}; fi
