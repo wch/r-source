@@ -618,8 +618,8 @@ void InitGlobalEnv()
     R_PreserveObject(R_BaseNamespaceName);
     R_NamespaceRegistry = R_NewHashedEnv(R_NilValue);
     R_PreserveObject(R_NamespaceRegistry);
+    defineVar(install("base"), R_BaseNamespace, R_NamespaceRegistry);
     /**** need to properly initialize the base name space */
-    /**** need to enter base namespace in registry */
 #endif
 }
 
@@ -2660,11 +2660,13 @@ SEXP R_FindNamespace(SEXP info)
 static SEXP checkNSname(SEXP call, SEXP name)
 {
     switch (TYPEOF(name)) {
-    case STRSXP:
-	if (LENGTH(name) == 1)
-	    name = install(CHAR(STRING_ELT(name, 0)));
-	/* fall through */
     case SYMSXP: break;
+    case STRSXP:
+	if (LENGTH(name) >= 1) {
+	    name = install(CHAR(STRING_ELT(name, 0)));
+	    break;
+	}
+	/* else fall through */
     default: errorcall(call, "bad name space name");
     }
     return name;
