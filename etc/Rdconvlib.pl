@@ -332,8 +332,8 @@ sub get_arguments {
     # Returns a list with the id of the last closing bracket and
     # the arguments.
 
-    if($text =~ /\\($command)($ID)/){
-	$id = $2;
+    if($text =~ /\\($command)(\[[^\]]+\])?($ID)/){
+	$id = $3;
 	$text =~ /$id(.*)$id/s;
 	$retval[1] = $1;
 	my $k=2;
@@ -342,6 +342,24 @@ sub get_arguments {
 	    $text =~ /$id\s*(.*)$id/s;
 	    $retval[$k++] = $1;
 	}
+    }
+    $retval[0] = $id;
+    @retval;
+}
+
+# Get the argument(s) of a link.
+sub get_link {
+    my ($text) = @_;
+    my @retval, $id;
+    if($text =~ /\\link\[([^\]]+)\]($ID)/){
+	$retval[2] = $1;
+	$id = $2;
+	$text =~ /$id(.*)$id/s;
+	$retval[1] = $1;
+    } elsif($text =~ /\\link($ID)/){
+	$id = $1;
+	$text =~ /$id(.*)$id/s;
+	$retval[1] = $1;
     }
     $retval[0] = $id;
     @retval;
@@ -384,7 +402,7 @@ sub undefine_command {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
-	$text =~ s/\\$cmd$id(.*)$id/$1/s;
+	$text =~ s/\\$cmd(\[.*\])?$id(.*)$id/$2/s;
     }
     $text;
 }
@@ -502,16 +520,16 @@ sub text2html {
 	$text =~ s/\\dots/.../go;
 	$text =~ s/\\ldots/.../go;
 
-	$text =~ s/\\Gamma/&Gamma/go;
-	$text =~ s/\\alpha/&alpha/go;
-	$text =~ s/\\Alpha/&Alpha/go;
-	$text =~ s/\\pi/&pi/go;
-	$text =~ s/\\mu/&mu/go;
-	$text =~ s/\\sigma/&sigma/go;
-	$text =~ s/\\Sigma/&Sigma/go;
-	$text =~ s/\\lambda/&lambda/go;
-	$text =~ s/\\beta/&beta/go;
-	$text =~ s/\\epsilon/&epsilon/go;
+	$text =~ s/\\Gamma/&Gamma;/go;
+	$text =~ s/\\alpha/&alpha;/go;
+	$text =~ s/\\Alpha/&Alpha;/go;
+	$text =~ s/\\pi/&pi;/go;
+	$text =~ s/\\mu/&mu;/go;
+	$text =~ s/\\sigma/&sigma;/go;
+	$text =~ s/\\Sigma/&Sigma;/go;
+	$text =~ s/\\lambda/&lambda;/go;
+	$text =~ s/\\beta/&beta;/go;
+	$text =~ s/\\epsilon/&epsilon;/go;
 	$text =~ s/\\left\(/\(/go;
 	$text =~ s/\\right\)/\)/go;
 	$text =~ s/\\R/<FONT FACE=\"Courier New,Courier\" COLOR=\"\#666666\"><b>R<\/b><\/FONT>/go;
@@ -531,7 +549,7 @@ sub text2html {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg)	= get_arguments("link", $text, 1);
+	my ($id, $arg, $org) = get_link($text);
 	## fix conversions in key of htmlindex:
 	my $argkey = $arg;
 	$argkey =~ s/&lt;/</go;
@@ -549,19 +567,32 @@ sub text2html {
 #		    print "$htmlfile\n";
 		}
 		$text =~
-		    s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+		    s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
 	    } else {
 		$text =~
-		    s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+		    s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	    }
 	}
 	else {
 	    $misslink = $misslink . " " . $arg;
 	    if($using_chm){
-		$text =~ s/\\link$id.*$id/$arg/s;
+		if($opt ne "") {
+		    $opt =~ s/:.*$//o;
+		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$arg";
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+		} else {
+		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
+		} 
 	    }
 	    else{
-		$text =~ s/\\link$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
+		if($opt ne "") {
+		    my ($pkg, $topic) = split(/:/, $opt);
+		    $topic = $arg if $topic eq "";
+		    $htmlfile = $pkg."/".$topic.".html";
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+		} else {
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
+		}
 	    }
 	}
     }
@@ -630,7 +661,7 @@ sub code2html {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg)	= get_arguments("link", $text, 1);
+	my ($id, $arg, $opt) = get_link($text);
 
 	## fix conversions in key of htmlindex:
 	my $argkey = $arg;
@@ -650,19 +681,32 @@ sub code2html {
 #		    print "$htmlfile\n";
 		}
 		$text =~
-		    s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+		    s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
 	    } else {
 		$text =~
-		    s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+		    s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	    }
 	}
 	else{
 	    $misslink = $misslink . " " . $argkey;
 	    if($using_chm){
-		$text =~ s/\\link$id.*$id/$arg/s;
+		if($opt ne "") {
+		    $opt =~ s/:.*$//o;
+		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$arg";
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+		} else {
+		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
+		} 
 	    }
 	    else{
-		$text =~ s/\\link$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
+		if($opt ne "") {
+		    my ($pkg, $topic) = split(/:/, $opt);
+		    $topic = $arg if $topic eq "";
+		    $htmlfile = $pkg."/".$topic.".html";
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+		} else {
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
+		}
 	    }
 	}
     }
@@ -2029,8 +2073,8 @@ sub code2latex {
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $text, "\\link")
 	      && $text =~ /\\link/) {
-	    my ($id, $arg) = get_arguments("link", $text, 1);
-	    $text =~ s/\\link$id.*$id/HYPERLINK($arg)/s;
+	    my ($id, $arg, $opt) = get_link($text);
+	    $text =~ s/\\link(\[.*\])?$id.*$id/HYPERLINK($arg)/s;
 	}
     } else {
 	$text = undefine_command($text, "link");

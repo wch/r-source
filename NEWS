@@ -64,6 +64,10 @@ NEW FEATURES
 	diagonal panel functions and control of diagonal labels.
 	(Much of this was contributed by Jens Oehlschlaegel-Akiyoshi.)
 
+    o	Links to R objects in other packages in help files can now be
+	specified explicitly as \link[pkg]{topic} or 
+	\link[pkg:maintopic]{topic}
+
 
 BUG FIXES
 
@@ -130,6 +134,9 @@ BUG FIXES
 	correctly to latex.
 
     o   qchisq with non-centrality parameter now does something.
+
+    o   Greek symbols are now converted correctly in HTML help (but
+	only rendered correctly on a few browsers).
 
 
 	**************************************************
