@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-8, 2000-08-14
+Version 1.1-9, 2000-08-19
 Kurt Hornik
 
 
@@ -1109,6 +1109,9 @@ works, was published in the Journal of Statistical Software
      (E1071), including moments, short-time Fourier transforms, Independent
      Component Analysis, and simulation of a Wiener process.
 
+*ellipse*
+     Package for drawing ellipses and ellipse-like confidence regions.
+
 *fdim*
      Functions for calculating fractal dimension.
 
@@ -1116,6 +1119,9 @@ works, was published in the Journal of Statistical Software
      Maximum likelihood estimation of the parameters of a fractionally
      differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
      Statistics, 1989).
+
+*gafit*
+     Genetic algorithm for curve fitting.
 
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation
