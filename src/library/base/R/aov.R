@@ -210,8 +210,48 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 }
 
 summary.aov <- function(object, intercept = FALSE, split,
-                        expand.split = FALSE, keep.zero.df = TRUE, ...)
+                        expand.split = TRUE, keep.zero.df = TRUE, ...)
 {
+    splitInteractions <- function(split, factors, names, asgn, df.names)
+    {
+        ns <- names(split)
+        for(i in unique(asgn)) {
+            if(i == 0 || names[i+1] %in% ns) next
+            f <- rownames(factors)[factors[, i] > 0]
+            sp <- f %in% ns
+            if(any(sp)) {              # some marginal terms are split
+                if(sum(sp) > 1) {
+                    old <- split[ f[sp] ]
+                    nn <- f[sp]
+                    names(nn) <- nn
+                    marg <- lapply(nn, function(x)
+                                   df.names[asgn == (match(x, names) - 1)])
+                    term.coefs <- strsplit(df.names[asgn == i], ":")
+                    ttc <- sapply(term.coefs, function(x) x[sp])
+                    rownames(ttc) <- nn
+                    splitnames <- apply(expand.grid(lapply(old, names)), 1,
+                                        function(x) paste(x, collapse="."))
+                    names(splitnames) <- splitnames
+                    tmp <- sapply(nn, function(i)
+                                  names(old[[i]])[match(ttc[i, ], marg[[i]])] )
+                    tmp <- apply(tmp, 1, function(x) paste(x, collapse="."))
+                    new <- lapply(splitnames, function(x) match(x, tmp))
+                    split[[ names[i+1] ]] <-
+                        new[sapply(new, function(x) length(x) > 0)]
+                } else {
+                    old <- split[[ f[sp] ]]
+                    marg.coefs <- df.names[asgn == (match(f[sp], names) - 1)]
+                    term.coefs <- strsplit(df.names[asgn == i], ":")
+                    ttc <- sapply(term.coefs, function(x) x[sp])
+                    new <- lapply(old, function(x)
+                                  seq(along=ttc)[ttc %in% marg.coefs[x]])
+                    split[[ names[i+1] ]] <- new
+                }
+            }
+        }
+        split
+    }
+
     asgn <- object$assign[object$qr$pivot[1:object$rank]]
     uasgn <- unique(asgn)
     nterms <- length(uasgn)
@@ -241,10 +281,14 @@ summary.aov <- function(object, intercept = FALSE, split,
             if(!is.list(split))
                 stop("The split argument must be a list")
             if(!all(ns %in% nmeffect))
-                stop("Unknown name(s) of the split argument")
+                stop("Unknown name(s) in the split list")
         }
-        if(expand.split)
-            split <- splitlist(split, attr(Terms, "factors"), nmeffect, uasgn)
+        if(expand.split) {
+            df.names <- names(coef(object))
+            split <- splitInteractions(split, attr(Terms, "factors"),
+                                       nmeffect, asgn, df.names)
+            ns <- names(split)
+        }
     }
 
     for (y in 1:nresp) {
@@ -265,7 +309,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                 if(!missing(split) && !is.na(int <- match(nmi, ns))) {
                     df <- c(df, unlist(lapply(split[[int]], length)))
                     if(is.null(nms <- names(split[[int]])))
-                        nms <- paste("C", seq(along = split[[int]]))
+                        nms <- paste("C", seq(along = split[[int]]), sep = "")
                     ss <- c(ss, unlist(lapply(split[[int]],
                                               function(i, e)
                                               sum(e[i]^2), effects[ai, y])))
@@ -611,10 +655,4 @@ se.contrast.aovlist <-
     rse <- rse.list[strata.nms]
     eff <- effic[eff.used]
     sqrt((rse/eff^2) %*% wgt)
-}
-
-splitlist <- function(split, factors, names, asgn)
-{
-    .NotYetImplemented()
-    split
 }

@@ -29,6 +29,11 @@
   An object of class \code{c("summary.aov", "listof")} or
   \code{"summary.aovlist"} respectively.
 }
+\note{
+  The use of \code{expand.split = TRUE} is little tested: it is always
+  possible to set it to \code{FALSE} and specify exactly all
+  the splits required.
+}
 \author{B. D. Ripley}
 \seealso{
   \code{\link{aov}}, \code{\link{summary}}
@@ -47,12 +52,25 @@ npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
 summary(npk.aov)
 coefficients(npk.aov)
 
-## as a test, not particularly sensible statistically
-op <- options(contrasts=c("contr.helmert", "contr.treatment"))
-npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
-npk.aovE
-summary(npk.aovE)
-options(op)# reset to previous
+# Cochran and Cox (1957, p.164)
+# 3x3 factorial with ordered factors, each is average of 12. 
+CC <- data.frame(
+    y = c(449, 413, 326, 409, 358, 291, 341, 278, 312)/12,
+    P = ordered(gl(3, 3)), N = ordered(gl(3, 1, 9))
+)
+CC.aov <- aov(y ~ N * P, data = CC , weights = rep(12, 9))
+summary(CC.aov)
+
+# Split both main effects into linear and quadratic parts.
+summary(CC.aov, split = list(N = list(L = 1, Q = 2), P = list(L = 1, Q = 2)))
+
+# Split only the interaction
+summary(CC.aov, split = list("N:P" = list(L.L = 1, Q = 2:4)))
+\testonly{
+# split on just one var
+summary(CC.aov, split = list(P = list(lin = 1, quad = 2)))
+summary(CC.aov, split = list(P = list(lin = 1, quad = 2)),
+        expand.split=FALSE)}
 }
 \keyword{models}
 \keyword{regression}
