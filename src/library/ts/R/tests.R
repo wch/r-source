@@ -4,8 +4,8 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
         stop ("x is not a vector or univariate time series")
     DNAME <- deparse(substitute(x))
     type <- match.arg(type)
-    cor <- acf (x, lag.max = lag, plot = FALSE)
-    n <- length(x)
+    cor <- acf (x, lag.max = lag, plot = FALSE, na.action = na.pass)
+    n <- sum(!is.na(x))
     PARAMETER <- lag
     obs <- cor$acf[2:(lag+1)]
     if (type=="Box-Pierce")

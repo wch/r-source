@@ -1,6 +1,5 @@
 \name{arima0}
 \alias{arima0}
-\alias{arima0.diag}
 \alias{print.arima0}
 \alias{predict.arima0}
 \title{ARIMA Modelling of Time Series -- Preliminary Version}
@@ -16,8 +15,6 @@ arima0(x, order = c(0, 0, 0),
        method = c("ML", "CSS"), n.cond, optim.control = list())
 
 \method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
-
-arima0.diag(fit, gof.lag = 10)
 }
 \arguments{
   \item{x}{a univariate time series}
@@ -238,8 +235,10 @@ arima0(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
 
 data(presidents) # contains NAs
 ## graphs is example(acf) suggest order 1 or 3
-arima0(presidents, c(1, 0, 0), delta = -1)  # avoid warning
-arima0(presidents, c(3, 0, 0), delta = -1)  # smaller AIC
+(fit1 <- arima0(presidents, c(1, 0, 0), delta = -1))  # avoid warning
+tsdiag(fit1)
+(fit3 <- arima0(presidents, c(3, 0, 0), delta = -1))  # smaller AIC
+tsdiag(fit3)
 \testonly{
 ## test fitting with NAs
 tmp <- LakeHuron

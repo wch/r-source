@@ -47,6 +47,7 @@ R_CallMethodDef CallEntries[] = {
     {"Starma_method", (DL_FUNC) &Starma_method, 2},
     {"Invtrans", (DL_FUNC) &Invtrans, 2},
     {"Gradtrans", (DL_FUNC) &Gradtrans, 2},
+    {"ARMAtoMA", (DL_FUNC) &ARMAtoMA, 3},
     {NULL, NULL, 0}
 };
 

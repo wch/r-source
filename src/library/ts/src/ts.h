@@ -79,4 +79,6 @@ SEXP arma0_kfore(SEXP pG, SEXP pd, SEXP psd, SEXP n_ahead);
 SEXP Starma_method(SEXP pG, SEXP method);
 SEXP Gradtrans(SEXP pG, SEXP x);
 SEXP Invtrans(SEXP pG, SEXP x);
+
+SEXP ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max);
 #endif
