@@ -68,10 +68,17 @@ none
 
 Directory:  Graphics
 
-* PR# 828 *
-Subject: termplot fails for composite non-factor terms
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
+* PR# 839 *
+Subject: clipped lines have wrong slope in log plot
+From: Jason Eisner <jason@cs.rochester.edu>
+Date: Sun, 4 Feb 2001 20:17:31 -0500 (EST)
+* PR# 202 *
+Subject: persp box occlusion bug
+From: wsi@gcal.ac.uk
+Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
+--The persp algorithm does not apply the occlusion rules to the frame, 
+--which is always plotted first. 
+--A bug, but not very simple to fix.
 * PR# 726 *
 Subject: par(las=.)  gives wrong "adj" for mtext()
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -80,13 +87,6 @@ Date: Tue, 7 Nov 2000 13:03:58 +0100
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 202 *
-Subject: persp box occlusion bug
-From: wsi@gcal.ac.uk
-Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
---The persp algorithm does not apply the occlusion rules to the frame, 
---which is always plotted first. 
---A bug, but not very simple to fix.
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
@@ -95,6 +95,10 @@ Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -114,14 +118,26 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
 Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 828 *
+Subject: termplot fails for composite non-factor terms
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 * PR# 823 *
 Subject: adjustment of expressions with mtext(..., las=2)
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Wed, 24 Jan 2001 20:12:43 +0100
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
+* PR# 837 *
+Subject: screen doesn't handle redrawing properly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 01 Feb 2001 14:20:52 -0500
+* PR# 831 *
+Subject: screen can't go back to (split) screen with log="y" plot
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:39:41 -0500
+* PR# 830 *
+Subject: Disappearing x axis in plot.factor
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:27:13 -0500
 
 Directory:  In-Out
 
@@ -168,7 +184,12 @@ Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 
 Directory:  Misc
 
-none
+* PR# 829 *
+Subject: variables in nls
+From: baron@cattell.psych.upenn.edu
+Date: Sun, 28 Jan 2001 15:07:27 +0100 (MET)
+--need to get all.vars to skip blank variable names,
+--or patch nls to workaround this.
 
 Directory:  Models
 
@@ -185,6 +206,11 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 838 *
+Subject: Linux shared library problem
+From: daniel.egloff@dplanet.ch
+Date: Sun, 4 Feb 2001 22:37:31 +0100 (MET)
+--RedHat 7.0: need updates?
 * PR# 822 *
 Subject: Re: Sys.time dumps core at start-up
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -197,12 +223,6 @@ Date: Tue, 23 Jan 2001 19:44:28 +0100 (CET)
 --See also 822, which shows the segfault is in strftime.c.
 --From other correspondence, this is on RH5.0: we can't
 --reproduce it on RH6.2 or anywhere else.
-* PR# 808 *
-Subject: Time zone
-From: Herve Morin <morin@mat.ulaval.ca>
-Date: Wed, 10 Jan 2001 07:24:07 -0500
---This appears to be a complaint about a warning on a beta Mac version
---(but Macs are never mentioned!).  That version is incomplete.
 
 Directory:  TooMuchAtOnce
 
@@ -225,47 +245,4 @@ none
 
 Directory:  incoming
 
-* PR# 840 *
-Subject: X11 warnings about "wrong" font sizes
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 06 Feb 2001 09:50:44 -0500
-* PR# 831 *
-Subject: screen can't go back to (split) screen with log="y" plot
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 30 Jan 2001 00:39:41 -0500
-* PR# 830 *
-Subject: Disappearing x axis in plot.factor
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 30 Jan 2001 00:27:13 -0500
-* PR# 829 *
-Subject: variables in nls
-From: baron@cattell.psych.upenn.edu
-Date: Sun, 28 Jan 2001 15:07:27 +0100 (MET)
-* PR# 835 *
-Subject: factors in data.frames
-From: Jim Lindsey <james.lindsey@luc.ac.be>
-Date: Thu, 1 Feb 2001 10:55:59 +0100 (MET)
-* PR# 834 *
-Subject:  inconsistent behaviour between class() and inherits() 
-From: adrian@olsen.ch
-Date: Thu, 01 Feb 2001 10:07:13 +0100
-* PR# 832 *
-Subject: Rconsole documentation
-From: david.firth@nuffield.oxford.ac.uk
-Date: Tue, 30 Jan 2001 15:52:49 +0100 (MET)
-* PR# 837 *
-Subject: screen doesn't handle redrawing properly
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 01 Feb 2001 14:20:52 -0500
-* PR# 836 *
-Subject: configure bug in R-1.2.1 and earlier
-From: Lars Hecking <lhecking@nmrc.ie>
-Date: Thu, 1 Feb 2001 18:41:09 +0000
-* PR# 839 *
-Subject: clipped lines have wrong slope in log plot
-From: Jason Eisner <jason@cs.rochester.edu>
-Date: Sun, 4 Feb 2001 20:17:31 -0500 (EST)
-* PR# 838 *
-Subject: Linux shared library problem
-From: daniel.egloff@dplanet.ch
-Date: Sun, 4 Feb 2001 22:37:31 +0100 (MET)
+none
