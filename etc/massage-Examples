@@ -31,7 +31,7 @@ do
  elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
  elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
  elif [ $bf = 'na.fail' ];	then sed -e '/^na\.fail/s/^/##Test: /' $file
- elif [ $bf = 'pictex' ];	then sed -e '6,$s/^/##LaTex /' $file
+ elif [ $bf = 'pictex' ];	then sed -e '11,$s/^/##LaTex /' $file
  elif [ $bf = 'postscript' ];	then sed -e '/^postscript(/s/^/## /' $file
  elif [ $bf = 'Random' ];	then sed -e '$s/$/.Random.seed <- 9:7/' $file
  elif [ $bf = 'solve'  ];	then sed -e '/error:.*singular/s/^/## /' $file
