@@ -12,19 +12,29 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
     names(out) <- R_files
 
     find_strings <- function(e) {
-         if(is.call(e) && is.name(e[[1]])
+        find_strings2 <- function(e) {
+            if(is.character(e)) {
+                if(!suppress) strings <<- c(strings, e)
+            } else if(is.call(e)) {
+                if(as.character(e[[1]]) %in% "gettext") {
+                    domain <- e[["domain"]]
+                    suppress <<- !is.null(domain) && is.na(domain)
+                }
+                for(i in seq(along = e)) find_strings2(e[[i]])
+            }
+        }
+        if(is.call(e) && is.name(e[[1]])
            && as.character(e[[1]]) %in% c("warning", "stop", "gettext")) {
+             domain <- e[["domain"]]
+             suppress <- !is.null(domain) && is.na(domain)
              ## remove named args
              if(!is.null(names(e)))
                  e <- e[!names(e) %in% c("call.", "immediate.", "domain")]
-             if(asCall) strings <<- c(strings, as.character(e)[-1])
-             else for(i in seq(along = e)) find_strings2(e[[i]])
+             if(asCall) {
+                 if(!suppress) strings <<- c(strings, as.character(e)[-1])
+             } else for(i in seq(along = e)) find_strings2(e[[i]])
         } else if(is.recursive(e))
             for(i in seq(along = e)) Recall(e[[i]])
-    }
-    find_strings2 <- function(e) {
-        if(is.character(e)) strings <<- c(strings, e)
-        else if(is.call(e)) for(i in seq(along = e)) Recall(e[[i]])
     }
 
     for(f in R_files) {

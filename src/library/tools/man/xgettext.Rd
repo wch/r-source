@@ -25,6 +25,11 @@ xgettext2pot(dir, potFile)
 \details{
   Leading and trailing white space (space, tab and linefeed) is removed,
   as it is by the internal code that passes strings for translation.
+
+  We look to see if these functions were called with \code{domain = NA}
+  and if so omits the call if \code{asCall = TRUE}: note that the
+  call might contain a call to \code{gettext} which would be visible if
+  \code{asCall = FALSE}.
 }
 \value{
   For \code{xgettext}, an object of class \code{"xgettext"} which is
