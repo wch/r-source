@@ -86,30 +86,22 @@
 
 #include "R_ext/Rdynpriv.h"
 
+#ifdef Unix
+# ifndef HAVE_NO_SYMBOL_UNDERSCORE
+#  ifdef HAVE_ELF_H
+#   define HAVE_NO_SYMBOL_UNDERSCORE
+#  endif /* HAVE_ELF_H */
+# endif /* HAVE_NO_SYMBOL_UNDERSCORE */
+#endif
+
+#ifdef Win32
+# define HAVE_NO_SYMBOL_UNDERSCORE 
+#endif
 
 #ifdef Macintosh
   extern char *strdup(); 
-# define R_DIR_SEPARATOR ':'
 # define HAVE_NO_SYMBOL_UNDERSCORE 
-/* No "_" before function names under MacOS */
-
-#else   /* Unix or Win32 */
-
-# define R_DIR_SEPARATOR '/'
-
-# ifdef Win32
-#  define HAVE_NO_SYMBOL_UNDERSCORE
-
-# else /* Unix */
-#  ifndef HAVE_NO_SYMBOL_UNDERSCORE
-#   ifdef HAVE_ELF_H
-#    define HAVE_NO_SYMBOL_UNDERSCORE
-#   endif /* HAVE_ELF_H */
-#  endif /* HAE_NO_SYMBOL_UNDERSCORE */
-# endif /* Win32 */
-#endif /* Macintosh*/
-
-
+#endif
 
 /* The following code loads in a compatibility module written by Luke
    Tierney to support S version 4 on Hewlett-Packard machines.	The
@@ -398,7 +390,7 @@ static int AddDLL(char *path, int asLocal, int now)
     if(R_osDynSymbol->fixPath)
 	R_osDynSymbol->fixPath(dpath);
 
-    p = strrchr(dpath, R_DIR_SEPARATOR); 
+    p = strrchr(dpath, FILESEP[0]); 
     if(!p) p = dpath; else p++;
     strcpy(DLLname, p);
     p = strchr(DLLname, '.');
@@ -606,15 +598,6 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
   call routines from "incomplete" libraries.
  */
 
-static int Cdynload(SEXP call, char *dllpath, int local, int now)
-{
-    char buf[2 * PATH_MAX];
-
-    GetFullDLLPath(call, buf, dllpath);
-    DeleteDLL(buf);
-    return AddDLL(buf, local, now);
-}
-
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
@@ -622,24 +605,12 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected");
-   if(!Cdynload(call, CHAR(STRING_ELT(CAR(args), 0)), LOGICAL(CADR(args))[0], 
-      LOGICAL(CADDR(args))[0]))
-/*    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
-    DeleteDLL(buf);
-    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))*/
+    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
+    /* AddDLL does this DeleteDLL(buf); */
+    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;
-}
-
-int moduleCdynload(char *module, int local, int now)
-{
-    char dllpath[PATH_MAX], *p = getenv("R_HOME");
-
-    if(!p) return 0;
-    sprintf(dllpath, "%s%smodules%s%s.%s", p, FILESEP, FILESEP, 
-	    module, SHLIB_EXT);
-    return Cdynload(R_NilValue, dllpath, local, now);
 }
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -653,6 +624,16 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!DeleteDLL(buf))
 	errorcall(call, "dynamic/shared library \"%s\" was not loaded", buf);
     return R_NilValue;
+}
+
+int moduleCdynload(char *module, int local, int now)
+{
+    char dllpath[PATH_MAX], *p = getenv("R_HOME");
+
+    if(!p) return 0;
+    sprintf(dllpath, "%s%smodules%s%s.%s", p, FILESEP, FILESEP, 
+	    module, SHLIB_EXT);
+    return AddDLL(dllpath, local, now);
 }
 
 #else /* no dyn.load support */
