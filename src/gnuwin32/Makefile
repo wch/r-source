@@ -356,7 +356,7 @@ pkgcheck-%:
 	fi
 
 lazyload-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
 
 lazydata-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata

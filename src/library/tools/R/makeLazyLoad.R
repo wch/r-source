@@ -6,9 +6,10 @@ code2LazyLoadDB <-
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
         stop(paste("There is no package called", sQuote(package)))
+    barepackage <- sub("([^-]+)_.*", "\\1", package)
     loadenv <-new.env(hash=TRUE)
-    codeFile <- file.path(pkgpath, "R", package)
-    dbbase <- file.path(pkgpath, "R", package)
+    codeFile <- file.path(pkgpath, "R", barepackage)
+    dbbase <- file.path(pkgpath, "R", barepackage)
     if (packageHasNamespace(package, dirname(pkgpath))) {
         if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
             stop("name space must not be loaded.")
@@ -25,7 +26,7 @@ code2LazyLoadDB <-
         env <- new.env(hash=TRUE)
         .Internal(lib.fixup(loadenv, env))
         ## save the package name in the environment
-        assign(".packageName", package, envir = env)
+        assign(".packageName", barepackage, envir = env)
         makeLazyLoadDB(env, dbbase, compress = compress)
     }
 }
@@ -246,6 +247,7 @@ makeLazyLoading <-
     }
 
     pkgpath <- findpack(package, lib.loc)
+    barepackage <- sub("([^-]+)_.*", "\\1", package)
 
     if (package == "base")
         loaderFile <- file.path(R.home(), "share", "R", "baseloader.R")
@@ -253,7 +255,7 @@ makeLazyLoading <-
         loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
     else
         loaderFile <- file.path(R.home(), "share", "R", "packloader.R")
-    codeFile <- file.path(pkgpath, "R", package)
+    codeFile <- file.path(pkgpath, "R", barepackage)
 
     if (!file.exists(codeFile)) {
         warning("package contains no R code")
@@ -278,11 +280,6 @@ makeLazyLoading <-
                             keep.source = keep.source, compress = compress)
         file.copy(loaderFile, codeFile, TRUE)
     }
-    ## <NOTE> This test needs to be independent of tools, so
-    ## package tools can be prepared for lazy loading.
-    ## </NOTE>
-    ## if(file.exists(file.path(pkgpath, "data")))
-    ##    data2LazyLoadDB(package, lib.loc, compress = compress)
 
     invisible()
 }

@@ -292,17 +292,18 @@ foreach $pkg (@ARGV){
 		$codesize = $1;
 		print "*** codesize is $codesize ***\n" if $opt_debug;
 		if($codesize > 50000) {$lazyload = 1;} else {$lazyload = 0;}
-		print "*** lazyload is $lazyload ***\n" if($opt_debug);
 	    }
+	    print "*** lazyload is $lazyload ***\n" if $opt_debug;
 	    if($lazyload) {
-		my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 ";
-		$cmd .= "PKGDIR=$pkgdir lazyload-$pkgname";
+		my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
+		$cmd .= "RHOME=$R_HOME SPKG=$pkg DPKG=$library/$decpkgname PKG=$decpkgname RLIB=$library lazyload";
+#		print "$cmd\n";
 		system($cmd);
 	    }
 
 	    if($lazydata) {
 		my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
-		$cmd .= " lazydata-$pkgname";
+		$cmd .= " lazydata-$decpkgname";
 		system($cmd);
 	    }
 
