@@ -6,8 +6,18 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 1.0.1
+		CHANGES IN R VERSION 1.0.2
 
+BUG FIXES
+
+    o	R CMD Rd2dvi now sorts files alphabetically.
+
+    o	Fixed bug in undoc() - requiring new `chdir' argument for sys.source()
+
+    o	\deqn{} fix in R-exts.texi, PR#523.
+
+
+		CHANGES IN R VERSION 1.0.1
 
 BUG FIXES
 
