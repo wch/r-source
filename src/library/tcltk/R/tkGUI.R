@@ -112,22 +112,35 @@ CRANmirrorWidget <- function(a)
 {
     lvar <- tclVar()
     tclObj(lvar) <- a[,1]
-    box <- tklistbox(tt <- tktoplevel(), height=length(a[, 1]),
-                     listvariable = lvar, selectmode="single")
-    res <- 0
-    gogetem <- function() {
+    dlg <- tktoplevel()
+    tkwm.deiconify(dlg)
+    tkgrab.set(dlg)
+    tkfocus(dlg)
+    box <- tklistbox(dlg, height = length(a[, 1]),
+                     listvariable = lvar, selectmode = "single")
+    onOK <- function() {
         res <- 1+as.integer(tkcurselection(box))
-        if(res > 0) {
+        if(length(res)) {
             repos <- getOption("repos")
             URL <- a[res, "URL"]
             repos["CRAN"] <- gsub("/$", "", a[res, "URL"])
             options(repos = repos)
         }
-        tkdestroy(tt)
+        tkgrab.release(dlg)
+        tkdestroy(dlg)
     }
-    tkpack(tklabel(tt, text = "Select CRAN mirror", fg="blue"))
-    tkpack(box)
-    tkpack(tkbutton(tt, text=" OK ", command=gogetem))
+    onCancel <- function() {
+        tkgrab.release(dlg)
+        tkdestroy(dlg)
+    }
+    lab <- tklabel(dlg, text = "Select CRAN mirror", fg = "blue")
+    tkgrid.configure(lab, columnspan = 2)
+    tkgrid.configure(box, columnspan = 2)
+    OK <- tkbutton(dlg,     text = "  OK  ", command = onOK)
+    Cancel <- tkbutton(dlg, text = "Cancel", command = onCancel)
+    tkgrid(OK, Cancel)
+    tkbind(dlg, "<Destroy>", function() tkgrab.release(dlg))
+    tkwait.window(dlg)
     invisible()
 }
 
@@ -135,19 +148,33 @@ repositoriesWidget <- function(a)
 {
     lvar <- tclVar()
     tclObj(lvar) <- a[,1]
-    box <- tklistbox(tt <- tktoplevel(), height=length(a[, 1]),
-                     listvariable = lvar, selectmode="multiple")
+    dlg <- tktoplevel()
+    tkwm.deiconify(dlg)
+    tkgrab.set(dlg)
+    tkfocus(dlg)
+    box <- tklistbox(dlg, height = length(a[, 1]),
+                     listvariable = lvar, selectmode = "multiple")
     for(i in which(a[["default"]])) tkselection.set(box, i-1) # 0-based
 
-    gogetem <- function() {
+    onOK <- function() {
         res <- 1+as.integer(tkcurselection(box))
         repos <- a[["URL"]]
         names(repos) <- row.names(a)
         options(repos = repos[res])
-        tkdestroy(tt)
+        tkgrab.release(dlg)
+        tkdestroy(dlg)
     }
-    tkpack(tklabel(tt, text = "Select repositories", fg="blue"))
-    tkpack(box)
-    tkpack(tkbutton(tt, text=" OK ", command=gogetem))
+    onCancel <- function() {
+        tkgrab.release(dlg)
+        tkdestroy(dlg)
+    }
+    lab <- tklabel(dlg, text = "Select repositories", fg = "blue")
+    tkgrid.configure(lab, columnspan = 2)
+    tkgrid.configure(box, columnspan = 2)
+    OK <- tkbutton(dlg, text = " OK ", command = onOK)
+    Cancel <- tkbutton(dlg, text = "Cancel", command = onCancel)
+    tkgrid(OK, Cancel)
+    tkbind(dlg, "<Destroy>", function() tkgrab.release(dlg))
+    tkwait.window(dlg)
     invisible()
 }
