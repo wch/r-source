@@ -359,10 +359,9 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     dotargs <- dotargs[!named]
     is.glm <- unlist(lapply(dotargs,function(x) inherits(x,"glm")))
     dotargs <- dotargs[is.glm]
-    if (length(dotargs)>0)
-	return(anova.glmlist(c(list(object),dotargs),test=test))
-    ##args <- function(...) nargs()
-    ##if(args(...)) return(anova.glmlist(list(object, ...), test=test))
+    if (length(dotargs) > 0)
+	return(anova.glmlist(c(list(object), dotargs),
+                             dispersion = dispersion, test=test))
 
     ## extract variables from model
 
