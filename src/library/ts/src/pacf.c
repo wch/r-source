@@ -298,25 +298,33 @@ void artoma(int *pp, double *phi, double *psi, int *npsi)
     }
 }
 
-static void partrans(int np, double *raw, double *new)
+static void partrans(int p, double *raw, double *new)
 {
-    int i, j;
+    int j, k;
+    double a, work[100];
 
-    for(i = 0; i < np; i++) raw[i] = new[i] = tanh(raw[i]);
-    for(j = 1; j < np; j++)
-	for(i = 0; i < j; i++)
-	    raw[i] -= new[j] * new[j - i - 1];
-    for(i = 0; i < np; i++) new[i] = raw[i];
+    if(p > 100) error("can only transform 100 pars in arima0");
+
+    /* Step one: map (-Inf, Inf) to (-1, 1) via tanh
+       The parameters are now the pacf phi_{kk} */
+    for(j = 0; j < p; j++) work[j] = new[j] = tanh(raw[j]);
+    /* Step two: run the Durbin-Levinson recursions to find phi_{j.},
+       j = 2, ..., p and phi_{p.} are the autoregression coefficients */
+    for(j = 1; j < p; j++) {
+	a = new[j];
+	for(k = 0; k < j; k++)
+	    work[k] -= a * new[j - k - 1];
+	for(k = 0; k < j; k++) new[k] = work[k];
+    }
 }
 
-/* raw is overwritten */
 static void dotrans(Starma G, double *raw, double *new, int trans)
 {
     int i, v, n = G->mp + G->mq + G->msp + G->msq;
 
     if(trans) {
 	v = 0;
-	partrans(G->mp, raw+v, new + v);
+	partrans(G->mp, raw + v, new + v);
 	v += G->mp;
 	partrans(G->mq, raw + v, new + v);
 	v += G->mq;

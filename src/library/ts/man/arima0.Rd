@@ -38,7 +38,7 @@ arima0.diag(fit, gof.lag = 10)
 
   \item{transform.pars}{If true, the ARMA parameters are
     transformed to ensure that they remain in the region of
-    invertibility.  Not used for \code{method = "CSS"}.}
+    stationarity/invertibility.  Not used for \code{method = "CSS"}.}
 
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only non-\code{NA} entries in
@@ -104,6 +104,13 @@ arima0.diag(fit, gof.lag = 10)
   negligible and the speed-up considerable. Exact computations can be
   ensured by setting \code{delta} to a negative value.
 
+  If \code{transform.pars} is true, the optimization is done using an
+  alternative parametrization which is a variation on that suggested by
+  Jones (1980) and ensures that the model is stationary and has an
+  invertible MA part.  For an AR(p) model the parametrization is via the
+  inverse tanh of the partial autocorrelations: the same procedure
+  is applied (separately) to the MA and seasonal terms.
+
   As from \R 1.5.0 missing values are allowed, but any missing values
   will force \code{delta} to be ignored and full recursions used.
 
@@ -155,20 +162,23 @@ arima0.diag(fit, gof.lag = 10)
   components are time series.
 }
 \references{
-    Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
-      Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
+  Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
+    Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
 
-    Gardener, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
-    AS154. An algorithm for exact maximum likelihood estimation of
-    autoregressive-moving average models by means of Kalman filtering.
-    \emph{Applied Statistics} \bold{29}, 311--322.
+  Gardener, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
+  AS154. An algorithm for exact maximum likelihood estimation of
+  autoregressive-moving average models by means of Kalman filtering.
+  \emph{Applied Statistics} \bold{29}, 311--322.
 
-    Harvey, A. C. (1993) \emph{Time Series Models},
-    2nd Edition, Harvester Wheatsheaf, sections 3.3 and  4.4.
+  Harvey, A. C. (1993) \emph{Time Series Models},
+  2nd Edition, Harvester Wheatsheaf, sections 3.3 and  4.4.
 
-    Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
-    An algorithm for finite sample prediction from ARIMA processes.
-    \emph{Applied Statistics} \bold{31}, 180--187.
+  Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
+  An algorithm for finite sample prediction from ARIMA processes.
+  \emph{Applied Statistics} \bold{31}, 180--187.
+
+  Jones, R. H. (1980) Maximum likelihood fitting of ARMA models to time
+  series with missing observations. \emph{Technometrics} \bold{20} 389--395.
 }
 
 \author{B. D. Ripley}
