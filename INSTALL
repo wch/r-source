@@ -179,11 +179,10 @@ USING MAKE
 
 To compile R, you will most likely find it easiest to use GNU make.
 On Solaris 2.6/7 in particular, you need a version of GNU make
-different from 3.77; 3.78.x and 3.76.1 work fine, as does the Sun
-make.
+different from 3.77; 3.79 works fine, as does the Sun make.
 
 To build in a separate directory you need a make that uses the VPATH
-variable, for example GNU make.
+variable, for example GNU make, or Sun make on Solaris 2.7 (but not earlier).
 
 If you want to use a make by another name, for example if your GNU make
 is called `gmake', you need to set MAKE at configure time, for example
