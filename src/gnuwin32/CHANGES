@@ -8,7 +8,8 @@ rw1090
 ======
 
 
-***PLACEHOLDER***
+R's internal malloc is now remapped to Rm_malloc and only used in
+allocating memory for R objects.
 
 
 

@@ -554,14 +554,14 @@ extern "C" {
 #define public_iCALLOc   dlindependent_calloc
 #define public_iCOMALLOc dlindependent_comalloc
 #else /* USE_DL_PREFIX */
-#define public_cALLOc    calloc
-#define public_fREe      free
-#define public_cFREe     cfree
-#define public_mALLOc    malloc
-#define public_mEMALIGn  memalign
-#define public_rEALLOc   realloc
-#define public_vALLOc    valloc
-#define public_pVALLOc   pvalloc
+#define public_cALLOc    Rm_calloc
+#define public_fREe      Rm_free
+#define public_cFREe     Rm_cfree
+#define public_mALLOc    Rm_malloc
+#define public_mEMALIGn  Rm_memalign
+#define public_rEALLOc   Rm_realloc
+#define public_vALLOc    Rm_valloc
+#define public_pVALLOc   Rm_pvalloc
 #define public_mALLINFo  mallinfo
 #define public_mALLOPt   mallopt
 #define public_mTRIm     malloc_trim
@@ -5644,11 +5644,11 @@ History:
 */
 
 /* Need strdup here so we don't get calls to the wrong heap function inside the library */
-char * strdup (const char *str)
+char * Rm_strdup (const char *str)
 {
   char *newstr;
 
-  newstr = (char *) malloc (strlen (str) + 1);
+  newstr = (char *) Rm_malloc (strlen (str) + 1);
   if (newstr)
     strcpy (newstr, str);
   return newstr;

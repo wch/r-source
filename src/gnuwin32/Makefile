@@ -40,6 +40,7 @@ ifdef DEBUG
 else
  DLLFLAGS=-s
 endif
+OPTFLAGS_M=$(OPTFLAGS)
 
 ifneq ($(strip $(BUILD)),CROSS)
 R-DLLFLAGS = -mwindows
@@ -63,6 +64,7 @@ PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
 ifdef LEA_MALLOC
 extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
+OPTFLAGS_M+=-DLEA_MALLOC
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
@@ -105,13 +107,13 @@ rpackage: ../../library/R.css
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
 	$(MAKE) --no-print-directory -C ./getline
 	$(MAKE) --no-print-directory -C ../extra/xdr -f Makefile.win
 
-rmodules: libRm.a
+rmodules:
 	$(MAKE) --no-print-directory -C ../modules \
 	  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 
@@ -159,19 +161,6 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	@$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
 	@$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
 	@$(CAT) exported-vars >> $@
-	@$(RM) RDefs
-
-# An additional import library needed for the modules that uses R.dll's malloc/.../free
-libRm.a:  Rm.exp
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
-
-Rm.exp: Rm.exp1
-	@(diff Rm.exp Rm.exp1 > /dev/null) || $(CP) Rm.exp1 Rm.exp
-
-Rm.exp1: $(OBJS-EXTRA)
-	@$(ECHO) EXPORTS > $@
-	@$(NM) $(OBJS-EXTRA) > RDefs
-	@$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
 	@$(RM) RDefs
 
 ../../library/R.css: ../../doc/html/R.css
