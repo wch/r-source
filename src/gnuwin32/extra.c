@@ -1097,11 +1097,18 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     *temp = 0;
 
+    *list = '\0'; /* no initialization */
     askfilenames(CHAR(STRING_ELT(caption, 0)), path,
 		 multi, cfilters, filterindex,
                  list, 65500);  /* list declared larger to protect against overwrites */
     Rwin_fpset();
-    count = countFilenames(list);
+
+    if(!multi) {
+	/* only one filename possible */
+	count = 1;
+    } else {
+	count = countFilenames(list);	
+    }
 
     if (count < 2) PROTECT(ans = allocVector(STRSXP, count));
     else PROTECT(ans = allocVector(STRSXP, count-1));

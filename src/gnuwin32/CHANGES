@@ -23,6 +23,8 @@ making the image (PR#6769).
 Installing a package which failed did not return an error code from
 Rcmd INSTALL (PR#6768).
 
+choose.files(multi=FALSE) was liable to give incorrect results (PR#6818).
+
 
 
 rw1090
