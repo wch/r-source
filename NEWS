@@ -581,6 +581,13 @@ BUG FIXES
 
     o   library() (with no arguments) no longer fails on empty TITLE files.
 
+    o   glm() was failing if both offset() and start were specified. (PR#1421)
+
+    o	glm() might have gotten confused if both step-shortening and
+	pivoting had occurred (PR#1331).  Step-halving to avoid the
+	boundary of feasible values was not working.
+
+
 
 	**************************************************
 	*						 *

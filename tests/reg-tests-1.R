@@ -604,6 +604,15 @@ stopifnot(d2 == 0) ## 1.4.1 gave 9.331893e+19
 stopifnot(all.equal(d1, d3, tol=1e-3))
 
 
+## PR#1422 glm start/offset bugs
+if(require(MASS)) {
+data(ships, package = MASS)
+ships.glm <- glm(incidents ~ type + year + period + offset(log(service)),
+                 family = poisson, data = ships, subset = (service != 0))
+update(ships.glm, start = coef(ships.glm))
+}
+## failed in 1.4.1.
+
 
 ## This example last: needed < 1.5.0 ##
 

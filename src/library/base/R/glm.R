@@ -66,7 +66,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	fit$null.deviance <-
 	    if(is.empty.model(mt)) fit$deviance
 	    else glm.fit(x=X[,"(Intercept)",drop=FALSE], y=Y, weights=weights,
-			 start=start, offset=offset, family=family,
+			 offset=offset, family=family,
 			 control=control, intercept=TRUE)$deviance
     }
     if(model) fit$model <- mf
@@ -133,7 +133,6 @@ glm.fit <-
     if (is.null(validmu))
 	validmu <- function(mu) TRUE
     if(is.null(mustart)) {
-        ## eval(family$initialize)
         ## calculates mustart and may change y and weights and set n (!)
 	eval(family$initialize)
     } else {
@@ -143,22 +142,24 @@ glm.fit <-
     }
     if (NCOL(y) > 1)
 	stop("y must be univariate unless binomial")
+    coefold <- NULL
     eta <-
-	if(!is.null(etastart) && valideta(etastart))
-	    etastart
+	if(!is.null(etastart)) etastart
 	else if(!is.null(start))
 	    if (length(start) != nvars)
 		stop(paste("Length of start should equal", nvars,
 			   "and correspond to initial coefs for",
 			   deparse(xnames)))
-	    else as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+	    else {
+                coefold <- start
+                offset + as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+            }
 	else family$linkfun(mustart)
     mu <- linkinv(eta)
     if (!(validmu(mu) && valideta(eta)))
 	stop("Can't find valid starting values: please specify some")
     ## calculate initial deviance and coefficient
     devold <- sum(dev.resids(y, mu, weights))
-    coefold <- start
     boundary <- FALSE
 
     ##------------- THE Iteratively Reweighting L.S. iteration -----------
@@ -183,27 +184,29 @@ glm.fit <-
 	z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
 	w <- sqrt((weights[good] * mu.eta.val[good]^2)/variance(mu)[good])
 	ngoodobs <- as.integer(nobs - sum(!good))
-	ncols <- as.integer(1)
-	## call linpack code
+	## call Fortran code
 	fit <- .Fortran("dqrls",
-			qr = x[good, ] * w, n = as.integer(ngoodobs),
-			p = nvars, y = w * z, ny = ncols,
+			qr = x[good, ] * w, n = ngoodobs,
+			p = nvars, y = w * z, ny = as.integer(1),
 			tol = min(1e-7, control$epsilon/1000),
-			coefficients = numeric(nvars),
-			residuals = numeric(ngoodobs),
-			effects = numeric(ngoodobs),
+			coefficients = double(nvars),
+			residuals = double(ngoodobs),
+			effects = double(ngoodobs),
 			rank = integer(1),
 			pivot = 1:nvars, qraux = double(nvars),
 			work = double(2 * nvars),
 			PACKAGE = "base")
+	if (any(!is.finite(fit$coefficients))) {
+	    conv <- FALSE
+	    warning(paste("Non-finite coefficients at iteration", iter))
+	    break
+	}
 	## stop if not enough parameters
 	if (nobs < fit$rank)
 	    stop(paste("X matrix has rank", fit$rank, "but only",
 		       nobs, "observations"))
 	## calculate updated values of eta and mu with the new coef:
-	start <- coef <- fit$coefficients
-	start[fit$pivot] <- coef
-#	eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+	start[fit$pivot] <- fit$coefficients
 	eta <- drop(x %*% start)
 	mu <- linkinv(eta <- eta + offset)
 	dev <- sum(dev.resids(y, mu, weights))
@@ -211,49 +214,49 @@ glm.fit <-
 	    cat("Deviance =", dev, "Iterations -", iter, "\n")
 	## check for divergence
 	boundary <- FALSE
-	if (is.na(dev) || any(is.na(coef))) {
-	    warning("Step size truncated due to divergence")
+	if (!is.finite(dev)) {
+            if(is.null(coefold))
+                stop("no valid set of coefficients has been found:please supply starting values", call. = FALSE)
+	    warning("Step size truncated due to divergence", call. = FALSE)
 	    ii <- 1
-	    while ((is.na(dev) || any(is.na(start)))) {
+	    while (!is.finite(dev)) {
 		if (ii > control$maxit)
 		    stop("inner loop 1; can't correct step size")
-		ii <- ii+1
+		ii <- ii + 1
 		start <- (start + coefold)/2
-#		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
 		eta <- drop(x %*% start)
 		mu <- linkinv(eta <- eta + offset)
 		dev <- sum(dev.resids(y, mu, weights))
 	    }
 	    boundary <- TRUE
-	    coef <- start
 	    if (control$trace)
-		cat("New Deviance =", dev, "\n")
+		cat("Step halved: new deviance =", dev, "\n")
 	}
 	## check for fitted values outside domain.
 	if (!(valideta(eta) && validmu(mu))) {
-	    warning("Step size truncated: out of bounds.")
+	    warning("Step size truncated: out of bounds", call. = FALSE)
 	    ii <- 1
 	    while (!(valideta(eta) && validmu(mu))) {
 		if (ii > control$maxit)
 		    stop("inner loop 2; can't correct step size")
 		ii <- ii + 1
 		start <- (start + coefold)/2
-#		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+		eta <- drop(x %*% start)
 		mu <- linkinv(eta <- eta + offset)
 	    }
 	    boundary <- TRUE
-	    coef <- start
 	    dev <- sum(dev.resids(y, mu, weights))
 	    if (control$trace)
-		cat("New Deviance =", dev, "\n")
+		cat("Step halved: new deviance =", dev, "\n")
 	}
 	## check for convergence
 	if (abs(dev - devold)/(0.1 + abs(dev)) < control$epsilon) {
 	    conv <- TRUE
+	    coef <- start
 	    break
 	} else {
 	    devold <- dev
-	    coefold <- coef
+	    coef <- coefold <- start
 	}
     }##-------------- end IRLS iteration -------------------------------
 
@@ -272,14 +275,10 @@ glm.fit <-
     ## hence we need to re-label the names ...
     ## Original code changed as suggested by BDR---give NA rather
     ## than 0 for non-estimable parameters
-    if (fit$rank != nvars) {
-	coef[seq(fit$rank+1, nvars)] <- NA
-	dimnames(fit$qr) <- list(NULL, xnames)
-    }
-    coef[fit$pivot] <- coef
+    if (fit$rank < nvars) coef[fit$pivot][seq(fit$rank+1, nvars)] <- NA
     xxnames <- xnames[fit$pivot]
     residuals <- rep(NA, nobs)
-    residuals[good] <- z - (eta-offset)[good] # z does not have offset in.
+    residuals[good] <- z - (eta - offset)[good] # z does not have offset in.
     fit$qr <- as.matrix(fit$qr)
     nr <- min(sum(good), nvars)
     if (nr < nvars) {
