@@ -132,7 +132,7 @@ setMethod("profile", "mle",
                 ## now let's try a bit harder if we came up short
                 for(dstep in c(0.2, 0.4, 0.6, 0.8, 0.9)) {
                     z <- onestep(step - 1 + dstep)
-                    if(is.na(z)) break
+                    if(is.na(z) || abs(z) > zmax) break
                 }
             } else if(length(zi) < 5) { # try smaller steps
                 mxstep <- step - 1
@@ -140,7 +140,7 @@ setMethod("profile", "mle",
                 while ((step <- step + 1) < mxstep) onestep(step)
             }
         }
-        si <- order(zi)
+        si <- order(pvi[, i])
         prof[[pi]] <- data.frame(z = zi[si])
         prof[[pi]]$par.vals <- pvi[si,, drop=FALSE]
     }
@@ -173,9 +173,11 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     opar <- par(mar = c(5, 4, 1, 1) + 0.1)
     if (absVal) {
         for (i in seq(along = nm)) {
+            ## <FIXME> This does not need to be monotonic
             sp <- interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
             bsp <- backSpline(sp)
+            ## </FIXME>
             xlim <- predict(bsp, c(-mlev, mlev))$y
             if (is.na(xlim[1]))
                 xlim[1] <- min(obj[[i]]$par.vals[, i])
