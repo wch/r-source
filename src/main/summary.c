@@ -559,13 +559,16 @@ badmode:
 
 SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
+    SEXP ans, a, b, prargs;
 
     if (DispatchGroup("Summary", call, op, args, env, &ans))
 	return(ans);
     PROTECT(op = findFun(install("range.default"), env));
-    ans = applyClosure(call, op, args, env, R_NilValue);
-    UNPROTECT(1);
+    PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
+    for (a = args, b = prargs; a != R_NilValue; a = CDR(a), b = CDR(b))
+	SET_PRVALUE(CAR(b), CAR(a));
+    ans = applyClosure(call, op, prargs, env, R_NilValue);
+    UNPROTECT(2);
     return(ans);
 }
 
