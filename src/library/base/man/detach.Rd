@@ -43,13 +43,13 @@ detach(name, pos = 2, version)
   \code{\link{objects}}.
 }
 \examples{
-require(eda)#package
-detach(package:eda)
-## could equally well use detach("package:eda")
-## but NOT  pkg <- "package:eda"; detach(pkg)
+require(splines)#package
+detach(package:splines)
+## could equally well use detach("package:splines")
+## but NOT  pkg <- "package:splines"; detach(pkg)
 ## Instead, use
-library(eda)
-pkg <- "package:eda"
+library(splines)
+pkg <- "package:splines"
 detach(pos = match(pkg, search()))
 
 ## careful: do not do this unless 'splines' is not already loaded.

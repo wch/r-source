@@ -274,14 +274,14 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .packages(all = TRUE)       # return all available as character vector
 library()                   # list all available packages
 library(lib = .Library)     # list all packages in the default library
-library(help = eda)         # documentation on package 'eda'
-library(eda)                # load package 'eda'
-require(eda)                # the same
-(.packages())               # "eda", too
-detach("package:eda")
+library(help = splines)     # documentation on package 'splines'
+library(splines)            # load package 'splines'
+require(splines)            # the same
+(.packages())               # "splines", too
+detach("package:splines")
 
 # if the package name is in a character vector, use
-pkg <- "eda"
+pkg <- "splines"
 library(pkg, character.only = TRUE)
 detach(pos = match(paste("package", pkg, sep=":"), search()))
 

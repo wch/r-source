@@ -20,8 +20,6 @@ RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
 
 DATE = $(shell date +%F)
 
-PACKAGES = $(filter-out tcltk, $(R_PKGS_BASE))
-
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
@@ -54,8 +52,8 @@ MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a \
    ../extra/bzip2/libbz2.a
 
-PKGS = $(foreach i,$(PACKAGES) $(R_PKGS_STUBS),pkg-$i)
-PKGCLEAN = $(foreach i,$(R_PKGS_BASE) $(R_PKGS_STUBS),pkgclean-$i)
+PKGS = $(foreach i,$(R_PKGS_BASE) ,pkg-$i)
+PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
 
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
@@ -66,10 +64,6 @@ endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
 
-
-# separate as Tcl/Tk headers are needed.
-tcl:
-	@$(MAKE) --no-print-directory pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(FOPTFLAGS)
@@ -132,7 +126,7 @@ fixfiles: docfiles
 	@$(MAKE) --no-print-directory -C ./fixed BUILD=$(BUILD)
 
 fixed/fixdesc:
-	@sh fixed/GETDESC $(R_PKGS_BASE) $(R_PKGS_STUBS)
+	@sh fixed/GETDESC $(R_PKGS_BASE)
 
 dllversion.o: ../include/Rversion.h
 
@@ -374,7 +368,7 @@ distclean veryclean: clean clean-recommended
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer distclean
-	@for pkg in $(R_PKGS_BASE) $(R_PKGS_STUBS); do \
+	@for pkg in $(R_PKGS_BASE); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
@@ -408,7 +402,7 @@ test-Basic:
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win
 
 
-PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
+PKGS-CHK = $(foreach i, $(R_PKGS_BASE), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
 check-devel: check
@@ -516,7 +510,6 @@ distribution:
 	$(MAKE) rpackage
 	$(MAKE) rdocs
 	$(MAKE) bitmapdll
-	$(MAKE) tcl
 	$(MAKE) recommended
 	$(MAKE) docs
 	$(MAKE) rinstaller

@@ -11,7 +11,8 @@
 
 USER-VISIBLE CHANGES
 
-
+    o	The stub packages from 1.9.x have been removed: the library()
+	function selects the new home for their code.
 
 
 NEW FEATURES

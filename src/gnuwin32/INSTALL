@@ -47,6 +47,10 @@ BEWARE: you do need the *Windows* port and not the Cygwin one.
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
+The TclTk support files are in
+http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip: unzip it at the
+top level of the R sources: it will add directories $RHOME/Tcl,
+$RHOME/Tcl/bin, etc.
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
@@ -189,19 +193,6 @@ If everything is set up in directory bitmap,
 will work from this directory.
 
 
-Building Tcl/Tk support
------------------------
-
-The TclTk support package is not built automatically.  Get
-http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip and unzip it at the top
-level of the R sources: it will add directories $RHOME/Tcl, $RHOME/Tcl/bin,
-etc.  Then
-
-	make tcl
-
-will make the package.
-
-
 Recommended packages
 ====================
 
@@ -276,7 +267,6 @@ all the parts in the sequence:
 	rpackage (the base packages) 
 	rdocs (the HTML documentation) 	
 	bitmapdll (the bitmap support files)	
-	tcl (the TCL/TK support files and package) 	
 	recommended (the recommended packages)	
 	docs (the manuals)
 	rinstaller (the install program)
@@ -298,9 +288,6 @@ There is currently a complete set of tools at
     http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross2.tar.bz2
 
 (Just unpack this somewhere and put its bin directory in your path.)
-Note that as from R 1.7.0 you do need versions >= 2.0 of mingw-runtime
-and w32api and so a later set of cross-compilers than is needed for R
-1.6.x.
 
 You will need Perl, zip and unzip installed and makeinfo >= 4.2 
 (part of GNU texinfo).

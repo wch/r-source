@@ -125,9 +125,29 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
     if(!missing(package)) {
         if (is.null(lib.loc)) lib.loc <- .libPaths()
-        
+
 	if(!character.only)
 	    package <- as.character(substitute(package))
+
+        if(package %in% c("ctest", "eda", "mle", "modreg", "mva",
+                          "nls", "stepfun", "ts")) {
+            have.stats <- "package:stats" %in% search()
+            if(!have.stats) require("stats")
+            warning("package ", sQuote(package), " has been merged into ",
+                sQuote("stats"), call. = FALSE)
+            return(if (logical.return) TRUE else invisible(.packages()))
+        }
+        if(package == "lqs") {
+            cat("Package 'lqs' has been moved back to package 'MASS'\n")
+            have.VR <- "package:MASS" %in% search()
+            if(!have.VR) {
+                if(require(MASS, quietly=TRUE))
+                    cat("Package 'MASS' has now been loaded\n")
+                else
+                    stop("Package 'MASS' seems to be missing from this R installation\n")
+            }
+            return(if (logical.return) TRUE else invisible(.packages()))
+        }
 
 	if (!missing(version)) {
 	     package <- manglePackageName(package, version)
