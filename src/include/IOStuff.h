@@ -1,0 +1,77 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997  Robert Gentleman and Ross Ihaka
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/*
+ *  I/O Support for Consoles and Character Vectors
+ *
+ *  This code provides analogues for the stdio routines "fgetc" and
+ *  "ungetc" for "consoles" and character vectors.  These routines
+ *  are used for parsing input from the console window and character
+ *  vectors.
+ */
+
+#include <stdio.h>
+#include "Defn.h"
+
+#define IOBSIZE 4096
+
+typedef struct BufferListItem {
+	unsigned char			buf[IOBSIZE];
+	struct BufferListItem	*next;
+} BufferListItem;
+
+typedef struct IoBuffer {
+	BufferListItem	*start_buf;		/* First buffer item */
+	BufferListItem	*write_buf;		/* Write pointer location */
+	unsigned char	*write_ptr;		/* Write pointer location */
+	int		 write_offset;		/* Write pointer location */
+	BufferListItem	*read_buf;		/* Read pointer location */
+	unsigned  char	*read_ptr;		/* Read pointer location */
+	int		 read_offset;		/* Read pointer location */
+} IoBuffer;
+
+
+typedef struct TextBuffer {
+	char	*vmax;				/* Memory stack top */
+	unsigned char	*buf;			/* Line buffer */
+	unsigned char	*bufp;			/* Line buffer location */
+	SEXP	text;				/* String Vector */
+	int	ntext;				/* Vector length */
+	int	offset;				/* Offset within vector */
+} TextBuffer;
+
+#ifndef __MAIN__
+extern
+#endif
+IoBuffer R_ConsoleIob;	    			/* Console IO Buffer */
+
+/*- some of these really could be void */
+int R_IoBufferInit(IoBuffer*);
+int R_IoBufferFree(IoBuffer*);
+int R_IoBufferReadReset(IoBuffer*);
+int R_IoBufferWriteReset(IoBuffer*);
+int R_IoBufferGetc(IoBuffer*);
+int R_IoBufferUngetc(int, IoBuffer*);
+int R_IoBufferPutc(int, IoBuffer*);
+int R_IoBufferPuts(char*, IoBuffer*);
+
+int R_TextBufferInit(TextBuffer*, SEXP);
+int R_TextBufferFree(TextBuffer*);
+int R_TextBufferGetc(TextBuffer*);
+int R_TextBufferUngetc(int, TextBuffer*);

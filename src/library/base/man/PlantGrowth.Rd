@@ -1,0 +1,28 @@
+\name{PlantGrowth}
+\alias{PlantGrowth}
+\title{Results from an Experiment on Plant Growth}
+\usage{data(PlantGrowth)}
+\description{
+    Results from an experiment to compare yields (as measured by dried
+    weight of plants) obtained under a control and two different
+    treatment conditions.
+}
+\format{
+    A data frame of 30 cases on 2 variables.
+    \tabular{rll}{
+	[, 1] \tab weight \tab numeric \cr
+	[, 2] \tab group  \tab factor
+    }
+    The levels of \code{group} are `ctrl', `trt1', and `trt2'.
+}
+\examples{
+## One factor ANOVA example from Dobson's book, cf. Table 7.4:
+data(PlantGrowth)
+anova(lm(weight ~ group, data = PlantGrowth))
+}
+\source{
+    Dobson, A. J. (1983).
+    \emph{An Introduction to Statistical Modelling}.
+    London: Chapman and Hall.
+}
+\keyword{datasets}

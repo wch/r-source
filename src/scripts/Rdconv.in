@@ -1,0 +1,74 @@
+#! @PERL@
+#-*- perl -*- (for Rdconv.in ..)
+
+# Convert R documentation into HTML, LaTeX and nroff format
+
+# Copyright (C) 1997 Friedrich Leisch
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# writing to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA  02111-1307  USA.
+
+# Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
+
+use Getopt::Long;
+use File::Basename;
+use Cwd;
+
+$cwd=getcwd();
+if($ENV{"R_HOME"}){
+    $R_HOME=$ENV{"R_HOME"};
+}
+else{
+    $R_HOME = `R RHOME`;
+    $R_HOME =~ s/(.*)\n*/$1/;
+}
+
+chdir($cwd);
+
+require "$R_HOME/etc/Rdconvlib.pl";
+
+@knownoptions = ("debug|d", "type|t:s", "help|h");
+GetOptions (@knownoptions) || usage();
+
+usage() if $opt_help;
+print stderr "R_HOME: '$R_HOME';  cwd='$cwd'\n" if $opt_debug;
+
+##-- In the future, we want allow  SEVERAL types simultaneously ... :
+if($opt_type =~ /html/i){
+    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);# filename 0 : STDOUT
+}
+elsif($opt_type =~ /nroff/i){
+    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+}
+elsif($opt_type =~ /Sd/i){
+    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+}
+elsif($opt_type =~ /latex/i){
+    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+}
+else {
+    Rdconv($ARGV[0],$opt_type,$opt_debug, 0, -1);
+}
+
+
+
+
+sub usage {
+
+    print "Rdconv\n";
+    print "Usage: Rdconv [--debug/-d] [--help/-h]";
+    print " [--type/-t html|nroff|Sd|latex|example] file\n\n";
+    exit 0;
+}

@@ -1,0 +1,13 @@
+beavers		time series of body temperatures of two beavers
+BJsales		sales data with leading indicator from Box & Jenkins
+EuStockMarkets  daily closing prices of major European stock indices, 1991-8
+LakeHuron	level of Lake Huron 1875-1972
+lh		dataset on luteinizing hormone from Diggle (1990)
+lynx		Annual Canadian Lynx trappings 1821-1934
+nottem		time-series of temperatures in Nottingham, 1920-1939
+sunspot 	yearly sunspot data, 1700-1988
+		monthly sunspot data, 1749-1997
+treering        yearly tree ring data, -6000-1979
+UKDriverDeaths	time series on UK road deaths of drivers from Harvey (1989)
+UKLungDeaths	time-series on UK lung deaths 1974-9 from Diggle (1990)
+USAccDeaths	US accidental deaths 1973-8

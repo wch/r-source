@@ -1,0 +1,19 @@
+In this directory,
+various tests on R are made automatically.
+This is the recommended way to check if R has been built successfully on
+your architecture.
+
+	make test-All
+does both of
+	make test-Examples
+and	make test-Specific
+
+the first of which runs all the examples from the help files (*.Rd) of all
+core packages (base, eda, ..., ts) -- which can take quite long (5-15
+minutes, depending on your environment).
+
+The "fast" part of the tests is `test-Specific'
+which runs the *.R files in this (./tests) directory (tolerantly) compares
+the result *.Rout file with the prespecified *.Rout.safe.
+
+Martin Maechler for the R Core Team.

@@ -1,0 +1,257 @@
+#! /bin/sh
+
+# ${R_HOME}/bin/INSTALL for installing add-on packages
+# Usage:
+#	R INSTALL [options] [-l lib] pkg_1 ... pkg_n
+
+# @configure_input@
+
+VERSION="0.2-1"
+USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
+
+CLEAN=false
+DEBUG=false
+ERROR=false
+BUILD_TEXT=true
+BUILD_HTML=true
+BUILD_LATEX=true
+BUILD_HELP=true
+BUILD_HELP_OPTS=
+BUILD_EXAMPLE=true
+SHLIB_OPTS=
+
+USE_ZIP=
+
+INSTALL='@INSTALL@'
+
+NO_PERL5=@NO_PERL5@
+NO_PERL5_MSG="\
+*** Formatting and installing R help pages needs Perl version 5, which
+*** does not seem to be installed on your system or is not in your path.
+*** Please install either Perl 5 on your system and re-configure R or
+*** get pre-formatted help pages from the nearest CRAN server.
+*** The CRAN master site can be found at
+***    http://www.ci.tuwien.ac.at/R
+***    ftp://ftp.ci.tuwien.ac.at/pub/R"
+
+PKGS=
+lib=${R_HOME}/library
+
+MAKE=${MAKE-@MAKE@}
+
+TMPDIR="/tmp/R.INSTALL.$$"
+
+umask 022
+
+while test -n "${1}"; do
+  case ${1} in
+    -h|--help|-\?)
+      echo "${USAGE_MSG}"; exit 0 ;;
+    -V|--version)
+      echo "${VERSION}"; exit 0 ;;
+    -c|--clean)
+      CLEAN=true ;;
+    --debug)
+      DEBUG=true; SHLIB_OPTS="${SHLIB_OPTS} --debug" ;;
+    --no-docs)
+      BUILD_TEXT=false
+      BUILD_HTML=false
+      BUILD_LATEX=false
+      BUILD_EXAMPLE=false ;;
+    --no-text)
+      BUILD_TEXT=false ;;
+    --no-html)
+      BUILD_HTML=false ;;
+    --no-latex)
+      BUILD_LATEX=false ;;
+    --no-example)
+      BUILD_EXAMPLE=false ;;
+    --use-zip)
+      USE_ZIP=true ;;
+    -l|--library)
+      lib=${2}; shift ;;
+    *)
+      if test -f "${1}"; then
+        mkdir -p ${TMPDIR}
+	PKGNAME=`basename "${1}"`
+	PKGNAME=`echo "${PKGNAME}" | sed 's/_.*//'`
+	gzip -dc "${1}" | (cd ${TMPDIR} && tar -xf -)
+	if test -d "${TMPDIR}/${PKGNAME}"; then
+	  PKGS="${PKGS} \"`cd "${TMPDIR}/${PKGNAME}"; pwd`\""
+	else
+	  echo "ERROR: cannot extract package from ${1}"
+	  exit 1
+	fi    
+      elif test -d "${1}"; then
+	PKGS="${PKGS} \"`cd "${1}"; pwd`\""
+      else
+	echo "WARNING: package \`"${1}"' does not exist"
+      fi
+      ;;
+  esac
+  shift
+done
+
+if test -z "${PKGS}"; then
+  echo "${USAGE_MSG}"
+  exit 1
+fi
+
+if test -d ${lib} -a -w ${lib} || mkdir ${lib} 2> /dev/null; then
+  lib=`cd ${lib}; pwd`
+else
+  echo "ERROR:  cannot write to or create directory \`${lib}'"
+  exit 2
+fi
+
+if ${BUILD_TEXT}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --nroff"
+fi
+if ${BUILD_HTML}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --html"
+fi
+if ${BUILD_LATEX}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --latex"
+fi
+if ${BUILD_EXAMPLE}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --example"
+fi
+if test -z "${BUILD_HELP_OPTS}"; then
+  BUILD_HELP=false
+elif ${DEBUG}; then
+  BUILD_HELP_OPTS="--debug ${BUILD_HELP_OPTS}"
+fi
+
+do_install () {
+  cd "${1}"
+  pkg=`basename "${1}"`
+
+  mkdir -p ${lib}/${pkg} || exit 3
+  echo "Installing package \`${pkg}' ..."
+
+  if test -x ./configure ; then
+    ./configure
+  fi
+
+  if test -d src; then
+    echo " libs"
+    if ${DEBUG}; then set -x; fi
+    mkdir -p ${lib}/${pkg}/libs
+    if test -f src/Makefile; then
+      (cd src;
+	${MAKE} -f ${R_HOME}/etc/Makeconf -f Makefile \
+	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs \
+	  || ERROR=true; \
+	if ${CLEAN}; then ${MAKE} clean; fi)
+    else
+      (cd src;
+	sh ${R_HOME}/bin/SHLIB ${SHLIB_OPTS} \
+	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf] \
+	  || ERROR=true; \
+	if ${CLEAN}; then rm -f *.o; fi)
+    fi
+    if ${ERROR}; then
+      echo "ERROR: Compilation failed for package \`${pkg}'"
+      exit 4
+    fi
+    if ${DEBUG}; then set +x; fi
+  fi
+
+  if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
+  if test "${dir}"; then
+    echo " ${dir}"
+    mkdir -p ${lib}/${pkg}/R
+    cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
+  fi
+  dir=
+
+  if test -d data; then
+    echo " data"
+    mkdir -p ${lib}/${pkg}/data
+    cp data/* ${lib}/${pkg}/data
+    chmod 644 ${lib}/${pkg}/data/*
+  fi
+
+  if test -d exec; then
+    echo " exec"
+    mkdir -p ${lib}/${pkg}/exec
+    cp exec/* ${lib}/${pkg}/exec
+    chmod 755 ${lib}/${pkg}/exec/*
+  fi
+
+  if test -d inst; then
+    echo " inst"
+    cp -r inst/* ${lib}/${pkg}
+  fi
+
+  if test -f INDEX; then
+    cp INDEX ${lib}/${pkg}
+  fi
+  if test -f TITLE; then
+    cp TITLE ${lib}/${pkg}
+  fi
+  if test -f DESCRIPTION; then
+    cp DESCRIPTION ${lib}/${pkg}
+  fi
+  (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
+
+  if test -d man; then
+    echo " help"
+    if ${BUILD_HELP}; then
+      if ${NO_PERL5}; then
+	echo "${NO_PERL5_MSG}"
+      else
+	if ${DEBUG}; then
+	  echo "  ${R_HOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
+	fi
+	${R_HOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
+	${R_HOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
+	if test ${lib} = ${R_HOME}/library; then 
+	  ${R_HOME}/bin/build-help --htmllists
+	  cat ${R_HOME}/library/*/CONTENTS \
+	    > ${R_HOME}/doc/html/search/index.txt
+	fi	
+      fi
+      if test -n "${USE_ZIP}" -a -n "${R_UNZIPCMD}" -a -n "${R_ZIPCMD}"; then
+	cd ${lib}/${pkg}
+	if test -d R-ex; then
+	  (cd R-ex; ${R_ZIPCMD} -m Rhelp *.R)
+	fi
+	## NOT YET:
+	## if test -d latex; then
+	##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
+	## fi
+	if test -d help; then
+	  (cd help; ${R_ZIPCMD} -m Rhelp * -x 00Titles AnIndex);
+	fi
+      fi
+    fi
+  else
+    echo "  No man pages found in package \`${pkg}'"
+  fi
+
+  if ${CLEAN}; then
+    if test -x ./cleanup ; then
+      ./cleanup
+    fi
+  fi
+
+  chmod -R a+r ${lib}/${pkg}
+
+  echo " DONE (${pkg})"
+  echo
+}
+
+eval "for pkg in ${PKGS}; do do_install \"\${pkg}\"; done"
+
+if test -d "${TMPDIR}"; then
+  cd /
+  rm -rf "${TMPDIR}"
+fi
+
+echo "DONE (INSTALL)"
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indent: 2 ***
+### End: ***
