@@ -487,12 +487,12 @@ function(package, dir, lib.loc = NULL,
     }
 
     db <- if(!missing(package))
-        Rddb(package, lib.loc = dirname(dir))
+        Rd_db(package, lib.loc = dirname(dir))
     else
-        Rddb(dir = dir)
+        Rd_db(dir = dir)
 
     db <- lapply(db,
-                 function(f) paste(Rdpp(f), collapse = "\n"))
+                 function(f) paste(Rd_pp(f), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
     if(is_base) {
         ind <- db_names %in% c("base-defunct")
@@ -790,8 +790,8 @@ function(package, lib.loc = NULL)
     if(!length(S4_classes)) return(bad_Rd_objects)
 
     ## Build Rd data base.
-    db <- Rddb(package, lib.loc = dirname(dir))
-    db <- lapply(db, Rdpp)
+    db <- Rd_db(package, lib.loc = dirname(dir))
+    db <- lapply(db, Rd_pp)
 
     ## Need some heuristics now.  When does an Rd object document just
     ## one S4 class so that we can compare (at least) the slot names?
@@ -928,8 +928,8 @@ function(package, lib.loc = NULL)
     ## sets (and return if not).
 
     ## Build Rd data base.
-    db <- Rddb(package, lib.loc = dirname(dir))
-    db <- lapply(db, Rdpp)
+    db <- Rd_db(package, lib.loc = dirname(dir))
+    db <- lapply(db, Rd_pp)
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -1082,11 +1082,11 @@ function(package, dir, lib.loc = NULL)
     is_base <- basename(dir) == "base"
 
     db <- if(!missing(package))
-        Rddb(package, lib.loc = dirname(dir))
+        Rd_db(package, lib.loc = dirname(dir))
     else
-        Rddb(dir = dir)
+        Rd_db(dir = dir)
 
-    db <- lapply(db, Rdpp)
+    db <- lapply(db, Rd_pp)
     ## Do vectorized computations for metadata first.
     db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
     dbKeywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
@@ -1429,12 +1429,12 @@ function(package, dir, lib.loc = NULL)
     all_methods_in_package <- unlist(methods_in_package)
 
     db <- if(!missing(package))
-        Rddb(package, lib.loc = dirname(dir))
+        Rd_db(package, lib.loc = dirname(dir))
     else
-        Rddb(dir = dir)
+        Rd_db(dir = dir)
 
     db <- lapply(db,
-                 function(f) paste(Rdpp(f), collapse = "\n"))
+                 function(f) paste(Rd_pp(f), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
 
     db_usage_texts <-
@@ -2175,7 +2175,7 @@ function(package, dir, file, lib.loc = NULL)
         }
     }
     for(file in docs_files) {
-        txt <- paste(Rdpp(.read_Rd_lines_quietly(file)),
+        txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
                      collapse = "\n")
         txt <- .get_Rd_example_code(txt)
         exprs <- find_TnF_in_code(file, txt)
@@ -2332,8 +2332,8 @@ function(package, lib.loc = NULL)
 {
     if(length(package) != 1)
         stop(.wrong_args("package", "must be of length 1"))
-    ## (Actually, Rddb() would check on this too ...)
-    db <- Rddb(package, lib.loc)
+    ## (Actually, Rd_db() would check on this too ...)
+    db <- Rd_db(package, lib.loc)
     if(is.null(names(db)))
         stop(paste("Package Rd sources were installed ",
                    "without preserving Rd file names.\n",
@@ -2350,7 +2350,7 @@ function(dir)
     if(!file_test("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     dir <- file_path_as_absolute(dir)
-    ## Argh.  We cannot call Rddb() directly, because this works on
+    ## Argh.  We cannot call Rd_db() directly, because this works on
     ## the top-level package source directory ...
     Rd_files <- list_files_with_type(file.path(dir), "docs")        
     db <- lapply(Rd_files, .read_Rd_lines_quietly)
@@ -2458,7 +2458,26 @@ function(x, ...)
         }
         writeLines("")
     }
-    ## files_with_likely_bad_Rd
+
+    if(length(x$files_with_likely_bad_Rd)) {
+        writeLines("Rd files with likely Rd problems:")
+        bad <- x$files_with_likely_bad_Rd
+        for(i in seq(along = bad)) {
+            writeLines(paste("Unaccounted top-level text in file ",
+                             sQuote(names(bad)[i]), ":", sep = ""))
+            tags <- names(bad[[i]])
+            if(any(ind <- tags != ""))
+                tags[ind] <- paste("Following section",
+                                   sQuote(tags[ind]))
+            tags[!ind] <- "Preceding all sections"
+            vals <- as.character(bad[[i]])
+            long <- nchar(vals) >= 128  # Why 128?  Why not?
+            vals <- paste(sapply(substr(vals, 1, 127), deparse, 128),
+                          ifelse(long, " [truncated]", ""), sep = "")
+            writeLines(c(paste(tags, vals, sep = c(":\n", "\n")), ""))
+        }
+    }
+    
     if(length(x$files_with_bad_name)) {
         writeLines(c(paste("Rd files with missing or empty or invalid ",
                            sQuote("\\name"), ":", sep = ""),
@@ -2469,12 +2488,14 @@ function(x, ...)
                      "of PDF bookmarks to fail.")
         writeLines(c(strwrap(msg), ""))
     }
+    
     if(length(x$files_with_bad_title)) {
         writeLines(c(paste("Rd files with missing or empty ",
                            sQuote("\\title"), ":", sep = ""),
                      paste(" ", x$files_with_bad_title),
                      ""))
     }
+    
     if(length(x$files_with_missing_mandatory_tags)) {
         bad <- x$files_with_missing_mandatory_tags
         bad <- split(bad[, 1], bad[, 2])
@@ -2485,6 +2506,7 @@ function(x, ...)
         }
         writeLines("These entries are required in an Rd file.\n")
     }
+    
     if(length(x$files_with_duplicated_unique_tags)) {
         bad <- x$files_with_duplicated_unique_tags
         bad <- split(bad[, 1], bad[, 2])
@@ -2514,6 +2536,7 @@ function(x, ...)
                      "R home directory).")
         writeLines(c(strwrap(msg), ""))
     }
+    
     invisible(x)
 }
 
