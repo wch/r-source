@@ -81,7 +81,7 @@ void R_load_gnome_shlib(); /* in dynload.c */
 
 int main(int ac, char **av)
 {
-    int i, j, value, ierr, useX11 = 1, usegnome = 0;
+    int i, ioff = 1, j, value, ierr, useX11 = 1, usegnome = 0;
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -111,28 +111,37 @@ int main(int ac, char **av)
 
     /* first task is to select the GUI */
     for(i = 0, avv = av; i < ac; i++, avv++) {
-	if(!strncmp(*avv, "--gui", 5)) {
-	    if(strlen(*avv) < 7) {
-		sprintf(msg, "WARNING: --gui with no value ignored\n");
-		R_ShowMessage(msg);
-	    } else {
+	if(!strncmp(*avv, "--gui", 5) || !strncmp(*avv, "-g", 2)) {
+	    if(!strncmp(*avv, "--gui", 5) && strlen(*avv) >= 7)
 		p = &(*avv)[6];
-		if(!strcmp(p, "none")) {
-		    useX11 = 0;
-		} else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME")) {
-		    usegnome = 1;
+	    else {
+		if(i+1 < ac) {
+		    avv++; p = *avv; ioff++;
 		} else {
-#ifdef HAVE_X11
-		    sprintf(msg, "WARNING: unknown gui %s, using X11\n", p);
-#else
-		    sprintf(msg, "WARNING: unknown gui %s, using none\n", p);
-#endif
+		    sprintf(msg, "WARNING: --gui or -g without value ignored");
 		    R_ShowMessage(msg);
+		    p = "X11";
 		}
 	    }
-	    /* now remove it */
-	    for(j = i; j < ac; j++) av[i] = av[i+1];
-	    ac--;
+	    if(!strcmp(p, "none"))
+		useX11 = 0;
+	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
+		usegnome = 1;
+	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
+		useX11 = 1;
+	    else {
+#ifdef HAVE_X11
+		sprintf(msg, "WARNING: unknown gui `%s', using X11\n", p);
+#else
+		sprintf(msg, "WARNING: unknown gui `%s', using none\n", p);
+#endif
+		R_ShowMessage(msg);
+	    }
+	    /* now remove it/them */
+	    for(j = i; j < ac-ioff; j++) {
+		av[j] = av[j + ioff];
+	    }
+	    ac -= ioff;
 	    break;
 	}
     }
