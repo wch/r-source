@@ -25,7 +25,8 @@ princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
     edc <- eigen(cv, symmetric = TRUE)
     ev <- .Alias(edc$values)
     if (any(neg <- ev < 0)) { # S-PLUS sets all := 0
-        if (any(ev[neg] < - 2*.Machine$double.eps * ev[1]))
+        ## 9 * : on Solaris found case where 5.59 was needed (MM)
+        if (any(ev[neg] < - 9 * .Machine$double.eps * ev[1]))
             stop("covariance matrix is not non-negative definite")
         else
             ev[neg] <- 0
