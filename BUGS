@@ -449,6 +449,10 @@ Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
 Subject: make check fails d-p-q-r-tests.R - OpenBSD 3.0
 From: Jason Turner <jasont@indigoindustrial.co.nz>
 Date: Mon, 15 Apr 2002 10:13:36 +0000
+* PR# 1606 *
+Subject: hitting ^C breaks readline history
+From: Cyril Humbert <humbertc@univ-mlv.fr>
+Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -485,91 +489,15 @@ Date: Mon, 20 May 2002 06:45:07 -0400
 Subject: R bug in cluster package
 From: David Hitchcock <dhitchco@stat.ufl.edu>
 Date: Mon, 20 May 2002 14:33:24 -0400
-* PR# 1592 *
-Subject: signature match in setMethod
-From: tkeitt@ms.cc.sunysb.edu
-Date: Wed, 22 May 2002 23:04:53 +0200 (MET DST)
-* PR# 1606 *
-Subject: hitting ^C breaks readline history
-From: Cyril Humbert <humbertc@univ-mlv.fr>
-Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
 * PR# 1608 *
 Subject: merge.data.frame can coerce character vectors to factor in some circumstances 
 From: "David Kane  <David Kane" <a296180@agate.fmr.com>
 Date: Wed, 29 May 2002 07:09:12 -0400
-* PR# 1609 *
-Subject: typo in Introduction to R on dataframes
-From: "David Kane  <David Kane" <a296180@agate.fmr.com>
-Date: Wed, 29 May 2002 07:53:39 -0400
-* PR# 1610 *
-Subject: [±¤°?] °?????´? ?¤º?°? ?????¦ ??²? ?? ??´?
-From: "okgroup" <okgroup@zaza.info>
-Date: Thu, 30 May 2002 02:11:04 +0900
-* PR# 1611 *
-Subject: A  IE 6.0 patch
-From: bug-directory <bug-directory@gnu.org>
-Date: Wed, 29 May 2002 17:16:17 -0400
-* PR# 1612 *
-Subject: Maritime Newsletter (Week 22)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Thu, 30 May 2002 10:06:04 +0900
 * PR# 1613 *
 Subject: se.contrast: matrix contrast.obj doesn't work as documented
 From: Carl Mascott <cmascott@att.net>
 Date: Thu, 30 May 2002 11:54:06 -0400 (EDT)
-* PR# 1614 *
-Subject: [±¤°?] ?­???°! ??±??? ???? ??´?¾??? ???¤ , ±?¾?º° ???º?° , ??°?????±? , °??? ????±? ,?????º?±°?°?,ºü?¥????
-From: ?­???° <cos4u@chollian.net>
-Date: Fri, 31 May 2002 02:20:51 +0900
-* PR# 1615 *
-Subject: [±¤°?]???²??°?! ?±±?¾??? 6????°? ???????µ??! ????????±???!!
-From: ??????¾???<hyun10310@kornet.net>
-Date: Thu, 30 May 2002 21:33:41 +0900
-* PR# 1616 *
-Subject: [±¤°í]ÀÌ·²¼ö°¡! ¿±±â¾ç¸» 6ÄÓ·¹°¡ ÀÏ¸¸¿ÀÃµ¿ø! ¹«·á¹è¼Û±îÁö!!
-From: ¹ÙÀÌ¿À¾ç¸»<hyun10310@kornet.net>
-Date: Fri, 31 May 2002 05:24:02 +0900
-* PR# 1617 *
-Subject: ?¢???? ?±??µ??º ???? ´?  ¾?°? ????´?´? ! 20106543
-From: aerony@orgio.net
-Date: Thu, 30 May 2002 14:16:21 -0700
-* PR# 1618 *
-Subject: Documentation Bugs
-From: Brett Presnell <presnell@stat.ufl.edu>
-Date: Thu, 30 May 2002 18:40:26 -0400
-* PR# 1619 *
-Subject: URGENT ASSISTANCE NEEDED
-From: "MRS M. SESE SEKO" <sesemay2002@mail.com>
-Date: Fri, 31 May 2002 14:28:33 +0000
-* PR# 1620 *
-Subject: Searches 
-From: delariac <delariac@corp.earthlink.net>
-Date: Fri, 31 May 2002 12:21:20 -0400
-* PR# 1621 *
-Subject: ±M·~·s®Q¾ãÅé³y«¬¦ñÀHªA°È¡I¡I
-From: 1bvccbngn30by@snb.ch
-Date: 30 May 2002 03:30:32 +0800
-* PR# 1622 *
-Subject: Round(rnorm(50), 1)
-From: r-help-request <r-help-request@hypatia.math.ethz.ch>
-Date: Sat, 01 Jun 2002 22:24:48 +1200 (NZST)
-* PR# 1623 *
-Subject: cluster installation hangs or too many args
-From: felix@sprintlabs.com
-Date: Sun, 2 Jun 2002 02:45:22 +0200 (MET DST)
 * PR# 1624 *
 Subject: cluster installation hangs or too many args
 From: felix@sprintlabs.com
 Date: Sun, 2 Jun 2002 02:45:54 +0200 (MET DST)
-* PR# 1625 *
-Subject: [±¤°?] °?°´?? ?????ª´? ±? ±???... ±???µµ ´©?®??????.
-From: ??¶??? ?¶?????? ??º??? <nextsoft21@chollian.net>
-Date: Sun, 2 Jun 2002 15:15:59 +0900
-* PR# 1626 *
-Subject: [?º??¾?µ?AD]???ü ??~?ð?????© ??????!! ????±??? ?þ¾?´??ý´?´?!!   
-From: ??????º???<bozikorea@hotmail.com>
-Date: Sun, 02 Jun 2002 17:11:42 -0600
-* PR# 1627 *
-Subject: The Garden of Eden
-From: guima <guima@directnet.com.br>
-Date: Sun, 02 Jun 2002 11:31:45 -0300 (EST)
