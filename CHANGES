@@ -2,6 +2,9 @@
 
 BUG FIXES
 
+    o   (copy from 0.62) check.names argument to data.frame,
+	default rownames 1:n
+
     o   pretty(999) resulted in an infinite loop due to integer overflow.
 	pretty(.) now sometimes returns different results than before.
 
