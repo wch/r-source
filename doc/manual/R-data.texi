@@ -664,44 +664,42 @@ written by another statistical system.  This is often best avoided, but
 may be unavoidable if the originating system is not available.
 
 @menu
-* Stata::                       
-* Minitab::                     
-* SAS::                         
+* Minitab SAS SPSS Stata::      
 * S-PLUS::                      
-* SPSS::                        
 * Octave::                      
 @end menu
 
-@node Stata, Minitab, Importing from other statistical systems, Importing from other statistical systems
-@section Stata
+@node Minitab SAS SPSS Stata, S-PLUS, Importing from other statistical systems, Importing from other statistical systems
+@section Minitab, SAS, SPSS, Stata
 @cindex Stata
+@cindex Minitab
+@cindex SAS
+@cindex SPSS
+
+Package @pkg{foreign} on @acronym{CRAN} provides import facilities for
+files produced by these four statistical systems, and for export to Stata.
+
 @findex read.dta
 @findex write.dta
-
-Import and export facilities for Stata @file{.dta} files are provided by
-package @pkg{foreign} on @acronym{CRAN}.  (Formerly this was a separate
-package @pkg{stataread}.) This is a binary file format, and files from
+Stata @file{.dta} files are a binary file format. Files from
 versions 5.0 and 6.0 of Stata can be read and written by functions
 @code{read.dta} and @code{write.dta}.
 
-@node Minitab, SAS, Stata, Importing from other statistical systems
-@section Minitab
 @findex read.mtp
+Function @code{read.mtp} imports a `Minitab Portable Worksheet'.  This
+returns the components of the worksheet as an @R{} list.
 
-Package @pkg{foreign} on @acronym{CRAN} provides a function
-@code{read.mtp} to read a `Minitab Portable Worksheet'.  This returns
-the components of the worksheet as an @R{} list.
-
-@node SAS, S-PLUS, Minitab, Importing from other statistical systems
-@section SAS
-@cindex SAS
 @findex read.xport
-
-Package @pkg{foreign} on @acronym{CRAN} provides a function
-@code{read.xport} to read a file in SAS Transport (XPORT) format and
+Function @code{read.xport} reads a file in SAS Transport (XPORT) format and
 return a list of data frames.
 
-@node S-PLUS, SPSS, SAS, Importing from other statistical systems
+@findex read.spss
+Function @code{read.spss} can read files created by the `save' and
+`export' commands in @acronym{SPSS}.  It returns a list with one
+component for each variable in the saved data set.
+
+
+@node S-PLUS, Octave, Minitab SAS SPSS Stata, Importing from other statistical systems
 @section S-PLUS
 @cindex S-PLUS
 @findex readSfile
@@ -716,16 +714,10 @@ those.
 
 Package @pkg{Rstreams} also contains a function @code{data.restore} to
 read S-PLUS data dumps (created by @code{data.dump}) with the same
-restrictions.
+restrictions.  It may be possible to read data dumps from S-PLUS 5.x and
+6.x written with @code{data.dump(oldStyle=T)}.
 
-@node SPSS, Octave, S-PLUS, Importing from other statistical systems
-@section SPSS
-@cindex SPSS
-
-Package @code{foreign} on @acronym{CRAN} provides functions to read
-files created by the `save' and `export' commands in @acronym{SPSS}.
-
-@node Octave,  , SPSS, Importing from other statistical systems
+@node Octave,  , S-PLUS, Importing from other statistical systems
 @section Octave
 @cindex Octave
 @findex read.octave
@@ -927,7 +919,8 @@ the @acronym{SQL} name).
 
 @table @code
 @item float(@var{p})
-Real number, with optional precision.  Often called @code{real}.
+Real number, with optional precision.  Often called @code{real} or
+@code{double} or @code{double precision}.
 @item integer
 32-bit integer.  Often called @code{int}.
 @item smallint
@@ -1257,7 +1250,9 @@ all the rows have been fetched, and @code{getRowCount} returns the
 number of rows in the result.
 
 There is no simple way to load a data frame into the database, so we
-have to work harder using direct @acronym{SQL} statements.
+have to work harder using direct @acronym{SQL} statements.  The
+following will only work if the database is local: otherwise the file
+will need to be uploaded to the MySQL host.
 
 @smallexample
 > library(RMySQL)
