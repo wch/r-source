@@ -750,8 +750,9 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
-	char *ps = getenv("R_PAPERSIZE");
-	if(ps) strcpy(pd->papername, ps);
+	SEXP s = STRING(GetOption(install("papersize"), R_NilValue))[0];
+	if(s != NA_STRING && strlen(CHAR(s)) > 0)
+	    strcpy(pd->papername, CHAR(s));
 	else strcpy(pd->papername, "a4");
     }
     if(!strcmp(pd->papername, "A4") ||
@@ -970,9 +971,13 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 	    return 0;
     }
 
-    if (strlen(pd->filename) == 0)
-	pd->psfp = popen(R_PRINTCMD, "w");
-    else
+    if (strlen(pd->filename) == 0) {
+	SEXP s = STRING(GetOption(install("printcmd"), R_NilValue))[0];
+	if(s == NA_STRING || strlen(CHAR(s)) == 0) return 0;
+	pd->psfp = popen(CHAR(s), "w");
+    } else if (pd->filename[0] == '|') {
+	pd->psfp = popen(pd->filename + 1, "w");
+    } else
 	pd->psfp = R_fopen(R_ExpandFileName(pd->filename), "w");
     if (!pd->psfp) return 0;
 
