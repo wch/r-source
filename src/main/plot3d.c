@@ -461,7 +461,7 @@ int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 	return n;
 }
 
-/* 
+/*
  * Generate a list of segments for a single level
  */
 static SEGP* contourLines(double *x, int nx, double *y, int ny,
@@ -494,7 +494,7 @@ static SEGP* contourLines(double *x, int nx, double *y, int ny,
 	    zlh = z[k + nx];
 	    zhh = z[k + nx + 1];
 
-	    /* If the value at a corner is exactly equal to a contour level, 
+	    /* If the value at a corner is exactly equal to a contour level,
 	     * change that value by a tiny amount */
 
 	    if (zll == zc) zll += atom;
@@ -637,7 +637,7 @@ static SEGP* contourLines(double *x, int nx, double *y, int ny,
     return segmentDB;
 }
 
-/* maximal number of line segments of one contour segment: 
+/* maximal number of line segments of one contour segment:
  * for preventing infinite loops -- shouldn't be needed --> warning */
 #define MAX_ns 25000
 
@@ -657,7 +657,7 @@ static SEXP growList(SEXP oldlist) {
     return templist;
 }
 
-/* 
+/*
  * Store the list of segments for a single level in the SEXP
  * list that will be returned to the user
  */
@@ -708,7 +708,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		    xend = start->x0;
 		    yend = start->y0;
 		}
-		
+
 		/* ns := #{segments of polyline} -- need to allocate */
 		s = start;
 		ns = 0;
@@ -719,7 +719,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		}
 		if(ns == MAX_ns)
 		    warning("contour(): circular/long seglist -- bug.report()!");
-		
+
 		/* countour midpoint : use for labelling sometime (not yet!) */
 		if (ns > 3) ns2 = ns/2; else ns2 = -1;
 
@@ -745,9 +745,9 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		REAL(ysxp)[ns] = s->y1;
 		SET_VECTOR_ELT(ctr, CONTOUR_LIST_X, xsxp);
 		SET_VECTOR_ELT(ctr, CONTOUR_LIST_Y, ysxp);
-		/* 
+		/*
 		 * Set the names attribute for the contour
-		 * So that users can extract components using 
+		 * So that users can extract components using
 		 * meaningful names
 		 */
 		PROTECT(names = allocVector(STRSXP, 3));
@@ -755,14 +755,14 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		SET_STRING_ELT(names, 1, mkChar("x"));
 		SET_STRING_ELT(names, 2, mkChar("y"));
 		setAttrib(ctr, R_NamesSymbol, names);
-		/* 
+		/*
 		 * We're about to add another line to the list ...
 		 */
 		nlines += 1;
 		nc = LENGTH(VECTOR_ELT(container, 0));
 		if (nlines == nc)
 		    /* Where does this get UNPROTECTed? */
-		    SET_VECTOR_ELT(container, 0, 
+		    SET_VECTOR_ELT(container, 0,
 				   growList(VECTOR_ELT(container, 0)));
 		SET_VECTOR_ELT(VECTOR_ELT(container, 0), nlines - 1, ctr);
 		UNPROTECT(5);
@@ -771,7 +771,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
     return nlines;
 }
 
-/* 
+/*
  * Given nx x values, ny y values, nx*ny z values,
  * and nl cut-values in z ...
  * ... produce a list of contour lines:
@@ -787,7 +787,7 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
     double atom, zmin, zmax;
     SEGP* segmentDB;
     SEXP container, mainlist, templist;
-    /* 
+    /*
      * "tie-breaker" values
      */
     zmin = DBL_MAX;
@@ -810,35 +810,35 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
      * maybe something like   16 * DBL_EPSILON * (..).
      * see also MAX_ns above */
     atom = 1e-3 * (zmax - zmin);
-    /* 
+    /*
      * Create a "container" which is a list with only 1 element.
      * The element is the list of lines that will be built up.
      * I create the container because this allows me to PROTECT
-     * the container once here and then UNPROTECT it at the end of 
-     * this function and, as long as I always work with 
+     * the container once here and then UNPROTECT it at the end of
+     * this function and, as long as I always work with
      * VECTOR_ELT(container, 0) and SET_VECTOR_ELT(container, 0)
-     * in functions called from here, I don't need to worry about 
+     * in functions called from here, I don't need to worry about
      * protectin the list that I am building up.
      * Why bother?  Because the list I am building can potentially
      * grow and it's awkward to get the PROTECTs/UNPROTECTs right
      * when you're in a loop and growing a list.
      */
     container = PROTECT(allocVector(VECSXP, 1));
-    /* 
+    /*
      * Create "large" list (will trim excess at the end if necesary)
      */
     SET_VECTOR_ELT(container, 0, allocVector(VECSXP, CONTOUR_LIST_STEP));
     nlines = 0;
-    /* 
+    /*
      * Add lines for each contour level
      */
     for (i = 0; i < nl; i++) {
-	/* 
-	 * The vmaxget/set is to manage the memory that gets 
+	/*
+	 * The vmaxget/set is to manage the memory that gets
 	 * R_alloc'ed in the creation of the segmentDB structure
 	 */
-	vmax = vmaxget(); 
-	/* 
+	vmax = vmaxget();
+	/*
 	 * Generate a segment database
 	 */
 	segmentDB = contourLines(x, nx, y, ny, z, levels[i], atom);
@@ -848,9 +848,9 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 	nlines = addContourLines(x, nx, y, ny, z, levels[i],
 				 atom, segmentDB, nlines,
 				 container);
-	vmaxset(vmax); 
+	vmaxset(vmax);
     }
-    /* 
+    /*
      * Trim the list of lines to the appropriate length.
      */
     len = LENGTH(VECTOR_ELT(container, 0));
@@ -861,7 +861,7 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 	    SET_VECTOR_ELT(templist, i, VECTOR_ELT(mainlist, i));
 	mainlist = templist;
 	UNPROTECT(1);  /* UNPROTECT templist */
-    } else 
+    } else
 	mainlist = VECTOR_ELT(container, 0);
     UNPROTECT(1);  /* UNPROTECT container */
     return mainlist;
@@ -896,28 +896,28 @@ SEXP do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
     internalTypeCheck(call, c, REALSXP);
     nc = LENGTH(c);
     args = CDR(args);
-    
+
     return GEcontourLines(REAL(x), nx, REAL(y), ny, REAL(z), REAL(c), nc, dd);
 }
 
 /*
- * The *base graphics* function contour() and the *general base* 
- * function contourLines() use the same code to generate contour lines 
+ * The *base graphics* function contour() and the *general base*
+ * function contourLines() use the same code to generate contour lines
  * (i.e., the function contourLines())
  *
- * I had a look at extracting the code that draws the labels 
+ * I had a look at extracting the code that draws the labels
  * into a *general base* function
- * (e.g., into some sort of labelLines() function), 
- * but the code is too base-graphics-specific (e.g., one of the 
+ * (e.g., into some sort of labelLines() function),
+ * but the code is too base-graphics-specific (e.g., one of the
  * labelling methods seeks the location closest to the edge of the
- * plotting region) so I've left it alone for now. 
- * 
+ * plotting region) so I've left it alone for now.
+ *
  * This does mean that the contourLines() function is part of the
- * graphics engine, but the contour() function is part of the 
+ * graphics engine, but the contour() function is part of the
  * base graphics system.
  */
 
-static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, 
+static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		    double zc,
 		    SEXP labels, int cnum,
 		    Rboolean drawLabels, int method,
@@ -1036,13 +1036,13 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 #ifdef DEBUG_contour
 	    Rprintf("  [%2d,%2d]: (x,y)[1:%d] = ", i,j, ns);
 	    if(ns >= 5)
-		Rprintf(" (%g,%g), (%g,%g), ..., (%g,%g)\n", 
+		Rprintf(" (%g,%g), (%g,%g), ..., (%g,%g)\n",
 			xxx[0],yyy[0], xxx[1],yyy[1], xxx[ns-1],yyy[ns-1]);
 	    else
 		for(iii = 0; iii < ns; iii++)
 		    Rprintf(" (%g,%g)%s", xxx[iii],yyy[iii],
 			    (iii < ns-1) ? "," : "\n");
-#endif	    
+#endif
 
 	    GMode(1, dd);
 
@@ -1066,10 +1066,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 
 		if (vectorFonts) {
 		    /* 1, 1 => sans serif, basic font */
-		    labelDistance = 
+		    labelDistance =
 			GVStrWidth((unsigned char *)buffer, typeface, fontindex,
 				   INCHES, dd);
-		    labelHeight = 
+		    labelHeight =
 			GVStrHeight((unsigned char *)buffer, typeface, fontindex,
 				    INCHES, dd);
 		}
@@ -1354,7 +1354,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			      to be preserved across calls */
 }
 
-/* contour(x, y, z, levels, labels, labcex, drawlabels, 
+/* contour(x, y, z, levels, labels, labcex, drawlabels,
  *         method, vfont, col = col, lty = lty, lwd = lwd)
  */
 SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1517,10 +1517,10 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Rf_gpptr(dd)->lty = ltysave;
 	if (isNAcol(rawcol, i, ncol))
 	    Rf_gpptr(dd)->col = colsave;
-	else 
+	else
 	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
-	if (Rf_gpptr(dd)->lwd == NA_REAL)
+	if (!R_FINITE(Rf_gpptr(dd)->lwd))
 	    Rf_gpptr(dd)->lwd = lwdsave;
 	Rf_gpptr(dd)->cex = labcex;
 	contour(x, nx, y, ny, z, REAL(c)[i], labels, i,
@@ -1528,7 +1528,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 		vectorFonts, typeface, fontindex, atom, dd);
 	vmaxset(vmax);
     }
-    GMode(0, dd); 
+    GMode(0, dd);
     vmaxset(vmax0);
     Rf_gpptr(dd)->lty = ltysave;
     Rf_gpptr(dd)->col = colsave;
@@ -2242,7 +2242,7 @@ static void PerspAxis(double *x, double *y, double *z,
     i = nint;
     GPretty(&min, &max, &nint);
     /* GPretty() rarely gives values too much outside range ..
-       2D axis() clip these, we play cheaper */ 
+       2D axis() clip these, we play cheaper */
     while((min < range[0] - d_frac || range[1] + d_frac < max) && i < 20) {
 	nint = ++i;
 	min = range[0];
@@ -2618,7 +2618,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SEXP xl = STRING_ELT(xlab, 0), yl = STRING_ELT(ylab, 0),
 		zl = STRING_ELT(zlab, 0);
 	    PerspAxes(REAL(xlim), REAL(ylim), REAL(zlim),
-		      (xl == NA_STRING)? "" : CHAR(xl), 
+		      (xl == NA_STRING)? "" : CHAR(xl),
 		      (yl == NA_STRING)? "" : CHAR(yl),
 		      (zl == NA_STRING)? "" : CHAR(zl),
 		      nTicks, tickType, dd);
