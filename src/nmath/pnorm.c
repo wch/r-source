@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,9 @@
  *  SYNOPSIS
  *
  *    #include "Mathlib.h"
- *    double pnorm(double x, double mu, double sigma);
+ *
+ *    double pnorm  (double x, double mu, double sigma, int upper, int log_p);
+ *    void   pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p);
  *
  *  DESCRIPTION
  *
@@ -41,72 +44,22 @@
  */
 
 #include "Mathlib.h"
+/* for the moment : */
+void   pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p);
 
-/*  Mathematical Constants */
+#ifdef FUTURE
 
-#define SIXTEN	1.6					/* Magic Cutoff */
+double pnorm(double x, double mu, double sigma, int upper, int log_p)
 
+#else
+
+const int upper = 0;
+const int log_p = 0;
 double pnorm(double x, double mu, double sigma)
+
+#endif
 {
-    static double c[9] = {
-	0.39894151208813466764,
-	8.8831497943883759412,
-	93.506656132177855979,
-	597.27027639480026226,
-	2494.5375852903726711,
-	6848.1904505362823326,
-	11602.651437647350124,
-	9842.7148383839780218,
-	1.0765576773720192317e-8
-    };
-
-    static double d[8] = {
-	22.266688044328115691,
-	235.38790178262499861,
-	1519.377599407554805,
-	6485.558298266760755,
-	18615.571640885098091,
-	34900.952721145977266,
-	38912.003286093271411,
-	19685.429676859990727
-    };
-
-    static double p[6] = {
-	0.21589853405795699,
-	0.1274011611602473639,
-	0.022235277870649807,
-	0.001421619193227893466,
-	2.9112874951168792e-5,
-	0.02307344176494017303
-    };
-
-    static double q[5] = {
-	1.28426009614491121,
-	0.468238212480865118,
-	0.0659881378689285515,
-	0.00378239633202758244,
-	7.29751555083966205e-5
-    };
-
-    static double a[5] = {
-	2.2352520354606839287,
-	161.02823106855587881,
-	1067.6894854603709582,
-	18154.981253343561249,
-	0.065682337918207449113
-    };
-
-    static double b[4] = {
-	47.20258190468824187,
-	976.09855173777669322,
-	10260.932208618978205,
-	45507.789335026729956
-    };
-
-    double xden, temp, xnum, result, ccum;
-    double del, min, eps, xsq;
-    double y;
-    int i;
+    double p, cp;
 
     /* Note: The structure of these checks has been carefully thought through.
      * For example, if x == mu and sigma == 0, we still get the correct answer.
@@ -128,8 +81,79 @@ double pnorm(double x, double mu, double sigma)
     }
 #endif
 
+    pnorm_2(x, &p, &cp, (int)(upper ? 1 : 0), (int)log_p);
+
+    return(upper ? cp : p);
+}
+
+#define SIXTEN	1.6	/* Magic Cutoff */
+
+void pnorm_2(double x, double *cum, double *ccum, int i_tail, int log_p)
+{
+    const double a[5] = {
+	2.2352520354606839287,
+	161.02823106855587881,
+	1067.6894854603709582,
+	18154.981253343561249,
+	0.065682337918207449113
+    };
+    const double b[4] = {
+	47.20258190468824187,
+	976.09855173777669322,
+	10260.932208618978205,
+	45507.789335026729956
+    };
+    const double c[9] = {
+	0.39894151208813466764,
+	8.8831497943883759412,
+	93.506656132177855979,
+	597.27027639480026226,
+	2494.5375852903726711,
+	6848.1904505362823326,
+	11602.651437647350124,
+	9842.7148383839780218,
+	1.0765576773720192317e-8
+    };
+    const double d[8] = {
+	22.266688044328115691,
+	235.38790178262499861,
+	1519.377599407554805,
+	6485.558298266760755,
+	18615.571640885098091,
+	34900.952721145977266,
+	38912.003286093271411,
+	19685.429676859990727
+    };
+    const double p[6] = {
+	0.21589853405795699,
+	0.1274011611602473639,
+	0.022235277870649807,
+	0.001421619193227893466,
+	2.9112874951168792e-5,
+	0.02307344176494017303
+    };
+    const double q[5] = {
+	1.28426009614491121,
+	0.468238212480865118,
+	0.0659881378689285515,
+	0.00378239633202758244,
+	7.29751555083966205e-5
+    };
+
+    double xden, xnum, temp, del, min, eps, xsq, y;
+    int i, lower, upper;
+
+#ifdef IEEE_754
+    if(ISNAN(x)) { *cum = *ccum = x; return; }
+#endif
+
     eps = DBL_EPSILON * 0.5;
     min = DBL_MIN;
+
+    /* i_tail in {0,1,2} means: "lower","upper","both" */
+    lower = i_tail != 1;
+    upper = !i_tail;
+
     y = fabs(x);
     if (y <= 0.66291) {
 	if (y > eps)
@@ -142,12 +166,16 @@ double pnorm(double x, double mu, double sigma)
 	    xden = (xden + b[i]) * xsq;
 	}
 	temp = x * (xnum + a[3]) / (xden + b[3]);
-	result = 0.5 + temp;
-	ccum = 0.5 - temp;
+	if(lower) *cum = 0.5 + temp;
+	if(upper) *ccum = 0.5 - temp;
+	if(log_p) {
+	    if(lower) *cum = log(*cum);
+	    if(upper) *ccum = log(*ccum);
+	}
     }
     else if (y <= M_SQRT_32) {
 
-	/* Evaluate pnorm for 0.66291 < |z| <= sqrt(32) */
+	/* Evaluate pnorm for 0.66291 < |x| <= sqrt(32) */
 
 	xnum = c[8] * y;
 	xden = y;
@@ -155,22 +183,33 @@ double pnorm(double x, double mu, double sigma)
 	    xnum = (xnum + c[i]) * y;
 	    xden = (xden + d[i]) * y;
 	}
-	result = (xnum + c[7]) / (xden + d[7]);
-	xsq = floor(y * SIXTEN) / SIXTEN;
-	del = (y - xsq) * (y + xsq);
-	result = exp(-xsq * xsq * 0.5) * exp(-del * 0.5) * result;
-	ccum = 1.0 - result;
-	if (x > 0.0) {
-	    temp = result;
-	    result = ccum;
-	    ccum = temp;
+	*cum = (xnum + c[7]) / (xden + d[7]);
+
+#define do_del(X)							\
+	xsq = floor(X * SIXTEN) / SIXTEN;				\
+	del = (X - xsq) * (X + xsq);					\
+	if(log_p) {							\
+	    *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + log(*cum);	\
+	    if((lower && x > 0.) || (upper && x <= 0.))			\
+		*ccum = log(1.0 - exp(*cum));				\
+	}								\
+	else {								\
+	    *cum = exp(-xsq * xsq * 0.5) * exp(-del * 0.5) * *cum;	\
+	    *ccum = 1.0 - *cum;						\
 	}
+
+#define swap_tail						\
+	if (x > 0.) {/* swap  ccum <--> cum */			\
+	    temp = *cum; if(lower) *cum = *ccum; *ccum = temp;	\
+	}
+
+	do_del(y);
+	swap_tail;
     }
     else if(y < 50) {
 
-	/* Evaluate pnorm for sqrt(32) < |z| < 50 */
+	/* Evaluate pnorm for sqrt(32) < |x| < 50 */
 
-	result = 0.0;
 	xsq = 1.0 / (x * x);
 	xnum = p[5] * xsq;
 	xden = xsq;
@@ -178,33 +217,32 @@ double pnorm(double x, double mu, double sigma)
 	    xnum = (xnum + p[i]) * xsq;
 	    xden = (xden + q[i]) * xsq;
 	}
-	result = xsq * (xnum + p[4]) / (xden + q[4]);
-	result = (M_1_SQRT_2PI - result) / y;
-	xsq = floor(x * SIXTEN) / SIXTEN;
-	del = (x - xsq) * (x + xsq);
-	result = exp(-xsq * xsq * 0.5) * exp(-del * 0.5) * result;
-	ccum = 1.0 - result;
-	if (x > 0.0) {
-	    temp = result;
-	    result = ccum;
-	    ccum = temp;
+	*cum = xsq * (xnum + p[4]) / (xden + q[4]);
+	*cum = (M_1_SQRT_2PI - *cum) / y;
+
+	do_del(x);
+	swap_tail;
+    }
+    else { /* |x| >= 50 */
+	if(log_p) {/* be better than to just return log(0) or log(1) */
+	    xsq = x*x;
+	    if(xsq * DBL_EPSILON < 1.)
+		del = (1. - (1. - 5./(xsq+6.)) / (xsq+4.)) / (xsq+2.);
+	    else
+		del = 0.;
+	    *cum = -.5*xsq - M_LN_SQRT_2PI - log(y) + logrelerr(del);
+	    *ccum = 0.;/*log(1)*/
+	    swap_tail;
+
+	} else {
+	    if(x > 0) {	*cum = 1.; *ccum = 0.;	}
+	    else {	*cum = 0.; *ccum = 1.;	}
 	}
     }
-    else {
-	if(x > 0) {
-	    result = 1.0;
-	    ccum = 0.0;
-	}
-	else {
-	    result = 0.0;
-	    ccum = 1.0;
-	}
+
+    if(!log_p) { /* do not return "denormalized" -- needed ?? */
+	if(*cum < min)	*cum = 0.;
+	if(*ccum < min)	*ccum = 0.;
     }
-    if (result < min) {
-	result = 0.0;
-    }
-    if (ccum < min) {
-	ccum = 0.0;
-    }
-    return result;
+    return;
 }

@@ -91,16 +91,12 @@ double qnorm(double p, double mu, double sigma)
 	    val = sqrt(val * (1 - r));
 	    if(q < 0.0)
 		val = -val;
-	    return val;
+	    return mu + sigma * val;
 	}
 	else {
 	    ML_ERROR(ME_RANGE);
-	    if(q < 0.0) {
-		return ML_NEGINF;
-	    }
-	    else {
-		return ML_POSINF;
-	    }
+	    if(q < 0.0) return ML_NEGINF;
+	    else 	return ML_POSINF;
 	}
     }
     val = val - (pnorm(val, 0.0, 1.0) - p) / dnorm(val, 0.0, 1.0);

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +37,7 @@
 
 #include "Mathlib.h"
 
-double qpois(double x, double lambda)
+double qpois(double x, double lambda, int lower_tail, int log_p)
 {
     double mu, sigma, gamma, z, y;
 #ifdef IEEE_754
@@ -47,27 +48,33 @@ double qpois(double x, double lambda)
 	return ML_NAN;
     }
 #endif
-    if(x < 0 || x > 1 || lambda <= 0) {
+    if(lambda <= 0 ||
+       (log_p  && x > 0) ||
+       (!log_p && (x < 0 || x > 1)) ) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
-    if (x == 0) return 0;
+    if (x == R_D__0) return 0;
 #ifdef IEEE_754
-    if (x == 1) return ML_POSINF;
+    if (x == R_D__1) return ML_POSINF;
 #endif
     mu = lambda;
     sigma = sqrt(lambda);
     gamma = sigma;
-    z = qnorm(x, 0.0, 1.0);
+#ifdef DPQ_NEW_NORM
+    z = qnorm(x, 0., 1., lower_tail, log_p);
+#else
+    z = qnorm(R_DT_qIv(x), 0., 1.);
+#endif
     y = floor(mu + sigma * (z + gamma * (z * z - 1) / 6) + 0.5);
-    z = ppois(y, lambda);
+    z = ppois(y, lambda, lower_tail, log_p);
 
     if(z >= x) {
 
 	/* search to the left */
 
 	for(;;) {
-	    if((z = ppois(y - 1, lambda)) < x)
+	    if((z = ppois(y - 1, lambda, lower_tail, log_p)) < x)
 		return y;
 	    y = y - 1;
 	}
@@ -77,9 +84,9 @@ double qpois(double x, double lambda)
 	/* search to the right */
 
 	for(;;) {
-	    if((z = ppois(y + 1, lambda)) >= x)
-		return y + 1;
 	    y = y + 1;
+	    if((z = ppois(y, lambda, lower_tail, log_p)) >= x)
+		return y;
 	}
     }
 }

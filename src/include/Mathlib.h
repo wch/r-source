@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-1999 R Development Core Team
+ *  Copyright (C) 1998-2000  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -237,21 +237,22 @@ void ml_error(int n);
 
 	/* Utilities for `dpq' handling (density/probability/quantile) */
 
-#define R_D__0 (give_log ? ML_NEGINF : 0.)
-#define R_D__1 (give_log ? 0. : 1.)
+#define R_D__0 (log_p ? ML_NEGINF : 0.)
+#define R_D__1 (log_p ? 0. : 1.)
 #define R_DT_0 (lower_tail ? R_D__0 : R_D__1)
 #define R_DT_1 (lower_tail ? R_D__1 : R_D__0)
 
-#define R_D_val(x)   (give_log	 ? log(x) : x)	      /*  x  */
-#define R_D_log(x)   (give_log	 ?  x	  : exp(x))   /* log(x) */
+#define R_D_qIv(x)   (log_p	? exp(x) : x)	   /*  x  in qF(x,..) */
+#define R_D_val(x)   (log_p	? log(x) : x)	   /*  x  in pF(x,..) */
+#define R_D_exp(x)   (log_p	?  x	 : exp(x)) /* exp(x) */
 
 #define R_DT_val(x)  R_D_val(lower_tail ? x	 : 1. - x) /*  x  */
+#define R_DT_qIv(x)  R_D_qIv(lower_tail ? x	 : 1. - x) /*  x  */
 #define R_DT_Cval(x) R_D_val(lower_tail ? 1. - x : x)	   /*  1 - x */
-#define R_DT_log(x)  R_D_log(lower_tail ? x	 : 1. - x) /* log(x) */
-#define R_DT_Clog(x) R_D_log(lower_tail ? 1. - x : x)	   /* log(1 - x) */
+#define R_DT_CIv(x)  R_D_qIv(lower_tail ? 1. - x : x)	   /*  1 - x */
+#define R_DT_exp(x)  R_D_exp(lower_tail ? x	 : 1. - x) /* exp(x) */
+#define R_DT_Cexp(x) R_D_exp(lower_tail ? 1. - x : x)	   /* exp(1 - x) */
 
-#define R_D_give_log(dd)    (((int)dd) >> 1) /* Extract ``give_log'' flag */
-#define R_D_lower_tail(dd)  (((int)dd) % 2)  /* Extract ``lower_tail'' flag */
 
 	/* R's version of C functions: */
 
@@ -293,7 +294,7 @@ double	chebyshev_eval(double, double *, int);
 
 	/* Gamma and Related Functions */
 
-double	logrelerr(double);
+double	logrelerr(double); /* = log(1+x) {care for small x} */
 void	gammalims(double*, double*);
 double	lgammacor(double);
 double	gammafn(double);
@@ -434,9 +435,9 @@ double	rnbinom(double, double);
 
 	/* Poisson Distribution */
 
-double	dpois(double, double);
-double	ppois(double, double);
-double	qpois(double, double);
+double	dpois(double, double, int);
+double	ppois(double, double, int, int);
+double	qpois(double, double, int, int);
 double	rpois(double);
 
 	/* Weibull Distribution */

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +29,7 @@
 
 #include "Mathlib.h"
 
-double ppois(double x, double lambda)
+double ppois(double x, double lambda, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(lambda))
@@ -40,10 +41,15 @@ double ppois(double x, double lambda)
     }
     x = floor(x + 1e-7);
     if (x < 0)
-	return 0;
+	return R_DT_0;
 #ifdef IEEE_754
     if (!R_FINITE(x))
-	return 1;
+	return R_DT_1;
 #endif
-    return  1 - pgamma(lambda, x + 1, 1.0);
+
+#ifdef FUTURE
+    return pgamma(lambda, x + 1, 1., !lower_tail, log_p);
+#else
+    return R_DT_Cval(pgamma(lambda, x + 1, 1.));
+#endif
 }
