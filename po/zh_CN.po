@@ -1,15 +1,15 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# Fei Chen <FeiChen@FairIsaac.com>, 2005.
+# 陈斐 <FeiChen@FairIsaac.com>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-09 07:12+0000\n"
+"POT-Creation-Date: 2005-03-09 08:25+0000\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
-"Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
+"Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +30,7 @@ msgstr "approx(): 无法插值NA"
 
 #: src/appl/binning.c:67
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
-msgstr ".C(\"bin代码\",... NAOK=FALSE)有NA值"
+msgstr ".C(\"bincode\",... NAOK=FALSE)有NA值"
 
 #: src/appl/binning.c:104
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
@@ -402,7 +402,7 @@ msgstr "你必需选'--save',’--no-save'或'--vanilla'其中的一个"
 #: src/gnuwin32/system.c:945
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
-msgstr ""
+msgstr "无法建立‘reader thread’，系统资源不够"
 
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
@@ -633,6 +633,8 @@ msgid ""
 "unable to load shared library '%s':\n"
 "  %s"
 msgstr ""
+"无法载入共享图书馆‘%s’：:\n"
+"  %s"
 
 #: src/main/Rdynload.c:861
 #, c-format
@@ -699,7 +701,7 @@ msgstr "非符合时间系列"
 msgid ""
 "longer object length\n"
 "\tis not a multiple of shorter object length"
-msgstr ""
+msgstr "长的目标对象长度不是短的目标对象长度的整倍数"
 
 #: src/main/arithmetic.c:495
 #, fuzzy
@@ -750,7 +752,7 @@ msgstr "非数值的矩阵范围"
 
 #: src/main/array.c:86
 #, fuzzy
-msgid "matrix: invalid 'nrow value' (too large or NA)"
+msgid "matrix: invalid 'nrow' value (too large or NA)"
 msgstr "矩阵: nrow值不对(或是太大，或含NA)"
 
 #: src/main/array.c:88
@@ -773,14 +775,14 @@ msgstr "矩阵: ncol值不对(或是太大，或含NA)"
 msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of rows [%"
 "d] in matrix"
-msgstr ""
+msgstr "数据长度[%d] 不是矩阵行数[%d] 的整倍数"
 
 #: src/main/array.c:104
 #, c-format
 msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of columns "
 "[%d] in matrix"
-msgstr ""
+msgstr "数据长度[%d] 不是矩阵无数[%d] 的整倍数"
 
 #: src/main/array.c:107
 msgid "data length exceeds size of matrix"
@@ -1010,21 +1012,21 @@ msgstr "一定要有方法程辑包才能用正式类别"
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
-msgstr "类别\"%2$s\"的目标对象中没有\"%1$s\"这样一个槽"
+msgstr "目标对象的类别(\"%2$s\") 没有设定，因此不能从它那儿获取槽\"%1$s\" "
 
 #: src/main/attrib.c:1259
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
-msgstr "类别\"%2$s\"的目标对象中没有\"%1$s\"这样一个槽"
+msgstr "无法从没有槽的基本类别(\"%2$s\") 的目标对象中取得\"%1$s\"槽"
 
 #: src/main/attrib.c:1262
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
 "\", ...) (not a formally defined class)"
-msgstr ""
+msgstr "无法属于S3类别c(\"%2$s\", \"%3$s\", ...) 目标对象中取得\"%1$s\"槽"
 
 #: src/main/attrib.c:1280
 msgid "invalid slot type"
@@ -1069,7 +1071,7 @@ msgstr "矩阵的列数必需相符(见arg%d)"
 msgid "invalid add argument"
 msgstr "add变元不对"
 
-#: src/main/builtin.c:66 src/main/errors.c:957
+#: src/main/builtin.c:66 src/main/errors.c:958
 msgid "invalid number of arguments"
 msgstr "变元数目不对"
 
@@ -1313,7 +1315,7 @@ msgstr "变元必需是长度为1的字符向量"
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
-msgstr ""
+msgstr "变元应当是长度为1的字节向量，除第一个单元外其他所有的单元都略过不用"
 
 #: src/main/character.c:1817 src/main/character.c:1849
 #: src/main/character.c:1870
@@ -1357,15 +1359,15 @@ msgstr "strtrim()需要字符向量"
 msgid "invalid 'width' argument"
 msgstr "'width'这个变元不对"
 
-#: src/main/coerce.c:88 src/main/errors.c:972
+#: src/main/coerce.c:88 src/main/errors.c:973
 msgid "NAs introduced by coercion"
 msgstr "强制改变过程中产生了NA"
 
-#: src/main/coerce.c:90 src/main/errors.c:973
+#: src/main/coerce.c:90 src/main/errors.c:974
 msgid "inaccurate integer conversion in coercion"
 msgstr "强制改变整数不精确"
 
-#: src/main/coerce.c:92 src/main/errors.c:974
+#: src/main/coerce.c:92 src/main/errors.c:975
 msgid "imaginary parts discarded in coercion"
 msgstr "强制改变时丢弃了虚数部分"
 
@@ -1458,19 +1460,20 @@ msgstr "字符串类别的替换目标对象不对"
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
-msgstr ""
+msgstr "只有在目标对象有这一类别的情况下才能设\"%s\"；不应该有\"%s\""
 
 #: src/main/coerce.c:2112
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
-msgstr ""
+msgstr "除非维度的长度为2(目前是%d) ，否则不能设为矩阵类别"
 
 #: src/main/coerce.c:2118
+#, fuzzy
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
-msgstr ""
+msgstr "除非维度的长度>0，否则不能设为\"array\"类别"
 
 #: src/main/colors.c:40
 #, c-format
@@ -1492,7 +1495,7 @@ msgstr "alpha层次%g不在[0,1] 之间"
 msgid "alpha level %d, not in 0:255"
 msgstr "alpha层次%d不在0:255之间"
 
-#: src/main/colors.c:84 src/main/errors.c:958 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:959 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "变元种类不对"
 
@@ -2020,7 +2023,7 @@ msgstr "'sep'的值不对"
 #: src/main/connections.c:3009
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
-msgstr ""
+msgstr "writeChar：字符串的长度比需要的字节数目短-用0来补上"
 
 #: src/main/connections.c:3061 src/main/connections.c:3064
 #: src/main/connections.c:3103 src/main/connections.c:3108
@@ -2150,6 +2153,8 @@ msgid ""
 "bad target context--should NEVER happen;\n"
 "please bug.report() [R_run_onexits]"
 msgstr ""
+"目标上下文出错，这不应该发生\n"
+"请用bug.report() [R_run_onexits]"
 
 #: src/main/context.c:268
 #, fuzzy
@@ -2355,11 +2360,11 @@ msgid "\"%s\" function name not in load table"
 msgstr "载入表里没有这个函数%s的名字"
 
 #: src/main/dotcode.c:239
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
-msgstr ""
+msgstr "调用%s时明确要求不要复制变元，但变元%d的种类不对(%d != %d)"
 
 #: src/main/dotcode.c:254
 #, c-format
@@ -2576,7 +2581,7 @@ msgstr "\"function\"的正式变元不对"
 msgid ""
 "invalid body argument for \"function\"\n"
 "Should NEVER happen; please bug.report() [mkCLOSXP]"
-msgstr ""
+msgstr "\"function\"主体变元有错。这不应该发生，请用bug.report() [mkCLOSXP]"
 
 #: src/main/engine.c:49
 msgid "Graphics API version mismatch"
@@ -2884,7 +2889,7 @@ msgstr "没有\"%s\"联编"
 msgid ""
 "saved workspaces with locked bindings may not work properly when loaded into "
 "older versions of R"
-msgstr ""
+msgstr "保存的工作空间有锁住了的编联，旧的R版本有可能无法用这样的工作空间"
 
 #: src/main/envir.c:2654
 msgid "not a function"
@@ -2898,7 +2903,7 @@ msgstr "符号已经有了正式联编"
 msgid ""
 "saved workspaces with active bindings may not work properly when loaded into "
 "older versions of R"
-msgstr ""
+msgstr "保存的工作空间有活动编联，旧的R版本有可能无法用这样的工作空间"
 
 #: src/main/envir.c:2755
 msgid "unknown op"
@@ -2977,141 +2982,141 @@ msgstr "%s警告: "
 msgid "Warning: "
 msgstr "警告: "
 
-#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:435
+#: src/main/errors.c:327 src/main/errors.c:345 src/main/errors.c:436
 msgid "Lost warning messages\n"
 msgstr "警告信息丢失\n"
 
-#: src/main/errors.c:356
+#: src/main/errors.c:357
 #, fuzzy
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息:\n"
 
-#: src/main/errors.c:380
+#: src/main/errors.c:381
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "共有%d个警告 (用warnings()来显示)\n"
 
-#: src/main/errors.c:383
+#: src/main/errors.c:384
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr "警告多于50个(用warnings()来显示最先的50个)\n"
 
-#: src/main/errors.c:426
+#: src/main/errors.c:427
 msgid "Error during wrapup: "
 msgstr "收捲事出错: "
 
-#: src/main/errors.c:449
+#: src/main/errors.c:450
 msgid "Error in "
 msgstr "错误在"
 
-#: src/main/errors.c:460 src/main/errors.c:463
+#: src/main/errors.c:461 src/main/errors.c:464
 #, c-format
 msgid "Error: "
 msgstr "错误: "
 
-#: src/main/errors.c:472 src/main/errors.c:1089
+#: src/main/errors.c:473 src/main/errors.c:1090
 msgid "In addition: "
 msgstr "此外: "
 
-#: src/main/errors.c:606
+#: src/main/errors.c:607
 msgid "invalid option \"error\"\n"
 msgstr "选项\"error\"不对\n"
 
-#: src/main/errors.c:682
+#: src/main/errors.c:683
 msgid "Execution halted\n"
 msgstr "停止执行\n"
 
-#: src/main/errors.c:716
+#: src/main/errors.c:717
 msgid "invalid 'string' value"
 msgstr "'string'值不对"
 
-#: src/main/errors.c:743 src/main/errors.c:834 src/main/errors.c:859
+#: src/main/errors.c:744 src/main/errors.c:835 src/main/errors.c:860
 msgid "invalid 'domain' value"
 msgstr "'domain'值不对"
 
-#: src/main/errors.c:802
+#: src/main/errors.c:803
 msgid "invalid 'n'"
 msgstr "'n'值不对"
 
-#: src/main/errors.c:804
+#: src/main/errors.c:805
 msgid "'msg1' must be a character string"
 msgstr "'msg1’必需是字符串"
 
-#: src/main/errors.c:806
+#: src/main/errors.c:807
 msgid "'msg2' must be a character string"
 msgstr "'msg2’必需是字符串"
 
-#: src/main/errors.c:864
+#: src/main/errors.c:865
 msgid "invalid 'dirname' value"
 msgstr "'dirname'值不对"
 
-#: src/main/errors.c:900
+#: src/main/errors.c:901
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.)里的字符串不对]"
 
-#: src/main/errors.c:926
+#: src/main/errors.c:927
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.)里的字符串不对]"
 
-#: src/main/errors.c:942
+#: src/main/errors.c:943
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\"里的变元数目不对"
 
-#: src/main/errors.c:948 src/main/errors.c:963
+#: src/main/errors.c:949 src/main/errors.c:964
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s里的功能目前没有实现"
 
-#: src/main/errors.c:960
+#: src/main/errors.c:961
 msgid "time-series/vector length mismatch"
 msgstr "时间系列/向量长度不等"
 
-#: src/main/errors.c:961
+#: src/main/errors.c:962
 msgid "incompatible arguments"
 msgstr "不可兼容的变元"
 
-#: src/main/errors.c:964
+#: src/main/errors.c:965
 msgid "unknown error (report this!)"
 msgstr "不知是什么错误(请报告!)"
 
-#: src/main/errors.c:976
+#: src/main/errors.c:977
 msgid "unknown warning (report this!)"
 msgstr "不知是什么警告(请报告!)"
 
-#: src/main/errors.c:1054
+#: src/main/errors.c:1055
 msgid "No function to return from, jumping to top level"
 msgstr "没有可回归的函数, 跳到最高层"
 
-#: src/main/errors.c:1070
+#: src/main/errors.c:1071
 msgid "top level inconsistency?"
 msgstr "最高层不一致？"
 
-#: src/main/errors.c:1170
+#: src/main/errors.c:1171
 msgid "bad handler data"
 msgstr "处理器数据有错"
 
-#: src/main/errors.c:1318
+#: src/main/errors.c:1319
 msgid "error message not a string"
 msgstr "错误信息不是字符串"
 
-#: src/main/errors.c:1392
+#: src/main/errors.c:1393
 msgid "handler or restart stack mismatch in old restart"
 msgstr "旧重新启动中的处理器或重新启动堆叠不相配"
 
-#: src/main/errors.c:1418 src/main/errors.c:1434
+#: src/main/errors.c:1419 src/main/errors.c:1435
 msgid "bad error message"
 msgstr "错误信息不对"
 
-#: src/main/errors.c:1476
+#: src/main/errors.c:1477
 msgid "bad restart"
 msgstr "重新启动出错"
 
-#: src/main/errors.c:1508
+#: src/main/errors.c:1509
 msgid "restart not on stack"
 msgstr "不能在堆叠上重新启动"
 
-#: src/main/errors.c:1526
+#: src/main/errors.c:1527
 msgid "not in a try context"
 msgstr "不在try的上下文中"
 
@@ -3135,7 +3140,7 @@ msgstr "本系统没有R程序概要分析这个功能"
 #: src/main/eval.c:291
 msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
-msgstr ""
+msgstr "评估嵌套太深：无穷递归/ options(expressions=)?"
 
 #: src/main/eval.c:344 src/main/eval.c:2475
 #, fuzzy
@@ -4155,7 +4160,7 @@ msgstr "无法找到函数\"%s\"非类属的版本"
 #: src/main/objects.c:989
 msgid ""
 "standardGeneric called without methods dispatch enabled (will be ignored)"
-msgstr ""
+msgstr " tandardGeneric被调用，但方法分派没有促成(略过不用)"
 
 #: src/main/objects.c:996
 #, fuzzy
@@ -4163,11 +4168,11 @@ msgid "argument to standardGeneric must be a non-empty character string"
 msgstr "standardGeneric的变元必需是非空字符串"
 
 #: src/main/objects.c:1001
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
-msgstr ""
+msgstr "不能从非同屬函数中调用standardGeneric(\"%s\") "
 
 #: src/main/objects.c:1022
 #, fuzzy
@@ -4175,11 +4180,12 @@ msgid "argument 'code' must be a character string"
 msgstr "变元'code'必需是字符串"
 
 #: src/main/objects.c:1061
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
 "\"set\", or \"suppress\""
 msgstr ""
+"原始方法代码(\"%s\")有错：应该是\"clear\", \"reset\", \"set\", 或\"suppress\""
 
 #: src/main/objects.c:1069
 #, fuzzy
@@ -4187,11 +4193,11 @@ msgid "invalid object: must be a primitive function"
 msgstr "目标对象不对: 必需是原始函数"
 
 #: src/main/objects.c:1116
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
-msgstr ""
+msgstr "原始同属函数的正式定义必需是函数目标对象(不能是%s类)"
 
 #: src/main/objects.c:1230
 #, fuzzy
@@ -4199,11 +4205,11 @@ msgid "invalid primitive operation given for dispatch"
 msgstr "不能分派原始运算"
 
 #: src/main/objects.c:1259
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
-msgstr ""
+msgstr "原始函数\"%s\"设定了方法，但没有同属函数 "
 
 #: src/main/objects.c:1276
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
@@ -4434,7 +4440,7 @@ msgstr "分析海森的代码很有可能出错"
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
-msgstr ""
+msgstr "nlm()产生了不知是什么的错误信息(msg = %d) 。这不应该发生!"
 
 #: src/main/optimize.c:497
 msgid "Relative gradient close to zero.\n"
@@ -4457,7 +4463,7 @@ msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
-msgstr ""
+msgstr "要么x已经是函数的本地最小值，要么这个函数太非线性，要么steptol太大。\n"
 
 #: src/main/optimize.c:511
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
@@ -4471,6 +4477,10 @@ msgid ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 msgstr ""
+"最大步骤超过了5次。\n"
+"这个函数要么没有下边界,\n"
+"从上边界达到了渐近有限值\n"
+"要么是stepmx太小。\n"
 
 #: src/main/optimize.c:635
 msgid "hessian supplied is of the wrong length or mode, so ignored"
@@ -5356,10 +5366,13 @@ msgid "too few positive probabilities"
 msgstr "正值机率太少"
 
 #: src/main/random.c:407
+#, fuzzy
 msgid ""
 "cannot take a sample larger than the population\n"
 " when 'replace = FALSE'"
 msgstr ""
+"当replace=FALSE时不能取比总体要大的样本\n"
+" "
 
 #: src/main/random.c:415
 msgid "incorrect number of probabilities"
@@ -5449,7 +5462,7 @@ msgstr "前一个正规表现不存在"
 msgid ""
 "longer object length\n"
 " \tis not a multiple of shorter object length"
-msgstr ""
+msgstr "长的目标对象长度不是短的目标对象长度的整倍数"
 
 #: src/main/relop.c:100
 #, c-format
@@ -5525,7 +5538,7 @@ msgstr "版本1工作空间无法保存名字空间"
 #: src/main/saveload.c:922
 msgid ""
 "cannot save environment with locked/active bindingsin version 1 workspaces"
-msgstr ""
+msgstr "1号版本工作空间不能保存锁住了的或是仍在用的联编"
 
 #: src/main/saveload.c:946
 msgid "cannot save weak references in version 1 workspaces"
@@ -5953,6 +5966,7 @@ msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
 "d"
 msgstr ""
+"无法从由R实验版本%2$d.%3$d.%4$d写的还未被释放的工作空间版本%1$d中读取数据"
 
 #: src/main/serialize.c:1474
 #, c-format
@@ -5960,6 +5974,8 @@ msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
 "newer"
 msgstr ""
+"无法从由R版本%2$d.%3$d.%4$d写的工作空间版本%1$d中读取数据；需要R版本%5$d.%6"
+"$d.%7$d或更新"
 
 #: src/main/serialize.c:1603 src/main/serialize.c:1616
 msgid "error reading from connection"
@@ -6620,6 +6636,10 @@ msgid ""
 "Type 'license()' or 'licence()' for distribution details.\n"
 "\n"
 msgstr ""
+"R是免费软件软件，不承任何担保。\n"
+"在某些条件下你可以将其自由散布。\n"
+"用'license()'或'licence()'来看散布的详细条件。\n"
+"\n"
 
 #: src/main/version.c:37
 msgid ""
@@ -6628,6 +6648,10 @@ msgid ""
 "'citation()' on how to cite R or R packages in publications.\n"
 "\n"
 msgstr ""
+"R是个合作计划，有许多人为之做出了贡献.\n"
+"用'contributors()'来看详细的情况\n"
+"用'citation()'会告诉你如何在出版物中正确地引用R或R程辑包。\n"
+"\n"
 
 #: src/main/version.c:40
 msgid ""
@@ -6636,6 +6660,10 @@ msgid ""
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
+"用'demo()'来看一些示范程序，用'help()'来阅读在线帮助文件，或\n"
+"用'help.start()'通过HTML浏览器来看帮助文件。\n"
+"用'q()'退出R.\n"
+"\n"
 
 #: src/main/vfonts.c:78
 msgid "vfont routines cannot be accessed in module"
@@ -6992,19 +7020,24 @@ msgstr "无法设灰度: 用黑白颜色"
 msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
-msgstr ""
+msgstr "X11驱动程序无法打开颜色文块，转用黑白色。"
 
 #: src/modules/X11/devX11.c:421
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
+"错误：X11无法分配额外的图案颜色。\n"
+"请考虑用colortype=\"pseudo.cube\"或\"gray\"选项来调用X11。"
 
 #: src/modules/X11/devX11.c:816
+#, fuzzy
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
 msgstr ""
+"找不到任何X11字形\n"
+"请检查字形路径设得是不是对。"
 
 #: src/modules/X11/devX11.c:880
 #, c-format
@@ -7219,24 +7252,24 @@ msgstr "wilcox分配错误%d"
 #: src/unix/dynload.c:149
 msgid ""
 "Explicit local dynamic loading not supported on this platform. Using default."
-msgstr ""
+msgstr "本系统不支持明晰本地动态载入。用缺席值。"
 
 #: src/unix/dynload.c:150
 msgid ""
 "Explicit global dynamic loading not supported on this platform. Using "
 "default."
-msgstr ""
+msgstr "本系统不支持明晰整体动态载入。用缺席值。"
 
 #: src/unix/dynload.c:151
 msgid ""
 "Explicit non-lazy dynamic loading not supported on this platform. Using "
 "default."
-msgstr ""
+msgstr "本系统不支持明晰非缓慢动态载入。用缺席值。"
 
 #: src/unix/dynload.c:152
 msgid ""
 "Explicit lazy dynamic loading not supported on this platform. Using default."
-msgstr ""
+msgstr "本系统不支持明晰缓慢动态载入。用缺席值。"
 
 #: src/unix/dynload.c:235
 #, fuzzy
@@ -7279,13 +7312,13 @@ msgid "unable to open file to read"
 msgstr "无法打开文件来读取数据"
 
 #: src/unix/edit.c:177
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "an error occurred on line %d\n"
 " use a command like\n"
 " x <- edit()\n"
 " to recover"
-msgstr ""
+msgstr "%d行出错，请用类似于x <- edit()的指令来回到原来状态"
 
 #: src/unix/sys-std.c:120
 msgid "interrupt handler must not return"
@@ -7295,7 +7328,7 @@ msgstr "中断處置程式不能有回覆值"
 msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
-msgstr ""
+msgstr "读行输入嵌套出了不寻常的错，请用bug.report()"
 
 #: src/unix/sys-std.c:598
 msgid "re-encoding is not available on this system"
@@ -7377,24 +7410,6 @@ msgstr "无法载入X11模块"
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
 
-#~ msgid "Warning messages:\n"
-#~ msgstr "警告信息:\n"
-
-#~ msgid "WARNING: invalid R_HISTSIZE ignored;"
-#~ msgstr "警告: R_HISTSIZE不对，略过不用;"
-
-#~ msgid "sys.frame: not that many enclosing functions"
-#~ msgstr "sys.frame: 没有这么多的封闭函数"
-
-#~ msgid "invalid frame number"
-#~ msgstr "框号不对"
-
-#~ msgid "not that many enclosing functions"
-#~ msgstr "没有这么多的封闭函数"
-
-#~ msgid "invalid number of environment levels"
-#~ msgstr "环境层次不对"
-
 #~ msgid "invalid file name argument"
 #~ msgstr "文件名变元不对"
 
@@ -7403,6 +7418,9 @@ msgstr "没有X11平台这一功能"
 
 #~ msgid "invalid file argument"
 #~ msgstr "文件变元不对"
+
+#~ msgid "WARNING: invalid R_HISTSIZE ignored;"
+#~ msgstr "警告: R_HISTSIZE不对，略过不用;"
 
 #~ msgid "First arg is not a matrix"
 #~ msgstr "第一个变元不是矩阵"
@@ -7416,6 +7434,18 @@ msgstr "没有X11平台这一功能"
 #~ msgid "invalid value of p"
 #~ msgstr "p的值不对"
 
+#~ msgid "sys.frame: not that many enclosing functions"
+#~ msgstr "sys.frame: 没有这么多的封闭函数"
+
+#~ msgid "invalid frame number"
+#~ msgstr "框号不对"
+
+#~ msgid "not that many enclosing functions"
+#~ msgstr "没有这么多的封闭函数"
+
+#~ msgid "invalid number of environment levels"
+#~ msgstr "环境层次不对"
+
 #~ msgid "Unknown cumxxxx function"
 #~ msgstr "没有cumxxxx这个功能"
 
@@ -7427,6 +7457,9 @@ msgstr "没有X11平台这一功能"
 
 #~ msgid "invalid topics argument"
 #~ msgstr "topics变元不对"
+
+#~ msgid "Warning messages:\n"
+#~ msgstr "警告信息:\n"
 
 #~ msgid "Unimplemented feature in %s"
 #~ msgstr "%s里的功能目前没有实现"

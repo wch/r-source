@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-09 07:12+0000\n"
+"POT-Creation-Date: 2005-03-09 08:25+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -741,7 +741,7 @@ msgid "non-numeric matrix extent"
 msgstr "extensão matricial não numérica"
 
 #: src/main/array.c:86
-msgid "matrix: invalid 'nrow value' (too large or NA)"
+msgid "matrix: invalid 'nrow' value (too large or NA)"
 msgstr "matrix: valor de 'nrow' inválido (muito grande ou NA)"
 
 #: src/main/array.c:88
@@ -1051,7 +1051,7 @@ msgstr "números de colunas das matrizes devem ser iguais (veja arg %d)"
 msgid "invalid add argument"
 msgstr "argumento 'add' inválido"
 
-#: src/main/builtin.c:66 src/main/errors.c:957
+#: src/main/builtin.c:66 src/main/errors.c:958
 msgid "invalid number of arguments"
 msgstr "número inválido de argumentos"
 
@@ -1335,15 +1335,15 @@ msgstr "strtrim() requer um vetor de caracteres"
 msgid "invalid 'width' argument"
 msgstr "argumento 'width' inválido"
 
-#: src/main/coerce.c:88 src/main/errors.c:972
+#: src/main/coerce.c:88 src/main/errors.c:973
 msgid "NAs introduced by coercion"
 msgstr "NAs introduzidos por coerção"
 
-#: src/main/coerce.c:90 src/main/errors.c:973
+#: src/main/coerce.c:90 src/main/errors.c:974
 msgid "inaccurate integer conversion in coercion"
 msgstr "conversão inteira inacurada na coerção"
 
-#: src/main/coerce.c:92 src/main/errors.c:974
+#: src/main/coerce.c:92 src/main/errors.c:975
 msgid "imaginary parts discarded in coercion"
 msgstr "partes imaginárias descartadas na coerção"
 
@@ -1474,7 +1474,7 @@ msgstr "nível alpha %g não pertecente ao intervalo [0,1]"
 msgid "alpha level %d, not in 0:255"
 msgstr "nível alpha %d não pertence ao intervalo 0:255"
 
-#: src/main/colors.c:84 src/main/errors.c:958 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:959 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "argumento de tipo inválido"
 
@@ -2947,144 +2947,143 @@ msgstr "Aviso em %s : "
 msgid "Warning: "
 msgstr "Aviso: "
 
-#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:435
+#: src/main/errors.c:327 src/main/errors.c:345 src/main/errors.c:436
 msgid "Lost warning messages\n"
 msgstr "Mensagens de aviso perdidas\n"
 
-#: src/main/errors.c:356
-#, fuzzy
+#: src/main/errors.c:357
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
-msgstr[1] "Mensagem de aviso:\n"
+msgstr[1] "Mensagens de aviso:\n"
 
-#: src/main/errors.c:380
+#: src/main/errors.c:381
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "Houve %d avisos (use warnings() para vê-los)\n"
 
-#: src/main/errors.c:383
+#: src/main/errors.c:384
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr "Houve 50 ou mais avisos (use warnings() para ver os primeiros 50)\n"
 
-#: src/main/errors.c:426
+#: src/main/errors.c:427
 msgid "Error during wrapup: "
 msgstr "Erros durante o embrulho: "
 
-#: src/main/errors.c:449
+#: src/main/errors.c:450
 msgid "Error in "
 msgstr "Erro em "
 
-#: src/main/errors.c:460 src/main/errors.c:463
+#: src/main/errors.c:461 src/main/errors.c:464
 #, c-format
 msgid "Error: "
 msgstr "Erro: "
 
-#: src/main/errors.c:472 src/main/errors.c:1089
+#: src/main/errors.c:473 src/main/errors.c:1090
 msgid "In addition: "
 msgstr "Além disso: "
 
-#: src/main/errors.c:606
+#: src/main/errors.c:607
 msgid "invalid option \"error\"\n"
 msgstr "opção inválida \"error\"\n"
 
-#: src/main/errors.c:682
+#: src/main/errors.c:683
 msgid "Execution halted\n"
 msgstr "Execução interrompida\n"
 
-#: src/main/errors.c:716
+#: src/main/errors.c:717
 msgid "invalid 'string' value"
 msgstr "valor de 'string' inválido"
 
-#: src/main/errors.c:743 src/main/errors.c:834 src/main/errors.c:859
+#: src/main/errors.c:744 src/main/errors.c:835 src/main/errors.c:860
 msgid "invalid 'domain' value"
 msgstr "valor de 'domain' inválido"
 
-#: src/main/errors.c:802
+#: src/main/errors.c:803
 msgid "invalid 'n'"
 msgstr "'n' inválido"
 
-#: src/main/errors.c:804
+#: src/main/errors.c:805
 msgid "'msg1' must be a character string"
 msgstr "'msg1' deve ser uma string de caracteres"
 
-#: src/main/errors.c:806
+#: src/main/errors.c:807
 msgid "'msg2' must be a character string"
 msgstr "'msg2' deve ser uma string de caracteres"
 
-#: src/main/errors.c:864
+#: src/main/errors.c:865
 msgid "invalid 'dirname' value"
 msgstr "valor de 'dirname' inválido"
 
-#: src/main/errors.c:900
+#: src/main/errors.c:901
 msgid " [invalid string in stop(.)]"
 msgstr " [string inválida em stop(.)]"
 
-#: src/main/errors.c:926
+#: src/main/errors.c:927
 msgid " [invalid string in warning(.)]"
 msgstr " [string inválida em warning(.)]"
 
-#: src/main/errors.c:942
+#: src/main/errors.c:943
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "número de argumentos inválidos para \"%s\""
 
-#: src/main/errors.c:948 src/main/errors.c:963
+#: src/main/errors.c:949 src/main/errors.c:964
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "recurso não implementado em %s"
 
-#: src/main/errors.c:960
+#: src/main/errors.c:961
 msgid "time-series/vector length mismatch"
 msgstr "comprimento de séries temporais/vetor incompatível"
 
-#: src/main/errors.c:961
+#: src/main/errors.c:962
 msgid "incompatible arguments"
 msgstr "argumentos incompatíveis"
 
-#: src/main/errors.c:964
+#: src/main/errors.c:965
 msgid "unknown error (report this!)"
 msgstr "erro desconhecido (avise isso!)"
 
-#: src/main/errors.c:976
+#: src/main/errors.c:977
 msgid "unknown warning (report this!)"
 msgstr "aviso desconhecido (avise isso!)"
 
-#: src/main/errors.c:1054
+#: src/main/errors.c:1055
 msgid "No function to return from, jumping to top level"
 msgstr "Nenhuma função de onde retornar, pulando para o nível superior"
 
-#: src/main/errors.c:1070
+#: src/main/errors.c:1071
 msgid "top level inconsistency?"
 msgstr "nível superior inconsistente?"
 
-#: src/main/errors.c:1170
+#: src/main/errors.c:1171
 msgid "bad handler data"
 msgstr "manipulador de dados defeituoso"
 
-#: src/main/errors.c:1318
+#: src/main/errors.c:1319
 msgid "error message not a string"
 msgstr "mensagem de erro não é uma string"
 
-#: src/main/errors.c:1392
+#: src/main/errors.c:1393
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "incompatibilidade no manipulador ou pilha de reinício durante o reinício "
 "antigo"
 
-#: src/main/errors.c:1418 src/main/errors.c:1434
+#: src/main/errors.c:1419 src/main/errors.c:1435
 msgid "bad error message"
 msgstr "mensagem de erro inválida"
 
-#: src/main/errors.c:1476
+#: src/main/errors.c:1477
 msgid "bad restart"
 msgstr "reinício defeituoso"
 
-#: src/main/errors.c:1508
+#: src/main/errors.c:1509
 msgid "restart not on stack"
 msgstr "reínicio não está na pilha"
 
-#: src/main/errors.c:1526
+#: src/main/errors.c:1527
 msgid "not in a try context"
 msgstr "não está em um contexto try"
 
@@ -6355,9 +6354,8 @@ msgid "%s() applies only to vectors"
 msgstr "%s() pode ser aplicada somente a vetores"
 
 #: src/main/unique.c:498
-#, fuzzy
 msgid "'match' requires vector arguments"
-msgstr "match requer argumentos vetoriais"
+msgstr "'match' requer argumentos vetoriais"
 
 #: src/main/unique.c:584
 msgid "invalid 'duplicates.ok' argument"
@@ -7308,9 +7306,3 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
-
-#~ msgid "Warning messages:\n"
-#~ msgstr "Mensagens de aviso:\n"
-
-#~ msgid "WARNING: invalid R_HISTSIZE ignored;"
-#~ msgstr "ATENÇÃO: R_HISTSIZE inválido ignorado;"
