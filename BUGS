@@ -199,3 +199,15 @@ Date: Thu, 16 Mar 2000 04:02:26 +0000 (GMT)
 Subject: R-1.0.0 on alpha/osf1 memory glitch
 From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
 Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
+* PR# 491 *
+Subject: lag
+From: kthaka@uta.fi
+Date: Fri, 17 Mar 2000 10:16:09 +0100 (MET)
+* PR# 492 *
+Subject: the R bug
+From: "Robertas Geistoraitis" <robertasg@takas.lt>
+Date: Fri, 17 Mar 2000 17:17:23 +0100
+* PR# 493 *
+Subject: optim: problem with additional arguments
+From: "Dirk F. Moore" <dirk@surfer.sbm.temple.edu>
+Date: Fri, 17 Mar 2000 12:05:32 -0500
