@@ -117,19 +117,22 @@ BUG FIXES
 
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
-    o   removeClass() does a better job of removing inheritance
-        information.
+    o	removeClass() does a better job of removing inheritance
+	information.
 
-    o   setIs() will not allow mismatched representations between two
-        classes (without an explicit coerce method).
+    o	setIs() will not allow mismatched representations between two
+	classes (without an explicit coerce method).
 
-    o   The code underlying polygon drawing contained a memory leak.
+    o	The code underlying polygon drawing contained a memory leak.
 	This showed up in persp, but did not affect other graphics
 	functions.  It is now possible to draw big DEMs.
 
-    o   rbind() with a mixture of data frames and matrices treated the
+    o	logLik.nls() gave wrong df. (PR#2295)
+
+    o	rbind() with a mixture of data frames and matrices treated the
 	matrices as vectors. (PR#2266)
 
+    o   stripchart(method="stack") was not handling missing values. (PR#2018)
 
 
 		CHANGES IN R VERSION 1.6.1

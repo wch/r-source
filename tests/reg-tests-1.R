@@ -1027,6 +1027,14 @@ res <- try(add1(fit, ~ .))
 stopifnot(length(grep("missing value", res)) == 0)
 
 
+## stripchart with NAs (PR#2018)
+data(iris)
+Sepal <- iris$Sepal.Length
+Sepal[27] <- NA
+stripchart(Sepal ~ iris$Species, method="stack")
+## failed in 1.6.1
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
