@@ -3,12 +3,8 @@ R_NaInt
 R_NaReal
 R_NegInf
 R_PosInf 
-R_tmp
 m_one
-m_tiny
 m_zero
-RNG_Table
-RNG_kind 
 CharacterMode
 UserBreak
 R_GlobalEnv
