@@ -1161,7 +1161,7 @@ Panel.
 ## list the tables in the database
 > sqlTables(channel)
   TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
-1              NA          NA  usarrests      TABLE      NA
+1                              usarrests      TABLE        
 ## list it
 > sqlFetch(channel, "USArrests", rownames = TRUE)
                murder assault urbanpop rape
