@@ -22,7 +22,7 @@ nls.control(maxiter=50, tol=1e-05, minFactor=1/1024)
      limit.}
 }
 \value{
-    A \co{list} with exactly three components:
+    A \code{list} with exactly three components:
     \item{maxiter}{}
     \item{tol}{}
     \item{minFactor}{}
