@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2001   The R Development Core Team
- *  Copyright (C) 2002--2004  The R Foundation
+ *  Copyright (C) 2002--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1024,9 +1024,9 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = asInteger(CAR(args)); args = CDR(args);
     p = asInteger(CAR(args)); args = CDR(args);
     NaRm = asLogical(CAR(args));
-    if (n == NA_INTEGER || n <= 0)
+    if (n == NA_INTEGER || n < 0)
 	errorcall(call, _("invalid value of 'n'"));
-    if (p == NA_INTEGER || p <= 0)
+    if (p == NA_INTEGER || p < 0)
 	errorcall(call, _("invalid value of 'p'"));
     if (NaRm == NA_LOGICAL) errorcall(call, _("invalid value of 'na.rm'"));
     keepNA = !NaRm;

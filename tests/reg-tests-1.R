@@ -3589,3 +3589,11 @@ stopifnot(identical(x, "x12"))
 ## length(0) "dist":
 (d01. <- dist(matrix(0., 0,1)))
 ## failed in 2.0.1 and earlier
+
+
+## Wish of PR#7775
+x <- matrix(0, nrow=0, ncol=2)
+colSums(x); rowSums(x)
+x <- matrix(0, nrow=2, ncol=0)
+colSums(x); rowSums(x)
+## not allowed in 2.0.1

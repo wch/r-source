@@ -75,6 +75,9 @@ NEW FEATURES
     o	Added colorRamp() and colorRampPalette() functions for color
 	interpolation.
 
+    o	colSums()/rowSums() now allow arrays with a zero-length extent
+	(requested by PR#7775).
+
     o	confint() has stub methods for classes "glm" and "nls" that
 	invoke those in package MASS.  This avoids using the "lm"
 	method for "glm" objects if MASS is not attached.
