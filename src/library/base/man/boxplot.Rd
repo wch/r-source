@@ -1,8 +1,11 @@
 \name{boxplot}
+\title{Box Plots}
+\description{
+    Produce box-and-whisker plot(s) of the given (grouped) values.
+}
 \alias{boxplot}
 \alias{boxplot.default}
 \alias{boxplot.formula}
-\title{Box Plots}
 \usage{
 boxplot(x, \dots)
 boxplot.default(x, \dots, range = 1.5, width = NULL,
@@ -70,9 +73,6 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
   \item{\dots}{further arguments to the default boxplot method and
     graphical parameters may also be passed as arguments, see
     \code{\link{par}}.}
-}
-\description{
-    Produce box-and-whisker plot(s) of the given (grouped) values.
 }
 \details{
     This is a generic function.  It currently has a default method

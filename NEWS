@@ -33,6 +33,9 @@ BUG FIXES
 
     o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
 
+    o	bxp() now extends `ylim' properly when notch=TRUE (and a notch is more
+        extreme than other stats).
+	Also, varwidth is okay again, see example(split).
 
 
 		CHANGES IN R VERSION 1.1.0
@@ -53,7 +56,7 @@ NEW FEATURES
 	experimental so don't go churning out thousands of lines of
 	GUI code and then blame us for changing the API later on. It does
 	not currently work with GNOME because of event loop differences.
-	See demo(tkttest) and demo(tkdensity). 
+	See demo(tkttest) and demo(tkdensity).
 
     o	Internally using global R_Expressions [getOption("expressions")]
 	dramatically speeds up eval.c.
