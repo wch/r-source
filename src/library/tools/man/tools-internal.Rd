@@ -40,9 +40,9 @@
 % \alias{.buildDemoIndex}
 % \alias{.buildDataIndex}
 \alias{.checkVignetteIndex}
-% \alias{print.checkVignetteIndex}
+\alias{print.checkVignetteIndex}
 \alias{.checkDemoIndex}
-% \alias{print.checkDemoIndex}
+\alias{print.checkDemoIndex}
 % \alias{.stripRdComments}
 \description{
   Internal tools functions.
