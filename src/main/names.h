@@ -65,11 +65,7 @@ SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveDevga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
-#endif
-#ifdef oldWin32
-SEXP do_winedit(SEXP, SEXP, SEXP, SEXP);
-SEXP do_sysfile(SEXP, SEXP, SEXP, SEXP);
-SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);

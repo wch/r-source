@@ -489,10 +489,6 @@ FUNTAB R_FunTab[] =
 #ifdef Unix
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 #endif
-#ifdef oldWin32
-{"system.file",	do_sysfile,	0,	11,	2,	PP_FUNCALL},
-{"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
-#endif
 #ifdef Win32
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},
@@ -503,7 +499,8 @@ FUNTAB R_FunTab[] =
 {"int.unzip",   do_int_unzip,   0,      11,    -1,      PP_FUNCALL},
 {"win.version", do_winver,      0,      11,     0,      PP_FUNCALL},
 {"saveDevga",  do_saveDevga,    0,      11,     3,      PP_FUNCALL},
-{"shell.exec",  do_shellexec,    0,      11,     1,      PP_FUNCALL},
+{"shell.exec",  do_shellexec,   0,      11,     1,      PP_FUNCALL},
+{"dir.create",  do_dircreate,   0,      11,     1,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
