@@ -588,10 +588,20 @@ AC_DEFUN([R_PROG_F77_FLIBS],
 ## -lcrt0.o) is not stripped by AC_F77_LIBRARY_LDFLAGS.  This in 
 ## particular causes R_PROG_F77_CC_COMPAT to fail.  Hence, we make
 ## sure all -lcrt?.o are removed.
+## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
+## when using gcc for linking.  The '-l:' construction is similar to
+## plain '-l' except that search order (archive/shared) given by '-a'
+## is not important.  We escape such flags via '-Wl,'.  Note that the
+## current Autoconf CVS uses _AC_LINKER_OPTION for a similar purpose
+## when computing FLIBS: this uses '-Xlinker' escapes for gcc and does
+## nothing otherwise.
 flibs=
 for arg in ${FLIBS}; do
   case "${arg}" in
     -lcrt?.o)
+      ;;
+    -l:*)
+      flibs="${flibs} -Wl,${arg}"
       ;;
     *)
       flibs="${flibs} ${arg}"
