@@ -606,7 +606,7 @@ sub code2html {
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$htmlfile = $htmlindex{$argkey};
-	
+
 	if($htmlfile){
 	    $text =~
 		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
@@ -1270,9 +1270,9 @@ sub rdoc2ex { # (filename)
 	    }
 	    print Exout "\n";
 	}
-	
+
 	ex_print_exampleblock("examples", "Examples");
-	
+
 	if(@keywords) {
 	    print Exout "## Keywords: ";
 	    &print_vec(Exout, 'keywords');
@@ -1334,7 +1334,7 @@ sub rdoc2latex {# (filename)
       print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
 	if $debug;
       printf latexout "\\alias\{%s\}\{%s\}\n", $a, $blocks{"name"}
-	unless /^$blocks{"name"}$/;
+	unless /^\Q$blocks{"name"}\E$/; # Q..E : Quote (escape) Metacharacters
     }
     foreach (@keywords) {
       printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
@@ -1538,7 +1538,7 @@ sub latex_code_cmd {
 	  if $code =~ /@/;
 	warn("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
-	## till 0.63.1 
+	## till 0.63.1
 	## $code = "\\verb@" . $code . "@";
 	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
 	$code =~ s/[$LATEX_SPECIAL]/\\$&/go;# escape them (not the "bsl" )
