@@ -99,6 +99,7 @@ The model fitting function \code{\link{lm}}.
 \code{\link{residuals}}, \code{\link{summary}}.
 }
 \examples{
+\testonly{example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:
 coef(lm.D90)# the bare coefficients
 sld90 <- summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
@@ -110,7 +111,5 @@ plot(resid(lm.D90), fitted(lm.D90))# Tukey-Anscombe's
 abline(h=0, lty=2, col = 'gray')
 
 qqnorm(residuals(lm.D90))
-
-
 }
 \keyword{regression}
