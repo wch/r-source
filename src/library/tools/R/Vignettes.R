@@ -141,19 +141,18 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
         pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
             
         yy <- try(Sweave(f, quiet=TRUE))
-        if(inherits(yy, "try-error")) return(yy)
+        if(inherits(yy, "try-error")) stop(yy)
         if(!have.makefile){
             yy <- system(paste(file.path(R.home(), "bin", "texi2dvi"),
-                               "--batch --pdf", bft, ">",
-                               paste(bf, ".stdout", sep="")))
+                               "--quiet --pdf", bft))
             if(yy>0)
-                return(paste("Error: running texi2dvi on", bft, "failed"))
+                stop(paste("running texi2dvi on", bft, "failed"))
         }
     }
     
     if(have.makefile) {
         yy <- system(Sys.getenv("MAKE"))
-        if(yy>0) return("Error: running make failed")
+        if(yy>0) stop("running make failed")
     }
     else {
         f <- list.files()
