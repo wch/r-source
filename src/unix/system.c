@@ -834,9 +834,12 @@ int __main() {return 0;}
 
 /* New / Experimental API elements */
 
-/* A (Unix) Portable Date Function */
-/* There does not seem to be a standard C function interface. */
+/* Local Time and Date */
 
+/* If the time/ctime version fails */
+/* use the follwing */
+
+#ifdef FALLBACK
 static char datebuf[64];
 char *R_Date()
 {
@@ -853,6 +856,16 @@ char *R_Date()
 	}
     return datebuf;
 }
+#else
+#include <time.h>
+
+char *R_Date()
+{
+    time_t t;
+    time(&t);
+    return ctime(&t);
+}
+#endif
 
 void R_ShowFile(char *file, char *title)
 {
