@@ -1897,7 +1897,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     double *x, *y;
     double xx, yy;
     Rboolean vectorFonts = FALSE;
-    SEXP originalArgs = args;
+    SEXP string, originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
     GCheckState(dd);
@@ -2032,16 +2032,21 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		    break;
 		}
 	    }
-	    if (vectorFonts)
-		GVText(xx, yy, INCHES, CHAR(STRING_ELT(txt, i % ntxt)),
-		       INTEGER(vfont)[0], INTEGER(vfont)[1],
-		       adjx, adjy, Rf_gpptr(dd)->srt, dd);
-	    else if (isExpression(txt))
+	    if (vectorFonts) {
+		string = STRING_ELT(txt, i % ntxt);
+		if(string != NA_STRING)
+		    GVText(xx, yy, INCHES, CHAR(string),
+			   INTEGER(vfont)[0], INTEGER(vfont)[1],
+			   adjx, adjy, Rf_gpptr(dd)->srt, dd);
+	    } else if (isExpression(txt))
 		GMathText(xx, yy, INCHES, VECTOR_ELT(txt, i % ntxt),
 			  adjx, adjy, Rf_gpptr(dd)->srt, dd);
-	    else
-		GText(xx, yy, INCHES, CHAR(STRING_ELT(txt, i % ntxt)),
-		      adjx, adjy, Rf_gpptr(dd)->srt, dd);
+	    else {
+		string = STRING_ELT(txt, i % ntxt);
+		if(string != NA_STRING)
+		    GText(xx, yy, INCHES, CHAR(string),
+			  adjx, adjy, Rf_gpptr(dd)->srt, dd);
+	    }
 	}
     }
     GMode(0, dd);
