@@ -35,21 +35,14 @@
 #include "graphapp/ga.h"
 #include "rui.h"
 
-
-SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
+char * Rwin32_tmpnam(char * prefix)
 {
-    SEXP  ans;
-    char *tmp, *tn, tm[MAX_PATH], tmp1[MAX_PATH], *p;
-    unsigned int n, done = 0;
+    char *tmp, tm[MAX_PATH], tmp1[MAX_PATH], *p, *res;
     int hasspace = 0;
-
+    unsigned int n, done = 0;
     WIN32_FIND_DATA fd;
     HANDLE h;
-    checkArity(op, args);
-    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid file name argument");
-    tn = CHAR(STRING(CAR(args))[0]);
-    /* try to get a new file name */
+
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
@@ -62,7 +55,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(tmp1, tmp);
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s\\%s%d", tmp1, tn, rand());
+        sprintf(tm, "%s\\%s%d", tmp1, prefix, rand());
         if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) {
 	    done = 1;
 	    break;
@@ -72,8 +65,26 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(!done)
 	error("cannot find unused tempfile name");
+    res = (char *) malloc((strlen(tm)+1) * sizeof(char));
+    strcpy(res, tm);
+    return res;
+}
+
+
+SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  ans;
+    char *tn, *tm;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+	errorcall(call, "invalid file name argument");
+    tn = CHAR(STRING(CAR(args))[0]);
+    /* try to get a new file name */
+    tm = Rwin32_tmpnam(tn);
     PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = mkChar(tm);
+    free(tm);
     UNPROTECT(1);
     return (ans);
 }
