@@ -32,6 +32,9 @@ lines(x, \dots)
   \code{NA} in either its \code{x} or \code{y} value, it is omitted from
   the plot, and lines are not drawn to or from such points.  Thus
   missing values can be used to achieve breaks in lines.
+
+  For \code{type = "h"}, \code{col} can be a vector and will be recycled
+  as needed.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -39,7 +42,7 @@ lines(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{points}},
+  \code{\link{points}}, particularly for \code{type \%in\% c("p","b","o")},
   \code{\link{plot}},
   and the underlying \dQuote{primitive} \code{\link{plot.xy}}.
 

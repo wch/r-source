@@ -50,12 +50,12 @@ points(x, \dots)
   (a list with \code{x} and \code{y} components), a two-column matrix, a
   time series, \dots.  See \code{\link{xy.coords}}.
 
-  Arguments \code{pch}, \code{col}, \code{bg} and \code{cex} can be
-  vectors (which will be recycled as needed) giving a value for each
-  point plotted. 
+  Arguments \code{pch}, \code{col}, \code{bg}, \code{cex} and \code{lwd}
+  can be vectors (which will be recycled as needed) giving a value for each
+  point plotted.
   Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
   value is \code{NA} are omitted from the plot.
-  
+
   Graphical parameters are permitted as arguments to this function.
 }
 \references{

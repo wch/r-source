@@ -751,7 +751,7 @@ FUNTAB R_FunTab[] =
 {"plot.new",	do_plot_new,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"plot.window",	do_plot_window,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"axis",	do_axis,	0,	111,   12,	{PP_FUNCALL, PREC_FN,	0}},
-{"plot.xy",	do_plot_xy,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"plot.xy",	do_plot_xy,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"text",	do_text,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"mtext",	do_mtext,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"title",	do_title,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},

@@ -1352,20 +1352,21 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-/*	plot.xy(xy, type, pch, lty, col, cex, ...)
+/*	plot.xy(xy, type, pch, lty, col, cex, lwd, ...)
 
  *	plot points or lines of various types
  */
-    SEXP sxy, sx, sy, pch, cex, col, bg, lty;
-    double *x, *y, xold, yold, xx, yy, thiscex;
-    int i, n, npch, ncex, ncol, nbg, nlty, type=0, start=0, thispch, thiscol;
+    SEXP sxy, sx, sy, pch, cex, col, bg, lty, lwd;
+    double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
+    int i, n, npch, ncex, ncol, nbg, /*nlty,*/ nlwd,
+	type=0, start=0, thispch, thiscol;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
     /* Basic Checks */
     GCheckState(dd);
-    if (length(args) < 6)
+    if (length(args) < 7)
 	errorcall(call, "too few arguments");
 
     /* Required Arguments */
@@ -1407,7 +1408,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     npch = length(pch);
 
     PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));	args = CDR(args);
-    nlty = length(lty);
+    /* nlty = length(lty);*/
 
     /* Default col was NA_INTEGER (0x80000000) which was interpreted
        as zero (black) or "don't draw" depending on line/rect/circle
@@ -1417,24 +1418,29 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
        FIXME: bg needs similar change, but that requires changes to
        the specific drivers. */
 
-    PROTECT(col = FixupCol(CAR(args), 0)); args = CDR(args);
+    PROTECT(col = FixupCol(CAR(args), 0));		args = CDR(args);
     ncol = LENGTH(col);
 
     PROTECT(bg = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
     nbg = LENGTH(bg);
 
-    PROTECT(cex = FixupCex(CAR(args), 1.0));	args = CDR(args);
+    PROTECT(cex = FixupCex(CAR(args), 1.0));		args = CDR(args);
     ncex = LENGTH(cex);
 
-    /* Miscellaneous Graphical Parameters -- e.g., lwd */
+    PROTECT(lwd = FixupLwd(CAR(args), Rf_gpptr(dd)->lwd)); args = CDR(args);
+    nlwd = LENGTH(lwd);
+
+    /* Miscellaneous Graphical Parameters */
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
 
     x = REAL(sx);
     y = REAL(sy);
 
-    if (nlty && INTEGER(lty)[0] != NA_INTEGER)
+    if (INTEGER(lty)[0] != NA_INTEGER)
 	Rf_gpptr(dd)->lty = INTEGER(lty)[0];
+    if (R_FINITE(thislwd = REAL(lwd)[0]))
+	Rf_gpptr(dd)->lwd = thislwd; /* but do recycle for "p" etc */
 
     GMode(1, dd);
     /* removed by paul 26/5/99 because all clipping now happens in graphics.c
@@ -1585,6 +1591,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 		{
 		    Rf_gpptr(dd)->cex = thiscex * Rf_gpptr(dd)->cexbase;
 		    Rf_gpptr(dd)->col = thiscol;
+		    if(nlwd > 1 && R_FINITE(thislwd = REAL(lwd)[i % nlwd]))
+			Rf_gpptr(dd)->lwd = thislwd;
 		    Rf_gpptr(dd)->bg = INTEGER(bg)[i % nbg];
 		    GSymbol(xx, yy, DEVICE, thispch, dd);
 		}
@@ -1593,7 +1601,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     GMode(0, dd);
     GRestorePars(dd);
-    UNPROTECT(5);
+    UNPROTECT(6);
     /* NOTE: only record operation if no "error"  */
     if (GRecording(call))
 	recordGraphicOperation(op, originalArgs, dd);
@@ -1832,11 +1840,16 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));
     nlty = length(lty);
     args = CDR(args);
-
-    PROTECT(lwd = CAR(args));/*need  FixupLwd ?*/
+    /* use FixupLwd, as segments() does too! */
+#ifdef R_1_x_y
+    PROTECT(lwd = CAR(args));
     nlwd = length(lwd);
     if (nlwd == 0)
 	errorcall(call, "'lwd' must be numeric of length >=1");
+#else
+    PROTECT(lwd = FixupLwd(CAR(args), Rf_gpptr(dd)->lwd));
+    nlwd = length(lwd);
+#endif
     args = CDR(args);
 
     sxpd = CAR(args);
@@ -2085,7 +2098,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = REAL(sx);
     y = REAL(sy);
-    n = LENGTH(sx);
+    /* n = LENGTH(sx) = LENGTH(sy) */
     ntxt = LENGTH(txt);
 
     GSavePars(dd);
@@ -2094,7 +2107,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_gpptr(dd)->xpd = (xpd == NA_INTEGER)? 2 : xpd;
 
     GMode(1, dd);
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < imax2(n,ntxt); i++) {
 	xx = x[i % n];
 	yy = y[i % n];
 	GConvert(&xx, &yy, USER, INCHES, dd);

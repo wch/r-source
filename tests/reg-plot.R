@@ -87,3 +87,8 @@ plot(ecdf(c(1:4,8,12)), ylab = "ECDF", main=NULL)
 plot(1:10, pch = NA) # gave error till 1.9.0
 points(1:3, pch=c("o",NA,"x"))# used "N"
 try(points(4, pch=c(NA,FALSE)))# still give an error
+
+## 'lwd' should transfer to plot symbols
+legend(1,10, c("A","bcd"), lwd = 2:3, pch= 21:22, pt.bg="skyblue",
+       col = 2:3, bg = "thistle")
+## (gave an error for 2 days in "2.0.0 unstable")

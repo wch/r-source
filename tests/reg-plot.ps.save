@@ -3650,6 +3650,36 @@ o
 0 0 0 rgb
 103.58 104.10 (o) .5 0 0 t
 251.03 191.93 (x) .5 0 0 t
+/bg { 0.8471 0.7490 0.8471 } def
+0.75 setlinewidth
+[] 0 setdash
+103.58 502.43 60.38 -43.20 r p3
+1 0 0 rgb
+1.50 setlinewidth
+[] 0 setdash
+np
+106.82 488.03 m
+21.60 0 l
+o
+0 0.8039 0 rgb
+2.25 setlinewidth
+[] 0 setdash
+np
+106.82 473.63 m
+21.60 0 l
+o
+/bg { 0.5294 0.8078 0.9216 } def
+1 0 0 rgb
+1.50 setlinewidth
+[] 0 setdash
+117.62 488.03 2.70 c p3
+0 0.8039 0 rgb
+2.25 setlinewidth
+[] 0 setdash
+115.23 471.24 4.79 4.79 r p3
+0 0 0 rgb
+139.22 483.72 (A) 0 0 0 t
+139.22 469.32 (bcd) 0 0 0 t
 ep
 %%Trailer
 %%Pages: 15

@@ -56,6 +56,10 @@ USER-VISIBLE CHANGES
 	separately but not via data(sunspot) (which is used by package
 	lattice to retrieve a dataset 'sunspot').
 
+    o	text.default(x,y,labels) now also recycles (x,y) to the length of
+	'labels' if that is longer.  This is now compatible to grid.text()
+	and S-plus. (See also PR#7084.)
+
     o	Packages must have been re-installed for this version, and
 	library() will enforce this.
 
@@ -209,6 +213,11 @@ NEW FEATURES
 
     o	A 'version' argument has been added to pdf() device.  If this is
 	set to "1.4", the device will support transparent colours.
+
+    o	plot.xy(), the workhorse function of points, lines and plot.default
+	now has 'lwd' as explicit argument instead of implicitly in "...",
+	and now recycles lwd where it makes sense, i.e. for line based plot
+	symbols.
 
     o	The png() and jpeg() devices (and the bmp() device under Windows)
 	now allow a nominal resolution to be recorded in the file.

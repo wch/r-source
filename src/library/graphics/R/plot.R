@@ -342,8 +342,8 @@ function(formula, data = parent.frame(), ..., subset)
 }
 
 plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
-		    bg = NA, cex = 1, ...) {
-    .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))
+		    bg = NA, cex = 1, lwd = par("lwd"), ...) {
+    .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, lwd, ...))
 }
 
 plot.new <- function()

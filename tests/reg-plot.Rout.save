@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Patched (2004-05-12), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-08-23), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -112,4 +112,9 @@ Warning in xy.coords(x = matrix(rep.int(tx, k), ncol = k), y = x, log = log) :
 > try(points(4, pch=c(NA,FALSE)))# still give an error
 Error in plot.xy(xy.coords(x, y), type = type, pch = pch, col = col, bg = bg,  : 
 	only NA allowed in logical plotting symbol
+> 
+> ## 'lwd' should transfer to plot symbols
+> legend(1,10, c("A","bcd"), lwd = 2:3, pch= 21:22, pt.bg="skyblue",
++        col = 2:3, bg = "thistle")
+> ## (gave an error for 2 days in "2.0.0 unstable")
 > 
