@@ -1,6 +1,9 @@
 		CHANGES IN R VERSION 0.62.4
 BUG FIXES
 
+    o   plot.default(.) has now 'sub' argument which eliminates
+	"Warning: parameter "sub" couldn't be set in high-level plot() function"
+
     o	formatC(numeric(0)) now works.
 
     o	menu(.) works for empty imput
