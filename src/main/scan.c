@@ -38,30 +38,22 @@ static int  ConsoleBufCnt;
 static char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
 
 typedef struct {
- SEXP NAstrings;
- int quiet;
- int sepchar; /*  = 0 */
- int decchar; /* = '.' */
- char *quoteset;
- char *quotesave; /* = NULL */
- int comchar;
- int ttyflag;
- Rconnection con;
- Rboolean wasopen;
- int save; /* = 0; */
+    SEXP NAstrings;
+    int quiet;
+    int sepchar; /*  = 0 */
+    int decchar; /* = '.' */
+    char *quoteset;
+    char *quotesave; /* = NULL */
+    int comchar;
+    int ttyflag;
+    Rconnection con;
+    Rboolean wasopen;
+    int save; /* = 0; */
 
- char convbuf[100];
+    char convbuf[100];
 } LocalData;
 
 #define NO_COMCHAR 100000 /* won't occur even in unicode */
-
-#ifdef NOT_used
-static void InitConsoleGetchar()
-{
-    ConsoleBufCnt = 0;
-    ConsolePrompt[0] = '\0';
-}
-#endif
 
 static int ConsoleGetchar()
 {
@@ -77,6 +69,26 @@ static int ConsoleGetchar()
 	ConsoleBufCnt--;
     }
     return *ConsoleBufp++;
+}
+
+static int ConsoleGetcharWithPushBack(Rconnection con)
+{
+    char *curLine;
+    int c;
+
+    if(con->nPushBack > 0) {
+	curLine = con->PushBack[con->nPushBack-1];
+	c = curLine[con->posPushBack++];
+	if(con->posPushBack >= strlen(curLine)) {
+	    /* last character on a line, so pop the line */
+	    free(curLine);
+	    con->nPushBack--;
+	    con->posPushBack = 0;
+	    if(con->nPushBack == 0) free(con->PushBack);
+	}
+	return c;
+    } else
+	return ConsoleGetchar();
 }
 
 /* Like strtol, but for ints not longs and returns NA_INTEGER on overflow */
@@ -116,7 +128,8 @@ static double Rs_strtod(const char *c, char **end, Rboolean NA)
     return x;
 }
 
-static double Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d) 
+static double 
+Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d) 
 {
     if (d->decchar == '.')
 	return Rs_strtod(nptr, endptr, NA);
@@ -142,7 +155,8 @@ static double Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d
     } 
 }
 
-static Rcomplex strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
+static Rcomplex 
+strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
 {
     Rcomplex z;
     double x, y;
@@ -179,10 +193,12 @@ static int scanchar(Rboolean inQuote, LocalData *d)
 	next = d->save;
 	d->save = 0;
     } else 
-	next = (d->ttyflag) ? ConsoleGetchar() : Rconn_fgetc(d->con);
+	next = (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) : 
+	    Rconn_fgetc(d->con);
     if(next == d->comchar && !inQuote) {
 	do
-	    next = (d->ttyflag) ? ConsoleGetchar() : Rconn_fgetc(d->con);
+	    next = (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) : 
+		Rconn_fgetc(d->con);
 	while (next != '\n' && next != R_EOF);
     }
     return next;
@@ -429,9 +445,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	    linesread++;
 	    if (linesread == maxlines)
 		break;
-	    if (d->ttyflag) {
-		sprintf(ConsolePrompt, "%d: ", n + 1);
-	    }
+	    if (d->ttyflag) sprintf(ConsolePrompt, "%d: ", n + 1);
 	    nprev = n;
 	}
 	if (n == blocksize) {
@@ -503,7 +517,8 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 
 
 static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
-		      int fill, SEXP stripwhite, int blskip, int multiline, LocalData *d)
+		      int fill, SEXP stripwhite, int blskip, int multiline, 
+		      LocalData *d)
 {
     SEXP ans, new, old, w;
     char *buffer = NULL;
@@ -733,10 +748,10 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (strlen(p) == 1) data.comchar = (int)*p;
 
     i = asInteger(file);
+    data.con = getConnection(i);
     if(i == 0) {
 	data.ttyflag = 1;
     } else {
-	data.con = getConnection(i);
 	data.ttyflag = 0;
 	data.wasopen = data.con->isopen; 
 	if(!data.wasopen) {
@@ -822,10 +837,10 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid quote symbol set");
 
     i = asInteger(file);
+    data.con = getConnection(i);
     if(i == 0) {
 	data.ttyflag = 1;
     } else {
-	data.con = getConnection(i);
 	data.ttyflag = 0;
 	data.wasopen = data.con->isopen; 
 	if(!data.wasopen) {
@@ -1223,7 +1238,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     i = asInteger(file);
     data.con = getConnection(i);
-    data.ttyflag = 0;
+    data.ttyflag = (i == 0);
     data.wasopen = data.con->isopen; 
     if(!data.wasopen) {
 	strcpy(data.con->mode, "r");
@@ -1241,19 +1256,21 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, nlines));
     for(nread = 0; nread < nlines; ) {
 	nbuf = 0; empty = TRUE, skip = FALSE;
-	while((c = Rconn_fgetc(data.con)) != R_EOF) {
+	if (data.ttyflag) sprintf(ConsolePrompt, "%d: ", nread);
+	while((c = scanchar(FALSE, &data)) != R_EOF) {
 	    if(nbuf == buf_size) {
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
 		if(!buf)
 		    error("cannot allocate buffer in readTableHead");
 	    }
+	    if(c != '\n') buf[nbuf++] = c; else break;
 	    if(empty && !skip)
 		if(c != ' ' && c != '\t' && c != data.comchar) empty = FALSE;
 	    if(!skip && c == data.comchar) skip = TRUE;
-	    if(c != '\n') buf[nbuf++] = c; else break;
 	}
 	buf[nbuf] = '\0';
+	if(data.ttyflag && empty) break;
 	if(!empty) {
 	    SET_STRING_ELT(ans, nread, mkChar(buf));
 	    nread++;   

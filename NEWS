@@ -155,6 +155,8 @@ NEW FEATURES
 	now zero-length vectors are ignored unless the result would
 	have zero rows/columns.
 
+    o	read.table(stdin()) will now work.
+
 
 DEPRECATED & DEFUNCT
 
