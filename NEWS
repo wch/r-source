@@ -216,6 +216,9 @@ BUG FIXES
         result of class c("terms", "formula") with different
         subsetting rules from an object of class "formula".
 
+    o   The standalone Rmath library did not build correctly on systems
+        with innaccurate log1p.
+
 
 
 
