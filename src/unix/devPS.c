@@ -28,12 +28,10 @@
 
 #define PS_minus_default 45
 /* wrongly was 177 (plusminus);
-   hyphen = 45 or 173;  (n-dash not available as code!)
+   hyphen = 45 or 173;	(n-dash not available as code!)
    175 = "¯" (= "overline" (= high 'negative' sign))
 */
 char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
-
-#undef DEBUG
 
 /* Part 0.  AFM File Names */
 
@@ -260,12 +258,12 @@ static int GetFontBBox(char *buf, FontMetricInfo *metrics)
 	      &(metrics->FontBBox[1]),
 	      &(metrics->FontBBox[2]),
 	      &(metrics->FontBBox[3])) != 4) return 0;
-#ifdef DEBUG
-    printf("FontBBox %d %d %d %d\n",
-	   (metrics->FontBBox[0]),
-	   (metrics->FontBBox[1]),
-	   (metrics->FontBBox[2]),
-	   (metrics->FontBBox[3]));
+#ifdef DEBUG_PS
+    Rprintf("FontBBox %d %d %d %d\n",
+	    (metrics->FontBBox[0]),
+	    (metrics->FontBBox[1]),
+	    (metrics->FontBBox[2]),
+	    (metrics->FontBBox[3]));
 #endif
     return 1;
 }
@@ -297,13 +295,13 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics)
 	   &(metrics->CharInfo[nchar].BBox[2]),
 	   &(metrics->CharInfo[nchar].BBox[3]));
 
-#ifdef DEBUG
-    printf("nchar = %d %d %d %d %d %d\n", nchar,
-	   metrics->CharInfo[nchar].WX,
-	   metrics->CharInfo[nchar].BBox[0],
-	   metrics->CharInfo[nchar].BBox[1],
-	   metrics->CharInfo[nchar].BBox[2],
-	   metrics->CharInfo[nchar].BBox[3]);
+#ifdef DEBUG_PS
+    Rprintf("nchar = %d %d %d %d %d %d\n", nchar,
+	    metrics->CharInfo[nchar].WX,
+	    metrics->CharInfo[nchar].BBox[0],
+	    metrics->CharInfo[nchar].BBox[1],
+	    metrics->CharInfo[nchar].BBox[2],
+	    metrics->CharInfo[nchar].BBox[3]);
 #endif
     return 1;
 }
@@ -402,10 +400,10 @@ static void PSEncodeFont(FILE *fp, int index, int encoding)
 	for (i = 0; i < 4 ; i++) {
 	    fprintf(fp, "/%s findfont\n", Family[index].font[i].name);
 	    fprintf(fp, "dup length dict begin\n");
-            fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
-            fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
-            fprintf(fp, "  currentdict\n");
-            fprintf(fp, "  end\n");
+	    fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
+	    fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
+	    fprintf(fp, "  currentdict\n");
+	    fprintf(fp, "  end\n");
 	    fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
 	}
     }
@@ -417,37 +415,37 @@ static void PSEncodeFont(FILE *fp, int index, int encoding)
 /* region box is for the rotated page. */
 
 static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
-                         double paperwidth, double paperheight, int landscape,
-                         double left, double bottom, double right, double top)
+			 double paperwidth, double paperheight, int landscape,
+			 double left, double bottom, double right, double top)
 {
     fprintf(fp, "%%!PS-Adobe-3.0\n");
     fprintf(fp, "%%%%DocumentFonts: %s %s %s\n%%%%+ %s %s\n",
-            Family[font].font[0].name, Family[font].font[1].name,
-            Family[font].font[2].name, Family[font].font[3].name,
-            Family[font].font[4].name);
+	    Family[font].font[0].name, Family[font].font[1].name,
+	    Family[font].font[2].name, Family[font].font[3].name,
+	    Family[font].font[4].name);
     fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 ()\n",
-            papername, paperwidth, paperheight);
+	    papername, paperwidth, paperheight);
     fprintf(fp, "%%%%Title: R Graphics Output\n");
     fprintf(fp, "%%%%Creator: R Software\n");
     fprintf(fp, "%%%%Pages: (atend)\n");
     if (landscape) {
-        fprintf(fp, "%%%%Orientation: Landscape\n");
-        fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
-                bottom, left, top, right);
+	fprintf(fp, "%%%%Orientation: Landscape\n");
+	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
+		bottom, left, top, right);
     }
     else {
-        fprintf(fp, "%%%%Orientation: Portrait\n");
-        fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
-                left, bottom, right, top);
+	fprintf(fp, "%%%%Orientation: Portrait\n");
+	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
+		left, bottom, right, top);
     }
     fprintf(fp, "%%%%EndComments\n");
     fprintf(fp, "%%%%BeginProlog\n");
     fprintf(fp, "/gs  { gsave } def\n");
     fprintf(fp, "/gr  { grestore } def\n");
     if (landscape)
-        fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate} def\n", paperwidth);
+	fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate} def\n", paperwidth);
     else
-        fprintf(fp, "/bp  { gs } def\n");
+	fprintf(fp, "/bp  { gs } def\n");
     fprintf(fp, "/ep  { showpage gr } def\n");
     fprintf(fp, "/m   { moveto } def\n");
     fprintf(fp, "/l   { lineto } def\n");
@@ -457,18 +455,18 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "/o   { stroke } def\n");
     fprintf(fp, "/c   { newpath 0 360 arc } def\n");
     fprintf(fp, "/r   { 3 index 3 index moveto 1 index 4 -1 roll\n");
-    fprintf(fp, "       lineto exch 1 index lineto lineto closepath } def\n");
+    fprintf(fp, "	lineto exch 1 index lineto lineto closepath } def\n");
     fprintf(fp, "/p1  { stroke } def\n");
     fprintf(fp, "/p2  { bg setrgbcolor fill fg setrgbcolor } def\n");
     fprintf(fp, "/p3  { gsave bg setrgbcolor fill grestore stroke } def\n");
     fprintf(fp, "/t   { 6 -2 roll moveto gsave 3 index true\n");
-    fprintf(fp, "       charpath flattenpath pathbbox grestore gsave\n");
-    fprintf(fp, "       5 -1 roll rotate 6 -1 roll neg 3 -1 roll 5 -1\n");
-    fprintf(fp, "       roll sub mul 4 -1 roll neg 3 -1 roll 4 -1 roll\n");
-    fprintf(fp, "       sub mul rmoveto show grestore } def\n");
+    fprintf(fp, "	charpath flattenpath pathbbox grestore gsave\n");
+    fprintf(fp, "	5 -1 roll rotate 6 -1 roll neg 3 -1 roll 5 -1\n");
+    fprintf(fp, "	roll sub mul 4 -1 roll neg 3 -1 roll 4 -1 roll\n");
+    fprintf(fp, "	sub mul rmoveto show grestore } def\n");
     fprintf(fp, "/cl  { initclip newpath 3 index 3 index moveto 1 index\n");
-    fprintf(fp, "       4 -1 roll lineto  exch 1 index lineto lineto\n");
-    fprintf(fp, "       closepath clip newpath } def\n");
+    fprintf(fp, "	4 -1 roll lineto  exch 1 index lineto lineto\n");
+    fprintf(fp, "	closepath clip newpath } def\n");
     fprintf(fp, "/rgb { setrgbcolor } def\n");
     fprintf(fp, "/s   { scalefont setfont } def\n");
     fprintf(fp, "/R   { /Font1 findfont } def\n");
@@ -1164,7 +1162,7 @@ static void PS_Polygon(int n, double *x, double *y, int coords,
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, coords, DEVICE, dd);
-	    fprintf(pd->psfp, "  %.2f %.2f l\n", xx, yy);
+	    fprintf(pd->psfp, "	 %.2f %.2f l\n", xx, yy);
 	}
 	fprintf(pd->psfp, "cp p%d\n", code);
     }
