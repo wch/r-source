@@ -1,13 +1,13 @@
 \name{predict.bs}
 \title{Evaluate a predefined spline basis at new values}
 \usage{
-predict.bs(basis, newx)
-predict.ns(basis, newx)
+predict.bs(object, newx)
+predict.ns(object, newx)
 }
 \alias{predict.bs}
 \alias{predict.ns}
 \arguments{
-  \item{basis}{the result of a call to \code{bs()} or \code{ns()}, in
+  \item{object}{the result of a call to \code{bs()} or \code{ns()}, in
     particular, having attributes describing \code{knots}, \code{degree}
     etc.}
   \item{newx}{the \code{x} values at which evaluations are required.}
