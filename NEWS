@@ -19,6 +19,15 @@ NEW FEATURES
 	are printed after the error message (unless the error makes
 	this impossible).
 
+    o	The scaling of symbols is now linear in cex=, rather than being
+	tied to the available font's size. The fonts on an X11 device
+	also scale linearly with cex= insofar as your X server can do it.
+	On systems with the scalable type 1 PostScript fonts installed, this
+	looks particularly nice. Note that the scaling is linear in
+	the *diameter*, but quadratic in area. The distance between lines of
+	margin text in the X11 device is now proportional to the
+	size given to x11(pointsize).
+
 
     o	abline(a,b) now (again) refers to transformed coordinates on
 	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
@@ -28,6 +37,9 @@ NEW FEATURES
 
     o	barplot.default() has new `axisnames' (and `sub') arguments, easily
 	allowing suppression of bar labeling.
+
+    o	cbind()/rbind() will now usually label the columns/rows by the
+	names of the arguments.
 
     o  	gc() now reports the total sizes in Mb as well as numbers.
 
@@ -94,15 +106,6 @@ NEW FEATURES
 	for real arguments): useful if as.single is in use.
 
 
-    o	The scaling of symbols is now linear in cex=, rather than being
-	tied to the available font's size. The fonts on an X11 device
-	also scale linearly with cex= insofar as your X server can do it.
-	On systems with the scalable type 1 PostScript fonts installed, this
-	looks particularly nice. Note that the scaling is linear in
-	the *diameter*, but quadratic in area. The distance between lines of
-	margin text in the X11 device is now proportional to the
-	size given to x11(pointsize).
-
     o	The cex= argument to plot() etc. can be a vector, like pch=.
 
     o	lty=0 now (again) makes lines invisible. Looks better for
@@ -164,10 +167,14 @@ BUG FIXES
 	non-integer frequencies.
 
 
-    o   Protect R_fopen against NULL filename in Unix.
+    o	Switch to <tt> in HTML pages since Linux Netscape mangles
+	Courier.
 
     o	When documentation is "compiled" (build-help), you now get warnings
 	for multiple (conflicting) \alias{.} or \name{.}s.
+
+
+    o   Protect R_fopen against NULL filename in Unix.
 
     o	Math text in outer margins didn't work.
 
@@ -176,9 +183,6 @@ BUG FIXES
     o	Problems with realloc on some systems in AllocBuffer.
 
     o	Problem with formatReal on non-IEEE systems.
-
-    o	Switch to <tt> in HTML pages since Linux Netscape mangles
-	Courier.
 
     o	demos/dynload/Makefile used macros that gave incorrect build
 	on some non-GNU makes.
