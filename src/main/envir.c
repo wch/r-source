@@ -52,6 +52,283 @@
 
 #include "Defn.h"
 
+
+
+/* ----------- HASH TABLE ----------- 
+   The hash table consists of SEXP (vector) which contains
+   a number of SEXPs (lists).
+   
+*/
+
+#define HASHSIZE(x)    LENGTH(x)     /* (( x )->u.vecsxp.length ) */
+#define HASHPRI(x)     TRUELENGTH(x) /* (( x )->u.vecsxp.truelength ) */
+#define HASHTABLEGROWTHRATE 1.2
+#define HASHMINSIZE 29
+
+/* string hashing */
+static int newhashpjw(char *s)
+{
+    char *p;
+    unsigned h = 0, g;
+    for (p = s; *p; p = p + 1) {
+        h = (h << 4) + (*p);
+        if ((g = h & 0xf0000000) != 0) {
+            h = h ^ (g >> 24);
+            h = h ^ g;
+        }
+    }
+    return h;
+}
+
+/*----------------------------------------------------------------------
+
+  Hashtable set function.
+  Sets 'symbol' in 'table' to be 'value'.
+  'hashcode' must be provided by user.
+  Allocates some memory for list entries.
+
+------------------------------------------------------------------------*/
+void R_HashSet( int hashcode, SEXP symbol, SEXP table, SEXP value )
+{
+  SEXP chain;
+
+  /* Do some checking */
+  if (TYPEOF(table) != VECSXP) {
+    error( "3rd arg (table) not of type VECSXP, from R_HashSet\n" );
+  }  
+  
+  if (isNull(table)) {
+    error( "Table is null, from R_HashSet\n" );
+  }
+
+  /* Grab the chain from the hashtable */
+  chain = VECTOR(table)[hashcode];
+  if( isNull( chain )) {
+    HASHPRI( table )++;
+  }
+
+  /* Add the value into the chain */
+  for(; !isNull( chain ); chain = CDR( chain )) {
+    if(TAG(chain) == symbol) {
+      CAR(chain) = value;
+      return;
+    }
+  }
+
+  VECTOR(table)[hashcode] = CONS(value, VECTOR(table)[hashcode]);
+  TAG(VECTOR(table)[hashcode]) = symbol;
+  
+  return;
+} /* end R_HashSet */
+
+
+
+/*----------------------------------------------------------------------
+
+  Hashtable get function.
+  Returns 'value' from 'table' indexed by 'symbol'.
+  'hashcode' must be provided by user.
+  Returns 'R_UnboundValue' if value is not present.
+
+-------------------------------------------------------------------------*/
+
+SEXP R_HashGet( int hashcode, SEXP symbol, SEXP table )
+{
+  SEXP chain;
+
+  /* Do type checking */
+  if (TYPEOF(table) != VECSXP){
+    /* error( "3rd arg (table) not of type VECSXP, from R_HashGet\n" ); */
+    printf( "3rd arg (table) not of type VECSXP, from R_HashGet\n" );
+  }  
+  
+  if (isNull(table)) {
+    error( "Table is null, from R_HashGet\n" );
+  }
+
+  /* Grab the chain from the hashtable */
+  chain = VECTOR(table)[hashcode];
+
+  /* Retrieve the value from the chain */
+  for(; !isNull( chain ); chain = CDR( chain )) {
+    if(TAG(chain) == symbol) {
+      return CAR( chain );
+    }
+  }
+  /* If not found */
+  return R_UnboundValue;
+} /* end R_HashGet */
+
+
+
+/*----------------------------------------------------------------------
+  
+  Hash table initialisation function.
+  Creates a table of size 'size' that increases
+  in size by 'growth_rate' after a threshold
+  is met.
+  
+------------------------------------------------------------------------*/
+
+SEXP R_NewHashTable( int size, int growth_rate )
+{
+  SEXP table;
+  
+  /* Some checking */
+  if( growth_rate == 0 ) {
+    error( "Hash table growth rate must be > 0\n" );
+  }
+  if( size == 0 ) {
+    size = HASHMINSIZE;
+  }
+
+  /* Allocate hash table in the form of a vector */
+  PROTECT( table = allocVector( VECSXP, size ));
+  HASHSIZE( table ) = size;
+  HASHPRI( table ) = 0;
+  UNPROTECT(1);
+  
+  return( table );
+} /* end R_NewHashTable */
+
+
+ 
+/*----------------------------------------------------------------------
+
+  Hash table delete function.
+  Symbols are not removed from the table.
+  They have their value set to 'R_UnboundValue'.
+
+------------------------------------------------------------------------*/
+
+void R_HashDelete( int hashcode, SEXP symbol, SEXP table )
+{
+  /* Call R_HashSet with Unbound value */
+  R_HashSet( hashcode, symbol, table, R_UnboundValue );
+  return;
+} /* end R_HashDelete */
+
+
+
+/*----------------------------------------------------------------------
+
+  Hash table resizing funstion
+  Increase the size of the hash table by
+  the growth_rate of the table.
+  The vector is reallocated, however the
+  lists with in the hash table have there
+  poiters shuffled around so that they are not reallocated.
+
+------------------------------------------------------------------------*/
+
+SEXP R_HashResize( SEXP table )
+{
+  SEXP new_table, chain, new_chain, tmp_chain;
+  int hash_grow, counter, new_hashcode;
+
+  /* Do some checking */
+  if( TYPEOF( table ) != VECSXP ){
+     error( "1st arg (table) not of type VECSXP,  from R_HashResize\n" );
+  }
+  
+  /* This may have to change.  The growth rate should
+     be independent of the size (not implemented yet) */
+  /* hash_grow = HASHSIZE( table ); */
+
+  /* Allocate the new hash table */
+  new_table = R_NewHashTable( HASHSIZE( table ) * HASHTABLEGROWTHRATE,  HASHTABLEGROWTHRATE );
+
+  for( counter = 0; counter < length( table ); counter++ ) {
+    chain = VECTOR(table)[counter];
+    while( !isNull( chain )) {
+      new_hashcode = newhashpjw( CHAR( PRINTNAME( TAG( chain )))) % HASHSIZE( new_table );
+      new_chain = VECTOR(new_table)[new_hashcode];
+      
+      /* If using a primary slot then increase HASHPRI */
+      if( isNull( new_chain )) HASHPRI( new_table )++;
+
+      tmp_chain = chain;
+      chain = CDR( chain );
+      CDR( tmp_chain ) = new_chain;
+      VECTOR(new_table)[new_hashcode] = tmp_chain;
+      /* Debugging code */
+      /* fprintf( stdout, "HASHSIZE = %d\nHASHPRI = %d\ncounter = %d\nHASHCODE = %d\n", HASHSIZE( table ), HASHPRI( table ), counter, new_hashcode); */
+    }
+  }
+
+  /* Some debugging statements */
+#ifdef MIKE_DEBUG
+  fprintf( stdout, "Resized O.K.\n" );
+  fprintf( stdout, "Old size: %d, New size: %d\n", 
+	   HASHSIZE( table ), HASHSIZE( new_table ));
+  fprintf( stdout, "Old pri: %d, New pri: %d\n", 
+	   HASHPRI( table ), HASHPRI( new_table ));
+#endif
+  return new_table;
+} /* end R_HashResize */
+
+
+
+/*----------------------------------------------------------------------
+
+  Hash table size rechecking function.
+  Compares the load factor (size/# of primary slots used).
+  to a praticular threshhold value.
+  Returns true if the table needs to be resized.
+
+------------------------------------------------------------------------*/
+
+int R_HashSizeCheck( SEXP table )
+{
+  int resize;
+  double thresh_val;
+  
+  /* Do some checking */
+  if( TYPEOF( table ) != VECSXP ){
+    error( "1st arg (table) not of type VECSXP, R_HashSizeCheck\n" );
+  }
+
+  resize = 0; thresh_val = 0.85;
+  if( (double)HASHPRI( table ) > (double)HASHSIZE( table ) * thresh_val )
+    resize = 1;
+  return resize;
+}
+
+SEXP R_HashEnv2Hash( SEXP rho )
+{
+  int hashcode, counter;
+  SEXP frame, chain, tmp_chain, table;
+  
+  /* Do some checking */
+  if( TYPEOF( rho ) != ENVSXP ){
+     error( "1st arg (table) not of type ENVSXP, from R_HashVector2Hash\n" );
+  }
+  
+  table = HASHTAB( rho );
+  frame = FRAME( rho );
+
+  while( !isNull( frame )) {
+    hashcode = newhashpjw( CHAR( PRINTNAME( TAG( frame )))) % HASHSIZE( table ); 
+    chain = VECTOR( table )[hashcode];
+    
+    /* If using a primary slot then increase HASHPRI */
+    if( isNull( chain )) HASHPRI( table )++;
+    
+    tmp_chain = frame;
+    frame = CDR( frame );
+    CDR( tmp_chain ) = chain;
+    VECTOR( table )[hashcode] = tmp_chain;
+    
+  }
+
+  FRAME( rho ) = R_NilValue;
+  return rho;
+}
+
+/* ------------ END OF HASH TABLE --------------- */
+
+
+
 /*----------------------------------------------------------------------
 
     NewEnvironment
@@ -118,15 +395,23 @@ void InitGlobalEnv()
 
 void unbindVar(SEXP symbol, SEXP rho)
 {
+  int hashcode;
+  if( HASHTAB( rho ) == R_NilValue ) {
     SEXP *v = &(FRAME(rho));
     while (*v != R_NilValue) {
-	if (TAG(*v) == symbol) {
-	    *v = CDR(*v);
-	    R_DirtyImage = 1;
-	    return;
-	}
-	v = &CDR(*v);
+      if (TAG(*v) == symbol) {
+	*v = CDR(*v);
+	R_DirtyImage = 1;
+	return;
+      }
+      v = &CDR(*v);
     }
+  }
+  else /* Do the hash table thing */{
+    hashcode = newhashpjw( CHAR( PRINTNAME( symbol ))) % HASHSIZE( HASHTAB( rho ));
+    /* Should be changed to remove */
+    return( R_HashDelete( hashcode, symbol, HASHTAB( rho )));
+  }
 }
 
 
@@ -141,14 +426,25 @@ void unbindVar(SEXP symbol, SEXP rho)
 
   ----------------------------------------------------------------------*/
 
-SEXP findVarInFrame(SEXP frame, SEXP symbol)
+SEXP findVarInFrame(SEXP rho, SEXP symbol)
 {
+  int hashcode, strrep, size;
+  char *s;
+  SEXP frame;
+  if( HASHTAB( rho ) == R_NilValue ) {
+    frame = FRAME( rho );
     while (frame != R_NilValue) {
-	if (TAG(frame) == symbol)
-	    return CAR(frame);
-	frame = CDR(frame);
+      if (TAG(frame) == symbol)
+	return CAR(frame);
+      frame = CDR(frame);
     }
-    return R_UnboundValue;
+  }
+  else {    
+    hashcode = newhashpjw( CHAR( PRINTNAME( symbol ))) % HASHSIZE( HASHTAB( rho ));
+    /* Will return 'R_UnboundValue' if not found */
+    return( R_HashGet( hashcode, symbol, HASHTAB( rho ) ));
+  }
+  return R_UnboundValue;
 }
 
 
@@ -169,7 +465,7 @@ SEXP findVar(SEXP symbol, SEXP rho)
 {
     SEXP vl;
     while (rho != R_NilValue) {
-	vl = findVarInFrame(FRAME(rho), symbol);
+	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue)
 	    return (vl);
 	rho = ENCLOS(rho);
@@ -196,7 +492,7 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 {
     SEXP vl;
     while (rho != R_NilValue) {
-	vl = findVarInFrame(FRAME(rho), symbol);
+	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
 	    if (mode == ANYSXP || TYPEOF(vl) == mode) return vl;
 	    if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
@@ -239,12 +535,12 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
     SEXP vl;
 
     /* first look for the .. symbol itself */
-    vl = findVarInFrame(FRAME(rho), symbol);
+    vl = findVarInFrame(rho, symbol);
     if (vl != R_UnboundValue)
 	return(vl);
 
     i = DDVAL(symbol);
-    vl = findVarInFrame(FRAME(rho), R_DotsSymbol);
+    vl = findVarInFrame(rho, R_DotsSymbol);
     if (vl != R_UnboundValue) {
 	if (length(vl) >= i) {
 	    vl = nthcdr(vl, i - 1);
@@ -276,7 +572,13 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
     SEXP vl;
     while (cptr != R_ToplevelContext) {
 	if (cptr->callflag == CTXT_RETURN) {
-	    vl = findVarInFrame(FRAME(cptr->cloenv), symbol);
+
+	  /*#ifdef USE_HASHTAB*/
+	    vl = findVarInFrame(cptr->cloenv, symbol);
+	    /* Old */
+	    /* vl = findVarInFrame(FRAME(cptr->cloenv), symbol); */
+	    /*#endif  USE_HASHTAB */
+
 	    if (vl != R_UnboundValue)
 		return vl;
 	}
@@ -305,7 +607,7 @@ SEXP findFun(SEXP symbol, SEXP rho)
 {
     SEXP vl;
     while (rho != R_NilValue) {
-	vl = findVarInFrame(FRAME(rho), symbol);
+	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
 		PROTECT(vl);
@@ -342,23 +644,30 @@ SEXP findFun(SEXP symbol, SEXP rho)
 
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
 {
-    SEXP frame;
-    R_DirtyImage = 1;
+  int hashcode;
+  SEXP frame;
+  R_DirtyImage = 1;
+  if( HASHTAB( rho ) == R_NilValue ) {
     if (rho != R_NilValue) {
-	frame = FRAME(rho);
-	while (frame != R_NilValue) {
-	    if (TAG(frame) == symbol) {
-		CAR(frame) = value;
-		MISSING(frame) = 0;	/* Over-ride */
-		return;
-	    }
-	    frame = CDR(frame);
+      frame = FRAME(rho);
+      while (frame != R_NilValue) {
+	if (TAG(frame) == symbol) {
+	  CAR(frame) = value;
+	  MISSING(frame) = 0;	/* Over-ride */
+	  return;
 	}
-	FRAME(rho) = CONS(value, FRAME(rho));
-	TAG(FRAME(rho)) = symbol;
-	return;
+	frame = CDR(frame);
+      }
+      FRAME(rho) = CONS(value, FRAME(rho));
+      TAG(FRAME(rho)) = symbol;
+      return;
     }
     SYMVALUE(symbol) = value;
+  }
+  else /* Do the hash table thing */{
+    hashcode = newhashpjw( CHAR( PRINTNAME( symbol ))) % HASHSIZE( HASHTAB( rho ));
+    R_HashSet( hashcode, symbol, HASHTAB( rho ), value );
+  }
 }
 
 
@@ -371,16 +680,25 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 
   ----------------------------------------------------------------------*/
 
-SEXP setVarInFrame(SEXP frame, SEXP symbol, SEXP value)
+SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 {
+  int hashcode;
+  SEXP frame;
+  if( HASHTAB( rho ) == R_NilValue ) {
+    frame = FRAME( rho );
     while (frame != R_NilValue) {
-	if (TAG(frame) == symbol) {
-	    CAR(frame) = value;
-	    return symbol;
-	}
-	frame = CDR(frame);
+      if (TAG(frame) == symbol) {
+	CAR(frame) = value;
+	return symbol;
+      }
+      frame = CDR(frame);
     }
-    return R_NilValue;
+  }
+  else /* Do the hash table thing */{
+    hashcode = newhashpjw( CHAR( PRINTNAME( symbol ))) % HASHSIZE( HASHTAB( rho ));
+    R_HashSet( hashcode, symbol, HASHTAB( rho ), value );
+  }
+  return R_NilValue;
 }
 
 
@@ -400,7 +718,7 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
     SEXP vl;
     while (rho != R_NilValue) {
 	R_DirtyImage = 1;
-	vl = setVarInFrame(FRAME(rho), symbol, value);
+	vl = setVarInFrame(rho, symbol, value);
 	if (vl != R_NilValue) {
 	    return;
 	}
@@ -436,43 +754,54 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 
   ----------------------------------------------------------------------*/
 
-static SEXP mfindVarInFrame(SEXP frame, SEXP symbol)
+static SEXP mfindVarInFrame(SEXP rho, SEXP symbol)
 {
+  int hashcode;
+  SEXP frame;
+  if( HASHTAB( rho ) == R_NilValue ) {
+    frame = FRAME( rho );
     while (frame != R_NilValue) {
-	if (TAG(frame) == symbol)
-	    return frame;
-	frame = CDR(frame);
+      if (TAG(frame) == symbol)
+	return frame;
+      frame = CDR(frame);
     }
-    return R_NilValue;
+  }
+  else /* Do the hash table thing */{
+    hashcode = newhashpjw( CHAR( PRINTNAME( symbol ))) % HASHSIZE( HASHTAB( rho ));
+    /* Will return 'R_UnboundValue' if not found */
+    return( R_HashGet( hashcode, symbol, HASHTAB( rho )));
+  }
+  return R_NilValue;
 }
 
 
 static int isMissing(SEXP symbol, SEXP rho)
 {
-    SEXP vl, s;
-
-    if ( DDVAL(symbol) )
-	s = R_DotsSymbol;
-    else
-	s = symbol;
-
-    vl = mfindVarInFrame(FRAME(rho), s);
-    if (vl != R_NilValue) {
-	if ( DDVAL(symbol) ) {
-		if (length(CAR(vl)) < DDVAL(symbol) || CAR(vl) == R_MissingArg )
-			return 1;
-		else
-			vl = nthcdr(CAR(vl), DDVAL(symbol)-1);
-	}
-	if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
-	   return 1;
-	if (TYPEOF(CAR(vl)) == PROMSXP &&
-	      TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
-	      return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
-	else
-	   return 0;
+  SEXP vl, s;
+  
+  if ( DDVAL(symbol) )
+    s = R_DotsSymbol;
+  else
+    s = symbol;
+  
+  vl = mfindVarInFrame(rho, s);
+  if (vl != R_NilValue) {
+    if ( DDVAL(symbol) ) {
+      if (length(CAR(vl)) < DDVAL(symbol) || CAR(vl) == R_MissingArg )
+	return 1;
+      /* defineVar(symbol, value, R_GlobalEnv); */
+      else
+	vl = nthcdr(CAR(vl), DDVAL(symbol)-1);
     }
-    return 0;
+    if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
+      return 1;
+    if (TYPEOF(CAR(vl)) == PROMSXP &&
+	TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
+      return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+    else
+      return 0;
+  }
+  return 0;
 }
 
 /* in do_missing rho is the environment that missing was called from */
@@ -491,7 +820,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     rval=allocVector(LGLSXP,1);
 
-    t = mfindVarInFrame(FRAME(rho), sym);
+    t = mfindVarInFrame(rho, sym);
     if (t != R_NilValue) {
 	if (DDVAL(s)) {
 		if (length(CAR(t)) < DDVAL(s)  || CAR(t) == R_MissingArg ) {
@@ -544,7 +873,7 @@ SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     do_attach :
 
     To attach a list we make up an environment and insert components
-    of the list in as the values of this env and intall the tags from
+    of the list in as the values of this env and install the tags from
     the list as the names.
 
   ----------------------------------------------------------------------*/
@@ -552,7 +881,7 @@ SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP name, s, t, x;
-    int pos;
+    int pos, hsize;
     checkArity(op, args);
 
     if (!isNewList(CAR(args)))
@@ -574,6 +903,21 @@ SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(s, install("name"), name);
 
     FRAME(s) = duplicate(CAR(args));
+    
+    /* Connect FRAME(s) into HASHTAB(s) */
+    if( length( s ) < HASHMINSIZE )
+      hsize = HASHMINSIZE;
+    else 
+      hsize = length( s );
+
+    HASHTAB(s) = R_NewHashTable( hsize, HASHTABLEGROWTHRATE );
+    s = R_HashEnv2Hash( s );
+
+    /* FIXME: A little inefficient */
+    while( R_HashSizeCheck( HASHTAB( s ))) {
+      HASHTAB( s ) = R_HashResize( HASHTAB( s ));
+    }
+
     for (t = R_GlobalEnv; ENCLOS(t) != R_NilValue && pos > 2; t = ENCLOS(t))
 	pos--;
     if (ENCLOS(t) == R_NilValue) {

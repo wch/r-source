@@ -515,7 +515,7 @@ static SEXP subDots(SEXP rho)
     int len,i;
     char tbuf[10];
 
-    dots = findVarInFrame(FRAME(rho), R_DotsSymbol);
+    dots = findVarInFrame(rho, R_DotsSymbol);
 
     if (dots == R_MissingArg) 
 	return dots;
@@ -611,7 +611,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		t2 = subDots(sysp);
 		break;
 #ifdef NEWDOTS
-		t2 = findVarInFrame(FRAME(sysp), R_DotsSymbol);
+		t2 = findVarInFrame( sysp, R_DotsSymbol);
 		b = allocList(length(t2));
 		for(f=b; f!=R_NilValue; f=CDR(f)) {
 			CAR(b)=PREXPR(CAR(t2));

@@ -1655,7 +1655,7 @@ SEXP substitute(SEXP lang, SEXP rho)
     case PROMSXP:
 	return substitute(PREXPR(lang), rho);
     case SYMSXP:
-	t = findVarInFrame(FRAME(rho), lang);
+	t = findVarInFrame( rho, lang);
 	if (t != R_UnboundValue) {
 	    if (TYPEOF(t) == PROMSXP) {
 		do {
