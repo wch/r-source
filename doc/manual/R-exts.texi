@@ -1260,6 +1260,7 @@ assignment operator @code{<-}.   This tidied version is much easier to
 read, not least by other users who are used to the standard format.
 
 We can subvert the keeping of source in two ways.
+
 @enumerate
 @item The option @code{keep.source} can be set to @code{FALSE} before
 the code is loaded into @R{}.
