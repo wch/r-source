@@ -98,13 +98,12 @@ if test -r ${cfile}; then
   . ${cfile}
 fi
 
-## <FIXME>
 ## We provide these defaults so that headers and libraries in '/usr/local'
-## are found (by the native tools, mostly).  But why do this here and not
-## in 'config.site'???
-## In addition, note that Autoconf now recommends LDFLAGS for '-L' flags
-## and LIBS for '-l' flags ...
+## are found (by the native tools, mostly).
 : ${CPPFLAGS="-I/usr/local/include"}
+## <FIXME>
+## Autoconf 2.50 or better recommends LDFLAGS for '-L' flags and LIBS for
+## '-l' flags ...
 : ${LIBS="-L/usr/local/lib"}
 ## </FIXME>
 
@@ -173,36 +172,36 @@ AC_ARG_WITH([f2c],
 [AC_HELP_STRING([--with-f2c],
                 [use f2c even if FORTRAN compiler is available])],
 [R_ARG_USE(f2c)],
-[use_f2c=false])
+[use_f2c=no])
 ## Allow the user to force us to use g77.
 AC_ARG_WITH([g77],
 [AC_HELP_STRING([--with-g77],
                 [use g77 to compile FORTRAN subroutines])],
 [R_ARG_USE(g77)],
-[use_g77=false])
+[use_g77=no])
 ## Allow the user to force us to use f77.
 AC_ARG_WITH([f77],
 [AC_HELP_STRING([--with-f77],
                 [use f77 to compile FORTRAN subroutines])],
 [R_ARG_USE(f77)],
-[use_f77=false])
+[use_f77=no])
 
 ## Make sure only one of the above options for Fortran compilers was
 ## specified.
 R_ARG_WITH_EXCLUSIVE([f77], [g77],
 [warn_f77_and_g77="--with-f77 and --with-g77 both given!  Using f77 ..."
 AC_MSG_WARN([${warn_f77_and_g77}])
-use_g77=false
+use_g77=no
 ])
 R_ARG_WITH_EXCLUSIVE([f77], [f2c],
 [warn_f77_and_f2c="--with-f77 and --with-f2c both given!  Using f77 ..."
 AC_MSG_WARN([${warn_f77_and_f2c}])
-use_f2c=false
+use_f2c=no
 ])
 R_ARG_WITH_EXCLUSIVE([g77], [f2c],
 [warn_g77_and_f2c="--with-g77 and --with-f2c both given!  Using g77 ..."
 AC_MSG_WARN([${warn_g77_and_f2c}])
-use_f2c=false
+use_f2c=no
 ])
 
 ## BLAS.
@@ -210,14 +209,14 @@ AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
                 [use BLAS library, or specify it @<:@yes@:>@])],
 [R_ARG_USE(blas)],
-[use_blas=true])
+[use_blas=yes])
 
 ## Readline.
 AC_ARG_WITH([readline],
 [AC_HELP_STRING([--with-readline],
                 [use readline library (if available) @<:@yes@:>@])],
 [R_ARG_USE(readline)],
-[use_readline=true])
+[use_readline=yes])
 
 ## GNOME.
 AC_ARG_WITH([gnome],
@@ -434,15 +433,10 @@ AC_CHECK_LIB(ncurses, main, [],
 AC_CHECK_LIB(dl, dlopen)
 
 ## Readline.
-## <FIXME>
-## Get rid of R_ARG_USE eventually ...
-if ${use_readline}; then
+if test "${use_readline}" = yes; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
   use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
-else
-  use_readline=no
 fi
-## </FIXME>
 
 ### * Checks for header files.
 
@@ -455,11 +449,11 @@ AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h errno.h fcntl.h \
   netdb.h netinet/in.h pwd.h readline/history.h readline/readline.h \
   rpc/xdr.h stdarg.h string.h strings.h sys/param.h sys/select.h \
   sys/socket.h sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
-## <FIXME>
+## <NOTE>
 ## AC_CHECK_HEADERS(libintl.h)
 ## src/main/regex.c uses HAVE_LIBINTL_H.
 ## But then we want full gettext support and AM_GNU_GETTEXT.
-## </FIXME>
+## </NOTE>
 case "${host_os}" in
   sunos4*)
     AC_DEFINE(SunOS4, 1,
@@ -572,12 +566,7 @@ AH_TEMPLATE([HAVE_NO_SYMBOL_UNDERSCORE],
              be prepended to external names.])
 
 case "${host_os}" in
-  ## <FIXME>
-  ## This used to be
-  ##   aix4.[[2-9]]*)
-  ## What about aix5*?
-  aix4*)
-  ## </FIXME>
+  aix*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     if test "${GCC}" = yes; then
       R_PROG_CC_FLAG([-mno-fp-in-toc],
@@ -604,11 +593,7 @@ case "${host_os}" in
 	## pre-processor to increase the size of an internal table.  It
 	## seems that src/modules/vfonts/g_her_glyph.c contains a line
 	## that is too long for the pre-processor without this flag.
-        ## <FIXME>
-        ## This should really be in R_XTRA_CPPFLAGS but we do not have
-        ## this ...
-	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -Wp,-H16000"
-        ## </FIXME>
+	R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -Wp,-H16000"
 	;;
     esac
     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
@@ -655,7 +640,7 @@ AC_SUBST(R_XTRA_LIBS)
 ##   command and flags for loading the main binary so that it will load
 ##   shared libraries (DLLs) at runtime, also for profiling.
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
-##   flags for compiling C, C++, and Fortran library code
+##   flags for compiling C, C++, and Fortran library code.
 ## SHLIB_LD, SHLIB_LDFLAGS
 ##   command and flags for creating DLLs (which contain object files
 ##   from a C or Fortran compiler).
@@ -984,25 +969,24 @@ AC_SUBST(LIBR_LDFLAGS)
 
 AC_FUNC_ALLOCA
 AC_FUNC_FORK
-#AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access bcopy bzero expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv strcoll stat \
   strncasecmp strptime system times unsetenv)
 
 ## Used to build src/include/Rmath.h.
-if test "${ac_cv_func_log1p}" = yes; then
-  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
-else
-  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
-fi
-AC_SUBST(RMATH_HAVE_LOG1P)
 if test "${ac_cv_func_expm1}" = yes; then
   RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
 else
   RMATH_HAVE_EXPM1="# undef HAVE_EXPM1"
 fi
 AC_SUBST(RMATH_HAVE_EXPM1)
+if test "${ac_cv_func_log1p}" = yes; then
+  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
+else
+  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
+fi
+AC_SUBST(RMATH_HAVE_LOG1P)
 
 AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])
@@ -1018,7 +1002,7 @@ R_FUNC_STRPTIME
 ## <NOTE>
 ## This has to come *after* checking for FORTRAN 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
-if ${use_blas}; then
+if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
 ## </NOTE>
@@ -1148,18 +1132,18 @@ AC_SUBST(R_LD_LIBRARY_PATH)
 ### * Win32 overrides
 case "${host_os}" in
   mingw*)
-  AC_DEFINE(HAVE_INTERNET, 1)
-  AC_DEFINE(HAVE_JPEG, 1)
-  AC_DEFINE(SUPPORT_LIBXML, 1)
-  AC_DEFINE(HAVE_PNG, 1)
-  AC_DEFINE(HAVE_POSIX_SETJMP, 1)
-  AC_DEFINE(HAVE_SOCKETS, 1)
-  AC_DEFINE(HAVE_TCLTK, 1)
-  AC_DEFINE(HAVE_TIMES, 1)
-  want_R_profiling=yes
-  AC_DEFINE(R_PROFILING, 1)
-  AC_DEFINE(SUPPORT_LIBXML, 1)
-  ;;
+    AC_DEFINE(HAVE_INTERNET, 1)
+    AC_DEFINE(HAVE_JPEG, 1)
+    AC_DEFINE(SUPPORT_LIBXML, 1)
+    AC_DEFINE(HAVE_PNG, 1)
+    AC_DEFINE(HAVE_POSIX_SETJMP, 1)
+    AC_DEFINE(HAVE_SOCKETS, 1)
+    AC_DEFINE(HAVE_TCLTK, 1)
+    AC_DEFINE(HAVE_TIMES, 1)
+    want_R_profiling=yes
+    AC_DEFINE(R_PROFILING, 1)
+    AC_DEFINE(SUPPORT_LIBXML, 1)
+    ;;
 esac
 
 ### * Output.
