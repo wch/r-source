@@ -15,7 +15,7 @@ formula.terms <- function(x) {
     x
 }
 
-formula.data.frame<- function (df) 
+formula.data.frame<- function (df)
 {
     nm <- sapply(names(df), as.name)
     lhs <- nm[1]
@@ -53,7 +53,7 @@ print.terms <- function(x) print.default(unclass(x))
 delete.response <- function (termobj)
 {
     f<-formula(termobj)
-    if (length(f) == 3) 
+    if (length(f) == 3)
         f[[2]]<-NULL
     tt <- terms(f, specials = names(attr(termobj, "specials")))
     attr(tt, "intercept") <- attr(termobj, "intercept")
@@ -240,11 +240,11 @@ model.frame.default <-
 	    if(!is.null(xl <- xlev[[nm]])) {
 		xi <- data[[nm]]
 		if(is.null(nxl <- levels(xi)))
-		    warning("variable", nm, "is not a factor")
+		    warning(paste("variable", nm, "is not a factor"))
 		else {
 		    xi <- xi[, drop= TRUE] # drop unused levels
 		    if(any(m <- is.na(match(nxl, xl))))
-			stop("factor", nm, "has new level(s)", nxl[m])
+			stop(paste("factor", nm, "has new level(s)", nxl[m]))
 		    data[[nm]] <- factor(xi, levels=xl)
 		}
 	    }
@@ -264,7 +264,7 @@ model.offset <- function(x) {
     offsets <- attr(attr(x, "terms"),"offset")
     if(length(offsets) > 0) {
 	ans <- x$"(offset)"
-        if (is.null(ans)) 
+        if (is.null(ans))
 	   ans <- 0
 	for(i in offsets) ans <- ans+x[[i]]
 	ans
