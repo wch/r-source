@@ -229,7 +229,7 @@ distclean veryclean: clean
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) -f ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
-	../../etc/rgb.txt ../../etc/Makeconf-tests \
+	../../etc/rgb.txt ../../share/make/tests.mk \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	-$(MAKE) -C installer ISdistclean
@@ -364,10 +364,10 @@ GW32_HEADERS = globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc \
-	  $(RPREFIX)/doc $(RPREFIX)/doc/html \
-	  $(RPREFIX)/src $(RPREFIX)/src/include $(RPREFIX)/src/library \
-	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
+	$(MKDIR) -p $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc \
+	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/share \
+	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
+	  $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
 	  pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
@@ -382,15 +382,15 @@ packagedist:
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
 	$(SED) -e 3,5d readme.packages > $(RPREFIX)/readme.packages
 	$(CP) ../../COPYING.LIB $(RPREFIX)
-	$(MKDIR) $(RPREFIX)/share
-	$(CP) -r ../../share/perl ../../share/texmf $(RPREFIX)/share
+	$(CP) -r ../../share/make ../../share/perl ../../share/texmf \
+	   $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
-	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
+	$(CP) ../../share/make/tests.mk $(RPREFIX)/share/make
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)

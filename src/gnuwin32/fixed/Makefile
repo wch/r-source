@@ -1,6 +1,6 @@
 include ../MkRules
 
-all: profiles fixh fixhtml fixbin fixetc
+all: profiles fixh fixhtml fixbin fixetc fixshare
 
 profiles: ../../../library/base/R/Rprofile
 
@@ -80,6 +80,11 @@ fixhtml: $(wildcard ./html/*.html) ../../../doc/html/search/SearchEngine.html
 fixetc: $(filter-out ./etc/CVS, $(wildcard ./etc/*))
 	$(CP) -p $^ ../../../etc
 	$(ECHO) done > fixetc
+
+fixshare: ./share/tests.mk
+	$(MKDIR) -p ../../../share/make
+	$(CP) -p $^ ../../../share/make
+	$(ECHO) done > fixshare	
 
 clean:
 	$(RM) *~ */*~ fixr fixh fixbin fixetc
