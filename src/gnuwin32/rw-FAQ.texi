@@ -885,9 +885,9 @@ interchangeable (for the same 2.x.? version of R, at least).
 for example, in the console and to annotate graphs.  Similar comments
 apply to any non-Western European language.
 
-We believe this is possible by setting suitable fonts in the Rconsole and
-Rdevga configuration files (see Q4.2).  You can specify additional fonts in
-Rdevga, and use them by
+We believe this is possible by setting suitable fonts in the Rconsole
+and Rdevga configuration files (see Q4.2 and the next Q).  You can
+specify additional fonts in Rdevga, and use them by
 
 @example
 par(font=, font.lab=, font.main=, font.sub=)
@@ -900,14 +900,18 @@ In addition, the Hershey vector fonts (see @code{?Hershey},
 @code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
 device to display Japanese characters.
 
+To use non-Latin1 characters in the @code{postscript} graphics device,
+see its help page.
+
 
 @node I don't see characters with accents at the R console, The output to the console seems to be delayed, I would like to be able to use Japanese fonts, The R Console and Fonts
 @section I don't see characters with accents at the R console, for example in ?text.
 
-You need to specify a font in Rconsole (see Q4.2) that supports Latin1
-encoding.  The default, @code{Courier New}, does on our systems, as does
-@code{FixedSys}.  This may be a problem in other locales, especially for
-non-Western European languages.
+You need to specify a font in Rconsole (see Q4.2) that supports the
+encoding in use, in Western European languages Latin1.  The default
+font, @code{Courier New}, does on our systems, as does @code{FixedSys}.
+This may be a problem in other locales, especially for non-Western
+European languages.
 
 Support for these characters within @code{Rterm} depends on the
 environment (the terminal window and shell, including locale settings)
@@ -1004,7 +1008,7 @@ libraries are located.  You will need to make the libraries yourself:
 none of the binaries we have seen are compiled for the correct
 compiler.
 
-Even faster hand-coded routines are available as DLLs from Kazushige
+Even faster hand-coded routines are available as DLLs from Dr Kazushige
 Goto for certain CPUs (Pentium III and 4 and Opteron).  He does not
 allow redistribution: they are currently available @emph{via}
 @uref{http://www.cs.utexas.edu/users/kgoto/signup_first.html} and there
@@ -1216,14 +1220,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 Oct 27 by Professor B. D. Ripley
+Last edited 2004 Nov 05 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 Oct 27 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 Nov 05 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
