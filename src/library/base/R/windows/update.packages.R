@@ -9,10 +9,9 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
         download.file(url=paste(CRAN,
                       "/bin/windows/windows-NT/contrib/README", sep=""),
                       destfile=tmpf, method=method)
+        on.exit(unlink(tmpf))
     }
     alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
-    if(!localcran)
-        unlink(tmpf)
 
     pkgstart <- c(grep("^.+\\.zip", alldesc), length(alldesc)+1)
     retval <- NULL
@@ -62,9 +61,11 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 }
 
 
-install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
+install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
                              method="auto", available=NULL)
 {
+    if(!missing(pkgs))
+        pkgs <- as.character(substitute(pkgs))
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
@@ -78,18 +79,18 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
     pkgs <- NULL
     tmpd <- tempfile("Rinstdir")
     shell(paste("mkdir", tmpd))
-    pkgs <- download.packages(pkglist, destdir=tmpd,
-                              available=available,
-                              CRAN=CRAN, method=method)
-    update <- cbind(pkglist, lib)
-    colnames(update) <- c("Package", "LibPath")
+    foundpkgs <- download.packages(pkgs, destdir=tmpd,
+                                   available=available,
+                                   CRAN=CRAN, method=method)
 
-    if(!is.null(pkgs))
+    if(!is.null(foundpkgs))
     {
+        update <- cbind(pkgs, lib)
+        colnames(update) <- c("Package", "LibPath")
         for(lib in unique(update[,"LibPath"]))
         {
             oklib <- lib==update[,"LibPath"]
-            for(p in update[oklib,"Package"])
+            for(p in update[oklib, "Package"])
             {
                 okp <- p==pkgs[, 1]
                 for(pkg in pkgs[okp, 2]) zip.unpack(pkg, lib)
