@@ -299,7 +299,7 @@ Cross-building on ix86 Linux
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
 
-    http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross2.tar.bz2
+    http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross4.tar.bz2
 
 (Just unpack this somewhere and put its bin directory in your path.)
 
