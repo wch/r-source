@@ -105,6 +105,10 @@ dev.copy <- function(device, ..., which = dev.next())
 dev.print <- function(device = postscript, ...)
 {
     current.device <- dev.cur()
+    nm <- names(current.device)[1]
+    if(nm == "null device") stop("no device to print from")
+    if(nm != "X11" && nm != "windows" && nm != "gtk"  && nm != "gnome")
+        stop("can only print from screen device")
     dev.off(dev.copy(device = device, ...)) # user must still print this
     dev.set(current.device)
 }
