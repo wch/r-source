@@ -55,7 +55,6 @@ NEW FEATURES
     o	New functions substr<-() and substring<-().
 
 
-
 BUG FIXES
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
@@ -68,6 +67,9 @@ BUG FIXES
 
     o   We now use match.fun() in tapply() so that it won't get trapped
         by non-functions masking FUN.
+
+    o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
+
 
 
 	**************************************************
