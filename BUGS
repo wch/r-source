@@ -371,3 +371,15 @@ Date: Sun, 5 Dec 1999 19:47:02
 Subject: "function" function -- infinite loops and bus error [not user problem]
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
+* PR# 362 *
+Subject: Oprah, Nightline, Maria Shriver, 48 Hours, 20/20 
+From: Make 10K a Month <bo17280@flash.net>
+Date: Tue, 7 Dec 1999 02:13:02 +0100 (MET)
+* PR# 363 *
+Subject: Where should iofflush.c be?
+From: David Emile Lamy <delamy@uswest.net>
+Date: Tue, 7 Dec 1999 01:51:57 -0700 (MST)
+* PR# 364 *
+Subject: CRAN.packages
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 07 Dec 1999 10:27:13 +0100 (CET)
