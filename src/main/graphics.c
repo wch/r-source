@@ -2720,7 +2720,7 @@ void clipPoint (Edge b, double x, double y,
 
     /* For all, if point is 'inside' */
     /* proceed to next clip edge, if any */
-    if (inside (b, x, y, clip))
+    if (inside (b, x, y, clip)) {
 	if (b < Top)
 	    clipPoint (b + 1, x, y, xout, yout, cnt, store, clip, cs);
 	else {
@@ -2730,6 +2730,7 @@ void clipPoint (Edge b, double x, double y,
 	    }
 	    (*cnt)++;
 	}
+    }
 }
 
 void closeClip (double *xout, double *yout, int *cnt, int store,
@@ -2894,7 +2895,7 @@ void GText(double x, double y, int coords, char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
     /* Deallocate any prior string buffer */
-    static *sbuf = NULL;
+    static char *sbuf = NULL;
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
