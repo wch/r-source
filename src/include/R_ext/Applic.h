@@ -168,9 +168,10 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
 
-void optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
-	    d2fcn, void *state, double *typsiz, double fscale, int
-	    method, int iexp, int *msg, int ndigit, int itnlim, int iagflg,
+void optif9(int nr, int n, double *x, 
+	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
+	    void *state, double *typsiz, double fscale, int method, 
+	    int iexp, int *msg, int ndigit, int itnlim, int iagflg,
 	    int iahflg, double dlt, double gradtl, double stepmx,
 	    double steptl, double *xpls, double *fpls, double *gpls,
 	    int *itrmcd, double *a, double *wrk, int *itncnt);
