@@ -114,6 +114,11 @@ Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 Subject: documentation of `las' on `par' help page
 From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Date: Fri, 11 Jan 2002 12:30:20 +0100
+* PR# 1330 *
+Subject:  itemize/item crashes R CMD check 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Tue, 26 Feb 2002 15:13:04 -0500
+--Problem is in Rdconv, not CMD check
 
 Directory:  Graphics
 
@@ -457,25 +462,17 @@ Directory:  incoming
 Subject:  R CMD check 
 From: hoffmann@wsl.ch
 Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
-* PR# 1283 *
-Subject: max/min of NULL gives MININT/MAXINT instead of -INF/+INF
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Fri, 25 Jan 2002 14:36:52 -0500
---this was on purpose (type preserving); R 1.4.1 at least documents this
---We currently plan to return -/+ Inf from 1.5.0 on		-- MMä
 * PR# 1284 *
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1330 *
-Subject:  itemize/item crashes R CMD check 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1424 *
-Subject: ????ºñµð??,?±±?,???¡?¬,???? °¡??/?? ?º?? µ??µ?? °¨??
-From: wookmusic<wook_20@ya.com>
-Date: Sun, 31 Mar 2002 08:17:03 +0900
-* PR# 1425 *
-Subject: A  IE 6.0 patch
-From: tommyboy20gti <tommyboy20gti@hotmail.com>
-Date: Sun, 31 Mar 2002 14:35:47 +0200 (CEST)
+* PR# 1428 *
+Subject: R compile on Solaris 8 fails
+From: brower@bst.rochester.edu
+Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
+* PR# 1429 *
+Subject: fft fails for lengths 392, 588, 968, 980 ....
+From: ripley@stats.ox.ac.uk
+From: Gabriel Fricout <Gabriel.FRICOUT@cmm.ensmp.fr>
+Date: Mon, 1 Apr 2002 22:24:26 +0100 (BST)
+Date: Thu, 28 Mar 2002 09:37:34 +0100
