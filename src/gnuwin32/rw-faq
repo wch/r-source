@@ -53,8 +53,8 @@ Table of Contents
   7.2 How do I include compiled C code?
   7.3 How do I debug code that I have compiled and dyn.load-ed?
   7.4 How do I include C++ code?
-  7.5 The output from my C code disappears. Why?
-  7.6 The output from my Fortran code disappears. Why?
+  7.5 The output from my C code disappears.  Why?
+  7.6 The output from my Fortran code disappears.  Why?
   7.7 The console freezes when my compiled code is running.
   7.8 The Perl scripts don't seem to work under Windows 9x/ME
 
@@ -65,7 +65,7 @@ Table of Contents
 **************
 
 This FAQ is for the Windows port of R: it describes features specific to
-that version. The main R FAQ can be found at
+that version.  The main R FAQ can be found at
 
      `http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html'.
 
@@ -105,24 +105,24 @@ First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
 work.  Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to use `SetupR.exe' or `miniR.exe'. Just
+The simplest way is to use `SetupR.exe' or `miniR.exe'.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you supressed making a group for R).
 
 For a manual installation, choose a location and unzip the zip files
 (with a tool that preserves long file names and the directory structure:
-we recommend the INFO-ZIP project's `unzip'). All the files will unpack
-into a directory `rw1030'.
+we recommend the INFO-ZIP project's `unzip').  All the files will
+unpack into a directory `rw1030'.
 
-Choose a working directory for R. Unless you used `SetupR.exe' or
+Choose a working directory for R.  Unless you used `SetupR.exe' or
 `miniR.exe' (which did this for you by default), make a shortcut to
 `rw1030\bin\Rgui.exe' on your desktop or somewhere on the Start menu
-file tree. Right-click the shortcut, select Properties... and change
+file tree.  Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
-field, for example `--sdi --max-mem-size=40M'. You can also set
+field, for example `--sdi --max-mem-size=40M'.  You can also set
 environment variables at the end of the Target field, for example
 `R_LIBS=e:/R/library'.
 
@@ -155,14 +155,14 @@ several times slower on some tasks).
 2.5 How can I keep workspaces for different projects in different directories?
 ==============================================================================
 
-Create a separate shortcut for each project: see Q2.3. All the paths to
+Create a separate shortcut for each project: see Q2.3.  All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
 Alternatively, start R by double-clicking on a saved `.RData' file in
 the directory for the project you want to use, or drag-and-drop a file
-with extension `.RData' onto an R shortcut (which acts in the same way
-as double-clicking the file).
+with extension `.RData' onto an R shortcut.  In either case, the
+working directory will be set to that containing the file.
 
 2.6 How do I print from R?
 ==========================
@@ -189,17 +189,17 @@ Yes, if you have Perl and the files for making source packages (from
 `SetupR.exe' or `rw1030sp.zip') installed.  The Windows analogue is
 `Rcmd BATCH': use `Rcmd BATCH --help' for full details.
 
-Otherwise you can set up a batch file using `Rterm.exe'. A sample batch
-file might contain (as one line)
+Otherwise you can set up a batch file using `Rterm.exe'.  A sample
+batch file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
 2.8 Can I use rw1030 with ESS and emacs?
 ========================================
 
-Yes. The latest versions of ESS (e.g. 5.1.18) come with support for this
-version of R, and there is support for interrupting the R process from
-ESS (by `C-c C-c').
+Yes.  The latest versions of ESS (e.g. 5.1.18) come with support for
+this version of R, and there is support for interrupting the R process
+from ESS (by `C-c C-c').
 
 For help with ESS, please send email to <ESS-help@stat.ethz.ch>, not
 the R mailing lists.
@@ -211,7 +211,7 @@ Several places in the documentation use these terms.
 
 The working directory is the directory from which `Rgui' or `Rterm' was
 launched, unless a shortcut was used when it is given by the `Start in'
-field of the shortcut's properties. You can find this from R code by
+field of the shortcut's properties.  You can find this from R code by
 the call `getwd()'.
 
 The home directory is set as follows:
@@ -228,13 +228,13 @@ You can find this from R code by `Sys.getenv("R_USER")'.
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-`"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+`"d:\\rw1030\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
 for yourself by using forward slashes as path separators: they do work
 under Windows.
 
 Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but lots of people writing
-packages for Unix do not bother. So it is worth trying the alternative
+packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like `PROGRA~1'; you can get it as the `MS-DOS
 name' from the Properties on most versions of Windows).
 
@@ -250,7 +250,8 @@ association for extension `.RData' is set in the Registry.
 
 You can add the Registry entries by running `RSetReg.exe' in the `bin'
 folder, and remove them by running this with argument `/U'.  Note that
-the settings are all per machine and not per user.
+the settings are all per machine and not per user, and that this
+neither sets up nor removes the file associations.
 
 
 3 Packages
@@ -269,25 +270,26 @@ menu items on the `Packages' menu to provide a point-and-click
 interface to package installation.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
-`http://cran.r-project.org/bin/windows/contrib/ReadMe'
+`http://cran.r-project.org/bin/windows/contrib/ReadMe'.
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, get `rw1030sp.zip' from the distribution
 (see Q1.1; you may already have installed this from `SetupR.exe') and
-unpack it in `rw1030'.  Then read the file `readme.packages'.  You will
-need to collect and install several tools to use this.  Once you have
-done so, just run `Rcmd INSTALL pkgname'. To check the package (run all
-the examples on its help pages and in its test suite, if any) use `Rcmd
-check pkgname': see the `Writing R Extensions' manual.
+unpack it in the parent of `rw1030'.  Then read the file
+`readme.packages'.  You will need to collect and install several tools
+to use this.  Once you have done so, just run `Rcmd INSTALL pkgname'.
+To check the package (including running all the examples on its help
+pages and in its test suite, if any) use `Rcmd check pkgname': see the
+`Writing R Extensions' manual.
 
 3.2 I don't have permission to write to the `rw1030\library' directory.
 =======================================================================
 
 You can install packages anywhere and use the environment variable
-`R_LIBS' to point to the library location(s). You can also set the R
+`R_LIBS' to point to the library location(s).  You can also set the R
 variable `.lib.loc' in your `.Rprofile' or when running R.
 
-Suppose your packages are installed in `p:\mylibs'. Then you can EITHER
+Suppose your packages are installed in `p:\mylibs'.  Then you can EITHER
 
      set the environment variable R_LIBS to p:\mylibs
 
@@ -308,15 +310,15 @@ need to use the System Configuration Utility (under Programs,
 Accessories, System Tools on the Start menu).  You can also set them on
 the command line, for example in the shortcut you could have
 
-     path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
+     path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
 
 and you can set variables in a file `.Renviron' in the working directory
 or your home directory, for example
 
-     R_LIBS=e:/R/library
+     R_LIBS=p:/mylibs
 
-The order of precedence is the command line then `.Renviron' then the
-inherited environment.
+The order of precedence for environmental variables is the command line
+then `.Renviron' then the inherited environment.
 
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
@@ -367,12 +369,15 @@ For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)'
 after `library(tcltk)') you need to have Tcl installed.  Download
 either ActiveTcl 8.3.3 from
 `http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/' or `tcl832.exe'
-from `dev.scriptics.com' and install it. (That will put the `bin'
+from `dev.scriptics.com' and install it.  (That will put the `bin'
 directory containing the Tcl and Tk DLLs in your path).  You then need
 to set the environment variable `TCL_LIBRARY', to something like
 `c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code for the package
 will warn you if this is unset, and Q3.2 explains how to set them.  NB:
-do not quote the path, even if as here it contains spaces.)
+do not quote the path, even if as here it contains spaces. If you
+forget, you can set the variable inside R by something like
+         Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
+.)
 
 3.7 Hyperlinks in Compiled HTML sometimes do not work.
 ======================================================
@@ -380,7 +385,7 @@ do not quote the path, even if as here it contains spaces.)
 Unfortunately, hyperlinks in compiled HTML files used from R are
 interpreted relative to the current working directory of the R process,
 not relative to the `pkg.chm' file.  This was not discovered until
-`rw1021', files made before that version work incorrectly.  Remake the
+`rw1021': files made before that version work incorrectly.  Remake the
 package to cure this.
 
 
@@ -395,12 +400,12 @@ package to cure this.
      copying in the GUI version.
 
    * Command-line editing is always available, but is simpler than the
-     readline-based editing on Unix. For `Rgui.exe', the menu item
+     readline-based editing on Unix.  For `Rgui.exe', the menu item
      `Help | Console' will give details.  For `Rterm.exe' see file
      `README.rterm'.
 
    * Using `help.start()' does not automatically send help requests to
-     the browser: use `options(htmlhelp=T)' to turn this on.
+     the browser: use `options(htmlhelp=TRUE)' to turn this on.
 
    * The HTML help system can only access packages installed in the
      standard place.
@@ -415,22 +420,22 @@ package to cure this.
 ================================================================
 
 You have read the `README'? There are file menus on the R console,
-pager and graphics windows. You can source and save from those menus,
-and copy the graphics to `png', `jpeg', `bmp', `postscript' or
-`metafile'. There are right-click menus giving shortcuts to menu items,
-and optionally toolbars with buttons giving shortcuts to frequent
-operations.
+pager and graphics windows.  You can source and save from those menus,
+and copy the graphics to `png', `jpeg', `bmp', `postscript', `PDF' or
+`metafile'.  There are right-click menus giving shortcuts to menu
+items, and optionally toolbars with buttons giving shortcuts to
+frequent operations.
 
 If you resize the R console the `options(width=)' is automatically set
 to the console width (unless disabled in the configuration file).
 
-The graphics has a history mechanism. As the README says:
+The graphics has a history mechanism.  As the README says:
 
-     `The History menu allows the recording of plots. When plots have
+     `The History menu allows the recording of plots.  When plots have
      been recorded they can be reviewed by <PgUp> and <PgDn>, saved and
      replaced.  Recording can be turned on automatically (the Recording
      item on the list) or individual plots can be added (Add or the
-     <INS> key). The whole plot history can be saved to or retrieved
+     <INS> key).  The whole plot history can be saved to or retrieved
      from an R variable in the global environment.
 
      There is only one graphics history shared by all the windows
@@ -438,8 +443,8 @@ The graphics has a history mechanism. As the README says:
 
 The R console and graphics windows have configuration files stored in
 the `RHOME\etc' directory called `Rconsole' and `Rdevga'; you can keep
-personal copies in your `HOME' directory. They contain comments which
-should suffice for you to edit them to your preferences. For more
+personal copies in your `HOME' directory.  They contain comments which
+should suffice for you to edit them to your preferences.  For more
 details see `?Rconsole'.  There is a Preferences editor invoked from
 the `Edit' menu which can be used to edit the file `Rconsole'.
 
@@ -456,7 +461,7 @@ either in the call to `windows' or as options: see `?windows'.
 
 On one of our systems, the screen height is reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x
-1200 modes. In fact it is a 21" monitor and 400mm x 300mm!
+1200 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
 
 5 Workspaces
@@ -472,13 +477,16 @@ Have you changed the working directory?: see Q5.2.
 
 Use the `File | Change Dir' menu item to select a new working
 directory: this defaults to the last directory you loaded a file from.
-The workspace is saved in the working directory. You can also save a
+The workspace is saved in the working directory.  You can also save a
 snapshot of the workspace from the `Save Workspace' menu item.
+
+From the command line you can change the working directory by the
+function `setwd': see its help page.
 
 5.3 Can I load workspaces saved under Unix/GNU-Linux?
 =====================================================
 
-Yes. The converse (saving on Windows, loading on Unix) also works on
+Yes.  The converse (saving on Windows, loading on Unix) also works on
 almost all Unix systems, and workspaces can be interchanged with the
 Macintosh port too.
 
@@ -492,7 +500,7 @@ Macintosh port too.
 for example, in the console and to annotate graphs.
 
 We believe this is possible by setting suitable fonts in the Rconsole
-and Rdevga configuration files (see Q4.2). You can specify additional
+and Rdevga configuration files (see Q4.2).  You can specify additional
 fonts in Rdevga, and use them by
 
      par(font=, font.lab=, font.main=, font.sub=)
@@ -503,8 +511,8 @@ these (up to 13 more) or replace them.
 6.2 I don't see characters with accents at the R console, for example in ?text.
 ===============================================================================
 
-You need to specify a font in Rconsole (see Q4.2) that supports latin1
-encoding. The default, `Courier New', does on our systems, as does
+You need to specify a font in Rconsole (see Q4.2) that supports Latin1
+encoding.  The default, `Courier New', does on our systems, as does
 `FixedSys'.  This may be a problem in other locales, especially for
 non-Western European languages.
 
@@ -512,18 +520,18 @@ non-Western European languages.
 ==================================================================
 
 This is deliberate: the console output is buffered and re-written in
-chunks to be less distracting. You can turn buffering off or on from
+chunks to be less distracting.  You can turn buffering off or on from
 the Misc menu or the right-click menu: <Ctrl-W> toggles the setting.
 
 If you are sourcing R code or writing from a function, there is another
-option. A call to the R function `flush.console()' will write out the
+option.  A call to the R function `flush.console()' will write out the
 buffer and so update the console.
 
 6.4 Long lines in the console or pager are truncated.
 =====================================================
 
 They only *seem* to be truncated: that $ at the end indicates you can
-scroll the window to see the rest of the message. Use the horizontal
+scroll the window to see the rest of the message.  Use the horizontal
 scrollbar or the <CTRL+arrow> keys to scroll horizontally.
 
 
@@ -533,14 +541,15 @@ scrollbar or the <CTRL+arrow> keys to scroll horizontally.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources. Suppose you want to compile R-1.3.0.
+Get the R sources.  Suppose you want to compile R-1.3.0.  Start in a
+directory whose path does not contain spaces, and run
 
      tar zxvf R-1.3.0.tgz
      cd R-1.3.0
      cd src\gnuwin32
 
-Now read the `INSTALL' file and set up all the tools needed. Then you
-can just use `make', sit back and wait. (A complete build takes about
+Now read the `INSTALL' file and set up all the tools needed.  Then you
+can just use `make', sit back and wait.  (A complete build takes about
 15 minutes on a 300MHz PII with a fast local disc.)
 
 You may need to compile under a case-honouring file system: we found
@@ -586,13 +595,13 @@ However, note
    * gdb will only be able to find the source code if we run in the
      location where the source was compiled (`rw1030/src/gnuwin32' for
      the main system, `rw1030/src/library/mypkg/src' for a package),
-     unless told otherwise by the `directory' command. It is most
+     unless told otherwise by the `directory' command.  It is most
      convenient to set a list of code locations via `directory'
      commands in the file `.gdbinit' in the directory from which `gdb'
      is run.
 
    * It is only possible to set breakpoints in a DLL after the DLL has
-     been loaded. So a way to examine the function `tukeyline' in
+     been loaded.  So a way to examine the function `tukeyline' in
      package `eda' might be
 
                gdb ../../../../bin/Rgui.exe
@@ -634,9 +643,9 @@ You need to do two things:
 (a) Write a wrapper to export the symbols you want to call from R as
 `extern "C"'.
 
-(b) Include the C++ libraries in the link to make the DLL. Suppose
+(b) Include the C++ libraries in the link to make the DLL.  Suppose
 `X.cc' contains your C++ code, and `X_main.cc' is the wrapper, as in
-the example in `_Writing R Extensions_'. Then build the DLL by (`gcc')
+the example in `_Writing R Extensions_'.  Then build the DLL by (`gcc')
 
      ...\bin\Rcmd SHLIB X.cc X_main.cc
 
@@ -657,23 +666,23 @@ Note that you will not see the messages from this example in the GUI
 console: see the next section.
 
 This example is in package `cxx_0.0-x.tar.gz' in the
-`src/contrib/Devel' section on CRAN, and that can be compiled as
+`src/contrib/Devel' section on CRAN, and that can be compiled as a
 package in the usual way on Windows.
 
-7.5 The output from my C code disappears. Why?
-==============================================
+7.5 The output from my C code disappears.  Why?
+===============================================
 
 The `Rgui.exe' console is a Windows application: writing to `stdout' or
-`stderr' will not produce output in the console. (This will work with
-`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead. These are declared
+`stderr' will not produce output in the console.  (This will work with
+`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead.  These are declared
 in header file `R_ext/PrtUtil.h'.
 
 Note that output from the console is delayed (*note The output to the
 console seems to be delayed::), so that you will not normally see any
 output before returning to the R prompt.
 
-7.6 The output from my Fortran code disappears. Why?
-====================================================
+7.6 The output from my Fortran code disappears.  Why?
+=====================================================
 
 Writing to Fortran output writes to a file, not the `Rgui' console.
 Use one of the subroutines `dblepr', `intpr' or `realpr' documented in
@@ -691,15 +700,13 @@ then `R_ProcessEvents()'.
 7.8 The Perl scripts don't seem to work under Windows 9x/ME
 ===========================================================
 
-Yes, we know that for example `Rcmd check' can fail with some versions
-of Perl on some 16-bit Windows installations.  Usually there are
-alternatives such as `make pkgcheck-foo', but you could try getting a
-modern operating system!
-
-Hopefully this version (rw1030) is more robust in this respect.
+This has been seen under some versions of Perl and Windows version
+(95/98/ME) which use a 16-bit shell.  Hopefully this version (rw1030) is
+more robust in this respect: it _may_ help to upgrade your Perl version
+(5.6.1, build 626 was current at the time of writing).
 
 
 
-Last edited 2001 May 18 by Professor B. D. Ripley
+Last edited 2001 June 18 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 

@@ -105,14 +105,12 @@ Hyperlinks in Compiled HTML sometimes do not work.</a></li>
 
 <ul>
 <li><a href=
-"#What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version%20of%20R%3f">
+"#What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
 4.1 What should I expect to behave differently from the Unix
 version of R?</a></li>
 
-<li><a href=
-"#I%20hear%20about%20some%20nifty%20features.%20Please%20tell%20me%20about%20them!">
-4.2 I hear about some nifty features: please tell me about
-them!</a></li>
+<li><a href="#I%20hear%20about%20some%20nifty%20features.">4.2 I
+hear about some nifty features: please tell me about them!</a></li>
 
 <li><a href="#Circles%20appear%20as%20ovals%20on%20screen">4.3
 Circles appear as ovals on screen</a></li>
@@ -123,7 +121,7 @@ Circles appear as ovals on screen</a></li>
 
 <ul>
 <li><a href=
-"#My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20how%20do%20I%20stop%20this%3f">
+"#My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
 5.1 My workspace gets saved in a strange place: how do I stop
 this?</a></li>
 
@@ -327,8 +325,9 @@ projects.</p>
 <p>Alternatively, start R by double-clicking on a saved <code>
 .RData</code> file in the directory for the project you want to
 use, or drag-and-drop a file with extension <code>.RData</code>
-onto an R shortcut (which acts in the same way as double-clicking
-the file). <a name="How%20do%20I%20print%20from%20R%3f"></a></p>
+onto an R shortcut. In either case, the working directory will be
+set to that containing the file. <a name=
+"How%20do%20I%20print%20from%20R%3f"></a></p>
 
 <h2>2.6 How do I print from R?</h2>
 
@@ -408,7 +407,7 @@ Sys.getenv("R_USER")</code>. <a name=
 
 <p>How did you specify it? Backslashes have to be doubled in R
 character strings, so for example one needs <code>
-"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make life
+"d:\\rw1030\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make life
 easier for yourself by using forward slashes as path separators:
 they do work under Windows.</p>
 
@@ -434,7 +433,8 @@ set in the Registry.</p>
 <p>You can add the Registry entries by running <code>
 RSetReg.exe</code> in the <code>bin</code> folder, and remove them
 by running this with argument <code>/U</code>. Note that the
-settings are all per machine and not per user.</p>
+settings are all per machine and not per user, and that this
+neither sets up nor removes the file associations.</p>
 
 <hr>
 <a name="Packages"></a> 
@@ -460,18 +460,19 @@ interface to package installation.</p>
 
 <p>Note that the pre-compiled versions on CRAN are unsupported: see
 <a href="http://cran.r-project.org/bin/windows/contrib/ReadMe">
-http://cran.r-project.org/bin/windows/contrib/ReadMe</a></p>
+http://cran.r-project.org/bin/windows/contrib/ReadMe</a>.</p>
 
 <p>If there is not a pre-compiled version or that is not up-to-date
 or you prefer compiling from source, get <code>rw1030sp.zip</code>
 from the distribution (see Q1.1; you may already have installed
-this from <code>SetupR.exe</code>) and unpack it in <code>
-rw1030</code>. Then read the file <code>readme.packages</code>. You
-will need to collect and install several tools to use this. Once
-you have done so, just run <code>Rcmd INSTALL pkgname</code>. To
-check the package (run all the examples on its help pages and in
-its test suite, if any) use <code>Rcmd check pkgname</code>: see
-the `Writing R Extensions' manual. <a name=
+this from <code>SetupR.exe</code>) and unpack it in the parent of
+<code>rw1030</code>. Then read the file <code>
+readme.packages</code>. You will need to collect and install
+several tools to use this. Once you have done so, just run <code>
+Rcmd INSTALL pkgname</code>. To check the package (including
+running all the examples on its help pages and in its test suite,
+if any) use <code>Rcmd check pkgname</code>: see the `Writing R
+Extensions' manual. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1030%5clibrary%20directory">
 </a></p>
 
@@ -513,18 +514,19 @@ System Tools on the Start menu). You can also set them on the
 command line, for example in the shortcut you could have</p>
 
 <pre>
-path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
+path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
 </pre>
 
 <p>and you can set variables in a file <code>.Renviron</code> in
 the working directory or your home directory, for example</p>
 
 <pre>
-R_LIBS=e:/R/library
+R_LIBS=p:/mylibs
 </pre>
 
-<p>The order of precedence is the command line then <code>
-.Renviron</code> then the inherited environment. <a name=
+<p>The order of precedence for environmental variables is the
+command line then <code>.Renviron</code> then the inherited
+environment. <a name=
 "The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
 </a></p>
 
@@ -596,16 +598,22 @@ You then need to set the environment variable <code>
 TCL_LIBRARY</code>, to something like <code>c:/Program
 Files/Tcl/lib/tcl8.3</code>. (The startup code for the package will
 warn you if this is unset, and Q3.2 explains how to set them. NB:
-do not quote the path, even if as here it contains spaces.) <a
-name="Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work.">
-</a></p>
+do not quote the path, even if as here it contains spaces. If you
+forget, you can set the variable inside R by something like</p>
+
+<pre>
+    Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
+</pre>
+
+.) <a name="Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work.">
+</a> 
 
 <h2>3.7 Hyperlinks in Compiled HTML sometimes do not work.</h2>
 
 <p>Unfortunately, hyperlinks in compiled HTML files used from R are
 interpreted relative to the current working directory of the R
 process, not relative to the <code>pkg.chm</code> file. This was
-not discovered until <code>rw1021</code>, files made before that
+not discovered until <code>rw1021</code>: files made before that
 version work incorrectly. Remake the package to cure this.</p>
 
 <hr>
@@ -614,7 +622,7 @@ version work incorrectly. Remake the package to cure this.</p>
 <h1>4 Windows Features</h1>
 
 <a name=
-"What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version%20of%20R%3f">
+"What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
 </a> 
 
 <h2>4.1 What should I expect to behave differently from the Unix
@@ -632,8 +640,8 @@ menu item `Help | Console' will give details. For <code>
 Rterm.exe</code> see file <code>README.rterm</code>.</li>
 
 <li>Using <code>help.start()</code> does not automatically send
-help requests to the browser: use <code>options(htmlhelp=T)</code>
-to turn this on.</li>
+help requests to the browser: use <code>
+options(htmlhelp=TRUE)</code> to turn this on.</li>
 
 <li>The HTML help system can only access packages installed in the
 standard place.</li>
@@ -645,9 +653,7 @@ with either "/" or "\\".</li>
 and that of <code>shell()</code>.</li>
 </ul>
 
-<a name=
-"I%20hear%20about%20some%20nifty%20features.%20Please%20tell%20me%20about%20them!">
-</a> 
+<a name="I%20hear%20about%20some%20nifty%20features."></a> 
 
 <h2>4.2 I hear about some nifty features: please tell me about
 them!</h2>
@@ -655,10 +661,10 @@ them!</h2>
 <p>You have read the <code>README</code>? There are file menus on
 the R console, pager and graphics windows. You can source and save
 from those menus, and copy the graphics to <code>png</code>, <code>
-jpeg</code>, <code>bmp</code>, <code>postscript</code> or <code>
-metafile</code>. There are right-click menus giving shortcuts to
-menu items, and optionally toolbars with buttons giving shortcuts
-to frequent operations.</p>
+jpeg</code>, <code>bmp</code>, <code>postscript</code>, <code>
+PDF</code> or <code>metafile</code>. There are right-click menus
+giving shortcuts to menu items, and optionally toolbars with
+buttons giving shortcuts to frequent operations.</p>
 
 <p>If you resize the R console the <code>options(width=)</code> is
 automatically set to the console width (unless disabled in the
@@ -710,7 +716,7 @@ and 1600 x 1200 modes. In fact it is a 21" monitor and 400mm x
 <h1>5 Workspaces</h1>
 
 <a name=
-"My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20how%20do%20I%20stop%20this%3f">
+"My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
 </a> 
 
 <h2>5.1 My workspace gets saved in a strange place: how do I stop
@@ -726,7 +732,10 @@ this?</h2>
 directory: this defaults to the last directory you loaded a file
 from. The workspace is saved in the working directory. You can also
 save a snapshot of the workspace from the `Save Workspace' menu
-item. <a name=
+item.</p>
+
+<p>From the command line you can change the working directory by
+the function <code>setwd</code>: see its help page. <a name=
 "Can%20I%20load%20workspaces%20saved%20under%20Unix%2fGNU-Linux%3f">
 </a></p>
 
@@ -766,7 +775,7 @@ add to these (up to 13 more) or replace them. <a name=
 example in ?text.</h2>
 
 <p>You need to specify a font in Rconsole (see Q4.2) that supports
-latin1 encoding. The default, <code>Courier New</code>, does on our
+Latin1 encoding. The default, <code>Courier New</code>, does on our
 systems, as does <code>FixedSys</code>. This may be a problem in
 other locales, especially for non-Western European languages. <a
 name=
@@ -803,7 +812,8 @@ keys to scroll horizontally.</p>
 
 <h2>7.1 How can I compile R from source?</h2>
 
-<p>Get the R sources. Suppose you want to compile R-1.3.0.</p>
+<p>Get the R sources. Suppose you want to compile R-1.3.0. Start in
+a directory whose path does not contain spaces, and run</p>
 
 <pre>
 tar zxvf R-1.3.0.tgz
@@ -962,7 +972,7 @@ GUI console: see the next section.</p>
 
 <p>This example is in package <code>cxx_0.0-x.tar.gz</code> in the
 <code>src/contrib/Devel</code> section on CRAN, and that can be
-compiled as package in the usual way on Windows. <a name=
+compiled as a package in the usual way on Windows. <a name=
 "The%20output%20from%20my%20C%20code%20disappears."></a></p>
 
 <h2>7.5 The output from my C code disappears. Why?</h2>
@@ -1004,18 +1014,15 @@ R_ProcessEvents()</code>. <a name=
 <h2>7.8 The Perl scripts don't seem to work under Windows
 9x/ME</h2>
 
-<p>Yes, we know that for example <code>Rcmd check</code> can fail
-with some versions of Perl on some 16-bit Windows installations.
-Usually there are alternatives such as <code>make
-pkgcheck-foo</code>, but you could try getting a modern operating
-system!</p>
-
-<p>Hopefully this version (rw1030) is more robust in this
-respect.</p>
+<p>This has been seen under some versions of Perl and Windows
+version (95/98/ME) which use a 16-bit shell. Hopefully this version
+(rw1030) is more robust in this respect: it <em>may</em> help to
+upgrade your Perl version (5.6.1, build 626 was current at the time
+of writing).</p>
 
 <hr width="100%">
-<address>Last edited 2001 May 18 by Professor B. D. Ripley <code><a
-href="mailto:ripley@stats.ox.ac.uk">
+<address>Last edited 2001 June 18 by Professor B. D. Ripley <code>
+<a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>
 </html>
