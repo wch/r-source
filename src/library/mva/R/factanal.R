@@ -269,7 +269,7 @@ promax <- function(x, m = 4)
     Phi <- attr(x, "covariance")
     xx <- varimax(x)
     x <- xx$loadings
-    Q <- x * abs(x)^3
+    Q <- x * abs(x)^(m-1)
     U <- lm.fit(x, Q)$coefficients
     d <- diag(solve(t(U) %*% U))
     U <- U %*% diag(sqrt(d))
