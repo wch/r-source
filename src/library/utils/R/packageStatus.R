@@ -85,8 +85,10 @@ summary.packageStatus <- function(object, ...)
         ok <- (object$inst$LibPath==k)
         cat("\n*** Library ", k, "\n", sep="")
         if(any(ok)){
-            print(tapply(object$inst$Package[ok],
-                         object$inst$Status[ok],
+            i <- object$inst
+            Package <- ifelse(is.na(i$Bundle), i$Package,
+                              paste(i$Bundle, i$Package, sep=":"))
+            print(tapply(Package[ok], i$Status[ok],
                          function(x) sort(as.character(x))))
         }
     }
