@@ -166,6 +166,8 @@ void GraphicCopy(WindowPtr window);
 #define kRGUISep   1001
 #define kRGUIText   1002
 
+#define kRCustomEventClass 'revt'
+#define kRWakeUpPlease 	'wake'
 
 OSStatus 	InitMLTE(void);
 TXNObject	RConsoleOutObject = NULL;
@@ -194,7 +196,7 @@ WindowRef	RAboutWindow=NULL;
 WindowRef	RPrefsWindow=NULL;
 WindowRef	ConsoleWindow=NULL;
 
-ProcessSerialNumber AquaPSN;
+ProcessSerialNumber AquaPSN,RPSN;
 void RAqua2Front(void);
 void SendReturnKey(void);
 
@@ -397,7 +399,8 @@ static const EventTypeSpec	RGlobalWinEvents[] =
         { kEventClassWindow, kEventWindowFocusRelinquish },
         { kEventClassFont, kEventFontPanelClosed},
         { kEventClassFont, kEventFontSelection},
-        { kEventClassMouse, kEventMouseDown}
+        { kEventClassMouse, kEventMouseDown},
+        { kRCustomEventClass, kRWakeUpPlease }
 };
 
 static const EventTypeSpec	RCloseWinEvent[] = 
@@ -461,6 +464,8 @@ TXNControlTag   txnControlTag[1];
 TXNControlData  txnControlData[1];
 TXNMargins      txnMargins;
            
+static	pascal	void 	RIdleTimer(EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void * inUserData);
+
 static	pascal	void	OtherEventLoops( EventLoopTimerRef inTimer, void *inUserData );
 static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData );
 static	pascal	void	FlushConsoleTimer( EventLoopTimerRef inTimer, void *inUserData );
@@ -667,9 +672,14 @@ void Raqua_StartConsole(Rboolean OpenConsole)
 	Raqua_read_history(R_HistoryFile);
     }   
         
+    
+   InstallEventLoopIdleTimer(GetMainEventLoop(), kEventDurationMillisecond, kEventDurationMillisecond*2, (EventLoopIdleTimerUPP)RIdleTimer, NULL, NULL);
+
+
+    
     InstallEventLoopTimer(GetMainEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
     InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, NULL);
-    InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond *5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, NULL);
+    InstallEventLoopTimer(GetMainEventLoop(),0, kEventDurationSecond*5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, NULL);
 
     RAqua2Front();
 
@@ -761,6 +771,17 @@ void SetUpRAquaMenu(void){
        	
 }
 
+ 
+static	pascal	void 	RIdleTimer(EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void * inUserData)
+{
+    EventRef	REvent;
+    OSErr err1, err2;
+
+    err1 = CreateEvent(NULL, kRCustomEventClass, kRWakeUpPlease, 0, kEventAttributeNone, &REvent);
+    err2 = PostEventToQueue( GetMainEventQueue(), REvent, kEventPriorityHigh);
+
+}
+ 
 
 static	pascal	void	FlushConsoleTimer( EventLoopTimerRef inTimer, void *inUserData )
 {
@@ -894,7 +915,7 @@ void Raqua_WriteConsole(char *str, int len)
          TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
          err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
        }
-        Raqua_ProcessEvents();
+         Raqua_ProcessEvents();
      } else {
      fprintf(stderr,"%s", buf);
     }
@@ -993,7 +1014,7 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
    TXNSetTypeAttributes( RConsoleInObject, 1, RInAttr, 0, kTXNEndOffset );
 
      
-   while(!InputFinished & !HaveBigBuffer)
+   while(!InputFinished & !HaveBigBuffer) 
         Raqua_ProcessEvents();
 
   
@@ -1176,7 +1197,7 @@ int GetTextFromWindow(char *msg, char *text, int len){
     InputDialogFinished = false;
     
     while(!InputDialogFinished)
-                Raqua_ProcessEvents();
+            Raqua_ProcessEvents();
                 
     if(InputDialogAns == kRDlogProc){
         GetControlByID( RInputDialog, &DLogTextID, &RDlogControl );
@@ -2177,6 +2198,10 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
        
         switch(eventClass){
          
+        case kRCustomEventClass:
+         err = noErr;
+        break;
+ 
         case kEventClassMouse:
          if(eventKind == kEventMouseDown){
             if(ConvertEventRefToEventRecord(inEvent, &outEvent))
@@ -3368,8 +3393,10 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
 }
 
 
-
- void	Raqua_ProcessEvents(void)
+void DoNothing(void){
+ return;
+}
+void	Raqua_ProcessEvents(void)
 {
     EventRef theEvent;
     EventRecord	outEvent;
@@ -3380,11 +3407,14 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
      if(otherPolledEventHandler)
       otherPolledEventHandler();
 */
+
+    
+
     if(CheckEventQueueForUserCancel())
        onintr();
 
     
-    if(ReceiveNextEvent(0, NULL,  1/5 /*kEventDurationForever kEventDurationNoWait*/  ,true,&theEvent)== noErr){
+    if(ReceiveNextEvent(0, NULL, kEventDurationForever  ,true,&theEvent)== noErr){
         conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
     
         if(conv && (outEvent.what == kHighLevelEvent))
@@ -3394,11 +3424,8 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
         ReleaseEvent(theEvent);
             
     } 
-    
-
+//    fprintf(stderr,"\n process events");
 }
-
-
 
 static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData )
 {
