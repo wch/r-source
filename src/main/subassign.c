@@ -1096,7 +1096,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     if (n > 0 && ny == 0)
 	errorcall(call, _("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, _("no of items to replace is not a multiple of replacement length"));
+	errorcall(call, _("number of items to replace is not a multiple of replacement length"));
 
     if (stretch) {
 	yi = allocList(stretch - nx);

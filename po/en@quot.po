@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-18 07:43+0000\n"
-"PO-Revision-Date: 2005-02-18 07:43+0000\n"
+"POT-Creation-Date: 2005-02-22 08:47+0000\n"
+"PO-Revision-Date: 2005-02-22 08:47+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +148,7 @@ msgid "type not yet implemented"
 msgstr "type not yet implemented"
 
 #: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:635
-#: src/main/platform.c:841 src/unix/sys-std.c:897 src/unix/sys-std.c:919
+#: src/main/platform.c:850 src/unix/sys-std.c:897 src/unix/sys-std.c:919
 msgid "invalid file argument"
 msgstr "invalid file argument"
 
@@ -225,7 +225,7 @@ msgstr "don't be silly!: your machine has a 4Gb address limit"
 msgid "cannot decrease memory limit"
 msgstr "cannot decrease memory limit"
 
-#: src/gnuwin32/extra.c:786 src/main/platform.c:881
+#: src/gnuwin32/extra.c:786 src/main/platform.c:890
 msgid "invalid 'path' argument"
 msgstr "invalid ‘path’ argument"
 
@@ -249,56 +249,56 @@ msgstr "Unable to open the clipboard"
 msgid "Unable to write to the clipboard"
 msgstr "Unable to write to the clipboard"
 
-#: src/gnuwin32/extra.c:1131
+#: src/gnuwin32/extra.c:1134
 msgid "default must be a character string"
 msgstr "default must be a character string"
 
-#: src/gnuwin32/extra.c:1133
+#: src/gnuwin32/extra.c:1136
 msgid "default is overlong"
 msgstr "default is overlong"
 
-#: src/gnuwin32/extra.c:1142
+#: src/gnuwin32/extra.c:1145
 msgid "caption must be a character string"
 msgstr "caption must be a character string"
 
-#: src/gnuwin32/extra.c:1144
+#: src/gnuwin32/extra.c:1147
 msgid "'multi' must be a logical value"
 msgstr "‘multi’ must be a logical value"
 
-#: src/gnuwin32/extra.c:1146
+#: src/gnuwin32/extra.c:1149
 msgid "'filterindex' must be an integer value"
 msgstr "‘filterindex’ must be an integer value"
 
-#: src/gnuwin32/extra.c:1280
+#: src/gnuwin32/extra.c:1283
 msgid "'title' must be a character string"
 msgstr "‘title’ must be a character string"
 
-#: src/gnuwin32/extra.c:1312
+#: src/gnuwin32/extra.c:1315
 msgid "'which' must be length 1"
 msgstr "‘which’ must be length 1"
 
-#: src/gnuwin32/extra.c:1342
+#: src/gnuwin32/extra.c:1345
 msgid "invalid value of 'which'"
 msgstr "invalid value of ‘which’"
 
-#: src/gnuwin32/extra.c:1344 src/gnuwin32/extra.c:1346
-#: src/gnuwin32/extra.c:1386
+#: src/gnuwin32/extra.c:1347 src/gnuwin32/extra.c:1349
+#: src/gnuwin32/extra.c:1389
 msgid "invalid device"
 msgstr "invalid device"
 
-#: src/gnuwin32/extra.c:1347
+#: src/gnuwin32/extra.c:1350
 msgid "requires SDI mode"
 msgstr "requires SDI mode"
 
-#: src/gnuwin32/extra.c:1380
+#: src/gnuwin32/extra.c:1383
 msgid "invalid graphical device number"
 msgstr "invalid graphical device number"
 
-#: src/gnuwin32/extra.c:1390
+#: src/gnuwin32/extra.c:1393
 msgid "bad device"
 msgstr "bad device"
 
-#: src/gnuwin32/extra.c:1629 src/gnuwin32/extra.c:1637
+#: src/gnuwin32/extra.c:1632 src/gnuwin32/extra.c:1640
 msgid "invalid input in Rmbstowcs"
 msgstr "invalid input in Rmbstowcs"
 
@@ -636,7 +636,7 @@ msgstr "DLLname %s is too long"
 msgid "could not allocate space for 'name'"
 msgstr "could not allocate space for ‘name’"
 
-#: src/main/Rdynload.c:842 src/main/Rdynload.c:858 src/main/util.c:999
+#: src/main/Rdynload.c:842 src/main/Rdynload.c:858 src/main/util.c:1000
 msgid "character argument expected"
 msgstr "character argument expected"
 
@@ -1918,7 +1918,7 @@ msgstr "incomplete final line found by readLines on ‘%s’"
 msgid "too few lines read in readLines"
 msgstr "too few lines read in readLines"
 
-#: src/main/connections.c:2416 src/main/platform.c:887
+#: src/main/connections.c:2416 src/main/platform.c:896
 msgid "invalid 'sep' argument"
 msgstr "invalid ‘sep’ argument"
 
@@ -2115,15 +2115,15 @@ msgstr "R_decompress1 requires a scalar string"
 msgid "internal error in R_decompress1"
 msgstr "internal error in R_decompress1"
 
-#: src/main/connections.c:3802
+#: src/main/connections.c:3803
 msgid "not a list of sockets"
 msgstr "not a list of sockets"
 
-#: src/main/connections.c:3807
+#: src/main/connections.c:3808
 msgid "bad write indicators"
 msgstr "bad write indicators"
 
-#: src/main/connections.c:3817
+#: src/main/connections.c:3819
 msgid "not a socket connection"
 msgstr "not a socket connection"
 
@@ -4526,173 +4526,173 @@ msgstr "Impossible mode ( x )"
 msgid "vector arguments only"
 msgstr "vector arguments only"
 
-#: src/main/platform.c:210 src/main/platform.c:268
+#: src/main/platform.c:219 src/main/platform.c:277
 msgid "invalid filename specification"
 msgstr "invalid filename specification"
 
-#: src/main/platform.c:212
+#: src/main/platform.c:221
 msgid "invalid headers"
 msgstr "invalid headers"
 
-#: src/main/platform.c:214
+#: src/main/platform.c:223
 msgid "invalid title"
 msgstr "invalid title"
 
-#: src/main/platform.c:216
+#: src/main/platform.c:225
 msgid "invalid pager specification"
 msgstr "invalid pager specification"
 
-#: src/main/platform.c:265
+#: src/main/platform.c:274
 msgid "invalid editor specification"
 msgstr "invalid editor specification"
 
-#: src/main/platform.c:335 src/main/platform.c:381
+#: src/main/platform.c:344 src/main/platform.c:390
 msgid "write error during file append"
 msgstr "write error during file append"
 
-#: src/main/platform.c:349 src/main/platform.c:433 src/main/platform.c:462
+#: src/main/platform.c:358 src/main/platform.c:442 src/main/platform.c:471
 msgid "invalid first filename"
 msgstr "invalid first filename"
 
-#: src/main/platform.c:351 src/main/platform.c:464
+#: src/main/platform.c:360 src/main/platform.c:473
 msgid "invalid second filename"
 msgstr "invalid second filename"
 
-#: src/main/platform.c:353
+#: src/main/platform.c:362
 msgid "nothing to append to"
 msgstr "nothing to append to"
 
-#: src/main/platform.c:355
+#: src/main/platform.c:364
 msgid "'outFile' must be a single file"
 msgstr "‘outFile’ must be a single file"
 
-#: src/main/platform.c:410 src/main/platform.c:560
+#: src/main/platform.c:419 src/main/platform.c:569
 msgid "invalid filename argument"
 msgstr "invalid filename argument"
 
-#: src/main/platform.c:466
+#: src/main/platform.c:475
 msgid "nothing to link"
 msgstr "nothing to link"
 
-#: src/main/platform.c:495
+#: src/main/platform.c:504
 msgid "symlinks are not supported on this platform"
 msgstr "symlinks are not supported on this platform"
 
-#: src/main/platform.c:510
+#: src/main/platform.c:519
 msgid "source must be a single string"
 msgstr "source must be a single string"
 
-#: src/main/platform.c:513
+#: src/main/platform.c:522
 msgid "expanded source name too long"
 msgstr "expanded source name too long"
 
-#: src/main/platform.c:517
+#: src/main/platform.c:526
 msgid "destination must be a single string"
 msgstr "destination must be a single string"
 
-#: src/main/platform.c:520
+#: src/main/platform.c:529
 msgid "expanded destination name too long"
 msgstr "expanded destination name too long"
 
-#: src/main/platform.c:635
+#: src/main/platform.c:644
 msgid "file.info() is not implemented on this system"
 msgstr "file.info() is not implemented on this system"
 
-#: src/main/platform.c:699
+#: src/main/platform.c:708
 msgid "directory/folder path name too long"
 msgstr "directory/folder path name too long"
 
-#: src/main/platform.c:701
+#: src/main/platform.c:710
 #, c-format
 msgid "list.files: %s is not a readable directory"
 msgstr "list.files: %s is not a readable directory"
 
-#: src/main/platform.c:783
+#: src/main/platform.c:792
 msgid "invalid directory argument"
 msgstr "invalid directory argument"
 
-#: src/main/platform.c:789
+#: src/main/platform.c:798
 msgid "invalid 'pattern' argument"
 msgstr "invalid ‘pattern’ argument"
 
-#: src/main/platform.c:796
+#: src/main/platform.c:805
 msgid "'recursive = TRUE' is not supported on this platform"
 msgstr "‘recursive = TRUE’ is not supported on this platform"
 
-#: src/main/platform.c:802
+#: src/main/platform.c:811
 msgid "invalid 'pattern' regular expression"
 msgstr "invalid ‘pattern’ regular expression"
 
-#: src/main/platform.c:831
+#: src/main/platform.c:840
 msgid "unable to determine R home location"
 msgstr "unable to determine R home location"
 
-#: src/main/platform.c:878
+#: src/main/platform.c:887
 msgid "invalid 'topic' argument"
 msgstr "invalid ‘topic’ argument"
 
-#: src/main/platform.c:884
+#: src/main/platform.c:893
 msgid "invalid 'indexname' argument"
 msgstr "invalid ‘indexname’ argument"
 
-#: src/main/platform.c:890
+#: src/main/platform.c:899
 msgid "invalid 'type' argument"
 msgstr "invalid ‘type’ argument"
 
-#: src/main/platform.c:948
+#: src/main/platform.c:957
 msgid "file choice cancelled"
 msgstr "file choice cancelled"
 
-#: src/main/platform.c:950
+#: src/main/platform.c:959
 msgid "file name too long"
 msgstr "file name too long"
 
-#: src/main/platform.c:968
+#: src/main/platform.c:977
 msgid "invalid names argument"
 msgstr "invalid names argument"
 
-#: src/main/platform.c:971
+#: src/main/platform.c:980
 msgid "invalid mode value"
 msgstr "invalid mode value"
 
-#: src/main/platform.c:986
+#: src/main/platform.c:995
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() is not implemented on this system"
 
-#: src/main/platform.c:1008 src/main/platform.c:1038
+#: src/main/platform.c:1017 src/main/platform.c:1047
 msgid "invalid 'category' argument"
 msgstr "invalid ‘category’ argument"
 
-#: src/main/platform.c:1040
+#: src/main/platform.c:1049
 msgid "invalid 'locale' argument"
 msgstr "invalid ‘locale’ argument"
 
-#: src/main/platform.c:1054
+#: src/main/platform.c:1063
 msgid "OS reports request cannot be honored"
 msgstr "OS reports request cannot be honored"
 
-#: src/main/platform.c:1145 src/main/platform.c:1362 src/main/platform.c:1397
+#: src/main/platform.c:1154 src/main/platform.c:1371 src/main/platform.c:1406
 msgid "invalid path argument"
 msgstr "invalid path argument"
 
-#: src/main/platform.c:1311
+#: src/main/platform.c:1320
 msgid "hostname must be a character vector of length 1"
 msgstr "hostname must be a character vector of length 1"
 
-#: src/main/platform.c:1317
+#: src/main/platform.c:1326
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() was unable to resolve host ‘%s’"
 
-#: src/main/platform.c:1324
+#: src/main/platform.c:1333
 msgid "unknown format returned by gethostbyname"
 msgstr "unknown format returned by gethostbyname"
 
-#: src/main/platform.c:1335
+#: src/main/platform.c:1344
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() is not supported on this platform"
 
-#: src/main/platform.c:1379 src/main/platform.c:1416
+#: src/main/platform.c:1388 src/main/platform.c:1425
 #, c-format
 msgid "'%s' already exists"
 msgstr "‘%s’ already exists"
@@ -5722,7 +5722,7 @@ msgstr "invalid value for ‘sep’"
 msgid "invalid value for 'eol'"
 msgstr "invalid value for ‘eol’"
 
-#: src/main/scan.c:1736 src/main/util.c:1113
+#: src/main/scan.c:1736 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr "invalid value for ‘na’"
 
@@ -6130,6 +6130,7 @@ msgid "nothing to replace with"
 msgstr "nothing to replace with"
 
 #: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
+#: src/main/subassign.c:1099
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "number of items to replace is not a multiple of replacement length"
 
@@ -6150,10 +6151,6 @@ msgstr "incompatible types (%d) in array subset assignment"
 #: src/main/subassign.c:1071
 msgid "invalid number of subscripts to list assign"
 msgstr "invalid number of subscripts to list assign"
-
-#: src/main/subassign.c:1099
-msgid "no of items to replace is not a multiple of replacement length"
-msgstr "no of items to replace is not a multiple of replacement length"
 
 #: src/main/subassign.c:1216
 msgid "SubAssignArgs: invalid number of arguments"
@@ -6437,79 +6434,81 @@ msgstr "invalid tag in name extraction"
 
 #: src/main/util.c:806
 #, c-format
-msgid "%d argument%s passed to \"%s\" which requires %d"
-msgstr "%d argument%s passed to “%s” which requires %d"
+msgid "%d argument passed to '%s' which requires %d"
+msgid_plural "%d arguments passed to '%s' which requires %d"
+msgstr[0] "%d argument passed to ‘%s’ which requires %d"
+msgstr[1] "%d arguments passed to ‘%s’ which requires %d"
 
-#: src/main/util.c:817
+#: src/main/util.c:818
 #, c-format
 msgid "\"nthcdr\" list shorter than %d"
 msgstr "“nthcdr” list shorter than %d"
 
-#: src/main/util.c:822
+#: src/main/util.c:823
 msgid "\"nthcdr\" needs a list to CDR down"
 msgstr "“nthcdr” needs a list to CDR down"
 
-#: src/main/util.c:910
+#: src/main/util.c:911
 msgid "invalid 'xinds' argument"
 msgstr "invalid ‘xinds’ argument"
 
-#: src/main/util.c:913
+#: src/main/util.c:914
 msgid "invalid 'yinds' argument"
 msgstr "invalid ‘yinds’ argument"
 
-#: src/main/util.c:915
+#: src/main/util.c:916
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "‘all.x’ must be TRUE or FALSE"
 
-#: src/main/util.c:917
+#: src/main/util.c:918
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "‘all.y’ must be TRUE or FALSE"
 
-#: src/main/util.c:1004
+#: src/main/util.c:1005
 msgid "cannot change working directory"
 msgstr "cannot change working directory"
 
-#: src/main/util.c:1018 src/main/util.c:1052 src/main/util.c:1096
+#: src/main/util.c:1019 src/main/util.c:1053 src/main/util.c:1097
 msgid "a character vector argument expected"
 msgstr "a character vector argument expected"
 
-#: src/main/util.c:1023 src/main/util.c:1057
+#: src/main/util.c:1024 src/main/util.c:1058
 msgid "path too long"
 msgstr "path too long"
 
-#: src/main/util.c:1099
+#: src/main/util.c:1100
 msgid "invalid value for 'w'"
 msgstr "invalid value for ‘w’"
 
-#: src/main/util.c:1103
+#: src/main/util.c:1104
 msgid "invalid value for 'quote'"
 msgstr "invalid value for ‘quote’"
 
-#: src/main/util.c:1108
+#: src/main/util.c:1109
 msgid "only the first character of 'quote' will be used"
 msgstr "only the first character of ‘quote’ will be used"
 
-#: src/main/util.c:1111
+#: src/main/util.c:1112
 msgid "invalid value for 'justify'"
 msgstr "invalid value for ‘justify’"
 
-#: src/main/util.c:1164
+#: src/main/util.c:1165
 msgid "invalid multibyte string"
 msgstr "invalid multibyte string"
 
-#: src/main/util.c:1181 src/main/util.c:1189
+#: src/main/util.c:1182 src/main/util.c:1190
 msgid "invalid input in mbcsToLatin1"
 msgstr "invalid input in mbcsToLatin1"
 
-#: src/main/util.c:1186
+#: src/main/util.c:1187
 msgid "allocation failure in mbcsToLatin1"
 msgstr "allocation failure in mbcsToLatin1"
 
-#: src/main/util.c:1288
+#: src/main/util.c:1289
 msgid "error message truncated to 255 chars"
 msgstr "error message truncated to 255 chars"
 
-#: src/main/util.c:1301
+#: src/main/util.c:1302
 msgid "warning message truncated to 255 chars"
 msgstr "warning message truncated to 255 chars"
 
@@ -6732,12 +6731,12 @@ msgid "allocation of socket connection failed"
 msgstr "allocation of socket connection failed"
 
 #: src/modules/lapack/Lapack.c:47 src/modules/lapack/Lapack.c:532
-msgid "jobu and jobv must be character objects"
-msgstr "jobu and jobv must be character objects"
+msgid "'jobu' and 'jobv' must be character strings"
+msgstr "‘jobu’ and ‘jobv’ must be character strings"
 
 #: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:128
-msgid "method must be a character object"
-msgstr "method must be a character object"
+msgid "'method' must be a character string"
+msgstr "‘method’ must be a character string"
 
 #: src/modules/lapack/Lapack.c:70 src/modules/lapack/Lapack.c:80
 #: src/modules/lapack/Lapack.c:94 src/modules/lapack/Lapack.c:103
@@ -6761,8 +6760,8 @@ msgstr "error code %d from Lapack routine %s"
 
 #: src/modules/lapack/Lapack.c:142 src/modules/lapack/Lapack.c:270
 #: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:640
-msgid "x must be a square numeric matrix"
-msgstr "x must be a square numeric matrix"
+msgid "'x' must be a square numeric matrix"
+msgstr "‘x’ must be a square numeric matrix"
 
 #: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:276
 #: src/modules/lapack/Lapack.c:589 src/modules/lapack/Lapack.c:646
@@ -6770,31 +6769,31 @@ msgid "invalid 'only.values'"
 msgstr "invalid ‘only.values’"
 
 #: src/modules/lapack/Lapack.c:354 src/modules/lapack/Lapack.c:397
-msgid "A must be a complex matrix"
-msgstr "A must be a complex matrix"
+msgid "'A' must be a complex matrix"
+msgstr "‘A’ must be a complex matrix"
 
 #: src/modules/lapack/Lapack.c:356 src/modules/lapack/Lapack.c:448
 #: src/modules/lapack/Lapack.c:491
-msgid "B must be a complex matrix"
-msgstr "B must be a complex matrix"
+msgid "'B' must be a complex matrix"
+msgstr "‘B’ must be a complex matrix"
 
 #: src/modules/lapack/Lapack.c:361 src/modules/lapack/Lapack.c:778
-msgid "A is 0-diml"
-msgstr "A is 0-diml"
+msgid "'A' is 0-diml"
+msgstr "‘A’ is 0-diml"
 
 #: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:780
-msgid "no rhs in B"
-msgstr "no rhs in B"
+msgid "no right-hand side in 'B'"
+msgstr "no right-hand side in ‘B’"
 
 #: src/modules/lapack/Lapack.c:365 src/modules/lapack/Lapack.c:782
 #, c-format
-msgid "A (%d x %d) must be square"
-msgstr "A (%d x %d) must be square"
+msgid "'A' (%d x %d) must be square"
+msgstr "‘A’ (%d x %d) must be square"
 
 #: src/modules/lapack/Lapack.c:367 src/modules/lapack/Lapack.c:784
 #, c-format
-msgid "B (%d x %d) must be compatible with A (%d x %d)"
-msgstr "B (%d x %d) must be compatible with A (%d x %d)"
+msgid "'B' (%d x %d) must be compatible with 'A' (%d x %d)"
+msgstr "‘B’ (%d x %d) must be compatible with ‘A’ (%d x %d)"
 
 #: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
 #: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
@@ -6812,20 +6811,20 @@ msgstr "Fortran complex functions are not available on this platform"
 #: src/modules/lapack/Lapack.c:455 src/modules/lapack/Lapack.c:500
 #: src/modules/lapack/Lapack.c:866 src/modules/lapack/Lapack.c:906
 #, c-format
-msgid "rhs should have %d not %d rows"
-msgstr "rhs should have %d not %d rows"
+msgid "right-hand side should have %d not %d rows"
+msgstr "right-hand side should have %d not %d rows"
 
 #: src/modules/lapack/Lapack.c:493 src/modules/lapack/Lapack.c:899
 msgid "invalid 'trans' parameter"
 msgstr "invalid ‘trans’ parameter"
 
 #: src/modules/lapack/Lapack.c:701 src/modules/lapack/Lapack.c:939
-msgid "A must be a square matrix"
-msgstr "A must be a square matrix"
+msgid "'A' must be a square matrix"
+msgstr "‘A’ must be a square matrix"
 
 #: src/modules/lapack/Lapack.c:702
-msgid "A must have dims > 0"
-msgstr "A must have dims > 0"
+msgid "'A' must have dims > 0"
+msgstr "‘A’ must have dims > 0"
 
 #: src/modules/lapack/Lapack.c:712
 #, c-format
@@ -6835,22 +6834,22 @@ msgstr "the leading minor of order %d is not positive definite"
 #: src/modules/lapack/Lapack.c:720 src/modules/lapack/Lapack.c:758
 #: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:814
 #: src/modules/lapack/Lapack.c:932
-msgid "A must be a numeric matrix"
-msgstr "A must be a numeric matrix"
+msgid "'A' must be a numeric matrix"
+msgstr "‘A’ must be a numeric matrix"
 
 #: src/modules/lapack/Lapack.c:728
-msgid "size argument must be a positive integer"
-msgstr "size argument must be a positive integer"
+msgid "'size' argument must be a positive integer"
+msgstr "‘size’ argument must be a positive integer"
 
 #: src/modules/lapack/Lapack.c:737
 #, c-format
-msgid "size cannot exceed ncol(x) = %d"
-msgstr "size cannot exceed ncol(x) = %d"
+msgid "'size' cannot exceed ncol(x) = %d"
+msgstr "‘size’ cannot exceed ncol(x) = %d"
 
 #: src/modules/lapack/Lapack.c:738
 #, c-format
-msgid "size cannot exceed nrow(x) = %d"
-msgstr "size cannot exceed nrow(x) = %d"
+msgid "'size' cannot exceed nrow(x) = %d"
+msgstr "‘size’ cannot exceed nrow(x) = %d"
 
 #: src/modules/lapack/Lapack.c:747
 #, c-format
@@ -6859,8 +6858,8 @@ msgstr "element (%d, %d) is zero, so the inverse cannot be computed"
 
 #: src/modules/lapack/Lapack.c:773 src/modules/lapack/Lapack.c:859
 #: src/modules/lapack/Lapack.c:897
-msgid "B must be a numeric matrix"
-msgstr "B must be a numeric matrix"
+msgid "'B' must be a numeric matrix"
+msgstr "‘B’ must be a numeric matrix"
 
 #: src/modules/lapack/Lapack.c:796
 msgid "Lapack routine dgesv: system is exactly singular"
@@ -6872,8 +6871,8 @@ msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "system is computationally singular: reciprocal condition number = %g"
 
 #: src/modules/lapack/Lapack.c:934
-msgid "argument logarithm must be logical"
-msgstr "argument logarithm must be logical"
+msgid "argument 'logarithm' must be logical"
+msgstr "argument ‘logarithm’ must be logical"
 
 #: src/modules/X11/devX11.c:293
 msgid "cannot set grayscale: reverting to monochrome"

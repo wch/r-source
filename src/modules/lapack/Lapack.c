@@ -44,9 +44,9 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     char *meth;
 
     if (!(isString(jobu) && isString(jobv)))
-	error(_("jobu and jobv must be character objects"));
+	error(_("'jobu' and 'jobv' must be character strings"));
     if (!isString(method))
-	error(_("method must be a character object"));
+	error(_("'method' must be a character string"));
     meth = CHAR(STRING_ELT(method, 0));
 /*#ifndef IEEE_754
     if (strcmp(meth, "dgesdd") == 0)
@@ -125,7 +125,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
     char *meth;
 
     if (!isString(method))
-	error(_("method must be a character object"));
+	error(_("'method' must be a character string"));
     meth = CHAR(STRING_ELT(method, 0));
 /* #ifndef IEEE_754
     if (strcmp(meth, "dsyevr") == 0) {
@@ -139,7 +139,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
     if (n != xdims[1])
-	error(_("x must be a square numeric matrix"));
+	error(_("'x' must be a square numeric matrix"));
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid 'only.values'"));
     if (ov) jobv[0] = 'N'; else jobv[0] = 'V';
@@ -267,7 +267,7 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
     if (n != xdims[1])
-	error(_("x must be a square numeric matrix"));
+	error(_("'x' must be a square numeric matrix"));
 
     xvals = (double *) R_alloc(n * n, sizeof(double));
     /* work on a copy of x */
@@ -351,20 +351,20 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
     SEXP B;
 
     if (!(isMatrix(A) && isComplex(A)))
-	error(_("A must be a complex matrix"));
+	error(_("'A' must be a complex matrix"));
     if (!(isMatrix(Bin) && isComplex(Bin)))
-	error(_("B must be a complex matrix"));
+	error(_("'B' must be a complex matrix"));
     PROTECT(B = duplicate(Bin));
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     n = Adims[0];
-    if(n == 0) error(_("A is 0-diml"));
+    if(n == 0) error(_("'A' is 0-diml"));
     p = Bdims[1];
-    if(p == 0) error(_("no rhs in B"));
+    if(p == 0) error(_("no right-hand side in 'B'"));
     if(Adims[1] != n)
-	error(_("A (%d x %d) must be square"), n, Adims[1]);
+	error(_("'A' (%d x %d) must be square"), n, Adims[1]);
     if(Bdims[0] != n)
-	error(_("B (%d x %d) must be compatible with A (%d x %d)"),
+	error(_("'B' (%d x %d) must be compatible with 'A' (%d x %d)"),
 		Bdims[0], p, n, n);
     ipiv = (int *) R_alloc(n, sizeof(int));
 
@@ -394,7 +394,7 @@ static SEXP modLa_zgeqp3(SEXP Ain)
     SEXP val, nm, jpvt, tau, rank, A;
 
     if (!(isMatrix(Ain) && isComplex(Ain)))
-	error(_("A must be a complex matrix"));
+	error(_("'A' must be a complex matrix"));
     PROTECT(A = duplicate(Ain));
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     m = Adims[0];
@@ -445,14 +445,14 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 
     k = LENGTH(tau);
     if (!(isMatrix(Bin) && isComplex(Bin)))
-	error(_("B must be a complex matrix"));
+	error(_("'B' must be a complex matrix"));
 
     PROTECT(B = duplicate(Bin));
     Qdims = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP));
     n = Qdims[0];
     Bdims = INTEGER(coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
     if(Bdims[0] != n)
-	error(_("rhs should have %d not %d rows"), n, Bdims[0]);
+	error(_("right-hand side should have %d not %d rows"), n, Bdims[0]);
     nrhs = Bdims[1];
     lwork = -1;
     F77_CALL(zunmqr)("L", "C", &n, &nrhs, &k,
@@ -488,7 +488,7 @@ static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 
     k = LENGTH(tau);
     if (!(isMatrix(Bin) && isComplex(Bin)))
-	error(_("B must be a complex matrix"));
+	error(_("'B' must be a complex matrix"));
     tr = asLogical(trans);
     if(tr == NA_LOGICAL) error(_("invalid 'trans' parameter"));
 
@@ -497,7 +497,7 @@ static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
     n = Qdims[0];
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     if(Bdims[0] != n)
-	error(_("rhs should have %d not %d rows"), n, Bdims[0]);
+	error(_("right-hand side should have %d not %d rows"), n, Bdims[0]);
     nrhs = Bdims[1];
     lwork = -1;
     F77_CALL(zunmqr)("L", tr ? "C" : "N", &n, &nrhs, &k,
@@ -529,7 +529,7 @@ static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP xin, SEXP s, SEXP u, SEXP
     SEXP x, val, nm;
 
     if (!(isString(jobu) && isString(jobv)))
-	error(_("jobu and jobv must be character objects"));
+	error(_("'jobu' and 'jobv' must be character strings"));
     PROTECT(x = duplicate(xin));
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];
@@ -584,7 +584,7 @@ static SEXP modLa_rs_cmplx(SEXP xin, SEXP only_values)
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
     if (n != xdims[1])
-	error(_("x must be a square numeric matrix"));
+	error(_("'x' must be a square numeric matrix"));
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid 'only.values'"));
     if (ov) jobv[0] = 'N'; else jobv[0] = 'V';
@@ -637,7 +637,7 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
     if (n != xdims[1])
-	error(_("x must be a square numeric matrix"));
+	error(_("'x' must be a square numeric matrix"));
 
     xvals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
@@ -698,8 +698,8 @@ static SEXP modLa_chol(SEXP A)
 	int n = INTEGER(adims)[1];
 	int i, j;
 
-	if (m != n) error(_("A must be a square matrix"));
-	if (m <= 0) error(_("A must have dims > 0"));
+	if (m != n) error(_("'A' must be a square matrix"));
+	if (m <= 0) error(_("'A' must have dims > 0"));
 	for (j = 0; j < n; j++) {	/* zero the lower triangle */
 	    for (i = j+1; i < n; i++) {
 		REAL(ans)[i + j * n] = 0.;
@@ -717,7 +717,7 @@ static SEXP modLa_chol(SEXP A)
 	unprotect(1);
 	return ans;
     }
-    else error(_("A must be a numeric matrix"));
+    else error(_("'A' must be a numeric matrix"));
     return R_NilValue; /* -Wall */
 }
 
@@ -725,7 +725,7 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 {
     int sz = asInteger(size);
     if (sz == NA_INTEGER || sz < 1)
-	error(_("size argument must be a positive integer"));
+	error(_("'size' argument must be a positive integer"));
     if (isMatrix(A)) {
 	SEXP Amat = PROTECT(coerceVector(A, REALSXP));
 	SEXP ans;
@@ -734,8 +734,8 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 	int n = INTEGER(adims)[1];
 	int i, j;
 
-	if (sz > n) error(_("size cannot exceed ncol(x) = %d"), n);
-	if (sz > m) error(_("size cannot exceed nrow(x) = %d"), m);
+	if (sz > n) error(_("'size' cannot exceed ncol(x) = %d"), n);
+	if (sz > m) error(_("'size' cannot exceed nrow(x) = %d"), m);
 	ans = PROTECT(allocMatrix(REALSXP, sz, sz));
 	for (j = 0; j < sz; j++) {
 	    for (i = 0; i <= j; i++)
@@ -755,7 +755,7 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 	unprotect(2);
 	return ans;
     }
-    else error(_("A must be a numeric matrix"));
+    else error(_("'A' must be a numeric matrix"));
     return R_NilValue; /* -Wall */
 }
 
@@ -768,20 +768,20 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
     SEXP B;
 
     if (!(isMatrix(A) && isReal(A)))
-	error(_("A must be a numeric matrix"));
+	error(_("'A' must be a numeric matrix"));
     if (!(isMatrix(Bin) && isReal(Bin)))
-	error(_("B must be a numeric matrix"));
+	error(_("'B' must be a numeric matrix"));
     PROTECT(B = duplicate(Bin));
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     n = Adims[0];
-    if(n == 0) error(_("A is 0-diml"));
+    if(n == 0) error(_("'A' is 0-diml"));
     p = Bdims[1];
-    if(p == 0) error(_("no rhs in B"));
+    if(p == 0) error(_("no right-hand side in 'B'"));
     if(Adims[1] != n)
-	error(_("A (%d x %d) must be square"), n, Adims[1]);
+	error(_("'A' (%d x %d) must be square"), n, Adims[1]);
     if(Bdims[0] != n)
-	error(_("B (%d x %d) must be compatible with A (%d x %d)"),
+	error(_("'B' (%d x %d) must be compatible with 'A' (%d x %d)"),
 	      Bdims[0], p, n, n);
     ipiv = (int *) R_alloc(n, sizeof(int));
 
@@ -811,7 +811,7 @@ static SEXP modLa_dgeqp3(SEXP Ain)
     SEXP val, nm, jpvt, tau, rank, A;
 
     if (!(isMatrix(Ain) && isReal(Ain)))
-	error(_("A must be a numeric matrix"));
+	error(_("'A' must be a numeric matrix"));
     PROTECT(A = duplicate(Ain));
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     m = Adims[0];
@@ -856,14 +856,14 @@ static SEXP modqr_coef_real(SEXP Q, SEXP Bin)
 
     k = LENGTH(tau);
     if (!(isMatrix(Bin) && isReal(Bin)))
-	error(_("B must be a numeric matrix"));
+	error(_("'B' must be a numeric matrix"));
 
     PROTECT(B = duplicate(Bin));
     Qdims = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP));
     n = Qdims[0];
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     if(Bdims[0] != n)
-	error(_("rhs should have %d not %d rows"), n, Bdims[0]);
+	error(_("right-hand side should have %d not %d rows"), n, Bdims[0]);
     nrhs = Bdims[1];
     lwork = -1;
     F77_CALL(dormqr)("L", "T", &n, &nrhs, &k,
@@ -894,7 +894,7 @@ static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
 
     k = LENGTH(tau);
     if (!(isMatrix(Bin) && isReal(Bin)))
-	error(_("B must be a numeric matrix"));
+	error(_("'B' must be a numeric matrix"));
     tr = asLogical(trans);
     if(tr == NA_LOGICAL) error(_("invalid 'trans' parameter"));
 
@@ -903,7 +903,7 @@ static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
     n = Qdims[0];
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     if(Bdims[0] != n)
-	error(_("rhs should have %d not %d rows"), n, Bdims[0]);
+	error(_("right-hand side should have %d not %d rows"), n, Bdims[0]);
     nrhs = Bdims[1];
     lwork = -1;
     F77_CALL(dormqr)("L", tr ? "T" : "N", &n, &nrhs, &k,
@@ -929,14 +929,14 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
     SEXP val, nm, A;
 
     if (!(isMatrix(Ain) && isReal(Ain)))
-	error(_("A must be a numeric matrix"));
+	error(_("'A' must be a numeric matrix"));
     useLog = asLogical(logarithm);
-    if (useLog == NA_LOGICAL) error(_("argument logarithm must be logical"));
+    if (useLog == NA_LOGICAL) error(_("argument 'logarithm' must be logical"));
     PROTECT(A = duplicate(Ain));
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     n = Adims[0];
     if (Adims[1] != n)
-	error(_("A must be a square matrix"));
+	error(_("'A' must be a square matrix"));
     jpvt = (int *) R_alloc(n, sizeof(int));
     F77_CALL(dgetrf)(&n, &n, REAL(A), &n, jpvt, &info);
     sign = 1;

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-18 07:50\n"
+"POT-Creation-Date: 2005-02-22 08:26\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -335,6 +335,12 @@ msgstr ""
 msgid "The downloaded packages are in"
 msgstr ""
 
+msgid "menu() cannot be used non-interactively"
+msgstr ""
+
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr ""
+
 msgid "is a formal generic function; S3 methods will not likely be found"
 msgstr ""
 
@@ -428,10 +434,16 @@ msgstr ""
 msgid "trying to use CRAN without setting a mirror"
 msgstr ""
 
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr ""
+
+msgid "cannot set repositories non-interactively"
+msgstr ""
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr ""
 
-msgid "Enter one or more numbers"
+msgid "Enter one or more numbers separated by spaces"
 msgstr ""
 
 msgid "must be supplied"
@@ -555,6 +567,9 @@ msgid "*not* found"
 msgstr ""
 
 msgid "has no PDF"
+msgstr ""
+
+msgid "Enter zero or more numbers separated by space"
 msgstr ""
 
 msgid "'subject' missing"

@@ -803,9 +803,10 @@ SEXP EnsureString(SEXP s)
 void checkArity(SEXP op, SEXP args)
 {
     if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args))
-	error(_("%d argument%s passed to \"%s\" which requires %d"),
-	      length(args), (length(args) == 1 ? "" : "s"),
-	      PRIMNAME(op), PRIMARITY(op));
+	error(ngettext("%d argument passed to '%s' which requires %d",
+		       "%d arguments passed to '%s' which requires %d",
+		       length(args)),
+	      length(args), PRIMNAME(op), PRIMARITY(op));
 }
 
 
