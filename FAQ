@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-59, 2001-05-23
+Version 1.2-60, 2001-05-25
 Kurt Hornik
 
 
@@ -1396,6 +1396,9 @@ works, was published in the Journal of Statistical Software
      Functions intended to facilitate certain basic analyses of DNA array
      data, especially with regard to comparing expression levels between two
      types of tissue.
+
+*pinktoe*
+     Converts S trees to HTML/Perl files for interactive tree traversal.
 
 *pls*
      Univariate Partial Least Squares Regression.
