@@ -14,7 +14,8 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
   \item{x, y}{coordinate vectors of points to join.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
-  \item{col}{color to use.}
+  \item{col}{color to use. This can be vector of length greater than
+    one, but only the first value will be used.}
   \item{lty}{line type to use.}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}) may
     also be supplied as arguments, particularly, line type, \code{lty} and
