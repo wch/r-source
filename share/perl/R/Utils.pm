@@ -125,10 +125,12 @@ sub get_exclude_patterns {
     ## Return list of file patterns excluded by R CMD build and check.
     ## Kept here so that we ensure that the lists are in sync, but not
     ## exported.
-    my @exclude_patterns = ("^.Rbuildignore\$", "^TITLE\$",
-			    "^.DS_Store\$",
+    my @exclude_patterns = ("^.Rbuildignore\$", "^.DS_Store\$",
 			    "\~\$", "\\.swp\$", "\\.bak\$",
-			    "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$");
+			    "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$",
+			    "^TITLE\$",
+			    "^data/00Index\$",
+			    "^inst/doc/00Index.dcf]\$");
     @exclude_patterns;
 }
 
