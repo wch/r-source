@@ -19,7 +19,97 @@
   The output from \code{example(plotmath)} includes several tables which
   show the available features.  In these tables, the columns of grey text
   show sample \R expressions, and the columns of black text show the
-  resulting output.
+  resulting output.  
+
+  The available features are also described in the table below:
+
+  \tabular{ll}{
+    \bold{Syntax} \tab \bold{Meaning} \cr
+    x +	y	  \tab x plus y	  \cr
+    x - y	  \tab x minus y \cr
+    x*y		  \tab juxtapose x and y \cr
+    x/y		  \tab x forwardslash y \cr
+    x \%+-\% y	  \tab x plus or minus y \cr
+    x \%/\% y	  \tab x divided by y \cr
+    x \%*\% y	  \tab x times y \cr
+    x[i]	  \tab x subscript i \cr
+    x^2		  \tab x superscript 2 \cr
+    paste(x, y, z) \tab juxtapose x, y, and z \cr
+    sqrt(x)	  \tab square root of x \cr
+    sqrt(x, y)	  \tab yth root of x \cr
+    x == y	  \tab x equals y \cr
+    x != y	  \tab x is not equal to y \cr
+    x < y	  \tab x is less than y \cr
+    x <= y	  \tab x is less than or equal to y \cr
+    x > y	  \tab x is greater than y \cr
+    x >= y	  \tab x is greater than or equal to y \cr
+    x \%~~\% y	  \tab x is approximately equal to y \cr
+    x \%=~\% y	  \tab x and y are congruent \cr
+    x \%==\% y	  \tab x is defined as y \cr
+    x \%prop\% y  \tab x is proportional to y \cr
+    plain(x)	  \tab draw x in normal font \cr
+    bold(x)	  \tab draw x in bold font \cr
+    italic(x)	  \tab draw x in italic font \cr
+    bolditalic(x) \tab draw x in bolditalic font \cr
+    list(x, y, z) \tab comma-separated list \cr
+    ...		  \tab ellipsis (height varies) \cr
+    cdots	  \tab ellipsis (vertically centred) \cr
+    ldots	  \tab ellipsis (at baseline) \cr
+    x \%subset\% y \tab x is a proper subset of y \cr
+    x \%subseteq\% y \tab x is a subset of y \cr
+    x \%notsubset\% \tab x is not a subset of y \cr
+    x \%supset\% y \tab x is a proper superset of y \cr
+    x \%supseteq\% y \tab x is a superset of y \cr
+    x \%in\% y	  \tab x is an element of y \cr
+    x \%notin\% y \tab x is not an element of y \cr
+    hat(x)	  \tab x with a circumflex \cr
+    tilde(x)	  \tab x with a tilde \cr
+    ring(x)	  \tab x with a ring \cr
+    bar(xy)	  \tab xy with bar \cr
+    widehat(xy)	  \tab xy with a wide circumflex \cr
+    widetilde(xy) \tab xy with a wide tilde \cr
+    x \%<->\% y	  \tab x double-arrow y \cr
+    x \%->\% y	  \tab x right-arrow y \cr
+    x \%<-\% y	  \tab x left-arrow y \cr
+    x \%up\% y	  \tab x up-arrow y \cr
+    x \%down\% y  \tab x down-arrow y \cr
+    x \%<=>\% y	  \tab x is equivalent to y \cr
+    x \%=>\% y	  \tab x implies y \cr
+    x \%<=\% y	  \tab y implies x \cr
+    x \%dblup\% y	  \tab x double-up-arrow y \cr
+    x \%dbldown\% y \tab x double-down-arrow y \cr
+    alpha - omega \tab greek symbols \cr
+    Alpha - Omega \tab uppercase greek symbols \cr
+    infinity	  \tab infinity symbol \cr
+    32*degree	  \tab 32 degrees \cr
+    60*minute	  \tab 60 minutes of angle \cr
+    30*second	  \tab 30 seconds of angle \cr
+    displaystyle(x) \tab draw x in normal size (extra spacing) \cr
+    textstyle(x)  \tab draw x in normal size \cr
+    scriptstyle(x) \tab draw x in small size \cr
+    scriptscriptstyle(x) \tab draw x in very small size \cr
+    x ~~ y        \tab put extra space between x and y \cr
+    x + phantom(0) + y \tab leave gap for "0", but don't draw it \cr
+    x + over(1, phantom(0)) \tab leave vertical gap for "0" (don't draw) \cr
+    frac(x, y)	  \tab x over y \cr
+    over(x, y)	  \tab x over y \cr
+    atop(x, y)	  \tab x over y (no horizontal bar) \cr
+    sum(x[i], i==1, n) \tab sum x[i] for i equals 1 to n \cr
+    prod(plain(P)(X==x), x) \tab product of P(X=x) for all values of x \cr
+    integral(f(x)*dx, a, b) \tab definite integral of f(x) wrt x \cr
+    union(A[i], i==1, n) \tab union of A[i] for i equals 1 to n \cr
+    intersect(A[i], i==1, n) \tab intersection of A[i] \cr
+    lim(f(x), x \%->\% 0) \tab limit of f(x) as x tends to 0 \cr
+    min(g(x), x > 0) \tab minimum of g(x) for x greater than 0 \cr
+    inf(S)        \tab infimum of S \cr
+    sup(S)	  \tab supremum of S \cr
+    x^y + z	  \tab normal operator precedence \cr
+    x^(y + z)	  \tab visible grouping of operands \cr
+    x^{y + z}	  \tab invisible grouping of operands \cr
+    group("(",list(a, b),"]") \tab specify left and right delimeters \cr
+    bgroup("(",atop(x,y),")") \tab use scalable delimiters \cr
+    group(lceil, x, rceil) \tab special delimiters \cr
+  }
 }
 \references{Murrell, P. and Ihaka, R. \emph{An approach to providing
   mathematical annotation in plots}, Journal of Computational and Graphical
