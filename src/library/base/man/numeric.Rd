@@ -23,10 +23,10 @@ is.numeric(x)
     stored in double precision format}.
 
   \code{as.numeric} for factors yields the codes underlying the factor
-    levels. 
+    levels.
 }
 \examples{
-as.numeric(c("2","B"))
+as.numeric(c("-.1"," 2.7 ","B")) # (-0.1, 2.7, NA)  +  warning
 as.numeric(factor(5:10))
 }
 \keyword{classes}

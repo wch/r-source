@@ -89,6 +89,20 @@ BUG FIXES
 	**************************************************
 
 
+BUG FIXES
+
+    o	seq(along = v) { and seq(v) when length(v) > 1 } now returns integer.
+
+    o	which(x) failed when x had names and NAs.
+
+    o	Typos in NegBinomial.Rd (Negative Binomial distrib), thanks to Ch.Gu.
+
+    o	revsort() misbehaved if n<=1, causing sample(1,1,,1) to
+    	segfault
+
+    o	Improved error message from check.options().
+
+
 		CHANGES IN R VERSION 0.64.2
 
 
@@ -135,9 +149,9 @@ BUG FIXES
     o   matrix(f,...) with f a factor now coerces to character
 
     o   documentation errors for substitute and is.vector, minor fixups for
-        trig and nlm 
+        trig and nlm
 
-    o	Background colours are set properly on X11 devices with 
+    o	Background colours are set properly on X11 devices with
 	colortype="pseudo": sometimes they were not allocated separately.
 
     o	C() works (again?) for a single argument.
@@ -149,7 +163,7 @@ BUG FIXES
     o	in some cases one could get nonblack color instead of
 	black on 2nd x11() window.
 
-    o	influence.measures(.) $ is.influential was wrong on the 
+    o	influence.measures(.) $ is.influential was wrong on the
 	cooks.distance.
 
     o	printing of complex NaN/Inf was wrong as well.
