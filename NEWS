@@ -270,6 +270,8 @@ NEW FEATURES
     o	The header file R.h and those included from it are now usable
 	with C++ code.
 
+    o	R now by default uses GNU libtool to deal with shared libraries.
+
 
 BUG FIXES
 
