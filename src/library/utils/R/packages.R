@@ -146,8 +146,9 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
                 if(!res) next
             }
         }
-        update <- rbind(update, c(instp[k, c(1:3,8)], onRepos["Version"],
-                                  onRepos["Repository"]))
+        update <- rbind(update,
+                        c(instp[k, c("Package", "LibPath", "Version", "Built")],
+                          onRepos["Version"], onRepos["Repository"]))
     }
     if(!is.null(update))
         colnames(update) <- c("Package", "LibPath", "Installed", "Built",
