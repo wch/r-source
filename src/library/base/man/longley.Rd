@@ -21,6 +21,7 @@ Journal of the American Statistical Association 62, 819-841.}
 }
 \examples{
 # give the data set in the form it is used in S-plus:
+data(longley)
 longley.x <- data.matrix(longley[,1:6])
 longley.y <- longley[,"Employed"]
 }
