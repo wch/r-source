@@ -177,6 +177,27 @@ ActiveTcl 8.3.x can also be used, but a binary distribution can only be used
 with one of 8.3.x and 8.4.x.
 
 
+Recommended packages
+====================
+
+The recommended packages can be built by
+
+	make recommended
+
+and checked by
+
+	make check-recommended
+
+
+If you are using a cvs/rsync version of the R sources, you need to put
+the .tar.gz files for the recommended packages in
+../library/Recommended, and copy foo_*.tar.gz to foo.tgz.  If you have
+rsync installed,
+
+	make rsync-recommended
+
+does this from the CRAN master.
+
 
 Building the Manuals
 ====================
@@ -213,28 +234,6 @@ with a compiled version included in our tool set.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
-
-
-Recommended packages
-====================
-
-The recommended packages can be built by
-
-	make recommended
-
-and checked by
-
-	make check-recommended
-
-
-If you are using a cvs/rsync version of the R sources, you need to put
-the .tar.gz files for the recommended packages in
-../library/Recommended, and copy foo_*.tar.gz to foo.tgz.  If you have
-rsync installed,
-
-	make rsync-recommended
-
-does this from the CRAN master.
 
 
 Building the installers
