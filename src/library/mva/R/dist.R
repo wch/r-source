@@ -13,7 +13,7 @@ dist <- function(x, method="euclidian", diag=FALSE, upper=FALSE)
 	    nr= N,
 	    nc= ncol(x),
 	    d = double(N*(N - 1)/2),
-            diag  = as.integer(1),
+	    diag  = as.integer(FALSE),
 	    method= as.integer(method)) $ d
     attr(d, "Size") <- N
     attr(d, "Labels") <- dimnames(x)[[1]]

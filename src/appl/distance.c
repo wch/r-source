@@ -159,7 +159,7 @@ void distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
 	error("distance(): invalid distance\n");
     }
 
-    dc = (*diag) ? 1 : 0; /* do we exclude the diagonal */
+    dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */
     ij = 0;
     for(j=0 ; j <= *nr ; j++)
 	for(i=j+dc ; i < *nr ; i++)
