@@ -1805,6 +1805,38 @@ Character strings are read and written in C format, that is as a string
 of bytes terminated by a zero byte.  Functions @code{readChar} and
 @code{writeChar} provide greater flexibility.
 
+
+@menu
+* Special values::              
+@end menu
+
+@node Special values,  , Binary connections, Binary connections
+@subsection Special values
+
+Functions @code{readBin} and @code{writeBin} will pass missing and
+special values, although this should not be attempted if a size change
+is involved.
+
+The missing value for @R{} logical and integer types is @code{INT_MIN},
+the smallest representable @code{int} defined in the C header
+@file{limits.h}, normally corresponding to the bit pattern
+@code{0xffffffff}.
+
+The representation of the special values for @R{} numeric and complex
+types is machine-dependent, and possibly also compiler-dependent.  The
+simplest way to make use of them is to link an external application
+against the standalone @code{Rmath} library which exports double
+constants @code{NA_REAL}, @code{R_PosInf} and @code{R_NegInf}, and
+include the header @file{Rmath.h} which defines the macros @code{ISNAN}
+and @code{R_FINITE}.
+
+If that is not possible, on all common platforms IEC 60559 (aka IEEE
+754) arithmetic is used, so standard C facilities can be used to test
+for or set @code{Inf}, @code{-Inf} and @code{NaN} values.  On such
+platforms @code{NA} is represented by the @code{NaN} value with low-word
+@code{0x7a2} (1954 in decimal).
+
+
 @node Network interfaces, References, Connections, Top
 @chapter Network interfaces
 

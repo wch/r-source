@@ -171,7 +171,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   Using \code{nrows}, even as a mild over-estimate, will help memory usage.
 }
 \seealso{
-  The `R Data Import/Export' manual.
+  The \emph{R Data Import/Export} manual.
   
   \code{\link{scan}}, \code{\link{type.convert}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
