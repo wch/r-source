@@ -2,8 +2,9 @@
 ##
 R = ../bin/R --no-init-file --no-save --no-restore
 
-TESTsrc = simple-true.R ../demos/language/is-things.R simple-tests.R\
-	 print-tests.R
+TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
+	 print-tests.R\
+	 ../demos/language/is-things.R
 
 TESTout = $(TESTsrc:.R=.Rout)
 
@@ -12,3 +13,5 @@ TESTout = $(TESTsrc:.R=.Rout)
 	-@wc $@
 
 tests: $(TESTout)
+
+clean: ; rm -f $(TESTout)
