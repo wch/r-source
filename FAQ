@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-17 2004-05-20
+Version 1.9-18 2004-05-22
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1826,6 +1826,9 @@ distributions of R.)
 *fork*
      Functions for handling multiple processes: simple wrappers around the
      Unix process management API calls.
+
+*fortunes*
+     R fortunes.
 
 *forward*
      Forward search approach to robust analysis in linear and generalized
