@@ -9,10 +9,12 @@
 
 #include "ctest.h"
 
+#if 0
 static void
 errmsg(char *s) {
     PROBLEM "%s", s RECOVER(NULL_ENTRY);
 }
+#endif
 
 void
 kendall_tau(Sint *n, double *x, double *y, double *tau) {
