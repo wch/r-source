@@ -8,9 +8,9 @@ rep.int(x, times)
 }
 \arguments{
   \item{x}{a vector (of any mode including a list) or a pairlist.}
-  \item{times}{integer.  A vector giving the number of times to repeat
-    each element if of length \code{length(x)}, or to repeat the whole
-    vector if of length 1.}
+  \item{times}{non-negative integer.  A vector giving the number of
+    times to repeat each element if of length \code{length(x)}, or to
+    repeat the whole vector if of length 1.}
   \item{length.out}{integer.  (Optional.)  The desired length of the
     output vector.}
   \item{each}{optional integer. Each element of \code{x} is
@@ -68,5 +68,9 @@ rep(1, 40*(1-.8)+1e-7) # better
 ## replicate a list
 fred <- list(happy = 1:10, name = "squash")
 rep(fred, 5)
+
+## more esoteric:
+stopifnot(identical(rep(letters, 0), character(0)),
+          identical(rep.int(1:2, 0), integer(0)))
 }
 \keyword{manip}

@@ -35,11 +35,11 @@ NEW FEATURES
 	  environment of the caller of the generic function rather
 	  than the environment where the generic is defined.
 
-    o   The objects created in the methods package to represent
+    o	The objects created in the methods package to represent
 	classes, generic functions, method definitions, and
 	inheritance relations now themselves belong to true classes.  In
-        particular, the "classRepresentation" objects follow the description
-        in "Programming with Data" (section 7.6).
+	particular, the "classRepresentation" objects follow the description
+	in "Programming with Data" (section 7.6).
 
     o	New methods ([[, print, str) and extended plot() method
 	for "dendrogram" class.
@@ -97,7 +97,7 @@ NEW FEATURES
     o	library() attempts to detect improperly installed packages, so
 	as from this version an installed package must have a
 	DESCRIPTION file and that file must have been stamped with a
-	`Built:' line (which was introduced in 1.2.0).  Under
+	`Built:' line (which was introduced in 1.2.0).	Under
 	Unix-alikes, the platform is checked against that used for
 	installation.
 
@@ -125,16 +125,16 @@ NEW FEATURES
     o	rgb() has a new `maxColorValue' argument, allowing r,g,b in [0,M],
 	particularly in {0:255}, efficiently and non-error-prone.
 
-    o   summaryRprof() provides the functionality of R CMD Rprof in R
+    o	summaryRprof() provides the functionality of R CMD Rprof in R
 	code, though more slowly.
 
-    o   stop() accepts multiple arguments (which are concatenated)
+    o	stop() accepts multiple arguments (which are concatenated)
 	just as warning() does.
 
-    o   scan() now throws an error with incorrect logical input (which
+    o	scan() now throws an error with incorrect logical input (which
 	was previously taken as FALSE).
 
-    o   pdf() now uses PDF not R code for clipping, which ensures that
+    o	pdf() now uses PDF not R code for clipping, which ensures that
 	partially visible text strings are (partially) shown.
 
     o	Each R session uses a per-session temporary directory which
@@ -147,10 +147,10 @@ NEW FEATURES
 	is that ~/.R is now never deleted by R.
 
     o	*very* experimental browseEnv() for browsing objects in an
-        environment.
+	environment.
 
     o	cbind/rbind() used to ignore all zero-length vectors, an
-	undocumented quirk for S-compatibility.  This caused problems
+	undocumented quirk for S-compatibility.	 This caused problems
 	when combining zero-extent matrices and zero-length vectors, and
 	now zero-length vectors are ignored unless the result would
 	have zero rows/columns.
@@ -246,24 +246,24 @@ BUG FIXES
 	after par(tcl= <.>), highlevel graphic setting of tcl didn't work
 	anymore.  "tck" has now S's default of -0.01 (when tcl=NA).
 
-    o   data() was not checking if ./data was a directory before
+    o	data() was not checking if ./data was a directory before
 	warning.
 
-    o   Assignment beyond the end of character strings was filling
+    o	Assignment beyond the end of character strings was filling
 	with "", whereas changing the length extended with NA_STRING.
 	Now NA_STRING is used for both.
 
     o	boxplot()s with logarithmic scale in "width-direction" now have
-        proper widths, i.e. typically constant.
+	proper widths, i.e. typically constant.
 
     o	Using GNU readline in asynchronous event callbacks (e.g. TclTk
-        or Gtk) works correctly, i.e. doesn't cause readline to abort
-        the process.
+	or Gtk) works correctly, i.e. doesn't cause readline to abort
+	the process.
 
-    o   Using Q to exit a browser invoked at the top-level could lead to
+    o	Using Q to exit a browser invoked at the top-level could lead to
 	the browser being invoked on all future top-level loops (PR#1721)
 
-    o   step(fit, direction="both") now uses both directions even if
+    o	step(fit, direction="both") now uses both directions even if
 	no scope is supplied.
 
     o	strwidth(), strheight() now give 0 on NA strings (as they
@@ -275,11 +275,11 @@ BUG FIXES
     o	pdf() has been protected against the user who specified
 	non-existent fonts. (PR#1748)
 
-    o   dlnorm() returns zero for negative x argument. (PR#1781)
+    o	dlnorm() returns zero for negative x argument. (PR#1781)
 
-    o   Printing 0 in octmode gave "" not "0". (PR#1759)
+    o	Printing 0 in octmode gave "" not "0". (PR#1759)
 
-    o   anova.glm() was ignoring a `dispersion' argument if given
+    o	anova.glm() was ignoring a `dispersion' argument if given
 	multiple objects. (PR#1807)
 
     o	model.matrix() with a `rhs ~ .' formula included columns with
@@ -289,27 +289,27 @@ BUG FIXES
 	model.matrix() was sometimes incorrectly determining the first
 	factor in a formula without an intercept.
 
-    o   termplot() now needs data= argument more rarely. (PR#828)
+    o	termplot() now needs data= argument more rarely. (PR#828)
 
-    o   abline() on log scale doesn't draw -ve points. (PR#1243)
+    o	abline() on log scale doesn't draw -ve points. (PR#1243)
 
-    o   The Java search engine now works within Mozilla 1.0 and
+    o	The Java search engine now works within Mozilla 1.0 and
 	Netscape 6.2.x / 7.0pr1.
 
-    o   unsplit() failed if f was a list of factors. (PR#1843)
+    o	unsplit() failed if f was a list of factors. (PR#1843)
 
-    o   The methods package generic version of primitives is now "sealed"
-        and cannot be redefined (it was always a bad idea to do so).
+    o	The methods package generic version of primitives is now "sealed"
+	and cannot be redefined (it was always a bad idea to do so).
 
-    o   quantile() gave -Inf not NaN in some examples. (Related to PR#1852)
+    o	quantile() gave -Inf not NaN in some examples. (Related to PR#1852)
 
-    o   read.table() read too far in checking the file structure if
+    o	read.table() read too far in checking the file structure if
 	0 < nrows < 5 and more rows existed on the file. (PR1809)
 
-    o   loess() was not checking for too small a span (so no points
+    o	loess() was not checking for too small a span (so no points
 	were included in the smoothing window).
 
-    o   match() was assuming that there was only one possible bit
+    o	match() was assuming that there was only one possible bit
 	pattern for a numeric NA, so some matches failed on Solaris
 	under some compiler options.
 
@@ -325,7 +325,7 @@ BUG FIXES
 	particular `border = 0' plots in background colour.
 
     o	delete.response() was losing the attribute set for safe
-        prediction. (PR#1840)
+	prediction. (PR#1840)
 
     o	poly() was checking the degree against the number of points
 	even when predicting.
@@ -333,6 +333,10 @@ BUG FIXES
     o	Comparison of a data frame and list failed due to typo. (PR#1889)
 
     o	dput() and dump() attempt to check if writing succeeded. (PR#1884)
+
+    o	rep(1:2, 0) and hence array(1:2, 0) fail no longer.
+
+    o	apply(matrix("", 3,0), 2, length) now works.
 
 
 

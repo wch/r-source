@@ -30,6 +30,8 @@ apply(X, MARGIN, FUN, \dots)
   if \code{n > 1}.  If \code{n} equals \code{1}, \code{apply} returns a
   vector if \code{MARGIN} has length 1 and an array of dimension
   \code{dim(X)[MARGIN]} otherwise.
+  If \code{n} is \code{0}, the result has length 0 but not necessarily
+  the ``correct'' dimension.
 
   If the calls to \code{FUN} return vectors of different lengths,
   \code{apply} returns a list of length \code{dim(X)[MARGIN]}.
@@ -71,6 +73,7 @@ stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
  arr <- array(1:prod(d.arr), d.arr,
           list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
  aa <- array(1:20,c(2,2,5))
+ str(apply(aa[FALSE,,,drop=FALSE], 1, dim))# empty integer, `incorrect' dim.
  stopifnot(
 	apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)),
 	aa == apply(aa,2:3,function(x) x),

@@ -24,8 +24,20 @@ apply <- function(X, MARGIN, FUN, ...)
 
     ## do the calls
 
+    d2 <- prod(d.ans)
+    if(d2 == 0) {
+        ## arrays with some 0 extents: return ``empty result'' trying
+        ## to use proper mode and dimension:
+        ## The following is still a bit `hackish': use non-empty X
+        newX <- array(vector(typeof(X), 1), dim = c(prod(d.call), 1))
+        ans <- FUN(if(length(d.call) < 2) newX[,1] else
+                   array(newX[,1], d.call, dn.call), ...)
+        return(if(is.null(ans)) ans else if(length(d.call) < 2) ans[1][-1]
+               else array(ans, d.ans, dn.ans))
+    }
+    ## else
     newX <- aperm(X, c(s.call, s.ans))
-    dim(newX) <- c(prod(d.call), d2 <- prod(d.ans))
+    dim(newX) <- c(prod(d.call), d2)
     ans <- vector("list", d2)
     if(length(d.call) < 2) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
