@@ -90,8 +90,7 @@ static void   GTK_Polyline(int, double*, double*, int, DevDesc*);
 static void   GTK_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   GTK_Resize(DevDesc*);
 static double GTK_StrWidth(char*, DevDesc*);
-static void   GTK_Text(double, double, int, char*, double, double, double,
-		       DevDesc*);
+static void   GTK_Text(double, double, int, char*, double, DevDesc*);
 static void   GTK_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 /* Pixel Dimensions (Inches) */
@@ -847,7 +846,7 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
 }
 
 static void GTK_Text(double x, double y, int coords,
-		     char *str, double xc, double yc, double rot, DevDesc *dd)
+		     char *str, double rot, DevDesc *dd)
 {
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
   GdkColor gcol_fill;
@@ -862,13 +861,6 @@ static void GTK_Text(double x, double y, int coords,
 
   SetColor(&gcol_fill, dd->gp.col);
   gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
-
-  if(xc != 0.0 || yc != 0.0) {
-    x1 = GTK_StrWidth(str, dd);
-    y1 = GConvertYUnits(1, CHARS, DEVICE, dd);
-    x += -xc * x1 * cos(rrot) + yc * y1 * sin(rrot);
-    y -= -xc * x1 * sin(rrot) - yc * y1 * cos(rrot);
-  }
 
   gdk_draw_text_rot(gtkd->drawing->window,
 		    gtkd->font, gtkd->wgc,

@@ -164,8 +164,7 @@ static void   X11_Polyline(int, double*, double*, int, DevDesc*);
 static void   X11_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   X11_Resize(DevDesc*);
 static double X11_StrWidth(char*, DevDesc*);
-static void   X11_Text(double, double, int, char*, double, double, double,
-		       DevDesc*);
+static void   X11_Text(double, double, int, char*, double, DevDesc*);
 static void   X11_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 	/********************************************************/
@@ -1686,9 +1685,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/********************************************************/
 	/* device_Text should have the side-effect that the 	*/
 	/* given text is drawn at the given location		*/
-	/* the text should be justified according to "xc" and	*/
-	/* "yc" (0 = left, 0.5 = centre, 1 = right)		*/
-	/* and rotated according to rot (degrees)		*/
+	/* the text should be rotated according to rot (degrees)*/
 	/* the location is in an arbitrary coordinate system	*/
 	/* and this function is responsible for converting the	*/
 	/* location to DEVICE coordinates using GConvert	*/
@@ -1696,7 +1693,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 
 
 static void X11_Text(double x, double y, int coords,
-		     char *str, double xc, double yc, double rot, DevDesc *dd)
+		     char *str, double rot, DevDesc *dd)
 {
     int   size;
     double pixs, xl, yl, rot1;
@@ -1706,8 +1703,8 @@ static void X11_Text(double x, double y, int coords,
     GConvert(&x, &y, coords, DEVICE, dd);
     SetFont(dd->gp.font, size, 0.0, dd);
     pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
-    xl = xc * X11_StrWidth(str, dd);
-    yl = yc * GConvertYUnits(1, CHARS, DEVICE, dd) - pixs;
+    xl = 0.0;
+    yl = -pixs;
     rot1 = rot * DEG2RAD;
     x += -xl * cos(rot1) + yl * sin(rot1);
     y -= -xl * sin(rot1) - yl * cos(rot1);

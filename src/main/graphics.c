@@ -2572,14 +2572,7 @@ int GLocator(double *x, double *y, int coords, DevDesc *dd)
 void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 int units, DevDesc *dd)
 {
-#ifdef BUG61
-    if(dd->dp.metricInfo)
-	dd->dp.metricInfo(c, ascent, descent, width, dd);
-    else
-	error("detailed character metric information unavailable");
-#else
     dd->dp.metricInfo(c & 0xFF, ascent, descent, width, dd);
-#endif
     if (units != DEVICE) {
 	*ascent = GConvertYUnits(*ascent, DEVICE, units, dd);
 	*descent = GConvertYUnits(*descent, DEVICE, units, dd);
@@ -3054,27 +3047,6 @@ double GStrWidth(char *str, int units, DevDesc *dd)
 
 double GStrHeight(char *str, int units, DevDesc *dd)
 {
-#ifdef BUG61
-    /* VERY old stuff */
-    double h = dd->gp.cex * dd->gp.cra[1];
-    if (units != DEVICE)
-	h = GConvertYUnits(h, DEVICE, units, dd);
-    return h;
-    /* #else */
-    /* old stuff */
-    double h;
-    char *s;
-    int n;
-    /* Count the lines of text */
-    n = 1;
-    for(s = str; *s ; s++)
-	if (*s == '\n')
-	    n += 1;
-    h = n * dd->gp.cex * dd->gp.cra[1];
-    if (units != DEVICE)
-	h = GConvertYUnits(h, DEVICE, units, dd);
-    return h;
-#else
     double h;
     char *s;
     double asc, dsc, wid;
@@ -3094,7 +3066,6 @@ double GStrHeight(char *str, int units, DevDesc *dd)
 	h = GConvertYUnits(h, DEVICE, units, dd);
 
     return h;
-#endif
 }
 
 /* Draw text in a plot. */
@@ -3115,24 +3086,9 @@ void GText(double x, double y, int coords, char *str,
 	int i, n;
 	double xoff, yoff;
 	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
-#ifdef BUG61
-	double yadj;
-	/* Fixup for string centering. */
-	/* Higher functions send in NA_REAL */
-	/* when true text centering is desired */
-	if (!R_FINITE(yc)) {
-	    yadj = (dd->gp.yCharOffset - 0.5);
-	    yc = 0.5;
-	}
-	else yadj = 0;
-	if (!R_FINITE(xc)) xc = 0.5;
-	/* We work in NDC coordinates */
-	GConvert(&x, &y, coords, NDC, dd);
-#else
 	double xleft, ybottom;
 	/* We work in INCHES */
 	GConvert(&x, &y, coords, INCHES, dd);
-#endif
 	/* Count the lines of text */
 	n = 1;
         for(s = str; *s ; s++)
@@ -3148,17 +3104,6 @@ void GText(double x, double y, int coords, char *str,
         for(s = str; ; s++) {
             if (*s == '\n' || *s == '\0') {
 		*sb = '\0';
-#ifdef BUG61
-		/* Compute the approriate offset. */
-		/* (translate verticaly then rotate). */
-                yoff = (1 - yc) * (n - 1) - i - yadj;
-		yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
-		xoff = - yoff * sin_rot;
-		yoff = yoff * cos_rot;
-		GConvert(&xoff, &yoff, INCHES, NDC, dd);
-		xoff = x + xoff;
-		yoff = y + yoff;
-#else
 		if (n > 1) {
 		    /* first determine location of THIS line */
 		    if (!R_FINITE(xc))
@@ -3225,30 +3170,11 @@ void GText(double x, double y, int coords, char *str,
 		    xleft = xoff;
 		    ybottom = yoff;
 		}
-#endif
 		if(dd->dp.canClip) {
 		    GClip(dd);
-#ifdef BUG61
-		    dd->dp.text(xoff, yoff, NDC, sbuf, xc, yc, rot, dd);
-#else
-		    dd->dp.text(xleft, ybottom, INCHES, sbuf, 0., 0., rot, dd);
-#endif
+		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
 		}
 		else {
-#ifdef BUG61
-		    double xtest = xoff;
-		    double ytest = yoff;
-		    switch (dd->gp.xpd) {
-		    case 0:
-			GConvert(&xtest, &ytest, NDC, NPC, dd);
-			break;
-		    case 1:
-			GConvert(&xtest, &ytest, NDC, NFC, dd);
-			break;
-		    case 2:
-			break;
-		    }
-#else
 		    double xtest = xleft;
 		    double ytest = ybottom;
 		    switch (dd->gp.xpd) {
@@ -3262,14 +3188,9 @@ void GText(double x, double y, int coords, char *str,
 			GConvert(&xtest, &ytest, INCHES, NDC, dd);
 			break;
 		    }
-#endif
 		    if (xtest < 0 || ytest < 0 || xtest > 1 || ytest > 1)
 			    return;
-#ifdef BUG61
-		    dd->dp.text(xoff, yoff, NDC, sbuf, xc, yc, rot, dd);
-#else
-		    dd->dp.text(xleft, ybottom, INCHES, sbuf, 0., 0., rot, dd);
-#endif
+		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
 		}
 		sb = sbuf;
 		i += 1;

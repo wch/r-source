@@ -663,8 +663,7 @@ static void   PS_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   PS_Resize(DevDesc*);
 static double PS_StrWidth(char*, DevDesc*);
 static void   PS_MetricInfo(int, double*, double*, double*, DevDesc*);
-static void   PS_Text(double, double, int, char*, double, double, double,
-		      DevDesc*);
+static void   PS_Text(double, double, int, char*, double, DevDesc*);
 
 
 
@@ -1225,14 +1224,14 @@ static void PS_Polyline(int n, double *x, double *y, int coords,
 }
 
 static void PS_Text(double x, double y, int coords,
-		    char *str, double xc, double yc, double rot, DevDesc *dd)
+		    char *str, double rot, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     GConvert(&x, &y, coords, DEVICE, dd);
     SetFont(dd->gp.font, floor(dd->gp.cex * dd->gp.ps + 0.5), dd);
     SetColor(dd->gp.col, dd);
-    PostScriptText(pd->psfp, x, y, str, xc, yc, rot);
+    PostScriptText(pd->psfp, x, y, str, 0.0, 0.0, rot);
 }
 
 static int PS_Locator(double *x, double *y, DevDesc *dd)

@@ -180,8 +180,7 @@ static void   X11_Polyline(int, double*, double*, int, DevDesc*);
 static void   X11_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   X11_Resize(DevDesc*);
 static double X11_StrWidth(char*, DevDesc*);
-static void   X11_Text(double, double, int, char*, double, double, double,
-		       DevDesc*);
+static void   X11_Text(double, double, int, char*, double, DevDesc*);
 static void   X11_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 	/*************************************************/
@@ -1576,16 +1575,14 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/********************************************************/
 	/* device_Text should have the side-effect that the	*/
 	/* given text is drawn at the given location		*/
-	/* the text should be justified according to "xc" and	*/
-	/* "yc" (0 = left, 0.5 = centre, 1 = right)		*/
-	/* and rotated according to rot (degrees)		*/
+	/* the text should be rotated according to rot (degrees)*/
 	/* the location is in an arbitrary coordinate system	*/
 	/* and this function is responsible for converting the	*/
 	/* location to DEVICE coordinates using GConvert	*/
 	/********************************************************/
 
 static void X11_Text(double x, double y, int coords,
-		     char *str, double xc, double yc, double rot, DevDesc *dd)
+		     char *str, double rot, DevDesc *dd)
 {
     int len, size;
 /*    double xl, yl, rot1;*/
@@ -1596,16 +1593,6 @@ static void X11_Text(double x, double y, int coords,
     SetColor(dd->gp.col, dd);
     len = strlen(str);
     GConvert(&x, &y, coords, DEVICE, dd);
-#ifdef BUG61
-    if(xc != 0.0 || yc != 0) {
-	rot1 = DEG2RAD * rot;
-	xl = X11_StrWidth(str, dd);
-	/* yl = GConvertYUnits(1, CHARS, DEVICE, dd); */
-	yl = xd->font->ascent;
-	x += -xc * xl * cos(rot1) + yc * yl * sin(rot1);
-	y -= -xc * xl * sin(rot1) - yc * yl * cos(rot1);
-    }
-#endif
     XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		   (int)x, (int)y, str);
 #ifdef XSYNC

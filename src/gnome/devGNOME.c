@@ -81,8 +81,7 @@ static void   GNOME_Polyline(int, double*, double*, int, DevDesc*);
 static void   GNOME_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   GNOME_Resize(DevDesc*);
 static double GNOME_StrWidth(char*, DevDesc*);
-static void   GNOME_Text(double, double, int, char*, double, double, double,
-		       DevDesc*);
+static void   GNOME_Text(double, double, int, char*, double, DevDesc*);
 static void   GNOME_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 			/* Pixel Dimensions (Inches) */
@@ -298,13 +297,10 @@ static double GNOME_StrWidth(char *str, DevDesc *dd)
 
 static void GNOME_MetricInfo(int c, double *ascent, double *descent, double *width, DevDesc *dd)
 {
-#ifdef BUG61
-#else
     /* metric information not available => return 0,0,0 */
     *ascent = 0.0;
     *descent = 0.0;
     *width = 0.0;
-#endif
 }
 
 static void GNOME_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
@@ -634,7 +630,7 @@ static void GNOME_Polygon(int n, double *x, double *y, int coords,
 }
 
 static void GNOME_Text(double x, double y, int coords,
-		       char *str, double xc, double yc, double rot, DevDesc *dd)
+		       char *str, double rot, DevDesc *dd)
 {
   GnomeCanvasItem *item;
   gnomeDesc *gtkd = (gnomeDesc *) dd->deviceSpecific;
