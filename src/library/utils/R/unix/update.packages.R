@@ -70,8 +70,8 @@ download.packages <- function(pkgs, destdir, available=NULL,
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
-    if(!dirTest(destdir)) stop("destdir is not a directory")
     localcran <- length(grep("^file:", contriburl)) > 0
+    if(!localcran && !dirTest(destdir)) stop("destdir is not a directory")
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
 
