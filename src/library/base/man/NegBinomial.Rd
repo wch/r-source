@@ -14,10 +14,10 @@ rnbinom(n, size, prob)
 \item{x,q}{vector of quantiles representing the number of failures
 which occur in a sequence of Bernoulli trials before a target number of
 successes is reached, or alternately the probability distribution
-of a heterogeneous Poisson process whose intensity is distributed
-as a gamma distribution with scale parameter \code{prob/(1-prob)} and
-shape parameter \code{size} (this definition allows non-integer
-values of \code{size}).}
+of a compound Poisson process whose intensity is distributed
+as a gamma (\code{\link{pgamma}}) distribution with scale parameter
+\code{(1-prob)/prob} and shape parameter \code{size} (this definition
+ allows non-integer values of \code{size}).}
 \item{x}{vector of (non-negative integer) quantiles.}
 \item{q}{vector of quantiles.}
 \item{p}{vector of probabilities.}
@@ -26,7 +26,7 @@ values of \code{size}).}
     shape parameter of gamma distribution.}
 \item{prob}{probability of success in each trial /\cr
     determines scale of gamma distribution
-    (\code{prob} = \code{scale/(1+scale)}).} 
+    (\code{prob} = \code{scale/(1+scale)}).}
 }
 \description{
   These functions provide information about the negative binomial
