@@ -18,8 +18,6 @@ SUBDIRS_WITH_NO_BUILD = R licenses make perl sh texmf
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_SHARE_PERL = R Text
 
-GNOME_IF_FILES = @GNOME_IF_FILES@
-
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
