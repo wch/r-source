@@ -17,7 +17,7 @@ Basics
 	manip		&	Data Manipulation
 	attribute	&	Data Attributes
 	classes		&	Data Types (not OO)
-	    & character	&	Character Data Operations
+	    & character	&	Character Data ("String") Operations
 	    & complex	&	Complex Numbers
 	    & category	&	Categorical Data
 	    & NA	&	Missing Values			[!= S]
