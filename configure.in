@@ -471,8 +471,13 @@ AC_TRY_RUN(
   changequote(<<, >>)dnl
   <<
   #include <math.h>
+  #include "confdefs.h"
   int main () {
+  #ifdef HAVE_ISNAN
     return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
+  #else
+    return(log(0.) != -1. / 0);
+  #endif
   }
   >>,
   changequote([, ])dnl
