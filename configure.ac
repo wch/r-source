@@ -1042,8 +1042,12 @@ case "${host_os}" in
     ## LIBR_LDFLAGS ... not clear whether needed or in fact wanted.
     ##
     ## When running AQUA this has to be a fixed place, not under /usr/local
+    ## <FIXME>
+    ## I'm using want_aqua instead of use_aqua as the latter is not yet
+    ## at this point. S.I.
+    ## </FIXME>
     ## </NOTE>
-    if test "x${use_aqua}" = xyes; then
+    if test "${want_aqua}" = yes; then
       LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Frameworks/libR.dylib"
     else
       LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
