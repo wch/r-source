@@ -366,3 +366,19 @@ Date: Wed, 2 Jan 2002 14:24:35 +0700
 Subject: R1.4.0 under Windows NT, package grid/lattice
 From: H.Rinner@tirol.gv.at
 Date: Wed, 2 Jan 2002 16:09:58 +0100 (MET)
+* PR# 1235 *
+Subject: Axes labelling with logarithmic scales
+From: tobias.hoevekamp@ilw.agrl.ethz.ch
+Date: Thu, 3 Jan 2002 15:29:02 +0100 (MET)
+* PR# 1236 *
+Subject: type.convert()
+From: dxsun@bell-labs.com
+Date: Thu, 3 Jan 2002 17:00:18 +0100 (MET)
+* PR# 1237 *
+Subject: trellis plot and postscript file
+From: dxsun@bell-labs.com
+Date: Thu, 3 Jan 2002 18:25:46 +0100 (MET)
+* PR# 1238 *
+Subject:  identify.default() fails when x is a structure/matrix 
+From: David James <dj@localhost.localdomain>
+Date: Thu, 3 Jan 2002 17:17:12 -0500
