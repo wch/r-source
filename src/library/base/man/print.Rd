@@ -12,7 +12,6 @@ print.ordered(x, quote = FALSE)
 \alias{print.htest}
 \alias{print.listof}
 \alias{print.table}
-\alias{print.tabular}
 \description{
 \code{print} prints its argument.
 It is a generic function which means that new printing methods can be

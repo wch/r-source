@@ -136,9 +136,10 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
     n <- nrow(x)
     p <- ncol(x)
     wts <- w^0.5
-    z <- .Fortran("dqrls", qr = x * wts, n = n, p = p, y = y *
-		  wts, ny = ny, tol = tol, coefficients = mat.or.vec(p,
-					   ny), residuals = y, effects = mat.or.vec(n, ny),
+    z <- .Fortran("dqrls", qr = x * wts, n = n, p = p,
+                  y = y * wts, ny = ny, tol = tol,
+                  coefficients = mat.or.vec(p, ny), residuals = y,
+                  effects = mat.or.vec(n, ny),
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
 		  work = double(2 * p))
     coef <- z$coefficients
@@ -181,9 +182,10 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	z$weights <- save.w
     }
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
-	  "weights", "rank")], list(assign = attr(x, "assign"),
-				    qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
-				    df.residual = n - z$rank))
+	  "weights", "rank")],
+      list(assign = attr(x, "assign"),
+           qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
+           df.residual = n - z$rank))
 }
 
 print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
@@ -231,8 +233,9 @@ summary.lm <- function (object, correlation = FALSE)
     ans <- z[c("call", "terms")]
     ans$residuals <- r
     ans$coefficients <- cbind(est, se, tval, 2*(1 - pt(abs(tval), rdf)))
-    dimnames(ans$coefficients)<- list(names(z$coefficients)[Qr$pivot[p1]],
-                                      c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+    dimnames(ans$coefficients)<-
+        list(names(z$coefficients)[Qr$pivot[p1]],
+             c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
     ans$sigma <- sqrt(resvar)
     ans$df <- c(p, rdf, NCOL(Qr$qr))
     if (p != attr(z$terms, "intercept")) {
@@ -253,8 +256,9 @@ summary.lm <- function (object, correlation = FALSE)
     ans
 }
 
-print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-			      symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,	...)
+print.summary.lm <-
+    function (x, digits = max(3, .Options$digits - 3), symbolic.cor = p > 4,
+              signif.stars= .Options$show.signif.stars,	...)
 {
     cat("\nCall:\n")#S: ' ' instead of '\n'
     cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -282,8 +286,8 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 
     print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
     ##
-    cat("\nResidual standard error:", format(signif(x$sigma,
-						    digits)), "on", rdf, "degrees of freedom\n")
+    cat("\nResidual standard error:",
+        format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
     if (!is.null(x$fstatistic)) {
 	cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
 	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,d=digits),
@@ -315,16 +319,7 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 ## Commented by KH on 1998/07/10
 ## update.default() should be more general now ...
 ## update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
-## {
-##	call <- lm.obj$call
-##	if(!missing(formula))
-##		call$formula <- update.formula(call$formula, formula)
-##	if(!missing(data))	call$data <- substitute(data)
-##	if(!missing(subset))	call$subset <- substitute(subset)
-##	if(!missing(na.action)) call$na.action <- substitute(na.action)
-##	if (!missing(weights))	call$weights<-substitute(weights)
-##	eval(call, sys.frame(sys.parent()))
-## }
+## .....
 
 residuals.lm <- function(x) x$residuals
 fitted.lm <- function(x) x$fitted.values
@@ -439,15 +434,6 @@ anovalist.lm <- function (object, ..., test = NULL)
     structure(table, heading = c(title, topnote), class= "anova")# was "tabular"
 }
 
-## Unused (0.63, Sept.25 1998) --- print.anova()  now in ./print.R
-print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
-{
-    cat("\nAnalysis of Variance:\n\n")
-    print.default(round(unclass(x), digits), na="", print.gap=2)
-    cat("\n")
-    invisible(x)
-}
-
 predict.lm <- function(object, newdata,
 		       se.fit = FALSE, scale = NULL, df = Inf,
 		       interval=c("none","confidence","prediction"), level=.95)
@@ -464,16 +450,16 @@ predict.lm <- function(object, newdata,
     predictor <- drop(X[, piv, drop = FALSE] %*% est)
     interval <- match.arg(interval)
     if(se.fit || interval != "none") {
-	if (is.null(scale)){
+	if (is.null(scale)) {
 	    r <- resid(object)
 	    f <- fitted(object)
 	    w <- weights(object)
-	    if (is.null(w)) rss <- sum(r^2)
-	    else rss <- sum(r^2 * w)
+	    rss <- sum(if(is.null(w)) r^2 else r^2 * w)
 	    df <- n - p
 	    res.var <- rss/df
-	} else
-	res.var <- scale^2
+	} else {
+            res.var <- scale^2
+        }
 	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
 	vcov <- res.var * R
 	ip <- real(NROW(X))
@@ -482,25 +468,22 @@ predict.lm <- function(object, newdata,
 	    ip[i] <- xi %*% vcov %*% xi
 	}
     }
-    if (interval != "none")
-    {
+    if(interval != "none") {
 	tfrac <- qt((1 - level)/2,df)
 	w <- tfrac * switch(interval,
 			    confidence=sqrt(ip),
 			    prediction=sqrt(ip+res.var)
 			    )
-	predictor<-cbind(predictor,predictor+
-			 w %o% c(1,-1))
+	predictor <- cbind(predictor, predictor + w %o% c(1,-1))
 	colnames(predictor) <- c("fit","lwr","upr")
     }
-    if (se.fit)
+    if(se.fit)
 	list(fit = predictor, se.fit = sqrt(ip),
 	     df = df, residual.scale = sqrt(res.var))
     else predictor
 }
 
-effects.lm <-
-    function(object, set.sign = FALSE)
+effects.lm <- function(object, set.sign = FALSE)
 {
     eff <- object$effects
     if(set.sign) {
@@ -556,12 +539,11 @@ model.matrix.lm <- function(object, ...)
     }
 }
 
-predict.mlm <-
-    function(fit, newdata, se.fit = FALSE)
+predict.mlm <- function(fit, newdata, se.fit = FALSE)
 {
     if(missing(newdata)) return(fit$fitted)
     if(se.fit)
-	stop("The\"se.fit\" argument is not currently implemented for mlm objects")
+	stop("The 'se.fit' argument is not yet implemented for mlm objects")
     x <- model.matrix(fit, newdata) # will use model.matrix.lm
     piv <- object$qr$pivot[1:object$rank]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]

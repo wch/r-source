@@ -8,31 +8,19 @@ print.default <-
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
 print.matrix <- function (x, rowlab = dn[[1]], collab = dn[[2]],
-                          quote = TRUE, right = FALSE,
-                          na.print=NULL, print.gap=NULL) {
+			  quote = TRUE, right = FALSE,
+			  na.print=NULL, print.gap=NULL) {
     x <- as.matrix(x)
     dn <- dimnames(x)
     if(!is.null(print.gap)) warning("'print.gap' is not yet used")
     ## and 'na.print' could be done in .Internal(.) as well:
     if(!is.null(na.print) && any(ina <- is.na(x)))
-        x[ina] <- na.print
+	x[ina] <- na.print
     .Internal(print.matrix(x, rowlab, collab, quote, right))
 }
 prmatrix <- .Alias(print.matrix)
 
-## This is not used anymore [replaced by  print.anova() -> ./anova.R ]
-print.tabular <-
-    function(x, digits = max(3, .Options$digits - 3), na.print = "")
-{
-    cat("\n", if(!is.null(x$title))
-	x$title else "Analysis of Variance:", "\n\n", sep="")
-    if(!is.null(x$topnote))
-	cat(paste(x$topnote, collapse="\n"), "\n\n", sep="")
-    print.default(x$table, digits=digits, na = "", print.gap = 2)
-    if(!is.null(x$botnote))
-	cat("\n", paste(x$botnote, collapse="\n"), sep="")
-    cat("\n")
-}
+## print.tabular is now deprecated !
 
 noquote <- function(obj) {
     ## constructor for a useful "minor" class
@@ -63,27 +51,38 @@ print.coefmat <-
 	     signif.stars= .Options$show.signif.stars,
 	     dig.tst = max(1, min(5, digits - 1)),
 	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
-	     has.Pvalue = d[2] >= 4 && substr(colnames(x)[d[2]],1,3) == "Pr(",
-             na.print = "",
-	     ...)
+	     P.values = NULL,
+	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
+	     na.print = "", ...)
 {
     ## For printing ``coefficient matrices'' as they are in summary.xxx(.) where
     ## xxx in {lm, glm, aov, ..}. (Note: summary.aov(.) gives a class "anova").
 
     ## By Default
     ## Assume: x is a matrix-like numeric object.
-    ## ------  with *last* column = P-values  --iff-- has.Pvalue (== TRUE)
+    ## ------  with *last* column = P-values  --iff-- P.values (== TRUE)
     ##	  columns {cs.ind}= numbers, such as coefficients & std.err  [def.: 1:k]
     ##	  columns {tst.ind}= test-statistics (as "z", "t", or "F")  [def.: k+1]
 
     if(is.null(d <- dim(x)) || length(d) != 2)
 	stop("1st arg. 'x' must be coefficient matrix/d.f./...")
     nc <- d[2]
-    k <- nc - (if(missing(tst.ind)) 1 else length(tst.ind)) - has.Pvalue
-    ##if(!missing(cs.ind)) && length(cs.ind) > k) stop("wrong k / cs.ind")
+    if(is.null(P.values))
+	P.values <- has.Pvalue && .Options$show.coef.Pvalues
+    else if(P.values && !has.Pvalue)
+	stop("'P.values is TRUE, but has.Pvalue not!")
 
-    Cf <- array("", dim=d, dimnames = dimnames(x))
-    xm <- as.matrix(x)
+    if(has.Pvalue && !P.values) {# P values are there, but not wanted
+        d <- dim(xm <- as.matrix(x[,-nc]))
+        nc <- nc - 1
+        has.Pvalue <- FALSE
+    } else xm <- as.matrix(x)
+
+    k <- nc - has.Pvalue - (if(missing(tst.ind)) 1 else length(tst.ind))
+    if(!missing(cs.ind) && length(cs.ind) > k) stop("wrong k / cs.ind")
+
+    Cf <- array("", dim=d, dimnames = dimnames(xm))
+
     ok <- !(ina <- is.na(xm))
     if(length(cs.ind)>0) {
 	acs <- abs(coef.se <- xm[, cs.ind, drop=FALSE])# = abs(coef. , stderr)
@@ -104,18 +103,18 @@ print.coefmat <-
 	Cf[not.both.0] <- format(xm[okP][not.both.0], digits= max(1,digits-1))
     }
     if(any(ina)) Cf[ina] <- na.print
-    if(has.Pvalue) {
-        pv <- xm[, nc]
-        if(any(okP <- ok[,nc])) {
-            Cf[okP, nc] <- format.pval(pv[okP], digits = dig.tst)
-            signif.stars <- signif.stars && any(pv[okP] < .1)
-            if(signif.stars) {
-                Signif <- symnum(pv, corr = FALSE, na = FALSE,
-                                 cutpoints = c(0,  .001,.01,.05, .1, 1),
-                                 symbols   =  c("***","**","*","."," "))
-                Cf <- cbind(Cf, Signif)
-            }
-        } else signif.stars <- FALSE
+    if(P.values) {
+	pv <- xm[, nc]
+	if(any(okP <- ok[,nc])) {
+	    Cf[okP, nc] <- format.pval(pv[okP], digits = dig.tst)
+	    signif.stars <- signif.stars && any(pv[okP] < .1)
+	    if(signif.stars) {
+		Signif <- symnum(pv, corr = FALSE, na = FALSE,
+				 cutpoints = c(0,  .001,.01,.05, .1, 1),
+				 symbols   =  c("***","**","*","."," "))
+		Cf <- cbind(Cf, Signif)
+	    }
+	} else signif.stars <- FALSE
     } else signif.stars <- FALSE
     print.matrix(Cf, quote = FALSE, right = TRUE, na.print=na.print, ...)
     if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
@@ -126,22 +125,22 @@ print.anova <- function(x, digits = max(.Options$digits - 2, 3),
 			signif.stars= .Options$show.signif.stars, ...)
 {
     if (!is.null(heading <- attr(x, "heading")))
-        cat(heading, sep = "\n")
+	cat(heading, sep = "\n")
     nc <- (d <- dim(x))[2]
     if(is.null(cn <- colnames(x))) stop("anova object must have colnames(.)!")
     ncn <- nchar(cn)
     has.P <- substr(cn[nc],1,3) == "Pr(" # P-value as last column
     zap.i <- 1:(if(has.P) nc-1 else nc)
     if(length(i <- which(substr(cn,2,7) == " value")))
-        zap.i <- zap.i[!(zap.i %in% i)]
+	zap.i <- zap.i[!(zap.i %in% i)]
     tst.i <- i
     if(length(i <- which(substr(cn,ncn-1,ncn) == "Df")))
-        zap.i <- zap.i[!(zap.i %in% i)]
+	zap.i <- zap.i[!(zap.i %in% i)]
 
-    print.coefmat(x, digits=digits, signif.stars=signif.stars, has.Pvalue=has.P,
-                  cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
-                  na.print = "", # not yet in print.matrix:  print.gap = 2,
-                  ...)
+    print.coefmat(x, digits=digits, signif.stars=signif.stars, P.values=has.P,
+		  cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
+		  na.print = "", # not yet in print.matrix:  print.gap = 2,
+		  ...)
     invisible(x)
 }
 

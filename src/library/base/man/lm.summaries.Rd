@@ -37,7 +37,6 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{print.lm.null}
 \alias{print.summary.lm}
 \alias{print.summary.lm.null}
-\alias{print.anova.lm}
 \arguments{
   \item{object,x}{an object of class \code{lm}, usually, a result of
     \code{\link{lm}(..)}.}

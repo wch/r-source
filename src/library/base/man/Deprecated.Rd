@@ -8,6 +8,8 @@
 dnchisq(.)
 pnchisq(.)
 qnchisq(.)
+print.anova.lm(.)
+print.tabular(.)
 print.plot(.)
 save.plot(.)
 }
@@ -15,6 +17,8 @@ save.plot(.)
 \alias{dnchisq}
 \alias{pnchisq}
 \alias{qnchisq}
+\alias{print.anova.lm}
+\alias{print.tabular}
 \alias{print.plot}
 \alias{save.plot}
 \description{
