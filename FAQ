@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-22, 2002-09-17
+Version 1.5-23, 2002-09-19
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -346,7 +346,7 @@ not on other platforms).  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Duncan Murdoch
 <murdoch@stats.uwo.ca> and Brian D. Ripley <Brian.Ripley@r-project.org>.
 
-   For most installations the installer `SetupR.exe' will be the easiest
+   For most installations the Windows installer program will be the easiest
 tool to use.
 
    See the "R for Windows FAQ"
@@ -1218,6 +1218,10 @@ requirement for the user is a JavaScript capable browser.  See
      Data sets for "Introductory Statistics with R" by Peter Dalgaard,
      2002, Springer.
 
+*KMsurv*
+     Data sets and functions for "Survival Analysis, Techniques for Censored
+     and Truncated Data" by Klein and Moeschberger, 1997, Springer.
+
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding
      to the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995.
@@ -1424,6 +1428,10 @@ requirement for the user is a JavaScript capable browser.  See
      Calculates the NPMLE of the survival distribution for doubly censored
      data.
 
+*deal*
+     Bayesian networks with continuous and/or discrete variables can be
+     learned and compared from data.
+
 *deldir*
      Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
      tesselation (with respect to the entire plane) of a planar point set.
@@ -1506,6 +1514,11 @@ requirement for the user is a JavaScript capable browser.  See
      An implementation of the Liang/Zeger generalized estimating equation
      approach to GLMs for dependent data.
 
+*geepack*
+     Generalized estimating equations solver for parameters in mean, scale,
+     and correlation structures, through mean link, scale link, and
+     correlation link.  Can also handle clustered categorical responses.
+
 *geoR*
      Functions to perform geostatistical data analysis including model-based
      methods.
@@ -1536,6 +1549,10 @@ requirement for the user is a JavaScript capable browser.  See
      GTK graphics device driver that may be used independently of the
      R-GNOME interface and can be used to create R devices as embedded
      components in a GUI using a Gtk drawing area widget, e.g., using RGtk.
+
+*haplo.score*
+     Score tests for association of traits with haplotypes when linkage
+     phase is ambiguous.
 
 *hdf5*
      Interface to the NCSA HDF5 library.
