@@ -680,6 +680,8 @@ BUG FIXES
     o	Contrasts needed to be coerced to numeric (e.g. from integer)
 	inside model.matrix.  (PR#7695)
 
+    o   socketSelect() did not check for buffered input.
+
 
 
 

@@ -3791,6 +3791,7 @@ SEXP R_decompress1(SEXP in)
 
 SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    Rboolean immediate = FALSE;
     int nsock, i;
     SEXP insock, write, val, insockfd;
     double timeout;
@@ -3813,13 +3814,20 @@ SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
+	Rsockconn scp = (Rsockconn) conn->private;
 	if (strcmp(conn->class, "socket") != 0)
 	    errorcall(call, _("not a socket connection"));
-	INTEGER(insockfd)[i] = ((Rsockconn) conn->private)->fd;
+	INTEGER(insockfd)[i] = scp->fd;
+	if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
+	    LOGICAL(val)[i] = TRUE;
+	    immediate = TRUE;
+	}
+	else LOGICAL(val)[i] = FALSE;
     }
 
-    Rsockselect(nsock, INTEGER(insockfd), LOGICAL(val), LOGICAL(write),
-		timeout);
+    if (! immediate)
+	Rsockselect(nsock, INTEGER(insockfd), LOGICAL(val), LOGICAL(write),
+		    timeout);
 
     UNPROTECT(2);
     return val;
