@@ -1,7 +1,7 @@
 \name{nls}
 \alias{nls}
 %\alias{anova.nls}
-\alias{anovalist.nls}
+%\alias{anovalist.nls}
 %\alias{coef.nls}
 %\alias{deviance.nls}
 %\alias{df.residual.nls}

@@ -3,7 +3,7 @@ useDynLib(nls)
 export(NLSstAsymptotic, NLSstClosestX, NLSstLfAsymptote,
        NLSstRtAsymptote, SSasymp, SSasympOff, SSasympOrig, SSbiexp,
        SSfol, SSfpl, SSgompertz, SSlogis, SSmicmen, SSweibull,
-       anovalist.nls, asOneSidedFormula, clearNames,
+       asOneSidedFormula, clearNames,
        getInitial, nls, nls.control, nlsModel, numericDeriv, profiler,
        selfStart, setNames, sortedXyData)
 
