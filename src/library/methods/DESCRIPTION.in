@@ -1,14 +1,11 @@
-Package: RSMethods
-Version: @MAJOR_VERSION@.@MINOR_VERSION@-@PATCH_LEVEL@
-Date: @DATE@
-Author:  John Chambers
-Maintainer: John Chambers
+Package: Methods
+Version: @VERSION@
+Priority: base
 Title:  Formal Methods and Classes
-Description: Formally defined methods and classes for R objects, plus other programming
-	tools, as described in the reference.
+Author: R Development Core Team
+Maintainer: R Core Team <R-core@r-project.org>
+Description: Formally defined methods and classes for R objects, 
+        plus other programming tools, as described in the reference.
 References:  ``Programming with Data'' (1998), John M. Chambers, Springer NY.
 	http://www.omegahat.org/RSMethods/Intro.ps and .../Intro.pdf
-Note: This is released by the Omegahat Project for Statistical
-     Computing. Bug reports should be submitted via
-      http://www.omegahat.org/bugs
-License: BSD
+License: GPL Version 2 or later.
