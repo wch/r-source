@@ -114,10 +114,6 @@ Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 Subject: documentation of `las' on `par' help page
 From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Date: Fri, 11 Jan 2002 12:30:20 +0100
-* PR# 1323 *
-Subject: bug in options() - help page
-From: Ole Christensen <o.christensen@lancaster.ac.uk>
-Date: Sat, 23 Feb 2002 16:56:56 +0000
 
 Directory:  Graphics
 
@@ -461,39 +457,15 @@ Date: Tue, 26 Feb 2002 15:13:04 -0500
 Subject: solve() benchmark in R-1.4.1
 From: hyu@stats.uwo.ca
 Date: Wed, 20 Mar 2002 04:50:38 +0100 (MET)
-* PR# 1399 *
-Subject: Have a good Lady Day
-From: "t.lockx" <t.lockx@liftoff.nl>
-Date: Wed, 20 Mar 2002 06:04:37 -0600
 * PR# 1400 *
 Subject: RMySQL integer range bug
 From: matthias.piksa@web.de
 Date: Wed, 20 Mar 2002 13:41:37 +0100 (MET)
-* PR# 1401 *
-Subject: ?? 7???? ?? ??º?/´??????¥?¦ °??¤NO! I±¤.°?I
-From: price2 <price2@hatmail.com>
-Date: Thu, 21 Mar 2002 16:41:49 +0900
-* PR# 1402 *
-Subject: Small typo in An Introduction to R
-From: <mikalzet@libero.it>
-Date: Thu, 21 Mar 2002 08:46:41 +0100 (CET)
-* PR# 1403 *
-Subject: Small typo in An Introduction to R
-From: <mikalzet@libero.it>
-Date: Thu, 21 Mar 2002 08:47:39 +0100 (CET)
-* PR# 1404 *
-Subject: legend - bug with argument angle
-From: Uwe Ligges <ligges@amadeus.statistik.uni-dortmund.de>
-Date: Thu, 21 Mar 2002 13:14:18 +0100
-* PR# 1405 *
-Binary file 1405 matches
-Binary file 1405 matches
-Binary file 1405 matches
-* PR# 1406 *
-Subject: Maritime Newsletter (Week 12)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 22 Mar 2002 03:02:23 +0900
-* PR# 1407 *
-Subject: Happy Lady Day
-From: webmaster <webmaster@stolaf.edu>
-Date: Thu, 21 Mar 2002 13:07:58 -0600 (CST)
+* PR# 1408 *
+Subject: Inconsistencies in sum()
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 22 Mar 2002 08:00:13 +0000 (GMT)
+* PR# 1409 *
+Subject: rare bad bug in sys.function() {or match.arg()}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 22 Mar 2002 20:41:52 +0100
