@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 #include "S.h"
 
 
-extern int isValidName(char*); 
+extern int isValidName(char*);
 static void printAttributes(SEXP, SEXP);
 
 int R_print_width;
@@ -253,7 +253,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    sprintf(ptag, "$...");
 		else {
 		    if( isValidName(CHAR(STRING(names)[i])) )
-		        sprintf(ptag, "$%s", CHAR(STRING(names)[i]));
+			sprintf(ptag, "$%s", CHAR(STRING(names)[i]));
 		    else
 			sprintf(ptag, "$\"%s\"", CHAR(STRING(names)[i]));
 		}
@@ -354,7 +354,7 @@ static void printList(SEXP s, SEXP env)
 		    sprintf(ptag, "$...");
 		else {
 		    if( isValidName(CHAR(PRINTNAME(TAG(s)))) )
-		         sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
+			sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
 		    else
 			sprintf(ptag, "$\"%s\"", CHAR(PRINTNAME(TAG(s))));
 		}
@@ -387,13 +387,13 @@ static void printList(SEXP s, SEXP env)
 
 static void PrintExpression(SEXP s)
 {
-	SEXP u;
-	int i, n;
+    SEXP u;
+    int i, n;
 
-	u = deparse1(s, 0);
-	n = LENGTH(u);
-	for (i=0; i<n ; i++)
-		Rprintf("%s\n", CHAR(STRING(u)[i]));
+    u = deparse1(s, 0);
+    n = LENGTH(u);
+    for (i=0; i<n ; i++)
+	Rprintf("%s\n", CHAR(STRING(u)[i]));
 }
 
 
