@@ -1,9 +1,9 @@
 # Makefile for R for Windows Installers
 
 include ../MkRules
-include ../../../share/make/vars.mk
-
 R_HOME = ../../..
+include $(R_HOME)/share/make/vars.mk
+
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
@@ -28,7 +28,7 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 # morley.tab is needed for R-intro Appendix A
-	$(CP) -p ../../library/base/data/morley.tab $(RPREFIX)/library/base/data
+	$(CP) -p $(R_HOME)/src/library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
@@ -37,7 +37,9 @@ imagedir:
 	$(CP) -pr $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
 	  $(RPREFIX)/doc/manual
+#	html copies of these are in doc/html, and we don't have PDFs on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html $(RPREFIX)/doc/manual/R-FAQ.pdf
+	$(RM) $(RPREFIX)/doc/manual/R-admin.html $(RPREFIX)/doc/manual/R-admin.pdf
 #
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
@@ -68,7 +70,6 @@ endif
 	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(R_HOME)/lib $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
-	$(CP) -p ../graphapp/graphapp.h ../graphapp/ga.h $(RPREFIX)/include
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #

@@ -628,7 +628,7 @@ FUNTAB R_FunTab[] =
 {"qsort",	do_qsort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"radixsort",	do_radixsort,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"order",	do_order,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"rank",	do_rank,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"rank",	do_rank,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"missing",	do_missing,	1,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"nargs",	do_nargs,	1,	0,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"scan",	do_scan,	0,	11,	16,	{PP_FUNCALL, PREC_FN,	0}},

@@ -6,32 +6,33 @@ CP=cp
 RM=rm
 MKDIR=mkdir
 
+R_HOME = ../../..
 RHOME=$(shell perl ../pwd.pl ../../..)
 PKGDIR=../../library
 RLIB=$(RHOME)/library
 
 indices:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
+	  $(R_HOME)/share/perl/build-help-windows.pl ${DOS} -htmllists
 
 pkg-% help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    ../../../share/perl/build-help-windows.pl ${DOS} \
+	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
 	    -txt -html -example -latex $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 pkgfake-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    ../../../share/perl/build-help-windows.pl ${DOS} \
+	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
 	    -latex $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 chm-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    ../../../share/perl/build-help-windows.pl ${DOS} \
+	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
 	    -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
@@ -52,7 +53,7 @@ latex-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
 	-f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
 	PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  ../../../share/perl/build-help-windows.pl ${DOS} \
+	  $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
 	  -latex $(PKGDIR)/$* $(RLIB)
 
 clean:
