@@ -44,7 +44,10 @@ arima(x, order = c(0, 0, 0),
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only non-\code{NA} entries in
     \code{fixed} will be varied.  \code{transform.pars = TRUE}
-    will be overridden if any AR parameters are fixed.}
+    will be overridden (with a warning) if any AR parameters are fixed.
+    It may be wise to set \code{transform.pars = FALSE} when fixing
+    MA parameters, especially near non-invertibility.
+  }
 
   \item{init}{optional numeric vector of initial parameter
     values. Missing values will be filled in, by zeroes except for

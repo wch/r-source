@@ -152,6 +152,13 @@ arima <- function(x, order = c(0, 0, 0),
     else if(length(fixed) != narma + ncxreg) stop("wrong length for fixed")
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
+    if(transform.pars) {
+        ind <- arma[1] + arma[2] + seq(length=arma[3])
+        if(any(!mask[1:arma[1]]) || any(!mask[ind]) ) {
+            warning("some AR parameters were fixed: setting transform.pars = FALSE")
+            transform.pars <- FALSE
+        }
+    }
     init0 <- rep(0, narma)
     parscale <- rep(1, narma)
     if (ncxreg) {

@@ -62,6 +62,9 @@ BUG FIXES
     o	Only re-mapped symbols are exported by regex.o, to avoid
 	problems with embedded R on RedHat 9.
 
+    o	arima() did not set transform.pars to FALSE if AR parameters
+	were fixed, although it claimed to.
+
 
 
 		CHANGES IN R VERSION 1.7.0
