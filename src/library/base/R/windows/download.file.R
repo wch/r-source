@@ -6,7 +6,7 @@ download.file <- function(url, destfile, method,
               c("auto", "internal", "wget", "lynx", "socket"))
 
     if(method == "auto") {
-        if(capabilities("libxml"))
+        if(capabilities("http/ftp"))
             method <- "internal"
         else if(length(grep("^file:", url)))
             method <- "internal"
