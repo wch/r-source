@@ -188,9 +188,9 @@ BUG FIXES
 
     o	Math text in outer margins didn't work.
 
-    o	Text clipping now works in the X11 driver.
+    o	Text clipping now works in the X11 device.
 
-    o   Pixel rows sometimes got doubled in rotated text.
+    o   Pixel rows sometimes got doubled in rotated text on the X11 device.
 
     o	par("yaxt") is now ok.
 
