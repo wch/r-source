@@ -25,6 +25,11 @@
 # include <config.h>
 #endif
 
+#ifdef HAVE_STRINGS_H
+   /* may be needed to define bzero in FD_ZERO (eg AIX) */
+  #include <strings.h>
+#endif
+
 #include "Defn.h"
 #include "Fileio.h"
 #include "Rdevices.h"		/* for KillAllDevices */

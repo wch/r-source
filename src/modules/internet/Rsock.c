@@ -28,6 +28,11 @@
 extern void R_ProcessEvents(void);
 #endif
 
+#ifdef HAVE_STRINGS_H
+   /* may be needed to define bzero in FD_ZERO (eg AIX) */
+  #include <strings.h>
+#endif
+
 #include <stdlib.h> /* for NULL */
 #include <limits.h>
 #include <stdio.h>

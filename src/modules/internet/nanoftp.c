@@ -42,6 +42,11 @@
 extern void R_ProcessEvents(void);
 #endif
 
+#ifdef HAVE_STRINGS_H
+   /* may be needed to define bzero in FD_ZERO (eg AIX) */
+  #include <strings.h>
+#endif
+
 #include <R_ext/R-ftp-http.h>
 /* #define DEBUG_FTP */
 
