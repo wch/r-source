@@ -40,7 +40,7 @@ NEW FEATURES
 
     o	Many functions providing an interface to the operating system
 	have been made "platform independent".  See the manual entry
-	for "file" for details.
+	for "file"" "list.files" and "file.show" for details.
 
     o   There is a new function "eval.with.vis" which behaves exactly
 	like "eval", but which returns both the result of the evaluation
