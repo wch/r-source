@@ -688,3 +688,11 @@ stopifnot(!is.factor(ddf$b))
 ## PR 1548 : prettyNum inserted leading commas
 stopifnot(prettyNum(123456, big.mark=",") == "123,456")
 
+## PR 1552: cut.dendrogram
+library(cluster)
+data(flower)
+ dfl <- daisy(flower, type = list(asymm = 3))
+hdfl <- hclust(dfl, method = "average")
+ddfl <- as.dendrogram(hdfl)
+cdfl <- cut(ddfl, h = 0.31311)## error in 1.5.0
+

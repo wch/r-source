@@ -76,6 +76,7 @@ BUG FIXES
 
     o	prettyNum(*, bigmark=*) added extra marks in some cases (PR#1548).
 
+    o	cut.dendrogram() failed in some cases (PR#1552).
 
 
 		CHANGES IN R VERSION 1.5.0
