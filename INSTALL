@@ -27,6 +27,13 @@ copy this script to a place where users can invoke it, for example to
 `/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
 where your man reader finds it, such as `/usr/local/man/man1'.
 
+If you need or want to set certain configure variables to something
+other than their default, you can do that by either editing the file
+`config.site' or on the command line as
+
+	VAR="..." ./configure              # Bourne shell compatibles
+	(setenv VAR "..."; ./configure)    # C shell
+
 Using
 
 	make docs
@@ -45,13 +52,13 @@ Now type R and reach for your S manuals ...
 
 USING FORTRAN
 
-R is "shipped" configured so that it does not need a Fortran compiler
-to build and install.  For performance or other reasons you may
-wish to use your Fortran compiler to compile those pieces of R
-which are written in Fortran.  To do this, edit the file config.site
-and change the line "F77=no" as indicated in the comments above
-before typing configure.  There are no guarantees that this will
-work, but it may.
+To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
+converter.  The default is to search for g77, f77, f90, xlf, cf77, and
+fc (in that order), and then for f2c, and use whichever is found first;
+if none is found, R cannot be compiled.  The search mechanism can be
+changed using the `--with-g77', `--with-f77', and `--with-f2c' command
+line options to configure.  If your FORTRAN compiler is in a
+non-standard location, you can specify it via `--with-f77=path.to.f77'.
 
 
 NEW PLATFORMS (Standards Hah!)
