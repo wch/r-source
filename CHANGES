@@ -487,3 +487,6 @@ BUG FIXES
  o  ?"+" now works.
 
  o  tapply has been fixed as indicated by T. Lumley.
+
+ o  debian directory has been added so Debian GNU/Linux packages can be
+    created from raw source.
