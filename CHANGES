@@ -1,5 +1,9 @@
 		CHANGES IN R VERSION 0.61.3
 
+NEW FEATURES
+
+    o   find(.) function [on wish of many...]
+
 BUG FIXES
 
     o   rhyper gave wrong results in degenerate cases
@@ -14,7 +18,7 @@ BUG FIXES
     o   .Dyn.libs would linger in .RData causing code not to be dyn.loaded.
 	Now removed in .First(), if necessary
 
-    o	system.time() expression could not access local variables in 
+    o	system.time() expression could not access local variables in
 	functions.
 
 		CHANGES IN R VERSION 0.61.2
