@@ -148,7 +148,7 @@ static int	xxvalue(SEXP, int);
 %left		OR
 %left		AND
 %left		UNOT NOT
-%left   	GT GE LT LE EQ NE
+%nonassoc   	GT GE LT LE EQ NE
 %left		'+' '-'
 %left		'*' '/'
 %left		SPECIAL

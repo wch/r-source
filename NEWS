@@ -58,6 +58,12 @@ USER-VISIBLE CHANGES
 	require(), regardless of whether the underlying file system is
 	case-sensitive or not.
 
+    o   R no longer accepts associative use of relational 
+        operators. That is, 3 < 2 < 1 (which used to evalute 
+        as TRUE!) now causes a syntax error. If this breaks
+        existing code, just add parentheses - or braces in the
+        case of plotmath.
+
 
 NEW FEATURES
 
