@@ -157,6 +157,7 @@ BUG FIXES
     o	Internal function fprec was overflowing for numbers around
         1e-305.
 
+    o	print.noquote("ABC") now works.
 
 
 	**************************************************

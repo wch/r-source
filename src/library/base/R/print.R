@@ -34,14 +34,15 @@ as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
     attr <- attributes(x)
     r <- unclass(x)[...]
     attributes(r) <- c(attributes(r),
-		       attr[is.na(match(names(attr),c("dim","dimnames")))])
+		       attr[is.na(match(names(attr),
+                                        c("dim","dimnames","names")))])
     r
 }
 
-print.noquote <- function(obj,...) {
-    if(!is.null(cl <- class(obj)))
-	class(obj) <- cl[cl != "noquote"]
-    NextMethod("print", obj, quote = FALSE, ...)
+print.noquote <- function(x, ...) {
+    if(!is.null(cl <- class(x)))
+	class(x) <- cl[cl != "noquote"]
+    print(x, quote = FALSE, ...)
 }
 
 ## for alias:
