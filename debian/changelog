@@ -1,3 +1,58 @@
+r-base (1.8.0.cvs.20031114-1) unstable; urgency=low
+
+  * Upgraded to the initial 1.8.1 beta release of 2003-11-14
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri, 14 Nov 2003 19:13:43 -0600
+
+r-base (1.8.0.cvs.20031107-1) unstable; urgency=low
+
+  * Upgraded to the initial 1.8.1 alpha release of 2003-11-07
+  * debian/rules: Configure with R_PRINTCMD=/usr/bin/lpr (Closes: #219419)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri,  7 Nov 2003 19:56:48 -0600
+
+r-base (1.8.0.cvs.20031101-1) unstable; urgency=low
+
+  * Upgraded to 1.8.0 patched aka pre-1.8.1 as of 2003-11-01
+  * Also upgraded R-recommended via rsync
+  * debian/rules: make docs has to be called when binary-arch is built 
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat,  1 Nov 2003 18:58:09 -0600
+
+r-base (1.8.0.cvs.20031024-1) unstable; urgency=low
+
+  * Upgraded to 1.8.0 patched as of 2003-10-24
+  * Also upgraded R-recommended via rsync
+  * To avoid possible upgrade conflicts with pre-releases of 1.8.1, we 
+    use previously used ".cvs.YYYYMMDD" naming convention for the package
+  * debian/rules: 'make {docs,help,html}' are now called in binary-indep
+    which was not possible with earlier versions of R; however as make
+    recommended implies make doc, we manually descend into its top dir.
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 23 Oct 2003 15:21:35 -0500
+
+r-base (1.8.0-2) unstable; urgency=low
+
+  * With a big thanks to Camm Maguire for investigating this problem,
+    we are reverting back to the previously used setup of defaulting to 
+    Blas while automagically switching to Atlas where installed:
+    - debian/rules: Patch R.sh.in to disable use of R_LD_LIBRARY_PATH (beyond
+      the required $R_HOME/nbin) which conflicts with Debian's transparent 
+      switch of Atlas for Blas (as /usr/lib/libblas would be found instead)
+    - debian/rules: Configure again with --with-blas=blas
+    - debian/control: Hence remove Depends: on atlas2-base-dev | atlas2-dev
+    - debian/shlibs.local: Remove, no longer needed
+    - debian/rules: No longer need to postprocess Depends
+    - debian/rules: Other small cleanups
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 16 Oct 2003 20:13:32 -0500
+
+r-base (1.8.0-1) unstable; urgency=low
+
+  * Upgraded to version 1.8.0 released today
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed,  8 Oct 2003 10:10:41 -0500
+
 r-base (1.7.1.cvs.20031004-1) unstable; urgency=low
 
   * Upgraded to release candidate 1.8.0beta_2003-10-04 of R 1.8.0
