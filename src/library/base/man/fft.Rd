@@ -50,14 +50,24 @@ mvfft(z, inverse = FALSE)
 x <- 1:4
 fft(x)
 all(fft(fft(x), inverse = TRUE)/(x*length(x)) == 1+0i)
-## In general, not exactly, but still:
-x <- rnorm(100)
-all(Mod(fft(fft(x), inverse=TRUE)/(x*length(x)) - 1) < 1e-12)
+eps <- 1e-11 ## In general, not exactly, but still:
+for(N in 1:130) {
+    cat("N=",formatC(N,wid=3),": ")
+    x <- rnorm(N)
+    if(N \%\% 5 == 0) {
+        m5 <- matrix(x,ncol=5)
+        cat("mvfft:",all(apply(m5,2,fft) == mvfft(m5)),"")
+    }
+    dd <- Mod(1 - (f2 <- fft(fft(x), inverse=TRUE)/(x*length(x))))
+    cat(if(all(dd < eps))paste(" all < ", formatC(eps)) else
+            paste("NO: range=",paste(formatC(range(dd)),collapse=",")),"\n")
+}
 
 plot(fft(c(9:0,0:13, numeric(301))), type = "l")
-periodogram <- function(x) { # simple periodogram
+periodogram <- function(x, mean.x = mean(x)) { # simple periodogram
   n <- length(x)
-  Mod(fft(unclass(x)))[1:(n\%/\%2 + 1)]^2 / (2*pi*n)
+  x <- unclass(x) - mean.x
+  Mod(fft(x))[1:(n\%/\%2 + 1)]^2 / (2*pi*n)
 }
 data(sunspots)
 plot(10*log10(periodogram(sunspots)), type = "b", col = "blue")
