@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-18, 2003-06-13
+Version 1.7-19, 2003-06-20
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1814,6 +1814,11 @@ distributions of R.)
      Functions to perform the regression depth method (RDM) to binary
      regression to approximate the minimum number of observations that can
      be removed such that the reduced data set has complete separation.
+
+*negenes*
+     Estimating the number of essential genes in a genome on the basis of
+     data from a random transposon mutagenesis experiment, through the use
+     of a Gibbs sampler.
 
 *netCDF*
      Read data from netCDF files.

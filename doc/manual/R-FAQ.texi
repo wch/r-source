@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-18, @value{FAQ-YEAR}-06-13
+@set FAQ-VERSION 1.7-19, @value{FAQ-YEAR}-06-20
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -434,23 +434,23 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-05-02:
+@c Linux binaries as of 2003-06-18:
 @c
 @c debian    woody i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake  8.0   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
-@c           8.1   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
-@c           8.2   i386  1.7.0  Michele Alzetta <mikalzet@libero.it>
-@c           9.0   i386  1.7.0  Michele Alzetta <mikalzet@libero.it>
-@c           9.1   i386  1.7.0  Michele Alzetta <mikalzet@libero.it>
+@c mandrake  8.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
+@c           8.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
+@c           8.2   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
+@c           9.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
+@c           9.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat    7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                 i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
-@c           8.x   i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
-@c           9     i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
-@c suse      7.3   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.0   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.1   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.2   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c                 i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
+@c           8.x   i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
+@c           9     i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
+@c suse      7.3   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.0   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.1   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.2   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux 2.6   i386  1.6.2  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
@@ -1984,6 +1984,10 @@ Multivariate normal and @math{t} distributions.
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
 removed such that the reduced data set has complete separation.
+@item negenes
+Estimating the number of essential genes in a genome on the basis of
+data from a random transposon mutagenesis experiment, through the use of
+a Gibbs sampler.
 @item netCDF
 Read data from netCDF files.
 @item nlme
