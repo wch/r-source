@@ -162,6 +162,7 @@ void dist(double *x, int *nr, int *nc, double *d, int *method)
 		break;
 	case BINARY:
 		distfun = binary;
+		break;
 	default:
 		error("invalid distance");
 	}
