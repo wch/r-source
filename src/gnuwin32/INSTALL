@@ -111,7 +111,7 @@ locks up the machine when windres is run.
 Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
 used.  You can opt out of this by commenting the line LEA_MALLOC=YES
 in the Makefile, in which case the Windows malloc is used.  The one
-in crtdll.dll is unlikely to be satisfactory, but the one in msvcrt.dll
+in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
 You can test a build by `make check': expect some differences in the
