@@ -6,6 +6,7 @@
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
 \alias{print.dendrogram}
+\alias{rev.dendrogram}
 \alias{str.dendrogram}
 \alias{plot.dendrogram}
 %\alias{plotNode}
@@ -33,6 +34,8 @@ as.dendrogram(object, \dots)
 
 \method{print}{dendrogram}(x, digits, \dots)
 
+\method{rev}{dendrogram}(x)
+
 \method{str}{dendrogram}(x, \dots)% codoc warning; MM: hate to document
 % all arguments: user should rather look at ?str
 % Also: 'object' has different meaning here
@@ -48,6 +51,8 @@ as.dendrogram(object, \dots)
 \method{cut}{dendrogram}(x, h, \dots)
 
 \method{print}{dendrogram}(x, digits, \dots)
+
+\method{rev}{dendrogram}(x)
 
 str.dendrogram(object, max.level = 0, vec.len = 4, digits.d = 3,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
