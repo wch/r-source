@@ -1,56 +1,36 @@
 #!/bin/sh
 # Shell wrapper for R executable.
-# Just sets a few environment items
 
 RHOME=R_HOME_DIR
 export RHOME
 
-if [ "$1" = "RHOME" ]
-then
-	echo $RHOME; exit 0
-fi
-    
-if [ "$1" = "SHLIB" ]
-then
-	shift
-	exec sh $RHOME/etc/SHLIB $*
-fi
-
-if [ "$1" = "COMPILE" ]
-then
-	shift
-	exec sh $RHOME/etc/COMPILE $*
-fi
-
-if [ "$1" = "INSTALL" ]
-then
-        shift
-        exec sh $RHOME/etc/INSTALL $*
-fi
-
-if [ "$1" = "REMOVE" ]
-then
-        shift
-        exec sh $RHOME/etc/REMOVE $*
-fi
-
-if [ "$1" = -xxgdb ]
-then
-	shift
-	DEBUGGER=xxgdb
-fi
-
-if [ "$1" = -gdb ]
-then
-	shift
-	DEBUGGER=gdb
-fi
-
-if [ "$1" = -ddd ]
-then
-	shift
-	DEBUGGER=ddd
-fi
+ARG=$1
+case ${ARG} in
+    RHOME)
+	echo ${RHOME}; exit 0 ;;
+    SHLIB|COMPILE|INSTALL|REMOVE)
+	shift; exec sh ${RHOME}/etc/${ARG} $* ;;
+    -d|--debugger)
+	exec $2 ${RHOME}/bin/R.binary ;;
+    -h|--help|-\?)
+        echo "Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]"
+        echo ""
+        echo "Options:"
+        echo "  --save                     Do save data sets at the end of the session."
+        echo "  --no-save                  Don't save them."
+        echo "  --restore                  Do restore previously saved data sets at startup."
+        echo "  --no-restore               Don't restore them."
+        echo "  --no-readline              Don't use readline for command-line editing."
+        echo "  --no-site-file             Don't read the site-wide Rprofile."
+        echo "  --no-init-file             Don't read the .Rprofile or ~/.Rprofile files."
+        echo "  -v N                       Set the vector heap size to N megabytes."
+        echo "  -n N                       Set the number of cons cells to N."
+        echo "  -h, --help, -?             Print short help message and exit."
+        echo "  -q, --quiet                Make R run as quietly as possible."
+        echo "  -V, --version              Print version info and exit."
+        echo "  -d NAME, --debugger NAME   Run R through debugger NAME."
+	exit 0 ;;
+esac	
 
 # Default Printer Paper Size
 # Choose one of the following
@@ -67,9 +47,4 @@ export R_PAPERSIZE
 R_PRINTCMD=@R_PRINTCMD@
 export R_PRINTCMD
 
-if [ $DEBUGGER ]
-then
-	exec $DEBUGGER $RHOME/bin/R.binary 
-else
-	exec $RHOME/bin/R.binary @R_BATCHSAVE@ $*
-fi
+exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ $*
