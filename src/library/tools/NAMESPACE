@@ -7,15 +7,14 @@ export("Rdindex",
        "file_path_as_absolute", "file_path_sans_ext", "file_test",
        "list_files_with_exts", "list_files_with_type", "delimMatch",
        "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
-       "getDepList", "installFoundDepends", "vignetteDepends")
+       "getDepList", "installFoundDepends", "vignetteDepends",
+       "write_PACKAGES")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
-## <FIXME>
-## Remove in 2.1.
-export("filePathAsAbsolute", "filePathSansExt", "fileTest",
-       "listFilesWithExts", "listFilesWithType")
-## </FIXME>
+## Removed in 2.1.
+## export("filePathAsAbsolute", "filePathSansExt", "fileTest",
+##        "listFilesWithExts", "listFilesWithType")
 
 S3method("print", "checkDocFiles")
 S3method("print", "checkDocStyle")

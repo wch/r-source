@@ -207,6 +207,9 @@ UTILITIES
 
     o	R CMD build now reports empty directories in the source tree.
 
+    o	New function write_PACKAGES in package 'tools' to help with
+	preparing local package repositories.  (Contributed by Uwe Ligges.)
+
 
 DOCUMENTATION
 
