@@ -73,7 +73,10 @@ lm(formula, data, subset, weights, na.action,
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
   the same as \code{first + second + first:second}.  If \code{response} 
   is a matrix a linear model is fitted to each column of the matrix.
-  See \code{\link{model.matrix}} for some further details.
+  See \code{\link{model.matrix}} for some further details.  The terms in
+  the formula will be re-ordered so that main effects come first,
+  followed by the interactions, all second-order, all third-order and so
+  on: to avoid this pass a \code{terms} object as the formula.
 
   \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
   see below, for the actual numerical computations.  For programming

@@ -19,7 +19,8 @@ model.frame(formula, \dots)
 \method{model.frame}{lm}(formula, \dots)
 }
 \arguments{
-  \item{formula}{a model formula or an \R object.}
+  \item{formula}{a model \code{\link{formula}} or \code{\link{terms}}
+    object or an \R object.}
 
   \item{data}{\code{data.frame}, list, \code{environment} or object
     coercible to \code{data.frame} containing the variables in
@@ -68,7 +69,10 @@ model.frame(formula, \dots)
 
   If either \code{formula} or \code{data} is already a model frame (a
   data frame with a \code{"terms"} attribute and the other is missing,
-  the model frame is returned.
+  the model frame is returned.  Unless \code{formula} is a terms object,
+  \code{terms} is called on it.  (If you wish to use the
+  \code{keep.order} argument of \code{terms.formula}, pass a terms
+  object rather than a formula.)
 
   All the variables in \code{formula}, \code{subset} and in \code{\dots}
   are looked for first in \code{data} and then in the environment of

@@ -44,6 +44,15 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   be used with an \code{Error} term, and are incompletely supported
   (e.g., not by \code{\link{model.tables}}).
 }
+\note{
+  \code{aov} is designed for balanced designs, and the results can be
+  hard to interpret without balance: beware that missing values in the
+  reponse(s) will likely lose the balance.  If there are two or more
+  error strata, the methods used are statistically inefficient without
+  balance, and it may be better to use \code{\link[nlme]{lme}}.
+
+  Balance can be checked with the \code{\link{replications}} function.
+}
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
   of class \code{c("maov", "aov", "mlm", "lm")} or for multiple error
@@ -61,7 +70,8 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   in Chambers \emph{et al.} (1992).
 }
 \seealso{
-  \code{\link{lm}}, \code{\link{summary.aov}}, \code{\link{alias}},
+  \code{\link{lm}}, \code{\link{summary.aov}},
+  \code{\link{replications}}, \code{\link{alias}},
   \code{\link{proj}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
 }
 \examples{
@@ -74,12 +84,17 @@ yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,55.0,
 npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
                   K=factor(K), yield=yield)
 
+op <- options(contrasts=c("contr.helmert", "contr.treatment"))
 ( npk.aov <- aov(yield ~ block + N*P*K, npk) )
 summary(npk.aov)
 coefficients(npk.aov)
 
+## to show the effects of re-ordering terms contrast the two fits
+aov(yield ~ block + N * P + K, npk)
+aov(terms(yield ~ block + N * P + K, keep.order=TRUE), npk)
+
+
 ## as a test, not particularly sensible statistically
-op <- options(contrasts=c("contr.helmert", "contr.treatment"))
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 npk.aovE
 summary(npk.aovE)
