@@ -35,7 +35,8 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   \code{prcomp} returns an list with class \code{"prcomp"}
   containing the following components:
   \item{sdev}{the standard deviation of the principal components
-    (i.e., the eigenvalues of the cov matrix, though the calculation
+    (i.e., the sqare root of the eigenvalues of the covariance
+    matrix, though the calculation
     is actually done with the singular values of the data matrix).}
   \item{rotation}{the matrix of variable loadings (i.e., a matrix
     whose olumns contain the eigenvectors).  The function
