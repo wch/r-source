@@ -40,9 +40,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+/* defined in Devices.h
 #ifdef macintosh
 void killDevice(int);
 #endif
+*/
 
 static char HexDigits[] = "0123456789ABCDEF";
 

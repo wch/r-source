@@ -37,9 +37,11 @@
 #include <Graphics.h> /* display lists */
 #include <Devices.h> /* GetDevice */
 
+/* GetDevice is in Devices.h
 #ifdef macintosh
 DevDesc* GetDevice(int);
 #endif
+*/
 
 static int gc_reporting = 0;
 static int gc_count = 0;
