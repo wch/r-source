@@ -165,6 +165,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Method dispatching now forces evaluation of promises, so
+	autoloading works with methods.
+
     o	Postscript driver no longer uses the initclip operator, which
 	was against the EPSF specifications and broke inclusion of
 	graphics in some documents.

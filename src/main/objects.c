@@ -168,7 +168,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP *ans)
 {
     SEXP class, method, sxp, t, s, matchedarg;
-    SEXP op, formals, newrho, newcall;
+    SEXP op, formals, newrho, newcall,tmp;
     char buf[512];
     int i, j, nclass, matched;
     RCNTXT *cptr;
@@ -225,6 +225,12 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	    sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
 	    method = install(buf);
 	    sxp = findVar(method, rho);
+	    /* autoloading requires that promises be evaluated <TSL>*/
+	    if (TYPEOF(sxp)==PROMSXP){ 
+		PROTECT(tmp=eval(sxp, rho)); 
+		sxp=tmp;
+		UNPROTECT(1);
+	    }
 	    if (isFunction(sxp)) {
 		defineVar(install(".Generic"), mkString(generic), newrho);
 		if (i > 0) {
