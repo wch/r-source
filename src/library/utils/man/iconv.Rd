@@ -7,7 +7,7 @@
   encodings: the \sQuote{i} stands for \sQuote{internationalization}.
 }
 \usage{
-iconv(x, from, to)
+iconv(x, from, to, sub=NA)
 
 iconvlist()
 }
@@ -16,6 +16,10 @@ iconvlist()
   \item{x}{A character vector.}
   \item{from}{A character string describing the current encoding.}
   \item{to}{A character string describing the target encoding.}
+  \item{sub}{character string.  If not \code{NA} it is used to replace
+    an non-convertible bytes in the input.  (This would normally be a
+    single character, but can be more.  If "byte", the indication is
+    "<xx>" with the hex code of the byte.}
 }
 
 \details{
@@ -60,6 +64,14 @@ iconvlist()
 ## convert from Latin-2 to UTF-8: two of the GNU iconv variants.
 iconv(x, "ISO_8859-2", "UTF-8")  # 8859-2 on Solaris
 iconv(x, "LATIN2", "UTF-8")
+
+(x <- "fa\xE7ile")
+charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
+
+iconv(x, "latin1", "ASCII")          #   NA
+iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
+iconv(x, "latin1", "ASCII", "")      # "faile"
+iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
 }}
 \keyword{ character }
 \keyword{ utilities }

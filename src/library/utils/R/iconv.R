@@ -1,4 +1,5 @@
-iconv <- function(x, from, to) .Internal(iconv(x, from, to))
+iconv <- function(x, from, to, sub = NA)
+    .Internal(iconv(x, from, to, as.character(sub)))
 
 iconvlist <- function() sort(.Internal(iconv(NULL, "", "")))
 

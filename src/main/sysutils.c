@@ -355,15 +355,16 @@ write_one (unsigned int namescount, char * *names, void *data)
 
 #include "RBufferUtils.h"
 
-/* iconv(x, from, to) */
+/* iconv(x, from, to, sub) */
 SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_DECL_ICONV) && HAVE_DECL_ICONV
     SEXP ans, x = CAR(args);
     iconv_t obj;
-    int i;
+    int i, j;
     char *inbuf; /* Solaris headers have const char*  here */
     char *outbuf;
+    char *sub;
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     
@@ -389,6 +390,11 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "invalid 'from' argument");
 	if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
 	    errorcall(call, "invalid 'to' argument");
+	if(!isString(CADDDR(args)) || length(CADDDR(args)) != 1)
+	    errorcall(call, "invalid 'sub' argument");
+	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
+	else sub = CHAR(STRING_ELT(CADDDR(args), 0));
+
 	obj = iconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
 			 CHAR(STRING_ELT(CADR(args), 0)));
 	if(obj == (iconv_t)(-1))
@@ -399,16 +405,38 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	top_of_loop:
 	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
+	next_char:
 	    /* First initialize output */
 	    iconv (obj, NULL, NULL, &outbuf, &outb);
 	    /* Then convert input  */
 	    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
 	    *outbuf = '\0';
+	    /* other possible error conditions are incomplete 
+	       and invalid multibyte chars */
 	    if(res == -1 && errno == E2BIG) {
 		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 		goto top_of_loop;
-	    } /* other possible error conditions are incomplete 
-		 and invalid multibyte chars */
+	    } else if(res == -1 && errno == EILSEQ && sub) {
+		/* it seems this gets thrown for non-convertible input too */
+		if(strcmp(sub, "byte") == 0) {
+		    if(outb < 5) {
+			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+			goto top_of_loop;
+		    }
+		    snprintf(outbuf, 4, "<%02x>", (unsigned char)*inbuf);
+		    outbuf += 4; outb -= 4;
+		} else {
+		    if(outb < strlen(sub)) {
+			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+			goto top_of_loop;
+		    }
+		    for(j = 0; j < strlen(sub); j++) *outbuf++ = sub[j];
+		    outb -= strlen(sub);
+		}
+		inbuf++; inb--;
+		goto next_char;
+	    }
+	
 	    if(res != -1 && inb == 0)
 		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
 	    else SET_STRING_ELT(ans, i, NA_STRING);
