@@ -1259,6 +1259,8 @@ C     iparms(1:2) := (icrit, ispar)  for ./sbart.f
       endif
 c     ispar := 0 <==> estimate `spar' :
       iparms(2) = 0
+c     maxit = 500 :
+      iparms(3) = 500
       param(1) = 0d0
       param(2) = 1.5d0
 c  tol for `spar' estimation:
