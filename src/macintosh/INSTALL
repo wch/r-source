@@ -18,7 +18,7 @@ This note explains how to:
 * build R binary via MPW
 * build packages and modules via MPW
 * build recommended or further packages with MPW
-* build R binary via CodeWarrior
+* build R binary via CodeWarrior (no longer supported)
 
 Before you continue please assure that your installation
 fits the following requirements:
@@ -64,10 +64,11 @@ REQUIREMENTS:
    This is needed to build and run R.
 
 
-Starting from version 1.3.1 we are switching to Apple's MPW 
+Starting from version 1.3.1 we have switched to Apple's MPW 
 compiler to build R and its packages and modules.
-You will still find Metrowerks CodeWarrior project files
-but these will be shortly discontinued.
+You will still find the Metrowerks CodeWarrior project file
+for building the R binary but it is not working.
+
 
 General advice: 
 There should be the necessity to fix the line-endings of
@@ -136,8 +137,10 @@ FF_CREATE	:	MPW script that generates "FFTab.h" and
 				"FFDecl.h"
 GETDESC		:	fixes DESCRIPTION.in files
 GETCONFIG	:	MPW script that generates "Rconfig.h"
+PKGVERSION	:	MPW script that generates "pkgver.h"
 
-both need the "sed" MPW tool installed.				
+
+all need the "sed" MPW tool installed.				
 
 
 SUMMARY OF MPW BUILD COMMANDS:
@@ -164,18 +167,26 @@ On the MPW Shell submit the following two lines:
 Make -f MakeRecmd.mac > build
 build
 
-You can also use other type of packages by simply
+The file MakeBio.mac is a makefiles that can be
+used to build the Biocondutor bundle of packages
+as of version 1.0.
+
+You can also use other additional packages by simply
 providing a makefile and changing the parameters of
-the MakeRecmd.mac file (see the doc inside the file
-itself).
+the MakeAdd.mac file (see the doc inside the file 
+itself). Note that some of the makefiles are already
+in the /src/macintosh/makefiles folder, so you just 
+need to to the folloiwng in the order:
+1) download the pkg.tgz archive
+2) move it into /src/library
+3) Uncompress it
+4) go back to /src/macintosh
+5) modify the file MakeAdd.mac
+5) from MPW Shell execute
 
-You should prepear a makefile for the package `pkg'
-and put it in src/macintosh/makefiles/ directory
-with the name pkg.mac, i.e. 
-src/macintosh/makefiles/pkg.mac
+   Make -f MakeAdd.mac > build
+   build
 
-Once you have done this, just run the previous two
-lines.
 
 
 Where to find things:
@@ -195,8 +206,8 @@ ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c
 
 
 
-BUILD R WITH CODEWARRIOR:
--------------------------
+BUILD R WITH CODEWARRIOR (discontinued):
+----------------------------------------
 Even if we are going to discontinue CodeWarrior support,
 you can still build the R binary using the CWPro 7 Project
 file in the folder src/macintosh/cwpro.
@@ -227,7 +238,7 @@ or just
 
 
 
-April 14th, 2002		Stefano M. Iacus
+July 13th, 2002		Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
