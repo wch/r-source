@@ -30,7 +30,7 @@ Includes        = -i ::::include: ¶
 				  
 Sym-PPC         = -sym off
 
-PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
+PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23,29 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
                   -d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power -enum int
 				  
 ### Library directory ###
