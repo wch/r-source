@@ -913,10 +913,14 @@ void CloseRAquaConsole(void){
 	RemoveEventLoopTimer(Inst_FlushConsoleTimer);
 
 	CloseAquaIO();
-	if(RbundleURL)
-		CFRelease( RbundleURL );
-	if(RBundle)
-		CFRelease( RBundle ); 
+	if(RbundleURL){
+		CFRelease(RbundleURL);
+		RbundleURL = NULL;
+	}
+	if(RBundle){
+		CFRelease(RBundle); 
+		RBundle = NULL;
+	}
 }
 
 void OpenStdoutPipe(void){
@@ -981,8 +985,11 @@ void Raqua_WritePrompt(char *prompt) {
     if (WeHaveCocoa) {
         if (cocoaWritePrompt) {
             CFStringRef text = CFStringCreateWithCString(NULL, prompt, kCFStringEncodingMacRoman);
-            cocoaWritePrompt(text);
-            CFRelease(text);
+            if(text){
+				cocoaWritePrompt(text);
+            	CFRelease(text);
+				text = NULL;
+			}
         }
     } else {
         Aqua_RWrite(prompt);
@@ -997,8 +1004,11 @@ void Raqua_WriteUserInput(char *str) {
     if (WeHaveCocoa && cocoaWriteUserInput) {
         Raqua_FlushConsole();
         CFStringRef text = CFStringCreateWithCString(NULL, str, kCFStringEncodingMacRoman);
-        cocoaWriteUserInput(text);
-        CFRelease(text);
+        if(text){
+			cocoaWriteUserInput(text);
+        	CFRelease(text);
+			text = NULL;
+		}
     } else Raqua_WriteConsole(str, strlen(str));
 }
 
@@ -1013,8 +1023,11 @@ void Raqua_WriteEvent(char *str, int len)
     if (WeHaveCocoa) {
         if (cocoaWriteConsole) {
             CFStringRef text = CFStringCreateWithCString(NULL, str, kCFStringEncodingMacRoman);
-            cocoaWriteConsole(text);
-            CFRelease(text);
+            if(text){
+				cocoaWriteConsole(text);
+				CFRelease(text);
+				text = NULL;
+			}
         }
     } else {
         EventRef ReadEvent;
@@ -1378,9 +1391,11 @@ int GetTextFromWindow(char *msg, char *text, int len){
                             sizeof(CFStringRef), &CFMsg);
             controlStyle.flags = kControlUseJustMask;
             controlStyle.just = teCenter;
-            CFRelease(CFMsg);
-        }
-    }
+			CFRelease(CFMsg);
+			CFMsg = NULL;
+		}
+	}
+
 
     InputDialogAns = kRDlogCanc;
      
@@ -1397,7 +1412,10 @@ int GetTextFromWindow(char *msg, char *text, int len){
         GetControlData( RDlogControl, 0, kControlEditTextCFStringTag, 
                     sizeof(CFStringRef), &inputText, &outActualSize );
         CFStringGetCString(inputText, text, len,  kCFStringEncodingMacRoman);
-        CFRelease( inputText );
+        if(inputText){
+			CFRelease(inputText);
+			inputText = NULL;
+		}
     }
     
     return InputDialogAns;
@@ -1423,46 +1441,61 @@ void InitAboutWindow(void){
     appBundle = CFBundleGetMainBundle();
     text = CFStringCreateWithFormat( NULL, NULL, CFSTR("Version %s.%s %s (%s-%s-%s)"), R_MAJOR, 
                                         R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
-    GetControlByID(RAboutWindow, &versionInfoID, &versionControl);
-    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
-    controlStyle.flags = kControlUseJustMask;
-    controlStyle.just = teCenter;
-    CFRelease(text);
+    if(text){
+		GetControlByID(RAboutWindow, &versionInfoID, &versionControl);
+		SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+		controlStyle.flags = kControlUseJustMask;
+		controlStyle.just = teCenter;
+		CFRelease(text);
+		text = NULL;
+	}
     
     text = CFStringCreateWithFormat( NULL, NULL, CFSTR("R : Copyright %s, The R Development Core Team"), R_YEAR);
-    GetControlByID(RAboutWindow, &CopyrightID, &versionControl);
-    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
-    controlStyle.flags = kControlUseJustMask;
-    controlStyle.just = teCenter;
-    CFRelease(text);
-    
+    if(text){
+		GetControlByID(RAboutWindow, &CopyrightID, &versionControl);
+		SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+		controlStyle.flags = kControlUseJustMask;
+		controlStyle.just = teCenter;
+		CFRelease(text);
+		text = NULL;
+    }
+	
     text = CFSTR("Aqua GUI by Stefano M. Iacus and Thomas Lumley (2003).\rPlease send feedback to stefano.iacus@unimi.it");
-    GetControlByID(RAboutWindow, &AuthorsID, &versionControl);
-    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
-    controlStyle.flags = kControlUseJustMask;
-    controlStyle.just = teCenter;
-    CFRelease(text);
+    if(text){
+		GetControlByID(RAboutWindow, &AuthorsID, &versionControl);
+		SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+		controlStyle.flags = kControlUseJustMask;
+		controlStyle.just = teCenter;
+		CFRelease(text);
+		text = NULL;
+	}
     
-    text = CFSTR("Thanks to: Jan de Leeuw, Simon Urbanek, Byron Ellis");
-    GetControlByID(RAboutWindow, &ThanksToID, &versionControl);
-    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
-    controlStyle.flags = kControlUseJustMask;
-    controlStyle.just = teCenter;
-    CFRelease(text);
-
+	text = CFSTR("Thanks to: Jan de Leeuw, Simon Urbanek, Byron Ellis");
+    if(text){
+		GetControlByID(RAboutWindow, &ThanksToID, &versionControl);
+		SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+		controlStyle.flags = kControlUseJustMask;
+		controlStyle.just = teCenter;
+		CFRelease(text);
+		text = NULL;
+	}
      
     if( (fileName = CFStringCreateWithCString(NULL, "RLogo.png", kCFStringEncodingASCII)) != NULL ){
         url = CFBundleCopyResourceURL( appBundle, fileName, NULL, NULL );
         if(url)
-         provider = CGDataProviderCreateWithURL( url );
+         provider = CGDataProviderCreateWithURL(url);
         if(provider)
          image = CGImageCreateWithPNGDataProvider( provider, NULL, false,  kCGRenderingIntentDefault );
         if(provider)
-         CGDataProviderRelease( provider );
-        if(url)
-         CFRelease( url );
-        if(fileName)
-         CFRelease( fileName );
+         CGDataProviderRelease(provider);
+        if(url){
+			CFRelease(url);
+			url = NULL;
+		}
+        if(fileName){
+			CFRelease(fileName);
+			fileName = NULL;
+		}
     }
    
    
@@ -1566,10 +1599,14 @@ DialogItemIndex WantToSave(WindowRef window, char *title, char *msg){
           userAction = itemHit;
     }
 
-    if(TitleText != NULL)
+    if(TitleText){
 		CFRelease(TitleText);
-    if(MsgText != NULL)
+		TitleText = NULL;
+	}
+    if(MsgText){
 		CFRelease(MsgText);
+		MsgText = NULL;
+	}
 
     return(userAction);      
 }
@@ -1631,11 +1668,14 @@ DialogItemIndex YesOrNot(char *title, char *msg, char *actionlab, char *canclab)
           userAction = itemHit;
     }
 
-    if(TitleText != NULL)
+    if(TitleText){
 		CFRelease(TitleText);
-    if(MsgText != NULL)
+		TitleText = NULL;
+	}
+    if(MsgText){
 		CFRelease(MsgText);
-
+		MsgText = NULL;
+	}
     return(userAction);      
 }
 
@@ -3764,9 +3804,15 @@ loadPrivateFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
         }
     }
     
-    CFRelease(CocoabundleURL);
+    if(CocoabundleURL){
+		CFRelease(CocoabundleURL);
+		CocoabundleURL = NULL;
+	}
 CantCreateBundleURL:
-    CFRelease(baseURL);
+    if(baseURL){
+		CFRelease(baseURL);
+		baseURL = NULL;
+	}
 CantCopyURL:
 CantFindMainBundle:
     return;

@@ -630,8 +630,11 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
                         CopyCStringToPascal(Names[itemID-1],pascalString);
 			text = CFStringCreateWithPascalString(
 				CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
-			err = SetDataBrowserItemDataText(itemData, text); 
-		CFRelease(text);
+			if(text){
+				err = SetDataBrowserItemDataText(itemData, text); 
+				CFRelease(text);
+				text = NULL;
+			}
 		}	
 		break;
 
@@ -640,8 +643,11 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 			CopyCStringToPascal(Types[itemID-1],pascalString);
 			 text = CFStringCreateWithPascalString(
 				CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
-			err = SetDataBrowserItemDataText(itemData, text); 
-			CFRelease(text);
+			if(text){
+				err = SetDataBrowserItemDataText(itemData, text); 
+				CFRelease(text);
+				text = NULL;
+			}
 		}	
 		break;
 				
@@ -652,8 +658,11 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 				CopyCStringToPascal(Sizes[itemID-1],pascalString);
 			text = CFStringCreateWithPascalString(
 				CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
-			err = SetDataBrowserItemDataText(itemData, text); 
-			CFRelease(text);
+			if(text){
+				err = SetDataBrowserItemDataText(itemData, text); 
+				CFRelease(text);
+				text = NULL;
+			}
 		}	
 		break;
 		

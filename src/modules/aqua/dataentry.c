@@ -493,11 +493,14 @@ static pascal OSStatus deGetSetItemData(ControlRef browser,
        
        
          if(property==2000){
-             sprintf(buf,"%d",row);
-             CopyCStringToPascal(buf,pascalString);
-             text = CFStringCreateWithPascalString(CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
-             err = SetDataBrowserItemDataText(itemData, text); 
-             CFRelease(text); 
+			sprintf(buf,"%d",row);
+			CopyCStringToPascal(buf,pascalString);
+			text = CFStringCreateWithPascalString(CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
+			if(text){
+				err = SetDataBrowserItemDataText(itemData, text); 
+				CFRelease(text); 
+				text = NULL;
+			}
          }
          
          if(property>2000 & row>0 & row<=ymaxused){          
@@ -509,9 +512,11 @@ static pascal OSStatus deGetSetItemData(ControlRef browser,
              } 
              CopyCStringToPascal(buf,pascalString);
              text = CFStringCreateWithPascalString(CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
-             err = SetDataBrowserItemDataText(itemData, text); 
-             CFRelease(text); 
-                       
+             if(text){
+				err = SetDataBrowserItemDataText(itemData, text); 
+				CFRelease(text); 
+                text = NULL;
+			}       
      
         }   
         switch (property)
@@ -549,7 +554,10 @@ static pascal OSStatus deGetSetItemData(ControlRef browser,
                     REAL(tmp)[row - 1] = NA_REAL;
             }
 	    SetWindowModified(DataEntryWindow, true);
-            CFRelease(text); 
+            if(text){
+				CFRelease(text); 
+				text = NULL;
+			}
           }             
      
 
@@ -915,9 +923,10 @@ if( (property == LastSelProp) && (item == LastSelItem)){
 
         RGBForeColor( &fg );
 	DrawThemeTextBox( text, kThemeApplicationFont, kThemeStateActive, true, theRect, teFlushRight, NULL );		
-	if(text)
+	if(text){
          CFRelease(text);
-         
+		 text = NULL;
+	}
          if( (property == LastSelProp) && (item == LastSelItem))
           SetDataBrowserEditItem(browser,item,property);
          
