@@ -58,7 +58,6 @@ the list of devices.
 }
 \examples{
 if (interactive()) {
-( dl <- dev.list() ) # the currently open devices..
 x11()
 plot(1:10)
 x11()
@@ -67,8 +66,7 @@ dev.set(dev.prev())
 abline(0,1)# through the 1:10 points
 dev.set(dev.next())
 abline(h=0, col="gray")# for the residual plot
+dev.set(dev.prev())
 dev.off(); dev.off()#- close the two X devices
-all(dl == dev.list())# The device list as it was...
-}
 }
 \keyword{device}
