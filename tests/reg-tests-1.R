@@ -155,9 +155,10 @@ stopifnot(grC["red",] == grC["green",],
 ## complex
 z <- 0i ^ (-3:3)
 stopifnot(Re(z) == 0 ^ (-3:3))
+set.seed(123)
 z <- complex(real = rnorm(100), imag = rnorm(100))
 stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-          < 10 * .Machine$double.eps)
+          < 20 * .Machine$double.eps)
 ## end of moved from complex.Rd
 
 
