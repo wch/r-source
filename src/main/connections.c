@@ -26,6 +26,7 @@
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
 #include <R_ext/R-ftp-http.h>
+#include <R_ext/RS.h>
 
 int R_OutputCon; /* used in printutils.c */
 
@@ -1995,7 +1996,7 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	default:
 	    error("That type is unimplemented");
 	}
-	buf = R_alloc(len, size);
+	buf = R_chk_calloc(len, size); /* R_alloc(len, size); */
 	switch(TYPEOF(object)) {
 	case LGLSXP:
 	case INTSXP:
@@ -2077,6 +2078,7 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* write it now */
 	n = con->write(buf, size, len, con);
 	if(n < len) warning("problem writing to connection");
+	Free(buf);
     }
 
     if(!wasopen) con->close(con);

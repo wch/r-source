@@ -673,6 +673,8 @@ BUG FIXES
     o	Subsetting grouping factors gave incorrect degrees of freedom
 	for some tests in package ctests (PR#1124).
 
+    o	writeBin() had a memory leak.
+
 
 
 	**************************************************
