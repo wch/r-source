@@ -9,6 +9,7 @@
 \alias{list-class}
 \alias{logical-class}
 \alias{numeric-class}
+\alias{raw-class}
 \alias{single-class}
 \alias{vector-class}
 \alias{NULL-class}
@@ -34,6 +35,7 @@
 "logical"
 "numeric"
 "single"
+"raw"
 
 ### the class
 "vector"
