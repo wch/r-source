@@ -696,21 +696,23 @@ int richeditreplace(HWND hwnd, char *what, char *replacewith, int matchcase, int
     CHARRANGE sel;
     char *buf;
     textbox t = find_by_handle(hwnd);
-    sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
-    start = sel.cpMin;
-    end = sel.cpMax;
-    if (start < end) {
-	buf = (char *) malloc(end - start + 1);
-	sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
-	if (!strcmp(buf, what)) {
-	    checklimittext(t, strlen(replacewith) - strlen(what) + 2);
-	    sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
+    if (t) {
+	sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
+	start = sel.cpMin;
+	end = sel.cpMax;
+	if (start < end) {
+	    buf = (char *) malloc(end - start + 1);
+	    sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
+	    if (!strcmp(buf, what)) {
+		checklimittext(t, strlen(replacewith) - strlen(what) + 2);
+		sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
+	    }
+	    free(buf);
 	}
-	free(buf);
+	/* else just find next */
+	if (richeditfind(hwnd, what, matchcase, wholeword, down))
+	    return 1;
     }
-    /* else just find next */
-    if (richeditfind(hwnd, what, matchcase, wholeword, down))
-	return 1;
     return 0;
 }
 
