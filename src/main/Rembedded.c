@@ -49,7 +49,7 @@ void setup_Rmainloop(void); /* in main.c */
 
 
     char *argv[]= {"REmbeddedPostgres", "--gui=none", "--silent"};
-    initEmbedded(sizeof(argv)/sizeof(argv[0]), argv);
+    Rf_initEmbeddedR(sizeof(argv)/sizeof(argv[0]), argv);
 */
 
 int Rf_initEmbeddedR(int argc, char **argv)
