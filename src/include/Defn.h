@@ -676,6 +676,10 @@ void unbindVar(SEXP, SEXP);
 void unmarkPhase(void);
 #endif
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
+int R_GetMaxVSize(void);
+void R_SetMaxVSize(int);
+int R_GetMaxNSize(void);
+void R_SetMaxNSize(int);
 
 /* gram.y & gram.c : */
 void yyerror(char *);

@@ -83,8 +83,12 @@ static SEXPREC UnmarkedNodeTemplate;
 static int collect_counts_max[] = { LEVEL_0_FREQ, LEVEL_1_FREQ };
 
 /* When a level N collection fails to produce at least MinFreeFrac *
- R_NSize free nodes and MinFreeFrac * R_VSize free vector space, the
- next collection will be a level N + 1 collection. */
+   R_NSize free nodes and MinFreeFrac * R_VSize free vector space, the
+   next collection will be a level N + 1 collection.
+
+   This constant is also used in heap size adjustment as a minimal
+   fraction of the minimal heap size levels that should be available
+   for allocation. */
 static double R_MinFreeFrac = 0.2;
 
 /* When pages are released, a number of free nodes equal to
@@ -98,29 +102,63 @@ static int R_PageReleaseFreq = 1;
 /* The heap size constants R_NSize and R_VSize are used for triggering
    collections.  The initial values set by defaults or command line
    arguments are used as minimal values.  After full collections these
-   levels are adjusted up or down, though not below the minimal
-   values, to maintain heap occupancy within a specified range.  When
-   the number of nodes in use reaches R_NGrowFrac * R_NSize, the value
-   of R_NSize is incremented by R_NGrowIncr.  When the number of nodes
-   in use falls below R_NShrinkFrac, R_NSize is decremented by
-   R_NShrinkIncr.  Analogous values are used for the vector heap. */
+   levels are adjusted up or down, though not below the minimal values
+   or above the maximum values, towards maintain heap occupancy within
+   a specified range.  When the number of nodes in use reaches
+   R_NGrowFrac * R_NSize, the value of R_NSize is incremented by
+   R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize.  When the number of
+   nodes in use falls below R_NShrinkFrac, R_NSize is decremented by
+   R_NShrinkIncrMin * R_NShrinkFrac * R_NSize.  Analogous adjustments
+   are made to R_VSize. 
+
+   This mechanism for adjusting the heap size constants is very
+   primitive but hopefully adequate for now.  Some modeling and
+   experimentation would be useful.  We want the heap sizes to get set
+   at levels adequate for the current computations.  The present
+   mechanism uses only the size of the current live heap to provide
+   information about the current needs; since the current live heap
+   size can be very volatile, the adjustment mechanism only makes
+   gradual adjustments.  A more sophisticated strategy would use more
+   of the live heap history. */
 static double R_NGrowFrac = 0.70;
-static int R_NGrowIncr = 50000;
 static double R_NShrinkFrac = 0.30;
-static int R_NShrinkIncr = 50000;
 
 static double R_VGrowFrac = 0.70;
-static int R_VGrowIncr = 100000;
 static double R_VShrinkFrac = 0.30;
-static int R_VShrinkIncr = 100000;
+
+#ifdef SMALL_MEMORY
+/* On machines with only 32M of memory (or on a classic Mac OS port)
+   it might be a good idea to use settings like these that are more
+   aggressive at keeping memory usage down. */
+static double R_NGrowIncrFrac = 0.0, R_NShrinkIncrFrac = 0.2;
+static int R_NGrowIncrMin = 50000, R_NShrinkIncrMin = 0;
+static double R_VGrowIncrFrac = 0.0, R_VShrinkIncrFrac = 0.2;
+static int R_VGrowIncrMin = 100000, R_VShrinkIncrMin = 0;
+#else
+static double R_NGrowIncrFrac = 0.05, R_NShrinkIncrFrac = 0.2;
+static int R_NGrowIncrMin = 40000, R_NShrinkIncrMin = 0;
+static double R_VGrowIncrFrac = 0.05, R_VShrinkIncrFrac = 0.2;
+static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
+#endif
 
 /* Maximal Heap Limits.  These variables contain upper limits on the
    heap sizes.  They could be made adjustable from the R level,
    perhaps by a handler for a recoverable error.  For now both are set
    to INT_MAX to insure that the heap counters do not wrap on systems
-   with that much memory */
+   with that much memory.
+
+   Access to these values is provided with reader and writer
+   functions; the writer function insures that the maximal values are
+   never set below the current ones. */
 static int R_MaxVSize = INT_MAX;
 static int R_MaxNSize = INT_MAX;
+
+int R_GetMaxVSize(void) { return R_MaxVSize; }
+void R_SetMaxVSize(int size) { if (size >= R_VSize) R_MaxVSize = size; }
+
+int R_GetMaxNSize(void) { return R_MaxNSize; }
+void R_SetMaxNSize(int size) { if (size >= R_NSize) R_MaxNSize = size; }
+
 
 /* Miscellaneous Globals. */
 
@@ -621,32 +659,38 @@ static void ReleaseLargeFreeVectors(void)
 
 static void AdjustHeapSize(int size_needed)
 {
-    double node_occup = ((double) R_NodesInUse) / R_NSize;
-    double vect_occup =
-	((double) (R_SmallVallocSize + R_LargeVallocSize + size_needed)) / R_VSize;
+    int R_MinNFree = orig_R_NSize * R_MinFreeFrac;
+    int R_MinVFree = orig_R_VSize * R_MinFreeFrac;
+    int NNeeded = R_NodesInUse + R_MinNFree;
+    int VNeeded = R_SmallVallocSize + R_LargeVallocSize
+	+ size_needed + R_MinVFree;
+    double node_occup = ((double) NNeeded) / R_NSize;
+    double vect_occup =	((double) VNeeded) / R_VSize;
 
     if (node_occup > R_NGrowFrac) {
-	if (R_MaxNSize - R_NSize >= R_NGrowIncr)
-	    R_NSize += R_NGrowIncr;
+	int change = R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize;
+	if (R_MaxNSize - R_NSize >= change)
+	    R_NSize += change;
     }
     else if (node_occup < R_NShrinkFrac) {
-	R_NSize -= R_NShrinkIncr;
+	R_NSize -= R_NShrinkIncrMin + R_NShrinkIncrFrac * R_NSize;
+	if (R_NSize < NNeeded)
+	    R_NSize = NNeeded;
 	if (R_NSize < orig_R_NSize)
 	    R_NSize = orig_R_NSize;
     }
 
-    if (vect_occup > 1.0) {
-	int k = (R_SmallVallocSize + R_LargeVallocSize + size_needed - R_VSize - 1)
-	    / R_VGrowIncr + 1;
-	if (R_MaxVSize - R_VSize >= k * R_VGrowIncr)
-	    R_VSize += k * R_VGrowIncr;
-    }
-    else if (vect_occup > R_VGrowFrac) {
-	if (R_MaxVSize - R_VSize >= R_VGrowIncr)
-	    R_VSize += R_VGrowIncr;
+    if (vect_occup > 1.0)
+	R_VSize = VNeeded;
+    if (vect_occup > R_VGrowFrac) {
+	int change = R_VGrowIncrMin + R_VGrowIncrFrac * R_NSize;
+	if (R_MaxVSize - R_VSize >= change)
+	    R_VSize += change;
     }
     else if (vect_occup < R_VShrinkFrac) {
-	R_VSize -= R_VShrinkIncr;
+	R_VSize -= R_VShrinkIncrMin + R_VShrinkIncrFrac * R_VSize;
+	if (R_VSize < VNeeded)
+	    R_VSize = VNeeded;
 	if (R_VSize < orig_R_VSize)
 	    R_VSize = orig_R_VSize;
     }
