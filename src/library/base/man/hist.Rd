@@ -47,7 +47,11 @@ but not their left one, with the exception of the first cell when
   was a vector).}
   \item{counts}{\eqn{n} integers; for each cell, the number of
     \code{x[]} inside.}
-  \item{intensities}{the \emph{relative} frequencies, summing to 1.}
+  \item{intensities}{values \eqn{\hat f(x_i)}{f^(x[i])}, as estimated
+    density values. If \code{all(diff(breaks) == 1)}, they are the
+    relative frequencies \code{counts/n} and in general satisfy
+    \eqn{\sum_i \hat f(x_i) (b_{i+1}-b_i) = 1}{sum[i; f^(x[i])
+      (b[i+1]-b[i])] = 1}, where \eqn{b_i}{b[i]}=\code{breaks[i]}.}
   \item{mids}{the \eqn{n} cell midpoints; useful for plotting.}
 }
 \note{
