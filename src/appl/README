@@ -11,6 +11,10 @@ NOTE: The following source files are   NOT used at all currently
 	zsifa.f
 	zsisl.f
 
-Hint:	Adding new functionality here needs
-	an entry *BOTH* in Makefile.in and ROUTINES
-	(and usually further in ../../doc/manual/R-exts.texi).
+Hint:	Adding new functionality here usually needs an entry in each of
+	       	Makefile.in
+		ROUTINES
+		../include/R_ext/Applic.h
+	and usually as well in
+		NEWS
+		../../doc/manual/R-exts.texi
