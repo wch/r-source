@@ -22,7 +22,7 @@
  *	Remark AS R19 and Algorithm AS 109,
  *	Applied Statistics, 26(1), 111-114.
  * Remark AS R83 (v.39, 309-310) and the correction (v.40(1) p.236)
- *	have been incorporated in this version. 
+ *	have been incorporated in this version.
  */
 
 
@@ -120,14 +120,13 @@ double qbeta(double alpha, double p, double q)
 	t = 1 - qq;
 	yprev = zero;
 	adj = 1;
-	if (xinbta < lower) {
+	if (xinbta < lower)
 	  xinbta = lower;
-	}
-	if (xinbta > upper) {
+	else if (xinbta > upper)
 	  xinbta = upper;
-	}
+
 	/* Desired accuracy should depend on  (a,p)
-	 * This is from Remark .. on AS 109, adapated.
+	 * This is from Remark .. on AS 109, adapted.
 	 * However, it's not clear if this is "optimal" for IEEE double prec.
 
 	 * acu = fmax2(acu_min, pow(10., -25. - 5./(pp * pp) - 1./(a * a)));
@@ -143,12 +142,12 @@ double qbeta(double alpha, double p, double q)
 		y = pbeta_raw(xinbta, pp, qq);
 		/* y = pbeta_raw2(xinbta, pp, qq, logbeta); */
 #ifdef IEEE_754
-		if(!finite(y))
+		if(!FINITE(y))
 #else
 		if (errno)
 #endif
 		{ ML_ERROR(ML_DOMAIN); return ML_NAN; }
-		y = (y - a) * 
+		y = (y - a) *
 			exp(logbeta + r * log(xinbta) + t * log(1 - xinbta));
 		if (y * yprev <= zero)
 			prev = fmax2(fabs(adj),fpu);
@@ -174,6 +173,8 @@ double qbeta(double alpha, double p, double q)
 		yprev = y;
 	}
 	/*-- NOT converged: Iteration count --*/
+	ML_ERROR(ME_PRECISION);
+
       L_converged:
 	if (swap_tail)
 		xinbta = 1 - xinbta;
