@@ -1808,3 +1808,10 @@ SEXP do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return CAR(s);
 }
+
+SEXP do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+
+    return(CAR(args));
+}

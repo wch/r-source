@@ -7,7 +7,7 @@ eval <-
                        parent.frame())
     .Internal(eval(expr, envir,enclos))
 
-quote <- function(expr) substitute(expr)
+quote <- .Primitive("quote")
 
 
 eval.parent <- function(expr, n = 1){
