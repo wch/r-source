@@ -73,7 +73,6 @@ static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
 static R_StringBuffer *buffer = &gBuffer; /*XX Add appropriate const here
                                             and in the routines that use it. */
 
-
 R_size_t R_Decode2Long(char *p, int *ierr)
 {
     R_size_t v = strtol(p, &p, 10);
@@ -459,12 +458,6 @@ void REvprintf(const char *format, va_list arg)
 	buf[BUFSIZE-1] = '\0';
 	slen = strlen(buf);
 	R_WriteConsole(buf, slen);
-#ifdef HAVE_AQUA
-	/* the function doesn't access or  manipulate its arguments,
-	   so this is safe, if ugly */
-	do_flushconsole(NULL,NULL,NULL,NULL); 
-#endif
-
     }
 }
 
