@@ -287,7 +287,11 @@ INTERNATIONALIZATION
 	currently in use.
 
     o	scan() is now aware of double-byte locales such as Shift-JIS
-	in which ASCII characters can occur as the second ('trail') byte.
+	in which ASCII characters can occur as the second ('trail')
+	byte.
+
+    o	Functions sQuote() and dQuote() use the Unicode directional
+        quotes if in a UTF-8 locale.
 
 
 UTILITIES

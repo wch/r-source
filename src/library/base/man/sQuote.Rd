@@ -33,8 +33,9 @@ dQuote(x)
   employed, than the ASCII quotation mark (0x22) should be used as both
   the left and right double quotation mark.
 
-  \code{sQuote} and \code{dQuote} currently only provide undirectional
-  ASCII quotation style, but may be enhanced in the future.
+  By default, \code{sQuote} and \code{dQuote} provide undirectional 
+  ASCII quotation style.  In a UTF-8 locale (see
+  \code{\link{l10n_info}}), the Unicode directional quotes are used.
 }
 \references{
   Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.
