@@ -206,7 +206,8 @@ void	SaveRPrefs(void);
 void	SaveConsolePosToPrefs(void);
 
 
-CFStringRef appName, RTabSizeKey, RFontSizeKey, RFontFaceKey, devicefontKey;
+CFStringRef appName, RPrefsVerKey;
+CFStringRef RTabSizeKey, RFontSizeKey, RFontFaceKey, devicefontKey;
 CFStringRef outfgKey, outbgKey, infgKey, inbgKey;
 CFStringRef devWidthKey, devHeightKey, devPSizeKey;
 CFStringRef devAutoRefreshKey, devAntialiasingKey, devOverrideRDefKey;
@@ -222,6 +223,7 @@ void	SetUpPrefSymbols(void);
 void	SetUpPrefSymbols(void){
     
     appName = CFSTR("org.r-project.R");
+    RPrefsVerKey = CFSTR("R Preference Version");
     RTabSizeKey = CFSTR("R Tab Size");
     RFontSizeKey = CFSTR("R Font Size");
     RFontFaceKey = CFSTR("R Font Face");
@@ -768,10 +770,12 @@ void SaveRPrefs(void)
     RGBColor    fgout,bgout,fgin,bgin;
 	char 	 devicefont[255], cran[255], bioc[255];
     int	autorefresh, antialiasing, overrideRdef;
+	long prefver;
     int	grabstdout, grabstderr, globalpackages, saveconsolepos, setconsolewidth;
 
 
     
+    prefver = CurrentPrefs.prefsTypeVers;
     tabsize = CurrentPrefs.RTabSize;
     fontsize = CurrentPrefs.RFontSize;
     fontface = CurrentPrefs.RFontFace;
@@ -797,6 +801,11 @@ void SaveRPrefs(void)
     strcpy(cran, CurrentPrefs.CRANmirror);
 	
        
+/* Prefs Version */
+    value = CFNumberCreate(NULL, kCFNumberLongType, &prefver); 
+    CFPreferencesSetAppValue(RPrefsVerKey, value, appName);
+    CFRelease(value);
+
 /* Tab Size */
     value = CFNumberCreate(NULL, kCFNumberIntType, &tabsize); 
     CFPreferencesSetAppValue(RTabSizeKey, value, appName);

@@ -736,6 +736,7 @@ void Raqua_StartConsole(Rboolean OpenConsole)
      InitAboutWindow();
       
      GetRPrefs();
+	// fprintf(stderr,"\nfg red=%x, fg blue=%x", CurrentPrefs.FGInputColor.red, CurrentPrefs.FGInputColor.blue);
      RSetPipes();
    
 	 RepositionWindow (ConsoleWindow,  NULL, kWindowCascadeOnMainScreen);
@@ -1201,7 +1202,6 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
                 strncpy(buf,*(BufDataHandle)+curBufPos,i-curBufPos+1);
                 buf[i-curBufPos] = '\n';
                 buf[i-curBufPos+1] = '\0';
-               fprintf(stderr,">>%s<<",buf);
                if (WeHaveCocoa)
                    Raqua_WriteUserInput(buf);
                else
@@ -2211,8 +2211,10 @@ step2:
             CGContextScaleCTM(xd->auxcontext, 1, -1);
             GEplayDisplayList((GEDevDesc*) GetDevice(devnum)); 
             CGContextEndPage(xd->auxcontext);
-            if(xd->auxcontext != NULL)
+            if(xd->auxcontext){
              CGContextRelease(xd->auxcontext);
+			 xd->auxcontext = NULL;
+			}
             xd->where = kOnScreen;
             return(noErr);                                 
         }       
@@ -3710,8 +3712,6 @@ enum
 };
 
 static int userInput(const char *text) {
-    fprintf(stderr, "userInput: \"%s\"\n",text);
-    /* !!!! */
     strncpy(inputBuffer,text,inputBufferSize-2);
     InputFinished=true;
     return 0;
