@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-01)
+Version 1.8.0 Under development (unstable) (2003-05-30)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -65,8 +65,8 @@ Incompatible methods ("Ops.foo", "Ops.bar") for "<="
 > ## Tests S3 dispatch with the class attr forced to be data.class
 > ## Not very relevant when S4 methods are around, but kept for historical interest
 > abc <- function(x, ...) {
-+     if (is.null(oldClass(x))) oldClass(x) <- data.class(x)
-+     cat("abc: Before dispatching; x="); str(x)
++     cat("abc: Before dispatching; x has class `", class(x), "':", sep="")
++     str(x)
 +     UseMethod("abc", x) ## UseMethod("abc") (as in S) fails
 + }
 > 
@@ -78,20 +78,20 @@ Incompatible methods ("Ops.foo", "Ops.bar") for "<="
 +     cat("'expression' method of abc:", deparse(sys.call(sys.parent())),"\n")
 > 
 > abc(1)
-abc: Before dispatching; x=Class 'numeric'  num 1
+abc: Before dispatching; x has class `numeric': num 1
 abc.default(1)
 > e0 <- expression((x))
 > e1 <- expression(sin(x))
 > abc(e0)
-abc: Before dispatching; x=Class 'expression'   expression((x))
+abc: Before dispatching; x has class `expression':  expression((x))
 'expression' method of abc: abc.expression(e0) 
 > abc(e1)
-abc: Before dispatching; x=Class 'expression'   expression(sin(x))
+abc: Before dispatching; x has class `expression':  expression(sin(x))
 'expression' method of abc: abc.expression(e1) 
 > abc(e0[[1]])
-abc: Before dispatching; x=Class '('  language, mode "(": ( x
+abc: Before dispatching; x has class `(': language, mode "(": ( x
 '(' method of abc: "abc.("(e0[[1]]) 
 > abc(e1[[1]])
-abc: Before dispatching; x=Class 'call'  language sin(x)
+abc: Before dispatching; x has class `call': language sin(x)
 abc.default(e1[[1]])
 > 

@@ -35,8 +35,8 @@ x > 3 #-> "Ops.foo" and ">.bar"
 ## Tests S3 dispatch with the class attr forced to be data.class
 ## Not very relevant when S4 methods are around, but kept for historical interest
 abc <- function(x, ...) {
-    if (is.null(oldClass(x))) oldClass(x) <- data.class(x)
-    cat("abc: Before dispatching; x="); str(x)
+    cat("abc: Before dispatching; x has class `", class(x), "':", sep="")
+    str(x)
     UseMethod("abc", x) ## UseMethod("abc") (as in S) fails
 }
 
