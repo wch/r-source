@@ -75,6 +75,7 @@ $ENV{"R_DEFAULT_PACKAGES"} = "";
 my $startdir = R_cwd();
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $tar = R_getenv("TAR", "tar");
+my $libdir = &file_path(${R::Vars::TMPDIR}, "Rinst.$$");
 
 my $INSTALL_opts = "";
 $INSTALL_opts .= " --use-zip" if $opt_use_zip;
@@ -118,13 +119,6 @@ foreach my $pkg (@ARGV) {
     if($description->{"Contains"}) {
 	$log->message("looks like '${pkg}' is a package bundle");
 	$is_bundle = 1;
-	if($opt_binary) {
-	    if($WINDOWS) {
-		die "Error: cannot build binary bundles -- use INSTALL --build\n";
-	    } else {
-		die "Error: cannot build or INSTALL binary bundles\n";
-	    }
-	}
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	foreach my $ppkg (@bundlepkgs) {
 	    $log->message("preparing '$ppkg' in bundle '$pkg':");
@@ -134,6 +128,7 @@ foreach my $pkg (@ARGV) {
 			$description, $log);
 	    $log->setstars("*");
 	}
+	rmtree("$libdir") if (-d "$libdir");
     } else {
 	$is_bundle = 0;
 	chdir($startdir);
@@ -269,17 +264,43 @@ foreach my $pkg (@ARGV) {
     if($opt_binary) {
 	$log->message("building binary distribution");
 	chdir($startdir);
-	my $libdir = &file_path(${R::Vars::TMPDIR}, "Rinst.$$");
-	mkdir("$libdir", 0755)
-	    or die "Error: cannot create directory '$libdir'\n";
+	if (!-d "$libdir") {
+	    mkdir("$libdir", 0755)
+		or die "Error: cannot create directory '$libdir'\n";
+	}
 	my $srcdir = &file_path($tmpdir, $pkgname);
 	my $cmd;
 	if($WINDOWS) {
+	    $log->warning("some HTML links may not be found");
 	    $cmd = join(" ",
 			("Rcmd.exe INSTALL -l",
 			 &shell_quote_file_path($libdir),
 			 "--build $INSTALL_opts",
 			 &shell_quote_file_path($srcdir)));
+	    if(R_system($cmd)) { $log->error("installation failed"); }
+	} elsif($is_bundle) {
+	    $binfilename = "${pkgname}_" . $description->{"Version"} .
+		"_R_${R_platform}.tar";
+	    my $filepath = &file_path($startdir, $binfilename);
+	    $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "CMD INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "$INSTALL_opts",
+			 &shell_quote_file_path($srcdir)));
+	    if(R_system($cmd)) { $log->error("installation failed"); }
+	    chdir("$libdir");
+	    copy(&file_path($startdir, $pkg, "DESCRIPTION"),
+		 "DESCRIPTION");
+	    R_system(join(" ",
+			  ("$tar chf ",
+			   &shell_quote_file_path($filepath),
+			   @bundlepkgs, "DESCRIPTION")));
+	    R_system(join(" ",
+			  ("gzip -9f ",
+			   &shell_quote_file_path($filepath))));
+	    chdir($startdir);
+	    $log->message("packaged bundle '$pkgname' as '$binfilename.gz'");
 	} else {
 	    $cmd = join(" ",
 			(&shell_quote_file_path(${R::Vars::R_EXE}),
@@ -287,12 +308,8 @@ foreach my $pkg (@ARGV) {
 			 &shell_quote_file_path($libdir),
 			 "--build $INSTALL_opts",
 			 &shell_quote_file_path($srcdir)));
+	    if(R_system($cmd)) { $log->error("installation failed"); }
 	}
-	## print "$cmd\n";
-	if(R_system($cmd)) {
-	    $log->error("installation failed");
-	}
-	rmtree($libdir);
     } else {
 	$log->message("building '$filename.gz'");
 	R_system(join(" ",
@@ -383,10 +400,49 @@ sub prepare_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	if(!$opt_no_vignettes) {
+	    my $doit = 1;
+	    ## if we are in a bundle, need to install the whole bundle once.
+	    if ($in_bundle) {
+		$pkgdir = $pkgdir . "/..";
+		if(-d "$libdir") {
+		    $doit = 0;
+		} else {
+		    $log->message("installing the *bundle* to re-build vignettes");
+		mkdir("$libdir", 0755)
+		    or die "Error: cannot create directory '$libdir'\n";
+		}
+	    } else {
+		$log->message("installing the package to re-build vignettes");
+		mkdir("$libdir", 0755)
+		    or die "Error: cannot create directory '$libdir'\n";
+	    }
+	    my $cmd;
+	    if($WINDOWS) {
+		$cmd = join(" ",
+			    ("Rcmd.exe INSTALL -l",
+			     &shell_quote_file_path($libdir),
+			     &shell_quote_file_path($pkgdir)));
+	    } else {
+		$cmd = join(" ",
+			    (&shell_quote_file_path(${R::Vars::R_EXE}),
+			     "CMD INSTALL -l",
+			     &shell_quote_file_path($libdir),
+			     &shell_quote_file_path($pkgdir)));
+	    }
+	    if($doit && R_system($cmd)) {
+		$log->error();
+		$log->print("Installation failed.\n");
+		exit(1);
+	    }
+	    my $R_LIBS = $ENV{'R_LIBS'};
+	    $ENV{'R_LIBS'} = env_path("$libdir", $R_LIBS);
+
 	    $log->creating("vignettes");
 	    my $Rcmd = "library(tools)\n";
 	    $Rcmd .= "buildVignettes(dir = '.')\n";
 	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
+	    rmtree("$libdir") unless $in_bundle;
+	    $ENV{'R_LIBS'} = $R_LIBS;
 	    my @err = grep(/^Error/, @out);
 	    if(scalar(@err) > 0) {
 		@out = grep(!/^\>/, @out);

@@ -159,16 +159,14 @@ UTILITIES
 
     o	R CMD build now behaves consistently between source and binary
 	builds: in each case it prepares a source directory and then
-	either packages that as a tarball or call R CMD INSTALL
-	--build on the prepared sources.
+	either packages that directory as a tarball or calls R CMD
+	INSTALL --build on the prepared sources.
 
 	This means that R CMD build --binary now respects
 	.Rbuildignore and will rebuild vignettes (unless the option
-	--no-vignettes is used).
-
-	[Currently R CMD build --binary does not work for bundles.
-	On Windows Rcmd INSTALL --build works, and on Unix
-	R CMD INSTALL is not able to install a binary bundle.]
+	--no-vignettes is used).  For the latter, it now installs the
+	current sources into a temporary library and uses that version
+	of the package/bundle to rebuild the vignettes.
 
 
 DOCUMENTATION

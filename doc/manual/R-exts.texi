@@ -584,6 +584,9 @@ Description: Functions for kriging and point pattern analysis.
 @end cartouche
 @end quotation
 
+Any files in the package except the @file{DESCRIPTION} file and the
+named packages will be ignored.
+
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
 
@@ -951,13 +954,15 @@ of the @R{} package builder.
 
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
 option, it will attempt to rebuild and vignettes (@pxref{Writing package
-vignettes}) in the package: for this to be possible the current version
-and any dependent packages need to be installed in an available library
-tree (see the Note: below).
+vignettes}) in the package.  To do so it installs the current
+package/bundle into a temporary library tree, but any dependent packages
+need to be installed in an available library tree (see the Note: below).
 
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions, but @code{R CMD INSTALL --build} is preferred (and
-is considerably more flexible).
+is considerably more flexible).  In particular, Windows users are
+recommended to use @code{R CMD INSTALL --build} and install into the
+main library tree (the default) so that HTML links are resolved.
 
 @quotation
 @strong{Note}: @code{R CMD check} and @code{R CMD build} run @R{} with
