@@ -57,6 +57,7 @@ OutputBaseFilename=SetupR
 WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
+Compression=bzip
 
 [Types]
 Name: "user"; Description: "User installation"
