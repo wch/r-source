@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-14
+Version 2.0.2004-12-21
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1858,6 +1858,9 @@ distributions of R.)
 
 *ebayesthresh*
      Empirical Bayes thresholding and related methods.
+
+*eco*
+     Fitting Bayesian models of ecological inference in 2 by 2 tables.
 
 *edci*
      Edge Detection and Clustering in Images.
