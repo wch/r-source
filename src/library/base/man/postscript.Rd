@@ -231,7 +231,7 @@ dev.off()              # plot will appear on printer
 #endif
 #ifdef windows
 options(printcmd='redpr -P"\\\\markov\\lw"')
-postscript(file=tempfile("R.ps"), print.it=TRUE)
+postscript(file=tempfile("Rps."), print.it=TRUE)
 # produce the desired graph(s)
 dev.off()              # send plot file to the printer
 #endif

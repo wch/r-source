@@ -21,7 +21,7 @@ zip.file.extract(file, zipname = "R.zip")
   
   The file will be extracted if it is in the archive and any required
   \code{unzip} utility is available.  It will probably be extracted to
-  the directory used by \code{tempfile}, overwriting an existing file of
+  the directory given by \code{tempdir}, overwriting an existing file of
   that name.
 }
 \value{

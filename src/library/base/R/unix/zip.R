@@ -6,7 +6,7 @@ zip.file.extract <- function(file, zipname = "R.zip")
     path <- dirname(file)
     topic <- basename(file)
     if(file.exists(file.path(path, zipname))) {
-        tmpd <- dirname(tempfile())
+        tmpd <- tempdir()
         if(unzip != "internal") {
             if(!system(paste(unzip, "-o",
                              file.path(path, zipname), topic, "-d", tmpd,
