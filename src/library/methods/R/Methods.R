@@ -382,7 +382,9 @@ selectMethod <-
   ## optional = If TRUE, and no explicit selection results, return result anyway. else error
   ## mlist = Optional MethodsList object to use in the search.
     function(f, signature, optional = FALSE,
-             useInherited = TRUE, mlist = getMethods(fdef), fdef = getGeneric(f))
+             useInherited = TRUE,
+             mlist = (if(is.null(fdef)) NULL else getMethods(fdef)),
+             fdef = getGeneric(f, !optional))
 {
     evalArgs <- is.environment(signature)
     if(evalArgs)

@@ -13,6 +13,8 @@ BUG FIXES
     o	print.table() has used too much white space in some cases
 	in 1.7.0.
 
+    o   selectMethod() failed if f was a non-generic and optional=TRUE, and
+        gave a confusing error message if optional=FALSE.
 
 
 		CHANGES IN R VERSION 1.7.0
