@@ -190,7 +190,7 @@ static DWORD GALastUpdate = 0;
 static VOID CALLBACK
 GA_timer_proc(HWND hwnd, UINT message, UINT tid, DWORD time)
 {
-    if ((message != WM_TIMER) || tid != TimerNo) return;
+    if ((message != WM_TIMER) || tid != TimerNo || !GA_xd) return;
     gbitblt(GA_xd->gawin, GA_xd->bm, pt(0,0), getrect(GA_xd->bm));
     GALastUpdate = time;
 }
@@ -433,7 +433,7 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
-			((gadesc*) dd->deviceSpecific)->basefontsize, 
+			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, "R Graphics Output"))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
@@ -713,7 +713,7 @@ static void HelpMouseClick(window w, int button, point pt)
 	if (!xd->locator)
 	    return;
 	if (button & LeftButton) {
-	    int useBeep = asLogical(GetOption(install("locatorBell"), 
+	    int useBeep = asLogical(GetOption(install("locatorBell"),
 					      R_NilValue));
 	    if(useBeep) gabeep();
 	    xd->clicked = 1;
@@ -1492,7 +1492,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    xd->bg = dd->startfill = canvascolor;
 	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
-	if(strlen(dsp+4) >= 512) error("filename too long in %s() call", 
+	if(strlen(dsp+4) >= 512) error("filename too long in %s() call",
 				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, dsp+4);
 	if (!Load_Rbitmap_Dll()) {
@@ -1552,7 +1552,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
-	if(ld > ls && strlen(&dsp[ls + 1]) >= 512) 
+	if(ld > ls && strlen(&dsp[ls + 1]) >= 512)
 	    error("filename too long in win.metafile() call");
 	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
 	snprintf(buf, 600, xd->filename, 1);
@@ -1635,7 +1635,7 @@ static void GA_MetricInfo(int c, int font, double cex, double ps,
 	*ascent  = 0.0;
 	*descent = 0.0;
 	*width   = (double) w;
-	
+
     } else {
 	*ascent  = (double) a;
 	*descent = (double) d;
@@ -1856,6 +1856,7 @@ static void GA_Close(NewDevDesc *dd)
 	}
 	hide(xd->gawin);
 	del(xd->bm);
+	if (xd == GA_xd) GA_xd = NULL;
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
       SaveAsBitmap(dd);
     }
@@ -2393,11 +2394,11 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 
     xd->resize = (resize == 3);
     xd->locator = FALSE;
-    xd->buffered = buffered; 
+    xd->buffered = buffered;
     {
 	SEXP timeouts = GetOption(install("windowsTimeouts"), R_NilValue);
 	if(isInteger(timeouts)){
-	    xd->timeafter = INTEGER(timeouts)[0]; 
+	    xd->timeafter = INTEGER(timeouts)[0];
 	    xd->timesince = INTEGER(timeouts)[1];
 	} else {
 	    warning("option `windowsTimeouts' should be integer");
@@ -2510,7 +2511,7 @@ static void SaveAsBitmap(NewDevDesc *dd)
     rect r, r2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     unsigned char *data;
-    
+
     r = ggetcliprect(xd->gawin);
     gsetcliprect(xd->gawin, r2 = getrect(xd->gawin));
     if(xd->fp) {

@@ -18,9 +18,9 @@ Without either X11 or Tcl/Tk:
 With both:
 %  ./configure --enable-R-shlib --with-blas='-framework vecLib' 
    --with-lapack 
-   --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
-   --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh 
    --with-aqua
+provided that you have built and installed tk and tcl from the unix tree 
+of the respective sources.
 
 Then build R with
 %  make
@@ -29,8 +29,11 @@ Then build R with
 Compiling with X11 support requires X11 header files (SDK, as Apple 
 calls it) and running with X11 support requires an X server, such as 
 Apple's Xquartz server (http://www.apple.com/macosx/x11/download/).  
+The X server is shipped with Panther along with the SDK. The latter
+is not installed by default.
 
-Compiling with Tcl/Tk has been tested only with AquaTcl/Tk 8.4.2. See
+Compiling with Tcl/Tk requires the X11 implementation of the libraries. 
+See
      http://www.economia.unimi.it/R/
 for more information on where to get it and how to install it.
 
@@ -67,7 +70,7 @@ Creating packages:
 The tar command in OS X is missing some features that are used by R CMD 
 build.  At the moment the recommended work-around is to install GNU tar 
 (eg, as part of fink) and set the TAR environment variable to point to 
-GNU tar.
+GNU tar. Under Panther, GNU tar is the default tar.
 Eg
   setenv TAR /sw/bin/tar
 
@@ -89,13 +92,12 @@ The standard graphics driver for RAqua is quartz(), using the Quartz
 PDF-based display engine. It has all the features you would expect in an 
 R device driver.  If you compiled with X11 support and have an X 
 server running you can also use x11() for the X-Windows display device. 
-Currently x11() with Apple's X server is faster than quartz(). Of course, 
-all the usual file-based devices are available: PDF(), postscript(), 
-xfig(), etc.
+Of course, all the usual file-based devices are available: PDF(), 
+postscript(), xfig(), etc.
 
 Data frames can be displayed and edited with data.entry() and edit(). 
 
-The Workspace menu allows the Workspace to be saved, loaded, clearedor
+The Workspace menu allows the Workspace to be saved, loaded, cleared or
 browsed.  The workspace browser can also be started with the browseEnv()
 function.
 
@@ -138,4 +140,6 @@ There's a lot of coding based on static variables in the aqua files. If
 you can't find a local declaration for a variable look at the top of the 
 file.
 
+
+This version: nov 19th 2003
 	
