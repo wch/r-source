@@ -122,6 +122,13 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 /* for use in socket connections */
 
+static unsigned int timeout = 60;
+
+void R_SockTimeout(int delay)
+{
+    timeout = (unsigned int) delay;
+}
+
 int R_SockOpen(int port)
 {
     check_init();

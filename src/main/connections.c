@@ -1095,8 +1095,13 @@ static void sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
     int sock, res, len = 256;
+    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
     char buf[256];
 
+    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
+    R_SockTimeout(timeout);
+
+    
     if(this->server) {
 	sock = R_SockOpen(this->port);
 	if(sock < 0) error("port %d cannot be opened", this->port);

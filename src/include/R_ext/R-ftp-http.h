@@ -28,6 +28,7 @@ void RxmlNanoFTPCleanup(void);
 void RxmlNanoHTTPCleanup(void);
 
 /* sockets */
+void R_SockTimeout(int delay);
 int R_SockOpen(int port);
 int R_SockListen(int sockp, char *buf, int len);
 int R_SockConnect(int port, char *host);
