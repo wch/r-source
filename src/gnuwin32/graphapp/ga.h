@@ -38,6 +38,7 @@ void 	gabeep(void);
 #define Border      	0x10100000L
 void	app_cleanup(void);
 int 	ismdi();
+rect 	screen_coords(control c);
 
 /* gmenus.c */
 typedef struct {

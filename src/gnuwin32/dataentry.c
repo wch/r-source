@@ -1314,8 +1314,6 @@ static void popupclose(control c)
     del(wconf);
 }
 
-extern void getscreenrect(control, rect *);
-
 static void nm_hit_key(window w, int key)
 {
     if(key == '\n') popupclose(wconf);
@@ -1324,11 +1322,10 @@ static void nm_hit_key(window w, int key)
 static void de_popupmenu(int x_pos, int y_pos, int col)
 {
     char *blah;
-    rect r;
+    rect r = screen_coords(de);
 
     popupcol = colmin + col - 1;
     blah = get_col_name(popupcol);
-    getscreenrect(de, &r);
     wconf = newwindow("Variable editor",
 		      rect(x_pos + r.x-150, y_pos + r.y-50, 300, 100),
 		      Titlebar | Closebox);
@@ -1484,7 +1481,7 @@ static MenuItem DePopup[28] = {
     {"Help", menudehelp, 0},
     {"-", 0, 0},
     {"Copy selected cell", de_copy, 0},
-    {"Paste selected cell", de_paste, 0},
+    {"Paste to selected cell", de_paste, 0},
     {"Autosize column", de_autosize, 0},
     {"-", 0, 0},
     {"Close", declose, 0},

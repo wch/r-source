@@ -184,15 +184,15 @@ void redraw(control obj)
 	draw(obj);
 }
 
-void getscreenrect(control obj, rect *r)
-{
-    RECT W;
-    GetWindowRect(obj->handle, &W);
-    r->x = W.left;
-    r->y = W.top;
-    r->width = W.right - W.left;
-    r->height = W.bottom - W.top;
-}
+/*  void getscreenrect(control obj, rect *r) */
+/*  { */
+/*      RECT W; */
+/*      GetWindowRect(obj->handle, &W); */
+/*      r->x = W.left; */
+/*      r->y = W.top; */
+/*      r->width = W.right - W.left; */
+/*      r->height = W.bottom - W.top; */
+/*  } */
 
 
 /* The original here used GetWindowRect (which used screen coordinates)
