@@ -50,11 +50,10 @@ pairs.formula <- function(formula, data = NULL, subset, na.action, ...)
     if (missing(na.action))
         na.action <- options()$na.action
     m <- match.call(expand.dots = FALSE)
-    if (is.matrix(eval(m$data, sys.parent())))
+    if (is.matrix(eval(m$data, sys.frame(sys.parent()))))
         m$data <- as.data.frame(data)
     m$... <- NULL
     m[[1]] <- as.name("model.frame")
-    mf <- eval(m, sys.parent())
+    mf <- eval(m, sys.frame(sys.parent()))
     pairs(mf, ...)
 }
-

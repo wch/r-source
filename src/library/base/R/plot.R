@@ -147,11 +147,11 @@ plot.formula <- function(formula, data = NULL, subset, na.action,
 {
     if (missing(na.action)) na.action <- options()$na.action
     m <- match.call(expand.dots = FALSE)
-    if (is.matrix(eval(m$data, sys.parent())))
+    if (is.matrix(eval(m$data, sys.frame(sys.parent()))))
 	m$data <- as.data.frame(data)
     m$... <- NULL
     m[[1]] <- as.name("model.frame")
-    mf <- eval(m, sys.parent())
+    mf <- eval(m, sys.frame(sys.parent()))
     response <- attr(attr(mf, "terms"), "response")
     if (response) {
 	varnames <- names(mf)
@@ -166,10 +166,11 @@ plot.formula <- function(formula, data = NULL, subset, na.action,
     else plot.data.frame(mf)
 }
 
-plot.xy <-
-    function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
-{.Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))}
+plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
+                    bg = NA, cex = 1, ...) {
+    .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))
+}
 
-plot.new <- function(ask=NA) .Internal(plot.new(ask))
+plot.new <- function(ask = NA) .Internal(plot.new(ask))
 
 frame <- .Alias(plot.new)
