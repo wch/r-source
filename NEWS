@@ -86,9 +86,6 @@ NEW FEATURES
 	C++ source suffixes `.cpp' and `.C' are now recognized in
 	adddition to `.cc'.
 
-    o	save(, oldstyle=TRUE) is now deprecated, and will be removed
-	by 1.3.0.
-
     o	.Platform has new component "endian", useful for binary file
 	manipulations.
 
@@ -98,6 +95,7 @@ BUG FIXES
     o   Postscript driver nolonger uses the initclip operator, which
         was against the EPSF specifications and broke inclusion of
 	graphics in some documents.
+
 
 
 	**************************************************
