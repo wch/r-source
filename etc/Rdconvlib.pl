@@ -90,7 +90,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
 	$Exfile	  = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
     }
-
+    
 
     $max_bracket = 0;
     $max_section = 0;
@@ -157,7 +157,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
 	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
-	rdoc2txt($textfile)	if $type =~ /txt/i;
+	rdoc2txt($txtfile)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/i;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
 	rdoc2ex($Exfile)	if $type =~ /example/i;
@@ -1198,8 +1198,10 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     $INDENT = 5;
 
     if ($pkgname) {
-	print txtout  $blocks{"name"}, "'package:",
-	    $pkgname, "'R Documentation'\n\n";
+	my $pad = 65 - length($blocks{"name"}) - length($pkgname) - 30;
+	$pad = int($pad/2);
+	print txtout  "   ", $blocks{"name"}, " " x $pad, 
+	"package:$pkgname", " " x $pad,"R Documentation\n\n";
     }
     print txtout txt_header(striptitle($blocks{"title"})), "\n";
     txt_print_block("description", "Description");
@@ -1394,7 +1396,7 @@ sub txt_fill { # file, "text to be formatted"
 	    $INDENT = $INDENT + $para;
 	    $indent = " " x $INDENT;
         # check for a \deqn block
-	} elsif ($para =~ s/^\.DS B\n(.*)\n.DE/\1/) {
+	} elsif ($para =~ s/^[\n]*\.DS B\n(.*)[\n]+\.DE/\1/) {
 	    print txtout "\n", wrap(" " x 10, " " x 10, $para), "\n";
 	# check for a \tabular block
 	} elsif ($para =~ s/^\.TS\n//) {
@@ -1441,6 +1443,9 @@ sub txt_print_codeblock {
 	print txtout "\n";
 	print txtout txt_header($title), ":\n" if $title;
 	$ntext = code2txt($blocks{$block});
+	# make sure there is precisely one leading "\n"
+	$ntext =~ s/^[\n]*//go;
+	$ntext = "\n". $ntext;
 	$ntext =~ s/\\&\././go;
 	foreach $line (split /\n/, $ntext) {
 	    print txtout $indent, $line, "\n";
