@@ -890,6 +890,33 @@ fi
 AC_SUBST_FILE(f77_rules_frag)
 ])# R_PROG_F77_MAKEFRAG
 
+## R_PROG_F77_FLAG(FLAG, [ACTION-IF-TRUE])
+## ---------------------------------------
+## Check whether the FORTRAN 77 compiler handles command line option
+## FLAG, and set shell variable r_cv_prog_f77_flag_SFLAG accordingly
+## (where SFLAG is a shell-safe transliteration of FLAG).
+## In addition, execute ACTION-IF-TRUE in case of success.
+AC_DEFUN([R_PROG_F77_FLAG],
+[ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
+AC_MSG_CHECKING([whether ${F77-f77} accepts $1])
+AC_CACHE_VAL([r_cv_prog_f77_flag_${ac_safe}],
+[AC_LANG_PUSH(Fortran 77)
+r_save_FFLAGS="${FFLAGS}"
+FFLAGS="${FFLAGS} $1"
+AC_TRY_LINK([], [],
+            [eval "r_cv_prog_f77_flag_${ac_safe}=yes"],
+            [eval "r_cv_prog_f77_flag_${ac_safe}=no"])
+FFLAGS="${r_save_FFLAGS}"
+AC_LANG_POP(Fortran 77)
+])
+if eval "test \"`echo '$r_cv_prog_f77_flag_'$ac_safe`\" = yes"; then
+  AC_MSG_RESULT([yes])
+  [$2]
+else
+  AC_MSG_RESULT([no])
+fi
+])# R_PROG_F77_FLAG
+
 ## R_PROG_F2C_FLIBS
 ## ----------------
 AC_DEFUN([R_PROG_F2C_FLIBS],
