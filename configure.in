@@ -722,13 +722,18 @@ AC_OUTPUT(Makeconf
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
+  tools/Rdnewer
   tools/keyword-test
   tools/install-info
   tools/pkg2tex
 )
 
 AC_OUTPUT_COMMANDS(
-  chmod +x tools/install-info tools/keyword-test tools/pkg2tex
+  chmod +x \
+  tools/Rdnewer \
+  tools/install-info \
+  tools/keyword-test \
+  tools/pkg2tex
 )
 
 if test -z "${F77}"; then
