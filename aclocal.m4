@@ -210,7 +210,7 @@ AC_SUBST_FILE(cc_rules_frag)
 ])# R_PROG_CC_MAKEFRAG
 
 AC_DEFUN([R_PROG_CC_FLAG],
-[ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
+[ac_safe=`echo "$1" | sed 'y%./+-:%__p__%'`
 AC_MSG_CHECKING([whether ${CC-cc} accepts $1])
 AC_CACHE_VAL([r_cv_prog_cc_flag_${ac_safe}],
 [AC_LANG_PUSH(C)
@@ -354,7 +354,7 @@ AC_SUBST_FILE(cxx_rules_frag)
 ])# R_PROG_CXX_MAKEFRAG
 
 AC_DEFUN([R_PROG_CXX_FLAG],
-[ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
+[ac_safe=`echo "$1" | sed 'y%./+-:%__p__%'`
 AC_MSG_CHECKING([whether ${CXX-c++} accepts $1])
 AC_CACHE_VAL([r_cv_prog_cxx_flag_${ac_safe}],
 [AC_LANG_PUSH(C++)
@@ -679,7 +679,7 @@ AC_SUBST_FILE(f77_rules_frag)
 ])# R_PROG_F77_MAKEFRAG
 
 AC_DEFUN([R_PROG_F77_FLAG],
-[ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
+[ac_safe=`echo "$1" | sed 'y%./+-:%__p__%'`
 AC_MSG_CHECKING([whether ${F77-f77} accepts $1])
 AC_CACHE_VAL([r_cv_prog_f77_flag_${ac_safe}],
 [AC_LANG_PUSH(Fortran 77)

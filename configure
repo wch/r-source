@@ -15500,7 +15500,7 @@ fi
 rm -f conftest*
 
 
-    ac_safe=`echo "-mieee-fp" | sed 'y%./+-%__p_%'`
+    ac_safe=`echo "-mieee-fp" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mieee-fp" >&5
 echo $ECHO_N "checking whether ${CC-cc} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
@@ -15571,7 +15571,7 @@ echo "${ECHO_T}no" >&6
 fi
 
 
-ac_safe=`echo "-mieee-fp" | sed 'y%./+-%__p_%'`
+ac_safe=`echo "-mieee-fp" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${CXX-c++} accepts -mieee-fp" >&5
 echo $ECHO_N "checking whether ${CXX-c++} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cxx_flag_${ac_safe}+set}\" = set"; then
@@ -15644,21 +15644,15 @@ fi
     ;;
   alpha*)
     ## <NOTE>
-    ## Not clear whether we should use '-ieee' or '-ieee_with_inexact'
-    ## (or there GCC variants).  The GCC docs say for '-mieee' that
-    ##   <QUOTE>
-    ##   The resulting code is less efficient but is able to correctly
-    ##   support denormalized numbers and exceptional IEEE values such
-    ##   as not-a-number and plus/minus infinity.  Other Alpha compilers
-    ##   call this option `-ieee_with_no_inexact'.
-    ##   </QUOTE>
-    ## which should be good enough?
+    ## We really need to use '-ieee_with_inexact' ('-mieee-with-inexact'
+    ## for GCC) for the C compiler: '-ieee'/'-mieee' are not enough.
+    ## What about the FORTRAN 77 and C++ compilers?
     ## According to <Albrecht.Gebhardt@uni-klu.ac.at>, native FORTRAN
     ## on Alpha/OSF maps '-ieee' to '-fpe3' which was used previously.
     if test "${GCC}" = yes; then
-      ac_safe=`echo "-mieee" | sed 'y%./+-%__p_%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mieee" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -mieee... $ECHO_C" >&6
+      ac_safe=`echo "-mieee-with-inexact" | sed 'y%./+-:%__p__%'`
+echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mieee-with-inexact" >&5
+echo $ECHO_N "checking whether ${CC-cc} accepts -mieee-with-inexact... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15669,7 +15663,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 r_save_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} -mieee"
+CFLAGS="${CFLAGS} -mieee-with-inexact"
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
@@ -15720,16 +15714,16 @@ fi
 if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
   echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"
+  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-with-inexact"
 else
   echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
     else
-      ac_safe=`echo "-ieee" | sed 'y%./+-%__p_%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -ieee" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -ieee... $ECHO_C" >&6
+      ac_safe=`echo "-ieee_with_inexact" | sed 'y%./+-:%__p__%'`
+echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -ieee_with_inexact" >&5
+echo $ECHO_N "checking whether ${CC-cc} accepts -ieee_with_inexact... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15740,7 +15734,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 r_save_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} -ieee"
+CFLAGS="${CFLAGS} -ieee_with_inexact"
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
@@ -15791,7 +15785,7 @@ fi
 if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
   echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee"
+  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"
 else
   echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6
@@ -15799,7 +15793,7 @@ fi
 
     fi
     if test "${G77}" = yes; then
-      ac_safe=`echo "-mieee" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-mieee" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -mieee" >&5
 echo $ECHO_N "checking whether ${F77-f77} accepts -mieee... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
@@ -15856,7 +15850,7 @@ echo "${ECHO_T}no" >&6
 fi
 
     else
-      ac_safe=`echo "-ieee" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-ieee" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -ieee" >&5
 echo $ECHO_N "checking whether ${F77-f77} accepts -ieee... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
@@ -15914,7 +15908,7 @@ fi
 
     fi
     if test "${GXX}" = yes; then
-      ac_safe=`echo "-mieee" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-mieee" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${CXX-c++} accepts -mieee" >&5
 echo $ECHO_N "checking whether ${CXX-c++} accepts -mieee... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cxx_flag_${ac_safe}+set}\" = set"; then
@@ -15985,7 +15979,7 @@ echo "${ECHO_T}no" >&6
 fi
 
     else
-      ac_safe=`echo "-ieee" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-ieee" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${CXX-c++} accepts -ieee" >&5
 echo $ECHO_N "checking whether ${CXX-c++} accepts -ieee... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cxx_flag_${ac_safe}+set}\" = set"; then
@@ -16070,7 +16064,7 @@ case "${host_os}" in
 _ACEOF
 
     if test "${GCC}" = yes; then
-      ac_safe=`echo "-mno-fp-in-toc" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-mno-fp-in-toc" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mno-fp-in-toc" >&5
 echo $ECHO_N "checking whether ${CC-cc} accepts -mno-fp-in-toc... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
@@ -16285,7 +16279,7 @@ fi
     ## compilers *need* '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
     ## check whether the non-GNU tools *accept* the flag.
     if test "${G77}" != yes; then
-      ac_safe=`echo "-OPT:IEEE_NaN_inf=ON" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-OPT:IEEE_NaN_inf=ON" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -OPT:IEEE_NaN_inf=ON" >&5
 echo $ECHO_N "checking whether ${F77-f77} accepts -OPT:IEEE_NaN_inf=ON... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
@@ -16343,7 +16337,7 @@ fi
 
     fi
     if test "${GXX}" != yes; then
-      ac_safe=`echo "-OPT:IEEE_NaN_inf=ON" | sed 'y%./+-%__p_%'`
+      ac_safe=`echo "-OPT:IEEE_NaN_inf=ON" | sed 'y%./+-:%__p__%'`
 echo "$as_me:$LINENO: checking whether ${CXX-c++} accepts -OPT:IEEE_NaN_inf=ON" >&5
 echo $ECHO_N "checking whether ${CXX-c++} accepts -OPT:IEEE_NaN_inf=ON... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cxx_flag_${ac_safe}+set}\" = set"; then
