@@ -23,7 +23,7 @@ reshape<-function(data,varying=NULL,v.names=NULL,timevar="time",idvar="id",
     } 
     
     reshapeLong<-function(data,varying,v.names=NULL,timevar,idvar,
-                          ids=1:NROW(date), times,drop=NULL,new.row.names=NULL){
+                          ids=1:NROW(data), times,drop=NULL,new.row.names=NULL){
         
         if (is.matrix(varying))
             varying<-tapply(varying,row(varying),list)
@@ -113,9 +113,11 @@ reshape<-function(data,varying=NULL,v.names=NULL,timevar="time",idvar="id",
         
         CHECK<-TRUE
         if (CHECK){
-            rval<-data[,!(names(data) %in% c(timevar,v.names,idvar)),drop=FALSE]
-            if (NCOL(rval)>0){
-                really.constant<-unlist(lapply(rval,function(a) all(tapply(a,data[,idvar], function(b) length(unique(b))==1)))) 
+            keep <- !(names(data) %in% c(timevar,v.names,idvar))
+            if(any(keep)) {
+                rval <- data[keep]
+                tmp <- data[,idvar]
+                really.constant<-unlist(lapply(rval,function(a) all(tapply(a, tmp, function(b) length(unique(b))==1)))) 
                 if (!all(really.constant))
                     warning(paste("Some constant variables (",paste(names(rval)[!really.constant],collapse=","),") are really varying",sep=""))
             }
