@@ -99,8 +99,9 @@ par(\dots, no.readonly = FALSE)
   \item{csi}{\emph{\bold{R.O.}}. The height of (default sized)
       characters in inches.}
   \item{cxy}{\emph{\bold{R.O.}}; size of default character
-    \code{(width,height)} in user coordinate units,
-    \code{par("cxy")} is identical to \code{par("cin")/par("pin")}.
+    \code{(width,height)} in user coordinate units.
+    \code{par("cxy")} is \code{par("cin")/par("pin")} scaled to user
+    coordinates.
     Note that \code{c(\link{strwidth}(ch),\link{strheight}(ch))} for a
     given string \code{ch} is usually much more precise.}
   \item{din}{\emph{\bold{R.O.}}. The device dimensions in inches.}

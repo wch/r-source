@@ -1194,8 +1194,10 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "cxy")) {
 	value = allocVector(REALSXP, 2);
 	/* == par("cin") / par("pin") : */
-	REAL(value)[0] = dd->dp.cra[0]*dd->dp.ipr[0] / dd->dp.pin[0];
-	REAL(value)[1] = dd->dp.cra[1]*dd->dp.ipr[1] / dd->dp.pin[1];
+	REAL(value)[0] = dd->dp.cra[0]*dd->dp.ipr[0] / dd->dp.pin[0]
+	    * (dd->dp.usr[1] - dd->dp.usr[0]);
+	REAL(value)[1] = dd->dp.cra[1]*dd->dp.ipr[1] / dd->dp.pin[1]
+	    * (dd->dp.usr[3] - dd->dp.usr[2]);
     }
     else if (streql(what, "din")) {
 	value = allocVector(REALSXP, 2);
