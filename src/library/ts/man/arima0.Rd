@@ -180,7 +180,7 @@ arima0.diag(fit, gof.lag = 10)
   
   The results are likely to be different from S-PLUS's
   \code{arima.mle}, which computes a conditional likelihood and does
-  not include a mean in the model. Further, the convention used by
+  not include a mean in the model.  Further, the convention used by
   \code{arima.mle} reverses the signs of the MA coefficients.
 }
 
@@ -196,11 +196,13 @@ predict(arima0(lh, order = c(3,0,0)), n.ahead = 12)
 arima0(lh, order = c(3,0,0), method = "CSS")
 
 data(USAccDeaths)
-fit <- arima0(USAccDeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)))
-fit
-predict(fit, n.ahead = 6)
-arima0(USAccDeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)),
+arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
+arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
        method = "CSS") # drops first 13 observations.
+# for a model with as few years as this, we want full ML
+(fit <- arima0(USAccDeaths, order = c(0,1,1),
+               seasonal = list(order=c(0,1,1)), delta = -1))
+predict(fit, n.ahead = 6)
 
 data(LakeHuron)
 arima0(LakeHuron, order = c(2,0,0), xreg = 1:98)
