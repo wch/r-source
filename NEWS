@@ -33,33 +33,34 @@ NEW FEATURES
     o   help.search() creates a database for faster searching later in
 	the R session.
 
-
 BUG FIXES
 
-    o  some.list[[NA]] is NULL, following S, rather than giving spurious
-       error messages
+    o	font size fixups for the X11 driver (mainly)
 
-    o  segfault when running out of heap
+    o   some.list[[NA]] is NULL, following S, rather than giving spurious
+        error messages
 
-    o  segfault in rbind of a vector without names fixed. cbind, too.
+    o   segfault when running out of heap
 
-    o  fixed symbol size problems with PostScript driver
+    o   segfault in rbind of a vector without names fixed. cbind, too.
 
-    o  unique() & duplicated() only work for atomic vectors;
-       unique(data.frame(""[F])) doesn't segfault anymore.
+    o   fixed symbol size problems with PostScript driver
 
-    o  get("attr<-")(""[0],""[0]) doesn't segfault anymore.
+    o   unique() & duplicated() only work for atomic vectors;
+        unique(data.frame(""[F])) doesn't segfault anymore.
 
-    o  blunder in do_memoryprofile, causing segfault on Alpha machines
+    o   get("attr<-")(""[0],""[0]) doesn't segfault anymore.
 
-    o  erroneous error message in coerceToSymbol
+    o   blunder in do_memoryprofile, causing segfault on Alpha machines
 
-    o  partial workaround for workspace restore problems. This can
-       happen if an environment on the search path is assigned to a
-       variable which gets saved. The error "unresolved node during
-       restore" is turned into a warning, allowing the rest of the
-       workspace to be restored, but the variable contains an empty
-       environment on reload.
+    o   erroneous error message in coerceToSymbol
+
+    o   partial workaround for workspace restore problems. This can
+        happen if an environment on the search path is assigned to a
+        variable which gets saved. The error "unresolved node during
+        restore" is turned into a warning, allowing the rest of the
+        workspace to be restored, but the variable contains an empty
+        environment on reload.
 
 
 		CHANGES IN R VERSION 0.90.0
