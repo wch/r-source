@@ -17,6 +17,10 @@ NEW FEATURES
 
     o	matplot(matrix(1:25,5), cex=1:5) now works
 
+    o   ar.ols() has separate demean and intercept arguments, uses
+        internal scaling for greater accuracy.
+
+
 BUG FIXES
 
     o  segfault when running out of heap
