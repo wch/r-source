@@ -12,7 +12,8 @@
     true for all triples from the RANDU generator.
 
     These particular 400 triples start 5 apart in the sequence, that is
-    they are ((U[5i+1], U[5i+2], U[5i+3]), i= 0, \dots, 399).
+    they are ((U[5i+1], U[5i+2], U[5i+3]), i= 0, \dots, 399), and they
+    are rounded to 6 decimal places.
 
     Under VMS versions 2.0 and higher, this problem has been fixed.
 }
@@ -24,17 +25,16 @@
 \source{
     David Donoho
 }
-\example{
-## We can re-generate the dataset by the following R code
-seed <- 1
-RANDU <- function()
-{
+\examples{
+\dontrun{## We could re-generate the dataset by the following R code
+seed <- as.double(1)
+RANDU <- function() {
     seed <<- ((2^16 + 3) * seed) %% (2^31)
     seed/(2^31)
 }
 for(i in 1:400) {
-    U <- c(RANDU(),RANDU(),RANDU(),RANDU(),RANDU())
+    U <- c(RANDU(), RANDU(), RANDU(), RANDU(), RANDU())
     print(round(U[1:3], 6))
-}
+}}
 }
 \keyword{datasets}
