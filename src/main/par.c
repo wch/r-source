@@ -404,11 +404,11 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
 	dd->gp.layout = dd->dp.layout = 0;
 	if (nrow > 2 || ncol > 2) {
-	    dd->gp.cexbase = dd->dp.cexbase = 0.5;
+	    dd->gp.cexbase = dd->dp.cexbase = 0.66;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    dd->gp.cexbase = dd->dp.cexbase = 0.8;
+	    dd->gp.cexbase = dd->dp.cexbase = 0.83;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
 	else {
@@ -433,11 +433,11 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
 	dd->gp.layout = dd->dp.layout = 0;
 	if (nrow > 2 || ncol > 2) {
-	    dd->gp.cexbase = dd->dp.cexbase = 0.5;
+	    dd->gp.cexbase = dd->dp.cexbase = 0.66;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    dd->gp.cexbase = dd->dp.cexbase = 0.8;
+	    dd->gp.cexbase = dd->dp.cexbase = 0.83;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
 	else {
@@ -487,11 +487,11 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	dd->gp.new = dd->dp.new = 1;
 	/*
 	if (nrow > 2 || ncol > 2) {
-	    dd->gp.cexbase = dd->dp.cexbase = 0.5;
+	    dd->gp.cexbase = dd->dp.cexbase = 0.66;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    dd->gp.cexbase = dd->dp.cexbase = 0.8;
+	    dd->gp.cexbase = dd->dp.cexbase = 0.83;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
 	else {
@@ -1637,11 +1637,11 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     /*------------------------------------------------------*/
 
     if (nrow > 2 || ncol > 2) {
-	dd->gp.cexbase = dd->dp.cexbase = 0.5;
+	dd->gp.cexbase = dd->dp.cexbase = 0.66;
 	dd->gp.mex = dd->dp.mex = 1.0;
     }
     else if (nrow == 2 && ncol == 2) {
-	dd->gp.cexbase = dd->dp.cexbase = 0.8;
+	dd->gp.cexbase = dd->dp.cexbase = 0.83;
 	dd->gp.mex = dd->dp.mex = 1.0;
     }
     else {

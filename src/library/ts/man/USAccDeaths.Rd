@@ -4,7 +4,7 @@
 \name{USAccdeaths}
 \alias{USAccdeaths}
 \title{
-    Accidental Deaths in the US 1973-1978
+    Accidental Deaths in the US 1973--1978
 }
 \description{
     A time series giving the monthly totals of accidental deaths in the

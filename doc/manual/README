@@ -22,6 +22,13 @@ BUT you cannot use t1 postscript fonts with that setting.
 Support for making PDF versions of the manuals is currently
 experimental.  You will need pdftex and the hyperref package (and ae,
 see above).  Hyperref versions 6.56 and 6.67 are known to work.
+If you want to avoid making the hyperlinks, you can set the PDF macro
+(as described in the Makefile).
+
+You may well have to increase the poolsize of your pdflatex to process
+Reference.pdf with hyperlinks, particularly with later versions of
+hyperref. On a web2c-based system (teTeX, fptex, ...) set the environment
+variable pool_size, for example to 250000
 
 
 For Windows builds you may need to alter the TEXINPUTS.  The examples

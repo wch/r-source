@@ -1,4 +1,4 @@
-% $Id: getInitial.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: getInitial.Rd,v 1.1.2.1 1999/12/05 18:31:26 bates Exp $
 \name{getInitial}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}
@@ -30,7 +30,8 @@ getInitial(object, data, ...)
     estimates.
 }
 \author{Jose Pinheiro and Douglas Bates}
-\seealso{\code{\link{nls}}, \code{\link{nlsList}}, \code{\link{selfStart}},
+\seealso{\code{\link{nls}}, %\code{\link{nlsList}},
+    \code{\link{selfStart}},
     \code{\link{selfStart.default}}, \code{\link{selfStart.formula}}
 }
 \examples{

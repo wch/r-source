@@ -32,12 +32,14 @@
 #include "Fileio.h"
 #include "Parse.h"
 
-    /* Useful defines so editors don't get confused ... */
+#define yyconst const
+
+/* Useful defines so editors don't get confused ... */
 
 #define LBRACE	'{'
 #define RBRACE	'}'
 
-    /* Functions used in the parsing process */
+/* Functions used in the parsing process */
 
 static void	CheckFormalArgs(SEXP, SEXP);
 static SEXP	FirstArg(SEXP, SEXP);
@@ -48,7 +50,6 @@ static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP);
 
-
 /* These routines allocate constants */
 
 SEXP		mkComplex(char *);
@@ -56,7 +57,7 @@ SEXP		mkFalse(void);
 SEXP		mkFloat(char *);
 SEXP		mkInteger(char *);
 SEXP		mkNA(void);
-SEXP		mkString(const char *);
+SEXP		mkString(yyconst char *);
 SEXP		mkTrue(void);
 
 /* Internal lexer / parser state variables */
@@ -1362,7 +1363,7 @@ static int KeywordLookup(char *s)
 }
 
 
-SEXP mkString(const char *s)
+SEXP mkString(yyconst char *s)
 {
     SEXP t;
 
@@ -1623,9 +1624,9 @@ static int SymbolValue(int c)
 		SourcePtr = FunctionSource + 8;
 	    }
 	    FunctionStart[FunctionLevel] = SourcePtr - 8;
-	    #if 0
-	    printf("%d,%d\n",SourcePtr - FunctionSource, FunctionLevel);
-	    #endif
+#if 0
+	    printf("%d,%d\n", SourcePtr - FunctionSource, FunctionLevel);
+#endif
 	}
 	return kw;
     }

@@ -17,13 +17,17 @@ alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
     \code{aov}, or a formula for \code{alias.formula}.}
   \item{data}{Optionally, a data frame to search for the objects
     in the formula.}
- \item{complete}{Should information on complete aliasing be included?}
- \item{partial}{Should information on partial aliasing be included?}
- \item{partial.pattern}{Should partial aliasing be presented in a
-   schematic way? If this is done, the results are presented in a
-   more compact way, usually giving the deciles of the coefficients.}
+  \item{complete}{Should information on complete aliasing be included?}
+  \item{partial}{Should information on partial aliasing be included?}
+  \item{partial.pattern}{Should partial aliasing be presented in a
+    schematic way? If this is done, the results are presented in a
+    more compact way, usually giving the deciles of the coefficients.}
 }
 \description{
+  Find aliases (linearly dependent terms) in a linear model specified by
+  a formula.
+}
+\details{
   Although the main method is for class \code{"lm"}, \code{alias} is
   most useful for experimental designs and so is used with fits from
   \code{aov}.
@@ -46,7 +50,7 @@ alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
   contrasts are probably most useful.
 
   The defaults are different from those in S.
-  }
+}
 \examples{
 ## From Venables and Ripley (1997) p.210.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)

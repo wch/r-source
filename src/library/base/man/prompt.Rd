@@ -1,5 +1,5 @@
 \name{prompt}
-\title{Produce Prototype of an \R Documentation File}
+\title{Produce Prototype of an R Documentation File}
 \usage{
 prompt(object, ...)
 
@@ -15,17 +15,20 @@ prompt.default(object,
   \item{force.function}{treat \code{object} as function in any case}
 }
 \description{
-  The main goal is to facilitate the constructing of files documenting R
-  functions.
-
+  Facilitate the constructing of files documenting \R functions.
+}
+\details{
   An ASCII file \code{filename} is produced containing the proper
   function and argument names of \code{object}.  You have to edit it
   before adding the documentation to the source tree, i.e., (currently)
   to \file{\$R\_HOME/src/library/base/man/}.
 }
 \seealso{
-  \code{\link{help}} and the tutorial about writing \R documentation,
-  currently in the file \file{\$R\_HOME/doc/manual/writing-Rd.tex}.
+  \code{\link{prompt.data.frame}}.
+  
+  \code{\link{help}} and the chapter on ``Writing \R documentation'' in
+  ``Writing \R Extensions'' (see the \file{doc/manual}
+  subdirectory of the \R source tree).
 }
 \examples{
 prompt(plot.default)

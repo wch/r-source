@@ -1,20 +1,20 @@
 \name{treering}
 \alias{treering}
 \title{
-  Yearly Treering Data, -6000-1979.
+  Yearly Treering Data, -6000--1979.
 }
 \usage{
-data (treering)
+data(treering)
 }
 \format{
-    A univariate time series with 7981 observations. The object is of
-    class \code{"ts"}.
+  A univariate time series with 7981 observations. The object is of
+  class \code{"ts"}.
 }
 \description{
   Contains normalized tree-ring widths in dimensionless units.
-  Each tree ring corresponds to one year. Tree: METHUSELAH WALK, PILO;
-  Location: CALIFORNIA, GT BASIN B C PINE 2805M, 3726-11810; 
-  Author: DONALD A. GRAYBILL, 1980.  
+  Each tree ring corresponds to one year. Tree: Methuselah Walk, Pilo;
+  Location: California, Gt Basin B C pine 2805M, 3726-11810; 
+  Author: Donald A. Graybill, 1980.  
 }
 \source{
   Time Series Data Library:

@@ -929,7 +929,7 @@ static void NHelpKeyIn(control w,int key)
     DevDesc *dd = (DevDesc *) getdata(w);
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if (getkeystate() != CtrlKey)
+    if (ggetkeystate() != CtrlKey)
 	return;
     key = 'A' + key - 1;
     if (key == 'C')
@@ -1853,7 +1853,7 @@ X11DeviceDriver
     int   ps;
     x11Desc *xd;
     rect  rr;
-    int a, d, w;
+    int a=0, d=0, w=0;
 
     /* allocate new device description */
     if (!(xd = (x11Desc *) malloc(sizeof(x11Desc))))
@@ -1911,7 +1911,7 @@ X11DeviceDriver
 
 
     /* Nominal Character Sizes in Pixels */
-    gcharmetric(xd->gawin, xd->font, 0, &a, &d, &w);
+    gcharmetric(xd->gawin, xd->font, -1, &a, &d, &w);
     dd->dp.cra[0] = w;
     dd->dp.cra[1] = a + d;
     /* Character Addressing Offsets */
@@ -1968,7 +1968,7 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
     fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
-	errorcall(call, "invalid filename argument");
+	errorcall(call, "invalid type argument");
     tp = CHAR(STRING(type)[0]);
 
     if(!strcmp(tp, "png")) {

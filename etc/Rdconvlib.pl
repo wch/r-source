@@ -405,7 +405,7 @@ sub drop_full_command {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
-	$text =~ s/\\$cmd$id.*$id/$`$'/s;
+	$text =~ s/\\$cmd$id.*$id//s;
     }
     $text;
 }
@@ -791,7 +791,7 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".po 3\n";
     print nroffout ".na\n";
     print nroffout ".tl '", $blocks{"name"},
-          "($pkgname)''R Documentation'\n\n" if $pkgname;
+          " {$pkgname}''R Documentation'\n\n" if $pkgname;
     print nroffout ".SH\n";
     print nroffout $blocks{"title"}, "\n";
     nroff_print_block("description", "Description");
@@ -860,8 +860,11 @@ sub text2nroff {
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
     $text =~ s/\\R/R/go;
-    $text =~ s/---/\\(em/go;
-    $text =~ s/--/\\(en/go;
+# these are troff, not nroff
+#    $text =~ s/---/\\(em/go;
+#    $text =~ s/--/\\(en/go;
+    $text =~ s/---/--/go;
+    $text =~ s/--/-/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
@@ -1391,7 +1394,7 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
 
     $text =~ s/&/\\&/go;
-    $text =~ s/\\R /\\R\\ /go;
+    $text =~ s/\\R /\\R\{\} /go;
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;

@@ -5,7 +5,7 @@ strsplit(x,split)
 }
 \alias{strsplit}
 \description{
-  Split the Strings in \code{x} into substrings according to the
+  Split the strings in \code{x} into substrings according to the
   presence of substring \code{split} within them.
 }
 \arguments{

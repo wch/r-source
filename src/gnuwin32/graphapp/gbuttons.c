@@ -93,3 +93,18 @@ void scrolltext(textbox c, int lines)
     int linecount = sendmessage(c->handle, EM_GETLINECOUNT, 0, 0);
     sendmessage(c->handle, EM_LINESCROLL, 0, linecount - lines);
 }
+
+
+int ggetkeystate()
+{
+  int k = 0;
+  if (GetKeyState(VK_CONTROL)&0x8000) 
+    k |= CtrlKey;
+  if (GetKeyState(VK_MENU)&0x8000)
+    k |= AltKey;
+  if (GetKeyState(VK_SHIFT)&0x8000)
+    k |= ShiftKey;
+  return k;
+}
+
+

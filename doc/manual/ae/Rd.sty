@@ -24,7 +24,7 @@
   {\begin{list}{}{\setlength{\leftmargin}{30pt}}\item}%
   {\end{list}}
 \newcommand{\HTML}{{\normalfont\textsc{html}}}
-\newcommand{\R}{{\normalfont\textsf{R}}}
+\newcommand{\R}{{\normalfont\textsf{R}}{}}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -60,7 +60,7 @@
 \newcommand{\Link}[1]{#1\index{#1|textit}}
 %
 % \alias{<alias>}{<header>}
-\newcommand{\alias}[2]{\index{#1@#1\textit{(#2)}}}
+\newcommand{\alias}[2]{\index{#1@#1 \textit{(#2)}}}
 % \keyword{<topic>}{<header>}
 \newcommand{\keyword}[2]{\index{$*$Topic{\large\ \textbf{#1}}!#2@\textsf{#2}}}
 %
@@ -69,7 +69,7 @@
 \newcommand{\describe}[1]{\begin{description}{#1}\end{description}}
 
 \newcommand{\Tabular}[2]{%
-  \begin{tabular}{#1}
+  \par\begin{tabular}{#1}
     #2
   \end{tabular}}
 
@@ -119,7 +119,7 @@
 \newenvironment{Section}[1]{%
   \begin{Rdsection}{#1}}{\end{Rdsection}}
 \newenvironment{Usage}{%
-  \begin{Rdsection}{}}{\end{Rdsection}}
+  \begin{Rdsection}{Usage}}{\end{Rdsection}}
 \newenvironment{Value}{%
   \begin{Rdsection}{Value}}{\end{Rdsection}}
 

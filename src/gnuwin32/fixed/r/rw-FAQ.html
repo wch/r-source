@@ -16,7 +16,7 @@ href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.a
 
 <p>There are two versions of R for Windows, but only is under active
 development, that described here. It is often called something like
-<tt>rw0651</tt> (although not officially).  The information here
+<tt>rw0901</tt> (although not officially).  The information here
 applies only to recent versions (rw0642 or later).
 
 <p>There is also information on the use of R for Windows in the
@@ -161,7 +161,7 @@ files
 and you may want <tt>rw0xxxw.zip</tt> (the HTML format help files) or
 <tt>rw0xxxwh.zip</tt> (the Windows help files), <tt>rw0xxxl.zip</tt>
 (the LaTeX format help files, used for offline printing), or
-<tt>rw0900d.zip</tt> (the draft manuals, in PDF).
+<tt>rw0xxxd.zip</tt> (the draft manuals, in PDF).
 
 <p>
 Optionally, you can download the installer, <tt>rwinst.exe</tt>.
@@ -240,7 +240,7 @@ path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %
 1.7)&nbsp;<a NAME="q18"></a>Can I use <tt>rw0xxx</tt> with ESS and emacs?</h3>
 
 <p>
-Yes. The latest versions of ESS (e.g. 5.1.9) come with support for
+Yes. The latest versions of ESS (e.g. 5.1.11) come with support for
 this version of R, and <tt>rw0650</tt> and later have support for
 interrupting the R process from ESS (by </tt>C-c C-c</tt>).
 
@@ -509,10 +509,10 @@ write out the buffer and so update the console.
 <h3>
 6.1)&nbsp;<a NAME="q61"></a>How can I compile R from source?</h3>
 Get the R sources. Suppose you want to compile
-<tt>R-0.65.1</tt>.
+<tt>R-0.90.1</tt>.
 <pre>
-      tar zxvf R-0.65.1.tgz
-      cd R-0.65.1
+      tar zxvf R-0.90.1.tgz
+      cd R-0.90.1
       cd src\gnuwin32
 </pre>
 Now read the <tt>INSTALL</tt> file and set up all the tools
@@ -606,7 +606,7 @@ You need to do two things:
 <p>
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 <tt>X.cc</tt> contains your C++ code, and <tt>X_R.cc</tt> is the
-wrapper. Then build the DLL by (<tt>gcc-2.95</tt>)
+wrapper. Then build the DLL by (<tt>gcc-2.95.x</tt>)
 <pre>
     g++ -c X.cc X_R.cc
     dlltool --export-all-symbols --output-def X.def X_R.o
@@ -638,7 +638,7 @@ console. (This <em>will</em> work with <tt>Rterm.exe</tt>.)  Use
 
 <hr WIDTH="100%">
 <address>
-Last edited 13 November 1999 by Brian Ripley
+Last edited 9 December 1999 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 

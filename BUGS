@@ -47,10 +47,7 @@ Date: Thu, 18 Mar 1999 08:58:47 +0100
 
 Directory:  Documentation
 
-* PR# 323 *
-Subject:  { and } in examples get confused in help 
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 14 Nov 1999 22:51:43 GMT
+none
 
 Directory:  Graphics
 
@@ -100,6 +97,57 @@ From: Ulf Mehlig <umehlig@uni-bremen.de>
 Date: Tue, 2 Nov 1999 22:18:23 +0100
 --This is a problem with the X library (or possibly X server) when using plot.lm.
 --We need further details (promised later).
+* PR# 334 *
+Subject: Re: [R] problems with postscript device
+From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+Date: Tue, 23 Nov 1999 16:29:22 CET (+0100)
+* PR# 335 *
+Subject: (Fwd) [R] problems with postscript device
+Subject:       [R] problems with postscript device
+From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+From:          "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+Date: Tue, 23 Nov 1999 16:30:58 CET (+0100)
+Date:          Tue, 23 Nov 1999 15:14:23 CET (+0100)
+* PR# 336 *
+Subject: Re: [R] problems with postscript device
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 23 Nov 1999 16:47:45 +0100 (MET)
+* PR# 340 *
+Subject: "outer" argument in mtext
+From: Douglas Bates <bates@stat.wisc.edu>
+Date: 23 Nov 1999 12:31:36 -0600
+* PR# 341 *
+Subject: Re: [R] problems with postscript device
+From: Chong Gu <chong@stat.purdue.edu>
+Date: Wed, 24 Nov 1999 00:18:55 -0500
+* PR# 349 *
+Subject: size of text and numbers in graphs
+From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
+* PR# 357 *
+Subject: filled.contour
+From: steuer@statistik.uni-dortmund.de
+Date: Fri, 3 Dec 1999 15:32:29 +0100 (MET)
+* PR# 365 *
+Subject: plot math - segfault and "frac", "^" bug(s)..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 8 Dec 1999 18:27:03 +0100 (MET)
+* PR# 366 *
+Subject: pch==NA
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 07 Dec 1999 15:19:46 +0100
+* PR# 367 *
+Subject: plot math - segfault and "frac", "^" bug(s)..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 8 Dec 1999 12:50:44 +0100 (MET)
+* PR# 368 *
+Subject: plot math - segfault and "frac", "^" bug(s)..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 8 Dec 1999 17:27:46 +0100 (MET)
+* PR# 372 *
+Subject: hist() with horiz=TRUE does not give horiz. plots
+From: fran@stat.berkeley.edu
+Date: Sun, 12 Dec 1999 00:27:25 +0100 (MET)
 
 Directory:  In-Out
 
@@ -108,10 +156,6 @@ Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 --Documentation and ``merge'' of format() and formatC() would be desired - MM
-* PR# 248 *
-Subject: scan() + error interferes with count.fields() in some cases
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 13 Aug 1999 17:44:48 +0200
 
 Directory:  Installation
 
@@ -119,6 +163,16 @@ Directory:  Installation
 Subject: Error compiling R on RS6000
 From: pgutwin@us.ibm.com
 Date: Thu, 30 Sep 1999 21:18:49 +0200 (MET DST)
+* PR# 324 *
+Subject: R 0.65.1 config bug
+From: "Dr K.M. Briggs" <kmb28@cus.cam.ac.uk>
+Date: Mon, 15 Nov 1999 13:38:42 +0000 (GMT)
+--gnome options need sorting out -- still there Dec 99
+* PR# 363 *
+Subject: Where should iofflush.c be?
+From: David Emile Lamy <delamy@uswest.net>
+Date: Tue, 7 Dec 1999 01:51:57 -0700 (MST)
+--Linux installation problem, it seems. Too little to reproduce
 
 Directory:  Language
 
@@ -128,21 +182,12 @@ From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 29 Jan 1999 08:28:32 +0100 (MET)
 --Model formulas. Proper fix probably requires extensive rewrite of model formula
 --parser, which would make in non-S-compatible.
-* PR# 257 *
-Subject:  dimnames names lost when subscripting 
-From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
-Date: Wed, 25 Aug 1999 12:45:28 +0200
 * PR# 263 *
 Subject: Problems sourcing functions with R65.0
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 --There is a 128K limit on functions wirh keep.source set. Try modular
 --programming!
-* PR# 293 *
-Subject: dimnames and subscripting
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Fri, 8 Oct 1999 09:43:51 +0100 (BST)
---same as PR#257
 * PR# 305 *
 Subject: bug in sample
 From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
@@ -181,6 +226,14 @@ Subject: source(,echo=T) doesn't echo comments
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Thu, 21 Oct 1999 08:59:22 -0700 (PDT)
 --Currently, a feature
+* PR# 343 *
+Subject: rbind invisible return value
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
+* PR# 358 *
+Subject: [[ substitution
+From: clive@bell-labs.com
+Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
 
 Directory:  Misc
 
@@ -201,9 +254,6 @@ none
 
 Directory:  System-specific
 
-* PR# 214 *
-From: Charles Taylor <charles@amsta.leeds.ac.uk>
-Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
 * PR# 246 *
 Subject: R-Coda on rs6000-ibm-aix4.2.1.0
 From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
@@ -213,17 +263,6 @@ Date: Wed, 11 Aug 1999 08:49:47 +0200
 Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
 From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
 Date: Thu, 19 Aug 1999 06:03:06 +0900
-* PR# 260 *
-Subject: Re: Compiling R under Caldera Open Linux 2.2
-Subject: Compilation of R under Caldera OpenLinux 2.2
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sun, 29 Aug 1999 19:38:13 +1000 (EST)
---workaround is to install missing libg2c.a. See also PR#268 for sucess report
-* PR# 268 *
-Subject: Re: Compiling R under Caldera Open Linux 2.2
-From: "Jack N." <jnf@pcisys.net>
-Date: Mon, 06 Sep 1999 08:03:02 -0600
---Followup: See PR#260
 
 Directory:  TooMuchAtOnce
 
@@ -248,15 +287,11 @@ none
 
 Directory:  incoming
 
-* PR# 324 *
-Subject: R 0.65.1 config bug
-From: "Dr K.M. Briggs" <kmb28@cus.cam.ac.uk>
-Date: Mon, 15 Nov 1999 13:38:42 +0000 (GMT)
-* PR# 325 *
-Subject: xlim, ylim problem in barplot
-From: Matthew Wiener <mcw@ln.nimh.nih.gov>
-Date: Mon, 15 Nov 1999 16:07:43 -0500 (EST)
-* PR# 327 *
-Subject: spikes in contour and persp
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 16 Nov 1999 08:56:57 +0100 (MET)
+* PR# 361 *
+Subject: "function" function -- infinite loops and bus error [not user problem]
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
+* PR# 374 *
+Subject: Bug in R0.90.0?
+From: Claudio Lupi <c.lupi@isae.it>
+Date: Tue, 14 Dec 1999 12:55:00 +0100

@@ -7,7 +7,7 @@ ns(x, df, knots, intercept=F, Boundary.knots)
 \arguments{
   \item{x}{the predictor variable.}
   \item{df}{degrees of freedom. One can supply \code{df} rather than
-    knots; \code{ns()} then chooses \code{df-1-intercept} knots at
+    knots; \code{ns()} then chooses \code{df - 1 - intercept} knots at
     suitably chosen quantiles of \code{x}.}
   \item{knots}{breakpoints that define the spline. The default is no
     knots; together with the natural boundary conditions this results in
@@ -22,8 +22,11 @@ ns(x, df, knots, intercept=F, Boundary.knots)
     supplied, the basis parameters do not depend on \code{x}. Data can
     extend beyond \code{Boundary.knots}}
 }
+\description{
+  Generate the B-spline basis matrix for a natural cubic spline.
+}
 \value{
-    a matrix of dimension \code{length(x) * df} where either \code{df} was
+    A matrix of dimension \code{length(x) * df} where either \code{df} was
     supplied or if \code{knots} were supplied,
     \code{df = length(knots) + 1 + intercept}.
     Attributes are returned that correspond to the arguments to \code{ns},
@@ -44,7 +47,7 @@ ns(x, df, knots, intercept=F, Boundary.knots)
     specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
-  \code{bs}, \code{poly}, \code{lo}, \code{s}, \code{predict.ns}
+  \code{bs}, \code{poly}, \code{predict.ns}
 }
 \examples{
 library(splines)

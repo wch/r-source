@@ -30,8 +30,8 @@ R.version.string
   \item{major}{the major version number}
   \item{minor}{the minor version number}
   \item{year}{the year the version was released}
-  \item{month}{the year the version was released}
-  \item{day}{the year the version was released}
+  \item{month}{the month the version was released}
+  \item{day}{the day the version was released}
   \item{language}{always \code{"R"}.}
 }
 \seealso{

@@ -4,21 +4,32 @@
 sample(x, size, replace=FALSE, prob)
 }
 \alias{sample}
+\arguments{
+  \item{x}{Either a (numeric, complex, character or logical)
+    vector of more than one elements from which to
+    choose, or a positive integer.}
+  \item{size}{A positive integer giving the number of items to choose.}
+  \item{replace}{Should sampling be with replacement?}
+  \item{prob}{A vector of probabilities of obtaining the elements
+    of the vector being sampled.}
+}
 \description{
-\code{sample} takes a sample of the specified size from
-the elements of \code{x} using either with or without replacement
-sampling according to the value of \code{replace}.
+  \code{sample} takes a sample of the specified size from
+  the elements of \code{x} using either with or without replacement.
+}
+\details{
+  If \code{x} has length 1, sampling takes place from
+  \code{1:x}.
 
-By default \code{size} is equal to \code{length(x)}
-so that \code{sample(x)} generates a random permutation
-of the elements of \code{x}.
-
-If \code{x} has length 1, sampling takes place from
-\code{1:x}.
-
-The optional \code{prob} agrument can be used to give a vector
-of probabilities of obtaining the elements of the vector being
-sampled.
+  By default \code{size} is equal to \code{length(x)}
+  so that \code{sample(x)} generates a random permutation
+  of the elements of \code{x} (or \code{1:x}).
+  
+  The optional \code{prob} argument can be used to give a vector
+  of probabilities of obtaining the elements of the vector being
+  sampled. If \code{replace} is false, these probabilities are applied
+  sequentially, that is the probability of choosing the next item is
+  proportional to the probabilities amongst the remaining items.
 }
 \examples{
 x <- 1:12

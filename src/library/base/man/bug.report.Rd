@@ -1,5 +1,5 @@
 \name{bug.report}
-\title{Send a bug report}
+\title{Send a Bug Report}
 \usage{
 bug.report(subject="", ccaddress=getenv("USER"),
            method=.Options$mailer, address="r-bugs@biostat.ku.dk",
@@ -98,7 +98,7 @@ Sometimes this is impossible.  But in any case, it is unnecessary work
 for us.
 
 For example, suppose that on a data set which you know to be quite large
-the commmand
+the command
 	\code{data.frame(x,y,z,monday,tuesday)}
 never returns. Do not report that \code{data.frame()} fails for large data sets.
 Perhaps it fails when a variable name is a day of the week. If this is so

@@ -33,8 +33,9 @@ save.plot(.)
 %
 \description{
   The functions listed here are no longer part of \R as they are not
-  needed (any more):
-
+  needed (any more).
+}
+\details{
   \code{category} has been an old-S function before there were factors;
   should be replaced by \code{\link{factor}} throughout!
 

@@ -47,11 +47,11 @@ ls(pat="O")
 ls(pat="O", all = T)    # also shows ".[foo]"
 
 # shows an empty list because inside myfunc no variables are defined
-myfunc _ function() {ls()}
+myfunc <- function() {ls()}
 myfunc()
 
 # define a local variable inside myfunc
-myfunc _ function() {y_1; ls()}
+myfunc <- function() {y <- 1; ls()}
 myfunc()                # shows "y"
 }
 \keyword{environment}

@@ -1,15 +1,16 @@
 \name{is.R}
-\title{Are we using \R, rather than S?}
+\title{Are we using R, rather than S?}
 \usage{
 is.R()
 }
 \alias{is.R}
 \description{
-  \code{is.R} returns \code{TRUE} if we are using \R and \code{FALSE}
-  otherwise.
+  Test if running under \R.
+}
 
+\details{
   The function has been written such as to correctly run in all versions
-  of \R, S and S-plus.
+  of \R, S and S-PLUS.
   In order for code to be runnable in both \R and S dialects, either
   your the code must define \code{is.R} or use it as
 
@@ -19,7 +20,11 @@ is.R()
   \code{    }\emph{\#\# S-version of code}\cr
   \code{\}}
 }
-\seealso{\code{\link{version}}, \code{\link{system}}.}
+\value{
+  \code{is.R} returns \code{TRUE} if we are using \R and \code{FALSE}
+  otherwise.
+}
+\seealso{\code{\link{R.version}}, \code{\link{system}}.}
 \examples{
 x <- runif(20); small <- x < 0.4
 # which only exists in R:

@@ -11,13 +11,18 @@ seq(along)
 \alias{seq.default}
 \alias{:}
 \description{
-The \code{:} and the first \code{seq(.)} form above generate the sequence
+  Generate regular sequences.
+}
+\details{
+The operator \code{:} and the first \code{seq(.)} form generate the sequence
 \code{from, from+1}, \ldots, \code{to}.
 \code{seq} is a generic function.
 
-The second, \code{from, from+by}, \ldots, \code{to}.
+The second form generates \code{from, from+by}, \ldots, \code{to}.
+
 The third generates a sequence of \code{length} equally spaced values from
 \code{from} to \code{to}.
+
 The last generates the sequence
 \code{1, 2}, \ldots, \code{length(along)}.
 
@@ -52,8 +57,8 @@ seq(1.575, 5.125, by=0.05)
 for (x in list(NULL, letters[1:6], list(1,pi)))
   cat("x=",deparse(x),";  seq(along = x):",seq(along = x),"\n")
 
-f1_ gl(2,3); f1
-f2_ gl(3,2); f2
+f1 <- gl(2,3); f1
+f2 <- gl(3,2); f2
 f1:f2 # a factor, the ``cross''  f1 x f2
 }
 \keyword{manip}

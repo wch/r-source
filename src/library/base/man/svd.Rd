@@ -12,8 +12,11 @@ svd(x, nu=min(n,p), nv=min(n,p))
   This must be one of \code{0}, and \code{ncol(x)}.}
 }
 \description{
+  Compute the singular-value decomposition of a rectangular matrix.
+}
+\details{
 \code{svd} provides an interface to the LINPACK routine DSVDC.
-The singular value decompostion plays an important role in many
+The singular value decomposition plays an important role in many
 statistical techniques.
 }
 \value{
@@ -22,7 +25,7 @@ The SVD decomposition of the matrix as computed by LINPACK,
 orthogonal, \eqn{\bold{V'}} means \emph{V transposed}, and
 \eqn{\bold{D}} is a diagonal matrix with the singular
 values \eqn{D_{ii}}{D[i,i]}.  Equivalently, \eqn{\bold{D = U' X V}},
-which is veryfied in the examples, below.
+which is verified in the examples, below.
 
 The components in the returned value correspond directly
 to the values returned by DSVDC.

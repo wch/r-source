@@ -52,7 +52,7 @@ SEXP ScalarReal(double x)
     return ans;
 }
 
-SEXP ScalarComplex(complex x)
+SEXP ScalarComplex(Rcomplex x)
 {
     SEXP ans = allocVector(CPLXSXP, 1);
     COMPLEX(ans)[0] = x;
@@ -145,9 +145,9 @@ double asReal(SEXP x)
 }
 
 
-complex asComplex(SEXP x)
+Rcomplex asComplex(SEXP x)
 {
-    complex z;
+    Rcomplex z;
     z.r = NA_REAL;
     z.i = NA_REAL;
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
@@ -319,7 +319,7 @@ int isVectorAtomic(SEXP s)
     }
 }
 
-int isVector(SEXP s)/* isVectorList() or isVectorAtomic() */
+int isVector(SEXP s)/* === isVectorList() or isVectorAtomic() */
 {
     switch(TYPEOF(s)) {
     case LGLSXP:
@@ -327,6 +327,7 @@ int isVector(SEXP s)/* isVectorList() or isVectorAtomic() */
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+
     case VECSXP:
     case EXPRSXP:
 	return 1;
@@ -502,6 +503,8 @@ int nlevels(SEXP f)
 
 int isNumeric(SEXP s)
 {
+    if (inherits(s,"factor")) return 0;
+
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
@@ -526,7 +529,7 @@ int isLogical(SEXP s)
 
 int isInteger(SEXP s)
 {
-    return (TYPEOF(s) == INTSXP);
+    return (TYPEOF(s) == INTSXP && !inherits(s, "factor"));
 }
 
 
@@ -544,7 +547,7 @@ int isComplex(SEXP s)
 
 int isUnordered(SEXP s)
 {
-    return (isInteger(s)
+    return (TYPEOF(s) == INTSXP 
 	    && inherits(s, "factor")
 	    && !inherits(s, "ordered"));
 }
@@ -552,7 +555,7 @@ int isUnordered(SEXP s)
 
 int isOrdered(SEXP s)
 {
-    return (isInteger(s)
+    return (TYPEOF(s) == INTSXP 
 	    && inherits(s, "factor")
 	    && inherits(s, "ordered"));
 }
@@ -560,7 +563,7 @@ int isOrdered(SEXP s)
 
 int isFactor(SEXP s)
 {
-    return (isInteger(s) && inherits(s, "factor"));
+    return (TYPEOF(s) == INTSXP  && inherits(s, "factor"));
 }
 
 
@@ -810,9 +813,13 @@ do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     return(rval);
 }
 
+#if defined(Win32) && defined(_MSC_VER)
+#include <direct.h> /* for chdir */
+#endif
+
 SEXP
 do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
     const char *path;
 
     checkArity(op, args);
@@ -828,7 +835,7 @@ do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
 SEXP
 do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
@@ -849,11 +856,12 @@ do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* remove portion of path after last file separator if one exists, else
-   return "." */
+   return "."
+   */
 SEXP
 do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);

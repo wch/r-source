@@ -14,7 +14,7 @@ data(UKLungDeaths)
 }
 \description{
     Time series giving the monthly deaths from bronchitis,
-    emphysema and asthma in the UK, 1974-1979,
+    emphysema and asthma in the UK, 1974--1979,
     both sexes (\code{ldeaths}), males (\code{mdeaths}) and
     females (\code{fdeaths}).
 }

@@ -1,10 +1,28 @@
-density <- function(x, bw, adjust = 1,
-                    kernel=c("gaussian", "rectangular", "triangular", "cosine"),
-                    window = kernel,
-		    n = 512, width, from, to, cut = 3, na.rm = FALSE)
+density <-
+    function(x, bw, adjust = 1,
+             kernel=c("gaussian", "epanechnikov", "rectangular", "triangular",
+               "biweight", "cosine", "optcosine"),
+             window = kernel, width,
+             give.Rkern = FALSE,
+             n = 512, from, to, cut = 3, na.rm = FALSE)
 {
+    if(!missing(window) && missing(kernel))
+        kernel <- window
+    kernel <- match.arg(kernel)
+    if(give.Rkern)
+        ##-- sigma(K) * R(K), the scale invariant canonical bandwidth:
+        return(switch(kernel,
+                      gaussian = 1/(2*sqrt(pi)),
+                      rectangular = sqrt(3)/6,
+                      triangular  = sqrt(6)/9,
+                      epanechnikov= 3/(5*sqrt(5)),
+                      biweight    = 5*sqrt(7)/49,
+                      cosine      = 3/4*sqrt(1/3 - 2/pi^2),
+                      optcosine   = sqrt(1-8/pi^2)*pi^2/16
+                      ))
+
     if (!is.numeric(x))
-	stop("argument must be numeric")
+        stop("argument must be numeric")
     name <- deparse(substitute(x))
     x.na <- is.na(x)
     if (any(x.na)) {
@@ -17,23 +35,27 @@ density <- function(x, bw, adjust = 1,
         x <- x[x.finite]
         nx <- sum(x.finite)
     }
-    kernel <- match.arg(kernel)
     n.user <- n
     n <- max(n, 512)
     if (n > 512) n <- 2^ceiling(log2(n)) #- to be fast with FFT
 
     if (missing(bw))
-	bw <-
-	    if(missing(width))
-		adjust * 0.9 * min(sd (x), IQR(x)/1.34) * N^(-0.2)
-	    else 0.25 * width
+      bw <-
+        if(missing(width)) {
+            hi <- sd(x)
+            if(!(lo <- min(hi, IQR(x)/1.34)))# qnorm(.75) - qnorm(.25) = 1.34898
+                (lo <- hi) || (lo <- abs(x[1])) || (lo <- 1.)
+            adjust * 0.9 * lo * N^(-0.2)
+        } else 0.25 * width
+    if (!is.finite(bw)) stop("non-finite `bw'")
+    if (bw <= 0) stop("`bw' is not positive.")
+
     if (missing(from))
-	from <- min(x) - cut * bw
+        from <- min(x) - cut * bw
     if (missing(to))
 	to   <- max(x) + cut * bw
     if (!is.finite(from)) stop("non-finite `from'")
     if (!is.finite(to)) stop("non-finite `to'")
-    if (!is.finite(bw)) stop("non-finite `bw'")
     lo <- from - 4 * bw
     up <- to + 4 * bw
     y <- .C("massdist",
@@ -48,16 +70,27 @@ density <- function(x, bw, adjust = 1,
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
 		    gaussian = dnorm(kords, sd = bw),
+                    ## In the following, a := bw / sigma(K0), where
+                    ##	K0() is the unscaled kernel below
 		    rectangular = {
-                        a <- bw/0.2886751
-                        ifelse(abs(kords) < 0.5 * a, 1/a, 0) },
+                        a <- bw*sqrt(3)
+                        ifelse(abs(kords) < a, .5/a, 0) },
 		    triangular = {
-                        a <- bw/0.4082483
-                        ifelse(abs(kords) < a, (1 - abs(kords)/a)/a, 0) },
+                        a <- bw*sqrt(6) ; ax <- abs(kords)
+                        ifelse(ax < a, (1 - ax/a)/a, 0) },
+		    epanechnikov = {
+                        a <- bw*sqrt(5) ; ax <- abs(kords)
+                        ifelse(ax < a, 3/4*(1 - (ax/a)^2)/a, 0) },
+		    biweight = { ## aka quartic
+                        a <- bw*sqrt(7) ; ax <- abs(kords)
+                        ifelse(ax < a, 15/16*(1 - (ax/a)^2)^2/a, 0) },
 		    cosine = {
-                        a <- bw/1.135724
-                        ifelse(abs(kords) < a*pi, (1+cos(kords/a))/(2*pi*a), 0)}
-		    )
+                        a <- bw/sqrt(1/3 - 2/pi^2)
+                        ifelse(abs(kords) < a, (1+cos(pi*kords/a))/(2*a),0)},
+		    optcosine = {
+                        a <- bw/sqrt(1-8/pi^2)
+                        ifelse(abs(kords) < a, pi/4*cos(pi*kords/(2*a))/a, 0)}
+                    )
     kords <- convolve(y, kords, type = "circular", conj = TRUE)[1:n]
     xords <- seq(lo, up, length = n)
     keep <- (xords >= from) & (xords <= to)

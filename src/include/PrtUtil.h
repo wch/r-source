@@ -36,14 +36,14 @@
 void formatLogical(int*,int,int*);
 void formatInteger(int*,int,int*);
 void formatReal(double*, int, int*, int*, int*);
-void formatComplex(complex*, int, int*, int*, int*, int*, int*, int*);
+void formatComplex(Rcomplex*, int, int*, int*, int*, int*, int*, int*);
 
 long Decode2Long(char *p, int *ierr);
 /* Formating of values */
 char *EncodeLogical(int, int);
 char *EncodeInteger(int, int);
 char *EncodeReal(double, int, int, int);
-char *EncodeComplex(complex, int, int, int, int, int, int);
+char *EncodeComplex(Rcomplex, int, int, int, int, int, int);
 char *EncodeString(char*, int, int, int);
 
 /* Printing */
@@ -51,7 +51,7 @@ void VectorIndex(int, int);
 
 void printIntegerVector(int *x,	   int n, int index);
 void printRealVector   (double *x, int n, int index);
-void printComplexVector(complex *x,int n, int index);
+void printComplexVector(Rcomplex *x,int n, int index);
 
 char *Rsprintf(char*, ...);
 void Rprintf(char*, ...);

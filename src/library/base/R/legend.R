@@ -1,15 +1,21 @@
 legend <-
     function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
-	      bg = par("bg"), cex = 1, xjust = 0, yjust = 1, x.intersp = NULL,
-	      y.intersp = NULL, text.width = NULL, merge = FALSE, trace = FALSE)
+	      bg = par("bg"), cex = 1,
+              xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
+              text.width = NULL, merge = do.lines && has.pch, trace = FALSE)
 {
-    if (missing(y)) {
-	if (is.list(x)) { y <- x$y; x <- x$x } else stop("missing y")
-    }
+    if(is.list(x)) {
+        if(!missing(y)) {               # the 2nd arg maybe really is `legend'
+            if(!missing(legend))
+                stop("`y' and `legend' when `x' is list (need no `y')")
+            legend <- y
+        }
+        y <- x$y; x <- x$x
+    } else if(missing(y)) stop("missing y")
     if (!is.numeric(x) || !is.numeric(y))
 	stop("non-numeric coordinates")
-    if (length(x) <= 0 || length(x) != length(y))
-	stop("differing coordinate lengths")
+    if ((nx <- length(x)) <= 0 || nx != length(y) || nx > 2)
+	stop("invalid coordinate lengths")
 
     xlog <- par("xlog")
     ylog <- par("ylog")
@@ -37,19 +43,14 @@ legend <-
     }
 
     cin <- par("cin")
-    Cex <- cex * par("cex")  # = the 'effective' cex for text
+    Cex <- cex * par("cex")             # = the 'effective' cex for text
 
     if(is.null(text.width))
 	text.width <- max(strwidth(legend, u="user", cex=cex))
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("text.width must be numeric, >= 0")
 
-    ## These defaults should  DEPEND  on  text.width (& maybe x/y log):
-    if(is.null(x.intersp)) x.intersp <- min(4, 1.8 + 1.2* Cex^-1.25)
-    if(is.null(y.intersp)) y.intersp <- min(2, 0.2 + Cex^-1.25)
-    if(trace) cat('Legend: Cex=',formatC(Cex),' ==>  x.intersp=',
-		  format(x.intersp),'; y.intersp=', format(y.intersp),"\n")
-    xc <- Cex * xinch(cin[1], warn.log=FALSE) # [uses par("usr") and "pin"]
+    xc <- Cex * xinch(cin[1], warn.log=FALSE)# [uses par("usr") and "pin"]
     yc <- Cex * yinch(cin[2], warn.log=FALSE)
 
     xchar  <- xc
@@ -58,40 +59,55 @@ legend <-
     if(trace) cat('  xchar=',formatC(xchar),
 		  '; (yextra,ychar)=', format(c(yextra,ychar)),"\n")
 
-    xbox <- xc * 0.8 ##= sizes of filled boxes.
-    ybox <- yc * 0.8
-    n.leg <- length(legend)
-    ## -- (w,h) := (width,height) of the box to draw -- computed stepwise...
-    w <- 2 * xchar + text.width
-    h <- (n.leg + 1) * ychar
-    if(!missing(fill))
-	w <- w + (dx.fill <- xbox + xchar)
-    if(!missing(pch)) {
-	if(is.character(pch) && nchar(pch) > 1) {
-	    np <- nchar(pch)
-	    pch <- substr(rep(pch[1], np), 1:np, 1:np)
-	}
-	if(!merge) w <- w + (dx.pch <- x.intersp/2 * xchar)
+    if(!missing(fill)) {
+        ##= sizes of filled boxes.
+        xbox <- xc * 0.8
+        ybox <- yc * 0.5
+        dx.fill <- xbox ## + x.intersp*xchar
     }
     do.lines <- (!missing(lty) && any(lty > 0)) || !missing(lwd)
-    if(do.lines)
-	if(!merge) w <- w + x.intersp * xchar
+    n.leg <- length(legend)
 
-    if(merge) # we didn't add space above, so must do now
-	w <- w + x.intersp * xchar
-    ##
-    ##-- (w,h) are now the final box width/height. --> Adjust (x,y) :
+    if(has.pch <- !missing(pch)) {
+	if(is.character(pch) && nchar(pch[1]) > 1) {
+            if(length(pch) > 1)
+                warning("Not using pch[2..] since pch[1] has multiple chars")
+	    np <- nchar(pch[1])
+	    pch <- substr(rep(pch[1], np), 1:np, 1:np)
+	}
+	if(!merge) dx.pch <- x.intersp/2 * xchar
+    }
+    x.off <- if(merge) -0.7 else 0
 
+    ##- Adjust (x,y) :
     if (xlog) x <- log10(x)
     if (ylog) y <- log10(y)
-    if(length(x) != 1) { # in which situations do we need/want this ??
+
+    if(nx == 2) {
+        ## (x,y) are specifiying OPPOSITE corners of the box
+        x <- sort(x)
+        y <- sort(y)
+        left <- x[1]
+        top  <- y[2]
+        w <- diff(x)# width
+        h <- diff(y)# height
+
 	x <- mean(x)
 	y <- mean(y)
-	xjust <- 0.5
-	yjust <- 0.5
+	if(missing(xjust)) xjust <- 0.5
+	if(missing(yjust)) yjust <- 0.5
+
+    } else {## nx == 1
+        ## -- (w,h) := (width,height) of the box to draw -- computed in steps
+        h <- n.leg * ychar + yc
+        w <- text.width + (1.5 + x.intersp) * xchar
+        if(!missing(fill))      w <- w + dx.fill
+        if(has.pch && !merge)   w <- w + dx.pch
+        if(do.lines)		w <- w + (2+x.off) * xchar
+        ##-- (w,h) are now the final box width/height.
+        left <- x      - xjust  * w
+        top  <- y + (1 - yjust) * h
     }
-    left <- x - xjust * w
-    top	 <- y + (1 - yjust) * h
 
     if (bty != "n")
 	rect2(left, top, dx = w, dy = h, col = bg)
@@ -100,41 +116,39 @@ legend <-
     xt <- rep(left, n.leg) + xchar
     yt <- top - (1:n.leg) * ychar
 
-    if (!missing(fill)) {		  #- draw filled boxes -------------
-	if(trace)
-	    cat("  fill: rect2(", xt,",", yt+ybox/2,", dx=", xbox,", dy=", ybox/2,")\n")
-	rect2(xt, yt + ybox/2, dx = xbox, dy = ybox/2, col = fill)
+    if (!missing(fill)) {               #- draw filled boxes -------------
+	fill <- rep(fill, length.out=n.leg)
+	rect2(left=xt, top=yt+ybox/2, dx = xbox, dy = ybox, col = fill)
 	xt <- xt + dx.fill
     }
-    col <- rep(col,length.out=n.leg)
-    if (!missing(pch)) {		  #- draw points -------------------
-	pch <- rep(pch,length.out=n.leg)
+    if(has.pch || do.lines)
+        col <- rep(col,length.out=n.leg)
+    if (has.pch) {                      #- draw points -------------------
+	pch <- rep(pch, length.out=n.leg)
 	ok <- is.character(pch) | pch >= 0
-	x1 <- (xt + ifelse(merge,0, 0.25) * xchar)[ok]
+	x1 <- (xt + ifelse(merge, 0.2, 0) * xchar)[ok]
 	y1 <- yt[ok]
 	if(trace)
 	    cat("  points2(", x1,",", y1,", pch=", pch[ok],"...)\n")
 	points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex)
 	if (!merge) xt <- xt + dx.pch
     }
-    if (do.lines) {			  #- draw lines ---------------------
-	if(missing(lty)) { lty <- 1; ok.l <- TRUE }
-	else ok.l <- lty > 0
-	if(missing(lwd)) lwd <- 1
+    if (do.lines) {                     #- draw lines ---------------------
+	ok.l <- if(missing(lty)) { lty <- 1; TRUE } else lty > 0
+	if(missing(lwd)) lwd <- par("lwd")
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
-	x.off <- if(merge) -0.8 else 0
 	if(trace)
 	    cat("  segments2(",xt[ok.l] + x.off*xchar ,",", yt[ok.l],
 		",dx=",2*xchar,", dy=0, ...)\n")
 	segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= 2*xchar, dy=0,
 		  lty = lty[ok.l], lwd = lwd[ok.l], col = col[ok.l])
-	if (!merge) xt <- xt + 3 * xchar
+	## if (!merge)
+        xt <- xt + (2+x.off) * xchar
     }
-    if (merge) xt <- xt + x.intersp * xchar
 
-    ## adj = (x,y) text-box adjustment
-    if(trace)
-	cat("  text(xt=", xt,", yt=", yt,",.. adj.y=", 0.3*y.intersp,")\n")
-    text2(xt, yt, labels= legend, adj= c(0, 0.3*y.intersp), cex= cex)
+    xt <- xt + x.intersp * xchar
+    text2(xt, yt, labels= legend, adj= adj, cex= cex)
+
+    invisible(list(w=w,h=h,xt=xt,yt=yt))
 }

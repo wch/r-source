@@ -12,7 +12,8 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SHLIB = $(pkg).@SHLIBEXT@
-OBJS = PPsum.o burg.o eureka.o filter.o pacf.o starma.o stl.o
+OBJS = PPsum.o burg.o eureka.o filter.o pacf.o starma.o stl.o \
+       carray.o mburg.o myw.o qr.o
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

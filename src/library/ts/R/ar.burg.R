@@ -1,5 +1,6 @@
 ## ar.burg by B.D. Ripley based on R version by Martyn Plummer
-ar.burg <-
+ar.burg <- function(x, ...) UseMethod("ar.burg")
+ar.burg.default <-
     function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                    demean = TRUE, series = NULL, var.method = 1, ...)
 {
@@ -56,74 +57,3 @@ ar.burg <-
     return(res)
 }
 
-## ar.burg.R by Martyn Plummer
-ar.burg.R <-
-    function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-              demean = TRUE, series = NULL, var.method = 1, ...)
-{
-    if(is.null(series)) series <- deparse(substitute(x))
-    if (!is.null(dim(x)))
-        stop("Burg's algorithm only implemented for univariate series")
-    if (ists <- is.ts(x)) xtsp <- tsp(x)
-    x <- na.action(as.ts(x))
-    if(any(is.na(x))) stop("NAs in x")
-    if (ists)  xtsp <- tsp(x)
-    xfreq <- frequency(x)
-    if (demean) {
-        x.mean <- mean(x)
-        x <- x - x.mean
-    } else x.mean <- 0
-    n.used <- length(x)
-    order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
-    else floor(order.max)
-    if (order.max < 1) stop("order.max must be >= 1")
-    A <- array(0, dim = c(order.max + 1, 1, 1))
-    A[1, , ] <- diag(1)
-    partialacf <- array(dim = c(order.max, 1, 1))
-    xaic <- numeric(order.max + 1)
-    resid.f <- resid.b <- x
-    E <- crossprod(x)/n.used
-    solve.burg <- function(m) {
-        ## Burg's algorithm
-        ss <- crossprod(resid.f[-1]) + crossprod(resid.b[-(n.used - m)])
-        ss.fb <- 2 * crossprod(resid.f[-1], resid.b[-(n.used - m)])
-        K <- -ss.fb/ss
-        if(var.method == 1) E <<- E * (1 - K * K)
-        else E <<- ss * (1 - K * K) / (2*(n.used - m))
-        Aold <- A
-        for (i in 1:(m + 1)) A[i + 1, , ] <<- Aold[i + 1, , ] +
-            t(K) %*% Aold[m + 2 - i, , ]
-        resid.f.old <- resid.f
-        resid.b.old <- resid.b
-        resid.f <<- resid.f.old[-1] + resid.b.old[-(n.used - m)] * K
-        resid.b <<- resid.b.old[-(n.used - m)] + resid.f.old[-1] * K
-    }
-    order <- 0
-    for (m in 0:order.max) {
-        xaic[m + 1] <- n.used * log(E) + 2 * m
-        if (!aic || xaic[m + 1] == min(xaic[1:(m + 1)])) {
-            ar <- -A[2:(max(m, 1) + 1), , , drop = FALSE]
-            order <- m
-            resid <- resid.f
-            var.pred <- E #* n.used/(n.used - m - 1)
-        }
-        if (m < order.max) {
-            solve.burg(m)
-            partialacf[m + 1, , ] <- -A[m + 2, , ]
-        }
-    }
-    xaic <- xaic - min(xaic)
-    names(xaic) <- 0:order.max
-    resid <- c(rep(NA, order), resid)
-    if (ists) {
-        attr(resid, "tsp") <- xtsp
-        attr(resid, "class") <- "ts"
-    }
-    res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
-                aic = xaic, n.used = n.used, order.max = order.max,
-                partialacf = partialacf,
-                resid = resid, method = "Burg", series = series,
-                frequency=xfreq, call=match.call())
-    class(res) <- "ar"
-    return(res)
-}

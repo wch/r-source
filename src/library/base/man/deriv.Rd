@@ -9,7 +9,7 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
 \alias{deriv.default}
 \alias{deriv.formula}
 \arguments{
-  \item{expr}{expression which should be derivated}
+  \item{expr}{expression which should be differentiated.}
   \item{namevec}{character vector, giving the variable names with
     respect to which derivatives will be computed.}
   \item{function.arg}{\emph{NOT YET IMPLEMENTED}.  If specified, a
@@ -20,7 +20,10 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
     variables in result..}
 }
 \description{
-  \code{D} is modelled after its S pendant for taking simple symbolic
+  Compute derivatives of simple expressions, symbolically.
+}
+\details{
+  \code{D} is modelled after its S namesake for taking simple symbolic
   derivatives.
 
   \code{deriv} is a \emph{generic} function with a default and a
@@ -61,13 +64,13 @@ SIAM proceedings, Philadelphia.
 \examples{
 ## formula argument :
 dx2x <- deriv(~ x^2, "x") ; dx2x
-##- expression({
-##-         .value <- x^2
-##-         .grad <- array(0, c(length(.value), 1), list(NULL, c("x")))
-##-         .grad[, "x"] <- 2 * x
-##-         attr(.value, "gradient") <- .grad
-##-         .value
-##- })
+\dontrun{expression({
+         .value <- x^2
+         .grad <- array(0, c(length(.value), 1), list(NULL, c("x")))
+         .grad[, "x"] <- 2 * x
+         attr(.value, "gradient") <- .grad
+         .value
+})}
 mode(dx2x)
 x <- -1:2
 eval(dx2x)

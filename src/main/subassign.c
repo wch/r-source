@@ -1120,7 +1120,6 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y, ans;
     int nsubs, oldtype;
-    RCNTXT cntxt;
 
     /* This code performs an internal version of method dispatch. */
     /* We evaluate the first argument and attempt to dispatch on it. */
@@ -1242,7 +1241,6 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, index, names, newname, subs, x, y, ans;
     int i, ndims, nsubs, offset, stretch, which;
-    RCNTXT cntxt;
 
     gcall = call;
 
@@ -1280,7 +1278,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isVector(x)) {
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error("more elements supplied than there are to replace");
-	if (nsubs == 0 || CAR(subs) == R_MissingArg) 
+	if (nsubs == 0 || CAR(subs) == R_MissingArg)
 	    error("[[]] with missing subscript");
 	if (nsubs == 1) {
 	    offset = OneIndex(x, CAR(subs), length(x), 0, &newname);

@@ -1,4 +1,5 @@
 \name{winextras}
+\alias{flush.console}
 \alias{win.version}
 \alias{zip.unpack}
 \title{Auxiliary Functions for the Windows Port}
@@ -6,10 +7,18 @@
   Auxiliary functions for the Windows port
 }
 \usage{
+flush.console()
 win.version()
 zip.unpack(zipname, dest)
 }
+\arguments{
+  \item{zipname}{character string giving name of zip file.}
+  \item{dest}{character string giving directory within which to unpack.}
+}
 \details{
+  \code{flush.console} flushes the console output buffer in \code{Rgui}
+  and does nothing under other front-ends.
+
   \code{win.version} is an auxiliary function for
   \code{\link{bug.report}} which returns a character string describing
   the version of Windows in use.
@@ -17,6 +26,6 @@ zip.unpack(zipname, dest)
   \code{zip.unpack} unpacks the zip file \code{zipname} in directory
   \code{dest}: it is an internal version of \code{unzip zipfile -d dest}
   (but will use an external \code{unzip} if one is set in
-  \code{options("unzip")}.
+  \code{options("unzip")}).
 }
 \keyword{utilities}

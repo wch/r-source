@@ -11,7 +11,12 @@
 \description{The revenue passenger miles flown by commercial airlines in
   the United States for each year from 1937 to 1960.
 }
-\references{Brown, R. G. (1963).  Smoothing, Forcasting and Prediction
+\references{Brown, R. G. (1963).  Smoothing, Forecasting and Prediction
   of Discrete Time Series.  Prentice-Hall.
+}
+\examples{
+data(airmiles)
+plot(airmiles, main = "airmiles data",
+     xlab = "Passenger-miles flown by U.S. commercial airlines", col = 4)
 }
 \keyword{datasets}

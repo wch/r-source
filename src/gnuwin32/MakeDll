@@ -1,9 +1,10 @@
+#-*- Makefile -*-
 all:  $(DLLNAME).dll
 
 SOURCES=$(wildcard -f *.c *.f)
 OBJSA=$(foreach i,$(SOURCES),$(basename $i).o)
 
-include ../../../gnuwin32/MkRules
+include $(RHOME)/src/gnuwin32/MkRules
 
 ifdef DEBUG
   DLLFLAGS=
@@ -13,9 +14,9 @@ else
   DEBUGFLAG=-Wall
 endif
 
-CFLAGS=-I../../../include -include ../../../include/globalvar.h $(DEBUGFLAG) -O2
+CFLAGS=-I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2
 FFLAGS=-O2 $(DEBUGFLAG)
-DLLLIBS=-L../../../gnuwin32  $(FLIBS) -lR 
+DLLLIBS=-L$(RHOME)/src/gnuwin32  $(FLIBS) -lR 
 
 
 #ifeq ($(PKG),modreg)

@@ -55,5 +55,7 @@ table <- function (..., exclude = c(NA, NaN),
     }
     names(dn) <- dnn
     bin <- bin[!is.na(bin)]
-    array(tabulate(bin + 1, pd), dims, dimnames = dn)
+    y <- array(tabulate(bin + 1, pd), dims, dimnames = dn)
+    class(y) <- "table"
+    y
 }

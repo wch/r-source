@@ -27,8 +27,6 @@ lqs.default(x, y, intercept, method = c("lts", "lqs", "lms", "S"),
             quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
 lmsreg(\ldots)
 ltsreg(\ldots)
-print.lqs(x, digits, \ldots)
-residuals.lqs(x)
 }
 \arguments{
 \item{formula}{
@@ -90,28 +88,29 @@ residuals.lqs(x)
   of the \code{quantile} smallest squared residuals. \code{"lqs"} and
   \code{"lms"} differ in the defaults for \code{quantile}, which are
   \code{floor((n+p+1)/2)} and \code{floor((n+1)/2)} respectively.
-  For \code{"lts"} the default is `floor(n/2) + floor((p+1)/2)'.
+  For \code{"lts"} the default is \code{floor(n/2) + floor((p+1)/2)}.
 
   The \code{"S"} estimation method solves for the scale \code{s}
   such that the average of a function chi of the residuals divided
   by \code{s} is equal to a given constant.
 
-The \code{control} argument is a list with components
-\item{psamp}{
+The \code{control} argument is a list with components:
+
+\code{psamp}:
   the size of each sample. Defaults to \code{p}.
-}
-\item{nsamp}{
+
+\code{nsamp}:
   the number of samples or \code{"best"} or \code{"exact"} or
   \code{"sample"}. If \code{"sample"} the number chosen is
   \code{min(5*p, 3000)}, taken from Rousseeuw and Hubert (1997).
   If \code{"best"} exhaustive enumeration is done up to 5000 samples:
   if \code{"exact"} exhaustive enumeration will be attempted however
   many samples are needed.
-}
-\item{adjust}{
+
+\code{adjust}:
   should the intercept be optimized for each sample?
-}}
-\section{NOTE}{
+}
+\note{
   There seems no reason other than historical to use the \code{lms} and
   \code{lqs}
   options.  LMS estimation is of low efficiency (converging at rate

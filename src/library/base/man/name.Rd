@@ -18,7 +18,7 @@ is.name(x)
   object mode, \code{\link{typeof}}.
 }
 \examples{
-an _ as.name("arrg")
+an <- as.name("arrg")
 is.name(an) # TRUE
 str(an)# symbol
 }

@@ -1,6 +1,6 @@
 \name{PP.test}
 \alias{PP.test}
-\title{Phillips-Perron Unit Root Test}
+\title{Phillips--Perron Unit Root Test}
 \usage{
 PP.test(x, lshort = TRUE)
 }
@@ -36,12 +36,12 @@ PP.test(x, lshort = TRUE)
     \item{data.name}{a character string giving the name of the data.}
 }
 \references{
-    A. Banerjee, J. J. Dolado, J. W. Galbraith, and D. F. Hendry (1993):
+    A. Banerjee, J. J. Dolado, J. W. Galbraith, and D. F. Hendry (1993)
     \emph{Cointegration, Error Correction, and the Econometric Analysis
 	of Non-Stationary Data}, Oxford University Press, Oxford.
   
-    P. Perron (1988): Trends and Random Walks in Macroeconomic Time
-    Series. \emph{Journal of Economic Dynamics and Control} \bold{12},
+    P. Perron (1988) Trends and random walks in macroeconomic time
+    series. \emph{Journal of Economic Dynamics and Control} \bold{12},
     297-332.
 }
 \author{A. Trapletti}

@@ -5,14 +5,14 @@
 \alias{predict.npolySpline}
 \alias{predict.ppolySpline}
 \alias{plot.spline}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Evaluate a spline at new values of x}
 \description{
-The \code{predict} methods for the classes that inherit from the virtual
-classes \code{bSpline} and \code{polySpline} are used to evaluate the
-spline or its derivatives.  The \code{plot} method for a spline object
-first evaluates \code{predict} with the \code{x} argument missing, then
-plots the resulting \code{xyVector} with \code{type = "l"}.}
+  The \code{predict} methods for the classes that inherit from the
+  virtual classes \code{bSpline} and \code{polySpline} are used to
+  evaluate the spline or its derivatives.  The \code{plot} method for a
+  spline object first evaluates \code{predict} with the \code{x}
+  argument missing, then plots the resulting \code{xyVector} with
+  \code{type = "l"}.}
 \usage{
 predict.bSpline(object, x, nseg=50, deriv=0)
 predict.nbSpline(object, x, nseg=50, deriv=0)
@@ -22,21 +22,20 @@ predict.ppolySpline(object, x, nseg=50, deriv=0)
 plot.spline(x, \dots)
 }
 \arguments{
- \item{object}{An object that inherits from the \code{bSpline} or the
-     \code{polySpline} class.  For \code{plot.spline} this argument is
-     called \code{x}.}
- \item{x}{A numeric vector of \code{x} values at which to evaluate the
-     spline.  If this argument is missing a suitable set of \code{x}
-     values is generated as a sequence of \code{nseq} segments spanning
-     the range of the knots.  For \code{plot.spline} the \code{x}
-     argument is as described under \code{object} above.}
- \item{nseg}{A positive integer giving the number of segments in a set
-     of equally-spaced \code{x} values spanning the range of the knots
-     in \code{object}.  This value is only used if \code{x} is missing.}
- \item{deriv}{An integer between 0 and \code{splineOrder(object) - 1}
-     specifying the derivative to evaluate.}
-  \item{\dots}{additional graphical parameters can be given as arguments to
-    \code{plot.spline}.}
+  \item{object}{An object that inherits from the \code{bSpline} or the
+    \code{polySpline} class.  For \code{plot.spline} this argument is
+    called \code{x}.}
+  \item{x}{A numeric vector of \code{x} values at which to evaluate the
+    spline.  If this argument is missing a suitable set of \code{x}
+    values is generated as a sequence of \code{nseq} segments spanning
+    the range of the knots.  For \code{plot.spline} the \code{x}
+    argument is as described under \code{object} above.}
+  \item{nseg}{A positive integer giving the number of segments in a set
+    of equally-spaced \code{x} values spanning the range of the knots
+    in \code{object}.  This value is only used if \code{x} is missing.}
+  \item{deriv}{An integer between 0 and \code{splineOrder(object) - 1}
+    specifying the derivative to evaluate.}
+  \item{\dots}{additional graphical parameters (see \code{link{par}}).}
 }
 \value{
   an \code{xyVector} with components
@@ -44,7 +43,7 @@ plot.spline(x, \dots)
   \item{y}{the value of the spline (or its \code{deriv}'th derivative)
       at the \code{x} vector}
 }
-\author{Douglas Bates and William Venables}
+\author{Douglas Bates and Bill Venables}
 \seealso{\code{\link{xyVector}}, \code{\link{interpSpline}},
     \code{\link{periodicSpline}}}
 \examples{
@@ -67,4 +66,4 @@ plot(predict(ispl, nseg = 401, deriv = 3),
      xlab = "height", ylab = "weight") 
 par(opar)
 }
-\keyword{models}%-- one or more ...
+\keyword{models}

@@ -32,3 +32,10 @@ all(dim(cbind(cbind(I=1,x=1:4), c(a=pi))) == 4:3)# fails in S+
 is.factor(factor(list()))
 all(levels(ordered(rev(gl(3,4)))) == 1:3)# coercion to char
 all(levels(factor(factor(9:1)[3:5])) == 5:7)
+
+### data.frame s :
+
+## Logicals: (S is wrong)
+l1 <- c(TRUE,FALSE,TRUE)
+(! as.logical(as.data.frame(FALSE)[,1]))
+all(l1 == as.logical(as.data.frame(l1)[,1]))

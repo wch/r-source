@@ -13,14 +13,23 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
     library trees to search through.}
 }
 \description{
-  \code{library.dynam} loads the specified (shared) object file if it
-  has not been loaded already.	It is designed to be used inside a
+  Load the specified file of compiled code if it has not been loaded already.
+}
+\details{
+  This is designed to be used inside a
   package rather than at the command line, and should really only be
   used inside \code{\link{.First.lib}()}.  The system-specific extension
-  for shared libraries (e.g., ``\file{.so}'' on Unix systems) should not
-  be added.
+  for shared libraries
+#ifdef unix
+  (e.g., \file{.so} or \file{.sl} on Unix systems)
+#endif
+#ifdef windows
+  (\file{.dd} on Windows)
+#endif
+  should not be added.
 }
-\value{The \code{.Dyn.libs} vector with the names of packages
+\value{
+  The \code{.Dyn.libs} vector with the names of packages
   which have used \code{library.dynam(..)} in the current \R session.
 
   It is returned as \code{\link{invisible}}, unless the \code{chname}

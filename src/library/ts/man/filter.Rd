@@ -43,13 +43,13 @@ filter(x, filter, method="convolution", sides=2,
 
     Note that there is an implied coefficient 1 at lag 0 in the
     recursive filter, which gives
-    \code{y[i] = x[i] + f[1]*y[i-1] + \ldots f[p]*y[i-p]}.
+    \deqn{y_i = x_i + f_1y_{i-1} + \cdots + f_py_{i-p}}{\code{y[i] =
+	x[i] + f[1]*y[i-1] + \dots + f[p]*y[i-p]}}
     No check is made to see if recursive filter is invertible:
     the output may diverge if it is not.
 
     The convolution filter is
-
-    y[i] = f[1]*x[i+o] + ... + f[p]*x[i+o-p-1]
+    \deqn{y_i = f_1x_{i+o} + \cdots + f_px_{i+o-p-1}}{\code{y[i] = f[1]*x[i+o] + \dots + f[p]*x[i+o-p-1]}}
 
     where \code{o} is the offset: see \code{sides} for how it is determined.
 }

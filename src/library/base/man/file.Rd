@@ -1,11 +1,12 @@
 \name{file}
 \alias{file}
-\title{File manipulation}
+\title{File Manipulation}
 \usage{
 file.create(\dots)
 file.exists(\dots)
 file.remove(\dots)
 file.append(file1, file2)
+dir.create(path)
 basename(path)
 dirname(path)
 }
@@ -13,6 +14,7 @@ dirname(path)
 \alias{file.append}
 \alias{file.remove}
 \alias{file.exists}
+\alias{dir.create}
 \alias{basename}
 \alias{dirname}
 \arguments{
@@ -42,6 +44,9 @@ not it succeeded in removing each file.
 second argument to those named by its first.  The \R subscript
 recycling rule is used to align names given in vectors
 of different lengths.
+
+\code{dir.create} creates the last element of the path. It returns a
+logical, true for success.
 
 \code{basename} removes all of the path up to the last path separator
 (if any).

@@ -13,7 +13,7 @@ CFLAGS=-Wall
 
 rtest-CFLAGS=-I.. -I../../include
 Rtest.exe: rtest.o R.dll
-#	$(CC) -o $@ rtest.o -L.. -lR
+	$(CC) -o $@ rtest.o -L.. -lR
 
 rtest.c: ../../include/Rversion.h
 

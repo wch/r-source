@@ -54,10 +54,6 @@ extern void seed_out(long *);
 extern double unif_rand(void);
 extern double norm_rand(void);
 
-extern void *R_chk_calloc(size_t, size_t);
-extern void *R_chk_realloc(void *, size_t);
-extern void R_chk_free(void *);
-
 /* Macros for S/R Compatibility */
 
 #include "Rdefines.h"
@@ -78,10 +74,12 @@ extern void R_chk_free(void *);
 #define DOUBLE_XMAX    DBL_MAX
 #define DOUBLE_XMIN    DBL_MIN
 
+/*
 extern int F77_SYMBOL(dblepr) (char *label, int *nchar,
 			       double *data, int *ndata);
 extern int F77_SYMBOL(intpr) (char *label, int *nchar,
 			      int *data, int *ndata);
+*/
 
 #ifdef __cplusplus
 }

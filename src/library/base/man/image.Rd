@@ -1,5 +1,5 @@
 \name{image}
-\title{Display a color image}
+\title{Display a Color Image}
 \usage{
 image(x, y, z, zlim, col = heat.colors(12),
       add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab, ...)
@@ -37,6 +37,7 @@ image(x, y, z, zlim, col = heat.colors(12),
   Creates a grid of colored or gray-scale rectangles with colors
   corresponding to the values in \code{z}.  This can be used to display
   three-dimensional or spatial data aka ``images''.
+
   The functions \code{\link{heat.colors}}, \code{\link{terrain.colors}}
   and \code{\link{topo.colors}} create heat-spectrum (red to white) and
   topographical color schemes suitable for displaying ordered data, with

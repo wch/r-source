@@ -1,7 +1,7 @@
-% $Id: profile.nls.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: profile.nls.Rd,v 1.1.2.1 1999/12/15 08:04:29 ripley Exp $
 \name{profile.nls}
 \alias{profile.nls}
-\title{ Method for profiling nls objects}
+\title{ Method for Profiling nls Objects}
 \usage{
 profile.nls(fitted, which, maxpts=100, alphamax=0.01, delta.t=cutoff/5)
 }

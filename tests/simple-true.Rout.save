@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 22, 1999)
+Version 0.90.0 Patched (December 6, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -61,5 +61,14 @@ Type	"q()" to quit R.
 > all(levels(ordered(rev(gl(3,4)))) == 1:3)# coercion to char
 [1] TRUE
 > all(levels(factor(factor(9:1)[3:5])) == 5:7)
+[1] TRUE
+> 
+> ### data.frame s :
+> 
+> ## Logicals: (S is wrong)
+> l1 <- c(TRUE,FALSE,TRUE)
+> (! as.logical(as.data.frame(FALSE)[,1]))
+[1] TRUE
+> all(l1 == as.logical(as.data.frame(l1)[,1]))
 [1] TRUE
 > 

@@ -36,6 +36,7 @@ docs:
 	@$(MAKE) DOCS
 	@R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
 	  $${R_HOME}/bin/build-help --htmllists
+	@touch stamp-docs
 help:
 	@OPTS="--nroff"   $(MAKE) DOCS
 html:

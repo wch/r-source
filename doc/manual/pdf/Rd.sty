@@ -1,4 +1,4 @@
- %%% Rd.sty ... Style for printing the R manual
+%%% Rd.sty ... Style for printing the R manual
 %%%
 %%% Modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
 %%% Modified 1998/07/07 by Martin Maechler
@@ -24,7 +24,7 @@
   {\begin{list}{}{\setlength{\leftmargin}{30pt}}\item}%
   {\end{list}}
 \newcommand{\HTML}{{\normalfont\textsc{html}}}
-\newcommand{\R}{{\normalfont\textsf{R}}}
+\newcommand{\R}{{\normalfont\textsf{R}}{}}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -38,12 +38,13 @@
 \newcommand{\Header}[2]{%
   \vneed{1ex}
   \markboth{#1}{#1}
-  \def\@currentHref{page.\thepage}% as we seem to omit sections here!
-  \addcontentsline{toc}{subsection}{#1}
-  \hypertarget{Rfn.#1}{\index{#1}}
   \noindent
   \nopagebreak
   \begin{center}
+    \def\@currentHref{page.\thepage}% as we seem to omit sections here!
+    \hypertarget{Rfn.#1}{\index{#1}}%
+    \myaddcontentsline{toc}{subsection}{#1}%
+    \pdfbookmark[1]{#1}{Rfn.#1}
     \begin{tabular}{c}
       \hline \rule[-0.275cm]{0cm}{0.8cm}
       \makebox[1in][l]{\texttt{#1}}
@@ -61,7 +62,7 @@
 \newcommand{\Link}[1]{#1\index{#1|textit}}
 %
 % \alias{<alias>}{<header>}
-\newcommand{\alias}[2]{\index{#1@#1\textit{(#2)}}}
+\newcommand{\alias}[2]{\index{#1@#1 \textit{(#2)}}}
 % \keyword{<topic>}{<header>}
 \newcommand{\keyword}[2]{\index{$*$Topic{\large\ \textbf{#1}}!#2@\textsf{#2}}}
 %
@@ -70,7 +71,7 @@
 \newcommand{\describe}[1]{\begin{description}{#1}\end{description}}
 
 \newcommand{\Tabular}[2]{%
-  \begin{tabular}{#1}
+  \par\begin{tabular}{#1}
     #2
   \end{tabular}}
 
@@ -120,7 +121,7 @@
 \newenvironment{Section}[1]{%
   \begin{Rdsection}{#1}}{\end{Rdsection}}
 \newenvironment{Usage}{%
-  \begin{Rdsection}{}}{\end{Rdsection}}
+  \begin{Rdsection}{Usage}}{\end{Rdsection}}
 \newenvironment{Value}{%
   \begin{Rdsection}{Value}}{\end{Rdsection}}
 
@@ -153,7 +154,45 @@
 \RequirePackage{color}
 \definecolor{Blue}{rgb}{0,0,0.8}
 \definecolor{Red}{rgb}{0.7,0,0}
+
+% Avoid the hyperref > 6.56 addcontentsline using too much string space.
+\def\myaddcontentsline#1#2#3{%
+  \addtocontents{#1}{\protect\contentsline{#2}{#3}{\thepage}{page.\thepage}}}
 \RequirePackage{hyperref}
+% next line needed in hyperref > 6.56
+%\def\Hy@writebookmark#1#2#3#4#5{}%
+
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \pdfbookmark{Contents}{contents}
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+\renewenvironment{theindex}
+               {\if@twocolumn
+                  \@restonecolfalse
+                \else
+                  \@restonecoltrue
+                \fi
+                \columnseprule \z@
+                \columnsep 35\p@
+                \twocolumn[\@makeschapterhead{\indexname}]%
+                \@mkboth{\MakeUppercase\indexname}%
+                        {\MakeUppercase\indexname}%
+                \pdfbookmark{Index}{index}
+                \myaddcontentsline{toc}{chapter}{Index}
+                \thispagestyle{plain}\parindent\z@
+                \parskip\z@ \@plus .3\p@\relax
+                \let\item\@idxitem}
+               {\if@restonecol\onecolumn\else\clearpage\fi}
+
 % next one is not an index hyperlink.
 \renewcommand{\Link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1|textit}}
 \renewcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1}}

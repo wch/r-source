@@ -35,7 +35,7 @@ system(command, intern=FALSE, wait=TRUE, input,
     run or gives an error a \R error is generated.
 
     If \code{intern=FALSE}, the return value is a error code, given the
-    invisible attribute (so needs to be printed explictly). If the
+    invisible attribute (so needs to be printed explicitly). If the
     command could not be run for any reason, the value is \code{-1} and
     an \R warning is generated. Otherwise if \code{wait=FALSE} the value
     is the error code returned by the command, and if \code{wait=TRUE}

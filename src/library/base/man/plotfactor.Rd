@@ -1,5 +1,5 @@
 \name{plot.factor}
-\title{Plotting factor variables}
+\title{Plotting Factor Variables}
 \usage{
 plot.factor(x, y, legend.text = levels(y), \dots)
 }

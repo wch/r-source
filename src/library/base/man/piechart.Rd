@@ -25,10 +25,15 @@ the slices.}
 \item{\dots}{graphical parameters can be given as arguments to \code{piechart}.}
 }
 \description{
-Pie charts are a very bad way of displaying information.
-The eye is good at judging linear measures and bad at judging relative areas.
-A bar chart or dot chart is a preferable way of displaying this
-type of data.
+  Draw a pie chart.
+}
+\note{
+  Pie charts are a very bad way of displaying information.
+  The eye is good at judging linear measures and bad at judging
+  relative areas.
+
+  A bar chart or dot chart is a preferable way of displaying this
+  type of data.
 }
 \seealso{
 \code{\link{dotplot}}.

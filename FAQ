@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-1, 1999/11/16
+Version 0.90-4, 1999/11/13
 Kurt Hornik
 
 
@@ -52,6 +52,7 @@ Table of Contents
 6 R and Emacs
   6.1 Is there Emacs support for R?
   6.2 Should I run R from within Emacs?
+  6.3 Debugging R from within Emacs
 
 7 R Miscellania
   7.1 Why does R run out of memory?
@@ -198,7 +199,7 @@ distribution for more information.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 0.90.0, the unstable one is
+   The current stable Unix/Windows version is 0.90.1, the unstable one is
 0.99.0.  Typically, new features are introduced in the development
 versions; updates of stable versions are for bug fixes mostly.  The version
 for the Mac is pre-alpha.
@@ -301,9 +302,10 @@ distribution is available.  We hope that this will change soon.
 platform (now part of the Debian distribution and maintained by Doug Bates)
 as well as Red Hat 5.1 packages for the alpha and sparc platforms
 (maintained by Nassib Nasser and Vin Everett, respectively), Red Hat 6.0
-packages for the i386 and alpha platforms (maintained by Martyn Plummer and
-Naoki Takebayashi, respectively), S.u.S.E. 5.3/6.0/6.2 i386 packages by
-Albrecht Gebhardt, and RPMs for the ppc platform by Alex Buerkle.
+packages for the i386, alpha and sparc platforms (maintained by Martyn
+Plummer, Naoki Takebayashi, and Vin Everett, respectively), S.u.S.E.
+5.3/6.0/6.2 i386 packages by Albrecht Gebhardt, and RPMs for the ppc
+platform by Alex Buerkle.
 
    The `bin/osf' directory contains RPMs for alpha systems running Digital
 Unix 4.0 by Albrecht Gebhardt.
@@ -392,8 +394,8 @@ three mailing lists devoted to R.
      The `main' R mailing list, for announcements about the development of R
      and the availability of new code, questions and answers about problems
      and solutions using R, enhancements and patches to the source code and
-     documentation of R, comparison and compatibility with S and S-PLUS, and
-     for the posting of nice examples and benchmarks.
+     documentation of R, comparison and compatibility with S and S-PLUS,
+     and for the posting of nice examples and benchmarks.
 
 Note that the r-announce list is gatewayed into r-help, so you don't need
 to subscribe to both of them.
@@ -1030,9 +1032,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      and also performs searches using a number of less time-consuming
      techniques.
 
-*lme*
-     Fit and compare Gaussian linear mixed-effects models.
-
 *lmtest*
      A collection of tests on the assumptions of linear regression models
      from the book "The linear regression model under test" by W. Kraemer
@@ -1064,6 +1063,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
+
+*nlme*
+     Fit and compare Gaussian linear and nonlinear mixed-effects models.
 
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
@@ -1122,6 +1124,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Density, distribution, quantile and hazard functions of a stable
      variate; generalized linear models for the parameters of a stable
      distribution.
+
+*stataread*
+     Read and write Stata v6 `.dta' files.
 
 *survival5*
      Functions for survival analysis, version 5 (requires *splines* and
@@ -1183,6 +1188,14 @@ Kalman filter, VARMA and cointegration models, and numerical
 differentiation.  It also contains Troll models as another class (the Troll
 interface is not yet functional in R).  Paul's package *dse* can be
 obtained via `http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm'.
+
+   Timothy H. Keitt <keitt@nceas.ucsb.edu> has written *RPgSQL*, a package
+which allows users to read and write data frames to and from a PostgreSQL
+database (and also has a low-level interface for sending SQL queries to the
+PostgreSQL backend, and retrieving results), and can be obtained from
+`http://www.nceas.ucsb.edu/~keitt/R/'.  There is also the *RODBC* package
+by Michael Lapsley <mlapsley@ndirect.co.uk> which provides an R ODBC
+interface; see `http://www.ndirect.co.uk/~mlapsley/' for more information.
 
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
@@ -1378,7 +1391,10 @@ as described in "Statistical Models in S" (see *Note What is S?::);
 Generalized Additive Models (*gam*) and some of the nonlinear modeling code
 are not there yet.
 
-   See also the `PROJECTS' file in the top level R source directory.
+   The R Developer Page (http://developer.r-project.org) acts as an
+intermediate repository for more or less finalized ideas and plans for the
+R statistical system.  It contains (pointers to) TODO lists, RFCs, various
+other writeups, ideas lists, and CVS miscellania.
 
    Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
@@ -1456,6 +1472,42 @@ also be used for error recovery through the use of the transcript mode.
 M-x R' for starting R.  This prompts you for the arguments; in particular,
 you can increase the memory size this way (*note Why does R run out of
 memory?::).
+
+6.3 Debugging R from within Emacs
+=================================
+
+   To debug R "from within Emacs", there are several possibilities.  To use
+GUD mode, type `M-x gdb' and give the path to the R _binary_, typically
+`R.X11', as argument.  At the gdb prompt, set `R_HOME' and other
+environment variables as needed (using e.g.  `set env R_HOME /path/to/R/',
+but see also below), and start the binary with the desired arguments (e.g.,
+`r --vsize 12M').
+
+   If you have ESS, you can do `C-u M-x R<RET>-d gdb' to start an inferior
+R process with arguments `-d gdb'.
+
+   A third option is to start an inferior R process via ESS (`M-x R') and
+then start GUD (`M-x gdb') giving `$R_HOME/bin/R.X11' as the program to
+debug.  Use the program `ps' to find the process number of the currently
+running R process then use the `attach' command in gdb to attach it to that
+process.  One advantage of this method is that you have separate `*R*' and
+`*gud-gdb*' windows.  Within the `*R*' window you have all the ESS
+facilities, such as object-name completion, that we know and love.
+
+   When using GUD mode for debugging from within Emacs, you may find it
+most convenient to use the directory with your code in it as the current
+working directory and then make a symbolic link from that directory to the
+R executable.  That way `.gdbinit' can stay in the directory with the code
+and be used to set up the environment and the search paths for the source,
+e.g. as follows:
+
+     set env R_HOME /opt/R
+     set env R_PAPERSIZE letter
+     set env R_PRINTCMD lpr
+     dir /opt/R/src/appl
+     dir /opt/R/src/main
+     dir /opt/R/src/nmath
+     dir /opt/R/src/unix
 
 7 R Miscellania
 ***************
@@ -1720,7 +1772,8 @@ cases you don't want anything printed.
 loaded code is to
 
    * Call the debugger on the R executable.  In the shell, you can e.g. use
-     `R -d gdb'; see below for debugging from within Emacs.
+     `R -d gdb'; see *Note Debugging R from within Emacs:: for debugging
+     from within Emacs.
 
    * Start the R program.
 
@@ -1732,21 +1785,6 @@ loaded code is to
    * Set the breakpoints in your code.
 
    * Continue execution of R by typing `signal 0<RET>'.
-
-   When using GUD mode for debugging from within Emacs, you may find it
-most convenient to use the directory with your code in it as the current
-working directory and then make a symbolic link from that directory to the
-R executable.  That way `.gdbinit' can stay in the directory with the code
-and be used to set up the environment and the search paths for the source,
-e.g. as follows:
-
-     set env R_HOME /opt/R
-     set env R_PAPERSIZE letter
-     set env R_PRINTCMD lpr
-     dir /opt/R/src/appl
-     dir /opt/R/src/main
-     dir /opt/R/src/nmath
-     dir /opt/R/src/unix
 
 8.3 How can I inspect R objects when debugging?
 ===============================================

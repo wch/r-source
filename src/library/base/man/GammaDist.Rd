@@ -12,7 +12,7 @@ rgamma(n, shape, scale=1)
 \alias{rgamma}
 \arguments{
 \item{x,q}{vector of quantiles.}
-\item{p}{vector of probabilites.}
+\item{p}{vector of probabilities.}
 \item{n}{number of observations.}
 \item{shape, scale}{shape and scale parameters.}
 }

@@ -38,8 +38,8 @@ regexpr(pattern, text,  extended=TRUE)
 }
 \details{
   The two \code{*sub} functions differ only in that \code{sub} replaces only
-  the first occurence of a \code{pattern} whereas \code{gsub} replaces
-  all occurences.
+  the first occurrence of a \code{pattern} whereas \code{gsub} replaces
+  all occurrences.
 
   The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the

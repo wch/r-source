@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 0.90-1, 1999/11/16</h2>
+<h2>Version 0.90-4, 1999/11/13</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -50,14 +50,14 @@
 <li><a href="#R%20and%20S">3 R and S</a>
 <ul>
 <li><a href="#What%20is%20S%3f">3.1 What is S?</a>
-<li><a href="#What%20is%20S-PLUS%3f">3.2 What is S-PLUS?</a>
+<li><a href="#What%20is%20S-PLUS%3f">3.2 What is <small>S-PLUS</small>?</a>
 <li><a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">3.3 What are the differences between R and S?</a>
 <ul>
 <li><a href="#Lexical%20scoping">3.3.1 Lexical scoping</a>
 <li><a href="#Models">3.3.2 Models</a>
 <li><a href="#Others">3.3.3 Others</a>
 </ul>
-<li><a href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">3.4 Is there anything R can do that S-PLUS cannot?</a>
+<li><a href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">3.4 Is there anything R can do that <small>S-PLUS</small> cannot?</a>
 </ul>
 <li><a href="#R%20Web%20Interfaces">4 R Web Interfaces</a>
 <li><a href="#R%20Add-On%20Packages">5 R Add-On Packages</a>
@@ -73,6 +73,7 @@
 <ul>
 <li><a href="#Is%20there%20Emacs%20support%20for%20R%3f">6.1 Is there Emacs support for R?</a>
 <li><a href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">6.2 Should I run R from within Emacs?</a>
+<li><a href="#Debugging%20R%20from%20within%20Emacs">6.3 Debugging R from within Emacs</a>
 </ul>
 <li><a href="#R%20Miscellania">7 R Miscellania</a>
 <ul>
@@ -187,7 +188,7 @@ Up:<a rel=up href="#Introduction">Introduction</a>
 <p>From there, you can obtain versions converted to
 <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.txt">plain ASCII text</a>, <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.dvi.gz">DVI</a>,
 <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.info.gz">GNU info</a>,
-<a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">HTML</a>,
+<a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html"><small>HTML</small></a>,
 <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.pdf">PDF</a>,
 <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.ps.gz">PostScript</a> as
 well as the <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.texi">Texinfo source</a> used for creating all these formats using the
@@ -325,7 +326,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current stable Unix/Windows version is 0.90.0, the
+<p>The current stable Unix/Windows version is 0.90.1, the
 unstable one is 0.99.0.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
@@ -373,8 +374,8 @@ come with them.
 very easily under a number of common Unix platforms (see <a href="#What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>).  The file <code>INSTALL</code> that comes with the
 R distribution contains instructions.
 
-<p>Note that you need a FORTRAN compiler or <code>f2c</code> in addition to a C
-compiler to build R.  Also, you need Perl version 5 to build the
+<p>Note that you need a <small>FORTRAN</small> compiler or <code>f2c</code> in addition to a
+C compiler to build R.  Also, you need Perl version 5 to build the
 documentation.  If this is not available on your system, you can obtain
 precompiled documentation files via CRAN.
 
@@ -389,7 +390,7 @@ $ make
 font-end called <code>R</code> are created and copied to the <code>bin</code>
 directory.  You can copy the script to a place where users can invoke
 it, for example to <code>/usr/local/bin</code>.  In addition, plain text help
-pages as well as HTML and LaTeX versions of the documentation are
+pages as well as <small>HTML</small> and LaTeX versions of the documentation are
 built.
 
 <p>Use <kbd>make dvi</kbd> to obtain a dvi version of the R manual.  This
@@ -471,9 +472,10 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 platform (now part of the Debian distribution and maintained by Doug
 Bates) as well as Red Hat 5.1 packages for the alpha and sparc platforms
 (maintained by Nassib Nasser and Vin Everett, respectively), Red Hat 6.0
-packages for the i386 and alpha platforms (maintained by Martyn Plummer
-and Naoki Takebayashi, respectively), S.u.S.E. 5.3/6.0/6.2 i386 packages
-by Albrecht Gebhardt, and RPMs for the ppc platform by Alex Buerkle.
+packages for the i386, alpha and sparc platforms (maintained by Martyn
+Plummer, Naoki Takebayashi, and Vin Everett, respectively),
+S.u.S.E. 5.3/6.0/6.2 i386 packages by Albrecht Gebhardt, and RPMs for
+the ppc platform by Alex Buerkle.
 
 <p>The <code>bin/osf</code> directory contains RPMs for alpha systems running
 Digital Unix 4.0 by Albrecht Gebhardt.
@@ -497,41 +499,42 @@ the topic help is sought for.  (In the case of unary and binary
 operators and control-flow special forms, the name may need to be be
 quoted.)
 
-<p>This documentation can also be made available as HTML, and as hardcopy
-via LaTeX, see <a href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>.  An up-to-date HTML
-version is always available for web browsing at
+<p>This documentation can also be made available as <small>HTML</small>, and as
+hardcopy via LaTeX, see <a href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>.  An up-to-date
+<small>HTML</small> version is always available for web browsing at
 <a href="http://stat.ethz.ch/R/manual/">http://stat.ethz.ch/R/manual/</a>.
 
 <p>An earlier attempt at an R manual ("Notes on R:  A Programming
 Environment for Data Analysis and Graphics"), based on the "Notes on
-S-PLUS" by <a href="mailto:venables@stats.adelaide.edu.au">Bill Venables</a> and
+<small>S-PLUS</small>" by <a href="mailto:venables@stats.adelaide.edu.au">Bill Venables</a> and
 <a href="mailto:D.M.Smith@lancaster.ac.uk">David Smith</a>, can be obtained as
 <code>Rnotes.tgz</code> (LaTeX source) in a CRAN <code>doc</code> directory. 
 Further documentation on R and the R API are currently being written.
 
-<p>In the absence of an R manual, documentation for S/S-PLUS (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this FAQ (see <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>).  We recommend
+<p>In the absence of an R manual, documentation for S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this FAQ (see <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>).  We recommend
 
 <blockquote>
 W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
-S-PLUS.  Third Edition".  Springer, ISBN 0-387-98825-4. 
+<small>S-PLUS</small>.  Third Edition".  Springer, ISBN 0-387-98825-4. 
 </blockquote>
 
 <p>which has a home page at <a href="http://www.stats.ox.ac.uk/pub/MASS3/">http://www.stats.ox.ac.uk/pub/MASS3/</a>
 providing additional material, in particular "R Complements" which
 describe how to use the book with R.  These complements provide both
-descriptions of some of the differences between R and S-PLUS, and the
+descriptions of some of the differences between R and <small>S-PLUS</small>, and the
 modifications needed to run the examples in the book.  Its companion
 volume on "S Programming", due in about April 2000, will provide an
 in-depth guide to writing software in the S language which forms the
-basis of both the commercial S-PLUS and the Open Source R data analysis
-software systems.
+basis of both the commercial <small>S-PLUS</small> and the Open Source R data
+analysis software systems.
 
 <p>More introductory books are
 
 <blockquote>
-P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
+P. Spector (1994), "An introduction to S and <small>S-PLUS</small>", Duxbury Press.
 
-<p>A. Krause and M. Olsen (1997), "The Basics of S and S-PLUS", Springer. 
+<p>A. Krause and M. Olsen (1997), "The Basics of S and <small>S-PLUS</small>",
+Springer. 
 </blockquote>
 
 <p>Last, but not least, Ross' and Robert's experience in designing and
@@ -585,8 +588,8 @@ the development of R.
 <dd>The `main' R mailing list, for announcements about the development of R
 and the availability of new code, questions and answers about problems
 and solutions using R, enhancements and patches to the source code and
-documentation of R, comparison and compatibility with S and S-PLUS, and
-for the posting of nice examples and benchmarks. 
+documentation of R, comparison and compatibility with S and <small>S-PLUS</small>,
+and for the posting of nice examples and benchmarks. 
 </dl>
 
 <p>Note that the r-announce list is gatewayed into r-help, so you don't
@@ -747,19 +750,19 @@ Previous:<a rel=previous href="#What%20is%20S%3f">What is S?</a>,
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.2 What is S-PLUS?</h2>
+<h2>3.2 What is <small>S-PLUS</small>?</h2>
 
-<p>S-PLUS is a value-added version of S sold by Statistical Sciences,
+<p><small>S-PLUS</small> is a value-added version of S sold by Statistical Sciences,
 Inc. (now a division of Mathsoft, Inc.).  Based on the S language,
-S-PLUS provides functionality in a wide variety of areas, including
+<small>S-PLUS</small> provides functionality in a wide variety of areas, including
 robust regression, modern non-parametric regression, time series,
 survival analysis, multivariate analysis, classical statistical tests,
 quality control, and graphics drivers.  Add-on modules add additional
 capabilities for wavelet analysis, spatial statistics, GARCH models, and
 design of experiments.
 
-<p>See the <a href="http://www.mathsoft.com/splus/">MathSoft S-PLUS page</a> for
-further information.
+<p>See the <a href="http://www.mathsoft.com/splus/">MathSoft <small>S-PLUS</small> page</a>
+for further information.
 
 <p><hr>
 Node:<a name="What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
@@ -831,7 +834,7 @@ For simplicity, we shall use both the cdf and pdf of the distribution
 as explicit arguments.  (Example compiled from various postings by Luke
 Tierney.)
 
-<p>The S-PLUS documentation for <code>call()</code> basically suggests the
+<p>The <small>S-PLUS</small> documentation for <code>call()</code> basically suggests the
 following:
 
 <pre>dorder &lt;- function(n, r, pfun, dfun) {
@@ -1070,7 +1073,7 @@ length.
 as in S.
 
 <li>R has no single precision storage mode.  However, as of version 0.65.1,
-there is a single precision interface to C/FORTRAN subroutines.
+there is a single precision interface to C/<small>FORTRAN</small> subroutines.
 
 <li>By default, <code>ls()</code> returns the names of the objects in the current
 (under R) and global (under S) environment, respectively.  For example,
@@ -1140,14 +1143,14 @@ Previous:<a rel=previous href="#What%20are%20the%20differences%20between%20R%20a
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.4 Is there anything R can do that S-PLUS cannot?</h2>
+<h2>3.4 Is there anything R can do that <small>S-PLUS</small> cannot?</h2>
 
 <p>Since almost anything you can do in R has source code that you could
-port to S-PLUS with little effort there will never be much you can do in
-R that you couldn't do in S-PLUS if you wanted to.  (Note that using
-lexical scoping may simplify matters considerably, though.)
+port to <small>S-PLUS</small> with little effort there will never be much you can do
+in R that you couldn't do in <small>S-PLUS</small> if you wanted to.  (Note that
+using lexical scoping may simplify matters considerably, though.)
 
-<p>R offers several graphics features that S-PLUS does not, such as finer
+<p>R offers several graphics features that <small>S-PLUS</small> does not, such as finer
 handling of line types, more convenient color handling (via palettes),
 gamma correction for color, and, most importantly, mathematical
 annotation in plot texts, via input expressions reminiscent of TeX
@@ -1251,7 +1254,7 @@ area.
 the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995. 
 <br><dt><strong>MASS</strong>
 <dd>Functions and datasets from the main library of Venables and Ripley,
-"Modern Applied Statistics with S-PLUS".  Contained in <code>VR</code>. 
+"Modern Applied Statistics with <small>S-PLUS</small>".  Contained in <code>VR</code>. 
 <br><dt><strong>NISTnls</strong>
 <dd>A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology. 
@@ -1323,8 +1326,6 @@ using smoothing splines.
 given set of potential regressors, using a branch-and-bound algorithm,
 and also performs searches using a number of less time-consuming
 techniques. 
-<br><dt><strong>lme</strong>
-<dd>Fit and compare Gaussian linear mixed-effects models. 
 <br><dt><strong>lmtest</strong>
 <dd>A collection of tests on the assumptions of linear regression models
 from the book "The linear regression model under test" by W. Kraemer
@@ -1349,6 +1350,8 @@ including stabilized test procedures by Laeuter et. al.
 <br><dt><strong>multiv</strong>
 <dd>Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis. 
+<br><dt><strong>nlme</strong>
+<dd>Fit and compare Gaussian linear and nonlinear mixed-effects models. 
 <br><dt><strong>nnet</strong>
 <dd>Software for single hidden layer perceptrons ("feed-forward neural
 networks"), and for multinomial log-linear models.  Contained in
@@ -1382,16 +1385,18 @@ two-sample comparison of binary outcomes.
 <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>sm</strong>
 <dd>Software linked to the book "Applied Smoothing Techniques for Data
-Analysis:  The Kernel Approach with S-PLUS Illustrations" by
+Analysis:  The Kernel Approach with <small>S-PLUS</small> Illustrations" by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press. 
 <br><dt><strong>spatial</strong>
 <dd>Functions for kriging and point pattern analysis from "Modern Applied
-Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
+Statistics with <small>S-PLUS</small>" by W. Venables and B. Ripley.  Contained in
 <code>VR</code>. 
 <br><dt><strong>stable</strong>
 <dd>Density, distribution, quantile and hazard functions of a stable
 variate; generalized linear models for the parameters of a stable
 distribution. 
+<br><dt><strong>stataread</strong>
+<dd>Read and write Stata v6 <code>.dta</code> files. 
 <br><dt><strong>survival5</strong>
 <dd>Functions for survival analysis, version 5 (requires <strong>splines</strong>
 and suggests <strong>date</strong>), the main new feature being penalised
@@ -1449,6 +1454,15 @@ models, and numerical differentiation.  It also contains Troll models as
 another class (the Troll interface is not yet functional in R).  Paul's
 package <strong>dse</strong> can be obtained via
 <a href="http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm">http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm</a>.
+
+<a href="mailto:keitt@nceas.ucsb.edu">Timothy H. Keitt</a> has written
+<strong>RPgSQL</strong>, a package which allows users to read and write data
+frames to and from a PostgreSQL database (and also has a low-level
+interface for sending SQL queries to the PostgreSQL backend, and
+retrieving results), and can be obtained from
+<a href="http://www.nceas.ucsb.edu/~keitt/R/">http://www.nceas.ucsb.edu/~keitt/R/</a>.  There is also the
+<strong>RODBC</strong> package by <a href="mailto:mlapsley@ndirect.co.uk">Michael Lapsley</a> which provides an R ODBC interface; see
+<a href="http://www.ndirect.co.uk/~mlapsley/">http://www.ndirect.co.uk/~mlapsley/</a> for more information.
 
 <p>More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
@@ -1640,7 +1654,7 @@ objects in the package.  The documentation files to be installed must
 also start with a (lower- or uppercase) letter and have the extension
 <code>.Rd</code> (the default) or <code>.rd</code>.
 
-<p>C or FORTRAN source and optionally a <code>Makefile</code> for the compiled
+<p>C or <small>FORTRAN</small> source and optionally a <code>Makefile</code> for the compiled
 code is in <code>src</code>.  Note that the <code>Makefile</code> most likely is not
 needed.
 
@@ -1691,7 +1705,10 @@ as described in "Statistical Models in S" (see <a href="#What%20is%20S%3f">What 
 Generalized Additive Models (<strong>gam</strong>) and some of the nonlinear
 modeling code are not there yet.
 
-<p>See also the <code>PROJECTS</code> file in the top level R source directory.
+<p>The <a href="http://developer.r-project.org">R Developer Page</a> acts as an
+intermediate repository for more or less finalized ideas and plans for
+the R statistical system.  It contains (pointers to) TODO lists, RFCs,
+various other writeups, ideas lists, and CVS miscellania.
 
 <p>Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
@@ -1711,6 +1728,7 @@ Up:<a rel=up href="#Top">Top</a>
 <ul>
 <li><a href="#Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>: 
 <li><a href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>: 
+<li><a href="#Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>: 
 </ul>
 
 <p><hr>
@@ -1726,12 +1744,12 @@ Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 statistical programs and statistical processes called ESS ("Emacs
 Speaks Statistics").  It is intended to provide assistance for
 interactive statistical programming and data analysis.  Languages
-supported include: S dialects (S 3/4, S-PLUS 3.x/4.x/5.x, and R),
+supported include: S dialects (S 3/4, <small>S-PLUS</small> 3.x/4.x/5.x, and R),
 LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects (SPSS,
 Fiasco) and SCA.
 
 <p>ESS grew out of the desire for bug fixes and extensions to S-mode 4.8
-(which was a GNU Emacs interface to S/S-PLUS version 3 only).  The
+(which was a GNU Emacs interface to S/<small>S-PLUS</small> version 3 only).  The
 current set of developers desired support for XEmacs, R, S4, and MS
 Windows.  In addition, with new modes being developed for R, Stata, and
 SAS, it was felt a unifying interface and framework for the user
@@ -1754,8 +1772,9 @@ transcripts, and re-evaluating commands from transcript files).
 
 <p>The latest versions of ESS are available from
 <a href="http://ess.stat.wisc.edu/pub/ESS/">http://ess.stat.wisc.edu/pub/ESS/</a> or
-<a href="ftp://ess.stat.wisc.edu/pub/ESS/">ftp://ess.stat.wisc.edu/pub/ESS/</a>, or via CRAN.  The HTML version
-of the documentation can be found at <a href="http://stat.ethz.ch/ESS/">http://stat.ethz.ch/ESS/</a>.
+<a href="ftp://ess.stat.wisc.edu/pub/ESS/">ftp://ess.stat.wisc.edu/pub/ESS/</a>, or via CRAN.  The <small>HTML</small>
+version of the documentation can be found at
+<a href="http://stat.ethz.ch/ESS/">http://stat.ethz.ch/ESS/</a>.
 
 <p>ESS comes with detailed installation instructions.
 
@@ -1768,6 +1787,7 @@ within Emacs by typing <kbd>M-x ess-submit-bug-report</kbd> or using the
 
 <p><hr>
 Node:<a name="Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
+Next:<a rel=next href="#Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
 Previous:<a rel=previous href="#Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>,
 Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <br>
@@ -1793,6 +1813,49 @@ also be used for error recovery through the use of the transcript mode.
 <p>To specify command line arguments for the inferior R process, use
 <kbd>C-u M-x R</kbd> for starting R.  This prompts you for the arguments; in
 particular, you can increase the memory size this way (see <a href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>).
+
+<p><hr>
+Node:<a name="Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
+Previous:<a rel=previous href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
+Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
+<br>
+
+<h2>6.3 Debugging R from within Emacs</h2>
+
+<p>To debug R "from within Emacs", there are several possibilities.  To
+use GUD mode, type <kbd>M-x gdb</kbd> and give the path to the R
+<em>binary</em>, typically <code>R.X11</code>, as argument.  At the gdb prompt,
+set <code>R_HOME</code> and other environment variables as needed (using e.g. 
+<kbd>set env R_HOME /path/to/R/</kbd>, but see also below), and start the
+binary with the desired arguments (e.g., <kbd>r --vsize 12M</kbd>).
+
+<p>If you have ESS, you can do <kbd>C-u M-x R&lt;RET&gt;-d gdb</kbd> to start an
+inferior R process with arguments <code>-d gdb</code>.
+
+<p>A third option is to start an inferior R process via ESS (<kbd>M-x R</kbd>)
+and then start GUD (<kbd>M-x gdb</kbd>) giving <code>$R_HOME/bin/R.X11</code> as
+the program to debug.  Use the program <code>ps</code> to find the process
+number of the currently running R process then use the <code>attach</code>
+command in gdb to attach it to that process.  One advantage of this
+method is that you have separate <code>*R*</code> and <code>*gud-gdb*</code>
+windows.  Within the <code>*R*</code> window you have all the ESS facilities,
+such as object-name completion, that we know and love.
+
+<p>When using GUD mode for debugging from within Emacs, you may find it
+most convenient to use the directory with your code in it as the current
+working directory and then make a symbolic link from that directory to
+the R executable.  That way <code>.gdbinit</code> can stay in the directory
+with the code and be used to set up the environment and the search paths
+for the source, e.g. as follows:
+
+<pre>set env R_HOME /opt/R
+set env R_PAPERSIZE letter
+set env R_PRINTCMD lpr
+dir /opt/R/src/appl
+dir /opt/R/src/main
+dir /opt/R/src/nmath
+dir /opt/R/src/unix
+</pre>
 
 <p><hr>
 Node:<a name="R%20Miscellania">R Miscellania</a>,
@@ -2194,7 +2257,8 @@ loaded code is to
 
 <ul>
 <li>Call the debugger on the R executable.  In the shell, you can e.g. use
-<kbd>R -d gdb</kbd>; see below for debugging from within Emacs. 
+<kbd>R -d gdb</kbd>; see <a href="#Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a> for debugging
+from within Emacs. 
 <li>Start the R program. 
 <li>At the R prompt, use <code>dyn.load()</code> to load your library. 
 <li>Send an interrupt signal.  Inside of GUD mode in Emacs, you send
@@ -2202,22 +2266,6 @@ loaded code is to
 <li>Set the breakpoints in your code. 
 <li>Continue execution of R by typing <kbd>signal 0&lt;RET&gt;</kbd>. 
 </ul>
-
-<p>When using GUD mode for debugging from within Emacs, you may find it
-most convenient to use the directory with your code in it as the current
-working directory and then make a symbolic link from that directory to
-the R executable.  That way <code>.gdbinit</code> can stay in the directory
-with the code and be used to set up the environment and the search paths
-for the source, e.g. as follows:
-
-<pre>set env R_HOME /opt/R
-set env R_PAPERSIZE letter
-set env R_PRINTCMD lpr
-dir /opt/R/src/appl
-dir /opt/R/src/main
-dir /opt/R/src/nmath
-dir /opt/R/src/unix
-</pre>
 
 <p><hr>
 Node:<a name="How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,

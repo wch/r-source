@@ -10,15 +10,22 @@
 }
 \source{T. A. Ryan, B. L. Joiner and B. F. Ryan (1976).
 The Minitab Student Handbook. Duxbury Press.
-
 }
-\description{This data set provides measurements of the girth, height and volume
-of timber in 31 felled black cherry trees.  Note that girth is the
-diameter of the tree at 4 ft 6 in above the ground.
-
+\description{
+    This data set provides measurements of the girth, height and volume
+    of timber in 31 felled black cherry trees.  Note that girth is the
+    diameter of the tree at 4 ft 6 in above the ground.
 }
-\references{A. C. Atkinson (1985).  Plots, Transformations and Regression.
-Oxford University Press.
-
+\references{
+    A. C. Atkinson (1985).  Plots, Transformations and Regression.
+    Oxford University Press.
+}
+\examples{
+data(trees)
+pairs(trees, panel = panel.smooth, main = "trees data")
+plot(Volume ~ Girth, data = trees, log = "xy")
+coplot(log(Volume) ~ log(Girth) | Height, data = trees,
+       panel = panel.smooth)
+summary(fm1 <- lm(log(Volume) ~ log(Girth), data = trees))
 }
 \keyword{datasets}

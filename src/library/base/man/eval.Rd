@@ -1,66 +1,69 @@
 \name{eval}
 \title{Evaluate an (Unevaluated) Expression}
-\usage{
-eval(expr, envir=sys.frame(sys.parent()), 
-   enclos=if(is.list(envir) || is.pairlist(envir)) 
-             sys.frame(sys.parent()))
-
-evalq(expr, envir, enclos)
-
-eval.parent(expr, n = 1)
-
-local(expr, envir = new.env())
-}
 \alias{eval}
 \alias{evalq}
 \alias{eval.parent}
 \alias{local}
+\usage{
+eval(expr, envir = sys.frame(sys.parent()), 
+     enclos = if(is.list(envir) || is.pairlist(envir)) 
+                  sys.frame(sys.parent()))
+evalq(expr, envir, enclos)
+eval.parent(expr, n = 1)
+local(expr, envir = new.env())
+}
 \arguments{
   \item{expr}{object of mode \code{\link{expression}} or\code{call} or
-      an ``unevaluated expression''.}
-  \item{envir}{the \code{\link{environment}} in which \code{expr} is to be
-      evaluated. May also be a list or an integer as in \code{sys.call}.}
+    an ``unevaluated expression''.}
+  \item{envir}{the \code{\link{environment}} in which \code{expr} is to
+    be evaluated.  May also be a list or an integer as in
+    \code{sys.call}.}
   \item{enclos}{Only relevant if \code{envir} is a list. Specifies the
-      enclosure, i.e. where R looks for objects not found in \code{envir}.} 
+    enclosure, i.e., where \R looks for objects not found in
+    \code{envir}.}
   \item{n}{parent generations to go back}
 }
 \description{
-These functions evaluate the expression \code{expr} argument in the
-environment specified by \code{envir} and returns the computed value.  If
-\code{envir} is not specified, then
-\code{\link{sys.frame}(\link{sys.parent}())}, the environment where the
-call to \code{eval} was made is used. The \code{eval} form evaluates its first
-argument before passing it to the evaluator.
-This allows you to assign complicated expressions to symbols and then
-evaluate them. The \code{evalq} form avoids this and is equivalent to
-\code{eval(quote(expression), ...)} 
-
-\code{eval.parent(expr, n)} is a shorthand for \code{eval(expr,
-parent.frame(n))}. 
-
-\code{local} evaluates an expression in a local environment. It is
-equivalent to \code{evalq} except the its default argument creates a
-new, empty environment. This is useful to create anonymous recursive
-functions and as a kind of limited namespace feature since variables
-defined in the environment are not visible from the outside. 
+  Evaluate an \R expression in a specified environment.
 }
+\details{
+  \code{eval} evaluates the expression \code{expr} argument in the
+  environment specified by \code{envir} and returns the computed value.
+  If \code{envir} is not specified, then
+  \code{\link{sys.frame}(\link{sys.parent}())}, the environment where
+  the call to \code{eval} was made is used.
 
+  The \code{evalq} form is equivalent to \code{eval(quote(expr), ...)}.
+  %% FIXME: This is not what the code says?
 
+  \code{eval.parent(expr, n)} is a shorthand for \code{eval(expr,
+    parent.frame(n))}. 
+
+  \code{local} evaluates an expression in a local environment.  It is
+  equivalent to \code{evalq} except the its default argument creates a
+  new, empty environment.  This is useful to create anonymous recursive
+  functions and as a kind of limited namespace feature since variables
+  defined in the environment are not visible from the outside.
+}
 \seealso{
-\code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
-\code{\link{environment}}. 
+  \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
+  \code{\link{environment}}. 
+}
+\details{
+  As \code{eval} evaluates its first argument before passing it to the
+  evaluator, it allows you to assign complicated expressions to symbols
+  and then evaluate them.  \code{evalq} avoids this.
 }
 \note{
-Due to the difference in scoping rules, there are some differences
-between R and S in this area. In particular, the default enclosure
-in S is the global environment.
+  Due to the difference in scoping rules, there are some differences
+  between R and S in this area.  In particular, the default enclosure 
+  in S is the global environment.
 
-When evaluating expressions in dataframes that has been passed as
-argument to a function, the relevant enclosure is often the caller's
-environment, i.e. one needs 
-\code{eval(x, data, sys.frame(sys.parent()))}.
+  When evaluating expressions in dataframes that has been passed as
+  argument to a function, the relevant enclosure is often the caller's
+  environment, i.e., one needs
+  \code{eval(x, data, sys.frame(sys.parent()))}.
 }
-
 \examples{
 eval(2 ^ 2 ^ 3)
 mEx <- expression(2^2^3); mEx; 1 + eval(mEx)
@@ -106,8 +109,6 @@ sapply(1:5,gg)
 
 ls(envir=environment(gg))
 ls(envir=environment(get("k",envir=environment(gg))))
-
 }
-
 \keyword{data}
 \keyword{programming}

@@ -1,6 +1,7 @@
 #### -*- R -*-
-					# Helical Valley Function
-					# Page 362 Dennis + Schnabel
+
+## Helical Valley Function
+## Page 362 Dennis + Schnabel
 
 theta <- function(x1,x2) {
     if(x1 > 0)
@@ -16,4 +17,72 @@ f <- function(x) {
     return(f1^2+f2^2+f3^2)
 }
 
+## explore surface
+x <- seq(-1, 2, len=50)
+y <- seq(-1, 1, len=50)
+z <- apply(as.matrix(expand.grid(x, y)), 1, function(x) f(c(x, 0)))
+contour(x, y, matrix(log10(z), 50, 50))
+
 nlm(f, c(-1,0,0), hessian=TRUE, print=0)
+
+
+## the Rosenbrock banana valley function
+
+f <- function(x)
+{
+    x1 <- x[1]; x2 <- x[2]
+    100*(x2 - x1*x1)^2 + (1-x1)^2
+}
+
+## explore surface
+x <- seq(-2, 2, len=100)
+y <- seq(-1, 1, len=100)
+fx <- function(x)
+{
+    x1 <- x[,1]; x2 <- x[,2]
+    100*(x2 - x1*x1)^2 + (1-x1)^2
+}
+z <- fx(expand.grid(x, y))
+contour(x, y, matrix(log10(z), length(x)))
+
+nlm(f, c(-1.2,1), hessian=TRUE)
+
+
+fg <- function(x)
+{
+    gr <- function(x1, x2) {
+        c(-400*x1*(x2 - x1*x1)-2*(1-x1), 200*(x2 - x1*x1))
+    }
+    x1 <- x[1]; x2 <- x[2]
+    res<- 100*(x2 - x1*x1)^2 + (1-x1)^2
+    attr(res, "gradient") <- gr(x1, x2)
+    return(res)
+}
+
+nlm(fg, c(-1.2,1), hessian=TRUE)
+
+## or use deriv to find the derivatives
+
+fd <- deriv(~ 100*(x2 - x1*x1)^2 + (1-x1)^2, c("x1", "x2"))
+fdd <- function(x1, x2) {}
+body(fdd) <- fd
+nlm(function(x) fdd(x[1], x[2]), c(-1.2,1), hessian=TRUE)
+
+
+fgh <- function(x)
+{
+    gr <- function(x1, x2) {
+        c(-400*x1*(x2 - x1*x1) - 2*(1-x1), 200*(x2 - x1*x1))
+    }
+    h <- function(x1, x2) {
+        a11 <- 2 - 400*(x2 - x1*x1) + 800*x1*x1
+        a21 <- -400*x1
+        matrix(c(a11,a21,a21,200),2,2)
+    }
+    x1 <- x[1]; x2 <- x[2]
+    res<- 100*(x2 - x1*x1)^2 + (1-x1)^2
+    attr(res, "gradient") <- gr(x1, x2)
+    attr(res, "hessian") <- h(x1, x2)
+    return(res)
+}
+nlm(fgh, c(-1.2,1), hessian=TRUE)

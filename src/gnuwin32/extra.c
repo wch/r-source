@@ -29,35 +29,10 @@
 #include "Defn.h"
 #include "Fileio.h"
 #include <io.h>
+#include <direct.h>
 #include <time.h>
 #include <windows.h>
 #include "graphapp/ga.h"
-
-static char DefaultFileName[MAX_PATH];
-
-/*
- * replacement for Windows function that uses root directory
- */
-char * tmpnam(char * str)
-{
-    char *tmp, tmp1[MAX_PATH], *tmp2, *p;
-    int hasspace = 0;
-
-    if(str) tmp2 = str; else tmp2 = DefaultFileName;
-    tmp = getenv("TMP");
-    if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
-    /* make sure no spaces in path */
-    for (p = tmp; *p; p++)
-	if (isspace(*p)) { hasspace = 1; break; }
-    if (hasspace)
-	GetShortPathName(tmp, tmp1, MAX_PATH);
-    else
-	strcpy(tmp1, tmp);
-    sprintf(tmp2, "%s/RtmpXXXXXX", tmp);
-    mktemp(tmp2); /* Windows function to replace X's */
-    return(tmp2);
-}
 
 
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -102,6 +77,26 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
+SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  path, ans;
+    char *p, dir[MAX_PATH];
+    int res;
+
+    checkArity(op, args);
+    path = CAR(args);
+    if (!isString(path) || length(path) != 1)
+	errorcall(call, "invalid path argument");
+    strcpy(dir, CHAR(STRING(path)[0]));
+    for(p = dir; *p != '\0'; p++)
+	if(*p == '/') *p = '\\';
+    res = mkdir(dir);
+    PROTECT(ans = allocVector(LGLSXP, 1));
+    LOGICAL(ans)[0] = (res==0);
+    UNPROTECT(1);
+    return (ans);
+}
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -123,7 +118,7 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(tmp, CHAR(STRING(fn)[i]));
 	for(p = tmp; *p != '\0'; p++)
 	    if(*p == '/') *p = '\\';
-	if(stat(tmp, &sb))
+	if(stat(tmp, &sb) == 0)
 	    /* Is this a directory? */
 	    if(sb.st_mode & _S_IFDIR) {
 		if(rmdir(tmp)) failures++;
@@ -142,13 +137,13 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		failures += (unlink(tmp) !=0);
 	    }
 	    FindClose(fh);
-	} else failures++;
+	} /* else  failures++;*/
     }
-    PROTECT(ans = allocVector(STRSXP, 1));
+    PROTECT(ans = allocVector(INTSXP, 1));
     if (!failures)
-	STRING(ans)[0] = mkChar("0");
+	INTEGER(ans)[0] = 0;
     else
-	STRING(ans)[0] = mkChar("1");
+	INTEGER(ans)[0] = 1;
     UNPROTECT(1);
     return (ans);
 }

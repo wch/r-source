@@ -11,11 +11,15 @@ abline(reg=, \dots)
 \alias{abline}
 \description{
   This function adds one or more straight lines through the current plot.
-  The first form above specifies the line in intercept/slope form
+}
+\details{
+  The first form specifies the line in intercept/slope form
   (alternatively \code{a} can be specified on its own and is taken to
   contain the slope and intercept in vector form).
+
   The \code{h=} and \code{v=} forms draw horizontal and vertical lines
   at the specified coordinates.
+
   The \code{coef} form specifies the line by a vector containing the
   slope and intercept.
   \code{reg} is a regression object which contains \code{reg$coef}.  If

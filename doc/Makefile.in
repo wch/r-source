@@ -11,7 +11,7 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = KEYWORDS R.1 Rdconv.1 keyword-test.in Makefile.in
+DISTFILES = KEYWORDS KEYWORDS.db R.1 Rdconv.1 keyword-test.in Makefile.in
 SUBDIRS = html manual
 
 all docs: Makefile keyword-test R
@@ -79,7 +79,7 @@ uninstall:
 	@(cd $(mandir)/man1; \
 	  rm -f R.1 Rdconv.1 Rd2txt.1 Rdindex.1 Sd2Rd.1)
 
-dvi info::
+dvi info pdf::
 	@(cd manual && $(MAKE) $@)
 
 mostlyclean:

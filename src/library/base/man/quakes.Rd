@@ -11,17 +11,20 @@
     [,5] \tab stations  \tab numeric    \tab Number of stations reporting
   }
 }
-\source{This is one of the Harvard PRIM-H project data sets.  They in turn
-obtained it from Dr. John Woodhouse, Dept. of Geophysics,
-Harvard University.
+\source{
+  This is one of the Harvard PRIM-H project data sets.  They in turn
+  obtained it from Dr. John Woodhouse, Dept. of Geophysics,
+  Harvard University.
 }
-\description{The data set give the locations of 1000 seismic events of MB > 4.0.
-The events occurred in a cube near Fiji since 1964.
-
-There are two clear planes of seismic activity.  One is a major
-plate junction; the other is a trench off New Zealand.  These data
-constitute a subsample from a larger dataset of containing 5000
-observations.
+\description{
+  The data set give the locations of 1000 seismic events of MB > 4.0.
+  The events occurred in a cube near Fiji since 1964.
+}
+\details{
+  There are two clear planes of seismic activity.  One is a major
+  plate junction; the other is a trench off New Zealand.  These data
+  constitute a subsample from a larger dataset of containing 5000
+  observations.
 }
 \examples{
 data(quakes)

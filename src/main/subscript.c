@@ -113,6 +113,7 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 int get1index(SEXP s, SEXP names, int len, int pok)
 {
     int index, i;
+    double dblind;
 
     if (length(s) > 1)
 	error("attempt to select more than one element");
@@ -123,10 +124,18 @@ int get1index(SEXP s, SEXP names, int len, int pok)
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	index = integerOneIndex(INTEGER(s)[0], len);
+	i = INTEGER(s)[0];
+	if(i == NA_INTEGER) 
+	    index = -1;
+	else
+	    index = integerOneIndex(i, len);
 	break;
     case REALSXP:
-	index = integerOneIndex(REAL(s)[0], len);
+	dblind = REAL(s)[0];
+	if(ISNAN(dblind)) 
+	    index = -1;
+	else
+	    index = integerOneIndex((int)dblind, len);
 	break;
     case STRSXP:
 	/* Try for exact match */

@@ -81,10 +81,10 @@ filled.contour(x, y, volcano, color = terrain.colors,
     xlab = "Meters North", ylab = "Meters West"),
     plot.axes = { axis(1, seq(100, 800, by = 100))
                   axis(2, seq(100, 600, by = 100)) },
-    key.title = title(main="Height (Meters)"),
+    key.title = title(main="Height\n(meters)"),
     key.axes = axis(4, seq(90, 190, by = 10)))# maybe also asp=1
 mtext(paste("filled.contour(.) from", R.version.string),
-      side=1, line=4, adj=1, cex=.6)
+      side=1, line=4, adj=1, cex=.66)
 }
 \keyword{hplot}
 \keyword{aplot}

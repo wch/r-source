@@ -7,19 +7,22 @@ savePlot(filename="Rplot",
          device=dev.cur())
 }
 \arguments{
-    \item{filename}{The filename under which to save the plot, without
-	the extension.}
-    \item{type}{The type of plot, Windows metafile, PNG, JPEG, BMP
-      (Windows bitmap format)  or PostScript.}
-    \item{device}{A device number of a \code{windows} device, by default
+  \item{filename}{The filename under which to save the plot, without
+    the extension.}
+  \item{type}{The type of plot, Windows metafile, PNG, JPEG, BMP
+    (Windows bitmap format)  or PostScript.}
+  \item{device}{A device number of a \code{windows} device, by default
     the current device.}
 }
 \description{
-    Saves the current plot on a \code{windows} device to a file.
+  Saves the current plot on a \code{windows} device to a file.
 }
 \details{
-    This is equivalent to selecting the `Save as' menu item on the
-    `File' menu of a devga device.
+  This is equivalent to selecting the `Save as' menu item on the
+  `File' menu of a devga device.
+
+  Using \code{filename} as \code{"clipboard"} or \code{""} with
+  \code{type = "wmf"} will copy to the clipboard.
 }
 \value{
   None, but a plot file will be created.

@@ -9,8 +9,11 @@ embed (x, dimension = 1)
   \item{dimension}{a scalar representing the embedding dimension.}
 }
 \description{
-  Embeds the time series \code{x} into the \code{dimension} dimensional
-  Euclidean space. Each row of the resulting matrix consists of sequences
+  Embeds the time series \code{x} into a low-dimensional
+  Euclidean space.
+}
+\details{
+  Each row of the resulting matrix consists of sequences
   \code{x[t]}, \code{x[t-1]}, \dots, \code{x[t-dimension+1]}, where
   \code{t} is the original index of \code{x}. If \code{x} is a matrix,
   i.e., \code{x} contains more than one variable, then \code{x[t]}

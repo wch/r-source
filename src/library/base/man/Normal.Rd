@@ -12,7 +12,7 @@ rnorm(n, mean=0, sd=1)
 \alias{rnorm}
 \arguments{
   \item{x,q}{vector of quantiles.}
-  \item{p}{vector of probabilites.}
+  \item{p}{vector of probabilities.}
   \item{n}{number of observations.}
   \item{mean}{vector of means.}
   \item{sd}{vector of standard deviations.}
@@ -23,7 +23,8 @@ rnorm(n, mean=0, sd=1)
   \code{dnorm} gives the density, \code{pnorm} gives the distribution
   function \code{qnorm} gives the quantile function and \code{rnorm}
   generates random deviates.
-
+}
+\details{
   If \code{mean} or \code{sd} are not specified they assume the default
   values of \code{0} and \code{1}, respectively.
 

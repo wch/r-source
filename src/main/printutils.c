@@ -164,7 +164,7 @@ char *EncodeReal(double x, int w, int d, int e)
     return Encodebuf;
 }
 
-char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
+char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 {
 #if OLD
     char fmt[64], *efr, *efi;

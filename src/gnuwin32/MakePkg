@@ -1,6 +1,6 @@
-LIBLOC=../../../library
-LIBINDEX=$(wildcard $(LIBLOC)/LibIndex)
-DPKG=$(LIBLOC)/$(PKG)
+#-*- Makefile -*-
+RLIB=../../../library
+DPKG=$(RLIB)/$(PKG)
 SPKG=.
 
 ifeq ($(strip $(DLLNM)),)
@@ -55,7 +55,7 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 
 all:  $(DPKG)/zzzz  $(DPKG)/R/$(PKG)  $(DATA) $(DYNLIB)
 
-include ../../gnuwin32/MkRules
+include $(RHOME)/src//gnuwin32/MkRules
 
 clean:
 	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def
@@ -92,9 +92,10 @@ $(DATA): $(DSOURCES)
 $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
 	$(MKDIR) -p $(DPKG)/libs
 	$(CP) $^ $@
-	
+
 $(SSPKG)/$(DLLNAME).dll: FORCE
-	$(MAKE) -C $(SSPKG) -f ../../../gnuwin32/MakeDll DLLNAME=$(DLLNAME)
+	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) \
+	  -f $(RHOME)/src/gnuwin32/MakeDll DLLNAME=$(DLLNAME)
 
 FORCE:
 

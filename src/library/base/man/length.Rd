@@ -6,16 +6,24 @@ length(x) <- n
 }
 \alias{length}
 \alias{length<-}
+\arguments{
+  \item{x}{a vector or list.}
+  \item{n}{an integer.}
+}
 \description{
-If \code{x} is (or can be coerced to) a vector or list, \code{length}
-returns the length of \code{x}.
-Otherwise, \code{length} returns \code{NA}.
-
-The second form above can be used to reset
-the length of a vector.
-If a vector is shortened, extra values are discarded
-and when a vector is lengthened, it is padded out to
-its new length with \code{\link{NA}}s.
+  Get or set the length of vectors (including lists).
+}
+\value{
+  If \code{x} is (or can be coerced to) a vector or list, \code{length}
+  returns the length of \code{x}.
+  Otherwise, \code{length} returns \code{NA}.
+}
+\details{ 
+  The replacement form can be used to reset
+  the length of a vector.
+  If a vector is shortened, extra values are discarded
+  and when a vector is lengthened, it is padded out to
+  its new length with \code{\link{NA}}s.
 }
 \examples{
 length(diag(4))# = 16 (4 x 4)

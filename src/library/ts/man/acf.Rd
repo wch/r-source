@@ -18,62 +18,64 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
 }
 \arguments{
-    \item{x, y}{a univariate or multivariate (not \code{ccf}) time
-	series object or a numeric vector or matrix.}
+  \item{x, y}{a univariate or multivariate (not \code{ccf}) time
+    series object or a numeric vector or matrix.}
 
-    \item{lag.max}{maximum lag at which to calculate the acf.  Default
-	is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
-	of observations.}
+  \item{lag.max}{maximum lag at which to calculate the acf.  Default
+    is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
+    of observations.}
 
-    \item{plot}{logical. If \code{TRUE} the acf is plotted.}
+  \item{plot}{logical. If \code{TRUE} the acf is plotted.}
 
-    \item{type}{character string giving type of acf.  Allowed values are
- 	"correlation" (the default), "covariance" or "partial".}
+  \item{type}{character string giving the type of acf to be computed.
+    Allowed values are
+    \code{"correlation"} (the default), \code{"covariance"} or
+    \code{"partial"}.}
 
-    \item{na.action}{function to be called to handle missing values.}
+  \item{na.action}{function to be called to handle missing values.}
 
-    \item{demean}{logical. Should the covariances be about the sample means?}
+  \item{demean}{logical. Should the covariances be about the sample means?}
 
-    \item{acf.obj}{an object of class \code{acf}.}
+  \item{acf.obj}{an object of class \code{acf}.}
 
-    \item{ci}{coverage probability for confidence interval.  Plotting of
-	the confidence interval is suppressed if \code{ci} is
-	zero or negative.}
+  \item{ci}{coverage probability for confidence interval.  Plotting of
+    the confidence interval is suppressed if \code{ci} is
+    zero or negative.}
 
-    \item{ci.col}{colour to plot the confidence interval lines.}
+  \item{ci.col}{colour to plot the confidence interval lines.}
 
-    \item{ci.type}{should the confidence limits assume a white noise
-	input or for lag \code{k} an MA(\code{k-1}) input?}
+  \item{ci.type}{should the confidence limits assume a white noise
+    input or for lag \code{k} an MA(\code{k-1}) input?}
 
-    \item{\dots}{graphical parameters.}
+  \item{\dots}{graphical parameters.}
 }
 \description{
-    The function \code{acf} computes (and by default plots) estimates of
-    the autocovariance or autocorrelation function.  Function
-    \code{pacf} is the function used for the partial autocorrelations.
+  The function \code{acf} computes (and by default plots) estimates of
+  the autocovariance or autocorrelation function.  Function
+  \code{pacf} is the function used for the partial autocorrelations.
 
-    Function \code{ccf} computes the cross-correlation or
-    cross-covariance of two univariate series.
+  Function \code{ccf} computes the cross-correlation or
+  cross-covariance of two univariate series.
 
-    The generic function \code{plot} has a method for \code{acf} objects.
+  The generic function \code{plot} has a method for \code{acf} objects.
 }
 \details{
-    For \code{type} = \code{"correlation"} and \code{"covariance"}, the
-    estimates are based on the sample covariance.
-    
-    The partial correlation coefficient is estimated by fitting
-    autoregressive models of successively higher orders up to
-    \code{lag.max}.
+  For \code{type} = \code{"correlation"} and \code{"covariance"}, the
+  estimates are based on the sample covariance.
+
+  The partial correlation coefficient is estimated by fitting
+  autoregressive models of successively higher orders up to
+  \code{lag.max}.
 }
 \value{
   An object of class \code{acf}, which is a list with the following
   elements:
 
   \item{lag}{A three dimensional array containing the lags at which
-      the acf is estimated.}
+    the acf is estimated.}
 
-  \item{acf}{An array with the same dimensions as \code{lag} 
-      containing the estimated acf.}
+  \item{acf}{An array with the same dimensions as \code{lag}
+    containing the estimated acf.}
 
   \item{type}{The type of correlation (same as the \code{type} argument).}
 
@@ -86,11 +88,14 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
   The result is returned invisibly if \code{plot} is \code{TRUE}.
 }
 \author{Original: Paul Gilbert, Martyn Plummer.  Extensive modifications
-    and univariate case of \code{pacf} by B.D. Ripley.}
+  and univariate case of \code{pacf} by B.D. Ripley.}
 
-\note{The confidence interval plotted in \code{plot.acf} is based on an
-    \emph{uncorrelated} series and should be treated with appropriate
-    caution. Using \code{ci.type = "ma"} may be less potentially misleading.}
+\note{
+  The confidence interval plotted in \code{plot.acf} is based on an
+  \emph{uncorrelated} series and should be treated with appropriate
+  caution. Using \code{ci.type = "ma"} may be less potentially
+  misleading.
+}
 
 \examples{
 ## Examples from Venables & Ripley

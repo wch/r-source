@@ -95,7 +95,7 @@ int LogicalFromReal(double x, int *warn)
 	NA_LOGICAL : (x != 0);
 }
 
-int LogicalFromComplex(complex x, int *warn)
+int LogicalFromComplex(Rcomplex x, int *warn)
 {
     return (ISNAN(x.r) || ISNAN(x.i)) ?
 	NA_LOGICAL : (x.r != 0 || x.i != 0);
@@ -136,7 +136,7 @@ int IntegerFromReal(double x, int *warn)
     return x;
 }
 
-int IntegerFromComplex(complex x, int *warn)
+int IntegerFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -190,7 +190,7 @@ double RealFromInteger(int x, int *warn)
 	return x;
 }
 
-double RealFromComplex(complex x, int *warn)
+double RealFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -213,9 +213,9 @@ double RealFromString(SEXP x, int *warn)
     return NA_REAL;
 }
 
-complex ComplexFromLogical(int x, int *warn)
+Rcomplex ComplexFromLogical(int x, int *warn)
 {
-    complex z;
+    Rcomplex z;
     if (x == NA_LOGICAL) {
 	z.r = NA_REAL;
 	z.i = NA_REAL;
@@ -227,9 +227,9 @@ complex ComplexFromLogical(int x, int *warn)
     return z;
 }
 
-complex ComplexFromInteger(int x, int *warn)
+Rcomplex ComplexFromInteger(int x, int *warn)
 {
-    complex z;
+    Rcomplex z;
     if (x == NA_INTEGER) {
 	z.r = NA_REAL;
 	z.i = NA_REAL;
@@ -241,9 +241,9 @@ complex ComplexFromInteger(int x, int *warn)
     return z;
 }
 
-complex ComplexFromReal(double x, int *warn)
+Rcomplex ComplexFromReal(double x, int *warn)
 {
-    complex z;
+    Rcomplex z;
     if (ISNAN(x)) {
 	z.r = NA_REAL;
 	z.i = NA_REAL;
@@ -255,10 +255,10 @@ complex ComplexFromReal(double x, int *warn)
     return z;
 }
 
-complex ComplexFromString(SEXP x, int *warn)
+Rcomplex ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
-    complex z;
+    Rcomplex z;
     char *endp = CHAR(x);;
     z.r = z.i = NA_REAL;
     if (x != R_NaString) {
@@ -301,7 +301,7 @@ SEXP StringFromReal(double x, int *warn)
     return mkChar(EncodeReal(x, w, d, e));
 }
 
-SEXP StringFromComplex(complex x, int *warn)
+SEXP StringFromComplex(Rcomplex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei);
@@ -366,7 +366,7 @@ static SEXP coerceToSymbol(SEXP v)
     int warn;
     if (length(v) <= 0)
 	error("Invalid data of mode \"%s\" (too short)",
-	      type2str(TYPEOF(v)));
+	      CHAR(type2str(TYPEOF(v))));
     PROTECT(v);
     switch(TYPEOF(v)) {
     case LGLSXP:
@@ -962,6 +962,8 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	STRING(v)[0] = PRINTNAME(u);
 	return v;
     }
+    else if (isSymbol(u) && type == SYMSXP)
+	return u;
     else errorcall(call, "cannot coerce to vector");
     return u;/* -Wall */
 }

@@ -1,5 +1,5 @@
 \name{nlm}
-\title{non-linear minimization}
+\title{Non-Linear Minimization}
 \usage{
 nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
     print.level = 0, ndigit=12, gradtol = 1e-6,
@@ -11,7 +11,9 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
 \item{f}{the function to be minimized.  If the function value has
     an attribute called \code{gradient} or both \code{gradient} and
     \code{hessian} attributes, these will be used in the calculation of
-    updated parameter values.  Otherwise, numerical derivatives are used.}
+    updated parameter values.  Otherwise, numerical derivatives are
+    used. \code{\link{deriv}} returns a function with suitable
+    \code{gradient} attribute.}
 \item{p}{starting parameter values for the minimization.}
 \item{hessian}{if \code{TRUE}, the hessian of \code{f}
 at the minimum is returned.}
@@ -93,12 +95,15 @@ system of algorithms for unconstrained minimization,
 \seealso{
 \code{\link{optimize}} for one-dimensional
 minimization and \code{\link{uniroot}} for root finding.
-\code{demo(nlm)} for more examples.
+\code{\link{deriv}} to calculate analytical derivatives.
 }
 \examples{
 f <- function(x) sum((x-1:length(x))^2)
 nlm(f, c(10,10))
 nlm(f, c(10,10), print.level = 2)
 str(nlm(f, c(5), hessian = TRUE))
+
+## more examples, including the use of derivatives.
+\dontrun{demo(nlm)}
 }
 \keyword{nonlinear}

@@ -238,7 +238,7 @@ sub usage {
 }
 
 sub open_hhp {
-    my $pkg = $ARGV[0];
+    my $pkg = $_[0];
 
     open hhpfile, ">../chm/$pkg.hhp" 
 	|| die "Couldn't open the chm project file\n";

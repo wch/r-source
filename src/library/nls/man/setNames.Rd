@@ -1,6 +1,6 @@
 \name{setNames}
 \alias{setNames}
-\title{set the names in an object}
+\title{Set the Names in an Object}
 \usage{
 setNames(object, nm)
 }

@@ -67,6 +67,26 @@ AC_DEFUN(R_PROG_PERL,
     AC_SUBST(NO_PERL5)
   ])
 dnl
+dnl R_PROG_TEXMF
+dnl
+AC_DEFUN(R_PROG_TEXMF,
+ [AC_REQUIRE([R_PROG_PERL])
+  AC_PATH_PROG(DVIPS, [${DVIPS} dvips], false)
+  AC_PATH_PROG(LATEX, [${LATEX} latex], false)
+  AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
+  AC_PATH_PROG(PDFLATEX, [${PDFLATEX} pdflatex], false)
+  AC_PATH_PROG(KPSEWHICH, [${KPSEWHICH} kpsewhich], false)
+  AE=`${KPSEWHICH} ae.sty`
+  if test -z "${AE}"; then AE="."; else AE=ae; fi
+  AC_SUBST(AE)
+  AC_PATH_PROG(MAKEINFO, [${MAKEINFO} makeinfo], false)
+  if test -n "${PERL}"; then
+    INSTALL_INFO="\$(top_builddir)/tools/install-info"
+    AC_SUBST(INSTALL_INFO)
+  else
+    AC_PATH_PROG(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  fi])
+dnl
 dnl R_PROG_CC_M
 dnl
 dnl Test whether the C compiler accepts -M for generating dependencies

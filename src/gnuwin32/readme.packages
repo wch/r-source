@@ -41,7 +41,7 @@ http://msdn.microsoft.com/workshop/author/htmlhelp.
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this is available for download at
-ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE), or hcp505.exe
+ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE), or hcp505.exe.
 
 For large packages it is helpful to make zipped help files: for that
 you need zip from the Info-ZIP project 
@@ -161,6 +161,19 @@ but users may want to read the information files in a Windows editor).
 
 zip is often installed on Linux machines, and sources and binaries for
 Unix boxes are available via the Info-Zip site given above.
+
+
+Non-standard locations
+======================
+
+You can specify the location of the package source by PKGDIR and the
+library in which to install the package by RLIB, as in
+
+make PKGDIR=/mysources RLIB=/R/library pkg-mypkg
+make PKGDIR=/mysources RLIB=/R/library pkgcheck-mypkg
+
+installs the package in \mysources\mypkg as \R\library\mypkg and checks its
+examples.
 
 
 Feedback

@@ -3,16 +3,19 @@
 \alias{package.description}
 \title{Package Contents and Description}
 \description{
-  Parses and returns the CONTENTS and DESCRIPTION file of a package.
+  Parses and returns the \file{CONTENTS} and \file{DESCRIPTION}
+  file of a package.
 }
 \usage{
-package.contents(pkg, lib=.lib.loc)
-package.description(pkg, lib=.lib.loc)
+package.contents(pkg, lib = .lib.loc)
+package.description(pkg, lib = .lib.loc, fields = NULL)
 }
 \arguments{
  \item{pkg}{A character string with the package name.}
- \item{lib}{A character vector with path names of R package
-             libraries.}
+ \item{lib}{A character vector with path names of \R package
+   libraries.}
+ \item{fields}{A character vector of fields to return (if other fields
+   occur in the file they are ignored.}
 }
 \seealso{\code{\link{parse.dcf}}}
 \examples{

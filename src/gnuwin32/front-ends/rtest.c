@@ -53,7 +53,8 @@ extern void R_DefParams(Rstart);
 extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
 extern void ProcessEvents(void);
-extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit(), R_CleanUp();
+extern void setup_Rmainloop(void), end_Rmainloop(void), 
+    R_ReplDLLinit(void), R_CleanUp(int, int, int);
 extern int R_ReplDLLdo1();
 extern void run_Rmainloop(void);
 
@@ -159,7 +160,7 @@ int main (int argc, char **argv)
 /* add user actions here if desired */
     }
 /* only get here on EOF (not q()) */
-    R_CleanUp(SA_DEFAULT);
+    R_CleanUp(SA_DEFAULT, 0, 1);
 #endif
     end_Rmainloop();
     return 0;

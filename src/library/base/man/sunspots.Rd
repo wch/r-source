@@ -16,4 +16,9 @@
 	Student and Research Worker}.
     New York: Springer-Verlag.
 }
+\examples{
+data(sunspots)
+plot(sunspots, main = "sunspots data", xlab = "Year",
+     ylab = "Monthly sunspot numbers")
+}
 \keyword{datasets}

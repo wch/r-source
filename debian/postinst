@@ -4,6 +4,8 @@
 # This version written by Douglas Bates <bates@stat.wisc.edu>
 
 set -e
+
+#DEBHELPER#
     
 if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 

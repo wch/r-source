@@ -1,5 +1,5 @@
 \name{euro}
-\title{Euro conversion rates}
+\title{Euro Conversion Rates}
 \alias{euro}
 \alias{euro.cross}
 \usage{data(euro)}
@@ -34,5 +34,8 @@ all(euro.cross == outer(1/euro, euro)) # TRUE
 
 ## Convert 20.- Spanish Pesetas to Italian Lira
 20 * euro.cross["ESP", "ITL"]
+dotplot(euro, main = "euro data: 1 Euro in currency unit")
+dotplot(1/euro, main = "euro data: 1 currency unit in Euros")
+dotplot(log(euro, 10), main = "euro data: log10(1 Euro in currency unit)")
 }
 \keyword{datasets}

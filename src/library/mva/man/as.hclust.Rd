@@ -1,7 +1,7 @@
 \name{as.hclust}
 \alias{as.hclust}
 \alias{as.hclust.twins}
-\title{Convert objects to class hclust}
+\title{Convert Objects to Class hclust}
 \usage{
 as.hclust(x, ...)
 as.hclust.twins(x)
@@ -10,16 +10,20 @@ as.hclust.twins(x)
  \item{x}{Hierarchical clustering object}
 }
 \description{
-    Converts objects from other hierarchical clustering functions to
-    class \code{"hclust"}. Currently there is only support for
-    converting objects of class \code{"twins"} as produced by the
-    functions \code{diana()} and \code{agnes()} from the package
-    \file{cluster}.
+  Converts objects from other hierarchical clustering functions to
+  class \code{"hclust"}.
+}
+\details{
+  Currently there is only support for converting objects of
+  class \code{"twins"} as produced by the functions \code{diana} and
+  \code{agnes} from the package \file{cluster}.
 }
 \value{
-    An object of class \code{"hclust"}.
+  An object of class \code{"hclust"}.
 }
-\seealso{\code{\link{hclust}},\code{\link{diana}},\code{\link{agnes}}}
+\seealso{
+  \code{\link{hclust}},\ code{\link{diana}}, \code{\link{agnes}}
+}
 \examples{
 \dontrun{
 x <- matrix(rnorm(30), ncol=3)

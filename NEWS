@@ -5,6 +5,118 @@
 	*						 *
 	**************************************************
 
+		CHANGES IN R VERSION 0.90.1
+
+
+NEW FEATURES
+
+    o	rect(.) has `lwd' argument.
+
+    o	legend() has a `adj' argument and has been streamlined (and fixed up).
+
+    o   `unname' convenience function [experimental data.frame behavior].
+
+    o   `examples' sections have been added to the documentation
+        for most of the data sets in the base library.
+
+    o   update.packages & friends have new argument contriburl for
+        incomplete CRAN mirrors. Package bundles such as VR can be
+        directly installed both from the shell and from inside R.
+
+    o	RLIBS is no longer accepted as well as R_LIBS (which has been
+	the documented form since 0.65.0).
+
+    o	demo(nlm) has examples of using analytical gradients and
+	Hessians.
+
+    o	.Platform$OS.type is standardized to be `unix', `mac' or `windows'
+
+    o	setting cex in matplot(matrix(1:25,5), cex=1:5) now works
+
+    o   ar.ols() has separate demean and intercept arguments, uses
+        internal scaling for greater accuracy.
+
+    o   xxxPR functions allow NCHAR=-1 for S compatibility.
+
+    o   `Rcomplex' is preferred to `complex' (a future reserved word
+	in C) for R complex objects passed to C.
+
+    o   new function dir.create() for platform-independence.
+
+    o   help.search() creates a database for faster searching later in
+	the R session.
+
+    o	density() allows for more kernels and has a new argument
+        `give.Rkern' to access the relevant kernel property.
+
+    o	multivariate methods for ar: "yule-walker" (now in C) and
+	"burg" (new) contributed by Martyn Plummer.
+
+    o	New data sets `HairEyeColor' (hair and eye color of statistics
+	students), `Titanic' (survival of passengers on the Titanic),
+	and `UCBAdmissions' (student admissions at UC Berkeley).
+
+
+BUG FIXES
+
+    o	Many help pages have been revised and enhanced.
+
+    o   predict.glm() works again with type="link".
+
+    o   subscripting arrays and matrices no longer loses the names of
+	the dimnames vector.  Transpose also preserves the names.
+
+    o   examples in help files containing \testonly are no longer
+	(partially) duplicated.
+
+    o   is.numeric() of a factor is now FALSE
+
+    o   prevent a segfault in plotmath
+
+    o	f <- get("function"); f(,); f(F,F)  now "ok" (PR#361).
+
+    o	blank-line reject code in parse.dcf was wrong (Martyn Plummer)
+
+    o	made filled.contour independent of pointsize. Make plot key
+	wider so there's room for a title. Touchup example.
+
+    o	font size fixups for the X11 driver (mainly)
+
+    o   some.list[[NA]] is NULL, following S, rather than giving spurious
+        error messages
+
+    o   segfault when running out of heap
+
+    o   segfault in rbind of a vector without names fixed. cbind, too.
+
+    o   fixed symbol size problems with PostScript driver
+
+    o   unique() & duplicated() only work for atomic vectors;
+        unique(data.frame(""[F])) doesn't segfault anymore.
+
+    o   get("attr<-")(""[0],""[0]) doesn't segfault anymore.
+
+    o   blunder in do_memoryprofile, causing segfault on Alpha machines
+
+    o   erroneous error message in coerceToSymbol
+
+    o   partial workaround for workspace restore problems. This can
+        happen if an environment on the search path is assigned to a
+        variable which gets saved. The error "unresolved node during
+        restore" is turned into a warning, allowing the rest of the
+        workspace to be restored, but the variable contains an empty
+        environment on reload.
+
+    o   density(x) now works also when IQR(x) == 0.
+        density(x, window=...) now works [S compatibility].
+
+    o   prevent points from being plotted if pch, cex, or col are NA.
+        Does not apply to bg on pch 21--25 (where NA means
+        "transparent") because it would require fixes at the driver
+        level.
+
+
+		CHANGES IN R VERSION 0.90.0
 
 NEW FEATURES
 
@@ -30,6 +142,7 @@ NEW FEATURES
 	area. The distance between lines of margin text in the X11
 	device is now proportional to the size given to
 	x11(pointsize).
+
 
     o	abline(a,b) now (again) refers to transformed coordinates on
 	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
@@ -101,8 +214,9 @@ NEW FEATURES
     o	The R-external manual which describes programming for the
 	.Call and .External interfaces is in the doc/manual directory.
 
-    o	New target `make pdf' in doc/manuals makes hyperlinked PDF 
-	documentation. (This is experimental for this release.)
+    o	New target `make pdf' in doc/manuals makes hyperlinked PDF
+	documentation. (This is experimental for this release. See
+	doc/manual/README for further details.)
 
 
     o	S.h now contains (via Rdefines.h) a MESSAGE macro, and
@@ -164,7 +278,7 @@ BUG FIXES
 
     o	Fix problems in scan(flush = TRUE).
 
-    o   scan() got confused by trailing whitespace.
+    o	scan() got confused by trailing whitespace.
 
     o	split(x,f) now works even when f is a factor with unused levels
 	(PR#294).
@@ -200,7 +314,7 @@ BUG FIXES
 
     o	Text clipping now works in the X11 device.
 
-    o   Pixel rows sometimes got doubled in rotated text on the X11 device.
+    o	Pixel rows sometimes got doubled in rotated text on the X11 device.
 
     o	par("yaxt") is now ok.
 
@@ -216,6 +330,7 @@ BUG FIXES
     o	R CMD check had a typo which made the final message fail.
 
     o	R_EOF redefined as -1, was causing trouble with isxxxx contructions.
+
 
 
 	**************************************************

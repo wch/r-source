@@ -1,5 +1,5 @@
 \name{read.table}
-\title{data input}
+\title{Data Input}
 \usage{
 read.table(file, header = FALSE, sep = "", row.names,
         col.names, as.is = FALSE, na.strings = "NA", skip = 0)

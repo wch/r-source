@@ -17,7 +17,8 @@ xor(x, y)
 \alias{Logic}
 \description{
   These operators act on logical vectors.
-
+}
+\details{
   \code{!} indicates logical negation (NOT).
 
   \code{&} and \code{&&} indicate logical AND and \code{|} and \code{||}

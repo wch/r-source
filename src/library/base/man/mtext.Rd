@@ -1,7 +1,7 @@
 \name{mtext}
-\title{Write text into the margins of a plot}
+\title{Write Text into the Margins of a Plot}
 \usage{
-mtext(text, side=3, line=0, outer=FALSE, at=NULL, adj = NA, \dots)
+mtext(text, side = 3, line = 0, outer = FALSE, at = NULL, adj = NA, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -26,7 +26,8 @@ mtext(text, side=3, line=0, outer=FALSE, at=NULL, adj = NA, \dots)
 }
 \section{Side Effects}{The given text is written onto the current plot.}
 \seealso{
-\code{\link{title}}, \code{\link{text}}, \code{\link{plot}}.
+  \code{\link{title}}, \code{\link{text}}, \code{\link{plot}};
+  \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
 plot(1:10, (-4:5)^2, main="Parabola Points", xlab="xlab")

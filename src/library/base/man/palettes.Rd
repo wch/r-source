@@ -22,22 +22,25 @@ cm.colors(n)
 }
 \description{
 These functions create a vector of \code{n} ``contiguous'' colors.
-Conceptually, all of these functions actually use (parts of) a line
-cut out of the 3-dimensional color space, parametrized by
-\code{\link{hsv}(h,s,v, gamma)}, where \code{gamma}\eqn{=1} for the
-\emph{foo}\code{.colors} function, and hence,
-equispaced hues in RGB space tend to cluster at
-the red, green and blue primaries.
 }
 \details{
-Some applications such as contouring require a palette
-of colors which do not ``wrap around'' to give a final
-color close to the starting one.
-With \code{rainbow}, the parameters \code{start} and \code{end} can be used
-to specify particular subranges of hues.
-The following values can be used when generating
-such a subrange:
-red=0, yellow=\eqn{\frac 1 6}{1/6}, green=\eqn{\frac 2 6}{2/6}, cyan=\eqn{\frac 3 6}{3/6}, blue=\eqn{\frac 4 6}{4/6} and magenta=\eqn{\frac 5 6}{5/6}.
+  Conceptually, all of these functions actually use (parts of) a line
+  cut out of the 3-dimensional color space, parametrized by
+  \code{\link{hsv}(h,s,v, gamma)}, where \code{gamma}\eqn{=1} for the
+  \emph{foo}\code{.colors} function, and hence,
+  equispaced hues in RGB space tend to cluster at
+  the red, green and blue primaries.
+
+  Some applications such as contouring require a palette
+  of colors which do not ``wrap around'' to give a final
+  color close to the starting one.
+
+  With \code{rainbow}, the parameters \code{start} and \code{end} can be used
+  to specify particular subranges of hues.
+  The following values can be used when generating such a subrange:
+  red=0, yellow=\eqn{\frac 1 6}{1/6}, green=\eqn{\frac 2 6}{2/6},
+  cyan=\eqn{\frac 3 6}{3/6}, blue=\eqn{\frac 4 6}{4/6}
+  and magenta=\eqn{\frac 5 6}{5/6}.
 }
 \value{A character vector, \code{cv}, of color names.  This can be used
   either to create a user--defined color palette for subsequent

@@ -8,12 +8,12 @@ count.fields(file, sep = "", skip = 0)
   \item{file}{a character string naming an ASCII data file}
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.  By default, arbitrary amounts
-    of whitespace can seperate fields.}
+    of whitespace can separate fields.}
   \item{skip}{the number of lines of the data file to skip before
     beginning to read data.}
 }
 \description{
-  \code{count.fields} counts the number of fields, as seperated by
+  \code{count.fields} counts the number of fields, as separated by
   \code{sep}, in each of the lines of \code{file} read.  It is used by
   \code{\link{read.table}};  a user will typically have no need for it.
 }

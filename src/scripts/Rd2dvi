@@ -1,69 +1,121 @@
 #!/bin/sh
 #  Rd2dvi -- check man pages (*.Rd help files) by LaTeX..
 #
-# Example (in $R_HOME):
-#    bin/Rd2dvi src/library/base/man/Normal
-#    bin/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/* |sort|uniq`
-#
-Pwd=`dirname $0`
+# Examples:
+#  R CMD Rd2dvi /path/to/Rsrc/src/library/base/man/Normal.Rd
+#  R CMD Rd2dvi `grep -l "\\keyword\\{distr" \
+#                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-R_HOME=`R RHOME`
+START_DIR=`pwd`
 
-MANTEXDIR=${R_HOME}/doc/manual
-D2L="R CMD Rdconv -t latex"
+CLEAN=true
+DEBUG=false
+USE_XDVI=true
+
 file_sed='s/[_$]/\\\\&/g'
-# Quote the      ^^^^  "\" twice (-> 4 \ ) since it used in ".."
-## If perl-sh: sub subject() {
-##	"$1"'{\\Large \\file{'`echo  $2  | sed $file_sed`"}$3" }
-#
-call_dir=`pwd`
-if [ -f Rd2.tex ]
-then
-    echo "'Rd2.tex' already exists -- renaming it to  Rd2.tex.Older"
-    echo " -------- "
-    mv Rd2.tex Rd2.tex.Older
-fi
-touch Rd2.tex
-if [ $# -eq 1  -a  -d $1 ]
-then
-    dir=$1
-    test -d $dir/man && dir=$dir/man
-    echo "Rd2dvi : \`Rdconv -t latex' $dir/ files..."
-    files="${dir}/*.Rd"
-    subj='of all in {\\Large \\file{'`echo $dir | sed $file_sed`'}}'
-    # DBG: echo "files = $files"
-    toc_sed='; s/\\input{Rd/\\Rdcontents{\\R\\ objects documented:} &/'
-else
-    files="$@"
-    if [ $# -gt 1 ]; then subj=' ...etc '; else subj=''; fi
-    subj='of {\\Large \\file{'`echo  $1  | sed $file_sed`"}$subj}"
-    echo "Rd2dvi : Collecting files and \`Rdconv -t latex'ing them ..."
-    toc_sed=''
-fi
-## DBG: echo ''; echo 'subj:'; echo "$subj"; echo ''
-for f in $files
-do
-    echo $f
-    $D2L $f >> Rd2.tex
+
+while test -n "${1}"; do
+  case ${1} in
+    --clean=[nN]*)
+      CLEAN=false ;;
+    --clean=[yY]*)
+      CLEAN=true ;;
+    --debug=[nN]*)
+      DEBUG=false ;;
+    --debug=[yY]*)
+      DEBUG=true ;;
+    --use-xdvi=[nN]*)
+      USE_XDVI=false ;;
+    --use-xdvi=[yY]*)
+      USE_XDVI=true ;;
+    --|*)
+      break ;;
+  esac
+  shift
 done
-echo "MANTEXDIR='$MANTEXDIR'"
-R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep -v getenv|grep '"'|sed 's/ *//g;s/"//g'`
-sed "s/a4paper/${R_P}paper/; s| documentation |& ${subj} |; ${toc_sed}" \
-  ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
-if [ ! -f Rd.sty ]; then
- sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd2.sty
+
+TOC="\\Rdcontents{\\R{} objects documented:}"
+if [ ${#} -eq 1 -a -d ${1} ]; then
+  if test -d ${1}/man; then
+    dir=${1}/man
+  else
+    dir=${1}
+  fi
+  if ${DEBUG}; then
+    echo "Rd2dvi: \`Rdconv -t latex' ${dir}/ Rd files ..."
+  fi
+  files=`find ${dir} -name "*.[Rr]d" -print`
+  subj="all in \\file{`echo ${dir} | sed ${file_sed}`}"
+  if ${DEBUG}; then  
+    echo "files = ${files}"
+  fi
+else
+  files="${@}"
+  if [ ${#} -gt 1 ]; then
+    subj=" etc.";
+  else
+    subj=
+    TOC=
+  fi
+  subj="\\file{`echo ${1} | sed ${file_sed}`}${subj}"
+  if ${DEBUG}; then
+    echo "Rd2dvi: Collecting files and \`Rdconv -t latex'ing them ..."
+  fi
 fi
-#exit
-#---------------------
-latex Rd2dvi
-if [ -x `/usr/bin/which makeindex` ]
-then makeindex Rd2dvi
-     latex Rd2dvi
+
+if ${DEBUG}; then
+  echo ""; echo "subj:"; echo "${subj}"; echo ""
 fi
-if [ -x `/usr/bin/which xdvi` ]
-then  xdvi Rd2dvi &
+
+if test -f Rd2.dvi; then
+  echo "file \`Rd2.dvi' exists; please remove first"
+  exit 1
 fi
-echo ''
-echo 'Rd2dvi: You may want to clean up by'
-echo '    rm -f Rd2dvi.* Rd2.sty Rd2.tex*'
-echo ''
+BUILD_DIR=.Rd2dvi${$}
+if test -d ${BUILD_DIR}; then
+  rm -rf ${BUILD_DIR} || echo "cannot write to build dir" && exit 2
+fi
+mkdir ${BUILD_DIR}
+cd ${BUILD_DIR}
+
+sed 's/markright{#1}/markboth{#1}{#1}/' \
+  ${R_HOME}/doc/manual/Rd.sty > Rd2.sty
+
+cat > Rd2.tex <<EOF
+\\documentclass[${R_PAPERSIZE}]{book}
+\\usepackage{Rd2}
+\\usepackage{makeidx}
+\\makeindex
+\\begin{document}
+\\chapter*{}
+\\begin{center}
+  {\\textbf{\\huge\\R{} documentation}}
+  \\par\\bigskip{\\Large of ${subj}}
+  \\par\\medskip{\\large \\today}
+\\end{center}
+${TOC}
+EOF
+
+for f in ${files}; do
+  if ${DEBUG}; then echo ${f}; fi
+  R CMD Rdconv -t latex ${f} >> Rd2.tex
+done
+
+cat >> Rd2.tex <<EOF  
+\\printindex
+\\end{document}
+EOF
+
+${R_LATEXCMD} Rd2
+${R_MAKEINDEXCMD} Rd2
+${R_LATEXCMD} Rd2
+cp Rd2.dvi ..
+cd ${START_DIR}
+if ${CLEAN}; then
+  rm -rf ${BUILD_DIR}
+else
+  echo "You may want to clean up by \`rm -rf ${BUILD_DIR}'"
+fi
+if ${USE_XDVI}; then
+  xdvi Rd2.dvi
+fi

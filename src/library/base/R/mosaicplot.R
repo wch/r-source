@@ -45,7 +45,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
                     } else label[[1]]
                 text(x= x.l + (x.r - x.l) / 2,
                      y= 965 + 22 * (lablevx - 1),
-                     srt=0, adj=.5, cex=.5, this.lab)
+                     srt=0, adj=.5, cex=.66, this.lab)
             }
             if (p > 2) {          # recursive call.
                 for (i in 1:xdim) {
@@ -102,7 +102,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
                     } else label[[1]]
                 text(x= 35 - 20 * (lablevy - 1),
                      y= y.b + (y.t - y.b) / 2,
-                     srt=90, adj=.5, cex=.5, this.lab)
+                     srt=90, adj=.5, cex=.66, this.lab)
             }
             if (p > 2) {          # recursive call.
                 for (j in 1:ydim) {
@@ -185,7 +185,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
 
     ##-- Plotting
     frame()
-    opar <- par(usr = c(1,1000,1,1000))
+    opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
     on.exit(par(opar))
 
     if (!is.null(main) || !is.null(xlab) || !is.null(ylab))

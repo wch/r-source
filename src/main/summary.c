@@ -89,9 +89,9 @@ static void rsum(double *x, int n, double *value)
     *value = s;
 }
 
-static void csum(complex *x, int n, complex *value)
+static void csum(Rcomplex *x, int n, Rcomplex *value)
 {
-    complex s;
+    Rcomplex s;
     int i;
     s.r = s.i = 0;
     for (i = 0; i < n; i++) {
@@ -275,9 +275,9 @@ static void rprod(double *x, int n, double *value)
     *value = s;
 }
 
-static void cprod(complex *x, int n, complex *value)
+static void cprod(Rcomplex *x, int n, Rcomplex *value)
 {
-    complex s, t;
+    Rcomplex s, t;
     int i;
     s.r = 1;
     s.i = 0;
@@ -319,7 +319,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a;
     double tmp;
-    complex z, ztmp, zcum;
+    Rcomplex z, ztmp, zcum;
     int itmp, icum=0, int_a, empty;
     short iop;
     SEXPTYPE ans_type;/* only INTEGER, REAL, or COMPLEX here */

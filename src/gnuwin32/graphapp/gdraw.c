@@ -480,7 +480,15 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     first = tm.tmFirstChar;
     last = tm.tmLastChar;
     extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
-    if(c == 0) {
+    if(c < 0) { /* used for setting cra */
+      SIZE size;
+      char* cc="M";
+      GetTextExtentPoint32(dc,(LPSTR) cc, 1, &size);
+      *descent = tm.tmDescent ;
+      *ascent = size.cy - *descent;
+      *width = size.cx;
+      if(*width > size.cy) *width = size.cy;
+    } else if(c == 0) {
 	*descent = tm.tmDescent ;
         *ascent = tm.tmHeight - *descent - extra ;
 	*width = tm.tmMaxCharWidth ;
@@ -530,10 +538,10 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     else
 	pixs = pixs * devicepixelsx(d);
 
-    lf.lfHeight = - (pixs + 0.5);
+    lf.lfHeight = (int) -(pixs + 0.5);
 
     lf.lfWidth = 0 ;
-    lf.lfEscapement = lf.lfOrientation = 10*rot;
+    lf.lfEscapement = lf.lfOrientation = (int) 10*rot;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
     if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
@@ -577,7 +585,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
 	obj->rect.height = tm.tmHeight;
 	obj->rect.x = tm.tmAscent - tm.tmInternalLeading;
 	obj->rect.y = tm.tmDescent;
-	SelectObject(dc, old);
+	SelectObject((HDC)d->handle, old);
     }
 
     return (font) obj;

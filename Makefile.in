@@ -16,7 +16,7 @@ DISTFILES = $(INSTFILES) \
 	Makeconf.in Makefile.in \
 	aclocal.m4 config.site configure configure.in configure.mac \
 	date-stamp
-SUBDIRS = src afm demos doc etc tests
+SUBDIRS = src afm demos doc etc tests tools
 
 GZIP = --best
 
@@ -148,14 +148,18 @@ distdir: $(DISTFILES)
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
         done
-	@for d in tools debian; do \
+	@for d in debian; do \
 	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
 
-dvi info::
+dvi info pdf::
 	-@(cd doc && $(MAKE) $@)
+install-dvi install-info install-pdf::
+	-@(cd doc/manual && $(MAKE) $@)
+uninstall-dvi uninstall-info uninstall-pdf::
+	-@(cd doc/manual && $(MAKE) $@)
 
 TAGS:
 

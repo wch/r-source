@@ -19,7 +19,6 @@ provide(name)
 \alias{provide}
 \alias{require}
 \alias{R_LIBS}
-\alias{RLIBS}
 \alias{.Autoloaded}
 \alias{.First.lib}
 \alias{.Library}
@@ -110,83 +109,15 @@ provide(name)
   \code{.lib.loc} is a character vector with the locations of all
   library trees that \R should use.  It is initialized at startup from
   the environment variable \code{R_LIBS} (\code{RLIBS} as used by older
-  versions of \R is now deprecated), which should be a colon-separated
-  list of directories at which \R library trees are rooted, and
-  \code{.Library}.
-}
-
-\section{Creating Packages}{
+  versions of \R is no longer accepted) (which should be a
 #ifdef unix
-  For installation etc, refer to \code{\link{INSTALL}} and
-  \code{\link{REMOVE}}.
+  colon-separated
 #endif
-
-    Packages provide a mechanism for loading optional code and attached
-    documentation as needed.  The \R distribution provides the example
-    packages \code{eda}, \code{mva}, and \code{stepfun}.
-
-    A package consists of a subdirectory containing the files
-    \file{DESCRIPTION}, \file{INDEX}, and \file{TITLE}, and the
-    subdirectories \file{R}, \file{data}, \file{exec}, \file{man}, and
-    \file{src} (some of which can be missing).
-
-    The \file{DESCRIPTION} file contains information about authors,
-    version, copyright, etc., and looks like
-
-    Package:\cr
-    Version:\cr
-    Author:\cr
-    Description:\cr
-    Depends:\cr
-    License:
-
-    Continuation lines (e.g., for descriptions longer than one line)
-    start with a whitespace character.  The license field should contain
-    an explicit statement or a well-known abbreviation (such as `GPL',
-    `LGPL', `BSD' and `Artistic'), maybe followed by a reference to the
-    actual license file.  It is very important that this information is
-    included---otherwise, it may not even be legally correct for others
-    to distribute copies of the package.
-
-    The \file{TITLE} file contains a line giving the name of the package
-    and a brief description.  \file{INDEX} contains a line for each
-    sufficiently interesting object in the package, giving its name and
-    a description (functions such as print methods not usually called
-    explicitly might not be included).  Note that you can automatically
-    create this file using the \code{Rdindex} program in
-    \file{R\_HOME/etc}, provided that Perl is available on your system.
-
-    The \file{R} subdirectory contains \R code files.  The code files to
-    be installed must start with a (lower- or uppercase) letter and have
-    one of the extensions \file{.R}, \file{.S}, \file{.q}, \file{.r}, or
-    \file{.s}.  We recommend using \file{.R}, as this extension seems to
-    be not used by any other software.  If necessary, one of these files
-    (historically \file{zzz.R}) should use \code{library.dynam()}
-    \emph{inside} \code{.First.lib()} to load compiled code.
-
-    The \file{man} subdirectory should contain \R documentation files
-    for the objects in the package.  The documentation files to be
-    installed must also start with a (lower- or uppercase) letter and
-    have the extension \file{.Rd} (the default) or \file{.rd}.
-
-    Source and a Makefile for the compiled code is in \file{src},
-    containing C or FORTRAN.  The Makefile will be passed various
-    machine-dependent compile and link flags, examples of which can be
-    seen in the \code{eda} package.
-
-    The \file{data} subdirectory is for additional data files the
-    package makes available for loading using \code{data()}.  Currently,
-    data files can have one of three types as indicated by their
-    extension: plain R code (\file{.R} or \file{.r}), tables
-    (\file{.tab}, \file{.txt}, or \file{.csv}), or \code{save()} images
-    (\file{.RData} or \file{.rda}).  See the documentation for
-    \code{data()} for more information.  If there is a \file{data}
-    subdirectory it should contain a \file{00Index} file that describes
-    the datasets available.
-
-    Finally, \file{exec} could contain additional executables the
-    package needs, typically Shell or Perl scripts.  This mechanism is
-    currently not used by any package, and still experimental.
+#ifdef windows
+  semicolon-separated
+#endif
+  list of directories at which \R library trees are rooted) followed by
+  \code{.Library}.
 }
 \value{
     \code{library} returns the list of loaded (or available) packages
@@ -199,10 +130,10 @@ provide(name)
 \seealso{
     \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
     \code{\link{objects}}, \code{\link{autoload}},
-    \code{\link{library.dynam}};
-    \code{\link{data}};
+    \code{\link{library.dynam}},
+    \code{\link{data}}, \code{\link{install.packages}}.
 #ifdef unix
-    \code{\link{INSTALL}}, \code{\link{REMOVE}}
+    \code{\link{INSTALL}}, \code{\link{REMOVE}} 
 #endif
 }
 \examples{

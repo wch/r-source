@@ -205,6 +205,7 @@ extern double m_one;
 #define ML_VALID(x)	(!isnan(x))
 
 #else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
+void ml_error(int n);
 #define ML_ERROR(x)	ml_error(x)
 #define ML_POSINF	DBL_MAX
 #define ML_NEGINF	(-DBL_MAX)

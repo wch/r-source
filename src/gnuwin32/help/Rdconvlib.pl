@@ -407,7 +407,7 @@ sub drop_full_command {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
-	$text =~ s/\\$cmd$id.*$id/$`$'/s;
+	$text =~ s/\\$cmd$id.*$id//s;
     }
     $text;
 }
@@ -462,7 +462,7 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
     }
     $using_chm = 0;
-    print htmlout html_functionhead($blocks{"title"}, $pkgname,
+    print htmlout html_functionhead(striptitle($blocks{"title"}), $pkgname,
 				    $blocks{"name"});
 
     html_print_block("description", "Description");
@@ -623,7 +623,7 @@ sub code2html {
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$htmlfile = $htmlindex{$argkey};
-	
+
 	if($htmlfile){
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
@@ -822,9 +822,9 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".po 3\n";
     print nroffout ".na\n";
     print nroffout ".tl '", $blocks{"name"},
-          "($pkgname)''R Documentation'\n\n" if $pkgname;
+          " {$pkgname}''R Documentation'\n\n" if $pkgname;
     print nroffout ".SH\n";
-    print nroffout $blocks{"title"}, "\n";
+    print nroffout striptitle($blocks{"title"}), "\n";
     nroff_print_block("description", "Description");
     nroff_print_codeblock("usage", "Usage");
     nroff_print_argblock("arguments", "Arguments");
@@ -891,8 +891,11 @@ sub text2nroff {
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
     $text =~ s/\\R/R/go;
-    $text =~ s/---/\\(em/go;
-    $text =~ s/--/\\(en/go;
+# these are troff, not nroff
+#    $text =~ s/---/\\(em/go;
+#    $text =~ s/--/\\(en/go;
+    $text =~ s/---/--/go;
+    $text =~ s/--/-/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
@@ -1284,7 +1287,7 @@ sub Sd_print_sections {
 
 sub rdoc2ex { # (filename)
 
-    local($tit = $blocks{"title"});
+    local($tit = striptitle($blocks{"title"}));
 
     if(defined $blocks{"examples"}) {
 	if($_[0]!= -1) {
@@ -1421,7 +1424,7 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
 
     $text =~ s/&/\\&/go;
-    $text =~ s/\\R /\\R\\ /go;
+    $text =~ s/\\R /\\R\{\} /go;
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;
@@ -1564,11 +1567,11 @@ sub latex_code_cmd {
     my $code = $_[0];
 
     if($code =~ /[$LATEX_SPECIAL]/){
-	die("\nERROR: found `\@' in \\code{...\}\n")
+	warn("\nERROR: found `\@' in \\code{...\}\n")
 	  if $code =~ /@/;
-	die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
+	warn("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
-	## till 0.63.1 
+	## till 0.63.1
 	## $code = "\\verb@" . $code . "@";
 	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
 	$code =~ s/[$LATEX_SPECIAL]/\\$&/go;# escape them (not the "bsl" )
@@ -1623,13 +1626,13 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
     }
     $using_chm = 1;
-    print htmlout chm_functionhead($blocks{"title"}, $pkgname,
+    print htmlout chm_functionhead(striptitle($blocks{"title"}), $pkgname,
 				   $blocks{"name"});
 
+    html_print_block("description", "Description");
     html_print_codeblock("usage", "Usage");
     html_print_argblock("arguments", "Arguments");
     html_print_block("format", "Format");
-    html_print_block("description", "Description");
     html_print_block("details", "Details");
     html_print_argblock("value", "Value");
 
@@ -1645,6 +1648,14 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     print htmlout html_functionfoot();
     close htmlout;
     $using_chm = 0;
+}
+
+sub striptitle { # text
+    my $text = $_[0];
+    $text =~ s/\\//go;
+    $text =~ s/---/-/go;
+    $text =~ s/--/-/go;
+    return $text;
 }
 
 # Local variables: **

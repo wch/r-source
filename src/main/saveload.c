@@ -80,7 +80,7 @@ static void AllocBuffer(int len)
 static void	(*OutInit)(FILE*);
 static void	(*OutInteger)(FILE*, int);
 static void	(*OutReal)(FILE*, double);
-static void	(*OutComplex)(FILE*, complex);
+static void	(*OutComplex)(FILE*, Rcomplex);
 static void	(*OutString)(FILE*, char*);
 static void	(*OutSpace)(FILE*, int);
 static void	(*OutNewline)(FILE*);
@@ -89,7 +89,7 @@ static void	(*OutTerm)(FILE*);
 static void	(*InInit)(FILE*);
 static int	(*InInteger)(FILE*);
 static double	(*InReal)(FILE*);
-static complex	(*InComplex)(FILE*);
+static Rcomplex	(*InComplex)(FILE*);
 static char*	(*InString)(FILE*);
 static void	(*InTerm)(FILE*);
 
@@ -165,7 +165,7 @@ static double AsciiInReal(FILE *fp)
     return x;
 }
 
-static void AsciiOutComplex(FILE *fp, complex x)
+static void AsciiOutComplex(FILE *fp, Rcomplex x)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	fprintf(fp, "NA NA");
@@ -173,9 +173,9 @@ static void AsciiOutComplex(FILE *fp, complex x)
 	fprintf(fp, "%g %g", x.r, x.i);
 }
 
-static complex AsciiInComplex(FILE *fp)
+static Rcomplex AsciiInComplex(FILE *fp)
 {
-    complex x;
+    Rcomplex x;
     fscanf(fp, "%s", smbuf);
     if (strcmp(smbuf, "NA") == 0)
 	x.r = NA_REAL;
@@ -367,7 +367,7 @@ static double XdrInReal(FILE * fp)
     return x;
 }
 
-static void XdrOutComplex(FILE *fp, complex x)
+static void XdrOutComplex(FILE *fp, Rcomplex x)
 {
     if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
 	xdr_destroy(&xdrs);
@@ -375,9 +375,9 @@ static void XdrOutComplex(FILE *fp, complex x)
     }
 }
 
-static complex XdrInComplex(FILE * fp)
+static Rcomplex XdrInComplex(FILE * fp)
 {
-    complex x;
+    Rcomplex x;
     if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
 	xdr_destroy(&xdrs);
 	error("a C read error occured");
@@ -460,16 +460,16 @@ static double BinaryInReal(FILE * fp)
     return x;
 }
 
-static void BinaryOutComplex(FILE *fp, complex x)
+static void BinaryOutComplex(FILE *fp, Rcomplex x)
 {
-	if (fwrite(&x, sizeof(complex), 1, fp) != 1)
+	if (fwrite(&x, sizeof(Rcomplex), 1, fp) != 1)
 		error("a write error occured");
 }
 
-static complex BinaryInComplex(FILE * fp)
+static Rcomplex BinaryInComplex(FILE * fp)
 {
-    complex x;
-    if (fread(&x, sizeof(complex), 1, fp) != 1)
+    Rcomplex x;
+    if (fread(&x, sizeof(Rcomplex), 1, fp) != 1)
 	error("a read error occured");
     return x;
 }
@@ -683,8 +683,9 @@ static SEXP OffsetToNode(int offset)
     while (offset != OldOffset[m] && l <= r);
     if (offset == OldOffset[m]) return NewAddress[m];
 
-    error("unresolved node during restore");
-    return R_NilValue;/* for -Wall */
+    /* Not supposed to happen: */
+    warning("unresolved node during restore");
+    return R_NilValue;
 }
 
 static void DataSave(SEXP s, FILE *fp)
@@ -1655,7 +1656,7 @@ static double InDoubleAscii(FILE *fp)
     return x;
 }
 
-static void OutComplexAscii(FILE *fp, complex x)
+static void OutComplexAscii(FILE *fp, Rcomplex x)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	fprintf(fp, "NA NA");
@@ -1666,9 +1667,9 @@ static void OutComplexAscii(FILE *fp, complex x)
     }
 }
 
-static complex InComplexAscii(FILE *fp)
+static Rcomplex InComplexAscii(FILE *fp)
 {
-    complex x;
+    Rcomplex x;
     x.r = InDoubleAscii(fp);
     x.i = InDoubleAscii(fp);
     return x;
@@ -1754,16 +1755,16 @@ static double InRealBinary(FILE * fp)
     return x;
 }
 
-static void OutComplexBinary(FILE *fp, complex x)
+static void OutComplexBinary(FILE *fp, Rcomplex x)
 {
-	if (fwrite(&x, sizeof(complex), 1, fp) != 1)
+	if (fwrite(&x, sizeof(Rcomplex), 1, fp) != 1)
 		error("a write error occured");
 }
 
-static complex InComplexBinary(FILE * fp)
+static Rcomplex InComplexBinary(FILE * fp)
 {
-    complex x;
-    if (fread(&x, sizeof(complex), 1, fp) != 1)
+    Rcomplex x;
+    if (fread(&x, sizeof(Rcomplex), 1, fp) != 1)
 	error("a read error occured");
     return x;
 }
@@ -1881,7 +1882,7 @@ static double InRealXdr(FILE * fp)
     return x;
 }
 
-static void OutComplexXdr(FILE *fp, complex x)
+static void OutComplexXdr(FILE *fp, Rcomplex x)
 {
     if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
 	xdr_destroy(&xdrs);
@@ -1889,9 +1890,9 @@ static void OutComplexXdr(FILE *fp, complex x)
     }
 }
 
-static complex InComplexXdr(FILE * fp)
+static Rcomplex InComplexXdr(FILE * fp)
 {
-    complex x;
+    Rcomplex x;
     if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
 	xdr_destroy(&xdrs);
 	error("an xdr complex data read error occured");

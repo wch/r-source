@@ -2,7 +2,7 @@
 \alias{transform}
 \alias{transform.default}
 \alias{transform.data.frame}
-\title{Transform an object, e.g. a dataframe}
+\title{Transform an Object, e.g. a Data Frame}
 \usage{
 transform(x, ...)
 transform.default(x, ...)
@@ -13,23 +13,24 @@ transform.data.frame(x, ...)
     \item{\dots}{Further arguments of the form \code{tag=value}}
 }
 \description{
-    \code{transform} is a generic function, which---at least
-    currently---only does anything useful with
-    dataframes. \code{transform.default} converts its first argument to
-    a dataframe if possible and calls \code{transform.data.frame}. 
-
-    The \code{...} arguments to \code{transform.data.frame} are tagged
-    vector expressions, which are evaluated in the dataframe
-    \code{x}.  The tags are matched against \code{names(x)}, and for
-    those that match, the value replace the corresponding variable in
-    \code{x}, and the others are appended to \code{x}.
+  \code{transform} is a generic function, which---at least
+  currently---only does anything useful with
+  dataframes. \code{transform.default} converts its first argument to
+  a dataframe if possible and calls \code{transform.data.frame}. 
+}
+\details{
+  The \code{...} arguments to \code{transform.data.frame} are tagged
+  vector expressions, which are evaluated in the dataframe
+  \code{x}.  The tags are matched against \code{names(x)}, and for
+  those that match, the value replace the corresponding variable in
+  \code{x}, and the others are appended to \code{x}.
 } 
 \value{
-    The modified value of \code{x}.
+  The modified value of \code{x}.
 }
 \author{Peter Dalgaard}
 \note{If some of the values are not vectors of the appropriate length,
-    you deserve whatever you get!}
+  you deserve whatever you get!}
 \seealso{
     \code{\link{subset}},
     \code{\link{list}},

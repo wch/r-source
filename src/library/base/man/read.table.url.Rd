@@ -4,43 +4,47 @@
 \alias{source.url}
 \alias{copy.url}
 \alias{url.show}
-\title{Read data and code from web server}
+\title{Read Data and Code from a Web Server}
 \usage{
-read.table.url(url, port=80, check.MIME.type=TRUE ...)
-scan.url(url, port=80, check.MIME.type=TRUE ...)
-source.url(url, port=80, check.MIME.type=TRUE ...)
-copy.url(url, port=80, error.is.fatal=TRUE, file=tempfile(),
-  check.MIME.type=TRUE, drop.ctrl.z=TRUE)
-url.show(url, port=80, check.MIME.type=TRUE, file=tempfile(),
-  delete.file=TRUE,...)
+read.table.url(url, port = 80, check.MIME.type = TRUE, ...)
+scan.url(url, port = 80, check.MIME.type = TRUE, ...)
+source.url(url, port = 80, check.MIME.type = TRUE, ...)
+copy.url(url, port = 80, error.is.fatal = TRUE, file = tempfile(),
+         check.MIME.type = TRUE, drop.ctrl.z = TRUE)
+url.show(url, port = 80, check.MIME.type = TRUE, file = tempfile(),
+         delete.file = TRUE, ...)
 }
 \arguments{
  \item{url}{URL beginning with \code{http://} }
  \item{port}{ Port number for the HTTP server (usually 80) }
  \item{check.MIME.type}{Check that the document is of a type known to be
-     plain ASCII?}
- \item{\dots}{Arguments to pass to \link{read.table},\link{scan},
-     \link{source} or \link{file.show}}
+   plain ASCII?}
+ \item{\dots}{Arguments to pass to \code{\link{read.table}},
+   \code{\link{scan}}, \code{\link{source}} or \code{\link{file.show}}
  \item{error.is.fatal}{An HTTP error causes an error instead of a
-     warning?}
+   warning?}
  \item{file}{File to copy to}
  \item{delete.file}{Delete the file?}
  \item{drop.ctrl.z}{Filter out the \code{EOF} (control-Z) character?}
 }
 \description{
-    Extensions of \link{read.table}, \link{scan}, \link{source}
-    and \link{file.show} to read text files on a remote HTTP (Web) server.
-    HTTP errors are handled correctly, but attempts to read non-text files
-    are currently not (thus the \code{check.MIME.type} option).
+  Extensions of \code{\link{read.table}}, \code{\link{scan}},
+  \code{\link{source}}
+  and \code{\link{file.show}} to read text files on a remote HTTP (Web)
+  server.
+}
+\details{
+  HTTP errors are handled correctly, but attempts to read non-text files
+  are currently not (thus the \code{check.MIME.type} option).
 }
 \value{
- \code{copy.url} returns the name of a temporary file.
+  \code{copy.url} returns the name of a temporary file.
 }
 
 \seealso{
-    \code{\link{read.table}}, \code{\link{scan}}, \code{\link{source}},
-    \code{\link{make.socket}}, \code{\link{read.socket}},
-    \code{\link{file.show}}
+  \code{\link{read.table}}, \code{\link{scan}}, \code{\link{source}},
+  \code{\link{make.socket}}, \code{\link{read.socket}},
+  \code{\link{file.show}}
 }
 
 \examples{

@@ -1,7 +1,7 @@
 #! @PERL@
-### $Id: lib2tex.in,v 1.4 1999/03/31 15:17:42 ripley Exp $
+### $Id: lib2tex.in,v 1.4.8.1 1999/12/06 06:33:44 hornik Exp $
 
-## Create a single pkg-pkgname.tex file from the Latex subdirectories
+## Create a single pkgname-pkg.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
 
 ## This file is free software; you can redistribute it and/or modify
@@ -28,6 +28,8 @@ use Getopt::Long;
 
 my $help;
 my $VERSION = 0.62.0;
+my $NAME;
+($NAME = $0) =~ s|.*/||;
 
 GetOptions("help|h" => \$help);
 &usage() if $help;
@@ -44,8 +46,8 @@ for (@ARGV) {
     my $latexDir = $RLIB . "/" . $_ . "/latex/";
     carp "latex subdirectory for library $_ does not exist!\n", next
 	unless -d $latexDir;
-    my $out = new FileHandle "> pkg-" . $_ . ".tex" or
-	croak "unable to open file pkg-$_.tex: $!\n";
+    my $out = new FileHandle "> " . $_ . "-pkg.tex" or
+	croak "unable to open file $_-pkg.tex: $!\n";
     &do_header($_, $out);
     &do_tex_files($latexDir, $out);
     &do_trailer($out);
@@ -94,8 +96,13 @@ sub do_trailer {
 
 sub usage {
 
-    print "create-pkg-tex version $VERSION\n";
-    print "Usage: create-pkg-tex [--help/-h] file ..." ;
+    print "$NAME version $VERSION\n";
+    print "Usage: $NAME [--help/-h] file ..." ;
 
     exit 0;
 }
+
+### Local variables: ***
+### mode: perl ***
+### perl-indent-level: 4 ***
+### End: ***

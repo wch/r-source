@@ -52,8 +52,9 @@ static char sccsid[] = "@(#)xdr.c 1.35 87/08/12";
  * xdr.
  */
 
+#include <stdlib.h>
 #include <stdio.h>
-char *malloc();
+/*char *malloc();*/
 
 #include <rpc/types.h>
 #include <rpc/xdr.h>

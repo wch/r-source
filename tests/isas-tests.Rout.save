@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 28, 1999)
+Version 0.90.0 Patched (December 10, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,11 +13,14 @@ Type	"demo()" for some demos, "help()" for on-line help, or
     	"help.start()" for a HTML browser interface to help.
 Type	"q()" to quit R.
 
+> isall.equal <- function(x,y)
++ is.logical(r <- all.equal(x,y, tol=0)) && r 
+> 
 > options(error = expression(NULL)) # don't stop on error in batch
 > ##~~~~~~~~~~~~~~
 > 
 > ###--------
->  x <- 1
+>  x <- integer(0)
 > is.array(as.array( x ))
 [1] TRUE
 > is.call(as.call( x ))
@@ -35,7 +38,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-[1] TRUE
+Error in as.function.default(l, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -45,7 +48,7 @@ Error in as.call(x) : invalid argument list
 > is.matrix(as.matrix( x ))
 [1] TRUE
 > is.name(as.name( x ))
-[1] TRUE
+Error in as.name(x) : Invalid data of mode "integer" (too short)
 > is.null(as.null( x ))
 [1] TRUE
 > is.numeric(as.numeric( x ))
@@ -61,37 +64,228 @@ Error in as.qr(x) : you cannot be serious
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.ts(as.ts( x ))
-[1] TRUE
+Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
 [1] TRUE
 > 
-> if(is.array( x ))  all.equal(x, as.array( x ))
-> if(is.call( x ))  all.equal(x, as.call( x ))
-> if(is.character( x ))  all.equal(x, as.character( x ))
-> if(is.complex( x ))  all.equal(x, as.complex( x ))
-> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-> if(is.double( x ))  all.equal(x, as.double( x ))
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
 [1] TRUE
-> if(is.expression( x ))  all.equal(x, as.expression( x ))
-> if(is.factor( x ))  all.equal(x, as.factor( x ))
-> if(is.function( x ))  all.equal(x, as.function( x ))
-> if(is.integer( x ))  all.equal(x, as.integer( x ))
-> if(is.list( x ))  all.equal(x, as.list( x ))
-> if(is.logical( x ))  all.equal(x, as.logical( x ))
-> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-> if(is.name( x ))  all.equal(x, as.name( x ))
-> if(is.null( x ))  all.equal(x, as.null( x ))
-> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+Error in as.call(x) : invalid argument list
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
 [1] TRUE
-> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-> if(is.qr( x ))  all.equal(x, as.qr( x ))
-> if(is.real( x ))  all.equal(x, as.real( x ))
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
 [1] TRUE
-> if(is.single( x ))  all.equal(x, as.single( x ))
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+[1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+[1] FALSE
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+[1] TRUE
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+Error in as.function.default(l, envir) : argument must have length at least 1
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+IS: [1] TRUE
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+[1] TRUE
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+[1] TRUE
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+[1] TRUE
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+Error in as.name(x) : Invalid data of mode "integer" (too short)
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+IS: [1] TRUE
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+[1] TRUE
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+[1] FALSE
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
-> if(is.ts( x ))  all.equal(x, as.ts( x ))
-> if(is.vector( x ))  all.equal(x, as.vector( x ))
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+Error in ts(x) : ts object must have one or more observations
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+IS: [1] TRUE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+[1] TRUE
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+Error in as.call(x) : invalid argument list
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+[1] TRUE
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Modes: numeric, list"                                
+[2] "Component x: Lengths: 0, 1"                                       
+[3] "Component x: names for current but not for target"                
+[4] "Component x: Attributes: < Modes: NULL, list >"                   
+[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component x: Attributes: < names for current but not for target >"
+[7] "Component x: Attributes: < target is NULL, current is list >"     
+[8] "Component x: target is numeric, current is data.frame"            
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+ [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+ [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+ [3] "Component x: Modes: numeric, list"                                                     
+ [4] "Component x: Lengths: 0, 1"                                                            
+ [5] "Component x: names for current but not for target"                                     
+ [6] "Component x: Attributes: < Modes: NULL, list >"                                        
+ [7] "Component x: Attributes: < Lengths: 0, 2 >"                                            
+ [8] "Component x: Attributes: < names for current but not for target >"                     
+ [9] "Component x: Attributes: < target is NULL, current is list >"                          
+[10] "Component x: target is numeric, current is data.frame"                                 
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+[1] TRUE
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+[1] TRUE
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+[1] TRUE
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : invalid formula
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+[1] TRUE
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+[1] TRUE
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+Error in as.name(x) : Invalid data of mode "integer" (too short)
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+[1] TRUE
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+[1] TRUE
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+[1] TRUE
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+Error in ts(x) : ts object must have one or more observations
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > 
 > ###--------
@@ -143,185 +337,224 @@ Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
 [1] FALSE
 > 
-> if(is.array( x ))  all.equal(x, as.array( x ))
-> if(is.call( x ))  all.equal(x, as.call( x ))
-> if(is.character( x ))  all.equal(x, as.character( x ))
-> if(is.complex( x ))  all.equal(x, as.complex( x ))
-> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-> if(is.double( x ))  all.equal(x, as.double( x ))
-> if(is.expression( x ))  all.equal(x, as.expression( x ))
-> if(is.factor( x ))  all.equal(x, as.factor( x ))
-> if(is.function( x ))  all.equal(x, as.function( x ))
-> if(is.integer( x ))  all.equal(x, as.integer( x ))
-> if(is.list( x ))  all.equal(x, as.list( x ))
-> if(is.logical( x ))  all.equal(x, as.logical( x ))
-> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-> if(is.name( x ))  all.equal(x, as.name( x ))
-> if(is.null( x ))  all.equal(x, as.null( x ))
-[1] TRUE
-> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-[1] TRUE
-> if(is.qr( x ))  all.equal(x, as.qr( x ))
-> if(is.real( x ))  all.equal(x, as.real( x ))
-> if(is.single( x ))  all.equal(x, as.single( x ))
-Error in is.single(x) : type "single" unimplemented in R
-> if(is.ts( x ))  all.equal(x, as.ts( x ))
-> if(is.vector( x ))  all.equal(x, as.vector( x ))
-> 
-> ###--------
->  x <- pi
-> is.array(as.array( x ))
-[1] TRUE
-> is.call(as.call( x ))
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
+Error in as.array(x) : attempt to set an attribute on NULL
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
 Error in as.call(x) : invalid argument list
-> is.character(as.character( x ))
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
 [1] TRUE
-> is.complex(as.complex( x ))
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
 [1] TRUE
-> is.data.frame(as.data.frame( x ))
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
 [1] TRUE
-> is.double(as.double( x ))
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
 [1] TRUE
-> is.expression(as.expression( x ))
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
-> is.factor(as.factor( x ))
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
 [1] TRUE
-> is.function(as.function( x ))
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+Error in as.function.default(l, envir) : argument must have length at least 1
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
-> is.integer(as.integer( x ))
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
 [1] TRUE
-> is.list(as.list( x ))
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
 [1] TRUE
-> is.logical(as.logical( x ))
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : attempt to set an attribute on NULL
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+Error in as.name(x) : invalid type/length (1/0) in vector allocation
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+IS: [1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
 [1] TRUE
-> is.matrix(as.matrix( x ))
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
 [1] TRUE
-> is.name(as.name( x ))
-[1] TRUE
-> is.null(as.null( x ))
-[1] TRUE
-> is.numeric(as.numeric( x ))
-[1] TRUE
-> is.ordered(as.ordered( x ))
-[1] TRUE
-> is.pairlist(as.pairlist( x ))
-[1] TRUE
-> is.qr(as.qr( x ))
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+IS: [1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
 Error in as.qr(x) : you cannot be serious
-> is.real(as.real( x ))
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
 [1] TRUE
-> is.single(as.single( x ))
-Error in is.single(as.single(x)) : type "single" unimplemented in R
-> is.ts(as.ts( x ))
-[1] TRUE
-> is.vector(as.vector( x ))
-[1] TRUE
-> 
-> if(is.array( x ))  all.equal(x, as.array( x ))
-> if(is.call( x ))  all.equal(x, as.call( x ))
-> if(is.character( x ))  all.equal(x, as.character( x ))
-> if(is.complex( x ))  all.equal(x, as.complex( x ))
-> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-> if(is.double( x ))  all.equal(x, as.double( x ))
-[1] TRUE
-> if(is.expression( x ))  all.equal(x, as.expression( x ))
-> if(is.factor( x ))  all.equal(x, as.factor( x ))
-> if(is.function( x ))  all.equal(x, as.function( x ))
-> if(is.integer( x ))  all.equal(x, as.integer( x ))
-> if(is.list( x ))  all.equal(x, as.list( x ))
-> if(is.logical( x ))  all.equal(x, as.logical( x ))
-> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-> if(is.name( x ))  all.equal(x, as.name( x ))
-> if(is.null( x ))  all.equal(x, as.null( x ))
-> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-[1] TRUE
-> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-> if(is.qr( x ))  all.equal(x, as.qr( x ))
-> if(is.real( x ))  all.equal(x, as.real( x ))
-[1] TRUE
-> if(is.single( x ))  all.equal(x, as.single( x ))
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
-> if(is.ts( x ))  all.equal(x, as.ts( x ))
-> if(is.vector( x ))  all.equal(x, as.vector( x ))
-[1] TRUE
-> 
-> ###--------
->  x <- "1.3"
-> is.array(as.array( x ))
-[1] TRUE
-> is.call(as.call( x ))
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+Error in ts(x) : ts object must have one or more observations
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+[1] FALSE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+Error in as.array(x) : attempt to set an attribute on NULL
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : invalid argument list
-> is.character(as.character( x ))
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
 [1] TRUE
-> is.complex(as.complex( x ))
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
-> is.data.frame(as.data.frame( x ))
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
-> is.double(as.double( x ))
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
-> is.expression(as.expression( x ))
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
 [1] TRUE
-> is.factor(as.factor( x ))
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
-> is.function(as.function( x ))
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Modes: NULL, list"                                   
+[2] "Component x: Lengths: 0, 1"                                       
+[3] "Component x: names for current but not for target"                
+[4] "Component x: Attributes: < Modes: NULL, list >"                   
+[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component x: Attributes: < names for current but not for target >"
+[7] "Component x: Attributes: < target is NULL, current is list >"     
+[8] "Component x: target is NULL, current is data.frame"               
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
-> is.integer(as.integer( x ))
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+ [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+ [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+ [3] "Component x: Modes: NULL, list"                                                        
+ [4] "Component x: Lengths: 0, 1"                                                            
+ [5] "Component x: names for current but not for target"                                     
+ [6] "Component x: Attributes: < Modes: NULL, list >"                                        
+ [7] "Component x: Attributes: < Lengths: 0, 2 >"                                            
+ [8] "Component x: Attributes: < names for current but not for target >"                     
+ [9] "Component x: Attributes: < target is NULL, current is list >"                          
+[10] "Component x: target is NULL, current is data.frame"                                    
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
-> is.list(as.list( x ))
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 [1] TRUE
-> is.logical(as.logical( x ))
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
-> is.matrix(as.matrix( x ))
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
 [1] TRUE
-> is.name(as.name( x ))
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
 [1] TRUE
-> is.null(as.null( x ))
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 [1] TRUE
-> is.numeric(as.numeric( x ))
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
-> is.ordered(as.ordered( x ))
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
 [1] TRUE
-> is.pairlist(as.pairlist( x ))
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
 [1] TRUE
-> is.qr(as.qr( x ))
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : attempt to set an attribute on NULL
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : attempt to set an attribute on NULL
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+Error in as.name(x) : invalid type/length (1/0) in vector allocation
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+[1] TRUE
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
 Error in as.qr(x) : you cannot be serious
-> is.real(as.real( x ))
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
 [1] TRUE
-> is.single(as.single( x ))
-Error in is.single(as.single(x)) : type "single" unimplemented in R
-> is.ts(as.ts( x ))
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
 [1] TRUE
-> is.vector(as.vector( x ))
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
 [1] TRUE
-> 
-> if(is.array( x ))  all.equal(x, as.array( x ))
-> if(is.call( x ))  all.equal(x, as.call( x ))
-> if(is.character( x ))  all.equal(x, as.character( x ))
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+Error in ts(x) : ts object must have one or more observations
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
 [1] TRUE
-> if(is.complex( x ))  all.equal(x, as.complex( x ))
-> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-> if(is.double( x ))  all.equal(x, as.double( x ))
-> if(is.expression( x ))  all.equal(x, as.expression( x ))
-> if(is.factor( x ))  all.equal(x, as.factor( x ))
-> if(is.function( x ))  all.equal(x, as.function( x ))
-> if(is.integer( x ))  all.equal(x, as.integer( x ))
-> if(is.list( x ))  all.equal(x, as.list( x ))
-> if(is.logical( x ))  all.equal(x, as.logical( x ))
-> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-> if(is.name( x ))  all.equal(x, as.name( x ))
-> if(is.null( x ))  all.equal(x, as.null( x ))
-> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-> if(is.qr( x ))  all.equal(x, as.qr( x ))
-> if(is.real( x ))  all.equal(x, as.real( x ))
-> if(is.single( x ))  all.equal(x, as.single( x ))
-Error in is.single(x) : type "single" unimplemented in R
-> if(is.ts( x ))  all.equal(x, as.ts( x ))
-> if(is.vector( x ))  all.equal(x, as.vector( x ))
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > 
 > ###--------
@@ -373,39 +606,230 @@ Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
 [1] TRUE
 > 
-> if(is.array( x ))  all.equal(x, as.array( x ))
-> if(is.call( x ))  all.equal(x, as.call( x ))
-> if(is.character( x ))  all.equal(x, as.character( x ))
-> if(is.complex( x ))  all.equal(x, as.complex( x ))
-> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-> if(is.double( x ))  all.equal(x, as.double( x ))
-> if(is.expression( x ))  all.equal(x, as.expression( x ))
-> if(is.factor( x ))  all.equal(x, as.factor( x ))
-> if(is.function( x ))  all.equal(x, as.function( x ))
-> if(is.integer( x ))  all.equal(x, as.integer( x ))
-> if(is.list( x ))  all.equal(x, as.list( x ))
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
 [1] TRUE
-> if(is.logical( x ))  all.equal(x, as.logical( x ))
-> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-> if(is.name( x ))  all.equal(x, as.name( x ))
-> if(is.null( x ))  all.equal(x, as.null( x ))
-> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-> if(is.qr( x ))  all.equal(x, as.qr( x ))
-> if(is.real( x ))  all.equal(x, as.real( x ))
-> if(is.single( x ))  all.equal(x, as.single( x ))
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+Error in as.call(x) : illegal length 0 argument
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
+[1] TRUE
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
+Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+[1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+[1] TRUE
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+Error in as.function.default(l, envir) : argument must have length at least 1
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+IS: [1] TRUE
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+[1] TRUE
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+Error in as.name(x) : (list) object cannot be coerced to vector type 1
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+[1] TRUE
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
-> if(is.ts( x ))  all.equal(x, as.ts( x ))
-> if(is.vector( x ))  all.equal(x, as.vector( x ))
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+Error in ts(x) : ts object must have one or more observations
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+IS: [1] TRUE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+[1] TRUE
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+Error in as.call(x) : illegal length 0 argument
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Lengths: 0, 1"                                       
+[2] "Component x: names for current but not for target"                
+[3] "Component x: Attributes: < Modes: NULL, list >"                   
+[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component x: Attributes: < names for current but not for target >"
+[6] "Component x: Attributes: < target is NULL, current is list >"     
+[7] "Component x: Length mismatch: comparison on first 0 components"   
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce list into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+[1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[3] "Component x: Lengths: 0, 1"                                                            
+[4] "Component x: names for current but not for target"                                     
+[5] "Component x: Attributes: < Modes: NULL, list >"                                        
+[6] "Component x: Attributes: < Lengths: 0, 2 >"                                            
+[7] "Component x: Attributes: < names for current but not for target >"                     
+[8] "Component x: Attributes: < target is NULL, current is list >"                          
+[9] "Component x: Length mismatch: comparison on first 0 components"                        
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                                                            
+[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[4] "Components not in target: f"                                                           
+[5] "Components not in current: x"                                                          
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+[1] TRUE
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : invalid formula
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+Error in as.name(x) : (list) object cannot be coerced to vector type 1
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+[1] TRUE
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : (list) object cannot be coerced to vector type 14
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : (list) object cannot be coerced to vector type 14
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+Error in ts(x) : ts object must have one or more observations
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > 
 > ###--------
->  x <- list(a = 1)
+>  x <- 1:1
 > is.array(as.array( x ))
 [1] TRUE
 > is.call(as.call( x ))
-[1] TRUE
+Error in as.call(x) : invalid argument list
 > is.character(as.character( x ))
 [1] TRUE
 > is.complex(as.complex( x ))
@@ -429,7 +853,7 @@ Error in is.single(x) : type "single" unimplemented in R
 > is.matrix(as.matrix( x ))
 [1] TRUE
 > is.name(as.name( x ))
-Error in as.name(x) : invalid type/length (1/1) in vector allocation
+[1] TRUE
 > is.null(as.null( x ))
 [1] TRUE
 > is.numeric(as.numeric( x ))
@@ -449,31 +873,1250 @@ Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.vector(as.vector( x ))
 [1] TRUE
 > 
-> if(is.array( x ))  all.equal(x, as.array( x ))
-> if(is.call( x ))  all.equal(x, as.call( x ))
-> if(is.character( x ))  all.equal(x, as.character( x ))
-> if(is.complex( x ))  all.equal(x, as.complex( x ))
-> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-> if(is.double( x ))  all.equal(x, as.double( x ))
-> if(is.expression( x ))  all.equal(x, as.expression( x ))
-> if(is.factor( x ))  all.equal(x, as.factor( x ))
-> if(is.function( x ))  all.equal(x, as.function( x ))
-> if(is.integer( x ))  all.equal(x, as.integer( x ))
-> if(is.list( x ))  all.equal(x, as.list( x ))
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
 [1] TRUE
-> if(is.logical( x ))  all.equal(x, as.logical( x ))
-> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-> if(is.name( x ))  all.equal(x, as.name( x ))
-> if(is.null( x ))  all.equal(x, as.null( x ))
-> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-> if(is.qr( x ))  all.equal(x, as.qr( x ))
-> if(is.real( x ))  all.equal(x, as.real( x ))
-> if(is.single( x ))  all.equal(x, as.single( x ))
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+Error in as.call(x) : invalid argument list
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
+[1] TRUE
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
+[1] TRUE
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+[1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+[1] FALSE
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+[1] TRUE
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+[1] TRUE
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+IS: [1] TRUE
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+[1] TRUE
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+[1] TRUE
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+[1] TRUE
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+[1] TRUE
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+IS: [1] TRUE
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+[1] TRUE
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+[1] FALSE
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
-> if(is.ts( x ))  all.equal(x, as.ts( x ))
-> if(is.vector( x ))  all.equal(x, as.vector( x ))
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+[1] TRUE
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+IS: [1] TRUE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+[1] TRUE
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+Error in as.call(x) : invalid argument list
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+[1] TRUE
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Modes: numeric, list"                                
+[2] "Component x: names for current but not for target"                
+[3] "Component x: Attributes: < Modes: NULL, list >"                   
+[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component x: Attributes: < names for current but not for target >"
+[6] "Component x: Attributes: < target is NULL, current is list >"     
+[7] "Component x: target is numeric, current is data.frame"            
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+[1] "Attributes: < Component row.names: 1 string mismatches >"         
+[2] "Component x: Modes: numeric, list"                                
+[3] "Component x: names for current but not for target"                
+[4] "Component x: Attributes: < Modes: NULL, list >"                   
+[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component x: Attributes: < names for current but not for target >"
+[7] "Component x: Attributes: < target is NULL, current is list >"     
+[8] "Component x: target is numeric, current is data.frame"            
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+[1] TRUE
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+[1] TRUE
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+[1] TRUE
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : invalid formula
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+[1] TRUE
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+[1] TRUE
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+[1] TRUE
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+[1] TRUE
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+[1] TRUE
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+[1] TRUE
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+[1] TRUE
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+[1] TRUE
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+[1] TRUE
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+[1] TRUE
+> 
+> ###--------
+>  x <- pi
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+Error in as.call(x) : invalid argument list
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] TRUE
+> is.function(as.function( x ))
+[1] TRUE
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+[1] TRUE
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
+[1] TRUE
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+Error in as.call(x) : invalid argument list
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
+[1] TRUE
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
+[1] TRUE
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+[1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+IS: [1] TRUE
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+[1] TRUE
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+[1] TRUE
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+[1] TRUE
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+[1] TRUE
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+[1] TRUE
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+[1] TRUE
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+[1] TRUE
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+IS: [1] TRUE
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+[1] TRUE
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+IS: [1] TRUE
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+[1] TRUE
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+IS: [1] TRUE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+[1] TRUE
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+Error in as.call(x) : invalid argument list
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+[1] TRUE
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Modes: numeric, list"                                
+[2] "Component x: names for current but not for target"                
+[3] "Component x: Attributes: < Modes: NULL, list >"                   
+[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component x: Attributes: < names for current but not for target >"
+[6] "Component x: Attributes: < target is NULL, current is list >"     
+[7] "Component x: target is numeric, current is data.frame"            
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+[1] "Attributes: < Component row.names: 1 string mismatches >"         
+[2] "Component x: Modes: numeric, list"                                
+[3] "Component x: names for current but not for target"                
+[4] "Component x: Attributes: < Modes: NULL, list >"                   
+[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component x: Attributes: < names for current but not for target >"
+[7] "Component x: Attributes: < target is NULL, current is list >"     
+[8] "Component x: target is numeric, current is data.frame"            
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+[1] TRUE
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+[1] TRUE
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+[1] TRUE
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : invalid formula
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+[1] TRUE
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+[1] TRUE
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+[1] TRUE
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+[1] TRUE
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+[1] TRUE
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+[1] TRUE
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+[1] TRUE
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+[1] TRUE
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+[1] TRUE
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+[1] TRUE
+> 
+> ###--------
+>  x <- "1.3"
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+Error in as.call(x) : invalid argument list
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] TRUE
+> is.function(as.function( x ))
+[1] TRUE
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+[1] TRUE
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
+[1] TRUE
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+Error in as.call(x) : invalid argument list
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
+IS: [1] TRUE
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
+[1] TRUE
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+[1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+[1] TRUE
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+[1] TRUE
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+[1] TRUE
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+[1] TRUE
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+[1] TRUE
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+[1] TRUE
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+[1] TRUE
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+[1] TRUE
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+[1] TRUE
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+[1] TRUE
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+[1] TRUE
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+[1] TRUE
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+IS: [1] TRUE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+[1] TRUE
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+Error in as.call(x) : invalid argument list
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+[1] TRUE
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Modes: character, list"                              
+[2] "Component x: names for current but not for target"                
+[3] "Component x: Attributes: < Modes: NULL, list >"                   
+[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component x: Attributes: < names for current but not for target >"
+[6] "Component x: Attributes: < target is NULL, current is list >"     
+[7] "Component x: target is character, current is data.frame"          
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce character into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+[1] "Attributes: < Component row.names: 1 string mismatches >"         
+[2] "Component x: Modes: character, list"                              
+[3] "Component x: names for current but not for target"                
+[4] "Component x: Attributes: < Modes: NULL, list >"                   
+[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component x: Attributes: < names for current but not for target >"
+[7] "Component x: Attributes: < target is NULL, current is list >"     
+[8] "Component x: target is character, current is data.frame"          
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+[1] TRUE
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+[1] TRUE
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+[1] TRUE
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : invalid formula
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+[1] TRUE
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+[1] TRUE
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+[1] TRUE
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+[1] TRUE
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+[1] TRUE
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+[1] TRUE
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+[1] TRUE
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+[1] TRUE
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+[1] TRUE
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+[1] TRUE
+> 
+> ###--------
+>  x <- list(a = 1)
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+[1] TRUE
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+Error in unique(x) : unique() applies only to vectors
+> is.function(as.function( x ))
+[1] TRUE
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+Error in unique(x) : unique() applies only to vectors
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
+[1] TRUE
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+[1] TRUE
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
+[1] TRUE
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
+[1] TRUE
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+[1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+[1] TRUE
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+Error in unique(x) : unique() applies only to vectors
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+Error in current[[i]] : object is not subsettable
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+[1] TRUE
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+IS: [1] TRUE
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+[1] TRUE
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+[1] TRUE
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+[1] TRUE
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+Error in unique(x) : unique() applies only to vectors
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+[1] TRUE
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+[1] TRUE
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+IS: [1] TRUE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+[1] TRUE
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+[1] TRUE
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+[1] TRUE
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Names: 1 string mismatches"                                       
+[2] "Component x: Attributes: < Lengths: 0, 2 >"                                    
+[3] "Component x: Attributes: < names for current but not for target >"             
+[4] "Component x: Attributes: < Length mismatch: comparison on first 0 components >"
+[5] "Component x: Components not in target: x"                                      
+[6] "Component x: Components not in current: a"                                     
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : missing value where logical needed
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce list into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+Error in 1:nrows : NA/NaN argument
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+[1] "Attributes: < Component row.names: 1 string mismatches >"                      
+[2] "Component x: Names: 1 string mismatches"                                       
+[3] "Component x: Attributes: < Lengths: 0, 2 >"                                    
+[4] "Component x: Attributes: < names for current but not for target >"             
+[5] "Component x: Attributes: < Length mismatch: comparison on first 0 components >"
+[6] "Component x: Components not in target: x"                                      
+[7] "Component x: Components not in current: a"                                     
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+[1] TRUE
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+[1] TRUE
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : invalid formula
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+[1] TRUE
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+[1] TRUE
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+[1] TRUE
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+[1] TRUE
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in 1:p : NA/NaN argument
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in NextMethod(generic, object, ...) : object not specified
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+[1] TRUE
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+[1] TRUE
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+[1] TRUE
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+[1] TRUE
+> 
+> ###--------
+>  x <- as.data.frame(character(0))
+> is.array(as.array( x ))
+Error in dimnames<-.data.frame(*tmp*, value = list(n)) : invalid dimnames given for data frame
+> is.call(as.call( x ))
+[1] TRUE
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+Error in unique(x) : unique() applies only to vectors
+> is.function(as.function( x ))
+[1] TRUE
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
+> is.name(as.name( x ))
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+Error in unique(x) : unique() applies only to vectors
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+Error in ts(x) : ts object must have one or more observations
+> is.vector(as.vector( x ))
+[1] FALSE
+> 
+> if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
++ } else   !isall.equal(x, as.array( x ))
+Error in dimnames<-.data.frame(*tmp*, value = list(n)) : invalid dimnames given for data frame
+> if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
++ } else   !isall.equal(x, as.call( x ))
+[1] TRUE
+> if(is.character(x)) { cat('IS: ');all.equal(x, as.character( x ), tol=0)
++ } else   !isall.equal(x, as.character( x ))
+[1] TRUE
+> if(is.complex(x)) { cat('IS: ');all.equal(x, as.complex( x ), tol=0)
++ } else   !isall.equal(x, as.complex( x ))
+[1] TRUE
+> if(is.data.frame(x)) { cat('IS: ');all.equal(x, as.data.frame( x ), tol=0)
++ } else   !isall.equal(x, as.data.frame( x ))
+IS: [1] TRUE
+> if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
++ } else   !isall.equal(x, as.double( x ))
+[1] TRUE
+> if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
++ } else   !isall.equal(x, as.expression( x ))
+[1] TRUE
+> if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
++ } else   !isall.equal(x, as.factor( x ))
+Error in unique(x) : unique() applies only to vectors
+> if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
++ } else   !isall.equal(x, as.function( x ))
+Error in current[[i]] : object is not subsettable
+> if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
++ } else   !isall.equal(x, as.integer( x ))
+[1] TRUE
+> if(is.list(x)) { cat('IS: ');all.equal(x, as.list( x ), tol=0)
++ } else   !isall.equal(x, as.list( x ))
+IS: [1] "Attributes: < Lengths: 2, 0 >"                                    
+[2] "Attributes: < names for target but not for current >"             
+[3] "Attributes: < Length mismatch: comparison on first 0 components >"
+> if(is.logical(x)) { cat('IS: ');all.equal(x, as.logical( x ), tol=0)
++ } else   !isall.equal(x, as.logical( x ))
+[1] TRUE
+> if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
++ } else   !isall.equal(x, as.matrix( x ))
+Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
+> if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
++ } else   !isall.equal(x, as.name( x ))
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
+> if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
++ } else   !isall.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric(x)) { cat('IS: ');all.equal(x, as.numeric( x ), tol=0)
++ } else   !isall.equal(x, as.numeric( x ))
+[1] TRUE
+> if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
++ } else   !isall.equal(x, as.ordered( x ))
+Error in unique(x) : unique() applies only to vectors
+> if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
++ } else   !isall.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr(x)) { cat('IS: ');all.equal(x, as.qr( x ), tol=0)
++ } else   !isall.equal(x, as.qr( x ))
+Error in as.qr(x) : you cannot be serious
+> if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
++ } else   !isall.equal(x, as.real( x ))
+[1] TRUE
+> if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
++ } else   !isall.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
++ } else   !isall.equal(x, as.ts( x ))
+Error in ts(x) : ts object must have one or more observations
+> if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
++ } else   !isall.equal(x, as.vector( x ))
+[1] FALSE
+> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+Error in dimnames<-.data.frame(*tmp*, value = list(n)) : invalid dimnames given for data frame
+> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+[1] TRUE
+> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
+[1] TRUE
+> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+[1] TRUE
+> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+[1] TRUE
+> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
+[1] "Component x: Names: 1 string mismatches"          
+[2] "Component x: Components not in target: x"         
+[3] "Component x: Components not in current: factor(x)"
+> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+Error in as.data.frame.default(x) : can't coerce data.frame into a data.frame
+> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+[1] "Names: 1 string mismatches"   "Components not in target: f" 
+[3] "Components not in current: x"
+> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
+[1] "Attributes: < Component row.names: 1 string mismatches >"                                           
+[2] "Component x: Names: 1 string mismatches"                                                            
+[3] "Component x: Attributes: < Component row.names: Lengths: 0, 1 >"                                    
+[4] "Component x: Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
+[5] "Component x: Components not in target: x"                                                           
+[6] "Component x: Components not in current: factor(x)"                                                  
+> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
+[1] "Names: 1 string mismatches"                              
+[2] "Attributes: < Component row.names: 1 string mismatches >"
+[3] "Components not in target: f"                             
+[4] "Components not in current: x"                            
+> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+[1] TRUE
+> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+[1] TRUE
+> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+[1] TRUE
+> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+[1] TRUE
+> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+[1] TRUE
+> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+[1] TRUE
+> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+[1] TRUE
+> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+[1] TRUE
+> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+[1] TRUE
+> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+[1] TRUE
+> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+[1] TRUE
+> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+[1] TRUE
+> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+[1] TRUE
+> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+[1] TRUE
+> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
+> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
+> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+Error in dimnames<-.data.frame(*tmp*, value = dimnames) : invalid dimnames given for data frame
+> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
+> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
+> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+[1] TRUE
+> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+[1] TRUE
+> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+[1] TRUE
+> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+Error in unique(x) : unique() applies only to vectors
+> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+[1] TRUE
+> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+Error in as.qr(x) : you cannot be serious
+> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+[1] TRUE
+> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+[1] TRUE
+> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+Error in ts(x) : ts object must have one or more observations
+> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+[1] TRUE
+> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > 
 > 

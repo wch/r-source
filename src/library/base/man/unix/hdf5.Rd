@@ -3,7 +3,7 @@
 \usage{
 hdf5save(file, \dots)
 
-hdf5load(file, load=TRUE)
+hdf5load(file, load = TRUE)
 }
 \alias{hdf5save}
 \alias{hdf5load}
@@ -17,7 +17,10 @@ hdf5load(file, load=TRUE)
 }
 \description{
   \code{hdf5save} and \code{hd5fload} provide an experimental interface
-  to version 5 of the NCSA HDF library.  \code{hdf5save} writes a
+  to version 5 of the NCSA HDF library.
+}
+\details{
+  \code{hdf5save} writes a
   representation of \R objects to the specified file in a form which
   can be read by software which understands the HDF5 format.
   The objects can be read back from the file at a later

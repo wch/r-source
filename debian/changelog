@@ -1,9 +1,38 @@
+r-base (0.90.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Tue, 14 Dec 1999 10:51:10 -0600
+
+r-base (0.90.0-2) unstable; urgency=low
+
+  * added Conflicts: r-cran in control (Closes: #51673)
+  * Reinstated -Xfoo flags in call to dh_md5sums for Bug#35744
+  * Set up --mandir so package builds with -rfakeroot (Closes: #51901)
+  * Undid Dirk's marking of Rd2txt.1 Rdindex.1 Sd2Rd.1 as undocumented
+    (the manual pages are symbolic links to the Rdconv.1 page)
+  
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun,  5 Dec 1999 15:03:52 -0600
+
+r-base (0.90.0-1) unstable; urgency=low
+
+  * Non-maintainer upload dealing with the usr/doc to usr/share/doc
+    transition, as well as a  few other lintian errors and warnings 
+  * debian/postinst: added #DEBHELPER# stub
+  * debian/rules: configure with mandir=/usr/share/man
+  * debian/rules: remove extra licenses 
+  * debian/rules: also install docs BUGS PLATFORMS VERSION Y2K
+  * debian/rules: mark Rd2txt.1 Rdindex.1 Sd2Rd.1 as undocumented
+  * debian/dirs: change usr/doc to usr/share/doc
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 25 Nov 1999 20:46:56 -0500
+
 r-base (0.90.0-0) unstable; urgency=low
 
-  * Experimental package of development upstream release.
+  * new upstream release
   * Added a "suggests" entry in control for the ess package
 
- -- Douglas Bates <bates@stat.wisc.edu>  Tue, 26 Oct 1999 10:07:14 -0500
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu, 25 Nov 1999 13:08:19 -0600
 
 r-base (0.65.1-2) unstable; urgency=low
 

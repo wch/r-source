@@ -1,3 +1,24 @@
+rw0901
+======
+
+It is possible to install packages from any directory (set PKGDIR on
+the make command) and to any directory (set RLIB on the make command).
+
+RLIBS is no longer accepted for the library directory: use R_LIBS
+(which has been preferred since 0.65.0).
+
+The code to set the `cra' parameter for a windows() device (and hence
+the base character size of symbols) is more robust.
+
+The code handling Ctrl-like keys has been changed and ought to be more
+robust (AltGr on Danish Windows NT used to misbehave.)
+
+savePlot recognises filename="clipboard" (or "") for wmf plots.
+
+The installer has always been version-specific and now tests it is
+being used for the right version.
+
+
 rw0900
 ======
 
@@ -72,8 +93,8 @@ There is more support for (support of) ActiveX Automation via the
 Rproxy.dll: see the file front-ends/readme.
 
 As under Unix, .Renviron is first searched for in the working directory, 
-then in the home directory. (See README for how the home directory is
-decided.)
+then in the home directory. (It this case the home directory must
+be given by the R_USER or HOME environmental variable.)
 
 The sockets code is definitely working in this version, enough to support
 source.url and friends.

@@ -1,5 +1,5 @@
 \name{model.matrix}
-\title{Construct design matrices}
+\title{Construct Design Matrices}
 \usage{
 model.matrix   (object, \dots)
 model.matrix.lm(object, \dots)

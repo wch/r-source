@@ -1,6 +1,6 @@
 \name{rowsum}
 \title{
-Give row sums of a matrix, based on a grouping variable.
+Give Row Sums of a Matrix, Based on a Grouping Variable
 }
 \alias{rowsum}
 \usage{

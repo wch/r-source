@@ -3071,19 +3071,18 @@ double GStrHeight(char *str, int units, DevDesc *dd)
 #else
     double h;
     char *s;
-    double asc, dummy;
+    double asc, dsc, wid;
     int n;
     /* Count the lines of text minus one */
     n = 0;
     for(s = str; *s ; s++)
 	if (*s == '\n')
 	    n++;
-    h = n ? n * GConvertYUnits(1, CHARS, DEVICE, dd) : 0.;
+    h = n * GConvertYUnits(1, CHARS, DEVICE, dd);
     /*  Add in the ascent of the font, if available */
-    if(dd->dp.metricInfo)
-	GMetricInfo('M', &asc, &dummy, &dummy, DEVICE, dd);
-    else
-	asc = 1;
+    GMetricInfo('M', &asc, &dsc, &wid, DEVICE, dd);
+    if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0)) 
+	asc = GConvertYUnits(1, CHARS, DEVICE, dd);
     h += asc;
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
@@ -3187,14 +3186,26 @@ void GText(double x, double y, int coords, char *str,
 			    height = GStrHeight(sbuf, INCHES, dd);
 			    yc = dd->dp.yCharOffset;
 			} else {
-			    double maxHeight = 0;
-			    double maxDepth = 0;
+			    double maxHeight = 0.0;
+			    double maxDepth = 0.0;
 			    char *ss;
+			    int charNum = 0;
 			    for (ss=sbuf; *ss; ss++) {
 				GMetricInfo((unsigned char) *ss, &h, &d, &w,
 					    INCHES, dd);
-				if (h > maxHeight) maxHeight = h;
-				if (d > maxDepth) maxDepth = d;
+				/* Set maxHeight and maxDepth from height
+				   and depth of first char.
+				   Must NOT set to 0 in case there is 
+				   only 1 char and it has negative
+				   height or depth
+				*/
+				if (charNum++ == 0) {
+				    maxHeight = h;
+				    maxDepth = d;
+				} else {
+				    if (h > maxHeight) maxHeight = h;
+				    if (d > maxDepth) maxDepth = d;
+				}
 			    }
 			    height = maxHeight - maxDepth;
 			    yc = 0.5;
@@ -3550,14 +3561,15 @@ void GPretty(double *lo, double *up, int *ndiv)
 #ifdef Macintosh
 #define CMAG	1.0
 #else
-#define CMAG	1.1				/* Circle magnifier */
+#define CMAG	1.0				/* Circle magnifier, now defunct */
 #endif
 #ifdef OLDSYMSIZE
 #define GSTR_0  GStrWidth("0", INCHES, dd)
 #else
-#define GSTR_0  xDevtoInch(dd->dp.cra[0] * 0.66, dd) * dd->gp.cex
+#define GSTR_0  dd->dp.cra[1] * 0.5 * dd->gp.ipr[0] * dd->gp.cex
 /* NOTE: This cex is already multiplied with cexbase */
-#endif /* Draw one of the R special symbols. */
+#endif 
+/* Draw one of the R special symbols. */
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
     double r, xc, yc;
@@ -3568,7 +3580,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
     if(' ' <= pch && pch <= 255) {
 	if (pch == '.') {
 	    GConvert(&x, &y, coords, DEVICE, dd);
-	    GRect(x-.5, y-.5, x+.5, y+.5, DEVICE, NA_INTEGER, dd->gp.col, dd);
+	    GRect(x-.5, y-.5, x+.5, y+.5, DEVICE, dd->gp.col, NA_INTEGER, dd);
 	} else {
 	    str[0] = pch;
 	    str[1] = '\0';

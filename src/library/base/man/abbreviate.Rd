@@ -11,8 +11,9 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{use.classes}{logical (currently ignored by \R).}
   \item{dot}{logical; should a dot (\code{"."}) be appended?}
 }
-\description{Abbreviate Strings to at least \code{minlength} characters,
-    such that they remain \emph{unique} (if they were).
+\description{
+  Abbreviate strings to at least \code{minlength} characters,
+  such that they remain \emph{unique} (if they were).
 }
 \details{
   The algorithm used is similar to that of S.

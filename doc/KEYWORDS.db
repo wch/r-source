@@ -1,0 +1,63 @@
+Basics: Basics
+Basics|sysdata: Basic System Variables # != S
+Basics|datasets: Datasets available by data() # != S
+Basics|data: Environments, Scoping, Packages # ~= S
+Basics|manip: Data Manipulation
+Basics|attribute: Data Attributes	
+Basics|classes: Data Types (not OO)
+Basics|classes|character: Character Data Operations
+Basics|classes|complex: Complex Numbers
+Basics|classes|category: Categorical Data
+Basics|classes|NA: Missing Values # != S
+Basics|list: Lists
+Graphics: Graphics
+Graphics|aplot: Add to Existing Plot / internal plot
+Graphics|dplot: Computations Related to Plotting
+Graphics|hplot: High-Level Plots
+Graphics|iplot: Interacting with Plots
+Graphics|color: Color, Palettes etc.
+Graphics|dynamic: Dynamic Graphics
+Graphics|device: Graphical Devices
+Mathematics: Mathematics
+Mathematics|array: Matrices and Arrays
+Mathematics|array|algebra: Linear Algebra
+Mathematics|arith: Basic Arithmetic and Sorting	# != S
+Mathematics|math: Mathematical Calculus etc. # != S
+Mathematics|logic: Logical Operators
+Mathematics|optimize: Optimization:
+Mathematics|symbolmath: `Symbolic Math', as polynomials, fractions
+Programming: Programming, Input/Ouput, and Miscellaneous
+Programming|programming: Programming
+Programming|programming|interface: Interfaces to Other Languages
+Programming|iteration: Looping and Iteration
+Programming|methods: Methods and Generic Functions
+Programming|print: Printing
+Programming|file: Input/Output Files
+Programming|error: Error Handling
+Programming|environment: Session Environment
+Programming|utilities: Utilities
+Programming|misc: Miscellaneous
+Programming|documentation: Documentation
+Statistics: Statistics
+Statistics|distribution: Probability Distributions and Random Numbers
+Statistics|univar: simple univariate statistics  # != S
+Statistics|htest: Statistical Inference
+Statistics|models: Statistical Models
+Statistics|models|regression: Regression
+Statistics|models|regression|nonlinear: Non-linear Regression # only?
+Statistics|robust: Robust/Resistant Techniques
+Statistics|design: Designed Experiments
+Statistics|multivariate: Multivariate Techniques
+Statistics|ts: Time Series
+Statistics|survival: Survival Analysis
+# actually, `survival4' rather than `survival', but do we want `survival5'
+# later?
+Statistics|nonparametric: Nonparametric Statistics # w/o `smooth'
+Statistics|smooth: Curve (and Surface) Smoothing
+Statistics|cluster: Clustering
+Statistics|loess: Loess Objects
+Statistics|tree: Regression and Classification Trees
+MASS: Keywords added in MASS2 (1997)
+MASS|classif: Classification # package `class'
+MASS|neural: Neural Networks # package `nnet'
+MASS|spatial: Spatial Statistics # package `spatial'

@@ -1,5 +1,5 @@
 \name{print.coefmat}
-\title{Print Coefficients' Matrices}
+\title{Print Coefficient Matrices}
 \usage{
 print.coefmat(x, digits=max(3, .Options$digits - 2),
               signif.stars = .Options$show.signif.stars,

@@ -1,42 +1,43 @@
 
 /*  A Bison parser, made from ../../../R/src/main/gram.y
-    by GNU Bison version 1.28  */
+ by  GNU Bison version 1.25
+  */
 
 #define YYBISON 1  /* Identify Bison output.  */
 
-#define	END_OF_INPUT	257
-#define	ERROR	258
-#define	STR_CONST	259
-#define	NUM_CONST	260
-#define	NULL_CONST	261
-#define	SYMBOL	262
-#define	FUNCTION	263
-#define	LEFT_ASSIGN	264
-#define	RIGHT_ASSIGN	265
-#define	LBB	266
-#define	FOR	267
-#define	IN	268
-#define	IF	269
-#define	ELSE	270
-#define	WHILE	271
-#define	NEXT	272
-#define	BREAK	273
-#define	REPEAT	274
-#define	GT	275
-#define	GE	276
-#define	LT	277
-#define	LE	278
-#define	EQ	279
-#define	NE	280
-#define	AND	281
-#define	OR	282
-#define	LOW	283
-#define	TILDE	284
-#define	UNOT	285
-#define	NOT	286
-#define	SPECIAL	287
-#define	UMINUS	288
-#define	UPLUS	289
+#define	END_OF_INPUT	258
+#define	ERROR	259
+#define	STR_CONST	260
+#define	NUM_CONST	261
+#define	NULL_CONST	262
+#define	SYMBOL	263
+#define	FUNCTION	264
+#define	LEFT_ASSIGN	265
+#define	RIGHT_ASSIGN	266
+#define	LBB	267
+#define	FOR	268
+#define	IN	269
+#define	IF	270
+#define	ELSE	271
+#define	WHILE	272
+#define	NEXT	273
+#define	BREAK	274
+#define	REPEAT	275
+#define	GT	276
+#define	GE	277
+#define	LT	278
+#define	LE	279
+#define	EQ	280
+#define	NE	281
+#define	AND	282
+#define	OR	283
+#define	LOW	284
+#define	TILDE	285
+#define	UNOT	286
+#define	NOT	287
+#define	SPECIAL	288
+#define	UMINUS	289
+#define	UPLUS	290
 
 #line 1 "../../../R/src/main/gram.y"
 
@@ -73,12 +74,14 @@
 #include "Fileio.h"
 #include "Parse.h"
 
-    /* Useful defines so editors don't get confused ... */
+#define yyconst const
+
+/* Useful defines so editors don't get confused ... */
 
 #define LBRACE	'{'
 #define RBRACE	'}'
 
-    /* Functions used in the parsing process */
+/* Functions used in the parsing process */
 
 static void	CheckFormalArgs(SEXP, SEXP);
 static SEXP	FirstArg(SEXP, SEXP);
@@ -89,7 +92,6 @@ static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP);
 
-
 /* These routines allocate constants */
 
 SEXP		mkComplex(char *);
@@ -97,7 +99,7 @@ SEXP		mkFalse(void);
 SEXP		mkFloat(char *);
 SEXP		mkInteger(char *);
 SEXP		mkNA(void);
-SEXP		mkString(const char *);
+SEXP		mkString(yyconst char *);
 SEXP		mkTrue(void);
 
 /* Internal lexer / parser state variables */
@@ -183,7 +185,7 @@ static int	xxvalue(SEXP, int);
 #define	YYFLAG		-32768
 #define	YYNTBASE	57
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 289 ? yytranslate[x] : 67)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 290 ? yytranslate[x] : 67)
 
 static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,    48,
@@ -211,10 +213,10 @@ static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     1,     3,     4,     5,     6,
-     7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
-    17,    18,    19,    20,    21,    22,    23,    24,    25,    26,
-    27,    28,    30,    32,    33,    34,    40,    42,    43
+     2,     2,     2,     2,     2,     1,     2,     3,     4,     5,
+     6,     7,     8,     9,    10,    11,    12,    13,    14,    15,
+    16,    17,    18,    19,    20,    21,    22,    23,    24,    25,
+    26,    27,    28,    30,    32,    33,    34,    40,    42,    43
 };
 
 #if YYDEBUG != 0
@@ -262,14 +264,14 @@ static const short yyrhs[] = {     3,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-   158,   159,   160,   161,   162,   165,   166,   167,   168,   170,
-   171,   173,   174,   175,   176,   177,   179,   180,   181,   182,
-   183,   184,   185,   186,   187,   188,   189,   190,   191,   192,
-   193,   194,   195,   197,   198,   199,   201,   202,   203,   204,
-   205,   206,   207,   208,   209,   210,   211,   212,   216,   219,
-   222,   226,   227,   228,   229,   230,   231,   234,   235,   238,
-   239,   240,   241,   242,   243,   244,   245,   248,   249,   250,
-   251,   252,   255
+   159,   160,   161,   162,   163,   166,   167,   168,   169,   171,
+   172,   174,   175,   176,   177,   178,   180,   181,   182,   183,
+   184,   185,   186,   187,   188,   189,   190,   191,   192,   193,
+   194,   195,   196,   198,   199,   200,   202,   203,   204,   205,
+   206,   207,   208,   209,   210,   211,   212,   213,   217,   220,
+   223,   227,   228,   229,   230,   231,   232,   235,   236,   239,
+   240,   241,   242,   243,   244,   245,   246,   249,   250,   251,
+   252,   253,   256
 };
 #endif
 
@@ -488,8 +490,7 @@ static const short yycheck[] = {     0,
     40,    41,    -1,    -1,    44,    45,    46,    47
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/usr/lib/bison.simple"
-/* This file comes from bison-1.28.  */
+#line 3 "/usr/share/misc/bison.simple"
 
 /* Skeleton output parser for bison,
    Copyright (C) 1984, 1989, 1990 Free Software Foundation, Inc.
@@ -506,66 +507,46 @@ static const short yycheck[] = {     0,
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.  */
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 /* As a special exception, when this file is copied by Bison into a
    Bison output file, you may use that output file without restriction.
    This special exception was added by the Free Software Foundation
    in version 1.24 of Bison.  */
 
+#ifndef alloca
+#ifdef __GNUC__
+#define alloca __builtin_alloca
+#else /* not GNU C.  */
+#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi)
+#include <alloca.h>
+#else /* not sparc */
+#if defined (MSDOS) && !defined (__TURBOC__)
+#include <malloc.h>
+#else /* not MSDOS, or __TURBOC__ */
+#if defined(_AIX)
+#include <malloc.h>
+ #pragma alloca
+#else /* not MSDOS, __TURBOC__, or _AIX */
+#ifdef __hpux
+#ifdef __cplusplus
+extern "C" {
+void *alloca (unsigned int);
+};
+#else /* not __cplusplus */
+void *alloca ();
+#endif /* not __cplusplus */
+#endif /* __hpux */
+#endif /* not _AIX */
+#endif /* not MSDOS, or __TURBOC__ */
+#endif /* not sparc.  */
+#endif /* not GNU C.  */
+#endif /* alloca not defined.  */
+
 /* This is the parser code that is written into each bison parser
   when the %semantic_parser declaration is not specified in the grammar.
   It was written by Richard Stallman by simplifying the hairy parser
   used when %semantic_parser is specified.  */
-
-#ifndef YYSTACK_USE_ALLOCA
-#ifdef alloca
-#define YYSTACK_USE_ALLOCA
-#else /* alloca not defined */
-#ifdef __GNUC__
-#define YYSTACK_USE_ALLOCA
-#define alloca __builtin_alloca
-#else /* not GNU C.  */
-#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi) || (defined (__sun) && defined (__i386))
-#define YYSTACK_USE_ALLOCA
-#include <alloca.h>
-#else /* not sparc */
-/* We think this test detects Watcom and Microsoft C.  */
-/* This used to test MSDOS, but that is a bad idea
-   since that symbol is in the user namespace.  */
-#if (defined (_MSDOS) || defined (_MSDOS_)) && !defined (__TURBOC__)
-#if 0 /* No need for malloc.h, which pollutes the namespace;
-	 instead, just don't use alloca.  */
-#include <malloc.h>
-#endif
-#else /* not MSDOS, or __TURBOC__ */
-#if defined(_AIX)
-/* I don't know what this was needed for, but it pollutes the namespace.
-   So I turned it off.   rms, 2 May 1997.  */
-/* #include <malloc.h>  */
- #pragma alloca
-#define YYSTACK_USE_ALLOCA
-#else /* not MSDOS, or __TURBOC__, or _AIX */
-#if 0
-#ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
-		 and on HPUX 10.  Eventually we can turn this on.  */
-#define YYSTACK_USE_ALLOCA
-#define alloca __builtin_alloca
-#endif /* __hpux */
-#endif
-#endif /* not _AIX */
-#endif /* not MSDOS, or __TURBOC__ */
-#endif /* not sparc */
-#endif /* not GNU C */
-#endif /* alloca not defined */
-#endif /* YYSTACK_USE_ALLOCA not defined */
-
-#ifdef YYSTACK_USE_ALLOCA
-#define YYSTACK_ALLOC alloca
-#else
-#define YYSTACK_ALLOC malloc
-#endif
 
 /* Note: there must be only one dollar sign in this file.
    It is replaced by the list of actions, each action
@@ -575,8 +556,8 @@ static const short yycheck[] = {     0,
 #define yyclearin	(yychar = YYEMPTY)
 #define YYEMPTY		-2
 #define YYEOF		0
-#define YYACCEPT	goto yyacceptlab
-#define YYABORT 	goto yyabortlab
+#define YYACCEPT	return(0)
+#define YYABORT 	return(1)
 #define YYERROR		goto yyerrlab1
 /* Like YYERROR except do call yyerror.
    This remains here temporarily to ease the
@@ -657,12 +638,14 @@ int yydebug;			/*  nonzero means print parse trace	*/
 #ifndef YYMAXDEPTH
 #define YYMAXDEPTH 10000
 #endif
-
-/* Define __yy_memcpy.  Note that the size argument
-   should be passed with type unsigned int, because that is what the non-GCC
-   definitions require.  With GCC, __builtin_memcpy takes an arg
-   of type size_t, but it can handle unsigned int.  */
 
+/* Prevent warning if -Wstrict-prototypes.  */
+#ifdef __GNUC__
+#ifndef YYPARSE_PARAM
+int yyparse (void);
+#endif
+#endif
+
 #if __GNUC__ > 1		/* GNU C and GNU C++ define this.  */
 #define __yy_memcpy(TO,FROM,COUNT)	__builtin_memcpy(TO,FROM,COUNT)
 #else				/* not GNU C or C++ */
@@ -674,7 +657,7 @@ static void
 __yy_memcpy (to, from, count)
      char *to;
      char *from;
-     unsigned int count;
+     int count;
 {
   register char *f = from;
   register char *t = to;
@@ -689,10 +672,10 @@ __yy_memcpy (to, from, count)
 /* This is the most reliable way to avoid incompatibilities
    in available built-in functions on various systems.  */
 static void
-__yy_memcpy (char *to, char *from, unsigned int count)
+__yy_memcpy (char *to, char *from, int count)
 {
-  register char *t = to;
   register char *f = from;
+  register char *t = to;
   register int i = count;
 
   while (i-- > 0)
@@ -702,7 +685,7 @@ __yy_memcpy (char *to, char *from, unsigned int count)
 #endif
 #endif
 
-#line 217 "/usr/lib/bison.simple"
+#line 196 "/usr/share/misc/bison.simple"
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
    into yyparse.  The argument should have type void *.
@@ -722,15 +705,6 @@ __yy_memcpy (char *to, char *from, unsigned int count)
 #define YYPARSE_PARAM_ARG
 #define YYPARSE_PARAM_DECL
 #endif /* not YYPARSE_PARAM */
-
-/* Prevent warning if -Wstrict-prototypes.  */
-#ifdef __GNUC__
-#ifdef YYPARSE_PARAM
-int yyparse (void *);
-#else
-int yyparse (void);
-#endif
-#endif
 
 int
 yyparse(YYPARSE_PARAM_ARG)
@@ -760,7 +734,6 @@ yyparse(YYPARSE_PARAM_ARG)
 #endif
 
   int yystacksize = YYINITDEPTH;
-  int yyfree_stacks = 0;
 
 #ifdef YYPURE
   int yychar;
@@ -845,32 +818,18 @@ yynewstate:
       if (yystacksize >= YYMAXDEPTH)
 	{
 	  yyerror("parser stack overflow");
-	  if (yyfree_stacks)
-	    {
-	      free (yyss);
-	      free (yyvs);
-#ifdef YYLSP_NEEDED
-	      free (yyls);
-#endif
-	    }
 	  return 2;
 	}
       yystacksize *= 2;
       if (yystacksize > YYMAXDEPTH)
 	yystacksize = YYMAXDEPTH;
-#ifndef YYSTACK_USE_ALLOCA
-      yyfree_stacks = 1;
-#endif
-      yyss = (short *) YYSTACK_ALLOC (yystacksize * sizeof (*yyssp));
-      __yy_memcpy ((char *)yyss, (char *)yyss1,
-		   size * (unsigned int) sizeof (*yyssp));
-      yyvs = (YYSTYPE *) YYSTACK_ALLOC (yystacksize * sizeof (*yyvsp));
-      __yy_memcpy ((char *)yyvs, (char *)yyvs1,
-		   size * (unsigned int) sizeof (*yyvsp));
+      yyss = (short *) alloca (yystacksize * sizeof (*yyssp));
+      __yy_memcpy ((char *)yyss, (char *)yyss1, size * sizeof (*yyssp));
+      yyvs = (YYSTYPE *) alloca (yystacksize * sizeof (*yyvsp));
+      __yy_memcpy ((char *)yyvs, (char *)yyvs1, size * sizeof (*yyvsp));
 #ifdef YYLSP_NEEDED
-      yyls = (YYLTYPE *) YYSTACK_ALLOC (yystacksize * sizeof (*yylsp));
-      __yy_memcpy ((char *)yyls, (char *)yyls1,
-		   size * (unsigned int) sizeof (*yylsp));
+      yyls = (YYLTYPE *) alloca (yystacksize * sizeof (*yylsp));
+      __yy_memcpy ((char *)yyls, (char *)yyls1, size * sizeof (*yylsp));
 #endif
 #endif /* no yyoverflow */
 
@@ -1031,300 +990,300 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 158 "../../../R/src/main/gram.y"
+#line 159 "../../../R/src/main/gram.y"
 { return 0; ;
     break;}
 case 2:
-#line 159 "../../../R/src/main/gram.y"
+#line 160 "../../../R/src/main/gram.y"
 { return xxvalue(NULL,2); ;
     break;}
 case 3:
-#line 160 "../../../R/src/main/gram.y"
+#line 161 "../../../R/src/main/gram.y"
 { return xxvalue(yyvsp[-1],3); ;
     break;}
 case 4:
-#line 161 "../../../R/src/main/gram.y"
+#line 162 "../../../R/src/main/gram.y"
 { return xxvalue(yyvsp[-1],4); ;
     break;}
 case 5:
-#line 162 "../../../R/src/main/gram.y"
+#line 163 "../../../R/src/main/gram.y"
 { YYABORT; ;
     break;}
 case 6:
-#line 165 "../../../R/src/main/gram.y"
-{ yyval = yyvsp[0]; ;
-    break;}
-case 7:
 #line 166 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
-case 8:
+case 7:
 #line 167 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
-case 9:
+case 8:
 #line 168 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
+case 9:
+#line 169 "../../../R/src/main/gram.y"
+{ yyval = yyvsp[0]; ;
+    break;}
 case 10:
-#line 170 "../../../R/src/main/gram.y"
+#line 171 "../../../R/src/main/gram.y"
 { yyval = xxexprlist(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 11:
-#line 171 "../../../R/src/main/gram.y"
+#line 172 "../../../R/src/main/gram.y"
 { yyval = xxparen(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 12:
-#line 173 "../../../R/src/main/gram.y"
-{ yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
-    break;}
-case 13:
 #line 174 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 14:
+case 13:
 #line 175 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 15:
+case 14:
 #line 176 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 16:
+case 15:
 #line 177 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 17:
-#line 179 "../../../R/src/main/gram.y"
-{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
+case 16:
+#line 178 "../../../R/src/main/gram.y"
+{ yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 18:
+case 17:
 #line 180 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 19:
+case 18:
 #line 181 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 20:
+case 19:
 #line 182 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 21:
+case 20:
 #line 183 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 22:
+case 21:
 #line 184 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 23:
+case 22:
 #line 185 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 24:
+case 23:
 #line 186 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 25:
+case 24:
 #line 187 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 26:
+case 25:
 #line 188 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 27:
+case 26:
 #line 189 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 28:
+case 27:
 #line 190 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 29:
+case 28:
 #line 191 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 30:
+case 29:
 #line 192 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 31:
+case 30:
 #line 193 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 32:
+case 31:
 #line 194 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 33:
+case 32:
 #line 195 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
+case 33:
+#line 196 "../../../R/src/main/gram.y"
+{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
+    break;}
 case 34:
-#line 197 "../../../R/src/main/gram.y"
+#line 198 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 35:
-#line 198 "../../../R/src/main/gram.y"
+#line 199 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[0],yyvsp[-2]); ;
     break;}
 case 36:
-#line 200 "../../../R/src/main/gram.y"
+#line 201 "../../../R/src/main/gram.y"
 { yyval = xxdefun(yyvsp[-5],yyvsp[-3],yyvsp[0]); ;
     break;}
 case 37:
-#line 201 "../../../R/src/main/gram.y"
+#line 202 "../../../R/src/main/gram.y"
 { yyval = xxfuncall(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 38:
-#line 202 "../../../R/src/main/gram.y"
+#line 203 "../../../R/src/main/gram.y"
 { yyval = xxif(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 39:
-#line 203 "../../../R/src/main/gram.y"
+#line 204 "../../../R/src/main/gram.y"
 { yyval = xxifelse(yyvsp[-4],yyvsp[-3],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 40:
-#line 204 "../../../R/src/main/gram.y"
+#line 205 "../../../R/src/main/gram.y"
 { yyval = xxfor(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 41:
-#line 205 "../../../R/src/main/gram.y"
+#line 206 "../../../R/src/main/gram.y"
 { yyval = xxwhile(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 42:
-#line 206 "../../../R/src/main/gram.y"
+#line 207 "../../../R/src/main/gram.y"
 { yyval = xxrepeat(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 43:
-#line 207 "../../../R/src/main/gram.y"
+#line 208 "../../../R/src/main/gram.y"
 { yyval = xxsubscript(yyvsp[-4],yyvsp[-3],yyvsp[-2]); ;
     break;}
 case 44:
-#line 208 "../../../R/src/main/gram.y"
+#line 209 "../../../R/src/main/gram.y"
 { yyval = xxsubscript(yyvsp[-3],yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 45:
-#line 209 "../../../R/src/main/gram.y"
-{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
-    break;}
-case 46:
 #line 210 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 47:
+case 46:
 #line 211 "../../../R/src/main/gram.y"
-{ yyval = xxnxtbrk(yyvsp[0]); ;
+{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 48:
+case 47:
 #line 212 "../../../R/src/main/gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
+case 48:
+#line 213 "../../../R/src/main/gram.y"
+{ yyval = xxnxtbrk(yyvsp[0]); ;
+    break;}
 case 49:
-#line 216 "../../../R/src/main/gram.y"
+#line 217 "../../../R/src/main/gram.y"
 { yyval = xxcond(yyvsp[-1]); ;
     break;}
 case 50:
-#line 219 "../../../R/src/main/gram.y"
+#line 220 "../../../R/src/main/gram.y"
 { yyval = xxifcond(yyvsp[-1]); ;
     break;}
 case 51:
-#line 222 "../../../R/src/main/gram.y"
+#line 223 "../../../R/src/main/gram.y"
 { yyval = xxforcond(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 52:
-#line 226 "../../../R/src/main/gram.y"
+#line 227 "../../../R/src/main/gram.y"
 { yyval = xxexprlist0(); ;
     break;}
 case 53:
-#line 227 "../../../R/src/main/gram.y"
+#line 228 "../../../R/src/main/gram.y"
 { yyval = xxexprlist1(yyvsp[0]); ;
     break;}
 case 54:
-#line 228 "../../../R/src/main/gram.y"
+#line 229 "../../../R/src/main/gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 55:
-#line 229 "../../../R/src/main/gram.y"
+#line 230 "../../../R/src/main/gram.y"
 { yyval = yyvsp[-1]; ;
     break;}
 case 56:
-#line 230 "../../../R/src/main/gram.y"
+#line 231 "../../../R/src/main/gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 57:
-#line 231 "../../../R/src/main/gram.y"
+#line 232 "../../../R/src/main/gram.y"
 { yyval = yyvsp[-1];;
     break;}
 case 58:
-#line 234 "../../../R/src/main/gram.y"
+#line 235 "../../../R/src/main/gram.y"
 { yyval = xxsublist1(yyvsp[0]); ;
     break;}
 case 59:
-#line 235 "../../../R/src/main/gram.y"
+#line 236 "../../../R/src/main/gram.y"
 { yyval = xxsublist2(yyvsp[-3],yyvsp[0]); ;
     break;}
 case 60:
-#line 238 "../../../R/src/main/gram.y"
+#line 239 "../../../R/src/main/gram.y"
 { yyval = xxsub0(); ;
     break;}
 case 61:
-#line 239 "../../../R/src/main/gram.y"
+#line 240 "../../../R/src/main/gram.y"
 { yyval = xxsub1(yyvsp[0]); ;
     break;}
 case 62:
-#line 240 "../../../R/src/main/gram.y"
+#line 241 "../../../R/src/main/gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
 case 63:
-#line 241 "../../../R/src/main/gram.y"
+#line 242 "../../../R/src/main/gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 64:
-#line 242 "../../../R/src/main/gram.y"
+#line 243 "../../../R/src/main/gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
 case 65:
-#line 243 "../../../R/src/main/gram.y"
+#line 244 "../../../R/src/main/gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 66:
-#line 244 "../../../R/src/main/gram.y"
+#line 245 "../../../R/src/main/gram.y"
 { yyval = xxnullsub0(); ;
     break;}
 case 67:
-#line 245 "../../../R/src/main/gram.y"
+#line 246 "../../../R/src/main/gram.y"
 { yyval = xxnullsub1(yyvsp[0]); ;
     break;}
 case 68:
-#line 248 "../../../R/src/main/gram.y"
+#line 249 "../../../R/src/main/gram.y"
 { yyval = xxnullformal(); ;
     break;}
 case 69:
-#line 249 "../../../R/src/main/gram.y"
+#line 250 "../../../R/src/main/gram.y"
 { yyval = xxfirstformal0(yyvsp[0]); ;
     break;}
 case 70:
-#line 250 "../../../R/src/main/gram.y"
+#line 251 "../../../R/src/main/gram.y"
 { yyval = xxfirstformal1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 71:
-#line 251 "../../../R/src/main/gram.y"
+#line 252 "../../../R/src/main/gram.y"
 { yyval = xxaddformal0(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 72:
-#line 252 "../../../R/src/main/gram.y"
+#line 253 "../../../R/src/main/gram.y"
 { yyval = xxaddformal1(yyvsp[-4],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 73:
-#line 255 "../../../R/src/main/gram.y"
+#line 256 "../../../R/src/main/gram.y"
 { EatLines = 1; ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 543 "/usr/lib/bison.simple"
+#line 498 "/usr/share/misc/bison.simple"
 
   yyvsp -= yylen;
   yyssp -= yylen;
@@ -1519,32 +1478,8 @@ yyerrhandle:
 
   yystate = yyn;
   goto yynewstate;
-
- yyacceptlab:
-  /* YYACCEPT comes here.  */
-  if (yyfree_stacks)
-    {
-      free (yyss);
-      free (yyvs);
-#ifdef YYLSP_NEEDED
-      free (yyls);
-#endif
-    }
-  return 0;
-
- yyabortlab:
-  /* YYABORT comes here.  */
-  if (yyfree_stacks)
-    {
-      free (yyss);
-      free (yyvs);
-#ifdef YYLSP_NEEDED
-      free (yyls);
-#endif
-    }
-  return 1;
 }
-#line 257 "../../../R/src/main/gram.y"
+#line 258 "../../../R/src/main/gram.y"
 
 
 
@@ -2653,7 +2588,7 @@ static int KeywordLookup(char *s)
 }
 
 
-SEXP mkString(const char *s)
+SEXP mkString(yyconst char *s)
 {
     SEXP t;
 
@@ -2914,9 +2849,9 @@ static int SymbolValue(int c)
 		SourcePtr = FunctionSource + 8;
 	    }
 	    FunctionStart[FunctionLevel] = SourcePtr - 8;
-	    #if 0
-	    printf("%d,%d\n",SourcePtr - FunctionSource, FunctionLevel);
-	    #endif
+#if 0
+	    printf("%d,%d\n", SourcePtr - FunctionSource, FunctionLevel);
+#endif
 	}
 	return kw;
     }

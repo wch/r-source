@@ -8,9 +8,7 @@ Luteinizing Hormone in Blood Samples
 }
 \description{
 A regular time series giving the luteinizing hormone in blood
-samples at 10 mins intervals from a human female, 48 samples. 
-
-
+samples at 10 mins intervals from a human female, 48 samples.
 }
 \source{
 P.J. Diggle (1990)

@@ -118,6 +118,10 @@ multivariate outliers and leverage points,
 P. J. Rousseeuw and K. van Driessen (1997) A fast algorithm for the
 minimum covariance determinant estimator. Technical Report, Department
 of Mathematics and Computer Science, Universitaire Instelling Antwerpen.
+
+P. Rousseeuw and M. Hubert (1997) Recent developments in PROGRESS. In
+\emph{L1-Statistical Procedures and Related Topics }
+ed Y. Dodge, IMS Lecture Notes volume \bold{31}, pp. 201-214.
 }
 \seealso{
 \code{\link{lqs}}

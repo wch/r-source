@@ -1,26 +1,30 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL,
-              method=c("yule-walker","burg", "ols", "mle"),
+              method=c("yule-walker","burg", "ols", "mle", "yw",),
               na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),
         "yule-walker" = ar.yw(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...),
+                  na.action = na.action, series=series, ...),
 	"burg" = ar.burg(x, aic=aic, order.max=order.max,
                               na.action = na.action, series=series, ...),
 	"ols" = ar.ols(x, aic=aic, order.max=order.max,
                               na.action = na.action, series=series, ...),
  	"mle" = ar.mle(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...)
+                              na.action = na.action, series=series, ...),
+        "yw" = ar.yw(x, aic=aic, order.max=order.max,
+                  na.action = na.action, series=series, ...)
    )
     res$call <- match.call()
     res
 }
 
+ar.yw <- function(x, ...) UseMethod("ar.yw")
 
-ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                   demean = TRUE, series = NULL, ...)
+ar.yw.default <-
+    function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
+              demean = TRUE, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
     ists <- is.ts(x)
@@ -102,6 +106,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                            dimnames=list(NULL, snames, snames))
         dimnames(var.pred) <- list(snames, snames)
         dimnames(partialacf) <- list(1:order.max, snames, snames)
+        colnames(resid) <- colnames(x)
     } else {
         ## univariate case
         r <- as.double(drop(xacf))
@@ -146,7 +151,9 @@ print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)
     if(nser > 1) {
-        res <- x[c("ar", "var.pred")]
+        if(!is.null(x$x.intercept))
+            res <- x[c("ar", "x.intercept", "var.pred")]
+        else res <- x[c("ar", "var.pred")]
         res$ar <- aperm(res$ar, c(2,3,1))
         print(res, digits=digits)
     } else {
@@ -156,6 +163,10 @@ print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
             names(coef) <- seq(length=x$order)
             print.default(coef, print.gap = 2)
         }
+        if(!is.null(xint <- x$x.intercept) && !is.na(xint))
+            cat("\nIntercept: ", format(xint, digits = digits),
+                " (", format(x$asy.se.coef$x.mean, digits = digits),
+                ") ", "\n", sep="")
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
             format(x$var.pred, digits = digits),"\n")
 
@@ -186,12 +197,11 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         else xint <- object$x.intercept
         x <- rbind(sweep(newdata, 2, object$x.mean),
                    matrix(rep(0, nser), n.ahead, nser, byrow=TRUE))
-        ar <- aperm(ar, c(2, 3, 1))
         if(p > 0) {
             for(i in 1:n.ahead) {
-                x[n+i,] <- ar[,,1] %*% x[n+i-1,] + xint
+                x[n+i,] <- ar[1,,] %*% x[n+i-1,] + xint
                 if(p > 1) for(j in 2:p)
-                    x[n+i,] <- x[n+i,] + ar[,,j] %*% x[n+i-j,]
+                    x[n+i,] <- x[n+i,] + ar[j,,] %*% x[n+i-j,]
             }
             pred <- x[n+(1:n.ahead), ]
         } else {
@@ -206,7 +216,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     } else {
         if(is.null(object$x.intercept)) xint <- 0
         else xint <- object$x.intercept
-        x <- c(newdata-object$x.mean, rep(0, n.ahead))
+        x <- c(newdata - object$x.mean, rep(0, n.ahead))
         if(p > 0) {
             for(i in 1:n.ahead) {
                 x[n+i] <- sum(ar * x[n+i - (1:p)]) + xint

@@ -1049,10 +1049,14 @@ SEXP promiseArgs(SEXP el, SEXP rho)
 
 void CheckFormals(SEXP ls)
 {
-    if (isList(ls))
+    if (isList(ls)) {
 	for (; ls != R_NilValue; ls = CDR(ls))
 	    if (TYPEOF(TAG(ls)) != SYMSXP)
-		error("invalid formal argument list for \"function\"");
+		goto err;
+	return;
+    }
+ err:
+    error("invalid formal argument list for \"function\"");
 }
 
 

@@ -23,7 +23,8 @@ rlogis(n, location=0, scale=1)
   the density, \code{plogis} gives the distribution function
   \code{qlogis} gives the quantile function and \code{rlogis} generates
   random deviates.
-
+}
+\details{
   If \code{location} or \code{scale} are omitted, they assume the
   default values of \code{0} and \code{1} respectively.
 

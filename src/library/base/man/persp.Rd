@@ -38,7 +38,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   \item{ltheta, lphi}{if finite values are specified for \code{ltheta}
     and \code{lphi}, the surface is shaded as though it was being
     illuminated from the direction specified by azimuth \code{ltheta}
-    and collattitude \code{lphi}.}
+    and colatitude \code{lphi}.}
   \item{shade}{the shade at a surface facet is computed as
     \code{((1+d)/2)^shade}, where \code{d} is the dot product of
     a unit vector normal to the facet and a unit vector in the
@@ -54,13 +54,16 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 }
 \description{
   This function draws perspective plots of surfaces over the
-  x-y plane.  The plots are produced by first transforming the
+  x--y plane.
+}
+\details{
+  The plots are produced by first transforming the
   coordinates to the interval [0,1].  The surface is then viewed
   by looking at the origin from a direction defined by \code{theta}
   and \code{phi}.  If \code{theta} and \code{phi} are both zero
   the viewing direction is directly down the negative y axis.
   Changing \code{theta} will vary the azimuth and changing \code{phi}
-  the colattitude.
+  the colatitude.
 }
 \seealso{
   \code{\link{contour}} and \code{\link{image}}.

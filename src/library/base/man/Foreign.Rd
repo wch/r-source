@@ -1,8 +1,8 @@
 \name{Foreign}
 \title{Foreign Function Interface}
 \usage{
-       .C(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
- .Fortran(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
+       .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
+ .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
 .External(name, \dots)
     .Call(name, \dots)
 }
@@ -28,6 +28,9 @@
     \code{PACKAGE="base"} for symbols linked in to \R.} 
 }
 \description{
+  Function to make calls to compiled code that has been loaded into \R.
+}
+\details{
   The functions \code{.C} and \code{.Fortran} can be used to make calls
   to C and Fortran code.
 
@@ -69,6 +72,7 @@ character \tab char ** \tab [see below]\cr
 list \tab SEXP *\tab not allowed\cr
 other \tab SEXP\tab not allowed\cr
 }
+
 Numeric vectors in \R will be passed as type \code{double *} to C
 (and as \code{double precision} to Fortran) unless (i) \code{.C} or
 \code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the argument
@@ -79,7 +83,7 @@ facilitate the interfacing of existing C and Fortran code.
 The C type \code{complex} is defined in \file{Complex.h} as a
 \code{typedef struct {double r; double i;}}. Fortran type
 \code{double complex} is an extension to the Fortran standard, and
-the availibility of a mapping of \code{complex} to Fortran may be
+the availability of a mapping of \code{complex} to Fortran may be
 compiler dependent.
 
 \emph{Note:} The C types corresponding to \code{integer} and

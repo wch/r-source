@@ -38,7 +38,7 @@ plot.stepfun(Fn, x, xlim, xlab = "x", ylab = "f(x)", main = NULL,
   \item{t}{abscissa (x) values, including the two outermost ones.}
   \item{y}{y values `in between' the \code{t[]}.}
 }
-\author{Martin Maechler \email{<maechler@stat.math.ethz.ch>}, 1990,
+\author{Martin Maechler \email{maechler@stat.math.ethz.ch}, 1990,
     1993; ported to \R, 1997.}
 \seealso{\code{\link{ecdf}} for empirical distribution functions as
   special step functions,
