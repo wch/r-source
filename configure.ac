@@ -832,14 +832,14 @@ case "${host_os}" in
     esac
     main_ldflags="-Wl,-E"
     if test "${GCC}" = yes; then
-      shlib_ldflags="-shared -fPIC"
+      shlib_ldflags="-shared -fPIC -Wl,-Bsymbolic"
     else
       ## <NOTE>
       ## Native cc insists on tacking on crt0.o when it calls ld, and
       ## crt0.o is not built with PIC.  As there seems to be no obvious
       ## way to tell cc not to do this, we use ld for linking shlibs.
       shlib_ld=ld
-      shlib_ldflags="-b"
+      shlib_ldflags="-b -Bsymbolic"
       ## </NOTE>
     fi
     if test "${GXX}" = yes; then
@@ -1020,8 +1020,14 @@ case "${host_os}" in
     RLAPACK_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libRlapack.dylib"
     ;;
   hpux*)
-    ## needs to avoid embedding a relative path ../../../bin
-    LAPACK_LDFLAGS="-Wl,+s"
+    ## Needs to avoid embedding a relative path ../../../bin.
+    ## See the above code for shlib_ldflags for reasons why we currently
+    ## cannot always use '-Wl,+s'.
+    if test "${GCC}" = yes; then
+      LAPACK_LDFLAGS="-Wl,+s"
+    else
+      LAPACK_LDFLAGS="+s"
+    fi
     ;;
 esac
 
