@@ -65,7 +65,7 @@ rt(n, df)
   Then \eqn{T} is distributed as non-centrally \eqn{t} with
   \code{df}\eqn{= n-1}
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
-  \code{ncp}\eqn{= \mu - \mu_0}{= mu - m0}.
+  \code{ncp}\eqn{= (\mu - \mu_0) \sqrt{n}/\sigma}{= (mu - m0) * sqrt(n)/sigma}.
 }
 \references{Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
     Cumulative distribution function of the non-central \eqn{t} distribution,
