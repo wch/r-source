@@ -298,32 +298,18 @@ static void setcellwidths()
 
 static void drawwindow()
 {
-    int i;
-
     /* might have resized */
     setcellwidths();
-    nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
+    nhigh = (HEIGHT - 2 * bwidth - hwidth - 3) / box_h;
     windowHeight = nhigh * box_h + 2 * bwidth + hwidth;
     oldWIDTH = WIDTH;
     oldHEIGHT = HEIGHT;
     
     clearwindow();
-
-    gfillrect(de, bbg, rect(0, 0, windowWidth, box_h));
-    gfillrect(de, bbg, rect(0, 0, boxw[0], windowHeight));
-    
-    for (i = 1; i < nhigh; i++)
-	drawrectangle(0, hwidth + i * box_h, boxw[0], box_h, 1, 1);
-     /* so row 0 and col 0 are reserved for labels */
-    colmax = colmin + (nwide - 2);
-    rowmax = rowmin + (nhigh - 2);
-    printlabs();
-    if (inputlist != R_NilValue)
-	for (i = colmin; i <= colmax; i++) drawcol(i);
+    deredraw();
     /* row/col 1 = pos 0 */
     gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
     gchangescrollbar(de, HWINSB, colmin-1, xmaxused, nwide, 0);
-    highlightrect();
 }
 
 static void doHscroll(int oldcol)
@@ -1145,6 +1131,11 @@ static void de_mousedown(control c, int buttons, point xy)
 		highlightrect();
 		bell();
 	    }
+	} else if (wrow > nhigh - 1 || wcol > nwide -1) {
+		/* off the grid */
+		highlightrect();
+		bell();
+		return;
 	} else if (buttons & DblClick) {
 	    int x, y, bw;
 	    char *prev;
@@ -1195,20 +1186,17 @@ static void de_mouseup(control c, int buttons, point xy)
 
 static void de_redraw(control c, rect r)
 {
-    deredraw();
+    if (WIDTH != oldWIDTH || HEIGHT != oldHEIGHT) drawwindow();
+    else deredraw();
 }
 
 static void deredraw()
 {
     int i;
 
-    if (WIDTH != oldWIDTH || HEIGHT != oldHEIGHT) {
-	drawwindow();
-	return;
-    }
     setcellwidths();
 
-    gfillrect(de, bbg, rect(0, 0, windowWidth, box_h));
+    if(hwidth > 0) gfillrect(de, bbg, rect(0, 0, WIDTH, hwidth));
     gfillrect(de, bbg, rect(0, 0, boxw[0], windowHeight));
 
     for (i = 1; i < nhigh; i++)
@@ -1218,7 +1206,8 @@ static void deredraw()
     printlabs();
     if (inputlist != R_NilValue)
 	for (i = colmin; i <= colmax; i++) drawcol(i);
-    gfillrect(de, p->bg, rect(windowWidth+1, 0, WIDTH-windowWidth-1, HEIGHT));
+    gfillrect(de, p->bg, rect(windowWidth+1, hwidth, WIDTH-windowWidth-1, 
+			      HEIGHT - hwidth));
     highlightrect();
 }
 
@@ -1242,8 +1231,6 @@ static void copyH(int src_x, int dest_x, int width)
 	     rect(src_x, hwidth, width, windowHeight - hwidth));
 }
 
-#include <windows.h> /* for COLOR_BTNFACE */
-
 static int  initwin()
 {
     int i;
@@ -1263,7 +1250,7 @@ static int  initwin()
     text_xoffset = 5;
     text_yoffset = -3;
     setcellwidths();
-    nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
+    nhigh = (HEIGHT - 2 * bwidth - hwidth - 3) / box_h;
     windowHeight = nhigh * box_h + 2 * bwidth + hwidth;
     r = getrect(de);
     r.width = windowWidth + 3;
@@ -1271,7 +1258,7 @@ static int  initwin()
     resize(de, r);
 
     CellModified = CellEditable = 0;
-    bbg = myGetSysColor(COLOR_BTNFACE);
+    bbg = dialog_bg();
     /* set the active cell to be the upper left one */
     crow = 1;
     ccol = 1;
@@ -1300,8 +1287,7 @@ static void popupclose(control c)
     int levs;
     char buf[30];
 
-    strcpy(buf, gettext(varname));
-    if(!strlen(buf)) {
+    strcpy(buf, gettext(varname));    if(!strlen(buf)) {
 	askok("column names cannot be blank");
 	return;
     }

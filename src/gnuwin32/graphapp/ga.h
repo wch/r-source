@@ -86,6 +86,8 @@ rgb     nametorgb(char *colourname);
 char *  rgbtoname(rgb in);
 int     rgbtonum(rgb in);
 rgb     myGetSysColor(int);
+rgb 	dialog_bg();
+
 
 /* clipboard.c */
 void    copytoclipboard(drawing src);
