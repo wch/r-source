@@ -3,7 +3,7 @@
 include ../Makeconf
 
 
-CleanMe1 = SHLIB INSTALL REMOVE
+CleanMe1 = SHLIB INSTALL REMOVE COMPILE 
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help help.pretty html2dos
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
@@ -57,7 +57,6 @@ moreclean: clean
 distclean realclean:
 	@rm -fr $(CleanMe)
 	@rm -f stamp-*
-
 
 install:
 	$(INSTALL_DIR) $(rhome)/etc
