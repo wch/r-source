@@ -367,3 +367,11 @@ Date: Wed, 1 Dec 1999 08:05:05 +0100 (MET)
 Subject: Error in plot.aov()
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Thu, 02 Dec 1999 13:42:21 +1100
+* PR# 357 *
+Subject: filled.contour
+From: steuer@statistik.uni-dortmund.de
+Date: Fri, 3 Dec 1999 15:32:29 +0100 (MET)
+* PR# 358 *
+Subject: [[ substitution
+From: clive@bell-labs.com
+Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
