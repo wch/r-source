@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-44, @value{FAQ-YEAR}-02-21
+@set FAQ-VERSION 1.8-45, @value{FAQ-YEAR}-02-28
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -697,6 +697,9 @@ Of course, in the case of bug reports it would be very helpful to have
 code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
+
+Please read the @uref{http://www.r-project.org/posting-guide.html,
+posting guide} @emph{before} sending anything to any mailing list.
 
 Archives of the above three mailing lists are made available on the net
 in a monthly schedule via the @file{doc/html/mail.html} file in @CRAN{}.
@@ -2147,6 +2150,9 @@ Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
 @item lpridge
 Local polynomial (ridge) regression.
+@item mAr
+Estimation of multivariate AR models through a computationally efficient
+stepwise least-squares algorithm.
 @item magic
 A variety of methods for creating magic squares of any order greater
 than 2, and various magic hypercubes.

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-44, 2004-02-21
+Version 1.8-45, 2004-02-28
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -583,6 +583,10 @@ typically also result in much quicker feedback for yourself.
 code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See *Note R
 Bugs:: for more details.
+
+   Please read the posting guide
+(http://www.r-project.org/posting-guide.html) _before_ sending anything to
+any mailing list.
 
    Archives of the above three mailing lists are made available on the net
 in a monthly schedule via the `doc/html/mail.html' file in CRAN.
@@ -2006,6 +2010,10 @@ distributions of R.)
 
 *lpridge*
      Local polynomial (ridge) regression.
+
+*mAr*
+     Estimation of multivariate AR models through a computationally
+     efficient stepwise least-squares algorithm.
 
 *magic*
      A variety of methods for creating magic squares of any order greater
