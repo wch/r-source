@@ -209,7 +209,7 @@ par(\dots, no.readonly = FALSE)
       For compatibility with S, the form \code{c(i, j, nr, nc)} is also
       accepted, when \code{nr} and \code{nc} should be the current
       number of rows and number of columns.  Mismatches will be ignored,
-      with a warning.} 
+      with a warning.}
     \item{\code{mgp}}{The margin line (in \code{mex} units) for the axis
       title, axis labels and axis line.
       The default is \code{c(3, 1, 0)}.}
@@ -243,17 +243,18 @@ par(\dots, no.readonly = FALSE)
       be used; \code{"s"} generates a square plotting region and
       \code{"m"} generates the maximal plotting region.}
     \item{\code{smo}}{(\emph{Unimplemented}) a value which indicates how
-      smooth circles and circular arc should be.}
+      smooth circles and circular arcs should be.}
     \item{\code{srt}}{The string rotation in degrees.
       %% NOT true for R (but for S): Causes \code{srt} to be set to the
       %% same value.
     }
     \item{\code{tck}}{The length of tick marks as a fraction of the
       smaller of the width or height of the plotting region.  If
-      \code{tck=1}, grid lines are drawn.  The default setting is to use
-      \code{tcl=-0.5} (see below).}
+      \code{tck=1}, grid lines are drawn.  The default setting
+      (\code{tck = NA}) is to use \code{tcl = -0.5} (see below).}
     \item{\code{tcl}}{The length of tick marks as a fraction of the
-      height of a line of text.  The default value is \code{-0.5}.}
+      height of a line of text.  The default value is \code{-0.5};
+      setting \code{tcl = NA} sets \code{tck = -0.01} which is S' default.}
     \item{\code{tmag}}{A number specifying the enlargement of text of
       the main title relative to the other annotating text of the plot.}
     \item{\code{type}}{character;  the default plot type desired, see
