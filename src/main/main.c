@@ -324,7 +324,8 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 void setup_Rmainloop(void)
 {
     volatile int doneit;
-    SEXP cmd, baseEnv;
+    volatile SEXP baseEnv; 
+    SEXP cmd;
     FILE *fp;
 
     InitConnections(); /* needed to get any output at all */
