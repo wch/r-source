@@ -116,6 +116,9 @@ BUG FIXES
 
     o	read.dcf() was not checking memory allocation succeeded.
 
+    o	The C function fprec might overflow for > 16 digits, showing
+	up in example(str) on some platforms.
+
 
 
 		CHANGES IN R VERSION 1.5.0
