@@ -152,12 +152,15 @@ BUG FIXES
     o	More accurate rounding (including rounding to even) on platforms
 	without rint (e.g. Windows).
 
-    o   qgeom() is now left-continuous with a tolerance, and so the
+    o	qgeom() is now left-continuous with a tolerance, and so the
 	example on the help page will be platform-independent.
 
     o	pretty() has been changed to use tolerance around integers and
 	so will be more platform-independent. The exact output has
 	probably changed on all platforms for some input.
+
+    o	image() & filled.contour() now work for 1x1 matrices
+	and with constant z values.
 
 
 		CHANGES IN R VERSION 0.65.0
