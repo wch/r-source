@@ -819,7 +819,8 @@ typedef struct {
     int fontsize;           /* Size in points */
     int usefixed;
     RGBColor rgb[2];	    /* Window-Pict/Pixmap Port ForeColors */
-    int col[2];
+	int color;		        /* color */
+	int fill;	        /* fill color */
     WindowPtr window;
     int	lineType;
     SInt16 currentDash;
