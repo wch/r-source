@@ -23,7 +23,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     character or factor columns will be surrounded by double quotes.  If
     a numeric vector, its elements are taken as the indices of the
     variable (columns) to quote.  In both cases, row and columns names
-    are quoted if they are written, but not if \code{quote is FALSE}.} 
+    are quoted if they are written, but not if \code{quote} is
+    \code{FALSE}.}
   \item{sep}{the field separator string.  Values within each row of
     \code{x} are separated by this string.}
   \item{eol}{the character(s) to print at the end of each line (row).}
