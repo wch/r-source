@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-7 @value{FAQ-YEAR}-04-27
+@set FAQ-VERSION 1.9-9 @value{FAQ-YEAR}-05-01
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2144,6 +2144,9 @@ classifier will consist of a classification tree with one such
 @math{k}-nn classifier in each leaf.
 @item knncat
 Nearest-neighbor classification with categorical variables.
+@item kza
+Kolmogorov-Zurbenko Adpative filter for locating change points in a time
+series.
 @item labstatR
 Functions for the book ``Laboratorio di statistica con R'' by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
@@ -2451,6 +2454,8 @@ R version of GENetic Optimization Using Derivatives.
 @item rimage
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
+@item rlecuyer
+R interface to RNG with multiple streams.
 @item rmeta
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-7 2004-04-27
+Version 1.9-9 2004-05-01
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1990,6 +1990,10 @@ distributions of R.)
 *knncat*
      Nearest-neighbor classification with categorical variables.
 
+*kza*
+     Kolmogorov-Zurbenko Adpative filter for locating change points in a
+     time series.
+
 *labstatR*
      Functions for the book "Laboratorio di statistica con R" by S. M.
      Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
@@ -2383,6 +2387,9 @@ distributions of R.)
 *rimage*
      Functions for image processing, including Sobel filter, rank filters,
      fft, histogram equalization, and reading JPEG files.
+
+*rlecuyer*
+     R interface to RNG with multiple streams.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
