@@ -333,6 +333,13 @@ stopifnot(it[c(1,203)] == c(0, 100),
 	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
 	  )
 ## end of moved from findint.Rd
+## NA & Inf's :
+tt[ina <- c(2,3,5,7)] <- NA
+tt[300] <- Inf
+X <- c(-Inf, X, Inf)
+it <- findInterval(tt,X)
+stopifnot(identical(it, as.integer(rowSums(outer(tt, X, ">=")))),
+	  is.na(it[ina]))
 
 
 ## fix
