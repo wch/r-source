@@ -162,6 +162,7 @@ lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
     longint i, iter, j, k, k0 = *pk0, nn = *n, this, trial;
     longint rank, info, n100 = 100;
     long ignored;
+    int firsttrial = 1;
     double a = 0.0, tol = 1.0e-7, sum, thiscrit, best = R_PosInf, target, 
 	old, new, dummy;
   
@@ -220,10 +221,11 @@ lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
 		}
 	    }
 	} else { /* S estimation */
-	    if(trial == 0) {
+	    if(firsttrial) {
 		for(i = 0; i < nn; i ++) res[i] = fabs(res[i]);
 		rPsort(res, nn, nn/2);
 		old = res[nn/2]/0.6745;	 /* MAD provides the initial scale */
+		firsttrial = 0;
 	    } else {  
 		/* only find optimal scale if it will be better than
 		   existing best solution */
