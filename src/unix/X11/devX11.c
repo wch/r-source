@@ -1093,10 +1093,13 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     if (!strncmp(dsp, "png::", 5)) {
 	FILE *fp;
 #ifndef HAVE_PNG
-	error("No png support in this version of R");
+	warning("No png support in this version of R");
+	return FALSE;
 #endif
-	if (!(fp = R_fopen(R_ExpandFileName(dsp+5), "w")))
-	    error("could not open PNG file `%s'", dsp+6);
+	if (!(fp = R_fopen(R_ExpandFileName(dsp+5), "w"))) {
+	    warning("could not open PNG file `%s'", dsp+6);
+	    return FALSE;
+	}
 	xd->fp = fp;
 	type = PNG;
 	p = "";
@@ -1104,12 +1107,15 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     else if (!strncmp(dsp, "jpeg::", 6)) {
 	FILE *fp;
 #ifndef HAVE_JPEG
-	error("No jpeg support in this version of R");
+	warning("No jpeg support in this version of R");
+	return FALSE;
 #endif
 	p = strchr(dsp+6, ':'); *p='\0';
 	xd->quality = atoi(dsp+6);
-	if (!(fp = R_fopen(R_ExpandFileName(p+1), "w")))
-	    error("could not open JPEG file `%s'", p+1);
+	if (!(fp = R_fopen(R_ExpandFileName(p+1), "w"))) {
+	    warning("could not open JPEG file `%s'", p+1);
+	    return FALSE;
+	}
 	xd->fp = fp;
 	type = JPEG;
 	p = "";
