@@ -51,7 +51,6 @@
 % get(devNam <- getOption("device"))()
 % if (dev.interactive()) {
 \dontrun{
-  library(mva)
   data(USArrests)
   hca <- hclust(dist(USArrests))
   plot(hca)
