@@ -129,7 +129,8 @@ static SEXP SetOption(SEXP tag, SEXP value)
 	error("corrupted options list\n");
     opt = FindTaggedItem(opt, tag);
 
-    if (value == R_NilValue) {  /* we're removing */
+    /* The option is being removed. */
+    if (value == R_NilValue) {
 	for ( ; t != R_NilValue ; t = CDR(t)) 
 	    if (TAG(CDR(t)) == tag) {
 		old = CAR(t);
@@ -138,7 +139,8 @@ static SEXP SetOption(SEXP tag, SEXP value)
 	    }
 	return R_NilValue;
     }
-    /* if the option is new a new slot is added to the end of .Options */
+    /* If the option is new, a new slot */
+    /* is added to the end of .Options */
     if (opt == R_NilValue) {
 	while (CDR(t) != R_NilValue)
 	    t = CDR(t);
@@ -150,6 +152,9 @@ static SEXP SetOption(SEXP tag, SEXP value)
     CAR(opt) = value;
     return old;
 }
+
+/* Note that options are stored as a dotted pair list */
+/* This is larely historical, but is also useful. */
 
 void InitOptions(void)
 {
@@ -172,75 +177,154 @@ void InitOptions(void)
     UNPROTECT(2);
 }
 
+/* FIXME : This functionality should be universal */
+/* See also in cbind.c. */
+
+static SEXP EnsureString(SEXP s)
+{
+    switch(TYPEOF(s)) {
+    case SYMSXP:
+	s = PRINTNAME(s);
+	break;
+    case STRSXP:
+	s = STRING(s)[0];
+	break;
+    case CHARSXP:
+	break;
+    case NILSXP:
+	s = R_BlankString;
+	break;
+    default:
+	error("invalid tag in name extraction\n");
+    }
+    return s;
+}
+
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, opt, s, t;
-    char *what;
-    int k;
-    opt = SYMVALUE(Options());
+    SEXP argi, argnames, namei, names, options, s, tag, value;
+    int i, k, n;
+
+    /* Locate the options values in the symbol table. */
+    /* This will need to change if options are to live */
+    /* in the session frame. */
+
+    options = SYMVALUE(Options());
+
+    /* This is the zero argument case.  We alloc up a real */
+    /* list and write the system values into it. */
+
     if (args == R_NilValue) {
-	NAMED(opt) = 1;
-	return opt;
-    }
-    if (isList(CAR(args)) && length(args) == 1)
-	args = CAR(args);
-    for (a = args; a != R_NilValue; a = CDR(a)) {
-	if (isNull(t = TAG(a))) {
-	    if (!isString(CAR(a)) || LENGTH(CAR(a)) <= 0)
-		errorcall(call, "invalid argument\n");
-	    t = install(CHAR(STRING(CAR(a))[0]));
-	    s = FindTaggedItem(opt, t);
-	    TAG(a) = t;
-	    CAR(a) = duplicate(CAR(s));
+	n = length(options);
+	PROTECT(value = allocVector(VECSXP, n));
+	PROTECT(names = allocVector(STRSXP, n));
+	i = 0;
+	while (options != R_NilValue) {
+	    VECTOR(names)[i] = PRINTNAME(TAG(options));
+	    VECTOR(value)[i] = duplicate(CAR(options));
+	    i = i + 1; options = CDR(options);
 	}
-	else {
-	    what = CHAR(PRINTNAME(t));
-	    if (streql(what, "width")) {
-		k = asInteger(CAR(a));
+	setAttrib(value, R_NamesSymbol, names);
+	UNPROTECT(2);
+	return value;
+    }
+
+    /* The arguments to "options" can either be a sequence of */
+    /* name = value form, or can be a single list. This means */
+    /* that we must code so that both forms will work.  */
+    /* [ Vomits quietly onto shoes ... ] */
+
+    n = length(args);
+    if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))) {
+	args = CAR(args);
+	n = length(args);
+    }
+    PROTECT(value = allocVector(VECSXP, n));
+    PROTECT(names = allocVector(STRSXP, n));
+    
+    switch (TYPEOF(args)) {
+    case NILSXP:
+    case LISTSXP:
+	argnames = R_NilValue;
+	break;
+    case VECSXP:
+	argnames = getAttrib(args, R_NamesSymbol);	    
+	break;
+    }
+
+    R_Visible = 0;
+    for (i = 0 ; i < n ; i++) {
+
+	switch (TYPEOF(args)) {
+	case LISTSXP:
+	    argi = CAR(args);
+	    namei = EnsureString(TAG(args));
+	    args = CDR(args);
+	    break;
+	case VECSXP:
+	    argi = VECTOR(args)[i];
+	    namei = EnsureString(STRING(argnames)[i]);
+	    break;
+	}
+	
+	if (*CHAR(namei)) {
+	    tag = install(CHAR(namei));
+	    if (streql(CHAR(namei), "width")) {
+		k = asInteger(argi);
 		if (k < MIN_WIDTH || k > MAX_WIDTH)
 		    errorcall(call, "invalid width parameter\n");
-		CAR(a) = SetOption(install("width"), optInteger(k));
+		VECTOR(value)[i] = SetOption(tag, optInteger(k));
 	    }
-	    else if (streql(what, "digits")) {
-		k = asInteger(CAR(a));
+	    else if (streql(CHAR(namei), "digits")) {
+		k = asInteger(argi);
 		if (k < MIN_DIGITS || k > MAX_DIGITS)
 		    errorcall(call, "invalid digits parameter\n");
-		CAR(a) = SetOption(install("digits"), optInteger(k));
+		VECTOR(value)[i] = SetOption(tag, optInteger(k));
 	    }
-	    else if (streql(what, "expressions")) {
-		k = asInteger(CAR(a));
+	    else if (streql(CHAR(namei), "expressions")) {
+		k = asInteger(argi);
 		if (k < 25 || k > MAX_EXPRESSIONS)
 		    errorcall(call, "expressions parameter invalid\n");
-		CAR(a) = SetOption(install("expressions"), optInteger(k));
+		VECTOR(value)[i] = SetOption(tag, optInteger(k));
 	    }
-	    else if (streql(what, "editor")) {
-		s = asChar(CAR(a));
+	    else if (streql(CHAR(namei), "editor")) {
+		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    errorcall(call, "invalid editor parameter\n");
-		CAR(a) = SetOption(install("editor"), optString(s));
+		VECTOR(value)[i] = SetOption(tag, optString(s));
 	    }
-	    else if (streql(what, "continue")) {
-		s = asChar(CAR(a));
+	    else if (streql(CHAR(namei), "continue")) {
+		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    errorcall(call, "invalid continue parameter\n");
-		CAR(a) = SetOption(install("continue"), optString(s));
+		VECTOR(value)[i] = SetOption(tag, optString(s));
 	    }
-	    else if (streql(what, "prompt")) {
-		s = asChar(CAR(a));
+	    else if (streql(CHAR(namei), "prompt")) {
+		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    errorcall(call, "prompt parameter invalid\n");
-		CAR(a) = SetOption(install("prompt"), optString(s));
+		VECTOR(value)[i] = SetOption(tag, optString(s));
 	    }
-	    else if (streql(what, "contrasts")) {
-		s = CAR(a);
-		if (TYPEOF(s) != STRSXP || LENGTH(s) != 2)
+	    else if (streql(CHAR(namei), "contrasts")) {
+		if (TYPEOF(argi) != STRSXP || LENGTH(s) != 2)
 		    errorcall(call, "contrasts parameter invalid\n");
-		CAR(a) = SetOption(install("contrasts"), s);
+		VECTOR(value)[i] = SetOption(tag, argi);
 	    }
-	    else
-		SetOption(t,duplicate(CAR(a)));
-	    R_Visible = 0;
+	    else {
+		VECTOR(value)[i] = SetOption(tag, duplicate(argi));
+	    }
+	    STRING(names)[i] = namei;
+	}
+	else {
+	    if (!isString(argi) || LENGTH(argi) <= 0)
+		errorcall(call, "invalid argument\n");
+	    VECTOR(value)[i] = duplicate(CAR(FindTaggedItem(options,
+				     install(CHAR(STRING(argi)[0])))));
+	    STRING(names)[i] = STRING(argi)[0];
+	    R_Visible = 1;
 	}
     }
-    return (args);
+    setAttrib(value, R_NamesSymbol, names);
+    UNPROTECT(2);
+    return value;
 }
