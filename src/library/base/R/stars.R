@@ -15,7 +15,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
          cex = 0.8, lwd = 0.25, lty = par("lty"), xpd = FALSE,
          mar = pmin(par("mar"),
                     1.1+ c(2*axes+ (xlab != ""), 2*axes+ (ylab != ""), 1,0)),
-         ...)
+         add=FALSE, plot=TRUE, ...)
 {
     if (is.data.frame(x))
 	x <- data.matrix(x)
@@ -92,8 +92,13 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
     ## The asp argument keeps everything (the symbols!) square
     op <- par(mar = mar, xpd = xpd) ; on.exit(par(op))
-    plot(0, type="n", ..., xlim=xlim, ylim=ylim,
-	 main = main, sub = sub, xlab = xlab, ylab=ylab, asp = 1, axes = axes)
+    if(!add)
+        plot(0, type="n", ..., xlim=xlim, ylim=ylim,
+             main = main, sub = sub, xlab = xlab, ylab=ylab,
+             asp = 1, axes = axes)
+
+    if(!plot)
+        return()
 
     s.x <- xloc + x * rep(cos(angles), rep(n.loc,n.seg))
     s.y <- yloc + x * rep(sin(angles), rep(n.loc,n.seg))

@@ -243,6 +243,8 @@ NEW FEATURES
     o	p.adjust() has two new methods, 'Hommel' and 'FDR', contributed
 	by Gordon Smyth <smyth@wehi.edu.au>.
 
+    o   stars() now has add and plot arguments.
+
 
 DEPRECATED & DEFUNCT
 
