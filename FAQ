@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-24, 2003-07-07
+Version 1.7-25, 2003-07-08
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1240,6 +1240,14 @@ distributions of R.)
 *GeneSOM*
      Clustering genes using Self-Organizing Maps (SOMs).
 
+*Hmisc*
+     Functions useful for data analysis, high-level graphics, utility
+     operations, functions for computing sample size and power, importing
+     datasets, imputing missing values, advanced table making, variable
+     clustering, character string manipulation, conversion of S objects to
+     LaTeX code, recoding variables, and bootstrap repeated measures
+     analysis.
+
 *ISwR*
      Data sets for "Introductory Statistics with R" by Peter Dalgaard,
      2002, Springer.
@@ -1876,6 +1884,9 @@ distributions of R.)
      An interface for the Ordinary Differential Equation (ODE) solver lsoda.
      ODEs are expressed as R functions.
 
+*orientlib*
+     Representations, conversions and display of orientation SO(3) data.
+
 *oz*
      Functions for plotting Australia's coastline and state boundaries.
 
@@ -1986,6 +1997,9 @@ distributions of R.)
 
 *seao*
      Simple Evolutionary Algorithm Optimization.
+
+*seao.gui*
+     Simple Evolutionary Algorithm Optimization: graphical user interface.
 
 *sem*
      Functions for fitting general linear Structural Equation Models (with
