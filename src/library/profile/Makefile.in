@@ -11,8 +11,7 @@ subdir = src/library/profile
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Common.R Makefile.in \
-	Rprofile.mac Rprofile.unix Rprofile.windows
+DISTFILES = Common.R Makefile.in Rprofile.unix Rprofile.windows
 
 all: Makefile $(srcdir)/Common.R $(srcdir)/Rprofile.$(R_OSTYPE)
 	@echo "building system startup profile"
