@@ -27,9 +27,22 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R: Makefile
 	@for g in $(MODULES) ""; do \
 	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) R) || exit 1; \
+	    (cd $${g} && $(MAKE) $@) || exit 1; \
 	  fi; \
 	done
+
+install install-strip:
+## <FIXME>
+## This should really work for all subdirs ...
+	@for g in $(MODULES) ""; do \
+	  if test -n "$${g}"; then \
+	    (cd $${g} && $(MAKE) $@); \
+	  fi; \
+	done
+## </FIXME>
+installdirs:
+uninstall:
+	@rm -rf $(Rexecmodulesdir)
 
 mostlyclean: clean
 clean:
@@ -55,6 +68,8 @@ distclean: clean
 	done
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

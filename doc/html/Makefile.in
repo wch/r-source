@@ -26,7 +26,7 @@ INSTFILES = \
 ## </FIXME>
 ## FIXME:
 ## build-help really should not create package.html in *this* directory.
-CLEANFILES = packages.html
+CLEANFILES = packages.html packages-foot.html
 ## </FIXME>
 DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
@@ -70,13 +70,12 @@ install-sources:
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/$(subdir); \
 	done
 install-strip: install
-
 uninstall:
 	@echo "uninstalling $(subdir) ..."
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@for f in $(CLEANFILES) $(OBJECTS); do \
+	@for f in $(CLEANFILES) $(INSTFILES) $(OBJECTS); do \
 	  rm -f $(rhome)/$(subdir)/$${f}; \
 	done
 	@rmdir $(rhome)/$(subdir) 2>/dev/null \

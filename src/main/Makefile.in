@@ -144,14 +144,23 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
+installdirs:
+	@$(MKINSTALLDIRS) $(Rexecbindir)
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
 install-bin:
 	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
 install-lib:
 @USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/libR.$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
-installdirs:
-	@$(MKINSTALLDIRS) $(Rexecbindir)
-	@$(MKINSTALLDIRS) $(Rexeclibdir)
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@rm -f $(Rexecbindir)/R.bin
+	@rmdir $(Rexecbindir) 2>/dev/null \
+	  || echo "  subdir $(Rexecbindir) not removed"
+	@rm -f $(Rexeclibdir)/libR.$(SHLIBEXT)
+	@rmdir $(Rexeclibdir) 2>/dev/null \
+	  || echo "  subdir $(Rexeclibdir) not removed"
 
 mostlyclean: clean
 clean:
@@ -169,16 +178,15 @@ tags: TAGS
 TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
 	etags $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
 
+## Unused targets
+info dvi check:
+
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-
-# Unused targets
-
-install-strip uninstall info dvi check::
 
 ## Automagically generated dependencies:
 

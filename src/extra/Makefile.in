@@ -27,8 +27,6 @@ R: Makefile
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 
-install install-strip uninstall TAGS info dvi check docs:
-
 mostlyclean: clean
 clean:
 	@for d in $(SUBDIRS); do \
@@ -37,6 +35,8 @@ clean:
 distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean
+
+install install-strip uninstall TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

@@ -17,7 +17,7 @@ DISTFILES = $(INSTFILES) \
 	acconfig.h acinclude.m4 aclocal.m4 \
 	config.site configure configure.in \
 	date-stamp
-SUBDIRS = src afm doc etc share tests tools
+SUBDIRS = tools afm doc etc share src tests
 
 GZIP = --best
 
@@ -47,7 +47,7 @@ R: Makefile
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
 	  done; \
 	fi
-	@for d in tools afm doc etc share src; do \
+	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
@@ -62,89 +62,25 @@ help html latex examples: FORCE
 FORCE:
 
 install: installdirs
-	@for d in afm doc etc share; do \
+	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
 	done
-## FIXME:
-## This is really ugly, but should disappear anyway when we convert to
-## Automake.
-	@echo "installing executables ..."
-	@$(INSTALL_PROGRAM) bin/R.bin $(rhome)/bin
-	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
-	  > $(rhome)/bin/R
-	@rm -f $(bindir)/R
-	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
-	  > $(bindir)/R
-	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `find bin -type f -print \
-	             | grep -v '^bin/R$$' \
-	             | grep -v '^bin/R.bin' \
-	             | grep -v '^bin/libR' \
-	             | grep -v '^bin/R_'`; do \
-	  $(INSTALL_SCRIPT) $${f} $(Rexecbindir); \
-	done
-	@echo "installing shlibs ..."
-## <FIXME>
-## Add bin/*.la when using libtool for shlibs
-## Note: if there are no shared libraries, the ls call may generate an error.
-	@-for f in `ls bin/*.$(SHLIB_EXT) 2> /dev/null`; do \
-	  $(INSTALL_PROGRAM) $${f} $(Rexeclibdir); \
-	done
-## </FIXME>
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --quiet --mode=finish $(Rexeclibdir)
-	@echo "installing modules ..."
-## <FIXME>
-## Add modules/*.la when using libtool for shlib modules
-	@-for f in `ls modules/*.$(SHLIB_EXT) 2> /dev/null`; do \
-	  $(INSTALL_PROGRAM) $${f} $(Rexecmodulesdir); \
-	done
-## </FIXME>
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --quiet --mode=finish $(Rexecmodulesdir)
-	@echo "installing headers ..."
-	@for f in include/*.h; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/include; \
-	done
-	@for f in include/R_ext/*.h; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/include/R_ext; \
-	done
-## </FIXME>
-	@echo "installing packages ..."
-	@cp -r library $(rhome) || \
-	  (cd library; \
-	    $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xof -))
-	@echo "  building HTML index ..."
-	@$(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists
 installdirs:
-	@$(MKINSTALLDIRS) $(bindir)
-	@$(MKINSTALLDIRS) $(rhome)/bin
-	@$(MKINSTALLDIRS) $(rhome)/include
-	@$(MKINSTALLDIRS) $(rhome)/include/R_ext
-	@$(MKINSTALLDIRS) $(rhome)/library
-	@$(MKINSTALLDIRS) $(rhome)/modules
+	@$(MKINSTALLDIRS) $(rhome)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@echo "uninstalling library ..."
-	@(cd $(rhome)/library; \
-	  for p in $(R_PKGS); do rm -rf $${p}; done)
-	@echo "uninstalling headers ..."
-	@rm -rf $(rhome)/include
-	@echo "uninstalling modules ..."
-	@rm -rf $(rhome)/modules
-	@echo "uninstalling executables ..."
-	@rm -rf $(rhome)/bin
-	@rm -rf $(rhome)/gnome
-	@rm -f $(bindir)/R
+	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
+	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
-	@for d in afm doc etc share; do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
+	@rm -rf $(Rexecbindir)
 	@rm -rf $(rhome)/demos
+	@rm -rf $(rhome)/gnome
 
 mostlyclean: clean
 clean:

@@ -38,19 +38,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile Rconfig.h Rversion.h
-	@$(MKINSTALLDIRS) $(top_builddir)/include
-	@$(MKINSTALLDIRS) $(top_builddir)/include/R_ext
-	@for f in $(SRC_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir)/include; \
-	done
-	@for f in $(R_EXT_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/R_ext/$${f} \
-	    $(top_builddir)/include/R_ext; \
-	done
-	@for f in $(OBJ_HEADERS); do \
-	  $(INSTALL_DATA) $${f} $(top_builddir)/include; \
-	done
+R: Makefile $(OBJ_HEADERS)
+	@$(MAKE) rhome=$(top_builddir) install
 
 config.h: stamp-h
 stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
@@ -67,14 +56,33 @@ Rconfig.h: $(top_srcdir)/VERSION config.h
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
 
-mostlyclean:
+install: installdirs
+	@for f in $(SRC_HEADERS); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/include; \
+	done
+	@for f in $(R_EXT_HEADERS); do \
+	  $(INSTALL_DATA) $(srcdir)/R_ext/$${f} \
+	    $(rhome)/include/R_ext; \
+	done
+	@for f in $(OBJ_HEADERS); do \
+	  $(INSTALL_DATA) $${f} $(rhome)/include; \
+	done
+installdirs:
+	@$(MKINSTALLDIRS) $(rhome)/include
+	@$(MKINSTALLDIRS) $(rhome)/include/R_ext
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@rm -rf $(rhome)/include
+
+mostlyclean: clean
 clean:
-	@rm -f Rconfig.h Rversion.h FFDecl.h FFTab.h
+	@rm -f $(OBJ_HEADERS) FFDecl.h FFTab.h
 distclean: clean
 	@rm -f Makefile config.h stamp-h
 maintainer-clean: distclean
 
-install install-strip uninstall::
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

@@ -86,6 +86,10 @@ install: installdirs
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_gnome_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@rm -f $(Rexecmodulesdir)/R_gnome.$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
@@ -94,6 +98,8 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

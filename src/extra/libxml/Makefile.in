@@ -69,6 +69,8 @@ distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
 
+install install-strip uninstall TAGS info dvi check:
+
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
 	  test -f $(distdir)/$${f} \

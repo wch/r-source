@@ -20,8 +20,6 @@ SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
-Rexecbin_SCRIPTS = $(SCRIPTS_S) $(SCRIPTS_B) $(top_builddir)/libtool R.fe
-
 .SUFFIXES:
 .SUFFIXES: .in
 
@@ -41,14 +39,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  done) >> $@
 
 R: $(SCRIPTS_B) R.fe
-	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	@for f in $(SCRIPTS_S); do \
-	  $(INSTALL_SCRIPT) $(srcdir)/$${f} $(top_builddir)/bin; \
-	done
-	@for f in $(SCRIPTS_B); do \
-	  $(INSTALL_SCRIPT) $${f} $(top_builddir)/bin; \
-	done
-	@$(INSTALL_SCRIPT) $(top_builddir)/libtool $(top_builddir)/bin
+	@$(MAKE) rhome=$(top_builddir) install-cmds
 	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
 
 $(SCRIPTS_B): $(top_builddir)/config.status
@@ -73,11 +64,41 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 $(top_builddir)/libtool:
 	@(cd $(@D); $(MAKE) $(@F))
 
+install: installdirs install-cmds
+	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < R.fe \
+	  > $(Rexecbindir)/R
+	@rm -f $(bindir)/R
+	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < R.fe \
+	  > $(bindir)/R
+	@chmod 755 $(bindir)/R $(Rexecbindir)/R
+installdirs:
+	@$(MKINSTALLDIRS) $(bindir)
+install-cmds:
+	@$(MKINSTALLDIRS) $(Rexecbindir)
+	@for f in $(SCRIPTS_S); do \
+	  $(INSTALL_SCRIPT) $(srcdir)/$${f} $(Rexecbindir); \
+	done
+	@for f in $(SCRIPTS_B); do \
+	  $(INSTALL_SCRIPT) $${f} $(Rexecbindir); \
+	done
+	@$(INSTALL_SCRIPT) $(top_builddir)/libtool $(Rexecbindir)
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
+	  rm -f $(Rexecbindir)/$${f}; \
+	done
+	@rmdir $(Rexecbindir) 2>/dev/null \
+	  || echo "  subdir $(Rexecbindir) not removed"
+	@rm -f $(bindir)/R
+
 mostlyclean: clean
 clean:
 distclean:
 	@rm -f Makefile R.fe R.sh $(SCRIPTS_B)
 maintainer-clean: distclean
+
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

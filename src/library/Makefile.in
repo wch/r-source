@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = profile $(R_PKGS)
+SUBDIRS = $(R_PKGS) profile
 
 PKGS = $(R_PKGS)
 
@@ -26,10 +26,11 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@for pkg in $(R_PKGS) profile; do \
+	@for pkg in $(SUBDIRS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
-	@cp $(top_srcdir)/doc/html/R.css $(top_builddir)/library
+	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
+	  $(top_builddir)/library
 
 docs:
 	@echo "building all R object docs (help, HTML, LaTeX, examples)"
@@ -63,6 +64,22 @@ DOCS:
 	cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt
 
+install: installdirs
+	@echo "installing packages ..."
+	@cp -r $(top_builddir)/library $(rhome) || \
+	  (cd $(top_builddir)/library; \
+	    $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xof -))
+	@echo "  building HTML index ..."
+	@$(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists
+installdirs:
+	@$(MKINSTALLDIRS) $(rhome)/library
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@echo "uninstalling packages ..."
+	@(cd $(rhome)/library; \
+	  for p in $(R_PKGS); do rm -rf $${p}; done)
+
 mostlyclean: clean
 clean:
 	@for d in $(SUBDIRS); do \
@@ -74,10 +91,9 @@ distclean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -f Makefile
-
 maintainer-clean: distclean
 
-install install-strip uninstall TAGS info dvi check::
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
