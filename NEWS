@@ -21,13 +21,23 @@ NEW FEATURES
 	means that code using Rdefines.h or Rinternals.h or Mathlib.h
 	will need to be re-compiled, and code using Applic.h may do so.
 
+    o	The random number generation interface has changed, although
+	saved .Random.seed's will work unchanged. The default
+	generator is now Marsaglia's multicarry, and the Mersenne Twister
+	and Knuth's Fibonacci subtraction are also available.  The
+	type of normal generation can be selected by RNGkind (and is
+	encoded in .Random.seed).
+
+    	The new function set.seed() which uses a single integer to set
+	the random number seeds is now the recommended way to do so.
+
     o	DPQ {probability density quantile} functions have new
 	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
 	more precise results when values would be close to 0 or 1.
 
     o	R CMD Rd2dvi has new options --pdf, --title and --output
 
-    o	New Date, URL and Title fields in DESCRIPTION file of
+    o	New fields Date, URL and Title in the DESCRIPTION file of
 	packages. The Title field replaces the separate TITLE file of
 	packages, which is no longer necessary.
 
@@ -102,9 +112,6 @@ NEW FEATURES
 
     o	New function cutree() for cutting hclust trees in package mva.
 
-    o	New function set.seed() to use a single integer to set the
-	random number seeds.
-
     o	Under Unix, the default editor is obtained from the environment
 	variables EDITOR or VISUAL if either is set.
 
@@ -143,8 +150,6 @@ NEW FEATURES
 
     o	optimize() can now be used recursively.
 
-    o	RNGkind can now set the algorithm used to generate normal
-	random variates from uniforms.
 
 
 BUG FIXES
@@ -156,7 +161,7 @@ BUG FIXES
 
     o	strsplit fix broke copy.url.
 
-    o	0 ^ -1 == Inf  &  min(NA, NaN) is now always NA
+    o	0 ^ -1 == Inf  and  min(NA, NaN) is now always NA
 
     o	R CMD xxx sets $R_HOME/bin to be first in PATH
 

@@ -5,9 +5,7 @@
 RNGkind <- function(kind = NULL, normal.kind = NULL)
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
-               ## NOT yet: "Mersenne-Twister",
-               ##BUG "Rand"
-               )
+               "Mersenne-Twister", "Knuth-TAOCP")
     n.kinds <- c("Ahrens-Dieter", "Kinderman-Ramage", "Box-Muller")
     do.set <- length(kind) > 0
     if(do.set) {
@@ -25,7 +23,8 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
         if(is.na(normal.kind))
  	    stop(paste("'", normal.kind,"' is not a valid choice", sep=""))
     }
-    r <- kinds[1 + .Internal(RNGkind(i.knd, normal.kind))]
+    r <- 1 + .Internal(RNGkind(i.knd, normal.kind))
+    r <- c(kinds[r[1]], n.kinds[r[2]])
     if(do.set || !is.null(normal.kind)) invisible(r) else r
 }
 

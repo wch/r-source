@@ -26,74 +26,56 @@
 #include "Defn.h"
 #include "Random.h"
 
-typedef unsigned int Int32;/* how is this done on 64-bit architectures? */
+#define RNG_DEFAULT MARSAGLIA_MULTICARRY
 
-#define i2_seed i_seed[0]
-#define i3_seed i_seed[1]
+static RNGtype RNG_kind = RNG_DEFAULT;
+extern N01type N01_kind; /* from .../nmath/snorm.c */
+
+#if (SIZEOF_LONG == 4)
+typedef unsigned long Int32;
+#else
+/* assume long > 4 bytes so int is 4 bytes */
+typedef unsigned int Int32;
+#endif
+
+/* .Random.seed == (RNGkind, i_seed[0],i_seed[1],..,i_seed[n_seed-1])
+ * or           == (RNGkind) or missing  [--> Randomize]
+ */
+
 typedef struct {
-    RNGtype kind; /* above enum: 0,1,2... */
+    RNGtype kind;
     N01type Nkind;
     char *name; /* print name */
-    int is_seeded; /* False(0), True(1) */
     int n_seed; /* length of seed vector */
-    Int32 i1_seed;
     Int32 *i_seed;
 } RNGTAB;
 
-/* .Random.seed == (RNGkind, i1_seed, i_seed[0],i_seed[1],..,i_seed[n_seed-2])
- *		                      i2_seed   i3_seed
- * or           == (RNGkind)  [--> Randomize that one !]
- */
 
-
-static Int32 dummy[3];
-
+static Int32 dummy[625];
 static
 RNGTAB RNG_Table[] =
 {
-/* kind Nkind	  name	  is_seeded seed-length	i1_s, *seed-vec */
-    { 0, 0, "Wichmann-Hill",	0,	3,	123,	dummy},
-    { 1, 0, "Marsaglia-MultiCarry",0,	2,	123,	dummy},
-    { 2, 0, "Super-Duper",	0,	2,	123,	dummy},
-    { 3, 0, "Mersenne-Twister",	0,  1+624,	123,	dummy},
-    { 4, 0, "Rand",		0,	2,	-1,	dummy},
+/* kind Nkind	  name	           n_seed      i_seed */
+    { 0, 0, "Wichmann-Hill", 	        3,	dummy},
+    { 1, 0, "Marsaglia-MultiCarry",	2,	dummy},
+    { 2, 0, "Super-Duper",		2,	dummy},
+    { 3, 0, "Mersenne-Twister",	    1+624,	dummy},
+    { 4, 0, "Knuth-TAOCP",          1+100,	dummy},
 };
 
-static
-RNGtype RNG_kind = WICHMANN_HILL;
-
-/* SEED vector:	 Assume 32 __or more__ bits 
-   
- * The first few are `unrolled' for speed
- * Here, use maximal seed length from above;
- *
- */
-
-/*unsigned long int i1_seed, i2_seed, i_seed[1+624 - 2];
- */
 
 #define d2_32	4294967296./* = (double) */
 #define i2_32m1 2.328306437080797e-10/* = 1/(2^32 - 1) */
+#define KT      9.31322574615479e-10 /* = 2^-30 */
 
-/* do32bits(): Zero bits higher than 32
- * ----------
- * & 037.. really does nothing when long=32bits, 
- * however does every compiler optimize this?  -- optimize ourselves!
- */
+#define I1 (RNG_Table[RNG_kind].i_seed[0])
+#define I2 (RNG_Table[RNG_kind].i_seed[1])
+#define I3 (RNG_Table[RNG_kind].i_seed[2])
 
-#if (SIZEOF_LONG == 4)
-# define do32bits(N) (N)
-#else
-# define do32bits(N) ((N) & 037777777777)
-#endif
-
-#define I1 RNG_Table[RNG_kind].i1_seed
-#define I2 RNG_Table[RNG_kind].i2_seed
-#define I3 RNG_Table[RNG_kind].i3_seed
-#define ISd RNG_Table[RNG_kind].i_seed
-
-
-extern N01type N01_kind; /* from .../nmath/snorm.c */
+static double MT_genrand();
+static Int32 KT_next();
+static void RNG_Init_KT(Int32);
+#define KT_pos (RNG_Table[KNUTH_TAOCP].i_seed[100])
 
 double unif_rand(void)
 {
@@ -105,57 +87,42 @@ double unif_rand(void)
 	I1 = I1 * 171 % 30269;
 	I2 = I2 * 172 % 30307;
 	I3 = I3 * 170 % 30323;
-	value =
-	    I1 / 30269.0 +
-	    I2 / 30307.0 +
-	    I3 / 30323.0;
+	value = I1 / 30269.0 + I2 / 30307.0 + I3 / 30323.0;
 	return value - (int) value;/* in [0,1) */
 	
     case MARSAGLIA_MULTICARRY:/* 0177777(octal) == 65535(decimal)*/
-	/* The following also works when 'usigned long' is > 32 bits : */
 	I1= 36969*(I1 & 0177777) + (I1>>16);
 	I2= 18000*(I2 & 0177777) + (I2>>16);
-	return (do32bits(I1 << 16)^(I2 & 0177777))
-	    * i2_32m1;/* in [0,1) */
+	return ((I1 << 16)^(I2 & 0177777)) * i2_32m1; /* in [0,1) */
 	
     case SUPER_DUPER:
-	
 	/* This is Reeds et al (1984) implementation; 
 	 * modified using __unsigned__	seeds instead of signed ones
 	 */
-	I1 ^= ((I1 >> 15) & 0377777);/*	 Tausworthe */
-	I1 ^= do32bits(I1 << 17);
-#ifdef LONG_32_BITS
+	I1 ^= ((I1 >> 15) & 0377777); /* Tausworthe */
+	I1 ^= I1 << 17;
 	I2 *= 69069;		/* Congruential */
-#else
-	I2 = do32bits(69069 * I2);
-#endif
-	return (I1^I2) * i2_32m1;/* in [0,1) */
-	
-    case RAND:
-	/* Use ANSI C_INTERNAL	(with which you can only SET a seed,
-	   but not get the current)*/
-	
-	return rand()/(.1 + RAND_MAX);/* in [0,1) */
+	return (I1^I2) * i2_32m1; /* in [0,1) */
 	
     case MERSENNE_TWISTER:
-	
-	return 0.5;/*PLACE HOLDER*/
+	return MT_genrand();
+
+    case KNUTH_TAOCP:
+	return KT_next() * KT;
 	
     default:/* can never happen (enum type)*/ return -1.;
     }
 }
 
-static void FixupSeeds(RNGtype kind)
+static void FixupSeeds(RNGtype kind, int initial)
 {
 /* Depending on RNG, set 0 values to non-0, etc. */
     
-    int j; 
+    int j, notallzero = 0; 
 
-    /* Set 0 to 1 : */
-    if(!RNG_Table[kind].i1_seed) RNG_Table[kind].i1_seed++;
-    for(j = 0; j <= RNG_Table[kind].n_seed - 2; j++)
-	if(!RNG_Table[kind].i_seed[j]) RNG_Table[kind].i_seed[j]++;
+    /* Set 0 to 1 :
+       for(j = 0; j <= RNG_Table[kind].n_seed - 1; j++)
+       if(!RNG_Table[kind].i_seed[j]) RNG_Table[kind].i_seed[j]++; */
     
     switch(kind) {
     case WICHMANN_HILL:
@@ -166,32 +133,28 @@ static void FixupSeeds(RNGtype kind)
 	if(I2 == 0) I2 = 1;
 	if(I3 == 0) I3 = 1;
 	return;
-    case MARSAGLIA_MULTICARRY: 
-	return;
-    case SUPER_DUPER:
-	/* I2 = Congruential: must be ODD */
-	RNG_Table[kind].i2_seed |= 1;
-	break;
-	
-    case RAND:/* no read-access to seed */
-	
-    case MERSENNE_TWISTER:
-	
-	break;
-    }
-}
 
-static void MaybeAllocSeeds(RNGtype kind)
-{
-    if(! RNG_Table[kind].is_seeded) { /* allocate ! */
-#ifdef DEBUG_RAND
-	MATHLIB_WARNING2("Allocating seed (length %d) for RNG kind '%d'\n",
-			 RNG_Table[kind].n_seed - 1, kind);
-#endif
-	RNG_Table[kind].i_seed = (Int32 *) 
-	    calloc((size_t)RNG_Table[kind].n_seed - 1,
-		   sizeof(Int32));
-	RNG_Table[kind].is_seeded = 1;
+    case SUPER_DUPER:
+	if(I1 == 0) I1 = 1;
+	/* I2 = Congruential: must be ODD */
+	I2 |= 1;
+	break;
+	
+    case MARSAGLIA_MULTICARRY: 
+	if(I1 == 0) I1 = 1;
+	if(I2 == 0) I2 = 1;
+	break;
+
+    case MERSENNE_TWISTER:
+	if(initial) I1 = 624;
+	/* check for all zeroes: should not happen unless user sets it */
+	for (j = 1; j <= 624; j++)
+	    if(RNG_Table[kind].i_seed[j] != 0) {
+		notallzero = 1;
+		break;
+	    }
+	if(!notallzero) RNG_Table[kind].i_seed[3] = 37;
+	break;
     }
 }
 
@@ -202,20 +165,20 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     /* Initial scrambling */
     for(j = 0; j < 50; j++)
 	seed = (69069 * seed + 1) & 0xffffffff;
-    RNG_Table[kind].i1_seed = seed;
-    for(j = 0; j < RNG_Table[RNG_kind].n_seed - 1; j++) {
-	seed = (69069 * seed + 1) & 0xffffffff;
-	RNG_Table[kind].i_seed[j] = seed;
-    }
-    FixupSeeds(kind);
+    if (kind != KNUTH_TAOCP) {
+	for(j = 0; j < RNG_Table[kind].n_seed; j++) {
+	    seed = (69069 * seed + 1) & 0xffffffff;
+	    RNG_Table[kind].i_seed[j] = seed;
+	}
+	FixupSeeds(kind, 1);
+    } else
+	RNG_Init_KT(seed);
 }
 
 #include <time.h>
 static void Randomize(RNGtype kind)
 {
-/* Only called by  GetRNGstate(), when there's no .Random.seed */
-    
-    MaybeAllocSeeds(kind);
+/* Only called by  GetRNGstate() when there's no .Random.seed */
     
     RNG_Init(kind, (Int32) time(NULL));
 }
@@ -223,8 +186,8 @@ static void Randomize(RNGtype kind)
 
 void GetRNGstate()
 {
-  /* Get  .Random.seed  into proper variables */
-    int len_seed, j, seed_off = 0;
+    /* Get  .Random.seed  into proper variables */
+    int len_seed, j, tmp;
     SEXP seeds;
 
     seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
@@ -237,40 +200,36 @@ void GetRNGstate()
 	    error(".Random.seed is a missing argument with no default");
 	if (!isVector(seeds))
 	    error(".Random.seed is not a vector");
-	RNG_kind = INTEGER(seeds)[0];
-	if (RNG_kind > MERSENNE_TWISTER || RNG_kind < 0) 
-		RNG_kind = WICHMANN_HILL; 
+	tmp = INTEGER(seeds)[0];
+	if(tmp == NA_INTEGER)
+	    error(".Random.seed[0] is not a valid integer");
+	RNG_kind = tmp % 100;
+	N01_kind = tmp / 100;
+	if (RNG_kind > KNUTH_TAOCP || RNG_kind < 0) RNG_kind = RNG_DEFAULT; 
 	len_seed = RNG_Table[RNG_kind].n_seed;
-	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1) {
-	    if(LENGTH(seeds) == RNG_Table[WICHMANN_HILL].n_seed) {
-		/* BACKWARDS COMPATIBILITY: */
-		seed_off = 1;
-		warning("Wrong length .Random.seed; forgot initial RNGkind? set to Wichmann-Hill");
-		/* compatibility mode */
-		RNG_kind = WICHMANN_HILL;
-	    } else {
-		error(".Random.seed has wrong length");
-	    }
-	}
+	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
+	    error(".Random.seed has wrong length");
 
  	switch(RNG_kind) {
  	case WICHMANN_HILL:
  	case MARSAGLIA_MULTICARRY:
  	case SUPER_DUPER:
- 	case RAND:
-	    break;
  	case MERSENNE_TWISTER:
-	    error("'Mersenne-Twister' not yet implemented"); break;
+ 	case KNUTH_TAOCP:
+	    break;
 	default:
 	    error(".Random.seed[1] is NOT a valid RNG kind (code)");
 	}
 	if(LENGTH(seeds) == 1)
 	    Randomize(RNG_kind);
 	else {
-	    RNG_Table[RNG_kind].i1_seed = INTEGER(seeds)[1 - seed_off];
-	    for(j = 2; j <= len_seed; j++)
-		RNG_Table[RNG_kind].i_seed[j - 2] = INTEGER(seeds)[j - seed_off];
-	    FixupSeeds(RNG_kind);
+	    for(j = 1; j <= len_seed; j++) {
+		tmp = INTEGER(seeds)[j];
+		if(tmp == NA_INTEGER)
+		    error(".Random.seed[%d] is not a valid integer", j+1);
+		RNG_Table[RNG_kind].i_seed[j - 1] = tmp;
+	    }
+	    FixupSeeds(RNG_kind, 0);
 	}
     }
 }
@@ -283,10 +242,9 @@ void PutRNGstate()
 
     PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
 
-    INTEGER(seeds)[0] = RNG_kind;
-    INTEGER(seeds)[1] = RNG_Table[RNG_kind].i1_seed;
-    for(j = 2; j <= len_seed; j++)
-	INTEGER(seeds)[j] = RNG_Table[RNG_kind].i_seed[j-2];
+    INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind;
+    for(j = 0; j < len_seed; j++)
+	INTEGER(seeds)[j+1] = RNG_Table[RNG_kind].i_seed[j];
 
     setVar(R_SeedsSymbol, seeds, R_GlobalEnv);
     UNPROTECT(1);
@@ -305,17 +263,11 @@ static void RNGkind(RNGtype newkind)
     case WICHMANN_HILL:
     case MARSAGLIA_MULTICARRY:
     case SUPER_DUPER:
-      break;
-    case RAND:
-	error("RNGkind: \"Rand\" not yet available (BUG)!");
-	/* srand((unsigned int)unif_rand()*UINT_MAX);*/
-      break;
     case MERSENNE_TWISTER:
-	/* ... */
-	error("RNGkind: \"Mersenne-Twister\" not yet available!");
-      break;
+    case KNUTH_TAOCP:
+	break;
     default:
-      error("RNGkind: unimplemented RNG kind %d", newkind);
+	error("RNGkind: unimplemented RNG kind %d", newkind);
     }
     RNG_kind = newkind;
 
@@ -381,3 +333,228 @@ void seed_out(long *ignored)
 {
     PutRNGstate();
 }
+
+/* ===================  Mersenne Twister ========================== */
+/* From http://www.math.keio.ac.jp/~matumoto/emt.html */
+
+/* A C-program for MT19937: Real number version([0,1)-interval) 
+   (1999/10/28)                                                 
+     genrand() generates one pseudorandom real number (double)  
+   which is uniformly distributed on [0,1)-interval, for each   
+   call. sgenrand(seed) sets initial values to the working area 
+   of 624 words. Before genrand(), sgenrand(seed) must be       
+   called once. (seed is any 32-bit integer.)                   
+   Integer generator is obtained by modifying two lines.        
+     Coded by Takuji Nishimura, considering the suggestions by  
+   Topher Cooper and Marc Rieffel in July-Aug. 1997.            
+
+   Copyright (C) 1997, 1999 Makoto Matsumoto and Takuji Nishimura. 
+   When you use this, send an email to: matumoto@math.keio.ac.jp   
+   with an appropriate reference to your work.                     
+
+   REFERENCE                                                       
+   M. Matsumoto and T. Nishimura,                                  
+   "Mersenne Twister: A 623-Dimensionally Equidistributed Uniform  
+   Pseudo-Random Number Generator",                                
+   ACM Transactions on Modeling and Computer Simulation,           
+   Vol. 8, No. 1, January 1998, pp 3--30.                          
+*/
+
+/* Period parameters */  
+#define N 624
+#define M 397
+#define MATRIX_A 0x9908b0df   /* constant vector a */
+#define UPPER_MASK 0x80000000 /* most significant w-r bits */
+#define LOWER_MASK 0x7fffffff /* least significant r bits */
+
+/* Tempering parameters */   
+#define TEMPERING_MASK_B 0x9d2c5680
+#define TEMPERING_MASK_C 0xefc60000
+#define TEMPERING_SHIFT_U(y)  (y >> 11)
+#define TEMPERING_SHIFT_S(y)  (y << 7)
+#define TEMPERING_SHIFT_T(y)  (y << 15)
+#define TEMPERING_SHIFT_L(y)  (y >> 18)
+
+static Int32 *mt = dummy+1; /* the array for the state vector  */
+static int mti=N+1; /* mti==N+1 means mt[N] is not initialized */
+
+/* Initializing the array with a seed */
+static void
+MT_sgenrand(Int32 seed)
+{
+    int i;
+
+    for (i = 0; i < N; i++) {
+	mt[i] = seed & 0xffff0000;
+	seed = 69069 * seed + 1;
+	mt[i] |= (seed & 0xffff0000) >> 16;
+	seed = 69069 * seed + 1;
+    }
+    mti = N;
+}
+
+/* Initialization by "sgenrand()" is an example. Theoretically,      
+   there are 2^19937-1 possible states as an intial state.           
+   Essential bits in "seed_array[]" is following 19937 bits:         
+    (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1]. 
+   (seed_array[0]&LOWER_MASK) is discarded.                           
+   Theoretically,                                                    
+    (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1]  
+   can take any values except all zeros.                             */
+
+static double MT_genrand()
+{
+    Int32 y;
+    static Int32 mag01[2]={0x0, MATRIX_A};
+    /* mag01[x] = x * MATRIX_A  for x=0,1 */
+
+    mti = dummy[0];
+    
+    if (mti >= N) { /* generate N words at one time */
+        int kk;
+
+        if (mti == N+1)   /* if sgenrand() has not been called, */
+            MT_sgenrand(4357); /* a default initial seed is used   */
+
+        for (kk = 0; kk < N - M; kk++) {
+            y = (mt[kk] & UPPER_MASK) | (mt[kk+1] & LOWER_MASK);
+            mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1];
+        }
+        for (; kk < N - 1; kk++) {
+            y = (mt[kk] & UPPER_MASK) | (mt[kk+1] & LOWER_MASK);
+            mt[kk] = mt[kk+(M-N)] ^ (y >> 1) ^ mag01[y & 0x1];
+        }
+        y = (mt[N-1] & UPPER_MASK) | (mt[0] & LOWER_MASK);
+        mt[N-1] = mt[M-1] ^ (y >> 1) ^ mag01[y & 0x1];
+
+        mti = 0;
+    }
+  
+    y = mt[mti++];
+    y ^= TEMPERING_SHIFT_U(y);
+    y ^= TEMPERING_SHIFT_S(y) & TEMPERING_MASK_B;
+    y ^= TEMPERING_SHIFT_T(y) & TEMPERING_MASK_C;
+    y ^= TEMPERING_SHIFT_L(y);
+    dummy[0] = mti;
+    
+    return ( (double)y * 2.3283064365386963e-10 ); /* reals: [0,1)-interval */
+}
+
+#define long Int32
+#define Void void
+#define void static void
+#define ran_arr_buf       R_KT_ran_arr_buf
+#define ran_arr_cycle     R_KT_ran_arr_cycle
+#define ran_arr_ptr       R_KT_ran_arr_ptr
+#define ran_arr_sentinel  R_KT_ran_arr_sentinel
+#define ran_x         R_KT_ran_x
+
+/* ===================  Knuth TAOCP ========================== */
+
+         /* Please do NOT alter this part of the code */
+
+/*    This program by D E Knuth is in the public domain and freely copyable
+ *    AS LONG AS YOU MAKE ABSOLUTELY NO CHANGES!
+ *    It is explained in Seminumerical Algorithms, 3rd edition, Section 3.6
+ *    (or in the errata to the 2nd edition --- see
+ *        http://www-cs-faculty.stanford.edu/~knuth/taocp.html
+ *    in the changes to pages 171 and following of Volume 2).              */
+
+/*    If you find any bugs, please report them immediately to
+ *                 taocp@cs.stanford.edu
+ *    (and you will be rewarded if the bug is genuine). Thanks!            */
+
+/************ see the book for explanations and caveats! *******************/
+
+/* the old C calling conventions are used here, for reasons of portability */
+
+#define KK 100                     /* the long lag */
+#define LL  37                     /* the short lag */
+#define MM (1L<<30)                 /* the modulus */
+#define mod_diff(x,y) (((x)-(y))&(MM-1)) /* subtraction mod MM */
+
+long ran_x[KK];                    /* the generator state */
+
+/* void ran_array(long aa[],int n) */
+void ran_array(aa,n)    /* put n new random numbers in aa */
+  long *aa;   /* destination */
+  int n;      /* array length (must be at least KK) */
+{
+  register int i,j;  
+  for (j=0;j<KK;j++) aa[j]=ran_x[j];
+  for (;j<n;j++) aa[j]=mod_diff(aa[j-KK],aa[j-LL]);
+  for (i=0;i<LL;i++,j++) ran_x[i]=mod_diff(aa[j-KK],aa[j-LL]);
+  for (;i<KK;i++,j++) ran_x[i]=mod_diff(aa[j-KK],ran_x[i-LL]);
+}
+
+#define TT  70   /* guaranteed separation between streams */
+#define is_odd(x)  ((x)&1)          /* units bit of x */
+#define evenize(x) ((x)&(MM-2))   /* make x even */
+
+/* void ran_start(long seed) */
+void ran_start(seed)    /* do this before using ran_array */
+  long seed;            /* selector for different streams */
+{
+  register int t,j;
+  long x[KK+KK-1];              /* the preparation buffer */
+  register long ss=evenize(seed+2);
+  for (j=0;j<KK;j++) {
+    x[j]=ss;                      /* bootstrap the buffer */
+    ss<<=1; if (ss>=MM) ss-=MM-2; /* cyclic shift 29 bits */
+  }
+  for (;j<KK+KK-1;j++) x[j]=0;
+  x[1]++;              /* make x[1] (and only x[1]) odd */
+  ss=seed&(MM-1);
+  t=TT-1; while (t) {
+    for (j=KK-1;j>0;j--) x[j+j]=x[j];  /* "square" */
+    for (j=KK+KK-2;j>KK-LL;j-=2) x[KK+KK-1-j]=evenize(x[j]);
+    for (j=KK+KK-2;j>=KK;j--) if(is_odd(x[j])) {
+      x[j-(KK-LL)]=mod_diff(x[j-(KK-LL)],x[j]);
+      x[j-KK]=mod_diff(x[j-KK],x[j]);
+    }
+    if (is_odd(ss)) {              /* "multiply by z" */
+      for (j=KK;j>0;j--)  x[j]=x[j-1];
+      x[0]=x[KK];            /* shift the buffer cyclically */
+      if (is_odd(x[KK])) x[LL]=mod_diff(x[LL],x[KK]);
+    }
+    if (ss) ss>>=1; else t--;
+  }
+  for (j=0;j<LL;j++) ran_x[j+KK-LL]=x[j];
+  for (;j<KK;j++) ran_x[j-LL]=x[j];
+}
+
+/* the following routines are from exercise 3.6--15 */
+/* after calling ran_start, get new randoms by, e.g., "x=ran_arr_next()" */
+
+#define QUALITY 1009 /* recommended quality level for high-res use */
+long ran_arr_buf[QUALITY];
+long ran_arr_sentinel=-1;
+long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
+
+#define ran_arr_next() (*ran_arr_ptr>=0? *ran_arr_ptr++: ran_arr_cycle())
+long ran_arr_cycle()
+{
+  ran_array(ran_arr_buf,QUALITY);
+  ran_arr_buf[100]=-1;
+  ran_arr_ptr=ran_arr_buf+1;
+  return ran_arr_buf[0];
+}
+
+/* ===================== end of Knuth's code ====================== */
+
+static Int32 KT_next()
+{
+    if(KT_pos >= 100) {
+	ran_arr_cycle();
+	KT_pos = 0;
+    }
+    return ran_x[(KT_pos)++];
+}
+
+Void RNG_Init_KT(Int32 seed)
+{
+    RNG_Table[KNUTH_TAOCP].i_seed = ran_x;
+    ran_start(seed % 1073741821);
+    KT_pos = 100;
+}
+

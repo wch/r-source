@@ -18,21 +18,21 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef RANDOM_H
-#define RANDOM_H
+#ifndef R_RANDOM_H
+#define R_RANDOM_H
 
 typedef enum {
     WICHMANN_HILL,
     MARSAGLIA_MULTICARRY,
     SUPER_DUPER,
-    RAND,
-    MERSENNE_TWISTER
+    MERSENNE_TWISTER,
+    KNUTH_TAOCP
 } RNGtype;
 
 /* Different kinds of "N(0,1)" generators :*/
 typedef enum {
-    AHRENS_DIETER,
     KINDERMAN_RAMAGE,
+    AHRENS_DIETER,
     BOX_MULLER
 } N01type;
 
