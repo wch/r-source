@@ -11,7 +11,7 @@ subdir = doc/manual
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-SOURCES_TEXI = R-FAQ.texi R-exts.texi
+SOURCES_TEXI = R-FAQ.texi R-exts.texi R-intro.texi
 DISTFILES = \
 	EQN README \
 	Makefile.in Makefile.win \
