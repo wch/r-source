@@ -19,10 +19,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8> used XTextWidth and XDrawText, so need to use fontsets */
+/* <UTF8-FIXME> 
+   used XTextWidth and XDrawText, so need to use fontsets
+
+   GetCharP is still character-based, XLookupString is explicitly for
+   Latin-1.
+*/
 
 /* The version for R 2.1.0 is partly based on patches by 
-   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
+   Eiji Nakama <nakama@ki.rim.or.jp> for use with Japanese fonts. */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -79,7 +84,7 @@ static void drawcol(int);
 static void drawrow(int);
 static void find_coords(int, int, int*, int*);
 static int  findcell(void);
-static char GetCharP(DEEvent*);
+static char *GetCharP(DEEvent*);
 static KeySym GetKey(DEEvent*);
 static void handlechar(char*);
 static void highlightrect(void);
@@ -120,7 +125,7 @@ static double ssNA_REAL;
 /* Global variables needed for the graphics */
 
 static int box_w;                       /* width of a box */
-static int boxw[100];
+static int boxw[100];                   /* widths of cells */
 static int box_h;                       /* height of a box */
 static int windowWidth;                 /* current width of the window */
 static int fullwindowWidth;
@@ -135,7 +140,7 @@ static int ndecimal;                    /* count decimal points */
 static int ne;                          /* count exponents */
 static int nneg;			/* indicate whether its a negative */
 static int clength;                     /* number of characters currently entered */
-static char buf[30];
+static char buf[201];			/* boosted to allow for MBCS */
 static char *bufp;
 static int bwidth;			/* width of the border */
 static int hwidth;			/* width of header  */
@@ -169,6 +174,7 @@ static XFontSet         font_set;
 static XFontStruct	**fs_list;
 static int		font_set_cnt;
 static char             *fontset_name="-alias-fixed-medium-r-normal--10-";
+static XIC		ic;
 #endif
 
 #define mouseDown 	ButtonPress
@@ -194,7 +200,7 @@ static char             *fontset_name="-alias-fixed-medium-r-normal--10-";
   set for non-NULL columns.
 
   If the list was originally length(0), that should work with
-  0 pre-defined rows.  (It used to have 1 pre-defined numeric column.)
+  0 pre-defined cols.  (It used to have 1 pre-defined numeric column.)
 
   All row and col numbers are 1-based.
 
@@ -961,12 +967,19 @@ static void clearrect(void)
    should get this far */
 
 /* --- Not true! E.g. ESC ends up in here... */
+#ifdef SUPPORT_UTF8
+#include <wchar.h>
+#include <wctype.h>
+#endif
 
 static void handlechar(char *text)
 {
-    int c = text[0];
+    int i, c = text[0];
+#ifdef SUPPORT_UTF8
+    wchar_t wc;
+#endif
 
-    if ( c == '\033' ) {
+    if ( c == '\033' ) { /* ESC */
 	CellModified = FALSE;
 	clength = 0;
         bufp = buf;
@@ -992,42 +1005,57 @@ static void handlechar(char *text)
     }
 
     if (currentexp == 1)	/* we are parsing a number */
-	switch (c) {
-	case '-':
-	    if (nneg == 0)
-		nneg++;
-	    else
-		goto donehc;
+#ifdef SUPPORT_UTF8
+	mbrtowc(&wc, text, MB_CUR_MAX , NULL);
+	switch (wc) {
+	case L'-':
+	    if (nneg == 0) nneg++; else goto donehc;
 	    break;
 	case '.':
-	    if (ndecimal == 0)
-		ndecimal++;
-	    else
-		goto donehc;
+	    if (ndecimal == 0) ndecimal++; else goto donehc;
+	    break;
+	case L'e':
+	case L'E':
+	    if (ne == 0) {
+		nneg = ndecimal = 0;	/* might have decimal in exponent */
+		ne++;
+	    } else goto donehc;
+	    break;
+	default:
+	    if (!iswdigit(wc)) goto donehc;
+	    break;
+	}
+#else
+	switch (c) {
+	case '-':
+	    if (nneg == 0) nneg++; else goto donehc;
+	    break;
+	case '.':
+	    if (ndecimal == 0) ndecimal++; else goto donehc;
 	    break;
 	case 'e':
 	case 'E':
 	    if (ne == 0) {
 		nneg = ndecimal = 0;	/* might have decimal in exponent */
 		ne++;
-	    }
-	    else
-		goto donehc;
+	    } else goto donehc;
 	    break;
 	default:
-	    if (!isdigit((int)text[0]))
-		goto donehc;
+	    if (!isdigit(c)) goto donehc;
 	    break;
 	}
+#endif
     if (currentexp == 3) {
-	if (isspace(c))
-	    goto donehc;
-	if (clength == 0) {
-	    if (c != '.' && !isalpha(c))
-		goto donehc;
-	    else if (c != '.' && !isalnum(c))
-		goto donehc;
-	}
+#ifdef SUPPORT_UTF8
+	mbrtowc(&wc, text, MB_CUR_MAX , NULL);
+	if (iswspace(wc)) goto donehc;
+	if (clength == 0 && wc != '.' && !iswalpha(wc)) goto donehc;
+	else if (wc != '.' && !iswalnum(wc)) goto donehc;
+#else
+	if (isspace(c)) goto donehc;
+	if (clength == 0  && c != '.' && !isalpha(c)) goto donehc;
+	else if (c != '.' && !isalnum(c)) goto donehc;
+#endif
     }
 
     if (clength++ > 29) {
@@ -1036,7 +1064,7 @@ static void handlechar(char *text)
 	goto donehc;
     }
 
-    *bufp++ = text[0];
+    for(i = 0; i < strlen(text); i++) *bufp++ = text[i];
     printstring(buf, clength, crow, ccol, 1);
     return;
 
@@ -1073,7 +1101,7 @@ static int checkquit(int xw)
 /* when a buttonpress event happens find the square that is being
    pointed to if the pointer is in the header we need to see if the
    quit button was pressed and if so quit. This is done by having
-   findcell return an int which is zero if we should quit and one
+   findcell return an int which is one if we should quit and zero
    otherwise */
 
 static int findcell(void)
@@ -1200,10 +1228,10 @@ static int doMouseDown(DEEvent * event)
 static void doSpreadKey(int key, DEEvent * event)
 {
     KeySym iokey;
-    char text[1];
+    char *text;
 
     iokey = GetKey(event);
-    text[0] = GetCharP(event);
+    text = GetCharP(event);
 
     if (CheckControl(event))
 	doControl(event);
@@ -1285,13 +1313,19 @@ static KeySym GetKey(DEEvent * event)
     return iokey;
 }
 
-static char GetCharP(DEEvent * event)
+static char *GetCharP(DEEvent * event)
 {
-    char text[1];
+    static char text[8];
     KeySym iokey;
 
-    XLookupString((XKeyEvent *)event, text, 1, &iokey, NULL);
-    return text[0];
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	Xutf8LookupString(ic, (XKeyEvent *)event, text, 8, &iokey, NULL);
+	/* FIXME check the return code */
+    } else
+#endif
+	XLookupString((XKeyEvent *)event, text, 8, &iokey, NULL);
+    return text;
 }
 
 static int CheckControl(DEEvent * event)
@@ -1522,7 +1556,11 @@ static Rboolean initwin(void) /* TRUE = Error */
 		 ButtonPressMask | KeyPressMask
 		 | ExposureMask | StructureNotifyMask);
     XMapRaised(iodisplay, iowindow);
-
+#ifdef SUPPORT_UTF8
+    /* FIXME  create ic by something like
+    ic = XCreateIC(IM);
+    */
+#endif
 
     /* now set up the menu-window, for now use the same text
        dimensions as above */
