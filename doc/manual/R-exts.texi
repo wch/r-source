@@ -729,7 +729,7 @@ file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
 
 @noindent
 for platform independence.  On some Unix systems the path supplied to
-@code{dyn.load} should contain a @samp{/} as the standard search path
+@code{dyn.load} should contain a @samp{./} as the standard search path
 for shared libraries does not contain the current directory.
 
 Loading is most often done via a call to @code{library.dynam} in the
@@ -1333,7 +1333,7 @@ one in package @code{nls}) is very useful:
 
 SEXP getListElement(SEXP list, char *str)
 @{
-  SEXP elmt = R_NilValue, names = getAttrib(a, R_NamesSymbol);
+  SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
   int i;
 
   for (i = 0; i < length(list); i++)
