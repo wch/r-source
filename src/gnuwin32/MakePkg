@@ -59,7 +59,7 @@ PKGDEMOS=$(filter-out $(SPKG)/demo/CVS, $(PKGDEMOS0))
 
 # Others
 OFILES0=$(wildcard $(SPKG)/*)
-OFILES1= INDEX TITLE
+OFILES1= INDEX
 OFILES-NO= R r chm data man src src-c demo Makefile.in inst check orig tests \
 	DESCRIPTION DESCRIPTION.in INDEX TITLE index title \
 	configure configure.ac configure.in configure.win cleanup CVS cvs
@@ -104,15 +104,11 @@ ifneq ($(strip $(PKGDEMOS)),)
 	@$(CP) $(PKGDEMOS)   $@
 endif
 
-$(SPKG)/TITLE:
-	if [ ! -f $(SPKG)/TITLE -a -f $(SPKG)/DESCRIPTION ] ; then \
-	  PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/share/perl/maketitle.pl $(SPKG)/DESCRIPTION > $@; \
-	fi
 
 # This fails if DESCRIPTION.. doesn't exist.
 # $(DPKG)/zzzz: $(OFILES3) $(OFILES)
 # On the other hand, ...zzzz is never created so
-$(DPKG)/zzzz: $(SPKG)/TITLE
+$(DPKG)/zzzz:
 ifeq ($(SPKG0),$(DPKG0))
 	@echo
 	@echo "  *** cannot install a package into its source directory ***"
@@ -133,14 +129,19 @@ endif
 	fi
 	$(MKDIR) -p $(DPKG)
 ifeq ($(strip $(INSTFILES)),)
-	-$(CP) -r  $(OFILES3) $(OFILES) $(DPKG)/
+	-@$(CP) -r $(OFILES3) $(OFILES) $(DPKG)/
 else
-	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
+	echo "  installing inst files"
+	-@$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
 	@if test -f ${SPKG}/DESCRIPTION; then \
 	  $(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
 	  echo "  adding build stamp to DESCRIPTION" ; \
 	  echo "Built: R" $(RVER)\;  Win32\;  `date` >> ${DPKG}/DESCRIPTION; \
+	  PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/share/perl/maketitle.pl $(SPKG)/DESCRIPTION > ${DPKG}/TITLE; \
+	else \
+	  echo "A package must contain a DESCRIPTION file"; \
+	  exit 27; \
 	fi
 
 $(DATA): $(DSOURCES)
@@ -157,10 +158,10 @@ $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
 $(SSPKG)/$(DLLNAME).dll: FORCE
 	@echo "  making DLL"
 ifeq ($(strip $(SRCMAKE)),)
-	@$(MAKE) -C $(SSPKG) RHOME=$(RHOME) \
+	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakeDll DLLNAME=$(DLLNAME)
 else
-	@$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
+	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
 endif
 	@echo "  DLL made"
 	@echo
