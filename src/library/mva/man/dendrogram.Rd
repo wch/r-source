@@ -100,7 +100,7 @@ as.dendrogram.hclust(object, \dots)
   Objects of class \code{"hclust"} can be converted to class
   \code{"dendrogram"} using method \code{as.dendrogram}.
 
-  \code{isLeaf}, \code{plotNode()} and \code{plotNodeLimit()} are helper
+  \code{isLeaf()}, \code{plotNode()} and \code{plotNodeLimit()} are helper
   functions. 
 }
 \note{
