@@ -15,7 +15,7 @@ all: R docs
 
 R: stamp-R
 stamp-R: $(top_builddir)/src/include/Platform.h $(base_src)
-	@for d in afm etc src; do cd $$d; $(MAKE) R; cd ..; done
+	@for d in afm doc etc src; do cd $$d; $(MAKE) R; cd ..; done
 	@if [ ! -f src/library/stamp-docs ]; then \
 	  echo "You should \`make docs' now ..."; \
 	fi
@@ -77,7 +77,7 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@for d in afm etc src; do \
+	@for d in afm doc etc src; do \
 	  cd $$d; $(MAKE) $@; cd ..; \
 	done
 	@rm -f stamp-R
