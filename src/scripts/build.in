@@ -43,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.67 $ ';
+my $revision = ' $Revision: 1.68 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -284,12 +284,30 @@ foreach my $pkg (@ARGV) {
 	    or die "Cannot create directory '$tmpdir'\n";
 	chdir($tmpdir);
 	system("$tar xhf $filepath");
+	## Remove exclude files.
 	open(EXCLUDE, "< $exclude");
 	while(<EXCLUDE>) {
 	    rmtree(glob($_));
 	}
 	close(EXCLUDE);
-	## unlink($exclude);	
+	unlink($exclude);
+	## Fix permissions.
+	sub fix_permissions {
+	    ## Note that when called via File::Find::find, $_ holds the
+	    ## file name within the current directory.
+	    if(-d $_) {
+		## Directories should really be mode 00755 if possible.
+		chmod(00755, $_);
+	    }
+	    elsif(-f $_) {
+		## Files should be readable by everyone, and writable
+		## only for user.  This leaves a bit of uncertainty
+		## about the execute bits.
+		chmod(((stat $_)[2] | 00644) & 00755, $_);
+	    }
+	}
+	find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
+	## Finalize.
 	system("$tar chf $filepath $pkgname");
 	chdir($startdir);
 	rmtree($tmpdir);
