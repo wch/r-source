@@ -45,7 +45,7 @@ void find_interv_vec(double *xt, int *n,	double *x,  int *nx,
     for(i=0; i < *nx; i++) {
 	mfl = *all_inside;
 	ii = findInterval(xt, *n, x[i],
-			   *rightmost_closed, *all_inside, ii,  &mfl);
+			  *rightmost_closed, *all_inside, ii,  &mfl);
 	indx[i] = ii;
     }
 }
