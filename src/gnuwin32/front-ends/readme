@@ -2,7 +2,7 @@ Linking the R DLL into other applications
 =========================================
 
 The file rtest.c provides an example of linking the R engine into
-another front end. To build it
+another front end.  To build it
 
 - edit it to set Rp->rhome and Rp->home appropriately, or set
   appropriate environmental variables.
@@ -21,7 +21,7 @@ main program here: R_ReplDLLdo1() parses one line (up to ; or \n) and
 returns 1 if complete, 2 if incomplete as an R expression.
 
 There is a callback available during evaluation, plotting and console
-I/O, intended to be used for processing GUI events. (The pager and
+I/O, intended to be used for processing GUI events.  (The pager and
 graphics windows' GUI events are handled at these times by
 ProcessEvents: the callback is called from within ProcessEvents.)
 Note that in this version console input blocks the process so pager
@@ -34,7 +34,7 @@ An alternative to linking the import library would be to explicitly
 load the DLL from a known location or after searching for it.
 
 The example shows one way to handle user interrupts, although it might
-be as easy to generate a SIGINT directly from a GUI front end. For
+be as easy to generate a SIGINT directly from a GUI front end.  For
 this to be useful you will want to set R_Interactive to be true, and
 you will need to use SETJMP to jump back to somewhere useful in your
 code.
