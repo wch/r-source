@@ -4,7 +4,8 @@
 density(x, bw, adjust = 1, kernel="gaussian", window = kernel,
         n = 512, width, from, to, cut = 3, na.rm = FALSE)
 print(dobj)
-plot(dobj, \dots)
+plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
+     zero.line = TRUE, \dots)
 }
 \alias{density}
 \alias{print.density}
@@ -16,7 +17,7 @@ plot(dobj, \dots)
   power of 2 for efficieny reasons (\code{\link{fft}}).}
 \item{kernel,window}{a character string giving the smoothing kernel to be used.
   This must be one of \code{"gaussian"}, \code{"rectangular"},
-  \code{"triangular"}, or \code{"cosine"}, and may be abbrevited to a
+  \code{"triangular"}, or \code{"cosine"}, and may be abbreviated to a
   single letter.}
 \item{bw}{the smoothing bandwith to be used.  This is the standard
   deviation of the smoothing kernel.  It defaults to 0.9 times the
@@ -38,16 +39,18 @@ plot(dobj, \dots)
 \item{na.rm}{logical; if \code{TRUE}, missing values are eliminated from
   \code{x} in advance to further computation.}
 \item{dobj}{a ``density'' object.}
-\item{\dots}{plotting parameters.}
+\item{main, xlab, ylab, type}{plotting parameters with useful defaults.}
+\item{\dots}{further plotting parameters.}
+\item{zero.line}{logical; if \code{TRUE}, add a base line at \eqn{y = 0}}
 }
 \description{
-The function \code{density} computes kernel density estimates
-with the given kernel and bandwidth
-(which is the standard deviation of the kernel).
+  The function \code{density} computes kernel density estimates
+  with the given kernel and bandwidth.
 
-The generic functions \code{plot} and \code{print} have
-methods for density objects.
-
+  The generic functions \code{plot} and \code{print} have
+  methods for density objects.
+}
+\details{
 The algorithm used in \code{density} disperses the mass of the
 empirical distribution function over a regular grid of at least 512
 points and then
@@ -56,7 +59,7 @@ with a discretized version of the kernel and then uses linear
 approximation to evaluate the density at the specified points.
 }
 \value{
-An object with class ``density''.
+An object with class \code{"density"}.
 The underlying structure is a list containing the following components.
 \item{x}{the \code{n} coordinates of the points where the density is estimated.}
 \item{y}{the estimated density values.}

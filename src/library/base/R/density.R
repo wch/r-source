@@ -62,11 +62,14 @@ function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
 }
 
 plot.density <-
-function(s, main=NULL, xlab=NULL, ylab="Density", type="l", ...)
+function(s, main=NULL, xlab=NULL, ylab="Density", type="l",
+         zero.line = TRUE, ...)
 {
-	if(is.null(xlab)) xlab <- paste("Bandwidth =", format(s$bw))
+	if(is.null(xlab))
+          xlab <- paste("N =", s$n, "  Bandwidth =", format(s$bw))
 	if(is.null(main)) main <- deparse(s$call)
 	plot.default(s, main=main, xlab=xlab, ylab=ylab, type=type, ...)
+        if(zero.line) abline(h=0, lwd=0.1, col = "gray")
 }
 
 print.density <-
