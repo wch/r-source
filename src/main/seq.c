@@ -120,6 +120,12 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	    for (j = 0; j < (INTEGER(t)[i]); j++)
 		STRING(a)[n++] = STRING(s)[i];
 	break;
+    case VECSXP:
+    case EXPRSXP:
+	for (i = 0; i < nc; i++)
+	    for (j = 0; j < (INTEGER(t)[i]); j++)
+		VECTOR(a)[n++] = VECTOR(s)[i];
+	break;
     case LISTSXP:
 	u = a;
 	for (i = 0; i < nc; i++)
