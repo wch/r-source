@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-21 2004-05-28
+Version 1.9-22 2004-06-03
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -399,8 +399,8 @@ Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
 9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9/Fedora1
 i386, 7.x alpha, and Fedora1 x86_64 packages by Martyn Plummer, Naoki
 Takebayashi, and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386
-and 9.0 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages by
-Susunu Tanimura.
+and 9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages
+by Susunu Tanimura.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1795,6 +1795,10 @@ distributions of R.)
      and (for simulation) multivariate parametric extreme value
      distributions, and provides fitting functions which calculate maximum
      likelihood estimates for univariate and bivariate models.
+
+*evdbayes*
+     Functions for the bayesian analysis of extreme value models, using MCMC
+     methods.
 
 *evir*
      Extreme Values in R: Functions for extreme value theory, which may be
