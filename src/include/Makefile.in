@@ -80,20 +80,20 @@ install: installdirs
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(SRC_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/include; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/include"; \
 	done
 	@for f in $(OBJ_HEADERS); do \
-	  $(INSTALL_DATA) $${f} $(rhome)/include; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/include"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/include
+	@$(MKINSTALLDIRS) "$(rhome)/include"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -rf $(rhome)/include
+	@rm -rf "$(rhome)/include"
 
 mostlyclean: clean
 clean:

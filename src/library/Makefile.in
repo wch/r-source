@@ -98,18 +98,18 @@ examples:
 
 install: installdirs
 	@echo "installing packages ..."
-	@cp -r $(top_builddir)/library $(rhome) || \
+	@cp -r $(top_builddir)/library "$(rhome)" || \
 	  (cd $(top_builddir)/library; \
-	    $(TAR) cf - . | (cd $(rhome)/library; $(TAR) xmof -))
+	    $(TAR) cf - . | (cd "$(rhome)/library"; $(TAR) xmof -))
 	@echo "  building HTML index ..."
-	@$(R_CMD_BUILD_HELP) --rhome $(rhome) --htmllists
+	@$(R_CMD_BUILD_HELP) --rhome "$(rhome)" --htmllists
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/library
+	@$(MKINSTALLDIRS) "$(rhome)/library"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@echo "uninstalling packages ..."
-	@(cd $(rhome)/library; \
+	@(cd "$(rhome)/library"; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
 	rm -f R.css
 

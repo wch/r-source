@@ -300,26 +300,26 @@ install: install-message installdirs install-html
 install-message:
 	@echo "installing $(subdir) ..."
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/$(subdir)
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
 install-strip: install
 install-dvi: dvi installdirs install-images-eps
 	@echo "installing R manuals in DVI format ..."
 	@for f in *.dvi; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
 install-images-eps:
-	@$(MKINSTALLDIRS) $(rhome)/$(subdir)/images
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"/images
 	@-for f in $(srcdir)/images/*.eps; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir)/images; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"/images; \
 	done
 install-images-pdf:
-	@$(MKINSTALLDIRS) $(rhome)/$(subdir)/images
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"/images
 	@-for f in $(srcdir)/images/*.pdf; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir)/images; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"/images; \
 	done
 install-html:
 	@for f in $(OBJECTS_HTML); do \
-	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
 install-info: info $(infodir)/dir
 	@echo "installing R info pages ..."
@@ -334,7 +334,7 @@ install-info: info $(infodir)/dir
 install-pdf: pdf installdirs
 	@echo "installing R manuals in PDF format ..."
 	@for f in *.pdf; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
 
 $(infodir)/dir:
@@ -346,12 +346,12 @@ uninstall:
 	  $(MAKE) uninstall-info; \
 	fi
 	@echo "uninstalling $(subdir) ..."
-	@rm -rf $(rhome)/$(subdir)
+	@rm -rf "$(rhome)/$(subdir)"
 uninstall-dvi:
 	@echo "uninstalling R manuals in DVI format ..."
-	@-rm -f $(rhome)/$(subdir)/images/*.eps
-	@-rmdir $(rhome)/$(subdir)/images
-	@-rm -f $(rhome)/$(subdir)/*.dvi
+	@-rm -f "$(rhome)/$(subdir)"/images/*.eps
+	@-rmdir "$(rhome)/$(subdir)"/images
+	@-rm -f "$(rhome)/$(subdir)"/*.dvi
 uninstall-info:
 	@echo "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
@@ -363,7 +363,7 @@ uninstall-info:
 	done
 uninstall-pdf:
 	@echo "uninstalling R manuals in PDF format ..."
-	@-rm -f $(rhome)/$(subdir)/*.pdf
+	@-rm -f "$(rhome)/$(subdir)"/*.pdf
 
 mostlyclean: clean
 clean:
