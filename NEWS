@@ -17,6 +17,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   load/save/data allow unlimited string sizes.
+
     o   strsplit() allows unlimited string size.
 
 

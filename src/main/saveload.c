@@ -26,12 +26,12 @@
 #include <hdf5.h>
 #endif
 
-/* FIXME : the fixed size buffer here is an abomination */
-
 /* Static Globals */
 
-static char buf[MAXELTSIZE];	/* Buffer for character strings */
+static char smbuf[512];	        /* Small buffer for temp use */
+static char *buf=NULL;	        /* Buffer for character strings */
 static char *bufp;		/* A pointer to that buffer */
+static int bufsize=0;		/* Current buffer size */
 
 static int NSymbol;		/* Number of symbols */
 static int NSave;		/* Number of non-symbols */
@@ -45,6 +45,28 @@ static int VersionId;
 
 static SEXP DataLoad(FILE*);
 static void DataSave(SEXP, FILE*);
+
+static void AllocBuffer(int len)
+{
+    if(len >= 0 ) {
+	if(len < bufsize) return;
+	len = (len+1)*sizeof(char);
+	if(len < MAXELTSIZE) len = MAXELTSIZE;
+	buf = (char *) realloc(buf, len);
+	bufsize = len;
+	if(!buf) {
+	    bufsize = 0;
+	    error("Could not allocate memory for string save/load");
+	}   
+    } else {
+	if(bufsize == MAXELTSIZE) return;
+ /* frees if non-zero */
+	realloc(buf, 0);
+	buf = (char *) realloc(buf, MAXELTSIZE);
+	bufsize = MAXELTSIZE;
+    }
+}
+
 
 /* I/O Function Pointers */
 
@@ -86,11 +108,11 @@ static void AsciiOutInteger(FILE *fp, int i)
 static int AsciiInInteger(FILE *fp)
 {
     int x;
-    fscanf(fp, "%s", buf);
-    if (strcmp(buf, "NA") == 0)
+    fscanf(fp, "%s", smbuf);
+    if (strcmp(smbuf, "NA") == 0)
 	return NA_INTEGER;
     else {
-	sscanf(buf, "%d", &x);
+	sscanf(smbuf, "%d", &x);
 	return x;
     }
 }
@@ -111,15 +133,15 @@ static void AsciiOutReal(FILE *fp, double x)
 static double AsciiInReal(FILE *fp)
 {
     double x;
-    fscanf(fp, "%s", buf);
-    if (strcmp(buf, "NA") == 0)
+    fscanf(fp, "%s", smbuf);
+    if (strcmp(smbuf, "NA") == 0)
 	x = NA_REAL;
-    else if (strcmp(buf, "Inf") == 0)
+    else if (strcmp(smbuf, "Inf") == 0)
 	x = R_PosInf;
-    else if (strcmp(buf, "-Inf") == 0)
+    else if (strcmp(smbuf, "-Inf") == 0)
 	x = R_NegInf;
     else
-	sscanf(buf, "%lg", &x);
+	sscanf(smbuf, "%lg", &x);
     return x;
 }
 
@@ -134,25 +156,25 @@ static void AsciiOutComplex(FILE *fp, complex x)
 static complex AsciiInComplex(FILE *fp)
 {
     complex x;
-    fscanf(fp, "%s", buf);
-    if (strcmp(buf, "NA") == 0)
+    fscanf(fp, "%s", smbuf);
+    if (strcmp(smbuf, "NA") == 0)
 	x.r = NA_REAL;
-    else if (strcmp(buf, "Inf") == 0)
+    else if (strcmp(smbuf, "Inf") == 0)
 	x.r = R_PosInf;
-    else if (strcmp(buf, "-Inf") == 0)
+    else if (strcmp(smbuf, "-Inf") == 0)
 	x.r = R_NegInf;
     else
-	sscanf(buf, "%lg", &x.r);
+	sscanf(smbuf, "%lg", &x.r);
 
-    fscanf(fp, "%s", buf);
-    if (strcmp(buf, "NA") == 0)
+    fscanf(fp, "%s", smbuf);
+    if (strcmp(smbuf, "NA") == 0)
 	x.i = NA_REAL;
-    else if (strcmp(buf, "Inf") == 0)
+    else if (strcmp(smbuf, "Inf") == 0)
 	x.i = R_PosInf;
-    else if (strcmp(buf, "-Inf") == 0)
+    else if (strcmp(smbuf, "-Inf") == 0)
 	x.i = R_NegInf;
     else
-	sscanf(buf, "%lg", &x.i);
+	sscanf(smbuf, "%lg", &x.i);
     return x;
 }
 
@@ -294,7 +316,7 @@ static void XdrOutInteger(FILE *fp, int i)
 {
     if (!xdr_int(&xdrs, &i)) {
 	xdr_destroy(&xdrs);
-	error("a write error occured\n");
+	error("a I write error occured\n");
     }
 }
 
@@ -312,7 +334,7 @@ static void XdrOutReal(FILE *fp, double x)
 {
     if (!xdr_double(&xdrs, &x)) {
 	xdr_destroy(&xdrs);
-	error("a write error occured\n");
+	error("a R write error occured\n");
     }
 }
 
@@ -346,16 +368,16 @@ static complex XdrInComplex(FILE * fp)
 
 static void XdrOutString(FILE *fp, char *s)
 {
-    if (!xdr_string(&xdrs, &s, MAXELTSIZE - 1)) {
+    if (!xdr_string(&xdrs, &s, strlen(s))) {
 	xdr_destroy(&xdrs);
-	error("a write error occured\n");
+	error("a S write error occured\n");
     }
 }
 
 static char *XdrInString(FILE *fp)
 {
     char *bufp = buf;
-    if (!xdr_string(&xdrs, &bufp, MAXELTSIZE - 1)) {
+    if (!xdr_string(&xdrs, &bufp, bufsize)) {
 	xdr_destroy(&xdrs);
 	error("a read error occured\n");
     }
@@ -887,11 +909,13 @@ static void RestoreSEXP(SEXP s, FILE *fp)
     case SPECIALSXP:
     case BUILTINSXP:
 	len = InInteger(fp);
+	AllocBuffer(MAXELTSIZE - 1);
 	PRIMOFFSET(s) = StrToInternal(InString(fp));
 	break;
     case CHARSXP:
 	LENGTH(s) = len = InInteger(fp);
 	ReallocString(s, len);
+	AllocBuffer(len);
 	strcpy(CHAR(s), InString(fp));
 	break;
     case REALSXP:
@@ -958,6 +982,7 @@ static SEXP DataLoad(FILE *fp)
     for (i = 0 ; i < NSymbol ; i++) {
 	j = InInteger(fp);
 	OldOffset[j] = InInteger(fp);
+	AllocBuffer(MAXELTSIZE - 1);
 	NewAddress[j] = install(InString(fp));
     }
 
@@ -994,6 +1019,9 @@ static SEXP DataLoad(FILE *fp)
     /* restore the heap */
 
     vmaxset(vmaxsave);
+
+    /* clean the string buffer */
+    AllocBuffer(-1);
 
     /* return the "top-level" object */
     /* this is usually a list */
