@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-21, @value{FAQ-YEAR}-11-29
+@set FAQ-VERSION 1.8-23, @value{FAQ-YEAR}-12-03
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -440,14 +440,16 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-11-28:
+@c Linux binaries as of 2003-12-03:
 @c
 @c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.1  Dirk Eddelbuettel <edd@debian.org>
 @c           sid   i386  1.8.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
-@c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
+@c mandrake  9.0   i386  1.8.1  Michele Alzetta <mikalzet@libero.it>
+@c           9.1   i386  1.8.1  Michele Alzetta <mikalzet@libero.it>
+@c           9.2   i386  1.8.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat    7.x   i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
+@c                 alpha 1.8.1  Naoki Takebayashi <ffnt@uaf.edu>
 @c           8.x   i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
 @c           9     i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
 @c suse      7.3   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -1824,6 +1826,8 @@ Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
 @item combinat
 Combinatorics utilities.
+@item concord
+Measures of concordance and reliability.
 @item conf.design
 A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
@@ -2039,6 +2043,8 @@ Osborne et al.@: (1998)
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
+@item ldDesign
+Design of experiments for detection of linkage disequilibrium,
 @item leaps
 A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
@@ -2218,6 +2224,9 @@ Periodic Autoregression Analysis.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item phyloarray
+Software to process data from phylogenetic or identification
+microarrays.
 @item pinktoe
 Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
