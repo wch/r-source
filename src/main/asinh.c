@@ -61,7 +61,7 @@ double asinh(double xx)
     double a, z, x;
     int sign;
 
-    if(ISNAN(x)) return x;
+    if(ISNAN(xx)) return xx;
     if( xx == 0.0 ) return xx;
     if( xx < 0.0 ) {
 	sign = -1;
