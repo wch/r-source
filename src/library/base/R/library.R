@@ -38,6 +38,15 @@ library <-
                               "'", sep = ""))
             }
             file <- system.file("R", name, pkg = name, lib = lib.loc)
+            ## allowed zipped R source files
+            if (file == "") {
+                tfile <- file.path(which.lib.loc, name, "R", name)
+                zfile <- zip.file.extract(tfile)
+                if (zfile != tfile) {
+                    file <- zfile
+                    on.exit(unlink(file))
+                }
+            }
             # create environment
             env <- attach(NULL, name = pkgname)
             # "source" file into env
