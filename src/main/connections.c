@@ -46,7 +46,6 @@ int R_OutputCon; /* used in printutils.c */
 /* Win32 does have popen, but it does not work in GUI applications,
    so test that later */
 #ifdef Win32
-# define HAVE_POPEN
 # include <Startup.h>
   extern UImode  CharacterMode;
 #endif
@@ -233,7 +232,7 @@ static Rboolean file_open(Rconnection con)
     FILE *fp;
     Rfileconn this = con->private;
     Rboolean temp = FALSE;
-#ifdef HAVE_FCNTL_H
+#ifdef HAVE_FCNTL
     int fd, flags;
 #endif
     int mlen = strlen(con->mode);
@@ -268,7 +267,7 @@ static Rboolean file_open(Rconnection con)
     else con->text = TRUE;
     con->save = -1000;
 
-#ifdef HAVE_FCNTL_H
+#ifdef HAVE_FCNTL
     if(!con->blocking) {
 	fd = fileno(fp);
 	flags = fcntl(fd, F_GETFL);

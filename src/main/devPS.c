@@ -1381,6 +1381,11 @@ static void SetFont(int style, int size, NewDevDesc *dd)
     }
 }
 
+#ifdef Win32
+/* exists, but does not work on GUI processes */
+# undef HAVE_POPEN
+#endif
+
 static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 {
     char buf[512], *p;
