@@ -40,10 +40,9 @@ is.unsorted(x, na.rm = FALSE)
   increasingly, i.e., \code{is.unsorted(x)} is true if \code{any(x !=
     sort(x))} (and there are no \code{NA}s).
 
-  \code{method = "shell"} uses Shellsort and was the only method
-  before \R version 1.5.x (although improved there to an
-  \eqn{O(n^{4/3})} variant of Sedgewick (1996)).  It is \emph{stable},
-  that is ties are never re-ordered.
+  \code{method = "shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant
+  from Sedgewick (1996)).  If \code{x} has names a stable sort is used,
+  so ties are not reordered.  (This only matters if names are present.)
 
   Method \code{"quick"} uses Singleton's Quicksort implementation and is
   only available when \code{x} is numeric, the sort is increasing and
@@ -51,7 +50,8 @@ is.unsorted(x, na.rm = FALSE)
   Shellsort (perhaps twice as fast on vectors of length a million) but
   has poor performance in the rare worst case and is not stable.
   (Peto's modification using a pseudo-random midpoint is used to make
-  the worst case rarer.)
+  the worst case rarer.)  This is not a stable sort, and ties may be
+  reordered.
 }
 \value{
   For \code{sort} the sorted vector unless

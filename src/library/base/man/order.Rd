@@ -32,7 +32,8 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
   When the ordering of ties does not matter in the one argument case
   (e.g., in \code{sort.list}), \code{\link{sort}(x, method="quick",
     index.return=TRUE)$ix} may be much faster for long \code{x} vectors
-  with many ties.
+  with many ties.  If the ordering does matter, \code{order(x, seq(along=x))} 
+  may be faster than \code{sort.list(x)} with many ties.
 
   \code{partial} is supplied for compatibility with other
   implementations of S, but no other values are accepted and ordering is

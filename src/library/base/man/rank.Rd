@@ -19,12 +19,20 @@ rank(x, na.last = TRUE)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
+\note{
+  For ranks without averaging, see the examples below.
+}
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{
-(r1 <- rank(x1 <- c(3,1,4,59,26)))
-(r2 <- rank(x2 <- c(3,1,4,5,9,2,6,5,3,5))) # ties
+(r1 <- rank(x1 <- c(3, 1, 4, 59,26)))
+(r2 <- rank(x2 <- c(3, 1, 4, 5, 9, 2, 6, 5, 3, 5))) # ties
 
 ## rank() is "idempotent": rank(rank(x)) == rank(x) :
 stopifnot(rank(r1) == r1, rank(r2) == r2)
+
+## ranks without averaging
+sort.list(sort.list(x2))                 # first occurrence wins
+sort.list(order(x2, runif(length(x2))))  # ties broken at random
+sort.list(order(x2, runif(length(x2))))  # and again
 }
 \keyword{univar}
