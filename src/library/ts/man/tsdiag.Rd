@@ -39,9 +39,9 @@ tsdiag(object, gof.lag, ...)
 }
 
 \examples{
-data(lh)
+\dontrun{data(lh)
 fit <- arima0(lh, c(1,0,0))
-tsdiag(fit)
+tsdiag(fit)}
 
 ## see also examples(arima0)
 }

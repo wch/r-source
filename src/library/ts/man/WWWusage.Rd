@@ -30,7 +30,6 @@ for(q in 1:5) aics[1, 1+q] <- arima0(WWWusage, c(0,1,q),
 for(p in 1:5)
    for(q in 0:5) aics[1+p, 1+q] <- arima0(WWWusage, c(p,1,q),
        optim.control = list(maxit = 500))$aic
-aics <- round(aics - min(aics, na.rm=TRUE), 2)
-aics
+round(aics - min(aics, na.rm=TRUE), 2)
 }}
 \keyword{datasets}

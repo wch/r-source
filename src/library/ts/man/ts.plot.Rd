@@ -31,12 +31,5 @@ ts.plot(..., gpars = list())
 data(UKLungDeaths)
 ts.plot(ldeaths, mdeaths, fdeaths,
         gpars=list(xlab="year", ylab="deaths", lty=c(1:3)))
-
-data(nottem)
-nott <- window(nottem, end=c(1936,12))
-fit <- arima0(nott,order=c(1,0,0), list(order=c(2,1,0), period=12))
-nott.fore <- predict(fit, n.ahead=36)
-ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
-        nott.fore$pred-2*nott.fore$se, gpars=list(col=c(1,1,4,4)))
 }
 \keyword{ts}

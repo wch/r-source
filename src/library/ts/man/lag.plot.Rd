@@ -50,12 +50,12 @@ lag.plot(nhtemp, 5, main="Average Temperatures in New Haven")
 lag.plot(nhtemp, 6, layout = c(2,1), asp = NA,
          main = "New Haven Temperatures", col.main = "blue")
 
-data(sunspots) # no lines for larges series :
+\dontrun{data(sunspots) # no lines for long series :
 lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
 
 ## Multivariate (but non-stationary! ...)
 data(freeny)
 lag.plot(freeny.x, lag = 3)
-}
+}}
 \keyword{hplot}
 \keyword{ts}

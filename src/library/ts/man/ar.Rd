@@ -165,22 +165,10 @@ ar(lh, method="burg")
 ar(lh, method="ols")
 ar(lh, FALSE, 4) # fit ar(4)
 
-data(LakeHuron)
-ar(LakeHuron)
-ar(LakeHuron, method="burg")
-ar(LakeHuron, method="ols")
-
-
 data(sunspot)
-sunspot.ar <- ar(sunspot.year)
-sunspot.ar
-ar(x = sunspot.year, method = "burg")
-ar(x = sunspot.year, method = "ols")
-\dontrun{## next is slow and may have convergence problems,
-## as it cares about invertibility
-ar(x = sunspot.year, method = "mle")
-}
+(sunspot.ar <- ar(sunspot.year))
 predict(sunspot.ar, n.ahead=25)
+## try the other methods too
 
 data(BJsales)
 ar(ts.union(BJsales, BJsales.lead))

@@ -214,7 +214,8 @@ arima0(x, order = c(0, 0, 0),
 
 \examples{
 data(lh, package="ts")
-arima0(lh, order = c(1,0,0))
+\dontrun{arima0(lh, order = c(1,0,0))}
+\testonly{(fit <- arima0(lh, c(1,0,0))); tsdiag(fit)}
 arima0(lh, order = c(3,0,0))
 arima0(lh, order = c(1,0,1))
 predict(arima0(lh, order = c(3,0,0)), n.ahead = 12)
@@ -222,9 +223,6 @@ predict(arima0(lh, order = c(3,0,0)), n.ahead = 12)
 arima0(lh, order = c(3,0,0), method = "CSS")
 
 data(USAccDeaths, package="ts")
-arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
-arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
-       method = "CSS") # drops first 13 observations.
 # for a model with as few years as this, we want full ML
 (fit <- arima0(USAccDeaths, order = c(0,1,1),
                seasonal = list(order=c(0,1,1)), delta = -1))
@@ -232,40 +230,12 @@ predict(fit, n.ahead = 6)
 
 data(LakeHuron)
 arima0(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
-
+\dontrun{
 data(presidents) # contains NAs
-## graphs is example(acf) suggest order 1 or 3
+## graphs in example(acf) suggest order 1 or 3
 (fit1 <- arima0(presidents, c(1, 0, 0), delta = -1))  # avoid warning
 tsdiag(fit1)
 (fit3 <- arima0(presidents, c(3, 0, 0), delta = -1))  # smaller AIC
-tsdiag(fit3)
-\testonly{
-## test fitting with NAs
-tmp <- LakeHuron
-trend <- time(LakeHuron) - 1920
-tmp[c(17, 45, 96)] <- NA
-arima0(tmp, order=c(2,0,0), xreg=trend, delta = -1)
-arima0(tmp, order=c(1,1,1), xreg=trend, delta = -1)
-trend[c(20, 67)] <- NA
-arima0(tmp, order=c(2,0,0), xreg=trend, delta = -1)
-
-## tests of prediction
-predict(arima0(lh, order=c(1,0,1)), n.ahead=5)
-predict(arima0(lh, order=c(1,1,0)), n.ahead=5)
-predict(arima0(lh, order=c(0,2,1)), n.ahead=5)
-
-## test of init
-arima0(lh, order = c(1,0,1), init = c(0.5, 0.5, NA))
-arima0(lh, order = c(1,0,1), init = c(0.5, 2, NA))
-try(arima0(lh, order = c(1,0,1), init = c(2, NA, NA)))
-
-## test of fixed
-arima0(lh, order = c(1,0,1), fixed = c(0.5, NA, NA), trans = FALSE)
-trend <- time(LakeHuron) - 1920
-arima0(LakeHuron, order=c(2,0,0), xreg=trend, delta = -1)
-arima0(x = LakeHuron, order = c(2, 0, 0), xreg = trend,
-      delta = -1, fixed = c(NA, NA, 580, -0.02))
-arima0(x = LakeHuron, order = c(2, 0, 0), xreg = trend,
-      delta = -1, fixed = c(NA, NA, 580, 0))
-}}
+tsdiag(fit3)}
+}
 \keyword{ts}
