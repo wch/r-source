@@ -457,9 +457,14 @@ step <-
            trace = 1, keep = NULL, steps = 1000, k = 2, ...)
 {
   fixFormulaObject <- function(object) {
-    tmp <- attr(terms(object), "term.labels")
-    formula(paste(deparse(formula(object)[[2]]), "~",
-                  paste(tmp, collapse=" + ")))
+    tt <- terms(object)
+    tmp <- attr(tt, "term.labels")
+    tmp <- paste(deparse(formula(object)[[2]]), "~",
+                 paste(tmp, collapse = " + "))
+    if (length(offset <- attr(tt, "offset")))
+      tmp <- paste(tmp, deparse(attr(tt, "variables")[offset + 1]),
+                   sep = " + ")
+    formula(tmp)
   }
 
   cut.string <- function(string)
