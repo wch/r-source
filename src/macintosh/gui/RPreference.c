@@ -176,7 +176,7 @@ void                                      savePreference(void);
 void                                      DrawBox (DialogPtr PreferenceBox);
 void                                      SetTab(Boolean);
 pascal	OSErr	                          FSpGetFullPath (const FSSpec*, short*, Handle*);
-void                                      pickColor(DialogPtr, SInt16 , RGBColor , RGBColor*);
+void                                      pickColor(RGBColor , RGBColor*);
 void                                      SetTextSize(Boolean);
 void                                      SetTextFontAndSize(void);
 extern int                                R_SetOptionWidth(int w);
@@ -343,7 +343,10 @@ int GetTextSize(void)
    return(gTextSize);
 }
 
-
+/* This function read the R preferences file or generates it with
+   the default settings.
+   Jago Nov 2001, Stefano M Iacus.
+*/   
 void  doGetPreferences(void)
 {
    Str255               prefsFileName;
@@ -423,94 +426,6 @@ void  doGetPreferences(void)
 
 }
 
-/* ************************************************************************************************
-doGetPreferences :	This function will be called at the beginning when R application starts.
-					It sets up some parameters specified by the user in the .Renviron file
-					such as the graphic device screen resolution and font, the Console font and
-					size and the tab-size of all the text windows. Etc.
-Jago, April 2001, Stefano M. Iacus	
-************************************************************************************************ */
-void  doGetPreferences1(void)
-{
-   Str255               prefsFileName;
-   OSErr                osError;
-   SInt16               volRefNum;
-   long                 directoryID;
-   FSSpec               fileSSpec;
-   SInt16               fileRefNum;
-//   appPrefsHandle       appPrefsHdl;
-   char 				userfont[25];
-   FMFontFamily 		postFontId;
-     
-      strcpy(genvString, ".Renviron");
-      
-      SetTab(false);
-    
-      storeHistory = atoi(mac_getenv("RHISTSIZE"));
-       
-       
-      if(storeHistory < 1 || storeHistory > 512)  
-       storeHistory = 512;
-      HISTORY = storeHistory +1;
-      Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
-  
-         
-      gTextSize = GetTextSize();
-
-      gScreenRes = GetScreenRes();
-      
-      doCopyPString("\psymbol", MacSymbolFont);  /* Jago */
-
-      strncpy(userfont,mac_getenv("GraphFontName"),20);
- 
-      if(strlen(userfont)>0)
-       CopyCStringToPascal(userfont,PostFont);
- 
-	  if(GetFontIDFromMacFontName(PostFont) == kATSUInvalidFontID)
-         doCopyPString("\phelvetica", PostFont); /* Emergency font ! */
-
-   	  strncpy(userfont,mac_getenv("FontName"),20);
-      
-      if(strlen(userfont)>0)
-       CopyCStringToPascal(userfont,UserFont);
-  
-      if(systemVersion > kMinSystemVersion){
-      if( FMGetFontFamilyFromName(UserFont) == kInvalidFontFamily)
-         doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
-      }
-      else {
-       GetFNum(UserFont, &postFontId);
-       if( postFontId == kInvalidFontFamily)
-          doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
-      }
-
-      EIGHTY = EightyWidth();
-      
-
-      
-      tempTypeColour.red = gTypeColour.red =  0xffff;
-      tempTypeColour.green = gTypeColour.green =  0x0000;
-      tempTypeColour.blue = gTypeColour.blue =  0x0000;
-      tempFinishedColour.red = gFinishedColour.red = 0x0000;
-      tempFinishedColour.green = gFinishedColour.green = 0x0000;
-      tempFinishedColour.blue = gFinishedColour.blue = 0xffff;
- 
-      tempComputerColour.red = gComputerColour.red = 0x0000;
-      tempComputerColour.green = gComputerColour.green = 0x0000;
-      tempComputerColour.blue = gComputerColour.blue = 0x0000;
-      
-      if(strcmp(mac_getenv("Interrupt"),"TRUE")==0)
-       Interrupt = true;
-      else  
-       Interrupt = false;
-       
-       
-      if(strcmp(mac_getenv("OnOpenSource"),"TRUE")==0)
-       OnOpenSource = true;
-      else  
-       OnOpenSource = false;
-  
-}
 
 int EightyWidth(void)
 {
@@ -562,34 +477,19 @@ int EightyWidth(void)
 ************************************************************************************************
 pickColor routine :
 ************************************************************************************************
-Desciption :
-This procedure is used to redraw (Update) the update the color of the text that you selected.
-The purpose of this routine is to give the end user a impression of the color that they picked.
+Description :
+This procedure is used to call the color piker.
+Updated on november 2001, Jago (Stefano M. Iacus)
 ************************************************************************************************
 */
-void pickColor(DialogPtr PreferenceBox, SInt16 itemID, RGBColor inColour, RGBColor *outColor){
-   RGBColor	          blackColour;
-   short              type; 
-   Rect               itemRect;
-   Handle             itemHandle=NULL;
-   Str255		     prompt = "\pChoose a rectangle colour:";
-   Point			 where ={0,0};
-   GrafPtr           savePort;
-   long              SaveColor;
-   Boolean		okButton;
+void pickColor(RGBColor inColour, RGBColor *outColor){
+   RGBColor	         blackColour;
+   Str255		     prompt = "\pChoose a text colour:";
+   Point			 where = {-1,-1};
    
-   blackColour.red	 = 0x0000;
-   blackColour.green = 0x0000;
-   blackColour.blue	 = 0x0000;
-   GetDialogItem(PreferenceBox,  itemID, &type, &itemHandle, &itemRect);
-   okButton = GetColor(where,prompt,&inColour,outColor);
-   if (okButton){
-      RGBForeColor(outColor);
-      SetDialogItemText(itemHandle, "\pText Color"); 
-      RGBForeColor(&blackColour);
-   }else{
+   if (! GetColor(where,prompt,&inColour,outColor) )
       *outColor = inColour;
-   }
+
 
 }
 
@@ -598,11 +498,9 @@ void pickColor(DialogPtr PreferenceBox, SInt16 itemID, RGBColor inColour, RGBCol
 ************************************************************************************************
 DrawBox routine :
 ************************************************************************************************
-Desciption :
-This procedure is used to redraw (Update) the preference dialog box.
-When you open the dialog box, you may also open dialog like color picker, the preference dialog
-box didn't know how to recover the content, thus, we need to call this procedure and update the
-bitmap by ourself.
+Description :
+This procedure is used to redraw the preference dialog box.
+Updated on november 2001, Jago (Stefano M. Iacus)
 ************************************************************************************************
 */
 void DrawBox(DialogPtr PreferenceBox){
@@ -612,47 +510,56 @@ void DrawBox(DialogPtr PreferenceBox){
    Pattern	          myPat;
    RGBColor          blackColour;
    CGrafPtr savedPort,port;
-   Rect myRect = {400, 130, 430, 160};
-
+   Rect myRect;
+   
+   
+   
    blackColour.red	 = 0x0000;
    blackColour.green = 0x0000;
    blackColour.blue	 = 0x0000;
 
-//   GetIndPattern( &myPat, sysPatListID,2 ); 	/* brickwork */
+   GetIndPattern( &myPat, sysPatListID,2 ); 	/* brickwork */
    
-//   GetPort(&savedPort);
+   GetPort(&savedPort);
+
+   SetPort ( GetDialogPort(PreferenceBox) ) ;
 
    PenPat( &myPat );
-//   GetDialogItem(PreferenceBox,kEditRect,&type,&itemHandle,&itemRect);
-//   FrameRect(&itemRect);
-//   GetDialogItem(PreferenceBox,kMemoryRect,&type,&itemHandle,&itemRect);
-//   FrameRect(&itemRect);
-//   GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
-  //SetColor 
-   GetDialogItem(PreferenceBox,   kActiveTextField, &type, &itemHandle, &itemRect);
+   MoveTo(245,5);
+   LineTo(245,245);
+   MoveTo(5,160);
+   LineTo(500,160);
+      
+   GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
+   PenPat( &myPat );
+
+
    RGBForeColor(&tempTypeColour);
-   SetDialogItemText(itemHandle, "\pActive Text Color");
-   GetDialogItem(PreferenceBox,  kCompletedTextField, &type, &itemHandle, &itemRect);
+   SetRect(&myRect, 400, 60, 410, 70);
+   PaintRect(&myRect);
+   SetRect(&myRect, 398, 58, 412, 72);
+   RGBForeColor(&blackColour);
+   FrameRect(&myRect);
+
    RGBForeColor(&tempFinishedColour);
-   SetDialogItemText(itemHandle, "\pCompleted Text Color");
-   GetDialogItem(PreferenceBox,  kComputerResponseField, &type, &itemHandle, &itemRect);
-   
+   SetRect(&myRect, 400, 85, 410, 95);
+   PaintRect(&myRect);  
+   SetRect(&myRect, 398, 83, 412, 97);
+   RGBForeColor(&blackColour);
+   FrameRect(&myRect);
 
-  //  SetPort ( GetDialogPort(PreferenceBox) ) ;
-//	GetQDGlobalsBlack(&myPat);
-//	 PenPat( &myPat );
-//   GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
-  
-   // RGBForeColor(&blackColour);
    RGBForeColor(&tempComputerColour);
-  //  PaintRect(&myRect);
-  //  SetPort(savedPort);
+   SetRect(&myRect, 400, 110, 410, 120);
+   PaintRect(&myRect);
+   SetRect(&myRect, 398, 108, 412, 122);
+   RGBForeColor(&blackColour);
+   FrameRect(&myRect);
+ 
+   
+   SetPort(savedPort);
    
    
-   SetDialogItemText(itemHandle, "\pComputer Text Color");
-   RGBForeColor(&blackColour); 
 
-//   PenPat( &myPat );
 }
 
 /*
@@ -673,8 +580,8 @@ void SetTab(Boolean newtab){
    SInt16         i;  
    char 		tabsize[10];
    
-   if(!newtab)
-   gtabSize = atoi(mac_getenv("TabSize"));
+ //  if(!newtab)
+ //  gtabSize = atoi(mac_getenv("TabSize"));
      
    if(gtabSize < 1 || gtabSize > 20)
     gtabSize = 5;
@@ -915,17 +822,17 @@ void RPrefs ( void )
       ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
    
       if (itemHit == kActiveTextButton){
-         pickColor(PreferenceBox, kActiveTextField, tempTypeColour, &outColor);
+         pickColor(tempTypeColour, &outColor);
          tempTypeColour = outColor;
          DrawBox(PreferenceBox);
       }
       if (itemHit == kCompletedTextButton){
-         pickColor(PreferenceBox, kCompletedTextField, tempFinishedColour, &outColor);
+         pickColor(tempFinishedColour, &outColor);
          tempFinishedColour = outColor;
          DrawBox(PreferenceBox);
       }
       if (itemHit == kComputerResponseButton){
-         pickColor(PreferenceBox, kComputerResponseField, tempComputerColour, &outColor);
+         pickColor(tempComputerColour, &outColor);
          tempComputerColour = outColor;
          DrawBox(PreferenceBox);
 
