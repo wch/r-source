@@ -66,7 +66,7 @@
 integer \tab int * \tab integer\cr
 numeric \tab double * \tab double precision\cr
 -- or -- \tab float * \tab real\cr
-complex \tab complex * \tab double complex\cr
+complex \tab Rcomplex * \tab double complex\cr
 logical \tab int * \tab integer \cr
 character \tab char ** \tab [see below]\cr
 list \tab SEXP *\tab not allowed\cr
