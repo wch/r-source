@@ -46,6 +46,20 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   (\eqn{n\equiv 2 \bmod 4}{n = 2 mod 4}), and are in the middle of
   two observations otherwise.
 }
+\references{
+  Tukey, J. W. (1977) \emph{Exploratory Data Analysis.} Section 2C.
+
+  McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of box
+  plots. \emph{The American Statistician} \bold{32}, 12--16.
+  
+  Velleman, P. F. and Hoaglin, D. C. (1981) \emph{Applications, Basics
+    and Computing of Exploratory Data Analysis.}  Duxbury Press.
+  
+  Emerson, J. D and Strenio, J. (1983). Boxplots and batch comparison.
+  Chapter 3 of \emph{Understanding Robust and Exploratory Data
+    Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
+
+}
 \seealso{
   \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
 }

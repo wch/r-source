@@ -22,6 +22,9 @@
   operates by setting up the data from the formula specification, and
   then calling \code{\link{boxplot.default}}.
 }
+\references{
+  See \code{\link{boxplot.stats}}.
+}
 \seealso{
   \code{\link{boxplot.default}}
 }

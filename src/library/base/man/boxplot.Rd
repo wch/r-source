@@ -78,6 +78,9 @@
     indicate which group the outlier belongs to}
   \item{names}{a vector of names for the groups}
 }
+\references{
+  See \code{\link{boxplot.stats}}.
+}
 \seealso{
   \code{\link{boxplot.formula}} for the formula interface;
   \code{\link{boxplot.stats}} which does the computation,
