@@ -1465,10 +1465,10 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
    in the "..." as well.  LT */
 
     SEXP x = R_NilValue;
-    int dots = FALSE;
+    int dots = FALSE, nprotect = 0;;
 
     if( argsevald ) 
-	PROTECT(x = CAR(args));
+        {PROTECT(x = CAR(args)); nprotect++;}
     else {
 	/* Find the object to dispatch on, dropping any leading
 	   ... arguments with missing or empty values.  If there are no
@@ -1493,7 +1493,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    break;
 	    }
 	}
-	PROTECT(x);
+	PROTECT(x); nprotect++;
     }
 	/* try to dispatch on the object */
     if( isObject(x)) {
@@ -1507,12 +1507,11 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	}
 	else
 	  argValue = args;
-	PROTECT(argValue);
+	PROTECT(argValue); nprotect++;
 	value = R_possible_dispatch(call, op, argValue, rho);
-	UNPROTECT(1);
 	if(value) {
 	  *ans = value;
-	  UNPROTECT(1);
+	  UNPROTECT(nprotect);
 	  return 1;
 	}
 	else {
@@ -1529,7 +1528,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    argValue = CONS(x, EvalArgs(CDR(argValue), rho, dropmissing));
 	    SET_TAG(argValue, CreateTag(TAG(args)));
 	  }
-	  args = argValue;
+	  PROTECT(args = argValue); nprotect++;
 	  argsevald = 1;
 	}
       }
@@ -1541,7 +1540,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	if (pt == NULL || strcmp(pt,".default")) {
 	    RCNTXT cntxt;
 	    SEXP pargs;
-	    PROTECT(pargs = promiseArgs(args, rho));
+	    PROTECT(pargs = promiseArgs(args, rho)); nprotect++;
 	    SET_PRVALUE(CAR(pargs), x);
 	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs);
 #ifdef EXPERIMENTAL_NAMESPACES
@@ -1551,11 +1550,10 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 #endif
 	    {
 		endcontext(&cntxt);
-		UNPROTECT(2);
+		UNPROTECT(nprotect);
 		return 1;
 	    }
 	    endcontext(&cntxt);
-	    UNPROTECT(1);
 	}
     }
     if(!argsevald) {
@@ -1570,14 +1568,13 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
     }
     }
     else *ans = args;
-    UNPROTECT(1);
 #else
     SEXP x;
     RCNTXT cntxt;
 
     /* NEW */
-    PROTECT(args = promiseArgs(args, rho));
-    PROTECT(x = eval(CAR(args),rho));
+    PROTECT(args = promiseArgs(args, rho)); nprotect++;
+    PROTECT(x = eval(CAR(args),rho)); nprotect++;
 
     if( isObject(x)) {
 	char *pt;
@@ -1596,7 +1593,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    if(usemethod(generic, x, call, args, rho, ans)) {
 #endif
 		endcontext(&cntxt);
-		UNPROTECT(2);
+		UNPROTECT(nprotect);
 		return 1;
 	    }
 	    endcontext(&cntxt);
@@ -1605,8 +1602,8 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
     /* else PROTECT(args); */
     *ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
     SET_TAG(*ans, CreateTag(TAG(args)));
-    UNPROTECT(2);
 #endif
+    UNPROTECT(nprotect);
     return 0;
 }
 
