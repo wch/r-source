@@ -1907,11 +1907,11 @@ static short int TickVector[8][3] = {
     {-1, 1, 0},
     {1, 1, 0}};
 
-int lowest(double y1, double y2, double y3, double y4) {
+static int lowest(double y1, double y2, double y3, double y4) {
     return ((y1 <= y2) && (y1 <= y3) && (y1 <= y4));
 }
 
-double labelAngle(double x1, double y1, double x2, double y2) {
+static double labelAngle(double x1, double y1, double x2, double y2) {
     double dx, dy;
     double angle;
     dx = fabs(x2 - x1);
