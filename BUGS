@@ -50,20 +50,16 @@ Subject: Probable bug in RODBC 0.7.x
 From: emmanuel.charpentier@sap.ap-hop-paris.fr
 Date: Mon, 23 Oct 2000 13:15:55 +0200 (MET DST)
 --Package maintainer is aware of this
-* PR# 503 *
-Subject: dmvnorm() bug in e1071
-From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
-Date: Fri, 24 Mar 2000 03:24:45 +0000 (GMT)
-* PR# 496 *
-From: bonneau@epi.roazhon.inra.fr (en148)
-Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
---base R has no est.variogram function.
---This appears to be a bug report on sgeostat.
 * PR# 567 *
 Subject: ctest not works
 From: George Diniz <george@cpqam.fiocruz.br>
 Date: Sun, 12 Mar 2000 12:03:45 -0200
 --possibly the RH6.2 Fortran bug
+* PR# 496 *
+From: bonneau@epi.roazhon.inra.fr (en148)
+Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
+--base R has no est.variogram function.
+--This appears to be a bug report on sgeostat.
 
 Directory:  Analyses
 
@@ -279,10 +275,10 @@ none
 
 Directory:  incoming
 
-* PR# 738 *
-Subject: Bug in stars function
+* PR# 739 *
+Subject: Bug in stars.R
 From: Tom Dye <tdye@lava.net>
-Date: Sat, 18 Nov 2000 21:57:27 -1000 (HST)
+Date: Sun, 19 Nov 2000 21:48:16 -1000 (HST)
 * PR# 733 *
 Subject: gnome-support problems
 From: olav@melvin.jordforsk.no
@@ -295,6 +291,10 @@ Date: Mon, 13 Nov 00 22:26:39 EST
 Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 10 Nov 2000 16:00:31 GMT
+* PR# 738 *
+Subject: Bug in stars function
+From: Tom Dye <tdye@lava.net>
+Date: Sat, 18 Nov 2000 21:57:27 -1000 (HST)
 * PR# 737 *
 Subject: Bug in R 1.1.1 dev.print() with fix
 From: frost@pocketmail.com
