@@ -169,26 +169,26 @@ function(package, dir, lib.loc = NULL)
 
     if(!is.na(match("package:methods", search()))) {
         ## Undocumented S4 methods?
-        ## Courtesy JMC for advice on finding all S4 methods ...
+        methodsSignatures <- function(f) {
+            mlist <- getMethods(f, codeEnv)
+            meths <-
+                linearizeMlist(mlist, FALSE)
+            classes <- meths@classes
+            default <- as.logical(lapply(classes, function(x)identical(all(x== "ANY"),TRUE)))
+            if(any(default)) {
+                ## don't look for doc on a generated default method
+                if(is(finalDefaultMethod(mlist), "derivedDefaultMethod"))
+                    classes <- classes[!default]
+            }
+            sigs <-
+                sapply(classes, paste, collapse = ",")
+            if(length(sigs))
+                paste(f, ",", sigs, sep = "")
+            else
+                character()
+        }
         S4methods <-
-            sapply(getGenerics(codeEnv),
-                   function(f) {
-                       meths <- linearizeMlist(getMethods(f, codeEnv))
-                       if(!length(sigs <- meths@classes))
-                           return(character())
-                       ## For the time being, exclude methods with
-                       ## all-ANY signature (most likely automatically
-                       ## generated as default methods).
-                       sigs <-
-                           sigs[!sapply(sigs,
-                                        function(x) all(x == "ANY"))]
-                       if(length(sigs))
-                           paste(f, ",",
-                                 sapply(sigs, paste, collapse = ","),
-                                 sep = "")
-                       else
-                           character()
-                   })
+            sapply(getGenerics(codeEnv), methodsSignatures)
         S4methods <- as.character(unlist(S4methods, use.names = FALSE))
         S4methods <-
             S4methods[!sapply(S4methods,
