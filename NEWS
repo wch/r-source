@@ -4,6 +4,16 @@
 	*						 *
 	**************************************************
 
+NEW FEATURES
+
+    o   Convenience functions parent.frame() and eval.parent()
+
+    o   Function new.env() to create empty environment and local() to
+        allow local evaluation of expressions, with various useful 
+	idiomatic uses.
+
+BUG FIXES
+
     o	A bug which meant that it was not possible to add elements
 	to zero length lists in the obvious way has been fixed.
 		x <- list(); x[[1]] <- 10

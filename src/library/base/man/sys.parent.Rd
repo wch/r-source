@@ -12,6 +12,7 @@ sys.frames()
 sys.parents()
 sys.on.exit()
 sys.status()
+parent.frame(n=1)
 }
 \alias{sys.parent}
 \alias{sys.call}
@@ -23,6 +24,7 @@ sys.status()
 \alias{sys.parents}
 \alias{sys.on.exit}
 \alias{sys.status}
+\alias{parent.frame}
 \arguments{
 \item{which}{the frame number.}
 \item{n}{the number of frame generations to go back.}
@@ -32,22 +34,23 @@ These functions provide access to \code{\link{environment}}s (``frames''
 in S-speak) associated with functions further up the calling stack.
 }
 \details{
-You need access to two different types of environments.
-\enumerate{
-    \item{You need access to the environment where the arguments to a function
-	are defined; this is what \code{sys.parent} does.}
-    \item{You also need access to the environment where a function is
-	being evaluated; this is what \code{sys.frame} does.}
-}
-Often \code{sys.parent()} is the top-level environment,
 \code{\link{.GlobalEnv}}. 
-This is given number 1 in the list of frames. Each subsequent function
+is given number 1 in the list of frames. Each subsequent function
 evaluation increases the frame stack by 1 and the environment for evaluation
 of that function is returned by \code{sys.frame} with the appropriate index.
+
+The parent of a function evaluation is the environment in which the
+function was called. It is not necessarily one less than the frame
+number of the current evaluation, nor the environment from which it is
+called.  \code{sys.parent} return the number of the parent frame if n
+is 1, the grandparent if n is 2, and so forth. \code{sys.frame}
+returns the environment associated with a given frame number.
 
 \code{sys.call} and \code{sys.frame} both accept either positive or negative
 values for the argument \code{which}.  Positive values of \code{which} count up
 from frame 1 and negative values are count back from frame n.
+
+\code{parent.frame(n)} is a convenient shorthand for sys.frame(sys.parent(n)) 
 
 Notice that even though the \code{sys.\emph{xxx} functions are
 interpreted, their contexts are not counted nor are they reported.  There

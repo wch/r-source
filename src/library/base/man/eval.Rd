@@ -6,28 +6,46 @@ eval(expr, envir=sys.frame(sys.parent()),
              sys.frame(sys.parent()))
 
 evalq(expr, envir, enclos)
+
+eval.parent(expr, n = 1)
+
+local(expr, envir = new.env())
 }
 \alias{eval}
 \alias{evalq}
+\alias{eval.parent}
+\alias{local}
 \arguments{
-  \item{expr}{object of mode \code{\link{expression}} or an ``unevaluated
-    expression''.}
+  \item{expr}{object of mode \code{\link{expression}} or\code{call} or
+      an ``unevaluated expression''.}
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to be
       evaluated. May also be a list or an integer as in \code{sys.call}.}
   \item{enclos}{Only relevant if \code{envir} is a list. Specifies the
       enclosure, i.e. where R looks for objects not found in \code{envir}.} 
+  \item{n}{parent generations to go back}
 }
 \description{
-This function evaluates the expression \code{expr} argument in the
+These functions evaluate the expression \code{expr} argument in the
 environment specified by \code{envir} and returns the computed value.  If
 \code{envir} is not specified, then
 \code{\link{sys.frame}(\link{sys.parent}())}, the environment where the
 call to \code{eval} was made is used. The \code{eval} form evaluates its first
 argument before passing it to the evaluator.
 This allows you to assign complicated expressions to symbols and then
-evaluate them. The \code{evalq} form is equivalent to
+evaluate them. The \code{evalq} form avoids this and is equivalent to
 \code{eval(quote(expression), ...)} 
+
+\code{eval.parent(expr, n)} is a shorthand for \code{eval(expr,
+parent.frame(n))}. 
+
+\code{local} evaluates an expression in a local environment. It is
+equivalent to \code{evalq} except the its default argument creates a
+new, empty environment. This is useful to create anonymous recursive
+functions and as a kind of limited namespace feature since variables
+defined in the environment are not visible from the outside. 
 }
+
+
 \seealso{
 \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
 \code{\link{environment}}. 
@@ -61,6 +79,35 @@ ev <- function() {
 }
 tst.ev <- function(a = 7) { x <- pi; y <- 1; ev() }
 tst.ev()#-> aa : 7,  eval : 4.14
+
+##
+## Uses of local()
+##
+
+# Mutual recursives. 
+# gg gets value of last assignment, an anonymous version of f.
+
+gg<-local({
+    k<-function(y)f(y)
+    f<-function(x)if(x)x*k(x-1)else 1
+})
+gg(10)
+sapply(1:5,gg)
+
+# Nesting locals. a is private storage accessible to k
+gg<-local({
+    k<-local({
+        a<-1
+        function(y){print(a<<-a+1);f(y)}
+    })
+    f<-function(x)if(x)x*k(x-1)else 1
+})
+sapply(1:5,gg)
+
+ls(envir=environment(gg))
+ls(envir=environment(get("k",envir=environment(gg))))
+
 }
+
 \keyword{data}
 \keyword{programming}

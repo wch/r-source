@@ -5,12 +5,14 @@ environment(fun = NULL)
 environment(fun) <- value
 is.environment(obj)
 .GlobalEnv
+new.env()
 }
 \alias{environment}
 \alias{environment<-}
 \alias{.GlobalEnv}
 \alias{globalenv}
 \alias{is.environment}
+\alias{new.env}
 \arguments{
 \item{fun}{a \code{\link{function}} or \code{NULL}, which is the default.}
 }
@@ -19,6 +21,9 @@ If \code{fun} is a function then \code{environment(fun)}
 returns the environment associated with that function.
 If \code{fun} is \code{NULL} then the global environment, \code{.GlobalEnv},
  is returned. This variable is currently defined as \code{globalenv()}.
+
+\code{new.env} returns a new (empty) environment enclosed in the
+parent's environment.
 
 The assignment form sets the environment of the function \code{fun}
 to the \code{value} given.  \code{is.environment(obj)} returns \code{TRUE}
