@@ -1,17 +1,17 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-10-11)
+Version 1.2.0 Under development (unstable) (2000-11-23)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > .proctime00 <- proc.time()
 > 
@@ -173,6 +173,8 @@ Error in as.call(x) : invalid argument list
 > f <- as.character.POSIXlt( x );  all.equal(f, as.character.POSIXlt( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
 [1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
@@ -494,6 +496,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+[1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
@@ -813,6 +817,8 @@ Error in as.call(x) : illegal length 0 argument
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+[1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
@@ -1130,6 +1136,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+[1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
@@ -1436,6 +1444,8 @@ Error in as.call(x) : invalid argument list
 > f <- as.character.POSIXlt( x );  all.equal(f, as.character.POSIXlt( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
 [1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
@@ -1744,6 +1754,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+[1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
@@ -2050,6 +2062,8 @@ Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
 > f <- as.character.POSIXlt( x );  all.equal(f, as.character.POSIXlt( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
 [1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
@@ -2361,6 +2375,8 @@ Error in dimnames<-.data.frame(*tmp*, value = list(n)) :
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+[1] TRUE
 > f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 Error in as.character.octmode(x) : calling wrong method
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
@@ -2509,6 +2525,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.77 0.08 1.85 0 0 
+Time elapsed:  1.46 0.07 1.54 0 0 
 > 
 > 
