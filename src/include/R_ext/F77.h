@@ -20,7 +20,7 @@
 
 #ifndef R_EXT_F77_H_
 #define R_EXT_F77_H_
-#include "Rconfig.h"  /* for F77_SYMBOL */
+#include "R_ext/Rver.h"  /* for F77_SYMBOL */
 
 /* S Like Fortran Interface */
 /* These may not be adequate everywhere. Convex had _ prepending common

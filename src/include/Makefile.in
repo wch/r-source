@@ -57,15 +57,9 @@ Rconfig.h: $(top_srcdir)/configure $(srcdir)/Rconfig.h.in
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
 
-R_ext/Rver.h: $(top_srcdir)/VERSION
+R_ext/Rver.h: $(top_srcdir)/VERSION Rconfig.h
 	@mkdir -p R_ext
 	@$(top_srcdir)/tools/GETRVERSION > $@
-
-R_ext/F77.h: $(top_srcdir)/configure $(srcdir)/R_ext/F77.h.in
-	mkdir -p R_ext
-	cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@\
-	  $(SHELL) ./config.status
 
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
