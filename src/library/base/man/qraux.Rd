@@ -79,3 +79,4 @@ dim(Xc <- qr.X(qrstr, complete=TRUE)) # square: nrow(x) ^ 2
 all(Xc[,1:p] == X)
 }
 \keyword{algebra}
+\keyword{array}
