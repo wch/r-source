@@ -49,7 +49,13 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   a handful of Robert's fixes to the development version transferred
+    o   deparser left off empty parentheses on e.g. (function(x) x)()
+
+    o   cat() now works on "name" objects
+
+    o   forgot to set jump buffer in return context in one case
+
+    o   parser dropped off tagged missing args on function calls ( f(a=) )
 
     o   relops tried to set time series parameters before dimensions
 
