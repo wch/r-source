@@ -14,7 +14,10 @@
                 .GlobalEnv)
 	autoload(name,file)
         where <- length(search) - where + 2
-        eval(as.name(name), pos.to.env(where))
+ 	if (exists(name,where=where,inherits=F))
+           eval(as.name(name), pos.to.env(where))
+	else
+	   stop(paste("autoloader didn't find `",name,"' in `",file,"'.",sep=""))
 }
 
 

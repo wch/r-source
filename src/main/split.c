@@ -22,7 +22,7 @@
 SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP x, f, counts, vec, ans;
-	int i, j, k, nobs, nlevs;
+	int i, j, k, nobs, nlevs, nfac;
 
 	checkArity(op, args);
 	
@@ -35,29 +35,38 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 		errorcall(call, "second argument must be a factor\n");
 	nlevs = LEVELS(f);
 
-	if(LENGTH(CAR(args)) != LENGTH(CADR(args)))
-		errorcall(call, "argument lengths differ\n");
+        nfac=LENGTH(CADR(args));
+	nobs=LENGTH(CAR(args));
 
-	if((nobs = LENGTH(CAR(args))) <= 0)
+	if(nobs  <= 0)
 		return R_NilValue;
+
+	if( nfac<=0 )
+		errorcall(call,"Group length is 0 but data length > 0");
 	
+	if( nobs != nfac  )
+		warningcall(call,"argument lengths differ\n");
+
 	PROTECT(counts = allocVector(INTSXP, nlevs));
 	for(i=0 ; i<nlevs ; i++)
 		INTEGER(counts)[i] = 0;
 	for(i=0 ; i<nobs ; i++) {
-		j = INTEGER(f)[i];
+		j = INTEGER(f)[i%nfac];
 		if(j != NA_INTEGER) {
 			INTEGER(counts)[j-1] += 1;
 		}
 	}
 	/* allocate pointers */
 	PROTECT(vec = allocVector(STRSXP, nlevs));
-	for(i=0 ; i<nlevs ; i++)
+	for(i=0 ; i<nlevs ; i++) {
 		STRING(vec)[i] = allocVector(TYPEOF(x), INTEGER(counts)[i]);
+		LEVELS(STRING(vec)[i])=LEVELS(x);
+		setAttrib(STRING(vec)[i],R_LevelsSymbol,getAttrib(x,R_LevelsSymbol));
+	}
 	for(i=0 ; i<nlevs ; i++)
 		INTEGER(counts)[i] = 0;
 	for(i=0 ; i<nobs ; i++) {
-		j = INTEGER(f)[i];
+		j = INTEGER(f)[i%nfac];
 		if(j != NA_INTEGER) {
 			k = INTEGER(counts)[j-1];
 			switch(TYPEOF(x)) {

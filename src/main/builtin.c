@@ -152,8 +152,8 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP a, objs, file, fill, sepr, labs, s;
 	FILE *savefp;
 	int havefile, append;
-	int w, i, n, pwidth, width, sepw, lablen, ntot, nlsep;
-	char *p;
+	int w, i, n, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
+	char *p, buf[512];
 
 	checkArity(op, args);
 
@@ -218,6 +218,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	width = 0;
 	ntot = 0;
+	nlines = 0;
 	for (a = objs; a != R_NilValue; a = CDR(a)) {
 		s = CAR(a);
 		if (a != objs && !isNull(s) )
@@ -225,18 +226,23 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		n = length(s);
 		if (n > 0) {
 			if (labs != R_NilValue && a == objs) {
-				Rprintf("%s ", CHAR(STRING(labs)[0]));
-				width += strlen(CHAR(STRING(labs)[ntot % lablen])) + 1;
-				ntot++;
+				Rprintf("%s ", CHAR(STRING(labs)[nlines]));
+				width += strlen(CHAR(STRING(labs)[nlines % lablen])) + 1;
+				nlines++;
 			}
 			if(isString(s))
 				p = CHAR(STRING(s)[0]);
-			else
+			else {
 				p = EncodeElement(s, 0, 0);
+				strcpy(buf,p);
+				p=buf;
+			}
 			w = strlen(p);
 			cat_sepwidth(sepr, &sepw, ntot);
-			if (a != objs && (width + w + sepw > pwidth))
-				cat_newline(labs, &width, lablen, ntot);
+			if (a != objs && (width + w + sepw > pwidth)) {
+				cat_newline(labs, &width, lablen, nlines);
+				nlines++;
+			}
 			for (i = 0; i < n; i++, ntot++) {
 				Rprintf("%s", p);
 				width += w + sepw;
@@ -244,11 +250,17 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 					cat_printsep(sepr, ntot);
 					if(isString(s))
 						p = CHAR(STRING(s)[i+1]);
-					else
+					else {
 						p = EncodeElement(s, i+1, 0);
+						strcpy(buf,p);
+						p = buf;
+					}
+					w = strlen(p);
 					cat_sepwidth(sepr, &sepw, ntot);
-					if ((width + w + sepw > pwidth) && pwidth)
-						cat_newline(labs, &width, lablen, ntot);
+					if ((width + w + sepw > pwidth) && pwidth) {
+						cat_newline(labs, &width, lablen, nlines);
+						nlines++;
+					}
 				}
 			}
 		}
@@ -354,6 +366,8 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	len = asInteger(CADR(args));
 	s = coerceVector(CAR(args), STRSXP);
+	if (length(s) == 0)
+		error("vector: zero-length type argument\n");
 	mode = str2type(CHAR(STRING(s)[0]));
 	if (mode == -1 && streql(CHAR(STRING(s)[0]), "double"))
 		mode = REALSXP;
@@ -478,7 +492,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP name, val, aenv;
-	int ginherits;
+	int ginherits=0;
 
 	checkArity(op, args);
 	name = findVar(CAR(args), rho);
@@ -519,7 +533,7 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP name, aenv, tsym, tenv, tframe;
-	int ginherits;
+	int ginherits=0;
 	int set, i;
 
 	checkArity(op, args);
@@ -571,7 +585,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP rval, genv, t1;
 	SEXPTYPE gmode;
-	int ginherits, where;
+	int ginherits=0, where;
 
 	checkArity(op, args);
 
@@ -599,16 +613,14 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* Now we get the where= argument */
 
-	if (CADR(args) != R_NilValue) {
-		if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
-			where = asInteger(CADR(args));
-			genv = sysframe(where,R_GlobalContext);
-		}
-		else if (TYPEOF(CADR(args)) != ENVSXP)
-			errorcall(call,"invalid envir argument\n");
-		else
-			genv = CADR(args);
+	if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
+		where = asInteger(CADR(args));
+		genv = sysframe(where,R_GlobalContext);
 	}
+	else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
+		genv = CADR(args);
+	else 
+		errorcall(call,"invalid envir argument\n");
 
 	/* The mode of the object being sought */
 

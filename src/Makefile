@@ -1,36 +1,36 @@
 build:
 		@echo extracting foreign function symbols
 		@sh GETSYMBOLS
-		cd graphics; make
-		cd math; make
-		cd appl; make
-		cd unix; make
-		cd main; make
-		cd include; make
+		cd graphics; $(MAKE)
+		cd math; $(MAKE)
+		cd appl; $(MAKE)
+		cd unix; $(MAKE)
+		cd main; $(MAKE)
+		cd include; $(MAKE)
 
 install:	build
-		@cd main; make install
-		@cd library; make
-		@cd library; make libs
-		@cd front; make
+		@cd main; $(MAKE) install
+		@cd library; $(MAKE)
+		@cd library; $(MAKE) libs
+		@cd front; $(MAKE)
 
 clean:
-		@cd graphics; make $@
-		@cd library; make $@
-		@cd main; make $@
-		@cd math; make $@
-		@cd appl; make $@
-		@cd unix; make $@
+		@cd graphics; $(MAKE) $@
+		@cd library; $(MAKE) $@
+		@cd main; $(MAKE) $@
+		@cd math; $(MAKE) $@
+		@cd appl; $(MAKE) $@
+		@cd unix; $(MAKE) $@
 		@-rm -f lib/*.a
 
 realclean:
-		@cd front; make $@
-		@cd graphics; make $@
-		@cd library; make clean
-		@cd main; make $@
-		@cd math; make $@
-		@cd appl; make $@
-		@cd unix; make $@
-		@cd include; make $@
+		@cd front; $(MAKE) $@
+		@cd graphics; $(MAKE) $@
+		@cd library; $(MAKE) clean
+		@cd main; $(MAKE) $@
+		@cd math; $(MAKE) $@
+		@cd appl; $(MAKE) $@
+		@cd unix; $(MAKE) $@
+		@cd include; $(MAKE) $@
 		@-rm -f include/FFDecl.h include/FFTab.h include/Platform.h
 		@-rm -f lib/*.a

@@ -43,8 +43,12 @@ double rbinom(double nin, double pp)
 	/* setup, perform only when parameters change */
 
 	n = floor(nin + 0.5);
-        if (n <= 0.0 || pp <= 0.0 || pp >= 1.0)
+	/* n=0, p=0, p=1 are not errors <TSL>*/
+        if (n < 0.0 || pp < 0.0 || pp > 1.0)
 		DOMAIN_ERROR;
+	if (n==0.0 || pp==0) return 0;
+	if (pp==1.0) return n;
+
 
 	if (pp != psave) {
 		psave = pp;

@@ -167,7 +167,7 @@ system.time <- function(expr) {
 	## -----------------------------------------------------------------
 	## Arguments: expr: `any' valid R expression
 	## -----------------------------------------------------------------
-	loc.frame <- sys.parent(1)
+	loc.frame <- sys.frame(sys.parent(1))
 	on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
 	expr <- substitute(expr)
 	time <- proc.time()

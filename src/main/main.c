@@ -150,7 +150,6 @@ void InitGlobalEnv()
 
 static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 {
-	SEXP expr;
 	int status;
 
 	for(;;) {
@@ -203,7 +202,6 @@ char *R_PromptString(int browselevel, int type)
 
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
-	SEXP expr;
 	int c, status, prompt;
 	char *bufp, buf[1024];
 
@@ -285,7 +283,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	/* enter the read-eval-print loop. */
 
 
-	/* The following variable must be external to mainloop *.
+	/* The following variable must be external to mainloop */
 	/* because gcc -O seems to eliminate a local one? */
 
 #ifndef Macintosh
@@ -309,7 +307,9 @@ void mainloop()
 		/* internal structures. */
 
 #ifdef HAVE_LOCALE_H
-	setlocale(LC_ALL,"");/*- make ISO-latin1 etc. work LOCALE users */
+	setlocale(LC_CTYPE,"");/*- make ISO-latin1 etc. work LOCALE users */
+	setlocale(LC_COLLATE,"");/*- alphabetically sorting */
+	setlocale(LC_MESSAGES,"");
 #endif
 	InitMemory();
 	InitNames();
@@ -484,7 +484,6 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int savestack;
 	int savebrowselevel;
 	int saveEvalDepth;
-	int pflag = 1;
 	SEXP topExp;
 
 		/* Save the evaluator state information */

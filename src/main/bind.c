@@ -305,7 +305,9 @@ static void complexanswer(SEXP x)
 */
 static SEXP TagName(SEXP tag, SEXP base, int i)
 {
-	SEXP ans;
+	SEXP ans, t;
+
+	PROTECT(t=mkChar(""));
 
 	switch(TYPEOF(tag)) {
 	case SYMSXP:
@@ -316,6 +318,7 @@ static SEXP TagName(SEXP tag, SEXP base, int i)
 		break;
 	case CHARSXP:
 	case NILSXP:
+		tag = t;
 		break;
 	default:
 		error("wrong tag argument to TagName\n");
@@ -355,6 +358,7 @@ static SEXP TagName(SEXP tag, SEXP base, int i)
 			sprintf(CHAR(ans), "%s.%s",CHAR(base),CHAR(tag));
 		}
 	}
+	UNPROTECT(1);
 	return ans;
 }
 
@@ -554,7 +558,8 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (ans_flags & 4) {
 			if(ans_flags != 4) ErrorMessage(call, ERROR_INCOMPAT_ARGS);
-			while(t != R_NilValue) {
+                        t = CDR(args);
+ 			while(t != R_NilValue){
 				if(!factorsConform(CAR(args), CAR(t)))
 					ErrorMessage(call, ERROR_INCOMPAT_FACTORS);
 				t = CDR(t);

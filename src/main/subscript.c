@@ -22,12 +22,14 @@
 	/* Get a single index for the [[ operator. */
 	/* Check that only one index is being selected. */
 
-int get1index(SEXP s, SEXP names)
+int get1index(SEXP s, SEXP names, int pok)
 {
-	int k, i;
+	int k, i, len;
 
 	if (length(s) > 1)
 		error("attempt to select more than one element\n");
+	if (length(s) < 1)
+		error("attempt to select less than one element\n");
 	if (TYPEOF(s) == INTSXP || TYPEOF(s) == LGLSXP)
 		k = INTEGER(s)[0] - 1;
 	else if (TYPEOF(s) == REALSXP)
@@ -39,6 +41,17 @@ int get1index(SEXP s, SEXP names)
 				k = i;
 				break;
 			}
+		if( pok && k < 0 ) { /*partial match*/
+			len=strlen(CHAR(STRING(s)[0]));
+			for(i = 0; i < length(names); i++) {
+				if(!strncmp(CHAR(STRING(names)[i]),CHAR(STRING(s)[0]), len))
+					if(k == -1 )
+						k = i;
+					else
+						k = -2;
+			}
+		}
+			
 	}
 	else if (isSymbol(s)) {
 		k = -1;

@@ -21,6 +21,7 @@
 #include "Graphics.h"
 #include "Errormsg.h"
 #include "Arith.h"
+#include "Mathlib.h"/*- for floor(), fmax2(),.. in GPretty(.) */
 #include <string.h>
 #include <stdlib.h>
 
@@ -133,7 +134,7 @@ void DevNull(void)
 }
 
 /*  GInit --  Set default graphics parameter values  */
-/*  This routine is as part of the process of starting a device driver  */
+/*  This routine is as part of the process of starting a device driver	*/
 
 void GInit()
 {
@@ -255,7 +256,7 @@ void GInit()
 
 
 
-/*  GMapNDC2Dev -- Hide the device behind an NDC layer  */
+/*  GMapNDC2Dev -- Hide the device behind an NDC layer	*/
 /*  Use this coordinate system for outer margin coordinates  */
 
 static void GMapNDC2Dev(void)
@@ -268,7 +269,7 @@ static void GMapNDC2Dev(void)
 
 
 /*  GMapInner2Dev --  Normalised coordinates for the inner region. */
-/*  Use this coordinate system for setting up multiple figures  */
+/*  Use this coordinate system for setting up multiple figures	*/
 /*  This is also used when specifying the figure region directly  */
 /*  Note that this is incompatible with S which uses then entire  */
 /*  device surface for such a plot  */
@@ -287,7 +288,7 @@ static void GMapInner2Dev(void)
 }
 
 
-/*  GMapFig2Dev -- Normalised coordinates for the figure region  */
+/*  GMapFig2Dev -- Normalised coordinates for the figure region	 */
 
 static void GMapFig2Dev(void)
 {
@@ -313,7 +314,7 @@ static void GMapFig2Dev(void)
 }
 
 
-/*  GMapSpecialFig2Dev -- Normalised coordinates for the figure region  */
+/*  GMapSpecialFig2Dev -- Normalised coordinates for the figure region	*/
 /*  This is called into play when par(fig=) is used */
 
 static void GMapSpecialFig2Dev(void)
@@ -427,7 +428,7 @@ void GReset()
 }
 
 
-/*  GSetState -- This records whether GNewPlot has been called  */
+/*  GSetState -- This records whether GNewPlot has been called	*/
 
 void GSetState(int newstate)
 {
@@ -716,7 +717,7 @@ void GScale(double, double, int);
 void GLPretty(double *xmin, double *xmax, int *n)
 {
 	double u1, u2, v1, v2, p1, p2;
-	
+
 	if((*xmax) <= 7.8651*(*xmin))
 		GPretty(xmin, xmax, n);
 	else {
@@ -733,7 +734,7 @@ void GLPretty(double *xmin, double *xmax, int *n)
 				u2 = u1;
 			}
 			else (*n)++;
-	
+
 			v2 = 5.0*v1;
 			if(v2 >= *xmax) {
 				v2 = v1;
@@ -750,33 +751,63 @@ void GLPretty(double *xmin, double *xmax, int *n)
 	}
 }
 
-void GPretty(double *s, double *u, int *ndiv)
+void GPretty(double *lo, double *up, int *ndiv)
 {
-	double base, cell, unit, tmp;
-	int ns, nu;
+	/*  Set scale and ticks for linear scales.
+	 *  Pre:	 x1 = lo < up = x2
+	 *  Post: x1 <= y1 := lo < up =: y2 <= x2;  ndiv >= 1
+	 */
 
-	if( *s == R_PosInf || *u == R_PosInf
-	 || *s == R_NegInf || *u == R_NegInf || *ndiv == 0 )
+	double	dx, cell, unit, base, U;
+	double x1,x2; int nd0;
+	int ns, nu;
+	short i_small;
+
+	if( *lo == R_PosInf || *up == R_PosInf
+	 || *lo == R_NegInf || *up == R_NegInf || *ndiv == 0 )
 		error("infinite axis extents\n");
 
-	cell = FLT_EPSILON + (*u-*s) / *ndiv;
-	base = pow(10.0, floor(log10(cell)));
+	x1 = *lo; x2 = *up; nd0 = *ndiv;
+	dx = *up - *lo;
+	/* cell := "scale"  here */
+	if(dx == 0 && *up == 0) { /*  up == lo == 0  */
+		cell = i_small = 1;
+	} else {
+		cell = fmax2(fabs(*lo),fabs(*up));
+		i_small = dx < cell * 10/(double)INT_MAX;
+	}
+
+	/*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
+	if(i_small)
+		cell *= .25; /* shrink_sml in  pretty(.) */
+	else
+		cell = dx;
+	cell /= *ndiv;
+
+	base = pow(10, floor(log10(cell))); /* base <= cell < 10*base */
+
+	/* unit :=  arg min _u { |u - cell| ;  u = c(1,2,5,10) * base } */
 	unit = base;
-	if(fabs((tmp = 2.0*base)-cell) < fabs(unit-cell)) unit = tmp;
-	if(fabs((tmp = 5.0*base)-cell) < fabs(unit-cell)) unit = tmp;
-	if(fabs((tmp = 10.0*base)-cell) < fabs(unit-cell)) unit = tmp;
-	
-	ns = floor(*s/unit);
-	while(ns*unit > *s - FLT_EPSILON) ns--;
+	if(fabs((U = 2*base)-cell) < fabs(unit-cell)) unit = U;
+	if(fabs((U = 5*base)-cell) < fabs(unit-cell)) unit = U;
+	if(fabs((U =10*base)-cell) < fabs(unit-cell)) unit = U;
+
+	ns = floor(*lo/unit);
+	while(ns*unit > *lo *(1- DBL_EPSILON)) ns--;
 	ns++;
-	*s = unit*ns;
-	
-	nu = ceil(*u/unit);
-	while(nu*unit < *u + FLT_EPSILON) nu++;
+
+	nu = ceil(*up/unit);
+	while(nu*unit < *up *(1+ DBL_EPSILON)) nu++;
 	nu--;
-	*u = unit*nu;
-	
-	*ndiv = (*u-*s)/unit+0.5;
+
+	*lo = ns * unit;
+	*up = nu * unit;
+	*ndiv = nu - ns;
+
+	if(*ndiv <= 0)
+	  printf("Gpretty(%g,%g,%d): cell=%g, ndiv= %d <=0;\t\t(ns,nu)=(%d,%d);
+		 dx=%g, unit=%3e, ismall=%1d.\n",
+		 x1,x2, nd0, cell, *ndiv, ns, nu, dx, unit, (int)i_small);
 }
 
 void GScale(double xmin, double xmax, int axis)
@@ -808,7 +839,7 @@ void GScale(double xmin, double xmax, int axis)
 	if(xmin == xmax) {
 		if(xmin == 0) {
 			xmin = -1;
-			xmax =  1;
+			xmax =	1;
 		}
 		else {
 			xmin = 0.6 * xmin;
@@ -917,10 +948,10 @@ void GMoveTo(double x, double y)
 
 /*  GArrow -- Draw an arrow  */
 
-void GArrow(double xfrom, double yfrom, double xto, double yto, 
+void GArrow(double xfrom, double yfrom, double xto, double yto,
 	double length, double angle, int code)
 {
-	double rot, x1, x2, xc,  y1, y2, yc;
+	double rot, x1, x2, xc,	 y1, y2, yc;
 
 	GStartPath();
 	GMoveTo(xfrom, yfrom);
@@ -1098,7 +1129,7 @@ static void CSclip(double x1, double y1, double x2, double y2)
 
 	xstart = x1;
 	ystart = y1;
-	
+
 	c1 = clipcode(x1, y1);
 	c2 = clipcode(x2, y2);
 	while( c1 || c2 ) {
@@ -1160,7 +1191,7 @@ void GLineTo(double x, double y)
 }
 
 
-/*  GPolygon -- Draw a polygon  */
+/*  GPolygon -- Draw a polygon	*/
 /*  Filled with color bg and outlined with color fg  */
 /*  These may both be NA_INTEGER  */
 
@@ -1317,7 +1348,7 @@ void GSymbol(double x, double y, int pch)
 			break;
 
 		case 7:	/* S square and times superimposed */
-			unit =  RADIUS * GStrWidth("0", 3);
+			unit =	RADIUS * GStrWidth("0", 3);
 			Inch2Fig(unit, &xc, &yc);
 			GStartPath();
 			GMoveTo(x-xc, y-yc);
@@ -1329,7 +1360,7 @@ void GSymbol(double x, double y, int pch)
 			break;
 
 		case 8: /* S plus and times superimposed */
-			unit =  RADIUS * GStrWidth("0", 3);
+			unit =	RADIUS * GStrWidth("0", 3);
 			Inch2Fig(unit, &xc, &yc);
 			GStartPath();
 			GMoveTo(x-xc, y-yc);
@@ -1454,7 +1485,7 @@ void GSymbol(double x, double y, int pch)
 			xx[2] = x-xc; yy[2] = y-yc;
 			GPolygon(3, xx, yy, GP->col, NA_INTEGER, 0, zz);
 			break;
-			
+
 		case 18:
 			unit = RADIUS * GStrWidth("0", 3);
 			Inch2Fig(unit, &xc, &yc);
@@ -1626,7 +1657,7 @@ double GStrHeight(char *str, int units)
 }
 
 
-/*  GMtext -- Draw text in plot margins  */
+/*  GMtext -- Draw text in plot margins	 */
 
 void GMtext(char *str, int side, double line, int outer, double at, int las)
 {
@@ -1802,7 +1833,7 @@ void GTitles(char *main, char *sub, char *xlab, char *ylab)
 void GText(double x, double y, char *str, double xc, double yc, double rot)
 {
 	double ix, iy, xtest, ytest;
-	
+
 	ix = XFMAP(x);
 	iy = YFMAP(y);
 	if(str && *str)
@@ -1831,7 +1862,7 @@ void GSavePlot(char *name)
 }
 
 
-/*  GPrintPlot -- Print the current plot (only X11 at present)  */
+/*  GPrintPlot -- Print the current plot (only X11 at present)	*/
 
 void GPrintPlot(void)
 {
@@ -1858,37 +1889,37 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
 	q = v * (1 - s * f);
 	t = v * (1 - (s * (1 - f)));
 	switch (i) {
-	case 0: 
-		*r = v; 
-		*g = t; 
-		*b = p; 
+	case 0:
+		*r = v;
+		*g = t;
+		*b = p;
 		break;
-	case 1: 
-		*r = q; 
-		*g = v; 
-		*b = p; 
+	case 1:
+		*r = q;
+		*g = v;
+		*b = p;
 		break;
-	case 2: 
-		*r = p; 
-		*g = v; 
-		*b = t; 
+	case 2:
+		*r = p;
+		*g = v;
+		*b = t;
 		break;
-	case 3: 
-		*r = p; 
-		*g = q; 
-		*b = v; 
+	case 3:
+		*r = p;
+		*g = q;
+		*b = v;
 		break;
-	case 4: 
-		*r = t; 
-		*g = p; 
-		*b = v; 
+	case 4:
+		*r = t;
+		*g = p;
+		*b = v;
 		break;
-	case 5: 
-		*r = v; 
-		*g = p; 
-		*b = q; 
+	case 5:
+		*r = v;
+		*g = p;
+		*b = q;
 		break;
-	default: 
+	default:
 		error("bad hsv to rgb color conversion\n");
 	}
 }

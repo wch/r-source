@@ -7,7 +7,9 @@ CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help build-htmlpkglist help.pretty html2dos
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
-MANSRC = ../src/library/*/man/*.Rd
+### The following line was confusing Solaris "make". If your "make" is
+### confused now, you may want to try re-enabling it...
+#MANSRC = ../src/library/*/man/*.Rd
 MANbaseDIR = ../src/library/base/man
 MANdest= ../doc/manual
 
@@ -22,7 +24,7 @@ tests: test-Examples
 
 test-Examples: $(Ex_Tests)
 	@cp -p Makefile-test-Ex $(Ex_Tests)/Makefile
-	-(cd $(Ex_Tests); make $@)
+	-(cd $(Ex_Tests); $(MAKE) $@)
 
 stamp-help: $(MANSRC)
 	@echo "Building ALL help pages"
@@ -49,14 +51,14 @@ stamp-docs: $(MANSRC)
 	@touch stamp-latex
 
 $(DVI): stamp-latex
-	-(cd $(MANdest); make Man.dvi)
+	-(cd $(MANdest); $(MAKE) Man.dvi)
 
 $(Ex_Tests):
 	@if [ ! -d $@ ]; then mkdir -p $@ ; fi
 
 clean:
-	-(cd $(MANdest); make $@)
-	@-(cd $(Ex_Tests) && make $@)
+	-(cd $(MANdest); $(MAKE) $@)
+	@-(cd $(Ex_Tests) && $(MAKE) $@)
 
 moreclean: clean
 	@rm -f $(CleanMe1)

@@ -1,6 +1,6 @@
 all:
-	@cd base; make
-	@cd profile; make
+	@cd base; $(MAKE)
+	@cd profile; $(MAKE)
 
 libs:
 	@echo Building application libraries..

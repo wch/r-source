@@ -530,6 +530,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else {
 		tlist = allocVector(INTSXP, 1);
+		fflush(stdout);
 		INTEGER(tlist)[0] = system(CHAR(STRING(CAR(args))[0]));
 		R_Visible = 0;
 		return tlist;

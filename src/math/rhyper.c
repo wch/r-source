@@ -153,6 +153,20 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	if (minjx == maxjx) {
 		/* degenerate distribution */
 		ix = maxjx;
+		/* return ix;  
+		  No, need to unmangle <TSL>*/
+		/* return appropriate variate */
+ 
+		if (kk + kk >= tn) {
+			if (nn1 > nn2) {
+				ix = kk - nn2 + ix;
+			} else {
+				ix = nn1 - ix;
+			}
+		} else {
+			if (nn1 > nn2)
+			ix = kk - ix;
+		}
 		return ix;
 	} else if (m - minjx < 10) {
 		/* inverse transformation */
