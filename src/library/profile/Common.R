@@ -4,7 +4,13 @@ attach(NULL, name = "Autoloads")
 assign(".Autoloaded", NULL, env=.AutoloadEnv)
 T <- TRUE
 F <- FALSE
-version <- structure(Version(), class = "simple.list")
+R.version <- structure(Version(), class = "simple.list")
+version <- .Alias(R.version)# for S-compatibility
+R.version.string <- local({
+    cc <- function(...) paste(..., collapse=" ")
+    paste(cc("R version", paste(version[c("major","minor")],collapse=".")),
+          cc(version[c("year", "month","day")]), sep=", ")
+})
 .Machine <- Machine()
 .Platform <- Platform()
 
