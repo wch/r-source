@@ -44,9 +44,12 @@ install.packages(pkgs, lib, available = NULL,
     only if your CRAN mirror is incomplete, e.g., because you burned
     only the contrib section on a CD.  Overrides argument \code{CRAN}.}
   \item{method}{Tool to be used for downloading files.  Currently
-    download methods \code{"auto"}, \code{"wget"}, \code{"lynx"} and
-    \code{"cp"} are available.  To use \code{"wget"} or \code{"lynx"}
-    the executable must be installed on your system and in your path.}
+    download methods \code{"auto"}, \code{"wget"}, \code{"lynx"} 
+    \code{"cp"} and \code{"socket"} are available.  To use \code{"wget"}
+    or \code{"lynx"} the executable must be installed on your system and
+    in your path. To use \code{"socket"} the file must be on an
+    \code{HTTP} server, in plain text, and your system must allow socket
+    connections to be opened.}
   \item{url}{A character string with the URL of a file to be downloaded.}
   \item{destfile}{A character string with the name where the downloaded
     file is saved.}

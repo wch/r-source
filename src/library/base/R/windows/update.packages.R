@@ -57,7 +57,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
 download.file <- function(url, destfile, method="auto")
 {
     method <- match.arg(method,
-                        c("auto", "wget", "lynx", "cp"))
+                        c("auto", "wget", "lynx", "cp","socket"))
 
     if(method == "auto") {
         if(length(grep("^file:", url)))
@@ -66,6 +66,8 @@ download.file <- function(url, destfile, method="auto")
             method <- "wget"
         else if(shell("lynx -help", invisible=TRUE)==0)
             method <- "lynx"
+        else if (length(grep("^http:",url))==0)
+            method <- "socket"
         else
             stop("No download method found")
     }
@@ -77,6 +79,10 @@ download.file <- function(url, destfile, method="auto")
     else if(method=="cp") {
         url <- sub("^file:", "", url)
         status <- system(paste("cp", url, destfile))
+    }
+    else if (method=="socket"){
+        status<-0
+        httpclient(url,check.MIME.type=TRUE,file=destfile)
     }
     invisible(status)
 }

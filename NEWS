@@ -202,6 +202,8 @@ NEW FEATURES
     o	New function getOption() for retrieving the value of a single
 	option.
 
+    o   read.table.url() and related functions now use download.file, which has an
+	extra "socket" method for direct HTTP socket connection.
 
 BUG FIXES
 

@@ -2,49 +2,43 @@
 \alias{read.table.url}
 \alias{scan.url}
 \alias{source.url}
-\alias{copy.url}
 \alias{url.show}
-\title{Read Data and Code from a Web Server}
+\title{Read Data and Code from a URL}
 \usage{
-read.table.url(url, port = 80, check.MIME.type = TRUE, \dots)
-scan.url(url, port = 80, check.MIME.type = TRUE, \dots)
-source.url(url, port = 80, check.MIME.type = TRUE, \dots)
-copy.url(url, port = 80, error.is.fatal = TRUE, file = tempfile(),
-         check.MIME.type = TRUE, drop.ctrl.z = TRUE)
-url.show(url, port = 80, check.MIME.type = TRUE, file = tempfile(),
+read.table.url(url, method="auto",\dots)
+scan.url(url, method="auto", \dots)
+source.url(url, method="auto", \dots)
+url.show(url, title = url, file = tempfile(),
          delete.file = TRUE, \dots)
 }
 \arguments{
- \item{url}{URL beginning with \code{http://} }
- \item{port}{ Port number for the HTTP server (usually 80) }
- \item{check.MIME.type}{Check that the document is of a type known to be
-   plain ASCII?}
+ \item{url}{The URL to read from}
+ \item{method}{File transfer method: see \code{\link{download.file}}}
  \item{\dots}{Arguments to pass to \code{\link{read.table}},
    \code{\link{scan}}, \code{\link{source}} or \code{\link{file.show}}
- \item{error.is.fatal}{An HTTP error causes an error instead of a
-   warning?}
  \item{file}{File to copy to}
- \item{delete.file}{Delete the file?}
- \item{drop.ctrl.z}{Filter out the \code{EOF} (control-Z) character?}
+ \item{delete.file}{Delete the file afterwards?}
 }
 \description{
   Extensions of \code{\link{read.table}}, \code{\link{scan}},
   \code{\link{source}}
-  and \code{\link{file.show}} to read text files on a remote HTTP (Web)
+  and \code{\link{file.show}} to read text files on a remote 
   server.
 }
 \details{
-  HTTP errors are handled correctly, but attempts to read non-text files
-  are currently not (thus the \code{check.MIME.type} option).
+  These functions call \code{\link{download.file}} to create a temporary
+  local file. The file can be downloaded by \code{lynx} or \code{wget}
+  if these are available on the system. Another option is a direct
+  \code{HTTP} socket connection, if the local machine allows this. 
 }
 \value{
-  \code{copy.url} returns the name of a temporary file.
+  The same value as the respective file-based functions.
 }
 
 \seealso{
   \code{\link{read.table}}, \code{\link{scan}}, \code{\link{source}},
   \code{\link{make.socket}}, \code{\link{read.socket}},
-  \code{\link{file.show}}
+  \code{\link{file.show}},\code{\link{download.file}}
 }
 
 \examples{
@@ -52,10 +46,10 @@ url.show(url, port = 80, check.MIME.type = TRUE, file = tempfile(),
 \dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch11b.txt")}
 \dontrun{beaver<-read.table.url("http://lib.stat.cmu.edu/datasets/csb/ch11b.dat",
   col.names=c("obsnum","day","time","temperature","activity"),row.names=1)}
-\dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch3a.txt")}
+\dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch3a.txt"),method="socket"}
 \dontrun{ozone<-read.table.url("http://lib.stat.cmu.edu/datasets/csb/ch3a.dat",
   col.names=c("date","day.cts","day.passive","night.cts","night.passive"),
-  na.strings=".")}
+  na.strings=".",method="socket")}
 }
 \keyword{file}
 \keyword{misc}
