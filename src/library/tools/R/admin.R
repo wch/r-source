@@ -62,13 +62,13 @@ function(dir, outDir)
     ## (Guaranteed to work as per the Sys,setlocale() docs.)
     lccollate <- "C"
     if(Sys.setlocale("LC_COLLATE", lccollate) != lccollate) {
-        ## <FIXME>
+        ## <NOTE>
         ## I don't think we can give an error here.
         ## It may be the case that Sys.setlocale() fails because the "OS
         ## reports request cannot be honored" (src/main/platform.c), in 
         ## which case we should still proceed ...
         warning("cannot turn off locale-specific sorting via LC_COLLATE")
-        ## </FIXME>
+        ## </NOTE>
     }
 
     ## We definitely need a valid DESCRIPTION file.
@@ -77,13 +77,8 @@ function(dir, outDir)
     if(inherits(db, "try-error"))
         stop(paste("package directory", sQuote(dir),
                    "has no valid DESCRIPTION file"))
-    ## <FIXME>
-    ## What should we do in case there is no R code?
-    ## The other .installXXX() functions simply return invisible() in
-    ## this case, collator() gives an error.
     codeDir <- file.path(dir, "R")
     if(!tools::fileTest("-d", codeDir)) return(invisible())
-    ## </FIXME>
 
     codeFiles <- listFilesWithType(codeDir, "code", full.names = FALSE)
 
@@ -92,9 +87,9 @@ function(dir, outDir)
     if(any(i <- collationField %in% names(db))) {
         ## We have a Collate specification in the DESCRIPTION file:
         ## currently, file paths relative to codeDir, separated by
-        ## commas and maybe white space, possibly quoted.  Note that we
-        ## could have newlines in DCF entries but do not allow them in
-        ## file names, hence we gsub() them out.
+        ## white space, possibly quoted.  Note that we could have
+        ## newlines in DCF entries but do not allow them in file names,
+        ## hence we gsub() them out. 
         collationField <- collationField[i][1]
         codeFilesInCspec <-
             scan(textConnection(gsub("\n", " ", db[collationField])),
@@ -147,13 +142,13 @@ function(dir, outDir)
     outCodeDir <- file.path(outDir, "R")
     if(!tools::fileTest("-d", outCodeDir)) dir.create(outCodeDir)
     outFile <- file.path(outCodeDir, db["Package"])
-    ## <FIXME>
+    ## <NOTE>
     ## It may be safer to do
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
     file.create(outFile)
     file.append(outFile, codeFiles)
-    ## </FIXME>
+    ## </NOTE>
 
     invisible()
 }
