@@ -40,6 +40,10 @@ Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
 Subject: qgamma precision
 From: terra@diku.dk
 Date: Fri, 25 Oct 2002 16:50:17 +0200 (MET DST)
+* PR# 2894 *
+Subject: qbeta hang
+From: terra@gnome.org
+Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 
 Directory:  Add-ons
 
@@ -379,6 +383,10 @@ Subject: R config failure on solaris
 From: "Siva Ginjupalli" <gsivrao@hotmail.com>
 Date: Wed, 24 Jul 2002 20:08:49 +0000
 ..Missing info on R version and compilers.
+* PR# 2878 *
+Subject: Problem with R CMD INSTALL and package versions
+From: rpeng@stat.ucla.edu
+Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
 
 Directory:  Language
 
@@ -422,6 +430,10 @@ Date: Fri, 4 Jan 2002 13:34:34 GMT
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
+* PR# 3078 *
+Subject: grep, gsub, sub have problems with NA values 
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Thu, 22 May 2003 16:31:53 -0400
 
 Directory:  Low-level
 
@@ -521,6 +533,14 @@ Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
 From: Kurt Hornik <hornik@ci.tuwien.ac.at>
 Date: Mon, 17 Mar 2003 21:32:55 +0100
 ..part of 2644
+* PR# 3070 *
+Subject: Possible R CMD check problem
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Wed, 21 May 2003 12:16:55 -0700
+* PR# 3071 *
+Subject: ~ files not excluded from build
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Wed, 21 May 2003 12:21:31 -0700
 
 Directory:  Models
 
@@ -697,39 +717,23 @@ Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
 Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
-* PR# 2878 *
-Subject: Problem with R CMD INSTALL and package versions
-From: rpeng@stat.ucla.edu
-Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
-* PR# 2894 *
-Subject: qbeta hang
-From: terra@gnome.org
-Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 * PR# 2923 *
 Subject: segfault when applying strange coercion
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 05 May 2003 19:36:01 +0200
-* PR# 3067 *
-Subject: Urgent/confidential
-From: Mr, John Disi <johndisi1973@netscape.net>
-Date: Wed, 21 May 2003 15:56:55 +0200
-* PR# 3068 *
-Subject: r-bugs_they_ALL_lost_at_least_4_inches_of_UGLY_FAT!
-From: <shikha7890@yourwap.com>
-Date: Wed, 21 May 2003 22:57:00 -0400
-* PR# 3069 *
-Subject: feminite jymenez
-From: "Trudy Parsons" <2ymq19rt@aol.com>
-Date: Wed, 21 May 03 22:32:29 GMT
-* PR# 3070 *
-Subject: Possible R CMD check problem
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 21 May 2003 12:16:55 -0700
-* PR# 3071 *
-Subject: ~ files not excluded from build
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 21 May 2003 12:21:31 -0700
-* PR# 3072 *
-Subject: ###<>>><Largest Loan Program
-From: "Kaye Gibbons" <knumo0g0ye45@intellectualfantasy.com>
-Date: Thu, 22 May 03 04:26:03 GMT
+* PR# 3076 *
+Subject: faraway package installation failed
+From: jotero@lsi.uniovi.es
+Date: Thu, 22 May 2003 16:54:29 +0200 (MET DST)
+* PR# 3079 *
+Subject: Conflict with tseries package??
+From: xoaquin@computer.org
+Date: Thu, 22 May 2003 23:09:30 +0200 (MET DST)
+* PR# 3080 *
+Subject: r-bugs_Refinance_Start_a_new_business_14
+From: <alessandra.brokovich@lycos.co.uk>
+Date: Fri, 23 May 2003 06:05:07 +1000
+* PR# 3081 *
+Subject: ASSISTANCE
+From: ERIC JONES <ericjons9@mail15.com>
+Date: Thu, 22 May 2003 23:30:26 +0200
