@@ -2339,14 +2339,16 @@ F77_NAME(dgesdd)(char *jobz, int *m, int *n, double *
 void
 F77_NAME(dgetc2)(int *n, double *a, int *lda, int 
 	*ipiv, int *jpiv, int *info);
- void
+
+typedef int (*L_fp)();
+void
 F77_NAME(dggesx)(char *jobvsl, char *jobvsr, char *sort, L_fp 
 	delctg, char *sense, int *n, double *a, int *lda, 
 	double *b, int *ldb, int *sdim, double *alphar, 
 	double *alphai, double *beta, double *vsl, int *ldvsl,
 	 double *vsr, int *ldvsr, double *rconde, double *
 	rcondv, double *work, int *lwork, int *iwork, int *
-	liwork, logical *bwork, int *info);
+	liwork, int *bwork, int *info);
  
 void
 F77_NAME(dggev)(char *jobvl, char *jobvr, int *n, double *
@@ -2362,7 +2364,7 @@ F77_NAME(dggevx)(char *balanc, char *jobvl, char *jobvr, char *
 	beta, double *vl, int *ldvl, double *vr, int *ldvr, 
 	int *ilo, int *ihi, double *lscale, double *rscale, 
 	double *abnrm, double *bbnrm, double *rconde, double *
-	rcondv, double *work, int *lwork, int *iwork, logical *
+	rcondv, double *work, int *lwork, int *iwork, int *
 	bwork, int *info);
  
 void
@@ -2406,11 +2408,11 @@ F77_NAME(dlalsd)(char *uplo, int *smlsiz, int *n, int
 	int *info);
  
 void
-F77_NAME(dlamc1)(int *beta, int *t, logical *rnd, logical 
+F77_NAME(dlamc1)(int *beta, int *t, int *rnd, int 
 	*ieee1);
  
 void
-F77_NAME(dlamc2)(int *beta, int *t, logical *rnd, 
+F77_NAME(dlamc2)(int *beta, int *t, int *rnd, 
 	double *eps, int *emin, double *rmin, int *emax, 
 	double *rmax);
  
@@ -2422,7 +2424,7 @@ F77_NAME(dlamc4)(int *emin, double *start, int *base);
  
 void
 F77_NAME(dlamc5)(int *beta, int *p, int *emin, 
-	logical *ieee, int *emax, double *rmax);
+	int *ieee, int *emax, double *rmax);
 
 void
 F77_NAME(dlaqp2)(int *m, int *n, int *offset, 
@@ -2571,7 +2573,7 @@ void
 F77_NAME(dlasq5)(int *i0, int *n0, double *z, 
 	int *pp, double *tau, double *dmin, double *dmin1, 
 	double *dmin2, double *dn, double *dnm1, double *dnm2,
-	 logical *ieee);
+	 int *ieee);
  
 void
 F77_NAME(dlasq6)(int *i0, int *n0, double *z, 
@@ -2658,20 +2660,20 @@ F77_NAME(dsygvx)(int *itype, char *jobz, char *range, char *
 	int *ifail, int *info);
  
 void
-F77_NAME(dtgex2)(logical *wantq, logical *wantz, int *n, 
+F77_NAME(dtgex2)(int *wantq, int *wantz, int *n, 
 	double *a, int *lda, double *b, int *ldb, double *
 	q, int *ldq, double *z, int *ldz, int *j1, int *
 	n1, int *n2, double *work, int *lwork, int *info);
  
 void
-F77_NAME(dtgexc)(logical *wantq, logical *wantz, int *n, 
+F77_NAME(dtgexc)(int *wantq, int *wantz, int *n, 
 	double *a, int *lda, double *b, int *ldb, double *
 	q, int *ldq, double *z, int *ldz, int *ifst, 
 	int *ilst, double *work, int *lwork, int *info);
  
 void
-F77_NAME(dtgsen)(int *ijob, logical *wantq, logical *wantz, 
-	logical *select, int *n, double *a, int *lda, double *
+F77_NAME(dtgsen)(int *ijob, int *wantq, int *wantz, 
+	int *select, int *n, double *a, int *lda, double *
 	b, int *ldb, double *alphar, double *alphai, double *
 	beta, double *q, int *ldq, double *z, int *ldz, 
 	int *m, double *pl, double *pr, double *dif, 
@@ -2679,7 +2681,7 @@ F77_NAME(dtgsen)(int *ijob, logical *wantq, logical *wantz,
 	int *info);
  
 void
-F77_NAME(dtgsna)(char *job, char *howmny, logical *select, 
+F77_NAME(dtgsna)(char *job, char *howmny, int *select, 
 	int *n, double *a, int *lda, double *b, int *ldb, 
 	double *vl, int *ldvl, double *vr, int *ldvr, 
 	double *s, double *dif, int *mm, int *m, double *
@@ -2806,7 +2808,7 @@ F77_NAME(zlacpy)(char *uplo, int *m, int *n,
 	Rcomplex *a, int *lda, Rcomplex *b, int *ldb);
 
 void
-F77_NAME(zlahqr)(logical *wantt, logical *wantz, int *n,
+F77_NAME(zlahqr)(int *wantt, int *wantz, int *n,
 	int *ilo, int *ihi, Rcomplex *h, int *ldh,
 	Rcomplex *w, int *iloz, int *ihiz, Rcomplex *z,
 	int *ldz, int *info);
@@ -2903,11 +2905,12 @@ F77_NAME(zsteqr)(char *compz, int *n, double *d,
 	int *info);
 
 void
-F77_NAME(ztrevc)(char *side, char *howmny, logical *select,
+F77_NAME(ztrevc)(char *side, char *howmny, int *select,
 	int *n, Rcomplex *t, int *ldt, Rcomplex *vl,
 	int *ldvl, Rcomplex *vr, int *ldvr, int *mm, int
 	*m, Rcomplex *work, double *rwork, int *info);
 
+void
 F77_NAME(zung2l)(int *m, int *n, int *k,
 	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
 	work, int *info);
