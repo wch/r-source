@@ -50,14 +50,6 @@ Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 ..The warning is standard S and R behaviour.
 ..Probably xyplot needs to avoid it (by unclassing?)
 ..Still there in lattice 0.3-0, 0.6-8
-* PR# 1178 *
-Subject: segfault using svm from e1071
-From: Jan Rychter <jan@rychter.com>
-Date: Tue, 20 Nov 2001 23:38:17 +0100
-* PR# 1199 *
-Subject: pixmap: infinite recursion with nonascii pnm-files
-From: thomas.baumann@ch.tum.de
-Date: Fri, 7 Dec 2001 11:07:52 +0100 (CET)
 * PR# 1361 *
 Subject: Matrix identification bug
 From: hyu@stats.uwo.ca
@@ -83,11 +75,6 @@ Date: Tue, 2 Jul 2002 10:37:10 +0200 (MET DST)
 Subject: groupedData constructor from a function
 From: dieter.menne@menne-biomed.de
 Date: Thu, 4 Jul 2002 15:59:59 +0200 (MET DST)
-* PR# 1901 *
-Subject: svm seg faults
-From: stefan.boehringer+science@uni-bochum.de
-Date: Tue, 13 Aug 2002 14:12:17 +0200 (MET DST)
-..Seem to be due to gcc `2.96' from RH7.3
 * PR# 1972 *
 Subject: lattice install
 From: robert.king@newcastle.edu.au
@@ -576,3 +563,19 @@ Date: Thu, 13 Feb 2003 09:08:44 -0500
 Subject: error from sample if sampling length one character
 From: patrick@burns-stat.com
 Date: Thu, 13 Feb 2003 21:56:58 +0100 (MET)
+* PR# 2547 *
+Subject: ASSISTANCE
+From: "MRS MARIAM MAINASARA" <mmmainasara@netscape.net>
+Date: Fri, 14 Feb 2003 04:26:46
+* PR# 2548 *
+Subject: Re: lose fat, gain muscle, increase energy level? skhd
+From: bxdharrison <ybkwcaitlyn@juno.com>
+Date: Thu, 13 Feb 2003 21:52:49 -0800
+* PR# 2549 *
+Subject: Divx를 아십니까?
+From: ADULT바이러스<your@mail.com>
+Date: Fri, 14 Feb 2003 08:27:13 +0100 (MET)
+* PR# 2550 *
+Subject: eigen() error: R Version 1.6.1 on Mac OS X
+From: "Daniel E. Weeks" <dweeks@watson.hgen.pitt.edu>
+Date: Fri, 14 Feb 2003 15:36:15 -0500
