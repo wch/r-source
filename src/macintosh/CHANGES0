@@ -1,3 +1,32 @@
+		Macintosh-specific changes to R
+		===============================
+
+ 
+
+rm151
+=====
+* fixed a problem with methods library
+
+
+rm150
+=====
+
+* using dev.off() when a user close a windows instead
+  of killing directly the device
+* changed MPWBuild to take care of changes in the src/include   
+  directory
+* fixed a bug with path length (Thanks to T.Lumley)    
+* fixed a problem with building help files. In particular,
+  html help files now have correct links
+* added system() functionality under MacOS X. When R is
+  running under MacOS X, it is now possibile to run BSD
+  shell commands via the system() R command. Very limited
+  at the moment but working.
+* fixed the problem with the error message: "negative length vectors 
+  are not allowed". Now you should not experiment this anymore.
+* MacZip not needed anymore.
+  
+
 rm141
 =====
 * no particular fixing
