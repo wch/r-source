@@ -431,7 +431,7 @@ int findGapUp(double *xxx, double *yyy, int ns, double labelDistance,
 	dY = yyy[jjj] - yyy[jjj - n - 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
 	dYC = GConvertYUnits(dY, USER, INCHES, dd);
-	distanceSum = pythag(dXC, dYC);
+	distanceSum = hypot(dXC, dYC);
 	jjj = (jjj + 1);
 	n += 1;
     }
@@ -457,7 +457,7 @@ int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 	dY = yyy[jjj] - yyy[jjj + n + 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
 	dYC = GConvertYUnits(dY, USER, INCHES, dd);
-	distanceSum = pythag(dXC, dYC);
+	distanceSum = hypot(dXC, dYC);
 	jjj--;
 	n -= 1;
     }
@@ -820,7 +820,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 				dY = yyy[jjj] - yyy[jjj - n - 1];
 				dXC = GConvertXUnits(dX, USER, INCHES, dd);
 				dYC = GConvertYUnits(dY, USER, INCHES, dd);
-				distanceSum = pythag(dXC, dYC);
+				distanceSum = hypot(dXC, dYC);
 
 				/* Calculate the variance of the gradients
 				   of the segments that will make way for the
@@ -916,7 +916,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 						USER, INCHES, dd);
 			    dy = GConvertYUnits(yyy[index+range] - yyy[index],
 						USER, INCHES, dd);
-			    dxy = pythag(dx, dy);
+			    dxy = hypot(dx, dy);
 
 			    /* save the current label for checking overlap */
 			    label2 = allocVector(REALSXP, 8);
