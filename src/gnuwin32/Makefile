@@ -83,7 +83,8 @@ rbuild:
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
-	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
+	@$(MAKE) --no-print-directory ../../bin/R.dll
+	@$(MAKE) --no-print-directory libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
@@ -175,7 +176,10 @@ R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 
-../../bin/R.dll: fixfiles rlibs R.dll
+../../bin/R.dll:
+	@$(MAKE) --no-print-directory fixfiles
+	@$(MAKE) --no-print-directory rlibs
+	@$(MAKE) --no-print-directory R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
 
