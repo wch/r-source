@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.124 $ ';
+my $revision = ' $Revision: 1.125 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -467,22 +467,48 @@ sub check_pkg {
 
     if($description->{"Depends"}) {
 	my @dependencies = split(/\,/, $description->{"Depends"});
-	my $any = 0;
+	my @matches;
+	my ($is_bad_dep_op, $is_bad_dep_version);
+	my ($bad_dep_value, @bad_dep_error);
 	foreach my $dep (@dependencies) {
-	    $dep =~ /^\s*([\w\.]+)(\s*\(([^) ]+)\s+([^) ]+)\))?\s*$/;
+	    @matches =
+	      ($dep =~ /^\s*([\w\.]+)(\s*\(([^) ]+)\s+([^) ]+)\))?\s*$/);
             ## The entry is malformed if there is no match, or there is
             ## a match but the dep_op is different from '<=' or '>', or
 	    ## the dep_version does not only consist of digits, '.' or
 	    ## '-'.
-	    if(!($1) || ($2 && (!(($3 eq "<=") || ($3 eq ">="))
-				|| ($4 =~ /[^\d\.\-]/)))) {
-		$any++;
+	    $is_bad_dep_op =
+	      (($matches[2] ne "<=") && ($matches[2] ne ">="));
+	    $is_bad_dep_version = ($matches[3] =~ /[^\d\.\-]/);
+	    if(!($matches[0])
+	       || ($matches[1]
+		   && ($is_bad_dep_op || $is_bad_dep_version))) {
+		$bad_dep_entry = $dep;
+		if(!($matches[0])) {
+		    @bad_dep_error =
+		      ("Entries must be names of packages, optionally",
+		       "followed by '<=' or '>=', white space, and a",
+		       "valid version number in parentheses.\n");
+		}
+		elsif($is_bad_dep_op) {
+		    @bad_dep_error =
+			("Infeasible comparison operator '$matches[2]'.\n",
+			 "Only operators '<=' and '>=' are possible.\n");
+		}
+		elsif($is_bad_dep_version) {
+		    @bad_dep_error =
+			("Infeasible version number '$matches[3]'.\n",
+			 "Version numbers must only contain digits,",
+			 "'.' or '-'.\n");
+		}
 		break;
 	    }
 	}
-	if($any > 0) {
+	if($bad_dep_entry) {
 	    $log->error();
 	    $log->print("Malformed Depends field.\n");
+	    $log->print("Offending entry is: '$bad_dep_entry'.\n");
+	    $log->print(wrap("", "", @bad_dep_error));
 	    $log->print(wrap("", "", @msg_DESCRIPTION));
 	    exit(1);
 	}
