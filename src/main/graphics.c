@@ -2355,6 +2355,7 @@ void GCheckState(DevDesc *dd)
  */
 
 /* CLIPPING paradigm:
+
    R uses both the clipping capabilities of the device (if present)
    and its own internal clipping algorithms.
    If the device has no clipping capabilities (canClip = FALSE) then R
@@ -2363,6 +2364,7 @@ void GCheckState(DevDesc *dd)
    clipping (to the device extent).  This is to avoid "silly" values
    being sent to the device (e.g., X11 and Ghostview will barf if you
    send a ridiculously large number to them).  Call this silly-clipping.
+
        The problem with getting R to do some of the clipping is that it is
        not necessarily as good as the device at clipping (e.g., R's text
        clipping is very crude).  This is the motivation for leaving as much
@@ -2747,8 +2749,8 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
     Rboolean clip_ok;
     if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
     if (Rf_dpptr(dd)->canClip) {
-	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 1, dd);
 	GClip(dd);
+	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 1, dd);
     }
     else {
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 0, dd);
@@ -3482,7 +3484,11 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
     static char *sbuf = NULL;
 
     if (dd->newDevStruct) {
-	w = GEStrWidth(str, Rf_gpptr(dd)->font, Rf_gpptr(dd)->cex,
+	/* 
+	 * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
+	 * use these instead of "" and 1 below
+	 */
+	w = GEStrWidth(str, "", Rf_gpptr(dd)->font, 1, Rf_gpptr(dd)->cex,
 		       (double) Rf_gpptr(dd)->ps,
 		       (GEDevDesc*) dd);
 	if (units != DEVICE)

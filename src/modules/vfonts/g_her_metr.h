@@ -96,20 +96,18 @@
    the distinction ?)
    ... and added HERSHEY_UNITS_TO_DEVICE_UNITS
    ... and replaced HERSHEY_EM with HERSHEY_LARGE_CAPHEIGHT
+
+   When moving to graphics engine, simplified calculations again
+   and reverted to single HERSHEY_UNITS_TO_USER_UNITS macro.
+   FIXME:  There may be a problem for devices with cra[0] != cra[1].
 */
 
 /* The scaling between distances in Hershey units and distances in user
    coordinates.  Idea is that the font size (i.e. the nominal minimum
-   inter-line spacing) corresponds to HERSHEY_LARGE_EM Hershey units. */
+   inter-line spacing) corresponds to HERSHEY_LARGE_CAPHEIGHT Hershey units. */
 
-#define HERSHEY_X_UNITS_TO_USER_UNITS(size) \
-	((size)*(GConvertXUnits(GStrHeight("M", INCHES, dd), INCHES, g_unit, dd))/(HERSHEY_LARGE_CAPHEIGHT))
-
-#define HERSHEY_Y_UNITS_TO_USER_UNITS(size) \
-	((size)*(GStrHeight("M", g_unit, dd))/(HERSHEY_LARGE_CAPHEIGHT))
-
-#define HERSHEY_UNITS_TO_DEVICE_UNITS(size) \
-	((size)*(GStrHeight("M", DEVICE, dd))/(HERSHEY_LARGE_CAPHEIGHT))
+#define HERSHEY_UNITS_TO_USER_UNITS(size) \
+	((size)*(g_ps * g_cex)/(HERSHEY_LARGE_ASCENT))
 
 /************************************************************************/
 

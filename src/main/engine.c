@@ -1201,15 +1201,21 @@ void GERect(double x0, double y0, double x1, double y1,
    2 means intersects clip region */
 static int clipTextCode(double x, double y, char *str,
 			double rot, double hadj,
-			int font, double cex, double ps,
+			char *fontfamily, int fontface, double lineheight,
+			double cex, double ps,
 			int toDevice, GEDevDesc *dd)
 {
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
     double angle = DEG2RAD * rot;
     double theta1 = M_PI/2 - angle;
-    double width = fromDeviceWidth(GEStrWidth(str, font, cex, ps, dd),
+    double width = fromDeviceWidth(GEStrWidth(str, 
+					      fontfamily, fontface, lineheight,
+					      cex, ps, dd),
 				   GE_INCHES, dd);
-    double height = fromDeviceHeight(GEStrHeight(str, font, cex, ps, dd),
+    double height = fromDeviceHeight(GEStrHeight(str, 
+						 fontfamily, fontface, 
+						 lineheight,
+						 cex, ps, dd),
 				     GE_INCHES, dd);
 #ifdef HAVE_HYPOT
     double length = hypot(width, height);
@@ -1235,27 +1241,108 @@ static int clipTextCode(double x, double y, char *str,
 }
 
 static void clipText(double x, double y, char *str, double rot, double hadj,
-		     int col, double gamma, int font, double cex, double ps,
+		     int col, double gamma, 
+		     char *fontfamily, int fontface, double lineheight,
+		     double cex, double ps,
 		     int toDevice, GEDevDesc *dd)
 {
-    int result = clipTextCode(x, y, str, rot, hadj, font, cex, ps,
+    int result = clipTextCode(x, y, str, rot, hadj, 
+			      fontfamily, fontface, lineheight, cex, ps,
 			      toDevice, dd);
     switch (result) {
     case 0:  /* text totally clipped; draw nothing */
 	break;
     case 1:  /* text totally inside;  draw all */
+        /*
+	 * FIXME:  Pass on the fontfamily, fontface, and
+	 * lineheight so that the device can use them
+	 * if it wants to.
+	 * NOTE: fontface corresponds to old "font"
+	 */
 	dd->dev->text(x, y, str, rot, hadj, col, gamma, 
-		      font, cex, ps, dd->dev);
+		      fontface, cex, ps, dd->dev);
 	break;
     case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
 	if (toDevice) /* Device will do clipping */
+	    /*
+	     * FIXME:  Pass on the fontfamily, fontface, and
+	     * lineheight so that the device can use them
+	     * if it wants to.
+	     * NOTE: fontface corresponds to old "font"
+	     */
 	    dd->dev->text(x, y, str, rot, hadj, col, gamma, 
-			  font, cex, ps, dd->dev);
+			  fontface, cex, ps, dd->dev);
 	else /* don't draw anything; this could be made less crude :) */
 	    ;
     }
 }
+
+/****************************************************************
+ * Code for determining when to branch to vfont code from GEText
+ ****************************************************************
+ */
+
+typedef struct {
+    char *name;
+    int minface;
+    int maxface;
+} VFontTab;
+
+static VFontTab
+VFontTable[] = {
+    { "HersheySerif",	          1, 7 },
+    /* 
+       HersheySerif 
+       HersheySerif-Italic 
+       HersheySerif-Bold 
+       HersheySerif-BoldItalic 
+       HersheyCyrillic 
+       HersheyCyrillic-Oblique 
+       HersheyEUC 
+    */
+    { "HersheySans",	          1, 4 },
+    /* 
+       HersheySans 
+       HersheySans-Oblique 
+       HersheySans-Bold 
+       HersheySans-BoldOblique 
+    */
+    { "HersheyScript",	          1, 4 },
+    /*
+      HersheyScript 
+      HersheyScript 
+      HersheyScript-Bold 
+      HersheyScript-Bold
+    */ 
+    { "HersheyGothicEnglish",	  1, 1 },
+    { "HersheyGothicGerman",	  1, 1 },
+    { "HersheyGothicItalian",	  1, 1 },
+    { "HersheySymbol",	          1, 4 },
+    /*
+      HersheySerifSymbol 
+      HersheySerifSymbol-Oblique 
+      HersheySerifSymbol-Bold 
+      HersheySerifSymbol-BoldOblique 
+    */    
+    { "HersheySansSymbol",        1, 2 },
+    /*
+      HersheySansSymbol 
+      HersheySansSymbol-Oblique 
+    */
+
+    { NULL,		          0, 0 },
+};
+
+static int VFontFamilyCode(char *fontfamily)
+{
+    int i;
+    for (i = 0; VFontTable[i].minface; i++)
+	if (!strcmp(fontfamily, VFontTable[i].name))
+	    return i;
+    return -1;
+}
+
 
 /****************************************************************
  * GEText
@@ -1264,10 +1351,29 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
 void GEText(double x, double y, char *str,
-	   double xc, double yc, double rot,
-	   int col, double gamma, int font, double cex, double ps,
-	   GEDevDesc *dd)
+	    double xc, double yc, double rot,
+	    int col, double gamma, 
+	    char *fontfamily, int fontface, double lineheight,
+	    double cex, double ps,
+	    GEDevDesc *dd)
 {
+    /* 
+     * If the fontfamily is a Hershey font family, call R_GE_VText
+     */
+    int vfontcode = VFontFamilyCode(fontfamily);
+    if (vfontcode >= 0) {
+	/* 
+	 * R's "font" par has historically made 2=bold and 3=italic
+	 * These must be switched to correspond to Hershey fontfaces
+	 */
+	if (fontface == 2)
+	    fontface = 3;
+	else if (fontface == 3)
+	    fontface = 2;
+	R_GE_VText(x, y, str, vfontcode, fontface,
+		   xc, yc, rot, col, gamma, lineheight, cex, ps, dd);
+
+    } else {
     char *sbuf = NULL;
     if(str && *str) {
         char *s, *sb;
@@ -1321,7 +1427,10 @@ void GEText(double x, double y, char *str,
 		/* now determine bottom-left for THIS line */
 		if(xc != 0.0 || yc != 0) {
 		    double width, height;
-		    width = fromDeviceWidth(GEStrWidth(sbuf, font,
+		    width = fromDeviceWidth(GEStrWidth(sbuf, 
+						       fontfamily,
+						       fontface,
+						       lineheight,
 						       cex, ps, dd),
 					    GE_INCHES, dd);
 		    if (!R_FINITE(xc))
@@ -1332,9 +1441,16 @@ void GEText(double x, double y, char *str,
 			/* there is only one line, use GMetricInfo & yc=0.5 */
 			/* Otherwise use GEStrHeight and fiddle yc */
 			double h, d, w;
-			GEMetricInfo(0, font, cex, ps, &h, &d, &w, dd);
+			/* 
+			 * FIXME:  Need to pass fontfamily to 
+			 * GEMetricInfo too
+			 */
+			GEMetricInfo(0, fontface, cex, ps, &h, &d, &w, dd);
 			if (n>1 || (h==0 && d==0 && w==0)) {
-			    height = fromDeviceHeight(GEStrHeight(sbuf, font,
+			    height = fromDeviceHeight(GEStrHeight(sbuf, 
+								  fontfamily,
+								  fontface,
+								  lineheight,
 								  cex, ps, dd),
 						      GE_INCHES, dd);
 			    yc = dd->dev->yCharOffset;
@@ -1344,8 +1460,12 @@ void GEText(double x, double y, char *str,
 			    char *ss;
 			    int charNum = 0;
 			    for (ss=sbuf; *ss; ss++) {
+				/* 
+				 * FIXME:  Need to pass fontfamily to 
+				 * GEMetricInfo too
+				 */
 				GEMetricInfo((unsigned char) *ss,
-					     font, cex, ps, &h, &d, &w, dd);
+					     fontface, cex, ps, &h, &d, &w, dd);
 				h = fromDeviceHeight(h, GE_INCHES, dd);
 				d = fromDeviceHeight(d, GE_INCHES, dd);
 				/* Set maxHeight and maxDepth from height
@@ -1366,7 +1486,10 @@ void GEText(double x, double y, char *str,
 			    yc = 0.5;
 			}
 		    } else {
-			height = fromDeviceHeight(GEStrHeight(sbuf, font,
+			height = fromDeviceHeight(GEStrHeight(sbuf, 
+							      fontfamily,
+							      fontface,
+							      lineheight,
 							      cex, ps, dd),
 						  GE_INCHES, dd);
 		    }
@@ -1390,16 +1513,19 @@ void GEText(double x, double y, char *str,
 		ybottom = toDeviceY(ybottom, GE_INCHES, dd);
 		if(dd->dev->canClip) {
 		    clipText(xleft, ybottom, sbuf, rot, hadj,
-			     col, gamma, font, cex, ps, 1, dd);
+			     col, gamma, fontfamily, fontface, lineheight,
+			     cex, ps, 1, dd);
 		} else
 		    clipText(xleft, ybottom, sbuf, rot, hadj,
-			     col, gamma, font, cex, ps, 0, dd);
+			     col, gamma, fontfamily, fontface, lineheight,
+			     cex, ps, 0, dd);
 		sb = sbuf;
 		i += 1;
 	    }
 	    else *sb++ = *s;
 	    if (!*s) break;
 	}
+    }
     }
 }
 
@@ -1439,6 +1565,10 @@ void GEMode(int mode, GEDevDesc *dd)
  * angles -- in those cases, a conversion to and from GE_INCHES is done
  * to preserve angles.
  */
+/* 
+ * FIXME:  Need to pass fontfamily and lineheight to 
+ * GESymbol too
+ */
 void GESymbol(double x, double y, int pch, double size,
 	      int col, int fill, double gamma, double lty, double lwd,
 	      int font, double cex, double ps,
@@ -1458,7 +1588,12 @@ void GESymbol(double x, double y, int pch, double size,
 	    str[0] = pch;
 	    str[1] = '\0';
 	    GEText(x, y, str, NA_REAL, NA_REAL, 0., col, gamma, 
-		   font, cex, ps, dd);
+		   /* 
+		    * FIXME:  When fontfamily and lineheight are 
+		    * passed to GESymbol, use them here instead
+		    * of "" and 1
+		    */
+		   "", font, 1, cex, ps, dd);
 	}
     }
     else {
@@ -1779,6 +1914,10 @@ void GEPretty(double *lo, double *up, int *ndiv)
  * GEMetricInfo
  ****************************************************************
  */
+/* 
+ * FIXME:  Need to pass fontfamily to 
+ * GEMetricInfo too
+ */
 void GEMetricInfo(int c, int font, double cex, double ps,
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd)
@@ -1791,59 +1930,114 @@ void GEMetricInfo(int c, int font, double cex, double ps,
  * GEStrWidth
  ****************************************************************
  */
-double GEStrWidth(char *str, int font, double cex, double ps, GEDevDesc *dd)
+double GEStrWidth(char *str, 
+		  char *fontfamily, int fontface, double lineheight,
+		  double cex, double ps, GEDevDesc *dd)
 {
-    double w;
-    char *sbuf = NULL;
-    w = 0;
-    if(str && *str) {
-        char *s, *sb;
-	double wdash;
-	sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
-	sb = sbuf;
-        for(s = str; ; s++) {
-            if (*s == '\n' || *s == '\0') {
-		*sb = '\0';
-		wdash = dd->dev->strWidth(sbuf, font, cex, ps, dd->dev);
-		if (wdash > w) w = wdash;
-		sb = sbuf;
+    /* 
+     * If the fontfamily is a Hershey font family, call R_GE_VStrWidth
+     */
+    int vfontcode = VFontFamilyCode(fontfamily);
+    if (vfontcode >= 0) {
+	/* 
+	 * R's "font" par has historically made 2=bold and 3=italic
+	 * These must be switched to correspond to Hershey fontfaces
+	 */
+	if (fontface == 2)
+	    fontface = 3;
+	else if (fontface == 3)
+	    fontface = 2;
+	return R_GE_VStrWidth((unsigned char *) str, 
+			      vfontcode, fontface, lineheight,
+			      cex, ps, dd);
+    } else {
+	double w;
+	char *sbuf = NULL;
+	w = 0;
+	if(str && *str) {
+	    char *s, *sb;
+	    double wdash;
+	    sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
+	    sb = sbuf;
+	    for(s = str; ; s++) {
+		if (*s == '\n' || *s == '\0') {
+		    *sb = '\0';
+		    /*
+		     * FIXME:  Pass on the fontfamily, fontface, and
+		     * lineheight so that the device can use them
+		     * if it wants to.
+		     * NOTE: fontface corresponds to old "font"
+		     */
+		    wdash = dd->dev->strWidth(sbuf, fontface, 
+					      cex, ps, dd->dev);
+		    if (wdash > w) w = wdash;
+		    sb = sbuf;
+		}
+		else *sb++ = *s;
+		if (!*s) break;
 	    }
-	    else *sb++ = *s;
-	    if (!*s) break;
 	}
+	return w;
     }
-    return w;
 }
 
 /****************************************************************
  * GEStrHeight
  ****************************************************************
  */
-double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd)
+double GEStrHeight(char *str, 
+		   char *fontfamily, int fontface, double lineheight,
+		   double cex, double ps, GEDevDesc *dd)
 {
-    double h;
-    char *s;
-    double asc, dsc, wid;
-    int n;
-    /* Count the lines of text minus one */
-    n = 0;
-    for(s = str; *s ; s++)
-	if (*s == '\n')
-	    n++;
-    /* cra is based on the font pointsize at the 
-     * time the device was created.
-     * Adjust for potentially different current pointsize
-     * This is a crude calculation that might be better
-     * performed using a device call that responds with
-     * the current font pointsize in device coordinates.
+    /* 
+     * If the fontfamily is a Hershey font family, call R_GE_VStrHeight
      */
-    h = n * cex * dd->dev->cra[1] * ps/dd->dev->startps;
-    /* Add in the ascent of the font, if available */
-    GEMetricInfo('M', font, cex, ps, &asc, &dsc, &wid, dd);
-    if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0))
-	asc = cex * dd->dev->cra[1] * ps/dd->dev->startps;
-    h += asc;
-    return h;
+    int vfontcode = VFontFamilyCode(fontfamily);
+    if (vfontcode >= 0) {
+	/* 
+	 * R's "font" par has historically made 2=bold and 3=italic
+	 * These must be switched to correspond to Hershey fontfaces
+	 */
+	if (fontface == 2)
+	    fontface = 3;
+	else if (fontface == 3)
+	    fontface = 2;
+	return R_GE_VStrHeight((unsigned char *) str, 
+			       vfontcode, fontface, lineheight,
+			       cex, ps, dd);
+    } else {
+	double h;
+	char *s;
+	double asc, dsc, wid;
+	int n;
+	/* Count the lines of text minus one */
+	n = 0;
+	for(s = str; *s ; s++)
+	    if (*s == '\n')
+		n++;
+	/* cra is based on the font pointsize at the 
+	 * time the device was created.
+	 * Adjust for potentially different current pointsize
+	 * This is a crude calculation that might be better
+	 * performed using a device call that responds with
+	 * the current font pointsize in device coordinates.
+	 */
+	/* 
+	 * FIXME:  make use of lineheight passed in !
+	 * May need to wait until cra has been dealt to.
+	 */
+	h = n * cex * dd->dev->cra[1] * ps/dd->dev->startps;
+	/* Add in the ascent of the font, if available */
+	/* 
+	 * FIXME:  Need to pass fontfamily to 
+	 * GEMetricInfo too
+	 */
+	GEMetricInfo('M', fontface, cex, ps, &asc, &dsc, &wid, dd);
+	if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0))
+	    asc = cex * dd->dev->cra[1] * ps/dd->dev->startps;
+	h += asc;
+	return h;
+    }
 }
 
 /****************************************************************

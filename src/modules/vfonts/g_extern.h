@@ -131,7 +131,7 @@ extern const struct plTypefaceInfoStruct _hershey_typeface_info[];
 /* PAUL MURRELL
    Modified this declaration
 */
-extern unsigned short * _controlify (DevDesc*, const unsigned char *, 
+extern unsigned short * _controlify (GEDevDesc*, const unsigned char *, 
 				     int, int);
 
 /* PAUL MURRELL

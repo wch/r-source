@@ -1,7 +1,7 @@
 /* PAUL MURRELL
    This is from the GNU plotutils libplot-2.3 distribution
    All references to HAVE_PROTOS removed
-   All references to "plotter" replaced with references to "DevDesc"
+   All references to "plotter" replaced with references to "GEDevDesc"
 */
 
 /* _controlify() converts a "label" (i.e. a character string), which may
@@ -77,7 +77,7 @@
    Added typeface and fontindex arguments
 */
 
-unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
+unsigned short * _controlify (GEDevDesc *dd, const unsigned char *src,
 			      int typeface, int fontindex)
 {     
   unsigned short *dest;
