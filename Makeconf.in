@@ -42,9 +42,7 @@ YACC = @YACC@
 
 .SUFFIXES:
 .SUFFIXES: .c .f .d .o
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC) -M $(CPPFLAGS) $< -o $@
+@depend_rules_frag@
 .c.o:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 @f77_rules_frag_top@
