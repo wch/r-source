@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 1999  The R Core Development Team
+ *  Copyright (C) 1998, 1999  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ void *dlopen(const char *fname, int mode)
 {
   shl_t handle;
   LibEntry entry = NULL;
-  
+
   dlerrno = 0;
   if (fname == NULL)
     handle = PROG_HANDLE;

@@ -123,7 +123,7 @@ static void commands_source_cb(GtkWidget *widget, gpointer data)
 }
 
 
-static void graphics_new_cb(GtkWidget *widget, gpointer data) 
+static void graphics_new_cb(GtkWidget *widget, gpointer data)
 {
   R_gtk_terminal_run("X11()\n");
 }
@@ -190,24 +190,25 @@ static void help_about_cb(GtkWidget *widget,
     "Douglas Bates",
     "Peter Dalgaard",
     "Robert Gentleman",
-    "Kurt Hornik", 
+    "Kurt Hornik",
     "Ross Ihaka",
     "Friedrich Leisch",
     "Thomas Lumley",
     "Martin Maechler",
     "Guido Masarotto",
-    "Paul Murrell", 
+    "Paul Murrell",
     "Brian Ripley",
     "Heiner Schwarte",
-    "Duncan Temple Lang", 
+    "Duncan Temple Lang",
     "Luke Tierney",
     "Lyndon Drake, GNOME interface",
     NULL
   };
 
   version = g_strdup_printf("%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
-  copyright = g_strdup_printf("Copyright (C) %s R Core Team", R_YEAR);
-  
+  copyright = g_strdup_printf("Copyright (C) %s R Development Core Team",
+			      R_YEAR);
+
   g_assert(version != NULL);
   g_assert(copyright != NULL);
 
@@ -216,7 +217,7 @@ static void help_about_cb(GtkWidget *widget,
 			      "R-logo-sm.xpm");
 
   hbox = gtk_hbox_new(TRUE, 0);
-  home_href = gnome_href_new("http://lib.stat.cmu.edu/R/CRAN/", "R home page");
+  home_href = gnome_href_new("http://www.r-project.org/", "R home page");
   FAQ_href = gnome_href_new("http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html", "R FAQ");
   gtk_box_pack_start(GTK_BOX(hbox), home_href, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(hbox), FAQ_href, FALSE, FALSE, 0);
@@ -264,7 +265,7 @@ static GnomeUIInfo file_menu[] =
   GNOMEUIINFO_END
 };
 
-static GnomeUIInfo edit_menu[] = 
+static GnomeUIInfo edit_menu[] =
 {
   GNOMEUIINFO_MENU_CUT_ITEM(edit_cut_cb, NULL),
   GNOMEUIINFO_MENU_COPY_ITEM(edit_copy_cb, NULL),
