@@ -88,6 +88,8 @@ prop.test(x, n = NULL, p = NULL, c("two.sided", "less", "greater"),
     whether Yates' continuity correction was applied.}
   \item{data.name}{a character string giving the names of the data.}
 }
+\seealso{\code{\link{binom.test}} for an \emph{exact} test of a binomial
+  hypothesis.}
 \examples{
 heads <- rbinom(1, size=100, pr = .5)
 prop.test(heads, 100)          # continuity correction TRUE by default
