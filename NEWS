@@ -74,11 +74,11 @@ BUG FIXES
 
     o	A problem with "..." in substitutions has been fixed (PR#860). 
 
-    o   Various strangeness with match.call() and "..." has been fixed
-        (PR#813).
+    o	Various strangeness with match.call() and "..." has been fixed
+	(PR#813).
 
-    o   sys.function() could return an unevaluated promise, messing up
-        formals() and match.arg() (PR#872)
+    o	sys.function() could return an unevaluated promise, messing up
+	formals() and match.arg() (PR#872)
 
     o	We now use match.fun() in tapply() so that it won't get trapped
 	by non-functions masking FUN.
@@ -96,11 +96,14 @@ BUG FIXES
     o	Deparsing or dumping attributes with non-standard names was
 	not quoting the name (PR#871).
 
-    o   Overflow in deparse() in terms(formula) with very long left-hand
+    o	Overflow in deparse() in terms(formula) with very long left-hand
 	side fixed (PR#873)
 
-    o   as.numeric(), as.integer(), as.complex() returned zero on
-        completely blank strings. Now they return NA. (PR#870)
+    o	as.numeric(), as.integer(), as.complex() returned zero on
+	completely blank strings. Now they return NA. (PR#870)
+
+    o	qchisq(0.025,31,ncp=1,lower.tail=FALSE) now works.  (PR#875)
+
 
 	**************************************************
 	*						 *
