@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.17 $ ';
+my $revision = ' $Revision: 1.18 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -249,8 +249,8 @@ sub prepare_pkg {
 	system("./cleanup");
     }
 
-    updateIndex("INDEX", "man/*.Rd", 0, $log);
-    updateIndex("data/00Index", "man/*.Rd", 1, $log) if(-d "data");
+    updateIndex("INDEX", "man", 0, $log);
+    updateIndex("data/00Index", "man", 1, $log) if(-d "data");
     
     1;
 }
