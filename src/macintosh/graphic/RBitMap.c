@@ -1,4 +1,4 @@
- *  R : A Computer Language for Statistical Data Analysis
+/*  R : A Computer Language for Statistical Data Analysis
  *  file RBitMap.c
  *  Copyright (C) 1995-1999  Ross Ihaka
  *                2000-2001  Stefano M. Iacus and the R core team
@@ -582,7 +582,7 @@ void WriteTo()
     /* Copy gray ramp into color off-screen colorized with green */
     SetPort( (GrafPtr)colorPort );
     SetGDevice( colorDevice );
-       
+
     PenSize( 8, 8 );
     aColor.red = 0xFFFF; aColor.green = 0x0000; aColor.blue = 0x0000;
     RGBForeColor( &aColor );
@@ -604,7 +604,7 @@ void WriteTo2()
     /* Copy gray ramp into color off-screen colorized with green */
     SetPort( (GrafPtr)colorPort );
     SetGDevice( colorDevice );
-       
+
 
     PenSize( 8, 8 );
     aColor.red = 0x0000; aColor.green = 0xFFFF; aColor.blue = 0x0000;
@@ -693,7 +693,7 @@ void ExerciseOffScreen()
 		      &grayPort->portRect,
 		      &colorPort->portRect,
 		      srcCopy | ditherCopy, nil );
-#endif 
+#endif
             EraseRect(&colorPort->portRect);
 	    /* Draw red, green, and blue circles */
             PenSize( 8, 8 );
