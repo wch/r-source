@@ -6,7 +6,7 @@
 
 
        /* for X_COLORTYPE, but don't get the definition of the struct.  */
-#include "X11/devX11.h" 
+#include "../modules/X11/devX11.h"
 #include "Startup.h" /* for SA_TYPE */
 
 typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
