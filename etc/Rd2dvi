@@ -27,6 +27,8 @@ fi
 #exit
 #---------------------
 latex Man0
+makeindex Man0
+latex Man0
 if [ -x `/usr/bin/which xdvi` ]
 then  xdvi Man0 &
 fi
