@@ -66,7 +66,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
 	res <- c(list(coef[int]), res)
 	names(res)[1] <- "(Intercept)"
     }
-    class(res) <- "dummy.coef"
+    class(res) <- "dummy_coef"
     res
 }
 
@@ -141,11 +141,11 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
 	}
 	res[[i]] <- mod
     }
-    class(res) <- "dummy.coef.list"
+    class(res) <- "dummy_coef_list"
     res
 }
 
-print.dummy.coef <- function(x, ..., title)
+print.dummy_coef <- function(x, ..., title)
 {
     terms <- names(x)
     n <- length(x)
@@ -174,9 +174,9 @@ print.dummy.coef <- function(x, ..., title)
     invisible(x)
 }
 
-print.dummy.coef.list <- function(x, ...)
+print.dummy_coef_list <- function(x, ...)
 {
     for(strata in names(x))
-	print.dummy.coef(x[[strata]], ..., title=paste("\n     Error:", strata))
+	print.dummy_coef(x[[strata]], ..., title=paste("\n     Error:", strata))
     invisible(x)
 }

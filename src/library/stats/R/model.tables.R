@@ -51,7 +51,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
     result <- list(tables = tables, n = n)
     if(se) result$se <- se.tables
     attr(result, "type") <- type
-    class(result) <- c("tables.aov", "list.of")
+    class(result) <- c("tables_aov", "list.of")
     result
 }
 
@@ -150,7 +150,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     result <- list(tables = tables, n = n)
     if(se) result$se <- se.tables
     attr(result, "type") <- type
-    class(result) <- c("tables.aov", "list.of")
+    class(result) <- c("tables_aov", "list.of")
     result
 }
 
@@ -310,7 +310,7 @@ replications <- function(formula, data = NULL, na.action)
     if(balance) unlist(z) else z
 }
 
-print.tables.aov <- function(x, digits = 4, ...)
+print.tables_aov <- function(x, digits = 4, ...)
 {
     tables.aov <- x$tables
     n.aov <- x$n
