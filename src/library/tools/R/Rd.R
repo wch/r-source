@@ -206,8 +206,8 @@ function(RdFiles)
     title <- gsub("\\\\\&", "&", title)
     title <- gsub("---", "--", title)
     ## Also remove leading and trailing whitespace.
-    title <- sub("^[[:space:]]*", "", title)
-    title <- sub("[[:space:]]*$", "", title)
+    title <- sub("^[[:space:]]+", "", title)
+    title <- sub("[[:space:]]+$", "", title)
 
     data.frame(File = I(basename(RdFiles)),
                Name = I(unlist(contents[ , "Name"])),
@@ -644,8 +644,8 @@ function(txt)
     if(!length(txt)) return(character())
     txt <- unlist(strsplit(txt, ", *"))
     txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- sub("^[[:space:]]*", "", txt)
-    txt <- sub("[[:space:]]*$", "", txt)
+    txt <- sub("^[[:space:]]+", "", txt)
+    txt <- sub("[[:space:]]+$", "", txt)
     txt
 }
 

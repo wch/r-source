@@ -881,8 +881,8 @@ function(package, lib.loc = NULL)
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
-        txt <- sub("^[[:space:]]*", "", txt)
-        txt <- sub("[[:space:]]*$", "", txt)
+        txt <- sub("^[[:space:]]+", "", txt)
+        txt <- sub("[[:space:]]+$", "", txt)
         txt
     }
 
@@ -1020,8 +1020,8 @@ function(package, lib.loc = NULL)
         ## not to put variable names inside \code{}.
         txt <- gsub("\\\\_", "_", txt)
         txt <- unlist(strsplit(txt, ", *"))
-        txt <- sub("^[[:space:]]*", "", txt)
-        txt <- sub("[[:space:]]*$", "", txt)
+        txt <- sub("^[[:space:]]+", "", txt)
+        txt <- sub("[[:space:]]+$", "", txt)
         txt
     }
 
