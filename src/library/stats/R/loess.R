@@ -310,7 +310,7 @@ predLoess <-
 	(x.evaluate >= rep(ranges[1,], rep(M, D)))
 	inside <- inside %*% rep(1, D) == D
 	M1 <- sum(inside)
-	fit <- rep(NA, M)
+	fit <- rep(as.numeric(NA), M)
 	if(any(inside))
 	    fit[inside] <- .C("loess_ifit",
 			      as.integer(kd$parameter),
@@ -321,7 +321,7 @@ predLoess <-
 			      fit = double(M1),
 			      PACKAGE="stats")$fit
 	if(se) {
-	    se.fit <- rep(NA, M)
+	    se.fit <- rep(as.numeric(NA), M)
 	    if(any(inside)) {
 		L <- .C("loess_ise",
 			as.double(y),
