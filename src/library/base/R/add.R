@@ -636,10 +636,11 @@ step <- function(object, scope, scale = 0,
                          trace = trace, k = k, ...)
 	    rn <- row.names(aod)
 	    row.names(aod) <- c(rn[1], paste("-", rn[-1], sep=" "))
-            ## drop all zero df terms first.
+            ## drop zero df terms first: one at time since they
+            ## may mask each other
 	    if(any(aod$Df == 0, na.rm=TRUE)) {
 		zdf <- aod$Df == 0 & !is.na(aod$Df)
-		change <- paste(rownames(aod)[zdf])
+		change <- rev(rownames(aod)[zdf])[1]
 	    }
 	}
 	if(is.null(change)) {
