@@ -2,10 +2,10 @@
 
 #warning <- function(message = NULL).Internal(warning(message))
 
-warning <- function(...)
+warning <- function(..., call. = TRUE)
 {
     if(nargs() == 0) message <- NULL else message <- paste(..., sep="")
-    .Internal(warning(message))
+    .Internal(warning(as.logical(call.), message))
 }
 
 restart <- function(on = TRUE).Internal(restart(on))

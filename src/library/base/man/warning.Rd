@@ -2,15 +2,17 @@
 \alias{warning}
 \title{Warning Messages}
 \description{
-  Generates a warning message that corresponds to its argument(s) and the
-  expression or function from which it was called.
+  Generates a warning message that corresponds to its argument(s) and
+  (optionally) the expression or function from which it was called.
 }
 \usage{
-warning(\dots)
+warning(\dots, call. = TRUE)
 }
 \arguments{
   \item{\dots}{character vectors (which are pasted together with no
     separator) or \code{NULL}.}
+  \item{call.}{logical, indicating if the call should become part of the
+    warning message.}
 }
 \details{
   The result \emph{depends} on the value of
@@ -31,8 +33,14 @@ warning(\dots)
   and \code{\link{options}} with argument \code{warn=}.
 }
 \examples{
-\testonly{eigenval <- 10 ^ -rnorm(1,m=6)
-if(eigenval < 1.e-7) warning("system near singular")}
+\testonly{oldopt <- options(warn=1)}
+testit <- function() warning("testit")
+testit() ## shows call
+testit <- function() warning("problem in testit", call. = FALSE)
+testit() ## no call
+\testonly{eigenval <- 10 ^ -rnorm(1, m=6)
+if(eigenval < 1.e-7) warning("system near singular")
+options(oldopt)}
 }
 \keyword{programming}
 \keyword{error}

@@ -4,6 +4,31 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"))
 {
+    testRversion <- function(descfile)
+    {
+        current <- paste(R.Version()[c("major", "minor")], collapse = ".")
+        fields <- read.dcf(descfile, fields =
+                           c("Package", "Depends", "Built"))
+        ## depends on R version?
+        if(!package.dependencies(fields, check = TRUE)) {
+            dep <- package.dependencies(fields)[[1]][1,]
+            stop(paste("This is R ", current, ", package ",
+                       fields[1, "Package"],
+                       " needs ", dep[2], " ", dep[3], sep=""),
+                 call. = FALSE)
+        }
+        ## which version was this package built under?
+        if((built <- fields[1, "Built"]) != "NA") {
+            builtunder <- substring(strsplit(built, ";")[[1]][1], 3)
+            if(nchar(builtunder) &&
+               compareVersion(current, builtunder) < 0) {
+                warning(paste("package", fields[1, "Package"],
+                              "was built under R version", builtunder),
+                        call. = FALSE)
+            }
+        }
+    }
+
     sQuote <- function(s) paste("`", s, "'", sep = "")
     if(!missing(package)) {
 	if(!character.only)
@@ -29,6 +54,9 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		else stop(txt)
             }
             which.lib.loc <- dirname(pkgpath)
+            descfile <- system.file("DESCRIPTION", package = package,
+                                    lib.loc = which.lib.loc)
+            if(nchar(descfile)) testRversion(descfile)
             ## if the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.

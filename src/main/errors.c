@@ -573,19 +573,27 @@ SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
+    SEXP c_call;
 
-    cptr = R_GlobalContext->nextcontext;
-    while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
-	cptr = cptr->nextcontext;
+    if(asLogical(CAR(args))) {/* find context -> "... in: ..:" */
+	cptr = R_GlobalContext->nextcontext;
+	while ( !(cptr->callflag & CTXT_FUNCTION) && 
+		cptr->nextcontext != NULL)
+	    cptr = cptr->nextcontext;
+	c_call = cptr->call;
+    } else
+	c_call = R_NilValue;
+
+    args = CDR(args);
     if (CAR(args) != R_NilValue) {
 	SETCAR(args, coerceVector(CAR(args), STRSXP));
 	if(!isValidString(CAR(args)))
-	    warningcall(cptr->call, " [invalid string in warning(.)]");
+	    warningcall(c_call, " [invalid string in warning(.)]");
 	else
-	    warningcall(cptr->call,"%s", CHAR(STRING_ELT(CAR(args), 0)));
+	    warningcall(c_call, "%s", CHAR(STRING_ELT(CAR(args), 0)));
     }
     else
-	warningcall(cptr->call,"");
+	warningcall(c_call, "");
     return CAR(args);
 }
 

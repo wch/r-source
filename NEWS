@@ -69,13 +69,17 @@ NEW FEATURES
 	and has a predict method for objects created from a single
 	vector.
 
-   o	Argument `split' of summary.{aov,aovlist} is now implemented. 
+   o	Argument `split' of summary.{aov,aovlist} is now implemented.
 
    o	arima0() now handles missing values internally so the `na.action'
 	argument has been removed: missing values are also accepted in
 	the `xreg' argument.  There is a new argument `fixed' to allow
 	some of the parameters to be held fixed.
 
+   o	library() now checks the dependence on R version (if any) and
+	warns if the package was built under a later version of R.
+
+   o	warning() has new argument `call.', like stop()'s.
 
 
 DEPRECATED & DEFUNCT
@@ -91,6 +95,9 @@ UTILITIES
 	to mix latex documentation and R code in a single source file,
 	the R code can be replaced by its output (text, figures) to
 	allow automatic report generation.
+
+    o	Rdconv can convert to the S4 .sgml format. 
+	[Still under development.]
 
 
 C-LEVEL FACILITIES
