@@ -76,8 +76,8 @@ if($opt_example){
   mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
 }
 
-print "	 >>> Building help pages for package `$pkg'\n";
-print "      Formats: ";
+print ">>> Building/Updating help pages for package `$pkg'\n";
+print "    Formats: ";
 print "text " if $opt_nroff;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
