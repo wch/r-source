@@ -267,6 +267,10 @@ none
 
 Directory:  incoming
 
+* PR# 1041 *
+Subject: xtabs, drop.unused.levels
+From: martin.lenze@to.com
+Date: Sun, 5 Aug 2001 20:03:30 +0200 (MET DST)
 * PR# 1040 *
 Subject: String Length Limit
 From: possolo@crd.ge.com
