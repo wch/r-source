@@ -1727,6 +1727,9 @@ distributions of R.)
      Augmented convex hull plots: informative and nice plots for grouped
      bivariate data.
 
+*changeLOS*
+     Change in length of hospital stay (LOS).
+
 *chron*
      A package for working with chronological objects (times and dates).
 
