@@ -599,3 +599,15 @@ Date: Tue, 6 Aug 2002 03:28:20 +0900
 Subject: close.screen
 From: Martin.Schlather@uni-bayreuth.de
 Date: Mon, 5 Aug 2002 22:35:02 +0200 (MET DST)
+* PR# 1879 *
+Subject: options(digits)
+From: Gordon Geoff <gordong@epa.nsw.gov.au>
+Date: Tue, 6 Aug 2002 09:36:57 +1000 
+* PR# 1880 *
+Subject:  You requested this report 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Tue, 6 Aug 2002 16:57:54 +0800
+* PR# 1881 *
+Subject: polygon() draws non-transparent border, erase.screen draws non-transparent border
+From: oehl_list@gmx.de
+Date: Tue, 6 Aug 2002 18:15:09 +0200 (MEST)
