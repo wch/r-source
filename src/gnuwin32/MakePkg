@@ -38,8 +38,7 @@ ifeq ($(strip RWIN32),)
   PKGRFILES=$(PKGRFILES0)
 else
   R1 = $(foreach i,$(RWIN32), $(addprefix $(SPKG)/R/, $(notdir $i)))
-  R2 = $(R1) $(SPKG)/R/system.unix.R $(SPKG)/R/system.mac.R
-  PKGRFILES=$(filter-out $(R2), $(PKGRFILES0)) $(RWIN32)
+  PKGRFILES=$(filter-out $(R1), $(PKGRFILES0)) $(RWIN32)
 endif
 
 # Others
