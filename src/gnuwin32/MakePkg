@@ -75,7 +75,6 @@ else
 endif
 	$(RM) -rf $(SPKG)/chm $(SPKG)/check
 
-#SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 
 $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKGRFILES)),)
@@ -91,6 +90,7 @@ endif
 $(DPKG)/demo: $(PKGDEMOS)
 ifneq ($(strip $(PKGDEMOS)),)
 	@echo "  installing demos"
+	@$(RM) -rf $@
 	@$(MKDIR) -p $@
 	@$(CP) $(PKGDEMOS)   $@
 endif
@@ -121,6 +121,7 @@ endif
 
 $(DATA): $(DSOURCES)
 	@echo "  installing data files"
+	@$(RM) -rf $(DATA)
 	@$(MKDIR) -p $(DATA)
 	@$(CP) $^  $@
 
@@ -153,6 +154,6 @@ MANWIN32=$(wildcard $(SPKG)/man/windows/*.[Rr]d)
 
 mansrcs:
 	@echo "  installing man source files"
+	@$(RM) -rf $(DPKG)/man
 	@$(MKDIR) -p $(DPKG)/man
-	@$(CP) -p $(SPKG)/man/*.[Rr]d $(MANWIN32) $(DPKG)/man
-
+	@$(CAT) $(SPKG)/man/*.[Rr]d $(MANWIN32) > $(DPKG)/man/$(PKG).Rd
