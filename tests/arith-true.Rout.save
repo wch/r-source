@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.64.0 Patched (unreleased snapshot) (May 3, 1999)
+Version 0.65.0 Under development (unstable) (June 8, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -37,6 +37,9 @@ Type	"q()" to quit R.
 > log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 [1] TRUE
 > log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
+[1] TRUE
+> 
+> log(0) == -Inf
 [1] TRUE
 > 
 > ## Real Trig.:

@@ -20,6 +20,8 @@ abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 
+log(0) == -Inf
+
 ## Real Trig.:
 cos(0) == 1
 sin(3*pi/2) == cos(pi)
