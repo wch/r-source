@@ -124,6 +124,8 @@ BUG FIXES
 
     o	df[, length_1_index] <- value did not recycle short rhs. (PR#4820)
 
+    o	median no longer `works' for odd-length factor variables.
+
 
 
 		CHANGES IN R VERSION 1.8.0
