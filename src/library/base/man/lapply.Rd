@@ -29,7 +29,7 @@ replicate(n, expr, simplify = TRUE)
   corresponding element of \code{X}.
 
   \code{sapply} is a ``user-friendly'' version of \code{lapply} also
-  accepting vectors as \code{X}, and returning a vector or array with
+  accepting vectors as \code{X}, and returning a vector or matrix with
   \code{dimnames} if appropriate.
 
   \code{replicate} is a wrapper for the common use of \code{sapply} for
