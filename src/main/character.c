@@ -103,11 +103,26 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 /* returned of length equal to the input vector x, each element of the */
 /* list is the collection of splits for the corresponding element of x. */
 
+static char *buff=NULL;	        /* Buffer for character strings */
+
+static void AllocBuffer(int len)
+{
+    static int bufsize=0;		/* Current buffer size */
+    if(len < bufsize) return;
+    len = (len+1)*sizeof(char);
+    if(len < MAXELTSIZE) len = MAXELTSIZE;
+    buff = (char *) realloc(buff, len);
+    if(!buff) {
+	bufsize = 0;
+	error("Could not allocate memory for strsplit");
+    }   
+}
+
 SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok;
-    char buff[MAXELTSIZE], *pt, *split = "";
+    char *pt, *split = "";
 
     checkArity(op, args);
     x = CAR(args);
@@ -119,6 +134,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(VECSXP, len));
     for (i = 0; i < len; i++) {
 	/* find out how many splits there will be */
+	AllocBuffer(strlen(CHAR(STRING(x)[i])));
 	strcpy(buff, CHAR(STRING(x)[i]));
 	if (tlen > 0) {
 	    split = CHAR(STRING(tok)[i % tlen]);
