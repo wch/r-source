@@ -156,7 +156,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     overdocObjs <- lsDocs[!lsDocs %in% lsCode]
     if((length(overdocObjs) > 0) && !isBase) {
         writeLines("\nObjects documented but missing from the code:")
-        print(overdocObjs)
+        print(unique(overdocObjs))
         writeLines("")
     }
 
