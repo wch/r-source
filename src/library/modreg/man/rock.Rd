@@ -5,6 +5,8 @@
 \name{rock}
 \alias{rock}
 \title{Measurements on Petroleum Rock Samples}
+\description{
+    Measurements on 48 rock samples from a petroleum reservoir.}
 \usage{data(rock)}
 \format{
     A data frame with 48 rows and 4 numeric columns.
