@@ -3,22 +3,34 @@
 
 rm140
 =====
+* Added the Preferences panel. The settings in .Renviron
+  are now superseeded by the prefences settings
+  .Renviron can be still used to simulate the Environment
+  for the Sys.getenv() call.
 * Added the item "Link Packages Help" to the "Help" menu.
-* fixed a big that leaves help menu items ghosted after
+* Fixed a big that leaves help menu items ghosted after
   using them.
-* some MRC Apple's Compiler speficif fixing.
+* Some MRC Apple's Compiler specific fixing.
+* Fixed problems with current working directory in different
+  points (.Rprofile, .Renviron, etc)
+* Solved the problem of line endings that are different from
+  MacOS and OS X. Now text files generated under both systems
+  are fine to R.
+* Makefiles and perl scripts have been fixed so that now R
+  builds via MPW shell scripts and help files are generated
+  as well.
+* A bug in the internal file viewer that suppressed the "_"
+  symbols from the text has been fixed.
+* This version of R is slower at startup but faster than
+  then previous release (by a factor of 10%) in calculations.
+* The initial window at startup has been suppressed in this
+  in the hope to provide am applescript analogous to pass
+  initial arguments to R.
+* The about box now reports informations on the current
+  release of R
+* Added the zlib capability so now R can manage gzipped 
+  files and connentions
+* Fixed some wrong links in html help files
 
-rm131
-=====
-* Added the "Config" menu
-* Fixed a bug in the lapack module. Complex functions are now
-  available.
-* Added MPW makefiles to build standard libraries and modules 
-* Added experimental script to build R via Apple's MRC compiler
-* Now R needs a new shared library "f2c" lib that will increase
-  portability for all fortran based packages
-* Added support for apple events. R begins to be a scriptable
-  application. Very limited support by now but will increase soon.
-  Some demo scripts have been added.
-* link.html.help() function has been added by picking windows code.
+
 
