@@ -346,8 +346,8 @@ str.default <-
 		else round(v.len)
 	    ile <- min(le, v.len)
 	    if(ile >= 1)  # truncate if LONG char:
-                object <- maybe_truncate(encodeString(as.character(object),
-                                                      quote= '"', na=FALSE))
+                object <- maybe_truncate(encodeString(object,
+                                                      quote= '"', na= FALSE))
                                         #en_object[1:ile]
 	    formObj <- function(x) paste(as.character(x), collapse=" ")
 	}
