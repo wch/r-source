@@ -24,7 +24,7 @@ binutils* bundles.)  We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system (under gcc-2.95.x but not
 earlier versions), and in the case of the mclust library found this
 more successful that the standard version.  Be aware that many
-Windows 95 machines do have MSVCRT.DLL installed.
+Windows 95 machines do not have MSVCRT.DLL installed.
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
