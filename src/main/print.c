@@ -136,8 +136,10 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(a); a = CDR(a);
     rowlab = CAR(a); a = CDR(a);
     collab = CAR(a); a = CDR(a);
+
     quote = asInteger(CAR(a)); a = CDR(a);
     R_print.right = asInteger(CAR(a));
+
 #ifdef OLD
     PROTECT(oldnames = getAttrib(x, R_DimNamesSymbol));
     /* fix up the dimnames */
@@ -158,6 +160,11 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(rowlab) == 0) rowlab = R_NilValue;
     if (length(collab) == 0) collab = R_NilValue;
 #endif
+    if (!isNull(rowlab) && !isString(rowlab))
+	errorcall(call, "invalid row labels");
+    if (!isNull(collab) && !isString(collab))
+	errorcall(call, "invalid column labels");
+
     printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right, rowlab, collab, rowname, colname);
 #ifdef OLD
     setAttrib(x, R_DimNamesSymbol, oldnames);
