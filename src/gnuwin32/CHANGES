@@ -19,6 +19,9 @@ unlink() on non-existent files no longer causes a crash.
 The new function win.version() will report details of the run-time
 Windows version, principally for use in bug.report().
 
+bug.report() has a new argument wait: wait=FALSE gives a non-modal editor
+screen.
+
 Generally TAB will move between fields in dialog boxes, and return and
 escape will work (selecting OK and Cancel) in the Change Directory
 dialog box.

@@ -193,23 +193,30 @@ static void xbuffixl(xbuf p)
    To be fixed: during creation, memory is allocated two times
    (faster for small files but a big waste otherwise)
 */
-static xbuf file2xbuf(char *name,int del)
+static xbuf file2xbuf(char *name, int del)
 {
     HANDLE f;
     DWORD rr, vv;
-    char *q, *p;
+    char *q, *p, buf[MAX_PATH + 25];
     xlong dim;
     xint  ms;
     xbuf  xb;
 
     f = CreateFile(name, GENERIC_READ, FILE_SHARE_WRITE,
 		   NULL, OPEN_EXISTING, 0, NULL);
-    if (f == INVALID_HANDLE_VALUE)
+    if (f == INVALID_HANDLE_VALUE) {
+	sprintf(buf, "File %s could not be opened by internal pager\n", name);
+	warning(buf);
 	return NULL;
+    }
     vv = GetFileSize(f, NULL);
     p = (char *) winmalloc((size_t) vv + 1);
     if (!p) {
 	CloseHandle(f);
+	sprintf(buf,
+		"Insufficient memory to display %s in internal pager\n",
+		name);
+	warning(buf);
 	return NULL;
     }
     ReadFile(f, p, vv, &rr, NULL);
@@ -730,7 +737,7 @@ FBEGIN
     *s = '\0';
     GlobalUnlock(hglb);
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-        askok("Impossible to open the clipboard");
+        askok("Unable to open the clipboard");
         GlobalFree(hglb);
         FVOIDRETURN;
     }
@@ -1178,7 +1185,7 @@ FBEGIN
     fp = fopen(s, "w");
     if (!fp) {
        char msg[256];
-       sprintf(msg, "Impossible to open %s", s);
+       sprintf(msg, "Unable to open %s", s);
        askok(s);
        FVOIDRETURN;
     }
@@ -1235,6 +1242,8 @@ FBEGIN
     HEIGHT = r.height;
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
+    if(p->lbuf) FVOIDRETURN;    /* don't implement resize if no content
+				   yet in pager */
     del(BM);
     BM = newbitmap(r.width, r.height, 2);
     if (!BM) {
@@ -1733,7 +1742,7 @@ static pager pagercreate()
 pager newpager1win(char *wtitle, char *filename, int deleteonexit)
 {
     if (!pagerInstance && !(pagerInstance = pagercreate())) {
-        askok("Impossible to create pager windows");
+        askok("Unable to create pager windows");
         return NULL;
     }
     if (!pageraddfile(wtitle, filename, deleteonexit)) return NULL;
