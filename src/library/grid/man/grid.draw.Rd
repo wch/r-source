@@ -1,6 +1,6 @@
 \name{grid.draw}
 \alias{grid.draw}
-\title{Draw a Grid Graphical Object}
+\title{Draw a grid grob}
 \description{
   Produces graphical output from a graphical object.
 }
@@ -13,24 +13,32 @@ grid.draw(x, recording=TRUE)
     operation should be recorded on the Grid display list.}
 }
 \details{
-  This function doesn't do much itself beyond some system bookkeeping.
+  This is a generic function with methods for grob and gTree objects.
 
-  It calls the generic function \code{draw.details}, dispatching on the
-  class of the \code{list.struct} within the graphical object, and
-  the actual drawing occurs in the appropriate method.
+  The grob and gTree methods automatically push any viewports in a
+  \code{vp} slot and automatically apply any \code{gpar} settings
+  in a \code{gp} slot.  In addition, the gTree method pushes and
+  ups any viewports in a \code{childrenvp} slot and automatically
+  calls \code{grid.draw} for any grobs in a \code{children} slot.
+
+  The methods for grob and gTree call the generic hook functions
+  \code{preDrawDetails}, \code{drawDetails}, and \code{postDrawDetails}
+  to allow classes derived from grob or gTree to perform
+  additional viewport pushing/popping and produce additional
+  output beyond the default behaviour for grobs and gTrees.
 }
 \value{
   None.
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{grid.grob}}.
+  \code{\link{grob}}.
 }
 
 \examples{
 grid.newpage()
 ## Create a graphical object, but don't draw it
-l <- grid.lines(draw=FALSE)
+l <- linesGrob()
 ## Draw it
 grid.draw(l)
 }

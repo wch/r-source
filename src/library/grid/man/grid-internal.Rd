@@ -180,21 +180,14 @@
 %% Part of the sensible export list but (currently?) documented as
 %% internal (or waiting for documentation to be written):
 %% <LIST>
-\alias{draw.details}
-\alias{editDetails}
 \alias{grid.legend}
 \alias{grid.multipanel}
 \alias{grid.panel}
-\alias{grid.prop.list}
 \alias{grid.strip}
-\alias{height.post.details}
-\alias{height.pre.details}
 \alias{is.unit}
 \alias{layoutRegion}
 \alias{viewport.layout}
 \alias{viewport.transform}
-\alias{width.post.details}
-\alias{width.pre.details}
 %% </LIST>
 %% Currently (?) exported as used in the grid.layout.Rd \example ...
 %% <LIST>

@@ -61,10 +61,10 @@ cellViewport <- function(col, row, border) {
   vp <- viewport(layout.pos.col=col, layout.pos.row=row)
   if (!is.null(border))
     vp <- vpStack(vp,
-                  viewport(x=grob$border[2],
-                           y=grob$border[1],
-                           width=unit(1, "npc") - sum(grob$border[c(2,4)]),
-                           height=unit(1, "npc") - sum(grob$border[c(1,3)]),
+                  viewport(x=border[2],
+                           y=border[1],
+                           width=unit(1, "npc") - sum(border[c(2,4)]),
+                           height=unit(1, "npc") - sum(border[c(1,3)]),
                            just=c("left", "bottom")))
   vp
 }

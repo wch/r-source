@@ -38,7 +38,8 @@ gList(...)
   A grid graphical object (grob) is a description of a graphical
   item.  These basic classes provide default behaviour for
   validating, drawing,
-  and modifying graphical objects.
+  and modifying graphical objects.  Both call the function
+  \code{validDetails} to check that the object returned is coherent.
 
   A gTree can have other grobs as children;  when a gTree is drawn, it
   draws all of its children.  Before drawing its children, a gTree

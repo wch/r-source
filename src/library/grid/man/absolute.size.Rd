@@ -17,17 +17,15 @@ absolute.size(unit)
   and \code{"lines"}.  Non-absolute units are \code{"npc"}
   and \code{"native"}.
 
-  This function is designed to be used in \code{width.details}
-  and \code{height.details} methods.
+  This function is designed to be used in \code{widthDetails}
+  and \code{heightDetails} methods.
 }
 \value{
   An object of class \code{"unit"}.
 }
 \author{ Paul Murrell }
 \seealso{
-  The code for \code{width.details}
-  and \code{height.details} methods.
-
-  The file \file{grid/doc/notes/parentchild.ps}.
+  \code{\link{widthDetails}}
+  and \code{\link{heightDetails}} methods.
 }
 \keyword{ dplot }

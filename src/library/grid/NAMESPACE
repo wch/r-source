@@ -34,7 +34,11 @@ export(
        "dataViewport", "plotViewport", 
        "downViewport", "upViewport", "seekViewport", 
        
-#       "drawDetails", "editDetails", 
+       "drawDetails", "preDrawDetails", "postDrawDetails",
+       "editDetails", 
+       "validDetails",
+       "heightDetails", "widthDetails",
+       
 #       "height", "heightDetails",
 #       "width", "widthDetails", 
 
@@ -66,7 +70,6 @@ export("draw.details",
        "grid.legend", "grid.multipanel",
        "grid.panel", "grid.strip",
        "layoutRegion",
-#       "validGrobDetails",
        "viewport.layout", "viewport.transform")
 
 ## Manipulated via C code ...
@@ -135,12 +138,12 @@ S3method("preDraw", "grob")
 S3method("preDraw", "gTree")
 S3method("preDrawDetails", "grob")
 S3method("postDrawDetails", "grob")
-S3method("validGrobDetails", "arrows")
-S3method("validGrobDetails", "grob")
-S3method("validGrobDetails", "lines")
-S3method("validGrobDetails", "line.to")
-S3method("validGrobDetails", "move.to")
-S3method("validGrobDetails", "segments")
+S3method("validDetails", "arrows")
+S3method("validDetails", "grob")
+S3method("validDetails", "lines")
+S3method("validDetails", "line.to")
+S3method("validDetails", "move.to")
+S3method("validDetails", "segments")
 S3method("widthDetails", "default")
 S3method("widthDetails", "frame")
 #S3method("width.details", "rect")

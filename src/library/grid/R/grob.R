@@ -51,11 +51,11 @@ checkgpSlot <- function(gp) {
       stop("Invalid gp slot")
 }
 
-validGrobDetails <- function(x) {
-  UseMethod("validGrobDetails")
+validDetails <- function(x) {
+  UseMethod("validDetails")
 }
 
-validGrobDetails.grob <- function(x) {
+validDetails.grob <- function(x) {
   x
 }
 
@@ -64,7 +64,7 @@ validGrob <- function(x) {
   checkgpSlot(x$gp)
   x$vp <- checkvpSlot(x$vp)
   # Validate other grob slots
-  x <- validGrobDetails(x)
+  x <- validDetails(x)
   return(x)
 }
 
@@ -169,7 +169,7 @@ gTree <- function(..., name=NULL, gp=NULL, vp=NULL,
   checkgpSlot(gt$gp)
   gt$vp <- checkvpSlot(gt$vp)
   checkvpSlot(gt$childrenvp)
-  # Add children before calling validGrobDetails!
+  # Add children before calling validGrob!
   if (length(children) > 0)
     for (i in 1:length(children))
       if (!is.null(children[[i]]))

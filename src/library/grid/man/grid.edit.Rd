@@ -29,7 +29,7 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE)
   is \code{TRUE} it then redraws everything to reflect the change.
 
   Both functions call \code{editDetails} to allow a grob to perform
-  custom actions and \code{validGrob} to check that the modified grob
+  custom actions and \code{validDetails} to check that the modified grob
   is still coherent.
   
 }

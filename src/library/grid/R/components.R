@@ -20,7 +20,7 @@ grid.collection <- function(..., gp=gpar(), draw=TRUE, vp=NULL) {
 # grid.xaxis and grid.yaxis.  These functions assume a unit for the `at'
 # values rather than letting the user specify a unit.
 
-validGrobDetails.axis <- function(x) {
+validDetails.axis <- function(x) {
   if (!is.null(x$at))
     x$at <- as.numeric(x$at)
   x$label <- as.logical(x$label)

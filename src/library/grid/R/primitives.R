@@ -2,7 +2,7 @@
 ######################################
 # move-to and line-to primitives
 ######################################
-validGrobDetails.move.to <- function(x) {
+validDetails.move.to <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y))
     stop("x and y must be units")
@@ -37,7 +37,7 @@ grid.move.to <- function(x=0, y=0,
   invisible(mtg)
 }
 
-validGrobDetails.line.to <- function(x) {
+validDetails.line.to <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y))
     stop("x and y must be units")
@@ -75,7 +75,7 @@ grid.line.to <- function(x=1, y=1,
 ######################################
 # LINES primitive
 ######################################
-validGrobDetails.lines <- function(x) {
+validDetails.lines <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y))
     stop("x and y must be units")
@@ -114,7 +114,7 @@ grid.lines <- function(x=unit(c(0, 1), "npc", units.per.obs),
 ######################################
 # SEGMENTS primitive
 ######################################
-validGrobDetails.segments <- function(x) {
+validDetails.segments <- function(x) {
   if (!is.unit(x$x0) || !is.unit(x$x1) ||
       !is.unit(x$y0) || !is.unit(x$y1))
     stop("x0, y0, x1, and y1 must be units")
@@ -160,7 +160,7 @@ grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 # ARROWS primitive
 ######################################
 
-validGrobDetails.arrows <- function(x) {
+validDetails.arrows <- function(x) {
   # If grob is specified, that overrides any x and y values
   grobName <- childNames(x)
   if (length(grobName) == 0) {
@@ -292,7 +292,7 @@ grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
 # POLYGON primitive
 ######################################
 
-validGrobDetails.polygon <- function(x) {
+validDetails.polygon <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y))
     stop("x and y must be units")
@@ -362,7 +362,7 @@ grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
 # CIRCLE primitive
 ######################################
 
-validGrobDetails.circle <- function(x) {
+validDetails.circle <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y) ||
       !is.unit(x$r))
@@ -400,7 +400,7 @@ grid.circle <- function(x=0.5, y=0.5, r=0.5,
 ######################################
 # RECT primitive
 ######################################
-validGrobDetails.rect <- function(x) {
+validDetails.rect <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y) ||
       !is.unit(x$width) ||
@@ -454,7 +454,7 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 ######################################
 # TEXT primitive
 ######################################
-validGrobDetails.text <- function(x) {
+validDetails.text <- function(x) {
   if (!is.expression(x$label))
     x$label <- as.character(x$label)
   if (!is.unit(x$x) ||
@@ -520,7 +520,7 @@ valid.pch <- function(pch) {
   pch
 }
 
-validGrobDetails.points <- function(x) {
+validDetails.points <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y) ||
       !is.unit(x$size))
