@@ -15,7 +15,6 @@ window(x, start, end)
 \code{window} is a generic function which
 extracts the subset of the object \code{x}
 observed between the times \code{start} and \code{end}.
-Methods are available for time series and point-processes.
 }
 \seealso{\code{\link{time}}, \code{\link{ts}}.}
 \examples{
