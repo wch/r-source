@@ -11,7 +11,7 @@
 NEW FEATURES
 
     o	Support for configuration and building the Unix version of R
-	under Mac OS X.  (The `classic' Macintosh port is `Carbonized'
+	under Mac OS X.	 (The `classic' Macintosh port is `Carbonized'
 	and also runs under that OS.)
 
     o	dotchart() and stripchart() become the preferred names for
@@ -87,12 +87,16 @@ BUG FIXES
 
     o	Calls to replacement functions ("f<-") lost argument names (PR#888)
 
-    o   is.na() and is.nan() gave random results on lists containing
+    o	is.na() and is.nan() gave random results on lists containing
 	zero-length objects.
 
-    o   cor(), cov() and var() gave a result on a zero-length argument
-	(now an error).  cov(x, NULL) and cor(x, NULL) are now errors
+    o	cor(), cov() and var() gave a result on a zero-length argument
+	(now an error).	 cov(x, NULL) and cor(x, NULL) are now errors
 	if x is a vector.  (PR#883).
+
+    o	?smooth.spline now properly describes `spar' which is *not* lambda.
+	smooth.spline(1:20, spar = 50) gives an error instead of silent
+	nonsense.  print.smooth.spline() now makes use of a digits argument.
 
 
 
