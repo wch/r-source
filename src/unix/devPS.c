@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998	      Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,7 +54,7 @@ typedef struct {
 	FILE *psfp;				/* output file */
 } postscriptDesc;
 
-static FontMetricInfo metrics[5]; 		/* font metrics */
+static FontMetricInfo metrics[5];		/* font metrics */
 
 	/* Device Driver Entry Point */
 
@@ -81,7 +82,7 @@ static void   PS_Resize(DevDesc*);
 static void   PS_StartPath(DevDesc*);
 static double PS_StrWidth(char*, DevDesc*);
 static void   PS_MetricInfo(int, double*, double*, double*, DevDesc*);
-static void   PS_Text(double, double, int, char*, double, double, double, 
+static void   PS_Text(double, double, int, char*, double, double, double,
 		      DevDesc*);
 
 	/* Support Routines */
@@ -91,16 +92,16 @@ static void   SetFont(int, int, DevDesc*);
 static void   SetLinetype(int, DevDesc*);
 static int    matchfamily(char *name);
 
-	/*  PostScript Device Driver Parameters  */
-	/*  cpars[0] = output filename           */
-	/*  cpars[1] = paper type                */
-	/*  cpars[2] = typeface                  */
-	/*  cpars[3] = background color          */
-	/*  cpars[4] = foreground color          */
-	/*  npars[0] = width in inches           */
-	/*  npars[1] = height in inches          */
-	/*  npars[2] = landscape                 */
-	/*  npars[3] = pointsize                 */
+	/*  PostScript Device Driver Parameters	 */
+	/*  cpars[0] = output filename		 */
+	/*  cpars[1] = paper type		 */
+	/*  cpars[2] = typeface			 */
+	/*  cpars[3] = background color		 */
+	/*  cpars[4] = foreground color		 */
+	/*  npars[0] = width in inches		 */
+	/*  npars[1] = height in inches		 */
+	/*  npars[2] = landscape		 */
+	/*  npars[3] = pointsize		 */
 
 
 int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
@@ -120,8 +121,8 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 		error("filename to long in postscript\n");
 	}
 
-        /* allocate new postscript device description */
-	if (!(pd = (postscriptDesc *) malloc(sizeof(postscriptDesc)))) 
+	/* allocate new postscript device description */
+	if (!(pd = (postscriptDesc *) malloc(sizeof(postscriptDesc))))
 		return 0;
 
 	/* from here on, if need to bail out with "error", must also */
@@ -145,28 +146,28 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
 		/* Deal with paper and plot size and orientation */
 
-	if(!strcmp(pd->papername, "Default") || 
+	if(!strcmp(pd->papername, "Default") ||
 	   !strcmp(pd->papername, "default")) {
 		char *ps = getenv("R_PAPERSIZE");
 		if(ps) strcpy(pd->papername, ps);
 		else strcpy(pd->papername, "a4");
 	}
-	if(!strcmp(pd->papername, "A4") || 
+	if(!strcmp(pd->papername, "A4") ||
 	   !strcmp(pd->papername, "a4")) {
 		pd->pagewidth  = 21.0/2.54;
 		pd->pageheight = 29.7/2.54;
 	}
-	else if(!strcmp(pd->papername, "Letter") || 
+	else if(!strcmp(pd->papername, "Letter") ||
 		!strcmp(pd->papername, "letter")) {
 		pd->pagewidth  =  8.5;
 		pd->pageheight = 11.0;
 	}
-	else if(!strcmp(pd->papername, "Legal") || 
+	else if(!strcmp(pd->papername, "Legal") ||
 		!strcmp(pd->papername, "legal")) {
 		pd->pagewidth  =  8.5;
 		pd->pageheight = 14.0;
 	}
-	else if(!strcmp(pd->papername, "Executive") || 
+	else if(!strcmp(pd->papername, "Executive") ||
 		!strcmp(pd->papername, "executive")) {
 		pd->pagewidth  =  7.25;
 		pd->pageheight = 10.5;
@@ -190,9 +191,9 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 		pd->height = pd->pageheight-0.5;
 	xoff = (pd->pagewidth - pd->width)/2.0;
 	yoff = (pd->pageheight - pd->height)/2.0;
-	pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ? 
-			            pd->pageheight : pd->pagewidth);
-	
+	pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ?
+				    pd->pageheight : pd->pagewidth);
+
 	pd->pageno = 0;
 	pd->lty = 1;
 
@@ -202,7 +203,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	dd->dp.bg = pd->bg;
 	dd->dp.fg = dd->dp.col = pd->col;
 	dd->dp.left = 72 * xoff;			/* left */
-	dd->dp.right = 72 * (xoff + pd->width); 	/* right */
+	dd->dp.right = 72 * (xoff + pd->width);		/* right */
 	dd->dp.bottom = 72 * yoff;			/* bottom */
 	dd->dp.top = 72 * (yoff + pd->height);		/* top */
 
@@ -231,6 +232,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
 	dd->dp.ipr[0] = 1.0/72.0;
 	dd->dp.ipr[1] = 1.0/72.0;
+	/* GREset(.)  dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 
 	dd->dp.canResizePlot = 0;
 	dd->dp.canChangeFont = 1;
@@ -279,56 +281,56 @@ static char *FamilyName[][6][2] = {
 	  { "AvantGarde-Demi",				"AvantD",},
 	  { "AvantGarde-BookOblique",			"AvantBO",},
 	  { "AvantGarde-DemiOblique",			"AvantDO",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "Bookman",					"Bookman",},
 	  { "Bookman-Light",				"BookL",},
 	  { "Bookman-Demi",				"BookD",},
 	  { "Bookman-LightItalic",			"BookLI",},
 	  { "Bookman-DemiItalic",			"BookDI",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "Courier",					"Courier",},
 	  { "Courier",					"Cour",},
 	  { "Courier-Bold",				"CourB",},
 	  { "Courier-BoldOblique",			"CourBO",},
 	  { "Courier-Oblique",				"CourO",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "Helvetica",				"Helvetica",},
 	  { "Helvetica",				"Helv",},
 	  { "Helvetica-Bold",				"HelvB",},
 	  { "Helvetica-Oblique",			"HelvO",},
 	  { "Helvetica-BoldOblique",			"HelvBO",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "Helvetica-Narrow",				"Helvetica-Narrow",},
 	  { "Helvetica-Narrow",				"HelvN",},
 	  { "Helvetica-Narrow-Bold",			"HelvNB",},
 	  { "Helvetica-Narrow-Oblique",			"HelvNO",},
 	  { "Helvetica-Narrow-BoldOblique",		"HelvNBO",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "NewCenturySchoolbook",			"NewCenturySchoolbook",},
 	  { "NewCenturySchlbk-Roman",			"NCSchlR",},
 	  { "NewCenturySchlbk-Bold",			"NCSchlB",},
 	  { "NewCenturySchlbk-Italic",			"NCSchlI",},
 	  { "NewCenturySchlbk-BoldItalic",		"NCSchlBI"},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "Palatino",					"Palatino",},
 	  { "Palatino-Roman",				"PalatR",},
 	  { "Palatino-Bold",				"PalatB",},
 	  { "Palatino-Italic",				"PalatI",},
 	  { "Palatino-BoldItalic",			"PalatBI",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	{ { "Times",					"Times",},
 	  { "Times-Roman",				"TimesR",},
 	  { "Times-Bold",				"TimesB",},
-          { "Times-Italic",				"TimesI",},
+	  { "Times-Italic",				"TimesI",},
 	  { "Times-BoldItalic",				"TimesBI",},
-	  { "Symbol", 					"Symbol",}, },
+	  { "Symbol",					"Symbol",}, },
 
 	NULL
 };
@@ -348,7 +350,7 @@ static void SetColor(int color, DevDesc *dd)
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
 
 	if(color != pd->col) {
-		PostScriptSetColor(pd->psfp, 
+		PostScriptSetColor(pd->psfp,
 			R_RED(color)/255.0,
 			R_GREEN(color)/255.0,
 			R_BLUE(color)/255.0);
@@ -459,8 +461,8 @@ static void PS_NewPage(DevDesc *dd)
 	PostScriptSetLineWidth(pd->psfp, 0.75);
 	PostScriptSetColor(pd->psfp,
 			R_RED(pd->col)/255.0,
-                        R_GREEN(pd->col)/255.0,
-                        R_BLUE(pd->col)/255.0);
+			R_GREEN(pd->col)/255.0,
+			R_BLUE(pd->col)/255.0);
 	if(dd->dp.bg != R_RGB(255,255,255)) {
 		SetColor(dd->dp.bg, dd);
 #ifdef OLD
@@ -505,7 +507,7 @@ static double PS_StrWidth(char *str, DevDesc *dd)
 static void PS_MetricInfo(int c, double *ascent, double *descent, double *width,
 			  DevDesc *dd)
 {
-	PostScriptMetricInfo(c, ascent, descent, width, 
+	PostScriptMetricInfo(c, ascent, descent, width,
 			     &(metrics[dd->gp.font-1]));
 	*ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
 	*descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
@@ -529,7 +531,7 @@ static void PS_EndPath(DevDesc *dd)
 }
 
 static void PS_Rect(double x0, double y0, double x1, double y1, int coords,
-                    int bg, int fg, DevDesc *dd)
+		    int bg, int fg, DevDesc *dd)
 {
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
 
@@ -546,7 +548,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1, int coords,
 	}
 }
 
-static void PS_Circle(double x, double y, int coords, double r, 
+static void PS_Circle(double x, double y, int coords, double r,
 		      int bg, int fg, DevDesc *dd)
 {
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
@@ -567,7 +569,7 @@ static void PS_Line(double x1, double y1, double x2, double y2,
 		    int coords, DevDesc *dd)
 {
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
-	
+
 	GConvert(&x1, &y1, coords, DEVICE, dd);
 	GConvert(&x2, &y2, coords, DEVICE, dd);
 	SetColor(dd->gp.col, dd);
@@ -644,7 +646,7 @@ static void PS_Polyline(int n, double *x, double *y, int coords,
 	fprintf(pd->psfp, "o\n");
 }
 
-static void PS_Text(double x, double y, int coords, 
+static void PS_Text(double x, double y, int coords,
 		    char *str, double xc, double yc, double rot, DevDesc *dd)
 {
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
