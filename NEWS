@@ -5488,7 +5488,7 @@ BUG FIXES
 
     o	Add explicit test for rank-deficient residuals to summary.manova().
 
-    o	The help search databases did not contain the data from the
+    o	The help search data bases did not contain the data from the
 	platform-specific help files.
 
     o	parse.dcf() and hence package.contents() now work with a warning
