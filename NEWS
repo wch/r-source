@@ -284,9 +284,6 @@ BUG FIXES
     o	Warnings from .Last or closing devices are printed where
 	sensible (e.g. not on GNOME nor Windows console).
 
-    o	qnorm() is now based on AS 241 instead of AS 111, and should
-	give precise results up to 16 digits precision.
-
     o	add1.glm() and drop1.glm gave() incorrect results in the "Chisq"
 	test option when the scale was estimated.
 
@@ -348,6 +345,9 @@ BUG FIXES
 
     o	proj.aovlist() now gives a non-zero result for strata with
 	no fitted effects.
+
+    o	qnorm() is now based on AS 241 instead of AS 111, and should
+	give precise results up to 16 digits precision.
 
     o	rgeom(, prob=1) gives 0 rather than NA
 
