@@ -15,6 +15,8 @@ DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = stats4
 
+R_EXE = $(top_builddir)/bin/R --vanilla
+
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R

@@ -72,6 +72,9 @@ all: Makefile DESCRIPTION
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  echo "makeLazyLoading(\"$(pkg)\")") | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	@echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null
+
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
