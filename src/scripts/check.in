@@ -28,11 +28,13 @@ use File::Path;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
+use R::Rd;
+use Text::DelimMatch;
 
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.47.4.3 $ ';
+my $revision = ' $Revision: 1.47.4.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -434,7 +436,7 @@ sub check_pkg {
 	$log->result("OK") unless $any;
     }
 
-    ## check Rd documentation files
+    ## check R documentation files
     
     if(-d "man") {
 	$log->checking("Rd files");
@@ -472,9 +474,9 @@ sub check_pkg {
 	my @uniqueTags = qw(name title description usage arguments
 			    format details value references source
 			    seealso examples note author synopsis);
+	my @badbraces;	
 	my %badmandatory;
 	my %badunique;
-	
 	my %badkeywords;
 	
 	## create hash allTags with all tags found in mandatory Tags and
@@ -486,12 +488,12 @@ sub check_pkg {
 	}
 	
 	foreach $rdfile (@rdfiles) {
-	    open rdfile, "< $rdfile" ||
+	    open RDFILE, "< $rdfile" ||
 		die "cannot open \`$rdfile' for reading\n";
 
 	    my %keywords;
 	    my %tagcount;
-	    while(<rdfile>) {
+	    while(<RDFILE>) {
 		my $line = $_;
 		foreach $tag (keys %allTags) {
 		    if($line =~ /^\s*\\$tag/) {
@@ -502,7 +504,7 @@ sub check_pkg {
                     $keywords{$1} = 1;
                 }
 	    }
-	    close rdfile;
+	    close RDFILE;
 	    
 	    foreach $tag (@mandatoryTags) {
 		push(@{$badmandatory{$tag}}, $rdfile)
@@ -516,9 +518,43 @@ sub check_pkg {
                 push(@{$badkeywords{$rdfile}}, $key)
                     unless $standard_keywords{$key};
             }
+
+	    ## Check for unbalanced braces.
+	    my $text = "";
+	    ## Read the Rd file via Rdpp, and get rid of the \alias
+	    ## entries as these may have unbalanced braces (Paren.Rd).
+	    my @lines = split(/\n/, R::Rd::Rdpp($rdfile, $OS));
+	    foreach $line (@lines) {
+		$text .= "\n$line" unless ($line =~ /^\\alias/);
+	    }
+	    $text .= "\n";
+	    my $dc = new Text::DelimMatch;
+	    $dc->delim("\{", "\}");
+	    $dc->escape("\\");
+	    $text =~ s/([^\\])%.*\n/$1\n/g; # ???
+	    ## Now loop through matching pairs of braces.
+	    while($dc->match($text)) {
+		$text = $dc->post_matched;
+	    }
+	    ## Get rid of trailing comments.
+	    $text =~ s/^%.*\n/\n/gs;
+	    $text =~ s/\n%.*\n/\n/gs;
+	    ## Anything left in $text means unbalanced.
+	    if(!($text =~ /^\s*$/)) {
+		push(@badbraces, $rdfile);
+	    }
+	    
 	}
 
 	my $any = 0;
+
+	if($#badbraces >= 0) {
+	    $log->warning("") unless $any;
+	    $any++;
+	    $log->message("  Rd files with unbalanced braces:");
+	    $log->message("    " . join("\n    ", @badbraces));
+	}
+
 	foreach $tag (@mandatoryTags) {
 	    if(exists $badmandatory{$tag}) {
 		$log->warning("") unless $any;
