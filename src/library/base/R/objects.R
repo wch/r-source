@@ -63,6 +63,7 @@ methods <- function (generic.function, class)
         genfun <- get(generic.function, mode = "function",
                       envir = parent.frame())
 	name <- paste("^", generic.function, ".", sep = "")
+        name <- gsub("\\$", "\\\\$", name) # $ and $<- are generics
         ## also look for registered methods from namespaces
         if(generic.function %in% S3groupGenerics)
             defenv <- .BaseNamespaceEnv
@@ -90,7 +91,7 @@ methods <- function (generic.function, class)
 	name <- paste(".", class, "$", sep = "")
     }
     else stop("must supply generic.function or class")
-    keep <- grep(gsub("([.[$])", "\\\\\\1", name), an)
+    keep <- grep(gsub("([.[])", "\\\\\\1", name), an)
     res <- an[keep]; info <- info[keep,]
     keep <- ! res %in% S3MethodsStopList
     res <- res[keep]; info <- info[keep,]

@@ -57,6 +57,7 @@ methods(generic.function, class)
 methods(summary)
 methods(class = "aov")
 methods("[[")  ##- does not list the C-internal ones...
+methods("$<-") # replacement function
 \dontrun{methods(print)
 }}
 \keyword{methods}
