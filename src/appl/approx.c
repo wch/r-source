@@ -33,12 +33,16 @@
  * Linear/constant interpolation then takes place on that interval
 */
 
-static double ylow;
-static double yhigh;
-static double f1;
-static double f2;
+typedef struct {
+    double ylow;
+    double yhigh;
+    double f1;
+    double f2;
+    int kind;
+} appr_meth;
 
-static double approx1(double v, double *x, double *y, int n, int method)
+static double approx1(double v, double *x, double *y, int n, 
+		      appr_meth *Meth)
 {
     /* Approximate  y(v),  given (x,y)[i], i = 0,..,n-1 */
     int i, j, ij;
@@ -48,28 +52,30 @@ static double approx1(double v, double *x, double *y, int n, int method)
 
     /* handle out-of-domain points */
 
-    if(v < x[i]) return ylow;
-    if(v > x[j]) return yhigh;
+    if(v < x[i]) return Meth->ylow;
+    if(v > x[j]) return Meth->yhigh;
 
     /* find the correct interval by bisection */
 
-    while(i < j - 1) {
-	ij = (i + j)/2;
+    while(i < j - 1) { /* x[i] <= v <= x[j] */
+	ij = (i + j)/2; /* i+1 <= ij <= j-1 */
 	if(v < x[ij]) j = ij;
 	else i = ij;
+	/* still i < j */
     }
+    /* provably have i == j-1 */
 
     /* interpolation */
 
-    if(v == x[i]) return y[i];
     if(v == x[j]) return y[j];
-    if(x[j] == x[i]) return y[i];
+    if(v == x[i]) return y[i];
+    /* impossible: if(x[j] == x[i]) return y[i]; */
 
-    if(method == 1) { /* linear */
+    if(Meth->kind == 1) { /* linear */
 	return y[i] + (y[j] - y[i]) * ((v - x[i])/(x[j] - x[i]));
     }
     else { /* 2 : constant */
-	return y[i] * f1 + y[j] * f2;
+	return y[i] * Meth->f1 + y[j] * Meth->f2;
     }
 }
 
@@ -79,6 +85,7 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	      int *method, double *yleft, double *yright, double *f)
 {
     int i;
+    appr_meth M;
 
     /* check interpolation method */
 
@@ -88,8 +95,8 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
     case 2: /* constant */
 	if(!R_FINITE(*f) || *f < 0 || *f > 1)
 	    error("approx(): invalid f value");
-	f2 = *f;
-	f1 = 1 - *f;
+	M.f2 = *f;
+	M.f1 = 1 - *f;
 	break;
     default:
 	error("approx(): invalid interpolation method");
@@ -100,11 +107,12 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	if(ISNA(x[i]) || ISNA(y[i]))
 	    error("approx(): attempted to interpolate NA values");
 
-    ylow = *yleft;
-    yhigh = *yright;
+    M.kind = *method;
+    M.ylow = *yleft;
+    M.yhigh = *yright;
 
-    for(i=0 ; i<*nout ; i++)
+    for(i=0 ; i < *nout; i++)
 	if(!ISNA(xout[i]))
-	    xout[i] = approx1(xout[i], x, y, *nxy, *method);
+	    xout[i] = approx1(xout[i], x, y, *nxy, &M);
 }
 

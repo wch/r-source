@@ -430,6 +430,9 @@ BUG FIXES
 
     o	asInteger was ignoring integer overflow (PR#929 and others).
 
+    o	approxfun(*, ties = <fun>) could return garbage when there were ties;
+	ties = "ordered" was incorrect--also for approx()-- when there was
+	a tie at the very right.
 
 
 	**************************************************
