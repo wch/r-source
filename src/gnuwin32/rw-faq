@@ -399,7 +399,7 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, make sure you installed the necessary
-files from `rw1062.exe'.  Then read the file `README.packages'.  You
+files from `rw1062.exe'.  Then read the file `readme.packages'.  You
 will need to collect and install several tools to use this: you can
 download them via the portal at
 `http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you have done so, just
@@ -547,17 +547,17 @@ with `--vanilla' to be able to update package `foo'.
 4.2 I hear about some nifty features: please tell me about them!
 ================================================================
 
-You have read the `README'? There are file menus on the R console,
-pager and graphics windows.  You can source and save from those menus,
-and copy the graphics to `png', `jpeg', `bmp', `postscript', `PDF' or
-`metafile'.  There are right-click menus giving shortcuts to menu
-items, and optionally toolbars with buttons giving shortcuts to
-frequent operations.
+You have read the `README.rw1062'? There are file menus on the R
+console, pager and graphics windows.  You can source and save from
+those menus, and copy the graphics to `png', `jpeg', `bmp',
+`postscript', `PDF' or `metafile'.  There are right-click menus giving
+shortcuts to menu items, and optionally toolbars with buttons giving
+shortcuts to frequent operations.
 
 If you resize the R console the `options(width=)' is automatically set
 to the console width (unless disabled in the configuration file).
 
-The graphics has a history mechanism.  As the README says:
+The graphics has a history mechanism.  As README.rw1062 says:
 
      `The History menu allows the recording of plots.  When plots have
      been recorded they can be reviewed by <PgUp> and <PgDn>, saved and

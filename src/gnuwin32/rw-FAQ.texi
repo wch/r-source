@@ -465,7 +465,7 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 If there is not a pre-compiled version or that is not up-to-date or
 you prefer compiling from source, make sure you installed the
 necessary files from @code{@RWVER@.exe}.  Then read the file
-@file{README.packages}.  You will need to collect and install several
+@file{readme.packages}.  You will need to collect and install several
 tools to use this: you can download them via the portal at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}.  Once you have done so,
 just run @code{Rcmd INSTALL pkgname}.  To check the package (including
@@ -641,7 +641,7 @@ of @code{shell()}.
 @node I hear about some nifty features., Circles appear as ovals on screen, What should I expect to behave differently from the Unix version, Windows Features
 @section I hear about some nifty features: please tell me about them!
 
-You have read the @code{README}? There are file menus on the R console,
+You have read the @code{README.@RWVER@}? There are file menus on the R console,
 pager and graphics windows.  You can source and save from those menus,
 and copy the graphics to @code{png}, @code{jpeg}, @code{bmp},
 @code{postscript}, @code{PDF} or @code{metafile}.  There are right-click
@@ -651,7 +651,7 @@ buttons giving shortcuts to frequent operations.
 If you resize the R console the @code{options(width=)} is automatically
 set to the console width (unless disabled in the configuration file).
 
-The graphics has a history mechanism.  As the README says:
+The graphics has a history mechanism.  As README.@RWVER@ says:
 
 @quotation
 `The History menu allows the recording of plots.  When plots have been

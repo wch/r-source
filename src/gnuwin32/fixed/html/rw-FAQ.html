@@ -6,25 +6,26 @@
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
-<meta name="generator" content="makeinfo 4.2">
+<meta name="generator" content="makeinfo 4.3">
 <link href="http://www.gnu.org/software/texinfo/" rel=
 "generator-home">
 </head>
 <body>
-<h1>R for Windows FAQ</h1>
+<h1 class="settitle">R for Windows FAQ</h1>
 
 <h2>Version for <tt>rw1062</tt></h2>
 
 <address>B. D. Ripley</address>
 
 <hr>
+<div class="contents">
 <h2>Table of Contents</h2>
 
 <ul>
-<li><a name="toc_Introduction"></a> <a href="#Introduction">1
+<li><a name="toc_Introduction" href="#Introduction">1
 Introduction</a></li>
 
-<li><a name="toc_Installation%20and%20Usage"></a> <a href=
+<li><a name="toc_Installation%20and%20Usage" href=
 "#Installation%20and%20Usage">2 Installation and Usage</a> 
 <ul>
 <li><a href=
@@ -87,7 +88,7 @@ crashes.</a></li>
 </ul>
 </li>
 
-<li><a name="toc_Packages"></a> <a href="#Packages">3 Packages</a> 
+<li><a name="toc_Packages" href="#Packages">3 Packages</a> 
 <ul>
 <li><a href=
 "#Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
@@ -123,8 +124,8 @@ Hyperlinks in Compiled HTML sometimes do not work.</a></li>
 </ul>
 </li>
 
-<li><a name="toc_Windows%20Features"></a> <a href=
-"#Windows%20Features">4 Windows Features</a> 
+<li><a name="toc_Windows%20Features" href="#Windows%20Features">4
+Windows Features</a> 
 <ul>
 <li><a href=
 "#What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
@@ -144,8 +145,7 @@ console?</a></li>
 </ul>
 </li>
 
-<li><a name="toc_Workspaces"></a> <a href="#Workspaces">5
-Workspaces</a> 
+<li><a name="toc_Workspaces" href="#Workspaces">5 Workspaces</a> 
 <ul>
 <li><a href=
 "#My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
@@ -162,7 +162,7 @@ this?</a></li>
 </ul>
 </li>
 
-<li><a name="toc_The%20R%20Console%20and%20Fonts"></a> <a href=
+<li><a name="toc_The%20R%20Console%20and%20Fonts" href=
 "#The%20R%20Console%20and%20Fonts">6 The R Console and Fonts</a> 
 <ul>
 <li><a href=
@@ -184,7 +184,7 @@ lines in the console or pager are truncated.</a></li>
 </ul>
 </li>
 
-<li><a name="toc_Building%20from%20Source"></a> <a href=
+<li><a name="toc_Building%20from%20Source" href=
 "#Building%20from%20Source">7 Building from Source</a> 
 <ul>
 <li><a href="#How%20can%20I%20compile%20R%20from%20source%3f">7.1
@@ -218,19 +218,20 @@ output from my Fortran code disappears. Why?</a></li>
 </ul>
 </li>
 </ul>
+</div>
 
 <a name="Top"></a>  
 <hr>
 <a name="Introduction"></a> 
-<h2>1 Introduction</h2>
+<h2 class="chapter">1 Introduction</h2>
 
 <p>This FAQ is for the Windows port of R: it describes features
-specific to that version. The main R FAQ can be found at<br>
-</p>
+specific to that version. The main R FAQ can be found at</p>
 
-<pre>
-<a href=
+<pre class="display">
+     <a href=
 "http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a>.
+    
 </pre>
 
 <p>The information here applies only to recent versions of R for
@@ -240,10 +241,10 @@ officially).</p>
 
 <hr>
 <a name="Installation%20and%20Usage"></a> 
-<h2>2 Installation and Usage</h2>
+<h2 class="chapter">2 Installation and Usage</h2>
 
 <a name="Where%20can%20I%20find%20the%20latest%20version%3f"></a> 
-<h3>2.1 Where can I find the latest version?</h3>
+<h3 class="section">2.1 Where can I find the latest version?</h3>
 
 <p>Go to any CRAN site (see <a href=
 "http://cran.r-project.org/mirrors.html">http://cran.r-project.org/mirrors.html</a>
@@ -260,7 +261,7 @@ and eight files <code>miniR-?.bin</code>. You can put
 and the remaining <code>miniR-?.bin</code> on a floppy each. <a
 name="How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
 
-<h3>2.2 How do I install R for Windows?</h3>
+<h3 class="section">2.2 How do I install R for Windows?</h3>
 
 <p>First, you need Windows 95/98/ME/NT4/2000/XP: Windows
 3.11+win32s will not work. Your file system must allow long file
@@ -295,7 +296,7 @@ at the end of the Target field, for example
 <code>R_LIBS=p:/myRlib</code>. <a name=
 "How%20do%20I%20run%20it%3f"></a></p>
 
-<h3>2.3 How do I run it?</h3>
+<h3 class="section">2.3 How do I run it?</h3>
 
 <p>Just double-click on the shortcut you prepared at
 installation.</p>
@@ -312,7 +313,7 @@ anything you would put in the Target field of a shortcut, and the
 starting directory will be the currect working directory of the
 shell.) <a name="How%20do%20I%20UNinstall%20R%3f"></a></p>
 
-<h3>2.4 How do I UNinstall R?</h3>
+<h3 class="section">2.4 How do I UNinstall R?</h3>
 
 <p>Normally you can do this from the R group on the Start Menu or
 from the <code>Add/Remove Programs</code> in the Control Panel. If
@@ -327,7 +328,7 @@ not for example packages you have installed.</p>
 which R was installed. <a name=
 "What's%20the%20best%20way%20to%20upgrade%3f"></a></p>
 
-<h3>2.5 What's the best way to upgrade?</h3>
+<h3 class="section">2.5 What's the best way to upgrade?</h3>
 
 <p>That's a matter of taste. For most people the best thing to do
 is to uninstall R (see the previous Q), install the new version,
@@ -340,7 +341,8 @@ parallel folders so you can keep old versions around if you prefer.
 "There%20seems%20to%20be%20a%20limit%20on%20the%20memory%20it%20uses!">
 </a></p>
 
-<h3>2.6 There seems to be a limit on the memory it uses!</h3>
+<h3 class="section">2.6 There seems to be a limit on the memory it
+uses!</h3>
 
 <p>Indeed there is. It is set by the command-line flag
 <code>--max-mem-size</code> (see <a href=
@@ -368,8 +370,8 @@ slower (making R several times slower on some tasks). <a name=
 "How%20can%20I%20keep%20workspaces%20for%20different%20projects%20in%20different%20directories%3f">
 </a></p>
 
-<h3>2.7 How can I keep workspaces for different projects in
-different directories?</h3>
+<h3 class="section">2.7 How can I keep workspaces for different
+projects in different directories?</h3>
 
 <p>Create a separate shortcut for each project: see Q2.3. All the
 paths to files used by R are relative to the starting directory, so
@@ -383,7 +385,7 @@ onto an R shortcut. In either case, the working directory will be
 set to that containing the file. <a name=
 "How%20do%20I%20print%20from%20R%3f"></a></p>
 
-<h3>2.8 How do I print from R?</h3>
+<h3 class="section">2.8 How do I print from R?</h3>
 
 <p>It depends what you want to print.</p>
 
@@ -404,7 +406,7 @@ have LaTeX installed you can print help files by
 </ul>
 
 <a name="Can%20I%20use%20R%20BATCH%3f"></a> 
-<h3>2.9 Can I use <code>R BATCH</code>?</h3>
+<h3 class="section">2.9 Can I use <code>R BATCH</code>?</h3>
 
 <p>Yes, if you have Perl and the files for making source packages
 (from <code>rw1062.exe</code>) installed. The Windows analogue is
@@ -413,16 +415,17 @@ full details.</p>
 
 <p>Otherwise you can set up a batch file using
 <code>Rterm.exe</code>. A sample batch file might contain (as one
-line)<br>
-</p>
+line)</p>
 
-<pre>
-path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
+<pre class="example">
+     path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
+    
 </pre>
 
 <a name=
 "Can%20I%20use%20rw1062%20with%20ESS%20and%20(X)emacs%3f"></a> 
-<h3>2.10 Can I use rw1062 with ESS and (X)emacs?</h3>
+<h3 class="section">2.10 Can I use rw1062 with ESS and
+(X)emacs?</h3>
 
 <p>Yes. Recent versions of ESS (e.g. 5.1.20) come with support for
 this version of R, and there is support for interrupting the R
@@ -433,7 +436,8 @@ process from ESS (by <code>C-c C-c</code>).</p>
 mailing lists. <a name=
 "What%20are%20HOME%20and%20working%20directories%3f"></a></p>
 
-<h3>2.11 What are HOME and working directories?</h3>
+<h3 class="section">2.11 What are HOME and working
+directories?</h3>
 
 <p>Several places in the documentation use these terms.</p>
 
@@ -457,24 +461,25 @@ If all of these fail, the current working directory is used.</p>
 <code>Sys.getenv("R_USER")</code>. <a name=
 "How%20do%20I%20set%20environment%20variables%3f"></a></p>
 
-<h3>2.12 How do I set environment variables?</h3>
+<h3 class="section">2.12 How do I set environment variables?</h3>
 
 <p>Environment variables can be set in R in three different
 ways.</p>
 
 <ol type="1" start="1">
 <li>On the command line as name=value pairs. For example in the
-shortcut to <code>RGui</code> you could have<br>
-<pre>
-path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+shortcut to <code>RGui</code> you could have 
+<pre class="example">
+          path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+         
 </pre>
 </li>
 
 <li>In an environment file <code>.Renviron</code> in the working
-directory or your home directory, for example containing the
-line<br>
-<pre>
-R_LIBS=p:/myRlib
+directory or your home directory, for example containing the line 
+<pre class="example">
+          R_LIBS=p:/myRlib
+         
 </pre>
 
 <p>See <code>?Startup</code> for more details of environment
@@ -497,7 +502,8 @@ in which these options are listed, that is the command line then
 <code>.Renviron</code> then the inherited environment. <a name=
 "R%20can't%20find%20my%20file"></a></p>
 
-<h3>2.13 R can't find my file, but I know it is there!</h3>
+<h3 class="section">2.13 R can't find my file, but I know it is
+there!</h3>
 
 <p>How did you specify it? Backslashes have to be doubled in R
 character strings, so for example one needs
@@ -514,7 +520,7 @@ Properties of the file on most versions of Windows, and from
 <code>dir /X</code> in a <code>Command Prompt</code> window on
 2000/XP). <a name="Does%20R%20use%20the%20Registry%3f"></a></p>
 
-<h3>2.14 Does R use the Registry?</h3>
+<h3 class="section">2.14 Does R use the Registry?</h3>
 
 <p>Not itself.</p>
 
@@ -534,7 +540,8 @@ settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations. <a name=
 "Entering%20certain%20characters%20crashes%20Rgui."></a></p>
 
-<h3>2.15 Entering certain characters crashes Rgui.</h3>
+<h3 class="section">2.15 Entering certain characters crashes
+Rgui.</h3>
 
 <p>This used to happen occasionally, and all the occurrences we
 have solved have been traced to faulty versions of
@@ -555,7 +562,7 @@ results in the date-time functions. However, you are probably
 better off re-installing Windows. <a name=
 "The%20internet%20download%20functions%20fail."></a></p>
 
-<h3>2.16 The internet download functions fail.</h3>
+<h3 class="section">2.16 The internet download functions fail.</h3>
 
 <p>for example <code>update.packages</code> and the menu items on
 the Packages menu.</p>
@@ -573,7 +580,7 @@ so needs Internet Explorer 4 or later installed).</p>
 <p>(b) A proxy needs to be set up: see <code>?download.file</code>.
 <a name="Other%20strange%20crashes."></a></p>
 
-<h3>2.17 Other strange crashes.</h3>
+<h3 class="section">2.17 Other strange crashes.</h3>
 
 <p>Some users have found that <code>Rgui.exe</code> fails to start,
 exiting with a "Floating- point invalid operation" or other low
@@ -591,12 +598,13 @@ buggy driver that is causing the error.</p>
 
 <hr>
 <a name="Packages"></a> 
-<h2>3 Packages</h2>
+<h2 class="chapter">3 Packages</h2>
 
 <a name=
 "Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
 </a> 
-<h3>3.1 Can I install packages (libraries) in this version?</h3>
+<h3 class="section">3.1 Can I install packages (libraries) in this
+version?</h3>
 
 <p>Yes, but you will need a lot of tools to do so, unless the
 author or the maintainers of the <code>bin/windows/contrib</code>
@@ -616,7 +624,7 @@ point-and-click interface to package installation.</p>
 <p>If there is not a pre-compiled version or that is not up-to-date
 or you prefer compiling from source, make sure you installed the
 necessary files from <code>rw1062.exe</code>. Then read the file
-<code>README.packages</code>. You will need to collect and install
+<code>readme.packages</code>. You will need to collect and install
 several tools to use this: you can download them via the portal at
 <a href=
 "http://www.stats.ox.ac.uk/pub/Rtools/">http://www.stats.ox.ac.uk/pub/Rtools/</a>.
@@ -632,7 +640,7 @@ name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1062%5clibrary%20directory">
 </a></p>
 
-<h3>3.2 I don't have permission to write to the
+<h3 class="section">3.2 I don't have permission to write to the
 <code>rw1062\library</code> directory.</h3>
 
 <p>You can install packages anywhere and use the environment
@@ -642,35 +650,35 @@ environment variables?</a>) to point to the library
 location(s).</p>
 
 <p>Suppose your packages are installed in <code>p:\myRlib</code>.
-Then you can EITHER<br>
-</p>
+Then you can EITHER</p>
 
-<pre>
-set the environment variable R_LIBS to p:\myRlib
+<pre class="example">
+     set the environment variable R_LIBS to p:\myRlib
+    
 </pre>
 
-<p>OR use a package by, e.g.<br>
-</p>
+<p>OR use a package by, e.g.</p>
 
-<pre>
-library(MASS, lib.loc="p:/myRlib")
+<pre class="example">
+     library(MASS, lib.loc="p:/myRlib")
+    
 </pre>
 
 <a name=
 "The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
 </a> 
-<h3>3.3 The packages I installed do not appear in the HTML help
-system.</h3>
+<h3 class="section">3.3 The packages I installed do not appear in
+the HTML help system.</h3>
 
 <p>The HTML search only works for packages installed in
 <code>rw1062\library</code>.</p>
 
 <p>To update the HTML indices after you have installed a
-pre-compiled package, run at the R prompt.<br>
-</p>
+pre-compiled package, run at the R prompt.</p>
 
-<pre>
-&gt; link.html.help()
+<pre class="example">
+     &gt; link.html.help()
+    
 </pre>
 
 <p>This is done automatically when installing from the Packages
@@ -680,8 +688,8 @@ in <code>rw1062\library</code>. <a name=
 "My%20functions%20are%20not%20found%20by%20the%20HTML%20help%20search%20system.">
 </a></p>
 
-<h3>3.4 My functions are not found by the HTML help search
-system.</h3>
+<h3 class="section">3.4 My functions are not found by the HTML help
+search system.</h3>
 
 <p>The following conditions need to hold for functions in a package
 you installed.</p>
@@ -705,7 +713,7 @@ support optional: for example it is optional in Netscape 6.x and
 Opera, and may not be installed for IE6 on Windows XP. <a name=
 "Loading%20a%20package%20fails."></a></p>
 
-<h3>3.5 Loading a package fails.</h3>
+<h3 class="section">3.5 Loading a package fails.</h3>
 
 <p>Is the package compiled for this version of R? Many of the
 packages need to be compiled for a fairly recent version. (As from
@@ -722,7 +730,7 @@ function inside R.) If there is no <code>Built:</code> line or
 version tab, the package was compiled too long ago. <a name=
 "Package%20TclTk%20does%20not%20work."></a></p>
 
-<h3>3.6 Package TclTk does not work.</h3>
+<h3 class="section">3.6 Package TclTk does not work.</h3>
 
 <p>For package <code>tcltk</code> to work (try
 <code>demo(tkdensity)</code> or <code>demo(tkttest)</code> after
@@ -743,28 +751,30 @@ environment variables?</a>), to something like <code>c:/Program
 Files/Tcl/lib/tcl8.3</code>. (The startup code for the package will
 warn you if this is unset. NB: do not quote the path, even if as
 here it contains spaces. If you forget, you can set the variable
-inside R by something like<br>
-</p>
+inside R by something like</p>
 
-<pre>
-    Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
+<pre class="smallexample">
+         Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
+    
 </pre>
 
-.) Similarly, you can set the path if needed by something like <br>
-<pre>
-    Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
+.) Similarly, you can set the path if needed by something like 
+<pre class="smallexample">
+         Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
+    
 </pre>
 
 <a name="Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work."></a>
 
-<h3>3.7 Hyperlinks in Compiled HTML sometimes do not work.</h3>
+<h3 class="section">3.7 Hyperlinks in Compiled HTML sometimes do
+not work.</h3>
 
 <p>They may well not work between packages installed in different
 libraries. This is solved under Unix using symbolic links which
 Windows does not implement. <a name=
 "update.packages()%20fails"></a></p>
 
-<h3>3.8 <code>update.packages()</code> fails</h3>
+<h3 class="section">3.8 <code>update.packages()</code> fails</h3>
 
 <p>You may not be able to update a package which is in use: Windows
 `locks' the package's DLL when it is loaded. So use
@@ -778,13 +788,13 @@ session.</p>
 
 <hr>
 <a name="Windows%20Features"></a> 
-<h2>4 Windows Features</h2>
+<h2 class="chapter">4 Windows Features</h2>
 
 <a name=
 "What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
 </a> 
-<h3>4.1 What should I expect to behave differently from the Unix
-version of R?</h3>
+<h3 class="section">4.1 What should I expect to behave differently
+from the Unix version of R?</h3>
 
 <ul>
 <li>R commands can be interrupted by &lt;Esc&gt; in
@@ -812,22 +822,23 @@ and that of <code>shell()</code>.</li>
 </ul>
 
 <a name="I%20hear%20about%20some%20nifty%20features."></a> 
-<h3>4.2 I hear about some nifty features: please tell me about
-them!</h3>
+<h3 class="section">4.2 I hear about some nifty features: please
+tell me about them!</h3>
 
-<p>You have read the <code>README</code>? There are file menus on
-the R console, pager and graphics windows. You can source and save
-from those menus, and copy the graphics to <code>png</code>,
-<code>jpeg</code>, <code>bmp</code>, <code>postscript</code>,
-<code>PDF</code> or <code>metafile</code>. There are right-click
-menus giving shortcuts to menu items, and optionally toolbars with
-buttons giving shortcuts to frequent operations.</p>
+<p>You have read the <code>README.rw1062</code>? There are file
+menus on the R console, pager and graphics windows. You can source
+and save from those menus, and copy the graphics to
+<code>png</code>, <code>jpeg</code>, <code>bmp</code>,
+<code>postscript</code>, <code>PDF</code> or <code>metafile</code>.
+There are right-click menus giving shortcuts to menu items, and
+optionally toolbars with buttons giving shortcuts to frequent
+operations.</p>
 
 <p>If you resize the R console the <code>options(width=)</code> is
 automatically set to the console width (unless disabled in the
 configuration file).</p>
 
-<p>The graphics has a history mechanism. As the README says:</p>
+<p>The graphics has a history mechanism. As README.rw1062 says:</p>
 
 <blockquote>`The History menu allows the recording of plots. When
 plots have been recorded they can be reviewed by &lt;PgUp&gt; and
@@ -850,7 +861,7 @@ a Preferences editor invoked from the <code>Edit</code> menu which
 can be used to edit the file <code>Rconsole</code>. <a name=
 "Circles%20appear%20as%20ovals%20on%20screen"></a></p>
 
-<h3>4.3 Circles appear as ovals on screen</h3>
+<h3 class="section">4.3 Circles appear as ovals on screen</h3>
 
 <p>The graphics system asks Windows for the number of pixels per
 inch in the X and Y directions, and uses that to size graphics
@@ -868,8 +879,8 @@ and 1600 x 1200 modes. In fact it is a 21" monitor and 400mm x
 "How%20do%20I%20move%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
 </a></p>
 
-<h3>4.4 How do I move focus to a graphics window or the
-console?</h3>
+<h3 class="section">4.4 How do I move focus to a graphics window or
+the console?</h3>
 
 <p>You may want to do this from within a function, for example when
 calling <code>identify</code> or <code>readline</code>. Use the
@@ -884,19 +895,20 @@ can be used for graphics windows from <code>Rterm.exe</code>
 
 <hr>
 <a name="Workspaces"></a> 
-<h2>5 Workspaces</h2>
+<h2 class="chapter">5 Workspaces</h2>
 
 <a name=
 "My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
 </a> 
-<h3>5.1 My workspace gets saved in a strange place: how do I stop
-this?</h3>
+<h3 class="section">5.1 My workspace gets saved in a strange place:
+how do I stop this?</h3>
 
 <p>Have you changed the working directory?: see Q5.2. <a name=
 "How%20do%20I%20store%20my%20workspace%20in%20a%20different%20place%3f">
 </a></p>
 
-<h3>5.2 How do I store my workspace in a different place?</h3>
+<h3 class="section">5.2 How do I store my workspace in a different
+place?</h3>
 
 <p>Use the `File | Change Dir...' menu item to select a new working
 directory: this defaults to the last directory you loaded a file
@@ -909,7 +921,8 @@ the function <code>setwd</code>: see its help page. <a name=
 "Can%20I%20load%20workspaces%20saved%20under%20Unix%2fGNU-Linux%3f">
 </a></p>
 
-<h3>5.3 Can I load workspaces saved under Unix/GNU-Linux?</h3>
+<h3 class="section">5.3 Can I load workspaces saved under
+Unix/GNU-Linux?</h3>
 
 <p>Yes. All ports of R use the same format for workspaces, so they
 are interchangeable (for the same 1.x.? version of R, at
@@ -917,22 +930,23 @@ least).</p>
 
 <hr>
 <a name="The%20R%20Console%20and%20Fonts"></a> 
-<h2>6 The R Console and Fonts</h2>
+<h2 class="chapter">6 The R Console and Fonts</h2>
 
 <a name=
 "I%20would%20like%20to%20be%20able%20to%20use%20Japanese%20fonts"></a>
 
-<h3>6.1 I would like to be able to use Japanese fonts</h3>
+<h3 class="section">6.1 I would like to be able to use Japanese
+fonts</h3>
 
 <p>for example, in the console and to annotate graphs.</p>
 
 <p>We believe this is possible by setting suitable fonts in the
 Rconsole and Rdevga configuration files (see Q4.2). You can specify
-additional fonts in Rdevga, and use them by<br>
-</p>
+additional fonts in Rdevga, and use them by</p>
 
-<pre>
-par(font=, font.lab=, font.main=, font.sub=)
+<pre class="example">
+     par(font=, font.lab=, font.main=, font.sub=)
+    
 </pre>
 
 <p>Nineteen fonts are specified (as 1 to 19) by default: you can
@@ -940,8 +954,8 @@ add to these (up to 13 more) or replace them. <a name=
 "I%20don't%20see%20characters%20with%20accents%20at%20the%20R%20console">
 </a></p>
 
-<h3>6.2 I don't see characters with accents at the R console, for
-example in ?text.</h3>
+<h3 class="section">6.2 I don't see characters with accents at the
+R console, for example in ?text.</h3>
 
 <p>You need to specify a font in Rconsole (see Q4.2) that supports
 Latin1 encoding. The default, <code>Courier New</code>, does on our
@@ -954,8 +968,8 @@ settings) within which it is run as well as the font used by the
 terminal window. <a name=
 "The%20output%20to%20the%20console%20seems%20to%20be%20delayed"></a></p>
 
-<h3>6.3 When using Rgui the output to the console seems to be
-delayed.</h3>
+<h3 class="section">6.3 When using Rgui the output to the console
+seems to be delayed.</h3>
 
 <p>This is deliberate: the console output is buffered and
 re-written in chunks to be faster and less distracting. You can
@@ -968,7 +982,8 @@ another option. A call to the R function
 update the console. <a name=
 "Long%20lines%20seem%20to%20be%20truncated."></a></p>
 
-<h3>6.4 Long lines in the console or pager are truncated.</h3>
+<h3 class="section">6.4 Long lines in the console or pager are
+truncated.</h3>
 
 <p>They only <strong>seem</strong> to be truncated: that $ at the
 end indicates you can scroll the window to see the rest of the
@@ -977,19 +992,19 @@ arrow&gt; keys to scroll horizontally.</p>
 
 <hr>
 <a name="Building%20from%20Source"></a> 
-<h2>7 Building from Source</h2>
+<h2 class="chapter">7 Building from Source</h2>
 
 <a name="How%20can%20I%20compile%20R%20from%20source%3f"></a> 
-<h3>7.1 How can I compile R from source?</h3>
+<h3 class="section">7.1 How can I compile R from source?</h3>
 
 <p>Get the R sources. Suppose you want to compile R-1.6.1. Start in
-a directory whose path does not contain spaces, and run<br>
-</p>
+a directory whose path does not contain spaces, and run</p>
 
-<pre>
-tar zxvf R-1.6.1.tgz
-cd R-1.6.1
-cd src\gnuwin32
+<pre class="example">
+     tar zxvf R-1.6.1.tgz
+     cd R-1.6.1
+     cd src\gnuwin32
+    
 </pre>
 
 <p>Now read the <code>INSTALL</code> file and set up all the tools
@@ -1002,7 +1017,7 @@ found that a <code>samba</code>-mounted file system (which maps all
 file names to lower case) did not work. <a name=
 "Can%20I%20use%20a%20fast%20BLAS%3f"></a></p>
 
-<h3>7.2 Can I use a fast BLAS?</h3>
+<h3 class="section">7.2 Can I use a fast BLAS?</h3>
 
 <p>Fast BLAS (Basic Linear Algebra Subprograms, <a href=
 "http://www.netlib.org/blas/faq.html">http://www.netlib.org/blas/faq.html</a>)
@@ -1031,7 +1046,7 @@ You will need to make the libraries yourself: none of the binaries
 we have seen are compiled for the correct compiler. <a name=
 "How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
 
-<h3>7.3 How do I include compiled C code?</h3>
+<h3 class="section">7.3 How do I include compiled C code?</h3>
 
 <p>We strongly encourage you to do this <em>via</em> building an R
 package: see the <em>`Writing R Extensions'</em> manual. In any
@@ -1039,11 +1054,11 @@ event you should install the parts of the R system for building R
 packages (in <code>rw1062.exe</code>), and get and install the
 tools (including Perl) and compilers mentioned in the file
 <code>readme.packages</code> contained therein. Then you can
-use<br>
-</p>
+use</p>
 
-<pre>
-...\bin\Rcmd SHLIB foo.c bar.f
+<pre class="example">
+     ...\bin\Rcmd SHLIB foo.c bar.f
+    
 </pre>
 
 <p>to make <code>foo.dll</code>. Use <code>...\bin\Rcmd SHLIB
@@ -1055,8 +1070,8 @@ name=
 "How%20do%20I%20debug%20code%20that%20I%20have%20compiled%20and%20dyn.load-ed%3f">
 </a></p>
 
-<h3>7.4 How do I debug code that I have compiled and
-dyn.load-ed?</h3>
+<h3 class="section">7.4 How do I debug code that I have compiled
+and dyn.load-ed?</h3>
 
 <p>You will need a suitable version of <code>gdb</code>: we
 normally use that from the Cygwin distribution. Debugging under
@@ -1069,27 +1084,27 @@ build a version of R with debugging information as described
 below.</p>
 
 <p>First, build a version of the R system with debugging
-information by<br>
-</p>
+information by</p>
 
-<pre>
-make clean
-make DEBUG=T
+<pre class="example">
+     make clean
+     make DEBUG=T
+    
 </pre>
 
-<p>and make a debug version of your package by<br>
-</p>
+<p>and make a debug version of your package by</p>
 
-<pre>
-make pkgclean-mypkg
-make DEBUG=T pkg-mypkg
+<pre class="example">
+     make pkgclean-mypkg
+     make DEBUG=T pkg-mypkg
+    
 </pre>
 
-<p>Then you can debug by<br>
-</p>
+<p>Then you can debug by</p>
 
-<pre>
-gdb /path/to/rw1062/bin/Rgui.exe
+<pre class="example">
+     gdb /path/to/rw1062/bin/Rgui.exe
+    
 </pre>
 
 <p>However, note</p>
@@ -1106,20 +1121,21 @@ in the directory from which <code>gdb</code> is run.</li>
 
 <li>It is only possible to set breakpoints in a DLL after the DLL
 has been loaded. So a way to examine the function
-<code>tukeyline</code> in package <code>eda</code> might be<br>
-<pre>
-     gdb ../../../../bin/Rgui.exe
-     (gdb) break WinMain
-     (gdb) run
-     [ stops with R.dll loaded ]
-     (gdb) break R_ReadConsole
-     (gdb) continue
-     [ stops with console running ]
-     (gdb) continue
-     Rconsole&gt; library(eda)
-     (gdb) break tukeyline
-     (gdb) clear R_ReadConsole
-     (gdb) continue
+<code>tukeyline</code> in package <code>eda</code> might be 
+<pre class="example">
+               gdb ../../../../bin/Rgui.exe
+               (gdb) break WinMain
+               (gdb) run
+               [ stops with R.dll loaded ]
+               (gdb) break R_ReadConsole
+               (gdb) continue
+               [ stops with console running ]
+               (gdb) continue
+               Rconsole&gt; library(eda)
+               (gdb) break tukeyline
+               (gdb) clear R_ReadConsole
+               (gdb) continue
+         
 </pre>
 
 <p>Fortran symbols need an underline appended.</p>
@@ -1133,7 +1149,7 @@ often work with the <code>cygwin</code> version.</li>
 </ul>
 
 <a name="How%20do%20I%20include%20C++%20code%3f"></a> 
-<h3>7.5 How do I include C++ code?</h3>
+<h3 class="section">7.5 How do I include C++ code?</h3>
 
 <p>You need to do two things:</p>
 
@@ -1144,27 +1160,27 @@ R as <code>extern "C"</code>.</p>
 Suppose <code>X.cc</code> contains your C++ code, and
 <code>X_main.cc</code> is the wrapper, as in the example in
 <em>`Writing R Extensions'</em>. Then build the DLL by
-(<code>gcc</code>)<br>
-</p>
+(<code>gcc</code>)</p>
 
-<pre>
-...\bin\Rcmd SHLIB X.cc X_main.cc
+<pre class="example">
+     ...\bin\Rcmd SHLIB X.cc X_main.cc
+    
 </pre>
 
-<p>or (VC++, which requires extension <code>.cpp</code>)<br>
-</p>
+<p>or (VC++, which requires extension <code>.cpp</code>)</p>
 
-<pre>
-cl /MT /c X.cpp X_main.cpp
-link /dll /out:X.dll /export:X_main X.obj X_main.obj
+<pre class="example">
+     cl /MT /c X.cpp X_main.cpp
+     link /dll /out:X.dll /export:X_main X.obj X_main.obj
+    
 </pre>
 
 <p>or (Borland C++, which also requires extension
-<code>.cpp</code>)<br>
-</p>
+<code>.cpp</code>)</p>
 
-<pre>
-bcc32 -u- -WDE X.cpp X_main.cpp
+<pre class="example">
+     bcc32 -u- -WDE X.cpp X_main.cpp
+    
 </pre>
 
 <p>and call the entry point(s) in <code>X_R</code>, such as
@@ -1180,7 +1196,8 @@ GUI console: see the next section.</p>
 compiled as a package in the usual way on Windows. <a name=
 "The%20output%20from%20my%20C%20code%20disappears."></a></p>
 
-<h3>7.6 The output from my C code disappears. Why?</h3>
+<h3 class="section">7.6 The output from my C code disappears.
+Why?</h3>
 
 <p>The <code>Rgui.exe</code> console is a Windows application:
 writing to <code>stdout</code> or <code>stderr</code> will not
@@ -1196,7 +1213,8 @@ not normally see any output before returning to the R prompt. <a
 name=
 "The%20output%20from%20my%20Fortran%20code%20disappears."></a></p>
 
-<h3>7.7 The output from my Fortran code disappears. Why?</h3>
+<h3 class="section">7.7 The output from my Fortran code disappears.
+Why?</h3>
 
 <p>Writing to Fortran output writes to a file, not the
 <code>Rgui</code> console. Use one of the subroutines
@@ -1211,7 +1229,8 @@ when using the <code>xxxpr</code> subroutines. <a name=
 "The%20console%20freezes%20when%20my%20compiled%20code%20is%20running">
 </a></p>
 
-<h3>7.8 The console freezes when my compiled code is running.</h3>
+<h3 class="section">7.8 The console freezes when my compiled code
+is running.</h3>
 
 <p>The console, pagers and graphics window all run in the same
 thread as the R engine. To allow the console etc to respond to
