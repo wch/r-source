@@ -984,7 +984,10 @@ pltmth> par(oldpar)
 	demo(image)
 	---- ~~~~~
 
-> opar <- par(ask = interactive() && .Device == "X11")
+> if (dev.cur() <= 1) get(getOption("device"))()
+
+> opar <- par(ask = interactive() && (.Device %in% c("X11", 
+    "GTK", "windows", "Macintosh")))
 
 > data(volcano)
 
@@ -1603,5 +1606,5 @@ In addition: Warning messages:
 6: is.nan() applied to non-(list or vector) in: fn(obj) 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  7.21 0.16 14.79 0 0 
+Time elapsed:  23.44 2.07 26.04 0 0 
 > 
