@@ -3006,9 +3006,9 @@ These @emph{are} subject to change.
 
 @node Utility functions, Version information, Numerical analysis subroutines, The R API
 @section Utility functions
-@findex isort
-@findex rsort
-@findex csort
+@findex R_isort
+@findex R_rsort
+@findex R_csort
 @findex rsort_with_index
 @findex revsort
 @findex iPsort
@@ -3019,9 +3019,9 @@ These @emph{are} subject to change.
 available to users' C code.  These include
 
 @example
-void isort(int* x, int n);
-void rsort(double* x, int n);
-void csort(Rcomplex* x, int n);
+void R_isort(int* x, int n);
+void R_rsort(double* x, int n);
+void R_csort(Rcomplex* x, int n);
 void rsort_with_index(double* x, int* index, int n);
 @end example
 

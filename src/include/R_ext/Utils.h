@@ -27,9 +27,6 @@
 #include "R_ext/Complex.h"
 
 #ifndef R_NO_REMAP
-#define isort         Rf_isort
-#define rsort         Rf_rsort
-#define csort         Rf_csort
 #define revsort       Rf_revsort
 #define iPsort        Rf_iPsort
 #define rPsort        Rf_rPsort
@@ -44,9 +41,9 @@
 #endif
 
 /* ../main/sort.c : */
-void	isort(int*,     int);
-void	rsort(double*, int);
-void	csort(Rcomplex*, int);
+void	R_isort(int*, int);
+void	R_rsort(double*, int);
+void	R_csort(Rcomplex*, int);
 void    rsort_with_index(double *, int *, int);
 void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
 void	iPsort(int*,    int, int);

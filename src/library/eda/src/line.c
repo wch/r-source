@@ -1,4 +1,4 @@
-#include "R_ext/Utils.h"/* rsort() */
+#include "R_ext/Utils.h"/* R_rsort() */
 #include <math.h>
 
 static int il(int n, double x)
@@ -22,7 +22,7 @@ static void line(double *x, double *y, double *z, double *w, int n,
 	z[i] = x[i];
 	w[i] = y[i];
     }
-    rsort(z, n);
+    R_rsort(z, n);
 
     tmp1 = z[il(n, 1.0/6.0)];
     tmp2 = z[iu(n, 1.0/6.0)];
@@ -47,20 +47,20 @@ static void line(double *x, double *y, double *z, double *w, int n,
 	for( i = 0 ; i < n ; i++ )
 	    if( x[i] <= x1 )
 		z[k++] = w[i];
-	rsort(z, k);
+	R_rsort(z, k);
 	yb = 0.5 * (z[il(k, 0.5)] + z[iu(k, 0.5)]);
 	k = 0;
 	for(i = 0 ; i < n ; i++)
 	    if( x[i] >= x2 )
 		z[k++] = w[i];
-	rsort(z,k);
+	R_rsort(z,k);
 	yt = 0.5 * (z[il(k, 0.5)] + z[iu(k, 0.5)]);
 	slope += (yt - yb)/(xt - xb);
 	for(i = 0 ; i < n ; i++) {
 	    z[i] = y[i]-slope*x[i];
 	    w[i] = z[i];
 	}
-	rsort(z,n);
+	R_rsort(z,n);
 	yint = 0.5 * (z[il(n, 0.5)] + z[iu(n, 0.5)]);
     }
     for( i = 0 ; i < n ; i++ ) {

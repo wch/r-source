@@ -31,7 +31,7 @@
 
 #include "R.h"
 #include "R_ext/Applic.h"	/* for the QR	  routines */
-#include "R_ext/Utils.h"	/* for the sort() routines */
+#include "R_ext/Utils.h"	/* for the *sort() routines */
 #define BIG DBL_MAX
 
 /* GLOBAL Variables, explicitly allocated and freed: */
@@ -206,7 +206,7 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
 	       the criterion. As this is a univariate problem, has an exact
 	       solution.  */
 	    if(*adj) {
-		rsort(res, nn);
+		R_rsort(res, nn);
 		if(*lts) a = ltsadj(res, nn, *qn, &thiscrit);
 		else a = lmsadj(res, nn, *qn, &thiscrit);
 	    } else {

@@ -25,9 +25,8 @@
 
 #include "Mathlib.h" /* for imin2 and imax2 */
 #include "PrtUtil.h" /* for Rprintf */
-#include "Utils.h" /* for rsort */
+#include "Utils.h" /* for R_rsort */
 
-void rsort(double *, int);
 
 static void stem_print(int close, int dist, int ndigits)
 {
@@ -43,7 +42,7 @@ static int stem_leaf(double *x, int n, double scale, int width, double atom)
     int mm, mu, k, i, j, hi, lo, xi;
     int ldigits, hdigits, ndigits, pdigits;
 
-    rsort(x,n);
+    R_rsort(x,n);
 
     if(n <= 1) return 0;
 
