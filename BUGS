@@ -307,12 +307,6 @@ Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
 Subject: rstandard forgotten?
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sat, 27 Nov 1999 12:41:09 -0500 (EST)
-* PR# 355 *
-Subject: PRIVATE: Printing Problems
-From: mlamias@umich.edu
-Date: Wed, 1 Dec 1999 08:05:05 +0100 (MET)
---It's a bit hard to deal with this. There is no rw0652, but rw0651 seems to
---work for other people. If it was rw0642, who knows now?
 * PR# 357 *
 Subject: filled.contour
 From: steuer@statistik.uni-dortmund.de
