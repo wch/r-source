@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-21, 2001-01-19
+@set FAQ-VERSION 1.2-22, 2001-01-20
 @set REL-VERSION 1.2.1
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -419,7 +419,7 @@ A binhexed self-extracting archive containing a pre-alpha port of R
 @c              i386  1.2.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c          7.x alpha 1.2.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.2.0  Martyn Plummer <plummer@iarc.fr>
+@c              i386  1.2.1  Martyn Plummer <plummer@iarc.fr>
 @c suse     6.4 i386  1.2.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          7.0 i386  1.2.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
