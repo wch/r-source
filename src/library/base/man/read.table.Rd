@@ -49,8 +49,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.  If \code{sep = ""} (the
-    default) the separator is ``white space'', that is one or more
-    spaces, tabs or newlines.}
+    default for \code{read.table}) the separator is ``white space'',
+    that is one or more spaces, tabs or newlines.}
 
   \item{quote}{the set of quoting characters. To disable quoting
     altogether, use \code{quote=""}.  See \code{\link{scan}} for the
