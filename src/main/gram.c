@@ -3159,7 +3159,7 @@ static int StringValue(int c)
 
 static int QuotedSymbolValue(int c)
 {
-    int dummy = StringValue(c);
+    (void) StringValue(c); /* always returns STR_CONST */
     UNPROTECT(1);
     PROTECT(yylval = install(yytext));
     return SYMBOL;
