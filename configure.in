@@ -194,6 +194,7 @@ AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 ## C compiler.
 
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_GCC_TRADITIONAL
 
 dnl Yes, we already need this at configure time ...
@@ -273,9 +274,8 @@ fi
 
 if test -n "${F77}"; then
   FC=${F77}
-  R_PROG_F77_WORKS
-  R_PROG_F77_GNU
-  OCTAVE_FLIBS
+  AC_PROG_F77
+  AC_F77_LIBRARY_LDFLAGS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   f77_rules_frag=Makefrag.f77
@@ -442,7 +442,7 @@ case "${host}" in
     fi
     ## </Albrecht.Gebhardt@uni-klu.ac.at>
     ;;
-  alpha*linux)
+  alpha*linux*)
     R_PROG_CC_FLAG(-mieee,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee")
@@ -534,7 +534,7 @@ case "${host}" in
     shlibld=${FC}
     shlibldflags=-shared
     ;;
-  alpha*linux)
+  alpha*linux*)
     dllflags=-export-dynamic
     ;;
   *freebsd3.*)
@@ -555,10 +555,10 @@ case "${host}" in
     shlibldflags="-b"
     SHLIBEXT=sl
     ;;
-  *linuxaout)
+  *linux*aout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
-  *linux)
+  *linux*)
     dllflags=-export-dynamic
     ;;
   *netbsd*)
