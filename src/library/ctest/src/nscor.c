@@ -90,9 +90,10 @@ void init(double *work)
     for (i = 1; i <= nstep; ++i) {
 	work[(i << 2) + 1] = xx;
 	work[(i << 2) + 2] = pi2 - xx * xx * half;
-	/* upper & lower tail;	but alnorm() also only does "1 -" */
-	work[(i << 2) + 3] = log(pnorm(-xx,0.,1.));/* alnorm_(&xx, UPPER) */
-	work[(i << 2) + 4] = log(pnorm( xx,0.,1.));/* alnorm_(&xx, LOWER) */
+	/* upper & lower tail */
+	/* had  log(alnorm_(&xx, UPPER)) & log(alnorm_(&xx, LOWER)) :*/
+	work[(i << 2) + 3] = pnorm(xx,0.,1., 0, /*log_p = */1));
+	work[(i << 2) + 4] = pnorm(xx,0.,1., 1, /*log_p = */1));
 	xx = xstart + (double) i * hh;
     }
     return;
@@ -192,7 +193,7 @@ void nscor2(float *s, int *n, int *n2, int *ier)
 /*	convert tail areas to normal deviates. */
 
     for (i = 0; i < *n2; ++i)
-	s[i] = - qnorm(s[i], 0., 1.);
+	s[i] = - qnorm(s[i], 0., 1., 1, 0);
 
     return;
 } /* nscor2 */
