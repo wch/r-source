@@ -104,8 +104,8 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 }
 
 help.search <- function(what, fields = c("name", "title"),
-                        apropos, keyword, whatis, package = NULL,
-                        lib.loc = .lib.loc) {
+                        apropos, keyword, whatis, ignore.case = TRUE,
+                        package = NULL, lib.loc = .lib.loc) {
     TABLE <- c("name", "alias", "title", "keyword")
     if (!missing(what)) {
         if (!is.character(what) || (length(what) > 1))
@@ -165,7 +165,7 @@ help.search <- function(what, fields = c("name", "title"),
 
     i <- NULL
     for (f in fields) {
-        i <- c(i, grep(what, db[, f], ignore.case = TRUE))
+        i <- c(i, grep(what, db[, f], ignore.case = ignore.case))
     }
     db <- db[sort(unique(i)), , drop = FALSE]
     fields <- paste(fields, collapse = " or ")
