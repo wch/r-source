@@ -32,20 +32,4 @@ atan2(y, x)
 
   Angles are in radians, not degrees (i.e. a right angle is \eqn{\pi/2}).
 }
-\examples{
-cos(0) == 1
-sin(3*pi/2) == cos(pi)
-x <- rnorm(99)
-all.equal( sin(-x), - sin(x))
-all.equal( cos(-x), cos(x))
-x <- abs(x); y <- abs(rnorm(x))
-all(abs(atan2(y, x) - atan(y/x)) <= .Machine$double.eps)# TRUE
-table(abs(atan2(y, x) - atan(y/x)) / .Machine$double.eps) # depends!
-
-x <- 1:99/100
-all(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 1.1 * .Machine$double.eps)
- 2* abs(1 - x / acos(cos(x))) / .Machine$double.eps #-- depends ?
-all(abs(1 - x / asin(sin(x))) <= .Machine$double.eps) # TRUE
-all(abs(1 - x / atan(tan(x))) <= .Machine$double.eps) # TRUE
-}
 \keyword{math}
