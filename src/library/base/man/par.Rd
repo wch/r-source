@@ -89,9 +89,9 @@ par(\dots)
     the length (in points) of line segments which are alternatively
     drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}
-  \item{mai}{A numerical vector of the form \code{c(xb, xt, yl, yr)}
+  \item{mai}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
     which gives the margin size specified in inches.}
-  \item{mar}{A numerical vector of the form \code{c(xb, xt, yl, yr)}
+  \item{mar}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
     which gives the lines of margin to be specified on the four sides of
     the plot.  The default is \code{c(5, 4, 4, 2) + 0.1}.}
   \item{mex}{\code{mex} is a character size expansion factor which is
