@@ -11,7 +11,8 @@
 }
 \usage{
 checkVignettes(package, dir, lib.loc = NULL, tangle = TRUE,
-               weave = TRUE, usetmpdir = TRUE, keepfiles = !usetmpdir)
+               weave = TRUE, workdir = c("tmp", "src", "cur"),
+               keepfiles = FALSE)
 }
 \arguments{
  \item{package}{a character string naming an installed package.  If
@@ -25,10 +26,13 @@ checkVignettes(package, dir, lib.loc = NULL, tangle = TRUE,
     to search for \code{package}.}
   \item{tangle}{Perform a tangle and \code{\link{source}} the extraced code?}
   \item{weave}{Perform a weave?}
-  \item{usetmpdir}{Write output files to a temporary directory or the
-    current working directory?}
+  \item{workdir}{Directory used as working directory while checking the
+    vignettes. If \code{"tmp"} then a temporary directory is created,
+    this is the default.  If \code{"src"} then the directory containing
+    the vignettes itself is used, if \code{"cur"} then the current
+    working directory of \R is used.}
   \item{keepfiles}{Delete file in temporary directory? This option is
-    ignored when \code{usetmpdir=FALSE}.}
+    ignored when \code{workdir!="tmp"}.}
 }
 \value{
   An object of class \code{"checkVignettes"} which is a list with the

@@ -1,7 +1,9 @@
 checkVignettes <- function(package, dir, lib.loc = NULL,
-                           tangle=TRUE, weave=TRUE, usetmpdir=TRUE,
-                           keepfiles = !usetmpdir)
-{
+                           tangle=TRUE, weave=TRUE,
+                           workdir=c("tmp", "src", "cur"),
+                           keepfiles = FALSE)
+{    
+
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -25,16 +27,22 @@ checkVignettes <- function(package, dir, lib.loc = NULL,
     exts <- outer(c("r", "s", "R", "S"), c("nw","tex"), paste, sep="")
     files <- .listFilesWithExts(docdir, exts)
     
-    outConn <- textConnection("out", "w")
-    sink(outConn, type = "output")
-    sink(outConn, type = "message")
+    workdir <- match.arg(workdir)
     wd <- getwd()
-    if(usetmpdir){
+    if(workdir=="tmp"){
         tmpd <- tempfile("Sweave")
         dir.create(tmpd)
         setwd(tmpd)
     }
-        
+    else{
+        keepfiles <- TRUE
+        if(workdir=="src") setwd(docdir)
+    }
+    
+    outConn <- textConnection("out", "w")
+    sink(outConn, type = "output")
+    sink(outConn, type = "message")
+    
     on.exit({sink(type = "output")
              sink(type = "message")
              setwd(wd)
