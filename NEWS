@@ -33,6 +33,10 @@ BUG FIXES
     o	as.data.frame.list() could fail on some unusual list names.
 	(PR#6782)
 
+    o	type.convert() ignored na.strings when no conversion was done.
+	(PR#6781, not needed for its primary use in read.table.)
+
+
 
 
 		CHANGES IN R VERSION 1.9.0

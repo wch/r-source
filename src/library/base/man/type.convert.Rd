@@ -13,7 +13,7 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".")
 
   \item{na.strings}{a vector of strings which are to be interpreted as
     \code{\link{NA}} values.  Blank fields are also considered to be
-    missing values.}
+    missing values in logical, integer, numeric or complex vectors.}
 
   \item{as.is}{logical. See Details.}
 

@@ -3008,3 +3008,10 @@ xx <- list(row.names=1:2,foxglove=3:4,toadflax=5:6)
 foo <- as.data.frame(xx)
 stopifnot(identical(names(xx), names(foo)))
 ## 1.9.0 changed the last name to "x".
+
+
+## type.convert quirk (PR#6781)
+res1 <- type.convert( c("abc","-"), as.is=TRUE, na.strings="-" )
+stopifnot(identical(mode(res1), "character"), is.na(res1[2]))
+## res1[2] was "-" <= 1.9.0.
+
