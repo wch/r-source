@@ -83,6 +83,27 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
 
     update <- NULL
 
+    newerVersion <- function(a, b){
+        a <- as.integer(strsplit(a, "[\\.-]")[[1]])
+        b <- as.integer(strsplit(b, "[\\.-]")[[1]])
+        if(is.na(a))
+            return(FALSE)
+        if(is.na(b))
+            return(TRUE)
+        for(k in 1:length(a)){
+            if(k <= length(b)){
+                if(a[k]>b[k])
+                    return(TRUE)
+                else if(a[k]<b[k])
+                    return(FALSE)
+            }
+            else{
+                return(TRUE)
+            }
+        }
+        return(FALSE)
+    }
+
     for(k in 1:nrow(instp)){
         ok <- (instp[k, "Priority"] != "base") &
                 (available[,"Package"] == instp[k, "Package"])
@@ -101,28 +122,6 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
                               "Installed", "CRAN")
     update
 }
-
-newerVersion <- function(a, b){
-    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
-    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
-    if(is.na(a))
-        return(FALSE)
-    if(is.na(b))
-        return(TRUE)
-    for(k in 1:length(a)){
-        if(k <= length(b)){
-            if(a[k]>b[k])
-                return(TRUE)
-            else if(a[k]<b[k])
-                return(FALSE)
-        }
-        else{
-            return(TRUE)
-        }
-    }
-    return(FALSE)
-}
-
 
 package.contents <- function(pkg, lib=.lib.loc){
 
