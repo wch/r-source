@@ -91,4 +91,4 @@ parse.description <- function(desc)
 \seealso{\code{\link{INSTALL}}, \code{\link{REMOVE}},
     \code{\link{library}}, \code{\link{.packages}}
 }
-
+\keyword{utilities}
