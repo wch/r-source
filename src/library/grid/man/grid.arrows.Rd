@@ -80,8 +80,8 @@ pop.viewport()
 push.viewport(viewport(layout.pos.col=2,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
-# An arrow on a zero-length line
-grid.arrows(x=unit(0.5, "npc"))
+# Recycling arguments
+grid.arrows(x=unit(1:10/11, "npc"), y=unit(1:3/4, "npc"))
 pop.viewport()
 push.viewport(viewport(layout.pos.col=3,
                        layout.pos.row=2))
