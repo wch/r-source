@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   New 'R --vanilla' is equivalent to
+	R --no-save --no-restore --no-site-file --no-init-file
+
     o   gc() has now a 'verbose' argument and returns a matrix with free
 	and total n- and v-cells(heap).
 
@@ -78,6 +81,8 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
 BUG FIXES
+
+    o	R --help  gives more
 
     o	postscript() now uses 'hyphen' instead of 'plusminus' for a minus.
 
