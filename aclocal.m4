@@ -49,15 +49,18 @@ dnl
 AC_DEFUN(R_PROG_PERL,
   [ AC_PATH_PROG(PERL, perl)
     if test -n "${PERL}"; then
-      AC_MSG_CHECKING(whether perl version is at least 5)
-      perl_version=`${PERL} -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
-      if test ${perl_version} -ge 5; then
-	NO_PERL5=false
-	AC_MSG_RESULT(yes)
-      else
-	NO_PERL5=true
-	AC_MSG_RESULT(no)
-      fi
+      AC_CACHE_CHECK([whether perl version is at least 5],
+	r_cv_prog_perl_v5,
+        [ perl_version=`${PERL} -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
+	  if test ${perl_version} -ge 5; then
+	    r_cv_prog_perl_v5=yes
+	  else
+	    r_cv_prog_perl_v5=no
+	  fi
+	])
+    fi
+    if test "${r_cv_prog_perl_v5}" = yes; then
+      NO_PERL5=false
     else
       NO_PERL5=true
     fi
@@ -115,37 +118,35 @@ dnl
 dnl See if the Fortran compiler appends underscores
 dnl
 AC_DEFUN(R_PROG_F77_APPEND_UNDERSCORE,
- [AC_MSG_CHECKING([whether ${F77-f77} appends underscores])
-  AC_CACHE_VAL(r_cv_prog_f77_append_underscore,
-   [r_cv_prog_f77_append_underscore=no,
-    cat > conftestf.f <<EOF
+ [AC_CACHE_CHECK([whether ${F77-f77} appends underscores],
+    r_cv_prog_f77_append_underscore,
+    [ cat > conftestf.f <<EOF
       subroutine try
       end
 EOF
-    ${FC} -c ${FFLAGS} conftestf.f 2>/dev/null 1>/dev/null
-    cat > conftest.c <<EOF
+      ${FC} -c ${FFLAGS} conftestf.f 2>/dev/null 1>/dev/null
+      cat > conftest.c <<EOF
 main() { try_(); }
 EOF
-    ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
-      conftest.c conftestf.o 1>/dev/null 2>/dev/null
-    if test ${?} = 0; then
-      r_cv_prog_f77_append_underscore=yes
-    else
-      cat > conftest.c <<EOF
+      ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
+	conftest.c conftestf.o 1>/dev/null 2>/dev/null
+      if test ${?} = 0; then
+	r_cv_prog_f77_append_underscore=yes
+      else
+	cat > conftest.c <<EOF
 main() { try(); }
 EOF
-      ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
-        conftest.c conftestf.o 1>/dev/null 2>/dev/null
-      if test ${?} = 0; then
-        r_cv_prog_f77_append_underscore=no
+	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
+	  conftest.c conftestf.o 1>/dev/null 2>/dev/null
+	if test ${?} = 0; then
+	  r_cv_prog_f77_append_underscore=no
+	fi
       fi
-    fi
-    rm -rf conftest conftest.* conftestf.*
-    if test -z "${r_cv_prog_f77_append_underscore}"; then
-      AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
-    fi
-  ])
-  AC_MSG_RESULT([${r_cv_prog_f77_append_underscore}])
+      rm -rf conftest conftest.* conftestf.*
+      if test -z "${r_cv_prog_f77_append_underscore}"; then
+	AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
+      fi
+    ])
   if test "${r_cv_prog_f77_append_underscore}" = yes; then
     AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
   fi
@@ -338,116 +339,131 @@ dnl
 dnl R_FUNC___SETFPUCW
 dnl
 AC_DEFUN(R_FUNC___SETFPUCW,
- [AC_CHECK_FUNC(__setfpucw,
-   [AC_MSG_CHECKING([whether __setfpucw is needed])
-    AC_TRY_RUN(
-      changequote(<<, >>)dnl
-      <<
-      int main () {
-      #include <fpu_control.h>
-      #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
-	return(_FPU_DEFAULT != _FPU_IEEE);
-      #endif
-	return(0);
-      }
-      >>,
-      changequote([, ])dnl
-      AC_MSG_RESULT(no),
-      AC_MSG_RESULT(yes)
-      AC_DEFINE(NEED___SETFPUCW),
-      AC_MSG_WARN(cannot determine when cross-compiling))
-   ])
- ])
+  [ AC_CHECK_FUNC(__setfpucw,
+    [ AC_CACHE_CHECK([whether __setfpucw is needed],
+	r_cv_func___setfpucw_needed,
+	AC_TRY_RUN(
+	  changequote(<<, >>)dnl
+	  <<
+	  int main () {
+	  #include <fpu_control.h>
+	  #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
+	    return(_FPU_DEFAULT != _FPU_IEEE);
+	  #endif
+	    return(0);
+	  }
+	  >>,
+	  changequote([, ])dnl
+	  r_cv_func___setfpucw_needed=no,
+	  r_cv_func___setfpucw_needed=yes,
+	  r_cv_func___setfpucw_needed=no))
+      if test "${r_cv_func___setfpucw_needed}" = yes; then
+	AC_DEFINE(NEED___SETFPUCW)
+      fi
+    ])
+  ])
 dnl
 dnl R_FUNC_CALLOC
 dnl
 AC_DEFUN(R_FUNC_CALLOC,
- [AC_MSG_CHECKING([whether calloc works for 0 elements])
-  AC_TRY_RUN(
-    changequote(<<, >>)dnl
-    <<
-    #include <stdlib.h>
-    int main () {
-      int *p = calloc(0, sizeof(int));
-      return(p == 0);
-    }
-    >>,
-    changequote([, ])dnl
-    AC_MSG_RESULT(yes),
-    AC_MSG_RESULT(no)
-    AC_DEFINE(CALLOC_BROKEN),
-    AC_MSG_WARN(cannot determine when cross-compiling))
- ])
+  [ AC_CACHE_CHECK([whether calloc is broken],
+      r_cv_func_calloc_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+	#include <stdlib.h>
+	int main () {
+	  int *p = calloc(0, sizeof(int));
+	  return(p == 0);
+	}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_calloc_broken=no,
+	r_cv_func_calloc_broken=yes,
+	r_cv_func_calloc_broken=yes))
+    if test "${r_cv_func_calloc_broken}" = yes; then
+      AC_DEFINE(CALLOC_BROKEN)
+    fi
+  ])
 dnl
 dnl R_FUNC_FINITE
 dnl
 AC_DEFUN(R_FUNC_FINITE,
- [AC_MSG_CHECKING([whether finite is broken])
-  AC_TRY_RUN(
-    changequote(<<, >>)dnl
-    <<
-    #include <math.h>
-    #include "confdefs.h"
-    int main () {
-    #ifdef HAVE_FINITE
-      return(finite(1./0.));
-    #else
-      return(0);
-    #endif
-    }
-    >>,
-    changequote([, ])dnl
-    AC_MSG_RESULT(no),
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(FINITE_BROKEN),
-    AC_MSG_WARN(cannot determine when cross-compiling))
- ])
+  [ AC_CACHE_CHECK([whether finite is broken],
+      r_cv_func_finite_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+	#include <math.h>
+	#include "confdefs.h"
+	int main () {
+	#ifdef HAVE_FINITE
+	  return(finite(1./0.));
+	#else
+	  return(0);
+	#endif
+	}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_finite_broken=no,
+	r_cv_func_finite_broken=yes,
+	r_cv_func_finite_broken=yes))
+    if test "${r_cv_func_finite_broken}" = yes; then
+      AC_DEFINE(FINITE_BROKEN)
+    fi
+  ])
 dnl
 dnl R_FUNC_LOG
 dnl
 AC_DEFUN(R_FUNC_LOG,
- [AC_MSG_CHECKING([whether log is broken])
-  AC_TRY_RUN(
-    changequote(<<, >>)dnl
-    <<
-    #include <math.h>
-    #include "confdefs.h"
-    int main () {
-    #ifdef HAVE_ISNAN
-      return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
-    #else
-      return(log(0.) != -1. / 0);
-    #endif
-    }
-    >>,
-    changequote([, ])dnl
-    AC_MSG_RESULT(no),
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(LOG_BROKEN),
-    AC_MSG_WARN(cannot determine when cross-compiling))
- ])
+  [ AC_CACHE_CHECK([whether log is broken],
+      r_cv_func_log_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+	#include <math.h>
+	#include "confdefs.h"
+	int main () {
+	#ifdef HAVE_ISNAN
+	  return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
+	#else
+	  return(log(0.) != -1. / 0);
+	#endif
+	}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_log_broken=no,
+	r_cv_func_log_broken=yes,
+	r_cv_func_log_broken=yes))
+    if test "${r_cv_func_log_broken}" = yes; then
+      AC_DEFINE(LOG_BROKEN)
+    fi
+  ])
 dnl
 dnl R_C_OPTIEEE
 dnl
 AC_DEFUN(R_C_OPTIEEE,
- [AC_MSG_CHECKING(whether compilers need -OPT:IEEE_NaN_inf=ON)
-  AC_TRY_RUN(
-    changequote(<<, >>)dnl
-    <<
-    #include <math.h>
-    #include <ieeefp.h>
-    int main () {
-      double x = 0;
-      fpsetmask(0); x = x / x; return (x != x);
-    }
-    >>,
-    changequote([, ])dnl
-    AC_MSG_RESULT(yes)
-    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
-    R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON",
-    AC_MSG_RESULT(no),
-    AC_MSG_WARN(cannot determine when cross-compiling))
- ])
+  [ AC_CACHE_CHECK([whether compilers need -OPT:IEEE_NaN_inf=ON],
+      r_cv_c_optieee,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+	#include <math.h>
+	#include <ieeefp.h>
+	int main () {
+	  double x = 0;
+	  fpsetmask(0); x = x / x; return (x != x);
+	}
+	>>,
+	changequote([, ])dnl
+	r_cv_c_optieee=yes,
+	r_cv_c_optieee=no,
+	r_cv_c_optieee=no))
+    if test "${r_cv_c_optieee}" = yes; then
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"
+    fi
+  ])
 dnl
 dnl GNOME_INIT_HOOK (script-if-gnome-enabled, failflag)
 dnl
