@@ -233,7 +233,7 @@ predict.arima0 <-
     }
     storage.mode(data) <- "double"
     G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),
-               0, -1, 0, 0, 0, PACKAGE = "ts")
+               0, -1, 0, 0, PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
     .Call("Starma_method", G, TRUE, PACKAGE = "ts")
     .Call("arma0fa", G, as.double(coefs), PACKAGE = "ts")
