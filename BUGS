@@ -158,6 +158,11 @@ Date: 12 May 2003 17:59:41 +0200
 Subject: plot.ranef.lme
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 12 May 2003 18:19:28 +0200
+* PR# 3188 *
+Subject: get.hist.quote not connecting to yahoo
+From: alexg@trwim.com
+Date: Wed, 4 Jun 2003 13:51:46 +0200 (MET DST)
+..That's not a bug, but there is one in get.hist.quote ...
 
 Directory:  Analyses
 
@@ -677,47 +682,11 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 3139 *
-Subject: power.t.test needs to check delta==NULL before abs(delta) 
-From: "A.J. Rossini" <rossini@blindglobe.net>
-Date: Fri, 30 May 2003 08:49:34 -0700
-* PR# 3140 *
-Subject: Re: [Rd] power.t.test needs to check delta==NULL before abs(delta)
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 30 May 2003 17:05:11 +0100 (BST)
-* PR# 3168 *
-Subject: mva:princomp.default not set correctly
-From: irwin@imcs.rutgers.edu
-Date: Mon, 2 Jun 2003 17:17:22 +0200 (MET DST)
-* PR# 3171 *
-Subject: 신용불량! 적은이자율로 은행또는 카드회사에서 빌려 신용불량을 막는 비법(101가지)        >>25286-0603011404bb1200ms
-From: 25286-0603011404bb1200ms@yahoo.co.kr
-Date: Mon, 2 Jun 2003 18:14:11 +0200 (MET DST)
-* PR# 3172 *
-Subject: RE: Submited (004756-3463)
-From: "Intervideo Tech Support" <support@intervideo.com>
-Date: Mon, 2 Jun 2003 11:29:45 -0700
-* PR# 3173 *
-Subject: Such a sad story
-From: "Dion Palmer" <fi0kgafb@usa.net>
-Date: Mon, 02 Jun 03 09:19:12 GMT
-* PR# 3174 *
-Subject: Re: what time?
-From: "Guadalupe Brooks" <f78t6m3o@earthlink.com>
-Date: Mon, 02 Jun 03 09:18:26 GMT
-* PR# 3175 *
-Subject: Fw: Somewhere, over the rainbow tdMIBRRWWV
-From: "maria" <essence@msn.com>
-Date: Mon, 02 Jun 03 18:42:20 Eastern Daylight Time
-* PR# 3176 *
-Subject: Virus Alert
-From: interscan@unicc.org
-Date: Tue, 3 Jun 2003 06:14:20 +0200
-* PR# 3177 *
-Subject: vaht tynamism q
-From: "Kristen Lloyd" <mwj426d5@aol.com>
-Date: Tue, 03 Jun 03 15:09:55 GMT
-* PR# 3178 *
-Subject: No Perscription Requierd ! Free overnight delivery !..... ...........
-From: "Tameka Guerra" <q9hjj390gq@wildmail.com>
-Date: Tue, 03 Jun 03 02:17:14 GMT
+* PR# 3189 *
+Subject: (광고)제일편한대출제일싼이자로 받아드립니다        >>13492-060503465948036-06050121346487-0603212504send
+From: 13492-060503465948036-06050121346487-0603212504send@aijsoft.com
+Date: Wed, 4 Jun 2003 20:47:07 +0200 (MET DST)
+* PR# 3190 *
+Subject: RE: Your application
+From: "Taylor, Sam" <Sam.Taylor@chh.co.nz>
+Date: Thu, 5 Jun 2003 07:24:37 +1200 
