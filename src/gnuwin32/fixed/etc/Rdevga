@@ -9,10 +9,10 @@
 #   (a) Windows graphic engine can rotate only True Type fonts;
 #   (b) Only the first 32 font will be used.
 
-TT Times New Roman : plain
-TT Times New Roman : bold
-TT Times New Roman : italic
-TT Times New Roman : bold&italic
+TT Arial : plain
+TT Arial : bold
+TT Arial : italic
+TT Arial : bold&italic
 
 # Please, don't change the following definition. The plot math engine
 # assume that font5 contains greek letters and math symbols

@@ -16,6 +16,10 @@ aware), but for best results should be re-compiled.
 This release has a number of changes to bring its behaviour closer to that 
 of Unix versions of R.
 
+-   The default font for graphics (window(), win.printer(), win.metafile())
+    is now Arial: the font numbers for the Times New Roman and Arial
+    families have been interchanged.
+
 -   The history is only saved when the workspace is (to be compatible with
     Unix versions of R) and whether it is restored is controlled by
     option --no-restore-history (implied by --no-restore and --vanilla):
