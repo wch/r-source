@@ -408,6 +408,8 @@ void mainloop()
 	doneit = 1;
 	R_InitialData();
     }
+    else
+    	R_Suicide("unable to restore saved data\n (remove .RData or increase memory)\n");
 
 #ifndef Macintosh
     /* This is where we source the system-wide, the site's and the

@@ -635,9 +635,9 @@ void R_RestoreGlobalEnv(void)
 			/* warning here perhaps */
 			return;
 		}
+		FRAME(R_GlobalEnv) = R_LoadFromFile(fp);
 		if(!R_Quiet)
 			Rprintf("[Previously saved workspace restored]\n\n");
-		FRAME(R_GlobalEnv) = R_LoadFromFile(fp);
 	}
 }
 
