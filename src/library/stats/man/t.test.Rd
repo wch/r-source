@@ -54,6 +54,9 @@ t.test(x, \dots)
   variance is used.  By default, if \code{var.equal} is \code{FALSE}
   then the variance is estimated separately for both groups and the
   Welch modification to the degrees of freedom is used.
+
+  If the input data are effectively constant (compared to the larger of the
+  two means) an error is generated.
 }
 \value{
   A list with class \code{"htest"} containing the following components:

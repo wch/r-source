@@ -767,6 +767,8 @@ BUG FIXES
     o   It is no longer possible to call gzcon() more than once on a
 	connection.
 
+    o   t.test() now detects nearly-constant input data.  (PR#7225)
+
 
 
 

@@ -1315,6 +1315,11 @@ Success in building @R{} depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
+Many 32-bit systems have a means of using files > 2Gb, and most are
+based on that in the Singel Unix specification: see
+@uref{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}.
+However, this is only covered under Linux and Solaris.
+
 @menu
 * Linux::                       
 * Mac OS X::                    
@@ -1358,7 +1363,10 @@ libraries with the exception of the ATLAS BLAS libraries.
 64-bit versions of Linux are built with support for files > 2Gb, but
 32-bit versions usually are not.  This can be enabled for Linux kernels
 2.4.x or later by the configure option @option{--enable-linux-lfs}: it
-test for Linux, a suitable kernel and a 32-bit @samp{long} type.
+tests for Linux, a suitable kernel and a 32-bit @samp{long} type.
+A discussion of which Linux systems support large files can be found at
+@uref{http://www.suse.de/~aj/linux_lfs.html}: it has been available
+since about 2001.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
