@@ -63,6 +63,8 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 
     if (df <= 0.) ML_ERR_return_NAN;
 
+    if(!R_FINITE(t))
+	return (t < 0) ? R_DT_0 : R_DT_1;
     if (t >= 0.) {
 	negdel = FALSE;	tt = t;		del = delta;
     }

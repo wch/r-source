@@ -399,7 +399,11 @@ glm4<-glm(y~x,family=binomial("log"),control=glm.control(eps=1e-8))
 stopifnot(all.equal(resid(glm3,"pearson"),resid(glm4,"pearson")))
 
 
-    
+## Torsten Hothorn, 2001-12-04
+stopifnot(pt(-Inf, 3, ncp=0) == 0, pt(Inf, 3, ncp=0) == 1)
+##  Comments: were 0.5 in 1.3.1
+
+
 ## This example last ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
