@@ -22,7 +22,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.15.2.1 $ ';
+my $revision = ' $Revision: 1.15.2.2 $ ';
 my $version;
 my $name;
 
@@ -433,7 +433,7 @@ sub process_group {
 	    if ($t =~ /name=\"(.*?)\">\s*(.*)<\/s-return-component>/s) {
 		my $name=$1;
 		$t = $2;
-		print "\item{$1}{\n", sub4($t), "}\n";
+		print "\\item{$1}{\n", sub4($t), "}\n";
 	    } else {
 		print sub4($t), "\n";
 	    }
