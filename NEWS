@@ -11,8 +11,13 @@
 NEW FEATURES
 
     o	Support for configuration and building the Unix version of R
-	 under Mac OS X.  (The `classic' Macintosh port is
-	`Carbonized' and also runs under that OS.)
+	under Mac OS X.  (The `classic' Macintosh port is `Carbonized'
+	and also runs under that OS.)
+
+    o	dotchart() and stripchart() become the preferred names for
+	dotplot() and stripplot(), respectively.  The old names are now
+	deprecated.
+
 
 
 BUG FIXES

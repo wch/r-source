@@ -9,9 +9,20 @@
 		  sep = ""))
 }
 
-getenv <- function(x)
-{
-    .Deprecated()
+## Deprecated in 1.2.0
+getenv <- function(x) {
+    .Deprecated("Sys.getenv")
     Sys.getenv(x)
 }
+## </Deprecated>
 
+## Deprecated in 1.2.3
+dotplot <- function(...) {
+    .Deprecated("dotchart")
+    dotchart(...)
+}
+stripplot <- function(...) {
+    .Deprecated("stripchart")
+    stripchart(...)
+}
+## </Deprecated>
