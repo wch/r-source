@@ -544,7 +544,7 @@ void PrintValueRec(SEXP s,SEXP env)
 	break;
     case CHARSXP:
 	Rprintf("<CHARSXP: ");
-	Rprintf(EncodeString(CHAR(s), 0, '"', Rprt_adj_left));
+	Rprintf(EncodeString(s, 0, '"', Rprt_adj_left));
 	Rprintf(">\n");
 	break;
     case EXPRSXP:
@@ -687,12 +687,10 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		goto nextattr;
 	    if(useSlots)
 		sprintf(ptag, "Slot \"%s\":",
-			EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
-				     Rprt_adj_left));
+			EncodeString(PRINTNAME(TAG(a)), 0, 0, Rprt_adj_left));
 	    else
 		sprintf(ptag, "attr(,\"%s\")",
-			EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
-				     Rprt_adj_left));
+			EncodeString(PRINTNAME(TAG(a)), 0, 0, Rprt_adj_left));
 	    Rprintf("%s", tagbuf); Rprintf("\n");
 	    if (isObject(CAR(a))) {
 		/* Need to construct a call to

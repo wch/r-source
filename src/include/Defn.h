@@ -823,6 +823,10 @@ int yyparse(void);
 void yyprompt(char *format, ...);
 int yywrap(void);
 
+/* ../../main/printutils.c : */
+int	Rstrlen(SEXP, int);
+char *EncodeString(SEXP, int, int, int);
+
 /* Macros for suspending interrupts */
 #define BEGIN_SUSPEND_INTERRUPTS do { \
     Rboolean __oldsusp__ = R_interrupts_suspended; \

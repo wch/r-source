@@ -63,7 +63,6 @@ void R_qsort_int_I(int *iv, int *I, int i, int j);
 
 /* ../../main/printutils.c : */
 int	IndexWidth(int);
-int	Rstrlen(char*, int);
 /* ../../main/util.c  and others : */
 char*	R_ExpandFileName(char*);
 void	setIVector(int*, int, int);

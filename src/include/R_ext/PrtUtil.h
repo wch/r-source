@@ -61,7 +61,6 @@ char *EncodeLogical(int, int);
 char *EncodeInteger(int, int);
 char *EncodeReal(double, int, int, int);
 char *EncodeComplex(Rcomplex, int, int, int, int, int, int);
-char *EncodeString(char*, int, int, int);
 
 /* Printing */
 void VectorIndex(int, int);

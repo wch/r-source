@@ -142,7 +142,7 @@ static void printStringVector(SEXP * x, int n, int quote, int indx)
 	    DO_newline;
 	}
 	Rprintf("%*s%s", R_print.gap, "",
-		EncodeString(CHAR(x[i]), w, quote, Rprt_adj_left));
+		EncodeString(x[i], w, quote, Rprt_adj_left));
 	width += w + R_print.gap;
     }
     Rprintf("\n");
@@ -214,7 +214,7 @@ void printVector(SEXP x, int indx, int quote)
 	if (i) Rprintf("\n");						\
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++)	\
 	    Rprintf("%s%*s",						\
-		    EncodeString(CHAR(names[k]), w, 0, Rprt_adj_right),	\
+		    EncodeString(names[k], w, 0, Rprt_adj_right),	\
 		    R_print.gap, "");					\
 	Rprintf("\n");							\
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++)	\
@@ -271,7 +271,7 @@ static void printNamedComplexVector(Rcomplex * x, int n, SEXP * names)
 static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
     PRINT_N_VECTOR(formatString(x, n, &w, quote),
 		   Rprintf("%s%*s",
-			   EncodeString(CHAR(x[k]), w, quote, Rprt_adj_right),
+			   EncodeString(x[k], w, quote, Rprt_adj_right),
 			   R_print.gap, ""))
 
 void printNamedVector(SEXP x, SEXP names, int quote, char *title)

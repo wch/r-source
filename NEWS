@@ -67,6 +67,10 @@ NEW FEATURES
     o	Replaying a plot (with replayPlot or autoprinting) now
 	automagically opens a device if none is open.
 
+    o	Printing a character string with embedded nuls now prints the
+	whole string, and non-printable characters are represented by
+	octal escape sequences.
+
 
 UTILITIES
 
