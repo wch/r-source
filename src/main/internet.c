@@ -66,9 +66,19 @@ R_setInternetRoutines(R_InternetRoutines *routines)
     return(tmp);
 }
 
+#ifdef Win32
+extern UseInternet2;
+#endif
+
 static void internet_Init(void)
 {
-    int res = moduleCdynload("internet", 1, 1);
+    int res;
+#ifdef Win32
+    res = UseInternet2 ? moduleCdynload("internet2", 1, 1) : 
+	moduleCdynload("internet", 1, 1);
+#else
+    res = moduleCdynload("internet", 1, 1);
+#endif
     initialized = -1;
     if(!res) return;
     initialized = 1;    

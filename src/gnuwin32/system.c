@@ -38,6 +38,7 @@
 #include "Startup.h"
 
 unsigned int R_max_memory = INT_MAX;
+Rboolean UseInternet2 = FALSE;
 
 SA_TYPE SaveAction = SA_DEFAULT;
 SA_TYPE RestoreAction = SA_RESTORE;
@@ -703,6 +704,8 @@ int cmdlineoptions(int ac, char **av)
 		Rp->R_Interactive = TRUE;
 		Rp->ReadConsole = ThreadedReadConsole;
                 InThreadReadConsole = FileReadConsole;
+	    } else if (!strcmp(*av, "--internet2")) {
+		UseInternet2 = TRUE;
 	    } else if (!strcmp(*av, "--mdi")) {
 		MDIset = 1;
 	    } else if (!strcmp(*av, "--sdi") || !strcmp(*av, "--no-mdi")) {

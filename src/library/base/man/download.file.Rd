@@ -70,8 +70,7 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
 #ifdef windows
 
   There is an alternative method if you have Internet Explorer 4 or
-  later installed.   You can use \code{modules\\internet2.dll} to
-  replace \code{modules\\internet.dll}, when
+  later installed.   You can use the flag \code{--internet2}, when
   the `Internet Options' of the system are used to choose proxies and so
   on; these are set in the Control Panel and are those used for Internet
   Explorer.  This version does not support \code{cacheOK = FALSE}.

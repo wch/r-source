@@ -15,6 +15,9 @@ the chance that R cannot be started.
 memory.limit() can now increase the memory limit of the current session.
 This will not work if the limit is currently reached!
 
+internet2.dll (see changes for rw1030) can be selected by the
+--internet2 flag.
+
 The miniR* distribution has grown to seven floppies, and the html
 files no longer fit on a floppy.
 
