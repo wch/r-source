@@ -26,8 +26,8 @@ $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*
 	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
 	fi
 
-test-src-1=$(shell ls *.R 2> nul)
-test-src-auto=$(shell ls *.Rin 2> nul | sed 's/Rin$$/R/')
+test-src-1=$(shell ls *.R 2> /dev/null)
+test-src-auto=$(shell ls *.Rin 2> /dev/null | sed 's/Rin$$/R/')
 test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
@@ -36,7 +36,7 @@ test-out = $(test-src:.R=.Rout)
 
 .Rin.R:
 	@echo "Creating \`$@'"
-	@$(R) < $< > nul
+	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
