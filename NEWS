@@ -61,6 +61,8 @@ BUG FIXES
 
     o	qhyper should work better for large N.
 
+    o   qbinom(1-1e-16, n, p) looped for ever.
+
     o	as.matrix.data.frame no longer escapes quotes in character
 	vectors.
 
