@@ -25,8 +25,6 @@ NEW FEATURES
     o	New functions rowSums(), colSums(), rowMeans() and colMeans():
 	versions of apply() optimized for these cases.
 
-    o	Function arima.sim() in package ts.
-
     o	New function findInterval() {using new C entry point
 	findInterval, see below}.
 
@@ -71,16 +69,6 @@ NEW FEATURES
 
    o	Argument `split' of summary.{aov,aovlist} is now implemented.
 
-   o	arima0() now handles missing values internally so the `na.action'
-	argument has been removed: missing values are also accepted in
-	the `xreg' argument.
-
-	There is a new argument `fixed' to allow some of the
-	parameters to be held fixed.
-
-	There is a new argument `method' giving the option to use
-	conditional-sum-of-squares estimation.
-
    o	library() now checks the dependence on R version (if any) and
 	warns if the package was built under a later version of R.
 
@@ -97,19 +85,44 @@ NEW FEATURES
 
    o    acosh(), asinh(), atanh() are guaranteed to be available.
 
-   o    Package ts includes new datasets Nile, UKgas and WWWusage, and
-	a expanded version of UKDriverDeaths (as a multiple time
-	series SeatBelts).
-
    o    New na.action function na.pass() passes through NAs.
 
-   o    Function acf() now accepts missing values.
+   o	Changes in package ts:
+
+	-  arima0() now handles missing values internally so the
+	   `na.action' argument has been removed: missing values are also
+	   accepted in the `xreg' argument.
+
+	   There is a new arguments `fixed' to allow some of the
+	   parameters to be held fixed and `init' to specify
+	   initial values.
+
+	   There is a new argument `method' giving the option to use
+	   conditional-sum-of-squares estimation.
+
+	-  New function arima.sim().
+
+	-  Function acf() now accepts missing values.
+
+	-  New datasets Nile, UKgas and WWWusage, and a expanded
+           version of UKDriverDeaths (as a multiple time series SeatBelts).
+
+	-  New generic function tsdiag() and an `arima0' method for
+	   diagnostic plots.
+
+	-  New functions ARMAacf() and ARMAtoMA() to compute
+           theoretical quantities for an ARMA process.
+
+	-  New function acf2AR to compute the AR process with a given
+           autocorrelation function.
 
 
 
 DEPRECATED & DEFUNCT
 
     o	.Alias, reshapeLong(), reshapeWide() are defunct.
+
+    o	arima0.diag() (package ts) is deprecated: use tsdiag() instead.
 
 
 DOCUMENTATION CHANGES
