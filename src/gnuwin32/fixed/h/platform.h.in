@@ -7,7 +7,7 @@
 
 /* (Long) Integers */
 
-#define LONG_32_BITS
+#define SIZEOF_LONG 4
 
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
@@ -86,6 +86,8 @@ double atanh(double);
 #define LONGJMP(x,i) longjmp(x,i)
 
 
+/* Some Linux systems may need this */
+#undef HAVE___SETFPUCW
 
 /* Fortran and C Links */
 #define HAVE_F77_UNDERSCORE
@@ -107,6 +109,7 @@ double atanh(double);
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
+#undef LOG_BROKEN
 
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
@@ -136,6 +139,36 @@ double atanh(double);
 /* Printing Command */
 #define R_PRINTCMD	""
 
+/* Getting the working directory */
+#if defined(HAVE_UNISTD_H)
+#define R_GETCWD(x, y) getcwd(x, y)
+#elif defined(Win32)
+#define R_GETCWD(x, y) GetCurrentDirectory(y, x)
+#else
+#undef R_GETCWD
+#endif
+
+/* Maximal length of an entire file name */
+#define HAVE_LIMITS_H
+#undef HAVE_SYS_PARAM_H
+
+#if defined(HAVE_LIMITS_H)
+#  include <limits.h>
+#endif
+#if !defined(PATH_MAX)
+#  if defined(HAVE_SYS_PARAM_H)
+#    include <sys/param.h>
+#  endif
+#  if defined(MAXPATHLEN) && !defined(PATH_MAX)
+#    define PATH_MAX MAXPATHLEN
+#  elif defined(Win32)
+#    define PATH_MAX 260
+#  else
+#    define PATH_MAX 255
+#  endif
+#endif
+
+/* for platform.c to put in .Platform */
 #define R_PLATFORM	"Windows"
 #define R_CPU		"x86"
 #define R_VENDOR	"IBM"
@@ -148,7 +181,7 @@ double atanh(double);
 #define R_MONTH		@R_MONTH@
 #define R_YEAR		@R_YEAR@
 
-
+/* Windows-specific */
 #ifndef M_PI
 #define M_PI		3.141592653589793238462643383279502884197169399375
 #endif
