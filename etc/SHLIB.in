@@ -8,11 +8,11 @@ MAKE=${MAKE-make}
 if [ ${1} = "-o" ]; then
   lib=${2}; shift 2
 else
-  lib=`echo $1|sed 's/\.[^\.]\+$/.@SHLIBEXT@/'`
+  lib=`echo $1|sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`
 fi
 
 for i in ${*}; do
-  obj=`echo $i|sed 's/\.[^\.]\+$/.o/'`
+  obj=`echo $i|sed 's/\.[^\.][^\.]*$/.o/'`
   ${MAKE} -f ${RHOME}/etc/Makeconf ${obj}
   OBJS="${OBJS} ${obj}"
 done
