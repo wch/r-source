@@ -260,6 +260,23 @@ foreach my $pkg (@ARGV) {
 	&fix_CRLF_in_source_files($pkgname);
     }
 
+    sub empty_dir_check {
+	if(-d $_) {
+	    opendir(DIR, $_) or die "cannot open dir $File::Find::name: $!";
+	    my @files = readdir(DIR);
+	    closedir(DIR);
+	    if (@files <= 2) {
+		print "WARNING: directory $File::Find::name is empty\n";
+		if($File::Find::name =~ m+^$pkgname(/|\\)(help|html|latex|libs)$+) {
+		    print "  A directory named '$_' should only occur in an installed package\n";
+		}
+	    }
+	}
+    }
+
+    $log->message("checking for empty directories");
+    find(\&empty_dir_check, "${pkgname}");
+
     ## Finalize.
     if($opt_binary) {
 	$log->message("building binary distribution");

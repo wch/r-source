@@ -935,10 +935,10 @@ To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl regexps, one per line, to be
 matched against the file names relative to the top-level source
-directory.  In addition, files called @file{CVS} or @file{GNUMakefile},
-or with base names starting with @samp{.#}, or starting and ending with
-@samp{#}, or ending in @samp{~} or @samp{.bak} or @samp{.swp}, are
-excluded by default.
+directory.  In addition, directories called @file{CVS} or @file{.svn}
+and files @file{GNUMakefile} or with base names starting with @samp{.#},
+or starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak}
+or @samp{.swp}, are excluded by default.
 
 @c <FIXME>
 @c From 1.8.0 on, the build code removes exclude files itself, rather
@@ -957,6 +957,10 @@ option, it will attempt to rebuild and vignettes (@pxref{Writing package
 vignettes}) in the package.  To do so it installs the current
 package/bundle into a temporary library tree, but any dependent packages
 need to be installed in an available library tree (see the Note: below).
+
+One of the checks that @code{R CMD build} runs is for empty source
+directories.  These are in most cases unintentional, in which case they
+should be removed and the build re-run.
 
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions, but @code{R CMD INSTALL --build} is preferred (and

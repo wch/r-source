@@ -168,6 +168,8 @@ UTILITIES
 	current sources into a temporary library and uses that version
 	of the package/bundle to rebuild the vignettes.
 
+    o	R CMD build now reports empty directories in the source tree.
+
 
 DOCUMENTATION
 
