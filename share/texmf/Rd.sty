@@ -172,6 +172,7 @@
 {\newcommand{\link}[1]{#1\index{#1@\texttt{#1}}}}
 
 \newcommand{\email}[1]{$\langle${#1}$\rangle$}
+
 %% \code without `-' ligatures
 {\catcode`\-=\active%
   \global\def\code{\bgroup%
@@ -183,6 +184,24 @@
 \def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\Rd@AsIsX}
 \def\Rd@AsIs@dospecials{\do\$\do\&\do\#\do\^\do\_\do\%\do\~}
 \def\Rd@AsIsX#1{\normalfont #1\egroup}
+\let\command=\code
+\let\env=\code
+
+\newcommand\samp{`\bgroup\@noligs\@sampx}
+\def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
+\let\option=\samp
+
+\newcommand{\dfn}[1]{\textsl{#1}}
+\let\Cite=\dfn
+
+\newcommand{\acronym}[1]{\textsc{\lowercase{#1}}}
+\newcommand{\kbd}[1]{\texttt{\textsl{#1}}}
+
+\newcommand{\strong}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\let\pkg=\strong
+
+\newcommand{\sQuote}[1]{`#1'}
+\newcommand{\dQuote}[1]{``#1''}
 
 \IfFileExists{ae.sty}{\setboolean{Rd@has@ae}{true}}{}
 \ifthenelse{\boolean{Rd@use@ae}\and\boolean{Rd@has@ae}}{%
