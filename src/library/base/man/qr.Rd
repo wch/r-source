@@ -38,7 +38,7 @@ as.qr(x)
 }
 \description{
   \code{qr} computes the QR decomposition of a matrix.  It provides an
-  interface to the techniques used in the LINPACK routine DQRDC 
+  interface to the techniques used in the LINPACK routine DQRDC
   or the LAPACK routines DGEQP3 and (for complex matrices) ZGEQP3.
 }
 \details{
@@ -57,7 +57,7 @@ as.qr(x)
   All the above functions keep \code{dimnames} (and \code{names}) of
   \code{x} and \code{y} if there are.
 
-  \code{solve.qr} is the method for \code{solve} for \code{qr} objects.
+  \code{solve.qr} is the method for \code{\link{solve}} for \code{qr} objects.
   \code{qr.solve} solves systems of equations via the QR decomposition:
   if \code{a} is a QR decomposition it is the same as \code{solve.qr},
   but if \code{a} is a rectangular matrix the QR decomposition is
@@ -115,7 +115,7 @@ as.qr(x)
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for
   reconstruction of the matrices.
-  \code{\link{solve.qr}},  \code{\link{lsfit}},
+  \code{\link{lm.fit}},  \code{\link{lsfit}},
   \code{\link{eigen}}, \code{\link{svd}}.
 
   \code{\link{det}} (using \code{qr}) to compute the determinant of a matrix.
