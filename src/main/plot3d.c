@@ -433,10 +433,10 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     nc = LENGTH(c);
     args = CDR(args);
 
-    PROTECT(col = FixupCol(GetPar("col", args), dd));
+    PROTECT(col = FixupCol(GetPar("col", args), NA_INTEGER));
     ncol = length(col);
 
-    PROTECT(lty = FixupLty(GetPar("lty", args), dd));
+    PROTECT(lty = FixupLty(GetPar("lty", args), dd->gp.lty));
     nlty = length(lty);
 
     /* col, lwd and lty vectors here --- FIXME: "lwd" ???? */
@@ -679,7 +679,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     nc = length(sc);
     args = CDR(args);
 
-    PROTECT(scol = FixupCol(CAR(args), dd));
+    PROTECT(scol = FixupCol(CAR(args), NA_INTEGER));
     ncol = length(scol);
 
     /* Shorthand Pointers */
@@ -792,7 +792,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     zmax = REAL(szlim)[1];
     args = CDR(args);
 
-    PROTECT(sc = FixupCol(CAR(args), dd));
+    PROTECT(sc = FixupCol(CAR(args), NA_INTEGER));
     nc = length(sc);
 
     /* Shorthand Pointers */
@@ -1433,13 +1433,13 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     expand = asReal(CAR(args));
     args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), dd));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
     ncol = LENGTH(col);
     if (ncol < 1)
 	errorcall(call, "invalid col specification\n");
     args = CDR(args);
 
-    PROTECT(border = FixupCol(CAR(args), dd));
+    PROTECT(border = FixupCol(CAR(args), NA_INTEGER));
     if (length(border) < 1)
 	errorcall(call, "invalid border specification\n");
     args = CDR(args);

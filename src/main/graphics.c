@@ -4625,13 +4625,13 @@ unsigned int name2col(char *nm)
 
 /* Index (as string) to Internal Color Code */
 
-unsigned int number2col(char *nm, DevDesc *dd)
+unsigned int number2col(char *nm)
 {
     int index;
     char *ptr;
     index = strtod(nm, &ptr);
     if(*ptr) error("invalid color specification\n");
-    if(index == 0) return dd->dp.bg;
+    if(index == 0) return CurrentDevice()->dp.bg;
     else return R_ColorTable[(index-1) % R_ColorTableSize];
 }
 
@@ -4678,36 +4678,32 @@ char *col2name(unsigned int col)
 /* the initialisation code in which case, str2col */
 /* assumes that `s' is a name */
 
-unsigned int str2col(char *s, DevDesc *dd)
+unsigned int str2col(char *s)
 {
-    if (dd) {
-	if(s[0] == '#') return rgb2col(s);
-	else if(isdigit(s[0])) return number2col(s, dd);
-	else return name2col(s);
-    }
-    else
-	return name2col(s);
+    if(s[0] == '#') return rgb2col(s);
+    else if(isdigit(s[0])) return number2col(s);
+    else return name2col(s);
 }
 
 /* Convert a sexp element to an R  color desc */
 /* We Assume that Checks Have Been Done */
 
-unsigned int RGBpar(SEXP x, int i, DevDesc *dd)
+unsigned int RGBpar(SEXP x, int i)
 {
     int index;
     if(isString(x)) {
-	return str2col(CHAR(STRING(x)[i]), dd);
+	return str2col(CHAR(STRING(x)[i]));
     }
     else if(isInteger(x) || isLogical(x)) {
 	if(INTEGER(x)[i] == NA_INTEGER) return NA_INTEGER;
 	index = INTEGER(x)[i] - 1;
-	if(index < 0) return dd->dp.bg;
+	if(index < 0) return CurrentDevice()->dp.bg;
 	else return R_ColorTable[abs(index) % R_ColorTableSize];
     }
     else if(isReal(x)) {
 	if(!R_FINITE(REAL(x)[i])) return NA_INTEGER;
 	index = REAL(x)[i] - 1;
-	if(index < 0) return dd->dp.bg;
+	if(index < 0) return CurrentDevice()->dp.bg;
 	else return R_ColorTable[abs(index) % R_ColorTableSize];
     }
     return 0;		/* should not occur */
@@ -4727,7 +4723,7 @@ void InitColors()
 
     /* Install Default Palette */
     for(i=0 ; DefaultPalette[i] ; i++)
-	R_ColorTable[i] = str2col(DefaultPalette[i], NULL);
+	R_ColorTable[i] = str2col(DefaultPalette[i]);
     R_ColorTableSize = i;
 }
 

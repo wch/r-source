@@ -713,8 +713,8 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     strcpy(pd->papername, paper);
     pd->fontfamily = MatchFamily(family);
     pd->encoding = 1;
-    pd->bg = str2col(bg, dd);	/* dd is not used ... */
-    pd->col = str2col(fg, dd);
+    pd->bg = str2col(bg);
+    pd->col = str2col(fg);
     pd->fill = NA_INTEGER;
     pd->width = width;
     pd->height = height;
