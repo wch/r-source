@@ -8,14 +8,13 @@
 
 #include "Mathlib.h"
 
-/*----------- DEBUGGING -------------*/
-/* #define DEBUG_pnch
- * rather use  make CFLAGS='-DDEBUG_pnch -g -I/usr/local/include -I../include'
+/*----------- DEBUGGING -------------
+ *
+ *	make CFLAGS='-DDEBUG_pnch -g -I/usr/local/include -I../include'
 
  * -- Feb.1, 1998 (R 0.62 alpha); M.Maechler:  still have
- - INFINITE loop \
- - bad precision / in some cases
-
+	- INFINITE loop \
+	- bad precision / in some cases
  */
 #ifdef DEBUG_pnch
 #include "PrtUtil.h"
