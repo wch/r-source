@@ -12,28 +12,27 @@ gsub(pattern, replacement, x,
 \alias{gsub}
 \arguments{
 \item{pattern}{character string containing a regular expression
-to be matched in the vector of character string \code{vec}.}
-\item{x}{a vector of character strings where matches is sought.}
+  to be matched in the vector of character string \code{vec}.}
+\item{x}{a vector of character strings where matches are sought.}
 \item{ignore.case}{if \code{FALSE}, the pattern matching is
-\emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
+  \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 \item{extended}{if \code{TRUE}, extended regular expression matching
-is used, and if \code{FALSE} basic regular expressions are used.}
-\item{value}{if \code{FALSE}, a vector containing the indices
-of the matches determined by \code{grep} is returned,
-and if \code{TRUE}, a vector containing the matching
-elements themselves is returned.}
+  is used, and if \code{FALSE} basic regular expressions are used.}
+\item{value}{if \code{FALSE}, a vector containing the (\code{integer}) indices
+  of the matches determined by \code{grep} is returned,
+  and if \code{TRUE}, a vector containing the matching
+  elements themselves is returned.}
 \item{replacement}{a replacement for matched pattern in
-\code{sub} and \code{gsub}.}
+  \code{sub} and \code{gsub}.}
 }
 \description{
-\code{grep} searches for matches to pattern given as its first
-argument within the the vector of character strings given as
-its second argument.
+\code{grep} searches for matches to \code{pattern} (its first
+argument) within the vector \code{x} of character strings (second argument).
 
 \code{sub} and \code{gsub} perform replacement of matches
 determined by regular expression matching.
 The functions differ only in that \code{sub} replaces only
-the first occurence of a pattern whereas \code{gsub} replaces
+the first occurence of a \code{pattern} whereas \code{gsub} replaces
 all occurences.
 
 The regular expressions used are those specified by POSIX 1003.2,
