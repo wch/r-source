@@ -47,6 +47,8 @@ n <- 17; fac <- factor(rep(1:3, len = n), levels = 1:5)
 table(fac)
 tapply(1:n, fac, sum)
 tapply(1:n, fac, sum, simplify = FALSE) #- does not yet print okay
+tapply(1:n, fac, range)			#- .. nor does this
+tapply(1:n, fac, quantile)		#- ... or this
 
 ind <- list(c(1, 2, 2), c("A", "A", "B"))
 table(ind)
