@@ -46,7 +46,6 @@
 #include <sys/stat.h>
 
 /*-- necessary for some (older, i.e., ~ <= 1997) Linuxen:*/
-#ifdef linux
 #ifndef FD_SET
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
