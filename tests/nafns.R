@@ -65,7 +65,7 @@ summary(gfit2) # same as before
 sm(fitted(gfit2))
 sm(resid(gfit2))
 sm(predict(gfit2))
-(pp2 <- predict(gfit, nd))
+(pp2 <- predict(gfit2, nd))
 stopifnot(all.equal(pp, pp2))
 
 ## more precise tests.
