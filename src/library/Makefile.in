@@ -86,7 +86,7 @@ install-strip:
 uninstall:
 	@echo "uninstalling packages ..."
 	@(cd $(rhome)/library; \
-	  for p in $(R_PKGS) $(R_REGULAR_PKGS); do rm -rf $${p}; done)
+	  for p in $(R_PKGS); do rm -rf $${p}; done)
 
 mostlyclean: clean
 clean:
@@ -95,7 +95,7 @@ clean:
 	done
 	@rm -f stamp-*
 distclean:
-	@for d in $(SUBDIRS) $(R_REGULAR_PKGS); do \
+	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -f Makefile
