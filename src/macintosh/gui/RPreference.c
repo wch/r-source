@@ -54,6 +54,7 @@
 	************************************************************************************************ 
 */
 
+#include <RCarbon.h>
 
 /* ************************************************************************************************ */
 /*                                    INCLUDE HEADER FILE                                           */
@@ -227,15 +228,18 @@ void  doGetPreferences(void)
    FMFontFamily 		postFontId;
      
       strcpy(genvString, ".Renviron");
+      
       SetTab();
     
       storeHistory = atoi(mac_getenv("RHISTSIZE"));
+       
        
       if(storeHistory < 1 || storeHistory > 512)  
        storeHistory = 512;
       HISTORY = storeHistory +1;
       Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
   
+         
       gTextSize = GetTextSize();
 
       gScreenRes = GetScreenRes();
@@ -289,7 +293,6 @@ void  doGetPreferences(void)
       else  
        OnOpenSource = false;
   
-       
 }
 
 int EightyWidth(void)
@@ -434,7 +437,6 @@ void SetTab(){
    SInt16         i;  
    char 		tabsize[10];
    
-
    gtabSize = atoi(mac_getenv("TabSize"));
      
    if(gtabSize < 1 || gtabSize > 20)
