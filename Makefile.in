@@ -36,7 +36,7 @@ R:
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
-	  echo "You should \`make docs' now ..."; \
+	  echo "you should \`make docs' now ..."; \
 	fi
 
 src/include/config.h: $(srcdir)/configure \
@@ -55,7 +55,7 @@ install: all installdirs
 	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $${f} $(rhome); \
 	  done)
-	@echo "Installing executables ..."
+	@echo "installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.X11 $(rhome)/bin
 	@if test -x bin/R.GNOME; then \
 	  $(INSTALL_PROGRAM) bin/R.GNOME $(rhome)/bin; \
@@ -68,20 +68,17 @@ install: all installdirs
 	                    | grep -v '^bin/R.GNOME\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
-	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \
-	  $(INSTALL) bin/$${f} $(bindir); \
-	done
-	@echo "Installing headers ..."
+	@echo "installing headers ..."
 	@for f in include/*.h; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
 	done
-	@echo "Installing library ..."
+	@echo "installing library ..."
 	@cp -r library $(rhome) || \
 	  (cd library; \
 	    $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xof -))
-	@echo "  Building help index ..."
+	@echo "  building help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
-	@echo "  Building HTML index ..."
+	@echo "  building HTML index ..."
 	@$(rhome)/bin/build-help --rhome $(rhome) --htmllists
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
@@ -91,23 +88,26 @@ installdirs:
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@echo "Uninstalling library ..."
+	@echo "uninstalling library ..."
 	@(cd $(rhome)/library; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
-	@echo "  Rebuilding help index ..."
+	@echo "  rebuilding help index ..."
 	@(cd $(rhome)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
-	@echo "  Rebuilding HTML index ..."
+	@echo "  rebuilding HTML index ..."
 	@if test -x $(rhome)/bin/build-help; then \
 	  $(rhome)/bin/build-help --rhome $(rhome) --htmllists; \
 	fi
-	@echo "Uninstalling headers ..."
+	@echo "uninstalling headers ..."
 	@rm -rf $(rhome)/include
-	@echo "Uninstalling executables ..."
+	@echo "uninstalling executables ..."
 	@rm -rf $(rhome)/bin
+	@rm -f $(bindir)/R
+## FIXME: old stuff
 	@for f in R Rd2txt Rdconv Rdindex Sd2Rd; do \
 	  rm -f $(bindir)/$${f}; \
 	done
+##
 	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
@@ -131,7 +131,7 @@ distclean: clean
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status
 maintainer-clean: distclean
-	@echo "This command is intended for maintainers to use;  it"
+	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
 
 dist: dist-unix
