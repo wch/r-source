@@ -97,7 +97,7 @@ refman.pdf: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
-	  cat refman.bot) > $@
+	  cat refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
