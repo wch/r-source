@@ -16,6 +16,7 @@ R_PAPERSIZE = a4
 # set the next to `ae' to omit the hyperlinks
 R_RD4PDF = ae,hyper
 
+MAKEINFO = makeinfo
 PDFLATEX = pdflatex
 PDFTEX = pdftex
 MAKEINDEX = makeindex
@@ -39,6 +40,13 @@ Rdnewer.pl: $(top_srcdir)/tools/Rdnewer.in
 .texi.pdf:
 	$(PDFTEX) $<
 	$(PDFTEX) $<
+
+.texi.info:
+	$(MAKEINFO)  -D UseExternalXrefs $<
+
+info: $(OBJECTS_INFO)
+R-exts.info: version.texi
+R-intro.info: version.texi
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
@@ -89,7 +97,7 @@ R-intro.pdf: R-intro.texi version.texi
 	$(PDFTEX) R-intro.texi
 	$(PDFTEX) R-intro.texi
 
-version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
+version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/| |g' $(top_srcdir)/date-stamp`)"; \
