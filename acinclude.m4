@@ -528,13 +528,15 @@ fi
 ## to be used (under *exactly* these names).  It is also possible to use
 ## these options to specify the full path name of the compiler.
 AC_DEFUN([R_PROG_F77_OR_F2C],
-[if test -n "${F77}"; then
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test -n "${FC}"; then
+[if test -n "${FC}"; then
   warn_arg_var_FC="configure variable 'FC' is deprecated.
 Use variable 'F77' to specify a FORTRAN 77 compiler if necessary."
   AC_MSG_WARN([${warn_arg_var_FC}])
-  F77=${FC}
+fi
+if test -n "${F77}"; then
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif test -n "${FC}"; then
+  F77="${FC}"
   AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test "${use_f77}" = yes; then
   if test "${with_f77}" = yes; then
@@ -588,17 +590,26 @@ AC_DEFUN([R_PROG_F77_FLIBS],
 ## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
 ## when using gcc for linking.  The '-l:' construction is similar to
 ## plain '-l' except that search order (archive/shared) given by '-a'
-## is not important.  We escape such flags via '${wl}' from libtool.
+## is not important.  We escape such flags via '-Wl,' in case of gcc.
 ## Note that the current Autoconf CVS uses _AC_LINKER_OPTION for a
 ## similar purpose when computing FLIBS: this uses '-Xlinker' escapes
-## for gcc and does nothing otherwise.
+## for gcc and does nothing otherwise.  Note also that we cannot simply
+## unconditionally escape with '${wl}' from libtool as on HPUX we need
+## SHLIB_LD=ld for native C compilers (problem with non-PIC 'crt0.o',
+## see 'Individual platform overrides' in section 'DLL stuff' in file
+## 'configure.ac'.
 flibs=
+if test "${GCC}" = yes; then
+  linker_option="-Wl,"
+else
+  linker_option=
+fi
 for arg in ${FLIBS}; do
   case "${arg}" in
     -lcrt?.o)
       ;;
     -l:*)
-      flibs="${flibs} ${wl}${arg}"
+      flibs="${flibs} ${linker_option}${arg}"
       ;;
     *)
       flibs="${flibs} ${arg}"
