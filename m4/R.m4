@@ -2802,8 +2802,10 @@ fi
 done
 if test "x${want_utf8_support}" = xyes; then
 AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
-fi
 AC_SUBST(SUPPORT_UTF8)
+AC_DEFINE(SUPPORT_MBCS, 1, [Define this to enable support for MBCS locales.])
+AC_SUBST(SUPPORT_MBCS)
+fi
 ])# R_UTF8
 
 

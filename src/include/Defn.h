@@ -677,15 +677,12 @@ extern int R_dec_min_exponent		INI_as(-308);
 
    As of 2.1.0 we have some internationalization support.
    Configuring with --enable-utf8 defines SUPPORT_UTF8 if there is
-   enough OS support for widechars. That is turn defines
-   SUPPORT_MBCS (here) and USE_FONTSET (in the X11 module), both of
+   enough OS support for widechars and SUPPORT_MBCS.  That in turn
+   defines USE_FONTSET (in the X11 module), both of
    which control sections with more general MBCS support.
 
    ------------------------------------------------------------ */
 
-#ifdef SUPPORT_UTF8
-#define SUPPORT_MBCS 1
-#endif
 
 /* Platform Dependent Gui Hooks */
 

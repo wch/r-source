@@ -582,6 +582,9 @@
 /* Define if you provide support for the libxml ftp/http functions. */
 #define SUPPORT_LIBXML 1
 
+/* Define this to enable support for MBCS locales. */
+#undef SUPPORT_MBCS
+
 /* Define this to enable support for UTF-8 locales. */
 /* #undef SUPPORT_UTF8 */
 

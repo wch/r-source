@@ -5,9 +5,8 @@
 #include <R.h>
 #include "tools.h"
 
-#ifdef SUPPORT_UTF8
-/* Not used on Windows, so OK not to LibExtern*/
-extern Rboolean mbcslocale;
+#ifdef SUPPORT_MBCS
+LibExtern Rboolean mbcslocale;
 #endif
 
 SEXP
