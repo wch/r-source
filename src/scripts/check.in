@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.27.2.2 $ ';
+my $revision = ' $Revision: 1.27.2.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,6 +72,8 @@ my $TMPDIR = R_getenv("TMPDIR", "/tmp");
 my $R_exe = "${R_HOME}/bin/R";
 if($WINDOWS){
     $TMPDIR = R_getenv("TMPDIR", "/TEMP");
+    die "Please set TMPDIR to a valid temporary directory\n" 
+	unless (-d $TMPDIR);
     $R_exe = "Rterm.exe";
     $MAKE = "make";
     $LATEX = "latex";
