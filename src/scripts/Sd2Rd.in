@@ -21,7 +21,7 @@
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.9 $ ';
+my $revision = ' $Revision: 1.10 $ ';
 my $version;
 my $name;
 
@@ -41,7 +41,7 @@ END
 
 sub usage {
   print STDERR <<END;
-Usage: $name [options] FILE
+Usage: R CMD Sd2Rd [options] FILE
 
 Convert S documentation in FILE to R documentation format.
 
