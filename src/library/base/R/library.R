@@ -173,16 +173,16 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             which.lib.loc <- dirname(pkgpath)
             descfile <- system.file("DESCRIPTION", package = package,
                                     lib.loc = which.lib.loc)
-            if(!nchar(descfile)) 
-            	stop("This is not a valid package -- no DESCRIPTION exists") 
-	
+            if(!nchar(descfile))
+            	stop("This is not a valid package -- no DESCRIPTION exists")
+
             descfields <- read.dcf(descfile, fields =
-                           c("Package", "Depends", "Built")) 
-            testRversion(descfields)                           
+                           c("Package", "Depends", "Built"))
+            testRversion(descfields)
 
             ## Check for inconsistent naming
-            if(descfields[1, "Package"] != package) {
-            	warning(paste("Package", sQuote(package), "not found,", 
+            if(descfields[1, "Package"] != libraryPkgName(package)) {
+            	warning(paste("Package", sQuote(package), "not found,",
             		sQuote(descfields[1, "Package"]), "used"))
             	package <- descfields[1, "Package"]
             	pkgname <- paste("package", package, sep = ":")
