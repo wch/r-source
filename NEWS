@@ -320,6 +320,9 @@ BUG FIXES
     o	cutree(a, h=h) silently gave wrong results when 'a' was an
 	agnes object; now gives an error and reminds of as.hclust().
 
+    o	postscript() could crash if given a font value outside the
+	valid range 1...5.
+
 
 
 		CHANGES IN R VERSION 1.8.1
