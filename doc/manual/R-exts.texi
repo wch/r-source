@@ -1420,9 +1420,8 @@ arguments can be extracted.
 
 In each case the @R{} objects are available for manipulation via a set
 of functions and macros defined in the header file @file{Rinternals.h}
-or some higher-level macros defined in @file{Rdefines.h} (included by
-@file{S.h}).  Details on @code{.Call} and @code{.External} are given
-further below.
+or some higher-level macros defined in @file{Rdefines.h}.  Details on
+@code{.Call} and @code{.External} are given further below.
 
 Before you decide to use @code{.Call} or @code{.External}, you should
 look at other alternatives.  First, consider working in interpreted @R{}
@@ -1445,7 +1444,7 @@ installation.
 
 A more recent approach is to use @R{} versions of the macros and
 functions defined for the S version 4 interface @code{.Call}, which are
-defined in the header file @file{Rdefines.h}, included by @file{S.h}.
+defined in the header file @file{Rdefines.h}.
 This is a somewhat simpler approach, and is certainly to be preferred if
 the code might be shared with S at any stage.
 
