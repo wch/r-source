@@ -19,7 +19,7 @@ OBJS = bsplvd.o bvalue.o bvalus.o dpbfa.o dpbsl.o ksmooth.o loessc.o \
 
 all: $(LIB)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs
-	@cp $< $(top_builddir)/library/$(pkg)/libs
+	@cp $(LIB) $(top_builddir)/library/$(pkg)/libs
 
 $(LIB): $(OBJS)
 	$(top_builddir)/bin/R SHLIB -o $@ $(OBJS)
