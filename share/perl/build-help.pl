@@ -100,7 +100,7 @@ if (!$dest) {
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
-build_index($lib, $version, $dest, "");
+build_index($lib, $dest, $version, "");
 if($opt_index){
     exit 0;
 }
