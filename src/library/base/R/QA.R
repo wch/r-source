@@ -162,7 +162,8 @@ function(dir) {
     ## Explicitly deal with functions in base which `look' like S3
     ## methods, but are not.
     baseStopList <-
-        c("close.screen", "close.socket",
+        c("boxplot.stats",
+          "close.screen", "close.socket",
           "format.char", "format.info", "format.pval",
           "plot.new", "plot.window", "plot.xy",
           "split.screen",
