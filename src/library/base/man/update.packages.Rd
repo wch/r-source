@@ -37,10 +37,17 @@ old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
                   contriburl = contrib.url(CRAN), method = "auto")
+#ifdef unix
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,
 		 installWithVers=FALSE)
+#endif
+#ifndef unix
+install.packages(pkgs, lib, CRAN = getOption("CRAN"),
+                 contriburl = contrib.url(CRAN),
+                 method, available = NULL, destdir = NULL)
+#endif
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
