@@ -179,7 +179,7 @@ getOption(x)
 
     \item{\code{warning.expression}:}{an \R code expression to be called
       if a warning is generated, replacing the standard message.  If
-      non-null is called irrespective of the value of option
+      non-null it is called irrespective of the value of option
       \code{warn}.}
 #ifdef windows
 
