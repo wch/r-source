@@ -14,7 +14,11 @@
 \value{
   An object with the following attributes:
   \item{factors}{A matrix of variables by terms showing which variables
-    appear in which terms.}
+    appear in which terms. The entries are 0 if the variable does not
+    occur in the term, 1 if it does occur and should be coded by
+    contrasts, and 2 if it occurs and should be coded via dummy
+    variables for all levels (as when an intercept or lower-order term
+    is missing).}
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model.}
   \item{variables}{A list of the variables in the model}
