@@ -770,6 +770,7 @@ void errorcall(SEXP, const char*, ...);
 void warningcall(SEXP, const char*,...);
 void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
+SEXP R_GetTraceback(int);
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);
