@@ -148,6 +148,7 @@ double atanh(double);
 #undef HAVE_GETPWUID
 #undef HAVE_GETGRGID
 #define HAVE_PUTENV 1
+#undef HAVE_STRPTIME
 
 
 /* Dirent stuff */

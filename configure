@@ -4191,7 +4191,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-void *p = alloca(2 * sizeof(int));
+char *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:4198: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -4867,7 +4867,7 @@ fi
 
 for ac_func in access acosh asinh atanh bcopy finite getcwd getgrgid \
   getpwuid getuid hypot isnan matherr memcpy memmove popen putenv rint \
-  strcoll stat system times vsnprintf
+  strcoll stat strptime system times vsnprintf
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
 echo "configure:4874: checking for $ac_func" >&5
@@ -6108,7 +6108,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x = {0,0};
+typedef int charset[2]; const charset x;
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -8761,17 +8761,62 @@ fi
 
 
 
+## POSIX times
+echo $ac_n "checking whether leap seconds are counted""... $ac_c" 1>&6
+echo "configure:8767: checking whether leap seconds are counted" >&5
+  if eval "test \"`echo '$''{'uses_leapseconds'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+   cat > conftest.c <<EOF
+#include <time.h>
+#include <stdio.h>
+#include "confdefs.h"
+
+int main () {
+  struct tm *tm;
+  time_t ct;
+
+  ctime(&ct);
+  ct = ct - (ct % 60);
+  tm = gmtime(&ct);
+  printf("%d", tm->tm_sec);
+  exit(0);
+}
+EOF
+      if ${CC-cc} ${CFLAGS} -o conftest conftest.c; then
+          output=`./conftest`
+	  if test ${?} -eq 0; then
+            if test ${output} -gt 0; then
+	      uses_leapseconds=yes
+            fi
+	  fi
+      fi
+    
+fi
+
+  rm -rf conftest conftest.* core
+  if test -n "${uses_leapseconds}"; then
+    echo "$ac_t""yes" 1>&6
+    cat >> confdefs.h <<\EOF
+#define USING_LEAPSECONDS 1
+EOF
+
+  else
+    echo "$ac_t""no" 1>&6
+  fi
+
+
 ## R-profiling
 if test "${want_Rprof}" = yes; then
   for ac_func in setitimer
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:8770: checking for $ac_func" >&5
+echo "configure:8815: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 8775 "configure"
+#line 8820 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -8794,7 +8839,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:8798: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:8843: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
@@ -8838,7 +8883,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:8842: checking for $ac_word" >&5
+echo "configure:8887: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_R_PRINTCMD'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -8876,7 +8921,7 @@ EOF
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:8880: checking for $ac_word" >&5
+echo "configure:8925: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else

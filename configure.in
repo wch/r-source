@@ -374,7 +374,7 @@ AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite getcwd getgrgid \
   getpwuid getuid hypot isnan matherr memcpy memmove popen putenv rint \
-  strcoll stat system times vsnprintf)
+  strcoll stat strptime system times vsnprintf)
 AC_REPLACE_FUNCS(strdup)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
@@ -781,6 +781,9 @@ AC_SUBST(R_GUIS)
 ## Tcl/Tk
 
 R_TCLTK
+
+## POSIX times
+R_USES_LEAPSECONDS
 
 ## R-profiling
 if test "${want_Rprof}" = yes; then

@@ -631,7 +631,7 @@ FUNTAB R_FunTab[] =
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"XFig",	do_XFig,	0,	111,   12,	PP_FUNCALL},
 #ifdef Win32
-{"devga",	do_devga,	0,	111,	4,	PP_FUNCALL},
+{"devga",	do_devga,	0,	111,	5,	PP_FUNCALL},
 #endif
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
@@ -713,6 +713,13 @@ FUNTAB R_FunTab[] =
 /* History manipulation */
 {"loadhistory", do_loadhistory,	0,      11,     1,      PP_FUNCALL},
 {"savehistory", do_savehistory,	0,      11,     1,      PP_FUNCALL},
+
+/* data-time manipulations */
+{"Sys.time",	do_systime,	0,	11,	0,	PP_FUNCALL},
+{"as.POSIXct",	do_asPOSIXct,	0,	11,	2,	PP_FUNCALL},
+{"as.POSIXlt",	do_asPOSIXlt,	0,	11,	2,	PP_FUNCALL},
+{"format.POSIXlt",do_formatPOSIXlt,0,	11,	2,	PP_FUNCALL},
+{"strptime",	do_strptime,	0,	11,	2,	PP_FUNCALL},
 
 {NULL,		NULL,		0,	0,	0,	0},
 };

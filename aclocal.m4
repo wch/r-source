@@ -1111,6 +1111,46 @@ fi
 AC_SUBST(BLAS_LIBS)
 ])
 
+dnl
+dnl See if leap seconds are used.
+dnl
+AC_DEFUN(R_USES_LEAPSECONDS,
+ [AC_MSG_CHECKING([whether leap seconds are counted])
+  AC_CACHE_VAL(uses_leapseconds,
+    [ cat > conftest.c <<EOF
+#include <time.h>
+#include <stdio.h>
+#include "confdefs.h"
+
+int main () {
+  struct tm *tm;
+  time_t ct;
+
+  ctime(&ct);
+  ct = ct - (ct % 60);
+  tm = gmtime(&ct);
+  printf("%d", tm->tm_sec);
+  exit(0);
+}
+EOF
+      if ${CC-cc} ${CFLAGS} -o conftest conftest.c; then
+          output=`./conftest`
+	  if test ${?} -eq 0; then
+            if test ${output} -gt 0; then
+	      uses_leapseconds=yes
+            fi
+	  fi
+      fi
+    ])
+  rm -rf conftest conftest.* core
+  if test -n "${uses_leapseconds}"; then
+    AC_MSG_RESULT([yes])
+    AC_DEFINE(USING_LEAPSECONDS, 1)
+  else
+    AC_MSG_RESULT([no])
+  fi
+])
+
 
 dnl Local Variables: ***
 dnl mode: sh ***

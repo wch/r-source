@@ -1,0 +1,134 @@
+\name{strptime}
+\alias{format.POSIXct}
+\alias{format.POSIXlt}
+\alias{strftime}
+\alias{strptime}
+\alias{as.character.POSIXct}
+\alias{as.character.POSIXlt}
+\alias{ISOdatetime}
+\alias{ISOdate}
+
+\title{Date-time Conversion Functions to and from Character}
+\description{
+  Functions to convert between character representations and objects of
+  classes \code{"POSIXlt"} and \code{"POSIXct"} representing
+  calendar dates and times.
+}
+\usage{
+format.POSIXct(x, format = "", tz = "", ...)
+format.POSIXlt(x, format = "", ...)
+
+as.character.POSIXct(x, ...)
+as.character.POSIXlt(x, ...)
+
+strftime(x, format="\%Y-\%m-\%d \%X", ...)
+strptime(x, format)
+
+ISOdatetime(year, month, day, hour, min, sec, tz = "")
+ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
+}
+\arguments{
+  \item{x}{An object to be converted.}
+  \item{tz}{A timezone specification to be used for the conversion.
+    System-specific, but \code{""} is the current time zone, and
+    \code{"GMT"} is UTC.}
+  \item{format}{A character vector. The default is
+    \code{"\%Y-\%m-\%d \%H:\%M;\%S"} if any component has a time
+    component which is not midnight, and \code{"\%Y-\%m-\%d"} otherwise.
+  }
+  \item{\dots}{Further arguments to be passed from or to other methods.}
+  \item{tz}{A timezone: see \code{\link{as.POSIXct}}.}
+  \item{year, month, day}{numerical values to specify a day.}
+  \item{hour, min, sec}{numerical values for a time within a day.}
+}
+\details{
+  \code{strftime} is an alias for \code{format.POSIXlt}, and
+  \code{format.POSIXct} first converts to class \code{"POSIXct"} by
+  calling \code{\link{as.POSIXct}}. Note that only that conversion
+  depends on the time zone.
+
+  The usual vector re-cycling rules are applied to \code{x} and
+  \code{format} so the answer will be of length that of the longer of the
+  vectors.
+  
+  Locale-specific conversions to and from character strings are used
+  where appropriate and available.  This affects the names of the days
+  and months, the AM/PM indicator (if used) and the separators in
+  formats such as \code{\%x} and \code{\%X}.
+
+  The details of the formats are system-specific, but the following are
+  defined by the POSIX standard for \code{strftime} and are likely to be
+  widely available.  Any character in the format string other than
+  the \code{\%} escapes is interpreted literally (and \code{\%\%} gives
+  \code{\%}).
+  \describe{
+    \item{\code{\%a}}{Abbreviated weekday name.}
+    \item{\code{\%A}}{Full weekday name.}
+    \item{\code{\%b}}{Abbreviated month name.}
+    \item{\code{\%B}}{Full month name.}
+    \item{\code{\%c}}{Date and time, locale-specific.}
+    \item{\code{\%d}}{Day of the month as decimal number (01--31).}
+    \item{\code{\%H}}{Hours as decimal number (00--23).}
+    \item{\code{\%I}}{Hours as decimal number (01--12).}
+    \item{\code{\%j}}{Day of year as decimal number (001--366).}
+    \item{\code{\%m}}{Month as decimal number (01--12).}
+    \item{\code{\%M}}{Minute as decimal number (00--59).}
+    \item{\code{\%p}}{AM/PM indicator in the locale.}
+    \item{\code{\%S}}{Second as decimal number (00--61), allowing for
+      up to two leap-seconds.}
+    \item{\code{\%U}}{Week of the year as decimal number (00--53) using
+      the first Sunday as day 1 of week 1.}
+    \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
+    \item{\code{\%W}}{Week of the year as decimal number (00--53) using
+      the first Monday as day 1 of week 1.}
+    \item{\code{\%x}}{Date, locale-specific.}
+    \item{\code{\%X}}{Time, locale-specific.}
+    \item{\code{\%y}}{Year without century (00--99). If you use this on
+      input, which century you get is system-specific.  So don't!  Often
+      values up to 69 are prefixed by 20 and 70--100 by 19.}
+    \item{\code{\%Y}}{Year with century.}
+    \item{\code{\%Z}}{(output only.) Time zone as a character
+      string (empty if not available).}
+  }
+  Where leading zeros are shown they will be used on output but are
+  optional on input.
+
+  \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
+  \code{strptime}, that differ only in their defaults.
+}
+\value{
+  The \code{format} methods and \code{strftime} return character vectors
+  representing the time.
+
+  \code{strptime} turns character representations into an object of class
+  \code{"POSIXlt"}.
+
+  \code{ISOdatetime} and \code{ISOdate} return an object of class
+  \code{"POSIXct"}.
+}
+\note{
+  The default formats follow the rules of the ISO 8601
+  international standard which expresses a day as \code{2001-02-03} and
+  a time as \code{14:01:02} using leading zeroes as here. The ISO form
+  uses no space to separate dates and times.
+}
+\references{
+  International Organization for Standardization (1988, 1997, \dots)
+  \emph{ISO 8601. Data elements and interchange formats --
+    Information interchange -- Representation of dates and times.}
+  The 1997 version is available on-line at
+  \url{ftp://ftp.qsl.net/pub/g1smd/8601v03.pdf}
+}
+\seealso{
+  \link{date-time-classes} for details of the date-time classes.
+  \code{\link{locales}} to query or set a locale.
+  
+  Your system's help pages on \code{strftime} and \code{strptime} to
+  see how to specify their formats.
+}
+\examples{
+## locale-specific version of date()
+format(Sys.time(), "\%a \%b \%d \%X \%Y")
+}
+\keyword{utilities}
+\keyword{chron}

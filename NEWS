@@ -152,6 +152,14 @@ NEW FEATURES
 
     o	C API : Rboolean type with TRUE & FALSE enum constants.
 
+    o	Date-time support functions with classes "POSIXct" and
+	"POSIXlt" to represent dates/times (resolution 1 second) in
+	the POSIX formats.  Functions include Sys.time, as.POSIXct,
+	strftime, strptime,  and methods for format, plot, ....
+	There are conversion functions for objects from packages
+	`date' and `chron'; unlike those packages these support 
+	functions know about time zones.
+
 
 BUG FIXES
 

@@ -17,6 +17,7 @@ is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
 		   not.using = c("is.single", "is.na.data.frame",
+                   "is.na.POSIXlt",
 		   "is.loaded", "is.empty.model", "is.R", "is.element"),
 		   true.only = FALSE, debug = FALSE)
 {

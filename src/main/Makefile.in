@@ -25,6 +25,7 @@ SOURCES_C = \
 	context.c \
 	cov.c \
 	cum.c \
+	datetime.c \
 	debug.c \
 	devPS.c \
 	devPicTeX.c \
@@ -97,7 +98,8 @@ HEADERS = \
 	g_her_metr.h \
 	g_jis.h \
 	names.h \
-	regex.h
+	regex.h \
+	Rstrptime.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \
