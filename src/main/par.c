@@ -85,6 +85,8 @@ static void BoundsCheck(double x, double a, double b, char *s)
 		par_error(s);
 }
 
+/* Do NOT forget to update  ../library/base/R/par  if you  ADD a NEW  par !! */
+
 static int Specify(char *what, SEXP value)
 {
 	double x;
@@ -722,6 +724,8 @@ static int Specify(char *what, SEXP value)
 	}
 	/* else errorcall(gcall, "parameter \"%s\" is not setable\n", what); */
 }
+
+/* Do NOT forget to update  ../library/base/R/par if you  ADD a NEW  par !! */
 
 static SEXP Query(char *what, GPar *gp)
 {
