@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.37 $ ';
+my $revision = ' $Revision: 1.38 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -42,10 +42,16 @@ $version = $1;
 my $LATEX = '@LATEX@';
 my $MAKE = '@MAKE@';
 
-$opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
-my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
-		    "no-clean", "no-examples", "no-tests", "no-latex");
+## Options
+my $opt_clean = 1;
+my $opt_examples = 1;
+my $opt_tests = 1;
+my $opt_latex = 1;
+my $opt_use_gct = 0;
 
+my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
+		    "no-clean", "no-examples", "no-tests", "no-latex",
+		    "use-gct" => \$opt_use_gct);
 GetOptions (@knownoptions) || usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -534,10 +540,20 @@ sub check_pkg {
 
 	$log->result("OK");
 	$log->checking("examples");
-	if(system("${R_exe} ${R_opts} " .
-                  "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout")){
-	    $log->error("running examples failed");
-	    exit(1);
+	
+	if($opt_use_gct) {
+	    if(system("(echo 'gctorture(TRUE)'; cat ${pkgname}-Ex.R) " .
+		      "| ${R_exe} ${R_opts} > ${pkgname}-Ex.Rout")) {
+		$log->error("running examples failed");
+		exit(1);
+	    }
+	}
+	else {
+	    if(system("${R_exe} ${R_opts} " .
+		      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout")) {
+		$log->error("running examples failed");
+		exit(1);
+	    }
 	}
 	$log->result("OK");
     }
@@ -588,6 +604,7 @@ sub check_pkg {
                 print makevars "\\\n " . basename($_);
             }
             print makevars "\n";
+	    print makevars "USE_GCT = $opt_use_gct\n";
             close makevars;
             $makevars = " -f Makevars";
         }
@@ -663,6 +680,7 @@ Options:
       --no-examples     do not run the examples in the Rd files
       --no-tests        do not run code in tests subdirectory
       --no-latex        do not run LaTeX on help files
+      --use-gct         use \`gctorture(TRUE)' when running examples/tests
 
 By default, all test sections are turned on.
 

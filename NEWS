@@ -222,7 +222,9 @@ NEW FEATURES
     o	read.table() now uses a single pass through the dataset.
 
     o	R CMD check now also checks the keyword entries against the list
-	of standard keywords.
+	of standard keywords and for sufficient file permissions (Unix
+	only).  It also has a new new command line option `--use-gct' to
+	use `gctorture(TRUE)' when running R code.
 
     o	Matrix multiplication functions %*% and crossprod now use a
 	level-3 BLAS routine dgemm.  When R is linked with the ATLAS
@@ -255,6 +257,9 @@ NEW FEATURES
  	LAPACK code.
 
 	qr, qr.coef, qr.solve, qr.qy, qr.qty, solve.default, La.svd.
+
+    o	Contingency tables created by xtabs() or table() now have a
+	summary() method.
 
 
 BUG FIXES

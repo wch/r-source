@@ -10,6 +10,7 @@ test-out = $(test-src:.R=.Rout)
 
 R = srcdir=$(srcdir) $(R_HOME)/bin/R --vanilla
 RDIFF = $(R_HOME)/bin/Rdiff
+USE_GCT = 0
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -21,7 +22,11 @@ RDIFF = $(R_HOME)/bin/Rdiff
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
-	@R_LIBS=$(R_LIBS) $(R) < $< > $@
+	@if test "$(USE_GCT)" = 0; then \
+	  R_LIBS=$(R_LIBS) $(R) < $< > $@; \
+	else \
+	  (echo "gctorture(TRUE)"; cat $<) | R_LIBS=$(R_LIBS) $(R) > $@; \
+	fi
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
 	  echo $(ECHO_N) "  Comparing \`$@' to \`$@.save' ...$(ECHO_C)"; \
