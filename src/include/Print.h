@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002   The R Development Core Team.
+ *  Copyright (C) 1997-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ void RightMatrixColumnLabel(SEXP, int, int);
 void LeftMatrixColumnLabel(SEXP, int, int);
 void MatrixRowLabel(SEXP, int, int, int);
 
-/* In Defn.h (and MUST be there):
+/* In Rinternals.h (and MUST be there):
    CustomPrintValue,  PrintValue, PrintValueRec */
 void printArray(SEXP, SEXP, int, SEXP);
 void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP, char*, char*);

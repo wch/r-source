@@ -630,17 +630,26 @@ static void printAttributes(SEXP s, SEXP env)
 	    Rprintf(tagbuf); Rprintf("\n");
 	    if (isObject(CAR(a))) {
 		/* Need to construct a call to
-		   print(CAR(a), digits, quote, right)
+		   print(CAR(a), digits)
 		   based on the R_print structure, then eval(call, env).
-		   See do_docall for the template for this sort of thing
+		   See do_docall for the template for this sort of thing.
+
+		   quote, right, gap should probably be included if
+		   they have non-missing values.
 		*/
-		SEXP s, t;
+		SEXP s, t, na_string = R_print.na_string,
+		    na_string_noquote = R_print.na_string_noquote;
 		int quote = R_print.quote, right = R_print.right,
-		    digits = R_print.digits, gap = R_print.gap;
-		PROTECT(t = s = allocList(6));
+		    digits = R_print.digits, gap = R_print.gap,
+		    na_width = R_print.na_width,
+		    na_width_noquote = R_print.na_width_noquote;
+		PROTECT(t = s = allocList(3));
 		SET_TYPEOF(s, LANGSXP);
 		CAR(t) = install("print"); t = CDR(t);
 		CAR(t) = CAR(a); t = CDR(t);
+		CAR(t) = allocVector(INTSXP, 1);
+		INTEGER(CAR(t))[0] = digits;
+		SET_TAG(t, install("digits")); /* t = CDR(t);
 		CAR(t) = allocVector(LGLSXP, 1);
 		LOGICAL(CAR(t))[0] = quote;
 		SET_TAG(t, install("quote")); t = CDR(t);
@@ -648,17 +657,18 @@ static void printAttributes(SEXP s, SEXP env)
 		LOGICAL(CAR(t))[0] = right;
 		SET_TAG(t, install("right")); t = CDR(t);
 		CAR(t) = allocVector(INTSXP, 1);
-		INTEGER(CAR(t))[0] = digits;
-		SET_TAG(t, install("digits")); t = CDR(t);
-		CAR(t) = allocVector(INTSXP, 1);
 		INTEGER(CAR(t))[0] = gap;
-		SET_TAG(t, install("gap"));
+		SET_TAG(t, install("gap")); */
 		eval(s, env);
 		UNPROTECT(1);
 		R_print.quote = quote;
 		R_print.right = right;
 		R_print.digits = digits;
 		R_print.gap = gap;
+		R_print.na_width = na_width;
+		R_print.na_width_noquote = na_width_noquote;
+		R_print.na_string = na_string;
+		R_print.na_string_noquote = na_string_noquote;
 	    } else
 		PrintValueRec(CAR(a), env);
 	nextattr:

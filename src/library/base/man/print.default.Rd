@@ -49,9 +49,8 @@ print.atomic(x, quote = TRUE, \dots)
   that minimum number.
 
   As from \R 1.7.0 attributes are printed respecting their class(es),
-  using the values of \code{digits}, \code{right}, \code{quote} and
-  \code{print.gap} from the call to \code{print.default}, but using the
-  default value of \code{na.print}.
+  using the values of \code{digits} to \code{print.default}, but using the
+  default values (for the methods called) of the other arguments.
 }
 \seealso{The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.

@@ -21,7 +21,7 @@ na.omit(m)
 # [2,]    2   10
 # attr(,"na.action")
 # [1] 3
-# attr(,"na.action")attr(,"class")
+# attr(,"na.action")
 # [1] "omit"
 
 ## and
@@ -545,3 +545,8 @@ terms(breaks ~ . - tension, data = warpbreaks, simplify = TRUE)
 terms(breaks ~ . ^2, data = warpbreaks)
 terms(breaks ~ . ^2, data = warpbreaks, simplify = TRUE)
 ## 1.6.2 expanded these formulae out as in simplify = TRUE
+
+
+## printing attributes (PR#2506)
+(x <- structure(1:4, other=as.factor(LETTERS[1:3])))
+## < 1.7.0 printed the codes of the factor attribute
