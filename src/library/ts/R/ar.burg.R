@@ -1,6 +1,6 @@
 ## ar.burg by B.D. Ripley based on R version by Martyn Plummer
 ar.burg <- function(x, ...) UseMethod("ar.burg")
-ar.burg.ts <-
+ar.burg.default <-
     function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                    demean = TRUE, series = NULL, var.method = 1, ...)
 {

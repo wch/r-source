@@ -1,10 +1,10 @@
 \name{ar}
 \alias{ar}
 \alias{ar.burg}
-\alias{ar.burg.ts}
+\alias{ar.burg.default}
 \alias{ar.burg.mts}
 \alias{ar.yw}
-\alias{ar.yw.ts}
+\alias{ar.yw.default}
 \alias{ar.yw.mts}
 \alias{ar.mle}
 \alias{print.ar}
