@@ -41,7 +41,7 @@ getOption(x)
   \describe{
     \item{\code{prompt}:}{a string, used for \R's prompt; should usually
       end in a blank (\code{" "}).}
-    
+
     \item{\code{continue}:}{a string setting the prompt used for lines
       which continue over one line.}
 
@@ -91,8 +91,9 @@ getOption(x)
 
     \item{\code{defaultPackages}:}{the packages that are attached by
       default when \R starts up.  Initially set from value of the
-      environment variables \env{R\_DefaultPackages}, or if that is
-      unset to \code{c("methods", "ctest")}.  (Set
+      environment variables \env{R\_DefaultPackages}, or if that is unset
+      %%  default is set in ../../profile/Common.R :
+      to \code{c("ts", "nls", "modreg", "mva", "ctest", "methods")}.  (Set
       \env{R\_DEFAULT\_PACKAGES} to \code{NULL} or a comma-separated list
       of package names.)  A call to \code{options} should be in your
       \file{.Rprofile} file to ensure that the change takes effect
@@ -168,7 +169,7 @@ getOption(x)
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
-    
+
     \item{\code{warning.length}:}{sets the truncation limit for error
       and warning messages.  A non-negative integer, with allowed values
       100--8192, default 1000.}
@@ -182,7 +183,7 @@ getOption(x)
 	\item{\code{warn.FPU}:}{logical, by default undefined.  If true,
 	  a \link{warning} is produced whenever \link{dyn.load} repairs the
 	  control word damaged by a buggy DLL.}
-#endif	  
+#endif
 
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a \dQuote{generalized
@@ -209,7 +210,7 @@ getOption(x)
 #endif
 
     \item{\code{CRAN}:}{The URL of the preferred CRAN node for use by
-      \code{\link{update.packages}}.  Defaults to 
+      \code{\link{update.packages}}.  Defaults to
       \url{http://cran.r-project.org}.}
 
     \item{\code{download.file.method}:}{Method to be used for
@@ -228,7 +229,7 @@ getOption(x)
       Defaults to \code{"internal"} when the internal unzip code is
       used.}
 #endif
-    
+
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
       If this is unset, 0, negative or \code{NA}, variable cell widths
