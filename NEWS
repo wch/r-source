@@ -198,6 +198,12 @@ BUG FIXES
 	returned.  Neither returned f.statistic, and that is now
 	documented.
 
+    o	subsetting of matrices of mode list (or other non-atomic
+	modes) was not implemented and gave incorrect results without 
+	warning. (PR#1329)
+	Under some circumstances subsetting of a character matrix
+	inserted NA in the wrong place.
+
 
 
 	**************************************************

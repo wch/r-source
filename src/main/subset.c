@@ -216,7 +216,13 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    COMPLEX(result)[ij].i = NA_REAL;
 		    break;
 		case STRSXP:
-		    SET_STRING_ELT(result, i, NA_STRING);
+		    SET_STRING_ELT(result, ij, NA_STRING);
+		    break;
+		case VECSXP:
+		    SET_VECTOR_ELT(result, ij, R_NilValue);
+		    break;
+		default:
+		    error("matrix subscripting not handled for this type");
 		    break;
 		}
 	    }
@@ -235,6 +241,12 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    break;
 		case STRSXP:
 		    SET_STRING_ELT(result, ij, STRING_ELT(x, iijj));
+		    break;
+		case VECSXP:
+		    SET_VECTOR_ELT(result, ij, VECTOR_ELT(x, iijj));
+		    break;
+		default:
+		    error("matrix subscripting not handled for this type");
 		    break;
 		}
 	    }
@@ -376,6 +388,15 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		SET_STRING_ELT(result, i, STRING_ELT(x, ii));
 	    else
 		SET_STRING_ELT(result, i, NA_STRING);
+	    break;
+	case VECSXP:
+	    if (ii != NA_INTEGER)
+		SET_VECTOR_ELT(result, i, VECTOR_ELT(x, ii));
+	    else
+		SET_VECTOR_ELT(result, i, R_NilValue);
+	    break;
+	default:
+	    error("matrix subscripting not handled for this type");
 	    break;
 	}
 	if (n > 1) {
