@@ -315,8 +315,11 @@ Otherwise you can set up a batch file using @code{Rterm.exe}.  A sample
 batch file might contain (as one line)
 
 @example
-path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
+path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
+@noindent
+The purpose of @code{2>&1} is to redirect warnings and errors to the
+same file as normal output.
 
 
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
