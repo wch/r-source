@@ -159,12 +159,12 @@ plot.factor <- function(x, y, legend.text=levels(y), ...)
 ## FIXME (ideas/wishes):
 ## o for 1-D tables:
 ##   - alternatively, and/or as default, type = "bar" ??!??
-##   - if "h", make the default lwd depend on number of classes
-plot.table <- function(x, type = "h", ylim = c(0, max(x)), lwd = 2,
-                       xlab = NULL, ylab = deparse(substitute(x)),
-                       frame.plot = is.num,
-                       ...)
+##   - if "h", make the default lwd depend on number of classes instead of lwd=2
+plot.table <-
+    function(x, type = "h", ylim = c(0, max(x)), lwd = NULL,
+             xlab = NULL, ylab = NULL, frame.plot = is.num, ...)
 {
+    xnam <- deparse(substitute(x))
     rnk <- length(d <- dim(x))
     if(rnk == 0)
 	stop("invalid table `x'")
@@ -173,15 +173,19 @@ plot.table <- function(x, type = "h", ylim = c(0, max(x)), lwd = 2,
         nx <- dn[[1]]
         if(is.null(xlab)) xlab <- names(dn)
         if(is.null(xlab)) xlab <- ""
+        if(is.null(ylab)) ylab <- xnam
         ow <- options(warn = -1)
         is.num <- !any(is.na(xx <- as.numeric(nx))); options(ow)
         x0 <- if(is.num) xx else seq(x)
 	plot(x0, unclass(x), type = type,
              ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
-             lwd = lwd, ..., xaxt = "n")
+             lwd = if(is.null(lwd)) 2 else lwd,
+             ..., xaxt = "n")
         axis(1, at = x0, labels = nx)
     } else
-	mosaicplot(x, ...)
+	mosaicplot(x, xlab = xlab, ylab = ylab,
+                   lwd = if(is.null(lwd)) par("lwd"), ...)
+### FIXME : mosaicplot{.default}()  trashes the `lwd' silently
 }
 
 plot.formula <-

@@ -365,6 +365,9 @@ BUG FIXES
 
     o	grid() now works properly also with log coordinates active.
 
+    o	plot.table(tab, xlab="X", ylab="Y") now works as expected.
+
+
 
 		CHANGES IN R VERSION 1.5.1
 
