@@ -1,3 +1,38 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2000  The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *
+ *      Interfaces to POSIX date and time functions.
+ */
+
+/*
+    These use POSIX functions that are not available on all platforms,
+    and where they are they may be partially or incorrectly implemented.
+    A number of lightweight alternatives are supplied, but generally
+    timezone support is only available if the OS supplies it.
+
+    A particular problem is the setting of the timezone TZ on Unix/Linux.
+    POSIX appears to require it, yet many Linux systems do not set it
+    and do not give the correct results/crash strftime if it is not set.
+    We use unsetenv() to work around this: that is a BSD construct but
+    seems to be available on the affected platforms.
+ */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -288,7 +323,7 @@ static void makelt(struct tm *tm, SEXP ans, int i, int valid)
 SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, class, tzone;
-    int i, n, isgmt = 0, valid;
+    int i, n, isgmt = 0, valid, settz=0;
     char *tz = NULL, oldtz[20] = "", *p = NULL;
     struct tm *ptm = NULL;
 
@@ -302,20 +337,24 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WIN32
 	tzset();
 	strcpy(oldtz, _daylight ? _tzname[1] : _tzname[0]);
+#else
+	strcpy(oldtz, "");
+#endif
 	p = getenv("TZ");
 	if(p) strcpy(oldtz, p);
+#ifdef HAVE_PUTENV
 	strcpy(buff, "TZ="); strcat(buff, tz);
 	putenv(buff);
-	tzset();
+	settz = 1;
 #else
-	p = getenv("TZ");
-	if(p) {
-	    strcpy(oldtz, p);
-	    strcpy(buff, "TZ="); strcat(buff, tz);
-	    putenv(buff);
-	    tzset();
-	}
+# ifdef HAVE_SETENV
+	setenv("TZ", tz, 1);
+	settz = 1;
+# else
+	warning("cannot set timezones on this system");
+# endif
 #endif
+	tzset();
     }
 
     n = LENGTH(x);
@@ -350,9 +389,25 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(5);
 
     /* reset timezone */
-    if(!isgmt && strlen(oldtz)) {
-	strcpy(buff, "TZ="); strcat(buff, oldtz);
-	putenv(buff);
+    if(settz) {
+	if(strlen(oldtz)) {
+#ifdef HAVE_PUTENV
+	    strcpy(buff, "TZ="); strcat(buff, oldtz);
+	    putenv(buff);
+#else
+# ifdef HAVE_SETENV
+	    setenv("TZ", oldtz, 1);
+# endif
+#endif
+	} else {
+#ifdef HAVE_UNSETENV
+	    unsetenv("TZ");
+#else
+# ifdef HAVE_PUTENV
+	    putenv("TZ=");
+# endif
+#endif
+	}
 	tzset();
     }
     return ans;
@@ -361,7 +416,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans;
-    int i, n = 0, isgmt = 0, nlen[9];
+    int i, n = 0, isgmt = 0, nlen[9], settz = 0;
     char *tz = NULL, oldtz[20] = "", *p = NULL;
     struct tm tm;
 
@@ -378,18 +433,23 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WIN32
 	tzset();
 	strcpy(oldtz, _daylight ? _tzname[1] : _tzname[0]);
+#else
+	strcpy(oldtz, "");
+#endif
 	if((p = getenv("TZ"))) strcpy(oldtz, p);
+#ifdef HAVE_PUTENV
 	strcpy(buff, "TZ="); strcat(buff, tz);
 	putenv(buff);
-	tzset();
+	settz = 1;
 #else
-	if((p = getenv("TZ"))) {
-	    strcpy(oldtz, p);
-	    strcpy(buff, "TZ="); strcat(buff, tz);
-	    putenv(buff);
-	    tzset();
-	}
+# ifdef HAVE_SETENV
+	setenv("TZ", tz, 1);
+	settz = 1;
+# else
+	warning("cannot set timezones on this system");
+# endif
 #endif
+	tzset();
     }
 
     for(i = 0; i < 6; i++)
@@ -424,11 +484,29 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	else REAL(ans)[i] = mktime0(&tm);
     }
 
-    if(strlen(oldtz)) {
-	strcpy(buff, "TZ="); strcat(buff, oldtz);
-	putenv(buff);
+    /* reset timezone */
+    if(settz) {
+	if(strlen(oldtz)) {
+#ifdef HAVE_PUTENV
+	    strcpy(buff, "TZ="); strcat(buff, oldtz);
+	    putenv(buff);
+#else
+# ifdef HAVE_SETENV
+	    setenv("TZ", oldtz, 1);
+# endif
+#endif
+	} else {
+#ifdef HAVE_UNSETENV
+	    unsetenv("TZ");
+#else
+# ifdef HAVE_PUTENV
+	    putenv("TZ=");
+# endif
+#endif
+	}
 	tzset();
     }
+
     UNPROTECT(1);
     return ans;
 }
