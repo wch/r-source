@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.1 2003/12/11 07:16:02 ripley Exp $
+### $Id: nls.R,v 1.2 2004/01/22 23:14:12 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -642,7 +642,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     df <- c(NA, -diff(df.r))
     ss <- c(NA, -diff(ss.r))
     ms <- ss/df
-    f <- p <- rep(NA,nmodels)
+    f <- p <- rep(as.numeric(NA), nmodels)
     for(i in 2:nmodels) {
 	if(df[i] > 0) {
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])
