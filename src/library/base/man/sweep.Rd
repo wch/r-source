@@ -18,7 +18,8 @@ An array with the same shape as \code{x}, but with the summary
 statistics swept out.
 }
 \seealso{
-\code{\link{apply}}.
+    \code{\link{apply}} on which \code{sweep} is based;
+    \code{\link{scale}} for centering and scaling.
 }
 \examples{
 data(attitude)
