@@ -32,9 +32,13 @@ BUG FIXES
 	the linked help files if more than one package was loaded (as
 	now happens by default).
 
-    o	scan now sets the maximal sizes internally when what is a list
-	from nmax and failing that nlines.  This uses memory much more
-	efficiently if nmax is specified.  read.table() makes use of this.
+    o	scan now sets the maximal sizes internally when `what' is a list
+	from `nmax' and failing that `nlines'.  This uses memory much more
+	efficiently if `nmax' is specified.  read.table() makes use of this.
+
+    o	The Fortran code used is now much closer to ANSI compliance.
+
+    o	cov.rob() gives useful error message on nearly-degenerate matrices.
 
 
 		CHANGES IN R VERSION 1.2.1

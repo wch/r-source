@@ -2,15 +2,15 @@ C Output from Public domain Ratfor, version 1.0
       subroutine sinerp(abd,ld4,nk,p1ip,p2ip,ldnk,flag)
 c
 C Purpose :  Computes Inner Products between columns of L(-1)
-C	     where L = abd is a Banded Matrix with 3 subdiagonals
+C            where L = abd is a Banded Matrix with 3 subdiagonals
 
 C The algorithm works in two passes:
 C
-C		Pass 1 computes (cj,ck) k=j,j-1,j-2,j-3 ,j=nk, .. 1
-C		Pass 2 computes (cj,ck) k<=j-4  (If flag == 1 ).
+C               Pass 1 computes (cj,ck) k=j,j-1,j-2,j-3 ,j=nk, .. 1
+C               Pass 2 computes (cj,ck) k<=j-4  (If flag == 1 ).
 C
-C		A refinement of Elden's trick is used.
-      implicit none
+C               A refinement of Elden's trick is used.
+c      implicit none
 c Args
       integer ld4,nk,ldnk,flag
       DOUBLE precision abd(ld4,nk),p1ip(ld4,nk), p2ip(ldnk,nk)
