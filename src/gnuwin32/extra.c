@@ -696,16 +696,17 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if(isLogical(CAR(args))) {
 	maxmem = asLogical(CAR(args));
-	PROTECT(ans = allocVector(INTSXP, 1));
+	/* changed to real in 1.8.1 as might exceed 2G */
+	PROTECT(ans = allocVector(REALSXP, 1));
 #ifdef LEA_MALLOC
 	if(maxmem == NA_LOGICAL)
-	    INTEGER(ans)[0] = R_max_memory;
+	    REAL(ans)[0] = R_max_memory;
 	else if(maxmem)
-	    INTEGER(ans)[0] = max_total_mem;
+	    REAL(ans)[0] = max_total_mem;
 	else
-	    INTEGER(ans)[0] = mallinfo().uordblks;
+	    REAL(ans)[0] = mallinfo().uordblks;
 #else
-	INTEGER(ans)[0] = NA_INTEGER;
+	REAL(ans)[0] = NA_REAL;
 #endif
 	UNPROTECT(1);
 	return ans;
