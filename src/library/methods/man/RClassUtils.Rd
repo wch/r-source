@@ -299,10 +299,11 @@ setDataPart(object, value)
       a name mangling device to hide metadata defining method and
       class information.
     }
-  \item{metaNameUndo}{ As its name implies, this function undoes the
+    \item{\code{metaNameUndo}}{
+      As its name implies, this function undoes the
       name-mangling used to produce meta-data object names, and
       returns a object of class \code{\link{ObjectsWithPackage-class}}.
-      }
+    }
 
     \item{\code{requireMethods}:}{
       Require a subclass to implement methods for the generic functions,
