@@ -15,7 +15,7 @@ case "$1" in
 	install-info --quiet --remove R-data
 	install-info --quiet --remove R-lang
     ;;
-    abort-upgrade|abort-remove|abort-deconfigure)
+    upgrade|abort-upgrade|abort-remove|abort-deconfigure)
     ;;
     *)
 	echo "prerm called with unknown argument \`$1'" >&2
