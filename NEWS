@@ -7,26 +7,59 @@
 
 NEW FEATURES
 
+    o	A first step in improving performance has been made.
+	Attached objects, libraries etc are now hashed; performance
+	gains will be particularly apparent if large packages are in use.
+
+    o	First version of package ts for time-series analysis.
+	This has fairly complete S-PLUS compatibility, but more features
+	are planned. See library(help=ts) for details.
+
     o	warnings can be collected (options(warn=0), the default), printed
 	immediately (options(warn=0)) or turned into errors (options(warn=2)).
 	As a consequence, all warnings and errors now are printed followed
 	by a newline, if one is not supplied. (This should improve the
 	S compatibility of the use of PROBLEM ... in compiled code.)
 
-    o	hdf5{read|write} now allow more kinds of attributes and add support
-	for HDF5 version 1.2 (or newer)	thanks to Marcus G. Daniels.
-	Configure checks for hdf5 1.2 availability.
 
-    o	A first step in improving performance has been made.
-	Attached objects, libraries etc are now hashed; performance
-	gains will be particularly apparent if large packages are in use.
 
-    o	contrast() no longer drops colnames for 1DF contrasts.
-	Consequentially, the labels of regression coefficients for binary
-	factors contain level names (again...).
+    o	All R environment variables are now of the form `R_xxx'.  In
+	particular, `RHOME', `RLIBS' and `RPROFILE' are now called
+	`R_HOME', `R_LIBS', and `R_PROFILE'.
 
-    o	locator(, type=) is implemented to plot points or draw lines
-	interactively.
+    o	The handling of q()/quit()/EOF has been changed, with a new option
+	"default".  In interactive use this asks unless --save or --no-save
+	has been specified: if these are specified they set the default.
+
+    o	Limited capability for tilde expansion of file names even without
+	readline (on Unix, and on Windows).
+
+    o	New environment variables `R_HISTFILE' and `R_HISTSIZE' for the
+	name and size of the history file.
+
+    o	Attempting to restore (at startup) too large a .RData is now
+	a fatal error.
+
+
+
+    o	New generic function all.equal();
+	most useful for numerical comparisons `up to rounding errors'.
+
+    o	New function boxplot.formula() as a formula interface to boxplots.
+
+    o	New functions getwd() and setwd() for getting and setting the R
+	working directory, basename() and dirname() for manipulating paths.
+
+    o	Function locator(, type=) is implemented to plot points or
+	draw lines interactively.
+
+    o	Functions new.env() to create empty environment and local() to
+	allow local evaluation of expressions, with various useful
+	idiomatic uses.
+
+    o	Convenience functions parent.frame() and eval.parent().
+
+
 
     o	A new scheme for keeping source code with user-defined
 	functions has been implemented. In particular, comments
@@ -40,30 +73,22 @@ NEW FEATURES
 	deparsed for editing or printing, but any comments will be
 	lost.
 
-    o	Preliminary version of package ts for time-series analysis.
-	This has fairly complete S-PLUS compatibility, but more features
-	are planned. See library(help=ts) for details.
+    o	expressions have gained semantics that are closer to
+	those of S. They don't get evaluated except when explicitly
+	specified. Example:
 
-    o	The presence of an object .conflicts.OK in a package suppresses
-	conflict checking in library().
+	e <- expression(x); e[[1]] <- expression(123); eval(e)
+
+	now gives expression(123), not 123. This fixes some problems
+	with expressions in the list argument to do.call().
+
+
+
+    o	contrast() no longer drops colnames for 1DF contrasts.
+	Consequentially, the labels of regression coefficients for binary
+	factors contain level names (again ...).
 
     o	na.omit() and na.fail() are now generic.
-
-    o	New generic function all.equal();
-	most useful for numerical comparisons `up to rounding errors'.
-
-    o	Attempting to restore (at startup) too large a .RData is now
-	a fatal error.
-
-    o	The handling of q()/quit()/EOF has been changed, with a new option
-	"default".  In interactive use this asks unless --save or --no-save
-	has been specified: if these are specified they set the default.
-
-    o	Limited capability for tilde expansion of file names even without
-	readline (on Unix, and on Windows).
-
-    o	New environment variables `R_HISTFILE' and `R_HISTSIZE' for the
-	name and size of the history file.
 
     o	plot.lm() has more options and now does 4 plots by default, should
 	also be okay for "glm" object; all thanks to John Maindonald.
@@ -74,96 +99,97 @@ NEW FEATURES
     o	chisq.test() now optionally computes the p-value by Monte Carlo
 	simulation (in the standard case of a 2-d contigency table).
 
-    o	New functions getwd() and setwd() for getting and setting the R
-	working directory, basename() and dirname() for manipulating paths.
-
     o	source() has a new argument `chdir' for changing the working
 	directory to that of the file being sourced when evaluating.
 
     o	If data() loads an R source file, it now changes the working
 	directory (to that containing the file) when evaluating.
 
-    o	Interpret NaN and Inf in character->numeric conversions (and
-	thereby in read.table)
+    o	Interpret strings NaN and Inf in character to numeric conversions
+	(and thereby in read.table)
 
-    o	All R environment variables are now of the form `R_xxx'.  In
-	particular, `RHOME', `RLIBS' and `RPROFILE' are now called
-	`R_HOME', `R_LIBS', and `R_PROFILE'.
-
-    o	New boxplot.formula() as a formula interface to boxplots.
-
-    o	expression()'s have gotten semantics that are closer to
-	those of S. They don't get evaluated except when expressedly
-	specified. Example: e<-expression(x); e[[1]]<-expression(123);
-	eval(e) now gives expression(123), not 123. This fixes some
-	problems with expressions in the list argument to do.call().
-
-    o	Convenience functions parent.frame() and eval.parent().
-
-    o	Function new.env() to create empty environment and local() to
-	allow local evaluation of expressions, with various useful
-	idiomatic uses.
+    o	The presence of an object `.conflicts.OK' in a package suppresses
+	conflict checking in library().
 
     o	uniroot() can now be used recursively.
 
+    o	hdf5{read|write} now allow more kinds of attributes and add support
+	for HDF5 version 1.2 (or newer)	thanks to Marcus G. Daniels.
+	Configure checks for HDF5 1.2 availability.
+
+
+
 BUG FIXES
 
-    o	date() doesn't anymore return a final "\n" (as it did since 0.64).
-
-    o	When persp was the first graphics command given to R it caused
-	the error message "plot.new() has not been called yet" to be
-	printed.  This no longer happens.
-
-    o	axis now sorts `labels' when it sorts `at'.
-
-    o	abline now understands the "lwd" graphics parameter if it
-	is supplied as an inline argument.
-
-    o	The internals of postscript have been changed so that line
-	textures (dotted dashed etc) look better.  The use of the
-	PostScript "initclip" operator has been removed so that we
-	can(?) really claim eps compliance.
-
-    o	cooks.distance() now also works for "glm" objects;
-	deviance.lm() now ok for the case of weights.
-
-    o	cm.colors(n) now doesn't append silly "v=1"; works for n=0, n=1.
-
-    o	a clipping problem for plots when there non-zero outer margins
-	has been fixed.	 This problem used to affect coplot and pairs.
-
-    o	substr/substring, deparse, dput, dump, print
-	will work for arbitrarily long strings.
-
-    o	diag and diag<- now handle correctly matrices with zero rows or cols.
-
-    o	split.default() now uses subscripting for x with a non-null
-	class, this preserves, e.g., the class of factors
-
-    o	is.recursive(list(.)) is now TRUE [PR#221].
-
-    o	help([<-.factor) (etc) work again.
-
-    o	Default editor files (e.g. from fix()) are now removed at termination.
-
-    o	.Last() is called when terminating with q() (not just with EOF).
-
     o	x ^ y  gives proper results when x or y are infinite.
-
-    o	log(0) gives -Inf on all architectures.
-
-    o	plot(<function>, log="x") doesn't give silly warning anymore.
-
-    o	pgamma() gave 0 or 1 too quickly for extreme arguments.
-
-    o	Some small changes have made in the axis drawing code to
-	ensure that tick-mark label alignment is correct for
-	non-default values of the "las" parameter.
 
     o	The semantics of <<- have been corrected.  The search for
 	a variable binding to modify now begins one level "up" from
 	the current one.   Thus S and R semantics in "non-closure"
 	functions will be identical.
+
+    o	.Last() is called when terminating with q() (not just with EOF).
+
+    o	abline() now understands the "lwd" graphics parameter if it
+	is supplied as an inline argument.
+
+    o	axis() now sorts `labels' when it sorts `at'.
+
+    o	Some small changes have made in the axis drawing code to
+	ensure that tick-mark label alignment is correct for
+	non-default values of the "las" parameter.
+
+    o	Improved error message from check.options().
+
+    o	cm.colors(n) now doesn't append silly "v=1"; works for n=0, n=1.
+
+    o	cooks.distance() now also works for "glm" objects;
+	deviance.lm() now ok for the case of weights.
+
+    o	date() doesn't return a final "\n" (again ...).
+
+    o	diag() and diag<- now handle correctly matrices with zero rows or cols.
+
+    o	help([<-.factor) (etc) work again.
+
+    o	is.recursive(list(.)) is now TRUE [PR#221].
+
+    o	log(0) gives -Inf on all architectures.
+
+    o	When persp() was the first graphics command given to R it gave
+	the error "plot.new() has not been called yet".  This no
+	longer happens.
+
+    o	pgamma() gave 0 or 1 for extreme arguments too soon.
+
+    o	plot(<function>, log="x") doesn't give a silly warning any more.
+
+    o	The internals of postscript() have been changed so that line
+	textures (dotted dashed etc) look better.  The use of the
+	PostScript "initclip" operator has been removed so that we
+	can(?) really claim eps compliance.
+
+    o	revsort() misbehaved if n<=1, causing sample(1,1,,1) to
+	segfault
+
+    o	seq(along = v) { and seq(v) when length(v) > 1 } now returns
+	a result of mode "integer".
+
+    o	split.default() now uses subscripting for x with a non-null
+	class, this preserves, e.g., the class of factors
+
+    o	substr/substring(), deparse(), dput(), dump(), print()
+	will work for arbitrarily long strings.
+
+    o	which(x) failed when x had names and contained NAs.
+
+    o	Default editor files (e.g. from fix()) are now removed at termination.
+
+    o	Typos in NegBinomial.Rd (Negative Binomial distrib), thanks to Ch. Gu.
+
+    o	a clipping problem for plots when there non-zero outer margins
+	has been fixed.	 This problem used to affect coplot() and pairs().
+
 
 
 	**************************************************
@@ -171,20 +197,6 @@ BUG FIXES
 	*	       0.64 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
-
-BUG FIXES
-
-    o	seq(along = v) { and seq(v) when length(v) > 1 } now returns integer.
-
-    o	which(x) failed when x had names and NAs.
-
-    o	Typos in NegBinomial.Rd (Negative Binomial distrib), thanks to Ch.Gu.
-
-    o	revsort() misbehaved if n<=1, causing sample(1,1,,1) to
-	segfault
-
-    o	Improved error message from check.options().
 
 
 		CHANGES IN R VERSION 0.64.2
@@ -865,7 +877,7 @@ NEW FEATURES
     o	par(bty = "]") for _| box(.) in plots.
 
     o	New standard package `modreg' (smoothing and local MODern
-	REGression methods) contributed by B. D. Ripley.
+	REGression methods) contributed by B.D. Ripley.
 
     o	par() has a `no.readonly = FALSE' argument which allows more
 	sensible  op <- par(no.readonly = TRUE);  on.exit(par(op)).
@@ -874,7 +886,7 @@ NEW FEATURES
 	besselI(), besselK(), besselJ(), besselY() are the I(), K(),
 	J(), and Y() Bessel functions.
 
-    o	New conflicts() function from B.D.Ripley
+    o	New conflicts() function from B.D. Ripley
 
     o	uniroot has a new `maxiter' argument and returns #{iter} and
 	precision.
@@ -980,7 +992,7 @@ NEW FEATURES
 
 	- summary() and deviance() -- mlm methods.
 
-	- kappa()  for estimating condition numbers)
+	- kappa()  (for estimating condition numbers)
 
 	- labels() to find a suitable set of labels from an object
 

@@ -9,6 +9,8 @@ found at the URL
 
 	http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html
 
+A text version is in file FAQ in this directory.
+
 
 2. MAILING LISTS
 
@@ -47,17 +49,11 @@ The CRAN master site can be found at the URLs
     http://www.ci.tuwien.ac.at/R
 or  ftp://ftp.ci.tuwien.ac.at/pub/R/                  (Austria)
 
-and is currently being mirrored at
+and mirrored at many sites: see the list in the file MIRROR-SITES or
+on-line at
 
-    http://mirror.aarnet.edu.au/CRAN                  (Australia)
-    http://SunSITE.auc.dk/R/                          (Denmark)
-    http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/ (Italy)
-    ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/           (Japan)
-    ftp://dola.snu.ac.kr/pub/R/CRAN/                  (South Korea)
-    http://stat.ethz.ch/CRAN/			      (Switzerland)
-    http://www.stats.bris.ac.uk/R/		      (UK)
-    http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
-    http://cran.stat.wisc.edu/	                      (USA/Wisconsin)
+    http://www.ci.tuwien.ac.at/R/mirrors.html
+
 
 
 4. BUG-TRACKING SYSTEM
@@ -72,3 +68,6 @@ can be used to invoke an editor from a within an R session and send
 the report to the right address. It also fills in some basic
 information, such as your R version and operating system, which has
 proved helpful in the debugging process.
+
+A summary of the entries at the time this distribution was prepared is
+in file BUGS in this directory.
