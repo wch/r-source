@@ -144,12 +144,12 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  "An error occurred on line %d\n use a command like\n x <- edit()\n to recover", R_ParseError);
     R_ResetConsole();
     {   /* can't just eval(x) here */
-	int i, n;
+	int j, n;
 	SEXP tmp = R_NilValue;
 
 	n = LENGTH(x);
-	for (i = 0 ; i < n ; i++)
-	    tmp = eval(VECTOR_ELT(x, i), R_GlobalEnv);
+	for (j = 0 ; j < n ; j++)
+	    tmp = eval(VECTOR_ELT(x, j), R_GlobalEnv);
 	x = tmp;
     }
     if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
