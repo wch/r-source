@@ -90,7 +90,7 @@
   \code{\link{.Last}} for final actions before termination.
 }
 \examples{
-## Some examples with a Unix flavour
+\dontrun{## Some examples with a Unix flavour
 # ~/.Renviron
 R_LIBS=~/R/library
 PAGER=/usr/local/bin/less
@@ -103,7 +103,7 @@ set.seed(1234)
 .First <- function() cat("\n   Welcome to R!\n\n")
 .Last <- function()  cat("\n   Goodbye!\n\n")
 
-\dontrun{## if .Renviron contains
+## if .Renviron contains
 FOOBAR="coo\bar"doh\\ex"abc\"def'"
 
 ## then we get
