@@ -1931,7 +1931,6 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     gcall = call;
     vmax = vmaxget();
 
-    checkArity(args, op);
     /* Decode the arguments */
     display = SaveString(CAR(args), 0); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
