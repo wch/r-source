@@ -80,9 +80,12 @@ BSDfgetsFuncPtr		BSDfgets;
 BSDpcloseFuncPtr	BSDpclose;
 
 void	InvokeTool( char *toolName );
+OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr);
 
 Boolean CanLoadFrameWork(void);
 Boolean IsFrameWorkLoaded = false;
+
+
 
 /* end of code from Apple's CarbonLib SDK 1.6 */
  
@@ -2016,7 +2019,7 @@ void  doConcatPStrings(Str255 targetString, Str255 appendString)
 /* It consists of part of the MiniShell.c file       */
 
 
-static OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
+OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
 {
 	OSStatus 	err;
 	FSRef 		frameworksFolderRef;
@@ -2121,112 +2124,4 @@ Boolean CanLoadFrameWork(void)
 }
 
 /* end of code from Apple's CarbonLib SDK 1.6 */
-/* This code is taken from Apple's CarbonLib SDK 1.6 */
-/* It consists of part of the MiniShell.c file       */
 
-
-static OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr)
-{
-	OSStatus 	err;
-	FSRef 		frameworksFolderRef;
-	CFURLRef	baseURL;
-	CFURLRef	bundleURL;
-	
-	if ( bundlePtr == nil )	return( -1 );
-	
-	*bundlePtr = nil;
-	
-	baseURL = nil;
-	bundleURL = nil;
-	
-	err = FSFindFolder(kOnAppropriateDisk, kFrameworksFolderType, true, &frameworksFolderRef);
-	if (err == noErr) {
-		baseURL = CFURLCreateFromFSRef(kCFAllocatorSystemDefault, &frameworksFolderRef);
-		if (baseURL == nil) {
-			err = coreFoundationUnknownErr;
-		}
-	}
-	if (err == noErr) {
-		bundleURL = CFURLCreateCopyAppendingPathComponent(kCFAllocatorSystemDefault, 
-		 baseURL, framework, false);
-		if (bundleURL == nil) {
-			err = coreFoundationUnknownErr;
-		}
-	}
-	if (err == noErr) {
-		*bundlePtr = CFBundleCreate(kCFAllocatorSystemDefault, bundleURL);
-		if (*bundlePtr == nil) {
-			err = coreFoundationUnknownErr;
-		}
-	}
-	if (err == noErr) {
-	    if ( ! CFBundleLoadExecutable( *bundlePtr ) ) {
-			err = coreFoundationUnknownErr;
-	    }
-	}
-
-	// Clean up.
-	if (err != noErr && *bundlePtr != nil) {
-		CFRelease(*bundlePtr);
-		*bundlePtr = nil;
-	}
-	if (bundleURL != nil) {
-		CFRelease(bundleURL);
-	}	
-	if (baseURL != nil) {
-		CFRelease(baseURL);
-	}	
-	
-	return err;
-}
-
-/*	This routine does the interesting stuff, specifically the routine popen() */
-/* loaded into the BSDpopenFunc function pointer effectively does a fork()    */
-/* and execv() and also opens a stream  for us to read output from.           */
-
-void	InvokeTool( char *toolName )
-{
-	FILE				*fp;
-	char				outputS[1024 * 24];					  /* 24k buffer */
-	int					bytesRead;
-	
-	fp = BSDpopenFunc( toolName, "r" );							
-	if ( fp == nil ) return;
-
-	bytesRead	= BSDfread( outputS, sizeof(char), sizeof(outputS), fp );	
-	/* stdout gets redirected to this FILE*, stderr still goes to the console */
-	
-	outputS[bytesRead]	= '\0';
-	
-	Rprintf( "\"%s\" output: \n%s\n", toolName, outputS );		
-
-	(void) BSDpclose( fp );							/* Close the FILE stream */
-}
-
-Boolean CanLoadFrameWork(void)
-{
-	CFBundleRef 		sysBundle;
-	char				command[256];
-	OSStatus 			err;
-		
-	if ( ! RunningOnCarbonX() )
-		return(false);
-	
-/*	Load the "System.framework" bundle.                 */
-/*  Most UNIX/BSD routines are in the  System.framework */
-
-	err = LoadFrameworkBundle( CFSTR("System.framework"), &sysBundle );
-	if (err != noErr) return(false);
-	
-	//	Load the Mach-O function pointers for the routines we will be using.
-	BSDfread		= (BSDfreadFuncPtr) CFBundleGetFunctionPointerForName( sysBundle, CFSTR("fread") );
-	BSDfgets		= (BSDfgetsFuncPtr) CFBundleGetFunctionPointerForName( sysBundle, CFSTR("fgets") );
-	BSDpopenFunc	= (BSDpopenFuncPtr) CFBundleGetFunctionPointerForName( sysBundle, CFSTR("popen") );
-	BSDpclose		= (BSDpcloseFuncPtr) CFBundleGetFunctionPointerForName( sysBundle, CFSTR("pclose") );
-	if ( (BSDpopenFunc == nil) || (BSDpclose == nil) || (BSDfread == nil) || (BSDfgets == nil) )
-		return(false);
-	
-	return(true);	
-}
-
-/* end of code from Apple's CarbonLib SDK 1.6 */
