@@ -90,7 +90,7 @@ CPPFLAGS (for header files), respectively, to specify these locations.
 Make will also build plain text help pages as well as HTML and LaTeX
 versions of the documentation (the three kinds can also be generated
 separately using make help, make html and make latex).	Note that you need
-Perl version 5, available via http://www.perl.com/CPAN/ports, to build the
+Perl version 5, available via http://www.perl.com/CPAN/, to build the
 documentation.
 If this is not available on your system, you can obtain precompiled
 documentation files via the `doc/pre-formatted-help' directory of the
