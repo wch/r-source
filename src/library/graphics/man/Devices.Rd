@@ -1,49 +1,48 @@
 \name{Devices}
 \title{List of Graphical Devices}
-\usage{
-#ifdef unix
-X11(\dots)
-#endif
-#ifdef windows
-windows(\dots)
-#endif
-%% FIXME:
-#ifdef aqua
-quartz(\dots)
-#endif
-postscript(\dots)
-pdf(\dots)
-pictex(\dots)
-#ifdef unix
-png(\dots)
-jpeg(\dots)
-GNOME(\dots)
-#endif
-#ifdef windows
-win.metafile(\dots)
-win.print(\dots)
-png(\dots)
-jpeg(\dots)
-bmp(\dots)
-#endif
-xfig(\dots)
-bitmap(\dots)
-
-dev.interactive()
-}
 \alias{Devices}
 \alias{device}
-\alias{dev.interactive}
+% \usage{
+% #ifdef unix
+% X11(\dots)
+% #endif
+% #ifdef windows
+% windows(\dots)
+% #endif
+% %% FIXME:
+% #ifdef aqua
+% quartz(\dots)
+% #endif
+% postscript(\dots)
+% pdf(\dots)
+% pictex(\dots)
+% #ifdef unix
+% png(\dots)
+% jpeg(\dots)
+% GNOME(\dots)
+% #endif
+% #ifdef windows
+% win.metafile(\dots)
+% win.print(\dots)
+% png(\dots)
+% jpeg(\dots)
+% bmp(\dots)
+% #endif
+% xfig(\dots)
+% bitmap(\dots)
+% }
 \description{The following graphics devices are currently available:
   \itemize{
+#ifdef windows
+    \item \code{\link{windows}} The graphics driver for Windows (on screen,
+    to printer and to Windows metafile).
+#endif
     \item \code{\link{postscript}} Writes PostScript graphics commands to
     a file
     \item \code{\link{pdf}} Write PDF graphics commands to a file
     \item \code{\link{pictex}} Writes LaTeX/PicTeX graphics commands to a
     file
 #ifdef windows
-    \item \code{\link{windows}} The graphics driver for Windows (on screen,
-    to printer and to Windows metafile).
     \item \code{\link{png}} PNG bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
     \item \code{\link{bmp}} BMP bitmap device
@@ -60,7 +59,6 @@ dev.interactive()
     system
     \item \code{\link{png}} PNG bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
-    \code{\link{GNOME}} Graphics driver for the GNOME GUI.
 %% <FIXME>  quartz() also with corresponding --gui aqua ?
 #ifdef aqua
 %%     ^^^^ not yet available
@@ -72,16 +70,12 @@ dev.interactive()
   None of these are available under \code{R CMD \link[base:BATCH]{BATCH}}.
 #endif
 }
-\value{
-  \code{dev.interactive()} returns a logical, \code{TRUE} iff an
-  interactive (screen) device is in use.
-}
 \details{
   If no device is open, using a high-level graphics function will cause
   a device to be opened.  Which device is given by
   \code{\link{options}("device")} which is initially set as the most
   appropriate for each platform: a screen device for most interactive use and
-  \code{\link{postscript}} otherwise. The exception is  interactive
+  \code{\link{postscript}} otherwise. The exception is interactive
   use under Unix if no screen device is known to be available, when
   postscript() is used for most systems; pdf() for Mac OS X.
 }
@@ -89,6 +83,7 @@ dev.interactive()
   The individual help files for further information on any of the
   devices listed here;
 
+  \code{\link{dev.interactive}},
   \code{\link{dev.cur}}, \code{\link{dev.print}},
   \code{\link{graphics.off}}, \code{\link{image}},
   \code{\link{dev2bitmap}}.
