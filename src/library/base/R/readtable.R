@@ -1,12 +1,14 @@
-count.fields <- function(file, sep = "", quote = "\"'", skip = 0)
-    .Internal(count.fields(file, sep, quote, skip))
+count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
+                         blank.lines.skip = TRUE)
+    .Internal(count.fields(file, sep, quote, skip, blank.lines.skip))
 
 
 read.table <-
-    function (file, header=FALSE, sep="", quote="\"'", dec=".",
-              row.names, col.names, as.is=FALSE,
-	      na.strings="NA", skip=0,
-              check.names = TRUE, fill=FALSE, strip.white = FALSE)
+    function (file, header = FALSE, sep = "", quote = "\"'", dec = ".",
+              row.names, col.names, as.is = FALSE,
+	      na.strings = "NA", skip = 0,
+              check.names = TRUE, fill = !blank.lines.skip,
+              strip.white = FALSE, blank.lines.skip = TRUE)
 {
     type.convert <- function(x, na.strings = "NA",
                              as.is = FALSE, dec = ".")
@@ -15,7 +17,7 @@ read.table <-
     ##	basic column counting and header determination;
     ##	rlabp (logical) := it looks like we have column names
 
-    row.lens <- count.fields(file, sep, quote, skip)
+    row.lens <- count.fields(file, sep, quote, skip, blank.lines.skip)
     nlines <- length(row.lens)
     rlabp <- nlines > 1 && (max(row.lens[-1]) - row.lens[1]) == 1
     if(rlabp && missing(header))
@@ -62,8 +64,14 @@ read.table <-
     names(what) <- col.names
     data <- scan(file=file, what=what, sep=sep, quote=quote, skip=skip,
 		 na.strings=na.strings, quiet=TRUE, fill=fill,
-                 strip.white=strip.white)
+                 strip.white=strip.white, blank.lines.skip=blank.lines.skip)
 
+    if(!blank.lines.skip && row.lens[nlines] == 0) {
+        ## we had a blank last line
+        for (i in 1:cols)
+            data[[i]] <- data[[i]][-nlines]
+        nlines <- nlines - 1
+    }
     ##	now we have the data;
     ##	convert to numeric or factor variables
     ##	(depending on the specifies value of "as.is").

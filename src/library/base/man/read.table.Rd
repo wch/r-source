@@ -12,18 +12,19 @@
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
-           skip = 0, check.names = TRUE, fill = FALSE, strip.white = FALSE)
+           skip = 0, check.names = TRUE, fill = FALSE, strip.white = FALSE,
+           blank.lines.skip = TRUE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
 
-read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", 
+read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",",
          fill = TRUE, \dots)
 
 read.delim(file, header = TRUE, sep = "\t", quote="\"", dec=".",
          fill = TRUE, \dots)
 
-read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",", 
+read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
          fill = TRUE, \dots)
 }
 \details{
@@ -86,12 +87,15 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{fill}{logical. If \code{TRUE} then in case the rows have unequal
     length, blank fields are implicitly added.}
-  
+
   \item{strip.white}{logical. Used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
     white space from \code{character} fields (\code{numeric} fields
     are always stripped).  See \code{\link{scan}} for further details,
     remembering that the columns may include the row names.}
+
+  \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
+    input are ignored.}
 
   \item{\dots}{Further arguments to \code{read.table}.}
 }

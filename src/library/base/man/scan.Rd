@@ -4,7 +4,8 @@
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      quote = if (sep=="\n") "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
-     flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE)
+     flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE,
+     blank.lines.skip = TRUE)
 }
 \alias{scan}
 \arguments{
@@ -31,7 +32,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   \item{sep}{by default, scan expects to read white-space delimited
       input fields.  Alternatively, \code{sep} can be used to specify a
-      character which delimits fields.} 
+      character which delimits fields.  A field is always delimited by a
+      newline unless it is quoted.} 
 
   \item{quote}{the set of quoting characters as a single character string.}
 
@@ -44,14 +46,14 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
    \item{na.strings}{character vector. Elements of this vector are
      to be interpeted as  missing (\code{\link{NA}})
-    values.}
+     values.}
 
-  \item{flush}{logical; if \code{TRUE}, \code{scan} will flush to the
+  \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.
     This allows putting comments after the last field, but precludes
     putting more that one record on a line.}
   
-  \item{fill}{logical; if \code{TRUE}, \code{scan} will implicitly add
+  \item{fill}{logical: if \code{TRUE}, \code{scan} will implicitly add
     empty fields to any lines with fewer fields than implied by \code{what}.}
   
   \item{strip.white}{vector of logical value(s) corresponding to items
@@ -66,8 +68,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     then the leading and trailing white space from field \code{i} is
     stripped.}
   
-  \item{quiet}{logical; if \code{FALSE} (default), scan(.) will print a
+  \item{quiet}{logical: if \code{FALSE} (default), scan() will print a
     line, saying how many items have been read.}
+
+  \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
+    input are ignored.}
 }
 \description{
   Read data into a vector or list from the console or file.
@@ -78,16 +83,25 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   types of the elements in \code{what}.  This provides a way of reading
   columnar data.
 
-  If \code{sep} is nondefault, the fields may be quoted in the style of
-  .csv format files where separators inside quotes (\code{''} or
-  \code{""}) are ignored and quotes may be put inside strings by
-  doubling them. However, if \code{sep} is \code{"\n"} it is assumed
-  by default that one wants to read entire lines verbatim.
+  Empty  numeric fields are always regarded as missing values.
+  Empty character fields are scanned as empty character vectors, unless
+  \code{na.strings} contains \code{""} when they are regarded as missing
+  values.
   
-  Keyboard entry is terminated by typing a blank line.
-}
-\note{
-  When \code{sep="\n"}, blank input lines are omitted.
+  If \code{sep} is the default (\code{""}), the character \code{\}
+  in a quoted string escapes the following character, so quotes may
+  included in the string by escaping them.
+  
+  If \code{sep} is non-default, the fields may be quoted in the style of
+  \code{.csv} files where separators inside quotes (\code{''} or
+  \code{""}) are ignored and quotes may be put inside strings by
+  doubling them. However, if \code{sep = "\n"} it is assumed
+  by default that one wants to read entire lines verbatim.
+
+  Note that since \code{sep} is a separator and not a terminator,
+  reading a file by \code{scan("foo", sep="\n", blank.lines.skip=FALSE)}
+  will give an empty file line if the file ends in a linefeed and not it
+  it does not.  This might not be what you expected.
 }
 \seealso{
   \code{\link{read.table}} for more user-friendly reading of data

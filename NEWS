@@ -276,6 +276,12 @@ NEW FEATURES
     o   Formatting (and printing) of data.frames with complex objects is
         improved. toString was added as a new function.
 
+    o   scan() and read.table() have a new argument blank.lines.skip
+	to allow blank lines to be read.
+
+    o   scan() now reads empty character fields as "" not "NA" unless
+	"" is included in na.strings.
+
 
 BUG FIXES
 
@@ -453,7 +459,7 @@ BUG FIXES
 	install (e.g. on vanilla Solaris).
 
     o   nasty bug caused rpois to generate biased variables in some
-        cases
+        cases.
 
 
 
