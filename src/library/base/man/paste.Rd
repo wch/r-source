@@ -10,24 +10,26 @@ paste(\dots, sep = " ", collapse = NULL)
   \item{collapse}{an optional character string to separate the results.}
 }
 \description{
-  Concatenate character vectors.
+  Concatenate vectors after converting to character.
 }
 \details{
   \code{paste} converts its arguments to character strings, and
   concatenates them (separating them by the string given by \code{sep}).
   If the arguments are vectors, they are concatenated term-by-term to
   give a character vector result.
-  
+
   If a value is specified for \code{collapse}, the values in the result
   are then concatenated into a single string, with the elements being
   separated by the value of \code{collapse}.
 }
 \value{
-  A character vector of the  concatenated values.
+  A character vector of the concatenated values.
 }
 \seealso{
+  String manipulation with
   \code{\link{as.character}}, \code{\link{substr}}, \code{\link{nchar}},
-  \code{\link{strsplit}}.
+  \code{\link{strsplit}}; further, \code{\link{cat}} which concatenates and
+  writes to a file.
 }
 \examples{
 paste(1:12) # same as as.character(..)
