@@ -32,8 +32,6 @@ USER-VISIBLE CHANGES
 
     o	dir.create() now expands '~' in filenames.
 
-    o	tail() of a matrix now displays the original row numbers.
-
 
 NEW FEATURES
 
@@ -164,18 +162,20 @@ NEW FEATURES
 
     o   power (x^y) is optimised for y == 2.
 
-    o   read.fwf reads multiline records, is faster for large files.
+    o   read.fwf() reads multiline records, is faster for large files.
 
-    o   read.fortran reads Fortran-style fixed-format specifications.
+    o	New function read.fortran() reads Fortran-style fixed-format
+	specifications.
 
-    o	On Unix systems, help() now returns information about available
-	documentation for a given topic, and notifies about multiple
-	matches.
+    o	help() now returns information about available documentation for
+	a given topic, and notifies about multiple matches.
+
+    o	tail() of a matrix now displays the original row numbers.
 
 
 UTILITIES
 
-    o   Package utils now contains a much improved citation function
+    o   Package 'utils' now contains a much improved citation() function
         which also has a package argument.  By default the citation is
         auto-generated from the package DESCRIPTION, the file
         'inst/CITATION' can be used to override this, see
@@ -265,7 +265,7 @@ INSTALLATION CHANGES
 BUG FIXES
 
     o   Complex superassignments were wrong when a variable with the same
-    	 name existed locally, and were not documented in R-lang.
+        name existed locally, and were not documented in R-lang.
 
     o	rbind.data.frame() dropped names/rownames from columns in all
 	but the first data frame.
