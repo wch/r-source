@@ -217,7 +217,6 @@ arima0(x, order = c(0, 0, 0),
 \examples{
 data(lh)
 \dontrun{arima0(lh, order = c(1,0,0))}
-\dontshow{(fit <- arima0(lh, c(1,0,0))); tsdiag(fit)}
 arima0(lh, order = c(3,0,0))
 arima0(lh, order = c(1,0,1))
 predict(arima0(lh, order = c(3,0,0)), n.ahead = 12)

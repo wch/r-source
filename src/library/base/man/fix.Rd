@@ -28,13 +28,5 @@ fix(x, \dots)
  ## Also,
  fix(my.data.frame) # calls up data editor
  fix(my.data.frame, factor.mode="char") # use of ...
-}
-\dontshow{
-oo <- options(editor="touch") # not really changing anything
-fix(pi)
-if(!is.numeric(pi) || length(pi)!=1 ||
-   !is.null(attributes(pi)) || abs(pi - 3.1415) > 1e-4)
-      stop("OOPS:  fix() is broken ...")
-rm(pi); options(oo)
 }}
 \keyword{utilities}

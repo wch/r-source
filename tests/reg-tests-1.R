@@ -69,6 +69,13 @@ stopifnot(ls("Autoloads") == ls(envir = .AutoloadEnv))
 ## end of moved from autoload.Rd
 
 
+## axis
+Y <- c(10.50, 4.0, 13.75, 7.25)
+plot(1:4, Y, xlim=c(0,5), ylim=c(0,15))
+axis(side=4, at=Y, labels=LETTERS[1:4])
+## end of moved from axis.Rd
+
+
 ## backsolve
 r <- rbind(c(1,2,3),
 	   c(0,1,1),
@@ -161,6 +168,13 @@ stopifnot(grC["red",] == grC["green",],
 	  grC["red",] == grC["blue",],
 	  grC["red", 1:4] == c(0,3,5,8))
 ## end of moved from col2rgb.Rd
+
+
+## colnames
+m0 <- matrix(NA, 4, 0)
+rownames(m0, do.NULL = FALSE)
+colnames(m0, do.NULL = FALSE)
+## end of moved from colnames.Rd
 
 
 ## complex
@@ -319,6 +333,16 @@ stopifnot(it[c(1,203)] == c(0, 100),
 	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
 	  )
 ## end of moved from findint.Rd
+
+
+## fix
+oo <- options(editor="touch") # not really changing anything
+fix(pi)
+if(!is.numeric(pi) || length(pi)!=1 ||
+   !is.null(attributes(pi)) || abs(pi - 3.1415) > 1e-4)
+      stop("OOPS:  fix() is broken ...")
+rm(pi); options(oo)
+## end of moved from fix.Rd
 
 
 ## format
@@ -2510,6 +2534,95 @@ model.tables(npk.aovE, "means")
 options(op)# reset to previous
 ## Didn't work before 1.8.0
 
+
+library(mva)
+## cmdscale
+## failed in versions <= 1.4.0 :
+data(eurodist)
+cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)
+cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
+stopifnot(identical(cm1$x,  cmdsE$x),
+          identical(cm1$ac, cmdsE$ac))
+## end of moved from cmdscale.Rd
+
+
+## cutree
+data(USArrests)
+hc <- hclust(dist(USArrests))
+ct <- cutree(hc, h = c(0, hc$height[c(1,49)], 1000))
+stopifnot(ct[,"0"]== 1:50,
+          unique(ct[,2]) == 1:49,
+          ct[,3]  == ct[,4],
+          ct[,4]  == 1)
+## end of moved from cutree.Rd
+
+
+## princomp
+data(USArrests)
+USArrests[1, 2] <- NA
+pc.cr <- princomp(~ Murder + Assault + UrbanPop,
+                  data = USArrests, na.action=na.exclude, cor = TRUE)
+update(pc.cr, ~ . + Rape)
+## end of moved from princomp.Rd
+
+
+library(modreg)
+## smooth.spline.Rd
+y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
+xx  <- seq(1,length(y18), len=201)
+s2. <- smooth.spline(y18, cv=TRUE,con=list(trace=TRUE, tol=1e-6,low= -3,maxit=20))
+s2. ## Intel-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
+## {others, e.g., may end quite differently!}
+lines(predict(s2., xx), col = 4)
+mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
+
+sdf8 <- smooth.spline(y18, df = 8, con=list(trace=TRUE))
+sdf8 ; sdf8$df - 8
+
+try(smooth.spline(y18, spar = 50)) #>> error : spar 'way too large'
+## end of moved from smooth.spline.Rd
+
+
+library(ts)
+## arima{0}
+data(lh)
+(fit <- arima(lh, c(1,0,0)))
+tsdiag(fit)
+(fit <- arima0(lh, c(1,0,0)))
+tsdiag(fit)
+## end of moved from arima{0}.Rd
+
+
+## predict.arima
+data(lh, package="ts")
+predict(arima(lh, order=c(1,0,1)), n.ahead=5)
+predict(arima(lh, order=c(1,1,0)), n.ahead=5)
+predict(arima(lh, order=c(0,2,1)), n.ahead=5)
+## end of moved from predict.arima.Rd
+
+
+library(splines)
+## ns
+## Consistency:
+x <- c(1:3,5:6)
+stopifnot(identical(ns(x), ns(x, df = 1)),
+          !is.null(kk <- attr(ns(x), "knots")),# not true till 1.5.1
+          length(kk) == 0)
+## end of moved from ns.Rd
+
+
+## predict.bs
+## Consistency:
+data(women)
+basis <- ns(women$height, df = 5)
+newX <- seq(58, 72, len = 51)
+wh <- women$height
+bbase <- bs(wh)
+nbase <- ns(wh)
+stopifnot(identical(predict(basis), predict(basis, newx=wh)),
+          identical(predict(bbase), predict(bbase, newx=wh)),
+          identical(predict(nbase), predict(nbase, newx=wh)))
+## end of moved from predict.bs.Rd
 
 
 ## keep at end, as package `methods' has had persistent side effects

@@ -55,11 +55,5 @@ data(USAccDeaths, package="ts")
 (fit <- arima(USAccDeaths, order = c(0,1,1),
               seasonal = list(order=c(0,1,1))))
 predict(fit, n.ahead = 6)
-\dontshow{
-
-## tests of prediction
-predict(arima(lh, order=c(1,0,1)), n.ahead=5)
-predict(arima(lh, order=c(1,1,0)), n.ahead=5)
-predict(arima(lh, order=c(0,2,1)), n.ahead=5)
-}}
+}
 \keyword{ts}

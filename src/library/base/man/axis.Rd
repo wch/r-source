@@ -72,10 +72,5 @@ axis(1, 1:7, LETTERS[1:7], col.axis = "blue")
 # unusual options:
 axis(4, col = "violet", col.axis="dark violet",lwd = 2)
 axis(3, col = "gold", lty = 2, lwd = 0.5)
-\dontshow{ # test sorting of labels
- Y <- c(10.50, 4.0, 13.75, 7.25)
- plot(1:4, Y, xlim=c(0,5), ylim=c(0,15))
- axis(side=4, at=Y, labels=LETTERS[1:4])
-}
 }
 \keyword{aplot}

@@ -39,15 +39,5 @@ basis <- ns(women$height, df = 5)
 newX <- seq(58, 72, len = 51)
 # evaluate the basis at the new data
 predict(basis, newX)
-
-\dontshow{
-## Consistency:
-wh <- women$height
-bbase <- bs(wh)
-nbase <- ns(wh)
-stopifnot(identical(predict(basis), predict(basis, newx=wh)),
-          identical(predict(bbase), predict(bbase, newx=wh)),
-          identical(predict(nbase), predict(nbase, newx=wh)))
-}
 }
 \keyword{smooth}

@@ -200,8 +200,7 @@ arima(x, order = c(0, 0, 0),
 
 \examples{
 data(lh)
-\dontrun{arima(lh, order = c(1,0,0))}
-\dontshow{(fit <- arima(lh, c(1,0,0))); tsdiag(fit)}
+arima(lh, order = c(1,0,0))
 arima(lh, order = c(3,0,0))
 arima(lh, order = c(1,0,1))
 

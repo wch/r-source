@@ -45,13 +45,6 @@ cutree(hc, h=250)
 ## Compare the 2 and 3 grouping:
 g24 <- cutree(hc, k = c(2,4))
 table(g24[,"2"], g24[,"4"])
-\dontshow{
-  ct <- cutree(hc, h = c(0, hc$height[c(1,49)], 1000))
-  stopifnot(ct[,"0"]== 1:50,
-     unique(ct[,2]) == 1:49,
-            ct[,3]  == ct[,4],
-            ct[,4]  == 1)
-}
 }
 \keyword{multivariate}
 \keyword{cluster}

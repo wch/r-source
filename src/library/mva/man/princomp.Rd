@@ -125,7 +125,5 @@ USArrests[1, 2] <- NA
 pc.cr <- princomp(~ Murder + Assault + UrbanPop,
                   data = USArrests, na.action=na.exclude, cor = TRUE)
 pc.cr$scores
-\dontshow{
-update(pc.cr, ~ . + Rape)
-}}
+}
 \keyword{multivariate}

@@ -51,10 +51,7 @@ colnames(x) <- value
 \examples{
 m0 <- matrix(NA, 4, 0)
 rownames(m0)
-\dontshow{
-        rownames(m0, do.NULL = FALSE)
-        colnames(m0, do.NULL = FALSE)
-}
+
 m2 <- cbind(1,1:4)
 colnames(m2, do.NULL = FALSE)
 colnames(m2) <- c("x","Y")
