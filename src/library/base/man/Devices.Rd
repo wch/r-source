@@ -7,9 +7,13 @@ X11(\dots)
 #ifdef windows
 windows(\dots)
 #endif
+%% FIXME:
+#ifdef aqua
+quartz(\dots)
+#endif
 postscript(\dots)
 pdf(\dots)
-pictex(\dots)  
+pictex(\dots)
 #ifdef unix
 png(\dots)
 jpeg(\dots)
@@ -59,6 +63,13 @@ dev.interactive()
     \item \code{\link{jpeg}} JPEG bitmap device
     \item \code{\link{GTK}}, \code{\link{GNOME}} Graphics drivers for
     the GNOME GUI.
+%% <FIXME>  quartz() also with corresponding --gui aqua ?
+#ifdef aqua
+%%     ^^^^ not yet available
+    \item \code{\link{quartz}} The graphics driver for the Mac OSX
+    native aqua system.
+#endif
+%% </FIXME>
   }
   None of these are available under \code{\link[base:BATCH]{R CMD BATCH}}.
 #endif
@@ -85,10 +96,11 @@ dev.interactive()
 
   \code{\link{capabilities}} to see if \code{\link{X11}}, \code{\link{jpeg}}
   and \code{\link{png}} are available.
+%% FIXME: aqua / quartz ?
 #endif
 }
 \examples{\dontrun{
-## open the default screen device on this platform if no device is 
+## open the default screen device on this platform if no device is
 ## open
 if(dev.cur() == 1) get(getOption("device"))()
 }}

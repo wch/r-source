@@ -1,5 +1,5 @@
 dev.interactive <- function()
-    interactive() && .Device %in% c("X11", "GTK", "gnome", "windows")
+    interactive() && .Device %in% c("X11", "GTK", "gnome", "quartz", "windows")
 
 dev.list <- function()
 {
@@ -11,12 +11,10 @@ dev.list <- function()
     if(length(i) == 0) NULL else i
 }
 
-dev.cur <-
-    function()
+dev.cur <- function()
 {
-    if(!exists(".Devices")) {
+    if(!exists(".Devices"))
 	.Devices <- list("null device")
-    }
     num.device <- .Internal(dev.cur())
     names(num.device) <- .Devices[[num.device]]
     num.device
