@@ -21,7 +21,7 @@ all: $(LIB)
 	@cp $(LIB) $(top_builddir)/library/$(pkg)/libs
 
 $(LIB): $(OBJS)
-	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $(OBJS)
+	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $(OBJS) $(FLIBS)
 
 mostlyclean: clean
 clean:
