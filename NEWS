@@ -158,7 +158,7 @@ NEW FEATURES
     o   All methods for download.file() do tilde-expansion on the path
 	name.
 
-    o   Finalizers can be regeitered to be run on system exit for both
+    o   Finalizers can be registered to be run on system exit for both
 	reachable and unreachable objects.
 
     o   Methods dispatch for formal methods (the standardGeneric
