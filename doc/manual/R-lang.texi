@@ -1528,7 +1528,7 @@ Notice that @code{m[1]} is usually very different from @code{m[1, ]} or
 It is possible to use a matrix of integers as an index.  In this case,
 the number of columns of the matrix should match the number of
 dimensions of the structure, and the result will be a vector with length
-as the number of columns of the matrix.  The following example shows how
+as the number of rows of the matrix.  The following example shows how
 to extract the elements @code{m[1, 1]} and @code{m[2, 2]} in one
 operation.
 
