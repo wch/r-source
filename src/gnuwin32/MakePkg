@@ -138,7 +138,6 @@ endif
 	  $(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
 	  echo "  adding build stamp to DESCRIPTION" ; \
 	  echo "Built: R" $(RVER)\;  Win32\;  `date` >> ${DPKG}/DESCRIPTION; \
-	  PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/share/perl/maketitle.pl $(SPKG)/DESCRIPTION > ${DPKG}/TITLE; \
 	else \
 	  echo "A package must contain a DESCRIPTION file"; \
 	  exit 27; \

@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.93 $'
+revision='$Revision: 1.94 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -453,13 +453,14 @@ do_install () {
     for f in COPYING INDEX; do
       if test -f "${f}"; then cp "${f}" "${lib}/${pkg}"; fi
     done
-    title=`get_dcf_field Title DESCRIPTION`
-    if test "${title}"; then
-      ${R_CMD} perl "${R_HOME}/share/perl/maketitle.pl" DESCRIPTION \
-        > "${lib}/${pkg}/TITLE"
-    elif test -f TITLE; then
-      cp TITLE "${lib}/${pkg}"
-    fi
+## we no longer install TITLE files
+#     title=`get_dcf_field Title DESCRIPTION`
+#     if test "${title}"; then
+#       ${R_CMD} perl "${R_HOME}/share/perl/maketitle.pl" DESCRIPTION \
+#         > "${lib}/${pkg}/TITLE"
+#     elif test -f TITLE; then
+#       cp TITLE "${lib}/${pkg}"
+#     fi
     ## Copy DESCRIPTION file, stamp with build information, and remove
     ## blank lines.  (Need to add an empty line to deal with missing
     ## trailing newlines at EOF.)

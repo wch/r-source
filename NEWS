@@ -24,8 +24,9 @@ NEW FEATURES
 
 INSTALLATION CHANGES
 
-    o   TITLE files in packages are no longer used to create package
-	lists, the Title field in the DESCRIPTION file being preferred.
+    o   TITLE files in packages are no longer used, the Title field 
+	in the DESCRIPTION file being preferred.  TITLE files will be
+	ignored both in installed packages and source packages.
 
 
 
