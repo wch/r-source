@@ -1638,9 +1638,9 @@ DevDesc *GNewPlot(int recording, int ask)
     DevDesc *dd;
     int asksave;
 
-    /* If there are no active devices */
-    /* check the options for a "default device".	*/
-    /* If there is one, start it up. */
+    /* If there are no active devices
+     * check the options for a "default device".
+     * If there is one, start it up. */
 
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
@@ -1718,12 +1718,11 @@ DevDesc *GNewPlot(int recording, int ask)
     return dd;
 }
 
+void GScale(double min, double max, int axis, DevDesc *dd)
+{
 /* GScale: used to default axis information
  *	   i.e., if user has NOT specified par(usr=...)
  */
-
-void GScale(double min, double max, int axis, DevDesc *dd)
-{
     int log, n, style, swap;
     double temp;
 
@@ -1827,14 +1826,12 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
 }
 
-
+void GSetupAxis(int axis, DevDesc *dd)
+{
 /*  GSetupAxis -- Set up the default axis information
  *		  called when user specifies	par(usr =...) */
 /*  What should happen if			------------
  *   xlog or ylog = 1 ? */
-
-void GSetupAxis(int axis, DevDesc *dd)
-{
     double min, max;
     int n;
 
@@ -2711,6 +2708,8 @@ void GLPretty(double *ul, double *uh, int *n)
 void GPretty(double *lo, double *up, int *ndiv)
 {
 /*	Set scale and ticks for linear scales.
+ *	Called from GScale() and GSetupAxis().
+ *
  *	Pre:	   x1 = lo < up = x2
  *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
  */
@@ -2769,10 +2768,10 @@ void GPretty(double *lo, double *up, int *ndiv)
 
     *ndiv = nu - ns;
     if(*ndiv <= 0) {
-	REprintf("Problematic axis setup.\nGpretty(%g,%g,%d):"
-		 "cell=%g, ndiv= %d <=0;\t\t(ns,nu)=(%d,%d);"
-		 "dx=%g, unit=%3e, ismall=%1d.\n",
-		 x1,x2, nd0, cell, *ndiv, ns, nu, dx, unit, (int)i_small);
+	warning("Imprecision in axis setup.\t GPretty(%g,%g,%d):\n"
+		"cell=%g, ndiv= %d <=0;\t(ns,nu)=(%d,%d);"
+		"dx=%g, unit=%3e, ismall=%1d.\n",
+		x1,x2, nd0, cell, *ndiv, ns, nu, dx, unit, (int)i_small);
 	*ndiv = 1;
 	nu = ns + 1;
     }

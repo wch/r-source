@@ -532,7 +532,7 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
     SEXP at = R_NilValue;/* -Wall*/
     double umin, umax, dn, rng, small;
     int i, n, ne;
-    if(!log || axp[2] < 0) { /* linear axis -- 'nint' arg UNused */
+    if(!log || axp[2] < 0) { /* ---- linear axis ---- Only use	axp[]  arg. */
 	n = fabs(axp[2]) + 0.25;/* >= 0 */
 	dn = n;
 	rng = axp[1] - axp[0];
@@ -553,8 +553,8 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	umax = usr[1];
 	/* Debugging: When does the following happen... ? */
 	if(umin > umax)
-	    warning("CreateAtVector (from axis()): usr[0] = %g > %g = usr[1] !\n",
-		    umin, umax);
+	    warning("CreateAtVector \"log\"(from axis()): "
+		    "usr[0] = %g > %g = usr[1] !\n", umin, umax);
 
 	/* You get the 3 cases below by
 	 *  for(y in 1e-5*c(1,2,8))  plot(y, log = "y")
@@ -820,7 +820,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	else {
-	    /* The R(ight) way of doing ticks */
+	    /* The R(ight) way of doing ticks (using "tcl", not "tck") */
 	    for (i = 0; i < n; i++) {
 		x = REAL(at)[i];
 		if (low <= x && x <= high) {
@@ -950,8 +950,10 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* plot.xy(xy, type, pch, lty, col, cex, ...) */
-    /* plot points or lines of various types */
+/*	plot.xy(xy, type, pch, lty, col, cex, ...)
+
+ *	plot points or lines of various types
+ */
     SEXP sxy, sx, sy, pch, cex, col, bg, lty;
     double *x, *y, xold, yold, xx, yy;
     int i, n, npch, ncex, ncol, nbg, nlty, type=0, start=0;
