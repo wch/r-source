@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.13 $'
+revision='$Revision: 1.14 $'
 version=`set - ${revision}; echo ${2}`
 version="R package checker ${version}
 
@@ -109,7 +109,7 @@ checkpkg () {
   fi
 
   if ${use_man}; then
-    ${R_HOME}/bin/build-help ${OPTS} --example ../${pkg} ${lib}
+    ${R_HOME}/bin/build-help ${opts} --example ../${pkg} ${lib}
     check_dir=check
   else
     check_dir=check-${pkg}
