@@ -217,7 +217,11 @@ make check
 @noindent
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
-discrepancies.
+discrepancies.  To re-run the tests you would need
+@smallexample
+make check FORCE=FORCE
+@end smallexample
+
 
 If these commands execute successfully, the @R{} binary will be copied
 to the @file{$@{R_HOME@}/bin} directory.  In addition, a shell-script
@@ -346,10 +350,11 @@ the option @option{--prefix}, as in
 @end smallexample
 
 @noindent
-This installs the @R{} executable to @file{/where/you/want/R/to/go/bin},
-and so on.  The prefix of the installation directories can also be seen
-in the status message that is displayed at the end of
-@command{configure}.  You can install into another directory by using
+This causes @command{make install} to install the @R{} executable to
+@file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
+installation directories can e seen in the status message that is
+displayed at the end of @command{configure}.  You can install into
+another directory by using
 
 @smallexample
 make prefix=/path/to/here install
@@ -924,7 +929,7 @@ specify location of @command{libglade-config}
 @appendix New platforms
 
 There are a number of sources of problems when installing R on a new
-hardware/OS platform:
+hardware/OS platform. These include
 
 @strong{Floating Point Arithmetic}: @R{} supports the @acronym{POSIX},
 SVID and @acronym{IEEE} models for floating point arithmetic.  The
@@ -937,6 +942,11 @@ Linux require no special action, FreeBSD requires a call to (the macro)
 out the magic recipe and add some code to make it work.  This can often
 be done via the file @file{config.site} which resides in the top level
 directory.
+
+Beware of using high levels of optimization, at least initially.  On
+many compilers these reduce the degree of compliance to the
+@acronym{IEEE} model. For example, using @code{-fast} on the Solaris
+SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
 
 @strong{Shared Libraries}: There seems to be very little agreement
 across platforms on what needs to be done to build shared libraries.

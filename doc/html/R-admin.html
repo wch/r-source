@@ -12,7 +12,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.3.0 (2001-05-22).
+<p>The current version of this document is 1.3.0 (2001-05-23).
 
 </ul>
 
@@ -135,7 +135,9 @@ make
 
 <p>Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
-discrepancies.
+discrepancies.  To re-run the tests you would need
+<pre>make check FORCE=FORCE
+</pre>
 
 <p>If these commands execute successfully, the R binary will be copied
 to the <code>${R_HOME}/bin</code> directory.  In addition, a shell-script
@@ -248,10 +250,11 @@ the option <code>--prefix</code>, as in
 <pre>./configure --prefix=/where/you/want/R/to/go
 </pre>
 
-<p>This installs the R executable to <code>/where/you/want/R/to/go/bin</code>,
-and so on.  The prefix of the installation directories can also be seen
-in the status message that is displayed at the end of
-<code>configure</code>.  You can install into another directory by using
+<p>This causes <code>make install</code> to install the R executable to
+<code>/where/you/want/R/to/go/bin</code>, and so on.  The prefix of the
+installation directories can e seen in the status message that is
+displayed at the end of <code>configure</code>.  You can install into
+another directory by using
 
 <pre>make prefix=/path/to/here install
 </pre>
@@ -769,7 +772,7 @@ options, by (defaults in brackets)
 <h1>Appendix C New platforms</h1>
 
 <p>There are a number of sources of problems when installing R on a new
-hardware/OS platform:
+hardware/OS platform. These include
 
 <p><strong>Floating Point Arithmetic</strong>: R supports the <small>POSIX</small>,
 SVID and <small>IEEE</small> models for floating point arithmetic.  The
@@ -782,6 +785,11 @@ Linux require no special action, FreeBSD requires a call to (the macro)
 out the magic recipe and add some code to make it work.  This can often
 be done via the file <code>config.site</code> which resides in the top level
 directory.
+
+<p>Beware of using high levels of optimization, at least initially.  On
+many compilers these reduce the degree of compliance to the
+<small>IEEE</small> model. For example, using <code>-fast</code> on the Solaris
+SunPro compilers causes R's <code>NaN</code> to be set incorrectly.
 
 <p><strong>Shared Libraries</strong>: There seems to be very little agreement
 across platforms on what needs to be done to build shared libraries. 
