@@ -68,6 +68,7 @@ BUG FIXES
 
     o	reformulate() properly works with a response.
 
+    o	cmdscale(*, k = 1) now works properly.
 
 		CHANGES IN R VERSION 1.4.0
 
