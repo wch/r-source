@@ -298,7 +298,17 @@ AC_CACHE_VAL([r_cv_prog_cc_m],
 ##   ${srcdir}/foo.o: /path/to/bar.h
 ## Could be made to work, of course ...
 ## Note also that it does not create a 'conftest.o: conftest.c' line.
-for prog in "${CC} -M" "${CPP} -M" "cpp -M"; do
+## For gcc 3.2 or better, we want to use '-MM' in case this works.
+cc_minus_MM=false
+if test "${GCC}" = yes; then
+  gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
+    sed -e 's/^.*g.. version *//'`
+  case "${gcc_version}" in
+    1.*|2.*|3.[[01]]*) ;;
+    *) cc_minus_MM="${CC} -MM" ;;
+  esac
+fi
+for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
   if ${prog} conftest.c 2>/dev/null | \
       grep 'conftest.o: conftest.c' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
