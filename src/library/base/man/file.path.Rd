@@ -2,16 +2,19 @@
 \alias{file.path}
 \title{Construct Path to File}
 \description{
- Construct the path to a file from components in a platform-independent way.
+  Construct the path to a file from components in a platform-independent
+  way.
 }
 \usage{
-file.path(\dots, fsep=.Platform$file.sep)
+file.path(\dots, fsep = .Platform$file.sep)
 }
 \arguments{
- \item{\dots}{Character vectors}
- \item{fsep}{The path separator to use}
+  \item{\dots}{character vectors.}
+  \item{fsep}{the path separator to use.}
 }
 \value{
-  A character vector of length one.
+  A character vector of the arguments concatenated term-by-term and
+  separated by \code{fsep} if all arguments have positive length;
+  otherwise, an empty character vector.
 }
 \keyword{file}

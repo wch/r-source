@@ -33,8 +33,13 @@ list.files <- function(path=".", pattern=NULL, all.files=FALSE,
 
 dir <- list.files
 
-file.path <- function(..., fsep=.Platform$file.sep)
-paste(..., sep=fsep)
+file.path <-
+function(..., fsep=.Platform$file.sep)
+{
+    if(any(sapply(list(...), length) == 0)) return(character())
+    paste(..., sep = fsep)
+}
+
 
 file.exists <- function(...)
 .Internal(file.exists(c(...)))
@@ -51,7 +56,9 @@ file.copy <- function(from, to, overwrite=FALSE)
     if (!(nt <- length(to)))   stop("no files to copy to")
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, from)
-    else if (nf > nt)  stop("more `from' files than `to' files")
+    else if (nf > nt)
+        stop(paste("more", sQuote("from"), "files than", sQuote("to"),
+                   "files"))
     if(!overwrite) {
         if(nt > nf) from <- rep(from, length = nt)
         exists <- file.exists(from)
@@ -117,7 +124,7 @@ function(..., package = "base", lib.loc = NULL)
     if(nargs() == 0)
         return(file.path(.Library, "base"))
     if(length(package) != 1)
-        stop("argument `package' must be of length 1")
+        stop(paste("argument", sQuote("package"), "must be of length 1"))
     packagePath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(packagePath) == 0)
         return("")
