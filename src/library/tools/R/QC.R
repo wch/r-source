@@ -2342,14 +2342,12 @@ function(dir) {
 
     badDepends <- list()
 
-    if(installed) {
-        ## Are all packages listed in Depends/Suggests installed?
-        reqs <- unique(c(depends, suggests))
-        reqs <- reqs[!reqs %in%
-                     utils::installed.packages()[ , "Package"]]
-        if(length(reqs))
-            badDepends$requiredButNotInstalled <- reqs
-    }
+    ## Are all packages listed in Depends/Suggests installed?
+    reqs <- unique(c(depends, suggests))
+    reqs <- reqs[!reqs %in%
+                 utils::installed.packages()[ , "Package"]]
+    if(length(reqs))
+        badDepends$requiredButNotInstalled <- reqs
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?

@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.174 $ ';
+my $revision = ' $Revision: 1.175 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -760,7 +760,6 @@ sub check_pkg {
     ## could work around this, but checking uninstalled packages is a
     ## bad thing anyway.
     ## </NOTE>
-
     if($opt_install) {
 	$log->checking("package dependencies");
 	## According to FL, everything listed in Depends or Suggests
@@ -771,7 +770,7 @@ sub check_pkg {
 	## not required in the package DESCRIPTION file.
 	## Namespace imports must really be in Depends.
 	my $Rcmd = "tools:::.checkPackageDepends(dir = \"${pkgdir}\")\n";
-	my @out = R_runR($cmd, "${R_opts} --quiet",
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
