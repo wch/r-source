@@ -17,6 +17,12 @@ c Args
 c Locals
       integer i,j,k
       DOUBLE precision  wjm3(3),wjm2(2),wjm1(1),c0,c1,c2,c3
+c
+c     unnecessary initialization of c1 c2 c3 to keep g77 -Wall happy
+c
+      c1 = 0.0d0
+      c2 = 0.0d0
+      c3 = 0.0d0
 C
 C Pass 1
       wjm3(1)=0d0

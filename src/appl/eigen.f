@@ -581,6 +581,10 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of L to keep g77 -Wall happy
+c
+      L = 0
 C
       IERR = 0
       IF (LOW .EQ. IGH) GO TO 180
@@ -819,6 +823,10 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of L to keep g77 -Wall happy
+c
+      L = 0
 C
       IERR = 0
 C     .......... INITIALIZE EIGENVECTOR MATRIX ..........
@@ -1569,6 +1577,14 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of L M P Q R to keep g77 -Wall happy
+c
+      L = 0
+      M = 0
+      P = 0.0D0
+      Q = 0.0D0
+      R = 0.0D0
 C
       IERR = 0
       NORM = 0.0D0
@@ -1819,6 +1835,14 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of L M P R S to keep g77 -Wall happy
+c
+      L = 0
+      M = 0
+      P = 0.0D0
+      R = 0.0D0
+      S = 0.0D0
 C
       IERR = 0
       NORM = 0.0D0
@@ -2506,6 +2530,11 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of C3 and S2 to keep g77 -Wall happy
+c
+      C3 = 0.0D0
+      S2 = 0.0D0
 C
       IERR = 0
       IF (N .EQ. 1) GO TO 1001
@@ -2657,6 +2686,11 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of C3 and S2 to keep g77 -Wall happy
+c
+      C3 = 0.0D0
+      S2 = 0.0D0
 C
       IERR = 0
       IF (N .EQ. 1) GO TO 1001
@@ -2809,6 +2843,11 @@ C
 C     THIS VERSION DATED AUGUST 1983.
 C
 C     ------------------------------------------------------------------
+c
+c     unnecessary initialization of B and C to keep g77 -Wall happy
+c
+      B = 0.0D0
+      C = 0.0D0
 C
       IERR = 0
       IF (N .EQ. 1) GO TO 1001

@@ -31,6 +31,12 @@ C     IMPLICIT UNDEFINED(A-H,O-Z)
       LOGICAL FLAG(N)
       DOUBLE PRECISION INF, DMIN, X, XX
       DATA INF/1.D+20/
+c
+c     unnecessary initialization of im jj jm to keep g77 -Wall happy
+c
+      IM = 0
+      JJ = 0
+      JM = 0
 C
 C  Initializations
 C

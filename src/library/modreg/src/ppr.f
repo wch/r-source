@@ -536,6 +536,13 @@ c--------------
       implicit double precision (a-h, o-z)
       double precision x(n),s(n),w(n),d(n),sc(n,3)
       integer bl,el,bc,ec,br,er
+c
+c     unnecessary initialization of bl el ec to keep g77 -Wall happy
+c
+      bl = 0
+      el = 0
+      ec = 0
+c
       if(x(n) .gt. x(1)) goto 11441
       do 11451 j=1,n
       d(j)=0d0
