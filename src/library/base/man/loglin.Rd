@@ -88,7 +88,8 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 \author{Kurt Hornik}
 \seealso{\code{\link{table}}}
 \examples{
-## Currently no appropriate data sets are available.
+data(UCBAdmissions)
+loglin(UCBAdmissions, list(c(1, 3), c(2, 3)))
 }
 \keyword{category}
 \keyword{models}
