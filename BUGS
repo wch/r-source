@@ -457,7 +457,11 @@ Date: Tue, 26 Feb 2002 15:13:04 -0500
 Subject: rpart error with 0-frequency factor levels (with partial fix)
 From: "Wiener, Matthew" <matthew_wiener@merck.com>
 Date: Wed, 13 Mar 2002 12:03:23 -0500
-* PR# 1379 *
-Subject: ¾?´? ±??? °?¾? °???°???´?±??    [ ?¤   º? ]
-From: º??º±? <xxx0child0xxx@com.ne.kr>
-Date: Thu, 14 Mar 2002 04:24:59 +0900
+* PR# 1384 *
+Subject: KDE frontend
+From: egonw@sci.kun.nl
+Date: Thu, 14 Mar 2002 15:21:03 +0100 (MET)
+* PR# 1385 *
+Subject: "evaluating expression 0" bug in R-1.4.1
+From: eneafse@lumc.edu
+Date: Thu, 14 Mar 2002 21:05:42 +0100 (MET)
