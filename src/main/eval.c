@@ -705,8 +705,13 @@ SEXP R_execMethod(SEXP op, SEXP rho)
        it can be done more efficiently. */
     for (next = FORMALS(op); next != R_NilValue; next = CDR(next)) {
 	SEXP symbol =  TAG(next);
-	R_varloc_t loc = R_findVarLocInFrame(rho,symbol);
-	int missing = R_GetVarLocMISSING(loc);
+	R_varloc_t loc;
+	int missing;
+	loc = R_findVarLocInFrame(rho,symbol);
+	if(loc == NULL)
+	    error("Could not find symbol \"%s\" in environment of the generic function",
+		  CHAR(PRINTNAME(symbol)));
+	missing = R_GetVarLocMISSING(loc);
 	val = R_GetVarLocValue(loc);
 	SET_FRAME(newrho, CONS(val, FRAME(rho)));
 	SET_TAG(FRAME(newrho), symbol);

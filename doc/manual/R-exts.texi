@@ -5127,8 +5127,9 @@ functions documented in @file{Rmath.h}, as a standalone library
 documented in @ref{Numerical analysis subroutines} as from that header file.)
 
 The library is not built automatically when @R{} is installed, but can
-be built in the directory @file{src/nmath/standalone}. See the file
-@file{README} there.  To use the code in your own C program include
+be built in the directory @file{src/nmath/standalone} in the @R{}
+sources: see the file @file{README} there.  To use the code in your own
+C program include
 
 @smallexample
 @group

@@ -24,7 +24,7 @@ colnames(x) <- value
 }
 \details{
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
-  \code{\link{NROW}(x)} or \code{\link{NCOL}(x)} is returned in any
+  \code{\link{NROW}(x)} or \code{\link{NCOL}(x)}) is returned in any
   case, prepending \code{prefix} to simple numbers, if
   \code{dimnames(x)[[i]]} (\code{i =} 1 or 2) is \code{NULL}. 
 }

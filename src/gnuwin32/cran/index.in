@@ -48,7 +48,7 @@ NT4.0, 2000 and XP on Intel/clone chips.</p>
   </tr>
 </TBODY>
 </table>
-<p> Please see the <a href="../../doc/FAQ/R-FAQ.html">R FAQ</a> for general
+<p> Please see the <a href="../../../doc/FAQ/R-FAQ.html">R FAQ</a> for general
 information about R and the <a href="../contrib/rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
 including upgrade advice.</p>
 

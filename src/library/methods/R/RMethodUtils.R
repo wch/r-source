@@ -41,8 +41,16 @@
       name <- signature[[1]]
       if(is.null(fdefault))
           methods <- MethodsList(name)
-      else
+      else {
+          if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
+             !is.primitive(fdefault))
+              stop("The formal arguments of the generic function for \"",
+                   f, "\" (",
+                   paste(formalArgs(fdef), collapse = ", "),
+                   ") differ from those of the non-generic to be used as the default, (",
+                   paste(formalArgs(fdefault), collapse = ", "), ")")
           methods <- MethodsList(name, asMethodDefinition(fdefault))
+      }
       value@default <- methods
       value@skeleton <- generic.skeleton(f, fdef, fdefault)
       value
@@ -310,9 +318,12 @@ conformMethod <-
     if(!all(diff(seq(along=fnames)[!omitted]) > 0))
         stop(label, "Formal arguments in method and function don't appear in the same order")
     signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
-    if(any(is.na(match(signature[omitted], c("ANY", "missing")))))
-        stop(label, "Formal arguments omitted in the method definition cannot be in the signature:",
-                   paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", "))
+    if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
+        bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
+        stop(label, "Formal arguments omitted in the method definition cannot be in the signature (",
+                   paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", "),
+             ")")
+    }
     else if(!all(signature[omitted] == "missing")) {
         message(label, "Expanding the signature to include omitted arguments in definition: ",
             paste(fnames[omitted], "= \"missing\"",collapse = ", "))
@@ -328,8 +339,11 @@ conformMethod <-
 
 rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     added <- is.na(match(mnames, fnames))
-    if(!any(added))
+    if(!any(added)) {
+        ## the formal args of the method must be identical to generic
+        formals(definition, envir = environment(definition)) <- formals(generic)
         return(definition)
+    }
     dotsPos <- match("...", fnames)
     if(is.na(dotsPos))
         stop("Methods can add arguments to the generic only if \"...\" is an argument to the generic")
