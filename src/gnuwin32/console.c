@@ -1135,6 +1135,8 @@ FBEGIN
 
     if (!s || !(fp = fopen(s, "r"))) FVOIDRETURN;
     while ((c = getc(fp)) != EOF) xbufaddc(p->history, c);
+    /* remove blank line started by final \n */
+    p->history->ns--;
     fclose(fp);
 FVOIDEND
 
@@ -1729,7 +1731,10 @@ pager newpagerNwin(char *wtitle, char *filename, int deleteonexit)
 	del(c);
 	return NULL;
     }
-    if (c) show(c);
+    if (c) {
+	gchangescrollbar(c, VWINSB, 0, NUMLINES - 1 , ROWS, 0);
+	show(c);
+    }
     return c;
 }
 
@@ -2252,11 +2257,11 @@ dataeditor newdataeditor()
     h = HEIGHT;
     if (ismdi()) {
 	RECT *pR = RgetMDIsize();
-	x = (pR->right - w) / 1.5; x = x > 20 ? x:20;
-	y = (pR->bottom - h) / 1.5; y = y > 20 ? y:20;
+	x = (pR->right - w) / 3; x = x > 20 ? x:20;
+	y = (pR->bottom - h) / 3; y = y > 20 ? y:20;
     } else {
-	x = (devicewidth(NULL) - w) / 1.5;
-	y = (deviceheight(NULL) - h) / 1.5 ;
+	x = (devicewidth(NULL) - w) / 3;
+	y = (deviceheight(NULL) - h) / 3 ;
     }
     c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
 			       Document | StandardWindow | TrackMouse |

@@ -10,9 +10,9 @@ rw1010
 There is now a GUI preferences editor on the Edit menu in Rgui.
 
 A data entry editor is now implemented.  This is similar to the Unix
-one (see ?dataentry) with the additional feature that right-clicking
+one (see ?dataentry) with the additional feature that double-clicking
 in a cell turns it into an editable field (entered as a new value
-by navigating away from the cell).
+by navigating away from the cell), and there is a right-click popup menu.
 
 Rterm will now load and save the commands history (as Rgui does).
 There is a new item on the File menu in Rgui to save the commands
@@ -36,7 +36,7 @@ provide suitable tools.  See ?postscript for further details.
 The new xfig() device can be used, and a port of xfig to Windows (with
 an X server and the Cygwin B20.1 environment and X11R6.4 installed) is at
 ftp.franken.de:/pub/win32/develop/gnuwin32/cygwin/porters/Humblet_Pierre_A/B20
-as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz
+as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz.
 
 The R DLL and executables now have standard Windows version
 information, which will appear on a Version tab of the Properties
@@ -50,6 +50,11 @@ and those recommended for building packages from source (see the file
 README.packages).
 
 New makefile target zipdata-% to zip up data directories in packages.
+
+A long-standing bug in the (vertical) alignment of symbols in plotmath
+has been corrected.
+
+Pagers should no longer flash when launched.
 
 
 rw1001
