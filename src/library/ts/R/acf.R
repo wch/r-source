@@ -14,6 +14,8 @@ acf <-
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)
     x <- as.matrix(x)
+    if(!is.numeric(x))
+        stop("`x' must be numeric")
     sampleT <- nrow(x)
     nser <- ncol(x)
     if (is.null(lag.max))
@@ -50,6 +52,8 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         return(eval(m, parent.frame()))
     }
     x <- na.action(as.ts(x))
+    if(!is.numeric(x))
+        stop("`x' must be numeric")
     x.freq <- frequency(x)
     if(is.matrix(x))
         if(ncol(x) > 1) stop("univariate ts method")

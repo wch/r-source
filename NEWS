@@ -193,6 +193,9 @@ NEW FEATURES
      o	summaryRprof() now prints times with a precision appropriate
 	to the sampling interval, rather than always to 2dp.
 
+     o	Most of the time series functions now check explicitly for a
+	numeric time series, rather than fail at a later stage.
+
 
 INSTALLATION CHANGES
 
@@ -340,6 +343,8 @@ BUG FIXES
 
     o	delete.response() might re-order the rhs terms so prediction
 	might fail or even give incorrect results. (PR#2206)
+
+    o	StructTS() now accepts numeric time series of integer storage mode.
 
 
 

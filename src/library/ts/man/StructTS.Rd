@@ -11,7 +11,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
          fixed = NULL, optim.control = NULL)
 }
 \arguments{
-  \item{x}{a univariate time series. Missing values are allowed.}
+  \item{x}{a univariate numeric time series. Missing values are allowed.}
 
   \item{type}{the class of structural model.  If omitted, a BSM is used
     for a time series with \code{frequency(x) > 1}, and a local trend

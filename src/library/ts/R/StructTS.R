@@ -60,6 +60,9 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
     x <- as.ts(x)
+    if(!is.numeric(x))
+        stop("`x' must be numeric")
+    storage.mode(x) <- "double"
     type <- if(missing(type)) if(frequency(x) > 1) "BSM" else "trend"
     else match.arg(type)
     dim(x) <- NULL

@@ -81,6 +81,8 @@ arima <- function(x, order = c(0, 0, 0),
     method <- match.arg(method)
 
     x <- as.ts(x)
+    if(!is.numeric(x))
+        stop("`x' must be numeric")
     dim(x) <- NULL
     n <- length(x)
 
