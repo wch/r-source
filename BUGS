@@ -145,10 +145,29 @@ Date: Sun, 27 Apr 2003 01:56:30 -0400
 Subject: bug in y limits in bwplot
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Mon, 28 Apr 2003 02:19:53 -0400 (EDT)
+* PR# 2933 *
+Subject: frailty models in survreg() -- survival package
+From: Jerome Asselin <jerome@hivnet.ubc.ca>
+Date: Tue, 6 May 2003 15:36:23 -0700
+* PR# 2934 *
+Subject: Re: frailty models in survreg() -- survival package
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Tue, 6 May 2003 15:58:37 -0700 (PDT)
+* PR# 2985 *
+Subject: update.lme trouble
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 May 2003 17:59:41 +0200
+* PR# 2986 *
+Subject: plot.ranef.lme
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 May 2003 18:19:28 +0200
 
 Directory:  Analyses
 
-none
+* PR# 2993 *
+Subject: small bug in power.t.test for two-sided alternatives
+From: vangel@nmr.mgh.harvard.edu
+Date: Tue, 13 May 2003 14:12:24 +0200 (MET DST)
 
 Directory:  Documentation
 
@@ -441,6 +460,10 @@ Date: Mon, 4 Nov 2002 10:18:48 +0100
 Subject: Kinderman-Ramage
 From: Josef Leydold <leydold@statistik.wu-wien.ac.at>
 Date: Fri, 25 Apr 2003 13:18:53 +0200 (CEST)
+* PR# 2991 *
+Subject: qt(p,df) discontinuous in p for df in 1.01->1.7
+From: jens.lund@nordea.com
+Date: Tue, 13 May 2003 13:29:14 +0200 (MET DST)
 
 Directory:  Macintosh
 
@@ -623,12 +646,6 @@ none
 
 Directory:  Windows
 
-* PR# 1711 *
-Subject: GUI bug
-From: socrates@mail.ru
-Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
-..A crash that is *very* hard to trigger (after several
-..minutes of continuous resizing)
 * PR# 2798 *
 Subject: Re: [R] Keyboard problem using RWin 1.7.0
 From: DJNordlund@aol.com
@@ -700,55 +717,11 @@ Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
 Subject: return(1, ) results in subsequent segfault
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Wed, 30 Apr 2003 15:52:35 +0200
-* PR# 2884 *
-Subject: make check failures
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 30 Apr 2003 11:05:37 -0700
 * PR# 2894 *
 Subject: qbeta hang
 From: terra@gnome.org
 Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
-* PR# 2914 *
-Subject: R-1.7.0: Rproxy.dll loadlibrary/freelibrary error
-From: mpvenkatesh@lycos.com
-Date: Mon, 5 May 2003 01:07:29 +0200 (MET DST)
 * PR# 2923 *
 Subject: segfault when applying strange coercion
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 05 May 2003 19:36:01 +0200
-* PR# 2924 *
-Subject: prcomp need Conj(t(s$vt))
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Mon, 05 May 2003 14:12:59 -0400
-* PR# 2933 *
-Subject: frailty models in survreg() -- survival package
-From: Jerome Asselin <jerome@hivnet.ubc.ca>
-Date: Tue, 6 May 2003 15:36:23 -0700
-* PR# 2934 *
-Subject: Re: frailty models in survreg() -- survival package
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Tue, 6 May 2003 15:58:37 -0700 (PDT)
-* PR# 2982 *
-Subject: boy howdy!
-From: "Loyd Todd" <xfymzirk33@bigfoot.com>
-Date: Tue, 13 May 03 17:26:40 GMT
-* PR# 2983 *
-Subject: URGENT AND CONFIDENTIAL  ASSISTANCE SOUGHT.
-From: LUBUMBA MANDINGA <lubumaandi@hotmail.com>
-Date: Mon, 12 May 2003 15:26:13 +0200
-* PR# 2984 *
-Subject: Italian-crafted Rolex - only $65 - $140!! Free SHIPPING   !  !
-From: james@hello.com
-Date: Mon, 12 May 2003 23:06:54 +0800
-* PR# 2985 *
-Subject: update.lme trouble
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 12 May 2003 17:59:41 +0200
-* PR# 2986 *
-Subject: plot.ranef.lme
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 12 May 2003 18:19:28 +0200
-* PR# 2987 *
-Subject: Paxil, Phentermine, Viagra, and more. Order Online with NO PRIOR PRESCRIPTION
-From: "Freida Ferreira" <0jmq1vthno@springfields.com>
-Date: Tue, 13 May 03 02:57:24 GMT
