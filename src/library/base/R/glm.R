@@ -161,7 +161,7 @@ glm.fit <-
 	    stop("NAs in d(mu)/d(eta)")
 
 	## calculate z and w using only values where mu.eta != 0
-	good <- mu.eta.val != 0
+	good <- (mu.eta.val != 0) & (weights > 0)
 	if (all(!good)) {
 	    conv <- FALSE
 	    warning(paste("No observations informative at iteration",
@@ -287,7 +287,10 @@ glm.fit <-
     names(residuals) <- ynames
     names(mu) <- ynames
     names(eta) <- ynames
-    names(w) <- ynames[good]
+    # for compatibility with lm, which has a full-length weights vector
+    wt <- rep(0, nobs)
+    wt[good] <- w^2
+    names(wt) <- ynames
     names(weights) <- ynames
     names(y) <- ynames
     names(fit$effects) <-
@@ -309,7 +312,7 @@ glm.fit <-
 	 effects = fit$effects, R = Rmat, rank = fit$rank,
 	 qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,
 	 linear.predictors = eta, deviance = dev, aic = aic.model,
-	 null.deviance = nulldev, iter = iter, weights = w^2,
+	 null.deviance = nulldev, iter = iter, weights = wt,
 	 prior.weights = weights, df.residual = resdf, df.null = nulldf,
 	 y = y, converged = conv, boundary = boundary)
 }
