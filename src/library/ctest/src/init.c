@@ -61,5 +61,6 @@ static const R_CMethodDef cMethods[]  = {
 
 void R_init_ctest(DllInfo *dll)
 {
+    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, cMethods, NULL, NULL, NULL);
 }

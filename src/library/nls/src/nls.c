@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.16 2002/05/15 13:37:43 maechler Exp $
+ *  $Id: nls.c,v 1.17 2003/07/30 15:22:11 ripley Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -256,8 +256,9 @@ const static R_CallMethodDef R_CallDef  [] = {
 };
 
 void
-R_init_nls(DllInfo *info)
+R_init_nls(DllInfo *dll)
 {
-    R_registerRoutines(info, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
 }
 

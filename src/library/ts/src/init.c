@@ -69,5 +69,6 @@ static const R_FortranMethodDef FortEntries[] = {
 
 void R_init_ts(DllInfo *dll)
 {
+    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
 }
