@@ -23,6 +23,7 @@ R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
 SEXP R_GetVarLocValue(R_varloc_t);
 SEXP R_GetVarLocSymbol(R_varloc_t);
 void R_SetVarLocValue(R_varloc_t, SEXP);
+Rboolean R_GetVarLocMISSING(R_varloc_t);
 
 /* from Defn.h */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP);
@@ -600,15 +601,11 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 */
 static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
-    SEXP args = FRAME(ev);
-    while(args != R_NilValue) {
-	if(TAG(args) == symbol)
-	    return MISSING(args);
-	args = CDR(args);
-    }
-    error("Couldn't find symbol \"%s\" in frame of call",
-	  CHAR_STAR(symbol));
-    return FALSE;		/* -Wall */
+    R_varloc_t loc = R_findVarLocInFrame(ev, symbol);
+    if (loc == NULL)
+	error("Couldn't find symbol \"%s\" in frame of call",
+	      CHAR_STAR(symbol));
+    return R_GetVarLocMISSING(loc);
 }
 
 SEXP R_missingArg(SEXP symbol, SEXP ev) {
