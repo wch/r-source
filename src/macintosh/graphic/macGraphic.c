@@ -356,8 +356,8 @@ static void Mac_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
 static void Mac_NewPage(int fill, NewDevDesc *dd)
 {
     MacDesc *xd = (MacDesc *)dd->deviceSpecific;
-    Rect 	portRect;		/* Window bounds */
-    CGrafPtr savedPort,port;		/* Pointer to save current graphic port */
+    Rect 	portRect;		
+    CGrafPtr savedPort,port;	
 
     GetPort(&savedPort);
     
@@ -373,12 +373,6 @@ static void Mac_NewPage(int fill, NewDevDesc *dd)
  
     Mac_SetFill(fill, dd);
     PaintRect(&portRect);
-
-
-    /* FIXME:  Why set the foreground colour here??
-     *
-     SetColor(dd->fg, 1, dd);
-     */
 
     SetPort(savedPort);
     
@@ -516,6 +510,11 @@ static void Mac_Deactivate(NewDevDesc *dd)
    /* locations to DEVICE coordinates using GConvert                     */
   /**********************************************************************/
 
+/* Fixed Dec 2001, Jago. Stefano M. Iacus 
+   Rectangles are now drawn using lty and lwd parameter
+   double code suppressed.
+*/
+
 static void Mac_Rect(double x0, double y0, double x1, double y1,
 		     int col, int fill, int lty, double lwd,
 		     NewDevDesc *dd)
@@ -552,23 +551,21 @@ static void Mac_Rect(double x0, double y0, double x1, double y1,
 
     SetPort(port);
 
+    SetLinetype(lty, round(lwd), dd);
+
+
     if (fill != NA_INTEGER){
 	Mac_SetFill(fill, dd);
 	PaintRect(&myRect);
     }
     if (col != NA_INTEGER){
 	Mac_SetColor(col, dd);
-	FrameRect(&myRect);
+	DrawLineType(x0, y0, x1+1, y0, dd);
+	DrawLineType(x1+1, y0, x1+1, y1+1, dd);
+	DrawLineType(x1+1, y1+1, x0, y1+1, dd);
+	DrawLineType(x0, y1+1, x0, y0, dd);
     }
-    /* (2) Draw the rectangle into the backing pixmap */
-    if (fill != NA_INTEGER){
-	Mac_SetColor(fill, dd);
-	PaintRect(&myRect);
-    }
-    if (col != NA_INTEGER){
-	Mac_SetColor(col, dd);
-	FrameRect(&myRect);
-    }
+
     SetPort(savedPort);
 }
 
@@ -627,17 +624,7 @@ static void Mac_Circle(double x, double y, double r,
 	FrameArc(&myRect, 0, 360);
     }
 
-    /* Update the backing pixmap */
-    /* Only do this if it makes sense */
 
-    if (fill != NA_INTEGER){
-	Mac_SetColor(fill, dd);
-	PaintArc(&myRect, 0, 360);
-    }
-    if (col != NA_INTEGER){
-	Mac_SetColor(col, dd);
-	FrameArc(&myRect, 0, 360);
-    }
     SetPort(savedPort);
 }
 
@@ -648,6 +635,12 @@ static void Mac_Circle(double x, double y, double r,
    /* the function is responsible for converting them to                 */
    /* DEVICE coordinates using GConvert                                  */
    /**********************************************************************/
+
+/* Fixed Dec 2001, Jago. Stefano M. Iacus 
+   Lines are now drawn using lty and lwd parameter
+   the lwd & lty interaction is not yet under my complete
+   control but still enhanhced.
+*/
 
 static void Mac_Line(double x1, double y1, double x2, double y2,
 		     int col, int lty, double lwd,
@@ -670,6 +663,7 @@ static void Mac_Line(double x1, double y1, double x2, double y2,
     MacDesc *xd = (MacDesc*)dd->deviceSpecific;
     SInt16 WinIndex;
     CGrafPtr	savedPort,port;
+    short	shiftleft;
 
     GetPort(&savedPort);
 
@@ -690,10 +684,14 @@ static void Mac_Line(double x1, double y1, double x2, double y2,
    
     Mac_SetFill(col, dd);
     SetLinetype(lty, round(lwd), dd);
-    /* For some reason SetLineType does not work ! */
-    /* so we have fixed lwd to 1            */
-    /* It was:                                     */
-    /*  SetLinetype(lty, lwd, dd);   */
+       
+    /* FIXME: lwd and lty are not set correctly */
+       
+    if(lwd > 1 ){
+     shiftleft = ceil(lwd/2) - 1;
+     xx1 = xx1 - shiftleft;
+     xx2 = xx2 - shiftleft;
+    }
        
     if (xd->lineType == 0) {
 	MoveTo(xx1, yy1);
@@ -763,6 +761,10 @@ static void Mac_Polyline(int n, double *x, double *y,
    /* DEVICE coordinates using GConvert                                  */
    /**********************************************************************/
 
+/* Fixed Dec 2001, Jago. Stefano M. Iacus 
+   Polygon are now drawn using lty and lwd parameter
+   doubled code suppressed.
+*/
 static void Mac_Polygon(int n, double *x, double *y, 
 			int col, int fill, int lty, double lwd,
 			NewDevDesc *dd)
@@ -808,18 +810,13 @@ static void Mac_Polygon(int n, double *x, double *y,
 	Mac_SetFill(fill, dd);
 	PaintPoly(myPolygon);
     }
-    if (col != NA_INTEGER){
-	Mac_SetFill(col, dd);
-	FramePoly(myPolygon);
-    }
-    if (fill != NA_INTEGER){
-	Mac_SetColor(fill, dd);
-	PaintPoly(myPolygon);
-    }
-    if (col != NA_INTEGER){
-	Mac_SetColor(col,  dd);
-	FramePoly(myPolygon);
-    }
+
+    MoveTo(startXX, startYY);
+
+    for (i = 0; i < n-1; i++) 
+	 Mac_Line(x[i], y[i], x[i+1], y[i+1], col, lty, lwd, dd);
+    Mac_Line(x[n-1], y[n-1], x[0], y[0], col, lty, lwd, dd);
+       
     KillPoly(myPolygon);
     SetPort(savedPort);
 }
