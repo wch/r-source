@@ -242,10 +242,6 @@ static GnomeUIInfo file_menu[] =
   { GNOME_APP_UI_ITEM, "Save", "Save the workspace image", R_gtk_terminal_file_save, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_SAVE, GNOME_KEY_NAME_SAVE, GNOME_KEY_MOD_SAVE, NULL },
   { GNOME_APP_UI_ITEM, "Save _As...", "Save the workspace image to a file", R_gtk_terminal_file_saveas, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_SAVE_AS, GNOME_KEY_NAME_SAVE_AS, GNOME_KEY_MOD_SAVE_AS, NULL },
   GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_NONE("Edit Object...", "Use an editor to edit an R object", generic_cb),
-  GNOMEUIINFO_ITEM_NONE("Edit Vector...", "Use a spreadsheet to edit an R object", generic_cb),
-  GNOMEUIINFO_ITEM_NONE("Reload Files", "Reload objects being edited", generic_cb),
-  GNOMEUIINFO_SEPARATOR,
   { GNOME_APP_UI_ITEM, "_Print...", "Print the console output", generic_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_PRINT, NULL, (GdkModifierType)0, NULL },
   GNOMEUIINFO_MENU_PRINT_SETUP_ITEM(generic_cb, NULL),
   GNOMEUIINFO_SEPARATOR,
@@ -270,7 +266,16 @@ static GnomeUIInfo commands_menu[] =
 {
   { GNOME_APP_UI_ITEM, "_Interrupt", "Interrupt R processing (SIGTERM)", commands_interrupt_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_STOP, GDK_Escape, (GdkModifierType)0, NULL },
   GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_NONE("Source...", "Load a file containing R source", commands_source_cb),
+  GNOMEUIINFO_ITEM_NONE("source...", "Load a file containing R source", commands_source_cb),
+  GNOMEUIINFO_ITEM_NONE("grep...", "Search for matches to a regular expression within a vector of character strings", generic_cb),
+  GNOMEUIINFO_END
+};
+
+static GnomeUIInfo data_menu[] =
+{
+  GNOMEUIINFO_ITEM_NONE("Edit Object...", "Use an editor to edit an R object", generic_cb),
+  GNOMEUIINFO_ITEM_NONE("Edit Vector...", "Use a spreadsheet to edit an R object", generic_cb),
+  GNOMEUIINFO_ITEM_NONE("Reload Files", "Reload objects being edited", generic_cb),
   GNOMEUIINFO_END
 };
 
@@ -279,14 +284,17 @@ static GnomeUIInfo graphics_menu[] =
   GNOMEUIINFO_ITEM_STOCK("_New Window", "Create a new graphics window", graphics_new_cb, GNOME_STOCK_MENU_NEW),
   GNOMEUIINFO_ITEM_STOCK("_Close Active Device", "Close the active graphics device", graphics_close_cb, GNOME_STOCK_MENU_CLOSE),
   GNOMEUIINFO_ITEM_NONE("Close _All Devices", "Close all graphics devices", graphics_closeall_cb),
-  GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_NONE("List of graphics windows", NULL, NULL),
   GNOMEUIINFO_END
 };
 
 static GnomeUIInfo settings_menu[] =
 {
   GNOMEUIINFO_MENU_PREFERENCES_ITEM(settings_prefs_cb, NULL),
+  GNOMEUIINFO_END
+};
+
+static GnomeUIInfo windows_menu[] =
+{
   GNOMEUIINFO_END
 };
 
@@ -323,8 +331,10 @@ static GnomeUIInfo main_menu[] =
   GNOMEUIINFO_MENU_FILE_TREE(file_menu),
   GNOMEUIINFO_MENU_EDIT_TREE(edit_menu),
   GNOMEUIINFO_SUBTREE("_Commands", commands_menu),
+  GNOMEUIINFO_SUBTREE("_Data", data_menu),
   GNOMEUIINFO_SUBTREE("_Graphics", graphics_menu),
   GNOMEUIINFO_MENU_SETTINGS_TREE(settings_menu),
+  GNOMEUIINFO_MENU_WINDOWS_TREE(windows_menu),
   GNOMEUIINFO_MENU_HELP_TREE(help_menu),
   GNOMEUIINFO_END
 };

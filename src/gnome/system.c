@@ -136,8 +136,7 @@ void R_CleanUp(int saveact)
 	if(R_Interactive) {
 	    R_ClearerrConsole();
 	    R_FlushConsole();
-	    dialog = gnome_message_box_new("Do you want to save your workspace image?\n\n\
-Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor choose Cancel to return to R.",
+	    dialog = gnome_message_box_new("Do you want to save your workspace image?\n\nChoose Yes to save an image and exit, choose\nNo to exit without saving, or choose Cancel to\nreturn to R.",
 					   GNOME_MESSAGE_BOX_QUESTION,
 					   GNOME_STOCK_BUTTON_YES,
 					   GNOME_STOCK_BUTTON_NO,
