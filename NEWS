@@ -290,7 +290,7 @@ C-LEVEL FACILITIES
 
 INSTALLATION CHANGES
 
-    o	Perl 5.005 is now required.
+    o	Perl 5.005 or newer is now required.
 
     o	R CMD INSTALL is now guaranteed to sort the R source files in
 	ASCII order.
