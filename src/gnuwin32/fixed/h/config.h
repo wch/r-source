@@ -239,9 +239,6 @@
 /* Define to 1 if you have the `mbrtowc' function. */
 #define HAVE_MBRTOWC 1
 
-/* Define to 1 if you have the `mbsrtowcs' function. */
-/* #undef HAVE_MBSRTOWCS */
-
 /* Define to 1 if you have the `mbstowcs' function. */
 #define HAVE_MBSTOWCS 1
 
@@ -409,17 +406,20 @@
 /* Define to 1 if you have the `wcscoll' function. */
 #define HAVE_WCSCOLL 1
 
-/* Define to 1 if you have the `wcsrtombs' function. */
-/* #undef HAVE_WCSRTOMBS */
-
 /* Define to 1 if you have the `wcstombs' function. */
 #define HAVE_WCSTOMBS 1
 
 /* Define to 1 if you have the `wcswidth' function. */
 /* #undef HAVE_WCSWIDTH */
 
+/* Define to 1 if you have the `wctrans' function. */
+#define HAVE_WCTRANS 1
+
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
+
+/* Define to 1 if you have the `wcwidth' function. */
+/* #undef HAVE_WCWIDTH */
 
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1
