@@ -31,6 +31,6 @@ d.VAD <- data.frame(
  site =  gl(2,10,  labels= c("rural", "urban")))
 
 summary(aov.VAD <- aov(Drate ~ .^2, data = d.VAD))
-## plot.lm bug : plot(aov.VAD)
+plot(aov.VAD)
 }
 \keyword{datasets}
