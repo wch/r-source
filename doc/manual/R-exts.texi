@@ -293,8 +293,8 @@ The @file{man} subdirectory should contain documentation files for the
 objects in the package in @dfn{R documentation} (Rd) format.  The
 documentation files to be installed must also start with a (lower or
 upper case) letter and have the extension @file{.Rd} (the default) or
-@file{.rd}.  @xref{Writing R help files}, for more information.  Note
-that all user-level objects in a package should be documented; if a
+@file{.rd}.  @xref{Writing R documentation files}, for more information.
+Note that all user-level objects in a package should be documented; if a
 package @var{pkg} contains user-level objects which are for ``internal''
 use only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
@@ -701,7 +701,7 @@ endings.
 
 @item
 The examples provided by the package's documentation are run.
-(@pxref{Writing R help files}, for information on using
+(@pxref{Writing R documentation files}, for information on using
 @code{\examples} to create executable example code.)
 
 Of course, released packages should be able to run at least their own
