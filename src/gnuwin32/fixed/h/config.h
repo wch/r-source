@@ -497,15 +497,14 @@
 /* Define as `fork' if `vfork' does not work. */
 #define vfork fork
 
-/* Windows-specific */
 
-#define snprintf  _snprintf
-#define vsnprintf  _vsnprintf
-
-#define isnan(a) _isnan((a))
-#define finite(a) _finite((a))
-
+#ifdef Win32
+# define snprintf _snprintf
+# define vsnprintf _vsnprintf
+# define isnan(a) _isnan((a))
+# define finite(a) _finite((a))
 /* 27/03/2000 win32-api needs this for ANSI compliance */
-#define NONAMELESSUNION
+# define NONAMELESSUNION
+#endif /* Win32 */
 
 #endif /* not _CONFIG_H */
