@@ -28,8 +28,8 @@ variable R_RD4PDF to "ae" (or even to "").
 You may well have to increase the poolsize of your pdflatex to process
 the reference manual with hyperlinks, particularly with later versions
 of hyperref. On a web2c-based system (teTeX, fptex, ...) set the
-environment variable pool_size, for example to 250000
+configuration variable pool_size, for example to 500000. For
+pdftex-0.14d you will also need to increase max_strings, for example
+to 50000.  The UNIX Makefile does this for you via environment variables,
+which should cover most UNIX TeX systems.
 
-
-For Windows builds you may need to alter the TEXINPUTS.  The examples
-in Makefile.win work with fptex.

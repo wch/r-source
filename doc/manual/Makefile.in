@@ -124,11 +124,14 @@ refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
+	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
+	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
+	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
 stamp-refman-pdf: $(pkgsrcs)
