@@ -5,7 +5,7 @@ outer(X, Y, FUN="*", \dots)
 x \%o\% y
 }
 \alias{outer}
-\alias(\%o\%)
+\alias{\%o\%}
 
 \arguments{
  \item{X}{A vector or array.}
