@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-29, @value{FAQ-YEAR}-07-21
+@set FAQ-VERSION 1.7-30, @value{FAQ-YEAR}-07-23
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1547,6 +1547,11 @@ datasets, imputing missing values, advanced table making, variable
 clustering, character string manipulation, conversion of S objects to
 La@TeX{} code, recoding variables, and bootstrap repeated measures
 analysis.
+@item HyperbolicDist
+Basic functions for the hyperbolic distribution: probability density
+function, distribution function, quantile function, a routine for
+generating observations from the hyperbolic, and a function for fitting
+the hyperbolic distribution to data.
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
