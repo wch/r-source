@@ -412,7 +412,7 @@ do_install_source () {
     if ${lock} && test "`cd .. && ${GETWD}`" != \
             "`cd \"${tmpdir}\" && ${GETWD}`"; then
       (cd "${lockdir}/${R_PACKAGE_NAME}" \
-          && ${TAR} cf - R-ex help html latex) | \
+          && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
 	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
   fi
