@@ -425,9 +425,7 @@ SEXP R_HashFrame(SEXP rho)
 
 */
 
-/* leave this commented out in the distribution until we agree on
-   handling of nargs */
-/*#define USE_GLOBAL_CACHE*/
+#define USE_GLOBAL_CACHE
 #ifdef USE_GLOBAL_CACHE
 /* Global variable caching.  A cache is maintained in a hash table,
    R_GlobalCache.  The entry values are either R_UnboundValue (a
