@@ -1,10 +1,10 @@
-dist <- function(x, method="euclidian", diag=FALSE, upper=FALSE)
+dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
 {
     ## account for possible spellings of euclid?an
-    if(!is.na(pmatch(method, "euclidean")))
-        method <- "euclidian"
+    if(!is.na(pmatch(method, "euclidian")))
+        method <- "euclidean"
     
-    method <- pmatch(method, c("euclidian", "maximum",
+    method <- pmatch(method, c("euclidean", "maximum",
 			       "manhattan", "canberra", "binary"))
     if(is.na(method))
 	stop("invalid distance method")
