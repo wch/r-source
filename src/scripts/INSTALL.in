@@ -15,6 +15,7 @@ BUILD_HTML=true
 BUILD_LATEX=true
 BUILD_HELP=true
 BUILD_HELP_OPTS=
+SHLIB_OPTS=
 
 INSTALL='@INSTALL@'
 
@@ -42,7 +43,7 @@ while test -n "${1}"; do
     -V|--version)
       echo "${VERSION}"; exit 0 ;;
     --debug)
-      DEBUG=true ;;
+      DEBUG=true; SHLIB_OPTS="${SHLIB_OPTS} --debug" ;;
     --no-docs)
       BUILD_TEXT=false; BUILD_HTML=false; BUILD_LATEX=false ;;
     --no-text)
@@ -89,7 +90,7 @@ if test -z "${BUILD_HELP_OPTS}"; then
   BUILD_HELP=false
 elif ${DEBUG}; then
   BUILD_HELP_OPTS="--debug ${BUILD_HELP_OPTS}"
-fi  
+fi
 
 for pkg in ${PKGS}; do
   cd ${pkg}
@@ -100,6 +101,7 @@ for pkg in ${PKGS}; do
 
   if test -d src; then
     echo "libs"
+    if ${DEBUG}; then set -x ;fi
     mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
       (cd src;
@@ -107,8 +109,9 @@ for pkg in ${PKGS}; do
 	cp *.so ${lib}/${pkg}/libs)
     else
       (cd src;
-	sh ${RHOME}/bin/SHLIB -o ${lib}/${pkg}/libs/${pkg}.so *.[cfr])
+	sh ${RHOME}/bin/SHLIB ${SHLIB_OPTS} -o ${lib}/${pkg}/libs/${pkg}.so *.[cfr])
     fi
+    if ${DEBUG}; then set +x ;fi
   fi
 
   if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
@@ -154,7 +157,7 @@ for pkg in ${PKGS}; do
   else
     echo "No man pages found in package \`${pkg}'"
   fi
-  
+
   echo "DONE (${pkg})"
   echo
 done
