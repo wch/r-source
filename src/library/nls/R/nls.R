@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.19 2002/03/22 18:31:09 maechler Exp $
+### $Id: nls.R,v 1.20 2002/06/13 10:03:23 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -626,6 +626,12 @@ df.residual.nls <- function(object, ...)
 }
 
 deviance.nls <- function(object, ...) object$m$deviance()
+
+vcov.nls <- function(object, ...)
+{
+    sm <- summary(object)
+    sm$cov.unscaled * sm$sigma^2
+}
 
 
 anova.nls <- function(object, ...)

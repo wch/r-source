@@ -19,7 +19,7 @@ NEW FEATURES
 
     o	New operator :: in the grammar, for name spaces.
 
-    o	New faster rowsum, also works on data frames
+    o	New faster rowsum(), also works on data frames
 
     o	grep(), (g)sub() and regexpr() have a new argument `perl'
 	which if TRUE uses Perl-style regexps from PCRE (if installed).
@@ -53,6 +53,8 @@ NEW FEATURES
 
     o	axis() has three new optional arguments `col', `lty', and `lwd'
 	all for drawing the axis line and tick marks.
+
+    o	Function vcov() (formerly in MASS).
 
 
 DEPRECATED & DEFUNCT

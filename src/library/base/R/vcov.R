@@ -1,0 +1,19 @@
+vcov <- function(object, ...) UseMethod("vcov")
+
+vcov.glm <- function(object, ...)
+{
+    so <- summary(object, corr=FALSE, ...)
+    so$dispersion * so$cov.unscaled
+}
+
+vcov.lm <- function(object, ...)
+{
+    so <- summary(object, corr=FALSE)
+    so$sigma^2 * so$cov.unscaled
+}
+
+vcov.coxph <- vcov.survreg <- function (object, ...) object$var
+
+vcov.gls <- function (object, ...) object$varBeta
+
+vcov.lme <- function (object, ...) object$varFix
