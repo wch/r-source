@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-5, 2002-01-12
+@set FAQ-VERSION 1.4-6, 2002-01-13
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -1739,6 +1739,8 @@ Fits a principal curve to a numeric multivariate dataset in arbitrary
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
 other distance matrices and performs multi-dimensional scaling and
 principal component analyses.
+@item pear
+Periodic Autoregression Analysis.
 @item permax
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-5, 2002-01-12
+Version 1.4-6, 2002-01-13
 Kurt Hornik
 
 
@@ -1534,6 +1534,9 @@ works, was published in the Journal of Statistical Software
      dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis
      and other distance matrices and performs multi-dimensional scaling and
      principal component analyses.
+
+*pear*
+     Periodic Autoregression Analysis.
 
 *permax*
      Functions intended to facilitate certain basic analyses of DNA array
