@@ -483,6 +483,14 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	this code should preceed the building of the environment so that
         this will also go into the hash table.  */
 
+    /* This piece of code is destructively modifying the actuals list,
+       which is now also the list of bindings in the frame of newrho.
+       This is one place where internal structure of environment
+       bindings leaks out of envir.c.  It should be rewritten
+       eventually so as not to break encapsulation of the internal
+       environment layout.  We can live with it for now since it only
+       happens immediately after the environment creation.  LT */
+
     f = formals;
     a = actuals;
     while (f != R_NilValue) {
