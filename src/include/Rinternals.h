@@ -261,8 +261,8 @@ typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_ENCLOS(x,v)		(((x)->u.envsxp.enclos)=(v))
 #define SET_HASHTAB(x,v)	(((x)->u.envsxp.hashtab)=(v))
 #endif
-#define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
-#define SET_NARGS(x,v)	(((x)->sxpinfo.gp)=(v))
+#define ENVFLAGS(x)	((x)->sxpinfo.gp)	/* for environments */
+#define SET_ENVFLAGS(x,v)	(((x)->sxpinfo.gp)=(v))
 #else
 typedef struct SEXPREC *SEXP;
 #define CONS(a, b)	cons((a), (b))		/* data lists */
@@ -719,11 +719,11 @@ void (SET_DDVAL)(SEXP x, int v);
 SEXP (FRAME)(SEXP x);
 SEXP (ENCLOS)(SEXP x);
 SEXP (HASHTAB)(SEXP x);
-int (NARGS)(SEXP x);
+int (ENVFLAGS)(SEXP x);
 void (SET_FRAME)(SEXP x, SEXP v);
 void (SET_ENCLOS)(SEXP x, SEXP v);
 void (SET_HASHTAB)(SEXP x, SEXP v);
-void (SET_NARGS)(SEXP x, int v);
+void (SET_ENVFLAGS)(SEXP x, int v);
 
 /* Promise Access Macros */
 SEXP (PREXPR)(SEXP x);

@@ -2159,12 +2159,12 @@ void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(x, v); }
 SEXP (FRAME)(SEXP x) { return FRAME(x); }
 SEXP (ENCLOS)(SEXP x) { return ENCLOS(x); }
 SEXP (HASHTAB)(SEXP x) { return HASHTAB(x); }
-int (NARGS)(SEXP x) { return NARGS(x); }
+int (ENVFLAGS)(SEXP x) { return ENVFLAGS(x); }
 
 void (SET_FRAME)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); FRAME(x) = v; }
 void (SET_ENCLOS)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); ENCLOS(x) = v; }
 void (SET_HASHTAB)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); HASHTAB(x) = v; }
-void (SET_NARGS)(SEXP x, int v) { SET_NARGS(x, v); }
+void (SET_ENVFLAGS)(SEXP x, int v) { SET_ENVFLAGS(x, v); }
 
 /* Promise Accessors */
 SEXP (PREXPR)(SEXP x) { return PREXPR(x); }

@@ -29,14 +29,6 @@
  *	ENCLOS(envir) = parent environment
  *	HASHTAB(envir) = (optional) hash table
  *
- *  In addition, environments which are created by binding a
- *  function's (=closure's) formals to its actuals have a value
- *
- *	NARGs(envir)
- *
- *  which records the actual number of arguments passed in the
- *  function call.  This is the value returned by the function nargs().
- *
  *  Each frame is a (tagged) list with
  *
  *	TAG(item) = symbol
@@ -453,9 +445,8 @@ SEXP R_HashFrame(SEXP rho)
    Initially only the R_GlobalEnv frame is a global frame.  Additional
    global frames can only be created by attach.  All other frames are
    considered local.  Whether a frame is local or not is recorded in
-   the highest order bit of the gp field.  This field is also used for
-   holding NARGS in function call environments; the handling of NARGS
-   needs to be adjusted once we agree on how to do that.
+   the highest order bit of the ENVFLAGS field (the gp field of
+   sxpinfo).
 
    It is possible that the benefit of caching may be significantly
    reduced if we introduce name space management.  Since maintaining
@@ -468,9 +459,11 @@ SEXP R_HashFrame(SEXP rho)
    L. T. */
 
 #define GLOBAL_FRAME_MASK (1<<15)
-#define IS_GLOBAL_FRAME(e) (NARGS(e) & GLOBAL_FRAME_MASK)
-#define MARK_AS_GLOBAL_FRAME(e) SET_NARGS(e, NARGS(e) | GLOBAL_FRAME_MASK)
-#define MARK_AS_LOCAL_FRAME(e) SET_NARGS(e, NARGS(e) & (~ GLOBAL_FRAME_MASK))
+#define IS_GLOBAL_FRAME(e) (ENVFLAGS(e) & GLOBAL_FRAME_MASK)
+#define MARK_AS_GLOBAL_FRAME(e) \
+  SET_ENVFLAGS(e, ENVFLAGS(e) | GLOBAL_FRAME_MASK)
+#define MARK_AS_LOCAL_FRAME(e) \
+  SET_ENVFLAGS(e, ENVFLAGS(e) & (~ GLOBAL_FRAME_MASK))
 
 #define INITIAL_CACHE_SIZE 1000
 
