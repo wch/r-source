@@ -251,6 +251,10 @@ NEW FEATURES
 
     o   termplot() now has an `ask' argument.
 
+    o   options(width) now admits to a limit (previously 200, now
+	10000) and gives a more informative message is out of range
+	(as it does now for digits and expressions).
+
 
 BUG FIXES
 

@@ -22,10 +22,14 @@ getOption(x)
     over one line.}
 
   \item{width}{controls the number of characters on a line.  You may
-    want to change this if you re-size the window that \R is running in.}
+    want to change this if you re-size the window that \R is running in.
+    Valid values are 10\dots10000 with default normally 80. (The valid
+    values are in file \file{Print.h} and can be changed by re-compiling
+    \R.)}
 
   \item{digits}{controls the number of digits to print when printing
-    numeric values.  It is a suggestion only.}
+    numeric values.  It is a suggestion only. Valid values are 1\dots22
+    with default 7.}
 
   \item{editor}{sets the default text editor, e.g., for
     \code{\link{edit}}. Set from the environment variable \code{VISUAL}
@@ -56,7 +60,8 @@ getOption(x)
 
   \item{expressions}{sets a limit on the number of nested expressions that
     will be evaluated.  This is especially important on the Macintosh
-    since stack overflow is likely if this is set too high.}
+    since stack overflow is likely if this is set too high.
+    Valid values are 25\dots100000 with default 500.}
 
   \item{keep.source}{When \code{TRUE}, the source code for functions
     (newly defined or loaded) is stored in their \code{"source"}

@@ -344,19 +344,25 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
-		    errorcall(call, "invalid width parameter");
+		    errorcall(call, 
+			      "invalid width parameter, allowed %d...%d",
+			      R_MIN_WIDTH_OPT, R_MAX_WIDTH_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "digits")) {
 		k = asInteger(argi);
 		if (k < R_MIN_DIGITS_OPT || k > R_MAX_DIGITS_OPT)
-		    errorcall(call, "invalid digits parameter");
+		    errorcall(call, 
+			      "invalid digits parameter, allowed %d...%d",
+			      R_MIN_DIGITS_OPT, R_MAX_DIGITS_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
 		if (k < R_MIN_EXPRESSIONS_OPT || k > R_MAX_EXPRESSIONS_OPT)
-		    errorcall(call, "expressions parameter invalid");
+		    errorcall(call, 
+			      "expressions parameter invalid, allowed %d...%d",
+			      R_MIN_EXPRESSIONS_OPT, R_MAX_EXPRESSIONS_OPT);
 		R_Expressions = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
