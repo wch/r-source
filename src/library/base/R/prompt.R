@@ -44,7 +44,7 @@ prompt.default <-
 	for(i in s) { # i-th argument :
 	    call <- paste0(call, arg.names[i],
 			   if(!is.missing.arg(argls[[i]]))
-			   paste0("=",deparse(argls[[i]])))
+			   paste0(" = ",deparse(argls[[i]])))
 	    if(i != n) call <- paste0(call, ", ")
 	}
 	file <- c(file, "\\usage{", paste0(call, ")"), "}",
@@ -96,6 +96,9 @@ prompt.default <-
             c(file, paste0("\\alias{", name, "}"),
               "\\non_function{}",
               "\\title{ ~~data-name / kind ...  }",
+              "\\description{",
+		  "  ~~ A concise (1-5 lines) description of what the function does. ~~",
+              "}"
               paste0("\\usage{data(", name, ")}"),
               "\\format{", "  The format is:", str.txt, "}",
               ## remaining lines are IDENTICAL to those in prompt.data.frame():
