@@ -1,23 +1,23 @@
-# Subroutines for building R documentation
+## Subroutines for building R documentation
 
-# Copyright (C) 1997-2002 R Development Core Team
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-# writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA.
+## Copyright (C) 1997-2003 R Development Core Team
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2, or (at your option)
+## any later version.
+##
+## This program is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+## General Public License for more details.
+##
+## A copy of the GNU General Public License is available via WWW at
+## http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+## writing to the Free Software Foundation, Inc., 59 Temple Place, Suite
+## 330, Boston, MA 02111-1307 USA.
 
-# Send any bug reports to r-bugs@r-project.org
+## Send any bug reports to r-bugs@r-project.org.
 
 package R::Rdlists;
 
@@ -35,8 +35,8 @@ if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
-# determine if pkg and lib directory are accessible; chdir to pkg man dir
-# and return pkg name, full path to lib dir and contents of mandir
+### Determine if pkg and lib directory are accessible; chdir to pkg man
+### dir and return pkg name, full path to lib dir and contents of mandir
 
 sub buildinit {
 
