@@ -1,4 +1,4 @@
-### $Id: zzModels.R,v 1.1 1999/11/11 21:09:49 bates Exp $
+### $Id: zzModels.R,v 1.2 1999/11/21 23:13:00 bates Exp $
 ###
 ###       Individual selfStarting nonlinear regression models
 ###
@@ -163,7 +163,7 @@ function(mCall, data, LHS)
   ## get a preliminary estimate for A
   A0 <- NLSstRtAsymptote(xy)
   ## get a least squares estimate for log of the rate constant
-  lrc <- log(abs(mean(log(1 - xy$y/A0)/xy$x)))
+  lrc <- log(abs(mean(log(1 - xy$y/A0)/xy$x, na.rm = TRUE)))
   ## use the partially linear form to converge quickly
   xy <- data.frame(xy)
   pars <- as.vector(coef(nls(y ~ 1 - exp(-exp(lrc)*x),
