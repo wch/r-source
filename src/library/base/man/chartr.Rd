@@ -23,12 +23,14 @@ toupper(x)
   Ranges are supported in the specifications, but character classes and
   repreated characters are not.  If \code{old} contains more characters
   than new, an error is signaled; if it contains fewer characters, the
-  extra characters at the end of \code{new} are ignored.  
+  extra characters at the end of \code{new} are ignored.
 
   \code{tolower} and \code{toupper} convert upper-case characters in a
   character vector to lower-case, or vice versa.  Non-alphabetic
   characters are left unchanged.
 }
+\seealso{\code{\link{sub}} and \code{\link{gsub}} for other
+  substitutions in strings.}
 \examples{
 x <- "MiXeD cAsE 123"
 chartr("iXs", "why", x)

@@ -59,6 +59,8 @@ regexpr(pattern, text,  extended=TRUE)
     length of the matched text (or -1 for no match).
 }
 \seealso{
+  \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
+  for character translations.
   \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
   \code{\link{apropos}} uses regexps and has nice examples.
 }
