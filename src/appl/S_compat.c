@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  The R Development Core Team
+ *  Copyright (C) 1998--2000  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,15 +25,15 @@
 #include <Rconfig.h>
 #endif
 
-#include "S_compat.h"
+#include <S_compat.h>
 
 extern longint
 F77_NAME(dqrdc2) (double*, longint*, longint*, longint*, double*,
 		  longint*, double*, longint*, double*);
 
 /* These are based on the argument
-   sequences used in the nlme 2.1 code 
-   on statlib. */
+ * sequences used in the nlme 2.1 code on statlib.
+ */
 void
 F77_NAME(dqrdca) (double *x, longint *ldx, longint *n, longint *p,
 		  double *qraux, longint *jpvt, double *work,
