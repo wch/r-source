@@ -72,9 +72,6 @@
 /* Define if you have the <dl.h> header file. */
 #undef HAVE_DL_H
 
-/* Define if you don't have `vprintf' but do have `_doprnt.' */
-#undef HAVE_DOPRNT
-
 /* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
    can do arithmetic on the latter. */
 #undef HAVE_DOUBLE_COMPLEX
@@ -284,6 +281,9 @@
 /* Define if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
+/* Define if you have the `strncasecmp' function. */
+#undef HAVE_STRNCASECMP
+
 /* Define if you have the `strptime' function. */
 #undef HAVE_STRPTIME
 
@@ -341,9 +341,6 @@
 
 /* Define if you have the <vfork.h> header file. */
 #undef HAVE_VFORK_H
-
-/* Define if you have the `vprintf' function. */
-#undef HAVE_VPRINTF
 
 /* Define if you have the `vsnprintf' function. */
 #undef HAVE_VSNPRINTF
