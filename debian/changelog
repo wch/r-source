@@ -1,8 +1,8 @@
-r-base (1.0.1-2) unstable; urgency=low
+r-base (1.1.0-0) unstable; urgency=low
 
   * Test builds for new release
 
- -- Douglas Bates <bates@stat.wisc.edu>  Mon, 17 Apr 2000 10:08:37 -0500
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri, 19 May 2000 10:53:59 -0500
 
 r-base (1.0.1-1) unstable; urgency=low
 

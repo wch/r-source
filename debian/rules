@@ -76,7 +76,7 @@ install: build
 	dh_movefiles	-p$(pdfpackage)	usr/lib/R/doc/manual/*.pdf 
 
 	# move the GNOME version to the r-gnome package
-	dh_movefiles	-p$(gnomepackage) usr/lib/R/bin/R.GNOME
+	dh_movefiles	-p$(gnomepackage) usr/lib/R/gnome
 
 # Build architecture-independent files here.
 # Pass -i to all debhelper commands in this target to reduce clutter.
