@@ -113,12 +113,15 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     k = LENGTH(sa);
     l = LENGTH(so);
 
-    if (!isString(x) || !isInteger(sa) || !isInteger(so) || k==0 || l==0)
-	errorcall(call, "invalid argument in substr()");
-
+    if(!isString(x))
+      errorcall(call, "extracting substrings from a non-character object");
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
-    for (i = 0; i < len; i++) {
+    if(len > 0) {
+      if (!isInteger(sa) || !isInteger(so) || k==0 || l==0)
+	errorcall(call, "invalid substring argument(s) in substr()");
+      
+      for (i = 0; i < len; i++) {
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
 	slen = strlen(CHAR(STRING_ELT(x, i)));
@@ -135,9 +138,10 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    substr(buff, CHAR(STRING_ELT(x, i)), start, stop);
 	}
 	SET_STRING_ELT(s, i, mkChar(buff));
+      }
+      AllocBuffer(-1);
     }
     UNPROTECT(1);
-    AllocBuffer(-1);
     return s;
 }
 
@@ -163,16 +167,19 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     k = LENGTH(sa);
     l = LENGTH(so);
 
-    if (!isString(x) || !isInteger(sa) || !isInteger(so) || k==0 || l==0)
-	errorcall(call,"invalid argument in substr<-()");
-
-    v = LENGTH(value);
-    if (!isString(value) || v == 0)
-	errorcall(call, "invalid rhs in substr<-()");
-
+    if(!isString(x))
+      errorcall(call, "replacing substrings in a non-character object");
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
-    for (i = 0; i < len; i++) {
+    if(len > 0) {
+      if (!isInteger(sa) || !isInteger(so) || k==0 || l==0)
+	errorcall(call,"invalid substring argument(s) in substr<-()");
+      
+      v = LENGTH(value);
+      if (!isString(value) || v == 0)
+	errorcall(call, "invalid rhs in substr<-()");
+      
+      for (i = 0; i < len; i++) {
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
 	slen = strlen(CHAR(STRING_ELT(x, i)));
@@ -191,9 +198,10 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    substrset(buff, CHAR(STRING_ELT(value, i % v)), start, stop);
 	    SET_STRING_ELT(s, i, mkChar(buff));
 	}
+      }
+      AllocBuffer(-1);
     }
     UNPROTECT(1);
-    AllocBuffer(-1);
     return s;
 }
 
