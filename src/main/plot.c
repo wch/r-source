@@ -1712,10 +1712,16 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!FINITE(at)) {
 	switch(side % 2) {
 	case 0:
-	    at = yNPCtoUsr(adjx, dd);
+	    if (outer)
+		at = adjx;
+	    else
+		at = yNPCtoUsr(adjx, dd);
 	    break;
 	case 1:
-	    at = xNPCtoUsr(adjx, dd);
+	    if (outer)
+		at = adjx;
+	    else
+	    	at = xNPCtoUsr(adjx, dd);
 	    break;
 	}
     }
