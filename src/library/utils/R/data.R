@@ -9,6 +9,8 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
     ## Find the directories of the given packages and maybe the working
     ## directory.
     if(!is.null(package)) {
+        if(!is.character(package))
+            stop(sQuote(package), " must be a character string or NULL")
         if(any(package %in% "base"))
             warning("datasets have been moved from package ",
                     sQuote("base"), " to package ", sQuote("datasets"))

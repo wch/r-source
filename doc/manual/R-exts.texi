@@ -335,6 +335,10 @@ The optional @samp{SaveImage} field controls whether the @R{} objects
 are stored in a saved image @pxref{The install.R and R_PROFILE.R files}.
 (It takes the same values as the field @samp{LazyLoad}.)
 
+The optional @samp{ZipData} field controls whether the automatic
+Windows build will zip up the data directory or no: set this to
+@samp{no} if your package will not work with a zipped data directory.
+
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
 
