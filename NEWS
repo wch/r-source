@@ -74,6 +74,10 @@ USER-VISIBLE CHANGES
 	a syntax error.	 If this breaks existing code, just add
 	parentheses -- or braces in the case of plotmath.
 
+    o   The R parser now allows multiline strings, without escaping
+        the newlines with backslashes (the old method still works).
+        Patch by Mark Bravington.
+
 
 NEW FEATURES
 

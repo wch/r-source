@@ -1568,7 +1568,11 @@ static int StringValue(int c)
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	if (c == '\n') {
 	    xxungetc(c);
-	    return ERROR;
+	    /* Fix by Mark Bravington to allow multiline strings
+             * by pretending we've seen a backslash. Was:
+	     * return ERROR;
+             */
+	    c = '\\';
 	}
 	if (c == '\\') {
 	    c = xxgetc();
