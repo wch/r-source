@@ -49,7 +49,7 @@ xgettext2pot <- function(dir, potFile)
 {
     if(missing(potFile)) potFile <- paste("R-", basename(dir), ".pot", sep="")
     tmp <- unique(unlist(xgettext(dir, asCall = FALSE)))
-    tmp <- shQuote(tmp, type="cmd")
+    tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc
     con <- file(potFile, "wt")
     on.exit(close(con))
     writeLines(con=con,
@@ -57,7 +57,9 @@ xgettext2pot <- function(dir, potFile)
                  'msgstr ""',
                  '"Project-Id-Version: R 2.1.0\\n"',
                  '"Report-Msgid-Bugs-To: bugs@r-project.org\\n"',
-                 paste('"POT-Creation-Date: ', Sys.time(), '\\n"', sep=''),
+                 paste('"POT-Creation-Date: ',
+                       format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable
+                       '\\n"', sep=''),
                  '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"',
                  '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"',
                  '"Language-Team: LANGUAGE <LL@li.org>\\n"',
