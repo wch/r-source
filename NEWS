@@ -27,6 +27,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	in some cases one could get nonblack color instead of
+        black on 2nd x11() window
+
     o	influence.measures(.) $ is.inf was wrong.
 
     o	printing of complex NaN/Inf was wrong as well.

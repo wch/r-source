@@ -539,8 +539,6 @@ static int SetupX11Color()
 	printf("Unknown Visual\n");
 	return 0;
     }
-    whitepixel = GetX11Pixel(255, 255, 255);
-    blackpixel = GetX11Pixel(0, 0, 0);
     return 1;
 }
 
@@ -912,6 +910,8 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 	devPtrContext = XUniqueContext();
 	displayOpen = 1;
     }
+    whitepixel = GetX11Pixel(255, 255, 255);
+    blackpixel = GetX11Pixel(0, 0, 0);
 
     if (!SetBaseFont(xd)) {
 	Rprintf("can't find X11 font\n");
