@@ -1,19 +1,15 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-all: makeMakedeps ../../../modules/vfonts.dll
-
 MODULE=vfonts
+all: makeMakedeps ../../../modules/$(MODULE).dll
+
 CSOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 FSOURCES=
 
-CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
+CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
 FFLAGS=$(OPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
-
-ifndef DEBUG
-  DLLFLAGS=-s
-endif
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll
 	$(MKDIR) -p ../../../modules
@@ -23,7 +19,7 @@ DLLLIBS=-L../../gnuwin32 -lR
 $(MODULE).dll: $(OBJS)
 
 clean:
-	$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
+	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)

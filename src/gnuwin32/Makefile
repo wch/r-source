@@ -214,7 +214,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
 	-$(MAKE) -C ../extra/libxml -f Makefile.win clean
-	-$(MAKE) -C ../modules/vfonts -f Makefile.win clean
+	-$(MAKE) -C ../modules -f Makefile.win clean
 
 distclean veryclean: clean
 	$(RM) -rf R.exp globalvar.h ../../bin ../../library ../../modules
