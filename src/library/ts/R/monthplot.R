@@ -58,7 +58,7 @@ monthplot.default <-
             segments(1:f - 0.45, means, 1:f + 0.45, means)
     }
     y <- as.numeric(times)
-    scale <- 1/diff(range(y, na.rm = T)) * 0.9
+    scale <- 1 / diff(range(y, na.rm = TRUE)) * 0.9
     for (i in 1:f) {
         sub <- phase == i
         if (type != "h")
