@@ -83,6 +83,9 @@ BUG FIXES
     o	system() is now (partially) functional on systems without popen.
 
 
+    o   qbinom(1-1e-16,n,p) looped for ever
+
+
 		CHANGES IN R VERSION 1.0.1
 
 BUG FIXES
