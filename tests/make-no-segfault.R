@@ -26,7 +26,7 @@ stop.list[["base"]] <-
 	## print.plot() will print a blank page on the printer and is
 	## deprecated anyway --pd
 	misc.2 <- c("help.start", "print.plot",
-		    "gctorture", "q", "quit",
+		    "gctorture", "q", "quit", "restart", "try",
                     "read.fwf", "source",## << MM thinks "FIXME"
 		    "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
