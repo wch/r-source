@@ -4,6 +4,15 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+R 2.0.1 patched
+===============
+
+We work around reported bugs in Windows XP as to which characters are
+printable by attempting to print all non-control characters when using
+print().
+
+
+
 R 2.0.1
 =======
 
