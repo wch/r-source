@@ -561,39 +561,7 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1924 *
-Subject: Re: R-1.5.1 (X11/Darwin), Mac OS 10.1.5
-From: Lincoln Davis <ld-temp-qt3i@pobox.com>
-Date: Wed, 21 Aug 2002 19:58:01 -0700
 * PR# 1937 *
 Subject:  Inconsistent use of Perl? 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Sat, 24 Aug 2002 18:41:09 +0800
-* PR# 1954 *
-Subject: (?º??±¤°?) ?þ±?´? °??º?? ?????ð ???¤
-From: ???º°? <netgo333@orgio.net>
-Date: Wed, 28 Aug 2002 14:04:45 +0900
-* PR# 1955 *
-Subject: ENQUIRY
-From: "MELVIN JOHN" <melvinjohn1@madrid.com>
-Date: Wed, 28 Aug 2002 13:58:22 -0700
-* PR# 1956 *
-Subject: ENQUIRY
-From: "MELVIN JOHN" <melvinjohn1@madrid.com>
-Date: Wed, 28 Aug 2002 13:59:56 -0700
-* PR# 1957 *
-Subject: ENQUIRY
-From: "MELVIN JOHN" <melvinjohn1@madrid.com>
-Date: Wed, 28 Aug 2002 14:14:59 -0700
-* PR# 1958 *
-Subject: ENQUIRY
-From: "MELVIN JOHN" <melvinjohn1@madrid.com>
-Date: Wed, 28 Aug 2002 14:17:37 -0700
-* PR# 1959 *
-Subject: dev.print + impossible filename -> break
-From: otoomet@econ.dk
-Date: Wed, 28 Aug 2002 14:57:02 +0200 (MET DST)
-* PR# 1960 *
-Subject: (±¤°?)?¤??°?°? AIG(American International Group)
-From: Aig <zzazzazan@lycos.co.kr>
-Date: Wed, 28 Aug 2002 23:32:55 +0900
