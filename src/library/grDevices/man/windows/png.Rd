@@ -45,14 +45,17 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
 
   Windows imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.
-  It seems \code{width} and \code{height} are limited to
+  It seems that \code{width} and \code{height} are each limited to
   \eqn{2^{15}-1}{2^15-1} and there is a 16Mb limit on the total amount
-  of memory in Windows 95/98/Me.
+  of memory in Windows 95/98/ME.
 
   By default no resolution is recorded in the file.  Readers will often
   assume nominal resolution of 72dpi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the dpi value
   will be changed slightly.
+
+  Both \code{bmp} and \code{png} will use a palette if there are less
+  than 256 colours on the page, and record a 24-bit RGB file otherwise.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.

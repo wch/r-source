@@ -1675,7 +1675,8 @@ option @option{--enable-nls}, the default).
 The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at the @acronym{GNU}
-archive mirrors.
+archive mirrors and packaged with the @code{poEdit} package
+@uref{http://poedit.sourceforge.net/download.php#win32}.
 
 @menu
 * C-level messages::
@@ -1728,7 +1729,7 @@ copy that to @file{inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo}.  Now when
 the package is loaded after installation it will look for translations
 of its messages in the @file{po/@var{lang}/LC_MESSAGES/@var{pkg}.mo} file
 for any language @var{lang} that matches the user's preferences (via the
-setting of the @code{LANGUAGES} environment variable or from the locale
+setting of the @code{LANGUAGE} environment variable or from the locale
 settings).
 
 @node R messages,  , C-level messages, Localization
@@ -1738,9 +1739,10 @@ Mechanisms to support the automatic translation of @R{} @code{warning}
 and @code{stop} messages are in place, provided the package has a
 namespace.  They make use of message catalogs in the same way as C-level
 messages, but using domain @code{R-@var{pkg}} rather than
-@code{@var{pkg}}.  Translation of terms in @code{stop} and
-@code{warning} calls is automatically enabled, as well as other messages
-enclosed in calls to @code{gettext}.
+@code{@var{pkg}}.  Translation of character strings inside @code{stop}
+and @code{warning} calls is automatically enabled, as well as other
+messages enclosed in calls to @code{gettext}.  (To suppress this, use
+argument @code{domain=NA}.)
 
 Tools to prepare the @file{R-@var{pkg}.pot} file are provided in package
 @pkg{tools}: @code{xgettext2pot} will prepare a file from all strings
@@ -1749,8 +1751,17 @@ Some of these are likely to be spurious and so the file is likely to
 need manual editing.  @code{xgettext} extracts the actual calls and so
 is more useful when tidying up error messages.
 
+Translation of messages which might be singular or plural can be very
+intricate: languages can have up to four different forms.  The @R{}
+function @code{ngettext} provides an interface to the C function of the
+same name, and will choose an appropriate singular or plural form for
+the selected language depending on the value of its first argument
+@code{n}.
+
 Packages without namespaces will need to use @code{domain="R-@var{pkg}"}
-explicitly.
+explicitly in calls to @code{warning}, @code{stop}, @code{gettext} and
+@code{ngettext}.
+
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files

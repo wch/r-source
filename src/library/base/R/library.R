@@ -213,13 +213,13 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
             if(length(pkgpath) == 0) {
-               txt <- paste("There is no package called",
-			     sQuote(libraryPkgName(package)))
+               txt <- paste(gettext("There is no package called"),
+                            sQuote(libraryPkgName(package)))
 		vers <- libraryPkgVersion(package)
 		if (!is.null(vers))
 		   txt <- paste(txt, ", version ", vers, sep="")
                 if(logical.return) {
-                    warning(txt)
+                    warning(txt, domain=NA)
 		    return(FALSE)
 		} else stop(txt)
             }
@@ -421,13 +421,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
         colnames(db) <- c("Package", "LibPath", "Title")
         if((length(nopkgs) > 0) && !missing(lib.loc)) {
-            if(length(nopkgs) > 1)
-                warning("libraries ",
-                        paste(sQuote(nopkgs), collapse = ", "),
-                        " contain no packages")
-            else
-                warning("library ", paste(sQuote(nopkgs)),
-                        " contains no package")
+            pkglist <- paste(sQuote(nopkgs), collapse = ", ")
+            msg <- sprintf(ngettext(length(nopkgs),
+                                    "library %s contains no packages",
+                                    "libraries %s contain no packages"),
+                           pkglist)
+            warning(msg, domain=NA)
         }
 
         y <- list(header = NULL, results = db, footer = NULL)

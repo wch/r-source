@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-07 18:29\n"
+"POT-Creation-Date: 2005-02-09 09:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -731,6 +731,9 @@ msgstr ""
 msgid "package 'MASS' seems to be missing from this R installation"
 msgstr ""
 
+msgid "There is no package called"
+msgstr ""
+
 msgid "is not a valid package -- installed < 2.0.0?"
 msgstr ""
 
@@ -750,18 +753,6 @@ msgid ".First.lib failed for"
 msgstr ""
 
 msgid "already present in search()"
-msgstr ""
-
-msgid "libraries"
-msgstr ""
-
-msgid "contain no packages"
-msgstr ""
-
-msgid "library"
-msgstr ""
-
-msgid "contains no package"
 msgstr ""
 
 msgid "shared library"
@@ -1348,3 +1339,8 @@ msgstr ""
 
 msgid "cmd execution failed with error code"
 msgstr ""
+
+msgid        "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0]    ""
+msgstr[1]    ""

@@ -8,7 +8,7 @@ export("Rdindex",
        "list_files_with_exts", "list_files_with_type", "delimMatch",
        "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
        "getDepList", "installFoundDepends", "vignetteDepends",
-       "write_PACKAGES", "xgettext", "xgettext2pot")
+       "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
@@ -29,6 +29,7 @@ S3method("print", "codocClasses")
 S3method("print", "codocData")
 S3method("print", "undoc")
 S3method("print", "xgettext")
+S3method("print", "xngettext")
 
 S3method("print", "check_demo_index")
 S3method("print", "check_package_depends")

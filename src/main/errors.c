@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  The R Development Core Team.
+ *  Copyright (C) 1997--2005  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ extern void R_ProcessEvents(void);
 #include <Rconnections.h>
 #include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h> /* for GEonExit */
+#include <Rmath.h> /* for imax2 */
 
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
@@ -708,8 +709,10 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n = LENGTH(string);
     
     checkArity(op, args);
-    /* warning(NULL) is allowed, although no longer gets here */
     if(isNull(string) || !n) return string;
+
+    if(!isString(string)) errorcall(call, _("invalid 'string' value"));
+
     if(isNull(CAR(args))) {
 	RCNTXT *cptr;
 	SEXP rho = R_NilValue;
@@ -722,10 +725,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	while(rho != R_NilValue) {
 	    if (rho == R_GlobalEnv) break;
-	    else if (R_IsPackageEnv(rho)) {
-		domain = CHAR(STRING_ELT(R_PackageEnvName(rho), 0));
-		break;
-	    } else if (R_IsNamespaceEnv(rho)) {
+	    else if (R_IsNamespaceEnv(rho)) {
 		domain = CHAR(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
 		break;
 	    }
@@ -739,7 +739,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else if(isString(CAR(args)))
 	domain = CHAR(STRING_ELT(CAR(args),0));
     else errorcall(call, _("invalid 'domain' value"));
-    if(!isString(string)) errorcall(call, _("invalid 'string' value"));
+
     if(strlen(domain)) {
 	PROTECT(ans = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
@@ -788,6 +788,69 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     return CADR(args);
 #endif
 }
+
+/* ngettext(n, msg1, msg2, domain) */
+SEXP do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char *domain = "", *buf;
+    SEXP ans, sdom = CADDDR(args), msg1 = CADR(args), msg2 = CADDR(args);
+    int n = asInteger(CAR(args));
+    
+    checkArity(op, args);
+    if(n == NA_INTEGER || n < 0) error(_("invalid 'n'"));
+    if(!isString(msg1) || LENGTH(msg1) != 1)
+	error(_("'msg1' must be a character string"));
+    if(!isString(msg2) || LENGTH(msg2) != 1)
+	error(_("'msg2' must be a character string"));
+
+#ifdef ENABLE_NLS
+    if(isNull(sdom)) {
+	RCNTXT *cptr;
+	SEXP rho = R_NilValue;
+	for (cptr = R_GlobalContext->nextcontext;
+	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	     cptr = cptr->nextcontext)
+	    if (cptr->callflag & CTXT_FUNCTION) {
+		rho = cptr->cloenv;
+		break;
+	    }
+	while(rho != R_NilValue) {
+	    if (rho == R_GlobalEnv) break;
+	    else if (R_IsNamespaceEnv(rho)) {
+		domain = CHAR(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
+		break;
+	    }
+	    rho = CDR(rho);
+	}
+	if(strlen(domain)) {
+	    buf = alloca(strlen(domain)+3);
+	    sprintf(buf, "R-%s", domain);
+	    domain = buf;
+	}
+    } else if(isString(sdom))
+	domain = CHAR(STRING_ELT(sdom,0));
+    else errorcall(call, _("invalid 'domain' value"));
+
+    if(strlen(domain)) {
+	char *fmt = dngettext(domain,
+			      CHAR(STRING_ELT(msg1, 0)),
+			      CHAR(STRING_ELT(msg2, 0)),
+			      n);
+	PROTECT(ans = allocVector(STRSXP, 1));
+	SET_STRING_ELT(ans, 0, mkChar(fmt));
+	UNPROTECT(1);
+	return ans;
+    } else
+#endif
+    {
+	char *m1 = CHAR(STRING_ELT(msg1, 0)), *m2 = CHAR(STRING_ELT(msg2, 0));
+	PROTECT(ans = allocVector(STRSXP, 1));
+	SET_STRING_ELT(ans, 0, mkChar(n == 1? m1: m2));
+	UNPROTECT(1);
+	return ans;
+    }
+}
+
 
 /* bindtextdomain(domain, dirname) */
 SEXP do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)

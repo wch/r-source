@@ -10,6 +10,7 @@
 \alias{as.data.frame.integer}
 \alias{as.data.frame.list}
 \alias{as.data.frame.logical}
+\alias{as.data.frame.raw}
 \alias{as.data.frame.matrix}
 \alias{as.data.frame.model.matrix}
 \alias{as.data.frame.numeric}
