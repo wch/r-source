@@ -61,7 +61,7 @@ newEmptyObject()
 
 completeClassDefinition(Class, ClassDef, where, doExtends)
 
-getSlots(x, complete = TRUE)
+getSlots(x)
 
 getAllSuperClasses(ClassDef, simpleOnly = TRUE)
 
@@ -97,7 +97,7 @@ methodsPackageMetaName(prefix, name)
 
 metaNameUndo(strings, prefix = "M", searchForm = FALSE)
 
-requireMethods(functions, signature, message)
+requireMethods(functions, signature, message, where)
 
 checkSlotAssignment(obj, name, value)
 
@@ -175,10 +175,9 @@ setDataPart(object, value)
 
     \item{\code{getSlots}:}{
       Returns a named character vector.  The names are the names of the
-      slots, the values are the classes of the corresponding slots.  If
-      \code{complete} is \code{TRUE}, all slots from all superclasses
-      will be included.  The argument \code{x} can either be the name of
-      a class or an object having that class.
+      slots, the values are the classes of the corresponding slots.
+      The argument \code{x} can either be the name of
+      a class or the class definition object.
     }
 
     \item{\code{getAllSuperClasses}, \code{superClassDepth}:}{
