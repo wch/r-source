@@ -16,7 +16,7 @@ include $(top_builddir)/Makeconf
 
 SOURCES_C = \
 	approx.c \
-	bakslv.c binning.c \
+	bakslv.c bandwidths.c binning.c \
 	chull.c cpoly.c cumsum.c \
 	fft.c fmin.c integrate.c\
 	lbfgsb.c loglin.c lowess.c \

@@ -3,51 +3,60 @@
 \alias{print.density}
 \title{Kernel Density Estimation}
 \usage{
-density(x, bw, adjust = 1,
-        kernel=c("gaussian", "epanechnikov", "rectangular", "triangular",
-                 "biweight", "cosine", "optcosine"),
+density(x, bw = "nrd", adjust = 1,
+        kernel = c("gaussian", "epanechnikov", "rectangular", "triangular",
+                   "biweight", "cosine", "optcosine"),
         window = kernel, width,
         give.Rkern = FALSE,
         n = 512, from, to, cut = 3, na.rm = FALSE)
 }
 \arguments{
-\item{x}{the data from which the estimate is to be computed.}
-\item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
-  such that this is the standard deviation of the smoothing kernel.
-  It defaults to 0.9 times the
-  minimum of the standard deviation and the interquartile range divided by
-  1.34 times the sample size to the negative one-fifth power
-  (= Silverman's ``rule of thumb'') \emph{unless} the quartiles
-  coincide where \code{bw > 0} will be guaranteed.
-  The specified (or default) value of \code{bw} is multiplied by
-  \code{adjust}.
-}
-\item{adjust}{the bandwidth used is actually \code{adjust*bw}.
-  This makes it easy to specify values like ``half the default'' bandwidth.}
-\item{kernel,window}{a character string giving the smoothing kernel to be used.
-  This must be one of \code{"gaussian"}, \code{"rectangular"},
-  \code{"triangular"}, \code{"epanechnikov"}, \code{"biweight"},
-  \code{"cosine"} or \code{"optcosine"},
-  with default \code{"gaussian"},
-  and may be abbreviated to a unique prefix (single letter).
+  \item{x}{the data from which the estimate is to be computed.}
 
-  \code{"cosine"} is smoother than \code{"optcosine"}, which is the
-  usual ``cosine'' kernel in the literature and almost MSE-efficient.
-}
-\item{width}{this exists for compatibility with S; if given, and
-  \code{bw} is not, will set \code{bw = width/4}.}
-\item{give.Rkern}{logical; if true, \emph{no} density is estimated, and
-  the ``canonical bandwidth'' of the chosen \code{kernel} is returned instead.}
-\item{n}{the number of equally spaced points at which the density
-  is to be estimated.  When \code{n > 512}, it is rounded up to the next
-  power of 2 for efficiency reasons (\code{\link{fft}}).}
-\item{from,to}{the left and right-most points of the grid at which the
-  density is to be estimated.}
-\item{cut}{by default, the values of \code{left} and \code{right} are
-  \code{cut} bandwidths beyond the extremes of the data. This allows the
-  estimated density to drop to approximately zero at the extremes.}
-\item{na.rm}{logical; if \code{TRUE}, missing values are removed
-  from \code{x}. If \code{FALSE} any missing values cause an error.}
+  \item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
+    such that this is the standard deviation of the smoothing kernel.
+
+    \code{bw} can also be a character string giving a rule to choose the
+    bandwidth (but only for gaussian kernels).
+  
+    The specified (or computed) value of \code{bw} is multiplied by
+    \code{adjust}.
+  }
+  \item{adjust}{the bandwidth used is actually \code{adjust*bw}.
+    This makes it easy to specify values like ``half the default''
+    bandwidth.}
+
+  \item{kernel,window}{a character string giving the smoothing kernel
+    to be used. This must be one of \code{"gaussian"},
+    \code{"rectangular"}, \code{"triangular"}, \code{"epanechnikov"},
+    \code{"biweight"}, \code{"cosine"} or \code{"optcosine"}, with default
+    \code{"gaussian"}, and may be abbreviated to a unique prefix (single
+    letter).
+    
+    \code{"cosine"} is smoother than \code{"optcosine"}, which is the
+    usual ``cosine'' kernel in the literature and almost MSE-efficient.
+  }
+  
+  \item{width}{this exists for compatibility with S; if given, and
+    \code{bw} is not, will set \code{bw = width/4}.}
+
+  \item{give.Rkern}{logical; if true, \emph{no} density is estimated, and
+    the ``canonical bandwidth'' of the chosen \code{kernel} is returned
+    instead.}
+
+  \item{n}{the number of equally spaced points at which the density
+    is to be estimated.  When \code{n > 512}, it is rounded up to the next
+    power of 2 for efficiency reasons (\code{\link{fft}}).}
+
+  \item{from,to}{the left and right-most points of the grid at which the
+    density is to be estimated.}
+
+  \item{cut}{by default, the values of \code{left} and \code{right} are
+    \code{cut} bandwidths beyond the extremes of the data. This allows the
+    estimated density to drop to approximately zero at the extremes.}
+
+  \item{na.rm}{logical; if \code{TRUE}, missing values are removed
+    from \code{x}. If \code{FALSE} any missing values cause an error.}
 }
 \description{
   The function \code{density} computes kernel density estimates
@@ -93,7 +102,7 @@ density(x, bw, adjust = 1,
   \emph{Density Estimation}.
   London: Chapman and Hall.
 
-  Venables, W. N. and B. D. Ripley (1994, 7, 9)
+  Venables, W. N. and Ripley, B. D. (1999)
   \emph{Modern Applied Statistics with S-PLUS}.
   New York: Springer.
 
@@ -107,6 +116,7 @@ density(x, bw, adjust = 1,
   \emph{J. Roy. Statist. Soc.} \bold{B}, 683--690.
 }
 \seealso{
+  \code{\link{bw.nrd}},
   \code{\link{plot.density}}, \code{\link{hist}}.
 }
 \examples{

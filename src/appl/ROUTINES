@@ -83,3 +83,9 @@ C_FUNCTION(La_rg_cmplx)
 #nmath cleanup
 C_FUNCTION(signrank_free)
 C_FUNCTION(wilcox_free)
+# bandwidth selectors
+C_FUNCTION(band_ucv_bin)
+C_FUNCTION(band_bcv_bin)
+C_FUNCTION(band_phi4_bin)
+C_FUNCTION(band_phi6_bin)
+C_FUNCTION(band_den_bin)

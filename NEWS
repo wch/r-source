@@ -333,9 +333,14 @@ NEW FEATURES
 	scaled arguments.
 
     o	hist.default() allows `breaks' to specify a rule to choose the
-        number of classes, and rules "Sturges" (the previous default,
+        number of classes, and rules "Sturges" (the previous default),
 	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
 	package MASS).
+
+    o	density() allows `bw' or `width' to specify a rule to choose the
+        bandwidth, and rules "nrd0" (the previous default), "nrd",
+	"ucv", "bcv", "SJ-ste" and "SJ-dpi" are supplied (based on 
+	functions in package MASS).
 
     o	The symbol font can now be set on a postscript() device, and
 	support has been added for using Computer Modern type-1 fonts
@@ -356,7 +361,8 @@ NEW FEATURES
 
     o	contour() is now generic.
 
-    o	rle() now returns a classed object, has a print method and an inverse.
+    o	rle() now returns a classed object, has a print method and 
+	an inverse.
 
     o	Sys.setlocale() now issues a warning if it fails.
 
