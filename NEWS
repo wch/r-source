@@ -33,12 +33,13 @@ BUG FIXES
 
     o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
 
-    o	bxp() now extends `ylim' properly when notch=TRUE (and a 
+    o	bxp() now extends `ylim' properly when notch=TRUE (and a
 	notch is more extreme than other stats).
 	Also, varwidth is okay again, see example(split).
 
     o   Making manuals without making R first now works.
 
+    o	princomp() now works when some eigenvalues are tiny negatives.
 
 
 		CHANGES IN R VERSION 1.1.0
