@@ -478,7 +478,7 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
     if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
-	gl_loadhistory(CHAR(STRING(sfile)[0]));
+	gl_loadhistory(CHAR(STRING_ELT(sfile, 0)));
     else
 	errorcall(call, "savehistory can only be used in Rgui and Rterm");
     return R_NilValue;
@@ -513,26 +513,27 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
 
-    STRING(ans)[0] = mkChar("Windows");
+    SET_STRING_ELT(ans, 0, mkChar("Windows"));
     sprintf(ver, "%s %d.%d", isNT,
 	    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion);
-    STRING(ans)[1] = mkChar(ver);
+    SET_STRING_ELT(ans, 1, mkChar(ver));
     sprintf(ver, "(build %d) %s", LOWORD(verinfo.dwBuildNumber), 
 	    verinfo.szCSDVersion);
-    STRING(ans)[2] = mkChar(ver);
+    SET_STRING_ELT(ans, 2, mkChar(ver));
     GetComputerName(name, &namelen);
-    STRING(ans)[3] = mkChar(name);
-    STRING(ans)[4] = mkChar("x86");
+    SET_STRING_ELT(ans, 3, mkChar(name));
+    SET_STRING_ELT(ans, 4, mkChar("x86"));
     GetUserName(user, &userlen);
-    STRING(ans)[6] = STRING(ans)[5] = mkChar(user);
+    SET_STRING_ELT(ans, 5, mkChar(user));
+    SET_STRING_ELT(ans, 6, STRING_ELT(ans, 5));
     PROTECT(ansnames = allocVector(STRSXP, 7));
-    STRING(ansnames)[0] = mkChar("sysname");
-    STRING(ansnames)[1] = mkChar("release");
-    STRING(ansnames)[2] = mkChar("version");
-    STRING(ansnames)[3] = mkChar("nodename");
-    STRING(ansnames)[4] = mkChar("machine");
-    STRING(ansnames)[5] = mkChar("login");
-    STRING(ansnames)[6] = mkChar("user");
+    SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
+    SET_STRING_ELT(ansnames, 1, mkChar("release"));
+    SET_STRING_ELT(ansnames, 2, mkChar("version"));
+    SET_STRING_ELT(ansnames, 3, mkChar("nodename"));
+    SET_STRING_ELT(ansnames, 4, mkChar("machine"));
+    SET_STRING_ELT(ansnames, 5, mkChar("login"));
+    SET_STRING_ELT(ansnames, 6, mkChar("user"));
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;
