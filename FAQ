@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-28, 2001-11-04
+Version 1.3-29, 2001-11-11
 Kurt Hornik
 
 
@@ -2052,6 +2052,11 @@ and `--vsize'.
 will increase the memory available to R as needed.  Hence, user
 intervention is no longer necessary for ensuring that enough memory is
 available.
+
+   The new garbage collector does not move objects in memory, meaning that
+it is possible for the free memory to become fragmented so that large
+objects cannot be allocated even when there is apparently enough memory for
+them.
 
 7.2 Why does sourcing a correct file fail?
 ==========================================
