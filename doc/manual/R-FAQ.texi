@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-25, @value{FAQ-YEAR}-07-08
+@set FAQ-VERSION 1.7-26, @value{FAQ-YEAR}-07-15
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -434,10 +434,10 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-07-08:
+@c Linux binaries as of 2003-07-15:
 @c
 @c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
-@c           sarge i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
+@c           sarge i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake  8.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
 @c           8.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
 @c           8.2   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
@@ -1755,6 +1755,8 @@ or sampling grids.
 @item dichromat
 Color schemes for dichromats: collapse red-green distinctions to
 simulate the effects of colour-blindness.
+@item diptest
+Compute Hartigan's dip test statistic for unimodality.
 @item dispmod
 Functions for modelling dispersion in GLMs.
 @item dr
@@ -1806,6 +1808,9 @@ on spatial data.  The major methods implemented include cubic and thin
 plate splines, universal Kriging and Kriging for large data sets.  The
 main feature is that any covariance function implemented in R can be
 used for spatial prediction.
+@item flexmix
+Flexible Mixture Modeling: a general framework for finite mixtures of
+regression models using the EM algorithm.
 @item foreign
 Functions for reading and writing data stored by statistical software
 like Minitab, SAS, SPSS, Stata, etc.  @emph{Recommended}.
@@ -1960,6 +1965,8 @@ additive regression splines (MARS), adaptive back-fitting splines
 @item meanscore
 Mean Score method for missing covariate data in logistic regression
 models.
+@item merror
+Accuracy and precision of measurements.
 @item mgcv
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
