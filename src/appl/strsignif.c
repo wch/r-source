@@ -62,102 +62,106 @@
 #include <config.h>
 #endif
 #include "R_ext/Error.h" /* error */
+#include "R_ext/RS.h" /* Calloc */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
-	char **format, char **flag, char **result)
+		char **format, char **flag, char **result)
 {
-	int wid = *width;
-	int dig = *digits;
-	int i, nn = *n;
-	int short do_fg = !strcmp("fg",*format);/* == 1	 iff  format == "fg" */
-	double xx;
-	int iex, j, jL;
+    int wid = *width;
+    int dig = *digits;
+    int i, nn = *n;
+    int short do_fg = !strcmp("fg",*format);/* == 1  iff  format == "fg" */
+    double xx;
+    int iex, j, jL, len_flag = strlen(*flag);
 
+    char *f0  =	 Calloc(do_fg ? 1+len_flag+3 : 1, char);
+    char *form = Calloc(len_flag+4 + strlen(*format), char);
 
-	char f0[12], form[12]; /* ---- Really, instead :
-	  char *form;
-	  form = Calloc(strlen(*flag)+strlen(*format)+ 4+1, char);
-	*/
+    if (wid == 0)
+	error(".C(..): Width cannot be zero");
 
-	if (wid == 0) error("Width cannot be zero");
-
-	if (strcmp("d", *format) == 0) {
-		if (strlen(*flag) == 0) strcpy(form, "%*d");
-		else {
-			strcpy(form, "%");
-			strcat(form, *flag);
-			strcat(form, "*d");
-		}
-		if (strcmp("integer", *type) == 0)
-		    for (i=0; i < nn; i++)
-			sprintf(result[i], form, wid, ((int *)x)[i]);
-		else
-			error("`type' must be \"integer\" for  \"d\"-format");
+    if (strcmp("d", *format) == 0) {
+	if (len_flag == 0)
+	    strcpy(form, "%*d");
+	else {
+	    strcpy(form, "%");
+	    strcat(form, *flag);
+	    strcat(form, "*d");
 	}
-	else { /* --- floating point --- */
-		if (strlen(*flag) == 0) {
-			strcpy(form, "%*.*");
-		} else {
-			strcpy(form, "%");
-			strcat(form, *flag);
-			strcat(form, "*.*");
-		}
+	if (strcmp("integer", *type) == 0)
+	    for (i=0; i < nn; i++)
+		sprintf(result[i], form, wid, ((int *)x)[i]);
+	else
+	    error(".C(..): `type' must be \"integer\" for  \"d\"-format");
+    }
+    else { /* --- floating point --- */
+	if (len_flag == 0)
+	    strcpy(form, "%*.*");
+	else {
+	    strcpy(form, "%");
+	    strcat(form, *flag);
+	    strcat(form, "*.*");
+	}
 
-		if(do_fg) {
-			strcpy(f0, "%");
-			strcat(f0, *flag);
-			strcat(f0, ".*f");
-			strcat(form, "g");
-		}
-		else	strcat(form, *format);
+	if(do_fg) {
+	    strcpy(f0, "%");
+	    strcat(f0, *flag);
+	    strcat(f0, ".*f");
+	    strcat(form, "g");
+	}
+	else
+	    strcat(form, *format);
 #ifdef DEBUG
-		fprintf(stderr, "strsignif.c: form=«%s», wid=%d, dig=%d\n",
-			form, wid, dig);
-		if(do_fg) fprintf(stderr, "\t\"fg\": f0=«%s».", f0);
+	fprintf(stderr, "strsignif.c: form=«%s», wid=%d, dig=%d\n",
+		form, wid, dig);
+	if(do_fg) fprintf(stderr, "\t\"fg\": f0=«%s».", f0);
 #endif
-		if (strcmp("double", *type) == 0) {
-		  if(do_fg) /* do smart "f" : */
-		    for (i=0; i < nn; i++) {
-		      xx = ((double *)x)[i];
-		      if(xx == 0.) strcpy(result[i], "0");
-		      else {
+	if (strcmp("double", *type) == 0) {
+	    if(do_fg) /* do smart "f" : */
+		for (i=0; i < nn; i++) {
+		    xx = ((double *)x)[i];
+		    if(xx == 0.)
+			strcpy(result[i], "0");
+		    else {
 			iex= (int)floor(log10(fabs(xx)));
 			if(iex == -4 && fabs(xx)< 1e-4) {/* VERY rare case */
-			  iex = -5;
+			    iex = -5;
 			}
 			if(iex < -4) {
-			  /* "g" would result in 'e-' representation:*/
-			  sprintf(result[i], f0, dig-1 + -iex, xx);
+				/* "g" would result in 'e-' representation:*/
+			    sprintf(result[i], f0, dig-1 + -iex, xx);
 #ifdef DEBUG
-			  fprintf(stderr, " x[%d]=%g, iex%d\n", i, xx, iex);
-			  fprintf(stderr, "\tres. = '%s'; ", result[i]);
+			    fprintf(stderr, " x[%d]=%g, iex%d\n", i, xx, iex);
+			    fprintf(stderr, "\tres. = '%s'; ", result[i]);
 #endif
-			  /* Remove trailing  "0"s : */
-			  jL = j = strlen(result[i])-1;
-			  while(result[i][j] == '0') j--;
-			  result[i][j+1] = '\0';
+				/* Remove trailing  "0"s : */
+			    jL = j = strlen(result[i])-1;
+			    while(result[i][j] == '0') j--;
+			    result[i][j+1] = '\0';
 #ifdef DEBUG
-			  fprintf(stderr, "\t>>> jL=%d, j=%d; new res= '%s'\n",
-				  jL, j, result[i]);
+			    fprintf(stderr, "\t>>> jL=%d, j=%d; new res= '%s'\n",
+				    jL, j, result[i]);
 #endif
 			} else { /* iex >= -4:	NOT "e-" */
-			  /* if iex >= dig, would have "e+" representation */
+				/* if iex >= dig, would have "e+" representation */
 #ifdef DEBUG
-			  fprintf(stderr, "\t  iex >= -4; using %d for 'dig'\n",
-				  (iex >= dig) ? (iex+1) : dig);
+			    fprintf(stderr, "\t  iex >= -4; using %d for 'dig'\n",
+				    (iex >= dig) ? (iex+1) : dig);
 #endif
-			  sprintf(result[i], form, wid,
-				  (iex >= dig) ? (iex+1) : dig, xx);
+			    sprintf(result[i], form, wid,
+				    (iex >= dig) ? (iex+1) : dig, xx);
 			}
-		      } /* xx != 0 */
-		    } /* if(do_fg) for(i..) */
-		  else
-		    for (i=0; i < nn; i++)
-			sprintf(result[i], form, wid, dig, ((double *)x)[i]);
-		} else
-			error("`type' must be \"real\" for this format");
-	}
+		    } /* xx != 0 */
+		} /* if(do_fg) for(i..) */
+	    else
+		for (i=0; i < nn; i++)
+		    sprintf(result[i], form, wid, dig, ((double *)x)[i]);
+	} else
+	    error(".C(..): `type' must be \"real\" for this format");
+    }
+    Free(form);
+    Free(f0);
 }
