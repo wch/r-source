@@ -106,6 +106,8 @@ function(file)
     ## Could be none or more than one ... argh.
     Rd_type <-
         c(.get_Rd_metadata_from_Rd_lines(lines, "docType"), "")[1]
+    encoding <-
+        c(.get_Rd_metadata_from_Rd_lines(lines, "encoding"), "")[1]
 
     txt <- paste(lines, collapse = "\n")
 
@@ -128,7 +130,8 @@ function(file)
                    ".", sep = ""))
 
     list(name = Rd_name, type = Rd_type, title = Rd_title,
-         aliases = aliases, concepts = concepts, keywords = keywords)
+         aliases = aliases, concepts = concepts, keywords = keywords,
+         encoding = encoding)
 }
 
 ### * Rdcontents
@@ -147,15 +150,17 @@ function(RdFiles)
                           Title = I(character(0)),
                           Aliases = I(list()),
                           Concepts = I(list()),
-                          Keywords = I(list())))
+                          Keywords = I(list()),
+                          Encoding = I(character())))
 
-    contents <- vector("list", length(RdFiles) * 6)
-    dim(contents) <- c(length(RdFiles), 6)
+    entries <- c("Name", "Type", "Title", "Aliases", "Concepts",
+                 "Keywords", "Encoding")
+    contents <- vector("list", length(RdFiles) * length(entries))
+    dim(contents) <- c(length(RdFiles), length(entries))
     for(i in seq(along = RdFiles)) {
         contents[i, ] <- Rdinfo(RdFiles[i])
     }
-    colnames(contents) <-
-        c("Name", "Type", "Title", "Aliases", "Concepts", "Keywords")
+    colnames(contents) <- entries
 
     ## Although R-exts says about the Rd title slot that
     ## <QUOTE>
@@ -184,6 +189,7 @@ function(RdFiles)
                Aliases = I(contents[ , "Aliases"]),
                Concepts = I(contents[ , "Concepts"]),
                Keywords = I(contents[ , "Keywords"]),
+               Encoding = I(unlist(contents[ , "Encoding"])),
                row.names = NULL)  # avoid trying to compute row names
 }
 
