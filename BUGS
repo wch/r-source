@@ -36,12 +36,6 @@ Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 --The warning is standard S and R behaviour.
 --Probably xyplot needs to avoid it (by unclassing?)
 --Still there in lattice 0.3-0.
-* PR# 981 *
-Subject: read.xport() bug
-From: abroman@jhu.edu
-Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
---confirmed on Windows and Solaris.
---Seems that file is not in the expected format
 * PR# 1038 *
 Subject: nlme: bug in getCovariateFormula
 From: Setzer.Woodrow@epamail.epa.gov
@@ -65,6 +59,10 @@ Date: Wed, 10 Oct 2001 17:43:42 +0200 (MET DST)
 Subject: segfault using svm from e1071
 From: Jan Rychter <jan@rychter.com>
 Date: Tue, 20 Nov 2001 23:38:17 +0100
+* PR# 1181 *
+Subject: predict.nnet
+From: jcs20@po.cwru.edu
+Date: Mon, 26 Nov 2001 22:00:13 +0100 (MET)
 
 Directory:  Analyses
 
@@ -379,35 +377,27 @@ none
 
 Directory:  incoming
 
-* PR# 1181 *
-Subject: predict.nnet
-From: jcs20@po.cwru.edu
-Date: Mon, 26 Nov 2001 22:00:13 +0100 (MET)
 * PR# 1184 *
 Subject: ltsreg warnings
 From: charlie@stat.umn.edu
 Date: Thu, 29 Nov 2001 17:02:33 +0100 (MET)
-* PR# 1185 *
-Subject: documentation for diff
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Thu, 29 Nov 2001 11:38:15 -0500
 * PR# 1186 *
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1190 *
-Subject: bug in rbinom?
-From: viele@ms.uky.edu
-Date: Sun, 2 Dec 2001 01:27:53 +0100 (MET)
-* PR# 1191 *
-Subject: I have visited BUGS.R-PROJECT.ORG and noticed that ...
-From: "Vanessa Lintner" <reply@seekercenter.net>
-Date: Sun, 2 Dec 2001 15:56:41 +0800
-* PR# 1192 *
-Subject: Segfault in foreign:read.xport
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Mon, 3 Dec 2001 14:33:24 -0500 
 * PR# 1193 *
 Subject: Re: [R] appending similar data frames?
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Mon, 3 Dec 2001 13:46:35 -0800 (PST)
+* PR# 1194 *
+Subject: factorial() not here
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Tue, 4 Dec 2001 11:29:01 -0500 (EST)
+* PR# 1195 *
+Subject: help(dbinom) recommended documentation improvement
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
+* PR# 1196 *
+Subject: Re:
+From: "(null)" <_bravington@ukonline.co.uk>
+Date: Tue,  4 Dec 2001 19:51:00 +0000 (GMT)
