@@ -1,17 +1,16 @@
 % file modreg/man/smooth.spline.Rd
 % copyright (C) 1998 B. D. Ripley
-% copyright (C) 2001 The R Core Development Team
+% copyright (C) 2001-2002 The R Core Development Team
 %
 \name{smooth.spline}
 \alias{smooth.spline}
-\alias{predict.smooth.spline.fit}
 \alias{print.smooth.spline}
 \title{Fit a Smoothing Spline}
 \description{
   Fits a cubic smoothing spline to the supplied data.
 }
 \usage{
-smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
+smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
               cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1,
               control.spar = list())
 }
@@ -20,7 +19,8 @@ smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
   list or a two-column matrix specifying x and y. }
  \item{y}{responses. If \code{y} is missing, the responses are assumed
    to be specified by \code{x}.}
- \item{w}{optional vector of weights}
+ \item{w}{optional vector of weights of the same length as \code{x};
+   defaults to all 1.}
  \item{df}{the desired equivalent number of degrees of freedom (trace of
    the smoother matrix).}
  \item{spar}{smoothing parameter, typically (but not necessarily) in
@@ -30,8 +30,9 @@ smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
    below.}
  \item{cv}{ordinary (\code{TRUE}) or `generalized' (\code{FALSE})
    cross-validation.}
- \item{all.knots}{if \code{TRUE}, all points in \code{x} are uses as
-   knots. If \code{FALSE}, a suitably fine grid of knots is used.}
+ \item{all.knots}{if \code{TRUE}, all points in \code{x} are used as
+   knots.  If \code{FALSE} (default), a suitably fine grid of knots
+   subset of \code{x[]} is used for \eqn{n > 49}.}
  \item{df.offset}{allows the degrees of freedom to be increased by
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
@@ -59,27 +60,31 @@ smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
  }
 }
 \details{
-  The \code{x} vector should contain at least ten distinct values.
+  The \code{x} vector should contain at least four distinct values.
+  \emph{Distinct} here means ``distinct after rounding to 6 significant
+  digits'', i.e., \code{x} will be transformed to
+  \code{unique(sort(signif(x, 6)))}, and \code{y} and \code{w} are
+  pooled accordingly.
 
   The computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is
   \eqn{\lambda = r * 256^{3 s - 1}}{lambda = r * 256^(3*spar - 1)}
   where
-  \eqn{r = tr(X' W^2 X) / tr(\Sigma)},
+  \eqn{r = tr(X' W X) / tr(\Sigma)},
   \eqn{\Sigma} is the matrix given by
   \eqn{\Sigma_{ij} = \int B_i''(t) B_j''(t) dt}{%
     Sigma[i,j] = Integral B''[i](t) B''[j](t) dt},
   \eqn{X} is given by \eqn{X_{ij} = B_j(x_i)}{X[i,j] = B[j](x[i])},
-  \eqn{W^2} is the diagonal matrix of scaled weights, \code{W =
-    diag(w)/n} (i.e., the identity for default weights),
+  \eqn{W} is the diagonal matrix of weights (scaled such that
+  its trace is \eqn{n}, the original number of observations)
   and \eqn{B_k(.)}{B[k](.)} is the \eqn{k}-th B-spline.
 
   Note that with these definitions, \eqn{f_i = f(x_i)}, and the B-spline
   basis representation \eqn{f = X c} (i.e. \eqn{c} is
   the vector of spline coefficients), the penalized log likelihood is
-  \eqn{L = (y - f)' W^2 (y - f) + \lambda c' \Sigma c}, and hence
+  \eqn{L = (y - f)' W (y - f) + \lambda c' \Sigma c}, and hence
   \eqn{c} is the solution of the (ridge regression)
-  \eqn{(X' W^2 X + \lambda \Sigma) c = X' W^2 y}.
+  \eqn{(X' W X + \lambda \Sigma) c = X' W y}.
 
   If \code{spar} is missing or \code{NULL}, the value of \code{df} is used to
   determine the degree of smoothing.  If both are missing, leave-one-out
@@ -99,7 +104,7 @@ smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
   \eqn{\lambda}).  In \R's (\eqn{\log \lambda}) scale, it makes more
   sense to vary \code{spar} linearly.
 
-  Note however that currently the results may be come very unreliable
+  Note however that currently the results may become very unreliable
   for \code{spar} values smaller than about -1 or -2.  The same may
   happen for values larger than 2 or so. Don't think of setting
   \code{spar} or the controls \code{low} and \code{high} outside such a
@@ -111,9 +116,20 @@ smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
   internal code uses an approximation that involves leaving out groups
   of duplicated points.  \code{cv=TRUE} is best avoided in that case.
 }
+\note{
+  The default \code{all.knots = FALSE} entails using only \eqn{O(n^{0.2})}
+  knots instead of \eqn{n} for \eqn{n > 49}.  This cuts the memory
+  requirement which is \eqn{O({n_k} ^ 2) + O(n)}{O(nk^2) + O(n)} where
+  \eqn{n_k}{nk} is the number of knots.
+  In this case where not all unique \code{x} values are
+  used as knots, the result is not a smoothing spline in the strict
+  sense, but very close unless a small smoothing parameter (or large
+  \code{df}) is used.
+}
 \value{
   An object of class \code{"smooth.spline"} with components
-  \item{x}{the distinct \code{x} values in increasing order.}
+  \item{x}{the \emph{distinct} \code{x} values in increasing order, see
+  the \bold{Details} above.}
   \item{y}{the fitted values corresponding to \code{x}.}
   \item{w}{the weights used at the unique values of \code{x}.}
   \item{yin}{the y values used at the unique \code{y} values.}
@@ -131,11 +147,25 @@ smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
     see the details above.}
   \item{iparms}{named integer(3) vector where \code{..$ipars["iter"]}
     gives number of spar computing iterations used.}
-  \item{fit}{list for use by \code{predict.smooth.spline}.}
+  \item{fit}{list for use by \code{\link{predict.smooth.spline}}, with
+    components
+    \describe{
+      \item{knot:}{the knot sequence (including the repeated boundary knots).}
+      \item{nk:}{number of coefficients or number of ``proper'' knots plus 2.}
+      \item{coef:}{coefficients for the spline basis used.}
+      \item{min, range:}{numbers giving the corresponding quantities of \code{x}.}
+    }
+  }
   \item{call}{the matched call.}
 }
+\references{
+  Green, P. J. and Silverman, B. W. (1994)
+  \emph{Nonparametric Regression and Generalized Linear Models:
+    A Roughness Penalty Approach}; Chapman and Hall.
+}
 \author{B.D. Ripley and Martin Maechler (spar/lambda, etc).}
-\seealso{\code{\link{predict.smooth.spline}}}
+\seealso{\code{\link{predict.smooth.spline}} for evaluating the spline
+  and its derivatives.}
 \examples{
 data(cars)
 attach(cars)
