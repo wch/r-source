@@ -22,10 +22,14 @@ update.formula(old, new)
   the \emph{rhs} of the \code{old} formula for any occurence
   of "\code{.}" on the right of \code{new}.
 }
-\value{ 
+\value{
   The updated formula is returned.
 }
 \seealso{
   \code{\link{terms}}, \code{\link{model.matrix}}.
+}
+\examples{
+update.formula(y ~ x,    ~ . + x2) #> y ~ x + x2
+update.formula(y ~ x, log(.) ~ . ) #> log(y) ~ x
 }
 \keyword{models}
