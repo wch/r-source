@@ -137,7 +137,9 @@ foreach $pkg (@ARGV){
 	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
 	my $dir = "R.INSTALL";
-	mkdir($dir, 0755) or die "Error: cannot create $dir\n";
+	if(! -d $dir) {
+	    mkdir($dir, 0755) or die "Error: cannot create $dir\n";
+	}
 	## workaround for paths in Cygwin tar
 	$pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	if(system("tar -zxf '$pkg' -C $dir")) {
