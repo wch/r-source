@@ -15,7 +15,7 @@ export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
 #        summary.princomp)
 
 # cluster needs
-export(as.hclust.twins)
+export(as.hclust.twins, plot.hclust)
 # using match.call needs
 export(princomp.default, princomp.formula)
 
