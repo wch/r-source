@@ -26,8 +26,9 @@
 
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
-@blocknames = ("name", "title", "usage", "arguments", "description",
-	       "value", "references", "seealso", "examples", "author", "note");
+@blocknames = ("name", "title", "usage", "arguments", "format",
+	       "description", "value", "references", "source", 
+	       "seealso", "examples", "author", "note");
 # These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
 
@@ -96,6 +97,7 @@ sub Rdconv {
 
     rdoc2html()	 if $type =~ /html/i;
     rdoc2nroff() if $type =~ /nroff/i;
+    rdoc2Sd()    if $type =~ /Sd/i;
     rdoc2latex() if $type =~ /tex/i;
     rdoc2ex()	 if $type =~ /example/i;
 }
@@ -367,6 +369,7 @@ sub rdoc2html {
 
     html_print_codeblock("usage", "Usage");
     html_print_argblock("arguments", "Arguments");
+    html_print_block("format", "Format");
     html_print_block("description", "Description");
     html_print_argblock("value", "Value");
 
@@ -374,6 +377,7 @@ sub rdoc2html {
 
     html_print_block("note", "Note");
     html_print_block("author", "Author(s)");
+    html_print_block("source", "Source");
     html_print_block("references", "References");
     html_print_block("seealso", "See Also");
     html_print_codeblock("examples", "Examples");
@@ -675,6 +679,7 @@ sub rdoc2nroff {
 
     nroff_print_codeblock("usage", "");
     nroff_print_argblock("arguments", "Arguments");
+    nroff_print_block("format", "Format");
     nroff_print_block("description", "Description");
     nroff_print_argblock("value", "Value");
 
@@ -682,6 +687,7 @@ sub rdoc2nroff {
 
     nroff_print_block("note", "Note");
     nroff_print_block("author", "Author(s)");
+    nroff_print_block("source", "Source");
     nroff_print_block("references", "References");
     nroff_print_block("seealso", "See Also");
     nroff_print_codeblock("examples", "Examples");
@@ -1002,6 +1008,116 @@ sub nroff_tables {
 }
 
 
+#****************************** Sd ******************************
+
+
+sub rdoc2Sd {
+
+    get_blocks($complete_text);
+    get_sections($complete_text);
+
+    print Sdout "\.\\\" -*- nroff -*- generated from \.Rd format\n";
+    print Sdout ".BG\n";
+    print Sdout ".FN ", $blocks{"name"}, "\n";
+    print Sdout ".TL\n";
+    print Sdout $blocks{"title"}, "\n";
+    if (defined $blocks{"description"}){
+	print Sdout ".DN\n";
+	print Sdout text2nroff($blocks{"description"}), "\n";
+    }
+    if (defined $blocks{"usage"}){
+	print Sdout ".CS\n";
+	print Sdout text2nroff($blocks{"usage"}), "\n";
+    }
+    Sd_print_argblock("arguments", ".RA");
+    Sd_print_argblock("value", ".RT");
+    Sd_print_sections();
+    Sd_print_block("note", "Note");
+    Sd_print_block("references", ".SH REFERENCES");
+    Sd_print_block("seealso", ".SA");
+    Sd_print_codeblock("examples", ".EX");
+    if (@keywords) {
+	print Sdout ".KW\n";
+	print Sdout join(',', @keywords), "\n";
+    }
+    print Sdout ".WR\n"
+}
+
+# Convert a Rdoc text string to nroff
+#   $_[0]: text to be converted
+#   $_[1]: (optional) indentation of paragraphs. default = $INDENT
+
+# Print a standard block
+
+sub Sd_print_block {
+
+    my ($block,$macro) = @_;
+
+    if(defined $blocks{$block}){
+	print Sdout $macro, "\n";
+	print Sdout text2nroff($blocks{$block});
+    }
+}
+
+# Print a code block (preformatted)
+sub Sd_print_codeblock {
+
+    my ($block, $macro) = @_;
+
+    if(defined $blocks{$block}){
+	print Sdout $macro;
+	print Sdout code2nroff($blocks{$block});
+    }
+}
+
+
+# Print the value or arguments block
+sub Sd_print_argblock {
+
+    my ($block, $macro) = @_;
+
+    if(defined $blocks{$block}){
+	print Sdout $macro, "\n" if $macro;
+	my $text = $blocks{$block};
+
+	if($text =~ /\\item/s){
+	    $text =~ /^(.*)(\\item.*)*/s;
+	    my ($begin, $rest) = split(/\\item/, $text, 2);
+	    if($begin){
+		print Sdout text2nroff($begin);
+		$text =~ s/^$begin//s;
+	    }
+	    my $loopcount = 0;
+	    while(checkloop($loopcount++, $text, "\\item") &&
+		  $text =~ /\\item/s){
+		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+		$arg = text2nroff($arg);
+		$desc = text2nroff($desc);
+		print Sdout ".AG ", $arg, "\n";
+		print Sdout $desc, "\n";
+		$text =~ s/.*$id//s;
+	    }
+	}
+	else{
+	    print Sdout text2nroff($text), "\n";
+	}
+    }
+}
+
+# Print sections
+sub Sd_print_sections {
+
+    my $section;
+
+    for($section=0; $section<$max_section; $section++){
+	print Sdout "\n";
+	print Sdout ".SH\n";
+	print Sdout $section_title[$section], ":\n";
+	print Sdout text2nroff($section_body[$section]), "\n";
+    }
+}
+
+
 #*********************** Example ***********************************
 
 
@@ -1085,6 +1201,7 @@ sub rdoc2latex {
     }
     latex_print_codeblock("usage", "Usage");
     latex_print_argblock("arguments", "Arguments");
+    latex_print_block("format", "Format");
     latex_print_block("description", "Description");
     latex_print_argblock("value", "Value");
 
@@ -1092,6 +1209,7 @@ sub rdoc2latex {
 
     latex_print_block("note", "Note");
     latex_print_block("author", "Author");
+    latex_print_block("source", "Source");
     latex_print_block("references", "References");
     latex_print_block("seealso", "SeeAlso");
     latex_print_exampleblock("examples", "Examples");
