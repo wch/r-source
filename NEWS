@@ -354,6 +354,10 @@ BUG FIXES
 
     o	labels.lm was broken. (PR#7417)
 
+    o	The hashing used for character vectors in object.size() was
+	inefficient for vectors of with tens of thousands of identical
+	values not sharing the same storage (an unusual case).
+
 
 
 		CHANGES IN R VERSION 2.0.1
