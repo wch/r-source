@@ -1,0 +1,38 @@
+
+R : Copyright 1999, The R Development Core Team
+Version 0.63.3 in progress (January 23, 1999)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type	"?license" or "?licence" for distribution details.
+
+R is a collaborative project with many contributors.
+Type	"?contributors" for a list.
+
+Type	"demo()" for some demos, "help()" for on-line help, or
+    	"help.start()" for a HTML browser interface to help.
+Type	"q()" to quit R.
+
+> ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+> ##- To: r-core
+> ##- Date: 22 Jan 1999 11:47
+> ##-   ...
+> ##- This is what didn't work before:
+> 
+> e <- quote(c(F=1,"tail area"=pf(1,1,1)))
+> e
+c(F = 1, "tail area" = pf(1, 1, 1))
+> 
+> eval(e)
+        F tail area 
+      1.0       0.5 
+> names(e)
+[1] ""          "F"         "tail area"
+> 
+> names(e)[2] <- "Variance ratio"
+> e
+c("Variance ratio" = 1, "tail area" = pf(1, 1, 1))
+> eval(e)
+Variance ratio      tail area 
+           1.0            0.5 
+> 
