@@ -11,7 +11,7 @@
 NEW FEATURES
 
     o	demo(nlm) has examples of using analytical gradients and
-        Hessians.
+	Hessians.
 
     o	.Platform$OS.type is standardized.
 
@@ -20,6 +20,10 @@ BUG FIXES
     o  segfault in rbind of a vector without names fixed. cbind, too.
 
     o  fixed symbol size problems with PostScript driver
+
+    o  unique() & duplicated() only work for atomic vectors;
+       unique(data.frame(""[F])) doesn't segfault anymore.
+       
 
 		CHANGES IN R VERSION 0.90.0
 
@@ -183,7 +187,7 @@ BUG FIXES
 
     o	Fix problems in scan(flush = TRUE).
 
-    o   scan() got confused by trailing whitespace.
+    o	scan() got confused by trailing whitespace.
 
     o	split(x,f) now works even when f is a factor with unused levels
 	(PR#294).
@@ -219,7 +223,7 @@ BUG FIXES
 
     o	Text clipping now works in the X11 device.
 
-    o   Pixel rows sometimes got doubled in rotated text on the X11 device.
+    o	Pixel rows sometimes got doubled in rotated text on the X11 device.
 
     o	par("yaxt") is now ok.
 
