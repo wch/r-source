@@ -1,2 +1,2 @@
 importFrom(stats, biplot, dist)
-export(biplot, dist)
+export(biplot, dist, .conflicts.OK)

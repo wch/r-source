@@ -1,2 +1,2 @@
 importFrom(stats, loess.smooth, scatter.smooth)
-export(loess.smooth, scatter.smooth)
+export(loess.smooth, scatter.smooth, .conflicts.OK)
