@@ -1174,7 +1174,10 @@ static void RunGenCollect(int size_needed)
     for (i = 0; i < R_MaxDevices; i++) {   /* Device display lists */
 	dd = GetDevice(i);
 	if (dd)
-	    FORWARD_NODE(dd->displayList);
+	    if (dd->newDevStruct)
+		FORWARD_NODE(((GEDevDesc*) dd)->dev->displayList);
+	    else
+		FORWARD_NODE(dd->displayList);
     }
 
     for (ctxt = R_GlobalContext ; ctxt != NULL ; ctxt = ctxt->nextcontext)
