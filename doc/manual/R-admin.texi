@@ -924,9 +924,12 @@ by on-the-fly re-encoding.  The @code{LANGUAGE} variable (only) can be a
 colon-separated list, for example @code{se:de}, giving a set of
 languages in decreasing order of preference.
 
-If no suitable translation catalog is found or a particular message is
+If no suitable translation catalogue is found or a particular message is
 not translated in that catalogue, English is used.
 
+See
+@uref{http://developer.r-project.org/Translations.html} for how to
+prepare and install translation catalogues.
 
 
 @node Essential and useful other programs, Configuration on Unix, Internationalization, Top
