@@ -2,6 +2,10 @@
 
 NEW FEATURES
 
+     o  An experimental directory etc/Rdoc has been added with a perl5
+	module to parse R documentation files.  Sample perl programs
+	to use this module are also included.
+
      o	All internal mechanisms to support factors and data.frames
 	have been removed.  These are now entirely supported by
 	interpreted code! `is.unordered' has been eliminated.
