@@ -1106,7 +1106,7 @@ listbox newdroplist(char *list[], rect r, scrollfn fn)
 
 	obj = newchildwin("combobox", NULL,
 				CBS_DROPDOWNLIST |
-				CBS_DISABLENOSCROLL |
+				//CBS_DISABLENOSCROLL |
 				WS_BORDER |
 				WS_VSCROLL | WS_HSCROLL,
 				r, NULL);
