@@ -61,7 +61,7 @@ $MAXLOOPS = 1000;
 sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
     $Rdname = $_[0];
-    open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdfile':$!\n";
+    open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdfile': $!\n";
 
     $type = $_[1];
     $debug = $_[2];
@@ -74,7 +74,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	    $Exfile = $chmfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
-	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
+	die "Rdconv(): '$dirname' is NOT a valid directory: $!\n"
 	    unless -d $dirname;
 	$htmlfile = file_path($dirname, "html", $Rdname.$HTML) if $type =~ /html/i;
 	$txtfile= file_path($dirname, "help", $Rdname)	if $type =~ /txt/i;
@@ -608,7 +608,7 @@ sub text2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = file_path($pkg, "html", $topic.$HTML);
+		    $htmlfile = $pkg."/html/".$topic.$HTML;
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
@@ -735,7 +735,7 @@ sub code2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = file_path($pkg, "html", $topic.$HTML);
+		    $htmlfile = $pkg."/html/".$topic.$HTML;
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
@@ -956,7 +956,7 @@ sub html_functionfoot
 
     if($HTML){
 	$retval .= "\n\n<hr><div align=\"center\">" .
-	    "<a href=\"00Index.$HTML\">[Package Contents]</a></div>\n\n";
+	    "<a href=\"00Index$HTML\">[Package Contents]</a></div>\n\n";
     }
 
     $retval .= "</body></html>\n";
