@@ -682,6 +682,7 @@ FUNTAB R_FunTab[] =
 {"setlocale",	do_setlocale,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"localeconv",	do_localeconv,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"path.expand",	do_pathexpand,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"getpid",	do_sysgetpid,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},

@@ -147,6 +147,8 @@ NEW FEATURES
      o	New function slice.index() for identifying indexes with respect
 	to slices of an array.
 
+     o	New function Sys.getpid() to get the process ID of the R session.
+
 
 INSTALLATION CHANGES
 

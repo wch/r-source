@@ -405,6 +405,7 @@ SEXP do_switch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_symbol(SEXP, SEXP, SEXP, SEXP);
 SEXP do_symbols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sys(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sysgetpid(SEXP, SEXP, SEXP, SEXP);
 SEXP do_system(SEXP, SEXP, SEXP, SEXP);
 SEXP do_systime(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tempdir(SEXP, SEXP, SEXP, SEXP);

@@ -20,3 +20,5 @@ Sys.putenv <- function(...)
     x <- paste(nm,val, sep="=")
     invisible(.Internal(putenv(x)))
 }
+
+Sys.getpid <- function() .Internal(getpid())
