@@ -53,6 +53,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   examples in help files containing \testonly are no longer
+	(partially) duplicated.
+
     o   is.numeric() of a factor is now FALSE
 
     o   prevent a segfault in plotmath
