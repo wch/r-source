@@ -32,20 +32,21 @@ bitmap(\dots)
 #endif
 #ifdef windows
   \item \code{\link{windows}} The graphics driver for Windows (on screen, to
-    printer and to Windows metafile.
+    printer and to Windows metafile).
   \item \code{\link{png}} PNG bitmap device
   \item \code{\link{jpeg}} JPEG bitmap device
   \item \code{\link{bmp}} BMP bitmap device
 #endif
-  \item \code{\link{bitmap}} bitmap pseudo-device via \code{GhostScript} (if
-    available).
 #ifdef mac
   \item \code{\link{macintosh}} The graphics driver for the Macintosh
 #endif
+  \item \code{\link{xfig}} Device for XFIG graphics file format
+  \item \code{\link{bitmap}} bitmap pseudo-device via \code{GhostScript} (if
+    available).
 }
 }
 \seealso{
-  the individual help files for further information on any of the
+  The individual help files for further information on any of the
   devices listed here;
 
   \code{\link{dev.cur}}, \code{\link{dev.print}},
