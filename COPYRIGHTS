@@ -62,13 +62,6 @@ src/library/ts/src/carray.c, mburg.c, myw.c, qr.c
 	Copyright (C) 1999 Martyn Plummer
 
 
-src/regex/* [Only used on Macintosh]
-
-	Copyright (c) 1992, 1993, 1994 Henry Spencer
-
-	See the file src/regex/COPYRIGHTS
-
-
 src/unix/rotated.[ch]
 
 	Copyright (c) 1993 Alan Richardson
