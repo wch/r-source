@@ -28,28 +28,21 @@
  *-- =====  ../main/errors.c ! (MM, who did the following in
  *				the first place ...) */
 
-#define R_MSG_NA		"NaNs produced"
+#define R_MSG_NA	_("NaNs produced")
 
-#define R_MSG_NONNUM_MATH 	"Non-numeric argument to mathematical function"
+#define R_MSG_NONNUM_MATH _("Non-numeric argument to mathematical function")
 
-#define R_MSG_IA   "invalid argument"
+#define R_MSG_IA   _("invalid argument")
 
-#define R_MSG_char "a character string"
-#define R_MSG_list "a list"
-#define R_MSG_A1   "first argument"
-#define R_MSG_A2   "second argument"
+#define R_MSG_A1_char _("first argument must be a character string")
+#define R_MSG_A1_list _("first argument must be a list")
+#define R_MSG_A2_char _("second argument must be a character string")
+#define R_MSG_A2_list _("secong argument must be a list")
 
-#define R_MSG_must "must be"
-#define R_MSG_A1_char R_MSG_A1 " " R_MSG_must " " R_MSG_char
-#define R_MSG_A1_list R_MSG_A1 " " R_MSG_must " " R_MSG_list
-#define R_MSG_A2_char R_MSG_A2 " " R_MSG_must " " R_MSG_char
-#define R_MSG_A2_list R_MSG_A2 " " R_MSG_must " " R_MSG_list
-
-#define R_MSG_subs_o_b	"subscript out of bounds"
-#define R_MSG_ob_nonsub	"object is not subsettable"
-#define R_MSG_mode	"invalid \"mode\" of argument"
-#define R_MSG_list_vec	"applies only to lists and vectors"
-#define R_MSG_list_vec2	"() applied to non-(list or vector)"
+#define R_MSG_subs_o_b	_("subscript out of bounds")
+#define R_MSG_ob_nonsub	_("object is not subsettable")
+#define R_MSG_mode	_("invalid 'mode' of argument")
+#define R_MSG_list_vec	_("applies only to lists and vectors")
 
 /*---- Packaged Error & Warning Messages ---- 
  *---- ================================= ----*/

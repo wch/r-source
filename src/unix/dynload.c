@@ -146,10 +146,10 @@ static int computeDLOpenFlag(int asLocal, int now)
 {
 #if !defined(RTLD_LOCAL) || !defined(RTLD_GLOBAL) || !defined(RTLD_NOW) || !defined(RTLD_LAZY)
     static char *warningMessages[] = {
-	"Explicit local dynamic loading not supported on this platform. Using default.",
-	"Explicit global dynamic loading not supported on this platform. Using default.",
-	"Explicit non-lazy dynamic loading not supported on this platform. Using default.",
-	"Explicit lazy dynamic loading not supported on this platform. Using default."
+	N_("Explicit local dynamic loading not supported on this platform. Using default."),
+	N_("Explicit global dynamic loading not supported on this platform. Using default."),
+	N_("Explicit non-lazy dynamic loading not supported on this platform. Using default."),
+	N_("Explicit lazy dynamic loading not supported on this platform. Using default.")
     };
     /* Define a local macro for issuing the warnings.
        This allows us to redefine it easily so that it only emits the
@@ -164,7 +164,7 @@ static int computeDLOpenFlag(int asLocal, int now)
 # define DL_WARN(i) \
     if(asInteger(GetOption(install("warn"), R_NilValue)) == 1 || \
        asInteger(GetOption(install("verbose"), R_NilValue)) > 0) \
-        warning(warningMessages[i]);
+        warning(_(warningMessages[i]));
 #endif
 
     int openFlag = 0;		/* Default value so no-ops for undefined

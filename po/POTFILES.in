@@ -6,6 +6,7 @@ src/appl/binning.c
 src/appl/pretty.c
 src/appl/rcont.c
 src/appl/strsignif.c
+src/include/Errormsg.h
 src/main/CConverters.c
 src/main/CommandLineArgs.c
 src/main/RNG.c

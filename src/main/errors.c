@@ -773,14 +773,14 @@ static struct {
     const char* const format;
 }
 const ErrorDB[] = {
-    { ERROR_NUMARGS,		"invalid number of arguments"	},
-    { ERROR_ARGTYPE,		"invalid argument type"		},
+    { ERROR_NUMARGS,		N_("invalid number of arguments")	},
+    { ERROR_ARGTYPE,		N_("invalid argument type")		},
 
-    { ERROR_TSVEC_MISMATCH,	"time-series/vector length mismatch"	},
-    { ERROR_INCOMPAT_ARGS,	"incompatible arguments"		},
+    { ERROR_TSVEC_MISMATCH,	N_("time-series/vector length mismatch")},
+    { ERROR_INCOMPAT_ARGS,	N_("incompatible arguments")		},
 
-    { ERROR_UNIMPLEMENTED,	"unimplemented feature in %s"	},
-    { ERROR_UNKNOWN,		"unknown error (report this!)"	}
+    { ERROR_UNIMPLEMENTED,	N_("unimplemented feature in %s")	},
+    { ERROR_UNKNOWN,		N_("unknown error (report this!)")	}
 };
 
 static struct {
@@ -788,11 +788,11 @@ static struct {
     char* format;
 }
 WarningDB[] = {
-    { WARNING_coerce_NA,	"NAs introduced by coercion"		},
-    { WARNING_coerce_INACC,	"inaccurate integer conversion in coercion" },
-    { WARNING_coerce_IMAG,	"imaginary parts discarded in coercion" },
+    { WARNING_coerce_NA,	N_("NAs introduced by coercion")	},
+    { WARNING_coerce_INACC,	N_("inaccurate integer conversion in coercion")},
+    { WARNING_coerce_IMAG,	N_("imaginary parts discarded in coercion") },
 
-    { WARNING_UNKNOWN,		"unknown warning (report this!)"	},
+    { WARNING_UNKNOWN,		N_("unknown warning (report this!)")	},
 };
 
 
@@ -810,7 +810,7 @@ void ErrorMessage(SEXP call, int which_error, ...)
     }
 
     va_start(ap, which_error);
-    Rvsnprintf(buf, BUFSIZE, ErrorDB[i].format, ap);
+    Rvsnprintf(buf, BUFSIZE, _(ErrorDB[i].format), ap);
     va_end(ap);
     errorcall(call, "%s", buf);
 }
@@ -829,7 +829,7 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
     }
 
     va_start(ap, which_warn);
-    Rvsnprintf(buf, BUFSIZE, WarningDB[i].format, ap);
+    Rvsnprintf(buf, BUFSIZE, _(WarningDB[i].format), ap);
     va_end(ap);
     warningcall(call, "%s", buf);
 }
