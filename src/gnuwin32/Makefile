@@ -283,6 +283,7 @@ graphics-HELP = ziponly
 methods-HELP = ziponly
 stats-HELP = ziponly
 utils-HELP = ziponly
+stats4-SAVE = true
 
 MASS-HELP = ziponly
 boot-HELP = ziponly
@@ -305,9 +306,10 @@ bundle-%:
 	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
-	  -f $(RHOME)/src/gnuwin32/MakePkg
+	@$(MAKE) --no-print-directory SAVE=$($*-SAVE) \
+          DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi

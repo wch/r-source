@@ -6,7 +6,7 @@ BUILD=$5
 RX_EXE=$6
 
 case $1 in
-    CHECK) if test -r install.R; then R_SAVE_IMAGE=true; else R_SAVE_IMAGE=false; fi;;
+    CHECK|'') if test -r install.R; then R_SAVE_IMAGE=true; else R_SAVE_IMAGE=false; fi;;
     *) R_SAVE_IMAGE=$1;;
 esac
 export R_SAVE_IMAGE
