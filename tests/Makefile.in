@@ -44,10 +44,11 @@ test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
-test-out = $(test-src:.R=.Rout)
+test-out-gct = eval-etc.Rout-gct
+test-out = $(test-src:.R=.Rout) $(test-out-gct)
 
 .SUFFIXES:
-.SUFFIXES: .R .Rin .Rout
+.SUFFIXES: .R .Rin .Rout .Rout-gct
 
 all: Makefile test-All
 
@@ -86,6 +87,15 @@ FORCE:
 	  echo "@ECHO_T@ OK"; \
 	fi
 
+.R.Rout-gct:
+	@echo "running gctorture() + \`$<'"
+	@echo 'gctorture()'| cat - $< | $(R) > $@
+	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; $(MAKE) $$Ro ;\
+	  echo @ECHO_N@ "comparing \`$@' to \`$$Ro' ...@ECHO_C@"; \
+	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "@ECHO_T@ OK"
+
 test-All: Makefile
 	@$(MAKE) test-Examples
 	@$(MAKE) test-Specific
@@ -100,6 +110,7 @@ test-Specific:
 	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
 	@echo "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
+test-Gct: $(test-out-gct)
 
 # Note: we need to increase nsize (in fact, twice the default) in what
 # follows to make sure we can load the base package twice.
