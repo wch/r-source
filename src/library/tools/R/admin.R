@@ -240,24 +240,28 @@ function(dir, outDir)
 function(dir, outDir)
 {
     vignetteDir <- file.path(dir, "inst", "doc")
-    htmlIndex <- file.path(outDir, "doc", "index.html")
-    pkgDesc <- read.dcf(file.path(dir, "DESCRIPTION"))
-
-    ## Create a vignette index only if the vignette dir exists and
-    ## really contains vignettes.
+    ## Create a vignette index only if the vignette dir exists
     if(!fileTest("-d", vignetteDir))
         return(invisible())
        
+    htmlIndex <- file.path(outDir, "doc", "index.html")
+    pkgDesc <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
+                   silent = TRUE)
+    if(inherits(pkgDesc, "try-error"))
+        stop(paste("package directory", sQuote(dir),
+                   "has no valid DESCRIPTION file"))
+
+    ## write dummy HTML index if no vignettes are found and exit
     if(!length(listFilesWithType(vignetteDir, "vignette"))){
         if(!file.exists(htmlIndex)){
-            .writeVignetteHtmlIndex(pkgDesc[1,"Package"], htmlIndex)
+            .writeVignetteHtmlIndex(pkgDesc["Package"], htmlIndex)
         }
         return(invisible())
     }
 
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
     if(!file.exists(htmlIndex)){
-        .writeVignetteHtmlIndex(pkgDesc[1,"Package"], htmlIndex, vignetteIndex)
+        .writeVignetteHtmlIndex(pkgDesc["Package"], htmlIndex, vignetteIndex)
     }
 
     .saveRDS(vignetteIndex,
