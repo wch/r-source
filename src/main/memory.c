@@ -1289,6 +1289,30 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
     return (newrho);
 }
 
+/* mkPROMISE is defined directly do avoid the need to protect its arguments
+   unless a GC will actually occur. */
+SEXP mkPROMISE(SEXP expr, SEXP rho)
+{
+    SEXP s;
+    if (FORCE_GC || NO_FREE_NODES()) {
+      PROTECT(expr);
+      PROTECT(rho);
+      R_gc_internal(0);
+      UNPROTECT(2);
+      if (NO_FREE_NODES())
+	mem_err_cons();
+    }
+    GET_FREE_NODE(s);
+    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    TYPEOF(s) = PROMSXP;
+    PREXPR(s) = expr;
+    PRENV(s) = rho;
+    PRVALUE(s) = R_UnboundValue;
+    PRSEEN(s) = 0;
+    ATTRIB(s) = R_NilValue;
+    return s;
+}
+
 /* "allocString" allocate a string on the (vector) heap. */
 /* All vector objects  must be a multiple of sizeof(ALIGN) */
 /* bytes so that alignment is preserved for all objects */

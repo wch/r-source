@@ -141,6 +141,7 @@ SEXP mkSYMSXP(SEXP name, SEXP value)
 
 /*  mkPROMISE - make a promise to evaluate an argument  */
 
+#if 0 /* moved to memory.c for efficiency */
 SEXP mkPROMISE(SEXP expr, SEXP rho)
 {
     SEXP p;
@@ -155,7 +156,7 @@ SEXP mkPROMISE(SEXP expr, SEXP rho)
     UNPROTECT(2);
     return p;
 }
-
+#endif
 
 /*  length - length of objects  */
 
