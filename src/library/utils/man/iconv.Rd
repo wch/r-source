@@ -46,6 +46,11 @@ iconvlist()
 \note{
   Note all platforms support these functions.  See also
   \code{\link{capabilities}("iconv")}.
+
+#ifdef windows
+  The support DLL for these functions is not included in the miniR
+  distribution.
+#endif
 }
 \examples{\dontrun{
 iconvlist()
