@@ -113,10 +113,11 @@ static int 	xxcharcount, xxcharsave;
 /* Handle function source */
 
 /* FIXME: These arrays really ought to be dynamically extendable */
+/* The 128K size is to keep Pat Lindsey happy...*/
 
-#define MAXFUNSIZE 65536
-#define MAXLINESIZE 1024
-#define MAXNEST      265
+#define MAXFUNSIZE 131072 
+#define MAXLINESIZE  1024
+#define MAXNEST       265
 
 static unsigned char FunctionSource[MAXFUNSIZE];
 static unsigned char SourceLine[MAXLINESIZE];
