@@ -2098,16 +2098,37 @@ static void PerspAxis(double *x, double *y, double *z,
     }
 }
 
+/* Determine the transformed (x, y) coordinates (in USER space)
+ * for the four corners of the x-y plane of the persp plot
+ * These will be used to determine which sides of the persp
+ * plot to label with axes
+ * The strategy is to determine which corner has the lowest y-value
+ * to decide which of the x- and y-axes to label AND which corner
+ * has the lowest x-value to decide which of the z-axes to label
+ */
 static void PerspAxes(double *x, double *y, double *z,
                       char *xlab, char *ylab, char *zlab,
 		      int nTicks, int tickType, DevDesc *dd) {
     int xAxis=0, yAxis=0, zAxis=0; /* -Wall */
     int xpdsave;
-    Vector3d u0 = {0, 0, 0, 1};
-    Vector3d u1 = {1, 0, 0, 1};
-    Vector3d u2 = {0, 1, 0, 1};
-    Vector3d u3 = {1, 1, 0, 1};
+    Vector3d u0, u1, u2, u3;
     Vector3d v0, v1, v2, v3;
+    u0[0] = x[0];
+    u0[1] = y[0];
+    u0[2] = z[0];
+    u0[3] = 1;
+    u1[0] = x[1];
+    u1[1] = y[0];
+    u1[2] = z[0];
+    u1[3] = 1;
+    u2[0] = x[0];
+    u2[1] = y[1];
+    u2[2] = z[0];
+    u2[3] = 1;
+    u3[0] = x[1];
+    u3[1] = y[1];
+    u3[2] = z[0];
+    u3[3] = 1;
     TransVector(u0, VT, v0);
     TransVector(u1, VT, v1);
     TransVector(u2, VT, v2);
