@@ -32,6 +32,10 @@ static void get_locale_strings(void);
 #include <limits.h>
 #include <string.h>*/
 
+#ifdef HAVE_STRINGS_H
+#include <strings.h>  /* for strncasecmp */
+#endif
+
 #define match_char(ch1, ch2) if (ch1 != ch2) return NULL
 
 #ifndef Macintosh
