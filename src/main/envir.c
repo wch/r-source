@@ -968,7 +968,7 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
 
 SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP name, envarg, tsym, tenv, tframe;
+    SEXP name, envarg, tsym, tenv;
     int ginherits = 0;
     int done, i, hashcode;
     checkArity(op, args);

@@ -1203,7 +1203,7 @@ static SEXP ConvertPairToVector(SEXP obj)
 
 void R_LoadSavedData(FILE *fp, SEXP aenv)
 {
-    SEXP a, ans, e;
+    SEXP a, ans;
     ans = R_LoadFromFile(fp, 0);
 
     /* Store the components of the list in the Global Env */
