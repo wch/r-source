@@ -33,6 +33,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   abline() now responds to the setting of par(xpd), including 
+	via the "..." argument.
+
     o	Using cat() to a gzfile() connection no longer compresses poorly
 	(at the expense of some latency).
 
