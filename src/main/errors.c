@@ -124,7 +124,7 @@ void jump_to_toplevel()
 	jump_now();
 }
 
-void jump_now()
+static void jump_now()
 {
 	inError=0;
 	R_PPStackTop = 0;

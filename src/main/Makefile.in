@@ -16,7 +16,6 @@ RLIBS=	\
 		../lib/libgraphics.a \
 		../lib/libunix.a \
 		../lib/libappl.a \
-		../lib/libregex.a \
 		../lib/libmath.a
 
 OBJS=		arithmetic.o \

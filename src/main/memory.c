@@ -15,66 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Modified by Heiner Schwarte to allow growth of vector heap
- *  Copyright (C) 1997, Heiner Schwarte
  */
 
 #include "Defn.h"
 
+/*      MEMORY MANAGEMENT
+ *
+ *	Separate areas are maintained for fixed and variable sized
+ *	objects.  The first of these is allocated as an array of
+ *	SEXPRECs and the second as an array of VECRECs.  The fixed
+ *	sized objects are assembled into a free list and cons cells
+ *	are allocated from it.  When the list is exhausted, a
+ *	mark-sweep garbarge collection takes place and the free list
+ *	is rebuilt.  Variable size objects are allocated in the VECREC
+ *	area.  During a garbage collection, these are compacted to the
+ *	beginning of the VECREC array.
+ *
+ *	The top end of the VECREC array is also used by R_alloc to
+ *	maintain a stack of non-relocatable memory blocks.  These are
+ *	used in calls to .Fortran and .C (and for other temporary
+ *	purposes).  They are freed using a stack discipline.
+ *
+ *	+---------------------------------------------------+
+ *	| allocated vectors |	free	| R-alloc'ed blocks |
+ *	+---------------------------------------------------+
+ *	                    ^           ^
+ *	                    |           |
+ *	                    R_VTop      R_VMax
+ *
+ *	If a piece of code R-allocs some blocks, it is required to
+ *	reset the R_VMax pointer back to its original value before it
+ *	exits.  This can be done with the functions getvmax and
+ *	setvmax.
+ */
+
 static int gc_reporting = 0;
-
-
-#define HS_NUMS 100
-VECREC*HS_Stacks[HS_NUMS];
-VECREC*HS_StackPtr;
-
-VECREC*HS_Heaps[HS_NUMS];
-VECREC*HS_HeapPtrs[HS_NUMS];
-int HS_HeapActive;
-
-
-static int HS_StackActive(VECREC *StackPtr)
-{
-	int i;
-	for (i = 0; HS_Stacks[i] != NULL; i++)
-		if (&HS_Stacks[i][0] <= HS_StackPtr &&
-		    HS_StackPtr <= &HS_Stacks[i][R_VSize-1])
-			return i;
-	return - 1;
-}
-
-
-static void HS_expandStack()
-{
-	int i = 0;
-	while (HS_Stacks[i] != NULL)
-		i++;
-	HS_Stacks[i] = (VECREC * )malloc(R_VSize * sizeof(VECREC));
-	if (HS_Stacks[i] == NULL)
-		if (i == 0)
-			suicide("couldn't allocate memory for stack");
-			else
-			error(" couldn't expand stack");
-	return;
-}
-
-
-void HS_expandHeap()
-{
-	int i = 0;
-	while (HS_Heaps[i] != NULL)
-		i++;
-	HS_Heaps[i] = (VECREC * )malloc(R_VSize * sizeof(VECREC));
-	if (HS_Heaps[i] == NULL)
-		if (i == 0)
-			suicide("couldn't allocate memory for stack");
-			else
-			error(" couldn't expand heap");
-	HS_HeapPtrs[i] = &HS_Heaps[i][0];
-	return;
-}
-
 
 void installIntVector(SEXP, int, FILE *);
 
@@ -88,17 +63,46 @@ SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
 }
 
-
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	int reporting = gc_reporting;
-        gc();
 	checkArity(op, args);
 	gc_reporting = 1;
 	gc();
-	gc_reporting = reporting;
+	gc_reporting = 0;
 	return R_NilValue;
 }
+
+
+#ifdef Macintosh
+Handle  gStackH;
+Handle  gNHeapH;
+Handle  gVHeapH;
+
+/*
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	CleanUpRMemory
+
+	This routine releases the memory that R has allocated.
+	This is only needed for the Mac because the memory
+	is in system memory so not naturally cleaned up at the
+	end of the application execution.
+
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+*/
+ 
+void CleanUpMemory( void )
+{
+	OSErr   result;
+
+	if( gStackH != nil )
+		TempDisposeHandle( gStackH, &result);
+	if( gNHeapH != nil )
+		TempDisposeHandle( gNHeapH, &result );
+	if( gVHeapH != nil )
+		TempDisposeHandle( gVHeapH, &result );
+}
+
+#endif
 
 
 /*
@@ -118,29 +122,50 @@ void InitMemory()
 {
 	int i;
 
-	if (!(R_PPStack = (SEXP * ) malloc(R_PPStackSize * sizeof(SEXP))))
-		suicide("couldn't allocate memory for pointer stack");
+#ifdef Macintosh
+	OSErr   result;
 
+	gStackH = TempNewHandle( R_PPStackSize * sizeof(SEXP), &result );
+	if( (gStackH == NULL) || (result != noErr) )
+		suicide( "couldn't allocate system memory for pointer stack" );
+	TempHLock( gStackH, &result );
+	R_PPStack = (SEXP*)*gStackH;
+#else  
+	if (!(R_PPStack = (SEXP *) malloc(R_PPStackSize * sizeof(SEXP))))
+		suicide("couldn't allocate memory for pointer stack");
+#endif
+     
 	R_PPStackTop = 0;
 
-	if (!(R_NHeap = (SEXPREC * ) malloc(R_NSize * sizeof(SEXPREC))))
+#ifdef Macintosh
+	gNHeapH = TempNewHandle( R_NSize * sizeof(SEXPREC), &result );
+	if( (gNHeapH == NULL) || (result != noErr) )
+		suicide( "couldn't allocate system memory for node heap" );
+	TempHLock( gNHeapH, &result );
+	R_NHeap = (SEXPREC *)*gNHeapH;
+#else
+	if (!(R_NHeap = (SEXPREC *) malloc(R_NSize * sizeof(SEXPREC))))
 		suicide("couldn't allocate memory for node heap");
+#endif
+     
+	R_VSize = (((R_VSize + 1)/ sizeof(VECREC)));
 
-	R_VSize = (((R_VSize + 1) / sizeof(VECREC)));
-
-
-	for (i = 0; i < HS_NUMS; i++)
-		HS_Stacks[i] = NULL;
-	HS_expandStack();
-	HS_StackPtr = &HS_Stacks[0][0];
-
-	for (i = 0; i < HS_NUMS; i++) {
-		HS_Heaps[i] = NULL;
-		HS_HeapPtrs[i] = NULL;
-	}
-	HS_expandHeap();
-	HS_HeapActive = 0;
-
+#ifdef Macintosh
+	gVHeapH = TempNewHandle( R_VSize * sizeof(VECREC), &result );
+	if( (gVHeapH == NULL) || (result != noErr) )
+		suicide( "couldn't allocate system memory for vector heap" );
+	TempHLock( gVHeapH, &result );
+	R_VHeap = (VECREC *)*gVHeapH;
+#else
+#ifdef DEBUGGING
+	printf("R_VSize = %d malloc-ed\n", R_VSize * sizeof(VECREC));
+#endif
+	if (!(R_VHeap = (VECREC *) malloc(R_VSize * sizeof(VECREC))))
+		suicide("couldn't allocate memory for vector heap");
+#endif
+     
+	R_VTop = &R_VHeap[0];
+	R_VMax = &R_VHeap[R_VSize - 1];
 
 	for (i = 0; i < R_NSize - 1; i++)
 		CDR(&R_NHeap[i]) = &R_NHeap[i + 1];
@@ -151,49 +176,36 @@ void InitMemory()
 
 char *vmaxget(void)
 {
-	return (char *) HS_StackPtr;
+	return (char *) R_VMax;
 }
-
 
 void vmaxset(char *ovmax)
 {
-	if (ovmax) 
-		HS_StackPtr = (VECREC * ) ovmax;
-	else 
-		HS_StackPtr = &HS_Stacks[0][0];
+	if (ovmax) R_VMax = (VECREC *) ovmax;
+	else R_VMax = &R_VHeap[R_VSize - 1];
 }
-
 
 char *R_alloc(long nelem, int eltsize)
 {
-	int stacknum;
-	VECREC * res = HS_StackPtr;
-	unsigned int size = INT2VEC(nelem *eltsize);
+	unsigned int size = INT2VEC(nelem * eltsize);
 	if (size != 0) {
-		stacknum = HS_StackActive(HS_StackPtr);
-		if (&HS_Stacks[stacknum][R_VSize-1] - HS_StackPtr < size) {
-			if (HS_Stacks[stacknum+1] == NULL) {
-				HS_expandStack();
-			}
-			stacknum++;
-			HS_StackPtr = &HS_Stacks[stacknum][0];
-			if (&HS_Stacks[stacknum][R_VSize-1] - HS_StackPtr < size)
-				error("memory exhausted in R_alloc");
-			res = HS_StackPtr;
+		if (R_VMax - R_VTop < size) {
+			gc();
+			if (R_VMax - R_VTop < size)
+				error("memory exhausted\n");
 		}
-		HS_StackPtr += size;
+		R_VMax -= size;
 	}
-	return (char * ) res;
+	return (char*) R_VMax;
 }
-
 
 /* S COMPATIBILITY */
 
 char *S_alloc(long nelem, int eltsize)
 {
-	unsigned int i, size  = INT2VEC(nelem *eltsize);
+	unsigned int i, size  = INT2VEC(nelem * eltsize);
 	char *p = R_alloc(nelem, eltsize);
-	for (i = 0 ; i < size; i++)
+	for(i=0 ; i<size; i++)
 		p[i] = 0;
 	return p;
 }
@@ -205,18 +217,16 @@ char *S_realloc(char *p, long new, long old, int size)
 	char *q;
 
 	/* shrinking is a no-op */
-	if (new <= old) 
-		return p;
+	if(new <= old) return p;
 
 	q = R_alloc(new, size);
 	nold = old * size;
-	for (i = 0 ; i < nold ; i++)
+	for(i=0 ; i<nold ; i++)
 		q[i] = p[i];
 	return q;
 }
 
-
-/* allocSExp - get SEXPREC from free list; call gc if necessary */
+	/* allocSExp - get SEXPREC from free list; call gc if necessary */
 
 SEXP allocSExp(SEXPTYPE t)
 {
@@ -247,9 +257,9 @@ SEXP allocSExp(SEXPTYPE t)
 }
 
 
-/* allocString - allocate a string on the (vector) heap */
-/* all vector objects must be a multiple of sizeof(ALIGN) */
-/* bytes so that alignment is preserved for all objects */
+	/* allocString - allocate a string on the (vector) heap */
+	/* all vector objects must be a multiple of sizeof(ALIGN) */
+	/* bytes so that alignment is preserved for all objects */
 
 SEXP allocString(int length)
 {
@@ -260,20 +270,12 @@ SEXP allocString(int length)
 	size = 1 + BYTE2VEC(length + 1);
 
 	/* we need to do the gc here so allocSExp doesn't! */
-
-	if (R_FreeSEXP == NULL || 
-	    &HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size) {
+	if (R_FreeSEXP == NULL || R_VMax - R_VTop < size) {
 		gc();
-		if (R_FreeSEXP == NULL)
+		if (R_FreeSEXP == NULL || R_VMax - R_VTop < size)
 			error("memory exhausted\n");
-		if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size) {
-			if (HS_Heaps[HS_HeapActive+1] == NULL)
-				HS_expandHeap();
-			HS_HeapActive++;
-		}
-		if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size)
-			error("could not allocate memory 1: size %d", size);
 	}
+
 #ifdef oldmem
 	s = R_FreeSEXP;
 	R_FreeSEXP = CDR(s);
@@ -285,15 +287,15 @@ SEXP allocString(int length)
 #else
 	s = allocSExp(CHARSXP);
 #endif
-	CHAR(s) = (char *) (HS_HeapPtrs[HS_HeapActive] + 1);
+	CHAR(s) = (char *) (R_VTop + 1);
 	LENGTH(s) = length;
-	BACKPOINTER(*HS_HeapPtrs[HS_HeapActive]) = s;
-	HS_HeapPtrs[HS_HeapActive] += size;
+	BACKPOINTER(*R_VTop) = s;
+	R_VTop += size;
 	return s;
 }
 
 
-/* allocVector - allocate a vector object on the heap */
+	/* allocVector - allocate a vector object on the heap */
 
 SEXP allocVector(SEXPTYPE type, int length)
 {
@@ -303,7 +305,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 
 	if (length < 0 )
 		errorcall(R_GlobalContext->call,
-		    "negative length vectors are not allowed\n");
+			"negative length vectors are not allowed\n");
 
 	/* number of vector cells to allocate */
 	switch (type) {
@@ -318,20 +320,20 @@ SEXP allocVector(SEXPTYPE type, int length)
 	case ORDSXP:
 		if (length <= 0)
 			size = 0;
-			else
+		else
 			size = 1 + INT2VEC(length);
 		break;
 	case REALSXP:
 		if (length <= 0)
 			size = 0;
-			else
+		else
 			size = 1 + FLOAT2VEC(length);
 		break;
 #ifdef COMPLEX_DATA
 	case CPLXSXP:
 		if (length <= 0)
 			size = 0;
-			else
+		else
 			size = 1 + COMPLEX2VEC(length);
 		break;
 #endif
@@ -340,30 +342,20 @@ SEXP allocVector(SEXPTYPE type, int length)
 	case VECSXP:
 		if (length <= 0)
 			size = 0;
-			else
+		else
 			size = 1 + PTR2VEC(length);
 		break;
 	case LISTSXP:
 		return allocList(length);
 	default:
-		error("invalid type/length (%d/%d) in vector allocation\n",
-			type, length);
+		error("invalid type/length (%d/%d) in vector allocation\n", type, length);
 	}
 
 	/* we need to do the gc here so allocSExp doesn't! */
-
-	if (R_FreeSEXP == NULL || 
-	    &HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size) {
+	if (R_FreeSEXP == NULL || R_VMax - R_VTop < size) {
 		gc();
-		if (R_FreeSEXP == NULL)
+		if (R_FreeSEXP == NULL || R_VMax - R_VTop < size)
 			error("memory exhausted\n");
-		if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size) {
-			if (HS_Heaps[HS_HeapActive+1] == NULL)
-				HS_expandHeap();
-			HS_HeapActive++;
-		}
-		if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size)
-			error("could not allocate memory 2 size: %d", size);
 	}
 
 #ifdef oldmem
@@ -378,14 +370,15 @@ SEXP allocVector(SEXPTYPE type, int length)
 	OBJECT(s) = 0;
 	ATTRIB(s) = R_NilValue;
 	if (size > 0) {
-		CHAR(s) = (char *) (HS_HeapPtrs[HS_HeapActive] + 1);
-		BACKPOINTER(*HS_HeapPtrs[HS_HeapActive]) = s;
-		HS_HeapPtrs[HS_HeapActive] += size;
-	} else
-		CHAR(s) = (char * )0;
+		CHAR(s) = (char *) (R_VTop + 1);
+		BACKPOINTER(*R_VTop) = s;
+		R_VTop += size;
+	}
+	else
+		CHAR(s) = (char*)0;
 
-	/* The following prevents disaster in the case */
-	/* that an uninitialised string vector is marked */
+		/* The following prevents disaster in the case */
+		/* that an uninitialised string vector is marked */
 
 	if (type == STRSXP || type == EXPRSXP || type == VECSXP) {
 		for (i = 0; i < length; i++)
@@ -393,7 +386,6 @@ SEXP allocVector(SEXPTYPE type, int length)
 	}
 	return s;
 }
-
 
 SEXP allocList(int n)
 {
@@ -413,13 +405,11 @@ SEXP allocList(int n)
 
 
 
-/* gc - mark-sweep garbage collector */
+	/* gc - mark-sweep garbage collector */
 
 void gc(void)
 {
-	int heapchunks;
-	int i;
-	int freecells;
+	int vcells, vfrac;
 	if (gc_reporting)
 		REprintf("Garbage collection ...");
 	unmarkPhase();
@@ -428,19 +418,16 @@ void gc(void)
 	scanPhase();
 	if (gc_reporting) {
 		REprintf("\n%ld cons cells free (%ld%%)\n",
-		    R_Collected, (100 * R_Collected / R_NSize));
-		heapchunks = 0;
-		for (i = 0; HS_Heaps[i] != NULL; i++)
-			heapchunks++;
-		freecells = &HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive];
-		freecells = freecells + R_VSize * (heapchunks - 1 - HS_HeapActive);
+			 R_Collected, (100 * R_Collected / R_NSize));
+		vcells = R_VSize - (R_VTop - R_VHeap);
+		vfrac = 100 * vcells / R_VSize;
 		REprintf("%ldk bytes of heap free (%ld%%)\n",
-		    freecells * sizeof(VECREC) / 1024, (100 * freecells) / (heapchunks * R_VSize));
+			 vcells * sizeof(VECREC) / 1024, vfrac);
 	}
 }
 
 
-/* unmarkPhase - reset mark in ALL cons cells */
+	/* unmarkPhase - reset mark in ALL cons cells */
 
 void unmarkPhase(void)
 {
@@ -456,18 +443,18 @@ void markPhase(void)
 {
 	int i;
 
-	markSExp(R_NilValue);			/* Builtin constants */
+	markSExp(R_NilValue);	/* Builtin constants */
 	markSExp(NA_STRING);
 	markSExp(R_UnboundValue);
 	markSExp(R_MissingArg);
 	markSExp(R_CommentSxp);
 
-	markSExp(R_GlobalEnv);			/* Global environent */
+	markSExp(R_GlobalEnv);	/* Global environent */
 
-	for (i = 0; i < HSIZE; i++)		/* Symbol table */
+	for (i = 0; i < HSIZE; i++)	/* Symbol table */
 		markSExp(R_SymbolTable[i]);
 
-	if (R_CurrentExpr != NULL)		/* Current expression */
+	if (R_CurrentExpr != NULL)	/* Current expression */
 		markSExp(R_CurrentExpr);
 
 	for (i = 0; i < R_PPStackTop; i++)	/* protected pointers */
@@ -528,66 +515,55 @@ void markSExp(SEXP s)
 /* compactPhase - compact the vector heap */
 void compactPhase(void)
 {
-	VECREC * vto, *vfrom;
+	VECREC *vto, *vfrom;
 	SEXP s;
 	int i, size;
-	int chunkfrom;
-	int chunkto = 0;
 
-	vto = &HS_Heaps[0][0];
-	for (chunkfrom = 0; chunkfrom <= HS_HeapActive; chunkfrom++) {
-		vfrom = &HS_Heaps[chunkfrom][0];
-		while (vfrom < HS_HeapPtrs[chunkfrom]) {
-			s = BACKPOINTER(*vfrom);
-			switch (TYPEOF(s)) {	/* get size in bytes */
-			case CHARSXP:
-				size = LENGTH(s) + 1;
-				break;
-			case LGLSXP:
-			case FACTSXP:
-			case ORDSXP:
-			case INTSXP:
-				size = LENGTH(s) * sizeof(int);
-				break;
-			case REALSXP:
-				size = LENGTH(s) * sizeof(double);
-				break;
+	vto = vfrom = R_VHeap;
+
+	while (vfrom < R_VTop) {
+		s = BACKPOINTER(*vfrom);
+		switch (TYPEOF(s)) {	/* get size in bytes */
+		case CHARSXP:
+			size = LENGTH(s) + 1;
+			break;
+		case LGLSXP:
+		case FACTSXP:
+		case ORDSXP:
+		case INTSXP:
+			size = LENGTH(s) * sizeof(int);
+			break;
+		case REALSXP:
+			size = LENGTH(s) * sizeof(double);
+			break;
 #ifdef COMPLEX_DATA
-			case CPLXSXP:
-				size = LENGTH(s) * sizeof(complex);
-				break;
+		case CPLXSXP:
+			size = LENGTH(s) * sizeof(complex);
+			break;
 #endif
-			case STRSXP:
-			case EXPRSXP:
-			case VECSXP:
-				size = LENGTH(s) * sizeof(SEXP);
-				break;
-			default:
-				abort();
+		case STRSXP:
+		case EXPRSXP:
+		case VECSXP:
+			size = LENGTH(s) * sizeof(SEXP);
+			break;
+		default:
+			abort();
+		}
+		size = 1 + BYTE2VEC(size);
+		if (MARK(s)) {
+			if (vfrom != vto) {
+				for (i = 0; i < size; i++)
+					vto[i] = vfrom[i];
 			}
-			size = 1 + BYTE2VEC(size);
-			if (MARK(s)) {
-				if (vfrom != vto) {
-					if (vto + size > &HS_Heaps[chunkto][R_VSize-1]) {
-						HS_HeapPtrs[chunkto] = vto;
-						chunkto++;
-						vto = &HS_Heaps[chunkto][0];
-					}
-					for (i = 0; i < size; i++)
-						vto[i] = vfrom[i];
-				}
-				CHAR(BACKPOINTER(*vto)) = (char *) (vto + 1);
-				vto += size;
-				vfrom += size;
-			} else {
-				vfrom += size;
-			}
+			CHAR(BACKPOINTER(*vto)) = (char *) (vto + 1);
+			vto += size;
+			vfrom += size;
+		}
+		else {
+			vfrom += size;
 		}
 	}
-	HS_HeapPtrs[chunkto] = vto;
-	HS_HeapActive = chunkto;
-	for (i = HS_HeapActive + 1; HS_Heaps[i] != NULL; i++)
-		HS_HeapPtrs[i] = &HS_Heaps[i][0];
+	R_VTop = vto;
 }
 
 
@@ -598,8 +574,8 @@ void scanPhase(void)
 
 	R_FreeSEXP = NULL;
 	R_Collected = 0;
-	if (R_FreeSEXP == NULL)
-		i = 10;
+	if(R_FreeSEXP == NULL)
+		i=10;
 	for (i = 0; i < R_NSize; i++) {
 		if (!MARK(&R_NHeap[i])) {
 			CDR(&R_NHeap[i]) = R_FreeSEXP;
@@ -630,7 +606,7 @@ void unprotect(int l)
 {
 	if (R_PPStackTop > 0)
 		R_PPStackTop = R_PPStackTop - l;
-		else
+	else
 		error("stack imbalance in \"unprotect\"\n");
 }
 

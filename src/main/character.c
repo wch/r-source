@@ -251,11 +251,14 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ans);
 }
 
+#ifdef HAVE_REGCOMP
 #include <sys/types.h>
 #include <regex.h>
+#endif
 
 SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifdef HAVE_REGCOMP
 	SEXP pat, vec, ind, ans;
 	regex_t reg;
 	int i, j, n, nmatches;
@@ -309,8 +312,12 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
 	return ans;
+#else
+	errorcall(call, "POSIX regular expressions not available\n");
+#endif
 }
 
+#ifdef HAVE_REGCOMP
 
 	/*  The following R functions do substitution for     */
 	/*  regular expressions, either once or globally.     */
@@ -371,8 +378,11 @@ static char *string_adj(char *target, char *orig, char *repl,
 	return t;
 }
 
+#endif
+
 SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifdef HAVE_REGCOMP
 	SEXP pat, rep, vec, ans;
 	regex_t reg;
 	regmatch_t regmatch[10];
@@ -443,4 +453,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	regfree(&reg);
 	UNPROTECT(1);
 	return ans;
+#else
+	errorcall(call, "POSIX regular expressions not available\n");
+#endif
 }

@@ -1,12 +1,27 @@
 #ifndef lint
-static char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
+static char const yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #endif
 #define YYBYACC 1
 #define YYMAJOR 1
 #define YYMINOR 9
-#define yyclearin (yychar=(-1))
+#define YYLEX yylex()
+#define YYEMPTY -1
+#define yyclearin (yychar=(YYEMPTY))
 #define yyerrok (yyerrflag=0)
 #define YYRECOVERING (yyerrflag!=0)
+/* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
+#ifdef c_plusplus
+#ifndef __cplusplus
+#define __cplusplus
+#endif
+#endif
+#ifdef __cplusplus
+extern "C" { char *getenv(const char *); }
+#else
+extern char *getenv();
+extern int yylex();
+extern int yyparse();
+#endif
 #define YYPREFIX "yy"
 #line 2 "gram.y"
 /*
@@ -44,7 +59,7 @@ extern SEXP R_CommentSxp;
 #define YYRETURN(x)	{ free((void*)yys); free((void*)yyv); return(x); }
 #endif
 
-#line 48 "y.tab.c"
+#line 63 "y.tab.c"
 #define STR_CONST 257
 #define NUM_CONST 258
 #define NULL_CONST 259
@@ -79,7 +94,7 @@ extern SEXP R_CommentSxp;
 #define UMINUS 288
 #define UPLUS 289
 #define YYERRCODE 256
-short yylhs[] = {                                        -1,
+const short yylhs[] = {                                        -1,
     0,    0,    0,    0,    0,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -89,17 +104,17 @@ short yylhs[] = {                                        -1,
     9,    9,    9,    9,    9,    9,    9,    3,    3,    3,
     3,    3,    4,
 };
-short yylen[] = {                                         2,
+const short yylen[] = {                                         2,
     0,    2,    3,    3,    2,    1,    1,    1,    1,    3,
     3,    2,    2,    2,    2,    2,    3,    3,    3,    3,
     3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
     3,    3,    3,    3,    3,    6,    4,    3,    5,    3,
     3,    2,    5,    4,    3,    3,    1,    1,    3,    3,
     5,    0,    1,    3,    2,    3,    2,    1,    4,    0,
-    1,    3,    2,    3,    2,    3,    2,    0,    1,    3,
+    1,    2,    3,    2,    3,    2,    3,    0,    1,    3,
     3,    5,    0,
 };
-short yydefred[] = {                                      1,
+const short yydefred[] = {                                      1,
     0,    5,    7,    6,    8,    9,    0,    0,    0,    0,
    47,   48,    0,    0,    0,    0,    0,    0,    2,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -115,10 +130,10 @@ short yydefred[] = {                                      1,
     0,    0,    0,    0,    0,    0,    0,    0,   43,    0,
     0,    0,   51,   59,    0,
 };
-short yydgoto[] = {                                       1,
+const short yydgoto[] = {                                       1,
    79,   37,   65,  118,   80,   27,   25,   29,   81,
 };
-short yysindex[] = {                                      0,
+const short yysindex[] = {                                      0,
   564,    0,    0,    0,    0,    0,  -29,  -26,  -24,  -18,
     0,    0, 1247, 1247, 1247, 1247, 1247, 1247,    0, 1247,
  1247,  -10, -236, -229, 1247, 1247, 1247, 1247, 1247, 1266,
@@ -134,7 +149,7 @@ short yysindex[] = {                                      0,
  1266, 1247,   44, 1197, 1266, 1266, 1266, 1266,    0, 1365,
  1266, 1247,    0,    0, 1266,
 };
-short yyrindex[] = {                                      0,
+const short yyrindex[] = {                                      0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,   19,
     0,    0,  -21,    0,    0,    0,    0,    0,    0,  414,
@@ -150,11 +165,11 @@ short yyrindex[] = {                                      0,
     3,    0,   18,    0,  760,  131,  136,  199,    0,  219,
   767,    0,    0,    0,   35,
 };
-short yygindex[] = {                                      0,
+const short yygindex[] = {                                      0,
  1627,    0,    0,   12,  -58,    0,    0,    0,  -11,
 };
 #define YYTABLESIZE 1759
-short yytable[] = {                                      62,
+const short yytable[] = {                                      62,
   101,  103,  104,  102,   59,   59,   55,   60,   60,   60,
    23,   53,   51,   24,   52,   26,   54,  106,   13,   68,
   107,   28,   68,   64,   73,   59,   55,   57,   52,   60,
@@ -162,29 +177,29 @@ short yytable[] = {                                      62,
   108,   69,   60,   70,   69,   13,   70,   57,   63,   13,
    13,   13,   13,   13,  114,   13,   60,   17,   71,   61,
    61,   71,   58,   58,   12,  115,   13,   13,   12,   12,
-   12,   12,   12,   74,   12,   72,   22,   52,   72,   65,
-   61,  116,   65,   58,   17,   12,   12,   61,   17,   17,
+   12,   12,   12,   74,   12,   72,   22,   52,   72,   64,
+   61,  116,   64,   58,   17,   12,   12,   61,   17,   17,
    17,   17,   17,   53,   17,   23,  117,  119,  120,  123,
   129,   13,  130,   22,  132,   17,   17,   22,   22,   22,
    22,   22,   57,   22,   20,   50,   73,  122,  134,   55,
    12,    0,   23,    0,   22,   22,   23,   23,   23,   23,
-   23,   65,   23,   13,   13,    0,   15,    0,   56,   75,
+   23,   64,   23,   13,   13,    0,   15,    0,   56,   75,
    17,   20,   53,   52,   23,   20,   20,   20,   20,   20,
     0,   20,   12,   12,    0,    0,    0,   54,    0,   22,
-    0,   57,   67,   20,    0,   67,   63,   15,   55,   63,
-   15,   64,   17,   17,   64,    0,   66,    0,   23,   66,
+    0,   57,   66,   20,    0,   66,   62,   15,   55,   62,
+   15,   65,   17,   17,   65,    0,   67,    0,   23,   67,
    59,    0,   59,   55,   60,   15,   60,   56,   53,    0,
     0,   22,   22,   54,    0,    0,    0,   20,    0,    0,
     0,    0,   57,   59,   57,    0,   54,   60,   53,    0,
-   23,   23,    0,    0,   67,    0,    0,    0,   63,   15,
-    0,    0,    0,   64,    0,   57,    0,   57,   66,   20,
-   20,   39,   39,    0,   55,   61,    0,   61,   58,   62,
-   58,    0,   62,    0,   42,   43,   44,   45,   46,   47,
+   23,   23,    0,    0,   66,    0,    0,    0,   62,   15,
+    0,    0,    0,   65,    0,   57,    0,   57,   67,   20,
+   20,   39,   39,    0,   55,   61,    0,   61,   58,   63,
+   58,    0,   63,    0,   42,   43,   44,   45,   46,   47,
    48,   15,   39,   56,   40,   41,   56,    0,   61,   60,
     0,   58,   60,    0,   42,   43,   44,   45,   46,   47,
    48,   49,   54,   13,   13,    0,   56,    0,   13,    0,
     0,    0,    0,   13,   13,   13,   13,   13,   13,   13,
-   13,   62,   12,   12,    0,   13,    0,   12,    0,    0,
+   13,   63,   12,   12,    0,   13,    0,   12,    0,    0,
     0,    0,   12,   12,   12,   12,   12,   12,   12,   12,
     0,   60,   17,   17,   12,    0,    0,   17,    0,    0,
     0,    0,   17,   17,   17,   17,   17,   17,   17,   17,
@@ -332,7 +347,7 @@ short yytable[] = {                                      62,
   126,  127,  128,    0,    0,    0,    0,    0,  131,    0,
     0,    0,    0,    0,    0,    0,    0,    0,  135,
 };
-short yycheck[] = {                                      10,
+const short yycheck[] = {                                      10,
   257,   60,   61,  260,   36,   36,   37,   44,   40,   40,
    40,   42,   43,   40,   45,   40,   47,   41,   10,   41,
    44,   40,   44,  260,   10,   36,   37,   58,   10,   40,
@@ -530,7 +545,7 @@ char *yyname[] = {
 "LT","LE","EQ","NE","AND","OR","LOW","TILDE","UNOT","NOT","SPECIAL","UMINUS",
 "UPLUS",
 };
-char *yyrule[] = {
+const char * const yyrule[] = {
 "$accept : prog",
 "prog :",
 "prog : prog '\\n'",
@@ -593,12 +608,12 @@ char *yyrule[] = {
 "sublist : sublist gobble ',' sub",
 "sub :",
 "sub : expr",
-"sub : SYMBOL '=' expr",
 "sub : SYMBOL '='",
-"sub : STR_CONST '=' expr",
+"sub : SYMBOL '=' expr",
 "sub : STR_CONST '='",
-"sub : NULL_CONST '=' expr",
+"sub : STR_CONST '=' expr",
 "sub : NULL_CONST '='",
+"sub : NULL_CONST '=' expr",
 "formlist :",
 "formlist : SYMBOL",
 "formlist : SYMBOL '=' expr",
@@ -633,6 +648,268 @@ short yyss[YYSTACKSIZE];
 YYSTYPE yyvs[YYSTACKSIZE];
 #define yystacksize YYSTACKSIZE
 #line 167 "gram.y"
+
+static void addcomment(SEXP);
+static void ifpush(void);
+SEXP newlist(void);
+SEXP growlist(SEXP, SEXP);
+SEXP firstarg(SEXP, SEXP);
+SEXP nextarg(SEXP, SEXP, SEXP);
+SEXP tagarg(SEXP, SEXP);
+void check_formals(SEXP, SEXP);
+
+static SEXP yynullformal()
+{
+	SEXP ans;
+	PROTECT(ans = R_NilValue);
+	return ans;
+}
+
+static SEXP yyfirstformal0(SEXP sym)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = firstarg(R_MissingArg, sym));
+	return ans;
+}
+
+static SEXP yyfirstformal1(SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = firstarg(expr, sym));
+	return ans;
+}
+
+static SEXP yyaddformal0(SEXP formlist, SEXP sym)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	check_formals(formlist ,sym);
+	PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
+	return ans;
+}
+
+static SEXP yyaddformal1(SEXP formlist, SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(3);
+	check_formals(formlist, sym);
+	PROTECT(ans = nextarg(formlist, expr, sym));
+	return ans;
+}
+
+static SEXP yyexprlist0()
+{
+	SEXP ans;
+	PROTECT(ans = newlist());
+	return ans;
+}
+
+static SEXP yyexprlist1(SEXP expr)
+{
+	SEXP ans;
+	addcomment(expr);
+	UNPROTECT(1);
+	PROTECT(ans = growlist(newlist(), expr));
+	return ans;
+}
+
+static SEXP yyexprlist2(SEXP exprlist, SEXP expr)
+{
+	SEXP ans;
+	addcomment(expr);
+	UNPROTECT(2);
+	PROTECT(ans = growlist(exprlist, expr));
+	return ans;
+}
+
+static SEXP yysub0(void)
+{
+	SEXP ans;
+	PROTECT(ans = lang2(R_MissingArg,R_NilValue));
+	return ans;
+}
+
+static SEXP yysub1(SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = tagarg(expr, R_NilValue));
+	return ans;
+}
+
+static SEXP yysymsub0(SEXP sym)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = tagarg(R_MissingArg, sym));
+	return ans;
+}
+
+static SEXP yysymsub1(SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = tagarg(expr, sym));
+	return ans;
+}
+
+static SEXP yynullsub0()
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = tagarg(R_MissingArg, install("NULL")));
+	return ans;
+}
+
+static SEXP yynullsub1(SEXP expr)
+{
+	SEXP ans = install("NULL");
+	UNPROTECT(2);
+	PROTECT(ans = tagarg(expr, ans));
+	return ans;
+}
+
+
+static SEXP yysublist1(SEXP sub)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = firstarg(CAR(sub),CADR(sub)));
+	return ans;
+}
+
+static SEXP yysublist2(SEXP sublist, SEXP sub)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = nextarg(sublist, CAR(sub), CADR(sub)));
+	return ans;
+}
+
+static SEXP yycond(SEXP expr)
+{
+	eatln = 1;
+	return expr;
+}
+
+static SEXP yyifcond(SEXP expr)
+{
+	ifpush();
+	eatln = 1;
+	return expr;
+}
+
+static SEXP yyforcond(SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = LCONS(sym, expr));
+	eatln=1;
+	return ans;
+}
+
+static SEXP yyforloop(SEXP forsym, SEXP forcond, SEXP body)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = lang4(forsym, CAR(forcond), CDR(forcond), body));
+	return ans;
+}
+
+static SEXP yyfuncall(SEXP expr, SEXP args)
+{
+	SEXP ans;
+	if(isString(expr))
+		expr = install(CHAR(STRING(expr)[0])); 
+	UNPROTECT(2);
+	if(length(CDR(args)) == 1 && CADR(args) == R_MissingArg )
+		ans = lang1(expr);
+	else    
+		ans = LCONS(expr, CDR(args));   
+	PROTECT(ans);
+	return ans;
+}       
+
+static SEXP yydefun(SEXP fname, SEXP formals, SEXP body)
+{
+	SEXP ans;
+	addcomment(body);
+	UNPROTECT(2);
+	ans = lang3(fname, CDR(formals), body); 
+	PROTECT(ans);
+	popCmt();
+	return ans;
+}
+
+static SEXP yyunary(SEXP op, SEXP arg)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = lang2(op, arg));
+	return ans;
+}
+
+static SEXP yybinary(SEXP n1, SEXP n2, SEXP n3)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = lang3(n1, n2, n3));
+	return ans;
+}
+
+static SEXP yyparen(SEXP n1, SEXP n2)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = lang2(n1, n2));
+	return ans;
+}
+
+static SEXP yynode2(int nprot, SEXP n1, SEXP n2)
+{
+	SEXP ans;
+	UNPROTECT(nprot);
+	PROTECT(ans = lang2(n1, n2));
+	return ans;
+}
+
+static SEXP yynode3(int nprot, SEXP n1, SEXP n2, SEXP n3)
+{
+	SEXP ans;
+	UNPROTECT(nprot);
+	PROTECT(ans = lang3(n1, n2, n3));
+	return ans;
+}
+
+static SEXP yynode4(int nprot, SEXP n1, SEXP n2, SEXP n3, SEXP n4)
+{
+	SEXP ans;
+	UNPROTECT(nprot);
+	PROTECT(ans = lang4(n1, n2, n3, n4));
+	return ans;
+}
+
+static SEXP yysubscript(SEXP a1, SEXP a2, SEXP a3)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	ans = LCONS(a2, LCONS(a1, CDR(a3)));
+	PROTECT(ans);
+	return ans;
+}
+
+static SEXP yyexprlist(SEXP a1, SEXP a2)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	TYPEOF(a2) = LANGSXP;
+	CAR(a2) = a1;
+	PROTECT(ans = a2);
+	eatln = 0;
+	return ans;
+}
 
 SEXP tagarg(SEXP arg, SEXP tag)
 {
@@ -705,7 +982,7 @@ int isComment(SEXP l)
 		return 0;
 }
 
-void addcomment(SEXP l)
+static void addcomment(SEXP l)
 {
 	SEXP tcmt, cmt;
 	int i, ncmt;
@@ -1379,7 +1656,7 @@ int yylex()
 		if (c == '%')
 			*p++ = c;
 		*p++ = '\0';
-		PROTECT(yylval = install(yytext));
+		yylval = install(yytext);
 		eatln=1;
 		return SPECIAL;
 	}
@@ -1556,20 +1833,20 @@ int yylex()
 		return c;
 	}
 }
-#line 1560 "y.tab.c"
+#line 1837 "y.tab.c"
 #define YYABORT goto yyabort
 #define YYREJECT goto yyabort
 #define YYACCEPT goto yyaccept
 #define YYERROR goto yyerrlab
+
 int
 yyparse()
 {
     register int yym, yyn, yystate;
 #if YYDEBUG
     register char *yys;
-    extern char *getenv();
 
-    if (yys = getenv("YYDEBUG"))
+    if ((yys = getenv("YYDEBUG")))
     {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
@@ -1586,7 +1863,7 @@ yyparse()
     *yyssp = yystate = 0;
 
 yyloop:
-    if (yyn = yydefred[yystate]) goto yyreduce;
+    if ((yyn = yydefred[yystate])) goto yyreduce;
     if (yychar < 0)
     {
         if ((yychar = yylex()) < 0) yychar = 0;
@@ -1626,12 +1903,12 @@ yyloop:
         goto yyreduce;
     }
     if (yyerrflag) goto yyinrecovery;
-#ifdef lint
+#if defined(lint) || defined(__GNUC__)
     goto yynewerror;
 #endif
 yynewerror:
     yyerror("syntax error");
-#ifdef lint
+#if defined(lint) || defined(__GNUC__)
     goto yyerrlab;
 #endif
 yyerrlab:
@@ -1734,156 +2011,152 @@ case 9:
 { yyval = yyvsp[0]; }
 break;
 case 10:
-#line 78 "gram.y"
-{ UNPROTECT(1); TYPEOF(yyvsp[-1]) = LANGSXP; CAR(yyvsp[-1]) = yyvsp[-2]; yyval = yyvsp[-1]; PROTECT(yyval); eatln = 0; }
+#line 79 "gram.y"
+{ yyval = yyexprlist(yyvsp[-2],yyvsp[-1]); }
 break;
 case 11:
-#line 79 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-2], yyvsp[-1]); PROTECT(yyval); }
+#line 80 "gram.y"
+{ yyval = yyparen(yyvsp[-2],yyvsp[-1]); }
 break;
 case 12:
-#line 80 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+#line 82 "gram.y"
+{ yyval = yyunary(yyvsp[-1],yyvsp[0]); }
 break;
 case 13:
-#line 81 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+#line 83 "gram.y"
+{ yyval = yyunary(yyvsp[-1],yyvsp[0]); }
 break;
 case 14:
-#line 82 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+#line 84 "gram.y"
+{ yyval = yyunary(yyvsp[-1],yyvsp[0]); }
 break;
 case 15:
-#line 83 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+#line 85 "gram.y"
+{ yyval = yyunary(yyvsp[-1],yyvsp[0]); }
 break;
 case 16:
-#line 84 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+#line 86 "gram.y"
+{ yyval = yyunary(yyvsp[-1],yyvsp[0]); }
 break;
 case 17:
-#line 85 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 88 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 18:
-#line 86 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 89 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 19:
-#line 87 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 90 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 20:
-#line 88 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 91 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 21:
-#line 89 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 92 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 22:
-#line 90 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 93 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 23:
-#line 91 "gram.y"
-{ UNPROTECT(3); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 94 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 24:
-#line 92 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 95 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 25:
-#line 93 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 96 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 26:
-#line 94 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 97 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 27:
-#line 95 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 98 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 28:
-#line 96 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 99 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 29:
-#line 97 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 100 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 30:
-#line 98 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 101 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 31:
-#line 99 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 102 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 32:
-#line 100 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 103 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 33:
-#line 101 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 104 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 34:
-#line 102 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+#line 106 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 35:
-#line 103 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-1], yyvsp[0], yyvsp[-2]); PROTECT(yyval); }
+#line 107 "gram.y"
+{ yyval = yybinary(yyvsp[-1],yyvsp[0],yyvsp[-2]); }
 break;
 case 36:
-#line 105 "gram.y"
-{ addcomment(yyvsp[0]); UNPROTECT(2); yyval = lang3(yyvsp[-5], CDR(yyvsp[-3]), yyvsp[0]); PROTECT(yyval); popCmt();}
+#line 109 "gram.y"
+{ yyval = yydefun(yyvsp[-5], yyvsp[-3], yyvsp[0]); }
 break;
 case 37:
-#line 106 "gram.y"
-{ if(isString(yyvsp[-3])) yyvsp[-3]=install(CHAR(STRING(yyvsp[-3])[0])); UNPROTECT(2); if(length(CDR(yyvsp[-1])) == 1 && CADR(yyvsp[-1]) == R_MissingArg )
-										yyval = lang1(yyvsp[-3]);
-									else
-										yyval = LCONS(yyvsp[-3], CDR(yyvsp[-1]));
-									PROTECT(yyval); }
+#line 110 "gram.y"
+{ yyval = yyfuncall(yyvsp[-3], yyvsp[-1]); }
 break;
 case 38:
 #line 111 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-2], yyvsp[-1], yyvsp[0]); PROTECT(yyval);  }
+{ yyval = yynode3(2,yyvsp[-2],yyvsp[-1],yyvsp[0]); }
 break;
 case 39:
 #line 112 "gram.y"
-{ UNPROTECT(3); yyval = lang4(yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[0]); PROTECT(yyval); }
+{ yyval = yynode4(3,yyvsp[-4],yyvsp[-3],yyvsp[-2],yyvsp[0]); }
 break;
 case 40:
 #line 113 "gram.y"
-{ UNPROTECT(2); yyval = lang4(yyvsp[-2], CAR(yyvsp[-1]), CDR(yyvsp[-1]), yyvsp[0]); PROTECT(yyval); }
+{ yyval = yyforloop(yyvsp[-2],yyvsp[-1],yyvsp[0]); }
 break;
 case 41:
 #line 114 "gram.y"
-{ UNPROTECT(2); yyval = lang3(yyvsp[-2], yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+{ yyval = yynode3(2,yyvsp[-2],yyvsp[-1],yyvsp[0]); }
 break;
 case 42:
 #line 115 "gram.y"
-{ UNPROTECT(1); yyval = lang2(yyvsp[-1], yyvsp[0]); PROTECT(yyval); }
+{ yyval = yynode2(1,yyvsp[-1],yyvsp[0]); }
 break;
 case 43:
 #line 116 "gram.y"
-{ UNPROTECT(2); yyval = LCONS(yyvsp[-3], LCONS(yyvsp[-4], CDR(yyvsp[-2]))); PROTECT(yyval); }
+{ yyval = yysubscript(yyvsp[-4],yyvsp[-3],yyvsp[-2]); }
 break;
 case 44:
 #line 117 "gram.y"
-{ UNPROTECT(2); yyval = LCONS(yyvsp[-2], LCONS(yyvsp[-3], CDR(yyvsp[-1]))); PROTECT(yyval); }
+{ yyval = yysubscript(yyvsp[-3],yyvsp[-2],yyvsp[-1]); }
 break;
 case 45:
 #line 118 "gram.y"
-{ yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); UNPROTECT(2); PROTECT(yyval); }
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 46:
 #line 119 "gram.y"
-{ yyval = lang3(yyvsp[-1], yyvsp[-2], yyvsp[0]); UNPROTECT(2); PROTECT(yyval); }
+{ yyval = yybinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); }
 break;
 case 47:
 #line 120 "gram.y"
@@ -1895,27 +2168,27 @@ case 48:
 break;
 case 49:
 #line 125 "gram.y"
-{ yyval = yyvsp[-1];  eatln = 1; }
+{ yyval = yycond(yyvsp[-1]); }
 break;
 case 50:
 #line 128 "gram.y"
-{ yyval = yyvsp[-1]; ifpush(); eatln = 1; }
+{ yyval = yyifcond(yyvsp[-1]); }
 break;
 case 51:
 #line 131 "gram.y"
-{ UNPROTECT(2); yyval = LCONS(yyvsp[-3],yyvsp[-1]); PROTECT(yyval); eatln=1;}
+{ yyval = yyforcond(yyvsp[-3], yyvsp[-1]); }
 break;
 case 52:
 #line 135 "gram.y"
-{ yyval = newlist(); PROTECT(yyval); }
+{ yyval = yyexprlist0(); }
 break;
 case 53:
 #line 136 "gram.y"
-{ addcomment(yyvsp[0]); UNPROTECT(1); yyval = growlist(newlist(), yyvsp[0]); PROTECT(yyval);}
+{ yyval = yyexprlist1(yyvsp[0]); }
 break;
 case 54:
 #line 137 "gram.y"
-{ addcomment(yyvsp[0]); UNPROTECT(2); yyval = growlist(yyvsp[-2], yyvsp[0]); PROTECT(yyval);}
+{ yyval = yyexprlist2(yyvsp[-2], yyvsp[0]); }
 break;
 case 55:
 #line 138 "gram.y"
@@ -1923,7 +2196,7 @@ case 55:
 break;
 case 56:
 #line 139 "gram.y"
-{ addcomment(yyvsp[0]); UNPROTECT(2); yyval = growlist(yyvsp[-2], yyvsp[0]); PROTECT(yyval);}
+{ yyval = yyexprlist2(yyvsp[-2], yyvsp[0]); }
 break;
 case 57:
 #line 140 "gram.y"
@@ -1931,69 +2204,69 @@ case 57:
 break;
 case 58:
 #line 143 "gram.y"
-{ UNPROTECT(1); yyval = firstarg(CAR(yyvsp[0]),CADR(yyvsp[0])); PROTECT(yyval); }
+{ yyval = yysublist1(yyvsp[0]); }
 break;
 case 59:
 #line 144 "gram.y"
-{ UNPROTECT(2); yyval = nextarg(yyvsp[-3], CAR(yyvsp[0]), CADR(yyvsp[0])); PROTECT(yyval); }
+{ yyval = yysublist2(yyvsp[-3],yyvsp[0]); }
 break;
 case 60:
 #line 147 "gram.y"
-{ yyval = lang2(R_MissingArg,R_NilValue); PROTECT(yyval); }
+{ yyval = yysub0(); }
 break;
 case 61:
 #line 148 "gram.y"
-{ UNPROTECT(1); yyval = tagarg(yyvsp[0], R_NilValue); PROTECT(yyval); }
+{ yyval = yysub1(yyvsp[0]); }
 break;
 case 62:
 #line 149 "gram.y"
-{ UNPROTECT(2); yyval = tagarg(yyvsp[0], yyvsp[-2]); PROTECT(yyval); }
+{ yyval = yysymsub0(yyvsp[-1]); }
 break;
 case 63:
 #line 150 "gram.y"
-{ UNPROTECT(1); yyval = tagarg(R_MissingArg, yyvsp[-1]); PROTECT(yyval); }
+{ yyval = yysymsub1(yyvsp[-2],yyvsp[0]); }
 break;
 case 64:
 #line 151 "gram.y"
-{ UNPROTECT(2); yyval = tagarg(yyvsp[0], yyvsp[-2]); PROTECT(yyval); }
+{ yyval = yysymsub0(yyvsp[-1]); }
 break;
 case 65:
 #line 152 "gram.y"
-{ UNPROTECT(1); yyval = tagarg(R_MissingArg, yyvsp[-1]); PROTECT(yyval); }
+{ yyval = yysymsub1(yyvsp[-2],yyvsp[0]); }
 break;
 case 66:
 #line 153 "gram.y"
-{ UNPROTECT(2); yyval = tagarg(yyvsp[0], install("NULL")); PROTECT(yyval); }
+{ yyval = yynullsub0(); }
 break;
 case 67:
 #line 154 "gram.y"
-{ UNPROTECT(1); yyval = tagarg(R_MissingArg, install("NULL")); PROTECT(yyval); }
+{ yyval = yynullsub1(yyvsp[0]); }
 break;
 case 68:
 #line 157 "gram.y"
-{ yyval = R_NilValue; PROTECT(yyval); }
+{ yyval = yynullformal(); }
 break;
 case 69:
 #line 158 "gram.y"
-{ UNPROTECT(1); yyval = firstarg(R_MissingArg, yyvsp[0]); PROTECT(yyval); }
+{ yyval = yyfirstformal0(yyvsp[0]); }
 break;
 case 70:
 #line 159 "gram.y"
-{ UNPROTECT(2); yyval = firstarg(yyvsp[0], yyvsp[-2]); PROTECT(yyval); }
+{ yyval = yyfirstformal1(yyvsp[-2], yyvsp[0]); }
 break;
 case 71:
 #line 160 "gram.y"
-{ UNPROTECT(2); check_formals(yyvsp[-2],yyvsp[0]); yyval = nextarg(yyvsp[-2], R_MissingArg, yyvsp[0]); PROTECT(yyval); }
+{ yyval = yyaddformal0(yyvsp[-2],yyvsp[0]); }
 break;
 case 72:
 #line 161 "gram.y"
-{ UNPROTECT(3); check_formals(yyvsp[-4],yyvsp[-2]); yyval = nextarg(yyvsp[-4], yyvsp[0], yyvsp[-2]); PROTECT(yyval); }
+{ yyval = yyaddformal1(yyvsp[-4],yyvsp[-2],yyvsp[0]); }
 break;
 case 73:
 #line 164 "gram.y"
 {eatln = 1;}
 break;
-#line 1997 "y.tab.c"
+#line 2270 "y.tab.c"
     }
     yyssp -= yym;
     yystate = *yyssp;

@@ -64,106 +64,368 @@ extern SEXP R_CommentSxp;
 
 %%
 
-prog:							{ newline = 0; }
-	|	prog '\n'				{ R_CurrentExpr = NULL; return 2; }
-	|	prog expr '\n'				{ R_CurrentExpr = $2; UNPROTECT(1); YYRETURN(3); }
-	|	prog expr ';'				{ R_CurrentExpr = $2; UNPROTECT(1); YYRETURN(4); }
-	|	prog error 				{ YYABORT; }
+prog:						{ newline = 0; }
+	|	prog '\n'			{ R_CurrentExpr = NULL; return 2; }
+	|	prog expr '\n'			{ R_CurrentExpr = $2; UNPROTECT(1); YYRETURN(3); }
+	|	prog expr ';'			{ R_CurrentExpr = $2; UNPROTECT(1); YYRETURN(4); }
+	|	prog error 			{ YYABORT; }
 	;
 
-expr:		NUM_CONST				{ $$ = $1; }
-	|	STR_CONST				{ $$ = $1; }
-	|	NULL_CONST				{ $$ = $1; }
-	|	SYMBOL					{ $$ = $1; }
-	|	'{' exprlist '}'			{ UNPROTECT(1); TYPEOF($2) = LANGSXP; CAR($2) = $1; $$ = $2; PROTECT($$); eatln = 0; }
-	|	'(' expr ')'				{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	'-' expr %prec UMINUS			{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	'+' expr %prec UMINUS			{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	'!' expr %prec UNOT			{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	'~' expr %prec TILDE			{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	'?' expr				{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	expr ':'  expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '+'  expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '-' expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '*' expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '/' expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '^' expr 				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr SPECIAL expr			{ UNPROTECT(3); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '%' expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr '~' expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr LT expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr LE expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr EQ expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr NE expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr GE expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr GT expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr AND expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|	expr OR expr				{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|  	expr LEFT_ASSIGN expr 			{ UNPROTECT(2); $$ = lang3($2, $1, $3); PROTECT($$); }
-	|  	expr RIGHT_ASSIGN expr 			{ UNPROTECT(2); $$ = lang3($2, $3, $1); PROTECT($$); }
+expr:	 	NUM_CONST			{ $$ = $1; }
+	|	STR_CONST			{ $$ = $1; }
+	|	NULL_CONST			{ $$ = $1; }
+	|	SYMBOL				{ $$ = $1; }
+
+	|	'{' exprlist '}'		{ $$ = yyexprlist($1,$2); }
+	|	'(' expr ')'			{ $$ = yyparen($1,$2); }
+
+	|	'-' expr %prec UMINUS		{ $$ = yyunary($1,$2); }
+	|	'+' expr %prec UMINUS		{ $$ = yyunary($1,$2); }
+	|	'!' expr %prec UNOT		{ $$ = yyunary($1,$2); }
+	|	'~' expr %prec TILDE		{ $$ = yyunary($1,$2); }
+	|	'?' expr			{ $$ = yyunary($1,$2); }
+
+	|	expr ':'  expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr '+'  expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr '-' expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr '*' expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr '/' expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr '^' expr 			{ $$ = yybinary($2,$1,$3); }
+	|	expr SPECIAL expr		{ $$ = yybinary($2,$1,$3); }
+	|	expr '%' expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr '~' expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr LT expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr LE expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr EQ expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr NE expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr GE expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr GT expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr AND expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr OR expr			{ $$ = yybinary($2,$1,$3); }
+
+	|	expr LEFT_ASSIGN expr 		{ $$ = yybinary($2,$1,$3); }
+	|	expr RIGHT_ASSIGN expr 		{ $$ = yybinary($2,$3,$1); }
 	|	FUNCTION '(' formlist ')' gobble expr %prec LOW
-							{ addcomment($6); UNPROTECT(2); $$ = lang3($1, CDR($3), $6); PROTECT($$); popCmt();}
-	|	expr '(' sublist ')'			{ if(isString($1)) $1=install(CHAR(STRING($1)[0])); UNPROTECT(2); if(length(CDR($3)) == 1 && CADR($3) == R_MissingArg )
-										$$ = lang1($1);
-									else
-										$$ = LCONS($1, CDR($3));
-									PROTECT($$); }
-	|	IF ifcond expr 				{ UNPROTECT(2); $$ = lang3($1, $2, $3); PROTECT($$);  }
-	|	IF ifcond expr ELSE expr		{ UNPROTECT(3); $$ = lang4($1, $2, $3, $5); PROTECT($$); }
-	|	FOR forcond expr	%prec FOR 	{ UNPROTECT(2); $$ = lang4($1, CAR($2), CDR($2), $3); PROTECT($$); }
-	|	WHILE cond expr				{ UNPROTECT(2); $$ = lang3($1, $2, $3); PROTECT($$); }
-	|	REPEAT expr				{ UNPROTECT(1); $$ = lang2($1, $2); PROTECT($$); }
-	|	expr LBB sublist ']' ']'		{ UNPROTECT(2); $$ = LCONS($2, LCONS($1, CDR($3))); PROTECT($$); }
-	|	expr '[' sublist ']'			{ UNPROTECT(2); $$ = LCONS($2, LCONS($1, CDR($3))); PROTECT($$); }
-	|	expr '$' SYMBOL				{ $$ = lang3($2, $1, $3); UNPROTECT(2); PROTECT($$); }
-	|	expr '$' STR_CONST			{ $$ = lang3($2, $1, $3); UNPROTECT(2); PROTECT($$); }
-	|	NEXT					{ $$ = lang1($1); PROTECT($$); }
-	|	BREAK					{ $$ = lang1($1); PROTECT($$); }
+						{ $$ = yydefun($1, $3, $6); }
+	|	expr '(' sublist ')'		{ $$ = yyfuncall($1, $3); }
+	|	IF ifcond expr 			{ $$ = yynode3(2,$1,$2,$3); }
+	|	IF ifcond expr ELSE expr	{ $$ = yynode4(3,$1,$2,$3,$5); }
+	|	FOR forcond expr %prec FOR 	{ $$ = yyforloop($1,$2,$3); }
+	|	WHILE cond expr			{ $$ = yynode3(2,$1,$2,$3); }
+	|	REPEAT expr			{ $$ = yynode2(1,$1,$2); }
+	|	expr LBB sublist ']' ']'	{ $$ = yysubscript($1,$2,$3); }
+	|	expr '[' sublist ']'		{ $$ = yysubscript($1,$2,$3); }
+	|	expr '$' SYMBOL			{ $$ = yybinary($2,$1,$3); }
+	|	expr '$' STR_CONST		{ $$ = yybinary($2,$1,$3); }
+	|	NEXT				{ $$ = lang1($1); PROTECT($$); }
+	|	BREAK				{ $$ = lang1($1); PROTECT($$); }
 	;
 
 
-cond:		'(' expr ')'				{ $$ = $2;  eatln = 1; }
+cond:		'(' expr ')'			{ $$ = yycond($2); }
 	;
 
-ifcond:		'(' expr ')'				{ $$ = $2; ifpush(); eatln = 1; }
+ifcond:		'(' expr ')'			{ $$ = yyifcond($2); }
 	;
 
-forcond:	'(' SYMBOL IN expr ')' 			{ UNPROTECT(2); $$ = LCONS($2,$4); PROTECT($$); eatln=1;}
+forcond:	'(' SYMBOL IN expr ')' 		{ $$ = yyforcond($2, $4); }
 	;
 
 
-exprlist:						{ $$ = newlist(); PROTECT($$); }
-	|	expr					{ addcomment($1); UNPROTECT(1); $$ = growlist(newlist(), $1); PROTECT($$);}
-	|	exprlist ';' expr			{ addcomment($3); UNPROTECT(2); $$ = growlist($1, $3); PROTECT($$);}
-	|	exprlist ';'				{ $$ = $1; addcomment(CAR($$));}
-	|	exprlist '\n' expr			{ addcomment($3); UNPROTECT(2); $$ = growlist($1, $3); PROTECT($$);}
-	|	exprlist '\n'				{ $$ = $1;}
+exprlist:					{ $$ = yyexprlist0(); }
+	|	expr				{ $$ = yyexprlist1($1); }
+	|	exprlist ';' expr		{ $$ = yyexprlist2($1, $3); }
+	|	exprlist ';'			{ $$ = $1; addcomment(CAR($$));}
+	|	exprlist '\n' expr		{ $$ = yyexprlist2($1, $3); }
+	|	exprlist '\n'			{ $$ = $1;}
 	;
 
-sublist:	sub					{ UNPROTECT(1); $$ = firstarg(CAR($1),CADR($1)); PROTECT($$); }
-	|	sublist gobble ',' sub			{ UNPROTECT(2); $$ = nextarg($1, CAR($4), CADR($4)); PROTECT($$); }
+sublist:	sub				{ $$ = yysublist1($1); }
+	|	sublist gobble ',' sub		{ $$ = yysublist2($1,$4); }
 	;
 
-sub:							{ $$ = lang2(R_MissingArg,R_NilValue); PROTECT($$); }
-	|	expr					{ UNPROTECT(1); $$ = tagarg($1, R_NilValue); PROTECT($$); }
-	|	SYMBOL '=' expr				{ UNPROTECT(2); $$ = tagarg($3, $1); PROTECT($$); }
-	|	SYMBOL '=' 				{ UNPROTECT(1); $$ = tagarg(R_MissingArg, $1); PROTECT($$); }
-	|	STR_CONST '=' expr			{ UNPROTECT(2); $$ = tagarg($3, $1); PROTECT($$); }
-	|	STR_CONST '=' 				{ UNPROTECT(1); $$ = tagarg(R_MissingArg, $1); PROTECT($$); }
-	|	NULL_CONST '=' expr			{ UNPROTECT(2); $$ = tagarg($3, install("NULL")); PROTECT($$); }
-	|	NULL_CONST '=' 				{ UNPROTECT(1); $$ = tagarg(R_MissingArg, install("NULL")); PROTECT($$); }
+sub:						{ $$ = yysub0(); }
+	|	expr				{ $$ = yysub1($1); }
+	|	SYMBOL '=' 			{ $$ = yysymsub0($1); }
+	|	SYMBOL '=' expr			{ $$ = yysymsub1($1,$3); }
+	|	STR_CONST '=' 			{ $$ = yysymsub0($1); }
+	|	STR_CONST '=' expr		{ $$ = yysymsub1($1,$3); }
+	|	NULL_CONST '=' 			{ $$ = yynullsub0(); }
+	|	NULL_CONST '=' expr		{ $$ = yynullsub1($3); }
 	;
 
-formlist:						{ $$ = R_NilValue; PROTECT($$); }
-	|	SYMBOL					{ UNPROTECT(1); $$ = firstarg(R_MissingArg, $1); PROTECT($$); }
-	|	SYMBOL '=' expr				{ UNPROTECT(2); $$ = firstarg($3, $1); PROTECT($$); }
-	|	formlist ',' SYMBOL			{ UNPROTECT(2); check_formals($1,$3); $$ = nextarg($1, R_MissingArg, $3); PROTECT($$); }
-	|	formlist ',' SYMBOL '=' expr		{ UNPROTECT(3); check_formals($1,$3); $$ = nextarg($1, $5, $3); PROTECT($$); }
+formlist:					{ $$ = yynullformal(); }
+	|	SYMBOL				{ $$ = yyfirstformal0($1); }
+	|	SYMBOL '=' expr			{ $$ = yyfirstformal1($1, $3); }
+	|	formlist ',' SYMBOL		{ $$ = yyaddformal0($1,$3); }
+	|	formlist ',' SYMBOL '=' expr	{ $$ = yyaddformal1($1,$3,$5); }
 	;
 
-gobble:	{eatln = 1;}
+gobble:		{eatln = 1;}
 	;
 %%
+
+static void addcomment(SEXP);
+static void ifpush(void);
+SEXP newlist(void);
+SEXP growlist(SEXP, SEXP);
+SEXP firstarg(SEXP, SEXP);
+SEXP nextarg(SEXP, SEXP, SEXP);
+SEXP tagarg(SEXP, SEXP);
+void check_formals(SEXP, SEXP);
+
+static SEXP yynullformal()
+{
+	SEXP ans;
+	PROTECT(ans = R_NilValue);
+	return ans;
+}
+
+static SEXP yyfirstformal0(SEXP sym)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = firstarg(R_MissingArg, sym));
+	return ans;
+}
+
+static SEXP yyfirstformal1(SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = firstarg(expr, sym));
+	return ans;
+}
+
+static SEXP yyaddformal0(SEXP formlist, SEXP sym)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	check_formals(formlist ,sym);
+	PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
+	return ans;
+}
+
+static SEXP yyaddformal1(SEXP formlist, SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(3);
+	check_formals(formlist, sym);
+	PROTECT(ans = nextarg(formlist, expr, sym));
+	return ans;
+}
+
+static SEXP yyexprlist0()
+{
+	SEXP ans;
+	PROTECT(ans = newlist());
+	return ans;
+}
+
+static SEXP yyexprlist1(SEXP expr)
+{
+	SEXP ans;
+	addcomment(expr);
+	UNPROTECT(1);
+	PROTECT(ans = growlist(newlist(), expr));
+	return ans;
+}
+
+static SEXP yyexprlist2(SEXP exprlist, SEXP expr)
+{
+	SEXP ans;
+	addcomment(expr);
+	UNPROTECT(2);
+	PROTECT(ans = growlist(exprlist, expr));
+	return ans;
+}
+
+static SEXP yysub0(void)
+{
+	SEXP ans;
+	PROTECT(ans = lang2(R_MissingArg,R_NilValue));
+	return ans;
+}
+
+static SEXP yysub1(SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = tagarg(expr, R_NilValue));
+	return ans;
+}
+
+static SEXP yysymsub0(SEXP sym)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = tagarg(R_MissingArg, sym));
+	return ans;
+}
+
+static SEXP yysymsub1(SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = tagarg(expr, sym));
+	return ans;
+}
+
+static SEXP yynullsub0()
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = tagarg(R_MissingArg, install("NULL")));
+	return ans;
+}
+
+static SEXP yynullsub1(SEXP expr)
+{
+	SEXP ans = install("NULL");
+	UNPROTECT(2);
+	PROTECT(ans = tagarg(expr, ans));
+	return ans;
+}
+
+
+static SEXP yysublist1(SEXP sub)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = firstarg(CAR(sub),CADR(sub)));
+	return ans;
+}
+
+static SEXP yysublist2(SEXP sublist, SEXP sub)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = nextarg(sublist, CAR(sub), CADR(sub)));
+	return ans;
+}
+
+static SEXP yycond(SEXP expr)
+{
+	eatln = 1;
+	return expr;
+}
+
+static SEXP yyifcond(SEXP expr)
+{
+	ifpush();
+	eatln = 1;
+	return expr;
+}
+
+static SEXP yyforcond(SEXP sym, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = LCONS(sym, expr));
+	eatln=1;
+	return ans;
+}
+
+static SEXP yyforloop(SEXP forsym, SEXP forcond, SEXP body)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = lang4(forsym, CAR(forcond), CDR(forcond), body));
+	return ans;
+}
+
+static SEXP yyfuncall(SEXP expr, SEXP args)
+{
+	SEXP ans;
+	if(isString(expr))
+		expr = install(CHAR(STRING(expr)[0])); 
+	UNPROTECT(2);
+	if(length(CDR(args)) == 1 && CADR(args) == R_MissingArg )
+		ans = lang1(expr);
+	else    
+		ans = LCONS(expr, CDR(args));   
+	PROTECT(ans);
+	return ans;
+}       
+
+static SEXP yydefun(SEXP fname, SEXP formals, SEXP body)
+{
+	SEXP ans;
+	addcomment(body);
+	UNPROTECT(2);
+	ans = lang3(fname, CDR(formals), body); 
+	PROTECT(ans);
+	popCmt();
+	return ans;
+}
+
+static SEXP yyunary(SEXP op, SEXP arg)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = lang2(op, arg));
+	return ans;
+}
+
+static SEXP yybinary(SEXP n1, SEXP n2, SEXP n3)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = lang3(n1, n2, n3));
+	return ans;
+}
+
+static SEXP yyparen(SEXP n1, SEXP n2)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = lang2(n1, n2));
+	return ans;
+}
+
+static SEXP yynode2(int nprot, SEXP n1, SEXP n2)
+{
+	SEXP ans;
+	UNPROTECT(nprot);
+	PROTECT(ans = lang2(n1, n2));
+	return ans;
+}
+
+static SEXP yynode3(int nprot, SEXP n1, SEXP n2, SEXP n3)
+{
+	SEXP ans;
+	UNPROTECT(nprot);
+	PROTECT(ans = lang3(n1, n2, n3));
+	return ans;
+}
+
+static SEXP yynode4(int nprot, SEXP n1, SEXP n2, SEXP n3, SEXP n4)
+{
+	SEXP ans;
+	UNPROTECT(nprot);
+	PROTECT(ans = lang4(n1, n2, n3, n4));
+	return ans;
+}
+
+static SEXP yysubscript(SEXP a1, SEXP a2, SEXP a3)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	ans = LCONS(a2, LCONS(a1, CDR(a3)));
+	PROTECT(ans);
+	return ans;
+}
+
+static SEXP yyexprlist(SEXP a1, SEXP a2)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	TYPEOF(a2) = LANGSXP;
+	CAR(a2) = a1;
+	PROTECT(ans = a2);
+	eatln = 0;
+	return ans;
+}
 
 SEXP tagarg(SEXP arg, SEXP tag)
 {
@@ -236,7 +498,7 @@ int isComment(SEXP l)
 		return 0;
 }
 
-void addcomment(SEXP l)
+static void addcomment(SEXP l)
 {
 	SEXP tcmt, cmt;
 	int i, ncmt;
@@ -910,7 +1172,7 @@ int yylex()
 		if (c == '%')
 			*p++ = c;
 		*p++ = '\0';
-		PROTECT(yylval = install(yytext));
+		yylval = install(yytext);
 		eatln=1;
 		return SPECIAL;
 	}
