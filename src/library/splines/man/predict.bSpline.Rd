@@ -2,16 +2,21 @@
 \alias{predict.bSpline}
 \alias{predict.nbSpline}
 \alias{predict.pbSpline}
+\alias{predict.npolySpline}
+\alias{predict.ppolySpline}
 %- Also NEED an `\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~}
+\title{Evaluate a spline at new values of x}
 \description{
-Evaluate a bSpline at new values of x
+The \code{predict} methods for the classes that inherit from the virtual
+classes \code{bSpline} and \code{polySpline} are used to evaluate the
+spline or its derivatives.
 }
 \usage{
 predict.bSpline(object, x, nseg=50, deriv=0)
 }
 \arguments{
- \item{object}{An object that inherits from the \code{bSpline} class.}
+ \item{object}{An object that inherits from the \code{bSpline} or the
+     \code{polySpline} class.}
  \item{x}{A numeric vector of \code{x} values at which to evaluate the
      spline.  If this argument is missing a suitable set of \code{x}
      values is generated as a sequence of \code{nseq} segments spanning
