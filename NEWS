@@ -36,6 +36,8 @@ NEW FEATURES
     o	density() allows for more kernels and has a new argument
         `give.Rkern' to access the relevant kernel property.
 
+    o	multivariate methods for ar: "yule-walker" (now in C) and
+	"burg" (new) contributed by Martyn Plummer.
 
 
 BUG FIXES

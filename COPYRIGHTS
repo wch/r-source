@@ -18,6 +18,7 @@ doc/html/search/*.java
 
 	Copyright (C), 1998, Thomas Baier
 
+
 src/library/base/R/mosaicplot.R
 
 	Copyright (C) 1998 John W. Emerson
@@ -47,6 +48,7 @@ src/library/mva/R/princomp-add.R
 
 	Copyright (C) 1998 W. N. Venables and B. D. Ripley
 
+
 src/library/ts/R/diffinv.R
 src/library/ts/R/embed.R
 src/library/ts/R/kernel.R
@@ -55,15 +57,22 @@ src/library/ts/src/PPsum.c
 	Copyright (C) 1997-1999  Adrian Trapletti
 
 
+src/library/ts/src/carray.c, mburg.c, myw.c, qr.c
+
+	Copyright (C) 1999 Martyn Plummer
+
+
 src/regex/* [Only used on Macintosh]
 
 	Copyright (c) 1992, 1993, 1994 Henry Spencer
 
 	See the file src/regex/COPYRIGHTS
 
+
 src/unix/rotated.[ch]
 
 	Copyright (c) 1993 Alan Richardson
+
 
 src/appl/chisqsim.c, loglin.c
 src/library/ts/src/starma.f
@@ -80,4 +89,3 @@ src/gnome/devGNOME.c, devGTK.c, gdkrotated.c, gnome-find-dialog.c,
 
 	Copyright (C) 1998-1999   Lyndon Drake
 		and the R Development Core Team
- 
