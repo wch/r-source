@@ -56,9 +56,9 @@ MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a\
    ../extra/bzip2/libbz2.a
 
-LIBFILES = $(foreach i, $(R_PKGS_BASE), ../../library/$i) ../../library/R.css
-PKGS = $(foreach i,$(PACKAGES),pkg-$i)
-PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
+# LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_STUBS), ../../library/$i) ../../library/R.css
+PKGS = $(foreach i,$(PACKAGES) $(R_PKGS_STUBS),pkg-$i)
+PKGCLEAN = $(foreach i,$(R_PKGS_BASE) $(R_PKGS_STUBS),pkgclean-$i)
 
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
@@ -126,7 +126,7 @@ fixfiles: docfiles
 	@$(MAKE) --no-print-directory -C ./fixed
 
 fixed/fixdesc:
-	@sh fixed/GETDESC $(R_PKGS_BASE)
+	@sh fixed/GETDESC $(R_PKGS_BASE) $(R_PKGS_STUBS)
 
 dllversion.o: ../include/Rversion.h
 
@@ -357,7 +357,7 @@ distclean veryclean: clean clean-recommended
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer distclean
-	@for pkg in $(R_PKGS_BASE); do \
+	@for pkg in $(R_PKGS_BASE) $(R_PKGS_STUBS); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
