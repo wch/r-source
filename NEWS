@@ -238,6 +238,9 @@ NEW FEATURES
     o	Printing factors with both level "NA" and missing values
 	uses `<NA>' for the missing values to distinguish them.
 
+    o	New Fortran entry points rwarn() and rexit() for warnings and 
+	error exits from compiled Fortran code.
+
 
 
 BUG FIXES

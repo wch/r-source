@@ -110,7 +110,7 @@ int asLogical(SEXP x)
 int asInteger(SEXP x)
 {
     int warn = 0, res;
-    
+
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -175,23 +175,23 @@ double asReal(SEXP x)
 {
     int warn = 0;
     double res;
-    
+
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    res = RealFromLogical(LOGICAL(x)[0], &warn);
 	    CoercionWarning(warn);
-	    return res;	    
+	    return res;
 	case INTSXP:
 	    res = RealFromInteger(INTEGER(x)[0], &warn);
 	    CoercionWarning(warn);
-	    return res;	    
+	    return res;
 	case REALSXP:
 	    return REAL(x)[0];
 	case CPLXSXP:
 	    res = RealFromComplex(COMPLEX(x)[0], &warn);
 	    CoercionWarning(warn);
-	    return res;	    
+	    return res;
 	}
     }
     return NA_REAL;
@@ -904,11 +904,11 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ( !isInteger(yi) || !(ny = LENGTH(yi)) )
 	error("invalid `yinds' argument");
     if(!LENGTH(ans = CADDR(args)) || NA_LOGICAL == (all_x = asLogical(ans)))
-	errorcall(call, "`all.x' must be TRUE or FALSE");		 
+	errorcall(call, "`all.x' must be TRUE or FALSE");
     if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))
 	errorcall(call, "`all.y' must be TRUE or FALSE");
     /* 1. determine result sizes */
-    if(all_x) { 
+    if(all_x) {
 	for (i = 0; i < nx; i++)
 	    if (INTEGER(xi)[i] == 0) nx_lone++;
     }
@@ -922,22 +922,22 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, 4));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
-    if(all_x) { 
-	x_lone = allocVector(INTSXP, nx_lone);    
+    if(all_x) {
+	x_lone = allocVector(INTSXP, nx_lone);
 	SET_VECTOR_ELT(ans, 2, x_lone);
 	ll = 0;
 	for (i = 0; i < nx; i++)
 	    if (INTEGER(xi)[i] == 0) INTEGER(x_lone)[ll++] = i + 1;
     }
-    if(all_y) { 
-	y_lone = allocVector(INTSXP, ny_lone);    
+    if(all_y) {
+	y_lone = allocVector(INTSXP, ny_lone);
 	SET_VECTOR_ELT(ans, 3, y_lone);
 	ll = 0;
     } else
 	y_lone = R_NilValue;
     for (j = 0, k = 0; j < ny; j++)
 	if ((y = INTEGER(yi)[j]) > 0) {
-	    for (i = 0; i < nx; i++) 
+	    for (i = 0; i < nx; i++)
 		if (INTEGER(xi)[i] == y) {
 		INTEGER(ansx)[k]   = i + 1;
 		INTEGER(ansy)[k++] = j + 1;
@@ -1051,4 +1051,32 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	p[1] = '\0';
     }
     return(mkString(buf));
+}
+
+
+
+void F77_SYMBOL(rexitc)(char *msg, int *nchar)
+{
+    int nc = *nchar;
+    char buf[256];
+    if(nc > 255) {
+        warning("error message truncated to 255 chars");
+	nc = 255;
+    }
+    strncpy(buf, msg, nc);
+    buf[nc] = '\0';
+    error(buf);
+}
+
+void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
+{
+    int nc = *nchar;
+    char buf[256];
+    if(nc > 255) {
+        warning("warning message truncated to 255 chars");
+	nc = 255;
+    }
+    strncpy(buf, msg, nc);
+    buf[nc] = '\0';
+    warning(buf);
 }
