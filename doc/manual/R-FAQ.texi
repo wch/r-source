@@ -1829,6 +1829,8 @@ penalisations.  Also includes some other multiway methods.
 @item ProbForecastGOP
 Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004).
+@item R.matlab
+Read and write of MAT files together with R-to-Matlab connectivity.
 @item R.oo
 R object-oriented programming with or without references.
 @item R2HTML
@@ -2092,6 +2094,10 @@ via linear programming.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
+@item coin
+COnditional INference procedures for the general independence problem
+including two-sample, @math{K}-sample, correlation, censored, ordered
+and multivariate problems.
 @item colorspace
 Mapping between assorted color spaces.
 @item combinat

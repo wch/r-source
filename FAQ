@@ -1483,6 +1483,9 @@ distributions of R.)
      Probabilistic weather field forecasts using the Geostatistical Output
      Perturbation method introduced by Gel, Raftery and Gneiting (2004).
 
+*R.matlab*
+     Read and write of MAT files together with R-to-Matlab connectivity.
+
 *R.oo*
      R object-oriented programming with or without references.
 
@@ -1823,6 +1826,11 @@ distributions of R.)
 *coda*
      Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
      simulations.
+
+*coin*
+     COnditional INference procedures for the general independence problem
+     including two-sample, K-sample, correlation, censored, ordered and
+     multivariate problems.
 
 *colorspace*
      Mapping between assorted color spaces.
