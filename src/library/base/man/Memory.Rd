@@ -39,7 +39,7 @@ mem.limits(nsize = NA, vsize = NA)
   allocation: it has a minimum allowed value of 10M.  This is intended
   to catch attempts to allocate excessive amounts of memory which may
   cause other processes to run out of resources.  The default is the
-  smaller of the amount of physical RAM in the machine and 256Mb. 
+  smaller of the amount of physical RAM in the machine and 256Mb.
   See also \code{\link[utils]{memory.limit}}.)
 #endif
 
@@ -73,7 +73,7 @@ mem.limits(nsize = NA, vsize = NA)
   and no maxima (other than machine resources). The maxima can be
   changed during an \R session by calling \code{mem.limits}. (If this is
   called with the default values, it reports the current settings.)
-  
+
 
   You can find out the current memory consumption (the heap and cons
   cells used as numbers and megabytes) by typing \code{\link{gc}()} at the
@@ -95,13 +95,15 @@ mem.limits(nsize = NA, vsize = NA)
 }
 
 \value{
-  (\code{mem.limits}) an integer vector giving the current settings of
-  the maxima, possibly \code{NA}.
+  \code{mem.limits()} returns an integer vector giving the current
+  settings of the maxima, possibly \code{NA}.
 }
 
 \seealso{
   \code{\link{gc}} for information on the garbage collector,
-  \code{\link{memory.profile}} for profiling the usage of cons cells.
+  \code{\link{object.size}(a)} for the (approximate) size of \R object
+  \code{a}.  \code{\link{memory.profile}} for profiling the usage of
+  cons cells.
 #ifdef windows
 
   \code{\link[utils]{memory.size}} to monitor total memory usage,
@@ -114,7 +116,7 @@ mem.limits(nsize = NA, vsize = NA)
   \option{--vsize} are equivalent to \option{--min-nsize} and
   \option{--min-vsize}.
 #ifdef windows
-  
+
   When using the \code{Rgui} console it is simplest to make a shortcut and
   put these command-line flags at the end of the Target field.
 #endif
