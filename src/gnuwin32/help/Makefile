@@ -11,13 +11,13 @@ PKGDIR=../../library
 RLIB=$(RHOME)/library
 
 indices:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
+	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 pkg-% help-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
+	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl  ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -chm $(PKGDIR)/$* $(RLIB)
+	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -chm $(PKGDIR)/$* $(RLIB)
 # hhc always gives an error code
 	$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
 	$(MKDIR) -p $(RLIB)/$*/chtml
@@ -35,7 +35,7 @@ contents-%:
 	  --os=windows -o $(RLIB)/$*/CONTENTS $(PKGDIR)/$*
 	@$(MKDIR) -p $(RHOME)/doc/html/search
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
+	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 ziphelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
