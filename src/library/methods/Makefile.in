@@ -65,12 +65,12 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
   $(top_builddir)/library/$(pkg)/R/all.rda
 
-$(top_builddir)/library/$(pkg)/R/$(pkg): install.R
-	@cp install.R $@
+$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
+	@cp $(srcdir)/install.R $@
 
 $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	@echo "dumping R code in package '$(pkg)'"
-	if test -f NAMESPACE; then \
+	@if test -f NAMESPACE; then \
 	  $(INSTALL_DATA) all.R  $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
 	  cd $(top_builddir)/library/$(pkg); \
 	  echo "options(error=quote(dump.frames(to.file=TRUE))); loadNamespace(\"$(pkg)\")"  | R_DEFAULT_PACKAGES=NULL ../../bin/R  --slave; \
