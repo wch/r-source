@@ -3151,32 +3151,31 @@ stopifnot(identical(names(cumsum(x)), nm),
 ## 1.9.x dropped names
 
 ## complex superassignments
-e<-c(a=1,b=2)
-f<-c(a=1,b=2)
-g<-e
-h<-list(a=1,list(b=2,list(c=3,d=4),list(e=5)))
-j<-matrix(1,2,2)
-a<-"A"
+e <- c(a=1,b=2)
+f <- c(a=1,b=2)
+g <- e
+h <- list(a=1,list(b=2,list(c=3,d=4),list(e=5)))
+j <- matrix(1,2,2)
+a <- "A"
 local({
-  eold<-e<-c(A=10,B=11)
-  hold<-h<-2
-  jold<-j<-7
-  gold<-g<-e
-  a<-"B"
+  eold <- e <- c(A=10,B=11)
+  hold <- h <- 2
+  jold <- j <- 7
+  gold <- g <- e
+  a <- "B"
 
-  e[2]<<-e[2]+1
-  names(f)[2]<<-a
-  g<<-1
-  h[[2]][[h]][[ f[e==10] ]]<<-h
-  names(h[[2]][[h]])[f[e==10] ]<<-a
-  j[h,h]<<-h
-  colnames(j)[2]<<-a
+  e[2] <<- e[2]+1
+  names(f)[2] <<- a
+  g <<- 1
+  h[[2]][[h]][[ f[e==10] ]] <<- h
+  names(h[[2]][[h]])[f[e==10] ] <<- a
+  j[h,h] <<- h
+  colnames(j)[2] <<- a
 
   stopifnot(identical(e,eold))
   stopifnot(identical(h,hold))
   stopifnot(identical(g,gold))
   stopifnot(identical(j,jold))
-
 })
 
 stopifnot(identical(e, c(a=1,b=12)))
@@ -3185,3 +3184,4 @@ stopifnot(identical(g, 1))
 stopifnot(identical(h, list(a=1,list(b=2, list(B=2,d=4), list(e=5)))))
 stopifnot(identical(as.vector(j), c(1,1,1,2)))
 stopifnot(identical(colnames(j), c(NA,"B")))
+## gave error 'subscript out of bounds' in 1.x.x
