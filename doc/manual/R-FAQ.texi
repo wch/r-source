@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-07
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-08
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1817,6 +1817,9 @@ analyses using GLS.
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
+@item ProbForecastGOP
+Probabilistic weather field forecasts using the Geostatistical Output
+Perturbation method introduced by Gel, Raftery and Gneiting (2004).
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
 @item R2WinBUGS

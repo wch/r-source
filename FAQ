@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-07
+Version 2.0.2005-02-08
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1461,6 +1461,10 @@ distributions of R.)
      A multiway method to decompose a tensor (array) of any order, as a
      generalisation of SVD also supporting non-identity metrics and
      penalisations.  Also includes some other multiway methods.
+
+*ProbForecastGOP*
+     Probabilistic weather field forecasts using the Geostatistical Output
+     Perturbation method introduced by Gel, Raftery and Gneiting (2004).
 
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
