@@ -1,4 +1,4 @@
-cmdscale <- function (d, k = 2, eig = FALSE) {
+cmdscale <- function (d, k = 2, eig = FALSE, x.ret = FALSE) {
     if (any(is.na(d)))
 	stop("NA values not allowed in d")
     if (is.null(n <- attr(d, "Size"))) {
@@ -12,12 +12,16 @@ cmdscale <- function (d, k = 2, eig = FALSE) {
 	x <- x + t(x)
     }
     storage.mode(x) <- "double"
-    Tmat <- -0.5 * .C("dblcen", x, as.integer(n), PACKAGE="mva")[[1]]
-    e <- La.eigen(Tmat, symmetric = TRUE)
+    ## doubly center x in-place  -- DUP needs change in ../src/init.c -- "FIXME" naokfind
+    ## .C("dblcen", x, as.integer(n), DUP = FALSE, PACKAGE="mva")
+    x <- .C("dblcen", x=x, as.integer(n), PACKAGE="mva")$x
+    e <- La.eigen(-x/2, symmetric = TRUE)
     ev <- e$values[1:k]
     points <- e$vectors[, 1:k] %*% diag(sqrt(ev))
     rn <- if(is.matrix(d)) rownames(d) else names(d)
     dimnames(points) <- list(rn, NULL)
-    if (eig) list(points = points, eig = ev)
+    if (eig || x.ret)
+        list(points = points,
+             eig = if(eig) ev, x = if(x.ret) x)
     else points
 }

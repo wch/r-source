@@ -1,7 +1,7 @@
 \name{cmdscale}
 \title{Classical (Metric) Multidimensional Scaling}
 \usage{
-cmdscale(d, k = 2, eig = FALSE)
+cmdscale(d, k = 2, eig = FALSE, x.ret = FALSE)
 }
 \alias{cmdscale}
 \arguments{
@@ -9,6 +9,8 @@ cmdscale(d, k = 2, eig = FALSE)
     or a full symmetric matrix containing the dissimilarities.}
   \item{k}{the dimension of the space which the data are to be represented in.}
   \item{eig}{indicates whether eigenvalues should be returned.}
+  \item{x.ret}{indicates whether the doubly centered symmetric distance
+    matrix should be returned.}
 }
 \description{
   Classical multidimensional scaling of a data matrix.
@@ -22,13 +24,16 @@ cmdscale(d, k = 2, eig = FALSE)
   \file{MASS} provide alternative ordination techniques.
 }
 \value{
-  If \code{eig = FALSE}, a matrix with \code{k} columns whose rows give the
-  coordinates of the points chosen to represent the dissimilarities.
+  If \code{eig = FALSE} and \code{x.ret = FALSE} (default), a matrix
+  with \code{k} columns whose rows give the coordinates of the points
+  chosen to represent the dissimilarities.
 
   Otherwise, a list containing the following components.
   \item{points}{a matrix with \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
-  \item{eig}{the eigenvalues computed during the scaling process.}
+  \item{eig}{the eigenvalues computed during the scaling process if
+    \code{eig} is true.}
+  \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
 }
 \references{
   Seber, G. A. F. (1984).
@@ -56,5 +61,9 @@ x <- loc[,1]
 y <- -loc[,2]
 plot(x, y, type="n", xlab="", ylab="")
 text(x, y, names(eurodist), cex=0.5)
+
+str(cmdscale(eurodist, k=3,           , x.ret = TRUE))
+str(cmdscale(eurodist, k=3, eig = TRUE, x.ret = TRUE))
+str(cmdscale(eurodist, k=3, eig = TRUE              ))
 }
 \keyword{multivariate}

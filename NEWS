@@ -14,7 +14,7 @@ USER-VISIBLE CHANGES
 NEW FEATURES
 
     o	cmdscale() now takes rownames from a dist object `d' as well
-	as from a matrix.
+	as from a matrix; it has a new argument `x.ret'.
 
     o	New functions rowSums(), colSums(), rowMeans() and colMeans():
 	versions of apply() optimized for these cases.
@@ -26,7 +26,7 @@ NEW FEATURES
 	the R code can be replaced by its output (text, figures) to
 	allow automatic report generation.
 
-    o	new function findInt() {using new C findInterval(), see below}.
+    o	new function findInterval() {using new C findInterval(), see below}.
 
     o	Add function logb(), same as log() but for S-PLUS
 	compatibility (where log now has only one argument).
