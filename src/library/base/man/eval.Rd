@@ -34,7 +34,7 @@ local(expr, envir = new.env())
   the call to \code{eval} was made is used.
 
   The \code{evalq} form is equivalent to \code{eval(quote(expr), \dots)}.
-  %% FIXME: This is not what the code says?
+
   As \code{eval} evaluates its first argument before passing it to the
   evaluator, it allows you to assign complicated expressions to symbols
   and then evaluate them.  \code{evalq} avoids this.
