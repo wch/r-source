@@ -1,0 +1,17 @@
+\name{rev}
+\title{Reverse a Vector's Elements}
+\usage{
+rev(x)
+}
+\alias{rev}
+\description{
+\code{rev}
+provides a reversed version of its argument.
+It can be used in combination with
+\code{sort} to obtain vectors sorted into descending order.
+}
+\examples{
+x <- c(1:5,5:3)
+# sort into descending order
+rev(sort(x))
+}

@@ -1,0 +1,31 @@
+#! /bin/sh
+#
+# ${RHOME}/etc/build-latex
+# Creates the `dvi' version of the R Base Manual --- needs LATEX ---
+
+# FIXME:  Should be similar to build-help, and create a reference manual
+# for arbitrary packages
+
+RHOME=`dirname $0`/..           # relative
+RHOME=`cd ${RHOME}; pwd`        # absolute
+
+DVIDIR=${RHOME}/dvi
+
+cd ${RHOME}
+(cd mansrc/latex;
+    cp Man.tex Rd.sty plotmath.tex writing-Rd.tex ${DVIDIR})
+cd src/library/base/man
+
+echo " >>> Converting Rd files to LaTeX"
+FILES=`ls *.Rd`
+rm -f ${DVIDIR}/doc.tex
+for file in ${FILES};
+do
+    ${RHOME}/etc/Rdconv -t latex ${file} >> ${DVIDIR}/doc.tex
+    echo "  `basename ${file} .Rd`"
+done
+
+echo " >>> Running LaTeX"
+cd ${DVIDIR}
+latex Man
+latex Man

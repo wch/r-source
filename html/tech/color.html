@@ -1,0 +1,26 @@
+<HEAD><TITLE>R Color</TITLE></HEAD>
+<H2>Internal Color Representation</H2>
+<BODY>
+Internally, R uses a 24 bit color model; with 8 bits describing
+the intensity of each of the primaries red, green and blue.
+These bytes are interpreted as values in the range 0-255,
+with 0 representing the lowest intensity and 255 the highest.
+The bytes are stored in the most significant bytes of a 32-bit
+integer as follows:
+<LISTING>
+        color = (red<<8)|(blue<<16)|(green<<24);
+</LISTING>
+The bytes can be extracted from a 32 bit integer as follows:
+<LISTING>
+        red   = (color>> 8)&255;
+        green = (color>>16)&255;
+        blue  = (color>>24)&255;
+</LISTING>
+Device drivers may choose to rescale these values to whatever scale
+is appropriate.
+<P>
+Since the lowest byte of color values is not used by the        
+color representation it can be used for other purposes.
+Currently a non-zero byte is taken to indicate     
+an index into a (user defined) table of colors.
+Such indices are restricted to the range 1-255.

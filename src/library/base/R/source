@@ -1,0 +1,18 @@
+source <- function (file, local=FALSE) {
+	if(local) envir <- sys.frame(sys.parent())
+	else if(!local) envir <- .GlobalEnv
+	exprs <- parse(n = -1, file = file)
+	if (length(exprs) == 0) return(invisible())
+	for (i in exprs) {
+		yy <- eval(i, envir)
+	}
+	invisible(yy)
+}
+sys.source <- function (file) {
+	exprs <- parse(n = -1, file = file)
+	if (length(exprs) == 0) return(invisible())
+	for (i in exprs) {
+		yy <- eval(i, NULL)
+	}
+	invisible(yy)
+}

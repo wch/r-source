@@ -1,0 +1,46 @@
+match <- function(x, table, nomatch=NA)
+		.Internal(match(x, table, nomatch))
+
+match.call <- function(definition=NULL,call=sys.call(sys.parent()),
+expand.dots=T)
+        .Internal(match.call(definition,call,expand.dots))
+
+pmatch <- function(x, table, nomatch=NA) {
+	y<-.Internal(pmatch(x,table))
+	y[is.na(y)]<-nomatch
+	y
+}
+
+match.arg <- function(arg, choices) {
+        if (missing(choices)) {
+                formal.args <- formals(sys.function(sys.parent()))
+                choices <- eval(formal.args[[deparse(substitute(arg))]])
+        }
+        rval <- choices[pmatch(arg, choices)]
+        if (is.na(rval)) {
+                stop(paste("argument should be one of",
+			paste(choices,collapse=", "), sep = " "))
+        }
+	if( length(rval) > 1 ) {
+		if(arg==choices)
+			rval<-choices[1]
+		else
+			stop("there is more than one match in match.arg")
+	}
+        return(rval)
+}
+
+	
+#just for compatiblity we have charmatch and char.expand
+charmatch <- pmatch
+
+char.expand <- function(input, target, nomatch = stop("no match"))
+{
+	if(length(input) != 1)
+		stop("char.expand: input must have length 1")
+	if(!(is.character(input) && is.character(target)))
+		stop("char.expand: input must be character")
+	y<-.Internal(pmatch(input,target))
+	if(any(is.na(y))) eval(nomatch)
+	target[y]
+}

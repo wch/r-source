@@ -1,0 +1,7 @@
+TITLE(skewness @@ Sample Skewness)
+USAGE(
+skewness(x)
+)
+DESCRIPTION(
+LANG(skewness) calculates the skewness coefficient of the data in LANG(x).
+)

@@ -1,0 +1,30 @@
+table <- function(x, ...)
+{
+	if (nargs() == 0)
+		stop("no arguments")
+	bin <- 0
+	lens <- NULL
+	dims <- integer(0)
+	pd <- 1
+	dn <- NULL
+	if(nargs() == 1 && is.list(x))
+		args <- x
+	else
+		args <- list(x, ...)
+	for (a in args) {
+		if (is.null(lens))
+			lens <- length(a)
+		if (length(a) != lens)
+			stop("all arguments must have the same length")
+		if (!is.factor(a))
+			cat <- as.factor(a)
+		else cat <- a
+		l <- levels(cat)
+		dims <- c(dims, nlevels(cat))
+		dn <- c(dn, list(l))
+		bin <- bin + pd * (as.integer(cat) - 1)
+		pd <- pd * nlevels(cat)
+	}
+	bin <- bin[!is.na(bin)]
+	array(tabulate(bin + 1, pd), dims, dimnames = dn)
+}

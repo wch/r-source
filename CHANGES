@@ -1,0 +1,15 @@
+
+		  CHANGES IN VERSION R VERSION 0.60
+
+R is now an official part of the GNU project.  To quote RMS
+
+	``I hereby dub R GNU software!''
+
+And a golden glow descended on the R core, and all their sins
+were washed away ...
+
+
+NEW FEATURES
+
+ o  There has been a major change in directory structure.
+

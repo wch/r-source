@@ -1,0 +1,9 @@
+The R base package currently contains about 766 functions, so clearly we
+cannot list all of them here.
+
+You can use
+	ls(pos = length(search()))
+to list all user-level objects in the base package.
+
+Or, look at ${RHOME}/dvi/Man.dvi for a nicely formatted alphabetically
+organized reference manual.

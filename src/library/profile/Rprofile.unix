@@ -1,0 +1,19 @@
+.GlobalEnv <- globalenv()
+attach(NULL, name = "Autoloads")
+.AutoloadEnv <- pos.to.env(2)
+T <- TRUE
+F <- FALSE
+version <- Version()
+.Machine <- Machine()
+options(na.action = "na.omit")
+
+.Library <- paste(getenv("RHOME"), "library", sep = "/")
+
+.lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
+
+options(printcmd = getenv("R_PRINTCMD"))
+options(papersize = getenv("R_PAPERSIZE"))
+
+.First <- function() {
+  if (interactive() && getenv("DISPLAY") != "") x11()
+}

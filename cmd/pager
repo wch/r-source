@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pager=${PAGER-"more -s"}
+$pager $1

@@ -1,0 +1,7 @@
+TITLE(var @@ Sample Variance)
+USAGE(
+var(x)
+)
+DESCRIPTION(
+LANG(var) calculates the variance of the elements in the vector LANG(x).
+)

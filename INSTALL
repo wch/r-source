@@ -1,0 +1,96 @@
+
+			INSTALLING R UNDER UNIX
+
+
+GENERALITIES
+
+R will configure and build under a number of common Unix platforms
+including dec-alpha-osf, freebsd, hpux, linux-elf, sgi-irix, solaris,
+and sunos.  In general it is relatively easy to adapt R to new
+platforms.  See below for details.
+
+
+SIMPLE INSTALLATION
+
+Choose a place to install the R tree (R is not just a binary, but
+has additional data sets, help files, font metrics etc).  Let's call
+this place RHOME.  Untar the source code.  This should create
+directories src, etc, cmd, help and doc.  Issue the following
+commands:
+
+	./configure
+	make
+	make help
+
+You can also build a LaTeX version of the manual entries with
+
+	make latex
+
+and an HTML version of the manual with
+
+	make html
+
+These are not fully supported yet.
+
+To build help pages and LaTeX and HTML versions of the manual in one
+step, do
+
+	make docs
+
+If these commands execute successfully, the R binary will be copied
+to the $RHOME/bin directory.  In addition, a shell script font-end
+called "R" will be created and copied to the same directory.  You
+can copy the script to a place where users can invoke it:
+/usr/local/bin/R for example.
+
+Now type R and reach for your S manuals ...
+
+
+USING FORTRAN
+
+R is "shipped" configured so that it does not need a Fortran compiler
+to build and install.  For performance or other reasons you may
+wish to use your Fortran compiler to compile those pieces of R
+which are written in Fortran.  To do this, edit the file config.site
+and change the line "F77=no" as indicated in the comments above
+before typing configure.  There are no guarantees that this will
+work, but it may.
+
+
+NEW PLATFORMS (Standards Hah!)
+
+There are a number of sources of problems when installing R on a new
+harware/os platform.
+
+ 1. Floating Point Arithmetic: R supports the POSIX, SVID and IEEE
+    models for floating point arithmetic.  The POSIX and SVID models
+    provide no problems.  The IEEE model however can be a pain.  The
+    problem is that there is no agreement on how to set the signalling
+    behavior;  sgi/irix and linux require no special action, freebsd
+    requires a call to (the macro) fpsetmask(0) and osf1v3.2 requires
+    that computation be done with a -ieee_with_inexact flag etc...
+    On a new platform you must find out the magic recipe and add some
+    code to make it work.  This can often be done via the file
+    config.site which resides in the top level directory.
+
+ 2. Shared Libraries: There seems to be very little agreement across
+    platforms on what needs to be done to build shared libraries.
+    there are many different combinations of flags for the compilers
+    and loaders.  The technique we use is to interrogate the X window
+    system about what it does (using xmkmf).  This often works, but
+    you may have to manually override the results.  Scanning the cc(1)
+    and ld(1) manual entries usually reveals the correct incantation.
+    Once you know the recipe you can modify the file config.site
+    (following the instructions therein) so that the build will use
+    these options.
+
+If you do manage to get R running on a new platform please let us know
+about it so we can modify the configuration procedures to include that
+platform.
+
+If you are having trouble getting R to work on your platform please
+feel free to get in touch to ask questions.  We've had a fair amount
+of practice at porting R to new platforms...
+
+	Ross-n-Robert
+	R@stat.auckland.ac.nz

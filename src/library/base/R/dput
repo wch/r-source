@@ -1,0 +1,2 @@
+dput <- function(x,file="")
+		.Internal(dput(x,file))

@@ -1,0 +1,24 @@
+
+COPYRIGHT STATUS
+
+The bulk of this code is copyright by Robert Gentleman and Ross Ihaka.
+See the file COPYING for the exact conditions under which you may
+redistribute it.
+
+Some of the code contain different copyright statements.  It is used
+here in accordance with the copyright conditions in that code.
+
+src/regex/*
+
+	Copyright 1992, 1993, 1994 Henry Spencer.
+	Copyright (c) 1994 The Regents of the University of California.
+
+
+src/unix/rotated.[ch]
+
+	Copyright (c) 1993 Alan Richardson
+
+
+lib/afm/*
+
+	Copyright (c) 1984 Adobe Systems Incorporated.

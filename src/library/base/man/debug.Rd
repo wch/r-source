@@ -1,0 +1,32 @@
+\name{debug}
+\title{Debug a function}
+\usage{
+debug(fun)
+undebug(fun)
+}
+\alias{debug}
+\alias{undebug}
+\arguments{
+\item{fun}{any interpreted R function.}
+}
+\description{
+These functions set and unset the debugging flag on a function.
+When a function flagged for debugging is entered, normal execution
+is suspended and the body of function is executed on statement at a time.
+A new browser context is initiated for each step (and the previous one
+destroyed).
+Currently you can only debug functions that have bodies enclosed in braces.
+This is a bug and will be fixed soon.
+You take the next step by typing carriage return, \code{n} or \code{next}.
+You can see the values of variables by typing their names.
+Typing \code{c} or \code{cont} causes the debugger to continue to the
+end of the function.
+You can \code{debug} new functions before you step in to them from inside
+the debugger.
+If you have variables with names that are identical to the controls
+(eg. \code{c} or \code{n} ) then you need to use \code{print(c)} and
+\code{print(n)} to evaluate them.
+}
+\seealso{
+\code{\link{browser}}.
+}

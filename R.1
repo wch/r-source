@@ -1,0 +1,105 @@
+.TH R 1
+.SH NAME
+R \- a language for data analysis and graphics
+.SH SYNOPSIS
+.B R
+[
+.B \-xxgdb
+]
+[
+.B \-v
+.I size
+]
+[
+.B \-n
+.I size
+]
+.br
+.B R
+[
+.B \-xxgdb
+]
+[
+.B \-v
+.I size
+]
+[
+.B \-n
+.I size
+] <
+.I infile
+>
+.I outfile
+.SH DESCRIPTION
+R is a language which bears a passing resemblance to the S language
+developed at AT&T Bell Laboratories.
+It provides support for a variety of statistical and graphical analyses.
+R is a true computer language which contains a number
+of control-flow constructions for iteration and alternation.
+It allows users to add additional functionality by defining
+new functions.
+.LP
+On platforms which support the
+.BR dlopen (3)
+interface, Fortran and C code can be linked and called at run time.
+.LP
+On systems which have the GNU
+.BR readline (3)
+library, R will maintain a command history,
+so that commands can be recalled, edited and
+re-executed.
+.SH OPTIONS
+The
+.B \-v
+option can be used to specify the size of the vector heap in
+megabytes (the default is 2).
+The
+.B \-n
+option can be used to specify the number of
+.I "cons cells"
+(each occupying 16 bytes)
+which R is to use (the default is 200000).
+If possible these sizes should be set so that R does not use
+more than the amount of physical memory available on the machine
+where the program is executing.
+This will minimize paging and ensure that execution
+is as efficient as possible.
+The
+.B \-xxgdb
+option will run R under the control of the
+.IR xxgdb (1)
+debugger.
+.SH STARTUP PROCESSING
+When R is invoked it searches for the files
+.B .Rprofile
+and
+.B ~/.Rprofile
+(in that order) and executes any statements
+in the first of these files to be found.
+Finally, if a user has defined a function called
+.BR \&.First ,
+it will be invoked.
+After these steps, an read-eval-print loop is run
+for user input.
+.SH FILES
+.PD 0
+.TP 12
+\&.RData
+saved data sets.
+.TP
+\&.Rhistory
+saved command history.
+.TP
+\&.Rprofile
+current directory startup file.
+.TP
+\&~/.Rprofile
+home directory startup file.
+.PD
+.SH SEE ALSO
+.BR S (1) ,
+.BR Splus (1),
+.BR readline (3).
+.SH BUGS
+R is very close to S in both syntax and semantics, but is not identical.
+Whether this is a bug of feature is an open question.

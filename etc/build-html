@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# ${RHOME}/etc/build-html
+# Creates the HTML version of the R Base Manual
+
+# FIXME:  Should be similar to build-help, and create a reference manual
+# for arbitrary packages
+
+RHOME=`dirname $0`/..           # relative
+RHOME=`cd ${RHOME}; pwd`        # absolute
+
+pkg="${RHOME}/src/library/base"
+
+HTMLDIR=${RHOME}/html
+INDEX=${HTMLDIR}/funs/index.html
+
+cd ${pkg}/man
+pkg=`basename ${pkg}`
+
+FILES=`ls *.Rd`
+
+echo " >>> Building HTML pages for package \`${pkg}'"
+for file in ${FILES}
+do
+    name=`basename $file .Rd`
+    ${RHOME}/etc/Rdconv -t html ${file} > ${HTMLDIR}/funs/${name}.html
+    echo "  ${name}"
+done
+
+echo " >>> Building HTML index for package \`${pkg}'"
+cat > ${INDEX} << 'END'
+<HEAD><TITLE>R Function Index</TITLE></HEAD>
+<BODY LINK=#0000EF VLINK=#0000EF>
+<HR ALIGN=middle>
+<H2><CENTER><I>R Function Index<I></CENTER></H2>
+<HR ALIGN=middle>
+END
+
+grep '\\name' ${FILES} |
+sed 's/.*\\name{\(.*\)} *$/\1/;' |
+sort -d -f +0 |
+awk '
+  BEGIN {
+    k=0;
+    printf("<CENTER><TABLE>\n");
+    printf("<TR ALIGN=LEFT>\n")
+  }
+  {
+    printf("<TD><A HREF=\"%s.html\">%s</A>\n",$1,$1)
+    k=k+1;
+    if(k == 5) { printf("<TR>\n"); k=0 }
+  }
+  END {
+    printf("</TABLE></CENTER>\n")
+  }
+' >> ${INDEX}
+echo '</BODY>' >> ${INDEX}

@@ -1,0 +1,14 @@
+median <- function(x, na.rm = FALSE) {
+	if(na.rm)
+		x <- x[!is.na(x)]
+	else if(any(is.na(x)))
+		return(NA)
+	n <- length(x)
+	half <- (n + 1)/2
+	if(n %% 2 == 1) {
+		sort(x, partial = half)[half]
+	}
+	else {
+		sum(sort(x, partial = c(half, half + 1))[c(half, half + 1)])/2
+	}
+}
