@@ -1,30 +1,23 @@
 #-*- Makefile -*-
-R: $(DPKG)/R $(DPKG)/R/all.rda
+R: $(DPKG)/R $(DPKG)/R/methods.rdb
 
 $(DPKG)/R:
-	@echo "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
 
-$(DPKG)/R/all.rda: all.R
-#	@$(CP) -p all.R $(DPKG)/R
+$(DPKG)/R/methods.rdb: all.R
 	@echo "  dumping R code in package \`$(PKG)'"
 ifeq ($(strip $(BUILD)),CROSS)
 	@ cp `$(R_EXE) RHOME`/library/methods/libs/methods.so $(RHOME)/library/methods/libs
 	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\", \"..\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave)
 	@ rm $(RHOME)/library/methods/libs/methods.so
 else
-	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\")" | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL)
+	(cp all.R $(RHOME)/library/methods/R/methods; echo "loadNamespace(\"methods\")" | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL)
 endif
-	@$(CP) -p $(RHOME)/share/R/nsrdaload.R $(DPKG)/R/$(PKG)
-	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
+	$(ECHO)  "preparing package $(PKG) for lazy loading"
+	@$(CP) -p $(RHOME)/share/R/nspackloader.R $(DPKG)/R/$(PKG)
 
 all.R: $(PKGRFILES)
 	@echo "  collecting R files"
-	@$(MKDIR) -p $(DPKG)/R
 	@echo ".packageName <- \"methods\"" > $@
-ifeq ($(strip $(BUILD)),CROSS)
-	@$(CAT) $(PKGRFILES) | $(SED) -e 's+file.path(.Library+file.path("../../library"+' >> $@
-else
 	@$(CAT) $(PKGRFILES)   >> $@
-endif
 

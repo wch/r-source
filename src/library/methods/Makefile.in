@@ -10,7 +10,7 @@ subdir = src/library/methods
 
 include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = LICENSE DESCRIPTION.in Makefile.in NAMESPACE install.R
+DISTFILES = LICENSE DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = methods
 
@@ -52,7 +52,6 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
-	@$(MAKE) Rfiles
 	@$(MAKE) RfilesLazy
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -62,40 +61,14 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
-$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: $(top_builddir)/library/$(pkg)/R/all.rda
-	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
-	@cat /dev/null > $(top_builddir)/library/$(pkg)/R/all.rda
-	@touch $^
-
-Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
-  $(top_builddir)/library/$(pkg)/R/all.rda
-
-$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
-	@$(INSTALL_DATA) $(srcdir)/install.R $@
-
-$(top_builddir)/library/$(pkg)/R/all.rda: all.R
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@echo "dumping R code in package '$(pkg)'"
-	@if test -f $(srcdir)/NAMESPACE; then \
-	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	  echo "loadNamespace(\"$(pkg)\")" | \
-	    R_DEFAULT_PACKAGES=NULL \
-	    $(top_builddir)/bin/R --vanilla --slave; \
-	  $(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	else \
-	  (echo \
-	    "options(save.image.defaults=list(compress=TRUE, safe=FALSE))"; \
-	    cat all.R) | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave --save; \
-	  $(INSTALL_DATA) .RData $@; \
-	  $(INSTALL_DATA) $(top_srcdir)/share/R/firstlib.R \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then \
-	    rm -f $(top_builddir)/library/$(pkg)/NAMESPACE; \
-	  fi; \
-	fi
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@echo "loadNamespace(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave
+	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 mostlyclean: clean
 clean:

@@ -101,7 +101,7 @@ Rcode: fixed/fixdesc
 	done
 	@$(ECHO) "  ... done"
 
-LAZY_PKGS = utils graphics stats methods grid
+LAZY_PKGS = utils graphics stats grid # methods is done directly
 
 rpackage: ../../library/R.css
 ifeq ($(strip $(HELP)),YES)
@@ -143,7 +143,6 @@ endif
 	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) \
 	  lazyload ; \
 	done
-	@touch ../../library/methods/R/all.rda
 	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
 
