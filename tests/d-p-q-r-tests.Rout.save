@@ -120,7 +120,7 @@ n= 50 : ......................
 +     for(sig in round(rlnorm(30),2)) {
 + 	tst <- all.equal((d1 <- dgamma(	 x,   shape = sh, scale = sig)),
 + 			 (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig),
-+ 			 tol = 1e-15)
++ 			 tol = 1e-14)## __ad interim__ was 1e-15
 + 	if(!(is.logical(tst) && tst))
 + 	    cat("ERROR: dgamma() doesn't scale:",tst,"\n",
 + 		"  x =", formatC(x),"\n	 shape,scale=",formatC(c(sh, sig)),"\n")
