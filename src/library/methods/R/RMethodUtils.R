@@ -287,12 +287,20 @@ getGroup <-
 
 getMethodsMetaData <-
   ## get the methods meta-data for function f on database where
-  function(f, where) {
+  function(f, where = -1) {
     mname <- mlistMetaName(f)
-    if(exists(mname, where = where, inherits = FALSE))
-      get(mname, where)
-    else
-      NULL
+    if(identical(where, -1)) {
+        if(exists(mname))
+            get(mname)
+        else
+            NULL
+    }
+    else {
+        if(exists(mname, where = where, inherits = FALSE))
+            get(mname, where)
+        else
+            NULL
+    }
   }
 
 assignMethodsMetaData <-
