@@ -4,14 +4,8 @@ memory.limit <- function(size = NA) .Internal(memory.size(size))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 
-select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
-    .Internal(select.list(list, preselect, multiple, title))
-
-flush.console <- function() .Internal(flush.console())
-
 readClipboard <- function()
     strsplit(.Internal(readClipboard()), "\r\n")[[1]]
-
 
 writeClipboard <- function(str)
     .Internal(writeClipboard(str))
@@ -37,7 +31,8 @@ getWindowsHandle <- function(which = "Console") {
 
 menuShowCRAN <- function()
 {
-    CRAN <- getOption("CRAN")[1]
-    if(identical(CRAN, "@CRAN@")) CRAN <- "http://cran.r-project.org"
+    CRAN <- as.vector(getOption("repos")["CRAN"])
+    if(is.na(CRAN) || identical(CRAN, "@CRAN@"))
+        CRAN <- "http://cran.r-project.org"
     shell.exec(CRAN)
 }

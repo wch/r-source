@@ -1,3 +1,3 @@
 export(CRAN.binaries, Rapp.updates, browse.pkgs, browse.update.pkgs,
-       data.manager, flush.console, install.binaries, install.from.file,
+       data.manager, install.binaries, install.from.file,
        package.manager, main.help.url)

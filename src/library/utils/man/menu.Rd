@@ -15,6 +15,10 @@ menu(choices, graphics = FALSE, title = "")
     used.  Currently unused.}
   \item{title}{a character string to be used as the title of the menu}
 }
+\details{
+  Ten or few items will be displayed in a single column, more in
+  multiple columns if possible.
+}
 \value{
   The number corresponding to the selected item, or 0 if no choice was
   made.

@@ -170,7 +170,7 @@ browse.pkgs <- function (where = c("CRAN", "BIOC"), type = c("binary", "source")
 
     }
 
-flush.console <- function() {if (.Platform$GUI=="AQUA") .Internal(flush.console())}
+# flush.console <- function() {if (.Platform$GUI=="AQUA") .Internal(flush.console())}
 
 print.hsearch <- function(x,...)
   {

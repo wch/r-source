@@ -51,11 +51,12 @@ install.packages(pkgs, lib, repos = CRAN,
                  type = getOption("pkgType"))
 
 contrib.url(repos, type = getOption("pkgType"))
+}
 \arguments{
   \item{lib.loc}{character vector describing the location of R
     library trees to search through (and update packages therein).}
   \item{repos}{character vector, the base URL(s) of the repositories
-    to use, i.e., the URL of a CRAN root such as
+    to use, i.e., the URL of the CRAN master such as
     \code{"http://cran.r-project.org"} or its Statlib mirror,
     \code{"http://lib.stat.cmu.edu/R/CRAN"}.
 #ifdef unix

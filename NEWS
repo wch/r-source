@@ -269,7 +269,12 @@ NEW FEATURES
 	messages.
 
     o	New function normalizePath() to find canonical paths.
-	
+
+    o	Functions flush.console() and select.list() are now available
+	on all platforms.
+
+    o	menu() uses a multi-column layout if possible for more then 10 choices.
+
 
 INTERNATIONALIZATION
 
