@@ -305,6 +305,24 @@ NEW FEATURES
 
     o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
 
+    o   packages that use S4 classes and methods should now work with
+        or without saved images (saved images are still recommended
+        for efficiency), writing setMethod(), etc. calls with the
+        default for argument `where'.  The topenv() function and
+        sys.source() have been changed correspondingly.  See the
+        online help.
+
+    o   require() now maintains a list of required packages in the
+        toplevel environment (typically, .GlobalEnv).  Two features
+        use this:  detach() now warns if a package is detached that is
+        required by an attached package, and packages that install
+        with saved images no longer need to use require() in the
+        .First as well as in the main source.
+
+    o   S4 generic functions and method dispatch have been modified to
+        make the generic functions more self-contained (e.g., usable
+        in apply-type operations) and potentially to speed dispatch.
+
 
 DEPRECATED & DEFUNCT
 
