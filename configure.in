@@ -350,6 +350,7 @@ EOF
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
 %.o : %.f
 EOF
+  f77_rules_frag_etc=Makefrag.etc
   cat << \EOF > ${f77_rules_frag_etc}
 %.c : %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
