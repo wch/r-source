@@ -17,17 +17,17 @@ NEW FEATURES
 
 	-  New function gzfile() to read from / write to compressed files.
 
-	-  Text input from file, pipe, gzfile and url connections 
-	   can be read with a user-specified encoding.
+	-  Text input from file, pipe, gzfile and url connections can be
+           read with a user-specified encoding.
 
-	-  New functions readChar() and writeChar() to read
-	   character strings with known lengths and no terminators,
-	   and to write user-specified lengths from strings.
+	-  New functions readChar() and writeChar() to read character
+	   strings with known lengths and no terminators, and to write
+	   user-specified lengths from strings.
 
 	-  sink() now has a stack of output connections, following S4.
 
-	-  sink() can also be applied to the message stream, to
-	   capture error messages to a connection.  Use carefully!
+	-  sink() can also be applied to the message stream, to capture
+           error messages to a connection.  Use carefully!
 
 	-  seek() has a new `origin' argument.
 
@@ -61,20 +61,20 @@ NEW FEATURES
 	-  Methods for cut(), seq(), round() and trunc() for date/time
 	   classes.
 
-	-  Convenience generic functions weekday(), months(),
-	   quarters() and julian() with methods for "POSIXt" objects.
+	-  Convenience generic functions weekday(), months(), quarters()
+           and julian() with methods for "POSIXt" objects.
 
     o	`hessian' argument added to deriv and its methods.  A new function
 	deriv3() provides identical capabilities to deriv() except that
 	`hessian' is TRUE by default.
-	deriv(*,*, func = TRUE) for convenience.
+	deriv(*, *, func = TRUE) for convenience.
 
-    o	New components in .Machine give the sizes of long, long long
-	and long double C types (or 0 if they do not exist).
+    o	New components in .Machine give the sizes of long, long long and
+	long double C types (or 0 if they do not exist).
 
-    o	postscript() allows user-specified encoding, with encoding
-	files supplied for Windows, Mac, Unicode and various others,
-	and with an appropriate platform-specific default.
+    o	postscript() allows user-specified encoding, with encoding files
+	supplied for Windows, Mac, Unicode and various others, and with
+	an appropriate platform-specific default.
 
     o	New pdf() graphics driver.
 
@@ -86,11 +86,11 @@ NEW FEATURES
 
     o	Generalised "birthday paradox" functions [pq]birthday.
 
-    o	dist() can now handle missing values, and zeroes in the
-	Canberra distance.
+    o	dist() can now handle missing values, and zeroes in the	Canberra
+	distance.
 
-    o	stl() has more optional arguments for fine tuning,
-	a summary() and an improved plot() method.
+    o	stl() has more optional arguments for fine tuning, a summary()
+	and an improved plot() method. 
 
     o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
 
@@ -114,8 +114,8 @@ NEW FEATURES
     o	outer() has a speed-up in the default case of a matrix outer
 	product (by Jonathan Rougier).
 
-    o	aperm() uses strides in the internal C code and so is substantially
-	faster (by Jonathan Rougier).
+    o	aperm() uses strides in the internal C code and so is
+	substantially faster (by Jonathan Rougier).
 
     o	sort(x) now produces an error when x is not atomic instead of 
 	just returning x.
@@ -154,8 +154,8 @@ NEW FEATURES
     o	New function formatDL() for formatting description lists.
 
     o	New function write.dcf() for writing data in Debian Control File
-	format.  parse.dcf() has been replaced by (much faster)
-	internal read.dcf().
+	format.  parse.dcf() has been replaced by (much faster)	internal
+	read.dcf().
 
     o	New function oneway.test() in package ctest for testing for
 	equal means in a one-way layout, assuming normality but not
@@ -172,8 +172,8 @@ NEW FEATURES
     o   [dpqr]nbinom also accept an alternative parametrization via the
 	mean and the dispersion parameter (thanks to Ben Bolker).
 
-    o   A function is allowed as the error option, as an alternative to an
-	expression.  (The blue book only allows a function; current
+    o   A function is allowed as the error option, as an alternative to
+	an expression.  (The blue book only allows a function; current
 	S-Plus a function or an expression.)
 
     o	Exact p-values are available for the two-sided two-sample
@@ -183,12 +183,12 @@ NEW FEATURES
 	estimators of the location or scale parameter of interest along
 	with confidence intervals for these.
 
-    o   The INSTALL command for package installation allows a --save
-        option.  Using it causes a binary image of the package contents to
-        be created at INSTALL time and loaded when the library is
+    o   The INSTALL command for package installation allows a `--save'
+        option.  Using it causes a binary image of the package contents
+        to be created at INSTALL time and loaded when the library is
         attached.  This saves time, but also uses a more standard way
         of source-ing the package.  Packages that do more than just
-        assign object definitions may need to install with --save.
+        assign object definitions may need to install with `--save'.
 
 
 
@@ -197,27 +197,27 @@ BUG FIXES
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
 	have been removed.
 
-    o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
+    o	Unused directory `src/f2clib' and header `src/include/R_ext/f2c.h'
 	have been removed.
 
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
     o	symnum(x) behaves more reasonably for zero length or non-numeric x.
 
-    o   R INSTALL and package.description() fix some common problems of
-        DESCRIPTION files (blank lines, ...)
+    o   R CMD INSTALL and package.description() fix some common problems
+        of DESCRIPTION files (blank lines, ...)
 
     o	the "coef = 0" fix (PR#917) to boxplot.stats() accidentally broke
 	boxplot.stats(do.out = FALSE).
 
     o   The documentation and parts of the parse/deparse mechanism
-    	indicated that there was an operator '%'. Corrected. PR#925
+    	indicated that there was an operator `%'. Corrected (PR#925).
 
     o   Fixed some cases where the deparser gave code that threw a
-        syntax error when parsed.
+	syntax error when parsed.
 
     o   The implementation of sys.function() did not work when the
-        current function was already a function (e.g., a closure).
+	current function was already a function (e.g., a closure). 
 
 
 	**************************************************
