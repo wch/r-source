@@ -39,7 +39,7 @@ ncb <- dimnames(cbind(a=1, yy=1:3))[[2]]
 all(cbind(a=1:2, b=1:3, c=1:6) == t(rbind(a=1:2, b=1:3, c=1:6)))
 ##P rbind(a=1:2, b=1:3, c=1:6)
 
-source("/u/maechler/R/MM-Goodies/all.equal.R")
+source("all.equal.R")
 
 ##--- Cumulative Poisson '==' Cumulative Chi^2 :
 ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
