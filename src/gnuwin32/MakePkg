@@ -114,7 +114,7 @@ else
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | $(RHOME)/bin/rterm.exe --vanilla --slave \
 	    R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
-	@cp -p $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
+#	@cp -p $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
 	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
 endif
 ## install halts here if collater failed
