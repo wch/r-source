@@ -67,7 +67,7 @@ dev.off()
 $$ \\input Rplots.tex $$
 }
 ##--------------------
-unlink(Rplots.tex)
+unlink("Rplots.tex")
 }
 \keyword{device}
 %%-
