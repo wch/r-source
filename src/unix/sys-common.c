@@ -94,6 +94,9 @@ FILE *R_OpenSiteFile(void)
 	    return fp;
 	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
 	    return fp;
+	sprintf(buf, "%s/etc/Rprofile.site", R_Home);
+	if ((fp = R_fopen(buf, "r")))
+	    return fp;
 	sprintf(buf, "%s/etc/Rprofile", R_Home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
@@ -730,26 +733,33 @@ static int process_Renviron(char *filename)
 }
 
 
-/* read R_HOME/etc/Renviron:  Unix only */
-void process_global_Renviron()
+/* try system Renviron: R_HOME/etc/Renviron.  Unix only. */
+void process_system_Renviron()
 {
-    char buf[1024];
+    char buf[PATH_MAX];
     
     strcpy(buf, R_Home);
     strcat(buf, "/etc/Renviron");
-    if(!process_Renviron(buf)) R_ShowMessage("cannot find system Renviron");
+    if(!process_Renviron(buf))
+	R_ShowMessage("cannot find system Renviron");
 }
 
-/* try ./.Renviron, then value of R_ENVIRON, then ~/.Renviron */
-void process_users_Renviron()
+/* try site Renviron: R_ENVIRON, then R_HOME/etc/Renviron.site. */
+void process_site_Renviron ()
+{
+    char buf[PATH_MAX];
+
+    if(process_Renviron(getenv("R_ENVIRON"))) return;
+    sprintf(buf, "%s/etc/Renviron.site", R_Home);
+    process_Renviron(buf);
+}
+
+/* try user Renviron: ./.Renviron, then ~/.Renviron */
+void process_user_Renviron()
 {
     char *s;
     
     if(process_Renviron(".Renviron")) return;
-    if((s = getenv("R_ENVIRON"))) {
-	process_Renviron(s);
-	return;
-    } 
 #ifdef Unix
     s = R_ExpandFileName("~/.Renviron");
 #endif

@@ -294,7 +294,10 @@ void gnome_start(int ac, char **av, Rstart Rp)
     R_ShowQueuedMessages();
 
     R_SetParams(Rp);
-    if(!Rp->NoRenviron) process_users_Renviron();
+    if(!Rp->NoRenviron) {
+	process_site_Renviron();
+	process_user_Renviron();
+    }
 
     R_Interactive = isatty(0);
     if((R_Home = R_HomeDir()) == NULL) {

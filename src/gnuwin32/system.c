@@ -578,7 +578,7 @@ void R_SetWin32(Rstart Rp)
     /* Process .Renviron or ~/.Renviron, if it exists. 
        Only used here in embedded versions */
     if(!Rp->NoRenviron)
-	process_users_Renviron();
+	process_user_Renviron();
     _controlfp(_MCW_EM, _MCW_EM);
 }
 
@@ -684,7 +684,7 @@ int cmdlineoptions(int ac, char **av)
      * precedence:  command-line, .Renviron, inherited
      */
     if(!Rp->NoRenviron) {
-	process_users_Renviron();
+	process_user_Renviron();
 	Rp->NoRenviron = TRUE;
     }
     env_command_line(&ac, av);

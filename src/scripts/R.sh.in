@@ -32,7 +32,7 @@ Options:
   RHOME			Print path to R home directory and exit
   --save                Do save data sets at the end of the session
   --no-save             Don't save them
-  --no-environ          Don't read the .Renviron or ~/.Renviron files
+  --no-environ          Don't read the site and user environment files
   --no-site-file        Don't read the site-wide Rprofile
   --no-init-file        Don't read the .Rprofile or ~/.Rprofile files
   --restore             Do restore previously saved data sets at startup

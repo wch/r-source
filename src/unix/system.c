@@ -117,7 +117,7 @@ int Rf_initialize_R(int ac, char **av)
     if((R_Home = R_HomeDir()) == NULL)
 	R_Suicide("R home directory is not defined");
 
-    process_global_Renviron();
+    process_system_Renviron();
 
 #ifdef HAVE_TIMES
     R_setStartTime();
@@ -206,7 +206,10 @@ int Rf_initialize_R(int ac, char **av)
 	}
     }
     R_SetParams(Rp);
-    if(!Rp->NoRenviron) process_users_Renviron();
+    if(!Rp->NoRenviron) {
+	process_site_Renviron();
+	process_user_Renviron();
+    }
 
     /* On Unix the console is a file; we just use stdio to write on it */
 

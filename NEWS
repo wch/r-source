@@ -50,14 +50,24 @@ NEW FEATURES
     o	Ops, cbind, diff and na.omit methods for time series objects
 	moved from package ts to package base.
 
-    o   Started work on new package management system:
-        package.status() and friends.
+    o   Started work on new package management system: package.status()
+	and friends.
 
     o   A package `methods' has been added, containing formal classes
         and methods ("S4" methods).  In support of this, the "@"
         operator has been added to the grammar.
 
-    o	New argument `cacheOK' to download.file() to request cache-flushing.
+    o	New argument `cacheOK' to download.file() to request cache
+	flushing.
+
+    o	The name of the site profile now defaults to
+	`R_HOME/etc/Rprofile.site'.
+
+    o	The startup process for setting environment variables now first
+	searches for a site environment file (given by the environment
+	variable `R_ENVIRON' if set or `R_HOME/etc/Renviron.site' if
+	not), *and* then for a user `.Renviron' file in the current or
+	the user's home directory.
 
 
 

@@ -415,7 +415,7 @@ int Mac_initialize_R(int ac, char **av)
     R_SetParams(Rp);
     
    
-    if(!Rp->NoRenviron) process_users_Renviron();
+    if(!Rp->NoRenviron) process_user_Renviron();
  
  
     /* On Unix the console is a file; we just use stdio to write on it */
@@ -1779,7 +1779,7 @@ static int process_Renviron(char *filename)
 /* read R_HOME/etc/Renviron:  Unix only */
 
 /* try ./.Renviron, then value of R_ENVIRON, then ~/.Renviron */
-void process_users_Renviron()
+void process_user_Renviron()
 {
     char *s;
     
