@@ -95,7 +95,6 @@ if(.Platform$GUI == "AQUA") {
        }
    }
 
-
     ## edited from windows/install.packages
     ##
     install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
@@ -273,8 +272,12 @@ if(.Platform$GUI == "AQUA") {
         invisible()
     }
 
-    install.from.file <- function(pkg = file.choose())
+    install.from.file <- function(pkg = file.choose(), binary=FALSE)
     {
+	if (binary){
+		install.binaries(CRAN=NULL, pkg=pkg, lib=.libPaths()[1])
+	}
+
         lib <- .libPaths()[1]
         cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
         cmd <- paste(cmd, "-l", lib)
