@@ -59,6 +59,15 @@ case "${INSTALL}" in
     INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
     ;;
 esac
+case "{host_os}" in
+  hpux*)
+    ## On some versions of HP-UX (seen on both 10.20 and 11.0) we end up
+    ## a broken install (seen in /opt/imake/bin) which has the default
+    ## permissions wrong (PR#2091).  Let's just always use install-sh on
+    ## HP-UX.
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+    ;;
+esac
 ])# R_PROG_INSTALL
 
 ## R_PROG_PAGER
