@@ -4270,25 +4270,31 @@ These all provide (very) partial sorting: they permute @var{x} so that
 the left, larger ones to the right.
 @end deftypefun
 
-@deftypefun  void R_qsort   (double *@var{v},  int @var{i}, int @var{j})
+@deftypefun  void R_qsort   (double *@var{v}, int @var{i}, int @var{j})
 @deftypefunx void R_qsort_I (double *@var{v}, int *@var{I}, int @var{i}, int @var{j})
-@deftypefunx void R_qsort_int  (int *@var{iv},  int @var{i}, int @var{j})
-@deftypefunx void R_qsort_int_I(int *@var{iv}, int *@var{I}, int @var{i}, int @var{j})
+@deftypefunx void R_qsort_int   (int *@var{iv}, int @var{i}, int @var{j})
+@deftypefunx void R_qsort_int_I (int *@var{iv}, int *@var{I}, int @var{i}, int @var{j})
 
-@deftypefunx int F77_NAME(qsort4)(double *@var{v}, int *@var{indx}, int *@var{ii}, int *@var{jj});
-@deftypefunx int F77_NAME(qsort3)(double *@var{v},            int *@var{ii}, int *@var{jj});
 
 These routines sort @code{v[i:j]} or @code{iv[i:j]} (using 1-indexing,
-i.e. @code{v[1]} is the first element) calling the same quicksort algorithm
-as used by @R{}'s @code{sort(v, method = "quick")} and documented there.
-The @code{..._I()} versions also return the @code{sort.index()} verctor in
-@code{I} (where the ordering is @emph{not} stable for ties).
+i.e. @code{v[1]} is the first element) calling the quicksort algorithm
+as used by @R{}'s @code{sort(v, method = "quick")} and documented on the
+help page for the @R{} function @code{sort}. 
+The @code{..._I()} versions also return the @code{sort.index()} vector in
+@code{I}.  Note that the ordering is @emph{not} stable, so tied values
+may be permuted.
 
-The FORTRAN interface routines for double precision vectors are
-@code{qsort3} and @code{qsort4}.
-
-Note that @code{NA}s are not handled (explicitely) and you should
+Note that @code{NA}s are not handled (explicitly) and you should
 use different sorting functions if NAs can be present.
+@end deftypefun
+
+@deftypefun integer qsort4 (double precision @var{v}, integer @var{indx}, integer@var{ii}, integer @var{jj})
+@deftypefunx integer qsort3 (double precision @var{v}, integer @var{ii}, integer@var{jj})
+
+The FORTRAN interface routines for sorting double precision vectors are
+@code{qsort3} and @code{qsort4}, equivalent to @code{R_qsort} and 
+@code{R_qsort_I} respectively (and always returning 0).
+
 @end deftypefun
 
 
