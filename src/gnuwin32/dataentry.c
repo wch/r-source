@@ -21,7 +21,8 @@
 
 /* TODO
    - is END useful here?
-   - ctrl-home ctrl-end etc?
+   - faster repaints for horizontal scroll?
+   - help menu
  */
 
 #ifdef HAVE_CONFIG_H
@@ -34,6 +35,7 @@
 #include "graphapp/ga.h"
 #include "console.h"
 #include "consolestructs.h"
+#include "rui.h"
 
 static dataeditor de;
 static ConsoleData p;
@@ -71,6 +73,8 @@ static void printlabs();
 static void printrect(int, int);
 static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
+void de_copy(control c);
+void de_paste(control c);
 
 
 static SEXP inputlist;  /* each element is a vector for that row */
@@ -95,6 +99,7 @@ SEXP ssNewVector(SEXPTYPE type, int vlen)
 /* Global variables needed for the graphics */
  
 static int box_w;                       /* width of a box */
+static int boxw[100];                   /* widthes of cells */
 static int box_h;                       /* height of a box */
 static int windowWidth;                 /* current width of the window */
 static int windowHeight;                /* current height of the window */
@@ -116,7 +121,10 @@ static int CellModified;
 static int CellEditable;
 static field celledit;
 static int newcol;
+static int xmaxused, ymaxused;
 
+
+char *demenuitems[20];
 
 
 void R_ProcessEvents(); /* in system.c */
@@ -130,7 +138,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tvec2, tvec, colmodes, indata;
     SEXPTYPE type;
-    int i, j,len, nprotect;
+    int i, j,len, nprotect, tmp;
     RCNTXT cntxt;
 
     nprotect = 0;/* count the PROTECT()s */
@@ -162,11 +170,12 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* setup inputlist  */
 
     if (indata != R_NilValue) {
+	xmaxused = 0; ymaxused = 0;
 	PROTECT(inputlist = duplicate(indata)); nprotect++;
 	for (tvec = inputlist, tvec2 = colmodes; 
 	     tvec != R_NilValue; 
 	     tvec = CDR(tvec), tvec2 = CDR(tvec2)) {
-	    type = TYPEOF(CAR(tvec));
+	    type = TYPEOF(CAR(tvec)); xmaxused++;
 	    if (CAR(tvec2) != R_NilValue)
 		type = str2type(CHAR(STRING(CAR(tvec2))[0]));
 	    if (type != STRSXP)
@@ -183,7 +192,8 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else {
 		if (TYPEOF(CAR(tvec)) != type)
 		    CAR(tvec) = coerceVector(CAR(tvec), type);
-		LEVELS(CAR(tvec)) = LENGTH(CAR(tvec));
+		tmp = LEVELS(CAR(tvec)) = LENGTH(CAR(tvec));
+		if (tmp > ymaxused) ymaxused = tmp;
 	    }
 	}
     }
@@ -256,46 +266,57 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Window Drawing Routines */
 
-static rgb bbg=rgb(255,255,255);
+static rgb bbg;
 
 
 void drawwindow()
 {
-    int i;
+    int i, w, dw;
     
     /* might have resized */
-    windowWidth = WIDTH;
-    windowHeight = HEIGHT;
-    nwide = (windowWidth - 2 * bwidth) / box_w;
-    nhigh = (windowHeight - 2 * bwidth - hwidth) / box_h;
-    windowWidth = nwide * box_w + 2 * bwidth;
+    windowWidth = w = 2*bwidth + boxw[0] + boxw[colmin];
+    nwide = 2;
+    for (i = 2; i < 100; i++) {
+	dw = boxw[i + colmin - 1];
+	if((w += dw) > WIDTH) {
+	    nwide = i;
+	    windowWidth = w - dw;
+	    break;
+	}
+    }
+    nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
     windowHeight = nhigh * box_h + 2 * bwidth - hwidth;
 
     clearwindow();
 
     gfillrect(de, bbg, rect(0, 0, windowWidth, box_h));
-    gfillrect(de, bbg, rect(0, 0, box_w, windowHeight));
+    gfillrect(de, bbg, rect(0, 0, boxw[0], windowHeight));
 
-    for (i = 1; i <= nwide; i++)
-	de_drawline(i * box_w, hwidth, i * box_w, windowHeight);
     for (i = 1; i <= nhigh; i++)
-	de_drawline(0, hwidth + i * box_h, windowWidth, hwidth + i * box_h);
+	drawrectangle(0, hwidth + i * box_h, boxw[0], box_h, 1, 1);
     colmax = colmin + (nwide - 2);
      /* so row 0 and col 0 are reserved for labels */
     rowmax = rowmin + (nhigh - 2);
     printlabs();
     if (inputlist != R_NilValue)
 	for (i = colmin; i <= colmax; i++) drawcol(i);
+    /* row/col 1 = pos 0 */
+    gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
+    gchangescrollbar(de, HWINSB, colmin-1, xmaxused, nwide, 0);
     highlightrect();
     show(de);
 }
 
 /* find_coords finds the coordinates of the upper left corner of the
-   given cell on the screen */
+   given cell on the screen: row and col are on-screen coords */
 
 void find_coords(int row, int col, int *xcoord, int *ycoord)
 {
-    *xcoord = bwidth + box_w * col;
+    int i, w;
+    w = bwidth;
+    if (col > 0) w += boxw[0];
+    for(i = 1; i < col; i ++) w += boxw[i + colmin - 1];
+    *xcoord = w;
     *ycoord = bwidth + hwidth + box_h * row;
 }
 
@@ -363,39 +384,85 @@ void advancerect(int which)
     highlightrect();
 }
 
+static char *get_col_name(int col)
+{
+    SEXP tmp;
+    static char clab[15];
+    if (col <= length(inputlist)) {
+	tmp = nthcdr(inputlist, col - 1);
+	if (TAG(tmp) != R_NilValue)
+	    return CHAR(PRINTNAME(TAG(tmp)));
+    }
+    sprintf(clab, "var%d", col);
+    return clab;
+}
+
+static int get_col_width(int col)
+{
+    int i, w = 0, w1;
+    char *strp;
+    SEXP tmp;
+    if (col <= length(inputlist)) {
+	tmp = nthcdr(inputlist, col - 1);
+	if (tmp == R_NilValue) return 10;
+	PrintDefaults(R_NilValue);
+	if (TAG(tmp) != R_NilValue)	
+	    w = strlen(CHAR(PRINTNAME(TAG(tmp))));
+	else w = 5;
+	tmp = CAR(tmp);
+	PrintDefaults(R_NilValue);
+	for (i = 0; i < (int)LEVELS(tmp); i++) {
+	    strp = EncodeElement(tmp, i, 0);
+	    w1 = strlen(strp);
+	    if (w1 > w) w = w1;
+	}
+	if(w < 5) w = 5;
+	if(w < 8) w++;
+	return w;
+    }
+    return 10;
+}
+
+typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
+
+static CellType get_col_type(int col)
+{
+    SEXP tmp;
+    CellType res = UNKNOWNN;
+    
+    if (col <= length(inputlist)) {
+	tmp = CAR(nthcdr(inputlist, col - 1));
+	if(TYPEOF(tmp) == REALSXP) res = NUMERIC;
+	if(TYPEOF(tmp) == STRSXP) res = CHARACTER;
+    }
+    return res;
+}
+
+
 /* whichcol is absolute col no, col is position on screen */
 void drawcol(int whichcol)
 {
     int i, src_x, src_y, len, col = whichcol - colmin + 1;
-    char clab[15];
+    char *clab;
     SEXP tmp;
 
     find_coords(0, col, &src_x, &src_y);
-    cleararea(src_x, src_y, box_w, windowHeight, p->bg);
-    cleararea(src_x, src_y, box_w, box_h, bbg);
+    cleararea(src_x, src_y, boxw[whichcol], windowHeight, p->bg);
+    cleararea(src_x, src_y, boxw[whichcol], box_h, bbg);
     for (i = 0; i < nhigh; i++)
-	drawrectangle(src_x, hwidth + i * box_h, box_w, box_h, 1, 1);
+	drawrectangle(src_x, hwidth + i * box_h, boxw[whichcol], box_h, 1, 1);
 
     /* now fill it in if it is active */
-
-    if (length(inputlist) >= whichcol) {
+    clab = get_col_name(whichcol);
+    printstring(clab, strlen(clab), 0, col, 0);
+ 
+   if (length(inputlist) >= whichcol) {
 	tmp = nthcdr(inputlist, whichcol - 1);
-	if (TAG(tmp) != R_NilValue)
-	    printstring(CHAR(PRINTNAME(TAG(tmp))),
-			strlen(CHAR(PRINTNAME(TAG(tmp)))), 0, col, 0);
-	else {
-	    sprintf(clab, "var%d", whichcol);
-	    printstring(clab, strlen(clab), 0, col, 0);
-	}
 	if (CAR(tmp) != R_NilValue) {
 	    len = ((int)LEVELS(CAR(tmp)) > rowmax) ? rowmax : LEVELS(CAR(tmp));
 	    for (i = (rowmin - 1); i < len; i++)
 		printelt(CAR(tmp), i, i - rowmin + 2, col);
 	}
-    }
-    else {
-	sprintf(clab, "var%d", whichcol);
-	printstring(clab, strlen(clab), 0, col, 0);
     }
     show(de);
 }
@@ -404,17 +471,21 @@ void drawcol(int whichcol)
 /* whichrow is absolute row no */
 void drawrow(int whichrow)
 {
-    int i, src_x, src_y, lenip, row = whichrow - rowmin + 1;
+    int i, src_x, src_y, lenip, row = whichrow - rowmin + 1, w;
     char rlab[15];
     SEXP tvec;
 
     find_coords(row, 0, &src_x, &src_y);
     cleararea(src_x, src_y, windowWidth, box_h, (whichrow > 0)?p->bg:bbg);
-    for (i = 0; i <= nwide; i++)
-	drawrectangle(i * box_w, src_y, box_w, box_h, 1, 1);
-
-    sprintf(rlab, "row %4d", whichrow);
+    drawrectangle(src_x, src_y, boxw[0], box_h, 1, 1);
+    sprintf(rlab, "%4d", whichrow);
     printstring(rlab, strlen(rlab), row, 0, 0);
+
+    w = bwidth + boxw[0];
+    for (i = colmin; i <= colmax; i++) {
+	drawrectangle(w, src_y, boxw[i], box_h, 1, 1);
+	w += boxw[i];
+    }
 
     lenip = length(inputlist);
     for (i = colmin; i <= colmax; i++) {
@@ -458,61 +529,57 @@ void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 static void drawelt(int whichrow, int whichcol)
 {
     int i;
-    char clab[15];
+    char *clab;
     SEXP tmp;
 
-    if (length(inputlist) >= whichcol + colmin - 1) {
-	tmp = nthcdr(inputlist, whichcol + colmin - 2);
-	if (whichrow == 0) {
-	    if (TAG(tmp) != R_NilValue) {
-		printstring(
-		    CHAR(PRINTNAME(TAG(tmp))),
-		    strlen(CHAR(PRINTNAME(TAG(tmp)))), 0, whichcol, 0);
-	    } else {
-		sprintf(clab, "var%d", whichcol + colmin - 1);
-		printstring(clab, strlen(clab), 0, whichcol, 0);
-	    }
-	} else
+    if (whichrow == 0) {
+	clab = get_col_name(whichcol + colmin - 1);
+	printstring(clab, strlen(clab), 0, whichcol, 0);	
+    } else {
+	if (length(inputlist) >= whichcol + colmin - 1) {
+	    tmp = nthcdr(inputlist, whichcol + colmin - 2);
 	    if (CAR(tmp) != R_NilValue && 
 		(i = rowmin + whichrow - 2) < (int)LEVELS(CAR(tmp)) )
 		printelt(CAR(tmp), i, whichrow, whichcol);
-    }
-    else if (whichrow == 0){
-	sprintf(clab, "var%d", whichcol + colmin - 1);
-	printstring(clab, strlen(clab), 0, whichcol, 0);
-    }
-    else
+	} else
 	printstring("", 0, whichrow,  whichcol, 0);
-
+    }
     show(de);
 }
 
 void jumppage(int dir)
 {
+    int i, w;
+    
     switch (dir) {
     case UP:
 	rowmin--;
 	rowmax--;
 	copyarea(0, hwidth + box_h, 0, hwidth + 2 * box_h);
 	drawrow(rowmin);
+	gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
 	break;
     case DOWN:
 	rowmin++;
 	rowmax++;
 	copyarea(0, hwidth + 2 * box_h, 0, hwidth + box_h);
 	drawrow(rowmax);
+	gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
 	break;
     case LEFT:
 	colmin--;
 	colmax--;
-	copyarea(box_w, hwidth, 2 * box_w, hwidth);
-	drawcol(colmin);
+	drawwindow();
 	break;
     case RIGHT:
 	colmin++;
 	colmax++;
-	copyarea(2 * box_w, hwidth, box_w, hwidth);
-	drawcol(colmax);
+/* There may not be room to fit the next column in */
+	w = boxw[0];
+	for (i = 1; i < nwide; i++) w += boxw[i + colmin - 1];
+	/* scroll again */
+	if (w > WIDTH) { colmin++; colmax++; ccol--; }
+	drawwindow();
 	break;
     }
 }
@@ -520,9 +587,11 @@ void jumppage(int dir)
 
 void printrect(int lwd, int fore)
 {
-    drawrectangle(ccol * box_w + lwd - 1, 
-		  hwidth + crow * box_h + lwd -1, 
-		  box_w - lwd + 1, box_h - lwd + 1, lwd, fore);
+    int x, y;
+    find_coords(crow, ccol, &x, &y);
+    drawrectangle(x + lwd - 1, y + lwd -1, 
+		  boxw[ccol+colmin-1] - lwd + 1, 
+		  box_h - lwd + 1, lwd, fore);
     show(de);
 }
 
@@ -590,7 +659,7 @@ extern double R_strtod(char *c, char **end); /* in coerce.c */
 void closerect()
 {
     SEXP cvec, c0vec, tvec;
-    int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1;
+    int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
     
     *bufp = '\0';
 
@@ -603,7 +672,9 @@ void closerect()
 	}
 	c0vec = getccol();
 	cvec = CAR(c0vec);
-	if (wrow > (int)LEVELS(cvec)) LEVELS(cvec) = wrow;
+	wrow0 = (int)LEVELS(cvec);
+	if (wrow > wrow0) LEVELS(cvec) = wrow;
+	if (wrow > ymaxused) ymaxused = wrow;
 	if (clength != 0) {
 	    int warn = 0;
 	    double new;
@@ -632,11 +703,10 @@ void closerect()
 	    else 
 		REAL(cvec)[wrow - 1] = NA_REAL;
 	}
-	drawelt(crow, ccol); /* to get the cell scrolling right */
+	drawelt(crow, ccol);  /* to get the cell scrolling right */
+	if(wrow > wrow0) drawcol(wcol); /* to fill in NAs */
     }
     CellEditable = CellModified = 0;
-    if (newcol) drawcol(wcol); /* to fill in NAs */
-    
 
     downlightrect();
     gsetcursor(de, ArrowCursor);
@@ -655,23 +725,23 @@ void closerect()
 
 void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
-    int x_pos, y_pos;
-    char buf[45], *pc=buf;
+    int x_pos, y_pos, bw, fw;
+    char buf[45], *pc = buf;
 
     find_coords(row, col, &x_pos, &y_pos);
-    cleararea(col * box_w + 2, 
-	      hwidth + row * box_h + 2,
-	      box_w - 3, 
-	      box_h - 3, (row==0||col==0) ? bbg:p->bg);
+    if (col == 0) bw = boxw[0]; else bw = boxw[col+colmin-1];
+    cleararea(x_pos + 2, y_pos + 2, bw - 3, box_h - 3, 
+	      (row==0 || col==0) ? bbg:p->bg);
     strncpy(buf, ibuf, buflen);
     buf[buflen] = '\0';
-    if (buflen > FIELDWIDTH) {
+    fw = (bw - 8)/FW;
+    if (buflen > fw) {
 	if(left) {
-	    pc += buflen - FIELDWIDTH;
+	    pc += buflen - fw;
 	    *pc = '<';
 	} else {
-	    *(pc + FIELDWIDTH - 1) = '>';
-	    *(pc + FIELDWIDTH) = '\0';	    
+	    *(pc + fw - 1) = '>';
+	    *(pc + fw) = '\0';	    
 	}
     }
     de_drawtext(x_pos + text_xoffset, y_pos - text_yoffset, pc);
@@ -680,7 +750,9 @@ void printstring(char *ibuf, int buflen, int row, int col, int left)
 
 void clearrect()
 {
-    cleararea(ccol * box_w, hwidth + crow * box_h, box_w, box_h, p->bg);
+    int x_pos, y_pos;
+    find_coords(crow, ccol, &x_pos, &y_pos);
+    cleararea(x_pos, y_pos, boxw[ccol+colmin-1], box_h, p->bg);
     show(de);
 }
 
@@ -692,10 +764,7 @@ void clearrect()
 
 void handlechar(char *text)
 {
-    int c;
-    SEXP tvec;
-
-    c = text[0];
+    int c = text[0];
 
     if ( c == '\033' ) {
 	CellModified = 0;
@@ -703,21 +772,19 @@ void handlechar(char *text)
 	drawelt(crow, ccol);
 	gsetcursor(de, ArrowCursor);
 	return;
-    }
-    else {
+    } else {
 	CellModified = 1;
 	gsetcursor(de, TextCursor);
     }
     
     if (clength == 0) {
-	if (length(inputlist) >= ccol + colmin - 1)
-	    tvec = nthcdr(inputlist, ccol + colmin - 2);
-	else
-	    tvec = R_NilValue;
-	if (TYPEOF(CAR(tvec)) == REALSXP)	/* numeric data */
+	switch(get_col_type(ccol + colmin - 1)) {
+	case NUMERIC:
 	    currentexp = 1;
-	else                                    /* character data */
+	    break;
+	default:
 	    currentexp = 2;
+	}
 	clearrect();
 	highlightrect();
     }
@@ -767,28 +834,15 @@ void handlechar(char *text)
 
 void printlabs()
 {
-    char clab[10];
+    char clab[10], *p;
     int i;
-    SEXP tppoint;
 
-    if (length(inputlist) > colmin)
-	tppoint = nthcdr(inputlist, colmin - 1);
-    else
-	tppoint = R_NilValue;
-
-    for (i = colmin; i <= colmax; i++)
-	if (TAG(tppoint) != R_NilValue) {
-	    printstring(CHAR(PRINTNAME(TAG(tppoint))),
-			strlen(CHAR(PRINTNAME(TAG(tppoint)))), 
-			0, i - colmin + 1, 0);
-	    tppoint = CDR(tppoint);
-	}
-	else {
-	    sprintf(clab, "var%d", i);
-	    printstring(clab, strlen(clab), 0, i - colmin + 1, 0);
-	}
+    for (i = colmin; i <= colmax; i++) {
+	p = get_col_name(i);
+	printstring(p, strlen(p), 0, i - colmin + 1, 0);
+    }
     for (i = rowmin; i <= rowmax; i++) {
-	sprintf(clab, "row %4d", i);
+	sprintf(clab, "%4d", i);
 	printstring(clab, strlen(clab), i - rowmin + 1, 0, 0);
     }
 }
@@ -805,6 +859,7 @@ static void cleararea(int xpos, int ypos, int width, int height, rgb col)
 
 static void clearwindow()
 {
+    gfillrect(de, p->bg, rect(0, 0, WIDTH, HEIGHT));
 }
 
 static void de_drawline(int fromx, int fromy, int tox, int toy)
@@ -838,7 +893,7 @@ void de_normalkeyin(control c, int k)
 	p->fbrk(c);
 	return;
     }
-    if (st == CtrlKey) {
+    if (st & CtrlKey) {
 	switch (k + 'A' - 1) {
 	case 'B':
 	    i = rowmin - nhigh + 2;
@@ -856,11 +911,21 @@ void de_normalkeyin(control c, int k)
 	    } else bell();
 	    break;
 	case 'I':
-	    advancerect(RIGHT);
+	    if (st & ShiftKey) advancerect(LEFT);
+	    else advancerect(RIGHT);
 	    break;
 	case 'N':
 	case 'J':
 	    advancerect(DOWN);
+	    break;
+	case 'C':
+	    de_copy(de);
+	    break;
+	case 'V':
+	    de_paste(de);
+	    break;
+	case 'L':
+	    drawwindow();
 	    break;
 	default:
 	    bell();
@@ -874,7 +939,8 @@ void de_normalkeyin(control c, int k)
     } else if(k == '\n' || k == '\r') {
 	    advancerect(DOWN);	    
     } else if(k == '\t') {
-	    advancerect(RIGHT);	    
+	if (st & ShiftKey) advancerect(LEFT);
+	else advancerect(RIGHT);
     } else {
 	text[0] = k;
 	handlechar(text);
@@ -897,7 +963,9 @@ void de_ctrlkeyin(control c, int key)
 	jumpwin(1, 1);
 	break;
     case END:
-	jumpwin(colmax, rowmax);
+	i = ymaxused - nhigh + 2;
+	crow = ymaxused;
+	jumpwin(xmaxused, (i < 1) ? 1:i);
 	break;
     case PGUP:
 	i = rowmin - nhigh + 2;
@@ -935,11 +1003,36 @@ void de_ctrlkeyin(control c, int key)
 
 /* mouse callbacks */
 
+static char *get_cell_text()
+{
+    int  wrow = rowmin + crow - 2;
+    char *prev = "";
+    SEXP tvec;
+
+    if (ccol <= length(inputlist)) {
+	tvec = CAR(nthcdr(inputlist, ccol - 1));
+	if (tvec != R_NilValue && wrow < (int)LEVELS(tvec)) {
+	    PrintDefaults(R_NilValue);
+	    if (TYPEOF(tvec) == REALSXP) {
+		if (REAL(tvec)[wrow] != ssNA_REAL)
+		    prev = EncodeElement(tvec, wrow, 0);
+	    } else if (TYPEOF(tvec) == STRSXP) {
+		if (!streql(CHAR(STRING(tvec)[wrow]), 
+			    CHAR(STRING(ssNA_STRING)[0])))
+		    prev = EncodeElement(tvec, wrow, 0);
+	    } else error("dataentry: internal memory error");
+	}
+    }
+    return prev;
+}
+
+static int online, clickline;
+
 void de_mousedown(control c, int buttons, point xy)
 {
-    int xw, yw, wcol, wrow;
+    int xw, yw, wcol=0, wrow, i, w;
     
-    if (buttons) {
+    if (buttons & LeftButton) {
 	xw = xy.x;
 	yw = xy.y;
 	
@@ -953,20 +1046,38 @@ void de_mousedown(control c, int buttons, point xy)
 	}
 	/* translate to box coordinates */
 
-	wcol = (xw - bwidth) / box_w;
 	wrow = (yw - bwidth - hwidth) / box_h;
 
 	/* see if it is in the row labels */
-	if (wcol == 0) {
+	if (xw < bwidth + boxw[0]) {
 	    bell();
 	    highlightrect();
 	    return;
 	}
+	w = bwidth + boxw[0];
+	for (i = 1; i <= nwide; i++)
+	    if((w += boxw[i+colmin-1]) > xw) {
+		wcol = i;
+		break;
+	}
+	w = bwidth;
+	online = 0;
+	for (i = 0; i <= nwide; i++) {
+	    if(i == 0) w += boxw[0]; else w += boxw[i+colmin-1];
+	    if (abs(w - xw) <= 2) {
+		online = 1;
+		clickline = i; /* between cols i and i+1 */
+		highlightrect();
+		gsetcursor(de, TextCursor);
+		return;
+	    }
+	}
+	
 
 	/* next check to see if it is in the column labels */
 
 	if (yw < hwidth + bwidth + box_h) {
-	    if (xw > bwidth + box_w)
+	    if (xw > bwidth + boxw[0])
 		de_popupmenu(xw, yw, wcol);
 	    else {
 		/* in 0th column */
@@ -975,30 +1086,17 @@ void de_mousedown(control c, int buttons, point xy)
 	    }
 	} else if (buttons & DblClick) {
 	    int x, y;
-	    char *prev = "";
-	    SEXP tvec;
+	    char *prev;
 	    rect rr;
 	    
 	    ccol = wcol;
-	    crow = wrow--;
+	    crow = wrow;
 	    highlightrect();
 	    find_coords(crow, ccol, &x, &y);
-	    if (ccol <= length(inputlist)) {
-		tvec = CAR(nthcdr(inputlist, ccol - 1));
-		if (tvec != R_NilValue && wrow <= (int)LEVELS(tvec)) {
-		    PrintDefaults(R_NilValue);
-		    if (TYPEOF(tvec) == REALSXP) {
-			if (REAL(tvec)[wrow] != ssNA_REAL)
-			    prev = EncodeElement(tvec, wrow, 0);
-		    } else if (TYPEOF(tvec) == STRSXP) {
-			if (!streql(CHAR(STRING(tvec)[wrow]), 
-				    CHAR(STRING(ssNA_STRING)[0])))
-			    prev = EncodeElement(tvec, wrow, 0);
-		    } else error("dataentry: internal memory error");
-		}
-	    }
-	    rr = rect(x+text_xoffset, y-text_yoffset-1, 
-		      box_w-text_xoffset-2, box_h-text_yoffset-2);
+	    rr = rect(x + text_xoffset, y - text_yoffset - 1, 
+		      boxw[crow+colmin-1] - text_xoffset - 2, 
+		      box_h - text_yoffset - 2);
+	    prev = get_cell_text();
 	    if (strlen(prev) > FIELDWIDTH)
 		rr.width = (strlen(prev) + 2) * FW;
 	    celledit = newfield_no_border(prev, rr);
@@ -1015,6 +1113,24 @@ void de_mousedown(control c, int buttons, point xy)
 	return;
     }
 }
+
+void de_mouseup(control c, int buttons, point xy)
+{
+    int xw, bw, i, w;
+    
+    if (online) {
+	xw = xy.x;
+	w = bwidth + boxw[0];
+	for(i = 1; i < clickline; i++) w+= boxw[i+colmin-1];
+	bw = xw - w;
+	if (bw < FW*4 + 8) bw = FW*4 + 8;
+	if (bw > FW*50) bw = FW*50;
+	boxw[clickline] = bw;
+	gsetcursor(de, ArrowCursor);
+	drawwindow();
+    }
+}
+
 
 void de_redraw(control c, rect r)
 {
@@ -1041,30 +1157,42 @@ static void copyarea(int src_x, int src_y, int dest_x, int dest_y)
 
 static int  initwin()
 {    
+    int i, w;
     rect r;
+
+    demenuitems[0] = "";
     de = newdataeditor();
     if(!de) return 1;
     p = getdata(de);
+
     box_w = FIELDWIDTH*FW + 8;
+    boxw[0] = 5*FW + 8;
+    for(i = 1; i < 100; i++) boxw[i] = get_col_width(i)*FW + 8;
     box_h = FH + 4;
     text_xoffset = 5;
     text_yoffset = -3;
-    windowWidth = WIDTH;
-    windowHeight = HEIGHT;
-    nwide = (windowWidth - 2 * bwidth) / box_w;
-    nhigh = (windowHeight - 2 * bwidth - hwidth) / box_h;
-    windowWidth = nwide * box_w + 2 * bwidth;
+    windowWidth = w = 2*bwidth + boxw[0] + boxw[1];
+    nwide = 2;
+    for (i = 2; i < 100; i++) {
+	if((w += boxw[i]) > WIDTH) {
+	    nwide = i;
+	    windowWidth = w - boxw[i];
+	    break;
+	}
+    }
+    nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
     windowHeight = nhigh * box_h + 2 * bwidth - hwidth;
-    bbg = myGetSysColor(COLOR_BTNFACE);
     r = getrect(de);
     r.width = windowWidth + 3;
     r.height = windowHeight + 3;
-    resize(de, r);    
+    resize(de, r);
+
     CellModified = CellEditable = 0;
-    drawwindow();
+    bbg = myGetSysColor(COLOR_BTNFACE);
     /* set the active cell to be the upper left one */
     crow = 1;
     ccol = 1;
+    /* drawwindow(); done as repaint */
     show(de);
     R_de_up = 1;
     return 0;
@@ -1118,18 +1246,11 @@ void getscreenrect(control, rect *);
 
 static void de_popupmenu(int x_pos, int y_pos, int col)
 {
-    char blah[25];
+    char *blah;
     rect r;
 
     popupcol = colmin + col - 1;
-    if (popupcol <= length(inputlist)) {
-	SEXP tvec = nthcdr(inputlist, popupcol - 1);
-	strcpy(blah, CHAR(PRINTNAME(TAG(tvec))));
-	isnumeric = TYPEOF(CAR(tvec)) == REALSXP;
-    } else {
-	sprintf(blah, "var%d", col);
-	isnumeric = 1;
-    }
+    blah = get_col_name(popupcol);
     getscreenrect(de, &r);
     wconf = newwindow("Variable editor", 
 		      rect(x_pos + r.x-150, y_pos + r.y-50, 300, 100),
@@ -1143,4 +1264,71 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
     rb_char = newradiobutton("character", rect(180, 60 , 80, 20), NULL);
     if (isnumeric) check(rb_num); else check(rb_char);
     show(wconf);
+}
+
+void de_copy(control c)
+{
+    HGLOBAL hglb;
+    char *s, *cell;
+    int ll;
+
+    cell = get_cell_text();
+    ll = strlen(cell) + 1;
+    if (!(hglb = GlobalAlloc(GHND, ll))){
+        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
+	return;
+    }
+    if (!(s = (char *)GlobalLock(hglb))){
+        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
+	return;
+    }
+    strcpy(s, cell);
+    GlobalUnlock(hglb);
+    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
+        R_ShowMessage("Unable to open the clipboard");
+        GlobalFree(hglb);
+        return;
+    }
+    SetClipboardData(CF_TEXT, hglb);
+    CloseClipboard();
+}
+
+void de_paste(control c)
+{
+    HGLOBAL hglb;
+    char *p, *pc;
+
+    closerect();
+    if ( OpenClipboard(NULL) &&
+         (hglb = GetClipboardData(CF_TEXT)) &&
+         (pc = (char *)GlobalLock(hglb))) {
+	/* set current cell to first line of pc */
+	CellModified = 1;
+	strncpy(buf, pc, 29);
+        GlobalUnlock(hglb);
+	CloseClipboard();    
+	buf[30] = '\0';
+	if ((p = strchr(buf, '\n'))) *p = '\0';
+	clength = strlen(buf);
+	bufp = buf + clength;
+	closerect();
+    }
+}
+
+void de_autosize(control c)
+{
+    int col = ccol + colmin - 1;
+    boxw[col] = get_col_width(col);
+    drawwindow();
+}
+
+void de_sbf(control c, int pos)
+{
+    if (pos < 0) { /* horizontal */
+	colmin = 1 + (-pos - 1);
+    } else {
+	rowmin = 1 + pos;
+	if(rowmin > ymaxused - nhigh + 2) rowmin = ymaxused - nhigh + 2;
+    }
+    drawwindow();
 }

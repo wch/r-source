@@ -2174,7 +2174,13 @@ extern void de_redraw(control c, rect r);
 extern void de_normalkeyin(control c, int k);
 extern void de_ctrlkeyin(control c, int k);
 extern void de_mousedown(control c, int buttons, point xy);
+extern void de_mouseup(control c, int buttons, point xy);
 extern void de_closewin();
+extern void de_copy(control c);
+extern void de_paste(control c);
+extern void de_autosize(control c);
+extern void de_sbf(control c, int pos);
+
 
 static void deldataeditor(control m)
 {
@@ -2201,6 +2207,19 @@ FBEGIN
     clear(c);
 FVOIDEND
 
+static MenuItem DePopup[28] = {
+    {"Copy", de_copy, 0},
+    {"Paste", de_paste, 0},
+    {"Autosize", de_autosize, 0},
+    {"-", 0, 0},
+    {"Close", declose, 0},
+    LASTMENUITEM
+};
+
+static void demenuact(control m)
+{
+    /* use this to customize the menu */
+}
 
 dataeditor newdataeditor()
 {
@@ -2225,7 +2244,8 @@ dataeditor newdataeditor()
 	y = (deviceheight(NULL) - h) / 1.5 ;
     }
     c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
-			       Document | StandardWindow | TrackMouse | Modal);
+			       Document | StandardWindow | TrackMouse |
+			       VScrollbar | HScrollbar | Modal);
     if (!c) {
          freeConsoleData(p);
          return NULL;
@@ -2247,13 +2267,16 @@ dataeditor newdataeditor()
         MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
     }
+    MCHECK(gpopup(demenuact, DePopup));
     setdata(c, p);
     setresize(c, deresize);
     setredraw(c, de_redraw);
     setdel(c, deldataeditor);
     setclose(c, declose);
+    sethit(c, de_sbf);
     setkeyaction(c, de_ctrlkeyin);
     setkeydown(c, de_normalkeyin);
     setmousedown(c, de_mousedown);
+    setmouseup(c, de_mouseup);
     return(c);
 }
