@@ -47,8 +47,8 @@
   by the user.
 }
 \usage{
-makeGeneric(f, fdef, keepMethods=TRUE, useAsDefault=NA,
-            group=character(), valueClass=character())
+makeGeneric(f, fdef, fdeflt, group=character(),
+            valueClass=character(), myDispatch = FALSE)
 
 makeStandardGeneric(f, fdef)
 
@@ -116,7 +116,12 @@ unRematchDefinition(definition)
    
     \item{\code{makeGeneric}:}{ 
       Makes a generic function object corresponding to the given
-      function name and optional definition.
+      function name and definition.  Other arguments supply optional
+      group generic identification and value class.  If
+      \code{myDispatch} is TRUE, the supplied function definition does
+      the call to \code{standardGeneric}; otherwise, only the
+      arguments matter, and the body of the generic is only the call
+      to \code{standardGeneric}.
     }
 
     \item{\code{makeStandardGeneric}:}{ 
