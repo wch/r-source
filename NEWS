@@ -92,6 +92,8 @@ NEW FEATURES
 
     o	There is now a coef() method for summaries of "nls" objects.
 
+    o	coplot() now makes use of cex.lab and font.lab par() settings.
+
     o	cumsum/prod/max/min() now preserve names.
 
     o	data(), .path.packages() and .find.packages() now interpret
@@ -301,7 +303,8 @@ NEW FEATURES
 	S. (See also PR#7084.)
 
     o	TukeyHSD() now labels comparisons when applied to an
-	interaction in an aov() fit.
+	interaction in an aov() fit.  It detects non-factor terms in
+	'which' and drops them if sensible to do so.
 
     o	There is now a replacement method for window(), to allow a
 	range of values of time series to be replaced by specifying the

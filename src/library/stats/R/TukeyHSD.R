@@ -28,9 +28,21 @@ TukeyHSD.aov <-
              conf.level = 0.95, ...)
 {
     mm <- model.tables(x, "means")
+    if(is.null(mm$n))
+        stop("no factors in the fitted model")
     tabs <- mm$tables[-1]
     tabs <- tabs[which]
-    nn <- mm$n[which]
+    ## mm$n need not be complete -- factors only -- so index by names
+    nn <- mm$n[names(tabs)]
+    nn_na <- is.na(nn)
+    if(all(nn_na))
+        stop(sQuote("which"), " specified no factors")
+    if(any(nn_na)) {
+        warning(sQuote("which"),
+                " specified some non-factors which will be dropped")
+        tabs <- tabs[!nn_na]
+        nn <- nn[!nn_na]
+    }
     out <- vector("list", length(tabs))
     names(out) <- names(tabs)
     MSE <- sum(resid(x)^2)/x$df.residual

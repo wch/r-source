@@ -47,6 +47,9 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   at each level of the factor.  This function incorporates an adjustment
   for sample size that produces sensible intervals for mildly unbalanced
   designs.
+
+  If \code{which} specifies non-factor terms whese will be dropped with
+  a warning: if no terms are left this is a an error.
 }
 \value{
   A list with one component for each term requested in \code{which}.
