@@ -22,12 +22,12 @@
 
 #include "Platform.h"
 
-/* Maybe get  finite(.) : */
+/* Maybe get finite(.): */
 #ifdef HAVE_IEEE754_H
-#include <ieee754.h> /* newer Linuxen */
+#include <ieee754.h>		/* newer Linuxen */
 #else
 #ifdef HAVE_IEEEFP_H
-#include <ieeefp.h> /* others [Solaris 2.5.x], .. */
+#include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
 #endif
 #endif
 
@@ -36,9 +36,9 @@
 # define finite(x) isfinite(x)
 #else
 # ifndef HAVE_FINITE
-#  ifndef finite /* Do not declare if macro! */
-#   ifdef isfinite/* HPUX math.h */
-#     define finite(x)	 isfinite(x)
+#  ifndef finite		/* Do not declare if macro! */
+#   ifdef isfinite		/* HPUX math.h */
+#     define finite(x) isfinite(x)
 #   else
       int finite(double);
 #   endif
@@ -46,12 +46,12 @@
 # endif
 #endif
 
-extern double	R_tmp;			/* Used in NaN/Inf checks */
-extern double	R_NaN;			/* IEEE NaN or -DBL_MAX */
-extern double	R_PosInf;		/* IEEE Inf or DBL_MAX */
-extern double	R_NegInf;		/* IEEE -Inf or -DBL_MAX */
-extern int	R_NaInt;		/* NA_INTEGER etc */
-extern double	R_NaReal;		/* NA_REAL */
+extern double	R_tmp;		/* Used in NaN/Inf checks */
+extern double	R_NaN;		/* IEEE NaN or -DBL_MAX */
+extern double	R_PosInf;	/* IEEE Inf or DBL_MAX */
+extern double	R_NegInf;	/* IEEE -Inf or -DBL_MAX */
+extern int	R_NaInt;	/* NA_INTEGER etc */
+extern double	R_NaReal;	/* NA_REAL */
 
 #define NA_LOGICAL	R_NaInt
 #define NA_INTEGER	R_NaInt
@@ -66,12 +66,12 @@ extern int finite(double);
 
 #ifdef IEEE_754
 
-int R_IsNA(double);/* True for Real NA only */
-int R_IsNaN(double);/* True for special NaN,  *not* for NA */
+int R_IsNA(double);		/* True for Real NA only */
+int R_IsNaN(double);		/* True for special NaN, *not* for NA */
 
 #define MATH_CHECK(call)	(call)
 #define FINITE(x)		finite(x)
-#define ISNAN(x)		((x)!=(x))/* -> True, *both* for NA | NaN */
+#define ISNAN(x)		isnan(x)  /* -> True, *both* for NA | NaN */
 #define ISNA(x)			R_IsNA(x) /* from ../main/arithmetic.c */
 
 #else
