@@ -3555,8 +3555,8 @@ void GPretty(double *lo, double *up, int *ndiv)
 #ifdef OLDSYMSIZE
 #define GSTR_0  GStrWidth("0", INCHES, dd)
 #else
-#define GSTR_0  xDevtoInch(dd->dp.cra[0] * 0.66, dd) * dd->gp.cex 
-/* NOTE: This cex is already multiplied with cexbase */ 
+#define GSTR_0  xDevtoInch(dd->dp.cra[0] * 0.66, dd) * dd->gp.cex
+/* NOTE: This cex is already multiplied with cexbase */
 #endif /* Draw one of the R special symbols. */
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
@@ -4879,14 +4879,15 @@ typedef struct {
     unsigned int pattern;
 } LineTYPE;
 
+/* LTY_... integer patterns are in ../include/Graphics.h ! */
 static LineTYPE linetype[] = {
-    { "blank",   LTY_BLANK   },
-    { "solid",	 LTY_SOLID   },
-    { "dashed",	 LTY_DASHED  },
-    { "dotted",	 LTY_DOTTED  },
-    { "dotdash", LTY_DOTDASH },
-    { "longdash",LTY_LONGDASH},
-    { "twodash", LTY_TWODASH },
+    { "blank",   LTY_BLANK   },/* 0 */
+    { "solid",	 LTY_SOLID   },/* 1 */
+    { "dashed",	 LTY_DASHED  },/* 2 */
+    { "dotted",	 LTY_DOTTED  },/* 3 */
+    { "dotdash", LTY_DOTDASH },/* 4 */
+    { "longdash",LTY_LONGDASH},/* 5 */
+    { "twodash", LTY_TWODASH },/* 6 */
     { NULL,	 0	     },
 };
 
