@@ -471,7 +471,8 @@ static SEXP ExpandDots(SEXP s, int expdots)
 SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
         SEXP formals, actuals, rlist;
-	SEXP f, b, rval;
+	SEXP f, b, rval, sysp;
+	RCNTXT *cptr;
 	int expdots;
 
 	checkArity(op,args);
@@ -486,10 +487,23 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* Get the function definition */
 
 	if(TYPEOF(CAR(args)) == NILSXP) {
-		if( TYPEOF(CAR(f)) == SYMSXP )
-			PROTECT(b = findFun(CAR(f), env));
+		/* get the env that the function containing matchcall was
+		   called from */
+		cptr = R_GlobalContext;
+		sysp = R_GlobalContext->sysparent;
+	        while(cptr != NULL) {
+			if(cptr->callflag == CTXT_RETURN && cptr->cloenv == sysp)
+				break;
+			cptr = cptr->nextcontext;
+		}
+		if( cptr == NULL )
+			sysp = R_GlobalEnv;
 		else
-			PROTECT(b = eval(CAR(f), env));
+			sysp = cptr->sysparent;
+		if( TYPEOF(CAR(f)) == SYMSXP )
+			PROTECT(b = findFun(CAR(f), sysp));
+		else
+			PROTECT(b = eval(CAR(f), sysp));
 	}
 	else PROTECT(b = CAR(args));
 
