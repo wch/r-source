@@ -1,0 +1,10 @@
+LIBRARY tcl83.dll
+EXPORTS
+ Tcl_CreateCommand
+ Tcl_CreateInterp
+ Tcl_Eval
+ Tcl_Init
+ Tcl_ServiceAll
+ Tcl_SetResult
+ Tcl_SetServiceMode
+ Tcl_StaticPackage
