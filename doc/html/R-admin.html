@@ -12,7 +12,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.3.0 (2001-05-18).
+<p>The current version of this document is 1.3.0 (2001-05-22).
 
 </ul>
 
@@ -21,43 +21,50 @@
 <h1>1 Obtaining R</h1>
 
 <p>Sources, binaries and documentation for R can be obtained via
-<small>CRAN</small>, the "Comprehensive R Archive Network". See
-the file <code>RESOURCES</code> for information on <small>CRAN</small>.
+<small>CRAN</small>, the "Comprehensive R Archive Network".  See the file
+<code>RESOURCES</code> for information on <small>CRAN</small>.
 
 </ul>
 
-<a name="Getting%20and%20Unpacking%20the%20Sources"></a>
+<a name="Getting%20and%20unpacking%20the%20sources"></a>
 
-<h2>1.1 Getting and Unpacking the Sources</h2>
+<h2>1.1 Getting and unpacking the sources</h2>
 
-<p>The simplest way is to download the most recent <code>R-x.y.z.tgz</code> package,
-and unpack it with
-<pre>	tar xvfz R-x.y.z.tgz
+<p>The simplest way is to download the most recent
+<code>R-<var>x</var>.<var>y</var>.<var>z</var>.tgz</code> file, and unpack it with
+
+<pre>tar xvfz R-<var>x</var>.<var>y</var>.<var>z</var>.tgz
 </pre>
 
-<p>on systems that have GNU <code>tar</code> installed.  On other systems you need at
-least to have the <code>gzip</code> program installed.  Then you can use
-<pre>	gzip -dc R-x.y.z.tgz | tar xvf -
+<p>on systems that have GNU <code>tar</code> installed.  On other systems you
+need at least to have the <code>gzip</code> program installed.  Then you
+can use
+
+<pre>gzip -dc R-<var>x</var>.<var>y</var>.<var>z</var>.tgz | tar xvf -
 </pre>
 
 <p>If you need to transport the sources on floppy disks, you can download
-the <code>R-x.y.z.tgz-split.*</code> files and paste them together at the
-destination with (Unix)
-<pre>	cat R-x.y.z.tgz-split.* &gt; R-x.y.z.tgz
+the <code>R-<var>x</var>.<var>y</var>.<var>z</var>.tgz-split.*</code> files and paste them
+together at the destination with (Unix)
+
+<pre>cat R-<var>x</var>.<var>y</var>.<var>z</var>-split.* &gt; R-<var>x</var>.<var>y</var>.<var>z</var>.tgz
 </pre>
 
-<p>and proceed as above.  If you want the build to be usable by a group
-of users, set <code>umask</code> before unpacking so that the files will be
-readable by the target group (e.g. <code>umask 022</code> to be usable by all
+<p>and proceed as above.  If you want the build to be usable by a group of
+users, set <code>umask</code> before unpacking so that the files will be
+readable by the target group (e.g., <code>umask 022</code> to be usable by all
 users).
 
-<p>Finally, for minor-minor releases (<code>x.y.z</code> with <code>z != 0</code> ), a
-patch against the preceding release is made available in
-<code>R-x.y.{z-1}-x.y.z.diff.gz</code> (e.g., <code>R-1.2.2-1.2.3.diff.gz</code>),
-which is generally a much smaller file that the <code>.tgz</code> files.  Such
-a file can be applied to the sources of the previous version by changing
-to the top directory of it and
-<pre>	gzip -dc /path/to/it/R-x.y.{z-1}-x.y.z.diff.gz | patch -E -p1
+<p>Finally, for minor-minor releases (<code><var>x</var>.<var>y</var>.<var>z</var></code> with
+<var>z</var> != 0), a patch against the preceding release is made available
+in
+<code>R-<var>x</var>.<var>y</var>.<var>{z-1}</var>-<var>x</var>.<var>y</var>.<var>z</var>.diff.gz</code>
+(e.g., <code>R-1.2.2-1.2.3.diff.gz</code>), which is generally a much smaller
+file that the <code>.tgz</code> files.  Such a file can be applied to the
+sources of the previous version by changing to the top directory of it
+and
+
+<pre>gzip -dc /path/to/it/R-<var>x</var>.<var>y</var>.<var>{z-1}</var>-<var>x</var>.<var>y</var>.<var>z</var>.diff.gz | patch -E -p1
 </pre>
 
 <p>Beware that this does not necessarily work if the older sources have
@@ -74,14 +81,14 @@ been modified (e.g., by building in their directories).
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
 subdirectory <code>R</code> of the current directory, where <var>module</var>
-specifies one of the three existing flavours of the R sources, and can be
-one of <code>r-release</code> (latest released version),
+specifies one of the three existing flavours of the R sources, and
+can be one of <code>r-release</code> (latest released version),
 <code>r-release-patched</code> (latest released version with patches applied),
 and <code>r-devel</code> (current development version).  The rsync trees are
 created directly from the master CVS archive and are updated hourly. 
-The <code>-C</code> option in the <code>rsync</code> command is to cause it to skip the
-CVS directories.  Further information on <code>rsync</code> is available at
-<a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+The <code>-C</code> option in the <code>rsync</code> command is to cause it to
+skip the CVS directories.  Further information on <code>rsync</code> is
+available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
 <a name="Installing%20R%20under%20Unix"></a>
 
@@ -94,20 +101,20 @@ Unix-like platforms, including <code>i386-freebsd</code>, <code>i386-linux</code
 <code>hppa-hp-hpux</code>, <code>sparc-linux</code> and <code>sparc-sun-solaris</code>.
 
 <p>In addition, binary distributions are available for most common Linux
-distributions, Compaq Alpha systems running OSF1, and for MacOS X. 
-See the FAQ for current details.  These are installed in
+distributions, Compaq Alpha systems running OSF1, and for MacOS X.  See
+the <small>FAQ</small> for current details.  These are installed in
 platform-specific ways.  So for the rest of this chapter we consider
 only building from the sources.
 
 </ul>
 
-<a name="Simple%20Compilation"></a>
+<a name="Simple%20compilation"></a>
 
-<h2>2.1 Simple Compilation</h2>
+<h2>2.1 Simple compilation</h2>
 
 <p>First review the essential and useful tools and libraries in
-<a href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>, and install those
-you want or need.
+<a href="#Essential%20and%20useful%20other%20programs">Essential and useful other programs</a>, and install those you want or
+need.
 
 <p>Choose a place to install the R tree (R is not just a binary, but
 has additional data sets, help files, font metrics etc).  Let us call
@@ -127,105 +134,100 @@ make
 </pre>
 
 <p>Failures are not necessarily problems as they might be caused by missing
-functionality, but you should look carefully at any reported discrepancies.
+functionality, but you should look carefully at any reported
+discrepancies.
 
 <p>If these commands execute successfully, the R binary will be copied
 to the <code>${R_HOME}/bin</code> directory.  In addition, a shell-script
 front-end called <code>R</code> will be created and copied to the same
 directory.  You can copy this script to a place where users can invoke
 it, for example to <code>/usr/local/bin/R</code>.  You could also copy the man
-page <code>R.1</code> to a place where your <code>man</code> reader finds it, such
-as <code>/usr/local/man/man1</code>.  If you want to install the complete R
-tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>.  Note:
-you do not <em>need</em> to install R: you can run it from where it was
-built.
+page <code>R.1</code> to a place where your <code>man</code> reader finds it,
+such as <code>/usr/local/man/man1</code>.  If you want to install the complete
+R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>. 
+Note: you do not <em>need</em> to install R: you can run it from where
+it was built.
 
-<p>You do not necessarily have to build R in the top-level source directory
-(say, <code>TOP_SRCDIR</code>).  To build in <code>BUILDDIR</code>, run
+<p>You do not necessarily have to build R in the top-level source
+directory (say, <code>TOP_SRCDIR</code>).  To build in <code>BUILDDIR</code>, run
+
 <pre>cd BUILDDIR
 TOP_SRCDIR/configure
 make
 </pre>
 
 <p>and so on, as described further below.  This has the advantage of always
-keeping your source tree "clean".  (You may need GNU <code>make</code> to allow
-this.)
+keeping your source tree "clean".  (You may need GNU <code>make</code> to
+allow this.)
 
-<p>Make will also build plain text help pages as well as HTML and LaTeX
-versions of the R object documentation (the three kinds can also be
-generated separately using <code>make help</code>, <code>make html</code> and
-<code>make latex</code>).  Note that you need Perl version 5: if this
-is not available on your system, you can obtain PDF versions of the
+<p>Make will also build plain text help pages as well as <small>HTML</small> and
+LaTeX versions of the R object documentation (the three kinds can
+also be generated separately using <code>make help</code>, <code>make html</code>
+and <code>make latex</code>).  Note that you need Perl version 5: if this is
+not available on your system, you can obtain PDF versions of the
 documentation files via <small>CRAN</small>.
 
-<p>Now <code>rehash</code> if necessary, type <code>R</code>, and read the R manuals
-and the R FAQ (files <code>FAQ</code> or <code>doc/html/faq.html</code> or the
-latest version at
-<a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a>).
+<p>Now <code>rehash</code> if necessary, type <kbd>R</kbd>, and read the R manuals
+and the R <small>FAQ</small> (files <code>FAQ</code> or
+<code>doc/html/faq.html</code>, or
+<a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a> which always has
+the latest version).
 
-<a name="Making%20the%20Manuals"></a>
+<a name="Making%20the%20manuals"></a>
 
-<h2>2.2 Making the Manuals</h2>
+<h2>2.2 Making the manuals</h2>
 
 <p>There is a set of manuals that can be built from the sources,
 
 <dl>
 <dt><code>refman</code>
-<dd>Printed versions of all the help pages.
-
+<dd>Printed versions of all the help pages. 
 <br><dt><code>R-FAQ</code>
-<dd>R FAQ (which is already built for you).
-
+<dd>R <small>FAQ</small> (which is already built for you). 
 <br><dt><code>R-intro</code>
-<dd>"An Introduction to R".
-
+<dd>"An Introduction to R". 
 <br><dt><code>R-data</code>
-<dd>"R Data Import/Export".
-
+<dd>"R Data Import/Export". 
 <br><dt><code>R-admin</code>
-<dd>"R Installation and Administration", this manual.
-
+<dd>"R Installation and Administration", this manual. 
 <br><dt><code>R-exts</code>
-<dd>"Writing R Extensions".
-
+<dd>"Writing R Extensions". 
 <br><dt><code>R-lang</code>
 <dd>"The R Language Definition". 
 </dl>
 
 <p>To make these, <code>cd</code> to the <code>doc/manual</code> directory and use
 
-<dl>
-<dt><code>make dvi</code>
-<dd>to create DVI versions
-<br><dt><code>make pdf</code>
-<dd>to create PDF versions
-<br><dt><code>make info</code>
-<dd>to create info files (not <code>refman</code>)
-</dl>
+<pre>make dvi      to create DVI versions
+make pdf      to create PDF versions
+make info     to create info files (not <code>refman</code>).
+</pre>
 
 <p>You will not be able to build the info files unless you have
 <code>makeinfo</code> version 4 or later installed (and some Linux
 distributions have 3.12).
 
 <p>The DVI versions can be previewed and printed using standard programs
-such as <code>xdvi</code> and <code>dvips</code>.  The PDF versions can be viewed
-using Acrobat Reader or (recent versions of) ghostscript: they have
-hyperlinks that can be followed in Acrobat Reader.  The info files are
-suitable for reading online with Emacs or the standalone GNU Info.
+such as <code>xdvi</code> and <code>dvips</code>.  The PDF versions can be
+viewed using Acrobat Reader or (recent versions of) ghostscript: they
+have hyperlinks that can be followed in Acrobat Reader.  The info files
+are suitable for reading online with Emacs or the standalone GNU Info.
 
 <a name="Installation"></a>
 
 <h2>2.3 Installation</h2>
 
 <p>After
-<pre>	./configure
-	make
-	make check
+
+<pre>./configure
+make
+make check
 </pre>
 
 <p>have been completed successfully, you can install the complete R tree
 to your system by typing
-<pre>	make install
+
+<pre>make install
 </pre>
 
 <p>This will install to the following directories:
@@ -240,27 +242,30 @@ to your system by typing
 </dl>
 
 <p>where <code>prefix</code> is determined during configuration (typically
-<code>/usr/local</code>) and can be set by running <code>configure</code> with the option
-<pre>	./configure --prefix=/where/you/want/R/to/go
+<code>/usr/local</code>) and can be set by running <code>configure</code> with
+the option <code>--prefix</code>, as in
+
+<pre>./configure --prefix=/where/you/want/R/to/go
 </pre>
 
-<p>This installs the R executable to <code>/where/you/want/R/to/go/bin</code>, and so
-on.  The prefix of the installation directories can also be seen in the
-status message that is displayed at the end of <code>configure</code>.  You can
-install into another directory by using
+<p>This installs the R executable to <code>/where/you/want/R/to/go/bin</code>,
+and so on.  The prefix of the installation directories can also be seen
+in the status message that is displayed at the end of
+<code>configure</code>.  You can install into another directory by using
 
-<pre>	make prefix=/path/to/here install
+<pre>make prefix=/path/to/here install
 </pre>
 
 <p>To install DVI, info and PDF versions of the manuals, use one or more of
-<pre>	make install-dvi
-	make install-info
-	make install-pdf
+
+<pre>make install-dvi
+make install-info
+make install-pdf
 </pre>
 
 <p>To ensure that the installed tree is usable by the right group of users,
-set <code>umask</code> appropriately (perhaps to <code>022</code>) before unpacking the
-sources and throughout the build process.
+set <code>umask</code> appropriately (perhaps to <code>022</code>) before unpacking
+the sources and throughout the build process.
 
 <a name="Installing%20R%20under%20Windows"></a>
 
@@ -277,35 +282,36 @@ work.
 <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-<p>The simplest way is to use <code>SetupR.exe</code> or <code>miniR.exe</code>. Just
+<p>The simplest way is to use <code>SetupR.exe</code> or <code>miniR.exe</code>.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you suppressed making a group for R).
 
-<p>For more details see the
-<a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a>.
+<p>See the <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a> for more details.
 
 </ul>
 
-<a name="Building%20from%20Source"></a>
+<a name="Building%20from%20source"></a>
 
-<h2>3.1 Building from Source</h2>
+<h2>3.1 Building from source</h2>
 
 <p>If you want to build this port from the sources, see the file
-<code>src/gnuwin32/INSTALL</code> in the source distribution. You will need to
-collect, install and test an extensive set of tools: see
+<code>src/gnuwin32/INSTALL</code> in the source distribution.  You will need
+to collect, install and test an extensive set of tools: see
 <a href="http://www.stats.ox.ac.uk/pub/Rtools/">http://www.stats.ox.ac.uk/pub/Rtools/</a> for the current locations.
 
 <p>You may need to compile under a case-honouring file system: we found
 that a <code>samba</code>-mounted file system (which maps all file names to
 lower case) did not work.  Open a commands window at a directory whose
 path does not contain spaces, and run something like
+
 <pre>tar zxvf R-1.3.0.tgz
 cd R-1.3.0\src\gnuwin32
 make
 </pre>
 
-<p>sit back and wait (for about 5 minutes on 1GHz PIII with a fast local disc).
+<p>sit back and wait (for about 5 minutes on 1GHz PIII with a fast local
+disc).
 
 <p>For further details, including how to make the documentation and how to
 cross-compile, see <code>src/gnuwin32/INSTALL</code>.
@@ -325,9 +331,9 @@ Classic Environment.
 <p>There is also a port to MacOS X which is considered to be a Unix variant
 in this document.
 
-<a name="Add-on%20Packages"></a>
+<a name="Add-on%20packages"></a>
 
-<h1>5 Add-on Packages</h1>
+<h1>5 Add-on packages</h1>
 
 </ul>
 
@@ -338,7 +344,8 @@ to the Classic MacOS port.
 loaded from a <em>library</em> by the function <code>library</code>.  Thus a
 library is a directory containing installed packages; the main library
 is <code>R_HOME/library</code>, but others can be used, for example by setting
-the environment variable <code>R_LIBS</code> or the R object <code>.lib.loc</code>.
+the environment variable <code>R_LIBS</code> or the R object
+<code>.lib.loc</code>.
 
 <a name="Installing%20packages"></a>
 
@@ -349,6 +356,7 @@ which the package is to be installed.  This is only an issue if you have
 more than one library, of course.
 
 <p>To install packages from source on Unix use
+
 <pre>R CMD INSTALL -l /path/to/library pkg1 pkg2 ...
 </pre>
 
@@ -357,38 +365,42 @@ library in <code>R_LIBS</code> is used if set, otherwise the main library
 <code>R_HOME/library</code>.
 
 <p>The Windows equivalent is<a rel=footnote href="#fn-1"><sup>1</sup></a>
+
 <pre>Rcmd INSTALL -l /path/to/library pkg1 pkg2 ...
 </pre>
 
-<p>Alternatively, packages can be downloaded and installed from within R. 
-First set the option <code>CRAN</code> to your nearest <small>CRAN</small> mirror, for
-example
+<p>Alternatively, packages can be downloaded and installed from within
+R.  First set the option <code>CRAN</code> to your nearest <small>CRAN</small>
+mirror, for example
+
 <pre>&gt; options(CRAN = "cran.us.r-project.org")
 </pre>
 
-<p>Then download and install package <code>foo</code> by
+<p>Then download and install package <strong>foo</strong> by
+
 <pre>&gt; install.packages("foo")
 </pre>
 
 <p>Unless the library is specified (argument <code>lib</code>) the first library
 in <code>.lib.loc</code> is used.
 
-<p>What this does is different on Unix and Windows. On Unix it consults the
-list of available source packages on <small>CRAN</small>, downloads the
-latest version of the <code>foo</code> sources, and installs it (via <code>R
+<p>What this does is different on Unix and Windows.  On Unix it consults
+the list of available source packages on <small>CRAN</small>, downloads the
+latest version of the <strong>foo</strong> sources, and installs it (via <code>R
 CMD INSTALL</code>).  On Windows it looks at the list of <em>binary</em>
 versions of packages and downloads the latest version (if any).
 
 <p>On Windows <code>install.packages</code> can also install a binary package
-from a local <code>zip</code> file by setting argument <code>CRAN</code> to <code>NULL</code>.
+from a local <code>zip</code> file by setting argument <code>CRAN</code> to
+<code>NULL</code>.
 
 <a name="Updating%20packages"></a>
 
 <h2>5.2 Updating packages</h2>
 
 <p>The command <code>update.packages()</code> is the simplest way to ensure that
-all the packages on your system are up to date. Set the <code>CRAN</code>
-option as in the previous section. The <code>update.packages()</code>
+all the packages on your system are up to date.  Set the <code>CRAN</code>
+option as in the previous section.  The <code>update.packages()</code>
 downloads the list of available packages and their current versions,
 compares it with those installed and offers to fetch and install any
 that have later versions on <small>CRAN</small>.
@@ -416,9 +428,9 @@ can be removed by
 <p>Finally, in most installations one can just remove the package directory
 from the library.
 
-<a name="Essential%20and%20Useful%20Other%20Programs"></a>
+<a name="Essential%20and%20useful%20other%20programs"></a>
 
-<h1>Appendix A Essential and Useful Other Programs</h1>
+<h1>Appendix A Essential and useful other programs</h1>
 
 <p>This appendix gives details of programs you will need to build R on
 Unix-like platforms, or which will be used by R if found by
@@ -426,11 +438,11 @@ Unix-like platforms, or which will be used by R if found by
 
 </ul>
 
-<a name="Essential%20Programs"></a>
+<a name="Essential%20programs"></a>
 
-<h2>A.1 Essential Programs</h2>
+<h2>A.1 Essential programs</h2>
 
-<p>You need a means of compiling C and <small>FORTRAN</small> (see <a href="#Using%20Fortran">Using Fortran</a>). 
+<p>You need a means of compiling C and FORTRAN (see <a href="#Using%20FORTRAN">Using FORTRAN</a>). 
 Some add-on packages also need a C++ compiler.
 
 <p>You will need Perl version 5, available via
@@ -451,14 +463,15 @@ distributions have 3.12).
 <h3>A.1.1 Building on MacOS X</h3>
 
 <p>You can build R as a Unix application on MacOS X.  You will need the
-DevTools, <code>f2c</code> (<a href="ftp://netlib.bell-labs.com/netlib/f2c.tar">ftp://netlib.bell-labs.com/netlib/f2c.tar</a><a rel=footnote href="#fn-2"><sup>2</sup></a>) and the <code>dlcompat</code> libraries<a rel=footnote href="#fn-3"><sup>3</sup></a>.
+DevTools, <code>f2c</code>
+(<a href="ftp://netlib.bell-labs.com/netlib/f2c.tar">ftp://netlib.bell-labs.com/netlib/f2c.tar</a><a rel=footnote href="#fn-2"><sup>2</sup></a>) and the <code>dlcompat</code> libraries<a rel=footnote href="#fn-3"><sup>3</sup></a>.
 
 <p>You will also need to install a X sub-system or configure with
 <code>--without-x</code>.
 
-<a name="Useful%20Libraries%20and%20Programs"></a>
+<a name="Useful%20libraries%20and%20programs"></a>
 
-<h2>A.2 Useful Libraries and Programs</h2>
+<h2>A.2 Useful libraries and programs</h2>
 
 <p>The command-line editing depends on the <code>readline</code> library
 available from any GNU mirror: you will need a fairly recent version.
@@ -477,20 +490,21 @@ and <code>libz</code> respectively.
 <h3>A.2.1 Tcl/Tk</h3>
 
 <p>The <strong>tcltk</strong> package needs Tcl/Tk installed: the sources are
-available at <a href="http://dev.scriptics.com">http://dev.scriptics.com</a>. To specify the locations of the
-Tcl/Tk files you may need the configuration options
+available at <a href="http://dev.scriptics.com/">http://dev.scriptics.com/</a>.  To specify the locations
+of the Tcl/Tk files you may need the configuration options
+
 <dl>
 <dt><code>--with-tcltk</code>
 <dd>use Tcl/Tk, or specify its library directory
-<br><dt><code>--with-tcl-config=TCL_CONFIG</code>
+<br><dt><code>--with-tcl-config=<var>TCL_CONFIG</var></code>
 <dd>specify location of <code>tclConfig.sh</code>
-<br><dt><code>--with-tk-config=TK_CONFIG</code>
+<br><dt><code>--with-tk-config=<var>TK_CONFIG</var></code>
 <dd>specify location of <code>tkConfig.sh</code>
 </dl>
 
-<a name="Linear%20Algebra"></a>
+<a name="Linear%20algebra"></a>
 
-<h3>A.2.2 Linear Algebra</h3>
+<h3>A.2.2 Linear algebra</h3>
 
 <p>The linear algebra routines in R can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, <a href="http://www.netlib.org/blas/faq.html">http://www.netlib.org/blas/faq.html</a>)
@@ -499,20 +513,22 @@ routines.  Some are compiler-system-specific (<code>libcxml</code> and
 <code>libcomplib.sgimath</code> on SGI, <code>libessl</code> on IBM) but ATLAS
 (<a href="http://www.netlib.org/atlas">http://www.netlib.org/atlas</a>) is a `tuned' BLAS that runs on a
 wide range of platforms.  If no more specific library is found, a
-<code>libblas</code> library in the library path will be used. You can specify
-a specific BLAS library by the configuration option <code>--with-blas</code>
-and not to use an external BLAS library by <code>--without-blas</code>.
+<code>libblas</code> library in the library path will be used.  You can
+specify a specific BLAS library by the configuration option
+<code>--with-blas</code> and not to use an external BLAS library by
+<code>--without-blas</code>.
 
 <p>Note that the BLAS library will be used for several add-on packages as
-well as for R itself.  This means that it is better to use a
-shared BLAS library, as most of a static library will be compiled into
-the R executable and each BLAS-using package.
+well as for R itself.  This means that it is better to use a shared
+BLAS library, as most of a static library will be compiled into the R
+executable and each BLAS-using package.
 
 <p>You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
 <p>Optimized versions of LAPACK are available, but no provision is made for
-using them with R as the likely performance gains are thought to be small.
+using them with R as the likely performance gains are thought to be
+small.
 
 <a name="Configuration%20on%20Unix"></a>
 
@@ -525,26 +541,37 @@ using them with R as the likely performance gains are thought to be small.
 <h2>B.1 Configuration options</h2>
 
 <p><code>configure</code> has many options: running
-<pre>        ./configure --help
+
+<pre>./configure --help
 </pre>
 
-<p>will give a list. Probably the most important ones not covered elsewhere are
-<pre>  --with-x                use the X Window System
-  --x-includes=DIR        X include files are in DIR
-  --x-libraries=DIR       X library files are in DIR
-  --with-readline         use readline library (if available) [yes]
-  --enable-R-profiling    attempt to compile support for Rprof() [yes]
-  --enable-R-shlib        build R as a shared library [no]
-</pre>
-You can use <code>--without-foo</code> or <code>--disable-foo</code> for the
+<p>will give a list.  Probably the most important ones not covered
+elsewhere are (defaults in brackets)
+
+<dl>
+<dt><code>--with-x</code>
+<dd>use the X Window System
+<br><dt><code>--x-includes=<var>DIR</var></code>
+<dd>X include files are in <var>DIR</var>
+<br><dt><code>--x-libraries=<var>DIR</var></code>
+<dd>X library files are in <var>DIR</var>
+<br><dt><code>--with-readline</code>
+<dd>use readline library (if available) [yes]
+<br><dt><code>--enable-R-profiling</code>
+<dd>attempt to compile support for <code>Rprof()</code> [yes]
+<br><dt><code>--enable-R-shlib</code>
+<dd>build R as a shared library [no]
+</dl>
+
+<p>You can use <code>--without-foo</code> or <code>--disable-foo</code> for the
 negatives.
 
-<p>You will want to use <code>--disable-R-profiling</code> if you are building a
-profiled executable of R (e.g. with <code>-pg)</code>.
+<p>You will want to use <code>--disable-R-profiling</code> if you are building
+a profiled executable of R (e.g. with <code>-pg)</code>.
 
-<p>Flag <code>--enable-R-shlib</code> causes the make process to make <code>libR.so</code>,
-and to take considerably longer, so you probably only want this if you
-will be using an application which embeds R.
+<p>Flag <code>--enable-R-shlib</code> causes the make process to make
+<code>libR.so</code>, and to take considerably longer, so you probably only
+want this if you will be using an application which embeds R.
 
 <a name="Configuration%20variables"></a>
 
@@ -552,11 +579,11 @@ will be using an application which embeds R.
 
 <p>If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
-<code>config.site</code> (which documents all the variables you might want to set)
-or on the command line as
+<code>config.site</code> (which documents all the variables you might want to
+set) or on the command line as
 
-<pre>	VAR="..." ./configure		   # Bourne shell compatibles
-	(setenv VAR "..."; ./configure)	   # C shell
+<pre>VAR="..." ./configure              # Bourne shell compatibles
+(setenv VAR "..."; ./configure)	   # C shell
 </pre>
 
 <p>One common variable to change is <code>R_PAPERSIZE</code>, which defaults to
@@ -568,9 +595,10 @@ and <code>CPPFLAGS</code> (for header files), respectively, to specify these
 locations.  These default to <code>/usr/local/lib</code> and
 <code>/usr/local/include</code> to catch the most common cases.  If libraries
 are still not found, then maybe your compiler/linker does not support
-re-ordering of <code>-L</code> and <code>-l</code> flags (this has been reported to be a
-problem on HP-UX with the native <code>cc</code>).  In this case, use a different
-compiler (or a front end shell script which does the re-ordering).
+re-ordering of <code>-L</code> and <code>-l</code> flags (this has been reported
+to be a problem on HP-UX with the native <code>cc</code>).  In this case,
+use a different compiler (or a front end shell script which does the
+re-ordering).
 
 <p>If you find you need to alter configure variables, it is worth noting
 that some settings are cached in the file <code>config.cache</code>, and it is
@@ -586,57 +614,60 @@ GNU <code>make</code> different from 3.77; 3.79 works fine, as does the Sun
 <code>make</code>.
 
 <p>To build in a separate directory you need a <code>make</code> that uses the
-<code>VPATH</code> variable, for example GNU <code>make</code>, or Sun <code>make</code>
-on Solaris 2.7/8 (but not earlier).
+<code>VPATH</code> variable, for example GNU <code>make</code>, or Sun
+<code>make</code> on Solaris 2.7/8 (but not earlier).
 
 <p>If you want to use a <code>make</code> by another name, for example if your
-GNU <code>make</code> is called <code>gmake</code>, you need to set the environment
-variable <code>MAKE</code> at configure time, for example
-<pre>	MAKE=gmake ./configure      (sh, bash)
-	env MAKE=gmake ./configure  (csh)
+GNU <code>make</code> is called <code>gmake</code>, you need to set the
+environment variable <code>MAKE</code> at configure time, for example
+
+<pre>MAKE=gmake ./configure        (sh, bash)
+env MAKE=gmake ./configure    (csh)
 </pre>
 
-<a name="Using%20Fortran"></a>
+<a name="Using%20FORTRAN"></a>
 
-<h2>B.4 Using Fortran</h2>
+<h2>B.4 Using FORTRAN</h2>
 
-<p>To compile R, you need a <small>FORTRAN</small> compiler or <code>f2c</code>, the
-<small>FORTRAN</small>-to-C converter (<a href="http://www.netlib.org/f2c">http://www.netlib.org/f2c</a>).  The
-default is to search for <code>g77</code>, <code>f77</code>, <code>xlf</code>,
-<code>cf77</code>, <code>cft77</code>, <code>pgf77</code>, <code>fl32</code>, <code>af77</code>,
-<code>fort77</code>, <code>f90</code>, <code>xlf90</code>, <code>pgf90</code>, <code>epcf90</code>,
-<code>f95</code>, <code>xlf95</code>, <code>lf9</code>5, <code>g95</code>, and <code>fc</code> (in
-that order), and then for <code>f2c</code>, and use whichever is found first;
-if none is found, R cannot be compiled.  The search mechanism can be
-changed using the <code>--with-g77</code>, <code>--with-f77</code>, and
-<code>--with-f2c</code> command line options to <code>configure</code>.  If your
-<small>FORTRAN</small> compiler is in a non-standard location, you should set the
+<p>To compile R, you need a FORTRAN compiler or <code>f2c</code>, the
+FORTRAN-to-C converter (<a href="http://www.netlib.org/f2c">http://www.netlib.org/f2c</a>).  The default
+is to search for <code>g77</code>, <code>f77</code>, <code>xlf</code>,
+<code>cf77</code>, <code>cft77</code>, <code>pgf77</code>, <code>fl32</code>,
+<code>af77</code>, <code>fort77</code>, <code>f90</code>, <code>xlf90</code>,
+<code>pgf90</code>, <code>epcf90</code>, <code>f95</code>, <code>xlf95</code>,
+<code>lf9</code>5, <code>g95</code>, and <code>fc</code> (in that order), and
+then for <code>f2c</code>, and use whichever is found first; if none is
+found, R cannot be compiled.  The search mechanism can be changed
+using the <code>--with-g77</code>, <code>--with-f77</code>, and
+<code>--with-f2c</code> command line options to <code>configure</code>.  If
+your FORTRAN compiler is in a non-standard location, you should set the
 environment variable <code>PATH</code> accordingly before running
 <code>configure</code>.
 
-<p>If your <small>FORTRAN</small> libraries are in slightly peculiar places, you should
+<p>If your FORTRAN libraries are in slightly peculiar places, you should
 also look at <code>LD_LIBRARY_PATH</code> to make sure that all libraries are
 on this path.
 
 <p>You must set whatever compilation flags (if any) are needed to ensure
-that <small>FORTRAN</small> <code>integer</code> is equivalent to a C <code>int</code> pointer and
-<small>FORTRAN</small> <code>double precision</code> is equivalent to a C <code>double</code>
+that FORTRAN <code>integer</code> is equivalent to a C <code>int</code> pointer and
+FORTRAN <code>double precision</code> is equivalent to a C <code>double</code>
 pointer.  This is checked during the configuration process.
 
-<p>Some of the <small>FORTRAN</small> code makes use of <code>COMPLEX*16</code> variables,
-which is a <small>FORTRAN 90</small> extension.  This is checked for at configure
+<p>Some of the FORTRAN code makes use of <code>COMPLEX*16</code> variables, which
+is a FORTRAN 90 extension.  This is checked for at configure
 time<a rel=footnote href="#fn-5"><sup>5</sup></a>, but you may need to avoid
 compiler flags<a rel=footnote href="#fn-6"><sup>6</sup></a> asserting
-<small>FORTRAN 77</small> compliance.
+FORTRAN 77 compliance.
 
-<p>For performance reasons<a rel=footnote href="#fn-7"><sup>7</sup></a> you may want to choose a <small>FORTRAN 90/95</small> compiler.
+<p>For performance reasons<a rel=footnote href="#fn-7"><sup>7</sup></a> you may want to choose a FORTRAN 90/95 compiler.
 
-<a name="Compile%20and%20Load%20Flags"></a>
+<a name="Compile%20and%20load%20flags"></a>
 
-<h2>B.5 Compile and Load Flags</h2>
+<h2>B.5 Compile and load flags</h2>
 
 <p>A wide range of flags can be set in the file <code>config.site</code> or via
 environment variables.  We have already mentioned
+
 <dl>
 <dt><code>CPPFLAGS</code>
 <dd>extra include flags
@@ -645,15 +676,16 @@ environment variables.  We have already mentioned
 </dl>
 
 <p>and others include
+
 <dl>
 <dt><code>CFLAGS</code>
 <dd>debugging and optimization flags, C
 <br><dt><code>MAIN_CFLAGS</code>
 <dd>ditto, for compiling the main program
 <br><dt><code>SHLIB_CFLAGS</code>
-<dd>or shared libraries
+<dd>for shared libraries
 <br><dt><code>FFLAGS</code>
-<dd>debugging and optimization flags, Fortran
+<dd>debugging and optimization flags, FORTRAN
 <br><dt><code>MAIN_FFLAGS</code>
 <dd>ditto, for compiling the main program
 <br><dt><code>SHLIB_FFLAGS</code>
@@ -673,94 +705,99 @@ use <code>MAIN_CFLAGS=-pg</code>, <code>MAIN_FFLAGS=-pg</code>,
 <code>MAIN_LDFLAGS=-pg</code> on platforms where <code>-pg</code> cannot be used
 with position-independent code.
 
-<a name="Building%20the%20GNOME%20Interface"></a>
+<a name="Building%20the%20GNOME%20interface"></a>
 
-<h2>B.6 Building the GNOME Interface</h2>
+<h2>B.6 Building the <small>GNOME</small> interface</h2>
 
 <p>This interface is experimental, incomplete and not currently being
-developed. It provides a console and a graphics device <code>(gtk()</code>;
+developed.  It provides a console and a graphics device <code>(gtk()</code>;
 the <code>x11()</code> device can also be used).  Many of the `features' of
 the console are currently stubs.
 
-<p>The GNOME interface for R will only be built if you specify it by
-running configure with the <code>--with-gnome</code> option.  For example, you
-might run
-<pre>	./configure --with-gnome
+<p>The <small>GNOME</small> interface for R will only be built if you specify
+it by running configure with the <code>--with-gnome</code> option.  For
+example, you might run
+
+<pre>./configure --with-gnome
 </pre>
 
 <p>but please check you have all the requirements first.  It is advisable
 to have reasonably-up-to-date versions of the <code>gnome</code> and
-<code>gtk+</code> libraries. 
-You can find the versions you have by
-<pre>	gnome-config --version
-	gtk-config --version
+<code>gtk+</code> libraries.  You can find the versions you have by
+
+<pre>gnome-config --version
+gtk-config --version
 </pre>
 
-<p>We know 1.0.10 and 1.2.3 suffice. You need the following RPMs and
-their dependencies installed:
-<pre>	gnome-libs
-	gnome-libs-devel
-	gtk+
-	gtk+-devel
-	glib
-	glib-devel
+<p>We know 1.0.10 and 1.2.3 suffice.  On Red Hat systems, you need the
+following RPMs and their dependencies installed:
+
+<pre>gnome-libs
+gnome-libs-devel
+gtk+
+gtk+-devel
+glib
+glib-devel
 </pre>
 
 <p>You will need also <code>libglade</code> 0.5 or later for correct behaviour. 
 For more information on <code>libglade</code> and to download the source, see
 <a href="http://www.daa.com.au/~james/gnome/">http://www.daa.com.au/~james/gnome/</a>.  The sources are also
-available from the GNOME ftp site (<a href="ftp://ftp.gnome.org">ftp://ftp.gnome.org</a> and mirrors). 
-RPMs are in RedHat 6.1 and later.
+available from the <small>GNOME</small> ftp site (<a href="ftp://ftp.gnome.org">ftp://ftp.gnome.org</a>
+and mirrors).  RPMs are in RedHat 6.1 and later.
 
 <p>Library <code>libglade</code> needs <code>libxml</code> 1.4 or later, the source for
-which is available from the GNOME ftp site (<a href="ftp://ftp.gnome.org">ftp://ftp.gnome.org</a> and
-mirrors).
+which is available from the <small>GNOME</small> ftp site
+(<a href="ftp://ftp.gnome.org">ftp://ftp.gnome.org</a> and mirrors).
 
 <p>The locations of some of these libraries can be set as configuration
-options, by
+options, by (defaults in brackets)
+
 <dl>
 <dt><code>--with-gnome</code>
-<dd>use GNOME, or specify its prefix [no]
-<br><dt><code>--with-gnome-includes=DIR</code>
-<dd>specify location of GNOME headers
-<br><dt><code>--with-gnome-libs=DIR</code>
-<dd>specify location of GNOME libs
-<br><dt><code>--with-libglade-config=LIBGLADE_CONFIG</code>
+<dd>use <small>GNOME</small>, or specify its prefix [no]
+<br><dt><code>--with-gnome-includes=<var>DIR</var></code>
+<dd>specify location of <small>GNOME</small> headers
+<br><dt><code>--with-gnome-libs=<var>DIR</var></code>
+<dd>specify location of <small>GNOME</small> libs
+<br><dt><code>--with-libglade-config=<var>LIBGLADE_CONFIG</var></code>
 <dd>specify location of <code>libglade-config</code>
 </dl>
 
-<a name="New%20Platforms"></a>
+<a name="New%20platforms"></a>
 
-<h1>Appendix C New Platforms</h1>
+<h1>Appendix C New platforms</h1>
 
 <p>There are a number of sources of problems when installing R on a new
 hardware/OS platform:
 
-<p><strong>Floating Point Arithmetic</strong>: R supports the POSIX, SVID and
-IEEE models for floating point arithmetic.  The POSIX and SVID models
-provide no problems.  The IEEE model however can be a pain.  The problem
-is that there is no agreement on how to set the signalling behaviour;
-Sun/Sparc, SGI/IRIX and ix86 Linux require no special action, FreeBSD
-requires a call to (the macro) <code>fpsetmask(0)</code> and OSF1 requires
-that computation be done with a <code>-ieee_with_inexact</code> flag etc.  On
-a new platform you must find out the magic recipe and add some code to
-make it work.  This can often be done via the file <code>config.site</code>
-which resides in the top level directory.
+<p><strong>Floating Point Arithmetic</strong>: R supports the <small>POSIX</small>,
+SVID and <small>IEEE</small> models for floating point arithmetic.  The
+<small>POSIX</small> and SVID models provide no problems.  The <small>IEEE</small>
+model however can be a pain.  The problem is that there is no agreement
+on how to set the signalling behaviour; Sun/Sparc, SGI/IRIX and ix86
+Linux require no special action, FreeBSD requires a call to (the macro)
+<code>fpsetmask(0)</code> and OSF1 requires that computation be done with a
+<code>-ieee_with_inexact</code> flag etc.  On a new platform you must find
+out the magic recipe and add some code to make it work.  This can often
+be done via the file <code>config.site</code> which resides in the top level
+directory.
 
-<p><strong>Shared Libraries</strong>: There seems to be very little agreement across
-platforms on what needs to be done to build shared libraries.  there are
-many different combinations of flags for the compilers and loaders.  The
-technique we use is to interrogate the X window system about what it
-does (using <code>xmkmf</code>).  This often works, but you may have to
-manually override the results.  Scanning the <code>cc(1)</code> and
+<p><strong>Shared Libraries</strong>: There seems to be very little agreement
+across platforms on what needs to be done to build shared libraries. 
+there are many different combinations of flags for the compilers and
+loaders.  The technique we use is to first interrogate the X window
+system about what it does (using <code>xmkmf</code>), and maybe override
+this in situations where we know better.  This often works, but you may
+have to manually override the results.  Scanning the <code>cc(1)</code> and
 <code>ld(1)</code> manual entries usually reveals the correct incantation. 
 Once you know the recipe you can modify the file <code>config.site</code>
 (following the instructions therein) so that the build will use these
 options.
 
-<p>If you do manage to get R running on a new platform please let us know
-about it so we can modify the configuration procedures to include that
-platform.
+<p>If you do manage to get R running on a new platform please let us
+know about it so we can modify the configuration procedures to include
+that platform.
 
 <p>If you are having trouble getting R to work on your platform please
 feel free to get in touch to ask questions.  We've had a fair amount
@@ -771,10 +808,10 @@ of practice at porting R to new platforms <small>...</small>.
 <h1>Function and variable index</h1>
 
 <ul compact>
-<li><code>configure</code>: <a href="#Using%20make">Using make</a>, <a href="#Configuration%20variables">Configuration variables</a>, <a href="#Installation">Installation</a>, <a href="#Simple%20Compilation">Simple Compilation</a>
+<li><code>configure</code>: <a href="#Using%20make">Using make</a>, <a href="#Configuration%20variables">Configuration variables</a>, <a href="#Installation">Installation</a>, <a href="#Simple%20compilation">Simple compilation</a>
 <li><code>install.packages</code>: <a href="#Installing%20packages">Installing packages</a>
 <li><code>make</code>: <a href="#Using%20make">Using make</a>
-<li><code>R_HOME</code>: <a href="#Simple%20Compilation">Simple Compilation</a>
+<li><code>R_HOME</code>: <a href="#Simple%20compilation">Simple compilation</a>
 <li><code>remove.packages</code>: <a href="#Removing%20packages">Removing packages</a>
 <li><code>rsync</code>: <a href="#Using%20rsync">Using rsync</a>
 <li><code>update.packages</code>: <a href="#Updating%20packages">Updating packages</a>
@@ -784,23 +821,23 @@ of practice at porting R to new platforms <small>...</small>.
 <h1>Concept index</h1>
 
 <ul compact>
-<li><small>FORTRAN</small>: <a href="#Using%20Fortran">Using Fortran</a>
-<li>Help pages: <a href="#Simple%20Compilation">Simple Compilation</a>
+<li>FORTRAN: <a href="#Using%20FORTRAN">Using FORTRAN</a>
+<li>Help pages: <a href="#Simple%20compilation">Simple compilation</a>
 <li>Installation: <a href="#Installation">Installation</a>
 <li>Installing under MacOS: <a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>
 <li>Installing under Unix: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Installing under Windows: <a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
 <li>Linux: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>MacOS X: <a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
-<li>Manuals: <a href="#Making%20the%20Manuals">Making the Manuals</a>
+<li>Manuals: <a href="#Making%20the%20manuals">Making the manuals</a>
 <li>Manuals, installing: <a href="#Installation">Installation</a>
 <li>Obtaining R: <a href="#Obtaining%20R">Obtaining R</a>
-<li>Packages: <a href="#Add-on%20Packages">Add-on Packages</a>
+<li>Packages: <a href="#Add-on%20packages">Add-on packages</a>
 <li>Packages, installing: <a href="#Installing%20packages">Installing packages</a>
 <li>Packages, removing: <a href="#Removing%20packages">Removing packages</a>
 <li>Packages, updating: <a href="#Updating%20packages">Updating packages</a>
-<li>Patch files: <a href="#Getting%20and%20Unpacking%20the%20Sources">Getting and Unpacking the Sources</a>
-<li>Sources for R: <a href="#Getting%20and%20Unpacking%20the%20Sources">Getting and Unpacking the Sources</a>
+<li>Patch files: <a href="#Getting%20and%20unpacking%20the%20sources">Getting and unpacking the sources</a>
+<li>Sources for R: <a href="#Getting%20and%20unpacking%20the%20sources">Getting and unpacking the sources</a>
 </ul>
 
 
@@ -811,8 +848,9 @@ of practice at porting R to new platforms <small>...</small>.
 package files installed</p>
 
 <li><a name="fn-2"></a>
-<p>compile with <code>c++</code> or  comment out <code>sigcatch(0)</code> in line 520
-of <code>main.c</code></p>
+<p>compile with
+<code>c++</code> or comment out <code>sigcatch(0)</code> in line 520 of
+<code>main.c</code></p>
 
 <li><a name="fn-3"></a>
 <p>e.g. 
