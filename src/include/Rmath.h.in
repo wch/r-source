@@ -32,6 +32,7 @@
 
 #ifdef MATHLIB_STANDALONE
 # define R_NO_REMAP 1
+@RMATH_HAVE_LOG1P@
 #endif
 
 
@@ -218,7 +219,6 @@
 #define lbeta		Rf_lbeta
 #define lchoose		Rf_lchoose
 #define lgammafn	Rf_lgammafn
-#define log1p		Rf_log1p
 #define pbeta		Rf_pbeta
 #define pbeta_raw	Rf_pbeta_raw
 #define pbinom		Rf_pbinom
@@ -517,7 +517,9 @@ double	bessel_y(double, double);
 	/* General Support Functions */
 
 double 	pythag(double, double);
+#ifndef HAVE_LOG1P
 double  log1p(double); /* = log(1+x) {care for small x} */
+#endif
 int	imax2(int, int);
 int	imin2(int, int);
 double	fmax2(double, double);

@@ -12,7 +12,7 @@
 USER-VISIBLE CHANGES
 
     o	XDR support is now guaranteed to be available, so the default
-	save format will alway be XDR binary files, and it is safe to
+	save format will always be XDR binary files, and it is safe to
 	distribute data in that format.  (We are unaware of any
 	platform that did not support XDR in recent versions of R.)
 
@@ -27,12 +27,7 @@ NEW FEATURES
 
     o	Function arima.sim() in package ts.
 
-    o	Sweave(), Stangle() and friends in package tools. Sweave allows
-	to mix latex documentation and R code in a single source file,
-	the R code can be replaced by its output (text, figures) to
-	allow automatic report generation.
-
-    o	new function findInterval() {using new C entry point
+    o	New function findInterval() {using new C entry point
 	findInterval, see below}.
 
     o	Add function logb(), same as log() but for S-PLUS
@@ -72,6 +67,12 @@ DOCUMENTATION CHANGES
 
 UTILITIES
 
+    o	Sweave(), Stangle() and friends in package tools. Sweave allows
+	to mix latex documentation and R code in a single source file,
+	the R code can be replaced by its output (text, figures) to
+	allow automatic report generation.
+
+
 C-LEVEL FACILITIES
 
     o	findInterval(xt[],n,x,...) gives the index (or interval number)
@@ -86,11 +87,17 @@ C-LEVEL FACILITIES
 	to the native routine being invoked.  Any code that relied on
 	the old behaviour will need to be modified.
 	
+    o	log1p is only provided in Rmath.h if it is not provided by the
+	platform, in which case its name is not remapped.
+	Applications using libRmath may need to be re-compiled.
+
 
 BUG FIXES
 
     o	Options by = "month" and "year" to seq.POSIXt() take account
 	of changes to/from daylight savings time.
+
+
 
 	**************************************************
 	*						 *

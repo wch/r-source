@@ -458,6 +458,15 @@ AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
    memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
   stat strptime system times unsetenv)
+
+## to build src/include/Rmath.h
+if test "${ac_cv_func_log1p}" = yes; then
+RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
+else
+RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
+fi
+AC_SUBST(RMATH_HAVE_LOG1P)
+
 AC_REPLACE_FUNCS(snprintf strdup vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
@@ -1081,6 +1090,7 @@ AC_OUTPUT(Makeconf
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile
   src/include/Makefile
+  src/include/Rmath.h
   src/include/R_ext/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION

@@ -3884,6 +3884,9 @@ still works when both @var{a} and @var{b} are between @code{1e200} and
 @deftypefun double log1p (@var{x})
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
 even for small @var{x}, i.e. @eqn{|x| \ll 1, |x| << 1}.
+
+This may be provided by your platform, in which case it is not
+included in @file{Rmath.h}, but is (probably) in @file{math.h}.
 @end deftypefun
 
 @deftypefun int imax2 (int @var{x}, int @var{y})
