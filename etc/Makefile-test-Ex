@@ -13,7 +13,7 @@ Rbase   = $(rRHOME)/library/base
 MANSRC = $(rRHOME)/src/library/*/man/*.Rd
 MANbaseDIR = $(rRHOME)/src/library/base/man
 
-##--- Uncomment one of the 2 'Rd_files' defintion -- depending on 'make' version
+##- Uncomment one of the 2 'Rd_files' defs -- depending on your 'make' version
 ##--- <<<<<< CONFIGURE should do this >>>>>>
 ##-- Sun make
 #> Rd_files:sh = ./Rd.files
@@ -34,6 +34,7 @@ test-Examples: All-Ex.Rout
 
 ##-- The 'show-..' are just for testing purposes:
 show-R: ; @-(cd ../../include; echo "R = '$(R)'"
+show-RHOME: ; @-(RHOME=`cd ${rRHOME}; pwd`;export RHOME; printenv RHOME)
 show-Rd:
 	@-echo 'R help() files = "Rd files" :'
 	@-echo $(Rd_files)
@@ -43,7 +44,8 @@ show-Ex:
 
 
 %.R: $(MANbaseDIR)/%.Rd
-	@$(RETC)/Rdconv -t example < $< > $@ ; echo $@
+	@(RHOME=`cd $(rRHOME);pwd`;export RHOME;$(RETC)/Rdconv -t example $<>$@)
+	@-echo $@
 
 All-Ex.R: $(R_src)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
