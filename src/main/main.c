@@ -57,6 +57,7 @@ SEXP*	R_PPStack;			/* The pointer protection stack */
 
 			/* Evaluation Environment */
 
+SEXP	R_Call;				/* The current call */
 SEXP	R_GlobalEnv;			/* The "global" environment */
 SEXP	R_CurrentExpr;			/* Currently evaluating expression */
 SEXP	R_ReturnedValue;		/* Slot for return-ing values */

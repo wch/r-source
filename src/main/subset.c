@@ -118,7 +118,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP index, SEXP call)
 			tmp = CDR(tmp);
 			break;
 		default:
-			errorcall(call, "non-subsettable object\n");
+			errorcall(call, "non-subsetable object\n");
 		}
 	}
 	return result;
@@ -528,7 +528,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		UNPROTECT(1);
 	}
-	else errorcall(call, "object is not subsettable\n");
+	else errorcall(call, "object is not subsetable\n");
 
 	setAttrib(ans, R_TspSymbol, R_NilValue);
 	setAttrib(ans, R_ClassSymbol, R_NilValue);

@@ -19,6 +19,8 @@
 
 #include "Defn.h"
 
+static SEXP gcall;
+
 	/* The following table shows the codes which have been	*/
 	/* assigned to the type combinations in assignments of	*/
 	/* the form  "x[s] <- y".  Here the type of y is given	*/
@@ -237,7 +239,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y, int which, int stretch)
 		break;
 
 	default:
-		error("incompatible types in subset assignment\n");
+		errorcall(gcall, "incompatible types\n");
 
 	}
 
@@ -1046,6 +1048,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* If the dispatch fails, we "drop through" */
 		/* to the default code below. */
 
+	gcall = call;
 	CAR(args) = eval(CAR(args), rho);
 	if(isObject(CAR(args)) && CAR(call) != install("[<-.default")) {
 		/*SetArgsforUseMethod(args); */
@@ -1094,7 +1097,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if(isList(x) || isLanguage(x)) {
 		x = listAssign1(call, x, subs, y);
 	}
-	else error("type error in subset assignment\n");
+	else errorcall(call, "object is not subsetable\n");
 
 		/* Note the setting of NAMED(x) to zero here. */
 		/* This means that the following assignment will */
@@ -1121,6 +1124,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int i, ndims, nsubs, offset, which;
 	RCNTXT cntxt;
 
+	gcall = call;
 	CAR(args) = eval(CAR(args), rho);
 	if(isObject(CAR(args)) && CAR(call) != install("[[<-.default") ) {
 		/*SetArgsforUseMethod(args);*/
@@ -1300,7 +1304,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		UNPROTECT(1);
 	}
-	else error("type error in subset assignment\n");
+	else errorcall(gcall, "object is not subsetable\n");
 
 	UNPROTECT(1);
 	NAMED(x) = 0;
@@ -1313,6 +1317,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	checkArity(op, args);
 
+	gcall = call;
 	PROTECT(x = eval(CAR(args), env));
 
 	if (!isList(x) && !isLanguage(x))
