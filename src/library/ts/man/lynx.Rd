@@ -3,8 +3,8 @@
 \title{Annual Canadian Lynx trappings 1821-1934}
 \description{
     Annual numbers of lynx trappings for 1821-1934 in Canada. Taken from
-    Brockwell \& Davis (1991), this
-    appears to be the series considered by Campbell \& Walker (1977).
+    Brockwell & Davis (1991), this appears to be the series considered
+    by Campbell & Walker (1977).
 }
 \source{
     Brockwell, P. J. and Davis, R. A. (1991) \emph{Time
