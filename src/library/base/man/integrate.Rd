@@ -12,19 +12,20 @@ integrate(f, lower, upper, subdivisions=100,
           stop.on.error = TRUE, keep.xy = FALSE, aux = NULL, \dots)
 }
 \arguments{
-  \item{f}{An \R function taking a numeric first argument and returning
-    a numeric vector of the same length. Returning a non-finite element will
+  \item{f}{an \R function taking a numeric first argument and returning
+    a numeric vector of the same length.  Returning a non-finite element will
     generate an error.}
-  \item{lower, upper}{The limits of integration. Can be infinite.}
+  \item{lower, upper}{the limits of integration.  Can be infinite.}
   \item{subdivisions}{the maximum number of subintervals.}
   \item{rel.tol}{relative accuracy requested.}
   \item{abs.tol}{absolute accuracy requested.}
   \item{stop.on.error}{logical. If true (the default) an error stops the
     function.  If false some errors will give a result with a warning in
     the \code{message} component.}
-  \item{keep.xy}{unused. For compatibility with S.}
-  \item{aux}{unused. For compatibility with S.}
-  \item{\dots}{additional arguments to be passes to \code{f}.}
+  \item{keep.xy}{unused.  For compatibility with S.}
+  \item{aux}{unused.  For compatibility with S.}
+  \item{\dots}{additional arguments to be passed to \code{f}.  Remember
+    to use argument names \emph{not} matching those of \code{integrate(.)}!}
 }
 \details{
   If one or both limits are infinite, the
@@ -38,12 +39,12 @@ integrate(f, lower, upper, subdivisions=100,
 }
 \note{
   Like all numerical integration routines, these evaluate the function
-  on a finite set of points. If the function is approximately constant
+  on a finite set of points.  If the function is approximately constant
   (in particular, zero) over nearly all its range it is possible that
   the result and error estimate may be seriously wrong.
 
   When integrating over infinite intervals do so explicitly, rather than
-  just using a large number as the endpoint. This increases the chance
+  just using a large number as the endpoint.  This increases the chance
   of a correct answer -- any function whose integral over an infinite
   interval is finite must be near zero for most of that interval.
 }
@@ -79,7 +80,7 @@ integrate(integrand, lower = 0, upper = Inf)
 
 ## don't do this if you really want the integral from 0 to Inf
 integrate(integrand, lower = 0, upper = 10)
-integrate(integrand, lower = 0, upper = 100000)  
+integrate(integrand, lower = 0, upper = 100000)
 integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
 
 try(integrate(function(x) 2, 0, 1))  ## no vectorizable function
