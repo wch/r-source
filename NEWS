@@ -64,6 +64,9 @@ NEW FEATURES
 
     o	cumsum/prod/max/min() now preserve names.
 
+    o	Replaying a plot (with replayPlot or autoprinting) now
+	automagically opens a device if none is open.
+
 
 UTILITIES
 

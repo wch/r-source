@@ -9,8 +9,6 @@ recordPlot <- function()
 
 replayPlot <- function(x)
 {
-    if(dev.cur() == 1)
-        stop("no current device to replay to")
     if(class(x) != "recordedplot")
         stop("argument is not of class \"recordedplot\"")
     plot.new()
