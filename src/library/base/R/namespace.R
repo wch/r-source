@@ -438,6 +438,22 @@ namespaceImportFrom <- function(self, ns, vars) {
         names(old) <- new
         old
     }
+    mergeImportMethods <- function(impenv, expenv, metaname) {
+        expMethods <- get(metaname, envir = expenv)
+        if(exists(metaname, envir = impenv, inherits = FALSE)) {
+            impMethods <- get(metaname, envir = impenv)
+            assign(metaname, mergeMethods(impMethods, expMethods), envir = impenv)
+            TRUE
+        }
+        else
+            FALSE
+    }
+    whichMethodMetaNames <- function(impvars) {
+        if(!.isMethodsDispatchOn())
+            return(numeric())
+        mm <- mlistMetaName()
+        seq(along = impvars)[substr(impvars, 1, nchar(mm)) == mm]
+    }
     if (is.character(self))
         self <- getNamespace(self)
     ns <- asNamespace(ns)
@@ -467,6 +483,18 @@ namespaceImportFrom <- function(self, ns, vars) {
         register <- FALSE
     }
     else stop("invalid import target")
+    which <- whichMethodMetaNames(impvars)
+    if(length(which)) {
+        ## If methods are already in impenv, merge and don't import
+        delete <- integer()
+        for(i in which)
+            if(mergeImportMethods(impenv, ns, impvars[[i]]))
+                delete <- c(delete, i)
+        if(length(delete)>0) {
+            impvars <- impvars[-delete]
+            impnames <- impnames[-delete]
+        }
+    }
     for (n in impnames)
         if (exists(n, env = impenv, inherits = FALSE))
             warning(paste(msg, n))
@@ -536,6 +564,20 @@ namespaceExport <- function(ns, vars) {
             names(old) <- new
             old
         }
+        mergeExportMethods <- function(new, ns) {
+            if(!(.isMethodsDispatchOn() && exists("mlistMetaName")))
+                return(FALSE)
+            mm = mlistMetaName()
+            newMethods <- new[substr(new, 1, nchar(mm)) == mm]
+            nsimports <- parent.env(ns)
+            for(what in newMethods) {
+                if(exists(what, envir = nsimports, inherits = FALSE)) {
+                    m1 <- get(what, envir = nsimports)
+                    m2 <- get(what, envir = ns)
+                    assign(what, envir = ns, mergeMethods(m1, m2))
+                }
+            }
+        }
         new <- makeImportExportNames(vars)
         if (any(duplicated(new)))
             stop("duplicate export names ",
@@ -545,6 +587,7 @@ namespaceExport <- function(ns, vars) {
            undef <- do.call("paste", as.list(c(undef, sep=", ")))
             stop(paste("undefined exports:", undef))
         }
+        mergeExportMethods(new, ns)
         addExports(ns, new)
     }
 }
