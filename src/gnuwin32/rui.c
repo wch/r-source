@@ -668,9 +668,9 @@ static MenuItem ConsolePopup[] = {
 static void popupact(control m)
 {
     if (consolegetlazy(RConsole))
-	check(ConsolePopup[6].m);
+	check(ConsolePopup[8].m);
     else
-	uncheck(ConsolePopup[6].m);
+	uncheck(ConsolePopup[8].m);
 
     if (consolecancopy(RConsole)) {
 	enable(ConsolePopup[0].m);

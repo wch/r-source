@@ -41,6 +41,9 @@ menus nor the savePlot() function.
 Building under (repaired) Cygwin -mno-cygwin environments is no longer
 supported.
 
+The console pop-up was checking the wrong item for `Buffered output'.
+
+
 
 rw1031
 ======
