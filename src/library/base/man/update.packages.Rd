@@ -28,7 +28,7 @@ old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
 
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
-                  contriburl = contrib.url(CRAN))
+                  contriburl = contrib.url(CRAN), method)
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,
