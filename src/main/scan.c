@@ -952,11 +952,11 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else {
 	    char *sc = CHAR(STRING_ELT(sep, 0));
 	    if(strlen(sc) > 1)
-		errorcall(call, _("invalid 'sep value: must be one byte"));
+		errorcall(call, _("invalid 'sep' value: must be one byte"));
 	    data.sepchar = (unsigned char) sc[0];
 	}
 	/* gets compared to chars: bug prior to 1.7.0 */
-    } else errorcall(call, _("invalid sep value"));
+    } else errorcall(call, _("invalid 'sep' value"));
 
     if (isString(dec) || isNull(dec)) {
 	if (length(dec) == 0)
