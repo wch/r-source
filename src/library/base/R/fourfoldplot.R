@@ -48,7 +48,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     if(is.null(dnx))
         dnx <- vector("list", 3)
     for(i in which(sapply(dnx, is.null)))
-        dnx[[i]] <- LETTERS[seq(from = 1, to = dim(x)[i])]
+        dnx[[i]] <- LETTERS[seq(length = dim(x)[i])]
     if(is.null(names(dnx)))
         i <- 1 : 3
     else
