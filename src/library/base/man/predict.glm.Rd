@@ -1,7 +1,7 @@
 \name{predict.glm}
 \title{Predict Method for GLM Fits}
 \usage{
-predict.glm(object, newdata = NULL, type = c("link", "response", "terms"),
+\method{predict}{glm}(object, newdata = NULL, type = c("link", "response", "terms"),
             se.fit = FALSE, dispersion = NULL, terms = NULL, \dots)
 }
 \alias{predict.glm}

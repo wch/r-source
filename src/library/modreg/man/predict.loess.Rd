@@ -2,20 +2,20 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{predict.loess}
-\title{Predict Loess Curve or Surface}
-\usage{
-predict.loess(object, newdata = NULL, se = FALSE, ...)
-}
 \alias{predict.loess}
+\title{Predict Loess Curve or Surface}
+\description{
+ Predictions from a \code{loess} fit, optionally with standard errors.
+}
+\usage{
+\method{predict}{loess}(object, newdata = NULL, se = FALSE, \dots)
+}
 \arguments{
  \item{object}{an object fitted by \code{loess}.}
  \item{newdata}{an optional data frame specifying points at which to do
    the predictions. If missing, the original data points are used.}
  \item{se}{should standard errors be computed?}
- \item{...}{arguments passed to or from other methods.}
-}
-\description{
- Predictions from a \code{loess} fit, optionally with standard errors.
+ \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
   The standard errors calculation is slower than prediction.

@@ -2,20 +2,20 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{predict.smooth.spline}
-\title{Predict from Smoothing Spline Fit}
-\usage{
-predict.smooth.spline(object, x, deriv = 0, \dots)
-}
 \alias{predict.smooth.spline}
+\title{Predict from Smoothing Spline Fit}
+\description{
+  Predict a smoothing spline fit at new points, return the derivative if
+  desired. The predicted fit is linear beyond the original data.
+}
+\usage{
+\method{predict}{smooth.spline}(object, x, deriv = 0, \dots)
+}
 \arguments{
   \item{object}{a fit from \code{smooth.spline}.}
   \item{x}{the new values of x.}
   \item{deriv}{integer; the order of the derivative required.}
   \item{\dots}{further arguments passed to or from other methods.}
-}
-\description{
-  Predict a smoothing spline fit at new points, return the derivative if
-  desired. The predicted fit is linear beyond the original data.
 }
 \value{
   A list with components

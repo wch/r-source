@@ -1,19 +1,24 @@
 \name{plot.histogram}
+\alias{plot.histogram}
+\alias{lines.histogram}
 \title{Plot Histograms}
+\description{
+  These are methods for objects of class \code{"histogram"}, typically
+  produced by \code{\link{hist}}.
+}
 \usage{
-plot.histogram(x, freq = equidist, col = NULL, border = par("fg"),
+\method{plot}{histogram}(x, freq = equidist, col = NULL, border = par("fg"),
                lty = NULL, main = paste("Histogram of", x$xname),
                xlim = range(x$breaks), ylim = range(y, 0),
                xlab = x$xname, ylab, axes = TRUE, labels = FALSE,
                add = FALSE, \dots)
 
-lines.histogram(x, \dots)
+\method{lines}{histogram}(x, \dots)
 }
-\alias{plot.histogram}
-\alias{lines.histogram}
 \arguments{
   \item{x}{a \code{histogram} object, or a list with components
-    \code{intensities}, \code{mid}, etc, see \code{\link{hist}}.}
+    \code{intensities}, \code{mid}, etc, see \code{\link{hist}} for
+    information about the components of \code{x}.}
   \item{freq}{logical; if \code{TRUE}, the
     histogram graphic is to present a representation of frequencies, i.e,
     \code{x$counts}; if \code{FALSE}, \emph{relative} frequencies
@@ -34,11 +39,7 @@ lines.histogram(x, \dots)
     current plot.  This is what \code{lines.histogram(*)} does.}
   \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
-\description{
-  These are methods for objects of class \code{"histogram"}, typically
-  produced by \code{\link{hist}(\dots)}.  See that page for information
-  about the components of \code{x}.
-
+\details{
   \code{lines.histogram(*)} is the same as
   \code{plot.histogram(*, add = TRUE)}.
 }

@@ -1,11 +1,17 @@
 \name{plot.profile.nls}
 \alias{plot.profile.nls}
 \title{Plot a profile.nls Object}
+\description{
+  Displays a series of plots of the profile t function and interpolated
+  confidence intervals for the parameters in a nonlinear regression
+  model that has been fit with \code{nls} and profiled with
+  \code{profile.nls}.
+}
 \usage{
-plot.profile.nls(x, levels, conf, nseg, absVal, ...)
+\method{plot}{profile.nls}(x, levels, conf, nseg, absVal, ...)
 }
 \arguments{
- \item{x}{an object of class \code{profile.nls} }
+ \item{x}{an object of class \code{"profile.nls"} }
  \item{levels}{levels, on the scale of the absolute value of a t
      statistic, at which to interpolate intervals.  Usually \code{conf}
      is used instead of giving \code{levels} explicitly.}
@@ -19,16 +25,17 @@ plot.profile.nls(x, levels, conf, nseg, absVal, ...)
      Defaults to \code{TRUE}.} 
  \item{\dots}{other arguments to the \code{plot} function can be passed here.}
 }
-\description{
-    Displays a series of plots of the profile t function and
-    interpolated confidence intervals for the parameters in a nonlinear
-    regression model that has been fit with \code{nls} and profiled with
-    \code{profile.nls}.
+\references{
+  Bates, D.M. and Watts, D.G. (1988),
+  \emph{Nonlinear Regression Analysis and Its Applications},
+  Wiley (chapter 6)
 }
-\references{Bates, D.M. and Watts, D.G. (1988), \emph{Nonlinear Regression Analysis
-	and Its Applications}, Wiley (chapter 6)}
 \author{Douglas M. Bates and Saikat DebRoy}
-\seealso{\code{\link{nls}}, \code{\link{profile}}, \code{\link{profile.nls}}}
+\seealso{
+  \code{\link{nls}},
+  \code{\link{profile}},
+  \code{\link{profile.nls}}
+}
 \examples{
 data( BOD )
 # obtain the fitted object

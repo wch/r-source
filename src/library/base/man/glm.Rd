@@ -1,5 +1,14 @@
 \name{glm}
+\alias{glm}
+\alias{glm.fit}
+\alias{glm.fit.null}
+\alias{weights.glm}
 \title{Fitting Generalized Linear Models}
+\description{
+  \code{glm} is used to fit generalized linear models, specified by
+  giving a symbolic description of the linear predictor and a
+  description of the error distribution.
+}
 \usage{
 glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
     na.action, start = NULL, offset = NULL,
@@ -11,12 +20,8 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
         offset = rep(0, nrow(x)),
         family = gaussian(), control = glm.control(),
         intercept = TRUE)
-weights.glm(object, type = c("prior", "working"), ...)
+\method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
-\alias{glm}
-\alias{glm.fit}
-\alias{glm.fit.null}
-\alias{weights.glm}
 \arguments{
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}
@@ -76,11 +81,6 @@ weights.glm(object, type = c("prior", "working"), ...)
   \item{intercept}{logical. Should an intercept be included?}
   
   \item{\dots}{further arguments passed to or from other methods.}
-}
-\description{
-  \code{glm} is used to fit generalized linear models, specified by
-  giving a symbolic description of the linear predictor and
-  a description of the error distribution.
 }
 \details{
   A typical predictor has the form \code{response ~ terms} where

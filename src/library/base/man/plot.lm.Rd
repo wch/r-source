@@ -3,7 +3,7 @@
 \alias{plot.mlm}%which is .NotYetImplemented()
 \title{Plot Diagnostics for an lm Object}
 \usage{
-plot.lm(x, which = 1:4,
+\method{plot}{lm}(x, which = 1:4,
         caption = c("Residuals vs Fitted", "Normal Q-Q plot",
                     "Scale-Location plot", "Cook's distance plot"),
         panel = points,

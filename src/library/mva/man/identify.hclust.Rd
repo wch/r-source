@@ -9,7 +9,7 @@
   applied to the index of data points contained in the cluster.
 }
 \usage{
-identify.hclust(x, FUN=NULL, N=20, MAXCLUSTER=20, DEV.FUN=NULL, ...)
+\method{identify}{hclust}(x, FUN=NULL, N=20, MAXCLUSTER=20, DEV.FUN=NULL, \dots)
 }
 \arguments{
   \item{x}{an object of the type produced by \code{hclust}.}

@@ -9,7 +9,7 @@
 \usage{
 hclust(d, method = "complete", members=NULL)
 
-plot.hclust(x, labels = NULL, hang = 0.1,
+\method{plot}{hclust}(x, labels = NULL, hang = 0.1,
             axes = TRUE, frame.plot = FALSE, ann = TRUE,
             main = "Cluster Dendrogram",
             sub = NULL, xlab = NULL, ylab = "Height", \dots)

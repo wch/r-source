@@ -4,33 +4,34 @@
 Biplot for Principal Components
 }
 \description{
-    Produces a biplot (in the strict sense) from the output of
-    \code{\link{princomp}}.
+  Produces a biplot (in the strict sense) from the output of
+  \code{\link{princomp}}.
 }
 \usage{
-biplot.princomp(x, choices = 1:2, scale = 1, pc.biplot = FALSE, \dots)
+\method{biplot}{princomp}(x, choices = 1:2, scale = 1, pc.biplot = FALSE, \dots)
 }
 \arguments{
-\item{x}{an object of class \code{"princomp"}.}
-\item{choices}{
+  \item{x}{an object of class \code{"princomp"}.}
+  \item{choices}{
     length 2 vector specifying the components to plot. Only the default
     is a biplot in the strict sense.
-}
-\item{scale}{
+  }
+  \item{scale}{
     The variables are scaled by \code{lambda ^ scale} and the
     observations are scaled by \code{lambda ^ (1-scale)} where
     \code{lambda} are the singular values as computed by
     \code{\link{princomp}}. Normally \code{0 <= scale <= 1}, and a warning 
     will be issued if the specified \code{scale} is outside this range.
-}
-\item{pc.biplot}{
+  }
+  \item{pc.biplot}{
     If true, use what Gabriel (1971) refers to as a "principal component
     biplot", with \code{lambda = 1} and observations scaled up by sqrt(n) and
     variables scaled down by sqrt(n).  Then inner products between
     variables approximate covariances and distances between observations
     approximate Mahalanobis distance.
-}
-\item{\dots}{optional arguments to be passed to \code{\link{biplot.default}}.}
+  }
+  \item{\dots}{optional arguments to be passed to
+    \code{\link{biplot.default}}.}
 }
 \section{Side Effects}{
     a plot is produced on the current graphics device.

@@ -6,17 +6,19 @@
 \alias{plotNode}
 \alias{plotNodeLimit}
 \alias{cut.dendrogram}
-\description{Class \code{"dendrogram"} provides general functions for
-  handling tree-like structures. It is
-  intended as a replacement for similar functions in hierarchical
-  clustering and classification/regression trees, such that all of these
-  can use the same engine for plotting or cutting trees. Currently the
-  code is in alpha stage and the API may change at any point in time.}
+\description{
+  Class \code{"dendrogram"} provides general functions for handling
+  tree-like structures.  It is intended as a replacement for similar
+  functions in hierarchical clustering and classification/regression
+  trees, such that all of these can use the same engine for plotting or
+  cutting trees. Currently the code is in alpha stage and the API may
+  change at any point in time.
+}
 \usage{
-plot.dendrogram(x, type=c("rectangle", "triangle"),
+\method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
                 center=FALSE, xlab="", ylab="", ...)
 as.dendrogram.hclust(object, ...)
-cut.dendrogram(x, h, ...)
+\method{cut}{dendrogram}(x, h, ...)
 
 plotNode(x1, x2, subtree, type, center)
 plotNodeLimit(x1, x2, subtree, center)
@@ -69,4 +71,3 @@ plot(dend2$lower[[3]])
 }
 %FIXME !! -- proper Keyword !!
 \keyword{multivariate}
-

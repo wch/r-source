@@ -7,8 +7,7 @@
   back by a given number of observations.
 }
 \usage{
-lag(x, \dots)
-lag.default(x, k = 1, \dots)
+\method{lag}{default}(x, k = 1, \dots)
 }
 \arguments{
   \item{x}{A vector or matrix or univariate or multivariate time series}
@@ -17,6 +16,9 @@ lag.default(x, k = 1, \dots)
 }
 \details{
   Vector or matrix arguments \code{x} are coerced to time series.
+
+  \code{lag} is a generic function; this page documents its default
+  method.
 }
 \value{
   A time series object.
