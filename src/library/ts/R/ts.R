@@ -1,16 +1,3 @@
-start	  <- function(x, ...) UseMethod("start")
-end	  <- function(x, ...) UseMethod("end")
-frequency <- function(x, ...) UseMethod("frequency")
-time	  <- function(x, ...) UseMethod("time")
-window	  <- function(x, ...) UseMethod("window")
-
-## The first 2 as requested by <la-jassine@aix.pacwan.net>
-start.default	<- function (x) start.ts(ts(x))
-end.default	<- function (x)	end.ts(ts(x))
-frequency.default<-function (x) frequency.ts(ts(x))
-time.default	<- function (x)	time.ts(ts(x))
-window.default	<- function (x)	window.ts(ts(x))
-
 options(ts.eps = 1e-5)#- default as S
 
 ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
