@@ -1,3 +1,9 @@
+R FAQ
+Frequently Asked Questions on R
+Version 0.64-5, 1999/05/02
+Kurt Hornik
+
+
 1 Introduction
 **************
 
@@ -236,8 +242,8 @@ platforms in `bin/nextstep/i386' and `bin/nextstep/m68k'.
    No other binary distributions have thus far been made publically
 available.
 
-2.7 Which Documentation Exists for R?
-=====================================
+2.7 What Documentation Exists for R?
+====================================
 
    Online documentation for most of the functions and variables in R
 exists, and can be printed on-screen by typing `help(NAME)' (or `?NAME') at
@@ -291,8 +297,8 @@ implementing R is described in:
 
 This is also the reference for R to use in publications.
 
-2.8 Which Mailing Lists Exist for R?
-====================================
+2.8 What Mailing Lists Exist for R?
+===================================
 
    Thanks to Martin Maechler <maechler@stat.math.ethz.ch>, there are three
 mailing lists devoted to R.
@@ -576,7 +582,7 @@ optimizer supports this (and typically, the builtin ones do not).
 state.  A simple example (taken from Abelson and Sussman) is obtained by
 typing `demo(scoping)' at the R prompt.  Further information is provided in
 the standard R reference "R: A Language for Data Analysis and Graphics"
-(*note Which Documentation Exists for R?::.) and a paper on "Lexical Scope
+(*note What Documentation Exists for R?::.) and a paper on "Lexical Scope
 and Statistical Computing" by Robert Gentleman and Ross Ihaka which can be
 obtained from the `doc/misc' directory of a CRAN site.
 
@@ -827,7 +833,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      An interface between R and the mSQL database system.
 
 *Rnotes*
-     The data sets for the exercises in Rnotes (*note Which Documentation
+     The data sets for the exercises in Rnotes (*note What Documentation
      Exists for R?::.).
 
 *MASS*
@@ -966,7 +972,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      A collection of functions to implement a class for univariate
      polynomial manipulations.
 
-*principal.curve*
+*princurve*
      Fits a principal curve to a matrix of points in arbitrary dimension.
 
 *pspline*
