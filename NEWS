@@ -245,7 +245,11 @@ BUG FIXES
     o   R now reports `50 or more warnings', not just 50, as it only
 	displays the first 50.
 
-    o   pointer protection bug in load code.
+    o   Resetting the RNG state resets the state of the Box-Muller 
+	generator too.
+
+    o   Pointer protection bug in load() code.
+
 
 	**************************************************
 	*						 *

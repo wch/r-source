@@ -179,9 +179,13 @@ static void FixupSeeds(RNGtype kind, int initial)
     }
 }
 
+extern double BM_norm_keep; /* ../nmath/snorm.c */
+
 static void RNG_Init(RNGtype kind, Int32 seed)
 {
     int j;
+
+    BM_norm_keep = 0.0; /* zap Box-Muller history */
 
     /* Initial scrambling */
     for(j = 0; j < 50; j++)

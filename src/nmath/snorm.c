@@ -33,7 +33,7 @@
 #include "Random.h"
 
 #define repeat for(;;)
-static double BM_norm_keep = 0.0;
+double BM_norm_keep = 0.0;
 
 N01type N01_kind = KINDERMAN_RAMAGE;
 
