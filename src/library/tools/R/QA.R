@@ -1114,15 +1114,20 @@ function(x, ...)
 checkTnF <-
 function(package, dir, file, lib.loc = NULL)
 {
+    docsFiles <- character(0)
+    
     if(!missing(package)) {
         if(length(package) != 1)
             stop("argument 'package' must be of length 1")
         packageDir <- .find.package(package, lib.loc)
         if(file.exists(file.path(packageDir, "R", "all.rda"))) {
             warning("cannot check R code installed as image")
-            return(invisible())
         }
-        file <- file.path(packageDir, "R", package)
+        codeFiles <- file.path(packageDir, "R", package)
+        if(file.exists(exampleDir <- file.path(packageDir, "R-ex"))) {
+            codeFiles <- c(codeFiles,
+                           .listFilesWithExts(exampleDir, "R"))
+        }
     }
     else if(!missing(dir)) {
         if(!file.exists(dir))
@@ -1138,34 +1143,67 @@ function(package, dir, file, lib.loc = NULL)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
             codeFiles <- c(codeFiles,
                            .listFilesWithExts(codeOSDir, codeExts))
-        file <- tempfile()
-        on.exit(unlink(file))
-        file.create(file)
-        file.append(file, codeFiles)
+        if(file.exists(docsDir <- file.path(dir, "man"))) {
+            docsExts <- c("Rd", "rd")
+            docsFiles <- .listFilesWithExts(docsDir, docsExts)
+            if(file.exists(docsOSDir <- file.path(docsDir,
+                                                  .Platform$OS)))
+                docsFiles <- c(docsFiles,
+                               .listFilesWithExts(docsOSDir, docsExts))
+        }
     }
-    else if(missing(file)) {
+    else if(!missing(file)) {
+        if(!file.exists(file))
+            stop(paste("file", sQuote(file), "does not exist"))
+        else
+            codeFiles <- file
+    }
+    else
         stop("you must specify 'package', 'dir' or 'file'")
-    }
 
-    if(!file.exists(file))
-        stop(paste("file", sQuote(file), "does not exist"))
+    findTnFInFile <- function(file) {
+        matches <- list()
+        TnF <- c("T", "F")
+        findBadExprs <- function(e, p) {
+            if(is.name(e)
+               && (as.character(e) %in% TnF)
+               && !is.null(p)) {
+                ## Need the 'list()' to deal with T/F in function
+                ## arglists which are pairlists ...
+                matches <<- c(matches, list(p))
+            }
+            else if(is.recursive(e)) {
+                for(i in seq(along = e)) Recall(e[[i]], e)
+            }
+        }
+        exprs <- parse(file = file, n = -1)
+        for(i in seq(along = exprs))
+            findBadExprs(exprs[[i]], NULL)
+        matches
+    }
 
     badExprs <- list()
-    badTnF <- c("T", "F")    
-    findBadExprs <- function(e, p) {
-        if(is.name(e) && (as.character(e) %in% badTnF) && !is.null(p)) {
-            ## Need the 'list()' to deal with T/F in function arglists
-            ## which are pairlists ...
-            badExprs <<- c(badExprs, list(p))
-        }
-        else if(is.recursive(e)) {
-            for(i in seq(along = e)) Recall(e[[i]], e)
+    for(file in codeFiles) {
+        exprs <- findTnFInFile(file)
+        if(length(exprs) > 0) {
+            exprs <- list(exprs)
+            names(exprs) <- file
+            badExprs <- c(badExprs, exprs)
         }
     }
-
-    exprs <- parse(file = file, n = -1)
-    for(i in seq(along = exprs))
-        findBadExprs(exprs[[i]], NULL)
+    for(file in docsFiles) {
+        exampleFile <- tempfile()
+        .Script("perl", "extract-examples.pl", paste(file, exampleFile))
+        if(file.exists(exampleFile)) {
+            exprs <- findTnFInFile(exampleFile)
+            if(length(exprs) > 0) {
+                exprs <- list(exprs)
+                names(exprs) <- file
+                badExprs <- c(badExprs, exprs)
+            }
+            unlink(exampleFile)
+        }
+    }
     class(badExprs) <- "checkTnF"
     badExprs
 }
@@ -1173,10 +1211,16 @@ function(package, dir, file, lib.loc = NULL)
 print.checkTnF <-
 function(x, ...)
 {
-    for(i in seq(along = x)) {
-        writeLines(strwrap(paste("found T/F in",
-                                 paste(deparse(x[[i]]), collapse = "")),
-                           exdent = 4))
+    for(fname in names(x)) {
+        writeLines(paste("File ", sQuote(fname), ":", sep = ""))
+        xfname <- x[[fname]]
+        for(i in seq(along = xfname)) {
+            writeLines(strwrap(paste("found T/F in",
+                                     paste(deparse(xfname[[i]]),
+                                           collapse = "")),
+                               exdent = 4))
+        }
+        writeLines("")        
     }
     invisible(x)
 }
