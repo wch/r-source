@@ -14424,6 +14424,11 @@ for arg in ${FLIBS}; do
       ;;
   esac
 done
+case "${host_os}" in
+  darwin*)
+    flibs=`echo "${flibs}" | sed 's/\(.*\)-lcrtbegin.o\(.*\)/\1\2/'`
+    ;;
+esac
 FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"

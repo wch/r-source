@@ -595,12 +595,21 @@ for arg in ${FLIBS}; do
       ;;
   esac
 done
+## Also need to deal with offending '-lcrtbegin.o' on MacOS X (Jaguar)
+## with GCC 3.1 or better ...
+case "${host_os}" in
+  darwin*)
+    flibs=`echo "${flibs}" | sed 's/\(.*\)-lcrtbegin.o\(.*\)/\1\2/'`
+    ;;
+esac
 FLIBS="${flibs}"
 ## Versions of g77 up to 3.0.x only have a non-PIC (static) -lg2c which
 ## on some platforms means one cannot build dynamically loadable modules
 ## containing Fortran code.  (g77 3.1 will have a shared -lg2c too.)  As
 ## a workaround, Debian provides -lg2c-pic which holds pic objects only,
 ## and we should use in case we can find it ...
+## <FIXME>
+## Use FLIBS instead of ac_cv_flibs ...
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
   flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
@@ -610,6 +619,7 @@ if test "${G77}" = yes; then
   AC_LANG_POP(C)
   LIBS="${r_save_LIBS}"
 fi
+## </FIXME>
 ])# R_PROG_F77_FLIBS
 
 ## R_PROG_F77_APPEND_UNDERSCORE
