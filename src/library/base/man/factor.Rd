@@ -9,7 +9,7 @@ ordered(x, levels = sort(unique(x), na.last = TRUE), labels,
 is.factor(x)
 is.ordered(x)
 
-as.factor(x, ordered = FALSE)
+as.factor(x)
 as.ordered(x)
 }
 \alias{factor}
