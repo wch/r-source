@@ -27,6 +27,7 @@ SOURCES_C = \
 	distance.c \
 	fft.c \
 	fortran.c \
+	lbfgsb.c \
 	loglin.c \
 	lowess.c \
 	machar.c \

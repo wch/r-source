@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999  the R Development Core Team
+ *  Copyright (C) 1999, 2000  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #endif
 
 #include "Defn.h"
+#include "Rdefines.h"
 
 #include <math.h>
 
@@ -71,6 +72,11 @@ static void nmmin(int n, double *Bvec, double *X, double *Fmin,
 static void cgmin(int n, double *Bvec, double *X, double *Fmin,
 		  int *fail, double abstol, double intol, OptStruct OS, 
 		  int type, int trace, int *fncount, int *grcount, int maxit);
+static void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd, 
+		   double *Fmin, int *fail, OptStruct OS, 
+		   double factr, double pgtol,
+		   int *fncount, int *grcount, int maxit, char *msg);
+
 
 static double fminfn(int n, double *p, OptStruct OS)
 {
@@ -126,7 +132,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 /* par fn gr method options */
 SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP par, fn, gr, method, options, tmp;
+    SEXP par, fn, gr, method, options, tmp, slower, supper;
     SEXP res, value, counts, conv;
     int i, npar=0, *mask, trace, maxit, fncount, grcount, nREPORT;
     int ifail = 0;
@@ -162,7 +168,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     for (i = 0; i < npar; i++) 
 	dpar[i] = REAL(par)[i] / (OS->parscale[i]);
-    PROTECT(res = allocVector(VECSXP, 4));
+    PROTECT(res = allocVector(VECSXP, 5));
     PROTECT(value = allocVector(REALSXP, 1));
     PROTECT(counts = allocVector(INTSXP, 2));
     PROTECT(conv = allocVector(INTSXP, 1));
@@ -227,7 +233,51 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < npar; i++)  
 	    REAL(par)[i] = opar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
-    } else errorcall(call, "unknown method");
+    } else if (strcmp(tn, "L-BFGS-B") == 0) {
+	SEXP ndeps, smsg;
+	double *lower = vect(npar), *upper = vect(npar);
+	int lmm, *nbd = (int *) R_alloc(npar, sizeof(int));
+	double factr, pgtol;
+	char msg[60];
+
+	factr = asReal(getListElement(options, "factr"));
+	pgtol = asReal(getListElement(options, "pgtol"));
+	lmm = asInteger(getListElement(options, "lmm"));
+	if(!isNull(gr)) {
+	    if(!isFunction(gr)) error("gr is not a function");
+	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
+	} else {
+	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
+	    ndeps = getListElement(options, "ndeps");	
+	    if(LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    OS->ndeps = vect(npar);
+	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
+	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
+	    UNPROTECT(1);
+	}
+	args = CDR(args); slower = CAR(args); /* coerce in calling code */
+	args = CDR(args); supper = CAR(args);
+	for (i = 0; i < npar; i++) {
+	    lower[i] = REAL(slower)[i];
+	    upper[i] = REAL(supper)[i];
+	    if (!R_FINITE(lower[i])) {
+		if (!R_FINITE(upper[i])) nbd[i] = 0; else nbd[i] = 3;
+	    } else {
+		if (!R_FINITE(upper[i])) nbd[i] = 1; else nbd[i] = 2;
+	    }
+	}
+	lbfgsb(npar, lmm, dpar, lower, upper, nbd, &val, &ifail, OS,
+	       factr, pgtol, &fncount, &grcount, maxit, msg);
+	for (i = 0; i < npar; i++)  
+	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
+	UNPROTECT(1); /* OS->R_gcall */
+	PROTECT(smsg = allocVector(STRSXP, 1));
+	STRING(smsg)[0] = CREATE_STRING_VECTOR(msg);
+	VECTOR(res)[4] = smsg;
+	UNPROTECT(1);
+    } else 
+	errorcall(call, "unknown method");
+
     REAL(value)[0] = val * (OS->fnscale);
     VECTOR(res)[0] = par; VECTOR(res)[1] = value;
     INTEGER(counts)[0] = fncount; INTEGER(counts)[1] = grcount;
@@ -839,3 +889,54 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     *fncount = funcount;
     *grcount = gradcount;
 }
+
+#include "S.h"
+
+void setulb(int n, int m, double *x, double *l, double *u, int *nbd, 
+	    double *f, double *g, double factr, double *pgtol, 
+	    double *wa, int * iwa, char *task, int iprint, 
+	    int *lsave, int *isave, double *dsave);
+
+
+
+static
+void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd, 
+	    double *Fmin, int *fail, OptStruct OS, 
+	    double factr, double pgtol,
+	    int *fncount, int *grcount, int maxit, char *msg)
+{
+    char task[60];
+    double f, *g, dsave[29], wa[2*m*n+4*n+11*m*m+8*m];
+    int iter = 0, iwa[3*n], isave[44], lsave[4];
+
+    *fail = 0;
+    g = vect(n);
+    strcpy(task, "START");
+    while(1) {
+	setulb(n, m, x, l, u, nbd, &f, g, factr, &pgtol, wa, iwa, task, 0,
+	       lsave, isave, dsave);
+/*	Rprintf("in lbfgsb - %s\n", task);*/
+	if (strncmp(task, "FG", 2) == 0) {
+	    f = fminfn(n, x, OS);
+	    fmingr(n, x, g, OS);
+	} else if (strncmp(task, "NEW_X", 5) == 0) {
+	    if (++iter > maxit) {
+		*fail = 1;
+		break;
+	    }
+	} else if (strncmp(task, "WARN", 4) == 0) {
+	    *fail = 51;
+	    break;
+	} else if (strncmp(task, "CONV", 4) == 0) {
+	    break;
+	} else if (strncmp(task, "ERROR", 5) == 0) {
+	    *fail = 52;
+	    break;
+	}
+    }
+    *Fmin = f;
+    *fncount = *grcount = isave[33];
+    strcpy(msg, task);
+}
+
+

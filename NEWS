@@ -47,6 +47,9 @@ NEW FEATURES
 	for unconstrained minimization and maximization with and
 	without derivatives.
 
+	optim() also allows box constraints (interval bounds on 
+	individual variables) in its limited-memory BFGS option.
+
     o	strsplit() now uses split regexps, and no longer insists on
 	splitting into non-empty tokens.
 

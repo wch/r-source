@@ -1,6 +1,7 @@
-optim <- function(par, fn, gr=NULL,
-                   method=c("Nelder-Mead", "BFGS", "CG"),
-                   control=list(), hessian = FALSE)
+optim <- function(par, fn, gr = NULL,
+                  method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B"),
+                  lower = -Inf, upper = Inf,
+                  control = list(), hessian = FALSE)
 {
     method <- match.arg(method)
     con <- list(trace = 0, fnscale = 1, parscale = rep(1, length(par)),
@@ -8,11 +9,15 @@ optim <- function(par, fn, gr=NULL,
                 maxit = 100, abstol = -Inf, reltol=sqrt(.Machine$double.eps),
                 alpha = 1.0, beta = 0.5, gamma = 2.0,
                 REPORT = 10,
-                type = 1)
+                type = 1,
+                lmm = 5, factr = 1e12, pgtol = 0)
     if (method == "Nelder-Mead") con$maxit <- 500
     con[names(control)] <- control
-    res <- .Internal(optim(par, fn, gr, method, con))
-    names(res) <- c("par", "value", "counts", "convergence")
+    npar <- length(par)
+    lower <- as.double(rep(lower, npar))
+    upper <- as.double(rep(upper, npar))
+    res <- .Internal(optim(par, fn, gr, method, con, lower, upper))
+    names(res) <- c("par", "value", "counts", "convergence", "message")
     nm <- names(par)
     if(!is.null(nm)) names(res$par) <- nm
     names(res$counts) <- c("function", "gradient")

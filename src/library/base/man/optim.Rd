@@ -7,7 +7,8 @@
 }
 \usage{
 optim(par, fn, gr = NULL,
-      method = c("Nelder-Mead", "BFGS", "CG"),
+      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B"),
+      lower = -Inf, upper = +Inf,
       control = list(), hessian = FALSE)%, \dots)
 }
 \arguments{
@@ -21,6 +22,7 @@ optim(par, fn, gr = NULL,
    \code{gr} will be called immediately after a call to \code{fn} at
    the same parameter values.}
  \item{method}{The method to be used. See \bold{Details}.}
+ \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
  \item{control}{A list of control parameters. See \bold{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
@@ -45,6 +47,12 @@ optim(par, fn, gr = NULL,
   be more fragile that the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
   
+  The fourth method is that of Byrd \emph{et. al.} (1994) which allows
+  \emph{box constrainsts}, that is each variable can be given a lower
+  and/or upper bound. The initial value must satisfy the constraints.
+  This uses a limited-memory modification of the BFGS quasi-Newton
+  method.
+
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
   have a computable finite value of \code{fn}.
@@ -86,6 +94,15 @@ optim(par, fn, gr = NULL,
     \item \code{type} for the conjugate-gradients method. Takes value
     \code{1} for the Fletcher--Reeves update, \code{2} for
     Polak--Ribiere and \code{3} for Beale--Sorenson.
+    \item \code{lmm} is an integer giving the number of BFGS updates
+    retained in the \code{"L-BFGS-B"} method, It defaults to \code{5}.
+    \item \code{factr} controls the convergence of the \code{"L-BFGS-B"}
+    method. Convergence occurs when the reduction in the objective is
+    within this factor of the machine tolerance. Default is \code{1e12},
+    that is a tolerance of about \code{1e-3}.
+    \item \code{pgtol} helps controls the convergence of the \code{"L-BFGS-B"}
+    method. It is a tolerance on the projected gradient in the current
+    search direction. This defaults to zero, when the check is suppressed.
   }
 }
 \value{
@@ -101,12 +118,20 @@ optim(par, fn, gr = NULL,
       \item \code{1} indicates that the iteration limit \code{maxit}
       had been reached.
       \item \code{10} indicates degeneracy of the Nelder--Mead simplex.
-    }
+    }      
   }
+  \item{message}{An character string giving any additional information
+    returned by the optimizer.}
   \item{hessian}{Only if argument \code{hessian} is true. A symmetric
-    matrix giving an estimate of the Hessian at the solution found.}
+    matrix giving an estimate of the Hessian at the solution found. Note
+    that this is the Hessian of the unconstrained problem even if the
+    box constraints are active.}
 }
 \references{
+  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
+  memory algorithm for bound constrained optimization.
+  \emph{SIAM J. Scientific Computing},  \bold{16},  1190--1208.
+
   Fletcher, R. and Reeves, C. M. (1964) Function minimization by
   conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
 
@@ -117,9 +142,13 @@ optim(par, fn, gr = NULL,
   minimization. \emph{Computer Journal} \bold{7}, 308--313.
 }
 \note{
-  The code was based originally on Pascal code in Nash (1990) that was
+  The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
+  \code{"CG"} was based originally on Pascal code in Nash (1990) that was
   translated by \code{p2c} and then hand-optimized. Dr Nash has agreed
   that the code can be make freely available.
+
+  The code for method \code{"L-BFGS-B"} is based on Fortran code by
+  Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib.
 }
 
 \seealso{\code{\link{nlm}}, \code{\link{optimize}}}
@@ -144,5 +173,11 @@ optim(c(-1.2,1), fr, NULL, "BFGS", hessian = TRUE)
 optim(c(-1.2,1), fr, grr, "CG")
 
 optim(c(-1.2,1), fr, grr, "CG", list(type=2))
+
+optim(c(-1.2,1), fr, grr, "L-BFGS-B")
+flb <- function(x)
+  sum(c(1, rep(4, length(x)-1))*(x - c(1, x[-length(x)])^2)^2)
+optim(rep(3, 25), flb, NULL, "L-BFGS-B", lower=rep(2, 25), upper=rep(4, 25))
+
 }
 \keyword{nonlinear}

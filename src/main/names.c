@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -668,7 +668,7 @@ FUNTAB R_FunTab[] =
 {"nlm",		do_nlm,		0,	11,	11,	PP_FUNCALL},
 {"fmin",	do_fmin,	0,	11,	4,	PP_FUNCALL},
 {"zeroin",	do_zeroin,	0,	11,	5,	PP_FUNCALL},
-{"optim",	do_optim,	0,	11,	5,	PP_FUNCALL},
+{"optim",	do_optim,	0,	11,	7,	PP_FUNCALL},
 {"optimhess",	do_optimhess,	0,	11,	4,	PP_FUNCALL},
 {"terms.formula",do_termsform,	0,	11,	5,	PP_FUNCALL},
 {"update.formula",do_updateform,0,	11,	2,	PP_FUNCALL},
