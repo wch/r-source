@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-15, @value{FAQ-YEAR}-11-12
+@set FAQ-VERSION 1.8-16, @value{FAQ-YEAR}-11-13
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2184,6 +2184,8 @@ Representations, conversions and display of orientation SO(3) data.
 Functions for plotting Australia's coastline and state boundaries.
 @item pamr
 Pam: Prediction Analysis for Microarrays.
+@item pan
+Multiple imputation for multivariate panel or clustered data.
 @item panel
 Functions and datasets for fitting models to Panel data.
 @item pastecs
