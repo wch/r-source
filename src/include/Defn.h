@@ -36,8 +36,6 @@
 # define USE_RINTERNALS
 #endif
 
-#include "config.h"
-
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #include "Internal.h"		/* do_FOO */
@@ -54,7 +52,7 @@
 #ifdef Win32
 #define PLOTHISTORY
 void R_ProcessEvents(void);
-#endif
+#endif /* Win32 */
 
 #ifdef Win32
 # include <psignal.h>
@@ -765,17 +763,17 @@ int yywrap(void);
 
 /* Macros for suspending interrupts */
 #ifdef HAVE_POSIX_SETJMP
-#define BEGIN_SUSPEND_INTERRUPTS do { \
+# define BEGIN_SUSPEND_INTERRUPTS do { \
     sigset_t mask, omask; \
     sigemptyset(&mask); \
     sigaddset(&mask,SIGINT); \
     sigprocmask(SIG_BLOCK, &mask, &omask);
-#define END_SUSPEND_INTERRUPTS sigprocmask(SIG_SETMASK, &omask, &mask); \
+# define END_SUSPEND_INTERRUPTS sigprocmask(SIG_SETMASK, &omask, &mask); \
     } while(0)
 #else
-#define BEGIN_SUSPEND_INTERRUPTS do {
-#define END_SUSPEND_INTERRUPTS } while (0)
-#endif
+# define BEGIN_SUSPEND_INTERRUPTS do {
+# define END_SUSPEND_INTERRUPTS } while (0)
+#endif /* HAVE_POSIX_SETJMP */
 
 #endif /* DEFN_H_ */
 /*
