@@ -22,7 +22,6 @@
 #endif
 
 #include <Defn.h>
-/* #include <Rdynpriv.h> */
 
 #include "Runix.h"
 #include <sys/types.h>
@@ -30,54 +29,14 @@
 # include <sys/stat.h>
 #endif
 
-/*
-#ifndef HAVE_NO_SYMBOL_UNDERSCORE
-# ifdef HAVE_ELF_H
-#  define HAVE_NO_SYMBOL_UNDERSCORE
-# endif
-#endif
 
-#ifdef __APPLE_CC__
-# include "dlfcn-darwin.h"
-# define HAVE_DYNAMIC_LOADING
-#else
-#ifdef __hpux
-# ifdef HAVE_DL_H
-#  include "hpdlfcn.h"
-#  define HAVE_DYNAMIC_LOADING
-# endif
-#else
-# ifdef HAVE_DLFCN_H
-#  include <dlfcn.h>
-#  define HAVE_DYNAMIC_LOADING
-# endif
-#endif
-#endif
-*/
+#if defined(HAVE_AQUA)
 
-#if defined(HAVE_AQUA) /* && defined(HAVE_DYNAMIC_LOADING) */
-#define __DEBUGGING__
-
-/* #include <R_ext/eventloop.h>
 #include <Rdevices.h>
-#include <R_ext/GraphicsDevice.h> */
+#include <R_ext/GraphicsDevice.h> 
  
-#include <Carbon/Carbon.h>
 extern Rboolean useaqua; /* from src/unix/system.c */
 
-
-/*
-static DL_FUNC Rdlsym(void *handle, char const *name)
-{
-    char buf[MAXIDSIZE+1];
-#ifdef HAVE_NO_SYMBOL_UNDERSCORE
-    sprintf(buf, "%s", name);
-#else
-    sprintf(buf, "_%s", name);
-#endif
-    return (DL_FUNC) dlsym(handle, buf);
-}
-*/
 
 extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
     ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, 
@@ -86,10 +45,9 @@ extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole,
     ptr_R_Busy;
 
 
-DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_FocusOnConsole, 
+DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
     ptr_Raqua_Edit, ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
-    ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, 
-    ptr_InitAquaIO, ptr_RSetConsoleWidth;
+    ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser;
 
 DL_FUNC ptr_R_ProcessEvents, ptr_CocoaInnerQuartzDevice, 
     ptr_CocoaGetQuartzParameters, ptr_CocoaSystem;
