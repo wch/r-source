@@ -651,9 +651,7 @@ deviance.glm <- function(x) x$deviance
 effects.glm <- function(x) x$effects
 fitted.glm<- function(x) x$fitted.values
 
-family.glm <- function(x) {
-  get(as.character(x$family$family), mode="function")()
-}
+family.glm <- function(object, ...) object$family
 
 residuals.glm <- function(x, type="deviance")
 {
@@ -674,28 +672,29 @@ residuals.glm <- function(x, type="deviance")
 		)
 }
 
-update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
-			offset, family, x)
-{
-	call <- glm.obj$call
-	if (!missing(formula))
-	  call$formula <- update.formula(call$formula, formula)
-	if (!missing(data))	call$data <- substitute(data)
-	if (!missing(subset))	call$subset <- substitute(subset)
-	if (!missing(na.action))call$na.action <- substitute(na.action)
-	if (!missing(weights))	call$weights <- substitute(weights)
-	if (!missing(offset))	call$offset <- substitute(offset)
-	if (!missing(family))	call$family <- substitute(family)
-	if (!missing(x))	call$x <- substitute(x)
-##	notparent <- c("NextMethod", "update", methods(update))
-##	for (i in 1:(1+sys.parent())) {
-##		parent <- sys.call(-i)[[1]]
-##		if (is.null(parent))
-##		break
-##	if (is.na(match(as.character(parent), notparent)))
-##			break
-##	}
-##	eval(call, sys.frame(-i))
-	eval(call, sys.frame(sys.parent()))
-}
-
+## Commented by KH on 1998/06/22
+## update.default() should be more general now ...
+##update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
+##			offset, family, x)
+##{
+##	call <- glm.obj$call
+##	if (!missing(formula))
+##	  call$formula <- update.formula(call$formula, formula)
+##	if (!missing(data))	call$data <- substitute(data)
+##	if (!missing(subset))	call$subset <- substitute(subset)
+##	if (!missing(na.action))call$na.action <- substitute(na.action)
+##	if (!missing(weights))	call$weights <- substitute(weights)
+##	if (!missing(offset))	call$offset <- substitute(offset)
+##	if (!missing(family))	call$family <- substitute(family)
+##	if (!missing(x))	call$x <- substitute(x)
+####	notparent <- c("NextMethod", "update", methods(update))
+####	for (i in 1:(1+sys.parent())) {
+####		parent <- sys.call(-i)[[1]]
+####		if (is.null(parent))
+####		break
+####	if (is.na(match(as.character(parent), notparent)))
+####			break
+####	}
+####	eval(call, sys.frame(-i))
+##	eval(call, sys.frame(sys.parent()))
+##}

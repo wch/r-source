@@ -25,7 +25,7 @@ contr.poly <- function (n, contrasts = TRUE)
   contr <- make.poly(n)
   if (contrasts) {
     dn <- dimnames(contr)[[2]]
-    dn[2:min(3,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]
+    dn[2:min(4,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]
     dimnames(contr)[[2]] <- dn
     contr[, -1, drop = FALSE]
   }

@@ -1,4 +1,4 @@
-family <- function(x, ...) UseMethod("family")
+family <- function(object, ...) UseMethod("family")
 
 print.family <- function(x, ...)
 {

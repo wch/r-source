@@ -353,7 +353,7 @@ weights.lm <- function(x) x$weights
 df.residual.lm <- function(x) x$df.residual
 deviance.lm <- function(x) sum((x$residuals)^2)
 formula.lm <- function(x) formula(x$terms)
-family.lm <- function(x) { gaussian() }
+family.lm <- function(object, ...) { gaussian() }
 
 model.frame.lm <-
 function(formula, data, na.action, ...) {

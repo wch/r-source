@@ -44,7 +44,7 @@ function(x, intercept = F, tol = .Machine$double.eps^0.5, ...)
   cat("\nTerms:\n")
   if(nterms == 0) {
     # empty model
-    print(matrix(0, 1, 2, list("<empty>", c("Sum of Squares", 
+    print(matrix(0, 1, 2, dimnames=list("<empty>", c("Sum of Squares", 
                                             "Deg. of Freedom"))))
     return(invisible(x))
   }
