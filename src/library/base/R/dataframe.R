@@ -616,13 +616,13 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	seq(from = nrow + 1, length = ni)
       else ri
     }
-  n <- nargs()
+  allargs <- list(...)
+  n <- length(allargs)
   if(n == 0)
     return(structure(list(), class = "data.frame", row.names = character()))
-  all <- list(...)
-  nms <- names(all)
+  nms <- names(allargs)
   if(is.null(nms))
-    nms <- character(length(all))
+    nms <- character(length(allargs))
   cl <- NULL
   perm <- rows <- rlabs <- vector("list", n)
   nrow <- 0
@@ -630,7 +630,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
   all.levs <- list()
   for(i in 1:n) {
     ## check the arguments, develop row and column labels
-    xi <- all[[i]]
+    xi <- allargs[[i]]
     nmi <- nms[i]
     if(inherits(xi, "data.frame")) {
       if(is.null(cl))
@@ -639,7 +639,11 @@ rbind.data.frame <- function(..., deparse.level = 1)
       ni <- length(ri)
       if(is.null(clabs))
 	clabs <- names(xi)
-      else perm[[i]] <- pi <- match.names(clabs, names(xi))
+      else {
+	pi <- match.names(clabs, names(xi))
+	if( !is.null(pi) )
+		perm[[i]] <- pi
+      }
       rows[[i]] <- nii <- seq(from = nrow + 1, length = ni)
       rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
       nrow <- nrow + ni
@@ -650,7 +654,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	has.dim <- logical(nvar)
 	for(j in 1:nvar) {
 	  xj <- value[[j]]
-	  all.levs[[j]] <- levels(xj)
+	  if( !is.null(levels(xj)) )
+	  	all.levs[[j]] <- levels(xj)
 	  has.dim[j] <- length(dim(xj)) == 2
 	}
       }
@@ -673,7 +678,11 @@ rbind.data.frame <- function(..., deparse.level = 1)
       if(length(nmi <- names(xi)) > 0) {
 	if(is.null(clabs))
 	  clabs <- nmi
-	else perm[[i]] <- match.names(clabs, nmi)
+	else {
+	  tmp<-match.names(clabs, nmi)
+	  if( !is.null(tmp) )
+	  	perm[[i]] <- tmp
+        }
       }
     }
     else if(length(xi) > 0) {
@@ -683,7 +692,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
   }
   nvar <- length(clabs)
   if(nvar == 0)
-    nvar <- max(sapply(all, length))	# only vector args
+    nvar <- max(sapply(allargs, length))	# only vector args
   if(nvar == 0)
     return(structure(list(), class = "data.frame",
 		     row.names = character()))
@@ -710,7 +719,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
       }
   }
   for(i in 1:n) {
-    xi <- unclass(all[[i]])
+    xi <- unclass(allargs[[i]])
     if(!is.list(xi))
       if(length(xi) != nvar)
 	xi <- rep(xi, length = nvar)
