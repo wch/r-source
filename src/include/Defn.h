@@ -330,6 +330,7 @@ extern int	R_PPStackSize;		/* The stack size (elements) */
 extern int	R_PPStackTop;		/* The top of the stack */
 extern SEXP*	R_PPStack;		/* The pointer protection stack */
 		/* Evaluation Environment */
+extern SEXP	R_Call;			/* The current call */
 extern SEXP	R_GlobalEnv;		/* The "global" environment */
 extern SEXP	R_CurrentExpr;		/* Currently evaluating expression */
 extern SEXP	R_ReturnedValue;	/* Slot for return-ing values */
