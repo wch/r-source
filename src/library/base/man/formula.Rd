@@ -6,6 +6,7 @@ formula(object)
 formula.default(anything)
 formula.formula(formula.obj)
 formula.terms(terms.obj)
+formula.data.frame(df)
 as.formula(object)
 }
 \alias{~}
@@ -13,6 +14,7 @@ as.formula(object)
 \alias{formula.default}
 \alias{formula.formula}
 \alias{formula.terms}
+\alias{formula.data.frame}
 \alias{as.formula}
 \alias{print.formula}
 \description{
