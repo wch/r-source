@@ -101,7 +101,8 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
-    if (!re_pcre) errorcall(call, "invalid regular expression");
+    if (!re_pcre) errorcall(call, "invalid regular expression '%s'", 
+			    CHAR(STRING_ELT(pat, 0)));
 
     n = length(vec);
     ind = allocVector(LGLSXP, n);
@@ -154,7 +155,7 @@ static int length_adj(char *repl, int *ovec, int nsubexpr)
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
 		if (k > nsubexpr)
-		    error("invalid backreference in regular expression");
+		    error("invalid backreference %d in regular expression", k);
 		n += (ovec[2*k+1] - ovec[2*k]) - 2;
 		p++;
 	    }
@@ -233,7 +234,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
-    if (!re_pcre) errorcall(call, "invalid regular expression");
+    if (!re_pcre) errorcall(call, "invalid regular expression '%s'",
+			    CHAR(STRING_ELT(pat, 0)));
     re_nsub = pcre_info(re_pcre, NULL, NULL);
     re_pe = pcre_study(re_pcre, 0, &errorptr);
 
@@ -333,7 +335,8 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, 
 			   &errorptr, &erroffset, tables);
-    if (!re_pcre) errorcall(call, "invalid regular expression");
+    if (!re_pcre) errorcall(call, "invalid regular expression '%s'",
+			    CHAR(STRING_ELT(pat, 0)));
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
