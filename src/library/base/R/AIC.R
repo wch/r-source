@@ -1,5 +1,5 @@
 #### Return the object's value of the Akaike Information Criterion
-#### (or "A Inf.. Crit..")
+#### (or "An Inf.. Crit..")
 
 AIC <- function(object, ..., k = 2) UseMethod("AIC")
 
@@ -24,6 +24,3 @@ AIC.default <- function(object, ..., k = 2)
 	val
     } else AIC(logLik(object), k = k)
 }
-
-
-AIC.lm <- AIC.default## currently (2001-09-18) needed for  library(nlme)
