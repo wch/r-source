@@ -32,7 +32,6 @@ static unsigned int BoxColor;
 static unsigned int TextColor;
 static double BaseCex = 1;
 static int MetricUnit = INCHES;
-static double HalfPi  = 1.57079632679489661922;
 
 /* Font Definitions */
 
@@ -44,7 +43,7 @@ typedef enum {
     SymbolFont     = 5,
 } FontType;
 
-/* 
+/*
  *  Italic Correction Factor
  *
  *  The correction for a character is computed as ItalicFactor
@@ -200,7 +199,7 @@ static double MuSpace()
     double height, depth, width;
     static double OneEighteenth = 0.05555555555555555555;
     GMetricInfo('M', &height, &depth, &width, MetricUnit, MathDevice);
-    return OneEighteenth * width;    
+    return OneEighteenth * width;
 }
 
 
@@ -326,7 +325,7 @@ static STYLE GetStyle()
 
 static void SetStyle(STYLE newstyle)
 {
-    switch (newstyle) {	
+    switch (newstyle) {
     case STYLE_D:
     case STYLE_T:
     case STYLE_D1:
@@ -1313,7 +1312,7 @@ static BBOX RenderBin(SEXP expr, int draw)
 	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
 	}
 	else {
-	    gap = (CurrentStyle > STYLE_S) ? MediumSpace() : 0;	    
+	    gap = (CurrentStyle > STYLE_S) ? MediumSpace() : 0;
 	    bbox = RenderElement(CADR(expr), draw);
 	    bbox = RenderItalicCorr(bbox, draw);
 	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
@@ -1586,7 +1585,7 @@ AccentTable[] = {
     "tilde",         126,
     NULL,              0,
 };
-    
+
 static int AccentCode(SEXP expr)
 {
     int i;
@@ -1901,7 +1900,7 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	break;
     case '{':
 	top = 236; ext = 239; bot = 238; mid = 237;
-	break;	
+	break;
     case '}':
 	top = 252; ext = 239; bot = 254; mid = 253;
 	break;
@@ -1937,7 +1936,7 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	    MoveTo(savedX, savedY + topShift);
 	    RenderSymbolChar(top, draw);
 	    MoveTo(savedX, savedY + midShift);
-	    RenderSymbolChar(mid, draw);	    
+	    RenderSymbolChar(mid, draw);
 	    MoveTo(savedX, savedY - botShift);
 	    RenderSymbolChar(bot, draw);
 	    MoveTo(savedX + bboxWidth(ansBBox), savedY);
@@ -1964,7 +1963,7 @@ static BBOX RenderDelim(int which, double dist, int draw)
 		}
 	    }
 	    MoveTo(savedX + bboxWidth(ansBBox), savedY);
-	    
+
 	}
     }
     SetFont(prev);
@@ -2399,7 +2398,7 @@ static BBOX RenderCurly(SEXP expr, int draw)
                                 /* Binary Relationships */
 
 SymTab RelTable[] = {
-    "<",                 60,    /* less */  
+    "<",                 60,    /* less */
     "==",                61,    /* equal */
     ">",                 62,    /* greater */
     "%=~%",              64,    /* congruent */
@@ -2448,7 +2447,7 @@ static BBOX RenderRel(SEXP expr, int draw)
     double gap;
 
     if(nexpr == 3) {
-	gap = (CurrentStyle > STYLE_S) ? ThickSpace() : 0;	    
+	gap = (CurrentStyle > STYLE_S) ? ThickSpace() : 0;
 	bbox = RenderElement(CADR(expr), draw);
 	bbox = RenderItalicCorr(bbox, draw);
 	bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
@@ -2563,13 +2562,13 @@ static BBOX RenderStyle(SEXP expr, int draw)
 {
     STYLE prevstyle = GetStyle();
     BBOX bbox;
-    if (NameMatch(CAR(expr), "displaystyle"))	
+    if (NameMatch(CAR(expr), "displaystyle"))
 	SetStyle(STYLE_D);
-    else if (NameMatch(CAR(expr), "textstyle"))	
+    else if (NameMatch(CAR(expr), "textstyle"))
 	SetStyle(STYLE_T);
-    else if (NameMatch(CAR(expr), "scriptstyle"))	
+    else if (NameMatch(CAR(expr), "scriptstyle"))
 	SetStyle(STYLE_S);
-    else if (NameMatch(CAR(expr), "scriptscriptstyle"))	
+    else if (NameMatch(CAR(expr), "scriptscriptstyle"))
 	SetStyle(STYLE_SS);
     bbox = RenderElement(CADR(expr), draw);
     SetStyle(prevstyle);
@@ -2862,8 +2861,9 @@ void GMathText(double x, double y, int coords, SEXP expr,
     else
 	CurrentY = ReferenceY;
     CurrentAngle = rot;
-    CosAngle = cos(rot / 90 * HalfPi);
-    SinAngle = sin(rot / 90 * HalfPi);
+    rot = rot / 90 * M_PI_half;/* radians */
+    CosAngle = cos(rot);
+    SinAngle = sin(rot);
     RenderElement(expr, 1);
 }
 
