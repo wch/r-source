@@ -55,6 +55,7 @@ lsf.str(pos = 1, pattern, \dots)
   \item{nest.lev}{current nesting level in the recursive calls to
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
+  \item{\dots}{potential further arguments (required for Method/Generic reasons).}
 }
 \value{
   \code{str} does not return anything, for efficiency reasons.
@@ -89,7 +90,7 @@ str(longch, nchar.max = 52)
 
 lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list")#- what are the structured objects I have defined?
-## which base functions have "file" in their name ?  
+## which base functions have "file" in their name ?
 lsf.str(pos = length(search()), pattern = "file")
 \testonly{
  ##-- Some "crazy" objects
