@@ -26,14 +26,18 @@
 
 static void jump_now();
 
-static int inError = 0;
+/* 
+Different values of inError are used to indicate different places
+in the error handling.
+*/
+static int inError = 0; 
 static int inWarning = 0;
 
 /* Interface / Calling Hierarchy :
 
-  R__stop()   -> do_error .    errorcall \-/->--->----------------\
-			  \	          X                        \
-			   \-> error ->--/-\-->-- jump_to_toplevel --> jump_now
+  R__stop()   -> do_error ->   errorcall --> jump_to_toplevel --> jump_now
+			 /  
+		    error  
 
   R__warning()-> do_warning   -> warningcall -> if(warn >= 2) errorcall
 			     /
@@ -85,7 +89,7 @@ void warningcall(SEXP call, char *format, ...)
         cptr = R_GlobalContext;
         while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
             cptr = cptr->nextcontext;
-        eval(s, cptr->cloenv);
+	eval(s, cptr->cloenv);
         return;
     }
 
@@ -186,25 +190,23 @@ void PrintWarnings(void)
 
 void errorcall(SEXP call, char *format,...)
 {
-    char buf[BUFSIZE], *p;
+    char buf[BUFSIZE], *p, *dcall;
+    
     va_list(ap);
-    char *dcall;
-    if (inError )
+
+    if ( inError ) {
+	if( inError == 3 )
+	    REprintf("Error during wrapup \n");
 	jump_now();
-#ifdef FOO
-    RCNTXT *cptr;
-    cptr = R_GlobalContext;
-    while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
-        cptr = cptr->nextcontext;
-    if( cptr->callflag & CTXT_FUNCTION )
-        do_browser(cptr->call, R_NilValue, R_NilValue, cptr->cloenv);
-#endif
+    }
+
     if(call != R_NilValue ) {
         dcall = CHAR(STRING(deparse1(call, 0))[0]);
         sprintf(buf, "Error in %s : ", dcall);
     }
     else
 	sprintf(buf, "Error: ");
+
     p = buf + strlen(buf);
     va_start(ap, format);
     vsprintf(p, format, ap);
@@ -218,33 +220,14 @@ void errorcall(SEXP call, char *format,...)
 void error(const char *format, ...)
 {
     char buf[BUFSIZE], *p;
-#ifdef NEWERROR
-    char *dcall;
-#endif
+
     va_list(ap);
-    if (inError)
-	jump_now();
-#ifdef NEWERROR
-/* This must be improved: otherwise gives
-   messages like
-   `` Error in stop("FOO and BAR") : FOO and BAR ''
-*/
-    if (R_GlobalContext->call == R_NilValue)
-	dcall = CHAR(STRING(deparse1(R_CurrentExpr, 0))[0]);
-    else
-	dcall = CHAR(STRING(deparse1(R_GlobalContext->call, 0))[0]);
-    sprintf(buf, "Error in %s : ", dcall);
-#else
-    sprintf(buf, "Error: ");
-#endif
-    p = buf + strlen(buf);
     va_start(ap, format);
-    vsprintf(p, format, ap);
+    vsprintf(buf, format, ap);
     va_end(ap);
     p = buf + strlen(buf) - 1;
     if(*p != '\n') strcat(buf, "\n");
-    REprintf("%s", buf);
-    jump_to_toplevel();
+    errorcall(R_GlobalContext->call, buf);
 }
 
 /* Unwind the call stack in an orderly fashion */
@@ -267,6 +250,22 @@ void jump_to_toplevel()
 	PrintWarnings();
 	inError = 1;
     }
+
+    /*now see if options("error") is set */
+    s = GetOption(install("error"), R_NilValue);
+    if( s != R_NilValue ) {
+	if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
+	    REprintf("invalid option \"error\"\n");
+	else {
+	    c = R_GlobalContext;
+	    while ( !(c->callflag & CTXT_FUNCTION) && c->callflag )
+		c = c->nextcontext;
+	    inError = 3;
+	    eval(s, c->cloenv);
+	    inError = 1;
+	}
+    }
+
     if (R_Inputfile != NULL)
 	fclose(R_Inputfile);
     R_ResetConsole();
@@ -344,14 +343,18 @@ void isintrpt()
 
 void do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-/*=== SHOULD call errorcall() in the same way
- *===  that  do_warning uses warningcall()
-*/
-    CAR(args) = coerceVector(CAR(args), STRSXP);
-    if (length(CAR(args)) <= 0)
-	error("");
+    RCNTXT *cptr;
+
+    cptr = R_GlobalContext->nextcontext;
+    while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
+        cptr = cptr->nextcontext;
+
+    if (CAR(args) != R_NilValue) {
+      CAR(args) = coerceVector(CAR(args), STRSXP);
+      errorcall(cptr->call, "%s", CHAR(STRING(CAR(args))[0]));
+    }
     else
-	error("%s", CHAR(STRING(CAR(args))[0]));
+      errorcall(cptr->call, "");
     /*NOTREACHED*/
 }
 
@@ -367,7 +370,7 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warningcall(cptr->call,"%s", CHAR(STRING(CAR(args))[0]));
     }
     else
-	warningcall(cptr->call,"%s", "");
+	warningcall(cptr->call,"");
     return CAR(args);
 }
 

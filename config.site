@@ -46,7 +46,7 @@
 # Use this to specify CFLAGS for the version of the C compiler specified
 # above.  If unspecified, defaults to "-g -O2" for gcc, and "-g" in all
 # other cases.
-# CFLAGS=
+CFLAGS="-g -O2 -Wall"
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
