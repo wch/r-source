@@ -33,8 +33,9 @@ x$name
   \item{i, j, \dots, name}{elements to extract or replace. \code{i, j} are
     \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.\\
-    \emph{For \code{[}-indexing only:} \code{i, j, \dots} can be
+    integer as by \code{\link{as.integer}}.
+    
+    For \code{[}-indexing only: \code{i, j, \dots} can be
     logical vectors, indicating elements/slices to select. Such vectors
     are recycled if necessary to match the corresponding extent. When
     indexing arrays, \code{i} can be a (single) matrix with as many
