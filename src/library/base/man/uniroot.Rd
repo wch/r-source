@@ -1,5 +1,5 @@
 \name{uniroot}
-\title{One Dimensional Root Finding}
+\title{One Dimensional Root (Zero) Finding}
 \usage{
 uniroot(f, interval, lower = min(interval), upper = max(interval),
         tol = .Machine$double.eps^0.25, maxiter = 1000, \dots)
@@ -17,8 +17,8 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
 }
 \description{
   The function \code{uniroot} searches the interval from \code{lower}
-  to \code{upper} for a zero of the function \code{f} with respect to
-  its first argument.
+  to \code{upper} for a root (i.e. zero) of the function \code{f} with
+  respect to its first argument.
 }
 \details{
   Either \code{interval} or both \code{lower} and \code{upper} must be
