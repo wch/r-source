@@ -34,9 +34,9 @@ The auxiliary function \code{ps.options} can be used to set and view
 (if called without arguments)
 default values for the arguments to \code{postscript}.
 
-The postscript produced by \R is  EPS (\emph{Encapsulated PostScript})
+The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
 compatible, and can be included into other documents, e.g. into LaTeX, using
-\code{\\epffig{\emph{file}}}.
+\code{\\epsfig{file=<filename>}}.
 }
 \seealso{
 \code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.
