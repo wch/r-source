@@ -1680,43 +1680,43 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	PROTECT(x); nprotect++;
     }
 	/* try to dispatch on the object */
-    if( isObject(x)) {
+    if( isObject(x) ) {
 	char *pt;
-      /* try for formal method */
-      if(R_has_methods(op)) {
-	SEXP value, argValue;
-	/* create a promise to pass down to applyClosure  */
-	if(!argsevald) {
-	    argValue = promiseArgs(args, rho);
-	    SET_PRVALUE(CAR(argValue), x);
+	/* try for formal method */
+	if(R_has_methods(op)) {
+	    SEXP value, argValue;
+	    /* create a promise to pass down to applyClosure  */
+	    if(!argsevald) {
+		argValue = promiseArgs(args, rho);
+		SET_PRVALUE(CAR(argValue), x);
+	    }
+	    else
+		argValue = args;
+	    PROTECT(argValue); nprotect++;
+	    value = R_possible_dispatch(call, op, argValue, rho);
+	    if(value) {
+		*ans = value;
+		UNPROTECT(nprotect);
+		return 1;
+	    }
+	    else {
+		/* go on, with the evaluated args.  Not guaranteed to have
+		   the same semantics as if the arguments were not
+		   evaluated, in special cases (e.g., arg values that are
+		   LANGSXP).
+		   The use of the promiseArgs is supposed to prevent
+		   multiple evaluation after the call to possible_dispatch.
+		*/
+		if (dots)
+		    argValue = EvalArgs(argValue, rho, dropmissing);
+		else {
+		    argValue = CONS(x, EvalArgs(CDR(argValue), rho, dropmissing));
+		    SET_TAG(argValue, CreateTag(TAG(args)));
+		}
+		PROTECT(args = argValue); nprotect++;
+		argsevald = 1;
+	    }
 	}
-	else
-	  argValue = args;
-	PROTECT(argValue); nprotect++;
-	value = R_possible_dispatch(call, op, argValue, rho);
-	if(value) {
-	  *ans = value;
-	  UNPROTECT(nprotect);
-	  return 1;
-	}
-	else {
-	  /* go on, with the evaluated args.  Not guaranteed to have
-	     the same semantics as if the arguments were not
-	     evaluated, in special cases (e.g., arg values that are
-	     LANGSXP).
-	     The use of the promiseArgs is supposed to prevent
-	     multiple evaluation after the call to possible_dispatch.
-	  */
-	  if (dots)
-	    argValue = EvalArgs(argValue, rho, dropmissing);
-	  else {
-	    argValue = CONS(x, EvalArgs(CDR(argValue), rho, dropmissing));
-	    SET_TAG(argValue, CreateTag(TAG(args)));
-	  }
-	  PROTECT(args = argValue); nprotect++;
-	  argsevald = 1;
-	}
-      }
 	if (TYPEOF(CAR(call)) == SYMSXP)
 	    pt = strrchr(CHAR(PRINTNAME(CAR(call))), '.');
 	else
