@@ -12,7 +12,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
         tmpDir <- tempfile(, lib)
-        dir.create(tmpDir)
+        if (!dir.create(tmpDir)) stop('Unable to create temp directory ',tmpDir)
         cDir <- getwd()
         on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
@@ -100,7 +100,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     if(!localcran) {
         if (is.null(destdir)) {
             tmpd <- tempfile("Rinstdir")
-            dir.create(tmpd)
+            if (!dir.create(tmpd)) stop('Unable to create temp directory ',tmpd)
         } else tmpd <- destdir
     }
 
