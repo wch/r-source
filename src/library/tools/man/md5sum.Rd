@@ -23,7 +23,7 @@ md5sum(files)
   \code{\link{checkMD5sums}}
 }
 \examples{
-md5sum(dir())
+md5sum(dir(R.home(), pattern="^COPY", full.names=TRUE))
 }
 \keyword{utilities}
 
