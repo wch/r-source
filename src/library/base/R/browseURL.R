@@ -4,10 +4,13 @@ browseURL <- function(url, browser = getOption("browser")) {
     if(!is.character(browser)
        || !(length(browser) == 1)
        || (nchar(browser) == 0))
-        stop("browser must be a nonempty character string")
+        stop("browser must be a non-empty character string")
+    switch(.Platform$OS.type,
+           "windows" = return(shell.exec(url)),
+           "mac" = stop("don't know how to browse URLs on the Mac"))
     remoteCmd <-
         switch(basename(browser),
-               "netscape" =, "mozilla" = {
+               "netscape" =, "mozilla" =, "opera" =, {
                    paste("-remote \"openURL(",
                          ## Quote ',' and ')' ...
                          gsub("([,)])", "%\\1", url), ")\"",
