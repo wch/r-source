@@ -1804,10 +1804,10 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ## ------
 ## Try finding zlib library and headers.
 ## We check that both are installed, and that the header >= 1.1.3
-## and that gzopen is in the library (which suggests the library
+## and that gzeof is in the library (which suggests the library
 ## is also recent enough).
 AC_DEFUN([R_ZLIB],
-[AC_CHECK_LIB(z, gzopen, [have_zlib=yes], [have_zlib=no])
+[AC_CHECK_LIB(z, gzeof, [have_zlib=yes], [have_zlib=no])
 if test "${have_zlib}" = yes; then
   AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
 fi
