@@ -29,6 +29,10 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #ifdef __APPLE_CC__
 
 
@@ -867,4 +871,4 @@ to darwin-development AT lists DOT apple DOT com and slightly modified
 	return 1;
 }
 
-#endif __APPLE_CC__
+#endif /* __APPLE_CC__ */
