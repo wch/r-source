@@ -767,9 +767,7 @@ void *R_chk_realloc(void *ptr, size_t size)
 }
 void R_chk_free(void *ptr)
 {
-    if(!ptr) warning("attempt to free NULL pointer by Free");
-    free(ptr);
-    ptr = NULL;  /* Berwin Turlach reports S does this */
+    if(!ptr) free(ptr);
 }
 
 /* This code keeps a list of objects which are not assigned to variables

@@ -104,7 +104,8 @@
 
 #define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
-#define Free(p)        R_chk_free( (void *)(p) )
+/* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
+#define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
 /* S Like Fortran Interface */

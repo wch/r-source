@@ -6,6 +6,9 @@
 
 NEW FEATURES
 
+    o  	S.h now contains (via Rdefines.h) a MESSAGE macro, and 
+	Free NULLs the pointer, for compatibility with S3 (but not S4).
+
     o  	gc() now reports the total sizes in Mb as well as numbers.
 
     o   NULL extra arguments to model.frame() are now treated as missing
