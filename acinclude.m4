@@ -1229,6 +1229,30 @@ if test "x${r_cv_func_finite_works}" = xyes; then
 fi
 ])# R_FUNC_FINITE
 
+## R_FUNC_ISFINITE
+## ---------------
+AC_DEFUN([R_FUNC_ISFINITE],
+[AC_CACHE_CHECK([for working isfinite], [r_cv_func_isfinite_works],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <math.h>
+#include "confdefs.h"
+int main () {
+#ifdef HAVE_ISFINITE
+  exit(isfinite(1./0.) | isfinite(0./0.) | isfinite(-1./0.));
+#else
+  exit(1);
+#endif
+}
+]])],
+               [r_cv_func_isfinite_works=yes],
+               [r_cv_func_isfinite_works=no],
+               [r_cv_func_isfinite_works=no])])
+if test "x${r_cv_func_isfinite_works}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_ISFINITE, 1,
+            [Define if isfinite() is correct for -Inf/NaN/Inf.])
+fi
+])# R_FUNC_ISFINITE
+
 ## R_FUNC_LOG
 ## ----------
 AC_DEFUN([R_FUNC_LOG],

@@ -1169,7 +1169,7 @@ AC_SUBST(LAPACK_LDFLAGS)
 
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
+  getgrgid getpwuid getuid hypot isascii isfinite isnan log1p matherr mkfifo \
   popen putenv rint setenv strcoll stat strptime symlink \
   system times unsetenv)
 ## <NOTE>
@@ -1214,7 +1214,12 @@ AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl])
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
+if test "${ac_cv_func_finite}" = "yes"; then
 R_FUNC_FINITE
+fi
+if test "${ac_cv_func_infinite}" = "yes"; then
+R_FUNC_ISFINITE
+fi
 R_FUNC_LOG
 R_FUNC_LOG1P
 R_FUNC_STRPTIME

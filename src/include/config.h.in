@@ -178,6 +178,9 @@
 /* Define to 1 if you have the `isascii' function. */
 #undef HAVE_ISASCII
 
+/* Define to 1 if you have the `isfinite' function. */
+#undef HAVE_ISFINITE
+
 /* Define to 1 if you have the `isnan' function. */
 #undef HAVE_ISNAN
 
@@ -386,6 +389,9 @@
 
 /* Define if finite() is correct for -Inf/NaN/Inf. */
 #undef HAVE_WORKING_FINITE
+
+/* Define if isfinite() is correct for -Inf/NaN/Inf. */
+#undef HAVE_WORKING_ISFINITE
 
 /* Define if log() is correct for 0/-1. */
 #undef HAVE_WORKING_LOG

@@ -29188,8 +29188,9 @@ fi
 
 
 
+
 for ac_func in access chdir expm1 fcntl finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
+  getgrgid getpwuid getuid hypot isascii isfinite isnan log1p matherr mkfifo \
   popen putenv rint setenv strcoll stat strptime symlink \
   system times unsetenv
 do
@@ -30794,6 +30795,7 @@ _ACEOF
 
 fi
 
+if test "${ac_cv_func_finite}" = "yes"; then
 echo "$as_me:$LINENO: checking for working finite" >&5
 echo $ECHO_N "checking for working finite... $ECHO_C" >&6
 if test "${r_cv_func_finite_works+set}" = set; then
@@ -30853,6 +30855,68 @@ _ACEOF
 
 fi
 
+fi
+if test "${ac_cv_func_infinite}" = "yes"; then
+echo "$as_me:$LINENO: checking for working isfinite" >&5
+echo $ECHO_N "checking for working isfinite... $ECHO_C" >&6
+if test "${r_cv_func_isfinite_works+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_func_isfinite_works=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <math.h>
+#include "confdefs.h"
+int main () {
+#ifdef HAVE_ISFINITE
+  exit(isfinite(1./0.) | isfinite(0./0.) | isfinite(-1./0.));
+#else
+  exit(1);
+#endif
+}
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_func_isfinite_works=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+r_cv_func_isfinite_works=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+fi
+echo "$as_me:$LINENO: result: $r_cv_func_isfinite_works" >&5
+echo "${ECHO_T}$r_cv_func_isfinite_works" >&6
+if test "x${r_cv_func_isfinite_works}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_WORKING_ISFINITE 1
+_ACEOF
+
+fi
+
+fi
 echo "$as_me:$LINENO: checking for working log" >&5
 echo $ECHO_N "checking for working log... $ECHO_C" >&6
 if test "${r_cv_func_log_works+set}" = set; then

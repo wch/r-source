@@ -96,6 +96,9 @@ INSTALLATION CHANGES
 	IEEE 754) standard is now required -- the partial and often
 	untested support for more limited arithmetic has been withdrawn.
 
+	The C99 macro isfinite is used in preference to finite if available
+	(and its correct functioning is checked at configure time).
+
     o	The dynamic libraries libR and libRlapack are now installed in
 	R_HOME/lib rather than R_HOME/bin.
 
