@@ -72,7 +72,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%j}}{Day of year as decimal number (001--366).}
     \item{\code{\%m}}{Month as decimal number (01--12).}
     \item{\code{\%M}}{Minute as decimal number (00--59).}
-    \item{\code{\%p}}{AM/PM indicator in the locale.}
+    \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
+      conjuction with \code{\%I} and \bold{not} with \code{\%H}.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds.}
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
