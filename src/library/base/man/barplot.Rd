@@ -73,9 +73,12 @@
     \code{names.arg} (see above), the
     other axis is drawn (with \code{lty=0}) and labeled.}
   \item{cex.axis}{expansion factor for numeric axis labels.}
-  \item{cex.names}{expansion factor for names.}
-  \item{inside}{logical.  If \code{TRUE}, the lines which  divide
-    adjacent bars will be drawn.}
+  \item{cex.names}{expansion factor for axis names (bar labels).}
+  \item{inside}{logical.  If \code{TRUE}, the lines which divide
+    adjacent (non-stacked!) bars will be drawn.  Only applies when
+    \code{space = 0} (which it partly is when \code{beside = TRUE}).}
+%MM: we still have "NotYetUsed" -- the above describe's S-plus 6.1 (not
+% precisely documented!) behavior!
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{axis.lty}{the graphics parameter \code{lty} applied to the axis
     and tick marks of the categorical (default horzontal) axis.  Note
@@ -144,8 +147,12 @@ mtext(side = 1, at = colMeans(mp), line = -2,
       text = paste("Mean", formatC(colMeans(hh))), col = "red")
 
 # Bar shading example
-barplot(VADeaths, angle = 15+10*1:5, density = 20, col = "black", 
+barplot(VADeaths, angle = 15+10*1:5, density = 20, col = "black",
         legend = rownames(VADeaths))
 title(main = list("Death Rates in Virginia", font = 4))
+
+# border :
+barplot(VADeaths, border = "dark blue", lwd = 2)
+%notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside=FALSE)")
 }
 \keyword{hplot}

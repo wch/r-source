@@ -18,6 +18,7 @@ NEW FEATURES
 	allows the pre-1.6.0 behaviour of plotting the axis and tick
 	marks for the categorical axis.	 (This was apparently not
 	intentional, but axis() used to ignore lty=0.)
+	The argument `border' is no longer ".NotYetUsed".
 
 
 BUG FIXES
@@ -79,10 +80,10 @@ BUG FIXES
 
     o	besselK(x,*) now returns 0 instead of Inf for large x. (PR#2179)
 
-    o   The Tcl console code didn't work with Tcl/TK 8.0, and has been 
-        #ifdef'd out.
+    o	The Tcl console code didn't work with Tcl/TK 8.0, and has been
+	#ifdef'd out.
 
-    o   format.AsIs was not handling matrices.
+    o	format.AsIs was not handling matrices.
 
 
 
