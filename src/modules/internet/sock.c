@@ -73,7 +73,7 @@ if defined(__MWERKS__) && defined(Macintosh)
 
 #define MAXBACKLOG 5
 
-#if !defined(Win32) && !defined(HAVE_BSD_NETWORKING)
+#ifndef HAVE_SOCKETS
 static char socket_msg[] = "sockets are not available on this system";
 #endif
 
@@ -121,7 +121,7 @@ int Sock_init()
 /* open a socket for listening */
 int Sock_open(Sock_port_t port, Sock_error_t perr)
 {
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
+#ifdef HAVE_SOCKETS 
     int sock;
     struct sockaddr_in server;
 
@@ -145,7 +145,7 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
 /* listen on a socket, return name of connecting host in cname */
 int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 {
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
+#ifdef HAVE_SOCKETS 
     struct sockaddr_in net_client;
     SOCKLEN_T len = sizeof(struct sockaddr);
     int retval;
@@ -180,7 +180,7 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 /* open and connect to a socket */
 int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 {
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
+#ifdef HAVE_SOCKETS 
     struct sockaddr_in server;
     struct hostent *hp;
     int sock;
@@ -230,7 +230,7 @@ int Sock_close(int fd, Sock_error_t perr)
 /* read from a socket */
 ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
 {
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
+#ifdef HAVE_SOCKETS 
     ssize_t retval;
     do
 	retval = recv(fd, buf, size, 0);
@@ -248,7 +248,7 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
 /* write to a socket */
 ssize_t Sock_write(int fd, const void *buf, size_t size, Sock_error_t perr)
 {
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
+#ifdef HAVE_SOCKETS 
     ssize_t retval;
     do
 	retval = send(fd, buf, size, 0);

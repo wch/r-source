@@ -77,6 +77,15 @@
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 
+/* Define if you have support for sockets. */
+#define HAVE_SOCKETS 1
+
+/* Define if you have support for ftp/http access. */
+#define HAVE_INTERNET 1
+
+/* Define if you provide support for libxml's ftp/http functions. */
+#define SUPPORT_LIBXML 1
+
 /* Define if your Fortran compiler appends an underscore to external
    names. */
 #define HAVE_F77_UNDERSCORE 1
@@ -382,10 +391,6 @@
 /* Windows-specific */
 #define PSIGNAL
 #define PLOTHISTORY
-
-#define HAVE_SOCKETS 1
-#define HAVE_INTERNET 1
-#define HAVE_LIBXML 1
 
 #define snprintf  _snprintf
 #define vsnprintf  _vsnprintf

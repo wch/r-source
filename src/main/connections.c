@@ -123,7 +123,7 @@ static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 }
 
 #define BUFSIZE 1000
-static int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
+int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
     int res, usedRalloc = FALSE;
@@ -1301,126 +1301,6 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- socket connections  --------------------- */
 
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
-static void sock_open(Rconnection con)
-{
-    Rsockconn this = (Rsockconn)con->private;
-    int sock, sock1;
-    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
-    char buf[256];
-
-    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
-    R_SockTimeout(timeout);
-    this->pend = this->pstart = this->inbuf;
-
-    if(this->server) {
-	sock1 = R_SockOpen(this->port);
-	if(sock1 < 0) error("port %d cannot be opened", this->port);
-	sock = R_SockListen(sock1, buf, 256);
-	if(sock < 0) error("problem in listening on this socket");
-	free(con->description);
-	con->description = (char *) malloc(strlen(buf) + 10);
-	sprintf(con->description, "<-%s:%d", buf, this->port);
-	R_SockClose(sock1);
-    } else {
-	sock = R_SockConnect(this->port, con->description);
-	if(sock < 0) error("%s:%d cannot be opened", con->description,
-			   this->port);
-	sprintf(buf, "->%s:%d", con->description, this->port);
-	strcpy(con->description, buf);
-    }
-    this->fd = sock;
-    
-    con->isopen = TRUE;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
-    else con->text = TRUE;
-    con->save = -1000;
-}
-
-static void sock_close(Rconnection con)
-{
-    Rsockconn this = (Rsockconn)con->private;
-    R_SockClose(this->fd);
-    con->isopen = FALSE;
-}
-
-static int sock_read_helper(Rconnection con, void *ptr, size_t size)
-{
-    Rsockconn this = (Rsockconn)con->private;
-    int res;
-
-    if(this->pstart == this->pend){
-	this->pstart = this->pend = this->inbuf;
-	res = R_SockRead(this->fd, this->inbuf, 4096, con->blocking);
-	/* Rprintf("socket read %d\n", res); */
-	con->incomplete = (-res == EAGAIN);
-	if(res <= 0) return res;
-	this->pend = this->inbuf + res;
-    } else res = this->pend - this->pstart;
-    if(size < res) res = size;
-    memcpy(ptr, this->pstart, res);
-    this->pstart += res;
-    return res;
-}
-
-
-static int sock_fgetc(Rconnection con)
-{
-    unsigned char c;
-    int n;
-  
-    n = sock_read_helper(con, (char *)&c, 1);
-    return (n == 1) ? con->encoding[c] : R_EOF;
-}
-
-static size_t sock_read(void *ptr, size_t size, size_t nitems,
-			Rconnection con)
-{
-    return sock_read_helper(con, ptr, size * nitems)/size;
-}
-
-static size_t sock_write(const void *ptr, size_t size, size_t nitems,
-			 Rconnection con)
-{
-    Rsockconn this = (Rsockconn)con->private;
-
-    return R_SockWrite(this->fd, ptr, size * nitems)/size;
-}
-
-static Rconnection newsock(char *host, int port, int server, char *mode)
-{
-    Rconnection new;
-
-    new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of file connection failed");
-    new->class = (char *) malloc(strlen("socket") + 1);
-    if(!new->class) {
-	free(new);
-	error("allocation of socket connection failed");
-    }
-    strcpy(new->class, "socket");
-    new->description = (char *) malloc(strlen(host) + 10);
-    if(!new->description) {
-	free(new->class); free(new);
-	error("allocation of socket connection failed");
-    }
-    init_con(new, host, mode);
-    new->open = &sock_open;
-    new->close = &sock_close;
-    new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &sock_fgetc;
-    new->read = &sock_read;
-    new->write = &sock_write;
-    new->private = (void *) malloc(sizeof(struct sockconn));
-    if(!new->private) {
-	free(new->description); free(new->class); free(new);
-	error("allocation of socket connection failed");
-    }
-    ((Rsockconn)new->private)-> port = port;
-    ((Rsockconn)new->private)-> server = server;
-    return new;
-}
-#endif
 
 /* socketConnection(host, port, server, blocking, open, encoding) */
 SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1431,7 +1311,7 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
+#ifdef HAVE_SOCKETS
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) != 1)
 	error("invalid `host' argument");
@@ -1459,7 +1339,7 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `enc' argument");
 
     ncon = NextConnection();
-    con = newsock(host, port, server, open);
+    con = R_newsock(host, port, server, open);
     Connections[ncon] = con;
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
@@ -2554,6 +2434,11 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+#if defined(USE_WININET_ASYNC) && !defined(USE_WININET)
+#define USE_WININET 2
+#endif
+
+
 /* url(description, open, encoding) */
 SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -2561,7 +2446,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     char *url, *open, *class2 = "url";
     int i, ncon, block;
     Rconnection con = NULL;
-#if defined(HAVE_LIBXML) || defined(USE_WININET)
+#ifdef HAVE_INTERNET
     UrlScheme type = HTTPsh; /* -Wall */
 #endif
 
@@ -2572,7 +2457,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(scmd) > 1)
 	warning("only first element of `description' argument used");
     url = CHAR(STRING_ELT(scmd, 0));
-#if defined(HAVE_LIBXML) || defined(USE_WININET)
+#ifdef HAVE_INTERNET
     if (strncmp(url, "http://", 7) == 0) {
 	type = HTTPsh;
     } else if (strncmp(url, "ftp://", 6) == 0) {
@@ -2595,7 +2480,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strncmp(url, "file://", 7) == 0) {
        con = newfile(url + 7, strlen(open) ? open : "r");
        class2 = "file";
-#if defined(HAVE_LIBXML) || defined(USE_WININET)
+#ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "ftp://", 6) == 0) {
        con = R_newurl(url, strlen(open) ? open : "r");

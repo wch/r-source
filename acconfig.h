@@ -25,6 +25,15 @@
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 
+/* Define if you have support for sockets. */
+#undef HAVE_SOCKETS
+
+/* Define if you have support for ftp/http access. */
+#undef HAVE_INTERNET
+
+/* Define if you provide support for libxml's ftp/http functions. */
+#undef SUPPORT_LIBXML
+
 /* Define if your Fortran compiler appends an underscore to external
    names. */
 #undef HAVE_F77_UNDERSCORE
@@ -118,13 +127,6 @@
 
 /* Type for socket lengths: socklen_t, sock_t, int? */
 #undef SOCKLEN_T
-
-/* Unix-specific equivalences */
-#ifdef HAVE_BSD_NETWORKING
-#define HAVE_SOCKETS 1
-#define HAVE_INTERNET 1
-#define HAVE_LIBXML 1
-#endif
 
 @BOTTOM@
 

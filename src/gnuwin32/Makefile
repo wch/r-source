@@ -7,7 +7,7 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-USE_WININET=YES
+#USE_LIBXML=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -46,12 +46,16 @@ extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
 endif
 
+ifdef USE_LIBXML
+INET=USE_LIBXML
+else
+INET=USE_WININET
+endif
+
 ifdef USE_WININET
 R-DLLLIBS+=-lwininet
-OPTFLAGS+=-DUSE_WININET
-#OPTFLAGS+=-DUSE_WININET_ASYNC
-else
-EXTRALIBS+= Rlibxml.a
+OPTEXTRA=-DUSE_WININET
+#OPTEXTRA=-DUSE_WININET_ASYNC
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
@@ -64,7 +68,7 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
+rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll libR.a CHTML \
 	 ../include/globalvar.h front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
@@ -81,12 +85,9 @@ rlibs:
 	$(MAKE) -C ./getline
 	$(MAKE) -C ../extra/xdr
 	$(MAKE) -C ./math
-ifdef USE_LIBXML
-	$(MAKE) -C ../extra/libxml OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-endif
 
-rmodules:
-	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+rmodules: libRm.a
+	$(MAKE) -C ../modules INET=$(INET) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -135,6 +136,22 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
+
+# A version needed for the modules that uses R.dll's malloc/.../free:
+
+libRm.a:  Rm.exp
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
+
+Rm.exp: Rm.exp1
+	(diff Rm.exp Rm.exp1 > /dev/null) || $(CP) Rm.exp1 Rm.exp
+
+Rm.exp1: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) exported-vars
+	$(ECHO) EXPORTS > $@
+	$(NM) R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) > RDefs
+	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
+	$(CAT) exported-vars >> $@
+	$(RM) RDefs
+
 
 # avoid building globalvar.h with errors
 ../include/globalvar.h: exported-vars
@@ -212,7 +229,7 @@ clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
-	-$(MAKE) -C ../extra/libxml -f Makefile.win clean
+#	-$(MAKE) -C ../extra/libxml -f Makefile.win clean
 	-$(MAKE) -C ../modules -f Makefile.win clean
 
 distclean veryclean: clean

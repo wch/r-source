@@ -1,21 +1,28 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-MODULE=lapack
+MODULE=internet
 all: makeMakedeps ../../../modules/$(MODULE).dll
 
-CSOURCES = Lapack.c
-FSOURCES = double.f cmplx.f blas2.f cmplxblas.f
+CSOURCES=internet.c sockconn.c Rsock.c sock.c
 
-CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
-FFLAGS=$(FOPTFLAGS)
-OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
+CFLAGS=$(OPTFLAGS) -D$(INET) -I../../include -I../../gnuwin32 -DHAVE_CONFIG_H -include ../../include/globalvar.h
+
+OBJS=$(CSOURCES:.c=.o) dllversion.o
+
+DLLLIBS=-L../../gnuwin32 -lRm -lwsock32
+ifeq ($(INET),USE_WININET)
+DLLLIBS+=-lwininet
+endif
+
+ifeq ($(INET),USE_LIBXML)
+CSOURCES+=nanoftp.c nanohttp.c
+endif
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-DLLLIBS=-L../../gnuwin32 -lRm -lg2c
 $(MODULE).dll: $(OBJS)
 
 clean:

@@ -884,7 +884,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libxml"));
-#ifdef HAVE_LIBXML
+#ifdef SUPPORT_LIBXML
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;

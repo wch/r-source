@@ -15,7 +15,6 @@ include $(top_builddir)/Makeconf
 ## see `../unix/dynload.c'.
 
 SOURCES_C = \
-	Rsock.c \
 	approx.c \
 	bakslv.c binning.c \
 	chull.c cpoly.c cumsum.c \
@@ -24,7 +23,7 @@ SOURCES_C = \
 	machar.c maxcol.c massdist.c \
 	pretty.c \
 	rowsum.c \
-	sock.c splines.c stem.c strsignif.c \
+	splines.c stem.c strsignif.c \
 	tabulate.c \
 	uncmin.c \
 	zeroin.c
@@ -36,7 +35,7 @@ SOURCES_F = \
 	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
-HEADERS = sock.h
+HEADERS =
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = COPYRIGHT COPYRIGHT.ftn README ROUTINES lowess.doc \

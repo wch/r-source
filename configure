@@ -1849,7 +1849,7 @@ EOF
 
 ### Programs.
 
-for ac_prog in mawk gawk nawk awk
+for ac_prog in gawk mawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -8798,7 +8798,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-void *p = alloca(2 * sizeof(int));
+char *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:8805: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -10590,7 +10590,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x = {0,0};
+typedef int charset[2]; const charset x;
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -13481,15 +13481,18 @@ if test "${r_cv_bsd_networking}" = yes; then
 #define HAVE_BSD_NETWORKING 1
 EOF
 
-fi
+  cat >> confdefs.h <<\EOF
+#define HAVE_SOCKETS 1
+EOF
 
+  cat >> confdefs.h <<\EOF
+#define HAVE_INTERNET 1
+EOF
 
-if test "${r_cv_bsd_networking}" = yes; then
-  USE_LIBXML_TRUE=
-  USE_LIBXML_FALSE='#'
-else
-  USE_LIBXML_TRUE='#'
-  USE_LIBXML_FALSE=
+  cat >> confdefs.h <<\EOF
+#define SUPPORT_LIBXML 1
+EOF
+
 fi
 
 
@@ -13497,7 +13500,7 @@ fi
 
   BITMAP_LIBS=
   cat > conftest.$ac_ext <<EOF
-#line 13501 "configure"
+#line 13504 "configure"
 #include "confdefs.h"
 #include <jpeglib.h>
 EOF
@@ -13506,7 +13509,7 @@ if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
   rm -rf conftest*
   
     echo $ac_n "checking for jpeg_destroy_compress in -ljpeg""... $ac_c" 1>&6
-echo "configure:13510: checking for jpeg_destroy_compress in -ljpeg" >&5
+echo "configure:13513: checking for jpeg_destroy_compress in -ljpeg" >&5
 ac_lib_var=`echo jpeg'_'jpeg_destroy_compress | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -13514,7 +13517,7 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-ljpeg ${LIBS} $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 13518 "configure"
+#line 13521 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -13525,7 +13528,7 @@ int main() {
 jpeg_destroy_compress()
 ; return 0; }
 EOF
-if { (eval echo configure:13529: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:13532: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -13556,7 +13559,7 @@ fi
 rm -f conftest*
 
   echo $ac_n "checking for main in -lz""... $ac_c" 1>&6
-echo "configure:13560: checking for main in -lz" >&5
+echo "configure:13563: checking for main in -lz" >&5
 ac_lib_var=`echo z'_'main | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -13564,14 +13567,14 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-lz  $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 13568 "configure"
+#line 13571 "configure"
 #include "confdefs.h"
 
 int main() {
 main()
 ; return 0; }
 EOF
-if { (eval echo configure:13575: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:13578: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -13589,17 +13592,17 @@ if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   
     ac_safe=`echo "png.h" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for png.h""... $ac_c" 1>&6
-echo "configure:13593: checking for png.h" >&5
+echo "configure:13596: checking for png.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 13598 "configure"
+#line 13601 "configure"
 #include "confdefs.h"
 #include <png.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:13603: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:13606: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -13617,7 +13620,7 @@ if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
   echo "$ac_t""yes" 1>&6
   
       echo $ac_n "checking for png_create_write_struct in -lpng""... $ac_c" 1>&6
-echo "configure:13621: checking for png_create_write_struct in -lpng" >&5
+echo "configure:13624: checking for png_create_write_struct in -lpng" >&5
 ac_lib_var=`echo png'_'png_create_write_struct | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -13625,7 +13628,7 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-lpng ${LIBS} $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 13629 "configure"
+#line 13632 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -13636,7 +13639,7 @@ int main() {
 png_create_write_struct()
 ; return 0; }
 EOF
-if { (eval echo configure:13640: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:13643: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -13676,7 +13679,7 @@ fi
 
 ## POSIX times
 echo $ac_n "checking whether leap seconds are counted""... $ac_c" 1>&6
-echo "configure:13680: checking whether leap seconds are counted" >&5
+echo "configure:13683: checking whether leap seconds are counted" >&5
   if eval "test \"`echo '$''{'r_cv_uses_leapseconds'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -13724,12 +13727,12 @@ if test "${want_R_profiling}" = yes; then
   for ac_func in setitimer
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:13728: checking for $ac_func" >&5
+echo "configure:13731: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 13733 "configure"
+#line 13736 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -13752,7 +13755,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:13756: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:13759: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
@@ -13796,7 +13799,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:13800: checking for $ac_word" >&5
+echo "configure:13803: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_R_PRINTCMD'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -13834,7 +13837,7 @@ EOF
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:13838: checking for $ac_word" >&5
+echo "configure:13841: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -14058,8 +14061,6 @@ trap 'rm -fr `echo "Makeconf
   share/Makefile
   src/Makefile
   src/appl/Makefile
-  src/extra/Makefile
-  src/extra/libxml/Makefile
   src/include/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
@@ -14098,6 +14099,7 @@ trap 'rm -fr `echo "Makeconf
   src/modules/Makefile
   src/modules/X11/Makefile
   src/modules/gnome/Makefile
+  src/modules/internet/Makefile
   src/modules/lapack/Makefile
   src/modules/vfonts/Makefile
   src/nmath/Makefile
@@ -14293,8 +14295,6 @@ s%@TK_CONFIG@%$TK_CONFIG%g
 s%@TCLTK_CPPFLAGS@%$TCLTK_CPPFLAGS%g
 s%@TCLTK_LIBS@%$TCLTK_LIBS%g
 s%@use_tcltk@%$use_tcltk%g
-s%@USE_LIBXML_TRUE@%$USE_LIBXML_TRUE%g
-s%@USE_LIBXML_FALSE@%$USE_LIBXML_FALSE%g
 s%@BITMAP_LIBS@%$BITMAP_LIBS%g
 s%@R_PROFILING@%$R_PROFILING%g
 s%@R_PRINTCMD@%$R_PRINTCMD%g
@@ -14363,8 +14363,6 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   share/Makefile
   src/Makefile
   src/appl/Makefile
-  src/extra/Makefile
-  src/extra/libxml/Makefile
   src/include/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
@@ -14403,6 +14401,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/modules/Makefile
   src/modules/X11/Makefile
   src/modules/gnome/Makefile
+  src/modules/internet/Makefile
   src/modules/lapack/Makefile
   src/modules/vfonts/Makefile
   src/nmath/Makefile

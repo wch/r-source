@@ -122,7 +122,7 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 /* --------- for use in socket connections ---------- */
 
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING) 
+#ifdef HAVE_SOCKETS
 #include <R_ext/R-ftp-http.h>
 
 #ifdef Win32
@@ -424,4 +424,4 @@ int R_SockWrite(int sockp, const void *buf, int len)
     return (res >= 0) ? res : -socket_errno();
 }
 
-#endif /* defined(Win32) || defined(HAVE_BSD_NETWORKING) */
+#endif
