@@ -466,3 +466,7 @@ Date: Mon, 25 Mar 2002 21:08:45 +0100 (MET)
 Subject: int 32 bit error on SPARC 64bit
 From: kss28@mail.cba.nau.edu
 Date: Mon, 25 Mar 2002 21:18:58 +0100 (MET)
+* PR# 1416 *
+Subject: seq.default test for relative range
+From: Don MacQueen <macq@llnl.gov>
+Date: Tue, 26 Mar 2002 09:59:56 -0800
