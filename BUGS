@@ -428,3 +428,15 @@ Date: Thu, 17 Jan 2002 09:54:14 +0100 (MET)
 Subject: data(): Error in FUN(X[[2]], ...) : subscript out of bounds
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Tue, 22 Jan 2002 10:24:34 +0100 (CET)
+* PR# 1282 *
+Subject: na.action=na.omit doesn't omit in glm()
+From: Ralph.MacNally@sci.monash.edu.au
+Date: Fri, 25 Jan 2002 05:22:19 +0100 (MET)
+* PR# 1283 *
+Subject: max/min of NULL gives MININT/MAXINT instead of -INF/+INF
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Fri, 25 Jan 2002 14:36:52 -0500
+* PR# 1284 *
+Subject: make check fails when R_HOME env var set
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Fri, 25 Jan 2002 15:08:33 -0500
