@@ -13,16 +13,16 @@
 Projection Pursuit Regression
 }
 \usage{
-ppr(formula, data=sys.parent(), weights,
-    subset, na.action, contrasts=NULL,
-    ww=rep(1,q), nterms, max.terms=nterms, optlevel=2, 
-    sm.method=c("supsmu", "spline", "gcvspline"),
-    bass=0, span=0, df=5, gcvpen=1)
+ppr(formula, data = sys.parent(), weights,
+    subset, na.action, contrasts = NULL,
+    ww = rep(1,q), nterms, max.terms=nterms, optlevel = 2, 
+    sm.method = c("supsmu", "spline", "gcvspline"),
+    bass = 0, span = 0, df = 5, gcvpen = 1)
 
-ppr(x, y, weights=rep(1,n),
-    ww=rep(1,q), nterms, max.terms=nterms, optlevel=2, 
-    sm.method=c("supsmu", "spline", "gcvspline"),
-    bass=0, span=0, df=5, gcvpen=1)
+ppr(x, y, weights = rep(1,n),
+    ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2, 
+    sm.method = c("supsmu", "spline", "gcvspline"),
+    bass = 0, span = 0, df = 5, gcvpen = 1)
 }
 \arguments{
   \item{formula}{
@@ -157,7 +157,7 @@ the training set points.
 }
 \details{
   The basic method is given by Friedman (1984), and is essentially the
-  same code used by S_PLUS's \code{ppreg}.  This code is extremely
+  same code used by S-PLUS's \code{ppreg}.  This code is extremely
   sensitive to the compiler used.
 
   The algorithm first adds up to \code{max.terms} ridge terms one at a
