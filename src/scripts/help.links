@@ -28,7 +28,8 @@ cp ${RHOME}/doc/html/packages-head.html ${PKGLIST}
 for lib in $*; do
     echo "<P><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
     echo "<P><TABLE width=100%>" >> ${PKGLIST}
-    for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
+    if test -d ${lib}; then
+      for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
 	    rm -f ${URHOME}/library/${pkg}
 	    ln -s ${pkg} ${URHOME}/library
@@ -43,7 +44,8 @@ for lib in $*; do
 		    ${pkgname}</A><TD>${pkgtitle}</TD></TR>" \
 		>> ${PKGLIST}
 	fi
-    done
+      done
+    fi
     echo "</TABLE>" >> ${PKGLIST}
     echo "" >> ${PKGLIST}
 done
