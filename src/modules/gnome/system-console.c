@@ -22,8 +22,6 @@
 # include <config.h>
 #endif
 
-#include "Defn.h" /* R_Interactive and R_Slave */
-
 #include "system.h"
 #include "terminal.h"
 #include "gtkconsole.h"

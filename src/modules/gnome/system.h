@@ -18,6 +18,7 @@
  */
 
 #include <Rinternals.h>
+#include <Rinterface.h>
 #include <Startup.h>
 
 /* defined in GNOME GUI */
@@ -39,11 +40,6 @@ void Rgnome_FlushConsole(void);
 void Rgnome_ClearerrConsole(void);
 void Rgnome_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 void Rgnome_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
-
-/* From elsewhere */
-
-void R_setStartTime(void); /* in sys-unix.c */
-void fpu_setup(Rboolean);  /* in sys-unix.c */
 
 /* src/unix/devUI.h */
 

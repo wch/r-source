@@ -21,20 +21,21 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
 #include "system.h"
+#include <Startup.h>
 #include "gtkconsole.h"
 #include "terminal.h"
+
+extern void Rf_errorcall(SEXP, const char*, ...);
 
 void Rgnome_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
     char file[PATH_MAX];
    
-    checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, "invalid file argument");
+	Rf_errorcall(call, "invalid file argument");
     strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile,0))));
     gtk_console_clear_history(GTK_CONSOLE(R_gtk_terminal_text));
     gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), 
@@ -46,10 +47,9 @@ void Rgnome_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sfile;
     char file[PATH_MAX];
     
-    checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, "invalid file argument");
+	Rf_errorcall(call, "invalid file argument");
     strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile, 0))));
     gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), 
 			     file, R_HistorySize, NULL);

@@ -27,7 +27,8 @@
 #define G_STMT_END   while(0)
 
 #include "Rinternals.h"
-#include "Startup.h"
+#include "Rinterface.h"
+#include <Startup.h>
 
 #include "terminal-prefs.h"
 #include "terminal.h"

@@ -25,7 +25,7 @@ SOURCES = \
 	terminal-prefs.c terminal-toolbar.c terminal.c 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = \
+HEADERS = Rinterface.h system.h \
 	command-grep.h \
 	gdkrotated.h \
 	gnome-find-dialog.h \

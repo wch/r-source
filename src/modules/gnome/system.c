@@ -42,8 +42,11 @@
 
 #include <Rversion.h>
 
-#include "Defn.h"
-#include "Rdevices.h"
+#include <Rinternals.h>
+#include <Rinterface.h>
+#include <Startup.h>
+#include <Rdevices.h> /* for KillAllDevices */
+#include <R_ext/Print.h> /* for Rprintf */
 
 #include "gtkconsole.h"
 #include "terminal.h"
@@ -199,17 +202,20 @@ void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
     }
 */
     if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
-	sprintf(buf, "rm -rf %s", tmpdir);
-	R_system(buf);
+	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
+	R_system((char *)buf);
     }
 
 
     /* close all the graphics devices */
-    KillAllDevices();
-    fpu_setup(0);
+    if(saveact != SA_SUICIDE) KillAllDevices();
+    fpu_setup(FALSE);
 
     exit(status);
 }
+
+/* The message queue here was needed when GNOME was a plug-in module,
+   but no more */
 
 void Rgnome_ShowMessage(char *s)
 {
@@ -271,7 +277,7 @@ void R_set_SaveAction(int sa)
 
 int main(int ac, char **av)
 {
-    int i, ioff = 1, j, value, ierr;
+    int i, ioff = 1, j;
     char *p, **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -317,6 +323,7 @@ int main(int ac, char **av)
 		  g_strdup_printf("%s.%s %s (%s-%s-%s)", R_MAJOR,
 				  R_MINOR, R_STATUS, R_YEAR, R_MONTH,
 				  R_DAY));
+    /* The aim here seems to be to set user's defaults to R defaults */
     R_gnome_prefs_cmd_load(RestoreAction, SaveAction);
     R_set_gnome_prefs(Rp);
 
@@ -384,21 +391,11 @@ int main(int ac, char **av)
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
-    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-	R_HistoryFile = ".Rhistory";
-    R_HistorySize = 512;
-    if ((p = getenv("R_HISTSIZE"))) {
-	value = R_Decode2Long(p, &ierr);
-	if (ierr != 0 || value < 0)
-	    fprintf(stderr, "WARNING: invalid R_HISTSIZE ignored;");
-	else
-	    R_HistorySize = value;
-    }
-
     /* create console */
     R_gtk_terminal_new();
 
     /* restore command history */
+    R_setupHistory();
     if(R_RestoreHistory)
 	gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), 
 				    R_HistoryFile, R_HistorySize, NULL);

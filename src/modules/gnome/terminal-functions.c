@@ -22,13 +22,16 @@
 # include <config.h>
 #endif
 
-#include "Defn.h"
+#include "Rinterface.h" /* for onintr */
+#include <R_ext/Print.h> /* for Rprintf */
 
 #include "terminal.h"
 #include "terminal-functions.h"
 
 #include <signal.h>
 
+static void file_open_ok(GtkWidget *widget, gpointer data);
+static void file_saveas_ok(GtkWidget *widget, gpointer data);
 
 /* Primitive functions:
    - run a string */
