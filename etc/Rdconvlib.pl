@@ -257,9 +257,11 @@ sub get_sections {
 	print STDERR "found: $section\n" if $debug;
 
 	## remove leading and trailing whitespace 
-	$blocks{$block} =~ s/^\s+//so;
-	$blocks{$block} =~ s/\s+$//so;
-	$blocks{$block} =~ s/\n[ \t]+/\n/go;
+	$section =~ s/^\s+//so;
+	$section =~ s/\s+$//so;
+	$body =~ s/^\s+//so;
+	$body =~ s/\s+$//so;
+	$body =~ s/\n[ \t]+/\n/go;
 	$section_body[$max_section] = $body;
 	$section_title[$max_section++] = $section;
 	$text =~ s/\\section//s;
@@ -708,7 +710,7 @@ sub text2nroff {
     ## tables are pre-processed by the tbl(1) command, so this has to
     ## be done first 
     $text = nroff_tables($text);
-    $text =~ s/\\cr\n?/\n/sgo;
+    $text =~ s/\\cr\n?/\n.br\n/sgo;
 
     
 
