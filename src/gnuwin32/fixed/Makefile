@@ -43,7 +43,7 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
 
 ../../../bin/check: ../../scripts/check.in
-	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+	$(SED) -e 1d -e "s/R CMD/Rcmd/" -e "s/Rd2dvi /Rd2dvi.sh /" $< > $@
 
 ../../../bin/build: ../../scripts/build.in
 	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
