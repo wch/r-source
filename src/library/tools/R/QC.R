@@ -118,11 +118,11 @@ function(package, dir, lib.loc = NULL)
         for(f in files) {
             ## <NOTE>
             ## Non-standard evaluation for argument 'package' to data().
-            yy <- try(substitute(data(list = f,
-                                      package = packageName,
-                                      lib.loc = libPath,
-                                      envir = dataEnv),
-                                 list(packageName = packageName)))
+            yy <- try(eval(substitute(data(list = f,
+                                           package = packageName,
+                                           lib.loc = libPath,
+                                           envir = dataEnv),
+                                      list(packageName = packageName))))
             ## </NOTE>
             if(inherits(yy, "try-error"))
                 stop(paste("cannot load data set", sQuote(f)))
