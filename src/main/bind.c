@@ -550,7 +550,7 @@ static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 	next = CDR(a);
 	if (n != R_NilValue && pmatch(R_RecursiveSymbol, n, 1)) {
 	    if (n_recurse++ == 1)
-		error("repeated formal argument 'recursive'");
+		error(_("repeated formal argument 'recursive'"));
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
 		*recurse = v;
 	    }
@@ -561,7 +561,7 @@ static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 	}
 	else if (n != R_NilValue && pmatch(R_UseNamesSymbol, n, 1)) {
 	    if (n_usenames++ == 1)
-		error("repeated formal argument 'use.names'");
+		error(_("repeated formal argument 'use.names'"));
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
 		*usenames = v;
 	    }
@@ -772,7 +772,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	UNPROTECT(1);
 	if (isVector(args)) return args;
-	else errorcall(call, "argument not a list");
+	else errorcall(call, _("argument not a list"));
     }
 
     /* If a non-vector argument was encountered (perhaps a list if */
@@ -870,7 +870,7 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
     char buf[LNAMBUF];
     SEXP method;
     if (strlen(generic) + strlen(classname) + 2 > LNAMBUF)
-	error("class name too long in %s", generic);
+	error(_("class name too long in %s"), generic);
     sprintf(buf, "%s.%s", generic, classname);
     method = findVar(install(buf), env);
     if (TYPEOF(method)==PROMSXP)
@@ -996,7 +996,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* we don't handle expressions: we could, but coercion of a matrix 
 	   to an expression is not ideal */
     default:
-	errorcall(call, "cannot create a matrix from these types");
+	errorcall(call, _("cannot create a matrix from these types"));
     }
 
     if (PRIMVAL(op) == 1)
@@ -1071,7 +1071,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 	    if (mrows == -1)
 		mrows = INTEGER(dims)[0];
 	    else if (mrows != INTEGER(dims)[0])
-		errorcall(call, "number of rows of matrices must match (see arg %d)", n + 1);
+		errorcall(call, 
+			  _("number of rows of matrices must match (see arg %d)"),
+			  n + 1);
 	    cols += INTEGER(dims)[1];
 	}
 	else if (length(u) >= lenmin) {
@@ -1281,7 +1283,9 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 		have_mcols=1;
 	    }
 	    else if (mcols != INTEGER(dims)[1])
-		errorcall(call, "number of columns of matrices must match (see arg %d)", n + 1);
+		errorcall(call,
+			  _("number of columns of matrices must match (see arg %d)"),
+			  n + 1);
 	    rows += INTEGER(dims)[0];
 	}
 	else if (length(u) >= lenmin){

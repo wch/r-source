@@ -162,7 +162,7 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	  ddpSaved->cra[1] *= rf;
 	}
 	else 
-	  error("Event UpdatePS requires a single numeric value");
+	  error(_("Event UpdatePS requires a single numeric value"));
 	break;
     }
     return result;

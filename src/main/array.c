@@ -68,7 +68,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     snc = CADDR(args);
     byrow = asLogical(CADR(CDDR(args)));
     if (byrow == NA_INTEGER)
-	error("matrix: invalid byrow value");
+	error(_("matrix: invalid byrow value"));
 
     /* R wrapper does as.vector
     if (isVector(vals) || isList(vals)) {
@@ -78,38 +78,38 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     else errorcall(call, "invalid matrix element type"); */
 
     if (!isNumeric(snr) || !isNumeric(snc))
-	error("non-numeric matrix extent");
+	error(_("non-numeric matrix extent"));
 
     lendat = length(vals);
     nr = asInteger(snr);
     if (nr == NA_INTEGER) /* This is < 0 */
-	error("matrix: invalid nrow value (too large or NA)");
+	error(_("matrix: invalid nrow value (too large or NA)"));
     if (nr < 0)
-	error("matrix: invalid nrow value (< 0)");
+	error(_("matrix: invalid nrow value (< 0)"));
     nc = asInteger(snc);
     if (nc < 0)
-	error("matrix: invalid ncol value (< 0)");
+	error(_("matrix: invalid ncol value (< 0)"));
     if (nc == NA_INTEGER)
-	error("matrix: invalid ncol value (too large or NA)");
+	error(_("matrix: invalid ncol value (too large or NA)"));
     if (nc < 0)
-	error("matrix: invalid ncol value (< 0)");
+	error(_("matrix: invalid ncol value (< 0)"));
 
     if(lendat > 0 ) {
 	if (lendat > 1 && (nr * nc) % lendat != 0) {
 	    if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
 		((lendat < nr) && (nr / lendat) * lendat != nr))
-		warning("data length [%d] is not a sub-multiple or multiple of the number of rows [%d] in matrix", lendat, nr);
+		warning(_("data length [%d] is not a sub-multiple or multiple of the number of rows [%d] in matrix"), lendat, nr);
 	    else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
 		     ((lendat < nc) && (nc / lendat) * lendat != nc))
-		warning("data length [%d] is not a sub-multiple or multiple of the number of columns [%d] in matrix", lendat, nc);
+		warning(_("data length [%d] is not a sub-multiple or multiple of the number of columns [%d] in matrix"), lendat, nc);
 	}
 	else if ((lendat > 1) && (nr * nc == 0)){
-	    warning("data length exceeds size of matrix");
+	    warning(_("data length exceeds size of matrix"));
 	}
     }
 
     if ((double)nr * (double)nc > INT_MAX)
-	error("matrix: too many elements specified");
+	error(_("matrix: too many elements specified"));
 
     PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
     if(lendat) {
@@ -171,9 +171,9 @@ SEXP allocMatrix(SEXPTYPE mode, int nrow, int ncol)
     int n;
 
     if (nrow < 0 || ncol < 0)
-	error("negative extents to matrix");
+	error(_("negative extents to matrix"));
     if ((double)nrow * (double)ncol > INT_MAX)
-	error("allocMatrix: too many elements specified");
+	error(_("allocMatrix: too many elements specified"));
     n = nrow * ncol;
     PROTECT(s = allocVector(mode, n));
     PROTECT(t = allocVector(INTSXP, 2));
@@ -195,7 +195,7 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
     for (i = 0; i < LENGTH(dims); i++) {
 	dn *= INTEGER(dims)[i];
 	if(dn > INT_MAX)
-	    error("allocArray: too many elements specified by dims");
+	    error(_("allocArray: too many elements specified by dims"));
 	n *= INTEGER(dims)[i];
     }
 
@@ -340,7 +340,7 @@ SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_len_t len;
 
     if (length(args) != 1)
-	error("incorrect number of args to length");
+	error(_("incorrect number of args to length"));
 
     if( isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
 					      rho, &ans, 0, 1))
@@ -359,9 +359,9 @@ SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j, nr, nc;
 
     if (length(args) != 1)
-	error("incorrect number of args to row/col");
+	error(_("incorrect number of args to row/col"));
     if (!isMatrix(CAR(args)))
-	error("a matrix is required as arg to row/col");
+	error(_("a matrix is required as arg to row/col"));
 
     nr = nrows(CAR(args));
     nc = ncols(CAR(args));
@@ -532,7 +532,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     sym = isNull(y);
     if (sym && (PRIMVAL(op) == 1)) y = x;
     if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )
-	errorcall(call, "requires numeric matrix/vector arguments");
+	errorcall(call, _("requires numeric matrix/vector arguments"));
 
     xdims = getAttrib(x, R_DimSymbol);
     ydims = getAttrib(y, R_DimSymbol);
@@ -605,11 +605,11 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (PRIMVAL(op) == 0) {
 	if (ncx != nry)
-	    errorcall(call, "non-conformable arguments");
+	    errorcall(call, _("non-conformable arguments"));
     }
     else {
 	if (nrx != nry)
-	    errorcall(call, "non-conformable arguments");
+	    errorcall(call, _("non-conformable arguments"));
     }
 
     if (isComplex(CAR(args)) || isComplex(CADR(args)))
@@ -831,7 +831,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return r;
  not_matrix:
-    errorcall(call, "argument is not a matrix");
+    errorcall(call, _("argument is not a matrix"));
     return call;/* never used; just for -Wall */
 }
 
@@ -869,7 +869,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     a = CAR(args);
     if (!isArray(a))
-	errorcall(call,"invalid first argument, must be an array");
+	errorcall(call, _("invalid first argument, must be an array"));
 
     PROTECT(dimsa = getAttrib(a, R_DimSymbol));
     n = LENGTH(dimsa);
@@ -886,7 +886,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i=0; i<n; i++)
 	    pp[i] = INTEGER(perm)[i] - 1; /* no offset! */
     } else
-	errorcall(call, "`perm' is of wrong length");
+	errorcall(call, _("'perm' is of wrong length"));
 
     iip = (int *) R_alloc(n, sizeof(int));
     for (i=0; i<n; iip[i++] = 0);
@@ -894,10 +894,10 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (pp[i] >= 0 && pp[i] < n)
 	    iip[pp[i]]++;
 	else
-	    errorcall(call, "value of out range in `perm'");
+	    errorcall(call, _("value out of range in 'perm'"));
     for (i=0; i<n; i++)
 	if (iip[i]==0)
-	    errorcall(call, "invalid permutation (`perm')");
+	    errorcall(call, _("invalid permutation ('perm')"));
 
     /* create the stride object and permute */
 
@@ -1025,10 +1025,10 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = asInteger(CAR(args)); args = CDR(args);
     NaRm = asLogical(CAR(args));
     if (n == NA_INTEGER || n <= 0)
-	errorcall(call, "invalid value of n");
+	errorcall(call, _("invalid value of n"));
     if (p == NA_INTEGER || p <= 0)
-	errorcall(call, "invalid value of p");
-    if (NaRm == NA_LOGICAL) errorcall(call, "invalid value of na.rm");
+	errorcall(call, _("invalid value of p"));
+    if (NaRm == NA_LOGICAL) errorcall(call, _("invalid value of na.rm"));
     keepNA = !NaRm;
 
     OP = PRIMVAL(op);
@@ -1037,7 +1037,7 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     case INTSXP: break;
     case REALSXP: break;
     default:
-	errorcall(call, "`x' must be numeric");
+	errorcall(call, _("'x' must be numeric"));
     }
 
     if (OP == 0 || OP == 1) { /* columns */
