@@ -94,17 +94,25 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if((fp=R_fopen(R_ExpandFileName(filename), "r")) == NULL)
 	errorcall(call, "unable to open file to read\n");
     R_ParseCnt = 0;
-    x = R_ParseFile(fp, -1, &status);
+    x = PROTECT(R_ParseFile(fp, -1, &status));
     if (status != PARSE_OK)
 	errorcall(call,
 		  "An error occurred on line %d\n use a command like\n x <- vi()\n to recover\n", R_ParseError);
     else
 	fclose(fp);
     R_ResetConsole();
-    x = eval(x, R_GlobalEnv);
+    {   /* can't just eval(x) here */
+	int i, n;
+	SEXP tmp;
+
+	n = LENGTH(x);
+	for (i = 0 ; i < n ; i++)
+	    tmp = eval(VECTOR(x)[i], R_GlobalEnv);
+	x = tmp;
+    }
     if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
 	CLOENV(x) = envir;
-    UNPROTECT(1);
+    UNPROTECT(2);
     vmaxset(vmaxsave);
     return (x);
 }
