@@ -42,7 +42,7 @@ to the current release are incorporated in the build available <a href="rpatched
   </tr>   
   <tr>
     <td width="19%" valign="top"><a href="@RWVER@.exe">@RWVER@.exe</a></td>
-    <td width="81%">Setup program (about 20 megabytes). Please download this 
+    <td width="81%">Setup program (about 23 megabytes). Please download this 
     from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
     This corresponds to the file named <b>SetupR.exe</b> in pre-1.6.0 releases.</td>
   </tr>
