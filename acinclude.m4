@@ -40,9 +40,9 @@ fi
 ## ---------
 AC_DEFUN([R_ARG_USE],
 [if test "${withval}" = no; then
-  use_$1=false
+  use_$1=no
 else
-  use_$1=true
+  use_$1=yes
 fi
 ])# R_ARG_USE
 
@@ -532,21 +532,21 @@ AC_DEFUN([R_PROG_F77_OR_F2C],
 [if test -n "${FC}"; then
   F77=${FC}
   AC_MSG_RESULT([defining F77 to be ${F77}])
-elif ${use_f77}; then
+elif test "${use_f77}" = yes; then
   if test "${with_f77}" = yes; then
     F77=f77
   else
     F77="${with_f77}"
   fi
   AC_MSG_RESULT([defining F77 to be ${F77}])
-elif ${use_g77}; then
+elif test "${use_g77}" = yes; then
   if test "${with_g77}" = yes; then
     F77=g77
   else
     F77="${with_g77}"
   fi
   AC_MSG_RESULT([defining F77 to be ${F77}])
-elif ${use_f2c}; then
+elif test "${use_f2c}" = yes; then
   F77=
   if test "${with_f2c}" = yes; then
     F2C=f2c
