@@ -155,6 +155,11 @@ NEW FEATURES
 
     o	rank() has two new 'ties.method's, "min" and "max".
 
+    o   power (x^y) is optimised for y==2
+
+    o   read.fwf reads multiline records, is faster for large files.
+
+    o   read.fortran reads Fortran-style fixed-format specifications.
 
 UTILITIES
 
@@ -246,6 +251,9 @@ INSTALLATION CHANGES
 
 
 BUG FIXES
+
+    o   Complex superassignments were wrong when a variable with the same
+    	 name existed locally, and were not documented in R-lang.
 
     o	rbind.data.frame() dropped names/rownames from columns in all
 	but the first data frame.
