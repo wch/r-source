@@ -695,9 +695,9 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    dd->gp.usr[0] = dd->dp.usr[0] = REAL(value)[0];
 	    dd->gp.usr[1] = dd->dp.usr[1] = REAL(value)[1];
 	    dd->gp.logusr[0] = dd->dp.logusr[0] =
-		Log10(REAL(value)[0]);
+		R_Log10(REAL(value)[0]);
 	    dd->gp.logusr[1] = dd->dp.logusr[1] =
-		Log10(REAL(value)[1]);
+		R_Log10(REAL(value)[1]);
 	}
 	if (dd->gp.ylog) {
 	    dd->gp.logusr[2] = dd->dp.logusr[2] = REAL(value)[2];
@@ -709,9 +709,9 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    dd->gp.usr[2] = dd->dp.usr[2] = REAL(value)[2];
 	    dd->gp.usr[3] = dd->dp.usr[3] = REAL(value)[3];
 	    dd->gp.logusr[2] = dd->dp.logusr[2] =
-		Log10(REAL(value)[2]);
+		R_Log10(REAL(value)[2]);
 	    dd->gp.logusr[3] = dd->dp.logusr[3] =
-		Log10(REAL(value)[3]);
+		R_Log10(REAL(value)[3]);
 	}
 	/* Reset Mapping and Axis Parameters */
 	GMapWin2Fig(dd);

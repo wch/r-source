@@ -388,7 +388,7 @@ static void GNOME_Activate(DevDesc *dd)
 
   devnum = deviceNumber(dd);
   devnum++;
-  numdigits = floor(Log10(devnum)) + 1;
+  numdigits = floor(R_Log10(devnum)) + 1;
   title_text = g_malloc(text_len + numdigits + 1);
 
   g_return_if_fail(title_text != NULL);
@@ -416,7 +416,7 @@ static void GNOME_Deactivate(DevDesc *dd)
 
   devnum = deviceNumber(dd);
   devnum++;
-  numdigits = floor(Log10(devnum)) + 1;
+  numdigits = floor(R_Log10(devnum)) + 1;
   title_text = g_malloc(text_len + numdigits + 1);
 
   g_return_if_fail(title_text != NULL);
