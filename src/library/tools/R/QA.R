@@ -134,20 +134,13 @@ function(package, dir, lib.loc = NULL)
         ## documentation ...
         if(!is.na(match("package:methods", search()))) {
             codeObjs <-
-                codeObjs[sapply(codeObjs, function(fName) {
-                    f <- get(fName, envir = codeEnv)
-                    fAttr <- try(attributes(f)[c("class", "package")])
-                    if(inherits(fAttr, "try-error")) {
-                        warning(paste("problem determining the",
-                                      "class/package attributes of",
-                                      sQuote(fName)))
-                        FALSE
-                    }
-                    else
-                        (length(fAttr) == 2
-                         && fAttr[1] == "genericFunction"
-                         && fAttr[2] != basename(dir))
-                } == FALSE)]
+                codeObjs[sapply(codeObjs, function(f) {
+                    f <- get(f, envir = codeEnv)
+                    fAttr <- c(class(f), attr(f, "package"))
+                    (length(fAttr) == 2
+                     && fAttr[1] == "genericFunction"
+                     && fAttr[2] != basename(dir))
+                }) == FALSE]
         }
         ## </FIXME>
     }
