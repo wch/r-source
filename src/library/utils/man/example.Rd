@@ -71,8 +71,8 @@ example(topic, package = .packages(), lib.loc = NULL,
 \seealso{\code{\link{demo}}}
 \examples{
 example(InsectSprays)
-## force use of the standard package 'eda':
-example("smooth", package="eda", lib.loc=.Library)
+## force use of the standard package 'stats':
+example("smooth", package="stats", lib.loc=.Library)
 
 ## set RNG *before* example as when R CMD check is run:
 
