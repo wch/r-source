@@ -289,7 +289,7 @@ BOOL InitApplication(HINSTANCE hinstCurrent)
         wc.style=CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
         wc.lpfnWndProc = GraphWndProc;
         wc.cbClsExtra=0;
-        wc.cbWndExtra=0;
+        wc.cbWndExtra=sizeof(DevDesc*);
         wc.hInstance=hinstCurrent;
         wc.hIcon=LoadIcon(NULL, IDI_APPLICATION);
         wc.hCursor=LoadCursor(NULL,IDC_CROSS);
