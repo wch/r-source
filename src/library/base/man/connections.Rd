@@ -183,6 +183,19 @@ isIncomplete(con)
   append to fifos) connects both sides of the fifo to the \R process,
   and provides an similar facility to \code{file()}.
 }
+#ifdef windows
+\section{Clipboard}{
+  Under Windows, \code{file} can also be used with \code{description =
+    "clipboard"} in mode \code{"w"} and \code{"w"} only.
+  
+  When the clipboard is opened for reading, the contents are immediately
+  copied to internal storage in the connection.
+
+  When writing to the clipboard, the output is
+  copied to the clipboard only when the connection is closed or flushed.
+  There is a 32Kb limit of the text to be written to the clipboard.
+}
+#endif
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998). However \R goes well beyond the Svr4 model, for example

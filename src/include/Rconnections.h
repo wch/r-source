@@ -101,6 +101,13 @@ typedef struct bzfileconn {
     void *bfp;
 } *Rbzfileconn;
 
+#ifdef Win32
+typedef struct clpconn {
+    char *buff;
+    int pos, len, last;
+} *Rclpconn;
+#endif
+
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_getline(Rconnection con, char *buf, int bufsize);

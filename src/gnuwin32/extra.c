@@ -986,7 +986,7 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    *s = '\0';
 	    GlobalUnlock(hglb);
 	    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-		R_ShowMessage("Unable to open the clipboard");
+		warningcall(call, "Unable to open the clipboard");
 		GlobalFree(hglb);
 	    } else {
 		SetClipboardData(CF_TEXT, hglb);
