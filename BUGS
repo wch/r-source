@@ -385,11 +385,6 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject:  Problem with "missing" in "local" 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 4 Jan 2002 13:34:34 GMT
-* PR# 1737 *
-Subject: complex numbers in library function
-From: alex.deckmyn@oma.be
-Date: Wed, 3 Jul 2002 14:25:58 +0200 (MET DST)
---parse/deparse problem
 * PR# 1891 *
 Subject: summary.data.frame with compound elements problem
 From: b.rowlingson@lancaster.ac.uk
@@ -416,21 +411,11 @@ Subject: crash bug in get("function.name")()
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
 --Still segfaults in 1.5.1 
-* PR# 1697 *
-Subject: Bug in printing symbolic derivative
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Thu, 20 Jun 2002 16:27:37 -0400
---Problem in parentheses in deparse/parse
 * PR# 1880 *
 Subject:  You requested this report 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Tue, 6 Aug 2002 16:57:54 +0800
 --The bug is that we get as far as mkCLOSXP before an error is reported
-* PR# 1928 *
-Subject: Symbolic differentiation ("D","deriv", etc.)
-From: lylek@utk.edu
-Date: Thu, 22 Aug 2002 14:45:45 +0200 (MET DST)
---same as 1119, 1637, 1797
 
 Directory:  Macintosh
 
@@ -584,23 +569,3 @@ Date: Wed, 21 Aug 2002 19:58:01 -0700
 Subject:  Inconsistent use of Perl? 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Sat, 24 Aug 2002 18:41:09 +0800
-* PR# 1939 *
-Subject: title(list) shows strange chars
-From: otoomet@econ.dk
-Date: Sun, 25 Aug 2002 10:33:54 +0200 (MET DST)
-* PR# 1941 *
-Subject: Let's be friends
-From: ktmitch <ktmitch@aug.com>
-Date: Sun, 25 Aug 2002 05:25:38 -0500
-* PR# 1942 *
-Subject:  library(file) segfaults on solaris 
-From: <stvjc@channing.harvard.edu>
-Date: Sun, 25 Aug 2002 08:49:57 -0400 (EDT)
-* PR# 1943 *
-Subject: REQUEST FOR MUTUALLY BENEFITTING ENDEAVOUR
-From: <phillipadams@arabia.com>
-Date: Sun, 25 Aug 2002 07:54:26 -0700
-* PR# 1944 *
-Subject: (±¤°?) ??µðº?¾? ´º?º????....   
-From: ??µðº?¾???¶?<master@pe2pe.co.kr>
-Date: Mon, 26 Aug 2002 03:18:06 -0600
