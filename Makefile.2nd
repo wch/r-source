@@ -19,6 +19,7 @@ dvi: build-dvi
 build-docs build-help build-latex build-html build-dvi::
 	-@cd etc; MANSRC=`echo ../src/library/*/man/*.Rd` $(MAKE) $@
 
+check: test-All
 test-All test-Examples::
 	-@cd tests; $(MAKE) $@
 
