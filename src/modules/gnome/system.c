@@ -43,9 +43,7 @@
 #include <Rversion.h>
 
 #include "Defn.h"
-#include "Fileio.h"
 #include "Rdevices.h"
-#include "Startup.h"
 
 #include "gtkconsole.h"
 #include "terminal.h"

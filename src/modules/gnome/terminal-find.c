@@ -26,9 +26,6 @@
 #define G_STMT_START do
 #define G_STMT_END   while(0)
 
-#include "Defn.h"
-#include "Fileio.h"
-
 #include "gnome-find-dialog.h"
 #include "terminal.h"
 #include "terminal-find.h"

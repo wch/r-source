@@ -23,7 +23,6 @@
 #endif
 
 #include "Defn.h"
-#include "Fileio.h"
 
 #include "terminal.h"
 #include "terminal-functions.h"

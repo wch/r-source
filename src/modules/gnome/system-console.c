@@ -22,8 +22,7 @@
 # include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
+#include "Defn.h" /* R_Interactive and R_Slave */
 
 #include "system.h"
 #include "terminal.h"
@@ -59,10 +58,10 @@ Rgnome_ReadConsole (char *prompt, unsigned char *buf, int len,
     {
       if (!R_Slave)
 	fputs (prompt, stdout);
-      if (fgets (buf, len, stdin) == NULL)
+      if (fgets ((char *) buf, len, stdin) == NULL)
 	return 0;
       if (!R_Slave)
-	fputs (buf, stdout);
+	fputs ((char *) buf, stdout);
     }
    else
     {
@@ -76,7 +75,7 @@ Rgnome_ReadConsole (char *prompt, unsigned char *buf, int len,
 	  gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
       gtk_main ();
 
-      gtk_console_read (GTK_CONSOLE (R_gtk_terminal_text), buf, len,
+      gtk_console_read (GTK_CONSOLE (R_gtk_terminal_text), (char *) buf, len,
 			addtohistory);
     }
 

@@ -31,13 +31,6 @@
 
 #include <Rversion.h>
 
-#include "Defn.h"
-#include "Graphics.h"
-#include "Print.h"
-#include "Fileio.h"
-#include "IOStuff.h"
-#include "Parse.h"
-
 #include "terminal.h"
 #include "terminal-find.h"
 #include "terminal-functions.h"

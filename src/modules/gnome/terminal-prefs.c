@@ -26,7 +26,7 @@
 #define G_STMT_START do
 #define G_STMT_END   while(0)
 
-#include "Defn.h"
+#include "Rinternals.h"
 #include "Startup.h"
 
 #include "terminal-prefs.h"

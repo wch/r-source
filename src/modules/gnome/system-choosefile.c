@@ -22,9 +22,6 @@
 # include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
-
 #include "system.h"
 
 #include "terminal.h"

@@ -22,8 +22,6 @@
 # include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
 #ifdef HAVE_FCNTL_H
 # include <fcntl.h> /* for open and constants */
 #endif
