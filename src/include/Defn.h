@@ -32,6 +32,10 @@
 				  PrtUtil.h, Utils.h */
 #include "Errormsg.h"
 
+#ifndef USE_GENERATIONAL_GC
+# define ALLOW_OLD_SAVE_RESTORE
+#endif
+
 /* PSIGNAL may be defined on Win32 in config.h */
 #ifdef PSIGNAL
 #include <psignal.h>
@@ -478,7 +482,7 @@ extern char*	R_GUIType	INI_as("unknown");
 #define tspgets			Rf_tspgets
 #define type2str		Rf_type2str
 #define unbindVar		Rf_unbindVar
-#ifdef ALLOW_OLD_SAVE_RESTORE
+#ifdef USE_GENERATIONAL_GC
 #define unmarkPhase		Rf_unmarkPhase
 #endif
 #define usemethod		Rf_usemethod
