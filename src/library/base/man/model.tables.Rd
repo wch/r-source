@@ -38,8 +38,12 @@ model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
   \item{n}{The replication information for each term.}
   \item{se}{Standard error information.}
 }
-\section{Warning}{The implementation is incomplete, and only the simpler
-  cases have been tested thoroughly.}
+\section{Warning}{
+  The implementation is incomplete, and only the simpler
+  cases have been tested thoroughly.
+
+  Weighted \code{aov} fits are not supported.
+}
 
 \author{B.D. Ripley}
 

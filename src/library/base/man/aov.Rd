@@ -7,6 +7,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 \alias{aov}
 \alias{print.aov}
 \alias{print.aovlist}
+\alias{Error}
 \arguments{
   \item{formula}{A formula specifying the model.}
   \item{data}{A data frame in which the variables specified in the
@@ -38,6 +39,10 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   error stratum.
 
   The formula can specify multiple responses.
+
+  Weights can be specified by a \code{weights} argument, but should not
+  be used with an \code{Error} term, and are incompletely supported
+  (e.g. not by \code{\link{model.tables}}).
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
