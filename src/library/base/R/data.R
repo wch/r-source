@@ -149,6 +149,7 @@ function(..., list = character(0),
                     found <- FALSE
                 else {
                     zfile <- zip.file.extract(file, "Rdata.zip")
+                    if(zfile != file) on.exit(unlink(zfile))
                     switch(ext,
                            R = , r =
                            sys.source(zfile, chdir = TRUE,
@@ -165,7 +166,6 @@ function(..., list = character(0),
                                              sep = ";"),
                                   envir = envir),
                            found <- FALSE)
-                    if(zfile != file) unlink(zfile)
                 }
                 if(verbose)
                     cat(if(!found) "*NOT* ", "found\n")
