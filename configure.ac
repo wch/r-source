@@ -34,6 +34,8 @@ AC_INIT([R], R_VERSION, [r-bugs@R-project.org])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
 
+### * Information on the package.
+
 ## Automake initialization.
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
@@ -42,7 +44,7 @@ AH_TOP([#ifndef _CONFIG_H
 #define _CONFIG_H])
 AH_BOTTOM([#endif /* not _CONFIG_H */])
 
-### Platform.
+### ** Platform.
 
 AC_CANONICAL_HOST
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}",
@@ -72,7 +74,7 @@ case "${host_os}" in
    ;;
 esac
 
-### Defaults.
+### ** Defaults.
 
 f="${srcdir}/config.site"
 if test -r ${f}; then echo "loading site script ${f}"; . ${f}; fi
@@ -81,12 +83,22 @@ if test -r ${f}; then echo "loading user script ${f}"; . ${f} ; fi
 f="./config.site"
 if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 
-### Handle arguments to configure.
+## <FIXME>
+## We provide these defaults so that headers and libraries in '/usr/local'
+## are found (by the native tools, mostly).  But why do this here and not
+## in 'config.site'???
+## In addition, note that Autoconf now recommends LDFLAGS for '-L' flags
+## and LIBS for '-l' flags ...
+: ${CPPFLAGS="-I/usr/local/include"}
+: ${LIBS="-L/usr/local/lib"}
+## </FIXME>
+
+### ** Handle arguments to configure.
 
 config_opts=${ac_configure_args}
 AC_SUBST(config_opts)
 
-### Optional features.
+### ** Optional features.
 
 ## Allow the user to specify support for R profiling.
 AC_ARG_ENABLE([R-profiling],
@@ -139,7 +151,7 @@ AC_ARG_ENABLE([strict-barrier],
 fi],
 [])
 
-### Optional packages.
+### ** Optional packages.
 
 ## Allow the user to force us to use f2c.
 AC_ARG_WITH([f2c],
@@ -244,7 +256,8 @@ AC_ARG_WITH([tk-config],
 ## </FIXME>
 AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 
-### Precious variables.
+### ** Precious variables.
+
 AC_ARG_VAR([R_PRINTCMD],
            [command used to spool PostScript files to the printer])
 AC_ARG_VAR([R_PAPERSIZE],
@@ -294,7 +307,8 @@ AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
 AC_ARG_VAR([MAKE], [Make command])
 
-## Check whether we build in srcdir.
+### ** Check whether we build in srcdir.
+
 AC_PATH_PROG(GETWD, pwd, pwd)
 ## <FIXME>
 ## Autoconf 2.53 or better has abs_top_srcdir and abs_top_builddir.
@@ -308,34 +322,16 @@ fi
 AC_SUBST(BUILDDIR_IS_SRCDIR)
 AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
-### C compiler.
+### * Checks for programs.
 
-AC_PROG_CC
-AC_PROG_CPP
-
-: ${CPPFLAGS="-I/usr/local/include"}
-: ${LIBS="-L/usr/local/lib"}
-## Yes, we already need this at configure time ...
-case "${host_os}" in
-  aix*)
-    AC_AIX
-    LIBS="${LIBS} -lc"
-    ;;
-esac
-
-AC_PROG_CC_STDC
-AC_PROG_GCC_TRADITIONAL
-R_PROG_CC_M
-R_PROG_CC_C_O_LO
-
-### Programs.
+AC_AIX # Should be called before any macro that runs the C compiler.
 
 AC_PROG_AWK
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
-R_PROG_INSTALL
+AC_PROG_INSTALL
 AC_PATH_PROG(JAVAC, javac)
 ## Make
 : ${MAKE=make}
@@ -359,38 +355,17 @@ AC_SUBST(LIBTOOL_DEPS)
 ## Makeinfo
 R_PROG_MAKEINFO
 
-### FORTRAN compiler.
-
-## This is needed for setting up LIBM and in the FORTRAN tests, hence we
-## do it here rather than later when we do all the library checking.
-AC_CHECK_LIBM
-AC_SUBST(LIBM)
-
+AC_PROG_CC
+AC_PROG_CC_STDC
+AC_PROG_GCC_TRADITIONAL
+AC_PROG_CPP
 R_PROG_F77_OR_F2C
+AC_PROG_CXX
+AC_PROG_CXXCPP
 
-if test -n "${F77}"; then
-  FC=${F77}
-  AC_PROG_F77
-  R_PROG_F77_FLIBS
-  R_PROG_F77_APPEND_UNDERSCORE
-  R_PROG_F77_CC_COMPAT
-  R_PROG_F77_CC_COMPAT_COMPLEX
-  R_PROG_F77_MAKEFRAG  
-elif test -n "${F2C}"; then
-  R_PROG_F2C_FLIBS
-  AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
-  AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1)
-  R_PROG_F2C_MAKEFRAG
-else
-  AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
-fi
+### * Checks for libraries.
 
-AC_SUBST(FC)
-AC_SUBST(F2C)
-AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX, [test "x$HAVE_DOUBLE_COMPLEX" != x])
-
-### Set up LD_LIBRARY_PATH or equivalent.
-
+## Set up LD_LIBRARY_PATH or equivalent.
 ## <FIXME>
 ## What is this doing *HERE*?
 ## Should be needed for tests using AC_TRY_RUN()?
@@ -415,7 +390,6 @@ done
 ltout=`./libtool --config | grep '^shlibpath_var='`
 eval "${ltout}"
 AC_SUBST(shlibpath_var)
-
 ## Export LD_LIBRARY_PATH or equivalent.
 if eval "test -z \"\${${shlibpath_var}}\""; then
   eval "${shlibpath_var}=\"${R_LD_LIBRARY_PATH}\""
@@ -424,29 +398,24 @@ else
 fi
 eval "export ${shlibpath_var}"
 
-### C++ compiler.
+## Yes, we already need this at configure time ...
+case "${host_os}" in
+  aix*)
+    LIBS="-lc ${LIBS}"
+    ;;
+esac
 
 ## <NOTE>
-## Needs to follow initialization of LIBS and putting what is already in
-## LIBS into LD_LIBRARY_PATH or equivalent as -lstdc++ might well be in
-## `/usr/local/lib' and so not found at run time.
+## This actually comes from libtool.m4.
+AC_CHECK_LIBM
+AC_SUBST(LIBM)
 ## </NOTE>
-
-AC_PROG_CXX
-AC_PROG_CXXCPP
-R_PROG_CXX_M
-R_PROG_CXX_C_O_LO
-
-### Libraries.
-
+## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
+## the following as well.
 AC_CHECK_LIB(m, sin)
-if ${use_libmoto}; then
-  AC_CHECK_LIB(moto, sin)
-fi
-AC_CHECK_LIB(ncurses, main,,
-  AC_CHECK_LIB(termcap, main,,
-    AC_CHECK_LIB(termlib, main)
-))
+AC_CHECK_LIB(ncurses, main, ,
+             AC_CHECK_LIB(termcap, main, ,
+                          AC_CHECK_LIB(termlib, main)))
 AC_CHECK_LIB(dl, dlopen)
 
 ## BLAS.
@@ -459,44 +428,14 @@ else
   BLAS="blas.o"
 fi
 AC_SUBST(BLAS)
-AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x$BLAS_LIBS" != x])
+AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x${BLAS_LIBS}" != x])
 
 ## Readline.
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
 
-### Library functions.
-
-AC_FUNC_ALLOCA
-AC_FUNC_FORK
-AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
-  memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
-  stat strptime system times unsetenv)
-
-## <FIXME>
-## to build src/include/Rmath.h
-if test "${ac_cv_func_log1p}" = yes; then
-  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
-else
-  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
-fi
-AC_SUBST(RMATH_HAVE_LOG1P)
-## </FIXME>
-
-AC_REPLACE_FUNCS(snprintf strdup vsnprintf)
-AC_SEARCH_LIBS(connect, [socket])
-AC_SEARCH_LIBS(gethostbyname, [nsl socket])
-AC_SEARCH_LIBS(xdr_string, [nsl])
-R_FUNC___SETFPUCW
-R_FUNC_CALLOC
-R_FUNC_FINITE
-R_FUNC_LOG
-R_FUNC_STRPTIME
-
-### Header files.
+### * Checks for header files.
 
 AC_HEADER_STDC
 AC_HEADER_TIME
@@ -512,7 +451,6 @@ AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h errno.h fcntl.h \
 ## src/main/regex.c uses HAVE_LIBINTL_H.
 ## But then we want full gettext support and AM_GNU_GETTEXT.
 ## </FIXME>
-
 case "${host_os}" in
   sunos4*)
     AC_DEFINE(SunOS4, 1,
@@ -523,7 +461,7 @@ esac
 R_HEADER_SETJMP
 R_HEADER_GLIBC2
 
-### Typedefs.
+### * Checks for types.
 
 AC_TYPE_SIGNAL
 AC_TYPE_PID_T
@@ -534,7 +472,11 @@ AH_TEMPLATE([blkcnt_t],
              Apparently necessary to fix a GCC bug on AIX?])
 R_TYPE_SOCKLEN
 
-### C Compiler characteristics.
+### * Checks for compiler characteristics.
+
+### ** Generic tests for the C, FORTRAN 77 and C++ compilers.
+
+### *** C compiler.
 
 AC_C_BIGENDIAN
 AC_C_CONST
@@ -554,21 +496,42 @@ AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
 AC_CHECK_SIZEOF(long double, 0)
 
-### Platform-specific overrides for the C, FORTRAN and C++ compilers.
+R_PROG_CC_MAKEFRAG
+
+### *** FORTRAN 77 compiler.
+
+if test -n "${F77}"; then
+  FC=${F77}
+  R_PROG_F77_FLIBS
+  R_PROG_F77_APPEND_UNDERSCORE
+  R_PROG_F77_CC_COMPAT
+  R_PROG_F77_CC_COMPAT_COMPLEX
+  R_PROG_F77_MAKEFRAG  
+else
+  R_PROG_F2C_FLIBS
+  AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
+  AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1)
+  R_PROG_F2C_MAKEFRAG
+fi
+
+AC_SUBST(FC)
+AC_SUBST(F2C)
+AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX,
+               [test "x${HAVE_DOUBLE_COMPLEX}" != x])
+
+### *** C++ compiler.
+
+R_PROG_CXX_MAKEFRAG
+
+### ** Platform-specific overrides for the C, FORTRAN 77 and C++ compilers.
 
 case "${host_cpu}" in
   i*86)
+    R_PROG_CC_FLAG_D__NO_MATH_INLINES
     R_PROG_CC_FLAG([-mieee-fp],
                    [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp"])
     R_PROG_CXX_FLAG([-mieee-fp],
                     [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp"])
-    ## In current glibc, inline version [x86] of exp is broken
-    AC_EGREP_CPP([yes],
-      [ #include <math.h>
-        #if defined(__GLIBC__)
-          yes
-	#endif ],
-      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES"])
     ;;
   alpha*)
     ## <FIXME>
@@ -636,7 +599,7 @@ case "${host_os}" in
         ## </FIXME>
 	;;
     esac
-    AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="${R_XTRA_LIBS} -ldld"])
+    AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
     ;;
   irix*)
     R_C_OPTIEEE
@@ -666,7 +629,7 @@ AC_SUBST(R_XTRA_CXXFLAGS)
 AC_SUBST(R_XTRA_FFLAGS)
 AC_SUBST(R_XTRA_LIBS)
 
-### DLL stuff.
+### ** DLL stuff.
 
 ## We need to determine the following:
 ##
@@ -714,24 +677,23 @@ SHLIB_LIBADD=
 use_exportfile=no
 
 ## Step 1.  Ask imake.
-## <FIXME>
-## Use PATH_SEPARATOR instead of hard-wired ':', but the whole Imake
-## procedure is broken by design.
-AC_PATH_PROG(XMKMF, xmkmf, [],
-             [${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin])
-## </FIXME>
+## <NOTE>
+## Earlier versions had fpicflags=${cpicflags}.  As this really amounts
+## to hoping rather than knowing, we no longer do this.
+## </NOTE>
+r_xtra_path=${PATH}
+for dir in /usr/bin/X11 /usr/X11R6/bin /usr/openwin/bin; do
+  r_xtra_path="${r_xtra_path}${PATH_SEPARATOR}${dir}"
+done
+AC_PATH_PROG(XMKMF, xmkmf, [], [${r_xtra_path}])
 if test -n "${XMKMF}"; then
   echo > Imakefile
-  ${XMKMF} > /dev/null || touch Makefile
+  ${XMKMF} > /dev/null || echo > Makefile
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
     shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
-    ## <FIXME>
-    ## This is really stupid.
-    fpicflags=${cpicflags}
-    ## </FIXME>
   fi
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
@@ -763,9 +725,11 @@ case "${host_os}" in
     cxxpicflags=
     fpicflags=
     wl="-Wl,"
-    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
-    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
-      ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
+    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp"
+    main_ldflags="${main_ldflags} ${wl}-bM:SRE"
+    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512"
+    shlib_ldflags="${shlib_ldflags} ${wl}-bnoentry ${wl}-bexpall"
+    shlib_ldflags="${shlib_ldflags} ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
     ;;
   darwin*)
@@ -893,7 +857,7 @@ if test -z "${MAIN_LD}"; then
   fi
 fi
 
-: ${CPICFLAGS=${cpicflags}}
+: ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
     aix*|irix*|osf*)
@@ -905,7 +869,7 @@ if test -z "${CPICFLAGS}"; then
   esac
 fi
 
-: ${FPICFLAGS=${fpicflags}}
+: ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}" \
     && test -z "${F2C}"; then
   case "${host_os}" in
@@ -918,7 +882,7 @@ if test -z "${FPICFLAGS}" \
   esac
 fi
 
-: ${CXXPICFLAGS=${cxxpicflags}}
+: ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
     aix*|irix*|osf*)
@@ -987,7 +951,35 @@ AM_CONDITIONAL(USE_EXPORTFILE, [test "x${use_exportfile}" = xyes])
 AC_SUBST(LIBR_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 
-### System services.
+### * Checks for library functions.
+
+AC_FUNC_ALLOCA
+AC_FUNC_FORK
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
+  getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
+  memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
+  stat strptime system times unsetenv)
+
+## Used to build src/include/Rmath.h.
+if test "${ac_cv_func_log1p}" = yes; then
+  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
+else
+  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
+fi
+AC_SUBST(RMATH_HAVE_LOG1P)
+
+AC_REPLACE_FUNCS(snprintf strdup vsnprintf)
+AC_SEARCH_LIBS(connect, [socket])
+AC_SEARCH_LIBS(gethostbyname, [nsl socket])
+AC_SEARCH_LIBS(xdr_string, [nsl])
+R_FUNC___SETFPUCW
+R_FUNC_CALLOC
+R_FUNC_FINITE
+R_FUNC_LOG
+R_FUNC_STRPTIME
+
+### * Checks for system services.
 
 ## X11.
 ## Here we use the standard X11 search macro.
@@ -1043,7 +1035,7 @@ if test "${want_R_profiling}" = yes; then
 fi
 AC_SUBST(R_PROFILING)
 
-### Miscellaneous.
+### * Miscellaneous.
 
 ## Printing.
 ## We look to see whether we have `lpr' or `lp'.  Some platforms
@@ -1057,7 +1049,7 @@ AC_DEFINE_UNQUOTED(R_PRINTCMD, "${R_PRINTCMD}",
 ## Default paper size.
 AC_PATH_PROG(PAPERCONF, paperconf, false)
 papersize=`${PAPERCONF}`
-: ${R_PAPERSIZE=${papersize:-a4}}
+: ${R_PAPERSIZE="${papersize-a4}"}
 AC_SUBST(R_PAPERSIZE)
 
 ## Saving.
@@ -1101,21 +1093,11 @@ done
 ## </FIXME>
 AC_SUBST(R_LD_LIBRARY_PATH)
 
-### Final cleanups/rewrites.
+### * Output.
 
-## <FIXME>
-## This will no longer be necessary in Autoconf 2.50 or better.
-LTLIBOBJS=`echo $LIBOBJS | sed 's/\.o/\.lo/g'`
-AC_SUBST(LTLIBOBJS)
-LTALLOCA=`echo "$ALLOCA" | sed 's/\.o/.lo/g'`
-AC_SUBST(LTALLOCA)
-## </FIXME>
-
-### Output.
-
-AC_CONFIG_COMMANDS([stamp-h],
-  [test -f src/include/stamp-h || echo timestamp > src/include/stamp-h])
-AC_CONFIG_FILES([Makeconf
+AC_CONFIG_HEADERS([src/include/config.h])
+AC_CONFIG_FILES(
+[Makeconf
   Makefile
   afm/Makefile
   doc/Makefile
@@ -1200,10 +1182,23 @@ AC_CONFIG_FILES([Makeconf
   tests/Examples/Makefile
   tools/Makefile
 ])
-AC_CONFIG_HEADERS([src/include/config.h])
+
+AC_CONFIG_COMMANDS_PRE(
+[LTLIBOBJS=`echo "${LIBOBJS}" | sed 's/\.o/\.lo/g'`
+AC_SUBST(LTLIBOBJS)
+LTALLOCA=`echo "${ALLOCA}" | sed 's/\.o/.lo/g'`
+AC_SUBST(LTALLOCA)])
+
+AC_CONFIG_COMMANDS([stamp-h],
+[test -f src/include/stamp-h || echo timestamp > src/include/stamp-h])
 
 AC_OUTPUT
 
+## Summarize configure results.
+## <NOTE>
+## Doing this via AC_CONFIG_COMMANDS would require explicitly passing all
+## configure variables to config.status.
+## </NOTE>
 C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F77}"; then
@@ -1211,9 +1206,8 @@ if test -z "${F77}"; then
 else
   FORTRAN_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 fi
-
-AC_MSG_RESULT([
-
+AC_MSG_RESULT(
+[
 R is now configured for ${host}
 
   Source directory:          ${srcdir}
@@ -1229,7 +1223,6 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 ])
-
 if test -n "${warn_f77_and_g77}"; then
   AC_MSG_WARN([${warn_f77_and_g77}])
 fi
@@ -1238,6 +1231,9 @@ if test -n "${warn_f77_and_f2c}"; then
 fi
 if test -n "${warn_g77_and_f2c}"; then
   AC_MSG_WARN([${warn_g77_and_f2c}])
+fi
+if test -n "${warn_f77_mangling}"; then
+  AC_MSG_WARN([${warn_f77_mangling}])
 fi
 if test -n "${warn_f2c_flibs}"; then
   AC_MSG_WARN([${warn_f2c_flibs}])
@@ -1278,3 +1274,8 @@ fi
 if test -n "${warn_pager}"; then
   AC_MSG_WARN([${warn_pager}])
 fi
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
