@@ -481,6 +481,9 @@ BUG FIXES
 
     o	file.copy() ignored the overwrite argument (PR#3529)
 
+    o	The length of a string specification of lty is now checked: it
+	must be even.
+
 
 
 		CHANGES IN R VERSION 1.7.1

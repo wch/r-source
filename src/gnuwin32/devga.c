@@ -2031,12 +2031,13 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     xx2 = (int) x2;
     yy2 = (int) y2;
 
-    SetColor(col, gamma, dd),
-    SetLinetype(lty, lwd, dd);
-    if (R_OPAQUE(xd->fgcolor))
+    if (R_OPAQUE(col)) {
+	SetColor(col, gamma, dd);
+	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		       pt(xx1, yy1), pt(xx2, yy2), 0));
     SH;
+    }
 }
 
 	/********************************************************/
