@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   new function mosaicplot().
+
     o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
 
     o	RNGtype() allows to choose different Random Number Generators.
