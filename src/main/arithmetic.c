@@ -30,15 +30,15 @@
 /* Error Handling for Floating Point Errors */
 
 #ifndef IEEE_754
+#ifdef Unix
 #include <signal.h>
 
 static RETSIGTYPE handle_fperror(int dummy)
 {
     errno = ERANGE;
-#ifdef Unix
     signal(SIGFPE, handle_fperror);
-#endif
 }
+#endif
 #endif /* not IEEE_754 */
 
 #ifdef HAVE_MATHERR
@@ -211,7 +211,7 @@ void InitArithmetic()
     R_PosInf = 1.0/R_Zero_Hack;
     R_NegInf = -1.0/R_Zero_Hack;
 #else
-    R_NaN = -DBL_MAX;
+    R_NaN = -DBL_MAX*(1-1e-15);
     R_NaReal = R_NaN;
     R_PosInf = DBL_MAX;
     R_NegInf = -DBL_MAX;

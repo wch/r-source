@@ -131,7 +131,9 @@ char *EncodeReal(double x, int w, int d, int e)
 	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
 	else sprintf(Encodebuf, "%*s", w, "-Inf");
 #else
-	sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
+	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
+	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
+	else sprintf(Encodebuf, "%*s", w, "-Inf");
 #endif
     }
     else if (e) {
@@ -178,11 +180,7 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
     if (x.r == 0.0) x.r = 0.0;
     if (x.i == 0.0) x.i = 0.0;
 
-#ifdef IEEE_754
     if (ISNA(x.r) || ISNA(x.i)) {
-#else
-    if (R_FINITE(x.r) || R_FINITE(x.i)) {
-#endif
 	sprintf(Encodebuf, "%*s%*s", R_print.gap, "", wr+wi+2,
 		CHAR(R_print.na_string));
     }
