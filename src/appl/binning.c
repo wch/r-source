@@ -17,7 +17,6 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
 #include "Mathlib.h"
 #include "Error.h"
 #include "Arith.h"
