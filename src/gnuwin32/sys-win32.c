@@ -175,10 +175,11 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #include "run.h"
 
+#define INTERN_BUFSIZE 8096
 SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     rpipe *fp;
-    char  buf[120];
+    char  buf[INTERN_BUFSIZE];
     int   vis = 0, flag = 2, i = 0, j, ll;
     SEXP  tlist = R_NilValue, tchar, rval;
 
@@ -221,7 +222,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else {
 	    if (flag == 3)
 		PROTECT(tlist);
-	    for (i = 0; rpipeGets(fp, buf, 120); i++) {
+	    for (i = 0; rpipeGets(fp, buf, INTERN_BUFSIZE); i++) {
 		if (flag == 3) {
 		    ll = strlen(buf) - 1;
 		    if ((ll >= 0) && (buf[ll] == '\n'))

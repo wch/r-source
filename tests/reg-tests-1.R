@@ -1053,6 +1053,17 @@ attributes(tmp)
 stopifnot(length(res) == 1 && res == 1)
 ## gave NULL in 1.6.1
 
+
+## Undocumented line limit in system(intern=TRUE)
+## Naoki Takebayashi <ntakebay@bio.indiana.edu> 2002-12-07
+tmp <- tempfile()
+long <- paste(rep("0123456789", 20), collapse="")
+cat(long, "\n", sep="", file=tmp)
+junk <- system(paste("cat", tmp), intern = TRUE)
+stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
+## and split truncated on 1.6.1
+
+
 ## missing group generics for `difftime' (related to PR#2345)
 x <- as.difftime(c("0:3:20", "11:23:15"))
 y <- ISOdate(2001, 4, 26) - ISOdate(2001, 2, 26)
@@ -1061,6 +1072,8 @@ x + x
 x < y
 x < 100
 ## all but last failed in R < 1.7.0
+
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

@@ -196,10 +196,11 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif /* not _R_HAVE_TIMING_ */
 
 
+#define INTERN_BUFSIZE 8096
 SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
-    char *x = "r", buf[120];
+    char *x = "r", buf[INTERN_BUFSIZE];
     int read=0, i, j;
     SEXP tlist = R_NilValue, tchar, rval;
 
@@ -212,9 +213,9 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_POPEN
 	PROTECT(tlist);
 	fp = popen(CHAR(STRING_ELT(CAR(args), 0)), x);
-	for (i = 0; fgets(buf, 120, fp); i++) {
+	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
-	    buf[read - 1] = '\0';
+	    if (read < INTERN_BUFSIZE) buf[read - 1] = '\0'; /* chop final CR */
 	    tchar = mkChar(buf);
 	    UNPROTECT(1);
 	    PROTECT(tlist = CONS(tchar, tlist));
