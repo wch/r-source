@@ -249,7 +249,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	s = CHAR(STRING_ELT(vec, i));
 	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);
-	while (pcre_exec(re_pcre, re_pe, s, ns, 0, 0, ovector, 30) >= 0) {
+	while (pcre_exec(re_pcre, re_pe, s+offset, ns-offset, 0, 0, 
+			 ovector, 30) >= 0) {
 	    nmatch += 1;
 	    if (ovector[0] == 0)
 		offset++;
@@ -265,7 +266,6 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    SET_STRING_ELT(ans, i, allocString(ns));
 	    offset = 0;
-	    nmatch = 0;
 	    s = CHAR(STRING_ELT(vec, i));
 	    t = CHAR(STRING_ELT(rep, 0));
 	    uu = u = CHAR(STRING_ELT(ans, i));
@@ -287,7 +287,6 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
 	    *u = '\0';
-	    SETLENGTH(STRING_ELT(ans, i), strlen(uu));
 	}
     }
     (pcre_free)(re_pe);
