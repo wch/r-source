@@ -21,7 +21,7 @@
 #define NONAMELESSUNION
 #include <windows.h>
 #include <stdio.h>
-#include "config.h"
+#include <config.h>
 #include "Rversion.h"
 #include "Startup.h"
 /* for askok and askyesnocancel */
