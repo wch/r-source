@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-48, @value{FAQ-YEAR}-10-02
+@set FAQ-VERSION 1.7-49, @value{FAQ-YEAR}-10-03
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2026,6 +2026,9 @@ Solve linear programming/linear optimization problems by using the
 simplex algorithm.
 @item lme4
 Fit linear and generalized linear mixed-effects models.
+@item lmeSplines
+Fit smoothing spline terms in Gaussian linear and nonlinear
+mixed-effects models.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
