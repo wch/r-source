@@ -47,6 +47,12 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   "/Font5 /Symbol findfont definefont" confused some printers
+
+    o   Bounding box rotated 90 deg for landscape (shouldn't be)
+
+    o   Legend skipped symbol for pch=0
+
     o   compilation on non-Intel Linux systems no longer looks for __setfpucw
 
     o   a %% b -- is now periodic instead of symmetric; more S compatible.
