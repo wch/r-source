@@ -5,7 +5,7 @@
   Enable or disable profiling of the execution of \R expressions.
 }
 \usage{
-Rprof(filename = "Rprof.out", append = TRUE, interval = 0.02)
+Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
 }
 \arguments{
   \item{filename}{

@@ -20,7 +20,7 @@
 file(description, open = "", blocking = TRUE)
 pipe(description, open = "")
 
-\method{open}{connection}(con, open = "rt", blocking = TRUE)
+\method{open}{connection}(con, open = "r", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
 \method{seek}{connection}(con, where = NA, rw = "")
 
@@ -31,7 +31,6 @@ isSeekable(con)
 \arguments{
   \item{description}{character. A description of the connection. For
     \code{file} this is a path to the file to be opened.
-    For a \code{textConnection} it is an \R character vector object.
   }
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}

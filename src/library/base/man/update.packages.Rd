@@ -14,22 +14,22 @@
   CRAN and update outdated packages on the fly.}
 }
 \usage{
-update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
+update.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method = "auto", instlib = NULL,
                 ask=TRUE, available=NULL, destdir=NULL)
 
 installed.packages(lib.loc = .lib.loc)
-CRAN.packages(CRAN = options("CRAN"), method = "auto",
+CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
               contriburl = contrib.url(CRAN))
 old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
              method = "auto", available = NULL)
 
 download.packages(pkgs, destdir, available = NULL,
-                  CRAN = options("CRAN"), 
+                  CRAN = getOption("CRAN"), 
                   contriburl = contrib.url(CRAN), method = "auto")
-install.packages(pkgs, lib, CRAN = options("CRAN"),
+install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method = "auto", available = NULL, destdir = NULL)
 newerVersion(a, b)
