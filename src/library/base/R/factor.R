@@ -1,17 +1,19 @@
 "factor" <-
-  function (x, levels = sort(unique(x), na.last = TRUE), labels, 
-            exclude = NA) 
+  function (x, levels = sort(unique(x), na.last = TRUE),
+	labels=as.character(levels), 
+            exclude = NA)
 {
   if (length(x) == 0) 
     return(character(0))
   exclude <- as.vector(exclude, typeof(x))
   levels <- levels[is.na(match(levels, exclude))]
-  x <- match(x, levels)
-  attr(x, "levels") <- levels
-  attr(x, "class") <- "factor"
-  if (!missing(labels)) 
-    levels(x) <- labels
-  x
+  f <- match(x, levels)
+  names(f) <- names(x)
+  attr(f, "levels") <- if (length(labels) == length(levels)) labels
+    else if(length(labels) == 1) paste(labels, seq(along = levels), sep = "")
+  else stop("invalid labels argument in \"factor\"")
+  attr(f, "class") <- "factor"
+  f
 }
 
 
@@ -124,8 +126,9 @@ codes.factor <-
 # ordered factors ...
 
 "ordered" <-
-  function (x, levels = sort(unique(x), na.last = TRUE), labels, 
-            exclude = NA, ordered = TRUE) 
+  function (x, levels = sort(unique(x), na.last = TRUE),
+	    labels=as.character(levels),
+            exclude = NA) 
 {
   if (is.ordered(x)) return(x)
   if (is.factor(x)) {
@@ -136,12 +139,14 @@ codes.factor <-
     return(character(0))
   exclude <- as.vector(exclude, typeof(x))
   levels <- levels[is.na(match(levels, exclude))]
-  x <- match(x, levels)
-  attr(x, "levels") <- levels
-  attr(x, "class") <- "factor"
-  if (!missing(labels))
-    levels(x) <- labels
-  x
+
+  f <- match(x, levels)
+  names(f) <- names(x)
+  attr(f, "levels") <- if (length(labels) == length(levels)) labels
+    else if(length(labels) == 1) paste(labels, seq(along = levels), sep = "")
+  else stop("invalid labels argument in \"ordered\"")
+  attr(f, "class") <- c("ordered", "factor")
+  f
 }
 
 "is.ordered" <-
