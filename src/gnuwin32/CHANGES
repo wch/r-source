@@ -73,6 +73,10 @@ Rcmd INSTALL now supports versioned install via --with-package-versions.
 Installing (binary) package bundles now checks the MD5 sums and
 reports success, just as for packages.
 
+Added "* DONE" to the end of INSTALL logs so --install option to CHECK
+will work. (This is a repository maintainer option; see 
+src/scripts/check.in for docs).
+
 
 Internal changes
 ----------------

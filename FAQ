@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-38, 2004-02-02
+Version 1.8-40, 2004-02-13
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1525,6 +1525,9 @@ distributions of R.)
 *ash*
      David Scott's ASH routines for 1D and 2D density estimation.
 
+*assist*
+     A suite of functions implementing smoothing splines.
+
 *asypow*
      A set of routines that calculate power and related quantities utilizing
      asymptotic likelihood ratio methods.
@@ -2089,6 +2092,9 @@ distributions of R.)
 
 *mvnormtest*
      Generalization of the Shapiro-Wilk test for multivariate variables.
+
+*mvpart*
+     Multivariate partitioning.
 
 *mvtnorm*
      Multivariate normal and t distributions.

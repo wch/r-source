@@ -194,7 +194,8 @@ Building Tcl/Tk support
 
 The TclTk support package is not built automatically.  Get
 http://www.stats.ox.ac.uk/pub/Rtools/R_Tcl.zip and unzip it at the top
-level of the R sources: it will add a Tcl directory.  Then
+level of the R sources: it will add directories $RHOME/Tcl, $RHOME/Tcl/bin,
+etc.  Then
 
 	make tcl
 
@@ -282,7 +283,7 @@ all the parts in the sequence:
 	crandir (the CRAN distribution directory)
 
 The parts can be made individually if a full build is not needed, but
-earlier parts must built before later ones.  (The Makefile doesn't
+earlier parts must be built before later ones.  (The Makefile doesn't
 enforce this dependency---some build targets force a lot of
 computation even if all files are up to date.)  The first four targets
 are the default build if just "make" is run.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-38, @value{FAQ-YEAR}-02-02
+@set FAQ-VERSION 1.8-40, @value{FAQ-YEAR}-02-13
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1783,6 +1783,8 @@ minimum spanning tree, or the population parameter theta based on
 various approaches.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
+@item assist
+A suite of functions implementing smoothing splines. 
 @item asypow
 A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
@@ -2208,6 +2210,8 @@ preparation, macro functions, and more.
 ML estimation for multivariate normal data with missing values.
 @item mvnormtest
 Generalization of the Shapiro-Wilk test for multivariate variables.
+@item mvpart
+Multivariate partitioning.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
 @item ncdf
