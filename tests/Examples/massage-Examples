@@ -25,8 +25,7 @@ FILES="$@"
 (cat <<_EOF_
 .ptime <- proc.time()
 postscript('PKG-Examples.ps')
-.pp <- par()
-.par.postscript <- .pp[-match(c("cin","cra","csi","din"),names(.pp))]
+.par.postscript <- par(no.readonly = TRUE)
 _EOF_
 ) | sed "s/PKG/${PKG}/"
 if [ "$PKG" != "base" ]; then echo "library('$PKG')" ; fi

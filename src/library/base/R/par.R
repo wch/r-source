@@ -14,17 +14,16 @@
 	   ##-- newer ones:
 	   "gamma", "tcl"
 	   )
+.Pars.readonly <- c("cin","cra","csi","din")
 
-
-par <-
-    function (...)
+par <- function (..., no.readonly = FALSE)
 {
     single <- FALSE
-    if (nargs() == 0) {
-	args <- as.list(.Pars)
-    }
+    args <- list(...)
+    if (!length(args))
+	args <- as.list(if(no.readonly)
+                        .Pars[-match(.Pars.readonly, .Pars)] else .Pars)
     else {
-	args <- list(...)
 	if (all(unlist(lapply(args, is.character))))
 	    args <- as.list(unlist(args))
 	if (length(args) == 1) {
@@ -35,8 +34,8 @@ par <-
 		    single <- TRUE
 	}
     }
-    value <- if (single) .Internal(par(args))[[1]]
-    else .Internal(par(args))
+    value <-
+        if (single) .Internal(par(args))[[1]] else .Internal(par(args))
     if(!is.null(names(args))) invisible(value) else value
 }
 

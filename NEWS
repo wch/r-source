@@ -2,6 +2,13 @@
 
 NEW FEATURES
 
+    o   par() has a 'no.readonly = FALSE' argument which allows more
+	sensible  op <- par(no.readonly = TRUE);  on.exit(par(op)).
+
+    o   Real Bessel functions of 1st to 3rd kind, of arbitrary order:
+	besselI(.), besselK(.),	besselJ(.), besselY(.) are the
+	I(), K(), J(), Y() Bessel functions.
+
     o   uniroot has a new 'maxiter' argument and returns #{iter} and precision.
 
     o   New options "show.coef.Pvalue" (= TRUE).  If FALSE, print.summary.[g]lm
@@ -87,6 +94,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   seq(a,a, by=b) now works properly.
+
     o	print.data.frame(.) now calls print.matrix instead of print(.)
 	which finally enables the 'right = TRUE' argument.
 
@@ -101,8 +110,13 @@ BUG FIXES
 
     o   Fixes and restructuring to name generation in connection with
 	unlist() and c().
+
 
-(BUG FIXES to non-released 0.62.4)
+		CHANGES IN R VERSION 0.62.4
+BUG FIXES
+
+    o   plot.default(.) has now 'sub' argument which eliminates
+	"Warning: parameter "sub" couldn't be set in high-level plot() function"
 
     o	formatC(numeric(0)) now works.
 
