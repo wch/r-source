@@ -676,3 +676,12 @@ a3 <- DF[1,1:3, drop = TRUE]
 a4 <- xx[, 1:3, drop = TRUE]
 stopifnot(identical(a1, a2), identical(a3, a4))
 ## <= 1.5.0 had a2 == a3.
+
+
+## PR 1536 rbind.data.frame converts logical to factor
+df <- data.frame(a = 1:10)
+df$b <- df$a < 5
+ddf <- rbind(df, df)
+stopifnot(!is.factor(ddf$b))
+## 1.5.0 had b as a factor.
+
