@@ -1087,6 +1087,7 @@ int main() {
   ])
   if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
+    LIBS="-lz ${LIBS}"
   fi
 ])
 AC_DEFUN([R_USES_LEAPSECONDS],
