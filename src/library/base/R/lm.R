@@ -557,6 +557,7 @@ model.matrix.lm <- function(object, ...)
     }
 }
 
+##---> SEE ./mlm.R  for more methods, etc. !! 
 predict.mlm <- function(object, newdata, se.fit = FALSE)
 {
     if(missing(newdata)) return(object$fitted)
