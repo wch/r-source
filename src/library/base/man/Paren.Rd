@@ -5,16 +5,15 @@
 
 { \dots }
 }
-% These two do not work properly!
-%\alias{(}
-%\alias{{}
+\alias{(}
+\alias{{}
 \description{
-    Open parenthesis, \code{(}, and open brace, \code{\{}, are
-    \code{\link{.Primitive}} functions in \R.
+  Open parenthesis, \code{(}, and open brace, \code{\{}, are
+  \code{\link{.Primitive}} functions in \R.
 
-    Effectively, \code{(} is semantically equivalent to the identity
-    \code{function(x) x}, whereas \code{\{} is slightly more interesting,
-    see examples.
+  Effectively, \code{(} is semantically equivalent to the identity
+  \code{function(x) x}, whereas \code{\{} is slightly more interesting,
+  see examples.
 }
 \seealso{
 \code{\link{if}}, \code{\link{return}}, etc for other objects used in
@@ -26,7 +25,6 @@ e <- expression(3 + 2 * 4)
 f(e) == e           # TRUE
 
 do <- get("\{")
-do(x_ 3, y_ 2*x-3, 6-x-y); x; y
+do(x <- 3, y <- 2*x-3, 6-x-y); x; y
 }
 \keyword{programming}
-

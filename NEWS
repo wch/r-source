@@ -276,6 +276,8 @@ BUG FIXES
     o	Better rendering of ^ and ~ in latex in \code{} (and they should
 	not appear outside code and verbatim sections).
 
+    o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
+
 
 
 		CHANGES IN R VERSION 1.1.0
