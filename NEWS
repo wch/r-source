@@ -31,6 +31,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   matrix(f,...) with f a factor now coerces to character
+
+    o   documentation errors for substitute and is.vector 
+
     o	Background colours are set properly on X11 devices with 
 	colortype="pseudo": sometimes they were not allocated separately.
 
