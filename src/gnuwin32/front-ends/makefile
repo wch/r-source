@@ -31,7 +31,7 @@ Rgui.exe: graphappmain.o  rgui.o rgico.o
 
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-rgui.o rterm.o: ../../include/Platform.h
+rgui.o rterm.o: ../../include/Version.h
 
 clean:
 	$(RM) *.o *.exe *~ *.exp

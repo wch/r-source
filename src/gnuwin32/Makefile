@@ -31,7 +31,7 @@ EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 all: rbuild rdemo rpackage
 
-CFLAGS=$(OPTFLAGS) -I../include
+CFLAGS=$(OPTFLAGS) -I../include -I.
 FFLAGS=$(OPTFLAGS)
 
 ../main/saveload-CFLAGS=-Ixdr
@@ -233,12 +233,12 @@ devga.o:  		console.h rui.h devga.h opt.h graphapp/ga.h \
 dynload.o: 		../include/FFDecl.h ../include/FFTab.h
 edit.o: 		run.h
 extra.o: 		graphapp/ga.h
-rhome.o: 		../include/Platform.h
-rui.o: 			console.h opt.h rui.h ../include/Platform.h \
+rhome.o: 		../include/Version.h
+rui.o: 			console.h opt.h rui.h ../include/Version.h \
 			graphapp/ga.h graphapp/stdimg.h
 run.o: 			run.h graphapp/ga.h
 system.o: 		devga.h run.h console.h rui.h graphapp/ga.h \
-                        ../include/Defn.h ../include/Platform.h
+                        ../include/Defn.h ../include/Version.h
 
 
 ../main/colors.o:	../include/Graphics.h
@@ -259,7 +259,7 @@ system.o: 		devga.h run.h console.h rui.h graphapp/ga.h \
 ../main/printutils.o:	../include/Print.h
 ../main/printvector.o:	../include/Print.h
 
-../main/version.o:	../include/Platform.h
+../main/version.o:	../include/Version.h
 
 ../nmath/snorm.o:	../include/Random.h
 ../nmath/sunif.o:	../include/Random.h

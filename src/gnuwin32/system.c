@@ -167,6 +167,7 @@
 #include <windows.h>
 #include "run.h"
 #include "Startup.h"
+#include "Version.h"
 
 static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;

@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
-#include "Platform.h"
+#include "Version.h"
 #include "Startup.h"
 #include "graphapp/graphapp.h"
 

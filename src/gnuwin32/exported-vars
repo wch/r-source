@@ -34,3 +34,4 @@ R_LastvalueSymbol
 R_CommentSymbol
 R_NaString
 R_BlankString
+R_PreciousList

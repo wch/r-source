@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
-#include "Platform.h"
+#include "Version.h"
 
 #define CharacterMode (*__imp_CharacterMode)
 #define UserBreak     (*__imp_UserBreak)
