@@ -5,24 +5,16 @@ str(object, \dots)
 
 \method{str}{data.frame}(object, \dots)
 
-\method{str}{default}(object, max.level = 0, vec.len = 4, digits.d = 3,
+\method{str}{default}(object, max.level = NA, vec.len = 4, digits.d = 3,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
     wid = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = NULL,
     \dots)
-
- ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos),
-        mode = "any")
-lsf.str(pos = 1, \dots, envir = as.environment(pos))
-\method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots)
 }
 \alias{str}
 \alias{str.default}
 \alias{str.data.frame}
-\alias{ls.str}
-\alias{lsf.str}
-\alias{print.ls_str}
 \description{
   Compactly display the internal \bold{str}ucture of an \R object, a
   \dQuote{diagnostic} function and an alternative to \code{\link{summary}}
@@ -31,17 +23,13 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
   to compactly display the (abbreviated) contents of (possibly nested)
   lists.  The idea is to give reasonable output for \bold{any} \R
   object.  It calls \code{\link{args}} for (non-primitive) function objects.
-
-  \code{\link{ls.str}} and \code{\link{lsf.str}} are \dQuote{variations}
-  of \code{\link{ls}} applying \code{str()} to each matched name, see
-  section \sQuote{Value}.
 }
 \arguments{
   \item{object}{any \R object about which you want to have some
     information.}
   \item{max.level}{maximal level of nesting which is applied for
     displaying nested structures, e.g., a list containing sub lists.
-    Default 0: Display all nesting levels.}
+    Default NA: Display all nesting levels.}
   \item{vec.len}{numeric (>= 0) indicating how many \dQuote{first few} elements
     are displayed of each vector.  The number is multiplied by different
     factors (from .5 to 3) depending on the kind of vector.  Default 4.}
@@ -65,32 +53,15 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
   \item{envir}{the environment to be used for \emph{promise} (see
     \code{\link{delay}}) objects only.}
   \item{\dots}{potential further arguments (required for Method/Generic reasons).}
-%% The following line is swallowed, unfortunately..  fixme??
-  For \code{ls.str} and \code{lsf.str}:
-
-  \item{pos}{integer indicating \code{\link{search}} path position.}
-  \item{envir}{environment to use, see \code{\link{ls}}.}
-  \item{pattern}{a \link{regular expression} passed to \code{\link{ls}}.
-    Only names matching \code{pattern} are considered.}
-  \item{mode}{character specifying the \code{\link{mode}} of objects to
-    consider.  Passed to \code{\link{exists}} and \code{\link{get}}.}
-%% print.ls_str:
-  \item{x}{an object of class \code{"ls_str"}.}
-
 }
 \value{
   \code{str} does not return anything, for efficiency reasons.
   The obvious side effect is output to the terminal.
-
-  \code{ls.str} and \code{lsf.str} return an object of class
-  \code{"ls_str"}, basically the character vector of matching names
-  (functions only for \code{\link{lsf.str}}), similarly to
-  \code{\link{ls}}, with a \code{print()} method that calls \code{str()}
-  on each object.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
 }
 \seealso{
+  \code{\link{ls.str}} for \emph{listing} objects with their structure;
   \code{\link{summary}}, \code{\link{args}}.
 }
 \examples{
@@ -116,10 +87,6 @@ nchar(longch <- paste(rep(letters,100), collapse=""))
 str(longch)
 str(longch, nchar.max = 52)
 
-lsf.str()#- how do the functions look like which I am using?
-ls.str(mode = "list") #- what are the structured objects I have defined?
-## which base functions have "file" in their name ?
-lsf.str(pos = length(search()), pattern = "file")
 \dontshow{
  ##-- Some "crazy" objects
  str(array(1:5, dim=20))

@@ -66,13 +66,17 @@ USER-VISIBLE CHANGES
 
     o	Package names must now be given exactly in library() and
 	require(), regardless of whether the underlying file system is
-	case-sensitive or not.  So 'library(mass)' will not work, even
+	case-sensitive or not.	So 'library(mass)' will not work, even
 	on Windows.
 
     o	R no longer accepts associative use of relational operators.
-        That is, 3 < 2 < 1 (which used to evalute as TRUE!) now causes
-        a syntax error.  If this breaks existing code, just add
-        parentheses -- or braces in the case of plotmath.
+	That is, 3 < 2 < 1 (which used to evalute as TRUE!) now causes
+	a syntax error.	 If this breaks existing code, just add
+	parentheses -- or braces in the case of plotmath.
+
+    o	str(*, max.level = 0) has a new meaning of suppressing all
+	hierarchical details.  The default behavior of giving all levels is
+	unchanged, but now specified by 'max.level = NA'.
 
 
 NEW FEATURES
@@ -191,7 +195,7 @@ NEW FEATURES
 	dependencies ....
 
 	The Unix version of install.packages() attempts to install
-	packages in an order that reflects their dependencies.  (This
+	packages in an order that reflects their dependencies.	(This
 	is not needed for binary installs as used under Windows.)
 
     o	interaction() has new argument 'sep'.
@@ -200,7 +204,7 @@ NEW FEATURES
 	warnings when passed a matplot()-only argument such as 'main'.
 
     o	is.integer() and is.numeric() always return FALSE for a
-	factor.  (Previously they were true and false respectively for
+	factor.	 (Previously they were true and false respectively for
 	well-formed factors, but it is possible to create factors
 	with non-integer codes by underhand means.)
 
@@ -232,16 +236,16 @@ NEW FEATURES
 	intention, but they sometimes were as the result of an earlier
 	bug fix.)
 
-    o   There is a new 'padj' argument to mtext() and axis().
+    o	There is a new 'padj' argument to mtext() and axis().
 	Code patch provided by Uwe Ligges (fixes PR#1659 and PR#7188).
-	
+
     o	Function package.dependencies() has been moved to package 'tools'.
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to 'na.pass', rather than the value of
 	getOption("na.action").
 
-    o   There are five new par() settings:
+    o	There are five new par() settings:
 
 	'family' can be used to specify a font family for graphics
 	text.  This is a device-independent family specification
@@ -252,7 +256,7 @@ NEW FEATURES
 
 	'lend', 'ljoin', and 'lmitre' control the cap style and
 	join style for drawing lines (only noticeable on thick lines
-	or borders).  Currently, only PostScript, PDF, X11, and Quartz 
+	or borders).  Currently, only PostScript, PDF, X11, and Quartz
 	respond to these settings.
 
 	'lheight' is a multiplier used in determining the vertical
@@ -261,10 +265,10 @@ NEW FEATURES
 	All of these settings are currently only available via par()
 	(i.e., not in-line as arguments to plot(), lines(), ...)
 
-    o   New functions to control mapping from device-independent graphics
-	font family to device-specific family:  postscriptFont() and
-	postscriptFonts() (for postscript() and pdf());  X11Font() and
-	X11Fonts();  windowsFont() and windowsFonts();  quartzFont() and
+    o	New functions to control mapping from device-independent graphics
+	font family to device-specific family:	postscriptFont() and
+	postscriptFonts() (for postscript() and pdf());	 X11Font() and
+	X11Fonts();  windowsFont() and windowsFonts();	quartzFont() and
 	quartzFonts().
 
     o	A 'version' argument has been added to pdf() device.  If this is
@@ -285,7 +289,7 @@ NEW FEATURES
 
 	prcomp() now has a simple predict() method.
 
-    o   printCoefmat() has a new logical argument 'signif.legend'.
+    o	printCoefmat() has a new logical argument 'signif.legend'.
 
     o	quantile() has the option of several methods described in
 	Hyndman & Fan (1996). (Contributed by Rob Hyndman.)
@@ -313,7 +317,7 @@ NEW FEATURES
     o	Replaying a plot (with replayPlot() or via autoprinting) now
 	automagically opens a device if none is open.
 
-    o   replayPlot() issues a warning if an attempt is made to replay
+    o	replayPlot() issues a warning if an attempt is made to replay
 	a plot that was recorded using a different R version (the
 	format for recorded plots is not guaranteed to be stable
 	across different R versions).  The Windows-menu equivalent
@@ -321,38 +325,41 @@ NEW FEATURES
 
     o	reshape() can handle multiple 'id' variables.
 
-    o   It is now possible to specify colours with a full alpha
+    o	It is now possible to specify colours with a full alpha
 	transparency channel via the new 'alpha' argument to the
 	rgb() and hsv() functions, or as a string of the form "#RRGGBBAA".
 
 	NOTE: most devices draw nothing if a colour is not opaque,
 	but PDF and Quartz devices will render semitransparent colours.
 
-	A new argument 'alpha' to the function col2rgb() 
-        provides the ability to return the alpha component of
+	A new argument 'alpha' to the function col2rgb()
+	provides the ability to return the alpha component of
 	colours (as well as the red, green, and blue components).
 
     o	save() now checks that a binary connection is used.
 
     o	seek() on connections now accepts and returns a double for the
-	file position.  This allows >2Gb files to be handled on a 
+	file position.	This allows >2Gb files to be handled on a
 	64-bit platform.
 
     o	source() with 'echo = TRUE' uses the function source attribute
 	when displaying commands as they are parsed.
 
-    o   setClass() and its utilities now warn if either superclasses
-        or classes for slots are undefined.  (Use setOldClass to
-        register S3 classes for use as slots)
+    o	setClass() and its utilities now warn if either superclasses
+	or classes for slots are undefined.  (Use setOldClass to
+	register S3 classes for use as slots)
 
     o	str(obj) now displays more reasonably the STRucture of S4 objects.
 
-	It's also improved for language objects and lists with promise
+	It is also improved for language objects and lists with promise
 	components.
 
 	The method for class "dendrogram" has a new argument 'stem' and
 	indicates when it's not printing all levels (as typically when
 	e.g., 'max.level = 2').
+
+	Specifying 'max.level = 0' now allows to suppress all but the top
+	level for hierarchical objects such as lists.
 
     o	system.time() has a new argument 'gcFirst' which, when TRUE,
 	forces a garbage collection before timing begins.
@@ -360,10 +367,10 @@ NEW FEATURES
     o	tail() of a matrix now displays the original row numbers.
 
     o	The default method for text() now coerces a factor to character
-	and not to its internal codes.  This is incompatible with S
+	and not to its internal codes.	This is incompatible with S
 	but seems what users would expect.
 
-    	It now also recycles (x,y) to the length of 'labels' if that
+	It now also recycles (x,y) to the length of 'labels' if that
 	is longer.  This is now compatible with grid.text() and
 	S. (See also PR#7084.)
 
@@ -380,7 +387,7 @@ NEW FEATURES
 
 
     o	Subassignments involving NAs and with a replacement value of
-	length > 0 are now disallowed.  (They were handled
+	length > 0 are now disallowed.	(They were handled
 	inconsistently in R < 2.0.0, see PR#7210.)  For data frames
 	they are disallowed altogether, even for logical matrix indices
 	(the only case which used to work).
@@ -398,10 +405,10 @@ NEW FEATURES
 	whole string, and non-printable characters are represented by
 	octal escape sequences.
 
-    o   Objects created from a formally defined class now include the
-        name of the corresponding package as an attribute in the
-        object's class.  This allows packages with namespaces to have
-        private (non-exported) classes.
+    o	Objects created from a formally defined class now include the
+	name of the corresponding package as an attribute in the
+	object's class.	 This allows packages with namespaces to have
+	private (non-exported) classes.
 
     o	Changes to package 'grid':
 
@@ -411,7 +418,7 @@ NEW FEATURES
 	- Calculation of number of rectangles to draw in rectGrob now
 	  looks at length of y, w, and h as well as length of x.
 
-	- All primitives (rectangles, lines, text, ...) now handle 
+	- All primitives (rectangles, lines, text, ...) now handle
 	  non-finite values (NA, Inf, -Inf, NaN) for locations and
 	  sizes.
 
@@ -422,9 +429,9 @@ NEW FEATURES
 	  new behaviour.
 
 	- Fixed (unreported) bug in drawing circles.  Now checks that
-          radius is non-negative.
+	  radius is non-negative.
 
-	- downViewport() now reports the depth it went down to find a 
+	- downViewport() now reports the depth it went down to find a
 	  viewport.  Handy for "going back" to where you started, e.g., ...
 
 	    depth <- downViewport("vpname")
@@ -432,51 +439,51 @@ NEW FEATURES
 	    upViewport(depth)
 
 	- The "alpha" gpar() is now combined with the alpha channel of
-          colours when creating a gcontext as follows:
+	  colours when creating a gcontext as follows:
 
-            finalAlpha = gpar("alpha")*(R_ALPHA(col)/255)
+	    finalAlpha = gpar("alpha")*(R_ALPHA(col)/255)
 
 	  This means that gpar(alpha=) settings now affect internal
 	  colours so grid alpha transparency settings now are sent to
 	  graphics devices.
 
-	  The alpha setting is also cumulative.  For example, ...
-      
-	    grid.rect(width=0.5, height=0.5, 
-                      gp=gpar(fill="blue"))              # alpha = 1
-            pushViewport(viewport(gp=gpar(alpha=0.5)))
-            grid.rect(height=0.25, gp=gpar(fill="red"))  # alpha = 0.5
-            pushViewport(viewport(gp=gpar(alpha=0.5)))
-            grid.rect(width=0.25, gp=gpar(fill="red"))   # alpha = 0.25 !
+	  The alpha setting is also cumulative.	 For example, ...
+
+	    grid.rect(width=0.5, height=0.5,
+		      gp=gpar(fill="blue"))		 # alpha = 1
+	    pushViewport(viewport(gp=gpar(alpha=0.5)))
+	    grid.rect(height=0.25, gp=gpar(fill="red"))	 # alpha = 0.5
+	    pushViewport(viewport(gp=gpar(alpha=0.5)))
+	    grid.rect(width=0.25, gp=gpar(fill="red"))	 # alpha = 0.25 !
 
 	- Editing a gp slot in a grob is now incremental.  For example ...
 
-            grid.lines(name="line")
+	    grid.lines(name="line")
 	    grid.edit("line", gp=gpar(col="red")) # line turns red
-	    grid.edit("line", gp=gpar(lwd=3)) # line becomes thick 
-                                              # AND STAYS red
-      
-        - The "cex" gpar is now cumulative.  For example ...
-      
-            grid.rect(height=unit(4, "char")) # cex = 1
+	    grid.edit("line", gp=gpar(lwd=3)) # line becomes thick
+					      # AND STAYS red
+
+	- The "cex" gpar is now cumulative.  For example ...
+
+	    grid.rect(height=unit(4, "char")) # cex = 1
 	    pushViewport(viewport(gp=gpar(cex=0.5)))
 	    grid.rect(height=unit(4, "char")) # cex = 0.5
 	    pushViewport(viewport(gp=gpar(cex=0.5)))
 	    grid.rect(height=unit(4, "char")) # cex = 0.125 !!!
 
 	- New childNames() function to list the names of children
-          of a gTree.
+	  of a gTree.
 
-	- The "grep" and "global" arguments have been implemented for 
-          grid.[add|edit|get|remove]Grob() functions.
+	- The "grep" and "global" arguments have been implemented for
+	  grid.[add|edit|get|remove]Grob() functions.
 
-          The "grep" argument has also been implemented for the
+	  The "grep" argument has also been implemented for the
 	  grid.set() and setGrob().
 
-	- New function grid.grab() which creates a gTree from the 
+	- New function grid.grab() which creates a gTree from the
 	  current display list (i.e., the current page of output can
 	  be converted into a single gTree object with all grobs
-	  on the current page as children of the gTree and all the 
+	  on the current page as children of the gTree and all the
 	  viewports used in drawing the current page in the childrenvp
 	  slot of the gTree).
 
@@ -485,7 +492,7 @@ NEW FEATURES
 	  line end can be "round", "butt", or "square".
 	  line join can be "round", "mitre", or "bevel".
 	  line mitre can be any number larger than 1
-            (controls when a mitre join gets turned into a bevel join;  
+	    (controls when a mitre join gets turned into a bevel join;
 	     proportional to angle between lines at join;
 	     very big number means that conversion only happens for lines
 	     that are almost parallel at join).
@@ -521,17 +528,17 @@ UTILITIES
 
     o	Package 'utils' contains several new functions:
 
-        - Generics toBibtex() and toLatex() for converting
+	- Generics toBibtex() and toLatex() for converting
 	  R objects to BibTeX and LaTeX (but almost no methods yet).
 
-        - A much improved citation() function which also has a package
+	- A much improved citation() function which also has a package
 	  argument.  By default the citation is auto-generated from
 	  the package DESCRIPTION, the file 'inst/CITATION' can be
 	  used to override this, see help(citation) and
 	  help(citEntry).
 
 	- sessionInfo() can be used to include version information about
-          R and R packages in text or LaTeX documents.
+	  R and R packages in text or LaTeX documents.
 
 
 DOCUMENTATION
@@ -550,11 +557,11 @@ DOCUMENTATION
 	version in the footer, and HTML package index pages give their
 	name and version at the top.
 
-    o   All manuals in the 2.x series have new ISBN numbers.
+    o	All manuals in the 2.x series have new ISBN numbers.
 
-    o   The 'R Data Import/Export' manual has been revised and has a
+    o	The 'R Data Import/Export' manual has been revised and has a
 	new chapter on `Reading Excel spreadsheets'.
-    
+
 
 C-LEVEL FACILITIES
 
@@ -635,13 +642,13 @@ INSTALLATION CHANGES
 
     o	Makeinfo 4.5 or later is now required for building the HTML and
 	Info versions of the manuals.  However, binary distributions
-	need to be made with 4.7 or later to ensure some of the 
+	need to be made with 4.7 or later to ensure some of the
 	links are correct.
 
-    o   f2c is not allowed on 64-bit platforms, as it uses longs for
+    o	f2c is not allowed on 64-bit platforms, as it uses longs for
 	Fortran integers.
 
-    o   There are new options on how to make the PDF version of the
+    o	There are new options on how to make the PDF version of the
 	reference manual -- see the 'R Administration and Installation
 	Manual' section 2.2.
 
@@ -657,7 +664,7 @@ PACKAGE INSTALLATION CHANGES
 
     o	The DESCRIPTION file of packages may contain a 'Imports:'
 	field for packages whose namespaces are used but do not need
-	to be attached.  Such packages should no longer be listed in
+	to be attached.	 Such packages should no longer be listed in
 	'Depends:'.
 
     o	There are new optional fields 'SaveImage', 'LazyLoad' and
@@ -727,8 +734,8 @@ BUG FIXES
 
     o	inverse.gaussian() always printed 1/mu^2 as the link function.
 
-    o   constrOptim now passes ... arguments through optim to the
-        objective function.
+    o	constrOptim now passes ... arguments through optim to the
+	objective function.
 
     o	object.size() now has a better estimate for character vectors:
 	it was in general too low (but only significantly so for
@@ -754,32 +761,32 @@ BUG FIXES
     o	packageStatus() reported partially-installed bundles as
 	installed.
 
-    o   apply() failed on an array of dimension >=3 when for each iteration
+    o	apply() failed on an array of dimension >=3 when for each iteration
 	the function returns a named vector of length >=2 (PR#7205)
 
     o	The GNOME interface was in some circumstances failing if run
 	from a menu -- it needed to always specify that R be interactive.
 
     o	depMtrxToStrings (part of pkgDepends) applied nrow() to a
-        non-matrix and aborted on the result.
+	non-matrix and aborted on the result.
 
-    o   Fix some issues with nonsyntactical names in modelling code
-        (PR#7202), relating to backquoting.  There are likely more.
+    o	Fix some issues with nonsyntactical names in modelling code
+	(PR#7202), relating to backquoting.  There are likely more.
 
-    o   Support for S4 classes that extend basic classes has been fixed
-        in several ways.  as() methods and x@.Data should work better.
+    o	Support for S4 classes that extend basic classes has been fixed
+	in several ways.  as() methods and x@.Data should work better.
 
-    o   hist() and pretty() accept (and ignore) infinite values.  (PR#7220)
+    o	hist() and pretty() accept (and ignore) infinite values.  (PR#7220)
 
-    o   It is no longer possible to call gzcon() more than once on a
+    o	It is no longer possible to call gzcon() more than once on a
 	connection.
 
-    o   t.test() now detects nearly-constant input data.  (PR#7225)
+    o	t.test() now detects nearly-constant input data.  (PR#7225)
 
-    o   mle() had problems if ndeps or parscale was supplied in the
-        control arguments for optim(). Also, the profiler is now more
-        careful to reevaluate modified mle() calls in its parent
-        environment. 
+    o	mle() had problems if ndeps or parscale was supplied in the
+	control arguments for optim(). Also, the profiler is now more
+	careful to reevaluate modified mle() calls in its parent
+	environment.
 
 
 
@@ -859,12 +866,12 @@ BUG FIXES
     o	str(Surv(..)) failed for  type = "counting"  Surv objects and for
 	promises.
 
-    o   approx(c(1,2),c(NA,NA),1.5,rule=2) does not segfault anymore
+    o	approx(c(1,2),c(NA,NA),1.5,rule=2) does not segfault anymore
 	(PR#7177), but gives an error.
 
-    o   nls(model = TRUE) was broken.
+    o	nls(model = TRUE) was broken.
 
-    o   Subsetted assignments of the form A[i1, i2, i3] <- B stopped as
+    o	Subsetted assignments of the form A[i1, i2, i3] <- B stopped as
 	soon as an NA was encountered in an index so subsequent non-NA
 	indices were ignored.  (PR#7210)
 
@@ -1024,8 +1031,8 @@ BUG FIXES
 
     o	Building standalone nmath did not support some of the DEBUG options.
 
-    o   mle() got confused if start value list was not in same order as
-        arguments of likelihood function (reported by Ben Bolker)
+    o	mle() got confused if start value list was not in same order as
+	arguments of likelihood function (reported by Ben Bolker)
 
     o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
 	always claimed.
@@ -1048,8 +1055,8 @@ BUG FIXES
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
-    o   Copying lattice (grid) output to another device now works again
-        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)
+    o	Copying lattice (grid) output to another device now works again
+	(There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
@@ -8324,16 +8331,16 @@ NEW FEATURES
     o	Mathlib can be built as a standalone library: see directory
 	src/nmath/standalone.
 
-    o   The trace() function has two new features.  Giving where= as a
-        function name allows tracing of functions called from a
-        namespace.  A new argument edit= allows inserting arbitrary
-        tracing code in the function.  See the online help for
-        details.
+    o	The trace() function has two new features.  Giving where= as a
+	function name allows tracing of functions called from a
+	namespace.  A new argument edit= allows inserting arbitrary
+	tracing code in the function.  See the online help for
+	details.
 
-    o   Namespaces and S4 classes/methods should work better
-        together.  Generic function and class definition objects are
-        used in many places where the name of the function or class
-        was used before, which caused problems for non-exported objects.
+    o	Namespaces and S4 classes/methods should work better
+	together.  Generic function and class definition objects are
+	used in many places where the name of the function or class
+	was used before, which caused problems for non-exported objects.
 
 
 BUG FIXES
@@ -8579,16 +8586,16 @@ BUG FIXES
 	prevented caching methods (and therfore slowed down dispatch
 	seriously) in similar cases.
 
-    o   Packages can now have non-exported classes.  Previously this
-        failed because computations could not find methods for objects
-        from private classes.  Adding a "package" attribute to an
-        object's class attribute (along with a large number of changes
-        to use the package information) fixes this for most cases.
-        (Methods for primitive functions still use global information
-        about classes because of imposed efficiency constraints on
-        primitives.)
+    o	Packages can now have non-exported classes.  Previously this
+	failed because computations could not find methods for objects
+	from private classes.  Adding a "package" attribute to an
+	object's class attribute (along with a large number of changes
+	to use the package information) fixes this for most cases.
+	(Methods for primitive functions still use global information
+	about classes because of imposed efficiency constraints on
+	primitives.)
 
-    o   untrace() now works with package::function-style references.
+    o	untrace() now works with package::function-style references.
 
 
 	*********************************************************

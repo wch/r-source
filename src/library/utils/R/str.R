@@ -25,7 +25,7 @@ str.data.frame <- function(object, ...)
 }
 
 str.default <-
-    function(object, max.level = 0, vec.len = 4, digits.d = 3,
+    function(object, max.level = NA, vec.len = 4, digits.d = 3,
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
 	     wid = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
@@ -100,7 +100,7 @@ str.default <-
 		cat(if(i.pl) "Dotted pair list" else "List",
 		    " of ", le, "\n", sep="")
 	    }
-	    if (max.level==0 || nest.lev < max.level) {
+	    if (is.na(max.level) || nest.lev < max.level) {
 		nam.ob <-
 		    if(is.null(nam.ob <- names(object))) rep.int("", le)
 		    else { max.ncnam <- max(nchar(nam.ob))

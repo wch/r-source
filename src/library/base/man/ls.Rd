@@ -36,8 +36,8 @@ objects(name, pos= -1, envir = as.environment(pos),
   is used. The \code{pos} and \code{envir} arguments are an alternative
   way to specify an environment, but are primarily there for back
   compatibility.
-}  
- \description{
+}
+\description{
    \code{ls} and \code{objects} return a vector of character strings
    giving the names of the objects in the specified environment.
    When invoked with no argument at the top level prompt,
@@ -52,6 +52,7 @@ objects(name, pos= -1, envir = as.environment(pos),
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{ls.str}} for a long listing based on \code{\link{str}}.
   \code{\link{apropos}} (or \code{\link{find}})
   for finding objects in the whole search path;
   \code{\link{grep}} for more details on \dQuote{regular expressions};
