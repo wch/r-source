@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-7, 1999/10/06
+Version 0.65-8, 1999/10/11
 Kurt Hornik
 
 
@@ -1123,6 +1123,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 
 *tseries*
      Additional code for time series analysis.
+
+*wavethresh*
+     Software to perform 1-d and 2-d wavelet statistics and transforms.
 
 *xgobi*
      Interface to the XGobi program for graphical data analysis.
