@@ -2,10 +2,10 @@
 include ../../gnuwin32/MkRules
 
 MODULE=lapack
-all: makeMakedeps ../../../modules/$(MODULE).dll
+all: makeMakedeps Rlapack ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
-FSOURCES = double.f cmplx.f rgeev.f rsyev.f
+FSOURCES = rgeev.f rsyev.f
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
@@ -15,12 +15,35 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-DLLLIBS=-L../../gnuwin32 -lRm -lR -lRblas -lg2c
+lapack-DLLLIBS=-L../../../lib -lRlapack
+DLLLIBS=-L../../gnuwin32 -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
 
 clean:
-	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
+	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def
+
+
+# Rlapack.* section
+Rlapack: ../../../bin/Rlapack.dll ../../../lib/libRlapack.a
+
+Rlapack.dll: double.o cmplx.o Rlapackrc.o
+	@$(ECHO) LIBRARY Rlapack > Rlapack.def
+	@$(ECHO) EXPORTS >> Rlapack.def
+	@$(NM) $^ > Defs
+	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
+	@$(RM) Defs
+	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(DLLLIBS)
+
+libRlapack.a: Rlapack.dll
+
+../../../bin/Rlapack.dll: Rlapack.dll
+	@$(MKDIR) -p ../../../bin
+	@$(CP) $< $@
+
+../../../lib/libRlapack.a: libRlapack.a
+	@$(MKDIR) -p ../../../lib
+	@$(CP) $< $@
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)

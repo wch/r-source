@@ -111,8 +111,8 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../extra/xdr -f Makefile.win
 
 rmodules: libRm.a
-	$(MAKE) --no-print-directory -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
-	  -f Makefile.win
+	$(MAKE) --no-print-directory -C ../modules \
+	  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -329,7 +329,7 @@ clean: cleanwin $(PKGCLEAN)
 	done
 
 distclean veryclean: clean clean-recommended
-	$(RM) -r ../../bin ../../library ../../modules
+	$(RM) -r ../../bin ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
@@ -503,6 +503,7 @@ packagedist:
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd  \
           $(RPREFIX)/bin
+	$(CP) -pr ../../lib $(RPREFIX)
 	$(CP) ../../share/make/wintests.mk $(RPREFIX)/share/make
 	$(CP) -pr ../../share/R $(RPREFIX)/share
 	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
