@@ -34,7 +34,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     char fmt[MAXLINE+1], bit[MAXLINE+1], outputString[MAXLINE+1];
     size_t n, cur, chunk;
 
-    SEXP format, ans, this, a[100];
+    SEXP format, ans, this, a[100], tmp;
     int ns, maxlen, lens[100], nthis;
 
     /* grab the format string */
@@ -140,7 +140,12 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    this = coerceVector(this, REALSXP);
 			break;
 		    case 's':
-			this = coerceVector(this, STRSXP);
+			if(TYPEOF(this) != STRSXP) {
+			    PROTECT(tmp = 
+				    lang2(install("as.character"), this));
+			    this = eval(tmp, env);
+			    UNPROTECT(1);
+			}
 			break;
 		    default:
 			break;

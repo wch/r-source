@@ -64,7 +64,7 @@ gettextf(fmt, \dots, domain = NULL)
   }
   Integer and logical variables will be coerced to numeric for use with
   \code{f, e, E, g, G}, numeric values that are exactly integer will be
-  coerced for use with \code{d, i, x}, and the internal equivalent of
+  coerced for use with \code{d, i, x}, and
   \code{\link{as.character}} is used with \code{s}.
   
   In addition, between the initial \code{\%} and the terminating
