@@ -75,6 +75,15 @@ NEW FEATURES
 	MAIN_LD and MAIN_LDFLAGS for consistency with other MAIN_* vars,
 	simlarly for SHLIBLD and SHLIBLDFLAGS.
 
+    o	Much improved support for C++ code in add-on packages.
+	New configure/build variables SHLIB_CXXLD and SHLIB_CXXLDFLAGS
+	for specifying the command and flags needed for building shared
+	libraries containing objects from a C++ compiler.
+	Configure tries to get these right in typical cases (GNU tools
+	and/or common platforms).
+	C++ source suffixes `.cpp' and `.C' are now recognized in
+	adddition to `.cc'.
+
 
 
 	**************************************************

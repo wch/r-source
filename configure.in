@@ -493,22 +493,40 @@ AC_SUBST(R_XTRA_LIBS)
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code
 ## SHLIB_LD, SHLIB_LDFLAGS
-##   command and flags for creating DLLs
+##   command and flags for creating DLLs (which contain object files
+##   from a C or Fortran compiler).
+## SHLIB_CXXLD, SHLIB_CXXLDFLAGS
+##   command and flags for creating DLLs which contain object files from
+##   a C++ compiler.  According to autoconf, the C++ compiler/linker
+##   must be used for linking in this case (since special C++-ish things
+##   need to happen at link time like calling global constructors,
+##   instantiating templates, enabling exception support, etc.).
 ##
-## The following procedure is as follows.
-## *) We think we know what to do if CC is gcc.  Otherwise, try using
-##    imake values in case its CC is ours.
-## *) Then, use platform specific overrides.
-## *) As a final safeguard, values from the environment (as specified in
-##    one of the configuration files) override anything we figure out.
+## The procedure is as follows.
+##   
+## * We use applicable values from imake in case its CC is ours.
+## * Irrespective of that, we think we know what to do with GNU tools
+##   (GNU C, Fortran, and C++ compilers).
+## * Then, use platform specific overrides.
+## * As a final safeguard, values from the environment (as specified in
+##   one of the configuration files or at the configure command line)
+##   override anything we figure out in the case of compiler flags; for
+##   linker flags (*LDFLAGS), environment settings override our results
+##   if the corresponding *LD variable was set, and add otherwise.
+##
+## NOTE: We do not provide defaults for the *LDFLAGS, taking a defensive
+## approach.  In case we cannot figure out {MAIN,SHLIB}_LDFLAGS and the
+## user did not provide defaults, an error results.  A warning is given
+## if nothing was obtained for SHLIB_CXXLDFLAGS.
 
 main_ld=${CC}
 shlib_ld=${CC}
-SHLIB_EXT=so
+shlib_cxxld=${CXX}
+SHLIB_EXT="so"
 
-AC_PATH_PROG(XMKMF, xmkmf, ,
+## Step 1.  Ask imake.
+AC_PATH_PROG(XMKMF, xmkmf, [],
   ${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin)
-AC_MSG_CHECKING([how to deal with shared libraries])
 if test -n "${XMKMF}"; then
   echo > Imakefile
   ${XMKMF} > /dev/null
@@ -526,20 +544,21 @@ if test -n "${XMKMF}"; then
   fi
   rm -f Imakefile Makefile
 fi
+
+## Step 2.  GNU compilers.
 if test "${GCC}" = yes; then
-  cpicflags=-fPIC
-  shlib_ldflags=-shared
+  cpicflags="-fPIC"
+  shlib_ldflags="-shared"
 fi
 if test "${GXX}" = yes; then
-  cxxpicflags=-fPIC
+  cxxpicflags="-fPIC"
+  shlib_cxxldflags="-shared"
 fi
 if test "${G77}" = yes; then
-  fpicflags=-fPIC
+  fpicflags="-fPIC"
 fi
-AC_MSG_RESULT(done)
 
-## Individual platform overrides.
-
+## Step 3.  Individual platform overrides.
 case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
@@ -565,21 +584,19 @@ case "${host}" in
     fpicflags=
     shlib_ldflags="-shared"
     ;;
-  alpha*linux*)
-    main_ldflags="-export-dynamic"
-    ;;
   *freebsd[[3-4]].*)
     main_ldflags="-export-dynamic"
     shlib_ldflags="-shared"
     ;;
   *hpux*)
+    SHLIB_EXT=sl
     case "${CC}" in
       cc|c89)
-        cpicflags="+z" ;;
+        cpicflags="+Z" ;;
     esac
     case "${FC}" in
       f77|fort77|f90)
-        fpicflags="+z" ;;
+        fpicflags="+Z" ;;
     esac
     main_ldflags="-Wl,-E"
     if test "${GCC}" = yes; then
@@ -587,7 +604,9 @@ case "${host}" in
     else
       shlib_ldflags="-b"
     fi
-    SHLIB_EXT=sl
+    if test "${GXX}" = yes; then
+      shlib_cxxldflags="-shared -fPIC"
+    fi
     ;;
   *linux*aout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
@@ -604,22 +623,17 @@ case "${host}" in
     fi
     ;;
   *sgi*)
-    if test "${GCC}" = yes; then
-      cpicflags=-fPIC
-    else
-      cpicflags=-KPIC
+    if test "${GCC}" != yes; then
+      cpicflags="-KPIC"
     fi
-    if test "${G77}" = yes; then
-      fpicflags=-fPIC
-    else
-      fpicflags=-KPIC
+    if test "${G77}" != yes; then
+      fpicflags="-KPIC"
     fi
     shlib_ldflags="-shared"
     ;;
   *solaris*)
     shlib_ldflags="-G"
     if test "${GCC}" = yes; then
-      cpicflags=-fPIC
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
@@ -627,17 +641,17 @@ case "${host}" in
 	shlib_ldflags="-shared"
       fi
     else
-      cpicflags=-KPIC
+      cpicflags="-KPIC"
     fi
-    if test "${G77}" = yes; then
-      fpicflags=-fPIC
-    else
-      fpicflags=-PIC
+    if test "${G77}" != yes; then
+      fpicflags="-PIC"
     fi
     ;;
 esac
 
+## Step 4.  Overrides from the environment and error checking.
 if test -z "${MAIN_LD-${MAINLD}}"; then
+  ## FIXME: get rid of MAINLD/MAINLDFLAGS eventually.
   MAIN_LD=${main_ld}
   if test -z "${MAIN_LDFLAGS-${MAINLDFLAGS}}"; then
     MAIN_LDFLAGS=${main_ldflags}
@@ -675,6 +689,7 @@ if test -z "${CXXPICFLAGS}"; then
 fi
 
 if test -z "${SHLIB_LD-${SHLIBLD}}"; then
+  ## FIXME: get rid of SHLIBLD/SHLIBLDFLAGS eventually.
   SHLIB_LD=${shlib_ld}
   if test -z "${SHLIB_LDFLAGS-${SHLIBLDFLAGS}}"; then
     SHLIB_LDFLAGS=${shlib_ldflags}
@@ -687,14 +702,29 @@ if test -z "${SHLIB_LDFLAGS}"; then
   AC_MSG_ERROR([See the file INSTALL for more information.])
 fi
 
+if test -z "${SHLIB_CXXLD}"; then
+  SHLIB_CXXLD=${shlib_cxxld}
+  if test -z "${SHLIB_CXXLDFLAGS}"; then
+    SHLIB_CXXLDFLAGS=${shlib_cxxldflags}
+  else
+    SHLIB_CXXLDFLAGS="${SHLIB_CXXLDFLAGS} ${shlib_cxxldflags}"
+  fi
+fi
+if test -z "${SHLIB_CXXLDFLAGS}"; then
+  warn_shlib_cxxldflags="I could not determine SHLIB_CXXLDFLAGS"
+  AC_MSG_WARN(${warn_shlib_cxxldflags})
+fi
+
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
 AC_SUBST(CPICFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(CXXPICFLAGS)
-AC_SUBST(SHLIB_LDFLAGS)
-AC_SUBST(SHLIB_EXT)
 AC_SUBST(SHLIB_LD)
+AC_SUBST(SHLIB_LDFLAGS)
+AC_SUBST(SHLIB_CXXLD)
+AC_SUBST(SHLIB_CXXLDFLAGS)
+AC_SUBST(SHLIB_EXT)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}")
 AC_SUBST(EXPORTFILE)
 
@@ -919,6 +949,9 @@ if test -n "${warn_f2c_flibs}"; then
 fi
 if test -n "${warn_cxxpicflags}"; then
   AC_MSG_WARN(${warn_cxxpicflags})
+fi
+if test -n "${warn_shlib_cxxldflags}"; then
+  AC_MSG_WARN(${warn_shlib_cxxldflags})
 fi
 if test -n "${warn_libglade}"; then
   AC_MSG_WARN(${warn_libglade})
