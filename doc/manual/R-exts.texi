@@ -96,8 +96,9 @@ A package consists of a subdirectory containing the files
 @file{tests} (some of which can be missing).  
 
 Optionally the package can also contain script files @file{configure}
-and @file{cleanup} which are executed before and after installation on
-Unix, @xref{Configure and cleanup}.
+and @file{cleanup} which are executed before and (provided that option
+@option{--clean} was given) after installation on Unix, @xref{Configure
+and cleanup}.
 
 @menu
 * The DESCRIPTION file::        
@@ -152,10 +153,11 @@ and not have any continuation lines.  This information has been
 contained in a separate @file{TITLE} file in older versions of @R{},
 please use the title field in the @file{DESCRIPTION} file from now on.
 
-The optional @samp{URL} field may give a list of URLs separated by
-commas or whitespace, for example the homepage of the author or a page
-where additional material describing the software can be found.  These
-URLs are converted to active hyperlinks on CRAN.
+The optional @samp{URL} field may give a list of @acronym{URL}s
+separated by commas or whitespace, for example the homepage of the
+author or a page where additional material describing the software can
+be found.  These @acronym{URL}s are converted to active hyperlinks on
+@acronym{CRAN}.
 
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
@@ -224,7 +226,7 @@ package needs to specify additional directories for searching header
 files (@samp{-I} options) or additional libraries for linking (@samp{-l}
 and @samp{-L} options), it should do this by setting the variables
 @code{PKG_CPPFLAGS} and @code{PKG_LIBS} in @file{src/Makevars}.
-(Additional flags to be passed to the C, C++, or Fortran compilers can
+(Additional flags to be passed to the C, C++, or FORTRAN compilers can
 be specified by the variables @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
 and @code{PKG_FFLAGS}, respectively.)  Note that this mechanism should
 be general enough to eliminate the need for a package-specific
@@ -326,11 +328,12 @@ extension package (including variable substitution, searching for
 libraries, etc.).
 
 The script @file{cleanup} is executed as last thing by @code{R CMD
-INSTALL} if present and can be used to clean up the package source tree,
-especially remove files created by @file{configure}.
+INSTALL} if present and option @option{--clean} was given, and can be
+used to clean up the package source tree, especially remove files
+created by @file{configure}.
 
 As an example consider we want to use functionality provided by a (C or
-Fortran) library @code{foo}.  Using @code{autoconf}, we can write a
+FORTRAN) library @code{foo}.  Using @code{autoconf}, we can write a
 configure script which checks for the library, sets variable
 @code{HAVE_FOO} to @code{TRUE} if it was found and with @code{FALSE}
 otherwise, and then substitutes this value into output files (by
@@ -450,12 +453,6 @@ obtain more information about the usage of the @R{} package checker.
 A subset of the checking steps can be selected by
 adding flags.
 
-@c FIXME: This should be obsolete with the new GenGC, right?
-@c Note that some packages will require more than the default workspace
-@c size to run their examples: this needs to be specified by setting the
-@c environment variables @env{R_NSIZE} and @env{R_VSIZE} or the
-@c command-line options @code{--nsize} and @code{--vsize}.
-
 @findex R CMD build
 @cindex Package builder
 Using @code{R CMD build}, the @R{} package builder, one can build R
@@ -478,15 +475,15 @@ obtain more information about the usage of the @R{} package builder.
 binary distributions.
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
-@section Submitting a package to CRAN
+@section Submitting a package to @acronym{CRAN}
 @cindex CRAN
 @cindex CRAN submission
 @cindex Submitting to CRAN
 
-CRAN is a network of WWW sites holding the @R{} distributions and
-contributed code, especially @R{} packages.  Users of @R{} are
+@acronym{CRAN} is a network of WWW sites holding the @R{} distributions
+and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
-packages to CRAN.
+packages to @acronym{CRAN}.
 
 Before submitting a package @strong{mypkg}, do run the following steps
 to test it is complete and will install properly.  (Unix procedures
@@ -515,8 +512,8 @@ When all the testing is done, upload the @file{.tar.gz} file to
 
 @noindent
 and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.  The
-CRAN maintainers will run these tests before putting a submission in the
-main archive.
+@acronym{CRAN} maintainers will run these tests before putting a
+submission in the main archive.
 
 @node Writing R documentation, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation
@@ -839,8 +836,9 @@ give a description of each column, preferably as a list or table.
 
 @item \source@{@dots{}@}
 @findex \source
-Details of the original source (a reference or URL).  In addition,
-section @code{\references} could give secondary sources and usages.
+Details of the original source (a reference or @acronym{URL}).  In
+addition, section @code{\references} could give secondary sources and
+usages.
 @end table
 
 Note also that when documenting data set @var{bar},
@@ -907,7 +905,7 @@ specific kinds of text.
 @tab for email addresses
 @item @code{\url@{@var{word}@}}
 @findex \url
-@tab for URLs
+@tab for @acronym{URL}s
 @end multitable
 @end quotation
 
@@ -1234,9 +1232,9 @@ You may need to move comments to more appropriate places.
 
 The standard format provides a good starting point for further tidying.
 Most package authors use a version of Emacs (on Unix or Windows) to edit
-@R{} code, using the ESS[S] mode of the ESS Emacs package.  See @ref{R
-coding standards} for style options within the ESS[S] mode recommended
-for the source code of @R{} itself.
+@R{} code, using the ESS[S] mode of the @acronym{ESS} Emacs package.
+See @ref{R coding standards} for style options within the ESS[S] mode
+recommended for the source code of @R{} itself.
 
 
 @node Profiling R code,  , Tidying R code, Tidying and profiling R code
@@ -1380,12 +1378,12 @@ limited on non-Unix-like platforms).
 These two functions provide a standard interface to compiled code that
 has been linked into @R{}, either at build time or via @code{dyn.load}
 (@pxref{dyn.load and dyn.unload}).  They are primarily intended for
-compiled C and Fortran code respectively, but the @code{.C} function can
+compiled C and FORTRAN code respectively, but the @code{.C} function can
 be used with other languages which can generate C interfaces, for
 example C++ (@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string given the
-symbol name as known to C or Fortran, that is the function or subroutine
+symbol name as known to C or FORTRAN, that is the function or subroutine
 name.  (The mapping to the symbol name in the load table is given by the
 functions @code{symbol.C} and @code{symbol.For};
 @findex symbol.C
@@ -1401,12 +1399,12 @@ components in the returned list object (but not passed to the compiled
 code).
 
 The following table gives the mapping between the modes of @R{} vectors
-and the types of arguments to a C function or Fortran subroutine.
+and the types of arguments to a C function or FORTRAN subroutine.
 
 @quotation
 @multitable {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
 
-@item @R{} storage mode @tab  C type  @tab   Fortran type
+@item @R{} storage mode @tab  C type  @tab   FORTRAN type
 
 @item @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
@@ -1420,7 +1418,7 @@ and the types of arguments to a C function or Fortran subroutine.
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{Complex.h}
 included by @file{R.h}.  Only a single character string can be passed to
-or from Fortran, and the success of this is compiler-dependent.  Other
+or from FORTRAN, and the success of this is compiler-dependent.  Other
 @R{} objects can be passed to @code{.C}, but it is better to use one of
 the other interfaces.  An exception is passing an @R{} function for use
 with @w{@code{call_R}}, when the object can be handled as @code{void *}
@@ -1428,16 +1426,17 @@ en route to @code{call_R}, but even there @code{.Call} is to be
 preferred.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or Fortran as @code{REAL} by setting the attribute
+C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
 @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single}, @code{single} or @code{storage.mode}.  This is
-intended only to be used to aid interfacing to existing C or Fortran
+intended only to be used to aid interfacing to existing C or FORTRAN
 code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
-checked for missing values @code{NA} and for the IEEE special values
-@code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any of these
-generates an error.  If it is true, these values are passed unchecked.
+checked for missing values @code{NA} and for the @acronym{IEEE} special
+values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
+of these generates an error.  If it is true, these values are passed
+unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.  It is not possible
@@ -1451,7 +1450,7 @@ two package writers using the same symbol name, and such name clashes
 are normally sufficient to cause @R{} to crash.
 
 Note that the compiled code should not return anything except through
-its arguments: C functions should be of type @code{void} and Fortran
+its arguments: C functions should be of type @code{void} and FORTRAN
 subprograms should be subroutines.
 
 To fix ideas, let us consider a very simple example which convolves two
@@ -1550,7 +1549,7 @@ which occurrence is meant.
 
 Under Unix, shared libraries for loading into @R{} can be created using
 @code{R CMD SHLIB}.  This accepts as arguments a list of files which
-must be object files (with extension @file{.o}) or C, C++, or Fortran
+must be object files (with extension @file{.o}) or C, C++, or FORTRAN
 sources (with extensions @file{.c}, @file{.cc} or @file{.cpp} or
 @file{.C}, and @file{.f}, respectively).  See @kbd{R CMD SHLIB --help},
 or the on-line help for @code{SHLIB}, for usage information.  If
@@ -1558,7 +1557,7 @@ compiling the source files does not work ``out of the box'', you can
 specify additional flags by setting some of the variables
 @code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, and @code{PKG_FFLAGS} (for the
-C, C++, and Fortran compilers, respectively) in the file @file{Makevars}
+C, C++, and FORTRAN compilers, respectively) in the file @file{Makevars}
 in the compilation directory, or write a @file{Makefile} in the
 compilation directory containing the rules required (or, of course,
 create the object files directly from the command line).  Similarly,
@@ -1566,7 +1565,7 @@ variable @code{PKG_LIBS} in @file{Makevars} can be used for additional
 @samp{-l} and @samp{-L} flags to be passed to the linker when building
 the shared library.
 
-If an add-on package @var{pkg} contains C, C++, or Fortran code in its
+If an add-on package @var{pkg} contains C, C++, or FORTRAN code in its
 @file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
 (for loading into @R{} in the @code{.First.lib} function of the package)
 either automatically using the above @code{R CMD SHLIB} mechanism, or
@@ -1574,7 +1573,7 @@ using @code{make} if directory @file{src} contains a @file{Makefile}.
 In both cases, if file @file{Makevars} exists it is read first when
 invoking @code{make}.  If a @file{Makefile} is really needed or
 provided, it needs to ensure that the shared library created is linked
-against all Fortran 77 intrinsic and run-time libraries that @R{} was
+against all FORTRAN 77 intrinsic and run-time libraries that @R{} was
 linked against; @code{make} variable @code{FLIBS} contains this
 information.
 
@@ -1683,8 +1682,8 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compile
-this example under various Windows compilers.
+The R for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
+to compile this example under various Windows compilers.
 
 Using C++ iostreams, as in this example, is best avoided.  There is no
 guarantee that the output will appear in the R console, and indeed it
@@ -2260,9 +2259,15 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 @findex setVar
 
 @noindent
-can be used to assign values to @R{} objects, in the specified
-environment frame and to perform the equivalent of @code{assign(x,
-value, envir = rho, inherits = TRUE)} respectively.
+can be used to assign values to @R{} variables.  @code{defineVar}
+creates a new binding or changes the value of an existing binding in the
+specified environment frame; it is the equivalent of
+@code{assign(symbol, value, envir = rho, inherits = FALSE)}.
+@code{setVar} searches for an existing binding for @code{symbol} in
+@code{rho} or its enclosing environments.  If a binding is found, its
+value is changed to @code{value}.  Otherwise, a new binding with the
+specified value is created in the global environment.  This corresponds
+to @code{assign(symbol, value, envir = rho, inherits = TRUE)}.
 
 @node Changes in R version 1.2,  , Finding and setting variables, Handling R objects in C
 @subsection Changes in R version 1.2
@@ -2560,15 +2565,15 @@ showArgs <- function(...) .Call("showArgs1", list(...))
 @cindex IEEE special values
 
 One piece of error-checking the @code{.C} call does (unless @code{NAOK}
-is true) is to check for missing (@code{NA}) and IEEE special values
-(@code{Inf}, @code{-Inf} and @code{NaN}) and give an error if any are
-found.  With the @code{.Call} interface these will be passed to our
-code.  In this example the special values are no problem, as IEEE
-arithmetic will handle them correctly.  In the current implementation
-this is also true of @code{NA} as it is a type of @code{NaN}, but it is
-unwise to rely on such details.  Thus we will re-write the code to
-handle @code{NA}s using macros defined in @file{Arith.h} included by
-@file{R.h}.
+is true) is to check for missing (@code{NA}) and @acronym{IEEE} special
+values (@code{Inf}, @code{-Inf} and @code{NaN}) and give an error if any
+are found.  With the @code{.Call} interface these will be passed to our
+code.  In this example the special values are no problem, as
+@acronym{IEEE} arithmetic will handle them correctly.  In the current
+implementation this is also true of @code{NA} as it is a type of
+@code{NaN}, but it is unwise to rely on such details.  Thus we will
+re-write the code to handle @code{NA}s using macros defined in
+@file{Arith.h} included by @file{R.h}.
 
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
@@ -2935,7 +2940,7 @@ parameter value.
 
 @noindent
 Now, we compute the @code{i}'th column of the gradient matrix.  Note how
-it is accessed: @R{} stores matrices by column (like Fortran).
+it is accessed: @R{} stores matrices by column (like FORTRAN).
 
 @smallexample
   PROTECT(dimnames = allocVector(VECSXP, 2));
@@ -3131,7 +3136,7 @@ $7 = 5
 @end smallexample
 
 @node The R API, R (internal) programming miscellania, System and foreign language interfaces, Top
-@chapter The R API: entry points for C code
+@chapter The R @acronym{API}: entry points for C code
 
 @menu
 * Memory allocation::           
@@ -3139,18 +3144,15 @@ $7 = 5
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
-* Calling C from Fortran and vice versa::  
+* Calling C from FORTRAN and vice versa::  
 * Numerical analysis subroutines::  
-* Distribution functions::      
-* Mathematical Utilities::      
-* Mathematical Constants::      
 * Utility functions::           
 * Platform and version information::  
 * Standalone Mathlib::          
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
-can be called from C code (and some that can be called from Fortran
+can be called from C code (and some that can be called from FORTRAN
 code).  Only those documented here are stable enough that they will only
 be changed with considerable notice.
 
@@ -3343,13 +3345,13 @@ select the kind of RNG or set the seed except by evaluating calls to the
 @R{} functions.
 
 The C code behind @R{}'s @code{r@var{xxx}} functions can be accessed by
-including the header file @file{R_ext/Mathlib.h}; @xref{Distribution
+including the header file @file{Rmath.h}; @xref{Distribution
 functions}.  Those calls generate a single variate and should also be
 enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
-@section Missing and IEEE special values
+@section Missing and @acronym{IEEE} special values
 @cindex Missing values
 @cindex IEEE special values
 @findex ISNA
@@ -3360,15 +3362,15 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 @findex R_NegInf
 @findex NA_REAL
 
-It is possible to compile @R{} on a platform without IEEE 754-compatible
-arithmetic, so users should not assume that it is available.  Rather a
-set of functions is provided to test for @code{NA}, @code{Inf},
-@code{-Inf} (which exists on all platforms) and @code{NaN}.  These
-functions are accessed via macros:
+It is possible to compile @R{} on a platform without @acronym{IEEE}
+754-compatible arithmetic, so users should not assume that it is
+available.  Rather a set of functions is provided to test for @code{NA},
+@code{Inf}, @code{-Inf} (which exists on all platforms) and @code{NaN}.
+These functions are accessed via macros:
 
 @example
 ISNA(@var{x})        @r{True for R's @code{NA} only}
-ISNAN(@var{x})       @r{True for R's @code{NA} and IEEE @code{NaN}}
+ISNAN(@var{x})       @r{True for R's @code{NA} and @acronym{IEEE} @code{NaN}}
 R_FINITE(@var{x})    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}}
 @end example
 
@@ -3390,7 +3392,7 @@ which could occur in ordinary computations which run out of control,
 so you may need to test that they have not been generated inadvertently.
 
 
-@node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
+@node Printing, Calling C from FORTRAN and vice versa, Missing and IEEE values, The R API
 @section Printing
 @cindex Printing from C
 @findex Rprintf
@@ -3401,26 +3403,24 @@ so you may need to test that they have not been generated inadvertently.
 The most useful function for printing from a C routine compiled into
 @R{} is @code{Rprintf}.  This is used in exactly the same way as
 @code{printf}, but is guaranteed to write to @R{}'s output (which might
-be a GUI console rather than a file).  It is wise to write complete
-lines (including the @code{"\n"}) before returning to @R{}.
+be a @acronym{GUI} console rather than a file).  It is wise to write
+complete lines (including the @code{"\n"}) before returning to @R{}.
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
 output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
-These routines are declared in @file{R_ext/PrtUtil.h} which is not
-included by @file{R.h}.
 
-@subsection Printing from Fortran
-@cindex Printing from Fortran
+@subsection Printing from FORTRAN
+@cindex Printing from FORTRAN
 
-In theory Fortran @code{write} and @code{print} statements can be used,
+In theory FORTRAN @code{write} and @code{print} statements can be used,
 but the output may not interleave well with that of C, and will be
-invisible on GUI interfaces.  They are best avoided.
+invisible on @acronym{GUI} interfaces.  They are best avoided.
 
 Three subroutines are provided to ease the output of information from
-Fortran code.
+FORTRAN code.
 
 @example
 subroutine dblepr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
@@ -3438,32 +3438,32 @@ line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
-@node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
-@section Calling C from Fortran and vice versa
-@cindex Calling C from Fortran and vice versa
+@node Calling C from FORTRAN and vice versa, Numerical analysis subroutines, Printing, The R API
+@section Calling C from FORTRAN and vice versa
+@cindex Calling C from FORTRAN and vice versa
 
-Naming conventions for symbols generated by Fortran differ by platform:
-it is not safe to assume that Fortran names appear to C with a trailing
+Naming conventions for symbols generated by FORTRAN differ by platform:
+it is not safe to assume that FORTRAN names appear to C with a trailing
 underscore.  To help cover up the platform-specific differences there is
 a set of macros that should be used.
 
 @table @code
 @item F77_SUB(@var{name})
-to define a function in C to be called from Fortran
+to define a function in C to be called from FORTRAN
 @item F77_NAME(@var{name})
-to declare a Fortran routine in C before use
+to declare a FORTRAN routine in C before use
 @item F77_CALL(@var{name})
-to call a Fortran routine from C
+to call a FORTRAN routine from C
 @item F77_COMDECL(@var{name})
-to declare a Fortran common block in C
+to declare a FORTRAN common block in C
 @item F77_COM(@var{name})
-to access a Fortran common block from C
+to access a FORTRAN common block from C
 @end table
 
 On most current platforms these are all the same, but it is unwise to
 rely on this.
 
-@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran and vice versa, The R API
+@node Numerical analysis subroutines, Utility functions, Calling C from FORTRAN and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -3472,16 +3472,25 @@ for example numerical linear algebra computations and special functions.
 
 The header file @file{R_ext/Linpack.h} contains details of the LINPACK
 and EISPACK linear algebra functions include in @R{}.  These are
-expressed as calls to Fortran subroutines, and they will also be usable
-from users' Fortran code.  Although not part of the official API, this
-set of subroutines is unlikely to change (but might be supplemented).
+expressed as calls to FORTRAN subroutines, and they will also be usable
+from users' FORTRAN code.  Although not part of the official
+@acronym{API}, this set of subroutines is unlikely to change (but might
+be supplemented).
 
-The header file @file{R_ext/Mathlib.h} lists other undocumented calls
-that are currently available, mainly special functions (such gamma, beta
-and Bessel functions).  These @emph{are} subject to change.
+The header file @file{Rmath.h} lists many other functions that are
+available and documented in the following subsections. Many of these are
+C interfaces to the code behind @R{} functions, so the @R{} function
+documentation may give further details.
 
-@node Distribution functions, Mathematical Utilities, Numerical analysis subroutines, The R API
-@section Distribution functions
+@menu
+* Distribution functions::      
+* Mathematical functions::      
+* Utilities::                   
+* Mathematical constants::      
+@end menu
+
+@node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
+@subsection Distribution functions
 @cindex  Distribution functions from C
 
 The routines used to calculate densities, cumulative distribution
@@ -3544,8 +3553,8 @@ distributions.
 @item non-central beta @tab @code{nbeta} @tab @code{a, b, lambda}
 @item binomial @tab @code{binom} @tab @code{n, p}
 @item Cauchy @tab @code{cauchy} @tab @code{location, scale}
-@item chi-square @tab @code{chisq} @tab @code{df}
-@item non-central chi-square @tab @code{nchisq} @tab @code{df, lambda}
+@item chi-squared @tab @code{chisq} @tab @code{df}
+@item non-central chi-squared @tab @code{nchisq} @tab @code{df, lambda}
 @item exponential @tab @code{exp} @tab @code{scale}
 @item F @tab @code{f} @tab @code{n1, n2}
 @item non-central F @tab @code{@{p,q@}nf} @tab @code{n1, n2, ncp}
@@ -3568,51 +3577,67 @@ distributions.
 @end quotation
 
 @noindent
-The argument sequences are not all quite the same as the @R{} ones.
+The argument names are not all quite the same as the @R{} ones.
 @c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
 @c {don't want to change the R function argument names} -- <<
 
-@node Mathematical Utilities, Mathematical Constants, Distribution functions, The R API
-@section Mathematical Utilities
-There are a few other numerical utilities available as entry points.
 
-@c FIXME :  Not yet documented (but in the public API) are
-@c -----    ------------------
-@c ======== These are all mathematically non-trivial
-@c ======== whereas the "Mathematical Utilities" here are at least elementary.
-@c ======== We should hence use an extra [section + node] ...
+@node Mathematical functions, Utilities, Distribution functions, Numerical analysis subroutines
+@subsection Mathematical functions
 
-@c void	gammalims(double*, double*);
-@c double	lgammacor(double);
-@c double	gammafn(double);
-@c double	gamma_cody(double);
-@c double	lgammafn(double);
-@c void	dpsifn(double, int, int, int, double*, int*, int*);
-@c double	digamma(double);
-@c double	trigamma(double);
-@c double	tetragamma(double);
-@c double	pentagamma(double);
-@c
-@c double	choose(double, double);
-@c double	lchoose(double, double);
-@c double	fastchoose(double, double);
-@c double	lfastchoose(double, double);
-@c
-@c 	/* Bessel Functions of All Kinds */
-@c
-@c double	bessel_i(double, double, double);
-@c double	bessel_j(double, double);
-@c double	bessel_k(double, double, double);
-@c double	bessel_y(double, double);
-@c void	I_bessel(double*, double*, long*, long*, double*, long*);
-@c void	J_bessel(double*, double*, long*,	 double*, long*);
-@c void	K_bessel(double*, double*, long*, long*, double*, long*);
-@c void	Y_bessel(double*, double*, long*,	 double*, long*);
-@c
-@c 	/* Beta and Related Functions */
-@c
-@c double	beta(double, double);
-@c double	lbeta(double, double);
+@findex gammafn
+@findex lgammafn
+@findex digamma
+@findex trigamma
+@findex tetragamma
+@findex pentagamma
+@cindex Gamma function
+@deftypefun double gammafn (double @var{x})
+@deftypefunx double lgammafn (double @var{x})
+@deftypefunx double digamma (double @var{x})
+@deftypefunx double trigamma (double @var{x})
+@deftypefunx double tetragamma (double @var{x})
+@deftypefunx double pentagamma (double @var{x})
+The Gamma function, its natural logarithm and first four derivatives.
+@end deftypefun
+
+@findex beta
+@findex lbeta
+@cindex Beta function
+@deftypefun double beta (double @var{a}, double @var{b})
+@deftypefunx double lbeta (double @var{a}, double @var{b})
+The (complete) Beta function and its natural logarithm.
+@end deftypefun
+
+@findex choose
+@findex lchoose
+@deftypefun double choose (double @var{n}, double @var{k})
+@deftypefunx double lchoose (double @var{n}, double @var{k})
+The number of combinations of @var{k} items chosen from from @var{n} and
+its natural logarithm.  @var{n} and @var{k} are rounded to the nearest
+integer.
+@end deftypefun
+
+@findex bessel_i
+@findex bessel_j
+@findex bessel_k
+@findex bessel_y
+@cindex Bessel functions
+@deftypefun double bessel_i (double @var{x}, double @var{nu}, double @var{expo})
+@deftypefunx double bessel_j (double @var{x}, double @var{nu})
+@deftypefunx double bessel_k (double @var{x}, double @var{nu}, double @var{expo})
+@deftypefunx double bessel_y (double @var{x}, double @var{nu})
+Bessel functions of types I, J, K and Y with index @var{nu}.  For
+@code{bessel_i} and @code{bessel_k} there is the option to return
+@code{exp(-x) I(x;nu)} or @code{exp(x) K(x;nu)} if @code{@var{expo} ==
+2}. (Use @code{@var{expo} == 1} for unscaled values.)
+@end deftypefun
+
+
+@node Utilities, Mathematical constants, Mathematical functions, Numerical analysis subroutines
+@subsection Utilities
+There are a few other numerical utility functions available as entry points.
+
 
 @deftypefun double R_pow (double @var{x}, double @var{y})
 @deftypefunx double R_pow_di (double @var{x}, int @var{i})
@@ -3627,7 +3652,7 @@ missing or infinite or @code{NaN}.
 @code{pythag(@var{a}, @var{b})} computes @code{sqrt(@var{a}^2 +
 @var{b}^2)} without overflow or destructive underflow: for example it
 still works when both @var{a} and @var{b} are between @code{1e200} and
-@code{1e300} (in IEEE double precision).
+@code{1e300} (in @acronym{IEEE} double precision).
 @end deftypefun
 
 @deftypefun double log1p (@var{x})
@@ -3667,15 +3692,16 @@ decimal digits.
 This is the function used by @R{}'s @code{signif()}.
 @end deftypefun
 
-@c FIXME : These are not yet in there
-@c double ftrunc(double)
-@c double fmod(double, double)
-@c double fsquare(double)
-@c double fcube(double)
+@deftypefun double fmod (double @var{x})
+Returns the absolute value of value of @var{x}.
+@end deftypefun
 
+@deftypefun double ftrunc (double @var{x})
+Returns the value of @var{x} truncated (to an integer value) towards zero.
+@end deftypefun
 
-@node Mathematical Constants, Utility functions, Mathematical Utilities, The R API
-@section Mathematical Constants
+@node Mathematical constants,  , Utilities, Numerical analysis subroutines
+@subsection Mathematical constants
 @findex M_E
 @findex M_PI
 @c maybe not all into the index ...
@@ -3683,7 +3709,7 @@ This is the function used by @R{}'s @code{signif()}.
 @R{} has a set of commonly used mathematical constants encompassing
 constants usually found @file{math.h} and contains further ones that are
 used in statistical computations.  All these are defined to (at least)
-30 digits accuracy in @file{R_ext/Mathlib.h}.  The following definitions
+30 digits accuracy in @file{Rmath.h}.  The following definitions
 use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 
 @quotation
@@ -3706,6 +3732,7 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @item @code{M_SQRT2}        @tab = sqrt(2)         @tab 1.4142136
 @item @code{M_SQRT1_2}      @tab = 1/sqrt(2)       @tab 0.7071068
 @c R-specific ones
+@item @code{M_SQRT_3}       @tab = sqrt(3)         @tab 1.7320508
 @item @code{M_SQRT_32}      @tab = sqrt(32)        @tab 5.6568542
 @item @code{M_LOG10_2}      @tab = log10(2)        @tab 0.3010300
 @item @code{M_SQRT_PI}      @tab = sqrt(pi)        @tab 1.7724539
@@ -3726,7 +3753,7 @@ Further, the included header @file{R_ext/Boolean.h}
 has constants @code{TRUE} and @code{FALSE = 0} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 
-@node Utility functions, Platform and version information, Mathematical Constants, The R API
+@node Utility functions, Platform and version information, Numerical analysis subroutines, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -3758,7 +3785,7 @@ the left, larger ones to the right.
 @end deftypefun
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
-Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``Fortran'')
+Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
@@ -3813,10 +3840,9 @@ version includes the patchlevel (as in @code{99.0}).
 @section Using these functions in your own C code
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
-functions documented in @file{R_ext/Mathlib.h}, as a standalone library
-@file{libRmath} under Unix and Windows.  This includes the functions
-documented in @ref{Distribution functions} and @ref{Mathematical
-Utilities} and the constants in @ref{Mathematical Constants}.
+functions documented in @file{Rmath.h}, as a standalone library
+@file{libRmath} under Unix and Windows.  (This includes the functions
+documented in @ref{Numerical analysis subroutines} as from that header file.)
 
 The library is not built automatically when @R{} is installed, but can
 be built in the directory @file{src/nmath/standalone}. See the file
@@ -3824,7 +3850,7 @@ be built in the directory @file{src/nmath/standalone}. See the file
 
 @smallexample
 #define MATHLIB_STANDALONE
-#include "R_ext/Mathlib.h"
+#include <Rmath.h>
 @end smallexample
 
 @noindent
@@ -4024,8 +4050,8 @@ packages distributed with @R{}), be careful to check if @code{make
 test-Specific} or particularly, @code{cd tests; make no-segfault.Rout}
 still works (without interactive user intervention, and on a standalone
 computer).  If the new function, for example, accesses the Internet, or
-requires GUI interaction, please add its name to the ``stop list'' in
-@file{tests/make-no-segfault.R}.
+requires @acronym{GUI} interaction, please add its name to the ``stop
+list'' in @file{tests/make-no-segfault.R}.
 
 @node R coding standards, Function and variable index, R (internal) programming miscellania, Top
 @appendix R coding standards
@@ -4036,50 +4062,53 @@ most variants of Unix as well as 32-bit Windows versions and eventually
 adding to the @R{} base distribution or by providing an add-on package,
 one should not rely on features specific to only a few supported
 platforms, if this can be avoided.  In particular, although most @R{}
-developers use GNU tools, they should not employ the GNU extensions to
-standard tools.  Whereas some other software packages explicitly rely on
-e.g.@: GNU make or the GNU C++ compiler, @R{} does not.  Nevertheless,
-@R{} is a GNU project, and the spirit of the @cite{GNU Coding Standards}
-should be followed if possible.
+developers use @acronym{GNU} tools, they should not employ the
+@acronym{GNU} extensions to standard tools.  Whereas some other software
+packages explicitly rely on e.g.@: @acronym{GNU} make or the
+@acronym{GNU} C++ compiler, @R{} does not.  Nevertheless, @R{} is a
+@acronym{GNU} project, and the spirit of the @cite{@acronym{GNU} Coding
+Standards} should be followed if possible.
 
 The following tools can ``safely be assumed'' for @R{} extensions.
 
 @itemize @bullet
 @item
-An ANSI C compiler.  If you do not have access to the ANSI standard,
-refer to the 2nd edition of Brian W. Kernighan & Dennis M. Ritchie,
-@cite{The C Programming Language}.  Any extensions, such as POSIX, must
-be tested for, typically using Autoconf (@pxref{Configure and cleanup}).
+An @acronym{ANSI} C compiler.  If you do not have access to the
+@acronym{ANSI} standard, refer to the 2nd edition of Brian W. Kernighan
+& Dennis M. Ritchie, @cite{The C Programming Language}.  Any extensions,
+such as @acronym{POSIX}, must be tested for, typically using Autoconf
+(@pxref{Configure and cleanup}).
 
 @item
 A FORTRAN 77 compiler or @command{f2c}, the FORTRAN-to-C converter.
 
 @item
 A simple @command{make}, considering the features of @command{make} in
-4.2 BSD systems as a baseline.
+4.2 @acronym{BSD} systems as a baseline.
 
-GNU or other extensions, including pattern rules using @samp{%}, the
-automatic variable @samp{$^}, the @samp{+=} syntax to append to the
-value of a variable, the (``safe'') inclusion of makefiles with no
-error, conditional execution, and many more, must not be used (see
-Chapter ``Features'' in the @cite{GNU Make Manual} for more
-information).  On the other hand, building @R{} in a separate directory
-(not containing the sources) should work provided that @command{make}
-supports the @code{VPATH} mechanism.
+@acronym{GNU} or other extensions, including pattern rules using
+@samp{%}, the automatic variable @samp{$^}, the @samp{+=} syntax to
+append to the value of a variable, the (``safe'') inclusion of makefiles
+with no error, conditional execution, and many more, must not be used
+(see Chapter ``Features'' in the @cite{@acronym{GNU} Make Manual} for
+more information).  On the other hand, building @R{} in a separate
+directory (not containing the sources) should work provided that
+@command{make} supports the @code{VPATH} mechanism.
 
-Windows-specific makefiles can assume GNU @command{make} 3.75 or later,
-as no other @command{make} is viable on that platform.
+Windows-specific makefiles can assume @acronym{GNU} @command{make} 3.75
+or later, as no other @command{make} is viable on that platform.
 
 @item
 A Bourne shell and the ``traditional'' Unix programming tools, including
 @command{grep}, @command{sed}, and @command{awk}.
 
-There are POSIX standards for these tools, but these may not fully be
-supported, and the precise standards are typically hard to access.
-Baseline features could be determined from a book such as @cite{The UNIX
-Programming Environment} by Brian W. Kernighan & Rob Pike.  Note in
-particular that @samp{|} in a regexp is an extended regexp, and is not
-supported by all versions of @command{grep} or @command{sed}.
+There are @acronym{POSIX} standards for these tools, but these may not
+fully be supported, and the precise standards are typically hard to
+access.  Baseline features could be determined from a book such as
+@cite{The UNIX Programming Environment} by Brian W. Kernighan & Rob
+Pike.  Note in particular that @samp{|} in a regexp is an extended
+regexp, and is not supported by all versions of @command{grep} or
+@command{sed}.
 
 Under Windows, these tools can be assumed because versions
 (specifically, of @command{basename}, @command{cat}, @command{comm},
@@ -4111,8 +4140,8 @@ hand, Perl cannot be assumed at all for installing @emph{binary}
 
 @item
 Makeinfo version 4 is needed to build the Info files for the @R{}
-manuals written in the GNU Texinfo system.  (Future distributions of
-@R{} will contain the Info files.)
+manuals written in the @acronym{GNU} Texinfo system.  (Future
+distributions of @R{} will contain the Info files.)
 @end itemize
 
 It is also important that code is written in a way that allows others to

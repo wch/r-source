@@ -92,9 +92,9 @@ refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
 	fi
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-dvi
-	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
+	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
@@ -143,6 +143,8 @@ stamp-images-eps:
 R-lang.dvi: $(texiincludes)
 
 html: $(OBJECTS_HTML)
+	@(cd ../html; $(MAKE) index.html)
+
 R-data.html: $(texiincludes)
 R-exts.html: $(texiincludes)
 R-intro.html: $(texiincludes)
@@ -162,9 +164,9 @@ refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
 	fi
 	@echo "PDF/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
-	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
+	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
@@ -270,9 +272,10 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf Rd.sty images; \
 	fi
-	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.info* *.ky *.kys \
-	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
-	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex \
+	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.html *.info* \
+	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \
+	  *.toc *.tp *.vr *.vrs \
+	  *-pkg.tex refman.i?? refman.tex version.tex \
 	  version.texi
 	@rm -f stamp-*
 distclean: clean

@@ -6,7 +6,7 @@
 # code which is to be accessed via .C and .Fortran calls.
 
 TOOLS_DIR=`echo $0 | sed 's%/[^/][^/]*$%%'`
-TMPDIR=${TMPDIR:-/tmp}
+TMPDIR=${TMPDIR-/tmp}
 ROUTINES=${TMPDIR}/ROUTINES${$}
 
 # Allow `#' comments in `../src/appl/ROUTINES':

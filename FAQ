@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-25, 2000-11-14
+Version 1.1-32, 2000-11-30
 Kurt Hornik
 
 
@@ -339,11 +339,11 @@ more details.
 
    The `bin/linux' directory of a CRAN site contains Debian 2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
-sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
-Everett, respectively), SuSE 5.3/6.4/7.0 i386 packages by Albrecht
-Gebhardt, Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc 5.0
-RPMs by Alex Buerkle.
+maintained by Doug Bates), Red Hat 6.x packages for the alpha and sparc
+platforms and 6.x/7.x packages for the i386 platform (maintained by Naoki
+Takebayashi, Vin Everett, and Martyn Plummer, respectively), SuSE
+5.3/6.4/7.0 i386 packages by Albrecht Gebhardt, Mandrake 7.1 i386 packages
+by Michele Alzetta, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -550,7 +550,7 @@ Tracking system.
 <wwwadmin@cran.r-project.org>.
 
      *Note:*  It is very important that you indicate the copyright
-     (license) information (GPL, BSD, Artistic, ...) in your submission.
+     (license) information (GPL, BSD, Artistic, ...)  in your submission.
 
    Please always use the URL of the master site when referring to CRAN.
 
@@ -1106,6 +1106,9 @@ works, was published in the Journal of Statistical Software
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 
+*XML*
+     Facilities for reading XML documents and DTDs.
+
 *acepack*
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
      VAriance Stabilization for regression) methods for selecting regression
@@ -1300,6 +1303,9 @@ works, was published in the Journal of Statistical Software
 *rpart*
      Recursive PARTitioning and regression trees.
 
+*scatterplot3d*
+     Plots a three dimensional (3D) point cloud perspectively.
+
 *sgeostat*
      An object-oriented framework for geostatistical modeling.
 
@@ -1358,15 +1364,20 @@ packages still "under development" or depending on features only present in
 the current development versions of R.  Volunteers are invited to give
 these a try, of course.  This area of CRAN currently contains
 
+*GRASS*
+     Interface between the GRASS geographical information system and R,
+     based on starting R from within the GRASS environment and chosen
+     LOCATION and MAPSET.  Wrapper and helper functions are provided for a
+     range of R functions to match the interface metadata structures.
+
 *HTML*
      Functions for exporting R objects as HTML tables.
 
-*Java*
-     An interface from R to Java to create and call Java objects and
-     methods.
-
 *RMySQL*
      An interface between R and the MySQL database system.
+
+*StatDataML*
+     Read and write StatDataML
 
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
@@ -1407,15 +1418,26 @@ these a try, of course.  This area of CRAN currently contains
 *netCDF*
      Read data from netCDF files.
 
-*syskern*
-     Functions for writing code that is OS and R/S independent.
+*npConfRatio*
+     Nonparametric confidence intervals for the ratios of medians.
 
-*tframe*
-     Functions for writing code that is independent of the representation of
-     time.
+*regexp*
+     Simple regular expression interface.
 
 *timeslab*
      Time series routines.
+
+   Directory `src/contrib/Omegahat' contains yet unreleased packages from
+the Omegahat Project for Statistical Computing (http://www.omegahat.org).
+Currently, there are
+
+*Java*
+     An interface from R to Java to create and call Java objects and
+     methods.
+
+*RSPerl*
+     An interface from R to an embedded, persistent Perl interpreter,
+     allowing one to call arbitrary Perl subroutines, classes and methods.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
@@ -1442,13 +1464,13 @@ named `PKG_VERSION.tar.gz', which may in fact be "bundles" containing more
 than one package.  Provided that `tar' and `gzip' are available on your
 system, type
 
-     $ R INSTALL /path/to/PKG_VERSION.tar.gz
+     $ R CMD INSTALL /path/to/PKG_VERSION.tar.gz
 
 at the shell prompt to install to the default R directory tree (the
 `library' subdirectory of `R_HOME').  To install to another tree (e.g.,
 your private one), use
 
-     $ R INSTALL -l LIB /path/to/PKG_VERSION.tar.gz
+     $ R CMD INSTALL -l LIB /path/to/PKG_VERSION.tar.gz
 
 where LIB gives the path to the library tree to install to.
 
@@ -1525,11 +1547,11 @@ at the R prompt.
    To remove the packages PKG_1, ..., PKG_N from the default library or the
 library LIB, do
 
-     $ R REMOVE PKG_1 ... PKG_N
+     $ R CMD REMOVE PKG_1 ... PKG_N
 
 or
 
-     $ R REMOVE -l LIB PKG_1 ... PKG_N
+     $ R CMD REMOVE -l LIB PKG_1 ... PKG_N
 
 respectively.
 

@@ -1,17 +1,17 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-06)
+Version 1.2.0 Under development (unstable) (2000-11-15)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > ####	d|ensity
 > ####	p|robability (cumulative)
@@ -193,21 +193,21 @@ Warning messages:
 > z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
 [1] TRUE
 > z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
-> zsml <- z > -37.5 || !is.finite(z)
+> z.ok <- z > -37.5 | !is.finite(z)
 > for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
 +     cat("ERROR -- df = ", df, "\n")
 > All.eq(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE))
 [1] TRUE
 > All.eq(pz,		 pnorm(-z, lower=FALSE))
 [1] TRUE
-> All.eq(log(pz[zsml]),  pnorm(z[zsml], log=TRUE))
+> All.eq(log(pz[z.ok]),  pnorm(z[z.ok], log=TRUE))
 [1] TRUE
 > y <- seq(-70,0, by = 10)
 > cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE))
        y log(pnorm(y)) pnorm(y, log=T)
-[1,] -70          -Inf   -2455.1672298
-[2,] -60          -Inf   -1805.0130056
-[3,] -50          -Inf   -1254.8305621
+[1,] -70          -Inf   -2455.1676378
+[2,] -60          -Inf   -1805.0135607
+[3,] -50          -Inf   -1254.8313611
 [4,] -40          -Inf    -804.6084420
 [5,] -30  -454.3212440    -454.3212440
 [6,] -20  -203.9171554    -203.9171554
@@ -694,5 +694,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.59 0.11 7.79 0 0 
+Time elapsed:  7.5 0.23 7.73 0 0 
 > 

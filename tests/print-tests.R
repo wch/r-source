@@ -184,3 +184,15 @@ matrix(x + 1i*pi, 3)
 xx + pi
 t(cbind(xx, xx+ 1i*c(1,pi)))
 
+#--- format checks after incorrect changes in Nov 2000
+zz <- data.frame("(row names)" = c("aaaaa", "b"), check.names = FALSE)
+format(zz)
+format(zz, justify = "left")
+zz <- data.frame(a = I("abc"), b = I("def\"gh"))
+format(zz)
+# test format.data.frame on former AsIs's.
+set.seed(321)
+dd <- data.frame(x = 1:5, y = rnorm(5), z = c(1, 2, NA, 4, 5))
+model <- glm(y ~ x, data = dd, subset = 1:4, na.action = na.omit)
+expand.model.frame(model, "z", na.expand = FALSE)
+expand.model.frame(model, "z", na.expand = TRUE)

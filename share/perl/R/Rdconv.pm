@@ -979,8 +979,7 @@ sub chm_functionhead
 
 #==************************** txt ******************************
 
-use Text::Wrap;
-use Text::Tabs;
+use Text::Tabs qw(expand);
 
 sub rdoc2txt { # (filename); 0 for STDOUT
 
@@ -992,7 +991,6 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 	$txtout = "STDOUT";
     }
 
-    $Text::Wrap::columns=72;
     $INDENT = 3;  # indent for \itemize and \enumerate first line
     $INDENTD = 0; # indent for \describe list first line
     $INDENTDD = 7; # indent for \describe list bodies
@@ -1169,21 +1167,63 @@ sub code2txt {
 }
 
 
+sub nounder
+{
+    my ($text) = @_;
+    $text =~ s/_//g;
+    $text;
+}
 
-# generate wrapped text, undo tabifying, zap empty lines to \n
+## Modified from Text::Wrap to take account of underlines, not entab.
+sub Rwrap
+{
+    my ($ip, $xp, @t) = @_;
+
+    my $r = "";
+    my $columns = 72;
+    my $t = expand(join(" ",@t));
+    my $lead = $ip;
+    my $ll = $columns - length(nounder(expand($ip))) - 1;
+    my $nll = $columns - length(nounder(expand($xp))) - 1;
+    my $nl = "";
+    my $remainder = "";
+
+    while ($t !~ /^\s*$/) {
+	if ($t =~ s/^([^\n]{0,$ll})(\s|\Z(?!\n))//xm) {
+	    $r .= $nl . $lead . $1;
+	    $remainder = $2;
+	} elsif ($t =~ s/^([^\n]{$ll})//) {
+	    $r .= $nl . $lead . $1;
+	    $remainder = "\n";
+	} else {
+	    die "This shouldn't happen";
+	}
+
+	$lead = $xp;
+	$ll = $nll;
+	$nl = "\n";
+    }
+    $r .= $remainder;
+
+    $r .= $lead . $t if $t ne "";
+
+    return $r;
+}
+
+# generate wrapped text, zap empty lines to \n
 sub mywrap {
     my ($pre1, $pre2, $text) = @_;
 
     my $ntext;
     if(length($text) > 0) {
-	$ntext = wrap($pre1, $pre2, $text);
+	$ntext = Rwrap($pre1, $pre2, $text);
     } else {
 	$ntext = $pre1;
     }
     my @lines = split /\n/, $ntext;
     my $out = "", $line;
     foreach $line (@lines) {
-	$line = expand $line;
+#	$line = expand $line;
 	$line =~ s/^\s+$//o;
 	$out .= $line . "\n";
     }

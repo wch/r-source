@@ -1,4 +1,4 @@
-# Interactive density plots. Based on TCL version by Guido Masarotto
+### Interactive density plots. Based on TCL version by Guido Masarotto
 
 require(tcltk) || stop("tcltk support is absent")
 local({
@@ -37,6 +37,7 @@ local({
     left.frm <- tkframe(spec.frm)
     right.frm <- tkframe(spec.frm)
 
+    ## Two left frames:
     frame1 <- tkframe(left.frm, relief="groove", borderwidth=2)
     tkpack(tklabel(frame1, text="Distribution"))
     tkpack(tkradiobutton(frame1, command=regen, text="Normal",
@@ -53,6 +54,7 @@ local({
         tkpack(tmp, anchor="w")
     }
 
+    ## Two right frames:
     frame3 <-tkframe(right.frm, relief="groove", borderwidth=2)
     tkpack(tklabel(frame3, text="Sample size"))
     for ( i in c(50,100,200,300) ) {
@@ -68,11 +70,11 @@ local({
                    showvalue=F, variable="bw",
                    resolution=0.05, orient="horiz"))
 
-
     tkpack(frame1, frame2, fill="x")
     tkpack(frame3, frame4, fill="x")
     tkpack(left.frm, right.frm,side="left", anchor="n")
 
+    ## `Bottom frame' (on base):
     q.but <- tkbutton(base,text="Quit",
                       command=function()tkdestroy(base))
 
@@ -82,6 +84,11 @@ local({
     tclvar$dist  <- 1
     tclvar$kernel<- "gaussian"
     tclvar$bw    <- 1
+    cat("******************************************************\n",
+        "The source for this demo can be found in the file:\n", 
+        paste(R.home(),"demos","tcltk","tkdensity.R", sep=.Platform$file.sep),
+        "\n******************************************************\n")
+
     regen()
 })
 

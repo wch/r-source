@@ -14,3 +14,10 @@ x <- matrix(c(2, 2, 4, 8, 6, 0, 1, 1, 7, 8, 1, 3, 1, 3, 7, 4, 2, 2, 2,
             nc = 2)
 fisher.test(x)
 ## Comments:
+
+## PR 753 (step can't find variables)
+##
+x<-data.frame(a=rnorm(10),b=rnorm(10),c=rnorm(10))
+x0.lm<-lm(a~1,data=x)
+step(x0.lm,~b+c)
+## Comments:

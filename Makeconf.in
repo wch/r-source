@@ -46,6 +46,7 @@ MAIN_LDFLAGS = @MAIN_LDFLAGS@
 @USE_LIBTOOL_TRUE@MAIN_LINK = $(LIBTOOL) --mode=link $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 MAKEINDEX = @MAKEINDEX@
 MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
+PERL = @PERL@
 R_GUIS = @R_GUIS@
 # fixme: tcltk needs to be optional
 R_PKGS = base ctest eda lqs modreg mva nls splines stepfun ts tcltk

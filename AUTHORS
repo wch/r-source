@@ -9,7 +9,7 @@ source, currently consisting of
 Douglas Bates		<bates@stat.wisc.edu>
 John Chambers		<jmc@research.bell-labs.com>
 Peter Dalgaard		<p.dalgaard@kubism.ku.dk>
-Robert Gentleman	<rgentlem@stat.auckland.ac.nz>
+Robert Gentleman	<rgentlem@jimmy.dfci.harvard.edu>
 Kurt Hornik		<Kurt.Hornik@ci.tuwien.ac.at>
 Ross Ihaka		<ihaka@stat.auckland.ac.nz>
 Friedrich Leisch	<Friedrich.Leisch@ci.tuwien.ac.at>
@@ -21,4 +21,4 @@ Brian Ripley		<ripley@stats.ox.ac.uk>
 Duncan Temple Lang	<duncan@research.bell-labs.com>
 Luke Tierney		<luke@stat.umn.edu>
 
-plus Heiner Schwarte up to October 1999.
+plus Heiner Schwarte <h.schwarte@bluewin.ch> up to October 1999.

@@ -71,11 +71,11 @@ manual details and defines the @R{} language.
 
 The language syntax has a superficial similarity with C, but the
 semantics are of the FPL (functional programming language) variety with
-stronger affinities with Lisp and APL.  In particular, it allows
-``computing on the language'', which in turn makes it possible to write
-functions that take expressions as input, something that often comes in
-handy when writing interface functions for statistical modeling and
-graphics.
+stronger affinities with Lisp and @acronym{APL}.  In particular, it
+allows ``computing on the language'', which in turn makes it possible to
+write functions that take expressions as input, something that often
+comes in handy when writing interface functions for statistical modeling
+and graphics.
 
 It is possible to get quite far using @R{} interactively, executing
 simple expressions from the command line.  Some users may never need to
@@ -172,14 +172,18 @@ The following table describes the possible values returned by
 @item @code{symbol}
 @tab a variable name
 @item @code{pairlist}
-@tab a list
+@tab a pairlist object
 @item @code{closure} @tab a function
 @item @code{environment} @tab an environment
 @item @code{promise}  @tab an object used to implement lazy evaluation
 @item @code{language} @tab an @R{} language construct
 @item @code{special}  @tab a builtin function that does not evaluate its
 arguments
-@item @code{builtin} @tab a builtin function that evaluates its arguments
+@item @code{builtin} @tab a builtin function that evaluates its
+arguments
+@c FIXME: in SEXPTYPE but not here ...
+@c @item @code{char} @ a `scalar' string object (internal only) ***
+@c </FIXME>
 @item @code{logical} @tab a vector containing logical values
 @item @code{integer} @tab a vector containing integer values
 @item @code{double}  @tab a vector containing real values
@@ -187,16 +191,18 @@ arguments
 @item @code{character} @tab a vector containing character values
 @item @code{...} @tab the special variable length argument ***
 @item @code{any} @tab a special type that matches all types ***
-@item @code{expression} @tab an expression
+@item @code{expression} @tab an expression object
 @item @code{list} @tab a list
+@c FIXME: in SEXPTYPE but not here ...
+@c @item BCODESXP @tab byte code
+@c </FIXME>
+@item @code{externalptr} @tab an external pointer object
 @end multitable
 @end quotation
 
 @noindent
 I don't think that the user can get a hold of items marked with a `***';
 at least not easily; counter examples would be appreciated.
-
-@code{pairlist} objects are returned by @code{formals}.
 
 @menu
 * Vector objects::              
@@ -242,11 +248,11 @@ somewhat confusing.
 @node List objects, Language objects, Vector objects, Basic types
 @subsection Lists
 
-Lists are another kind of data storage.  Lists have elements, each of
-which can contain any type of @R{} object, i.e.@: the elements of a list
-do not have to be of the same type.  List elements are accessed through
-three different indexing operations.  These are explained in detail in
-@ref{Indexing}.
+Lists (``generic vectors'') are another kind of data storage.  Lists
+have elements, each of which can contain any type of @R{} object, i.e.@:
+the elements of a list do not have to be of the same type.  List
+elements are accessed through three different indexing operations.
+These are explained in detail in @ref{Indexing}.
 @c @ref{Data structures}.
 
 @node Language objects, Expression objects, List objects, Basic types
@@ -294,7 +300,7 @@ They naturally appear as atoms of parsed expressions, try e.g.@:
 @code{as.list(quote(x + y))}.
 
 @node Expression objects, Function objects, Language objects, Basic types
-@subsection Expressions
+@subsection Expression objects
 
 In @R{} one can have objects of mode @code{"expression"}.  An
 @emph{expression} contains one or more statements.  A statement is a
@@ -440,8 +446,8 @@ environment can lead to surprises.
 
 Pairlist objects are similar to Lisp's dotted-pair lists.  They are used
 extensively in the internals of @R{}, but are rarely visible in
-interpreted code, although they can be created by (e.g.) the
-@code{pairlist} function.
+interpreted code, although they are returned by @code{formals}, and can
+be created by (e.g.) the @code{pairlist} function.
 @findex pairlist
 Each such object has three slots, a CAR value, a CDR value and a TAG
 value.  The TAG value is a text string and CAR and CDR usually
@@ -467,6 +473,9 @@ It is not really possible for an object to be of ``Any'' type, but it is
 nevertheless a valid type value.  It gets used in certain (rather rare)
 circumstances, e.g.@: @code{as.vector(x, "any")}, indicating that type
 coercion should not be done.
+
+@c @node External pointer objects
+@c @subsection External pointer objects
 
 @node Attributes, Special compound objects, Basic types, Objects
 @section Attributes
@@ -2519,7 +2528,7 @@ nice output for the results of any analysis.
 have the ability to modify or construct other subroutines and evaluate
 the result as an integral part of the language itself.  This is similar
 to Lisp and Scheme and other languages of the ``functional programming''
-variety, but in contrast to Fortran and the Algol family.  The Lisp
+variety, but in contrast to FORTRAN and the ALGOL family.  The Lisp
 family takes this feature to the extreme by the ``everything is a list''
 paradigm in which there is no distinction between programs and data.
 
@@ -3136,12 +3145,12 @@ platforms, although the information available may be limited there).
 
 These two functions provide a standard interface to compiled code that
 has been linked into @R{}, either at build time or via @code{dyn.load}
-(q.v.).  They are primarily intended for compiled @C{} and Fortran code
+(q.v.).  They are primarily intended for compiled @C{} and FORTRAN code
 respectively, but the @code{.C} function can be used with other
 languages which can generate C interfaces, for example C++.
 
 The first argument to each function is a character string given the
-symbol name as known to @C{} or Fortran, that is the function or
+symbol name as known to @C{} or FORTRAN, that is the function or
 subroutine name.  (The mapping to the symbol name in the load table is
 given by the functions @code{symbol.C} and @code{symbol.For};
 @findex symbol.C
@@ -3156,11 +3165,11 @@ the arguments are given names, these are used as names for the
 components in the returned list object.
 
 The following table gives the mapping between the modes of @R{} vectors
-and the types of arguments to a C function or Fortran subroutine.
+and the types of arguments to a C function or FORTRAN subroutine.
 
 @quotation
 @multitable @columnfractions 0.2 0.2 0.3
-@item @R{} storage mode @tab C type            @tab Fortran type
+@item @R{} storage mode @tab C type            @tab FORTRAN type
 @item @code{logical}    @tab @code{int *}      @tab @code{INTEGER}
 @item @code{integer}    @tab @code{int *}      @tab @code{INTEGER}
 @item @code{double}     @tab @code{double *}   @tab @code{DOUBLE PRECISION}
@@ -3171,28 +3180,29 @@ and the types of arguments to a C function or Fortran subroutine.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}.
-Only a single character string can be passed to or from Fortran, and the
+Only a single character string can be passed to or from FORTRAN, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
 to @code{.C}, but it is better to use one of the other interfaces.  An
 exception is passing an @R{} function for use with @code{call_R}, when
 the object can be handled as @code{void *} en route to @code{call_R}.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or Fortran as @code{REAL} by setting the attribute
+C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
 @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single} and @code{single}.  This is intended only to be used to
-aid interfacing to existing C or Fortran code.
+aid interfacing to existing C or FORTRAN code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
-checked for missing values @code{NA} and for the IEEE special values
-@code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any of these
-generates an error.  If it is true, these values are passed unchecked.
+checked for missing values @code{NA} and for the @acronym{IEEE} special
+values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
+of these generates an error.  If it is true, these values are passed
+unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.
 
 Note that the compiled code should not return anything except through
-its arguments: C functions should be of type @code{void} and Fortran
+its arguments: C functions should be of type @code{void} and FORTRAN
 subprograms should be subroutines.
 
 @node dyn.load/dyn.unload, .Internal, .C/.Fortran, System and foreign language interfaces
@@ -3678,14 +3688,14 @@ at least) takes place prior to the syntactic analysis performed by the
 parser itself.
 
 @menu
-* Literal constants::
-* Identifiers::
-* Reserved words::
-* Special operators::
-* Separators::
-* Operator tokens::
-* Grouping symbols::
-* Indexing tokens::
+* Literal constants::           
+* Identifiers::                 
+* Reserved words::              
+* Special operators::           
+* Separators::                  
+* Operator tokens::             
+* Grouping symbols::            
+* Indexing tokens::             
 @end menu
 
 @node Literal constants, Identifiers, Tokens, Tokens
@@ -3699,8 +3709,9 @@ In addition, there are four special constants, @code{NULL}, @code{NA},
 
 @code{NULL} is used to indicate the empty object.  @code{NA} is used for
 absent (``Not Available'') data values.  @code{Inf} denotes infinity and
-@code{NaN} is not-a-number in the IEEE floating point calculus (results
-of the operations respectively @math{1/0} and @math{0/0}, for instance).
+@code{NaN} is not-a-number in the @acronym{IEEE} floating point calculus
+(results of the operations respectively @math{1/0} and @math{0/0}, for
+instance).
 
 Logical constants are either @code{TRUE} or @code{FALSE}.
 

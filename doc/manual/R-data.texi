@@ -73,6 +73,7 @@ principal authors of the packages mentioned are
 
 @quotation
 @multitable {stataread  xxxx} {A longggggggggggggggggggggggggggggggggg description}
+@item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy and Douglas Bates 
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{netCDF} @tab Thomas Lumley
@@ -95,9 +96,10 @@ that can take far more time than the statistical analysis itself, even
 though most readers will find the latter far more appealing.
 
 This manual describes the import and export facilities available either
-in @R{} itself or via packages which are available from CRAN.  Some of
-the packages described are still under development (and hence in the
-Devel section on CRAN) but they already provide useful functionality.
+in @R{} itself or via packages which are available from @acronym{CRAN}.
+Some of the packages described are still under development (and hence in
+the Devel section on @acronym{CRAN}) but they already provide useful
+functionality.
 
 Unless otherwise stated, everything described in this manual is
 available for both Unix/Linux and Windows versions of @R{}.
@@ -122,10 +124,8 @@ manipulate the data before input to @Sl{}.  @R{} itself takes that
 approach, using @code{perl} to manipulate its databases of help files
 rather than @R{} itself, and the function @code{read.fwf} used a call to
 a @code{perl} script until it was decided not to require @code{perl} at
-run-time.   The traditional Unix tools are now much more widely
+run-time.  The traditional Unix tools are now much more widely
 available, including on Windows.
-
-
 
 @menu
 * Imports::                     
@@ -154,17 +154,16 @@ access such files directly from @R{}.
 
 In a few cases, data have been stored in a binary form for compactness
 and speed of access.  One application of this that we have seen several
-times is imaging data, which is normally stored as a stream of bytes
-as represented in memory, possibly preceded by a header.  Such data
-formats are discussed in @ref{Binary files}.
+times is imaging data, which is normally stored as a stream of bytes as
+represented in memory, possibly preceded by a header.  Such data formats
+are discussed in @ref{Binary files}.
 
-For much larger databases it is common to handle the data using a database
-management system (DBMS).  There is once again the option of using the
-DBMS to extract a plain file, but for many such DBMSs the extraction
-operation can be done directly from an @R{} package: @xref{Relational
-databases}.  Importing data via network connections is discussed in
-@ref{Network connections}.
-
+For much larger databases it is common to handle the data using a
+database management system (DBMS).  There is once again the option of
+using the DBMS to extract a plain file, but for many such DBMSs the
+extraction operation can be done directly from an @R{} package:
+@xref{Relational databases}.  Importing data via network connections is
+discussed in @ref{Network connections}.
 
 @node Export to text files,  , Imports, Introduction
 @section Export to text files
@@ -183,13 +182,13 @@ text file to be written via successive calls to @code{cat}.
 
 @findex write
 @findex write.table
-The commonest task is to write a matrix or data frame to file
-as a rectangular grid of numbers, possibly with row and column labels.
-This can be done by the functions @code{write.table} and @code{write}.
+The commonest task is to write a matrix or data frame to file as a
+rectangular grid of numbers, possibly with row and column labels.  This
+can be done by the functions @code{write.table} and @code{write}.
 Function @code{write} just writes out a matrix or vector in a specified
 number of columns (and transposes a matrix).  Function
-@code{write.table} is more convenient, and writes out a data frame
-(or an object that can be coerced to a data frame) with row and column
+@code{write.table} is more convenient, and writes out a data frame (or
+an object that can be coerced to a data frame) with row and column
 labels.
 
 There are a number of issues that need to be considered in writing out a
@@ -200,20 +199,23 @@ data frame to a text file.
 @item @strong{Precision}
 
 These functions are based on @code{cat} not @code{print}, and the
-precision to which numbers are printed is governed by the
-current setting of @code{options(digits)}.  It may be necessary
-to increase this to avoid losing precision.  For more control,
-use @code{format} on a data frame, possibly column-by-column.
+precision to which numbers are printed is governed by the current
+setting of @code{options(digits)}.  It may be necessary to increase this
+to avoid losing precision.  For more control, use @code{format} on a
+data frame, possibly column-by-column.
 
 @item @strong{Header line}
 
 @R{} prefers the header line to have no entry for the row names, so the
 file looks like
+
 @smallexample
                 dist    climb   time
 Greenmantle     2.5     650     16.083
    ...
 @end smallexample
+
+@noindent
 Other systems require a (possibly empty) entry for the row names, which
 is what @code{write.table} will provide if argument @code{col.names=NA}
 is specified.  Excel is one such system.
@@ -229,7 +231,8 @@ Unfortunately, in some locales the comma is used as the decimal point
 (set this in @code{write.table} by @code{dec=","}) and there CSV files
 use the semicolon as the field separator.
 
-Using a semicolon or tab (@code{sep="\t"}) are probably the safest options.
+Using a semicolon or tab (@code{sep="\t"}) are probably the safest
+options.
 
 @item @strong{Missing values}
 @cindex Missing values
@@ -242,44 +245,33 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 @cindex Quoting strings
 
 By default strings are quoted (including the row and column names).
-Argument @code{quote} controls quoting of character variables.  Factors
-are never quoted (and most character variables in data frames are factors).
+Argument @code{quote} controls quoting of character and factor variables.
 
-Some care is needed if the strings contain embedded quotes.
+Some care is needed if the strings contain embedded quotes. Three
+useful forms are
+
 @smallexample
 > df <- data.frame(a = I("a \" quote"))
 > write.table(df)
 "a"
-"1" "a " quote"
-> write.table(df, quote=F)
-a
-1 a " quote
-@end smallexample
-@noindent
-is much as one might expect, but is probably not acceptable to other
-programs.  Better solutions include
-@smallexample
-> equote <- function(x)
-    if(is.character(x) gsub('"', '\\\\"', x)) else x
-> write.table(lapply(df, equote))
-"a"
 "1" "a \" quote"
-> dquote <- function(x)
-    if(is.character(x) gsub('"', '""', x)) else x
-> write.table(lapply(df, dquote))
+> write.table(df, qmethod="double")
 "a"
 "1" "a "" quote"
+> write.table(df, quote=FALSE, sep=",")
+a
+1,a " quote
 @end smallexample
+
 @noindent
-the latter being the form of escape commonly used by spreadsheets.
+The second is the form of escape commonly used by spreadsheets.
 @end enumerate
 
 @findex sink
-It is possible to use @code{sink} to divert the standard @R{} output
-to a file, and thereby capture the output of (possibly implicit)
+It is possible to use @code{sink} to divert the standard @R{} output to
+a file, and thereby capture the output of (possibly implicit)
 @code{print} statements.  This is not usually the most efficient route,
 and the @code{options(width)} setting may need to be increased.
-
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
 @chapter Spreadsheet-like data
@@ -290,6 +282,7 @@ and the @code{options(width)} setting may need to be increased.
 * Fixed-width-format files::    
 * Using scan directly::         
 * Re-shaping data::             
+* Flat contingency tables::     
 @end menu
 
 In @ref{Export to text files} we saw a number of variations on the
@@ -301,78 +294,84 @@ section we consider importing such files into @R{}.
 @section  Variations on @code{read.table}
 @findex read.table
 
-The function @code{read.table} is the most convenient way to read in
-a rectangular grid of data.  Because of the many possibilities, there
-are several other functions that call @code{read.table} but change a
-group of default arguments.
+The function @code{read.table} is the most convenient way to read in a
+rectangular grid of data.  Because of the many possibilities, there are
+several other functions that call @code{read.table} but change a group
+of default arguments.
 
 Some of the issues to consider are:
+
 @enumerate
 @item @strong{Header line}
 
 We recommend that you specify the @code{header} argument explicitly,
 Conventionally the header line has entries only for the columns and not
 for the row labels, so is one field shorter than the remaining lines.
-(If @R{} sees this, it sets @code{header = TRUE}.)
-If presented with a file that has a (possibly empty) header field for
-the row labels, read it in by something like
+(If @R{} sees this, it sets @code{header = TRUE}.)  If presented with a
+file that has a (possibly empty) header field for the row labels, read
+it in by something like
+
 @smallexample
 read.table("file.dat", header = TRUE, row.names = 1)
 @end smallexample
 
-Column names can be given explicitly via the @code{col.names};
-explicit names override the header line (if present).
+Column names can be given explicitly via the @code{col.names}; explicit
+names override the header line (if present).
 
 @item @strong{Separator}
 
 Normally looking at the file will determine the field separator to be
 used, but with white-space separated files there may be a choice between
 @code{sep = ""} which uses any white space (spaces, tabs or newlines) as
-a separator, @code{sep = " "} and @code{sep = "\t"}. Note that the choice of
-separator affects the input of quoted strings.
+a separator, @code{sep = " "} and @code{sep = "\t"}. Note that the
+choice of separator affects the input of quoted strings.
 
 @item @strong{Quoting}
 @cindex Quoting strings
 
-By default character strings can be quoted by either @code{"} or
-@code{'}, and in each case all the characters up to a matching quote are
+By default character strings can be quoted by either @samp{"} or
+@samp{'}, and in each case all the characters up to a matching quote are
 taken as part of the character string.  The set of valid quoting
 characters (which might be none) is controlled by the @code{quote}
 argument.  For @code{sep = "\n"} the default is changed to @code{quote =
 ""}.
 
 If no separator character is specified, quotes can be escaped within
-quoted strings by immediately preceding them by @code{\}, C-style.
+quoted strings by immediately preceding them by @samp{\}, C-style.
 
 If a separator character is specified, quotes can be escaped within
 quoted strings by doubling them as is conventional in spreadsheets.  For
 example
+
 @smallexample
 'One string isn''t two',"one more"
 @end smallexample
+
 @noindent
 can be read by
+
 @smallexample
 read.table("testfile", sep = ",")
 @end smallexample
+
 @noindent
 This does not work with the default separator.
 
 @item @strong{Missing values}
 @cindex Missing values
 
-By default the file is assumed to contain
-the character string @code{NA} to represent missing values, but this can
-be changed by the argument @code{na.strings}, which is a vector of one
-or more character representations of missing values.
+By default the file is assumed to contain the character string @code{NA}
+to represent missing values, but this can be changed by the argument
+@code{na.strings}, which is a vector of one or more character
+representations of missing values.
 
 Empty fields in numeric columns are also regarded as missing values.
 
 @item @strong{Unfilled lines}
 
 It is quite common for a file exported from a spreadsheet to have all
-trailing empty fields (and their separators) omitted. To read such files
-set @code{fill = TRUE}.
+trailing empty fields (and their separators) omitted.  To read such
+files set @code{fill = TRUE}.
 
 @item @strong{White space in character fields}
 
@@ -383,9 +382,9 @@ use argument @code{strip.white = TRUE}.
 @item @strong{Blank lines}
 
 By default, @code{read.table} ignores empty lines. This can be changed
-by setting @code{blank.lines.skip = FALSE}, which will only be useful
-in connection with @code{fill = TRUE}, perhaps to indicate missing
-data in a regular layout.
+by setting @code{blank.lines.skip = FALSE}, which will only be useful in
+connection with @code{fill = TRUE}, perhaps to indicate missing data in
+a regular layout.
 
 @end enumerate
 
@@ -397,11 +396,12 @@ data in a regular layout.
 Convenience functions @code{read.csv} and @code{read.delim} provide
 arguments to @code{read.table} appropriate for CSV and tab-delimited
 files exported from spreadsheets in English-speaking locales.  The
-variations @code{read.csv2} and @code{read.delim2} are appropriate
-for use in countries where the comma is used for the decimal point.
+variations @code{read.csv2} and @code{read.delim2} are appropriate for
+use in countries where the comma is used for the decimal point.
 
 If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
+
 @smallexample
 row.lens=
  [1] 4 4 5 5 5 4 6 4 4 4 5 4 4 5 5
@@ -409,6 +409,7 @@ Error in read.table("file.dat", header = TRUE) :
         all rows must have the same length.
 @end smallexample
 @findex count.fields
+
 @noindent
 This may give enough information to find the problem, but the auxiliary
 function @code{count.fields} can be useful to investigate further.
@@ -418,8 +419,8 @@ function @code{count.fields} can be useful to investigate further.
 @cindex Fixed-width-format files
 
 Sometimes data files have no field delimiters but have fields in
-pre-specified columns.  This was very common in the days of punched cards,
-and is still sometimes used to save file space.
+pre-specified columns.  This was very common in the days of punched
+cards, and is still sometimes used to save file space.
 
 @findex read.fwf
 Function @code{read.fwf} provides a simple way to read such files,
@@ -453,10 +454,12 @@ from the file.  If the list is named, the names are used for the
 components of the returned list.  Modes can be numeric, character or
 complex, and are usually specified by an example, e.g. @code{0},
 @code{""} or @code{0i}.  For example
+
 @smallexample
 cat("2 3 5 7", "11 13 17 19", file="ex.dat", sep="\n")
 scan(file="ex.dat", what=list(x=0, y="", z=0), flush=TRUE)
 @end smallexample
+
 @noindent
 returns a list with three components and discards the fourth column in
 the file.
@@ -466,14 +469,16 @@ There is a function @code{readLines} which will be more convenient if
 all you want is to read whole lines into @R{} for further processing.
 
 
-@node Re-shaping data,  , Using scan directly, Spreadsheet-like data
+@node Re-shaping data, Flat contingency tables, Using scan directly, Spreadsheet-like data
 @section Re-shaping data
 @cindex Re-shaping data
 
-Sometimes spreadsheet data is in a compact format that gives the covariates
-for each subject followed by all the observations on that subject.
-@R{}'s modelling functions need observations in a single column.
-Consider the following sample of data from repeated MRI brain measurements
+Sometimes spreadsheet data is in a compact format that gives the
+covariates for each subject followed by all the observations on that
+subject.  @R{}'s modelling functions need observations in a single
+column.  Consider the following sample of data from repeated MRI brain
+measurements
+
 @example
  Status   Age    V1     V2     V3    V4
       P 23646 45190  50333  55166 56271
@@ -484,18 +489,23 @@ Consider the following sample of data from repeated MRI brain measurements
      CC 28359 58591  58803  59435 61292
      CC 25136 45801  45389  47197 47126
 @end example
+
 @noindent
 There are two covariates and up to four measurements on each subject.
+The data were exported from Excel as a file @file{mr.csv}.
 
 @findex stack
 We can use @code{stack} to help manipulate these data to give a single
 response.
+
 @smallexample
 zz <- read.csv("mr.csv", strip.white = TRUE)
-zzz <- cbind(zz[gl(7, 1, 28), 1:2], stack(zz[, 3:6]))
+zzz <- cbind(zz[gl(nrow(zz), 1, 4*nrow(zz)), 1:2], stack(zz[, 3:6]))
 @end smallexample
+
 @noindent
 with result
+
 @example
       Status   Age values ind
 X1         P 23646  45190  V1
@@ -513,6 +523,60 @@ X11        P 23646  50333  V2
 Function @code{unstack} goes in the opposite direction, and may be
 useful for exporting data.
 
+
+@node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
+@section Flat contingency tables
+@cindex Flat contingency tables
+
+Displaying higher-dimensional contingency tables in array form typically
+is rather inconvenient.  In categorical data analysis, such information
+is often represented in the form of bordered two-dimensional arrays with
+leading rows and columns specifying the combination of factor levels
+corresponding to the cell counts.  These rows and columns are typically
+``ragged'' in the sense that labels are only displayed when they change,
+with the obvious convention that rows are read from top to bottom and
+columns are read from left to right.  In @R{}, such ``flat'' contingency
+tables can be created using @code{ftable},
+@findex ftable
+which creates objects of class @code{"ftable"} with an appropriate print
+method.
+
+As a simple example, consider the @R{} standard data set
+@code{UCBAdmissions} which is a 3-dimensional contingency table
+resulting from classifying applicants to graduate school at UC Berkeley
+for the six largest departments in 1973 classified by admission and sex.
+
+@smallexample
+> data(UCBAdmissions)
+> ftable(UCBAdmissions)
+                Dept   A   B   C   D   E   F
+Admit    Gender                             
+Admitted Male        512 353 120 138  53  22
+         Female       89  17 202 131  94  24
+Rejected Male        313 207 205 279 138 351
+         Female       19   8 391 244 299 317
+@end smallexample
+
+@noindent
+The printed representation is clearly more useful than displaying the
+data as a 3-dimensional array.
+
+There is also a function @code{read.ftable} for reading in flat-like
+contingency tables from files.
+@findex read.ftable
+This has additional arguments for dealing with variants on how exactly
+the information on row and column variables names and levels is
+represented.  The help page for @code{read.ftable} has some useful
+examples.  The flat tables can be converted to standard contingency
+tables in array form using @code{as.table}.
+
+Note that flat tables are characterized by their ``ragged'' display of
+row (and maybe also column) labels.  If the full grid of levels of the
+row variables is given, one should instead use @code{read.table} to read
+in the data, and create the contingency table from this using
+@code{xtabs}.
+
+
 @node Importing from other statistical systems, Relational databases, Spreadsheet-like data, Top
 @chapter Importing from other statistical systems
 @cindex Importing from other statistical systems
@@ -527,6 +591,7 @@ may be unavoidable if the originating system is not available.
 * SAS::                         
 * S-PLUS::                      
 * SPSS::                        
+* Octave::                      
 @end menu
 
 @node Stata, Minitab, Importing from other statistical systems, Importing from other statistical systems
@@ -536,47 +601,63 @@ may be unavoidable if the originating system is not available.
 @findex write.dta
 
 Import and export facilities for Stata @file{.dta} files and provided by
-package @pkg{stataread} on CRAN. This is a binary file format, and files
-from versions 5.0 and 6.0 of Stata can be read and (despite the package
-name) written by functions @code{read.dta} and @code{write.dta}.
+package @pkg{stataread} on @acronym{CRAN}. This is a binary file format,
+and files from versions 5.0 and 6.0 of Stata can be read and (despite
+the package name) written by functions @code{read.dta} and
+@code{write.dta}.
 
 @node Minitab, SAS, Stata, Importing from other statistical systems
 @section Minitab
 @findex read.mtp
 
-Package @pkg{foreign} in the Devel section on CRAN provides a function
-@code{read.mtp} to read a `Minitab Portable Worksheet'.  This returns
-the components of the worksheet as an @R{} list.
+Package @pkg{foreign} in the Devel section on @acronym{CRAN} provides a
+function @code{read.mtp} to read a `Minitab Portable Worksheet'.  This
+returns the components of the worksheet as an @R{} list.
 
 @node SAS, S-PLUS, Minitab, Importing from other statistical systems
 @section SAS
 @cindex SAS
 @findex read.xport
 
-Package @pkg{foreign} in the Devel section on CRAN provides a function
-@code{read.xport} to read a file in SAS Transport (XPORT) format
-and return a list of data frames.
+Package @pkg{foreign} in the Devel section on @acronym{CRAN} provides a
+function @code{read.xport} to read a file in SAS Transport (XPORT)
+format and return a list of data frames.
 
 @node S-PLUS, SPSS, SAS, Importing from other statistical systems
 @section S-PLUS
 @cindex S-PLUS
 @findex readSfile
+@findex data.restore
 
-Package @pkg{Rstreams} on CRAN contains a function @code{readSfile}
-which can read binary objects produced by S-PLUS 3.x, 4.x or 2000 on
-Unix or Windows (and can read them on a different OS). This is able
-to read many but not all @Sl{} objects: in particular it can read
-vectors, matrices and data frames and lists containing those.
+Package @pkg{Rstreams} on @acronym{CRAN} contains a function
+@code{readSfile} which can read binary objects produced by S-PLUS 3.x,
+4.x or 2000 on Unix or Windows (and can read them on a different
+OS). This is able to read many but not all @Sl{} objects: in particular
+it can read vectors, matrices and data frames and lists containing
+those.
 
-@node SPSS,  , S-PLUS, Importing from other statistical systems
+Package @pkg{Rstreams} also contains a function @code{data.restore} to
+read S-PLUS data dumps (created by @code{data.dump}) with the same
+restrictions.
+
+@node SPSS, Octave, S-PLUS, Importing from other statistical systems
 @section SPSS
 @cindex SPSS
 @cindex PSPP
 
 There are currently no facilities to import SPSS data files, but it may
-be possible to use the PSPP package (@url{http://pspp.stat.wisc.edu}) to
+be possible to use the @uref{http://pspp.stat.wisc.edu, PSPP package} to
 convert these files to a text format.
 
+@node Octave,  , SPSS, Importing from other statistical systems
+@section Octave
+@cindex Octave
+@findex read.octave
+
+Octave is a numerical linear algebra system, and function
+@code{read.octave} in package @pkg{e1071} can read the first vector or
+matrix from an Octave ASCII data file created using the Octave command
+@command{save -ascii}.
 
 @node Relational databases, Binary files, Importing from other statistical systems, Top
 @chapter Relational databases
@@ -612,19 +693,24 @@ subsequent session, but the format of the stored data is specific to
 Database management systems (DBMSs) and, in particular, relational
 DBMSs (RDBMSs) @emph{are} designed to do all of these things well.
 Their strengths are
+
 @enumerate
-@item To provide fast access to selected parts of large databases.
+@item
+To provide fast access to selected parts of large databases.
 
-@item Powerful ways to summarize and cross-tabulate columns in
-databases.
+@item
+Powerful ways to summarize and cross-tabulate columns in databases.
 
-@item Store data in more organized ways than the rectangular grid model
-of spreadsheets and @R{} data frames.
+@item
+Store data in more organized ways than the rectangular grid model of
+spreadsheets and @R{} data frames.
 
-@item Concurrent access from multiple clients running on multiple hosts 
-while enforcing security constraints on access to the data.
+@item
+Concurrent access from multiple clients running on multiple hosts while
+enforcing security constraints on access to the data.
 
-@item Ability to act as a server to a wide range of clients.
+@item
+Ability to act as a server to a wide range of clients.
 @end enumerate
 
 The sort of statistical applications for which DBMS might be used are to
@@ -636,31 +722,32 @@ from a database for separate analysis.
 @section Overview of RDBMSs
 
 Traditionally there have been large (and expensive) commercial RDBMSs
-(Informix, @url{www.informix.com}; Oracle, @url{www.oracle.com};
-Sysbase, @url{www.sysbase.com}; IBM's DB/2; Microsoft SQL Server on
-Windows) and academic and small-system databases (such as MySQL,
-PostgreSQL, Microsoft Access, @dots{}), the former marked
-out by much greater emphasis on data security features.  The line is
-blurring, with the Open Source PostgreSQL having more and more high-end
-features, and `free' versions of Informix, Oracle and Sysbase being made
-available on Linux.
+(@uref{http://www.informix.com, Informix}; @uref{http://www.oracle.com,
+Oracle}; @uref{http://www.sysbase.com, Sysbase}; IBM's DB/2; Microsoft
+@acronym{SQL} Server on Windows) and academic and small-system databases
+(such as MySQL, PostgreSQL, Microsoft Access, @dots{}), the former
+marked out by much greater emphasis on data security features.  The line
+is blurring, with the Open Source PostgreSQL having more and more
+high-end features, and `free' versions of Informix, Oracle and Sysbase
+being made available on Linux.
 
 @cindex ODBC
 @cindex Open Database Connectivity
 There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
-Open Database Connectivity (ODBC) is a standard to all of these data
-sources. It originated on Windows
-(@url{http://www.microsoft.com/data/odbc/}) but is also implemented on
+Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
+these data sources.  It originated on Windows (see
+@uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
 Linux.
 
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
-(more often) remotely.  There is an ISO standard (in fact several:
-SQL-92 is ISO/IEC 9075, also known as ANSI X3.135-1992) for an interface
-language called SQL (Structured Query Language, sometimes pronounced
-`sequel': see Bowman @emph{et al.@:} 1996) which these DBMSs support to
-varying degrees.
+(more often) remotely.  There is an @acronym{ISO} standard (in fact
+several: @acronym{SQL}-92 is @acronym{ISO}/IEC 9075, also known as
+@acronym{ANSI} X3.135-1992) for an interface language called
+@acronym{SQL} (Structured Query Language, sometimes pronounced `sequel':
+see Bowman @emph{et al.@:} 1996) which these DBMSs support to varying
+degrees.
 
 
 @menu
@@ -669,15 +756,14 @@ varying degrees.
 @end menu
 
 @node SQL queries, Data types, Overview of RDBMSs, Overview of RDBMSs
-@subsection SQL queries
+@subsection @acronym{SQL} queries
 @cindex SQL queries
 
-
-The more comprehensive @R{} interfaces generate SQL behind the scenes
-for common operations, but direct use of SQL is needed for complex
-operations in all.  Conventionally SQL is written in upper case, but
-many users will find it more convenient to use lower case in the @R{}
-interface functions.
+The more comprehensive @R{} interfaces generate @acronym{SQL} behind the
+scenes for common operations, but direct use of @acronym{SQL} is needed
+for complex operations in all.  Conventionally @acronym{SQL} is written
+in upper case, but many users will find it more convenient to use lower
+case in the @R{} interface functions.
 
 A relational DBMS stores data as a database of @emph{tables} (or
 @emph{relations}) which are rather similar to @R{} data frames, in that
@@ -685,8 +771,9 @@ they are made up of @emph{columns} or @emph{fields} of one type
 (numeric, character, date, currency, @dots{}) and @emph{rows} or
 @emph{records} containing the observations for one entity.
 
-SQL `queries' are quite general operations on a relational database.
-The classical query is a SELECT statement of the type
+@acronym{SQL} `queries' are quite general operations on a relational
+database.  The classical query is a SELECT statement of the type
+
 @smallexample
 SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder
 
@@ -695,8 +782,9 @@ SELECT t.sch, c.meanses, t.sex, t.achieve
 
 SELECT sex, COUNT(*) FROM student GROUP BY sex
 
-SELECT sch, AVG(sestat) FROM student GROUP BY sch LIMIT 10;
+SELECT sch, AVG(sestat) FROM student GROUP BY sch LIMIT 10
 @end smallexample
+
 @noindent
 The first of these selects two columns from the @R{} data frame
 @code{USArrests} that has been copied across to a database table,
@@ -716,20 +804,20 @@ lexicographical order) on more than one column by separating them by
 commas. Placing DESC after an ORDER BY puts the sort in descending
 order.
 
-SELECT DISTINCT queries will only return one copy of each distinct
-row in the selected table.
+SELECT DISTINCT queries will only return one copy of each distinct row
+in the selected table.
 
 The GROUP BY clause selects subgroups of the rows according to the
-criterion. If more than one column is specified (separated by commas)
+criterion.  If more than one column is specified (separated by commas)
 then multi-way cross-classifications can be summarized by one of the
 five aggregation functions.  A HAVING clause allows the select to
 include or exclude groups depending on the aggregated value.
 
 If the SELECT statement contains an ORDER BY statement that produces a
 unique ordering, a LIMIT clause can be added to select (by number) a
-contiguous block of output rows.  This can be useful to retrieve
-rows a block at a time.  (It may not be reliable unless the ordering is
-unique, as the LIMIT clause can be used to optimize the query.)
+contiguous block of output rows.  This can be useful to retrieve rows a
+block at a time.  (It may not be reliable unless the ordering is unique,
+as the LIMIT clause can be used to optimize the query.)
 
 There are queries to create a table (CREATE TABLE, but usually one
 copies a data frame to the database in these interfaces), INSERT or
@@ -739,30 +827,52 @@ DELETE or UPDATE data.  A table is destroyed by a DROP TABLE `query'.
 @subsection Data types
 
 Data can be stored in a database in various data types.  The range of
-data types is DBMS-specific, but the SQL standard defines many types,
-including the following that are widely implemented (often not by the
-SQL name).
+data types is DBMS-specific, but the @acronym{SQL} standard defines many
+types, including the following that are widely implemented (often not by
+the @acronym{SQL} name).
 
-@quotation
-@multitable {Data type name varying} {A longgggggggggggggggggggg description}
+@c  @quotation
+@c  @multitable {Data type name varying} {A longgggggggggggggggggggg description}
 
-@item name @tab  description
+@c  @item name @tab  description
 
-@item @code{float(p)}   @tab Real number, with optional precision
-@item @code{integer}   @tab 32-bit integer
-@item @code{smallint}  @tab 16-bit integer
-@item @code{character(n)}   @tab fixed-length character string
-@item @code{character varying(n)} @tab variable-length character string
-@item @code{boolean}  @tab true or false.
-@item @code{date}  @tab calendar date
-@item @code{time}  @tab time of day
-@item @code{timestamp}  @tab date and time
+@c  @item @code{float(p)}   @tab Real number, with optional precision
+@c  @item @code{integer}   @tab 32-bit integer
+@c  @item @code{smallint}  @tab 16-bit integer
+@c  @item @code{character(n)}   @tab fixed-length character string
+@c  @item @code{character varying(n)} @tab variable-length character string
+@c  @item @code{boolean}  @tab true or false.
+@c  @item @code{date}  @tab calendar date
+@c  @item @code{time}  @tab time of day
+@c  @item @code{timestamp}  @tab date and time
 
-@end multitable
-@end quotation
+@c  @end multitable
+@c  @end quotation
+
+@table @code
+@item float(@var{p})
+Real number, with optional precision.  Often called @code{real}.
+@item integer
+32-bit integer.  Often called @code{int}.
+@item smallint
+16-bit integer
+@item character(@var{n})
+fixed-length character string.  Often called @code{char}.
+@item character varying(@var{n})
+variable-length character string.  Often called @code{varchar}.
+@item boolean
+true or false.  Sometimes called @code{bool}.
+@item date
+calendar date
+@item time
+time of day
+@item timestamp
+date and time
+@end table
+
 @noindent
-There are variants on @code{time} and @code{timestamp}, @code{with timezone}.
-
+There are variants on @code{time} and @code{timestamp}, @code{with
+timezone}.
 
 The more comprehensive of the @R{} interface packages hide the type
 conversion issues from the user.
@@ -770,13 +880,14 @@ conversion issues from the user.
 @node R interface packages,  , Overview of RDBMSs, Relational databases
 @section R interface packages
 
-There are four packages available on CRAN to help @R{}
+There are four packages available on @acronym{CRAN} to help @R{}
 communicate with DBMSs.  They provide different levels of abstraction.
 Some provide means to copy whole data frames to and from databases.  All
-have functions to select data within the database via SQL queries, and
-(except @pkg{RmSQL}) to retrieve the result as a whole as a data frame
-or in pieces (usually as groups of rows, but @pkg{RPgSQL} can retrieve
-columns).  All except @pkg{RODBC} are (currently) tied to one DBMS.
+have functions to select data within the database via @acronym{SQL}
+queries, and (except @pkg{RmSQL}) to retrieve the result as a whole as a
+data frame or in pieces (usually as groups of rows, but @pkg{RPgSQL} can
+retrieve columns).  All except @pkg{RODBC} are (currently) tied to one
+DBMS.
 
 
 @menu
@@ -790,8 +901,9 @@ columns).  All except @pkg{RODBC} are (currently) tied to one DBMS.
 @subsection Package RPgSQL
 @cindex PostgreSQL database system
 
-Package @pkg{RPgSQL} at @url{http://rpgsql.sourceforge.net/} and on CRAN
-provides an interface to PostgreSQL (@url{http://www.postgresql.org}).
+Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and on
+@acronym{CRAN} provides an interface to @uref{http://www.postgresql.org,
+PostgreSQL}.
 
 PostgreSQL is described by its developers as `the most advanced open
 source database server' (Momjian, 2000). It would appear to be buildable
@@ -804,8 +916,8 @@ interfaces.
 @findex db.connect
 @findex db.read.table
 @findex db.write.table
-To make use of @pkg{RPgSQL}, first open a connection to a database
-using @code{db.connect}. (Currently only one connection can be open at a
+To make use of @pkg{RPgSQL}, first open a connection to a database using
+@code{db.connect}. (Currently only one connection can be open at a
 time.)  Once a connection is open an @R{} data frame can be copied to a
 PostgreSQL table by @code{db.write.table}, whereas @code{db.read.table}
 copies a PostgreSQL table to an @R{} data frame.
@@ -815,9 +927,9 @@ copies a PostgreSQL table to an @R{} data frame.
 @pkg{RPgSQL} has the interesting concept of a @emph{proxy data frame}.
 A data frame proxy is an @R{} object that inherits from the
 @code{"data.frame"} class, but contains no data.  All accesses to the
-proxy data frame generate the appropriate SQL query and retrieve the
-resulting data from the database.  A proxy data frame is set up by a
-call to @code{bind.db.proxy}.  To remove the proxy, just
+proxy data frame generate the appropriate @acronym{SQL} query and
+retrieve the resulting data from the database.  A proxy data frame is
+set up by a call to @code{bind.db.proxy}.  To remove the proxy, just
 remove the object which @code{bind.db.proxy} created.
 
 @findex db.execute
@@ -825,27 +937,31 @@ remove the object which @code{bind.db.proxy} created.
 @findex db.result.rows
 @findex db.read.column
 @findex db.fetch.result
+@findex db.clear.result
 @findex db.result.get.value
-A finer level of control is available via sending SQL queries to the
-PostgreSQL server via @code{db.execute}. Once this is done,
-@code{db.fetch.result} can be used to fetch the whole result as a data
-frame.  Functions such as @code{db.result.columns} and
-@code{db.result.rows} will report the number of columns and rows in the
-resulting table, and @code{db.read.column} will fetch a single column
-(as a vector).  An individual cell in the table can be read by
-@code{db.result.get.value}.
+A finer level of control is available via sending @acronym{SQL} queries
+to the PostgreSQL server via @code{db.execute}.  This leaves a result in
+PostgreSQL's result cache, unless flushed by @code{clear = TRUE} (the
+default).  Once a result is in the cache, @code{db.fetch.result} can be
+used to fetch the whole result as a data frame.  Functions such as
+@code{db.result.columns} and @code{db.result.rows} will report the
+number of columns and rows in the cached table, and
+@code{db.read.column} will fetch a single column (as a vector).  An
+individual cell in the result can be read by @code{db.result.get.value}.
+@code{db.clear.result} will clear the result cache.
 
 @findex sql.insert
 @findex sql.select
-One disadvantage is that SQL queries get mapped to lower case, so
-for maximal flexibility, only use lower case in @R{} names.  Functions
-@code{sql.insert} and @code{sql.select} provide convenience wrappers for
-the INSERT and SELECT queries.
+One disadvantage is that PostgreSQL maps all table and column names to
+lower case, so for maximal flexibility, only use lower case in @R{}
+names.  Functions @code{sql.insert} and @code{sql.select} provide
+convenience wrappers for the INSERT and SELECT queries.
 
 We can explore these functions in a simple example.  The database
-@file{testdb} had already been set up, and as PostgreSQL was running on a
-standalone machine no further authentication was required to connect.
-@example
+@file{testdb} had already been set up, and as PostgreSQL was running on
+a standalone machine no further authentication was required to connect.
+
+@smallexample
 > library(RPgSQL)
 > db.connect(dbname="testdb")   # add authentication as needed
 Connected to database "testdb" on ""
@@ -884,13 +1000,14 @@ New Mexico   11.4
 Michigan     12.1
 Nevada       12.2
 Florida      15.4
-> db.rm("USArrests", "usarrests")  # use ask=F to skip confirmation
+> db.rm("USArrests", "usarrests") # use ask=FALSE to skip confirmation
 Destroy table USArrests? y
 Destroy table usarrests? y
 > db.ls()
 character(0)
 > db.disconnect()
-@end example
+@end smallexample
+
 @noindent
 Notice how the row names are mapped if @code{write.row.names = TRUE} to
 a field @code{rpgsql_row_names} in the database table and transparently
@@ -905,68 +1022,69 @@ within a data frame and PostgreSQL types.
 @cindex ODBC
 @cindex Open Database Connectivity
 
-Package @pkg{RODBC} on CRAN provides an interface to database sources
-supporting an ODBC interface.  This is very widely available, and
-allows the same @R{} code to access different database systems.
-@pkg{RODBC} runs on both Linux and Windows, and many database systems
-provide support ODBC, including most of those on Windows (such as
-Microsoft Access), and MySQL, Oracle and PostgreSQL on Unix/Linux.
+Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
+sources supporting an @acronym{ODBC} interface.  This is very widely
+available, and allows the same @R{} code to access different database
+systems.  @pkg{RODBC} runs on both Linux and Windows, and many database
+systems provide support @acronym{ODBC}, including most of those on
+Windows (such as Microsoft Access), and MySQL, Oracle and PostgreSQL on
+Unix/Linux.
 
-You will need an ODBC Driver Manager such as unixODBC
-(@url{http://www.unixODBC.org}) or iOBDC (@url{http://www.iODBC.org}) on
-Unix/Linux, and an installed driver for your database system.  The
-FreeODBC project (@url{http://www.jepstone.net/FreeODBC/}) is a
-repository of information related to ODBC.
+You will need an @acronym{ODBC} Driver Manager such as
+@uref{http://www.unixODBC.org, unixODBC} or @uref{http://www.iODBC.org,
+iOBDC} on Unix/Linux, and an installed driver for your database system.
+The @uref{http://www.jepstone.net/FreeODBC/, FreeODBC project} is a
+repository of information related to @acronym{ODBC}.
 
 Two groups of interface functions are provided. The @code{odbc*} group
-provide a low-level interface to the basic ODBC functions: see the help
-page (@code{?RODBC}) for details. The @code{sql*} group provide an
-interface between @R{} data frames and SQL tables.
+provide a low-level interface to the basic @acronym{ODBC} functions: see
+the help page (@code{?RODBC}) for details.  The @code{sql*} group
+provide an interface between @R{} data frames and @acronym{SQL} tables.
 
 @findex odbcConnect
 @findex odbcClose
 @findex sqlTables
 Up to 16 simultaneous connections are possible.  A connection is opened
-by a call to @code{odbcConnect} which returns a handle used for subsequent
-access to the database.  A connection is closed by @code{odbcClose}.
-Details of the tables on a connection can be found using @code{sqlTables}.
+by a call to @code{odbcConnect} which returns a handle used for
+subsequent access to the database.  A connection is closed by
+@code{odbcClose}.  Details of the tables on a connection can be found
+using @code{sqlTables}.
 
 @findex sqlFetch
 @findex sqlSave
 Function @code{sqlSave} copies an @R{} data frame to a table in the
-database, and @code{sqlFetch} copies a table in the database to an
-@R{} data frame.
+database, and @code{sqlFetch} copies a table in the database to an @R{}
+data frame.
 
 @findex sqlQuery
 @findex sqlCopy
 @findex odbcQuery
 @findex sqlGetResults
 @findex odbcFetchRows
-An SQL query can be sent to the database by a call to @code{sqlQuery}.
-This returns the result in an @R{} data frame.  (@code{sqlCopy} sends a
-query to the database and saves the result as a table in the database.)
-A finer level of control is attained by first calling @code{odbcQuery}
-and then @code{sqlGetResults} to fetch the results.  The latter can be
-used within a loop to retrieve a limited number of rows at a time.
-@code{sqlGetResults} returns a data frame, but the raw results can be
-obtainedas a character matrix from @code{odbcFetchRows}.
+An @acronym{SQL} query can be sent to the database by a call to
+@code{sqlQuery}.  This returns the result in an @R{} data frame.
+(@code{sqlCopy} sends a query to the database and saves the result as a
+table in the database.)  A finer level of control is attained by first
+calling @code{odbcQuery} and then @code{sqlGetResults} to fetch the
+results.  The latter can be used within a loop to retrieve a limited
+number of rows at a time.  @code{sqlGetResults} by default returns a
+data frame, but the raw results can also be obtained as a character
+matrix.
 
 @cindex PostgreSQL database system
-Here is an example using PostgreSQL, for which the ODBC driver maps
-column and data frame names to lower case.  We use a database
-@code{testdb} we created earlier, and had the DSN (data source name)
-set up in @file{~/.odbc.ini} under @code{unixODBC}.
-Exactly the same code worked using MyODBC to access a MySQL database
-under Windows NT (where MySQL also maps names to lowercase).  Under
-Windows, DSNs are set up in the ODBC applet in the Control Panel.
+Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
+maps column and data frame names to lower case.  We use a database
+@code{testdb} we created earlier, and had the DSN (data source name) set
+up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
+worked using MyODBC to access a MySQL database under Linux or Windows NT
+(where MySQL also maps names to lowercase).  Under Windows, DSNs are set
+up in the @acronym{ODBC} applet in the Control Panel.
 @cindex MySQL database system
 
-@example
+@smallexample
 > library(RODBC)
 ## tell it to map names to l/case
-> (channel <- odbcConnect("testdb", uid="ripley", case="tolower"))
-[1] 0
-## check it worked as failure is indicated by returning -1
+> channel <- odbcConnect("testdb", uid="ripley", case="tolower")
 ## load a data frame into the database
 > data(USArrests)
 > sqlSave(channel, USArrests, rownames="state")
@@ -976,10 +1094,10 @@ Windows, DSNs are set up in the ODBC applet in the Control Panel.
   TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
 1              NA          NA  usarrests      TABLE      NA
 ## list it
-> sqlFetch(channel,"USArrests")
-            state murder assault urbanpop rape
-1         Alabama   13.2     236       58 21.2
-2          Alaska   10.0     263       48 44.5
+> sqlFetch(channel, "USArrests", rownames = TRUE)
+               murder assault urbanpop rape
+Alabama          13.2     236       58 21.2
+Alaska           10.0     263       48 44.5
     ...
 ## an SQL query, originally on one line
 > sqlQuery(channel, "select state, murder from USArrests
@@ -997,25 +1115,27 @@ Windows, DSNs are set up in the ODBC applet in the Control Panel.
 > sqlDrop(channel, "usarrests")
 ## close the connection
 > odbcClose(channel)
-@end example
+@end smallexample
 
 @node RMySQL, RmSQL, RODBC, R interface packages
 @subsection Package RMySQL
 @cindex MySQL database system
 
-Package @pkg{RMySQL} in the Devel section on CRAN provides an interface
-to the MySQL database system (see @url{http://www.mysql.com} and Dubois,
-2000.).  This is part of a project to provide a common API for access
-from @R{} to relational DBMSs using SQL.  Currently this provides
-lower-level facilities than @pkg{RPgSQL} or @pkg{RODBC}.
+Package @pkg{RMySQL} in the Devel section on @acronym{CRAN} provides an
+interface to the MySQL database system (see @uref{http://www.mysql.com}
+and Dubois, 2000.).  This is part of a project to provide a common
+@acronym{API} for access from @R{} to relational DBMSs using
+@acronym{SQL}.  Currently this provides lower-level facilities than
+@pkg{RPgSQL} or @pkg{RODBC}.
 
 MySQL exists on Unix/Linux and Windows.  (Its current status appears to
 be that the source is freely available and beta versions are free but
 release binary versions are commercial on Windows.)  MySQL is a `light
-and lean' database.  (It preserves the case of names where the
-operating file system is case-sensitive, so not on Windows.)
+and lean' database.  (It preserves the case of names where the operating
+file system is case-sensitive, so not on Windows.)
 
-@c Currently package @pkg{RMySQL} appears only to be installable on Unix/Linux.
+@c Currently package @pkg{RMySQL} appears only to be installable on
+@c Unix/Linux.
 
 @findex MySQL
 @findex dbConnect
@@ -1027,13 +1147,12 @@ function @code{close}.
 
 @findex dbExec
 @findex dbExecStatement
-SQL queries can be sent by either @code{dbExec} or
+@acronym{SQL} queries can be sent by either @code{dbExec} or
 @code{dbExecStatement}.  @code{dbExec} sends the query and retrieves the
 results as a list. (It will fail unless the results are from a
-SELECT-like statement.)
-@code{dbExecStatement} sends the query and returns
-an object of class @code{"MySQLResultSet"} which can be used to retrieve
-the results, and subsequently used to @code{close} the result.
+SELECT-like statement.)  @code{dbExecStatement} sends the query and
+returns an object of class @code{"MySQLResultSet"} which can be used to
+retrieve the results, and subsequently used to @code{close} the result.
 
 @findex fetch
 Function @code{fetch} is used to retrieve some or all of the rows in the
@@ -1042,8 +1161,9 @@ all the rows have been fetched, and @code{getRowCount} returns the
 number of rows in the result.
 
 There is no simple way to load a data frame into the database, so we
-have to work harder using direct SQL statements.
-@example
+have to work harder using direct @acronym{SQL} statements.
+
+@smallexample
 > library(RMySQL)
 ## open a connection to a MySQL database
 > con <- dbConnect(MySQL(), dbname = "test")
@@ -1054,8 +1174,8 @@ have to work harder using direct SQL statements.
 ## write the values to a file
 > write.table(USArrests, "/tmp/arrests.dat", sep="\t",
               row.names = FALSE, col.names = FALSE)
-> if(!is.na(match("arrests", getTables(con)[[1]])))
 ## delete any existing table
+> if(!is.na(match("arrests", getTables(con)[[1]])))
     dbExecStatement(con, "drop table arrests")
 ## character string here needs to be on one line
 > dbExecStatement(con,
@@ -1077,23 +1197,24 @@ have to work harder using direct SQL statements.
 7   12.2     252       81 46.0
 8   15.4     335       80 31.9
 > close(con)
-@end example
+@end smallexample
 
 @node RmSQL,  , RMySQL, R interface packages
 @subsection Package RmSQL
 @cindex Mini SQL database system
 
-Package @pkg{RmSQL} on CRAN provides an interface to the Mini SQL
-database system (also known as mSQL, @url{http://www.hughes.com.au},
-Yarger @emph{et al.@:}, 1999). The package documentation describes mSQL
-as
+Package @pkg{RmSQL} on @acronym{CRAN} provides an interface to the Mini
+@acronym{SQL} database system (also known as mSQL,
+@url{http://www.hughes.com.au}, Yarger @emph{et al.@:}, 1999). The
+package documentation describes mSQL as
 @quotation
 Note that mSQL is NOT GPL licenced but free of charge for universities
 and noncommercial organisations.
 @end quotation
 @noindent
 @pkg{RmSQL} provides the most basic interface of those in this chapter,
-a wrapper to the C-API of mSQL with no additional functionality.
+a wrapper to the C-@acronym{API} of mSQL with no additional
+functionality.
 
 @findex msqlConnect
 @findex msqlSelect
@@ -1103,10 +1224,10 @@ a wrapper to the C-API of mSQL with no additional functionality.
 @findex msqlFreeResult
 A database connection is opened by first selecting a host with
 @code{msqlConnect} and then a database by @code{msqlSelect}. The
-connection is closed by a call to @code{msqlClose}.  Then an SQL query is
-sent by a call to @code{msqlQuery}, and the results stored by a call to
-@code{msqlStoreResult}.  When a query is finished with, the result can
-be freed by @code{msqlFreeResult}.
+connection is closed by a call to @code{msqlClose}.  Then an
+@acronym{SQL} query is sent by a call to @code{msqlQuery}, and the
+results stored by a call to @code{msqlStoreResult}.  When a query is
+finished with, the result can be freed by @code{msqlFreeResult}.
 
 @findex msqlFetchRow
 @findex msqlDataSeek
@@ -1132,9 +1253,9 @@ lengthy, but there is one in the @file{Example} directory of the package.
 @node Package Rstreams, Binary data formats, Binary files, Binary files
 @section Package Rstreams
 
-Package @pkg{Rstreams} on CRAN provides a low-level interface to read
-from and write to binary files.  It has been used to read in data from
-MRI experiments and Windows sound files, for example.
+Package @pkg{Rstreams} on @acronym{CRAN} provides a low-level interface
+to read from and write to binary files.  It has been used to read in
+data from MRI experiments and Windows sound files, for example.
 
 @findex openstream
 @findex closestream
@@ -1147,40 +1268,44 @@ to reference the open file until it is closed by @code{closestream}.
 @findex readfloat
 @findex readcomplex
 @findex readchar
-Once a stream is open for reading, bytes can be transferred from it
-to an @R{} object by one of the functions
+Once a stream is open for reading, bytes can be transferred from it to
+an @R{} object by one of the functions
+
 @example
 readint(stream, n, size = 4, signed = TRUE, swapbytes = FALSE)
 readfloat(stream, n, size = 8, swapbytes = FALSE)
 readcomplex(stream, n, size = 8, swapbytes = FALSE)
 readchar(stream, n = 1, len = NA, bufsize = 256)
 @end example
+
 @noindent
 These return an @R{} object of an appropriate mode and storage mode.
 (Integers too large to be represented in storage mode @code{"integer"}
-will be read into a vector of storage mode @code{"double"}.)
-Here @code{n} is the number of items to be read, but fewer will be read
-if there is insufficient data on the file.
+will be read into a vector of storage mode @code{"double"}.)  Here
+@code{n} is the number of items to be read, but fewer will be read if
+there is insufficient data on the file.
 
 The size of the data components on file need not be the same as that in
-the machine running @R{}, and data written on a little-endian machine can
-be read on a big-endian machine or @emph{vice versa} by setting
+the machine running @R{}, and data written on a little-endian machine
+can be read on a big-endian machine or @emph{vice versa} by setting
 @code{swapbytes = TRUE}.
 
 Character data can be read either as fixed-length blocks of bytes (by
-specifying @code{len}) or as ASCII-zero-delimited strings.
+specifying @code{len}) or as @acronym{ASCII}-zero-delimited strings.
 
 @findex writeint
 @findex writefloat
 @findex writecomplex
 @findex writechar
 A file open for writing can be written to by any of
+
 @example
 writeint(stream, data, size = 4, swapbytes = FALSE)
 writefloat(stream, data, size = 8, swapbytes = FALSE)
 writecomplex(stream, data, size = 8, swapbytes = FALSE)
 writechar(stream, data, asciiz = FALSE)
 @end example
+
 @noindent
 where @code{data} is an @R{} vector of an appropriate mode.  There is no
 separator between character strings on the file unless @code{asciiz =
@@ -1202,14 +1327,14 @@ all data after that point is lost.
 @cindex Hierarchical Data Format
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} and @pkg{netCDF} in the Devel area on CRAN provide
-experimental interfaces to NASA's HDF5 (Hierarchical Data Format,
-see @url{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data files
-(network Common Data Form, see
-@url{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
+Packages @pkg{hdf5} and @pkg{netCDF} in the Devel area on @acronym{CRAN}
+provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
+Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
+netCDF data files (network Common Data Form, see
+@uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
 
 Both of these are systems to store scientific data in array-oriented
-way, including descriptions, labels, formats, units, @dots{}. HDF5 also
+way, including descriptions, labels, formats, units, @dots{}.  HDF5 also
 allows @emph{groups} of arrays, and the @R{} interface writes maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
@@ -1233,12 +1358,12 @@ across network connections.
 @node Reading from sockets, Using download.file, Network connections, Network connections
 @section Reading from sockets
 
-Base @R{} comes with some facilities to communicate @emph{via} BSD
-sockets on systems that support them (including the common Linux, Unix
-and Windows ports of @R{}).   One potential problem with using sockets
-is that these facilities are often blocked for security reasons or to
-force the use of Web caches, so these functions may be more useful on an
-intranet than externally.
+Base @R{} comes with some facilities to communicate @emph{via}
+@acronym{BSD} sockets on systems that support them (including the common
+Linux, Unix and Windows ports of @R{}).  One potential problem with
+using sockets is that these facilities are often blocked for security
+reasons or to force the use of Web caches, so these functions may be
+more useful on an intranet than externally.
 
 @findex make.socket
 @findex read.socket
@@ -1248,7 +1373,7 @@ intranet than externally.
 The low-level interface is given by functions @code{make.socket},
 @code{read.socket}, @code{write.socket} and @code{close.socket}.  The
 function @code{httpclient} builds on these to read (directly) from an
-HTTP server.
+@acronym{HTTP} server.
 
 @node Using download.file, DCOM interface, Reading from sockets, Network connections
 @section Using @code{download.file}
@@ -1257,51 +1382,52 @@ HTTP server.
 @findex scan.url
 @cindex wget
 @cindex lynx
-There are  functions @code{read.table.url} and @code{scan.url} that
+There are functions @code{read.table.url} and @code{scan.url} that
 appear to work like @code{read.table} and @code{scan} but access a Web
-resource at a specified URL.  Appearances are deceptive, however, as
-these functions (and @code{url.show} and @code{source.url}) first
-download the Web resource to a local file and then apply the standard
-functions.  Various methods can be used to download the file, including
-the programs @code{wget} and @code{lynx} and the direct use of BSD sockets.
+resource at a specified @acronym{URL}.  Appearances are deceptive,
+however, as these functions (and @code{url.show} and @code{source.url})
+first download the Web resource to a local file and then apply the
+standard functions.  Various methods can be used to download the file,
+including the programs @code{wget} and @code{lynx} and the direct use of
+@acronym{BSD} sockets.
 
 
 @node DCOM interface, CORBA interface, Using download.file, Network connections
-@section DCOM interface
+@section @acronym{DCOM} interface
 @cindex DCOM
 
-DCOM is a Windows protocol for communicating between different programs,
-possibly on different machines.  Thomas Baier's @code{StatConnector}
-program available from CRAN under Software->Other->Non-standard
-provides an interface to the proxy DLL which ships with the Windows
-version of @R{} and makes an DCOM server.  This can be used to pass
-simple objects (vectors and matrices) to and from @R{} and to submit
-commands to @R{}.
+@acronym{DCOM} is a Windows protocol for communicating between different
+programs, possibly on different machines.  Thomas Baier's
+@code{StatConnector} program available from @acronym{CRAN} under
+Software->Other->Non-standard provides an interface to the proxy DLL
+which ships with the Windows version of @R{} and makes an @acronym{DCOM}
+server.  This can be used to pass simple objects (vectors and matrices)
+to and from @R{} and to submit commands to @R{}.
 
 The program comes with a Visual Basic demonstration, and there is an
-Excel plug-in by Erich Neuwirth available in the same area on CRAN.
-This interface is in the other direction to most of those considered
-here in that it is another application (Excel, or written in Visual
-Basic) that is the client and @R{} is the server.
+Excel plug-in by Erich Neuwirth available in the same area on
+@acronym{CRAN}.  This interface is in the other direction to most of
+those considered here in that it is another application (Excel, or
+written in Visual Basic) that is the client and @R{} is the server.
 
 @node CORBA interface,  , DCOM interface, Network connections
-@section CORBA interface
+@section @acronym{CORBA} interface
 @cindex CORBA
 
-An interface to @R{} providing communication via CORBA objects is
-available from the Omegahat Project (@url{http://www.omeghat.org}).
+An interface to @R{} providing communication via @acronym{CORBA} objects
+is available from the @uref{http://www.omeghat.org, Omegahat Project}.
 
 @node References, Function and variable index, Network connections, Top
 @appendix References
 
 @noindent
-R.@: A.@: Becker, J.@: M.@: Chambers and A.@: R.@: Wilks (1988) @emph{The New
-S Language. A Programming Environment for Data Analysis and Graphics.}
-Wadsworth & Brooks/Cole.
+R.@: A.@: Becker, J.@: M.@: Chambers and A.@: R.@: Wilks (1988)
+@emph{The New S Language. A Programming Environment for Data Analysis
+and Graphics.}  Wadsworth & Brooks/Cole.
 
 @noindent
 J.@: Bowman, S.@: Emberson and M.@: Darnovsky. (1996) @emph{The
-Practical SQL Handbook. Using Structured Query Language.}
+Practical @acronym{SQL} Handbook. Using Structured Query Language.}
 Addison-Wesley.
 
 @noindent
@@ -1309,7 +1435,7 @@ P.@: Dubois (2000) @emph{MySQL.} New Riders.
 
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
-Draft book from @url{http://www.postgresql.org/docs/awbook.html}.
+Draft book from @uref{http://www.postgresql.org/docs/awbook.html}.
 
 @noindent
 T.@: M.@: Therneau and P.@: M.@: Grambsch (2000) @emph{Modeling Survival

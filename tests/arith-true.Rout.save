@@ -1,17 +1,17 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-06)
+Version 1.2.0 Under development (unstable) (2000-11-29)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > ####=== Numerical / Arithmetic Tests
 > ####--- ALL tests here should return  TRUE !
@@ -264,8 +264,23 @@ NaNs produced in: gamma(x)
 +               all(x==0) || all.equal(p, rev(-pretty(-x)), tol = 10*Meps))
 + }
 > 
+> ## PR#741:
+> pi != (pi0 <- pi + 2*.Machine$double.eps)
+[1] TRUE
+> is.na(match(c(1,pi,pi0), pi)[3])
+[1] TRUE
+>     
+> ## PR#749:
+> all(is.na(c(NA && TRUE, TRUE  && NA, NA && NA,
++             NA || FALSE,FALSE || NA, NA || NA)))
+[1] TRUE
+> 
+> all((c(NA || TRUE,  TRUE || NA,
++     !c(NA && FALSE,FALSE && NA))))
+[1] TRUE
+> 
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.16 0.12 4.29 0 0 
+Time elapsed:  4.07 0.18 4.26 0 0 
 > 

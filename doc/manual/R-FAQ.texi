@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-25, 2000-11-14
+@set FAQ-VERSION 1.1-32, 2000-11-30
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -21,15 +21,15 @@
 @end macro
 
 @macro HTML{}
-@sc{html}
+@acronym{HTML}
 @end macro
 
 @macro FORTRAN{}
-@sc{Fortran}
+FORTRAN
 @end macro
 
 @titlepage
-@title R FAQ
+@title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
 @subtitle Version @value{FAQ-VERSION}
 @author Kurt Hornik
@@ -99,16 +99,17 @@ questions about R.
 @section Legalese
 
 This document is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2, or (at your option) any
-later version.
+under the terms of the @acronym{GNU} General Public License as published
+by the Free Software Foundation; either version 2, or (at your option)
+any later version.
 
 This document is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+@acronym{GNU} General Public License for more details.
 
-A copy of the GNU General Public License is available via WWW at
+A copy of the @acronym{GNU} General Public License is available via WWW
+at
 
 @display
 @uref{http://www.gnu.org/copyleft/gpl.html}.
@@ -128,24 +129,26 @@ The latest version of this document is always available from
 @end display
 
 From there, you can obtain versions converted to
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.txt,, plain ASCII
-text}, @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.dvi.gz,, DVI},
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.info.gz,, GNU info},
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html,, @HTML{}},
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.txt,, plain
+@acronym{ASCII} text},
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.dvi.gz,, DVI},
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.info.gz,, @acronym{GNU}
+info}, @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html,, @HTML{}},
 @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.pdf,, PDF},
 @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.ps.gz,, PostScript} as
 well as the @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.texi,,
 Texinfo source} used for creating all these formats using the
-@uref{http://texinfo.org/, GNU Texinfo system}.
+@uref{http://texinfo.org/, @acronym{GNU} Texinfo system}.
 
-You can also obtain the R FAQ from the @file{doc/FAQ} subdirectory of a
-CRAN site (@ref{What is CRAN?}).
+You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
+subdirectory of a @acronym{CRAN} site (@ref{What is CRAN?}).
 
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
 
-In publications, please refer to this FAQ as Hornik (@value{FAQ-YEAR}),
-``The R FAQ'' and give the above, @emph{official} URL.
+In publications, please refer to this @acronym{FAQ} as Hornik
+(@value{FAQ-YEAR}), ``The R @acronym{FAQ}'' and give the above,
+@emph{official} @acronym{URL}.
 
 @node Notation, Feedback, Citing this document, Introduction
 @section Notation
@@ -227,8 +230,8 @@ Guido Masarotto, Paul Murrell, Brian Ripley, Duncan Temple Lang, and
 Luke Tierney.
 
 R has a home page at @uref{http://www.r-project.org/}.  It is free
-software distributed under a GNU-style copyleft, and an official part of
-the GNU project (``GNU S'').
+software distributed under a @acronym{GNU}-style copyleft, and an
+official part of the @acronym{GNU} project (``@acronym{GNU} S'').
 
 @node What machines does R run on?, What is the current version of R?, What is R?, R Basics
 @section What machines does R run on?
@@ -257,8 +260,9 @@ for bug fixes mostly.  The version for the Mac is pre-alpha.
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
 
-Sources, binaries and documentation for R can be obtained via CRAN, the
-``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
+Sources, binaries and documentation for R can be obtained via
+@acronym{CRAN}, the ``Comprehensive R Archive Network'' (see @ref{What
+is CRAN?}).
 
 Sources are also available via anonymous rsync.  Use
 
@@ -302,7 +306,8 @@ R distribution contains instructions.
 Note that you need a @FORTRAN{} compiler or @command{f2c} in addition to
 a C compiler to build R.  Also, you need Perl version 5 to build the R
 object documentations.  (If this is not available on your system, you
-can obtain a PDF version of the object reference manual via CRAN.)
+can obtain a PDF version of the object reference manual via
+@acronym{CRAN}.)
 
 In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
@@ -325,10 +330,11 @@ the ``R Extension Writers Guide'', in the @file{doc/manual}
 subdirectory.  These files can be previewed and printed using standard
 programs such as @command{xdvi} and @command{dvips}.  You can also use
 @kbd{make pdf} to build PDF (Portable Document Format) version of the
-manuals, and view these using Acrobat.  Manuals written in the GNU
-Texinfo system can also be converted to info files suitable for reading
-online with Emacs or stand-alone GNU Info; use @kbd{make info} to create
-these versions (note that this requires @command{makeinfo} version 4).
+manuals, and view these using Acrobat.  Manuals written in the
+@acronym{GNU} Texinfo system can also be converted to info files
+suitable for reading online with Emacs or stand-alone @acronym{GNU}
+Info; use @kbd{make info} to create these versions (note that this
+requires @command{makeinfo} version 4).
 
 Finally, use @kbd{make check} to find out whether your R system works
 correctly.
@@ -366,13 +372,13 @@ respectively.
 @node How can R be installed (Windows), How can R be installed (Macintosh), How can R be installed (Unix), How can R be installed?
 @subsection How can R be installed (Windows)
 
-The @file{bin/windows/windows-NT} directory of a CRAN site contains the
-latest binary distributions of R for 32 bit versions of MS Windows
-(i.e., 95, 98 or NT), as well as binary distributions for a large number
-of add-on packages from CRAN.  The Windows version of R was created by
-Robert Gentleman, and is now being developed and maintained by
-@email{Guido.Masarotto@@r-project.org, Guido Masarotto} and
-@email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
+The @file{bin/windows/windows-NT} directory of a @acronym{CRAN} site
+contains the latest binary distributions of R for 32 bit versions of MS
+Windows (i.e., 95, 98 or NT), as well as binary distributions for a
+large number of add-on packages from @acronym{CRAN}.  The Windows
+version of R was created by Robert Gentleman, and is now being developed
+and maintained by @email{Guido.Masarotto@@r-project.org, Guido
+Masarotto} and @email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
 
 @c Note that when uncompressing the zip files, the pkunzip program needs to
 @c be invoked with the @samp{-D} flag to create subdirectories.  Also, be
@@ -383,7 +389,7 @@ For most installations the installer @command{rwinst.exe} will be the
 easiest tool to use.
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
-FAQ} for more details.
+@acronym{FAQ}} for more details.
 
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
@@ -409,7 +415,7 @@ A binhexed self-extracting archive containing a pre-alpha port of R
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000-10-27:
+@c Linux binaries as of 2000-11-17:
 @c
 @c debian   2.2 i386  1.1.1  Doug Bates
 @c          2.3 i386  1.1.1  Doug Bates
@@ -418,17 +424,19 @@ A binhexed self-extracting archive containing a pre-alpha port of R
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
+@c          7.x i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
 @c suse     5.3 i386  1.0.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          6.4 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          7.0 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
-The @file{bin/linux} directory of a CRAN site contains Debian 2.2/2.3
-packages for the i386 platform (now part of the Debian distribution and
-maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
-sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and
-Vin Everett, respectively), SuSE 5.3/6.4/7.0 i386 packages by Albrecht
-Gebhardt, Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc
-5.0 RPMs by Alex Buerkle.
+The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
+2.2/2.3 packages for the i386 platform (now part of the Debian
+distribution and maintained by Doug Bates), Red Hat 6.x packages for the
+alpha and sparc platforms and 6.x/7.x packages for the i386 platform
+(maintained by Naoki Takebayashi, Vin Everett, and Martyn Plummer,
+respectively), SuSE 5.3/6.4/7.0 i386 packages by Albrecht Gebhardt,
+Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc 5.0 RPMs by
+Alex Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -439,17 +447,18 @@ deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
 
 @noindent
 (where @var{distribution} is either @samp{stable} or @samp{unstable};
-feel free to use a CRAN mirror instead of the master) to the file
-@file{/etc/apt/sources.list}.  Once you have added that line the
+feel free to use a @acronym{CRAN} mirror instead of the master) to the
+file @file{/etc/apt/sources.list}.  Once you have added that line the
 programs @code{apt-get}, @code{apt-cache}, and @code{dselect} (using the
 apt access method) will automatically detect and install updates of the
 R packages.
 
-The @file{bin/osf} directory of a CRAN site contains RPMs by Albrecht
-Gebhardt for alpha systems running Digital Unix 4.0.
+The @file{bin/osf} directory of a @acronym{CRAN} site contains RPMs by
+Albrecht Gebhardt for alpha systems running Digital Unix 4.0.
 
 @c There are also `tar' distributions for NEXTSTEP on the i386 and m68k
-@c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k}.
+@c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k},
+@c created by Stephen Shiboski <steve@biostat.ucsf.edu>.
 
 No other binary distributions have thus far been made publically
 available.
@@ -480,7 +489,7 @@ modeling and graphics.  This document is based on the ``Notes on
 @item ``Writing R Extensions'' (@file{R-exts})
 currently describes the process of creating R add-on packages, writing R
 documentation, R's system and foreign language interfaces, and the R
-API.
+@acronym{API}.
 @end itemize
 
 @noindent
@@ -497,8 +506,9 @@ forth.
 @end itemize
 
 In addition to material written specifically for R, documentation for
-S/@SPLUS{} (see @ref{R and S}) can be used in combination with this FAQ
-(@pxref{What are the differences between R and S?}).  We recommend
+S/@SPLUS{} (see @ref{R and S}) can be used in combination with this
+@acronym{FAQ} (@pxref{What are the differences between R and S?}).  We
+recommend
 
 @quotation
 W. N. Venables and B. D. Ripley (1999), ``Modern Applied Statistics with
@@ -630,21 +640,22 @@ include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
 
 Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the @file{doc/html/mail.html} file in CRAN.
-Searchable archives of the lists are available via
+in a monthly schedule via the @file{doc/html/mail.html} file in
+@acronym{CRAN}.  Searchable archives of the lists are available via
 @uref{http://www.ens.gu.edu.au/robertk/R/}.
 
 The R Core Team can be reached at @email{r-core@@lists.r-project.org}
 for comments and reports.
 
 @node What is CRAN?,  , What mailing lists exist for R?, R Basics
-@section What is CRAN?
+@section What is @acronym{CRAN}?
 
-The ``Comprehensive R Archive Network'' (CRAN) is a collection of sites
-which carry identical material, consisting of the R distribution(s), the
-contributed extensions, documentation for R, and binaries.
+The ``Comprehensive R Archive Network'' (@acronym{CRAN}) is a collection
+of sites which carry identical material, consisting of the R
+distribution(s), the contributed extensions, documentation for R, and
+binaries.
 
-The CRAN master site can be found at the URL
+The @acronym{CRAN} master site can be found at the @acronym{URL}
 
 @quotation
 @multitable @columnfractions .45 .30
@@ -692,26 +703,29 @@ currently being mirrored daily at
 @end quotation
 
 @noindent
-Please use the CRAN site closest to you to reduce network load.
+Please use the @acronym{CRAN} site closest to you to reduce network
+load.
 
-From CRAN, you can obtain the latest official release of R, daily
-snapshots of R (copies of the current CVS trees), as gzipped and bzipped
-tar files or as two gzipped tar files (ready for 1.4M floppies), a
-wealth of additional contributed code, as well as prebuilt binaries for
-various operating systems (Linux, Digital Unix, and MS Windows).  CRAN
-also provides access to documentation on R, existing mailing lists and
-the R Bug Tracking system.
+From @acronym{CRAN}, you can obtain the latest official release of R,
+daily snapshots of R (copies of the current CVS trees), as gzipped and
+bzipped tar files or as two gzipped tar files (ready for 1.4M floppies),
+a wealth of additional contributed code, as well as prebuilt binaries
+for various operating systems (Linux, Digital Unix, and MS Windows).
+@acronym{CRAN} also provides access to documentation on R, existing
+mailing lists and the R Bug Tracking system.
 
-To ``submit'' to CRAN, simply upload to
+To ``submit'' to @acronym{CRAN}, simply upload to
 @uref{ftp://cran.r-project.org/incoming/} and send an email to
 @email{wwwadmin@@cran.r-project.org}.
 
 @quotation
 @strong{Note:}  It is very important that you indicate the copyright
-(license) information (GPL, BSD, Artistic, @dots{}) in your submission.
+(license) information (@acronym{GPL}, @acronym{BSD}, Artistic, @dots{})
+in your submission.
 @end quotation
 
-Please always use the URL of the master site when referring to CRAN.
+Please always use the @acronym{URL} of the master site when referring to
+@acronym{CRAN}.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
@@ -727,9 +741,9 @@ Please always use the URL of the master site when referring to CRAN.
 @section What is S?
 
 S is a very high level language and an environment for data analysis and
-graphics.  In 1998, the Association for Computing Machinery (ACM)
-presented its Software System Award to John M. Chambers, the principal
-designer of S, for
+graphics.  In 1998, the Association for Computing Machinery
+(@acronym{ACM}) presented its Software System Award to John M. Chambers,
+the principal designer of S, for
 
 @quotation
 the S system, which has forever altered the way people analyze,
@@ -780,7 +794,7 @@ See @uref{http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html}
 for further information on ``Stages in the Evolution of S''.
 
 There is a huge amount of user-contributed code for S, available at the
-@uref{http://lib.stat.cmu.edu/S/, S Repository} at CMU.
+@uref{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
 
 @c The @uref{http://lib.stat.cmu.edu/S/faq, ``Frequently Asked Questions
 @c about S''} contains further information about S, but is not
@@ -1107,6 +1121,10 @@ In R, if @code{x} is a list, then @code{x[i] <- NULL} and @code{x[[i]]
 these is incompatible with S, where it is a no-op.  (Note that you can
 set elements to @code{NULL} using @code{x[i] <- list(NULL)}.)
 
+@c @item
+@c In R @code{x[-4]} fails if @code{x} is not @code{NULL} but has fewer
+@c than 4 elements.  In S it has no effect.
+
 @item
 In S, the functions named @code{.First} and @code{.Last} in the
 @file{.Data} directory can be used for customizing, as they are executed
@@ -1294,7 +1312,7 @@ output and graphs, a more sophisticated Javascript version that provides
 a multiple window environment, and a set of point and click modules that
 are useful for introductory statistics courses and require no knowledge
 of the R language.  All of the Rweb versions can analyze Web accessible
-datasets if a URL is provided.
+datasets if a @acronym{URL} is provided.
 
 The paper ``Rweb: Web-based Statistical Analysis'', providing a detailed
 explanation of the different versions of Rweb and an overview of how
@@ -1341,13 +1359,13 @@ Regression spline functions and classes.
 Code for dealing with STEP FUNctions, including empirical cumulative
 distribution functions.
 @item tcltk
-Interface and language bindings to Tcl/Tk GUI elements.
+Interface and language bindings to Tcl/Tk @acronym{GUI} elements.
 @item ts
 Time Series.
 @end table
 
-The following packages are available from the CRAN @file{src/contrib}
-area.
+The following packages are available from the @acronym{CRAN}
+@file{src/contrib} area.
 
 @table @strong
 @item Devore5
@@ -1366,14 +1384,14 @@ bundle.
 @item Matrix
 A Matrix package.
 @item NISTnls
-A set of test nonlinear least squares examples from NIST, the
+A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
 @item PHYLOGR
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
 @item RODBC
-An ODBC database interface.
+An @acronym{ODBC} database interface.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
 @item RmSQL
@@ -1387,6 +1405,8 @@ Binary file stream support functions.
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+@item XML
+Facilities for reading @acronym{XML} documents and DTDs.
 @item acepack
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
@@ -1536,6 +1556,8 @@ Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
 @item rpart
 Recursive PARTitioning and regression trees.
+@item scatterplot3d
+Plots a three dimensional (3D) point cloud perspectively.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
 @item sm
@@ -1583,22 +1605,26 @@ Matrices with numeric indices starting at zero rather than one.
 @end table
 
 @noindent
-See CRAN @file{src/contrib/INDEX} for more information.
+See @acronym{CRAN} @file{src/contrib/INDEX} for more information.
 
-There is also a CRAN @file{src/contrib/Devel} directory which contains
-packages still ``under development'' or depending on features only
-present in the current development versions of R.  Volunteers are
-invited to give these a try, of course.  This area of CRAN currently
-contains
+There is also a @acronym{CRAN} @file{src/contrib/Devel} directory which
+contains packages still ``under development'' or depending on features
+only present in the current development versions of R.  Volunteers are
+invited to give these a try, of course.  This area of @acronym{CRAN}
+currently contains
 
 @table @strong
+@item GRASS
+Interface between the GRASS geographical information system and R, based
+on starting R from within the GRASS environment and chosen LOCATION and
+MAPSET.  Wrapper and helper functions are provided for a range of R
+functions to match the interface metadata structures.
 @item HTML
 Functions for exporting R objects as @HTML{} tables.
-@item Java
-An interface from R to Java to create and call Java objects and
-methods.
 @item RMySQL
 An interface between R and the MySQL database system.
+@item StatDataML
+Read and write StatDataML
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -1619,7 +1645,7 @@ SAS, SPSS, etc.
 An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
 @item hdf5
-Interface to the NCSA HDF5 library.
+Interface to the @acronym{NCSA} HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
@@ -1627,13 +1653,25 @@ statistics.
 Multivariate normal and t distributions.
 @item netCDF
 Read data from netCDF files.
-@item syskern
-Functions for writing code that is OS and R/S independent.
-@item tframe
-Functions for writing code that is independent of the representation of
-time.
+@item npConfRatio
+Nonparametric confidence intervals for the ratios of medians.
+@item regexp
+Simple regular expression interface.
 @item timeslab
 Time series routines.
+@end table
+
+Directory @file{src/contrib/Omegahat} contains yet unreleased packages
+from the @uref{http://www.omegahat.org, Omegahat Project for Statistical
+Computing}.  Currently, there are
+
+@table @strong
+@item Java
+An interface from R to Java to create and call Java objects and
+methods.
+@item RSPerl
+An interface from R to an embedded, persistent Perl interpreter,
+allowing one to call arbitrary Perl subroutines, classes and methods.
 @end table
 
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
@@ -1661,13 +1699,13 @@ obtained from the mailing list archive.
 @node How can add-on packages be installed?, How can add-on packages be used?, Which add-on packages exist for R?, R Add-On Packages
 @section How can add-on packages be installed?
 
-(Unix only.)  The add-on packages on CRAN come as gzipped tar files
-named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
+(Unix only.)  The add-on packages on @acronym{CRAN} come as gzipped tar
+files named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
 ``bundles'' containing more than one package.  Provided that
 @command{tar} and @command{gzip} are available on your system, type
 
 @example
-$ R INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
+$ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
 @end example
 
 @noindent
@@ -1676,15 +1714,15 @@ at the shell prompt to install to the default R directory tree (the
 tree (e.g., your private one), use
 
 @example
-$ R INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
+$ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
 @end example
 
 @noindent
 where @var{lib} gives the path to the library tree to install to.
 
 Even more conveniently, you can install and automatically update
-packages from within R if you have access to CRAN.  See the help page
-for @code{CRAN.packages()} for more information.
+packages from within R if you have access to @acronym{CRAN}.  See the
+help page for @code{CRAN.packages()} for more information.
 
 You can use several library trees of add-on packages.  The easiest way
 to tell R to use these is via the environment variable @env{R_LIBS}
@@ -1770,14 +1808,14 @@ To remove the packages @var{pkg_1}, @dots{}, @var{pkg_n} from the
 default library or the library @var{lib}, do
 
 @example
-$ R REMOVE @var{pkg_1} @dots{} @var{pkg_n}
+$ R CMD REMOVE @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
 @noindent
 or
 
 @example
-$ R REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
+$ R CMD REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
 @noindent
@@ -1850,47 +1888,49 @@ If you are interested in working on any of these projects, please notify
 @node Is there Emacs support for R?, Should I run R from within Emacs?, R and Emacs, R and Emacs
 @section Is there Emacs support for R?
 
-There is an Emacs package called ESS (``Emacs Speaks Statistics'') which
-provides a standard interface between statistical programs and
-statistical processes.  It is intended to provide assistance for
-interactive statistical programming and data analysis.  Languages
-supported include: S dialects (S 3/4, @SPLUS{} 3.x/4.x/5.x, and R),
-LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects (SPSS,
-PSPP) and SCA.
+There is an Emacs package called @acronym{ESS} (``Emacs Speaks
+Statistics'') which provides a standard interface between statistical
+programs and statistical processes.  It is intended to provide
+assistance for interactive statistical programming and data analysis.
+Languages supported include: S dialects (S 3/4, @SPLUS{} 3.x/4.x/5.x,
+and R), LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects
+(SPSS, PSPP) and SCA.
 
-ESS grew out of the need for bug fixes and extensions to S-mode 4.8
-(which was a GNU Emacs interface to S/@SPLUS{} version 3 only).  The
-current set of developers desired support for XEmacs, R, S4, and MS
-Windows.  In addition, with new modes being developed for R, Stata, and
-SAS, it was felt that a unifying interface and framework for the user
-interface would benefit both the user and the developer, by helping both
-groups conform to standard Emacs usage.  The end result is an increase
-in efficiency for statistical programming and data analysis, over the
-usual tools.
+@acronym{ESS} grew out of the need for bug fixes and extensions to
+S-mode 4.8 (which was a @acronym{GNU} Emacs interface to S/@SPLUS{}
+version 3 only).  The current set of developers desired support for
+XEmacs, R, S4, and MS Windows.  In addition, with new modes being
+developed for R, Stata, and SAS, it was felt that a unifying interface
+and framework for the user interface would benefit both the user and the
+developer, by helping both groups conform to standard Emacs usage.  The
+end result is an increase in efficiency for statistical programming and
+data analysis, over the usual tools.
 
 R support contains code for editing R source code (syntactic indentation
 and highlighting of source code, partial evaluations of code, loading
 and error-checking of code, and source code revision maintenance) and
 documentation (syntactic indentation and highlighting of source code,
-sending examples to running ESS process, and previewing), interacting
-with an inferior R process from within Emacs (command-line editing,
-searchable command history, command-line completion of R object and file
-names, quick access to object and search lists, transcript recording,
-and an interface to the help system), and transcript manipulation
-(recording and saving transcript files, manipulating and editing saved
-transcripts, and re-evaluating commands from transcript files).
+sending examples to running @acronym{ESS} process, and previewing),
+interacting with an inferior R process from within Emacs (command-line
+editing, searchable command history, command-line completion of R object
+and file names, quick access to object and search lists, transcript
+recording, and an interface to the help system), and transcript
+manipulation (recording and saving transcript files, manipulating and
+editing saved transcripts, and re-evaluating commands from transcript
+files).
 
-The latest versions of ESS are available from
+The latest versions of @acronym{ESS} are available from
 @uref{http://ess.stat.wisc.edu/pub/ESS/} or
-@uref{ftp://ess.stat.wisc.edu/pub/ESS/}, or via CRAN.  The @HTML{}
-version of the documentation can be found at
+@uref{ftp://ess.stat.wisc.edu/pub/ESS/}, or via @acronym{CRAN}.  The
+@HTML{} version of the documentation can be found at
 @uref{http://stat.ethz.ch/ESS/}.
 
-ESS comes with detailed installation instructions.
+@acronym{ESS} comes with detailed installation instructions.
 
-For help with ESS, send email to @email{ESS-help@@stat.ethz.ch}.
+For help with @acronym{ESS}, send email to
+@email{ESS-help@@stat.ethz.ch}.
 
-Please send bug reports and suggestions on ESS to
+Please send bug reports and suggestions on @acronym{ESS} to
 @email{ESS-bugs@@stat.math.ethz.ch}.  The easiest way to do this from is
 within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 [ESS] or [iESS] pulldown menus.
@@ -1930,18 +1970,19 @@ other environment variables as needed (using e.g.@: @kbd{set env R_HOME
 /path/to/R/}, but see also below), and start the binary with the desired
 arguments (e.g., @kbd{run --vsize=12M}).
 
-If you have ESS, you can do @kbd{C-u M-x R @key{RET} - d @key{SPC} g d b
-@key{RET}} to start an inferior R process with arguments @option{-d
-gdb}.
+If you have @acronym{ESS}, you can do @kbd{C-u M-x R @key{RET} - d
+@key{SPC} g d b @key{RET}} to start an inferior R process with arguments
+@option{-d gdb}.
 
-A third option is to start an inferior R process via ESS (@kbd{M-x R})
-and then start GUD (@kbd{M-x gdb}) giving the R binary (using its full
-path name) as the program to debug.  Use the program @command{ps} to
-find the process number of the currently running R process then use the
-@code{attach} command in gdb to attach it to that process.  One
-advantage of this method is that you have separate @code{*R*} and
-@code{*gud-gdb*} windows.  Within the @code{*R*} window you have all the
-ESS facilities, such as object-name completion, that we know and love.
+A third option is to start an inferior R process via @acronym{ESS}
+(@kbd{M-x R}) and then start GUD (@kbd{M-x gdb}) giving the R binary
+(using its full path name) as the program to debug.  Use the program
+@command{ps} to find the process number of the currently running R
+process then use the @code{attach} command in gdb to attach it to that
+process.  One advantage of this method is that you have separate
+@code{*R*} and @code{*gud-gdb*} windows.  Within the @code{*R*} window
+you have all the @acronym{ESS} facilities, such as object-name
+completion, that we know and love.
 
 When using GUD mode for debugging from within Emacs, you may find it
 most convenient to use the directory with your code in it as the current
@@ -2559,7 +2600,7 @@ the package writers and porters for adding to it.
 Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Fritz
 Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D. Ripley,
 Anthony Rossini, and Andreas Weingessel for their comments which helped
-me improve this FAQ.
+me improve this @acronym{FAQ}.
 
 More to some soon @dots{}
 
