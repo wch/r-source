@@ -36,8 +36,7 @@ esac
 # Check for object or archive files
 ofiles=""
 for arg; do
-    case $arg in *.o) ofiles="$ofiles $arg";; esac
-    case $arg in *.a) ofiles="$ofiles $arg";; esac
+    case $arg in *.o | *.lo | *.a) ofiles="$ofiles $arg";; esac
 done
 
 # Call nm so that it prints only global symbols (unsorted, w/o header)
