@@ -156,15 +156,43 @@ AC_DEFUN(R_PROG_CC_FLAG,
   [ ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
     AC_MSG_CHECKING([whether ${CC-cc} accepts $1])
     AC_CACHE_VAL(r_cv_prog_cc_flag_${ac_safe},
-      [ AC_LANG_C
+      [ AC_LANG_SAVE
+        AC_LANG_C
 	XCFLAGS="${CFLAGS}"
 	CFLAGS="${CFLAGS} $1"
 	AC_TRY_LINK([], [],
 	  eval "r_cv_prog_cc_flag_${ac_safe}=yes",
 	  eval "r_cv_prog_cc_flag_${ac_safe}=no")
 	CFLAGS="${XCFLAGS}"
+	AC_LANG_RESTORE
       ])
     if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
+      AC_MSG_RESULT(yes)
+      [$2]
+    else
+      AC_MSG_RESULT(no)
+    fi
+  ])
+dnl
+dnl R_PROG_CXX_FLAG
+dnl
+dnl Test whether the C++ compiler handles a command line option
+dnl
+AC_DEFUN(R_PROG_CXX_FLAG,
+  [ ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
+    AC_MSG_CHECKING([whether ${CXX-c++} accepts $1])
+    AC_CACHE_VAL(r_cv_prog_cxx_flag_${ac_safe},
+      [ AC_LANG_SAVE
+        AC_LANG_CPLUSPLUS
+	XCXXFLAGS="${CXXFLAGS}"
+	CXXFLAGS="${CXXFLAGS} $1"
+	AC_TRY_LINK([], [],
+	  eval "r_cv_prog_cxx_flag_${ac_safe}=yes",
+	  eval "r_cv_prog_cxx_flag_${ac_safe}=no")
+	CXXFLAGS="${XCXXFLAGS}"
+	AC_LANG_RESTORE
+      ])
+    if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
       AC_MSG_RESULT(yes)
       [$2]
     else
