@@ -121,25 +121,25 @@ void R_ProcessEvents(void);
 #endif
 
 /* declare substitutions */
-#if defined(HAVE_DECL_ACOSH) || !HAVE_DECL_ACOSH
+#if defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH
 extern double acosh(double x);
 #endif
-#if defined(HAVE_DECL_ASINH) || !HAVE_DECL_ASINH
+#if defined(HAVE_DECL_ASINH) && !HAVE_DECL_ASINH
 extern double acosh(double x);
 #endif
-#if defined(HAVE_DECL_ATANH) || !HAVE_DECL_ATANH
+#if defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
 extern double acosh(double x);
 #endif
-#if defined(HAVE_DECL_SNPRINTF) || !HAVE_DECL_SNPRINTF
+#if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
 extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
-#if defined(HAVE_DECL_STRDUP) || !HAVE_DECL_STRDUP
+#if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
 extern char *strdup(const char *s1);
 #endif
-#if defined(HAVE_DECL_STRNCASECMP) || !HAVE_DECL_STRNCASECMP
+#if defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP
 extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
-#if defined(HAVE_DECL_VSNPRINTF) || !HAVE_DECL_VSNPRINTF
+#if defined(HAVE_DECL_VSNPRINTF) && !HAVE_DECL_VSNPRINTF
 extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #endif
 
