@@ -729,6 +729,7 @@ FUNTAB R_FunTab[] =
 {"open", 	do_open,	0,      11,     3,      PP_FUNCALL},
 {"isOpen", 	do_isopen,	0,      11,     2,      PP_FUNCALL},
 {"isIncomplete",do_isincomplete,0,      11,     1,      PP_FUNCALL},
+{"isSeekable", 	do_isseekable,	0,      11,     1,      PP_FUNCALL},
 {"close", 	do_close,	0,      11,     2,      PP_FUNCALL},
 {"file", 	do_file,	0,      11,     3,      PP_FUNCALL},
 {"pipe", 	do_pipe,	0,      11,     2,      PP_FUNCALL},

@@ -55,5 +55,14 @@ stderr()
 \seealso{\code{\link{connection}}}
 
 \examples{
+showConnections(all = TRUE)
+
+textConnection(letters)
+# oops, I forgot to record that one
+showConnections()
+#  class     description      mode text   isopen   can read can write
+#3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"     
+close(getConnection(3))
+showConnections()
 }
 \keyword{connection}

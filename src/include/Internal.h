@@ -388,6 +388,7 @@ SEXP do_writeraw(SEXP, SEXP, SEXP, SEXP);
 SEXP do_open(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isopen(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isincomplete(SEXP, SEXP, SEXP, SEXP);
+SEXP do_isseekable(SEXP, SEXP, SEXP, SEXP);
 SEXP do_close(SEXP, SEXP, SEXP, SEXP);
 SEXP do_file(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pipe(SEXP, SEXP, SEXP, SEXP);

@@ -6,6 +6,7 @@
 \alias{open.connection}
 \alias{isOpen}
 \alias{isIncomplete}
+\alias{isSeekable}
 \alias{close}
 \alias{close.connection}
 \alias{seek}
@@ -24,8 +25,10 @@ textConnection(description, open =  "")
 open(con, open = "rt", blocking = TRUE)
 close(con, type = "rw")
 seek(con, where = NA, rw = "")
+
 isOpen(con, rw = "")
 isIncomplete(con)
+isSeekable(con)
 }
 \arguments{
   \item{description}{character. A description of the connection. For
@@ -56,7 +59,8 @@ isIncomplete(con)
   \code{seek} with \code{where = NA} returns the current byte offset
   of a connection (from the beginning), and with a positive \code{where}
   argument the connection is re-positioned (if possible) to the
-  specified position.
+  specified position. \code{isSeekable} returns whether the connection
+  in principle supports \code{seek}: currently only file connections do.
 
   Text connections \emph{are} opened and the character vector is copied at the
   time the connection object is created, and \code{close} destroys the copy.
@@ -94,7 +98,7 @@ isIncomplete(con)
   was blocked (currently always false).
 }
 \note{
-  \R's connections are modelled on those in S version 4 (see Chamber,
+  \R's connections are modelled on those in S version 4 (see Chambers,
   1998), but the implementation is currently incomplete.  In particular:
   \itemize{
     \item Pipes are only implemented on Unix. Fifos are not yet
@@ -124,6 +128,16 @@ scan(zz, "", 4)
 pushBack(c("aa", "bb"), zz)
 scan(zz, "", 4)
 close(zz)
+
+\dontrun{## Unix examples of use of pipes
+
+# read listing of current directory
+readLines(pipe("ls -1"))
+
+# convert decimal point to comma in output 
+zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
+cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
+close(zz)}
 }
 \keyword{file}
 \keyword{connection}

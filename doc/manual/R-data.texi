@@ -1473,8 +1473,10 @@ opening a file connection allows a file to be read sequentially in
 different formats.
 
 Other functions that call @code{scan} can also make use of connections.
-Some like @code{read.table} read the data twice, and these can only
-be used on seek-able connections.
+In particular @code{read.table} can use connections, but as it needs to
+read the data twice it is inefficient on a non-seekable connection.
+(It reads the datafile into an @R{} character vector and operates on
+that via a text connections.)
 
 @menu
 * Pushback::                    
@@ -1484,7 +1486,7 @@ be used on seek-able connections.
 @subsection Pushback
 
 @cindex pushBack.
-C programmers maybe familiar with the @code{ungetc} function to push
+C programmers may be familiar with the @code{ungetc} function to push
 back a character onto a text input stream.  @R{} connections have the
 same idea in a more powerful way, in that an (essentially) arbitrary
 number of lines of text can be pushed back onto a connection via a call

@@ -22,10 +22,10 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Print.h"
-#include "Fileio.h"
-#include "Rconnections.h"
+#include <Defn.h>
+#include <Print.h>
+#include <Fileio.h>
+#include <Rconnections.h>
 
 SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -182,7 +182,8 @@ static void cat_printsep(SEXP sep, int ntot)
 SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP objs, file, fill, sepr, labs, s;
-    int ifile, savecon, wasopen;
+    int ifile, savecon;
+    Rboolean wasopen;
     Rconnection con;
     int append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;

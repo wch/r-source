@@ -22,31 +22,45 @@ read.table <-
 	.Internal(type.convert(x, na.strings, as.is, dec))
 
     if(is.character(file)) {
-        file <- file(file)
+        file <- file(file, "r")
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
         stop("argument `file' must be a character string or connection")
 
+    if(isSeekable(file)) {
+        if(skip > 0) readLines(file, skip)
+        begin <- seek(file)
+        row.lens <- count.fields(file, sep, quote, 0, blank.lines.skip)
+        seek(file, begin)
+        tfile <- file
+    } else {
+        warning("readLines on a non-seekable connection can be resource-intensive")
+        if(skip > 0) readLines(file, skip)
+        whole <- readLines(file)
+        tfile <- textConnection(whole)
+        row.lens <- count.fields(tfile, sep, quote, 0, blank.lines.skip)
+        close(tfile)
+        tfile <- textConnection(whole)
+        on.exit(close(tfile), add = TRUE)
+    }
+
     ##	basic column counting and header determination;
     ##	rlabp (logical) := it looks like we have column names
 
-    row.lens <- count.fields(file, sep, quote, skip, blank.lines.skip)
     nlines <- length(row.lens)
     rlabp <- nlines > 1 && (max(row.lens[-1]) - row.lens[1]) == 1
     if(rlabp && missing(header))
 	header <- TRUE
 
-    open(file, "r")
-    if(skip > 0) readLines(file, skip)
     if (header) { # read in the header
-        colnm <- scan(file, what="", sep=sep, quote=quote, nlines=1,
-                      quiet=TRUE, skip=0, strip.white=TRUE)
+        colnm <- scan(tfile, what = "", sep = sep, quote = quote, nlines = 1,
+                      quiet = TRUE, skip = 0, strip.white = TRUE)
 	row.lens <- row.lens[-1]
 	nlines <- nlines - 1
         if(missing(col.names)) col.names <- colnm
     } else if (missing(col.names))
-	col.names <- paste("V", 1:max(row.lens), sep="")
+	col.names <- paste("V", 1:max(row.lens), sep = "")
 
     if(check.names) col.names <- make.names(col.names)
 
@@ -77,9 +91,10 @@ read.table <-
     if (rlabp)
 	col.names <- c("row.names", col.names)
     names(what) <- col.names
-    data <- scan(file=file, what=what, sep=sep, quote=quote, skip=0,
-		 na.strings=na.strings, quiet=TRUE, fill=fill,
-                 strip.white=strip.white, blank.lines.skip=blank.lines.skip)
+    data <- scan(file = tfile, what = what, sep = sep, quote = quote, skip = 0,
+		 na.strings = na.strings, quiet = TRUE, fill = fill,
+                 strip.white = strip.white,
+                 blank.lines.skip = blank.lines.skip)
 
     if(!blank.lines.skip && row.lens[nlines] == 0) {
         ## we had a blank last line

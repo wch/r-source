@@ -17,12 +17,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <R_ext/Boolean.h>
+
 typedef struct Rconn 
 {
     char* class;
     char* description;
     char mode[5];
-    short text, isopen, incomplete, canread, canwrite, blocking;
+    Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking;
     void (*open)(struct Rconn *);
     void (*close)(struct Rconn *); /* routine closing after auto open */
     void (*destroy)(struct Rconn *); /* when closing connection */

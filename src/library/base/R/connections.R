@@ -33,6 +33,9 @@ isOpen <- function(con, rw = "")
 isIncomplete <- function(con)
     .Internal(isIncomplete(con))
 
+isSeekable <- function(con)
+    .Internal(isSeekable(con))
+
 close <- function(con, ...)
     UseMethod("close")
 

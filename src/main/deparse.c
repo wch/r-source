@@ -77,9 +77,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Print.h"
-#include "Fileio.h"
+#include <Defn.h>
+#include <Print.h>
+#include <Fileio.h>
 
 #define BUFSIZE 512
 
@@ -207,7 +207,8 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP saveenv, tval;
-    int i, ifile, wasopen;
+    int i, ifile;
+    Rboolean wasopen;
     Rconnection con = (Rconnection) 1; /* stdout */
 
     checkArity(op, args);
@@ -243,7 +244,8 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval;
-    int i, j, nobjs, wasopen;
+    int i, j, nobjs;
+    Rboolean wasopen;
     Rconnection con;
 
     checkArity(op, args);
@@ -267,7 +269,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(INTEGER(file)[0] == 1) {
 	for (i = 0; i < nobjs; i++) {
 	    Rprintf("\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if (TYPEOF(CAR(o)) != CLOSXP || 
+	    if (TYPEOF(CAR(o)) != CLOSXP ||
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
@@ -282,7 +284,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!wasopen) con->open(con);
 	for (i = 0; i < nobjs; i++) {
 	    Rconn_printf(con, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if (TYPEOF(CAR(o)) != CLOSXP || 
+	    if (TYPEOF(CAR(o)) != CLOSXP ||
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {

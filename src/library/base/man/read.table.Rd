@@ -46,7 +46,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
     Alternatively, \code{file} can be a \code{\link{connection}}, which
     will be opened if necessary, and if so closed at the end of the
-    function call.
+    function call.  However, since the file must be read twice, this
+    will be resource-intensive except on seekable connections.
   }
 
   \item{header}{a logical value indicating whether the file contains the

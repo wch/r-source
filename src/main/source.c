@@ -21,11 +21,11 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
-#include "IOStuff.h"
-#include "Parse.h"
-#include "Rconnections.h"
+#include <Defn.h>
+#include <Fileio.h>
+#include <IOStuff.h>
+#include <Parse.h>
+#include <Rconnections.h>
 
 extern IoBuffer R_ConsoleIob;
 /* extern int errno; No longer used */
@@ -41,8 +41,8 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP text, prompt, s;
     Rconnection con;
-    int ifile, wasopen;
-    int num, pstacktop, status;
+    Rboolean wasopen;
+    int ifile, num, pstacktop, status;
 
     checkArity(op, args);
     pstacktop = R_PPStackTop;

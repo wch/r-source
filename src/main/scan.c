@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
-#include "Rconnections.h"
+#include <Defn.h>
+#include <Fileio.h>
+#include <Rconnections.h>
 
 /* The size of vector initially allocated by scan */
 #define SCAN_BLOCKSIZE		1000
@@ -44,7 +44,7 @@ static int decchar = '.';
 static char *quoteset;
 static char *quotesave = NULL;
 static Rconnection con;
-static int wasopen;
+static Rboolean wasopen;
 static int ttyflag;
 static int quiet;
 static SEXP NAstrings;
