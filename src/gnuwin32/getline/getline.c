@@ -42,11 +42,13 @@ int 		(*gl_tab_hook)() = gl_tab;
 #ifdef __unix__
 #include <signal.h>
 #endif
+#include <stdlib.h>
+#include <io.h>
 
-extern int     isatty();	
+/*extern int     isatty();	
 extern void    *malloc();
 extern void    *calloc();
-extern void     free();
+extern void     free();*/
 
 /******************** internal interface *********************************/
 
@@ -103,8 +105,8 @@ static void     search_forw();		/* look forw for current string */
 
 /************************ nonportable part *********************************/
 
-extern int      write();
-extern void     exit();
+/*extern int      write();
+ extern void     exit();*/
 
 #ifdef unix
 #ifndef __unix__

@@ -45,30 +45,30 @@ int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine, 
 	 int CmdShow)
 {
-    #if (PASS_ARGS > 1) /* define argc, argv, environ */
+#if (PASS_ARGS > 1) /* define argc, argv, environ */
 	extern int _argc;
 	extern char **_argv;
 	extern char **environ;
 	extern void AppMain(int argc, char **argv, char **envp);
-    #elif (PASS_ARGS > 0) /* only define argc and argv */
+#elif (PASS_ARGS > 0) /* only define argc and argv */
 	extern int _argc;
 	extern char **_argv;
 	extern void AppMain(int argc, char **argv);
-    #else /* else pass zero and NULL to main */
+#else /* else pass zero and NULL to main */
 	extern void AppMain(int argc, char **argv);
-    #endif /* end arg declarations */
+#endif /* end arg declarations */
 
         startgraphapp(Instance, PrevInstance, CmdShow);
 	/*
 	 *  Call the main function now.
 	*/
-    #if (PASS_ARGS > 1)		/* pass argc, argv, environ */
+#if (PASS_ARGS > 1)		/* pass argc, argv, environ */
 	AppMain(_argc, _argv, environ);
-    #elif (PASS_ARGS > 0)	/* only pass argc and argv */
+#elif (PASS_ARGS > 0)	/* only pass argc and argv */
 	AppMain(_argc, _argv);
-    #else			/* pass zero and NULL */
+#else			/* pass zero and NULL */
 	AppMain(0, NULL);
-    #endif
+#endif
 
 	/*
 	 *  Call the mainloop function to handle events.

@@ -29,35 +29,10 @@
 #include "Defn.h"
 #include "Fileio.h"
 #include <io.h>
+#include <direct.h>
 #include <time.h>
 #include <windows.h>
 #include "graphapp/ga.h"
-
-static char DefaultFileName[MAX_PATH];
-
-/*
- * replacement for Windows function that uses root directory
- */
-char * tmpnam(char * str)
-{
-    char *tmp, tmp1[MAX_PATH], *tmp2, *p;
-    int hasspace = 0;
-
-    if(str) tmp2 = str; else tmp2 = DefaultFileName;
-    tmp = getenv("TMP");
-    if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
-    /* make sure no spaces in path */
-    for (p = tmp; *p; p++)
-	if (isspace(*p)) { hasspace = 1; break; }
-    if (hasspace)
-	GetShortPathName(tmp, tmp1, MAX_PATH);
-    else
-	strcpy(tmp1, tmp);
-    sprintf(tmp2, "%s/RtmpXXXXXX", tmp);
-    mktemp(tmp2); /* Windows function to replace X's */
-    return(tmp2);
-}
 
 
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -102,7 +77,6 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
-#include <direct.h>
 SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  path, ans;

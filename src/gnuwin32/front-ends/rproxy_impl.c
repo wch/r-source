@@ -35,10 +35,17 @@
 #include "IOStuff.h"
 #include "Parse.h"
 
+#ifndef _MSC_VER
 #define R_GlobalEnv (*__imp_R_GlobalEnv)
 #define R_Visible (*__imp_R_Visible)
 #define R_EvalDepth (*__imp_R_EvalDepth)
 #define R_DimSymbol (*__imp_R_DimSymbol)
+#else
+#define R_GlobalEnv (*_imp__R_GlobalEnv)
+#define R_Visible (*_imp__R_Visible)
+#define R_EvalDepth (*_imp__R_EvalDepth)
+#define R_DimSymbol (*_imp__R_DimSymbol)
+#endif
 
 extern SEXP R_GlobalEnv;
 extern int R_Visible;

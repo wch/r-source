@@ -538,10 +538,10 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     else
 	pixs = pixs * devicepixelsx(d);
 
-    lf.lfHeight = - (pixs + 0.5);
+    lf.lfHeight = (int) -(pixs + 0.5);
 
     lf.lfWidth = 0 ;
-    lf.lfEscapement = lf.lfOrientation = 10*rot;
+    lf.lfEscapement = lf.lfOrientation = (int) 10*rot;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
     if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
