@@ -169,7 +169,7 @@
   or from the sources at
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
   If PCRE support was compiled from the sources within \R, the PCRE
-  version is 3.9: PCRE >= 4.0 supports more of the Perl regular expressions.
+  version is 4.4: PCRE < 4.0 supports less of the Perl regular expressions.
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2, from
