@@ -4,7 +4,7 @@
 
 ## Drop these for strict testing {and add them to demos2.R)
 ## in ../src/library/base/man/demo.Rd }:
-dont <- list(base = c("Hershey", "Japanese", "nlm", "plotmath")
+dont <- list(base = c("Hershey", "Japanese", "lm.glm", "nlm", "plotmath")
              )
 ## don't take tcltk here
 for(pkg in c("base", "eda")) {
