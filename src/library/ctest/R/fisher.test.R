@@ -207,8 +207,14 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                        less = c(0, ncp.U(x, 1 - conf.level)),
                        greater = c(ncp.L(x, 1 - conf.level), Inf),
                        two.sided = {
-                           alpha <- (1 - conf.level) / 2
-                           c(ncp.L(x, alpha), ncp.U(x, alpha))
+                           if(ESTIMATE == 0)
+                               c(0, ncp.U(x, 1 - conf.level))
+                           else if(ESTIMATE == Inf)
+                               c(ncp.L(x, 1 - conf.level), Inf)
+                           else {
+                               alpha <- (1 - conf.level) / 2
+                               c(ncp.L(x, alpha), ncp.U(x, alpha))
+                           }
                        })
         attr(CINT, "conf.level") <- conf.level
 
