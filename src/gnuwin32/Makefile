@@ -16,10 +16,17 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
 ALLPACKAGES = $(PACKAGES) tcltk
 
-RHOME = $(shell Rpwd.exe ../..)# must be absolute path
+## must be absolute and space-free paths
+ifneq ($(strip $(BUILD)),CROSS)
+RHOME = $(shell Rpwd.exe ../..)
+PKGD = $(shell Rpwd.exe $(PKGDIR))
+else
+RHOME = $(shell perl pwd.pl ../..)
+PKGD = $(shell perl pwd.pl $(PKGDIR))
+endif
+
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
-PKGD = $(shell Rpwd.exe $(PKGDIR))# must be absolute path
 
 OPTFLAGS=-O2 -Wall -pedantic
 ## use FOPTFLAGS where complex*16 is used.
