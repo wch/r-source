@@ -146,8 +146,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   Bartlett, M. S. (1938) Methods of estimating mental
   factors. \emph{Nature}, \bold{141}, 609--610.
   
-  Jöreskog, K. G. (1963) \emph{Statistical Estimation in Factor
-    Analysis.}  Almqvist and Wicksell.
+  \enc{Jöreskog}{Joreskog}, K. G. (1963)
+  \emph{Statistical Estimation in Factor Analysis.}  Almqvist and Wicksell.
   
   Lawley, D. N. and Maxwell, A. E. (1971) \emph{Factor Analysis as a
     Statistical Method.} Second edition. Butterworths.

@@ -67,7 +67,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   }
 }
 \references{
-  Härdle, W. and Steiger, W. (1995)
+  \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)
   [Algorithm AS 296] Optimal median smoothing,
   \emph{Applied Statistics} \bold{44}, 258--264.
 

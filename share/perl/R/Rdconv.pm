@@ -865,6 +865,13 @@ sub text2html {
 	$text =~ s/\\deqn(.*)$id/<\/p><p align="center"><i>$eqn<\/i><\/p><p>/s;
     }
 
+    ## Handle encoded text:
+    $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
+	$text =~ s/\\enc(.*)$id/$enc/s;
+    }
+
     $text = replace_command($text, "itemize", "<ul>", "</ul>");
     $text = replace_command($text, "enumerate", "<ol>", "</ol>");
     $text =~ s/<\/p>\n<p>\s+\\item\s+/<li>/go;
@@ -1412,8 +1419,7 @@ sub text2txt {
 
     ## Handle equations:
     my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\eqn")
-	  &&  $text =~ /\\eqn/){
+    while(checkloop($loopcount++, $text, "\\eqn") &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$eqn =~ s/\\([^&])/$1/go;
@@ -1421,14 +1427,22 @@ sub text2txt {
     }
 
     $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\deqn")
-	  && $text =~ /\\deqn/) {
+    while(checkloop($loopcount++, $text, "\\deqn") && $text =~ /\\deqn/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$eqn =~ s/\\([^&])/$1/go;
 	$eqn =~ s/^\n*//o;
 	$eqn =~ s/\n*$//o;
 	$text =~ s/\\deqn(.*)$id/\n\n.DS B\n$eqn\n.DE\n\n/s;
+    }
+
+    ## Handle encoded text:
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
+	$enc = $ascii if $ascii;
+	$enc =~ s/\\([^&])/$1/go;
+	$text =~ s/\\enc(.*)$id/$enc/s;
     }
 
     $list_depth=0;
@@ -2106,6 +2120,15 @@ sub text2nroff {
 	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
     }
 
+    ## Handle encoded text:
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
+	$enc = $ascii if $ascii;
+	$enc =~ s/\\([^&])/$1/go;
+	$text =~ s/\\enc(.*)$id/$enc/s;
+    }
+
     $list_depth=0;
 
     $text = replace_command($text,
@@ -2424,6 +2447,15 @@ sub text2latex {
 	  && $text =~ /\\deqn/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
+    }
+
+    ## Handle encoded text:
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
+	## $enc = $ascii if $ascii; # not clear which we want here
+	$enc =~ s/\\([^&])/$1/go;
+	$text =~ s/\\enc(.*)$id/$enc/s;
     }
 
     $loopcount = 0;
@@ -2953,6 +2985,15 @@ sub text2Ssgm {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\deqn(.*)$id/<p><it>$eqn<\/it><\/p>/s;
+    }
+
+    ## Handle encoded text:
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
+	$enc = $ascii if $ascii;
+	$enc =~ s/\\([^&])/$1/go;
+	$text =~ s/\\enc(.*)$id/$enc/s;
     }
 
     $text = replace_command($text, "itemize", "<itemize>", "</itemize>");

@@ -256,7 +256,15 @@ INTERNATIONALIZATION
     o	read/writeChar() work in units of characters, not bytes.
 
     o	.C() now accepts an ENCODING= argument where re-encoding is
-	supported.
+
+    o	delimMatch (tools) now reports match lengths in units of 
+	characters, not bytes.
+
+    o	.Rd files can indicate via a \encoding{} argument the encoding
+	that should be assumed for non-ASCII characters they contain.
+
+    o	Phrases in .Rd files can be marked by \enc{}{} to show a
+	transliteration to ASCII for use in e.g. text help.
 
 
 UTILITIES

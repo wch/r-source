@@ -17,7 +17,7 @@
 }
 \source{W. Härdle.}
 \references{
-  Härdle, W. (1991)
+  \enc{Härdle}{Haerdle}, W. (1991)
   \emph{Smoothing Techniques with Implementation in S}.
   New York: Springer.
 

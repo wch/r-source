@@ -41,7 +41,9 @@ power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
   \code{note} elements. 
 }
 
-\author{Peter Dalgaard.  Based on previous work by Claus Ekstrøm}
+\author{Peter Dalgaard.  Based on previous work by Claus
+  \enc{Ekstrøm}{Ekstrom}}
+
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so
   you may see errors from it, notably about inability to bracket the
