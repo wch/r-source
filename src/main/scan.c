@@ -607,6 +607,8 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     nlines=0;
     nfields=0;
 
+    save = 0;
+
     for (;;) {
 	c = scanchar();
 	if (c == R_EOF)	 {
