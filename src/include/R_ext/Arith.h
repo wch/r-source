@@ -47,7 +47,6 @@ LibExtern int	 R_NaInt;	/* NA_INTEGER:= INT_MIN currently */
 
 int R_IsNA(double);		/* True for R's NA only */
 int R_IsNaN(double);		/* True for special NaN, *not* for NA */
-int R_IsNaNorNA(double);	/* True for both */
 int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
 
 #define ISNA(x)	       R_IsNA(x)
