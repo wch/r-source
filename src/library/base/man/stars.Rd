@@ -23,7 +23,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{x}{matrix or data frame of data.
     One star or segment plot will be produced for each row of \code{x}.
     Missing values (\code{NA}) are allowed, but they are treated as if
-    they were 0.}
+    they were 0 (after scaling, if relevant).}
   \item{full}{logical flag: if \code{TRUE}, the segment plots will
     occupy a full circle.  Otherwise, they occupy the (upper) semicircle
     only.}
@@ -97,6 +97,9 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 \note{
   This code started life as spatial star plots by David A. Andrews.
   See \url{http://www.udallas.edu:8080/~andrews/software/software.html}.
+
+  Prior to 1.4.1, scaling only shifted the maximum to 1, although
+  documented as here.
 }
 \examples{
 data(mtcars)
@@ -118,18 +121,22 @@ stars(mtcars[, 1:7], len = 0.6, key.loc = c(1.5, 0),
       frame.plot=TRUE, nrow = 4, cex = .7)
 
 data(USJudgeRatings)
+## scale linearly (not affinely) to [0, 1]
+USJudge <- apply(USJudgeRatings, 2, function(x) x/max(x))
 Jnam <- case.names(USJudgeRatings)
 Snam <- abbreviate(substring(Jnam,1,regexpr("[,.]",Jnam) - 1), 7)
-stars(USJudgeRatings, labels = Jnam,
+stars(USJudge, labels = Jnam, scale = FALSE,
       key.loc = c(13, 1.5), main = "Judge not ...", len = 0.8)
-stars(USJudgeRatings, labels = Snam, key.loc = c(13, 1.5), radius = FALSE)
+stars(USJudge, labels = Snam, scale = FALSE,
+      key.loc = c(13, 1.5), radius = FALSE)
 
-loc <- stars(USJudgeRatings, labels = NULL, radius = FALSE, frame.plot = TRUE,
+loc <- stars(USJudge, labels = NULL, scale = FALSE,
+             radius = FALSE, frame.plot = TRUE,
              key.loc = c(13, 1.5), main = "Judge not ...", len = 1.2)
 text(loc, Snam, col = "blue", cex = 0.8, xpd = TRUE)
 
 ## `Segments':
-stars(USJudgeRatings, draw.segments=TRUE, key.loc=c(13,1.5))
+stars(USJudge, draw.segments = TRUE, scale = FALSE, key.loc = c(13,1.5))
 
 ## `Spider':
 stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
