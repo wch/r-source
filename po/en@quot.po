@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-28 07:26+0000\n"
-"PO-Revision-Date: 2005-02-28 07:26+0000\n"
+"POT-Creation-Date: 2005-03-01 07:59+0000\n"
+"PO-Revision-Date: 2005-03-01 07:59+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -251,56 +251,56 @@ msgstr "Unable to open the clipboard"
 msgid "Unable to write to the clipboard"
 msgstr "Unable to write to the clipboard"
 
-#: src/gnuwin32/extra.c:1118
+#: src/gnuwin32/extra.c:1199
 msgid "'default' must be a character string"
 msgstr "‘default’ must be a character string"
 
-#: src/gnuwin32/extra.c:1120
+#: src/gnuwin32/extra.c:1201
 msgid "'default' is overlong"
 msgstr "‘default’ is overlong"
 
-#: src/gnuwin32/extra.c:1129
+#: src/gnuwin32/extra.c:1210
 msgid "'caption' must be a character string"
 msgstr "‘caption’ must be a character string"
 
-#: src/gnuwin32/extra.c:1131
+#: src/gnuwin32/extra.c:1212
 msgid "'multi' must be a logical value"
 msgstr "‘multi’ must be a logical value"
 
-#: src/gnuwin32/extra.c:1133
+#: src/gnuwin32/extra.c:1214
 msgid "'filterindex' must be an integer value"
 msgstr "‘filterindex’ must be an integer value"
 
-#: src/gnuwin32/extra.c:1267
+#: src/gnuwin32/extra.c:1348
 msgid "'title' must be a character string"
 msgstr "‘title’ must be a character string"
 
-#: src/gnuwin32/extra.c:1299
+#: src/gnuwin32/extra.c:1380
 msgid "'which' must be length 1"
 msgstr "‘which’ must be length 1"
 
-#: src/gnuwin32/extra.c:1329
+#: src/gnuwin32/extra.c:1410
 msgid "invalid value of 'which'"
 msgstr "invalid value of ‘which’"
 
-#: src/gnuwin32/extra.c:1331 src/gnuwin32/extra.c:1333
-#: src/gnuwin32/extra.c:1373
+#: src/gnuwin32/extra.c:1412 src/gnuwin32/extra.c:1414
+#: src/gnuwin32/extra.c:1454
 msgid "invalid device"
 msgstr "invalid device"
 
-#: src/gnuwin32/extra.c:1334
+#: src/gnuwin32/extra.c:1415
 msgid "requires SDI mode"
 msgstr "requires SDI mode"
 
-#: src/gnuwin32/extra.c:1367
+#: src/gnuwin32/extra.c:1448
 msgid "invalid graphical device number"
 msgstr "invalid graphical device number"
 
-#: src/gnuwin32/extra.c:1377
+#: src/gnuwin32/extra.c:1458
 msgid "bad device"
 msgstr "bad device"
 
-#: src/gnuwin32/extra.c:1616 src/gnuwin32/extra.c:1624
+#: src/gnuwin32/extra.c:1697 src/gnuwin32/extra.c:1705
 msgid "invalid input in Rmbstowcs"
 msgstr "invalid input in Rmbstowcs"
 
@@ -435,7 +435,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr "Non-numeric argument to mathematical function"
 
 #: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
-#: src/main/scan.c:1465
+#: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "invalid argument"
 
@@ -1903,8 +1903,8 @@ msgstr "cannot read from this connection"
 #: src/main/connections.c:2521 src/main/connections.c:2710
 #: src/main/connections.c:2925 src/main/connections.c:2997
 #: src/main/connections.c:3159 src/main/dcf.c:59 src/main/deparse.c:311
-#: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1000
-#: src/main/scan.c:1105 src/main/scan.c:1551 src/main/scan.c:1719
+#: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1010
+#: src/main/scan.c:1115 src/main/scan.c:1561 src/main/scan.c:1729
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "cannot open the connection"
@@ -1928,7 +1928,7 @@ msgstr "invalid ‘sep’ argument"
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
 #: src/main/connections.c:2967 src/main/connections.c:3400
-#: src/main/scan.c:1715 src/main/serialize.c:1579
+#: src/main/scan.c:1725 src/main/serialize.c:1579
 msgid "cannot write to this connection"
 msgstr "cannot write to this connection"
 
@@ -5588,149 +5588,149 @@ msgstr "error writing to connection"
 msgid "invalid envir argument"
 msgstr "invalid envir argument"
 
-#: src/main/scan.c:541
+#: src/main/scan.c:551
 #, c-format
 msgid "scan() expected '%s', got '%s'"
 msgstr "scan() expected '%s', got ‘%s’"
 
-#: src/main/scan.c:736
+#: src/main/scan.c:746
 msgid "empty 'what' specified"
 msgstr "empty ‘what’ specified"
 
-#: src/main/scan.c:750 src/main/scan.c:1027
+#: src/main/scan.c:760 src/main/scan.c:1037
 msgid "invalid 'what' specified"
 msgstr "invalid ‘what’ specified"
 
-#: src/main/scan.c:795
+#: src/main/scan.c:805
 #, c-format
 msgid "line %d did not have %d elements"
 msgstr "line %d did not have %d elements"
 
-#: src/main/scan.c:847
+#: src/main/scan.c:857
 msgid "number of items read is not a multiple of the number of columns"
 msgstr "number of items read is not a multiple of the number of columns"
 
-#: src/main/scan.c:932
+#: src/main/scan.c:942
 msgid "invalid 'strip.white' value"
 msgstr "invalid ‘strip.white’ value"
 
-#: src/main/scan.c:934
+#: src/main/scan.c:944
 msgid "invalid 'strip.white' length"
 msgstr "invalid ‘strip.white’ length"
 
-#: src/main/scan.c:936 src/main/scan.c:1241
+#: src/main/scan.c:946 src/main/scan.c:1251
 msgid "invalid 'na.strings' value"
 msgstr "invalid ‘na.strings’ value"
 
-#: src/main/scan.c:938 src/main/scan.c:984 src/main/scan.c:1065
-#: src/main/scan.c:1068 src/main/scan.c:1539 src/main/scan.c:1542
+#: src/main/scan.c:948 src/main/scan.c:994 src/main/scan.c:1075
+#: src/main/scan.c:1078 src/main/scan.c:1549 src/main/scan.c:1552
 msgid "invalid 'comment.char' value"
 msgstr "invalid ‘comment.char’ value"
 
-#: src/main/scan.c:945
+#: src/main/scan.c:955
 msgid "invalid 'sep value: must be one byte"
 msgstr "invalid 'sep value: must be one byte"
 
-#: src/main/scan.c:949
+#: src/main/scan.c:959
 msgid "invalid sep value"
 msgstr "invalid sep value"
 
-#: src/main/scan.c:958
+#: src/main/scan.c:968
 msgid "invalid decimal separator: must be one byte"
 msgstr "invalid decimal separator: must be one byte"
 
-#: src/main/scan.c:963
+#: src/main/scan.c:973
 msgid "invalid decimal separator"
 msgstr "invalid decimal separator"
 
-#: src/main/scan.c:974 src/main/scan.c:1087 src/main/scan.c:1530
+#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1540
 msgid "out of memory"
 msgstr "out of memory"
 
-#: src/main/scan.c:980 src/main/scan.c:1093 src/main/scan.c:1536
+#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1546
 msgid "invalid quote symbol set"
 msgstr "invalid quote symbol set"
 
-#: src/main/scan.c:987
+#: src/main/scan.c:997
 msgid "invalid 'allowEscapes' value"
 msgstr "invalid ‘allowEscapes’ value"
 
-#: src/main/scan.c:1078
+#: src/main/scan.c:1088
 msgid "invalid 'sep' value"
 msgstr "invalid ‘sep’ value"
 
-#: src/main/scan.c:1149 src/main/scan.c:1168
+#: src/main/scan.c:1159 src/main/scan.c:1178
 msgid "string terminated by newline or EOF"
 msgstr "string terminated by newline or EOF"
 
-#: src/main/scan.c:1237
+#: src/main/scan.c:1247
 msgid "the first argument must be of mode character"
 msgstr "the first argument must be of mode character"
 
-#: src/main/scan.c:1467
+#: src/main/scan.c:1477
 #, c-format
 msgid "Selection: "
 msgstr "Selection: "
 
-#: src/main/scan.c:1519
+#: src/main/scan.c:1529
 msgid "invalid 'nlines' value"
 msgstr "invalid ‘nlines’ value"
 
-#: src/main/scan.c:1560 src/main/scan.c:1572
+#: src/main/scan.c:1570 src/main/scan.c:1582
 msgid "cannot allocate buffer in readTableHead"
 msgstr "cannot allocate buffer in readTableHead"
 
-#: src/main/scan.c:1599 src/main/scan.c:1602
+#: src/main/scan.c:1609 src/main/scan.c:1612
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "incomplete final line found by readTableHeader on ‘%s’"
 
-#: src/main/scan.c:1712
+#: src/main/scan.c:1722
 msgid "'file' is not a connection"
 msgstr "‘file’ is not a connection"
 
-#: src/main/scan.c:1731
+#: src/main/scan.c:1741
 msgid "invalid value for 'nr'"
 msgstr "invalid value for ‘nr’"
 
-#: src/main/scan.c:1732
+#: src/main/scan.c:1742
 msgid "invalid value for 'nc'"
 msgstr "invalid value for ‘nc’"
 
-#: src/main/scan.c:1734
+#: src/main/scan.c:1744
 msgid "invalid value for 'rnames'"
 msgstr "invalid value for ‘rnames’"
 
-#: src/main/scan.c:1735
+#: src/main/scan.c:1745
 msgid "invalid value for 'sep'"
 msgstr "invalid value for ‘sep’"
 
-#: src/main/scan.c:1736
+#: src/main/scan.c:1746
 msgid "invalid value for 'eol'"
 msgstr "invalid value for ‘eol’"
 
-#: src/main/scan.c:1737 src/main/util.c:1114
+#: src/main/scan.c:1747 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr "invalid value for ‘na’"
 
-#: src/main/scan.c:1738
+#: src/main/scan.c:1748
 msgid "invalid value for 'dec'"
 msgstr "invalid value for ‘dec’"
 
-#: src/main/scan.c:1739
+#: src/main/scan.c:1749
 msgid "invalid value for 'qmethod'"
 msgstr "invalid value for ‘qmethod’"
 
-#: src/main/scan.c:1744
+#: src/main/scan.c:1754
 msgid "'dec' must be a single character"
 msgstr "‘dec’ must be a single character"
 
-#: src/main/scan.c:1765
+#: src/main/scan.c:1775
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "corrupt data frame -- length of column %d does not not match nrows"
 
-#: src/main/scan.c:1802
+#: src/main/scan.c:1812
 msgid "corrupt matrix -- dims not not match length"
 msgstr "corrupt matrix -- dims not not match length"
 
