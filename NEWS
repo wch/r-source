@@ -177,6 +177,8 @@ BUG FIXES
     o	Many bugs found and fixed in the memory allocation / garbage
 	collection area. In particular, the parser was sometimes
 	UNPROTECT()ing the wrong pointers.
+
+    o	lm(y[g=="1"]~x[g=="1"]) caused memory corruption
 
 
 		CHANGES IN R VERSION 0.62.4
