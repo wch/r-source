@@ -74,9 +74,9 @@
 #define LOGICAL_POINTER(x)	LOGICAL(x)
 #define INTEGER_POINTER(x)	INTEGER(x)
 #define NUMERIC_POINTER(x)	REAL(x)
-#define CHARACTER_POINTER(x)	STRING(x)
+#define CHARACTER_POINTER(x)	STRING_PTR(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
-#define LIST_POINTER(x)		VECTOR(x)
+#define LIST_POINTER(x)		VECTOR_PTR(x)
 
 /* The following are not defined in `Programming with Data' but are
    defined in S.h in Svr4 */
@@ -90,10 +90,10 @@
 #define INTEGER_DATA(x)		(INTEGER(x))
 #define DOUBLE_DATA(x)		(REAL(x))
 #define NUMERIC_DATA(x)		(REAL(x))
-#define CHARACTER_DATA(x)	(STRING(x))
+#define CHARACTER_DATA(x)	(STRING_PTR(x))
 #define COMPLEX_DATA(x)		(COMPLEX(x))
-#define RECURSIVE_DATA(x)	(VECTOR(x))
-#define VECTOR_DATA(x)		(VECTOR(x))
+#define RECURSIVE_DATA(x)	(VECTOR_PTR(x))
+#define VECTOR_DATA(x)		(VECTOR_PTR(x))
 
 #define LOGICAL_VALUE(x)	asLogical(x)
 #define INTEGER_VALUE(x)	asInteger(x)
@@ -102,7 +102,7 @@
 #define STRING_VALUE(x)		CHAR(asChar(x))
 #define LIST_VALUE(x)		error("the `value' of a list object is not defined")
 
-#define SET_ELEMENT(x, i, val)	(VECTOR(x)[i] = (val))
+#define SET_ELEMENT(x, i, val)	SET_VECTOR_ELT(x, i, val)
 #define GET_ATTR(x,what)       	getAttrib(x, what)
 #define GET_CLASS(x)       	getAttrib(x, R_ClassSymbol)
 #define GET_DIM(x)       	getAttrib(x, R_DimSymbol)
@@ -129,13 +129,8 @@
 #define FALSE 0
 #endif
 
-#ifdef NEW_GC
-#define COPY_TO_USER_STRING(x)	mkStringElement(x)
-#define CREATE_STRING_VECTOR(x)	mkStringElement(x)
-#else
 #define COPY_TO_USER_STRING(x)	mkChar(x)
 #define CREATE_STRING_VECTOR(x)	mkChar(x)
-#endif
 
 #define CREATE_FUNCTION_CALL(name, argList) createFunctionCall(name, argList)
 
