@@ -258,6 +258,7 @@ double  Rlog1p(double);
 #define qbinom		Rf_qbinom
 #define qcauchy		Rf_qcauchy
 #define qchisq		Rf_qchisq
+#define qchisq_appr	Rf_qchisq_appr
 #define qexp		Rf_qexp
 #define qf		Rf_qf
 #define qgamma		Rf_qgamma
@@ -379,6 +380,7 @@ double	dchisq(double, double, int);
 double	pchisq(double, double, int, int);
 double	qchisq(double, double, int, int);
 double	rchisq(double);
+double  qchisq_appr(double, double, double, int, int, double tol);
 
 	/* Non-central Chi-squared Distribution */
 
