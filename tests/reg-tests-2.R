@@ -303,3 +303,14 @@ z <- table(x = 1:2, y = 1:2)
 z - 1
 unclass(z - 1)
 ## lost object bit prior to 1.4.0, so printed class attribute.
+
+
+## PR#1226  (predict.mlm ignored newdata)
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2,10,20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+data <- data.frame(weight, group)
+fit <- lm(cbind(w=weight, w2=weight^2) ~ group, data=data)
+predict(fit, newdata=data[1:2, ])
+## was 20 rows in R <= 1.4.0
