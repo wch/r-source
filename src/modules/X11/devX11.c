@@ -853,7 +853,7 @@ static int gcToX11lend(R_GE_lineend lend) {
     return newend;
 }
 
-static int gcToX11ljoin(R_GE_lineend ljoin) {
+static int gcToX11ljoin(R_GE_linejoin ljoin) {
     int newjoin = JoinRound; /* -Wall */
     switch (ljoin) {
     case GE_ROUND_JOIN:
