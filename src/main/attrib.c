@@ -441,7 +441,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 		error("invalid type for dimname (must be a vector)\n");
 	    if (INTEGER(dims)[i] != LENGTH(VECTOR(val)[i]) 
 		&& LENGTH(VECTOR(val)[i]) != 0)
-		error("length of dimnames element not equal to array extent\n");
+		error("length of dimnames[%d] not equal to array extent\n",i+1);
 	    if (LENGTH(VECTOR(val)[i]) == 0) {
 		VECTOR(val)[i] = R_NilValue;
 	    }
