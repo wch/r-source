@@ -67,7 +67,7 @@ double pnchisq(double x, double f, double theta)
     f2 = f * half;
     /* The following overflows very soon, eg. x=f=150
        t = pow(x2, f2) * exp(-x2) / exp(lgamma((f2 + 1))); */
-    t = exp(f2*log(x2) -x2 - lgamma(f2 + 1));
+    t = exp(f2*log(x2) -x2 - lgammafn(f2 + 1));
 
     /* there is no need to test ifault si */
     /* already been checked */ /*^^^^^^^^ ?????? */

@@ -32,7 +32,7 @@
 
 double lfastchoose(double n, double k)
 {
-	return lgamma(n + 1.0) - lgamma(k + 1.0) - lgamma(n - k + 1.0);
+	return lgammafn(n + 1.0) - lgammafn(k + 1.0) - lgammafn(n - k + 1.0);
 }
 
 double fastchoose(double n, double k)

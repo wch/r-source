@@ -37,7 +37,7 @@ double dgamma(double x, double shape, double scale)
     if (shape <= 0 || scale <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
-    } 
+    }
     if (x < 0)
 	return 0;
     if (x == 0) {
@@ -51,5 +51,5 @@ double dgamma(double x, double shape, double scale)
 	return 1 / scale;
     }
     x = x / scale;
-    return exp((shape - 1) * log(x) - lgamma(shape) - x) / scale;
+    return exp((shape - 1) * log(x) - lgammafn(shape) - x) / scale;
 }

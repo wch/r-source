@@ -66,7 +66,7 @@ double beta(double a, double b)
 #endif
 
     if (a + b < xmax)
-	return gamma(a) * gamma(b) / gamma(a+b);
+	return gammafn(a) * gammafn(b) / gammafn(a+b);
 
     val = lbeta(a, b);
     if (val < alnsml) {

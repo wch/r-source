@@ -24,7 +24,7 @@
  *  DESCRIPTION
  *
  *    This function alculates the minimum and maximum legal bounds
- *    for x in gamma(x).  These are not the only bounds, but they
+ *    for x in gammafn(x).  These are not the only bounds, but they
  *    are the only non-trivial ones to calculate.
  *
  *  NOTES

@@ -9,7 +9,7 @@
  *
  *    Requires the following auxiliary routines:
  *
- *        lgamma(x)       - log gamma function
+ *        lgammafn(x)       - log gamma function
  *        pbeta(x, a, b)  - incomplete beta function
  *        pnorm(x)        - normal distribution function
  *
@@ -67,7 +67,7 @@ double pnt(double t, double df, double delta)
 	a = half;
 	b = half * df;
 	rxb = pow(one - x, b);
-	albeta = M_LN_SQRT_PI + lgamma(b) - lgamma(a + b);
+	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(a + b);
 	xodd = pbeta(x, a, b);
 	godd = two * rxb * exp(a * log(x) - albeta);
 	xeven = one - rxb;

@@ -70,10 +70,10 @@ double lbeta(double a, double b)
     else if (q >= 10) {
 	/* p is small, but q is big. */
 	corr = lgammacor(q) - lgammacor(p + q);
-	return lgamma(p) + corr + p - p * log(p + q)
+	return lgammafn(p) + corr + p - p * log(p + q)
 		+ (q - 0.5) * logrelerr(-p / (p + q));
     }
     else
 	/* p and q are small: p <= q > 10. */
-	return log(gamma(p) * (gamma(q) / gamma(p + q)));
+	return log(gammafn(p) * (gammafn(q) / gammafn(p + q)));
 }

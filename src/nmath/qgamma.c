@@ -106,7 +106,7 @@ double qgamma(double p, double alpha, double scale)
     v = 2*alpha;
 
     c = alpha-1;
-    g = lgamma(alpha);/* log Gamma(v/2) */
+    g = lgammafn(alpha);/* log Gamma(v/2) */
 
     if(v < (-1.24)*log(p)) {
       /* starting approximation for small chi-squared */

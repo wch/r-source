@@ -344,7 +344,7 @@ double ptukey(double q, double rr, double cc, double df)
     /* lgamma is the log gamma function. */
 
     f2 = df * 0.5;
-    f2lf = ((f2 * log(df)) - (df * M_LN_2)) - lgamma(f2);
+    f2lf = ((f2 * log(df)) - (df * M_LN_2)) - lgammafn(f2);
     f21 = f2 - 1.0;
 
     /* integral is divided into unit, half-unit, quarter-unit, or */

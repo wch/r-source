@@ -19,7 +19,7 @@
  *  SYNOPSIS
  *
  *    #include "Mathlib.h"
- *    double gamma(double x);
+ *    double gammafn(double x);
  *
  *  DESCRIPTION
  *
@@ -37,7 +37,7 @@
 
 #include "Mathlib.h"
 
-double gamma(double x)
+double gammafn(double x)
 {
     static double gamcs[42] = {
 	+.8571195590989331421920062399942e-2,
