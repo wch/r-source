@@ -134,7 +134,7 @@ arima <- function(x, order = c(0, 0, 0),
     if(method == "CSS-ML") {
         anyna <- any(is.na(x))
         if(ncxreg) anyna <- anyna || any(is.na(xreg))
-        if(anyna) method <- "CSS"
+        if(anyna) method <- "ML"
     }
 
     if (method == "CSS" || method == "CSS-ML") {
@@ -203,7 +203,7 @@ arima <- function(x, order = c(0, 0, 0),
         val <- .Call("ARIMA_CSS", x, arma, trarma[[1]], trarma[[2]],
                      as.integer(ncond), TRUE, PACKAGE = "ts")
         sigma2 <- val[[1]]
-        var <- solve(res$hessian * length(x))
+        var <- solve(res$hessian * n.used)
     } else {
         if(method == "CSS-ML") {
             res <- optim(init[mask], armaCSS,  method = "BFGS",
@@ -264,9 +264,9 @@ arima <- function(x, order = c(0, 0, 0),
             A <- .Call("ARIMA_Gradtrans", as.double(coef), arma,
                        PACKAGE = "ts")
             A <- A[mask, mask]
-            var <- t(A) %*% solve(res$hessian*length(x)) %*% A
+            var <- t(A) %*% solve(res$hessian * n.used) %*% A
             coef <- .Call("ARIMA_undoPars", coef, arma, PACKAGE = "ts")
-        } else var <- solve(res$hessian * length(x))
+        } else var <- solve(res$hessian * n.used)
         trarma <- .Call("ARIMA_transPars", coef, arma, FALSE,
                         PACKAGE = "ts")
         mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta)
