@@ -13,7 +13,7 @@
 #include "Parse.h"
 #include "Fileio.h"
 #include "Graphics.h"		/* for devX11.h */
-#include "../devX11.h"
+#include "../devUI.h"
 #include "../Runix.h"
 
 static int stdin_activity; /* flag to say that input is present */
@@ -87,7 +87,7 @@ static int R_call(ClientData clientData,
 
 static void stdin_setflag(int dummy) {stdin_activity = 1;}
 
-void tcltk_init()
+void _tcltk_init()
 {
     int code;
     
@@ -173,7 +173,7 @@ static void readline_handler(unsigned char *line)
 
 	/* Fill a text buffer with user typed console input. */
 
-int tcltk_ReadConsole(char *prompt, unsigned char *buf, int len,
+int _tcltk_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
 {
     if(!R_Interactive) {
@@ -229,7 +229,7 @@ int tcltk_ReadConsole(char *prompt, unsigned char *buf, int len,
     }
 }
 
-char* tk_eval(char *cmd) 
+char* _tk_eval(char *cmd) 
 {
     if (Tcl_Eval(Tcl_interp, cmd) == TCL_ERROR)
     {

@@ -108,12 +108,6 @@ static CFunTabEntry CFunTab[] =
 #endif
 
 
-/*
- #ifdef HAVE_TCLTK
- #include "tcltk/tcltk.h"
- #endif
-*/
-
 #undef CACHE_DLL_SYM
 #ifdef CACHE_DLL_SYM
 /* keep a record of symbols that have been found */
@@ -450,7 +444,7 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 #include <sys/types.h>
 #include <sys/stat.h>
 
-extern DL_FUNC X11DeviceDriver, ptr_dataentry;
+extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry;
 
 void R_load_X11_shlib()
 {
@@ -473,8 +467,8 @@ void R_load_X11_shlib()
 	sprintf(buf, "The X11 shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-    X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
-    if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
+    ptr_X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
+    if(!ptr_X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
     ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
     if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
 }
@@ -482,7 +476,8 @@ void R_load_X11_shlib()
 extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
     ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
-    ptr_R_ChooseFile, gnome_start, GnomeDeviceDriver, GTKDeviceDriver, 
+    ptr_R_ChooseFile, ptr_gnome_start, 
+    ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver, 
     tcltk_init, tk_eval, ptr_R_addInputHandler, ptr_R_removeInputHandler, 
     ptr_R_getInputHandler;
 
@@ -508,15 +503,15 @@ void R_load_tcltk_shlib()
 	R_Suicide(buf);
     }
 
-    tcltk_init = R_dlsym(handle, "tcltk_init");
+    tcltk_init = R_dlsym(handle, "_tcltk_init");
     if (!tcltk_init) 
 	R_Suicide("Cannot load tcltk_init");
     
-    tk_eval = R_dlsym(handle, "tk_eval");
+    tk_eval = R_dlsym(handle, "_tk_eval");
     if (!tk_eval) 
 	R_Suicide("Cannot load tk_eval");
     
-    ptr_R_ReadConsole = R_dlsym(handle, "tcltk_ReadConsole");
+    ptr_R_ReadConsole = R_dlsym(handle, "_tcltk_ReadConsole");
     if (!ptr_R_ReadConsole) 
 	R_Suicide("Cannot load tcltk_ReadConsole");
 
@@ -536,7 +531,6 @@ void R_load_tcltk_shlib()
 */
 } 
 
-
 void R_load_gnome_shlib()
 {
     char gnome_DLL[PATH_MAX], buf[1000];
@@ -544,7 +538,7 @@ void R_load_gnome_shlib()
     struct stat sb;
 
     strcpy(gnome_DLL, getenv("R_HOME"));
-    strcat(gnome_DLL, "/bin/R_gnome.");
+    strcat(gnome_DLL, "/gnome/R_gnome.");
     strcat(gnome_DLL, SHLIBEXT); /* from config.h */
     if(stat(gnome_DLL, &sb))
 	R_Suicide("Probably no GNOME support: the shared library was not found");
@@ -580,13 +574,13 @@ void R_load_gnome_shlib()
     if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
     ptr_R_ChooseFile = R_dlsym(handle, "Rgnome_ChooseFile");
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-    gnome_start = R_dlsym(handle, "gnome_start");
-    if(!gnome_start) R_Suicide("Cannot load gnome_start");
-    GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
-    if(!GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
+    ptr_gnome_start = R_dlsym(handle, "gnome_start");
+    if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
+    ptr_GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
+    if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
 /* Uncomment the next two lines to experiment with the gnome() device */
-/*    GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
-      if(!GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
+/*    ptr_GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
+      if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
 }
 
 

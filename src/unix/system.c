@@ -30,8 +30,7 @@
 #include "Graphics.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
-#include "devX11.h"
-#include "tcltk/tcltk.h"
+#include "devUI.h"
 #undef __SYSTEM__
 
 #include "Startup.h"
@@ -99,6 +98,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 { return ptr_R_ShowFiles(nfile, file, headers, wtitle, del, pager); }
 int R_ChooseFile(int new, char *buf, int len)
 { return ptr_R_ChooseFile(new, buf, len); }
+void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
 
 
 
@@ -186,9 +186,9 @@ int main(int ac, char **av)
 	}
     }
 
-    GnomeDeviceDriver = stub_GnomeDeviceDriver;
-    GTKDeviceDriver = stub_GTKDeviceDriver;
-    X11DeviceDriver = stub_X11DeviceDriver;
+    ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
+    ptr_GTKDeviceDriver = stub_GTKDeviceDriver;
+    ptr_X11DeviceDriver = stub_X11DeviceDriver;
     ptr_dataentry = stub_dataentry;
 #ifdef HAVE_X11
     if(useX11) {
@@ -202,7 +202,7 @@ int main(int ac, char **av)
 	    R_load_X11_shlib();
 	    R_load_gnome_shlib();
 	    R_GUIType="GNOME";
-	    gnome_start(ac, av, Rp);
+	    ptr_gnome_start(ac, av, Rp);
 	    /* this will never return, but for safety */
 	    return 0;
 	}

@@ -24,9 +24,26 @@ extern void (*ptr_R_CleanUp)(int, int, int);
 extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, int, char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
 
+#if HAVE_TCLTK
+extern int (*tcltk_ReadConsole)();
+extern void (*tcltk_init)();
+extern char * (*tk_eval)(char *);
+
+#include "R_ext/eventloop.h" /* needed for defn of InputHandler etc */
+
+InputHandler *(*ptr_R_addInputHandler)(InputHandler *, int, 
+                                      InputHandlerProc, int);
+
+int (*ptr_R_removeInputHandler)(InputHandler **, InputHandler *);
+
+InputHandler *(*ptr_R_getInputHandler)(InputHandler *, int);
+
+#endif
+
 #ifdef __SYSTEM__
 #undef extern
 #endif
+
 
 int stub_X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
 			 int, int);

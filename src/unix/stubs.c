@@ -23,7 +23,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "devX11.h"
+#include "devUI.h"
 
 int stub_X11DeviceDriver(DevDesc *dd,
 		    char *display,
