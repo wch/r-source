@@ -4,7 +4,7 @@
 \usage{
 help.search(what, fields = c("name", "title"),
             apropos, keyword, whatis, ignore.case = TRUE,
-            package = NULL, lib.loc = .lib.loc)
+            packages = NULL, lib.loc = .lib.loc, verbose = .Options$verbose)
 }
 \arguments{
   \item{what}{a character string containing a regular expression to be
@@ -24,11 +24,12 @@ help.search(what, fields = c("name", "title"),
     matched in the help page names.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
     matching; if \code{FALSE}, pattern matching is case sensitive.}
-  \item{package}{a character vector with the names of packages to search
+  \item{packages}{a character vector with the names of packages to search
     through, or \code{NULL} in which case \emph{all} available packages
-    in the specified library trees are searched.}
+    in the specified library trees \code{lib.loc} are searched.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through.}
+  \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
 }
 \description{
   Allows for searching the help system for documentation matching a
@@ -60,10 +61,12 @@ help.search(what, fields = c("name", "title"),
 \examples{
 help.search("linear models")    # In case you forgot how to fit linear
                                 # models
+\dontrun{
 help.search("print")            # All help pages with name or title
                                 # matching `print'
 help.search(apropos = "print")  # The same
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
+}
 }
 \keyword{documentation}
