@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-15 21:18+0000\n"
+"POT-Creation-Date: 2005-03-22 21:09+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -206,8 +206,8 @@ msgstr "não seja tolo!: seu computador tem um limite de endereçamento de 4Gb"
 msgid "cannot decrease memory limit"
 msgstr "não foi possível diminuir o limite de memória"
 
-#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1154
-#: src/main/platform.c:1371 src/main/platform.c:1406
+#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1179
+#: src/main/platform.c:1396 src/main/platform.c:1431
 msgid "invalid 'path' argument"
 msgstr "argumento 'path' inválido"
 
@@ -4666,7 +4666,7 @@ msgstr "valor de 'mode' inválido"
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() não está implementado nesse sistema"
 
-#: src/main/platform.c:1017 src/main/platform.c:1047
+#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
 msgid "invalid 'category' argument"
 msgstr "argumento 'category' inválido"
 
@@ -4674,28 +4674,32 @@ msgstr "argumento 'category' inválido"
 msgid "invalid 'locale' argument"
 msgstr "argumento 'locale' inválido"
 
-#: src/main/platform.c:1063
+#: src/main/platform.c:1074
+msgid "setting 'LC_NUMERIC' may cause R to function strangely"
+msgstr ""
+
+#: src/main/platform.c:1088
 msgid "OS reports request cannot be honored"
 msgstr "SO informa que a requisição não pode ser cumprida"
 
-#: src/main/platform.c:1320
+#: src/main/platform.c:1345
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/platform.c:1326
+#: src/main/platform.c:1351
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "resolução de máquina '%s' impossível em nsl()"
 
-#: src/main/platform.c:1333
+#: src/main/platform.c:1358
 msgid "unknown format returned by gethostbyname"
 msgstr "formato desconhecido retornado por gethostbyname"
 
-#: src/main/platform.c:1344
+#: src/main/platform.c:1369
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/main/platform.c:1388 src/main/platform.c:1425
+#: src/main/platform.c:1413 src/main/platform.c:1450
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' já existe"

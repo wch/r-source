@@ -16,6 +16,7 @@
 ## add other languages for the R domain to LINGUAS
 ## add both RGui-ll.po and RGui-ll.gmo files to RGUI_CATALOGS
 RGUI_CATALOGS = \
+  RGui-de.po RGui-de.gmo \
   RGui-it.po RGui-it.gmo \
   RGui-ja.po RGui-ja.gmo \
   RGui-zh_CN.po RGui-zh_CN.gmo

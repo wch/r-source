@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-15 21:18+0000\n"
+"POT-Creation-Date: 2005-03-22 21:09+0000\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -204,8 +204,8 @@ msgstr "愚蠢!: 你的机器有4Gb的地址上限"
 msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
-#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1154
-#: src/main/platform.c:1371 src/main/platform.c:1406
+#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1179
+#: src/main/platform.c:1396 src/main/platform.c:1431
 msgid "invalid 'path' argument"
 msgstr "'path'变元不对"
 
@@ -4586,7 +4586,7 @@ msgstr "'mode'值不对"
 msgid "file.access() is not implemented on this system"
 msgstr "本系统没有实现file.access()"
 
-#: src/main/platform.c:1017 src/main/platform.c:1047
+#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
 msgid "invalid 'category' argument"
 msgstr "'category'变元不对"
 
@@ -4594,28 +4594,32 @@ msgstr "'category'变元不对"
 msgid "invalid 'locale' argument"
 msgstr "'locale'变元不对"
 
-#: src/main/platform.c:1063
+#: src/main/platform.c:1074
+msgid "setting 'LC_NUMERIC' may cause R to function strangely"
+msgstr ""
+
+#: src/main/platform.c:1088
 msgid "OS reports request cannot be honored"
 msgstr "操作系统报告无法承兌执行请求"
 
-#: src/main/platform.c:1320
+#: src/main/platform.c:1345
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'必需是长度为1的字符向量"
 
-#: src/main/platform.c:1326
+#: src/main/platform.c:1351
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
-#: src/main/platform.c:1333
+#: src/main/platform.c:1358
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname回覆了错误的格式"
 
-#: src/main/platform.c:1344
+#: src/main/platform.c:1369
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支持nsl()"
 
-#: src/main/platform.c:1388 src/main/platform.c:1425
+#: src/main/platform.c:1413 src/main/platform.c:1450
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'已存在"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-15 21:18+0000\n"
+"POT-Creation-Date: 2005-03-22 21:09+0000\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -206,8 +206,8 @@ msgstr "あらら！あなたのマシンのアドレス空間の上限は4Gbで
 msgid "cannot decrease memory limit"
 msgstr "メモリー限界を減らすことができません"
 
-#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1154
-#: src/main/platform.c:1371 src/main/platform.c:1406
+#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1179
+#: src/main/platform.c:1396 src/main/platform.c:1431
 msgid "invalid 'path' argument"
 msgstr "'path' 引数が不正です"
 
@@ -4649,7 +4649,7 @@ msgstr "'mode' 値が不正です"
 msgid "file.access() is not implemented on this system"
 msgstr "このシステムには file.access 関数は実装されていません"
 
-#: src/main/platform.c:1017 src/main/platform.c:1047
+#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
 msgid "invalid 'category' argument"
 msgstr "'category' 引数が不正です"
 
@@ -4657,28 +4657,32 @@ msgstr "'category' 引数が不正です"
 msgid "invalid 'locale' argument"
 msgstr "'local' 引数が不正です"
 
-#: src/main/platform.c:1063
+#: src/main/platform.c:1074
+msgid "setting 'LC_NUMERIC' may cause R to function strangely"
+msgstr ""
+
+#: src/main/platform.c:1088
 msgid "OS reports request cannot be honored"
 msgstr "OS のレポート要求は優先されません"
 
-#: src/main/platform.c:1320
+#: src/main/platform.c:1345
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' は長さ1の文字列ベクトルでなくてはなりません"
 
-#: src/main/platform.c:1326
+#: src/main/platform.c:1351
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl 関数はホスト '%s' を解決できませんでした"
 
-#: src/main/platform.c:1333
+#: src/main/platform.c:1358
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname が未知の書式を返しました"
 
-#: src/main/platform.c:1344
+#: src/main/platform.c:1369
 msgid "nsl() is not supported on this platform"
 msgstr "このプラットフォームでは nsl 関数はサポートされていません"
 
-#: src/main/platform.c:1388 src/main/platform.c:1425
+#: src/main/platform.c:1413 src/main/platform.c:1450
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' はすでに存在します"

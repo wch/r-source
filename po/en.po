@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-15 21:18+0000\n"
+"POT-Creation-Date: 2005-03-22 21:09+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -202,8 +202,8 @@ msgstr ""
 msgid "cannot decrease memory limit"
 msgstr ""
 
-#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1154
-#: src/main/platform.c:1371 src/main/platform.c:1406
+#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1179
+#: src/main/platform.c:1396 src/main/platform.c:1431
 msgid "invalid 'path' argument"
 msgstr ""
 
@@ -4576,7 +4576,7 @@ msgstr ""
 msgid "file.access() is not implemented on this system"
 msgstr ""
 
-#: src/main/platform.c:1017 src/main/platform.c:1047
+#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
 msgid "invalid 'category' argument"
 msgstr ""
 
@@ -4584,28 +4584,32 @@ msgstr ""
 msgid "invalid 'locale' argument"
 msgstr ""
 
-#: src/main/platform.c:1063
+#: src/main/platform.c:1074
+msgid "setting 'LC_NUMERIC' may cause R to function strangely"
+msgstr ""
+
+#: src/main/platform.c:1088
 msgid "OS reports request cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:1320
+#: src/main/platform.c:1345
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:1326
+#: src/main/platform.c:1351
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:1333
+#: src/main/platform.c:1358
 msgid "unknown format returned by gethostbyname"
 msgstr ""
 
-#: src/main/platform.c:1344
+#: src/main/platform.c:1369
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:1388 src/main/platform.c:1425
+#: src/main/platform.c:1413 src/main/platform.c:1450
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
