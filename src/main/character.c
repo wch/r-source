@@ -859,7 +859,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     for(i = 0; i < length(y); i++) {
-	for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
+	for(p = (unsigned char *)CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
 	    *p = xtable[*p];
 	}
     }
