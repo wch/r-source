@@ -287,33 +287,33 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	  UNPROTECT(1);
 	}
 	if (isFunction(sxp)) {
-	  defineVar(install(".Generic"), mkString(generic), newrho);
-	  if (i > 0) {
-	    PROTECT(t = allocVector(STRSXP, nclass - i));
-	    for (j = 0; j < length(t); j++, i++)
-	      SET_STRING_ELT(t, j, STRING_ELT(class, i));
-	    setAttrib(t, install("previous"), class);
-	    defineVar(install(".Class"), t, newrho);
+	    defineVar(install(".Generic"), mkString(generic), newrho);
+	    if (i > 0) {
+		PROTECT(t = allocVector(STRSXP, nclass - i));
+		for (j = 0; j < length(t); j++, i++)
+		    SET_STRING_ELT(t, j, STRING_ELT(class, i));
+		setAttrib(t, install("previous"), class);
+		defineVar(install(".Class"), t, newrho);
+		UNPROTECT(1);
+	    }
+	    else
+		defineVar(install(".Class"), class, newrho);
+	    PROTECT(t = mkString(buf));
+	    defineVar(install(".Method"), t, newrho);
 	    UNPROTECT(1);
-	  }
-	  else
-	    defineVar(install(".Class"), class, newrho);
-	  PROTECT(t = mkString(buf));
-	  defineVar(install(".Method"), t, newrho);
-	  UNPROTECT(1);
 #ifdef EXPERIMENTAL_NAMESPACES
-	  if (R_UseNamespaceDispatch) {
-	    defineVar(install(".GenericCallEnv"), callrho, newrho);
-	    defineVar(install(".GenericDefEnv"), defrho, newrho);
-	  }
+	    if (R_UseNamespaceDispatch) {
+		defineVar(install(".GenericCallEnv"), callrho, newrho);
+		defineVar(install(".GenericDefEnv"), defrho, newrho);
+	    }
 #endif
-	  t = newcall;
-	  SETCAR(t, method);
-	  R_GlobalContext->callflag = CTXT_GENERIC;
-	  *ans = applyMethod(t, sxp, matchedarg, rho, newrho);
-	  R_GlobalContext->callflag = CTXT_RETURN;
-	  UNPROTECT(4);
-	  return 1;
+	    t = newcall;
+	    SETCAR(t, method);
+	    R_GlobalContext->callflag = CTXT_GENERIC;
+	    *ans = applyMethod(t, sxp, matchedarg, rho, newrho);
+	    R_GlobalContext->callflag = CTXT_RETURN;
+	    UNPROTECT(4);
+	    return 1;
 	}
     }
     sprintf(buf, "%s.default", generic);
@@ -357,7 +357,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[128];
-    SEXP ans, meth, obj;
+    SEXP ans, generic, obj;
 #ifdef EXPERIMENTAL_NAMESPACES
     SEXP callenv, defenv;
 #endif
@@ -381,9 +381,9 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     if (nargs)
-	PROTECT(meth = eval(CAR(args), env));
+	PROTECT(generic = eval(CAR(args), env));
     else
-	meth = R_MissingArg;
+	generic = R_MissingArg;
 
     if (nargs > 2)  /* R-lang says there should be a warning */
 	warningcall(call, "Arguments after the first two are ignored");
@@ -398,17 +398,17 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (cptr == NULL)
 	    error("UseMethod called from outside a closure");
-	if (meth == R_MissingArg)
-	    PROTECT(meth = mkString(CHAR(PRINTNAME(CAR(cptr->call)))));
+	if (generic == R_MissingArg)
+	    PROTECT(generic = mkString(CHAR(PRINTNAME(CAR(cptr->call)))));
 	PROTECT(obj = GetObject(cptr));
     }
 
-    if (TYPEOF(meth) != STRSXP ||
-	LENGTH(meth) < 1 ||
-	strlen(CHAR(STRING_ELT(meth, 0))) == 0)
-	errorcall(call, "first argument must be a method name");
+    if (TYPEOF(generic) != STRSXP ||
+	LENGTH(generic) < 1 ||
+	strlen(CHAR(STRING_ELT(generic, 0))) == 0)
+	errorcall(call, "first argument must be a generic name");
 
-    strcpy(buf, CHAR(STRING_ELT(meth, 0)));
+    strcpy(buf, CHAR(STRING_ELT(generic, 0)));
 
 #ifdef EXPERIMENTAL_NAMESPACES
     if (usemethod(buf, obj, call, CDR(args),
