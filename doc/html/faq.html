@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2004-12-07</h2>
+<h2>Version 2.0.2004-12-10</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1905,6 +1905,8 @@ and Bmapqtl samples.
 <br><dt><strong>blighty</strong><dd>Function for drawing the coastline of the United Kingdom. 
 <br><dt><strong>boa</strong><dd>Bayesian Output Analysis Program for MCMC. 
 <br><dt><strong>boolean</strong><dd>Boolean logit and probit: a procedure for testing Boolean hypotheses. 
+<br><dt><strong>boost</strong><dd>Boosting methods for real and simulated data, featuring `BagBoost',
+`LogitBoost', `AdaBoost', and `L2Boost'. 
 <br><dt><strong>boot</strong><dd>Functions and datasets for bootstrapping from the book &ldquo;Bootstrap
 Methods and Their Applications&rdquo; by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.  <em>Recommended</em>. 
@@ -1953,6 +1955,7 @@ via linear programming.
 <br><dt><strong>coda</strong><dd>Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations. 
 <br><dt><strong>combinat</strong><dd>Combinatorics utilities. 
+<br><dt><strong>concor</strong><dd>Concordance, providing &ldquo;SVD by blocks&rdquo;. 
 <br><dt><strong>concord</strong><dd>Measures of concordance and reliability. 
 <br><dt><strong>conf.design</strong><dd>A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs. 
@@ -3399,6 +3402,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>
 <li><a href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>
 <li><a href="#How-can-I-create-rotated-axis-labels_003f">How can I create rotated axis labels?</a>
+<li><a href="#Why-is-read_002etable_0028_0029-so-inefficient_003f">Why is read.table() so inefficient?</a>
 </ul>
 
 <!-- @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea -->
@@ -4175,7 +4179,8 @@ probably unexported for a reason and may change without warning.
 
 <div class="node">
 <p><hr>
-<a name="How-can-I-create-rotated-axis-labels_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>,
+<a name="How-can-I-create-rotated-axis-labels_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#Why-is-read_002etable_0028_0029-so-inefficient_003f">Why is read.table() so inefficient?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
@@ -4210,6 +4215,22 @@ to move the axis labels up or down relative to the x axis.  See
    <p>Also see Figure 1 and associated code in Paul Murrell (2003),
 &ldquo;Integrating grid Graphics Output with Base Graphics Output&rdquo;,
 <em>RNews</em>, <strong>3/2</strong>, 7&ndash;12.
+
+<div class="node">
+<p><hr>
+<a name="Why-is-read_002etable_0028_0029-so-inefficient_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-create-rotated-axis-labels_003f">How can I create rotated axis labels?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.28 Why is read.table() so inefficient?</h3>
+
+<p>By default, <code>read.table()</code> needs to read in everything as character
+data, and then try to figure out which variables to convert to numerics
+or factors.  For a large data set, this takes condiderable amounts of
+time and memory.  Performance can substantially be improved by using the
+<code>colClasses</code> argument to specify the classes to be assumed for the
+columns of the table.
 
 <div class="node">
 <p><hr>

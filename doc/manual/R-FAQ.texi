@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-07
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-10
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1970,6 +1970,9 @@ Function for drawing the coastline of the United Kingdom.
 Bayesian Output Analysis Program for MCMC.
 @item boolean
 Boolean logit and probit: a procedure for testing Boolean hypotheses.
+@item boost
+Boosting methods for real and simulated data, featuring `BagBoost',
+`LogitBoost', `AdaBoost', and `L2Boost'.
 @item boot
 Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
@@ -2040,6 +2043,8 @@ Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
 @item combinat
 Combinatorics utilities.
+@item concor
+Concordance, providing ``SVD by blocks''.
 @item concord
 Measures of concordance and reliability.
 @item conf.design
@@ -3889,6 +3894,7 @@ dir /opt/R/src/unix
 * Why did my .Rprofile stop working when I updated R?::  
 * Where have all the methods gone?::  
 * How can I create rotated axis labels?::  
+* Why is read.table() so inefficient?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4592,7 +4598,7 @@ of package @code{"bar"} use @code{bar:::foo}.  Don't use these
 constructions to call unexported functions in your own code---they are
 probably unexported for a reason and may change without warning.
 
-@node How can I create rotated axis labels?,  , Where have all the methods gone?, R Miscellanea
+@node How can I create rotated axis labels?, Why is read.table() so inefficient?, Where have all the methods gone?, R Miscellanea
 @section How can I create rotated axis labels?
 
 To rotate axis labels (using base graphics), you need to use
@@ -4627,6 +4633,15 @@ Also see Figure 1 and associated code in Paul Murrell (2003),
 ``Integrating grid Graphics Output with Base Graphics Output'',
 @emph{RNews}, @strong{3/2}, 7--12.
 
+@node Why is read.table() so inefficient?,  , How can I create rotated axis labels?, R Miscellanea
+@section Why is read.table() so inefficient?
+
+By default, @code{read.table()} needs to read in everything as character
+data, and then try to figure out which variables to convert to numerics
+or factors.  For a large data set, this takes condiderable amounts of
+time and memory.  Performance can substantially be improved by using the
+@code{colClasses} argument to specify the classes to be assumed for the
+columns of the table.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

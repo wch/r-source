@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-07
+Version 2.0.2004-12-10
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -86,6 +86,7 @@ R FAQ
   7.25 Why did my .Rprofile stop working when I updated R?
   7.26 Where have all the methods gone?
   7.27 How can I create rotated axis labels?
+  7.28 Why is read.table() so inefficient?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -1661,6 +1662,10 @@ distributions of R.)
 *boolean*
      Boolean logit and probit: a procedure for testing Boolean hypotheses.
 
+*boost*
+     Boosting methods for real and simulated data, featuring `BagBoost',
+     `LogitBoost', `AdaBoost', and `L2Boost'.
+
 *boot*
      Functions and datasets for bootstrapping from the book "Bootstrap
      Methods and Their Applications" by A. C. Davison and D. V. Hinkley,
@@ -1745,6 +1750,9 @@ distributions of R.)
 
 *combinat*
      Combinatorics utilities.
+
+*concor*
+     Concordance, providing "SVD by blocks".
 
 *concord*
      Measures of concordance and reliability.
@@ -4324,6 +4332,16 @@ relative to the x axis.  See `?par' for more information.
    Also see Figure 1 and associated code in Paul Murrell (2003),
 "Integrating grid Graphics Output with Base Graphics Output", _RNews_,
 *3/2*, 7-12.
+
+7.28 Why is read.table() so inefficient?
+========================================
+
+By default, `read.table()' needs to read in everything as character data,
+and then try to figure out which variables to convert to numerics or
+factors.  For a large data set, this takes condiderable amounts of time and
+memory.  Performance can substantially be improved by using the
+`colClasses' argument to specify the classes to be assumed for the columns
+of the table.
 
 8 R Programming
 ***************
