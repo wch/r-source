@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.113 $ ';
+my $revision = ' $Revision: 1.114 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -273,6 +273,7 @@ sub check_pkg {
     ## $pkgname the name of the package.
     ## Note that we need to do repeat the checking from the main loop in
     ## the case of package bundles (and we could check for this).
+
     $log->checking("package directory");
     chdir($startdir);
     $pkg =~ s/\/$//;
@@ -391,6 +392,8 @@ sub check_pkg {
 	}
     }
 
+    ## Check DESCRIPTION meta-information.
+
     if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
         if(-r "DESCRIPTION.in") {
 	    $log->checking("for file 'DESCRIPTION.in'");
@@ -410,26 +413,27 @@ sub check_pkg {
 	}
     }
 
-    ## Check mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer.
-
     my @msg_DESCRIPTION
       = ("See the information on DESCRIPTION files",
 	 "in section 'Creating R packages'",
 	 "of the 'Writing R Extensions' manual.\n");
 
-    $log->checking("DESCRIPTION Package field");
+    $log->checking("DESCRIPTION meta-information");
+
+    ## Mandatory entries in DESCRIPTION:
+    ##   Package, Version, License, Description, Title, Author,
+    ##   Maintainer.
+
     if(! $description->{"Package"}) {
 	$log->error();
 	$log->print("No DESCRIPTION Package field found.\n");
 	$log->print(wrap("", "", @msg_DESCRIPTION));
         exit(1);
     }
-    my $tmp = $description->{"Package"};
     if($description->{"Package"} ne $pkgname) {
 	$log->error();
-	$log->print("DESCRIPTION Package field differs from dir name.\n");
+	$log->print("DESCRIPTION Package field differs from dir	name.\n");
+	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
     if($description->{"Package"} !~ /^[a-z][a-z\d\.]*$/i) {
@@ -438,10 +442,7 @@ sub check_pkg {
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
-    $log->result("OK");
-	    
 
-    $log->checking("DESCRIPTION Version field");
     if(! $description->{"Version"}) {
 	$log->error();
 	$log->print("No DESCRIPTION Version field found.\n");
@@ -457,44 +458,39 @@ sub check_pkg {
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
-    $log->result("OK");
 
     foreach my $field (qw(License Description Title Author)) {
-	$log->checking("DESCRIPTION $field field");
 	if(! $description->{$field}) {
 	    $log->error();
 	    $log->print("No DESCRIPTION $field field found.\n");
 	    $log->print(wrap("", "", @msg_DESCRIPTION));
 	    exit(1);
 	}
-	$log->result("OK");
     }
 
-    $log->checking("DESCRIPTION Maintainer field");
     if(!$description->{"Maintainer"}) {
 	$log->error();
 	$log->print("No DESCRIPTION Maintainer field found.\n");
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
-    elsif($description->{"Maintainer"} !~ /^[^<>]*<[^<>]+> *$/) {
+    if($description->{"Maintainer"} !~ /^[^<>]*<[^<>]+> *$/) {
 	$log->error();
 	$log->print("Malformed Maintainer field.\n");
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
-    else {
-	$log->result("OK");
-    }
+
+    ## Optional entries in DESCRIPTION which must be correct if present:
+    ##   Depends.
 
     if($description->{"Depends"}) {
-	$log->checking("DESCRIPTION Depends field");
 	my @dependencies = split(/\,/, $description->{"Depends"});
 	my $any = 0;
 	foreach my $dep (@dependencies) {
 	    $dep =~ /^\s*([\w\.]+)(\s*\(([^) ]+)\s+([^) ]+)\))?\s*$/;
-	    ## The entry is malformed if there is no match, or there is
-	    ## a match but the dep_op is different from '<=' or '>', or
+            ## The entry is malformed if there is no match, or there is
+            ## a match but the dep_op is different from '<=' or '>', or
 	    ## the dep_version does not only consist of digits, '.' or
 	    ## '-'.
 	    if(!($1) || ($2 && (!(($3 eq "<=") || ($3 eq ">="))
@@ -503,16 +499,15 @@ sub check_pkg {
 		break;
 	    }
 	}
-	if($any == 0) {
-	    $log->result("OK")
-	}
-	else {
+	if($any > 0) {
 	    $log->error();
 	    $log->print("Malformed Depends field.\n");
 	    $log->print(wrap("", "", @msg_DESCRIPTION));
 	    exit(1);
 	}
     }
+
+    $log->result("OK");
 
     ## Check index files.
 
