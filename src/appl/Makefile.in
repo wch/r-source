@@ -39,6 +39,7 @@ SOURCES_C = \
 	stem.c \
 	strsignif.c \
 	tabulate.c \
+	uncmin.c \
 	zeroin.c
 SOURCES_F = \
 	ch2inv.f \
@@ -59,8 +60,7 @@ SOURCES_F = \
 	dtrsl.f \
 	eigen.f \
 	fmin.f \
-	lminfl.f \
-	uncmin.f
+	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
 HEADERS = Rsock.h sock.h

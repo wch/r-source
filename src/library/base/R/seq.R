@@ -62,8 +62,8 @@ seq.default <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 
 sequence <- function(nvec)
 {
-    sequence <- NULL
+    s <- integer(0)
     for(i in nvec)
-	sequence <- c(sequence, seq(1:i))
-    return(sequence)
+	s <- c(s, 1:i)
+    return(s)
 }

@@ -1,8 +1,9 @@
+#-*- Makefile -*-
 include ../gnuwin32/MkRules
 
 all: makeMakedeps ../gnuwin32/libmain.a
 
-CFLAGS=$(OPTFLAGS) -I../include -I../gnuwin32
+CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
@@ -10,8 +11,8 @@ OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 gram.c: ;
 
 saveload-CFLAGS=-I../gnuwin32/xdr
-character-CFLAGS=-I../gnuwin32/regex
-platform-CFLAGS=-I../gnuwin32/regex
+character-CFLAGS=-I../regex
+platform-CFLAGS=-I../regex
 
 ../gnuwin32/libmain.a: $(OBJS)
 

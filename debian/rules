@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 # debian/rules file for the Debian GNU/Linux r-base package
-# Copyright 1997, 1998 by Douglas M. Bates <bates@stat.wisc.edu>
+# Copyright 1997-1999 by Douglas M. Bates <bates@stat.wisc.edu>
 
 package=r-base
 
@@ -43,7 +43,7 @@ binary-arch: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	make install prefix=`pwd`/debian/tmp/usr
+	make; make check; make install prefix=`pwd`/debian/tmp/usr
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/bin/R
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \

@@ -11,7 +11,7 @@ subdir = src/library/ts
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION INDEX SOURCES TITLE Makefile.in
+DISTFILES = INDEX SOURCES TITLE DESCRIPTION.in Makefile.in
 
 pkg = ts
 
@@ -52,7 +52,7 @@ clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	@rm -f Makefile
+	@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

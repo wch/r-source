@@ -72,6 +72,7 @@ distclean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -f Makefile
+
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check::

@@ -80,7 +80,11 @@ C Local variables
       integer i
 
       common /XXXsbart/q
-
+c
+c     unnecessary initialization of d u to keep g77 -Wall happy
+c
+      d = 0.0d0
+      u = 0.0d0
 C  Compute SIGMA, X' W**2 X, X' W**2 z, trace ratio, s0, s1.
 
 C     		SIGMA     -> sg0,sg1,sg2,sg3

@@ -143,13 +143,22 @@ AC_ARG_WITH(readline,
   use_readline=true)
 
 AC_ARG_WITH(gnome,
-  [  --with-gnome            use GNOME (if available)],
-  [ if test "${withval}" = no; then
-      use_gnome=false;
+  [  --with-gnome            use GNOME, or specify its prefix],
+  if test "${withval}" = yes; then
+    want_gnome=yes
+    dnl Note that an empty true branch is not valid sh syntax.
+    ifelse([$1], [], :, [$1])
+  else
+    if test "${withval}" = no; then
+      want_gnome=no
     else
-      use_gnome=true;
-    fi],
-  use_gnome=false)
+      want_gnome=yes
+      LDFLAGS="$LDFLAGS -L${withval}/lib"
+      CFLAGS="$CFLAGS -I${withval}/include"
+      gnome_prefix=${withval}/lib
+    fi
+  fi,
+  want_gnome=no)
 
 ### Programs.
 
@@ -691,6 +700,7 @@ AC_OUTPUT(Makeconf
   src/library/ts/src/Makefile
   src/main/Makefile
   src/nmath/Makefile
+  src/regex/Makefile
   src/scripts/Makefile
   src/scripts/COMPILE
   src/scripts/INSTALL

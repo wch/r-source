@@ -107,9 +107,10 @@ done
 
 # Startup
 if ${USE_R_ENVIRON}; then # use the one in current dir, or default
-  if [ -r .Renviron ]
-  then . .Renviron
-  else [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
+  if [ -r ./.Renviron ]; then
+    . ./.Renviron
+  else
+    [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
   fi
 fi
 

@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 22, 1999)
+Version 0.99.0 Under development (unstable) (December 20, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -44,6 +44,51 @@ Type	"q()" to quit R.
 [1] TRUE
 > log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 [1] TRUE
+> 
+> ## More IEEE  Infinity/NaN checks
+> i1 <- pi / 0
+> i1 == (i2 <- 1:1 / 0:0)
+[1] TRUE
+> is.infinite( i1) & is.infinite( i2) &   i1 > 12   &   i2 > 12
+[1] TRUE
+> is.infinite(-i1) & is.infinite(-i2) & (-i1) < -12 & (-i2) < -12
+[1] TRUE
+> 
+> is.nan(n1 <- 0 / 0)
+[1] TRUE
+> is.nan( - n1)
+[1] TRUE
+> 
+> i1 ==  i1 + i1
+[1] TRUE
+> i1 ==  i1 * i1
+[1] TRUE
+> is.nan(i1 - i1)
+[1] TRUE
+> is.nan(i1 / i1)
+[1] TRUE
+> 
+> 1/0 == Inf
+[1] TRUE
+> 1/Inf == 0
+[1] TRUE
+> 
+> !is.na(Inf) & !is.nan(Inf) &   is.infinite(Inf) & !is.finite(Inf)
+[1] TRUE
+> !is.na(-Inf)& !is.nan(-Inf)&   is.infinite(-Inf)& !is.finite(-Inf)
+[1] TRUE
+>  is.na(NA)  & !is.nan(NA)  &  !is.infinite(NA)  & !is.finite(NA)
+[1] TRUE
+>  is.na(NaN) &  is.nan(NaN) &  !is.infinite(NaN) & !is.finite(NaN)
+[1] TRUE
+> 
+> all(!is.nan(c(1,NA)))
+[1] TRUE
+> all(c(F,T,F) == is.nan(c   (1,NaN,NA)))
+[1] TRUE
+> all(c(F,T,F) == is.nan(list(1,NaN,NA)))
+[1] TRUE
+> 
 > 
 > ##  log() and "pow()" -- POSIX is not specific enough..
 > log(0) == -Inf

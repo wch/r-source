@@ -685,30 +685,28 @@ int main () {
 dnl
 dnl R_GNOME
 dnl
-AC_DEFUN(R_GNOME,
-  [ if ${use_gnome}; then
-      GNOME_INIT_HOOK([], cont)
-      if test "${GNOMEUI_LIBS}"; then
-	AM_PATH_LIBGLADE(
-	  [ use_gnome="yes"
-	    RGNOMEDIR="gnome"
-	    RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
-	    GNOME_IF_FILES="gnome-interface.glade"],
-	  [ AC_MSG_WARN(
-	      [GNOME support requires libglade version >= 0.3])],
-	  gnome)
-      fi
+AC_DEFUN(R_GNOME, [ 
+  if test ${want_gnome} = yes; then
+    GNOME_INIT_HOOK([], cont)
+    if test "${GNOMEUI_LIBS}"; then
+      AM_PATH_LIBGLADE(
+        [use_gnome="yes"
+	  RGNOMEDIR="gnome"
+	  RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
+	  GNOME_IF_FILES="gnome-interface.glade"],
+        [AC_MSG_WARN([GNOME support requires libglade version >= 0.3])],
+        gnome)
     fi
-    if test "${use_gnome}" != yes; then
-      use_gnome="no"
-      RGNOMEDIR=
-      RGNOMEBIN=
-      GNOME_IF_FILES=
-    fi
-    AC_SUBST(RGNOMEDIR)
-    AC_SUBST(RGNOMEBIN)
-    AC_SUBST(GNOME_IF_FILES)
-  ])
+  fi
+  if test "${use_gnome}" != yes; then
+    use_gnome="no"
+    RGNOMEDIR=
+    RGNOMEBIN=
+    GNOME_IF_FILES=
+  fi
+  AC_SUBST(RGNOMEDIR)
+  AC_SUBST(RGNOMEBIN)
+  AC_SUBST(GNOME_IF_FILES)])
 dnl
 dnl GNOME_INIT_HOOK (script-if-gnome-enabled, failflag)
 dnl
@@ -734,24 +732,6 @@ AC_DEFUN([GNOME_INIT_HOOK], [
     LDFLAGS="$LDFLAGS -L$withval"
     gnome_prefix=$withval
   ])
-
-  AC_ARG_WITH(gnome,
-    [  --with-gnome            Specify prefix for GNOME files],
-    if test "${withval}" = yes; then
-      want_gnome=yes
-      dnl Note that an empty true branch is not valid sh syntax.
-      ifelse([$1], [], :, [$1])
-    else
-      if test "${withval}" = no; then
-	want_gnome=no
-      else
-	want_gnome=yes
-	LDFLAGS="$LDFLAGS -L${withval}/lib"
-	CFLAGS="$CFLAGS -I${withval}/include"
-	gnome_prefix=${withval}/lib
-      fi
-    fi,
-    want_gnome=yes)
 
   if test "${want_gnome}" = yes; then
     AC_PATH_PROG(GNOME_CONFIG, gnome-config, no)
@@ -943,3 +923,8 @@ AC_DEFUN(AM_CONDITIONAL, [
     $1_FALSE=
   fi
 ])
+
+dnl Local Variables: ***
+dnl mode: sh ***
+dnl sh-indentation: 2 ***
+dnl End: ***

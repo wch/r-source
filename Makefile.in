@@ -26,7 +26,12 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-R: 
+R:
+	@if [ "$(srcdir)" != "." ]; then \
+	  for f in $(INSTFILES); do \
+	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
+	  done; \
+	fi
 	@for d in afm demos doc etc src; do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
@@ -115,7 +120,9 @@ clean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-
+	@if [ "$(srcdir)" != "." ]; then \
+	  rm -f $(INSTFILES);
+	fi
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \

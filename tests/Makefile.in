@@ -117,11 +117,11 @@ stamp-R: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
 mostlyclean: clean
 clean:
 	-(cd Examples; $(MAKE) $@)
-	rm -f stamp-R Makedeps
+	rm -f stamp-R Makedeps Rplots.* *.Rd
 distclean: clean
 	@rm -f $(TESTout)
 	-(cd Examples; $(MAKE) $@)
-	@rm -f Makefile
+	@rm -f Makefile $(TESTsrc-auto)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -1,6 +1,6 @@
 \name{weighted.residuals}
 \alias{weighted.residuals}
-\title{Computed Weighted Residuals}
+\title{Compute Weighted Residuals}
 \usage{
 weighted.residuals(obj, drop0 = TRUE)
 }
@@ -17,7 +17,7 @@ weighted.residuals(obj, drop0 = TRUE)
   by \eqn{\sqrt{w_i}}{wi^0.5}, where \eqn{w_i}{wi} are the
   \code{weights} as specified in \code{\link{lm}}'s call.
 
-  Dropping cases with weights zero, is compatible with
+  Dropping cases with weights zero is compatible with
   \code{\link{lm.influence}} and related functions.
 }
 \value{

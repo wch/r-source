@@ -11,7 +11,7 @@ subdir = src/library/base
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = INDEX TITLE Makefile.in
+DISTFILES = INDEX TITLE DESCRIPTION.in Makefile.in
 
 all: Makefile
 	@echo "building package \`base'"
@@ -43,7 +43,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 mostlyclean: clean
 clean:
 distclean:
-	@rm -f Makefile
+	@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -80,7 +80,8 @@ SOURCES = \
 SOURCES_F = \
 	xxxpr.f
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o) $(SOURCES_F:.f=.o)
+OBJECTS = $(SOURCES:.c=.o) $(SOURCES_F:.f=.o) ../regex/regex.o
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(top_srcdir)/src/regex $(CPPFLAGS) $(DEFS) 
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(SOURCES) arithmetic.h names.h gram.y
@@ -137,6 +138,8 @@ $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	(cd ../appl;  $(MAKE) $(@F))
 ../nmath/libmath.a:
 	(cd ../nmath; $(MAKE) $(@F))
+../regex/regex.o:
+	(cd ../regex; $(MAKE) $(@F))
 
 gram.c: $(srcdir)/gram.y
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y

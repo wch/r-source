@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.h,v 1.3.2.1 1999/12/20 15:16:45 ripley Exp $
+ *  $Id: rproxy_impl.h,v 1.3.2.2 1999/12/26 10:41:13 ripley Exp $
  */
 
 #ifndef _RPROXY_IMPL_H_

@@ -73,8 +73,8 @@ static double eta;
 static double infin;
 
 
-int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
-		      double *zeror, double *zeroi, int *fail)
+int cpoly(double *opr, double *opi, int *degree,
+	  double *zeror, double *zeroi, int *fail)
 {
     int i__1;
     double d__1, d__2;

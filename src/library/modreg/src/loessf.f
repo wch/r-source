@@ -1519,6 +1519,10 @@ c           $Lf sub {:,l,:} = V SIGMA sup {+} U sup T Q sup T W$
       external ifloor
       save execnt
       data execnt /0/
+c
+c     unnecessary initialization of i1 to keep g77 -Wall happy
+c
+      i1 = 0
 c     version -> versio
       execnt=execnt+1
       if(.not.(versio.eq.106))then

@@ -108,6 +108,11 @@ c
      *                 smm1,t1,test,ztest
       logical wantu,wantv
 c
+c     unnecessary initializations of l and ls to keep g77 -Wall happy
+c
+      l = 0
+      ls = 0
+c
 c
 c     set the maximum number of iterations.
 c

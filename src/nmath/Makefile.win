@@ -1,8 +1,9 @@
+#-*- Makefile -*-
 include ../gnuwin32/MkRules
 
 all: makeMakedeps ../gnuwin32/libmath.a
 
-CFLAGS=$(OPTFLAGS) -I../include -I../gnuwin32
+CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
