@@ -66,7 +66,6 @@ Real.primitives <-
 	 c("environment<-",
 	   "length",	"length<-",
 	   "class",	"class<-",
-	   "dataClass", "objWithClass",
 	   "attr", # again
 	   "attr<-",
 	   "attributes",	"attributes<-",

@@ -451,6 +451,10 @@ DEPRECATED & DEFUNCT
     o	printNoClass() {methods} is deprecated (and moved to base,
 	since it was a copy of a base function).
 
+    o	Primitives dataClass() and objWithClass() have been replaced
+	by class() and class<-(); they were internal support functions
+	for use by package methods.
+
 
 UTILITIES
 

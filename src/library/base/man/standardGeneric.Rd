@@ -1,7 +1,5 @@
 \name{standardGeneric}
 \alias{standardGeneric}
-\alias{objWithClass}
-\alias{dataClass}
 \alias{topicName}
 \title{Formal Method System Placeholders}
 \description{
@@ -15,15 +13,6 @@
       using the actual arguments in the frame from which
       \code{standardGeneric} is called.
     }
-    \item{\code{objWithClass}:}{
-      return the result of setting the class of \code{object} to
-      \code{value}.  Defined as a separate primitive function because \R
-      types cannot generally be changed in place.  The same as
-      \code{\link{class<-}}.
-    }
-    \item{\code{dataClass}:}{
-      Now the same as \code{\link{class}}.
-    }
     \item{\code{topicName}:}{
       the string used internally to find documenation of the given type
       and topic.  Called by the \code{?} operator and the special prompt
@@ -33,8 +22,6 @@
 }
 \usage{
 standardGeneric(f)
-objWithClass(object, value)
-dataClass(object)
 topicName(type, topic)
 }
 \author{ John Chambers }
