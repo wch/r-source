@@ -109,12 +109,12 @@ void natural_spline(int n, double *x, double *y, double *b, double *c, double *d
 	b[1] = (y[2] - y[1])/d[1] - d[i] * c[2];
 	c[1] = 0.0;
 	d[1] = c[2]/d[1];
+	b[n] = (y[n] - y[n-1])/d[n-1] + 2.0 * d[n-1] * c[n-1];
 	for(i=2 ; i<n ; i++) {
 		b[i] = (y[i+1]-y[i])/d[i] - d[i]*(c[i+1]+2.0*c[i]);
 		d[i] = (c[i+1]-c[i])/d[i];
 		c[i] = 3.0*c[i];
 	}
-	b[n] = (y[n] - y[n-1])/d[n-1] + 2.0 * d[n-1] * c[n-1];
 	c[n] = 0.0;
 	d[n] = d[n-1];
 
@@ -197,12 +197,12 @@ void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
 	/* c[i] is now the sigma[i-1] of the text */
 	/* Compute polynomial coefficients */
 	
+	b[n] = (y[n] - y[n-1])/d[n-1] + d[n-1]*(c[n-1]+ 2.0*c[n]);
 	for(i=1 ; i<=nm1 ; i++) {
 		b[i] = (y[i+1]-y[i])/d[i] - d[i]*(c[i+1]+2.0*c[i]);
 		d[i] = (c[i+1]-c[i])/d[i];
 		c[i] = 3.0*c[i];
 	}
-	b[n] = (y[n] - y[n-1])/d[n-1] + d[n-1]*(c[n-1]+ 2.0*c[n]);
 	c[n] = 3.0*c[n];
 	d[n] = d[n-1];
 	return;

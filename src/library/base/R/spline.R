@@ -48,8 +48,7 @@ function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x))
 		z$y,
 		z$b,
 		z$c,
-		z$d,
-           NAOK = TRUE)[c("x","y")]
+		z$d)[c("x","y")]
 }
 
 

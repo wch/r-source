@@ -43,7 +43,6 @@ splinefun <- function(x, y=NULL, method="fmm")
 			z$y,
 			z$b,
 			z$c,
-			z$d,
-			NAOK = TRUE)$y
+			z$d)$y
 	}
 }
