@@ -316,8 +316,10 @@ lazyload:
 	fi
 
 lazydata:
-	@if ! test -f ../../library/$(PKG)/data/Rdata.rdb ; then \
-	  $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
-	  $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\")" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	@if test -d ../../library/$(PKG)/data; then \
+	  if ! test -f ../../library/$(PKG)/data/Rdata.rdb ; then \
+	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
+	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\")" | \
+	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	  fi ; \
 	fi
