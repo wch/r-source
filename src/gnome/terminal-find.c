@@ -7,7 +7,10 @@
 
 #include <gnome.h>
 #include <sys/types.h>
+
+#ifdef HAVE_REGCOMP
 #include <regex.h>
+#endif /* HAVE_REGCOMP */
 
 
 #define ERRBUF_SIZE 500
@@ -38,6 +41,7 @@ regex_t *preg; /* compiled regular expression structure */
 
 /* FIXME: find/find again needs to check if regex button state has changed; force line cache update if it has */
 /* FIXME: save/restore find params to dialog box */
+/* FIXME: wrapped searches */
 
 void find_update_text_cache(void)
 {
@@ -116,7 +120,7 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
 {
   int find_text_len;
   int eflags;
-  regmatch_t pmatch[2];
+  regmatch_t pmatch[1];
   int regex_result;
   char errbuf[ERRBUF_SIZE];
   char messagebuf[MSGBUF_SIZE];
@@ -178,24 +182,21 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
 #ifdef HAVE_REGCOMP
   if (find_params.regular_exp == TRUE) {
     /* Regular expression search */
-    tmp_find_pos = line_cache_start; 
-    eflags = REG_EXTENDED;
-    if(find_params.case_sensitive == FALSE) {
-      eflags |= REG_ICASE;
-    }
+    tmp_find_pos = 0; 
+    eflags = 0;
     do {
-      if (tmp_find_pos != line_cache_start) {
-	eflags |= REG_NOTBOL;
+      if (tmp_find_pos != 0) {
+	eflags = REG_NOTBOL;
       }
 
       /* execute the match */
-      regex_result = regexec(preg, find_line_cache, 1, pmatch, eflags);
+      regex_result = regexec(preg, find_line_cache + tmp_find_pos, 1, pmatch, eflags);
 
       if(regex_result == 0) {
 	/* construct list item if found */
 	find_select = g_new(find_selection, 1);
-	find_select->select_start = tmp_find_pos + pmatch[0].rm_so;
-	find_select->select_end = tmp_find_pos + pmatch[0].rm_eo;
+	find_select->select_start = line_cache_start + tmp_find_pos + pmatch[0].rm_so;
+	find_select->select_end = line_cache_start + tmp_find_pos + pmatch[0].rm_eo;
 	find_current_match = g_list_append(find_current_match, (gpointer) find_select);
 
 	tmp_find_pos += pmatch[0].rm_so + 1;
@@ -224,7 +225,7 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
 
 	return GNOME_FIND_NOMATCH;
       }
-    } while ((tmp_find_pos <= line_cache_end) && (regex_result == 0));
+    } while ((tmp_find_pos <= (line_cache_end - line_cache_start)) && (regex_result == 0));
   }
   else {
 #endif /* HAVE_REGCOMP */
@@ -319,8 +320,6 @@ void R_gtk_terminal_find(GnomeFindDialog *find_dialog)
 
   /* compile the regular expression */
   find_compile_regex(find_dialog);
-
-  /* FIXME: wrapped searches */
 
   /* do the actual find */
   find_result = GNOME_FIND_NOTFOUND;
