@@ -132,9 +132,6 @@ old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
 
 package.contents <- function(pkg, lib.loc=NULL)
 {
-    if(is.null(lib.loc))
-        lib.loc <- .libPaths()
-
     file <- system.file("CONTENTS", package = pkg, lib.loc = lib.loc)
     if(file == "") {
         warning(paste("Cannot find CONTENTS file of package", pkg))

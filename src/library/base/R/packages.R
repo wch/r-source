@@ -88,9 +88,6 @@ package.dependencies <- function(x, check = FALSE,
 
 package.description <- function(pkg, lib.loc=NULL, fields=NULL)
 {
-    if(is.null(lib.loc))
-        lib.loc <- .libPaths()
-
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
     if(file != "") {
         retval <- read.dcf(file=file, fields=fields)[1,]

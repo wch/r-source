@@ -123,9 +123,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         for(fun in hook) try(fun(pkgname, pkgpath))
     }
 
-    if (is.null(lib.loc)) lib.loc <- .libPaths()
-
     if(!missing(package)) {
+        if (is.null(lib.loc)) lib.loc <- .libPaths()
+        
 	if(!character.only)
 	    package <- as.character(substitute(package))
 

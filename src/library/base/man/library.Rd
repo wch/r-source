@@ -121,7 +121,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{library(help = somename)} computes basic information about the
   package \code{somename}, and returns this in an object of class
   \code{"packageInfo"}.  The structure of this class may change in
-  future versions.
+  future versions.  When used with the default value (\code{NULL}) for
+  \code{lib.loc}, the loaded packages are searched before the libraries.
 
   \code{.First.lib} is called when a package is loaded by
   \code{library}.  It is called with two arguments, the name of the

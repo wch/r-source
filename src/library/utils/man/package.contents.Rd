@@ -9,9 +9,10 @@ package.contents(pkg, lib.loc = NULL)
 }
 \arguments{
   \item{pkg}{a character string with the package name.}
-  \item{lib.loc}{a character vector describing the location of \R
-    library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  If the default is used, the loaded
+    packages are searched before the libraries.}
 }
 \value{
   \code{package.contents} returns \code{NA} if there is no
