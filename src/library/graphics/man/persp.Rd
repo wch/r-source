@@ -101,6 +101,12 @@ persp(x, \dots)
   called after the plot is completed, which is used in the
   testing code to annotate the plot page.  The hook function(s) are
   called with no argument.
+
+  Notice that \code{persp} interprets the \code{z} matrix as a table of
+  \code{f(x[i], y[j])} values, so that the x axis corresponds to row
+  number and the y axis to column number, with column 1 at the bottom,
+  so that with the standard rotation angles, the top left corner of the
+  matrix is displayed at the left hand side, closest to the user.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

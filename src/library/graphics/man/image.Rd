@@ -74,6 +74,11 @@ image(x, \dots)
   If \code{breaks} is specified then \code{zlim} is unused and the
   algorithm used follows \code{\link{cut}}, so intervals are closed on
   the right and open on the left except for the lowest interval.
+
+  Notice that \code{image} interprets the \code{z} matrix as a table of
+  \code{f(x[i], y[j])} values, so that the x axis corresponds to row
+  number and the y axis to column number, with column 1 at the bottom,
+  i.e. a 90 degree clockwise rotation of the conventional textual layout.
 }
 \note{
   Based on a function by Thomas Lumley
@@ -96,6 +101,11 @@ image(z, axes = FALSE, main = "Math can be beautiful ...",
       xlab = expression(cos(r^2) * e^{-r/6}))
 contour(z, add = TRUE, drawlabels = FALSE)
 
+# Volcano data visualized as matrix. Need to transpose and flip
+# matrix horizontally. 
+image(t(volcano)[ncol(volcano):1,])
+
+# A prettier display of the volcano
 x <- 10*(1:nrow(volcano))
 y <- 10*(1:ncol(volcano))
 image(x, y, volcano, col = terrain.colors(100), axes = FALSE)

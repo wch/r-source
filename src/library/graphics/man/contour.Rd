@@ -78,6 +78,11 @@ contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 
   For information about vector fonts, see the
   help for \code{\link{text}} and \code{\link{Hershey}}.
+
+  Notice that \code{contour} interprets the \code{z} matrix as a table of
+  \code{f(x[i], y[j])} values, so that the x axis corresponds to row
+  number and the y axis to column number, with column 1 at the bottom,
+  i.e. a 90 degree clockwise rotation of the conventional textual layout.
 }
 \value{
   \code{contourLines} returns a list of contours.
