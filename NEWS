@@ -10,13 +10,13 @@
 
 NEW FEATURES
 
-    o   as.hclust.twins() in package mva to convert (and plot)
-        objects from agnes() and daisy() of package cluster.
+    o	as.hclust.twins() in package mva to convert (and plot)
+	objects from agnes() and daisy() of package cluster.
 
-    o   R INSTALL now can directly install pkg_version.tar.gz files
-        as obtained from CRAN. New function update.packages()
-        & friends for automatically downloading packages from CRAN and
-        install them on the fly (on Unix).
+    o	R INSTALL now can directly install pkg_version.tar.gz files
+	as obtained from CRAN. New function update.packages()
+	& friends for automatically downloading packages from CRAN and
+	install them on the fly (on Unix).
 
     o	New function commandArgs() to record the command-line used.
 
@@ -36,6 +36,9 @@ NEW FEATURES
 
     o	Version info now in the top-level file `VERSION'.
 
+    o	barplot has a "plot = TRUE" argument and now returns locations of
+	all bars even when "beside = TRUE".
+
 
 BUG FIXES
 
@@ -48,12 +51,12 @@ BUG FIXES
 
     o	[<-.data.frame mishandled dfr[1] <- 1 (forgotten drop=FALSE)
 
-    o   sys.on.exit didn't work
+    o	sys.on.exit didn't work
 
-    o   sys.parent didn't quite work either for n >= 2. 
+    o	sys.parent didn't quite work either for n >= 2.
 
-    o   par("mfg") was wrong, par(mfg=) switched to down columns. Now
-	par(mfrow/mfcol = c(nr, nc)) followed by par(mfg=c(i,j)) is 
+    o	par("mfg") was wrong, par(mfg=) switched to down columns. Now
+	par(mfrow/mfcol = c(nr, nc)) followed by par(mfg=c(i,j)) is
 	the preferred style.
 
 
