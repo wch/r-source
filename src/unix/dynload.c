@@ -18,15 +18,6 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*  Changes made by Heiner Schwarte:
- *
- *  1. Ensure that the code will run on platforms which do not support
- *     the use of dlsym to loacate symbols in the executing program
- *     itself (AIX).
- *
- *  2. Symbols are added to a hash table as they are located.
- */
-
 /*  Dynamic Loading Support
  *
  *  This module provides support for run-time loading of shared libraries
@@ -76,8 +67,11 @@ typedef struct {
         DL_FUNC func;
 } CFunTabEntry;  
 #include "FFDecl.h"
+#include "FFDecl.h"
 
 	/* This provides a table of built-in C and Fortran functions */
+	/* We include this table, even when we have dlopen and friends */
+	/* This is so that the functions are actually loaded at link time */
 
 static CFunTabEntry CFunTab[] =
 {
@@ -104,288 +98,128 @@ static CFunTabEntry CFunTab[] =
 #define RTLD_LAZY 1
 #endif
 
-struct libhandlelist
+#ifdef DL_SEARCH_PROG
+static void *dlhandle;
+#endif
+
+void InitFunctionHashing()
 {
-  void *ptr;
-  char *librarypath;
-  struct libhandlelist *next;
-};
-
-static struct libhandlelist *list = NULL;
-
-static void 
-add_ptr (void *p, char *name)
-{
-  struct libhandlelist *tmp;
-  if (p == NULL)
-    return;
-  tmp = (struct libhandlelist *) malloc (sizeof (struct libhandlelist));
-  tmp->ptr = p;
-  tmp->librarypath = (char *) malloc (sizeof (char) * (strlen (name) + 1));
-  strcpy (tmp->librarypath, name);
-  tmp->next = list;
-  list = tmp;
-}
-
-/* Inserts the specified DLL at the start of the DLL list */
-/* All the other entries are "moved down" by one. */
-/* Returns 1 if the library was successfully added */
-/* and returns 0 if there library table is full or */
-/* or if dlopen fails for some reason. */
-
-static int AddDLL(char *path)
-{
-  void *handle;
-  handle = dlopen(path, RTLD_LAZY|RTLD_GLOBAL);
-  if(handle == NULL)
-    return 0;
-  add_ptr(handle,path);
-  return 1;
-}
-
-static void RemoveFromHashTable (void *);
-
-/* Remove the specified DLL from the current DLL list */
-/* Returns 1 if the DLL was found and removed from */
-/* the list and returns 0 otherwise. */
-
-static int DeleteDLL(char *path)
-{
-  struct libhandlelist *ptr, *oldptr=NULL;
-  ptr = list;
-  while (ptr != NULL)
-    {
-      if (strcmp (ptr->librarypath, path) == 0)
-	{
-	  RemoveFromHashTable (ptr->ptr);
-	  dlclose (ptr->ptr);
-	  free (ptr->librarypath);
-	  if (list == ptr)
-	    list = ptr->next;
-	  else
-	    oldptr->next = ptr->next;
-	  free (ptr);
-	  return 1;
-	}
-      oldptr = ptr;
-      ptr = ptr->next;
-    }
-  return 0;
-}
-
-typedef struct HashTabElem
-  {
-    CFunTabEntry data;
-    struct HashTabElem *next;
-    void *libraryhandle;
-  }
-HashTabElem;
-
-
-/* HashTable stores name - pointer pairs with chaining. Sometimes      */
-/* the hashtable  will be expanded and reorganized. The implementation */
-/* is entirely elementary.  Possible sizes of the table are 2^p+1      */
-/* where p is a positive integer.                                      */
-
-static HashTabElem **HashTable;
-static int HASHSIZE;
-static int NumberElem;
-
-
-static int 
-HashCode (char *symbol)
-{
-  unsigned int code = 0;
-  char *p = symbol;
-
-  while (*p)
-    code = 8 * code + *p++;
-  return code % HASHSIZE;
+#ifdef DL_SEARCH_PROG
+	dlhandle = dlopen(0, RTLD_LAZY);
+#endif
 }
 
 
-static void 
-HashInstall (char *name, DL_FUNC func, void *libhandle)
-{
-  int key;
-  HashTabElem *newptr;
-  newptr = (HashTabElem *) malloc (sizeof (HashTabElem));
-  (newptr->data).name = (char *) malloc (strlen (name) + 1);
-  strcpy ((newptr->data).name, name);
-  (newptr->data).func = func;
-  newptr->libraryhandle = libhandle;
-  NumberElem++;
-  key = HashCode (name);
-  newptr->next = HashTable[key];
-  HashTable[key] = newptr;
+#define MAX_NUM_DLLS	100
+
+static int CountDLL = 0;
+
+static struct {
+	char	*path;
+	void	*handle;
 }
+LoadedDLL[MAX_NUM_DLLS];
 
+	/* Remove the specified DLL from the current DLL list */
+	/* Returns 1 if the DLL was found and removed from */
+	/* the list and returns 0 otherwise. */
 
-static void 
-HashExpand ()
+static DeleteDLL(char *path)
 {
-  int oldsize;
-  int i;
-  HashTabElem **OldTable;
-  HashTabElem *ptr, *newptr;
-  oldsize = HASHSIZE;
-  OldTable = HashTable;
-  HASHSIZE = 2 * HASHSIZE - 1;
-  NumberElem = 0;
-  HashTable = (HashTabElem **) malloc (HASHSIZE *
-				       sizeof (HashTabElem *));
-  for (i = 0; i < HASHSIZE; i++)
-    HashTable[i] = NULL;
-
-  for (i = 0; i < oldsize; i++)
-    {
-      ptr = OldTable[i];
-      while (ptr != NULL)
-	{
-	  HashInstall (ptr->data.name, ptr->data.func, ptr->libraryhandle);
-	  newptr = ptr->next;
-	  free (ptr->data.name);
-	  free (ptr);
-	  ptr = newptr;
-	}
-    }
-  free (OldTable);
-}
-
-static DL_FUNC 
-HashLookup (char *symbol)
-{
-  int key;
-  HashTabElem *ptr;
-  key = HashCode (symbol);
-  ptr = HashTable[key];
-  while (ptr != NULL)
-    {
-      if (strcmp (symbol, (ptr->data).name) == 0)
-	return (ptr->data).func;
-      ptr = ptr->next;
-    }
-  return NULL;
-}
-
-
-static void 
-RemoveFromHashTable (void *handle)
-{
-  int key;
-  HashTabElem *ptr, *oldptr=NULL;
-  for (key = 0; key < HASHSIZE; key++)
-    {
-      ptr = HashTable[key];
-      while (ptr != NULL)
-	{
-	  if (ptr->libraryhandle == handle)
-	    {
-	      if (HashTable[key] == ptr)
-		{
-		  HashTable[key] = ptr->next;
-		  free ((ptr->data).name);
-		  free (ptr);
-		  ptr = HashTable[key];
+	int i, loc;
+	for(i=0 ; i<CountDLL ; i++) {
+		if(!strcmp(path, LoadedDLL[i].path)) {
+			loc = i;
+			goto found;
 		}
-	      else
-		{
-		  oldptr->next = ptr->next;
-		  free ((ptr->data).name);
-		  free (ptr);
-		  ptr = oldptr->next;
-		}
-	    }
-	  else
-	    {
-	      oldptr = ptr;
-	      ptr = ptr->next;
-	    }
 	}
-    }
+	return 0;
+found:
+	free(LoadedDLL[i].path);
+	dlclose(LoadedDLL[i].handle);
+	for(i=loc+1 ; i<CountDLL ; i++) {
+		LoadedDLL[i-1].path = LoadedDLL[i].path;
+		LoadedDLL[i-1].handle = LoadedDLL[i].handle;
+	}
+	CountDLL--;
+	return 1;
 }
 
+	/* Inserts the specified DLL at the start of the DLL list */
+	/* All the other entries are "moved down" by one. */
+	/* Returns 1 if the library was successfully added */
+	/* and returns 0 if there library table is full or */
+	/* or if dlopen fails for some reason. */
 
-
-/* findDynProc checks whether one of the libraries    */
-/* that have been loaded contains the symbol name and */
-/* returns a pointer to that symbol and the library   */ 
-/* handle upon success.                               */
-
-
-DL_FUNC 
-findDynProc (char const *name, void **handle)
+static AddDLL(char *path)
 {
-  struct libhandlelist *tmp;
-  DL_FUNC fcnptr;
-  for (tmp = list; tmp != NULL; tmp = tmp->next)
-    {
-      /* The following line is not legal ANSI C. */
-      /* It is only meant to be used in systems supporting */
-      /* the dlopen() interface, in which systems data and  */
-      /* function pointers _are_ the same size and _can_   */
-      /* be cast without loss of information.              */
-      fcnptr = (DL_FUNC) dlsym (tmp->ptr, name);
-      if (fcnptr != NULL)
-	{
-	  *handle = tmp->ptr;
-	  return fcnptr;
+	void *handle;
+	char *dpath;
+	int i;
+	if(CountDLL == MAX_NUM_DLLS)
+		return 0;
+	handle = dlopen(path, RTLD_LAZY);
+	if(handle == NULL)
+		return 0;
+	dpath = malloc(strlen(path)+1);
+	if(dpath == NULL) {
+		dlclose(handle);
+		return 0;
 	}
-    }
-  return NULL;
+	strcpy(dpath, path);
+	for(i=CountDLL ; i>0 ; i--) {
+		LoadedDLL[i].path = LoadedDLL[i-1].path;
+		LoadedDLL[i].handle = LoadedDLL[i-1].handle;
+	}
+	LoadedDLL[0].path = dpath;
+	LoadedDLL[0].handle = handle;
+	CountDLL++;
+	return 1;
 }
+
+
+	/* R_FindSymbol checks whether one of the libraries */
+	/* that have been loaded contains the symbol name and */
+	/* returns a pointer to that symbol upon success. */
 
 
 DL_FUNC R_FindSymbol(char const *name)
 {
-  char buf[MAXIDSIZE+1];
-  DL_FUNC fcnptr=NULL;
-  void *libhandle;
+	char buf[MAXIDSIZE+1];
+	DL_FUNC fcnptr;
+	int i;
+
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
-  sprintf(buf, "%s", name);
+	sprintf(buf, "%s", name);
 #else
-  sprintf(buf, "_%s", name);
+	sprintf(buf, "_%s", name);
 #endif
-  if (!(fcnptr = HashLookup (buf)))
-    {
-      if ((fcnptr = findDynProc (buf, &libhandle)))
-	{
-	  if ((1.0 * NumberElem) / HASHSIZE > 0.5)
-	    HashExpand ();
-	  HashInstall (buf, fcnptr, libhandle);
+
+	/* The following is not legal ANSI C. */
+	/* It is only meant to be used in systems supporting */
+	/* the dlopen() interface, in which systems data and  */
+	/* function pointers _are_ the same size and _can_   */
+	/* be cast without loss of information.              */
+
+	for (i=0 ; i<CountDLL ; i++) {
+		fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
+		if (fcnptr != (DL_FUNC)0) return fcnptr;
 	}
-    }
-  return fcnptr;
-}
-
-
-void 
-InitFunctionHashing ()
-{
-  int n;
-  int i, size = 3;
-#ifdef OLD
-  NaokSymbol = install ("NAOK");
-  DupSymbol = install ("DUP");
+#ifdef DL_SEARCH_PROG
+	fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
+#else
+	for(i=0 ; CFunTab[i].name ; i++)
+		if(!strcmp(name, CFunTab[i].name))
+			return CFunTab[i].func;
 #endif
-  n = sizeof (CFunTab) / sizeof (CFunTabEntry);
-  while (size < n/2 )
-    size = 2 * size - 1;
-  HASHSIZE = size;
-  NumberElem = 0;
-  HashTable = (HashTabElem **) malloc (HASHSIZE * sizeof (HashTabElem *));
-  for (i = 0; i < HASHSIZE; i++)
-    HashTable[i] = NULL;
-  for (i = 0; CFunTab[i].name; i++)
-    HashInstall (CFunTab[i].name, CFunTab[i].func, NULL);
-  HashExpand ();
+	return (DL_FUNC)0;
 }
 
 
-static void GetFullDLLPath(SEXP call, char *buf, char *path)
+static GetFullDLLPath(SEXP call, char *buf, char *path)
 {
 	if(path[0] != '/') {
-		if(!getcwd(buf,2*MAXPATHLEN))
+		if(!getcwd(buf, MAXPATHLEN))
 			errorcall(call, "can't get working directory!\n");
 		strcat(buf, "/");
 		strcat(buf, path);
