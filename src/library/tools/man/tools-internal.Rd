@@ -5,20 +5,6 @@
 % \alias{.makeFileExts}
 % \alias{.makeS3MethodsStopList}
 % \alias{.sourceAssignments}
-% \alias{SweaveParseOptions}
-% \alias{SweaveHooks}
-% \alias{RweaveLatexRuncode}
-% \alias{RweaveLatexWritedoc}
-% \alias{RweaveLatexFinish}
-\alias{RweaveLatexOptions}
-% \alias{RweaveChunkPrefix}
-% \alias{RweaveEvalWithOpt}
-% \alias{RtangleRuncode}
-\alias{RtangleWritedoc}
-% \alias{RtangleFinish}
-% \alias{SweaveGetSyntax}
-% \alias{Rdpp}
-% \alias{Rdinfo}
 % \alias{Rdcontents}
 % \alias{Rd2contents}
 \alias{.installPacakgeCodeFiles}
@@ -43,9 +29,6 @@
   Internal tools functions.
 }
 \usage{
-RweaveLatexOptions(options)
-RtangleWritedoc(object, chunk)
-
 % .isS3Generic(fname, envir)
 % .loadPackageQuietly(package, lib.loc)
 % .makeFileExts(type)
