@@ -1,10 +1,11 @@
 \name{contour}
 \title{Display Contours}
 \usage{
-contour(x=, y=, z, nlevels = 10,
+contour(x = seq(0,1,len=nrow(z)), y = seq(0,1,len=ncol(z)),
+        z, nlevels = 10,
         levels = pretty(range(z, na.rm = TRUE), nlevels),
         labcex = 0,
-        xlim = range(x), ylim = range(y),
+	xlim = range(x,na.rm=TRUE), ylim = range(y,na.rm=TRUE),
         col = par("fg"), lty = par("lty"), add = FALSE)
 }
 \alias{contour}
@@ -13,7 +14,8 @@ contour(x=, y=, z, nlevels = 10,
     measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.}
   \item{z}{a matrix containing the values to be plotted (\code{NA}s are
-    allowed).}
+    allowed).  Note that \code{x} can be used instead of \code{z} for
+    convenience.}
   \item{nlevels}{number of contour levels desired \bold{iff}
     \code{levels} is not supplied.}
   \item{levels}{numeric vector of levels at which to draw contour
@@ -34,9 +36,12 @@ contour(x=, y=, z, nlevels = 10,
   \code{demo(graphics)}.
 }
 \examples{
-x <- -6:16 ; z <- outer(x, sqrt(abs(x)), FUN="/")
+x <- -6:16
 op <- par(mfrow=c(2,2))
-contour(z=outer(x, x))
+contour(outer(x, x))
+z <- outer(x, sqrt(abs(x)), FUN="/")
+##Should not be necessary:
+z[!is.finite(z)] <- NA
   image(x,x, z)
 contour(x,x, z, col="pink", add=T)
 contour(x,x, z, ylim=c(1,6))
@@ -47,7 +52,7 @@ par(op)
 x <- y <- seq(-4*pi, 4*pi, len=27)
 r <- sqrt(outer(x^2, y^2, "+"))
 opar <- par(mfrow=c(2,2), mar=rep(0,4))
-for(f in pi^(0:3)) contour(z= cos(r^2)*exp(-r/f))
+for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f))
 
 data("volcano")
 rx <- range(x <- 10*1:nrow(volcano))
