@@ -108,7 +108,7 @@ install.packages(pkgs, lib, CRAN = options("CRAN"),
 #ifdef windows
 \note{
   \code{wget.exe} is available from
-  \file{windows/windows-NT/base/etc/wget.zip} on CRAN.
+  \url{http://www.stats.ox.ac.uk/pub/Rtools/wget.zip}.
   \code{lynx.exe} is available from
   \url{http://www.fdisk.com/doslynx/lynxport.htm}.
 }
