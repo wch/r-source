@@ -1450,7 +1450,7 @@ LDFLAGS=/opt/fortran90/lib}).
 
 @node IRIX, Alpha/OSF1, HP-UX, Platform notes
 @subsection IRIX
-@cindex IRIS
+@cindex IRIX
 
 @R{} has been built successfully on IRIX64 6.5 using
 @command{gcc}/@command{f77} or @command{cc}/@command{f77} for 32-bit
@@ -1469,6 +1469,12 @@ version but not detect that is was incompatible with a 64-bit build.
 A 32-bit build using @command{gcc}/@command{g77} passed @command{make
 check} but failed @command{make test-all-extras} in the complex LAPACK
 tests.
+
+George N. White III reports that the @code{strptime} tests in 1.9.0 fail
+unless Arthur Olson's timezone data @uref{ftp://elsie.nci.nih.gov/pub/}
+(see also: @uref{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html})
+are installed and @code{-ltz} is added to the list of libraries (for
+example, in environment variable @env{LIBS}).
 
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
