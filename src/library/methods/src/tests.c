@@ -5,7 +5,6 @@
 
 SEXP R_methods_test_MAKE_CLASS(SEXP className)
 {
-  SEXP clDef;
   char *class;
   class = CHAR(asChar(className));
   return MAKE_CLASS(class);
