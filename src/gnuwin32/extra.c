@@ -867,7 +867,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(preselect) &&
        (!isString(preselect) || length(preselect) != 1))
 	error("invalid `preselect' argument");
-    if(isNull(preselect)) cps = CHAR(STRING_ELT(preselect, 0));
+    if(!isNull(preselect)) cps = CHAR(STRING_ELT(preselect, 0));
     else cps = "";
     multiple = asLogical(CADDR(args));
     if(multiple == NA_LOGICAL) multiple = 0;
