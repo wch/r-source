@@ -995,13 +995,11 @@ void *findRegion (void *start_address, unsigned long size)
     while ((unsigned long)start_address < TOP_MEMORY)
     {
 	VirtualQuery (start_address, &info, sizeof (info));
-	if (info.State != MEM_FREE)
-	    start_address = (char*)info.BaseAddress + info.RegionSize;
-	else if (info.RegionSize >= size)
+	if (info.State == MEM_FREE && info.RegionSize >= size)
 	    return start_address;
 	else {
-/*	    Requested region is not available so see if the
-	    next region is available.  Set 'start_address'
+/*	    Requested region is not available or not big enough 
+	    so see if the next region is available.  Set 'start_address'
 	    to the next region and call 'VirtualQuery()' again. */
 
 	    start_address = (char*)info.BaseAddress + info.RegionSize;
@@ -1025,10 +1023,11 @@ void *findRegion (void *start_address, unsigned long size)
     return NULL;
 }
 
-
+/* BDR 2000-10-28: add loop count as this infinitely looped */
 void *wsbrk (long size)
 {
     void *tmp;
+    int count = 0;
     if (PageSize == 0) PageSize = getpagesize();
 
     if (size > 0) {
@@ -1039,7 +1038,7 @@ void *wsbrk (long size)
 	/* first check if request fits in reserved space, and if not
 	   try to reserve the address space (never unreserved) */
 	if (gAddressBase == 0) {
-	    gReservedSize = max (RESERVED_SIZE, AlignPage (size));
+	    gReservedSize = max (RESERVED_SIZE, AlignPage64K(size));
 	    gNextAddress = gAddressBase =
 		(unsigned int)VirtualAlloc (NULL, gReservedSize,
 					    MEM_RESERVE, PAGE_NOACCESS);
@@ -1047,9 +1046,12 @@ void *wsbrk (long size)
 		R_Suicide("unable to reserve initial space in wsbrk");
 	} else if (AlignPage (gNextAddress + size) > (gAddressBase +
 						      gReservedSize)) {
-	    long new_size = max (NEXT_SIZE, AlignPage(size));
+	    long new_size = max (NEXT_SIZE, AlignPage64K(size));
 	    void *new_address = (void*)(gAddressBase+gReservedSize);
 	    do {
+		/* if we failed twice, try somewhat desparately */
+		if (count >= 2) 
+		    new_address = (void *)((unsigned int) new_address + new_size + NEXT_SIZE);
 		new_address = findRegion (new_address, new_size);
 		if (new_address == 0) return (void *) -1;
 		gNextAddress =
@@ -1058,12 +1060,13 @@ void *wsbrk (long size)
 				/* repeat in case of race condition
 				  The region that we found has been grabbed
 				  by another thread */
-	    } while (gNextAddress == 0);
+	    } while (gNextAddress == 0 && count++ < 10);
+	    if (gNextAddress == 0) return (void *) -1;
 
 	    if (new_address != (void*)gNextAddress)
 		R_Suicide("internal error in wsbrk");
 
-	    if (gNextAddress == gAddressBase +gReservedSize) {
+	    if (gNextAddress == gAddressBase + gReservedSize) {
 		/* allocated a contiguous block */
 		gReservedSize += new_size;
 	    } else {

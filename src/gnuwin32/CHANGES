@@ -32,7 +32,7 @@ of Unix versions of R.
     setting Sys.setlocale("LC_COLLATE", "C") should give the previous
     behaviour.  Further, users of Windows 9x/ME should be able to use
     their native character set for the names of R objects (as NT/2000
-    users always have: this is caused to the change to msvcrt.dll).
+    users always have: this is caused by the change to msvcrt.dll).
     (For the benefit of those used to Unix, LC_ALL can be set in the
     environment, although this is not usually supported by Windows,
     and setting individual LC_* such as LC_COLLATE will also work.)
@@ -120,19 +120,24 @@ Windows.
 Rterm in interactive use sets the title of the window it is running
 in, and unsets it when it terminates.
 
-New function memory.size().  The Windows memory manager proved to be
-(far) too slow to work with the new generational garbage collector, so
-it has been replaced.  The current memory manager rarely releases
-memory back to Windows (but reuses memory very efficiently) so total
-memory usage will often grow slowly over the course of a session.
-Memory used for transient large objects will normally be returned at
-garbage collection.
+The Windows memory manager proved to be (far) too slow to work with
+the new generational garbage collector, so it has been replaced.  The
+current memory manager rarely releases memory back to Windows (but
+reuses memory very efficiently) so total memory usage will often grow
+slowly over the course of a session.  Memory used for transient large
+objects will normally be returned at garbage collection.  (Once memory
+usage has gone over the 256Mb of address space that is initially
+reserved, it is unlikely to be reduced much, but the allocated memory
+will be reused.)
+
+New function memory.size() showing the amount of memory currently in
+use or the maximum that has been used.
 
 New command-line option --max-mem-size to limit the maximum memory
 allocation: it is by default unlimited (except by system constraints)
 and has a minimum allowed value of 10M.  This is intended to catch
 attempts to allocate excessive amounts of memory which may cause other
-process to run out of resources.
+processes to run out of resources.
 
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this
@@ -161,8 +166,8 @@ Better rendering of wide (lwd > 1) and dashed (lty != "solid") lines
 on the windows/win.print device.
 
 The installer rwinst.exe tries when first asked to install a package
-to find a current installation of R, first from R_HOME if set, then
-from the PATH (it looks for rw1020\bin).
+to find a current installation of R, first from R_HOME if set in the
+environment, then from the PATH (it looks for ...\rw1020\bin).
 
 The GUI console copes much better with receiving output (e.g. from
 tcltk) during input.
@@ -195,7 +200,7 @@ Characters using the AltGr key now work in interactive use of Rterm.
 Ctrl+V now works as described in a pager (pasting to the console).
 
 Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
-MkRules (but only 8.31 has been tested).
+MkRules (but only 8.31 and 8.32 have been tested).
 
 A file Makevars.win in the src directory of a package will be used in
 preference to a file Makevars.
