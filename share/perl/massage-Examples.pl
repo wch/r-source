@@ -63,6 +63,7 @@ assign("plot.new",
                      outer = outer, adj = 1, cex = .8, col = "orchid")
 	   }
        },
+# <FIXME> needs to replace in graphics namespace </FIXME>
 #       env = environment(plot)) # now readonly
        env = environment(print))
 assign("cleanEx",
