@@ -1425,7 +1425,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     rawcol = CAR(args);
-    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
+    PROTECT(col = FixupCol(rawcol, R_TRANWHITE));
     ncol = length(col);
     args = CDR(args);
 
@@ -1698,7 +1698,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nc < 1)
 	errorcall(call, "no contour values");
 
-    PROTECT(scol = FixupCol(CAR(args), NA_INTEGER));
+    PROTECT(scol = FixupCol(CAR(args), R_TRANWHITE));
     ncol = length(scol);
 
     /* Shorthand Pointers */
@@ -1747,7 +1747,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 				    px, py, pz, &npt);
                 if (npt > 2)
 		    GPolygon(npt, px, py, USER, col[(k-1)%ncol],
-			     NA_INTEGER, dd);
+			     R_TRANWHITE, dd);
 	    }
 	}
     }
@@ -1800,7 +1800,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     internalTypeCheck(call, sz, INTSXP);
     args = CDR(args);
 
-    PROTECT(sc = FixupCol(CAR(args), NA_INTEGER));
+    PROTECT(sc = FixupCol(CAR(args), R_TRANWHITE));
     nc = LENGTH(sc);
 
     /* Shorthand Pointers */
@@ -1833,7 +1833,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tmp = z[i + j * (nx - 1)];
 	    if (tmp >= 0 && tmp < nc && tmp != NA_INTEGER)
 		GRect(x[i], y[j], x[i+1], y[j+1], USER, c[tmp],
-		      NA_INTEGER, dd);
+		      R_TRANWHITE, dd);
 	}
     }
     GMode(0, dd);

@@ -405,7 +405,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
     txt	  = R_NilValue;
     vfont = R_NilValue;
     cex	  = NA_REAL;
-    col	  = NA_INTEGER;
+    col	  = R_TRANWHITE;
     colspecd = 0;
     font  = NA_INTEGER;
     PROTECT(txt);
@@ -441,7 +441,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		else if (!strcmp(CHAR(STRING_ELT(nms, i)), "col")) {
 		    SEXP colsxp = VECTOR_ELT(spec, i);
 		    if (!isNAcol(colsxp, 0, LENGTH(colsxp))) {
-			col = asInteger(FixupCol(colsxp, NA_INTEGER));
+			col = asInteger(FixupCol(colsxp, R_TRANWHITE));
 			colspecd = 1;
 		    }
 		}
@@ -1421,7 +1421,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(col = FixupCol(CAR(args), 0));		args = CDR(args);
     ncol = LENGTH(col);
 
-    PROTECT(bg = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
+    PROTECT(bg = FixupCol(CAR(args), R_TRANWHITE));	args = CDR(args);
     nbg = LENGTH(bg);
 
     PROTECT(cex = FixupCex(CAR(args), 1.0));		args = CDR(args);
@@ -1660,7 +1660,7 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
     sx1 = CAR(args); nx1 = length(sx1); args = CDR(args);
     sy1 = CAR(args); ny1 = length(sy1); args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));
     ncol = LENGTH(col); args = CDR(args);
 
     PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));
@@ -1724,7 +1724,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     sxr = CAR(args); nxr = length(sxr); args = CDR(args);/* x_right */
     syt = CAR(args); nyt = length(syt); args = CDR(args);/* y_top */
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));
     ncol = LENGTH(col);
     args = CDR(args);
 
@@ -1833,7 +1833,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
      * FixupCol converts NAs to fully transparent
      */
     rawcol = CAR(args);
-    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
+    PROTECT(col = FixupCol(rawcol, R_TRANWHITE));
     ncol = LENGTH(col);
     args = CDR(args);
 
@@ -1934,7 +1934,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     sy = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
     nx = LENGTH(sx);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));	args = CDR(args);
     ncol = LENGTH(col);
 
     PROTECT(border = FixupCol(CAR(args), Rf_gpptr(dd)->fg));	args = CDR(args);
@@ -2081,7 +2081,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     rawcol = CAR(args);
-    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
+    PROTECT(col = FixupCol(rawcol, R_TRANWHITE));
     ncol = LENGTH(col);
     args = CDR(args);
 
@@ -2364,7 +2364,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Arg8 : col */
     rawcol = CAR(args);
-    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
+    PROTECT(col = FixupCol(rawcol, R_TRANWHITE));
     ncol = length(col);
     if (ncol <= 0) errorcall(call, "zero length \"col\" specified");
     if (n < ncol) n = ncol;
@@ -2760,7 +2760,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));	args = CDR(args);
     ncol = LENGTH(col);
 
     PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty)); args = CDR(args);
@@ -3510,11 +3510,11 @@ SEXP do_erase(SEXP call, SEXP op, SEXP args, SEXP env)
     int ncol;
     DevDesc *dd = CurrentDevice();
     checkArity(op, args);
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));
     ncol = LENGTH(col);
     GSavePars(dd);
     GMode(1, dd);
-    GRect(0.0, 0.0, 1.0, 1.0, NDC, INTEGER(col)[0], NA_INTEGER, dd);
+    GRect(0.0, 0.0, 1.0, 1.0, NDC, INTEGER(col)[0], R_TRANWHITE, dd);
     GMode(0, dd);
     GRestorePars(dd);
     UNPROTECT(1);
@@ -3678,10 +3678,10 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!R_FINITE(inches) || inches < 0)
 	inches = 0;
 
-    PROTECT(bg = FixupCol(CAR(args), NA_INTEGER)); args = CDR(args);
+    PROTECT(bg = FixupCol(CAR(args), R_TRANWHITE)); args = CDR(args);
     nbg = LENGTH(bg);
 
-    PROTECT(fg = FixupCol(CAR(args), NA_INTEGER)); args = CDR(args);
+    PROTECT(fg = FixupCol(CAR(args), R_TRANWHITE)); args = CDR(args);
     nfg = LENGTH(fg);
 
     GSavePars(dd);
