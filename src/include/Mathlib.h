@@ -17,12 +17,12 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
 
- * Mathlib.h  should contain ALL headers from R's  src/nmath/*.c  code
+ * Mathlib.h  should contain ALL headers from R's C code in `src/nmath'
    ---------  such that ``the Math library'' can be used by simply
 
    ``#include "Mathlib.h" ''
 
-   and nothing else
+   and nothing else.
 */
 #ifndef MATHLIB_H
 #define MATHLIB_H
