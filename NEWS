@@ -32,7 +32,7 @@ NEW FEATURES
     o	basename() and dirname() are now vectorized.
 
     o	mosaicplot() has a new default for `main', and supports the
-	`las' argument (contrinuted by Uwe Ligges and Wolfram Fischer).
+	`las' argument (contributed by Uwe Ligges and Wolfram Fischer).
 
     o	optim(method = "SANN") can now cover combinatorial
 	optimization by supplying a move function as the `gr'
@@ -78,7 +78,6 @@ NEW FEATURES
 	padded by character NAs. (Wishlist part of PR#2358)
 
      o  The postscript() and PDF() drivers now allow the title to be set.
-
 
      o  table() now allows exclude= with factor arguments. (requested by
 	Michael Friendly)
@@ -130,7 +129,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o   Sys.sleep() was having trouble with waits of less than 0.5s 
+    o   Sys.sleep() on Unix was having trouble with waits of less than 0.5s 
 
 
 	**************************************************
