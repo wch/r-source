@@ -3,10 +3,11 @@
 .Pars <- c(
 	   "adj", "ann", "ask", "bg", "bty",
 	   "cex", "cex.axis", "cex.lab", "cex.main", "cex.sub", "cin",
-	   "col", "col.axis", "col.lab", "col.main", "col.sub", "cra", "crt", "csi",
-	   "din", "err", "fg", "fig", "fin",
-	   "font", "font.axis", "font.lab", "font.main", "font.sub", "lab", "las",
-	   "lty", "lwd", "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
+	   "col", "col.axis", "col.lab", "col.main", "col.sub",
+           "cra", "crt", "csi","cxy",	"din", "err", "fg", "fig", "fin",
+	   "font", "font.axis", "font.lab", "font.main", "font.sub",
+           "lab", "las", "lty", "lwd",
+           "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
 	   "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
 	   "smo", "srt", "tck", "tmag", "type", "usr",
 	   "xaxp", "xaxs", "xaxt", "xlog", "xpd",
@@ -14,7 +15,7 @@
 	   ##-- newer ones:
 	   "gamma", "tcl"
 	   )
-.Pars.readonly <- c("cin","cra","csi","din")
+.Pars.readonly <- c("cin","cra","csi","cxy","din")
 
 par <- function (..., no.readonly = FALSE)
 {

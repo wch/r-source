@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997, 1998  Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997, 2000  Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1190,6 +1190,12 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "csi")) {
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = GConvertYUnits(1.0, CHARS, INCHES, dd);
+    }
+    else if (streql(what, "cxy")) {
+	value = allocVector(REALSXP, 2);
+	/* == par("cin") / par("pin") : */
+	REAL(value)[0] = dd->dp.cra[0]*dd->dp.ipr[0] / dd->dp.pin[0];
+	REAL(value)[1] = dd->dp.cra[1]*dd->dp.ipr[1] / dd->dp.pin[1];
     }
     else if (streql(what, "din")) {
 	value = allocVector(REALSXP, 2);
