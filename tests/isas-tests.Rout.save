@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 9, 1999)
+Version 0.90.0 Under development (unstable) (October 16, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -55,7 +55,7 @@ Error in as.call(x) : invalid argument list
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
-Error: you cannot be serious
+Error in as.qr(x) : you cannot be serious
 > is.real(as.real( x ))
 [1] TRUE
 > is.single(as.single( x ))
@@ -97,7 +97,7 @@ Error in is.single(x) : type "single" unimplemented in R
 > ###--------
 >  x <- NULL
 > is.array(as.array( x ))
-Error: attempt to set an attribute on NULL
+Error in as.array(x) : attempt to set an attribute on NULL
 > is.call(as.call( x ))
 Error in as.call(x) : invalid argument list
 > is.character(as.character( x ))
@@ -105,7 +105,7 @@ Error in as.call(x) : invalid argument list
 > is.complex(as.complex( x ))
 [1] TRUE
 > is.data.frame(as.data.frame( x ))
-Error: can't coerce NULL into a data.frame
+Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > is.double(as.double( x ))
 [1] TRUE
 > is.expression(as.expression( x ))
@@ -121,9 +121,9 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 > is.logical(as.logical( x ))
 [1] TRUE
 > is.matrix(as.matrix( x ))
-Error: attempt to set an attribute on NULL
+Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : attempt to set an attribute on NULL
 > is.name(as.name( x ))
-Error: invalid type/length (1/0) in vector allocation
+Error in as.name(x) : invalid type/length (1/0) in vector allocation
 > is.null(as.null( x ))
 [1] TRUE
 > is.numeric(as.numeric( x ))
@@ -133,13 +133,13 @@ Error: invalid type/length (1/0) in vector allocation
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
-Error: you cannot be serious
+Error in as.qr(x) : you cannot be serious
 > is.real(as.real( x ))
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.ts(as.ts( x ))
-Error: ts object must have one or more observations
+Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
 [1] FALSE
 > 
@@ -209,7 +209,7 @@ Error in as.call(x) : invalid argument list
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
-Error: you cannot be serious
+Error in as.qr(x) : you cannot be serious
 > is.real(as.real( x ))
 [1] TRUE
 > is.single(as.single( x ))
@@ -287,7 +287,7 @@ Error in as.call(x) : invalid argument list
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
-Error: you cannot be serious
+Error in as.qr(x) : you cannot be serious
 > is.real(as.real( x ))
 [1] TRUE
 > is.single(as.single( x ))
@@ -333,11 +333,11 @@ Error in as.call(x) : illegal length 0 argument
 > is.character(as.character( x ))
 [1] TRUE
 > is.complex(as.complex( x ))
-Error: (list) object cannot be coerced to vector type 15
+Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
 > is.data.frame(as.data.frame( x ))
 [1] TRUE
 > is.double(as.double( x ))
-Error: (list) object cannot be coerced to vector type 14
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -345,31 +345,31 @@ Error: (list) object cannot be coerced to vector type 14
 > is.function(as.function( x ))
 Error in as.function.default(l, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))
-Error: (list) object cannot be coerced to vector type 13
+Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
 > is.list(as.list( x ))
 [1] TRUE
 > is.logical(as.logical( x ))
-Error: (list) object cannot be coerced to vector type 10
+Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
 > is.matrix(as.matrix( x ))
 [1] TRUE
 > is.name(as.name( x ))
-Error: (list) object cannot be coerced to vector type 1
+Error in as.name(x) : (list) object cannot be coerced to vector type 1
 > is.null(as.null( x ))
 [1] TRUE
 > is.numeric(as.numeric( x ))
-Error: (list) object cannot be coerced to vector type 14
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > is.ordered(as.ordered( x ))
 [1] TRUE
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
-Error: you cannot be serious
+Error in as.qr(x) : you cannot be serious
 > is.real(as.real( x ))
-Error: (list) object cannot be coerced to vector type 14
+Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > is.single(as.single( x ))
-Error: (list) object cannot be coerced to vector type 14
+Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : (list) object cannot be coerced to vector type 14
 > is.ts(as.ts( x ))
-Error: ts object must have one or more observations
+Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
 [1] TRUE
 > 
@@ -429,7 +429,7 @@ Error in is.single(x) : type "single" unimplemented in R
 > is.matrix(as.matrix( x ))
 [1] TRUE
 > is.name(as.name( x ))
-Error: invalid type/length (1/1) in vector allocation
+Error in as.name(x) : invalid type/length (1/1) in vector allocation
 > is.null(as.null( x ))
 [1] TRUE
 > is.numeric(as.numeric( x ))
@@ -439,7 +439,7 @@ Error: invalid type/length (1/1) in vector allocation
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
-Error: you cannot be serious
+Error in as.qr(x) : you cannot be serious
 > is.real(as.real( x ))
 [1] TRUE
 > is.single(as.single( x ))
