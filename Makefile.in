@@ -158,6 +158,8 @@ dvi info pdf::
 	-@(cd doc && $(MAKE) $@)
 install-dvi install-info install-pdf::
 	-@(cd doc/manual && $(MAKE) $@)
+uninstall-dvi uninstall-info uninstall-pdf::
+	-@(cd doc/manual && $(MAKE) $@)
 
 TAGS:
 
