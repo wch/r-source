@@ -70,7 +70,11 @@ par(op)
 axis(1, pos = 0, at=c(-2,2,3), lty = lt, col=4)
 mtext(side=1,"note the x-ticks on the other side of the bars")
 
-## explicit xlab and ylab for non-1D  plot.table():
+## plot.table(): explicit xlab and ylab for non-1D
 data(UCBAdmissions)
 plot(UCBAdmissions)# default x- and y-lab
 plot(UCBAdmissions, xlab = "x label", ylab = "YY")# wrong in 1.5.1
+##   axis suppression
+plot(tt <- table(c(rep(0,7), rep(1,4), rep(5, 3))), axes = FALSE)
+plot(tt, xaxt = "n")
+## wrong till (incl.) 1.6.x

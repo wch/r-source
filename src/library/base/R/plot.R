@@ -176,18 +176,22 @@ plot.table <-
     if(rnk == 0)
 	stop("invalid table `x'")
     if(rnk == 1) {
-        dn <- dimnames(x)
-        nx <- dn[[1]]
-        if(is.null(xlab)) xlab <- names(dn)
-        if(is.null(xlab)) xlab <- ""
-        if(is.null(ylab)) ylab <- xnam
-        ow <- options(warn = -1)
-        is.num <- !any(is.na(xx <- as.numeric(nx))); options(ow)
-        x0 <- if(is.num) xx else seq(x)
+	dn <- dimnames(x)
+	nx <- dn[[1]]
+	if(is.null(xlab)) xlab <- names(dn)
+	if(is.null(xlab)) xlab <- ""
+	if(is.null(ylab)) ylab <- xnam
+	ow <- options(warn = -1)
+	is.num <- !any(is.na(xx <- as.numeric(nx))); options(ow)
+	x0 <- if(is.num) xx else seq(x)
 	plot(x0, unclass(x), type = type,
-             ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
-             lwd = lwd, ..., xaxt = "n")
-        axis(1, at = x0, labels = nx)
+	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
+	     lwd = lwd, ..., xaxt = "n")
+	xaxt <-
+	    if(length(as <- list(...))) {
+		if(!is.null(as$axes) && !as$axes) "n" else as$xaxt
+	    }## else NULL
+	axis(1, at = x0, labels = nx, xaxt = xaxt)
     } else
 	mosaicplot(x, xlab = xlab, ylab = ylab, ...)
 }
