@@ -1,6 +1,6 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-12-28), ISBN 3-900051-07-0
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.0 Under development (unstable) (2005-01-20), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,7 +17,7 @@ Type 'q()' to quit R.
 > ## Regression tests for which the printed output is the issue
 > ### _and_ must work (no Recommended packages, please)
 > 
-> postscript("reg-tests-2.ps")
+> postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
 > RNGversion("1.6.2")
 Warning message:
 Buggy version of Kinderman-Ramage generator used. in: RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") 

@@ -1,7 +1,7 @@
 ## Regression tests for which the printed output is the issue
 ### _and_ must work (no Recommended packages, please)
 
-postscript("reg-tests-2.ps")
+postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
 RNGversion("1.6.2")
 
 ### moved from various .Rd files

@@ -2126,7 +2126,8 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     }
 #ifdef SUPPORT_MBCS
     if(utf8locale && strcmp(encoding, "ISOLatin1.enc")) {
-	warning("Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\nAssuming \"ISOLatin1.enc\"");
+	warning("Requested encoding \"%s\"\nOnly encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\nAssuming \"ISOLatin1.enc\"", 
+		encoding);
 	encoding = ISOLatin1Enc;
     }
 #endif
