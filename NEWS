@@ -37,7 +37,9 @@ INSTALLATION ISSUES
 
     o	Added some patches to allow non-IEEE-754 installations to work
 	reasonably well.  (Infs and NAs are still not handled properly
-	in complex arithmetic and functions such as sin().)
+	in complex arithmetic and functions such as sin(). See also
+	Deprecated, as support for non-IEEE-754 installations is about
+	to be removed.)
 
     o	Installation will now work in et_EE* locales, which sort z
 	before u.  (PR#6958)
@@ -47,6 +49,9 @@ DEPRECATED & DEFUNCT
 
     o	Support for non-IEEE-754 arithmetic (which has been untested
 	for some time) will be removed in the next full release.
+
+    o	Direct use of R INSTALL|REMOVE|BATCH|COMPILE|SHLIB is
+	deprecated: use R CMD instead.
 
 
 BUG FIXES
