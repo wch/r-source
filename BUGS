@@ -41,6 +41,10 @@ Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 ..R 1.7.1 incorporates the two suggestions of the 2nd followup:
 ..  r = sqrt(-2 * log (a)) and ...(log1p(-a) + log (qq))...
 ..
+* PR# 3723 *
+Subject: NA's in eigen(), La.eigen()
+From: Jerome Asselin <jerome@hivnet.ubc.ca>
+Date: Mon, 11 Aug 2003 15:09:09 -0700
 
 Directory:  Add-ons
 
@@ -193,15 +197,6 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
-* PR# 2794 *
-Subject: prop.test  confidence intervals
-From: rbaer@kcom.edu
-Date: Fri, 18 Apr 2003 19:01:03 +0200 (MET DST)
-..prop.test should say how it computes confidence intervals.
-* PR# 3528 *
-Subject: missing permissions in reference manual copyright page
-From: Brian Gough <bjg@network-theory.co.uk>
-Date: Mon, 21 Jul 2003 15:12:30 +0100
 
 Directory:  Graphics
 
@@ -730,67 +725,12 @@ Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
 Subject: The two chisq.test p values differ when the contingency table is transposed!
 From: shitao@ucla.edu
 Date: Wed, 16 Jul 2003 01:27:25 +0200 (MET DST)
+..Rounding error in ctest/R/chisq.test.R
 * PR# 3671 *
 Subject: model.frame() call from inside a function
 From: Jerome Asselin <jerome@hivnet.ubc.ca>
 Date: Wed, 6 Aug 2003 15:41:16 -0700
-* PR# 3680 *
-Subject: segmentation fault: formula() with long variable names
-From: Jerome Asselin <jerome@hivnet.ubc.ca>
-Date: Thu, 7 Aug 2003 11:32:17 -0700
-* PR# 3690 *
-Subject: Wish
-From: a.buness@dkfz.de
-Date: Fri, 8 Aug 2003 15:50:27 +0200 (MET DST)
-* PR# 3704 *
-Subject: Re: [Rd] segmentation fault: formula() with long variable names
-From: Luke Tierney <luke@stat.uiowa.edu>
-Date: Sat, 9 Aug 2003 12:18:36 -0500 (CDT)
-* PR# 3723 *
-Subject: NA's in eigen(), La.eigen()
-From: Jerome Asselin <jerome@hivnet.ubc.ca>
-Date: Mon, 11 Aug 2003 15:09:09 -0700
-* PR# 3737 *
-Subject: rowsum() may return a vector instead of a matrix
-From: David Brahm  <brahm@alum.mit.edu>
-Date: Tue, 12 Aug 2003 18:05:12 -0400
-* PR# 3740 *
-Subject: Settle your debt without taking out another loan!
-From: vdhzlfvrzopq@msn.com
-Date: Wed, 13 Aug 2003 13:03:06 +0900
-* PR# 3741 *
-Subject: .. Why pay your debts off when you dont have to?09fdksami
-From: jvgyezcwlogj@msn.com
-Date: Wed, 13 Aug 2003 13:30:43 +0900
-* PR# 3742 *
-Subject: The best breast enlargement pills tplrudyzq xk
-From: "Rolando Polk" <nwlegwcoeaaz@msn.com>
-Date: Wed, 13 Aug 03 03:55:48 GMT
-* PR# 3743 *
-Subject: Urgent Attention
-From: "joseph Nzaga Mobutu" <mobutumobutu@tiscali.co.uk>
-Date: Wed, 13 Aug 2003 16:16:52 +0100
-* PR# 3744 *
-Subject: fat melts Away
-From: "Dr. Jorge Pratas" <J-Pratas@yahoo.com>
-Date: Fri, 12 Sep 03 21:46:13 GMT
-* PR# 3745 *
-Subject: Grow Penis Size to Your Full Potential  albacore
-From: "Tammi Bragg" <owf93j3sl9y@21cn.net>
-Date: Thu, 14 Aug 03 02:17:51 GMT
 * PR# 3746 *
 Subject: Bug in numericDeriv (was: [R] nls confidence intervals)
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Thu, 14 Aug 2003 12:54:34 -0400
-* PR# 3747 *
-Subject:                             URGENT ASSISTANCE NEEDED
-From: MUSA SMITH <musasmith@ahotmail.com>
-Date: Thu, 14 Aug 2003 19:41:44 +0200
-* PR# 3748 *
-Subject: G.e.n.e.r.i.c     V i a g r a    -  Order On-line - Fast Delivery!  tcmolnikceomg
-From: "Robert Prince" <rico1259896471@allergist.com>
-Date: Thu, 14 Aug 03 19:43:35 GMT
-* PR# 3749 *
-Subject: DOES THE SIZE OF YOUR PENIS REALLY MATTER?  versatile
-From: "Melanie Kelly" <u6lb6se4@citiz.net>
-Date: Fri, 15 Aug 03 07:06:16 GMT
