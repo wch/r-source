@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-24 @value{FAQ-YEAR}-06-15
-@set REL-VERSION 1.9.0
+@set FAQ-VERSION 1.9-25 @value{FAQ-YEAR}-06-21
+@set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
