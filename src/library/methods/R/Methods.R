@@ -358,8 +358,15 @@ selectMethod <-
         env <- signature
     else if(length(names(signature)) == length(signature))
         env <- sigToEnv(signature)
+    else if(is.character(signature)) {
+        argNames <-  formalArgs(getFunction(f))
+        length(argNames) <- length(signature)
+        argNames <- argNames[is.na(match(argNames, "..."))]
+        names(signature) <- argNames
+        env <- sigToEnv(signature)
+    }
     else
-        stop("signature must be a named vector of classes or an environment")
+        stop("signature must be a vector of classes or an environment")
     if(is.null(mlist)) {
         if(optional)
             return(mlist)
