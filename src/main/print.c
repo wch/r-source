@@ -17,11 +17,11 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
- *  print.default()  ->  do_printdefault & its sub-functions.
- *                       do_printmatrix, do_sink, do_invisible
+ *  print.default()  ->	 do_printdefault & its sub-functions.
+ *			 do_printmatrix, do_sink, do_invisible
  *
- *  See ./printutils.c   for general remarks on Printing
- *                       and the Encode.. utils.
+ *  See ./printutils.c	 for general remarks on Printing
+ *			 and the Encode.. utils.
  *
  *  Also ./printvector.c,  ./printarray.c
  */
@@ -90,7 +90,10 @@ SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote, right;
-    SEXP a, x, rowlab, collab, oldnames;
+    SEXP a, x, rowlab, collab;
+#ifdef OLD
+    SEXP oldnames;
+#endif
     checkArity(op,args);
     PrintDefaults(rho);
     a = args;
@@ -120,8 +123,10 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(collab) == 0) collab = R_NilValue;
 #endif
     printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, right, rowlab, collab);
+#ifdef OLD
     setAttrib(x, R_DimNamesSymbol, oldnames);
     UNPROTECT(1);
+#endif
     return x;
 }
 
@@ -144,7 +149,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (print_digits == NA_INTEGER ||
 	    print_digits < 1 ||
 	    print_digits > 22)
-	        errorcall(call, "invalid digits parameter\n");
+		errorcall(call, "invalid digits parameter\n");
     }
     args = CDR(args);
 
@@ -176,7 +181,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* FIXME : We need a general mechanism for "rendering" symbols. */
 /* It should make sure that it quotes when there are special */
 /* characters and also take care of ansi escapes properly. */
- 
+
 static void PrintGenericVector(SEXP s, SEXP env)
 {
     int i, taglen, ns;
@@ -185,87 +190,87 @@ static void PrintGenericVector(SEXP s, SEXP env)
 
     ns = length(s);
     if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
-        PROTECT(dims);
-        PROTECT(t = allocArray(STRSXP, dims));
-        for (i = 0 ; i < ns ; i++) {
-            switch(TYPEOF(VECTOR(s)[i])) {
-            case NILSXP:
-                pbuf = Rsprintf("NULL");
-                break;
-            case LGLSXP:
-                pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
-                break;
-            case INTSXP:
-            case REALSXP:
-                pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
-                break;
-            case CPLXSXP:
-                pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
-                break;
-            case STRSXP:
-                pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
-                break;
-            case LISTSXP:
-            case VECSXP:
-                pbuf = Rsprintf("List,%d", length(CAR(s)));
-                break;
-            case LANGSXP:
-                pbuf = Rsprintf("Expression");
-                break;
-            default:
-                pbuf = Rsprintf("?");
-                break;
-            }
-            STRING(t)[i] = mkChar(pbuf);
-        }
-        if (LENGTH(dims) == 2) {
+	PROTECT(dims);
+	PROTECT(t = allocArray(STRSXP, dims));
+	for (i = 0 ; i < ns ; i++) {
+	    switch(TYPEOF(VECTOR(s)[i])) {
+	    case NILSXP:
+		pbuf = Rsprintf("NULL");
+		break;
+	    case LGLSXP:
+		pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
+		break;
+	    case INTSXP:
+	    case REALSXP:
+		pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
+		break;
+	    case CPLXSXP:
+		pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
+		break;
+	    case STRSXP:
+		pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
+		break;
+	    case LISTSXP:
+	    case VECSXP:
+		pbuf = Rsprintf("List,%d", length(CAR(s)));
+		break;
+	    case LANGSXP:
+		pbuf = Rsprintf("Expression");
+		break;
+	    default:
+		pbuf = Rsprintf("?");
+		break;
+	    }
+	    STRING(t)[i] = mkChar(pbuf);
+	}
+	if (LENGTH(dims) == 2) {
 	    SEXP rl, cl;
 	    GetMatrixDimnames(s, &rl, &cl);
-            printMatrix(t, 0, dims, 0, 0, rl, cl);
+	    printMatrix(t, 0, dims, 0, 0, rl, cl);
 	}
-        else {
+	else {
 	    names = GetArrayDimnames(s);
-            printArray(t, dims, 0, names);
+	    printArray(t, dims, 0, names);
 	}
-        UNPROTECT(2);
+	UNPROTECT(2);
     }
     else {
-        names = getAttrib(s, R_NamesSymbol);
-        taglen = strlen(tagbuf);
-        ptag = tagbuf + taglen;
-        PROTECT(newcall = allocList(2));
-        CAR(newcall) = install("print");
-        TYPEOF(newcall) = LANGSXP;
+	names = getAttrib(s, R_NamesSymbol);
+	taglen = strlen(tagbuf);
+	ptag = tagbuf + taglen;
+	PROTECT(newcall = allocList(2));
+	CAR(newcall) = install("print");
+	TYPEOF(newcall) = LANGSXP;
 
 	if(ns > 0) {
-        for (i = 0 ; i < ns ; i++) {
-            if (i > 0) Rprintf("\n");
-            if (names != R_NilValue &&
-                STRING(names)[i] != R_NilValue &&
-                *CHAR(STRING(names)[i]) != '\0') {
-                if (taglen + strlen(CHAR(STRING(names)[i])) > TAGBUFLEN)
-                    sprintf(ptag, "$...");
-                else
-                    sprintf(ptag, "$%s", CHAR(STRING(names)[i]));
-            }
-            else {
-                if (taglen + IndexWidth(i) > TAGBUFLEN)
-                    sprintf(ptag, "$...");
-                else
-                    sprintf(ptag, "[[%d]]", i+1);
-            }
-            Rprintf("%s\n", tagbuf);
-            if(isObject(VECTOR(s)[i])) {
-                CADR(newcall) = VECTOR(s)[i];
-                eval(newcall, env);
-            }
-            else PrintValueRec(VECTOR(s)[i], env);
-            *ptag = '\0';
-        }
-        Rprintf("\n");
+	for (i = 0 ; i < ns ; i++) {
+	    if (i > 0) Rprintf("\n");
+	    if (names != R_NilValue &&
+		STRING(names)[i] != R_NilValue &&
+		*CHAR(STRING(names)[i]) != '\0') {
+		if (taglen + strlen(CHAR(STRING(names)[i])) > TAGBUFLEN)
+		    sprintf(ptag, "$...");
+		else
+		    sprintf(ptag, "$%s", CHAR(STRING(names)[i]));
+	    }
+	    else {
+		if (taglen + IndexWidth(i) > TAGBUFLEN)
+		    sprintf(ptag, "$...");
+		else
+		    sprintf(ptag, "[[%d]]", i+1);
+	    }
+	    Rprintf("%s\n", tagbuf);
+	    if(isObject(VECTOR(s)[i])) {
+		CADR(newcall) = VECTOR(s)[i];
+		eval(newcall, env);
+	    }
+	    else PrintValueRec(VECTOR(s)[i], env);
+	    *ptag = '\0';
+	}
+	Rprintf("\n");
 	}
 	else Rprintf("NULL\n");
-        UNPROTECT(1);
+	UNPROTECT(1);
     }
 }
 
@@ -573,7 +578,7 @@ int F77_SYMBOL(dblepr) (char *label, int *nchar, double *data, int *ndata)
     printRealVector(data, *ndata, 1);
     return(0);
 }
-  
+
 int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
 {
     int k;
