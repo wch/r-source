@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-19, @value{FAQ-YEAR}-06-20
+@set FAQ-VERSION 1.7-20, @value{FAQ-YEAR}-06-25
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -434,7 +434,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-06-18:
+@c Linux binaries as of 2003-06-22:
 @c
 @c debian    woody i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
@@ -451,7 +451,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c           8.0   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.1   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.2   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c vinelinux 2.6   i386  1.6.2  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c vinelinux 2.6   i386  1.7.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
@@ -1915,6 +1915,8 @@ and also performs searches using a number of less time-consuming
 techniques.
 @item lgtdl
 A set of methods for longitudinal data objects.
+@item lme4
+Fit linear and generalized linear mixed-effects models.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
