@@ -152,7 +152,7 @@ barplot(VADeaths, angle = 15+10*1:5, density = 20, col = "black",
 title(main = list("Death Rates in Virginia", font = 4))
 
 # border :
-barplot(VADeaths, border = "dark blue", lwd = 2)
+barplot(VADeaths, border = "dark blue") % lwd = 2 << not passed
 %notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside=FALSE)")
 }
 \keyword{hplot}
