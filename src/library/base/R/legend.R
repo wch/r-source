@@ -126,7 +126,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
         top  <- y + (1 - yjust) * h
     }
 
-    if (bty != "n") {
+    if (bty != "n") { ## The legend box :
         if(trace)
             catn("  rect2(",left,",",top,", w=",w,", h=",h,"...)",sep="")
 	rect2(left, top, dx = w, dy = h, col = bg)
@@ -141,7 +141,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
 	xt <- xt + dx.fill
     }
     if(has.pch || do.lines)
-        col <- rep(col,length.out=n.leg)
+        col <- rep(col,length.out = n.leg)
 
     if (do.lines) {                     #- draw lines ---------------------
         seg.len <- 2 # length of drawn segment, in xchar units
@@ -151,27 +151,27 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
 	lwd <- rep(lwd, length.out = n.leg)
 	if(trace)
 	    catn("  segments2(",xt[ok.l] + x.off*xchar ,",", yt[ok.l],
-                 ", dx=",seg.len*xchar,", dy=0, ...)", sep="")
-	segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= seg.len*xchar, dy=0,
+                 ", dx=",seg.len*xchar,", dy=0, ...)", sep = "")
+	segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx = seg.len*xchar, dy = 0,
 		  lty = lty[ok.l], lwd = lwd[ok.l], col = col[ok.l])
 	# if (!merge)
         xt <- xt + (seg.len+x.off) * xchar
     }
     if (has.pch) {                      #- draw points -------------------
-	pch   <- rep(pch, length.out=n.leg)
-	pt.bg <- rep(pt.bg, length.out=n.leg)
+	pch   <- rep(pch, length.out = n.leg)
+	pt.bg <- rep(pt.bg, length.out = n.leg)
 	ok <- is.character(pch) | pch >= 0
 	x1 <- (if(merge) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]
 	if(trace)
 	    catn("  points2(", x1,",", y1,", pch=", pch[ok],"...)")
-	points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex, bg = pt.bg[ok])
+	points2(x1, y1, pch = pch[ok], col = col[ok], cex = cex, bg = pt.bg[ok])
 	if (!merge) xt <- xt + dx.pch
     }
 
     xt <- xt + x.intersp * xchar
-    text2(xt, yt, labels= legend, adj= adj, cex= cex)
+    text2(xt, yt, labels = legend, adj = adj, cex = cex)
 
-    invisible(list(rect = list(w=w, h=h, left=left, top=top),
+    invisible(list(rect = list(w = w, h = h, left = left, top = top),
                    text = list(x = xt, y = yt)))
 }
