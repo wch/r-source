@@ -312,7 +312,7 @@ FAQs: rw-faq fixed/html/rw-FAQ.html
 
 fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
-	makeinfo --html --no-headers --number-sections -o tmp.html tmp.texi
+	makeinfo --no-split --html --no-headers --number-sections -o tmp.html tmp.texi
 	-tidy tmp.html > $@ 2> /dev/null
 	@$(RM) tmp.texi tmp.html
 

@@ -570,11 +570,11 @@ scrollbar or the <CTRL+arrow> keys to scroll horizontally.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources.  Suppose you want to compile R-1.3.0.  Start in a
+Get the R sources.  Suppose you want to compile R-1.3.1.  Start in a
 directory whose path does not contain spaces, and run
 
-     tar zxvf R-1.3.0.tgz
-     cd R-1.3.0
+     tar zxvf R-1.3.1.tgz
+     cd R-1.3.1
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed.  Then you

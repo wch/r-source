@@ -1,7 +1,7 @@
-R 1.3.0 for Windows
+R 1.3.1 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.3.0 to
+This distribution contains the sources to build a port of R-1.3.1 to
 run on Windows 95, 98, ME, NT4 and 2000 on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
@@ -79,11 +79,11 @@ appropriate environment variables set.
 Building
 --------
 
-You also need the R source (R-1.3.0.tgz).
+You also need the R source (R-1.3.1.tgz).
 
-Then: untar R-1.3.0.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.3.1.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.3.0/src/gnuwin32
+	cd /somewhere/R-1.3.1/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed.
 
@@ -221,12 +221,12 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-1.3.0.tgz), and to build the installer,
+You also need: the R source (R-1.3.1.tgz), and to build the installer,
 unzip542.zip from any Info-ZIP mirror.
 
-Then: untar R-1.3.0.tgz somewhere, and
+Then: untar R-1.3.1.tgz somewhere, and
 
-	cd /somewhere/R-1.3.0/src/gnuwin32
+	cd /somewhere/R-1.3.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
