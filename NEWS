@@ -160,7 +160,9 @@ NEW FEATURES
     o	Methods dispatch for formal methods (the standardGeneric
 	function), is now a primitive.	Aside from efficiency issues,
 	this allows S3-style generics to also have formal methods (not
-	really recommended in the long run, but it should at least work).
+	really recommended in the long run, but it should at least
+	work).  The C-level dispatch is now implemented for primitives
+	that use either DispatchGroup or DispatchOrEval internally.
 
     o	readline() allows up to 256 chars for the prompt.
 
