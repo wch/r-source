@@ -271,12 +271,7 @@ foreach $pkg (@ARGV){
 	if($opt_auto_zip || $opt_build) {
 	    my $dir = $pkgdir. "/" . $pkgname . "/data";
 	    my $tmp = parse_description_field("ZipData");
-	    if(-d $dir && $tmp != 0
-	       && $pkgname ne "RadioSonde" 
-	       && $pkgname ne "pls.pcr" 
-	       && $pkgname ne "mlbench" 
-	       && $pkgname ne "tapiR" 
-	       && $pkgname ne "anm") {
+	    if(-d $dir && $tmp != 0) {
 		my $Rout = "datacnt";
 		my @tmp = `ls.exe -s1 $dir`;  # system > no longer works
 		my $out = 0, $nodups=1, $prev="", $this;
@@ -412,9 +407,9 @@ sub usage {
 Usage: R CMD $name [options] pkgs
 
 Install the add-on packages specified by pkgs into the default R library
-tree ($R_HOME/library) or the tree specified via \`--library'.  The
+tree ($R_HOME/library) or the tree specified via '--library'.  The
 elements of pkgs can be relative or absolute paths to directories with
-the package (bundle) sources, or to gzipped package \`tar' archives.
+the package (bundle) sources, or to gzipped package 'tar' archives.
 Then optionally pack the installed package into a zip file.
 
 Options:
@@ -431,7 +426,7 @@ Options:
   --no-lazy-data        do not use lazy loading for data (current default)
 
   --fake		do minimal install for testing purposes
-  --unsafe		do not do safe loading
+  --unsafe		install on top of any existing installation
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
   --docs=TYPE	        type(s) of documentation to build and install
@@ -439,10 +434,9 @@ Options:
 			allow for multiple versions of the same package
   --use-zip-data	collect data files in zip archive
   --use-zip-help	collect help and examples into zip archives
-  --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
+  --use-zip		combine \'--use-zip-data\' and \'--use-zip-help\'
   --auto-zip	        select whether to zip automatically
-  --build		zip-up the installation. Implies --auto-zip
-  --unsafe		install on top of any existing installation
+  --build		zip-up the installation.  Implies --auto-zip
 
 TYPE can be "none" or "normal" or "chm" (the default) or "all"
 
