@@ -1,9 +1,11 @@
 \name{stl}
 \alias{stl}
-\alias{print.stl}
-\alias{summary.stl}
-\alias{plot.stl}
+% all methods -> ./stlmethods.Rd
 \title{Seasonal Decomposition of Time Series by Loess}
+\description{
+  Decompose a time series into seasonal, trend and irregular components
+  using \code{loess}, acronym STL.
+}
 \usage{
 stl(x, s.window, s.degree = 0,
     t.window = NULL, t.degree = 1,
@@ -15,11 +17,6 @@ stl(x, s.window, s.degree = 0,
     inner = if(robust)  1 else 2,
     outer = if(robust) 15 else 0,
     na.action = na.fail)
-    
-plot.stl(x, labels = colnames(X),
-         set.pars = list(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0),
-                         tck = -0.01, mfrow = c(nplot, 1)),
-         main = NULL, \dots)
 }
 \arguments{
   \item{x}{univariate time series to be decomposed.
@@ -53,10 +50,6 @@ plot.stl(x, labels = colnames(X),
   \item{outer}{integer; the number of `outer' robustness iterations.}
   \item{na.action}{action on missing values.}
 }
-\description{
-  Decompose a time series into seasonal, trend and irregular
-  components.
-}
 \details{
   The seasonal component is found by \emph{loess} smoothing the
   seasonal sub-series (the series of all January values, \ldots); if
@@ -66,6 +59,9 @@ plot.stl(x, labels = colnames(X),
   seasonal component and added to the trend component. This process is
   iterated a few times.  The \code{remainder} component is the
   residuals from the seasonal plus trend fit.
+
+  Several methods for the resulting class \code{"stl"} objects, see,
+  \code{\link{plot.stl}}.
 }
 \value{
   \code{stl} returns an object of class \code{"stl"} with components
@@ -95,9 +91,10 @@ plot.stl(x, labels = colnames(X),
   S-PLUS. The \code{remainder} component given by S-PLUS is the sum of
   the \code{trend} and \code{remainder} series from this function.}
 
-\seealso{\code{\link{loess}} in package \file{modreg} (which is not
-  actually used in \code{stl}).}
-
+\seealso{\code{\link{plot.stl}} for \code{stl} methods;
+  \code{\link{loess}} in package \file{modreg} (which is not actually
+  used in \code{stl}).
+} 
 \examples{
 data(nottem)
 plot(stl(nottem, "per"))
