@@ -72,15 +72,6 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 /* cumsum.c : */
 void R_cumsum(double *, int *, double *, double *);
 
-/* distance.c */
-double R_euclidean(double *, int, int, int, int);
-double R_maximum(double *, int, int, int, int);
-double R_manhattan(double *, int, int, int, int);
-double R_canberra(double *, int, int, int, int);
-double R_dist_binary(double *, int, int, int, int);
-enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY };/* == 1,2,... */
-void R_distance(double *, int *, int *, double *, int *, int *);
-
 /* eigen.c */
 int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
 		 double *wr, double *wi, int *matz, double *zr, double *zi,

@@ -22,7 +22,6 @@ C_FUNCTION(R_chull)
 F77_SUBROUTINE(rg)
 F77_SUBROUTINE(rs)
 C_FUNCTION(R_cumsum)
-C_FUNCTION(R_distance)
 #-- Linpack --
 F77_SUBROUTINE(dpbfa)
 F77_SUBROUTINE(dpbsl)

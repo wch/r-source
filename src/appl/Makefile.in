@@ -19,7 +19,6 @@ SOURCES_C = \
 	approx.c \
 	bakslv.c binning.c \
 	chisqsim.c chull.c cpoly.c cumsum.c \
-	distance.c \
 	fft.c fmin.c \
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \
