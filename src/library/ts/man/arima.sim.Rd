@@ -5,14 +5,14 @@
   Simulate from an ARIMA model.
 }
 \usage{
-arima.sim(n, model, rand.gen = rnorm, innov = rand.gen(n, ...),
+arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, ...),
           n.start = NA, ...)
 }
 \arguments{
-  \item{n}{length of output series.}
   \item{model}{A list with component \code{ar} and/or \code{ma} giving
     the AR and MA coeffcients respectively.  Optionally a component
     \code{order} can be used.}
+  \item{n}{length of output series.}
   \item{rand.gen}{optional: a function to generate the innovations.}
   \item{innov}{an optional times series of innovations.  If not
     provided, \code{rand.gen} is used.}
