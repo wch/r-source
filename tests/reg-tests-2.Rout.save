@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-02-20), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-03-03), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3706,4 +3706,127 @@ Error in matrix(, 2^31/10, 100) : matrix: too many elements specified
 > try(array(dim=c(2^31/10, 100)))
 Error in array(dim = c(2^31/10, 100)) : dim specifies too large an array
 > ## reported negative values (really integer NA) for R < 1.9.0
+> 
+> 
+> ## aov with a singular error model
+> rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
++         10.72, 8.79, 13.14, 9.79, 8.36, 15.62, 9.64, 8.72, 15.32,
++         11.35, 8.52, 13.27, 9.74, 8.78, 13.16, 10.16, 8.4, 13.08, 9.66,
++         8.16, 12.17, 9.13, 7.43, 13.28, 9.16, 7.92, 118.77, 78.83, 62.2,
++         107.29, 73.79, 58.59, 118.9, 66.35, 53.12, 372.62, 245.39, 223.72,
++         326.03, 232.67, 209.44, 297.55, 239.71, 223.8)
+> sample.df <- data.frame(dep.variable=rd,
++                         subject=factor(rep(paste("subj",1:6, sep=""),each=9)),
++                         f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
++                         f2=factor(rep(c("g1","g2","g3"),each=18))
++ )
+> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+Warning message: 
+Error model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) 
+> sample.aov
+
+Call:
+aov(formula = dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), 
+    data = sample.df)
+
+Grand Mean: 65.07444 
+
+Stratum 1: subject
+
+Terms:
+                       f1        f2     f1:f2
+Sum of Squares   47815.99 312824.49 100370.96
+Deg. of Freedom         1         2         2
+
+2 out of 7 effects not estimable
+Estimated effects may be unbalanced
+
+Stratum 2: subject:f1
+
+Terms:
+                      f1    f1:f2
+Sum of Squares  483.9628 869.6876
+Deg. of Freedom        2        4
+
+Estimated effects may be unbalanced
+
+Stratum 3: Within
+
+Terms:
+                Residuals
+Sum of Squares   29204.13
+Deg. of Freedom        42
+
+Residual standard error: 26.36923 
+> summary(sample.aov)
+
+Error: subject
+      Df Sum Sq Mean Sq
+f1     1  47816   47816
+f2     2 312824  156412
+f1:f2  2 100371   50185
+
+Error: subject:f1
+      Df Sum Sq Mean Sq
+f1     2 483.96  241.98
+f1:f2  4 869.69  217.42
+
+Error: Within
+          Df  Sum Sq Mean Sq F value Pr(>F)
+Residuals 42 29204.1   695.3               
+> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
+Warning message: 
+Error model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) 
+> sample.aov
+
+Call:
+aov(formula = dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), 
+    data = sample.df)
+
+Grand Mean: 65.07444 
+
+Stratum 1: subject
+
+Terms:
+                       f1        f2     f1:f2
+Sum of Squares   47815.99 312824.49 100370.96
+Deg. of Freedom         1         2         2
+
+2 out of 7 effects not estimable
+Estimated effects may be unbalanced
+
+Stratum 2: subject:f1
+
+Terms:
+                      f1    f1:f2
+Sum of Squares  483.9628 869.6876
+Deg. of Freedom        2        4
+
+Estimated effects may be unbalanced
+
+Stratum 3: Within
+
+Terms:
+                Residuals
+Sum of Squares   29204.13
+Deg. of Freedom        42
+
+Residual standard error: 26.36923 
+> summary(sample.aov)
+
+Error: subject
+      Df Sum Sq Mean Sq
+f1     1  47816   47816
+f2     2 312824  156412
+f1:f2  2 100371   50185
+
+Error: subject:f1
+      Df Sum Sq Mean Sq
+f1     2 483.96  241.98
+f1:f2  4 869.69  217.42
+
+Error: Within
+          Df  Sum Sq Mean Sq F value Pr(>F)
+Residuals 42 29204.1   695.3               
+> ## failed in 1.8.1
 > 

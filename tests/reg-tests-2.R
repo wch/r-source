@@ -1192,3 +1192,24 @@ try(matrix( , 2^31, 1))
 try(matrix( , 2^31/10, 100))
 try(array(dim=c(2^31/10, 100)))
 ## reported negative values (really integer NA) for R < 1.9.0
+
+
+## aov with a singular error model
+rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
+        10.72, 8.79, 13.14, 9.79, 8.36, 15.62, 9.64, 8.72, 15.32,
+        11.35, 8.52, 13.27, 9.74, 8.78, 13.16, 10.16, 8.4, 13.08, 9.66,
+        8.16, 12.17, 9.13, 7.43, 13.28, 9.16, 7.92, 118.77, 78.83, 62.2,
+        107.29, 73.79, 58.59, 118.9, 66.35, 53.12, 372.62, 245.39, 223.72,
+        326.03, 232.67, 209.44, 297.55, 239.71, 223.8)
+sample.df <- data.frame(dep.variable=rd,
+                        subject=factor(rep(paste("subj",1:6, sep=""),each=9)),
+                        f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
+                        f2=factor(rep(c("g1","g2","g3"),each=18))
+)
+sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+sample.aov
+summary(sample.aov)
+sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
+sample.aov
+summary(sample.aov)
+## failed in 1.8.1

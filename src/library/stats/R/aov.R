@@ -9,7 +9,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                    "Error terms: only 1 is allowed"))
     lmcall <- Call <- match.call()
     lmcall[[1]] <- as.name("lm")
-    lmcall$singular.ok <- TRUE          # not currently used in R
+    lmcall$singular.ok <- TRUE
     if(projections) qr <- lmcall$qr <- TRUE
     lmcall$projections <- NULL
     if(is.null(indError)) {
@@ -48,16 +48,19 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         nmstrata <- c("(Intercept)", nmstrata)
         qr.e <- er.fit$qr
         rank.e <- er.fit$rank
+        if(rank.e < length(er.fit$coef))
+            warning("Error model is singular")
         qty <- er.fit$resid
         maov <- is.matrix(qty)
         asgn.e <- er.fit$assign[qr.e$piv[1:rank.e]]
         ## we want this to label the rows of qtx, not cols of x.
+        maxasgn <- length(nmstrata)-1
         nobs <- NROW(qty)
         if(nobs > rank.e) {
-            result <- vector("list", max(asgn.e) + 2)
-            asgn.e[(rank.e+1):nobs] <- max(asgn.e) + 1
+            result <- vector("list", maxasgn + 2)
+            asgn.e[(rank.e+1):nobs] <- maxasgn + 1
             nmstrata <- c(nmstrata, "Within")
-        } else result <- vector("list", max(asgn.e) + 1)
+        } else result <- vector("list", maxasgn + 1)
         names(result) <- nmstrata
         lmcall$formula <- form <-
             update(formula, paste(". ~ .-", deparse(errorterm, width = 500,
@@ -112,7 +115,8 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             class(fiti) <- c(if(maov) "maov", "aov", oldClass(er.fit))
             result[[i]] <- fiti
         }
-        if(is.null(result[[1]])) result <- result[-1]
+        ## drop empty strata
+        result <- result[!sapply(result, is.null)]
         class(result) <- c("aovlist", "listof")
         if(qr) attr(result, "error.qr") <- qr.e
         attr(result, "call") <- Call

@@ -42,18 +42,19 @@ USER-VISIBLE CHANGES
 	an R session: it now takes about 2/3rds of the time of 1.8.1.
 
     o	A warning is issued at startup in a UTF-8 locale, as currently R
-	only supports single-byte encodings. [This may change before
-	release.]
+	only supports single-byte encodings.
 
 
 NEW FEATURES
 
     o	$, $<-, [[, [[<- can be applied to environments. Only character
-	arguments are allowed and no partial matching is done. The
+	arguments are allowed and no partial matching is done.  The
 	semantics are basically that of get/assign to the environment with
 	inherits=FALSE.
 
     o	There are now print() and [ methods for "acf" objects.
+
+    o	aov() will now handle singular Error() models, with a warning.
 
     o	arima() allows models with no free parameters to be fitted (to
 	find log-likelihood and AIC values, thanks to Rob Hyndman).
@@ -222,7 +223,7 @@ NEW FEATURES
 	in the ... of graphics functions without a warning.  It now
 	works as expected in contour().
 
-    o	Package stats4 exports generics for AIC() and BIC().
+    o	Package stats4 exports S4 generics for AIC() and BIC().
 
     o	The Mac OS X version now produces an R framework for easier linking
 	of R into other programs.  As a result, R.app is now relocatable.
@@ -496,6 +497,7 @@ BUG FIXES
 	pgamma(x, alph) now only uses a normal approximation for
 	alph > 1e5 instead of alph > 1000.  This also improves the accuracy
 	of ppois().
+
 
 
 
