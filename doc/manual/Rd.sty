@@ -1,7 +1,7 @@
 %%% Rd.sty ... Style for printing the R manual
 %%%
-%%% Last modified 1997/09/22 by Friedrich.Leisch@ci.tuwien.ac.at
-%%% Last modified 1997/11/15 by Martin.Maechler@stat.math.ethz.ch
+%%% Last modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
+
 
 \RequirePackage{amsbsy}          % AMS boldsymbol: defines `\boldsymbol'
 \RequirePackage{alltt}           % {verbatim} allowing \..
@@ -56,7 +56,12 @@
 \newcommand{\Itemize}[1]{\begin{itemize}{#1}\end{itemize}}
 \newcommand{\Enumerate}[1]{\begin{enumerate}{#1}\end{enumerate}}
 \newcommand{\describe}[1]{\begin{description}{#1}\end{description}}
-%
+
+\newcommand{\Tabular}[2]{%
+  \begin{tabular}{#1}
+    #2
+  \end{tabular}}
+
 \newlength{\ldescriptionwidth}
 \newcommand{\ldescriptionlabel}[1]{%
   \settowidth{\ldescriptionwidth}{{#1}}%

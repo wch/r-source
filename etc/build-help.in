@@ -78,7 +78,8 @@ foreach $manfile (@mandir) {
 
 	if($opt_nroff){
 	    $destfile = "$dest/help/$manfilebase";
-	    open(nroffout,"|nroff -ms 2> /dev/null | ${RHOME}/etc/help.pretty >$destfile");
+	    open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
+		 " ${RHOME}/etc/help.pretty >$destfile");
 	    Rdconv($manfile, "nroff", "");# maybe $opt_debug
 	    close(nroffout);
 	}
