@@ -944,7 +944,7 @@ again:
 #endif
 
   if (gc_reporting) {
-    REprintf("Garbage collecion %d = %d", gc_count, gen_gc_counts[0]);
+    REprintf("Garbage collection %d = %d", gc_count, gen_gc_counts[0]);
     for (i = 0; i < NUM_OLD_GENERATIONS; i++)
       REprintf("+%d", gen_gc_counts[i + 1]);
     REprintf(" (level %d) ... ", gens_collected);
