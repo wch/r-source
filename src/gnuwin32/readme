@@ -2,9 +2,10 @@ R @RVER@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows 95, 98, NT4 and 2000 on Intel/clone chips.  It is designed to be
-as close as possible to the implementation on Unix, but see the list
-of differences below.  The port was by Guido Masarotto and Brian Ripley.
+Windows 95, 98, ME, NT4 and 2000 on Intel/clone chips.  It is designed
+to be as close as possible to the implementation on Unix, but see the
+list of differences below.  The port was by Guido Masarotto and Brian
+Ripley.
 
 See the file `CHANGES' for the new features of this version.
 

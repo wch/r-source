@@ -44,7 +44,8 @@ FFLAGS = $(OPTFLAGS)
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
-rpackage: fixed/fixdesc $(PKGS) ../../library/R.css
+rpackage: fixed/fixdesc ../../library/R.css
+	$(MAKE) STAMP=NO $(PKGS)
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
@@ -136,7 +137,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) DATESTAMP=$(DATESTAMP-"YES") \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
@@ -326,7 +327,7 @@ endif
 
 
 #taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h Rmath.h S_compat.h
+SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
 OBJ_HEADERS = Rconfig.h Rversion.h
 GW32_HEADERS = globalvar.h # psignal.h
 
