@@ -60,8 +60,8 @@ All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	$(R) -v 6 < All-Ex.R > $@
 
 clean:
-	rm -f *.R
-	rm -f *.Rd* *.ps *.tex *.dat* data foo*
+	@rm -f *.Rd* *.ps *.tex *.dat* data foo*
 
 realclean: clean
+	@rm -f *.R
 	@rm -fr $(CleanMe)

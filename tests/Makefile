@@ -23,7 +23,8 @@ test-Examples:
 $(REXE)::
 	-(cd $(RHOME); $(MAKE) R)
 
-clean: ; rm -f $(TESTout)
+realclean clean:
+	rm -f $(TESTout)
 	-(cd $(Ex); $(MAKE) $@)
 
 
