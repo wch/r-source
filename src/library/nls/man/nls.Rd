@@ -1,19 +1,18 @@
 \name{nls}
 \alias{nls}
-\alias{anova.nls}
+%\alias{anova.nls}
 \alias{anovalist.nls}
-\alias{coef.nls}
-\alias{deviance.nls}
-\alias{df.residual.nls}
-\alias{fitted.nls}
-\alias{logLik.nls}
-\alias{print.nls}
-\alias{residuals.nls}
-\alias{summary.nls}
-\alias{print.summary.nls}
-\alias{weights.nls}
-\alias{AIC.nls}
-\alias{vcov.nls}
+%\alias{coef.nls}
+%\alias{deviance.nls}
+%\alias{df.residual.nls}
+%\alias{fitted.nls}
+%\alias{logLik.nls}
+%\alias{print.nls}
+%\alias{residuals.nls}
+%\alias{summary.nls}
+%\alias{print.summary.nls}
+%\alias{weights.nls}
+%\alias{vcov.nls}
 \title{Nonlinear Least Squares}
 \synopsis{
 nls(formula, data = parent.frame(), start, control,

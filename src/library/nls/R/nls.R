@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.21 2002/11/15 18:47:59 ripley Exp $
+### $Id: nls.R,v 1.22 2003/03/04 11:44:43 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -22,8 +22,6 @@
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ### MA 02111-1307, USA
 
-### Force loading of the nls dynamic library in R
-.First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
 
 numericDeriv <- function(expr, theta, rho = parent.frame()) {
     val <- .Call("numeric_deriv", expr, theta, rho, PACKAGE="nls")
