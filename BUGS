@@ -540,3 +540,23 @@ Date: Tue, 21 May 2002 12:48:22 -0700 (PDT)
 Subject: I() fails on objects of class POSIXct
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
 Date: Tue, 21 May 2002 16:16:08 -0400
+* PR# 1588 *
+Subject: (±¤°?) ????????~~~7?????ü~~~
+From: ?????? <rfv456kr@yahoo.co.kr>
+Date: Wed, 22 May 2002 09:38:04 +0900
+* PR# 1589 *
+Subject: §ïµ½±¼¾v, ¹w¨¾¨rÀYªº³Ì¨Î¿ï¾Ü
+From: nv_op11b1jc@bloomberg.com
+Date: 22 May 2002 15:29:18 +0800
+* PR# 1590 *
+Subject: Bug in pexp
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Wed, 22 May 2002 14:28:44 +0200
+* PR# 1591 *
+Subject: R CMD check fails if Depends field includes a package with a `.' in it
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Wed, 22 May 2002 09:55:59 -0400
+* PR# 1592 *
+Subject: signature match in setMethod
+From: tkeitt@ms.cc.sunysb.edu
+Date: Wed, 22 May 2002 23:04:53 +0200 (MET DST)
