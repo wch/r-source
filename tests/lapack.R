@@ -51,11 +51,12 @@ stopifnot(abs(D - Conj(t(s$u)) %*% X %*% s$v) < Eps)
 
 ##  -------  tests of random real and complex matrices ------
 
-# 100 may cause failures here.
+##			       100  may cause failures here.
 eigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 {
     V <- E$vect; lam <- E$values
     stopifnot(abs(A %*% V - V %*% diag(lam)) < Eps,
+              abs(lam[length(lam)]/lam[1]) < Eps || # this one not for singular A :
               abs(A - V %*% diag(lam) %*% t(V)) < Eps)
 }
 
@@ -65,6 +66,11 @@ Ceigenok <- function(A, E, Eps=1000*.Machine$double.eps)
     stopifnot(Mod(A %*% V - V %*% diag(lam)) < Eps,
               Mod(A - V %*% diag(lam) %*% Conj(t(V))) < Eps)
 }
+
+## failed for some 64bit-Lapack-gcc combinations:
+sm <- cbind(1, 3:1, 1:3)
+eigenok(sm, eigen(sm))
+eigenok(sm, eigen(sm, sym=FALSE))
 
 set.seed(123)
 sm <- matrix(rnorm(25), 5, 5)
