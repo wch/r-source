@@ -31,9 +31,9 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     if(!is.function(f)) return(FALSE)
     if(fname %in% c("as.data.frame", "plot")) return(TRUE)
     e <- body(f)
-    while(is.language(e) && !is.name(e) && (e[[1]] == as.name("{")))
+    while(is.call(e) && (length(e) > 1) && (e[[1]] == as.name("{")))
         e <- e[[2]]
-    is.language(e) && !is.name(e) && (e[[1]] == as.name("UseMethod"))
+    is.call(e) && (e[[1]] == as.name("UseMethod"))
 }
 
 .listFilesWithExts <- function(dir, exts, path = TRUE) {
@@ -948,7 +948,7 @@ function(package, dir, file, lib.loc = NULL,
         stop(paste("file", sQuote(file), "does not exist"))
 
     ## <FIXME>
-    ## Should there really be 'verbose' argument?
+    ## Should there really be a 'verbose' argument?
     ## It may be useful to extract all foreign function calls but then
     ## we would want the calls back ...
     ## What we currently do is the following: if 'verbose' is true, we
