@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-23, 2002-12-31
+Version 1.6-24, 2003-01-08
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1565,6 +1565,10 @@ distributions of R.)
      Routines for log-linear models of incomplete contingency tables,
      including some latent class models via EM and Fisher scoring
      approaches.
+
+*gpclib*
+     General polygon clipping routines for R based on Alan Murta's C
+     library.
 
 *grasper*
      Generalized Regression Analysis and Spatial Predictions for R.
