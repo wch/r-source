@@ -34,6 +34,11 @@ BUG FIXES
 
     o   strsplit() allows unlimited string size.
 
+    o	eigen() now should work (again) in all cases.
+
+    o   is.nan() fixed to work (again) in architectures with 
+	"unspecified" internal isnan().
+
 
 		CHANGES IN R VERSION 0.64.0
 
