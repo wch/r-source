@@ -14,7 +14,8 @@ integrate<- function(f, lower, upper, subdivisions=100,
                         ff, rho = environment(),
                         as.double(lower), as.double(upper),
                         as.double(abs.tol), as.double(rel.tol),
-                        limit = as.integer(limit))
+                        limit = as.integer(limit),
+                        PACKAGE = "base")
         res <- wk[c("value", "abs.error", "subdivisions")]
     } else {
         if(is.na(lower) || is.na(upper)) stop("a limit is missing")
@@ -32,7 +33,8 @@ integrate<- function(f, lower, upper, subdivisions=100,
                         ff, rho = environment(),
                         as.double(bound), as.integer(inf),
                         as.double(abs.tol), as.double(rel.tol),
-                        limit = as.integer(limit))
+                        limit = as.integer(limit),
+                        PACKAGE = "base")
         res <- wk[c("value", "abs.error", "subdivisions")]
     }
     res$message <-

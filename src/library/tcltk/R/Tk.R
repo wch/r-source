@@ -1,8 +1,10 @@
 ### ------ Basics ------
 
 
-.Tcl <- function(...).External("dotTcl",...)
-.Tcl.callback <- function(...).External("dotTclcallback",...)
+.Tcl <- function(...)
+    .External("dotTcl", ..., PACKAGE = "tcltk")
+.Tcl.callback <- function(...)
+    .External("dotTclcallback", ..., PACKAGE = "tcltk")
 
 .Tcl.args <- function(...) {
     ## Convert argument tags to option names (i.e. stick "-" in front)

@@ -1,4 +1,4 @@
-## $Id: splineClasses.R,v 1.4 2000/09/04 06:44:53 ripley Exp $
+## $Id: splineClasses.R,v 1.5 2001/05/06 20:38:08 hornik Exp $
 ##
 ## Classes and methods for determining and manipulating interpolation
 ## splines.
@@ -49,7 +49,8 @@ splineDesign <-
         stop(paste("The x data must be in the range",
                    knots[ord], "to", knots[nk + 1 - ord]))
     }
-    temp <- .Call("spline_basis", knots, ord, x, derivs)
+    temp <- .Call("spline_basis", knots, ord, x, derivs,
+                  PACKAGE = "splines")
     ncoef <- nk - ord
     design <- array(double(nx * ncoef), c(nx, ncoef))
     d.ind <- array(c(rep(1:nx, rep(ord, nx)),
@@ -373,7 +374,8 @@ predict.bSpline <-
     ind <- order(xx)
     knots <- splineKnots(object)
     coeff <- coef(object)
-    y[accept] <- .Call("spline_value", knots, coeff, ord, xx, deriv)
+    y[accept] <- .Call("spline_value", knots, coeff, ord, xx, deriv,
+                       PACKAGE = "splines")
     xyVector(x = x, y = y)
 }
 
@@ -435,7 +437,7 @@ predict.pbSpline <-
     }
     xyVector(x = x.original,
              y = .Call("spline_value", splineKnots(object), coef(object),
-             splineOrder(object), x, deriv))
+             splineOrder(object), x, deriv, PACKAGE = "splines"))
 }
 
 predict.npolySpline <-
