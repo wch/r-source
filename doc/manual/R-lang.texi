@@ -4214,14 +4214,29 @@ single quote
 double quote
 @item \n
 newline
+@item \r
+carriage return
 @item \t
 tab character
 @item \b
 backspace
+@item \a
+bell
+@item \f
+form feed
+@item \v
+vertical tab
 @item \\
 backslash itself
 @item \@var{nnn}
-character with given code
+character with given octal code -- sequences of one, two or three digits
+in the range @code{0 ... 8} are accepted.
+@item \x@var{nn}
+character with given hex code -- sequences of one or two hex digits
+(with entries @code{0 ... 9 A ... F a ... f}).
+@item \x@var{nnnn}
+(Unicode locales only).
+Unicode character with given hex code -- sequences of up to eight hex digits.
 @end table
 
 @noindent
