@@ -7,12 +7,13 @@
   order of collation can be specified by the package DESCRIPTION file.
 }
 \usage{
-collater(pkgDir, pkg = basename(pkgDir), lccollate="C") )
+collater(pkgDir, pkg = basename(pkgDir), lccollate="C", destDir=pkg)
 }
 \arguments{
   \item{pkgDir}{The directory that the package is contained in.}
   \item{pkg}{The name of the package.}
   \item{lccollate} {The flag for controlling sorting of names.}
+  \item{destDir} {The directory to write the output file to.}
 }
 \details{
   Package installation concatenates all files in the package's \code{R}

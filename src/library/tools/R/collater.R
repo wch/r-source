@@ -1,4 +1,5 @@
-collater <- function(pkgDir, pkg=basename(pkgDir), lccollate="C") {
+collater <- function(pkgDir, pkg=basename(pkgDir), lccollate="C",
+                     destDir=pkg) {
     cDir <- getwd()
     on.exit(setwd(cDir), add=TRUE)
 
@@ -29,11 +30,12 @@ collater <- function(pkgDir, pkg=basename(pkgDir), lccollate="C") {
         stop(paste("Package directory",pkgDir,"does not exist"))
 
     ## Get the full pathname of any valid R file
-    rFilePaths <- dir(pattern="*\\.[RSqrs]$")
-    if (file.exists(.Platform$OS.type))
-        rFilePaths <- c(rFilePaths, dir(path=.Platform$OS.type,
-                                        pattern="*\\.[RSqrs]$",
-                                        full.names=TRUE))
+    rFilePaths <- listFilesWithType(".","code")
+    ## rFilePaths will have a './' in front of everything due to
+    ## the way it collects the file names.  This will cause problems
+    ## later so remove them.  Use sub so that it will only kill the
+    ## first instance
+    rFilePaths <- sub("\\.\\/","", rFilePaths)
 
     collationField <- "Collate"
 
@@ -75,14 +77,14 @@ collater <- function(pkgDir, pkg=basename(pkgDir), lccollate="C") {
                 out <- paste("\n",out,sep="")
                 stop(out)
             }
-        file.append(tempColFile,file2=colFiles)
+        collatedLines <- unlist(lapply(colFiles, readLines))
     }
     else {
         ## Collate files by simply catting them all together
-        file.append(tempColFile,file2=rFilePaths)
+        collatedLines <- unlist(lapply(rFilePaths, readLines))
     }
+    writeLines(collatedLines,file.path(destDir,pkg))
 
-    file.copy(tempColFile,pkg)
     ## Success
-    return(TRUE)
+    invisible()
 }
