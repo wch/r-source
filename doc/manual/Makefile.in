@@ -89,7 +89,7 @@ docs: html
 	  echo "ERROR: 'makeinfo' v4.7 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) -D UseExternalXrefs -I$(srcdir) $<
+	$(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 .texi.pdf:
 	@if test "$(PDFTEX)" = false; then \
