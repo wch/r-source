@@ -30,7 +30,9 @@ tmp <- 1:4
 ## work with tmp  and cleanup
 rm(tmp)
 
-## remove (almost) everything in the working environment:
+\dontrun{
+## remove (almost) everything in the working environment.
+## You will get no warning, so don't do this unless you are really sure.
 rm(list = ls())
-}
+}}
 \keyword{environment}
