@@ -6,7 +6,6 @@ density <-
              give.Rkern = FALSE,
              n = 512, from, to, cut = 3, na.rm = FALSE)
 {
-    if (!missing(x)) x <- as.vector(x)
     if(!missing(window) && missing(kernel))
         kernel <- window
     kernel <- match.arg(kernel)
@@ -25,6 +24,7 @@ density <-
     if (!is.numeric(x))
         stop("argument must be numeric")
     name <- deparse(substitute(x))
+    x <- as.vector(x)
     x.na <- is.na(x)
     if (any(x.na)) {
         if (na.rm) x <- x[!x.na]
