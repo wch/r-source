@@ -39,13 +39,17 @@ static void get_locale_strings(void);
 #define match_char(ch1, ch2) if (ch1 != ch2) return NULL
 
 /* we guarantee to have strncasecmp in R */
-static int match_string(const char *cs1, const char *s2)
-{ 
-    size_t len = strlen (cs1);
-    int result = strncasecmp ((cs1), (s2), len) == 0;
-    if (result) (s2) += len;
-    return result;
-}
+#if defined __GNUC__ && __GNUC__ >= 2
+# define match_string(cs1, s2) \
+  (__extension__ ({ size_t len = strlen (cs1);						      \
+     int result = strncasecmp ((cs1), (s2), len) == 0;			      \
+     if (result) (s2) += len;						      \
+     result; }))
+#else
+/* Oh come on.  Get a reasonable compiler.  */
+# define match_string(cs1, s2) \
+  (strncasecmp ((cs1), (s2), strlen (cs1)) ? 0 : ((s2) += strlen (cs1), 1))
+#endif
 
 /* We intentionally do not use isdigit() for testing because this will
    lead to problems with the wide character version.  */
