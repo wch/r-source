@@ -97,11 +97,14 @@ S3method("width.post.details", "default")
 S3method("width.pre.details", "default")
 
 ## <FIXME>?
-## Should I have to do this when the generic is NOT exported?
 S3method("depth", "viewport")
 S3method("depth", "vpList")
 S3method("depth", "vpStack")
 S3method("depth", "vpTree")
+S3method("setvpgpar", "viewport")
+S3method("setvpgpar", "vpStack")
+S3method("setvpgpar", "vpList")
+S3method("setvpgpar", "vpTree")
 S3method("push.vp", "default")
 S3method("push.vp", "viewport")
 S3method("push.vp", "vpList")

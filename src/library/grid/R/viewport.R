@@ -140,7 +140,9 @@ depth.vpList <- function(vp) {
 }
 
 depth.vpStack <- function(vp) {
-  length(vp)
+  # Elements in the stack may be vpStacks or vpLists or vpTrees
+  # so need to sum all the depths
+  sum(sapply(vp, depth, simplify=TRUE))
 }
 
 depth.vpTree <- function(vp) {
@@ -240,6 +242,30 @@ vpTree <- function(parent, children) {
   } else {
     stop("Parent must be viewport and children must be vpList in vpTree")
   }
+}
+
+# A function for setting all gpars for vpStack/List/Tree
+# Used in size.R
+setvpgpar <- function(vp) {
+  UseMethod("setvpgpar")
+}
+
+setvpgpar.viewport <- function(vp) {
+  if (!is.null(vp$gp))
+    set.gpar(vp$gp)
+}
+
+setvpgpar.vpStack <- function(vp) {
+  lapply(vp, setvpgpar)
+}
+
+setvpgpar.vpList <- function(vp) {
+  setvpgpar(vp[[length(vp)]])
+}
+
+setvpgpar.vpTree <- function(vp) {
+  setvpgpar(vp$parent)
+  setvpgpar(vp$children)
 }
 
 #############

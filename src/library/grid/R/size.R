@@ -42,8 +42,11 @@
 width.pre <- function(x) {
   list.struct <- get.value(x)
   if (!is.null(list.struct$vp))
-    if (!is.null(list.struct$vp$gp))
-      set.gpar(list.struct$vp$gp)
+    # NOTE: The vp slot in a grob could be more than just a standard viewport
+    # i.e., it could be a vpStack/List/Tree
+    # NOTE also that the unsetting is less problematic because
+    # the previous gpar setting is just saved and reset in C code
+    setvpgpar(list.struct$vp)
   if (!is.null(list.struct$gp))
     set.gpar(list.struct$gp)
   width.pre.details(list.struct)
@@ -90,8 +93,11 @@ width.post.details.default <- function(x) {}
 height.pre <- function(x) {
   list.struct <- get.value(x)
   if (!is.null(list.struct$vp))
-    if (!is.null(list.struct$vp$gp))
-      set.gpar(list.struct$vp$gp)
+    # NOTE: The vp slot in a grob could be more than just a standard viewport
+    # i.e., it could be a vpStack/List/Tree
+    # NOTE also that the unsetting is less problematic because
+    # the previous gpar setting is just saved and reset in C code
+    setvpgpar(list.struct$vp)
   if (!is.null(list.struct$gp))
     set.gpar(list.struct$gp)
   height.pre.details(list.struct)

@@ -174,7 +174,8 @@ grid.draw <- function(x, recording=TRUE) {
       if (!is.null(list.struct$gp))
         set.gpar(tempgpar)
       if (!is.null(list.struct$vp))
-          popViewport(recording=FALSE)
+        # NOTE that the grob's vp may be a vpStack/List/Tree
+        popViewport(depth(list.struct$vp), recording=FALSE)
       if (recording)
         record(x)
   }

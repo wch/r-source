@@ -227,13 +227,14 @@ vpTreeFromNode <- function(node) {
 # or ALL of the tree
 current.vpTree <- function(all=TRUE) {
   cpvp <- grid.Call("L_currentViewport")
-  if (all && vpDepth() > 0) {
+  moving <- all && vpDepth() > 0
+  if (moving) {
     savedname <- cpvp$name
     upViewport(0)
     cpvp <- grid.Call("L_currentViewport")
   }
   tree <- vpTreeFromNode(cpvp)
-  if (all) {
+  if (moving) {
     downViewport(savedname)
   }
   tree
