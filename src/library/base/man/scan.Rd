@@ -121,11 +121,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   If \code{sep} is non-default, the fields may be quoted in the style of
   \file{.csv} files where separators inside quotes (\code{''} or 
   \code{""}) are ignored and quotes may be put inside strings by
-  doubling them.  However, if \code{sep = "\n"} it is assumed
+  doubling them.  However, if \code{sep = "\\n"} it is assumed
   by default that one wants to read entire lines verbatim.
 
   Note that since \code{sep} is a separator and not a terminator,
-  reading a file by \code{scan("foo", sep="\n", blank.lines.skip=FALSE)}
+  reading a file by \code{scan("foo", sep="\\n", blank.lines.skip=FALSE)}
   will give an empty file line if the file ends in a linefeed and not if
   it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.

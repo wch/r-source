@@ -30,7 +30,7 @@ geterrmessage()
 }
 \value{
   \code{geterrmessage} gives the last error message, as character string
-  ending in \code{"\n"}.
+  ending in \code{"\\n"}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -28,7 +28,7 @@ textConnection(object, open = "r")
   \code{\link{isIncomplete}} will indicate if there is an incomplete
   final line.  Closing the connection will output the final line,
   complete or not.  (A line is complete once it has been terminated by
-  end-of-line, represented by \code{"\n"} in \R.)
+  end-of-line, represented by \code{"\\n"} in \R.)
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the
