@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:56\n"
+"POT-Creation-Date: 2005-03-11 08:53\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -128,9 +128,8 @@ msgstr "esiste già un oggetto con questo nome"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "l'autocaricatore non trova"
 
-#, fuzzy
 msgid "invalid argument values in 'backsolve'"
-msgstr "parametri non valid in backsolve"
+msgstr "parametri non valid in 'backsolve'"
 
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "matrice singolare in backsolve. Primo zero sulla diagonale [%d]"
@@ -138,36 +137,29 @@ msgstr "matrice singolare in backsolve. Primo zero sulla diagonale [%d]"
 msgid "complex matrices not permitted at present"
 msgstr "matrici complesse non ammesse al momento"
 
-#, fuzzy
 msgid "non-numeric argument to 'chol'"
-msgstr "argomento non numerico per chol"
+msgstr "argomento non numerico per 'chol'"
 
-#, fuzzy
 msgid "non-square matrix in 'chol'"
-msgstr "matrice non quadrata in chol"
+msgstr "matrice non quadrata in 'chol'"
 
-#, fuzzy
 msgid "non-matrix argument to 'chol'"
-msgstr "argomento di chol deve essere una matrice"
+msgstr "argomento di 'chol' deve essere una matrice"
 
 msgid "matrix not positive definite"
 msgstr "matrice non definita positiva"
 
-#, fuzzy
 msgid "non-positive definite matrix in 'chol'"
-msgstr "matrice non definita positiva in chol"
+msgstr "matrice non definita positiva in 'chol'"
 
-#, fuzzy
 msgid "non-numeric argument to 'chol2inv'"
-msgstr "argomento non numeric in chol2inv"
+msgstr "argomento non numeric in 'chol2inv'"
 
-#, fuzzy
 msgid "invalid 'size' argument in 'chol2inv'"
-msgstr "argomento size non valido in chol2inv"
+msgstr "argomento size non valido in 'chol2inv'"
 
-#, fuzzy
 msgid "singular matrix in 'chol2inv'"
-msgstr "matrice singolare in chol2inv"
+msgstr "matrice singolare in 'chol2inv'"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' deve essere un array con almeno due dimensioni"
@@ -224,21 +216,17 @@ msgstr "dati in frame non di tipo numeric"
 msgid "class information lost from one or more columns"
 msgstr "informazioni sulla classe perse per una o più colonne"
 
-#, fuzzy
 msgid "invalid 'row.names' length"
-msgstr "lunghezza di row.names non ammissibile"
+msgstr "lunghezza di 'row.names' non ammissibile"
 
-#, fuzzy
 msgid "duplicate 'row.names' are not allowed"
-msgstr "row.names duplicate non sono permesse"
+msgstr "'row.names' duplicate non sono permesse"
 
-#, fuzzy
 msgid "missing 'row.names' are not allowed"
-msgstr "row.names mancanti non sono permesse"
+msgstr "'row.names' mancanti non sono permesse"
 
-#, fuzzy
 msgid "invalid 'dimnames' given for data frame"
-msgstr "dimnames fornita per i ldata frame non valida"
+msgstr "'dimnames' fornita per i ldata frame non valida"
 
 #, fuzzy
 msgid "cannot coerce class \"%s\" into a data.frame"
@@ -251,9 +239,8 @@ msgstr "dimnames fornita per i ldata frame non valida"
 msgid "supplied %d row names for %d rows"
 msgstr ""
 
-#, fuzzy
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
-msgstr "ambiguità nei row names negli elementi di \"data.frame\", elemnto"
+msgstr "ambiguità nei row names negli elementi di 'data.frame', elemnto %d"
 
 msgid "some row.names duplicated:"
 msgstr "alcuni row.names doppi:"
@@ -536,9 +523,8 @@ msgstr ""
 msgid "No DLL currently loaded with name or path"
 msgstr "Nessuna DLL attualmente caricata con questo nome e path"
 
-#, fuzzy
 msgid "multiple DLLs match '%s'. Using '%s'"
-msgstr "più di una DLL è simile a '%s'. Userò %s"
+msgstr "più di una DLL è simile a '%s'. Userò '%s'"
 
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
 msgstr ""
@@ -559,13 +545,11 @@ msgstr ""
 msgid "0 x 0 matrix"
 msgstr "matrice 0 x 0"
 
-#, fuzzy
 msgid "non-square matrix in 'eigen'"
-msgstr "matrice non quadrata in eigen"
+msgstr "matrice non quadrata in 'eigen'"
 
-#, fuzzy
 msgid "numeric or complex values required in 'eigen'"
-msgstr "valori numeric o complex necessari in eigen"
+msgstr "valori numeric o complex necessari in 'eigen'"
 
 #, fuzzy
 msgid "'ch' returned code %d in 'eigen'"
@@ -613,14 +597,12 @@ msgstr "nessun file su cui copiare"
 msgid "more 'from' files than 'to' files"
 msgstr "ci sono più file 'from' che file 'to'"
 
-#, fuzzy
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "il file non può essere copiato sia da 'from' che su 'to'"
 
 msgid "no files to link from"
 msgstr "nessun file cui collegarsi"
 
-#, fuzzy
 msgid "no files/directory to link to"
 msgstr "nessun file/directory da collegare"
 
@@ -664,28 +646,23 @@ msgstr "'subset' deve essere di tipo logico"
 msgid "'form' must be a two-sided formula"
 msgstr "'form' deve essere una formula con due membri"
 
-#, fuzzy
 msgid "value for '"
-msgstr "valore per \""
+msgstr "valore per '"
 
-#, fuzzy
 msgid "' not found"
-msgstr "\" non trovato"
+msgstr "' non trovato"
 
-#, fuzzy
 msgid "'pattern' must be a non-empty character string"
-msgstr "il pattern deve essere una stringa di caratteri non vuota"
+msgstr "il 'pattern' deve essere una stringa di caratteri non vuota"
 
-#, fuzzy
 msgid "'max.distance' must be non-negative"
-msgstr "max.distance deve essere non negativa"
+msgstr "'max.distance' deve essere non negativa"
 
 msgid "unknown match distance components ignored"
 msgstr "le componenti sconosciute della distanza verranno ignorate"
 
-#, fuzzy
 msgid "'max.distance' components must be non-negative"
-msgstr "le componenti di max.distance devono essere non negative"
+msgstr "le componenti di 'max.distance' devono essere non negative"
 
 msgid "matrix should be square"
 msgstr "la matrice deve essere quadrata"
@@ -712,9 +689,8 @@ msgstr "non è stato correttamente installato"
 msgid "See the Note in ?library"
 msgstr "Si veda 'Note' in ?library"
 
-#, fuzzy
 msgid "Attaching package: '%s'"
-msgstr "Carico il pacchetto richiesto: %s"
+msgstr "Carico il pacchetto richiesto: '%s'"
 
 #, fuzzy
 msgid "package '%s' has been merged into '%s'"
@@ -757,13 +733,23 @@ msgstr "impossibile caricare il codice R del pacchetto"
 msgid "package '%s' contains no R code"
 msgstr "non contiene codice R"
 
-#, fuzzy
 msgid ".First.lib failed for '%s'"
-msgstr ".First.lib fallita per"
+msgstr ".First.lib fallita per '%s'"
 
 #, fuzzy
 msgid "package '%s' already present in search()"
 msgstr "già presente in search()"
+
+msgid "%sPackages in library '%s':"
+msgstr ""
+
+#, fuzzy
+msgid "no packages found"
+msgstr "nessuno dei pacchetti è stato trovato"
+
+#, fuzzy
+msgid "R packages available"
+msgstr "Nessun traceback disponibile"
 
 msgid "shared library '%s' not found"
 msgstr "libraria condivisa '%s' non trovata"
@@ -797,12 +783,37 @@ msgstr ""
 msgid "none of the packages were found"
 msgstr "nessuno dei pacchetti è stato trovato"
 
+msgid ""
+"Further information is available in the following vignettes in directory '%"
+"s':"
+msgstr ""
+
+msgid "doc"
+msgstr ""
+
+msgid "Description:"
+msgstr ""
+
+msgid "Index:"
+msgstr ""
+
+msgid "Information on package '%s'"
+msgstr "Carico il pacchetto richiesto: '%s'"
+
+msgid "Documentation for package '%s'"
+msgstr "Carico il pacchetto richiesto: '%s'"
+
 msgid "package '%s' required by '%s' could not be found"
 msgstr ""
 
-#, fuzzy
+msgid "package '%s' %s was found, but %s %s is required by '%s'"
+msgstr ""
+
 msgid "package '%s' could not be loaded"
-msgstr "pacchetto %s non caricato"
+msgstr "pacchetto '%s' non caricato"
+
+msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "argomento file non corretto"
@@ -862,9 +873,8 @@ msgstr "l'input e la destinazione devono essere vettori di caratteri"
 msgid "'%s' is not a function, character or symbol"
 msgstr "nessuna oggetto function, character o symbol:"
 
-#, fuzzy
 msgid "found non-function '%s'"
-msgstr "trovata una non-function:"
+msgstr "trovata una non-function '%s'"
 
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "tentativo di impostare rownames per un oggetto senza dimensioni"
@@ -894,9 +904,8 @@ msgstr "'by' deve specificare colonne(a) valide"
 msgid "no rows to match"
 msgstr "nessuna riga da corrispondere"
 
-#, fuzzy
 msgid "'by.x' and 'by.y' specify different numbers of columns"
-msgstr "by.x e by.y specificano numeri di colonne differenti"
+msgstr "'by.x' e 'by.y' specificano numeri di colonne differenti"
 
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
@@ -918,7 +927,7 @@ msgstr "il namespace è già agganciato"
 
 #, fuzzy
 msgid "%s not found"
-msgstr "\" non trovato"
+msgstr "%s non trovato"
 
 msgid "cyclic name space dependencies are not supported"
 msgstr "dipendenze circolari nel namespace non sono supportate"
@@ -1003,19 +1012,15 @@ msgstr "esportazioni indefinite :"
 msgid "package '%s' has no NAMESPACE file"
 msgstr "non ha il file NAMESPACE"
 
-#, fuzzy
 msgid "bad 'S3method' directive: %s"
-msgstr "direttiva S3method sbagliata:"
+msgstr "direttiva S3method sbagliata: %s"
 
-#, fuzzy
 msgid "too many 'S3method' directives"
-msgstr "troppe direttive S3method"
+msgstr "troppe direttive 'S3method'"
 
-#, fuzzy
 msgid "unknown namespace directive: %s"
-msgstr "direttiva namespace sconosciuta:"
+msgstr "direttiva namespace sconosciuta:i %s"
 
-#, fuzzy
 msgid "S3 method '%s' was declared in NAMESPACE but not found"
 msgstr "dichiarato in NAMESPACE ma non trovato"
 
@@ -1037,7 +1042,6 @@ msgstr "non ancora implementato"
 msgid "argument '%s' is not used (yet)"
 msgstr ""
 
-#, fuzzy
 msgid "invalid version specification"
 msgstr "versione specificata non valida"
 
@@ -1072,32 +1076,28 @@ msgstr "'eps.correct' deve essere 0, 1, o 2"
 msgid "first argument must be a QR decomposition"
 msgstr "il primo argomento deve essere una decomposizione QR"
 
-#, fuzzy
 msgid "'qr' and 'y' must have the same number of rows"
-msgstr "qr e y devono avere lo stesso numero di righe"
+msgstr "'qr' e 'y' devono avere lo stesso numero di righe"
 
-#, fuzzy
 msgid "exact singularity in 'qr.coef'"
-msgstr "singolarità perfetta in qr.coef"
+msgstr "singolarità perfetta in 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
 msgstr "l'argomento non è una decomposizione QR"
 
-#, fuzzy
 msgid "not implemented for complex 'qr'"
-msgstr "implementato per qr complex"
+msgstr "implementato per 'qr' complex"
 
 msgid "not supported for LAPACK QR"
 msgstr "non supportato per LAPACK QR"
 
-#, fuzzy
 msgid "'k' is too large"
-msgstr "k è troppo grande"
+msgstr "'k' è troppo grande"
 
-#, fuzzy
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
-"c'è bisogno di un valore più grande di ncol poiché si utilizzato il pivoting"
+"c'è bisogno di un valore più grande di 'ncol' poiché si utilizzato il "
+"pivoting"
 
 msgid "file' must be a character string or connection"
 msgstr "'file' deve essere una stringa di caratteri o una connessione"
@@ -1193,30 +1193,26 @@ msgstr "'file' deve essere NULL, una connessione o una stringa di caratteri"
 msgid "this is the \"qr\" method for the generic function solve()"
 msgstr "questo è il metodo \"qr\" per la funzione generica solve()"
 
-#, fuzzy
 msgid "singular matrix 'a' in 'solve'"
 msgstr "matrice singolare 'a' in solve"
 
 msgid "only square matrices can be inverted"
 msgstr "solo le matrici quadrate si possono invertire"
 
-#, fuzzy
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
-msgstr "solve.default è stato usato con un oggetto qr: usare qr.solve"
+msgstr "solve.default è stato usato con un oggetto \"qr\": usare 'qr.solve'"
 
 msgid "singular matrix 'a' in solve"
 msgstr "matrice singolare 'a' in solve"
 
-#, fuzzy
 msgid "'index.return' only for non-factors"
-msgstr "index.return solo per oggetti non factor"
+msgstr "'index.return' solo per oggetti non factor"
 
 msgid "'x' must be atomic"
 msgstr "'x' deve essere atomico"
 
-#, fuzzy
 msgid "'index.return' only for 'na.last = NA'"
-msgstr "index.return solo per na.last = NA"
+msgstr "'index.return' solo per 'na.last = NA'"
 
 msgid "unsupported options for partial sorting"
 msgstr "opzione non supportata nel sort parziale"
@@ -1227,21 +1223,17 @@ msgstr "'partial' non finito"
 msgid "argument lengths differ"
 msgstr "la lunghezza degli argomenti differisce"
 
-#, fuzzy
 msgid "method=\"quick\" is only for numeric 'x'"
-msgstr "method=\"quick\" è solo per x di tipo numeric"
+msgstr "method=\"quick\" è solo per 'x' di tipo numeric"
 
-#, fuzzy
 msgid "method=\"radix\" is only for integer 'x'"
-msgstr "method=\"radix\" è solo per x interi"
+msgstr "method=\"radix\" è solo per 'x' interi"
 
-#, fuzzy
 msgid "'echo' must be logical"
-msgstr "echo deve essere di tpo logico"
+msgstr "'echo' deve essere di tpo logico"
 
-#, fuzzy
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
-msgstr "verbose è TRUE, echo no; ... impongo echo <- TRUE"
+msgstr "'verbose' è TRUE, echo no; ... impongo 'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "non posso trovare un encoding plausibile"
@@ -1259,17 +1251,14 @@ msgstr "valore non corretto per 'x'"
 msgid "'x' and 'y' must have the same length"
 msgstr "'x' e 'y' devono avere la stessa lunghezza"
 
-#, fuzzy
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "valori non corretti per 'indent' e 'width'"
 
-#, fuzzy
 msgid "argument to 'svd' must be numeric"
-msgstr "l'argomento di svd deve essere numeric"
+msgstr "l'argomento di 'svd' deve essere numeric"
 
-#, fuzzy
 msgid "'nv' must be 0 or ncol(x)"
-msgstr "nv deve essere 0 o ncol(x)"
+msgstr "'nv' deve essere 0 o ncol(x)"
 
 msgid "error %d in 'dsvdc'"
 msgstr "errore %d in 'dsvdc'"
@@ -1280,9 +1269,8 @@ msgstr "nulla da tabulare"
 msgid "all arguments must have the same length"
 msgstr "tutti gli argomenti devono avere la stessa lunghezza"
 
-#, fuzzy
 msgid "'object' must inherit from class \"table\""
-msgstr "l'oggetto deve ereditare dalla classe \"table\""
+msgstr "'object' deve ereditare dalla classe \"table\""
 
 msgid "'x' must inherit from class \"summary.table\""
 msgstr "'x' deve ereditare dalla classe \"summary.table\""
@@ -1290,9 +1278,8 @@ msgstr "'x' deve ereditare dalla classe \"summary.table\""
 msgid "cannot coerce into a table"
 msgstr "non posso trasformarlo in una table"
 
-#, fuzzy
 msgid "'x' is not an array"
-msgstr "x non è un array"
+msgstr "'x' non è un array"
 
 msgid "invalid argument 'n'"
 msgstr "argomento 'n' non valido"
@@ -1325,9 +1312,8 @@ msgstr "Rimozione"
 msgid "Registering evaluate as low-level callback"
 msgstr "Registering lavora come callback di basso livello"
 
-#, fuzzy
 msgid "'width' must be positive"
-msgstr "width deve essere positiva"
+msgstr "'width' deve essere positiva"
 
 msgid "No traceback available"
 msgstr "Nessun traceback disponibile"
@@ -1356,13 +1342,11 @@ msgstr "'digits' non valido"
 msgid "argument must be character"
 msgstr "l'argomento deve essere di tipo character"
 
-#, fuzzy
 msgid "'cmd' could not be run"
-msgstr "cmd non può essere eseguito"
+msgstr "'cmd' non può essere eseguito"
 
-#, fuzzy
 msgid "'cmd' execution failed with error code %d"
-msgstr "l'esecuzione di cmd non è fallita con errore"
+msgstr "l'esecuzione di 'cmd' non è fallita con errore"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"

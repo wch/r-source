@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:56\n"
+"POT-Creation-Date: 2005-03-11 08:53\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -762,6 +762,17 @@ msgstr ".First.lib载入失败，因为"
 msgid "package '%s' already present in search()"
 msgstr "已经在search()存在了"
 
+msgid "%sPackages in library '%s':"
+msgstr ""
+
+#, fuzzy
+msgid "no packages found"
+msgstr "所有的程辑包都没有找到"
+
+#, fuzzy
+msgid "R packages available"
+msgstr "无输入"
+
 #, fuzzy
 msgid "shared library '%s' not found"
 msgstr "共享图书馆"
@@ -797,12 +808,40 @@ msgstr ""
 msgid "none of the packages were found"
 msgstr "所有的程辑包都没有找到"
 
+msgid ""
+"Further information is available in the following vignettes in directory '%"
+"s':"
+msgstr ""
+
+msgid "doc"
+msgstr ""
+
+msgid "Description:"
+msgstr ""
+
+msgid "Index:"
+msgstr ""
+
+#, fuzzy
+msgid "Information on package '%s'"
+msgstr "载入需要的程辑包：%s"
+
+#, fuzzy
+msgid "Documentation for package '%s'"
+msgstr "里没有这个程辑包"
+
 msgid "package '%s' required by '%s' could not be found"
+msgstr ""
+
+msgid "package '%s' %s was found, but %s %s is required by '%s'"
 msgstr ""
 
 #, fuzzy
 msgid "package '%s' could not be loaded"
 msgstr "程辑包%s没有载入"
+
+msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "文件变元值不对"
@@ -1594,9 +1633,6 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "library"
 #~ msgstr "图书馆"
-
-#~ msgid "contains no package"
-#~ msgstr "里没有这个程辑包"
 
 #~ msgid "package(s)"
 #~ msgstr "程辑包"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-10 10:16+0000\n"
+"POT-Creation-Date: 2005-03-11 08:05+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -376,14 +376,15 @@ msgstr "ATTENZIONE: valore non valido di  --max-mem-size: verrà ignorato\n"
 #: src/gnuwin32/system.c:882
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
-msgstr "ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e "
-"quindi ignorato\n"
+msgstr ""
+"ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e quindi "
+"ignorato\n"
 
 #: src/gnuwin32/system.c:887
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
-msgstr "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi "
-"ignorato\n"
+msgstr ""
+"ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
 
 #: src/gnuwin32/system.c:897 src/unix/system.c:235
 #, c-format
@@ -556,8 +557,8 @@ msgstr "RNG_Init: RNG di tipo %d non implementato"
 
 #: src/main/RNG.c:285
 msgid ".Random.seed is a missing argument with no default"
-msgstr "il parametro .Random.seed  non è specificato e non "
-"ha un valore di default"
+msgstr ""
+"il parametro .Random.seed  non è specificato e non ha un valore di default"
 
 #: src/main/RNG.c:287
 msgid ".Random.seed is not a vector"
@@ -631,7 +632,8 @@ msgstr "richiesto argomento di tipo character"
 msgid ""
 "unable to load shared library '%s':\n"
 "  %s"
-msgstr "impossibile caricare libreria condivisa '%s':\n"
+msgstr ""
+"impossibile caricare libreria condivisa '%s':\n"
 "  %s"
 
 #: src/main/Rdynload.c:861
@@ -697,7 +699,8 @@ msgstr "Serie storiche non compatibili"
 msgid ""
 "longer object length\n"
 "\tis not a multiple of shorter object length"
-msgstr "lunghezza dell'oggetto più lungho\n"
+msgstr ""
+"lunghezza dell'oggetto più lungho\n"
 "\tnon è un multiplo di quella dell'oggetto più piccolo"
 
 #: src/main/arithmetic.c:495
@@ -1054,88 +1057,93 @@ msgstr "il numero di righe delle matrici deve coincidere (si veda arg %d)"
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "il numero di colonne delle matrici deve coincidere (si veda arg %d)"
 
-#: src/main/builtin.c:62
+#: src/main/builtin.c:51 src/main/envir.c:1417 src/main/envir.c:1570
+#: src/main/envir.c:1701 src/main/paste.c:59 src/main/random.c:403
+msgid "invalid first argument"
+msgstr "primo argomento non valido"
+
+#: src/main/builtin.c:88
 msgid "invalid add argument"
 msgstr "argomento 'add' non valido"
 
-#: src/main/builtin.c:66 src/main/errors.c:958
+#: src/main/builtin.c:92 src/main/errors.c:958
 msgid "invalid number of arguments"
 msgstr "numero di argomenti non valido"
 
-#: src/main/builtin.c:160
+#: src/main/builtin.c:186
 msgid "replacement object is not an environment"
 msgstr "l'oggetto sostitutivo non è un environment"
 
-#: src/main/builtin.c:175
+#: src/main/builtin.c:201
 msgid "'enclos' must be an environment"
 msgstr "'enclos' deve essere un environment"
 
-#: src/main/builtin.c:188 src/main/builtin.c:198
+#: src/main/builtin.c:214 src/main/builtin.c:224
 msgid "argument is not an environment"
 msgstr "l'argomento non è un environment"
 
-#: src/main/builtin.c:200
+#: src/main/builtin.c:226
 msgid "'parent' is not an environment"
 msgstr "'parent' non è un environment"
 
-#: src/main/builtin.c:281
+#: src/main/builtin.c:307
 msgid "invalid 'sep=' specification"
 msgstr "specificazione di 'sep=' non valida"
 
-#: src/main/builtin.c:289
+#: src/main/builtin.c:315
 msgid "invalid 'fill' argument"
 msgstr "argomento 'fill' non valido"
 
-#: src/main/builtin.c:301
+#: src/main/builtin.c:327
 msgid "invalid 'label' argument"
 msgstr "argomento 'label' non valido"
 
-#: src/main/builtin.c:307
+#: src/main/builtin.c:333
 msgid "invalid 'append' specification"
 msgstr "specificazione di 'append' non valida"
 
-#: src/main/builtin.c:363
+#: src/main/builtin.c:389
 #, c-format
 msgid "argument %d not yet handled by cat"
 msgstr "l'argomento %d non ancora supportato da cat"
 
-#: src/main/builtin.c:475
+#: src/main/builtin.c:501
 msgid "vector: zero-length 'type' argument"
 msgstr "vector: argomento 'type' di lunghezza zero"
 
-#: src/main/builtin.c:494
+#: src/main/builtin.c:520
 #, c-format
 msgid "vector: cannot make a vector of mode \"%s\"."
 msgstr "vector: non posso creare un vettore in modalità \"%s\"."
 
-#: src/main/builtin.c:524
+#: src/main/builtin.c:550
 msgid "cannot set length of non-vector"
 msgstr "impossibile impostare lunghezza di un oggetto non vector"
 
-#: src/main/builtin.c:621
+#: src/main/builtin.c:647
 msgid "length<- invalid first argument"
 msgstr "length<- primo argomento non valido"
 
-#: src/main/builtin.c:623
+#: src/main/builtin.c:649
 msgid "length<- invalid second argument"
 msgstr "length<- secondo argomento non valido"
 
-#: src/main/builtin.c:626
+#: src/main/builtin.c:652
 msgid "length<- missing value for 'length'"
 msgstr "length<- valore mancante in 'length'"
 
-#: src/main/builtin.c:652 src/main/coerce.c:1931 src/main/coerce.c:1962
+#: src/main/builtin.c:678 src/main/coerce.c:1931 src/main/coerce.c:1962
 #: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
 #: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
 #: src/main/eval.c:3036 src/main/eval.c:3128
 msgid "... used in an incorrect context"
 msgstr "...usato in un contesto sbagliato"
 
-#: src/main/builtin.c:657
+#: src/main/builtin.c:683
 msgid "invalid parameter in switch()"
 msgstr "parametro non valido in switch()"
 
-#: src/main/builtin.c:668
+#: src/main/builtin.c:694
 msgid "switch: EXPR must return a length 1 vector"
 msgstr "switch: EXPR deve restituire un vettore di lunghezza 1"
 
@@ -2700,11 +2708,6 @@ msgstr ""
 msgid "cannot remove variables from this database"
 msgstr ""
 
-#: src/main/envir.c:1417 src/main/envir.c:1570 src/main/envir.c:1701
-#: src/main/paste.c:59 src/main/random.c:403
-msgid "invalid first argument"
-msgstr "primo argomento non valido"
-
 #: src/main/envir.c:1424 src/main/envir.c:1513 src/main/envir.c:1585
 #: src/main/envir.c:2249 src/main/saveload.c:2028
 msgid "invalid 'envir' argument"
@@ -3388,8 +3391,8 @@ msgid "'onMouseDown' not supported"
 msgstr ""
 
 #: src/main/gevents.c:60
-msgid "invalid 'onMouseDow'n callback"
-msgstr ""
+msgid "invalid 'onMouseDown' callback"
+msgstr "callback per 'onMouseDown' non valida"
 
 #: src/main/gevents.c:66
 msgid "'onMouseMove' not supported"
@@ -3910,31 +3913,31 @@ msgstr ""
 msgid "term names will be truncated"
 msgstr ""
 
-#: src/main/names.c:914
+#: src/main/names.c:915
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:922
+#: src/main/names.c:923
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1035
+#: src/main/names.c:1036
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1037
+#: src/main/names.c:1038
 msgid "symbol print-name too long"
 msgstr ""
 
-#: src/main/names.c:1063
+#: src/main/names.c:1064
 msgid "invalid .Internal() argument"
 msgstr "argomento .Internal() non valido"
 
-#: src/main/names.c:1066
+#: src/main/names.c:1067
 msgid "invalid internal function"
 msgstr "functione interna non valida"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1069
 #, c-format
 msgid "no internal function \"%s\""
 msgstr ""
@@ -5577,11 +5580,11 @@ msgid "invalid 'comment.char' value"
 msgstr "valore 'comment.char' non valido"
 
 #: src/main/scan.c:955
-msgid "invalid 'sep value: must be one byte"
+msgid "invalid 'sep' value: must be one byte"
 msgstr "valore 'sep' non valido: deve essere di un byte"
 
-#: src/main/scan.c:959
-msgid "invalid sep value"
+#: src/main/scan.c:959 src/main/scan.c:1088
+msgid "invalid 'sep' value"
 msgstr "valore 'sep' non valido"
 
 #: src/main/scan.c:968
@@ -5603,10 +5606,6 @@ msgstr ""
 #: src/main/scan.c:997
 msgid "invalid 'allowEscapes' value"
 msgstr "valore 'allowEscapes' non valido"
-
-#: src/main/scan.c:1088
-msgid "invalid 'sep' value"
-msgstr "valore 'sep' non valido"
 
 #: src/main/scan.c:1159 src/main/scan.c:1178
 msgid "string terminated by newline or EOF"
@@ -6809,8 +6808,9 @@ msgstr "Lapack routine dgesv: is sistema è esattamente singolare"
 #: src/modules/lapack/Lapack.c:801
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
-msgstr "il sistema è numericamente singolare: valore di condizione di "
-"reciprocità = %g"
+msgstr ""
+"il sistema è numericamente singolare: valore di condizione di reciprocità = %"
+"g"
 
 #: src/modules/lapack/Lapack.c:934
 msgid "argument 'logarithm' must be logical"
@@ -7224,6 +7224,9 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
+
+#~ msgid "invalid sep value"
+#~ msgstr "valore 'sep' non valido"
 
 #~ msgid "Could not allocate memory for Encodebuf"
 #~ msgstr "non è possibile allocare memoria per Encodebuf"

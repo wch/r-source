@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:56\n"
+"POT-Creation-Date: 2005-03-11 08:53\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -674,6 +674,15 @@ msgstr ""
 msgid "package '%s' already present in search()"
 msgstr ""
 
+msgid "%sPackages in library '%s':"
+msgstr ""
+
+msgid "no packages found"
+msgstr ""
+
+msgid "R packages available"
+msgstr ""
+
 msgid "shared library '%s' not found"
 msgstr ""
 
@@ -704,10 +713,34 @@ msgstr ""
 msgid "none of the packages were found"
 msgstr ""
 
+msgid "Further information is available in the following vignettes in directory '%s':"
+msgstr ""
+
+msgid "doc"
+msgstr ""
+
+msgid "Description:"
+msgstr ""
+
+msgid "Index:"
+msgstr ""
+
+msgid "Information on package '%s'"
+msgstr ""
+
+msgid "Documentation for package '%s'"
+msgstr ""
+
 msgid "package '%s' required by '%s' could not be found"
 msgstr ""
 
+msgid "package '%s' %s was found, but %s %s is required by '%s'"
+msgstr ""
+
 msgid "package '%s' could not be loaded"
+msgstr ""
+
+msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr ""
 
 msgid "bad file argument"
