@@ -3043,5 +3043,11 @@ dat <- data.frame(a=rep(2,10),b=rep("a",10))
 aggregate(dat$a, by=list(a1=dat$a, b1=dat$b), NROW)
 ## failed due to missing drop = FALSE
 
+## [<-.data.frame with a data-frame value
+x <- data.frame(a=1:3, b=4:6, c=7:9)
+info <- x[1:2]
+x[, names(info)] <-  info[1,]
+##
+
 
 ### end of tests added in 1.9.1 ###

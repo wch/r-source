@@ -612,6 +612,7 @@ data.frame <-
     } else { # a list
         ## careful, as.data.frame turns things into factors.
 	## value <- as.data.frame(value)
+        value <- unclass(value) # to avoid data frame indexing
         lens <- sapply(value, NROW)
         for(k in seq(along=lens)) {
             N <- lens[k]
