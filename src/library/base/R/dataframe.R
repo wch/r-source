@@ -79,7 +79,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, optional = FALSE)
     cl <- class(x)
     i <- match("data.frame", cl)
     if(i > 1)
-	class(x) <- cl[ - seq(length = i - 1)]
+	class(x) <- cl[ - (1:(i-1))]
     if(is.character(row.names)){
 	if(length(row.names) == length(attr(x, "row.names")))
 	    attr(x, "row.names") <- row.names
@@ -146,13 +146,13 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     row.names <- dn[[1]]
     collabs <- dn[[2]]
     value <- vector("list", ncols)
-    for(i in seq(length=ncols))
-	value[[i]] <- x[,i]
+    for(i in 1:ncols)
+	value[[i]] <- as.vector(x[,i])
     if(length(row.names)==nrows) {}
     else if(optional) row.names <- character(nrows)
-    else row.names <- as.character(seq(length=nrows))
+    else row.names <- as.character(1:nrows)
     if(length(collabs) == ncols) names(value) <- collabs
-    else if(!optional) names(value) <- paste("V", seq(length=ncols), sep="")
+    else if(!optional) names(value) <- paste("V", 1:ncols, sep="")
     attr(value, "row.names") <- row.names
     class(value) <- "data.frame"
     value
@@ -172,7 +172,7 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
 		 nrows, "rows"))
     }
     else if(optional) row.names <- character(nrows)
-    else row.names <- as.character(seq(length=nrows))
+    else row.names <- as.character(1:nrows)
     if(!optional) names(value) <- deparse(substitute(x))[[1]]
     attr(value, "row.names") <- row.names
     class(value) <- "data.frame"
@@ -230,7 +230,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	nnew <- length(xi)
 	namesi <- names(xi)
 	if(nnew>1) {
-	    if(length(namesi) == 0) namesi <- seq(length=nnew)
+	    if(length(namesi) == 0) namesi <- 1:nnew
 	    if(no.vn[i]) vnames[[i]] <- namesi
 	    else vnames[[i]] <- paste(vnames[[i]], namesi, sep=".")
 	}
@@ -242,7 +242,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	value[[i]] <- xi
     }
     nr <- max(nrows)
-    for(i in seq(length=n)[nrows < nr]) {
+    for(i in (1:n)[nrows < nr]) {
 	xi <- value[[i]]
 	if(length(xi)==1 && nr%%nrows[[i]]==0 && is.vector(xi[[1]]))
 	    value[[i]] <- list(rep(xi[[1]], length=nr))
@@ -321,7 +321,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 		stop("undefined columns selected")
 	}
 	n <- length(x)
-	jj <- seq(length = n)
+	jj <- 1:n
 	for(j in jj) {
 	    xj <- x[[j]]
 	    if(length(dim(xj)) != 2)
@@ -591,7 +591,7 @@ function(x, old.rows, new.rows) {
     nro <- length(old.rows)
     nrn <- length(new.rows)
     nr <- nro + nrn
-    for (i in seq(length = nc)) {
+    for (i in 1:nc) {
 	y <- x[[i]]
 	dy <- dim(y)
 	cy <- class(y)
@@ -643,7 +643,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		paste(nmi, ri, sep = ".")
 	    else nmi
 	}
-	else if(nrow > 0 && all(ri == seq(length = ni)))
+	else if(nrow > 0 && all(ri == 1:ni))
 	    seq(from = nrow + 1, length = ni)
 	else ri
     }
@@ -775,7 +775,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     rlabs <- unlist(rlabs)
     while(any(xj <- duplicated(rlabs)))
-	rlabs[xj] <- paste(rlabs[xj], seq(length = sum(xj)), sep = "")
+	rlabs[xj] <- paste(rlabs[xj], 1:sum(xj), sep = "")
     if(is.null(cl)) {
 	as.data.frame(value, row.names = rlabs)
     }
@@ -830,7 +830,7 @@ as.matrix.data.frame <- function (x)
 		xj <- X[[j]] <- as.matrix(X[[j]])
 	    dnj <- dimnames(xj)[[2]]
 	    collabs[[j]] <- paste(collabs[[j]],
-				  if(length(dnj) > 0) dnj else seq(1:dj[2]),
+				  if(length(dnj) > 0) dnj else 1:dj[2],
 				  sep = ".")
 	}
 	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj)))
