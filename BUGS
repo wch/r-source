@@ -319,6 +319,10 @@ Subject: bug in R-1.5.1 for Mac OS X installer
 From: Kow Kuroda <kkuroda@crl.ucsd.edu>
 Date: Mon, 22 Jul 2002 16:40:26 -0700
 --Darwin port
+* PR# 1829 *
+Subject: R config failure on solaris
+From: "Siva Ginjupalli" <gsivrao@hotmail.com>
+Date: Wed, 24 Jul 2002 20:08:49 +0000
 
 Directory:  Language
 
@@ -533,75 +537,23 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject: read.table bug
 From: mmcstephen@cogstate.com
 Date: Fri, 19 Jul 2002 05:11:59 +0200 (MET DST)
-* PR# 1829 *
-Subject: R config failure on solaris
-From: "Siva Ginjupalli" <gsivrao@hotmail.com>
-Date: Wed, 24 Jul 2002 20:08:49 +0000
-* PR# 1830 *
-Subject: 2002 Yahoo! Taiwan Inc. All Rights Reserved.
-From: r-help-request <r-help-request@hypatia.math.ethz.ch>
-Date: Thu, 25 Jul 2002 09:55:53 +0800 (CST)
-* PR# 1831 *
-Subject: Spice girls' vocal concert
-From: chen <chen@office.com.tw>
-Date: Thu, 25 Jul 2002 17:21:43 +0800 (CST)
-* PR# 1832 *
-Subject: Santa Maria Landscape Contractor
-From: "Advanced Landscape & Maintenance" <info@advancedyardcare.com>
-Date: Thu, 25 Jul 2002 07:45:45 -0700
-* PR# 1833 *
-Subject: R 1.5.1 (Windows) crashes on plotting density(rnorm(1000))
-From: "Mike Prager" <Mike.Prager@noaa.gov>
-Date: Thu, 25 Jul 2002 11:54:30 -0400
 * PR# 1834 *
 Subject: src/nmath/pgeom.c
 From: terra@diku.dk
 Date: Thu, 25 Jul 2002 20:55:34 +0200 (MET DST)
-* PR# 1835 *
-Subject: ??°ú?? ????(??????´?´?)
-From: ?????µ <godfingers@lycos.co.kr>
-Date: Fri, 26 Jul 2002 09:34:48 +0900
-* PR# 1836 *
-Subject: ?????????? ???? ??´? ??´?´?.[±¤°?]
-From: ?¤???ñ <jsi1017@dreamwiz.com>
-Date: Fri, 26 Jul 2002 16:28:56 +0900
-* PR# 1837 *
-Subject: R 1.5.1 (Windows) crashes on plotting density(rnorm(1000))
-From: "Mike Prager" <Mike.Prager@noaa.gov>
-Date: Fri, 26 Jul 2002 10:15:45 -0400
-* PR# 1838 *
-Subject: Hello,your password
-From: gkato <gkato@roadbikereview.com>
-Date: Fri, 26 Jul 2002 16:30:24 +0200 (MEST)
-* PR# 1839 *
-Subject: LANGUAGE
-From: r-core <r-core@hypatia.math.ethz.ch>
-Date: Fri, 26 Jul 2002 10:52:32 -0500
 * PR# 1840 *
 Subject: predict() still not yet "safe"..
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 26 Jul 2002 20:11:26 +0200
-* PR# 1841 *
-Subject: ¬°»È¦æ©Ò±À
-From: tbbx <tbbx@mail.tku.edu.tw>
-Date: Sat, 27 Jul 2002 13:22:37 +0800 (CST)
-* PR# 1842 *
-Subject: Worm Klez.E immunity
-From: wendy-w <wendy-w@paradise.net.nz>
-Date: Sun, 28 Jul 2002 17:58:49 +1200 (NZST)
-* PR# 1843 *
-Subject: Re: [R] bug in unsplit()?
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 28 Jul 2002 12:27:03 +0200
-* PR# 1844 *
-Subject: Re: [R] bug in unsplit()?
-From: Hedderik van Rijn <hedderik@cmu.edu>
-Date: Sun, 28 Jul 2002 09:57:43 -0400
-* PR# 1845 *
-Subject: Re: [R] bug in unsplit()?
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 28 Jul 2002 18:44:24 +0200
-* PR# 1846 *
-Subject: Re: [R] bug in unsplit()?
-From: Hedderik van Rijn <hedderik@cmu.edu>
-Date: Sun, 28 Jul 2002 16:46:08 -0400
+* PR# 1852 *
+Subject: quantile()  bug
+From: "Ivan Frohne" <frohne@mtaonline.net>
+Date: Mon, 29 Jul 2002 11:23:19 -0800
+* PR# 1853 *
+Subject: (±¤°?)??°¡?? ?????°!! LPG???® ºñ?????ü±?@@
+From: ?¨²???<kidkyc@hotmail.com>
+Date: Tue, 30 Jul 2002 13:47:55 +0200 (MET DST)
+* PR# 1854 *
+Subject: Unable to install new package using local zip file
+From: rangrej@cheo.on.ca
+Date: Tue, 30 Jul 2002 23:24:58 +0200 (MET DST)
