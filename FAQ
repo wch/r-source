@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-20, 2002-12-15
+Version 1.6-21, 2002-12-16
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1668,6 +1668,9 @@ distributions of R.)
 *mgcv*
      Routines for GAMs and other genralized ridge regression problems with
      multiple smoothing parameter selection by GCV or UBRE.  _Recommended_.
+
+*mimR*
+     An R interface to MIM for graphical modeling in R.
 
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
