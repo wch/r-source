@@ -62,7 +62,7 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 # src Makefile?
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
-all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DATA)
+all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DATA) mansrcs
 bare: $(DPKG)/zzzz R $(DPKG)/demo
 
 include $(RHOME)/src/gnuwin32/MkRules
@@ -148,3 +148,9 @@ ifeq ($(AA),)
 else
  include R/Makefile.win
 endif
+
+mansrcs:
+	@echo "  installing man source files"
+	@$(MKDIR) $(DPKG)/man
+	@$(CP) -p $(SPKG)/man/*.[Rr]d $(SPKG)/man/windows/*.[Rr]d $(DPKG)/man
+
