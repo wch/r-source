@@ -21,17 +21,11 @@ svd <- function(x, nu=min(n,p), nv=min(n,p)) {
 	else
 		stop("nu must be 0, nrow(x) or ncol(x)")
 
-	if(nv == 0)
-		job <- job + 0
-	else if(nv == p || nv == n)
-		job <- job + 1
-	else
+	job <- job +
+	  if(nv == 0) 0 else if(nv == p || nv == n) 1 else
 		stop("nv must be 0 or ncol(x)")
 
-	if(job == 0)
-		v <- double(0)
-	else
-		v <- matrix(0, p, p)
+	v <- if(job == 0) double(0) else matrix(0, p, p)
 
 	mn <- min(n,p)
 	mm <- min(n+1,p)
@@ -54,5 +48,5 @@ svd <- function(x, nu=min(n,p), nv=min(n,p)) {
 		stop(paste("error ",z$info," in dsvdc"))
 	z$d <- z$d[1:mn]
 	if(nv && nv < p) z$v <- z$v[, 1:nv]
-	z[c("d", if(nu) "u" else NULL, if(nv) "v" else NULL)]
+	z[c("d", if(nu) "u", if(nv) "v")]
 }
