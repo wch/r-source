@@ -978,7 +978,6 @@ AC_SUBST(LIBR_LDFLAGS)
 ### * Checks for library functions.
 
 AC_FUNC_ALLOCA
-AC_FUNC_FORK
 AC_CHECK_FUNCS(access bcopy bzero expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv strcoll stat \
