@@ -96,11 +96,11 @@ BUG FIXES
     o	terms() sometimes removed offset() terms incorrectly, since it
 	counted by variables and not terms.  Its "offset" attribute
 	was incorrectly documented as referring to terms not
-	variables.
+	variables. (Related to PR#4941)
 
-    o   buildVignettes() and pkgVignettes() in package tools are now
-        documented, the call to texi2dvi is wrapped in the new
-        function texi2dvi() which also works on Windows.
+    o	buildVignettes() and pkgVignettes() in package tools are now
+	documented, the call to texi2dvi is wrapped in the new
+	function texi2dvi() which also works on Windows.
 
 
 
