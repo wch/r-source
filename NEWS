@@ -35,6 +35,9 @@ NEW FEATURES
 
     o	binomial() has a new "cauchit" link (suggested by Roger Koenker).
 
+    o	ecdf() now has jumps of the correct size (a multiple of 1/n)
+	if there are ties.  (wished by PR#7292).
+
 
 DOCUMENTATION
 

@@ -28,9 +28,9 @@ ecdf(x)
 }
 \details{
   The e.c.d.f. (empirical cumulative distribution function)
-  \eqn{F_n}{Fn} is a step function with jump \eqn{1/n} at each
-  observation (possibly with multiple jumps at one place if there are
-  ties).  Missing values are ignored.
+  \eqn{F_n}{Fn} is a step function with jumps \eqn{i/n} at
+  observation values, where \eqn{i} is the number of tied observations
+  at that value.  Missing values are ignored.
 
   For observations
   \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2}, \ldots \eqn{x_n)}{xn)},
@@ -48,8 +48,15 @@ ecdf(x)
   For \code{ecdf}, a function of class \code{"ecdf"}, inheriting from the
   \code{"\link{stepfun}"} class.
 }
+\section{Warning}{
+  Prior to \R 2.1.0, \code{ecdf} treated ties differently, so had
+  multiple jumps of size \eqn{1/n} at tied observations.  This was not
+  the most common definition, and could be very slow for large datasets
+  with many ties.
+}
 \author{
-  Martin Maechler, \email{maechler@stat.math.ethz.ch}.
+  Martin Maechler, \email{maechler@stat.math.ethz.ch}.\cr
+  Corrections by R-core.
 }
 \seealso{\code{\link{stepfun}}, the more general class of step functions,
   \code{\link{approxfun}} and \code{\link{splinefun}}.
@@ -64,12 +71,12 @@ y <- round(rnorm(12),1); y[3] <- y[1]
 Fn12 <- ecdf(y)
 Fn12
 print(knots(Fn12), dig=2)
-12*Fn12(knots(Fn12)) ## ~= 1:12  if there where no ties
+12*Fn12(knots(Fn12)) ## ~= 1:12  if there were no ties
 
 summary(Fn12)
 summary.stepfun(Fn12)
 print(ls.Fn12 <- ls(env= environment(Fn12)))
-##[1] "f"  "method"  "n"  "ties"   "x"  "y"  "yleft"  "yright"
+##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 
 12 * Fn12((-20:20)/10)
 
