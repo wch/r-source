@@ -613,22 +613,10 @@ Subject: switch
 From: rwehrens@sci.kun.nl
 Date: Tue, 17 Sep 2002 23:25:39 +0200 (MET DST)
 --not a bug; but worth a documentation hint
-* PR# 2037 *
-Subject: contrasts in lm~-1+(numeric.variable)/(factor)
-From: hosking@watson.ibm.com
-Date: Wed, 18 Sep 2002 23:06:12 +0200 (MET DST)
 * PR# 2038 *
 Subject: savehistory directories and quitting R
 From: Mark.Bravington@csiro.au
 Date: Thu, 19 Sep 2002 14:53:25 +1000
-* PR# 2042 *
-Subject: install.packages() together with pixmap package
-From: w.huber@dkfz.de
-Date: Thu, 19 Sep 2002 18:26:55 +0200 (MET DST)
-* PR# 2067 *
-Subject: R crashes when given graphic command
-From: anson@bgumail.bgu.ac.il
-Date: Wed, 25 Sep 2002 17:56:18 +0200 (MET DST)
 * PR# 2090 *
 Subject: Unsolved symbols: meet_ Tcl_EvalObjv
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -644,11 +632,23 @@ Date: Mon, 7 Oct 2002 15:46:21 +1300
 Subject:  Core dump with "parse" 
 From: j.c.rougier@durham.ac.uk
 Date: Mon, 7 Oct 2002 18:52:30 +0100
-* PR# 2123 *
-Subject: spec.pgram bug
-From: jimmy@econostat.co.uk
-Date: Tue, 8 Oct 2002 15:33:36 +0200 (MET DST)
-* PR# 2131 *
-Subject: help-links.sh doesn't make sure that packages.html is writable
-From: voegelas@users.sourceforge.net
-Date: Wed, 9 Oct 2002 20:13:52 +0200 (MET DST)
+* PR# 2134 *
+Subject: Questionnaire
+From: collectibles <collectibles@ukonline.co.uk>
+Date: Thu, 10 Oct 2002 06:19:29 +0100
+* PR# 2135 *
+Subject: Endspan 
+From: legal <legal@car-finance.net>
+Date: Thu, 10 Oct 2002 06:25:01 +0100
+* PR# 2142 *
+Subject: Sweave
+From: "Christophe Declercq" <c.declercq@orsnpdc.org>
+Date: Thu, 10 Oct 2002 16:02:50 +0100
+* PR# 2143 *
+Subject: Honey
+From: servicet <servicet@smartnet.com.tw>
+Date: Thu, 10 Oct 2002 23:52:57 +0800 (CST)
+* PR# 2144 *
+Subject: Save() with ascii=TRUE may corrupt numeric values
+From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
+Date: Thu, 10 Oct 2002 14:09:21 -0700
