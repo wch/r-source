@@ -101,7 +101,8 @@ sub get_usages {
 	    ##   $prefix =~ s/^;//;
 	    ## </FIXME>
 	    $prefix =~
-		s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1\.$2/g;
+		s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1\.$2/g
+		    unless($mode eq "style");
 
 	    ## Play with $match.
 	    $match =~ s/=\s*([,\)])/$1/g;
@@ -140,7 +141,7 @@ sub get_usages {
 			## seq), so we simply warn about multiple usage
 			## in case it was not shadowed by a \synopsis
 			## unless in mode `args', where we can cheat.
-			if($mode eq "args") {
+			if(($mode eq "args") || ($mode eq "style")) {
 			    my $save_prefix = $prefix . "0";
 			    while($usages{$save_prefix}) {
 				$save_prefix .= "0";
