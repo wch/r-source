@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-14, 2001-08-01</h2>
+<h2>Version 1.3-15, 2001-08-04</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1360,9 +1360,6 @@ files.
 Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury. 
 <br><dt><strong>GLMMGibbs</strong>
 <dd>Generalised Linear Mixed Models by Gibbs sampling. 
-<br><dt><strong>GenKern</strong>
-<dd>Functions for generating and manipulating generalised binned kernel
-density estimates. 
 <br><dt><strong>GeneSOM</strong>
 <dd>Clustering genes using Self-Organizing Maps (SOMs). 
 <br><dt><strong>KernSmooth</strong>
@@ -1444,6 +1441,11 @@ R. Tibshirani, 1993, Chapman and Hall.
 <br><dt><strong>bqtl</strong>
 <dd>QTL mapping toolkit for inbred crosses and recombinant inbred lines. 
 Includes maximum likelihood and Bayesian tools. 
+<br><dt><strong>car</strong>
+<dd>Companion to Applied Regression, containing functions for applied
+regession, linear models, and generalized linear models, with an
+emphasis on regression diagnostics, particularly graphical diagnostic
+methods. 
 <br><dt><strong>cclust</strong>
 <dd>Convex clustering methods, including k-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
@@ -1612,8 +1614,6 @@ data, especially with regard to comparing expression levels between two
 types of tissue. 
 <br><dt><strong>pinktoe</strong>
 <dd>Converts S trees to <small>HTML</small>/Perl files for interactive tree traversal. 
-<br><dt><strong>pls</strong>
-<dd>Univariate Partial Least Squares Regression. 
 <br><dt><strong>polymars</strong>
 <dd>Polychotomous regression based on Multivariate Adaptive Regression
 Splines. 
@@ -1635,6 +1635,10 @@ two-sample comparison of binary outcomes.
 <dd>Recursive PARTitioning and regression trees. 
 <br><dt><strong>scatterplot3d</strong>
 <dd>Plots a three dimensional (3D) point cloud perspectively. 
+<br><dt><strong>sem</strong>
+<dd>Functions for fitting general linear Structural Equation Models (with
+observed and unobserved variables) by the method of maximum likelihood
+using the RAM approach. 
 <br><dt><strong>sgeostat</strong>
 <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>sm</strong>
@@ -1698,15 +1702,13 @@ currently contains
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures. 
+<br><dt><strong>GenKern</strong>
+<dd>Functions for generating and manipulating generalised binned kernel
+density estimates. 
 <br><dt><strong>R2HTML</strong>
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
 <br><dt><strong>StatDataML</strong>
 <dd>Read and write StatDataML. 
-<br><dt><strong>car</strong>
-<dd>Companion to Applied Regression, containing functions for applied
-regession, linear models, and generalized linear models, with an
-emphasis on regression diagnostics, particularly graphical diagnostic
-methods. 
 <br><dt><strong>cxx</strong>
 <dd>A small C++ test package. 
 <br><dt><strong>dopt</strong>
@@ -1734,12 +1736,10 @@ statistics.
 including stabilized test procedures by Laeuter et. al. 
 <br><dt><strong>npConfRatio</strong>
 <dd>Nonparametric confidence intervals for the ratios of medians. 
+<br><dt><strong>pls</strong>
+<dd>Univariate Partial Least Squares Regression. 
 <br><dt><strong>regexp</strong>
 <dd>Simple regular expression interface. 
-<br><dt><strong>sem</strong>
-<dd>Functions for fitting general linear Structural Equation Models (with
-observed and unobserved variables) by the method of maximum likelihood
-using the RAM approach. 
 <br><dt><strong>write.snns</strong>
 <dd>Function for writing a <small>SNNS</small> pattern file from a data frame or
 matrix. 
@@ -2179,7 +2179,6 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#How%20should%20I%20set%20options%3f">How should I set options?</a>: 
 <li><a href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>: 
 <li><a href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>: 
-<li><a href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>: 
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>: 
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>: 
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>: 
@@ -2441,7 +2440,7 @@ can also replace <code>\</code> by <code>/</code> (<code>"c:/data/money.dat"</co
 
 <p><hr>
 Node:<a name="Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
-Next:<a rel=next href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
+Next:<a rel=next href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
 Previous:<a rel=previous href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -2464,31 +2463,13 @@ either the <code>-no-install</code> (to use the default colormap) or the
 help page for <code>X11()</code> for more information.
 
 <p><hr>
-Node:<a name="Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
-Next:<a rel=next href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Next:<a rel=next href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
 Previous:<a rel=previous href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.12 Is R Y2K-compliant?</h2>
-
-<p>We expect R to be Y2K compliant when compiled and run on a Y2K compliant
-system.  In particular R does not internally represent or manipulate
-dates as two-digit quantities.  However, no guarantee of Y2K compliance
-is provided for R.  R is free software and comes with <em>no warranty
-whatsoever</em>.
-
-<p>R, like any other programming language, can be used to write programs
-and manipulate data in ways that are not Y2K compliant.
-
-<p><hr>
-Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
-Next:<a rel=next href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
-Previous:<a rel=previous href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
-Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
-<br>
-
-<h2>7.13 How do I convert factors to numeric?</h2>
+<h2>7.12 How do I convert factors to numeric?</h2>
 
 <p>It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If <code>f</code> is such a
@@ -2511,7 +2492,7 @@ Previous:<a rel=previous href="#How%20do%20I%20convert%20factors%20to%20numeric%
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.14 Are Trellis displays implemented in R?</h2>
+<h2>7.13 Are Trellis displays implemented in R?</h2>
 
 <p>An R package called <strong>lattice</strong>, which provides graphical
 functionality that is compatible with most Trellis commands, is under
@@ -2540,7 +2521,7 @@ Previous:<a rel=previous href="#Are%20Trellis%20displays%20implemented%20in%20R%
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.15 What are the enclosing and parent environments?</h2>
+<h2>7.14 What are the enclosing and parent environments?</h2>
 
 <p>Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in ("enclosing"),
@@ -2594,7 +2575,7 @@ Previous:<a rel=previous href="#What%20are%20the%20enclosing%20and%20parent%20en
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.16 How can I substitute into a plot label?</h2>
+<h2>7.15 How can I substitute into a plot label?</h2>
 
 <p>Often, it is desired to use the value of an R object in a plot label,
 e.g., a title.  This is easily accomplished using <code>paste()</code> if the
@@ -2617,7 +2598,7 @@ Previous:<a rel=previous href="#How%20can%20I%20substitute%20into%20a%20plot%20l
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.17 What are valid names?</h2>
+<h2>7.16 What are valid names?</h2>
 
 <p>When creating data frames using <code>data.frame()</code> or
 <code>read.table()</code>, R by default ensures that the variable names are
@@ -2666,7 +2647,7 @@ Previous:<a rel=previous href="#What%20are%20valid%20names%3f">What are valid na
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.18 Are GAMs implemented in R?</h2>
+<h2>7.17 Are GAMs implemented in R?</h2>
 
 <p>There is a <code>gam()</code> function for Generalized Additive Models in
 package <strong>mgcv</strong>, but it is not an exact clone of what is described
@@ -2682,7 +2663,7 @@ Previous:<a rel=previous href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs i
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.19 Why is the output not printed when I source() a file?</h2>
+<h2>7.18 Why is the output not printed when I source() a file?</h2>
 
 <p>Most R commands do not generate any output. The command
 
@@ -2721,7 +2702,7 @@ Previous:<a rel=previous href="#Why%20is%20the%20output%20not%20printed%20when%2
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.20 Why does outer() behave strangely with my function?</h2>
+<h2>7.19 Why does outer() behave strangely with my function?</h2>
 
 <p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
 functions the way the <code>apply()</code> family does.  It requires functions

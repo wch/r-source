@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-14, 2001-08-01
+Version 1.3-15, 2001-08-04
 Kurt Hornik
 
 
@@ -69,15 +69,14 @@ R FAQ
   7.9 How should I set options?
   7.10 How do file names work in Windows?
   7.11 Why does plotting give a color allocation error?
-  7.12 Is R Y2K-compliant?
-  7.13 How do I convert factors to numeric?
-  7.14 Are Trellis displays implemented in R?
-  7.15 What are the enclosing and parent environments?
-  7.16 How can I substitute into a plot label?
-  7.17 What are valid names?
-  7.18 Are GAMs implemented in R?
-  7.19 Why is the output not printed when I source() a file?
-  7.20 Why does outer() behave strangely with my function?
+  7.12 How do I convert factors to numeric?
+  7.13 Are Trellis displays implemented in R?
+  7.14 What are the enclosing and parent environments?
+  7.15 How can I substitute into a plot label?
+  7.16 What are valid names?
+  7.17 Are GAMs implemented in R?
+  7.18 Why is the output not printed when I source() a file?
+  7.19 Why does outer() behave strangely with my function?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1114,10 +1113,6 @@ works, was published in the Journal of Statistical Software
 *GLMMGibbs*
      Generalised Linear Mixed Models by Gibbs sampling.
 
-*GenKern*
-     Functions for generating and manipulating generalised binned kernel
-     density estimates.
-
 *GeneSOM*
      Clustering genes using Self-Organizing Maps (SOMs).
 
@@ -1225,6 +1220,12 @@ works, was published in the Journal of Statistical Software
 *bqtl*
      QTL mapping toolkit for inbred crosses and recombinant inbred lines.
      Includes maximum likelihood and Bayesian tools.
+
+*car*
+     Companion to Applied Regression, containing functions for applied
+     regession, linear models, and generalized linear models, with an
+     emphasis on regression diagnostics, particularly graphical diagnostic
+     methods.
 
 *cclust*
      Convex clustering methods, including k-means algorithm, on-line update
@@ -1448,9 +1449,6 @@ works, was published in the Journal of Statistical Software
 *pinktoe*
      Converts S trees to HTML/Perl files for interactive tree traversal.
 
-*pls*
-     Univariate Partial Least Squares Regression.
-
 *polymars*
      Polychotomous regression based on Multivariate Adaptive Regression
      Splines.
@@ -1480,6 +1478,11 @@ works, was published in the Journal of Statistical Software
 
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
+
+*sem*
+     Functions for fitting general linear Structural Equation Models (with
+     observed and unobserved variables) by the method of maximum likelihood
+     using the RAM approach.
 
 *sgeostat*
      An object-oriented framework for geostatistical modeling.
@@ -1560,17 +1563,15 @@ these a try, of course.  This area of CRAN currently contains
      LOCATION and MAPSET.  Wrapper and helper functions are provided for a
      range of R functions to match the interface metadata structures.
 
+*GenKern*
+     Functions for generating and manipulating generalised binned kernel
+     density estimates.
+
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
 
 *StatDataML*
      Read and write StatDataML.
-
-*car*
-     Companion to Applied Regression, containing functions for applied
-     regession, linear models, and generalized linear models, with an
-     emphasis on regression diagnostics, particularly graphical diagnostic
-     methods.
 
 *cxx*
      A small C++ test package.
@@ -1610,13 +1611,11 @@ these a try, of course.  This area of CRAN currently contains
 *npConfRatio*
      Nonparametric confidence intervals for the ratios of medians.
 
+*pls*
+     Univariate Partial Least Squares Regression.
+
 *regexp*
      Simple regular expression interface.
-
-*sem*
-     Functions for fitting general linear Structural Equation Models (with
-     observed and unobserved variables) by the method of maximum likelihood
-     using the RAM approach.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -2153,18 +2152,7 @@ either the `-no-install' (to use the default colormap) or the `-install'
 than the default `"pseudo"'.  See the help page for `X11()' for more
 information.
 
-7.12 Is R Y2K-compliant?
-========================
-
-   We expect R to be Y2K compliant when compiled and run on a Y2K compliant
-system.  In particular R does not internally represent or manipulate dates
-as two-digit quantities.  However, no guarantee of Y2K compliance is
-provided for R.  R is free software and comes with _no warranty whatsoever_.
-
-   R, like any other programming language, can be used to write programs
-and manipulate data in ways that are not Y2K compliant.
-
-7.13 How do I convert factors to numeric?
+7.12 How do I convert factors to numeric?
 =========================================
 
    It may happen that when reading numeric data into R (usually, when
@@ -2179,7 +2167,7 @@ to get the numbers back.  More efficient, but harder to remember, is
 
    In any case, do not call `as.numeric()' or their likes directly.
 
-7.14 Are Trellis displays implemented in R?
+7.13 Are Trellis displays implemented in R?
 ===========================================
 
    An R package called *lattice*, which provides graphical functionality
@@ -2199,7 +2187,7 @@ fix against device resizing) the aspect ratio of the plot.
    (Because the word "Trellis" has been claimed as a trademark we do not
 use it in R.  The name "lattice" has been proposed for the R equivalent.)
 
-7.15 What are the enclosing and parent environments?
+7.14 What are the enclosing and parent environments?
 ====================================================
 
    Inside a function you may want to access variables in two additional
@@ -2245,7 +2233,7 @@ and S is to say that in S the enclosing environment is _always_ the global
 workspace, but in R the enclosing environment is wherever the function was
 created.
 
-7.16 How can I substitute into a plot label?
+7.15 How can I substitute into a plot label?
 ============================================
 
    Often, it is desired to use the value of an R object in a plot label,
@@ -2261,7 +2249,7 @@ interest, use
 (note that it is `==' and not `=').  There are more worked examples in the
 mailing list achives.
 
-7.17 What are valid names?
+7.16 What are valid names?
 ==========================
 
    When creating data frames using `data.frame()' or `read.table()', R by
@@ -2301,7 +2289,7 @@ language:
      with names in the language, but it is traditional to call these
      strings file "names".
 
-7.18 Are GAMs implemented in R?
+7.17 Are GAMs implemented in R?
 ===============================
 
    There is a `gam()' function for Generalized Additive Models in package
@@ -2310,7 +2298,7 @@ language:
 if you can accept regression splines you can use `glm()'.  For gaussian
 GAMs you can use `bruto()' from package *mda*.
 
-7.19 Why is the output not printed when I source() a file?
+7.18 Why is the output not printed when I source() a file?
 ==========================================================
 
    Most R commands do not generate any output. The command
@@ -2340,7 +2328,7 @@ or
 
 instead, or use `source(FILE, echo=TRUE)'.
 
-7.20 Why does outer() behave strangely with my function?
+7.19 Why does outer() behave strangely with my function?
 ========================================================
 
    As the help for `outer()' indicates, it does not work on arbitrary
