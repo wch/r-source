@@ -502,9 +502,13 @@ static void 	Quartz_NewPage(int fill, double gamma, NewDevDesc *dd)
     area.origin = origin;
     area.size = size;
 
+    if(fill == NA_INTEGER)
+      fill = R_RGB(255, 255, 255);
+      
     Quartz_SetFill(fill, gamma, dd);
 
     CGContextFillRect(xd->context, area);
+    CGContextFlush(xd->context);   /* we need to flash it just now */
 
 }
 
