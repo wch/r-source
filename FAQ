@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-53, 2001-05-11
+Version 1.2-54, 2001-05-15
 Kurt Hornik
 
 
@@ -1120,6 +1120,9 @@ works, was published in the Journal of Statistical Software
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
      National Institute for Standards and Technology.
+
+*Oarray*
+     Arrays with arbitrary offsets.
 
 *PHYLOGR*
      Manipulation and analysis of phylogenetically simulated data sets (as
