@@ -271,16 +271,14 @@ void printVector(SEXP x, int index, int quote)
 	    Rprintf("ordered(0)\n");
 	    break;
 	case INTSXP:
-	    Rprintf("integer(0)\n");
-	    break;
 	case REALSXP:
-	    Rprintf("real(0)\n");
-	    break;
-	case STRSXP:
-	    Rprintf("character(0)\n");
+	    Rprintf("numeric(0)\n");
 	    break;
 	case CPLXSXP:
 	    Rprintf("complex(0)\n");
+	    break;
+	case STRSXP:
+	    Rprintf("character(0)\n");
 	    break;
 	}
 }
