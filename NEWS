@@ -13,6 +13,9 @@ BUG FIXES
 
     o	Rdconv now skips CRs in input files, even on Unix.
 
+    o	readBin() had a (very slow) memory leak if changing size or reading
+	character strings.  writeChar() had a memory leak.
+
 
 
 		CHANGES IN R VERSION 1.5.0
