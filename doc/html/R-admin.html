@@ -495,7 +495,9 @@ add something like <code>-I/usr/local/include/libpng12</code> to
 (<a href="http://www.cs.wisc.edu/~ghost">http://www.cs.wisc.edu/~ghost</a>).
 
 <p><code>bzfile</code> connections make use of <code>libbz2</code>, part of
-<code>bzip2</code> (<a href="http://sources.redhat.com/bzip2">http://sources.redhat.com/bzip2</a>).
+<code>bzip2</code> (<a href="http://sources.redhat.com/bzip2">http://sources.redhat.com/bzip2</a>).  If an
+installed version is not found, that in the R sources will be
+compiled in.
 
 <p><code>grep</code> and related functions will make use of PCRE if installed. 
 The sources are at
