@@ -1139,41 +1139,6 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 
 /*----------------------------------------------------------------------
 
-  mfindVarInFrame
-
-  Look up a symbol in a single environment frame.  This differs from
-  findVarInFrame in that it returns the list whose CAR is the value of
-  the symbol, rather than the value of the symbol.
-
-*/
-
-static SEXP mfindVarInFrame(SEXP rho, SEXP symbol)
-{
-    int hashcode;
-    SEXP frame, c;
-    if (HASHTAB(rho) == R_NilValue) {
-	frame = FRAME(rho);
-    }
-    else {
-	c = PRINTNAME(symbol);
-	if( !HASHASH(c) ) {
-	    SET_HASHVALUE(c, R_Newhashpjw(CHAR(c)));
-	    SET_HASHASH(c, 1);
-	}
-	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
-	frame = VECTOR_ELT(HASHTAB(rho), hashcode);
-    }
-    while (frame != R_NilValue) {
-	if (TAG(frame) == symbol)
-	    return frame;
-	frame = CDR(frame);
-    }
-    return R_NilValue;
-}
-
-
-/*----------------------------------------------------------------------
-
   do_assign : .Internal(assign(x, value, envir, inherits))
 
 */
@@ -1412,7 +1377,7 @@ static int isMissing(SEXP symbol, SEXP rho)
     else
 	s = symbol;
 
-    vl = mfindVarInFrame(rho, s);
+    vl = findVarLocInFrame(rho, s);
     if (vl != R_NilValue) {
 	if (DDVAL(symbol)) {
 	    if (length(CAR(vl)) < ddv || CAR(vl) == R_MissingArg)
@@ -1450,7 +1415,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     rval=allocVector(LGLSXP,1);
 
-    t = mfindVarInFrame(rho, sym);
+    t = findVarLocInFrame(rho, sym);
     if (t != R_NilValue) {
 	if (DDVAL(s)) {
 	    if (length(CAR(t)) < ddv  || CAR(t) == R_MissingArg) {
