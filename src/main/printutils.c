@@ -420,7 +420,7 @@ void Rvprintf(const char *format, va_list arg)
     }
     else {
 	char buf[BUFSIZE], *p = buf, *vmax = vmaxget(); 
-	int slen, res;
+	int res;
 
 #ifdef HAVE_VSNPRINTF
 	res = vsnprintf(p, BUFSIZE, format, arg);
