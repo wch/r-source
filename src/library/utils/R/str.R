@@ -42,9 +42,13 @@ str.default <-
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
     P0 <- function(...) paste(..., sep="")
-    pasteCh <- function(x)
-	sapply(x, function(a) if(is.na(a)) "NA" else P0('"',a,'"'),
-	       USE.NAMES = FALSE)
+    maybe_truncate <- function(x, e.x= x, Sep = "\"", ch="| __truncated__")
+    {
+        if(any((ii <- nchar(e.x) > nchar.max)))
+            x[ii] <- P0(substr(e.x[ii], 1, nchar.max), Sep, ch)
+        x
+    }
+
     ## le.str: not used for arrays:
     le.str <-
 	if(is.na(le)) " __no length(.)__ "
@@ -193,13 +197,14 @@ str.default <-
 	    ord <- is.ordered(object)
 	    object <- unclass(object)
 	    if(nl) {
-                ## as from 2.1.0, quotes are included here.
+                ## as from 2.1.0, quotes are included ==> '-2':
 		lenl <- cumsum(3 + (nchar(lev.att) - 2))# level space
 		ml <- if(nl <= 1 || lenl[nl] <= 13)
 		    nl else which(lenl > 13)[1]
-		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
-		    lev.att[ml] <-
-			P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
+                lev.att <- maybe_truncate(lev.att[1:ml])
+## 		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
+## 		    lev.att[ml] <-
+## 			P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
 	    }
 	    else # nl == 0
 		ml <- length(lev.att <- "")
@@ -208,11 +213,12 @@ str.default <-
 	    str1 <- P0(if(ord)" Ord.f" else " F",
 		       "actor w/ ", nl, " level", if(nl != 1) "s",
 		       if(nl) " ",
-		       if(nl) P0(lev.att[1:ml], collapse = lsep),
+		       if(nl) P0(lev.att, collapse = lsep),
 		       if(ml < nl) P0(lsep, ".."), ":")
 
 	    std.attr <- c("levels", "class")
-	} else if (typeof(object) %in% c("externalptr", "weakref", "environment")) {
+	} else if(typeof(object) %in%
+                  c("externalptr", "weakref", "environment")) {
             ## Careful here, we don't want to change pointer objects
             if(has.class)
                 cat("Class", if(length(cl) > 1) "es",
@@ -337,16 +343,11 @@ str.default <-
 	    ## `5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
-	    if(ile >= 1) { # have LONG char ?!
-		nc <- nchar(en_object[1:ile])
-		if(any((ii <- nc > nchar.max)))
-		    object[ii] <- P0(substr(en_object[ii], 1, nchar.max),
-				     "| __truncated__")
-	    }
-	    formObj <- function(x) paste(encodeString(x,
-                                                      quote='"',
-                                                      na=FALSE),
-                                         collapse=" ")
+	    if(ile >= 1)  # truncate if LONG char:
+                object <- maybe_truncate(encodeString(as.character(object),
+                                                      quote= '"', na=FALSE))
+                                        #en_object[1:ile]
+	    formObj <- function(x) paste(as.character(x), collapse=" ")
 	}
 	else {
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
@@ -405,3 +406,4 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
     }
     invisible(x)
 }
+

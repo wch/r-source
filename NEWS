@@ -308,11 +308,14 @@ BUG FIXES
     o	.install_package_vignette_index() created an index even in an
 	empty 'doc' directory.
 
-    o	The print() method for factors now escapes characters in the  
+    o	The print() method for factors now escapes characters in the
 	levels in the same way as they are printed.
 
     o	str() no longer interprets control characters in character
-	strings and factor levels.
+	strings and factor levels; also no longer truncates factor
+	levels unless they are longer than 'nchar.max'.
+	Truncation of such long strings is now indicated ``outside''
+	the string.
 
     o	print.factor(quote=TRUE) was not quoting levels, causing
 	ambiguity when the levels contained spaces or quotes.

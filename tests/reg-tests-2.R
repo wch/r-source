@@ -1433,6 +1433,7 @@ foo(matrix(1:10, 2, 5))
 ## str() interpreted escape sequences prior to 2.1.0
 x <- "ab\bc\ndef"
 str(x)
+str(x, vec.len=0)# failed in rev 32244
 str(factor(x))
 
 x <- c("a", NA, "b")

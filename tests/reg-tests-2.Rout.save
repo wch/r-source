@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-12-19), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-12-20), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4352,6 +4352,8 @@ integer arg
 > x <- "ab\bc\ndef"
 > str(x)
  chr "ab\bc\ndef"
+> str(x, vec.len=0)# failed in rev 32244
+ chr  ...
 > str(factor(x))
  Factor w/ 1 level "ab\bc\ndef": 1
 > 
