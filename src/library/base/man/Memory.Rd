@@ -42,7 +42,7 @@ mem.limits(nsize = NA, vsize = NA)
   ``\emph{heap}'' of ``Vcells'' of 8 bytes each.  Effectively, the input
   \code{v} is rounded up to the nearest multiple of 8.
 
-  Each cons cell occupies 28 bytes on a 32-bit machine, around 52 bytes
+  Each cons cell occupies 28 bytes on a 32-bit machine, (usually) 56 bytes
   on a 64-bit machine.
 
   The \code{--*-nsize} options can be used to specify the number of cons
