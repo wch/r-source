@@ -28,13 +28,17 @@ subtraction \code{*} for multiplication, \code{/} for division and
 \code{^} for exponentiation.
 
 \code{\%\%} indicates \code{x mod y} and \code{\%/\%} indicates integer
-division. It is guaranteed that \code{x  ==  (x \%\% y)  +  y * ( x \%/\% y )}
+division.  It is guaranteed that \code{x  ==  (x \%\% y)  +  y * ( x \%/\% y )}
 unless \code{y == 0} where the result is \code{\link{NA}} or
 \code{\link{NaN}} (depending on the \code{\link{typeof}} of the arguments).
+}
+\details{
+    \code{1 ^ y} and \code{y ^ 0} are \code{1}, \emph{always}.
+    \code{x ^ y} should also give the proper ``limit'' result when
+    either argument is infinite (i.e., \code{+- \link{Inf}}).
 
- 
-Objects such as arrays or time-series can be operated on this
-way provided they are conformable.
+    Objects such as arrays or time-series can be operated on this
+    way provided they are conformable.
 }
 \seealso{
 \code{\link{Math}} for miscellaneous and \code{\link{Special}} for special

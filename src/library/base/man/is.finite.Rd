@@ -13,14 +13,40 @@ is.nan(x)
 \alias{NaN}
 \alias{is.nan}
 \description{
+\code{is.finite} and \code{is.infinite} return a vector of the same
+length as \code{x}, indicating which elements are finite or not.
+
+\code{Inf} and \code{-Inf} are positive and negative `infinity' whereas
+\code{NaN} means ``Not a Number''.
+}
+\details{
 \code{is.finite} returns a vector of the same length as \code{x}
-the jth element of which is \code{TRUE} if the jth element of \code{x} is
+the jth element of which is \code{TRUE} if \code{x[j]} is
 finite (i.e. it is not one of the values \code{NA}, \code{NaN},
 \code{Inf} or \code{-Inf}).
 
 \code{is.infinite} returns a vector of the same length as \code{x}
-the jth element of which is \code{TRUE} if the jth element of \code{x} is
+the jth element of which is \code{TRUE} if \code{x[j]} is
 infinite (i.e. equal to one of \code{Inf} or \code{-Inf}).
+}
+\note{
+    In \R, basically all mathematical functions (including basic
+    \code{\link{Arithmetic}}), are supposed to work properly with
+    \code{+/- Inf} and \code{NaN} as input or output.
+
+    The basic rule should be that calls and relations with \code{Inf}s
+    really are statements with a proper mathematical \emph{limit}, see the many
+    examples below.
+}
+\seealso{\code{\link{NA}}, \emph{`Not Available'} which is not a number
+    as well, however usually used for missing values.
+}
+\references{
+%%- better ones ?!??
+    ANSI/IEEE 754 Floating-Point Standard.
+
+    Currently (6/1999), Bill M.'s \email{billm@melbpc.org.au} tutorial
+    and examples at \cr \url{http://www.linuxsupportline.com/~billm/}
 }
 \examples{
 pi / 0 ## = Inf a non-zero number divided by zero creates infinity
@@ -32,9 +58,9 @@ pi / 0 ## = Inf a non-zero number divided by zero creates infinity
 1/0 == Inf
 1/Inf == 0
 exp(-Inf) == 0
-## 		(actually, the last one seems to give NA on not-very-new
-## 		 versions of Linux, which is a Linux bug and seems to be
-## 		 corrected in newer 'libc6' based Linuxen).
+##		(actually, the last one seems to give NA on not-very-new
+##		 versions of Linux, which is a Linux bug and seems to be
+##		 corrected in newer 'libc6' based Linuxen).
 
 is.na(0/0) # T
 !is.na(Inf)# T
@@ -88,31 +114,31 @@ all(atan(Inf*pm) == pm*pi/2) # TRUE
 
 
 x <- c(100,-1e-13,Inf,-Inf, NaN, pi, NA)
-x #  1.000000 -3.000000       Inf      -Inf        NA  3.141593        NA
+x #  1.000000 -3.000000	      Inf      -Inf	   NA  3.141593	       NA
 names(x) <- formatC(x, dig=3)
 is.finite(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     T      T   .    .   .    T  .
+##-	T      T   .	.   .	 T  .
 is.na(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     .      .   .    .   T    .  T
+##-	.      .   .	.   T	 .  T
 which(is.na(x) & !is.nan(x))# only 'NA': 7
 
 is.na(x) | is.finite(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     T      T   .    .   T    T  T
+##-	T      T   .	.   T	 T  T
 is.infinite(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     .      .   T    T   .    .  .
+##-	.      .   T	T   .	 .  .
 
-##-- either  finite or infinite  or  NA:
+##-- either  finite or infinite	 or  NA:
 all(is.na(x) != is.finite(x) | is.infinite(x)) # TRUE
 all(is.nan(x) != is.finite(x) | is.infinite(x)) # FALSE: have 'real' NA
 
 ##--- Integer
 (ix <- structure(as.integer(x),names= names(x)))
-##-   100 -1e-13        Inf        -Inf NaN 3.14 NA
-##-   100      . 2147483647 -2147483648  NA    3 NA
+##-   100 -1e-13	Inf	   -Inf NaN 3.14 NA
+##-   100      . 2147483647 -2147483648	 NA    3 NA
 all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
 
 ix[3] == (iI <- as.integer(Inf))#> warning: inaccurate integer conversion!
