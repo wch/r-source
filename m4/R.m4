@@ -118,24 +118,24 @@ AC_DEFUN([R_PROG_TEXMF],
 AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
 AC_PATH_PROGS(TEX, [${TEX} tex], false)
 AC_PATH_PROGS(LATEX, [${LATEX} latex], false)
-if test -z "${ac_cv_path_LATEX}" ; then
-  ## <FIXME>
-  ## This is not quite true: need LaTeX for refman, and TeX for the 
-  ## Texinfo manuals.
+if test -z "${ac_cv_path_TEX}" ; then
   warn_dvi="you cannot build DVI versions of the R manuals"
+elif test -z "${ac_cv_path_LATEX}"; then
+  warn_dvi="you cannot build DVI versions of all the help pages"
+fi
+if test -n "${warn_dvi}"; then
   AC_MSG_WARN([${warn_dvi}])
-  ## </FIXME>
 fi
 AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], false)
 AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], false)
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], false)
-if test -z "${ac_cv_path_PDFLATEX}" ; then
-  ## <FIXME>
-  ## This is not quite true: need pdfLaTeX for refman, and pdfTeX for
-  ## the Texinfo manuals.
+if test -z "${ac_cv_path_PDFTEX}" ; then
   warn_pdf="you cannot build PDF versions of the R manuals"
+elif test -z "${ac_cv_path_PDFLATEX}" ; then
+  warn_pdf="you cannot build PDF versions of all the help pages"
+fi
+if test -n "${warn_pdf}"; then
   AC_MSG_WARN([${warn_pdf}])
-  ## </FIXME>
 fi
 AC_PATH_PROGS(MAKEINFO_CMD, [${MAKEINFO} makeinfo])
 ## This test admittedly looks a bit strange ... see R_PROG_PERL.
@@ -197,7 +197,7 @@ fi])
 
 ## R_PROG_CC_M
 ## -----------
-## Check whether the C compiler accepts -M for generating dependencies
+## Check whether the C compiler accepts '-M' for generating dependencies.
 AC_DEFUN([R_PROG_CC_M],
 [AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
                 [r_cv_prog_cc_m],
@@ -213,7 +213,7 @@ fi])
 
 ## R_PROG_CC_C_O_LO
 ## ----------------
-## Check whether the C compiler supports -c -o FILE.lo
+## Check whether the C compiler supports '-c -o FILE.lo'.
 AC_DEFUN([R_PROG_CC_C_O_LO],
 [AC_CACHE_CHECK([whether ${CC} supports -c -o FILE.lo],
                 [r_cv_prog_cc_c_o_lo],
@@ -281,7 +281,7 @@ AC_SUBST_FILE(cc_rules_frag)
 ## In addition, execute ACTION-IF-TRUE in case of success.
 AC_DEFUN([R_PROG_CC_FLAG],
 [ac_safe=`echo "$1" | sed 'y%./+-:=%__p___%'`
-AC_MSG_CHECKING([whether ${CC-cc} accepts $1])
+AC_MSG_CHECKING([whether ${CC} accepts $1])
 AC_CACHE_VAL([r_cv_prog_cc_flag_${ac_safe}],
 [AC_LANG_PUSH(C)
 r_save_CFLAGS="${CFLAGS}"
@@ -344,7 +344,8 @@ fi
 
 ## R_PROG_CXX_M
 ## ------------
-## Check whether the C++ compiler accepts -M for generating dependencies
+## Check whether the C++ compiler accepts '-M' for generating
+## dependencies.
 AC_DEFUN([R_PROG_CXX_M],
 [AC_REQUIRE([R_PROG_CC_M])
 AC_CACHE_CHECK([whether ${CXX} accepts -M for generating dependencies],
@@ -362,7 +363,7 @@ fi])
 
 ## R_PROG_CXX_C_O_LO
 ## -----------------
-## Check whether the C++ compiler supports -c -o FILE.lo
+## Check whether the C++ compiler supports '-c -o FILE.lo'.
 AC_DEFUN([R_PROG_CXX_C_O_LO],
 [cxx_o_lo_rules_frag=Makefrag.cxx
 AC_CACHE_CHECK([whether ${CXX} supports -c -o FILE.lo],
@@ -479,13 +480,13 @@ else
 fi
 ])# R_PROG_CXX_FLAG
 
-### * FORTRAN 77 compiler/converter and its characteristics.
+### * Fortran 77 compiler/converter and its characteristics.
 
 ## R_PROG_F77_OR_F2C
 ## -----------------
 ## Find a Fortran 77 compiler, or f2c.
 ##
-## If we have not been forced to use a particular FORTRAN compiler, try
+## If we have not been forced to use a particular Fortran compiler, try
 ## to find one using one of the several common names.  The list is based
 ## on what the current autoconf CVS contains.  This says,
 ##
@@ -509,26 +510,14 @@ fi
 ##
 ## In fact, on HP-UX fort77 is the POSIX-compatible native compiler and
 ## f77 is not: hence we need look for fort77 first!
-##
-## The configure options '--with-f77' or '--with-f2c' force f77 or f2c
-## to be used (under *exactly* these names).  It is also possible to use
-## these options to specify the full path name of the compiler.
 AC_DEFUN([R_PROG_F77_OR_F2C],
-[if test -n "${FC}"; then
-  warn_arg_var_FC="configure variable 'FC' is deprecated.
-Use variable 'F77' to specify a FORTRAN 77 compiler if necessary."
-  AC_MSG_WARN([${warn_arg_var_FC}])
-fi
-if test -n "${F77}" && test -n "${F2C}"; then
+[if test -n "${F77}" && test -n "${F2C}"; then
   warn_F77_and_F2C="both 'F77' and 'F2C' given.
-Using the given FORTRAN 77 compiler ..."
+Using the given Fortran 77 compiler ..."
   AC_MSG_WARN([${warn_F77_and_F2C}])
   F2C=
 fi
 if test -n "${F77}"; then
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test -n "${FC}"; then
-  F77="${FC}"
   AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test -z "${F2C}"; then
   F77=
@@ -549,7 +538,7 @@ else
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 fi
 if test -n "${F77}"; then
-  ## If the above 'found' a FORTRAN 77 compiler, we run AC_PROG_F77 as
+  ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
   ## this does additional testing (GNU, '-g', ...).
   AC_PROG_F77
 elif test -z "${F2C}"; then
@@ -562,8 +551,8 @@ fi
 ## Run AC_F77_LIBRARY_LDFLAGS, and fix some known problems with FLIBS.
 AC_DEFUN([R_PROG_F77_FLIBS],
 [AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
-## Currently g77 on Darwin links against -lcrt1.o, which (unlike
-## -lcrt0.o) is not stripped by AC_F77_LIBRARY_LDFLAGS.  This in 
+## Currently g77 on Darwin links against '-lcrt1.o', which (unlike
+## '-lcrt0.o') is not stripped by AC_F77_LIBRARY_LDFLAGS.  This in 
 ## particular causes R_PROG_F77_CC_COMPAT to fail.  Hence, we make
 ## sure all -lcrt?.o are removed.
 ## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
@@ -598,15 +587,12 @@ done
 FLIBS="${flibs}"
 ## Versions of g77 up to 3.0.x only have a non-PIC (static) -lg2c which
 ## on some platforms means one cannot build dynamically loadable modules
-## containing FORTRAN code.  (g77 3.1 will have a shared -lg2c too.)  As
+## containing Fortran code.  (g77 3.1 will have a shared -lg2c too.)  As
 ## a workaround, Debian provides -lg2c-pic which holds pic objects only,
 ## and we should use in case we can find it ...
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
-  ## <FIXME>
-  ## Potentially dangerous ...
   flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
-  ## </FIXME>
   LIBS="${LIBS} ${flibs}"
   AC_LANG_PUSH(C)
   AC_TRY_LINK([], [], [FLIBS="${flibs}"])
@@ -626,7 +612,7 @@ fi
 ## the R API have one argument only and therefore cannot deal with 
 ## Fortran 77 compilers which convert to upper case or add an extra
 ## underscore for identifiers containing underscores.  We give an error
-## in the former case; as ISO FORTRAN 77 does not allow underscores in
+## in the former case; as ISO Fortran 77 does not allow underscores in
 ## function names, we do nothing about the latter.
 AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
 [AC_REQUIRE([AC_F77_WRAPPERS])
@@ -635,8 +621,8 @@ AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
 ## and hence may change ...
 case "${ac_cv_f77_mangling}" in
   "upper "*)
-    AC_MSG_WARN([FORTRAN compiler uses uppercase external names])
-    AC_MSG_ERROR([cannot use FORTRAN])
+    AC_MSG_WARN([Fortran compiler uses uppercase external names])
+    AC_MSG_ERROR([cannot use Fortran])
     ;;
 esac
 AC_CACHE_VAL([r_cv_prog_f77_append_underscore],
@@ -649,7 +635,7 @@ AC_CACHE_VAL([r_cv_prog_f77_append_underscore],
     ;;
 esac])
 if test -z "${r_cv_prog_f77_append_underscore}"; then
-  AC_MSG_ERROR([cannot use FORTRAN])
+  AC_MSG_ERROR([cannot use Fortran])
 fi
 if test "${r_cv_prog_f77_append_underscore}" = yes; then
   AC_DEFINE(HAVE_F77_UNDERSCORE, 1,
@@ -660,10 +646,10 @@ fi
 
 ## R_PROG_F77_CC_COMPAT
 ## --------------------
-## Check whether the Fortran and C compilers agree on int and double
+## Check whether the Fortran 77 and C compilers agree on int and double.
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
 [AC_REQUIRE([AC_CHECK_LIBM])
-AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
+AC_MSG_CHECKING([whether ${F77} and ${CC} agree on int and double])
 AC_CACHE_VAL([r_cv_prog_f77_cc_compat],
 [cat > conftestf.f <<EOF
       subroutine cftest(a, b, x, y)
@@ -678,7 +664,7 @@ AC_CACHE_VAL([r_cv_prog_f77_cc_compat],
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
-dnl Yes we need to double quote this ...
+## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
 #include "confdefs.h"
@@ -711,14 +697,18 @@ int main () {
   exit(res);
 }
 EOF]
-if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
-  ## <FIXME>
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
-  ## determined.  Or maybe we can always use ${CC} eventually?
-  if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
-  ## </FIXME>
+  ## </NOTE>
   then
     output=`./conftest${ac_exeext} 2>&1`
     if test ${?} = 0; then
@@ -731,17 +721,17 @@ rm -rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_cc_compat}"; then
   AC_MSG_RESULT([yes])
 else
-  AC_MSG_WARN([${F77-f77} and ${CC-cc} disagree on int and double])
+  AC_MSG_WARN([${F77} and ${CC} disagree on int and double])
   AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
 fi
 ])# R_PROG_F77_CC_COMPAT
 
 ## R_PROG_F77_CC_COMPAT_COMPLEX
 ## ----------------------------
-## Check whether the Fortran and C compilers agree on double complex
+## Check whether the Fortran 77 and C compilers agree on double complex.
 AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
 [AC_REQUIRE([AC_CHECK_LIBM])
-AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on double complex])
+AC_MSG_CHECKING([whether ${F77} and ${CC} agree on double complex])
 AC_CACHE_VAL([r_cv_prog_f77_cc_compat_complex],
 [cat > conftestf.f <<EOF
       subroutine cftest(x)
@@ -754,7 +744,7 @@ c a few tests of constructs that are sometimes missing
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
-dnl Yes we need to double quote this ...
+## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
 #include "confdefs.h"
@@ -787,14 +777,18 @@ int main () {
     else exit(1);
 }
 EOF]
-if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
-  ## <FIXME>
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
-  ## determined.  Or maybe we can always use ${CC} eventually?
-  if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
-  ## </FIXME>
+  ## </NOTE>
   then
     output=`./conftest${ac_exeext} 2>&1`
     if test ${?} = 0; then
@@ -810,17 +804,15 @@ if test -n "${r_cv_prog_f77_cc_compat_complex}"; then
             [Define if C's Rcomplex and Fortran's COMPLEX*16 can be
              interchanged, and can do arithmetic on the latter.])
 else
-  ## <FIXME>
-  ## Use warn_f77_cc_double_complex ...
-  AC_MSG_WARN([${F77-f77} and ${CC-cc} disagree on double complex])
-  ## </FIXME>
+  warn_f77_cc_double_complex="${F77} and ${CC} disagree on double complex"
+  AC_MSG_WARN([${warn_f77_cc_double_complex}])
 fi
 AC_SUBST(HAVE_DOUBLE_COMPLEX)
 ])# R_PROG_F77_CC_COMPAT_COMPLEX
 
 ## R_PROG_F77_C_O_LO
 ## -----------------
-## Check whether the Fortran compiler supports -c -o FILE.lo
+## Check whether the Fortran compiler supports '-c -o FILE.lo'.
 AC_DEFUN([R_PROG_F77_C_O_LO],
 [AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
                 [r_cv_prog_f77_c_o_lo],
@@ -842,8 +834,8 @@ rm -rf conftest* TMP])
 
 ## R_PROG_F77_MAKEFRAG
 ## -------------------
-## Generate a Make fragment with suffix rules for FORTRAN 77 source
-## files when using a FORTRAN 77 compiler.
+## Generate a Make fragment with suffix rules for Fortran 77 source
+## files when using a Fortran 77 compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_F77_MAKEFRAG],
 [AC_REQUIRE([R_PROG_F77_C_O_LO])
@@ -871,13 +863,13 @@ AC_SUBST_FILE(f77_rules_frag)
 
 ## R_PROG_F77_FLAG(FLAG, [ACTION-IF-TRUE])
 ## ---------------------------------------
-## Check whether the FORTRAN 77 compiler handles command line option
+## Check whether the Fortran 77 compiler handles command line option
 ## FLAG, and set shell variable r_cv_prog_f77_flag_SFLAG accordingly
 ## (where SFLAG is a shell-safe transliteration of FLAG).
 ## In addition, execute ACTION-IF-TRUE in case of success.
 AC_DEFUN([R_PROG_F77_FLAG],
 [ac_safe=`echo "$1" | sed 'y%./+-:=%__p___%'`
-AC_MSG_CHECKING([whether ${F77-f77} accepts $1])
+AC_MSG_CHECKING([whether ${F77} accepts $1])
 AC_CACHE_VAL([r_cv_prog_f77_flag_${ac_safe}],
 [AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS="${FFLAGS}"
@@ -942,8 +934,8 @@ fi
 
 ## R_PROG_F2C_MAKEFRAG
 ## -------------------
-## Generate a Make fragment with suffix rules for FORTRAN 77 source
-## files when using f2c, the FORTRAN-to-C converter.
+## Generate a Make fragment with suffix rules for Fortran 77 source
+## files when using f2c, the Fortran-to-C converter.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_F2C_MAKEFRAG],
 [AC_REQUIRE([R_PROG_CC_C_O_LO])
@@ -1418,10 +1410,16 @@ if test -z "${TCLTK_CPPFLAGS}" \
       have_tcltk=no
     fi
   fi
-  ## <FIXME>
-  ## Shouldn't there also be a test that major and minor versions of
-  ## the scripts match?
-  ## </FIXME>
+  if test -n "${TCL_CONFIG}" \
+      && test -n "${TK_CONFIG}" \
+      && test -z "${warn_tcltk_version}"; then
+    if test ${TCL_MAJOR_VERSION} -ne ${TK_MAJOR_VERSION} \
+      || test ${TCL_MINOR_VERSION} -ne ${TK_MINOR_VERSION}; then
+     warn_tcltk_version="Tcl and Tk major or minor versions disagree"
+      AC_MSG_WARN([${warn_tcltk_version}])
+      have_tcltk=no
+    fi
+  fi
 fi
 ])# _R_TCLTK_CONFIG
 
@@ -1479,14 +1477,12 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tcl.h in
       ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
       ##   ${TCL_PREFIX}/include
-      ## <FIXME>
       ## Also look in
       ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic
       ## to deal with current FreeBSD layouts.  These also link the real
       ## thing to the version subdir, but the link cannot be used as it
       ## fails to include 'tclDecls.h' which is not linked.  Hence we
       ## must look for the real thing first.  Argh ...
-      ## </FIXME>
       for dir in \
           ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic \
           ${TCL_PREFIX}/include/tcl${TCL_VERSION} \
@@ -1514,16 +1510,13 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tk.h in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}
       ##   ${TK_PREFIX}/include
-      ## <FIXME>
       ## Also look in
       ##   ${TK_PREFIX}/include/tcl${TK_VERSION}
       ## to compensate for Debian madness ...
-      ## </FIXME>
-      ## <FIXME>
       ## Also look in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}/generic
       ## to deal with current FreeBSD layouts.  See above for details.
-      ## </FIXME>
+      ##
       ## As the AC_CHECK_HEADER test tries including the header file and
       ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
       ## for the check.
@@ -1664,7 +1657,7 @@ AC_SUBST(use_tcltk)
 ## with the following changes:
 ## * We also handle HPUX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
-## * We only care about the FORTRAN 77 interface to Atlas, hence do not
+## * We only care about the Fortran 77 interface to Atlas, hence do not
 ##   test for -lcblas.
 ## * We do not use BLAS libs that caused problems in the past: Alpha
 ##   CXML and DXML, and SGI SCSL and SGIMATH (marked with COMMENT tags).
@@ -1799,7 +1792,7 @@ AC_SUBST(BLAS_LIBS)
 ## R_XDR
 ## -----
 ## Try finding XDR library functions and headers.
-## FreeBSD in particular needs rpc/types.h before rpc/xdr.h
+## FreeBSD in particular needs rpc/types.h before rpc/xdr.h.
 AC_DEFUN([R_XDR],
 [AC_CHECK_HEADER(rpc/types.h)
 if test "${ac_cv_header_rpc_types_h}" = yes ; then
@@ -1891,7 +1884,7 @@ caddr_t hello() {
 ## R_PCRE
 ## ------
 ## Try finding pcre library and headers.
-## RedHat puts the headers in /usr/include/pcre
+## RedHat puts the headers in /usr/include/pcre.
 AC_DEFUN([R_PCRE],
 [AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
 if test "${have_pcre}" = yes; then
