@@ -611,6 +611,8 @@ matched against the file names relative to the top-level source
 directory.  In addition, files called @file{CVS} or @file{GNUMakefile},
 or with base names starting with @samp{.#}, or starting and ending with
 @samp{#}, or ending in @samp{~} or @samp{.swp}, are excluded by default.
+@strong{Note:} file exclusion does not work correctly with GNU @code{tar
+1.13} but does work with later versions (e.g. @code{1.13.17}).
 
 Use @kbd{R CMD build --help} (@kbd{Rcmd build --help} on Windows) to
 obtain more information about the usage of the @R{} package builder.
