@@ -495,7 +495,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 }
 
 /* Code to extract the optional arguments to c().  We do it this */
-/* way, rather than having an interpreted font-end do the job, */
+/* way, rather than having an interpreted front-end do the job, */
 /* because we want to avoid duplication at the top level. */
 /* FIXME : is there another possibility? */
 
