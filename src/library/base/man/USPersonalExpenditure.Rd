@@ -6,7 +6,7 @@
   This data set consists of United States personal expenditures (in
   billions of dollars) in the categories; food and tobacco, household
   operation, medical and health, personal care, and private education
-  for the years 1940, 1945, 1950, and 1960.
+  for the years 1940, 1945, 1950, 1955 and 1960.
 }
 \usage{data(USPersonalExpenditure)}
 \format{A matrix with 5 rows and 5 columns.}
@@ -21,8 +21,9 @@
   Wiley.
 }
 \examples{
+require(stats) # for medpolish
 data(USPersonalExpenditure)
 USPersonalExpenditure
-stats::medpolish(log10(USPersonalExpenditure))
+medpolish(log10(USPersonalExpenditure))
 }
 \keyword{datasets}
