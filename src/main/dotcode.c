@@ -618,12 +618,13 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun = NULL;
-    SEXP retval, cargs[MAX_ARGS], pargs;
+    SEXP retval, nm, cargs[MAX_ARGS], pargs;
     R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
     int nargs;
     char *vmax = vmaxget();
     char buf[128];
 
+    nm = CAR(args);
     args = resolveNativeRoutine(args, &fun, &symbol, buf, NULL, NULL,
 				NULL, call);
     args = CDR(args);
@@ -638,7 +639,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(symbol.symbol.call->numArgs != nargs)
 	    error("Incorrect number of arguments (%d), expecting %d for %s",
 		  nargs, symbol.symbol.call->numArgs,
-		  CHAR(STRING_ELT(CAR(args), 0)));
+		  CHAR(STRING_ELT(nm, 0)));
     }
 
     retval = R_NilValue;	/* -Wall */
