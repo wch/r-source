@@ -32,7 +32,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.12 $ ';
+my $revision = ' $Revision: 1.13 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -136,7 +136,7 @@ foreach $pkg (@ARGV){
 	    my $filename =  "${pkgname}_" . $description->{"Version"} .
 		"_${R_platform}.tar";
 	    $log->message("building \`$filename.gz'");
-	    system("tar -c -h -f $startdir/$filename $pkgs");
+	    system("tar chf $startdir/$filename $pkgs");
 	    chdir($startdir);
 	    system("gzip -9f $filename");
 	}
@@ -178,7 +178,7 @@ foreach $pkg (@ARGV){
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
 	$log->message("building \`$filename.gz'");
 	chdir("$pkg/..");
-	system("tar -c -h -X $exclude -f $startdir/$filename $pkgname");
+	system("tar chXf $exclude $startdir/$filename $pkgname");
 	chdir($startdir);
 	system("gzip -9f $filename");
 	unlink($exclude);
@@ -221,13 +221,18 @@ sub prepare_pkg {
     if(-d "src"){
 	chdir("src");
 	$log->message("cleaning src");
-	if($WINDOWS && -r "Makefile.win"){
-	    system("$make -f Makefile.win clean");
-	}
-	else{
+	if($WINDOWS) {
+	    if(-r "Makefile.win") {
+		system("$make -f Makefile.win clean");
+	    } else {
+		my $file;
+		foreach $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>){
+		    unlink($file);
+		}
+	    }
+	} else{
 	    my $file;
-	    foreach $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>){
-#	    foreach $file (<*.o *s[lo]>){
+	    foreach $file (<*.o *s[lo]>){
 		unlink($file);
 	    }
 	}
