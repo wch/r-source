@@ -514,7 +514,10 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
         fp <- file.path(lib.loc, pkg)
         if(useAttached)
             fp <- c(.path.package(pkg, TRUE), fp)
-        fp <- unique(fp[file.exists(fp)])
+        ## Note that we cannot use tools::fileTest() here, as cyclic
+        ## name space dependencies are not supported.
+        fp <- unique(fp[file.exists(fp) &
+                        file.exists(file.path(fp, "DESCRIPTION"))])
         if(length(fp) == 0) {
             bad <- c(bad, pkg)
             next
