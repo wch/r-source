@@ -822,7 +822,6 @@ AC_OUTPUT(Makeconf
   src/scripts/build-help
   src/scripts/check
   src/scripts/fwf2table
-  src/scripts/help.pretty
   src/unix/Makefile
   src/unix/X11/Makefile
   src/unix/gnome/Makefile
