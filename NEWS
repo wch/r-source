@@ -57,6 +57,9 @@ BUG FIXES
 
     o	plot(.., type = 'h', log = 'y')	 now works ...
 
+    o   plot.factor(x, y, ...) of two factors now makes
+        barplot(table(y,x), ...)
+
 
 		CHANGES IN R VERSION 0.63.1
 

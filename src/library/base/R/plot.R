@@ -131,10 +131,12 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     invisible()
 }
 
-plot.factor <- function(x, y, ...)
+plot.factor <- function(x, y, legend.text=levels(y), ...)
 {
     if (missing(y))
 	barplot(table(x), ...)
+    else if (is.factor(y)) 
+        barplot(table(y, x), legend.text=legend.text, ...)
     else if (is.numeric(y))
 	boxplot(y ~ x, ...)
     else NextMethod("plot")
