@@ -41,4 +41,4 @@ rug(eruptions)
 rug(jitter(eruptions, amount = .01), side = 3, col = "light blue")
 detach("faithful")
 }
-\keyword{hplot}
+\keyword{aplot}
