@@ -62,47 +62,47 @@ optim(par, fn, gr = NULL,
 
   The \code{control} argument is a list that can supply any of the
   following components:
-  \itemize{
-    \item \code{trace} Logical. If true, tracing information on the
-    progress of the optimization is produced.
-    \item \code{fnscale} An overall scaling to be applied to the value
-    of \code{fn} and \code{gr} during optimization. If negative,
-    turns the problem into a maximization problem. Optimization is
-    performed on \code{fn(par)/fnscale}.
-    \item \code{parscale} A vector of scaling values for the parameters.
-    Optimization is performed on \code{par/parscale} and these should be
-    comparable in the sense that a unit change in any element produces
-    about a unit change in the scaled value.
-    \item \code{ndeps} A vector of stepsizes for the finite-difference
-    approximation to the gradient, on \code{par/parscale}
-    scale. Defaults to \code{1e-3}.
-    \item \code{maxit} The maximum number of iterations. Defaults to
-    \code{100} for the derivative-based methods,
-    and \code{500} for \code{"Nelder-Mead"}.
-    \item \code{abstol} The absolute convergence tolerance. Only
-    useful for non-negative functions, as a tolerance for reaching zero.
-    \item \code{reltol} Relative convergence tolerance. The algorithm
-    stops if it is unable to reduce the value by a factor of
-    \code{reltol * (abs(val) + reltol)} at a step.
-    \item \code{alpha}, \code{beta}, \code{gamma}. Scaling parameters
-    for the \code{"Nelder-Mead"} method. \code{alpha} is the reflection
-    factor (default 1.0), \code{beta} the contraction factor (0.5) and
-    \code{gamma} the expension factor (2.0).
-    \item \code{REPORT} The frequency of reports for the \code{"BFGS"}
-    method in \code{control$trace} is positive.
-    Defaults to every 10 iterations.
-    \item \code{type} for the conjugate-gradients method. Takes value
-    \code{1} for the Fletcher--Reeves update, \code{2} for
-    Polak--Ribiere and \code{3} for Beale--Sorenson.
-    \item \code{lmm} is an integer giving the number of BFGS updates
-    retained in the \code{"L-BFGS-B"} method, It defaults to \code{5}.
-    \item \code{factr} controls the convergence of the \code{"L-BFGS-B"}
-    method. Convergence occurs when the reduction in the objective is
-    within this factor of the machine tolerance. Default is \code{1e12},
-    that is a tolerance of about \code{1e-3}.
-    \item \code{pgtol} helps controls the convergence of the \code{"L-BFGS-B"}
-    method. It is a tolerance on the projected gradient in the current
-    search direction. This defaults to zero, when the check is suppressed.
+  \describe{
+    \item{\code{trace}}{Logical. If true, tracing information on the
+      progress of the optimization is produced.}
+    \item{\code{fnscale}}{An overall scaling to be applied to the value
+      of \code{fn} and \code{gr} during optimization. If negative,
+      turns the problem into a maximization problem. Optimization is
+      performed on \code{fn(par)/fnscale}.}
+    \item{\code{parscale}}{A vector of scaling values for the parameters.
+	Optimization is performed on \code{par/parscale} and these should be
+	comparable in the sense that a unit change in any element produces
+	about a unit change in the scaled value.}
+    \item{\code{ndeps}}{A vector of stepsizes for the finite-difference
+      approximation to the gradient, on \code{par/parscale}
+      scale. Defaults to \code{1e-3}.}
+    \item{\code{maxit}}{The maximum number of iterations. Defaults to
+      \code{100} for the derivative-based methods,
+      and \code{500} for \code{"Nelder-Mead"}.}
+    \item{\code{abstol}}{The absolute convergence tolerance. Only
+      useful for non-negative functions, as a tolerance for reaching zero.}
+    \item{\code{reltol}}{Relative convergence tolerance. The algorithm
+      stops if it is unable to reduce the value by a factor of
+      \code{reltol * (abs(val) + reltol)} at a step.}
+    \item{\code{alpha}, \code{beta}, \code{gamma}}{Scaling parameters
+      for the \code{"Nelder-Mead"} method. \code{alpha} is the reflection
+      factor (default 1.0), \code{beta} the contraction factor (0.5) and
+      \code{gamma} the expansion factor (2.0).}
+    \item{\code{REPORT}}{The frequency of reports for the \code{"BFGS"}
+      method in \code{control$trace} is positive.
+      Defaults to every 10 iterations.}
+    \item{\code{type}}{for the conjugate-gradients method. Takes value
+      \code{1} for the Fletcher--Reeves update, \code{2} for
+      Polak--Ribiere and \code{3} for Beale--Sorenson.}
+    \item{\code{lmm}}{is an integer giving the number of BFGS updates
+      retained in the \code{"L-BFGS-B"} method, It defaults to \code{5}.}
+    \item{\code{factr}}{controls the convergence of the \code{"L-BFGS-B"}
+      method. Convergence occurs when the reduction in the objective is
+      within this factor of the machine tolerance. Default is \code{1e12},
+      that is a tolerance of about \code{1e-3}.}
+    \item{\code{pgtol}}{helps controls the convergence of the \code{"L-BFGS-B"}
+      method. It is a tolerance on the projected gradient in the current
+      search direction. This defaults to zero, when the check is suppressed.}
   }
 }
 \value{
@@ -114,10 +114,14 @@ optim(par, fn, gr = NULL,
     to compute the Hessian, if requested.}
   \item{convergence}{An integer code. \code{0} indicates successful
     convergence. Error codes are
-    \itemize{
-      \item \code{1} indicates that the iteration limit \code{maxit}
-      had been reached.
-      \item \code{10} indicates degeneracy of the Nelder--Mead simplex.
+    \describe{
+      \item{\code{1}}{indicates that the iteration limit \code{maxit}
+      had been reached.}
+      \item{\code{10}}{indicates degeneracy of the Nelder--Mead simplex.}
+      \item{\code{51}}{indicates a warning from the \code{"L-BFGS-B"}
+      method; see component \code{message} for further details.}
+      \item{\code{52}}{indicates an error from the \code{"L-BFGS-B"}
+      method; see component \code{message} for further details.}
     }      
   }
   \item{message}{An character string giving any additional information
@@ -130,7 +134,7 @@ optim(par, fn, gr = NULL,
 \references{
   Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
   memory algorithm for bound constrained optimization.
-  \emph{SIAM J. Scientific Computing},  \bold{16},  1190--1208.
+  \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
 
   Fletcher, R. and Reeves, C. M. (1964) Function minimization by
   conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
@@ -171,13 +175,13 @@ optim(c(-1.2,1), fr)
 optim(c(-1.2,1), fr, grr, "BFGS")
 optim(c(-1.2,1), fr, NULL, "BFGS", hessian = TRUE)
 optim(c(-1.2,1), fr, grr, "CG")
-
 optim(c(-1.2,1), fr, grr, "CG", list(type=2))
-
 optim(c(-1.2,1), fr, grr, "L-BFGS-B")
+
 flb <- function(x)
-  sum(c(1, rep(4, length(x)-1))*(x - c(1, x[-length(x)])^2)^2)
-optim(rep(3, 25), flb, NULL, "L-BFGS-B", lower=rep(2, 25), upper=rep(4, 25))
+     sum(c(1, rep(4, length(x)-1))*(x - c(1, x[-length(x)])^2)^2)
+optim(rep(3, 25), flb, NULL, "L-BFGS-B",
+      lower=rep(2, 25), upper=rep(4, 25))
 
 }
 \keyword{nonlinear}
