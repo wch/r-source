@@ -356,6 +356,7 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     vmax = vmaxget();
     OS = (OptStruct) R_alloc(1, sizeof(opt_struct));
+    OS->usebounds = 0;
     OS->R_env = rho;
     par = CAR(args);
     npar = LENGTH(par);
