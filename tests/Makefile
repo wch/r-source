@@ -18,12 +18,12 @@ TESTout = $(TESTsrc:.R=.Rout)
 tests: test-Examples $(TESTout)
 
 test-Examples:
-	-(cd $(Ex); make $@)
+	-(cd $(Ex); $(MAKE) $@)
 
 $(REXE)::
-	-(cd $(RHOME); make R)
+	-(cd $(RHOME); $(MAKE) R)
 
 clean: ; rm -f $(TESTout)
-	-(cd $(Ex); make $@)
+	-(cd $(Ex); $(MAKE) $@)
 
 

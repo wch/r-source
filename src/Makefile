@@ -1,39 +1,39 @@
 R:		build
-		@cd main; make install
-		@cd library; make
-		@cd library; make libs
-		@cd front; make
+		@cd main; $(MAKE) install
+		@cd library; $(MAKE)
+		@cd library; $(MAKE) libs
+		@cd front; $(MAKE)
 
 build:
 		@echo "Extracting foreign function symbols"
 		@sh GETSYMBOLS
-		cd graphics; make
-		cd nmath; make
-		cd appl; make
-		cd unix; make
-		cd main; make
-		cd include; make
+		cd graphics; $(MAKE)
+		cd nmath; $(MAKE)
+		cd appl; $(MAKE)
+		cd unix; $(MAKE)
+		cd main; $(MAKE)
+		cd include; $(MAKE)
 
 install:
 		@echo "Sorry, this hasn't been implemented yet"
 
 clean:
-		@cd graphics; make $@
-		@cd library; make $@
-		@cd main; make $@
-		@cd nmath; make $@
-		@cd appl; make $@
-		@cd unix; make $@
+		@cd graphics; $(MAKE) $@
+		@cd library; $(MAKE) $@
+		@cd main; $(MAKE) $@
+		@cd nmath; $(MAKE) $@
+		@cd appl; $(MAKE) $@
+		@cd unix; $(MAKE) $@
 		@-rm -f lib/*.a
 
 realclean:
-		@cd front; make $@
-		@cd graphics; make $@
-		@cd library; make clean
-		@cd main; make $@
-		@cd nmath; make $@
-		@cd appl; make $@
-		@cd unix; make $@
-		@cd include; make $@
+		@cd front; $(MAKE) $@
+		@cd graphics; $(MAKE) $@
+		@cd library; $(MAKE) clean
+		@cd main; $(MAKE) $@
+		@cd nmath; $(MAKE) $@
+		@cd appl; $(MAKE) $@
+		@cd unix; $(MAKE) $@
+		@cd include; $(MAKE) $@
 		@-rm -f include/FFDecl.h include/FFTab.h include/Platform.h
 		@-rm -f lib/*.a

@@ -8,7 +8,7 @@ CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help help.pretty html2dos
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
-MANSRC = ../src/library/*/man/*.Rd
+#MANSRC = ../src/library/*/man/*.Rd
 MANbaseDIR = ../src/library/base/man
 MANdest= ../doc/manual
 
@@ -46,10 +46,10 @@ stamp-docs: $(MANSRC)
 	@touch stamp-latex
 
 $(DVI): stamp-latex
-	-(cd $(MANdest); make Man.dvi)
+	-(cd $(MANdest); $(MAKE) Man.dvi)
 
 clean:
-	-(cd $(MANdest); make $@)
+	-(cd $(MANdest); $(MAKE) $@)
 
 moreclean: clean
 	@rm -f $(CleanMe1)

@@ -7,5 +7,5 @@ install:
 	$(INSTALL_DATA) html/search/*.class \
 			html/search/*.html \
 			html/search/index.txt $(rhome)/doc/html/search
-	cd manual; make install
+	cd manual; $(MAKE) install
 
