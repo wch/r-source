@@ -20,6 +20,7 @@
 #ifndef GRAPHICS_H_
 #define GRAPHICS_H_
 
+#include "Defn.h"
 #include "Arith.h"
 #include "Errormsg.h"
 
@@ -281,6 +282,8 @@ void GBox(int);
 void GCheckState();
 void GClip(void);
 void GEndPath(void);
+double GExpressionHeight(SEXP, int);
+double GExpressionWidth(SEXP, int);
 void GForceClip(void);
 int  GGetIndex(unsigned int);
 void GGetRGB(unsigned int, int*, int*, int*);
@@ -318,6 +321,7 @@ void GSetViewPort(void);
 #endif
 void GStartPath(void);
 void GSetState(int);
+double GStrHeight(char*, int);
 double GStrWidth(char*, int);
 void GSymbol(double, double, int);
 void GText(double, double, char*, double, double, double);

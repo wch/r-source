@@ -1,14 +1,8 @@
 strwidth <- function(s, units="user", cex=NULL) {
- fudge <- 1
- if(!is.character(s)) {
-	 if(is.expression(s)) {
-	   ##-- Internal 'strwidth' should be enhanced for expressions !!!
-	   warning("using cheap fix in `strwidth(<expression>)' ..")
-	   ##-- CHEAP workaround:
-	   ns <- length(se <- s); s <- character(ns)
-	   for(i in 1:ns) s[i] <- paste(deparse(se[i]),collapse="")
-	 } else stop("`s' must be `character' or `expression'")
-	 fudge <- 0.6
- }
- fudge*.Internal(strwidth(s, pmatch(units, c("user", "figure", "inches")), cex))
+	.Internal(strwidth(s, pmatch(units, c("user", "figure", "inches")), cex))
 }
+
+strheight <- function(s, units="user", cex=NULL) {
+	.Internal(strheight(s, pmatch(units, c("user", "figure", "inches")), cex))
+}
+

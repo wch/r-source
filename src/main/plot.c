@@ -1565,6 +1565,40 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	/* strwidth(str, units) */
 
+SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+        SEXP ans, str;
+        int i, n, units;
+        double cex, cexsave;
+
+        checkArity(op,args);
+        str = CAR(args);
+        if((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
+                errorcall(call, "character or expression first argument expected\n");
+        args = CDR(args);
+
+        if((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
+                errorcall(call, "invalid units\n");
+        args = CDR(args);
+
+        if(isNull(CAR(args)))
+                cex = GP->cex;
+        else if(!FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
+                errorcall(call, "invalid cex value\n");
+
+        n = LENGTH(str);
+        ans = allocVector(REALSXP, n);
+        cexsave = GP->cex;
+        GP->cex = cex * GP->cexbase;
+        for(i=0 ; i<n ; i++)
+                if (isExpression(str))
+                        REAL(ans)[i] = GExpressionHeight(VECTOR(str)[i], units);
+                else
+                        REAL(ans)[i] = GStrHeight(CHAR(STRING(str)[i]), units);
+        GP->cex = cexsave;
+        return ans;
+}
+
 SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans, str;
@@ -1575,8 +1609,8 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	checkArity(op, args);
 	str = CAR(args);
-	if(TYPEOF(str) != STRSXP)
-		errorcall(call, "character first argument expected\n");
+	if((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
+		errorcall(call, "character or expression first argument expected\n");
 	args = CDR(args);
 
 	if((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
@@ -1593,7 +1627,10 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 	cexsave = GP->cex;
 	GP->cex = cex * GP->cexbase;
 	for(i=0 ; i<n ; i++)
-		REAL(ans)[i] = GStrWidth(CHAR(STRING(str)[i]), units);
+                if (isExpression(str))
+                        REAL(ans)[i] = GExpressionWidth(VECTOR(str)[i], units);
+                else
+                        REAL(ans)[i] = GStrWidth(CHAR(STRING(str)[i]), units);
 	GP->cex = cexsave;
 	return ans;
 }

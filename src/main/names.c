@@ -532,6 +532,7 @@ FUNTAB R_FunTab[] =
 {"arrows",	do_arrows,	0,	111,	9,	PP_FUNCALL,	0},
 {"locator",	do_locator,	0,	11,	1,	PP_FUNCALL,	0},
 {"identify",	do_identify,	0,	11,	3,	PP_FUNCALL,	0},
+{"strheight",   do_strheight,   0,      11,     3, 	PP_FUNCALL, 	0},
 {"strwidth",	do_strwidth,	0,	11,	3,	PP_FUNCALL,	0},
 {"contour",	do_contour,	0,	11,	6,	PP_FUNCALL,	0},
 {"image",	do_image,	0,	11,	5,	PP_FUNCALL,	0},

@@ -41,9 +41,6 @@ legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
 
   The default values for \code{x.intersp} and \code{y.intersp} are
   computed from \code{Cx <- cex * par('cex')}.
-
-  When (mathematical) expressions are used for \code{legend}, it may be
-  advisable to specify the \code{text.width} argument.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}, and
@@ -79,7 +76,5 @@ lines(x, cos(x), col = 3, lty = 2); abline(h=0, v=pi/2*(-6:6), col="gray90")
 ex.cs1 <- expression(plain(sin) * phi,  plain(cos) * phi)
 ex.cs2 <- expression(paste("sin ",phi), paste("cos ",phi))
 legend(-3, .9, ex.cs1, lty=1:2, col=2:3)
-legend(-3, .6, ex.cs2, lty=1:2, col=2:3, text.width= 0.4) # better
 rm(ex.cs1, ex.cs2)
-}
 

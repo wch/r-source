@@ -14,7 +14,9 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 	##- if(DEBUG) cat('Cex=',formatC(Cex),' ==>  x.intersp=',
 	##-	       format(x.intersp),'; y.intersp=', format(y.intersp),"\n")
 	xchar<- Cex * xinch(cin[1])
-	ychar<- Cex * yinch(cin[2]) * y.intersp
+	yextra <- Cex * yinch(cin[2]) * (y.intersp-1)
+	ychar<- max(c(strheight(legend, u="user", cex=cex), 
+		      Cex * yinch(cin[2]))) + yextra
 	## size of filled boxes:
 	xbox <- Cex * xinch(cin[1]) * 0.8
 	ybox <- Cex * yinch(cin[2]) * 0.8
