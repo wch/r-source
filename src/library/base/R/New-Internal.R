@@ -91,7 +91,7 @@ readline <- function().Internal(readline())
 search <- function().Internal(search())
 
 sink <- function (file = NULL) {
-  if (missing(file)) 
+  if (is.null(file)) 
     .Internal(sink())
   else .Internal(sink(file))
 }    

@@ -13,6 +13,6 @@ sink(file)
   file if it already exists;  appending is not supported yet).  Only
   prompts and error messages continue to appear on the terminal.
 
-  \code{sink()} ends the diversion.
+  \code{sink()} or \code{sink(file=NULL)} ends the diversion.
 }
 \keyword{file}
