@@ -46,8 +46,6 @@ polym(..., degree = 1)
   be used to evaluate it via the three-term recursion given in Kennedy
   \& Gentle (1980, pp. 343-4), and use in the ``predict'' part of the code.
 }
-\author{B. D. Ripley}
-
 \note{
   This routine is intended for statistical purposes such as
   \code{contr.poly}: it does not attempt to orthogonalize to

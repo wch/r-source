@@ -1,6 +1,3 @@
-% file dummy.coef.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{dummy.coef}
 \title{Extract Coefficients in Original Coding}
 \usage{
@@ -42,7 +39,6 @@ dummy.coef.aovlist(object, use.na = FALSE, \dots)
   A list giving for each term the values of the coefficients. For a
   multistratum \code{aov} model, such a list for each stratum.
 }
-\author{B.D. Ripley}
 
 \section{Warning}{
   This function is intended for human inspection of the

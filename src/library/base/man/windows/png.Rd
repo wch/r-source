@@ -54,8 +54,6 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
   set to a 24-bit or 32-bit colour mode.
 }
 
-\author{Guido Masarotto and Brian Ripley}
-
 \seealso{\code{\link{Devices}}, \code{\link{dev.print}},
   \code{\link{bitmap}}}
 \examples{

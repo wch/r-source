@@ -23,7 +23,6 @@
 \value{
   A time series object.
 }
-\author{B.D. Ripley}
 
 \note{
   Note the sign of \code{k}: a series lagged by a positive \code{k}

@@ -41,7 +41,6 @@ debugger(dump = last.dump)
 \value{
   None.
 }
-\author{B. D. Ripley}
 \note{
   Functions such as \code{\link{sys.parent}} and
   \code{\link{environment}} applied to closures will not work correctly

@@ -49,7 +49,6 @@ may not be supplied on a non-POSIX Unix system.
   This function will only be operational on systems with the
   \code{stat} system call, but that seems very widely available.
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{files}}, \code{\link{file.access}},

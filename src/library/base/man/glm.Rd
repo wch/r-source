@@ -215,7 +215,7 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
   since been extensively re-written by members of the R Core team.
 
   The design was inspired by the S function of the same name described
-  in Hastie \& Pregibon (1991).
+  in Hastie \& Pregibon (1992).
 }
 \references{
   Dobson, A. J. (1990)

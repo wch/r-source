@@ -1,6 +1,3 @@
-% file C.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{C}
 \title{Sets Contrasts for a Factor}
 \usage{
@@ -27,7 +24,6 @@ C(object, contr, how.many, \dots)
 \value{
   The factor \code{object} with the \code{"contrasts"} attribute set.
 }
-\author{B.D. Ripley}
 \seealso{
   \code{\link{contrasts}}, \code{\link{contr.sum}}, etc.
 }

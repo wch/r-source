@@ -22,7 +22,6 @@ ts.plot(..., gpars = list())
 \value{
   None.
 }
-\author{B.D. Ripley}
 
 
 \seealso{\code{\link{plot.ts}}}

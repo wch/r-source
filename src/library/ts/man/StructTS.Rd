@@ -116,8 +116,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   Harvey, A. C. (1993) \emph{Time Series Models}.
   2nd Edition, Harvester Wheatsheaf.
 }
-\author{B. D. Ripley}
-
+x
 \note{
   Optimization of structural models is a lot harder than many of the
   references admit. For example, the \code{\link{AirPassengers}} data

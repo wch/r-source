@@ -37,8 +37,6 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
   that AR spectra can be misleading.
 }
 
-\author{B.D. Ripley}
-
 \seealso{\code{\link{ar}}, \code{\link{spectrum}}.}
 
 \note{The multivariate case is not yet implemented.}

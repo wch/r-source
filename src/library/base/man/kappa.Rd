@@ -1,6 +1,3 @@
-% file kappa.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{kappa}
 \title{Estimate the Condition Number}
 \usage{
@@ -34,12 +31,23 @@ kappa.tri    (z, exact = FALSE, \dots)
  likely to be quick enough.
 }
 \value{
-    The condition number, \eqn{kappa}, or an approximation if
-    \code{exact=FALSE}.  
+  The condition number, \eqn{kappa}, or an approximation if
+  \code{exact=FALSE}.  
 }
-\author{B.D. Ripley}
-\seealso{\code{\link{svd}} for the singular value decomposition and
-        \code{\link{qr}} for the \eqn{QR} one.
+\references{
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
+\author{
+  The design was inspired by (but differs considerably from)
+  the S function of the same name described in Chambers (1992).
+}
+  
+\seealso{
+  \code{\link{svd}} for the singular value decomposition and
+  \code{\link{qr}} for the \eqn{QR} one.
 }
 \examples{
 kappa(x1 <- cbind(1,1:10))# 15.71

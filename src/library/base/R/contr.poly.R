@@ -1,9 +1,3 @@
-#### copyright (C) 1998 W. N. Venables and B. D. Ripley
-####
-#### copyright (C) 1998-2002 The R Development Core Team.
-
-#dimnames(x)[[2]] changed to colnames() --pd April 17 '99
-
 contr.poly <- function (n, contrasts = TRUE)
 {
     make.poly <- function(n)
@@ -40,9 +34,6 @@ contr.poly <- function (n, contrasts = TRUE)
     }
 }
 
-## implemented by BDR 29 May 1998
-## `coefs' code added by KH
-## prediction, ...  added BDR Jan 2002
 poly <- function(x, ..., degree = 1, coefs = NULL)
 {
     dots <- list(...)

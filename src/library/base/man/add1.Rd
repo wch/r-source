@@ -1,6 +1,3 @@
-% file add1.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{add1}
 \title{Add or Drop All Possible Single Terms to a Model}
 \usage{
@@ -81,7 +78,16 @@ drop1.glm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
   An object of class \code{"anova"} summarizing the differences in fit
   between the models.
 }
-\author{B. D. Ripley}
+\author{
+  The design was inspired by the S functions of the same names described
+  in Chambers (1992).
+}
+\references{
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \note{
   These are not fully equivalent to the functions in S.  There is no
   \code{keep} argument, and the methods used are not quite so

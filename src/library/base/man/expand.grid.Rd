@@ -18,7 +18,6 @@ expand.grid(\dots)
   the factors if these are supplied as named arguments or named
   components of a list.
 }
-\author{B.D. Ripley}
 
 \examples{
 expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),

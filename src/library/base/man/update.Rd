@@ -25,8 +25,9 @@ been corrected.
 \value{
   If \code{evaluate = TRUE} the fitted object, otherwise the updated call.
 }
-\author{B.D. Ripley}
-\seealso{\code{\link{update.formula}}}
+\seealso{
+  \code{\link{update.formula}}
+}
 
 \examples{
 oldcon <- options(contrasts = c("contr.treatment", "contr.poly"))

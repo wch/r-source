@@ -130,6 +130,22 @@ lm(formula, data, subset, weights, na.action,
   \code{\link{lm.fit}} for plain, and \code{\link{lm.wfit}} for weighted
   regression fitting.
 }
+\references{
+  Chambers, J. M. (1992)
+  \emph{Linear models.}
+  Chapter 4 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+
+  Wilkinson, G. N. and Rogers, C. E. (1973)
+  Symbolic descriptions of factorial models for analysis of variance.
+  \emph{Applied Statistics}, \bold{22}, 392--9.
+}
+\author{
+  The design was inspired by the S function of the same name described
+  in Chambers (1992).  The implementation of model formula by Ross Ihaka
+  was based on Wilkinson \& Rogers (1973).
+}
+
 \note{
   Offsets specified by \code{offset} will not be included in predictions
   by \code{\link{predict.lm}}, whereas those specified by an offset term

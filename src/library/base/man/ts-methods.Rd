@@ -27,7 +27,6 @@
   For the \code{na.omit} method, a time series without missing values.
   The class of \code{object} will be preserved.
 }
-\author{B. D. Ripley}
 \seealso{
   \code{\link{diff}};
   \code{\link{na.omit}}, \code{\link{na.fail}},

@@ -152,7 +152,6 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   Thomson, G. H. (1951) \emph{The Factorial Analysis of Human Ability.}
   London University Press.
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{print.loadings}},

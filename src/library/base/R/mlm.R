@@ -1,5 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
-
 ## mlm := multivariate lm()
 summary.mlm <- function(object, ...)
 {

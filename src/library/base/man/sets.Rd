@@ -35,7 +35,6 @@ is.element(el, set)
   length as \code{x} for \code{is.element}.
 }
 \seealso{\code{\link{\%in\%}}}
-\author{B. D. Ripley}
 
 \examples{
 (x <- c(sort(sample(1:20, 9)),NA))

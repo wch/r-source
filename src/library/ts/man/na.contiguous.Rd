@@ -15,7 +15,6 @@ na.contiguous(frame)
   A time series without missing values.  The class of \code{frame} will
   be preserved.
 }
-\author{B. D. Ripley}
 \seealso{
   \code{\link{na.omit}} and \code{\link{na.omit.ts}};
   \code{\link{na.fail}}

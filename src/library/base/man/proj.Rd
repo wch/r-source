@@ -56,8 +56,16 @@ proj.lm     (object, onedf = FALSE, unweighted.scale = FALSE, \dots)
   model matrix corresponding to that term. In this case the matrix does
   not depend on the coding used.
 }
-\author{B.D. Ripley}
-
+\references{
+  Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
+  \emph{Analysis of variance; designed experiments.}
+  Chapter 5 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
+\author{
+  The design was inspired by the S function of the same name described
+  in Chambers \emph{et al.} (1992).
+}
 \seealso{\code{\link{aov}}, \code{\link{lm}}, \code{\link{model.tables}}
 }
 \examples{

@@ -52,7 +52,6 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   \file{R\_HOME\\doc\\html\\search\\index.txt} are (re-)created by
   \code{make.packages.html} and \code{make.search.html} respectively.
 }
-\author{Guido Masarotto and Brian Ripley}
 \note{You will need write permission in the \file{R\_HOME\\doc\\html}
   directory to use any of the first three functions, and in the
   appropriate library trees to use the last two.}

@@ -27,7 +27,6 @@ savePlot(filename="Rplot",
 \value{
   None, but a plot file will be created.
 }
-\author{Guido Masarotto, B. D. Ripley}
 
 \seealso{
   \code{\link{windows}}, \code{\link{dev.print}}

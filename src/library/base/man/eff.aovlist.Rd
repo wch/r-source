@@ -1,6 +1,3 @@
-% file eff.aovlist.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{eff.aovlist}
 \title{Compute Efficiencies of Multistratum Analysis of Variance}
 \usage{
@@ -30,7 +27,7 @@ eff.aovlist(aovlist)
   A matrix giving for each non-pure-error stratum (row) the efficiencies
   for each fixed-effect term in the model.
 }
-\author{B.D. Ripley}
+
 \seealso{\code{\link{aov}}, \code{\link{model.tables.aovlist}},
   \code{\link{se.contrast.aovlist}} }
 

@@ -14,7 +14,6 @@ acf2AR(acf)
   A matrix, with one row for the computed AR(p) coefficients for
   \code{1 <= p <= length(acf)}.
 }
-\author{B. D. Ripley}
 \seealso{
   \code{\link{ARMAacf}}, \code{\link{ar.yw}} which does this from an
   empirical ACF.

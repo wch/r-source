@@ -31,7 +31,6 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
   same as the ticks.  You can always replot the box in black if you don't
   like this feature.
 }
-\author{B. D. Ripley}
 \seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{
 data(faithful)
