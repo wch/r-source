@@ -93,29 +93,27 @@ spectrum(fdeaths, spans=c(3,3))
 
 ## bivariate example
 mfdeaths.spc <- spec.pgram(ts.union(mdeaths, fdeaths), spans=c(3,3))
-# plots marginal spectra
-
-# plot coherency and phase
-plot.spec.coherency(mfdeaths.spc)
-plot.spec.phase(mfdeaths.spc)
+# plots marginal spectra: now plot coherency and phase
+plot(mfdeaths.spc, plot.type="coherency")
+plot(mfdeaths.spc, plot.type="phase")
 
 ## now impose a lack of alignment
 mfdeaths.spc <- spec.pgram(ts.intersect(mdeaths, lag(fdeaths, 4)),
    spans=c(3,3), plot=FALSE)
-plot.spec.coherency(mfdeaths.spc)
-plot.spec.phase(mfdeaths.spc)
+plot(mfdeaths.spc, plot.type="coherency")
+plot(mfdeaths.spc, plot.type="phase")
 
 data(EuStockMarkets)
 stocks.spc <- spectrum(EuStockMarkets, kernel("daniell", c(30,50)),
                        plot=FALSE)
-plot(stocks.spc)
-plot.spec.coherency(stocks.spc)
-plot.spec.phase(stocks.spc)
+plot(stocks.spc, plot.type="marginal") # the default type
+plot(stocks.spc, plot.type="coherency")
+plot(stocks.spc, plot.type="phase")
 
 data(BJsales)
 sales.spc <- spectrum(ts.union(BJsales, BJsales.lead),
                       kernel("modified.daniell", c(5,7)))
-plot.spec.coherency(sales.spc)
-plot.spec.phase(sales.spc)
+plot(sales.spc, plot.type="coherency")
+plot(sales.spc, plot.type="phase")
 }
 \keyword{ts}

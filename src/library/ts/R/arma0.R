@@ -35,6 +35,9 @@ arima0 <- function(x, order=c(0,0,0),
         init <- c(init, coef(lm(x ~ xreg+0)))
     }
     res <- nlm(arma0f, init, hessian=TRUE)
+    if(res$code > 2)
+        warning(paste("possible convergence problem: nlm gave code=",
+                      res$code))
     .C("free_starma")
     coef <- res$estimate
     sigma2 <- .C("get_s2", res=double(1))$res
@@ -53,11 +56,9 @@ arima0 <- function(x, order=c(0,0,0),
     dimnames(var) <- list(nm, nm)
     value <- 2 * n.used * res$minimum + n.used + n.used*log(2*pi)
     aic <- value + 2*length(coef)
-    data <- x
-    if(ncxreg) data <- data - xreg %*% coef[-(1:sum(arma[1:4]))]
     res <- list(coef = coef, sigma2 = sigma2, var.coef = var,
                 loglik = -0.5*value, aic = aic, arma = arma, resid = resid,
-                call = match.call(), series = series)
+                call = match.call(), series = series, code = res$code)
     class(res) <- "arima0"
     res
 }
@@ -163,7 +164,7 @@ predict.arima0 <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE)
 
 arima0.diag <- function(fit, gof.lag=10)
 {
-    ## plot standarized residuals, acf of residuals, Box-Pierce
+    ## plot standarized residuals, acf of residuals, Box-Pierce p-values
     oldpar<- par(mfrow=c(3,1))
     on.exit(par(oldpar))
     stdres <- fit$resid/sqrt(fit$sigma2)

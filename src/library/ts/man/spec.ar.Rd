@@ -31,9 +31,11 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action,
     Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
 	Statistics with S-PLUS.} Second edition. Springer. (Especially
     p. 448.)
-    }
-\section{Warning}{Some authors, for example Thomson (1990), warn strongly
-    that AR spectra can be misleading.}
+}
+\section{Warning}{
+    Some authors, for example Thomson (1990), warn strongly
+    that AR spectra can be misleading.
+}
 
 \author{B.D. Ripley}
 

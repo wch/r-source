@@ -32,7 +32,7 @@ spec.taper <- function (x, p = 0.1)
 }
 
 spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
-                    na.action = na.fail, ...)
+                    na.action = na.fail, method = "yule-walker", ...)
 {
     ## can be called with a ts or a result of an AR fit.
     if(!is.list(x)) {
@@ -41,7 +41,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         xfreq <- frequency(x)
         n <- NROW(x)
         nser <- NCOL(x)
-        x <- ar(x, is.null(order), order, na.action=na.action)
+        x <- ar(x, is.null(order), order, na.action=na.action, method=method)
     } else {
         cn <- match(c("ar", "var.pred", "order"), names(x))
         if(any(is.na(cn)))
@@ -196,9 +196,9 @@ spec.pgram <-
 
 plot.spec <-
     function (x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
-              xlab = "frequency",
-              ylab = if(log == "dB") "spectrum (dB)" else "spectrum",
-              type = "l", ci.col="blue", main = NULL, sub = NULL, ...)
+              xlab = "frequency", ylab = NULL,
+              type = "l", ci.col="blue", main = NULL, sub = NULL,
+              plot.type = c("marginal", "coherency", "phase"), ...)
 {
     spec.ci <- function (spec.obj, coverage = 0.95)
     {
@@ -215,6 +215,20 @@ plot.spec <-
         1/(qchisq(c(upper.quantile, lower.quantile), df)/df)
     }
 
+    plot.type <- match.arg(plot.type)
+    m <- match.call()
+    if(plot.type == "coherency") {
+        m[[1]] <- as.name("plot.spec.coherency")
+        m$plot.type <- m$log <- m$add <- NULL
+        return(eval(m, sys.frame(sys.parent())))
+    }
+    if(plot.type == "phase") {
+        m[[1]] <- as.name("plot.spec.phase")
+        m$plot.type <- m$log <- m$add <- NULL
+        return(eval(m, sys.frame(sys.parent())))
+    }
+    if(is.null(ylab))
+        ylab <- if(log == "dB") "spectrum (dB)" else "spectrum"
     if(is.logical(log))
         log <- if(log) "yes" else "no"
     if(missing(log) && .Options$ts.S.compat) log <- "dB"

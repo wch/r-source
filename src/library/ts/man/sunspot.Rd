@@ -27,7 +27,7 @@ data(sunspot)
     ROYAL OBSERVATORY OF BELGIUM, Av. Circulaire, 3 - B-1180 BRUSSELS
     \url{http://www.oma.be/KSB-ORB/SIDC/sidc\_txt.html}
 
-    Yearly data: H. Tong (1996):
+    Yearly data: H. Tong (1996)
     \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471. 
 }
 \keyword{datasets}

@@ -2,8 +2,8 @@ EPreliminary time-series package for R 0.65
 ==========================================
 
 This is a preliminary version of a time-series package; at present
-the functionality is somewhat limited in that not all the options are
-yet implemented or may be very slow.
+the functionality is limited in that not all the options are
+yet implemented or may be slow.
 
 Functions in base R:
 -------------------
@@ -46,14 +46,12 @@ kernel		Smoothing kernel objects (and (modified) Daniell, Fejer and
 lag		Compute lagged version of time series
 lines.ts	lines method for time series
 na.contiguous	Find longest contiguous stretch of non-NAs
-na.omit.ts	na.omit method for time series
+na.omit.ts	na.omit method for time series: omits at ends only
 Ops.ts		arithmetic (such as + - * /) for time series
 pacf		Partial autocorrelation function
 plot.acf	Plot autocorrelation function
-plot.spec	Plot spectral density estimate
-plot.spec.coherency
-plot.spec.phase
-PP.test		Phillips-Perron test for unit root
+plot.spec	Plot spectral density estimate, coherency and phase.
+PP.test		Phillips-Perron test for unit roots
 predict		methods for ar and arima0
 spec.ar		Estimate spectral density by autoregression
 spec.pgram	Estimate spectral density from periodogram
@@ -63,10 +61,6 @@ stl		Seasonal decomposition using loess
 toeplitz	Generate Toeplitz matrix
 ts.intersect	Bind time series as multivariate ts over the common time base
 ts.union	Bind time series as multivariate ts over their total time base
-
-TO DO
-
-ar.burg		maybe only univariate
 
 In some cases the visual output will closer to that of S(-PLUS) if
 options(ts.S.compat=TRUE) has been set.
@@ -79,7 +73,7 @@ airmiles	Passenger-Miles on US Airlines 1937-1960
 co2		Moana Loa Atmospheric CO2 Concentrations
 nhtemp		Yearly Average Temperatures in New Haven CT
 presidents	Quarterly Approval Ratings for US Presidents
-sunspots	Monthly Mean Relative Sunspot Numbers
+sunspots	Monthly Mean Relative Sunspot Numbers 1749-1983
 uspop		Populations Recorded by the US Census
 
 
