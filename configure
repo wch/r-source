@@ -2203,7 +2203,7 @@ else
   WANT_R_SHLIB_FALSE=
 fi
 if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/bin -lR"
+  LIBR="-L\$(R_HOME)/lib -lR"
 else
   LIBR=
 fi
