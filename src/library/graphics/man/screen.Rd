@@ -15,7 +15,7 @@ close.screen(n, all.screens = FALSE)
     number of columns in a screen matrix \emph{or} a matrix with 4 columns.
     If a matrix, then each row describes a screen with values for the left,
     right, bottom, and top of the screen (in that order) in NDC units,
-    that is 0 at the lower left coner of the device surface, and 1 at
+    that is 0 at the lower left corner of the device surface, and 1 at
     the upper right corner.}
   \item{screen}{A number giving the screen to be split.  It defaults to
     the current screen if there is one, otherwise the whole device region.}
@@ -71,7 +71,7 @@ close.screen(n, all.screens = FALSE)
 
 \section{Warnings}{
   The recommended way to use these functions is to completely draw a
-  plot and all additions (ie. points and lines) to the base plot, prior to
+  plot and all additions (i.e. points and lines) to the base plot, prior to
   selecting and plotting on another screen. The behavior associated with
   returning to a screen to add to an existing plot is unpredictable and
   may result in problems that are not readily visible.
