@@ -2738,3 +2738,16 @@ for(meth in eval(formals(cor)$method)) {
               )
 }
 ## "pairwise" failed in 1.8.0
+
+## regexpr(*, fixed=TRUE) had 0-index from C
+txt <- c("english", "french", "swiss")
+ir <- regexpr("en", txt, fixed = TRUE)
+stopifnot(ir == c(1, 3, -1),
+          identical(ir, regexpr("en", txt)))
+## (*, fixed=TRUE) gave 0 2 -1 before R 1.8.1
+
+##-- S4 classes with S3 slots:
+setClass("test1", representation(date="POSIXct"))
+(x <- new("test1", date=as.POSIXct("2003-10-09")))
+stopifnot(format(x @ date) == "2003-10-09")
+## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
