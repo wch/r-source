@@ -11,7 +11,7 @@
 	if(any(names(attrib) == "tsp"))
 	    attrib$class <- unique(c("ts", attrib$class))
 	if(is.numeric(.Data) && any(names(attrib) == "levels"))
-	    .Data <- factor(.Data,levels=1:max(1,.Data))
+	    .Data <- factor(.Data,levels=1:max(1,.Data, na.rm=TRUE))
 	attributes(.Data) <- c(attributes(.Data), attrib)
     }
     return(.Data)
