@@ -67,6 +67,10 @@ INSTALLATION CHANGES
     o	The dynamic libraries libR and libRlapack are now installed in
 	R_HOME/lib rather than R_HOME/bin.
 
+    o	When --enable-R-shlib is specified, the main R binary R.bin is
+	a small executable linked against libR.  See the R-admin
+	manual for further discussion.
+
 
 BUG FIXES
 
@@ -94,14 +98,17 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	pbinom(q, N, prob) is now more accurate when prob is close to 0
+    o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
 	(PR#6757).
 
     o	pcauchy(x, .., log.p) is now more accurate for large x,
-	particularly when log.p = TRUE	(PR#6756).
+	particularly when log.p = TRUE.	(PR#6756)
 
     o	pgeom(q, prob, lower.tail, log.p) is now (sometimes much) more
-	accurate when prob is very small (PR#6792).
+	accurate when prob is very small. (PR#6792)
+
+	The code for pgeom(prob=1) assumed IEEE 754 arithmetic, and
+	gave NaNs under gcc 3.4.0 -fPIC, for example.
 
     o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 

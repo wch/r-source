@@ -915,13 +915,16 @@ negatives.
 You will want to use @option{--disable-R-profiling} if you are building
 a profiled executable of @R{} (e.g. with @samp{-pg)}.
 
-Flag @option{--enable-R-shlib} causes the make process to build @R{} as a
-dynamic (shared) library, typically called @file{libR.so}, and link the
-main @R{} executable @file{R.bin} against that library.  This can only be
-done if all the code (including system libraries) can be compiled into a
-dynamic library, and there may be a small performance penalty.  So you
-probably only want this if you will be using an application which embeds
-@R{}.
+Flag @option{--enable-R-shlib} causes the make process to build @R{} as
+a dynamic (shared) library, typically called @file{libR.so}, and link
+the main @R{} executable @file{R.bin} against that library.  This can
+only be done if all the code (including system libraries) can be
+compiled into a dynamic library, and there may be a small performance
+penalty.  So you probably only want this if you will be using an
+application which embeds @R{}.  Note that C code in packages installed
+on a @R{} system linked with @option{--enable-R-shlib} are linked
+against the dynamic library and so such packages cannot be used from a
+@R{} system built in the default way.
 
 @node Configuration variables, Using make, Configuration options, Configuration on Unix
 @section Configuration variables

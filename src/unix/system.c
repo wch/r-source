@@ -87,23 +87,10 @@ void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
 void R_setStartTime(void); /* in sys-unix.c */
 void R_load_gnome_shlib(void); /* in dynload.c */
 
-int Rf_initialize_R(int ac, char **av);
-
-
-int main(int ac, char **av)
-{
-    Rf_initialize_R(ac, av);
-
-
-
-    mainloop();
-    /*++++++  in ../main/main.c */
-    return 0;
-}
 
 #ifdef HAVE_AQUA
 /*  this should be a global variable as it used in unix/devQuartz.c
-	and in unix/main.c
+	and in unix/aqua.c
 */
 Rboolean useaqua = FALSE;
 #endif
@@ -302,61 +289,6 @@ int Rf_initialize_R(int ac, char **av)
  return(0);
 }
 
-
-
-/*
-  It would be better to enclose this routine within a conditional
-    #ifdef R_EMBEDDED
-      Rf_initEmbeddedR() {
-	...
-      }
-    #endif
-
-    However, we would then have to recompile this file, libunix.a
-    and then link libR.so. Until we have this sorted out in the
-    Makefiles, we compile this unconditionally.
-*/
-
-
-/*
- This is the routine that can be called to initialize the R environment
- when it is embedded within another application (by loading libR.so).
-
- The arguments are the command line arguments that would be passed to
- the regular standalone R, including the first value identifying the
- name of the `application' being run.  This can be used to indicate in
- which application R is embedded and used by R code (e.g. in the
- Rprofile) to determine how to initialize itself. These are accessible
- via the R function commandArgs().
-
- We have to sort out how to recompile this file when building libR.so,
- having already compiled for the standalone build. However, since on
- most platforms we will have to recompile all the files with the
- position independent code (PIC) flag, this is a larger issue.
-
-
- The return value indicates whether the initialization was successful
- (Currently there is a possibility to do a long jump within the
- initialization code so that will we never return here.)
-
- Example:
-	 0) name of executable
-	 1) don't load the X11 graphics library
-	 2) don't show the banner at startup.
-
-
-    char *argv[]= {"REmbeddedPostgres", "--gui=none", "--silent"};
-    initEmbedded(sizeof(argv)/sizeof(argv[0]), argv);
-*/
-
-int Rf_initEmbeddedR(int argc, char **argv)
-{
-    Rf_initialize_R(argc, argv);
-    setup_Rmainloop();
-    return(1);
-}
-
-
     /*
        This function can be used to open the named files in text
        editors.  If the file does not exist then the editor should be
@@ -397,13 +329,5 @@ int R_EditFiles(int nfile, char **file, char **title, char *editor)
     }
     return 1;
 }
-
-
-
-	/* Declarations to keep f77 happy */
-
-int MAIN_(int ac, char **av)  {return 0;}
-int MAIN__(int ac, char **av) {return 0;}
-int __main(int ac, char **av) {return 0;}
 
 

@@ -73,7 +73,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(noinst_LIBRARIES)
+@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
 libappl.a: $(libappl_a_OBJECTS)

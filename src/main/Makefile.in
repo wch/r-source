@@ -38,6 +38,7 @@ SOURCES_C = \
 SOURCES_F = \
 	xxxpr.f
 EXTRA_SOURCES_C = \
+	Rmain.c Rembedded.c \
 	alloca.c acosh.c asinh.c atanh.c \
 	snprintf.c strdup.c strncasecmp.c \
 	vsnprintf.c
@@ -81,7 +82,7 @@ RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
 
 Rexecbin_PROGRAMS = R.bin
 R_bin_SOURCES = $(SOURCES)
-R_bin_OBJECTS = $(OBJECTS)
+R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
 ## <FIXME>
 ## This will not be good enough on AIX, where we need to play also with
 ## -export-symbols SYMFILE.
@@ -90,7 +91,7 @@ R_bin_OBJECTS = $(OBJECTS)
 R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE)
 ## <NOTE>
 ## Automake would figure this out itself.
-R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </NOTE>
 
 ## <FIXME>
@@ -101,7 +102,7 @@ libR_la = libR$(DYLIB_EXT)
 Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
 libR_la_LDFLAGS =
-libR_la_OBJECTS = $(OBJECTS:.o=.lo)
+libR_la_OBJECTS = Rembedded.lo $(OBJECTS:.o=.lo)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
@@ -127,14 +128,16 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(Rexecbin_PROGRAMS)
 @WANT_R_SHLIB_TRUE@	@$(MAKE) $(Rexeclib_LTLIBRARIES)
+	@$(MAKE) $(Rexecbin_PROGRAMS)
+
 
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
 R.bin: $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
-	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
+@WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
+@WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L ../../lib -lR
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin

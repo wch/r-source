@@ -53,7 +53,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(noinst_LIBRARIES)
+@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
 ../include/Rversion.h:
