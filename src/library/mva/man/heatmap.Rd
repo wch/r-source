@@ -8,26 +8,27 @@
   restrictions imposed by the dendrogram is carried out.
 }
 \usage{
-heatmap(x, Rowv, Colv, distfun = dist, add.expr,
+heatmap(x, Rowv, Colv, distfun = dist, hclustfun = hclust, add.expr,
         scale=c("row", "column", "none"), na.rm = TRUE, \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
-  \item{Rowv}{Either a \code{\link{dendrogram}} or a vector of values
-    used to reorder the row dendrogram. }
-  \item{Colv}{Either a dendrogram or a vector of values used to reorder
-    the column dendrogram. }
+  \item{Rowv}{either a \code{\link{dendrogram}} or a vector of values
+    used to reorder the row dendrogram or by default, missing, see
+    \emph{Details} below.}
+  \item{Colv}{either a dendrogram or a vector of values used to reorder
+    the column dendrogram.}
   \item{distfun}{function used to compute the distance (dissimilarity)
     between both rows and columns.  Defaults to \code{\link{dist}}.}
   \item{hclustfun}{function used to compute the hierarchical clustering
     when \code{Rowv} or \code{Colv} are not dendrograms.  Defaults to
     \code{\link{hclust}}.}
   \item{add.expr}{expression that will be evaluated after the call to
-    image.  Can be used to add components to the plot.}
+    \code{image}.  Can be used to add components to the plot.}
   \item{scale}{character indicating if the values should be centered and
     scaled in either the row direction or the column direction, or
     none.  The default is \code{"row"}.}
-  \item{na.rm}{logical indicating whether \code{NA}'s should be removed}
+  \item{na.rm}{logical indicating whether \code{NA}'s should be removed.}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
     e.g., \code{col} specifying the colors.} %
 }
