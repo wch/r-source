@@ -73,7 +73,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         cons <- attr(qtx, "contrasts")
         dnx <- colnames(qtx)
         asgn.t <- attr(qtx, "assign")
-        if(length(wts <- model.extract(mf, weights))) {
+        if(length(wts <- model.weights(mf))) {
             wts <- sqrt(wts)
             resp <- resp * wts
             qtx <- qtx * wts
@@ -522,13 +522,11 @@ se.contrast.aov <-
     }
     if(is.null(data)) contrast.obj <- eval(contrast.obj)
     else contrast.obj <- eval(substitute(contrast.obj), data, parent.frame())
-    if(!missing(coef)) {
+    if(!is.matrix(contrast.obj)) { # so a list
         if(sum(coef) != 0)
             stop("coef must define a contrast, i.e., sum to 0")
         if(length(coef) != length(contrast.obj))
             stop("coef must have same length as contrast.obj")
-    }
-    if(!is.matrix(contrast.obj)) {
         contrast <-
             sapply(contrast.obj, function(x)
                {
@@ -542,7 +540,7 @@ se.contrast.aov <-
             stop("The contrast defined is empty (has no TRUE elements)")
     } else {
         contrast <- contrast.obj
-        if(any(round(rep.int(1, nrow(contrast)) %*% contrast, 8) != 0))
+        if(any(abs(colSums(contrast)) > 1e-8))
             stop("Columns of contrast.obj must define a contrast (sum to zero)")
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
@@ -554,7 +552,7 @@ se.contrast.aov <-
     if(!is.null(wt)) resid <- resid * wt^0.5
     rse <- sum(resid^2)/rdf
     if(!is.matrix(contrast.obj)) sqrt(sum(weights) * rse)
-    else sqrt(rse * (rep.int(1, nrow(weights)) %*% weights))
+    else sqrt(rse * colSums(weights))
 }
 
 se.contrast.aovlist <-
@@ -614,13 +612,11 @@ se.contrast.aovlist <-
     contrast.obj <-
         if(is.null(data)) eval(contrast.obj)
         else eval(substitute(contrast.obj), data, parent.frame())
-    if(!missing(coef)) {
+    if(!is.matrix(contrast.obj)) {
         if(sum(coef) != 0)
             stop("coef must define a contrast, i.e., sum to 0")
         if(length(coef) != length(contrast.obj))
             stop("coef must have same length as contrast.obj")
-    }
-    if(!is.matrix(contrast.obj)) {
         contrast <-
             sapply(contrast.obj,
                    function(x) {
@@ -636,7 +632,7 @@ se.contrast.aovlist <-
     }
     else {
         contrast <- contrast.obj
-        if(any(round(rep.int(1, nrow(contrast)) %*% contrast, 8) != 0))
+        if(any(abs(colSums(contrast)) > 1e-8))
             stop("Columns of contrast.obj must define a contrast(sum to zero)")
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
@@ -645,13 +641,12 @@ se.contrast.aovlist <-
     weights <- weights[-match("(Intercept)", names(weights))]
     effic <- eff.aovlist(object)
     ## Need to identify the lowest stratum where each nonzero term appears
-    eff.used <- apply(effic, 2, function(x, ind = seq(length(x)))
-                  {
-                      temp <- (x > 0)
-                      if(sum(temp) == 1) temp
-                      else max(ind[temp]) == ind
-                  }
-                      )
+    eff.used <- apply(effic, 2,
+                      function(x, ind = seq(length(x))) {
+                          temp <- (x > 0)
+                          if(sum(temp) == 1) temp
+                          else max(ind[temp]) == ind
+                      })
     strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
     var.nms <- colnames(effic)[col(eff.used)[eff.used]]
     rse.list <- sapply(object[unique(strata.nms)], SS)

@@ -17,8 +17,8 @@ function(formula, data=sys.parent(), weights, subset,
     Terms <- attr(m, "terms")
     attr(Terms, "intercept") <- 0
     X <- model.matrix(Terms, m, contrasts)
-    Y <- model.extract(m, response)
-    w <- model.extract(m, weights)
+    Y <- model.response(m)
+    w <- model.weights(m)
     if(length(w) == 0) w <- rep(1, nrow(X))
     fit <- ppr.default(X, Y, w, ...)
     if(!is.null(na.act)) fit$na.action <- na.act
