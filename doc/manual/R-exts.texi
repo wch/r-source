@@ -15,7 +15,7 @@
 @finalout
 
 @include R-defs.texi
-@include version.tex
+@include version.texi
 
 @ifinfo
 This is a guide to extending R.
