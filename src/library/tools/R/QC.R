@@ -1898,15 +1898,54 @@ function(package, dir, lib.loc = NULL)
     ## package.
     badMethods <- list()
     envList <- list(codeEnv, S3groupGenericsEnv)
-#    if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     if(!isBase) {
-        ## look for generics in the whole of the former base
+        ## <FIXME>
+        ## Look for generics in the whole of the former base.
+        ## Maybe eventually change this ...
+        ## (Note that this requires that these packages are already
+        ## attached.)
         envList <- c(envList,
                      list(as.environment(NULL)),
                      list(as.environment("package:graphics")),
                      list(as.environment("package:stats")),
                      list(as.environment("package:utils"))
                      )
+        ## </FIXME>
+        ## If 'package' was given, also use the loaded namespaces and
+        ## attached packages listed in the DESCRIPTION Depends field.
+        ## Not sure if this is the best approach: we could also try to
+        ## determine which namespaces/packages were made available by
+        ## loading the package (which should work at least when run from
+        ## R CMD check), or we could simply attach every package listed
+        ## as a dependency ... or perhaps do both.
+        if(!missing(package)) {
+            db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
+                      silent = TRUE)
+            if(inherits(db, "try-error"))
+                stop(paste("package directory", sQuote(dir),
+                           "has no valid DESCRIPTION file"))
+            if(!is.na(depends <- db["Depends"])) {
+                depends <- unlist(strsplit(depends, ","))
+                depends <-
+                    sub("^[[:space:]]*([[:alnum:].]+).*", "\\1", depends)
+                depends <- depends[depends != "R"]
+                ind <- depends %in% loadedNamespaces()
+                if(any(ind)) {
+                    envList <-
+                        c(envList, lapply(depends[ind], getNamespace))
+                    depends <- depends[!ind]
+                }
+                ind <- depends %in% .packages()
+                if(any(ind)) {
+                    envList <-
+                        c(envList,
+                          lapply(depends[ind],
+                                 function(p)
+                                 as.environment(paste("package", p,
+                                                      sep = ":"))))
+                }
+            }
+        }
     }
     for(env in envList) {
         ## Find all available S3 generics.
