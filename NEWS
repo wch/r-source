@@ -76,7 +76,7 @@ NEW FEATURES
 
     o	Configure/build variables MAINLD and MAINLDFLAGS are renamed to
 	MAIN_LD and MAIN_LDFLAGS for consistency with other MAIN_* vars,
-	simlarly for SHLIBLD and SHLIBLDFLAGS.
+	similarly for SHLIBLD and SHLIBLDFLAGS.
 
     o	Much improved support for C++ code in add-on packages under Unix.
 	New configure/build variables SHLIB_CXXLD and SHLIB_CXXLDFLAGS
@@ -157,21 +157,23 @@ NEW FEATURES
 	the POSIX formats.  Functions include Sys.time, as.POSIXct,
 	strftime, strptime,  and methods for format, plot, ....
 	There are conversion functions for objects from packages
-	`date' and `chron'; unlike those packages these support 
+	`date' and `chron'; unlike those packages these support
 	functions know about time zones.
+
+    o	legend() has a new argument pt.bg.
 
 
 BUG FIXES
 
     o	Postscript driver no longer uses the initclip operator, which
 	was against the EPSF specifications and broke inclusion of
-	graphics in some documents. 
+	graphics in some documents.
 
-    o   In postscript driver, cleaned up the internals to fix some
+    o	In postscript driver, cleaned up the internals to fix some
 	cases where it was unclear whether a variable was meant to set
 	or track device status.
 
-    o   In some cases, emitted postscript violated the PS Document
+    o	In some cases, emitted postscript violated the PS Document
 	Structuring Conventions since some settings were carried from
 	one page to the next. (Caused breakage when turning
 	antialiasing on/off in "gv" for instance.)
@@ -203,9 +205,9 @@ BUG FIXES
 
     o	Now dweibull(0,1) == dexp(0) == 1 for consistency.
 
-    o	Failure to open a postscript() device not gives diagnostic warnings.
+    o	Failure to open a postscript() device now gives diagnostic warnings.
 
-
+    o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
 
 
 	**************************************************
@@ -229,21 +231,21 @@ NEW FEATURES
 	path and this is TRUE then a search is made of all packages
 	for possible matches.
 
-    o	Improved detection of Tcl/Tk at configure time.  One can either
+    o	Improved detection of Tcl/Tk at configure time.	 One can either
 	set configure variables TCLTK_CPPFLAGS and TCLTK_LIBS, or give
 	the locations of the tclConfig.sh and tkConfig.sh scripts via
 	the `--with-tcl-config' and `--with-tk-config' arguments.
 
-    o   prop.trend.test() - test for trend in proportions.
+    o	prop.trend.test() - test for trend in proportions.
 
-    o   write.table() has new argument `dec' for setting the decimal
-        separator (SPSS/Windows and probably others want commas in
+    o	write.table() has new argument `dec' for setting the decimal
+	separator (SPSS/Windows and probably others want commas in
 	continental European locales).
 
-    o   Advance warning: save(, oldstyle=TRUE) will no longer be
+    o	Advance warning: save(, oldstyle=TRUE) will no longer be
 	available after this release.
 
-    o   Symbols can now be coerced to expressions, making
+    o	Symbols can now be coerced to expressions, making
 	as.expression(quote(a)) work
 
 
@@ -258,29 +260,29 @@ BUG FIXES
 
     o	More stringent checks on the arguments to dataentry().
 
-    o   Specifying xlab as an expression now works again.
+    o	Specifying xlab as an expression now works again.
 
-    o   dev2bitmap() works again.
+    o	dev2bitmap() works again.
 
-    o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
+    o	Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
 
     o	bxp() now extends `ylim' properly when notch=TRUE (and a
 	notch is more extreme than other stats).
 	Also, varwidth is okay again, see example(split).
 
-    o   Making manuals without making R first now works.
+    o	Making manuals without making R first now works.
 
     o	princomp() now works when some eigenvalues are tiny negative
 	values (which are treated as zero).
 
-    o   SearchEngine.html was not installed when builddir != srcdir.
+    o	SearchEngine.html was not installed when builddir != srcdir.
 
     o	lm.{w}fit(x,y,..) now work when x has no column names.
 	These functions no longer add and subtract n zeros when there's no
-	offset.  They are now documented somewhat.
+	offset.	 They are now documented somewhat.
 
-    o   Some HTML files used src="R.css" instead of href="R.css"
-        causing some browsers to ignore the style sheet. R.css now
+    o	Some HTML files used src="R.css" instead of href="R.css"
+	causing some browsers to ignore the style sheet. R.css now
 	passes the w3c CSS validator and gives the intended results
 	with Internet Explorer. R.css is copied to all library directories.
 
@@ -328,66 +330,66 @@ BUG FIXES
 
     o	summary(.matrix | .data.frame) now respects a `digits' argument.
 
-    o   scan() recognises quoted strings by default again. The default
+    o	scan() recognises quoted strings by default again. The default
 	for the quote= argument got set wrongly when it was
 	introduced. They are, however, turned off when using sep="\n",
 	since you probably want unprocessed lines of text in that
 	case.
 
-    o   fixed buglet where scan() would double a character following a
-        terminating quote symbol.
+    o	fixed buglet where scan() would double a character following a
+	terminating quote symbol.
 
     o	kmeans was failing on vector inputs (although not documented
 	to accept such).
 
-    o   fixes in predict.lm (John Maindonald)
+    o	fixes in predict.lm (John Maindonald)
 
-    o   NCOL got confused by 1D arrays, which it now reports have 1
+    o	NCOL got confused by 1D arrays, which it now reports have 1
 	column rather than NA.
 
-    o   rep(1:2,c(1,-1)) segfaulted (PR 619)
+    o	rep(1:2,c(1,-1)) segfaulted (PR 619)
 
-    o   x[["a"]] <- y rejected some object types for y (e.g.
-        expressions) which were accepted in x$a <- y (PR
+    o	x[["a"]] <- y rejected some object types for y (e.g.
+	expressions) which were accepted in x$a <- y (PR
 
-    o   data editor froze on empty data frame, and more generally on
+    o	data editor froze on empty data frame, and more generally on
 	zero-length cols.
 
-    o   data editor did not handle factors properly in numeric-edit
-        mode.
+    o	data editor did not handle factors properly in numeric-edit
+	mode.
 
-    o   table() misbehaved on empty (or all-NA) data
+    o	table() misbehaved on empty (or all-NA) data
 
-    o   data editor now handles empty data frames, allowing data entry
-        to begin with  dd<-edit(data.frame())  or
+    o	data editor now handles empty data frames, allowing data entry
+	to begin with  dd<-edit(data.frame())  or
 	dd<-data.frame() ; fix(dd)
 
-    o   plotting math expressions when specified as a LANGSXP or
-        SYMSXP didn't work in several cases: plot(1,main=quote(a))
-        would segfault and there were problems with title(), text(),
-        and mtext() as well.
+    o	plotting math expressions when specified as a LANGSXP or
+	SYMSXP didn't work in several cases: plot(1,main=quote(a))
+	would segfault and there were problems with title(), text(),
+	and mtext() as well.
 
     o	optim(): no more segfault for REPORT=0; corrected error msg; ..
 	maxit default is now okay also when "L-*-B" is chosen automatically.
-        Using (abs|rel)tol with that method now gives a warning.
+	Using (abs|rel)tol with that method now gives a warning.
 
     o	text() did not respect its `xpd' argument, the default of which
-        is still to use par("xpd"); gave a wrong error message in one case.
+	is still to use par("xpd"); gave a wrong error message in one case.
 
     o	polygon() had an incorrect documentation and silently disregarded
 	"..." arguments.
 
     o	predict.loess was giving incorrect results (those for the
 	non-robust fit) in the case of a fit with family = "symmetric"
-	and surface = "direct" and prediction with se = FALSE.  The
+	and surface = "direct" and prediction with se = FALSE.	The
 	fitted values were missing for such fits.
 
     o	Better rendering of ^ and ~ in latex in \code{} (and they should
 	not appear outside code and verbatim sections).
 
-    o   Fixed unterminated string problem with lty (PR 584)
+    o	Fixed unterminated string problem with lty (PR 584)
 
-    o   Fixed scoping problem with quasi() family (PR 614)
+    o	Fixed scoping problem with quasi() family (PR 614)
 
 
 		CHANGES IN R VERSION 1.1.0
@@ -404,7 +406,7 @@ NEW FEATURES
     o	New package tcltk, providing interface and language bindings for
 	the Tcl/Tk graphical interface toolkit. This makes it possible
 	to do some rather nifty things with buttons and entry fields
-	and so forth in very few lines of code.  It is still somewhat
+	and so forth in very few lines of code.	 It is still somewhat
 	experimental so don't go churning out thousands of lines of
 	GUI code and then blame us for changing the API later on. It does
 	not currently work with GNOME because of event loop differences.
@@ -454,7 +456,7 @@ NEW FEATURES
 	strings.
 
     o	Formulas created with the tilde operator now contain the
-	environment in which they were created.  The environment of a
+	environment in which they were created.	 The environment of a
 	formula can be accessed with the environment() function.  This
 	facility is still experimental; it is intended to help
 	simplify writing modeling functions.
@@ -602,13 +604,13 @@ NEW FEATURES
     o	str(.) has a new optional argument "nchar.max = 128" and truncates
 	strings longer than that.  Also eliminated a few minor glitches.
 
-    o   The symbols() function is now implemented.
+    o	The symbols() function is now implemented.
 
     o	New function termplot() with similar functionality to
 	plot.gam() in S.
 
-    o   The parameters to title() which specify the labels may now
-        be specified as a list containing the parameter together
+    o	The parameters to title() which specify the labels may now
+	be specified as a list containing the parameter together
 	with additional modifying par values (cex, col, font) which
 	affect just that label.
 
@@ -672,7 +674,7 @@ BUG FIXES
 
     o	aggregate() applied to multiple time series lost the series names.
 
-    o   as.hclust.twins() in package mva sets method=NA (PR#538)
+    o	as.hclust.twins() in package mva sets method=NA (PR#538)
 
     o	ave(1:3) now works (as when is.null(list()) was TRUE years ago).
 
@@ -705,7 +707,7 @@ BUG FIXES
     o	lqs(, method="S") rounded k0 on passing to C.
 
     o	na.omit() now handles vectors and matrices as well as data
-        frames.
+	frames.
 
     o	plot.lm(*, which=4) now works thanks to Marcel Wolbers.
 
@@ -763,12 +765,12 @@ BUG FIXES
     o	Linpack.h now makes clear which routines are actually in R.
 
     o	Entry-point "pythag" is now loaded even though it is not
-	necessarily used in R.  Where "hypot" is available pythag
+	necessarily used in R.	Where "hypot" is available pythag
 	just calls hypot after checking for special values.
 
     o	call_R will now correctly handle character vector arguments.
 
-    o   The alphabet links on top of HTML function indices with more than
+    o	The alphabet links on top of HTML function indices with more than
 	100 entries now contain only the letters which are really
 	first letters of at least one entry.
 
