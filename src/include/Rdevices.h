@@ -26,6 +26,7 @@
 #define addDevice		Rf_addDevice
 #define copyDisplayList		Rf_copyDisplayList
 #define deviceNumber		Rf_deviceNumber
+#define devNumber		Rf_devNumber
 #define DevNull			Rf_DevNull
 #define inhibitDisplayList	Rf_inhibitDisplayList
 #ifndef Macintosh
@@ -81,8 +82,16 @@ DevDesc* GetDevice(int);
 void KillDevice(DevDesc*);
 /* How many devices exist ? (>= 1) */
 int NumDevices(void);
-/* Get the index of the specified device. */
+/* Get the index of the specified device. 
+ * This is used by the graphics engine to map from a *GEDevDesc to
+ * a device number.
+ */
 int deviceNumber(DevDesc*);
+/* Get the index of the specified device. 
+ * This is used by a device to map from a *NewDevDesc to
+ * a device number.
+ */
+int devNumber(DevDesc *dd);
 /* Create a new device. */
 int StartDevice(SEXP, SEXP, int, SEXP, int);
 /* Check for an available device slot */
