@@ -214,6 +214,15 @@ UTILITIES
 	checked for empty \name and \title entries.
 
 
+C-LEVEL FACILITIES
+
+    o	A full double-precision LAPACK shared library is made
+	available as -lRlapack.  To use this include
+	$(LAPACK_LIBS) $(BLAS_LIBS) in PKG_LIBS.
+	[Not currently operational on MacOS X unless vecLib is used,
+	and vecLib and libsunperf give incomplete libraries.]
+
+
 BUG FIXES
 
     o	Sys.sleep() on Unix was having trouble with waits of less than 0.5s
