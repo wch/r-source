@@ -480,6 +480,9 @@ BUG FIXES
 
     o	qqnorm()'s result now keeps NAs from it's input. (PR#3750)
 
+    o	round.POSIXt(x) for 0-length x does not return invalid structures
+	anymore (PR#3763).
+
 
 
 	**************************************************

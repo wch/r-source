@@ -2403,6 +2403,12 @@ y <- c(1, NA, NA, 7)
 identical(y, qqnorm(y, plot.it=FALSE)$y)
 ## qqnorm() used to drop NA's in its result till 1.7.x
 
+## PR#3763
+d0 <- ISOdate(2001,1,1)[0] # length 0 POSIX
+(rd0 <- round(d0, "day"))
+stopifnot(identical(rd0, as.POSIXlt(d0)))
+## 2nd line gave floating point exception (in format(*)!)
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

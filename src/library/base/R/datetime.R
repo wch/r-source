@@ -679,6 +679,7 @@ trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 {
     units <- match.arg(units)
     x <- as.POSIXlt(x)
+    if(length(x$sec) > 0)
     switch(units,
            "secs" = {x$sec <- trunc(x$sec)},
            "mins" = {x$sec <- 0},
