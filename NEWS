@@ -199,6 +199,9 @@ NEW FEATURES
            faster, and pre-screening for NAs speeds cases without any
 	   NAs several-fold.
 
+	-  sort.list() (and order with just one vector) is several
+	   times faster for numeric, integer and logical vectors.
+
 
 DEPRECATED & DEFUNCT
 
@@ -453,7 +456,7 @@ BUG FIXES
     o   legend() did not deal correctly with `angle' arguments. (PR#1404)
 
     o   sum() tried to give an integer result for integer arguments, 
-	but (PR#140)
+	but (PR#1408)
 	- this was not documented
 	- it sometimes warned on overflow, sometimes not
 	- it was order-dependent for a mixture of integer and numeric args.
@@ -462,6 +465,8 @@ BUG FIXES
 	but now always works with numeric (or complex) numbers.
 
     o	sort.list() and order() were treating NA_STRING as "NA".
+
+    o	sort.list(na.last = NA) was not implemented.
 
 
 	**************************************************
