@@ -437,14 +437,21 @@ and that this neither sets up nor removes the file associations.
 @node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
 @section Does R support automation (OLE, COM)?
 
-Directly, no.  There is a (D)COM server written by Thomas Baier
-available on CRAN (@uref{http://cran.r-project.org/other-software.html})
-which works with @code{Rproxy.dll} (in the R distribution) and
-@code{R.dll} to support transfer of data to and from R and remote
-execution of R commands, as well as embedding of an R graphics window.
+Directly, no.  
 
-An R-Excel interface making use of the DCOM server is available from the
-same area of CRAN.
+There is a (D)COM server written by Thomas Baier available on CRAN
+(@uref{http://cran.r-project.org/other-software.html}) which works with
+@code{Rproxy.dll} (in the R distribution) and @code{R.dll} to support
+transfer of data to and from R and remote execution of R commands, as
+well as embedding of an R graphics window.  An R-Excel interface making
+use of the DCOM server is included in the distribution.  @strong{NOTE:}
+You should ensure that the @code{RWVERSION/bin} directory is in your
+path when using this software, so that the R library DLLs are found.
+
+Another (D)COM server is available from @uref{http://www.omegahat.org/},
+which allows R objects to be exported as COM values.  That site also
+has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
+to act as a (D)COM client.
 
 
 @node The internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
@@ -548,7 +555,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  As from R 1.7.0 the
 packages for each minor (1.x) version will be stored in a separate area,
-so for R 1.7.0 the files are in @code{bin/windows/contrib/1.7}.  You can
+so for R 1.8.0 the files are in @code{bin/windows/contrib/1.8}.  You can
 try those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
@@ -587,7 +594,7 @@ set the environment variable R_LIBS to p:\myRlib
 OR use a package by, e.g.
 
 @example
-library(MASS, lib.loc="p:/myRlib")
+library(mypkg, lib.loc="p:/myRlib")
 @end example
 
 
@@ -606,9 +613,6 @@ This is done automatically when installing from the Packages menu or
 by @code{install.packages()}, and when @code{help.start} is run,
 provided you have write permission in @file{@RWVER@}.
 
-Prior to R 1.7.0 the HTML indices and search databases only covered
-packages installed in @file{@RWVER@\library}.
-
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
 @section My functions are not found by the HTML help search system.
@@ -622,8 +626,7 @@ The following conditions need to hold for functions in a package you installed.
 installing the package.
 @end itemize
 @noindent
-If those all hold true, this works for us.  As from R 1.7.0 the search
-should find topics in packages in other library trees.
+If those all hold true, this works for us.
 
 If the help search system does not work @emph{at all}, this probably
 indicates that Java support is either not installed or not enabled in
@@ -636,9 +639,7 @@ enabled,
 @section Loading a package fails.
 
 Is the package compiled for this version of R?  Many of the packages
-need to be compiled for a fairly recent version.  (As from version
-1.5.0, R will warn if a package is used that was built under a
-@emph{later} version.)
+need to be compiled for a fairly recent version.
 
 You can tell the version the package was compiled for by looking at the
 @code{Built:} line in its @file{DESCRIPTION} file or at the
@@ -646,7 +647,7 @@ You can tell the version the package was compiled for by looking at the
 directory.  (Right-click on the DLL in Windows Explorer and select
 @code{Version} tab of the @code{Properties}, or use the
 @code{DLL.version} function inside R.)  If there is no @code{Built:}
-line or version tab, the package was compiled too long ago.
+line or version tab, the package was compiled far too long ago.
 
 
 @node Package TclTk does not work., Hyperlinks in Compiled HTML do not work., Loading a package fails., Packages
@@ -702,8 +703,7 @@ the sources yourself you can configure it to use 8.3.x.)
 
 They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
-does not implement.  As from R 1.7.0 links from other library trees to
-the base package will work.
+does not implement.
 
 @node update.packages() fails,  , Hyperlinks in Compiled HTML do not work., Packages
 @section @code{update.packages()} fails
@@ -948,7 +948,7 @@ cd src\gnuwin32
 @noindent
 Now read the @file{INSTALL} file and set up all the tools needed.  Then you
 can just use @code{make}, sit back and wait.  (A complete build takes about
-5 minutes on a 1GHz PIII with a fast local disc.)
+5 minutes on a 2.4GHz P4 with a fast local disc.)
 
 You may need to compile under a case-honouring file system: we found
 that a @code{samba}-mounted file system (which maps all file names to lower
@@ -1010,7 +1010,7 @@ from the Cygwin distribution.  Debugging under Windows is often a
 fraught process, and sometimes does not work at all.  If all you need is
 a @emph{just-in-time} debugger to catch crashes, consider
 @code{Dr. Mingw} from
-@uref{http://mefriss1.swan.ac.uk/~jfonseca/gnu-win32/software/drmingw/}.
+@uref{http://jrfonseca.dyndns.org/projects/gnu-win32/software/drmingw/}.
 That will be able to pinpoint the error, most effectively if you build a
 version of R with debugging information as described below.
 
@@ -1163,14 +1163,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2003 February 11 by Professor B. D. Ripley
+Last edited 2003 September 1 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2003 February 11 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2003 September 1 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
