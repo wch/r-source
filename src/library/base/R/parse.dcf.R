@@ -39,9 +39,9 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
         text <- scan(file=file, what="",  sep="\n", quiet=TRUE)
     
     ## remove empty lines
-    ok <- grep("^[ \t]+$", text)
-    if(length(ok)>0){
-        text <- text[!ok]
+    notok <- grep("^[ \t]+$", text)
+    if (length(notok) > 0){
+        text <- text[-notok]
     }
 
     ## use the field name of the first line as record separator

@@ -47,6 +47,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	blank-line reject code in parse.dcf was wrong (Martyn Plummer)
+
     o	made filled.contour independent on pointsize. Make plot key
 	wider so there's room for a title. Touchup example.
 
