@@ -102,6 +102,9 @@ Testing R build under Windows
 
 - Check you can interrupt RGui with ESC and Rterm with Ctrl-C.
 
+- check building Rmath.dll in src/nmath/standalone.
+
+
 BDR
-2001-12-03
+2001-12-13
 
