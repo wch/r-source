@@ -1275,7 +1275,7 @@ recommended for the source code of @R{} itself.
 As from @R{} version 1.2.0 it is possible to profile @R{} code on most
 Unix-like versions of @R{}.  @R{} has to be built to enable this, by
 supplying the option @option{--enable-R-profiling}, profiling being
-disabled in a default build.  Unfortunately, profiling relies on OS
+enabled in a default build.  Unfortunately, profiling relies on OS
 facilities not available on Windows.
 
 The command @code{Rprof} is used to control profiling, and its help page
