@@ -16,7 +16,7 @@ void F77_NAME(dgemm)(const char *transa, const char *transb,
 
 /* DGEEV - compute for an N-by-N real nonsymmetric matrix A, the   */
 /* eigenvalues and, optionally, the left and/or right eigenvectors */
-void F77_NAME(dgeev)(const char *jobvl, const char *jobvr,
+void F77_NAME(rgeev)(const char *jobvl, const char *jobvr,
 		     const int *n, double *a, const int *lda,
 		     double *wr, double *wi,
 		     double *vl, const int *ldvl,

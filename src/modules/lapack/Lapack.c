@@ -247,11 +247,11 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     wI = (double *) R_alloc(n, sizeof(double));
     /* ask for optimal size of work array */
     lwork = -1;
-    F77_CALL(dgeev)(jobVL, jobVR, &n, xvals, &n, wR, wI,
+    F77_CALL(rgeev)(jobVL, jobVR, &n, xvals, &n, wR, wI,
 		    left, &n, right, &n, &tmp, &lwork, &info);
     lwork = (int) tmp;
     work = (double *) R_alloc(lwork, sizeof(double));
-    F77_CALL(dgeev)(jobVL, jobVR, &n, xvals, &n, wR, wI,
+    F77_CALL(rgeev)(jobVL, jobVR, &n, xvals, &n, wR, wI,
 		    left, &n, right, &n, work, &lwork, &info);
     if (info != 0)
 	error("error code %d from Lapack routine dgeev", info);

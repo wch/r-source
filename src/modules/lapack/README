@@ -15,5 +15,5 @@ blas2.f and complxblas.f are not used if a full BLAS implementation is
 found at configure time.
 
 Do not be tempted to replace double.f and cmplx.f by another LAPACK
-installation.  dgeev.f had to be corrected (lines 3047-8 of double.f)
-to allow LWORK queries to run.
+installation.  dgeev.f had to be corrected (lines 180-1) to allow
+LWORK queries to run.

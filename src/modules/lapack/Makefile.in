@@ -12,7 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c
-SOURCES_F = double.f @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
+SOURCES_F = double.f rgeev.f rsyev.f rsyevr.f @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
 
 SOURCES_BLAS_DOUBLE_COMPLEX = cmplxblas.f
 SOURCES_BLAS = @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplxblas.f
