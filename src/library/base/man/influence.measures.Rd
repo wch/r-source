@@ -117,6 +117,10 @@ hat(x, intercept = TRUE)
   For \code{hatvalues}, \code{dfbeta}, and \code{dfbetas}, the method
   for linear models also works for generalized linear models.
 }
+\author{
+  Several R core team members and John Fox, originally in his \file{car}
+  package.
+}
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
   \emph{Regression Diagnostics}.
