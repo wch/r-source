@@ -150,6 +150,7 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_FocusOnConsole,
 DL_FUNC ptr_R_ProcessEvents;
 
 
+
 void R_ProcessEvents(void);
 OSStatus StartUpGUI(void){
     IBNibRef 	nibRef = NULL;

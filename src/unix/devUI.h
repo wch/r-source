@@ -8,6 +8,7 @@
 
 #ifdef HAVE_AQUA
 extern void (*ptr_R_StartConsole)();
+extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 #endif
 
 extern void (*ptr_R_Suicide)(char *);

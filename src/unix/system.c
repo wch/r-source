@@ -303,6 +303,11 @@ int Rf_initialize_R(int ac, char **av)
 int R_EditFiles(int nfile, char **file, char **title, char *editor)
 {
     char  buf[1024];
+#if defined(HAVE_AQUA)
+	if (useCocoa){
+		return(ptr_R_EditFiles(nfile, file, title, editor));		
+	}
+#endif
 
     if (nfile > 0) {
 	if (nfile > 1)
