@@ -3,7 +3,7 @@
 # It also builds help files for the Macintosh
 # distribution.
 #
-# Jago November 2001, Stefano M. Iacus
+# Jago July 2002, Stefano M. Iacus
 #
 #
 
@@ -37,6 +37,7 @@ MODULES = vfonts lapack
 fixdesc Ä $OutOfDate
 	echo "creating DESCRIPTION files"
 	execute :tools:GETDESC (PACKAGES}
+	execute :tools:PKGVERSION
 
 library Ä mainfiles Libfiles datafiles help demofiles
 
@@ -50,10 +51,9 @@ mainfiles Ä fixdesc
 	   NewFolder {RHOME}library:{pkg}
 	  end
 	  if  `Exists ::library:{pkg}:DESCRIPTION`
-	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}
-	  end
-	  if  `Exists ::library:{pkg}:DESCRIPTION.in`
-	  Duplicate -y ::library:{pkg}:DESCRIPTION.in {RHOME}library:{pkg}:DESCRIPTION
+	   duplicate -y ::library:{pkg}:DESCRIPTION ::library:{pkg}:des
+	   catenate ::library:{pkg}:des :pkgver > {RHOME}library:{pkg}:DESCRIPTION
+       delete  ::library:{pkg}:des
 	  end
 	  if  `Exists ::library:{pkg}:INDEX`
 	   Duplicate -y ::library:{pkg}:INDEX {RHOME}library:{pkg}
