@@ -153,7 +153,10 @@
 static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table);
 static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream);
 static SEXP ReadItem(SEXP ref_table, R_inpstream_t stream);
-
+#ifdef BYTECODE
+static void WriteBC(SEXP s, SEXP ref_table, R_outpstream_t stream);
+static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
+#endif
 
 /*
  * Constants
@@ -578,6 +581,10 @@ static int HashGet(SEXP item, SEXP ht)
 /* the following are speculative--we may or may not need them soon */
 #define CLASSREFSXP       246
 #define GENERICREFSXP     245
+#ifdef BYTECODE
+#define BCREPDEF          244
+#define BCREPREF          243
+#endif
 
 /*
  * Type/Flag Packing and Unpacking
@@ -846,6 +853,13 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    for (i = 0; i < LENGTH(s); i++)
 		WriteItem(VECTOR_ELT(s, i), ref_table, stream);
 	    break;
+	case BCODESXP:
+#ifdef BYTECODE
+	    WriteBC(s, ref_table, stream);
+	    break;
+#else
+	    error("this version of R cannot write byte code objects");
+#endif
 	default:
 	    error("WriteItem: unknown type %i", TYPEOF(s));
 	}
@@ -853,6 +867,156 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    WriteItem(ATTRIB(s), ref_table, stream);
     }
 }
+
+#ifdef BYTECODE
+static SEXP MakeCircleHashTable()
+{
+    return CONS(R_NilValue, allocVector(VECSXP, HASHSIZE));
+}
+
+static Rboolean AddCircleHash(SEXP item, SEXP ct)
+{
+    SEXP table, bucket, list;
+    int pos;
+
+    table = CDR(ct);
+    pos = PTRHASH(item) % LENGTH(table);
+    bucket = VECTOR_ELT(table, pos);
+    for (list = bucket; list != R_NilValue; list = CDR(list))
+	if (TAG(list) == item) {
+	    if (CAR(list) == R_NilValue) {
+		/* this is the second time; enter in list and mark */
+		SETCAR(list, R_UnboundValue); /* anything different will do */
+		SETCAR(ct, CONS(item, CAR(ct)));
+	    }
+	    return TRUE;
+	}
+
+    /* If we get here then this is a new item; enter in the table */
+    bucket = CONS(R_NilValue, bucket);
+    SET_TAG(bucket, item);
+    SET_VECTOR_ELT(table, pos, bucket);
+    return FALSE;
+}
+
+static void ScanForCircles1(SEXP s, SEXP ct)
+{
+    switch (TYPEOF(s)) {
+    case LANGSXP:
+    case LISTSXP:
+        if (! AddCircleHash(s, ct)) {
+	    ScanForCircles1(CAR(s), ct);
+	    ScanForCircles1(CDR(s), ct);
+	}
+	break;
+    case BCODESXP:
+	{
+	    int i, n;
+	    SEXP consts = BCODE_CONSTS(s);
+	    n = LENGTH(consts);
+	    for (i = 0; i < n; i++)
+		ScanForCircles1(VECTOR_ELT(consts, i), ct);
+	}
+	break;
+    default: break;
+    }
+}
+
+static SEXP ScanForCircles(SEXP s)
+{
+    SEXP ct;
+    PROTECT(ct = MakeCircleHashTable());
+    ScanForCircles1(s, ct);
+    UNPROTECT(1);
+    return CAR(ct);
+}
+
+static SEXP findrep(SEXP x, SEXP reps)
+{
+    for (; reps != R_NilValue; reps = CDR(reps))
+	if (x == CAR(reps))
+	    return reps;
+    return R_NilValue;
+}
+
+static void WriteBCLang(SEXP s, SEXP ref_table, SEXP reps,
+			R_outpstream_t stream)
+{
+    int type = TYPEOF(s);
+    if (type == LANGSXP || type == LISTSXP) {
+	SEXP r = findrep(s, reps);
+	int output = TRUE;
+	if (r != R_NilValue) {
+	    /* we have a cell referenced more than once */
+	    if (TAG(r) == R_NilValue) {
+		/* this is the first reference, so update and register
+                   the counter */
+		int i = INTEGER(CAR(reps))[0]++;
+		SET_TAG(r, allocVector(INTSXP, 1));
+		INTEGER(TAG(r))[0] = i;
+		OutInteger(stream, BCREPDEF);
+		OutInteger(stream, i);
+	    }
+	    else {
+		/* we've seen it before, so just put out the index */
+		OutInteger(stream, BCREPREF);
+		OutInteger(stream, INTEGER(TAG(r))[0]);
+		output = FALSE;
+	    }
+	}
+	if (output) {
+	    OutInteger(stream, LANGSXP);
+	    WriteItem(TAG(s), ref_table, stream);
+	    WriteBCLang(CAR(s), ref_table, reps, stream);
+	    WriteBCLang(CDR(s), ref_table, reps, stream);
+	}
+    }
+    else {
+	OutInteger(stream, 0); /* pad */
+	WriteItem(s, ref_table, stream);
+    }
+}
+
+static void WriteBC1(SEXP s, SEXP ref_table, SEXP reps, R_outpstream_t stream)
+{
+    int i, n;
+    SEXP code, consts;
+    PROTECT(code = R_bcDecode(BCODE_CODE(s)));
+    WriteItem(code, ref_table, stream);
+    consts = BCODE_CONSTS(s);
+    n = LENGTH(consts);
+    OutInteger(stream, n);
+    for (i = 0; i < n; i++) {
+	SEXP c = VECTOR_ELT(consts, i);
+	int type = TYPEOF(c);
+	switch (type) {
+	case BCODESXP:
+	    OutInteger(stream, type);
+	    WriteBC1(c, ref_table, reps, stream);
+	    break;
+	case LANGSXP:
+	case LISTSXP:
+	    WriteBCLang(c, ref_table, reps, stream);
+	    break;
+	default:
+	    OutInteger(stream, type);
+	    WriteItem(c, ref_table, stream);
+	}
+    }
+    UNPROTECT(1);
+}
+
+static void WriteBC(SEXP s, SEXP ref_table, R_outpstream_t stream)
+{
+    SEXP reps = ScanForCircles(s);
+    PROTECT(reps = CONS(R_NilValue, reps));
+    OutInteger(stream, length(reps));
+    SETCAR(reps, allocVector(INTSXP, 1));
+    INTEGER(CAR(reps))[0] = 0; 
+    WriteBC1(s, ref_table, reps, stream);
+    UNPROTECT(1);
+}
+#endif
 
 void R_Serialize(SEXP s, R_outpstream_t stream)
 {
@@ -1098,7 +1262,12 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		SET_VECTOR_ELT(s, count, ReadItem(ref_table, stream));
 	    break;
 	case BCODESXP:
+#ifdef BYTECODE
+	    PROTECT(s = ReadBC(ref_table, stream));
+	    break;
+#else
 	    error("this version of R cannot read byte code objects");
+#endif
 	case CLASSREFSXP:
 	    error("this version of R cannot read class references");
 	case GENERICREFSXP:
@@ -1114,6 +1283,90 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	return s;
     }
 }
+
+#ifdef BYTECODE
+static SEXP ReadBC1(SEXP ref_table, SEXP reps, R_inpstream_t stream);
+
+static SEXP ReadBCLang(int type, SEXP ref_table, SEXP reps,
+		       R_inpstream_t stream)
+{
+    switch (type) {
+    case BCREPREF:
+	return VECTOR_ELT(reps, InInteger(stream));
+    case BCREPDEF:
+    case LANGSXP:
+    case LISTSXP:
+	{
+	    SEXP ans;
+	    int pos = -1;
+	    if (type == BCREPDEF) {
+		pos = InInteger(stream);
+		type = InInteger(stream);
+	    }
+	    PROTECT(ans = allocSExp(type));
+	    if (pos >= 0)
+		SET_VECTOR_ELT(reps, pos, ans);
+	    SET_TAG(ans, ReadItem(ref_table, stream));
+	    SETCAR(ans, ReadBCLang(InInteger(stream), ref_table, reps,
+				   stream));
+	    SETCDR(ans, ReadBCLang(InInteger(stream), ref_table, reps,
+				   stream));
+	    UNPROTECT(1);
+	    return ans;
+	}
+    default: return ReadItem(ref_table, stream);
+    }
+}
+
+static SEXP ReadBCConsts(SEXP ref_table, SEXP reps, R_inpstream_t stream)
+{
+    SEXP ans, c;
+    int i, n;
+    n = InInteger(stream);
+    PROTECT(ans = allocVector(VECSXP, n));
+    for (i = 0; i < n; i++) {
+	int type = InInteger(stream);
+	switch (type) {
+	case BCODESXP:
+	    c = ReadBC1(ref_table, reps, stream);
+	    SET_VECTOR_ELT(ans, i, c);
+	    break;
+	case LANGSXP:
+	case LISTSXP:
+	case BCREPDEF:
+	case BCREPREF:
+	    c = ReadBCLang(type, ref_table, reps, stream);
+	    SET_VECTOR_ELT(ans, i, c);
+	    break;
+	default:
+	    SET_VECTOR_ELT(ans, i, ReadItem(ref_table, stream));
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+}
+    
+static SEXP ReadBC1(SEXP ref_table, SEXP reps, R_inpstream_t stream)
+{
+    SEXP s;
+    PROTECT(s = allocSExp(BCODESXP));
+    SETCAR(s, ReadItem(ref_table, stream)); /* code */
+    SETCAR(s, R_bcEncode(CAR(s)));
+    SETCDR(s, ReadBCConsts(ref_table, reps, stream)); /* consts */
+    SET_TAG(s, R_NilValue); /* expr */
+    UNPROTECT(1);
+    return s;
+}
+
+static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream)
+{
+    SEXP reps, ans;
+    PROTECT(reps = allocVector(VECSXP, InInteger(stream)));
+    ans = ReadBC1(ref_table, reps, stream);
+    UNPROTECT(1);
+    return ans;
+}
+#endif
 
 static void DecodeVersion(int packed, int *v, int *p, int *s)
 {
