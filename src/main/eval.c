@@ -753,7 +753,7 @@ static char *asym[] = {":=", "<-", "<<-"};
 
 SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, lhs, rhs, saverhs, tmp, tmploc, tmpsym;
+    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, tmploc, tmpsym;
     char buf[32];
 
     expr = CAR(args);
@@ -802,9 +802,11 @@ SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	tmp = install(buf);
 	UNPROTECT(1);
 	CAR(tmploc) = CAR(lhs);
-	PROTECT(rhs = replaceCall(tmp, TAG(tmploc), CDDR(expr), rhs));
+	PROTECT(tmp2 = mkPROMISE(rhs, rho));
+	PRVALUE(tmp2) = rhs;
+	PROTECT(rhs = replaceCall(tmp, TAG(tmploc), CDDR(expr), tmp2));
 	rhs = eval(rhs, rho);
-	UNPROTECT(1);
+	UNPROTECT(2);
 	PROTECT(rhs);
 	lhs = CDR(lhs);
 	expr = CADR(expr);
