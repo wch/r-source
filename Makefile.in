@@ -12,9 +12,9 @@ include $(top_builddir)/Makeconf
 distdir = $(PACKAGE)-$(VERSION)
 INSTFILES = COPYING COPYRIGHTS FAQ MIRROR-SITES NEWS RESOURCES 
 DISTFILES = $(INSTFILES) \
-	BUGS INSTALL PLATFORMS PROJECTS README VERSION Y2K \
+	BUGS INSTALL PLATFORMS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	aclocal.m4 config.site configure configure.in configure.mac \
+	aclocal.m4 config.site configure configure.in \
 	date-stamp
 SUBDIRS = src afm demos doc etc tests tools
 
