@@ -68,8 +68,8 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a rmodules CHTML \
-	 ../include/globalvar.h front-ends COPYRIGHTS
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
+	 ../include/globalvar.h front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
