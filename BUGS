@@ -264,14 +264,6 @@ Date: Tue, 16 Nov 1999 08:56:57 +0100 (MET)
 Subject: continuous key press results in core dump
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 21 Nov 1999 14:43:07 -0500 (EST)
-* PR# 332 *
-Subject: compile error for mkString on alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 23 Nov 1999 15:14:00 +0100 (MET)
-* PR# 333 *
-Subject: cpp problem on alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 23 Nov 1999 15:23:38 +0100 (MET)
 * PR# 334 *
 Subject: Re: [R] problems with postscript device
 From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
@@ -307,10 +299,6 @@ Date: 23 Nov 1999 12:31:36 -0600
 Subject: Re: [R] problems with postscript device
 From: Chong Gu <chong@stat.purdue.edu>
 Date: Wed, 24 Nov 1999 00:18:55 -0500
-* PR# 342 *
-Subject: scan error
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Wed, 24 Nov 1999 15:26:09 +0100 (MET)
 * PR# 343 *
 Subject: rbind invisible return value
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -351,10 +339,6 @@ Date: Mon, 29 Nov 1999 15:53:10 +0100 (MET)
 Subject: image stops detecting wrong sized z matrix
 From: albrecht.gebhardt@uni-klu.ac.at
 Date: Tue, 30 Nov 1999 14:28:10 +0100 (MET)
-* PR# 353 *
-Subject: R CMD check xxx location
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Tue, 30 Nov 1999 15:22:25 -0500
 * PR# 354 *
 Subject: odd result of length() with factor arguments with NA
 From: Rashid Nassar <rnassar@duke.edu>
@@ -379,3 +363,11 @@ Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
 Subject: Inconsistent messages with [[ list indexing
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sat, 4 Dec 1999 14:13:07 +0000 (GMT)
+* PR# 360 *
+Subject: laser printer toner advertisement
+From: <bmark1@guestbooks.net>
+Date: Sun, 5 Dec 1999 19:47:02
+* PR# 361 *
+Subject: "function" function -- infinite loops and bus error [not user problem]
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
