@@ -630,8 +630,7 @@ later, but has been deprecated in favor of the function @code{Rdindex()}
 in package @pkg{tools} as of @R{} version 1.7.0.)
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4 or later installed (and some Linux
-distributions have 3.12).
+@command{makeinfo} version 4 or later installed.
 
 The typeset documentation needs @command{tex} and @command{latex}, or
 @command{pdftex} and @command{pdflatex}.
@@ -643,31 +642,18 @@ The typeset documentation needs @command{tex} and @command{latex}, or
 The command-line editing depends on the @code{readline} library
 available from any GNU mirror: you will need a fairly recent version.
 
-Use of @code{gzfile} connections needs @code{zlib} (version 1.1.3 or
-later): if an installed version is not found, that in the @R{} sources
-will be compiled in.
-
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
-appropriate libraries installed: @code{jpeg} (version 6b or later) or
-@code{libpng} (versions 1.0.5 to 1.2.1 or 1.2.3 or later) and
-@code{zlib} (version 1.1.3 or later) respectively.
-(@code{libpng-1.2.2}, only, moved its header files, and you will need
-add something like @samp{-I/usr/local/include/libpng12} to
-@code{CPPFLAGS} to make use of it.)
+appropriate headers and libraries installed: @code{jpeg} (version 6b
+or later) or @code{libpng} (version 1.2.3 or later) and @code{zlib}
+(version 1.1.3 or later) respectively.
 
 The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 (@uref{http://www.cs.wisc.edu/~ghost}).
 
-@code{bzfile} connections make use of @code{libbz2}, part of
-@code{bzip2} (@uref{http://sources.redhat.com/bzip2}).  If no installed
-version is found, that in the @R{} sources will be compiled in.
+If you have them installed (including the approrpiate headers),
+@code{zlib}, @code{libbz2} and PCRE will be used: otherwise versions
+in the @R{} sources will be compiled in.
 
-@code{grep} and related functions will make use of PCRE if installed.
-The sources are at
-@uref{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}; the
-Debian package is @code{libpcre3-dev} and the RPM something like
-@code{pcre-devel-3.4-2}.  If no installed version is found, that in the
-@R{} sources will be compiled in.
 
 @menu
 * Tcl/Tk::                      
