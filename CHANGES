@@ -25,7 +25,22 @@ NEW FEATURES
 
     o	new  src/library/profile/Common.R   for	 OS-independent intialization.
 
+    o   new date stamp mechanism (ensures that prerelease versions carry
+        correct date)
+
 BUG FIXES
+
+    o   save.image didn't work (Martyn Plummer)
+
+    o   abs() instead of fabs() in seq.c crashed R on Digital Unix
+
+    o   model.matrix() gagged on variables with complicated names 
+
+    o   saturated models acting up in glm
+
+    o   various improvement of build procedures
+
+    o   rbind(NULL, matrix) core dump
 
     o	density() default 'bw' now 0.9*(...) instead of 1.06*(...)
 				[=Silverman's rule of thumb].
