@@ -61,7 +61,7 @@ sub buildinit {
 
     chdir "man" or die("There are no man pages in $pkg\n");
     opendir man, '.';
-    @mandir = readdir(man);
+    @mandir = sort(readdir(man));
     closedir man;
 
     ($pkg, $lib, @mandir);
