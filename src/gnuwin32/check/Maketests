@@ -6,7 +6,7 @@ srcdir = .
 
 RHOME= ..
 
-R= $(RHOME)/bin/rterm  --vanilla
+R= $(RHOME)/bin/Rterm  --vanilla
 RDIFF = $(RHOME)/tools/Rdiff
 RVAL_IF_DIFF=0
 
