@@ -454,10 +454,6 @@ Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 1471 *
-Subject: Rprof segfault
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 20 Apr 2002 23:48:01 +0200
 * PR# 1509 *
 Subject:  Behaviour of environment(foo)<- 
 From: J.C.Rougier@durham.ac.uk
@@ -466,7 +462,3 @@ Date: Fri, 3 May 2002 11:10:21 +0100
 Subject: cut.dendrogram
 From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
 Date: Thu, 09 May 2002 03:17:17 -0700
-* PR# 1540 *
-Subject: Welcome
-From: BrandOffers <offers@brand-offers.com>
-Date: Fri, 10 May 2002 12:32:22 -0400 (EDT)
