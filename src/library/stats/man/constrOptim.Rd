@@ -22,12 +22,13 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   \item{outer.iterations}{Iterations of the barrier algorithm.}
   \item{outer.eps}{Criterion for relative convergence of the barrier
     algorithm.}
-  \item{\dots}{ Other arguments passed to \code{\link{optim}} }
+  \item{\dots}{ Other arguments passed to \code{\link{optim}}, which
+    will pass them to \code{f} and \code{grad} if it does not used them.}
 }
 \details{
   The feasible region is defined by \code{ui \%*\% theta - ci >= 0}. The
   starting value must be in the interior of the feasible region, but the
-  minimum may be on the boundary.
+  minimum may be on the boundary. 
   
   A logarithmic barrier is added to enforce the constraints and then
   \code{\link{optim}} is called. The barrier function is chosen so that

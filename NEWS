@@ -413,6 +413,9 @@ BUG FIXES
 
     o	inverse.gaussian() always printed 1/mu^2 as the link function.
 
+    o   constrOptim now passes ... arguments through optim to the
+        objective function
+
 
 
 	**************************************************
