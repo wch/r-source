@@ -120,6 +120,9 @@
 #define GET_LENGTH(x)		length(x)
 #define SET_LENGTH(x, n)	(x = lengthgets(x, n))
 
+#define GET_SLOT(x, what)       R_do_slot(w, what)
+#define SET_SLOT(x, what, value)  R_do_slot_assign(w, what, value)
+
 #define s_object                SEXPREC
 #define S_EVALUATOR             /**/
 #ifndef TRUE
