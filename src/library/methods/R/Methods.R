@@ -789,8 +789,8 @@ resetGeneric <- function(f, fdef = getGeneric(f, where = where), mlist = getMeth
 }
 
 setReplaceMethod <-
-  function(f, ...)
-  setMethod(paste(f, "<-", sep=""), ...)
+  function(f, ..., where = topenv(parent.frame()))
+  setMethod(paste(f, "<-", sep=""), ..., where = where)
 
 setGroupGeneric <-
     ## create a group generic function for this name.
