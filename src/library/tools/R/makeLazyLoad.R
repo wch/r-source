@@ -247,7 +247,7 @@ makeLazyLoading <-
     barepackage <- sub("([^-]+)_.*", "\\1", package)
 
     if (package == "base")
-        stop("this cannot be used for package ", sQuote(base))
+        stop("this cannot be used for package ", sQuote("base"))
     else if (packageHasNamespace(package, dirname(pkgpath)))
         loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
     else
