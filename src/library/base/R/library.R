@@ -28,29 +28,19 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
                               "using the one found in",
                               fQuote(which.lib.loc)))
             }
-            packagedir <- file.path(which.lib.loc, package)
-	    file <- system.file("R", package, pkg = package,
-                                lib = which.lib.loc)
-	    ## allowed zipped R source files
-	    if (file == "") {
-		tfile <- file.path(which.lib.loc, package, "R", package)
-		zfile <- zip.file.extract(tfile)
-		if (zfile != tfile) {
-		    file <- zfile
-		    on.exit(unlink(file))
-		}
-	    }
+            codeFile <- file.path(which.lib.loc, package, "R", package)
 	    ## create environment
 	    env <- attach(NULL, name = pkgname)
             ## detach does not allow character vector args
             on.exit(detach(2))
-            path <- system.file(pkg = package, lib = which.lib.loc)
-            attr(env, "path") <- path
-	    ## "source" file into env
-	    if (file == "")
-		warning(paste("Package `", package, "' contains no R code",
-			      sep = ""))
-	    else sys.source(file, env, keep.source = keep.source)
+            attr(env, "path") <- file.path(which.lib.loc, package)
+	    ## source file into env
+	    if(file.exists(codeFile))
+                sys.source(codeFile, env, keep.source = keep.source)
+            else
+		warning(paste("Package ",
+                              fQuote(package),
+                              "contains no R code"))
 	    .Internal(lib.fixup(env, .GlobalEnv))
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
@@ -96,14 +86,17 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	}
 	else {
 	    if (getOption("verbose"))
-		warning(paste("Package",pkgname,"already present in search()"))
+		warning(paste("Package",
+                              pkgname,
+                              "already present in search()"))
 	}
     }
     else if(!missing(help)) {
 	if(!character.only)
 	    help <- as.character(substitute(help))
         help <- help[1]                 # only give help on one package
-        which.lib.loc <- lib.loc[file.exists(file.path(lib.loc, help))]
+        which.lib.loc <-
+            lib.loc[file.exists(file.path(lib.loc, help))]
         if(length(which.lib.loc) == 0)
             stop(paste("No documentation for package", fQuote(help)))
         if(length(which.lib.loc) > 1) {
@@ -114,14 +107,19 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
                           "using the one found in",
                           fQuote(which.lib.loc)))
         }
-        FILES <- file.path(which.lib.loc, help,
-                           c("TITLE", "DESCRIPTION", "INDEX"))
-        ok <- file.exists(FILES)
-        do.call("file.show",
-                c(as.list(FILES[ok]),
-                  list(header = c("", "Description:", "Index:")[ok],
-                       title = paste("Documentation for package",
-                               fQuote(help)))))
+        outFile <- tempfile("Rlibrary")
+        docFiles <- file.path(which.lib.loc, help,
+                              c("TITLE", "DESCRIPTION", "INDEX"))
+        headers <- c("", "Description:\n\n", "Index:\n\n")
+        footers <- c("\n", "\n", "")
+        for(i in which(file.exists(docFiles))) {
+            cat(headers[i], file = outFile, append = TRUE)
+            file.append(outFile, docFiles[i])
+            cat(footers[i], file = outFile, append = TRUE)
+        }
+        file.show(outFile, delete.file = TRUE,
+                  title = paste("Documentation for package",
+                  fQuote(help)))
     }
     else {
 	## library():
@@ -141,8 +139,8 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	    else {
 		a <- .packages(all.available = TRUE, lib.loc = lib)
 		for (i in sort(a)) {
-		    title <- system.file("TITLE", pkg=i, lib=lib)
-		    if (title != "")
+		    title <- file.path(lib, i, "TITLE")
+		    if(file.exists(title))
 			file.append(libfil, title)
 		    else cat(i, "\n", file = libfil, append = TRUE)
 		}
