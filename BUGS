@@ -312,3 +312,7 @@ Date: Sat, 8 Sep 2001 10:19:00 -0500
 Subject: Debian Woody r-base depends on blas2
 From: michael_odonnell@acm.org
 Date: Sat, 8 Sep 2001 20:25:32 +0200 (MET DST)
+* PR# 1090 *
+Subject: [R] bad R.css link in "packages.html"
+From: Jason Turner <jasont@indigoindustrial.co.nz>
+Date: Fri, 7 Sep 2001 11:51:50 +1200
