@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.9 $ ';
+my $revision = ' $Revision: 1.10 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -69,6 +69,7 @@ my $pkg;
 foreach $pkg (@ARGV){
     $pkg =~ s/\/$//;
     my $pkgname = basename($pkg);
+    my $is_bundle = 0;
     my $istar = 0;
 
 ## is this a tar archive?
@@ -97,9 +98,12 @@ foreach $pkg (@ARGV){
     if(-r "$pkg/DESCRIPTION"){
 	$description = new R::Dcf("$pkg/DESCRIPTION");
     }
+    
     if($description->{"Contains"}) {
 	print "\nLooks like \`${pkg}' is a package bundle\n";
-	$makecmd = "bundle"
+	$makecmd = "bundle";
+	$is_bundle = 1;
+	@bundlepkgs = split(/\s+/, $description->{"Contains"});
     }
     print "\n";
 
@@ -125,22 +129,33 @@ foreach $pkg (@ARGV){
     }
 
     if(system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $helpflags $makecmd-$pkgname")){
-	printf "Installation of $pkgname failed\n";
+	printf "*** Installation of $pkgname failed ***\n";
     } else {
 	if($opt_use_zip || $opt_use_zip_data) {
-	    system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library zipdata-$pkgname") if -d "$library/$pkgname/data";
+	    if($is_bundle) {
+		foreach $ppkg (@bundlepkgs) {
+		    system("make -C $R_HOME/src/gnuwin32 RLIB=$library zipdata-$ppkg") if -d "$library/$ppkg/data" && $ppkg ne "spatial";
+		}
+	    } else {
+		system("make -C $R_HOME/src/gnuwin32 RLIB=$library zipdata-$pkgname") if -d "$library/$pkgname/data";
+	    }
 	}
 	if($opt_use_zip || $opt_use_zip_help) {
-	    system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library ziponly-$pkgname")
+	    if($is_bundle) {
+		foreach $ppkg (@bundlepkgs) {
+		    system("make -C $R_HOME/src/gnuwin32 PKGD=$pkgdir/$pkgname RLIB=$library ziponly-$ppkg");
+		}
+	    } else {
+		system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library ziponly-$pkgname");
+	    }
 	}
     }
 
-    system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean && $makecmd == "pkg");
+    system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean && $is_bundle == 0);
 
-    if($opt_clean && $makecmd == "bundle") {
-	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	foreach $ppkg (@bundlepkgs){
-	       system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir/$pkg RLIB=$library pkgclean-$ppkg") 
+    if($opt_clean && $is_bundle) {
+	foreach $ppkg (@bundlepkgs) {
+	    system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir/$pkgname RLIB=$library pkgclean-$ppkg") 
 	}
 
     }
