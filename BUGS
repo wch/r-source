@@ -215,3 +215,19 @@ Date: Fri, 17 Mar 2000 12:05:32 -0500
 Subject:  minor problem in barplot legend 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 20 Mar 2000 17:31:36 -0500
+* PR# 495 *
+Subject: barplot
+From: skala@incoma.cz
+Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
+* PR# 496 *
+From: bonneau@epi.roazhon.inra.fr (en148)
+Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
+* PR# 497 *
+Subject: par help wrong: xlog & ylog
+From: wsi@gcal.ac.uk
+Date: Tue, 21 Mar 2000 14:57:57 +0100 (MET)
+* PR# 498 *
+Subject: Use of Rd2txt on .Rd files from rw-1.0.0
+Subject: Use of Rd2txt on .Rd files from rw-1.0.0
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Wed, 22 Mar 2000 09:15:20 +1100 (EST)
