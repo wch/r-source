@@ -101,19 +101,22 @@ function(file)
         lines <- lines[-commentLineIndices]
     ## </NOTE>
     
-    aliasesRegExp <- "^\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
+    aliasesRegExp <-
+        "^[[:space:]]*\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
     aliases <- grep(aliasesRegExp, lines, value = TRUE)
     aliases <- gsub(aliasesRegExp, "\\1", aliases)
     aliases <- gsub("\\\\%", "%", aliases)
     
-    keywordsRegExp <- "^\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
+    keywordsRegExp <-
+        "^[[:space:]]*\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
     keywords <- grep(keywordsRegExp, lines, value = TRUE)
     keywords <- gsub(keywordsRegExp, "\\1", keywords)
     keywords <- gsub("\\\\%", "%", keywords)
     
     ## <FIXME>
     ## docType ... 
-    RdTypeRegExp <- "^\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
+    RdTypeRegExp <-
+        "^[[:space:]]*\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
     RdType <- grep(RdTypeRegExp, lines, value = TRUE)
     ## Could be none or more than one ... argh.
     RdType <- c(gsub(RdTypeRegExp, "\\1", RdType), "")[1]
