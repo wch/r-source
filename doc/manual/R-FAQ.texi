@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-21
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-24
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2540,6 +2540,8 @@ A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
 @item mlica
 Independent Component Analysis using Maximum Likelihood.
+@item mlmRev
+Examples from Multilevel Modelling Software Review.
 @item mmlcr
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
@@ -2954,6 +2956,9 @@ Spatial and space-time point pattern analysis functions.
 @c </COMMENT>
 @item statmod
 Miscellaneous biostatistical modelling functions.
+@item stepwise
+A stepwise approach to identifying recombination breakpoints in a
+sequence alignment.
 @item strucchange
 Various tests on structural change in linear regression models.
 @item subselect
