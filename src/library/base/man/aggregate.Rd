@@ -59,7 +59,8 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
   time series, it is coerced to one.  Then, the variables in \code{x}
   are split into appropriate blocks of length
   \code{frequency(x) / nfrequency}, and \code{FUN} is applied to each
-  such block.  The result returned is a time series with frequency
+  such block, with further (named) arguments in \code{\dots} passed to
+  it.  The result returned is a time series with frequency
   \code{nfrequency} holding the aggregated values.
 }
 \author{Kurt Hornik}
@@ -85,6 +86,8 @@ aggregate(state.x77,
 data(presidents)
 ## Compute the average annual approval ratings for American presidents.
 aggregate(presidents, nf = 1, FUN = mean)
+## Give the summer less weight.
+aggregate(presidents, nf = 1, FUN = weighted.mean, w = c(1, 1, 0.5, 1))
 \testonly{## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
 }}

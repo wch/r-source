@@ -1,18 +1,18 @@
 aggregate <- function(x, ...) UseMethod("aggregate")
 
 aggregate.default <- function(x, ...) {
-    if (is.ts(x))
+    if(is.ts(x))
         aggregate.ts(as.ts(x), ...)
     else
         aggregate.data.frame(as.data.frame(x), ...)
 }
 
 aggregate.data.frame <- function(x, by, FUN, ...) {
-    if (!is.data.frame(x))
+    if(!is.data.frame(x))
         x <- as.data.frame(x)
-    if (!is.list(by))
+    if(!is.list(by))
         stop("`by' must be a list")
-    if (is.null(names(by)))
+    if(is.null(names(by)))
         names(by) <- paste("Group", seq(along = by), sep = ".")
     else {
         nam <- names(by)
@@ -20,7 +20,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
     y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)
-    if (any(sapply(unlist(y, recursive = FALSE), length) > 1))
+    if(any(sapply(unlist(y, recursive = FALSE), length) > 1))
         stop("`FUN' must always return a scalar")
     z <- y[[1]]
     d <- dim(z)
@@ -43,15 +43,15 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     x <- as.ts(x)
     ofrequency <- tsp(x)[3]
     ## Set up the new frequency, and make sure it is an integer.
-    if (missing(nfrequency))
+    if(missing(nfrequency))
         nfrequency <- 1 / ndeltat
-    if ((nfrequency > 1) &&
+    if((nfrequency > 1) &&
         (abs(nfrequency - round(nfrequency)) < ts.eps))
         nfrequency <- round(nfrequency)
 
-    if (nfrequency == ofrequency)
+    if(nfrequency == ofrequency)
         return(x)
-    if (abs(ofrequency %% nfrequency) > ts.eps)
+    if(abs(ofrequency %% nfrequency) > ts.eps)
         stop(paste("cannot change frequency from",
                    ofrequency, "to", nfrequency))
     ## The desired result is obtained by applying FUN to blocks of
@@ -70,9 +70,8 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     nend <- floor(nrow(x) / len) * len
     x <- apply(array(c(x[1 : nend, ]),
                      dim = c(len, nend / len, ncol(x))),
-               MARGIN = c(2, 3),
-               FUN = FUN)
-    if (!mat) x <- as.vector(x)
+               MARGIN = c(2, 3), FUN = FUN, ...)
+    if(!mat) x <- as.vector(x)
     else colnames(x) <- cn
     ts(x, start = nstart, frequency = nfrequency)
 }
