@@ -147,10 +147,8 @@ found:
     return 1;
 }
 
-#define DLLerrBUFSIZE 1000
+#define DLLerrBUFSIZE 4000
 static char DLLerror[DLLerrBUFSIZE] = "";
-
-/* the error message; length taken from ERRBUFSIZE in ./hpdlfcn.c  */
 
         /* Inserts the specified DLL at the head of the DLL list */
         /* Returns 1 if the library was successfully added */
@@ -165,7 +163,6 @@ static int AddDLL(char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
     char *dpath, *name, DLLname[MAX_PATH], *p, *st;
-    /* int i; */
 
     DeleteDLL(path);
     if (CountDLL == MAX_NUM_DLLS) {
@@ -174,13 +171,27 @@ static int AddDLL(char *path, int asLocal, int now)
     }
     tdlh = LoadLibrary(path);
     if (tdlh == NULL) {
-	strcpy(DLLerror, "LoadLibrary failure");
+	LPVOID lpMsgBuf;
+	FormatMessage( 
+	    FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+	    FORMAT_MESSAGE_FROM_SYSTEM | 
+	    FORMAT_MESSAGE_IGNORE_INSERTS,
+	    NULL,
+	    GetLastError(),
+	    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	    (LPTSTR) &lpMsgBuf,
+	    0,
+	    NULL 
+	    );
+	strcpy(DLLerror, "LoadLibrary failure:  ");
+	strcat(DLLerror, lpMsgBuf);
+	LocalFree(lpMsgBuf);
 	return 0;
     }
 
     dpath = malloc(strlen(path)+1);
     if(dpath == NULL) {
-	strcpy(DLLerror,"Couldn't allocate space for 'path'");
+	strcpy(DLLerror, "Couldn't allocate space for 'path'");
 	FreeLibrary(tdlh);
 	return 0;
     }
@@ -296,11 +307,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 
         /* do_dynload implements the R-Interface for the */
         /* loading of shared libraries */
-/* This looks very close the version in unix.
-   Is the only reason it is not shared due to
-    a) 2*PATH_MAX v's PATH_MAX for sizeof(buf)
-    b) static routines in this file.
-*/
+
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char  buf[MAX_PATH];

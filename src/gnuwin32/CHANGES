@@ -84,6 +84,9 @@ Pagers should no longer flash when launched.
 Launching a pager or data editor or graphics window now brings it
 to the front, even from Rterm.exe. (Not for Tcl/Tk windows, unfortunately.)
 
+Failure to load a DLL with dyn.load now gives extended error information.
+
+
 
 rw1001
 ======
