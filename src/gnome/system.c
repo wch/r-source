@@ -829,7 +829,7 @@ char *R_Date()
 }
 #endif
 
-void R_ShowFile(char *file, char *title)
+int R_ShowFile(char *file, char *title)
 {
     FILE *fp;
     int c;
