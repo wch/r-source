@@ -89,7 +89,12 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{pos.to.env(match("package:name"), search())} will return the
   environment in which the package is stored.  If calling
   \code{.First.lib} gives an error the loading of the package is
-  abandoned, and the package will be unavailable.
+  abandoned, and the package will be unavailable.  Similarly, if the
+  option \code{".First.lib"} has a list element with the package's name,
+  this element is called in the same manner as \code{.First.lib} when
+  the package is loaded.  This mechanism allows the user to set package
+  ``load hooks'' in addition to startup code as provided by the package
+  maintainers.
 
   \code{.Last.lib} is called when a package is detached.  Beware
   that it might be called if \code{.First.lib} has failed, so it
