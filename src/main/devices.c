@@ -139,7 +139,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
         GInit(&dd->dp);
 	if(!PSDeviceDriver(dd, file, paper, face, bg, fg, width, height, (double)horizontal, ps)) {
 		free(dd);
-		errorcall(call, "unable to start device X11\n");
+		errorcall(call, "unable to start device PostScript\n");
 	}
         gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
         addDevice(dd);
@@ -147,3 +147,54 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmaxset(vmax);
 	return R_NilValue;
 }
+
+        /*  PicTeX Device Driver Parameters  */
+        /*  file      = output filename          */
+        /*  bg        = background color         */
+        /*  fg        = foreground color         */
+        /*  width     = width in inches          */
+        /*  height    = height in inches	 */
+
+int PicTeXDeviceDriver(DevDesc*, char*, char *, char*,
+                       double, double, int);
+
+SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+        DevDesc *dd;
+	char *vmax;
+        char *file, *bg, *fg;
+        double height, width;
+	int debug;
+
+	gcall = call;
+	vmax = vmaxget();
+
+	file = SaveString(CAR(args), 0);
+	args = CDR(args);
+	bg = SaveString(CAR(args), 0);
+	args = CDR(args);
+	fg = SaveString(CAR(args), 0);
+	args = CDR(args);
+	width = asReal(CAR(args));
+	args = CDR(args);
+	height = asReal(CAR(args));
+	args = CDR(args);
+	debug = asInteger(CAR(args));
+	args = CDR(args);
+
+	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+		return 0;
+	/* Do this for early redraw attempts */
+	dd->displayList = R_NilValue;
+        GInit(&dd->dp);
+	if(!PicTeXDeviceDriver(dd, file, bg, fg, width, height, debug)) {
+		free(dd);
+		errorcall(call, "unable to start device PicTeX\n");
+	}
+        gsetVar(install(".Device"), mkString("pictex"), R_NilValue);
+        addDevice(dd);
+        initDisplayList(dd);
+	vmaxset(vmax);
+	return R_NilValue;
+}
+

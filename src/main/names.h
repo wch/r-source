@@ -44,6 +44,7 @@
 
 SEXP do_X11(SEXP, SEXP, SEXP, SEXP);
 SEXP do_PS(SEXP, SEXP, SEXP, SEXP);
+SEXP do_PicTeX(SEXP, SEXP, SEXP, SEXP);
 
 /* Function Names */
 

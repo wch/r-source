@@ -540,6 +540,7 @@ FUNTAB R_FunTab[] =
 
 {"X11",		do_X11,		0,	111,	4,	PP_FUNCALL,	0},
 {"PS",		do_PS,		0,	111,	9,	PP_FUNCALL,	0},
+{"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL, 	0},
 
 /* Graphics */
 

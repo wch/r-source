@@ -722,6 +722,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     R_Visible = 0;
     GSavePars(dd);
+    ProcessInlinePars(args, dd);
 
     dd->gp.xpd = 1;
     dd->gp.adj = 0.5;
@@ -1570,7 +1571,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     double line, at, adj = 0;
     int side, outer;
-    int newsave=0;
+    int gpnewsave=0, dpnewsave=0;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1675,8 +1676,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     dd->gp.xpd = 1;
-    if (outer)
-	newsave = dd->gp.new;
+    if (outer) {
+	gpnewsave = dd->gp.new;
+	dpnewsave = dd->dp.new;
+    }
     GMode(dd, 1);
     if(isExpression(text))
 	GMMathText(VECTOR(text)[0], side, line, outer, at, dd->gp.las, dd);
@@ -1685,8 +1688,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(dd, 0);
 
     GRestorePars(dd);
-    if (outer)
-	dd->gp.new = dd->dp.new = newsave;
+    if (outer) {
+	dd->gp.new = gpnewsave;
+	dd->dp.new = dpnewsave;
+    }
 #ifdef OLD
     UNPROTECT(3);
 #endif
@@ -1859,23 +1864,25 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    dd->gp.lty = dd->dp.lty;
 	GMode(dd, 1);
-	if (dd->gp.xlog) {
-	    x[0] = dd->gp.logusr[0];
-	    x[1] = dd->gp.logusr[1];
+	x[0] = dd->gp.usr[0];
+	x[1] = dd->gp.usr[1];
+	if (dd->gp.xlog || dd->gp.ylog) {
+		double xx[101], yy[101];
+		int i;
+		double xstep = (x[1] - x[0])/100;
+		for (i=0; i<100; i++) {
+			xx[i] = x[0] + i*xstep;
+			yy[i] = aa + xx[i] * bb;
+		}
+		xx[100] = x[1];
+		yy[100] = aa + x[1] * bb;
+		GPolyline(101, xx, yy, USER, dd);
 	}
 	else {
-	    x[0] = dd->gp.usr[0];
-	    x[1] = dd->gp.usr[1];
+		y[0] = aa + dd->gp.usr[0] * bb;
+		y[1] = aa + dd->gp.usr[1] * bb;
+		GLine(x[0], y[0], x[1], y[1], USER, dd);
 	}
-	if (dd->gp.ylog) {
-	    y[0] = aa + dd->gp.logusr[0] * bb;
-	    y[1] = aa + dd->gp.logusr[1] * bb;
-	}
-	else {
-	    y[0] = aa + dd->gp.usr[0] * bb;
-	    y[1] = aa + dd->gp.usr[1] * bb;
-	}
-	GLine(x[0], y[0], x[1], y[1], USER, dd);
 	GMode(dd, 0);
 	nlines++;
     }
@@ -1889,14 +1896,8 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		dd->gp.lty = dd->dp.lty;
 	    aa = REAL(h)[i];
 	    if (FINITE(aa)) {
-		if (dd->gp.xlog) {
-		    x[0] = dd->gp.logusr[0];
-		    x[1] = dd->gp.logusr[1];
-		}
-		else {
-		    x[0] = dd->gp.usr[0];
-		    x[1] = dd->gp.usr[1];
-		}
+		x[0] = dd->gp.usr[0];
+		x[1] = dd->gp.usr[1];
 		y[0] = aa;
 		y[1] = aa;
 		GLine(x[0], y[0], x[1], y[1], USER, dd);
@@ -1915,14 +1916,8 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		dd->gp.lty = dd->dp.lty;
 	    aa = REAL(v)[i];
 	    if (FINITE(aa)) {
-		if (dd->gp.ylog) {
-		    y[0] = dd->gp.logusr[2];
-		    y[1] = dd->gp.logusr[3];
-		}
-		else {
-		    y[0] = dd->gp.usr[2];
-		    y[1] = dd->gp.usr[3];
-		}
+		y[0] = dd->gp.usr[2];
+		y[1] = dd->gp.usr[3];
 		x[0] = aa;
 		x[1] = aa;
 		GLine(x[0], y[0], x[1], y[1], USER, dd);
@@ -1996,6 +1991,8 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     while(i < n) {
 	if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
 	    break;
+	if (dd->gp.xlog) REAL(x)[i] = pow(10, REAL(x)[i]);
+	if (dd->gp.ylog) REAL(y)[i] = pow(10, REAL(y)[i]);
 	i += 1;
     }
     GMode(dd, 0);

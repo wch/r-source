@@ -458,9 +458,12 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	dd->gp.numcols = dd->dp.numcols = ncol;
 	dd->gp.lastFigure = dd->dp.lastFigure = nrow*ncol;
 	dd->dp.mfind = dd->gp.mfind = 1;
-	dd->dp.currentFigure = (col-1)*nrow + row - 1;
+		/* currentFigure is 1-based */
+	dd->dp.currentFigure = (col-1)*nrow + row;
+	/*
 	if (dd->dp.currentFigure == 0)
 	    dd->dp.currentFigure = dd->dp.lastFigure;
+	*/
 	dd->gp.currentFigure = dd->dp.currentFigure;
 	dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
 	dd->gp.layout = dd->dp.layout = 0;
