@@ -67,6 +67,13 @@ INSTALLATION CHANGES
 	capabilities' as all builds of R have had them since 1.7.0.
 
 
+BUG FIXES
+
+    o	contrasts() turns a logical variable into a factor.  This now
+	always has levels FALSE,TRUE even if only one (or none) of
+	these occur in the variable.
+
+
 
 
 	**************************************************

@@ -10,7 +10,7 @@ contrasts(x, contrasts = TRUE)
 contrasts(x, how.many) <- value
 }
 \arguments{
-  \item{x}{a factor.}
+  \item{x}{a factor or a logical variable.}
   \item{contrasts}{logical. See Details.}
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
@@ -23,18 +23,16 @@ contrasts(x, how.many) <- value
   If contrasts are not set for a factor the default functions from
   \code{\link{options}("contrasts")} are used.
 
+  A logical vector \code{x} is converted into a two-level factor with
+  levels \code{c(FALSE, TRUE)} (regardless of which levels occur in the
+  variable).
+
   The argument \code{contrasts} is ignored if \code{x} has a matrix
-  \code{contrasts} attribute set. Otherwise if \code{contrasts = TRUE}
+  \code{contrasts} attribute set.  Otherwise if \code{contrasts = TRUE}
   it is passed to a contrasts function such as
   \code{\link{contr.treatment}} and if \code{contrasts = FALSE}
   an identity matrix is returned.
 }
-% \note{
-%   Prior to \R version 1.2.0, \code{contrasts(, FALSE)} called a
-%   contrasts function with \code{contrasts = FALSE}.  This normally gave
-%   the same result, but not for \code{\link{contr.poly}}, the default for
-%   ordered factors.
-% }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical models.}

@@ -1,7 +1,7 @@
 contrasts <-
     function (x, contrasts = TRUE)
 {
-    if (is.logical(x)) x <- factor(x)
+    if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if (!is.factor(x))
 	stop("contrasts apply only to factors")
     if(!contrasts)
@@ -21,7 +21,7 @@ contrasts <-
 "contrasts<-" <-
     function(x, how.many, value)
 {
-    if (is.logical(x)) x <- factor(x)
+    if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if(!is.factor(x))
 	stop("contrasts apply only to factors")
     if(nlevels(x) < 2)
