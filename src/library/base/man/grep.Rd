@@ -67,6 +67,8 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
   PCRE: this is detected at configure time.
 }
 \seealso{
+  \code{\link{agrep}} for approximate matching.
+  
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
   \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
