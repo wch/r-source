@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-10, @value{FAQ-YEAR}-10-24
+@set FAQ-VERSION 1.8-11, @value{FAQ-YEAR}-10-27
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -440,9 +440,9 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-10-15:
+@c Linux binaries as of 2003-10-26:
 @c
-@c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
+@c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
 @c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
@@ -1599,6 +1599,8 @@ a range of R functions to match the interface metadata structures.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
+@item HI
+Simulation from distributions supported by nested hyperplanes.
 @item Hmisc
 Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
@@ -2051,6 +2053,8 @@ Local polynomial (ridge) regression.
 @item mapdata
 Supplement to package @strong{maps}, providing the larger and/or
 higher-resolution databases.
+@item mapproj
+Map Projections: converts latitude/longitude into projected coordinates.
 @item maps
 Draw geographical maps.  Projection code and larger maps are in separate
 packages.
@@ -2114,6 +2118,8 @@ ML estimation for multivariate normal data with missing values.
 Generalization of the Shapiro-Wilk test for multivariate variables.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item ncdf
+Interface to Unidata netCDF data files.
 @item ncomplete
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
