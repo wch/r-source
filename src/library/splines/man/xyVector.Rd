@@ -1,4 +1,4 @@
-%% $Id: xyVector.Rd,v 1.1 1999/11/10 21:14:35 bates Exp $
+%% $Id: xyVector.Rd,v 1.2 1999/11/15 22:12:59 bates Exp $
 \name{xyVector}
 \title{Construct an xyVector object}
 \usage{
@@ -6,6 +6,7 @@ xyVector(x, y)
 }
 \alias{xyVector}
 \alias{asVector.xyVector}
+\alias{as.data.frame.xyVector}
 \alias{print.xyVector}
 \alias{plot.xyVector}
 \arguments{
