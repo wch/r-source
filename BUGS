@@ -612,15 +612,3 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2159 *
-Subject: The class attribute on an environment seems buggy
-From: hb@maths.lth.se
-Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
-..Not a bug, but perhaps a useful feature: should the attributes of environments
-..be copied on assignment?
-* PR# 2310 *
-Subject:  Nesting of readline input 
-From: j.c.rougier@durham.ac.uk
-Date: Tue, 19 Nov 2002 14:24:41 GMT
-..Unix-specific bug.
-..apparently fixed in R-devel now
