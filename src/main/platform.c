@@ -832,14 +832,21 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
+    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+#else
     LOGICAL(ans)[i++] = TRUE;
+#endif
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
+#ifdef Unix
+    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+#else
     LOGICAL(ans)[i++] = TRUE;
+#endif
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif

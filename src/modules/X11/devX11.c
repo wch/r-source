@@ -70,6 +70,11 @@
 #define X_BELL_VOLUME 50 /* integer between -100 and 100 for the volume 
                             of the bell in locator. */
 
+/* a colour used to represent the background on png if transparent
+   NB: must be grey as used as RGB and BGR
+*/
+#define PNG_TRANS 0xfefefe
+
 	/********************************************************/
 	/* If there are resources that are shared by all devices*/
 	/* of this type, you may wish to make them globals	*/
@@ -1110,10 +1115,16 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 
     /* Foreground and Background Colors */
 
-    xd->bg =  dd->dp.bg	 = 0xffffffff; /* R_RGB(255, 255, 255); */
+    xd->bg = dd->dp.bg = 0xffffffff; /* transparent, was R_RGB(255, 255, 255); */
     xd->fg =  dd->dp.fg	 = R_RGB(0, 0, 0);
     xd->col = dd->dp.col = xd->fg;
     xd->canvas = canvascolor;
+    if(type == JPEG & !R_OPAQUE(xd->canvas)) {
+	warning("jpeg() does not support transparency: using white bg");
+	xd->canvas = 0xffffff;
+    }
+    if(type > WINDOW) xd->bg =  dd->dp.bg = xd->canvas;
+    
 
     /* Try to create a simple window. */
     /* We want to know about exposures */
@@ -1335,7 +1346,9 @@ static void X11_NewPage(DevDesc *dd)
     if (xd->type > WINDOW) {
 	if (xd->npages++)
 	    error("attempt to draw second page on pixmap device");
-	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : xd->canvas;
+/* we want to override the default bg="transparent" */
+/*	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : xd->canvas; */
+	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg: PNG_TRANS;
 	SetColor(xd->bg, dd);
 	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
 		       xd->windowWidth, xd->windowHeight);
@@ -1437,7 +1450,7 @@ static void X11_Close(DevDesc *dd)
 	    if (xd->type == PNG) 
 		R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight, 
 			    bitgp, 0, xd->fp, 
-			    R_OPAQUE(dd->dp.bg) ? 0 : xd->canvas);
+			    R_OPAQUE(dd->dp.bg) ? 0 : PNG_TRANS);
 	    else if (xd->type == JPEG)
 		R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight, 
 			     bitgp, 0, xd->quality, xd->fp);
