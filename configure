@@ -14,7 +14,7 @@ ac_default_prefix=/usr/local
 ac_help="$ac_help
   --enable-R-profiling    attempt to compile support for Rprof() [yes]"
 ac_help="$ac_help
-  --enable-R-shlibs       build R as a shared library [no]"
+  --enable-R-shlib        build R as a shared library [no]"
 ac_help="$ac_help
   --enable-maintainer-mode
                           enable make rules and dependencies not useful
@@ -1091,12 +1091,12 @@ fi
 
 
 ## Allow the user to specify building R shared libraries.
-# Check whether --enable-R-shlibs or --disable-R-shlibs was given.
-if test "${enable_R_shlibs+set}" = set; then
-  enableval="$enable_R_shlibs"
-   want_R_shlibs="${enableval}" 
+# Check whether --enable-R-shlib or --disable-R-shlib was given.
+if test "${enable_R_shlib+set}" = set; then
+  enableval="$enable_R_shlib"
+   want_R_shlib="${enableval}" 
 else
-  want_R_shlibs=no
+  want_R_shlib=no
 fi
 
 ## FIXME:
@@ -13099,12 +13099,12 @@ eval "${ltout}"
 
 
 
-if test "${want_R_shlibs}" = yes; then
-  WANT_R_SHLIBS_TRUE=
-  WANT_R_SHLIBS_FALSE='#'
+if test "${want_R_shlib}" = yes; then
+  WANT_R_SHLIB_TRUE=
+  WANT_R_SHLIB_FALSE='#'
 else
-  WANT_R_SHLIBS_TRUE='#'
-  WANT_R_SHLIBS_FALSE=
+  WANT_R_SHLIB_TRUE='#'
+  WANT_R_SHLIB_FALSE=
 fi
 
 ## FIXME:
@@ -13470,8 +13470,8 @@ s%@R_BATCHSAVE@%$R_BATCHSAVE%g
 s%@LIBPATHS@%$LIBPATHS%g
 s%@R_LD_LIBRARY_PATH@%$R_LD_LIBRARY_PATH%g
 s%@shlibpath_var@%$shlibpath_var%g
-s%@WANT_R_SHLIBS_TRUE@%$WANT_R_SHLIBS_TRUE%g
-s%@WANT_R_SHLIBS_FALSE@%$WANT_R_SHLIBS_FALSE%g
+s%@WANT_R_SHLIB_TRUE@%$WANT_R_SHLIB_TRUE%g
+s%@WANT_R_SHLIB_FALSE@%$WANT_R_SHLIB_FALSE%g
 s%@LTLIBOBJS@%$LTLIBOBJS%g
 s%@LTALLOCA@%$LTALLOCA%g
 
@@ -13797,7 +13797,7 @@ R is now configured for ${host}
   Tcl/Tk support:            ${use_tcltk}
 
   R profiling support:       ${want_R_profiling}
-  Build R shared libraries:  ${want_R_shlibs}
+  R as a shared library:     ${want_R_shlib}
 " 1>&6
 
 if test -n "${warn_f77_and_g77}"; then
