@@ -26,7 +26,7 @@ Mathematics|arith: Basic Arithmetic and Sorting	# != S
 Mathematics|math: Mathematical Calculus etc # != S
 Mathematics|logic: Logical Operators
 Mathematics|optimize: Optimization
-Mathematics|symbolmath: `Symbolic Math', as polynomials, fractions
+Mathematics|symbolmath: "Symbolic Math", as polynomials, fractions
 Mathematics|graphs: Graphs (not graphics), i.e nodes&edges, e.g. dendrograms
 Programming: Programming, Input/Ouput, and Miscellaneous
 Programming|programming: Programming
@@ -58,13 +58,13 @@ Statistics|design: Designed Experiments
 Statistics|multivariate: Multivariate Techniques
 Statistics|ts: Time Series
 Statistics|survival: Survival Analysis
-Statistics|nonparametric: Nonparametric Statistics # w/o `smooth'
+Statistics|nonparametric: Nonparametric Statistics # w/o 'smooth'
 Statistics|smooth: Curve (and Surface) Smoothing
 Statistics|smooth|loess: Loess Objects
 Statistics|cluster: Clustering
 Statistics|survey: Complex survey samples
 Statistics|tree: Regression and Classification Trees
 MASS: MASS (the book) uses
-MASS|classif: Classification # package `class'
-MASS|neural: Neural Networks # package `nnet'
-MASS|spatial: Spatial Statistics # package `spatial'
+MASS|classif: Classification # package 'class'
+MASS|neural: Neural Networks # package 'nnet'
+MASS|spatial: Spatial Statistics # package 'spatial'
