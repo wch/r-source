@@ -29,7 +29,7 @@
 
 double dnchisq(double x, double df, double lambda, int give_log)
 {
-    const static double eps = 5e-15;
+    const double eps = 5e-15;
 
     double i, lambda2, term, sum, q, mid, dfmid, imax, errorbound;
 
