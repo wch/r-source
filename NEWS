@@ -404,6 +404,8 @@ BUG FIXES
 
     o	is.ts() was too liberal: a time series must have at least one point.
 
+    o	methods() was sorting by package, not by name.
+
 
 
 	**************************************************

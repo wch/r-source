@@ -21,7 +21,7 @@ methods <- function (generic.function, class)
 	name <- paste(".", class, "$", sep = "")
     }
     else stop("must supply generic.function or class")
-    grep(gsub("([.[])", "\\\\\\1", name), unlist(an), value = TRUE)
+    sort(grep(gsub("([.[])", "\\\\\\1", name), unlist(an), value = TRUE))
 }
 
 data.class <- function(x) {
