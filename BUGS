@@ -253,10 +253,10 @@ none
 
 Directory:  incoming
 
-* PR# 887 *
-Subject: axis(adj=anything) has no effect
+* PR# 888 *
+Subject: User defined assignment function ignores argument names
 From: jhallman@frb.gov
-Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
+Date: Fri, 30 Mar 2001 23:03:08 +0200 (MET DST)
 * PR# 877 *
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
@@ -266,6 +266,10 @@ Date: Wed, 14 Mar 2001 17:45:25 +0100
 Subject: cor(x,y) when is.null(y)
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Fri, 23 Mar 2001 11:38:05 -0800 (PST)
+* PR# 887 *
+Subject: axis(adj=anything) has no effect
+From: jhallman@frb.gov
+Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
 * PR# 886 *
 Subject: Error (?) in documentation of 'swiss' data in R base package
 From: k.j.mcconway@open.ac.uk
