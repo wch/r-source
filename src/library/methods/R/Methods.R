@@ -413,9 +413,10 @@ selectMethod <-
       ## assign the updated information to the method environment
       fEnv <- environment(fdef)
       if(exists(".SelectMethodOn", fEnv, inherits = FALSE))
-          stop(paste("Apparent loop in selectMethod for function \"",
-                     f, "\":  try resetGeneric(\"", f,
-                     "\"), or else a bug in method selection", sep=""))
+          ## we shouldn't be doing method selection on a function used in method selection!
+          ## Having name spaces for methods will prevent this happening -- until then
+          ## force a return of the original default method
+          return(finalDefaultMethod(mlist, f))
       assign(".SelectMethodOn", TRUE, fEnv)
       on.exit(rm(.SelectMethodOn, envir = fEnv))
       mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = evalArgs, useInherited = useInherited)
