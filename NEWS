@@ -53,7 +53,7 @@ DEPRECATED & DEFUNCT
     o	Direct use of R INSTALL|REMOVE|BATCH|COMPILE|SHLIB is
 	deprecated: use R CMD instead.
 
-    o   The gnome/GNOME graphics device is deprecated and will be 
+    o	The gnome/GNOME graphics device is deprecated and will be
 	removed in the next full release.
 
 
@@ -157,17 +157,19 @@ BUG FIXES
 	message; and installed.packages("mgcv") properly returns <empty>.
 
     o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
-	the two children at each node.  This fixes as.dendrogram(hh) for
+	the two children at each node.	This fixes as.dendrogram(hh) for
 	the case where hh is a "reordered" hclust object.
 
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
-    o   Copying lattice (grid) output to another device now works again
-        (PR#6915, #6947/8).  
+    o	Copying lattice (grid) output to another device now works again
+	(PR#6915, #6947/8).
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
+
+    o	jitter(x) now returns x when length(x) == 0.
 
 
 
