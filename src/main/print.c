@@ -79,11 +79,11 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
     SEXP file;
-    int  append;
+    int do_append;
 
     file = CAR(args);
-    append = asLogical(CADR(args));
-    if (append == NA_LOGICAL)
+    do_append = asLogical(CADR(args));
+    if (do_append == NA_LOGICAL)
         errorcall(call, "invalid append specification");
 
     if(isNull(file)) {
@@ -93,7 +93,7 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else {
 	if (!isString(file) || length(file) != 1)
 	    errorcall(call, "invalid file name");
-	if (append)
+	if (do_append)
 	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "a");
 	else
 	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w");
@@ -564,13 +564,11 @@ void PrintValueRec(SEXP s,SEXP env)
 static void printAttributes(SEXP s,SEXP env)
 {
     SEXP a;
-    SEXP R_LevelsSymbol;
     char *ptag;
     int i;
 
     a = ATTRIB(s);
     if (a != R_NilValue) {
-	R_LevelsSymbol = install("levels");
 	ptag = tagbuf + strlen(tagbuf);
 	i = 1;
 	while (a != R_NilValue) {

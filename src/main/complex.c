@@ -453,23 +453,23 @@ static void z_tan(Rcomplex *r, Rcomplex *z)
 
 static void z_asin(Rcomplex *r, Rcomplex *z)
 {
-    double alpha, beta, t1, t2, x, y;
+    double alpha, bet, t1, t2, x, y;
     x = z->r;
     y = z->i;
     t1 = 0.5 * hypot(x + 1, y);
     t2 = 0.5 * hypot(x - 1, y);
     alpha = t1 + t2;
-    beta = t1 - t2;
-    r->r = asin(beta);
+    bet = t1 - t2;
+    r->r = asin(bet);
     r->i = log(alpha + sqrt(alpha*alpha - 1));
 }
 
 static void z_acos(Rcomplex *r, Rcomplex *z)
 {
-    Rcomplex asin;
-    z_asin(&asin, z);
-    r->r = M_PI_2 - asin.r;
-    r->i = - asin.i;
+    Rcomplex Asin;
+    z_asin(&Asin, z);
+    r->r = M_PI_2 - Asin.r;
+    r->i = - Asin.i;
 }
 
 	/* Complex Arctangent Function */
@@ -739,7 +739,9 @@ SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP z, zr, zi, r, rr, ri;
-    int degree, fail, i, n;
+    Rboolean fail;
+    int degree, i, n;
+
     checkArity(op, args);
     z = CAR(args);
     switch(TYPEOF(z)) {

@@ -336,31 +336,31 @@ char *EncodeString(char *s, int w, int quote, int right)
     return Encodebuf;
 }
 
-char *EncodeElement(SEXP x, int index, int quote)
+char *EncodeElement(SEXP x, int indx, int quote)
 {
     int w, d, e, wi, di, ei;
 
     switch(TYPEOF(x)) {
     case LGLSXP:
-	formatLogical(&INTEGER(x)[index], 1, &w);
-	EncodeLogical(INTEGER(x)[index], w);
+	formatLogical(&INTEGER(x)[indx], 1, &w);
+	EncodeLogical(INTEGER(x)[indx], w);
 	break;
     case INTSXP:
-	formatInteger(&INTEGER(x)[index], 1, &w);
-	EncodeInteger(INTEGER(x)[index], w);
+	formatInteger(&INTEGER(x)[indx], 1, &w);
+	EncodeInteger(INTEGER(x)[indx], w);
 	break;
     case REALSXP:
-	formatReal(&REAL(x)[index], 1, &w, &d, &e);
-	EncodeReal(REAL(x)[index], w, d, e);
+	formatReal(&REAL(x)[indx], 1, &w, &d, &e);
+	EncodeReal(REAL(x)[indx], w, d, e);
 	break;
     case STRSXP:
-	formatString(&STRING_PTR(x)[index], 1, &w, quote);
-	EncodeString(CHAR(STRING_ELT(x, index)), w, quote, Rprt_adj_left);
+	formatString(&STRING_PTR(x)[indx], 1, &w, quote);
+	EncodeString(CHAR(STRING_ELT(x, indx)), w, quote, Rprt_adj_left);
 	break;
     case CPLXSXP:
-	formatComplex(&COMPLEX(x)[index], 1,
+	formatComplex(&COMPLEX(x)[indx], 1,
 		      &w, &d, &e, &wi, &di, &ei);
-	EncodeComplex(COMPLEX(x)[index],
+	EncodeComplex(COMPLEX(x)[indx],
 		      w, d, e, wi, di, ei);
 	break;
     }

@@ -217,7 +217,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig)
 void formatReal(double *x, int l, int *m, int *n, int *e)
 {
     int left, right, sleft;
-    int mnl, mxl, rt, mxsl, mxns, mF;
+    int mnl, mxl, rgt, mxsl, mxns, mF;
     int neg, sgn, kpower, nsig;
     int i, naflag, nanflag, posinf, neginf;
 
@@ -228,7 +228,7 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
     posinf = 0;
     neginf = 0;
     neg = 0;
-    rt = mxl = mxsl = mxns = INT_MIN;
+    rgt = mxl = mxsl = mxns = INT_MIN;
     mnl = INT_MAX;
 
     for (i=0; i<l; i++) {
@@ -246,11 +246,11 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 	    if (sgn) neg = 1;	 /* if any < 0, need extra space for sign */
 
 	    /* Infinite precision "F" Format : */
-	    if (right > rt) rt = right;	   /* max digits to right of . */
-	    if (left > mxl) mxl = left;	   /* max digits to  left of . */
-	    if (left < mnl) mnl = left;	   /* min digits to  left of . */
-	    if (sleft> mxsl) mxsl = sleft; /* max left including sign(s)*/
-	    if (nsig > mxns) mxns = nsig;  /* max sig digits */
+	    if (right > rgt) rgt = right;	/* max digits to right of . */
+	    if (left > mxl)  mxl = left;	/* max digits to  left of . */
+	    if (left < mnl)  mnl = left;	/* min digits to  left of . */
+	    if (sleft> mxsl) mxsl = sleft;	/* max left including sign(s)*/
+	    if (nsig > mxns) mxns = nsig;	/* max sig digits */
 	}
     }
     /* F Format (NEW):	use "F" format
@@ -263,15 +263,15 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
      * If the additional exponent digit is required *e is set to 2
      */
 
-    /*-- These	'mxsl' & 'rt'  are	used in	 F Format
-     *	 AND in the	 ____ if(.) "F" else "E" ___   below: */
+    /*-- These	'mxsl' & 'rgt'  are used in F Format
+     *	 AND in the	____ if(.) "F" else "E" ___   below: */
     if (mxl < 0) mxsl = 1 + neg;
-    /*old: if (mxl != mnl && mxl + rt > R_print.digits) rt = R_print.digits - mxl;*/
-    if (rt < 0)		rt = 0;
-    /* NO! else if (rt > R_print.digits)	rt = R_print.digits; */
-    mF = mxsl + rt + (rt != 0);	   /* width m for F  format */
+    /*old: if (mxl != mnl && mxl + rgt > R_print.digits) rgt = R_print.digits - mxl;*/
+    if (rgt < 0) rgt = 0;
+    /* NO! else if (rgt > R_print.digits) rgt = R_print.digits; */
+    mF = mxsl + rgt + (rgt != 0);	/* width m for F  format */
 
-    /*-- 'see' how	"E" Exponential format would be like : */
+    /*-- 'see' how "E" Exponential format would be like : */
     if (mxl > 100 || mnl < -99) *e = 2;/* 3 digit exponent */
     else *e = 1;
     *n = mxns - 1;
@@ -279,7 +279,7 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 
     if (mF <= *m) { /* IFF it needs less space : "F" (Fixpoint) format */
 	*e = 0;
-	*n = rt;
+	*n = rgt;
 	*m = mF;
     } /* else : "E" Exponential format -- all done above */
     if (naflag && *m < R_print.na_width)
