@@ -7,7 +7,9 @@
 core.pkgs <-
 {x <- installed.packages(file.path(R.home(), "library"));
     x[x[,"Priority"] %in% "base", "Package"]}
-core.pkgs <- core.pkgs[- match(c("methods", "tcltk"), core.pkgs)]
+## skip mle for now because strange things happen with the S3
+## generic overrides
+core.pkgs <- core.pkgs[- match(c("methods", "tcltk", "mle"), core.pkgs)]
 ## move methods to the end because it has side effects (overrides primitives)
 core.pkgs <- c(core.pkgs, "methods")
 stop.list <- vector("list", length(core.pkgs))

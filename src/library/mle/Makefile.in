@@ -1,0 +1,111 @@
+#
+# ${R_HOME}/src/library/mle/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/library/mle
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = INDEX DESCRIPTION.in Makefile.in NAMESPACE
+
+pkg = mle
+
+all: Makefile DESCRIPTION
+	@echo "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  cat `ls $(srcdir)/R/*.R` > $${f}; \
+	  $(top_srcdir)/tools/move-if-change $${f} \
+	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+# Replace with these three lines for dumping to all.rda
+#	  echo ".packageName <- \"$(pkg)\"" >  $${f}; \
+#	  cat `ls $(srcdir)/R/*.R` >> $${f}; \
+#	  $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
+	done
+	@if test -f DESCRIPTION; then \
+	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
+	  (tmp="Built: R $(VERSION); "; \
+	    if test -d $(srcdir)/src; then \
+	      tmp="$${tmp}$(R_PLATFORM)"; \
+	    fi; \
+	    tmp="$${tmp}; `date`; $(R_OSTYPE)"; \
+	    echo "$${tmp}") \
+	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
+	fi
+	@if test -d $(srcdir)/data; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
+	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
+	  done; \
+	fi
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  (f=$${TMPDIR:-/tmp}/R$$$$; \
+	    for rdfile in $(srcdir)/man/*.Rd; do \
+	      cat $${rdfile}; echo '\eof'; \
+	    done >> $${f}; \
+	    $(top_srcdir)/tools/move-if-change $${f} \
+	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
+	fi
+	@if test -d src; then \
+	  (cd src && $(MAKE)) || exit 1; \
+	fi
+# enable the following line to use dumped R code
+#	@$(MAKE) Rfiles
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
+  $(top_builddir)/library/$(pkg)/R/all.rda
+
+$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
+	@cp $(srcdir)/install.R $@
+
+$(top_builddir)/library/$(pkg)/R/all.rda: all.R
+	@echo "dumping R code in package '$(pkg)'"
+	@if test -f $(srcdir)/NAMESPACE; then \
+	  $(INSTALL_DATA) all.R  $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
+	  cd $(top_builddir)/library/$(pkg); \
+	  echo "loadNamespace(\"$(pkg)\")"  | R_DEFAULT_PACKAGES=NULL ../../bin/R --vanilla --slave; \
+	  $(INSTALL_DATA) ../../share/R/nsrdaload.R  ../../library/$(pkg)/R/$(pkg) ; \
+	else R_DEFAULT_PACKAGES=NULL $(top_builddir)/bin/R --vanilla --slave < all.R ; \
+	  $(INSTALL_DATA) $(top_builddir)/share/R/firstlib.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then rm $(top_builddir)/library/$(pkg)/NAMESPACE; fi; \
+	  fi
+
+mostlyclean: clean
+clean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R
+distclean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f Makefile DESCRIPTION
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in R data demo exec inst man src; do \
+	  if test -d $(srcdir)/$${d}; then \
+	    ((cd $(srcdir); \
+	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	        | (cd $(distdir); $(TAR) -x -f -)) \
+	      || exit 1; \
+	  fi; \
+	done

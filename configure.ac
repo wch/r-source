@@ -1353,6 +1353,8 @@ AC_CONFIG_FILES(
   src/library/methods/DESCRIPTION
   src/library/methods/Makefile
   src/library/methods/src/Makefile
+  src/library/mle/DESCRIPTION
+  src/library/mle/Makefile
   src/library/modreg/DESCRIPTION
   src/library/modreg/Makefile
   src/library/modreg/src/Makefile

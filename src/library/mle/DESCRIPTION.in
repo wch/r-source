@@ -1,0 +1,8 @@
+Package: mle
+Title: Maximum likelihood estimation
+Version: @VERSION@
+Priority: base
+Author: Peter Dalgaard
+Description: Generic (smooth) likelihood maximization and profiling
+Maintainer: R Core Team <R-core@r-project.org>
+License: GPL
