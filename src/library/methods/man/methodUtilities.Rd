@@ -1,0 +1,75 @@
+\name{methodUtilities}
+\alias{functionBody}
+\alias{allNames}
+\alias{getFunction}
+\alias{el}
+\alias{elNamed}
+\alias{formalArgs}
+\alias{existsFunction}
+\alias{findFunction}
+\alias{Quote}
+\alias{message}
+\title{Utility Functions for Methods and S-Plus Compatibility}
+\usage{
+functionBody(fun=sys.function(sys.parent()))
+
+allNames(x)
+
+getFunction(name, generic=T, mustFind=T, where)
+existsFunction(name, generic=TRUE, where)
+findFunction(name, generic=TRUE)
+
+el(object, where)
+
+elNamed(x, name, mustFind=F)
+
+formalArgs(def)
+
+Quote()
+
+message(...)
+
+warning(...)
+
+}
+\description{
+These are utilities, currently in the methods package, that either
+provide some functionality needed by the package (e.g., element
+matching by name), or add compatibility with S-Plus, or both.
+
+\describe{
+  \item{\code{allNames}:}{ 
+  the character vector of names (unlike names(), never returns NULL)
+}
+  
+  \item{\code{getFunction}:}{ 
+  find the object as a function.
+}
+  
+  \item{\code{elNamed}:}{ 
+  get the element of the vector corresponding to name.  Unlike the
+  \code{[}, \code{[[}, and \code{$} operators, this function requires %]}}$
+  \code{name} to match the element name exactly (no partial matching).
+  }
+  \item{\code{formalArgs}:}{ 
+  Returns the names of the formal arguments of this function.
+}
+  
+  \item{\code{existsFunction}:}{ 
+  Is there a function of this name? If \code{generic==FALSE}, generic functions are not counted.
+}
+  
+  \item{\code{findFunction}:}{ 
+  return all the indices of the search list on which a function
+definition for \code{name} exists.  
+
+  If \code{generic} is \code{FALSE}, ignore generic
+functions.
+  }
+  \item{\code{message}:}{ 
+  output all the arguments, pasted together with no intervening spaces.
+}
+}
+}
+
+\keyword{programming}
