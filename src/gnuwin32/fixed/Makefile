@@ -40,6 +40,8 @@ fixh: version h/config.h ../FFDecl.h ../FFTab.h \
 	sh ../../../tools/GV > $@
 	$(RM) ../../../tools/GV
 
+# some headers have log1p, but end user's set may not have.
+# so assume not.
 ../../include/Rmath.h: ../../include/Rmath.h.in
 	$(SED) -e /@RMATH_HAVE_LOG1P@/d  -e /@RMATH_HAVE_EXPM1@/d $< > $@
 

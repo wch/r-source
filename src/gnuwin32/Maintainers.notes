@@ -5,11 +5,11 @@ Notes for Windows Maintainers
 achieved by overrides in the configure script.
 
 You will need a few more tools (ln, pwd, tr, ...), and I put a cygwin
-toolchain at the end of my path.  Then with the R sources in
-/R/rw1050, I used in /TEMP/R (any other directory will do, except the
-sources)
+toolchain at the end of my path.  (You do need /bin/sh, which cygwin
+might mount for you.)  Then with the R sources in /R/rw1060, I used in
+/TEMP/R (any other directory will do, except the sources)
 
-/R/rw1050/configure --build=i386-pc-mingw32
+/R/rw1060/configure --build=i386-pc-mingw32
 
 This ran fairly slowly, producing a src/include/config.h that differs only
 

@@ -203,7 +203,9 @@
 #define HAVE_LOCALE_H 1
 
 /* Define to 1 if you have the `log1p' function. */
-/* #undef HAVE_LOG1P */
+#if __MINGW32_MAJOR_VERSION >= 2
+#define HAVE_LOG1P 1
+#endif
 
 /* Define to 1 if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */

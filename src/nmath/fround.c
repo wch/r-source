@@ -38,7 +38,12 @@
 #ifdef WIN32
 /* earlier Windows headers did not include rint */
 #if __MINGW32_MAJOR_VERSION < 2
-#define USE_BUILTIN_RINT
+static __inline__ double rint (double x)
+{
+    double retval;
+    __asm__ ("frndint;": "=t" (retval) : "0" (x));
+    return retval;
+}
 #endif
 #endif
 
