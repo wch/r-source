@@ -35,7 +35,7 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
     \item{time series:}{the x values are taken to be
       \code{\link{time}(x)} and the y values to be the time series.}
 
-    \item{matrix with two columns:} the first is assumed to contain the
+    \item{matrix with two columns:}{the first is assumed to contain the
       x values and the second the y values.}
   }
   In any other case, the \code{x}argument is coerced to a vector and
