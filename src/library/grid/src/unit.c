@@ -1507,11 +1507,19 @@ SEXP validUnits(SEXP units)
 {
     int i;
     int n = LENGTH(units);
-    SEXP answer;
-    PROTECT(answer = allocVector(INTSXP, n));
-    for (i = 0; i<n; i++) 
-	INTEGER(answer)[i] = convertUnit(units, i);
-    UNPROTECT(1);
+    SEXP answer = R_NilValue;
+    if (n > 0) {
+	if (isString(units)) {
+	    PROTECT(answer = allocVector(INTSXP, n));
+	    for (i = 0; i<n; i++) 
+		INTEGER(answer)[i] = convertUnit(units, i);
+	    UNPROTECT(1);
+	} else {
+	    error("Units must be character");
+	}
+    } else {
+	error("Units must be of length > 0");
+    }
     return answer;
 }
     

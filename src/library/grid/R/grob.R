@@ -36,6 +36,9 @@ get.value.default <- function(x, child.specs=NULL) {
 }
 
 get.value.grob <- function(x, child.specs=NULL) {
+  # Remove check when have NAMESPACE (?)
+  if (!is.grob(x))
+    stop("Cannot get value of non-grob")
   result <- .Call("L_GetSEXPPtr", x[[1]], PACKAGE="grid")
   if (length(child.specs) > 0) 
     result <- get.value(result[[child.specs[[1]]]],
@@ -70,12 +73,6 @@ grid.set <- function(grob, ...) {
   if (nargs == 0)
     stop("No list.struct value specified")
   set.value.grob(grob, args[-nargs], args[[nargs]])
-}
-
-copy <- function(grob) {
-  grob2 <- get.value.grob(grob)
-  cl <- class(grob)
-  grid.grob(grob2, cl[length(cl) - 1])
 }
 
 # Use this function to produce a list of new.values for grid.edit()
