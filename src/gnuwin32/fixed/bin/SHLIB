@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000, 2001 R Development Core Team
+# Copyright (C) 2000-2005 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -70,9 +70,9 @@ my $cxx=join(" ", @cxxsrcs);
 my $makefiles = "-f $R_HOME/src/gnuwin32/MakeDll";
 ## Rcmd.exe ensures HOME is set
 if (-r "$HOME/.R/Makevars.win32") {
-    makefiles="$makefiles -f \"$HOME/.R/Makevars.win\"";
+    $makefiles="$makefiles -f \"$HOME/.R/Makevars.win\"";
 } elsif (-r "$HOME/.R/Makevars") {
-    makefiles="$makefiles -f \"$HOME/.R/Makevars\"";
+    $makefiles="$makefiles -f \"$HOME/.R/Makevars\"";
 }
 
 system("make -$makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' CFSOURCES='$srcs' CXXSOURCES='$cxx' RCOBJ=");
