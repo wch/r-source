@@ -61,7 +61,10 @@ Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 
 Directory:  Documentation
 
-none
+* PR# 801 *
+Subject: pos.to.env and sys.xxx documentation
+From: pperkins@ucsd.edu
+Date: Tue, 2 Jan 2001 21:14:31 +0100 (MET)
 
 Directory:  Graphics
 
@@ -69,10 +72,6 @@ Directory:  Graphics
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
 Date: Fri, 22 Dec 2000 10:59:26 +0100
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -80,31 +79,34 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 726 *
-Subject: par(las=.)  gives wrong "adj" for mtext()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 7 Nov 2000 13:03:58 +0100
 * PR# 693 *
 Subject:  Bug report
 From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
 Date: Thu, 12 Oct 2000 14:08:31 +1100
 --grid problem: note a report on 0.90.1 and nothing to reproduce this
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
-* PR# 764 *
-Subject: qqline
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Mon, 11 Dec 2000 18:06:27 -0500
---changed for 1.2.0 already, perhaps not what was desired
 * PR# 750 *
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 726 *
+Subject: par(las=.)  gives wrong "adj" for mtext()
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 7 Nov 2000 13:03:58 +0100
 
 Directory:  In-Out
 
+* PR# 802 *
+Subject: crash with scan(..., what=list(,,))
+From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
+Date: Fri, 05 Jan 2001 17:10:42 +0100
 * PR# 649 *
 Subject: Unable to read.table with > 256? columns
 From: r@marksmucker.com
@@ -270,31 +272,4 @@ Date: Thu, 28 Dec 2000 17:54:47 +0100
 
 Directory:  incoming
 
-* PR# 803 *
-Subject: pairs(NxK_Matrix,panel=qqplot)
-From: mvondavier@ets.org
-Date: Fri, 5 Jan 2001 21:23:03 +0100 (MET)
-* PR# 797 *
-Subject: editor in Windows doesn't like a data frame with row names
-From: John Fox <jfox@mcmaster.ca>
-Date: Sat, 30 Dec 2000 18:17:33 -0500
-* PR# 799 *
-Subject: minor problems (if problems at all): <ESC> in RGui; finding some 
-From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
-Date: Tue, 2 Jan 2001 14:20:55 +0100 
-* PR# 798 *
-Subject: Re: [Rd] editor in Windows doesn't like a data frame with row names
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 31 Dec 2000 07:54:47 +0000 (GMT)
-* PR# 802 *
-Subject: crash with scan(..., what=list(,,))
-From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
-Date: Fri, 05 Jan 2001 17:10:42 +0100
-* PR# 801 *
-Subject: pos.to.env and sys.xxx documentation
-From: pperkins@ucsd.edu
-Date: Tue, 2 Jan 2001 21:14:31 +0100 (MET)
-* PR# 800 *
-Subject: Re: [Rd] minor problems (if problems at all): <ESC> in RGui; finding
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 2 Jan 2001 15:35:24 +0000 (GMT)
+none
