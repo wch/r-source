@@ -73,7 +73,7 @@ while test -n "${1}"; do
     *)
       if test -f "${1}"; then
         mkdir -p ${TMPDIR}
-	PKGNAME=$(basename "${1}")
+	PKGNAME=`basename "${1}"`
 	PKGNAME=`echo -n "${PKGNAME}" | sed 's/_.*//'`
 	gzip -dc "${1}" | (cd ${TMPDIR} && tar -xf -)
 	if test -d "${TMPDIR}/${PKGNAME}"; then
