@@ -1438,7 +1438,6 @@ static int SkipSpace(void)
 static int SkipComment(void)
 {
     char *p;
-    SEXP f;
     int c;
     p = yytext;
     *p++ = '#';

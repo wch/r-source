@@ -215,15 +215,15 @@ static void SetSize(int vsize, int nsize)
 	vsize *= Mega;
     }
     if(vsize < Min_Vsize || vsize > Max_Vsize) {
-	sprintf(msg, "WARNING: invalid v(ector heap)size '%d' ignored\n"
+	sprintf(msg, "WARNING: invalid v(ector heap)size `%d' ignored\n"
 		 "using default = %gM\n", vsize, R_VSIZE / Mega);
 	R_ShowMessage(msg);
 	R_VSize = R_VSIZE;
     } else
 	R_VSize = vsize;
     if(nsize < Min_Nsize || nsize > Max_Nsize) {
-	sprintf(msg, "WARNING: invalid language heap (n)size '%d' ignored,"
-		 " using default = %d\n", nsize, R_NSIZE);
+	sprintf(msg, "WARNING: invalid language heap (n)size `%d' ignored,"
+		 " using default = %ld\n", nsize, R_NSIZE);
 	R_ShowMessage(msg);
 	R_NSize = R_NSIZE;
     } else
@@ -251,14 +251,16 @@ void R_SetParams(Rstart Rp)
 
 /* Remove and process common command-line arguments */
 
+/* FIXME: not used?
 static void R_common_badargs() {
     R_ShowMessage("invalid argument passed to R\n");
     exit(1);
 }
+*/
 
 void R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
-    int ac = *pac, newac = 1; /* argv[0] is process name */
+    int ac = *pac, newac = 1;	/* argv[0] is process name */
     int ierr;
     long value;
     char *p, **av = argv, msg[1024];
@@ -337,7 +339,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --vsize value is invalid: ignored\n");
 		    else
-			sprintf(msg, "WARNING: --vsize %ld'%c': too large and ignored\n", 
+			sprintf(msg, "WARNING: --vsize %ld`%c': too large and ignored\n", 
 				value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
 		    R_ShowMessage(msg);
@@ -362,7 +364,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --vsize value is invalid: ignored\n");
 		    else
-		    sprintf(msg, "WARNING: --nsize %ld'%c': too large and ignored\n", 
+		    sprintf(msg, "WARNING: --nsize %ld`%c': too large and ignored\n", 
 			    value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(msg);
