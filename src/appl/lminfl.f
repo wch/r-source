@@ -67,7 +67,7 @@ c   `docoef' option added Feb 17, 2003;  Martin Maechler ETH Zurich.
 
       subroutine lminfl(x, ldx, n, k, docoef, qraux, resid,
      +     hat, coef, sigma)
-      integer ldx, n, k
+      integer ldx, n, k, docoef
       double precision x(ldx,k), qraux(k), resid(n),
      +     hat(n), coef(n,k), sigma(n)
 c   coef(.,.) can be dummy(1) when docoef is 0(false)
