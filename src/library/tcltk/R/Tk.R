@@ -15,9 +15,13 @@
     ## everything else is converted to strings
     val2string <- function(x) {
         if (is.null(x)) return("")
-        if (is.function(x)) return(.Tcl.callback(x))
-        if (is.tkwin(x)) return (.Tk.ID(x))
-        if (x != "") paste("{", x, "}", sep="", collapse=" ")
+        if (is.tkwin(x)){current.win <<- x ; return (.Tk.ID(x))}
+        if (is.function(x)){
+            callback <- .Tcl.callback(x)
+            assign(callback, .Alias(x), envir=current.win)
+            return(callback)
+        }
+        paste("{", x, "}", sep="", collapse=" ")
     }
 
     val <- list(...)
@@ -28,6 +32,18 @@
         rep("", length(val))
     else
         sapply(nm, name2opt)
+
+    ## This is a bit dodgy: we need to ensure that callbacks don't get
+    ## garbage collected, so we try registering them with the relevant
+    ## window, which is assumed to be the last preceding window
+    ## argument during val2string processing if one occurs, or the
+    ## "win" variable of the caller (tkwidget calls) or as a last
+    ## resort .TkRoot. What a mess!
+
+    current.win <-
+        if (exists("win", envir=parent.frame()))
+            get("win", envir=parent.frame())
+        else .TkRoot
 
     val <- sapply(val, val2string)
     paste(as.vector(rbind(nm, val)), collapse=" ")
