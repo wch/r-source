@@ -621,3 +621,25 @@ Date: Wed, 18 Sep 2002 15:12:28 -0500
 Subject: contrasts in lm~-1+(numeric.variable)/(factor)
 From: hosking@watson.ibm.com
 Date: Wed, 18 Sep 2002 23:06:12 +0200 (MET DST)
+* PR# 2038 *
+Subject: savehistory directories and quitting R
+From: Mark.Bravington@csiro.au
+Date: Thu, 19 Sep 2002 14:53:25 +1000
+* PR# 2039 *
+Subject: Cellspacing
+From: krypton8 <krypton8@pacbell.net>
+Date: Thu, 19 Sep 2002 08:03:29 +0100
+* PR# 2040 *
+Subject: Undeliverable mail--"onmouseout"
+Subject: onmouseout<br>
+From: postmaster <postmaster@r-project.org>
+From: r-bugs@r-project.org<br>
+Date: Thu, 19 Sep 2002 08:06:23 +0100
+* PR# 2041 *
+Subject: [광고] 한번에 찾으세요! 성인/검색/커뮤니티/자료/은행/카드 ... 
+From: Goodsite<opencgi@langoo.com>
+Date: Thu, 19 Sep 2002 20:25:57 -0600
+* PR# 2042 *
+Subject: install.packages() together with pixmap package
+From: w.huber@dkfz.de
+Date: Thu, 19 Sep 2002 18:26:55 +0200 (MET DST)
