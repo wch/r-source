@@ -324,3 +324,15 @@ Date: Wed, 3 Nov 1999 10:05:26 +1300 (NZDT)
 Subject: arima0()
 From: hammour@msn.com
 Date: Sun, 7 Nov 1999 17:56:46 +0100 (MET)
+* PR# 315 *
+Subject: R.bug.report
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Tue, 9 Nov 1999 20:27:06 -0500 (EST)
+* PR# 316 *
+Subject: data.frame, cbind is inconsistent with S on logicals
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 10 Nov 1999 10:39:01 +0000 (GMT)
+* PR# 317 *
+Subject: plot() bugs
+From: wsi@gcal.ac.uk
+Date: Wed, 10 Nov 1999 14:19:25 +0100 (MET)
