@@ -64,23 +64,40 @@ print.isList <- function(r, ...)
     } else NextMethod("print", ...)
 }
 
-cmp.logical <- function(log.v)
+cmp.logical <- function(log.v, empty.dimnames= 2)
 {
     ## Purpose: compact printing of logicals
     ## -------------------------------------------------------------------------
     ## Arguments: log.v : logical vector
     ## -------------------------------------------------------------------------
-    ## Author: Martin Maechler, Date: 13 Dec 96, 16:28
+    ## Author: Martin Maechler, Date: 13 Dec 1996, Sept 98.
     if(!is.logical(log.v)) {
-	warning("coercing argument 'log.v' to logical")
+	warning("coercing argument to logical")
 	mode(log.v) <- "logical"
     }
-    structure(if(length(log.v) == 0) "()" else c(".","|")[ 1+ log.v],
-              dim = dim(log.v),
-              dimnames = if(is.array(log.v) && !is.null(n <- dimnames(log.v)))
-                lapply(n, abbreviate, minlength=1),
-              names = if(!is.null(n <- names(log.v))) abbreviate(n,minlength=1),
-	      class = "noquote")
+    r <- if((lv <- length(log.v))) c(".","|")[ 1+ log.v] else  "()"
+    if(is.array(log.v)) {
+        dim(r) <- d <- dim(log.v)
+        rk <- length(d)
+        do.empty <- is.logical(empty.dimnames)
+        if(do.empty) {
+            do.empty <- empty.dimnames
+            empty.dimnames <- if(do.empty) 1:rk else integer(0)
+        }
+        dimnames(r) <-
+            if(!do.empty && !is.null(n <- dimnames(log.v)))
+                lapply(n, abbreviate, minlength=1)
+            else if(length(empty.dimnames)) {
+                n <- vector(mode="list", rk)
+                for(i in empty.dimnames)
+                    n[[i]] <- rep("", d[i])
+                n
+            }
+    } else if(lv && !is.null(n <- names(log.v)))
+        names(r) <- abbreviate(n,minlength=1)
+
+    class(r) <- "noquote"
+    r
 }
 
 
