@@ -74,8 +74,8 @@ FILE *R_OpenSiteFile(void)
     if (LoadSiteFile) {
 	if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
 	    return fp;
-/*	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
-	return fp; */
+	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
+	    return fp;
 	sprintf(buf, "%s/etc/Rprofile", R_Home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
@@ -392,7 +392,6 @@ SEXP do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
  return(vals);
 }
 
-
 void R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
     int ac = *pac, newac = 1;	/* argv[0] is process name */
@@ -462,7 +461,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		R_ShowMessage("ERROR: option `-v' is defunct.  Use `--vsize' instead.\n");
 		exit(1);
 	    }
-	    else if(strcmp(*av, "--vsize") > 0) {
+	    else if(strncmp(*av, "--vsize", 7) == 0) {
 		if(strlen(*av) < 9) {
 		    R_ShowMessage("WARNING: use `--vsize=V' rather than `--vsize V'.\n");
 		    ac--; av++; p = *av;
@@ -478,7 +477,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --vsize value is invalid: ignored\n");
 		    else
-			sprintf(msg, "WARNING: --vsize %ld`%c': too large and ignored\n",
+			sprintf(msg, "WARNING: --vsize=%ld`%c': too large and ignored\n",
 				value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
 		    R_ShowMessage(msg);
@@ -490,7 +489,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		R_ShowMessage("ERROR: option `-n' is defunct.  Use `--nsize' instead.\n");
 		exit(1);
 	    }
-	    else if(strcmp(*av, "--nsize") > 0) {
+	    else if(strncmp(*av, "--nsize", 7) == 0) {
 		if(strlen(*av) < 9) {
 		    R_ShowMessage("WARNING: use `--nsize=V' rather than `--nsize V'.\n");
 		    ac--; av++; p = *av;
@@ -506,7 +505,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --nsize value is invalid: ignored\n");
 		    else
-		    sprintf(msg, "WARNING: --nsize %ld`%c': too large and ignored\n",
+		    sprintf(msg, "WARNING: --nsize=%ld`%c': too large and ignored\n",
 			    value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(msg);
