@@ -119,7 +119,7 @@ plot.hclust <-
     if (frame.plot) 
         box(...)
     if (ann) {
-        if(is.null(sub) && !is.null(cl <- tree$call))
+        if(!is.null(cl <- tree$call) && is.null(sub))
             sub <- paste(deparse(cl[[1]])," (*, \"", tree$method,"\")",sep="")
         if(is.null(xlab) && !is.null(cl))
             xlab <- deparse(cl[[2]])
