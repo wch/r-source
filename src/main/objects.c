@@ -856,13 +856,55 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val) {
   return old;
 }
 
+static SEXP dispatchNonGeneric(SEXP name, SEXP env) {
+  /* dispatch the non-generic definition of `name'.  Used to trap
+     calls to standardGeneric during the loading of the methods package */
+  SEXP e, value, rho, fun, symbol, dot_Generic;
+  RCNTXT *cptr;
+  /* find a non-generic function */
+  symbol = install(CHAR(asChar(name)));
+  dot_Generic = install(".Generic");
+  for(rho = ENCLOS(env); rho != R_NilValue && isEnvironment(rho);rho = ENCLOS(rho)) {
+    fun = findVarInFrame(rho, symbol);
+    if(fun == R_UnboundValue) continue;
+    switch(TYPEOF(fun)) {
+    case BUILTINSXP:  case SPECIALSXP: break;
+    case CLOSXP:
+      value = findVarInFrame(CLOENV(fun), dot_Generic);
+      if(value == R_UnboundValue) break;
+      /*in all other cases, go on to the parent environment */
+    }
+    fun = R_UnboundValue;
+  }
+  fun = SYMVALUE(symbol);
+  if(fun == R_UnboundValue)
+    error("Unable to find a non-generic version of function \"%s\"", CHAR(asChar(name)));
+  cptr = R_GlobalContext;
+  /* check this is the right context */
+    while (cptr != R_ToplevelContext) {
+	if (cptr->callflag & CTXT_FUNCTION )
+	    if (cptr->cloenv == env)
+		break;
+	cptr = cptr->nextcontext;
+    }
+  
+  PROTECT(e = duplicate(R_syscall(0, cptr)));
+  SETCAR(e, fun);
+  /* evaluate a call the non-generic with the same arguments and from
+     the same environment as the call to the generic version */
+  value = eval(e, cptr->sysparent);
+  UNPROTECT(1);
+  return value;
+}
+
 static void load_methods_package()
 {
   SEXP e;
+  R_set_standardGeneric_ptr(dispatchNonGeneric);
   PROTECT(e = allocVector(LANGSXP, 2));
   SETCAR(e, install("library"));
   SETCAR(CDR(e), install("methods"));
-  eval(e, R_NilValue);
+  eval(e, R_GlobalEnv);
   UNPROTECT(1);
 }
 
@@ -870,11 +912,13 @@ SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   SEXP arg, value; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
   if(!ptr) {
-    warning("standardGeneric called before the methods package has been attached (library(methods) will be evaluated now)");
-    load_methods_package();
+    warning("standardGeneric called before the methods package has been attached (will be ignored)");
+    R_set_standardGeneric_ptr(dispatchNonGeneric);
+    /*    load_methods_package(); */
     ptr = R_get_standardGeneric_ptr();
-    if(!ptr)
-      error("Something went wrong:  the internal pointer for standardGeneric was not set");
+    /* if(!ptr || ptr == dispatchNonGeneric)
+      error("Something went wrong:  the internal pointer for
+      standardGeneric was not set"); */
   }
   checkArity(op, args);
 

@@ -61,12 +61,16 @@ isGeneric <-
       return(FALSE)
     }
     env <- environment(fdef)
-    if(!exists(".Generic", envir=env))
+    ## catch  functions w/o special environments & non-closures
+    ## (necessary in case someone put a .Generic into the global environment)
+    if(identical(env, .GlobalEnv) || is.null(env))
+      return(FALSE)
+    if(!exists(".Generic", envir=env, inherits = FALSE))
         return(FALSE)
     gen <- get(".Generic", envir=env)
     if(getName)
         return(gen)
-    else if(gen == f)
+    else if(missing(f) || identical(gen, f))
         return(TRUE)
     else {
         warning(paste("Function \"", f, "\" appears to be a Generic function, but with generic name \"", gen, "\""))

@@ -17,7 +17,7 @@ allNames <-
 getFunction <-
   ## find the object as a function.
   function(name, generic = TRUE, mustFind = TRUE,
-           where = find(name, mode = "function", numeric=TRUE))
+           where = 1:length(search()))
 {
     isGenericFunction <- function(obj) exists(".Generic", envir = environment(obj), inherits=FALSE)
     found <- FALSE
@@ -25,9 +25,9 @@ getFunction <-
     ## loop will generate an error.
     if(is.environment(where)) where <- list(where)
     for(i in where)
-        if(exists(name, i, mode = "function", inherits = FALSE)) {
+        if(exists(name, i, inherits = FALSE)) {
             f <- get(name, i)
-            if(generic || !isGenericFunction(f)) {
+            if(is.function(f) && (generic || !isGenericFunction(f))) {
                 found <- TRUE
                 break
             }
