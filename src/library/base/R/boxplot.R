@@ -123,8 +123,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
                          lty = "dashed", col = border)
                 segments(stats[c(1, 5)], rep(x - wid/2, 2), stats[c(1, 5)],
                          rep(x + wid/2, 2), col = border)
-                points(out, rep(x, length(out)), col = border)
-
+                do.call("points",c(list(out, rep(x, length(out))), pt.pars))
             }
             else { ## vertical
 
@@ -146,7 +145,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
                          stats[c(2,4)], lty="dashed",col=border)
                 segments(rep(x-wid/2,2),stats[c(1,5)],rep(x+wid/2,2),
                          stats[c(1,5)],col=border)
-                points(rep(x,length(out)), out, col=border)
+                do.call("points",c(list(rep(x,length(out)), out), pt.pars))
             }
 	    if(any(inf <- !is.finite(out))) {
 		## FIXME: should MARK on plot !! (S-plus doesn't either)
@@ -177,6 +176,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	ylim <- pars$ylim
 	pars$ylim <- NULL
     }
+
     width <-
 	if(!is.null(width)) {
 	    if(length(width) != n | any(is.na(width)) | any(width <= 0))
@@ -189,6 +189,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 
     if(missing(border) || length(border)==0)
 	border <- par("fg")
+    pt.pars <- c(pars[names(pars) %in% c("pch", "cex", "bg")], col = border)
 
     if (!add) {
     	plot.new()

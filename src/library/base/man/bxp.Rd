@@ -56,13 +56,14 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
   box centers, useful for adding to the plot.
 }
 \examples{
+set.seed(314)
 str(bx.p <- boxplot(split(rnorm(100), gl(5,20))))
 op <- par(mfrow= c(2,2))
 bxp(bx.p, xaxt = "n")
-bxp(bx.p, notch = TRUE, axes = FALSE)
-bxp(bx.p, notch = TRUE, col= 'lightblue', frame = FALSE)
-bxp(bx.p, notch = TRUE, col= 'lightblue', border='red',
-    log = "x", ylim = c(-1,4), main = "bxp(*, log='x', ylim=*)")
+bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4)
+bxp(bx.p, notch = TRUE, col= "lightblue", frame = FALSE)
+bxp(bx.p, notch = TRUE, col= "lightblue", border="red", ylim = c(-1,4),
+    pch = 22, bg = "green", log = "x", main = "bxp(*, log='x', ylim=*)")
 par(op)
 op <- par(mfrow= c(1,2))
 data(PlantGrowth)
