@@ -187,16 +187,21 @@ if($opt_latex) {
 foreach my $pkg (@ARGV) {
     ## $pkg should be the path to the package (bundle) root source
     ## directory, either absolute or relative to $startdir.
+    ## As from 2.1.0 it can also be a tarball
+
     ## $pkgdir is the corresponding absolute path.
     ## $pkgname is the name of the package (bundle).
     chdir($startdir);
-    $pkg =~ s/\/$//;
-    (-d $pkg) or die "Error: package dir '$pkg' does not exist\n";
-    chdir($pkg)
-	or die "Error: cannot change to directory '$pkg'\n";
-    my $pkgdir = R_cwd();
-    my $pkgname = basename($pkgdir);
-    chdir($startdir);
+    my $pkgname = basename($pkg);
+
+    ## is this a tar archive?
+    my $istar = 0;
+    if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
+	$pkgname =~ s/\.tar\.gz$//;
+	$pkgname =~ s/\.tgz$//;
+	$pkgname =~ s/_[0-9\.-]*$//;
+	$istar = 1;
+    }
 
     my $pkgoutdir = &file_path($outdir, "$pkgname.Rcheck");
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
@@ -205,8 +210,30 @@ foreach my $pkg (@ARGV) {
 	  or die("Error: cannot create directory '$pkgoutdir'\n");
     }
 
+    if($istar) {
+	my $dir = "$pkgoutdir/00_pkg_src";
+	mkdir($dir, 755);
+	if($WINDOWS) {
+	    ## workaround for paths in Cygwin tar
+	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
+	}
+	if(system("tar -zxf '$pkg' -C $dir")) {
+	    die "Error: cannot untar the package\n";}
+	$pkg = $dir."/".$pkgname;
+    }
+
+    $pkg =~ s/\/$//;
+    (-d $pkg) or die "Error: package dir '$pkg' does not exist\n";
+    chdir($pkg)
+	or die "Error: cannot change to directory '$pkg'\n";
+    my $pkgdir = R_cwd();
+#    my $pkgname = basename($pkgdir);
+    chdir($startdir);
+
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
     $log->message("using log directory '$pkgoutdir'");
+    my @out = R_runR("cat(R.version.string, '\n', sep='')", "--slave");
+    $log->message("using @out");
 
     if(!$opt_library) {
 	$library = $pkgoutdir;
@@ -248,6 +275,7 @@ foreach my $pkg (@ARGV) {
 	    $log->result("NO");
 	    exit(1);
 	}
+	$log->message("this is package '$description->{\"Package\"}' version '$description->{\"Version\"}'");
 	## <NOTE>
 	## This check should be adequate, but would not catch a manually
 	## installed package, nor one installed prior to 1.4.0.

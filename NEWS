@@ -60,6 +60,9 @@ NEW FEATURES
 	a package from the first repository on the list in which it is
 	found.
 
+     	New function new.packages() to report uninstalled packages
+	available at the requested repositories.
+
     o	New argument 'immediate.' to warning() to send an immediate
 	warning.
 
@@ -73,8 +76,8 @@ NEW FEATURES
 	should be deleted: they will be deleted at the end of the
 	session anyway (and can be deleted by the user at any time).
 
-    o	New function new.packages() to report uninstalled packages
-	available at the requested repositories.
+    o	R CMD check will now work is a source tarball and prints out
+	information about the version of R and the package.
 
 
 UTILITIES
