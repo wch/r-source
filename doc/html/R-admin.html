@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-04-12).
+   <p>The current version of this document is 2.0.0 (2004-04-17).
 
    ISBN 3-900051-02-X
 
@@ -322,7 +322,7 @@ work.
    <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-   <p>The simplest way is to use <code>rw1090.exe</code> or
+   <p>The simplest way is to use <code>rw2000dev.exe</code> or
 <code>miniR.exe</code>.  Just double-click on the icon and follow the
 instructions.  If you installed R this way you can uninstall it from the
 Control Panel.
@@ -343,8 +343,8 @@ that a <code>samba</code>-mounted file system (which maps all file names to
 lower case) did not work.  Open a commands window at a directory <em>whose
 path does not contain spaces</em>, and run something like
 
-<pre class="smallexample">     tar zxvf R-1.9.0.tgz
-     cd R-1.9.0\src\gnuwin32
+<pre class="smallexample">     tar zxvf R-2.0.0.tgz
+     cd R-2.0.0\src\gnuwin32
      make
      </pre>
 
@@ -377,8 +377,8 @@ mentioned <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for 
 as explained in the document. Than you have to expand the R sources and
 configure R appropriately, for example
 
-<pre class="smallexample">     tar zxvf R-1.9.0.tgz
-     cd R-1.9.0
+<pre class="smallexample">     tar zxvf R-2.0.0.tgz
+     cd R-2.0.0
      ./configure --with-blas='-framework vecLib' --with-lapack --with-aqua
      make
      </pre>

@@ -1392,36 +1392,20 @@ AC_CONFIG_FILES(
   src/library/Makefile
   src/library/base/DESCRIPTION
   src/library/base/Makefile
-  src/library/ctest/DESCRIPTION
-  src/library/ctest/Makefile
-  src/library/eda/DESCRIPTION
-  src/library/eda/Makefile
   src/library/graphics/DESCRIPTION
   src/library/graphics/Makefile
   src/library/grid/DESCRIPTION
   src/library/grid/Makefile
   src/library/grid/src/Makefile
-  src/library/lqs/DESCRIPTION
-  src/library/lqs/Makefile
   src/library/methods/DESCRIPTION
   src/library/methods/Makefile
   src/library/methods/src/Makefile
-  src/library/mle/DESCRIPTION
-  src/library/mle/Makefile
-  src/library/modreg/DESCRIPTION
-  src/library/modreg/Makefile
-  src/library/mva/DESCRIPTION
-  src/library/mva/Makefile
-  src/library/nls/DESCRIPTION
-  src/library/nls/Makefile
   src/library/profile/Makefile
   src/library/stats/DESCRIPTION
   src/library/stats/Makefile
   src/library/stats/src/Makefile
   src/library/stats4/DESCRIPTION
   src/library/stats4/Makefile
-  src/library/stepfun/DESCRIPTION
-  src/library/stepfun/Makefile
   src/library/splines/DESCRIPTION
   src/library/splines/Makefile
   src/library/splines/src/Makefile
@@ -1431,8 +1415,6 @@ AC_CONFIG_FILES(
   src/library/tools/DESCRIPTION
   src/library/tools/Makefile
   src/library/tools/src/Makefile
-  src/library/ts/DESCRIPTION
-  src/library/ts/Makefile
   src/library/utils/DESCRIPTION
   src/library/utils/Makefile
   src/main/Makefile
