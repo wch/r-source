@@ -77,7 +77,7 @@ install: installdirs
 	@echo "installing packages ..."
 	@cp -r $(top_builddir)/library $(rhome) || \
 	  (cd $(top_builddir)/library; \
-	    $(TAR) cf - . | (cd $(rhome)/library; $(TAR) xof -))
+	    $(TAR) cf - . | (cd $(rhome)/library; $(TAR) xmof -))
 	@echo "  building HTML index ..."
 	@$(R_CMD_BUILD_HELP) --rhome $(rhome) --htmllists
 installdirs:
