@@ -167,7 +167,7 @@ int R_HiddenFile(char *name)
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
-    return( fopen(filename, mode) );
+    return(filename ? fopen(filename, mode) : NULL );
 }
 
 /*

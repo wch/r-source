@@ -53,6 +53,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Protect R_fopen against NULL filename in Unix
+
     o   Stored-source was dropped by dump()
 
     o	When documentation is "compiled" (build-help), you now get warnings
