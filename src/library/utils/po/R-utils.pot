@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-25 17:39\n"
+"POT-Creation-Date: 2005-02-27 15:46\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -290,36 +290,6 @@ msgstr ""
 msgid "is missing or broken"
 msgstr ""
 
-msgid "no packages were specified"
-msgstr ""
-
-msgid "argument 'lib' is missing: using"
-msgstr ""
-
-msgid "cannot install MacOS X binary packages on Windows"
-msgstr ""
-
-msgid "cannot install MacOS X binary packages on this plaform"
-msgstr ""
-
-msgid "cannot install Windows binary packages on this plaform"
-msgstr ""
-
-msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
-msgstr ""
-
-msgid "installation of package '%s' had non-zero exit status"
-msgstr ""
-
-msgid "Unable to create temp directory"
-msgstr ""
-
-msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
-msgstr ""
-
-msgid "The downloaded packages are in"
-msgstr ""
-
 msgid "menu() cannot be used non-interactively"
 msgstr ""
 
@@ -401,6 +371,9 @@ msgstr ""
 msgid "'priority' must be character or NULL"
 msgstr ""
 
+msgid "argument 'lib' is missing: using"
+msgstr ""
+
 msgid "destdir is not a directory"
 msgstr ""
 
@@ -440,6 +413,33 @@ msgstr ""
 msgid "are mutually dependent"
 msgstr ""
 
+msgid "no packages were specified"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr ""
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr ""
+
+msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+
+msgid "installation of package '%s' had non-zero exit status"
+msgstr ""
+
+msgid "Unable to create temp directory"
+msgstr ""
+
+msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
+msgstr ""
+
+msgid "The downloaded packages are in"
+msgstr ""
+
 msgid "page requires a name"
 msgstr ""
 
@@ -452,7 +452,7 @@ msgstr ""
 msgid "cannot determine a usable name"
 msgstr ""
 
-msgid "Created file named"
+msgid "Created file named '%s'."
 msgstr ""
 
 msgid "Edit the file and move it to the appropriate directory."
@@ -674,5 +674,15 @@ msgstr[1]    ""
 
 msgid        "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "also installing the dependency "
+msgid_plural "also installing the dependencies "
 msgstr[0]    ""
 msgstr[1]    ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 18:31\n"
+"POT-Creation-Date: 2005-02-16 08:34\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -432,9 +432,6 @@ msgstr "‘to’ 一定得是Date对象"
 msgid "'to' must be of length 1"
 msgstr "‘to’ 的长度必需为1"
 
-msgid "'to' must be later than 'from'"
-msgstr "‘to’必需晚于‘from’"
-
 msgid "'length.out' must be of length 1"
 msgstr " ‘length.out ’的长度必需为1"
 
@@ -653,6 +650,9 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 " ‘format’的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
 
+msgid "'flag' can contain only '0+- #'"
+msgstr ""
+
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "破损的数据框：縮短列的长度或用NA来填充空白"
 
@@ -747,17 +747,26 @@ msgstr ".First.lib载入失败，因为"
 msgid "already present in search()"
 msgstr "已经在search()存在了"
 
-msgid "shared library"
+#, fuzzy
+msgid "shared library '%s' not found"
 msgstr "共享图书馆"
 
-msgid "not found"
-msgstr "不存在"
+#, fuzzy
+msgid "shared library '%s' already loaded"
+msgstr "没有指定共享图书馆"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr ""
 
 msgid "no shared library was specified"
 msgstr "没有指定共享图书馆"
 
-msgid "was not loaded"
-msgstr "无法载入"
+#, fuzzy
+msgid "shared library '%s' was not loaded"
+msgstr "没有指定共享图书馆"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr ""
 
 msgid "Loading required package: %s"
 msgstr "载入需要的程辑包：%s"
@@ -891,6 +900,9 @@ msgstr "attachNamespace有错"
 
 msgid "name space is already attached"
 msgstr "名字空间已经连接上了"
+
+msgid "not found"
+msgstr "不存在"
 
 msgid "cyclic name space dependencies are not supported"
 msgstr "不支持互相从属的循環名字空间"
@@ -1299,6 +1311,10 @@ msgid "width must be positive"
 msgstr "width必需为正数"
 
 #, fuzzy
+msgid "No traceback available"
+msgstr "无输入"
+
+#, fuzzy
 msgid "argument to 'which' is not logical"
 msgstr "\"which\" 的变元不是逻辑值"
 
@@ -1351,6 +1367,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "'to' must be later than 'from'"
+#~ msgstr "‘to’必需晚于‘from’"
+
+#~ msgid "was not loaded"
+#~ msgstr "无法载入"
 
 #~ msgid "Use"
 #~ msgstr "用"
@@ -1408,4 +1430,3 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "'x' must inherit from class"
 #~ msgstr "‘x’必需继承于这一类别"
-
