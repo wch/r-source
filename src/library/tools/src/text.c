@@ -91,10 +91,10 @@ delim_match(SEXP x, SEXP delims)
 	    INTEGER(ans)[i] = start + 1; /* index from one */
 #ifdef SUPPORT_UTF8
 	    if(utf8locale) {
-		char save = s0[end];
-		s[end] = '\0';
+		char save = s0[end+1];
+		s0[end+1] = '\0';
 		INTEGER(matchlen)[i] = mbstowcs(NULL, s0 + start, 0);
-		s0[end] = save;
+		s0[end+1] = save;
 		if(INTEGER(matchlen)[i] < 0)
 		    warning("invalid UTF-8 string in delimMatch");
 	    } else
