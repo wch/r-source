@@ -87,7 +87,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 }
 
 plot <- function(x, ...) {
-    if(is.null(class(x)) && is.function(x)) {
+    if(is.null(attr(x, "class")) && is.function(x)) {
 	if("ylab" %in% names(list(...)))
 	    plot.function(x, ...)
 	else
