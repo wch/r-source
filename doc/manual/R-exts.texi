@@ -332,21 +332,23 @@ packages}).
 @cindex install.R file
 @cindex R_PROFILE.R file
 
-The optional file @file{install.R} serves two purposes.  First, its presence tells
-@code{R CMD INSTALL} to create a binary image of the package contents.
-A binary image is created by executing the code in the @file{R} 
-subdirectory and saving the resulting objects.  When the package
-is attached, the code is not executed again; it is simply added
-to the search list.  
+The optional file @file{install.R} serves two purposes.  First, its
+presence tells @code{R CMD INSTALL} to create a binary image of the
+package contents.  A binary image is created by executing the code in
+the @file{R} subdirectory and saving the resulting objects.  When the
+package is attached, the code is not executed again but @code{load}ed
+from the saved image.
 
-The second purpose for @file{install.R} is to hold code that needs
-to be executed each time the package is attached.  Most packages 
-have no need for such code so @file{install.R} is normally an empty file.
+The second purpose for @file{install.R} is to hold code that needs to be
+executed each time the package is attached, after the image is
+loaded. Few packages have a need for such code so @file{install.R} is
+normally an empty file.
 
-The optional file @file{R_PROFILE.R} plays a similar role at the time a source
-package is installed.  It is executed before the code in
-the @file{R} subdirectory; objects it creates will not be saved to the
-binary image.
+The optional file @file{R_PROFILE.R} is executed before the code in the
+@file{R} subdirectory and should be used to set up an environment needed
+only to evaluate the code (which is run with the @code{--vanilla}
+command-line flag).  Very few packages will need such code.
+
 
 @node Package subdirectories, Package bundles, The install.R and R_PROFILE.R files, Package structure
 @subsection Package subdirectories
