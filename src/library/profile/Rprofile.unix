@@ -58,8 +58,8 @@ if(.Platform$GUI == "AQUA") {
     Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
 
     if( !file.exists("~/Library/R") )
-	dir.create("~/Library/R")
+	dir.create(path.expand("~/Library/R"))
     if( !file.exists("~/Library/R/library") )
-	dir.create("~/Library/R/library")
-    .libPaths("~/Library/R/library")
+	dir.create(path.expand("~/Library/R/library"))
+    .libPaths(path.expand("~/Library/R/library"))
 }## end "Aqua"
