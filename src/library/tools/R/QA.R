@@ -188,9 +188,24 @@ function(package, dir, lib.loc = NULL)
     ## Undocumented objects?
     if(length(allObjs) == 0)
         warning("Neither code nor data objects found")
-    else
-        allObjs[! allObjs %in% c(allDocTopics,
-                                 ".First.lib", ".Last.lib")]
+    else {
+        if(!isBase) {
+            ## Objects in add-on packages with names starting with a dot
+            ## are considered 'internal' (not user-level) by convention.
+            ## <FIXME>
+            ## Not clear whether everyone believes in this convention.
+            ## We used to have
+            ##   allObjs[! allObjs %in% c(allDocTopics,
+            ##                            ".First.lib", ".Last.lib")]
+            ## i.e., only exclude '.First.lib' and '.Last.lib'.
+            allObjs <- grep("^[^.].*", allObjs, value = TRUE)
+            ## Also, maybe we should do something special about S4 meta
+            ## objects (with names starting with '.__C__' or '.__M__')
+            ## eventually ...
+            ## </FIXME>
+        }
+        allObjs[! allObjs %in% allDocTopics]
+    }
 }
 
 codoc <-
