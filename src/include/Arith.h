@@ -59,6 +59,8 @@ extern double	R_NaReal;		/* NA_REAL */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
+int R_IsNA(double);/* Missing Value Test */
+int R_IsNaN(double);/* Special NaN */
 
 #ifdef Win32
 extern int isnan(double);

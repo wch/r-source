@@ -25,11 +25,18 @@ Graphics.h
 IOStuff.h
 	-> Defn.h	-> .......
 
+Print.h
+	-> PrtUtil.h
+	-> Defn.h	-> .......
+
 Defn.h
 	-> Arith.h	-> Platform.h
 	-> Platform.h
 	-> Complex.h
 	-> Errormsg.h	-> Error.h
+	-> Memory.h
+	-> PrtUtil.h
+	-> Utils.h
 
     -------------
 
@@ -42,6 +49,7 @@ S_compat.h
 
 S.h
 	-> Platform.h
+	-> Memory.h
 
 Fortran.h
 	-> Platform.h

@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 #include "Error.h"
+#include "Memory.h"
 #include "Platform.h"
 
 #include <stddef.h>
@@ -46,8 +47,6 @@ extern "C" {
 #include <math.h>
 #endif
 
-extern char *S_alloc();
-extern void call_R();
 #define call_S call_R
 
 extern void seed_in(long *);

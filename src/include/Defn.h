@@ -25,6 +25,9 @@
 #include "Arith.h"/*-> Platform.h */
 #include "Complex.h"
 #include "Errormsg.h"
+#include "Memory.h"
+#include "PrtUtil.h"
+#include "Utils.h"
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 /*  These values are minima and can be overriden in Platform.h	*/
@@ -69,7 +72,7 @@
 
 #define HSIZE	    211	/* The size of the hash table for symbols */
 #define MAXELTSIZE  512 /* The largest string size */
-#define MAXIDSIZE   512	/* Largest symbol size possible */
+#define MAXIDSIZE   256	/* Largest symbol size possible */
 
 
 /*  Fundamental Data Types:  These are largely Lisp  */
@@ -320,9 +323,22 @@ enum {
 #define	GEOP	5
 #define	GTOP	6
 
-/* Global Variables ------------------------------------------------------ */
+/* File Handling */
+#define R_EOF	65535
 
-extern int		errno;
+/* MAGIC Numbers for files */
+#define R_MAGIC_BINARY 1975
+#define R_MAGIC_ASCII  1976
+#define R_MAGIC_XDR    1977
+
+#define R_MAGIC_BINARY_VERSION16 1971
+#define R_MAGIC_ASCII_VERSION16	 1972
+
+
+/*--- Global Variables ---------------------------------------------------- */
+
+extern int	errno;
+extern int	gc_inhibit_torture;
 
 /* Memory Management */
 extern int	R_NSize;	    /* Size of cons cell heap */
@@ -406,25 +422,8 @@ extern int	R_DirtyImage;	    /* Current image dirty */
 extern int	R_Init;		    /* Do we have an image loaded */
 extern FILE*	R_FileRef;	    /* the environment file pointer  */
 
-/* File Handling */
 
-#define R_EOF	65535
-
-/* MAGIC Numbers for files */
-
-#define R_MAGIC_BINARY 1975
-#define R_MAGIC_ASCII  1976
-#define R_MAGIC_XDR    1977
-
-#define R_MAGIC_BINARY_VERSION16 1971
-#define R_MAGIC_ASCII_VERSION16	 1972
-
-/* Other Stuff */
-
-void hsv2rgb(double h, double s, double v, double *r, double *g, double *b);
-void call_R(char *func, long nargs, void **arguments, char **modes, long *lengths, char **names, long nres, char **results);
-void printRealVector(double * x, int n, int index);
-void printIntegerVector(int * x, int n, int index);
+/*--- FUNCTIONS ------------------------------------------------------ */
 
 /* Platform Dependent Gui Hooks */
 
@@ -440,23 +439,6 @@ void	R_ClearerrConsole(void);
 void	R_Busy(int);
 void	R_CleanUp(int);
 void	R_StartUp(void);
-
-/* Defined in main.c */
-
-char	*R_PromptString(int, int);
-
-/* C Memory Management Interface */
-
-void Init_C_alloc(void);
-void Reset_C_alloc(void);
-char *C_alloc(long, int);
-void C_free(char *);
-
-/* Missing Value Test */
-/* Special NaN */
-
-int R_IsNA(double);
-int R_IsNaN(double);
 
 /* Internally Used Functions */
 
@@ -501,7 +483,6 @@ SEXP dimgets(SEXP, SEXP);
 SEXP dimnamesgets(SEXP, SEXP);
 int DispatchOrEval(SEXP, SEXP, SEXP, SEXP, SEXP*, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
-void dhsv2rgb(double,double,double,double*,double*,double*);
 SEXP DropDims(SEXP);
 SEXP duplicate(SEXP);
 SEXP duplicated(SEXP);
@@ -509,7 +490,7 @@ SEXP dynamicfindVar(SEXP, RCNTXT*);
 SEXP emptyEnv(void);
 void endcontext(RCNTXT*);
 void errorcall(SEXP, char*, ...);
-void  ErrorMessage(SEXP, int, ...);
+void ErrorMessage(SEXP, int, ...);
 SEXP eval(SEXP, SEXP);
 SEXP EvalArgs(SEXP, SEXP, int);
 SEXP evalList(SEXP, SEXP);
@@ -524,7 +505,6 @@ SEXP findFun(SEXP, SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
-void gc(void);
 SEXP getAttrib(SEXP, SEXP);
 int get1index(SEXP,SEXP,int);
 void GetMatrixDimnames(SEXP, SEXP*, SEXP*);
@@ -539,7 +519,6 @@ SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 void gsetVar(SEXP, SEXP, SEXP);
 int hashpjw(char*);
-int IndexWidth(int);
 int inherits(SEXP, char*);
 void InitArithmetic(void);
 void InitColors(void);
@@ -555,7 +534,6 @@ SEXP install(char*);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isArray(SEXP);
 int isComplex(SEXP);
-char *R_ExpandFileName(char*);
 int isEnvironment(SEXP);
 int isExpression(SEXP);
 int isExpressionObject(SEXP);
@@ -572,7 +550,6 @@ int isNull(SEXP);
 int isNumeric(SEXP);
 int isObject(SEXP);
 int isOrdered(SEXP);
-void isort(int*, int);
 int isPairList(SEXP);
 int isReal(SEXP);
 int isString(SEXP);
@@ -625,7 +602,6 @@ int NonNullStringMatch(SEXP, SEXP);
 SEXP nthcdr(SEXP, int);
 void onintr();
 int OneIndex(SEXP, SEXP, int, SEXP*);
-FILE* R_OpenLibraryFile();
 SEXP parse(FILE*, int);
 int pmatch(SEXP, SEXP, int);
 void PrintDefaults(SEXP);
@@ -635,20 +611,13 @@ void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);
 SEXP promiseArgs(SEXP, SEXP);
 void protect(SEXP);
-char *R_alloc(long, int);
-void REvprintf(const char*, va_list);
-void REprintf(char*, ...);
-void Rprintf(char*, ...);
-char *Rsprintf(char*, ...);
-void Rvprintf(const char*, va_list);
-void R_RestoreGlobalEnv(void);
-int restore_image(char*);
-SEXP rownamesgets(SEXP,SEXP);
-void rsort(double *x, int);
-int Rstrlen(char*);
 SEXP R_LoadFromFile(FILE*);
+FILE* R_OpenLibraryFile(char *);
+void R_RestoreGlobalEnv(void);
 void R_SaveGlobalEnv(void);
 void R_SaveToFile(SEXP, FILE*, int);
+void R_Suicide(char*);
+SEXP rownamesgets(SEXP,SEXP);
 SEXP ScalarLogical(int);
 SEXP ScalarInteger(int);
 SEXP ScalarReal(double);
@@ -656,8 +625,6 @@ SEXP ScalarComplex(complex);
 SEXP ScalarString(SEXP);
 void scanPhase(void);
 SEXP setAttrib(SEXP, SEXP, SEXP);
-void setIVector(int*, int, int);
-void setRVector(double*, int, double);
 void setSVector(SEXP*, int, SEXP);
 void setVar(SEXP, SEXP, SEXP);
 SEXP setVarInFrame(SEXP, SEXP, SEXP);
@@ -665,11 +632,7 @@ void sortVector(SEXP);
 void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);
 int StringBlank(SEXP);
-int StringFalse(char*);
-int StringTrue(char*);
 int StrToInternal(char*);
-void R_Suicide(char*);
-void SymbolShortcuts(void);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
@@ -678,22 +641,24 @@ int tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2str(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
-void UNIMPLEMENTED(char *s);
 void unmarkPhase(void);
 void unprotect(int);
 void unprotect_ptr(SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
-char *vmaxget(void);
-void vmaxset(char*);
-void WrongArgCount(char*);
 void warningcall(SEXP, char*,...);
 void WarningMessage(SEXP, int, ...);
+
+/* gram.y & gram.c : */
 void yyerror(char *);
 void yyinit(void);
 int yylex();
 int yyparse(void);
 void yyprompt(char *format, ...);
 int yywrap(void);
-int gc_inhibit_torture;
 
 #endif
+/*
+ *- Local Variables:
+ *- page-delimiter: "^/\\*---"
+ *- End:
+ */

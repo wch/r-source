@@ -1,2 +1,5 @@
-extern void error(const char *, ...);
-extern void warning(const char *, ...);
+void	error(const char *, ...);
+void	warning(const char *, ...);
+void	WrongArgCount(char*);
+void	UNIMPLEMENTED(char *);
+
