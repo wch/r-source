@@ -44,7 +44,7 @@ analysis of covariance.
 
 Models for \code{lm} are specified symbolically.
 A typical model has the form
-\code{reponse ~ terms} where \code{response} is the (numeric)
+\code{response ~ terms} where \code{response} is the (numeric)
 response vector and \code{terms} is a series of terms which
 specifies a linear predictor for \code{response}.
 A terms specification of the form \code{first+second}

@@ -16,7 +16,7 @@ x11(display = "", width = 7, height = 7, ps = 12, gamma = 1)
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors displayed are linearly related to
     RGB values.  A value of 0.5 is appropriate for many PC displays.
-    A value of 1.0 (no correction) is usually approriate for
+    A value of 1.0 (no correction) is usually appropriate for
     high-end displays.}
 }
 \description{

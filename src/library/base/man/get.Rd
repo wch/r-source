@@ -7,7 +7,7 @@ get(x, pos=-1, envir=pos.to.env(pos), mode="any", inherits=TRUE)
 \arguments{
 \item{x}{a variable name (given as a quoted string).}
 \item{pos}{position in search list, can be numerical or a quoted string.}
-\item{envir}{the environent to be used.}
+\item{envir}{the environment to be used.}
 \item{mode}{the type of object sought.}
 \item{inherits}{should the enclosing frames of
 the environment be inspected?}

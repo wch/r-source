@@ -34,7 +34,7 @@ of the assignment.
 These operators are generic. You can write methods to handle subsetting
 of specific classes of data.
 
-The \code{[[} operator requires all relevent subscripts be supplied.
+The \code{[[} operator requires all relevant subscripts be supplied.
 With  the \code{[} operator a comma separated blank indicates that all
 entries in that dimension are selected.
 

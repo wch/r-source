@@ -12,7 +12,7 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
 \alias{plot.default}
 \arguments{
   \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
-    coordinates for the plot.  Any reasonble way of defining the
+    coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}
   \item{type}{the type of plot desired.  The following possibilities are

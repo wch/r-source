@@ -38,7 +38,7 @@ value ->> x
   encountered.  If the symbol is not encountered then assignment takes
   place in the global environment.
 
-  If \code{inherits} is \code{FALSE}, assigment takes place in the
+  If \code{inherits} is \code{FALSE}, assignment takes place in the
   initial frame of \code{envir}.
 
   The arrow forms of assignment provide shortcut ways to carry out

@@ -14,7 +14,7 @@ plot(y ~ x, \dots)
 	  \code{plot} method} can be provided.}
   \item{y}{the y coordinates of points in the plot, \emph{optional}
       if \code{x} is an appropriate structure.}
-  \item{xlim,ylim}{the ranges to be encompased by the x and y axes.}
+  \item{xlim, ylim}{the ranges to be encompassed by the x and y axes.}
   \item{type}{what type of plot should be drawn. Possible types are
     \itemize{
       \item \code{"p"} for \bold{p}oints,

@@ -28,7 +28,7 @@ chisq.test(x, y = NULL, correct = TRUE,
     removed, the objects are coerced into factor objects, and the
     contingency table is computed from these.  Then, Pearson's
     chi-square test of the null that the joint distribution of the cell
-    counts in a 2-dimensional contigency table is the product of the row
+    counts in a 2-dimensional contingency table is the product of the row
     and column marginals is performed.  Continuity correction is only
     used in the 2-by-2 case if \code{correct} is \code{TRUE}.
 }

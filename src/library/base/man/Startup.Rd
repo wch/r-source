@@ -1,5 +1,5 @@
 \name{Startup}
-\title{Intialization at Start of an R Session}
+\title{Initialization at Start of an R Session}
 \usage{
 .First <- function() { \dots\dots }
 }

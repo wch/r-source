@@ -10,7 +10,7 @@ bug.report(subject="", ccaddress=getenv("USER"),
     \item{ccaddress}{Optional email address for copies (default is
 	current user). Use \code{ccaddress=FALSE} for no copies.} 
     \item{method}{Submission method.}
-    \item{address}{Recepient email address.}
+    \item{address}{Recipient's email address.}
 }
 \description{
     Invokes an editor to write a bug report and optionally mail it to

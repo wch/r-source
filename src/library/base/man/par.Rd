@@ -71,7 +71,7 @@ par(\dots, no.readonly = FALSE)
     \code{"n"} suppresses the box.}
   \item{cex}{A numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default.}
-  \item{cex.axis}{The magnification to be used for axis anotation
+  \item{cex.axis}{The magnification to be used for axis annotation
     relative to the current.}
   \item{cex.lab}{The magnification to be used for x and y labels
     relative to the current.}
@@ -221,7 +221,7 @@ par(\dots, no.readonly = FALSE)
   can be obtained with the function \code{\link{colors}}.
   Alternatively, colors can be specified directly in terms of there RGB
   components with a string of the form \code{"#RRGGBB"} where each of
-  the pairs \code{RR}, \code{GG}, \code{BB} consist of two hexidecimal
+  the pairs \code{RR}, \code{GG}, \code{BB} consist of two hexadecimal
   digits giving a value in the range \code{00} to \code{FF}.  Colors can
   also be specified by giving an index into a small table of colors.
   This provides compatibility with S.

@@ -30,7 +30,7 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     of \code{z}.  Areas with \code{z} values between consecutive
     levels are painted with the same color.}
  \item{nlevels}{if \code{levels} is not specified, the range of \code{z},
-    values is divided into approximiately this many levels.}
+    values is divided into approximately this many levels.}
  \item{color.palette}{a color palette function to be used to assign
     colors in the plot.}
  \item{col}{an explicit set of colors to be used in the plot.

@@ -22,7 +22,7 @@ X \%x\% Y
 \details{
     If \code{X} and \code{Y} do not have the same number of dimensions,
     the smaller array is padded with dimensions of size one.  \code{A}
-    consists of submatrices constucted by taking \code{X} one term at a time
+    consists of submatrices constructed by taking \code{X} one term at a time
     and expanding that term as \code{FUN(x, Y, ...)}.
     
     \code{\%x\%} is an \code{\link{.Alias}} for \code{kronecker} (where

@@ -26,7 +26,7 @@ polyroot(z)
   Comm. ACM \bold{15}, 97-99.
 }
 \seealso{
-  \code{\link{uniroot}} for numerical root finding of arbitray
+  \code{\link{uniroot}} for numerical root finding of arbitrary
   functions;
   \code{\link{complex}} and the \code{zero} example in the demos
   directory.

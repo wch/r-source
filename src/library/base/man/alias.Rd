@@ -25,7 +25,7 @@ alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
  \item{partial}{Should information on partial aliasing be included?}
  \item{partial.pattern}{Should partial aliasing be presented in a
    schematic way? If this is done, the results are presented in a
-   more compact way, usually giving the deciles of the coeffcients.}
+   more compact way, usually giving the deciles of the coefficients.}
 }
 \description{
   Although the main method is for class \code{"lm"}, \code{alias} is

@@ -9,7 +9,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{names.arg}{a vector of names to be abbreviated.}
   \item{minlength}{the minimum length of the abbreviations.}
   \item{use.classes}{logical (currently ignored by \R).}
-  \item{dot}{logical; should a dot (\code{"."}) be postpended?}
+  \item{dot}{logical; should a dot (\code{"."}) be appended?}
 }
 \description{Abbreviate Strings to at least \code{minlength} characters,
     such that they remain \emph{unique} (if they were).
@@ -24,7 +24,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 
   Letters are always stripped from the end of the word first.
   If an element of \code{names.arg} contains more than one word (words
-  are separted by space) then at least one letter from each word will be
+  are separated by space) then at least one letter from each word will be
   retained.
   If a single string is passed it is abbreviated in the same manner as a
   vector of strings.

@@ -12,7 +12,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
   \item{y}{the y location of the legend.}
   \item{legend}{a vector of text values or an \code{\link{expression}}
     of length \eqn{\ge 1}{>= 1} to appear in the legend.}
-  \item{fill}{if specied, this argument will cause boxes filled
+  \item{fill}{if specified, this argument will cause boxes filled
     with the specified colors to appear beside the legend text.}
   \item{col}{the color of points or lines appearing in the legend.}
   \item{lty,lwd}{the line types and widths for lines appearing in the

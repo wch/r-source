@@ -12,7 +12,7 @@ var(x, y=x, na.rm=FALSE, use)
 method for computing covariances in the presence
 of missing values.  This must be one of \code{"all.obs"},
 \code{"complete.obs"} or \code{"pairwise.complete.obs"},
-with abbreviation being permited.}
+with abbreviation being permitted.}
 }
 \description{
 \code{var} computes the variance of \code{x} and the

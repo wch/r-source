@@ -37,7 +37,7 @@ or a vector giving the breakpoints between histogram cells.}
 \item{xlim,ylim}{the range of x and y values with sensible defaults.}
 \item{plot}{logical.  If \code{TRUE} (default), a histogram is
   plotted, otherwise a list of breaks and counts is returned.}
-\item{labels}{logical.  Additionaly draw labels on top of bars, if \code{TRUE}.}
+\item{labels}{logical.  Additionally draw labels on top of bars, if \code{TRUE}.}
 \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
