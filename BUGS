@@ -32,11 +32,10 @@ Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 
 Directory:  Add-ons
 
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
---possibly the RH6.2 Fortran bug
+* PR# 611 *
+Subject: bug in loess
+From: hdrees@statlab.uni-heidelberg.de
+Date: Wed, 19 Jul 2000 17:47:04 +0200 (MET DST)
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -46,6 +45,11 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
 
 Directory:  Analyses
 
@@ -57,12 +61,7 @@ Date: Mon, 26 Jun 2000 15:50:58 +0200 (CEST)
 
 Directory:  Documentation
 
-* PR# 581 *
-Subject: help screens: typos, suggestions
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 15:59:57 -0400 (EDT)
---fixed in R-(release-)patched, i.e., for 1.1.1                                   
---    1.1
+none
 
 Directory:  Graphics
 
@@ -97,28 +96,32 @@ none
 
 Directory:  Installation
 
-* PR# 597 *
-Subject: multiply defined symbols
-From: plucas@csd.abdn.ac.uk
-Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
---Probably system-specific due to use of fort77
+* PR# 612 *
+Subject:  Installing R-1.1.0 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Thu, 20 Jul 2000 14:50:21 +0800
+* PR# 466 *
+Subject: Re: R-1.0.0 is released
+From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
+Date: 01 Mar 2000 16:00:54 +0100
+* PR# 485 *
+Subject: Install R1.0.0
+From: Lynn Zhang <lyzhang@umich.edu>
+Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
 * PR# 467 *
 Subject: Re: [R] Re: R-1.0.0 is released
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 01 Mar 2000 20:26:40 +0100
 --followup to PR#466
-* PR# 466 *
-Subject: Re: R-1.0.0 is released
-From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
-Date: 01 Mar 2000 16:00:54 +0100
+* PR# 597 *
+Subject: multiply defined symbols
+From: plucas@csd.abdn.ac.uk
+Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
+--Probably system-specific due to use of fort77
 * PR# 571 *
 Subject:  Missing -lc for compilation on AIX (R 1.1.0) 
 From: Thomas Vogels <tov@infiniti.ece.cmu.edu>
 Date: Thu, 15 Jun 2000 13:42:50 -0400
-* PR# 485 *
-Subject: Install R1.0.0
-From: Lynn Zhang <lyzhang@umich.edu>
-Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
 
 Directory:  Language
 
@@ -126,6 +129,11 @@ Directory:  Language
 Subject: Bug with lists and expressions
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Tue, 04 Jul 2000 02:26:41 GMT
+* PR# 587 *
+Subject: dim(a <- ...) sets invisible flag erronously
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
+--Not specific to dim: R differs from S for most functions here.
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -134,15 +142,6 @@ Date: 06 Feb 2000 01:18:50 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 587 *
-Subject: dim(a <- ...) sets invisible flag erronously
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
---Not specific to dim: R differs from S for most functions here.
-* PR# 576 *
-Subject:  exists() and the mode argument 
-From: J.C.Rougier@durham.ac.uk
-Date: Tue, 20 Jun 2000 12:03:36 +0100 (BST)
 
 Directory:  Low-level
 
@@ -249,11 +248,4 @@ none
 
 Directory:  incoming
 
-* PR# 612 *
-Subject:  Installing R-1.1.0 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Thu, 20 Jul 2000 14:50:21 +0800
-* PR# 611 *
-Subject: bug in loess
-From: hdrees@statlab.uni-heidelberg.de
-Date: Wed, 19 Jul 2000 17:47:04 +0200 (MET DST)
+none
