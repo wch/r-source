@@ -21,6 +21,10 @@
 
   Use \code{R CMD REMOVE --help} for more usage information.  
 }
+\note{
+  Some binary distributions of \R have \code{INSTALL} in a separate
+  bundle, e.g. an \code{R-devel} RPM.
+}
 \seealso{
   \code{\link{INSTALL}}
 }

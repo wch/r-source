@@ -23,4 +23,8 @@ R CMD LINK [options] linkcmd
 
   Use \code{R CMD LINK --help} for more usage information.
 }
+\note{
+  Some binary distributions of \R have \code{LINK} in a separate
+  bundle, e.g. an \code{R-devel} RPM.
+}
 \keyword{utilities}

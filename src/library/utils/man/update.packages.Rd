@@ -70,7 +70,7 @@ install.packages(pkgs, lib, repos = CRAN,
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of packages/bundles whose
     current versions should be downloaded from \code{CRAN}.
-    If \code{repos = NULL}, a vector of file names of
+    If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
     \code{.zip} files.
 #endif
@@ -213,6 +213,11 @@ install.packages(pkgs, lib, repos = CRAN,
   Not enough information is recorded to know if a bundle is completely
   installed, so a bundle is regarded as installed if any of its
   component packages is.
+}
+\note{
+  Some binary distributions of \R have \code{INSTALL} in a separate
+  bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
+  give an error if called on such a system.
 }
 \seealso{
   \code{\link{installed.packages}}.

@@ -11,8 +11,11 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning("argument 'lib' is missing: using ", lib)
+            warning("argument 'lib' is missing: using ", lib, immediate.=TRUE)
     }
+
+    if(!file.exists(file.path(R.home(),"bin","INSTALL")))
+        stop("This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM")
 
     if(is.null(repos) & missing(contriburl)) {
         update <- cbind(pkgs, lib) # for side-effect of recycling to same length

@@ -91,6 +91,12 @@
   image, followed by the R code in file \file{install.R}, if any.)
 
 }
+
+\note{
+  Some binary distributions of \R have \code{INSTALL} in a separate
+  bundle, e.g. an \code{R-devel} RPM.
+}
+
 \seealso{
   \code{\link{REMOVE}} and \code{\link{library}} for information on
   using several library trees;
