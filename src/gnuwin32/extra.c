@@ -33,11 +33,11 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
     char *tmp, *tn, tm[MAX_PATH];
-    unsigned int n;
+    unsigned int n, done = 0;
+
     WIN32_FIND_DATA fd;
     HANDLE h;
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 1));
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, "invalid file name argument\n");
     tn = CHAR(STRING(CAR(args))[0]);
@@ -45,12 +45,19 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_HOME");
-    for (n = 1; n < 32000; n++) { 
-        sprintf(tm, "%s\\%s%d", tmp, tn, n);
-        if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) break;
+    for (n = 1; n < 1000; n++) {
+	/* try a random number at the end */
+        sprintf(tm, "%s\\%s%d", tmp, tn, rand());
+        if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) {
+	    done = 1;
+	    break;
+	}
         FindClose(h);
-        tm[0] = '\0';             
+        tm[0] = '\0';
     }
+    if(!done)
+	error("cannot find unused tempfile name\n");
+    PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = mkChar(tm);
     UNPROTECT(1);
     return (ans);

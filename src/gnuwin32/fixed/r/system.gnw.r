@@ -6,7 +6,6 @@ getenv <- function(x)
         structure(.Internal(getenv(x)), names = x)
 }
 
-
 help.start <- function(gui = "irrelevant", browser = "irrelevant")
 {
     a <- system.file("index.html", pkg="doc/html", lib=R.home())
@@ -22,10 +21,9 @@ help.start <- function(gui = "irrelevant", browser = "irrelevant")
     invisible("")
 }
 
-
 system <- function(command, intern = FALSE, wait = TRUE, input = "",
-                   show.output.on.console = FALSE,minimized=FALSE,
-                   invisible=FALSE)
+                   show.output.on.console = FALSE, minimized = FALSE,
+                   invisible = FALSE)
 {
     f <- ""
     if (input!="") {
@@ -52,13 +50,9 @@ unix <- function(call, intern = FALSE)
     system(call,intern)
 }
 
-
-
-tempfile <- function(pattern = "") .Internal(tempfile(pattern))
+tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
 
 unlink <- function(x) invisible(.Internal(unlink(x)))
-
-
 
 flush.console <- function() .Internal(flush.console())
 
@@ -86,7 +80,6 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
     if(intern) res else invisible(res)
 }
 
-
 zip.file.extract <- function(file, zipname="R.zip")
 {
     unzip <- options()$unzip
@@ -98,7 +91,7 @@ zip.file.extract <- function(file, zipname="R.zip")
         tempdir <- sub("[^\\]*$","", tempfile())
         if(!system(paste(unzip, "-oq",
                          file.path(path, zipname), topic,
-                         "-d", tempdir), show=FALSE, invisible=TRUE))
+                         "-d", tempdir), show = FALSE, invisible = TRUE))
             file <- paste(tempdir,  topic, sep="")
     }
     file
