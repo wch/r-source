@@ -143,9 +143,17 @@ sub warning {
 
 sub summary {
     my ($x) = @_;
-    print "WARNING: There were $x->{'warnings'} warnings, see\n" .
-	"  " . $x->{'file'} .
-	    "\nfor details\n";
+    if($x->{'warnings'} > 1) {
+	print "WARNING: There were $x->{'warnings'} warnings, see\n" .
+	    "  " . $x->{'file'} .
+		"\nfor details\n";
+    }
+    if($x->{'warnings'} == 1) {
+	print "WARNING: There was 1 warning, see\n" .
+	    "  " . $x->{'file'} .
+		"\nfor details\n";
+    }
+
 }
 	    
     
