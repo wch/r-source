@@ -255,9 +255,6 @@
 /* Define to 1 if you have the `rint' function. */
 /* #undef HAVE_RINT */
 
-/* Define to 1 if you have the <rpc/rpc.h> header file. */
-/* #undef HAVE_RPC_RPC_H */
-
 /* Define to 1 if you have the `setenv' function. */
 /* #undef HAVE_SETENV */
 
@@ -342,7 +339,7 @@
    to be built. */
 #define HAVE_TCLTK 1
 
-/* Define to 1if you have the `times' function. */
+/* Define to 1 if you have the `times' function. */
 /* #undef HAVE_TIMES */
 
 /* Define to 1 if you have the <unistd.h> header file. */
@@ -369,9 +366,6 @@
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
 /* #undef HAVE_X11 */
-
-/* Define if you have the XDR headers and library routines. */
-/* #undef HAVE_XDR */
 
 /* Define if you have the zlib headers and libraries. */
 /* #undef HAVE_ZLIB */
@@ -401,13 +395,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 1.5.0"
+#define PACKAGE_STRING "R 1.6.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "r"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.5.0"
+#define PACKAGE_VERSION "1.6.0"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
@@ -481,7 +475,7 @@
 /* #undef Unix */
 
 /* Version number of package */
-#define VERSION "1.5.0"
+#define VERSION "1.6.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
