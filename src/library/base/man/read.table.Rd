@@ -88,6 +88,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
     Note: to suppress all conversions including those of numeric
     columns, set \code{colClasses = "character"}.
+
+    Note that \code{as.is} is specified per column (not per
+    variable) and so includes the column of row names (if any).
   }
 
   \item{na.strings}{a vector of strings which are to be interpreted as
@@ -100,7 +103,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     character, raw), there needs to be an \code{as} method for
     conversion from \code{"character"} to the specified class, or
     \code{NA} when \code{\link{type.convert}} is used.  NB: \code{as} is
-    in package \pkg{methods}.}
+    in package \pkg{methods}.  Note that \code{colClasses} and
+    \code{as.is} are specified per column, not per variable, and so
+    include the column of row names (if any).
+
+    Note that \code{colClasses} is specified per column (not per
+    variable) and so includes the column of row names (if any).
+  }
 
   \item{nrows}{the maximum number of rows to read in.  Negative values
     are ignored.}
