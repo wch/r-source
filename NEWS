@@ -118,6 +118,10 @@ UTILITIES
 	when installing packages) ensures files are separated by a
 	line feed.
 
+    o   vignette() returns now objects of the same name, the print()
+        method opens the corresponidng PDF file. The edit() method can
+        be used to open the code of the vignette in an editor.
+
 
 DOCUMENTATION
 
