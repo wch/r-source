@@ -682,3 +682,7 @@ Date: di, 24 dec 2002 05:39:30
 Subject: inv.logit (package boot)
 From: olefc@birc.dk
 Date: Wed, 25 Dec 2002 13:05:20 +0100 (MET)
+* PR# 2395 *
+Subject: R-1.6.2beta_2002-12-20: build problems
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 26 Dec 2002 09:38:33 -0700 (MST)
