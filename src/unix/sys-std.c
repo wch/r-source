@@ -293,6 +293,10 @@ fd_set *R_checkActivityEx(int usec, int ignore_stdin, void (*intr)(void))
     struct timeval tv;
     static fd_set readMask;
 
+    if (R_interrupts_pending) {
+	if (intr != NULL) intr();
+	else onintr();
+    }
 
     tv.tv_sec = 0;
     tv.tv_usec = usec;
