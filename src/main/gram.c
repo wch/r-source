@@ -3082,7 +3082,7 @@ static int token()
     if (c == '.' || isalpha(c))
 	return SymbolValue(c);
 
-    /* gag, barf, but the punters want it */
+    /* gag, barf, but the punters want it
 
     if (c == '_') {
 	yylval = install("<-");
@@ -3090,7 +3090,7 @@ static int token()
 	    warning("The use of _ is deprecated: you will be warned only once per session");
 	not_warned_on_underline = 0;
 	return LEFT_ASSIGN;
-    }
+    } */
 
     /* compound tokens */
 

@@ -1095,8 +1095,6 @@ below.
 @tab Or, binary, not vectorized
 @item @code{<-}
 @tab Left assignment, binary
-@item @code{_}
-@tab Left assignment, binary, shouldn't be used
 @item @code{->}
 @tab Right assignment, binary
 @item @code{$}
@@ -4321,7 +4319,7 @@ $ @@
 ~                  @r{(unary and binary)}
 -> ->>
 =                  @r{(as assignment)}
-<- _ <<-
+<- <<-
 @end smallexample
 
 The exponentiation operator @samp{^} and the 

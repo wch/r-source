@@ -45,3 +45,11 @@ reshapeWide <- function(...) .Defunct()
 ## Defunct in 1.6.0
 piechart <- function(...) .Defunct()
 ## </entry>
+
+## Deprecated in 1.6.0
+## Defunct in 1.7.0
+machine <- function(...) .Defunct()
+Machine <- function(...) .Defunct()
+Platform <- function(...) .Defunct()
+restart <- function(...) .Defunct()
+## </entry>

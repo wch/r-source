@@ -14,10 +14,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	The code underlying polygon drawing contained a memory leak.
-	This showed up in persp, but did not effect other graphics
-	functions.  It is now possible to draw big DEMs.
-
     o	library() was changed so that when the methods package is
 	attached it no longer complains about generic functions not
 	specific to the library.
@@ -37,7 +33,7 @@ NEW FEATURES
 	optimization by supplying a move function as the `gr'
 	argument (contributed by Adrian Trapletti).
 
-    o	New as.difftime() for time(-interval) data.
+    o	New function as.difftime() for time(-interval) data.
 
 
 INSTALLATION CHANGES
@@ -51,7 +47,20 @@ INSTALLATION CHANGES
 	longer for cf77 and cft77.
 
 
+DEPRECATED & DEFUNCT
+
+    o	The assignment operator `_' is no longer recognised.
+
+    o	machine(), Machine() and Platform() are defunct.
+
+    o	restart() is defunct.  Use try(), as has long been recommended.
+
+
 BUG FIXES
+
+    o   The code underlying polygon drawing contained a memory leak.
+	This showed up in persp, but did not affect other graphics
+	functions.  It is now possible to draw big DEMs.
 
 
 

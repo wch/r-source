@@ -24,7 +24,7 @@
     \code{~}\tab as in formulae\cr
     \code{-> ->>}\tab rightwards assignment\cr
     \code{=}\tab assignment (right to left)\cr
-    \code{<-  _  <<-}\tab assignment (right to left)\cr
+    \code{<- <<-}\tab assignment (right to left)\cr
     \code{?}\tab help (unary and binary)\cr
   }
   Within an expression operators of equal precedence are evaluated

@@ -32,6 +32,10 @@
 \alias{print.ordered}
 \alias{.Dyn.libs}
 \alias{.lib.loc}
+\alias{machine}
+\alias{Platform}
+\alias{Machine}
+\alias{restart}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -85,6 +89,12 @@ print.ordered(.)
 .Dyn.libs
 .lib.loc
 % </Removed 1.6.0>
+% Removed in 1.7.0
+machine()
+Machine()
+Platform()
+restart()
+% </Removed 1.7.0>
 }
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
@@ -135,6 +145,15 @@ print.ordered(.)
   shared libs, and the known \R library trees.  These are now dynamic
   variables which one can get or set using \code{\link{.dynLibs}} and
   \code{\link{.libPaths}}, respectively.
+
+  \code{Machine()} and \code{Platform()} were functions returning the
+  variables \code{\link{.Machine}} and \code{\link{.Platform}}
+  respectively.
+
+  \code{restart()} should be replaced by \code{try()}, in preparation
+  for an exception-based implementation.  If you use \code{restart()} in
+  a way that cannot be replaced with \code{try()} then ask for help
+  on \code{r-devel}.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}
