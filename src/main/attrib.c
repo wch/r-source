@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1038,15 +1038,29 @@ SEXP R_pseudo_null() {
 
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  nlist, object, ans;
+    SEXP  nlist, object, ans, class;
 
+    if(!isMethodsDispatchOn()) 
+	error("formal classes cannot be used without the methods package");
     nlist = CADR(args);
     PROTECT(object = eval(CAR(args), env));
+    /* do some testing here where we can give a better error message */
+    class = getAttrib(object, R_ClassSymbol);
+    if(length(class) != 1)
+	error("@ must be used on an object with a formal class");
+    {
+	/* internal version of isClass() */
+	char str[201];
+	snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
+	if(findVar(install(str), env) == R_UnboundValue)
+	    error("@ must be used on an object with a formal class");
+    }
     ans = R_do_slot(object, nlist);
     UNPROTECT(1);
     return ans;
 }
 
+#if 0
 /* Was a .Primitive implementation for @<-; no longer needed? */
 SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1063,4 +1077,5 @@ SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+#endif
 
