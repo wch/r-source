@@ -95,7 +95,7 @@ nam.var <- colnames(iris)[-5]
 nam.spec <- as.character(iris[1+50*0:2, "Species"])
 iris.S <- array(NA, dim = c(50,4,3), dimnames = list(NULL, nam.var, nam.spec))
 for(i in 1:3) iris.S[,,i] <- data.matrix(iris[1:50+50*(i-1), -5])
-# The example plot is produced by:
+
 matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch="SCV",
         col = rainbow(3, start = .8, end = .1),
         sub = paste(c("S", "C", "V"), dimnames(iris.S)[[3]],
