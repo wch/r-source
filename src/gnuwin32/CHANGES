@@ -28,6 +28,19 @@ All the configuration options are now in file MkRules.
 
 
 
+rw1042
+======
+
+Launching HTML files from the menus was not working with Netscape 6.2.1,
+so a workaround has been provided.
+
+Rgui.exe.manifest has been added to get XP-style widgets on Windows XP.
+
+Some logical colour names have been changed to get consistent colour
+schemes on Windows XP.
+
+
+
 rw1041
 ======
 
