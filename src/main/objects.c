@@ -657,8 +657,8 @@ void RemoveClass(SEXP x, char *name)
 
 SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, class, what, which, rval;
-    int i, j, nargs, nwhat, isvec, nclass;
+    SEXP x, class, what, which, rval = R_NilValue /* -Wall */;
+    int i, j, nwhat, isvec, nclass;
 
     checkArity(op, args);
 
