@@ -21,7 +21,7 @@ C
 C Pass 1
       wjm3(1)=0d0
       wjm3(2)=0d0
-      wjm3(1)=0d0
+      wjm3(3)=0d0
       wjm2(1)=0d0
       wjm2(2)=0d0
       wjm1(1)=0d0
