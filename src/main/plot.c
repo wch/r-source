@@ -973,6 +973,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(args) < 6)
 	errorcall(call, "too few arguments\n");
 
+    sx = R_NilValue;            /* -Wall */
+    sy = R_NilValue;            /* -Wall */
+
     /* Required Arguments */
     sxy = CAR(args);
     if (isNewList(sxy) && length(sxy) >= 2) {
@@ -1527,6 +1530,9 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     if(length(args) < 3) errorcall(call, "too few arguments\n");
+
+    sx = R_NilValue;            /* -Wall */
+    sy = R_NilValue;            /* -Wall */
 
     sxy = CAR(args);
     if (isNewList(sxy) && length(sxy) >= 2) {
