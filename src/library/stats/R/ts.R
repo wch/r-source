@@ -6,8 +6,6 @@ window	  <- function(x, ...) UseMethod("window")
 cycle     <- function(x, ...) UseMethod("cycle")
 deltat    <- function(x, ...) UseMethod("deltat")
 
-options(ts.eps = 1e-5)   # default as S
-
 ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 	       deltat = 1, ts.eps  =  getOption("ts.eps"),
                class = if(nseries > 1) c("mts", "ts") else "ts",
