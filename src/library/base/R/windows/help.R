@@ -137,7 +137,7 @@ help <-
                                  paste(R.home(), "bin", "helpPRINT", sep="/"),
                                  '"', sep="")
                     texpath <- gsub("\\\\", "/",
-                                    file.path(R.home(), "doc", "manual"))
+                                    file.path(R.home(), "share", "texmf"))
                     system(paste(cmd, FILE, topic, texpath), wait = FALSE)
                     return(invisible())
                 }
