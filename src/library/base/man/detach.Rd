@@ -44,7 +44,8 @@ library(eda)
 pkg <- "package:eda"
 detach(pos = match(pkg, search()))
 
-library(mva)
+## careful: do not do this unless `lqs' is not already loaded.
+library(lqs)
 detach(2)# `pos' used for `name'
 }
 \keyword{data}
