@@ -563,13 +563,13 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "/r   { 3 index 3 index moveto 1 index 4 -1 roll\n");
     fprintf(fp, "	lineto exch 1 index lineto lineto closepath } def\n");
     fprintf(fp, "/p1  { stroke } def\n");
-    fprintf(fp, "/p2  { bg setrgbcolor fill fg setrgbcolor } def\n");
+    fprintf(fp, "/p2  { gsave bg setrgbcolor fill grestore newpath } def\n");
     fprintf(fp, "/p3  { gsave bg setrgbcolor fill grestore stroke } def\n");
     fprintf(fp, "/t   { 6 -2 roll moveto gsave rotate\n");
     fprintf(fp, "       ps mul neg 0 2 1 roll rmoveto\n");
     fprintf(fp, "       1 index stringwidth pop\n");
     fprintf(fp, "       mul neg 0 rmoveto show grestore } def\n");
-    fprintf(fp, "/cl  { gr gs newpath 3 index 3 index moveto 1 index\n");
+    fprintf(fp, "/cl  { grestore gsave newpath 3 index 3 index moveto 1 index\n");
     fprintf(fp, "       4 -1 roll lineto  exch 1 index lineto lineto\n");
     fprintf(fp, "       closepath clip newpath } def\n");
     fprintf(fp, "/rgb { setrgbcolor } def\n");
@@ -777,7 +777,7 @@ static void   PS_Text(double, double, int, char*, double, double, DevDesc*);
 
 static void PostScriptSetCol(FILE *fp, double r, double g, double b)
 {
-	fprintf(fp,"/fg { %.4f %.4f %.4f } def fg rgb\n", r, g, b);
+	fprintf(fp,"%.4f %.4f %.4f rgb\n", r, g, b);
 }
 
 static void PostScriptSetFill(FILE *fp, double r, double g, double b)
