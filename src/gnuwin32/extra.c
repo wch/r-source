@@ -367,7 +367,7 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 		    (int)verinfoex.wServicePackMinor,
 		    verinfoex.szCSDVersion);
 	else {
-	    sprintf(ver, "Windows 2000 %d.%d (build %d) %",
+	    sprintf(ver, "Windows 2000 %d.%d (build %d) %s",
 		    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
 		    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
 	}
