@@ -2,10 +2,9 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 {
     methods <- c("mailx", "gnudoit")
 
-    if(is.null(method))
-	method <- "mailx"
-    else
-	method <- methods[pmatch(method, methods)]
+    method <-
+	if(is.null(method)) "mailx"
+	else methods[pmatch(method, methods)]
 
     body <- paste("\\n\\n",
 		  "--please do not edit the information below--\\n\\n",
@@ -16,7 +15,7 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 		  paste(search(), collapse=", "),
 		  "\\n", sep="", collapse="")
 
-    if(method == "mailx"){
+    if(method == "mailx") {
 	file <- tempfile()
 	cat("Subject: ")
 	subject <- readline()
@@ -42,7 +41,7 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 	    cat("The unsent bug report can be found in file",
 		file, "\n")
     }
-    else if(method == "gnudoit"){
+    else if(method == "gnudoit") {
 	cmd <- paste("gnudoit -q '",
 		     "(mail nil \"r-bugs@biostat.ku.dk\")",
 		     "(insert \"", body, "\")",
@@ -54,67 +53,67 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 }
 
 
-data <-
-    function(..., list = character(0), package =c(.packages(), .Autoloaded),
-	     lib.loc = .lib.loc, trace = FALSE) {
-	names <- c(as.character(substitute(list(...))[-1]), list)
-	if (!missing(package))
-	    if (is.name(y <- substitute(package)))# && !is.character(package))
-		package <- as.character(y)
-	found <- FALSE
-	if (length(names) == 0) {	      # give `index' of all possible
-	    ## data sets
-	    file <- tempfile("Rdata.")
-	    on.exit(unlink(file))
-	    for (lib in lib.loc)
-		for (pkg in package) {
-		    INDEX <- system.file(paste("data", "index.doc", sep = "/"),
-					 pkg, lib)
-		    if (INDEX != "") {
-			cat(paste(ifelse(found, "\n", ""),
-				  "Data sets in package `", pkg, "':\n\n", sep = ""),
-			    file = file, append = TRUE)
-			system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
-			if(!found) found <- TRUE
-		    }
-		}
-	    if (found)
-		system(paste("$RHOME/bin/pager", file))
-	}
-	else for (name in names) {
-	    dn <- paste("data/", name, sep = "")
-	    files <- system.file(paste(dn, ".*", sep = ""), package, lib.loc)
-	    found <- FALSE
-	    if (files != "") {
-		for (file in files) {
-		    if(trace)
-			cat("name=",name,":\t file= .../",sub(".*/","",file),"::\t",sep="")
-		    if (found) break
-		    found <- TRUE
-		    ext <- sub(".*\\.", "", file)
-		    ## make sure the match is really for `name.ext'
-		    if (sub(".*/", "", file) != paste(name, ".", ext, sep = ""))
-			found <- FALSE
-		    else
-			switch(ext,
-			       "R" =, "r" = source(file),
-			       "RData" =, "rdata" =, "rda" = load(file),
-			       "TXT" =, "txt" =, "tab" =
-			       assign(name, read.table(file, header = TRUE),
-				      env = .GlobalEnv),
-			       "CSV" =, "csv" =
-			       assign(name, read.table(file, header = TRUE, sep = ";"),
-				      env = .GlobalEnv),
-			       ## otherwise
-			       found <- FALSE)
-		    if (trace) cat(if(!found) "*NOT* ", "found\n")
+data <- function(..., list = character(0), package =c(.packages(), .Autoloaded),
+		 lib.loc = .lib.loc, verbose = .Options$verbose) {
+    names <- c(as.character(substitute(list(...))[-1]), list)
+    if (!missing(package))
+	if (is.name(y <- substitute(package)))# && !is.character(package))
+	    package <- as.character(y)
+    found <- FALSE
+    if (length(names) == 0) {		# give `index' of all possible
+	## data sets
+	file <- tempfile("Rdata.")
+	on.exit(unlink(file))
+	for (lib in lib.loc)
+	    for (pkg in package) {
+		INDEX <- system.file(paste("data", "index.doc", sep = "/"),
+				     pkg, lib)
+		if (INDEX != "") {
+		    cat(paste(ifelse(found, "\n", ""),
+			      "Data sets in package `", pkg, "':\n\n", sep = ""),
+			file = file, append = TRUE)
+		    system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
+		    if(!found) found <- TRUE
 		}
 	    }
-	    if (!found)
-		warning(paste("Data set `", name, "' not found", sep = ""))
-	}
-	invisible(names)
+	if (found)
+	    system(paste("$RHOME/bin/pager", file))
     }
+    else for (name in names) {
+	dn <- paste("data/", name, sep = "")
+	files <- system.file(paste(dn, ".*", sep = ""), package, lib.loc)
+	found <- FALSE
+	if (files != "") {
+	    for (file in files) {
+		if(verbose)
+		    cat("name=",name,":\t file= .../",sub(".*/","",file), "::\t",
+                        sep="")
+		if (found) break
+		found <- TRUE
+		ext <- sub(".*\\.", "", file)
+		## make sure the match is really for `name.ext'
+		if (sub(".*/", "", file) != paste(name, ".", ext, sep = ""))
+		    found <- FALSE
+		else
+		    switch(ext,
+			   "R" =, "r" = source(file),
+			   "RData" =, "rdata" =, "rda" = load(file),
+			   "TXT" =, "txt" =, "tab" =
+			   assign(name, read.table(file, header = TRUE),
+				  env = .GlobalEnv),
+			   "CSV" =, "csv" =
+			   assign(name, read.table(file, header = TRUE, sep = ";"),
+				  env = .GlobalEnv),
+			   ## otherwise
+			   found <- FALSE)
+		if (verbose) cat(if(!found) "*NOT* ", "found\n")
+	    }
+	}
+	if (!found)
+	    warning(paste("Data set `", name, "' not found", sep = ""))
+    }
+    invisible(names)
+}
 
 date <- function() { system("date", intern = TRUE) }
 
@@ -132,111 +131,101 @@ getenv <- function(x) {
     }
 }
 
-help <-
-    function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-	     lib.loc = .lib.loc) {
-	if (!missing(package))
-	    if (is.name(y <- substitute(package)))# && !is.character(package))
-		package <- as.character(y)
-	if (!missing(topic)) {
-	    topic <- substitute(topic)
-	    if (is.name(topic))
-		topic <- as.character(topic)
-	    else if (!is.character(topic))
-		stop("Unimplemented help feature")
-	    if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
-		topic <- "Arithmetic"
-	    else if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!="))))
-		topic <- "Comparison"
-	    else if (!is.na(match(topic, c("[", "[[", "$"))))
-		topic <- "Extract"
-	    else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
-		topic <- "Logic"
-	    else if (!is.na(match(topic, c("%*%"))))
-		topic<- "matmult"
-	    topic <- gsub("\\[","\\\\[", topic) # for cmd/help ..
-	    INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
-			     "help", "AnIndex", sep = "/", collapse = " ")
-	    file <- system(paste("${RHOME}/bin/help INDEX '", topic, "' ",
-				 INDICES, sep=""),
-			   intern = TRUE)
-	    if (file == "") {			# try data .doc -- this is OUTDATED
-		file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
-				    package, lib.loc)
-	    }
-	    if (length(file) && file != "") {
-		if (!is.null(.Options$trace) && .Options$trace)
-		    cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
-			 ".Rd'\n", sep = "")
-		if (!offline) {
-                    if(!is.null(.Options$htmlhelp) && .Options$htmlhelp){
-                        file <- gsub(paste("/help/", topic, sep=""),
-                                     paste("/html/", topic, sep=""),
-                                     file)
-                        file <- paste("file:", file, ".html", sep="")
-                        if(is.null(.Options$browser))
-                            stop("options(\"browser\") not set")
-                        browser <- .Options$browser
-                        system(paste(browser, " -remote \"openURL(", file,
-                                     ")\" 2>/dev/null || ",
-                                     browser, " ", file, " &", sep = ""))
-                    }
-                    else
-                        system(paste("${RHOME}/bin/pager", file))
-                }
-		else {
-		    FILE <- tempfile()
-		    ## on.exit(unlink(paste(FILE, "*", sep = "")))
-		    cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
-			file = FILE, sep = "")
-		    system(paste("cat ${RHOME}/doc/manual/Rd.sty >>", FILE))
-		    cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
-			file = FILE, append = TRUE)
-		    system(paste("cat ", sub("help/", "latex/", file), ".tex >>",
-				 FILE, sep = ""))
-		    cat("\\end{document}\n", file = FILE, append = TRUE)
-		    system(paste("${RHOME}/bin/help PRINT", FILE, topic))
-		    return()
-		}
-	    } else
-	    stop(paste("No documentation for `", topic, "'", sep = ""))
+help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
+		 lib.loc = .lib.loc, verbose = .Options$verbose) {
+    if (!missing(package))
+	if (is.name(y <- substitute(package)))# && !is.character(package))
+	    package <- as.character(y)
+    if (!missing(topic)) {
+	topic <- substitute(topic)
+	if (is.name(topic))
+	    topic <- as.character(topic)
+	else if (!is.character(topic))
+	    stop("Unimplemented help feature")
+	if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
+	    topic <- "Arithmetic"
+	else if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!="))))
+	    topic <- "Comparison"
+	else if (!is.na(match(topic, c("[", "[[", "$"))))
+	    topic <- "Extract"
+	else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
+	    topic <- "Logic"
+	else if (!is.na(match(topic, c("%*%"))))
+	    topic <- "matmult"
+	topic <- gsub("\\[","\\\\[", topic)# for cmd/help ..
+	INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
+			 "help", "AnIndex", sep = "/", collapse = " ")
+	file <- system(paste("${RHOME}/bin/help INDEX '", topic, "' ",
+			     INDICES, sep=""),
+		       intern = TRUE)
+	if (file == "") {		# try data .doc -- this is OUTDATED
+	    file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
+				package, lib.loc)
 	}
-	else if (!missing(package))
-	    library(help = package, lib = lib.loc, character.only = TRUE)
-	else if (!missing(lib.loc))
-	    library(lib = lib.loc)
-	else
-	    help("help", package = "base", lib.loc = .Library)
+	if (length(file) && file != "") {
+	    if (verbose)
+		cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
+		     ".Rd'\n", sep = "")
+	    if (!offline) {
+		if(!is.null(.Options$htmlhelp) && .Options$htmlhelp){
+		    file <- gsub(paste("/help/", topic, sep=""),
+				 paste("/html/", topic, sep=""),
+				 file)
+		    file <- paste("file:", file, ".html", sep="")
+		    if(is.null(.Options$browser))
+			stop("options(\"browser\") not set")
+		    browser <- .Options$browser
+		    system(paste(browser, " -remote \"openURL(", file,
+				 ")\" 2>/dev/null || ",
+				 browser, " ", file, " &", sep = ""))
+		}
+		else
+		    system(paste("${RHOME}/bin/pager", file))
+	    }
+	    else {
+		FILE <- tempfile()
+		## on.exit(unlink(paste(FILE, "*", sep = "")))
+		cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
+		    file = FILE, sep = "")
+		system(paste("cat ${RHOME}/doc/manual/Rd.sty >>", FILE))
+		cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
+		    file = FILE, append = TRUE)
+		system(paste("cat ", sub("help/", "latex/", file), ".tex >>",
+			     FILE, sep = ""))
+		cat("\\end{document}\n", file = FILE, append = TRUE)
+		system(paste("${RHOME}/bin/help PRINT", FILE, topic))
+		return()
+	    }
+	} else
+	stop(paste("No documentation for `", topic, "'", sep = ""))
     }
+    else if (!missing(package))
+	library(help = package, lib = lib.loc, character.only = TRUE)
+    else if (!missing(lib.loc))
+	library(lib = lib.loc)
+    else
+	help("help", package = "base", lib.loc = .Library)
+}
 
-help.start <-
-    function (gui = "irrelevant", browser = .Options$browser,
-              remote = NULL) {
-        
+help.start <- function (gui = "irrelevant", browser = .Options$browser,
+			remote = NULL) {
     if(is.null(browser))
 	stop("Invalid browser name, check options(\"browser\").")
-
     url <- paste(if (is.null(remote)) "$HOME/.R" else remote,
 		 "/doc/html/index.html", sep = "")
-    
     cat("If", browser, " is already running,\tit is *not* restarted,\n",
 	"and you must switch to its window.\nOtherwise, be patient..\n")
-
-
     system(paste("${RHOME}/bin/help.links",
-                 paste(.lib.loc[length(.lib.loc):1], sep=" ", collapse=" "),
-                 sep =" "))
-  
+		 paste(.lib.loc[length(.lib.loc):1], sep=" ", collapse=" "),
+		 sep =" "))
     system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
 		 browser, " ", url, " &", sep = ""))
-
     options(htmlhelp=TRUE)
 }
 
 
-library <-
-    function (name, help, lib.loc = .lib.loc, character.only = FALSE,
-	      logical.return = FALSE)
+library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
+		     logical.return = FALSE)
 {
     if (!missing(name)) {
 	if (!character.only)
@@ -308,26 +297,27 @@ library <-
     else invisible(.packages())
 }
 
-library.dynam <-
-    function(chname, package = .packages(), lib.loc = .lib.loc) {
-	if (!exists(".Dyn.libs"))
-	    assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
-	if(missing(chname) || (LEN <- nchar(chname)) == 0)
-	    return(.Dyn.libs)
-	if (substr(chname, LEN - 2, LEN) == ".so") {
-	    chname <- substr(chname, 1, LEN - 3)
-	}
-	if (is.na(match(chname, .Dyn.libs))) {
-	    file <- system.file(paste("libs", "/", chname, ".", "so", sep = ""),
-				package, lib.loc)
-	    if (file == "") {
-		stop(paste("dynamic library `", chname, "' not found", sep = ""))
-	    }
-	    .Internal(dyn.load(file))
-	    assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
-	}
-	invisible(.Dyn.libs)
+library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc,
+			  verbose = .Options$verbose) {
+    if (!exists(".Dyn.libs"))
+	assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
+    if(missing(chname) || (LEN <- nchar(chname)) == 0)
+	return(.Dyn.libs)
+    if (substr(chname, LEN - 2, LEN) == ".so") {
+	chname <- substr(chname, 1, LEN - 3)
     }
+    if (is.na(match(chname, .Dyn.libs))) {
+	file <- system.file(paste("libs", "/", chname, ".", "so", sep = ""),
+			    package, lib.loc)
+	if (file == "") {
+	    stop(paste("dynamic library `", chname, "' not found", sep = ""))
+	}
+	if(verbose) cat("now dyn.load(",file,")..\n", sep="")
+	.Internal(dyn.load(file))
+	assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
+    }
+    invisible(.Dyn.libs)
+}
 
 system <- function(call, intern = FALSE) .Internal(system(call, intern))
 unix <- function(call, intern = FALSE) {
@@ -342,10 +332,7 @@ system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
 
 system.time <- function(expr) {
     ## Purpose: Return CPU (and other) times that `expr' used ..
-    ## Modelled after S "unix.time"
-    ## -----------------------------------------------------------------
-    ## Arguments: expr: `any' valid R expression
-    ## -----------------------------------------------------------------
+    ## Argument	 expr: `any' valid R expression
     loc.frame <- sys.frame(sys.parent(1))
     on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
     expr <- substitute(expr)
@@ -354,7 +341,7 @@ system.time <- function(expr) {
     new.time <- proc.time()
     on.exit()
     if(length(new.time) == 3)	new.time <- c(new.time, 0, 0)
-    if(length(time) == 3)		time	 <- c(	  time, 0, 0)
+    if(length(time) == 3)	time	 <- c(	  time, 0, 0)
     new.time - time
 }
 
