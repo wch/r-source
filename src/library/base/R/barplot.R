@@ -44,11 +44,11 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     w.m <- w.r - delta
     w.l <- w.m - delta
     if (horiz) {
-	if (missing(xlim)) xlim <- range(-0.01 * height, height)
+	if (missing(xlim)) xlim <- range(-0.01 * height, height, na.rm=TRUE)
 	if (missing(ylim)) ylim <- c(min(w.l), max(w.r))
     } else {
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
-	if (missing(ylim)) ylim <- range(-0.01 * height, height)
+	if (missing(ylim)) ylim <- range(-0.01 * height, height, na.rm=TRUE)
     }
     if (beside)
 	w.m <- matrix(w.m, nc = NC)

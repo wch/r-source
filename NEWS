@@ -17,8 +17,8 @@ NEW FEATURES
 	during configuration, and is `less' if available, otherwise
 	`more' (and not `more -s' as previously).
 
-    o	configure now tests for strptime functions that fail before
-	1970 (found on Irix).
+    o	configure now tests for strptime functions that fail on inputs
+	before 1970 (found on Irix).
 
     o	New formula interface to cor.test() in package ctest.
 
@@ -41,6 +41,9 @@ BUG FIXES
 
     o	Eliminated segmentation fault in while loops without braces
 	in their bodies.
+
+    o	barplot did not accept NA heights unless ylim was specified.
+
 
 
 
