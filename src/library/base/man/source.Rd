@@ -42,7 +42,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   is missing the final EOL marker.
 
   If \code{\link{options}}("keep.source") is true (the default), the
-  source of functions is keep so they can be listed exactly as input.
+  source of functions is kept so they can be listed exactly as input.
   This imposes a limit of 128K chars on the function size and a nesting
   limit of 265.  Use \code{option(keep.source = FALSE)} when these
   limits might take effect: if exceeded they generate an error.
