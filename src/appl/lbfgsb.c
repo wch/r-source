@@ -46,14 +46,11 @@ static void timer(double * ttime)
 # define min(a, b) (a > b)?(b):(a)
 #endif
 
-/* Table of constant values */
-
-static double c_b9 = 0.;
+/* Constants -- needed only as pointer arguments to the BLAS routines
+ * --------- Declaring them "const" would give compiler warnings 
+ * unless the F77_CALL(d....) headers were changed too */
 static int c__1 = 1;
 static int c__11 = 11;
-static double c_b275 = .001;
-static double c_b276 = .9;
-static double c_b277 = .1;
 
 /*
 extern double F77_CALL(ddot)(int *, double *, int *, double *, int *);
@@ -78,9 +75,10 @@ static void cmprlb(int, int, double *,
 		   double *, double *, double *, double *, int *,
 		   double *, int *, int *, int *, int *,
 		   int *);
-static void dcsrch(double *, double *,
-		   double *, double *, double *, double *,
-		   double *, double *, char *, int *, double *);
+static void dcsrch(double *, double *, double *, 
+		   double, double, double,
+		   double, double, 
+		   char *, int *, double *);
 static void dcstep(double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, int *, double *,
@@ -332,16 +330,8 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
     int lz, lwa, lwn, lss, lws, lwt, lsy, lwy;
 
     /* Parameter adjustments */
-    --iwa;
-    --g;
-    --nbd;
-    --u;
-    --l;
-    --x;
     --wa;
-    --lsave;
     --isave;
-    --dsave;
 
     /* Function Body */
     if (strncmp(task, "START", 5) == 0) {
@@ -377,23 +367,23 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
     ld = isave[14];
     lt = isave[15];
     lwa = isave[16];
-    mainlb(n, m, &x[1], &l[1], &u[1], &nbd[1], f, &g[1], factr, pgtol, &wa[
-	    lws], &wa[lwy], &wa[lsy], &wa[lss], &wa[lwt], &wa[lwn], &wa[lsnd],
-	     &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa], &iwa[1], &iwa[n +
-	    1], &iwa[(n << 1) + 1], task, iprint, csave, &lsave[1], &isave[
-	    22], &dsave[1]);
+    mainlb(n, m, x, l, u, nbd, f, g, factr, pgtol, 
+	   &wa[lws], &wa[lwy], &wa[lsy],&wa[lss], &wa[lwt],&wa[lwn], 
+	   &wa[lsnd], &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa], 
+	   iwa, &iwa[n], &iwa[n << 1], task, iprint, 
+	   csave, lsave, &isave[22], dsave);
     return;
 } /* setulb */
-
 /* ======================= The end of setulb ============================= */
+
 static void mainlb(int n, int m, double *x,
-		   double *l, double *u, int *nbd, double *f, double
-		   *g, double factr, double *pgtol, double *ws, double *
-		   wy, double *sy, double *ss, double *wt, double *wn,
-		   double *snd, double *z__, double *r__, double *d__,
+		   double *l, double *u, int *nbd, double *f, double *g, 
+		   double factr, double *pgtol, double *ws, double * wy, 
+		   double *sy, double *ss, double *wt, double *wn,
+		   double *snd, double *z, double *r, double *d,
 		   double *t, double *wa, int *indx, int *iwhere,
-		   int *indx2, char *task, int iprint, char *csave, int *
-		   lsave, int *isave, double *dsave)
+		   int *indx2, char *task, int iprint, 
+		   char *csave, int *lsave, int *isave, double *dsave)
 {
 /*     ************
        Subroutine mainlb
@@ -621,9 +611,9 @@ static void mainlb(int n, int m, double *x,
     --iwhere;
     --indx;
     --t;
-    --d__;
-    --r__;
-    --z__;
+    --d;
+    --r;
+    --z;
     --g;
     --nbd;
     --u;
@@ -705,6 +695,7 @@ static void mainlb(int n, int m, double *x,
 	cnstnd = lsave[2];
 	boxed = lsave[3];
 	updatd = lsave[4];
+
 	nintol = isave[1];
 	itfile = isave[3];
 	iback = isave[4];
@@ -723,6 +714,7 @@ static void mainlb(int n, int m, double *x,
 	nact = isave[18];
 	ileave = isave[19];
 	nenter = isave[20];
+
 	theta = dsave[1];
 	fold = dsave[2];
 	tol = dsave[3];
@@ -739,22 +731,17 @@ static void mainlb(int n, int m, double *x,
 	stp = dsave[14];
 	gdold = dsave[15];
 	dtd = dsave[16];
-/*	  After returning from the driver go to the point where execution */
-/*	  is to resume. */
-	if (strncmp(task, "FG_LN", 5) == 0) {
-	    goto L666;
-	}
-	if (strncmp(task, "NEW_X", 5) == 0) {
-	    goto L777;
-	}
-	if (strncmp(task, "FG_ST", 5) == 0) {
-	    goto L111;
-	}
+/*	After returning from the driver go to the point where execution */
+/*	is to resume. */
+	if (strncmp(task, "FG_LN", 5) == 0)	goto L666;
+	if (strncmp(task, "NEW_X", 5) == 0)     goto L777;
+	if (strncmp(task, "FG_ST", 5) == 0)     goto L111;
+
 	if (strncmp(task, "STOP", 4) == 0) {
 	    if (strncmp(task + 6, "CPU", 3) == 0) {
-/*					    restore the previous iterate. */
+		/* restore the previous iterate. */
 		F77_CALL(dcopy)(&n, &t[1], &c__1, &x[1], &c__1);
-		F77_CALL(dcopy)(&n, &r__[1], &c__1, &g[1], &c__1);
+		F77_CALL(dcopy)(&n, &r[1], &c__1, &g[1], &c__1);
 		*f = fold;
 	    }
 	    goto L999;
@@ -785,7 +772,7 @@ L222:
 
     if (! cnstnd && col > 0) {
 /*					      skip the search for GCP. */
-	F77_CALL(dcopy)(&n, &x[1], &c__1, &z__[1], &c__1);
+	F77_CALL(dcopy)(&n, &x[1], &c__1, &z[1], &c__1);
 	wrk = updatd;
 	nint = 0;
 	goto L333;
@@ -797,7 +784,7 @@ L222:
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
     timer(&cpu1);
     cauchy(n, &x[1], &l[1], &u[1], &nbd[1], &g[1], &indx2[1], &iwhere[1], &t[
-	    1], &d__[1], &z__[1], m, &wy[wy_offset], &ws[ws_offset], &sy[
+	    1], &d[1], &z[1], m, &wy[wy_offset], &ws[ws_offset], &sy[
 	    sy_offset], &wt[wt_offset], &theta, &col, &head, &wa[1], &wa[(m
 	    << 1) + 1], &wa[(m << 2) + 1], &wa[m * 6 + 1], &nint, iprint, &
 	    sbgnrm, &info, &epsmch);
@@ -866,13 +853,13 @@ L333:
 /*	  compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x) */
 /*						     from 'cauchy'). */
     cmprlb(n, m, &x[1], &g[1], &ws[ws_offset], &wy[wy_offset], &sy[sy_offset]
-	    , &wt[wt_offset], &z__[1], &r__[1], &wa[1], &indx[1], &theta, &
+	    , &wt[wt_offset], &z[1], &r[1], &wa[1], &indx[1], &theta, &
 	    col, &head, &nfree, &cnstnd, &info);
     if (info != 0) {
 	goto L444;
     }
 /*	 call the direct method. */
-    subsm(n, m, &nfree, &indx[1], &l[1], &u[1], &nbd[1], &z__[1], &r__[1], &
+    subsm(n, m, &nfree, &indx[1], &l[1], &u[1], &nbd[1], &z[1], &r[1], &
 	    ws[ws_offset], &wy[wy_offset], &theta, &col, &head, &iword, &wa[1]
 	    , &wn[wn_offset], iprint, &info);
 L444:
@@ -903,19 +890,19 @@ L555:
 /*     Generate the search direction d:=z-x. */
     i__1 = n;
     for (i = 1; i <= i__1; ++i) {
-	d__[i] = z__[i] - x[i];
+	d[i] = z[i] - x[i];
 /* L40: */
     }
     timer(&cpu1);
 L666:
     lnsrlb(n, &l[1], &u[1], &nbd[1], &x[1], f, &fold, &gd, &gdold, &g[1], &
-	    d__[1], &r__[1], &t[1], &z__[1], &stp, &dnorm, &dtd, &xstep, &
+	    d[1], &r[1], &t[1], &z[1], &stp, &dnorm, &dtd, &xstep, &
 	    stpmx, &iter, &ifun, &iback, &nfgv, &info, task, &boxed, &cnstnd,
 	    csave, &isave[22], &dsave[17]);
     if (info != 0 || iback >= 20) {
 /*	    restore the previous iterate. */
 	F77_CALL(dcopy)(&n, &t[1], &c__1, &x[1], &c__1);
-	F77_CALL(dcopy)(&n, &r__[1], &c__1, &g[1], &c__1);
+	F77_CALL(dcopy)(&n, &r[1], &c__1, &g[1], &c__1);
 	*f = fold;
 	if (col == 0) {
 /*	       abnormal termination. */
@@ -983,16 +970,16 @@ L777:
 /*     Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's. */
     i__1 = n;
     for (i = 1; i <= i__1; ++i) {
-	r__[i] = g[i] - r__[i];
+	r[i] = g[i] - r[i];
 /* L42: */
     }
-    rr = F77_CALL(ddot)(&n, &r__[1], &c__1, &r__[1], &c__1);
+    rr = F77_CALL(ddot)(&n, &r[1], &c__1, &r[1], &c__1);
     if (stp == 1.) {
 	dr = gd - gdold;
 	ddum = -gdold;
     } else {
 	dr = (gd - gdold) * stp;
-	F77_CALL(dscal)(&n, &stp, &d__[1], &c__1);
+	F77_CALL(dscal)(&n, &stp, &d[1], &c__1);
 	ddum = -gdold * stp;
     }
     if (dr <= epsmch * ddum) {
@@ -1012,7 +999,7 @@ L777:
     ++iupdat;
 /*     Update matrices WS and WY and form the middle matrix in B. */
     matupd(n, m, &ws[ws_offset], &wy[wy_offset], &sy[sy_offset], &ss[
-	    ss_offset], &d__[1], &r__[1], &itail, &iupdat, &col, &head, &
+	    ss_offset], &d[1], &r[1], &itail, &iupdat, &col, &head, &
 	    theta, &rr, &dr, &stp, &dtd);
 /*     Form the upper half of the pds T = theta*SS + L*D^(-1)*L'; */
 /*	  Store T in the upper triangular of the array wt; */
@@ -1508,24 +1495,11 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     double d__1;
 
     /* Local variables */
-    double dibp;
-    int iter;
-    double zibp, tsum, dibp2;
-    int i, j;
-    int bnded;
-    double neggi;
-    int nfree;
-    double bkmin;
-    int nleft;
-    double f1, f2, f2_org__, dt, tj, tl= 0.0, tu=0.0;
-    int nbreak, ibkmin;
-    int pointr;
-    double tj0;
-    int xlower, xupper;
-    int ibp;
-    double dtm;
-    double wmc, wmp, wmw;
-    int col2;
+    double bkmin, dibp, dibp2, zibp, neggi, tsum;
+    double f1, f2, f2_org__, dt, tj, tj0, tl= 0.0, tu=0.0, dtm, wmc, wmp, wmw;
+
+    int i, j, ibp, iter, bnded, nfree, nleft, nbreak, ibkmin, pointr;
+    int xlower, xupper, col2;
 
     /* Parameter adjustments */
     --xcp;
@@ -1628,7 +1602,6 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 		p[j] += wy[i + pointr * wy_dim1] * neggi;
 		p[*col + j] += ws[i + pointr * ws_dim1] * neggi;
 		pointr = pointr % m + 1;
-/* L40: */
 	    }
 	    if (nbd[i] <= 2 && nbd[i] != 0 && neggi < 0.) {
 /*				   x(i) + d(i) is bounded; compute t(i). */
@@ -1648,13 +1621,11 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 		    bkmin = t[nbreak];
 		    ibkmin = nbreak;
 		}
-	    } else {
-/*		  x(i) + d(i) is not bounded. */
+	    } else {/*		  x(i) + d(i) is not bounded. */
 		--nfree;
 		iorder[nfree] = i;
-		if (fabs(neggi) > 0.) {
+		if (fabs(neggi) > 0.)
 		    bnded = FALSE_;
-		}
 	    }
 	}
 /* L50: */
@@ -1791,19 +1762,17 @@ L777:
 	if (*info != 0) {
 	    return;
 	}
-	wmc = F77_CALL(ddot)(&col2, &c[1], &c__1, &v[1], &c__1);
-	wmp = F77_CALL(ddot)(&col2, &p[1], &c__1, &v[1], &c__1);
-	wmw = F77_CALL(ddot)(&col2, &wbp[1], &c__1, &v[1], &c__1);
+	wmc = F77_CALL(ddot)(&col2,  &c[1], &c__1, &v[1], &c__1);
+	wmp = F77_CALL(ddot)(&col2,  &p[1], &c__1, &v[1], &c__1);
+	wmw = F77_CALL(ddot)(&col2,&wbp[1], &c__1, &v[1], &c__1);
 /*	     update p = p - dibp*wbp. */
 	d__1 = -dibp;
 	F77_CALL(daxpy)(&col2, &d__1, &wbp[1], &c__1, &p[1], &c__1);
 /*	     complete updating f1 and f2 while col > 0. */
 	f1 += dibp * wmc;
-	f2 = f2 + dibp * 2. * wmp - dibp2 * wmw;
+	f2 += (2. * dibp * wmp - dibp2 * wmw);
     }
-/* Computing MAX */
-    d__1 = *epsmch * f2_org__;
-    f2 = max(d__1,f2);
+    if(f2 < (d__1 = *epsmch * f2_org__)) f2 = d__1;
     if (nleft > 0) {
 	dtm = -f1 / f2;
 	goto L777;
@@ -2689,6 +2658,12 @@ static void lnsrlb(int n, double *l, double *u,
 	**********
 */
 
+    /* For dcsrch(): */ 
+    const double stpmin = 0.;
+    const double ftol = .001;
+    const double gtol = .9;
+    const double xtol = .1;
+
     /* System generated locals */
     double d1;
 
@@ -2706,8 +2681,6 @@ static void lnsrlb(int n, double *l, double *u,
     --nbd;
     --u;
     --l;
-    --isave;
-    --dsave;
 
     /* Function Body */
     if (strncmp(task, "FG_LN", 5) == 0) {
@@ -2767,8 +2740,10 @@ L556:
 	    return;
 	}
     }
-    dcsrch(f, gd, stp, &c_b275, &c_b276, &c_b277, &c_b9, stpmx, csave, &
-	    isave[1], &dsave[1]);
+    dcsrch(f, gd, stp, 
+	   ftol, gtol, xtol, 
+	   stpmin, *stpmx, 
+	   csave, isave, dsave);
     *xstep = *stp * *dnorm;
     if (strncmp(csave, "CONV", 4) != 0 && strncmp(csave, "WARN", 4) != 0) {
 	strcpy(task, "FG_LNSRCH");
@@ -2916,49 +2891,34 @@ static void projgr(int n, double *l, double *u,
 
 	************
 */
-
-    /* System generated locals */
-    double d__1, d__2;
-
-    /* Local variables */
     int i;
-    double gi;
+    double gi, d__1;
 
-    /* Parameter adjustments */
-    --g;
-    --x;
-    --nbd;
-    --u;
-    --l;
-
-    /* Function Body */
     *sbgnrm = 0.;
-    for (i = 1; i <= n; ++i) {
+    for (i = 0; i < n; ++i) {
 	gi = g[i];
 	if (nbd[i] != 0) {
 	    if (gi < 0.) {
 		if (nbd[i] >= 2) {
-		    d__1 = x[i] - u[i];
-		    gi = max(d__1,gi);
+		    if(gi < (d__1 = x[i] - u[i]))
+			gi = d__1;
 		}
 	    } else {
 		if (nbd[i] <= 2) {
-		    d__1 = x[i] - l[i];
-		    gi = min(d__1,gi);
+		    if(gi > (d__1 = x[i] - l[i]))
+			gi = d__1;
 		}
 	    }
 	}
-/* Computing MAX */
-	d__1 = *sbgnrm, d__2 = fabs(gi);
-	*sbgnrm = max(d__1,d__2);
+	if(*sbgnrm < (d__1 = fabs(gi))) *sbgnrm = d__1;
     }
     return;
 } /* projgr */
-/* ======================= The end of projgr ============================= */
+
 
 static void subsm(int n, int m, int *nsub, int *ind,
 		  double *l, double *u, int *nbd, double *x,
-		  double *d__, double *ws, double *wy, double *theta,
+		  double *d, double *ws, double *wy, double *theta,
 		  int *col, int *head, int *iword, double *wv,
 		  double *wn, int iprint, int *info)
 {
@@ -2974,9 +2934,9 @@ static void subsm(int n, int m, int *nsub, int *ind,
 
 	(P)   min Q(x) = r'(x-xcp) + 1/2 (x-xcp)' B (x-xcp)
 
-	      subject to l<=x<=u
-			x_i=xcp_i for all i in A(xcp)
-
+	      subject to l <= x <= u
+			 x_i = xcp_i   for all i in A(xcp)
+ 
 	along the subspace unconstrained Newton direction
 
 	   d = -(Z'BZ)^(-1) r.
@@ -3111,51 +3071,41 @@ static void subsm(int n, int m, int *nsub, int *ind,
 */
 
     /* System generated locals */
-    int ws_dim1, ws_offset, wy_dim1, wy_offset, wn_dim1, wn_offset, i__1,
-	    i__2;
+    int ws_offset, wn_dim1, wn_offset;
 
     /* Local variables */
-    double temp1, temp2;
-    int i, j, k;
-    double alpha;
-    int m2;
-    double dk;
-    int js, jy, pointr, ibd = 0, col2;
+    double alpha, dk, temp1, temp2;
+    int i, j, k, m2, js, jy, pointr, ibd = 0, col2, ns;
 
     /* Parameter adjustments */
-    --d__;
-    --x;
-    --nbd;
+    --d;
     --u;
     --l;
+    --x;
+    --ind;
+    --nbd;
+    --wv;
     wn_dim1 = 2 * m;
     wn_offset = 1 + wn_dim1 * 1;
     wn -= wn_offset;
-    --wv;
-    wy_dim1 = n;
-    wy_offset = 1 + wy_dim1 * 1;
-    wy -= wy_offset;
-    ws_dim1 = n;
-    ws_offset = 1 + ws_dim1 * 1;
+    /* ws[] and wy[] are both  [n x m ] :*/
+    ws_offset = 1 + n * 1;
     ws -= ws_offset;
-    --ind;
+    wy -= ws_offset;
 
-    /* Function Body */
-    if (*nsub <= 0) {
+    ns = *nsub;
+    if (ns <= 0)
 	return;
-    }
+
 /*     Compute wv = W'Zd. */
     pointr = *head;
-    i__1 = *col;
-    for (i = 1; i <= i__1; ++i) {
+    for (i = 1; i <= *col; ++i) {
 	temp1 = 0.;
 	temp2 = 0.;
-	i__2 = *nsub;
-	for (j = 1; j <= i__2; ++j) {
+	for (j = 1; j <= ns; ++j) {
 	    k = ind[j];
-	    temp1 += wy[k + pointr * wy_dim1] * d__[j];
-	    temp2 += ws[k + pointr * ws_dim1] * d__[j];
-/* L10: */
+	    temp1 += wy[k + pointr * n] * d[j];
+	    temp2 += ws[k + pointr * n] * d[j];
 	}
 	wv[i] = temp1;
 	wv[*col + i] = *theta * temp2;
@@ -3169,42 +3119,35 @@ static void subsm(int n, int m, int *nsub, int *ind,
     if (*info != 0) {
 	return;
     }
-    i__1 = *col;
-    for (i = 1; i <= i__1; ++i) {
+    for (i = 1; i <= *col; ++i)
 	wv[i] = -wv[i];
-/* L25: */
-    }
+
     F77_CALL(dtrsl)(&wn[wn_offset], &m2, &col2, &wv[1], &c__1, info);
     if (*info != 0) {
 	return;
     }
 /*     Compute d = (1/theta)d + (1/theta**2)Z'W wv. */
     pointr = *head;
-    i__1 = *col;
-    for (jy = 1; jy <= i__1; ++jy) {
+    for (jy = 1; jy <= *col; ++jy) {
 	js = *col + jy;
-	i__2 = *nsub;
-	for (i = 1; i <= i__2; ++i) {
+	for (i = 1; i <= ns; ++i) {
 	    k = ind[i];
-	    d__[i] = d__[i] + wy[k + pointr * wy_dim1] * wv[jy] / *theta
-		    + ws[k + pointr * ws_dim1] * wv[js];
-/* L30: */
+	    d[i] += (wy[k + pointr * n] * wv[jy] / *theta +
+		       ws[k + pointr * n] * wv[js]);
 	}
 	pointr = pointr % m + 1;
 /* L40: */
     }
-    i__1 = *nsub;
-    for (i = 1; i <= i__1; ++i) {
-	d__[i] /= *theta;
-/* L50: */
-    }
+
+    for (i = 1; i <= ns; ++i)
+	d[i] /= *theta;
+
 /*     Backtrack to the feasible region. */
     alpha = 1.;
     temp1 = alpha;
-    i__1 = *nsub;
-    for (i = 1; i <= i__1; ++i) {
+    for (i = 1; i <= ns; ++i) {
 	k = ind[i];
-	dk = d__[i];
+	dk = d[i];
 	if (nbd[k] != 0) {
 	    if (dk < 0. && nbd[k] <= 2) {
 		temp2 = l[k] - x[k];
@@ -3229,34 +3172,29 @@ static void subsm(int n, int m, int *nsub, int *ind,
 /* L60: */
     }
     if (alpha < 1.) {
-	dk = d__[ibd];
+	dk = d[ibd];
 	k = ind[ibd];
 	if (dk > 0.) {
 	    x[k] = u[k];
-	    d__[ibd] = 0.;
+	    d[ibd] = 0.;
 	} else if (dk < 0.) {
 	    x[k] = l[k];
-	    d__[ibd] = 0.;
+	    d[ibd] = 0.;
 	}
     }
-    i__1 = *nsub;
-    for (i = 1; i <= i__1; ++i) {
-	k = ind[i];
-	x[k] += alpha * d__[i];
-/* L70: */
-    }
-    if (alpha < 1.) {
-	*iword = 1;
-    } else {
-	*iword = 0;
-    }
+    for (i = 1; i <= ns; ++i)
+	x[ind[i]] += alpha * d[i];
+
+    *iword = (alpha < 1.) ? 1 : 0;
+
     return;
 } /* subsm */
 /* ====================== The end of subsm =============================== */
 
 static void dcsrch(double *f, double *g, double *stp,
-		   double *ftol, double *gtol, double *xtol,
-		   double *stpmin, double *stpmax,
+		   /*Chgd: the next five are no longer pointers:*/
+		   double ftol, double gtol, double xtol,
+		   double stpmin, double stpmax,
 		   char *task, int *isave, double *dsave)
 {
 /*	**********
@@ -3410,30 +3348,15 @@ static void dcsrch(double *f, double *g, double *stp,
 /*     Initialization block. */
     if (strncmp(task, "START", 5) == 0) {
 /*	  Check the input arguments for errors. */
-	if (*stp < *stpmin) {
-	    strcpy(task, "ERROR: STP .LT. STPMIN");
-	}
-	if (*stp > *stpmax) {
-	    strcpy(task, "ERROR: STP .GT. STPMAX");
-	}
-	if (*g >= 0.) {
-	    strcpy(task, "ERROR: INITIAL G .GE. ZERO");
-	}
-	if (*ftol < 0.) {
-	    strcpy(task, "ERROR: FTOL .LT. ZERO");
-	}
-	if (*gtol < 0.) {
-	    strcpy(task, "ERROR: GTOL .LT. ZERO");
-	}
-	if (*xtol < 0.) {
-	    strcpy(task, "ERROR: XTOL .LT. ZERO");
-	}
-	if (*stpmin < 0.) {
-	    strcpy(task, "ERROR: STPMIN .LT. ZERO");
-	}
-	if (*stpmax < *stpmin) {
-	    strcpy(task, "ERROR: STPMAX .LT. STPMIN");
-	}
+	if (*stp < stpmin)	strcpy(task, "ERROR: STP .LT. STPMIN");
+	if (*stp > stpmax)	strcpy(task, "ERROR: STP .GT. STPMAX");
+	if (*g >= 0.)		strcpy(task, "ERROR: INITIAL G .GE. ZERO");
+	if (ftol < 0.)		strcpy(task, "ERROR: FTOL .LT. ZERO");
+	if (gtol < 0.)		strcpy(task, "ERROR: GTOL .LT. ZERO");
+	if (xtol < 0.)		strcpy(task, "ERROR: XTOL .LT. ZERO");
+	if (stpmin < 0.)	strcpy(task, "ERROR: STPMIN .LT. ZERO");
+	if (stpmax < stpmin)	strcpy(task, "ERROR: STPMAX .LT. STPMIN");
+
 /*	  Exit if there are errors on input. */
 	if (strncmp(task, "ERROR", 5) == 0) {
 	    return;
@@ -3443,8 +3366,8 @@ static void dcsrch(double *f, double *g, double *stp,
 	stage = 1;
 	finit = *f;
 	ginit = *g;
-	gtest = *ftol * ginit;
-	width = *stpmax - *stpmin;
+	gtest = ftol * ginit;
+	width = stpmax - stpmin;
 	width1 = width / .5;
 /*	  The variables stx, fx, gx contain the values of the step, */
 /*	  function, and derivative at the best step. */
@@ -3452,12 +3375,8 @@ static void dcsrch(double *f, double *g, double *stp,
 /*	  function, and derivative at sty. */
 /*	  The variables stp, f, g contain the values of the step, */
 /*	  function, and derivative at stp. */
-	stx = 0.;
-	fx = finit;
-	gx = ginit;
-	sty = 0.;
-	fy = finit;
-	gy = ginit;
+	stx = 0.;	fx = finit;	gx = ginit;
+	sty = 0.;	fy = finit;	gy = ginit;
 	stmin = 0.;
 	stmax = *stp + *stp * 4.;
 	strcpy(task, "FG");
@@ -3484,33 +3403,28 @@ static void dcsrch(double *f, double *g, double *stp,
 	width = dsave[12];
 	width1 = dsave[13];
     }
-/*     If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the */
-/*     algorithm enters the second stage. */
+/*      If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the */
+/*      algorithm enters the second stage. */
     ftest = finit + *stp * gtest;
     if (stage == 1 && *f <= ftest && *g >= 0.) {
 	stage = 2;
     }
-/*     Test for warnings. */
-    if (brackt && (*stp <= stmin || *stp >= stmax)) {
+/*	Test for warnings. */
+    if (brackt && (*stp <= stmin || *stp >= stmax))
 	strcpy(task, "WARNING: ROUNDING ERRORS PREVENT PROGRESS");
-    }
-    if (brackt && stmax - stmin <= *xtol * stmax) {
+    if (brackt && stmax - stmin <= xtol * stmax)
 	strcpy(task, "WARNING: XTOL TEST SATISFIED");
-    }
-    if (*stp == *stpmax && *f <= ftest && *g <= gtest) {
+    if (*stp == stpmax && *f <= ftest && *g <= gtest)
 	strcpy(task, "WARNING: STP = STPMAX");
-    }
-    if (*stp == *stpmin && (*f > ftest || *g >= gtest)) {
+    if (*stp == stpmin && (*f > ftest || *g >= gtest))
 	strcpy(task, "WARNING: STP = STPMIN");
-    }
-/*     Test for convergence. */
-    if (*f <= ftest && fabs(*g) <= *gtol * (-ginit)) {
+/*	Test for convergence. */
+    if (*f <= ftest && fabs(*g) <= gtol * (-ginit))
 	strcpy(task, "CONVERGENCE");
-    }
-/*     Test for termination. */
-    if (strncmp(task, "WARN", 4) == 0 || strncmp(task, "CONV", 4) == 0) {
+/*	Test for termination. */
+    if (strncmp(task, "WARN", 4) == 0 || strncmp(task, "CONV", 4) == 0)
 	goto L1000;
-    }
+
 /*     A modified function is used to predict the step during the */
 /*     first stage if a lower function value has been obtained but */
 /*     the decrease is not sufficient. */
@@ -3552,12 +3466,13 @@ static void dcsrch(double *f, double *g, double *stp,
 	stmax = *stp + (*stp - stx) * 4.;
     }
 /*     Force the step to be within the bounds stpmax and stpmin. */
-    *stp = max(*stp,*stpmin);
-    *stp = min(*stp,*stpmax);
+    if(*stp < stpmin) *stp = stpmin;
+    if(*stp > stpmax) *stp = stpmax;
+
 /*     If further progress is not possible, let stp be the best */
 /*     point obtained during the search. */
     if ((brackt && (*stp <= stmin || *stp >= stmax)) ||
-	(brackt && (stmax - stmin <= *xtol * stmax))) {
+	(brackt && (stmax - stmin <= xtol * stmax))) {
 	*stp = stx;
     }
 /*     Obtain another function and derivative. */
