@@ -1915,10 +1915,19 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 		nProtect++;
 	    }
 	}
-	else if(!strcmp("array", valueString) &&
-		length(getAttrib(obj, R_DimSymbol)) >0) {}
-	else if(!strcmp("matrix", valueString) &&
-		length(getAttrib(obj, R_DimSymbol)) == 2) {}
+	/* the next 2 special cases mirror the special code in
+	 * R_data_class */
+	else if(!strcmp("matrix", valueString)) {
+	    if(length(getAttrib(obj, R_DimSymbol)) != 2)
+	        error("Invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)",
+		 length(getAttrib(obj, R_DimSymbol)));
+	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	}
+	else if(!strcmp("array", valueString)) {
+	    if(length(getAttrib(obj, R_DimSymbol))<= 0)
+	        error("Can't set class to \"array\" unless the dimension attribute has length > 0");
+	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	}
 	else { /* set the class but don't do the coercion; that's
 		  supposed to be done by an as() method */
 	    setAttrib(obj, R_ClassSymbol, value);
