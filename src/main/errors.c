@@ -193,7 +193,7 @@ static void (*R_WarningHook)(SEXP, char *) = NULL;
 #ifdef NEW_CONDITION_HANDLING
 /* declarations for internal condition handling */
 
-static void vsignalException(SEXP call, const char *format, va_list ap);
+static void vsignalError(SEXP call, const char *format, va_list ap);
 static void vsignalWarning(SEXP call, const char *format, va_list ap);
 static void invokeRestart(SEXP, SEXP);
 #endif
@@ -478,7 +478,7 @@ void errorcall(SEXP call, const char *format,...)
 
 #ifdef NEW_CONDITION_HANDLING
     va_start(ap, format);
-    vsignalException(call, format, ap);
+    vsignalError(call, format, ap);
     va_end(ap);
 #endif
 
@@ -990,13 +990,13 @@ SEXP do_resetCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-static SEXP findSimpleExceptionHandler()
+static SEXP findSimpleErrorHandler()
 {
     SEXP list;
     for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
 	SEXP entry = CAR(list);
-	if (! strcmp(CHAR(ENTRY_CLASS(entry)), "simpleException") ||
-	    ! strcmp(CHAR(ENTRY_CLASS(entry)), "exception") ||
+	if (! strcmp(CHAR(ENTRY_CLASS(entry)), "simpleError") ||
+	    ! strcmp(CHAR(ENTRY_CLASS(entry)), "error") ||
 	    ! strcmp(CHAR(ENTRY_CLASS(entry)), "condition"))
 	    return list;
     }
@@ -1033,12 +1033,12 @@ static void gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
     findcontext(CTXT_FUNCTION, rho, result);
 }
 
-static void vsignalException(SEXP call, const char *format, va_list ap)
+static void vsignalError(SEXP call, const char *format, va_list ap)
 {
     SEXP list, oldstack;
 
     PROTECT(oldstack = R_HandlerStack);
-    while ((list = findSimpleExceptionHandler()) != R_NilValue) {
+    while ((list = findSimpleErrorHandler()) != R_NilValue) {
 	char *buf = errbuf;
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
@@ -1051,7 +1051,7 @@ static void vsignalException(SEXP call, const char *format, va_list ap)
 	    }
 	    else {
 		SEXP hooksym, quotesym, hcall, qcall;
-		hooksym = install(".handleSimpleException");
+		hooksym = install(".handleSimpleError");
 		quotesym = install("quote");
 		PROTECT(qcall = LCONS(quotesym, LCONS(call, R_NilValue)));
 		PROTECT(hcall = LCONS(qcall, R_NilValue));
@@ -1077,7 +1077,7 @@ static SEXP findConditionHandler(SEXP cond)
     if (TYPEOF(classes) != STRSXP)
 	return R_NilValue;
     
-    /**** need some changes here to allow exceptions to be S4 classes */
+    /**** need some changes here to allow conditions to be S4 classes */
     for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
 	SEXP entry = CAR(list);
 	for (i = 0; i < LENGTH(classes); i++)
@@ -1136,7 +1136,7 @@ void R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
 
     /**** need more here to keep recursive errors in browser? */
     rho = cptr->cloenv;
-    PROTECT(class = mkChar("exception"));
+    PROTECT(class = mkChar("error"));
     entry = mkHandlerEntry(class, rho, R_RestartToken, rho, R_NilValue, TRUE);
     R_HandlerStack = CONS(entry, R_HandlerStack);
     UNPROTECT(1);
