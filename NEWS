@@ -11,7 +11,7 @@
 
 BUG FIXES
 
-    o	tcltk back-compatibility fix for tcl8.0  <<Peter fixme>>
+    o	tcltk back-compatibility fix for tcl8.0	 <<Peter fixme>>
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}' and
 	when `x' has NAs; the latter applies to cut.POSIXct() as well.
@@ -22,10 +22,14 @@ BUG FIXES
     o	poly() did not work for >=3 column matrices.
 
     o	cut.default() was not handling infinite values with infinite
-	breaks.  (PR#1694)
+	breaks.	 (PR#1694)
 
     o	ks.test() could fail due to integer overflow if n.x and n.y
 	were both large.
+
+    o	all.equal(3., 3:3) wasn't TRUE when the methods package was
+	present.
+
 
 
 		CHANGES IN R VERSION 1.5.1

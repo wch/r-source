@@ -747,3 +747,7 @@ stopifnot(all(!is.na(res)))
 (res <- cut(x, cut.off, include.lowest=TRUE, right=FALSE))
 stopifnot(all(!is.na(res)))
 ## outer values were NA in 1.5.1
+
+library(methods)
+stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
+detach("package:methods")
