@@ -53,12 +53,12 @@ n <- if(.Device == "postscript") 64 else 16
 i <- 1:n
 d <- n/20; dy <- 2*d; j <- n%/%4
 plot(i,i+d, type='n', main=paste("color palettes;  n=",n))
-rect(i-.5,   dy,   i+.4,   j, col=rainbow(n, start=.7, end=.1))
-text(2*j,   j+dy/4, "rainbow(n, start= .7, end= .1)")
-rect(i-.5, j+dy,   i+.4, 2*j, col=heat.colors(n))
-text(2*j, 2*j+dy/4, "heat.colors(n)")
+rect(i-.5,     dy, i+.4,   j, col=rainbow(n, start=.7, end=.1))
+text(2*j,    j+dy/4, "rainbow(n, start= .7, end= .1)")
+rect(i-.5,   j+dy, i+.4, 2*j, col=heat.colors(n))
+text(2*j,  2*j+dy/4, "heat.colors(n)")
 rect(i-.5, 2*j+dy, i+.4, 3*j, col=terrain.colors(n))
-text(2*j, 3*j+dy/4, "terrain.colors(n)")
+text(2*j,  3*j+dy/4, "terrain.colors(n)")
 rect(i-.5, 3*j+dy, i+.4, 4*j, col=topo.colors(n))
-text(2*j, 4*j+dy/4, "topo.colors(n)")
+text(2*j,  4*j+dy/4, "topo.colors(n)")
 }

@@ -33,7 +33,7 @@ function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
 	 paste0("\\alias{", name, "}"),
 	 "%- Also NEED an `\\alias' for EACH other function documented here."
 	)
-	
+
 	if(length(s))
 	  file <- c(file, "\\arguments{",
 		    paste0(" \\item{", arg.n, "}{",
@@ -85,4 +85,3 @@ function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
      paste(RHOME,"src/library/<pkg>/man/",sep="/"), "\n")
  invisible(file)
 }
-
