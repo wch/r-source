@@ -30,7 +30,7 @@
 
 void NewFrameConfirm()
 {
-    char buf[16];
+    unsigned char buf[16];
     R_ReadConsole("Hit <Return> to see next plot: ", buf, 16, 0);
 }
 
@@ -229,7 +229,11 @@ SEXP FixupFont(SEXP font, int dflt)
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
 	    k = INTEGER(font)[i];
+#ifndef Win32
 	    if (k < 1 || k > 4) k = NA_INTEGER;
+#else
+	    if (k < 1 || k > 32) k = NA_INTEGER;
+#endif
 	    INTEGER(ans)[i] = k;
 	}
     }
@@ -237,7 +241,11 @@ SEXP FixupFont(SEXP font, int dflt)
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
 	    k = REAL(font)[i];
+#ifndef Win32
 	    if (k < 1 || k > 4) k = NA_INTEGER;
+#else
+	    if (k < 1 || k > 32) k = NA_INTEGER;
+#endif
 	    INTEGER(ans)[i] = k;
 	}
     }
