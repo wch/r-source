@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.122 $ ';
+my $revision = ' $Revision: 1.123 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -579,7 +579,7 @@ sub check_pkg {
     else {
 	$log->result("OK");
     }
-    
+
     ## Check contents of directory 'inst'.
 
     if(-d "inst") {
@@ -1214,34 +1214,54 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if($opt_vignettes
-       && (-d &file_path($pkgdir, "inst", "doc"))
+    if((-d &file_path($pkgdir, "inst", "doc"))
        && &list_files_with_type(&file_path($pkgdir, "inst", "doc"),
 				"vignette")) {
 	$log->checking(join("",
-			    ("Sweave files in '",
+			    ("package vignettes in '",
 			     &file_path("inst", "doc"),
 			     "'")));
+	my $any = 0;
 
-	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
-	    $Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
-                     "lib.loc = \"$pkgoutdir\", " .
-                     "workdir=\"src\")\n";
+	## Do PDFs exist for all package vignettes?
+	my @vignette_files =
+	  &list_files_with_type(&file_path($pkgdir, "inst", "doc"),
+				"vignette");
+	my @bad_vignettes = ();
+	foreach my $file (@vignette_files) {
+	    my $pdf_file = $file;
+	    $pdf_file =~ s/\.[[:alpha:]]+$/.pdf/;
+	    push(@bad_vignettes, $file) unless(-f $pdf_file);
 	}
-	else {
-	    $Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
-	}
-
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	@out = grep(!/^\>/, @out);
-	if($#out >= 0) {
+	if($#bad_vignettes >= 0) {
 	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
+	    $any++;
+	    $log->print("Package vignettes without corresponding PDF:\n");
+	    $log->print("  " . join("\n  ", @bad_vignettes) . "\n");
 	}
-	else {
-	    $log->result("OK");
+
+	## Can we run the code in the vignettes?
+	if($opt_vignettes) {
+	    my $Rcmd = "library(tools)\n";
+	    if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+		$Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
+		         "lib.loc = \"$pkgoutdir\", " .
+		         "workdir=\"src\")\n";
+	    }
+	    else {
+		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
+	    }
+
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^\>/, @out);
+	    if($#out >= 0) {
+		$log->warning() unless($any);
+		$any++;
+		$log->print(join("\n", @out) . "\n");
+	    }
 	}
+
+	$log->result("OK") unless($any);
     }
 
     ## Run LaTeX on the manual.
