@@ -1,18 +1,14 @@
-\name{sunspot}
+\name{sunspot.month}
 \docType{data}
-%\alias{sunspot}
 \alias{sunspot.month}
-\alias{sunspot.year}
 \title{
-  Yearly Sunspot Data, 1700--1988, and
   Monthly Sunspot Data, 1749--1997
 }
 \description{
-  Monthly and yearly number of sunspots. 
+  Monthly numbers of sunspots. 
 }
 \usage{
 sunspot.month
-sunspot.year
 }
 \format{
   The univariate time series \code{sunspot.year} and
@@ -24,24 +20,16 @@ sunspot.year
   that runs until 1988 rather than 1983.
 }
 \source{
-  Monthly data: Sunspot Index Data Center,
   World Data Center-C1 For Sunspot Index
   Royal Observatory of Belgium, Av. Circulaire, 3, B-1180 BRUSSELS
   \url{http://www.oma.be/KSB-ORB/SIDC/sidc_txt.html}
-
-  Yearly data: H. Tong (1996)
-  \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471. 
 }
-\references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
-}
-\section{Warning}{
-  For back-compatibilty these datasets can be copied to the user's
-  workspace (or elsewhere) by \code{data(sunspot)}.  However, as package
-  \pkg{lattice} has a dataset \code{sunspot} which can be retrieved by
-  the same command, that usage is deprecated.
+\note{
+  Prior to \R 2.0.0 \code{sunspot.month} and \code{\link{sunspot.year}}
+  were copied to the user's workspace (or elsewhere) by
+  \code{data(sunspot)}. However, as package \pkg{lattice} has a dataset
+  \code{sunspot} which can be retrieved by the same command, that usage
+  has been removed.
 }
 \examples{
 require(stats)

@@ -35,16 +35,20 @@ USER-VISIBLE CHANGES
 	Packages can be installed to make their data objects available
 	via R CMD INSTALL --lazy-data.  [This is experimental.]
 
-	The semantics of data() have changed (and were incorrectly
+    o   The semantics of data() have changed (and were incorrectly
 	documented in recent releases) and the function has been moved
 	to package 'utils'.  Please read the help page carefully if
 	you use the 'package' or 'lib.loc' arguments.
 
+    o   Dataset 'phones' has been renamed to 'WorldPhones'.
+
+    o	Datasets 'sunspot.month' and 'sunspot.year' are available
+        separately but not via data(sunspot) (which is used by package
+        lattice to retrieve a dataset 'sunspot'.
+
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
-
-    o   Dataset 'phones' has been renamed to 'WorldPhones'.
 
 
 NEW FEATURES
