@@ -44,11 +44,18 @@ gList(...)
   and modifying graphical objects.  Both call the function
   \code{validDetails} to check that the object returned is coherent.
 
-  A gTree can have other grobs as children;  when a gTree is drawn, it
+    A gTree can have other grobs as children;  when a gTree is drawn, it
   draws all of its children.  Before drawing its children, a gTree
   pushes its childrenvp slot and then navigates back up (calls
   \code{upViewport}) so that the children can specify their location
   within the childrenvp via a vpPath.
+
+  Grob names need not be unique in general, but all children of a
+  gTree must have different names.  
+    A grob name can be any valid \R symbol name.  Also,
+    it is not
+    advisable to use the gPath separator  (currently \code{::}) in
+    grob names.
 
   The function \code{childNames} returns the names of the grobs
   which are children of a gTree.
