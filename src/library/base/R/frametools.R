@@ -6,6 +6,7 @@ subset.data.frame <-
     else {
 	e <- substitute(subset)
 	r <- eval(e, x, parent.frame())
+        if(!is.logical(r)) stop("'subset' must evaluate to logical")
 	r <- r & !is.na(r)
     }
     if(missing(select))
@@ -22,9 +23,10 @@ subset<-
     function(x, ...)
     UseMethod("subset")
 
-subset.default <-
-    function(x, subset, ...)
+subset.default <- function(x, subset, ...) {
+    if(!is.logical(subset)) stop("'subset' must be logical")
     x[subset & !is.na(subset)]
+}
 
 transform.data.frame <-
     function (x, ...)

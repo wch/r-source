@@ -28,6 +28,10 @@ BUG FIXES
 	almost as fast as on vectors without names (and maybe 100x
 	faster than before).
 
+    o	subset() now throws an error if its 'subset' argument is not
+	logical whereas it could appear to work and give wrong answers
+	with e.g. a numeric 'subset' argument.
+
 
 
 		CHANGES IN R VERSION 2.0.1
@@ -39,8 +43,8 @@ NEW FEATURES
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
-    o   The assignment form of split() allows recycling of vectors 
-	within the value list. In particular, things like 
+    o   The assignment form of split() allows recycling of vectors
+	within the value list. In particular, things like
 	    split(x, g) <- lapply(split(x, g), mean)
 	now work
 
@@ -166,7 +170,7 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
-    o   Using Rprof() with a non-writable 'file' argument is now a 
+    o   Using Rprof() with a non-writable 'file' argument is now a
 	non-fatal error and does not abort R.
 
     o   binom.test() did not deparse its arguments early enough such
@@ -207,8 +211,8 @@ BUG FIXES
 
     o	str() removed any class from externalptr objects.
 
-    o	logLik() and hence AIC() failed or gave incorrect answers 
-	on "lm" fits with na.action = na.exclude (and perhaps other 
+    o	logLik() and hence AIC() failed or gave incorrect answers
+	on "lm" fits with na.action = na.exclude (and perhaps other
 	na.actions's except na.omit and na.fail).
 
     o	pmax() and pmin() sometimes used NAs in internal subassignments,
@@ -223,10 +227,10 @@ BUG FIXES
     o	sort(partial=) silently ignored some other arguments: using
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
-	
-    o   The ave() function had trouble if the grouping contained 
-        unused levels. 
-	
+
+    o   The ave() function had trouble if the grouping contained
+	unused levels.
+
     o   read.fwf() got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
 

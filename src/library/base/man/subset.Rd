@@ -15,7 +15,8 @@ subset(x, \dots)
 }
 \arguments{
   \item{x}{object to be subsetted.}
-  \item{subset}{logical expression.}
+  \item{subset}{logical expression indicating elements or rows to keep:
+    missing values are taken as false.}
   \item{select}{expression, indicating columns to select from a
     data frame.}
   \item{drop}{passed on to \code{[} indexing operator.}
