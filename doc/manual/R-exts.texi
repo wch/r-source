@@ -130,29 +130,35 @@ installation) for the tools that you need to have installed.
 @cindex Package structure
 
 A package consists of a subdirectory containing a file
-@file{DESCRIPTION} and the subdirectories
-@file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
-@file{man}, @file{src}, and @file{tests} (some of which can be missing).
-The package subdirectory may also contain files @file{INDEX}, 
-@file{install.R}, @file{R_PROFILE.R}, @file{NAMESPACE}, @file{configure}, 
-@file{cleanup}, and @file{COPYING}.
+@file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
+@file{demo}, @file{exec}, @file{inst}, @file{man}, @file{src}, and
+@file{tests} (some of which can be missing).  The package subdirectory
+may also contain files @file{INDEX}, @file{install.R},
+@file{R_PROFILE.R}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
+and @file{COPYING}.  Other files such as @file{README}, @file{NEWS} or
+@file{ChangeLog} will be ignored by @R{}, but may be useful to
+end-users.
 
-The @file{DESCRIPTION}, @file{INDEX}, 
-@file{install.R} and @file{R_PROFILE.R} files are described in the sections
-below.  The @file{NAMESPACE} file is described in @ref{Package name spaces}.
+The @file{DESCRIPTION}, @file{INDEX}, @file{install.R} and
+@file{R_PROFILE.R} files are described in the sections below.  The
+@file{NAMESPACE} file is described in @ref{Package name spaces}.
 
 @cindex configure file
 @cindex cleanup file
 
-The optional files @file{configure} and @file{cleanup} are (Bourne shell) 
-script files which are executed before and
-(provided that option @option{--clean} was given) after installation on
-Unix, see @ref{Configure and cleanup}.
+The optional files @file{configure} and @file{cleanup} are (Bourne
+shell) script files which are executed before and (provided that option
+@option{--clean} was given) after installation on Unix, see
+@ref{Configure and cleanup}.
 
 @cindex COPYING file
 
 The optional file @file{COPYING} contains a copy of the license to the
-package, e.g.@: a copy of the @acronym{GNU} public license.
+package, e.g.@: a copy of the @acronym{GNU} public license.  Whereas you
+should feel free to include a licence file in your source distribution,
+please do not arrange to install yet another copy of the @acronym{GNU}
+@file{COPYING} or @file{COPYING.LIB} files but refer to the copies in
+the @R{} distribution in your own @file{COPYING} file.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -500,7 +506,13 @@ interfere with those used by R (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{man}, @file{help}, @file{html},
 @file{latex}, @file{R-ex}, and @file{Meta}).  As from @R{} 1.8.1 the
 copying of the @file{inst} happens after @file{src} is built so its
-@file{Makefile} can create files to be installed.
+@file{Makefile} can create files to be installed.  Note that with the
+exceptions of @file{INDEX} and @file{COPYING}, information files at the
+top level of the package will @emph{not} be installled and so not be
+known to users of Windows and MacOS X compiled packages (and not seen by
+those who use @command{R CMD INSTALL} or @command{install.packages} on
+the tarball).  So any information files you wish an end user to see
+should be included in @file{inst}.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
