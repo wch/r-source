@@ -59,14 +59,19 @@ edit.data.frame <-
             if (any(!ok)) {
                 warning(paste("invalid factor levels in", names(out)[i]))
                 o[!ok] <- NA
+                attributes(o) <- a
             }
         } else {
             o <- out[[i]]
-            if (any(is.na(match(o, c(a$levels, NA)))))
-                warning(paste("invalid factor levels in", names(out)[i]))
-            o <- match(o, a$levels)
+            if (any(new <- is.na(match(o, c(a$levels, NA))))) {
+                new <- unique(o[new])
+                warning(paste("added factor levels in", names(out)[i]))
+                o <- factor(o, levels=c(a$levels, new), ordered=is.ordered(o))
+            } else {
+                o <- match(o, a$levels)
+                attributes(o) <- a
+            }
         }
-        attributes(o) <- a
         out[[i]] <- o
     }
     if (edit.row.names) {

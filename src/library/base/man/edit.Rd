@@ -32,7 +32,8 @@ xedit(name = NULL, file = "")
   currently with a default method and one for data frames.
 
   \code{data.entry} can be used to edit data, and is used by \code{edit}
-  to edit data frames on systems for which \code{data.entry} is available.
+  to edit matrices and data frames on systems for which
+  \code{data.entry} is available.
 
   It is important to realize that \code{edit} does not change the object
   called \code{name}. Instead, a copy of name is made and it is that copy
@@ -43,7 +44,7 @@ xedit(name = NULL, file = "")
   
   In the form \code{edit(name)},
   \code{edit} deparses \code{name} into a temporary file and invokes the
-  editor \code{editor} on this file. Quiting from the editor causes
+  editor \code{editor} on this file. Quitting from the editor causes
   \code{file} to be parsed and that value returned.
   Should an error occur in parsing, possibly due to incorrect syntax, no
   value is returned. Calling \code{edit()}, with no arguments, will
