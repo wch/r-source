@@ -57,6 +57,7 @@ all: Makefile DESCRIPTION
 	  done >> $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/man/$(pkg).Rd)
+	$(INSTALL_DATA) $(srcdir)/inst/CITATION  $(top_builddir)/library/$(pkg)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
