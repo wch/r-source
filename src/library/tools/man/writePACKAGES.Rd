@@ -2,46 +2,53 @@
 \alias{write_PACKAGES}
 \title{Generating a PACKAGES file}
 \description{
-  Generating a PACKAGES file for a repository of packages.
-  Currently only implemented for Windows binary repositories.
+  Generating a \file{PACKAGES} file for a repository of source or
+  Windows binary packages.
 }
 \usage{
-write_PACKAGES(dir, fields, type = "winBinary")
+write_PACKAGES(dir, fields, type = c("source", "winBinary"), verbose = FALSE)
 }
 \arguments{
   \item{dir}{
     Character vector describing the location of the repository 
-    (directory including binary packages for Windows) 
-    to generate the \file{PACKAGES} file from and write it to.
+    (directory including source or binary packages) to generate
+    the \file{PACKAGES} file from and write it to.
   }
   \item{fields}{
     Optional, the fields to be used in the \file{PACKAGES} file.
-    The default is the same as that one used for building \file{bin/windows}
-    area of the CRAN repositories: \dQuote{Package}, 
-    \dQuote{Bundle}, \dQuote{Priority}, \dQuote{Version}, 
-    \dQuote{Depends}, \dQuote{Suggests}, \dQuote{Imports}, and
-    \dQuote{Contains}.
+    The default are those needed by \code{\link{available.packages}}:
+    \dQuote{Package}, \dQuote{Bundle}, \dQuote{Priority},
+    \dQuote{Version}, \dQuote{Depends}, \dQuote{Suggests},
+    \dQuote{Imports} and \dQuote{Contains}.
   }
-  \item{type}{Type of packages: currently only Windows binary packages
-    are supported.
-    }
+  \item{type}{
+    Type of packages: currently source \code{.tar.gz} archives
+    and Windows binary \code{.zip} packages are supported.  Defaults to
+    \code{"winBinary"} on Windows and to \code{"source"} otherwise.
+  }
+  \item{verbose}{logical. Should packages be listed as they are processed?}
 }
 \details{
-  This function uses \code{\link{unz}} connections to read all
+  \code{type = "winBinary"} uses \code{\link{unz}} connections to read all
   \file{DESCRIPTION} files contained in the (zipped) binary packages for
   Windows in the given directory \code{dir}, and builds a
   \file{PACKAGES} file from these information.
-
-  \strong{Note:} This function  can be useful on other OSes to prepare a
-  repository to be accessed by Windows machines.
 }
 \value{
   Invisibly returns the number of packages described in the resulting
   \file{PACKAGES} file.  If 0, no packages were found and no
   \file{PACKAGES} file has been written.
 }
+\note{
+  Processing \code{.tar.gz} archives to extract the \file{DESCRIPTION}
+  files is quite slow.
+  
+  This function can be useful on other OSes to prepare a repository to
+  be accessed by Windows machines, so \code{type = "winBinary"} should
+  work on all OSes.
+}
 \author{
-  Uwe Ligges
+  Uwe Ligges and R-core.
 }
 \seealso{
   See \code{\link{read.dcf}} and \code{\link{write.dcf}} for reading
@@ -49,7 +56,8 @@ write_PACKAGES(dir, fields, type = "winBinary")
 }
 \examples{
 \dontrun{
-write_PACKAGES("c:/myFolder/myRepository")
+write_PACKAGES("c:/myFolder/myRepository")  # on Windows
+write_PACKAGES("/pub/RWin/bin/windows/2.1", type="winBinary")  # on Linux
 }}
 \keyword{file}
 \keyword{utilities}

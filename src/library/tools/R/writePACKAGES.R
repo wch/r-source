@@ -1,7 +1,13 @@
-write_PACKAGES <- function(dir, fields, type = "winBinary")
+write_PACKAGES <-
+    function(dir, fields, type = c("source", "winBinary"), verbose = FALSE)
 {
+    if(missing(type) && .Platform$OS.type == "windows") type <- "winBinary"
     type <- match.arg(type)
-    files <- list.files(dir, pattern = "\.zip$")
+    files <- list.files(dir,
+                        pattern = switch(type,
+                        "source" = "\.tar\.gz$",
+                        "winBinary" = "\.zip$")
+                        )
     if(length(files)) {
         ## Standard set of fields required to build a
         ## Windows repository's PACKAGES file:
@@ -14,23 +20,47 @@ write_PACKAGES <- function(dir, fields, type = "winBinary")
         ## many (roughly length(files))
         ## warnings are *expected*, hence suppressed
         op <- options(warn = -1)
-        for(i in seq(along = files)){
-            ## for bundles:
-            con <- unz(files[i], "DESCRIPTION")
-            temp <- try(read.dcf(con, fields = fields), silent = TRUE)
-            if(identical(class(temp), "try-error")) {
-                close(con)
-                ## for regular packages:
-                con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
+        if(verbose) cat("Processing packages:\n")
+        if(type == "winBinary") {
+            for(i in seq(along = files)) {
+                if(verbose) cat("  ", files[i], "\n", sep ="")
+                ## for bundles:
+                con <- unz(files[i], "DESCRIPTION")
                 temp <- try(read.dcf(con, fields = fields), silent = TRUE)
                 if(identical(class(temp), "try-error")) {
                     close(con)
-                    next
+                    ## for regular packages:
+                    con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
+                    temp <- try(read.dcf(con, fields = fields), silent = TRUE)
+                    if(identical(class(temp), "try-error")) {
+                        close(con)
+                        next
+                    }
                 }
+                desc[[i]] <- temp
+                close(con)
             }
-            desc[[i]] <- temp
-            close(con)
+        } else {
+            cwd <- getwd()
+            td <- tempfile("PACKAGES")
+            if(!dir.create(td)) stop("unable to create ", td)
+            on.exit(unlink(td, recursive = TRUE))
+            setwd(td)
+            for(i in seq(along = files)) {
+                if(verbose) cat("  ", files[i], "\n", sep ="")
+                p <- file.path(packages[i], "DESCRIPTION")
+                ## <FIXME> quote appropriately to OS
+                temp <- try(system(paste("tar zxf",  files[i], shQuote(p))))
+                if(!identical(class(temp), "try-error")) {
+                    temp <- try(read.dcf(p, fields = fields), silent = TRUE)
+                    if(!identical(class(temp), "try-error"))
+                        desc[[i]] <- temp
+                }
+                unlink(packages[i], recursive = TRUE)
+            }
+            setwd(cwd)
         }
+        if(verbose) cat("done\n")
         options(op)                  # change warning level back again
         desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
         colnames(desc) <- fields
