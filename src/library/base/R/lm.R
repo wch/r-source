@@ -254,7 +254,6 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
-	##0.61: dput(x$call)
 	resid <- x$residuals
 	df <- x$df
 	rdf <- df[2]
