@@ -2,35 +2,39 @@ GROUPED Keywords
 ----------------
 
 Graphics
-       aplot		&	Add to Existing Plot
+       aplot		&	Add to Existing Plot / internal plot.
        dplot		&	Computations Related to Plotting
        hplot		&	High-Level Plots
        iplot		&	Interacting with Plots
+       color		&	Color, Palettes etc.
        dynamic		&	Dynamic Graphics
-       device		&	Graphical Devices			6
+       device		&	Graphical Devices			7
 
 Basics
-       sysdata		&	All Datasets
-       attribute	&	Data Attributes
-       data		&	Data Directories
+       sysdata		&	Basic System Variables		[!= S]
+       datasets		&	Datasets available by data(.)	[!= S]
+       data		&	Environments, Scoping, Packages [~= S]
        manip		&	Data Manipulation
-       classes		&	Data Types
-       character	&	Character Data Operations
-       complex		&	Complex Numbers
-       category		&	Categorical Data
-       list		&	Lists					9
+       attribute	&	Data Attributes
+       classes		&	Data Types (not OO)
+	   & character	&	Character Data Operations
+	   & complex	&	Complex Numbers
+	   & category   &	Categorical Data
+	   & NA		&	Missing Values			[!= S]
+       list		&	Lists					11
 
 Mathematics
-       algebra		&	Linear Algebra
-       math		&	Mathematical Operations
-       logic		&	Logical Operators
        array		&	Matrices and Arrays
-       optimize		&	Optimization				5
+	      & algebra &	Linear Algebra
+       arith		&	Basic Arithmetic and Sorting	[!= S]
+       math		&	Mathematical Calculus etc.	[!= S]
+       logic		&	Logical Operators
+       optimize		&	Optimization				6
 
 Programming, Input/Ouput, and Miscellaneous
 
        programming	&	Programming
-       interface	&	Interfaces to Other Languages
+	    & interface	&	Interfaces to Other Languages
        iteration	&	Looping and Iteration
        methods		&	Methods and Generic Functions
        print		&	Printing
@@ -45,23 +49,24 @@ Programming, Input/Ouput, and Miscellaneous
 Statistics
 
        distribution 	&	Probability Distributions and Random Numbers
+       univar		&	simple univariate statistics  [! S]
        htest		&	Statistical Inference
        models		&	Statistical Models
-       regression	&	Regression
-       nonlinear	&	Non-linear Regression
+	   & regression	&	Regression
+           & & nonlinear&	Non-linear Regression (only?)
        robust		&	Robust/Resistant Techniques
        design		&	Designed Experiments
        multivariate	&	Multivariate Techniques
        ts		&	Time Series
-       survival		&	Survival Analysis		       10	
+       survival		&	Survival Analysis		       11
 
-       nonparametric	&	Nonparametric Statistics
-       smooth		&	Smoothing Operations
-       loess		&	Loess Objects
+       nonparametric	&	Nonparametric Statistics [w/o 'smooth']
+       smooth		&	Curve (and Surface) Smoothing
        cluster		&	Clustering
+       loess		&	Loess Objects
        tree		&	Regression and Classification Trees	5
 								     ----
-								       46
+								       51
 
 MASS (2, 1997)
 --------------
