@@ -1745,8 +1745,9 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     if(!FINITE(min) || !FINITE(max)) {
 	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]\n",
 		min, max, axis, log);
-	if(!FINITE(min)) min = -DBL_MAX;
-	if(!FINITE(max)) max = +DBL_MAX;
+	if(!FINITE(min)) min = - .45 * DBL_MAX;
+	if(!FINITE(max)) max = + .45 * DBL_MAX;
+        /* max - min is now finite */
     }
     if(min == max) {
 	if(min == 0) {
@@ -1768,7 +1769,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	break;
     case 'i':
 	break;
-    case 's':
+    case 's':/* FIXME --- implement  's' and 'e' axis styles ! */
     case 'e':
     default:
 	error("axis style \"%c\" unimplemented\n", style);
@@ -1802,6 +1803,10 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 
     if(min > max) {
 	swap = 1;
+#ifdef DEBUG_PLOT
+	REprintf("GScale(..axis=%d) __SWAP__ (min = %g > %g = max); log=%d]\n",
+		 axis, min, max, log);
+#endif
 	temp = min;
 	min = max;
 	max = temp;
@@ -2731,30 +2736,19 @@ void GPretty(double *lo, double *up, int *ndiv)
  */
 
     double dx, cell, unit, base, U;
-    int ns, nu;
-    short i_small, i_big;
-    double x1,x2; int nd0;/* for the diagnostic output only */
+    int ns, nu, nd0;
+    short i_small;
+    double x1,x2;/* for checking only */
 
     if(*ndiv <= 0)
 	error("invalid axis extents [GPretty(.,.,n=%d)\n", *ndiv);
     if(*lo == R_PosInf || *up == R_PosInf ||
-       *lo == R_NegInf || *up == R_NegInf)
-#ifdef DEBUG
-	warning
-#else
-	error
-#endif
-	    ("Infinite axis extents [GPretty(%g,%g,%d)]\n", *lo, *up, *ndiv);
-
-    x1 = *lo; x2 = *up; nd0 = *ndiv;
-    dx = *up - *lo;
-    if(FINITE(dx))
-	i_big= 0;
-    else {
-	dx = FLT_MAX;
-	i_big= 1;
-	warning("..(GPretty): 'df' wasn't finite; now set to %g\n",dx);
+       *lo == R_NegInf || *up == R_NegInf ||
+       !FINITE(dx = *up - *lo)) {
+	error("Infinite axis extents [GPretty(%g,%g,%d)]\n", *lo, *up, *ndiv);
+	return;/*-Wall*/
     }
+
     /* cell := "scale"	here */
     if(dx == 0 && *up == 0) { /*	up == lo == 0  */
 	cell = i_small = 1;
@@ -2781,24 +2775,38 @@ void GPretty(double *lo, double *up, int *ndiv)
     ns = floor(*lo/unit);
     nu = ceil (*up/unit);
 
-    if(i_big)
-	warning("..\t cell = %g, base =%g, unit =%g; (ns,nu) = (%d,%d)\n",
-		cell, base, unit, ns,nu);
+#ifdef DEBUG_PLOT
+    REprintf("..\t cell = %g, base =%g, unit =%g; (ns,nu) = (%d,%d)\n",
+	     cell, base, unit, ns,nu);
+#endif
 
     while(ns*unit >= *lo *(1- DBL_EPSILON)) ns--;    ns++;
     while(nu*unit <= *up *(1+ DBL_EPSILON)) nu++;    nu--;
 
-    *ndiv = nu - ns;
-    if(*ndiv <= 0) {
+    nd0 = nu - ns;
+    if(nd0 > 0)
+	*ndiv = nd0;
+    else {
 	warning("Imprecision in axis setup.\t GPretty(%g,%g,%d):\n"
 		"cell=%g, ndiv= %d <=0; (ns,nu)=(%d,%d); "
 		"dx=%g, unit=%g, ismall=%d.\n",
-		x1,x2, nd0, cell, *ndiv, ns, nu, dx, unit, (int)i_small);
-	*ndiv = 1;
-	nu = ns + 1;
+		*lo,*up, *ndiv, cell, nd0, ns, nu, dx, unit, (int)i_small);
+	if(nd0 == 0)
+	    nu = ns + 1;
+	else {/* ns > nu: swap*/ nd0 = nu; nu = ns; ns = nd0; }
+	*ndiv = nu - ns;
     }
+#ifdef DEBUG_PLOT
+    x1 = *lo; x2 = *up;
+#endif
     *lo = ns * unit;
     *up = nu * unit;
+#ifdef DEBUG_PLOT
+    if(*lo < x1)
+	warning(" .. GPretty(.) cont.: new *lo = %g < %g = x1\n", *lo, x1);
+    if(*up > x2)
+	warning(" .. GPretty(.) cont.: new *up = %g > %g = x2\n", *up, x2);
+#endif
 }
 
 
