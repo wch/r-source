@@ -8,6 +8,15 @@
 #define PSIGNAL
 #include "psignal.h"
 
+#define SA_NORESTORE 0
+#define SA_RESTORE   1
+
+#define SA_DEFAULT   1
+#define SA_NOSAVE    2
+#define SA_SAVE      3
+#define SA_SAVEASK   4
+#define SA_SUICIDE   5
+
 /* one way to allow user interrupts: called in ProcessEvents */
 #ifdef VisualC
 __declspec(dllimport) int UserBreak;
@@ -18,12 +27,13 @@ extern int UserBreak;
 
 /* calls into the R DLL */
 extern char *getDLLVersion();
+extern void R_DefParams(Rstart);
 extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
 extern void ProcessEvents(void);
-extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit();
+extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit(), R_CleanUp();
 extern int R_ReplDLLdo1();
-void run_Rmainloop(void);
+extern void run_Rmainloop(void);
 
 
 /* getline-based input, simple output */
@@ -86,6 +96,7 @@ int main (int argc, char **argv)
 	exit(1);
     }
 
+    R_DefParams(Rp);
     Rp->rhome = "c:/R/rw0650";
     Rp->home = "c:/bdr";
     Rp->CharacterMode = LinkDLL;
@@ -95,13 +106,10 @@ int main (int argc, char **argv)
     Rp->message = askok;
     Rp->yesnocancel = askyesnocancel;
     Rp->busy = myBusy;
+
     Rp->R_Quiet = 1;
-    Rp->R_Slave = Rp->R_Interactive = Rp->R_Verbose = 0;
-    Rp->RestoreAction = 0; /* no restore */
-    Rp->SaveAction = 2;    /* no save */
-    Rp->LoadSiteFile = Rp->LoadInitFile = 1;
-    Rp->DebugInitFile = 0;
-    Rp->NoRenviron = 0;
+    Rp->R_Interactive = 0;
+    Rp->SaveAction = SA_NOSAVE;
     Rp->nsize = 300000;
     Rp->vsize = 6e6;
     R_SetParams(Rp);
@@ -121,8 +129,7 @@ int main (int argc, char **argv)
 /* add user actions here if desired */
     }
 /* only get here on EOF (not q()) */
-    Rprintf("\nquitting\n");
-    R_CleanUp(1);
+    R_CleanUp(SA_DEFAULT);
 #endif
     end_Rmainloop();
     return 0;

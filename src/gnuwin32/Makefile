@@ -139,7 +139,7 @@ distclean veryclean: clean
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
-	.RData .Rhistory Makedeps *.d edit.c
+	.RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C regex clean

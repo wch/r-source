@@ -15,11 +15,12 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(X_CFLAGS) $(CPPFLAGS) $(
 SOURCES = \
 	../unix/dataentry.c \
 	../unix/dynload.c \
+	../unix/sys-unix.c \
+	../unix/sys-common.c \
 	system.c \
 	system-choosefile.c \
 	system-console.c \
 	system-showfiles.c \
-	system-unix.c \
 	devGNOME.c \
 	devGTK.c \
 	edit.c \
