@@ -190,7 +190,7 @@ SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(CADR(args)) )
 	errorcall(call, "parent is not an environment");
 
-    ENCLOS(CAR(args)) = CADR(args);
+    SET_ENCLOS(CAR(args), CADR(args));
 
     return( CAR(args) );
 }
