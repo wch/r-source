@@ -761,6 +761,9 @@ BUG FIXES
 
     o	Fixed scoping problem with quasi() family (PR 614)
 
+    o   problem with subsetting and "..." arguments in plot.formula
+        (PR 757)
+
 
 		CHANGES IN R VERSION 1.1.0
 
