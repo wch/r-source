@@ -43,6 +43,12 @@
 # include <langinfo.h>
 #endif
 
+#ifdef ENABLE_NLS
+void nl_Rdummy()
+{
+    dgettext("R", ""); /* force this in as packages use it */
+}
+#endif
 
 /* The 'real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
