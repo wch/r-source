@@ -42,7 +42,7 @@ SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     inhibitDisplayList(CurrentDevice());
     return R_NilValue;
-
+}
 
 SEXP do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
