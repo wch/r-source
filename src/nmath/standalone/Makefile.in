@@ -78,7 +78,8 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 all: Makefile static shared
 
 ## can't run test, as that depends on OS-specific way to set library path.
-check: all clean
+## clean is useful, but forces a remake each time which MM did not want
+check: all # clean
 
 Copy:
 	@echo "Copying source files"
