@@ -34,7 +34,7 @@ plot(y)# once gave infinite loop on Solaris [TL];  y-axis too long
 ##    error("relative range of values is too small to compute accurately");
 ## which is not okay.
 
-set.seed(101) 
+set.seed(101)
 par(mfrow = c(3,3))
 for(j.fac in 1e-12* c(10, 1, .7, .3, .2, .1, .05, .03, .01)) {
 ##           ====
@@ -48,3 +48,21 @@ for(j.fac in 1e-12* c(10, 1, .7, .3, .2, .1, .05, .03, .01)) {
 }
 ## The warnings from inside GScale() will differ in their  relrange() ...
 ## >> do sloppy testing
+
+par(mfrow = c(1,1))
+
+### Test for centring of chars.  All the chars which are plotted should
+### be centred, and there should be no warnings about
+### font metrics unknown for character `?'
+
+par(pty="s")
+plot(c(0,15), c(0,15), type="n", xlab="", ylab="")
+title("Centred chars in default char set (ISO Latin1)")
+grid(15, 15, lty=1)
+for(i in c(32:126, 144:152, 154, 155, 157:255)) {
+    x <- i %% 16
+    y <- i %/% 16
+    points(x, y, pch=i)
+}
+
+par(pty="m")

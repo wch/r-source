@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.0 Patched (2001-01-08)
+Version 1.2.0 Patched (2001-01-14)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -55,7 +55,7 @@ List of 3
 > ##    error("relative range of values is too small to compute accurately");
 > ## which is not okay.
 > 
-> set.seed(101) 
+> set.seed(101)
 > par(mfrow = c(3,3))
 > for(j.fac in 1e-12* c(10, 1, .7, .3, .2, .1, .05, .03, .01)) {
 + ##           ====
@@ -72,7 +72,7 @@ par("usr")[3:4]:     3.142     3.142
 par("yaxp") :        3.142     3.142         3
 
 j.f = 1e-12 ;  rel.range = 56.02 * EPS
-Warning: relative range of values = 43.2901 * EPS, is small (axis 2).
+Warning: relative range of values = 42.6535 * EPS, is small (axis 2).
 par("usr")[3:4]:     3.142     3.142
 par("yaxp") :        3.142     3.142         1
 
@@ -108,4 +108,22 @@ par("yaxp") :            2         4         4
 
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
+> 
+> par(mfrow = c(1,1))
+> 
+> ### Test for centring of chars.  All the chars which are plotted should
+> ### be centred, and there should be no warnings about
+> ### font metrics unknown for character `?'
+> 
+> par(pty="s")
+> plot(c(0,15), c(0,15), type="n", xlab="", ylab="")
+> title("Centred chars in default char set (ISO Latin1)")
+> grid(15, 15, lty=1)
+> for(i in c(32:126, 144:152, 154, 155, 157:255)) {
++     x <- i %% 16
++     y <- i %/% 16
++     points(x, y, pch=i)
++ }
+> 
+> par(pty="m")
 > 
