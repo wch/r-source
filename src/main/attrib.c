@@ -221,7 +221,7 @@ static void checkNames(SEXP x, SEXP s)
 	if (!isVector(s) && !isList(s))
 	    error("invalid type for names: must be vector");
 	if (length(x) != length(s))
-	    error("names attribute [%d] must be the same length as the vector [%d}", length(s), length(x));
+	    error("names attribute [%d] must be the same length as the vector [%d]", length(s), length(x));
     }
     else error("names applied to non-vector");
 }
