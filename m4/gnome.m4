@@ -50,14 +50,16 @@ AC_DEFUN([GNOME_INIT_HOOK],[
               fi
             fi
 
-	    if test x$exec_prefix = xNONE; then
+	    if test x$gnome_prefix = x; then
+	      if test x$exec_prefix = xNONE; then
 	        if test x$prefix = xNONE; then
 		    gnome_prefix=$ac_default_prefix/lib
 	        else
  		    gnome_prefix=$prefix/lib
 	        fi
-	    else
+	      else
 	        gnome_prefix=`eval echo \`echo $libdir\``
+	      fi
 	    fi
 	
 	    if test "$no_gnome_config" = "yes"; then
