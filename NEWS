@@ -151,6 +151,11 @@ BUG FIXES
     o	round/trunc.POSIXt were erroneously retaining information on
 	DST. (PR#1543)
 
+    o	selfStart() {pkg "nls"} now works again when parameter names are
+        not specified (but implicit).
+
+    o	legend() now treats lty="0" properly (as solid).
+
 
 
 		CHANGES IN R VERSION 1.5.0
