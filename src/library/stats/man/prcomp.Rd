@@ -4,6 +4,7 @@
 \alias{print.prcomp}
 \alias{summary.prcomp}
 \alias{print.summary.prcomp}
+\concept{PCA}
 \title{Principal Components Analysis}
 \description{
   Performs a principal components analysis on the given data matrix
