@@ -29,11 +29,11 @@ make.packages.html <- function(lib.loc=.libPaths())
         ## use relative indexing for .Library
         if(is.na(pmatch(rh, lib))) {
             libname <- gsub("/", "\\\\", lib)
-            if(substring(lib, 2, 2) != ":")
-                lib <- paste(drive, lib, sep="")
-            lib <- paste("file:///", lib, sep="")
+            lib0 <- if(substring(lib, 2, 2) != ":")
+                paste(drive, lib, sep="") else lib
+            lib0 <- paste("file:///", lib0, sep="")
         } else {
-            lib <- "../../library"
+            lib0 <- "../../library"
             libname <- "the standard library"
         }
         if(length(lib.loc) > 1)
@@ -43,10 +43,10 @@ make.packages.html <- function(lib.loc=.libPaths())
             cat("<p>Cross-links from this library to other libraries may not work.\n\n",file = out)
         cat("<p>\n<table width=\"100%\">\n", file = out)
         for (i in  pg) {
-            title <- package.description(i, field="Title")[1]
+            title <- package.description(i, fields="Title", lib.loc = lib)[1]
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
-                '<td width="25%"><a href="', lib, '/', i,
+                '<td width="25%"><a href="', lib0, '/', i,
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
         }
@@ -71,18 +71,18 @@ make.search.html <- function(lib.loc=.libPaths())
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         ## use relative indexing for .Library
         if(is.na(pmatch(rh, lib))) {
-            if(substring(lib, 2, 2) != ":")
-                lib <- paste(drive, lib, sep="")
-            lib <- paste("URL: file:///", lib, sep="")
+            lib0 <- if(substring(lib, 2, 2) != ":") paste(drive, lib, sep="")
+            else lib
+            lib0 <- paste("URL: file:///", lib0, sep="")
             sed.it <- TRUE
         } else {
             sed.it <- FALSE
         }
         for (i in pg) {
-            cfile <- system.file("CONTENTS", package = i)
+            cfile <- system.file("CONTENTS", package = i, lib.loc = lib)
             if(nchar(cfile)) {
                 tmp <- if(sed.it)
-                    gsub("^URL: ../../../library", lib, readLines(cfile))
+                    gsub("^URL: ../../../library", lib0, readLines(cfile))
                 else readLines(cfile)
                 writeLines(tmp, out)
             }
