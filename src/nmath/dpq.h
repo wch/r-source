@@ -26,10 +26,10 @@
 #define R_DT_Cexp(x)	R_D_exp(R_D_Cval(x))		/* exp(1 - x) */
 
 #define R_DT_log(p)	(lower_tail ? R_D_log(p) :		\
-			 logrelerr(- (log_p ? exp(p) : p)))/* log(p)	in qF */
+			 log1p(- (log_p ? exp(p) : p)))/* log(p)	in qF */
 
 #define R_DT_Clog(p)	(lower_tail ?				\
-			 logrelerr(- (log_p ? exp(p) : p)) :	\
+			 log1p(- (log_p ? exp(p) : p)) :	\
 			 R_D_log(p))			/* log(1 - p)	in qF */
 
 #define R_Q_P01_check(p)			\

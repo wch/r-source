@@ -218,7 +218,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 		del = (1. - (1. - 5./(xsq+6.)) / (xsq+4.)) / (xsq+2.);
 	    else
 		del = 0.;
-	    *cum = -.5*xsq - M_LN_SQRT_2PI - log(y) + logrelerr(del);
+	    *cum = -.5*xsq - M_LN_SQRT_2PI - log(y) + log1p(del);
 	    *ccum = 0.;/*log(1)*/
 	    swap_tail;
 

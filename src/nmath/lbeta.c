@@ -62,13 +62,13 @@ double lbeta(double a, double b)
 	/* p and q are big. */
 	corr = lgammacor(p) + lgammacor(q) - lgammacor(p + q);
 	return log(q) * -0.5 + M_LN_SQRT_2PI + corr
-		+ (p - 0.5) * log(p / (p + q)) + q * logrelerr(-p / (p + q));
+		+ (p - 0.5) * log(p / (p + q)) + q * log1p(-p / (p + q));
     }
     else if (q >= 10) {
 	/* p is small, but q is big. */
 	corr = lgammacor(q) - lgammacor(p + q);
 	return lgammafn(p) + corr + p - p * log(p + q)
-		+ (q - 0.5) * logrelerr(-p / (p + q));
+		+ (q - 0.5) * log1p(-p / (p + q));
     }
     else
 	/* p and q are small: p <= q > 10. */
