@@ -526,15 +526,17 @@ language, and so forth.
 Books on R include
 
 @quotation
-Peter Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
+P. Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
 York, ISBN 0-387-95475-9.
 
 J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
 Sage Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
-(hardcover), @uref{http://www.socsci.mcmaster.ca/jfox/Books/Companion/}.
+(hardcover),
+@uref{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.
 
-J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using
-R'', Cambridge University Press, ISBN 0-521-81336-0.
+J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using R:
+An Example-Based Approach'', Cambridge University Press, ISBN
+0-521-81336-0, @uref{http://wwwmaths.anu.edu.au/~johnm/}.
 
 S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con R
 '', McGraw-Hill, ISBN 88-386-6084-0 (in Italian).
