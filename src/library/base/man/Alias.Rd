@@ -18,7 +18,7 @@ new <- .Alias(expr)
 \references{ ~put references to the literature/web site here ~ }
 \section{WARNING}{
   This has a \bold{dangerous} semantic, and consequences can be
-  unexpected.
+  unexpected (it can be used to defeat the call-by-value illusion).
   Know what you are doing \emph{before} using \code{.Alias}!
 }
 \seealso{\code{\link{<-}} for usual assignments.}
