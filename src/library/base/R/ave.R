@@ -1,21 +1,18 @@
-# Average a vector over the levels of a factor.
-
-"ave" <-
-function (x, ...) 
+ave <- function (x, ..., FUN = mean)
 {
         l <- list(...)
         if (is.null(l)) {
-                x[] <- mean(x)
+                x[] <- FUN(x)
         }
         else {
                 g <- 1
                 nlv <- 1
                 for (i in 1:length(l)) {
-                        l[[i]] <- as.factor(l[[i]])
-                        g <- g + nlv * (as.numeric(l[[i]]) - 1)
-                        nlv <- nlv * length(levels(l[[i]]))
+                        l[[i]] <- li <- as.factor(l[[i]])
+                        g <- g + nlv * (as.numeric(li) - 1)
+                        nlv <- nlv * length(levels(li))
                 }
-                x[] <- unlist(lapply(split(x, g), mean))[g]
+                x[] <- unlist(lapply(split(x, g), FUN))[g]
         }
         x
 }
