@@ -153,7 +153,7 @@ Similarly, omitting \code{f} is not currently supported.
   \item{fdef}{Optional, but usually omitted, argument to \code{isGeneric}}
   
   \item{getName}{If \code{TRUE}, \code{isGeneric} returns the name of
-    the generic.  By default, it returns \Code{TRUE}. }
+    the generic.  By default, it returns \code{TRUE}. }
 }
 
 \details{
