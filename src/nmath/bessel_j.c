@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2003 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2005 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -509,7 +509,8 @@ L250:
 	    /* ---------------------------------------------------
 	       Normalize.  Divide all b[N] by sum.
 	       ---------------------------------------------------*/
-	    if (nu + 1. != 1.)
+/*	    if (nu + 1. != 1.) poor test */
+	    if(fabs(nu) > 1e-15)
 		sum *= (gamma_cody(nu) * pow(.5* *x, -nu));
 
 	    aa = enmten_BESS;
