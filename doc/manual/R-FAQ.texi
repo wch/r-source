@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-09
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-15
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1820,6 +1820,8 @@ penalisations.  Also includes some other multiway methods.
 @item ProbForecastGOP
 Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004).
+@item R.oo
+R object-oriented programming with or without references.
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
 @item R2WinBUGS
@@ -2186,6 +2188,9 @@ right censored data.
 E-statistics (energy) tests for comparing distributions: multivariate
 normality, Poisson test, multivariate @math{k}-sample test for equal
 distributions, hierarchical clustering by e-distances.
+@item ensembleBMA
+Probabilistic forecasting using Bayesian Model Averaging of ensembles
+using a mixture of normal distributions.
 @item epitools
 Basic tools for applied epidemiology.
 @item epsi
@@ -4910,6 +4915,15 @@ the problem, preferably the simplest one you have found.
 Invoking R with the @option{--vanilla} option may help in isolating a
 bug.  This ensures that the site profile and saved data files are not
 read.
+
+Before you submit a bug report, you should check whether the bug has
+been reported and/or fixed before.  First, try the ``Search Existing
+Reports'' facility in the Bug Tracking page at
+@url{http://bugs.R-project.org}.  Second, consult
+@url{https://svn.R-project.org/R/trunk/NEWS}, which records changes that
+will appear in the @emph{next} release of R, including some bug fixes
+that do not appear in Bug Tracking.  If a bug has already been reported
+or fixed, please do not submit further bug reports on it.
 
 On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
