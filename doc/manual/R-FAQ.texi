@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-6, 2000-07-27
+@set FAQ-VERSION 1.1-7, 2000-08-02
 @set REL-VERSION 1.1.0
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1465,6 +1465,8 @@ methods.
 An interface between R and the MySQL database system.
 @item RPgSQL
 An interface between R and the PostgreSQL database system.
+@item Rstreams
+Binary file stream support functions.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
