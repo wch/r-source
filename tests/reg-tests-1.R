@@ -2759,3 +2759,12 @@ stopifnot(format(x @ date) == "2003-10-09")
 xx <- filter(4:8, c(1, 0.5, 0.25), method="recursive", init=3:1)
 stopifnot(identical(xx[1:3], c(8.25, 15.25, 26.125)))
 ## 1.8.0 gave 6.75 12.75 22.375
+
+
+## PR#5090 user error with writeChar could segfault
+tf <- tempfile()
+zz <- file(tf, "wb")
+writeChar("", zz, nchars=10000000)
+close(zz)
+unlink(tf)
+## segfaults in 1.8.0

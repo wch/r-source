@@ -130,6 +130,9 @@ BUG FIXES
 	matrix): model.matrix() gave nonsensical results for 0-level
 	factors.
 
+    o   writeChar() could segfault if more characters were requested
+	than exist. (PR#5090)
+
 
 
 		CHANGES IN R VERSION 1.8.0
