@@ -1,24 +1,28 @@
     browse.pkgs <- function(where = c("CRAN","BIOC"),
                             type = c("binary","source"), 
-							contriburl, global = FALSE)
+			    contriburl = NULL, global = FALSE)
    {
      if (.Platform$GUI!="AQUA")
        stop("This function is intended to work with the Aqua GUI")
      where <- match.arg(where)
-       type <- match.arg(type)
-       installed.packages() -> x
-       x[,1] -> i.pkgs
-       x[,3] -> i.vers
-	   if( !missing(contriburl) )
-				CRAN.packages(contriburl=contriburl) -> y
-       else { 
-			if(type == "binary") 
-				CRAN.binaries(getOption(where)) -> y
-			else
-				CRAN.packages(getOption(where)) -> y
-		}
-       y[,1] -> c.pkgs
-       y[,2] -> c.vers
+     type <- match.arg(type)
+     installed.packages() -> x
+     x[,1] -> i.pkgs
+     x[,3] -> i.vers
+     if (is.null(contriburl)){
+       if (type=="binary")
+         contriburl<-contrib.url(getOption(where),type="mac.binary")
+       else
+         contriburl<-contrib.url(getOption(where),type="source")
+       label <- switch(where, CRAN = paste("CRAN (",type,") @",getOption(where)),
+                       BIOC = paste("BioC (",type,") @",getOption(where)))
+     } else label<-paste("(",type,") @",contriburl)
+     if (type=="binary")
+       CRAN.binaries(contriburl=contriburl) -> y
+     else 
+       CRAN.packages(contriburl=contriburl) -> y
+     y[,1] -> c.pkgs
+     y[,2] -> c.vers
 
        match(i.pkgs, c.pkgs) -> idx
        vers2 <- character(length(c.pkgs))
@@ -26,9 +30,7 @@
        i.vers <- vers2
        ##inst.idx <- which(.Internal(pkgbrowser(c.pkgs,c.vers,i.vers,where)))
        want.update <- rep(FALSE, length(i.vers))
-       label <- switch(where, CRAN = paste("CRAN (",type,") @",getOption(where)),
-                       BIOC = paste("BioC (",type,") @",getOption(where)))
-       inst <- .Internal(pkgbrowser(c.pkgs,c.vers,i.vers,label, want.update))
+      inst <- .Internal(pkgbrowser(c.pkgs,c.vers,i.vers,label, want.update))
 
        ui.pkgs <- c.pkgs[inst]
        idx2 <- which(c.vers[inst] == i.vers[inst])
