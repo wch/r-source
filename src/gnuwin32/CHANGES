@@ -65,6 +65,9 @@ The output when building R or source packages is much quieter.
 Warnings are printed if a loaded DLL changes the floating point
 control word: see ?dyn.load for the details.
 
+Changed Windows README to README.rw1062, included standard README
+and RESOURCES file in binary distribution.
+
 
 
 rw1061

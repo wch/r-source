@@ -3,7 +3,7 @@ R for Windows
 
 This distribution contains the sources to build a port of R to run on
 Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips. See the
-file `readme' for fuller details, including how to install the binary
+file `README.rw1xxx' for fuller details, including how to install the binary
 versions.
 
 

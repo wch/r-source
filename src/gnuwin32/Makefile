@@ -415,10 +415,10 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -p ../../doc/manual/*.html $(RPREFIX)/doc/manual
 	$(CP) -pr ../../share/texmf $(RPREFIX)/share
 	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
-		../../THANKS ../../Y2K $(RPREFIX)
+		../../README ../../RESOURCES ../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
-	$(CP) -p rw-FAQ $(RPREFIX)
+	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README.$(RPREFIX)
+	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
 	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
 # convert docs and batch files to CRLF: might already be on Windows, though.
