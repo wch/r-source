@@ -41,7 +41,7 @@ ac_help="$ac_help
   --with-tk-config=TK_CONFIG
                           specify location of tkConfig.sh"
 ac_help="$ac_help
-  --with-libtool       use libtool for building shared libraries"
+  --with-libtool          use libtool for building shared libraries"
 ac_help="$ac_help
   --enable-static[=PKGS]  build static libraries [default=no]"
 ac_help="$ac_help
