@@ -39,7 +39,7 @@ extends <-
             return(c(class1, names(ext[!tested])))
         }
     }
-    if(class1 == class2)
+    if(identical(class1, class2))
         return(TRUE)
     value <- findExtends(class1, class2)
     if(is.logical(value))
@@ -65,13 +65,14 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, by = NULL, where = 1)
+           replace = NULL, by = NULL, dataPart = NULL, where = 1)
 {
     obj <- list()
     obj$test <- test
     obj$coerce <- coerce
     obj$replace <- replace
     obj$by <- by
+    obj$dataPart <- if(identical(dataPart, TRUE)) TRUE else NULL
     if(length(obj) == 0)
         obj <- TRUE                     # simple extension
     classDef1 <- getClassDef(class1, where)

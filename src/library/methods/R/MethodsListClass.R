@@ -23,8 +23,7 @@
     setIs("function", "PossibleMethod", where = envir)
 
     ## signatures -- used mainly as named character vectors
-    ## TO TRY:  add "name" as a formal slot?
-    setClass("signature", "character", where = envir)
+    setClass("signature", representation("character", names = "character"), where = envir)
     
     ## formal method definition for all but primitives
     setClass("MethodDefinition", representation("function", "PossibleMethod",
@@ -36,8 +35,8 @@
 }
 
 ## some intiializations that need to be done late
-.InitMethodDefinition <- function(envir) {
-    assign("asMethodDefinition",  function(def, signature = list(), argNames = character()) {
+.InitMethodDefinitions <- function(envir) {
+    assign("asMethodDefinition",  function(def, signature = list()) {
     ## primitives can't take slots, but they are only legal as default methods
     ## and the code will just have to accomodate them in that role, w/o the
     ## MethodDefinition information.
@@ -52,21 +51,14 @@
         value <- def
     else
         value <- new("MethodDefinition", def)
-    classes <- as.character(signature)
-    sigArgs <- names(signature)
-    formalNames <- argNames[seq(length = length(classes))]
-    if(length(sigArgs)< length(signature))
-        names(classes) <- formalNames
-    else if(length(sigArgs) > 0 && !identical(sigArgs, formalNames))
-        warning("names in signature (",
-                paste(sigArgs, collapse = ", "), ") don't match supplied argNames (",
-                paste(formalNames, collapse = ", "),")")
-    classes <- new("signature",  classes)
+    ## this is really new("signature",  def, signature)
+    ## but bootstrapping problems force us to make
+    ## the initialize method explicit here
+    classes <- .MakeSignature(new("signature"),  def, signature)
     value@target <- classes
     value@defined <- classes
     value
 }, envir = envir)
-
         setGeneric("loadMethod", where = envir)
     setMethod("loadMethod", "MethodDefinition",
               function(method, fname, envir) {
@@ -80,7 +72,6 @@
                   assign(".nextMethod", method@nextMethod, envir = envir)
                   method
               }, where = envir)
-
     setGeneric("findNextMethod", function(method, f = "<unknown>", mlist, optional = FALSE)
                standardGeneric("findNextMethod"), where = envir)
     setMethod("findNextMethod", "MethodDefinition",
@@ -88,7 +79,6 @@
               value <- .findNextMethod(method, f, mlist, optional, method@defined)
               new("MethodWithNext", method, nextMethod = value,
                                excluded = list(method@defined))
-
           }, where = envir)
     setMethod("findNextMethod", "MethodWithNext",
           function(method, f, mlist, optional) {
@@ -97,4 +87,49 @@
               new("MethodWithNext", method, nextMethod = value,
                                excluded = excluded)
          }, where = envir)
+    if(!isGeneric("initialize")) {
+        setGeneric("initialize",  function(object, ...) {
+            value <- standardGeneric("initialize")
+            if(!identical(class(value), class(object)))
+                stop(paste("Initialize method returned an object of class \"",
+                           class(value), "\" instead of the required class \"",
+                           class(object), "\"", sep=""))
+            value
+        }, where = envir, myDispatch = TRUE, useAsDefault = TRUE)
+    }
+    .InitTraceFunctions(envir)
+    setMethod("initialize", "signature",
+              function(object, functionDef, ...) {
+                  if(nargs() < 2)
+                      object
+                  else if(missing(functionDef))
+                      .MakeSignature(object, , list(...))
+                  else if(!is(functionDef, "function"))
+                      .MakeSignature(object, , list(functionDef, ...))
+                  else
+                      .MakeSignature(object, functionDef, list(...))
+              }, where = envir)
 }
+
+.MakeSignature <- function(object, def, signature) {
+    signature <- unlist(signature)
+    if(length(signature)>0) {
+        classes <- as.character(signature)
+        sigArgs <- names(signature)
+        formalNames <- formalArgs(def)
+        if(length(sigArgs)< length(signature))
+            names(signature) <- formalNames[seq(along = classes)]
+        else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
+            stop(paste("names in signature (",
+                       paste(sigArgs, collapse = ", "), ") don't match function's arguments (",
+                       paste(formalNames, collapse = ", "),")", sep=""))
+        ## the named classes become the signature object
+        class(signature) <- class(object)
+        signature
+    }
+    else
+        object
+}
+
+        
+       

@@ -378,9 +378,19 @@ matchSignature <-
   function(names, signature, fun)
 {
     sigClasses <- as.character(signature)
+    if(length(sigClasses) > 0) {
+        unknown <- !sapply(sigClasses, function(x)isClass(x))
+        unknown <- unknown & is.na(match(sigClasses, .OldClasses))
+    }
+    else
+        unknown <- logical()
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
         stop("signature argument doesn't look like a legitimate signature (vector of single class names)")
+    if(any(unknown)) {
+        unknown <- unique(sigClasses[unknown])
+        warning("Class ", paste("\"", unknown, "\"", sep="", collapse = ", "), "not defined")
+    }
     ## construct a function call with the same naming pattern as signature
     fcall <- do.call("call", c("fun", signature))
     ## match the call to the supplied function
@@ -617,5 +627,5 @@ addMethodFrom <- function(def, arg, Class, fromClass) {
 ## Define a trivial version of asMethodDefinition for bootstrapping.
 ## The real version requires several class definitions as well as
 ## methods for as<-
-asMethodDefinition <- function(def, signature = list(), argNames = character())
+asMethodDefinition <- function(def, signature = list())
     def

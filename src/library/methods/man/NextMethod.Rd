@@ -50,9 +50,9 @@ for further details and examples.
 \author{
   John Chambers
 }
-\seealso{ {\link{Methods} for the general behavior of method dispatch }
+\seealso{ {\link{Methods} for the general behavior of method dispatch }}
 
-  \examples{
+\examples{
 
 ## some class definitions with simple inheritance
 setClass("B0" ,representation(b0 = "numeric"))

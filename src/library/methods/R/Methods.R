@@ -9,59 +9,69 @@ setGeneric <-
   ## If `def' is supplied, this defines the generic function.  The default method for
   ## a new generic will usually be an existing non-generic.  See the .Rd page
   ##
-    function(name, def = NULL, group = NULL, valueClass = NULL, where = 1, doAssign,
-             myDispatch = FALSE)
+    function(name, def = NULL, group = NULL, valueClass = NULL, where = 1,
+             doAssign,
+             myDispatch, useAsDefault = existsFunction(name, generic = FALSE))
 {
-    useAsDefault <-  is.null(def) && existsFunction(name)
-    if(useAsDefault) {
-        fdef <- getFunction(name)
+    stdBody <- substitute(standardGeneric(NAME), list(NAME = name))
+    if(is.function(useAsDefault))
+        fdeflt <- useAsDefault
+    else if(useAsDefault)
+        fdeflt <- getFunction(name, generic = FALSE, mustFind = FALSE)
+    else
+        fdeflt <- NULL
+    if(is.null(def)) {
+        ## get the current function which may already be a generic
+        fdef <- getFunction(name, mustFind = FALSE)
+        if(is.null(fdef))
+            stop("Must supply a function skeleton, explicitly or via an existing function")
+        else if(is.primitive(fdef))
+            stop(paste("\"", name, "\" is a primitive function; methods can be defined for some of these but setGeneric must not be called", sep=""))
+        body(fdef) <- stdBody
     }
-    else {
-        if(is.null(def))
-            stop(paste("No existing function \"", name, "\", arguments must be supplied"))
+    else
         fdef <- def
-        stdBody <- substitute(standardGeneric(NAME), list(NAME = name))
-        if(myDispatch || identical(body(fdef), stdBody)) {} ## use as is
-        else {
-            if(!is.null(body(fdef)))
-               warning("the body of argument def will be ignored in creating generic \"",
-                       name, "\" (assign it as the default method if that's what you meant)")
+    if(identical(body(fdef), stdBody)) {} ## use as is
+    else {
+        if(missing(myDispatch))
+            ## with treeApply we could do a search for the _correct_ call to
+            ## standardGeneric, but as an approximation
+            myDispatch <- !is.na(match("standardGeneric", all.names(body(def))))
+        if(!myDispatch) {
+            warning("the body of the supplied function definition doesn't call standardGeneric; will be ignored")
             body(fdef) <- stdBody
         }
     }
-    if(!isGeneric(name, fdef = fdef)) {
-      if(missing(doAssign))
-        doAssign <- TRUE
-        ## create a generic; if the original fdef was NOT a generic, it becomes the default
-        ## Otherwise, there will be no default method.
-        fdef <- makeGeneric(name, fdef, FALSE, useAsDefault, group=group, valueClass=valueClass)
-        ## makeGeneric puts the default method into the function's environment
-        ## This will probably change, but for now, just copy it into the metadata
-        methods <- get(".Methods", envir = environment(fdef))
-        ## make a default method for special functions.  These must be dispatched
-        ## from the C code in main, and the default method is just a flag, used
-        ## to tell the C code to continue with the internal computations.
-        if(exists(name, "package:base")) {
-          deflt <- get(name, "package:base")
-          if(typeof(deflt) != "closure") {
-            ## uncondidtionally, never assign an explicit generic
-            ## for primitive functions.
-            doAssign <- FALSE
-           }
-        }
+    if(!is.null(valueClass)) {
+        ## include tests for value
+        fbody <- body(fdef)
+        body(fdef, envir = environment(fdef)) <-
+            substitute(.valueClassTest(EXPR, VALUECLASS, FNAME),
+               list(EXPR = fbody, VALUECLASS = valueClass, FNAME = name))
+        if(!identical(fbody, stdBody))
+            warning("Using valueClass with a non-standard generic definition:  check that the revised definition makes sense")
+    }
+    fdef <- makeGeneric(name, fdef, FALSE, fdeflt, group=group, valueClass=valueClass)
+    ## makeGeneric puts the default method into the function's environment
+    ## This will probably change, but for now, just copy it into the metadata
+    methods <- get(".Methods", envir = environment(fdef))
+    if(missing(doAssign))
+        doAssign <-  !isGeneric(name) || !is.null(valueClass) ||
+                     !identical(body(fdef), stdBody)
+    ## there are two assignment steps.  First, assign the methods metadata
+    if(doAssign)
         assignMethodsMetaData(name, methods, where = where)
-    }
-    else if(missing(doAssign))
-      doAssign <- FALSE
-    if(doAssign) {
-      ev <- environment(fdef)
-      if(!missing(def) && !identical(def, fdef)) {
-        ## use the supplied body and the generated environment
-        body(fdef) <- body(def)
-        environment(fdef) <- ev
-      }
+    else if(isGeneric(name))
+        message("Function \"", name, "\" is already a generic; no change")
+    ## Second, the generic version of the function.
+    ## special treatment for primitives on base.  These MUST not
+    ## be assigned as formal generics, because they are dispatched from the main
+    ## C code.
+    if(exists(name, "package:base") &&
+        typeof(get(name, "package:base")) != "closure")
+        doAssign <- FALSE
+    if(doAssign)
       assign(name, fdef, where)
-    }
     ## The S-Plus definition claims to return an object of class "Generic", which we don't
     ## have, but in fact just returns name.  
     name
@@ -210,12 +220,15 @@ setMethod <-
     ## assigned if there is no current generic, and the function is NOT a special.
     ## Specials are dispatched from the main C code, and an explicit generic NEVER
     ## exists for them (but getGeneric constructs one if needed).
-    
-    hasMethods <- isGeneric(f)
+
+    ## slight subtlety:  calling getGeneric vs calling isGeneric
+    ## For primitive functions, getGeneric returns the (hidden) generic function,
+    ## even if no methods have been defined.  An explicit generic MUST NOT be
+    ## created for these functions, dispatch is done inside the evaluator.
+    fdef <- getGeneric(f)
+    hasMethods <- !is.null(fdef)
     if(!hasMethods)
       fdef <- getFunction(f, mustFind = FALSE)
-    if(hasMethods || is.primitive(fdef))
-      fdef <- getGeneric(f)
     if(is.null(fdef))
       stop(paste("No existing definition for function \"",f,"\"", sep=""))
     if(!hasMethods) {
@@ -225,9 +238,7 @@ setMethod <-
     }
     fnames <- formalArgs(fdef)
     signature <- matchSignature(fnames, signature, fdef)
-    allMethods <- getMethodsMetaData(f, where = where)
-    if(is.null(allMethods))
-        allMethods <- new("MethodsList", argument = as.name(fnames[1]))
+    allMethods <- .getOrMakeMethodsList(f, fnames, where)
     switch(typeof(definition),
            closure = {
                mnames <- formalArgs(definition)
@@ -243,14 +254,14 @@ setMethod <-
              ## the only primitive methods allowed are those equivalent
              ## to the default, for generics that were primitives before
              ## and will be dispatched by C code.
-             deflt <- finalDefaultMethod(allMethods, f)
+             deflt <- getFunction(f, generic = FALSE, mustFind = FALSE)
              if(!identical(definition, deflt))
                 stop("Primitive functions cannot be methods; they must be enclosed in a regular function")
            },
            "NULL" = {}, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
     allMethods <- insertMethod(allMethods, signature, fnames[1:length(signature)],
-                               asMethodDefinition(definition, signature, fnames))
+                               asMethodDefinition(definition, signature))
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, where = where)
     f
@@ -570,23 +581,15 @@ removeMethods <-
     value
 }
 
-resetGeneric <-
+resetGeneric <- function(f) {
   ## reset the currently defined methods for this generic by un-caching any inherited
   ## methods.  You MUST call this function when you change relevant inheritance information during a
   ## session, to guarantee that the new information is used if this generic has already been
   ## called.
-  function(f)
-{
-    fdef <- getFromMethodMetaData(f)
-    if(is.null(fdef))
-        FALSE
-    else {
-        ## removes the definition from the session metadata
-        ## and resets cached info for a primitive
-        removeFromMethodMetaData(f)
-        cacheGenericsMetaData(f, TRUE, NULL)
-        TRUE
-    }
+
+    ## removes the definition from the session metadata
+    ## and resets cached info for a primitive
+    cacheGenericsMetaData(f, TRUE, NULL)
 }
 
 setReplaceMethod <-

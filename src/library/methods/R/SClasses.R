@@ -48,11 +48,12 @@ setSClass <-
     removeClass(name, where = 0)
     extends <- makeExtends(extends)
     subclasses <- makeExtends(subclasses)
-    if(!is.null(prototype) || length(properties)>0) {
-        ## make the prototype look like a "legal" element of the class
+    if(!is.null(prototype) || length(properties)>0 || length(extends) >0) {
+        ## collect information about slots, create prototype if needed
         pp <- reconcilePropertiesAndPrototype(name, properties, prototype, extends)
         properties <- pp$properties
         prototype <- pp$prototype
+        extends <- pp$extends
     }
     ev <- newClassEnvironment(name, properties, extends, prototype, subclasses,
                               virtual, validity, access)
@@ -142,7 +143,7 @@ checkSlotAssignment <- function(obj, name, value)
     slotDefs <- getProperties(ClassDef)
     slot <- elNamed(slotDefs, name)
     if(is.null(slot))
-        stop(paste("\"", name, "\" is not a slot in class \"", class(object), "\"", sep = ""))
+        stop(paste("\"", name, "\" is not a slot in class \"", class(obj), "\"", sep = ""))
     if(identical(slot, class(value)))
        return(value)
     if(is(value, slot))
@@ -208,93 +209,26 @@ new <-
   ##
   ## If other arguments are included, these are the values for named properties
   ## in the object, or an object that can be coerced into this class.
-  ## The special argument `.Force' controls what happens if the class is undefined: if
-  ## it is `TRUE' an empty object is returned (essentially a `NULL', except that R currently
-  ## doesn't allow `NULL' in certain contexts, so this object has a class as well).
-  ## If `.Force' is `FALSE', trying to create an object from an undefined class is an
-  ## error.  Note that the basic vector classes, `"numeric"', etc. are implicitly defined,
+  ## Note that the basic vector classes, `"numeric"', etc. are implicitly defined,
   ## so one can use `new' for these classes.
   ###
   ### Unnamed arguments are objects from this class or a superclass.
   ##
-  ## When called with no Class argument, assumes the call comes from the generating function
-  ## for a class, and uses that function's environment as the class representation.
-  function(Class, ..., .Force=FALSE)
+  function(Class, ...)
 {
     ## the basic classes have fixed definitions
     if(!is.na(match(Class, .BasicClasses)))
-        return(newBasic(Class, ..., .Force = .Force))
+        return(newBasic(Class, ...))
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
     ClassDef <- getClass(Class)
     if(identical(getVirtual(ClassDef), TRUE)) {
-        if(.Force)
-            value <- newEmptyObject()
-        else
-            stop("Trying to use new() on a virtual class")
+        stop("Trying to use new() on a virtual class")
     }
     else
         value <- getPrototype(ClassDef)
     class(value) <- Class
-    args <- list(...)
-    if(length(args) > 0) {
-        ## separate the slots, superclass objects
-        snames <- allNames(args)
-        which <- nchar(snames)>0
-        elements <- args[which]
-        supers <- args[!which]
-        thisExtends <- names(getExtends(ClassDef))
-        if(length(supers) > 0) {
-            for(i in rev(seq(along = supers))) {
-                obj <- el(supers, i)
-                Classi <- data.class(obj)
-                if(identical(Classi, Class))
-                    value <- obj
-                else if(extends(Classi, Class))
-                    ## typically, throw away extra slots.
-                    value <- as(obj, Class)
-                else if(extends(Class, Classi))
-                    as(value, Classi) <- obj
-                else {
-                    ## is there a class to which we can coerce obj
-                    ## that is then among the superclasses of Class?
-                    extendsi <- names(getExtends(getClass(Classi)))
-                    which <- match(extendsi, thisExtends)
-                    which <- seq(along=which)[!is.na(which)]
-                    if(length(which) == 1) {
-                        Classi <- extendsi[[which]]
-                        as(value, Classi) <- as(obj, Classi)
-                    }
-                    else
-                        stop(paste("Can't use object of class \"", Classi,
-                                   "\" in new():  Class \"", Class, "\" does not extend that class"), sep="")
-                }
-            }
-        }
-        if(length(elements)>0) {
-            slotDefs <- getProperties(ClassDef)
-            snames <- names(elements)
-            if(any(duplicated(snames)))
-                stop(paste("Duplicated slot names:",
-                           paste(snames[duplicated(snames)], collapse = ", ")), sep="")
-            which  <- match(snames, names(slotDefs))
-            if(any(is.na(which)))
-                stop(paste("Invalid names for properties of class ",
-                           Class, ": ", paste(snames[is.na(which)], collapse=", ")), sep="")
-            for(i in seq(along=snames)) {
-                slotName <- el(snames, i)
-                slotClass <- elNamed(slotDefs, slotName)
-                slotVal <- el(elements, i)
-                if(!.Force && !is(slotVal, slotClass))
-                    stop(paste("Invalid object for slot \"", slotName,
-                               "\", with class \"", class(slotVal), 
-                               "\", should be or extend class \"", slotClass, "\"", sep = ""))
-                slotVal <- as(slotVal, slotClass)
-                slot(value, slotName, check = FALSE) <- slotVal
-            }
-        }
-    }
-    value
+    initialize(value, ...)
 }
 
 getClasses <-
@@ -386,3 +320,72 @@ resetClass <-
             removeFromClassMetaData(cname)
         Class
     }
+
+## the (default) initialization:  becomes the default method when the function
+## is made a generic by .InitMethodDefinitions
+
+initialize <- function(object, ...) {
+    args <- list(...)
+    if(length(args) > 0) {
+        Class <- class(object)
+        ClassDef <- getClass(Class)
+        ## separate the slots, superclass objects
+        snames <- allNames(args)
+        which <- nchar(snames)>0
+        elements <- args[which]
+        supers <- args[!which]
+        thisExtends <- names(getExtends(ClassDef))
+        if(length(supers) > 0) {
+            for(i in rev(seq(along = supers))) {
+                obj <- el(supers, i)
+                Classi <- data.class(obj)
+                if(identical(Classi, Class))
+                    object <- obj
+                else if(extends(Classi, Class))
+                    ## typically, throw away extra slots.
+                    object <- as(obj, Class)
+                else if(extends(Class, Classi))
+                    as(object, Classi) <- obj
+                else {
+                    ## is there a class to which we can coerce obj
+                    ## that is then among the superclasses of Class?
+                    extendsi <- extends(Classi)[-1]
+                    ## look for the common extensions, choose the first
+                    ## one in the extensions of Class
+                    which <- match(thisExtends, extendsi)
+                    which <- seq(along=which)[!is.na(which)]
+                    if(length(which) >0 ) {
+                        Classi <- thisExtends[which[1]]
+                        as(object, Classi) <- as(obj, Classi)
+                    }
+                    else
+                        stop(paste("Can't use object of class \"", Classi,
+                                   "\" in new():  Class \"", Class, "\" does not extend that class", sep=""))
+                }
+            }
+        }
+        if(length(elements)>0) {
+            slotDefs <- getProperties(ClassDef)
+            snames <- names(elements)
+            if(any(duplicated(snames)))
+                stop(paste("Duplicated slot names:",
+                           paste(snames[duplicated(snames)], collapse = ", ")), sep="")
+            which  <- match(snames, names(slotDefs))
+            if(any(is.na(which)))
+                stop(paste("Invalid names for properties of class ",
+                           Class, ": ", paste(snames[is.na(which)], collapse=", "), sep=""))
+            for(i in seq(along=snames)) {
+                slotName <- el(snames, i)
+                slotClass <- elNamed(slotDefs, slotName)
+                slotVal <- el(elements, i)
+                if(!is(slotVal, slotClass))
+                    stop(paste("Invalid object for slot \"", slotName,
+                               "\", with class \"", class(slotVal), 
+                               "\", should be or extend class \"", slotClass, "\"", sep = ""))
+                slotVal <- as(slotVal, slotClass)
+                slot(object, slotName, check = FALSE) <- slotVal
+            }
+        }
+    }
+    object
+}

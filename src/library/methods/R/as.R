@@ -138,14 +138,24 @@ setAs <-
   setGeneric("coerce", function(from, to)standardGeneric("coerce"), where = where)
   setGeneric("coerce<-", function(from, to, value)standardGeneric("coerce<-"), where = where)
   basics <- c(
- "POSIXct",  "POSIXlt",  "array",  "call",  "character",  "complex",  "data.frame", "double", 
+ "POSIXct",  "POSIXlt",  "array",  "call",  "character",  "complex",  "data.frame", 
  "environment",  "expression",  "factor",  "formula",  "function",  "integer", 
- "list",  "logical",  "matrix",  "name",  "null",  "numeric",  "ordered", 
- "pairlist",  "real",  "single",  "symbol",  "table",  "ts",  "vector")
+ "list",  "logical",  "matrix",  "name",  "numeric",  "ordered", 
+  "single",  "table",  "ts",  "vector")
   for(what in basics) {
       method  <- eval(function(from, to)NULL, .GlobalEnv)
       body(method) <- substitute(AS(from),
                               list(AS = as.name(paste("as.", what, sep=""))))
       setMethod("coerce", c("ANY", what), method, where = where)
   }
+  ## and some hand-coded ones
+  body(method) <- quote(as.null(from))
+  setMethod("coerce", c("ANY", "NULL"), method)
+  body(method) <- quote({
+            if(length(from) != 1)
+              warning("ambiguous object (length!=1) to coerce to \"name\"")
+            as.name(from)
+        })
+  setMethod("coerce", c("ANY","name"), method)
+  ## not accounted for and maybe not needed:  real, pairlist, double
 }

@@ -1,12 +1,3 @@
-show <-
-  ## display the object, by printing, plotting or whatever suits its class.
-  ##
-  ## This function exists to be specialized by methods; the definition stored here
-  ## is intended as the default method.  In S-Plus, but not currently in R, `show'
-  ## is called for automatic display of the result of an evaluated expression.
-    function(object)
-    showDefault(object, oldMethods = FALSE)
-
 showDefault <-
   function(object, printTo = stdout(), oldMethods = TRUE)
 {
@@ -25,9 +16,9 @@ showDefault <-
             show(dataPart)
             slots <- slots[is.na(match(slots, ".Data"))]
         }
-        if(length(slots) == 0)
+        else if(length(slots) == 0)
             show(unclass(object))
-        else for(what in slots) {
+        for(what in slots) {
             if(identical(what, ".Data"))
                 next ## should have been done above
             cat(file = con, "Slot \"",what, "\":\n", sep="")
@@ -68,4 +59,32 @@ print.default <- function(x, ...) {
         show(x)
     else
         printNoClass(x, ...)
+}
+
+.InitShowMethods <- function(envir) {
+    setGeneric("show", function(object)standardGeneric("show"),
+               where = envir)
+    setMethod("show", "ANY",
+              function(object)
+              showDefault(object, oldMethods = FALSE), where = envir)
+    setMethod("show", "MethodDefinition",
+              function(object) {
+                  cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")
+                  show(object@.Data)
+                  mm <- methodSignatureMatrix(object)
+                  cat("\nSignatures:\n")
+                  print(mm)
+              },
+              where = envir)
+    setMethod("show", "MethodWithNext",
+              function(object)  {
+                  cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")
+                  show(object@.Data)
+                  mm <- rbind(methodSignatureMatrix(object),
+                              NextMethod = object@nextMethod@defined)
+                  cat("\nSignatures:\n")
+                  print(mm)
+              },
+              where = envir)
+    
 }

@@ -22,17 +22,19 @@ callNextMethod <- function() {
     if(exists(".nextMethod", envir = envir, inherits = FALSE))
         nextMethod <- get(".nextMethod", envir = envir, inherits = FALSE)
     else {
-        ## set up the nextMethod object and load it
-        ## into the environment
+        ## set up the nextMethod object, load it
+        ## into the calling environment, and maybe cache it
         if(exists(".Method", envir = envir, inherits = FALSE)) {
             method <- get(".Method", envir = envir, inherits = FALSE)
             f <- get(".Generic", envir = envir)
+            cache <- TRUE
         }
         else { ## not in an ordinary method: must be in another NextMethod call
             env2 <- parent.frame(2)
             if(exists(".nextMethod", envir = env2, inherits = FALSE)) {
                method <- get(".nextMethod", envir = env2, inherits = FALSE)
                f <- get(".Generic", envir = env2)
+               cache <- FALSE
            }
             else
                 stop("call to NextMethod doesn't appear to be in a method or NextMethod context")
@@ -40,8 +42,11 @@ callNextMethod <- function() {
         if(is(method, "MethodDefinition")) {
             newMethod <- findNextMethod(method, f, getMethods(f))
             ## cache the method with the nextMethod included,
-            ## so later calls will load this information
-            cacheMethod(f, method@target, newMethod)
+            ## so later calls will load this information.  But can't do this
+            ## if this call was from a next method, because dispatch may be
+            ## different
+            if(cache)
+                cacheMethod(f, method@target, newMethod)
             nextMethod <- newMethod@nextMethod
             assign(".nextMethod", nextMethod, envir = envir)
         }

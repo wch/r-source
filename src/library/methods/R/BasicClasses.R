@@ -4,9 +4,17 @@
     ## setClass won't allow redefining basic classes,
     ## so make the list of these empty for now.
     assign(".BasicClasses", character(), envir)
+    assign(".OldClasses", character(), envir)
+    ## hide some functions that would break because the basic
+    ## classes are not yet defined
+    real.reconcileP <- reconcilePropertiesAndPrototype
+    assign("reconcilePropertiesAndPrototype", function(name, properties, prototype, extends) {
+        list(properties=properties, prototype = prototype, extends = extends)
+    }, envir)
     setClass("VIRTUAL", where = envir)
     setClass("ANY", where = envir)
     setClass("vector", where = envir)
+    setClass("missing", where = envir)
     vClasses <- c("logical", "numeric", "character",
                 "complex", "integer", "single",
                 "expression", "list")
@@ -14,7 +22,7 @@
         setClass(.class, prototype = newBasic(.class), where = envir)
         setIs(.class, "vector")
     }
-    clList <- c(vClasses, "VIRTUAL", "ANY", "vector")
+    clList <- c(vClasses, "VIRTUAL", "ANY", "vector", "missing")
     setIs("double", "numeric")
     setIs("integer", "numeric")
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
@@ -47,4 +55,19 @@
     setIs("array", "matrix", test = function(object) length(dim(object)) == 2)
 
     assign(".BasicClasses", clList, envir)
+
+    ## some heuristics to find known old-style classes by looking for plausible
+    ## method names (!)  We can't guarantee anything about this list, but it's used
+    ## to avoid annoying warning message from matchSignature
+    clList <- unique(c(
+           substring(objects("package:base", pat = "^plot[.]"), 6),
+           substring(objects("package:base", pat = "^summary[.]"), 9),
+           substring(objects("package:base", pat = "^predict[.]"), 9),
+           substring(objects("package:base", pat = "^Ops[.]"), 5),
+           substring(objects("package:base", pat = "^print[.]"), 7)))
+    ## there are no known old classes with >1 dot in the name??
+    clList <- clList[-grep("[.].*[.]", clList)]
+    assign(".OldClasses", clList, envir)
+    ## restore the true definition of the hidden functions
+    assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
 }

@@ -53,12 +53,21 @@ makePrototypeFromClassDef <-
             ## the class is virtual, and the prototype usually NULL
             virtual <- TRUE
         else if(needsPrototype && isClass(what) && !isVirtualClass(what)) {
-            if(is.null(prototype))
+            if(is.null(prototype)) {
                 prototype <- getPrototype(getClass(what))
+                fromClass <- what
+            }
             else {
-                ## two super classes => prototype not defined?
-                warning("More than one non-virtual superclass: prototype may be ambiguous")
-                break
+                ## two super classes: check "data part" for consistency
+                ## (conflicting slot names are checked elsewhere)
+                pOther <- getPrototype(getClass(what))
+                attributes(pOther) <- NULL
+                pThis <- prototype
+                attributes(pThis) <- NULL
+                if(!identical(pOther, pThis) && !identical(pThis, list()))
+                    warning("classes \"", what, "\" and \"", fromClass,
+                            "\" have different prototypes; using the one from \"",
+                            fromClass, "\"")
             }
         }
     }
@@ -441,8 +450,9 @@ newBasic <-
   ## Class="NULL" (disallowed because NULL can't have attributes).
   ##
   ## See `new' for the interpretation of the arguments.
-  function(Class, ..., .Force = FALSE) {
-  value <- switch(Class,
+  function(Class, ...) {
+      msg <- NULL
+      value <- switch(Class,
                "NULL" = return(NULL), ## can't set attr's of NULL in R
                "logical" =,
                "numeric" =,
@@ -452,7 +462,7 @@ newBasic <-
                "double" =,
                "list" =  as.vector(c(...), Class),
                "expression" = eval(substitute(expression(...))),
-               "single" =, as.single(c(...)),
+               "single" = as.single(c(...)),
               "environment" = new.env(),
                "function" = eval(quote(function()NULL), .GlobalEnv),
                "named" = named(...),
@@ -465,19 +475,18 @@ newBasic <-
                   "name" = as.name("<UNDEFINED>"), # R won't allow 0 length names
                   "call" = quote({}), ## general expressions all get data.class=="call"
                   {
-                      if(.Force)
-                          ## create an empty object, even though this class is undefined
-                          ## for why this is not NULL, see the documentation for `new'.
-                          return(newEmptyObject())
-                      else if(is.na(Class, .BasicClasses))
-                          stop(paste("Calling new() on an undefined and non-basic class (\"",
-                               Class, "\")", sep=""))
+                      if(is.na(match(Class, .BasicClasses)))
+                          msg <- paste("Calling new() on an undefined and non-basic class (\"",
+                               Class, "\")", sep="")
                       else
-                          stop(paste("Basic class \"", Class, "\" cannot be instantiated by calling new()",
-                                     sep =""))
+                          msg <- paste("Creating objects from class \"", Class, "\" is not meaningful",
+                                     sep ="")
                   }
                   )
-  value
+  if(is.null(msg))
+      value
+  else
+      stop(msg)
 }
 
 makeExtends <-
@@ -526,32 +535,14 @@ reconcilePropertiesAndPrototype <-
       ## a vector.  But none of the existing SEXP types work.  Someday ...
       StandardPrototype <- defaultPrototype()
       superClasses <- names(extends)
-      undefined <- rep(FALSE, length(superClasses))
       slots <-  validSlotNames(allNames(properties))
-      allSlots <- character()
-      for(i in seq(along=superClasses)) {
-          cl <- superClasses[[i]]
-          if(isClass(cl))
-              allSlots <- c(allSlots, slotNames(cl))
-          else
-              undefined[[i]] <- TRUE
-      }
-      if(any(undefined)) {
-          warning("Prototype may be incomplete, not all superclasses defined (",
-                  paste(superClasses[undefined], collapse = ", "), ")")
-      }
-      undefined <- any(undefined) ## used as  a test later.
-      # a .Data specified in this class silently overrides all inherited data parts
       dataPartClass <- elNamed(properties, ".Data")
       if((!is.null(dataPartClass) || length(superClasses) > 0)
          && is.na(match("VIRTUAL", superClasses))) {
           ## Look for a data part in the super classes, either an inherited
           ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
           for(cl in superClasses) {
-              thisDataPart <-  elNamed(getSlots(cl), ".Data")
-              if(is.null(thisDataPart) &&
-                 (extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
-                  thisDataPart <- cl
+              thisDataPart <-  .validDataPartClass(cl)
               if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
                       if(!is.na(match(thisDataPart, c("NULL", "environment"))))
@@ -559,13 +550,17 @@ reconcilePropertiesAndPrototype <-
                       else
                           dataPartClass <- thisDataPart
                   }
-                  else if(!identical(dataPartClass, thisDataPart))
+                  else if(!extends(dataPartClass, thisDataPart))
                       warning("More than one possible class for the data part:  using \"",
                               dataPartClass, "\" rather than \"",
                               thisDataPart, "\"")
               }
           }
           if(length(dataPartClass) > 0) {
+              ## insert an is relation to the data part class
+              ## (which will override the simple extension, because
+              ## extendsCoerce must do object@.Data for this case)
+              elNamed(extends, dataPartClass) <- list(dataPart = TRUE)
               if(is.na(match(".Data", slots))) {
                   properties <- c(list(".Data"= dataPartClass), properties)
                   slots <- names(properties)
@@ -586,27 +581,32 @@ reconcilePropertiesAndPrototype <-
                              class(prototype), "\") conflicts with the class of ",
                              " the data part (\"", dataPartClass, "\")",sep=""))
           }
-          else if(any(!is.na(match(superClasses, c("vector", "structure")))))
-              prototype <- newBasic("logical")
           if(is.null(prototype)) { ## non-vector (may extend NULL)
               prototype <- StandardPrototype
           }
-          if(!is.na(match(".Data", allSlots)))
-              allSlots <- allSlots[allSlots != ".Data"]
       }
-      ## check for conflicts in the slot names
-      if(any(duplicated(allSlots))) {
-          warning("The inherited slots contain duplicates (",
-                  paste(allSlots[duplicated(allSlots)], collapse = ", "),
-                  ")")
-          allSlots <- unique(allSlots)
-      }
-      if(any(!is.na(match(slots, allSlots)))) {
-          ## representation catches this already, but for completeness:
-          warning("Class \"", name, "\" overrides some inherited slot definitions (",
-                  paste(allSlots[!is.na(match(slots, allSlots))], collapse = ", "),
-                  ")")
-          allSlots <- unique(slots, allSlots)
+      ## check for conflicts in the slots
+      allProps <- properties
+      for(i in seq(along=superClasses)) {
+          cl <- superClasses[[i]]
+          if(isClass(cl)) {
+              theseProperties <- getSlots(cl)
+              theseSlots <- names(theseProperties)
+              theseSlots <- theseSlots[theseSlots == ".Data"] # handled already
+              dups <- !is.na(match(theseSlots, allProps))
+              for(dup in theseSlots[dups])
+                  if(!extends(elNamed(allProps, dup), elNamed(theseProperties, dup)))
+                      stop(paste("Slot \"", dup, "\" in class \"", name,
+                                 "\" currently defined (or inherited) as \"", elNamed(allProps, dup),
+                                 "\", conflicts with an inherited definition in class \"",
+                                 cl, "\"", sep=""))
+              theseSlots <- theseSlots[!dups]
+              if(length(theseSlots)>0)
+                  allProps[theseSlots] <- theseProperties[theseSlots]
+          }
+          else
+              stop(paste("Class \"", name, "\" extends an undefined class (\"",
+                         cl, "\"", sep=""))
       }
       if(is.null(dataPartClass)) {
           if(is.list(prototype) && length(names(prototype)) > 0) {
@@ -635,7 +635,7 @@ reconcilePropertiesAndPrototype <-
              is.null(attr(prototype, propName)))
               slot(prototype, propName, FALSE) <- tryNew(el(props, i))
       }
-      list(properties = properties, prototype = prototype)
+      list(properties = properties, prototype = prototype, extends = extends)
   }
 
 tryNew <-
@@ -742,6 +742,8 @@ showExtends <-
       eli <- el(ext, i)
       if(length(eli$by) > 0)
         how <- paste("by class", paste("\"", eli$by, "\"", sep="", collapse = ", "))
+      else if(identical(eli$dataPart, TRUE))
+          how <- "from data part"
       else
         how <- "directly"
       if(is.function(eli$test)) {
@@ -851,33 +853,37 @@ extendsCoerce <-
     if(is.null(f)) {
         if(!formFunction)
             return(TRUE)
-        ## Because `is' was TRUE, must be a direct extension.
-        ## Copy slots if the slots are a subset.  Else, just set the
-        ## class.  For VIRTUAL targets, never change the object.
-        ## If the to Class is not formally defined, the `is' is taken to imply
-        ## that the object's contents are a Class object.
-        formal <- isClass(Class)
-        virtual <- formal && isVirtualClass(Class)
-        if(!formal)
-            f <- function(object)unclass(object)
-        else if(virtual)
-            f <- function(object)object
+        ## Because `is' was TRUE, must be a direct extension, or
+        ## the data part.
+        if(is.list(ext) && identical(ext$dataPart, TRUE))
+            f <- function(object) object@.Data
         else {
-            fromSlots <- slotNames(fromClass)
-            toSlots <-  slotNames(Class)
-            sameSlots <- (length(toSlots) == 0
-                          || (length(fromSlots) == length(toSlots) &&
-                              !any(is.na(match(fromSlots, toSlots)))))
-            if(sameSlots)
-                f <- substitute(function(from){class(from) <- CLASS; from},
-                                list(CLASS = Class))
-            else
-                f <- substitute(function(from) {
-                    value <- new(CLASS)
-                    for(what in TOSLOTS)
-                        slot(value, what) <- slot(from, what)
-                    value }, list(CLASS=Class, TOSLOTS = toSlots))
-            ## bug in R: substitute of a function gives a call
+            ## Copy slots if the slots are a subset.  Else, just set the
+            ## class.  For VIRTUAL targets, never change the object.
+            ## If the to Class is not formally defined, the `is' is taken to imply
+            ## that the object's contents are a Class object.
+            formal <- isClass(Class)
+            virtual <- formal && isVirtualClass(Class)
+            if(!formal)
+                f <- function(object)unclass(object)
+            else if(virtual)
+                f <- function(object)object
+            else {
+                fromSlots <- slotNames(fromClass)
+                toSlots <-  slotNames(Class)
+                sameSlots <- (length(toSlots) == 0
+                              || (length(fromSlots) == length(toSlots) &&
+                                  !any(is.na(match(fromSlots, toSlots)))))
+                if(sameSlots)
+                    f <- substitute(function(from){class(from) <- CLASS; from},
+                                    list(CLASS = Class))
+                else
+                    f <- substitute(function(from) {
+                        value <- new(CLASS)
+                        for(what in TOSLOTS)
+                            slot(value, what) <- slot(from, what)
+                        value }, list(CLASS=Class, TOSLOTS = toSlots))
+            }
             f <- eval(f)
         }
     }
@@ -914,16 +920,20 @@ extendsReplace <-
         ## else, drop through
     }
     if(is.null(f)) {
-        ## Because `is' was TRUE, must be a direct extension.
-        ## Copy slots if the slots are a subset.  Else, just set the
-        ## class.  For VIRTUAL targets, never change the object.
+        ## For VIRTUAL targets, never change the object.
         ## If the to Class is not formally defined, the `is' is taken to imply
         ## that the object's contents are a Class object.
         formal <- isClass(Class)
         virtual <- formal && isVirtualClass(Class)
         if(!formal || virtual)
             f <- NULL
+        ## Because `is' was TRUE, must be a direct extension,
+        ## or the data part.
+        else if(is.list(ext) && identical(ext$dataPart, TRUE))
+            f <- function(from, to, value) { from@.Data <- value; from}
         else {
+            ## Copy slots if the slots are a subset.  Else, just set the
+            ## class.
             f <- function(from, to, value) NULL
             objectSlotClasses <- getSlots(objectClass)
             objectSlots <- names(objectSlotClasses)
@@ -1232,8 +1242,23 @@ setDataPart <- function(object, value) {
                    "\" does not have a data part (a .Data slot) defined",
                    sep=""))
     value <- as(value, dataClass)
-    ## following should be extended to allow matrix, etc.
-    ## by retaining relevant attributes of value
     attributes(value) <- attributes(object)
+    value
+}
+
+.validDataPartClass <- function(cl) {
+    value <- elNamed(getSlots(cl), ".Data")
+    if(is.null(value)) {
+        if(identical(cl, "structure"))
+            value <- "vector"
+        else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
+            value <- cl
+        else {
+            ClassDef <- getClass(cl)
+            if(identical(getVirtual(ClassDef), TRUE) &&
+               length(getProperties(ClassDef)) == 0)
+                value <- cl
+        }
+    }
     value
 }

@@ -33,6 +33,7 @@
 \alias{missingArg}
 \alias{balanceMethodsList}
 \alias{sigToEnv}
+\alias{.valueClassTest}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}

@@ -2,7 +2,8 @@
 makeGeneric <-
 ## Makes a generic function object corresponding to the given function name.
 ## and optional definition.
-  function(f, fdef, keepMethods = TRUE, useAsDefault = NA,
+  function(f, fdef, keepMethods = TRUE,
+           fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
            group = character(), valueClass = character()) {
   if(missing(fdef)) {
     ## either find a generic or use either a pre-defined template or a non-generic
@@ -12,19 +13,8 @@ makeGeneric <-
   }
   fdef <- makeStandardGeneric(f, fdef)
   generic <- isGeneric(f, fdef = fdef)
-  if(is.na(useAsDefault))
-    useAsDefault <- !generic
   if(keepMethods && generic)
     return(fdef)
-  if(!useAsDefault || generic) {
-    ## create a generic with the same body (usually
-    ## standardGeneric(f)) but NULL default method
-    fdefault <- NULL
-  }
-  else {
-    ## a non-generic function becomes the default
-    fdefault <- getFunction(f, generic = FALSE, mustFind = FALSE)
-  }
   anames <- formalArgs(fdef)
   if(length(anames) == 0 || (length(anames) == 1 && el(anames, 1) == "..."))
     stop("must have a named argument for a generic function.")
@@ -494,8 +484,9 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
     if(identical(thisClass, methodClass))
         return(method)
     ext <- extendsCoerce(thisClass, methodClass, formFunction = FALSE)
-    ## findExtends in this version only returns a function if there
-    ## is an explicit coerce somewhere along the line.
+    ## extendsCoerce with formFunction=FALSE only returns a function if there
+    ## is an explicit coerce somewhere along the line, not for direct inclusion
+    ## or for the data part.
     if(!is.function(ext))
         return(method)
     methodInsert <- function(method, addExpr) {
@@ -571,4 +562,56 @@ sigToEnv <- function(signature) {
     for(i in seq(along=args))
         assign(args[[i]], classes[[i]], envir = value)
     value
+}
+
+methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
+    if(length(sigSlots)>0) {
+        allSlots <- lapply(sigSlots, slot, object = object)
+        mm <- unlist(allSlots)
+        mm <- matrix(mm, nrow = length(allSlots), byrow = TRUE)
+        dimnames(mm) <- list(sigSlots, names(allSlots[[1]]))
+        mm
+    }
+    else matrix(character(), 0, 0)
+}
+
+.valueClassTest <- function(object, classes, fname) {
+    if(length(classes) > 0) {
+        for(Cl in classes)
+            if(is(object, Cl))
+               return(object)
+        stop(paste("Invalid value from generic function \"",
+                   fname, "\", class \"", class(object),
+                   "\", expected ",
+                   paste("\"", classes, "\"", sep = "", collapse = " or "),
+                   sep = ""))
+    }
+    ## empty test is allowed
+    object
+}
+
+    
+.getOrMakeMethodsList <- function(f, fnames, where) {
+    allMethods <- getMethodsMetaData(f, where = where)
+    argName <- ""
+    for(i in fnames)
+        if(!identical(i, "..."))
+        { argName <- i; break}
+    if(nchar(argName) == 0)
+        stop(paste("\"", f, "\" can't be a generic; no valid argument name", sep=""))
+    if(is.null(allMethods)) {
+        allMethods <- new("MethodsList", argument = as.name(argName))
+        other <- getMethodsMetaData(f)
+        if(is.null(other))
+            ## this utility is called AFTER ensuring the existence of a generic for f
+            ## Therefore, the case below can only happen for a primitive for which
+            ## no methods currently are attached.  Make the prmitive the default
+            deflt <- getFunction(f, generic = FALSE, mustFind = FALSE)
+        else
+            ## inherit the default method, if any
+            deflt <- finalDefaultMethod(other)
+        if(!is.null(deflt))
+            allMethods <- insertMethod(allMethods, "ANY", argName, deflt)
+        }
+    allMethods
 }
