@@ -70,7 +70,7 @@ tests:
 	@(out=$(shell echo \"$(test-out)\");\
 	  if test -n "$${out}"; then \
 	    echo "Running specific tests"; \
-	    rm *.Rout ; \
+	    rm -f *.Rout ; \
 	    $(MAKE) -f $(RHOME)/src/gnuwin32/check/PkgCheck $${out}; \
 	  fi)
 
