@@ -39,7 +39,7 @@
 \alias{sigToEnv}
 \alias{rematchDefinition}
 \alias{unRematchDefinition}
-\alias{findNextMethod}
+\alias{addNextMethod}
 \alias{.valueClassTest}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
@@ -109,8 +109,9 @@ unRematchDefinition(definition)
 
 asMethodDefinition(def, signature, sealed = FALSE)
 
-findNextMethod(method, f, mlist, optional = FALSE, envir)
+addNextMethod(method, f, mlist, optional = FALSE, envir)
 
+addNextMethod(method, f, mlist, optional, envir)
 }
 \section{Summary of Functions}{
  
@@ -347,9 +348,10 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       the \code{sealed} argument.
     }
 
-    \item{\code{findNextMethod}:}{
+    \item{\code{addNextMethod}:}{
       A generic function that finds the next method in \code{mlist}
-      corresponding the method definition \code{method}.  It uses
+      corresponding the method definition \code{method}  and adds the
+      method to the methods list, which it then returns.  It uses
       methods defined suitably for ordinary methods and for methods with
       calls to \code{\link{callNextMethod}}.
     }
