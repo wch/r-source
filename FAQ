@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-36 2004-08-01
+Version 1.9-37 2004-08-02
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -619,8 +619,8 @@ mailing lists and the R Bug Tracking system.
 <cran@R-project.org>.  Note that CRAN generally does not accept submissions
 of precompiled binaries due to security reasons.
 
-     *Please notice:*  It is very important that you indicate the copyright
-     (license) information (GPL, BSD, Artistic, ...) in your submission.
+     *Note*:  It is very important that you indicate the copyright
+     (license) information (GPL, BSD, Artistic, ...)  in your submission.
 
    Please always use the URL of the master site when referring to CRAN.
 
@@ -929,9 +929,9 @@ to safeguard against possible crashes.  Other possibilities are logging
 your sessions, or have your R commands stored in text files which can be
 read in using `source()'.
 
-     *Please notice:*  If you run R from within Emacs (see *Note R and
-     Emacs::), you can save the contents of the interaction buffer to a file
-     and conveniently manipulate it using `ess-transcript-mode', as well as
+     *Note*:  If you run R from within Emacs (see *Note R and Emacs::), you
+     can save the contents of the interaction buffer to a file and
+     conveniently manipulate it using `ess-transcript-mode', as well as
      save source copies of all functions and data used.
 
 3.3.2 Models
@@ -1420,6 +1420,10 @@ distributions of R.)
 
 *RMySQL*
      An interface between R and the MySQL database system.
+
+*RNetCDF*
+     An interface to Unidata's NetCDF library functions (version 3) and
+     furthermore access to Unidata's udunits calendar conversions.
 
 *RODBC*
      An ODBC database interface.
@@ -2667,6 +2671,9 @@ distributions of R.)
 
 *tapiR*
      Tools for accessing (UK) parliamentary information in R.
+
+*taskPR*
+     Task-Parallel R package.
 
 *tensor*
      Tensor product of arrays.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-36 @value{FAQ-YEAR}-08-01
+@set FAQ-VERSION 1.9-37 @value{FAQ-YEAR}-08-02
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -806,9 +806,9 @@ To ``submit'' to @CRAN{}, simply upload to
 accept submissions of precompiled binaries due to security reasons.
 
 @quotation
-@strong{Please notice:}  It is very important that you indicate the
-copyright (license) information (@acronym{GPL}, @acronym{BSD}, Artistic,
-@dots{}) in your submission.
+@strong{Note}:  It is very important that you indicate the copyright
+(license) information (@acronym{GPL}, @acronym{BSD}, Artistic, @dots{})
+in your submission.
 @end quotation
 
 Please always use the @acronym{URL} of the master site when referring to
@@ -1234,10 +1234,10 @@ commands stored in text files which can be read in using
 @code{source()}.
 
 @quotation
-@strong{Please notice:}  If you run R from within Emacs (see @ref{R and
-Emacs}), you can save the contents of the interaction buffer to a file
-and conveniently manipulate it using @code{ess-transcript-mode}, as well
-as save source copies of all functions and data used.
+@strong{Note}:  If you run R from within Emacs (see @ref{R and Emacs}),
+you can save the contents of the interaction buffer to a file and
+conveniently manipulate it using @code{ess-transcript-mode}, as well as
+save source copies of all functions and data used.
 @end quotation
 
 @node Models, Others, Lexical scoping, What are the differences between R and S?
@@ -1745,6 +1745,9 @@ ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
 @item RMySQL
 An interface between R and the MySQL database system.
+@item RNetCDF
+An interface to Unidata's NetCDF library functions (version 3) and
+furthermore access to Unidata's udunits calendar conversions.
 @item RODBC
 An @acronym{ODBC} database interface.
 @item ROracle
@@ -2739,6 +2742,8 @@ Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
 Three-Stage Least Squares (3SLS).
 @item tapiR
 Tools for accessing (UK) parliamentary information in R.
+@item taskPR
+Task-Parallel R package.
 @item tensor
 Tensor product of arrays.
 @item tkrplot
