@@ -39,11 +39,9 @@
 #endif
 #include "nmath.h"
 
-#ifndef MATHLIB_STANDALONE
 /* want to compile log1p as Rlog1p if HAVE_LOG1P && !HAVE_WORKING_LOG1P */
 #if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
 #undef HAVE_LOG1P
-#endif
 #endif
 
 #ifndef HAVE_LOG1P
