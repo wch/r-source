@@ -585,19 +585,23 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	      1, paste, collapse=" "),
 	"AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
 	"Number of Fisher Scoring iterations: ", x$iter,
-	"\n\n", sep="")
+	"\n", sep="")
 
     correl <- x$correlation
     if(!is.null(correl)) {
-	p <- dim(correl)[2]
+	p <- NCOL(correl)
 	if(p > 1) {
-	    cat("Correlation of Coefficients:\n")
-	    correl[!lower.tri(correl)] <- NA
-	    print(correl[-1, -NCOL(correl), drop=FALSE],
-		  digits=digits, na="")
+	    cat("\nCorrelation of Coefficients:\n")
+	    if(symbolic.cor)
+		print(symnum(correl)[-1,-p])
+	    else {
+                correl[!lower.tri(correl)] <- NA
+                print(correl[-1, -p, drop=FALSE],
+                      digits = digits, na = "")
+            }
 	}
-	cat("\n")
     }
+    cat("\n")
     invisible(x)
 }
 
@@ -636,29 +640,7 @@ residuals.glm <-
 ## update.default() should be more general now ...
 ##update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
 ##			offset, family, x)
-##{
-##	call <- glm.obj$call
-##	if (!missing(formula))
-##	  call$formula <- update.formula(call$formula, formula)
-##	if (!missing(data))	call$data <- substitute(data)
-
-##	if (!missing(subset))	call$subset <- substitute(subset)
-##	if (!missing(na.action))call$na.action <- substitute(na.action)
-##	if (!missing(weights))	call$weights <- substitute(weights)
-##	if (!missing(offset))	call$offset <- substitute(offset)
-##	if (!missing(family))	call$family <- substitute(family)
-##	if (!missing(x))	call$x <- substitute(x)
-####	notparent <- c("NextMethod", "update", methods(update))
-####	for (i in 1:(1+sys.parent())) {
-####		parent <- sys.call(-i)[[1]]
-####		if (is.null(parent))
-####		break
-####	if (is.na(match(as.character(parent), notparent)))
-####			break
-####	}
-####	eval(call, sys.frame(-i))
-##	eval(call, sys.frame(sys.parent()))
-##}
+##{ ...... }
 
 model.frame.glm <-
     function (formula, data, na.action, ...)
