@@ -13232,7 +13232,8 @@ trap 'rm -fr `echo "Makeconf
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
-  etc/Makeconf-tests  
+  etc/Makeconf-tests
+  etc/Renviron
   share/Makefile
   src/Makefile
   src/appl/Makefile
@@ -13526,7 +13527,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
-  etc/Makeconf-tests  
+  etc/Makeconf-tests
+  etc/Renviron
   share/Makefile
   src/Makefile
   src/appl/Makefile
