@@ -223,7 +223,11 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch)
     if (ns == 0)
 	return(allocVector(INTSXP, 0));
     count = 0;
+#ifdef BROKEN
     for (i = 0; i < nx; i++)
+#else
+    for (i = 0; i < nmax; i++)
+#endif
 	if (LOGICAL(s)[i%ns])
 	    count++;
     index = allocVector(INTSXP, count);

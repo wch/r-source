@@ -420,7 +420,7 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 void InitGlobalEnv()
 {
     R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_NilValue);
-#ifdef NEW
+#ifdef NEW_CODE
     HASHTAB(R_GlobalEnv) = R_NewHashTable(100, HASHTABLEGROWTHRATE);
 #endif
 }
@@ -921,7 +921,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < LENGTH(name); i++) {
 	done = 0;
 	tsym = install(CHAR(STRING(name)[i]));
-	hashcode = hashpjw(CHAR(PRINTNAME(tsym)));
+	hashcode = newhashpjw(CHAR(PRINTNAME(tsym)));
 	tenv = envarg;
 	while (tenv != R_NilValue) {
 	    done = RemoveVariable(tsym, hashcode, tenv);
