@@ -691,7 +691,7 @@ Versions of Tcl/TK from 8.0 to 8.4.0 have been used successfully.
 The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
-Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
+Sparc@footnote{Using the SunPro aka Forte @command{cc} and @command{f95}
 compilers}, @code{libessl} on IBM) but ATLAS
 (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS that
 runs on a wide range of Unix-alike platforms.  If no more specific
@@ -1106,9 +1106,9 @@ to provide higher-performance versions of the BLAS and LAPACK routines.
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
-5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6}
-compilers, and less regularly on Solaris 2.5.1, 2.6, 8 and 9.  GNU
-@command{make} is needed prior to 2.7 for building other than in the
+5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
+Forte 6) compilers, and less regularly on Solaris 2.5.1, 2.6, 8 and 9.
+GNU @command{make} is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
 @command{gcc} 3.2.1 appears to generate incorrect code on 32-bit

@@ -1590,11 +1590,16 @@ fi
 
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
-    AC_CHECK_LIB(sunmath, acosp,
-                 [AC_CHECK_LIB(sunperf, ${sgemm},
-                               [BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
-                                acx_blas_ok=yes],
-                               [], [-lsunmath])])
+     AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
+     ac_check_lib_save_LIBS=$LIBS
+     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
+     if test "${R_sunperf}" = yes; then
+        BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
+	acx_blas_ok=yes
+     fi
+     LIBS=$ac_check_lib_save_LIBS
+     AC_MSG_RESULT(${acx_blas_ok})
   fi
 fi
 

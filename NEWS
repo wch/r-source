@@ -427,6 +427,10 @@ BUG FIXES
     o	symbols(thermometers=) was often giving a spurious warning about
 	the range.
 
+    o	The automatic search of BLAS libs now trys Sun's libsunperf
+	the way the latest versions require. (PR#2530)
+
+
 
 
 	**************************************************

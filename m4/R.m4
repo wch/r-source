@@ -1885,7 +1885,7 @@ AC_SUBST(use_tcltk)
 ##
 ## This is based on ACX_BLAS by Steven G. Johnson <stevenj@alum.mit.edu>
 ## from the Official Autoconf Macro Archive
-## (http://www.gnu.org/software/ac-archive/Installed_Packages/acx_blas.m4),
+## (http://www.gnu.org/software/ac-archive/htmldoc/acx_blas.m4),
 ## with the following changes:
 ## * We also handle HPUX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
@@ -1894,6 +1894,7 @@ AC_SUBST(use_tcltk)
 ## * We do not use BLAS libs that caused problems in the past: Alpha
 ##   CXML and DXML, and SGI SCSL and SGIMATH (marked with COMMENT tags).
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
+## The sunperf test calls the library as now required.
 ## Based on acx_blas.m4 version 1.2 (2001-12-13)
 AC_DEFUN([R_BLAS_LIBS],
 [AC_REQUIRE([R_PROG_F77_FLIBS])
@@ -1975,13 +1976,20 @@ fi
 ## </COMMENT>
 
 ## BLAS in Sun Performance library?
+## Some versions require -xlic_lib=sunperf: -lsunperf will not work
+## Not sure whether -lsunmath is required, but it helps anyway
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
-    AC_CHECK_LIB(sunmath, acosp,
-                 [AC_CHECK_LIB(sunperf, ${sgemm},
-                               [BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
-                                acx_blas_ok=yes],
-                               [], [-lsunmath])])
+     AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
+     ac_check_lib_save_LIBS=$LIBS
+     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
+     if test "${R_sunperf}" = yes; then
+        BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
+	acx_blas_ok=yes
+     fi
+     LIBS=$ac_check_lib_save_LIBS
+     AC_MSG_RESULT(${acx_blas_ok})
   fi
 fi
 
