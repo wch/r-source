@@ -20,7 +20,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 }
 \details{
   The locale describes aspects of the internationalization of a program.
-  Initially mist aspects of the locale of \R are set to \code{"C"} (which
+  Initially most aspects of the locale of \R are set to \code{"C"} (which
   is the default for the C language and reflects North-American usage).
   \R does set \code{"LC_COLLATE"} and  \code{"LC_CTYPE"}, which allow the
   use of a different character set (typically ISO Latin 1) and alphabetic
