@@ -443,6 +443,9 @@ BUG FIXES
    o  	deparse() dropped parentheses in some case where they were
 	needed. (PR#1119, 1737, 1928, at least)
 
+   o  	pdf(onefile = FALSE) never incremented the file number beyond
+	two.
+
 
 
 		CHANGES IN R VERSION 1.5.1
