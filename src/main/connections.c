@@ -629,8 +629,16 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 static Rboolean pipe_open(Rconnection con)
 {
     FILE *fp;
+    char mode[3];
 
-    fp = popen(con->description, con->mode);
+#ifdef Win32
+    strncpy(mode, con->mode, 2);
+    mode[2] = '\0';
+#else
+    mode[0] = con->mode[0];
+    mode[1] = '\0';
+#endif
+    fp = popen(con->description, mode);
     if(!fp) {
 	warning("cannot open cmd `%s'", con->description);
 	return FALSE;
