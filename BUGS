@@ -249,4 +249,11 @@ none
 
 Directory:  incoming
 
-none
+* PR# 609 *
+Subject: typos in ?lm
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sat, 15 Jul 2000 15:14:41 -0400 (EDT)
+* PR# 608 *
+Subject: seg.fault in eval.c
+From: Adrian Vance Custer <acuster@nopause.berkeley.edu>
+Date: Sat, 15 Jul 2000 01:22:23 -0700
