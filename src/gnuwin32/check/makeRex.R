@@ -9,6 +9,7 @@ cat(file=file, append=T,
     paste('postscript("', PKG, '-Examples.ps")\n', sep=""))
 cat(file=file, append=T, '.par.postscript <- par(no.readonly = TRUE)\n')
 cat(file=file, append=T, 'options(contrasts = c(unordered = "contr.treatment", ordered =  "contr.poly"))\n')
+cat(file=file, append=T, 'options(pager="console")\n')
 if(PKG != "base")
     cat(file=file, append=T, paste('library(', PKG, ')', "\n"), sep="")
 for(f in list.of.files) {
