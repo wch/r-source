@@ -126,6 +126,7 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifdef HAVE_TIMES
+#include <time.h>
 #include <sys/times.h>
 #ifndef CLK_TCK
 /* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV */
