@@ -9,18 +9,20 @@ co.intervals <- function (x, number = 6, overlap = 0.5)
 }
 
 panel.smooth <- function(x, y, col = par("col"), pch = par("pch"),
-			 col.smooth = "red", f = 2/3, iter = 3, ...)
+			 col.smooth = "red", span = 2/3, iter = 3, ...)
 {
     points(x, y, pch=pch, col=col)
-    lines(lowess(x, y, f=f, iter=iter), col = col.smooth, ...)
+    lines(lowess(x, y, f=span, iter=iter), col = col.smooth, ...)
 }
 
 coplot <- function (formula, data, given.values, panel=points, rows, columns,
 		    show.given = TRUE, col = par("fg"), pch=par("pch"),
+                    xlab = paste("Given :", a.name),
+                    ylab = paste("Given :", b.name),
                     number = 6, overlap = 0.5, ...)
 {
     deparen <- function(expr) {
-	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) == "(")
+	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")
 	    expr <- expr[[2]]
 	expr
     }
@@ -61,19 +63,23 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
     a.name <- deparse(a)
     a <- eval(a, data, sys.frame(sys.parent()))
     if(length(a) != nobs) bad.lengths()
+    if(is.character(a)) a <- as.factor(a)
     if (have.b) {
 	b.name <- deparse(b)
 	b <- eval(b, data, sys.frame(sys.parent()))
 	if(length(b) != nobs) bad.lengths()
+        if(is.character(b)) b <- as.factor(b)
+        missingrows <- which(is.na(x) | is.na(y) | is.na(a) | is.na(b))
     }
-    else b <- NULL
+    else {
+        missingrows <- which(is.na(x) | is.na(y) | is.na(a))
+        b <- NULL
+    }
 
     ## generate the given value intervals
 
     number <- as.integer(number)
     if(length(number)==0 || any(number < 1)) stop("number must be integer >= 1")
-
-    ##if(any(overlap < 0) || any(overlap >= 1)) stop("overlap must be in [0,1)")
     if(any(overlap >= 1)) stop("overlap must be < 1 (and typically >= 0).")
 
     bad.givens <- function() stop("invalid given.values")
@@ -140,8 +146,7 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	rows    <- nrow(b.intervals)
 	columns <- nrow(a.intervals)
 	nplots <- rows * columns
-	total.rows <- rows + if (show.given) 1 else 0
-	total.columns <- columns + if (show.given) 1 else 0
+        if(length(show.given) < 2) show.given <- rep(show.given, 2)
     } else {
 	nplots <- nrow(a.intervals)
 	if (missing(rows)) {
@@ -155,8 +160,17 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	    columns <- ceiling(nplots/rows)
 	if (rows * columns < nplots)
 	    stop("rows * columns too small")
-	total.rows <- rows + if (show.given) 1 else 0
-	total.columns <- columns
+    }
+    total.columns <- columns
+    total.rows <- rows
+    f.col <- f.row <- 1
+    if(show.given[1]) {
+        total.rows <- rows + 1
+        f.row <- rows/total.rows
+    }
+    if(have.b && show.given[2]) {
+        total.columns <- columns + 1
+        f.col <- columns/total.columns
     }
 
     ## Start Plotting only now
@@ -172,34 +186,39 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
     pch <- rep(pch, length=nobs)
     col <- rep(col, length=nobs)
     do.panel <- function(index) {
+        ## Use `global' variables
+        ##	id;     rows, columns,  total.rows, total.columns, nplots
+        ##		xlim, ylim
 	istart <- (total.rows - rows) + 1
 	i <- total.rows - ((index - 1)%/%columns)
 	j <- (index - 1)%%columns + 1
 	par(mfg = c(i, j, total.rows, total.columns))
 	plot.new()
 	plot.window(xlim, ylim, log = "")
+        if(any(is.na(id))) id[is.na(id)] <- FALSE
 	if(any(id)) {
 	    grid(lty="solid")
 	    panel(x[id], y[id], col = col[id], pch=pch[id], ...)
 	}
-	if ((i == total.rows) && (j%%2 == 0))
+	if((i == total.rows) && (j%%2 == 0))
 	    axis(1)
-	if ((i == istart || index + columns > nplots) && (j%%2 == 1))
+	else if((i == istart || index + columns > nplots) && (j%%2 == 1))
 	    axis(3)
-	if ((j == 1) && ((total.rows - i)%%2 == 0))
+	if((j == 1) && ((total.rows - i)%%2 == 0))
 	    axis(2)
-	if ((j == columns || index == nplots) && ((total.rows - i)%%2 == 1))
+	else if((j == columns || index == nplots) && ((total.rows - i)%%2 == 1))
 	    axis(4)
-	## if (i == total.rows)
+	## if(i == total.rows)
 	##	axis(1, labels = (j%%2 == 0))
-	## if (i == istart || index + columns > nplots)
+	## if(i == istart || index + columns > nplots)
 	##	axis(3, labels = (j%%2 == 1))
-	## if (j == 1)
+	## if(j == 1)
 	##	axis(2, labels = ((total.rows - i)%%2 == 0))
-	## if (j == columns || index == nplots)
+	## if(j == columns || index == nplots)
 	##	axis(4, labels = ((total.rows - i)%%2 == 1))
 	box()
-    }## do.panel
+    }## END function do.panel()
+
     if(have.b) {
 	count <- 1
 	for(i in 1:rows) {
@@ -216,16 +235,13 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	    do.panel(i)
 	}
     }
-    mtext(x.name, side=1, at=0.5*(columns/total.columns),
-	  outer=TRUE, line=3.5, xpd=TRUE)
-    mtext(y.name, side=2, at=0.5*(rows/total.rows),
-	  outer=TRUE, line=3.5, xpd=TRUE)
+    mtext(x.name, side=1, at=0.5*f.col, outer=TRUE, line=3.5, xpd=TRUE)
+    mtext(y.name, side=2, at=0.5*f.row, outer=TRUE, line=3.5, xpd=TRUE)
 
-    if(show.given) {
+    if(show.given[1]) {
 	mar <- par("mar")
 	nmar <- mar + c(4,0,0,0)
-	par(fig = c(0, columns/total.columns, rows/total.rows, 1),
-	    mar = nmar, new=TRUE)
+	par(fig = c(0, f.col, f.row, 1), mar = nmar, new=TRUE)
 	plot.new()
 	nint <- nrow(a.intervals)
 	plot.window(range(a.intervals, finite=TRUE), .5+c(0, nint), log="")
@@ -234,12 +250,15 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	axis(3)
 	axis(1, labels=FALSE)
 	box()
-	mtext(paste("Given :", a.name),
-	      side=3, at=mean(par("usr")[1:2]), line=3, xpd=TRUE)
-	if(have.b) {
-	    nmar <- mar + c(0, 4, 0, 0)
-	    par(fig = c(columns/total.columns, 1, 0, rows/total.rows),
-		mar = nmar, new=TRUE)
+	mtext(xlab, side=3, at=mean(par("usr")[1:2]), line=3, xpd=TRUE)
+    }
+    else { ## i. e. !show.given
+        mtext(xlab, side=3, at= 0.5*f.col, line= 3.25, outer= TRUE, xpd=TRUE)
+    }
+    if(have.b) {
+        if(show.given[2]) {
+            nmar <- mar + c(0, 4, 0, 0)
+	    par(fig = c(f.col, 1, 0, f.row), mar = nmar, new=TRUE)
 	    plot.new()
 	    nint <- nrow(b.intervals)
 	    plot.window(.5+c(0, nint),
@@ -249,8 +268,14 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	    axis(4)
 	    axis(2, labels=FALSE)
 	    box()
-	    mtext(paste("Given :", b.name),
-		  side=4, at=mean(par("usr")[3:4]), line=3, xpd=TRUE)
+	    mtext(ylab, side=4, at=mean(par("usr")[3:4]), line=3, xpd=TRUE)
 	}
+        else {
+            mtext(ylab, side=4, at=0.5*f.row, line= 3.25, outer=TRUE, xpd=TRUE)
+        }
+    }
+    if (length(missingrows) > 0) {
+        cat("\nMissing rows:",missingrows,"\n")
+        invisible(missingrows)
     }
 }

@@ -3,6 +3,8 @@
 \usage{
 coplot(formula, data, given.values, panel = points, rows, columns,
        show.given = TRUE, col = par("fg"), pch = par("pch"),
+       xlab = paste("Given :", a.name),
+       ylab = paste("Given :", b.name),
        number = 6, overlap = 0.5, \dots)
 co.intervals(x, number = 6, overlap = 0.5)
 }
@@ -39,19 +41,21 @@ co.intervals(x, number = 6, overlap = 0.5)
     \code{columns} array.  \code{rows} gives the number of rows in the
     array.}
   \item{columns}{the number of columns in the panel layout array.}
-  \item{show.given}{should conditioning plots be shown for the
-    conditioning variables (default \code{TRUE})}.
+  \item{show.given}{logical (possibly of length 2 for 2 conditioning
+      variables): should conditioning plots be shown for the
+    corresponding conditioning variables (default \code{TRUE})}.
   \item{col}{a vector of colors to be used to plot the points.  If too
     short, the values are recycled.}
   \item{pch}{a vector of plotting symbols or characters.  If too short,
     the values are recycyled.}
-
+  \item{xlab}{character; label to use for the 1st conditioning variable.}
+  \item{ylab}{character; label to use for the 2nd conditioning variable.}
   \item{number}{integer; the number of conditioning intervals,
     possibly of length 2 for x and y direction.}
   \item{overlap}{numeric < 1; the fraction of overlap of the
       conditioning variables, possibly of length 2 for x and y
       direction.  When overlap < 0, there will be \emph{gaps} between
-      the data slices.} 
+      the data slices.}
   \item{\dots}{additional arguments to the panel function.}
 }
 \description{
@@ -62,7 +66,7 @@ co.intervals(x, number = 6, overlap = 0.5)
     \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
   	2) \code{\link{matrix}}, say \code{ci},  where \code{ci[k,]} is
 	the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
-}    
+}
 \references{
   Cleveland, W. S. (1993).
   \emph{Visualizing Data}.
@@ -81,10 +85,21 @@ given.depth <- co.intervals(quakes$depth, number=4, overlap=.1)
 coplot(long ~ lat | depth, data = quakes, given.values=given.depth)
 
 ## Conditioning on 2 variables:
-coplot(long ~ lat | depth * mag, data = quakes)
-coplot(long ~ lat | depth * mag, data = quakes, number=c(4,7))
-coplot(long ~ lat | depth * mag, data = quakes, number=c(3,7),
+ll.dm <- long ~ lat | depth * mag
+coplot(ll.dm, data = quakes)
+coplot(ll.dm, data = quakes, number=c(4,7), show.given = c(T,F))
+coplot(ll.dm, data = quakes, number=c(3,7),
        overlap=c(-.5,.1)) # negative overlap DROPS values
+
+data(warpbreaks)
+## given two factors
+coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks, col = 'red')
+
+## Example with empty panels:
+data(state)
+attach(data.frame(state.x77))#> don't need `data' arg. below
+coplot(Life.Exp ~ Income | Illiteracy * state.region, number = 3,
+       panel=function(x,y,...) panel.smooth(x,y, span= .8, ...))
 }
 \keyword{hplot}
 \keyword{aplot}
