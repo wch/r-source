@@ -3365,7 +3365,18 @@ do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     case 6: /* boxplots */
 	if (nc != 5)
 	    errorcall(call, "invalid boxplot data");
-	SymbolSize(REAL(p), 5 * nr, &pmax, &pmin);
+	pmax = -DBL_MAX;
+	pmin =  DBL_MAX;
+	for(i = 0; i < nr; i++) {
+	    p1 = REAL(p)[i + nr];
+	    p3 = REAL(p)[i + 3 * nr];
+	    p4 = REAL(p)[i + 4 * nr];
+	    if (R_FINITE(p1) && R_FINITE(p3) && R_FINITE(p4)) {
+		p0 = p1 + p3 + p4;
+		if (pmax < p0) pmax = p0;
+		if (pmin > p0) pmin = p0;
+	    }
+	}
 	if (pmin > pmax)
 	    errorcall(call, "invalid symbol parameter");
 	for (i = 0; i < nr; i++) {

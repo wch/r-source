@@ -58,7 +58,7 @@ to zero.
 \emph{The Elements of Graphing Data.}
 Monterey, California: Wadsworth.}
 \examples{
-x <- runif(10)
+x <- 1:10
 y <- runif(10)
 z <- runif(10)
 symbols(x, y, thermometers=cbind(.5,1,z), inches=.5)
