@@ -148,9 +148,9 @@ void R_SaveGlobalEnv(void)
     if (!fp)
 	error("can't save data -- unable to open ./.RData");
     if (HASHTAB(R_GlobalEnv) != R_NilValue)
-	R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0, 0);
+	R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
     else
-	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0, 0);
+	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
     fclose(fp);
 }
 

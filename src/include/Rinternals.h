@@ -144,15 +144,6 @@ struct sxpinfo_struct {
 
 struct vecsxp_struct {
     int	length;
-#ifndef USE_GENERATIONAL_GC
-    union {
-	char		*c;
-	int		*i;
-	double		*f;
-	Rcomplex	*z;
-	struct SEXPREC	**s;
-    } type;
-#endif
     int	truelength;
 };
 
@@ -193,25 +184,16 @@ struct promsxp_struct {
 /* Every node must start with a set of sxpinfo flags and an attribute
    field. Under the generational collector these are followed by the
    fields used to maintain the collector's linked list structures. */
-#ifdef USE_GENERATIONAL_GC
 #define SEXPREC_HEADER \
     struct sxpinfo_struct sxpinfo; \
     struct SEXPREC *attrib; \
     struct SEXPREC *gengc_next_node, *gengc_prev_node
-#else
-#define SEXPREC_HEADER \
-    struct sxpinfo_struct sxpinfo; \
-    struct SEXPREC *attrib
-#endif
 
 /* The standard node structure consists of a header followed by the
    node data. */
 typedef struct SEXPREC {
     SEXPREC_HEADER;
     union {
-#ifndef USE_GENERATIONAL_GC
-	struct vecsxp_struct vecsxp;
-#endif
 	struct primsxp_struct primsxp;
 	struct symsxp_struct symsxp;
 	struct listsxp_struct listsxp;
@@ -221,7 +203,6 @@ typedef struct SEXPREC {
     } u;
 } SEXPREC, *SEXP;
 
-#ifdef USE_GENERATIONAL_GC
 /* The generational collector uses a reduced version of SEXPREC as a
    header in vector nodes.  The layout MUST be kept consistent with
    the SEXPREC definition.  The standard SEXPREC takes up 7 words on
@@ -236,7 +217,6 @@ typedef struct VECTOR_SEXPREC {
 } VECTOR_SEXPREC, *VECSEXP;
 
 typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
-#endif
 
 /* General Cons Cell Attributes */
 #define ATTRIB(x)	((x)->attrib)
@@ -250,21 +230,13 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 
 /* Vector Access Macros */
-#ifdef USE_GENERATIONAL_GC
 #define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
 #define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
 #define SETLENGTH(x,v)		((((VECSEXP) (x))->vecsxp.length)=(v))
 #define SET_TRUELENGTH(x,v)	((((VECSEXP) (x))->vecsxp.truelength)=(v))
-#else
-#define LENGTH(x)	((x)->u.vecsxp.length)
-#define TRUELENGTH(x)	((x)->u.vecsxp.truelength)
-#define SETLENGTH(x,v)		(((x)->u.vecsxp.length)=(v))
-#define SET_TRUELENGTH(x,v)	(((x)->u.vecsxp.truelength)=(v))
-#endif
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 
-#ifdef USE_GENERATIONAL_GC
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
    known ofset from the node SEXP. */
@@ -278,17 +250,6 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define STRING_PTR(x)	((SEXP *) DATAPTR(x))
 #define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
-#else
-#define CHAR(x)		((x)->u.vecsxp.type.c)
-#define LOGICAL(x)	((x)->u.vecsxp.type.i)
-#define COMPLEX(x)	((x)->u.vecsxp.type.z)
-#define INTEGER(x)	((x)->u.vecsxp.type.i)
-#define REAL(x)		((x)->u.vecsxp.type.f)
-#define STRING_ELT(x,i)		((x)->u.vecsxp.type.s)[i]
-#define VECTOR_ELT(x,i)		((x)->u.vecsxp.type.s)[i]
-#define STRING_PTR(x)	((x)->u.vecsxp.type.s)
-#define VECTOR_PTR(x)	((x)->u.vecsxp.type.s)
-#endif
 
 #ifndef USE_WRITE_BARRIER
 #define SET_STRING_ELT(x,i,v)	(((x)->u.vecsxp.type.s)[i]=(v))
@@ -856,4 +817,5 @@ int (HASHASH)(SEXP x);
 int (HASHVALUE)(SEXP x);
 void (SET_HASHASH)(SEXP x, int v);
 void (SET_HASHVALUE)(SEXP x, int v);
-#endif
+
+#endif /* _R_INTERNALS_H_ */

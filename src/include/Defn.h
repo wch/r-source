@@ -44,10 +44,6 @@
 
 #include "Errormsg.h"
 
-#ifndef USE_GENERATIONAL_GC
-# define ALLOW_OLD_SAVE
-#endif
-
 /* SunOS 4 is famous for broken header files. */
 #ifdef SunOS4
 # ifndef NULL
@@ -406,11 +402,6 @@ extern int	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
 extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
-#ifndef USE_GENERATIONAL_GC
-extern VECP	R_VHeap;	    /* Base of the vector heap */
-extern VECP	R_VTop;		    /* Current top of the vector heap */
-extern VECP	R_VMax;		    /* bottom of R_alloc'ed heap */
-#endif
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
 extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
 
@@ -557,9 +548,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define tspgets			Rf_tspgets
 #define type2str		Rf_type2str
 #define unbindVar		Rf_unbindVar
-#ifndef USE_GENERATIONAL_GC
-#define unmarkPhase		Rf_unmarkPhase
-#endif
 #define usemethod		Rf_usemethod
 #define yyerror			Rf_yyerror
 #define yyinit			Rf_yyinit
@@ -666,7 +654,7 @@ void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);
 void R_RestoreGlobalEnv(void);
 void R_SaveGlobalEnv(void);
-void R_SaveToFile(SEXP, FILE*, int, int);
+void R_SaveToFile(SEXP, FILE*, int);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
@@ -711,7 +699,7 @@ int yywrap(void);
 #define END_SUSPEND_INTERRUPTS } while (0)
 #endif
 
-#endif
+#endif /* DEFN_H_ */
 /*
  *- Local Variables:
  *- page-delimiter: "^/\\*---"
