@@ -15,9 +15,11 @@ indices:
 	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 pkg-% help-%:
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  ../../../share/perl/build-help-windows.pl ${DOS} \
-	  -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
+	@if test -d $(PKGDIR)/$*/man ; then \
+	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	    ../../../share/perl/build-help-windows.pl ${DOS} \
+	    -txt -html -example -latex $(PKGDIR)/$* $(RLIB) ; \
+	fi
 
 pkgfake-%:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
@@ -25,20 +27,23 @@ pkgfake-%:
 	  -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%:
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	@if test -d $(PKGDIR)/$*/man ; then \
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} \
-	  -chm $(PKGDIR)/$* $(RLIB)
-# hhc always gives an error code
-	@$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
-	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
-	@$(MKDIR) -p $(RLIB)/$*/chtml
-	@$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
+	  -chm $(PKGDIR)/$* $(RLIB) ; \
+	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
+	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
+	  $(MKDIR) -p $(RLIB)/$*/chtml ;\
+	  $(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml ; \
+	fi
 
 winhlp-%: chm-%
-	$(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
-	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp
-	$(MKDIR) -p $(RLIB)/$*/winhlp
-	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
+	@if test -d $(PKGDIR)/$*/man ; then \
+	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
+	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp ; \
+	  $(MKDIR) -p $(RLIB)/$*/winhlp ; \
+	  $(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp ; \
+	fi
 
 ziphelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
