@@ -17,7 +17,7 @@ all: cpy
 cpy:
 	$(CP) -p ../*.c .
 
-test.exe: test.c
+test test.exe: test.c
 	$(CC) -o $@ -I../../include $< -L. -lRmath
 
 clean:

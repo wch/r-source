@@ -8,7 +8,7 @@ Under Windows, use make -f Makefile.win. This makes Rmath.dll with
 import library libRmath.a.
 
 
-To use the routines in your own C programs, include
+To use the routines in your own C or C++ programs, include
 
 #define MATHLIB_STANDALONE
 #include "R_ext/Mathlib.h"
