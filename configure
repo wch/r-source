@@ -2612,12 +2612,12 @@ fi
 done
 
 if test -n "${PERL}"; then
-  echo "$as_me:$LINENO: checking whether perl version is at least 5.004" >&5
-echo $ECHO_N "checking whether perl version is at least 5.004... $ECHO_C" >&6
+  echo "$as_me:$LINENO: checking whether perl version is at least 5.005" >&5
+echo $ECHO_N "checking whether perl version is at least 5.005... $ECHO_C" >&6
 if test "${r_cv_prog_perl_v5+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  if ${PERL} -e 'require 5.004 or exit 1'; then
+  if ${PERL} -e 'require 5.005 or exit 1'; then
   r_cv_prog_perl_v5=yes
 else
   r_cv_prog_perl_v5=no
