@@ -55,7 +55,8 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   \item{main}{a main title for the plot.}
   \item{xlim}{numeric of length 2 giving the x limits for the plot.}
   \item{ylim}{numeric of length 2 giving the y limits for the plot.}
-  \item{\dots}{graphics parameters can also be passed to this function.}
+  \item{\dots}{graphics parameters can also be passed to this function,
+    as can the plot aspect ratio \code{asp} (see \code{\link{plot.window}}).}
 }
 \details{
   Observations which have missing coordinates or missing size

@@ -47,7 +47,8 @@ image(x, \dots)
     The current default is to have colour intervals of equal lengths
     between the limits.}
   \item{\dots}{graphical parameters for \code{\link{plot}} may also be
-    passed as arguments to this function.}
+    passed as arguments to this function, as can the plot aspect ratio
+    \code{asp} (see \code{\link{plot.window}}).}
 }
 \description{
   Creates a grid of colored or gray-scale rectangles with colors
