@@ -143,6 +143,9 @@ BUG FIXES
     o   The print button on the toolbar of the GNOME graphics device
         did not work.
 
+    o   The example code on the man page for TkWidgetcmds had not been
+        updated after the change that made tkget (et al.) return
+        tclObj objects, so the "Submit" button didn't work.
 
 
 		CHANGES IN R VERSION 1.8.0

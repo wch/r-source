@@ -218,7 +218,7 @@ tkinsert(txt.w, "0.0", "plot(1:10)")
 
 # callback function 
 eval.txt <- function()
-   eval(parse(text=tkget(txt.w, "0.0", "end")))
+   eval(parse(text=tclvalue(tkget(txt.w, "0.0", "end"))))
 tkpack(but.w <- tkbutton(tt,text="Submit", command=eval.txt))
 
 ## Try pressing the button, edit the text and when finished:
