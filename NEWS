@@ -18,6 +18,9 @@ NEW FEATURES
 	dotplot() and stripplot(), respectively.  The old names are now
 	deprecated.
 
+    o	Functions in package ctest now consistently use +/-Inf rather
+	than NA for one-sided confidence intervals.
+
 
 
 BUG FIXES
@@ -85,7 +88,8 @@ BUG FIXES
     o	The fuzz added in hist() for 1.2.2 broke the logic testing for
 	equidistant breakpoints.
 
-    o	Calls to replacement functions ("f<-") lost argument names (PR#888)
+    o	Calls to replacement functions ("f<-") lost argument names
+	(PR#888).
 
     o	is.na() and is.nan() gave random results on lists containing
 	zero-length objects.
@@ -94,9 +98,14 @@ BUG FIXES
 	(now an error).	 cov(x, NULL) and cor(x, NULL) are now errors
 	if x is a vector.  (PR#883).
 
-    o	?smooth.spline now properly describes `spar' which is *not* lambda.
-	smooth.spline(1:20, spar = 50) gives an error instead of silent
-	nonsense.  print.smooth.spline() now makes use of a digits argument.
+    o	?smooth.spline now properly describes `spar' which is *not*
+	lambda.  smooth.spline(1:20, spar = 50) gives an error instead
+	of silent nonsense.  print.smooth.spline() now makes use of a
+	digits argument.
+
+    o	Confidence intervals for wilcox.test() had the samples reversed
+	in the two-sided case (PR#895), and sometimes got continuity
+	correction wrong (PR#896).
 
 
 
