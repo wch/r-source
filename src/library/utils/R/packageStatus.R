@@ -46,8 +46,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method)
     for(bundle in bundles) {
         contains <- z[bundle, "Contains"]
         contains <- strsplit(contains, "[[:space:]]+")[[1]]
-        if(all(paste(z[bundle, "Bundle"], contains, sep=":") %in% y$Package))
-           z[bundle, "Status"] <- "installed"
+        if(all(contains %in% y$Package)) z[bundle, "Status"] <- "installed"
     }
 
     z <- char2df(z)
