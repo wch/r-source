@@ -17,7 +17,8 @@ stop.list[["base"]] <-
     } else {
 	inet.list <- c(apropos("download\."),
 		       apropos("^url\."), apropos("\.url"),
-		       paste(c("CRAN", "install", "update"),"packages",sep="."))
+		       paste(c("CRAN", "install", "update", "old"),
+                             "packages",sep="."))
 	socket.fun <- apropos("socket")
 	## "Interactive" ones:
 	dev.int <- c("X11", "windows", "macintosh")
