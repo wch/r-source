@@ -917,9 +917,14 @@ static void PostScriptRLineTo(FILE *fp, double x0, double y0,
 {
     double x = rround(x1, 2) - rround(x0, 2),
 	y = rround(y1, 2) - rround(y0, 2);
+    /* Warning: some machines seem to compute these differently from
+       others, and we do want to diff the output.  x and y should be
+       above around 0.01 or negligible (1e-14), and it is the latter case
+       we are watching out for here.
+    */
 
-    if(x == 0) fprintf(fp, "0"); else fprintf(fp, "%.2f", x);
-    if(y == 0) fprintf(fp, " 0"); else fprintf(fp, " %.2f", y);
+    if(fabs(x) < 0.005) fprintf(fp, "0"); else fprintf(fp, "%.2f", x);
+    if(fabs(y) < 0.005) fprintf(fp, " 0"); else fprintf(fp, " %.2f", y);
     fprintf(fp, " l\n");
 }
 
