@@ -22,6 +22,8 @@ d2x2xk(Sint *k, double *m, double *n, double *t, double *d)
 	c[i + 1] = (double *) R_alloc(l + z - y + 1, sizeof(double));
 	if(!c[i + 1])
 	    error("allocation error in d2x2xk().");
+	for(j = 0; j <= l + z - y; j++)
+	    c[i + 1][j] = 0;
 	for(j = 0; j <= z - y; j++) {
 	    u = dhyper(j + y, *m, *n, *t, FALSE);
 	    for(w = 0; w <= l; w++)
