@@ -14,7 +14,7 @@ INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
 	BUGS ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	acconfig.h aclocal.m4 \
+	acconfig.h acinclude.m4 aclocal.m4 \
 	config.site configure configure.in \
 	date-stamp
 SUBDIRS = m4 tools afm doc etc share src tests
@@ -31,9 +31,10 @@ Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-ACLOCAL_AMFLAGS = -I m4
 ACLOCAL_DEPENDENCIES = \
 	configure.in \
+	acinclude.m4
+ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
 	m4/am-fixes.m4 \
 	m4/gnome-gnorba-check.m4 \
@@ -46,7 +47,9 @@ config.status: $(srcdir)/configure
 $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(ACLOCAL_M4)
 	@cd $(srcdir) && $(AUTOCONF)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(ACLOCAL_DEPENDENCIES)
-	@cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
+	@cd $(srcdir) && $(ACLOCAL)
+$(srcdir)/acinclude.m4: @MAINTAINER_MODE_TRUE@ $(ACINCLUDE_DEPENDENCIES)
+	@cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES) > $@
 
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 libtool: $(LIBTOOL_DEPS)
