@@ -1,6 +1,10 @@
 # file modreg/R/zzz.R
 # copyright (C) 1998 B. D. Ripley
 #
-.First.lib <- function(lib, pkg) library.dynam("modreg", pkg, lib)
+.First.lib <- function(lib, pkg) {
+    library.dynam("modreg", pkg, lib)
+    ## Generic in non-base package:
+    autoload("as.stepfun", "stepfun")
+}
 
 .noGenerics <- TRUE

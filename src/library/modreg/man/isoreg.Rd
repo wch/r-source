@@ -1,0 +1,66 @@
+\name{isoreg}
+\title{Isotonic / Monotone Regression}
+\alias{isoreg}
+\alias{fitted.isoreg}
+\alias{residuals.isoreg}
+\alias{as.stepfun.isoreg}
+\description{
+  Compute the isotonic (monotonely increasing nonparametric) least
+  squares regression which is piecewise constant.
+}
+\usage{
+isoreg(x, y = NULL)
+\method{fitted}{isoreg}(object, \dots)
+\method{residuals}{isoreg}(object, \dots)
+\method{as.stepfun}{isoreg}(x, \dots)
+}
+\arguments{
+  \item{x, y}{coordinate vectors of the regression points.
+    Alternatively a single ``plotting'' structure can be
+    specified: see \code{\link{xy.coords}}.}
+  \item{object}{a \code{isoreg} object.}
+  \item{\dots}{potentially further arguments passed to methods.}
+}
+\details{
+  The algorithm determines the convex minorant \eqn{m(x)} of the
+  \emph{cumulative} data (i.e., \code{cumsum(y)}) which is piecewise
+  linear and the result is \eqn{m'(x)}, a step function with level
+  changes at locations where the convex \eqn{m(x)} touches the
+  cumulative data polygon and changes slope.\cr
+  \code{as.stepfun()} returns a \code{\link[stepfun]{stepfun}} object
+  which can be more parsimonious.
+}
+\value{
+  \code{isoreg()} returns an object of class \code{isoreg} which is
+  basically a list with components
+  \item{x}{original (constructed) abscissa values \code{x}.}
+  \item{y}{corresponding y values.}
+  \item{yf}{fitted values corresponding to \emph{ordered} x values.}
+  \item{yc}{cumulative y values corresponding to \emph{ordered} x values.}
+  \item{iKnots}{integer vector giving indices where the fitted curve jumps,
+    i.e. where the convex minorant has kinks.}
+  \item{isOrd}{logical indicating if original x values were ordered
+    increasingly already.}
+  \item{ord}{\code{if(!isOrd)}: integer permutation \code{\link{order}(x)} of
+    \emph{original} \code{x}.}
+  \item{call}{the \code{\link{call}} to \code{isoreg()} used.}
+}
+\references{
+  %% Add at least one!  `original' ??  __ FIXME __
+}
+%%\author{Original C code by Brian Ripley; all else: Martin Maechler}
+\seealso{the plotting method \code{\link{plot.isoreg}} with more examples;
+  \code{\link[MASS]{isoMDS}()} from the \code{MASS} package internally
+  uses isotonic regression.
+}
+\examples{
+(ir <- isoreg(c(1,0,4,3,3,5,4,2,0)))
+plot(ir, plot.type = "row")
+
+(ir3 <- isoreg(y3 <- c(1,0,4,3,3,5,4,2, 3)))# last "3", not "0"
+(fi3 <- as.stepfun(ir3))
+(ir4 <- isoreg(1:10, y4 <- c(5, 9, 1:2, 5:8, 3, 8)))
+cat("R^2 =", formatC(sum(residuals(ir4)^2) / (9*var(y4)), dig=2),"\n")
+}
+\keyword{regression}
+\keyword{smooth}
