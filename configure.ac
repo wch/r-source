@@ -784,15 +784,27 @@ case "${host_os}" in
     ## </FIXME>
     ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
     if test "${GCC}" = yes; then
-      if ${CC} --version | grep '3\.' > /dev/null; then
-        R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic])
-      fi
+      ## <FIXME>
+      ## R_PROG_CC_M() has the same code for determining the gcc
+      ## version.  Move this into e.g. _R_PROG_CC_VERSION.
+      gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
+        sed -e 's/^.*g.. version *//'`
+      case "${gcc_version}" in
+        3.*)
+          R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic]) ;;
+      esac
+      ## </FIXME>
     fi
     case "${host_os}" in
-      darwin1.[[012]])
-	shlib_ldflags="-bundle -undefined suppress" ;;
+      ## According to Jan de Leeuw, OS X 10.1 is darwin 5, OS X 10.2 is
+      ## darwin 6, and the real difference is between darwin < and >= 5.
+      ## The Darwin 1.[012] special casing is from libtool ...
+      darwin1.[[012]]*)
+        shlib_ldflags="-bundle -undefined suppress" ;;
+      darwin[[1234]].*)
+	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
       *)
-        shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
+        shlib_ldflags="-bundle -bundle_loader \$(Rexeclibdir)/R.bin -undefined error" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
@@ -989,13 +1001,18 @@ case "${host_os}" in
     ;;
   darwin*)
     DYLIB_EXT=".dylib"
+    ## <NOTE>
+    ## Earlier versions had '-flat_namespace -undefined suppress' in
+    ## LIBR_LDFLAGS ... not clear whether needed or in fact wanted.
+    ## </NOTE>
+    LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
     ## Change once the driver is modularized.
-    LIBR_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libR.dylib -framework Carbon"
+    R_SH_VAR_ADD(LIBR_LDFLAGS, [-framework Carbon])
     ## </FIXME>
-    RLAPACK_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libRlapack.dylib"
+    RLAPACK_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libRlapack.dylib"
     ;;
   hpux*)
     ## needs to avoid embedding a relative path ../../../bin
