@@ -3,8 +3,18 @@
 
 #define Unix
 
-/* (Long) Integers */
+/* alloca */
+#undef C_ALLOCA
+#undef HAVE_ALLOCA
+#undef HAVE_ALLOCA_H
 
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* (Long) Integers */
 #undef SIZEOF_LONG
 
 /* Floating Point Arithmetic */
@@ -24,6 +34,14 @@
 /* Signal Handler Type */
 #define RETSIGTYPE int
 
+/* Process ID */
+#undef pid_t
+/* Object size */
+#undef size_t
+
+/* Define if you have <sys/wait.h> that is POSIX.1 compatible.  */
+#undef HAVE_SYS_WAIT_H
+
 /* Dynamic Linking */
 #undef HAVE_DL_H		/* hpux */
 #undef HAVE_DLFCN_H		/* Everything else */
@@ -34,7 +52,9 @@
 /* Process Timing */
 #undef HAVE_TIMES
 #undef HAVE_TIMES_H
+#undef HAVE_SYS_TIME_H
 #undef HAVE_SYS_TIMES_H
+#undef TIME_WITH_SYS_TIME
 
 /* XDR Library Available */
 #undef HAVE_RPC_XDR_H
@@ -69,7 +89,6 @@
 
 /* Compatibility for setjmp / longjmp */
 #undef HAVE_SIGLONGJMP
-
 #ifdef HAVE_SIGLONGJMP
 #define JMP_BUF sigjmp_buf
 #define SETJMP(x) sigsetjmp(x,1)
@@ -79,7 +98,6 @@
 #define SETJMP(x) setjmp(x)
 #define LONGJMP(x,i) longjmp(x,i)
 #endif
-
 
 /* Some Linux systems may need this */
 #undef NEED___SETFPUCW
@@ -129,7 +147,8 @@
 #define R_PRINTCMD	""
 
 /* Getting the working directory */
-#if defined(HAVE_UNISTD_H)
+#undef HAVE_GETCWD
+#if defined(HAVE_GETCWD)
 #define R_GETCWD(x, y) getcwd(x, y)
 #elif defined(Win32)
 #define R_GETCWD(x, y) GetCurrentDirectory(y, x)
@@ -140,7 +159,6 @@
 /* Maximal length of an entire file name */
 #undef HAVE_LIMITS_H
 #undef HAVE_SYS_PARAM_H
-
 #if defined(HAVE_LIMITS_H)
 #  include <limits.h>
 #endif
