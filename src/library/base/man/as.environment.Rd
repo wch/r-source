@@ -9,7 +9,7 @@
 as.environment(object)
 }
 \arguments{
-  \item{object}{ The object to convert.  If it is already an
+  \item{object}{the object to convert.  If it is already an
     environment, just return it.  If it is a number, return the
     environment corresponding to that position on the search list.  If
     it is a character string, match the string to the names on the
@@ -19,10 +19,11 @@ as.environment(object)
   The corresponding environment object.
 }
 \author{ John Chambers }
-\seealso{ \code{\link{search}} }
-
+\seealso{\code{\link{environment}} for creation and manipulation,
+  \code{\link{search}}.}
 \examples{
 as.environment(1) ## the global environment
+identical(globalenv(), as.environment(1)) ## is TRUE
 as.environment("package:ctest")
 }
 \keyword{data}
