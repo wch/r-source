@@ -36,6 +36,7 @@ plot (data.frame.obj, \dots)
 \alias{as.data.frame.ordered}
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
+\alias{xpdrows.data.frame}
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
     \code{tag=value}.  Component names are created based on the tag (if
@@ -75,6 +76,11 @@ plot (data.frame.obj, \dots)
 
   For the \code{\link{print}} method (\code{print.data.frame}), see
   \code{\link{print.matrix}}.
+
+  \code{xpdrows.data.frame} is an auxiliary function which expands the
+  rows of a data frame.  It is used by the data frame methods of
+  \code{[<-} and \code{[[<-} (which perform subscripted assignments on a
+  data frame), and not intended to be called directly.
 }
 \seealso{
   \code{\link{read.table}}, \code{\link{Math.data.frame}},etc, about
