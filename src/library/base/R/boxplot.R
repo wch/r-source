@@ -2,8 +2,7 @@ boxplot <- function(x, ...) UseMethod("boxplot")
 
 boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
-         notch = FALSE, names, boxwex = 0.8,
-	 data = parent.frame(), plot = TRUE,
+         notch = FALSE, names, boxwex = 0.8, plot = TRUE,
          border = par("fg"), col = NULL, log = "", pars = NULL,
          horizontal = FALSE, add = FALSE, at = NULL)
 {
@@ -14,20 +13,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	else
 	    rep(FALSE, length = length(args))
     pars <- c(args[namedargs], pars)
-    groups <-
-	if(is.language(x)) {
-            warning(paste("Using `formula' in boxplot.default --",
-                          "shouldn't boxplot.formula be called?"))
-	    if(inherits(x, "formula") && length(x) == 3) {
-		groups <- eval(x[[3]], data, parent.frame())
-		x <- eval(x[[2]], data, parent.frame())
-		split(x, groups)
-	    }
-	}
-	else {
-	    groups <- args[!namedargs]
-	    if(length(groups) == 1 && is.list(x)) x else groups
-	}
+    groups <- if(is.list(x)) x else args[!namedargs]    
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
     if(length(class(groups)))
