@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.49 $ ';
+my $revision = ' $Revision: 1.50 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -53,22 +53,20 @@ R::Vars::error("R_HOME", "R_CMD");
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
-my @excludepatterns = R::Utils::get_exclude_patterns();
+my @exclude_patterns = R::Utils::get_exclude_patterns();
 
-my $vignette_exts_re = "[rRsS](nw|tex)";
-
-my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
+my @known_options = ("help|h", "version|v", "binary", "no-docs",
 		    "use-zip", "use-zip-help", "use-zip-data",
 		    "force", "no-vignettes");
 
 if($WINDOWS) {
     die "Please set TMPDIR to a valid temporary directory\n"
 	unless (-e ${R::Vars::TMPDIR});
-    @knownoptions = ("help|h", "version|v", "binary", "docs:s",
+    @known_options = ("help|h", "version|v", "binary", "docs:s",
 		    "use-zip", "use-zip-help", "use-zip-data", "force");
 }
 
-GetOptions (@knownoptions) or usage();
+GetOptions(@known_options) or usage();
 
 R_version("R add-on package builder", $version) if $opt_version;
 usage() if $opt_help;
@@ -207,7 +205,7 @@ foreach my $pkg (@ARGV) {
 	    open(RBUILDIGNORE, "$pkg/.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
 		chop;
-		push(@excludepatterns, $_) if $_;
+		push(@exclude_patterns, $_) if $_;
 	    }
 	    close(RBUILDIGNORE);
 	}
@@ -225,7 +223,7 @@ foreach my $pkg (@ARGV) {
 	    }
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
-	    foreach my $p (@excludepatterns) {
+	    foreach my $p (@exclude_patterns) {
 		if($WINDOWS) {
 		    ## Argh: Windows is case-honoring but not
 		    ## case-insensitive ...
@@ -259,15 +257,7 @@ foreach my $pkg (@ARGV) {
 }
 
 
-sub deleteJunkFiles {
-    unlink($_) if /^(\.RData|\.Rhistory)$/;
-    if(/^DESCRIPTION$/) {
-	unlink($_) if (-f "DESCRIPTION.in");
-    }
-}
-
-#**********************************************************
-
+
 sub prepare_pkg {
 
     my ($pkg, $in_bundle, $description, $log) = @_;
@@ -305,10 +295,13 @@ sub prepare_pkg {
 	system("./cleanup");
     }
 
-    updateRdIndex("INDEX", "man", 0, $log);
+    &updateRdIndex("INDEX", "man", 0, $log);
+    &updateRdIndex(&file_path("data", "00Index"), "man", 1, $log)
+	if(-d "data");
 
-    if((-d "inst/doc")
-       && list_files_with_exts("inst/doc", $vignette_exts_re)) {
+    if((-d &file_path("inst", "doc"))
+       && &list_files_with_type(&file_path("inst", "doc"),
+				"vignette")) {
 	if(!$opt_no_vignettes) {
 	    $log->creating("vignettes");
 	    my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
@@ -324,13 +317,22 @@ sub prepare_pkg {
 		$log->result("OK");
 	    }
 	}
+	&updateVignetteIndex(&file_path("inst", "doc", "00Index.dcf"),
+			     &file_path("inst", "doc"),
+			     $log);
     }
 
     1;
 }
 
-#**********************************************************
+sub deleteJunkFiles {
+    unlink($_) if /^(\.RData|\.Rhistory)$/;
+    if(/^DESCRIPTION$/) {
+	unlink($_) if (-f "DESCRIPTION.in");
+    }
+}
 
+
 sub updateIndex {
     my ($oldindex, $newindex, $log) = @_;
     
@@ -382,9 +384,52 @@ sub updateRdIndex {
     1;
 }
 
+sub updateVignetteIndex {
+    my ($oldindex, $dir, $log) = @_;
+    
+    my $newindex = ".Rbuildindex.$$";
+    
+    buildVignetteIndex($dir, $newindex);
+    updateIndex($oldindex, $newindex, $log);
+    
+    1;
+}
 
-#**********************************************************
+sub buildVignetteIndex {
+    my ($dir, $newindex) = @_;
 
+    my $delimcurly = new Text::DelimMatch("\\{", "\\}");
+    $delimcurly->escape("\\");
+    my @entries = ();
+    my @vignette_files = &list_files_with_type($dir, "vignette");
+
+    foreach my $file (@vignette_files) {
+        open(FILE, "< $file")
+            or die("Error: cannot open '$file' for reading");
+        my @text = <FILE>;
+        @text = split(/\n\s*\%+\s*\\VignetteIndexEntry\{/,
+                      "\n" . join("\n", @text));
+        if($#text >= 1) {
+            $delimcurly->match("\{" . $text[1]);
+            $file =~ s/\.[[:alpha:]]+$//;
+            push(@entries,
+                 "$file.pdf: " . substr($delimcurly->matched, 1, -1));
+        }
+        close(FILE);
+    }
+
+    open(NEWINDEX, "> $newindex")
+        or die("Error: cannot open '$newindex' for writing");
+    foreach my $entry (@entries) {
+        print NEWINDEX wrap("", "    ", $entry), "\n";
+    }
+    close(NEWINDEX);
+
+    1;
+
+}
+
+
 sub usage {
     print STDERR <<END;
 Usage: R CMD $name [options] pkgdirs
