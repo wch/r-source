@@ -8,8 +8,8 @@
   needed to display the largest, using leading zeroes as necessary.
 }
 \usage{
-as.character.octmode(x)
-format.octmode(x)
+as.character.octmode(x, \dots)
+format.octmode(x, \dots)
 print.octmode(x, \dots)
 }
 \arguments{
