@@ -1,7 +1,7 @@
 # GETVERSION
 # adapted from UNIX script
 #
-# Generates Rversion.h
+# Generates Rversion.h and RVerDefs.h
 #
 # Jago August 2001, Stefano M. Iacus
 #
