@@ -3,7 +3,7 @@
 \alias{is.stepfun}
 \alias{as.stepfun}
 %\alias{as.stepfun.default}
-%\alias{print.stepfun}
+\alias{print.stepfun}
 \alias{summary.stepfun}
 \alias{knots}
 %\alias{knots.stepfun}

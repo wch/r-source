@@ -1,7 +1,7 @@
 \name{ecdf}
 \alias{ecdf}
 \alias{plot.ecdf}
-%\alias{print.ecdf}
+\alias{print.ecdf}
 \title{Empirical Cumulative Distribution Function}
 \usage{
 ecdf(x)
