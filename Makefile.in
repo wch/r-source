@@ -83,9 +83,9 @@ install: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
 	done
-@WANT_R_FRAMEWORK_TRUE@	$(MAKE) install-R-framework
-@WANT_R_FRAMEWORK_TRUE@	sed 's/^LIBR =.*/LIBR = -framework R/' \
-@WANT_R_FRAMEWORK_TRUE@	$(top_builddir)/etc/Makeconf > $(rhome)/etc/Makeconf
+@WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's/^LIBR =.*/LIBR = -framework R/' \
+@WANT_R_FRAMEWORK_TRUE@		$(top_builddir)/etc/Makeconf > $(rhome)/etc/Makeconf)
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)
 install-strip:
@@ -168,14 +168,14 @@ install-R-framework:
 	@(cd $(top_builddir)/src/modules/aqua && \
 	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
-	  ln -f -s Resources/include Headers && \
-	  ln -f -s Resources/bin/libR.dylib R)
+	  ln -f -s -h Resources/include Headers && \
+	  ln -f -s -h Resources/bin/libR.dylib R)
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
-	  ln -f -s $(VERSION) Current)
+	  ln -f -s -h $(VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
-	  ln -f -s Versions/Current/Headers Headers&& \
-	  ln -f -s Versions/Current/R R && \
-	  ln -f -s Versions/Current/Resources Resources)
+	  ln -f -s -h Versions/Current/Headers Headers&& \
+	  ln -f -s -h Versions/Current/R R && \
+	  ln -f -s -h Versions/Current/Resources Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
 	  cp -R * "$(R_FRAMEWORK_DIR)/Resources/bin")
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/bin" && \
@@ -196,6 +196,6 @@ install-aqua:
 	@test -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua"  \
 	  || (echo "please, make install-R-framework first" &&  exit 1)
 	@(cd /Applications/R.app/Contents/MacOS && \
-	  ln -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
+	  ln -f -h "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
 	  chmod 755 R)
 TAGS:
