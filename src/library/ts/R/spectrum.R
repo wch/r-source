@@ -213,8 +213,7 @@ plot.spec <-
     } else {
         matplot(x$freq, x$spec, xlab = xlab, ylab = ylab, type = type,
                 log = ylog, ...)
-        is.ar <- !is.na(pmatch("AR", x$method))
-        if (ci <= 0 || log == "no" || is.ar) {
+        if (ci <= 0 || !is.numeric(x$df) || log == "no") {
             ## No confidence limits
             ci.text <- ""
         } else {
@@ -242,8 +241,10 @@ plot.spec <-
             }
         }
         if (is.null(main))
-            main <- paste(paste("Series:", x$series), x$method, sep = "\n")
-        if (is.null(sub) && !is.ar)
+            main <- paste(if(!is.null(x$series)) paste("Series:", x$series)
+                          else "from specified model",
+                          x$method, sep = "\n")
+        if (is.null(sub) && is.numeric(x$bandwidth))
              sub <- paste("bandwidth = ", format(x$bandwidth, digits = 3),
                          ci.text, sep="")
         title(main = main, sub = sub)

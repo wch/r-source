@@ -157,6 +157,9 @@ NEW FEATURES
 
     o	read.table(stdin()) will now work.
 
+    o	plot.spec(x) now also works for other x than AR and Pgram results.
+
+
 
 DEPRECATED & DEFUNCT
 
