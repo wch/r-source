@@ -25,7 +25,7 @@
 #include "Memory.h"
 
 void
-burg(int *pn, double*x, int *pp, double *coefs, double *sigma2)
+burg(int *pn, double*x, int *pp, double *coefs, double *var1, double *var2)
 {
     int i, j, n=*pn, p, pmax=*pp, t;
     double d, phii, *u, *v, *u0, sum;
@@ -41,7 +41,7 @@ burg(int *pn, double*x, int *pp, double *coefs, double *sigma2)
 	u[t] = v[t] = x[n - 1 - t];
 	sum += x[t] * x[t];
     }
-    sigma2[0] = sum/n;
+    var1[0] = var2[0] = sum/n;
     for(p = 1; p <= pmax; p++) { /* do AR(p) */
 	sum = 0.0;
 	d = 0;
@@ -62,11 +62,11 @@ burg(int *pn, double*x, int *pp, double *coefs, double *sigma2)
 	    u[t] = u0[t-1] - phii * v[t];
 	    v[t] = v[t] - phii * u0[t-1];
 	}
-/*	d = 0.0;
+	var1[p] = var1[p-1] * (1 - phii * phii);
+	d = 0.0;
 	for(t = p; t < n; t++) {
 	    d += v[t]*v[t] + u[t]*u[t];
 	    }
-	sigma2[p] = d/(2.0*(n-p));*/
-	sigma2[p] = sigma2[p-1] * (1 - phii * phii);
+	var2[p] = d/(2.0*(n-p));
     }
 }

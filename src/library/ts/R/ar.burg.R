@@ -1,7 +1,7 @@
 ## ar.burg by B.D. Ripley based on R version by Martyn Plummer
 ar.burg <-
     function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                   demean = TRUE, series = NULL, ...)
+                   demean = TRUE, series = NULL, var.method = 1, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
     if (!is.null(dim(x)))
@@ -23,19 +23,18 @@ ar.burg <-
             as.double(x),
             as.integer(order.max),
             coefs=double(order.max^2),
-            sigma2=double(1+order.max)
+            var1=double(1+order.max),
+            var2=double(1+order.max)
             )
     coefs <- matrix(z$coefs, order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1, 1))
-    var.pred <- z$sigma2
+    var.pred <- if(var.method == 1) z$var1 else z$var2
     xaic <- n.used * log(var.pred) + 2 * (0:order.max)
     xaic <- xaic - min(xaic)
     names(xaic) <- 0:order.max
     order <- if (aic) (0:order.max)[xaic == 0] else order.max
     ar <- if (order > 0) coefs[order, 1:order] else 0
     var.pred <- var.pred[order+1]
-    ## Splus compatibility fix
-    ## var.pred <- var.pred * n.used/(n.used - (order + 1))
     if(order > 0)
         resid <- c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
     else resid <- as.vector(x)
@@ -59,7 +58,7 @@ ar.burg <-
 ## ar.burg.R by Martyn Plummer
 ar.burg.R <-
     function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-              demean = TRUE, series = NULL, ...)
+              demean = TRUE, series = NULL, var.method = 1, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
     if (!is.null(dim(x)))
@@ -79,14 +78,15 @@ ar.burg.R <-
     A[1, , ] <- diag(1)
     partialacf <- array(dim = c(order.max, 1, 1))
     xaic <- numeric(order.max + 1)
-    E <- crossprod(x)/n.used
     resid.f <- resid.b <- x
+    E <- crossprod(x)/n.used
     solve.burg <- function(m) {
         ## Burg's algorithm
         ss <- crossprod(resid.f[-1]) + crossprod(resid.b[-(n.used - m)])
         ss.fb <- 2 * crossprod(resid.f[-1], resid.b[-(n.used - m)])
         K <- -ss.fb/ss
-        E <<- E * (1 - K * K)
+        if(var.method == 1) E <<- E * (1 - K * K)
+        else E <<- ss * (1 - K * K) / (2*(n.used - m))
         Aold <- A
         for (i in 1:(m + 1)) A[i + 1, , ] <<- Aold[i + 1, , ] +
             t(K) %*% Aold[m + 2 - i, , ]
@@ -102,7 +102,7 @@ ar.burg.R <-
             ar <- -A[2:(max(m, 1) + 1), , , drop = FALSE]
             order <- m
             resid <- resid.f
-            var.pred <- E * n.used/(n.used - m - 1)
+            var.pred <- E #* n.used/(n.used - m - 1)
         }
         if (m < order.max) {
             solve.burg(m)
