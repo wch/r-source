@@ -323,12 +323,12 @@ void PostScriptFileHeader(
 	fprintf(fp, "/cp  { closepath } def\n");
 	fprintf(fp, "/f   { fill } def\n");
 	fprintf(fp, "/o   { stroke } def\n");
-	fprintf(fp, "/cf  { newpath 0 360 arc fill } def\n");
-	fprintf(fp, "/co  { newpath 0 360 arc stroke } def\n");
+	fprintf(fp, "/c   { newpath 0 360 arc } def\n");
 	fprintf(fp, "/r   { 3 index 3 index moveto 1 index 4 -1 roll\n");
 	fprintf(fp, "       lineto exch 1 index lineto lineto closepath } def\n");
-	fprintf(fp, "/rf  { r f } def\n");
-	fprintf(fp, "/ro  { r o } def\n");
+	fprintf(fp, "/p1  { stroke } def\n");
+	fprintf(fp, "/p2  { bg setrgbcolor fill fg setrgbcolor } def\n");
+	fprintf(fp, "/p3  { gsave bg setrgbcolor fill grestore stroke } def\n");
 	fprintf(fp, "/t   { 6 -2 roll moveto gsave 3 index true\n");
 	fprintf(fp, "       charpath flattenpath pathbbox grestore gsave\n");
 	fprintf(fp, "       5 -1 roll rotate 6 -1 roll neg 3 -1 roll 5 -1\n");
@@ -417,63 +417,16 @@ void PostScriptEndPath(FILE *fp)
 	fprintf(fp, "o\n");    
 }
 
-void PostScriptFilledRectangle(FILE *fp,
+void PostScriptRectangle(FILE *fp,
 	double x0, double y0, double x1, double y1)
 {
-	fprintf(fp, "%.2f %.2f %.2f %.2f rf\n", x0, y0, x1, y1);
+	fprintf(fp, "%.2f %.2f %.2f %.2f r ", x0, y0, x1, y1);
 }
 
-void PostScriptOpenRectangle(FILE *fp,
-	double x0, double y0, double x1, double y1)
+void PostScriptCircle(FILE *fp, double x, double y, double r)
 {
-	fprintf(fp, "%.2f %.2f %.2f %.2f ro\n", x0, y0, x1, y1);
+	fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
-
-void PostScriptFilledCircle(FILE *fp, double x, double y, double r)
-{
-	fprintf(fp, "%.2f %.2f %.2f cf\n", x, y, r);
-}
-
-void PostScriptOpenCircle(FILE *fp, double x, double y, double r)
-{
-	fprintf(fp, "%.2f %.2f %.2f co\n", x, y, r);
-}
-
-#ifdef GONE
-void PostScriptFilledPolygon(FILE *fp, double *x, double *y, int nxy)
-{
-	int i;
-	fprintf(fp, "np\n");
-	fprintf(fp, "  %.2f %.2f m\n", x[0], y[0]);
-	for(i=1 ; i<nxy ; i++)
-		fprintf(fp, "  %.2f %.2f l\n", x[i], y[i]);
-	fprintf(fp, "cp f\n");
-}
-#endif
-
-#ifdef GONE
-void PostScriptOpenPolygon(FILE *fp, double *x, double *y, int nxy)
-{
-	int i;
-	fprintf(fp, "np\n");
-	fprintf(fp, "%.2f %.2f m\n", x[0], y[0]);
-	for(i=1 ; i<nxy ; i++)
-		fprintf(fp, "%.2f %.2f l\n", x[i], y[i]);
-	fprintf(fp, "cp o\n");
-}
-#endif
-
-#ifdef GONE
-void PostScriptPolyline(FILE *fp, double *x, double *y, int nxy)
-{
-	int i;
-	fprintf(fp, "np\n");
-	fprintf(fp, "%.2f %.2f m\n", x[0], y[0]);
-	for(i=1 ; i<nxy ; i++)
-		fprintf(fp, "%.2f %.2f l\n", x[i], y[i]);
-	fprintf(fp, "o\n");
-}
-#endif
 
 static void PostScriptWriteString(FILE *fp, char *str)
 {
