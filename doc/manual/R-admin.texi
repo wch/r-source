@@ -659,7 +659,7 @@ will give a list. Probably the most important ones not covered elsewhere are
 You can use @code{--without-foo} or @code{--disable-foo} for the
 negatives.
 
-You will want to use @code{--enable-R-profiling} if you are building a
+You will want to use @code{--disable-R-profiling} if you are building a
 profiled copy of @R{}.
 
 Flag @code{--enable-R-shlib} causes the make process to make @file{libR.so},
