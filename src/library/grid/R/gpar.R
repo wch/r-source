@@ -119,7 +119,14 @@ set.gpar <- function(gp) {
   if (!is.gpar(gp))
     stop("Argument must be a 'gpar' object")
   temp <- grid.Call("L_getGPar")
+  # Special case "alpha" (make it cumulative)
+  if (match("alpha", names(gp), nomatch=0))
+    tempalpha <- temp$alpha * gp$alpha
+  else
+    tempalpha <- temp$alpha
+  # All other gpars
   temp[names(gp)] <- gp
+  temp$alpha <- tempalpha
   # Do this as a .Call.graphics to get it onto the base display list
   grid.Call.graphics("L_setGPar", temp)
 }

@@ -46,7 +46,7 @@ int gpCol(SEXP gp, int i) {
     SEXP col = VECTOR_ELT(gp, GP_COL);
     int result;
     if (isNull(col))
-	result = R_RGBA(255, 255, 255, 255);
+	result = R_TRANWHITE;
     else
 	result = RGBpar(col, i % LENGTH(col));
     return result;
@@ -60,7 +60,7 @@ int gpFill(SEXP gp, int i) {
     SEXP fill = gpFillSXP(gp);
     int result;
     if (isNull(fill))
-	result = R_RGBA(255, 255, 255, 255);
+	result = R_TRANWHITE;
     else
 	result = RGBpar(fill, i % LENGTH(fill));
     return result;
@@ -137,22 +137,22 @@ double gpAlpha(SEXP gp, int i) {
 /*
  * Combine gpar alpha with alpha level stored in colour 
  *
- * finalAlpha = 1 - (1 - gpAlpha)*(1 - R_ALPHA*(col))
+ * finalAlpha = gpAlpha*(R_ALPHA(col)/255)
  *
  * Based on my reading of how group alpha and individual
  * object alphas are combined in the SVG 1.0 docs
  *
  * Also has nice properties:
  *  (i)   range of finalAlpha is 0 to 1.
- *  (ii)  if either of gpAlpha or R_ALPHA(col) are 1 then finalAlpha = 1
+ *  (ii)  if either of gpAlpha or R_ALPHA(col) are 0 then finalAlpha = 0
  *        (i.e., can never make fully transparent colour less transparent).
- *  (iii) in order to get finalAlpah = 0, both gpAlpha and R_ALPHA(col)
- *        must be 0 (i.e., only way to get fully opaque is if both
+ *  (iii) in order to get finalAlpha = 1, both gpAlpha and R_ALPHA(col)
+ *        must be 1 (i.e., only way to get fully opaque is if both
  *        alpha levels are fully opaque).
  */
 static unsigned int combineAlpha(double alpha, int col) 
 {
-    unsigned int newAlpha = (1 - (1 - alpha)*(1 - R_ALPHA(col)/255.0))*255;
+    unsigned int newAlpha = (alpha*(R_ALPHA(col)/255.0))*255;
     return R_RGBA(R_RED(col), R_GREEN(col), R_BLUE(col), newAlpha);
 }
 
@@ -278,7 +278,7 @@ void initGPar(GEDevDesc *dd)
     SET_STRING_ELT(gpfontfamily, 0, mkChar(""));
     SET_VECTOR_ELT(gpar, GP_FONTFAMILY, gpfontfamily);
     PROTECT(gpalpha = allocVector(REALSXP, 1));
-    REAL(gpalpha)[0] = 0;
+    REAL(gpalpha)[0] = 1;
     SET_VECTOR_ELT(gpar, GP_ALPHA, gpalpha);
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("gpar"));

@@ -30,11 +30,20 @@ Changes from grid_1.9.0 to grid_2.0.0:
 6.  The "alpha" gpar() is now combined with the alpha channel of
     colours when creating a gcontext as follows:
 
-      finalAlpha = 1 - (1 - gpar("alpha"))*(1 - R_ALPHA(col))
+      finalAlpha = gpar("alpha")*(R_ALPHA(col)/255)
 
     This means that gpar(alpha=) settings now affect internal
     colours so grid alpha transparency settings now are sent to
     graphics devices.
+
+    The alpha setting is also cumulative.  For example, ...
+      
+      grid.rect(width=0.5, height=0.5, 
+                gp=gpar(fill="blue"))              # alpha = 1
+      pushViewport(viewport(gp=gpar(alpha=0.5)))
+      grid.rect(height=0.25, gp=gpar(fill="red"))  # alpha = 0.5
+      pushViewport(viewport(gp=gpar(alpha=0.5)))
+      grid.rect(width=0.25, gp=gpar(fill="red"))   # alpha = 0.25 !
 
 
 Changes from grid_1.9.0 to grid_1.9.1:

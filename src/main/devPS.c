@@ -2104,7 +2104,7 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     pd->height = height;
     pd->landscape = horizontal;
     pointsize = floor(ps);
-    if(setbg == NA_INTEGER && setfg == NA_INTEGER) {
+    if(R_TRANSPARENT(setbg) && R_TRANSPARENT(setfg)) {
 	freeDeviceFontList(pd->fonts);
 	pd->fonts = NULL;
 	free(dd);
@@ -2510,11 +2510,11 @@ static void PS_NewPage(R_GE_gcontext *gc,
     PostScriptStartPage(pd->psfp, pd->pageno);
     Invalidate(dd);
 
-    if(R_ALPHA(gc->fill) == 0) {
+    if(R_OPAQUE(gc->fill)) {
 	/*
 	 * Override some gc settings
 	 */
-	gc->col = NA_INTEGER;
+	gc->col = R_TRANWHITE;
 	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight, gc, dd);
     }
 }
@@ -2622,7 +2622,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
     /* code == 2, fill only */
     /* code == 3, outline and fill */
 
-    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
+    code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 
     if (code) {
 	if(code & 2)
@@ -2649,7 +2649,7 @@ static void PS_Circle(double x, double y, double r,
     /* code == 2, fill only */
     /* code == 3, outline and fill */
 
-    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
+    code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 
     if (code) {
 	if(code & 2)
@@ -2670,7 +2670,7 @@ static void PS_Line(double x1, double y1, double x2, double y2,
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     /* FIXME : clip to the device extents here */
-    if(R_ALPHA(gc->col) == 0) {
+    if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	SetLineStyle(gc->lty, gc->lwd, dd);
 	PostScriptStartPath(pd->psfp);
@@ -2696,7 +2696,7 @@ static void PS_Polygon(int n, double *x, double *y,
     /* code == 2, fill only */
     /* code == 3, outline and fill */
 
-    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
+    code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 
     if (code) {
 	if(code & 2)
@@ -2724,7 +2724,7 @@ static void PS_Polyline(int n, double *x, double *y,
     int i;
 
     pd = (PostScriptDesc*) dd->deviceSpecific;
-    if(R_ALPHA(gc->col) == 0) {
+    if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	SetLineStyle(gc->lty, gc->lwd, dd);
 	fprintf(pd->psfp, "np\n");
@@ -2769,7 +2769,7 @@ static void PS_Text(double x, double y, char *str,
 
     SetFont(translateFont(gc->fontfamily, gc->fontface, pd), 
 	    (int)floor(gc->cex * gc->ps + 0.5),dd);
-    if(R_ALPHA(gc->col) == 0) {
+    if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
     }
@@ -3013,12 +3013,12 @@ innerXFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     pd->fontnum = XFig_basenums[MatchFamily(family)];
     pd->bg = str2col(bg);
     pd->col = str2col(fg);
-    pd->fill = NA_INTEGER;
+    pd->fill = R_TRANWHITE;
     pd->width = width;
     pd->height = height;
     pd->landscape = horizontal;
     pointsize = floor(ps);
-    if(pd->bg == NA_INTEGER && pd->col == NA_INTEGER) {
+    if(R_TRANSPARENT(pd->bg) && R_TRANSPARENT(pd->col)) {
 	free(dd);
 	free(pd);
 	error("invalid foreground/background color (xfig)");
@@ -3282,7 +3282,7 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 	pd->XFigColors[7] = 0xffffff;
 	pd->nXFigColors = 32;
     }
-     if(R_ALPHA(gc->fill) == 0) {
+     if(R_OPAQUE(gc->fill)) {
 	 int cbg = XF_SetColor(gc->fill, pd);
 	 int ix0, iy0, ix1, iy1;
 	 double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth,
@@ -3339,8 +3339,8 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
 	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    cpen = (R_ALPHA(gc->col) == 0)? cfg: -1;
-    dofill = (R_ALPHA(gc->fill) == 0)? 20: -1;
+    cpen = (R_OPAQUE(gc->col))? cfg: -1;
+    dofill = (R_OPAQUE(gc->fill))? 20: -1;
 
     XFconvert(&x0, &y0, pd);
     XFconvert(&x1, &y1, pd);
@@ -3368,8 +3368,8 @@ static void XFig_Circle(double x, double y, double r,
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
 	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    cpen = (R_ALPHA(gc->col) == 0)? cfg: -1;
-    dofill = (R_ALPHA(gc->fill) == 0)? 20: -1;
+    cpen = (R_OPAQUE(gc->col))? cfg: -1;
+    dofill = (R_OPAQUE(gc->fill))? 20: -1;
 
     XFconvert(&x, &y, pd);
     ix = (int)x; iy = (int)y; ir = (int)(16.667*r);
@@ -3393,7 +3393,7 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
 
     XFconvert(&x1, &y1, pd);
     XFconvert(&x2, &y2, pd);
-    if(R_ALPHA(gc->col) == 0) {
+    if(R_OPAQUE(gc->col)) {
 	fprintf(fp, "2 1 "); /* Polyline */
 	fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
 	fprintf(fp, "%d %d ", XF_SetColor(gc->col, pd), 7);
@@ -3416,8 +3416,8 @@ static void XFig_Polygon(int n, double *x, double *y,
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
 	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    cpen = (R_ALPHA(gc->col) == 0)? cfg: -1;
-    dofill = (R_ALPHA(gc->fill) == 0)? 20: -1;
+    cpen = (R_OPAQUE(gc->col))? cfg: -1;
+    dofill = (R_OPAQUE(gc->fill))? 20: -1;
 
     fprintf(fp, "2 3 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
@@ -3443,7 +3443,7 @@ static void XFig_Polyline(int n, double *x, double *y,
     double xx, yy;
     int i, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    if(R_ALPHA(gc->col) == 0) {
+    if(R_OPAQUE(gc->col)) {
 	fprintf(fp, "2 1 "); /* Polyline */
 	fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
 	fprintf(fp, "%d %d ", XF_SetColor(gc->col, pd), 7); /* pen colour fill colour */
@@ -3479,7 +3479,7 @@ static void XFig_Text(double x, double y, char *str,
     else fontnum = pd->fontnum + styles[style-1];
 
     XFconvert(&x, &y, pd);
-    if(R_ALPHA(gc->col) == 0) {
+    if(R_OPAQUE(gc->col)) {
 	fprintf(fp, "4 %d ", (int)floor(2*hadj)); /* Text, how justified */
 	fprintf(fp, "%d 100 0 ", XF_SetColor(gc->col, pd));
 	/* color, depth, pen_style */
@@ -3819,7 +3819,7 @@ innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
     pd->width = width;
     pd->height = height;
     pointsize = floor(ps);
-    if(setbg == NA_INTEGER && setfg  == NA_INTEGER) {
+    if(R_TRANSPARENT(setbg) && R_TRANSPARENT(setfg)) {
 	freeDeviceFontList(pd->fonts);
 	freeDeviceEncList(pd->encodings);
 	pd->fonts = NULL;
@@ -4267,19 +4267,16 @@ static void PDF_endfile(PDFDesc *pd)
     /* 
      * Write out objects representing the graphics state parameter 
      * dictionaries for alpha transparency
-     *
-     * NOTE:  R considers alpha=0 opaque, in PDF it is transparent
-     * so we must take 1 - alpha value
      */
     for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++) {
 	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
 	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /ExtGState\n/CA %1.3f >>\nendobj\n", 
-		pd->nobjs, 1 - pd->colAlpha[i]/255.0);
+		pd->nobjs, pd->colAlpha[i]/255.0);
     }
     for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++) {
 	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
 	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /ExtGState\n/ca %1.3f\n>>\nendobj\n", 
-		pd->nobjs, 1 - pd->fillAlpha[i]/255.0);
+		pd->nobjs, pd->fillAlpha[i]/255.0);
     }
 
     /* write out xref table */
@@ -4391,7 +4388,7 @@ static void PDF_NewPage(R_GE_gcontext *gc,
     pd->startstream = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
     PDF_Invalidate(dd);
-    if(R_ALPHA(gc->fill) == 0) {
+    if(R_OPAQUE(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
 		72.0 * pd->width, 72.0 * pd->height);
@@ -4434,7 +4431,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re B\n", x0, y0, x1-x0, y1-y0);
     } else {
-	code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
+	code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 	if (code) {
 	    if(pd->inText) textoff(pd);
 	    if(code & 2)
@@ -4491,7 +4488,7 @@ static void PDF_Circle(double x, double y, double r,
 	    fprintf(pd->pdffp, "B\n"); 
 	} 
     } else {
-	code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
+	code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 	if (code) {
 	    if(code & 2)
 		PDF_SetFill(gc->fill, dd);
@@ -4526,8 +4523,8 @@ static void PDF_Circle(double x, double y, double r,
 		a = 2./0.722 * r;
 		xx = x - 0.396*a;
 		yy = y - 0.347*a;
-		tr = (R_ALPHA(gc->fill) == 0) + 
-		    2 * (R_ALPHA(gc->col) == 0) - 1;
+		tr = (R_OPAQUE(gc->fill)) + 
+		    2 * (R_OPAQUE(gc->col)) - 1;
 		if(!pd->inText) texton(pd);
 		fprintf(pd->pdffp,
 			"/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
@@ -4548,7 +4545,7 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
      * Only try to do real transparency if version at least 1.4
      */
     if ((semiTransparent(gc->col) && alphaVersion(pd)) ||
-	(R_ALPHA(gc->col) == 0)) {
+	(R_OPAQUE(gc->col))) {
 	PDF_SetLineColor(gc->col, dd);
 	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	if(pd->inText) textoff(pd);
@@ -4584,7 +4581,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 	}
 	fprintf(pd->pdffp, "b\n"); 
     } else {
-	code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
+	code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 	if (code) {
 	    if(pd->inText) textoff(pd);
 	    if(code & 2)
@@ -4638,7 +4635,7 @@ static void PDF_Polyline(int n, double *x, double *y,
 	fprintf(pd->pdffp, "S\n");
     } else {
 	if(pd->inText) textoff(pd);
-	if(R_ALPHA(gc->col) == 0) {
+	if(R_OPAQUE(gc->col)) {
 	    PDF_SetLineColor(gc->col, dd);
 	    PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	    xx = x[0];
@@ -4709,7 +4706,7 @@ static void PDF_Text(double x, double y, char *str,
      * Only try to do real transparency if version at least 1.4
      */
     if ((pd->versionMajor >= 1 && pd->versionMinor >= 4) || 
-	(R_ALPHA(gc->col) == 0)) {
+	(R_OPAQUE(gc->col))) {
 	PDF_SetFill(gc->col, dd);
 	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 		PDFfontNumber(gc->fontfamily, face, pd), 

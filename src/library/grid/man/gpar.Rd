@@ -32,6 +32,7 @@ get.gpar(names = NULL)
   \tabular{ll}{
     col \tab Colour for lines and borders. \cr
     fill \tab Colour for filling rectangles, polygons, ... \cr
+    alpha \tab Alpha channel for transparency \cr
     lty \tab Line type \cr
     lwd \tab Line width \cr
     fontsize \tab The size of text (in points) \cr
@@ -43,6 +44,10 @@ get.gpar(names = NULL)
     backward compatibility) \cr
   }
 
+  The \code{alpha} setting is combined with the alpha channel for
+  individual colours by multiplying (with both alpha settings
+  normalised to the range 0 to 1).
+  
   The size of text is \code{fontsize}*\code{cex}.  The size of a line
   is \code{fontsize}*\code{cex}*\code{lineheight}.
   

@@ -748,7 +748,7 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
      return(0);
 
     xd->window = devWindow;
-    xd->color = xd->fill = NA_INTEGER;
+    xd->color = xd->fill = R_TRANWHITE;
     xd->resize = false;
     xd->lineType = 0;
     xd->lineWidth = 1;
@@ -867,10 +867,29 @@ static void 	Quartz_NewPage(R_GE_gcontext *gc,
     area.origin = origin;
     area.size = size;
 
-	Quartz_Clip(0,size.width, 0, size.height, dd);
-	
-    if(gc->fill == NA_INTEGER)
-      gc->fill = R_RGB(255, 255, 255);
+    Quartz_Clip(0,size.width, 0, size.height, dd);
+    
+    /*
+     * Paul to Stefano:
+     * Not sure what is intended here:  looks like you are
+     * making sure that on a "new page" operation you clear 
+     * the window -- filling the window with a "missing"
+     * colour wouldn't do the job so you use "white".
+     * We no longer deal with NA as a colour internally so
+     * I have changed this as follows:
+     * (i)  if gc->fill is not opaque, then fill with white 
+     *      (to clear the window)
+     * (ii) fill with gc->fill
+     *      (to produce the specified "background" which may or
+     *       may not be transparent)
+     */
+    if (!R_OPAQUE(gc->fill)) {
+	unsigned int tempcol = gc->fill;
+	gc->fill = R_RGB(255, 255, 255);
+	Quartz_SetFill(gc->fill, gc->gamma, dd);
+	CGContextFillRect( GetContext(xd), area);
+	gc->fill = tempcol;
+    }
       
     Quartz_SetFill(gc->fill, gc->gamma, dd);
 
@@ -1237,29 +1256,23 @@ static void Quartz_SetLineWidth(double lwd, NewDevDesc *dd)
 static void Quartz_SetStroke(int color, double gamma, NewDevDesc *dd)
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
-    float alpha = 1.0;
-
- 	xd->color = color;
-
-	if(color == NA_INTEGER)
-	 alpha = 0.0;
-
-    CGContextSetRGBStrokeColor( GetContext(xd), (float)R_RED(color)/255.0, (float)R_GREEN(color)/255.0, (float)R_BLUE(color)/255.0, alpha);
-
+    xd->color = color;
+    CGContextSetRGBStrokeColor( GetContext(xd), 
+				(float)R_RED(color)/255.0, 
+				(float)R_GREEN(color)/255.0, 
+				(float)R_BLUE(color)/255.0, 
+				(float)R_ALPHA(color)/255.0);
 }
 
 static void Quartz_SetFill(int fill, double gamma, NewDevDesc *dd)
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
-    float alpha = 1.0;
-
     xd->fill = fill;
-
- 	if(fill == NA_INTEGER)
- 	 alpha = 0.0;
-
-    CGContextSetRGBFillColor( GetContext(xd), (float)R_RED(fill)/255.0, (float)R_GREEN(fill)/255.0, (float)R_BLUE(fill)/255.0, alpha);
-
+    CGContextSetRGBFillColor( GetContext(xd), 
+			      (float)R_RED(fill)/255.0, 
+			      (float)R_GREEN(fill)/255.0, 
+			      (float)R_BLUE(fill)/255.0, 
+			      (float)R_ALPHA(fill)/255.0);
 }
 
 static void 	Quartz_Polygon(int n, double *x, double *y, 
