@@ -73,6 +73,15 @@ The Makefiles can be customized: in particular the name of the DLL can
 be set (for example we once needed integrate-DLLNM=adapt), the compile
 flags can be set (see the examples in MakeDll) and the types of help
 (if any) to be generated can be chosen (variables HELP and WINHELP).
+The simplest way to customize the compilation steps is to set variables in
+a file src/Makevars, which will automatically be included by MakeDLL.
+For example, for RODBC src/Makevars could include the line
+
+DLLLIBS+=-lodbc32
+
+or, equivalently,
+
+RODBC-DLLLIBS=-lodbc32
 
 
 Using zipped help files

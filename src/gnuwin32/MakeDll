@@ -30,6 +30,7 @@ ifeq ($(AA),Makefile)
 else
  OBJS=$(filter-out $(OBJS-NO),$(OBJSA))
 endif
+-include Makevars
 
 $(DLLNAME).a: $(OBJS) #
 	$(RM) -f $@
