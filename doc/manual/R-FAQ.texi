@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-19, 2002-08-22
+@set FAQ-VERSION 1.5-20, 2002-08-31
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1585,6 +1585,15 @@ Adaptive quadrature in up to 20 dimensions.
 Analysis of growth curve experiments.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
+@item ape
+Analyses of Phylogenetics and Evolution, providing functions for reading
+and plotting phylogenetic trees in parenthetic format (standard Newick
+format), analyses of comparative data in a phylogenetic framework,
+analyses of diversification and macroevolution, computing distances from
+allelic and nucleotide data, reading nucleotide sequences from GenBank
+via internet, and several tools such as Mantel's test, computation of
+minimum spanning tree, or the population parameter theta based on
+various approaches.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
 @item aws
@@ -1935,6 +1944,9 @@ visualization.
 @c @item snns
 @c An R interface to the Stuttgart Neural Networks Simulator (SNNS).
 @c </COMMENT>
+@item sound
+A sound interface for R: Basic functions for dealing with @file{.wav}
+files and sound samples.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
