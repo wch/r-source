@@ -3,9 +3,11 @@
 \usage{
 coplot(formula, data, given.values, panel = points, rows, columns,
        show.given = TRUE, col = par("fg"), pch = par("pch"), 
+       bar.bg = c(num = gray(0.8), fac = gray(0.95)),
        xlab = c(x.name, paste("Given :", a.name)),
        ylab = c(y.name, paste("Given :", b.name)),
        subscripts = FALSE,
+       axlabels = function(f) abbreviate(levels(f))
        number = 6, overlap = 0.5, xlim, ylim, \dots) 
 co.intervals(x, number = 6, overlap = 0.5)
 }
@@ -19,8 +21,12 @@ co.intervals(x, number = 6, overlap = 0.5)
     indicates that plots of \code{y} versus \code{x} should be produced
     conditional on the two variables \code{a} and \code{b}.
 
-    \code{x} and \code{y} must be numeric, but \code{a} and \code{b} may
-    be either numeric or factors.}
+    All three or four variables may be either numeric or factors.
+    When \code{x} or \code{y} are factors, the result is almost as if
+    \code{as.numeric()} was applied, whereas for factor
+    \code{a} or \code{b}, the conditioning (and its graphics if
+    \code{show.given} is true) are adapted.
+  }
   \item{data}{a data frame containing values for any variables in the
     formula.  By default the environment where \code{coplot} was called
     from is used.}
@@ -49,6 +55,9 @@ co.intervals(x, number = 6, overlap = 0.5)
     short, the values are recycled.}
   \item{pch}{a vector of plotting symbols or characters.  If too short,
     the values are recycled.}
+  \item{bar.bg}{a named vector with components \code{"num"} and
+    \code{"fac"} giving the background colors for the (shingle) bars,
+    for \bold{num}eric and \bold{fac}tor conditioning variables respectively.}
   \item{xlab}{character; labels to use for the x axis and the
     first conditioning variable.  If only one label is given, it is used
     for the x axis and the default label is used for the conditioning
@@ -58,8 +67,11 @@ co.intervals(x, number = 6, overlap = 0.5)
   \item{subscripts}{logical: if true the panel function is given an
     additional (third) argument \code{subscripts} giving the subscripts
     of the data passed to that panel.}
+  \item{axlabels}{function for creating axis (tick) labels when x or y
+      are factors.}
   \item{number}{integer; the number of conditioning intervals,
-    possibly of length 2 for x and y direction.}
+    for a and b, possibly of length 2.  It is only used if the
+    corresponding conditioning variable is not a \code{\link{factor}}.}
   \item{overlap}{numeric < 1; the fraction of overlap of the
     conditioning variables, possibly of length 2 for x and y
     direction.  When overlap < 0, there will be \emph{gaps} between
@@ -104,19 +116,25 @@ coplot(long ~ lat | depth, data = quakes, given.v=given.depth, rows=1)
 ## Conditioning on 2 variables:
 ll.dm <- long ~ lat | depth * mag
 coplot(ll.dm, data = quakes)
-coplot(ll.dm, data = quakes, number=c(4,7), show.given = c(T,F))
+coplot(ll.dm, data = quakes, number=c(4,7), show.given=c(TRUE,FALSE))
 coplot(ll.dm, data = quakes, number=c(3,7),
        overlap=c(-.5,.1)) # negative overlap DROPS values
 
 data(warpbreaks)
 ## given two factors
-coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks, col = 'red')
+coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks, show.given = 0:1)
+coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks,
+       col = "red", bg = "pink", pch = 21,
+       bar.bg = c(fac = "light blue"))
 
 ## Example with empty panels:
 data(state)
 attach(data.frame(state.x77))#> don't need `data' arg. below
 coplot(Life.Exp ~ Income | Illiteracy * state.region, number = 3,
        panel = function(x, y, ...) panel.smooth(x, y, span = .8, ...))
+## y ~ factor -- not really sensical, but `show off':
+coplot(Life.Exp ~ state.region | Income * state.division,
+       panel = panel.smooth)
 detach() # data.frame(state.x77)
 }
 \keyword{hplot}

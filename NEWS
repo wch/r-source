@@ -55,8 +55,13 @@ NEW FEATURES
     o	New functions substr<-() and substring<-().
 
     o	Under Unix, shlib modules for add-on packages are now linked
-	against R as a shared library (`libR') if this exists.  (This
+	against R as a shared library (`libR') if this exists.	(This
 	allows for improved embedding of R into other applications.)
+
+    o	coplot() has a new argument `bar.bg' (color of conditioning bars),
+	gives nicer plots when the conditioners are factors, and allows
+	factors for x and y (treated almost as if unclass()ed) using new
+	argument `axlabels' {original ideas by Thomas Baummann}.
 
 
 BUG FIXES

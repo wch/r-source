@@ -18,21 +18,22 @@ co.intervals <- function (x, number = 6, overlap = 0.5)
 }
 
 panel.smooth <- function(x, y, col = par("col"), bg = NA, pch = par("pch"),
-                         cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...)
+			 cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...)
 {
     points(x, y, pch=pch, col=col, bg=bg, cex=cex)
     ok <- is.finite(x) & is.finite(y)
     if (any(ok))
-        lines(lowess(x[ok], y[ok], f=span, iter=iter), col = col.smooth, ...)
+	lines(lowess(x[ok], y[ok], f=span, iter=iter), col = col.smooth, ...)
 }
 
 coplot <-
     function(formula, data, given.values, panel=points, rows, columns,
-             show.given = TRUE, col = par("fg"), pch=par("pch"),
-             xlab = c(x.name, paste("Given :", a.name)),
-             ylab = c(y.name, paste("Given :", b.name)),
-             subscripts = FALSE,
-             number = 6, overlap = 0.5, xlim, ylim, ...)
+	     show.given = TRUE, col = par("fg"), pch=par("pch"),
+	     bar.bg = c(num = gray(0.8), fac = gray(0.95)),
+	     xlab = c(x.name, paste("Given :", a.name)),
+	     ylab = c(y.name, paste("Given :", b.name)),
+	     subscripts = FALSE, axlabels = function(f) abbreviate(levels(f)),
+	     number = 6, overlap = 0.5, xlim, ylim, ...)
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")
@@ -77,18 +78,18 @@ coplot <-
     a <- eval(a, data, parent.frame())
     if(length(a) != nobs) bad.lengths()
     if(is.character(a)) a <- as.factor(a)
-    a.levels <- NULL
+    a.is.fac <- is.factor(a)
     if (have.b) {
-        b.levels <- NULL
 	b.name <- deparse(b)
 	b <- eval(b, data, parent.frame())
 	if(length(b) != nobs) bad.lengths()
-        if(is.character(b)) b <- as.factor(b)
-        missingrows <- which(is.na(x) | is.na(y) | is.na(a) | is.na(b))
+	if(is.character(b)) b <- as.factor(b)
+        b.is.fac <- is.factor(b)
+	missingrows <- which(is.na(x) | is.na(y) | is.na(a) | is.na(b))
     }
     else {
-        missingrows <- which(is.na(x) | is.na(y) | is.na(a))
-        b <- NULL
+	missingrows <- which(is.na(x) | is.na(y) | is.na(a))
+	b <- NULL
 	b.name <- "" # for default ylab
     }
 
@@ -101,70 +102,68 @@ coplot <-
     bad.givens <- function() stop("invalid given.values")
     if(missing(given.values)) {
 	a.intervals <-
-            if(is.factor(a)) {
-                i <- 1:nlevels(a)
-                a.levels <- levels(a)
-                a <- as.numeric(a)
-                cbind(i - 0.5, i + 0.5)
-            } else co.intervals(a,number=number[1],overlap=overlap[1])
+	    if(a.is.fac) {
+		i <- seq(along = a.levels <- levels(a))
+		a <- as.numeric(a)
+		cbind(i - 0.5, i + 0.5)
+	    } else co.intervals(a,number=number[1],overlap=overlap[1])
 	b.intervals <-
-            if (have.b) {
-                if(is.factor(b)) {
-                    i <- 1:nlevels(b)
-                    b.levels <- levels(b)
-                    b <- as.numeric(b)
-                    cbind(i - 0.5, i + 0.5)
-                }
-                else {
-                    if(length(number)==1) number  <- rep(number,2)
-                    if(length(overlap)==1)overlap <- rep(overlap,2)
-                    co.intervals(b,number=number[2],overlap=overlap[2])
-                }
-            }
+	    if (have.b) {
+		if(b.is.fac) {
+                    i <- seq(along = b.levels <- levels(b))
+		    b <- as.numeric(b)
+		    cbind(i - 0.5, i + 0.5)
+		}
+		else {
+		    if(length(number)==1) number  <- rep(number,2)
+		    if(length(overlap)==1)overlap <- rep(overlap,2)
+		    co.intervals(b,number=number[2],overlap=overlap[2])
+		}
+	    }
     } else {
 	if(!is.list(given.values))
 	    given.values <- list(given.values)
 	if(length(given.values) != (if(have.b) 2 else 1))
 	    bad.givens()
 	a.intervals <- given.values[[1]]
-	if(is.factor(a)) {
-            if (is.character(a.intervals))
-                a.intervals <- match(a.intervals, levels(a))
-            a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
-            a.levels <- levels(a)
+	if(a.is.fac) {
+	    a.levels <- levels(a)
+	    if (is.character(a.intervals))
+		a.intervals <- match(a.intervals, a.levels)
+	    a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
 	    a <- as.numeric(a)
 	}
-        else if(is.numeric(a)) {
+	else if(is.numeric(a)) {
 	    if(!is.numeric(a.intervals)) bad.givens()
 	    if(!is.matrix(a.intervals) || ncol(a.intervals) != 2)
 		a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
 	}
 	if(have.b) {
 	    b.intervals <- given.values[[2]]
-	    if(is.factor(b)) {
-                if (is.character(b.intervals))
-                    b.intervals <- match(b.intervals, levels(b))
-                b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
-                b.levels <- levels(b)
+	    if(b.is.fac) {
+		b.levels <- levels(b)
+		if (is.character(b.intervals))
+		    b.intervals <- match(b.intervals, b.levels)
+		b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
 		b <- as.numeric(b)
 	    }
-            else if(is.numeric(b)) {
+	    else if(is.numeric(b)) {
 		if(!is.numeric(b.intervals)) bad.givens()
 		if(!is.matrix(b.intervals) || ncol(b.intervals) != 2)
-                    b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
+		    b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
 	    }
 	}
     }
     if(any(is.na(a.intervals)) || (have.b && any(is.na(b.intervals))))
-        bad.givens()
+	bad.givens()
 
     ## compute the page layout
 
     if (have.b) {
-	rows    <- nrow(b.intervals)
+	rows	<- nrow(b.intervals)
 	columns <- nrow(a.intervals)
 	nplots <- rows * columns
-        if(length(show.given) < 2) show.given <- rep(show.given, 2)
+	if(length(show.given) < 2) show.given <- rep(show.given, 2)
     }
     else {
 	nplots <- nrow(a.intervals)
@@ -184,63 +183,67 @@ coplot <-
     total.rows <- rows
     f.col <- f.row <- 1
     if(show.given[1]) {
-        total.rows <- rows + 1
-        f.row <- rows/total.rows
+	total.rows <- rows + 1
+	f.row <- rows/total.rows
     }
     if(have.b && show.given[2]) {
-        total.columns <- columns + 1
-        f.col <- columns/total.columns
+	total.columns <- columns + 1
+	f.col <- columns/total.columns
     }
+
+    mar <- if(have.b) rep(0, 4) else c(0.5, 0, 0.5, 0)
+    oma <- c(5, 6, 5, 4)
+    if(have.b) { oma[2] <- 5 ; if(!b.is.fac) oma[4] <- 5 }
+    if(a.is.fac) oma[2] <- oma[2] - 1
 
     ## Start Plotting only now
 
     opar <- par(mfrow = c(total.rows, total.columns),
-		oma = if(have.b) rep(5, 4) else c(5, 6, 5, 4),
-		mar = if(have.b) rep(0, 4) else c(0.5, 0, 0.5, 0),
-		new = FALSE)
+		oma = oma, mar = mar, xaxs = "r", yaxs = "r", new = FALSE)
     on.exit(par(opar))
     plot.new()
-    if( missing(xlim) )
-        xlim <- range(x[is.finite(x)])
-    if( missing(ylim) )
-        ylim <- range(y[is.finite(y)])
+    ## as.numeric() allowing factors for x & y:
+    if(missing(xlim))
+	xlim <- range(as.numeric(x), finite = TRUE)
+    if(missing(ylim))
+	ylim <- range(as.numeric(y), finite = TRUE)
     pch <- rep(pch, length=nobs)
     col <- rep(col, length=nobs)
     do.panel <- function(index, subscripts = FALSE) {
-        ## Use `global' variables
-        ##	id;     rows, columns,  total.rows, total.columns, nplots
-        ##		xlim, ylim
+	## Use `global' variables
+	##	id;	rows, columns,	total.rows, total.columns, nplots
+	##		xlim, ylim
+        Paxis <- function(side, x) {
+            if(nlevels(x)) {
+                lab <- axlabels(x)
+                axis(side, labels = lab, at = seq(lab), xpd = NA)
+            } else
+                axis(side, xpd = NA)
+        }
 	istart <- (total.rows - rows) + 1
 	i <- total.rows - ((index - 1)%/%columns)
 	j <- (index - 1)%%columns + 1
 	par(mfg = c(i, j, total.rows, total.columns))
 	plot.new()
-	plot.window(xlim, ylim, log = "")
-        if(any(is.na(id))) id[is.na(id)] <- FALSE
+	plot.window(xlim, ylim)
+	if(any(is.na(id))) id[is.na(id)] <- FALSE
 	if(any(id)) {
 	    grid(lty="solid")
-            if(subscripts)
-                panel(x[id], y[id], subscripts = id,
-                      col = col[id], pch=pch[id], ...)
-            else
-                panel(x[id], y[id], col = col[id], pch=pch[id], ...)
+	    if(subscripts)
+		panel(x[id], y[id], subscripts = id,
+		      col = col[id], pch=pch[id], ...)
+	    else
+		panel(x[id], y[id], col = col[id], pch=pch[id], ...)
 	}
 	if((i == total.rows) && (j%%2 == 0))
-	    axis(1, xpd=NA)
+	    Paxis(1, x)
 	else if((i == istart || index + columns > nplots) && (j%%2 == 1))
-	    axis(3, xpd=NA)
+	    Paxis(3, x)
+
 	if((j == 1) && ((total.rows - i)%%2 == 0))
-	    axis(2, xpd=NA)
+	    Paxis(2, y)
 	else if((j == columns || index == nplots) && ((total.rows - i)%%2 == 1))
-	    axis(4, xpd=NA)
-	## if(i == total.rows)
-	##	axis(1, labels = (j%%2 == 0))
-	## if(i == istart || index + columns > nplots)
-	##	axis(3, labels = (j%%2 == 1))
-	## if(j == 1)
-	##	axis(2, labels = ((total.rows - i)%%2 == 0))
-	## if(j == columns || index == nplots)
-	##	axis(4, labels = ((total.rows - i)%%2 == 1))
+	    Paxis(4, y)
 	box()
     }## END function do.panel()
 
@@ -263,65 +266,64 @@ coplot <-
     mtext(xlab[1], side=1, at=0.5*f.col, outer=TRUE, line=3.5, xpd=NA)
     mtext(ylab[1], side=2, at=0.5*f.row, outer=TRUE, line=3.5, xpd=NA)
 
-    if(length(xlab) == 1) xlab <- c(xlab, paste("Given :", a.name))
-
+    if(length(xlab) == 1)
+        xlab <- c(xlab, paste("Given :", a.name))
+    ##mar <- par("mar")
     if(show.given[1]) {
-	mar <- par("mar")
-	nmar <- mar + c(4,0,0,0)
-	par(fig = c(0, f.col, f.row, 1), mar = nmar, new=TRUE)
+	par(fig = c(0, f.col, f.row, 1),
+            mar = mar + c(3+ !a.is.fac, 0, 0, 0), new=TRUE)
 	plot.new()
 	nint <- nrow(a.intervals)
-	plot.window(range(a.intervals[is.finite(a.intervals)]),
-                    0.5 + c(0, nint), log="")
-        bg <-
-            if (is.null(a.levels))
-                gray(0.9)
-            else {
-                mid <- apply(a.intervals, 1, mean)
-                text(mid, 1:nint, a.levels)
-                NULL
-            }
-        rect(a.intervals[, 1], 1:nint - 0.3,
-             a.intervals[, 2], 1:nint + 0.3, col = bg)
-
-	axis(3, xpd=NA)
-	axis(1, labels=FALSE)
+        a.range <- range(a.intervals, finite=TRUE)
+        ## 3% correction because axs = "r" extends by 4% :
+	plot.window(a.range + c(.03,-.03)*diff(a.range), 0.5 + c(0, nint))
+	rect(a.intervals[, 1], 1:nint - 0.3,
+	     a.intervals[, 2], 1:nint + 0.3,
+	     col = bar.bg[if(a.is.fac) "fac" else "num"])
+	if(a.is.fac) {
+	    text(apply(a.intervals, 1, mean), 1:nint, a.levels)
+        }
+        else {
+            axis(3, xpd=NA)
+            axis(1, labels=FALSE)
+        }
 	box()
-	mtext(xlab[2], side=3, at=mean(par("usr")[1:2]), line=3, xpd=NA)
+	mtext(xlab[2], 3, line = 3 - a.is.fac, at=mean(par("usr")[1:2]), xpd=NA)
     }
     else { ## i. e. !show.given
-        mtext(xlab[2], side=3, at= 0.5*f.col, line= 3.25, outer= TRUE, xpd=NA)
+	mtext(xlab[2], 3, line = 3.25, outer= TRUE, at= 0.5*f.col, xpd=NA)
     }
     if(have.b) {
-        if(length(ylab) == 1) ylab <- c(ylab, paste("Given :", b.name))
-        if(show.given[2]) {
-            nmar <- mar + c(0, 4, 0, 0)
-	    par(fig = c(f.col, 1, 0, f.row), mar = nmar, new=TRUE)
+	if(length(ylab) == 1)
+            ylab <- c(ylab, paste("Given :", b.name))
+	if(show.given[2]) {
+	    par(fig = c(f.col, 1, 0, f.row),
+                mar = mar + c(0, 3+ !b.is.fac, 0, 0), new=TRUE)
 	    plot.new()
 	    nint <- nrow(b.intervals)
-	    plot.window(0.5+c(0, nint),
-			range(b.intervals, finite=TRUE), log="")
-            bg <-
-                if (is.null(b.levels))
-                    gray(0.9)
-                else {
-                    mid <- apply(b.intervals, 1, mean)
-                    text(1:nint, mid, b.levels, srt = 90)
-                    NULL
-                }
-            rect(1:nint - 0.3, b.intervals[, 1],
-                 1:nint + 0.3, b.intervals[, 2], col = bg)
-	    axis(4, xpd=NA)
-	    axis(2, labels=FALSE)
+            b.range <- range(b.intervals, finite=TRUE)
+            ## 3% correction (see above)
+            plot.window(0.5 + c(0, nint), b.range+ c(.03,-.03)*diff(b.range))
+	    rect(1:nint - 0.3, b.intervals[, 1],
+                 1:nint + 0.3, b.intervals[, 2],
+                 col = bar.bg[if(b.is.fac)"fac" else "num"])
+	    if(b.is.fac) {
+                text(1:nint, apply(b.intervals, 1, mean), b.levels, srt = 90)
+            }
+            else {
+                axis(4, xpd=NA)
+                axis(2, labels=FALSE)
+            }
 	    box()
-	    mtext(ylab[2], side=4, at=mean(par("usr")[3:4]), line=3, xpd=NA)
+	    mtext(ylab[2], 4, line = 3 - b.is.fac,
+                  at=mean(par("usr")[3:4]), xpd=NA)
 	}
-        else {
-            mtext(ylab[2], side=4, at=0.5*f.row, line= 3.25, outer=TRUE, xpd=NA)
-        }
+	else {
+	    mtext(ylab[2], 4, line = 3.25, at=0.5*f.row, outer=TRUE, xpd=NA)
+	}
     }
     if (length(missingrows) > 0) {
-        cat("\nMissing rows:",missingrows,"\n")
-        invisible(missingrows)
+	cat("\nMissing rows:",missingrows,"\n")
+	invisible(missingrows)
     }
 }
