@@ -40,7 +40,7 @@
 
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
-#include "R_Internal.h" /* do_FOO */
+#include "Internal.h" /* do_FOO */
 
 #include "Rconfig.h"
 #include "Errormsg.h"
@@ -170,6 +170,29 @@ DL_FUNC R_FindSymbol(char const *, char const *);
 /* These are the built-in R functions. */
 typedef SEXP (*CCODE)();
 
+/* Information for Deparsing Expressions */
+typedef enum {
+    PP_ASSIGN   =  1,
+    PP_ASSIGN2  =  2,
+    PP_BINARY   =  3,
+    PP_BINARY2  =  4,
+    PP_BREAK    =  5,
+    PP_CURLY    =  6,
+    PP_FOR      =  7,
+    PP_FUNCALL  =  8,
+    PP_FUNCTION =  9,
+    PP_IF 	= 10,
+    PP_NEXT 	= 11,
+    PP_PAREN    = 12,
+    PP_RETURN   = 13,
+    PP_SUBASS   = 14,
+    PP_SUBSET   = 15,
+    PP_WHILE 	= 16,
+    PP_UNARY 	= 17,
+    PP_DOLLAR 	= 18,
+    PP_FOREIGN 	= 19,
+    PP_REPEAT 	= 20
+} PPinfo;
 
 /* The type definitions for the table of built-in functions. */
 /* This table can be found in ../main/names.c */
@@ -179,7 +202,7 @@ typedef struct {
     int	   code;     /* offset within c-code */
     int	   eval;     /* evaluate args? */
     int	   arity;    /* function arity */
-    int	   gram;     /* pretty-print info */
+    PPinfo gram;     /* pretty-print info */
 } FUNTAB;
 
 #ifdef USE_RINTERNALS
