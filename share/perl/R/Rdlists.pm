@@ -325,7 +325,7 @@ sub build_index { # lib, dest
 	    my $rdtitle = $1;
 	    $rdtitle =~ s/\n/ /sg;
 	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
-	    $internal = 1 if $text=~ /\\keyword\{internal\}/;
+	    $internal = 1 if $text =~ /\\keyword\{\s*internal\s*\}/;
 
 	    $main::filenm{$rdname} = $manfilebase;
 	    if($main::opt_chm) {

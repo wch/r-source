@@ -69,7 +69,8 @@ sub get_usages {
     ## analysis.  Hence, we do the following: ignore all usages of
     ## data(FOO) in a file with keyword 'datasets' where FOO as only one
     ## argument in the sense that it does not match ','.
-    $maybe_is_data_set_doc = 1 if($text =~ "\\keyword\{datasets\}");
+    $maybe_is_data_set_doc = 1
+	if($text =~ /\\keyword\{\s*datasets\s*\}/);
     ## </FIXME>
 
     ## In 'codoc' mode, use \synopsis in case there is one, but warn
