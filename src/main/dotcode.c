@@ -32,7 +32,6 @@
 #define max(a, b) ((a > b)?(a):(b))
 #endif
 
-typedef int (*DL_FUNC)();
 
 /* These are set during each call to do_dotCode() below. */
 

@@ -53,7 +53,7 @@ Rconfig.h: $(top_srcdir)/VERSION config.h
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
 
-FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
+FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES $(top_srcdir)/tools/GETSYMBOLS
 	@$(top_srcdir)/tools/GETSYMBOLS
 
 mostlyclean:

@@ -8,7 +8,8 @@
   A user-specified RNG is called from entry points in dynamically-loaded
   compiled code. The user must supply the entry point
   \code{user_unif_rand}, which takes no arguments and returns a
-  \emph{pointer to} a double.
+  \emph{pointer to} a double. The example below will show the general
+  pattern.
 
   Optionally, the user can supply the entry point \code{user_unif_init},
   which is called with an \code{unsigned int} argument when
@@ -21,12 +22,14 @@
   If only these functions are supplied, no information about the
   generator's state is recorded in \code{.Random.seed}. Optionally,
   functions \code{user_unif_nseed} and \code{user_unif_seedloc} can be
-  supplied which are called with no arguments and should return the
-  number of ``seeds'' and a pointer to an integer array of ``seeds''.
+  supplied which are called with no arguments and should return pointers
+  to the number of ``seeds'' and to an integer array of ``seeds''. Calls
+  to \code{GetRNGstate} and \code{PutRNGstate} will then copy this array
+  to and from \code{.Random.seed}.
 }
 \section{Warning}{As with all compiled code, mis-specifying these
   functions can crash \R. Do include the \file{R_ext/Random.h}
-  header file for some type-checking.
+  header file for type checking.
 }
 \examples{\dontrun{
 ## Marsaglia's conguential PRNG
@@ -34,6 +37,7 @@
 
 static Int32 seed;
 static double res;
+static int nseed = 1;
 
 double * user_unif_rand()
 {
@@ -43,6 +47,6 @@ double * user_unif_rand()
 }
 
 void  user_unif_init(Int32 seed_in) { seed = seed_in; }
-int   user_unif_nseed() { return 1; }
+int * user_unif_nseed() { return &nseed; }
 int * user_unif_seedloc() { return (int *) &seed; }
 }}

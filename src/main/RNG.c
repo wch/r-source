@@ -29,7 +29,6 @@
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
 
 /* platform-specific, from dynload.c */
-typedef void * (*DL_FUNC)();
 DL_FUNC R_FindSymbol(char const *, char const *);
 static DL_FUNC User_unif_fun, User_unif_init, User_unif_nseed, 
     User_unif_seedloc;
@@ -213,7 +212,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 		warning("cannot read seeds unless `user_unif_nseed' is supplied");
 		break;
 	    }
-	    ns = (int) User_unif_nseed();
+	    ns = *((int *) User_unif_nseed());
 	    if (ns < 0 || ns > 625) {
 		warning("seed length must be in 0...625; ignored");
 		break;

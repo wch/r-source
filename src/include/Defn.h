@@ -125,6 +125,10 @@
 # define LONGJMP(x,i) longjmp(x,i)
 #endif
 
+/* Dynamic loaded functions */
+typedef void * (*DL_FUNC)();
+DL_FUNC R_FindSymbol(char const *, char const *);
+
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */

@@ -16,8 +16,8 @@ sed '
 ' ${TOOLS_DIR}/../src/appl/ROUTINES > ${ROUTINES}
 
 sed '
-s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
-s/C_FUNCTION(\(.*\))/int \1();/
+s/F77_SUBROUTINE(\(.*\))/void * F77_SYMBOL(\1)();/
+s/C_FUNCTION(\(.*\))/void * \1();/
 ' ${ROUTINES} > ${TMPDIR}/RFF${$}
 ${TOOLS_DIR}/move-if-change ${TMPDIR}/RFF${$} FFDecl.h
 

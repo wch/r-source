@@ -49,7 +49,7 @@ double exp_rand(void);
 typedef unsigned int Int32;
 double * user_unif_rand();
 void user_unif_init(Int32);
-int user_unif_nseed();
+int * user_unif_nseed();
 int * user_unif_seedloc();
 
 #endif
