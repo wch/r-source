@@ -4161,7 +4161,7 @@ explicitly removed.
 @end table
 
 The @emph{formula operators} are similar in effect to the Wilkinson and
-Rogers notation used by such programs a Glim and Genstat.  One
+Rogers notation used by such programs as Glim and Genstat.  One
 inevitable change is that the operator @samp{@code{.}} becomes
 @samp{@code{:}} since the period is a valid name character in @R{}.
 
