@@ -15213,7 +15213,7 @@ FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
   flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
-  LIBS="${LIBS} ${flibs}"
+  LIBS="${flibs} ${LIBS}"
   ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -19991,7 +19991,7 @@ else
 fi
 
 acx_blas_save_LIBS="${LIBS}"
-LIBS="${LIBS} ${FLIBS}"
+LIBS="${FLIBS} ${LIBS}"
 
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
@@ -20475,7 +20475,7 @@ if test "${acx_blas_ok}" = no; then
      echo "$as_me:$LINENO: checking for ${sgemm} in -lsunperf" >&5
 echo $ECHO_N "checking for ${sgemm} in -lsunperf... $ECHO_C" >&6
      r_save_LIBS="${LIBS}"
-     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
      cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 /* confdefs.h.  */
@@ -20784,7 +20784,7 @@ if test "x${acx_blas_ok}" != xyes; then
 fi
 
 acx_lapack_save_LIBS="${LIBS}"
-LIBS="${LIBS} ${BLAS_LIBS} ${FLIBS}"
+LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 if test "${acx_lapack_ok}" = no; then
   as_ac_var=`echo "ac_cv_func_${zgeev}" | $as_tr_sh`

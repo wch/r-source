@@ -720,7 +720,7 @@ FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
   flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
-  LIBS="${LIBS} ${flibs}"
+  LIBS="${flibs} ${LIBS}"
   AC_LANG_PUSH(C)
   AC_LINK_IFELSE([AC_LANG_PROGRAM()], [FLIBS="${flibs}"], [])
   AC_LANG_POP(C)
@@ -1893,6 +1893,8 @@ AC_SUBST(use_tcltk)
 ##   test for -lcblas.
 ## * We do not use BLAS libs that caused problems in the past: Alpha
 ##   CXML and DXML, and SGI SCSL and SGIMATH (marked with COMMENT tags).
+## * As we link with $BLAS_LIBS $FLIBS $LIBS (in that order), we use the
+##   same order in the tests.
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
 ## The sunperf test calls the library as now required.
 ## Based on acx_blas.m4 version 1.2 (2001-12-13)
@@ -1921,7 +1923,7 @@ else
 fi
 
 acx_blas_save_LIBS="${LIBS}"
-LIBS="${LIBS} ${FLIBS}"
+LIBS="${FLIBS} ${LIBS}"
 
 ## First, check BLAS_LIBS environment variable
 if test "${acx_blas_ok}" = no; then
@@ -1982,7 +1984,7 @@ if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
      AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
-     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
      AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
      if test "${R_sunperf}" = yes; then
         BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
@@ -2043,12 +2045,17 @@ AC_SUBST(BLAS_LIBS)
 ## * We also handle HPUX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
 ## * We test for a LAPACK_LIBS environment variable after checking
-##   whether LAPACK is already linked (could override, though?).
+##   whether LAPACK is already linked (see below).
 ## * We do not test for the generic lapack_rs6k library (why not?).
+## * As we link with $LAPACK_LIBS $BLAS_LIBS $FLIBS $LIBS (in that
+##   order), we use the same order in the tests.
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
 ## Note that Debian ATLAS has LAPACK libs in /usr/lib/atlas (or $arch
 ## variants) which should be used if ATLAS is used for BLAS, and not
 ## found at configure time but used at run time ...
+## Note also that (see R-admin) that our main intention is to allow a
+## LAPACK-containing BLAS to be used ... there are too many slow or
+## broken LAPACKs out there.
 ## Based on acx_lapack.m4 version 1.3 (2002-03-12).
 
 AC_DEFUN([R_LAPACK_LIBS],
@@ -2080,7 +2087,7 @@ if test "x${acx_blas_ok}" != xyes; then
 fi
 
 acx_lapack_save_LIBS="${LIBS}"
-LIBS="${LIBS} ${BLAS_LIBS} ${FLIBS}"
+LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 ## LAPACK linked to by default?  (Could be in the BLAS libs.)
 if test "${acx_lapack_ok}" = no; then

@@ -512,7 +512,7 @@ FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
   flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
-  LIBS="${LIBS} ${flibs}"
+  LIBS="${flibs} ${LIBS}"
   AC_LANG_PUSH(C)
   AC_LINK_IFELSE([AC_LANG_PROGRAM()], [FLIBS="${flibs}"], [])
   AC_LANG_POP(C)
@@ -1552,7 +1552,7 @@ else
 fi
 
 acx_blas_save_LIBS="${LIBS}"
-LIBS="${LIBS} ${FLIBS}"
+LIBS="${FLIBS} ${LIBS}"
 
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
@@ -1592,7 +1592,7 @@ if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
      AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
-     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
      AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
      if test "${R_sunperf}" = yes; then
         BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
@@ -1653,7 +1653,7 @@ if test "x${acx_blas_ok}" != xyes; then
 fi
 
 acx_lapack_save_LIBS="${LIBS}"
-LIBS="${LIBS} ${BLAS_LIBS} ${FLIBS}"
+LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 if test "${acx_lapack_ok}" = no; then
   AC_CHECK_FUNC(${zgeev}, [acx_lapack_ok=yes])
