@@ -63,11 +63,6 @@ Subject: graphics bug: type="l"
 From: Matthew Wiener <mcw@ln.nimh.nih.gov>
 Date: Tue, 16 Feb 1999 15:30:25 -0500 (EST)
 --X server problem drawing > 64K lines at once. Workaround?
-* PR# 130 *
-Subject: lty=0 -- shouldn't it give an invisible line?
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 28 Feb 1999 21:45:43 +0100
---Strange effect on barplot
 * PR# 149 *
 Subject: plot.formula and pch=
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -110,10 +105,6 @@ Date: Thu, 26 Aug 1999 12:09:17 +0200
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Sep 1999 11:04:03 +0200
-* PR# 281 *
-Subject: mtext(. col = ...) stopped working in 0.65.0
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 17 Sep 1999 15:10:40 +0200
 * PR# 287 *
 Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
 From: Martin Maechler <maechler@stat.math.ethz.ch>
