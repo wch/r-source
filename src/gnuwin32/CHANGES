@@ -7,6 +7,13 @@ See the file NEWS for changes that affect all versions of R.
 rw1070
 ======
 
+This version of R needs more memory and is slower to start up, because
+it loads more packages by default.  This is only likely to be a
+concern on machines with 16Mb of memory or less than 300MHz
+processors.  For such machines append R_DEFAULT_PACKAGES=ctest to the
+command line in the shortcut to run R, when the memory usage will be
+about equal to that of rw1062.
+
 There is a new option to use file("clipboard") to read from or write
 to the clipboard.  As most input/output functions in R use file(),
 this makes it possible to read data from or write data to the
