@@ -63,15 +63,16 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Obtaining R::
-* Installing R under Unix::
-* Installing R under Windows::
-* Add-on packages::
-* Essential and useful other programs::
-* Configuration on Unix::
-* New platforms::
-* Function and variable index::
-* Concept index::
+* Obtaining R::                 
+* Installing R under Unix::     
+* Installing R under Windows::  
+* Add-on packages::             
+* Essential and useful other programs::  
+* Configuration on Unix::       
+* Enabling search in HTML help::  
+* New platforms::               
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Obtaining R, Installing R under Unix, Top, Top
@@ -84,8 +85,8 @@ Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}.
 
 @menu
-* Getting and unpacking the sources::
-* Using rsync::
+* Getting and unpacking the sources::  
+* Using rsync::                 
 @end menu
 
 @node Getting and unpacking the sources, Using rsync, Obtaining R, Obtaining R
@@ -182,9 +183,9 @@ for current details.  These are installed in platform-specific ways.  So
 for the rest of this chapter we consider only building from the sources.
 
 @menu
-* Simple compilation::
-* Making the manuals::
-* Installation::
+* Simple compilation::          
+* Making the manuals::          
+* Installation::                
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix, Installing R under Unix
@@ -419,7 +420,7 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
-* Building from source::
+* Building from source::        
 @end menu
 
 @node Building from source,  , Installing R under Windows, Installing R under Windows
@@ -453,9 +454,9 @@ cross-compile, see @file{src/gnuwin32/INSTALL}.
 @cindex Packages
 
 @menu
-* Installing packages::
-* Updating packages::
-* Removing packages::
+* Installing packages::         
+* Updating packages::           
+* Removing packages::           
 @end menu
 
 This chapter applies to Unix-like and Windows versions of @R{}.
@@ -593,8 +594,8 @@ extension @samp{-devel} or @samp{-dev}: you need both versions
 installed.
 
 @menu
-* Essential programs::
-* Useful libraries and programs::
+* Essential programs::          
+* Useful libraries and programs::  
 @end menu
 
 @node Essential programs, Useful libraries and programs, Essential and useful other programs, Essential and useful other programs
@@ -641,8 +642,8 @@ compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
 @menu
-* Tcl/Tk::
-* Linear algebra::
+* Tcl/Tk::                      
+* Linear algebra::              
 @end menu
 
 @node Tcl/Tk, Linear algebra, Useful libraries and programs, Useful libraries and programs
@@ -778,17 +779,17 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 @pkg{quantreg} will need to be re-installed.
 
 
-@node Configuration on Unix, New platforms, Essential and useful other programs, Top
+@node Configuration on Unix, Enabling search in HTML help, Essential and useful other programs, Top
 @appendix Configuration on Unix
 
 @menu
-* Configuration options::
-* Configuration variables::
-* Using make::
-* Using FORTRAN::
-* Compile and load flags::
-* Building the GNOME interface::
-* Platform notes::
+* Configuration options::       
+* Configuration variables::     
+* Using make::                  
+* Using FORTRAN::               
+* Compile and load flags::      
+* Building the GNOME interface::  
+* Platform notes::              
 @end menu
 
 @node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
@@ -1084,14 +1085,14 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
-* Linux::
-* MacOS X::
-* Solaris::
-* HP-UX::
-* IRIX::
-* Alpha/OSF1::
-* Alpha/FreeBSD::
-* AIX::
+* Linux::                       
+* MacOS X::                     
+* Solaris::                     
+* HP-UX::                       
+* IRIX::                        
+* Alpha/OSF1::                  
+* Alpha/FreeBSD::               
+* AIX::                         
 @end menu
 
 @node Linux, MacOS X, Platform notes, Platform notes
@@ -1449,7 +1450,91 @@ but was unable to use the X libraries or the native BLAS (ESSL) and so
 used @option{--without-x --without-blas}.
 
 
-@node New platforms, Function and variable index, Configuration on Unix, Top
+@node Enabling search in HTML help, New platforms, Configuration on Unix, Top
+@chapter Enabling search in HTML help
+
+There is a search engine available from the front page of the
+@acronym{HTML} help system, the page that is displayed by
+@code{help.start()}.  The search engine is written in Java and invoked
+by Javascript code, so the first thing to do is to ensure that both are
+enabled in your favourite browser.  Then try it and see: with most
+browsers you should see
+
+@smallexample
+Applet SearchEngine started
+@end smallexample
+
+@noindent
+displayed in the status bar.  (Internet Explorer shows @code{Applet
+started}.) Then click on one of the keywords and after a short delay
+(several seconds) you should see a page of search results.
+
+If this fails you should double-check that Java is enabled in your
+browser by visiting a page such as
+@uref{http://www.java.com/en/download/help/testvm.jsp}.  You can check
+which version of Java is in use at
+@uref{http://java.sun.com/docs/books/tutorial/applet/practical/properties.html}.
+
+Many thanks to Marc Schwartz in tracking down many of these issues with
+enabling the Java search engine.
+
+@menu
+* Java Virtual Machines on Linux ::  
+* Java Virtual Machines on Windows ::  
+@end menu
+
+@node Java Virtual Machines on Linux , Java Virtual Machines on Windows , Enabling search in HTML help, Enabling search in HTML help
+@section Java Virtual Machines on Linux
+
+We are aware of problems with certain Java installations.  In
+particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} and
+later do not work under Linux.  Current browsers of the Mozilla family
+(including Mozilla >= 1.4, Netscape 7.1 and FireFox) are compiled under
+@code{gcc 3.x} and @emph{require} the @code{ns610-gcc32} version of the
+Java plugin that was introduced with @code{j2re 1.4.2}, so the only Java
+version that we know to work is @code{j2re 1.4.2_01}.  Marc Schwartz has
+kindly made available the @code{i586} RPM and tarball at
+
+@smallexample
+http://www.MedAnalytics.com/j2re-1_4_2_01-linux-i586-rpm.bin
+http://www.MedAnalytics.com/j2re-1_4_2_01-linux-i586.bin
+@end smallexample
+
+@noindent
+The installation instructions are at
+@uref{http://www.java.com/en/download/help/linux_install.jsp} and the
+Mozilla FAQ at @uref{http://plugindoc.mozdev.org/faqs/java.html}.  Note
+that various installation instructions have omitted the need to link the
+browser plugin to the @code{plugins} directory.  Use
+
+@smallexample
+ln -s path_to_java/plugin/i386/ns610-gcc32/libjavaplugin_oji.so
+@end smallexample
+
+@noindent
+in either the browser's @code{plugins} directory or your personal plugin
+directory, @code{~/.mozilla/plugins}.
+
+
+It is likely that similar issues apply to Unix Java platforms, and
+@code{j2re 1.4.x} is said not to work with Mozilla under MacOS X.
+
+@node Java Virtual Machines on Windows ,  , Java Virtual Machines on Linux , Enabling search in HTML help
+@section Java Virtual Machines on Windows
+
+We have not seen any problems on Windows provided a Java Virtual Machine
+has been installed and is operational: @code{j2re 1.4.2_03} works in
+Netscape 7.1 and Mozilla FireFox 0.8 on Windows XP.  Note that a recent
+Windows system may not have Java installed at all.  For
+Netscape/Mozilla/FireFox visit
+@uref{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
+Which (if any) JVM is enabled can be set in `Set Program Access and
+Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
+plugins may also be controlled by the Sun Java applet in the Control
+Panel.
+
+
+@node New platforms, Function and variable index, Enabling search in HTML help, Top
 @appendix New platforms
 
 There are a number of sources of problems when installing R on a new
