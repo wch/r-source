@@ -1197,7 +1197,10 @@ static void clp_writeout(Rconnection con)
 	    warning("Unable to open the clipboard");
 	    GlobalFree(hglb);
 	} else {
-	    SetClipboardData(CF_TEXT, hglb);
+	    if(!SetClipboardData(CF_TEXT, hglb)) {
+		warning("Unable to write to the clipboard");
+		GlobalFree(hglb);
+	    }
 	    CloseClipboard();
 	}	    
     }
