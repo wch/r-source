@@ -20,14 +20,13 @@
  */
 
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
+void Rf_mainloop();                     /* in main.c */
 
 
 int main(int ac, char **av)
 {
     Rf_initialize_R(ac, av);
-
-    Rf_mainloop();
-    /*++++++  in main.c */
+    Rf_mainloop(); /* does not return */
     return 0;
 }
 
