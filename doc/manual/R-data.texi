@@ -1246,10 +1246,11 @@ query result, as a list.  The function @code{hasCompleted} indicates if
 all the rows have been fetched, and @code{getRowCount} returns the
 number of rows in the result.
 
-There is no simple way to load a data frame into the database, so we
-have to work harder using direct @acronym{SQL} statements.  The
-following will only work if the database is local: otherwise the file
-will need to be uploaded to the MySQL host.
+@findex assignTable
+@findex getTable
+As from @code{RMySQL} version 0.4 there are convenience functions
+@code{assignTable} to load a data frame into the database and
+@code{getTable} to retrieve a table as a data frame.
 
 @smallexample
 > library(RMySQL)
@@ -1259,30 +1260,18 @@ will need to be uploaded to the MySQL host.
 > getTables(con)
 ## load a data frame into the database, deleting any existing copy
 > data(USArrests)
-## write the values to a file
-> write.table(USArrests, "/tmp/arrests.dat", sep="\t",
-              row.names = FALSE, col.names = FALSE)
-## delete any existing table
-> if(!is.na(match("arrests", getTables(con)[[1]])))
-    quickSQL(con, "drop table arrests")
-## character string here needs to be on one line
-> quickSQL(con,
-    "create table arrests (Murder float, Assault float,
-     UrbanPop float, Rape float)")
-> quickSQL(con,
-    'load data infile "/tmp/arrests.dat" into table arrests')
-> unlink("/tmp/arrests.dat")
+> assignTable(con, "arrests", USArrests, overwrite = TRUE)
 ## Select from the loaded database.
 > quickSQL(con, "select * from USArrests where Rape > 30 order by Murder")
-  Murder Assault UrbanPop Rape
-1    7.9     204       78 38.7
-2    8.1     294       80 31.0
-3    9.0     276       91 40.6
-4   10.0     263       48 44.5
-5   11.4     285       70 32.1
-6   12.1     255       74 35.1
-7   12.2     252       81 46.0
-8   15.4     335       80 31.9
+  Murder Assault UrbanPop Rape  row_names
+1    7.9     204       78 38.7   Colorado
+2    8.1     294       80 31.0    Arizona
+3    9.0     276       91 40.6 California
+4   10.0     263       48 44.5     Alaska
+5   11.4     285       70 32.1 New Mexico
+6   12.1     255       74 35.1   Michigan
+7   12.2     252       81 46.0     Nevada
+8   15.4     335       80 31.9    Florida
 > close(con)
 @end smallexample
 
