@@ -33,6 +33,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   ifelse() now evaluates yes/no only if needed
+
     o   PROTECT'ed some memory in NewExtractNames that was getting overwritten
         during garbage collection.
 
