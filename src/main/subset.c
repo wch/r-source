@@ -130,7 +130,7 @@ static SEXP vectorSubset(SEXP x, SEXP s, SEXP call)
 	SEXP index, result, attrib, nattrib;
 
 	if (s == R_MissingArg)
-		return x;
+		return duplicate(x);
 
 	PROTECT(s);
 	attrib = getAttrib(x, R_DimSymbol);
