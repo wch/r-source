@@ -214,6 +214,10 @@ BUG FIXES
 
     o	guard against segfault in dataentry(x<-1, Modes = plot), and the like.
 
+    o	ppr(, sm.method="spline") has an internal limit of 250 rows:
+	this is now 2500 and is now checked.
+
+
 
 		CHANGES IN R VERSION 1.0.1
 

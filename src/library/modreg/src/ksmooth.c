@@ -35,3 +35,9 @@ void BDRksmooth(double *x, double *y, int *n,
 	if(den > 0) yp[j] = num/den; else yp[j] = NA_REAL;
     }
 }
+
+
+void F77_SUB(bdrsplerr)(void)
+{
+    error("only 2500 rows are allowed for sm.method=\"spline\"");
+}
