@@ -1208,7 +1208,7 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sx0, sx1, sy0, sy1, col, lty, lwd;
     double *x0, *x1, *y0, *y1;
     double xx[2], yy[2];
-    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd, xpd;
+    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1925,7 +1925,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  /* abline(a, b, h, v, col, lty, ...)	-- lwd !!! -- */
+    /* abline(a, b, h, v, col, lty, ...)	-- lwd !!! -- */
     SEXP a, b, h, v, col, lty;
     int i, ncol, nlines, nlty;
     double aa, bb, x[2], y[2];
@@ -1936,16 +1936,20 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(length(args) < 4) errorcall(call, "too few arguments\n");
 
-    if((a = CAR(args)) != R_NilValue) CAR(args) = a = coerceVector(a, REALSXP);
+    if((a = CAR(args)) != R_NilValue)
+	CAR(args) = a = coerceVector(a, REALSXP);
     args = CDR(args);
 
-    if((b = CAR(args)) != R_NilValue) CAR(args) = b = coerceVector(b, REALSXP);
+    if((b = CAR(args)) != R_NilValue)
+	CAR(args) = b = coerceVector(b, REALSXP);
     args = CDR(args);
 
-    if((h = CAR(args)) != R_NilValue) CAR(args) = h = coerceVector(h, REALSXP);
+    if((h = CAR(args)) != R_NilValue)
+	CAR(args) = h = coerceVector(h, REALSXP);
     args = CDR(args);
 
-    if((v = CAR(args)) != R_NilValue) CAR(args) = v = coerceVector(v, REALSXP);
+    if((v = CAR(args)) != R_NilValue)
+	CAR(args) = v = coerceVector(v, REALSXP);
     args = CDR(args);
 
     PROTECT(col = FixupCol(CAR(args), dd));	args = CDR(args);

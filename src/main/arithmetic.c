@@ -21,7 +21,7 @@
 
 #include "Defn.h"
 #include "Mathlib.h"
-#include "Applic.h"/* machar */
+#include "Applic.h"		/* machar */
 #include "arithmetic.h"
 
 /* Error Handling for Floating Point Errors */
@@ -986,6 +986,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
+    b = R_NilValue;		/* -Wall */
     lcall = call;
     switch (n = length(args)) {
     case 1:
@@ -1039,6 +1040,7 @@ SEXP do_signif (SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
+    b = R_NilValue;		/* -Wall */
     switch (n = length(args)) {
     case 1:
 	PROTECT(a = CAR(args));

@@ -26,8 +26,8 @@
 
 #include "Graphics.h"
 #include "Defn.h"
-#include "Mathlib.h" /* eg. fmax2() */
-#include "Applic.h" /* pretty0() */
+#include "Mathlib.h"		/* eg. fmax2() */
+#include "Applic.h"		/* pretty0() */
 
 #include <string.h>
 #include <stdlib.h>
@@ -2640,7 +2640,7 @@ int cross (Edge b, double x1, double y1, double x2, double y2,
 void intersect (Edge b, double x1, double y1, double x2, double y2,
 		double *ix, double *iy, GClipRect *clip)
 {
-    double m;
+    double m = 0;
 
     if (x1 != x2) m = (y1 - y2) / (x1 - x2);
     switch (b) {

@@ -646,7 +646,6 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP oargs, sx, sy, sz, sc, scol;
     double *x, *y, *z, *c;
     unsigned *col;
-    double xlow, xhigh, ylow, yhigh, zmin, zmax;
     int i, j, k, npt, nx, ny, nz, nc, ncol, colsave, xpdsave;
     double px[8], py[8], pz[8];
     DevDesc *dd = CurrentDevice();
@@ -1010,7 +1009,7 @@ static int DoLighting;
 
 static void SetUpLight(double theta, double phi)
 {
-    double u[4], v[4];
+    double u[4];
     u[0] = 0; u[1] = -1; u[2] = 0; u[3] = 1;
     SetToIdentity(VT);             /* Initialization */
     XRotate(-phi);                 /* colatitude rotation */
@@ -1109,7 +1108,7 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 		       int *index, double xs, double ys, double zs,
 	               int *col, int ncol, int border)
 {
-    double xx[4], yy[4], shade;
+    double xx[4], yy[4], shade = 0;
     Vector3d u, v;
     int i, j, k, n, nx1, ny1, icol, nv;
     unsigned int newcol, r, g, b;

@@ -110,7 +110,8 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     hd = CADR(args);
     tl = CADDR(args);
-    if (!isString(fn) || (n = length(fn)) < 1)
+    n = length(fn);
+    if (!isString(fn) || n < 1)
 	errorcall(call, "invalid filename specification\n");
     if (!isString(hd) || length(hd) != n)
 	errorcall(call, "invalid headers\n");
@@ -151,7 +152,7 @@ static int R_AppendFile(char *file1, char *file2)
 {
     FILE *fp1, *fp2;
     char buf[APPENDBUFSIZE];
-    int nchar, status;
+    int nchar, status = 0;
     if((fp1 = fopen(file1, "a")) == NULL) {
         return 0;
     }
@@ -286,11 +287,10 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(d))
 	errorcall(call, "invalid directory argument\n");
     p = CAR(args);  args = CDR(args);
-    if (isNull(p) || (isString(p) && length(p) < 1))
-	pattern = 0;
-    else if (isString(p) && length(p) >= 1 && STRING(p)[0] != R_NilValue)
+    pattern = 0;
+    if (isString(p) && length(p) >= 1 && STRING(p)[0] != R_NilValue)
 	pattern = 1;
-    else
+    else if (!isNull(p) && !(isString(p) && length(p) < 1))
 	errorcall(call, "invalid pattern argument\n");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args));

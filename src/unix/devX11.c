@@ -104,7 +104,6 @@ static Visual *visual;				/* Visual */
 static int depth;				/* Pixmap depth */
 static int class;                               /* Viasual class */
 static XSetWindowAttributes attributes;		/* Window attributes */
-static Colormap cmap;				/* Default color map */
 static Colormap colormap;                       /* Default color map */
 static int blackpixel;				/* Black */
 static int whitepixel;				/* White */
@@ -163,7 +162,6 @@ static void   X11_MetricInfo(int, double*, double*, double*, DevDesc*);
 
 	/* Support Routines */
 
-static void FreeColors(void);
 static XFontStruct *RLoadFont(int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
@@ -209,6 +207,7 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
     unsigned int pixel;
     int i, imin;
     int gray = (0.299 * r + 0.587 * g + 0.114 * b) + 0.0001;
+    pixel = 0;			/* -Wall */
     for (i = 0; i < PaletteSize; i++) {
 	dr = (RPalette[i].red - gray);
 	d = dr * dr;
@@ -258,7 +257,6 @@ static int GetGrayPalette(Display *display, Colormap cmap, int n)
 
 static void SetupGrayScale()
 {
-    int i;
     PaletteSize = 0;
     if (GetGrayPalette(display, colormap, 1 << depth) == 0)
 	depth = 1;
@@ -353,6 +351,7 @@ static unsigned int GetPseudoColorPixel(int r, int g, int b)
     unsigned int dr, dg, db;
     unsigned int pixel;
     int i, imin;
+    pixel = 0;			/* -Wall */
     for (i = 0; i < PaletteSize; i++) {
 	dr = (RPalette[i].red - r);
 	dg = (RPalette[i].green - g);
@@ -405,9 +404,13 @@ unsigned int GetX11Pixel(int r, int g, int b)
 	    return GetPseudoColorPixel(r, g, b);
 	case TrueColor:
 	    return GetTrueColorPixel(r, g, b);
+	default:
+	    printf("Unknown Visual\n");
+	    return 0;
 	}
     }
-    else GetMonochromePixel(r, g, b);
+    else
+	return GetMonochromePixel(r, g, b);
 }
 
 int SetupX11Color()
@@ -665,17 +668,8 @@ static void SetFont(int face, int size, DevDesc *dd)
     }
 }
 
-static struct {
-	int rcolor;
-	unsigned long pixel;
-} Colors[256];
-
-static int NColors;
-static int LimitedColors;
-
 static void SetColor(int color, DevDesc *dd)
 {
-    int i, r, g, b;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
     if(color != xd->col) {
 	blackpixel = GetX11Pixel(R_RED(color), R_GREEN(color), R_BLUE(color));
@@ -789,9 +783,8 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
     /* free(dd) and free(xd) */
 
     XEvent event;
-    int iw, ih, result;
+    int iw, ih;
     XGCValues gcv;
-    XColor exact;
 
     /* If there is no server connection, establish one and */
     /* initialize the X11 device driver data structures. */
@@ -1018,7 +1011,6 @@ static void X11_Resize(DevDesc *dd)
 
 static void X11_NewPage(DevDesc *dd)
 {
-    int result;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     if(xd->bg != dd->dp.bg) {
@@ -1606,7 +1598,6 @@ int X11ConnectionNumber()
 }
 
 	/* X11 Color Allocation code */
-
 
 /* return the position of the highest set bit in ul */
 /* as an integer (0-31), or -1 if none */

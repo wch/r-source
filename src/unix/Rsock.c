@@ -11,6 +11,7 @@ static int sock_inited = 0;
 
 #define SOCK_MAX OPEN_MAX
 
+/* -Wall: not used
 static void cleanup(void)
 {
   int i;
@@ -20,6 +21,7 @@ static void cleanup(void)
       sock[i] = -1;
     }
 }
+*/
 
 static int enter_sock(int fd)
 {

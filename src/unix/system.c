@@ -374,7 +374,7 @@ FILE *R_fopen(const char *filename, const char *mode)
 
 FILE *R_OpenLibraryFile(char *file)
 {
-    char buf[256], *rhome;
+    char buf[256];
     FILE *fp;
 
     sprintf(buf, "%s/library/base/R/%s", R_Home, file);
@@ -384,7 +384,7 @@ FILE *R_OpenLibraryFile(char *file)
 
 FILE *R_OpenSysInitFile(void)
 {
-    char buf[256], *rhome;
+    char buf[256];
     FILE *fp;
 
     sprintf(buf, "%s/library/base/R/Rprofile", R_Home);
@@ -394,7 +394,7 @@ FILE *R_OpenSysInitFile(void)
 
 FILE *R_OpenSiteFile(void)
 {
-    char buf[256], *rhome;
+    char buf[256];
     FILE *fp;
 
     fp = NULL;

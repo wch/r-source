@@ -764,21 +764,20 @@ void C_free(char *p)
 
 void *R_chk_calloc(size_t nelem, size_t elsize)
 {
-  void *p;
-  p = calloc(nelem, elsize);
-  if(!p) error("Calloc could not allocate memory");
-  return(p);
+    void *p;
+    p = calloc(nelem, elsize);
+    if(!p) error("Calloc could not allocate memory");
+    return(p);
 }
 void *R_chk_realloc(void *ptr, size_t size)
 {
-  void *p;
-  p = realloc(ptr, size);
-  if(!p) error("Realloc could not re-allocate memory");
-  return(p);
+    void *p;
+    p = realloc(ptr, size);
+    if(!p) error("Realloc could not re-allocate memory");
+    return(p);
 }
-void *R_chk_free(void *ptr)
+void R_chk_free(void *ptr)
 {
-  if(!ptr) warning("attempt to free NULL pointer by Free");
-  free(ptr);
-  return;
+    if(!ptr) warning("attempt to free NULL pointer by Free");
+    free(ptr);
 }

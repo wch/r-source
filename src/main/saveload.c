@@ -1174,7 +1174,7 @@ void R_LoadSavedData(FILE *fp, SEXP aenv)
 
 SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a, ans, e, aenv;
+    SEXP aenv;
     FILE *fp;
 
     checkArity(op, args);
