@@ -18,7 +18,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                  call. = FALSE)
         }
         ## which version was this package built under?
-        if((built <- !is.na(fields[1, "Built"]))) {
+        if((built <- fields[1, "Built"]) != "NA") {
             builtunder <- substring(strsplit(built, ";")[[1]][1], 3)
             if(nchar(builtunder) &&
                compareVersion(current, builtunder) < 0) {
