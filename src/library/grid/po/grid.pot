@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-11 09:57+1300\n"
+"POT-Creation-Date: 2005-02-16 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr ""
 
-#: grid.c:643 grid.c:648 grid.c:741 grid.c:746
+#: grid.c:643 grid.c:648 grid.c:745 grid.c:750
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 
-#: grid.c:1207
+#: grid.c:1211
 msgid "There is no layout defined"
 msgstr ""
 
-#: grid.c:1784
+#: grid.c:1788
 msgid "Invalid circle radius (must be non-negative)"
 msgstr ""
 

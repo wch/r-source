@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 15:42\n"
+"POT-Creation-Date: 2005-02-16 08:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -330,6 +330,15 @@ msgid "number must have same length as x and y"
 msgstr ""
 
 msgid "exactly one symbol type must be specified"
+msgstr ""
+
+msgid "x log scale:  xinch() is non-sense"
+msgstr ""
+
+msgid "y log scale:  yinch() is non-sense"
+msgstr ""
+
+msgid "log scale:  xyinch() is non-sense"
 msgstr ""
 
 msgid "invalid first argument [bad language object]"

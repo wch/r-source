@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 18:35\n"
+"POT-Creation-Date: 2005-02-16 08:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,9 +101,6 @@ msgstr ""
 msgid "NOT changing"
 msgstr ""
 
-msgid "&"
-msgstr ""
-
 msgid "invalid 'family' argument"
 msgstr ""
 
@@ -138,15 +135,6 @@ msgid "loading snapshot from pre-2.0.0 R version"
 msgstr ""
 
 msgid "loading snapshot from different R version"
-msgstr ""
-
-msgid "x log scale:  xinch() is non-sense"
-msgstr ""
-
-msgid "y log scale:  yinch() is non-sense"
-msgstr ""
-
-msgid "log scale:  xyinch() is non-sense"
 msgstr ""
 
 msgid "'file' is missing with no default"
@@ -214,7 +202,7 @@ msgid_plural "invalid argument names %s in '%s'"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "differ between new and previous"
-msgid_plural "differs between new and previous"
+msgid        "differs between new and previous"
+msgid_plural "differ between new and previous"
 msgstr[0]    ""
 msgstr[1]    ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-13 11:18+0000\n"
+"POT-Creation-Date: 2005-02-16 08:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,76 +207,76 @@ msgstr ""
 msgid "invalid 'path' argument"
 msgstr ""
 
-#: src/gnuwin32/extra.c:870
+#: src/gnuwin32/extra.c:869
 msgid "invalid 'list' argument"
 msgstr ""
 
-#: src/gnuwin32/extra.c:874
+#: src/gnuwin32/extra.c:872 src/gnuwin32/extra.c:877
 msgid "invalid 'preselect' argument"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1047
+#: src/gnuwin32/extra.c:1051
 msgid "argument must be a character vector"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1062 src/main/connections.c:1324
+#: src/gnuwin32/extra.c:1066 src/main/connections.c:1324
 msgid "Unable to open the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1067 src/main/connections.c:1328
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1328
 msgid "Unable to write to the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1094
+#: src/gnuwin32/extra.c:1098
 msgid "default must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1096
+#: src/gnuwin32/extra.c:1100
 msgid "default is overlong"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1105
+#: src/gnuwin32/extra.c:1109
 msgid "caption must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1107
+#: src/gnuwin32/extra.c:1111
 msgid "'multi' must be a logical value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1109
+#: src/gnuwin32/extra.c:1113
 msgid "'filterindex' must be an integer value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1243
+#: src/gnuwin32/extra.c:1247
 msgid "'title' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1275
+#: src/gnuwin32/extra.c:1279
 msgid "'which' must be length 1"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1305
+#: src/gnuwin32/extra.c:1309
 msgid "invalid value of 'which'"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1307 src/gnuwin32/extra.c:1309
-#: src/gnuwin32/extra.c:1349
+#: src/gnuwin32/extra.c:1311 src/gnuwin32/extra.c:1313
+#: src/gnuwin32/extra.c:1353
 msgid "invalid device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1310
+#: src/gnuwin32/extra.c:1314
 msgid "requires SDI mode"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1347
 msgid "invalid graphical device number"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1353
+#: src/gnuwin32/extra.c:1357
 msgid "bad device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1592 src/gnuwin32/extra.c:1600
+#: src/gnuwin32/extra.c:1596 src/gnuwin32/extra.c:1604
 msgid "invalid input in Rmbstowcs"
 msgstr ""
 
@@ -701,26 +701,26 @@ msgstr ""
 msgid "NAs produced by integer overflow"
 msgstr ""
 
-#: src/main/arithmetic.c:902
+#: src/main/arithmetic.c:904
 msgid "unimplemented real function (of 1 argument)"
 msgstr ""
 
-#: src/main/arithmetic.c:1092 src/main/arithmetic.c:1370
-#: src/main/arithmetic.c:1564 src/main/arithmetic.c:1693
+#: src/main/arithmetic.c:1094 src/main/arithmetic.c:1372
+#: src/main/arithmetic.c:1566 src/main/arithmetic.c:1695
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr ""
 
-#: src/main/arithmetic.c:1117
+#: src/main/arithmetic.c:1119
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1 or 2"
 msgstr ""
 
-#: src/main/arithmetic.c:1132 src/main/arithmetic.c:1151
+#: src/main/arithmetic.c:1134 src/main/arithmetic.c:1153
 msgid "invalid second argument of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1157
+#: src/main/arithmetic.c:1159
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -2206,7 +2206,7 @@ msgstr ""
 #: src/main/plot.c:2008 src/main/plot.c:2098 src/main/plot.c:2388
 #: src/main/plot.c:2588 src/main/plot.c:2831 src/main/plot.c:3424
 #: src/main/plot.c:3500 src/main/plot.c:3753 src/main/plot3d.c:1383
-#: src/main/sprintf.c:104
+#: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr ""
 
@@ -5936,61 +5936,65 @@ msgstr ""
 msgid "data length is not a multiple of split variable"
 msgstr ""
 
-#: src/main/sprintf.c:51
-msgid "'fmt' is not a character string of length 1"
+#: src/main/sprintf.c:45
+msgid "'fmt' is not a non-empty character vector"
 msgstr ""
 
-#: src/main/sprintf.c:55
+#: src/main/sprintf.c:48
+msgid "only 100 arguments are allowed"
+msgstr ""
+
+#: src/main/sprintf.c:58
+msgid "zero-length argument"
+msgstr ""
+
+#: src/main/sprintf.c:62 src/main/sprintf.c:65
+msgid "arguments cannot be recycled to the same length"
+msgstr ""
+
+#: src/main/sprintf.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal buffer length %d"
 msgstr ""
 
-#: src/main/sprintf.c:59
-msgid "only 100 arguments are allowed"
-msgstr ""
-
-#: src/main/sprintf.c:79
+#: src/main/sprintf.c:92
 msgid "unrecognised format at end of string"
 msgstr ""
 
-#: src/main/sprintf.c:90 src/main/sprintf.c:97
+#: src/main/sprintf.c:103 src/main/sprintf.c:110
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr ""
 
-#: src/main/sprintf.c:109
-msgid "zero-length argument"
-msgstr ""
-
-#: src/main/sprintf.c:142
+#: src/main/sprintf.c:155
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr ""
 
-#: src/main/sprintf.c:155
+#: src/main/sprintf.c:168
 #, c-format
-msgid "use format %d, %i or %x for integer objects"
+msgid "use format %d, %i, %x or %X for integer objects"
 msgstr ""
 
-#: src/main/sprintf.c:168
+#: src/main/sprintf.c:181
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr ""
 
-#: src/main/sprintf.c:202
+#: src/main/sprintf.c:215
 #, c-format
 msgid "use format %s for character objects"
 msgstr ""
 
-#: src/main/sprintf.c:204
+#: src/main/sprintf.c:218
 msgid "Likely truncation of character string"
 msgstr ""
 
-#: src/main/sprintf.c:209
+#: src/main/sprintf.c:224
 msgid "unsupported type"
 msgstr ""
 
-#: src/main/sprintf.c:222
+#: src/main/sprintf.c:239
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr ""

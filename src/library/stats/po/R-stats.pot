@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 18:32\n"
+"POT-Creation-Date: 2005-02-16 08:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,6 +86,9 @@ msgstr ""
 msgid "no terms in scope for adding to object"
 msgstr ""
 
+msgid "number of rows in use has changed: remove missing values?"
+msgstr ""
+
 msgid "using the"
 msgstr ""
 
@@ -117,9 +120,6 @@ msgid "upper scope does not include model"
 msgstr ""
 
 msgid "AIC is not defined for this model, so step cannot proceed"
-msgstr ""
-
-msgid "number of rows in use has changed: remove missing values?"
 msgstr ""
 
 msgid "Length of FUN,"
@@ -476,6 +476,9 @@ msgstr ""
 msgid "degree must be at least 1"
 msgstr ""
 
+msgid "missing values are not allowed in poly"
+msgstr ""
+
 msgid "degree must be less than number of points"
 msgstr ""
 
@@ -510,6 +513,9 @@ msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
 
 msgid "supply both x and y or a matrix-like x"
+msgstr ""
+
+msgid "cannot handle pairwise.complete.obs"
 msgstr ""
 
 msgid "'V' is not a square numeric matrix"

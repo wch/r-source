@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 18:31\n"
+"POT-Creation-Date: 2005-02-16 08:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,9 +419,6 @@ msgstr ""
 msgid "'to' must be of length 1"
 msgstr ""
 
-msgid "'to' must be later than 'from'"
-msgstr ""
-
 msgid "'length.out' must be of length 1"
 msgstr ""
 
@@ -635,6 +632,9 @@ msgstr ""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 
+msgid "'flag' can contain only '0+- #'"
+msgstr ""
+
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 
@@ -728,16 +728,22 @@ msgstr ""
 msgid "already present in search()"
 msgstr ""
 
-msgid "shared library"
+msgid "shared library '%s' not found"
 msgstr ""
 
-msgid "not found"
+msgid "shared library '%s' already loaded"
+msgstr ""
+
+msgid "now dyn.load(\"%s\") ..."
 msgstr ""
 
 msgid "no shared library was specified"
 msgstr ""
 
-msgid "was not loaded"
+msgid "shared library '%s' was not loaded"
+msgstr ""
+
+msgid "now dyn.unload(\"%s\") ..."
 msgstr ""
 
 msgid "Loading required package: %s"
@@ -867,6 +873,9 @@ msgid "failed in attachNamespace"
 msgstr ""
 
 msgid "name space is already attached"
+msgstr ""
+
+msgid "not found"
 msgstr ""
 
 msgid "cyclic name space dependencies are not supported"
@@ -1266,6 +1275,9 @@ msgid "Registering evaluate as low-level callback"
 msgstr ""
 
 msgid "width must be positive"
+msgstr ""
+
+msgid "No traceback available"
 msgstr ""
 
 msgid "argument to 'which' is not logical"

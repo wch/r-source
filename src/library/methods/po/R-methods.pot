@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 09:32\n"
+"POT-Creation-Date: 2005-02-16 08:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,25 @@ msgstr ""
 msgid ") is a locked namespace; can't assign methods there"
 msgstr ""
 
+msgid "Copying the generic function \""
+msgstr ""
+
+msgid "\" to environment \""
+msgstr ""
+
+msgid "\", because the previous version was in a sealed namespace ("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
 msgid "No existing definition for function \""
+msgstr ""
+
+msgid "Creating a new generic function for \""
+msgstr ""
+
+msgid "\" in \""
 msgstr ""
 
 msgid "Apparent internal error: a generic function was found for \""
@@ -209,6 +227,9 @@ msgstr ""
 msgid "\" in locked environment/package \""
 msgstr ""
 
+msgid "Restoring default function definition of \""
+msgstr ""
+
 msgid "Can't reset \""
 msgstr ""
 
@@ -219,6 +240,9 @@ msgid "Error in updating generic function \""
 msgstr ""
 
 msgid "\"; the function definition is not a generic function (class \""
+msgstr ""
+
+msgid "\" is already a group generic; no change"
 msgstr ""
 
 msgid "callGeneric with a primitive needs explict arguments (no formal args defined)"
@@ -333,9 +357,6 @@ msgid "The names in signature for method ("
 msgstr ""
 
 msgid ") don't match function's arguments ("
-msgstr ""
-
-msgid ")"
 msgstr ""
 
 msgid "NextMethod not defined because the the current method is not a MethodDefinition object"
@@ -542,6 +563,12 @@ msgstr ""
 msgid "); they conflict with the needed change to argument names ("
 msgstr ""
 
+msgid "Arguments in definition changed from ("
+msgstr ""
+
+msgid ") to ("
+msgstr ""
+
 msgid "A validity method must be a function of one argument, got an object of class \""
 msgstr ""
 
@@ -587,6 +614,9 @@ msgstr ""
 msgid "\" has no known argument list; will assume \"(x, ...)\""
 msgstr ""
 
+msgid "Making a generic for special function \""
+msgstr ""
+
 msgid "\" is not a function visible from \""
 msgstr ""
 
@@ -609,6 +639,12 @@ msgid "Formal arguments omitted in the method definition cannot be in the signat
 msgstr ""
 
 msgid "= \""
+msgstr ""
+
+msgid "Expanding the signature to include omitted arguments in definition:"
+msgstr ""
+
+msgid "= \"missing\""
 msgstr ""
 
 msgid "Methods can add arguments to the generic only if \"...\" is an argument to the generic"
@@ -1007,6 +1043,12 @@ msgstr ""
 msgid "; definition(s) on :"
 msgstr ""
 
+msgid "A shell of class documentation has been written"
+msgstr ""
+
+msgid "."
+msgstr ""
+
 msgid "invalid call to classLabel: expected a name or a class definition, got an object of class"
 msgstr ""
 
@@ -1037,14 +1079,23 @@ msgstr ""
 msgid "can't use \"at\" argument unless the function body has the form { ... }"
 msgstr ""
 
-msgid "Setting a method over the binding of symbol \""
+msgid "Object of class \""
+msgstr ""
+
+msgid "Assigning over the binding of symbol \""
 msgstr ""
 
 msgid "\" in environment/package \""
+msgstr ""
+
+msgid "Setting a method over the binding of symbol \""
 msgstr ""
 
 msgid "Not a package name:"
 msgstr ""
 
 msgid "Looks like the methods library was not installed correctly; check the make results!"
+msgstr ""
+
+msgid "Saving namespace image ..."
 msgstr ""
