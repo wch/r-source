@@ -545,7 +545,7 @@ FUNTAB R_FunTab[] =
 {"split",	do_split,	0,	11,	2,	PP_FUNCALL},
 {"symbol.C",	do_symbol,	0,	1,	1,	PP_FOREIGN},
 {"symbol.For",	do_symbol,	1,	1,	1,	PP_FOREIGN},
-{"is.loaded",	do_isloaded,	0,	1,	2,	PP_FOREIGN},
+{"is.loaded",	do_isloaded,	0,	1,	-1,	PP_FOREIGN},
 {".C",		do_dotCode,	0,	1,	-1,	PP_FOREIGN},
 {".Fortran",	do_dotCode,	1,	1,	-1,	PP_FOREIGN},
 {".External",   do_External,    0,      1,      -1,     PP_FOREIGN},

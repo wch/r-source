@@ -395,18 +395,21 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    char *sym, *pkg;
-    int val;
-    checkArity(op, args);
+    char *sym, *pkg= "";
+    int val = 1, nargs = length(args);
+
+    if (nargs < 1) errorcall(call, "no arguments supplied");
+    if (nargs > 2) errorcall(call, "too many arguments");
+
     if(!isValidString(CAR(args)))
 	errorcall(call, R_MSG_IA);
     sym = CHAR(STRING_ELT(CAR(args), 0));
-    if(!isValidString(CADR(args)))
-	errorcall(call, R_MSG_IA);
-    pkg = CHAR(STRING_ELT(CADR(args), 0));
-    val = 1;
-    if (!(R_FindSymbol(sym, pkg, NULL)))
-	val = 0;
+    if(nargs == 2) {
+	if(!isValidString(CADR(args)))
+	    errorcall(call, R_MSG_IA);
+	pkg = CHAR(STRING_ELT(CADR(args), 0));
+    }
+    if (!(R_FindSymbol(sym, pkg, NULL))) val = 0;
     ans = allocVector(LGLSXP, 1);
     LOGICAL(ans)[0] = val;
     return ans;
@@ -419,7 +422,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun;
     SEXP retval;
-    R_RegisteredNativeSymbol symbol = {R_EXTERNAL_SYM, NULL};
+    R_RegisteredNativeSymbol symbol = {R_EXTERNAL_SYM, {NULL}};
     /* I don't like this messing with vmax <TSL> */
     /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
     char *vmax = vmaxget();
@@ -450,7 +453,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun;
     SEXP retval, cargs[MAX_ARGS], pargs;
-    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, NULL};
+    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}};
     int nargs;
     char *vmax = vmaxget();
     op = CAR(args);
@@ -1169,7 +1172,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     DL_FUNC fun;
     SEXP ans, pargs, s;
     R_toCConverter  *argConverters[65];
-    R_RegisteredNativeSymbol symbol = {R_C_SYM, NULL};
+    R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}};
 
     char buf[128], *p, *q, *vmax;
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
