@@ -33,7 +33,7 @@
 #endif
 
 
-void NewFrameConfirm()
+void NewFrameConfirm(void)
 {
     unsigned char buf[16];
     R_ReadConsole("Hit <Return> to see next plot: ", buf, 16, 0);
@@ -301,10 +301,8 @@ SEXP FixupCex(SEXP cex, double dflt)
 }
 
 SEXP FixupVFont(SEXP vfont) {
-    SEXP ans = R_NilValue;/* -Wall*/
-    if (isNull(vfont))
-	ans = R_NilValue;
-    else {
+    SEXP ans = R_NilValue;
+    if (!isNull(vfont)) {
 	SEXP vf;
 	int typeface, fontindex;
 	int minindex, maxindex=0;/* -Wall*/
@@ -314,29 +312,29 @@ SEXP FixupVFont(SEXP vfont) {
 	    error("Invalid vfont value");
 	typeface = INTEGER(vf)[0];
 	if (typeface < 0 || typeface > 7)
-	    error("Invalid vfont value");
+	    error("Invalid vfont value [typeface]");
 	minindex = 0;
 	switch (typeface) {
-	case 0:
+	case 0: /* serif */
 	    maxindex = 7;
 	    break;
-	case 1:
-	case 6:
+	case 1: /* sans serif */
+	case 6: /* serif symbol */
 	    maxindex = 4;
 	    break;
-	case 2:
+	case 2: /* script */
 	    maxindex = 3;
 	    break;
-	case 3:
-	case 4:
-	case 5:
+	case 3: /* gothic english */
+	case 4: /* gothic german */
+	case 5: /* gothic italian */
 	    maxindex = 1;
-	case 7:
+	case 7: /* sans serif symbol */
 	    maxindex = 2;
 	}
 	fontindex = INTEGER(vf)[1];
 	if (fontindex < minindex || fontindex > maxindex)
-	    error("Invalid vfont value");
+	    error("Invalid vfont value [fontindex]");
 	ans = allocVector(INTSXP, 2);
 	for (i=0; i<2; i++)
 	    INTEGER(ans)[i] = INTEGER(vf)[i];
@@ -346,22 +344,25 @@ SEXP FixupVFont(SEXP vfont) {
 }
 
 /* GetTextArg() : extract from call and possibly set text arguments
- *  ("label", cex=, col=, font=, vfont=)
+ *  ("label", col=, cex=, font=, vfont=)
  *
- * Called from  do_title()  [only]
+ * Main purpose: Treat things like  title(main = list("This Title", font= 4))
+ *
+ * Called from  do_title()  [only, currently]
  */
-static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
-		    int *pcol, double *pcex, int *pfont, int*pvfont)
+static void
+GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
+	   int *pcol, double *pcex, int *pfont, SEXP *pvfont)
 {
-    int i, n, col, font, vfont;
+    int i, n, col, font;
     double cex;
-    SEXP txt, nms;
+    SEXP txt, vfont, nms;
 
     txt   = R_NilValue;
+    vfont = R_NilValue;
     cex   = NA_REAL;
     col   = NA_INTEGER;
     font  = NA_INTEGER;
-    vfont = NA_INTEGER;
     PROTECT(txt);
 
     switch (TYPEOF(spec)) {
@@ -388,7 +389,7 @@ static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		    font = asInteger(FixupFont(VECTOR_ELT(spec, i), NA_INTEGER));
 		}
 		else if (!strcmp(CHAR(STRING_ELT(nms, i)), "vfont")) {
-		    vfont = asInteger(FixupVFont(VECTOR_ELT(spec, i)));
+		    vfont = FixupVFont(VECTOR_ELT(spec, i));
 		}
 		else if (!strcmp(CHAR(STRING_ELT(nms, i)), "")) {
 		    txt = VECTOR_ELT(spec, i);
@@ -419,9 +420,9 @@ static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 	if (R_FINITE(cex))       *pcex   = cex;
 	if (col != NA_INTEGER)   *pcol   = col;
 	if (font != NA_INTEGER)  *pfont  = font;
-	if (vfont != NA_INTEGER) *pvfont = vfont;
+	if (vfont != R_NilValue) *pvfont = vfont;
     }
-}
+}/* GetTextArg */
 
 
     /* GRAPHICS FUNCTION ENTRY POINTS */
@@ -445,8 +446,8 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.ask = ask;
 
 
-    dd->dp.xlog = dd->gp.xlog = 0;
-    dd->dp.ylog = dd->gp.ylog = 0;
+    dd->dp.xlog = dd->gp.xlog = FALSE;
+    dd->dp.ylog = dd->gp.ylog = FALSE;
 
     GScale(0.0, 1.0, 1, dd);
     GScale(0.0, 1.0, 2, dd);
@@ -488,7 +489,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP xlim, ylim, log;
     double asp, xmin, xmax, ymin, ymax;
-    int logscale;
+    Rboolean logscale;
     char *p;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -506,7 +507,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid ylim");
     args = CDR(args);
 
-    logscale = 0;
+    logscale = FALSE;
     log = CAR(args);
     if (!isString(log))
 	errorcall(call, "\"log=\" specification must be character");
@@ -514,12 +515,10 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     while (*p) {
 	switch (*p) {
 	case 'x':
-	    dd->dp.xlog = dd->gp.xlog = 1;
-	    logscale = 1;
+	    dd->dp.xlog = dd->gp.xlog = logscale = TRUE;
 	    break;
 	case 'y':
-	    dd->dp.ylog = dd->gp.ylog = 1;
-	    logscale = 1;
+	    dd->dp.ylog = dd->gp.ylog = logscale = TRUE;
 	    break;
 	default:
 	    errorcall(call,"invalid \"log=%s\" specification",p);
@@ -676,7 +675,7 @@ SEXP labelformat(SEXP labels)
     return ans;
 }
 
-SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
+SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean log)
 {
 /*	Create an  'at = ...' vector for  axis(.) / do_axis,
  *	i.e., the vector of tick mark locations,
@@ -810,11 +809,15 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 
 SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* axis(side, at, labels, ticks, ...) - draw an axis */
-    SEXP at, lab;
-    int col, fg, dolabels, doticks, logflag = 0;
+    /* axis(side, at, labels, tick,
+     *       line, pos, outer, font, vfont, ...) */
+
+    SEXP at, lab, vfont;
+    int col, fg, font;
     int i, n, nint = 0, ntmp, side, *ind, outer;
     int istart, iend, incr;
+    Rboolean dolabels, doticks, logflag = FALSE;
+    Rboolean vectorFonts = FALSE;
     double x, y, temp, tnew, tlast;
     double axp[3], usr[2];
     double gap, labw, low, high, line, pos;
@@ -827,7 +830,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* This is a builtin function, so it should always have */
     /* the correct arity, but it doesn't hurt to be defensive. */
 
-    if (length(args) < 7) errorcall(call, "too few arguments");
+    if (length(args) < 9)
+	errorcall(call, "too few arguments");
     GCheckState(dd);
 
     /* Required argument: "side" */
@@ -851,11 +855,11 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* strings or expressions which give the labels explicitly. */
     /* The expressions are used to set mathematical labelling. */
 
-    dolabels = 1;
+    dolabels = TRUE;
     if (isLogical(CAR(args)) && length(CAR(args)) > 0) {
 	i = asLogical(CAR(args));
 	if (i == 0 || i == NA_LOGICAL)
-	    dolabels = 0;
+	    dolabels = FALSE;
 	PROTECT(lab = R_NilValue);
     }
     else if (isExpression(CAR(args))) {
@@ -871,7 +875,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* should be plotted: TRUE => show, FALSE => don't show. */
 
     doticks = asLogical(CAR(args));
-    if (doticks == NA_LOGICAL) doticks = 1;
+    doticks = (doticks == NA_LOGICAL) ? TRUE : (Rboolean) doticks;
     args = CDR(args);
 
     /* Optional argument: "line" */
@@ -901,8 +905,19 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	outer = NPC;
     else
 	outer = NIC;
-
     args = CDR(args);
+
+    /* Optional argument: "font" */
+    font = asInteger(FixupFont(CAR(args), NA_INTEGER));
+    args = CDR(args);
+
+    /* Optional argument: "vfont" */
+    /* Allows Hershey vector fonts to be used */
+    PROTECT(vfont = FixupVFont(CAR(args)));
+    if (!isNull(vfont))
+	vectorFonts = TRUE;
+    args = CDR(args);
+
 
     /* Retrieve relevant "par" values. */
 
@@ -983,7 +998,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (((side == 1 || side == 3) && dd->gp.xaxt == 'n') ||
 	((side == 2 || side == 4) && dd->gp.yaxt == 'n')) {
 	GRestorePars(dd);
-	UNPROTECT(3);
+	UNPROTECT(4);
 	return R_NilValue;
     }
 
@@ -1001,7 +1016,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.xpd = 2;
 
     dd->gp.adj = 0.5;
-    dd->gp.font = dd->gp.fontaxis;
+    dd->gp.font = (font == NA_INTEGER)? dd->gp.fontaxis : font;
     dd->gp.cex = dd->gp.cexbase * dd->gp.cexaxis;
     col = dd->gp.col;
     fg = dd->gp.fg;
@@ -1211,7 +1226,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	break;
     } /* end  switch(side, ..) */
-    UNPROTECT(3); /* lab, at, lab again */
+    UNPROTECT(4); /* lab, vfont, at, lab again */
     GMode(0, dd);
     GRestorePars(dd);
     /* NOTE: only record operation if no "error"  */
@@ -1219,7 +1234,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (call != R_NilValue)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
-}
+}/* do_axis */
 
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1471,7 +1486,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     if (call != R_NilValue)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
-}
+}/* do_plot_xy */
 
 /* Checks for ... , x0, y0, x1, y1 ... */
 
@@ -1874,7 +1889,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     double adjx = 0, adjy = 0, offset = 0.5;
     double *x, *y;
     double xx, yy;
-    int vectorFonts = 0;
+    Rboolean vectorFonts = FALSE;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1884,7 +1899,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PLOT_XY_DEALING("text");
 
-    /* labels */ 
+    /* labels */
     txt = CAR(args);
     if (isSymbol(txt) || isLanguage(txt))
 	txt = coerceVector(txt, EXPRSXP);
@@ -1925,7 +1940,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont))
-	vectorFonts = 1;
+	vectorFonts = TRUE;
     args = CDR(args);
 
     PROTECT(cex = FixupCex(CAR(args), 1.0));
@@ -2080,13 +2095,15 @@ static double ComputeAtValue(double at, double adj, int side, int outer,
          cex = NA,
          col = NA,
          font = NA,
+         vfont = NULL,
          ...) */
 
 SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, side, line, outer, at, adj, cex, col, font;
+    SEXP text, side, line, outer, at, adj, cex, col, font, vfont;
     int ntext, nside, nline, nouter, nat, nadj, ncex, ncol, nfont;
-    int dirtyplot = 0, gpnewsave = 0, dpnewsave = 0;
+    Rboolean dirtyplot = FALSE, gpnewsave = FALSE, dpnewsave = FALSE;
+    Rboolean vectorFonts = FALSE;
     int i, n, fontsave, colsave;
     double cexsave;
     SEXP originalArgs = args;
@@ -2166,6 +2183,12 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     if (n < nfont) n = nfont;
     args = CDR(args);
 
+    /* Arg10 : vfont */
+    PROTECT(vfont = FixupVFont(CAR(args)));
+    if (!isNull(vfont))
+	vectorFonts = TRUE;
+    args = CDR(args);
+
     GSavePars(dd);
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
@@ -2173,7 +2196,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     /* If we only scribble in the outer margins, */
     /* we don't want to mark the plot as dirty. */
 
-    dirtyplot = 0;
+    dirtyplot = FALSE;
     gpnewsave = dd->gp.new;
     dpnewsave = dd->dp.new;
     cexsave = dd->gp.cex;
@@ -2213,14 +2236,27 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.col = (colval == NA_INTEGER) ? colsave : colval;
 	dd->gp.adj = ComputeAdjValue(adjval, sideval, dd->gp.las);
 	atval = ComputeAtValue(atval, dd->gp.adj, sideval, outerval, dd);
-	if (isExpression(text))
+
+	if (vectorFonts) {
+#ifdef GMV_implemented
+	    GMVText(CHAR(STRING_ELT(text, i%ntext)),
+		    INTEGER(vfont)[0], INTEGER(vfont)[1],
+		    sideval, lineval, outerval, atval, dd->gp.las, dd);
+#else
+  	    warningcall(call,"Hershey fonts not yet implemented for mtext()");
+	    GMtext(CHAR(STRING_ELT(text, i%ntext)),
+		   sideval, lineval, outerval, atval, dd->gp.las, dd);
+#endif
+	}
+	else if (isExpression(text))
 	    GMMathText(VECTOR_ELT(text, i%ntext),
 		       sideval, lineval, outerval, atval, dd->gp.las, dd);
 	else
 	    GMtext(CHAR(STRING_ELT(text, i%ntext)),
 		   sideval, lineval, outerval, atval, dd->gp.las, dd);
-    	if (outerval == 0) dirtyplot = 1;
-}
+
+    	if (outerval == 0) dirtyplot = TRUE;
+    }
     GMode(0, dd);
 
     GRestorePars(dd);
@@ -2228,24 +2264,27 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.new = gpnewsave;
 	dd->dp.new = dpnewsave;
     }
-    UNPROTECT(9);
+    UNPROTECT(10);
 
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
     if (call != R_NilValue)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
-}
+}/* do_mtext */
 
-
-/* title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL, ...)
-   annotation for plots. */
 
 SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP Main, xlab, ylab, sub;
+/* Annotation for plots :
+
+   title(main, sub, xlab, ylab,
+         line, outer,
+         ...) */
+
+    SEXP Main, xlab, ylab, sub, vfont;
     double adj, adjy, cex, offset, line, hpos, vpos, where;
-    int col, font, vfont, outer;
+    int col, font, outer;
     int i, n;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -3380,7 +3419,7 @@ SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-void SymbolSize(double *x, int n, double *xmax, double *xmin)
+static void SymbolSize(double *x, int n, double *xmax, double *xmin)
 {
     int i;
     *xmax = -DBL_MAX;

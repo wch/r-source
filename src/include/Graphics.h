@@ -110,29 +110,30 @@
 #define MAX_LAYOUT_COLS 15
 
 	/* possible coordinate systems (for specifying locations) */
+typedef enum {
+ DEVICE	= 0,	/* native device coordinates (rasters) */
+ NDC	= 1,	/* normalised device coordinates x=(0,1), y=(0,1) */
+ INCHES = 13,	/* inches x=(0,width), y=(0,height) */
+ NIC	= 6,	/* normalised inner region coordinates (0,1) */
+ OMA1	= 2,	/* outer margin 1 (bottom) x=NIC, y=LINES */
+ OMA2	= 3,	/* outer margin 2 (left) */
+ OMA3	= 4,	/* outer margin 3 (top) */
+ OMA4	= 5,	/* outer margin 4 (right) */
+ NFC	= 7,	/* normalised figure region coordinates (0,1) */
+ NPC	= 16,	/* normalised plot region coordinates (0,1) */
+ USER	= 12,	/* user/data/world corrdinates;
+		 * x,=(xmin,xmax), y=(ymin,ymax) */
+ MAR1	= 8,	/* figure margin 1 (bottom) x=USER(x), y=LINES */
+ MAR2	= 9,	/* figure margin 2 (left)   x=USER(y), y=LINES */
+ MAR3	= 10,	/* figure margin 3 (top)    x=USER(x), y=LINES */
+ MAR4	= 11,	/* figure margin 4 (right)  x=USER(y), y=LINES */
 
-#define DEVICE	0	/* native device coordinates (rasters) */
-#define NDC	1	/* normalised device coordinates x=(0,1), y=(0,1) */
-#define INCHES 13	/* inches x=(0,width), y=(0,height) */
-#define NIC	6	/* normalised inner region coordinates (0,1) */
-#define OMA1	2	/* outer margin 1 (bottom) x=NIC, y=LINES */
-#define OMA2	3	/* outer margin 2 (left) */
-#define OMA3	4	/* outer margin 3 (top) */
-#define OMA4	5	/* outer margin 4 (right) */
-#define NFC	7	/* normalised figure region coordinates (0,1) */
-#define NPC	16	/* normalised plot region coordinates (0,1) */
-#define USER	12	/* user/data/world corrdinates */
-			/* x=(xmin,xmax), y=(ymin,ymax) */
-#define MAR1	8	/* figure margin 1 (bottom) x=USER(x), y=LINES */
-#define MAR2	9	/* figure margin 2 (left) x=USER(y) y=LINES */
-#define MAR3	10	/* figure margin 3 (top) x=USER(x), y=LINES */
-#define MAR4	11	/* figure margin 4 (right) x=USER(y) y=LINES */
-
-	/* possible units (for specifying dimensions) */
+	/* possible, units (for specifying dimensions) */
 	/* all of the above, plus ... */
 
-#define LINES 14	/* multiples of a line in the margin (mex) */
-#define CHARS 15	/* multiples of text height (cex) */
+ LINES = 14,	/* multiples of a line in the margin (mex) */
+ CHARS = 15	/* multiples of text height (cex) */
+} GUnit;
 
 #define R_MaxDevices 64
 
@@ -209,7 +210,7 @@ typedef struct {
     /* level (e.g., do_lines, do_axis, do_plot_xy, ...) */
 
     int	state;		/* Plot State */
-    int	valid;		/* valid layout ? */
+    Rboolean valid;		/* valid layout ? */
 
     /* GRZ-like Graphics Parameters */
     /* ``The horror, the horror ... '' */
@@ -262,8 +263,8 @@ typedef struct {
     double yaxp[3];	/* Y Axis annotation */
     int	yaxs;		/* Y Axis style */
     int	yaxt;		/* Y Axis type */
-    int	xlog;		/* Log Axis for X */
-    int	ylog;		/* Log Axis for Y */
+    Rboolean xlog;	/* Log Axis for X */
+    Rboolean ylog;	/* Log Axis for Y */
 
     /* Annotation Parameters */
 
@@ -296,7 +297,7 @@ typedef struct {
     int	cmHeights[MAX_LAYOUT_ROWS];
     int	cmWidths[MAX_LAYOUT_COLS];
     int	order[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
-    int	rspct;	        /* 0 = none, 1 = full, 2 = see respect */
+    int	rspct;		/* 0 = none, 1 = full, 2 = see respect */
     int	respect[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
 
     int	mfind;		/* By row/col indicator */
@@ -311,14 +312,14 @@ typedef struct {
 			/* [2] = bottom, [3] = top */
     double fin[2];	/* (current) Figure size (inches) */
 			/* [0] = width, [1] = height */
-    int	fUnits;		/* (current) figure size units */
+    GUnit fUnits;	/* (current) figure size units */
     int	defaultFigure;	/* calculate figure from layout ? */
     double plt[4];	/* (current) Plot size (proportions) */
 			/* [0] = left, [1] = right */
 			/* [2] = bottom, [3] = top */
     double pin[2];	/* (current) plot size (inches) */
 			/* [0] = width, [1] = height */
-    int	pUnits;		/* (current) plot size units */
+    GUnit	pUnits;		/* (current) plot size units */
     int	defaultPlot;	/* calculate plot from figure - margins ? */
 
     /* Layout parameters which are set directly by the user */
@@ -327,14 +328,14 @@ typedef struct {
     double mai[4];	/* Plot margins in inches */
 			/* [0] = bottom, [1] = left */
 			/* [2] = top, [3] = right */
-    int	mUnits;		/* plot margin units */
+    GUnit	mUnits;		/* plot margin units */
     double mex;		/* Margin expansion factor */
     double oma[4];	/* Outer margins in lines */
     double omi[4];	/* outer margins in inches */
     double omd[4];	/* outer margins in NDC */
 			/* [0] = bottom, [1] = left */
 			/* [2] = top, [3] = right */
-    int	oUnits;		/* outer margin units */
+    GUnit	oUnits;		/* outer margin units */
     int	pty;		/* Plot type */
 
     /* Layout parameters which can be set by the user, but */
@@ -351,7 +352,7 @@ typedef struct {
 
     /* Layout parameter: Internal flags */
 
-    int	new;		/* Clean plot ? */
+    Rboolean new;	/* Clean plot ? */
     int	devmode;	/* creating new image or adding to existing one */
 
     /* Coordinate System Mappings */
@@ -425,13 +426,13 @@ typedef struct {
 		/* Drivers from ../main/dev....c , description there: */
 
 int PSDeviceDriver(DevDesc*, char*, char*, char*,
-		   char*, char*, double, double, double, double, int, 
+		   char*, char*, double, double, double, double, int,
 		   int, int, char*);
 
 int PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, int);
 
 int XFigDeviceDriver(DevDesc*, char*, char*, char*,
-		     char*, char*, double, double, double, double, int, 
+		     char*, char*, double, double, double, double, int,
 		     int);
 
 /*ifdef Unix : ../unix/devX11.h	 only in few places*/
@@ -522,6 +523,7 @@ int MacDeviceDriver(char**, int, double*, int);
 #define LTYget			Rf_LTYget
 #define LTYpar			Rf_LTYpar
 #define name2col		Rf_name2col
+#define number2col		Rf_number2col
 #define NewFrameConfirm		Rf_NewFrameConfirm
 #define nextDevice		Rf_nextDevice
 #define NoDevices		Rf_NoDevices
@@ -539,13 +541,19 @@ int MacDeviceDriver(char**, int, double*, int);
 #define StartDevice		Rf_StartDevice
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
+/* which of these conversions should be public? maybe all?*/
 #define xDevtoNDC		Rf_xDevtoNDC
 #define xDevtoNFC		Rf_xDevtoNFC
+#define xDevtoNPC		Rf_xDevtoNPC
+#define xDevtoUsr		Rf_xDevtoUsr
 #define xNPCtoUsr		Rf_xNPCtoUsr
 #define yDevtoNDC		Rf_yDevtoNDC
 #define yDevtoNFC		Rf_yDevtoNFC
+#define yDevtoNPC		Rf_yDevtoNPC
+#define yDevtoUsr		Rf_yDevtoUsr
 #define yNPCtoUsr		Rf_yNPCtoUsr
 #endif
+
 
 		/* User Callable Functions */
 
@@ -557,7 +565,7 @@ int MacDeviceDriver(char**, int, double*, int);
  */
 
 /* Return a pointer to the current device. */
-DevDesc* CurrentDevice();
+DevDesc* CurrentDevice(void);
 /* Return a pointer to a device which is identified by number */
 DevDesc* GetDevice(int);
 /* Initialise internal device structures. */
@@ -565,11 +573,11 @@ void InitGraphics(void);
 /* Kill device which is identified by number. */
 void KillDevice(DevDesc*);
 /* Kill all active devices (used at shutdown). */
-void KillAllDevices();
+void KillAllDevices(void);
 /* Is the null device the current device? */
-int NoDevices();
+int NoDevices(void);
 /* How many devices exist ? (>= 1) */
-int NumDevices();
+int NumDevices(void);
 /* Get the index of the specified device. */
 int deviceNumber(DevDesc*);
 /* Create a new device. */
@@ -578,9 +586,9 @@ int StartDevice(SEXP, SEXP, int, SEXP, int);
 void DevNull(void);
 
 /* Miscellaneous */
-void NewFrameConfirm();
+void NewFrameConfirm(void);
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
-void initDisplayList();
+void initDisplayList(DevDesc *dd);
 void copyDisplayList(int);
 void playDisplayList(DevDesc*);
 void inhibitDisplayList(DevDesc*);
@@ -593,7 +601,7 @@ void inhibitDisplayList(DevDesc*);
  */
 
 /* Return the number of the current device. */
-int curDevice();
+int curDevice(void);
 /* Return the number of the next device. */
 int nextDevice(int);
 /* Return the number of the previous device. */
@@ -680,10 +688,10 @@ void GForceClip(DevDesc*);
 /* Draw a line from (x1,y1) to (x2,y2): */
 void GLine(double, double, double, double, int, DevDesc*);
 /* Return the location of the next mouse click: */
-int  GLocator(double*, double*, int, DevDesc*);
+Rboolean GLocator(double*, double*, int, DevDesc*);
 /* Return the height, depth, and width of the specified
  * character in the specified units: */
-void GMetricInfo(int, double*, double*, double*, int, DevDesc*);
+void GMetricInfo(int, double*, double*, double*, GUnit, DevDesc*);
 /* Set device "mode" (drawing or not drawing) here for windows and mac drivers.
  */
 void GMode(int, DevDesc*);
@@ -694,9 +702,9 @@ void GPolyline(int, double*, double*, int, DevDesc*);
 /* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, DevDesc*);
 /* Return the height of the specified string in the specified units: */
-double GStrHeight(char*, int, DevDesc*);
+double GStrHeight(char*, GUnit, DevDesc*);
 /* Return the width of the specified string in the specified units */
-double GStrWidth(char*, int, DevDesc*);
+double GStrWidth(char*, GUnit, DevDesc*);
 /* Draw the specified text at location (x,y) with the specified
  * rotation and justification: */
 void GText(double, double, int, char*, double, double, double, DevDesc*);
@@ -738,8 +746,8 @@ void GMtext(char*, int, double, int, double, int, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 
-double GExpressionHeight(SEXP, int, DevDesc*);
-double GExpressionWidth(SEXP, int, DevDesc*);
+double GExpressionHeight(SEXP, GUnit, DevDesc*);
+double GExpressionWidth(SEXP, GUnit, DevDesc*);
 
 
 
@@ -770,14 +778,14 @@ SEXP LTYget(unsigned int);
  */
 
 /* Convert an R unit (e.g., "user") into an internal unit (e.g., USER)> */
-int GMapUnits(int);
+GUnit GMapUnits(int);
 /* Convert a LOCATION from one coordinate system to another: */
-void GConvert(double*, double*, int, int, DevDesc*);
-double GConvertX(double, int, int, DevDesc*);
-double GConvertY(double, int, int, DevDesc*);
+void GConvert(double*, double*, GUnit, GUnit, DevDesc*);
+double GConvertX(double, GUnit, GUnit, DevDesc*);
+double GConvertY(double, GUnit, GUnit, DevDesc*);
 /* Convert an x/y-dimension from one set of units to another: */
-double GConvertXUnits(double, int, int, DevDesc*);
-double GConvertYUnits(double, int, int, DevDesc*);
+double GConvertXUnits(double, GUnit, GUnit, DevDesc*);
+double GConvertYUnits(double, GUnit, GUnit, DevDesc*);
 
 /* Set up the different regions on a device (i.e., inner region,
  * figure region, plot region) and transformations for associated
@@ -800,10 +808,15 @@ void currentFigureLocation(int*, int*, DevDesc*);
 
 double R_Log10(double);
 
-double xDevtoNDC(double x, DevDesc *dd);
-double yDevtoNDC(double y, DevDesc *dd);
-double xDevtoNFC(double x, DevDesc *dd);
-double yDevtoNFC(double y, DevDesc *dd);
+/* which of these conversions should be public? maybe all? [NO_REMAP] */
+double xDevtoNDC(double, DevDesc*);
+double yDevtoNDC(double, DevDesc*);
+double xDevtoNFC(double, DevDesc*);
+double yDevtoNFC(double, DevDesc*);
+double xDevtoNPC(double, DevDesc*);
+double yDevtoNPC(double, DevDesc*);
+double xDevtoUsr(double, DevDesc*);
+double yDevtoUsr(double, DevDesc*);
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
 
@@ -812,9 +825,11 @@ double yNPCtoUsr(double, DevDesc*);
 
 unsigned int rgb2col(char *);
 unsigned int name2col(char *);
-unsigned int char2col(char *s);/* rgb2col() or name2col() */
+unsigned int number2col(char *);
+unsigned int char2col(char *);/* rgb2col() or name2col() */
+unsigned int str2col(char *);
+
 char* col2name(unsigned int);
-unsigned int str2col(char *s);
 
 unsigned int ScaleColor(double x);
 
@@ -824,7 +839,7 @@ int StrMatch(char *s, char *t);
 void copyGPar(GPar *, GPar *);
 
 /* some functions that plot.c needs to share with plot3d.c */
-SEXP CreateAtVector(double*, double*, int, int);
+SEXP CreateAtVector(double*, double*, int, Rboolean);
 void GetAxisLimits(double, double, double*, double*);
 SEXP labelformat(SEXP);
 
@@ -832,7 +847,7 @@ SEXP labelformat(SEXP);
 
 double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
 double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
-void GVText (double, double, int, char *, int, int, 
+void GVText (double, double, int, char *, int, int,
 	     double, double, double, DevDesc *);
 
 #endif

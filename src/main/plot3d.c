@@ -192,7 +192,7 @@ int TestLabelIntersection(SEXP label1, SEXP label2) {
     double Ax, Bx, Ay, By, ax, ay, bx, by, q1, q2;
     double dom;
     double result1, result2;
-    
+
     for (i = 0; i < 4; i++) {
 	Ax = REAL(label1)[i];
 	Ay = REAL(label1)[i+4];
@@ -469,8 +469,9 @@ int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 
 static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		    SEXP labels, int cnum,
-		    int drawLabels, int method, int vectorFonts, int typeface,
-		    int fontindex, double atom, DevDesc *dd)
+		    Rboolean drawLabels, int method,
+		    Rboolean vectorFonts, int typeface, int fontindex,
+		    double atom, DevDesc *dd)
 {
     double f, xl, xh, yl, yh, zll, zhl, zlh, zhh, xx[4], yy[4];
     double xend, yend;
@@ -496,8 +497,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
     SEXP label1 = PROTECT(allocVector(REALSXP, 8));
     SEXP label2;
     SEXP lab;
-    int gotLabel = 0;
-    int ddl;  /** Don't draw label */
+    Rboolean gotLabel = FALSE;
+    Rboolean ddl;/* Don't draw label -- currently unused, i.e. always FALSE*/
 
     for (i = 0; i < nx - 1; i++) {
 	xl = REAL(x)[i];
@@ -656,365 +657,364 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
     /* 4. Draw the contour */
 
     for (i = 0; i < nx - 1; i++)
-	for (j = 0; j < ny - 1; j++) {
-	    while ((seglist = ctr_SegDB[i + j * nx])) {
-		ii = i; jj = j;
-		start = end = seglist;
-		ctr_SegDB[i + j * nx] = seglist->next;
-		xend = seglist->x1;
-		yend = seglist->y1;
-		while ((dir = ctr_segdir(xend, yend, REAL(x), REAL(y),
-				       &ii, &jj, nx, ny))) {
-		    ctr_SegDB[ii + jj * nx]
-			= ctr_segupdate(xend, yend, dir, 1,
-					ctr_SegDB[ii + jj * nx], &seg);
-		    if (!seg) break;
-		    end->next = seg;
-		    end = seg;
-		    xend = end->x1;
-		    yend = end->y1;
-		}
-		ii = i; jj = j;
-		xend = seglist->x0;
-		yend = seglist->y0;
-		while ((dir = ctr_segdir(xend, yend, REAL(x), REAL(y),
-				       &ii, &jj, nx, ny))) {
-		    ctr_SegDB[ii + jj * nx]
-			= ctr_segupdate(xend, yend, dir, 0,
-					ctr_SegDB[ii+jj*nx], &seg);
-		    if (!seg) break;
-		    seg->next = start;
-		    start = seg;
-		    xend = start->x0;
-		    yend = start->y0;
-		}
-		s = start;
-		ns = 0;
-		while (s) {
-		    ns++;
-		    s = s->next;
-		}
+      for (j = 0; j < ny - 1; j++) {
+	while ((seglist = ctr_SegDB[i + j * nx])) {
+	    ii = i; jj = j;
+	    start = end = seglist;
+	    ctr_SegDB[i + j * nx] = seglist->next;
+	    xend = seglist->x1;
+	    yend = seglist->y1;
+	    while ((dir = ctr_segdir(xend, yend, REAL(x), REAL(y),
+				     &ii, &jj, nx, ny))) {
+		ctr_SegDB[ii + jj * nx]
+		    = ctr_segupdate(xend, yend, dir, 1,
+				    ctr_SegDB[ii + jj * nx], &seg);
+		if (!seg) break;
+		end->next = seg;
+		end = seg;
+		xend = end->x1;
+		yend = end->y1;
+	    }
+	    ii = i; jj = j;
+	    xend = seglist->x0;
+	    yend = seglist->y0;
+	    while ((dir = ctr_segdir(xend, yend, REAL(x), REAL(y),
+				     &ii, &jj, nx, ny))) {
+		ctr_SegDB[ii + jj * nx]
+		    = ctr_segupdate(xend, yend, dir, 0,
+				    ctr_SegDB[ii+jj*nx], &seg);
+		if (!seg) break;
+		seg->next = start;
+		start = seg;
+		xend = start->x0;
+		yend = start->y0;
+	    }
+	    s = start;
+	    ns = 0;
+	    while (s) {
+		ns++;
+		s = s->next;
+	    }
 
-		/* countour midpoint */
-		/* use for labelling sometime */
+	    /* countour midpoint */
+	    /* use for labelling sometime */
 
-		if (ns > 3) ns2 = ns/2;
-		else ns2 = -1;
+	    if (ns > 3) ns2 = ns/2;
+	    else ns2 = -1;
 
-		s = start;
-		xxx = (double *) C_alloc(ns + 1, sizeof(double));
-		yyy = (double *) C_alloc(ns + 1, sizeof(double));
-		ns = 0;
+	    s = start;
+	    xxx = (double *) C_alloc(ns + 1, sizeof(double));
+	    yyy = (double *) C_alloc(ns + 1, sizeof(double));
+	    ns = 0;
+	    xxx[ns] = s->x0;
+	    yyy[ns++] = s->y0;
+	    while (s->next) {
+		s = s->next;
 		xxx[ns] = s->x0;
 		yyy[ns++] = s->y0;
-		while (s->next) {
-		    s = s->next;
-		    xxx[ns] = s->x0;
-		    yyy[ns++] = s->y0;
-		}
-		xxx[ns] = s->x1;
-		yyy[ns++] = s->y1;
-		GMode(1, dd);
+	    }
+	    xxx[ns] = s->x1;
+	    yyy[ns++] = s->y1;
+	    GMode(1, dd);
 
-		/* If user supplied labels, use i'th one of them
-		   Otherwise stringify the z-value of the contour */
-		buffer[0] = ' ';
-		if (!isNull(labels)) {
-		    int numl = length(labels);
-		    strcpy(&buffer[1], CHAR(STRING_ELT(labels, cnum % numl)));
-		}
-		else {
-		    PROTECT(lab = allocVector(REALSXP, 1));
-		    REAL(lab)[0] = zc;
-		    lab = labelformat(lab);
-		    strcpy(&buffer[1], CHAR(STRING_ELT(lab, 0)));
-		    UNPROTECT(1);
-		}
-		buffer[strlen(buffer)+1] = '\0';
-		buffer[strlen(buffer)] = ' ';
+	    /* If user supplied labels, use i'th one of them
+	       Otherwise stringify the z-value of the contour */
+	    buffer[0] = ' ';
+	    if (!isNull(labels)) {
+		int numl = length(labels);
+		strcpy(&buffer[1], CHAR(STRING_ELT(labels, cnum % numl)));
+	    }
+	    else {
+		PROTECT(lab = allocVector(REALSXP, 1));
+		REAL(lab)[0] = zc;
+		lab = labelformat(lab);
+		strcpy(&buffer[1], CHAR(STRING_ELT(lab, 0)));
+		UNPROTECT(1);
+	    }
+	    buffer[strlen(buffer)+1] = '\0';
+	    buffer[strlen(buffer)] = ' ';
 
-		if (vectorFonts) {
-		    /* 1, 1 => sans serif, basic font */
-		    labelDistance = GVStrWidth(buffer, typeface, fontindex,
-					       INCHES, dd);
-		    labelHeight = GVStrHeight(buffer, typeface, fontindex,
-					      INCHES, dd);
-		} else {
-		    labelDistance = GStrWidth(buffer, INCHES, dd);
-		    labelHeight = GStrHeight(buffer, INCHES, dd);
-		}
+	    if (vectorFonts) {
+		/* 1, 1 => sans serif, basic font */
+		labelDistance = GVStrWidth(buffer, typeface, fontindex,
+					   INCHES, dd);
+		labelHeight = GVStrHeight(buffer, typeface, fontindex,
+					  INCHES, dd);
+	    }
+	    else {
+		labelDistance = GStrWidth(buffer, INCHES, dd);
+		labelHeight = GStrHeight(buffer, INCHES, dd);
+	    }
 
-		if ((drawLabels == 1) && (labelDistance > 0)) {
-		    /* Try to find somewhere to draw the label */
-		    switch (method) {
-		    case 0: /* draw label at one end of contour
-			       overwriting contour line
-			    */
-		        if (useStart(xxx, yyy, ns, dd) )
-			    index = 0;
-			else
-			    index = ns - 1;
-			break;
-		    case 1: /* draw label at one end of contour
-			       embedded in contour
-			       no overlapping labels
-			    */
+	    if (drawLabels &&  labelDistance > 0) {
+		/* Try to find somewhere to draw the label */
+		switch (method) {
+		case 0: /* draw label at one end of contour
+			   overwriting contour line
+			*/
+		    if (useStart(xxx, yyy, ns, dd) )
 			index = 0;
-			range = 0;
-			gotLabel = 0;
-			if (useStart(xxx, yyy, ns, dd)) {
-			    iii = 0;
-			    n = findGapUp(xxx, yyy, ns, labelDistance, dd);
-			}
-			else {
-			    n = findGapDown(xxx, yyy, ns, labelDistance, dd);
-			    iii = ns - n - 1;
-			}
-			if (n > 0) {
-			    /** Find 4 corners of label extents **/
-			    FindCorners(labelDistance, labelHeight, label1,
-					xxx[iii], yyy[iii],
-					xxx[iii+n], yyy[iii+n], dd);
+		    else
+			index = ns - 1;
+		    break;
+		case 1: /* draw label at one end of contour
+			   embedded in contour
+			   no overlapping labels
+			*/
+		    index = 0;
+		    range = 0;
+		    gotLabel = FALSE;
+		    if (useStart(xxx, yyy, ns, dd)) {
+			iii = 0;
+			n = findGapUp(xxx, yyy, ns, labelDistance, dd);
+		    }
+		    else {
+			n = findGapDown(xxx, yyy, ns, labelDistance, dd);
+			iii = ns - n - 1;
+		    }
+		    if (n > 0) {
+			/** Find 4 corners of label extents **/
+			FindCorners(labelDistance, labelHeight, label1,
+				    xxx[iii], yyy[iii],
+				    xxx[iii+n], yyy[iii+n], dd);
 
-			    /** Test corners for intersection with previous labels **/
-			    label2 = labelList;
-			    result = 0;
-			    while ((result == 0) && (label2 != R_NilValue)) {
-				result = TestLabelIntersection(label1, CAR(label2));
-				label2 = CDR(label2);
-			    }
+			/** Test corners for intersection with previous labels **/
+			label2 = labelList;
+			result = 0;
+			while ((result == 0) && (label2 != R_NilValue)) {
+			    result = TestLabelIntersection(label1, CAR(label2));
+			    label2 = CDR(label2);
+			}
+			if (result == 0) {
+			    result = LabelInsideWindow(label1, dd);
 			    if (result == 0) {
-				result = LabelInsideWindow(label1, dd);
-				if (result == 0) {
-				    index = iii;
-				    range = n;
-				    gotLabel = 1;
-				}
+				index = iii;
+				range = n;
+				gotLabel = TRUE;
 			    }
 			}
-			break;
-		    case 2: /* draw label on flattest portion of contour
-			       embedded in contour line
-			       no overlapping labels
-			    */
-			/* Look for flatest sequence of contour gradients */
-			lowestVariance = 9999999;   /* A large number */
-			index = 0;
-			range = 0;
-			gotLabel = 0;
-			for (iii = 0; iii < ns; iii++) {
-			    distanceSum = 0;
-			    avgGradient = 0;
-			    squareSum = 0;
-			    sum = 0;
-			    n = 0;
-			    zeroCount = 0;
-			    jjj = (iii + 1);
-			    while ((jjj < ns-1) &&
-				   (distanceSum < labelDistance)) {
+		    }
+		    break;
+		case 2: /* draw label on flattest portion of contour
+			   embedded in contour line
+			   no overlapping labels
+			*/
+		    /* Look for flatest sequence of contour gradients */
+		    lowestVariance = 9999999;   /* A large number */
+		    index = 0;
+		    range = 0;
+		    gotLabel = FALSE;
+		    for (iii = 0; iii < ns; iii++) {
+			distanceSum = 0;
+			avgGradient = 0;
+			squareSum = 0;
+			sum = 0;
+			n = 0;
+			zeroCount = 0;
+			jjj = (iii + 1);
+			while ((jjj < ns-1) &&
+			       (distanceSum < labelDistance)) {
 
 				/* Find a gap big enough for the label
 				   use several segments if necessary
 				*/
-				dX = xxx[jjj] - xxx[jjj - n - 1];
-				dY = yyy[jjj] - yyy[jjj - n - 1];
-				dXC = GConvertXUnits(dX, USER, INCHES, dd);
-				dYC = GConvertYUnits(dY, USER, INCHES, dd);
-				distanceSum = hypot(dXC, dYC);
+			    dX = xxx[jjj] - xxx[jjj - n - 1];
+			    dY = yyy[jjj] - yyy[jjj - n - 1];
+			    dXC = GConvertXUnits(dX, USER, INCHES, dd);
+			    dYC = GConvertYUnits(dY, USER, INCHES, dd);
+			    distanceSum = hypot(dXC, dYC);
 
 				/* Calculate the variance of the gradients
 				   of the segments that will make way for the
 				   label
 				*/
-				deltaX = xxx[jjj] - xxx[jjj - 1];
-				deltaY = yyy[jjj] - yyy[jjj - 1];
-				deltaXC = GConvertXUnits(deltaX, USER, INCHES, dd);
-				deltaYC = GConvertYUnits(deltaY, USER, INCHES, dd);
-				if (deltaX == 0) {deltaX = 1;}
-				avgGradient += (deltaY/deltaX);
-				squareSum += avgGradient * avgGradient;
-				jjj = (jjj + 1);
-				n += 1;
-			    }
-			    if (distanceSum < labelDistance)
-				break;
-
-			    /** Find 4 corners of label extents **/
-			    FindCorners(labelDistance, labelHeight, label1,
-					xxx[iii], yyy[iii],
-					xxx[iii+n], yyy[iii+n], dd);
-
-			    /** Test corners for intersection with previous labels **/
-			    label2 = labelList;
-			    result = 0;
-			    while ((result == 0) && (label2 != R_NilValue)) {
-				result = TestLabelIntersection(label1, CAR(label2));
-				label2 = CDR(label2);
-			    }
-			    if (result == 0)
-				result = LabelInsideWindow(label1, dd);
-			    if (result == 0) {
-				variance = (squareSum - (avgGradient * avgGradient) / n) / n;
-				avgGradient /= n;
-				if (variance < lowestVariance) {
-				    lowestVariance = variance;
-				    index = iii;
-				    range = n;
-				    avg = avgGradient;
-				}
-			    }
-			    if (lowestVariance < 9999999)
-				gotLabel = 1;
+			    deltaX = xxx[jjj] - xxx[jjj - 1];
+			    deltaY = yyy[jjj] - yyy[jjj - 1];
+			    deltaXC = GConvertXUnits(deltaX, USER, INCHES, dd);
+			    deltaYC = GConvertYUnits(deltaY, USER, INCHES, dd);
+			    if (deltaX == 0) {deltaX = 1;}
+			    avgGradient += (deltaY/deltaX);
+			    squareSum += avgGradient * avgGradient;
+			    jjj = (jjj + 1);
+			    n += 1;
 			}
-		    } /* switch (method) */
+			if (distanceSum < labelDistance)
+			    break;
 
-		    if (method == 0) {
-			GPolyline(ns, xxx, yyy, USER, dd);
-			if (vectorFonts)
-			    GVText(xxx[index], yyy[index], USER, buffer,
-				   typeface, fontindex,
-				   .5, .5, 0, dd);
-			else
-			    GText(xxx[index], yyy[index], USER, buffer,
-				  .5, .5, 0, dd);
-		    } else {
-			for (iii = 0; iii < index; iii++)
-			    GLine(xxx[iii], yyy[iii],
-				  xxx[iii+1], yyy[iii+1], USER, dd);
-			for (iii = index+range; iii < ns - 1; iii++)
-			    GLine(xxx[iii], yyy[iii],
-				  xxx[iii+1], yyy[iii+1], USER, dd);
+			/** Find 4 corners of label extents **/
+			FindCorners(labelDistance, labelHeight, label1,
+				    xxx[iii], yyy[iii],
+				    xxx[iii+n], yyy[iii+n], dd);
 
-			if (gotLabel) {
-			    /* find which plot edge we are closest to */
-			    int closest; /* 0 = index,  1 = index+range */
-			    double dx1, dx2, dy1, dy2, dmin;
-			    dx1 = fmin2((xxx[index] - dd->gp.usr[0]),
-					(dd->gp.usr[1] - xxx[index]));
-			    dx2 = fmin2((dd->gp.usr[1] - xxx[index+range]),
-					(xxx[index+range] - dd->gp.usr[0]));
-			    if (dx1 < dx2) {
-				closest = 0;
-				dmin = dx1;
-			    } else {
-				closest = 1;
-				dmin = dx2;
+			/** Test corners for intersection with previous labels **/
+			label2 = labelList;
+			result = 0;
+			while ((result == 0) && (label2 != R_NilValue)) {
+			    result = TestLabelIntersection(label1, CAR(label2));
+			    label2 = CDR(label2);
+			}
+			if (result == 0)
+			    result = LabelInsideWindow(label1, dd);
+			if (result == 0) {
+			    variance = (squareSum - (avgGradient * avgGradient) / n) / n;
+			    avgGradient /= n;
+			    if (variance < lowestVariance) {
+				lowestVariance = variance;
+				index = iii;
+				range = n;
+				avg = avgGradient;
 			    }
-			    dy1 = fmin2((yyy[index] - dd->gp.usr[2]),
-					(dd->gp.usr[3] - yyy[index]));
-			    if (closest && (dy1 < dmin)) {
-				closest = 0;
-				dmin = dy1;
-			    } else if (dy1 < dmin)
-				dmin = dy1;
-			    dy2 = fmin2((dd->gp.usr[3] - yyy[index+range]),
-					(yyy[index+range] - dd->gp.usr[2]));
-			    if (!closest && (dy2 < dmin))
-				closest = 1;
+			}
+			if (lowestVariance < 9999999)
+			    gotLabel = TRUE;
+		    }
+		} /* switch (method) */
 
-			    dx = GConvertXUnits(xxx[index+range] - xxx[index],
-						USER, INCHES, dd);
-			    dy = GConvertYUnits(yyy[index+range] - yyy[index],
-						USER, INCHES, dd);
-			    dxy = hypot(dx, dy);
+		if (method == 0) {
+		    GPolyline(ns, xxx, yyy, USER, dd);
+		    if (vectorFonts)
+			GVText(xxx[index], yyy[index], USER, buffer,
+			       typeface, fontindex,
+			       .5, .5, 0, dd);
+		    else
+			GText(xxx[index], yyy[index], USER, buffer,
+			      .5, .5, 0, dd);
+		}
+		else {
+		    for (iii = 0; iii < index; iii++)
+			GLine(xxx[iii], yyy[iii],
+			      xxx[iii+1], yyy[iii+1], USER, dd);
+		    for (iii = index+range; iii < ns - 1; iii++)
+			GLine(xxx[iii], yyy[iii],
+			      xxx[iii+1], yyy[iii+1], USER, dd);
 
-			    /* save the current label for checking overlap */
-			    label2 = allocVector(REALSXP, 8);
+		    if (gotLabel) {
+			/* find which plot edge we are closest to */
+			int closest; /* 0 = index,  1 = index+range */
+			double dx1, dx2, dy1, dy2, dmin;
+			dx1 = fmin2((xxx[index] - dd->gp.usr[0]),
+				    (dd->gp.usr[1] - xxx[index]));
+			dx2 = fmin2((dd->gp.usr[1] - xxx[index+range]),
+				    (xxx[index+range] - dd->gp.usr[0]));
+			if (dx1 < dx2) {
+			    closest = 0;
+			    dmin = dx1;
+			} else {
+			    closest = 1;
+			    dmin = dx2;
+			}
+			dy1 = fmin2((yyy[index] - dd->gp.usr[2]),
+				    (dd->gp.usr[3] - yyy[index]));
+			if (closest && (dy1 < dmin)) {
+			    closest = 0;
+			    dmin = dy1;
+			} else if (dy1 < dmin)
+			    dmin = dy1;
+			dy2 = fmin2((dd->gp.usr[3] - yyy[index+range]),
+				    (yyy[index+range] - dd->gp.usr[2]));
+			if (!closest && (dy2 < dmin))
+			    closest = 1;
 
-			    FindCorners(labelDistance, labelHeight, label2,
-					xxx[index], yyy[index],
-					xxx[index+range], yyy[index+range], dd);
-			    UNPROTECT_PTR(labelList);
-			    labelList = PROTECT(CONS(label2, labelList));
+			dx = GConvertXUnits(xxx[index+range] - xxx[index],
+					    USER, INCHES, dd);
+			dy = GConvertYUnits(yyy[index+range] - yyy[index],
+					    USER, INCHES, dd);
+			dxy = hypot(dx, dy);
 
-			    ddl = 0;
-			    /* draw an extra bit of segment if the label
-			       doesn't fill the gap */
+			/* save the current label for checking overlap */
+			label2 = allocVector(REALSXP, 8);
+
+			FindCorners(labelDistance, labelHeight, label2,
+				    xxx[index], yyy[index],
+				    xxx[index+range], yyy[index+range], dd);
+			UNPROTECT_PTR(labelList);
+			labelList = PROTECT(CONS(label2, labelList));
+
+			ddl = FALSE;
+			/* draw an extra bit of segment if the label
+			   doesn't fill the gap */
+			if (closest) {
+			    xStart = xxx[index+range] -
+				(xxx[index+range] - xxx[index]) *
+				labelDistance / dxy;
+			    yStart = yyy[index+range] -
+				(yyy[index+range] - yyy[index]) *
+				labelDistance / dxy;
+			    if (labelDistance / dxy < 1)
+				GLine(xxx[index], yyy[index],
+				      xStart, yStart,
+				      USER, dd);
+			} else {
+			    xStart = xxx[index] +
+				(xxx[index+range] - xxx[index]) *
+				labelDistance / dxy;
+			    yStart = yyy[index] +
+				(yyy[index+range] - yyy[index]) *
+				labelDistance / dxy;
+			    if (labelDistance / dxy < 1)
+				GLine(xStart, yStart,
+				      xxx[index+range], yyy[index+range],
+				      USER, dd);
+			}
+
+			/*** Draw contour labels ***/
+			if (xxx[index] < xxx[index+range]) {
 			    if (closest) {
-				xStart = xxx[index+range] -
-				    (xxx[index+range] - xxx[index]) *
-				    labelDistance / dxy;
-				yStart = yyy[index+range] -
-				    (yyy[index+range] - yyy[index]) *
-				    labelDistance / dxy;
-				if (labelDistance / dxy < 1)
-				    GLine(xxx[index], yyy[index],
-					  xStart, yStart,
-					  USER, dd);
+				ux = xStart;
+				uy = yStart;
+				vx = xxx[index+range];
+				vy = yyy[index+range];
 			    } else {
-				xStart = xxx[index] +
-				    (xxx[index+range] - xxx[index]) *
-				    labelDistance / dxy;
-				yStart = yyy[index] +
-				    (yyy[index+range] - yyy[index]) *
-				    labelDistance / dxy;
-				if (labelDistance / dxy < 1)
-				    GLine(xStart, yStart,
-					  xxx[index+range], yyy[index+range],
-					  USER, dd);
+				ux = xxx[index];
+				uy = yyy[index];
+				vx = xStart;
+				vy = yStart;
 			    }
+			}
+			else {
+			    if (closest) {
+				ux = xxx[index+range];
+				uy = yyy[index+range];
+				vx = xStart;
+				vy = yStart;
+			    } else {
+				ux = xStart;
+				uy = yStart;
+				vx = xxx[index];
+				vy = yyy[index];
+			    }
+			}
 
-			    /*** Draw contour labels ***/
-			    if (xxx[index] < xxx[index+range]) {
-				if (closest) {
-				    ux = xStart;
-				    uy = yStart;
-				    vx = xxx[index+range];
-				    vy = yyy[index+range];
-				} else {
-				    ux = xxx[index];
-				    uy = yyy[index];
-				    vx = xStart;
-				    vy = yStart;
-				}
-			    }
-			    else {
-				if (closest) {
-				    ux = xxx[index+range];
-				    uy = yyy[index+range];
-				    vx = xStart;
-				    vy = yStart;
-				} else {
-				    ux = xStart;
-				    uy = yStart;
-				    vx = xxx[index];
-				    vy = yyy[index];
-				}
-			    }
-
-			    if (ddl == 0) {
+			if (!ddl) {
 				/* convert to INCHES for calculation of
 				   angle to draw text
 				*/
-				GConvert(&ux, &uy, USER, INCHES, dd);
-				GConvert(&vx, &vy, USER, INCHES, dd);
+			    GConvert(&ux, &uy, USER, INCHES, dd);
+			    GConvert(&vx, &vy, USER, INCHES, dd);
 				/* 1, 1 => sans serif, basic font
 				   0, .5 => left, centre justified */
-				if (vectorFonts)
-				    GVText(ux, uy, INCHES, buffer,
-					   typeface, fontindex,
-					   0, .5,
-					   (180 / 3.14) *
-					   atan2(vy - uy, vx - ux),
-					   dd);
-				else
-				    GText(ux, uy, INCHES, buffer, 0, .5,
-					  (180 / 3.14) *
-					  atan2(vy - uy, vx - ux),
-					  dd);
-			    }
-			} /* if (gotLabel) */
-		    } /* if (method == 0) else ... */
-		} /* if ((drawLabels == 1) && (labelDistance > 0)) */
-		else {
-		    GPolyline(ns, xxx, yyy, USER, dd);
-		}
-
-		GMode(0, dd);
-		C_free((char *) xxx);
-		C_free((char *) yyy);
+			    if (vectorFonts)
+				GVText(ux, uy, INCHES, buffer,
+				       typeface, fontindex, 0, .5,
+				       (180 / 3.14) * atan2(vy - uy, vx - ux),
+				       dd);
+			    else
+				GText (ux, uy, INCHES, buffer, 0, .5,
+				       (180 / 3.14) * atan2(vy - uy, vx - ux),
+				       dd);
+			}
+		    } /* if (gotLabel) */
+		} /* if (method == 0) else ... */
+	    } /* if (drawLabels && labelDistance > 0) */
+	    else {
+		GPolyline(ns, xxx, yyy, USER, dd);
 	    }
-	}
+
+	    GMode(0, dd);
+	    C_free((char *) xxx);
+	    C_free((char *) yyy);
+	} /* while */
+      } /* for(i .. )  for(j ..) */
     UNPROTECT_PTR(label1); /* pwwwargh! This is messy, but last thing
 			      protected is likely labelList, and that needs
 			      to be preserved across calls */
@@ -1030,9 +1030,9 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     double cexsave;
     double atom, zmin, zmax;
     char *vmax, *vmax0;
-    int drawLabels;
     int method;
-    int vectorFonts = 0;
+    Rboolean drawLabels;
+    Rboolean vectorFonts = FALSE;
     int typeface = 0;
     int fontindex = 0;
     double labcex;
@@ -1072,7 +1072,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     labcex = asReal(CAR(args));
     args = CDR(args);
 
-    drawLabels = asLogical(CAR(args));
+    drawLabels = (Rboolean)asLogical(CAR(args));
     args = CDR(args);
 
     method = asInteger(CAR(args)); args = CDR(args);
@@ -1081,7 +1081,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont)) {
-	vectorFonts = 1;
+	vectorFonts = TRUE;
 	typeface = INTEGER(vfont)[0];
 	fontindex = INTEGER(vfont)[1];
     }
@@ -2001,7 +2001,7 @@ static void PerspAxis(double *x, double *y, double *z,
 	       0.1, 10, 2, dd);
 	break;
     case 2: /* "detailed": normal ticks as per 2D plots */
-	PROTECT(at = CreateAtVector(axp, range, 7, 0));
+	PROTECT(at = CreateAtVector(axp, range, 7, FALSE));
 	PROTECT(lab = labelformat(at));
 	for (i=0; i<length(at); i++) {
 	    switch (axisType) {
@@ -2208,8 +2208,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     ProcessInlinePars(args, dd);
     if (length(border) > 1)
 	dd->gp.fg = INTEGER(border)[0];
-    dd->gp.xlog = 0;
-    dd->gp.ylog = 0;
+    dd->gp.xlog = dd->gp.ylog = FALSE;
 
     /* Set up the light vector (if any) */
     if (DoLighting)
