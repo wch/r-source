@@ -125,7 +125,8 @@ AC_DEFUN([R_PROG_PERL],
     AC_CACHE_CHECK([whether perl version is at least 5],
       r_cv_prog_perl_v5, [PERL5_CHECK()] )
   else
-    PERL=false
+    AC_PATH_PROGS(FALSE, false)
+    PERL="${FALSE}"
   fi
   if test "${r_cv_prog_perl_v5}" = yes; then
     NO_PERL5=false
@@ -175,11 +176,11 @@ AC_DEFUN([R_PROG_TEXMF],
     AC_MSG_WARN(${warn_info})
     MAKEINFO=false
   fi
-  if test "${PERL}" != false; then
+  if test "${PERL}" = ${FALSE}; then
+    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  else
     INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
     AC_SUBST(INSTALL_INFO)
-  else
-    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   fi
   : ${R_RD4DVI="ae"}
   AC_SUBST(R_RD4DVI)
