@@ -107,6 +107,9 @@
    GUI to be built. */
 #undef HAVE_X11
 
+/* Define if you have IEEE 754 floating point arithmetic. */
+#define IEEE_754 1
+
 /* Define if log() is wrong for 0/-1. */
 #undef LOG_BROKEN
 
