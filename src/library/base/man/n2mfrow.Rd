@@ -30,4 +30,4 @@ for (j in 1:n)
 sapply(1:10, n2mfrow)
 }
 \keyword{dplot}
-\keyword{utility}
+\keyword{utilities}
