@@ -11,14 +11,20 @@ subdir = doc/manual
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+SOURCES_TEXI = R-FAQ.texi R-exts.texi
 DISTFILES = \
 	EQN README \
 	Makefile.in Makefile.win \
-	R-defs.texi R-exts.texi dir texinfo.tex \
+	R-defs.texi dir texinfo.tex \
+	$(SOURCES_TEXI) \
 	Rd.sty lib2tex.in \
 	omsaer.fd omsaett.fd omscmtt.fd \
-	refman.top.in refman.bot
-SUBDIRS = ae pdf
+	refman.top refman.bot
+SUBDIRS = pdf
+
+OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
+OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
+OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = @MAKEINFO@
 TEXI2DVI = $(top_srcdir)/tools/texi2dvi
@@ -28,8 +34,10 @@ PDFLATEX = @PDFLATEX@
 infodir = @infodir@
 INSTALL_INFO = @INSTALL_INFO@
 
-# set the next to `.' if your LaTeX lacks the ae font package
-AE = @AE@
+R_PAPERSIZE = @R_PAPERSIZE@
+R_RD4DVI = ae
+R_RD4PDF =
+
 # set the next to `ae' to omit the hyperlinks
 PDF = pdf
 
@@ -62,25 +70,23 @@ R:
 .texi.pdf:
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
-dvi: refman.dvi R-exts.dvi
-refman.dvi: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+dvi: refman.dvi $(OBJECTS_DVI)
+refman.dvi: version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo "LaTeX documentation: Reference Index ..."
 	@rm -f *.aux refman.toc refman.ind
-	@TEXINPUTS="$(srcdir)/$(AE):$(srcdir):$$TEXINPUTS" \
+	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	  echo "\\documentclass[$${opt}]{book}"; \
+	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
+	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  cat $(srcdir)/refman.top; \
+	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  cat $(srcdir)/refman.bot) > refman.tex
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
-	@TEXINPUTS="$(srcdir)/$(AE):$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
-refman.tex: lib2tex refman.top $(srcdir)/refman.bot
-	@echo "creating $(subdir)/$@"
-	@(cat refman.top; \
-	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
-	  cat $(srcdir)/refman.bot) > $@
-refman.top: $(srcdir)/refman.top.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-version.tex: $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
+version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
@@ -93,20 +99,29 @@ version.tex: $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  OPTS="--latex" $(MAKE) PKGS="$*" DOCS
 	./lib2tex $*
 FORCE:
-R-exts.dvi: R-exts.texi version.texi $(srcdir)/texinfo.tex
 
-version.texi: $(top_srcdir)/VERSION
+$(OBJECTS_DVI): $(srcdir)/texinfo.tex
+R-exts.dvi: version.texi
+
+version.texi: Makefile $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  echo "@set VERSION $${v}" > $@)
 
-info: R-exts.info
-R-exts.info: R-exts.texi version.texi
+info: $(OBJECTS_INFO)
+R-exts.info: version.texi
 
-pdf: refman.pdf R-exts.pdf
-refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
+pdf: refman.pdf $(OBJECTS_PDF)
+refman.pdf: version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	@echo "PDF LaTeX documentation: Reference Index ..."
 	@rm -f *.aux refman.toc refman.ind
+	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	  echo "\\documentclass[$${opt}]{book}"; \
+	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
+	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  cat $(srcdir)/refman.top; \
+	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  cat $(srcdir)/refman.bot) > refman.tex
 	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
@@ -114,7 +129,8 @@ refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-R-exts.pdf: R-exts.texi version.texi $(srcdir)/texinfo.tex
+$(OBJECTS_PDF): $(srcdir)/texinfo.tex
+R-exts.pdf: version.texi 
 
 install: installdirs install-tex
 	@echo "Installing doc/manual ..."
@@ -127,11 +143,13 @@ install-dvi: dvi
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/dvi; \
 	done
 install-info: info $(infodir)/dir
-	@for f in R-exts.info*; do \
+	@for f in $(OBJECTS_INFO:.info=.info*); do \
 	  $(INSTALL_DATA) $${f} $(infodir); \
 	done
-	@$(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/R-exts.info \
-	  || echo "You need to adjust $(infodir)/dir manually"
+	@for f in $(OBJECTS_INFO); do \
+	  $(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/$${f} \
+	    || echo "You need to adjust $(infodir)/dir manually"; \
+	done
 install-pdf: pdf
 	@$(MKINSTALLDIRS) $(rhome)/doc/pdf
 	@for f in *.pdf; do \
@@ -153,10 +171,13 @@ uninstall-dvi:
 	@-rm -f $(rhome)/doc/dvi/*
 	@-rmdir $(rhome)/doc/dvi
 uninstall-info:
-	@$(INSTALL_INFO) --remove \
-	  --info-dir=$(infodir) $(infodir)/R-exts.info \
-	  || echo "You need to adjust $(infodir)/dir manually"
-	@rm -f $(infodir)/R-exts.info*
+	@for f in $(OBJECTS_INFO); do \
+	  $(INSTALL_INFO) --remove --info-dir=$(infodir) $${f} \
+	    || echo "You need to adjust $(infodir)/dir manually"; \
+	done
+	@for f in $(OBJECTS_INFO:.info=.info*); do \
+	  rm -f $(infodir)/$${f}; \
+	done
 uninstall-pdf:
 	@-rm -f $(rhome)/doc/pdf/*
 	@-rmdir $(rhome)/doc/pdf
@@ -172,7 +193,7 @@ clean:
 	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex \
 	  version.texi
 distclean: clean
-	@-rm -f Makefile lib2tex refman.top
+	@-rm -f Makefile lib2tex
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
