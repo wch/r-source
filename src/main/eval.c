@@ -367,6 +367,8 @@ SEXP eval(SEXP e, SEXP rho)
 	    val = eval(PREXPR(e), PRENV(e));
 	    SET_PRSEEN(e, 0);
 	    SET_PRVALUE(e, val);
+	    /* allow GC to reclaim; useful for fancy games with delay() */
+	    SET_PRENV(e, R_NilValue);
 	}
 	tmp = PRVALUE(e);
 	break;
