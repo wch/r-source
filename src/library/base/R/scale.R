@@ -15,9 +15,7 @@ scale.default <- function(x, center = TRUE, scale = TRUE)
     if (is.logical(scale)) {
 	if (scale) {
 	    f <- function(v) {
-		nas <- is.na(v)
-		if(any(is.na(nas)))
-		    v <- v[!is.na(nas)]
+		v <- v[!is.na(v)]
 		sqrt(sum(v^2) / max(1, length(v) - 1))
 	    }
 	    x <- sweep(x, 2, apply(x, 2, f), "/")

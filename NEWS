@@ -218,13 +218,14 @@ NEW FEATURES
         easier to read delimited files as Windows programs tend to
         create (usually TAB separated).
 
-    o   tcltk library has had several canvas functions implemented
+    o   tcltk library has had several canvas functions implemented.
     
     o   tcltk now wraps callbacks to R in a try() construct - the
         nonlocal return from R's error handling could bring the Tk
         system into a strange state.  
 
-    o   new `tkfaq' demo for tcltk: displays the R FAQ in a text widget
+    o   new `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
+
 
 BUG FIXES
 
@@ -342,6 +343,7 @@ BUG FIXES
 	not if used in lapply or called as .Primitive("c").  It now
 	always occurs.
 
+    o	scale(scale=TRUE) gave all NAs in any columns containing NAs.
 
 
 	**************************************************

@@ -30,8 +30,9 @@ scale(x, ..., scale = TRUE)
   of columns of \code{x}, then each column of \code{x} has the
   corresponding value from \code{center} subtracted from it.
   If \code{center} is \code{TRUE} then centering is done by subtracting
-  the column means of \code{x} from their corresponding columns, and if
-  \code{center} is \code{FALSE}, no centering is done.
+  the column means (omitting \code{NA}s) of \code{x} from their
+  corresponding columns, and if \code{center} is \code{FALSE},
+  no centering is done.
 
   The value of \code{scale} determines how column scaling is performed
   (after centering).
@@ -54,5 +55,9 @@ scale(x, ..., scale = TRUE)
 x <- matrix(1:10, nc=2)
 (centered.x <- scale(x, scale=FALSE))
 cov(centered.scaled.x <- scale(x))# all 1
-}
+\testonly{## test out NA handling
+tm <- matrix(c(2,1,0,1,0,NA,NA,NA,0), nrow=3)
+scale(tm, , FALSE)
+scale(tm)
+}}
 \keyword{array}
