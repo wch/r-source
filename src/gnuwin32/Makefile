@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 
 PACKAGES=base eda lqs modreg mva stepfun
-RPREFIX=rw0641
+RPREFIX=rw0650
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -16,7 +16,7 @@ endif
 DIRS=  . ../nmath ../appl ../main
 R-DLLFLAGS= $(STRIPFLAG) -mwindows
 R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
-SOURCES=$(foreach  i,$(DIRS),$(wildcard $i/*.c $i/*.f))
+SOURCES=$(foreach i, $(DIRS), $(wildcard $i/*.c $i/*.f))
 UFILES= ../unix/devPS.c ../unix/devPicTeX.c ../unix/sock.c ../unix/Rsock.c
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
 
@@ -40,8 +40,8 @@ FFLAGS=$(OPTFLAGS)
 ../unix/sock-CFLAGS=-DWin32
 ../unix/Rsock-CFLAGS=-DWin32
 
-rbuild: fixfiles rlibs ../../bin/R.dll libR.a ../include/globalvar.h \
-	front-ends COPYRIGHTS
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a \
+	../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: $(PKGS)
 
@@ -133,7 +133,7 @@ ziponly-%:
 bootstrap-DLLNM=boott
 
 clean: cleanwin
-	$(RM) -f $(OBJS) $(WINOBJS) *.a
+	$(RM) -f $(OBJS) $(WINOBJS) *.a ../*/*.d
 
 veryclean: clean
 	$(RM) -rf ../../bin/R.exe ../../library
@@ -141,7 +141,8 @@ veryclean: clean
 	$(RM) -f ../library/*/src/*.def ../library/*/src/*.dll
 
 cleanwin:
-	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 .RData .Rhistory
+	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
+	.RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C regex clean
@@ -227,43 +228,15 @@ packagedist:
 distribution: bindist srcdist packagedist
 
 # Dependencies
-console.o:		console.h rui.h graphapp/ga.h graphapp/stdimg.h
-devga.o:  		console.h rui.h devga.h opt.h graphapp/ga.h \
-			graphapp/stdimg.h
-dynload.o: 		../include/FFDecl.h ../include/FFTab.h
-edit.o: 		run.h
-extra.o: 		graphapp/ga.h
-rhome.o: 		../include/Version.h
-rui.o: 			console.h opt.h rui.h ../include/Version.h \
-			graphapp/ga.h graphapp/stdimg.h
-run.o: 			run.h graphapp/ga.h
-system.o: 		devga.h run.h console.h rui.h graphapp/ga.h \
-                        ../include/Defn.h ../include/Version.h
+CSOURCES=$(foreach i, $(DIRS), $(wildcard $i/*.c))
+DEPS=$(foreach i, $(CSOURCES) $(UFILES), $(basename $i).d)
 
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
 
-../main/colors.o:	../include/Graphics.h
-../main/graphics.o:	../include/Graphics.h
-../main/par.o:		../include/Graphics.h
-../main/plot.o:		../include/Graphics.h
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
 
-../main/arithmetic.o:	../include/Mathlib.h ../include/Arith.h \
-			../include/Platform.h
-../main/format.o:	../include/Mathlib.h ../include/Arith.h
-../main/random.o:	../include/Mathlib.h ../include/Arith.h ../include/Random.h
-
-../main/deparse.o:	../main/names.h
-../main/names.o:	../main/names.h
-
-../main/print.o:	../include/Print.h
-../main/printarray.o:	../include/Print.h
-../main/printutils.o:	../include/Print.h
-../main/printvector.o:	../include/Print.h
-
-../main/version.o:	../include/Version.h
-
-../nmath/snorm.o:	../include/Random.h
-../nmath/sunif.o:	../include/Random.h
-
-
-../unix/devPS.o:        ../include/Graphics.h ../include/Defn.h
-../unix/devPicTeX.o:    ../include/Graphics.h ../include/Defn.h
+-include Makedeps
