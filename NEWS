@@ -74,6 +74,11 @@ NEW FEATURES
     o   Hershey vector fonts are available in text() and contour().
         Documentation for Hershey vector fonts is in help(Hershey).
 
+    o   The HTML function indices (for packages and for all installed 
+	functions) now omit methods for generic functions if they
+	would immediately follow the generic and refer to the same
+	file.
+
 
 BUG FIXES
 
