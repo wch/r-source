@@ -134,10 +134,10 @@
      $                   DLASCL, DORGHR, DROT, DSCAL, DTREVC, XERBLA
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
+      LOGICAL            LSAMER
       INTEGER            IDAMAX, ILAENV
       DOUBLE PRECISION   DLAMCH, RLANGE, DLAPY2, DNRM2
-      EXTERNAL           LSAME, IDAMAX, ILAENV, DLAMCH, RLANGE, DLAPY2,
+      EXTERNAL           LSAMER, IDAMAX, ILAENV, DLAMCH, RLANGE, DLAPY2,
      $                   DNRM2
 *     ..
 *     .. Intrinsic Functions ..
@@ -149,11 +149,11 @@
 *
       INFO = 0
       LQUERY = ( LWORK.EQ.-1 )
-      WANTVL = LSAME( JOBVL, 'V' )
-      WANTVR = LSAME( JOBVR, 'V' )
-      IF( ( .NOT.WANTVL ) .AND. ( .NOT.LSAME( JOBVL, 'N' ) ) ) THEN
+      WANTVL = LSAMER( JOBVL, 'V' )
+      WANTVR = LSAMER( JOBVR, 'V' )
+      IF( ( .NOT.WANTVL ) .AND. ( .NOT.LSAMER( JOBVL, 'N' ) ) ) THEN
          INFO = -1
-      ELSE IF( ( .NOT.WANTVR ) .AND. ( .NOT.LSAME( JOBVR, 'N' ) ) ) THEN
+      ELSE IF( ( .NOT.WANTVR ) .AND. (.NOT.LSAMER( JOBVR, 'N' ) ) ) THEN
          INFO = -2
       ELSE IF( N.LT.0 ) THEN
          INFO = -3
@@ -486,8 +486,8 @@
       EXTERNAL           DLASSQ
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
+      LOGICAL            LSAMER
+      EXTERNAL           LSAMER
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, MIN, SQRT
@@ -496,7 +496,7 @@
 *
       IF( MIN( M, N ).EQ.0 ) THEN
          VALUE = ZERO
-      ELSE IF( LSAME( NORM, 'M' ) ) THEN
+      ELSE IF( LSAMER( NORM, 'M' ) ) THEN
 *
 *        Find max(abs(A(i,j))).
 *
@@ -506,7 +506,7 @@
                VALUE = MAX( VALUE, ABS( A( I, J ) ) )
    10       CONTINUE
    20    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'O' ) ) .OR. ( NORM.EQ.'1' ) ) THEN
+      ELSE IF( ( LSAMER( NORM, 'O' ) ) .OR. ( NORM.EQ.'1' ) ) THEN
 *
 *        Find norm1(A).
 *
@@ -518,7 +518,7 @@
    30       CONTINUE
             VALUE = MAX( VALUE, SUM )
    40    CONTINUE
-      ELSE IF( LSAME( NORM, 'I' ) ) THEN
+      ELSE IF( LSAMER( NORM, 'I' ) ) THEN
 *
 *        Find normI(A).
 *
@@ -534,7 +534,7 @@
          DO 80 I = 1, M
             VALUE = MAX( VALUE, WORK( I ) )
    80    CONTINUE
-      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+      ELSE IF( (LSAMER( NORM, 'F' ) ) .OR. (LSAMER( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
 *
@@ -552,3 +552,90 @@
 *     End of DLANGE
       END
 
+      LOGICAL          FUNCTION LSAMER( CA, CB )
+*
+*  -- LAPACK auxiliary routine (version 3.0) --
+*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
+*     Courant Institute, Argonne National Lab, and Rice University
+*     September 30, 1994
+*
+*     .. Scalar Arguments ..
+      CHARACTER          CA, CB
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  LSAME returns .TRUE. if CA is the same letter as CB regardless of
+*  case.
+*
+*  Arguments
+*  =========
+*
+*  CA      (input) CHARACTER*1
+*  CB      (input) CHARACTER*1
+*          CA and CB specify the single characters to be compared.
+*
+* =====================================================================
+*
+*     .. Intrinsic Functions ..
+      INTRINSIC          ICHAR
+*     ..
+*     .. Local Scalars ..
+      INTEGER            INTA, INTB, ZCODE
+*     ..
+*     .. Executable Statements ..
+*
+*     Test if the characters are equal
+*
+      LSAMER = CA.EQ.CB
+      IF( LSAMER )
+     $   RETURN
+*
+*     Now test for equivalence if both characters are alphabetic.
+*
+      ZCODE = ICHAR( 'Z' )
+*
+*     Use 'Z' rather than 'A' so that ASCII can be detected on Prime
+*     machines, on which ICHAR returns a value with bit 8 set.
+*     ICHAR('A') on Prime machines returns 193 which is the same as
+*     ICHAR('A') on an EBCDIC machine.
+*
+      INTA = ICHAR( CA )
+      INTB = ICHAR( CB )
+*
+      IF( ZCODE.EQ.90 .OR. ZCODE.EQ.122 ) THEN
+*
+*        ASCII is assumed - ZCODE is the ASCII code of either lower or
+*        upper case 'Z'.
+*
+         IF( INTA.GE.97 .AND. INTA.LE.122 ) INTA = INTA - 32
+         IF( INTB.GE.97 .AND. INTB.LE.122 ) INTB = INTB - 32
+*
+      ELSE IF( ZCODE.EQ.233 .OR. ZCODE.EQ.169 ) THEN
+*
+*        EBCDIC is assumed - ZCODE is the EBCDIC code of either lower or
+*        upper case 'Z'.
+*
+         IF( INTA.GE.129 .AND. INTA.LE.137 .OR.
+     $       INTA.GE.145 .AND. INTA.LE.153 .OR.
+     $       INTA.GE.162 .AND. INTA.LE.169 ) INTA = INTA + 64
+         IF( INTB.GE.129 .AND. INTB.LE.137 .OR.
+     $       INTB.GE.145 .AND. INTB.LE.153 .OR.
+     $       INTB.GE.162 .AND. INTB.LE.169 ) INTB = INTB + 64
+*
+      ELSE IF( ZCODE.EQ.218 .OR. ZCODE.EQ.250 ) THEN
+*
+*        ASCII is assumed, on Prime machines - ZCODE is the ASCII code
+*        plus 128 of either lower or upper case 'Z'.
+*
+         IF( INTA.GE.225 .AND. INTA.LE.250 ) INTA = INTA - 32
+         IF( INTB.GE.225 .AND. INTB.LE.250 ) INTB = INTB - 32
+      END IF
+      LSAMER = INTA.EQ.INTB
+*
+*     RETURN
+*
+*     End of LSAME
+*
+      END
