@@ -44,11 +44,6 @@ apply <- function(X, MARGIN, FUN, ...)
         for(i in 1:d2) ans[[i]] <- FUN(newX[,i], ...)
     } else
        for(i in 1:d2) ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
-#     if(length(d.call) == 1) {
-#         X1 <- newX[,1]
-#         if (length(dn.call)) names(X1) <- dn.call[[1]]
-#     } else X1 <- array(newX[,1], d.call, dn.call)
-#     ans <- .Internal(apply(newX, X1, FUN))
 
     ## answer dims and dimnames
 
@@ -69,10 +64,11 @@ apply <- function(X, MARGIN, FUN, ...)
     }
     if(len.a == d2)
 	return(array(ans, d.ans, dn.ans))
-    if(len.a > 0 && len.a %% d2 == 0)
+    if(len.a > 0 && len.a %% d2 == 0) {
+        if(is.null(dn.ans)) dn.ans <- vector(mode="list", length(d.ans))
+        dn.ans <- c(list(ans.names), dn.ans)
 	return(array(ans, c(len.a %/% d2, d.ans),
-                     if(is.null(dn.ans)) {
-                         if(!is.null(ans.names)) list(ans.names,NULL)
-                     } else c(list(ans.names), dn.ans)))
+                     if(!all(sapply(dn.ans, is.null))) dn.ans))
+    }
     return(ans)
 }

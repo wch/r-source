@@ -3233,3 +3233,11 @@ try(l[[2:3]] <- 1)
 l <- list(x=2, y=3)
 l[[2:3]] <- 1
 ## first two segfaulted in 1.9.x
+
+
+## apply() on an array of dimension >=3 AND when for each iteration
+## the function returns a named vector of length >=2 (PR#7205)
+a <- array(1:24, dim=2:4)
+func1 <- function(x) c(a=mean(x), b=max(x))
+apply(a, 1:2, func1)
+## failed in 1.9.1

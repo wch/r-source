@@ -618,6 +618,9 @@ BUG FIXES
     o	packageStatus() reported partially-installed bundles as
 	installed.
 
+    o   apply() failed on an array of dimension >=3 when for each iteration
+	the function returns a named vector of length >=2 (PR#7205)
+
 
 
 
