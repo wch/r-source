@@ -98,7 +98,8 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
 			  package, lib.loc)
     }
-    if (.Options$trace && length(file) && file != "") {
+    if (!is.null(.Options$trace) && .Options$trace
+        && length(file) && file != "") {
       cat ("\t\t\t\t\t\tHelp file name '", sub(".*/","",file),".Rd'\n",sep="")
       system(paste("${RHOME}/cmd/pager", file))
     } else
