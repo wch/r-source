@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.8.4.2 2001/03/22 12:54:19 maechler Exp $
+### $Id: nls.R,v 1.8.4.3 2001/03/24 00:10:55 bates Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -395,20 +395,39 @@ nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
 }
 
 nls <-
-  function (formula, data = list(),
-            start = getInitial( formula, data ), control,
+  function (formula, data = parent.frame(), start, control,
             algorithm="default", trace = FALSE,
             subset, weights, na.action)
 {
     mf <- match.call()             # for creating the model frame
-    mform <- formula <- as.formula( formula )
+    formula <- as.formula( formula )
     varNames <- all.vars(formula)  # parameter and variable names from formula
+
+    ## adjust a one-sided model formula by using 0 as the response
+    if (length(formula) == 2) {
+        formula[[3]] <- formula[[2]]
+        formula[[2]] <- 0
+    }
+
+    ## get names of the parameters from the starting values or selfStart model
+    if (missing(start)) {
+        if(!is.null(attr(data, "parameters"))) {
+            pnames <- names(attr(data, "parameters"))
+        } else {
+            cll <- formula[[length(formula)]]
+            func <- get(as.character(cll[[1]]))
+            pnames <-
+                as.character(as.list(match.call(func, call = cll))[-1][attr(func,
+                                                      "pnames")])
+        }
+    } else {
+        pnames <- names(start)
+    }
 
     ## Heuristics for determining which names in formula represent actual
     ## variables
-
     ## If it is a parameter it is not a variable (nothing to guess here :-)
-    varNames <- varNames[is.na(match(varNames, names(start), nomatch = NA))]
+    varNames <- varNames[is.na(match(varNames, pnames, nomatch = NA))]
     ## If its length is a multiple of the response or LHS of the formula,
     ## then it is probably a variable
     ## This may fail if evaluation of formula[[2]] fails
@@ -422,8 +441,11 @@ nls <-
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
+    if (missing(start)) {
+        start <- getInitial(formula, mf)
+    }
     for(var in varNames[!varIndex])
-      mf[[var]] <- eval(as.name(var), data)
+        mf[[var]] <- eval(as.name(var), data)
 
     m <- switch(algorithm,
                 plinear = nlsModel.plinear( formula, mf, start ),
