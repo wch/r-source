@@ -33,6 +33,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   arithmetic tried to set time series parameters before dimensions
+
     o   mvfft fixes (from Martyn Plummer) - not working with vectors and
         segfault problem.
 
