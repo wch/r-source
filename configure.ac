@@ -171,7 +171,7 @@ AC_ARG_ENABLE([R-shlib],
 [want_R_shlib="${want_R_framework}"])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/bin -lR"
+  LIBR="-L\$(R_HOME)/lib -lR"
 else
   LIBR=
 fi
