@@ -135,21 +135,18 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
   topic <- substitute(topic)
   if (!is.character(topic)) 
     topic <- deparse(topic)[1]
-  file <- ""
-  for (lib in lib.loc) for (pkg in package) {
-    AnIndexF <- system.file("help", "AnIndex", pkg = pkg, lib = lib)
-    if (AnIndexF != "") {
-      AnIndex <- scan(AnIndexF, what = c("c", "c"), quiet = TRUE)
-      i <- match(topic, AnIndex[seq(1, length(AnIndex), 2)], -1)
-      if (i != -1)
-        file <- system.file("R-ex", paste(AnIndex[2*i], ".R", sep = ""),
-                            pkg = pkg, lib = lib)
-    }
-    if (file != "") 
-      break
-  }
+  INDICES <- system.file(pkg=package, lib=lib.loc)
+  file <- index.search(topic, INDICES, "AnIndex")
   if (file == "") 
-    stop(paste("Couldn't find '", topic, "' example", sep = ""))
+    stop(paste("No help file found for'", topic, "'", sep = ""))
+  comp <- strsplit(file, .Platform$file.sep)[[1]]
+  pkg <- comp[length(comp) - 2]
+  if(length(file) > 1)
+    warning(paste("More than one help file found: using package", pkg))
+  lib <- sub(file.path("", pkg, "help", topic), "", file[1])
+  file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
+  if (!file.exists(file)) 
+    stop(paste("'", topic, "'has a help file but no examples file", sep = ""))
   if (pkg != "base") 
     library(pkg, lib = lib, character.only = TRUE)
   source(file, echo = echo, prompt.echo = prompt.echo, verbose = verbose, 
