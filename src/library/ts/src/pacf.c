@@ -127,8 +127,8 @@ void arma0fa(double *params, double *res)
 	/* expand out seasonal ARMA models */
 	for(i = 0; i < mp; i++) phi[i] = params[i];
 	for(i = 0; i < mq; i++) theta[i] = params[i+mp];
-	for(i = mp+1; i < ip; i++) phi[i] = 0.0;
-	for(i = mq+1; i < iq; i++) theta[i] = 0.0;
+	for(i = mp; i < ip; i++) phi[i] = 0.0;
+	for(i = mq; i < iq; i++) theta[i] = 0.0;
 	for(j = 0; j < msp; j++) {
 	    phi[(j+1)*ns-1] += params[j+mp+mq];
 	    for(i = 0; i < mp; i++)
@@ -172,6 +172,13 @@ void get_s2(double *res)
     *res=s2;
 }
 
+void get_resid(double *res)
+{
+    int i;
+
+    for(i = 0; i < n; i++) res[i] = resid[i];
+}
+
 void arma0_fore(int *n_ahead, double *x, double *var)
 {
     double *work;
@@ -179,6 +186,23 @@ void arma0_fore(int *n_ahead, double *x, double *var)
     work = Calloc(ir, double);
     F77_CALL(kalfor)(n_ahead, &ip, &ir, &np, phi, a, p, v, work, x, var);
     Free(work);
+}
+void arima0_fore(int *n_ahead, int *pn, double *x, int *seas, int *nsea)
+{
+    int i, k, sd, n = *pn, na = *n_ahead, N = n+na, ns = *nsea, nc = 0;
+
+    /* initialize all the differenced series */
+    for(k = 0; k < ns; k++) {
+	sd = seas[k];
+	nc += sd;
+	for(i = nc; i < n; i++) 
+	    x[i + (k+1)*N] = x[i + k*N] - x[i - sd + k*N];
+    }
+    /* predict them all one step at a time: the top level is already there */
+    for(i = 0; i < na; i++) {
+	for(k = ns - 1; k >= 0; k--)
+	    x[n + i + k*N] = x[n + i - seas[k] + k*N] + x[n+i + (k+1)*N];
+    }	    
 }
 
 void artoma(int *pp, double *phi, double *psi, int *npsi)
@@ -189,5 +213,63 @@ void artoma(int *pp, double *phi, double *psi, int *npsi)
     for(i = p+1; i < *npsi; i++) psi[i] = 0.0;
     for(i = 0; i < *npsi - p - 1; i++) {
 	for(j = 0; j < p; j++) psi[i+j+1] += phi[j]*psi[i];
+    }
+}
+
+void arimatoma(int *arma, double *params, double *psi, int *npsi)
+{
+    int i, j;
+    double tmp;
+
+    ns = arma[4];
+    ip = arma[0] + arma[5] + ns*(arma[3] + arma[6]);
+    iq = arma[1] + ns*arma[3];
+    phi = (double*) R_alloc(ip, sizeof(double));
+    theta = (double*) R_alloc(iq, sizeof(double));
+    
+    mp = arma[0];
+    mq = arma[1];
+    msp = arma[2];
+    msq = arma[3];
+    if(ns > 0) {
+	/* expand out seasonal ARMA models */
+	for(i = 0; i < mp; i++) phi[i] = params[i];
+	for(i = 0; i < mq; i++) theta[i] = params[i+mp];
+	for(i = mp; i < ip; i++) phi[i] = 0.0;
+	for(i = mq; i < iq; i++) theta[i] = 0.0;
+	for(j = 0; j < msp; j++) {
+	    phi[(j+1)*ns-1] += params[j+mp+mq];
+	    for(i = 0; i < mp; i++)
+		phi[(j+1)*ns+i] -= params[i]*params[j+mp+mq];
+	}
+	for(j = 0; j < msq; j++) {
+	    theta[(j+1)*ns-1] += params[j+mp+mq+msp];
+	    for(i = 0; i < mq; i++)
+		theta[(j+1)*ns+i] += params[i+mp]*params[j+mp+mq+msp];
+	}
+    } else {
+	for(i = 0; i < mp; i++) phi[i] = params[i];
+	for(i = 0; i < mq; i++) theta[i] = params[i+mp];
+    }
+
+    /* expand out differencing */
+    for(i = 0; i < arma[5]; i++) {
+	for(j = ip - 1; j >= 1; j--) phi[j] -= phi[j-1];
+	phi[0] += 1.0;
+    }
+    for(i = 0; i < arma[6]; i++) {
+	for(j = ip - 1; j >= ns; j--) phi[j] -= phi[j-ns];
+	phi[ns-1] += 1.0;
+    }
+
+    /* Invert: Harvey 1993, p. 117) */
+    for(i = 0; i < *npsi; i++) {
+	tmp = phi[i];
+	for(j = 1; j < ip; j ++) {
+	    if(j >= i) break;
+	    tmp += phi[j] * psi[j - i - 1];
+	}
+	if(i < iq) tmp += theta[i];
+	psi[i] = tmp;
     }
 }

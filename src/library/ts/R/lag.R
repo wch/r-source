@@ -25,3 +25,16 @@ deltat <- function(x, ...) UseMethod("deltat")
 deltat.default <- function(x) 1/tsp(as.ts(x))[3]
 
 
+diff.ts <- function (x, lag = 1, differences = 1)
+{
+    if (lag < 1 | differences < 1)
+        stop("Bad value for lag or differences")
+    if (lag * differences >= NROW(x)) return(x[0])
+    r <- x
+    for (i in 1:differences) {
+        r <- r - lag(r, -lag)
+    }
+    xtsp <- attr(x, "tsp")
+    if(is.matrix(x)) colnames(r) <- colnames(x)
+    ts(r, end = xtsp[2], freq = xtsp[3])
+}

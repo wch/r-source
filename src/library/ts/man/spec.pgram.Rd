@@ -105,11 +105,12 @@ mfdeaths.spc <- spec.pgram(ts.intersect(mdeaths, lag(fdeaths, 4)),
 plot.spec.coherency(mfdeaths.spc)
 plot.spec.phase(mfdeaths.spc)
 
-data(finance)
-finance.spc <- spectrum(finance, kernel=daniell.kernel(c(30,50)), plot=FALSE)
-plot(finance.spc)
-plot.spec.coherency(finance.spc)
-plot.spec.phase(finance.spc)
+data(EuStockMarkets)
+stocks.spc <- spectrum(EuStockMarkets, kernel=daniell.kernel(c(30,50)),
+                       plot=FALSE)
+plot(stocks.spc)
+plot.spec.coherency(stocks.spc)
+plot.spec.phase(stocks.spc)
 
 data(sales)
 sales.spc <- spectrum(ts.union(sales, sales.lead),

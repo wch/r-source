@@ -43,8 +43,10 @@ filter		Linear filtering on a time series
 kernel		Smoothing kernel objects (and Daniell, Fejer and 
 		   (modified) Dirichlet kernels)
 lag		Compute lagged version of time series
+lines.ts	lines method for time series
 na.contiguous	Find longest contiguous stretch of non-NAs
 na.omit.ts	na.omit method for time series
+Ops.ts		arithmetic (such as + - * /) for time series
 pacf		Partial autocorrelation function
 plot.acf	Plot autocorrelation function
 plot.spec	Plot spectral density estimate
@@ -65,7 +67,7 @@ TO DO
 
 ar.burg		maybe only univariate
 
-In some cases the behaviour will closer to that of S(-PLUS) if
+In some cases the visual output will closer to that of S(-PLUS) if
 options(ts.S.compat=TRUE) has been set.
 
 
@@ -84,11 +86,12 @@ Datasets in package ts:
 ----------------------
 
 accdeaths	US accidental deaths 1973-8
-beaver		time series of body temperatures of two beavers
+beavers		time series of body temperatures of two beavers
 deaths		time-series on UK lung deaths 1974-9 from Diggle (1990)
 mdeaths, fdeaths  as above, for males and females
 drivers 	time series on UK road deaths of drivers from Harvey (1989)
-finance 	daily closing prices of major European stock indices, 1991-1998
+EuStockMarkets	daily closing prices of major European stock indices, 1991-8
+LakeHuron	level of Lake Huron 1875-1972
 lh		dataset on luteinizing hormone from Diggle (1990)
 nottem		monthly time-series of temperatures in Nottingham, 1920-1939
 sales		sales data with leading indicator

@@ -1,7 +1,7 @@
 acf <-
-    function (x, lag.max = NULL, plot = TRUE,
+    function (x, lag.max = NULL,
               type = c("correlation", "covariance", "partial"),
-              na.action = na.fail, ...)
+              plot = TRUE, na.action = na.fail, ...)
 {
     type <- match.arg(type)
     if(type == "partial") {
@@ -112,12 +112,15 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
 
 plot.acf <-
     function (x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,
-              ylim = NULL, main = NULL, ci.col="blue", ...)
+              ylim = NULL, main = NULL, ci.col="blue",
+              ci.type=c("white", "ma"), ...)
 {
-    opar <- NULL
-    on.exit(par(opar))
+    ci.type <- match.arg(ci.type)
     nser <- ncol(x$lag)
-    opar <- c(opar, par(mfrow = rep(min(nser, 5), 2)))
+    if(nser > 1) {
+        opar <- par(mfrow = rep(min(nser, 5), 2))
+        on.exit(par(opar))
+    }
     if (is.null(ylab))
         ylab <- switch(x$type, correlation = "ACF", covariance = "ACF",
             partial = "Partial ACF")
@@ -127,10 +130,13 @@ plot.acf <-
         else paste("Series ", 1:nser)
     }
     with.ci <- (ci > 0) && (x$type != "covariance")
+    with.ci.ma <- with.ci && ci.type == "ma" && x$type == "correlation"
     for (i in 1:nser) for (j in 1:nser) {
-        clim <- if (with.ci)
-            qnorm((1 + ci)/2)/sqrt(x$n.used)
-        else c(0, 0)
+        clim <- c(0, 0)
+        if (with.ci)
+            clim <- qnorm((1 + ci)/2)/sqrt(x$n.used)
+        if (with.ci.ma && i == j)
+            clim <- clim * sqrt(cumsum(c(1, 2*x$acf[-1, i, j]^2)))
         if (is.null(ylim)) {
             ymin <- min(c(x$acf[, i, j], -clim))
             ymax <- max(c(x$acf[, i, j], clim))
@@ -138,9 +144,13 @@ plot.acf <-
         }
         plot(x$lag[, i, j], x$acf[, i, j], type = type, xlab = xlab,
             ylab = if(j==1) ylab else "", ylim = ylim, ...)
-        if (with.ci)
-            abline(h = c(clim, -clim), col = ci.col, lty = 2)
         abline(h = 0)
+        if (with.ci && ci.type == "white")
+            abline(h = c(clim, -clim), col = ci.col, lty = 2)
+        if (with.ci.ma && i == j) {
+            lines(x$lag[, i, j], clim, col = ci.col, lty = 2)
+            lines(x$lag[, i, j], -clim, col = ci.col, lty = 2)
+        }
         if (!is.null(main))
             title(main)
         else if (i == j)
@@ -149,9 +159,9 @@ plot.acf <-
     }
 }
 
-ccf <- function(x, y, lag.max = NULL, plot = TRUE,
+ccf <- function(x, y, lag.max = NULL,
                 type = c("correlation", "covariance"),
-                na.action = na.fail, ...)
+                plot = TRUE, na.action = na.fail, ...)
 {
     type <- match.arg(type)
     if(is.matrix(x) || is.matrix(y))

@@ -97,27 +97,27 @@ apply.kernel (k1, k2)
 	Methods.} Second edition. Springer, pp. 350-365.
 }
 \examples{
-data (finance)    # Demonstrate a simple trading strategy for the 
-x <- finance[,1]  # financial time series German stock index DAX.
-k1 <- daniell.kernel (50)  # a long moving average
-k2 <- daniell.kernel (10)  # and a short one
-plot (k1) 
-plot (k2)
-x1 <- apply.kernel (x, k1)
-x2 <- apply.kernel (x, k2)
-plot (x)
-lines (x1, col = "red")    # go long if the short crosses the long upwards
-lines (x2, col = "green")  # and go short otherwise
+data (EuStockMarkets)    # Demonstrate a simple trading strategy for the 
+x <- EuStockMarkets[,1]  # financial time series German stock index DAX.
+k1 <- daniell.kernel(50)  # a long moving average
+k2 <- daniell.kernel(10)  # and a short one
+plot(k1) 
+plot(k2)
+x1 <- apply.kernel(x, k1)
+x2 <- apply.kernel(x, k2)
+plot(x)
+lines(x1, col = "red")    # go long if the short crosses the long upwards
+lines(x2, col = "green")  # and go short otherwise
 
-data (sunspot)     # Reproduce example 10.4.3 from Brockwell and Davies (1991)
+data(sunspot)     # Reproduce example 10.4.3 from Brockwell and Davies (1991)
 x <- sunspot.year  # p. 354
-k1 <- daniell.kernel (11)
-k2 <- daniell.kernel (7)
-k3 <- daniell.kernel (3)
-k <- apply.kernel (k1, k2)
-k <- apply.kernel (k, k3)
+k1 <- daniell.kernel(11)
+k2 <- daniell.kernel(7)
+k3 <- daniell.kernel(3)
+k <- apply.kernel(k1, k2)
+k <- apply.kernel(k, k3)
 # or just k <- daniell.kernel(c(11,7,3))
-spectrum (x, kernel=k)
+spectrum(x, kernel=k)
 }
 \keyword{ts}
 

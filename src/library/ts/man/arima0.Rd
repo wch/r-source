@@ -4,31 +4,42 @@
 \alias{predict.arima0}
 \title{ARIMA Modelling of Time Series -- Preliminary Version}
 \usage{
-arima0(x, order=c(0, 0, 0),
-       seasonal=list(order = c(0, 0, 0), period = NA),
-       xreg=NULL, include.mean=TRUE, na.action=na.fail,
-       delta=0.01)
-predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
+arima0(x, order = c(0, 0, 0),
+       seasonal = list(order = c(0, 0, 0), period = NA),
+       xreg = NULL, include.mean, na.action = na.fail,
+       delta = 0.01)
+predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
 }
 \arguments{
  \item{x}{a univariate time series}
+
  \item{order}{A specification of the non-seasonal part of the ARIMA
      model: the three components are (p, d, q), the AR order, the degree
      of differencing and the MA order.}
+
  \item{seasonal}{A specification of the seasonal part of the ARIMA
      model, plus the period (which defaults to \code{frequency(x)}.}
+
  \item{xreg}{Optionally, a vector or matrix of external regressors,
      which must have the same number of rows as \code{x}
      \emph{after differencing}.}
+
  \item{include.mean}{Should the ARMA model (after differencing) include
-     a mean term?}
- \item{na.action}{Function to be applies to remove missing values.}
+     a mean term? The default is \code{TRUE} for undifferenced series,
+     \code{FALSE} for differenced ones.}
+
+ \item{na.action}{Function to be applied to remove missing values.}
+
  \item{delta}{A value to indicate at which point `fast recursions'
      should be used. See the Details section.}
+
  \item{arima0.obj}{The result of an \code{arima0} fit.}
+
  \item{newxreg}{New values of \code{xreg} to be used for
      prediction. Must have at least \code{n.ahead} rows.}
+
  \item{n.ahead}{The number of steps ahead for which prediction is required.}
+
  \item{se.fit}{Logical: should standard errors of prediction be returned?}
 }
 \description{
@@ -58,23 +69,31 @@ predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
     and unit variance.
 }
 \value{
-  For \code{arima0}, a list of class \code{"arima0"} with components
+  For \code{arima0}, a list of class \code{"arima0"} with components:
+
   \item{coef}{a vector of AR, MA and regression coefficients,}
+
   \item{sigma2}{the MLE of the innovations variance.}
+
   \item{var.coef}{the estimated variance matrix of the coefficients
       \code{coef}.}
+
   \item{loglik}{the maximized log-likelihood (of the differenced data).}
-  \item{aic}{the AIC value corresponding to that log-likelihood.}
-  \item{call}{the matched call.}
+
   \item{arma}{A compact form of the specification, as a vector giving
       the number of AR, MA, seasonal AR and seasonal MA coefficients,
       plus the period.}
+
+  \item{aic}{the AIC value corresponding to that log-likelihood.}
+
+  \item{resid}{the residuals.}
+
+  \item{call}{the matched call.}
+
   \item{series}{the name of the series \code{x}.}
-  \item{data}{the time series used for fitting (after regression and
-      removing the fitted mean).}
 
   For \code{predict.arima0}, a time series of predictions, or if
-  \code{se.fit=TRUE}, a list with components \code{pred}, the
+  \code{se.fit = TRUE}, a list with components \code{pred}, the
   predictions, and \code{se}, the estimated standard errors. Both
   components are time series.
 }
@@ -95,12 +114,13 @@ predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
 \note{
     This is a preliminary version, and will be replaced in due course.
 
-    The predictions and standard errors of prediction are currently for
-    the differenced series.
+    The standard errors of prediction exclude the uncertainly in the
+    estimation of the ARMA model and the regression coefficients.
 
     The results are likely to be different from S-PLUS's
-    \code{arima.mle}, which computes a conditional likelihood, and does
-    not include a mean in the model.
+    \code{arima.mle}, which computes a conditional likelihood and does
+    not include a mean in the model. Further, \code{arima.mle} reverses
+    the signs of the MA coefficients.
 }
 
 
@@ -117,6 +137,9 @@ predict(arima0(lh, order=c(3,0,0)), n.ahead=12)
 data(accdeaths)
 fit <- arima0(accdeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)))
 fit
-predict(fit, n.ahead=6) # note, predicts differences.
+predict(fit, n.ahead=6)
+
+data(LakeHuron)
+arima0(LakeHuron, order=c(2,0,0), xreg=1:98)
 }
 \keyword{ts}

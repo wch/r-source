@@ -17,26 +17,37 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 }
 \arguments{
     \item{x}{A univariate or multivariate time series.}
+
     \item{aic}{Logical flag.  If \code{TRUE} then the Akaike Information
  	Criterion is used to choose the order of the autoregressive
 	model. If \code{FALSE}, the model of order \code{order.max} is
 	fitted.}
+
     \item{order.max}{Maximum order (or order) of model to fit. Defaults
 	to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
 	of observations.}
+
     \item{method}{Character string giving the method used to fit the
 	model.  Must be one of \code{"yule-walker"} or \code{"burg"}
 	(the first few characters are sufficient).  Defaults to
 	\code{"yule-walker"}.}
+
     \item{na.action}{function to be called to handle missing values.}
+
     \item{demean}{should mean be removed before fitting?}
+
     \item{series}{name for the series.  Defaults to
      	\code{deparse(substitute(x))}.}
+
     \item{var.method}{the method to estimate the innovations variance
 	(see Details).}
+
     \item{ar.obj}{a fit from \code{ar}.}
+
     \item{newdata}{data to which to apply the prediction.}
+
     \item{n.ahead}{number of steps ahead at which to predict.}
+
     \item{se.fit}{logical: return estimated standard errors of the
      	prediction error?}
 }
@@ -58,12 +69,13 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
     coefficients and the autocovariance of \code{x} and in \code{ar.ols}
     from the variance matrix of the residuals.
 
-    \code{ar.burg} allows two
-    methods to estimate the innovations variance and hence AIC. Method 1
-    is to used the update given by the Levinson-Durbin recursion, and
-    follows S-PLUS. Method 2 is the mean of the sum of squares of the
-    foreward and backward prediction errors (as in Brockwell and Davis
-    (1996), p. 145). Percival and Walden (1998) discuss both.
+    \code{ar.burg} allows two methods to estimate the innovations
+    variance and hence AIC. Method 1 is to use the update given by
+    the Levinson-Durbin recursion (Brockwell and Davis, 1991, (8.2.6)
+    on page 242), and follows S-PLUS. Method 2 is the mean of the sum
+    of squares of the forward and backward prediction errors
+    (as in Brockwell and Davis, 1996, page 145). Percival and Walden
+    (1998) discuss both.
 
     Remember that \code{ar} includes by default a constant in the model, by
     removing the overall mean of \code{x} before fitting the AR model, or
@@ -140,6 +152,12 @@ ar(lh)
 ar(lh, method="burg")
 ar(lh, method="ols")
 
+data(LakeHuron)
+ar(LakeHuron)
+ar(LakeHuron, method="burg")
+ar(LakeHuron, method="ols")
+
+
 data(sunspot)
 sunspot.ar <- ar(sunspot.year)
 sunspot.ar
@@ -150,8 +168,8 @@ predict(sunspot.ar, n.ahead=25)
 data(sales)
 ar(ts.union(sales, sales.lead))
 
-data(finance)
-x <- diff(log(finance))
+data(EuStockMarkets)
+x <- diff(log(EuStockMarkets))
 ar.ols(x, order.max=6)
 }
 \keyword{ts}

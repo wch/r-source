@@ -7,13 +7,14 @@
 \alias{plot.acf}
 \title{Autocovariance and Autocorrelation Function Estimation}
 \usage{
-acf(x, lag.max = NULL, plot = TRUE,
+acf(x, lag.max = NULL,
     type = c("correlation", "covariance", "partial"),
-    na.action, ...)
+    plot = TRUE, na.action, ...)
 pacf(x, lag.max = NULL, plot = TRUE, na.action, ...)
-ccf(x, y, lag.max = NULL, plot = TRUE,
-    type = c("correlation", "covariance"), na.action, ...)
-plot.acf(acf.obj, ci=0.95, ...)
+ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
+    plot = TRUE,na.action, ...)
+
+plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
 }
 \arguments{
     \item{x, y}{a univariate or multivariate (not \code{ccf}) time
@@ -33,8 +34,13 @@ plot.acf(acf.obj, ci=0.95, ...)
     \item{acf.obj}{an object of class \code{acf}.}
 
     \item{ci}{coverage probability for confidence interval.  Plotting of
-	the confidence interval is suppressed unless \code{ci} is
-	positive.}
+	the confidence interval is suppressed if \code{ci} is
+	zero or negative.}
+
+    \item{ci.col}{colour to plot the confidence interval lines.}
+
+    \item{ci.type}{should the confidence limits assume a white noise
+	input or for lag \code{k} an MA(\code{k-1}) input?}
 
     \item{\dots}{graphical parameters.}
 }
@@ -59,13 +65,19 @@ plot.acf(acf.obj, ci=0.95, ...)
 \value{
   An object of class \code{acf}, which is a list with the following
   elements:
+
   \item{lag}{A three dimensional array containing the lags at which
       the acf is estimated.}
+
   \item{acf}{An array with the same dimensions as \code{lag} 
       containing the estimated acf.}
+
   \item{type}{The type of correlation (same as the \code{type} argument).}
+
   \item{n.used}{The number of observations in the time series.}
+
   \item{series}{The name of the series \code{x}.}
+
   \item{snames}{The series names for a multivariate time series.}
 
   The result is returned invisibly if \code{plot} is \code{TRUE}.
@@ -75,9 +87,7 @@ plot.acf(acf.obj, ci=0.95, ...)
 
 \note{The confidence interval plotted in \code{plot.acf} is based on an
     \emph{uncorrelated} series and should be treated with appropriate
-    caution.}
-
-%\seealso{\code{\link{ar.yw}}}
+    caution. Using \code{ci.type = "ma"} may be less potentially misleading.}
 
 \examples{
 ## Examples from Venables & Ripley
@@ -88,6 +98,7 @@ pacf(lh)
 
 data(deaths)
 acf(deaths)
+acf(deaths, ci.type="ma")
 acf(ts.union(mdeaths, fdeaths))
 ccf(mdeaths, fdeaths) # just the cross-correlations.
 }

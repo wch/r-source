@@ -46,9 +46,9 @@ stl <- function(x, s.window = NULL, s.degree = 0, t.window = NULL,
                   as.integer(t.window),
                   as.integer(l.window),
                   s.degree, t.degree, l.degree,
-                  nsjump = as.integer(s.window/10),
-                  ntjump = as.integer(t.window/10),
-                  nljump = as.integer(l.window/10),
+                  nsjump = as.integer(ceiling(s.window/10)),
+                  ntjump = as.integer(ceiling(t.window/10)),
+                  nljump = as.integer(ceiling(l.window/10)),
                   as.integer(ni),
                   niter = as.integer(niter), weights = double(n),
                   seasonal = double(n),
@@ -91,6 +91,7 @@ plot.stl <- function(x, labels = colnames(X), ...)
     for(i in 1:nplot) {
         plot(X[, i], type = if(i < nplot) "l" else "h",
              xlab = "", ylab = "", axes = F, ...)
+        if(i == nplot) abline(h=0)
         box()
         right <- i %% 2 == 0
         axis(2, labels = !right)

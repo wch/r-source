@@ -79,8 +79,8 @@ plot(gnp) # using `plot.ts' for time-series plot
 
 ## Multivariate
 z <- ts(matrix(rnorm(300),100,3),start=c(1961,1), frequency=12)
-data(finance)
-plot(finance)
+data(EuStockMarkets)
+plot(EuStockMarkets)
 \testonly{
 ts(1:5, start=2, end=4) # truncate
 ts(1:5, start=3, end=17)# repeat
