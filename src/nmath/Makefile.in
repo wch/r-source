@@ -85,6 +85,7 @@ R: Makefile
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
 libnmath.a: $(libnmath_a_OBJECTS)
+	rm -rf $@
 	$(AR) cr $@ $(libnmath_a_OBJECTS)
 	$(RANLIB) $@
 

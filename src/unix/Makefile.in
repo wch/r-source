@@ -60,6 +60,7 @@ R: Makefile
 	(cd ../include; $(MAKE) $(@F))
 
 libunix.a: $(libunix_a_OBJECTS)
+	rm -rf $@
 	$(AR) cr $@ $(libunix_a_OBJECTS)
 	$(RANLIB) $@
 
