@@ -11,6 +11,11 @@ BUG FIXES
 
     o   data.frame choked on long names from deparse()
 
+    o   data.edit now works (dataedit doesn't need pairlist()s anymore).
+
+    o   as.pairlist(NULL) is ok
+
+
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
