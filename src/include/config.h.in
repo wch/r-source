@@ -81,10 +81,11 @@
 /* String duplication */
 #undef HAVE_STRDUP
 
-/* Inverse Hyperbolics */
+/* Math stuff */
 #undef HAVE_ASINH
 #undef HAVE_ACOSH
 #undef HAVE_ATANH
+#undef HAVE_HYPOT
 
 /* Unix commands through a subshell */
 #undef HAVE_SYSTEM

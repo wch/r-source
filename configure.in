@@ -206,6 +206,9 @@ AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_GCC_TRADITIONAL
 
+CPPFLAGS=${CPPFLAGS:-"-I/usr/local/include"}
+LIBS=${LIBS:-"-L/usr/local/lib"}
+
 dnl Yes, we already need this at configure time ...
 case "${host}" in
   *aix*)
@@ -406,8 +409,8 @@ fi
 AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isnan matherr \
-  memcpy memmove popen rint strcoll system times vsnprintf)
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd hypot isnan \
+  matherr memcpy memmove popen rint strcoll system times vsnprintf)
 AC_REPLACE_FUNCS(strdup)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
