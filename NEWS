@@ -718,6 +718,9 @@ BUG FIXES
     o	as.dist() does a bit more checking of its first argument and now
 	warns when applied to non-square matrices.
 
+    o	mle() gives a more understandable error message when its 'start'
+        argument is not ok.
+
 
 
 

@@ -24,6 +24,8 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
     if(any(! n %in% names(fullcoef)))
         stop("some named arguments in 'fixed' are not arguments to the supplied log-likelihood")
     fullcoef[n] <- fixed
+    if(!missing(start) && (!is.list(start) || is.null(names(start))))
+        stop("'start' must be a named list")
     start[n] <- NULL
     f <- function(p){
         l <- as.list(p)
