@@ -1,11 +1,11 @@
 \name{esoph}
-\title{Smoking, Alcohol and (O)esophageal Cancer}
-\usage{data(esoph)}
 \alias{esoph}
+\title{Smoking, Alcohol and (O)esophageal Cancer}
 \description{
   Data from a case-control study of (o)esophageal cancer in
   Ile-et-Vilaine, France.
 }
+\usage{data(esoph)}
 \format{data frame with records for 88 age/alcohol/tobacco combinations.
 
   \tabular{rlll}{
@@ -24,7 +24,7 @@
     \tab \tab \tab 3  20--29\cr
     \tab \tab \tab 4  30+\cr
     [,4] \tab "ncases" \tab Number of cases \tab \cr
-    [,5] \tab "ncontrols"  \tab Number of subjects \tab
+    [,5] \tab "ncontrols" \tab Number of controls \tab
   }
 }
 \source{
