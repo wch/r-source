@@ -148,7 +148,9 @@ found:
     return 1;
 }
 
-static char DLLerror[256] = "";/* the error message */
+#define DLLerrBUFSIZE 1000
+static char DLLerror[DLLerrBUFSIZE] = "";
+/* the error message; length taken from ERRBUFSIZE in ./hpdlfcn.c  */
 
 	/* Inserts the specified DLL at the start of the DLL list */
 	/* All the other entries are "moved down" by one. */
