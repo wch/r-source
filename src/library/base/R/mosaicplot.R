@@ -74,8 +74,9 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                     if (XP[i] > 0) {
                         polygon(c(x.l[i], x.r[i], x.r[i], x.l[i]),
                                 c(y1, y1, y2, y2),
-                                lty = if(shade) X[i, p+1] else 1,
-                                col = color[if(shade) X[i, p+2] else i])
+                                ## shade can be a vector: what is intended?
+                                lty = if(shade[1]) X[i, p+1] else 1,
+                                col = color[if(shade[1]) X[i, p+2] else i])
                         ## <KH 2000-08-29>
                         ## Is this really needed?
                         ## segments(c(rep(x.l[i],3),x.r[i]),
