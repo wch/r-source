@@ -53,7 +53,7 @@ $(aqua_la): $(aqua_la_OBJECTS) $(aqua_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(aqua_la_LDFLAGS) $(aqua_la_OBJECTS) $(aqua_la_LIBADD)
 ## <FIXME>
 ## Not sure if we want to do this ...
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 Contents/Info.plist: $(srcdir)/Contents/Info.plist.in $(top_builddir)/config.status
