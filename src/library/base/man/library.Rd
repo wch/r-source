@@ -46,18 +46,15 @@ provide(package)
       vector of all available packages in \code{lib.loc}.}
 }
 \description{
-  \code{library(package)} and \code{require(package)} both load the package
-  named \code{package}.  \code{provide} allows code to register services that
-  it provides.
-
-  \code{.First.lib()} is called when a package is loaded by \code{library()}.
-  \code{.packages()} and the \code{.xxx} variables return information about
-  package availability.
+  \code{library} and \code{require} load add-on packages; \code{provide}
+  allows code to register services that packages provide.
+  \code{.First.lib()} is called when a package is loaded;
+  \code{.packages()} returns information about package availability.
 }
 \details{
-  \code{library(package)} and \code{require(package)} both load the package
-  with name \code{package}.  \code{require} is designed for use inside
-  other functions; it returns \code{FALSE} and optionally gives a
+  \code{library(package)} and \code{require(package)} both load the
+  package with name \code{package}.  \code{require} is designed for use
+  inside other functions; it returns \code{FALSE} and optionally gives a
   warning, rather than giving an error, if the package does not exist.
   Both functions check and update the list of currently loaded packages
   and do not reload code that is already loaded.  \code{require} also
@@ -69,23 +66,19 @@ provide(package)
   \code{.Provided} or among the packages in \code{search()}.  The main
   use for \code{provide} is when multiple packages share code.  This is
   most likely when the code implements features present in S(-PLUS) but
-  not in R. For example, the spline functions \code{ns}, \code{bs} and
-  so on are not included in the \R distribution.  A package containing
-  these functions can use \code{provide(splines)} to register this fact.
-  Another package that needs the functions can execute
-  \code{require(splines)} rather than \code{library(splines)} to load
-  the spline package only if their functionality is not already available.
+  not in R.
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it gives a list of all available packages in \code{lib.loc}
-  and invisibly returns their names (same as \code{.packages(all=T)}).
+  and invisibly returns their names (same as
+  \code{.packages(all = TRUE)}).
 
-  \code{library(help = somename)} prints information on
-  the package \code{somename}, typically by listing the most important user
-  level objects it contains.
+  \code{library(help = somename)} prints information on the package
+  \code{somename}, typically by listing the most important user level
+  objects it contains.
 
   \code{.First.lib()} is called when a package is loaded by
-  \code{library(.)}.  It is called with two arguments, the name of the
+  \code{library()}.  It is called with two arguments, the name of the
   library tree where the package was found (i.e., the corresponding
   element of \code{lib.loc}), and the name of the package (in that
   order).  It is a good place to put calls to \code{library.dynam()}
@@ -97,9 +90,9 @@ provide(package)
   environment in which the package is stored.
 
   \code{.packages()} returns the ``base names'' of the currently attached
-  packages \emph{invisibly} whereas \code{.packages(all.available =TRUE)}
-  gives (visibly) \emph{all} packages available in the library
-  location path \code{lib.loc}.
+  packages \emph{invisibly} whereas
+  \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
+  packages available in the library location path \code{lib.loc}.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.
