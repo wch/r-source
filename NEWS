@@ -332,6 +332,9 @@ NEW FEATURES
     o	New generic function reorder() with a dendrogram method;
 	new order.dendrogram() and heatmap().
 
+    o	The edit.matrix() and edit.data.frame() editors can now handle
+	logical data.
+
 
 INSTALLATION CHANGES
 
