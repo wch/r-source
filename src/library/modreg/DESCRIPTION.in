@@ -1,5 +1,6 @@
 Package: modreg
 Version: @VERSION@
+Priority: base
 Author: Brian Ripley.
 Description: Modern regression: smoothing and local methods
 License: GPL Version 2 or later.
