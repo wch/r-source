@@ -278,6 +278,8 @@ function(contents, type = NULL)
             tmp[is.na(tmp)] <- ""
             index[bad, 1] <- tmp
         }
+        ## and sort it by name
+        index <- index[sort.list(index[,1]), ]
     }
     index
 }
