@@ -166,31 +166,97 @@ function(RdFiles)
     contents
 }
 
+### * .writeContentsRDA
+
+.writeContentsRDA <-
+function(contents, outFile)
+{
+    ## Save Rd contents db to @file{outFile}.
+    ## <FIXME>
+    ## Change this as soon as we have Luke's code for serializing R
+    ## objects in base R.
+    ## </FIXME>
+    
+    ## Change e.g. when we use a different format for the contents db
+    ## (e.g., with aliases and keywords not collapsed).
+    version <- "0.1"
+    save(list = c("contents", "version"), file = outFile)
+}
+
+### * .writeContentsDCF
+
+.writeContentsDCF <-
+function(contents, packageName, outFile)
+{
+    ## Write a @file{CONTENTS} DCF file from an Rd contents db.
+    ## Note that these files currently have @samp{URL:} entries which
+    ## contain the package name, whereas @code{Rdcontents()} works on
+    ## collections of Rd files which do not necessarily all come from
+    ## the same package ...
+
+    ## <FIXME>
+    ## This has 'html' hard-wired.
+    ## Note that slashes etc. should be fine for URLs.
+    URLs <- paste("../../../library/",
+                  packageName,
+                  "/html/",
+                  basename(gsub("\\.[[:alpha:]]+$", "",
+                                contents[ , "File"])),
+                  ".html",
+                  sep = "")
+    ## </FIXME>
+                  
+    cat(paste(c("Entry:", "Aliases:", "Keywords:", "Description:",
+                "URL:"),
+              t(cbind(contents[, c("Name", "Aliases", "Keywords",
+                                   "Title"), drop = FALSE],
+                      URLs))),
+        sep = c("\n", "\n", "\n", "\n", "\n\n"),
+        file = outFile)
+}
+
+### * .buildRdIndex
+
+.buildRdIndex <-
+function(contents, type = NULL)
+{
+    ## Build an Rd 'index' containing Rd names and titles, maybe
+    ## subscripted according to the Rd type (\docType).
+    if(!is.null(type)) {
+        ind <- contents[ , "Type"] %in% type
+        ## Argh.  Ideally we only want to subscript according to
+        ## \docType.  Maybe for 2.0 ...
+        if(type == "data")
+            ind <- ind | contents[ , "Keywords"] == "datasets"
+        contents <- contents[ind, , drop = FALSE]
+    }
+    contents[ , c("Name", "Title"), drop = FALSE]
+}
+
 ### * Rdindex
 
 Rdindex <-
 function(RdFiles, outFile = "", type = NULL,
          width = 0.9 * getOption("width"), indent = NULL)
 {
-    ## Create @file{INDEX} or @file{data/00Index} files from Rd files.
+    ## Create @file{INDEX} or @file{data/00Index} style files from Rd
+    ## files.
+    ##
+    ## R version of @code{R CMD Rdindex}.
+    ##
+    ## <NOTE>
+    ## It is not a good idea to rewrite @code{R CMD Rdindex} as a shell
+    ## wrapper to @code{Rdindex()} because passing a long list of Rd
+    ## files as arguments can be quite messy.  Wait for this until we
+    ## have R scripts.
+    ## </NOTE>
 
     if((length(RdFiles) == 1) && .fileTest("-d", RdFiles)) {
         ## Compatibility code for the @code{R CMD Rdindex} interface.
-        ## <NOTE>
-        ## It is not a good idea to rewrite @code{R CMD Rdindex} as a
-        ## shell wrapper to @code{Rdindex()} because passing a long list
-        ## of Rd files as arguments can be quite messy.  Wait for this
-        ## until we have R scripts.
-        ## </NOTE>
         docsDir <- RdFiles
         if(.fileTest("-d", file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
-        docsExts <- .makeFileExts("docs")
-        RdFiles <- .listFilesWithExts(docsDir, docsExts)
-        docsOSDir <- file.path(docsDir, .Platform$OS)
-        if(.fileTest("-d", docsOSDir))
-            RdFiles <- c(RdFiles,
-                         .listFilesWithExts(docsOSDir, docsExts))
+        RdFiles <- .listFilesWithType(docsDir, "docs")
     }
 
     if(outFile == "")
@@ -203,19 +269,9 @@ function(RdFiles, outFile = "", type = NULL,
         stop(paste("argument", sQuote("outFile"),
                    "must be a character string or connection"))
 
-    contents <- Rdcontents(RdFiles)
-    
-    if(!is.null(type)) {
-        ind <- contents[ , "Type"] %in% type
-        ## Argh.  Ideally we only want to subscript according to
-        ## \docType.  Maybe for 2.0 ...
-        if(type == "data")
-            ind <- ind | contents[ , "Keywords"] == "datasets"
-        contents <- contents[ind, , drop = FALSE]
-    }
+    index <- .buildRdIndex(Rdcontents(RdFiles), type = type)
             
-    writeLines(formatDL(contents[ , c("Name", "Title"), drop = FALSE],
-                        width = width, indent = indent),
+    writeLines(formatDL(index, width = width, indent = indent),
                outFile)
 }
 
@@ -249,33 +305,9 @@ function(dir, outFile = "")
         stop(paste("argument", sQuote("outFile"),
                    "must be a character string or connection"))
 
-    docsExts <- .makeFileExts("docs")
-    docsFiles <- .listFilesWithExts(docsDir, docsExts)
-    if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
-        docsFiles <- c(docsFiles,
-                       .listFilesWithExts(docsOSDir, docsExts))
+    contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
 
-    contents <- Rdcontents(docsFiles)
-
-    ## <FIXME>
-    ## This has 'html' hard-wired.
-    ## Note that slashes etc. should be fine for URLs.
-    URLs <- paste("../../../library/",
-                  packageName,
-                  "/html/",
-                  basename(gsub("\\.[[:alpha:]]+$", "",
-                                contents[ , "File"])),
-                  ".html",
-                  sep = "")
-    ## </FIXME>
-                  
-    cat(paste(c("Entry:", "Aliases:", "Keywords:", "Description:",
-                "URL:"),
-              t(cbind(contents[, c("Name", "Aliases", "Keywords",
-                                   "Title"), drop = FALSE],
-                      URLs))),
-        sep = c("\n", "\n", "\n", "\n", "\n\n"),
-        file = outFile)
+    .writeContentsDCF(contents, packageName, outFile)
 }
 
 ### Local variables: ***

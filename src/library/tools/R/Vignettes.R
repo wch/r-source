@@ -165,6 +165,26 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
     invisible(NULL)
 }
 
+### .buildVignetteIndex
+
+.buildVignetteIndex <-
+function(vignetteFiles)
+{
+    vignetteIndexEntryRE <-
+        "[[:space:]]*%+[[:space:]]\\\\VignetteIndexEntry\{([^}]*)\}"
+    vignetteTitles <-
+        sapply(vignetteFiles,
+               function(file) {
+                   lines <- grep(vignetteIndexEntryRE, readLines(file),
+                                 value = TRUE)
+                   lines <- gsub(vignetteIndexEntryRE, "\\1", lines[1])
+               })
+    vignetteFiles <-
+        paste(basename(gsub("\\.[[:alpha:]]+$", "", vignetteFiles)),
+              ".pdf", sep = "")
+    cbind(vignetteFiles, vignetteTitles)
+}
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
