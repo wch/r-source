@@ -167,4 +167,5 @@ double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd);
 
 #define	DEG2RAD 0.01745329251994329576
 
-NewDevDesc* GEcurrentDevice();
+GEDevDesc* GEcurrentDevice();
+void GEcopyDisplayList(int fromDevice);

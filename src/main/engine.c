@@ -1835,7 +1835,7 @@ void GEplayDisplayList(GEDevDesc *dd)
  ****************************************************************
  */
 
-NewDevDesc* GEcurrentDevice()
+GEDevDesc* GEcurrentDevice()
 {
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
@@ -1846,5 +1846,34 @@ NewDevDesc* GEcurrentDevice()
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);
     }
-    return (NewDevDesc*) CurrentDevice();
+    return (GEDevDesc*) CurrentDevice();
 }
+
+/****************************************************************
+ * GEcopyDisplayList
+ ****************************************************************
+ */
+
+/* NOTE that this is NOT a permanent copy -- we just equate a couple 
+ * of pointers, then do some drawing.  You should NOT hang on to the
+ * device being copied to.  Most uses involve generating a new device
+ * then closing it.
+ */
+/* We assume that BOTH from and to devices are GEDevDesc's
+ * i.e., this will crash if you try to copy from or to an old DevDesc
+ */
+void GEcopyDisplayList(int fromDevice)
+{
+    GEDevDesc *dd = GEcurrentDevice();
+    DevDesc* fromDev = GetDevice(fromDevice);
+    int i;
+    dd->dev->displayList = displayList(fromDev);
+    for (i=0; i<numGraphicsSystems; i++) 
+	if (dd->gesd[i] != NULL)
+	    dd->gesd[i]->systemSpecific = GEsystemState((GEDevDesc*) fromDev, 
+							i);
+    GEplayDisplayList(dd);
+    if (!dd->dev->displayListOn)
+	initDisplayList((DevDesc*) dd);
+}
+
