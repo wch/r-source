@@ -144,6 +144,9 @@ NEW FEATURES
      o  hist.default now returns the nominal break points, not those
 	adjusted for numerical tolerances.
 
+     o	New function slice.index() for identifying indexes with respect
+	to slices of an array.
+
 
 INSTALLATION CHANGES
 
@@ -191,7 +194,8 @@ INSTALLATION CHANGES
 	kind, and the corresponding index information (in the Rd files,
 	the 'demo/00Index' file, and the \VignetteIndexEntry{} entries,
 	respectively).	These index files, as well as the package Rd
-	contents data base, are serialized as R objects, allowing for
+	contents data base, are serialized as R objects in the 'Meta'
+	subdirectory of the top-level package directory, allowing for
 	faster and more reliable index-based computations (e.g., in
 	help.search()).
 
