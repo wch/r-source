@@ -22,6 +22,9 @@ which can be used for coding a factor with \code{n} levels.
 The returned value contains the computed contrasts.
 If the argument \code{contrasts} is \code{FALSE} then an
 additional column of ones is prepended to the matrix.
+
+Note that as from version 0.62.2 \code{contr.poly} returns contrasts
+based on orthogonal (rather than raw) polynomials.
 }
 \seealso{
 \code{\link{contrasts}},
