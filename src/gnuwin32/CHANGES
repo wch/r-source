@@ -7,9 +7,6 @@ See the file NEWS for changes that affect all versions of R.
 rw1080
 ======
 
-The scrollbars on the data editor work better for very large matrices,
-and correctly for more than 65535 columns.
-
 The initial size and position of the MDI frame can be set in Rconsole:
 see the comments in .../etc/Rconsole.  The initial position of the
 console window and graphics windows can be set in Rconsole and in the
@@ -23,9 +20,6 @@ is updated only when there has been no plotting for 0.1sec or if the
 plot has not been updated for 0.5sec. [Currently only enabled if
 BUFFERED is defined in src/gnuwin32/devga.c.]
 
-The search for a directory for temporary files now checks that TMP and
-TEMP point to actual writeable directories.
-
 Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.
 
@@ -36,27 +30,21 @@ Calling dev.off() (or ending a session) when a windows() device is
 open and recording plots automatically saves the current plot as the
 last saved plot.
 
-When building a package, src/Makefile.win is run if present, and if
-that generates src/$(DLLNAME).dll the DLL is installed.  (DLLNAME is
-the package name unless overridden.)
-
-PKG_FFLAGS is now used if provided.
-
-bringToTop() tested against the wrong limit for the device list and so
-would sometimes not work for high-numbered devices if lower-numbered
-devices had been closed.
-
-doc/manual/Makefile.win now has targets for fullrefman.{dvi,pdf}.
-
 The windows (etc) devices use the Windows character metrics, which at
 least on some systems have non-zero height and depth for space.  This
 is now overridden.  (This showed up in the baseline placing for
 plotmath expressions containing a space.)
 
+A package's DLL used to be built only if standard source files were
+seen.  Now src/Makefile.win is run if present, and if that generates
+src/$(DLLNAME).dll the DLL is installed.  (DLLNAME is the package name
+unless overridden.)
+
+doc/manual/Makefile.win now has targets for fullrefman.{dvi,pdf}.
 
 
-rw1072
-======
+Bug fixes
+---------
 
 The changes to versioned install had ensured that the currently
 installed copy of a package had its MD5 sums checked, not the version
@@ -69,11 +57,19 @@ The BioConductor people had stolen the menu item for "Install
 package(s) from CRAN..." so it was not being enabled/disabled
 properly.
 
-A package's DLL would only be built if standard source files were 
-seen; now the presence of Makefile.win will trigger a build, allowing
-nonstandard languages to be used.
-
 The windows() device was not plotting transparent single lines correctly.
+
+The scrollbars on the data editor work better for very large matrices,
+and correctly for more than 65535 columns.
+
+The search for a directory for temporary files now checks that TMP and
+TEMP point to actual writeable directories.
+
+PKG_FFLAGS is now used if provided.
+
+bringToTop() tested against the wrong limit for the device list and so
+would sometimes not work for high-numbered devices if lower-numbered
+devices had been closed.
 
 
 
