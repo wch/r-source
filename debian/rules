@@ -6,6 +6,7 @@ package=r-base
 
 build:
 	dh_testdir
+	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
 	CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
 	 SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr --with-g77
 	make 
