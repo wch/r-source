@@ -255,7 +255,7 @@ appropriate environment variables set.
 
 You also need: the R source (R-0.65.0.tgz), and to build the
 installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
-MAKE_MODE to UNIX.
+MAKE_MODE to UNIX (set MAKE_MODE=UNIX in the Windows shells).
 
 
 Then: untar R-0.65.0.tgz somewhere,
