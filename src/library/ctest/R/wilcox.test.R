@@ -361,10 +361,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                  alternative = alternative,
                  method = METHOD, 
                  data.name = DNAME)
-    if(conf.int) {
-        RVAL$conf.int <- cint
-        RVAL$estimate <- ESTIMATE
-    }
+    if(conf.int)
+        RVAL <- c(RVAL,
+                  list(conf.int = cint,
+                       estimate = ESTIMATE))
     class(RVAL) <- "htest"
     return(RVAL)
 }

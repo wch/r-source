@@ -238,10 +238,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                  alternative = alternative,
                  method = "Ansari-Bradley test",
                  data.name = DNAME)
-    if(conf.int) {
-        RVAL$conf.int <- cint
-        RVAL$estimate <- c("ratio of scales" = ESTIMATE)
-    }
+    if(conf.int)
+        RVAL <- c(RVAL,
+                  list(conf.int = cint,
+                       estimate = c("ratio of scales" = ESTIMATE)))
     class(RVAL) <- "htest"
     return(RVAL)
 }
