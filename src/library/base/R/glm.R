@@ -54,10 +54,11 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 		   ", should equal", NROW(Y), "(number of observations)"))
 
     ## fit model via iterative reweighted least squares
-    fit <- (if (is.empty.model(mt)) glm.fit.null else glm.fit)(
-							       x=X, y=Y, weights=weights, start=start,
-							       offset=offset, family=family, control=control,
-							       intercept=attr(mt, "intercept") > 0)
+    fit <-
+        (if (is.empty.model(mt))
+         glm.fit.null else glm.fit)(x=X, y=Y, weights=weights, start=start,
+                                    offset=offset,family=family,control=control,
+                                    intercept=attr(mt, "intercept") > 0)
 
     if(any(offset) && attr(mt, "intercept") > 0) {
 	fit$null.deviance <-
@@ -401,10 +402,11 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
     ## calculate test statistics if needed
 
     if(!is.null(test))
-	table <- stat.anova(table=table, test=test, scale=sum(
-						    object$weights*object$residuals^2)/object$df.residual,
+	table <- stat.anova(table=table, test=test,
+                            scale=sum(object$weights*object$residuals^2)/
+                            object$df.residual,
 			    df.scale=object$df.residual, n=NROW(x))
-    structure(list(title=title, table=table), class= "anova.glm")
+    structure(table, heading = title, class= "anova")
 }
 
 
@@ -419,20 +421,20 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
     sameresp <- responses==responses[1]
     if(!all(sameresp)) {
 	object <- object[sameresp]
-	warning(paste("Models with response", deparse(responses[
-								!sameresp]), "removed because response differs from",
+	warning(paste("Models with response", deparse(responses[!sameresp]),
+                      "removed because response differs from",
 		      "model 1"))
     }
 
     ## calculate the number of models
 
     nmodels <- length(object)
-    if(nmodels==1)	return(anova.glm(object[[1]], na.action=na.action,
-       test=test))
+    if(nmodels==1)
+        return(anova.glm(object[[1]], na.action=na.action, test=test))
 
     ## extract statistics
 
-    resdf <- as.numeric(lapply(object, function(x) x$df.residual))
+    resdf  <- as.numeric(lapply(object, function(x) x$df.residual))
     resdev <- as.numeric(lapply(object, function(x) x$deviance))
 
     ## construct table and title
@@ -449,14 +451,13 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 
     if(!is.null(test)) {
 	bigmodel <- object[[(order(resdf)[1])]]
-	table <- stat.anova(table=table, test=test, scale=sum(
-						    bigmodel$weights * bigmodel$residuals^2)/
+	table <- stat.anova(table=table, test=test,
+                            scale=sum(bigmodel$weights * bigmodel$residuals^2)/
 			    bigmodel$df.residual, df.scale=min(resdf),
 			    n=length(bigmodel$residuals))
     }
 
-    structure(list(table=table, title=title),
-	      class= "anova.glm")
+    structure(table, heading = title, class= "anova")
 }
 
 
@@ -464,10 +465,11 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 {
     test <- match.arg(test)
     dev.col <- match("Deviance", colnames(table))
-    if ( is.na(dev.col) ) dev.col <- match("Sum of Sq", colnames(table))
+    if(is.na(dev.col)) dev.col <- match("Sum of Sq", colnames(table))
     switch(test,
 	   "Chisq" = {
-	       cbind(table,"P(>|Chi|)"= 1-pchisq(abs(table[, dev.col]), abs(table[, "Df"])))
+	       cbind(table,"P(>|Chi|)"= 1-pchisq(abs(table[, dev.col]),
+                             abs(table[, "Df"])))
 	   },
 	   "F" = {
 	       Fvalue <- abs((table[, dev.col]/table[, "Df"])/scale)
@@ -475,7 +477,8 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 		     "Pr(>F)" = 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale)))
 	   },
 	   "Cp" = {
-	       cbind(table, Cp = table[,"Resid. Dev"] + 2*scale*(n - table[,"Resid. Df"]))
+	       cbind(table, Cp = table[,"Resid. Dev"] +
+                     2*scale*(n - table[,"Resid. Df"]))
 	   })
 }
 
@@ -595,6 +598,7 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 }
 
 
+## Not used anymore..
 print.anova.glm <- function(x, digits = max(3, .Options$digits - 3),
 			    na.print = "", ...)
 {

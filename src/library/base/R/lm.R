@@ -364,7 +364,7 @@ anova.lm <- function(object, ...)
     if(length(list(object, ...)) > 1)
 	return(anovalist.lm(object, ...))
     w <- weights(object)
-    ssr <- if(is.null(w)) sum(resid(object)^2) else sum(w*resid(object)^2)
+    ssr <- sum(if(is.null(w)) resid(object)^2 else w*resid(object)^2)
     p1 <- 1:object$rank
     comp <- object$effects[p1]
     asgn <- object$assign[object$qr$pivot][p1]
@@ -419,15 +419,17 @@ anovalist.lm <- function (object, ..., test = NULL)
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])
 	    p[i] <- 1 - pf(f[i], df[i], df.r[i])
 	}
-	else {
+	else if(df[i] < 0) {
 	    f[i] <- ms[i]/(ss.r[i-1]/df.r[i-1])
 	    p[i] <- 1 - pf(f[i], -df[i], df.r[i-1])
 	}
+        else { # df[i] == 0
+          ss[i] <- 0
+        }
     }
     table <- cbind(df.r,ss.r,df,ss,f,p)
-    dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum-Sq", "Df",
-					 "Sum-Sq", "F value", "Pr(>F)"))
-
+    dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum Sq", "Df",
+					 "Sum Sq", "F value", "Pr(>F)"))
     ## construct table and title
     title <- "Analysis of Variance Table\n"
     topnote <- paste("Model ", format(1:nmodels),": ",
