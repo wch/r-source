@@ -320,7 +320,7 @@ void gnome_start(int ac, char **av, Rstart Rp)
 	process_user_Renviron();
     }
 
-    R_Interactive = isatty(0);
+    R_Interactive = 1; /* want to be always interactive */
     if((R_Home = R_HomeDir()) == NULL) {
 	R_Suicide("R home directory is not defined");
     }

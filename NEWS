@@ -621,6 +621,9 @@ BUG FIXES
     o   apply() failed on an array of dimension >=3 when for each iteration
 	the function returns a named vector of length >=2 (PR#7205)
 
+    o	The GNOME interface was in some circumstances failing if run
+	from a menu -- it needed to always specify that R be interactive.
+
 
 
 
