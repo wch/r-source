@@ -20,6 +20,9 @@ cummin(x)
 \details{
   An \code{NA} value in \code{x} causes the corresponding and following
   elements of the return value to be \code{NA}.
+
+  These are generic functions: methods can be defined for them
+  individually or via the \code{\link{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
