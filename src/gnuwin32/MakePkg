@@ -195,7 +195,9 @@ ifneq ($(strip $(PKGMANFILES)),)
 	@$(ECHO) "  installing man source files"
 	@$(RM) -rf $(DPKG)/man
 	@$(MKDIR) -p $(DPKG)/man
-	@$(CAT) $^ > $(DPKG)/man/$(PKG).Rd
+	@for rdfile in $^; do \
+	  $(CAT) $${rdfile}; echo '\eof'; \
+	done > $(DPKG)/man/$(PKG).Rd
 else
 	@$(ECHO) "  no man files in this package"
 endif
