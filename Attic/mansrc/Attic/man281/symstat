@@ -1,8 +1,0 @@
-TITLE(symstat @@ Symmetry Statistic)
-USAGE(
-symstat(x, alpha=0.1)
-)
-DESCRIPTION(
-Calculates the symmetry statistic of the data in LANG(x) based
-on the LANG(alpha) and LANG(1-alpha) quantiles.
-)

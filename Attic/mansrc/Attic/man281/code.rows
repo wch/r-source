@@ -1,9 +1,0 @@
-TITLE(code.rows @@ Which Matrix Rows are Duplicates)
-USAGE(
-code.rows(X)
-)
-DESCRIPTION(
-LANG(code.rows) returns a vector whose elements are integers.
-If two rows of the matrix LANG(X) are identical then the corresponding
-elements of the returned vector will have the same value.
-)
