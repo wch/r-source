@@ -26,4 +26,17 @@ pp. 645-650.}
 \description{This is a matched case-control study dating from before the availability of conditional logistic regression.}
 \note{One case with two prior spontaneous abortions and two prior induced
 abortions is omitted.}
+\examples{
+model1<-glm(case~spontaneous+induced,data=infert,family=binomial())
+summary(model1)
+## adjusted for other potential confounders
+model2<-glm(case~age+parity+education+spontaneous+induced,data=infert,family=binomial())
+## Really should be analysed by conditional logistic regression
+## which is equivalent to a Cox model
+if(require(survival4)){
+faketime<-rep(42,nrow(infert))
+model3<-coxph(Surv(faketime,case)~spontaneous+induced+strata(stratum),
+              data=infert,method="exact")
+summary(model3)
+}
 \keyword{datasets}
