@@ -13,8 +13,9 @@ savehistory(file = ".Rhistory")
 history(max.show = 25, reverse = FALSE)
 }
 \arguments{
-  \item{file}{The name of the file in which to save the history. The path
-    is relative to the current working directory.}
+  \item{file}{The name of the file in which to save the history, or
+    from shich to load it. The path is relative to the current
+    working directory.}
   \item{max.show}{The maximum nmber of lines to show. \code{Inf} will
     give all of the currently available history.}
   \item{reverse}{logical. If true, the lines are shown in reverse
