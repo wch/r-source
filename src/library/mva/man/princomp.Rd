@@ -9,7 +9,7 @@
 \usage{
 princomp(x, \dots)
 
-\method{princomp}{formula}(formula, data, subset, na.action, \dots)
+\method{princomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))), \dots)
@@ -19,9 +19,9 @@ princomp(x, \dots)
 \arguments{
   \item{formula}{a formula with no response variable.}
   \item{data}{an optional data frame containing the variables in the
-    formula \code{formula}. By default the variables are taken from
+    formula \code{formula}.  By default the variables are taken from
     \code{environment(formula)}.}
-  \item{x}{a matrix or data frame which provides the data for the
+  \item{x}{a numeric matrix or data frame which provides the data for the
     principal components analysis.}
   \item{subset}{an optional vector used to select rows (observations) of the
     data matrix \code{x}.}

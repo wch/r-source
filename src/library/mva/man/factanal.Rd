@@ -13,12 +13,12 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
          rotation = "varimax", control = NULL, \dots)
 }
 \arguments{
-  \item{x}{Either a formula or a numeric matrix or an object that can be
+  \item{x}{A formula or a numeric matrix or an object that can be
     coerced to a numeric matrix.}
   \item{factors}{The number of factors to be fitted.}
-  \item{data}{A data frame.}
+  \item{data}{A data frame, used only if \code{x} is a formula.}
   \item{covmat}{A covariance matrix, or a covariance list as returned by
-    \code{\link{cov.wt}}. Of course, correlation matrices are covariance
+    \code{\link{cov.wt}}.  Of course, correlation matrices are covariance
     matrices.}
   \item{n.obs}{The number of observations, used if \code{covmat} is a
     covariance matrix.}
@@ -72,8 +72,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   If \code{covmat} is supplied it is used.  Otherwise \code{x} is used if
   it is a matrix, or a formula \code{x} is used with \code{data} to
   construct a model matrix, and that is used to construct a covariance
-  matrix.  (It makes no sense for
-  the formula to have a response.)  Once a covariance matrix is found or
+  matrix.  (It makes no sense for the formula to have a response,
+  and all the variables must be numeric.)  Once a covariance matrix is found or
   calculated from \code{x}, it is converted to a correlation matrix for
   analysis.  The correlation matrix is returned as component
   \code{correlation} of the result.

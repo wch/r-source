@@ -1,24 +1,29 @@
 princomp <- function(x, ...) UseMethod("princomp")
 
 ## use formula to allow update() to be used.
-princomp.formula <- function(formula, data, subset, na.action, ...)
+princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
 {
     mt <- terms(formula, data = data)
     if(attr(mt, "response") > 0) stop("response not allowed in formula")
-    attr(mt, "intercept") <- 0
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- eval.parent(mf)
+    ## this is not a `standard' model-fitting function,
+    ## so no need to consider contrasts or levels
+    if(any(sapply(mf, function(x) is.factor(x) || !is.numeric(x))))
+        stop("PCA applies only to numerical variables")
     na.act <- attr(mf, "na.action")
+    mt <- attr(mf, "terms") # allow model.frame to update it
+    attr(mt, "intercept") <- 0
     x <- model.matrix(mt, mf)
     res <- princomp.default(x, ...)
     ## fix up call to refer to the generic, but leave arg name as `formula'
     cl[[1]] <- as.name("princomp")
     res$call <- cl
     if(!is.null(na.act)) {
-        res$na.action <- na.act
+        res$na.action <- na.act # not currently used
         if(!is.null(sc <- res$scores))
             res$scores <- napredict(na.act, sc)
     }
@@ -51,6 +56,7 @@ princomp.default <-
         cv <- covmat$cov * (1 - 1/n.obs)# for S-PLUS compatibility
         cen <- covmat$center
     } else stop("covmat is of unknown type")
+    if(!is.numeric(cv)) stop("PCA applies only to numerical variables")
     if (cor) {
         sds <- sqrt(diag(cv))
         cv <- cv/(sds %o% sds)
