@@ -136,8 +136,6 @@ package.contents <- function(pkg, lib=.lib.loc){
 
 package.description <- function(pkg, lib=.lib.loc, fields=NULL)
 {
-
-    print(pkg)
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib)
     if(file != "") {
         retval <- read.dcf(file=file, fields=fields)
