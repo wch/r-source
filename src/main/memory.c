@@ -91,10 +91,12 @@ SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+	int reporting = gc_reporting;
+        gc();
 	checkArity(op, args);
 	gc_reporting = 1;
 	gc();
-	gc_reporting = 0;
+	gc_reporting = reporting;
 	return R_NilValue;
 }
 
@@ -424,7 +426,7 @@ void gc(void)
 	markPhase();
 	compactPhase();
 	scanPhase();
-	if (1 | gc_reporting) {
+	if (gc_reporting) {
 		REprintf("\n%ld cons cells free (%ld%%)\n",
 		    R_Collected, (100 * R_Collected / R_NSize));
 		heapchunks = 0;
