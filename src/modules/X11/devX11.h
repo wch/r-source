@@ -42,10 +42,7 @@ typedef enum {
 /*
   For the moment, we just conditionally activate the remainder of this
   section iff we are in devX11.c which defines R_X11_DEVICE.
-  This allows devUI.h to include this file to get X_COLORTYPE.
-  However, that should probably not be happening if HAVE_X11 is not defined
-  due to the configuration being done --without-x. Why is unix/devices.c 
-  not(?) getting compiled if no X11 support is available? DTL.
+  This is purely historical: it was once included by devUI.h
  */
 #if R_X11_DEVICE
 
