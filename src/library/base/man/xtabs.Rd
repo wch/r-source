@@ -62,7 +62,7 @@ xtabs(cbind(ncases, ncontrols) ~ ., data = esoph)
 ## Output is not really helpful ... flat tables are better:
 ftable(xtabs(cbind(ncases, ncontrols) ~ ., data = esoph))
 ## In particular if we have fewer factors ...
-ftable(xtabs(cbind(ncases, ncontrols) ~ agegp., data = esoph))
+ftable(xtabs(cbind(ncases, ncontrols) ~ agegp, data = esoph))
 
 data(UCBAdmissions)
 ## This is already a contingency table in array form.
