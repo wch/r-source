@@ -1063,6 +1063,8 @@ static void menuprev(control m)
 	if (xd->recording && xd->needsave && (dd->displayList != R_NilValue)) {
 	    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
 	    xd->needsave = FALSE;
+	    vDL = findVar(install(".SavedPlots"), R_GlobalEnv);
+	    /* may have changed vDL pointer */
 	}
 	pMOVE((xd->needsave) ? 0 : -1);
     }
