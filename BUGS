@@ -825,10 +825,6 @@ Date: Fri,  6 Feb 2004 18:40:05 +0100 (CET)
 Subject: limitation
 From: Ming Lo <fnlo@ust.hk>
 Date: Mon, 16 Feb 2004 20:24:54 +0800 (HKT)
-* PR# 6590 *
-Subject: deprecated 'codes' function in 'factor' docs
-From: axs2pdx@yahoo.com
-Date: Tue, 17 Feb 2004 00:31:58 +0100 (CET)
 * PR# 6591 *
 Subject: R-bugs I found your addie ano
 From: "Lee Law" <NEWVWD@wsdc3sx.com>
@@ -857,3 +853,15 @@ Date: Tue, 17 Feb 2004 20:32:01 +0100 (CET)
 Subject: summary.rpart() in rpart package
 From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
 Date: Tue, 17 Feb 2004 17:07:02 -0600
+* PR# 6598 *
+Subject: src/scripts/Makefile bug
+From: Atro Tossavainen <atossava@cc.helsinki.fi>
+Date: Wed, 18 Feb 2004 14:45:24 +0200 (EET)
+* PR# 6599 *
+Subject: warning
+From: bw@bwdigitronik.ch
+Date: Wed, 18 Feb 2004 16:53:58 +0100
+* PR# 6600 *
+Subject: R would not quit (bug?)
+From: Michael Herron <Michael.C.Herron@Dartmouth.EDU>
+Date: Wed, 18 Feb 2004 14:27:07 -0500
