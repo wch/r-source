@@ -28,7 +28,7 @@ SEXP R_ParseVector(SEXP, int, int *);
 #include "tcltk.h" /* declarations of our `public' interface */
 extern int (*R_timeout_handler)();
 extern long R_timeout_val;
-extern  (*ptr_gnome_start)();
+extern int (*ptr_gnome_start)();
 
 static Tcl_Interp *Tcl_interp;      /* Interpreter for this application. */
 
@@ -222,7 +222,7 @@ void TclHandler(void)
     OldHandler();
 }
 
-unsigned int Gtk_TclHandler(void)
+int Gtk_TclHandler(void)
 {
     while (Tcl_DoOneEvent(TCL_DONT_WAIT))
 	;
