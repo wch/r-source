@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-23, 2000-11-12
+@set FAQ-VERSION 1.1-24, 2000-11-13
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -254,10 +254,6 @@ unstable one is @value{DEV-VERSION}.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
 
-@c Mac
-@c On 2000-09-11, Stefano Iacus <jago@mclink.it> said on r-devel that he
-@c has finished a port of 1.1.1 and 1.2.0 to the Power Mac under Mac OS.
-
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
 
@@ -392,13 +388,23 @@ FAQ} for more details.
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
 
-The Power Macintosh port is temporarily on hold, and currently no binary
-distribution is available.  We hope that this will change soon.
-
 @c The CRAN @file{bin/macos} directory contains @file{R.sea.hqx}, a
 @c binhexed self-extracting archive, and installation instructions in
 @c @file{README.MACINTOSH}.  Note that the version in it is nowhere near
 @c the quality of the current Unix/Windows version.
+
+@c The Power Macintosh port is temporarily on hold, and currently no binary
+@c distribution is available.  We hope that this will change soon.
+
+@c Mac
+@c On 2000-09-11, Stefano Iacus <jago@mclink.it> said on r-devel that he
+@c has finished a port of 1.1.1 and 1.2.0 to the Power Mac under Mac OS.
+@c Prerelease mentioned on 2000-11-08, not announced yet.
+
+A binhexed self-extracting archive containing a pre-alpha port of R
+1.1.1 for MacOS has recently been made available by
+@email{stefano.iacus@@unimi.it at, Stefano Iacus} at
+@uref{http://www.eco-dip.unimi.it/R/}.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
@@ -478,12 +484,17 @@ API.
 @end itemize
 
 @noindent
-Furthermore, the ``R Language Definition'' manual (@file{R-lang}) is
-currently being written, and will be available in R version 1.2.
 @c FIXME 1.2
+The following manuals will additionally be available in R version 1.2.
+
+@itemize @bullet
+@item ``R Data Import/Export'' (@file{R-data}),
+which is a guide to importing and exporting data to and from R.
+@item ``The R Language Definition'' (@file{R-lang}).
 This is the ``Kernighan & Ritchie of R'', explaining evaluation,
 parsing, object oriented programming, computing on the language, and so
 forth.
+@end itemize
 
 In addition to material written specifically for R, documentation for
 S/@SPLUS{} (see @ref{R and S}) can be used in combination with this FAQ
@@ -1207,9 +1218,9 @@ equivalent to S, until assignment takes place.
 
 @item
 In R, @code{eval(EXPR, sys.parent())} does not work.  Instead, one
-should use @code{eval(EXPR, sys.frame(sys.parent())),} which also works
-in S, or @code{eval(EXPR, parent.frame())}, which is more efficient but
-does not work in S.
+should use either @code{eval(EXPR, sys.frame(sys.parent())),} which also
+works in S, or @code{eval(EXPR, parent.frame())}, which is more
+efficient but does not work in S.
 
 @item
 In S, the index variable in a @code{for()} loop is local to the inside
@@ -1260,13 +1271,13 @@ Annotation in Plots'', @uref{http://www.amstat.org/publications/jcgs/, ,
 @node R Web Interfaces, R Add-On Packages, R and S, Top
 @chapter R Web Interfaces
 
-@strong{Rcgi} is a CGI WWW interface to R by @email{h089@@mth.uea.ac.uk,
-Mark J. Ray}.  Recent versions have the ability to use ``embedded
-code'': you can mix user input and code, allowing the @HTML{} author to
-do anything from load in data sets to enter most of the commands for
-users without writing CGI scripts.  Graphical output is possible in
-PostScript or GIF formats and the executed code is presented to the user
-for revision.
+@strong{Rcgi} is a CGI WWW interface to R by
+@email{mjr@@stats.mth.uea.ac.uk, Mark J. Ray}.  Recent versions have the
+ability to use ``embedded code'': you can mix user input and code,
+allowing the @HTML{} author to do anything from load in data sets to
+enter most of the commands for users without writing CGI scripts.
+Graphical output is possible in PostScript or GIF formats and the
+executed code is presented to the user for revision.
 
 Demo and download are available from
 @uref{http://www.mth.uea.ac.uk/~h089/Rcgi/}.
@@ -1595,8 +1606,8 @@ Finding D-optimal experimental designs.
 Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item exactDistr
-Exact distributions for rank tests, using an implementation of the
-Streitberg/Roehmel shift algorithm.
+Exact distributions for rank tests by means of an implementation of the
+Streit@-berg/Roehmel shift algorithm.
 @item foreign
 Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc.
