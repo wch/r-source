@@ -381,3 +381,19 @@ Date: Mon, 13 Sep 1999 03:02:20 +0200 (MET DST)
 Subject: Re: R with a broken finite() (was [R] Problems with R-0.65.0)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Tue, 14 Sep 1999 15:17:17 +0100 (BST)
+* PR# 276 *
+Subject: Re: chisqsim broken on alpha (was Re: axis() produces junk on DEC
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 15 Sep 1999 08:18:42 +0100 (BST)
+* PR# 277 *
+Subject: Re: chisqsim broken on alpha - solved + next bug in fft found
+From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+Date: Wed, 15 Sep 1999 15:33:09 +0200 (MET DST)
+* PR# 278 *
+Subject: buglet in lm.influence() -- easy fix but...
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 15 Sep 1999 17:36:46 +0200
+* PR# 279 *
+Subject: plot ( <aov.obj> ) failed -- easy fix
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 15 Sep 1999 18:42:56 +0200
