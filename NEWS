@@ -633,6 +633,9 @@ BUG FIXES
     o	extractAIC.coxph() works around an inconsistency in the
 	$loglik output from coxph.
 
+    o	stem() was running into integer overflows with nearly-constant
+	inputs, and scaling badly for constant ones.  (Partly PR#6645)
+
 
 
 

@@ -1213,3 +1213,12 @@ sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.d
 sample.aov
 summary(sample.aov)
 ## failed in 1.8.1
+
+
+## PR#6645  stem() with near-constant values
+stem(rep(1, 100))
+stem(rep(0.1, 10))
+stem(c(rep(1, 10), 1+1.e-8))
+stem(c(rep(1, 10), 1+1.e-9))
+stem(c(rep(1, 10), 1+1.e-10), atom=0) # integer-overflow is avoided.
+##  had integer overflows in 1.8.1, and silly shifts of decimal point

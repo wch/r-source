@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-03-03), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-03-05), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3829,4 +3829,40 @@ Error: Within
           Df  Sum Sq Mean Sq F value Pr(>F)
 Residuals 42 29204.1   695.3               
 > ## failed in 1.8.1
+> 
+> 
+> ## PR#6645  stem() with near-constant values
+> stem(rep(1, 100))
+
+  The decimal point is at the |
+
+  1 | 00000000000000000000000000000000000000000000000000000000000000000000+20
+
+> stem(rep(0.1, 10))
+
+  The decimal point is 1 digit(s) to the left of the |
+
+  1 | 0000000000
+
+> stem(c(rep(1, 10), 1+1.e-8))
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  100000000 | 0000000000
+  100000000 | 
+  100000001 | 0
+
+> stem(c(rep(1, 10), 1+1.e-9))
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  100000000 | 00000000001
+
+> stem(c(rep(1, 10), 1+1.e-10), atom=0) # integer-overflow is avoided.
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  100000000 | 00000000000
+
+> ##  had integer overflows in 1.8.1, and silly shifts of decimal point
 > 
