@@ -1,8 +1,5 @@
 import(grDevices)
 
-### temp measure for user hooks
-export(ps.options)
-
 export(abline, arrows, assocplot, axTicks, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, boxplot.stats,
        bxp, chull, close.screen, co.intervals, contour, contourLines,

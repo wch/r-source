@@ -41,7 +41,9 @@ USER-VISIBLE CHANGES
     o	Package 'graphics' has been split into 'grDevices' (the graphics
 	devices shared between base and grid graphics) and 'graphics'
 	(base graphics).  Each of the 'graphics' and 'grid' packages
-	load 'grDevices' when they are attached.
+	load 'grDevices' when they are attached.  Note that
+	ps.options has been moved to grDevices and user hooks will
+	need to be updated.
 
     o	The semantics of data() have changed (and were incorrectly
 	documented in recent releases) and the function has been moved
