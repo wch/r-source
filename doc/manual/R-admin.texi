@@ -474,6 +474,8 @@ setting the environment variable @env{R_LIBS} or using the @R{} function
 @section Installing packages
 @cindex Packages, installing
 
+Installing source packages requires that Perl 5.005 or later be installed.
+
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
 more than one library, of course.
@@ -489,8 +491,8 @@ The part @samp{-l /path/to/library} can be omitted, when the first
 library in @env{R_LIBS} is used if set, otherwise the main library
 @file{@var{R_HOME}/library}.
 
-The Windows equivalent is@footnote{if you have Perl and the source-code
-package files installed}
+The Windows equivalent is@footnote{if you have the source-code package
+files installed}
 
 @smallexample
 Rcmd INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
