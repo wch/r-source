@@ -188,8 +188,8 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(!isNull(CAR(args))) {
 	R_print.gap = asInteger(CAR(args));
-	if (R_print.gap == NA_INTEGER || R_print.gap < 1 || R_print.gap > 10)
-	    errorcall(call, "invalid gap parameter");
+	if (R_print.gap == NA_INTEGER || R_print.gap < 0)
+	    errorcall(call, "'gap' must be non-negative integer");
     }
     args = CDR(args);
 

@@ -51,7 +51,7 @@ USER-VISIBLE CHANGES
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
-	
+
     o	Package names must now be typed exactly in library() and
     	require, regardless of whether the underlying file system is
     	case-sensitive or not.
@@ -332,6 +332,9 @@ BUG FIXES
     o	smooth.spline(...)$pen.crit had a typo in its computation;
 	note this was printed in print.smooth.spline(*) but not used in
 	other "smooth.spline" methods.
+
+    o	print.default(*, gap = <n>) now in principle accepts all
+        non-negative values <n>.
 
 
 
