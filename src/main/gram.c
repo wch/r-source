@@ -1898,26 +1898,34 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	    unsigned char *p, *p0, *end;
 	    int lines = 0, nc;
 	    
-	    /* FIXME: if the function ends with a comment, it gets
-		chopped. E.g.
+	    /*  If the function ends with an endline comment,  e.g.
 
 		function()
-	            print("Hey") # This comment is dropped
+	            print("Hey") # This comment 
 
-                A fix needs to check that case specifically because functions
-		can be terminated by ELSE tokens and the like, which is the
-		cause for the end adjustment below.
+		we need some special handling to keep it from getting
+		chopped off. Normally, we will have read one token too
+		far, which is what xxcharcount and xxcharsave keeps
+		track of.
+
 	    */
 	    end = SourcePtr - (xxcharcount - xxcharsave);
+	    for (p = end ; p < SourcePtr && (*p == ' ' || *p == '\t') ; p++)
+		;
+	    if (*p == '#') {
+		while (p < SourcePtr && *p != '\n') 
+		    p++;
+		end = p;
+	    }
 
-	    for (p = FunctionStart[FunctionLevel]; p < end ; p++ )
+	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
 		if (*p == '\n') lines++;
 	    if ( *(end - 1) != '\n' ) lines++;
 	    PROTECT(source = allocVector(STRSXP, lines));
 	    p0 = FunctionStart[FunctionLevel];
 	    lines = 0;
-	    for (p = FunctionStart[FunctionLevel]; p < end ; p++ )
-		if ( *p == '\n' || p == end - 1 ) {
+	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
+		if (*p == '\n' || p == end - 1) {
 		    nc = p - p0;
 		    if (*p != '\n') 
 			nc++; 
