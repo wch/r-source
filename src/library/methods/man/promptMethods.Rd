@@ -16,7 +16,7 @@ promptMethods(f, filename, inherited=FALSE)
     documentation of the generic function itself (see
     \code{\link{prompt}}). May also be the name of a file on which to
     write the documentation. By default, this is the same as the coded
-    topic name for these methods (currently ]code{"methods_NAME.Rd"},
+    topic name for these methods (currently \code{"methods_NAME.Rd"},
     where \code{NAMAE} is the function name, argument \code{f}).
   }
   \item{inherited}{ Should inherited methods be included?  Default \code{FALSE}. }
