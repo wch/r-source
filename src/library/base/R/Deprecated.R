@@ -6,7 +6,7 @@
 		  if (!missing(new))
 		  paste("Use", sQuote(new), "instead.\n"),
 		  "See help(\"Deprecated\") ",
-                  if(!is.null(pkg))
+                  if(!is.null(package))
                   paste("and help(\"", package, "-deprecated\").", sep=""),
 		  sep = ""),
             call. = FALSE)
