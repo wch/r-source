@@ -1412,7 +1412,8 @@ static void newX11_MetricInfo(int c,
 	   even from X*TextExtents, so follow Nakama's fudge */
 	*ascent = extent->max_logical_extent.height * 0.8;
 	*descent = extent->max_logical_extent.height * 0.2;
-	Rprintf("%d %lc w=%f a=%f d=%f\n", c, wc[0], *width, *ascent, *descent);
+	/* Rprintf("%d %lc w=%f a=%f d=%f\n", c, wc[0],
+	           *width, *ascent, *descent); */
     } else { /* symbol font */
 	if(first <= c && c <= last) {
 	    *ascent = f->per_char[c-first].ascent;
@@ -1424,15 +1425,23 @@ static void newX11_MetricInfo(int c,
     f = xd->font->font;
     first = f->min_char_or_byte2;
     last = f->max_char_or_byte2;
-
     if (c == 0) {
 	*ascent = f->ascent;
 	*descent = f->descent;
 	*width = f->max_bounds.width;
     } else if (first <= c && c <= last) {
-	*ascent = f->per_char[c-first].ascent;
-	*descent = f->per_char[c-first].descent;
-	*width = f->per_char[c-first].width;
+    /* It seems that per_char could be NULL
+       http://www.ac3.edu.au/SGI_Developer/books/XLib_PG/sgi_html/ch06.html 
+    */
+	if(f->per_char) {
+	    *ascent = f->per_char[c-first].ascent;
+	    *descent = f->per_char[c-first].descent;
+	    *width = f->per_char[c-first].width;  /* rbearing - lbearing? */
+	} else {
+	    *ascent = f->max_bounds.ascent;
+	    *descent = f->max_bounds.descent;
+	    *width = f->max_bounds.width;  /* rbearing - lbearing? */
+	}
     } else {
 	*ascent = 0;
 	*descent = 0;
