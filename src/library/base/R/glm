@@ -83,6 +83,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	# get family functions
 	variance <- family$variance
 	dev.resids <- family$dev.resids
+	aic <- family$aic
 	linkinv <- family$linkinv
 	mu.eta <- family$mu.eta
 	if (!is.function(variance) || !is.function(linkinv) )
@@ -166,7 +167,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 		mu <- linkinv(eta + offset)
 		if (family$family == "binomial") {
 			if (any(mu == 1) || any(mu == 0))
-				warning("fitted probabilities of 0 or 1 occured")
+				warning("fitted probabilities of 0 or 1 occurred")
 			mu0 <- 0.5 * control$epsilon/length(mu)
 			mu[mu == 1] <- 1 - mu0
 			mu[mu == 0] <- mu0
@@ -267,6 +268,8 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	wtdmu <-
 	  if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
 	nulldev <- sum(dev.resids(y, wtdmu, weights))
+	## calculate aic
+	aic.model <- aic(y, n, mu, weights, dev) + 2*fit$rank
 
 	## calculate df
 	n.ok <- nobs - sum(weights==0)
@@ -276,6 +279,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	     effects = fit$effects, R = Rmat, rank = fit$rank,
 	     qr = list(qr = fit$qr, rank = fit$rank, qraux = fit$qraux),
 	     family = family, linear.predictors = eta, deviance = dev,
+	     aic = aic.model,
 	     null.deviance = nulldev, iter = iter, weights = w^2,
 	     prior.weights = weights, df.residual = resdf, df.null = nulldf,
 	     y = y, converged = conv, boundary = boundary)
@@ -288,8 +292,9 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 	print.default(round(x$coefficients, digits), print.gap = 2)
 	cat("\nDegrees of Freedom:", x$df.null, "Total; ",
 		 x$df.residual, "Residual\n")
-	cat("Null Deviance:", format(signif(x$null.deviance, digits)), "\n")
-	cat("Residual Deviance:", format(signif(x$deviance, digits)), "\n")
+	cat("Null Deviance:    ", format(signif(x$null.deviance, digits)), "\n")
+	cat("Residual Deviance:", format(signif(x$deviance, digits)), "\t")
+	cat("AIC:", format(signif(x$aic, digits)), "\n")
 	invisible(x)
 }
 
@@ -301,6 +306,10 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 	named<- if (is.null(names(dotargs)))
 			rep(FALSE,length(dotargs))
 		else (names(dotargs) != "")
+	if(any(named))
+		warning(paste("The following arguments to anova.glm(..)",
+			      "are invalid and dropped:",
+			      paste(deparse(dotargs[named]), collapse=", ")))
 	dotargs<-dotargs[!named]
 	is.glm<-unlist(lapply(dotargs,function(x) inherits(x,"glm")))
 	dotargs<-dotargs[is.glm]
@@ -377,11 +386,11 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 }
 
 
-anova.glmlist <- function(object, na.action=na.omit, test=NULL)
+anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 {
 
-	# find responses for all models and remove
-	# any models with a different response
+	## find responses for all models and remove
+	## any models with a different response
 
 	responses <- as.character(lapply(object, function(x) {
 			as.character(x$formula[2])} ))
@@ -431,31 +440,31 @@ anova.glmlist <- function(object, na.action=na.omit, test=NULL)
 
 stat.anova <- function(table, test, scale, df.scale, n)
 {
-	testnum <- match(test, c("Chisq", "F", "Cp"))
-	if(is.na(testnum))
-		stop(paste("Test \"", test, "\" not recognised", sep=""))
-	cnames <- colnames(table)
-	rnames <- rownames(table)
-	if(testnum==1) {
-		chisq <- 1-pchisq(abs(table[, "Deviance"]), abs(table[, "Df"]))
-		table <- cbind(table, chisq)
-		dimnames(table) <- list(rnames, c(cnames, "P(>|Chi|)"))
-	} else if(testnum==2) {
-		Fvalue <- abs((table[, "Deviance"]/table[, "Df"])/scale)
-		pvalue <- 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale))
-		table <- cbind(table, Fvalue, pvalue)
-		dimnames(table) <- list(rnames, c(cnames, "F", "Pr(>F)"))
-	} else if(testnum==3) {
-		Cp <- table[, "Resid. Dev"] + 2*scale*(n - table[, "Resid. Df"])
-		table <- cbind(table, Cp)
-		dimnames(table) <- list(rnames, c(cnames, "Cp"))
-	}
-	return(table)
+ testnum <- match(test, c("Chisq", "F", "Cp"))
+ if(is.na(testnum))
+	stop(paste("Test \"", test, "\" not recognised", sep=""))
+ cnames <- colnames(table)
+ rnames <- rownames(table)
+ switch(testnum,
+	{ ## "Chisq"
+	  chisq <- 1-pchisq(abs(table[, "Deviance"]), abs(table[, "Df"]))
+	  structure(cbind(table, chisq),
+		    dimnames= list(rnames, c(cnames, "P(>|Chi|)")))
+	}, { ## "F"
+	  Fvalue <- abs((table[, "Deviance"]/table[, "Df"])/scale)
+	  pvalue <- 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale))
+	  structure(cbind(table, Fvalue, pvalue),
+		    dimnames= list(rnames, c(cnames, "F", "Pr(>F)")))
+	}, { ## "Cp"
+	  Cp <- table[,"Resid. Dev"] + 2*scale*(n - table[,"Resid. Df"])
+	  structure(cbind(table, Cp),
+		    dimnames= list(rnames, c(cnames, "Cp")))
+	})
 }
 
 
 summary.glm <- function(object, dispersion = NULL,
-	correlation = TRUE, na.action=na.omit)
+	correlation = FALSE, na.action=na.omit)
 {
 	est.disp<-FALSE
 	if(is.null(dispersion))	# calculate dispersion if needed
@@ -516,9 +525,10 @@ summary.glm <- function(object, dispersion = NULL,
 
 	## return answer
 
-	ans <- c(object[c("call","terms","family","deviance",
+	ans <- c(object[c("call","terms","family","deviance", "aic",
 			  "df.residual","null.deviance","df.null","iter")],
 		 list(deviance.resid=residuals(object, type = "deviance"),
+		      aic = object$aic,
 		      coefficients=coef.table,
 		      dispersion=dispersion,
 		      df=c(object$rank, object$df.residual),
@@ -535,8 +545,10 @@ summary.glm <- function(object, dispersion = NULL,
 
 
 print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
-	roundfun=round, na.print="", ...)
+	formatfun = format,
+	na.print="", symbolic.cor = p > 4, signif.stars= TRUE, ...)
 {
+	lformat <- function(ll) format(unlist(ll), digits = digits)
 	cat("\nCall:\n")
 	cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")
 	cat("Deviance Residuals: \n")
@@ -546,15 +558,45 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	}
 	print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
 	cat("\nCoefficients:\n")
-	print.default(roundfun(x$coefficients, digits=digits), print.gap = 2)
-	cat(paste("\n(Dispersion parameter for ", x$family$family,
-		" family taken to be ", x$dispersion,
-		")\n\n	  Null deviance: ", x$null.deviance,
-		" on ", x$df.null, " degrees of freedom\n\n",
-		"Residual deviance: ", x$deviance,
-		" on ", x$df.residual, " degrees of freedom\n\n",
-		"Number of Fisher Scoring iterations: ", x$iter,
-		"\n\n", sep=""))
+	##
+	##0.61:print.default(roundfun(x$coefficients,digits=digits),print.gap=2)
+	acs <- abs(coef.se <- x$coef[, 1:2, drop=FALSE])
+	digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
+	## = digits for rounding col 1:2
+	digt <- max(1, min(5, digits - 1))
+	has.Pval <- ncol(x$coef)>= 4# or any("Pr(>|t|)" == dimnames(x$coef)[[2]]
+	if(has.Pval)
+		Pv <- x$coef[, 4]
+	Coefs <-
+	  cbind(format(round(coef.se, max(1,digits - digmin)), digits=digits),
+		format(round(x$coef[, 3], dig=digt), digits=digits),# Z- values
+		if(has.Pval) format.pval(Pv, digits = digt))
+	dimnames(Coefs) <- dimnames(x$coef)
+	if(any(not.both.0 <- (c(x$coef)==0)!=(as.numeric(Coefs)==0),na.rm=TRUE))
+	  ## not.both.0==T:  one is TRUE, one is FALSE : ==> x$coef != 0
+	  Coefs[not.both.0] <- format(x$coef[not.both.0], digits= min(1,digits-1))# =2
+	if(!has.Pval || !exists("symnum", mode = "function"))
+		signif.stars <- FALSE
+	else if(signif.stars) {
+		Signif <- symnum(Pv, corr = FALSE,
+				 cutpoints = c(0,  .001,.01,.05, .1, 1),
+				 symbols   =  c("***","**","*","."," "))
+		Coefs <- cbind(Coefs, Signif)
+	}
+	print(Coefs, quote = FALSE, ...)
+	if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
+	##
+	cat("\n(Dispersion parameter for ", x$family$family,
+	    " family taken to be ", lformat(x$dispersion), ")\n\n",
+	    apply(cbind(paste(format.char(c("Null","Residual"),width=8,flag=""),
+			      "deviance:"),
+			lformat(x[c("null.deviance","deviance")]), " on",
+			lformat(x[c("df.null","df.residual")]),
+			" degrees of freedom\n"),
+		  1, paste, collapse=" "),
+	    "AIC: ", lformat(x$aic),"\n\n",
+	    "Number of Fisher Scoring iterations: ", x$iter,
+	    "\n\n", sep="")
 
 	correl <- x$correlation
 	if(!is.null(correl)) {
@@ -593,15 +635,16 @@ family.glm <- function(object) {
 
 residuals.glm <- function(object, type="deviance")
 {
-	type <- match(type, c("deviance", "pearson", "working", "response"))
-	y <- object$y
+	ntyp <- match(type, c("deviance", "pearson", "working", "response"))
+	if(is.na(ntyp))
+		stop(paste("invalid `type':", type))
+	y  <- object$y
 	mu <- object$fitted.values
-	wts <- object$prior.weights
-	switch(type,
+	wts<- object$prior.weights
+	switch(ntyp,
 		deviance = {
-			dev.resids <- object$family$dev.resids
-			ifelse(y > mu, sqrt(dev.resids(y, mu, wts)),
-				      -sqrt(dev.resids(y, mu, wts)))
+			d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
+			ifelse(y > mu, d.res, -d.res)
 		},
 		pearson	 = object$residuals * sqrt(object$weights),
 		working	 = object$residuals,
