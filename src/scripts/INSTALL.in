@@ -6,9 +6,10 @@
 
 # @configure_input@
 
-VERSION="0.1-3"
+VERSION="0.1-4"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
+CLEAN=false
 DEBUG=false
 BUILD_TEXT=true
 BUILD_HTML=true
@@ -43,10 +44,15 @@ while test -n "${1}"; do
       echo "${USAGE_MSG}"; exit 0 ;;
     -V|--version)
       echo "${VERSION}"; exit 0 ;;
+    -c|--clean)
+      CLEAN=true ;;
     --debug)
       DEBUG=true; SHLIB_OPTS="${SHLIB_OPTS} --debug" ;;
     --no-docs)
-      BUILD_TEXT=false;BUILD_HTML=false;BUILD_LATEX=false;BUILD_EXAMPLE=false ;;
+      BUILD_TEXT=false
+      BUILD_HTML=false
+      BUILD_LATEX=false
+      BUILD_EXAMPLE=false ;;
     --no-text)
       BUILD_TEXT=false ;;
     --no-html)
@@ -55,7 +61,7 @@ while test -n "${1}"; do
       BUILD_LATEX=false ;;
     --no-example)
       BUILD_EXAMPLE=false ;;
-    -l)
+    -l|--library)
       lib=${2}; shift ;;
     *)
       if test -d ${1}; then
@@ -112,11 +118,13 @@ for pkg in ${PKGS}; do
     if test -f src/Makefile; then
       (cd src;
 	${MAKE} -f ${RHOME}/etc/Makeconf -f Makefile \
-	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs)
+	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs; \
+	if ${CLEAN}; then ${MAKE} clean; fi)
     else
       (cd src;
 	sh ${RHOME}/bin/SHLIB ${SHLIB_OPTS} \
-	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf])
+	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf]; \
+	if ${CLEAN}; then rm -f *.o; fi)
     fi || {
       echo "ERROR: Compilation failed for package \`${pkg}'"
       exit 4
