@@ -1194,7 +1194,16 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tcl.h in
       ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
       ##   ${TCL_PREFIX}/include
+      ## <FIXME>
+      ## Also look in
+      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic
+      ## to deal with current FreeBSD layouts.  These also link the real
+      ## thing to the version subdir, but the link cannot be used as it
+      ## fails to include 'tclDecls.h' which is not linked.  Hence we
+      ## must look for the real thing first.  Argh ...
+      ## </FIXME>
       for dir in \
+          ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic \
           ${TCL_PREFIX}/include/tcl${TCL_VERSION} \
           ${TCL_PREFIX}/include; do 
         AC_CHECK_HEADER([${dir}/tcl.h],
@@ -1225,12 +1234,18 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ##   ${TK_PREFIX}/include/tcl${TK_VERSION}
       ## to compensate for Debian madness ...
       ## </FIXME>
+      ## <FIXME>
+      ## Also look in
+      ##   ${TK_PREFIX}/include/tk${TK_VERSION}/generic
+      ## to deal with current FreeBSD layouts.  See above for details.
+      ## </FIXME>
       ## As the AC_CHECK_HEADER test tries including the header file and
       ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
       ## for the check.
       r_save_CPPFLAGS="${CPPFLAGS}"
       CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
       for dir in \
+          ${TK_PREFIX}/include/tk${TK_VERSION}/generic \
           ${TK_PREFIX}/include/tk${TK_VERSION} \
           ${TK_PREFIX}/include/tcl${TK_VERSION} \
           ${TK_PREFIX}/include; do 
