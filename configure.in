@@ -324,7 +324,7 @@ if ${use_blas}; then
 fi
 AC_SUBST(BLAS)
 if ${use_readline}; then
-  AC_CHECK_LIB(readline, main)
+  AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
 
 ### Library functions.
