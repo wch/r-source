@@ -123,6 +123,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   segfault in rbind of a vector without names fixed.
+
     o	apply should now work for all un-dimnamed arrays (PR#318).
 
     o	ar(..., demean=F) works more consistently across methods.
