@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-26 2004-06-23
+Version 1.9-27 2004-06-25
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -396,11 +396,11 @@ port of R for Macintosh is no longer supported.
 The `bin/linux' directory of a CRAN site contains Debian
 stable/testing/unstable packages for the i386 platform (now part of the
 Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
-9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9/Fedora1
-i386, 7.x alpha, and Fedora1 x86_64 packages by Martyn Plummer, Naoki
-Takebayashi, and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386
-and 9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages
-by Susunu Tanimura.
+9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
+8.x/9/Fedora1/Fedora2 i386 and Fedora1 x86_64 packages by Martyn Plummer
+and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386 and 9.0/9.1
+i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu
+Tanimura.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1405,6 +1405,11 @@ distributions of R.)
 
 *Matrix*
      A Matrix package.
+
+*NADA*
+     Methods described in "Nondetects And Data Analysis: Statistics for
+     Censored Environmental Data" by Dennis R. Helsel, 2004, John Wiley and
+     Sons.
 
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
@@ -2465,7 +2470,7 @@ distributions of R.)
 
 *rrcov*
      Functions for robust location and scatter estimation and robust
-     regression with HBDP.
+     regression with high breakdown point.
 
 *rsprng*
      Provides interface to SPRNG (Scalable Parallel Random Number
