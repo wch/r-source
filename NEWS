@@ -33,6 +33,13 @@ BUG FIXES
 	argument.  (This follows S but was not previously implemented
 	in R.)
 
+    o	write.table() was not respecting the 'dec' argument for complex
+	numbers.
+
+    o	write.table() printed a mixture of numeric and complex numbers
+	as all complex.  (PR#7260)
+
+
 
         *********************************************************
         *                                                       *

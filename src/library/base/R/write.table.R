@@ -16,11 +16,15 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                                      is.character(x) || is.factor(x))))
     if(dec != ".") {
         ## only need to consider numeric non-integer columns
-    	num <- which(unlist(lapply(x, is.double)))
+    	num <- which(unlist(lapply(x, function(x) is.double(x)
+                                   || is.complex(x))))
 	if(length(num))
            x[num] <- lapply(x[num],
                             function(z) gsub("\\.", ",", as.character(z)))
     }
+    ## as.matrix might turn integer or numeric columns into a complex matrix
+    cmplx <- sapply(x, is.complex)
+    if(any(cmplx) && !all(cmplx)) x[cmplx] <- lapply(x[cmplx], as.character)
     x <- as.matrix(x)
     if (!nocols){
         i <- is.na(x)

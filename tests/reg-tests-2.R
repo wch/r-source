@@ -1377,3 +1377,10 @@ read.table(foo, colClasses = c(V4="character"))
 unlist(sapply(.Last.value, class))
 unlink(foo)
 ## added in 2.0.0
+
+
+## write.table with complex columns (PR#7260, in part)
+write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "")
+# printed all as complex in 2.0.0.
+write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "", dec=",")
+## used '.' not ',' in 2.0.0
