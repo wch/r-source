@@ -345,7 +345,7 @@ sub build_index { # lib, dest
     print htmlfile html_pagehead("$title", "../../../doc/html",
 				 "../../../doc/html/index.$HTML", "Top",
 				 "../../../doc/html/packages.$HTML",
-				 "Package List", "../../R.css");
+				 "Package List", "", "", "../../R.css");
 
     if($main::opt_chm) {
 	print chmfile chm_pagehead("$title");
