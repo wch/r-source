@@ -206,7 +206,7 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Base 2 and Genreal Base Logarithms */
+/* Base 2 and General Base Logarithms */
 
 #ifdef OLD
 double log2(double x)
@@ -347,7 +347,7 @@ static SEXP binary(SEXP op, SEXP args)
     } else {
 	class = tsp = R_NilValue; /* -Wall */
     }
-    
+
     if (mismatch)
 	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length");
 
@@ -560,8 +560,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 		INTEGER(ans)[i] = NA_INTEGER;
 	    else {
-		INTEGER(ans)[i] = (int)myfmod((double)x1,(double)x2);
-		/* till 0.63.2:	 x1 % x2 */
+		INTEGER(ans)[i] = /* till 0.63.2:	x1 % x2 */
+		    (x1 >= 0 && x2 > 0) ? x1 % x2 :
+		    (int)myfmod((double)x1,(double)x2);
 	    }
 	}
 	break;
@@ -874,7 +875,6 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 #ifdef IEEE_754
 		y[i] = ai + bi;
 #else
-
 		y[i] = NA_REAL;
 #endif
 	    }
@@ -917,19 +917,19 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	return complex_math2(call, op, args, env);
 
     switch (PRIMVAL(op)) {
-    case 0: return math2(op, CAR(args), CADR(args), atan2);
+    case  0: return math2(op, CAR(args), CADR(args), atan2);
     /* case 1: return math2(op, CAR(args), CADR(args), prec); */
 
-    case 2: return math2(op, CAR(args), CADR(args), lbeta);
-    case 3: return math2(op, CAR(args), CADR(args), beta);
-    case 4: return math2(op, CAR(args), CADR(args), lchoose);
-    case 5: return math2(op, CAR(args), CADR(args), choose);
+    case  2: return math2(op, CAR(args), CADR(args), lbeta);
+    case  3: return math2(op, CAR(args), CADR(args), beta);
+    case  4: return math2(op, CAR(args), CADR(args), lchoose);
+    case  5: return math2(op, CAR(args), CADR(args), choose);
 
-    case 6: return math2(op, CAR(args), CADR(args), dchisq);
-    case 7: return math2(op, CAR(args), CADR(args), pchisq);
-    case 8: return math2(op, CAR(args), CADR(args), qchisq);
+    case  6: return math2(op, CAR(args), CADR(args), dchisq);
+    case  7: return math2(op, CAR(args), CADR(args), pchisq);
+    case  8: return math2(op, CAR(args), CADR(args), qchisq);
 
-    case 9: return math2(op, CAR(args), CADR(args), dexp);
+    case  9: return math2(op, CAR(args), CADR(args), dexp);
     case 10: return math2(op, CAR(args), CADR(args), pexp);
     case 11: return math2(op, CAR(args), CADR(args), qexp);
 
@@ -1066,7 +1066,9 @@ SEXP do_signif (SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #define mod_iterate3(n1,n2,n3,i1,i2,i3) for (i=i1=i2=i3=0; i<n; \
-(++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0), ++i3, (i3==n3)&&(i3=0), ++i))
+	(++i1, (i1==n1)&&(i1=0),\
+	 ++i2, (i2==n2)&&(i2=0),\
+	 ++i3, (i3==n3)&&(i3=0), ++i))
 
 static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 {
@@ -1143,83 +1145,85 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 
 /* Mathematical Functions of Three (Real) Arguments */
 
+#define Math3(op, A, FUN) math3(op, CAR(A), CADR(A), CADDR(A), FUN);
+
 SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
     switch (PRIMVAL(op)) {
 
-    case 1:  return math3(op, CAR(args), CADR(args), CADDR(args), dbeta);
-    case 2:  return math3(op, CAR(args), CADR(args), CADDR(args), pbeta);
-    case 3:  return math3(op, CAR(args), CADR(args), CADDR(args), qbeta);
+    case  1:  return Math3(op, args, dbeta);
+    case  2:  return Math3(op, args, pbeta);
+    case  3:  return Math3(op, args, qbeta);
 
-    case 4:  return math3(op, CAR(args), CADR(args), CADDR(args), dbinom);
-    case 5:  return math3(op, CAR(args), CADR(args), CADDR(args), pbinom);
-    case 6:  return math3(op, CAR(args), CADR(args), CADDR(args), qbinom);
+    case  4:  return Math3(op, args, dbinom);
+    case  5:  return Math3(op, args, pbinom);
+    case  6:  return Math3(op, args, qbinom);
 
-    case 7:  return math3(op, CAR(args), CADR(args), CADDR(args), dcauchy);
-    case 8:  return math3(op, CAR(args), CADR(args), CADDR(args), pcauchy);
-    case 9:  return math3(op, CAR(args), CADR(args), CADDR(args), qcauchy);
+    case  7:  return Math3(op, args, dcauchy);
+    case  8:  return Math3(op, args, pcauchy);
+    case  9:  return Math3(op, args, qcauchy);
 
-    case 10:  return math3(op, CAR(args), CADR(args), CADDR(args), df);
-    case 11:  return math3(op, CAR(args), CADR(args), CADDR(args), pf);
-    case 12:  return math3(op, CAR(args), CADR(args), CADDR(args), qf);
+    case 10:  return Math3(op, args, df);
+    case 11:  return Math3(op, args, pf);
+    case 12:  return Math3(op, args, qf);
 
-    case 13:  return math3(op, CAR(args), CADR(args), CADDR(args), dgamma);
-    case 14:  return math3(op, CAR(args), CADR(args), CADDR(args), pgamma);
-    case 15:  return math3(op, CAR(args), CADR(args), CADDR(args), qgamma);
+    case 13:  return Math3(op, args, dgamma);
+    case 14:  return Math3(op, args, pgamma);
+    case 15:  return Math3(op, args, qgamma);
 
-    case 16:  return math3(op, CAR(args), CADR(args), CADDR(args), dlnorm);
-    case 17:  return math3(op, CAR(args), CADR(args), CADDR(args), plnorm);
-    case 18:  return math3(op, CAR(args), CADR(args), CADDR(args), qlnorm);
+    case 16:  return Math3(op, args, dlnorm);
+    case 17:  return Math3(op, args, plnorm);
+    case 18:  return Math3(op, args, qlnorm);
 
-    case 19:  return math3(op, CAR(args), CADR(args), CADDR(args), dlogis);
-    case 20:  return math3(op, CAR(args), CADR(args), CADDR(args), plogis);
-    case 21:  return math3(op, CAR(args), CADR(args), CADDR(args), qlogis);
+    case 19:  return Math3(op, args, dlogis);
+    case 20:  return Math3(op, args, plogis);
+    case 21:  return Math3(op, args, qlogis);
 
-    case 22:  return math3(op, CAR(args), CADR(args), CADDR(args), dnbinom);
-    case 23:  return math3(op, CAR(args), CADR(args), CADDR(args), pnbinom);
-    case 24:  return math3(op, CAR(args), CADR(args), CADDR(args), qnbinom);
+    case 22:  return Math3(op, args, dnbinom);
+    case 23:  return Math3(op, args, pnbinom);
+    case 24:  return Math3(op, args, qnbinom);
 
-    case 25:  return math3(op, CAR(args), CADR(args), CADDR(args), dnorm);
-    case 26:  return math3(op, CAR(args), CADR(args), CADDR(args), pnorm);
-    case 27:  return math3(op, CAR(args), CADR(args), CADDR(args), qnorm);
+    case 25:  return Math3(op, args, dnorm);
+    case 26:  return Math3(op, args, pnorm);
+    case 27:  return Math3(op, args, qnorm);
 
-    case 28:  return math3(op, CAR(args), CADR(args), CADDR(args), dunif);
-    case 29:  return math3(op, CAR(args), CADR(args), CADDR(args), punif);
-    case 30:  return math3(op, CAR(args), CADR(args), CADDR(args), qunif);
+    case 28:  return Math3(op, args, dunif);
+    case 29:  return Math3(op, args, punif);
+    case 30:  return Math3(op, args, qunif);
 
-    case 31:  return math3(op, CAR(args), CADR(args), CADDR(args), dweibull);
-    case 32:  return math3(op, CAR(args), CADR(args), CADDR(args), pweibull);
-    case 33:  return math3(op, CAR(args), CADR(args), CADDR(args), qweibull);
+    case 31:  return Math3(op, args, dweibull);
+    case 32:  return Math3(op, args, pweibull);
+    case 33:  return Math3(op, args, qweibull);
 
-    case 34:  return math3(op, CAR(args), CADR(args), CADDR(args), dnchisq);
-    case 35:  return math3(op, CAR(args), CADR(args), CADDR(args), pnchisq);
+    case 34:  return Math3(op, args, dnchisq);
+    case 35:  return Math3(op, args, pnchisq);
 #ifdef UNIMP
-    case 36:  return math3(op, CAR(args), CADR(args), CADDR(args), qnchisq);
+    case 36:  return Math3(op, args, qnchisq);
 #endif
 
 #ifdef UNIMP
-    case 37:  return math3(op, CAR(args), CADR(args), CADDR(args), dnt);
+    case 37:  return Math3(op, args, dnt);
 #endif
-    case 38:  return math3(op, CAR(args), CADR(args), CADDR(args), pnt);
+    case 38:  return Math3(op, args, pnt);
 #ifdef UNIMP
-    case 39:  return math3(op, CAR(args), CADR(args), CADDR(args), qnt);
+    case 39:  return Math3(op, args, qnt);
 #endif
 
-    case 40:  return math3(op, CAR(args), CADR(args), CADDR(args), dwilcox);
-    case 41:  return math3(op, CAR(args), CADR(args), CADDR(args), pwilcox);
-    case 42:  return math3(op, CAR(args), CADR(args), CADDR(args), qwilcox);
+    case 40:  return Math3(op, args, dwilcox);
+    case 41:  return Math3(op, args, pwilcox);
+    case 42:  return Math3(op, args, qwilcox);
 
-    case 43:  return math3(op, CAR(args), CADR(args), CADDR(args), bessel_i);
-    case 44:  return math3(op, CAR(args), CADR(args), CADDR(args), bessel_k);
+    case 43:  return Math3(op, args, bessel_i);
+    case 44:  return Math3(op, args, bessel_k);
 
 
     default:
 	errorcall(call, "unimplemented real function\n");
     }
     return op;/* never used; to keep -Wall happy */
-}
+} /* do_math3() */
 
 #define mod_iterate4(n1,n2,n3,n4,i1,i2,i3,i4) for (i=i1=i2=i3=i4=0; i<n; \
 (++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0),\
@@ -1305,37 +1309,178 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     }
     UNPROTECT(5);
     return sy;
-}
+} /* math4() */
 
 /* Mathematical Functions of Four (Real) Arguments */
+
+#define Math4(op, A, FUN) math4(op, CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN);
 
 SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
     switch (PRIMVAL(op)) {
-    case 1: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), dhyper);
-    case 2: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), phyper);
-    case 3: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qhyper);
-    case 4: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), dnbeta);
-    case 5: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), pnbeta);
+    case  1: return Math4(op, args, dhyper);
+    case  2: return Math4(op, args, phyper);
+    case  3: return Math4(op, args, qhyper);
+    case  4: return Math4(op, args, dnbeta);
+    case  5: return Math4(op, args, pnbeta);
 #ifdef UNIMP
-    case 6: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qnbeta);
+    case  6: return Math4(op, args, qnbeta);
 #endif
 #ifdef UNIMP
-    case 7: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), dnf);
+    case  7: return Math4(op, args, dnf);
 #endif
-    case 8: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), pnf);
+    case  8: return Math4(op, args, pnf);
 #ifdef UNIMP
-    case 9: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qnf);
+    case  9: return Math4(op, args, qnf);
 #endif
 #ifdef UNIMP
-    case 10: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), dtukey);
+    case 10: return Math4(op, args, dtukey);
 #endif
-    case 11: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), ptukey);
-    case 12: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qtukey);
+    case 11: return Math4(op, args, ptukey);
+    case 12: return Math4(op, args, qtukey);
     default:
 	errorcall(call, "unimplemented real function\n");
     }
     return op;/* never used; to keep -Wall happy */
 }
+
+#ifdef WHEN_MATH5_IS_THERE
+
+#define mod_iterate5(n1,n2,n3,n4,n5, i1,i2,i3,i4,i5) \
+ for (i=i1=i2=i3=i4=i5=0; i<n; \
+(++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0),\
+ ++i3, (i3==n3)&&(i3=0), ++i4, (i4==n4)&&(i4=0),\
+ ++i5, (i5==n5)&&(i5=0), ++i))
+
+static SEXP math5(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se,
+		  double (*f)())
+{
+    SEXP sy;
+    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne;
+    double ai, bi, ci, di, ei, *a, *b, *c, *d, *e, *y;
+
+    if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) || !isNumeric(sd) || !isNumeric(se))
+	errorcall(lcall, "Non-numeric argument to mathematical function\n");
+
+    na = LENGTH(sa);
+    nb = LENGTH(sb);
+    nc = LENGTH(sc);
+    nd = LENGTH(sd);
+    ne = LENGTH(se);
+    n = na;
+    if (n < nb) n = nb;
+    if (n < nc) n = nc;
+    if (n < nd) n = nd;
+    if (n < ne) n = ne; /* n = min(na,nb,nc,nd,ne) */
+    PROTECT(sa = coerceVector(sa, REALSXP));
+    PROTECT(sb = coerceVector(sb, REALSXP));
+    PROTECT(sc = coerceVector(sc, REALSXP));
+    PROTECT(sd = coerceVector(sd, REALSXP));
+    PROTECT(se = coerceVector(se, REALSXP));
+    PROTECT(sy = allocVector(REALSXP, n));
+    a = REAL(sa);
+    b = REAL(sb);
+    c = REAL(sc);
+    d = REAL(sd);
+    e = REAL(se);
+    y = REAL(sy);
+    if (na < 1 || nb < 1 || nc < 1 || nd < 1 || ne < 1) {
+	for (i = 0; i < n; i++)
+	    y[i] = NA_REAL;
+    }
+    else {
+	naflag = 0;
+	mod_iterate5 (na, nb, nc, nd, ne,
+		      ia, ib, ic, id, ie) {
+	    ai = a[ia];
+	    bi = b[ib];
+	    ci = c[ic];
+	    di = d[id];
+	    ei = e[ie];
+	    if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di) || ISNAN(ei)) {
+#ifdef IEEE_754
+		y[i] = ai + bi + ci + di + ei;
+#else
+		y[i] = NA_REAL;
+#endif
+	    }
+	    else {
+		y[i] = MATH_CHECK(f(ai, bi, ci, di, ei));
+		if (ISNAN(y[i])) {
+#ifdef OLD
+		    y[i] = NA_REAL;
+#endif
+		    naflag = 1;
+		}
+	    }
+	}
+    }
+    if (naflag)
+#ifdef IEEE_754
+	warningcall(lcall, "NaNs produced");
+#else
+	warningcall(lcall, "NAs produced");
+#endif
+    if (n == na) {
+	ATTRIB(sy) = duplicate(ATTRIB(sa));
+	OBJECT(sy) = OBJECT(sa);
+    }
+    else if (n == nb) {
+	ATTRIB(sy) = duplicate(ATTRIB(sb));
+	OBJECT(sy) = OBJECT(sb);
+    }
+    else if (n == nc) {
+	ATTRIB(sy) = duplicate(ATTRIB(sc));
+	OBJECT(sy) = OBJECT(sc);
+    }
+    else if (n == nd) {
+	ATTRIB(sy) = duplicate(ATTRIB(sd));
+	OBJECT(sy) = OBJECT(sd);
+    }
+    else if (n == ne) {
+	ATTRIB(sy) = duplicate(ATTRIB(se));
+	OBJECT(sy) = OBJECT(se);
+    }
+    UNPROTECT(6);
+    return sy;
+} /* math5() */
+
+/* Mathematical Functions of Five (Real) Arguments */
+
+#define Math5(op, A, FUN) \
+	math5(op, CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN);
+
+SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+
+    switch (PRIMVAL(op)) {
+    case  1: return Math5(op, args, dhyper);
+    case  2: return Math5(op, args, phyper);
+    case  3: return Math5(op, args, qhyper);
+    case  4: return Math5(op, args, dnbeta);
+    case  5: return Math5(op, args, pnbeta);
+#ifdef UNIMP
+    case  6: return Math5(op, args, qnbeta);
+#endif
+#ifdef UNIMP
+    case  7: return Math5(op, args, dnf);
+#endif
+    case  8: return Math5(op, args, pnf);
+#ifdef UNIMP
+    case  9: return Math5(op, args, qnf);
+#endif
+#ifdef UNIMP
+    case 10: return Math5(op, args, dtukey);
+#endif
+    case 11: return Math5(op, args, ptukey);
+    case 12: return Math5(op, args, qtukey);
+    default:
+	errorcall(call, "unimplemented real function\n");
+    }
+    return op;/* never used; to keep -Wall happy */
+} /* do_math5() */
+
+#endif/* Math5 is there */
