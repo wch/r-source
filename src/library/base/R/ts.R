@@ -90,28 +90,14 @@ as.ts <- function (x)
     else ts(x)
 }
 
-.cbind.ts <- function(..., dframe = FALSE, union = TRUE)
+.cbind.ts <- function(sers, nmsers, dframe = FALSE, union = TRUE)
 {
-    names.dots <- function(...)
-    {
-        l <- as.list(substitute(list(...)))[-1]
-        nm <- names(l)
-        fixup <- if (is.null(nm)) seq(along = l) else nm == ""
-        dep <- sapply(l[fixup], function(x) deparse(x)[1])
-        if (is.null(nm)) dep
-        else {
-            nm[fixup] <- dep
-            nm
-        }
-    }
-    sers <- list(...)
     nulls <- sapply(sers, is.null)
     sers <- sers[!nulls]
     nser <- length(sers)
     if(nser == 0) return(NULL)
     if(nser == 1)
         if(dframe) return(as.data.frame(sers[[1]])) else return(sers[[1]])
-    nmsers <- names.dots(...)
     tsser <-  sapply(sers, function(x) length(tsp(x)) > 0)
     if(!any(tsser))
         stop("no time series supplied")
@@ -192,7 +178,10 @@ Ops.ts <- function(e1, e2)
         nc1 <- NCOL(e1)
         nc2 <- NCOL(e2)
         ## use ts.intersect to align e1 and e2        
-        e12 <- .cbind.ts(e1, e2, union = FALSE)
+        e12 <- .cbind.ts(list(e1, e2),
+                         c(deparse(substitute(e1))[1],
+                           deparse(substitute(e2))[1]),
+                         union = FALSE)
         e1 <- if(is.matrix(e1)) e12[, 1:nc1, drop = FALSE] else e12[, 1]
         e2 <- if(is.matrix(e2)) e12[, nc1 + (1:nc2), drop = FALSE]
         else e12[, nc1 + 1]
@@ -202,11 +191,22 @@ Ops.ts <- function(e1, e2)
 
 cbind.ts <- function(..., deparse.level = 1) {
     if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
-    ## <FIXME>
-    ## This is not quite right.  The only named argument of cbind.ts is
-    ## `deparse.level', but `dframe' and `union' are swallowed ...
-    .cbind.ts(..., dframe = FALSE, union = FALSE)
-    ## </FIXME>
+    makeNames <- function(...) {
+        l <- as.list(substitute(list(...)))[-1]
+        nm <- names(l)
+        fixup <- if(is.null(nm)) seq(along = l) else nm == ""
+        ## <NOTE>
+        dep <- sapply(l[fixup], function(x) deparse(x)[1])
+        ## We could add support for `deparse.level' here by creating dep
+        ## as in list.names() inside table().  But there is a catch: we
+        ## need deparse.level = 2 to get the `usual' deparsing when the
+        ## method is invoked by the generic ...
+        ## </NOTE>
+        if(is.null(nm)) return(dep)
+        if(any(fixup)) nm[fixup] <- dep
+        nm
+    }
+    .cbind.ts(list(...), makeNames(...), dframe = FALSE, union = TRUE)
 }
 
 diff.ts <- function (x, lag = 1, differences = 1, ...)
