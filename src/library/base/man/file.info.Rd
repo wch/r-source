@@ -19,7 +19,7 @@ file.info(...)
 
 #ifdef windows
   File modes are probably only useful on Windows NT machines.
-#endif  
+#endif
 }
 \value{
   A data frame with row names the file names and columns
@@ -36,7 +36,7 @@ file.info(...)
   \item{grname}{character: \code{gid} interpreted as a group name.}
   Unknown user and group names will be \code{NA}.
 #endif
-  
+
 Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
 The \code{uid}}, \code{gid}, \code{uname} and \code{grname} columns
@@ -63,9 +63,9 @@ may not be supplied on a non-POSIX Unix system.
 \seealso{
   \code{\link{file}}, \code{\link{file.access}}, \code{\link{list.files}}
 }
-  
+
 \examples{
-file.info(dir("."))
+file.info(dir("../..", full.names=TRUE))
 file.info("no-such-file-exists")
 }
 \keyword{file}
