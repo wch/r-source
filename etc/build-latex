@@ -8,6 +8,7 @@
 
 RHOME=`dirname $0`/..           # relative
 RHOME=`cd ${RHOME}; pwd`        # absolute
+export RHOME
 
 #-- NEW: Everything latex is now in here..
 DVIDIR=${RHOME}/doc/manual
