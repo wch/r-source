@@ -1,9 +1,9 @@
 ## Dotplots a la Box, Hunter and Hunter
 
-stripplot <- function(x, method="overplot", jitter=0.1, offset=1/3,
-		      vertical=FALSE, group.names,
-		      xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
-		      pch=0, col=par("fg"), cex=par("cex"))
+stripchart <-
+function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
+         group.names, xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
+         pch=0, col=par("fg"), cex=par("cex"))
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)

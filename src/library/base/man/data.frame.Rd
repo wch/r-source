@@ -82,7 +82,7 @@ plot (x, \dots)
   array argument.} 
 
   \code{plot.data.frame}, a method of the \code{\link{plot}} generic,
-  uses \code{\link{stripplot}} for \emph{one} variable,
+  uses \code{\link{stripchart}} for \emph{one} variable,
   \code{\link{plot.default}} (scatterplot) for \emph{two} variables, and
   \code{\link{pairs}} (scatterplot matrix) otherwise.
 

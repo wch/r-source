@@ -97,8 +97,8 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \seealso{
   \code{\link{boxplot.stats}} which does the computation,
-  \code{\link{bxp}} for the plotting, and \code{\link{stripplot}} for an
-  alternative (with small data sets).
+  \code{\link{bxp}} for the plotting, and \code{\link{stripchart}} for
+  an alternative (with small data sets).
 }
 \examples{
 ## boxplot on a formula:
