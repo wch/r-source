@@ -55,7 +55,7 @@ real \tab double * \tab double precision\cr
 complex \tab complex * \tab double complex\cr
 logical \tab int * \tab integer \cr
 character \tab char ** \tab [compiler dependent]\cr
-list \tab  SEXP *\tab \cr
+list \tab SEXP *\tab \cr
 other \tab SEXP\tab \cr
 }
     The C type \code{complex} is defined in \file{Complex.h} as a
@@ -115,10 +115,11 @@ safe.
  }
 
 \section{Header files for external code}{
-    Writing code for use with \code{.External} will typically use
-    internal \R structures. If possible use just those in
-    \file{Rinternals.h}, as other header files are not installed and are
-    even more likely to be changed.
+    Writing code for use with \code{.External} and \code{.Call} will
+    use internal \R structures. If possible use just those defined in
+    \file{Rinternals.h} or the macros in \file{Rdefines.h},
+    as other header files are not installed and are even more
+    likely to be changed.
 }
     
 \seealso{\code{\link{dyn.load}}.}
