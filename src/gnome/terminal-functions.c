@@ -176,7 +176,7 @@ static void file_saveas_ok(GtkWidget *widget, gpointer data)
     return;
   }
 
-  R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
+  R_SaveToFile(FRAME(R_GlobalEnv), fp, 0, 0);
   Rprintf("Workspace saved\n");
   fclose(fp);
 
