@@ -453,11 +453,11 @@ void setup_Rmainloop(void)
     InitGraphics();
     R_Is_Running = 1;
 #ifdef HAVE_AQUA 
-     if (strcmp(R_GUIType, "AQUA") == 0) 
-       InitAquaIO(); /* must be after InitTempDir() */
+    if (strcmp(R_GUIType, "AQUA") == 0) 
+	InitAquaIO(); /* must be after InitTempDir() */
 #endif
 #ifdef HAVE_NL_LANGINFO
-     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+    utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif
     /* gc_inhibit_torture = 0; */
 
