@@ -78,6 +78,9 @@ NEW FEATURES
     o	dump() has new argument append, argument `fileout' has been
 	renamed to `file' (for consistency with all other functions).
 
+    o	edit.default() now checks for an unset `editor' argument, and
+	terminates with an error if the editor cannot be run.
+
     o	The `mode' argument of exists() and get() is interpreted
 	as mode(x) rather than typeof(x), following S.
 
