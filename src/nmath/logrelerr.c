@@ -42,7 +42,7 @@ double logrelerr(double x)
     /*				      log weighted error  31.20	    */
     /*			    significant figures required  30.93	    */
     /*				 decimal places required  32.01	    */
-    static double alnrcs[43] = {
+    static /* const */ double alnrcs[43] = {
 	+.10378693562743769800686267719098e+1,
 	-.13364301504908918098766041553133e+0,
 	+.19408249135520563357926199374750e-1,
@@ -87,14 +87,15 @@ double logrelerr(double x)
 	-.33410026677731010351377066666666e-30,
 	+.63533936180236187354180266666666e-31,
     };
-    static int nlnrel = 0;
-    static double xmin = 0.;
+    const double xmin = -1 + sqrt(1/DBL_EPSILON);/*was sqrt(d1mach(4)); */
 
-    if (nlnrel == 0) {
-	nlnrel = chebyshev_init(alnrcs, 43, 0.1 * d1mach(3));
-	xmin = -1.0 + sqrt(d1mach(4));
+    static int nlnrel = 0;
+
+    if (nlnrel == 0) {/* initialize chebychev coefficients */
+	nlnrel = chebyshev_init(alnrcs, 43, DBL_EPSILON/20);/*was .1*d1mach(3)*/
     }
 
+    if (x == 0.) return 0.;/* speed */
     if (x <= -1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
