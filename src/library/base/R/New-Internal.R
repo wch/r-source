@@ -40,6 +40,7 @@ digamma <- function(x).Internal(   digamma(x))
 trigamma <- function(x).Internal(  trigamma(x))
 tetragamma <- function(x).Internal(tetragamma(x))
 pentagamma <- function(x).Internal(pentagamma(x))
+psigamma <- function(x, deriv=0) .Internal(psigamma(x, deriv))
 
 factorial <- function(x) gamma(x + 1)
 lfactorial <- function(x) lgamma(x + 1)

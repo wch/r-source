@@ -4,6 +4,7 @@
 \alias{lbeta}
 \alias{gamma}
 \alias{lgamma}
+\alias{psigamma}
 \alias{digamma}
 \alias{trigamma}
 \alias{tetragamma}
@@ -22,6 +23,7 @@ beta(a, b)
 lbeta(a, b)
 gamma(x)
 lgamma(x)
+psigamma(x, deriv = 0)
 digamma(x)
 trigamma(x)
 tetragamma(x)
@@ -33,7 +35,7 @@ lfactorial(x)
 }
 \arguments{
   \item{a, b, x}{numeric vectors.}
-  \item{n, k}{integer vectors.}
+  \item{n, k, deriv}{integer vectors.}
 }
 \details{
 %---- This should be improved! ---  want mathematical definitions
@@ -51,6 +53,8 @@ lfactorial(x)
   The functions \code{digamma}, \code{trigamma}, \code{tetragamma} and
   \code{pentagamma} return the first, second, third and fourth
   derivatives of the logarithm of the gamma function.
+  \code{psigamma(x, deriv)} (\code{deriv >= 0}) is more generally
+  computing the \code{deriv}-th derivative of \eqn{\psi(x)}.
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
     \frac{\Gamma'(x)}{\Gamma(x)}}{%
     \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
@@ -81,11 +85,12 @@ for (n in 0:10) print(choose(n, k = 0:n))
 
 factorial(100)
 lfactorial(10000)
-## gamma has discontinuities are 0, -1, -2, ...
-\dontrun{## use plots of points to show this.
-curve(gamma(x),-3,4, n=1001, ylim=c(-10,100),
-      col="red", lwd=2, main="gamma(x)")
-abline(h=0,v=0, lty=3, col="midnightblue")}
+
+## gamma has 1st order poles at 0, -1, -2, ...
+x <- sort(c(seq(-3,4, length=201), outer(0:-3, (-1:1)*1e-6, "+")))
+plot(x, gamma(x), ylim=c(-20,20), col="red", type="l", lwd=2,
+     main=expression(Gamma(x)))
+abline(h=0, v=-3:0, lty=3, col="midnightblue")
 
 x <- seq(.1, 4, length = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
@@ -98,5 +103,6 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
   abline(h = 0, col = "lightgray")
   if (is.deriv) lines(x[-1], dy, col = "blue", lty = 2)
 }
+
 }
 \keyword{math}

@@ -210,6 +210,7 @@ double  Rlog1p(double);
 #define dnorm4		Rf_dnorm4
 #define dnt		Rf_dnt
 #define dpois		Rf_dpois
+#define dpsifn		Rf_dpsifn
 #define dsignrank	Rf_dsignrank
 #define dt		Rf_dt
 #define dtukey		Rf_dtukey
@@ -250,6 +251,7 @@ double  Rlog1p(double);
 #define pnt		Rf_pnt
 #define ppois		Rf_ppois
 #define psignrank	Rf_psignrank
+#define psigamma	Rf_psigamma
 #define pt		Rf_pt
 #define ptukey		Rf_ptukey
 #define punif		Rf_punif
@@ -510,6 +512,8 @@ double rsignrank(double);
 	/* Gamma and Related Functions */
 double	gammafn(double);
 double	lgammafn(double);
+void    dpsifn(double, int, int, int, double*, int*, int*);
+double	psigamma(double, double);
 double	digamma(double);
 double	trigamma(double);
 double	tetragamma(double);

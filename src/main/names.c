@@ -263,8 +263,8 @@ FUNTAB R_FunTab[] =
 {"trigamma",	do_math1,	43,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"tetragamma",	do_math1,	44,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"pentagamma",	do_math1,	45,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-
 {"gammaCody",	do_math1,	46,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+/* see "psigamma" below !*/
 
 /* Mathematical Functions of Two Numeric (+ 1-2 int) Variables */
 
@@ -301,6 +301,9 @@ FUNTAB R_FunTab[] =
 
 {"besselJ",	do_math2,	24,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"besselY",	do_math2,	25,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+
+{"psigamma",	do_math2,	26,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+
 
 /* Mathematical Functions of a Complex Argument */
 

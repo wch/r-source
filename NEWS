@@ -129,8 +129,8 @@ NEW FEATURES
 	longer returns methods for non-visible generics (and
 	eliminates various mismatches).
 
-    o   A new function mget() will retrieve multiple values from an 
-        environment. 
+    o   A new function mget() will retrieve multiple values from an
+        environment.
 
     o	model.frame() methods, for example those for "lm" and "glm",
 	pass relevant parts of ... onto the default method.  (This has
@@ -156,6 +156,9 @@ NEW FEATURES
 
     o	princomp() now warns if both `x' and `covmat' are supplied,
 	and returns scores only if the centring used is known.
+
+    o	psigamma(x, deriv=0), a new function generalizes, digamma() etc.
+        All these (psigamma, digamma,trigamma,...) now also work for  x < 0.
 
     o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
@@ -236,8 +239,8 @@ NEW FEATURES
 
     o	Added experimental support for conditionals in NAMESPACE files.
 
-    o   Added as.list.environment to coerce environments to lists 
-        (efficiently). 
+    o   Added as.list.environment to coerce environments to lists
+        (efficiently).
 
     o	New function addmargins() in the stats package to add marginal
 	summaries to tables, e.g. row and column totals.  (Based on a
@@ -247,8 +250,8 @@ NEW FEATURES
 
         - Renamed push/pop.viewport() to push/popViewport().
 
-        - Added upViewport(), downViewport(), and seekViewport() to 
-          allow creation and navigation of viewport tree 
+        - Added upViewport(), downViewport(), and seekViewport() to
+          allow creation and navigation of viewport tree
           (rather than just viewport stack).
 
         - Added id and id.lengths arguments to grid.polygon() to allow
@@ -262,7 +265,7 @@ NEW FEATURES
 
         - Added vpPath() to allow specification of viewport path
           in downViewport() and seekViewport().
-    
+
           See ?viewports for an example of its use.
 
           NOTE: it is also possible to specify a path directly,
@@ -280,7 +283,7 @@ NEW FEATURES
           call downViewport() with the name or vpPath before drawing the
           grob and upViewport() the appropriate amount after drawing the
           grob.  Here's an example of the possible usage:
-      
+
               pushViewport(viewport(w=.5, h=.5, name="A"))
               grid.rect()
               pushViewport(viewport(w=.5, h=.5, name="B"))
@@ -293,16 +296,16 @@ NEW FEATURES
           tell grid NOT to use the graphics engine display list and to handle
           ALL redraws using its own display list (including redraws after
           device resizes and copies).
-      
+
           This provides a way to avoid some of the problems with resizing
           a device when you have used grid.convert(), or the gridBase package,
           or even base functions such as legend().
-      
+
           There is a document discussing the use of display lists in grid
-          on the grid web site 
+          on the grid web site
           (http://www.stat.auckland.ac.nz/~paul/grid/grid.html)
 
-        - Changed the implementation of grob objects.  They are no longer 
+        - Changed the implementation of grob objects.  They are no longer
           implemented as external references.  They are now regular R objects
           which copy-by-value.  This means that they can be saved/loaded
           like normal R objects.  In order to retain some existing grob
@@ -310,33 +313,33 @@ NEW FEATURES
 
           + grobs all now have a "name" slot.  The grob name is used to
             uniquely identify a "drawn" grob (i.e., a grob on the display
-            list).  
+            list).
           + grid.edit() and grid.pack() now take a grob name as the first
             argument instead of a grob.  (Actually, they take a gPath -
             see below)
           + the "grobwidth" and "grobheight" units take either a grob
-            OR a grob name (actually a gPath - see below).  Only in the 
+            OR a grob name (actually a gPath - see below).  Only in the
             latter case will the unit be updated if the grob "pointed to"
             is modified.
-      
+
           In addition, the following features are now possible with grobs:
-      
+
           + grobs now save()/load() like any normal R object.
           + many grid.*() functions now have a *Grob() counterpart.  The
-            grid.*() version is used for its side-effect of drawing 
+            grid.*() version is used for its side-effect of drawing
             something or modifying something which has been drawn;  the
             *Grob() version is used for its return value, which is a grob.
-            This makes it more convenient to just work with grob 
-            objects without producing any graphical output 
+            This makes it more convenient to just work with grob
+            objects without producing any graphical output
             (by using the *Grob() functions).
-          + there is a gTree object (derived from grob), which is a grob 
+          + there is a gTree object (derived from grob), which is a grob
             that can have children.  A gTree also has a "childrenvp" slot
             which is a viewport which is pushed and then "up"ed before the
-            children are drawn;  this allows the children of a gTree to 
+            children are drawn;  this allows the children of a gTree to
             place themselves somewhere in the viewports specified in the
-            childrenvp by having a vpPath in their vp slot. 
+            childrenvp by having a vpPath in their vp slot.
           + there is a gPath object, which is essentially a concatenation
-            of grob names.  This is used to specify the child of 
+            of grob names.  This is used to specify the child of
             (a child of ...) a gTree.
           + there is a new API for creating/accessing/modifying grob objects:
             grid.add(), grid.remove(), grid.edit(), grid.get() (and their
@@ -348,13 +351,13 @@ NEW FEATURES
           convenience functions (they produce "strwidth", "strheight",
           "grobwidth", and "grobheight" unit objects, respectively).
 
-        - Allowed viewports to turn off clipping altogether.  
+        - Allowed viewports to turn off clipping altogether.
           Possible settings for viewport clip arg are now:
-      
+
             "on"      = clip to the viewport (was TRUE)
             "inherit" = clip to whatever parent says (was FALSE)
-            "off"     = turn off clipping 
-      
+            "off"     = turn off clipping
+
           Still accept logical values (and NA maps to "off")
 
 
@@ -410,6 +413,9 @@ C-LEVEL FACILITIES
 
 
 DEPRECATED & DEFUNCT
+
+    o	tetragamma() and pentagamma() are deprecated, since now
+	equivalent to psigamma(, deriv=2) and psigamma(, deriv=3).
 
     o	print.coefmat() is defunct, replaced by printCoefmat().
 
