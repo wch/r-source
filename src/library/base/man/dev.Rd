@@ -60,13 +60,15 @@ the list of devices.
 }
 
 \examples{
-x11()
-plot(1:10)
-x11()
-plot(rnorm(10))
-dev.set(dev.prev())
-abline(0,1)
-dev.set(dev.next())
-abline(h=0)
+if (interactive()) { # will mess up "make test-Examples" otherwise!
+	x11()
+	plot(1:10)
+	x11()
+	plot(rnorm(10))
+	dev.set(dev.prev())
+	abline(0,1)
+	dev.set(dev.next())
+	abline(h=0)
+}
 }
 \keyword{device}%-- one or more ...
