@@ -31,16 +31,12 @@ double ppois(double x, double lambda, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(lambda))
 	return x + lambda;
 #endif
-    if(lambda < 0.0) ML_ERR_return_NAN;
+    if(lambda < 0.) ML_ERR_return_NAN;
 
     x = floor(x + 1e-7);
-    if (x < 0)
-	return R_DT_0;
-
-    if ( lambda == 0.0 )
-	return R_DT_1;
-    if (!R_FINITE(x))
-	return R_DT_1;
+    if (x < 0)		return R_DT_0;
+    if (lambda == 0.)	return R_DT_1;
+    if (!R_FINITE(x))	return R_DT_1;
 
     return pgamma(lambda, x + 1, 1., !lower_tail, log_p);
 }
