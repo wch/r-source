@@ -1,7 +1,7 @@
-dnl aclocal.m4 -- extra macros for configuring R
-dnl
-dnl Copyright (C) 1998, 1999, 2000 R Core Team
-dnl
+### aclocal.m4 -- extra macros for configuring R
+###
+### Copyright (C) 1998, 1999, 2000 R Core Team
+###
 ### This file is part of R.
 ###
 ### R is free software; you can redistribute it and/or modify it under
@@ -19,11 +19,11 @@ dnl
 ### `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
-dnl
-dnl
-dnl R_ARG_WITH_EXCLUSIVE
-dnl
-AC_DEFUN(R_ARG_WITH_EXCLUSIVE,
+
+##
+## R_ARG_WITH_EXCLUSIVE
+##
+AC_DEFUN([R_ARG_WITH_EXCLUSIVE],
  [if test "${with_$1+set}" = set; then
     if test "${with_$2+set}" = set; then
       if test "$with_$2" = no; then
@@ -33,26 +33,26 @@ AC_DEFUN(R_ARG_WITH_EXCLUSIVE,
       fi
     fi
   fi])
-dnl
-dnl R_ARG_USE
-dnl
-AC_DEFUN(R_ARG_USE,
+##
+## R_ARG_USE
+##
+AC_DEFUN([R_ARG_USE],
  [if test "${withval}" = no; then
     use_$1=false
   else
     use_$1=true
   fi])
-dnl
-dnl R_PROG_AR
-dnl
-AC_DEFUN(R_PROG_AR,
+##
+## R_PROG_AR
+##
+AC_DEFUN([R_PROG_AR],
  [AC_CHECK_PROGS(AR, [${AR} ar])
   : ${ARFLAGS="rc"}
   AC_SUBST(ARFLAGS)])
-dnl
-dnl R_PROG_ECHO_N
-dnl
-AC_DEFUN(R_PROG_ECHO_N,
+##
+## R_PROG_ECHO_N
+##
+AC_DEFUN([R_PROG_ECHO_N],
  [AC_MSG_CHECKING([whether echo can suppress newlines])
   if echo "testing\c" | grep c >/dev/null; then
     if echo -n "testing" | sed s/-n/xn/ | grep xn >/dev/null; then
@@ -72,10 +72,10 @@ AC_DEFUN(R_PROG_ECHO_N,
   AC_SUBST(ECHO_N)
   AC_SUBST(ECHO_T)
  ])
-dnl
-dnl R_PROG_INSTALL
-dnl
-AC_DEFUN(R_PROG_INSTALL,
+##
+## R_PROG_INSTALL
+##
+AC_DEFUN([R_PROG_INSTALL],
  [AC_REQUIRE([AC_PROG_INSTALL])
   warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
   case "${INSTALL}" in
@@ -95,9 +95,9 @@ AC_DEFUN(R_PROG_INSTALL,
       ;;
   esac
  ])
-dnl
-dnl R_PROG_PERL
-dnl
+##
+## R_PROG_PERL
+##
 changequote(<<, >>)dnl
 define(PERL5_CHECK,
 <<
@@ -109,7 +109,7 @@ define(PERL5_CHECK,
   fi
 >>)
 changequote([, ]) dnl
-AC_DEFUN(R_PROG_PERL,
+AC_DEFUN([R_PROG_PERL],
  [AC_PATH_PROGS(PERL, [${PERL} perl])
   if test -n "${PERL}"; then
     AC_CACHE_CHECK([whether perl version is at least 5],
@@ -126,10 +126,10 @@ AC_DEFUN(R_PROG_PERL,
   fi
   AC_SUBST(NO_PERL5)
  ])
-dnl
-dnl R_PROG_TEXMF
-dnl
-AC_DEFUN(R_PROG_TEXMF,
+##
+## R_PROG_TEXMF
+##
+AC_DEFUN([R_PROG_TEXMF],
  [AC_REQUIRE([R_PROG_PERL])
   AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
   AC_PATH_PROGS(TEX, [${TEX} tex], false)
@@ -176,12 +176,12 @@ AC_DEFUN(R_PROG_TEXMF,
   : ${R_RD4PDF="ae,hyper"}
   AC_SUBST(R_RD4PDF)
   ])
-dnl
-dnl R_PROG_CC_M
-dnl
-dnl Test whether the C compiler accepts -M for generating dependencies
-dnl
-AC_DEFUN(R_PROG_CC_M,
+##
+## R_PROG_CC_M
+##
+## Test whether the C compiler accepts -M for generating dependencies
+##
+AC_DEFUN([R_PROG_CC_M],
   [ depend_rules_frag=Makefrag.dep
     AC_CACHE_CHECK(
       [whether ${CC} accepts -M for generating dependencies],
@@ -209,12 +209,12 @@ EOF
     fi
     AC_SUBST_FILE(depend_rules_frag)
   ])
-dnl
-dnl R_PROG_CC_C_O_LO
-dnl
-dnl See whether C compiler supports -c -o FILE.lo
-dnl
-AC_DEFUN(R_PROG_CC_C_O_LO,
+##
+## R_PROG_CC_C_O_LO
+##
+## See whether C compiler supports -c -o FILE.lo
+##
+AC_DEFUN([R_PROG_CC_C_O_LO],
 [ cc_o_lo_rules_frag=Makefrag.cc
   AC_CACHE_CHECK([whether ${CC} supports -c -o FILE.lo],
     r_cv_prog_cc_c_o_lo,
@@ -245,12 +245,12 @@ EOF
   fi
   AC_SUBST_FILE(cc_o_lo_rules_frag)
 ])
-dnl
-dnl R_PROG_CC_FLAG
-dnl
-dnl Test whether the C compiler handles a command line option
-dnl
-AC_DEFUN(R_PROG_CC_FLAG,
+##
+## R_PROG_CC_FLAG
+##
+## Test whether the C compiler handles a command line option
+##
+AC_DEFUN([R_PROG_CC_FLAG],
   [ ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
     AC_MSG_CHECKING([whether ${CC-cc} accepts $1])
     AC_CACHE_VAL(r_cv_prog_cc_flag_${ac_safe},
@@ -271,12 +271,12 @@ AC_DEFUN(R_PROG_CC_FLAG,
       AC_MSG_RESULT(no)
     fi
   ])
-dnl
-dnl R_PROG_CXX_FLAG
-dnl
-dnl Test whether the C++ compiler handles a command line option
-dnl
-AC_DEFUN(R_PROG_CXX_FLAG,
+##
+## R_PROG_CXX_FLAG
+##
+## Test whether the C++ compiler handles a command line option
+##
+AC_DEFUN([R_PROG_CXX_FLAG],
   [ ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
     AC_MSG_CHECKING([whether ${CXX-c++} accepts $1])
     AC_CACHE_VAL(r_cv_prog_cxx_flag_${ac_safe},
@@ -297,14 +297,14 @@ AC_DEFUN(R_PROG_CXX_FLAG,
       AC_MSG_RESULT(no)
     fi
   ])
-dnl
-dnl R_PROG_F77_WORKS
-dnl
-dnl Determine whether the Fortran 77 compiler works (in the sense that
-dnl we can create executables, but not necessarily run them).  This
-dnl tests in particular whether all Fortran libraries are available.
-dnl
-AC_DEFUN(R_PROG_F77_WORKS, [
+##
+## R_PROG_F77_WORKS
+##
+## Determine whether the Fortran 77 compiler works (in the sense that
+## we can create executables, but not necessarily run them).  This
+## tests in particular whether all Fortran libraries are available.
+##
+AC_DEFUN([R_PROG_F77_WORKS], [
     AC_CACHE_CHECK([whether the Fortran 77 compiler (${FC} ${FFLAGS} ${LDFLAGS}) works],
     r_cv_prog_f77_works, [
       cat > conftest.f <<EOF    
@@ -323,12 +323,12 @@ EOF
     AC_MSG_WARN([Maybe your Fortran installation is incomplete])
     AC_MSG_ERROR([Fortran 77 compiler does not work])
   fi])
-dnl
-dnl R_PROG_F77_GNU
-dnl
-dnl See if ${F77-f77} is the GNU Fortran compiler
-dnl
-AC_DEFUN(R_PROG_F77_GNU,
+##
+## R_PROG_F77_GNU
+##
+## See if ${F77-f77} is the GNU Fortran compiler
+##
+AC_DEFUN([R_PROG_F77_GNU],
   [ AC_CACHE_CHECK([whether ${F77-f77} is the GNU Fortran compiler],
       r_cv_prog_f77_is_g77,
       [ if ${use_g77}; then
@@ -349,10 +349,10 @@ AC_DEFUN(R_PROG_F77_GNU,
       G77=
     fi
   ])
-dnl
-dnl See if the Fortran compiler appends underscores
-dnl
-AC_DEFUN(R_PROG_F77_APPEND_UNDERSCORE,
+##
+## See if the Fortran compiler appends underscores
+##
+AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
  [AC_CACHE_CHECK([whether ${F77-f77} appends underscores],
     r_cv_prog_f77_append_underscore,
     [ cat > conftestf.f <<EOF
@@ -386,10 +386,10 @@ EOF
     AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
   fi
 ])
-dnl
-dnl See whether Fortran and C compilers agree on int and double
-dnl
-AC_DEFUN(R_PROG_F77_CC_COMPAT,
+##
+## See whether Fortran and C compilers agree on int and double
+##
+AC_DEFUN([R_PROG_F77_CC_COMPAT],
  [AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
   AC_CACHE_VAL(r_cv_prog_f77_cc_compat,
     [ cat > conftestf.f <<EOF
@@ -460,10 +460,10 @@ EOF
     AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
   fi
 ])
-dnl
-dnl See whether Fortran compiler supports -c -o FILE.lo
-dnl
-AC_DEFUN(R_PROG_F77_C_O_LO,
+##
+## See whether Fortran compiler supports -c -o FILE.lo
+##
+AC_DEFUN([R_PROG_F77_C_O_LO],
 [AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
   r_cv_prog_f77_c_o_lo,
   [ test -d TMP || mkdir TMP
@@ -482,10 +482,10 @@ EOF
     rm -rf conftest* TMP
   ])
 ])
-dnl
-dnl R_PROG_F2C_FLIBS
-dnl
-AC_DEFUN(R_PROG_F2C_FLIBS,
+##
+## R_PROG_F2C_FLIBS
+##
+AC_DEFUN([R_PROG_F2C_FLIBS],
  [AC_REQUIRE([AC_PROG_RANLIB])
   AC_CACHE_VAL(r_cv_f2c_flibs,
     [## This seems to be necessary on some Linux system. -- you bet! -pd
@@ -514,10 +514,10 @@ EOF
     warn_f2c_flibs="I found f2c but not libf2c, or libF77 and libI77"
     AC_MSG_WARN(${warn_f2c_flibs})
   fi])
-dnl
-dnl R_FUNC___SETFPUCW
-dnl
-AC_DEFUN(R_FUNC___SETFPUCW,
+##
+## R_FUNC___SETFPUCW
+##
+AC_DEFUN([R_FUNC___SETFPUCW],
   [ AC_CHECK_FUNC(__setfpucw,
     [ AC_CACHE_CHECK([whether __setfpucw is needed],
 	r_cv_func___setfpucw_needed,
@@ -541,10 +541,10 @@ int main () {
       fi
     ])
   ])
-dnl
-dnl R_FUNC_CALLOC
-dnl
-AC_DEFUN(R_FUNC_CALLOC,
+##
+## R_FUNC_CALLOC
+##
+AC_DEFUN([R_FUNC_CALLOC],
   [ AC_CACHE_CHECK([whether calloc is broken],
       r_cv_func_calloc_broken,
       AC_TRY_RUN(
@@ -564,10 +564,10 @@ int main () {
       AC_DEFINE(CALLOC_BROKEN)
     fi
   ])
-dnl
-dnl R_FUNC_FINITE
-dnl
-AC_DEFUN(R_FUNC_FINITE,
+##
+## R_FUNC_FINITE
+##
+AC_DEFUN([R_FUNC_FINITE],
   [ AC_CACHE_CHECK([whether finite is broken],
       r_cv_func_finite_broken,
       AC_TRY_RUN(
@@ -591,10 +591,10 @@ int main () {
       AC_DEFINE(FINITE_BROKEN)
     fi
   ])
-dnl
-dnl R_FUNC_LOG
-dnl
-AC_DEFUN(R_FUNC_LOG,
+##
+## R_FUNC_LOG
+##
+AC_DEFUN([R_FUNC_LOG],
   [ AC_CACHE_CHECK([whether log is broken],
       r_cv_func_log_broken,
       AC_TRY_RUN(
@@ -618,10 +618,10 @@ int main () {
       AC_DEFINE(LOG_BROKEN)
     fi
   ])
-dnl
-dnl R_HEADER_SETJMP
-dnl
-AC_DEFUN(R_HEADER_SETJMP,
+##
+## R_HEADER_SETJMP
+##
+AC_DEFUN([R_HEADER_SETJMP],
  [AC_CACHE_CHECK([whether setjmp.h is POSIX.1 compatible], 
     r_cv_header_setjmp_posix,
     [AC_EGREP_HEADER(sigjmp_buf, setjmp.h, 
@@ -636,10 +636,10 @@ AC_DEFUN(R_HEADER_SETJMP,
   if test "${r_cv_header_setjmp_posix}" = yes; then
     AC_DEFINE(HAVE_POSIX_SETJMP)
   fi])
-dnl
-dnl R_HEADER_GLIBC2
-dnl
-AC_DEFUN(R_HEADER_GLIBC2,
+##
+## R_HEADER_GLIBC2
+##
+AC_DEFUN([R_HEADER_GLIBC2],
  [AC_CACHE_CHECK([for GNU C library with version >= 2],
     r_cv_header_glibc2,
     AC_EGREP_CPP(yes,
@@ -657,11 +657,11 @@ AC_DEFUN(R_HEADER_GLIBC2,
   if test "${r_cv_header_glibc2}" = yes; then
     AC_DEFINE(HAVE_GLIBC2)
   fi])
-dnl
-dnl
-dnl R_C_IEEE_754
-dnl
-AC_DEFUN(R_C_IEEE_754,
+##
+##
+## R_C_IEEE_754
+##
+AC_DEFUN([R_C_IEEE_754],
  [AC_CHECK_FUNCS(finite isnan)
   AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
     r_cv_c_ieee_754,
@@ -682,10 +682,10 @@ AC_DEFUN(R_C_IEEE_754,
   if test "${r_cv_c_ieee_754}" = yes; then
     AC_DEFINE(IEEE_754)
   fi])
-dnl
-dnl R_C_OPTIEEE
-dnl
-AC_DEFUN(R_C_OPTIEEE,
+##
+## R_C_OPTIEEE
+##
+AC_DEFUN([R_C_OPTIEEE],
   [ AC_CACHE_CHECK([whether compilers need -OPT:IEEE_NaN_inf=ON],
       r_cv_c_optieee,
       AC_TRY_RUN(
@@ -707,10 +707,10 @@ int main () {
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"
     fi
   ])
-dnl
-dnl R_GNOME
-dnl
-AC_DEFUN(R_GNOME, [ 
+##
+## R_GNOME
+##
+AC_DEFUN([R_GNOME], [ 
   if test ${want_gnome} = yes; then
     GNOME_INIT_HOOK([], cont)
     if test "${GNOMEUI_LIBS}"; then
@@ -730,6 +730,334 @@ AC_DEFUN(R_GNOME, [
   fi
   AC_SUBST(HAVE_GNOME)
   AC_SUBST(GNOME_IF_FILES)])
+##
+## R_BITMAPS
+##
+AC_DEFUN([R_BITMAPS], [
+  BITMAP_LIBS=
+  AC_EGREP_HEADER(jpeg_error_mgr, jpeglib.h, [
+    AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
+      BITMAP_LIBS=-ljpeg
+      AC_DEFINE(HAVE_JPEG)
+    ], , ${LIBS})
+  ])
+  AC_CHECK_LIB(z, main, [
+    AC_CHECK_HEADER(png.h, [
+      AC_CHECK_LIB(png, png_create_write_struct, [
+        BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+	AC_DEFINE(HAVE_PNG)
+      ], , ${LIBS})
+    ])
+  ])
+  AC_SUBST(BITMAP_LIBS)])
+##
+## Try finding {tcl,tk}Config.sh
+##
+## R_TCLTK_CONFIG()
+##
+AC_DEFUN([R_TCLTK_CONFIG],
+[libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
+libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
+AC_PATH_PROG(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${libpath})
+AC_PATH_PROG(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${libpath})
+if test -z "${TCLTK_CPPFLAGS}" -o -z "${TCLTK_LIBS}"; then
+  ## Check whether the versions found via the *Config.sh files are at
+  ## least 8; otherwise, issue a warning and turn off Tcl/Tk support.
+  ## Note that in theory a system could have outdated versions of the
+  ## *Config.sh scripts and yet up-to-date installations of Tcl/Tk in
+  ## standard places ...
+  if test -n "${TCL_CONFIG}"; then
+    . ${TCL_CONFIG}
+    if test ${TCL_MAJOR_VERSION} -lt 8; then
+      warn_tcltk_version="Tcl/Tk support requires Tcl version >= 8"
+      AC_MSG_WARN(${warn_tcltk_version})
+      have_tcltk=no
+    fi
+  fi
+  if test -n "${TK_CONFIG}" -a -z "${warn_tcltk_version}"; then
+    . ${TK_CONFIG}
+    if test ${TK_MAJOR_VERSION} -lt 8; then
+      warn_tcltk_version="Tcl/Tk support requires Tk version >= 8"
+      AC_MSG_WARN(${warn_tcltk_version})
+      have_tcltk=no
+    fi
+  fi
+fi
+])
+##
+## Need to ensure that we can find the tcl.h and tk.h headers, which
+## may be in non-standard and/or version-dependent directories, such as
+## on FreeBSD systems.
+##
+## The logic is as follows.  If TCLTK_CPPFLAGS was specified, then we
+## do not investigate any further.  Otherwise, if we still think we
+## have Tcl/Tk, then first try via the corresponding *Config.sh file,
+## or else try the obvious.
+##
+## R_TCLTK_CPPFLAGS()
+##
+AC_DEFUN([R_TCLTK_CPPFLAGS],
+[AC_REQUIRE([R_TCLTK_CONFIG])
+if test -z "${TCLTK_CPPFLAGS}"; then
+  ## We have to do the work.
+  if test "${have_tcltk}" = yes; then
+    ## Part 1.  Check for tcl.h.
+    found_tcl_h=no
+    if test -n "${TCL_CONFIG}"; then
+      . ${TCL_CONFIG}
+      ## Look for tcl.h in
+      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
+      ##   ${TCL_PREFIX}/include
+      AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h,
+        [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include/tcl${TCL_VERSION}"
+	  found_tcl_h=yes])
+      if test "${found_tcl_h}" = no; then
+	AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl.h,
+	  [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include"
+            found_tcl_h=yes])
+      fi
+    fi
+    if test "${found_tcl_h}" = no; then
+      AC_CHECK_HEADER(tcl.h, , have_tcltk=no)
+    fi
+    unset found_tcl_h
+  fi
+  if test "${have_tcltk}" = yes; then
+    ## Part 2.  Check for tk.h.
+    found_tk_h=no
+    if test -n "${TK_CONFIG}"; then
+      . ${TK_CONFIG}
+      ## Look for tk.h in
+      ##   ${TK_PREFIX}/include/tk${TK_VERSION}
+      ##   ${TK_PREFIX}/include
+      ## As the AC_CHECK_HEADER test tries including the header file and
+      ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
+      ## for the check.
+      save_CPPFLAGS="${CPPFLAGS}"
+      CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
+      AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
+        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
+	  found_tk_h=yes])
+      if test "${found_tk_h}" = no; then
+	AC_CHECK_HEADER(${TK_PREFIX}/include/tk.h,
+          [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
+            found_tk_h=yes])
+      fi
+      CPPFLAGS="${save_CPPFLAGS}"
+    fi
+    if test "${found_tk_h}" = no; then
+      AC_CHECK_HEADER(tk.h, , have_tcltk=no)
+    fi
+    unset found_tk_h
+  fi
+fi])
+##
+## Find the tcl and tk libraries.
+##
+## R_TCLTK_LIBS()
+##
+AC_DEFUN([R_TCLTK_LIBS],
+[AC_REQUIRE([AC_PATH_XTRA])
+AC_REQUIRE([R_TCLTK_CONFIG])
+if test -z "${TCLTK_LIBS}"; then
+  ## We have to do the work.
+  if test "${have_tcltk}" = yes; then
+    ## Part 1.  Try finding the tcl library.
+    if test -n "${TCL_CONFIG}"; then
+      . ${TCL_CONFIG}
+      TCLTK_LIBS="${TCL_LIB_SPEC}"
+    else
+      AC_CHECK_LIB(tcl, Tcl_CreateInterp,
+        TCLTK_LIBS=-ltcl,
+        have_tcltk=no)
+    fi
+  fi
+  if test "${have_tcltk}" = yes; then
+    ## Part 2.  Try finding the tk library.
+    if test -n "${TK_CONFIG}"; then
+      . ${TK_CONFIG}
+      TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_LIBS}"
+    else
+      AC_CHECK_LIB(tk, Tk_Init, , , ${TCLTK_LIBS})
+      if test "${ac_cv_lib_tk_Tk_Init}" = no; then
+	## Grr, simple -ltk does not work.
+	## But maybe we simply need to add X11 libs.
+	unset ac_cv_lib_tk_Tk_Init
+	AC_CHECK_LIB(tk, Tk_Init,
+          [TCLTK_LIBS="${TCLTK_LIBS} -ltk ${X_LIBS}"],
+	  have_tcltk=no,
+          [${TCLTK_LIBS} ${X_LIBS}])
+      fi
+    fi
+  fi
+fi
+])
+##
+## R_TCLTK()
+##
+AC_DEFUN([R_TCLTK],
+[if test "${want_tcltk}" = yes; then
+  have_tcltk=yes
+  R_TCLTK_CONFIG
+  R_TCLTK_CPPFLAGS  
+  R_TCLTK_LIBS
+else
+  have_tcltk=no
+  ## Just making sure.
+  TCLTK_CPPFLAGS=
+  TCLTK_LIBS=
+fi
+if test "${have_tcltk}" = yes; then
+  AC_DEFINE(HAVE_TCLTK)
+  use_tcltk=yes
+  if test -n "${TK_XINCLUDES}"; then
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
+  else
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
+  fi
+else
+  use_tcltk=no
+fi
+AC_SUBST(TCLTK_CPPFLAGS)
+AC_SUBST(TCLTK_LIBS)
+AC_SUBST(use_tcltk)
+])
+
+
+AC_DEFUN([R_BLAS_LIBS], [
+if test "${r_cv_prog_f77_append_underscore}" = yes; then
+  dgemm_func=dgemm_
+else
+  dgemm_func=dgemm
+fi
+if test -z "${with_blas}"; then
+  with_blas=yes
+fi
+
+if test "$with_blas" = "no"; then
+  BLAS_LIBS=" "
+elif test "$with_blas" != "yes"; then
+  # user specified a BLAS library to try on the command line
+  # Safeguard against users giving the location of the lib.
+  blas_lib_dir=`dirname ${with_blas}`
+  if test "x${blas_lib_dir}" = x; then
+    AC_CHECK_LIB($with_blas, $dgemm_func, 
+                 BLAS_LIBS="-l$with_blas", , $FLIBS)
+  else
+    blas_lib_name=`basename ${with_blas} | sed 's/^lib\([[^.]]*\).*$/\1/'`
+    AC_CHECK_LIB($blas_lib_name, $dgemm_func,
+      BLAS_LIBS="-L${blas_lib_dir} -l${blas_lib_name}", ,
+      [-L${blas_lib_dir} ${FLIBS}])
+  fi
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  # Checks for ATLAS BLAS library:
+  AC_CHECK_LIB(atlas, ATL_xerbla, BLAS_LIBS="-latlas")
+  if test "x$BLAS_LIBS" != x; then
+    # check for other atlas libs:
+    AC_CHECK_LIB(cblas, cblas_dgemm,BLAS_LIBS="-lcblas $BLAS_LIBS",,$BLAS_LIBS)
+    AC_CHECK_LIB(f77blas, $dgemm_func, 
+		 BLAS_LIBS="-lf77blas $BLAS_LIBS", , $BLAS_LIBS $FLIBS)
+  fi
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  # BLAS in Alpha CXML library?
+  AC_CHECK_LIB(cxml, $dgemm_func, BLAS_LIBS="-lcxml", , $FLIBS)
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  # BLAS in Alpha DXML library? (now called CXML, see above)
+  AC_CHECK_LIB(dxml, $dgemm_func, BLAS_LIBS="-ldxml", , $FLIBS)
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  if test "x$GCC" != xyes; then
+    # Check for BLAS in Sun Performance library:
+    AC_CHECK_LIB(sunmath, acosp,
+                 AC_CHECK_LIB(sunperf, $dgemm_func,
+			      BLAS_LIBS="-xlic_lib=sunperf -lsunmath", ,
+			      [-lsunmath $FLIBS]))
+  fi
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
+  AC_CHECK_LIB(scs, $dgemm_func,
+               BLAS_LIBS="-lscs", 
+	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
+			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  # Checks for BLAS in IBM ESSL library.  We must also link
+  # with -lblas in this case (ESSL does not include the full BLAS):
+  AC_CHECK_LIB(blas, zherk, 
+	       AC_CHECK_LIB(essl, $dgemm_func, 
+			    BLAS_LIBS="-lessl -lblas", , $FLIBS), , $FLIBS)
+fi
+
+if test "x$BLAS_LIBS" = x; then
+  # Finally, check for the generic BLAS library:
+  AC_CHECK_LIB(blas, $dgemm_func, BLAS_LIBS="-lblas", , $FLIBS)
+fi
+
+if test "$with_blas" = "no"; then
+  # Unset BLAS_LIBS so that we know below that nothing was found.
+  BLAS_LIBS=""
+fi
+
+AC_SUBST(BLAS_LIBS)
+])
+
+##
+## See if leap seconds are used.
+##
+AC_DEFUN([R_USES_LEAPSECONDS],
+ [AC_MSG_CHECKING([whether leap seconds are counted])
+  AC_CACHE_VAL(uses_leapseconds,
+    [ cat > conftest.c <<EOF
+#include <time.h>
+#include <stdio.h>
+#include "confdefs.h"
+
+int main () {
+  struct tm *tm;
+  time_t ct;
+
+  ctime(&ct);
+  ct = ct - (ct % 60);
+  tm = gmtime(&ct);
+  printf("%d", tm->tm_sec);
+  exit(0);
+}
+EOF
+      if ${CC-cc} ${CFLAGS} -o conftest conftest.c; then
+          output=`./conftest`
+	  if test ${?} -eq 0; then
+            if test ${output} -gt 0; then
+	      uses_leapseconds=yes
+            fi
+	  fi
+      fi
+    ])
+  rm -rf conftest conftest.* core
+  if test -n "${uses_leapseconds}"; then
+    AC_MSG_RESULT([yes])
+    AC_DEFINE(USING_LEAPSECONDS, 1)
+  else
+    AC_MSG_RESULT([no])
+  fi
+])
+
+## FIXME
+## This ends the what could eventually be R.m4 (after taking out the
+## GNOME macros which are in gnome.m4.  We currently include libtool.m4
+## because the release version 1.3.3 e.g. refuses to link a shared lib
+## against a static one.
+
+
 dnl
 dnl GNOME_INIT_HOOK (script-if-gnome-enabled, failflag)
 dnl
@@ -925,333 +1253,7 @@ AC_SUBST(LIBGLADE_CFLAGS)
 AC_SUBST(LIBGLADE_LIBS)
 ])
 
-dnl
-dnl R_BITMAPS
-dnl
-AC_DEFUN(R_BITMAPS, [
-  BITMAP_LIBS=
-  AC_EGREP_HEADER(jpeg_error_mgr, jpeglib.h, [
-    AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
-      BITMAP_LIBS=-ljpeg
-      AC_DEFINE(HAVE_JPEG)
-    ], , ${LIBS})
-  ])
-  AC_CHECK_LIB(z, main, [
-    AC_CHECK_HEADER(png.h, [
-      AC_CHECK_LIB(png, png_create_write_struct, [
-        BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-	AC_DEFINE(HAVE_PNG)
-      ], , ${LIBS})
-    ])
-  ])
-  AC_SUBST(BITMAP_LIBS)])
-dnl
-dnl Try finding {tcl,tk}Config.sh
-dnl
-dnl R_TCLTK_CONFIG()
-dnl
-AC_DEFUN(R_TCLTK_CONFIG,
-[libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
-libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
-AC_PATH_PROG(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${libpath})
-AC_PATH_PROG(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${libpath})
-if test -z "${TCLTK_CPPFLAGS}" -o -z "${TCLTK_LIBS}"; then
-  ## Check whether the versions found via the *Config.sh files are at
-  ## least 8; otherwise, issue a warning and turn off Tcl/Tk support.
-  ## Note that in theory a system could have outdated versions of the
-  ## *Config.sh scripts and yet up-to-date installations of Tcl/Tk in
-  ## standard places ...
-  if test -n "${TCL_CONFIG}"; then
-    . ${TCL_CONFIG}
-    if test ${TCL_MAJOR_VERSION} -lt 8; then
-      warn_tcltk_version="Tcl/Tk support requires Tcl version >= 8"
-      AC_MSG_WARN(${warn_tcltk_version})
-      have_tcltk=no
-    fi
-  fi
-  if test -n "${TK_CONFIG}" -a -z "${warn_tcltk_version}"; then
-    . ${TK_CONFIG}
-    if test ${TK_MAJOR_VERSION} -lt 8; then
-      warn_tcltk_version="Tcl/Tk support requires Tk version >= 8"
-      AC_MSG_WARN(${warn_tcltk_version})
-      have_tcltk=no
-    fi
-  fi
-fi
-])
-dnl
-dnl Need to ensure that we can find the tcl.h and tk.h headers, which
-dnl may be in non-standard and/or version-dependent directories, such as
-dnl on FreeBSD systems.
-dnl
-dnl The logic is as follows.  If TCLTK_CPPFLAGS was specified, then we
-dnl do not investigate any further.  Otherwise, if we still think we
-dnl have Tcl/Tk, then first try via the corresponding *Config.sh file,
-dnl or else try the obvious.
-dnl
-dnl R_TCLTK_CPPFLAGS()
-dnl
-AC_DEFUN(R_TCLTK_CPPFLAGS,
-[AC_REQUIRE([R_TCLTK_CONFIG])
-if test -z "${TCLTK_CPPFLAGS}"; then
-  ## We have to do the work.
-  if test "${have_tcltk}" = yes; then
-    ## Part 1.  Check for tcl.h.
-    found_tcl_h=no
-    if test -n "${TCL_CONFIG}"; then
-      . ${TCL_CONFIG}
-      ## Look for tcl.h in
-      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
-      ##   ${TCL_PREFIX}/include
-      AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h,
-        [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include/tcl${TCL_VERSION}"
-	  found_tcl_h=yes])
-      if test "${found_tcl_h}" = no; then
-	AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl.h,
-	  [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include"
-            found_tcl_h=yes])
-      fi
-    fi
-    if test "${found_tcl_h}" = no; then
-      AC_CHECK_HEADER(tcl.h, , have_tcltk=no)
-    fi
-    unset found_tcl_h
-  fi
-  if test "${have_tcltk}" = yes; then
-    ## Part 2.  Check for tk.h.
-    found_tk_h=no
-    if test -n "${TK_CONFIG}"; then
-      . ${TK_CONFIG}
-      ## Look for tk.h in
-      ##   ${TK_PREFIX}/include/tk${TK_VERSION}
-      ##   ${TK_PREFIX}/include
-      ## As the AC_CHECK_HEADER test tries including the header file and
-      ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
-      ## for the check.
-      save_CPPFLAGS="${CPPFLAGS}"
-      CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
-      AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
-        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
-	  found_tk_h=yes])
-      if test "${found_tk_h}" = no; then
-	AC_CHECK_HEADER(${TK_PREFIX}/include/tk.h,
-          [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
-            found_tk_h=yes])
-      fi
-      CPPFLAGS="${save_CPPFLAGS}"
-    fi
-    if test "${found_tk_h}" = no; then
-      AC_CHECK_HEADER(tk.h, , have_tcltk=no)
-    fi
-    unset found_tk_h
-  fi
-fi])
-dnl
-dnl Find the tcl and tk libraries.
-dnl
-dnl R_TCLTK_LIBS()
-dnl
-AC_DEFUN(R_TCLTK_LIBS,
-[AC_REQUIRE([AC_PATH_XTRA])
-AC_REQUIRE([R_TCLTK_CONFIG])
-if test -z "${TCLTK_LIBS}"; then
-  ## We have to do the work.
-  if test "${have_tcltk}" = yes; then
-    ## Part 1.  Try finding the tcl library.
-    if test -n "${TCL_CONFIG}"; then
-      . ${TCL_CONFIG}
-      TCLTK_LIBS="${TCL_LIB_SPEC}"
-    else
-      AC_CHECK_LIB(tcl, Tcl_CreateInterp,
-        TCLTK_LIBS=-ltcl,
-        have_tcltk=no)
-    fi
-  fi
-  if test "${have_tcltk}" = yes; then
-    ## Part 2.  Try finding the tk library.
-    if test -n "${TK_CONFIG}"; then
-      . ${TK_CONFIG}
-      TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_LIBS}"
-    else
-      AC_CHECK_LIB(tk, Tk_Init, , , ${TCLTK_LIBS})
-      if test "${ac_cv_lib_tk_Tk_Init}" = no; then
-	## Grr, simple -ltk does not work.
-	## But maybe we simply need to add X11 libs.
-	unset ac_cv_lib_tk_Tk_Init
-	AC_CHECK_LIB(tk, Tk_Init,
-          [TCLTK_LIBS="${TCLTK_LIBS} -ltk ${X_LIBS}"],
-	  have_tcltk=no,
-          [${TCLTK_LIBS} ${X_LIBS}])
-      fi
-    fi
-  fi
-fi
-])
-dnl
-dnl R_TCLTK()
-dnl
-AC_DEFUN(R_TCLTK,
-[if test "${want_tcltk}" = yes; then
-  have_tcltk=yes
-  R_TCLTK_CONFIG
-  R_TCLTK_CPPFLAGS  
-  R_TCLTK_LIBS
-else
-  have_tcltk=no
-  ## Just making sure.
-  TCLTK_CPPFLAGS=
-  TCLTK_LIBS=
-fi
-if test "${have_tcltk}" = yes; then
-  AC_DEFINE(HAVE_TCLTK)
-  use_tcltk=yes
-  if test -n "${TK_XINCLUDES}"; then
-    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
-  else
-    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
-  fi
-else
-  use_tcltk=no
-fi
-AC_SUBST(TCLTK_CPPFLAGS)
-AC_SUBST(TCLTK_LIBS)
-AC_SUBST(use_tcltk)
-])
-
-
-AC_DEFUN(R_BLAS_LIBS, [
-if test "${r_cv_prog_f77_append_underscore}" = yes; then
-  dgemm_func=dgemm_
-else
-  dgemm_func=dgemm
-fi
-if test -z "${with_blas}"; then
-  with_blas=yes
-fi
-
-if test "$with_blas" = "no"; then
-  BLAS_LIBS=" "
-elif test "$with_blas" != "yes"; then
-  # user specified a BLAS library to try on the command line
-  # Safeguard against users giving the location of the lib.
-  blas_lib_dir=`dirname ${with_blas}`
-  if test "x${blas_lib_dir}" = x; then
-    AC_CHECK_LIB($with_blas, $dgemm_func, 
-                 BLAS_LIBS="-l$with_blas", , $FLIBS)
-  else
-    blas_lib_name=`basename ${with_blas} | sed 's/^lib\([[^.]]*\).*$/\1/'`
-    AC_CHECK_LIB($blas_lib_name, $dgemm_func,
-      BLAS_LIBS="-L${blas_lib_dir} -l${blas_lib_name}", ,
-      [-L${blas_lib_dir} ${FLIBS}])
-  fi
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  # Checks for ATLAS BLAS library:
-  AC_CHECK_LIB(atlas, ATL_xerbla, BLAS_LIBS="-latlas")
-  if test "x$BLAS_LIBS" != x; then
-    # check for other atlas libs:
-    AC_CHECK_LIB(cblas, cblas_dgemm,BLAS_LIBS="-lcblas $BLAS_LIBS",,$BLAS_LIBS)
-    AC_CHECK_LIB(f77blas, $dgemm_func, 
-		 BLAS_LIBS="-lf77blas $BLAS_LIBS", , $BLAS_LIBS $FLIBS)
-  fi
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  # BLAS in Alpha CXML library?
-  AC_CHECK_LIB(cxml, $dgemm_func, BLAS_LIBS="-lcxml", , $FLIBS)
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  # BLAS in Alpha DXML library? (now called CXML, see above)
-  AC_CHECK_LIB(dxml, $dgemm_func, BLAS_LIBS="-ldxml", , $FLIBS)
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  if test "x$GCC" != xyes; then
-    # Check for BLAS in Sun Performance library:
-    AC_CHECK_LIB(sunmath, acosp,
-                 AC_CHECK_LIB(sunperf, $dgemm_func,
-			      BLAS_LIBS="-xlic_lib=sunperf -lsunmath", ,
-			      [-lsunmath $FLIBS]))
-  fi
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
-  AC_CHECK_LIB(scs, $dgemm_func,
-               BLAS_LIBS="-lscs", 
-	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
-			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  # Checks for BLAS in IBM ESSL library.  We must also link
-  # with -lblas in this case (ESSL does not include the full BLAS):
-  AC_CHECK_LIB(blas, zherk, 
-	       AC_CHECK_LIB(essl, $dgemm_func, 
-			    BLAS_LIBS="-lessl -lblas", , $FLIBS), , $FLIBS)
-fi
-
-if test "x$BLAS_LIBS" = x; then
-  # Finally, check for the generic BLAS library:
-  AC_CHECK_LIB(blas, $dgemm_func, BLAS_LIBS="-lblas", , $FLIBS)
-fi
-
-if test "$with_blas" = "no"; then
-  # Unset BLAS_LIBS so that we know below that nothing was found.
-  BLAS_LIBS=""
-fi
-
-AC_SUBST(BLAS_LIBS)
-])
-
-dnl
-dnl See if leap seconds are used.
-dnl
-AC_DEFUN(R_USES_LEAPSECONDS,
- [AC_MSG_CHECKING([whether leap seconds are counted])
-  AC_CACHE_VAL(uses_leapseconds,
-    [ cat > conftest.c <<EOF
-#include <time.h>
-#include <stdio.h>
-#include "confdefs.h"
-
-int main () {
-  struct tm *tm;
-  time_t ct;
-
-  ctime(&ct);
-  ct = ct - (ct % 60);
-  tm = gmtime(&ct);
-  printf("%d", tm->tm_sec);
-  exit(0);
-}
-EOF
-      if ${CC-cc} ${CFLAGS} -o conftest conftest.c; then
-          output=`./conftest`
-	  if test ${?} -eq 0; then
-            if test ${output} -gt 0; then
-	      uses_leapseconds=yes
-            fi
-	  fi
-      fi
-    ])
-  rm -rf conftest conftest.* core
-  if test -n "${uses_leapseconds}"; then
-    AC_MSG_RESULT([yes])
-    AC_DEFINE(USING_LEAPSECONDS, 1)
-  else
-    AC_MSG_RESULT([no])
-  fi
-])
-
-dnl FIXME
-dnl This ends the what could eventually be R.m4 (after taking out the
-dnl GNOME macros which are in gnome.m4.  We currently include libtool.m4
-dnl because the release version 1.3.3 e.g. refuses to link a shared lib
-dnl against a static one.
-
+
 ## libtool.m4 - Configure libtool for the host system. -*-Shell-script-*-
 ## Copyright 1996, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
 ## Originally by Gordon Matzigkeit <gord@gnu.ai.mit.edu>, 1996
