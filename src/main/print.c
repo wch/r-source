@@ -541,9 +541,9 @@ void PrintValueRec(SEXP s,SEXP env)
 	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
 	break;
     case CHARSXP:
-	Rprintf("\"");
+	Rprintf("<CHARSXP: ");
 	Rprintf(EncodeString(CHAR(s), 0, '"', Rprt_adj_left));
-	Rprintf("\"\n");
+	Rprintf(">\n");
 	break;
     case EXPRSXP:
 	PrintExpression(s);
