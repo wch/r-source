@@ -687,11 +687,41 @@ char *PrintUsage(void)
 
 #include <winbase.h>
 
+char * getRUser()
+{
+   /*
+    * try R_USER then HOME then Windows homes then working directory
+    */
+    char *p, *q;
+
+    if ((p = getenv("R_USER"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
+	strcpy(RUser, p);
+    } else if ((p = getenv("HOME"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
+	strcpy(RUser, p);
+    } else if (ShellGetPersonalDirectory(RUser)) {
+	/* nothing to do */;
+    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
+	strcpy(RUser, p);
+	if(strlen(RUser) + strlen(q) >= MAX_PATH)
+	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
+	strcat(RUser, q);
+    } else {
+	GetCurrentDirectory(MAX_PATH, RUser);
+    }
+    p = RUser + (strlen(RUser) - 1);
+    if (*p == '/' || *p == '\\') *p = '\0';
+    return RUser;
+}
+
+
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
     R_size_t value;
-    char *p, *q;
+    char *p;
     char  s[1024];
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -867,29 +897,7 @@ int cmdlineoptions(int ac, char **av)
     Rp->rhome = R_Home;
 
     R_tcldo = tcl_do_none;
-/*
- * try R_USER then HOME then Windows homes then working directory
- */
-
-    if ((p = getenv("R_USER"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
-	strcpy(RUser, p);
-    } else if ((p = getenv("HOME"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
-	strcpy(RUser, p);
-    } else if (ShellGetPersonalDirectory(RUser)) {
-	/* nothing to do */;
-    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
-	strcpy(RUser, p);
-	if(strlen(RUser) + strlen(q) >= MAX_PATH)
-	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
-	strcat(RUser, q);
-    } else {
-	GetCurrentDirectory(MAX_PATH, RUser);
-    }
-    p = RUser + (strlen(RUser) - 1);
-    if (*p == '/' || *p == '\\') *p = '\0';
+    getRUser();
     Rp->home = RUser;
     R_SetParams(Rp);
 

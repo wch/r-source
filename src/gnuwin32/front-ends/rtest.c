@@ -17,39 +17,29 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* 27/03/2000 win32-api needs this */
-#define NONAMELESSUNION
+#define Win32
 #include <windows.h>
 #include <stdio.h>
-#include <config.h>
 #include <Rversion.h>
-#include <Startup.h>
+#include <R_ext/RStartup.h>
 /* for askok and askyesnocancel */
 #include "graphapp/graphapp.h"
 
 /* for signal-handling code */
 #include <psignal.h>
 
-void R_Suicide(char*); /* In Defn.h */
-int ShellGetPersonalDirectory(char *folder);
+void R_Suicide(char*); /* In Rinterface.h */
+void R_CleanUp(SA_TYPE, int, int); /* from Startup.h */
 
 /* one way to allow user interrupts: called in ProcessEvents */
-#ifdef _MSC_VER
 __declspec(dllimport) int UserBreak;
-#else
-#define UserBreak     (*_imp__UserBreak)
-extern int UserBreak;
-#endif
 
 /* calls into the R DLL */
-extern char *getDLLVersion();
-extern void R_DefParams(Rstart);
-extern void R_SetParams(Rstart);
-extern void setup_term_ui(void);
-extern void ProcessEvents(void);
-extern void end_Rmainloop(void), R_ReplDLLinit(void);
+extern char *getDLLVersion(), *getRUser();
+extern void R_DefParams(Rstart), R_SetParams(Rstart);
+extern void setup_term_ui(void), ProcessEvents(void);
+extern void run_Rmainloop(void), end_Rmainloop(void), R_ReplDLLinit(void);
 extern int R_ReplDLLdo1();
-extern void run_Rmainloop(void);
 
 
 /* simple input, simple output */
@@ -89,45 +79,23 @@ int main (int argc, char **argv)
 {
     structRstart rp;
     Rstart Rp = &rp;
-    char Rversion[25], RUser[MAX_PATH], RHome[MAX_PATH], *p, *q;
+    char Rversion[25], RHome[MAX_PATH];
 
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) {
-	fprintf(stderr, "Error: R.DLL version does not match\n");
-	exit(1);
+        fprintf(stderr, "Error: R.DLL version does not match\n");
+        exit(1);
     }
 
     R_DefParams(Rp);
     if(getenv("R_HOME")) {
-	strcpy(RHome, getenv("R_HOME"));
+        strcpy(RHome, getenv("R_HOME"));
     } else {
-	fprintf(stderr, "R_HOME must be set\n");
-	exit(1);
+        fprintf(stderr, "R_HOME must be set\n");
+        exit(1);
     }
     Rp->rhome = RHome;
-/*
- * try R_USER then HOME then Windows homes then working directory
- */
-    if ((p = getenv("R_USER"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
-	strcpy(RUser, p);
-    } else if ((p = getenv("HOME"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
-	strcpy(RUser, p);
-    } else if (ShellGetPersonalDirectory(RUser)) {
-	/* nothing to do */;
-    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
-	strcpy(RUser, p);
-	if(strlen(RUser) + strlen(q) >= MAX_PATH)
-	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
-	strcat(RUser, q);
-    } else {
-	GetCurrentDirectory(MAX_PATH, RUser);
-    }
-    p = RUser + (strlen(RUser) - 1);
-    if (*p == '/' || *p == '\\') *p = '\0';
-    Rp->home = RUser;
+    Rp->home = getRUser();
     Rp->CharacterMode = LinkDLL;
     Rp->ReadConsole = myReadConsole;
     Rp->WriteConsole = myWriteConsole;
@@ -140,8 +108,6 @@ int main (int argc, char **argv)
     Rp->R_Interactive = FALSE;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
-    /* Rp->nsize = 300000;
-       Rp->vsize = 6e6; */
     R_SetParams(Rp); /* so R_ShowMessage is set */
     R_SizeFromEnv(Rp);
     R_SetParams(Rp);
@@ -150,7 +116,7 @@ int main (int argc, char **argv)
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 
     signal(SIGBREAK, my_onintr);
-    setup_term_ui();
+    setup_term_ui(); /* initialize graphapp, eventloop, read Rconsole */ 
     setup_Rmainloop();
 #ifdef SIMPLE_CASE
     run_Rmainloop();
