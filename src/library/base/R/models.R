@@ -208,7 +208,7 @@ na.omit.data.frame <- function(object)
 	    for(ii in 1:d[2])
 		omit <- omit | x[, ii]
     }
-    xx <- object[!omit, , drop = F]
+    xx <- object[!omit, , drop = FALSE]
     if (any(omit)) {
 	temp <- seq(omit)[omit]
 	names(temp) <- row.names(object)[omit]

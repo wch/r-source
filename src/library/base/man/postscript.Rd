@@ -96,7 +96,7 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
   }
 #ifdef windows
   Only the first of these will work on Windows, and the default
-  \code{"printcmd"} is empty and will give an error if \code{print.it=T}
+  \code{"printcmd"} is empty and will give an error if \code{print.it=TRUE}
   is used.  Suitable commands to spool a PostScript file to a printer
   can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/rjl.html}.  The command will be run

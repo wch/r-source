@@ -43,7 +43,7 @@ quantile(x <- rnorm(1001))# Extremes & Quartiles by default
 quantile(x,  probs=c(.1,.5,1,2,5,10,50, NA)/100)
 
 n <- length(x) ## the following is exact, because 1/(1001-1) is exact:
-stopifnot(sort(x) == quantile(x, probs = ((1:n)-1)/(n-1), names=F))
+stopifnot(sort(x) == quantile(x, probs = ((1:n)-1)/(n-1), names=FALSE))
 
 n <- 777
 ox <- sort(x <- round(rnorm(n),1))# round() produces ties

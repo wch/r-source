@@ -82,7 +82,7 @@ abline(v=knots(Fn12),lty=2,col='gray70')
 plot(xx, Fn12(xx), type='b', cex=.1)#- plot.default
 plot(Fn12, col.h='red', add= TRUE)  #- plot method
 abline(v=knots(Fn12),lty=2,col='gray70')
-plot(Fn12, verticals=T, col.p='blue', col.h='red',col.v='bisque')
+plot(Fn12, verticals=TRUE, col.p='blue', col.h='red',col.v='bisque')
 par(op)
 
 ##-- this works too (automatic call to  ecdf(.)):

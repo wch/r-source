@@ -138,7 +138,7 @@ kernapply.vector <- function (x, k, circular = FALSE)
     {
         n <- length(x)
         w <- c(k[0:k$m], rep(0,n-2*k$m-1), k[-k$m:-1])
-        y <- fft(fft(x)*fft(w), inverse=T)/n
+        y <- fft(fft(x)*fft(w), inverse = TRUE)/n
         if (is.numeric(x)) y <- Re(y)
         if (circular)
             return (y)
@@ -173,8 +173,8 @@ kernapply.tskernel <- function (k1, k2)
     if (!is.tskernel(k2))
         stop ("k2 is not a kernel")
     n <- k2$m
-    x <- c(rep(0,n),k1[-k1$m:k1$m],rep(0,n))
-    coef <- kernapply(x,k2,circular=T)
+    x <- c(rep(0,n), k1[-k1$m:k1$m], rep(0,n))
+    coef <- kernapply(x, k2, circular = TRUE)
     m <- length(coef)%/%2
     kernel(coef[(m+1):length(coef)],m,
            paste("Composite(", attr(k1, "name"),",",attr(k2, "name"),")",sep=""))

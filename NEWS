@@ -23,13 +23,16 @@ BUG FIXES
     o	Standalone Mathlib can now be made if builddir = srcdir
 	(working around an undocumented autoconf `feature').
 
-    o	Check for pre-1.1.0 saved object .Postscript.options in postscript.
+    o	Check for pre-1.1.0 saved object .Postscript.options in postscript().
 
     o	More stringent checks on the arguments to dataentry().
 
-    o   xlab=expression now works again
+    o   Specifying xlab as an expression now works again.
 
     o   dev2bitmap() works again.
+
+    o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
+
 
 
 		CHANGES IN R VERSION 1.1.0

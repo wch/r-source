@@ -42,10 +42,11 @@ url.show(url, title = url, file = tempfile(),
 }
 
 \examples{
-\dontrun{read.table.url("http://lib.stat.cmu.edu/jcgs/tu",skip=4,header=T)}
+\dontrun{read.table.url("http://lib.stat.cmu.edu/jcgs/tu",
+   skip=4, header=TRUE)}
 \dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch11b.txt")}
 \dontrun{beaver<-read.table.url("http://lib.stat.cmu.edu/datasets/csb/ch11b.dat",
-  col.names=c("obsnum","day","time","temperature","activity"),row.names=1)}
+  col.names=c("obsnum","day","time","temperature","activity"), row.names=1)}
 # the next two examples will only work if socket connections to
 # statlib are allowed from your site.
 \dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch3a.txt",

@@ -70,15 +70,15 @@ symnum(Cl) # highly correlated
 ##--- Missing value treatment:
 data(swiss)
 C1 <- cov(swiss)
-range(eigen(C1, only=T)$val) # 6.19  1921
+range(eigen(C1, only=TRUE)$val) # 6.19  1921
 swiss[1,2] <- swiss[7,3] <- swiss[25,5] <- NA # create 3 "missing"
 \dontrun{
  C2 <- cov(swiss) # Error: missing obs...
 }
 C2 <- cov(swiss, use = "complete")
-range(eigen(C2, only=T)$val) # 6.46  1930
+range(eigen(C2, only=TRUE)$val) # 6.46  1930
 C3 <- cov(swiss, use = "pairwise")
-range(eigen(C3, only=T)$val) # 6.19  1938
+range(eigen(C3, only=TRUE)$val) # 6.19  1938
 }
 \keyword{univar}
 \keyword{multivariate}

@@ -151,7 +151,7 @@ text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
 make.table <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
     plot(c(0, nc*2 + 1), c(0, -(nr + 1)), 
-         type="n", xlab="", ylab="", axes=F)
+         type="n", xlab="", ylab="", axes=FALSE)
     savepar
 }
 
@@ -285,7 +285,7 @@ draw.plotmath.cell(expression(x ~~ y), i, nr); i <- i + 1
 
 # Need fewer, taller rows for fractions ...
 # cheat a bit to save pages
-par(new =T)
+par(new = TRUE)
 nr <- 10
 nc <- 1
 make.table(nr, nc)

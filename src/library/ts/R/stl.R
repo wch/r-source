@@ -90,7 +90,7 @@ plot.stl <- function(x, labels = colnames(X), ...)
     par(mfrow = c(nplot, 1))
     for(i in 1:nplot) {
         plot(X[, i], type = if(i < nplot) "l" else "h",
-             xlab = "", ylab = "", axes = F, ...)
+             xlab = "", ylab = "", axes = FALSE, ...)
         if(i == nplot) abline(h=0)
         box()
         right <- i %% 2 == 0

@@ -24,7 +24,7 @@ save.image(file = ".Rdata", oldstyle = FALSE)
 
   \code{save.image()} is just a short-cut for ``save my current
   environment'',
-  i.e., \code{save(list = ls(all=T), file = ".RData")}. It is what also
+  i.e., \code{save(list = ls(all=TRUE), file = ".RData")}. It is what also
   happens with \code{\link{q}("yes")}.
 }
 \seealso{

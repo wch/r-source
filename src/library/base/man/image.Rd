@@ -88,15 +88,15 @@ image(as.matrix(1))
 image(matrix(pi,2,4))
 x <- seq(0,1,len=100)
 image(x, 1, matrix(x), col=heat.colors(10))
-image(x, 1, matrix(x), col=heat.colors(10), oldstyle=T)
-image(x, 1, matrix(x), col=heat.colors(10), breaks=seq(0.1,1.1,len=11))
+image(x, 1, matrix(x), col=heat.colors(10), oldstyle = TRUE)
+image(x, 1, matrix(x), col=heat.colors(10), breaks = seq(0.1,1.1,len=11))
 }
 x <- y <- seq(-4*pi, 4*pi, len=27)
 r <- sqrt(outer(x^2, y^2, "+"))
 image(z = z <- cos(r^2)*exp(-r/6), col=gray((0:32)/32))
-image(z, axes=F, main="Math can be beautiful ...",
-      xlab=expression(cos(r^2) * e^{-r/6}))
-contour(z, add=T, drawlabels=F)
+image(z, axes = FALSE, main = "Math can be beautiful ...",
+      xlab = expression(cos(r^2) * e^{-r/6}))
+contour(z, add = TRUE, drawlabels = FALSE)
 
 data(volcano)
 x <- 10*(1:nrow(volcano))

@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.5 2000/02/20 15:32:13 bates Exp $
+### $Id: nls.R,v 1.5.6.1 2000/06/21 08:40:30 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -10,13 +10,13 @@
 ### It is made available under the terms of the GNU General Public
 ### License, version 2, or at your option, any later version,
 ### incorporated herein by reference.
-### 
+###
 ### This program is distributed in the hope that it will be
 ### useful, but WITHOUT ANY WARRANTY; without even the implied
 ### warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ### PURPOSE.  See the GNU General Public License for more
 ### details.
-### 
+###
 ### You should have received a copy of the GNU General Public
 ### License along with this program; if not, write to the Free
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
@@ -46,7 +46,7 @@ numericDeriv <- function(expr, theta, rho = parent.frame()) {
 
 nlsModel.plinear <- function( form, data, start ) {
     thisEnv <- environment()
-    env <- newEnv() 
+    env <- newEnv()
     for( i in names( data ) ) {
         assign( i, data[[i]], envir = env )
     }
@@ -91,7 +91,7 @@ nlsModel.plinear <- function( form, data, start ) {
         useParams <- rep(TRUE, length(attr(rhs, "gradient")))
     }
     gradSetArgs[[1]] <- (~attr(ans, "gradient"))[[2]]
-    gradCall <- 
+    gradCall <-
       switch(length(gradSetArgs) - 1,
              call("[", gradSetArgs[[1]], gradSetArgs[[2]]),
              call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]]),
@@ -125,7 +125,7 @@ nlsModel.plinear <- function( form, data, start ) {
         ddot <- function( A, b ) apply( A, MARGIN = 3, FUN="%*%", b )
         dtdot <- function( A, b ) apply( A, MARGIN = c(2,3), FUN = "%*%", b )
     }
-    
+
     getPars.noVarying <- function()
       unlist( setNames( lapply( names( ind ), get, envir = env ),
                        names( ind ) ) )
@@ -133,7 +133,7 @@ nlsModel.plinear <- function( form, data, start ) {
       unlist( setNames( lapply( names( ind ), get, envir = env ),
                        names( ind ) ) )[useParams]
     getPars <- getPars.noVarying
-    
+
     internalPars <- getPars()
     setPars.noVarying <- function(newPars)
       {
@@ -150,11 +150,11 @@ nlsModel.plinear <- function( form, data, start ) {
           }
       }
     setPars <- setPars.noVarying
-    getPred <- 
+    getPred <-
       if(is.matrix(rhs))
         function(X) as.numeric(X %*% lin)
       else function(X) X * lin
-    
+
     m <-
       list(resid = function() resid,
            fitted = function() getPred(rhs),
@@ -242,7 +242,7 @@ nlsModel.plinear <- function( form, data, start ) {
 
 nlsModel <- function( form, data, start ) {
     thisEnv <- environment()
-    env <- newEnv() 
+    env <- newEnv()
     for( i in names( data ) ) {
         assign( i, data[[i]], envir = env )
     }
@@ -283,7 +283,7 @@ nlsModel <- function( form, data, start ) {
     }
     npar <- length(useParams)
     gradSetArgs[[1]] <- (~attr(ans, "gradient"))[[2]]
-    gradCall <- 
+    gradCall <-
       switch(length(gradSetArgs) - 1,
              call("[", gradSetArgs[[1]], gradSetArgs[[2]]),
              call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]]),
@@ -404,7 +404,7 @@ nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
 nls <-
   function (formula, data = list(),
             start = getInitial( formula, data ), control,
-            algorithm="default", trace = F,
+            algorithm="default", trace = FALSE,
             subset, weights, na.action, ...)
 {
     mf <- match.call()             # for creating the model frame
@@ -461,7 +461,7 @@ print.nls <- function(x, ...) {
     invisible(x)
 }
 
-summary.nls <- function (object, ...) 
+summary.nls <- function (object, ...)
 {
     z <- .Alias(object)
     resid <- resid(z)
@@ -508,25 +508,25 @@ summary.nls <- function (object, ...)
 }
 
 print.summary.nls <-
-  function (x, digits = max(3, getOption("digits") - 3), symbolic.cor = p > 
-            4, signif.stars = getOption("show.signif.stars"), ...) 
+  function (x, digits = max(3, getOption("digits") - 3), symbolic.cor = p >
+            4, signif.stars = getOption("show.signif.stars"), ...)
 {
     cat("\nFormula: ")
-    cat(paste(deparse(x$formula), sep = "\n", collapse = "\n"), 
+    cat(paste(deparse(x$formula), sep = "\n", collapse = "\n"),
         "\n", sep = "")
     df <- x$df
     rdf <- df[2]
     cat("\nParameters:\n")
-    print.coefmat(x$parameters, digits = digits, signif.stars = signif.stars, 
+    print.coefmat(x$parameters, digits = digits, signif.stars = signif.stars,
                   ...)
-    cat("\nResidual standard error:", format(signif(x$sigma, 
+    cat("\nResidual standard error:", format(signif(x$sigma,
                                                     digits)), "on", rdf, "degrees of freedom\n")
     correl <- x$correlation
     if (!is.null(correl)) {
         p <- dim(correl)[2]
         if (p > 1) {
             cat("\nCorrelation of Parameter Estimates:\n")
-            if (symbolic.cor) 
+            if (symbolic.cor)
               print(symnum(correl)[-1, -p])
             else {
                 correl[!lower.tri(correl)] <- NA
@@ -553,11 +553,11 @@ predict.nls <-
 .First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
 
 
-fitted.nls <- 
+fitted.nls <-
   function(object, ...)
 {
     val <- as.vector(object$m$fitted())
-    
+
     lab <- "Fitted values"
     if (!is.null(aux <- attr(object, "units")$y)) {
         lab <- paste(lab, aux)
@@ -588,10 +588,10 @@ residuals.nls <-
     val
 }
 
-logLik <- 
+logLik <-
   function(object, ...) UseMethod("logLik")
 
-logLik.nls <- 
+logLik.nls <-
   function(object, REML = FALSE)
 {
     if (REML) {
@@ -599,7 +599,7 @@ logLik.nls <-
     }
     res <- resid(object)
     N <- length(res)
-    if(is.null(w <- object$weights)) {	
+    if(is.null(w <- object$weights)) {
         w <- rep(1, N)
     }
     val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w)) + log(sum(w*res^2)))/2

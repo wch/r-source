@@ -88,7 +88,7 @@ par(op)
 x <- y <- seq(-4*pi, 4*pi, len = 27)
 r <- sqrt(outer(x^2, y^2, "+"))
 opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
-for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f), drawlabels = F)
+for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f), drawlabels = FALSE)
 
 data("volcano")
 rx <- range(x <- 10*1:nrow(volcano))
