@@ -46,9 +46,9 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, n));
     for(i = 0; i < n; i++) {
 	INTEGER(ind)[0] = i + 1;
-	PROTECT(VECTOR(ans)[i] = eval(R_fcall, rho));
+	VECTOR(ans)[i] = eval(R_fcall, rho);
     }
-    UNPROTECT(n+3);
+    UNPROTECT(3);
     return ans;
 }
 
@@ -98,8 +98,8 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error("unsupported type of array in apply");
 	}
 	/* careful: we have altered X1 and might have FUN = function(x) x */
-	PROTECT(VECTOR(ans)[i] = duplicate(eval(R_fcall, rho)));
+	VECTOR(ans)[i] = duplicate(eval(R_fcall, rho));
     }
-    UNPROTECT(nc+2);
+    UNPROTECT(2);
     return ans;
 }
