@@ -152,6 +152,7 @@ NEW FEATURES
 
     o	C API : Rboolean type with TRUE & FALSE enum constants.
 
+
 BUG FIXES
 
     o	Postscript driver no longer uses the initclip operator, which
@@ -184,6 +185,11 @@ BUG FIXES
     o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
 
     o	Now dweibull(0,1) == dexp(0) == 1 for consistency.
+
+    o	Failure to open a postscript() device not gives diagnostic warnings.
+
+
+
 
 	**************************************************
 	*						 *
