@@ -29,6 +29,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	detach(2) now works.
+
     o	format() doesn't drop names anymore.
 
     o	format.pval() works with NAs.
