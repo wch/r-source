@@ -91,9 +91,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
     if (x <= 0.)
 	return R_DT_0;
 
-    /* use a normal approximation if alph > alphlimit */
-
-    if (alph > alphlimit) {
+    if (alph > alphlimit) { /* use a normal approximation */
 	pn1 = sqrt(alph) * 3. * (pow(x/alph, 1./3.) + 1. / (9. * alph) - 1.);
 	return pnorm(pn1, 0., 1., lower_tail, log_p);
     }
@@ -153,7 +151,6 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	    pn3 = pn5;
 	    pn4 = pn6;
 	    if (fabs(pn5) >= xlarge) {
-
 		/* re-scale the terms in continued fraction if they are large */
 #ifdef DEBUG_p
 		REprintf(" [r] ");
