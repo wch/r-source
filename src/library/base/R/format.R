@@ -45,16 +45,18 @@ format.char <- function(x, width = NULL, flag = "-")
 	pad <- sapply(pmax(0,width - nc),
 		      function(no) paste(character(no+1), collapse =" "))
 	r <- if(flag=="-") paste(x, pad, sep="")#-- LEFT  justified
-	else	     paste(pad, x, sep="")#-- RIGHT justified
+		else	   paste(pad, x, sep="")#-- RIGHT justified
 	if(!is.null(at)) attributes(r) <- at
 	r
 }
 
 
 format.pval <- function(pv, digits = max(1, .Options$digits-2),
-			eps = .Machine$double.eps) {
+			eps = .Machine$double.eps, na.form = "NA")
+{
 	## Format  P values; auxiliary for print.summary.[g]lm(.)
 
+	if((has.na <- any(ina <- is.na(pv)))) pv <- pv[!ina]
 	## Better than '0.0' for very small values `is0':
 	r <- character(length(is0 <- pv < eps))
 	if(any(!is0)) {
@@ -75,6 +77,12 @@ format.pval <- function(pv, digits = max(1, .Options$digits-2),
 			sep <- if(digits==1 && nc <= 6) "" else " "
 		} else sep <- if(digits==1) "" else " "
 		r[is0] <- paste("<", format(eps, digits=digits), sep = sep)
+	}
+	if(has.na) { ## rarely...
+		rok <- r
+		r <- character(length(ina))
+		r[!ina] <- rok
+		r[ina] <- na.form
 	}
 	r
 }
