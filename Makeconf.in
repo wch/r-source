@@ -40,8 +40,8 @@ YACC = @YACC@
 .SUFFIXES:
 .SUFFIXES: .c .f .o
 .c.o:
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
-@f77_rules_frag@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+@f77_rules_frag_top@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
