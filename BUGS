@@ -382,3 +382,19 @@ Date: Thu, 3 Jan 2002 18:25:46 +0100 (MET)
 Subject:  identify.default() fails when x is a structure/matrix 
 From: David James <dj@localhost.localdomain>
 Date: Thu, 3 Jan 2002 17:17:12 -0500
+* PR# 1239 *
+Subject: R CMD check, file permissions
+From: Christian Hoffmann <christian.hoffmann@wsl.ch>
+Date: Fri, 04 Jan 2002 12:38:54 +0100
+* PR# 1240 *
+Subject:  R CMD check 
+From: hoffmann@wsl.ch
+Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
+* PR# 1241 *
+Subject:  Problem with "missing" in "local" 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 4 Jan 2002 13:34:34 GMT
+* PR# 1242 *
+Subject: copy metafile from window() device fails when lattice/grid is
+From: "Liaw, Andy" <andy_liaw@merck.com>
+Date: Fri, 04 Jan 2002 14:43:08 -0500
