@@ -2268,6 +2268,9 @@ Fixed point clusters, clusterwise regression and discriminant plots.
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
 Statistics, 1989).
+@item frailtypack
+Fit a shared gamma frailty model and Cox proportional hazards model
+using a Penalized Likelihood on the hazard function.
 @item ftnonpar
 Features and strings for nonparametric regression.
 @item g.data

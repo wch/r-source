@@ -2058,6 +2058,10 @@ distributions of R.)
      differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
      Statistics, 1989).
 
+*frailtypack*
+     Fit a shared gamma frailty model and Cox proportional hazards model
+     using a Penalized Likelihood on the hazard function.
+
 *ftnonpar*
      Features and strings for nonparametric regression.
 
