@@ -291,6 +291,11 @@ MethodsListSelect <-
         ## top level
         if(is(value, "EmptyMethodsList")) ## selection failed
             value <- NULL
+        else {
+            on.exit() # cancel the restore, if any, of the original mlist
+            .setMethodsForDispatch(f, fdef, value)
+        }
+            
     }
     value
 }
