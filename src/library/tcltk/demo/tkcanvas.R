@@ -6,6 +6,7 @@
 ### All I did was to add the code to plot the fitted regression line.
 
 require(tcltk) || stop("tcl/tk library not available")
+require(graphics); require(stats)
 local({
 
 
@@ -19,7 +20,7 @@ local({
                    text="This window displays a canvas widget containing a simple 2-dimensional plot.  You can doctor the data by dragging any of the points with mouse button 1.")
 
     tkpack(msg, side="top")
-    
+
     buttons <- tkframe(top)
     tkpack(buttons, side="bottom", fill="x", pady="2m")
     dismiss <- tkbutton(buttons, text="Dismiss",
@@ -133,10 +134,10 @@ local({
                    line <<- plotLine()
                })
     tkbind(canvas, "<B1-Motion>", plotMove)
-    
+
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n",
         file.path(system.file(package = "tcltk"), "demo", "tkcanvas.R"),
         "\n******************************************************\n")
-    
+
 })

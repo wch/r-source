@@ -13,7 +13,7 @@
         Sys.putenv(PATH=opath)
     }
     .C("tcltk_start", PACKAGE="tcltk")
-    bringToTop(-1) # restore focus to console
+    graphics::bringToTop(-1) # restore focus to console
     extra <- system.file("exec", package = "tcltk")
     extra <- gsub("\\\\", "/", extra)
     invisible(addTclPath(extra))

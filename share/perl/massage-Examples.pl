@@ -141,7 +141,7 @@ print <<_EOF_;
 ### * <FOOTER>
 ###
 cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\\n")
-dev.off()
+graphics::dev.off()
 ###
 ### Local variables: ***
 ### mode: outline-minor ***
