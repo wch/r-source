@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.2-9, 2001-01-02</h2>
+<h2>Version 1.2-10, 2001-01-03</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -215,7 +215,7 @@ Up:<a rel=up href="#Introduction">Introduction</a>
 <h2>1.3 Citing this document</h2>
 
 <p>In publications, please refer to this <small>FAQ</small> as Hornik
-(2000), "The R <small>FAQ</small>" and give the above,
+(2001), "The R <small>FAQ</small>" and give the above,
 <em>official</em> <small>URL</small>.
 
 <p><hr>
@@ -333,7 +333,7 @@ systems.
 
 <p>The current version of R will configure and build under a number of
 common Unix platforms including i386-freebsd, i386-linux,
-ix86-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
+i386-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
 rs6000-ibm-aix, hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
 <p>If you know about other platforms, please drop us a note.
@@ -437,7 +437,7 @@ the "R Extension Writers Guide", in the <code>doc/manual</code>
 subdirectory.  These files can be previewed and printed using standard
 programs such as <code>xdvi</code> and <code>dvips</code>.  You can also use
 <kbd>make pdf</kbd> to build PDF (Portable Document Format) version of the
-manuals, and view these using Acrobat.  Manuals written in the
+manuals, and view these using e.g. Acrobat.  Manuals written in the
 <small>GNU</small> Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone <small>GNU</small>
 Info; use <kbd>make info</kbd> to create these versions (note that this
@@ -1392,8 +1392,8 @@ line fitting, and median polish and smoothing.
 <dd>MODern REGression: smoothing and local methods. 
 <br><dt><strong>mva</strong>
 <dd>MultiVariate Analysis.  Currently contains code for principal
-components, canonical correlations, metric multidimensional scaling, and
-hierarchical and k-means clustering. 
+components, canonical correlations, metric multidimensional scaling,
+factor analysis, and hierarchical and k-means clustering. 
 <br><dt><strong>nls</strong>
 <dd>Nonlinear regression routines. 
 <br><dt><strong>splines</strong>
@@ -1500,7 +1500,9 @@ time).
 <br><dt><strong>e1071</strong>
 <dd>Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
-Component Analysis, and simulation of a Wiener process. 
+Component Analysis, Latent Class Analysis, reading and writing of images
+in portable anymap format, simulation of a Wiener process, support
+vector machines, and fuzzy clustering. 
 <br><dt><strong>ellipse</strong>
 <dd>Package for drawing ellipses and ellipse-like confidence regions. 
 <br><dt><strong>fdim</strong>
@@ -1824,8 +1826,8 @@ ts           Time series functions
 
 <p>You can then find out which functions it provides by typing one of
 
-<pre>help(package = <var>pkg</var>)
-library(help = <var>pkg</var>)
+<pre>library(help = <var>pkg</var>)
+help(package = <var>pkg</var>)
 </pre>
 
 <p>You can unload the loaded package <var>pkg</var> by
