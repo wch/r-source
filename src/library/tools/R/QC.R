@@ -4,32 +4,36 @@ undoc <-
 function(package, dir, lib.loc = NULL)
 {
     ## Argument handling.
+    ## <NOTE>
+    ## Earlier versions used to give an error if there were no Rd
+    ## objects.  This is not right: if there is code or data but no
+    ## documentation, everything is undocumented ...
+    ## </NOTE>
     if(!missing(package)) {
         if(length(package) != 1)
             stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
-        helpIndex <- file.path(dir, "help", "AnIndex")
-        if(!file_test("-f", helpIndex))
-            stop(paste("directory", sQuote(dir),
-                       "contains no help index"))
         is_base <- package == "base"
-
-        ## Find all documented topics from the help index.
-        all_doc_topics <-
+        helpIndex <- file.path(dir, "help", "AnIndex")
+        all_doc_topics <- if(!file_test("-f", helpIndex))
+            character()
+        else {
+            ## Find all documented topics from the help index.            
             sort(scan(file = helpIndex, what = list("", ""), sep = "\t",
                       quiet = TRUE, na.strings = character())[[1]])
-        ## <NOTE>
-        ## This gets all topics the same way as index.search() would
-        ## find individual ones.  We could also use
-        ##   unlist(.readRDS(file.path(dir, "Meta", "Rd.rds"))$Aliases)
-        ## which is marginally slower.
-        ## A real gain in efficiency would come from reading in Rd.rds
-        ## *once* (e.g., the first time help() is called), and storing
-        ## it in some known place, e.g. an attribute of the package env,
-        ## or a dynamic variable with the help entries indexed for fast
-        ## lookup by topic.
-        ## </NOTE>
+            ## <NOTE>
+            ## This gets all topics the same way as index.search() would
+            ## find individual ones.  We could also use
+            ##   unlist(.readRDS(file.path(dir, "Meta", "Rd.rds"))$Aliases)
+            ## which is marginally slower.
+            ## A real gain in efficiency would come from reading in
+            ## Rd.rds *once* (e.g., the first time help() is called),
+            ## and storing it in some known place, e.g. an attribute of
+            ## the package env, or a dynamic variable with the help
+            ## entries indexed for fast lookup by topic.
+            ## </NOTE>
+        }
 
         ## Load package into code_env.
         if(!is_base)
@@ -47,24 +51,24 @@ function(package, dir, lib.loc = NULL)
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- file_path_as_absolute(dir)
+        is_base <- basename(dir) == "base"        
         docs_dir <- file.path(dir, "man")
         if(!file_test("-d", docs_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd sources"))
-        is_base <- basename(dir) == "base"
-
-        ## Find all documented topics from the Rd sources.
-        aliases <- character(0)
-        for(f in list_files_with_type(docs_dir, "docs")) {
-            aliases <- c(aliases,
-                         grep("^\\\\alias",
-                              .read_Rd_lines_quietly(f),
-                              value = TRUE))
+            all_doc_topics <- character()
+        else {
+            ## Find all documented topics from the Rd sources.
+            aliases <- character(0)
+            for(f in list_files_with_type(docs_dir, "docs")) {
+                aliases <- c(aliases,
+                             grep("^\\\\alias",
+                                  .read_Rd_lines_quietly(f),
+                                  value = TRUE))
+            }
+            all_doc_topics <- gsub("\\\\alias{(.*)}.*", "\\1", aliases)
+            all_doc_topics <- gsub("\\\\%", "%", all_doc_topics)
+            all_doc_topics <- gsub(" ", "", all_doc_topics)
+            all_doc_topics <- sort(unique(all_doc_topics))
         }
-        all_doc_topics <- gsub("\\\\alias{(.*)}.*", "\\1", aliases)
-        all_doc_topics <- gsub("\\\\%", "%", all_doc_topics)
-        all_doc_topics <- gsub(" ", "", all_doc_topics)
-        all_doc_topics <- sort(unique(all_doc_topics))
 
         code_env <- new.env()
         code_dir <- file.path(dir, "R")
@@ -2940,7 +2944,7 @@ function(x)
     ## Note how we deal with S3 replacement methods found.
     ## These come out named "\method{GENERIC}{CLASS}<-" which we
     ## need to turn into 'GENERIC<-.CLASS'.
-    sub("\\\\(S3)?method{([.[:alnum:]]*)}{([.[:alnum:]]*)}(<-)?",
+    sub("\\\\(S3)?method{([._[:alnum:]]*)}{([._[:alnum:]]*)}(<-)?",
         "\\2\\4.\\3",
         x)
 }
@@ -2948,12 +2952,12 @@ function(x)
 ### * .S3_method_markup_regexp
 
 .S3_method_markup_regexp <-
-    "(\\\\(S3)?method{([.[:alnum:]]*)}{([.[:alnum:]]*)})"
+    "(\\\\(S3)?method{([._[:alnum:]]*)}{([._[:alnum:]]*)})"
 
 ### * .S4_method_markup_regexp
 
 .S4_method_markup_regexp <-
-    "(\\\\S4method{([.[:alnum:]]*)}{([.[:alnum:],]*)})"
+    "(\\\\S4method{([._[:alnum:]]*)}{([._[:alnum:],]*)})"
 
 
 ### Local variables: ***
