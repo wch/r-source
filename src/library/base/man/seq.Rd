@@ -26,6 +26,10 @@ seq(along)
   \item{along}{take the length from the length of this argument.}
 }
 \details{
+  The interpretation of the unnamed arguments of \code{seq} is
+  \emph{not} standard, and it is recommended to always name the
+  arguments when programming.
+ 
   The operator \code{:} and the first \code{seq(.)} form generate the
   sequence \code{from, from+1}, \ldots, \code{to}.
   \code{seq} is a generic function.
@@ -36,7 +40,8 @@ seq(along)
   from \code{from} to \code{to}.
 
   The last generates the sequence \code{1, 2}, \ldots,
-  \code{length(along)}.
+  \code{length(along)}, unless the argument is of length 1 when it is
+  interpreted as a \code{length} argument.
 
   If \code{from} and \code{to} are factors of the same length, then
   \code{from : to} returns the ``cross'' of the two.
@@ -65,6 +70,7 @@ seq(1,9, by = 2) # match
 seq(1,9, by = pi)# stay below
 seq(1,6, by = 3)
 seq(1.575, 5.125, by=0.05)
+seq(17) # same as 1:17
 
 for (x in list(NULL, letters[1:6], list(1,pi)))
   cat("x=",deparse(x),";  seq(along = x):",seq(along = x),"\n")
