@@ -16,7 +16,8 @@
   Third Edition. Holden-Day. Series G.
 }
  \examples{
-library(ts)
+\dontrun{## These are quite slow and so not run by example(AirPassengers)
+
 data(AirPassengers)
 ## The classic `airline model', by full ML
 (fit <- arima(log10(AirPassengers), c(0, 1, 1),
@@ -41,5 +42,5 @@ ap <- log10(AirPassengers) - 2
 par(mfrow=c(1,2))
 plot(cbind(ap, fitted(fit)), plot.type = "single")
 plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
-}
+}}
 \keyword{datasets}
