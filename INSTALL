@@ -67,7 +67,7 @@ called "R" will be created and copied to the same directory.  You can
 copy this script to a place where users can invoke it, for example to
 `/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
 where your man reader finds it, such as `/usr/local/man/man1'.  If you
-want to install the complete R tree to, e.g., `/usr/local/lib/R', see
+want to install the complete R tree to, e.g., `/usr/local/share/R', see
 section INSTALLATION below.
 
 You do not necessarily have to build R in the top-level source directory
@@ -119,8 +119,8 @@ MAKING THE MANUALS
 
 There is a set of manuals that can be built from the sources,
 
-	R-intro		`An Introduction to R.
 	refman		Printed versions of all the help pages.
+	R-intro		`An Introduction to R'.
 	R-exts		`Writing R Extensions'.
 	R-FAQ		R FAQ (which is already built for you).
 
@@ -156,7 +156,7 @@ This will install to the following directories:
 
 	${prefix}/bin		the front-end shell script
 	${prefix}/man/man1	the man page
-	${prefix}/lib/R		all the rest (libraries, on-line help
+	${prefix}/share/R	all the rest (libraries, on-line help
 				system, ...)
 
 where prefix is determined during configuration (typically `/usr/local')
@@ -185,14 +185,14 @@ variable, for example GNU make.
 If you want to use a make by another name, for example if your GNU make
 is called `gmake', you need to set MAKE at configure time, for example
 
-MAKE=gmake ./configure      (sh, bash)
-env MAKE=gmake ./configure  (csh)
+	MAKE=gmake ./configure      (sh, bash)
+	env MAKE=gmake ./configure  (csh)
 
 
 USING FORTRAN
 
 To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
-converter.  The default is to search for f77, g77, fort77, f90, xlf,
+converter.  The default is to search for g77, fort77, f77, f90, xlf,
 cf77, and fc (in that order), and then for f2c, and use whichever is
 found first; if none is found, R cannot be compiled.  The search
 mechanism can be changed using the `--with-g77', `--with-f77', and
