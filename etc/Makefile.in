@@ -10,7 +10,7 @@ subdir = etc
 
 include $(top_builddir)/Makeconf
 
-SOURCES = Makeconf.in Makeconf-tests.in Renviron.in
+SOURCES = Makeconf.in Renviron.in
 OBJECTS = $(SOURCES:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES)
@@ -20,6 +20,7 @@ EXPORTFILE = @EXPORTFILE@
 ## <FIXME>
 ## Remove eventually.
 GNOME_IF_FILES = @GNOME_IF_FILES@
+CLEANFILES = $(GNOME_IF_FILES) Makeconf-tests
 ## </FIXME>
 
 all: Makefile R
@@ -58,7 +59,7 @@ uninstall:
 	  && test "`cd $(rhome); $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
 	  (cd $(rhome)/etc && \
-	    rm -f *.pl $(OBJECTS) $(EXPORTFILE) $(GNOME_IF_FILES)); \
+	    rm -f $(OBJECTS) $(EXPORTFILE) *.pl $(CLEANFILES)); \
 	  rmdir $(rhome)/etc 2> /dev/null \
 	    || echo "  subdir etc not removed"; \
 	fi
@@ -68,7 +69,7 @@ clean:
 ## <FIXME>
 ## Remove eventually.
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f *.pl $(GNOME_IF_FILES); \
+	  rm -f *.pl $(CLEANFILES); \
 	fi
 ## </FIXME>
 	@rm -f $(EXPORTFILE)
