@@ -768,7 +768,7 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 	args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
 	UNPROTECT(1);
 	if(save != R_PPStackTop) {
-		printf("stack imbalance in internal %s, %d then %d\n",
+		REprintf("stack imbalance in internal %s, %d then %d\n",
 			PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
 	}
 	return (args);

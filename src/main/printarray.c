@@ -367,7 +367,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote)
 				k = k*INTEGER(dim)[j];
 				dn = CDR(dn);
 			}
-			printf("\n\n");
+			Rprintf("\n\n");
 
 			switch (TYPEOF(x)) {
 			case LGLSXP:
