@@ -14,11 +14,11 @@
 \usage{
 getMethod(f, signature=character(), where=-1, optional=FALSE)
 
-selectMethod(f, signature, optional=False, mlist=getMethods(f))
+selectMethod(f, signature, optional=False, inherited, mlist=getMethods(f))
 
 getMethods(f, where=-1)
 
-MethodsListSelect(f, ev, mustFind = TRUE, ...)
+MethodsListSelect(f, ev, mlist, finalDefault, ...)
 }
 \arguments{
   \item{f}{ The character-string name of the generic function }

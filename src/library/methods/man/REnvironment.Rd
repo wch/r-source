@@ -24,7 +24,7 @@ removeEnv(names, environment)
 
 objectsEnv(ev, all.names=FALSE, pattern)
 
-copyEnvironment(object)
+copyEnvironment(object, exceptions)
 
 defaultMetaEnvironment()
 }

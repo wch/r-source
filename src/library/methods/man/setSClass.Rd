@@ -3,12 +3,12 @@
 \title{ Low-level Class definition }
 \description{
  This is the lower-level version of \code{\link{setClass}}.  Unless you
- really know why you are calling it, user \code{setClass} instead.
+ really know why you are calling it, use \code{setClass} instead.
 }
 \usage{
 setSClass(name, properties=list(), extends=character(),
    prototype=NULL, generatorFunction, where=1,
-   subclasses=character(), virtual=NA)
+   subclasses=character(), virtual=NA, validity, access)
 }
 
 \arguments{
@@ -23,6 +23,10 @@ setSClass(name, properties=list(), extends=character(),
     By default, uses the global environment. }
   \item{subclasses}{ Classes that extend \emph{this} class.  }
   \item{virtual}{ Is this known to be a virtual class? }
+  \item{validity, access}{Optional arguments for validity method and
+    access restrictions.  At the time of writing, these are included for
+    compatibility and are not used.  In the future, however, the validity method
+    is likely to be relevant.  See \emph{Programming with Data} for its interpretation.}
 }
 \references{
 The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.

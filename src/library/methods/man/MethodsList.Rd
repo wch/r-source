@@ -10,6 +10,7 @@
 \alias{print.MethodsList}
 \alias{emptyMethodsList}
 \alias{insertMethodInEmptyList}
+\alias{listFromMlist}
 \alias{listFromMlistForPrint}
 \title{MethodsList Objects}
 \usage{
@@ -23,13 +24,15 @@ insertMethod(mlist, signature, args, def)
 
 MethodsListDispatch(fname, ev, mustFind = TRUE)
 
-matchArg(object, methods, defaultMethod)
+matchArg(object, thisClass, mlist, ev)
 
-matchArgClass(Class, methods, defaultMethod)
+matchArgClass(Class, classes, methods)
 
 showMlist(mlist, includeDefs=TRUE, inherited = TRUE)
 
 print.MethodsList(x, ...)
+
+listFromMlist(mlist, prefix = list())
 
 listFromMlistForPrint(mlist, inherited = TRUE, useArgName = TRUE, prev = character())
 

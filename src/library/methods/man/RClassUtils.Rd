@@ -100,7 +100,8 @@ setClassName(ClassDef, value)
 
 assignClassDef(Class, def, where=.GlobalEnv)
 
-newClassEnvironment(name, properties, extends, prototype, subclasses, virtual)
+newClassEnvironment(name, properties, extends, prototype, subclasses,
+                 virtual, validity, access)
 
 newBasic(Class, ..., .Force=FALSE)
 
