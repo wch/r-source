@@ -86,6 +86,10 @@ sfun0
 summary(sfun0)
 summary(sfun.2)
 
+## look at the internal structure:
+print.default(sfun0)
+ls.str(envir = environment(sfun0))
+
 x0 <- seq(0.5,3.5, by = 0.25)
 rbind(x=x0, f.f0 = sfun0(x0), f.f02= sfun.2(x0), f.f1 = sfun1(x0))
 }
