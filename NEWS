@@ -487,6 +487,9 @@ BUG FIXES
     o	library() now gives more informative error messages mentioning
 	the package being loaded.
 
+    o	Building the reference manual no longer uses roman upright
+	quotes in typewriter output.
+
 
 
 
