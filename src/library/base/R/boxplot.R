@@ -100,50 +100,36 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	if(!any(is.na(stats))) {
 	    ## stats = +/- Inf:	 polygon & segments should handle
 	    wid <- wid/2
+            if (notch) {
+                xx <- x + wid * c(-1, 1, 1, notch.frac, 1,
+                                   1,-1,-1,-notch.frac,-1)
+                yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
+                        stats[c(4, 4)], conf[2], stats[3], conf[1])
+            }
+            else {
+                xx <- x + wid * c(-1, 1, 1, -1)
+                yy <- stats[c(2, 2, 4, 4)]
+            }
+            if(!notch) notch.frac <- 1
+            wntch <- notch.frac*wid
             if (horizontal) {
-
-                if (notch) {
-                    xx <- x + wid * c(-1, 1, 1, notch.frac, 1, 1,
-                                      -1, -1, -notch.frac, -1)
-                    yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
-                            stats[c(4, 4)], conf[2], stats[3], conf[1])
-                    polygon(yy, xx, col = col, border = border)
-                    segments(stats[3], x - wid/2, stats[3], x + wid/2,
-                             col = border)
-                }
-                else {
-                    xx <- x + wid * c(-1, 1, 1, -1)
-                    yy <- stats[c(2, 2, 4, 4)]
-                    polygon(yy, xx, col = col, border = border)
-                    segments(stats[3], x - wid, stats[3], x + wid,
-                             col = border)
-                }
-                segments(stats[c(1, 5)], rep(x, 2), stats[c(2, 4)], rep(x, 2),
-                         lty = "dashed", col = border)
-                segments(stats[c(1, 5)], rep(x - wid/2, 2), stats[c(1, 5)],
-                         rep(x + wid/2, 2), col = border)
+                polygon(yy, xx, col = col, border = border)
+                segments(stats[3], x - wntch,
+                         stats[3], x + wntch, col = border)
+                segments(stats[c(1, 5)], rep(x, 2),
+                         stats[c(2, 4)], rep(x, 2), lty= "dashed", col= border)
+                segments(stats[c(1, 5)], rep(x - wid/2, 2),
+                         stats[c(1, 5)], rep(x + wid/2, 2), col = border)
                 do.call("points",c(list(out, rep(x, length(out))), pt.pars))
             }
             else { ## vertical
-
-                if(notch) {
-                    xx <- x+wid*c(-1,1, 1, notch.frac, 1,
-                                  1,-1,-1,-notch.frac,-1)
-                    yy <- c(stats[c(2,2)],conf[1],stats[3],conf[2],
-                            stats[c(4,4)],conf[2],stats[3],conf[1])
-                    polygon(xx, yy, col=col, border=border)
-                    segments(x-wid/2,stats[3], x+wid/2,stats[3], col=border)
-                }
-                else {
-                    xx <- x+wid*c(-1,1,1,-1)
-                    yy <- stats[c(2,2,4,4)]
-                    polygon(xx, yy, col=col, border=border)
-                    segments(x-wid,stats[3],x+wid,stats[3],col=border)
-                }
-                segments(rep(x,2),stats[c(1,5)], rep(x,2),
-                         stats[c(2,4)], lty="dashed",col=border)
-                segments(rep(x-wid/2,2),stats[c(1,5)],rep(x+wid/2,2),
-                         stats[c(1,5)],col=border)
+                polygon(xx, yy, col=col, border=border)
+                segments(x - wntch, stats[3],
+                         x + wntch, stats[3], col=border)
+                segments(rep(x,2), stats[c(1,5)],
+                         rep(x,2), stats[c(2,4)], lty= "dashed",col= border)
+                segments(rep(x - wid/2, 2), stats[c(1,5)],
+                         rep(x + wid/2, 2), stats[c(1,5)], col=border)
                 do.call("points",c(list(rep(x,length(out)), out), pt.pars))
             }
 	    if(any(inf <- !is.finite(out))) {
