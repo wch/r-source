@@ -57,7 +57,7 @@
 }
 
 \usage{
-testVirtual(properties, extends, prototype)
+testVirtual(properties, extends, prototype, where)
 
 makePrototypeFromClassDef(slots, ClassDef, extends, where)
 
