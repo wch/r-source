@@ -20,6 +20,36 @@ if(format(pi, digits=1) != "3" || format(pi, digits=3) != "3.14") {
 	}
 }
 
+
+format.pval <- function(pv, digits = max(1, .Options$digits-2),
+			eps = .Machine$double.eps) {
+	## Format  P values; auxiliary for print.summary.[g]lm(.)
+
+	## Better than '0.0' for very small values `is0':
+	r <- character(length(is0 <- pv < eps))
+	if(any(!is0)) {
+		rr <- pv <- pv[!is0]
+		## be smart -- differ for fixp. and expon. display:
+		expo <- floor(log10(pv))
+		fixp <- expo >= -3 | (expo == -4 & digits>1)
+		if(any( fixp)) rr[ fixp] <- format(pv[ fixp], dig=digits)
+		if(any(!fixp)) rr[!fixp] <- format(pv[!fixp], dig=digits)
+		r[!is0]<- rr
+	}
+	if(any(is0)) {
+		digits <- max(1,digits-2)
+		if(any(!is0)) {
+			nc <- max(nchar(rr))
+			if(digits > 1 && digits+6 > nc)
+				digits <- max(1, nc - 7)
+			sep <- if(digits==1 && nc <= 6) "" else " "
+		} else sep <- if(digits==1) "" else " "
+		r[is0] <- paste("<", format(eps, digits=digits), sep = sep)
+	}
+	r
+}
+
+
 formatC <-
 function (x, digits=NULL, width=max(0, digits) + 1, format=NULL,
 	flag="", mode=NULL)
