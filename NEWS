@@ -23,6 +23,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   eval of a promise forces the promise and printing a promise forces 
+        the promise
+
     o	rep() is now a generic function, with default, POSIXct and
 	POSIXlt methods.  For efficiency, the base code uses rep.int()
 	rather than rep() where possible.
