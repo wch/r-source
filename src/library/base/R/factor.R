@@ -91,13 +91,32 @@ as.character.factor <- function(x,...)
     cx
 }
 
-print.factor <- function (x, quote=FALSE, ...)
+## for `factor' *and* `ordered' :
+print.factor <- function (x, quote = FALSE, max.levels = NULL,
+                          width = getOption("width"), ...)
 {
-    if(length(x) <= 0)
-	cat("factor(0)\n")
+    ord <- is.ordered(x)
+    if (length(x) <= 0)
+        cat(if(ord)"ordered" else "factor","(0)\n",sep="")
     else
-	print(as.character(x), quote=quote, ...)
-    cat("Levels: ", paste(levels(x), collapse=" "), "\n")
+        print(as.character(x), quote = quote, ...)
+    maxl <- if(is.null(max.levels)) TRUE else max.levels
+    if (maxl) {
+        n <- length(lev <- levels(x))
+        colsep <- if(ord) " < " else " "
+        T0 <- "Levels: "
+        if(is.logical(maxl))
+            maxl <- { ## smart default
+                width <- width - (nchar(T0) + 3 + 1 + 3)# 3='...', 3=#lev, 1=extra
+                lenl <- cumsum(nchar(lev) + nchar(colsep))# + ifelse(quote,2,0))
+                if(n <= 1 || lenl[n] <= width) n
+                else max(1, which(lenl > width)[1] - 1)
+            }
+        drop <- n > maxl
+        cat(if(drop)paste(format(n),""), T0,
+            paste(if(drop)c(lev[1:max(1,maxl-1)],"...",if(maxl > 1) lev[n])
+                      else lev, collapse= colsep), "\n", sep="")
+    }
     invisible(x)
 }
 
@@ -112,7 +131,7 @@ Ops.factor <- function(e1, e2)
 {
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
     if(!ok) {
-	warning(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+	warning('"',.Generic,'"', " not meaningful for factors")
 	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
@@ -168,16 +187,6 @@ ordered <- function(x, ...) factor(x, ..., ordered=TRUE)
 is.ordered <- function(x) inherits(x, "ordered")
 as.ordered <- function(x) if(is.ordered(x)) x else ordered(x)
 
-print.ordered <- function (x, quote=FALSE, ...)
-{
-    if(length(x) <= 0)
-	cat("ordered(0)\n")
-    else
-	print(as.character(x), quote=quote, ...)
-    cat("Levels: ", paste(levels(x), collapse=" < "), "\n")
-    invisible(x)
-}
-
 Ops.ordered <-
 function (e1, e2)
 {
@@ -185,7 +194,7 @@ function (e1, e2)
 		 "<" = , ">" = , "<=" = , ">=" = ,"=="=, "!=" =TRUE,
 		 FALSE)
     if(!ok) {
-	warning(paste('"',.Generic,'"', " not meaningful for ordered factors", sep=""))
+	warning('"',.Generic,'"', " not meaningful for ordered factors")
 	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
