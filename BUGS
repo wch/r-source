@@ -204,6 +204,11 @@ Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
 Subject: wilcox.test, CI
 From: d.a.wooff@durham.ac.uk
 Date: Wed, 6 Aug 2003 11:31:37 +0200 (MET DST)
+* PR# 4757 *
+Subject: NLME: gls parameter evaluation inconsistency
+From: wb@arb-phys.uni-dortmund.de
+Date: Fri, 24 Oct 2003 14:52:26 +0200 (MET DST)
+..It's a known problem.
 
 Directory:  Documentation
 
@@ -702,11 +707,6 @@ Subject: File in use error
 From: oakeley@fmi.ch
 Date: Tue, 2 Sep 2003 11:06:16 +0200 (MET DST)
 ..Windows / R(D)COM
-* PR# 4204 *
-Subject: strptime
-From: pliu3@ncsu.edu
-Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
-..Correct on RH8 ....  Might this be a timezone DST problem?
 * PR# 4246 *
 Subject: creates directory that can't be deleted
 From: xiaobao_wang@yahoo.com
@@ -741,10 +741,6 @@ Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 Subject: hclust: median, centroid
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Tue, 16 Sep 2003 22:22:53 +0200 (CEST)
-* PR# 4329 *
-Subject: (fwd) package inst directory copied too early?
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Sat, 27 Sep 2003 19:19:29 -0400
 * PR# 4361 *
 Subject: dump/source problem with hclust object
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -761,10 +757,6 @@ Date: Wed, 08 Oct 2003 15:28:11 +1300
 Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4648 *
-Subject: R 1.80 version
-From: xiaopinj@biostat.umn.edu
-Date: Sat, 18 Oct 2003 17:18:37 +0200 (MET DST)
 * PR# 4688 *
 Subject: bug in fisher test---p-value cannot be Inf
 From: kjetil@entelnet.bo
@@ -777,47 +769,14 @@ Date: Mon, 20 Oct 2003 22:15:02 +0200 (MET DST)
 Subject: Problem R-1.8.0 library tcltk on Tcl-8.0.5
 From: nakama@ki.rim.or.jp
 Date: Tue, 21 Oct 2003 06:29:50 +0200 (MET DST)
-* PR# 4705 *
-Subject: Console in RGui does not do CR on \r
-From: david.lenn@rtsson.com
-Date: Tue, 21 Oct 2003 16:21:57 +0200 (MET DST)
-* PR# 4708 *
-Subject: R1.8.0 and virtual PC
-From: Luis Borda de Agua <lbagua@yahoo.co.jp>
-Date: Tue, 21 Oct 2003 11:24:58 -0600
 * PR# 4710 *
 Subject: round behaves differently from ceiling, floor for matrices with 0 rows
 From: w.huber@dkfz-heidelberg.de
 Date: Tue, 21 Oct 2003 20:48:27 +0200 (MET DST)
-* PR# 4718 *
-Subject: Something strange in cor.test in R-1.8.0 
-From: i.wilson@maths.abdn.ac.uk
-Date: Wed, 22 Oct 2003 12:11:48 +0200 (MET DST)
-* PR# 4720 *
-Subject: Fellow Networkers..Take A Look !
-From: "Gwaerien"<20001m@excite.com>
-Date: Wed, 22 Oct 2003 15:17:39 GMT
-* PR# 4721 *
-Subject: (±¤°í)¹«Á» °¢Áú ¹ß³¿»õ ´ÙÇÑÁõ ½ÀÁø ¾ÆÅäÇÇ °í¹Î ÇØ°áÇÏ¼¼¿ä~@
-From: ¹«Á»¹Ú»ç<dr-tinea@hanmail.net>
-Date: Wed, 22 Oct 2003 23:22:40 +0900
-* PR# 4722 *
-Subject: Congratulation
-From: "Mr Grace Jim." <gracejim@123.com>
-From:Mrs.Grace Jim. 
-Date: Wed, 22 Oct 2003 16:40:01 +0200
-* PR# 4723 *
-Subject: Credit Card Debt 100% Elimination!!
-From: "Bruno Lambert" <h1feit@hotmail.com>
-Date: Wed, 22 Oct 2003 09:48:20 -0600
 * PR# 4724 *
 Subject: Core dump when calling tclvalue
 From: mckay@gmr.com
 Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
-* PR# 4725 *
-Subject: best meds available......................................................................wholly
-From: "Paulette Galloway" <1gjaxet@juno.com>
-Date: Thu, 23 Oct 03 00:32:15 GMT
 * PR# 4726 *
 Subject: r-bugs,PLEASE READ
 From: "Dora H. "Janet""<uthmicheal@netscape.net>
@@ -842,10 +801,6 @@ Date: Wed, 22 Oct 03 21:17:43 GMT
 Subject: persp - incorrect shading of triangular facets
 From: ihaka@stat.auckland.ac.nz
 Date: Thu, 23 Oct 2003 02:19:26 +0200 (MET DST)
-* PR# 4732 *
-Subject: docu buglet in ?text
-From: kjetil@entelnet.bo
-Date: Wed, 22 Oct 2003 21:57:01 -0400
 * PR# 4733 *
 Subject: shanny rectffy
 From: "Glenda Bullock" <bltdkgpj@aol.com>
@@ -926,10 +881,6 @@ Date: Fri, 24 Oct 2003 08:19:25 GMT
 Subject: BUSSINESS PROPOSAL
 From: "musa bakuba" <musa2000@tiscali.co.uk>
 Date: Fri, 24 Oct 2003 06:46:39 +0200
-* PR# 4753 *
-Subject: [R] ave and factors with unused levels
-From: Wolfram Fischer - Z/I/M <wolfram@fischer-zim.ch>
-Date: Fri, 24 Oct 2003 09:16:01 +0200
 * PR# 4754 *
 Subject: (±¤°í).,Æ¯º¸.,Ä³³í Ä«¸Þ¶ó°¡ 1,460¿ø//Âù½º!@
 From: Á¶ÀÎ½º<tgrfjk753698@hotmail.com>
@@ -942,26 +893,14 @@ Date: Fri, 24 Oct 2003 06:28:23 -0400
 Subject: Winning / Notification
 From: estella rogers <megalott1@fsmail.net>
 Date: Fri, 24 Oct 2003 13:34:42 +0200 (CEST)
-* PR# 4757 *
-Subject: NLME: gls parameter evaluation inconsistency
-From: wb@arb-phys.uni-dortmund.de
-Date: Fri, 24 Oct 2003 14:52:26 +0200 (MET DST)
 * PR# 4758 *
 Subject: Special: Get DVD Professional 70% Off!!!! rfjhj
 From: "Porfirio Boone" <ykqimc@msn.com>
 Date: Fri, 24 Oct 03 10:22:25 GMT
-* PR# 4759 *
-Subject: Re: [R] ave and factors with unused levels
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Fri, 24 Oct 2003 16:44:09 +0200
 * PR# 4760 *
 Subject: El lugar donde buscar tu pareja.  kwb
 From: "Delfina Ballejos" <luis18112@yahoo.com.mx>
 Date: Fri, 24 Oct 03 15:17:51 GMT
-* PR# 4761 *
-Subject: Segmentation fault in .Call()
-From: jerome@hivnet.ubc.ca
-Date: Fri, 24 Oct 2003 23:30:27 +0200 (MET DST)
 * PR# 4762 *
 Subject: Sr, Free money from the government ngbrarm
 From: Johan <livenlearn13@correia.com.br>
@@ -1146,10 +1085,6 @@ Date: Mon, 27 Oct 2003 15:33:46 -0000
 Subject: Gët your üS Phärmacy Nëeds Filled aahcii
 From: "M. Jackson" <willenedunnigan@about.com>
 Date: Mon, 27 Oct 2003 12:45:42 -0400
-* PR# 4808 *
-Subject: [[<-.data.frame with POSIXt replacement
-From: "Jim Rogers" <jrogers@cantatapharm.com>
-Date: Mon, 27 Oct 2003 12:48:27 -0500
 * PR# 4809 *
 Subject: i couldn't wait to show this to youPkw
 From: <cinst708kvhl@yahoo.co.uk>
@@ -1194,10 +1129,6 @@ Date: Tue, 28 Oct 2003 01:01:30 -0400
 Subject: Tom thought you might be interested in this   Bkrporvg
 From: <rjnrvhfgtuy@kieno.nl>
 Date: Mon, 27 Oct 2003 20:46:04 -1000
-* PR# 4820 *
-Subject: data.frame replacement
-From: <Mark.Bravington@csiro.au>
-Date: Tue, 28 Oct 2003 17:28:48 +1100
 * PR# 4821 *
 Subject:              
 From: 240178@msn.com
@@ -1258,18 +1189,10 @@ Date: Tue, 28 Oct 03 21:37:43 GMT
 Subject: ADV: Valium Xanax Shipped To Your Door
 From: "Son Tatum" <mqx4dpjgqn@uymail.com>
 Date: Wed, 29 Oct 03 04:47:44 GMT
-* PR# 4836 *
-Subject: Wishlist: user-specified color names for palette()
-From: htang@hpl.hp.com
-Date: Wed, 29 Oct 2003 01:54:51 +0100 (MET)
 * PR# 4837 *
 Subject: FROM DAN EZEH.
 From: dankaro1@tiscali.co.uk
 Date: Wed, 29 Oct 2003 01:55:33 +0100
-* PR# 4838 *
-Subject: Rdconv Rd->Ssgm doesn't convert aliases
-From: Tim.Keighley@csiro.au
-Date: Wed, 29 Oct 2003 12:05:03 +1100
 * PR# 4839 *
 Subject: ,;;'B`O-0S"T .D`ICK S"I:Z-E:"    tqjfoldtpxqp
 From: "Rico Carroll" <rico.carrolljn@nba.fi>
@@ -1282,10 +1205,6 @@ Date: Wed, 29 Oct 03 03:25:04 GMT
 Subject: Eres soltero/a... nbceenqthi x r nf
 From: "Jazmin Crippan" <carlos18102@yahoo.com.mx>
 Date: Wed, 29 Oct 03 19:06:29 GMT
-* PR# 4842 *
-Subject: R installation problems on Windows XP
-From: Yongchao.Ge@mssm.edu
-Date: Wed, 29 Oct 2003 06:33:57 +0100 (MET)
 * PR# 4843 *
 Subject: Fwd:Earn a Full Income on eBay
 From: "Young Haywood" <tkeiy296@aol.com>
@@ -1374,14 +1293,6 @@ Date: Thu, 30 Oct 03 12:33:58 GMT
 Subject: ce@biostat.ku.dk, Prescribed online, shipped to your door!vaughan
 From: "Jannie Ayala" <232ujcx@hurting.com>
 Date: Thu, 30 Oct 2003 17:14:17 GMT
-* PR# 4865 *
-Subject: dataentry.c ESC key overrun.
-From: nakama@ki.rim.or.jp
-Date: Thu, 30 Oct 2003 15:15:05 +0100 (MET)
-* PR# 4866 *
-Subject: dist() objects with NA's don't print them
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Thu, 30 Oct 2003 15:40:24 +0100
 * PR# 4867 *
 Subject: MY REGARDS TO YOU
 From: "MOHAMMED ABACHA" <mohammeda5@epatra.com>
@@ -1462,10 +1373,6 @@ Date: Fri, 31 Oct 2003 21:38:12 +0800
 Subject: xqltc generate grand whý keep up the 5tru@gg¯lè, annex oùt of that @mess fwmteuw
 From: Cayden Smith <lowlie@talk21.com>
 Date: Fri, 31 Oct 2003 08:58:24 -0400
-* PR# 4887 *
-Subject: solve.Matrix() not found
-From: Stefano Conti <s.conti@sheffield.ac.uk>
-Date: Fri, 31 Oct 2003 13:50:11 +0000
 * PR# 4888 *
 Subject: NOTIFICATION OF BEQUEST
 From: chima jude <cjude6@fsmail.net>
@@ -1490,3 +1397,78 @@ Date: Sat, 01 Nov 03 12:58:56 GMT
 Subject: ce@biostat.ku.dk, Can't find away to get your medication?bruce
 From: "Emery Daniels" <dykjxbbco3@canada-11.com>
 Date: Sat, 01 Nov 2003 01:01:23 GMT
+* PR# 4894 *
+Subject: Zimbabwean White Farmer
+From: ROLAND SMITH WITHER FARMER <rolandsmith55@123.com>
+Date: Fri, 31 Oct 2003 16:46:21 -0800
+* PR# 4895 *
+Subject: You can download 24/7 o
+From: "Jon Siegel" <livenlearn13@campbellfreightbfs.co.uk>
+Date: Sat, 01 Nov 2003 01:59:36 +0100
+* PR# 4896 *
+Subject: Päín, Deprëssiön, övërwëíght? jcpdrp
+From: "Clarissa S. Brown" <oliviaherlong@velnet.com>
+Date: Fri, 31 Oct 2003 20:35:59 -0400
+* PR# 4897 *
+Subject: Business proposal to you,urgent response
+From: JONATHAN EZE <jonathan_eze5@123.com>
+Date: Sat, 01 Nov 2003 02:52:30 +0100
+* PR# 4898 *
+Subject: Suffer from a small member? gubcmih c lwf  tnskc
+From: "Gay Horton" <vvo152kyul@aol.com>
+Date: Sat, 01 Nov 2003 03:46:58 +0400
+* PR# 4899 *
+Subject: Suffer from a small member? f pmnnqnta
+From: "Imelda Gilmore" <32dgfy@yahoo.com>
+Date: Sat, 01 Nov 2003 02:51:01 +0300
+* PR# 4900 *
+Subject: gmbki positive money-maker why keep up the struggle, acquirê out o_f that mess ajaig
+From: "E. H. Williams" <ileanaoverton@zapo.net>
+Date: Sat, 01 Nov 2003 02:22:13 -0400
+* PR# 4901 *
+Subject: =?euc-kr?q?(=B1=A4=B0=ED)=B4=E7=C0=CF=C0=D4=B1=DD_=BC=AD=BA=F1=BD=BA_@?=
+From: AS loan <mktg@asloan.co.kr>
+Date: Sat, 01 Nov 2003 18:17:16 +0900
+* PR# 4902 *
+Subject: The Guide To Direct Email Marketing
+From: Leeny <email4money887@yahoo.fr>
+Date: Sat, 1 Nov 2003 10:05:53 GMT
+* PR# 4903 *
+Subject: mlm (fwd)
+Subject: mlm
+From: agent <mlmro@freemail.hu>
+From: agent <mlmro@freemail.hu>
+Date: Sat, 1 Nov 2003 11:19:51 +0100 (CET)
+Date: Thu, 2 Oct 2003 14:21:17 +0200 (CEST)
+* PR# 4904 *
+Subject: Get Bígger Mëmbër Today Mën bxipbdi
+From: "K Williams" <livenlearn13@jehawkins.freeserve.co.uk>
+Date: Sat, 01 Nov 2003 08:13:05 -0400
+* PR# 4905 *
+Subject: Mën Get Huge Güaranteëd wvcjzjm
+From: "D. G. Anderson" <tristankavanagh@lycos.com>
+Date: Sat, 01 Nov 2003 12:17:01 -0400
+* PR# 4906 *
+Subject: PLEASE RESPOND
+From: Steve Caler <caler@123.com>
+Date: Sat, 01 Nov 2003 09:20:00 -0800
+* PR# 4907 *
+Subject: cvs diff not working on anonymous cvs
+From: bjg@network-theory.co.uk
+Date: Sat, 1 Nov 2003 19:15:57 +0100 (MET)
+* PR# 4908 *
+Subject: V I A G R A   - No Prescription Needed !! febdvtwc gy
+From: "Diann Terrell" <terrikunert@joinme.com>
+Date: Sat, 01 Nov 2003 22:20:55 +0300
+* PR# 4909 *
+Subject: On-line Pharmacy - Acyclovir xgmvgv
+From: "Lynda Rosen" <drutorusk@deal-maker.com>
+Date: Sat, 01 Nov 2003 22:32:38 +0300
+* PR# 4910 *
+Subject: Pain, Dëprëssion, övërweight? blqlumh
+From: "L. I. Garcia" <gwendachianese.kristinade@sean.zzn.com>
+Date: Sat, 01 Nov 2003 17:24:39 -0400
+* PR# 4911 *
+Subject: On-line Pharmacy - Pain Relief - Shipped Overnight! - US doctors and pharmacies!
+From: "Linda Ayala" <livenlearn13@tellurian.de>
+Date: Sun, 02 Nov 03 18:14:11 GMT
