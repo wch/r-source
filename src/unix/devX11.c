@@ -1304,7 +1304,6 @@ static void X11_Close(DevDesc *dd)
 	/* the device to the user.  not all device types will	*/
 	/* do anything						*/
 	/********************************************************/
-
 static char title[11] = "R Graphics";
 
 static void X11_Activate(DevDesc *dd)
@@ -1617,7 +1616,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     XSync(display, 1);
     /* handle X events as normal until get a button */
     /* click in the desired device */
-    while (!done) {
+    while (!done && displayOpen) {
 	XNextEvent(display, &event);
 	if (event.type == ButtonPress) {
 	    XFindContext(display, event.xbutton.window,
