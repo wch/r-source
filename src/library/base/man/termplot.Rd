@@ -67,7 +67,7 @@ par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ..)"))
 termplot(model, rug=TRUE)
 termplot(model, partial=TRUE, rug= TRUE,
-         main="termplot(..,partial = T, rug = T)")
+         main="termplot(.., partial = TRUE, rug = TRUE)")
 termplot(model, partial=TRUE, se = TRUE, main = TRUE)
 if(rs) detach("package:splines")
 }
