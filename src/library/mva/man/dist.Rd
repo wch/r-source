@@ -5,7 +5,8 @@ dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
 
 as.dist(m, diag = FALSE, upper = FALSE)
 
-\method{print}{dist}(x, diag = NULL, upper = NULL, \dots)
+\method{print}{dist}(x, diag = NULL, upper = NULL,
+      digits = getOption("digits"), justify = "none", right = TRUE, \dots)
 
 \method{as.matrix}{dist}(x)
 }
@@ -28,7 +29,10 @@ as.dist(m, diag = FALSE, upper = FALSE)
     distance matrix should be printed by \code{print.dist}.}
   \item{m}{A matrix of distances to be converted to a \code{"dist"}
     object (only the lower triangle is used, the rest is ignored).}
-  \item{\dots}{further arguments, passed to the (next) \code{print} method.}
+  \item{digits, justify}{passed to \code{\link{format}} inside of
+    \code{print()}.}
+  \item{right, \dots}{further arguments, passed to the (next)
+    \code{print} method.}
 }
 \description{
   This function computes and returns the distance matrix computed by
