@@ -422,6 +422,11 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 
     r = INTEGER(dim)[0];
     c = INTEGER(dim)[1];
+    /* PR#850 */
+    if ((rl!=R_NilValue) && (r>length(rl)))
+	error("too few row labels");
+    if ((cl!=R_NilValue) && (c>length(cl)))
+	error("too few column labels");
     switch (TYPEOF(x)) {
     case LGLSXP:
 	printLogicalMatrix(x, offset, r, c, rl, cl, rn, cn);

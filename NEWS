@@ -95,6 +95,7 @@ BUG FIXES
 
     o   add fuzz to prevent anomalies with hist()
 
+    o   print.matrix checks length of rowlab, collab (PR#850)
 
 		CHANGES IN R VERSION 1.2.1
 
