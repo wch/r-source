@@ -4,7 +4,7 @@ $(DPKG)/R:
 	@echo "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
 
-$(DPKG)/R/$(PKG): R/firstlib
+$(DPKG)/R/$(PKG): $(RHOME)/share/R/firstlib.R
 	@$(CP) -p $< $@
 
 $(DPKG)/R/all.rda: R/${PKG}
