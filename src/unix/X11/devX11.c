@@ -51,6 +51,7 @@
 #include "R_ext/Memory.h" /* vmaxget */
 #include "Rdevices.h"
 
+#define R_X11_DEVICE 1
 #include "devX11.h"
 
 	/********************************************************/

@@ -4,12 +4,14 @@
 #define extern
 #endif
 
-#include "X11/devX11.h"
+
+       /* for X_COLORTYPE, but don't get the definition of the struct.  */
+#include "X11/devX11.h" 
 #include "Startup.h" /* for SA_TYPE */
 
 typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
-				       double, double, double, double,
-				       X_COLORTYPE, int);
+  				            double, double, double, double,
+				             X_COLORTYPE, int);
 
 X11DeviceDriverRoutine ptr_X11DeviceDriver;
 
