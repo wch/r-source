@@ -52,4 +52,4 @@ fixRd: $(wildcard man/*.Rd)
 
 
 clean:
-	$(RM) *~ */*~ fixr fixh fixRd fixbin
+	$(RM) *~ */*~ fixr fixh fixRd fixbin h/platform.h
