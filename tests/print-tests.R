@@ -24,8 +24,7 @@ v2 <- v1^(63/64)
 v3 <- pi*100^(-1:3)
 v4 <- (0:2)/1000 + 1e-10 #-- tougher one
 
-digs1 <- c(1,2*(1:5),11:15)		# 16: MS Windows differs
-					# 20: platform dependent
+digs1 <- c(1,2*(1:5),11:15)		# 16: platform dependent
 					# 30 gives ERROR : options(digits=30)
 digs2 <- c(1:20)#,30) gives 'error' in R: ``print.default(): invalid digits..''
 
@@ -133,27 +132,33 @@ tx <- tx[is.finite(tx)] #-- all kept
 (txp <- tx[tx >= 1])#-- Positive exponent -- 4 values
 (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
 
+olddig <- options(digits=14) # RH6.0 fails at 15
+z <- 1.234567891234567e27
+for(dig in 1:14) cat(formatC(dig,w=2),
+                     format(z, digits=dig), signif(z, digits=dig), "\n")
+options(olddig)
+# The following are tests of printf inside formatC
 ##------ Use  Emacs screen width 134 ;	Courier 12 ----
-cat("dig|  formatC(txp, d=dig)\n")
-for(dig in 1:17)# about >= 18 is platform dependent [libc's printf()..].
-    cat(formatC(dig,w=2), formatC(txp,		      dig=dig, wid=-29),"\n")
-cat("signif() behavior\n~~~~~~~~\n",
-    "dig|  formatC(signif(txp, dig=dig), dig = dig\n")
-for(dig in 1:15)#
-    cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig, wid=-26),"\n")
+# cat("dig|  formatC(txp, d=dig)\n")
+# for(dig in 1:17)# about >= 18 is platform dependent [libc's printf()..].
+#     cat(formatC(dig,w=2), formatC(txp,		      dig=dig, wid=-29),"\n")
+# cat("signif() behavior\n~~~~~~~~\n",
+#     "dig|  formatC(signif(txp, dig=dig), dig = dig\n")
+# for(dig in 1:15)#
+#     cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig, wid=-26),"\n")
 
-if(opt.conformance >= 1) {
-    noquote(cbind(formatC(txp, dig = 22)))
-}
+# if(opt.conformance >= 1) {
+#     noquote(cbind(formatC(txp, dig = 22)))
+# }
 
-cat("dig|  formatC(signif(txn, d = dig), dig=dig\n")
-for(dig in 1:15)#
-    cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig, wid=-20),"\n")
+# cat("dig|  formatC(signif(txn, d = dig), dig=dig\n")
+# for(dig in 1:15)#
+#     cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig, wid=-20),"\n")
 
-##-- Testing  'print' / digits :
-for(dig in 1:13) { ## 12:13: libc-2.0.7 diff; 14:18 --- PLATFORM-dependent !!!
-    cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+1)
-}
+# ##-- Testing  'print' / digits :
+# for(dig in 1:13) { ## 12:13: libc-2.0.7 diff; 14:18 --- PLATFORM-dependent !!!
+#     cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+1)
+# }
 
 ##-- Wrong alignment when printing character matrices with  quote = FALSE
 m1 <- matrix(letters[1:24],6,4)

@@ -73,7 +73,7 @@ Makedeps: Makefile
 FORCE:
 
 %.R : $(srcdir)/make-%.R stamp-R
-	$(R) < $< > /dev/null
+	@$(R) < $< > /dev/null
 
 %.Rout : %.R
 	@rm -f $@ $@.fail
