@@ -225,7 +225,7 @@ summary(rock.ppr)
 par(mfrow=c(1,2), pty="s")
 plot(rock.ppr)
 plot(update(rock.ppr, bass=5))
-\dontrun{plot(update(rock.ppr, sm.method="gcv", gcvpen=2))}
+plot(update(rock.ppr, sm.method="gcv", gcvpen=2))
 }
 \keyword{regression}
 % Converted by Sd2Rd version 0.2-a5.
