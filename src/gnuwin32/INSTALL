@@ -19,9 +19,10 @@ Building on Windows
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
-need suitable versions of at least make, sh, rm, sed, awk, mkdir,
-echo, cp, cut, grep and cat; we use those from the cygwin distribution
-(http://sourceware.cygnus.com/cygwin and several mirrors).
+need suitable versions of at least make, sh, rm, sed, (g)awk, mkdir,
+echo, cp, cut, diff, grep, egrep, pwd, expr and cat; we use those from
+the cygwin distribution (http://sourceware.cygnus.com/cygwin and
+several mirrors).
 
 It is also possible to use cygwin-b20.1 with the --no-cygwin flag, but
 we suggest you do so only if you have a working setup from building
@@ -144,6 +145,26 @@ so set WINHELP to NO.)
 Packages can be made in the same way as natively: see the file
 readme.packages.
 
+
+Building the Manuals
+====================
+
+To make the PDF versions of the manuals you will need pdftex installed
+and configured to work with a large file: see doc/manual/README.  Then the
+pdf manuals can be made by
+
+	make docs
+
+If you want to make the info versions, you will need a version of
+makeinfo 4 for Windows and texindex. Then
+
+	cd ../../doc/manuals
+	make -f Makefile.win info
+
+will make the info files.
+
+There is no provision to make DVI versions of the manuals, although
+../../doc/manuals/Makefile.win could easily be edited to do so.
 
 
 Feedback

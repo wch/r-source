@@ -19,12 +19,12 @@ ifeq ($(strip $(LSOURCES)),)
   LOBJS=
   DYNLIB=
 else
-  LOBJS=$(foreach i,$(LSOURCES),$(basename $i).o)
+  LOBJS=$(foreach i, $(LSOURCES), $(basename $i).o)
   DYNLIB=$(DPKG)/libs/$(DLLNAME).dll
 endif
 
 # data
-DSOURCES=$(filter-out $(SPKG)/data/CVS,$(wildcard $(SPKG)/data/*))
+DSOURCES=$(filter-out $(SPKG)/data/CVS, $(wildcard $(SPKG)/data/*))
 ifeq ($(strip $(DSOURCES)),)
   DATA= 
 else
@@ -74,7 +74,7 @@ endif
 
 $(SPKG)/TITLE:
 	if [ ! -f $(SPKG)/TITLE -a -f $(SPKG)/DESCRIPTION ] ; then \
-	  awk -f $(RHOME)/src/gnuwin32/maketitle $(SPKG)/DESCRIPTION > $@; \
+	  $(AWK) -f $(RHOME)/src/gnuwin32/maketitle $(SPKG)/DESCRIPTION > $@; \
 	fi
 
 # This fails if DESCRIPTION.. doesn't exist.

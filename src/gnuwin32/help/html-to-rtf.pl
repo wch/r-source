@@ -196,6 +196,8 @@ print RTF "\\red150\\green150\\blue150;\n";
 print RTF "}\n";
 
 foreach $file (@filelist) {
+#    if ($file =~ /^Hershey/) {printf "skipping\n"; next;}
+    if ($file =~ /^Japanese/) {printf "skipping Japanese\n"; next;}
     print STDERR "Translating $file\n";
     &parse_html($file);
     print RTF "\n\\page\n";

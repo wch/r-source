@@ -91,7 +91,7 @@ The equivalent of `R CMD check mypkg' on Unix is
 	make pkgcheck-mypkg
 
 This runs all the examples in the help files. If you need to increase
-the heap size or the number of cons cells (e.g. for lme and nlme) use
+the heap size or the number of cons cells (e.g. for nlme) use
 environmental variables to do so.
 
 
