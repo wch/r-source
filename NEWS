@@ -21,10 +21,11 @@ BUG FIXES
     o	demos/dynload/Makefile used macros that gave incorrect build
 	on some non-GNU makes.
 
+    o	Windows version copes better with paths with spaces in.
+
     o	density() should work better with NAs, even on DEC Alpha
 
     o	R CMD check had a typo which made the final message fail
-
 
 
 	**************************************************
