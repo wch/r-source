@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-02
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-03
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1776,6 +1776,8 @@ and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 @emph{Recommended}.
+@item LDheatmap
+Heat maps of linkage disequilibrium measures.
 @item LogicReg
 Routines for Logic Regression.
 @item MASS
