@@ -100,14 +100,14 @@ C     Generalized CV
 	    rss = ssw
 	    df = 0d0
 	    sumw = 0d0
-c	    w(i) is the square root of the weights
+c	w(i) are `sqrt weights'  scaled in ../R/smspline.R such
+c       that sumw =  number of observations with w(i) > 0
 	    do 24 i=1,n
 	       rss = rss + ((y(i)-sz(i))*w(i))**2
 	       df = df + lev(i)
 	       sumw = sumw + w(i)**2
  24	    continue
 
-c	    scaling made sumw the total number of observations
 	    crit = (rss/sumw)/((1d0-(dofoff + penalt*df)/sumw)**2)
 c            call dblepr("spar", 4, spar, 1)
 c            call dblepr("crit", 4, crit, 1)

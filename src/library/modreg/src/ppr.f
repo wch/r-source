@@ -158,26 +158,26 @@ c Common Vars
 
       asr=big
       lm=0
-      do 10641 l=1,m
+      do 100 l=1,m
          lm=lm+1
          asrold=asr
          call BDRnewb(lm,q,ww,b)
          call BDRonetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
      &        f(1,lm),t(1,lm),asr,sc,g,dp,edf)
-         do 10651 j=1,n
-            do 10651 i=1,q
-10651          r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
-         if(lm.eq.1) goto 10641
-         if(lf.le.0) goto 10690
-         if(lm.eq.m) return
-         iflsv=ifl
-         ifl=0
-         call BDRfulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,
-     &                  edf)
-         ifl=iflsv
-10690    continue
+         do 10 j=1,n
+            do 10 i=1,q
+ 10            r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
+         if(lm.eq.1) goto 100
+         if(lf.gt.0) then
+            if(lm.eq.m) return
+            iflsv=ifl
+            ifl=0
+            call BDRfulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,
+     &           g,dp, edf)
+            ifl=iflsv
+         endif
          if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) return
-10641 continue
+100   continue
       return
       end
 
@@ -210,36 +210,38 @@ c Common Vars
       endif
       iter=0
 C Outer loop:
-10711 continue
+1000  continue
       asrold=asri
       iter=iter+1
-      do 10731 lp=1,lm
-        do 10741 i=1,q
-10741     bt(i)=b(i,lp)
-        do 10751 i=1,p
-10751     g(i,3)=a(i,lp)
-        do 10761 j=1,n
-          do 10761 i=1,q
-10761       r(i,j)=r(i,j)+bt(i)*f(j,lp)
+      do 100 lp=1,lm
+        do 1 i=1,q
+ 1         bt(i)=b(i,lp)
+        do 2 i=1,p
+ 2         g(i,3)=a(i,lp)
+        do 3 j=1,n
+          do 3 i=1,q
+ 3           r(i,j)=r(i,j)+bt(i)*f(j,lp)
+
         call BDRonetrm(1,p,q,n,w,sw,x,r,ww,g(1,3),bt,sc(1,14),sc(1,15),
-     &    asri,sc,g,dp,edf(lp))
+     &            asri,sc,g,dp,edf(lp))
         if(asri .lt. asrold) then
-        do 10801 i=1,q
-10801     b(i,lp)=bt(i)
-        do 10811 i=1,p
-10811     a(i,lp)=g(i,3)
-        do 10821 j=1,n
-          f(j,lp)=sc(j,14)
-10821     t(j,lp)=sc(j,15)
+           do 4 i=1,q
+ 4            b(i,lp)=bt(i)
+           do 5 i=1,p
+ 5            a(i,lp)=g(i,3)
+           do 6 j=1,n
+              f(j,lp)=sc(j,14)
+              t(j,lp)=sc(j,15)
+ 6         continue
         else
            asri=asrold
         endif
-        do 10841 j=1,n
-          do 10841 i=1,q
-10841       r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
-10731   continue
-      if((iter .le. maxit) .and. ((asri .gt. 0d0) .and.
-     &       ((asrold-asri)/asrold .ge. conv))) goto 10711
+        do 8 j=1,n
+          do 8 i=1,q
+ 8           r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
+100   continue
+      if((iter .le. maxit) .and. ((asri .gt. 0d0)
+     &     .and. ((asrold-asri)/asrold .ge. conv))) goto 1000
       cutmin=fsv
       mitone=isv
       if(ifl .gt. 0) then
@@ -271,29 +273,32 @@ c Common Vars
       iter=0
       asr=big
 C REPEAT
-10901 continue
+1000  continue
       iter=iter+1
       asrold=asr
-      do 10911 j=1,n
-        s=0d0
-        do 10921 i=1,q
-10921     s=s+ww(i)*b(i)*y(i,j)
-10911   sc(j,13)=s
+      do 11 j=1,n
+	 s=0d0
+	 do 21 i=1,q
+ 21	    s=s+ww(i)*b(i)*y(i,j)
+	 sc(j,13)=s
+11    continue
       call BDRoneone(max0(jfl,iter-1),p,n,w,sw,sc(1,13),x,a,f,t,
-     & asr,sc,g,dp,edf)
-      do 10931 i=1,q
-        s=0d0
-        do 10941 j=1,n
-10941     s=s+w(j)*y(i,j)*f(j)
-10931   b(i)=s/sw
+     &	     asr,sc,g,dp,edf)
+      do 31 i=1,q
+	s=0d0
+	do 41 j=1,n
+ 41	   s=s+w(j)*y(i,j)*f(j)
+	b(i)=s/sw
+31    continue
       asr=0d0
-      do 10951 i=1,q
-        s=0d0
-        do 10961 j=1,n
-10961     s=s+w(j)*(y(i,j)-b(i)*f(j))**2
-10951   asr=asr+ww(i)*s/sw
-      if((q .ne. 1) .and. ((iter .le. maxit) .and. ((asr .gt. 0d0)
-     &     .and. ((asrold-asr)/asrold .ge. conv)))) goto 10901
+      do 51 i=1,q
+	 s=0d0
+	 do 61 j=1,n
+ 61	    s=s+w(j)*(y(i,j)-b(i)*f(j))**2
+	 asr=asr+ww(i)*s/sw
+51    continue
+      if((q .ne. 1) .and. (iter .le. maxit) .and. (asr .gt. 0d0)
+     &	     .and. (asrold-asr)/asrold .ge. conv) goto 1000
       return
       end
 
@@ -844,7 +849,7 @@ c
       integer np
       double precision x(np,*),y(np,*),smod(*), sc(*)
 
-      integer p,q, place,low,high, i,j,l,m,n, 
+      integer p,q, place,low,high, i,j,l,m,n,
      +     inp,ja,jb,jf,jt,jfl,jfh,jtl,jth, mu
       double precision ys, s, t
 
@@ -1063,7 +1068,7 @@ C     change by BDR
       end
 
       subroutine BDRsmooth (n,x,y,w,span,iper,vsmlsq,smo,acvr)
-c Args      
+c Args
       integer n, iper
       double precision x(n),y(n),w(n), span,vsmlsq, smo(n),acvr(n)
 c Var
@@ -1195,7 +1200,6 @@ c them with executable statements.
 c
 c-----------------------------------------------------------------
 
-
       subroutine BDRspline (n, x, y, w, smo, edf)
 c
 c------------------------------------------------------------------
@@ -1216,8 +1220,8 @@ c Args
 c Var
       double precision knot(29), coef(25), work((17+25)*25)
       double precision dx(2500),dy(2500), dw(2500),dsmo(2500), lev(2500)
-      double precision param(3), df1, lambda, crit, p, s
-      integer par(2), i, nk, ip, isetup,ier
+      double precision param(4), df1, lambda, crit, p, s
+      integer iparms(3), i, nk, ip, isetup,ier
 
       double precision     df, gcvpen
       integer                          ismethod
@@ -1242,24 +1246,29 @@ c Var
         ip = int(p)
         p = p-ip
         knot(i) = (1-p)*dx(ip+1) + p*dx(ip+2)
- 40     continue
+ 40   continue
 c      call dblepr('knots', 5, knot, nk+4)
-C       par = (icrit, ispar)
+C     iparms(1:2) := (icrit, ispar)  for ./sbart.f
       if (iabs(ismethod) .eq. 1) then
-         par(1) = 3
+         iparms(1) = 3
          df1 = df
       else
-         par(1) = 1
+         iparms(1) = 1
          df1 = 0d0
       endif
-      par(2) = 0
+c     ispar := 0 <==> estimate `spar' :
+      iparms(2) = 0
       param(1) = 0d0
       param(2) = 1.5d0
+c  tol for `spar' estimation:
       param(3) = 1d-2
+c   this was `eps' (=? sqrt(machine eps)) in ./sbart.f :
+      param(4) = .000244
+
       isetup = 0
       ier = 1
       call qsbart(gcvpen,df1,dx,dy,dw,0.0,n,knot,nk,coef,dsmo,lev,crit,
-     & par,lambda,param,isetup, work,4,1,ier)
+     &     iparms,lambda,param,isetup, work,4,1,ier)
       if(ier .gt. 0) call intpr('TROUBLE:',8, ier, 1)
       do 50 i = 1,n
  50      smo(i) = dsmo(i)

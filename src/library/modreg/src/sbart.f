@@ -10,8 +10,8 @@ C is itself called from	 qsbart() [./qsbart.f]	 which has only one work array
 C
       subroutine sbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &	   coef,sz,lev, crit,
-     &	   icrit, spar, ispar,
-     &	   lspar, uspar, tol,
+     &	   icrit, spar, ispar, iter,
+     &	   lspar, uspar, tol, eps,
      &	   isetup, xwy,
      &	   hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
      &	   abd,p1ip,p2ip,ld4,ldnk,ier)
@@ -26,33 +26,37 @@ C  lambda is a function of the spar which is assumed to be between 0 and 1
 C
 C INPUT
 C -----
-C penalt	A penalty > 1 to be used in the gcv criterion
+C  penalt	A penalty > 1 to be used in the gcv criterion
+C  dofoff	either `df.offset' for GCV or `df' (to be matched).
 C   n		number of data points
 C  ys(n)	vector of length n containing the observations
 C  ws(n)	vector containing the weights given to each data point
 C  xs(n)	vector containing the ordinates of the observations
-C  nk		number of b-spline coefficients to be estimated
+C  ssw          `centered weighted sum of y^2'
+C   nk		number of b-spline coefficients to be estimated
 C		nk <= n+2
 C  knot(nk+4)	vector of knot points defining the cubic b-spline basis.
 C		To obtain full cubic smoothing splines one might
 C		have (provided the xs-values are strictly increasing)
 C  spar		penalised likelihood smoothing parameter
-C  ispar	indicator saying if spar is supplied or to be estimated
-C  lspar, uspar lower and upper values for spar;  0.,1. are good values
-C  tol		used in Golden Search routine
-C  isetup	setup indicator
+C  ispar	indicating if spar is supplied (ispar=1) or to be estimated
+C  lspar, uspar lower and upper values for spar search;  0.,1. are good values
+C  tol, eps	used in Golden Search routine
+C  isetup	setup indicator [initially 0
 C  icrit	indicator saying which cross validation score is to be computed
+C     		0: none ;  1: GCV ;  2: CV ;  3: 'df matching'
 C  ld4		the leading dimension of abd (ie ld4=4)
 C  ldnk		the leading dimension of p2ip (not referenced)
-		
-C OUTPUT	
-C ------	
+
+C OUTPUT
+C ------
 C   coef(nk)	vector of spline coefficients
 C   sz(n)	vector of smoothed z-values
 C   lev(n)	vector of leverages
 C   crit	either ordinary or generalized CV score
 C   spar        if ispar != 1
 C   lspar       == lambda (a function of spar and the design)
+C   iter	number of iterations needed for spar search (if ispar != 1)
 C   ier		error indicator
 C		ier = 0 ___  everything fine
 C		ier = 1 ___  spar too small or too big
@@ -66,17 +70,21 @@ C   abd(ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
 C   p1ip(ld4,nk)	inner products between columns of L inverse
 C   p2ip(ldnk,nk)	all inner products between columns of L inverse
 C			where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
-      
-      integer n, nk,isetup,icrit,ispar,ld4,ldnk,ier
+
+      integer n, nk,isetup,icrit,ispar,iter, ld4,ldnk,ier
       double precision penalt,dofoff,xs(n),ys(n),ws(n),ssw,
-     &	   knot(nk+4), coef(nk),sz(n),lev(n), crit,spar,lspar,uspar,tol,
-     &	   xwy(nk),hs0(nk),hs1(nk),hs2(nk),hs3(nk), 
+     &	   knot(nk+4), coef(nk),sz(n),lev(n),
+     &     crit,spar,lspar,uspar,tol,eps,
+     &	   xwy(nk),hs0(nk),hs1(nk),hs2(nk),hs3(nk),
      &	   sg0(nk),sg1(nk),sg2(nk),sg3(nk),
      &	   abd(ld4,nk), p1ip(ld4,nk),p2ip(ldnk,nk)
 C Local variables
-      double precision t1,t2,ratio, a,b,c,d,e,eps,xm,p,
-     &	   q,r,tol1,tol2,u,v,w, fu,fv,fw,fx,x, ax,bx
-      integer i
+      double precision t1,t2,ratio, a,b,c,d,e, xm, p, q,
+     &	   r, tol1,tol2, u,v,w, fu,fv,fw,fx,x, ax,bx
+      integer i, maxit
+c#ifdef DEBUG_sbart
+      double precision ab(3)
+c#endif
 
       common /XXXsbart/q
 c
@@ -98,7 +106,7 @@ C the following rectifies that
       if(n .ge. 1) then
 	 do 5 i=1,n
 	    if(ws(i).gt.0)then
-	       ws(i)=sqrt(ws(i)) 
+	       ws(i)=sqrt(ws(i))
 	    endif
  5	 continue
       endif
@@ -108,16 +116,16 @@ c	 SIGMA[i,j] := Int  B''(i,t) B''(j,t) dt  {B(k,.) = k-th B-spline}
 	 call sgram(sg0,sg1,sg2,sg3, knot,nk)
 	 call stxwx(xs,ys,ws,n,knot,nk,xwy,hs0,hs1,hs2,hs3)
 C        Compute ratio :=  tr(X' W^2 X) / tr(SIGMA)
-	 t1=0. 
+	 t1=0.
 	 t2=0.
-	 do 7 i=3,nk-3 
-	    t1 = t1 + hs0(i) 
-	    t2 = t2 + sg0(i) 
+	 do 7 i=3,nk-3
+	    t1 = t1 + hs0(i)
+	    t2 = t2 + sg0(i)
  7	 continue
 	 ratio = t1/t2
-	 isetup = 1 
+	 isetup = 1
       endif
-      
+
 C     Compute estimate
 
       if(ispar.eq.1) then
@@ -135,11 +143,11 @@ c     ---- spar not supplied --> compute it ! -------------------------
 
 C     Use Forsythe Malcom and Moler routine to minimise criterion
 C     f denotes the value of the criterion
-C     
+C
 C     an approximation	x  to the point where	f  attains a minimum  on
 C     the interval  (ax,bx)  is determined.
-C     
-	 ax = lspar 
+C
+	 ax = lspar
 	 bx = uspar
 
 C INPUT
@@ -191,11 +199,15 @@ c- 10	 eps = eps/2e0
 c-	 tol1 = 1e0 + eps
 c-	 if (tol1 .gt. 1e0) go to 10
 c-	 eps = sqrt(eps)
-	 eps = .000244
+c R Version <= 1.3.x had  -- now eps is passed as argument
+c sqrt(5.954 e-8) = 0.00244 :
+c	 eps = .000244
 
 C
 C  initialization
 C
+         maxit = iter
+         iter = 0
 	 a = ax
 	 b = bx
 	 v = a + c*(b - a)
@@ -211,16 +223,43 @@ C
 	 fx = crit
 	 fv = fx
 	 fw = fx
-C     
+C
 C  main loop starts here
-C
+C  ---------
  20	 xm = 0.5*(a + b)
-	 tol1 = eps*abs(x) + tol/3d0
-	 tol2 = 2d0*tol1
+	 tol1 = eps*abs(x) + tol/3.
+	 tol2 = 2.*tol1
+         iter = iter + 1
+
+c#ifdef DEBUG_sbart
+         if(ispar .lt. 0) then
+            if(iter .eq. 1) then
+               call intpr ('sbart iterations :',-1, iter, 0)
+               if(icrit .eq. 1) then
+		  call intpr('      x      GCV         b - a',-1, 0,0)
+	       else if(icrit .eq. 2) then
+		  call intpr('      x       CV         b - a',-1, 0,0)
+	       else if(icrit .eq. 3) then
+		  call intpr('      x     (df0-df)^2   b - a',-1, 0,0)
+	       else
+		  call intpr('      x      ?fx?        b - a',-1,  0,0)
+	       endif
+	       call intpr   ('    ---------------------------',-1, 0,0)
+	    endif
+	    ab(1) = x
+	    ab(2) = fx
+c      there's cancellation in (3 + small) - 3, but it's still more informative:
+	    if(icrit .eq. 3) ab(2) = ab(2) - 3.
+	    ab(3) = b - a
+	    call dblepr(' ', 0, ab, 3)
+	 endif
+c#endif
+
 C
-C  check stopping criterion
-C
-	 if(abs(x - xm) .le. (tol2 - 0.5*(b - a)))	go to 990
+C  Check the (somewhat peculiar) stopping criterion:
+C  note that the RHS is negative as long as the interval [a,b] is not small:
+         if(abs(x - xm) .le. (tol2 - 0.5*(b - a)) .or. iter .gt. maxit)
+     &        go to 990
 C
 C is golden-section necessary
 C
@@ -236,7 +275,7 @@ C
 	 q = abs(q)
 	 r = e
 	 e = d
-C     
+C
 C  is parabola acceptable?  Otherwise do golden-section
 C
 	 if (abs(p) .ge. abs(0.5*q*r)) go to 40
@@ -256,7 +295,7 @@ C
 	 if ((u - a) .lt. tol2) d = sign(tol1, xm - x)
 	 if ((b - u) .lt. tol2) d = sign(tol1, xm - x)
 	 go to 50
-C	 --------      
+C	 --------
 C
 C  a golden-section step
 C
@@ -265,10 +304,10 @@ C
 	 d = c*e
 C
 C  f must not be evaluated too close to x
-C     
+C
    50	 if (abs(d) .ge. tol1) u = x + d
 	 if (abs(d) .lt. tol1) u = x + sign(tol1, d)
-      
+
 	 spar = u
          lspar = ratio * 16.**(-2. + spar * (6.))
 	 call sslvrg(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
@@ -276,7 +315,7 @@ C
      &	      lspar, xwy, hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
      &	      abd,p1ip,p2ip,ld4,ldnk,ier)
 	 fu = crit
-C     
+C
 C  update  a, b, v, w, and x
 C
 	 if (fu .le. fx) then
@@ -312,8 +351,8 @@ C
 C
 C  end of main loop
 C
- 990	 continue 
-	 spar = x 
+ 990	 continue
+	 spar = x
 	 crit = fx
       endif
 

@@ -1,28 +1,83 @@
-smooth.spline()	 [R]
+smooth.spline()  [R]
  |
- \--> qsbart()				./qsbart.f
-      \--> sbart()			./sbart.f
-	   |--> sgram()			./sgram.f  [was ratfor !]
-	   |    |--> interv()		./bvalue.f [was ratfor !]
-	   |    \--> bsplvd()		./bsplvd.f [was ratfor !]
-	   |	     \--> bsplvb()	    "
-	   |--> stxwx()			./stxwx.f  [was ratfor !]
-	   |    |--> interv()		  (see above)
-	   |    \--> bsplvd()		    "
-	   |	     \--> bsplvb()	    "
-	   \--> sslvrg()		./sslvrg.f [was ratfor !]
-	        |--> sinerp()		./sinerp.f [was ratfor !]
-	        |--> bvalue()		./bvalue.f   (above)
-	        |    \--> interv()	  (see above)
-	        |--> interv()		    "
-	        |--> bsplvd()		    "
-	   	|    \--> bsplvb()	    "
-	        |--> dpbfa()		../../../appl/dpbfa.f  {Linpack}
-	        \--> dpbsl()		../../../appl/dpbsl.f 
+ \--> qsbart()                          ./qsbart.f
+      |
+      \--> sbart()                      ./sbart.f
+           |--> sgram()                 ./sgram.f  [was ratfor !]
+           |    |--> interv()           ./bvalue.f [was ratfor !]
+           |    \--> bsplvd()           ./bsplvd.f [was ratfor !]
+           |         \--> bsplvb()          "
+           |--> stxwx()                 ./stxwx.f  [was ratfor !]
+           |    |--> interv()             (see above)
+           |    \--> bsplvd()               "
+           |         \--> bsplvb()          "
+           \--> sslvrg()                ./sslvrg.f [was ratfor !]
+                |--> sinerp()           ./sinerp.f [was ratfor !]
+                |--> bvalue()           ./bvalue.f   (above)
+                |    \--> interv()        (see above)
+                |--> interv()               "
+                |--> bsplvd()               "
+                |    \--> bsplvb()          "
+                |--> dpbfa()            ../../../appl/dpbfa.f  {Linpack}
+                \--> dpbsl()            ../../../appl/dpbsl.f
 
 
-predict.smooth.spline()	 [R]
+predict.smooth.spline()  [R]
  |
- \--> bvalus()				./bvalus.f
-       \--> bvalue()			(see above)
-             \--> interv()	          "
+ \--> bvalus()                          ./bvalus.f
+       \--> bvalue()                    (see above)
+             \--> interv()                "
+
+
+-------------
+
+But note that supsmu() / ppr() also call on smoothing splines :
+
+supsmu() [R]
+ |
+ |-> BDRsetsmu                          ./ppr.f
+ \-> BDRsupsmu                             "
+     |
+     |
+     |--> BDRsmooth                        "
+     \--> BDRspline                        "
+          |
+          |- intpr()
+          |- dblepr()
+          |- bdrsplerr()                ./ksmooth.c
+          |
+          \- qsbart()                   (see above)
+             \-> sbart()  .....etc..... (see above)
+
+
+
+ppr()   [R]
+ |
+ |-> BDRsetppr                          ./ppr.f
+ |
+ \-> BDRsmart                              "
+     \-> BDRsmart1                         "
+         |
+         |-> BDRsort                       "
+         |
+         |-> BDRsubfit                     "
+         |   |
+         |   |-> BDRnewb
+         |   |
+         \---+-> BDRfulfit
+             |   |
+             |   v
+             \-> BDRonetrm
+                 |
+                 \-> BDRoneone
+                     |
+                     |--> BDRsupsmu     (see above)
+                     |--> BDRsort       (see above)
+                     |
+                     |--> BDRdir
+                     |    \-> BDRconj
+                     |
+                     \--> BDRder
+                          \-> BDRpool
+
+
