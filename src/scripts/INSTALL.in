@@ -91,14 +91,14 @@ warning () { echo "WARNING: $*" >&2 ; }
 error ()   { echo "ERROR: $*" >&2 ; }
 
 startdir=`${GETWD}`
-tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
-if (test -d "${tmpdir}" && test -w "${tmpdir}") || \
-    ${MKDIR_P} "${tmpdir}" 2> /dev/null; then
-  tmpdir=`cd "${tmpdir}" && ${GETWD}`
-else
-  error "cannot write to or create temporary directory '${tmpdir}'"
-  exit 1
-fi
+: ${TMPDIR=/tmp}
+{ tmpdir=`mktemp -d -q "${TMPDIR}/R.INSTALL.XXXXXX" 2>/dev/null` \
+    && test -n "${tmpdir}" && test -d "${tmpdir}" ; } ||
+  { test -n "${RANDOM}" && tmp=${TMPDIR}/R.INSTALL$$-${RANDOM} \
+      && (${MKDIR_P} "${tmpdir}") ; } ||
+  { tmpdir=${TMPDIR}/R.INSTALL.$$ && (${MKDIR_P} "${tmpdir}") ; } ||
+  (error "cannot create temporary directory" && exit 1)
+tmpdir=`cd "${tmpdir}" && ${GETWD}`
 
 : ${R_OSTYPE=unix}
 ## <NOTE>

@@ -970,6 +970,9 @@ BUG FIXES
 
     o	"dist" objects of length 0 failed to print.
 
+    o   INSTALL and the libR try harder to find a temporary directory
+	(since there might be one left over with the same PID).
+
 
 
 
