@@ -2328,7 +2328,7 @@ sub rdoc2latex {# (filename)
 	$latexout = "STDOUT";
     }
     print $latexout "\\HeaderA\{";
-    print $latexout $blocks{"name"};
+    print $latexout &latex_escape_name($blocks{"name"});
     print $latexout "\}\{";
     print $latexout &ltxstriptitle($blocks{"title"});
     print $latexout "\}\{";
@@ -2356,8 +2356,8 @@ sub rdoc2latex {# (filename)
 	unless /^\Q$blocks{"name"}\E$/; # Q..E : Quote (escape) Metacharacters
     }
     foreach (@keywords) {
-	printf $latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
-	unless /^$/ ;
+	printf $latexout "\\keyword\{%s\}\{%s\}\n", $_, 
+	    &latex_escape_name($blocks{"name"}) unless /^$/ ;
     }
     latex_print_block("description", "Description");
     latex_print_codeblock("usage", "Usage");
@@ -2614,6 +2614,17 @@ sub latex_unescape_codes {
     $text;
 }
 
+sub latex_escape_name {
+    my $c = $_[0];
+
+    if($c =~ /[$LATEX_SPECIAL]/){
+	$c =~ s/[$LATEX_SPECIAL]/\\$&/go; #- escape them
+    }
+    ## avoid conversion to guillemots
+    $c =~ s/<</<\{\}</;
+    $c =~ s/>>/>\{\}>/;
+    $c;
+}
 
 ## The next two should transform links and aliases identically so use
 ## common subroutines
