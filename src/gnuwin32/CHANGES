@@ -53,9 +53,7 @@ Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
 
 Tcl/Tk 8.4.1 is bundled in rw1070.exe.  You can still use your own
-installation of Tcl/Tk (version 8.4.x unless you compile from sources)
-by setting the environment variables MY_TCLTK and TCL_LIBRARY and
-having tcl84.dll and tk84.dll in your path.
+installation of Tcl/Tk: see the rw-FAQ.
 
 The Makefiles that build the installers have been reorganized--see
 the Maintainers.notes file for details, and INSTALL for new build
@@ -129,11 +127,14 @@ in Makevars(.win).
 
 MD5 checksums are created on installation from sources (see
 ?checkMD5sums in package tools), and checked on installation by
-install.packages().
+install.packages().  If you see mismatches, this may be because files
+are left over from an earlier install of the package: try deleting the
+whole package directory and re-installing.
 
 There is a new command-line flag --auto-zip to Rcmd INSTALL which
 selects whether to zip up the data and/or help directories depending
-on their size.
+on their size.  This is mainly for use with Rcmd INSTALL --build to
+install and zip-up packages.
 
 
 

@@ -118,7 +118,7 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are two versions of
 the distribution.
 
-1) @code{@RWVER@.exe} is about 20Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 21Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
@@ -134,9 +134,9 @@ versions of the help files and the @emph{An Introduction to R} and
 @node How do I install R for Windows?, Can I customize the installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-First, you need Windows 95/98/ME/NT4/2000/XP: Windows 3.11+win32s will
-not work.  Your file system must allow long file names (as is likely
-except perhaps for some network-mounted systems).
+You need Windows 95/98/ME/NT4/2000/XP: Windows 3.11+win32s will not
+work.  Your file system must allow long file names (as is likely except
+perhaps for some network-mounted systems).
 
 If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
@@ -224,8 +224,8 @@ the top-level installation directory.  (As from version 1.6.2 there will
 be a separate uninstall item in the R group for each installed version
 of R.)
 
-Uninstalling R only removes files from the initial installation, not for
-example packages you have installed.
+Uninstalling R only removes files from the initial installation, not
+(for example) packages you have installed.
 
 If all else fails, you can just delete the whole directory in which R
 was installed.
@@ -545,7 +545,10 @@ kind enough to provide a pre-compiled version for Windows as a
 You can install pre-compiled packages either from CRAN or from a local
 @code{.zip} file by using @code{install.packages}: see its help page.
 There are menu items on the @code{Packages} menu to provide a
-point-and-click interface to package installation.
+point-and-click interface to package installation.  As from R 1.7.0 the
+packages for each minor (1.x) version will be stored in a separate area,
+so for R 1.7.0 the files are in @code{bin/windows/contrib/1.7}.  You can
+try those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}.
@@ -561,9 +564,9 @@ running all the examples on its help pages and in its test suite, if
 any) use @code{Rcmd check pkgname}: see the @emph{`Writing R
 Extensions'} manual.
 
-Note that this is rather so tricky; please do ensure that you have
-followed the instructions @strong{exactly}.  At least 90% of the
-questions asked are because people have not done so.
+Note that this is rather tricky; please do ensure that you have followed
+the instructions @strong{exactly}.  At least 90% of the questions asked
+are because people have not done so.
 
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
@@ -623,7 +626,8 @@ If the help search system does not work @emph{at all}, this probably
 indicates that Java support is either not installed or not enabled in
 your browser.  Recent versions of browsers have made Java support
 optional: for example it is optional in Netscape 6/7 and in Opera, and
-may not be installed for IE6 on Windows XP.
+may not be installed for IE6 on Windows XP.  You also need JavaScript
+enabled,
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
@@ -650,10 +654,10 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 installed.  This is an optional part of the installation by
 @code{@value{VERSION}.exe}, although it is selected by default.
 
-If you have the environment variable @code{MY_TCLTK} set, it is assumed
-that you want to use a different Tcl/Tk 8.4.x installation, and that
-this is set up correctly (with the DLLs in your path and
-@code{TCL_LIBRARY}).
+If you have the environment variable @code{MY_TCLTK} set to a non-empty
+value, it is assumed that you want to use a different Tcl/Tk 8.4.x
+installation, and that this is set up correctly (with the DLLs in your
+path and @code{TCL_LIBRARY}).
 
 
 @c Download ActiveTcl 8.4.x from

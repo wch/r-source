@@ -4,8 +4,8 @@ R @RVER@ for Windows
 This distribution contains a binary distribution of R-@RVER@ to run on
 Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips.  It is designed
 to be as close as possible to the implementation on Unix, but see the
-list of differences below.  The port was by Guido Masarotto and Brian
-Ripley.
+list of differences below.  The port was by Guido Masarotto, Brian
+Ripley and Duncan Murdoch.
 
 See the file `CHANGES' for the new features of this version.
 
@@ -23,7 +23,7 @@ Installation
 
 The distribution can be obtained in two versions:
 
-1) A 20Mb file @RWVER@.exe.  Just run this for a Windows-XP style
+1) A 21Mb file @RWVER@.exe.  Just run this for a Windows-XP style
 installer.  It contains all the R components, and you can select what
 want installed.
 
@@ -55,7 +55,7 @@ console in its own window.  It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
 ...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
-as the working directory (where workspaces and files are saved and
+as the working directory (where workspaces and files are saved to and
 loaded from).  The @RWVER@.exe and miniR.exe installers create a
 shortcut on the desktop for you (by default).
 
@@ -207,10 +207,10 @@ file .Rprofile.  In particular:
 Adding packages
 ===============
 
-Binaries for many packages are available at CRAN/bin/windows/contrib.
-These are zip files which should be unpacked in @RWVER@\library.
-Perhaps the simplest option is use the items on the Packages menu to
-install from a zip file or to download from CRAN.
+Binaries for many packages are available at
+CRAN/bin/windows/contrib/1.7.  These are zip files which should be
+unpacked in @RWVER@\library.  The simplest option is use the items on
+the Packages menu to install from a zip file or to download from CRAN.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command
@@ -265,22 +265,9 @@ Using package tcltk
 ===================
 
 The package tcltk supports building graphical interfaces with Tcl/Tk.
-To use this you need to install ActiveTcl 8.4.x from
-http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and you will
-need to have the Tcl and Tk dlls in your path (which the installer
-will probably do for you).  Also, you need to set the environment
-variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.4.
-
-How you set environmental variables under Windows is system-dependent,
-but with R you can always use the form
-TCL_LIBRARY="c:/Program Files/Tcl/lib/tcl8.4"
-at the end of the command line or Target field of a shortcut.
-
-The demos(tk*) (available after loading the tcltk library) will work
-on Windows.
-
-N.B. ActiveTcl 8.3.x will not work with the binary releases, but the
-sources can be configured to build against it.
+"Support Files for library(tcltk)" needs to be selected from the
+installer for this to work.  You can use an existing installation of
+Tcl/Tk 8.4.x by following the instructions in the rw-FAQ.
 
 
 Building From Source
