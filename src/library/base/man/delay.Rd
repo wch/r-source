@@ -14,10 +14,6 @@ delay(x, env=.GlobalEnv)
   This provides direct access to \emph{lazy evaluation} mechanism
   used by \R for the evaluation of (interpreted) functions.
 }
-\details{
-  This is an experimental feature and its addition is purely
-  for evaluation purposes.
-}
 \value{
   A \emph{promise} to evaluate the expression.
   The value which is returned by \code{delay} can be assigned
