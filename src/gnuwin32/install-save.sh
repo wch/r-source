@@ -23,25 +23,11 @@ if ${R_SAVE_IMAGE}; then
         || (echo "Execution of package source for ${pkg} failed"; exit 1)
     mv .RData ${lib}/${pkg}/R/all.rda
     mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
-      cat > ${lib}/${pkg}/R/${pkg} <<EOF
-.First.lib <- function(libname, pkgname) {
-  fullName <- paste("package", pkgname, sep=":")
-  myEnv <- as.environment(match(fullName, search()))
-  dataFile <- file.path(libname, pkgname, "R", "all.rda")
-  rm(.First.lib, envir = myEnv)
-  load(dataFile, myEnv)
-  if(exists(".First.lib", envir = myEnv, inherits = FALSE)) {
-    f <- get(".First.lib", envir = myEnv, inherits = FALSE)
-    if(is.function(f))
-      f(libname, pkgname)
-    else
-      stop(paste("package \"", pkgname, "\"has a non-function .First", sep=""))
-  }
-}
-EOF
-      ## if install.R is non-empty, arrange to evaluate the R code it contains
-      ## after the package source (maybe for some kind of cleanup).
-      if test -s install.R; then
-        cat install.R >> ${lib}/${pkg}/R/${pkg}
-      fi
+    cat ${R_HOME}/share/R/firstlib.R > ${lib}/${pkg}/R/${pkg}
+    ## if install.R is non-empty, arrange to evaluate the R code it
+    ## contains after the package source (maybe for some kind of
+    ## cleanup).
+    if test -s install.R; then
+      cat install.R >> ${lib}/${pkg}/R/${pkg}
+    fi
 fi
