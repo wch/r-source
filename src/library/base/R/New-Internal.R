@@ -41,6 +41,9 @@ trigamma <- function(x).Internal(  trigamma(x))
 tetragamma <- function(x).Internal(tetragamma(x))
 pentagamma <- function(x).Internal(pentagamma(x))
 
+factorial <- function(x) gamma(x + 1)
+lfactorial <- function(x) lgamma(x + 1)
+
 choose <- function(n,k).Internal(choose(n,k))
 lchoose <- function(n,k).Internal(lchoose(n,k))
 

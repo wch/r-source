@@ -10,6 +10,8 @@
 \alias{pentagamma}
 \alias{choose}
 \alias{lchoose}
+\alias{factorial}
+\alias{lfactorial}
 \title{Special Functions of Mathematics}
 \description{
   Special mathematical functions related to the beta and gamma
@@ -26,6 +28,8 @@ tetragamma(x)
 pentagamma(x)
 choose(n, k)
 lchoose(n, k)
+factorial(x)
+lactorial(x)
 }
 \arguments{
   \item{a, b, x}{numeric vectors.}
@@ -41,7 +45,8 @@ lchoose(n, k)
 
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
-  gamma function.
+  gamma function.   \code{factorial(x)} is \eqn{x!} and identical to
+  \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
 
   The functions \code{digamma}, \code{trigamma}, \code{tetragamma} and
   \code{pentagamma} return the first, second, third and fourth
@@ -74,6 +79,8 @@ lchoose(n, k)
 choose(5, 2)
 for (n in 0:10) print(choose(n, k = 0:n))
 
+factorial(100)
+lfactorial(10000)
 ## gamma has discontinuities are 0, -1, -2, ...
 \dontrun{## use plots of points to show this.
 curve(gamma(x),-3,4, n=1001, ylim=c(-10,100),
