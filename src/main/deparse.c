@@ -349,22 +349,24 @@ static void deparse2buff(SEXP s)
     int fop, lookahead, lbreak = 0;
     SEXP op, t;
     char tpb[120];
+    char * str;
 
     switch (TYPEOF(s)) {
     case NILSXP:
 	print2buff("NULL");
 	break;
     case SYMSXP:
-	if( isValidName(CHAR(PRINTNAME(s))) )
-		print2buff(CHAR(PRINTNAME(s)));
+    	str = CHAR(PRINTNAME(s));
+	if( isValidName(str) )
+		print2buff(str);
         else {
-                if( strlen(CHAR(PRINTNAME(s)))< 119 ) {
-                    sprintf(tpb,"\"%s\"",CHAR(PRINTNAME(s)));
+                if( strlen(str)< 119 ) {
+                    sprintf(tpb,"\"%s\"",str);
                     print2buff(tpb);
                 }
                 else {
                     sprintf(tpb,"\"");
-                    strncat(tpb, CHAR(PRINTNAME(s)), 117);
+                    strncat(tpb, str, 117);
                     strcat(tpb, "\"");
                     print2buff(tpb);
                 }

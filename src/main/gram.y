@@ -1521,7 +1521,7 @@ static int SpecialValue(int c)
     return SPECIAL;
 }
 
-extern int isValidName(char *name)
+int isValidName(char *name)
 {
     char *p;
     int c, i, j;
@@ -1538,14 +1538,12 @@ extern int isValidName(char *name)
                 return 0;
 
     if (c == '.' ) {
-        while ( c = *p++ && isdigit(c) );
-        if( *p == '\0' )
+        while ( c = *p++, isdigit(c) );
+        if( c == '\0' )
             return 0;
-        else
-            return 1;
     }
-    while ( c = *p++ && (isalnum(c) || c=='.') );
-    if (*p == '\0')
+    while ( c = *p++, (isalnum(c) || c=='.') );
+    if (c == '\0')
         return 1;
     else
         return 0;
