@@ -1,4 +1,23 @@
 /*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997-1998 Ross Ihaka
+ *  Copyright (C) 1999-2000 R Development Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+ *
  *	cpoly finds the zeros of a complex polynomial.
  *
  *	On Entry
@@ -83,7 +102,7 @@ static double infin;
 
 
 int R_cpoly(double *opr, double *opi, int *degree,
-	  double *zeror, double *zeroi, int *fail)
+	    double *zeror, double *zeroi, int *fail)
 {
     int i__1;
     double d__1, d__2;
@@ -99,17 +118,16 @@ int R_cpoly(double *opr, double *opi, int *degree,
     smalno = DBL_MIN;
 
     are = eta;
-    mre = sqrt(2.0) * 2.0 * eta;
+    mre = 2. * M_SQRT2 * eta;
 
-    /* We use the originals so we get exact */
-    /* agreement with the original, but ... */
+    /* We use the originals to get exact agreement with the original, but ... */
     /*	cos 94 =   -0.06975647374412529990   */
     /*	sin 94 =    0.99756405025982424767   */
     /*	1/sqrt(2) = 0.70710678118654752440   */
-
     cosr = (float)-.060756474;
     sinr = (float).99756405;
     xx = (float).70710678;
+
     yy = -xx;
     *fail = LFALSE;
 
@@ -161,7 +179,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
 	/* calculate bnd, a lower bound on the modulus of the zeros. */
 
 	for (i=0 ; i < nn ; i++)
-	    shr[i] = pythag(pr[i], pi[i]);
+	    shr[i] = hypot(pr[i], pi[i]);
 
 	bnd = cpoly_cauchy(&nn, shr, shi);
 
@@ -249,8 +267,8 @@ static void noshft(int l1)
 
     for (jj = 1; jj <= l1; jj++) {
 
-	if (pythag(hr[n-1], hi[n-1]) <=
-	    eta * 10.0 * pythag(pr[n-1], pi[n-1])) {
+	if (hypot(hr[n-1], hi[n-1]) <=
+	    eta * 10.0 * hypot(pr[n-1], pi[n-1])) {
 
 	    /*	If the constant term is essentially zero, */
 	    /*	shift h coefficients. */
@@ -333,7 +351,7 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
 	if (!bool && test && j != *l2) {
 	    d__1 = tr - otr;
 	    d__2 = ti - oti;
-	    if (pythag(tr - otr, ti - oti) >= pythag(*zr, *zi) * 0.5) {
+	    if (hypot(tr - otr, ti - oti) >= hypot(*zr, *zi) * 0.5) {
 		pasd = LFALSE;
 	    }
 	    else if (! pasd) {
@@ -409,8 +427,8 @@ static void vrshft(int l3, double *zr, double *zi, int *conv)
 	polyev(&nn, &sr, &si,
 	       pr, pi, qpr, qpi,
 	       &pvr, &pvi);
-	mp = pythag(pvr, pvi);
-	ms = pythag(sr, si);
+	mp = hypot(pvr, pvi);
+	ms = hypot(sr, si);
 	if (mp <=  20. * errev(&nn, qpr, qpi, &ms, &mp, &are, &mre)) {
 	    goto L_conv;
 	}
@@ -464,7 +482,7 @@ static void vrshft(int l3, double *zr, double *zi, int *conv)
 	nexth(&bool);
 	calct(&bool);
 	if (!bool) {
-	    relstp = pythag(tr, ti) / pythag(sr, si);
+	    relstp = hypot(tr, ti) / hypot(sr, si);
 	    sr += tr;
 	    si += ti;
 	}
@@ -492,7 +510,7 @@ static void calct(int *bool)
 
     polyev(&n, &sr, &si, hr, hi,
 	   qhr, qhi, &hvr, &hvi);
-    *bool = pythag(hvr, hvi) <= are * 10. * pythag(hr[n-1], hi[n-1]);
+    *bool = hypot(hvr, hvi) <= are * 10. * hypot(hr[n-1], hi[n-1]);
     if (!*bool) {
 	d__1 = -pvr;
 	d__2 = -pvi;
@@ -503,8 +521,6 @@ static void calct(int *bool)
 	ti = 0.;
     }
 }
-
-
 
 static void nexth(int *bool)
 {
@@ -583,9 +599,9 @@ double errev(int *nn, double *qr, double *qi, double *ms,
     double e;
     int i;
 
-    e = pythag(qr[0], qi[0]) * *mre / (*are + *mre);
+    e = hypot(qr[0], qi[0]) * *mre / (*are + *mre);
     for (i=0 ; i < *nn ; i++) {
-	e *= (*ms + pythag(qr[i], qi[i]));
+	e *= (*ms + hypot(qr[i], qi[i]));
     }
     return e * (*are + *mre) - *mp * *mre;
 }
@@ -726,5 +742,5 @@ void cdivid(double *ar, double *ai, double *br, double *bi,
 }
 
 /* static double cpoly_cmod(double *r, double *i)
- * --> replaced by pythag() everywhere
+ * --> replaced by hypot() everywhere
 */
