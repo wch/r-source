@@ -1,0 +1,58 @@
+\name{ns-hooks}
+\alias{.onLoad}
+\alias{.onUnload}
+\alias{.onAttach}
+\title{Hooks for Name Space events}
+\description{
+  Packages with name spaces can supply functions to be called when
+  loaded, attached or unloaded.
+}
+
+\usage{
+.onLoad(libname, pkgname)
+.onAttach(libname, pkgname)
+.onUnload(libpath)
+}
+\arguments{
+  \item{libname}{a character string giving the library directory where
+    the package defining the namespace was found.}
+  \item{pkgname}{a character string giving the name of the name space.}
+  \item{libpath}{a character string giving the complete path to the package.}
+}
+\details{
+  These functions apply only to packages with name spaces.
+
+  After loading, \code{\link{loadNamespace}} looks for a hook function named
+  \code{.onLoad} and runs it before sealing the namespace and processing
+  exports.  Note that the code is run without the package being on the
+  search path, so objects in the package need to be referred to using the
+  double colon operator.
+
+  If a name space is unloaded (via \code{\link{unloadNamespace}}),
+  a hook function \code{.onUnload} is run before final unloading.
+  
+  When the package is attached (via \code{\link{library}}), the hook
+  function \code{.onAttach} is called after the exported functions are
+  attached.  This is less likely to be useful than \code{.onLoad}, which
+  should be seen as the analogue of \code{\link{.First.lib}} (which is only
+  used for packages without a name space).
+
+  \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
+  as internal variables in the name space and should not be exported.
+
+  A function \code{\link{.Last.lib}} will be called when the package is
+  detached: this does need to be exported.
+
+  Anything needed for the functioning of the name space should be
+  handled at load/unload times by the \code{.onLoad} and
+  \code{.onUnload} hooks.  For example, shared libraries can be loaded
+  (unless done by a \code{useDynib} directive in the \code{NAMESPACE}
+  file) and initialized in \code{.onLoad} and unloaded in
+  \code{.onUnload}.  Use \code{.onAttach} only for actions that are
+  needed only when the package becomes visible to the user, for example
+  a start-up message.
+}
+\seealso{
+  \code{\link{setHook}} shows how users can set hooks on the same events.
+}
+\keyword{utilities}

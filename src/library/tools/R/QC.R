@@ -402,7 +402,8 @@ function(package, dir, lib.loc = NULL,
               objectsInBase[sapply(objectsInBase,
                                    .isPrimitive,
                                    NULL)],
-              c(".First.lib", ".Last.lib", ".Random.seed"))
+              c(".First.lib", ".Last.lib", ".Random.seed",
+                ".onLoad", ".onAttach", ".onUnload"))
         objectsInCodeOrNamespace <- objectsInCode
     }
     ## </FIXME>
