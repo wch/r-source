@@ -102,13 +102,15 @@ extern SA_TYPE RestoreAction;
 #define kRCmdInstallFromCRAN	'cran'
 #define kRCmdInstallFromBioC	'bioc'
 #define kRCmdBinaryUpdateFromCRAN	'crub'
-#define kRCmdBinaryUpdateFromBioC	'bcub'
 #define kRCmdBinaryInstallFromCRAN	'crab'
 #define kRCmdBinaryInstallFromBioC	'biob'
 #define kRCmdUpdateFromCRAN	'crup'
 #define kRCmdUpdateFromBioC	'bcup'
 #define kRCmdInstallFromSrc	'ipfs'
 #define kRCmdInstallFromSrcDir	'ipsd'
+#define kRCmdBioCBundleAll      'bial'
+#define kRCmdBioCBundleAffy     'biaf'
+#define kRCmdBioCBundleCDNA     'bicd'
 
 /* items in the Help Menu */
 #define kRHelpStart		'rhlp'
@@ -1042,9 +1044,6 @@ static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
 } 
 
 
- 
-
-
 /* Changes font size in both Console In and Out 
    default size is 12
 */
@@ -1358,41 +1357,51 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdInstallFromCRAN:
-               consolecmd("browse.pkgs(type=\"source\")");
+		  consolecmd("browse.pkgs(type=\"source\")");
               break;
 
               case kRCmdInstallFromBioC:
-		consolecmd("browse.pkgs(\"BIOC\",type=\"source\")");
+		  consolecmd("browse.pkgs(\"BIOC\",type=\"source\")");
               break;
 		
              case kRCmdUpdateFromCRAN:
-               consolecmd("browse.update.pkgs(type=\"source\")");
+		 consolecmd("browse.update.pkgs(type=\"source\")");
               break;
 
-              case kRCmdUpdateFromBioC:
-		consolecmd("browse.update.pkgs(\"BIOC\",type=\"source\")");
-              break;
-	      
              case kRCmdBinaryInstallFromCRAN:
-               consolecmd("browse.pkgs()");
+	       consolecmd("browse.pkgs()");
               break;
 
               case kRCmdBinaryInstallFromBioC:
-		consolecmd("browse.pkgs(\"BIOC\")");
+		  consolecmd("browse.pkgs(\"BIOC\")");
               break;
 		
              case kRCmdBinaryUpdateFromCRAN:
-               consolecmd("browse.update.pkgs()");
-              break;
-
-              case kRCmdBinaryUpdateFromBioC:
-		consolecmd("browse.update.pkgs(\"BIOC\")");
+		 consolecmd("browse.update.pkgs()");
               break;
 
               case kRCmdInstallFromSrc:
-               consolecmd("install.from.file()\r");
+		  consolecmd("install.from.file()\r");
 	       break;
 
+	       /* Bioconductor */
+              case kRCmdUpdateFromBioC:
+		consolecmd("{library(reposTools);update.packages2()}");
+              break;
+
+	     case kRCmdBioCBundleAll:
+	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('all')})");
+	       break;
+	       
+	     case kRCmdBioCBundleAffy:
+	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('affy')})");
+	       break;
+	      
+	     case kRCmdBioCBundleCDNA:
+	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('cdna')})");
+	       break;
+
+	      /* Local source files */
 	     case kRCmdInstallFromSrcDir:
 		if(DoSelectDirectory(buf,"Choose Package Directory") == noErr){
                     sprintf(cmd, "install.from.file(pkg=\"%s\")\r", buf);

@@ -61,6 +61,8 @@ typedef struct
    int		OverrideRDefaults;
   int           Buffering;
   int           BufferSize;
+  char          CRANmirror[255];
+  char          BIOCmirror[255];
 }  RAquaPrefs, *RAquaPrefsPointer, **RAquaPrefsHandle;
 
 

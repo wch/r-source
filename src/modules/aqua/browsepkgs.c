@@ -261,7 +261,7 @@ static void CreateBrowsePkg(WindowRef window, ControlRef *browser)
 		sizeof(frameAndFocus), &frameAndFocus);
 }
 
-char *bpNames[] = { "Install/Update",  "Available Packages", 
+char *bpNames[] = { "Install/Update",  "Package", 
 		    "Available version", "Installed version"};
 
 
