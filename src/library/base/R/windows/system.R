@@ -40,7 +40,7 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
         if(!nchar(shell)) shell <- Sys.getenv("SHELL")
         if(!nchar(shell)) shell <- Sys.getenv("COMSPEC")
     }
-    if(missing(flag) && any(!is.na(match(c("bash", "tcsh"), shell))))
+    if(missing(flag) && any(!is.na(pmatch(c("bash", "tcsh"), basename(shell)))))
         flag <- "-c"
     if(translate) cmd <- gsub("/", "\\\\", cmd)
     if(!is.null(shell)) cmd <- paste(shell, flag, cmd)
