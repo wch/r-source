@@ -11,108 +11,55 @@ subdir = src/main
 include $(top_builddir)/Makeconf
 
 SOURCES_C = \
-	@LIBOBJS@ \
-	apply.c \
-	arithmetic.c \
-	array.c \
-	attrib.c \
-	bind.c \
-	builtin.c \
-	character.c \
-	coerce.c \
-	colors.c \
-	complex.c \
-	context.c \
-	cov.c \
-	cum.c \
-	datetime.c \
-	debug.c \
-	devPS.c \
-	devPicTeX.c \
-	deparse.c \
-	deriv.c \
-	devices.c \
-	dotcode.c \
-	dstruct.c \
-	duplicate.c \
-	envir.c \
-	errors.c \
-	eval.c \
-	format.c \
-	fourier.c \
-	g_her_glyph.c \
-	g_fontdb.c \
-	g_cntrlify.c \
-	g_alab_her.c \
-	gram.c \
-	gram-ex.c \
-	graphics.c \
-	iosupport.c \
-	list.c \
-	logic.c \
-	main.c \
-	match.c \
-	memory.c \
-	model.c \
-	names.c \
-	objects.c \
-	optim.c \
-	optimize.c \
-	options.c \
-	par.c \
-	paste.c \
-	platform.c \
-	plot.c \
-	plot3d.c \
-	plotmath.c \
-	print.c \
-	printarray.c \
-	printvector.c \
-	printutils.c \
-	random.c \
 	RNG.c \
-	regex.c \
-	relop.c \
-	saveload.c \
-	scan.c \
-	seq.c \
-	size.c \
-	sort.c \
-	source.c \
-	split.c \
-	subassign.c \
-	subscript.c \
-	subset.c \
-	summary.c \
-	unique.c \
-	util.c \
+	apply.c arithmetic.c array.c attrib.c \
+	bind.c builtin.c \
+	character.c coerce.c colors.c complex.c context.c cov.c cum.c \
+	datetime.c debug.c devPS.c devPicTeX.c deparse.c deriv.c \
+	devices.c dotcode.c dstruct.c duplicate.c \
+	envir.c errors.c eval.c \
+	format.c fourier.c \
+	g_her_glyph.c g_fontdb.c g_cntrlify.c g_alab_her.c gram.c \
+	gram-ex.c graphics.c \
+	iosupport.c \
+	list.c logic.c \
+	main.c match.c memory.c model.c \
+	names.c \
+	objects.c optim.c optimize.c options.c \
+	par.c paste.c platform.c \
+	plot.c plot3d.c plotmath.c \
+	print.c printarray.c printvector.c printutils.c \
+	random.c regex.c relop.c \
+	saveload.c scan.c seq.c size.c sort.c source.c split.c \
+	subassign.c subscript.c subset.c summary.c \
+	unique.c util.c \
 	version.c
 SOURCES_F = \
 	xxxpr.f
-DEPENDS = $(SOURCES_C:.c=.d)
+## FIXME: Need better names ...
+EXTRA_SOURCES_C = alloca.c strdup.c
+## </FIXME>
+DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
+	Rstrptime.h \
 	arithmetic.h \
-	g_cntrlify.h \
-	g_control.h \
-	g_extern.h \
-	g_her_metr.h \
-	g_jis.h \
+	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h \
 	names.h \
-	regex.h \
-	Rstrptime.h
+	regex.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-## FIXME: need to reconcile with LIBOBJS
 DISTFILES = Makefile.in Makefile.win \
 	$(HEADERS) \
 	$(SOURCES_C) \
-	strdup.c \
+	$(EXTRA_SOURCES_C) \
 	$(SOURCES_F) \
 	gram.y
-## </FIXME>
 
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
+## FIXME:
+## Names in here should use $(top_builddir) instead ...
+RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
+## </FIXME>
 
 Rexecbin_PROGRAMS = R.bin
 R_bin_SOURCES = $(SOURCES)
@@ -122,8 +69,11 @@ R_bin_OBJECTS = $(OBJECTS)
 ## -export-symbols SYMFILE.
 @USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
 ## </FIXME>
-R_bin_DEPENDENCIES = $(RLIBS) @EXPORTFILE@
-R_bin_LDADD = $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+## NOTE:
+## Automake would figure this out itself.
+R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @EXPORTFILE@
+## </NOTE>
 
 Rexeclib_LTLIBRARIES = libR.la
 libR_la_SOURCES = $(SOURCES)
@@ -132,9 +82,9 @@ libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## FIXME:
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+libR_la_DEPENDENCIES = @LTLIBOBJS@ @LTALLOCA@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo
 ## </FIXME>
-libR_la_DEPENDENCIES = ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
 all: Makefile Makedeps R
@@ -154,7 +104,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) R.bin
+	@$(MAKE) $(Rexecbin_PROGRAMS)
 	@@WANT_R_SHLIBS_TRUE@$(MAKE) libR.la
 	@(cd ../unix && $(MAKE) DLLs)
 
@@ -179,7 +129,7 @@ libR.la: $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
 ## </FIXME>
 
-$(libR_la_DEPENDENCIES):
+../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
 
 gram.c: $(srcdir)/gram.y
@@ -190,7 +140,7 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f libR.la; then $(MAKE) install-lib; fi
 install-bin:
-	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)
+	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
 install-lib:
 @USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change libR.la $(Rexeclibdir)/libR.$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) libR.la $(Rexeclibdir)
