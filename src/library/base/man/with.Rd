@@ -1,5 +1,6 @@
 \name{with}
 \alias{with}
+\alias{with.default}
 \title{Evaluate an Expression in a Data Environment}
 \description{
   Evaluate an \R expression in an environment constructed from data.
@@ -12,6 +13,7 @@
     default method this may be an environment, a list, a data frame,
     or an integer as in \code{sys.call}.}
   \item{expr}{expression to evaluate.}
+  \item{\dots}{arguments to be passed to future methods.}
 }
 \details{
   \code{with} is a generic function that evaluates \code{expr} in a

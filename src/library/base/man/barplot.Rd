@@ -5,6 +5,7 @@
 \usage{
 \method{barplot}{default}(height, width = 1, space = NULL, names.arg = NULL,
         legend.text = NULL, beside = FALSE, horiz = FALSE,
+        angle = 45, density = NULL,
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
         xlim = NULL, ylim = NULL,
@@ -51,6 +52,8 @@
   \item{horiz}{a logical value.  If \code{FALSE}, the bars are drawn
     vertically with the first bar to the left.  If \code{TRUE}, the
     bars are drawn horizontally with the first at the bottom.}
+  \item{angle, density}{select shading of bars by lines:
+    see \code{\link{rect}}.}
   \item{col}{a vector of colors for the bars or bar components.}
   \item{border}{the color to be used for the border of the bars.}
   \item{main,sub}{overall and sub title for the plot.}

@@ -6,7 +6,7 @@
 }
 \usage{
 piechart(x, labels = names(x), edges = 200, radius = 0.8, col = NULL,
-         main = NULL, \dots)
+         angle = 45, density = NULL, main = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector of positive quantities.
@@ -19,6 +19,11 @@ piechart(x, labels = names(x), edges = 200, radius = 0.8, col = NULL,
     range from \eqn{-1} to \eqn{1}.  If the character strings labeling
     the slices are long it may be necessary to use a smaller radius.}
   \item{col}{a vector of colors to be used in filling the slices.}
+  \item{angle}{angle of shading lines.}
+  \item{density}{the density of shading lines, in lines per inch.
+    The default value of \code{NULL} means that no shading lines are drawn.
+    Non-positive values of \code{density} also inhibit the drawing
+    of shading lines.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{piechart}.}

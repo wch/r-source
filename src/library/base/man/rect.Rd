@@ -14,7 +14,7 @@ rect(xleft, ybottom, xright, ytop, density=NULL, angle=45,
     The default value of \code{NULL} means that no shading lines are drawn.
     Non-positive values of \code{density} also inhibit the drawing
     of shading lines.}
-  
+  \item{angle}{angle of shading lines.}
   \item{col}{color(s) to fill the rectangle(s) with.  The default
     \code{NULL}, or also \code{\link{NA}} do not fill, i.e., draw
     transparent rectangles.}

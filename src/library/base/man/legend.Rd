@@ -3,6 +3,7 @@
 \title{Add Legends to Plots}
 \usage{
 legend(x, y, legend, fill, col = "black", lty, lwd, pch,
+       angle = 45, density = NULL,
        bty = "o", bg = par("bg"), pt.bg = NA, cex = 1, xjust = 0, yjust = 1,
        x.intersp = 1, y.intersp = 1, adj = 0,
        text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
@@ -31,6 +32,8 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
   \item{pch}{the plotting symbols appearing in the legend, either as
     vector of 1-character strings, or one (multi character)
     string. \emph{Must} be specified for symbol drawing.}
+  \item{angle}{angle of shading lines.}
+  \item{density}{the density of shading lines, if numeric and positive.}
   \item{bty}{the type of box to be drawn around the legend.}
   \item{bg}{the background color for the legend box.}
   \item{pt.bg}{the background color for the \code{\link{points}}.}

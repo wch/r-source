@@ -8,6 +8,7 @@
 }
 \usage{
 \method{plot}{histogram}(x, freq = equidist, col = NULL, border = par("fg"),
+               angle = NULL, density = NULL,
                lty = NULL, main = paste("Histogram of", x$xname),
                xlim = range(x$breaks), ylim = range(y, 0),
                xlab = x$xname, ylab, axes = TRUE, labels = FALSE,
@@ -27,6 +28,8 @@
   \item{col}{a colour to be used to fill the bars.  The default of
     \code{NULL} yields unfilled bars.}
   \item{border}{the color of the border around the bars.}
+  \item{angle, density}{select shading of bars by lines:
+    see \code{\link{rect}}.}
   \item{lty}{the line type used for the bars, see also \code{\link{lines}}.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
   \item{main, xlab, ylab}{these arguments to \code{title} have useful

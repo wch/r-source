@@ -1,7 +1,7 @@
 hist <- function(x, ...) UseMethod("hist")
 
 hist.default <-
-    function (x, breaks = "Sturges", freq= NULL,
+    function (x, breaks = "Sturges", freq = NULL,
               probability = !freq, include.lowest= TRUE,
               right= TRUE, col = NULL, border = NULL,
               angle = 45, density = NULL,
@@ -119,7 +119,7 @@ plot.histogram <-
     if(freq && !equidist)
         warning("the AREAS in the plot are wrong -- rather use `freq=FALSE'!")
 
-    y <- if (freq) x$counts else x$density
+    y <- if (freq) x$counts else x$intensities
     nB <- length(x$breaks)
     if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
 
