@@ -1,5 +1,5 @@
 getCRANmirrors <- function()
-    read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"),
+    read.csv(file.path(R.home(), "doc", "CRAN_mirrors.csv"),
              as.is=TRUE)
 
 
