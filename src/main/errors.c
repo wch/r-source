@@ -143,6 +143,19 @@ static void setupwarnings(void)
     setAttrib(R_Warnings, R_NamesSymbol, allocVector(STRSXP, 50));
 }
 
+/* Rvsnprintf: like vsnprintf, but guaranteed to null-terminate. */
+static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
+{
+    int val;
+#ifdef HAVE_VSNPRINTF
+    val = vsnprintf(buf, size, format, ap);
+    buf[size-1] = '\0';
+#else
+    val = vsprintf(buf, format, ap);
+#endif
+    return val;
+}
+
 #define BUFSIZE 8192
 void warning(const char *format, ...)
 {
@@ -150,12 +163,7 @@ void warning(const char *format, ...)
 
     va_list(ap);
     va_start(ap, format);
-#ifdef HAVE_VSNPRINTF
-    vsnprintf(buf, BUFSIZE, format, ap);
-    buf[BUFSIZE-1] = '\0';
-#else
-    vsprintf(buf, format, ap);
-#endif
+    Rvsnprintf(buf, BUFSIZE, format, ap);
     va_end(ap);
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
@@ -193,12 +201,7 @@ void warningcall(SEXP call, const char *format, ...)
     if(w >= 2) { /* make it an error */
 	va_list(ap);
 	va_start(ap, format);
-#ifdef HAVE_VSNPRINTF
-	vsnprintf(buf, BUFSIZE, format, ap);
-	buf[BUFSIZE-1] = '\0';
-#else
-	vsprintf(buf, format, ap);
-#endif
+	Rvsnprintf(buf, BUFSIZE, format, ap);
 	va_end(ap);
 	errorcall(call, "(converted from warning) %s", buf);
     }
@@ -224,12 +227,7 @@ void warningcall(SEXP call, const char *format, ...)
 	if( R_CollectWarnings > 49 )
 	    return;
 	SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
-#ifdef HAVE_VSNPRINTF
-	vsnprintf(buf, BUFSIZE, format, ap);
-	buf[BUFSIZE-1] = '\0';
-#else
-	vsprintf(buf, format, ap);
-#endif
+	Rvsnprintf(buf, BUFSIZE, format, ap);
 	va_end(ap);
 	names = CAR(ATTRIB(R_Warnings));
 	SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
@@ -303,17 +301,26 @@ void errorcall(SEXP call, const char *format,...)
     }
 
     if(call != R_NilValue) {
+	char *head = "Error in ";
+	char *mid = " : ";
+	char *tail = "\n\t";/* <- TAB */
+	int len = strlen(head) + strlen(mid) + strlen(tail);
+
 	inError = 1;
 	dcall = CHAR(STRING_ELT(deparse1(call, 0), 0));
-	sprintf(errbuf, "Error in %s : ", dcall);
-	if (strlen(dcall) > LONGCALL) strcat(errbuf, "\n	");/* <- TAB */
+	if (strlen(dcall) + len < BUFSIZE) {
+	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
+	    if (strlen(dcall) > LONGCALL) strcat(errbuf, tail);
+	}
+	else
+	    sprintf(errbuf, "Error: ");
     }
     else
 	sprintf(errbuf, "Error: ");
 
     p = errbuf + strlen(errbuf);
     va_start(ap, format);
-    vsprintf(p, format, ap);
+    Rvsnprintf(p, BUFSIZE - strlen(errbuf), format, ap);
     va_end(ap);
     p = errbuf + strlen(errbuf) - 1;
     if(*p != '\n') strcat(errbuf, "\n");
@@ -338,16 +345,9 @@ void error(const char *format, ...)
 
     va_list(ap);
     va_start(ap, format);
-#ifdef HAVE_VSNPRINTF
-    vsnprintf(buf, BUFSIZE, format, ap);
-    buf[BUFSIZE-1] = '\0';
-#else
-    vsprintf(buf, format, ap);
-#endif
+    Rvsnprintf(buf, BUFSIZE, format, ap);
     va_end(ap);
-    p = buf + strlen(buf) - 1;
-    if(*p != '\n') strcat(buf, "\n");
-    errorcall(R_GlobalContext->call, buf);
+    errorcall(R_GlobalContext->call, "%s", buf);
 }
 
 /* Unwind the call stack in an orderly fashion */
