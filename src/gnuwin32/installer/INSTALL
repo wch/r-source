@@ -6,3 +6,6 @@ mirrors, and unzip it in this directory, with say
 Then alter UNZIPDIR in the Makefile if necessary and run make.
 
 dounzip.c is based rather loosely on the windll/example.c file.
+
+For some versions of the mingw32 headers you need to edit 
+unzip/win32/win32.c and add #undef HAVE_INT64 at about line 532.
