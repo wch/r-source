@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2004 The R Foundation
  *  based on AS91 (C) 1979 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -28,11 +29,13 @@
  *	This function is based on the Applied Statistics
  *	Algorithm AS 91 ("ppchi2") and via pgamma(.) AS 239.
  *
+ *	R core improvements: p ~ 1 no longer gives +Inf; final Newton step
+ *
  *  REFERENCES
  *
  *	Best, D. J. and D. E. Roberts (1975).
  *	Percentage Points of the Chi-Squared Distribution.
- *      Applied Statistics 24, page 385.  */
+ *	Applied Statistics 24, page 385.  */
 
 #include "nmath.h"
 #include "dpq.h"
@@ -49,8 +52,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #define EPS2 5e-7/* final precision */
 #define MAXIT 1000/* was 20 */
 
-#define pMIN 1e-100    /* was 0.000002 = 2e-6 */
-#define pMAX (1-1e-15)/* was (1-1e-12) and 0.999998 = 1 - 2e-6 */
+#define pMIN 1e-100   /* was 0.000002 = 2e-6 */
+#define pMAX (1-1e-14)/* was (1-1e-12) and 0.999998 = 1 - 2e-6 */
 
     const double
 	i420  = 1./ 420.,
@@ -72,14 +75,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
     /* FIXME: This (cutoff to {0, +Inf}) is far from optimal when log_p: */
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
-    v = 2*alpha;/* = 'nu' == df  in qchisq() */
-
-    if (/* 0 <= */ p_ < pMIN) return 0;
-    if (/* 1 >= */ p_ > pMAX) {
-	/*was: return ML_POSINF; */
-	/* RATHER: Use approximation */
-
-    }
+    v = 2*alpha;/* = 'nu' == df	 in qchisq() */
 
     c = alpha-1;
     g = lgammafn(alpha);/* log Gamma(v/2) */
@@ -107,8 +103,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     } else if(v > 0.32) {	/*  using Wilson and Hilferty estimate */
 
 	x = qnorm(p, 0, 1, lower_tail, log_p);
-	p1 = 0.222222/v;
-	ch = v*pow(x*sqrt(p1)+1-p1, 3);
+	p1 = 2./(9*v);
+	ch = v*pow(x*sqrt(p1) + 1-p1, 3);
 
 #ifdef DEBUG_qgamma
 	REprintf(" v > .32: Wilson-Hilferty; x = %7g\n", x);
@@ -137,6 +133,10 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #ifdef DEBUG_qgamma
     REprintf("\t==> ch = %10g:", ch);
 #endif
+
+    if(p_ > pMAX || p_ < pMIN)
+	/* did return ML_POSINF or 0.;	much better: */
+	goto END;/* and do 1 a Newton step -- FIXME: do more than one */
 
 /*----- Phase II: Iteration
  *	Call pgamma() [AS 239]	and calculate seven term taylor series
@@ -172,7 +172,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #else
     ML_ERROR(ME_PRECISION);/* does nothing in R ! */
 #endif
- END:
+
+END:
 /* PR# 2214 :	 From: Morten Welinder <terra@diku.dk>, Fri, 25 Oct 2002 16:50
    --------	 To: R-bugs@biostat.ku.dk     Subject: qgamma precision
 

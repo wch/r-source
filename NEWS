@@ -671,9 +671,12 @@ BUG FIXES
 	of ppois().
 
     o	qgamma() now does a final Newton step, increasing accuracy from
-	around 2e-8 to 3e-16 in some cases.  (PR#2214).	 It allows larger
-	values p close to 1 before returning Inf.  These also apply to
-	qchisq(), e.g., qchisq(1e-13, 4, lower=FALSE) now is finite.
+	around 2e-8 to 3e-16 in some cases.  (PR#2214).	 It allows
+	values p close to 1 not returning Inf, with accuracy for
+	'lower=FALSE', and values close to 0 not returning 0 for
+	'log=TRUE'.  These also apply to qchisq(), e.g.,
+	qchisq(1e-13, 4, lower=FALSE) is now finite and
+	qchisq(1e-101, 1) is positive.
 
     o	gamma(-n) now gives NaN for all negative integers -n.
 
