@@ -202,7 +202,7 @@ library <-
                 }
             }
             codeFile <- file.path(which.lib.loc, package, "R",
-                                  libraryPkgName(package))
+                                  package)
 	    ## create environment (not attached yet)
 	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
 	    ## source file into loadenv
