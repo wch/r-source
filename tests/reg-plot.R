@@ -4,6 +4,8 @@ postscript("reg-plot.ps", paper="a4", horizontal=TRUE,
            encoding ="ISOLatin1.enc")
 ## since we supply the font metrics, the results depend only on
 ## the encoding used: Windows is different from Unix by default.
+## As from 2.1.0 we only test genuine Latin-1 chars: Adobe has dotlessi
+## and accents at 144:152, 154, 155, 157:159, but Unicode does not.
 
 options(warn = 1)# print them as they occur
 
@@ -20,7 +22,7 @@ par(pty="s")
 plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
 title("Centred chars in default char set (ISO Latin1)")
 grid(17, 17, lty=1)
-known <- c(32:126, 144:152, 154, 155, 157:255)
+known <- c(32:126, 160:255)
 
 for(i in known) {
     x <- i %% 16
