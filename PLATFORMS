@@ -28,6 +28,8 @@ following platforms.
 
 	aix	AIX 4.2
 
+	sgi	IRIX 6.4.
+
 See below for more details and contact information.
 
 If you have success on any others, please notify us by filling in the
@@ -244,6 +246,15 @@ CC		cc
 FC		f77
 MAKE		GNU make
 NOTES		some patches were needed
+
+NAME       	Duncan Temple Lang
+EMAIL      	duncan@research.bell-labs.com
+VERSION    	0.64.1
+PLATFORM   	SGI
+SYSTEM     	IRIX6.4
+CC         	gcc 2.8.0
+FC         	f2c
+MAKE       	GNU make 3.75
 
 NAME		
 EMAIL		
