@@ -15,7 +15,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     has.na <- any(nax <- is.na(x))
     num.x <- is.numeric(x)## !is.logical(x)
     if(num.x) {
-	eval(corr)
+        corr # eval missingness..
 	cutpoints <- sort(cutpoints)
 	if(corr) cutpoints <- c(0, cutpoints, 1)
 	if(any(duplicated(cutpoints)) ||
