@@ -278,3 +278,11 @@ Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
 Subject: Bug in R0.90.0?
 From: Claudio Lupi <c.lupi@isae.it>
 Date: Tue, 14 Dec 1999 12:55:00 +0100
+* PR# 375 *
+Subject: R-0.90.1 buglet in R shell
+From: Bill Venables <William.Venables@cmis.CSIRO.AU>
+Date: Thu, 16 Dec 1999 11:17:18 +1000 (EST)
+* PR# 376 *
+Subject: aggregate.ts
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Thu, 16 Dec 1999 14:17:26 +0100 (CET)
