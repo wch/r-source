@@ -245,4 +245,14 @@ none
 
 Directory:  incoming
 
-none
+* PR# 842 *
+Subject: dnbinom(,size<1,)=0
+Subject: Re: [R] Goodness of fit to Poisson / NegBinomial
+From: Thomas Lumley <tlumley@u.washington.edu>
+From: Yudi Pawitan <yudi@stat.ucc.ie>
+Date: Thu, 8 Feb 2001 11:44:21 -0800 (PST)
+Date: Thu, 08 Feb 2001 17:10:23 +0000
+* PR# 841 *
+Subject: RE: [R] Re: failed rpm installation of R 1.2-1 (fwd)
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Thu, 08 Feb 2001 09:14:03 +0100 (CET)
