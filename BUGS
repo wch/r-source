@@ -106,6 +106,10 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 --This isn't really a bug: the line in question is a plain-text equation, not a
 --piece of R code.
+* PR# 1257 *
+Subject: documentation of `las' on `par' help page
+From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
+Date: Fri, 11 Jan 2002 12:30:20 +0100
 
 Directory:  Graphics
 
@@ -339,7 +343,10 @@ Date: Mon, 05 Nov 2001 10:05:27 -0500
 
 Directory:  Models
 
-none
+* PR# 1258 *
+Subject: Bug in predict(newdata=x) with poly()
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Fri, 11 Jan 2002 09:10:34 -0500
 
 Directory:  Startup
 
@@ -387,15 +394,3 @@ Directory:  incoming
 Subject:  R CMD check 
 From: hoffmann@wsl.ch
 Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
-* PR# 1257 *
-Subject: documentation of `las' on `par' help page
-From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
-Date: Fri, 11 Jan 2002 12:30:20 +0100
-* PR# 1258 *
-Subject: Bug in predict(newdata=x) with poly()
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Fri, 11 Jan 2002 09:10:34 -0500
-* PR# 1259 *
-Subject: ?µ??(ºñµð??) ???ý ???ò??
-From: µð?ð?? <nice@dmotion.co.kr>
-Date: Mon, 14 Jan 2002 02:06:13 +0900
