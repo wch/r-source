@@ -12,8 +12,6 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   model.frame/na.omit bug for matrices and Surv objects.
-
     o   `make install' copied the R shell script a second time without
 	getting RHOME right (thus also breaking R CMD check).  Fixed.
 
@@ -21,6 +19,10 @@ BUG FIXES
         to filename (e.g. rnorm is found in Normal.html)
 
     o   fix the 0.63.1 fix for abbreviate(.);  improved doc.
+
+    o   predict.mlm(.) couldn't have worked with 'newdata'.
+
+    o   model.frame/na.omit bug for matrices and Surv objects.
 
 
 		CHANGES IN R VERSION 0.63.1
