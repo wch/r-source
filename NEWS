@@ -225,12 +225,12 @@ NEW FEATURES
 
     o	contr.SAS() has been moved from the nlme package to the stats package.
 
-    o	sprintf() has enhanced to allow the POSIX/XSI specifiers like
-	"%2$6d".
+    o	sprintf() has been enhanced to allow the POSIX/XSI specifiers
+	like "%2$6d", and also accepts "%x".
 
-	sprintf() now does limited coercion of its arguments.
+	sprintf() does limited coercion of its arguments.
 
-	sprintf() now accepts vector arguments and operates on them in
+	sprintf() accepts vector arguments and operates on them in
 	parallel (after re-cycling if needed).
 
     o   pbeta() now uses a different algorithm for large values of at
