@@ -311,8 +311,8 @@ echo " " >> MakeR
 
 echo " " >> MakeR
 
-echo "R ÄÄ  :res:Carbon.r" >> MakeR
-echo '	'"Rez :res:Carbon.r -o :::R -a" >>MakeR
+echo "R ÄÄ  :res:RCarbon.r" >> MakeR
+echo '	'"Rez :res:RCarbon.r -o :::R -a" >>MakeR
 echo " " >> MakeR
 
 echo "R ÄÄ :res:Size.r" >>MakeR
