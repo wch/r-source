@@ -11,10 +11,7 @@
 %
 \alias{xpdrows.data.frame}
 \description{
-  These functions create or manipulate data frames, tightly coupled
-  collections of variables which share many of the properties of
-  matrices and of lists, used as the fundamental data structure by most
-  of \R's modeling software.
+  Auxiliary functions for use with data frames.
 }
 \usage{
 row.names(x)
