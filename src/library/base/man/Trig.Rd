@@ -17,9 +17,16 @@ atan2(y, x)
 \alias{atan}
 \alias{atan2}
 \description{
-These functions give the obvious trigonometric functions.  They
-respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
-arc-tangent and arc-tangent of two arguments.
+    These give the obvious trigonometric functions,
+    computing the cosine, sine, tangent, arc-cosine, arc-sine and
+    arc-tangent respectively.
+}
+\details{
+    The arc-tangent of two arguments \code{atan2(y,x)} returns the angle
+    between the x-axis and the vector from the origin to \eqn{(x,y)}, i.e., for
+    positive arguments \code{atan2(y,x) == atan(y/x)}.
+
+    Angles are in radians, not degrees (i.e. a right angle is \eqn{\pi/2}).
 }
 \seealso{
 \code{\link{Log}}, \code{\link{Math}}.
@@ -30,6 +37,7 @@ sin(3*pi/2) == cos(pi)
 x <- rnorm(99)
 all( sin(-x) == - sin(x))
 all( cos(-x) == cos(x))
+x <- abs(x); y <- abs(rnorm(x)); all(atan2(y, x) == atan(y/x))
 
 x <- 1:99/100
 all(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 1.1 * .Machine$double.eps)
