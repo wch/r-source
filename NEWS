@@ -207,6 +207,11 @@ NEW FEATURES
     o	rev() is now a generic function, with default and dendrogram
 	methods.
 
+    o	serialize() and unserialize() functions are available for
+	low-level serialization to connections.
+
+    o	socketSelect() allows waiting on multiple sockets.
+
     o	sort(method = "quick", decreasing = TRUE) is now implemented.
 
     o	sort.list() has methods "quick" (a wrapper for sort(method =
@@ -219,6 +224,10 @@ NEW FEATURES
     o	strsplit(x, *) now preserves names() but won't work for
 	non-character `x' anymore {formerly used as.character(x),
 	destroying names(x)}.
+
+    o	textConnection() now has a local argument for use with output
+	connections.  local = TRUE means the variable containing the
+	output is assigned in the frame of the caller.
 
     o	Using UseMethod() with more than two arguments now gives a
 	warning (as R-lang.texi has long claimed it did).
@@ -307,20 +316,15 @@ NEW FEATURES
 	connections. local = TRUE means the variable containing the output
 	is assigned in the frame of the caller.
 
-    o	serialize() and unserialize() functions are available for
-	low-level serialization to connections.
-
-    o	socketSelect() allows waiting on multiple sockets.
-
 
 STANDARD PACKAGES
 
     o	New package 'mle'. This is a simple package to find maximum
 	likelihood estimates, and perform likelihood profiling and
-	approximate confidence limits based upon it. A well-behaved
+	approximate confidence limits based upon it.  A well-behaved
 	likelihood function is assumed, and it is the responsibility
 	of the user to gauge the applicability of the asymptotic
-	theory. This package is based on S4 methods and classes.
+	theory.  This package is based on S4 methods and classes.
 
     o	Changes in package 'mva':
 
