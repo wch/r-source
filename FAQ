@@ -1370,8 +1370,10 @@ maintained by Thomas Lumley provides information on porting S packages to R.
 5.6 How can I contribute to R?
 ==============================
 
-   R is currently still in alpha (or pre-alpha) state, so simply using it
-and communicating problems is certainly of great value.
+   R is in active development and there is always a risk of bugs creeping
+in.  Also, the developers do not have access to all possible machines
+capable of running R.  So, simply using it and communicating problems is
+certainly of great value.
 
    One place where functionality is still missing is the modeling software
 as described in "Statistical Models in S" (see *Note What is S?::);
