@@ -47,7 +47,7 @@ BUG FIXES
     o	text()'s default method could segfault if passed 0-length coordinates.
 
     o	R CMD INSTALL (Unix) was sometimes leaving a temporary dir
-	behind.  (PR#7230)
+	behind.	 (PR#7230)
 
     o	read.table() could fail when the row.names were looking like numbers.
 
@@ -80,6 +80,10 @@ BUG FIXES
     o	gsub(perl=TRUE) returned a string which printed with trailing
 	garbage if there was a match at the beginning whose
 	replacement was shorter.  (PR#7479)
+
+    o	Some PDF readers do not define PDFDocEncoding, so pdf()'s
+	ISOLatin1 encoding is now derived from WinAnsi rather than
+	PDFDocEncoding.
 
 
 

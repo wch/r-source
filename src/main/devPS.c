@@ -4232,7 +4232,7 @@ static void PDF_Encodings(PDFDesc *pd)
 	    fprintf(pd->pdffp, "/BaseEncoding /%s\n", encoding->name);
 	    fprintf(pd->pdffp, "/Differences [ 45/minus ]\n");
 	} else if (strcmp(encoding->name, "ISOLatin1Encoding") == 0) {
-	    fprintf(pd->pdffp, "/BaseEncoding /PDFDocEncoding\n");
+	    fprintf(pd->pdffp, "/BaseEncoding /WinAnsiEncoding\n");
 	    fprintf(pd->pdffp, "/Differences [ 45/minus 96/quoteleft\n144/dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent\n/dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron /space]\n");
 	} else {
 	    fprintf(pd->pdffp, "/BaseEncoding /PDFDocEncoding\n");
@@ -4845,6 +4845,8 @@ static void PDF_Text(double x, double y, char *str,
     rot1 = rot * DEG2RAD;
     a = size * cos(rot1);
     b = size * sin(rot1);
+    if(fabs(a) < 0.01) a = 0.0;
+    if(fabs(b) < 0.01) b = 0.0;
     if(!pd->inText) texton(pd);
     /*
      * Only try to do real transparency if version at least 1.4
