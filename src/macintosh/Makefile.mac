@@ -3,7 +3,7 @@
 # It also builds help files for the Macintosh
 # distribution.
 #
-# Jago October 2001, Stefano M. Iacus
+# Jago November 2001, Stefano M. Iacus
 #
 #
 
@@ -69,6 +69,14 @@ mainfiles Ä fixdesc
 	  if `Exists -d ::library:{pkg}:R:mac`
 	    catenate ::library:{pkg}:R:mac:Å.R >> {RHOME}library:{pkg}:R:{pkg}
 	  end
+	  Duplicate {RHOME}library:{pkg}:R:{pkg} {RHOME}library:{pkg}:R:{pkg}.ux
+      translate ¶0x0a ¶0x0d <{RHOME}library:{pkg}:R:{pkg}.ux >{RHOME}library:{pkg}:R:{pkg}
+      delete -y {RHOME}library:{pkg}:R:{pkg}.ux
+	  if {pkg} == base
+	    Duplicate :::library:{pkg}:R:Rprofile :::library:{pkg}:R:Rprofile.ux
+        translate ¶0x0a ¶0x0d <:::library:{pkg}:R:Rprofile.ux >:::library:{pkg}:R:Rprofile
+        delete -y :::library:{pkg}:R:Rprofile.ux
+      end
 	 end
     end 
 
