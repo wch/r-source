@@ -13,20 +13,21 @@ stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
 
 ## -- Stop List for "base" :
+edit.int <- c("fix", "edit", "vi", "emacs", "pico", "xemacs", "xedit")
+misc.int <- c("browser", "bug.report", "menu")
 stop.list[["base"]] <-
     if(nchar(getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
-	"bug.report"
+	c(edit.int, misc.int)
     } else {
 	inet.list <- c(apropos("download\."),
-                       apropos("^url\."), apropos("\.url"),
-                       paste(c("CRAN", "install", "update"),"packages",sep="."))
-	socket.fun <- apropos("socket")# those *do* segfault...
+		       apropos("^url\."), apropos("\.url"),
+		       paste(c("CRAN", "install", "update"),"packages",sep="."))
+	socket.fun <- apropos("socket")
 	## "Interactive" ones:
 	dev.int <- c("X11", "windows", "macintosh")
-        edit.int <- c("fix", "edit", "vi", "emacs", "pico", "xemacs", "xedit")
-	misc.int <- c("browser", "bug.report", "help", "menu",
-		      "data.entry", "dataentry", "de", apropos("^de\."))
-	c(inet.list, socket.fun, dev.int, edit.int, misc.int)
+	misc.2 <- c("help.start",
+		    "data.entry", "dataentry", "de", apropos("^de\."))
+	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
 
 for (pkg in core.pkgs) {
