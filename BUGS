@@ -60,14 +60,31 @@ none
 
 Directory:  Documentation
 
-none
+* PR# 856 *
+Subject: "}  {" problem in Rd files
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 26 Feb 2001 11:10:01 -0500
 
 Directory:  Graphics
 
-* PR# 837 *
-Subject: screen doesn't handle redrawing properly
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 01 Feb 2001 14:20:52 -0500
+* PR# 857 *
+Subject: Plotting points on a filled.contour plot
+From: marchini@stats.ox.ac.uk
+Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
+--This needs at least to be documented, and preferably par("usr")
+--set to the coordinate system of the plotting region after use.
+* PR# 202 *
+Subject: persp box occlusion bug
+From: wsi@gcal.ac.uk
+Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
+--The persp algorithm does not apply the occlusion rules to the frame, 
+--which is always plotted first. 
+--A bug, but not very simple to fix.
+* PR# 776 *
+Subject: strwidth does not take font into account
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
+--This needs a substantial redesign.
 * PR# 750 *
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -76,13 +93,13 @@ Date: Mon, 27 Nov 2000 18:27:11 +0100
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 202 *
-Subject: persp box occlusion bug
-From: wsi@gcal.ac.uk
-Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
---The persp algorithm does not apply the occlusion rules to the frame, 
---which is always plotted first. 
---A bug, but not very simple to fix.
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
+--mtext is unscaled by default.  It is not clear if this should
+--use the par("cex") setting or an inline cex setting such as cex.axis.
+--It might make more sense to use axis rather than mtext, as boxplot does.
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -102,11 +119,10 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
 Date: Fri, 22 Dec 2000 10:59:26 +0100
-* PR# 776 *
-Subject: strwidth does not take font into account
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
---This needs a substantial redesign.
+* PR# 830 *
+Subject: Disappearing x axis in plot.factor
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:27:13 -0500
 * PR# 828 *
 Subject: termplot fails for composite non-factor terms
 From: John Maindonald <john.maindonald@anu.edu.au>
@@ -115,21 +131,14 @@ Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 --
 --The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
 --the data right is a project for 1.3
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
---mtext is unscaled by default.  It is not clear if this should
---use the par("cex") setting or an inline cex setting such as cex.axis.
---It might make more sense to use axis rather than mtext, as boxplot does.
+* PR# 837 *
+Subject: screen doesn't handle redrawing properly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 01 Feb 2001 14:20:52 -0500
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 30 Jan 2001 00:39:41 -0500
-* PR# 830 *
-Subject: Disappearing x axis in plot.factor
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 30 Jan 2001 00:27:13 -0500
 
 Directory:  In-Out
 
@@ -141,6 +150,18 @@ none
 
 Directory:  Language
 
+* PR# 860 *
+Subject: Context problem with ... and rbind
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sat, 3 Mar 2001 20:59:04 +0000 (GMT)
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
+* PR# 408 *
+Subject: convolution bug
+From: wsimpson@gcal.ac.uk
+Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 * PR# 813 *
 Subject: match.call problem
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -150,14 +171,6 @@ Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 25 Sep 2000 10:17:15 +0200
 --status of AsIs columns
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
-* PR# 408 *
-Subject: convolution bug
-From: wsimpson@gcal.ac.uk
-Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
@@ -219,27 +232,4 @@ none
 
 Directory:  incoming
 
-* PR# 860 *
-Subject: Context problem with ... and rbind
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sat, 3 Mar 2001 20:59:04 +0000 (GMT)
-* PR# 855 *
-Subject: %*% in examples
-From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Date: Mon, 26 Feb 2001 13:48:39 +0100 (MET)
-* PR# 857 *
-Subject: Plotting points on a filled.contour plot
-From: marchini@stats.ox.ac.uk
-Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
-* PR# 856 *
-Subject: "}  {" problem in Rd files
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Mon, 26 Feb 2001 11:10:01 -0500
-* PR# 859 *
-Subject: apply on data.frame does not work properly
-From: sergei@stams.strath.ac.uk
-Date: Fri, 2 Mar 2001 18:14:30 +0100 (MET)
-* PR# 858 *
-Subject: docs + packages
-From: Adelchi Azzalini <aa@gwen.stat.unipd.it>
-Date: Thu, 01 Mar 2001 10:09:22 +0100
+none
