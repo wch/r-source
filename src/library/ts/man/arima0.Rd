@@ -162,7 +162,8 @@ arima0(x, order = c(0, 0, 0),
     differences.}
 
   \item{aic}{the AIC value corresponding to the log-likelihood. Only
-    valid for \code{method = "ML"} fits.}
+    valid for \code{method = "ML"} fits.  Prior to \R 1.5.0 this omitted
+    \code{2} for the estimation of the innovations variance.}
 
   \item{residuals}{the standardized residuals. (Was \code{resid}
     prior to \R 1.5.0.)}
