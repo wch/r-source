@@ -1107,8 +1107,13 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
     return(NULL);
   /* check that the methods for this function have been set */
   if(current == NEEDS_RESET) {
-      mlist = get_primitive_methods(op, rho);
+      /* get the methods and store them in the in-core primitive
+	 method table.  The entries will be preserved via
+	 R_preserveobject, so later we can just grab mlist from
+	 prim_mlist */
+      PROTECT(mlist = get_primitive_methods(op, rho));
       do_set_prim_method(op, "set", R_NilValue, mlist);
+      UNPROTECT(1);
   }
   mlist = prim_mlist[offset];
   if(mlist && !isNull(mlist)
