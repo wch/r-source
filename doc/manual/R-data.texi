@@ -1,4 +1,4 @@
-\input texinfo
+p\input texinfo
 @c %**start of header
 @setfilename R-data.info
 @settitle R Data Import/Export
@@ -1250,7 +1250,9 @@ number of rows in the result.
 @findex getTable
 As from @code{RMySQL} version 0.4 there are convenience functions
 @code{assignTable} to load a data frame into the database and
-@code{getTable} to retrieve a table as a data frame.
+@code{getTable} to retrieve a table as a data frame.  The row names
+get copied into the table as column @code{row_names} by
+@code{assignTable}, but they are not copied back by @code{getTable}.
 
 @smallexample
 > library(RMySQL)
@@ -1261,17 +1263,25 @@ As from @code{RMySQL} version 0.4 there are convenience functions
 ## load a data frame into the database, deleting any existing copy
 > data(USArrests)
 > assignTable(con, "arrests", USArrests, overwrite = TRUE)
-## Select from the loaded database.
-> quickSQL(con, "select * from USArrests where Rape > 30 order by Murder")
-  Murder Assault UrbanPop Rape  row_names
-1    7.9     204       78 38.7   Colorado
-2    8.1     294       80 31.0    Arizona
-3    9.0     276       91 40.6 California
-4   10.0     263       48 44.5     Alaska
-5   11.4     285       70 32.1 New Mexico
-6   12.1     255       74 35.1   Michigan
-7   12.2     252       81 46.0     Nevada
-8   15.4     335       80 31.9    Florida
+## get the whole table
+> getTable(con, "arrests")
+   Murder Assault UrbanPop Rape      row_names
+1    13.2     236       58 21.2        Alabama
+2    10.0     263       48 44.5         Alaska
+3     8.1     294       80 31.0        Arizona
+...
+## Select from the loaded table: all on one line
+> quickSQL(con, "select row_names, Murder from arrests
+           where Rape > 30 order by Murder")
+   row_names Murder
+1   Colorado    7.9
+2    Arizona    8.1
+3 California    9.0
+4     Alaska   10.0
+5 New Mexico   11.4
+6   Michigan   12.1
+7     Nevada   12.2
+8    Florida   15.4
 > close(con)
 @end smallexample
 
