@@ -40,55 +40,54 @@ export R_UNZIPCMD R_ZIPCMD
 use_r_environ=true
 
 usage="
-Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
-   or  R command      [arguments]
-   or  R CMD Rcommand [arguments]
+Usage: R [options] [< infile] [> outfile]
+   or: R CMD command [arguments]
 
 Start R, a system for statistical computation and graphics, with the
 specified options, or invoke an R tool via the \`R CMD' interface.
 
 Options:
-  -g, --gnome		Run the gnome binary
+  -h, --help            Print short help message and exit
+  --version             Print version info and exit
+  RHOME			Print path to R home directory and exit
   --save                Do save data sets at the end of the session
   --no-save             Don't save them
-  --restore             Do restore previously saved data sets at startup
-  --no-restore          Don't restore them
-  --no-readline         Don't use readline for command-line editing
+  --no-environ          Don't read the .Renviron or ~/.Renviron files
   --no-site-file        Don't read the site-wide Rprofile
   --no-init-file        Don't read the .Rprofile or ~/.Rprofile files
-  --no-environ          Don't read the .Renviron or ~/.Renviron files
+  --restore             Do restore previously saved data sets at startup
+  --no-restore          Don't restore them
   --vanilla		Combine --no-save, --no-restore, --no-site-file,
 			--no-init-file, and --no-environ
+  --no-readline         Don't use readline for command-line editing
   --vsize=N             Set vector heap size to N bytes; \`4M' = 4 MegaB
   --nsize=N             Set number of cons cells to N
-  -h, --help            Print short help message and exit
   -q, --quiet           Don't print startup message
   --silent              Same as --quiet
   --slave               Make R run as quietly as possible
-  --version             Print version info and exit
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME
+  -g, --gnome		Run the gnome binary
 
 Commands:
-  RHOME			Give R's home directory and exit
-  BATCH			Run batch job
+  BATCH			Run R in batch mode
   COMPILE		Compile files for use with R
+  SHLIB			Build shared library for dynamic loading
   INSTALL		Install add-on packages
   REMOVE		Remove add-on packages
-  SHLIB			Build shared library for dynamic loading
-
-  Please use \`R command --help' to obtain further information.
-
-Rcommands:
+  build			Build add-on packages
+  check			Check add-on packages
   Rdconv		Convert Rd format to various other formats
   Rd2dvi		Convert Rd format to DVI/PDF
   Rd2txt		Convert Rd format to pretty text
   Rdindex		Extract index information from Rd files
   Sd2Rd			Convert S documentation to Rd format
-  build			Build add-on packages
-  check			Check add-on packages
 
-  Please use \`R CMD Rcommand --help' to obtain further information.
+The first five tools (i.e., BATCH, COMPILE, SHLIB, INSTALL, and REMOVE)
+can also be invoked without the \`CMD' option.
+
+Please use \`R CMD command --help' to obtain further information about
+the usage of \`command'.
 
 Report bugs to <R-bugs@lists.r-project.org>."
 
