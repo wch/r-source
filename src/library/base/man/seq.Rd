@@ -1,5 +1,15 @@
 \name{seq}
 \title{Sequence Generation}
+\alias{seq}
+\alias{seq.default}
+\alias{:}
+\description{
+  Generate regular sequences.
+}
+\synopsis{
+seq.default(from = 1, to = 1, by = ((to - from)/(length.out - 1)), 
+            length.out = NULL, along.with = NULL)
+}
 \usage{
 from:to
 seq(from, to)
@@ -7,34 +17,31 @@ seq(from, to, by=)
 seq(from, to, length=)
 seq(along)
 }
-\alias{seq}
-\alias{seq.default}
-\alias{:}
-\description{
-  Generate regular sequences.
-}
 \details{
-The operator \code{:} and the first \code{seq(.)} form generate the sequence
-\code{from, from+1}, \ldots, \code{to}.
-\code{seq} is a generic function.
+  The operator \code{:} and the first \code{seq(.)} form generate the
+  sequence \code{from, from+1}, \ldots, \code{to}.
+  \code{seq} is a generic function.
 
-The second form generates \code{from, from+by}, \ldots, \code{to}.
+  The second form generates \code{from, from+by}, \ldots, \code{to}.
 
-The third generates a sequence of \code{length} equally spaced values from
-\code{from} to \code{to}.
+  The third generates a sequence of \code{length} equally spaced values
+  from \code{from} to \code{to}.
 
-The last generates the sequence
-\code{1, 2}, \ldots, \code{length(along)}.
+  The last generates the sequence \code{1, 2}, \ldots,
+  \code{length(along)}.
 
-If \code{from} and \code{to} are factors of the same length,
-the ``cross'' of the two is returned.
+  If \code{from} and \code{to} are factors of the same length, then
+  \code{from : to} returns the ``cross'' of the two.
 }
 \value{
   The result is of \code{mode} \code{"integer"} if \code{from} is
   (numerically equal to an) integer.
 }
 \seealso{
-\code{\link{rep}}, \code{\link{sequence}}, \code{\link{row}}, \code{\link{col}}.
+  \code{\link{rep}},
+  \code{\link{sequence}},
+  \code{\link{row}},
+  \code{\link{col}}.
 }
 \examples{
 1:4

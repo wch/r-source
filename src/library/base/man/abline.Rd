@@ -1,5 +1,14 @@
 \name{abline}
+\alias{abline}
 \title{Add a Straight Line to a Plot}
+\description{
+  This function adds one or more straight lines through the current plot.
+}
+\synopsis{
+abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, 
+       coef = NULL, untf = FALSE, col = par("col"),
+       lty = par("lty"), lwd = NULL, ...)
+}
 \usage{
 abline(a, b, \dots)
 abline(h=, \dots)
@@ -7,10 +16,6 @@ abline(v=, \dots)
 abline(untf=, \dots)
 abline(coef=, \dots)
 abline(reg=, \dots)
-}
-\alias{abline}
-\description{
-  This function adds one or more straight lines through the current plot.
 }
 \details{
   The first form specifies the line in intercept/slope form
@@ -22,6 +27,7 @@ abline(reg=, \dots)
 
   The \code{coef} form specifies the line by a vector containing the
   slope and intercept.
+
   \code{reg} is a regression object which contains \code{reg$coef}.  If
   it is of length 1 then the value is taken to be the slope of a line
   through the origin, otherwise, the first 2 values are taken to be the

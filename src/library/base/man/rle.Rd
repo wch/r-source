@@ -1,20 +1,20 @@
 \name{rle}
 \alias{rle}
 \title{Run Length Encoding}
+\description{
+  Compute the lengths and values of runs of equal values in a vector.
+}
 \usage{
 rle(x)
 }
-\description{
-    Compute the lengths and values of runs of equal values in a vector.
-}
 \arguments{
-    \item{x}{a vector.}
+  \item{x}{a vector.}
 }
 \value{
-    A list with components
-    \item{lengths}{a vector containing the length of each run.}
-    \item{values}{a vector of the same length as \code{lengths} with the
-        corresponding values.}
+  A list with components
+  \item{lengths}{a vector containing the length of each run.}
+  \item{values}{a vector of the same length as \code{lengths} with the
+    corresponding values.}
 }
 \examples{
 x <- rev(rep(6:10, 1:5))

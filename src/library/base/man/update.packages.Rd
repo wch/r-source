@@ -2,6 +2,7 @@
 \alias{update.packages}
 \alias{installed.packages}
 \alias{CRAN.packages}
+\alias{old.packages}
 \alias{download.file}
 \alias{download.packages}
 \alias{install.packages}
