@@ -209,7 +209,7 @@ qpois <- function(p, lambda, lower.tail = TRUE, log.p = FALSE)
     .Internal(qpois(p, lambda, lower.tail, log.p))
 rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
-dt <- function(x, df, ncp, log = FALSE) {
+dt <- function(x, df, ncp=0, log = FALSE) {
     if(missing(ncp))
         .Internal(dt(x, df, log))
     else .NotYetImplemented()
