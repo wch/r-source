@@ -1,11 +1,5 @@
 \name{grid-internal}
 %% <FIXME>
-%% This was documented as internal here but shown in the \usage of
-%% grid.current.viewport.Rd which only had alias grid.current.viewport.
-\alias{current.viewport}
-%% </FIXME>
-
-%% <FIXME>
 %% These had aliases but no corresponding code object:
 %% <LIST>
 %% \alias{.unit}

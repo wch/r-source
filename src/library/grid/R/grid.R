@@ -68,20 +68,13 @@ pop.viewport <- function(n=1, recording=TRUE) {
 }
 
 # Function to obtain the current viewport
-# Grid plotting functions all take a viewport argument which
-# currents to NULL (NULL indicates that the current viewport
-# should be used).  The function may want to copy the viewport
-# it is drawing into (see e.g., lxaxis and grid.yaxis) and this
-# function provides a consistent interface for deciding whether
-# a temporary viewport has been specified or whether the
-# current viewport is being used.
-# Can also be called without specifying vp, just to get current
-# current viewport (see e.g., lgrid)
 current.viewport <- function(vp=NULL) {
   if (is.null(vp))
     grid.Call("L_currentViewport")
-  else
+  else {
+    warning("The vp argument is going to be deprecated")
     vp
+  }
 }
 
 # Call this function if you want the graphics device erased or moved
