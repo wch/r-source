@@ -33,7 +33,7 @@
  *
  * NOTE: This is done by using some preprocessor trickery.  If __MAIN__
  * is defined as above, there is a sneaky
- *     #define extern /**/
+ *     #define extern
  * so that the same code produces both declarations and definitions.
  *
  * This does not include user interface symbols which are included
