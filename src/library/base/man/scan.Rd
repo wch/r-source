@@ -101,11 +101,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   Note that since \code{sep} is a separator and not a terminator,
   reading a file by \code{scan("foo", sep="\n", blank.lines.skip=FALSE)}
   will give an empty file line if the file ends in a linefeed and not it
-  it does not.  This might not be what you expected.
+  it does not.  This might not be what you expected; see also
+  \code{\link{readLines}}.
 }
 \seealso{
   \code{\link{read.table}} for more user-friendly reading of data
   matrices;
+  \code{\link{readLines}} to read a file a line at a time.
   \code{\link{write}}.
 }
 \examples{

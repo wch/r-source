@@ -282,6 +282,8 @@ NEW FEATURES
     o   scan() now reads empty character fields as "" not "NA" unless
 	"" is included in na.strings.
 
+    o   New readLines() function to read a file line-by-line.
+
 
 BUG FIXES
 

@@ -585,6 +585,7 @@ FUNTAB R_FunTab[] =
 {"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
 {"object.size",	do_objectsize,	0,	11,	1,	PP_FUNCALL},
 {"mem.limits",	do_memlimits,	0,	11,	2,	PP_FUNCALL},
+{"readLines",	do_readLines,	0,	11,	3,	PP_FUNCALL},
 #if 0
 {"visibleflag", do_visibleflag,	0,	1,	0,	PP_FUNCALL},
 #endif

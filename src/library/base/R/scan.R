@@ -16,3 +16,7 @@ scan <-
                    na.strings, flush, fill, strip.white, quiet,
                    blank.lines.skip))
 }
+
+readLines <- function(file, n = -1, ok = TRUE)
+    .Internal(readLines(file, n, ok))
+
