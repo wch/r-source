@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-24, 2002-03-18
+@set FAQ-VERSION 1.4-25, 2002-03-20
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1775,6 +1775,10 @@ networks''), and for multinomial log-linear models.  Contained in the
 @file{VR} bundle.
 @item norm
 Analysis of multivariate normal datasets with missing values.
+@item npmc
+Nonparametric Multiple Comparisons:  provides simultaneous rank test
+procedures for the one-way layout without presuming a certain
+distribution.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
@@ -1858,6 +1862,16 @@ the @file{VR} bundle.
 @item spatstat
 Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates.
+@item spdep
+A collection of functions to create spatial weights matrix objects from
+polygon contiguities, from point patterns by distance and tesselations,
+for summarising these objects, and for permitting their use in spatial
+data analysis; a collection of tests for spatial autocorrelation,
+including global Moran's I and Geary's C, local Moran's I, saddlepoint
+approximations for global and local Moran's I; and functions for
+estimating spatial simultaneous autoregressive (SAR) models.  Was
+formerly the three packages: @strong{spweights}, @strong{sptests}, and
+@strong{spsarlm}.
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @item spsarlm
