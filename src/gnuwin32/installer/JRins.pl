@@ -48,7 +48,6 @@ AppVersion=${RVER}
 DefaultDirName={pf}\\R\\${RW}
 DefaultGroupName=R
 AllowNoIcons=yes
-AlwaysCreateUninstallIcon=yes
 LicenseFile=${RW}\\COPYING
 DisableReadyPage=yes
 DisableStartupPrompt=yes
