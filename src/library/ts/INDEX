@@ -38,6 +38,7 @@ ar.burg		Estimate autoregression model by Burg's method
 ar.ols		Estimate autoregression model by ordinary least squares
 ar.mle		Estimate autoregression model by maximum likelihood
 ar.yw		Estimate autoregression model by solving Yule-Walker equations
+arima           ARIMA Modelling of Time Series
 arima0		ARIMA modelling -- provisional version
 arima.sim       Simulate from an ARIMA Model
 ARMAacf         Compute Theoretical ACF for an ARMA Process
@@ -58,18 +59,20 @@ pacf		Partial autocorrelation function
 plot.acf	Plot autocorrelation function
 plot.spec	Plot spectral density estimate, coherency and phase.
 PP.test		Phillips-Perron test for unit roots
-predict		methods for ar and arima0
+predict		methods for ar, arima, arima0 and StructTS
 spec.ar		Estimate spectral density by autoregression
 spec.pgram	Estimate spectral density from periodogram
 spec.taper	Taper by cosine bell
 spectrum	Wrapper for spectral density estimation functions
 stl		Seasonal decomposition using loess
 stlmethods      Methods for STL Objects
+StructTS        Fit Structural Time Series
 toeplitz	Generate Toeplitz matrix
 ts.intersect	Bind time series as multivariate ts over the common time base
 ts.plot		Plot several time series with different time bases
 ts.union	Bind time series as multivariate ts over their total time base
 tsdiag          Diagnostic Plots for Time-Series Fits
+tsSmooth        Use Fixed-Interval Smoothing on Time Series
 
 In some cases the visual output will closer to that of S(-PLUS) if
 options(ts.S.compat=TRUE) has been set.
@@ -89,20 +92,4 @@ uspop		Populations Recorded by the US Census
 Datasets in package ts:
 ----------------------
 
-austres		Quarterly time series of the number of Australian residents
-beavers		time series of body temperatures of two beavers
-BJsales		sales data with leading indicator from Box & Jenkins
-EuStockMarkets	daily closing prices of major European stock indices, 1991-8
-LakeHuron	level of Lake Huron 1875-1972
-lh		dataset on luteinizing hormone from Diggle (1990)
-lynx		Annual Canadian Lynx trappings 1821-1934
-Nile		Flow of the River Nile
-nottem		time-series of temperatures in Nottingham, 1920-1939
-sunspot 	yearly sunspot data, 1700-1988
-		monthly sunspot data, 1749-1997
-treering        yearly tree ring data, -6000-1979
-UKDriverDeaths	time series on UK road casualties 1969-84
-UKgas		UK quarterly gas consumption 1960-1986
-UKLungDeaths	time-series on UK lung deaths 1974-9 from Diggle (1990)
-USAccDeaths	US accidental deaths 1973-8
-WWWusage	Numbers of users connected to the Internet per minute
+See data(package="ts").

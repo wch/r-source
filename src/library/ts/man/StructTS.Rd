@@ -115,15 +115,15 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL)
 }
 
 \examples{
-## see also Nile and AirPassengers
+## see also JohnsonJohnson, Nile and AirPassengers
 
-data(treering, package = "ts")
+data(treering)
 trees <- window(treering, start=0)
 (fit <- StructTS(trees, type = "level"))
 plot(trees)
 lines(fitted(fit), col = "green")
 
-data(UKgas,  package = "ts")
+data(UKgas)
 (fit <- StructTS(log10(UKgas), type = "BSM"))
 par(mfrow = c(4, 1))
 plot(log10(UKgas))

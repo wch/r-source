@@ -1,17 +1,22 @@
-austres		Quarterly time series of the number of Australian residents
-beavers		time series of body temperatures of two beavers
-BJsales		sales data with leading indicator from Box & Jenkins
-EuStockMarkets  daily closing prices of major European stock indices, 1991-8
-LakeHuron	level of Lake Huron 1875-1972
-lh		dataset on luteinizing hormone from Diggle (1990)
-lynx		Annual Canadian Lynx trappings 1821-1934
-Nile		Flow of the River Nile
-nottem		time-series of temperatures in Nottingham, 1920-1939
-sunspot 	yearly sunspot data, 1700-1988
-		monthly sunspot data, 1749-1997
-treering        yearly tree ring data, -6000-1979
-UKDriverDeaths	time series on UK road casualties 1969-84
-UKgas		UK quarterly gas consumption 1960-1986
-UKLungDeaths	time-series on UK lung deaths 1974-9 from Diggle (1990)
-USAccDeaths	US accidental deaths 1973-8
-WWWusage	Numbers of users connected to the Internet per minute
+AirPassengers            Monthly Airline Passenger Numbers 1949-1960
+austres                  Quarterly Time Series of the Number of
+                         Australian Residents
+beavers                  Body Temperature Series of Two Beavers
+BJsales                  Sales Data with Leading Indicator.
+EuStockMarkets           Daily Closing Prices of Major European Stock
+                         Indices, 1991-1998.
+JohnsonJohnson           Quarterly Earnings per Johnson & Johnson Share
+LakeHuron                Level of Lake Huron 1875--1972
+lh                       Luteinizing Hormone in Blood Samples
+lynx                     Annual Canadian Lynx trappings 1821--1934
+Nile                     Flow of the River Nile
+nottem                   Average Monthly Temperatures at Nottingham,
+                         1920--1939
+sunspot                  Yearly Sunspot Data, 1700--1988. Monthly Sunspot
+                         Data, 1749--1997.
+treering                 Yearly Treering Data, -6000--1979.
+UKDriverDeaths           Road Casualties in Great Britain 1969--84
+UKLungDeaths             Monthly Deaths from Lung Diseases in the UK
+UKgas                    UK Quarterly Gas Consumption
+USAccDeaths              Accidental Deaths in the US 1973--1978
+WWWusage                 Internet Usage per Minute
