@@ -31,7 +31,7 @@ functions. There is no documentation to help you write this sort of code.
 
 \code{.Call} can be used call compiled code which makes use of internal
 \R objects.  The arguments are passed to the C code as a sequence of
-\R objects.  It is included to provide compaibility with S version 4.
+\R objects.  It is included to provide compatibility with S version 4.
 }
 \value{
 The functions \code{.C} and \code{.Fortran} return a list similar to the \code{\dots}
@@ -103,10 +103,10 @@ safe.
 }
 
 \section{Header files for external code}{
-Writing code for use with \code{.External} will typically require access 
-to the header files in the \code{src/include}. These are not copied by
-\code{make install} and so may not be available in an installed version
-of \R.
+    Writing code for use with \code{.External} will typically use
+    internal \R structures. If possible use just those in
+    \file{Rinternals.h}, as other header files are not installed and are
+    even more likely to be changed.
 }
     
 \seealso{\code{\link{dyn.load}}.}
