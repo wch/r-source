@@ -180,8 +180,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 	    if (formula == dotSymbol && framenames != R_NilValue)
 		for (i=0; i<length(framenames); i++) {
 		    v=install(CHAR(STRING_ELT(framenames, i)));
-		    if (!MatchVar(v, CADR(varlist)))
-			InstallVar(install(CHAR(STRING_ELT(framenames, i))));
+		    if (!MatchVar(v, CADR(varlist))) InstallVar(v);
 		}
 	    else
 		InstallVar(formula);
@@ -554,7 +553,8 @@ static SEXP DeleteTerms(SEXP left, SEXP right)
 static SEXP EncodeVars(SEXP formula)
 {
     SEXP term, r;
-    int len, i;
+    int len, i, j;
+    char *c;
 
     if (isNull(formula))
 	return R_NilValue;
@@ -573,9 +573,14 @@ static SEXP EncodeVars(SEXP formula)
 	if (formula == dotSymbol && framenames != R_NilValue) {
 	    r = R_NilValue;
 	    for (i=0; i< LENGTH(framenames); i++) {
+		/* change in 1.6.0 do not use duplicated names */
+		c = CHAR(STRING_ELT(framenames, i));
+		for(j = 0; j < i; j++)
+		    if(!strcmp(c, CHAR(STRING_ELT(framenames, j))))
+			error("duplicated name `%s' in data frame using `.'", c);
 		PROTECT(r);
 		term = AllocTerm();
-		SetBit(term, InstallVar(install(CHAR(STRING_ELT(framenames, i)))),
+		SetBit(term, InstallVar(install(c)),
 		       1);
 		r = CONS(term, r);
 		UNPROTECT(1);

@@ -105,14 +105,14 @@ NEW FEATURES
     o	data.frame() recycles factors and "AsIs" objects as well as
 	atomic vectors.
 
+    o	predict.lm() warns if newdata is supplied and the fit was
+	rank-deficient, as this can be misleading.
+
 
 DEPRECATED & DEFUNCT
 
     o	The assignment operator `_' is deprecated: a warning is	given
 	once per R session.
-
-    o	The print.ordered() method is no longer needed, since handled by
-        print.factor() and hence deprecated.
 
     o	machine() is deprecated in favour of .Platform$OS.type.
 	Machine() and Platform() are deprecated in favour of .Machine
@@ -122,7 +122,7 @@ DEPRECATED & DEFUNCT
 
     o	piechart() is defunct.
 
-    o	print.ordered() has been removed.
+    o	print.ordered() has been removed, so print.factor() is used,
 
 
 DOCUMENTATION CHANGES
@@ -159,7 +159,7 @@ BUG FIXES
     o	Setting "tcl = a" in a highlevel graphic function worked almost
 	as if par(tcl = a) was called (i.e. was persistent).  Further,
 	after par(tcl= <.>), highlevel graphic setting of tcl didn't work
-	anymore.  "tck" has now S' default -0.01 (when tcl=NA).
+	anymore.  "tck" has now S's default of -0.01 (when tcl=NA).
 
     o   data() was not checking if ./data was a directory before
 	warning.
@@ -177,6 +177,7 @@ BUG FIXES
 
     o   Using Q to exit a browser invoked at the top-level could lead to
 	the browser being invoked on all future top-level loops (PR#1721)
+
 
 
 	**************************************************

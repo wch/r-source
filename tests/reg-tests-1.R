@@ -808,6 +808,25 @@ stopifnot(identical(X, XX))
 ## Last is false in some S variants.
 
 
+## test of rank-deficient prediction, as various claims this did not work
+## on R-help in June 2002
+x1 <- rnorm(100)
+x3 <- rnorm(100)
+y <- rnorm(100)
+train <- data.frame(y=y, x1=x1, x2=x1, x3=x3)
+fit <- lm(y ~ ., train)
+stopifnot(all.equal(predict(fit), predict(fit, train)))
+## warning added for 1.6.0
+
+
+## terms(y ~ .) on data frames with duplicate names
+DF <- data.frame(y = rnorm(10), x1 = rnorm(10), x2 = rnorm(10), x3 = rnorm(10))
+names(DF)[3] <- "x1"
+fit <- try(lm(y ~ ., DF))
+stopifnot(class(fit) == "try-error")
+## had formula y ~ x1 + x1 + x3 in 1.5.1.
+
+
 ## keep at end, as package `methods' has persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
