@@ -11,8 +11,8 @@ NEW FEATURES
 
     o	symnum(x) now nicely codes logical x.
 
-    o	convolve() has now "circular = TRUE" allowing "open" convolution
-	as opposed to circular.
+    o	convolve() has a new type = c("circular", "open", "filter")
+	argument allowing more than the only circular convolution.
 
     o	par(xpd) now has three settings:  FALSE (clip to plot region),
 	TRUE (clip to figure region), or NA (clip to device region).

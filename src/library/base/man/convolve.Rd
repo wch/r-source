@@ -1,39 +1,42 @@
 \name{convolve}
 \title{Fast Convolution}
 \usage{
-convolve(x, y, conj = TRUE, circular = TRUE)
+convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 }
 \alias{convolve}
 \arguments{
 \item{x,y}{numeric sequences \emph{of the same length} to be convolved.}
 \item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
     before back-transforming (default, and used for usual convolution).}
-\item{circular}{logical; if \code{TRUE}, the two sequences are treated
-    as \emph{circular}, i.e., periodic.  Otherwise (\code{circular =
-	FALSE}), they are padded with \code{0}s first.}
+\item{type}{character; one of \code{"circular"}, \code{"open"},
+    \code{"filter"}.  For \code{circular}, the two sequences are treated
+    as \emph{circular}, i.e., periodic.
+
+    For \code{open} and \code{filter}, the sequences are padded with
+    \code{0}s (from left and right) first;
+    \code{"filter"} returns a the middle sub-vector of \code{"open"},
+    namely, the result of running a weighted mean of \code{x} with
+    weights \code{y}.}
 }
 \description{
     Use the Fast Fourier Transform to compute the
-    (circular) convolution of two sequences.
+    several kinds of convolutions of two sequences.
 }
 \details{
     The Fast Fourier Transform, \code{\link{fft}}, is used for efficiency.
 
     The input sequences \code{x} and  \code{y} must have the same length if
     \code{circular = TRUE}).
-
-    The usual ``open'' convolution uses \code{circular = FALSE}.
-    It can be used for a fast weighted running mean filter.
 }
 \value{
-%%-MM: TODO: Polish --- circular  <-> non-circular
-%% --  Show how to use for weighted running mean filter !
-    If \code{r <- convolve(x,y, conj=TRUE, circular= Circ )}
+    If \code{r <- convolve(x,y, conj=TRUE, type)}
     and \code{n <- length(x)}, then
     \deqn{r_k = \sum_{i=1}^n x_i y_{k-i}}{r[k] = sum(i=1,..,n;  x[i] * y[k-i])}
     for \eqn{k = 1,\dots,n}.
 
-    If \code{Circ = TRUE}, then
+%%-MM: TODO: Polish --- circular  <-> non-circular
+%% --  Show how to use for weighted running mean filter !
+    If \code{type == "circular"}, then
     \eqn{y_{j} = y_{n+j}}{y[j] == y[n+j]} for \eqn{j < 0}.
 }
 \references{
@@ -50,6 +53,16 @@ round(convolve(x,y), 7)# this is *NOT* what you first thought..
 x <- rnorm(50);y <- rnorm(50)
 all(convolve(x,y), convolve(y,x))
 all(convolve(x,y, conj = FALSE), rev(convolve(y,x)))
+
+n <- length(x <- -20:24)
+y <- (x-10)^2/1000 + rnorm(x)/8
+
+Han <- function(y) # Hanning
+convolve(y, c(1,2,1)/4, type = "filter")
+
+plot(x,y, main="Using  convolve(.) for Hanning filters")
+lines(x[-c(1  , n)      ], Han(y), col="red")
+lines(x[-c(1:2, (n-1):n)], Han(Han(y)), lwd=2, col="dark blue")
 }
 \keyword{math}
 \keyword{dplot}
