@@ -42,7 +42,7 @@
 
 #define TRACERUI(a)
 
-extern int UserBreak;
+extern Rboolean UserBreak;
 
 console RConsole = NULL;
 #ifdef USE_MDI
@@ -247,7 +247,7 @@ static void menulazy(control m)
 static void menukill(control m)
 {
     show(RConsole);
-    UserBreak = 1;
+    UserBreak = TRUE;
 }
 
 static void menuls(control m)

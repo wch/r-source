@@ -52,7 +52,7 @@ typedef struct {
 
     int windowWidth;			/* Window width (pixels) */
     int windowHeight;			/* Window height (pixels) */
-    int resize;				/* Window resized */
+    Rboolean resize;			/* Window resized */
     GtkWidget *window;			/* Graphics frame */
     GtkWidget *drawing;                 /* Drawable window */
 
@@ -63,11 +63,14 @@ typedef struct {
     GdkRectangle clip;
     GdkCursor *gcursor;
 
-    int usefixed;
+    Rboolean usefixed;
     GdkFont *font;
 
 } gtkDesc;
 
+/* routines from here */
+Rboolean GTKDeviceDriver(DevDesc *dd, char *display, double width, 
+			 double height, double pointsize);
 
 /* Device driver actions */
 static void   GTK_Activate(DevDesc *);
@@ -77,10 +80,10 @@ static void   GTK_Close(DevDesc*);
 static void   GTK_Deactivate(DevDesc *);
 static void   GTK_Hold(DevDesc*);
 static void   GTK_Line(double, double, double, double, int, DevDesc*);
-static int    GTK_Locator(double*, double*, DevDesc*);
+static Rboolean GTK_Locator(double*, double*, DevDesc*);
 static void   GTK_Mode(int, DevDesc*);
 static void   GTK_NewPage(DevDesc*);
-static int    GTK_Open(DevDesc*, gtkDesc*, char*, double, double);
+static Rboolean GTK_Open(DevDesc*, gtkDesc*, char*, double, double);
 static void   GTK_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   GTK_Polyline(int, double*, double*, int, DevDesc*);
 static void   GTK_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -316,7 +319,7 @@ static gint configure_event(GtkWidget *widget, GdkEventConfigure *event, gpointe
 	gtkd->windowWidth = event->width;
 	gtkd->windowHeight = event->height;
 
-	gtkd->resize = 1;
+	gtkd->resize = TRUE;
     }
 
     return FALSE;
@@ -392,7 +395,7 @@ static GnomeUIInfo graphics_toolbar[] =
 };
 
 /* create window etc */
-static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
+static Rboolean GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 {
     gint iw, ih;
 
@@ -469,11 +472,11 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
     /* Set base font */
     if(!SetBaseFont(gtkd)) {
 	Rprintf("can't find X11 font\n");
-	return 0;
+	return FALSE;
     }
 
     /* we made it! */
-    return 1;
+    return TRUE;
 }
 
 static double GTK_StrWidth(char *str, DevDesc *dd)
@@ -901,7 +904,7 @@ static gboolean locator_button_press(GtkWidget *widget,
     gtk_main_quit();
 }
 
-static int GTK_Locator(double *x, double *y, DevDesc *dd)
+static Rboolean GTK_Locator(double *x, double *y, DevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GTK_locator_info *info;
@@ -930,9 +933,9 @@ static int GTK_Locator(double *x, double *y, DevDesc *dd)
     g_free(info);
 
     if(button1)
-	return 1;
+	return TRUE;
 
-    return 0;
+    return FALSE;
 }
 
 static void GTK_Mode(gint mode, DevDesc *dd)
@@ -951,8 +954,9 @@ static void GTK_Hold(DevDesc *dd)
 
 
 /* Device driver entry point */
-int GTKDeviceDriver(DevDesc *dd, char *display, double width, 
-		    double height, double pointsize)
+Rboolean
+GTKDeviceDriver(DevDesc *dd, char *display, double width, 
+		double height, double pointsize)
 {
     int ps;
     gchar tmp[2];
@@ -961,7 +965,7 @@ int GTKDeviceDriver(DevDesc *dd, char *display, double width,
     gtkDesc *gtkd;
 
     if(!(gtkd = (gtkDesc *) malloc(sizeof(gtkDesc))))
-	return 0;
+	return FALSE;
 
     dd->deviceSpecific = (void *) gtkd;
 
@@ -977,7 +981,7 @@ int GTKDeviceDriver(DevDesc *dd, char *display, double width,
     /* device driver start */
     if(!GTK_Open(dd, gtkd, display, width, height)) {
 	free(gtkd);
-	return 0;
+	return FALSE;
     }
 
     /* setup data structure */
@@ -1033,21 +1037,21 @@ int GTKDeviceDriver(DevDesc *dd, char *display, double width,
     dd->dp.ipr[1] = pixelHeight();
 
     /* device capabilities */
-    dd->dp.canResizePlot = 1;
-    dd->dp.canChangeFont = 0;
-    dd->dp.canRotateText = 1;
-    dd->dp.canResizeText = 1;
-    dd->dp.canClip = 0;
-    dd->dp.canHAdj = 0;
+    dd->dp.canResizePlot= TRUE;
+    dd->dp.canChangeFont= FALSE;
+    dd->dp.canRotateText= TRUE;
+    dd->dp.canResizeText= TRUE;
+    dd->dp.canClip = FALSE;/* FIXME: really? */
+    dd->dp.canHAdj = 0;/* not better? {0, 0.5, 1} */
 
     /* gtk device description stuff */
     gtkd->cex = 1.0;
     gtkd->srt = 0.0;
-    gtkd->resize = 0;
+    gtkd->resize = FALSE;
 
-    dd->displayListOn = 1;
+    dd->displayListOn = TRUE;
 
     /* finish */
-    return 1;
+    return TRUE;
 }
 

@@ -1228,44 +1228,40 @@ static void heightCmRegions(double widths[], double heights[],
 		   dd->gp.cmWidths, 1);
 }
 
-static int allCmWidths(DevDesc *dd)
+static Rboolean allCmWidths(DevDesc *dd)
 {
     int j;
-    int allCm = 1;
     for (j = 0; j < dd->gp.numcols; j++)
 	if (!dd->gp.cmWidths[j])
-	    allCm = 0;
-    return allCm;
+	    return FALSE;
+    return TRUE;
 }
 
-static int allCmHeights(DevDesc *dd)
+static Rboolean allCmHeights(DevDesc *dd)
 {
     int i;
-    int allCm = 1;
     for (i = 0; i < dd->gp.numrows; i++)
 	if (!dd->gp.cmHeights[i])
-	    allCm = 0;
-    return allCm;
+	    return FALSE;
+    return TRUE;
 }
 
-static int noCmWidths(DevDesc *dd)
+static Rboolean noCmWidths(DevDesc *dd)
 {
     int j;
-    int noCm = 1;
     for (j = 0; j < dd->gp.numcols; j++)
 	if (dd->gp.cmWidths[j])
-	    noCm = 0;
-    return noCm;
+	    return FALSE;
+    return TRUE;
 }
 
-static int noCmHeights(DevDesc *dd)
+static Rboolean noCmHeights(DevDesc *dd)
 {
     int i;
-    int noCm = 1;
     for (i = 0; i < dd->gp.numrows; i++)
 	if (dd->gp.cmHeights[i])
-	    noCm = 0;
-    return noCm;
+	    return FALSE;
+    return TRUE;
 }
 
 static void someCmRegions(double widths[], double heights[],
@@ -1279,12 +1275,12 @@ static void someCmRegions(double widths[], double heights[],
 	notAllCmRegions(widths, heights, cmWidth, cmHeight, dd);
 }
 
-static int allCm(DevDesc *dd)
+static Rboolean allCm(DevDesc *dd)
 {
     return allCmWidths(dd) && allCmHeights(dd);
 }
 
-static int noCm(DevDesc *dd)
+static Rboolean noCm(DevDesc *dd)
 {
     return noCmWidths(dd) && noCmHeights(dd);
 }
@@ -1692,7 +1688,7 @@ void GReset(DevDesc *dd)
 
 /*  Is the figure region too big ? */
 
-static int validFigureRegion(DevDesc *dd)
+static Rboolean validFigureRegion(DevDesc *dd)
 {
     return ((dd->gp.fig[0] > 0-FLT_EPSILON) &&
 	    (dd->gp.fig[1] < 1+FLT_EPSILON) &&
@@ -1702,7 +1698,7 @@ static int validFigureRegion(DevDesc *dd)
 
 /*  Is the figure region too small ? */
 
-static int validOuterMargins(DevDesc *dd)
+static Rboolean validOuterMargins(DevDesc *dd)
 {
     return ((dd->gp.fig[0] < dd->gp.fig[1]) &&
 	    (dd->gp.fig[2] < dd->gp.fig[3]));
@@ -1710,7 +1706,7 @@ static int validOuterMargins(DevDesc *dd)
 
 /* Is the plot region too big ? */
 
-static int validPlotRegion(DevDesc *dd)
+static Rboolean validPlotRegion(DevDesc *dd)
 {
     return ((dd->gp.plt[0] > 0-FLT_EPSILON) &&
 	    (dd->gp.plt[1] < 1+FLT_EPSILON) &&
@@ -1720,7 +1716,7 @@ static int validPlotRegion(DevDesc *dd)
 
 /* Is the plot region too small ? */
 
-static int validFigureMargins(DevDesc *dd)
+static Rboolean validFigureMargins(DevDesc *dd)
 {
     return ((dd->gp.plt[0] < dd->gp.plt[1]) &&
 	    (dd->gp.plt[2] < dd->gp.plt[3]));
@@ -1742,10 +1738,10 @@ SEXP savedDisplayList;
 GPar savedGPar;
 #endif
 
-DevDesc *GNewPlot(int recording, int ask)
+DevDesc *GNewPlot(Rboolean recording, int ask)/* ask can be NA */
 {
     DevDesc *dd;
-    int asksave;
+    Rboolean asksave;
 
     /* If there are no active devices
      * check the options for a "default device".
@@ -1767,29 +1763,34 @@ DevDesc *GNewPlot(int recording, int ask)
     GRestore(dd);
     if (ask == NA_LOGICAL)
 	ask = dd->dp.ask;
-    asksave = dd->gp.ask;
+    asksave = dd->gp.ask; 
+/* FIXME: The above cannot be correct, since `ask' is not used
+ *	  anymore now.
+ * maybe add something like
+ *
+ *   if(asksave == NA_LOGICAL) asksave = dd->dp.ask;
+ *   dd->gp.ask = (Rboolean)ask;
 
+ * and use `ask' instead of  `dd->gp.ask'  7 lines below ..
+*/
     if (!dd->gp.new) {
 	dd->dp.currentFigure += 1;
 	dd->gp.currentFigure = dd->dp.currentFigure;
 	if (dd->gp.currentFigure > dd->gp.lastFigure) {
-	    if (dd->gp.ask && recording) {
-		NewFrameConfirm();
-		if (NoDevices())
-		    error("attempt to plot on null device");
-		else
-		    dd = CurrentDevice();
-	    }
-	    if (recording)
+	    if (recording) {
+		if (dd->gp.ask) {
+		    NewFrameConfirm();
+		    if (NoDevices())
+			error("attempt to plot on null device");
+		    else
+			dd = CurrentDevice();
+		}
 #ifdef PLOTHISTORY
-	    {
 		PROTECT(savedDisplayList=dd->displayList);
 		copyGPar(&(dd->dpSaved), &(savedGPar));
 #endif
 		initDisplayList(dd);
-#ifdef PLOTHISTORY
 	    }
-#endif
 	    dd->dp.newPage(dd);
 #ifdef PLOTHISTORY
 	    if (recording) UNPROTECT(1);
@@ -1797,7 +1798,7 @@ DevDesc *GNewPlot(int recording, int ask)
 	    dd->dp.currentFigure = dd->gp.currentFigure = 1;
 	}
 
-	dd->gp.new =  dd->gp.new = 1;
+	dd->gp.new = dd->gp.new = TRUE;
 	GReset(dd);
 	if (dd->dp.canClip)
 	    GForceClip(dd);
@@ -1809,35 +1810,29 @@ DevDesc *GNewPlot(int recording, int ask)
     /* send an error message to the command line */
     /* IF we are replaying then draw a message in the output */
 
-    dd->dp.valid = dd->gp.valid = 0;
+#define G_ERR_MSG(msg)			\
+	if (recording)			\
+	    invalidError(msg, dd);	\
+	else				\
+	    GText(0.5,0.5,NFC, msg,	\
+		  0.5,0.5,  0, dd)
+    
+    dd->dp.valid = dd->gp.valid = FALSE;
     if (!validOuterMargins(dd)) {
-	if (recording)
-	    invalidError("Outer margins too large (fig.region too small)", dd);
-	else
-	    GText(0.5,0.5,NFC,"Outer margins too large (fig.region too small)",
-		  0.5,0.5, 0, dd);
+	G_ERR_MSG("Outer margins too large (fig.region too small)");
     } else if (!validFigureRegion(dd)) {
-	if (recording)
-	    invalidError("Figure region too large", dd);
-	else
-	    GText(0.5,0.5,NFC,"Figure region too large",
-		  0.5,0.5, 0, dd);
+	G_ERR_MSG("Figure region too large");
     } else if (!validFigureMargins(dd)) {
-	if (recording)
-	    invalidError("Figure margins too large", dd);
-	else
-	    GText(0.5,0.5,NFC,"Figure margins too large",
-		  0.5,0.5, 0, dd);
+	G_ERR_MSG("Figure margins too large");
     } else if (!validPlotRegion(dd)) {
-	if (recording)
-	    invalidError("Plot region too large", dd);
-	else
-	    GText(0.5,0.5,NFC,"Plot region too large",
-		  0.5,0.5, 0, dd);
+	G_ERR_MSG("Plot region too large");
     } else
-	dd->dp.valid = dd->gp.valid = 1;
+	dd->dp.valid = dd->gp.valid = TRUE;
+
+    dd->gp.ask = asksave;
     return dd;
 }
+#undef G_ERR_MSG
 
 void GScale(double min, double max, int axis, DevDesc *dd)
 {
@@ -1966,7 +1961,7 @@ void GSetupAxis(int axis, DevDesc *dd)
 /*  GSetupAxis -- Set up the default axis information
  *		  called when user specifies	par(usr =...) */
 /*  What should happen if			------------
- *   xlog or ylog = 1 ? */
+ *   xlog or ylog = TRUE ? */
     double min, max;
     int n;
 
@@ -2002,132 +1997,135 @@ void GSetupAxis(int axis, DevDesc *dd)
  */
 
 
-/* Set default graphics parameter values in a GPar.  This initialises */
-/* the plot state, plus the other graphical parameters that are not the */
-/* responsibility of the device initialisation. */
-void GInit(GPar *gp)
+/* Set default graphics parameter values in a GPar. 
+ * This initialises the plot state, plus the other graphical
+ * parameters that are not the responsibility of the device initialisation.
+
+ * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
+ */  
+void GInit(GPar *dp)
 {
-    gp->state = 0;
+    dp->state = 0;
 
-    gp->ann = 1;
-    gp->ask = 0;
-    gp->err = 0;
-    gp->bty = 'o';
+    dp->ann = TRUE;
+    dp->ask = FALSE;
+    dp->err = 0;
+    dp->bty = 'o';
 
-    gp->mkh = .001;/* dummy value > 0  --- FIXME : */
+    dp->mkh = .001;/* dummy value > 0  --- FIXME : */
     /* GREset has dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
-    gp->cex = 1.0;
-    gp->cexbase = 1.0;
-    gp->cexmain = 1.2;
-    gp->cexlab = 1.0;
-    gp->cexsub = 1.0;
-    gp->cexaxis = 1.0;
+    dp->cex = 1.0;
+    dp->cexbase = 1.0;
+    dp->cexmain = 1.2;
+    dp->cexlab = 1.0;
+    dp->cexsub = 1.0;
+    dp->cexaxis = 1.0;
 
-    gp->col = 0;
-    gp->colmain = 0;
-    gp->collab = 0;
-    gp->colsub = 0;
-    gp->colaxis = 0;
-    gp->gamma = 1;
+    dp->col = 0;
+    dp->colmain = 0;
+    dp->collab = 0;
+    dp->colsub = 0;
+    dp->colaxis = 0;
+    dp->gamma = 1;
 
-    /* gp->ps = 10; */	/* Device Specific */
-    gp->metricInfo = 0;
-    gp->font = 1;
-    gp->fontmain = 2;
-    gp->fontlab = 1;
-    gp->fontsub = 1;
-    gp->fontaxis = 1;
+    /* dp->ps = 10; */	/* Device Specific */
+    dp->metricInfo = 0;
+    dp->font = 1;
+    dp->fontmain = 2;
+    dp->fontlab = 1;
+    dp->fontsub = 1;
+    dp->fontaxis = 1;
 
-    gp->pch = 1;
-    gp->lty = LTY_SOLID;
-    gp->smo = 1;
+    dp->pch = 1;
+    dp->lty = LTY_SOLID;
+    dp->smo = 1;
 
     /* String Adjustment and rotation */
-    gp->adj = 0.5;
-    gp->crt = 0.0;
-    gp->srt = 0.0;
+    dp->adj = 0.5;
+    dp->crt = 0.0;
+    dp->srt = 0.0;
 
     /* Positioning of margin text */
-    gp->mgp[0] = 3;
-    gp->mgp[1] = 1;
-    gp->mgp[2] = 0;
+    dp->mgp[0] = 3;
+    dp->mgp[1] = 1;
+    dp->mgp[2] = 0;
 
     /* Axis annotation parameters */
-    gp->lab[0] = 5;
-    gp->lab[1] = 5;
-    gp->lab[2] = 7;
-    gp->las = 0;
-    gp->tck = NA_REAL;
-    gp->tcl = -0.5;
-    gp->tmag = 1.2;
-    gp->type = 'p';
-    gp->xaxp[0] = 0.0;
-    gp->xaxp[1] = 1.0;
-    gp->xaxp[2] = 5.0;
-    gp->xaxs = 'r';
-    gp->xaxt = 's';
-    gp->xlog = 0;
-    gp->xpd = 0;
-    gp->oldxpd = -99;
-    gp->yaxp[0] = 0.0;
-    gp->yaxp[1] = 1.0;
-    gp->yaxp[2] = 5.0;
-    gp->yaxs = 'r';
-    gp->yaxt = 's';
-    gp->ylog = 0;
+    dp->lab[0] = 5;
+    dp->lab[1] = 5;
+    dp->lab[2] = 7;
+    dp->las = 0;
+    dp->tck = NA_REAL;
+    dp->tcl = -0.5;
+    dp->tmag = 1.2;
+    dp->type = 'p';
+    dp->xaxp[0] = 0.0;
+    dp->xaxp[1] = 1.0;
+    dp->xaxp[2] = 5.0;
+    dp->xaxs = 'r';
+    dp->xaxt = 's';
+    dp->xlog = FALSE;
+    dp->xpd = 0;
+    dp->oldxpd = -99;
+    dp->yaxp[0] = 0.0;
+    dp->yaxp[1] = 1.0;
+    dp->yaxp[2] = 5.0;
+    dp->yaxs = 'r';
+    dp->yaxt = 's';
+    dp->ylog = FALSE;
 
     /* Outer Margins */
-    gp->mex = 1.0;
-    gp->oma[0] = 0.0;
-    gp->oma[1] = 0.0;
-    gp->oma[2] = 0.0;
-    gp->oma[3] = 0.0;
-    gp->oUnits = LINES;
-    gp->fig[0] = 0.0;
-    gp->fig[1] = 1.0;
-    gp->fig[2] = 0.0;
-    gp->fig[3] = 1.0;
-    gp->fUnits = NIC;
-    gp->defaultFigure = 1;	/* the figure region is calculated from */
+    dp->mex = 1.0;
+    dp->oma[0] = 0.0;
+    dp->oma[1] = 0.0;
+    dp->oma[2] = 0.0;
+    dp->oma[3] = 0.0;
+    dp->oUnits = LINES;
+    dp->fig[0] = 0.0;
+    dp->fig[1] = 1.0;
+    dp->fig[2] = 0.0;
+    dp->fig[3] = 1.0;
+    dp->fUnits = NIC;
+    dp->defaultFigure = TRUE;	/* the figure region is calculated from */
 				/* the layout by default */
-    gp->pUnits = NFC;
-    gp->defaultPlot = 1;	/* the plot region is calculated as */
+    dp->pUnits = NFC;
+    dp->defaultPlot = TRUE;	/* the plot region is calculated as */
 				/* figure-margin by default */
 
     /* Inner Margins */
-    gp->mar[0] = 5.1;
-    gp->mar[1] = 4.1;
-    gp->mar[2] = 4.1;
-    gp->mar[3] = 2.1;
-    gp->mUnits = LINES;
+    dp->mar[0] = 5.1;
+    dp->mar[1] = 4.1;
+    dp->mar[2] = 4.1;
+    dp->mar[3] = 2.1;
+    dp->mUnits = LINES;
 
     /* Multi-figure parameters */
-    gp->layout = 0;
-    gp->mfind  = 0;
+    dp->layout = FALSE;
+    dp->mfind  = 0;
 
-    gp->numrows = 1;
-    gp->numcols = 1;
-    gp->currentFigure = 1;
-    gp->lastFigure = 1;
-    gp->heights[0] = 1;
-    gp->widths[0] = 1;
-    gp->cmHeights[0] = 0;
-    gp->cmWidths[0] = 0;
-    gp->order[0][0] = 1;
-    gp->rspct = 0;
-    gp->respect[0][0] = 0;
+    dp->numrows = 1;
+    dp->numcols = 1;
+    dp->currentFigure = 1;
+    dp->lastFigure = 1;
+    dp->heights[0] = 1;
+    dp->widths[0] = 1;
+    dp->cmHeights[0] = 0;
+    dp->cmWidths[0] = 0;
+    dp->order[0][0] = 1;
+    dp->rspct = 0;
+    dp->respect[0][0] = 0;
 
     /* Misc plotting parameters */
-    gp->new = 0;
-    gp->devmode = -99;
-    gp->pty = 'm';
-    gp->lwd = 1;
+    dp->new = FALSE;
+    dp->devmode = -99;
+    dp->pty = 'm';
+    dp->lwd = 1;
 
     /* Data window */
-    gp->usr[0] = 0.0;
-    gp->usr[1] = 1.0;
-    gp->usr[2] = 0.0;
-    gp->usr[3] = 1.0;
+    dp->usr[0] = 0.0;
+    dp->usr[1] = 1.0;
+    dp->usr[2] = 0.0;
+    dp->usr[3] = 1.0;
 }
 
 
@@ -2250,7 +2248,7 @@ void GSavePars(DevDesc *dd)
 }
 
 
-/*  Restore temorarily saved inline parameter values	*/
+/*  Restore temporarily saved inline parameter values	*/
 void GRestorePars(DevDesc *dd)
 {
     dd->gp.adj = adjsave;
@@ -2323,7 +2321,7 @@ void GCheckState(DevDesc *dd)
 {
     if(dd->gp.state == 0)
 	error("plot.new has not been called yet");
-    if (dd->gp.valid == 0)
+    if (!dd->gp.valid)
 	onintr();
 }
 
@@ -2335,7 +2333,7 @@ void GCheckState(DevDesc *dd)
 /* CLIPPING paradigm:
    R uses both the clipping capabilities of the device (if present)
    and its own internal clipping algorithms.
-   If the device has no clipping capabilities (canClip = 0) then R
+   If the device has no clipping capabilities (canClip = FALSE) then R
    does all of the clipping internally.
    If the device has clipping capabilities, R still does some internal
    clipping (to the device extent).  This is to avoid "silly" values
@@ -2439,8 +2437,9 @@ static int clipcode(double x, double y, cliprect *cr)
     return c;
 }
 
-static int CSclipline(double *x1, double *y1, double *x2, double *y2,
-		      int *clipped1, int *clipped2, int coords, cliprect *cr)
+static Rboolean 
+CSclipline(double *x1, double *y1, double *x2, double *y2,
+	   int *clipped1, int *clipped2, int coords, cliprect *cr)
 {
     int c, c1, c2;
     double x, y;
@@ -2453,7 +2452,7 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
     y = cr->yb;		/* keep -Wall happy */
     while( c1 || c2 ) {
 	if(c1 & c2)
-	    return 0;
+	    return FALSE;
 	if( c1 )
 	    c = c1;
 	else
@@ -2488,7 +2487,7 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
 	    c2 = clipcode(x, y, cr);
 	}
     }
-    return 1;
+    return TRUE;
 }
 
 
@@ -2569,13 +2568,14 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 /* Clip the line
    If toDevice = 1, clip to the device extent (i.e., temporarily ignore
    dd->gp.xpd) */
-static int clipLine(double *x1, double *y1, double *x2, double *y2,
-		     int coords, int toDevice, DevDesc *dd)
+static Rboolean
+clipLine(double *x1, double *y1, double *x2, double *y2,
+	 int coords, int toDevice, DevDesc *dd)
 {
     double temp;
     int dummy1, dummy2;
     int xpdsaved = 0; /* -Wall */
-    int result;
+    Rboolean result;
     cliprect cr;
 
     if (toDevice) {
@@ -2607,16 +2607,16 @@ static int clipLine(double *x1, double *y1, double *x2, double *y2,
    device does all other clipping. */
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
-    int result;
+    Rboolean clip_ok;
     if (dd->gp.lty == LTY_BLANK) return;
     if (dd->dp.canClip) {
-	result = clipLine(&x1, &y1, &x2, &y2, coords, 1, dd);
+	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 1, dd);
 	GClip(dd);
     }
     else {
-	result = clipLine(&x1, &y1, &x2, &y2, coords, 0, dd);
+	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 0, dd);
     }
-    if (result)
+    if (clip_ok)
 	dd->dp.line(x1, y1, x2, y2, coords, dd);
 }
 
@@ -2658,7 +2658,7 @@ void GMode(int mode, DevDesc *dd)
 	error("No graphics device is active");
     if(mode != dd->gp.devmode)
 	dd->dp.mode(mode, dd);
-    dd->gp.new = dd->dp.new = 0;
+    dd->gp.new = dd->dp.new = FALSE;
     dd->gp.devmode = dd->dp.devmode = mode;
 }
 
@@ -3339,7 +3339,7 @@ void GText(double x, double y, int coords, char *str,
         warning("freeing previous text buffer in GText");
     }
     if(str && *str) {
-        char *s, *sbuf, *sb;
+        char *s, *sb;
 	int i, n;
 	double xoff, yoff, hadj;
 	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
@@ -5025,12 +5025,12 @@ unsigned int LTYpar(SEXP value, int ind)
     else if(isReal(value)) {
 	code = REAL(value)[ind];
 	LTY_do_int;
-#undef LTY_do_int
     }
     else {
 	error("invalid line type"); /*NOTREACHED, for -Wall : */ return 0;
     }
 }
+#undef LTY_do_int
 
 SEXP LTYget(unsigned int lty)
 {
@@ -5552,11 +5552,13 @@ void restoredpSaved(DevDesc *dd)
 
 void playDisplayList(DevDesc *dd)
 {
-    int ask, savedDevice;
+    int savedDevice;
+    Rboolean asksave;
     SEXP theList = dd->displayList;
+
     if (theList != R_NilValue) {
-	ask = dd->gp.ask;
-	dd->gp.ask = 1;
+	asksave = dd->gp.ask;
+	dd->gp.ask = TRUE;
 	restoredpSaved(dd);
 	copyGPar(&(dd->dp), &(dd->gp));
 	GReset(dd);
@@ -5570,7 +5572,7 @@ void playDisplayList(DevDesc *dd)
             if (!dd->gp.valid) break;
 	    theList = CDR(theList);
 	}
-	dd->gp.ask = ask;
+	dd->gp.ask = asksave;
 	selectDevice(savedDevice);
     }
 }
@@ -5590,5 +5592,5 @@ void copyDisplayList(int fromDevice)
 void inhibitDisplayList(DevDesc *dd)
 {
     initDisplayList(dd);
-    dd->displayListOn = 0;
+    dd->displayListOn = FALSE;
 }

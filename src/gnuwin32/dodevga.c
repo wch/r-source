@@ -78,7 +78,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!GADeviceDriver(dd, display, width, height, ps, recording)) {
+    if (!GADeviceDriver(dd, display, width, height, ps, (Rboolean)recording)) {
 	free(dd);
 	errorcall(call, "unable to start device devga");
     }

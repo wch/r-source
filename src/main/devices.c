@@ -121,7 +121,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
  *  fg	    = foreground color
  *  width   = width in inches
  *  height  = height in inches
- *  debug   = int; if non-0, write TeX-Comments into output.
+ *  debug   = Rboolean; if TRUE, write TeX-Comments into output.
  */
 
 SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -130,7 +130,8 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     char *vmax;
     char *file, *bg, *fg;
     double height, width;
-    int debug;
+    Rboolean debug;
+
     gcall = call;
     vmax = vmaxget();
     file = SaveString(CAR(args), 0); args = CDR(args);
@@ -138,7 +139,9 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     fg = SaveString(CAR(args), 0);   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);
     height = asReal(CAR(args));	     args = CDR(args);
-    debug = asInteger(CAR(args));    args = CDR(args);
+    debug = asLogical(CAR(args));    args = CDR(args);
+    if(debug == NA_LOGICAL) debug = FALSE;
+
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */

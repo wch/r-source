@@ -481,7 +481,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
     double variance, dX, dY, deltaX, deltaY;
     double dXC, dYC, deltaXC, deltaYC;
-    int range=0, index=0, n; /* -Wall */
+    int range=0, indx=0, n; /* -Wall */
     double lowestVariance;
     double squareSum, sum;
     int iii, jjj;
@@ -753,15 +753,15 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			   overwriting contour line
 			*/
 		    if (useStart(xxx, yyy, ns, dd) )
-			index = 0;
+			indx = 0;
 		    else
-			index = ns - 1;
+			indx = ns - 1;
 		    break;
 		case 1: /* draw label at one end of contour
 			   embedded in contour
 			   no overlapping labels
 			*/
-		    index = 0;
+		    indx = 0;
 		    range = 0;
 		    gotLabel = FALSE;
 		    if (useStart(xxx, yyy, ns, dd)) {
@@ -788,7 +788,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			if (result == 0) {
 			    result = LabelInsideWindow(label1, dd);
 			    if (result == 0) {
-				index = iii;
+				indx = iii;
 				range = n;
 				gotLabel = TRUE;
 			    }
@@ -801,7 +801,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			*/
 		    /* Look for flatest sequence of contour gradients */
 		    lowestVariance = 9999999;   /* A large number */
-		    index = 0;
+		    indx = 0;
 		    range = 0;
 		    gotLabel = FALSE;
 		    for (iii = 0; iii < ns; iii++) {
@@ -860,7 +860,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			    avgGradient /= n;
 			    if (variance < lowestVariance) {
 				lowestVariance = variance;
-				index = iii;
+				indx = iii;
 				range = n;
 				avg = avgGradient;
 			    }
@@ -873,29 +873,29 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		if (method == 0) {
 		    GPolyline(ns, xxx, yyy, USER, dd);
 		    if (vectorFonts)
-			GVText(xxx[index], yyy[index], USER, buffer,
+			GVText(xxx[indx], yyy[indx], USER, buffer,
 			       typeface, fontindex,
 			       .5, .5, 0, dd);
 		    else
-			GText(xxx[index], yyy[index], USER, buffer,
+			GText(xxx[indx], yyy[indx], USER, buffer,
 			      .5, .5, 0, dd);
 		}
 		else {
-		    for (iii = 0; iii < index; iii++)
+		    for (iii = 0; iii < indx; iii++)
 			GLine(xxx[iii], yyy[iii],
 			      xxx[iii+1], yyy[iii+1], USER, dd);
-		    for (iii = index+range; iii < ns - 1; iii++)
+		    for (iii = indx+range; iii < ns - 1; iii++)
 			GLine(xxx[iii], yyy[iii],
 			      xxx[iii+1], yyy[iii+1], USER, dd);
 
 		    if (gotLabel) {
 			/* find which plot edge we are closest to */
-			int closest; /* 0 = index,  1 = index+range */
+			int closest; /* 0 = indx,  1 = indx+range */
 			double dx1, dx2, dy1, dy2, dmin;
-			dx1 = fmin2((xxx[index] - dd->gp.usr[0]),
-				    (dd->gp.usr[1] - xxx[index]));
-			dx2 = fmin2((dd->gp.usr[1] - xxx[index+range]),
-				    (xxx[index+range] - dd->gp.usr[0]));
+			dx1 = fmin2((xxx[indx] - dd->gp.usr[0]),
+				    (dd->gp.usr[1] - xxx[indx]));
+			dx2 = fmin2((dd->gp.usr[1] - xxx[indx+range]),
+				    (xxx[indx+range] - dd->gp.usr[0]));
 			if (dx1 < dx2) {
 			    closest = 0;
 			    dmin = dx1;
@@ -903,21 +903,21 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			    closest = 1;
 			    dmin = dx2;
 			}
-			dy1 = fmin2((yyy[index] - dd->gp.usr[2]),
-				    (dd->gp.usr[3] - yyy[index]));
+			dy1 = fmin2((yyy[indx] - dd->gp.usr[2]),
+				    (dd->gp.usr[3] - yyy[indx]));
 			if (closest && (dy1 < dmin)) {
 			    closest = 0;
 			    dmin = dy1;
 			} else if (dy1 < dmin)
 			    dmin = dy1;
-			dy2 = fmin2((dd->gp.usr[3] - yyy[index+range]),
-				    (yyy[index+range] - dd->gp.usr[2]));
+			dy2 = fmin2((dd->gp.usr[3] - yyy[indx+range]),
+				    (yyy[indx+range] - dd->gp.usr[2]));
 			if (!closest && (dy2 < dmin))
 			    closest = 1;
 
-			dx = GConvertXUnits(xxx[index+range] - xxx[index],
+			dx = GConvertXUnits(xxx[indx+range] - xxx[indx],
 					    USER, INCHES, dd);
-			dy = GConvertYUnits(yyy[index+range] - yyy[index],
+			dy = GConvertYUnits(yyy[indx+range] - yyy[indx],
 					    USER, INCHES, dd);
 			dxy = hypot(dx, dy);
 
@@ -925,8 +925,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			label2 = allocVector(REALSXP, 8);
 
 			FindCorners(labelDistance, labelHeight, label2,
-				    xxx[index], yyy[index],
-				    xxx[index+range], yyy[index+range], dd);
+				    xxx[indx], yyy[indx],
+				    xxx[indx+range], yyy[indx+range], dd);
 			UNPROTECT_PTR(labelList);
 			labelList = PROTECT(CONS(label2, labelList));
 
@@ -934,54 +934,54 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			/* draw an extra bit of segment if the label
 			   doesn't fill the gap */
 			if (closest) {
-			    xStart = xxx[index+range] -
-				(xxx[index+range] - xxx[index]) *
+			    xStart = xxx[indx+range] -
+				(xxx[indx+range] - xxx[indx]) *
 				labelDistance / dxy;
-			    yStart = yyy[index+range] -
-				(yyy[index+range] - yyy[index]) *
+			    yStart = yyy[indx+range] -
+				(yyy[indx+range] - yyy[indx]) *
 				labelDistance / dxy;
 			    if (labelDistance / dxy < 1)
-				GLine(xxx[index], yyy[index],
+				GLine(xxx[indx], yyy[indx],
 				      xStart, yStart,
 				      USER, dd);
 			} else {
-			    xStart = xxx[index] +
-				(xxx[index+range] - xxx[index]) *
+			    xStart = xxx[indx] +
+				(xxx[indx+range] - xxx[indx]) *
 				labelDistance / dxy;
-			    yStart = yyy[index] +
-				(yyy[index+range] - yyy[index]) *
+			    yStart = yyy[indx] +
+				(yyy[indx+range] - yyy[indx]) *
 				labelDistance / dxy;
 			    if (labelDistance / dxy < 1)
 				GLine(xStart, yStart,
-				      xxx[index+range], yyy[index+range],
+				      xxx[indx+range], yyy[indx+range],
 				      USER, dd);
 			}
 
 			/*** Draw contour labels ***/
-			if (xxx[index] < xxx[index+range]) {
+			if (xxx[indx] < xxx[indx+range]) {
 			    if (closest) {
 				ux = xStart;
 				uy = yStart;
-				vx = xxx[index+range];
-				vy = yyy[index+range];
+				vx = xxx[indx+range];
+				vy = yyy[indx+range];
 			    } else {
-				ux = xxx[index];
-				uy = yyy[index];
+				ux = xxx[indx];
+				uy = yyy[indx];
 				vx = xStart;
 				vy = yStart;
 			    }
 			}
 			else {
 			    if (closest) {
-				ux = xxx[index+range];
-				uy = yyy[index+range];
+				ux = xxx[indx+range];
+				uy = yyy[indx+range];
 				vx = xStart;
 				vy = yStart;
 			    } else {
 				ux = xStart;
 				uy = yStart;
-				vx = xxx[index];
-				vy = yyy[index];
+				vx = xxx[indx];
+				vy = yyy[indx];
 			    }
 			}
 
@@ -1195,7 +1195,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(5);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
-    if (call != R_NilValue)
+    if (GRecording(call))
 	recordGraphicOperation(op, oargs, dd);
     return R_NilValue;
 }
@@ -1409,7 +1409,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.xpd = xpdsave;
     R_Visible = 0;
     UNPROTECT(1);
-    if (call != R_NilValue)
+    if (GRecording(call))
 	recordGraphicOperation(op, oargs, dd);
     return R_NilValue;
 
@@ -1494,7 +1494,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.xpd = xpdsave;
     R_Visible = 0;
     UNPROTECT(1);
-    if (call != R_NilValue)
+    if (GRecording(call))
 	recordGraphicOperation(op, oargs, dd);
     return R_NilValue;
 
@@ -1555,7 +1555,7 @@ static double FacetShade(double *u, double *v)
 /* Note that we ignore z values when doing this. */
 
 static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
-		       double *depth, int *index)
+		       double *depth, int *indx)
 {
     int i, ii, j, jj, nx1, ny1;
     Vector3d u, v;
@@ -1563,7 +1563,7 @@ static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
     nx1 = nx - 1;
     ny1 = ny - 1;
     for (i = 0; i < nx1 * ny1; i++)
-	index[i] = i;
+	indx[i] = i;
     for (i = 0; i < nx1; i++)
 	for (j = 0; j < ny1; j++) {
 	    d = -DBL_MAX;
@@ -1587,12 +1587,12 @@ static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
 	}
     /* Determine the depth ordering of the facets to ensure
        that they are drawn in an occlusion compatible order. */
-    rsort_with_index(depth, index, nx1 * ny1);
+    rsort_with_index(depth, indx, nx1 * ny1);
 }
 
 
 static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
-		       int *index, double xs, double ys, double zs,
+		       int *indx, double xs, double ys, double zs,
 	               int *col, int ncol, int border)
 {
     double xx[4], yy[4], shade = 0;
@@ -1606,8 +1606,8 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
     n = nx1 * ny1;
     for (k = 0; k < n; k++) {
 	nv = 0;
-	i = index[k] % nx1;
-	j = index[k] / nx1;
+	i = indx[k] % nx1;
+	j = indx[k] / nx1;
 	icol = (i + j * nx1) % ncol;
 	if (DoLighting) {
             /* Note we must scale here */
@@ -2100,7 +2100,7 @@ static void PerspAxes(double *x, double *y, double *z,
 SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, z, xlim, ylim, zlim;
-    SEXP depth, index, originalArgs;
+    SEXP depth, indx, originalArgs;
     SEXP col, border, xlab, ylab, zlab;
     double theta, phi, r, d;
     double ltheta, lphi;
@@ -2194,7 +2194,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((tickType == NA_INTEGER) || (tickType < 1) || (tickType > 2))
 	errorcall(call, "invalid ticktype value");
 
-    dd = GNewPlot(call != R_NilValue, NA_LOGICAL);
+    dd = GNewPlot(GRecording(call), NA_LOGICAL);
 
     PROTECT(col = FixupCol(col, dd->gp.bg));
     ncol = LENGTH(col);
@@ -2240,9 +2240,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Compute facet order. */
 
     PROTECT(depth = allocVector(REALSXP, (nrows(z) - 1)*(ncols(z) - 1)));
-    PROTECT(index = allocVector(INTSXP, (nrows(z) - 1)*(ncols(z) - 1)));
+    PROTECT(indx = allocVector(INTSXP, (nrows(z) - 1)*(ncols(z) - 1)));
     DepthOrder(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z),
-	       REAL(depth), INTEGER(index));
+	       REAL(depth), INTEGER(indx));
 
     /* Now we order the facets by depth */
     /* and then draw them back to front. */
@@ -2259,7 +2259,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 		      nTicks, tickType, dd);
     }
 
-    DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index),
+    DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(indx),
 	       1/xs, 1/ys, expand/zs,
 	       INTEGER(col), ncol, INTEGER(border)[0]);
 
@@ -2269,7 +2269,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GRestorePars(dd);
     UNPROTECT(10);
-    if (call != R_NilValue)
+    if (GRecording(call))
         recordGraphicOperation(op, originalArgs, dd);
 
     PROTECT(x = allocVector(REALSXP, 16));

@@ -25,8 +25,12 @@
 #include "Defn.h"
 #include "Graphics.h"
 #include "Fileio.h"
+#include "Devices.h"
 
 	/* device-specific information per picTeX device */
+
+#define DOTSperIN	72.27
+#define in2dots(x) 	(DOTSperIN * x)
 
 typedef struct {
     FILE *texfp;
@@ -47,7 +51,7 @@ typedef struct {
     rcolor bg;
     int fontsize;
     int fontface;
-    int debug;
+    Rboolean debug;
 } picTeXDesc;
 
 
@@ -155,10 +159,10 @@ static void   PicTeX_Close(DevDesc*);
 static void   PicTeX_Deactivate(DevDesc *);
 static void   PicTeX_Hold(DevDesc*);
 static void   PicTeX_Line(double, double, double, double, int, DevDesc*);
-static int    PicTeX_Locator(double*, double*, DevDesc*);
+static Rboolean PicTeX_Locator(double*, double*, DevDesc*);
 static void   PicTeX_Mode(int, DevDesc*);
 static void   PicTeX_NewPage(DevDesc*);
-static int    PicTeX_Open(DevDesc*, picTeXDesc*);
+static Rboolean PicTeX_Open(DevDesc*, picTeXDesc*);
 static void   PicTeX_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   PicTeX_Polyline(int, double*, double*, int, DevDesc*);
 static void   PicTeX_Rect(double, double, double, double, int, int, int,
@@ -221,23 +225,23 @@ static void PicTeX_MetricInfo(int c, double *ascent, double *descent,
 
 	/* Initialize the device */
 
-static int PicTeX_Open(DevDesc *dd, picTeXDesc *ptd)
+static Rboolean PicTeX_Open(DevDesc *dd, picTeXDesc *ptd)
 {
     ptd->fontsize = 0;
     ptd->fontface = 0;
-    ptd->debug = 0;
+    ptd->debug = FALSE;
     if (!(ptd->texfp = R_fopen(R_ExpandFileName(ptd->filename), "w")))
-	return 0;
+	return FALSE;
     fprintf(ptd->texfp, "\\hbox{\\beginpicture\n");
     fprintf(ptd->texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
     fprintf(ptd->texfp,
 	    "\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",
-	    ptd->width * 72.27, ptd->height * 72.27);
+	    in2dots(ptd->width), in2dots(ptd->height));
     fprintf(ptd->texfp,"\\setlinear\n");
     fprintf(ptd->texfp, "\\font\\picfont cmss10\\picfont\n");
     SetFont(1, 10, ptd);
-    ptd->pageno += 1;
-    return 1;
+    ptd->pageno++;
+    return TRUE;
 }
 
 
@@ -274,11 +278,11 @@ static void PicTeX_NewPage(DevDesc *dd)
 	fprintf(ptd->texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
 	fprintf(ptd->texfp,
 		"\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",
-		ptd->width * 72.27, ptd->height * 72.27);
+		in2dots(ptd->width), in2dots(ptd->height));
 	fprintf(ptd->texfp,"\\setlinear\n");
 	fprintf(ptd->texfp, "\\font\\picfont cmss10\\picfont\n");
     }
-    ptd->pageno +=1;
+    ptd->pageno++;
     face = ptd->fontface;
     size = ptd->fontsize;
     ptd->fontface = 0;
@@ -411,7 +415,7 @@ static void PicTeX_Line(double x1, double y1, double x2, double y2,
 	PicTeX_ClipLine(x1, y1, x2, y2, ptd);
 	if (ptd->debug)
 		fprintf(ptd->texfp,
-			"%% Drawing cliped ine from %.2f, %.2f to %.2f, %.2f\n",
+			"%% Drawing clipped line from %.2f, %.2f to %.2f, %.2f\n",
 			ptd->clippedx0, ptd->clippedy0,
 			ptd->clippedx1, ptd->clippedy1);
 	fprintf(ptd->texfp, "\\plot %.2f %.2f %.2f %.2f /\n",
@@ -579,25 +583,22 @@ static void PicTeX_Text(double x, double y, int coords,
     size = dd->gp.cex * dd->gp.ps + 0.5;
     SetFont(dd->gp.font, size, ptd);
     GConvert(&x, &y, coords, DEVICE, dd);
-    if(ptd->debug) fprintf(ptd->texfp,
-			   "%% Writing string of length %.2f, at %.2f %.2f, xc = %.2f yc = %.2f\n",
-			   (double)PicTeX_StrWidth(str, dd), x, y, 0.0, 0.0);
-    if (ptd->debug) fprintf(ptd->texfp,
-			    "%% Writing string of length %.2f, at %.2f %.2f, xc = %.2f yc = %.2f\n",
-			    (double)PicTeX_StrWidth(str, dd), x, y, 0.0, 0.0);
-
+    if(ptd->debug) 
+	fprintf(ptd->texfp,
+		"%% Writing string of length %.2f, at %.2f %.2f, xc = %.2f yc = %.2f\n",
+		(double)PicTeX_StrWidth(str, dd), x, y, 0.0, 0.0);
     fprintf(ptd->texfp,"\\put ");
     textext(str, ptd);
     if (rot == 90 )
-	fprintf(ptd->texfp," [rB] <%.2fpt,%.2fpt>", xoff, yoff);
+	 fprintf(ptd->texfp," [rB] <%.2fpt,%.2fpt>", xoff, yoff);
     else fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
     fprintf(ptd->texfp," at %.2f %.2f\n", x, y);
 }
 
 /* Pick */
-static int PicTeX_Locator(double *x, double *y, DevDesc *dd)
+static Rboolean PicTeX_Locator(double *x, double *y, DevDesc *dd)
 {
-    return 0;
+    return FALSE;
 }
 
 
@@ -611,13 +612,13 @@ static void PicTeX_Hold(DevDesc *dd)
 {
 }
 
-int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
-		       double width, double height, int debug)
+Rboolean PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
+			    double width, double height, Rboolean debug)
 {
     picTeXDesc *ptd;
 
     if (!(ptd = (picTeXDesc *) malloc(sizeof(picTeXDesc))))
-	return 0;
+	return FALSE;
 
     strcpy(ptd->filename, filename);
 
@@ -646,20 +647,21 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
     /* Screen Dimensions in Pixels */
 
     dd->dp.left = 0;		/* left */
-    dd->dp.right = 72.27 * width;	/* right */
+    dd->dp.right = in2dots(width);/* right */
     dd->dp.bottom = 0;		/* bottom */
-    dd->dp.top = 72.27 * height;	/* top */
+    dd->dp.top = in2dots(height);/* top */
     ptd->width = width;
     ptd->height = height;
 
-    if( ! PicTeX_Open(dd, ptd) ) return 0;
+    if( ! PicTeX_Open(dd, ptd) ) 
+	return FALSE;
 
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
 
     dd->dp.ps = 10;
     dd->dp.cra[0] =	 (6.0/12.0) * 10.0;
-    dd->dp.cra[1] =	 (10.0/12.0) * 10.0;
+    dd->dp.cra[1] =	(10.0/12.0) * 10.0;
 
     /* Character Addressing Offsets */
     /* These offsets should center a single */
@@ -671,17 +673,14 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
     dd->dp.yLineBias = 0; /*0.1;*/
 
     /* Inches per Raster Unit */
-    /* We use printer points */
-    /* I.e. 72.27 dots per inch */
+    /* We use printer points, i.e. 72.27 dots per inch : */
+    dd->dp.ipr[0] = dd->dp.ipr[1] = 1./DOTSperIN;
 
-    dd->dp.ipr[0] = 1.0/72.27;
-    dd->dp.ipr[1] = 1.0/72.27;
-
-    dd->dp.canResizePlot = 0;
-    dd->dp.canChangeFont = 1;
-    dd->dp.canRotateText = 0;
-    dd->dp.canResizeText = 1;
-    dd->dp.canClip = 1;
+    dd->dp.canResizePlot = FALSE;
+    dd->dp.canChangeFont = TRUE;
+    dd->dp.canRotateText = FALSE;
+    dd->dp.canResizeText = TRUE;
+    dd->dp.canClip = TRUE;
     dd->dp.canHAdj = 0;
 
     ptd->lty = 1;
@@ -689,6 +688,6 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
     ptd->debug = debug;
 
     dd->deviceSpecific = (void *) ptd;
-    dd->displayListOn = 0;
-    return 1;
+    dd->displayListOn = FALSE;
+    return TRUE;
 }

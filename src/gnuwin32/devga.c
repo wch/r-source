@@ -38,7 +38,7 @@
 #include "windows.h"
 
 extern console RConsole;
-extern int AllDevicesKilled;
+extern Rboolean AllDevicesKilled;
 
 
 	/********************************************************/
@@ -86,7 +86,7 @@ typedef struct {
     enum DeviceKinds kind;
     int   windowWidth;		/* Window width (pixels) */
     int   windowHeight;		/* Window height (pixels) */
-    int   resize;		/* Window resized */
+    Rboolean resize;		/* Window resized */
     window gawin;		/* Graphics window */
   /*FIXME: we should have union for this stuff and
     maybe change gawin to canvas*/
@@ -98,7 +98,7 @@ typedef struct {
     menuitem mpng, mbmp, mjpeg50, mjpeg75, mjpeg100;
     menuitem mps, mwm, mclpbm, mclpwm, mprint, mclose;
     menuitem mrec, madd, mreplace, mprev, mnext, mclear, msvar, mgvar;
-    int   recording, replaying, needsave;
+    Rboolean recording, replaying, needsave;
     bitmap bm;
   /* PNG and JPEG section */
     FILE *fp;
@@ -108,12 +108,13 @@ typedef struct {
     rgb   fgcolor;		/* Foreground color */
     rgb   bgcolor;		/* Background color */
     rect  clip;			/* The clipping rectangle */
-    int   usefixed;
+    Rboolean usefixed;
     font  fixedfont;
     font  font;
-    int   locator, clicked, px, py;
-    int   lty, lwd;
-}     gadesc;
+    Rboolean locator;
+    int clicked; /* {0,1,2} */
+    int	px, py, lty, lwd;
+} gadesc;
 
 
 	/********************************************************/
@@ -136,10 +137,10 @@ static void   GA_Close(DevDesc*);
 static void   GA_Deactivate(DevDesc *);
 static void   GA_Hold(DevDesc*);
 static void   GA_Line(double, double, double, double, int, DevDesc*);
-static int    GA_Locator(double*, double*, DevDesc*);
+static Rboolean GA_Locator(double*, double*, DevDesc*);
 static void   GA_Mode(int);
 static void   GA_NewPage(DevDesc*);
-static int    GA_Open(DevDesc*, gadesc*, char*, double, double, int);
+static Rboolean GA_Open(DevDesc*, gadesc*, char*, double, double, int);
 static void   GA_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   GA_Polyline(int, double*, double*, int, DevDesc*);
 static void   GA_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -270,7 +271,7 @@ static double pixelHeight(drawing obj)
 #define NFONT 19
 #define MAXFONT 32
 static int fontnum;
-static int fontinitdone = 0;
+static int fontinitdone = 0;/* in {0,1,2} */
 static char *fontname[MAXFONT];
 static int fontstyle[MAXFONT];
 
@@ -354,11 +355,11 @@ static int SetBaseFont(gadesc *xd)
     xd->fontface = 1;
     xd->fontsize = xd->basefontsize;
     xd->fontangle = 0.0;
-    xd->usefixed = 0;
+    xd->usefixed= FALSE;
     xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0], 
 			MulDiv(xd->fontsize, xd->wanteddpi, xd->truedpi), 0.0);
     if (!xd->font) {
-	xd->usefixed = 1;
+	xd->usefixed= TRUE;
 	xd->font = xd->fixedfont = FixedFont;
 	if (!xd->fixedfont)
 	    return 0;
@@ -494,7 +495,7 @@ static void HelpResize(window w,rect r)
 		((xd->windowHeight != r.height))) {
 		xd->windowWidth = r.width;
 		xd->windowHeight = r.height;
-		xd->resize = 1;
+		xd->resize= TRUE;
 	    }
 	}
     }
@@ -518,9 +519,9 @@ static void HelpExpose(window w,rect r)
 
 	if (xd->resize) {
 	    dd->dp.resize(dd);
-	    xd->replaying = 1;
+	    xd->replaying= TRUE;
 	    playDisplayList(dd);
-	    xd->replaying = 0;
+	    xd->replaying= FALSE;
 	    R_ProcessEvents();
 	} else
 	    SHOW;
@@ -765,12 +766,12 @@ static void Replay(DevDesc *dd,SEXP vDL)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    xd->replaying = 1;
+    xd->replaying= TRUE;
     dd->displayList = pCURRENTdl;
     gsetcursor(xd->gawin, WatchCursor);
     copyGPar((GPar *) pCURRENTgp, &dd->dpSaved);
     playDisplayList(dd);
-    xd->replaying = 0;
+    xd->replaying= FALSE;
     if (!dd->displayListOn)
 	initDisplayList(dd);
     gsetcursor(xd->gawin, ArrowCursor);
@@ -783,10 +784,10 @@ static void menurec(control m)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (xd->recording) {
-	xd->recording = 0;
+	xd->recording= FALSE;
 	uncheck(m);
     } else {
-	xd->recording = 1;
+	xd->recording= TRUE;
 	check(m);
     }
 }
@@ -798,7 +799,7 @@ static void menuadd(control m)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     AddtoPlotHistory(dd->displayList, &dd->dpSaved, 0);
-    xd->needsave = 0;
+    xd->needsave= FALSE;
 }
 
 static void menureplace(control m)
@@ -838,7 +839,7 @@ static void menuprev(control m)
     if (pNUMPLOTS) {
 	if (xd->recording && xd->needsave && (dd->displayList != R_NilValue)) {
 	    AddtoPlotHistory(dd->displayList, &dd->dpSaved, 0);
-	    xd->needsave = 0;
+	    xd->needsave= FALSE;
 	}
 	pMOVE((xd->needsave) ? 0 : -1);
     }
@@ -1000,7 +1001,7 @@ static void mbarf(control m)
 #define MCHECK(m) {if(!(m)) {del(xd->gawin); return 0;}}
 
 static int 
-setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h, int recording) 
+setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h, Rboolean recording) 
 {
     menu  m;
     int   iw, ih;
@@ -1159,13 +1160,13 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h, int recording)
     setkeyaction(xd->gawin, CHelpKeyIn);
     setclose(xd->gawin, HelpClose);
     xd->recording = recording;
-    xd->replaying = 0;
+    xd->replaying= FALSE;
 
     return 1;
 }
 
-static int GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
-                    double w, double h, int recording)
+static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
+			double w, double h, Rboolean recording)
 {
     rect  rr;
 
@@ -1181,17 +1182,18 @@ static int GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
     xd->bgcolor = White;
 
     if (!dsp[0]) {
-      if (!setupScreenDevice(dd, xd, w, h, recording)) return 0;
+      if (!setupScreenDevice(dd, xd, w, h, recording)) 
+	  return FALSE;
     } else if (!strcmp(dsp, "win.print")) {
 	xd->kind = PRINTER;
 	xd->gawin = newprinter(MM_PER_INCH * w, MM_PER_INCH * h);
 	if (!xd->gawin)
-	    return 0;
+	    return FALSE;
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:",4)) {
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
 	if (!Load_Rbitmap_Dll()) {
 	  warning("Impossible to load Rbitmap.dll");
-	  return 0;
+	  return FALSE;
 	}
 	/*
 	  Observe that given actual graphapp implementation 256 is 
@@ -1202,15 +1204,15 @@ static int GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
 	    ((xd->fp=fopen(&dsp[4],"wb")) == NULL )) {
 	  if (xd->gawin != NULL) del(xd->gawin);
 	  if (xd->fp != NULL) fclose(xd->fp);
-	  return 0;
+	  return FALSE;
 	}
     } else if (!strncmp(dsp, "jpeg:", 5)) {
         char *p = strchr(&dsp[5], ':');
         xd->kind = JPEG;
-	if (!p) return 0;
+	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
 	  warning("Impossible to load Rbitmap.dll");
-	  return 0;
+	  return FALSE;
 	}
 	*p = '\0';
 	xd->quality = atoi(&dsp[5]);
@@ -1219,27 +1221,27 @@ static int GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
 	    ((xd->fp=fopen(p+1,"wb")) == NULL )) {
 	  if (xd->gawin != NULL) del(xd->gawin);
 	  if (xd->fp != NULL) fclose(xd->fp);
-	  return 0;
+	  return FALSE;
 	}
     } else {
 	/*
 	 * win.metafile[:] in memory (for the clipboard)
 	 * win.metafile:filename
-	 * anything else return 0
+	 * anything else return FALSE
 	 */
 	char  *s = "win.metafile";
 	int   ls = strlen(s);
 	int   ld = strlen(dsp);
 
 	if (ls > ld)
-	    return 0;
+	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
-	    return 0;
+	    return FALSE;
 	xd->gawin = newmetafile((ld > ls) ? &dsp[ls + 1] : "",
 				rect(0, 0, MM_PER_INCH * w, MM_PER_INCH * h));
 	xd->kind = METAFILE;
 	if (!xd->gawin)
-	    return 0;
+	    return FALSE;
     }
     xd->truedpi = devicepixelsy(xd->gawin);
     if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) 
@@ -1250,15 +1252,15 @@ static int GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
 	Rprintf("can't find any fonts\n");
 	del(xd->gawin);
 	if (xd->kind == SCREEN) del(xd->bm);
-	return 0;
+	return FALSE;
     }
     rr = getrect(xd->gawin);
     xd->windowWidth = rr.width;
     xd->windowHeight = rr.height;
     xd->clip = rr;
     setdata(xd->gawin, (void *) dd);
-    xd->needsave = 0;
-    return 1;
+    xd->needsave= FALSE;
+    return TRUE;
 }
 
 	/********************************************************/
@@ -1343,7 +1345,7 @@ static void GA_Resize(DevDesc *dd)
 	dd->dp.right = dd->gp.right = iw = xd->windowWidth;
 	dd->dp.bottom = dd->gp.bottom = ih = xd->windowHeight;
 	dd->dp.top = dd->gp.top = 0.0;
-	xd->resize = 0;
+	xd->resize= FALSE;
 	if (xd->kind==SCREEN) {
 	    del(xd->bm);
 	    xd->bm = newbitmap(iw, ih, getdepth(xd->gawin));
@@ -1381,16 +1383,16 @@ static void GA_NewPage(DevDesc *dd)
 	if (xd->recording && xd->needsave)
 	    AddtoPlotHistory(savedDisplayList, &savedGPar, 0);
 	if (xd->replaying)
-	    xd->needsave = 0;
+	    xd->needsave= FALSE;
 	else
-	    xd->needsave = 1;
+	    xd->needsave= TRUE;
     }
     xd->bg = dd->dp.bg;
     xd->bgcolor = rgb(R_RED(xd->bg),
 		      R_GREEN(xd->bg),
 		      R_BLUE(xd->bg));
     if (xd->kind!=SCREEN) {
-	xd->needsave = 1;
+	xd->needsave= TRUE;
 	xd->clip = getrect(xd->gawin);
     } else {
 	xd->clip = getrect(xd->bm);
@@ -1720,13 +1722,13 @@ static void GA_Text(double x, double y, int coords,
 	/* not all devices will do anything (e.g., postscript)	*/
 	/********************************************************/
 
-static int GA_Locator(double *x, double *y, DevDesc *dd)
+static Rboolean GA_Locator(double *x, double *y, DevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (xd->kind!=SCREEN)
-	return 0;
-    xd->locator = 1;
+	return FALSE;
+    xd->locator = TRUE;
     xd->clicked = 0;
     show(xd->gawin);
     addto(xd->gawin);
@@ -1753,13 +1755,13 @@ static int GA_Locator(double *x, double *y, DevDesc *dd)
     gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
     setstatus("R Graphics");
-    xd->locator = 0;
+    xd->locator = FALSE;
     if (xd->clicked == 1) {
 	*x = xd->px;
 	*y = xd->py;
-	return 1;
+	return TRUE;
     } else
-	return 0;
+	return FALSE;
 }
 
 	/********************************************************/
@@ -1817,8 +1819,8 @@ static void GA_Hold(DevDesc *dd)
 
 
 
-int GADeviceDriver(DevDesc *dd, char *display, double width, 
-		   double height, double pointsize, int recording)
+Rboolean GADeviceDriver(DevDesc *dd, char *display, double width, 
+			double height, double pointsize, Rboolean recording)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -1830,7 +1832,7 @@ int GADeviceDriver(DevDesc *dd, char *display, double width,
 
     /* allocate new device description */
     if (!(xd = (gadesc *) malloc(sizeof(gadesc))))
-	return 0;
+	return FALSE;
 
     /* from here on, if need to bail out with "error", must also */
     /* free(xd) */
@@ -1851,7 +1853,7 @@ int GADeviceDriver(DevDesc *dd, char *display, double width,
 
     if (!GA_Open(dd, xd, display, width, height, recording)) {
 	free(xd);
-	return 0;
+	return FALSE;
     }
     /* Set up Data Structures  */
 
@@ -1904,22 +1906,22 @@ int GADeviceDriver(DevDesc *dd, char *display, double width,
     /* Clipping is problematic for X11 */
     /* Graphics is clipped, text is not */
 
-    dd->dp.canResizePlot = 1;
-    dd->dp.canChangeFont = 0;
-    dd->dp.canRotateText = 1;
-    dd->dp.canResizeText = 1;
-    dd->dp.canClip = 1;
+    dd->dp.canResizePlot= TRUE;
+    dd->dp.canChangeFont= FALSE;
+    dd->dp.canRotateText= TRUE;
+    dd->dp.canResizeText= TRUE;
+    dd->dp.canClip= TRUE;
     dd->dp.canHAdj = 1; /* 0, 0.5, 1 */
 
     /* initialise device description (most of the work */
     /* has been done in GA_Open) */
 
-    xd->resize = 0;
-    xd->locator = 0;
+    xd->resize= FALSE;
+    xd->locator= FALSE;
     dd->deviceSpecific = (void *) xd;
-    dd->displayListOn = 1;
+    dd->displayListOn = TRUE;
     if (RConsole && (xd->kind!=SCREEN)) show(RConsole);
-    return 1;
+    return TRUE;
 }
 
 SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)

@@ -18,5 +18,6 @@
  */
 
 #include "Graphics.h"
-int GADeviceDriver(DevDesc*, char*, double, double, double, int);
+#include "R_ext/Boolean.h"
+Rboolean GADeviceDriver(DevDesc*, char*, double, double, double, Rboolean);
 

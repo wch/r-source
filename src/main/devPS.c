@@ -30,6 +30,7 @@
 #include "Graphics.h"
 #include "R_ext/Error.h"
 #include "Fileio.h"
+#include "Devices.h"
 
 #define PS_minus_default 45
 /* wrongly was 177 (plusminus);
@@ -529,7 +530,7 @@ static void PSEncodeFont(FILE *fp, int encoding)
 /* region box is for the rotated page. */
 
 static void PSFileHeader(FILE *fp, int encoding, char *papername,
-			 double paperwidth, double paperheight, int landscape,
+			 double paperwidth, double paperheight, Rboolean landscape,
 			 int EPSFheader,
 			 double left, double bottom, double right, double top)
 {
@@ -697,28 +698,28 @@ typedef struct {
     char filename[PATH_MAX];
     int open_type;
 
-    char papername[64];	 /* paper name */
-    int paperwidth;	 /* paper width in big points (1/72 in) */
-    int paperheight;	 /* paper height in big points */
-    int landscape;	 /* landscape mode */
-    int pageno;		 /* page number */
-
-    int fontfamily;	 /* font family */
-    int encoding;	 /* font encoding */
-    char **afmpaths;	 /* for user-specified family */
+    char papername[64];	/* paper name */
+    int paperwidth;	/* paper width in big points (1/72 in) */
+    int paperheight;	/* paper height in big points */
+    Rboolean landscape;	/* landscape mode */
+    int pageno;		/* page number */
+			
+    int fontfamily;	/* font family */
+    int encoding;	/* font encoding */
+    char **afmpaths;	/* for user-specified family */
     int maxpointsize;
 
-    double width;	 /* plot width in inches */
-    double height;	 /* plot height in inches */
-    double pagewidth;	 /* page width in inches */
-    double pageheight;	 /* page height in inches */
-    int pagecentre;      /* centre image on page? */
-    int printit;         /* print page at close? */
+    double width;	/* plot width in inches */
+    double height;	/* plot height in inches */
+    double pagewidth;	/* page width in inches */
+    double pageheight;	/* page height in inches */
+    Rboolean pagecentre;/* centre image on page? */
+    Rboolean printit;	/* print page at close? */
     char command[PATH_MAX];
 
-    FILE *psfp;		 /* output file */
+    FILE *psfp;		/* output file */
 
-    int onefile;         /* EPSF header etc*/
+    Rboolean onefile;	/* EPSF header etc*/
 
     /* This group of variables track the current device status.
      * They should only be set by routines that emit PostScript code. */
@@ -746,10 +747,10 @@ static void   PS_Close(DevDesc*);
 static void   PS_Deactivate(DevDesc*);
 static void   PS_Hold(DevDesc*);
 static void   PS_Line(double, double, double, double, int, DevDesc*);
-static int    PS_Locator(double*, double*, DevDesc*);
+static Rboolean PS_Locator(double*, double*, DevDesc*);
 static void   PS_Mode(int, DevDesc*);
 static void   PS_NewPage(DevDesc*);
-static int    PS_Open(DevDesc*, PostScriptDesc*);
+static Rboolean PS_Open(DevDesc*, PostScriptDesc*);
 static void   PS_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   PS_Polyline(int, double*, double*, int, DevDesc*);
 static void   PS_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -784,12 +785,14 @@ static void Invalidate(DevDesc*);
 static int  MatchFamily(char *name);
 
 
-int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
-		   char **afmpaths,
-		   char *bg, char *fg,
-		   double width, double height,
-		   double horizontal, double ps,
-		   int onefile, int pagecentre, int printit, char*cmd)
+Rboolean
+PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
+	       char **afmpaths,
+	       char *bg, char *fg,
+	       double width, double height,
+	       Rboolean horizontal, double ps,
+	       Rboolean onefile, Rboolean pagecentre, 
+	       Rboolean printit, char*cmd)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
@@ -808,7 +811,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     /* allocate new postscript device description */
     if (!(pd = (PostScriptDesc *) malloc(sizeof(PostScriptDesc))))
-	return 0;
+	return FALSE;
 
     /* from here on, if need to bail out with "error", must also */
     /* free(pd) */
@@ -962,7 +965,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     pd->pageno = 0;
     if(!PS_Open(dd, pd)) {
 	free(pd);
-	return 0;
+	return FALSE;
     }
 
     dd->dp.open	      = PS_Open;
@@ -985,8 +988,8 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.hold	      = PS_Hold;
 
     dd->deviceSpecific = (void *) pd;
-    dd->displayListOn = 0;
-    return 1;
+    dd->displayListOn = FALSE;
+    return TRUE;
 }
 
 static int MatchFamily(char *name)
@@ -1057,7 +1060,7 @@ static void SetFont(int style, int size, DevDesc *dd)
     }
 }
 
-static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
+static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
 {
     char buf[512], *p;
     int i;
@@ -1068,34 +1071,34 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]), 
 				      familyname[i], 1)) {
 	    warning("cannot read afm file %s", buf);
-	    return 0;
+	    return FALSE;
 	}
     }
     if(!PostScriptLoadFontMetrics("sy______.afm", &(pd->metrics[4]), 
 				  familyname[4], 0)) {
 	warning("cannot read afm file %s", buf);
-	return 0;
+	return FALSE;
     }
 
     if (strlen(pd->filename) == 0) {
 #ifndef HAVE_POPEN
 	error("printing via file = \"\" is not implemented in this version");
-	return 0;
+	return FALSE;
 #else
-	if(strlen(pd->command) == 0) return 0;
+	if(strlen(pd->command) == 0) return FALSE;
 	pd->psfp = popen(pd->command, "w");
 	pd->open_type = 1;
 #endif
     } else if (pd->filename[0] == '|') {
 #ifndef HAVE_POPEN
 	error("file = \"|cmd\" is not implemented in this version");
-	return 0;
+	return FALSE;
 #else
 	pd->psfp = popen(pd->filename + 1, "w");
 	pd->open_type = 1;
 	if (!pd->psfp) {
 	    warning("cannot open `postscript' pipe to `%s'", pd->filename + 1);
-	    return 0;
+	    return FALSE;
 	}
 #endif
     } else {
@@ -1105,7 +1108,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
     }
     if (!pd->psfp) {
 	warning("cannot open `postscript' file argument `%s'", buf);
-	return 0;
+	return FALSE;
     }
 
     if(pd->landscape)
@@ -1133,7 +1136,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 		     dd->dp.right,
 		     dd->dp.top);
 
-    return 1;
+    return TRUE;
 }
 
 /* The driver keeps track of the current values of colors, fonts and
@@ -1424,9 +1427,9 @@ static void PS_Text(double x, double y, int coords,
     PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
 }
 
-static int PS_Locator(double *x, double *y, DevDesc *dd)
+static Rboolean PS_Locator(double *x, double *y, DevDesc *dd)
 {
-    return 0;
+    return FALSE;
 }
 
 static void PS_Mode(int mode, DevDesc* dd)
@@ -1453,7 +1456,7 @@ typedef struct {
     char papername[64];	 /* paper name */
     int paperwidth;	 /* paper width in big points (1/72 in) */
     int paperheight;	 /* paper height in big points */
-    int landscape;	 /* landscape mode */
+    Rboolean landscape;	 /* landscape mode */
     int pageno;		 /* page number */
 
     int fontfamily;	 /* font family */
@@ -1467,7 +1470,7 @@ typedef struct {
     double height;	 /* plot height in inches */
     double pagewidth;	 /* page width in inches */
     double pageheight;	 /* page height in inches */
-    int pagecentre;      /* centre image on page? */
+    Rboolean pagecentre;      /* centre image on page? */
 
     double lwd;		 /* current line width */
     int lty;		 /* current line type */
@@ -1480,7 +1483,7 @@ typedef struct {
     FILE *tmpfp;         /* temp file */
     char tmpname[PATH_MAX];
 
-    int onefile;
+    Rboolean onefile;
     int ymax;            /* used to invert coord system */
 
     FontMetricInfo metrics[5];	/* font metrics */
@@ -1495,15 +1498,14 @@ typedef struct {
  */
 
 static void
-XF_FileHeader(FILE *fp, char *papername, int landscape, int onefile)
+XF_FileHeader(FILE *fp, char *papername, Rboolean landscape, Rboolean onefile)
 {
     fprintf(fp, "#FIG 3.2\n");
-    if(landscape) fprintf(fp, "Landscape\n"); else fprintf(fp, "Portrait\n");
+    fprintf(fp, landscape ? "Landscape\n" : "Portrait\n");
     fprintf(fp, "Flush Left\nInches\n");
     /* Fix */fprintf(fp, "%s\n", papername);
     fprintf(fp, "100.0\n");
-    if(onefile) fprintf(fp, "Multiple\n");
-    else fprintf(fp, "Single\n");
+    fprintf(fp, onefile ? "Multiple\n" : "Single\n");
     fprintf(fp, "-2\n"); /* no background */
     fprintf(fp, "1200 2\n"); /* coordinate system */
     fprintf(fp, "# End of XFig header\n");
@@ -1596,10 +1598,10 @@ static void   XFig_Close(DevDesc*);
 static void   XFig_Deactivate(DevDesc*);
 static void   XFig_Hold(DevDesc*);
 static void   XFig_Line(double, double, double, double, int, DevDesc*);
-static int    XFig_Locator(double*, double*, DevDesc*);
+static Rboolean XFig_Locator(double*, double*, DevDesc*);
 static void   XFig_Mode(int, DevDesc*);
 static void   XFig_NewPage(DevDesc*);
-static int    XFig_Open(DevDesc*, XFigDesc*);
+static Rboolean XFig_Open(DevDesc*, XFigDesc*);
 static void   XFig_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   XFig_Polyline(int, double*, double*, int, DevDesc*);
 static void   XFig_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -1613,11 +1615,12 @@ static int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
 
 /* Driver Support Routines */
 
-int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
-		     char *bg, char *fg,
-		     double width, double height,
-		     double horizontal, double ps,
-		     int onefile, int pagecentre)
+Rboolean
+XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
+		 char *bg, char *fg,
+		 double width, double height,
+		 Rboolean horizontal, double ps,
+		 Rboolean onefile, Rboolean pagecentre)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -1797,7 +1800,7 @@ int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.hold	      = XFig_Hold;
 
     dd->deviceSpecific = (void *) pd;
-    dd->displayListOn = 0;
+    dd->displayListOn = FALSE;
     return 1;
 }
 
@@ -1805,7 +1808,7 @@ int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 char * Rwin32_tmpnam(char * prefix);
 #endif
 
-static int XFig_Open(DevDesc *dd, XFigDesc *pd)
+static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
 {
     char buf[512], name[50];
     int i;
@@ -1814,23 +1817,23 @@ static int XFig_Open(DevDesc *dd, XFigDesc *pd)
 	if(!PostScriptLoadFontMetrics(Family[pd->fontfamily].afmfile[i], 
 				      &(pd->metrics[i]), name, 1)) {
 	    warning("cannot read afm file %s", buf);
-	    return 0;
+	    return FALSE;
 	}
     }
     if(!PostScriptLoadFontMetrics("sy______.afm", 
 				  &(pd->metrics[4]), name, 0)) {
 	warning("cannot read afm file %s", buf);
-	return 0;
+	return FALSE;
     }
 
     if (strlen(pd->filename) == 0) {
 	error("empty file name");
-	return 0;
+	return FALSE;
     } else {
 	sprintf(buf, pd->filename, pd->pageno + 1); /* page 1 to start */
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
     }
-    if (!pd->psfp) return 0;
+    if (!pd->psfp) return FALSE;
 #ifdef Win32
     strcpy(pd->tmpname, Rwin32_tmpnam("Rxfig"));
 #else
@@ -1839,13 +1842,13 @@ static int XFig_Open(DevDesc *dd, XFigDesc *pd)
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
 	fclose(pd->psfp);
-	return 0;
+	return FALSE;
     }
     XF_FileHeader(pd->psfp, pd->papername, pd->landscape, pd->onefile);
     pd->fontstyle = 1;
     pd->fontsize = 10;
     pd->pageno = 0;
-    return 1;
+    return TRUE;
 }
 
 
@@ -2086,9 +2089,9 @@ static void XFig_Text(double x, double y, int coords,
     fprintf(fp, "\\001\n");
 }
 
-static int XFig_Locator(double *x, double *y, DevDesc *dd)
+static Rboolean XFig_Locator(double *x, double *y, DevDesc *dd)
 {
-    return 0;
+    return FALSE;
 }
 
 static void XFig_Mode(int mode, DevDesc* dd)

@@ -315,11 +315,11 @@ static void readline_handler(unsigned char *line)
 	return;
     if (line[0]) {
 #ifdef HAVE_READLINE_HISTORY_H
-	if (strlen(line) && readline_addtohistory)
+	if (strlen((char *)line) && readline_addtohistory)
 	    add_history(line);
 #endif
-	l = (((readline_len-2) > strlen(line))?
-	     strlen(line): (readline_len-2));
+	l = (((readline_len-2) > strlen((char *)line))?
+	     strlen((char *)line): (readline_len-2));
 	strncpy(readline_buf, line, l);
 	readline_buf[l] = '\n';
 	readline_buf[l+1] = '\0';
@@ -340,10 +340,10 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
     if(!R_Interactive) {
 	if (!R_Slave)
 	    fputs(prompt, stdout);
-	if (fgets(buf, len, stdin) == NULL)
+	if (fgets((char *)buf, len, stdin) == NULL)
 	    return 0;
 	if (!R_Slave)
-	    fputs(buf, stdout);
+	    fputs((char *)buf, stdout);
 	return 1;
     }
     else {
@@ -382,7 +382,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		else
 #endif
 		{
-		    if(fgets(buf, len, stdin) == NULL)
+		    if(fgets((char *)buf, len, stdin) == NULL)
 			return 0;
 		    else
 			return 1;

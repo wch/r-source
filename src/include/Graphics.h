@@ -34,6 +34,10 @@
 #define MAX_LAYOUT_ROWS 15
 #define MAX_LAYOUT_COLS 15
 
+/* NOTE: during replays, call == R_NilValue;
+   ----  the following adds readability: */
+#define GRecording(call)  (call != R_NilValue)
+
 typedef unsigned int rcolor;
 
 typedef struct {
@@ -86,11 +90,11 @@ typedef struct {
     double xCharOffset;	/* x character addressing offset */
     double yCharOffset;	/* y character addressing offset */
     double yLineBias;	/* 1/2 interline space as fraction of line height */
-    int canResizePlot;	/* can the graphics surface be resized */
-    int canChangeFont;	/* device has multiple fonts */
-    int canRotateText;	/* text can be rotated */
-    int canResizeText;	/* text can be resized */
-    int canClip;	/* Hardware clipping */
+    Rboolean canResizePlot;	/* can the graphics surface be resized */
+    Rboolean canChangeFont;	/* device has multiple fonts */
+    Rboolean canRotateText;	/* text can be rotated */
+    Rboolean canResizeText;	/* text can be resized */
+    Rboolean canClip;		/* Hardware clipping */
     int canHAdj;	/* Can do at least some horizontal adjustment of text
 			   0 = none, 1 = {0,0.5, 1}, 2 = [0,1] */
 
@@ -110,7 +114,7 @@ typedef struct {
     /* level (e.g., do_lines, do_axis, do_plot_xy, ...) */
 
     int	state;		/* Plot State */
-    Rboolean valid;		/* valid layout ? */
+    Rboolean valid;	/* valid layout ? */
 
     /* GRZ-like Graphics Parameters */
     /* ``The horror, the horror ... '' */
@@ -119,8 +123,8 @@ typedef struct {
     /* General Parameters -- set and interrogated directly */
 
     double adj;		/* String adjustment */
-    int	ann;		/* Should annotation take place */
-    int	ask;		/* User confirmation of ``page eject'' */
+    Rboolean ann;	/* Should annotation take place */
+    Rboolean ask;	/* User confirmation of ``page eject'' */
     rcolor bg;		/* **R ONLY** Background color */
     int	bty;		/* Box type */
     double cex;		/* Character expansion */
@@ -186,7 +190,7 @@ typedef struct {
 
     /* Layout Parameters */
 
-    int	layout;		/* has a layout been specified */
+    Rboolean layout;	/* has a layout been specified */
 
     int	numrows;
     int	numcols;
@@ -213,14 +217,14 @@ typedef struct {
     double fin[2];	/* (current) Figure size (inches) */
 			/* [0] = width, [1] = height */
     GUnit fUnits;	/* (current) figure size units */
-    int	defaultFigure;	/* calculate figure from layout ? */
     double plt[4];	/* (current) Plot size (proportions) */
 			/* [0] = left, [1] = right */
 			/* [2] = bottom, [3] = top */
     double pin[2];	/* (current) plot size (inches) */
 			/* [0] = width, [1] = height */
-    GUnit	pUnits;		/* (current) plot size units */
-    int	defaultPlot;	/* calculate plot from figure - margins ? */
+    GUnit pUnits;	/* (current) plot size units */
+    Rboolean defaultFigure;	/* calculate figure from layout ? */
+    Rboolean defaultPlot;	/* calculate plot from figure - margins ? */
 
     /* Layout parameters which are set directly by the user */
 
@@ -228,14 +232,14 @@ typedef struct {
     double mai[4];	/* Plot margins in inches */
 			/* [0] = bottom, [1] = left */
 			/* [2] = top, [3] = right */
-    GUnit	mUnits;		/* plot margin units */
+    GUnit mUnits;	/* plot margin units */
     double mex;		/* Margin expansion factor */
     double oma[4];	/* Outer margins in lines */
     double omi[4];	/* outer margins in inches */
     double omd[4];	/* outer margins in NDC */
 			/* [0] = bottom, [1] = left */
 			/* [2] = top, [3] = right */
-    GUnit	oUnits;		/* outer margin units */
+    GUnit oUnits;	/* outer margin units */
     int	pty;		/* Plot type */
 
     /* Layout parameters which can be set by the user, but */
@@ -293,7 +297,7 @@ typedef struct {
     /* they need to be updated per plot.new too */
 
     /* device operations */
-    int (*open)();
+    Rboolean (*open)();
     void (*close)();
     void (*activate)();
     void (*deactivate)();
@@ -308,7 +312,7 @@ typedef struct {
     void (*rect)();
     void (*circle)();
     void (*polygon)();
-    int (*locator)();
+    Rboolean (*locator)();
     void (*mode)();
     void (*hold)();
     void (*metricInfo)();
@@ -319,9 +323,21 @@ typedef struct {
 	GPar gp;		/* current device current parameters */
 	GPar dpSaved;		/* saved device default parameters */
 	void *deviceSpecific;	/* pointer to device specific parameters */
-	int displayListOn;	/* toggle for display list status */
+	Rboolean displayListOn;	/* toggle for display list status */
 	SEXP displayList;	/* display list */
 } DevDesc;
+
+/* For easy reference: Here are the source files of 
+ * currently existing device drivers:
+ * FILE				driver name prefix
+ * ----------------------	------------------
+ * ../main/devPS.c		PS  _and_  XFig
+ * ../main/devPicTeX.c		PicTeX
+ * ../unix/X11/devX11.c		X11
+ * ../gnuwin32/devga.c		GA
+ * ../unix/gnome/devGTK.c	GTK
+ * ../unix/gnome/devGNOME.c	Gnome
+ */
 
 #include "R_ext/Graphics.h"
 
