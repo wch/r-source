@@ -1180,11 +1180,12 @@ chapter.
 @section Tidying R code
 @cindex Tidying R code
 
-@R{} treats function code loaded from packages and code entered by
-users differently.  Code entered by users has the exact source code
-retained, and when the function is listed, the original source is
-reproduced.  Loading code from a package discards the source code, and
-the function listing is re-created from the parse tree of the function.
+@R{} treats function code loaded from packages and code entered by users
+differently.  Code entered by users has the source code stoed in an
+attribute, and when the function is listed, the original source is
+reproduced.  Loading code from a package (by default) discards the
+source code, and the function listing is re-created from the parse tree
+of the function.
 
 Normally keeping the source code is a good idea, and in particular it
 avoids comments being moved around in the source.  However, we can
@@ -1226,10 +1227,10 @@ will contain the functions in alphabetical order in the standard layout.
 You may need to move comments to more appropriate places.
 
 The standard format provides a good starting point for further tidying.
-Most package authors use a version of Emacs (or Unix or Windows) to edit
+Most package authors use a version of Emacs (on Unix or Windows) to edit
 @R{} code, using the ESS[S] mode of the ESS Emacs package.  See @ref{R
 coding standards} for style options within the ESS[S] mode recommended
-by the @R{} Core Team.
+for the source code of @R{} itself.
 
 
 @node Profiling R code,  , Tidying R code, Tidying and profiling R code
