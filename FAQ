@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-36, 2003-03-06
+Version 1.6-37, 2003-03-10
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1906,6 +1906,10 @@ distributions of R.)
      graph-level indices, structural distance and covariance methods,
      structural equivalence detection, p* modeling, and network
      visualization.
+
+*snow*
+     Simple Network of Workstations: support for simple parallel computing
+     in R.
 
 *sound*
      A sound interface for R: Basic functions for dealing with `.wav' files

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-36, 2003-03-06
+@set FAQ-VERSION 1.6-37, 2003-03-10
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2051,6 +2051,9 @@ visualization.
 @c @item snns
 @c An R interface to the Stuttgart Neural Networks Simulator (SNNS).
 @c </COMMENT>
+@item snow
+Simple Network of Workstations: support for simple parallel computing in
+R.
 @item sound
 A sound interface for R: Basic functions for dealing with @file{.wav}
 files and sound samples.
