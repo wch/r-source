@@ -157,6 +157,9 @@ BUG FIXES
     o	Using scan() with 0-length `what' argument now gives an error
 	message rather than a segfault.
 
+    o	Loading .Random.seed could very rarely and with some
+	generators reject a value as NA_INTEGER when it was valid.
+
 
 
 		CHANGES IN R VERSION 1.2.0
