@@ -383,6 +383,7 @@ etc/Rdconv
 etc/Rdindex
 etc/Rman2Rd
 etc/Sd2Rd
+etc/html2dos
 demos/dynload/Makefile
 src/library/LIBSETUP
 src/library/LIBCLEAN
@@ -390,6 +391,6 @@ cmd/fwf2table
 )
 
 AC_OUTPUT_COMMANDS(
-(cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd)
+(cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd html2dos)
 (cd cmd; chmod +x fwf2table)
 )

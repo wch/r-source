@@ -3477,6 +3477,7 @@ etc/Rdconv
 etc/Rdindex
 etc/Rman2Rd
 etc/Sd2Rd
+etc/html2dos
 demos/dynload/Makefile
 src/library/LIBSETUP
 src/library/LIBCLEAN
@@ -3590,6 +3591,7 @@ etc/Rdconv
 etc/Rdindex
 etc/Rman2Rd
 etc/Sd2Rd
+etc/html2dos
 demos/dynload/Makefile
 src/library/LIBSETUP
 src/library/LIBCLEAN
@@ -3769,7 +3771,7 @@ test "$no_create" = yes || ${CONFIG_SHELL-/bin/sh} $CONFIG_STATUS || exit 1
 
 
 
-(cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd)
+(cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd html2dos)
 (cd cmd; chmod +x fwf2table)
 
 
