@@ -53,9 +53,26 @@ const static char * const falsenames[] = {
 #define WARN_INACC 2
 #define WARN_IMAG  4
 
+/* The following two macros copy or clear the attributes.  They also
+   ensure that the object bit is properly set.  They avoid calling the
+   assignment functions when possible, since the write barrier (and
+   possibly cache behavior on some architectures) makes assigning more
+   costly than dereferencing. */
 #define DUPLICATE_ATTRIB(to, from) do {\
-  SEXP __a__ = ATTRIB(from); \
-  if (__a__ != R_NilValue) SET_ATTRIB(to, duplicate(__a__)); \
+  SEXP __from__ = (from); \
+  if (ATTRIB(__from__) != R_NilValue) { \
+    SEXP __to__ = (to); \
+    SET_ATTRIB(__to__, duplicate(ATTRIB(__from__))); \
+    if (OBJECT(__from__)) SET_OBJECT(__to__, 1); \
+  } \
+} while (0)
+
+#define CLEAR_ATTRIB(x) do {\
+  SEXP __x__ = (x); \
+  if (ATTRIB(__x__) != R_NilValue) { \
+    SET_ATTRIB(__x__, R_NilValue); \
+    if (OBJECT(__x__)) SET_OBJECT(__x__, 0); \
+  } \
 } while (0)
 
 void CoercionWarning(int warn)
@@ -978,8 +995,7 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	    ) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
-	    SET_ATTRIB(v, R_NilValue);
-	    SET_OBJECT(v, 0);
+	    CLEAR_ATTRIB(v);
 	}
 	return v;
     }
@@ -1008,7 +1024,7 @@ SEXP do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     ans = ascommon(call, CAR(args), STRSXP);
-    SET_ATTRIB(ans, R_NilValue);
+    CLEAR_ATTRIB(ans);
     UNPROTECT(1);
     return ans;
 }
@@ -1061,10 +1077,9 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     case LANGSXP:
 	break;
     default:
-	SET_ATTRIB(ans, R_NilValue);
+	CLEAR_ATTRIB(ans);
 	break;
     }
-    SET_OBJECT(ans, 0);
     UNPROTECT(1);
     return ans;
 }
