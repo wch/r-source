@@ -1,4 +1,4 @@
-% $Id: NLSstAsymptotic.Rd,v 1.2 1999/12/15 17:20:29 pd Exp $
+% $Id: NLSstAsymptotic.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
 \name{NLSstAsymptotic}
 \title{Fit the Asymptotic Regression Model}
 \alias{NLSstAsymptotic}
@@ -27,4 +27,5 @@ data( Loblolly )
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 NLSstAsymptotic(sortedXyData(expression(age), expression(height), Lob.329 ))
 }
-\keyword{data, manip}
+\keyword{data}
+\keyword{manip}

@@ -27,4 +27,5 @@ tmp <- 1:3
 names(tmp) <-  c("foo", "bar", "baz")
 tmp
 }
-\keyword{data, list}%-- one or more ...
+\keyword{data}
+\keyword{list}

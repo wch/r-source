@@ -1,4 +1,4 @@
-% $Id: profiler.Rd,v 1.2 1999/12/15 17:20:29 pd Exp $
+% $Id: profiler.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
 \name{profiler}
 \alias{profiler}
 \title{ Constructor for Profiler Objects for Non-Linear Models}
@@ -59,4 +59,5 @@ profiler(fitted, ...)
 \examples{
 # see documentation on individual methods
 }
-\keyword{ nonlinear, models }
+\keyword{nonlinear}
+\keyword{models}

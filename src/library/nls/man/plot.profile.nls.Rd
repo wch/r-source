@@ -45,5 +45,6 @@ mtext("BOD data - confidence levels of 50\%, 80\%, 90\% and 95\%",
       side = 1, outer = TRUE)
 par(opar)
 }
-\keyword{nonlinear, regression, models}
-
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{models}

@@ -1,4 +1,4 @@
-% $Id: profile.nls.Rd,v 1.2 1999/12/15 17:20:29 pd Exp $
+% $Id: profile.nls.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
 \name{profile.nls}
 \alias{profile.nls}
 \title{ Method for Profiling nls Objects}
@@ -49,4 +49,6 @@ pr1 <- profile( fm1 )
 pr1$A
 pr1$lrc
 }
-\keyword{ nonlinear, regression, models }
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{models}

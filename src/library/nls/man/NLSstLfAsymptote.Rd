@@ -1,4 +1,4 @@
-% $Id: NLSstLfAsymptote.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: NLSstLfAsymptote.Rd,v 1.2 2000/01/17 16:23:10 ripley Exp $
 \name{NLSstLfAsymptote}
 \title{Horizontal Asymptote on the Left Side}
 \alias{NLSstLfAsymptote}
@@ -30,4 +30,5 @@ DNase.2 <- DNase[ DNase$Run == "2", ]
 DN.srt <- sortedXyData( expression(log(conc)), expression(density), DNase.2 )
 NLSstLfAsymptote( DN.srt )
 }
-\keyword{data, manip}
+\keyword{data}
+\keyword{manip}

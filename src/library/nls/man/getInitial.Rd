@@ -1,4 +1,4 @@
-% $Id: getInitial.Rd,v 1.2 1999/12/11 20:57:36 pd Exp $
+% $Id: getInitial.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
 \name{getInitial}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}
@@ -40,4 +40,6 @@ data(Puromycin)
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]
 getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt )
 }
-\keyword{models,nonlinear,data}
+\keyword{models
+\keyword{nonlinear}
+\keyword{data}

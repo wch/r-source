@@ -33,4 +33,6 @@ nls.control(maxiter=50, tol=1e-05, minFactor=1/1024)
 \examples{
 nls.control(minFactor = 1/2048)
 }
-\keyword{nonlinear, regression, models}%-- one or more ...
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{models}

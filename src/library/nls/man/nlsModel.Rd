@@ -76,4 +76,5 @@ mod$deviance()    # see if the parameter increment was successful
 mod$trace()       # check the tracing
 mod$Rmat()        # R matrix from the QR decomposition of the gradient
 }
-\keyword{nonlinear, models}%-- one or more ...
+\keyword{nonlinear}
+\keyword{models}

@@ -70,4 +70,6 @@ fm3DNase1 <- nls( density ~ Asym/(1 + exp(( xmid - log(conc) )/scal ) ),
                   trace = TRUE )
 summary( fm3DNase1 )
 }
-\keyword{nonlinear, regression, models}%-- one or more ...
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{models}

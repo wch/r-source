@@ -70,7 +70,9 @@ tt <- seq(0, 8, length = 101)
 lines(tt, predict(fm, list(Time = tt)))
 par(opar)
 }
-\keyword{nonlinear, regression, models}
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{models}
 
 
 
