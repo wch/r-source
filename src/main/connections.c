@@ -143,7 +143,7 @@ void set_iconv(Rconnection con)
     if(!con->text || !strlen(con->encname) ||
        strcmp(con->encname, "native.enc") == 0) return;
     if(con->canread) {
-	unsigned int onb = 50;
+	size_t onb = 50;
 	char *ob = con->oconvbuff;
 	tmp = Riconv_open("", con->encname);
 	if(tmp != (void *)-1) con->inconv = tmp;
@@ -154,7 +154,7 @@ void set_iconv(Rconnection con)
 	con->navail = 50-onb; con->inavail = 0;
     }
     if(con->canwrite) {
-	unsigned int onb = 25;
+	size_t onb = 25;
 	char *ob = con->init_out;
 	tmp = Riconv_open(con->encname, "");
 	if(tmp != (void *)-1) con->outconv = tmp;
@@ -245,9 +245,9 @@ int dummy_fgetc(Rconnection con)
 
     if(con->inconv) {
 	if(con->navail <= 0) {
-	    unsigned int i, inb, onb, inew = 0;
+	    unsigned int i, inew = 0;
 	    char *p = con->iconvbuff + con->inavail, *ib, *ob;
-	    size_t res;
+	    size_t inb, onb, res;
 
 	    if(con->EOF_signalled) return R_EOF;
 	    for(i = con->inavail; i < 25; i++) {
