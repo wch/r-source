@@ -51,9 +51,8 @@ AC_DEFUN(R_PROG_PERL,
   if test -n "${PERL}"; then
     AC_CACHE_CHECK([whether perl version is at least 5],
       r_cv_prog_perl_v5,
-      [ perl_version=`${PERL} -v | \
-	  sed -n 's/^.*perl.*version \(.\).*/\1/p'`
-	if test ${perl_version} -ge 5; then
+      [ ${PERL} -e 'require 5' 2>/dev/null
+        if test ${?} -eq 0; then
 	  r_cv_prog_perl_v5=yes
 	else
 	  r_cv_prog_perl_v5=no
