@@ -3,9 +3,9 @@
 \usage{
 library(package, help = NULL, lib.loc = .lib.loc,
         character.only = FALSE, logical.return = FALSE,
-        warn.conflicts = TRUE, keep.source = getOption("keep.source"))
+        warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"))
 require(package, quietly = FALSE, warn.conflicts = TRUE,
-        keep.source = getOption("keep.source"))
+        keep.source = getOption("keep.source.pkgs"))
 provide(package)
 
 .First.lib(libname, pkgname)
@@ -152,6 +152,13 @@ library(help = eda)         # documentation on package "eda"
 library(eda)                # load package "eda"
 require(eda)                # the same
 (.packages())		    # "eda", too
+.path.package()
+.Provided	# often empty
+.Autoloaded     # maybe "ctest"
+
+.lib.loc
+.Library == .lib.loc[length(.lib.loc)]  # `by definition'
+
 require(nonexistent)        # FALSE
 \dontrun{## Suppose a package needs to call a shared library named "foo.EXT",
 ## where "EXT" is the system-specific extension.  Then you should use
