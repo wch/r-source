@@ -1,6 +1,6 @@
 # Not necessarily the brightest place to put this (contourLines() is a
 # general base function, whereas contour() is a base graphics function
-contourLines <- 
+contourLines <-
 function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	  z, nlevels = 10, levels = pretty(range(z, na.rm=TRUE), nlevels))
 {
@@ -31,7 +31,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     invisible(.Internal(contourLines(as.double(x), as.double(y), z,
                                      as.double(levels))))
 }
-          
+
 contour <- function(x, ...) UseMethod("contour")
 
 contour.default <-
@@ -65,7 +65,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	stop("no proper `z' matrix specified")
     if (!add) {
 	plot.new()
-	plot.window(xlim, ylim, "")
+	plot.window(xlim, ylim, log = "", ...)
 	title(...)
     }
     ##- don't lose  dim(.)

@@ -55,7 +55,8 @@ contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   \item{lty}{line type for the lines drawn.}
   \item{lwd}{line width for the lines drawn.}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
-  \item{\dots}{additional graphical parameters (see \code{\link{par}})
+  \item{\dots}{additional graphical parameters (see \code{\link{par}}).
+    The plot aspect ratio \code{asp} (see \code{\link{plot.window}}) 
     and the arguments to \code{\link{title}} may also be supplied.}
 }
 \details{

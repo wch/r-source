@@ -136,6 +136,10 @@ NEW FEATURES
         installation and if available used to speed loading the
         package, so packages with namespaces should be reinstalled.
 
+    o   Argument `asp' although not a graphics parameter is accepted
+	in the ... of graphics functions without a warning.  It now
+	works as expected in contour().
+
 
 UTILITIES
 

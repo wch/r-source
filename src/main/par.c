@@ -581,6 +581,9 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
     }
+    else if (streql(what, "asp")) {
+	/* this is not a parameter, but let it through as if it were */
+    }
 
     else warning(
 	"parameter \"%s\" couldn't be set in high-level plot() function", what);
