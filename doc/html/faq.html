@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.8-40, 2004-02-13</h2>
+<h2>Version 1.8-41, 2004-02-16</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1470,15 +1470,12 @@ Apache under Linux and in principle should run on any platform that
 supports R and a web server provided that the installer has the
 necessary security permissions.
 
-   <p><strong>Rcgi</strong> is a CGI WWW interface to R by
-<a href="mailto:mjr@stats.mth.uea.ac.uk">Mark J. Ray</a>.  It had the ability to
-use "embedded code": you could mix user input and code, allowing the
-<small>HTML</small> author to do anything from load in data sets to enter most of
-the commands for users without writing CGI scripts.  Graphical output
-was possible in PostScript or GIF formats and the executed code was
-presented to the user for revision.  However, it is not clear if the
-project is still active and recent attempts to contact the author or
-find the package have failed. 
+   <p><strong>Rcgi</strong> is a CGI WWW interface to R by <a href="mailto:mjr@dsl.pipex.com">MJ Ray</a>.  It had the ability to use "embedded code": you could mix
+user input and code, allowing the <small>HTML</small> author to do anything from
+load in data sets to enter most of the commands for users without
+writing CGI scripts.  Graphical output was possible in PostScript or GIF
+formats and the executed code was presented to the user for revision. 
+However, it is not clear if the project is still active. 
 Currently, a modified version of <strong>Rcgi</strong> by
 <a href="mailto:mai@ms.uky.edu">Mai Zhou</a> (actually, two versions: one with
 (bitmap) graphics and one without) as well as the original code are
@@ -2101,6 +2098,9 @@ The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes. 
 <br><dt><strong>its</strong>
      <dd>An S4 class for handling irregular time series. 
+<br><dt><strong>kernlab</strong>
+     <dd>Kernel-based machine learning methods including support vector machines. 
+(Currently in <code>1.9.0/Other</code>.) 
 <br><dt><strong>knnTree</strong>
      <dd>Construct or predict with k-nearest-neighbor classifiers, using
 cross-validation to select k, choose variables (by forward or

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-40, @value{FAQ-YEAR}-02-13
+@set FAQ-VERSION 1.8-41, @value{FAQ-YEAR}-02-16
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1463,15 +1463,13 @@ Apache under Linux and in principle should run on any platform that
 supports R and a web server provided that the installer has the
 necessary security permissions.
 
-@strong{Rcgi} is a CGI WWW interface to R by
-@email{mjr@@stats.mth.uea.ac.uk, Mark J. Ray}.  It had the ability to
-use ``embedded code'': you could mix user input and code, allowing the
-@HTML{} author to do anything from load in data sets to enter most of
-the commands for users without writing CGI scripts.  Graphical output
-was possible in PostScript or GIF formats and the executed code was
-presented to the user for revision.  However, it is not clear if the
-project is still active and recent attempts to contact the author or
-find the package have failed.  
+@strong{Rcgi} is a CGI WWW interface to R by @email{mjr@@dsl.pipex.com,
+MJ Ray}.  It had the ability to use ``embedded code'': you could mix
+user input and code, allowing the @HTML{} author to do anything from
+load in data sets to enter most of the commands for users without
+writing CGI scripts.  Graphical output was possible in PostScript or GIF
+formats and the executed code was presented to the user for revision.
+However, it is not clear if the project is still active.
 @c URL no longer seems to work ...
 @c See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
 Currently, a modified version of @strong{Rcgi} by
@@ -2074,6 +2072,11 @@ The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes.
 @item its
 An S4 class for handling irregular time series.
+@item kernlab
+Kernel-based machine learning methods including support vector machines.
+@c <FIXME 1.9.0>
+(Currently in @file{1.9.0/Other}.)
+@c </FIXME>
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
