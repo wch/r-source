@@ -453,6 +453,10 @@ Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
 Subject: eigen() error: R Version 1.6.1 on Mac OS X
 From: "Daniel E. Weeks" <dweeks@watson.hgen.pitt.edu>
 Date: Fri, 14 Feb 2003 15:36:15 -0500
+* PR# 2725 *
+Subject: Default broswer for OS X
+From: james@freelancepropaganda.com
+Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
 
 Directory:  Misc
 
@@ -561,6 +565,21 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
+* PR# 2730 *
+Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
+From: Dirk Eddelbuettel <edd@debian.org>
+Date: Fri, 4 Apr 2003 06:27:15 -0600
+..something obscure in debian: pbuilder is not part of R
+* PR# 2733 *
+Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
+From: Daniel Schepler <schepler@math.berkeley.edu>
+Date: 05 Apr 2003 14:06:09 -0800
+..part of 2730
+* PR# 2736 *
+Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
+From: Dirk Eddelbuettel <edd@debian.org>
+Date: Sun, 6 Apr 2003 21:20:29 -0500
+..part of 2730
 
 Directory:  TooMuchAtOnce
 
@@ -601,132 +620,11 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: termplot
 From: Mark.Bravington@csiro.au
 Date: Wed, 26 Mar 2003 10:32:17 +1100
-* PR# 2718 *
-Subject: =?GB2312?B?zqrE47f+zvE=?=
-From: "dds" <wyhao33@yahoo.com.cn>
-Date: Wed, 2 Apr 2003 17:10:47 +0800
-* PR# 2719 *
-Subject: cozlar rhjection
-From: "Jillian Diggs" <xxib2ityh@aol.com>
-Date: Wed, 02 Apr 03 15:05:17 GMT
 * PR# 2720 *
 Subject: [R] 
 From: Jerome Asselin <jerome@hivnet.ubc.ca>
 Date: Tue, 1 Apr 2003 11:22:55 -0800
-* PR# 2721 *
-Subject: Fwd: Thinking about a DVD-R? Don't waste your money!
-From: "Jocelyn Madden" <Darleen1698t@msnbc.com>
-Date: Thu, 03 Apr 03 16:55:39 GMT
-* PR# 2722 *
-Subject: write.matrix has limited line length -> truncation
-From: christen@chemie.hu-berlin.de
-Date: Thu, 3 Apr 2003 08:49:05 +0200 (MET DST)
-* PR# 2723 *
-Subject: Graphics, grid with type="b" causes problems
-From: wolfgang.waser@rz.hu-berlin.de
-Date: Thu, 3 Apr 2003 14:04:46 +0200 (MET DST)
-* PR# 2724 *
-Subject: mild encoulter
-From: "Nadine Barrera" <4w0w1gdbbw18@hotmail.com>
-Date: Thu, 03 Apr 03 12:57:06 GMT
-* PR# 2725 *
-Subject: Default broswer for OS X
-From: james@freelancepropaganda.com
-Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
-* PR# 2726 *
-Subject: Re: COPY ANY DVD TO A CD
-From: "Virgil Landis" <Leonel8953x@mailservant.com>
-Date: Sat, 05 Apr 03 10:30:35 GMT
-* PR# 2727 *
-Subject: hjlddown ballnon
-From: "Graciela Frye" <tmt5cn2x@aol.com>
-Date: Fri, 04 Apr 03 07:10:31 GMT
-* PR# 2728 *
-Subject: R crashes on calling a Fortran routine
-From: martyn.byng@nag.co.uk
-Date: Fri, 4 Apr 2003 11:21:16 +0200 (MET DST)
-* PR# 2729 *
-Subject: Re: DVD copier program request
-From: "Jermaine Ford" <Myles3162s@flagmail.com>
-Date: Sat, 05 Apr 03 08:26:46 GMT
-* PR# 2730 *
-Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
-From: Dirk Eddelbuettel <edd@debian.org>
-Date: Fri, 4 Apr 2003 06:27:15 -0600
-* PR# 2731 *
-Subject: URGENT RESPONSES NEEDED
-From: "ABU MOBUTU." <abumobutu@netsape.net>
-Date: Fri, 04 Apr 2003 18:49:45 +0200
-* PR# 2732 *
-Subject: ATTN:  Interest rates are lower than ever, but maybe not for long
-From: "Jan Parson" <3o655kum3v@bushinternet.com>
-Date: Sat, 05 Apr 03 12:10:54 GMT
-* PR# 2733 *
-Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
-From: Daniel Schepler <schepler@math.berkeley.edu>
-Date: 05 Apr 2003 14:06:09 -0800
-* PR# 2734 *
-Subject: COPY ANY DVD TO A CD
-From: DVD Professional <cgrdennis4@yahoo.com>
-Date: Sun, 6 Apr 2003 01:58:05 +0200
-* PR# 2735 *
-Subject: objeciive discgpline
-From: "Etta Melvin" <t81i1s5a0h@yahoo.com>
-Date: Sun, 06 Apr 03 00:55:35 GMT
-* PR# 2736 *
-Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
-From: Dirk Eddelbuettel <edd@debian.org>
-Date: Sun, 6 Apr 2003 21:20:29 -0500
-* PR# 2737 *
-Subject: Plot Dates
-From: possolo@crd.ge.com
-Date: Mon, 7 Apr 2003 15:19:54 +0200 (MET DST)
-* PR# 2738 *
-Subject: PLEASE GET BACK TO ME.
-From: "Mrs. Mariam Sese Seko" <mariamsese4@rediffmail.com>
-Date: Mon, 07 Apr 2003 18:36:14 +0200
-* PR# 2739 *
-Subject: Urgent Assistance
-From: Joseph Mobutu Sese-Seko  <josephm54@latinmail.com>
-Date: Sat, 08 Mar 2003 19:48:38 +0100
-* PR# 2740 *
-Subject: Re:Want a king-size P-E-N-I-S in one week? f oufqqsiavqevlw  a
-From: "Refugio Logan" <84o7rn0zc@aol.com>
-Date: Tue, 08 Apr 03 01:29:41 GMT
-* PR# 2741 *
-Subject: FWD:  There has never been a better time to re^fina-nce you current loan
-From: "Taylor Wright" <7rr4amdpf51u@utcsuperset.com>
-Date: Mon, 07 Apr 03 19:09:53 GMT
-* PR# 2742 *
-Subject: kendall's tau-b computation 
-From: dan.field@av.com
-Date: Mon, 7 Apr 2003 22:20:28 +0200 (MET DST)
-* PR# 2743 *
-Subject: NEW // COPY ANY DVD TO CD°°
-From: DVD Professional <dnmedia2@hotmail.com>
-Date: Tue, 8 Apr 2003 04:37:08 +0200
-* PR# 2744 *
-Subject: Re: PROTECT YOUR INFORMATION AND YOUR COMPUTER!  eia
-From: "Dallas Stafford" <572zn7vyj37@mindspring.com>
-Date: Tue, 08 Apr 03 07:53:48 GMT
-* PR# 2745 *
-Subject: paser spligt
-From: "Marianne Pritchard" <6p7wiqi0@mail.com>
-Date: Mon, 07 Apr 03 20:19:47 GMT
-* PR# 2746 *
-Subject: added job options with a well-off potential!   X7C2vB6
-From: "Mcclod Bracher" <McclodBracher@in-box.net>
-Date: 8 Apr 2003 02:01:54 -0700
-* PR# 2747 *
-Subject: PLEASE RESPOND URGENTLY
-From: "Maher Labib" <maher_labib@shuf.com>
-From: Maher Labib Abou Steit
-Date: Tue, 8 Apr 2003 05:27:57 -0700
-* PR# 2748 *
-Subject: YOUR ASISTANCE IS NEEDED
-From: "KASIDI OTUNBA." <kasidiotunba@yahoo.com>
-Date: Tue, 8 Apr 2003 20:07:41 +0100
-* PR# 2749 *
-Subject: ... Discover the fountain of youth ... hw
-From: "Barbara" <FountainOfYouth342840@earthlink.net>
-Date: Wed, 09 Apr 03 02:28:11 GMT
+* PR# 2752 *
+Subject: Increase your p-e-n-i-s size naturally qh nm
+From: "Sheri Rollins" <ah77cylo61@coxnet.com>
+Date: Wed, 09 Apr 03 12:38:59 GMT
