@@ -291,8 +291,9 @@ BUG FIXES
 
 BUG FIXES
 
-    o	The fix to PR#2396 broke read.table() on files with CR line
-	endings. (PR#2469)
+    o   The fix to PR#2396 broke read.table() on files with CR line
+	endings. (PR#2469) Separate problem with this on Carbon Mac
+	build fixed as well.
 
     o   Converting Sweave files to noweb syntax using SweaveSyntConv()
         was broken.
