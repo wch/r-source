@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
 
-all: makeMakedeps ../gnuwin32/libmain.a
+all: makeMakedeps libmain.a
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS=$(OPTFLAGS)
@@ -18,8 +18,7 @@ dounzip-CFLAGS=-I../extra/zlib
 character-CFLAGS=-I../extra/pcre -DSTATIC
 pcre-CFLAGS=-I../extra/pcre -DSTATIC
 
-
-../gnuwin32/libmain.a: $(OBJS)
+libmain.a: $(OBJS)
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)

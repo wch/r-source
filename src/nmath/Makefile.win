@@ -1,15 +1,14 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
 
-all: makeMakedeps ../gnuwin32/libmath.a
+all: makeMakedeps libnmath.a
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
-FSOURCES=$(wildcard *.f)
-OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
+OBJS=$(CSOURCES:.c=.o)
 
-../gnuwin32/libmath.a: $(OBJS)
+libnmath.a: $(OBJS)
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)

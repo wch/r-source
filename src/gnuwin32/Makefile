@@ -48,9 +48,9 @@ SOURCES = console.c dataentry.c devga.c dodevga.c dynload.c edit.c editor.c extr
    opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
     sys-common.c sys-win32.c system.c
 OBJS = $(SOURCES:.c=.o) e_pow.o
-MAINLIBS = libmain.a libappl.a libmath.a
-EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a \
-   ../extra/bzip2/libbz2.a
+MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
+EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/xdr.a \
+   ../extra/zlib/libz.a ../extra/pcre/libRpcre.a ../extra/bzip2/libbz2.a
 
 PKGS = $(foreach i,$(R_PKGS_BASE) ,pkg-$i)
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
@@ -339,7 +339,7 @@ data-%:
 #                          ===== cleaning ======
 
 clean: cleanwin $(PKGCLEAN)
-	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
+	$(RM) -f ../*/*.o ../*/*.a *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) --no-print-directory -C ../nmath/standalone -f Makefile.win distclean
 	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
@@ -386,7 +386,7 @@ cleanwin:
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
-	$(MAKE) -C ../extra/xdr -f Makefile.win clean
+	$(MAKE) -C ../extra/xdr -f Makefile.win distclean
 	$(MAKE) -C ../extra/pcre -f Makefile.win distclean
 	$(MAKE) -C ../extra/bzip2 -f Makefile.win clean
 	$(MAKE) -C ../extra/zlib -f Makefile.win distclean

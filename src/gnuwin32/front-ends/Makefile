@@ -30,7 +30,7 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
 ../../../bin/RSetReg.exe: RSetReg.exe
 	$(MKDIR) -p ../../../bin
 	$(CP) $^ $@
-	
+
 ../../../bin/R.exe: R.exe
 	$(MKDIR) -p ../../../bin
 	$(CP) $^ $@	

@@ -7,9 +7,9 @@ CSOURCES=$(wildcard *.c)
 FSOURCES1=$(filter-out blas.f zgemm.f, $(wildcard *.f))
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES1:.f=.o)
 
-all: makeMakedeps ../gnuwin32/libappl.a
+all: makeMakedeps libappl.a
 
-../gnuwin32/libappl.a: $(OBJS)
+libappl.a: $(OBJS)
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)
