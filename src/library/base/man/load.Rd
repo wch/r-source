@@ -1,7 +1,7 @@
 \name{load}
 \title{Reload Saved Datasets}
 \usage{
-load(filename, envir = parent.frame()))
+load(filename, envir = parent.frame())
 }
 \alias{load}
 \arguments{
