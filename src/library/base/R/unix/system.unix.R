@@ -16,3 +16,5 @@ tempfile <- function(pattern = "file") {
 
 unlink <- function(x) { system(paste("rm -rf ", paste(x, collapse = " "))) }
 
+dir.create <- function(path)
+    invisible(system(paste("mkdir", path)) == 0)
