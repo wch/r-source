@@ -2,6 +2,10 @@
 \alias{GNOME}
 \alias{gnome}
 \title{GNOME Desktop Graphics Device}
+\description{
+  \code{gnome} starts a \code{GNOME} compatible device driver.  `GNOME'
+  is an acronym for \bold{G}NU \bold{N}etwork \bold{O}bject \bold{M}odel
+  \bold{E}nvironment.
 \usage{
 gnome(display="", width=7, height=7, pointsize=12)
 GNOME(display="", width=7, height=7, pointsize=12)
@@ -14,26 +18,17 @@ GNOME(display="", width=7, height=7, pointsize=12)
   \item{height}{the height of the plotting window in inches.}
   \item{pointsize}{the default pointsize to be used.}
 }
-\description{
-    \code{gnome} starts a \code{GNOME} compatible device driver.
-    GNOME is an acronym for
-    \bold{G}NU \bold{N}etwork \bold{O}bject \bold{M}odel \bold{E}nvironment.
-
-%>> Lyndon, fill in the above; however it should only be a few lines
-%>>    whereas the "details" should come below :
-}
-\details{
-%%>>>    Please, Lyndon, fill this in ...
-    This is still in development state.
-}
-\references{\url{http://www.gnome.org} and \url{http://www.gtk.org} for the
-    \code{GTK+} (GIMP Tool Kit) libraries.
+\references{\url{http://www.gnome.org} and \url{http://www.gtk.org} for
+  the \code{GTK+} (GIMP Tool Kit) libraries.
 }
 \author{Lyndon Drake \email{lyndon@stat.auckland.ac.nz}}
-\note{The GNOME device is only available when explicitly desired at
-    configure/compile time, see the toplevel \file{INSTALLATION} file.
+\note{
+  This is still in development state.
+
+  The GNOME device is only available when explicitly desired at
+  configure/compile time, see the toplevel \file{INSTALL} file.
 }
-\seealso{\code{\link{x11}},\code{\link{Devices}}.}
+\seealso{\code{\link{x11}}, \code{\link{Devices}}.}
 \examples{
 \dontrun{
 gnome(width=9)
