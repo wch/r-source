@@ -1121,6 +1121,19 @@ stopifnot(identical(levels(z$V2), "NA"),
 ## 1.6.1 had V2 as NA NA.
 
 
+## PR#2396, parsing and pushbacks.
+tmp <- tempfile()
+cat( c( "1", "a+b", "2"), file=tmp, sep="\n")
+open(tcon <- file(tmp))
+readLines(tcon, n=1)
+pushBack("a1+b1", tcon)
+parse(file=tcon, n=1)
+close(tcon)
+unlink(tmp)
+## failed with syntax error in 1.6.1
+
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

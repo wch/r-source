@@ -67,6 +67,12 @@ sys.save.image(name)
   when called from \code{q()} and allies, but reinforces the warning
   that it should not be called directly.
 }
+\section{Warning}{
+  The \code{\dots} arguments only give the \emph{names} of the objects
+  to be saved: they are searched for in the environment given by the
+  \code{envir} argument, and the actual objects given as arguments need
+  not be those found.  
+}
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},
   \code{\link{data}}.
