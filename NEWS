@@ -2,7 +2,13 @@
 
 NEW FEATURES
 
-    o	new  COLNAMES, ROWNAMES function
+    o	library(... , warn.conflicts = TRUE)
+	now prints all conflicts arising from attach the given package.
+
+    o	new  .Platform	variable  for better modularizing
+	platform dependence. __This_is_"beta"_and_bound_to_be_changed___
+
+    o	new  COLNAMES, ROWNAMES functions.
 			   _
     o	par(bty = "]") for _| box(.) in plots.
 
@@ -103,22 +109,22 @@ NEW FEATURES
     o	New persp function added.  It is NOT compatible with S (yet)
 	and is subject to internal and interface changes.
 
-    o   gctorture() for torturing the garbage collector to reveal
-        memory protection bugs. (Call GC on every memory allocation). 
+    o	gctorture() for torturing the garbage collector to reveal
+	memory protection bugs. (Call GC on every memory allocation). 
 
-    o   B. Ripley's aov code (and more) has been added. This includes: 
+    o	B. Ripley's aov code (and more) has been added. This includes: 
 
-        - aov() now handles models with Error terms, multiple
-          responses. 
+	- aov() now handles models with Error terms, multiple
+	  responses. 
 
 	- proj(), model.tables(), se.contrast(), replications(),
-          eff.aovlist() are implemented for aov fits, and where
-          appropriate for lm fits.
+	  eff.aovlist() are implemented for aov fits, and where
+	  appropriate for lm fits.
 
-        - dummy.coef(), with methods for lm and aovlist fits.
+	- dummy.coef(), with methods for lm and aovlist fits.
 
 	- add1(), drop1(), step() for stepwise fitting of statistical
-          models, with default, lm and glm methods.
+	  models, with default, lm and glm methods.
 
 	- summary() and deviance() -- mlm methods.
 
@@ -130,7 +136,7 @@ NEW FEATURES
 
 	- anova(), plot(), summary() and deviance() methods for mlm fits
 
-    o   eval() semantics changed when envir= is a list. A 3rd argument is 
+    o	eval() semantics changed when envir= is a list. A 3rd argument is 
 	now allowed, specifying the enclosure (i.e. where R looks for
 	variables *not* found in envir=) it defaults to the calling 
 	environment (was .GlobalEnv). Note that when used inside a function,
@@ -167,9 +173,9 @@ BUG FIXES
     o	Fixes and restructuring to name generation in connection with
 	unlist() and c().
 
-    o   Many bugs found and fixed in the memory allocation / garbage
-        collection area. In particular, the parser was sometimes
-        UNPROTECT()ing the wrong pointers.
+    o	Many bugs found and fixed in the memory allocation / garbage
+	collection area. In particular, the parser was sometimes
+	UNPROTECT()ing the wrong pointers.
 
 
 		CHANGES IN R VERSION 0.62.4
