@@ -289,6 +289,10 @@ Date: Thu, 26 Sep 2002 19:37:40 +0200 (MET DST)
 Subject: Wandering usr values in par(no.readonly=TRUW)
 From: Jari Oksanen <jarioksa@sun3.oulu.fi>
 Date: Tue, 12 Nov 2002 13:50:44 +0200
+* PR# 2578 *
+Subject: "trace" argument in legend()
+From: jerome@hivnet.ubc.ca
+Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
 
 Directory:  In-Out
 
@@ -563,23 +567,39 @@ Date: Thu, 13 Feb 2003 09:08:44 -0500
 Subject: ks.test gets stuck
 From: dirk@santafe.edu
 Date: Fri, 21 Feb 2003 14:51:37 +0100 (MET)
-* PR# 2575 *
-Subject: nested assignment 
-From: "Lawrence H. Snyder" <larry@cognition.wustl.edu>
-Date: Sun, 23 Feb 2003 16:53:41 -0600
-* PR# 2576 *
-Subject: hsv producing a color intensity not in [0,1]
-From: jchoi@dal.ca
-Date: Mon, 24 Feb 2003 17:32:21 +0100 (MET)
 * PR# 2577 *
 Subject: Problem with hessian in deriv3 
 From: j.c.rougier@durham.ac.uk
 Date: Mon, 24 Feb 2003 17:01:47 GMT
-* PR# 2578 *
-Subject: "trace" argument in legend()
-From: jerome@hivnet.ubc.ca
-Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
-* PR# 2579 *
-Subject: unz
-From: jutans@utans.u-net.com
-Date: Tue, 25 Feb 2003 00:40:19 +0100 (MET)
+* PR# 2583 *
+Subject: Norton SystemWorks 2003 > Computer Viruses
+From: "" <Neville8385d@mindspring.com>
+Date: Thu, 27 Feb 03 10:14:00 GMT
+* PR# 2584 *
+Subject: [Package car/data.ellipse]: confidence intervals off by factor sqrt(2)???
+From: volker.franz@tuebingen.mpg.de
+Date: Wed, 26 Feb 2003 21:39:58 +0100 (MET)
+* PR# 2585 *
+Subject: Dear Sir/Madam
+From: peter obasarogbe <pe-obsae@zwallet.com>
+Date: Wed, 26 Feb 2003 16:35:12 -0500
+* PR# 2586 *
+Subject: Alias does not label rows and columns correctly.
+From: Derek Smith <dsmith@santafe.edu>
+Date: Wed, 26 Feb 2003 20:39:36 -0500
+* PR# 2587 *
+Subject: unwanted coercion of length 0 vectors
+From: Mark.Bravington@csiro.au
+Date: Thu, 27 Feb 2003 14:10:02 +1100
+* PR# 2588 *
+Subject: [광고]공짜 소프트웨어 / 좋은 유료 소프트웨어 받으세요.        >>62070aijsoft
+From: 62070aijsoft@aijsoft.com
+Date: Thu, 27 Feb 2003 15:54:58 +0100 (MET)
+* PR# 2589 *
+Subject: [광고]공짜 소프트웨어 / 좋은 유료 소프트웨어 받으세요.        >>62070aijsoft
+From: 62070aijsoft@aijsoft.com
+Date: Thu, 27 Feb 2003 15:54:57 +0100 (MET)
+* PR# 2590 *
+Subject: seq() documentation bug
+From: oehl_list@gmx.de
+Date: Fri, 28 Feb 2003 13:40:11 +0100 (MET)
