@@ -412,6 +412,9 @@ BUG FIXES
     o	aov() could still fail on multistrata models with very long
 	Error formulae.
 
+    o	try() could fail in BATCH use due to use of fflush(stdin). 
+	Only seen on Solaris. (PR#1934)
+
 
 
 		CHANGES IN R VERSION 1.5.1
