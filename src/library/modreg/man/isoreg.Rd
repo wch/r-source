@@ -1,8 +1,8 @@
 \name{isoreg}
 \title{Isotonic / Monotone Regression}
 \alias{isoreg}
-\alias{fitted.isoreg}
-\alias{residuals.isoreg}
+%\alias{fitted.isoreg}
+%\alias{residuals.isoreg}
 \alias{as.stepfun.isoreg}
 \description{
   Compute the isotonic (monotonely increasing nonparametric) least
@@ -10,8 +10,8 @@
 }
 \usage{
 isoreg(x, y = NULL)
-\method{fitted}{isoreg}(object, \dots)
-\method{residuals}{isoreg}(object, \dots)
+%\method{fitted}{isoreg}(object, \dots)
+%\method{residuals}{isoreg}(object, \dots)
 \method{as.stepfun}{isoreg}(x, \dots)
 }
 \arguments{

@@ -1,9 +1,9 @@
 \name{plot.isoreg}
 \alias{plot.isoreg}
-\alias{print.isoreg}
-\title{Print and Plot Methods for  isoreg  Objects}
+%\alias{print.isoreg}
+\title{Plot Method for isoreg  Objects}
 \description{
-  These are \code{\link{print}} and \code{\link{plot}} methods for
+  The \code{\link{plot}} method for
   \R objects of class \code{\link{isoreg}}.
 }
 \usage{
@@ -15,7 +15,7 @@
       mar = if (both) 0.1 + c(3.5, 2.5, 1, 1) else par("mar"),
       mgp = if (both) c(1.6, 0.7, 0) else par("mgp"),
       grid = length(x$x) < 12, \dots)
-\method{print}{isoreg}(x, digits = getOption("digits"), \dots)
+%\method{print}{isoreg}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
   \item{x}{an \code{\link{isoreg}} object.}
@@ -33,7 +33,7 @@
     true, \code{\link{grid}()} is used for the first plot, where as
     vertical lines are drawn at ``touching'' points for the cumulative plot.}
   \item{\dots}{further arguments passed to and from methods.}
-  \item{digits}{integer indicating number of digits to use for printing.}
+%  \item{digits}{integer indicating number of digits to use for printing.}
 }
 \seealso{\code{\link{isoreg}} for computation of \code{isoreg} objects.}
 \examples{

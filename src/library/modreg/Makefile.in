@@ -11,7 +11,7 @@ subdir = src/library/modreg
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = COPYRIGHTS INDEX DESCRIPTION.in Makefile.in
+DISTFILES = COPYRIGHTS INDEX DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = modreg
 
@@ -22,7 +22,7 @@ all: Makefile DESCRIPTION
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX SOURCES; do \
+	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
