@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-21, 2002-12-16
+Version 1.6-22, 2002-12-17
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1284,6 +1284,10 @@ distributions of R.)
 *RSQLite*
      Database Interface R driver for SQLite.  Embeds the SQLite database
      engine in R.
+
+*RSvgDevice*
+     A graphics device for R that uses the new w3.org XML standard for
+     Scalable Vector Graphics.
 
 *RadioSonde*
      A collection of programs for reading and plotting SKEW-T,log p diagrams
