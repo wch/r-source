@@ -68,9 +68,10 @@ Optional support for the Tcl/Tk interface.  To use this you need to
 install tcl831.exe from dev.scriptics.com, and you will need the Tcl
 and Tk dlls in your path.  Also, you need to set the environment
 variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.3.
+The demos(tk*) will work on Windows.
 
 The R mathematical functions can now be built as a DLL for use
-with your own C programs.  See  src/nmath/standalone/README is the
+with your own C programs.  See  src/nmath/standalone/README in the
 sources.
 
 Rdconv.bat no longer depends on having a Unix-compatible `cat' program
