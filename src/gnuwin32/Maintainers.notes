@@ -15,10 +15,12 @@ This ran fairly slowly, producing a src/include/config.h that differs only
 
  - it found R_PRINTCMD = lpr on my system, but that is not used under 
    Windows, so the actual setting is irrelevant.
+
  - watch out for local features: e.g. I have libz installed in my
    mingw compiler system.
 
-Note that HAVE_TIMES should be defined even though times() is not found:
-it is used in R for the availabilty of timing.
+ - watch out for versions of the header files. <strings.h> is in
+   mingw-runtime-1.2 and later, but not in the Mingw-1.1 bundle.
 
-BDR 2002-03-20
+
+BDR 2002-04-15
