@@ -199,6 +199,12 @@ if test x"${use_strict_barrier}" = xyes; then
              violation.])
 fi
 
+AC_ARG_ENABLE([linux-lfs],
+[AC_HELP_STRING([--enable-linux-lfs],
+                [Enable support for > 2GB files on Linux @<:@no@:>@])],
+[want_linux_lfs="${enableval}"],
+[want_linux_lfs=no])
+
 
 ### ** Optional packages.
 
@@ -1320,6 +1326,12 @@ if test "${want_R_profiling}" = yes; then
 fi
 AC_SUBST(R_PROFILING)
 
+## Large-file-support (Linux-only, at present)
+if test "x${want_linux_lfs}" = xyes; then
+R_LARGE_FILES
+fi
+
+
 ### * Miscellaneous.
 
 ## Printing.
@@ -1561,8 +1573,8 @@ fi
 if test "${use_strict_barrier}" = yes; then
   R_SH_VAR_ADD(r_options, [strict barrier], [, ])
 fi
-if test "${use_lazy_loading}" = yes; then
-  R_SH_VAR_ADD(r_options, [lazy loading], [, ])
+if test "${want_linux_lfs}" = yes; then
+  R_SH_VAR_ADD(r_options, [Linux LFS], [, ])
 fi
 
 AC_MSG_RESULT(

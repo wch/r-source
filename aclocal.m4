@@ -2079,6 +2079,27 @@ if test "x${r_cv_size_max}" = xyes; then
 fi
 ])# R_SIZE_MAX
 
+AC_DEFUN([R_LARGE_FILES],
+[case "$host_os" in
+  linux*)
+    AC_MSG_CHECKING([for large file support mode on Linux])
+    if test ${ac_cv_sizeof_long} -gt 4 ; then
+      AC_MSG_RESULT([always enabled on > 32-bit machine])
+    else
+      LX_MAJOR_VER="`uname -r | cut -d '.' -f1`"
+      LX_MINOR_VER="`uname -r | cut -d '.' -f2`"
+      if test ${LX_MAJOR_VER} -gt 2 -o \
+	${LX_MAJOR_VER} -eq 2 -a ${LX_MINOR_VER} -ge 4; then
+	AC_MSG_RESULT([enabled])
+	CFLAGS="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE $CFLAGS"
+      else
+	AC_MSG_RESULT([disabled])
+      fi
+    fi
+    ;;
+esac
+])# R_LARGE_FILES
+
 # codeset.m4 serial AM1 (gettext-0.10.40)
 dnl Copyright (C) 2000-2002 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU

@@ -2586,6 +2586,29 @@ if test "x${r_cv_size_max}" = xyes; then
 fi
 ])# R_SIZE_MAX
 
+## R_LARGE_FILES
+## Enable large file support on linux >= 2.4.0?  Idea from hdf5 configure.
+AC_DEFUN([R_LARGE_FILES],
+[case "$host_os" in
+  linux*)
+    AC_MSG_CHECKING([for large file support mode on Linux])
+    if test ${ac_cv_sizeof_long} -gt 4 ; then
+      AC_MSG_RESULT([always enabled on > 32-bit machine])
+    else
+      LX_MAJOR_VER="`uname -r | cut -d '.' -f1`"
+      LX_MINOR_VER="`uname -r | cut -d '.' -f2`"
+      if test ${LX_MAJOR_VER} -gt 2 -o \
+	${LX_MAJOR_VER} -eq 2 -a ${LX_MINOR_VER} -ge 4; then
+	AC_MSG_RESULT([enabled])
+	CFLAGS="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE $CFLAGS"
+      else
+	AC_MSG_RESULT([disabled])
+      fi
+    fi
+    ;;
+esac
+])# R_LARGE_FILES
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
