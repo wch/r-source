@@ -8,7 +8,7 @@ our installation procedures.
 	PLATFORM			COMPILER	NOTES
 
 	i386-unknown-freebsd2.2.5	gcc / f77
-	i386-unknown-linux debian 1.3	gcc / f77
+	i386-unknown-linux debian 1.3	gcc / g77
 	mips-sgi-irix6.2		cc  / f77
 	sparc-sun-solaris2.5.1		gcc / g77
 		"			gcc / f77
