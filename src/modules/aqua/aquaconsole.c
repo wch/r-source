@@ -62,28 +62,18 @@
 
 #include "Raqua.h"
 
-struct GlobalsStruct
-{
-	Boolean				done;
-	ControlID			tabControlID;
-	ControlID			popupControlID;
-	EventLoopTimerRef	mainRunLoopTimerRef;
-	SInt32				numberOfRunningThreads;
-	IBNibRef 			mainNibRef;
-	Boolean				saveOnClose;
-	short				sharedFileRefNum;
-	WindowRef			cursorWindow;
-	EventHandlerUPP		largeCursorEventHandler;
-	EventHandlerRef		largeCursorEventHandlerRef;
-	Boolean				largeCursorActive;
-};
-typedef struct GlobalsStruct GlobalsStruct;
 
-GlobalsStruct	g;	/*	Globals */
 
 void Raqua_ProcessEvents(void);
 extern OSStatus OpenPageSetup(WindowRef window);
 extern OSStatus OpenPrintDialog(WindowRef window);
+
+void R_dot_Last(void);		/* in main.c */
+void R_RunExitFinalizers(void);	/* in memory.c */
+extern SA_TYPE SaveAction;
+extern SA_TYPE RestoreAction;
+
+
 
 
 /* Items for the Tools menu */
@@ -149,6 +139,88 @@ void RSetTab(void);
 void RSetFontSize(void);
 void RSetFont(void);
 
+void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast);
+void Raqua_Suicide(char *s);
+void Raqua_ShowMessage(char *msg);
+void CloseAllHelpWindows(void);
+void CloseAllEditWindows(void);
+
+#define	      	MAX_NUM_OF_WINS	1000
+WindowRef     	EditWindowsList[MAX_NUM_OF_WINS];
+WindowRef     	HelpWindowsList[MAX_NUM_OF_WINS];
+int		NumOfEditWindows = 0;
+int		NumOfHelpWindows = 0;
+                
+OSStatus AddEditWindow(WindowRef window);
+OSStatus AddHelpWindow(WindowRef window);
+OSStatus RemEditWindow(WindowRef window);
+OSStatus RemHelpWindow(WindowRef window);
+
+void DestroyHelpWindow(WindowRef window);
+void DestroyEditWindow(WindowRef window);
+
+OSStatus AddHelpWindow(WindowRef window){
+
+        if(window == NULL)
+         return(-1);
+
+        if(NumOfHelpWindows == MAX_NUM_OF_WINS){
+            Raqua_ShowMessage("Too many help windows opened");
+            return(-1);
+        }
+
+        NumOfHelpWindows++;
+        HelpWindowsList[NumOfHelpWindows-1] = window;
+        return(noErr);
+}
+
+OSStatus RemHelpWindow(WindowRef window){
+        int i,j;
+        
+        if((window == NULL) || (NumOfHelpWindows == 0))
+         return(-1);
+
+        for(i=0;i<NumOfHelpWindows;i++)
+         if(window == HelpWindowsList[i]){
+          for(j=i;j<NumOfHelpWindows-1;j++)
+           HelpWindowsList[j] = HelpWindowsList[j+1];
+          NumOfHelpWindows--; 
+        }
+
+        return(noErr);
+}
+
+OSStatus AddEditWindow(WindowRef window){
+
+        if(window == NULL)
+         return(-1);
+
+        if(NumOfEditWindows == MAX_NUM_OF_WINS){
+            Raqua_ShowMessage("Too many edit windows opened");
+            return(-1);
+        }
+
+        NumOfEditWindows++;
+        EditWindowsList[NumOfEditWindows-1] = window;
+        return(noErr);
+}
+
+OSStatus RemEditWindow(WindowRef window){
+        int i,j;
+
+        if((window == NULL) || (NumOfEditWindows == 0))
+         return(-1);
+
+        for(i=0;i<NumOfEditWindows;i++)
+         if(window == EditWindowsList[i]){
+          for(j=i;j<NumOfEditWindows-1;j++)
+           EditWindowsList[j] = EditWindowsList[j+1];
+          NumOfEditWindows--; 
+        }
+
+        return(noErr);
+}
+
 
                 
 static pascal OSStatus
@@ -185,6 +257,8 @@ extern Boolean isConsoleFont;
 extern OSStatus MySetFontSelection(void);                              
 extern OSStatus MyGetFontSelection(EventRef event);
                      
+
+                     
 void consolecmd(char *cmd);
 void RSetColors(void);
                    
@@ -196,6 +270,7 @@ static const EventTypeSpec	REvents[] =
 
 
 
+
 static const EventTypeSpec	aboutSpec =
 	{ kEventClassWindow, kEventWindowClose };
 
@@ -204,6 +279,7 @@ static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
                                      AppleEvent* reply, UInt32 refcon); 
 static pascal OSStatus KeybHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void *inUserData );
 static pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData);
+
 
 OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 
@@ -243,8 +319,8 @@ void InitAboutWindow(void);
 void HistBack(void);
 void HistFwd(void);
 void maintain_cmd_History(char *buf);
-void mac_savehistory(char *file);
-void mac_loadhistory(char *file);
+void Raqua_write_history(char *file);
+void Raqua_read_history(char *file);
 SEXP Raqua_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP Raqua_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
 OSStatus SaveWindow(WindowRef window, Boolean ForceNewFName);
@@ -296,8 +372,9 @@ void Raqua_StartConsole(void)
     CFURLRef    bundleURL = NULL;
     CFBundleRef RBundle = NULL;
     Str255	menuStr;
+    char	buf[300];
+    FSRef 	ref;
     
-   
     err = CreateNibReference(CFSTR("main"), &nibRef);
     if(err != noErr) 
      goto noconsole;
@@ -312,6 +389,7 @@ void Raqua_StartConsole(void)
     
     err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
     
+
    if(err != noErr)
      goto noconsole;
    else
@@ -325,6 +403,8 @@ void Raqua_StartConsole(void)
      DisposeNibReference(nibRef);
   
     ShowWindow(ConsoleWindow);
+    SelectWindow(ConsoleWindow);
+   
 
     GetRPrefs();
      
@@ -391,10 +471,14 @@ void Raqua_StartConsole(void)
          TXNSetTXNObjectControls(RConsoleInObject,false,1,txnControlTag,txnControlData);
 
   	 InstallStandardEventHandler(GetApplicationEventTarget());
-         err = InstallApplicationEventHandler( KeybHandler, GetEventTypeCount(KeybEvents), KeybEvents, 0, NULL);
+      //   err = InstallApplicationEventHandler( KeybHandler, GetEventTypeCount(KeybEvents), KeybEvents, 0, NULL);
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
                                                 RCmdEvents, 0, NULL);
 	    
+         err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(KeybHandler), 
+                                          GetEventTypeCount(KeybEvents),
+                                          KeybEvents, (void *)ConsoleWindow, NULL);
+         
          err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(DoCloseHandler), 
                                           GetEventTypeCount(RCloseWinEvent),
                                           RCloseWinEvent, (void *)ConsoleWindow, NULL);
@@ -408,7 +492,7 @@ void Raqua_StartConsole(void)
         InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
                                 (void *)RAboutWindow, NULL);
 
-              InstallPrefsHandlers();
+        InstallPrefsHandlers();
       
         }
         else
@@ -448,7 +532,12 @@ void Raqua_StartConsole(void)
        RSetFont();
        
        EnableMenuCommand(NULL, kHICommandPreferences);
+   
+       chdir(R_ExpandFileName("~/"));
        
+       if (R_RestoreHistory)
+	Raqua_read_history(R_HistoryFile);
+        
         
 noconsole:
     if(bundleURL)
@@ -460,6 +549,18 @@ noconsole:
 
 /* BEWARE: before quitting R via ExitToShell() call TXNTerminateTextension() */
 
+void CloseRAquaConsole(void);
+void CloseRAquaConsole(void){
+
+  DisposeWindow(RAboutWindow);
+  DisposeWindow(RPrefsWindow);
+  
+  TXNDeleteObject(RConsoleOutObject);
+  TXNDeleteObject(RConsoleInObject);
+  DisposeWindow(ConsoleWindow);
+  
+  TXNTerminateTextension();
+}
 
 void Aqua_RWrite(char *buf);
 void Aqua_RnWrite(char *buf, int len);
@@ -491,8 +592,10 @@ void Raqua_WriteConsole(char *buf, int len)
  	if (strlen(buf)+1+end_of_buffer>=AQUA_BUFLEN){
          TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
  	if (end_of_buffer>0)
- 	  err =  TXNSetData (RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, kTXNEndOffset, kTXNEndOffset);
- 	err = TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
+            err =  TXNSetData( RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, 
+                                kTXNEndOffset, kTXNEndOffset);
+        err = TXNSetData(RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, 
+                                kTXNEndOffset);
  	outputbuffer[0]='\0';
  	end_of_buffer = 0;
  	} else {
@@ -689,8 +792,6 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
  UInt32		RKeyCode;
  char c;
  
- if(FrontWindow() != ConsoleWindow)
-  return(err);
   
  if(!EditingFinished)
   return(err);
@@ -831,12 +932,75 @@ pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event,
     return result;
 }
  
+ 
+
+NavUserAction WantToSave(WindowRef window, char *msg);
+NavUserAction WantToSave(WindowRef window, char *msg){
+    OSStatus			err = noErr;
+    NavDialogCreationOptions	dialogOptions;
+    NavAskSaveChangesAction	action 	= 0;
+    NavDialogRef		WantDialog;
+    NavReplyRecord		reply;
+    NavUserAction 		userAction = 0;
+    
+    action = kNavSaveChangesClosingDocument;
+    
+    if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
+        if(msg != NULL)
+            dialogOptions.message = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), msg);
+        if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
+                                    NULL, &WantDialog)) == noErr){
+            if( (err = NavDialogRun(WantDialog)) == noErr)
+                userAction =  NavDialogGetUserAction(WantDialog);
+            NavDialogDispose(WantDialog);              
+        }
+  
+        if( dialogOptions.message ) 
+            CFRelease(dialogOptions.message);
+    }  
+    
+    return(userAction);      
+}
+
+
+NavUserAction YesOrNot(WindowRef window, char *msg);
+NavUserAction YesOrNot(WindowRef window, char *msg){
+    OSStatus			err = noErr;
+    NavDialogCreationOptions	dialogOptions;
+    NavAskSaveChangesAction	action 	= 0;
+    NavDialogRef		WantDialog;
+    NavReplyRecord		reply;
+    NavUserAction 		userAction = 0;
+    
+    action = kNavSaveChangesQuittingApplication;
+    
+    if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
+        if(msg != NULL)
+            dialogOptions.message = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), msg);
+        if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
+                                    NULL, &WantDialog)) == noErr){
+            if( (err = NavDialogRun(WantDialog)) == noErr)
+                userAction =  NavDialogGetUserAction(WantDialog);
+            NavDialogDispose(WantDialog);              
+        }
+  
+        if( dialogOptions.message ) 
+            CFRelease(dialogOptions.message);
+    }  
+    
+    return(userAction);      
+}
+
+
 static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
                                      AppleEvent* reply, UInt32 refcon) 
 {
-  consolecmd("q()");
+  Raqua_CleanUp(SA_SAVEASK, 2, 0);
 } 
-  
+
+
+ 
+
 
 /* Changes font size in both Console In and Out 
    default size is 12
@@ -901,9 +1065,11 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	UInt32			eventKind = GetEventKind( inEvent );
         FSSpec 			tempfss;
         char			buf[300],cmd[2500];
-        WindowRef		EventWindow = NULL; 
+        WindowRef		window = NULL; 
         int len;
+        TXNObject		tmpObj;
 
+        window = FrontWindow();
 	switch ( GetEventClass( inEvent ) )
 	{
          case kEventClassCommand:
@@ -967,8 +1133,13 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 
               case kHICommandPaste:
                if(TXNIsScrapPastable()){
+                if(window == ConsoleWindow){
                  TXNSetSelection(RConsoleInObject,kTXNEndOffset,kTXNEndOffset); 
                  TXNPaste(RConsoleInObject); 
+                }
+                else
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+                   TXNPaste(tmpObj); 
                }
                break;
               
@@ -978,14 +1149,94 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                  I'm not sure if it should be the contrary.
               */    
               case kHICommandCopy:
-               if(!TXNIsSelectionEmpty(RConsoleOutObject)){
-                 TXNCopy(RConsoleOutObject); 
-               } else 
-                  if(!TXNIsSelectionEmpty(RConsoleInObject)){
-                 TXNCopy(RConsoleInObject); 
-               }               
+                if(window == ConsoleWindow){              
+                 if(!TXNIsSelectionEmpty(RConsoleOutObject))
+                    TXNCopy(RConsoleOutObject); 
+                 else 
+                  if(!TXNIsSelectionEmpty(RConsoleInObject))
+                    TXNCopy(RConsoleInObject); 
+                } else {
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                   if(!TXNIsSelectionEmpty(tmpObj))
+                    TXNCopy(tmpObj);
+                 } else
+                  if( GetWindowProperty(window, 'RHLP', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                   if(!TXNIsSelectionEmpty(tmpObj))
+                    TXNCopy(tmpObj);                
+                  }
+                }                               
                break;
           
+              case kHICommandCut:
+                if(window == ConsoleWindow){              
+                  if(!TXNIsSelectionEmpty(RConsoleInObject))
+                    TXNCut(RConsoleInObject); 
+                } else {
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+                  if(!TXNIsSelectionEmpty(tmpObj))
+                   TXNCut(tmpObj);
+                }                               
+               break;
+
+              case kHICommandSelectAll:
+                if(window == ConsoleWindow){              
+                 if(!TXNIsSelectionEmpty(RConsoleOutObject))
+                    TXNSelectAll(RConsoleOutObject); 
+                 else 
+                    TXNSelectAll(RConsoleInObject); 
+                } else {
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+                    TXNSelectAll(tmpObj);
+                 else
+                  if( GetWindowProperty(window, 'RHLP', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+                    TXNSelectAll(tmpObj);                
+                }                               
+              break;
+              
+               case kHICommandClear:
+                if(window == ConsoleWindow){              
+                 if(!TXNIsSelectionEmpty(RConsoleOutObject))
+                    TXNClear(RConsoleOutObject); 
+                 else 
+                  if(!TXNIsSelectionEmpty(RConsoleInObject))
+                    TXNClear(RConsoleInObject); 
+                } else {
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                   if(!TXNIsSelectionEmpty(tmpObj))
+                    TXNClear(tmpObj);
+                 } else
+                  if( GetWindowProperty(window, 'RHLP', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                   if(!TXNIsSelectionEmpty(tmpObj))
+                    TXNClear(tmpObj);                
+                  }
+                }                               
+              break;
+ 
+              case kHICommandUndo:
+                if(window == ConsoleWindow){              
+                  if(TXNCanUndo(RConsoleInObject,NULL))
+                    TXNUndo(RConsoleInObject); 
+                } else {
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                  if(TXNCanUndo(tmpObj,NULL))
+                   TXNUndo(tmpObj);
+                  }
+                }                               
+               break;
+
+
+              case kHICommandRedo:
+                if(window == ConsoleWindow){              
+                  if(TXNCanRedo(RConsoleInObject,NULL))
+                    TXNRedo(RConsoleInObject); 
+                } else {
+                 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                  if(TXNCanRedo(tmpObj,NULL))
+                   TXNRedo(tmpObj);
+                  }
+                }                               
+              break;
+               
               case kHICommandAbout:
                 ShowWindow(RAboutWindow);
                 SelectWindow(RAboutWindow);    
@@ -1100,7 +1351,7 @@ OSStatus SaveWindow(WindowRef window, Boolean ForceNewFName){
     TXNObject	tmpObj;
     Handle 	DataHandle;
     FILE 	*fp;
-   
+    ItemCount	changes;
     
     if(window == NULL)
      return(-1);
@@ -1179,6 +1430,9 @@ nomem:
     if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
         err = SetWindowProperty(window,'REDT', 'fssp', sizeof(FSSpec), &tempfss);
         SetWTitle(window,tempfss.name);
+        TXNClearActionChangeCount(tmpObj, kTXNAllCountMask);
+        TXNGetActionChangeCount(tmpObj,  kTXNAllCountMask, &changes);
+        err = SetWindowProperty(window, 'REDT', 'chgs', sizeof(ItemCount), &changes);
         return err;
      }
            
@@ -1318,6 +1572,8 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
         Handle 		DataHandle;
         FILE 		*fp;
         ControlRef 	browser = NULL;
+        ItemCount	changes, newchanges;
+        NavUserAction	userAction;
 
 
 	
@@ -1339,15 +1595,15 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
               } 
               
              /* Are we closing any quartz device window ? */
-            if( GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), NULL, &devnum) == noErr){
+            if( GetWindowProperty(EventWindow, kRAppSignature, 'QRTZ', sizeof(int), NULL, &devnum) == noErr){
                     sprintf(cmd,"dev.off(%d)",1+devnum);
                     consolecmd(cmd);
                     err= noErr; 
             }
          
            if( GetWindowProperty(EventWindow, 'RHLP', 'robj', sizeof(TXNObject), NULL, &RHlpObj) == noErr){
-                    TXNDeleteObject(RHlpObj);
-                    HideWindow(EventWindow);
+                    DestroyHelpWindow(EventWindow);
+                    RemHelpWindow(EventWindow);
                     err= noErr; 
             }
             
@@ -1370,34 +1626,20 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
             }
             
             if( GetWindowProperty(EventWindow, 'REDT', 'robj', sizeof(TXNObject), NULL, &REdtObj) == noErr){
-                    err = GetWindowProperty(EventWindow, 'REDT', 'fsiz', sizeof(int), NULL, &fsize);
-                    err = GetWindowProperty(EventWindow, 'REDT', 'fnam', fsize, NULL, filename);
-                    txtlen = TXNDataSize(REdtObj)/2;
-                    err = TXNGetDataEncoded(REdtObj, 0, txtlen, &DataHandle, kTXNTextData);
-                    HLock( DataHandle );
-                    filename[fsize] = '\0';
-                    buf = malloc(txtlen+1);
-                    if(buf != NULL){
-                        strncpy(buf,*DataHandle,txtlen);
-                        for(i=0;i<txtlen;i++){
-                        if( buf[i] == '\r') 
-                            buf[i] = '\n';
-                        } 
-                        buf[txtlen] = '\0';
-                        if( (fp = R_fopen(R_ExpandFileName(filename), "w")) ){
-                            fprintf(fp, "%s", buf);
-                            fclose(fp);
-                        }
-                        free(buf);
+                    err = GetWindowProperty(EventWindow, 'REDT', 'chgs', sizeof(ItemCount), NULL, &changes);
+                    TXNGetActionChangeCount(REdtObj,  kTXNAllCountMask, &newchanges);      
+                    if( changes != newchanges ){
+                     userAction = WantToSave(EventWindow, NULL);
+                     if(userAction == kNavUserActionSaveChanges)
+                        SaveWindow(EventWindow,false);
                     }
-                    HUnlock( DataHandle );
-                    if(DataHandle)
-                        DisposeHandle( DataHandle );
-                    TXNDeleteObject(REdtObj);
-                    HideWindow(EventWindow);
-                    QuitApplicationEventLoop();
-                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
-                    EditingFinished = true;
+                    if((userAction != kNavUserActionCancel) || (changes == newchanges)){  
+                        DestroyEditWindow(EventWindow);
+                        RemEditWindow(EventWindow);
+                        QuitApplicationEventLoop();
+                        TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                        EditingFinished = true;
+                     }
                     err= noErr; 
             } 
            break;
@@ -1423,23 +1665,11 @@ void consolecmd(char *cmd)
    TXNSetData (RConsoleInObject, kTXNTextData, cmd, strlen(cmd), 0, TXNDataSize(RConsoleInObject));
    CreateEvent(NULL, kEventClassKeyboard, kEventRawKeyDown, 0,kEventAttributeNone, &REvent);
    SetEventParameter(REvent, kEventParamKeyCode, typeUInt32, sizeof(RKeyCode), &RKeyCode);
-   SendEventToEventTarget (REvent,GetApplicationEventTarget());
+   SendEventToEventTarget (REvent,GetWindowEventTarget(ConsoleWindow));
 }
 
  
 
-
-/* DoSelectDirectory: allows the user to change R current working directory
-                    via dialog box
-*/
-pascal	OSErr	FSpGetFullPath(const FSSpec *spec,
-							   short *fullPathLength,
-							   Handle *fullPath);
-
-pascal	OSErr	FSMakeFSSpecCompat(short vRefNum,
-								   long dirID,
-								   ConstStr255Param fileName,
-								   FSSpec *spec);
 
 OSErr DoSelectDirectory( void )
 {	
@@ -1518,6 +1748,7 @@ int NewEditWindow(char *fileName)
     Str255			fontname;
     int fsize,flen;
     FILE *fp;
+    ItemCount	changes; 
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask|kTXNMonostyledTextMask;
@@ -1611,7 +1842,7 @@ int NewEditWindow(char *fileName)
      err = SetWindowProperty(EditWindow, 'REDT', 'fnam', fsize, fileName);
     }
     SetWindowModified(EditWindow,false);
-
+    
     err = InstallWindowEventHandler( EditWindow, NewEventHandlerUPP(DoCloseHandler), 
                                           GetEventTypeCount(RCloseWinEvent),
                                           RCloseWinEvent, (void *)EditWindow, NULL);
@@ -1632,14 +1863,20 @@ int NewEditWindow(char *fileName)
         fclose(fp);
      }
     }
-    TXNSetSelection(REditObject,0,0);              
+    
     ShowWindow(EditWindow);
     BeginUpdate(EditWindow);
     TXNForceUpdate(REditObject);
     TXNDraw(REditObject, NULL);
     EndUpdate(EditWindow); 				 	           
 
+    TXNSetSelection(REditObject,1,1); 
+    TXNShowSelection(REditObject, false);
     TXNFocus(REditObject,true);
+    
+    TXNGetActionChangeCount(REditObject, kTXNAllCountMask, &changes);
+    err = SetWindowProperty(EditWindow, 'REDT', 'chgs', sizeof(ItemCount), &changes);
+    AddEditWindow(EditWindow);
     return 0;
     
 fail:
@@ -1801,11 +2038,11 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
         if(fbuf){
          fread(fbuf, 1, flen, fp);
          fbuf[flen] = '\0';
-         for(i=0;i<flen;++i)
-          if(fbuf[i] == '_'){
-           for(j=i;j<flen-1;j++)
-            fbuf[j] = fbuf[j+1]; 
-            flen--;
+         for(i=0;i<flen-1;++i)
+          if((fbuf[i] == '_') && (fbuf[i+1] == '\b')){
+           for(j=i+2;j<flen;j++)
+            fbuf[j-2] = fbuf[j]; 
+            flen = flen -2;
             }
          fbuf[flen] = '\0';   
          TXNSetData (RHelpObject, kTXNTextData, fbuf, strlen(fbuf), kTXNEndOffset, kTXNEndOffset);
@@ -1814,16 +2051,16 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
         fclose(fp);
     }
  
-    TXNSetSelection(RHelpObject,1,1); 
-    TXNShowSelection(RHelpObject, false);
-
+   
     ShowWindow(HelpWindow);
     BeginUpdate(HelpWindow);
     TXNForceUpdate(RHelpObject);
     TXNDraw(RHelpObject, NULL);
     EndUpdate(HelpWindow); 				 	           
-
-    
+    TXNSetSelection(RHelpObject,1,1); 
+    TXNShowSelection(RHelpObject, false);
+    TXNFocus(RHelpObject,true);
+    AddHelpWindow(HelpWindow);
     return 0;
     
 fail:
@@ -2136,7 +2373,7 @@ SEXP Raqua_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    mac_savehistory(CHAR(STRING_ELT(sfile, 0)));
+    Raqua_write_history(CHAR(STRING_ELT(sfile, 0)));
     return R_NilValue;
 }
 
@@ -2148,11 +2385,11 @@ SEXP Raqua_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    mac_loadhistory(CHAR(STRING_ELT(sfile, 0)));
+    Raqua_read_history(CHAR(STRING_ELT(sfile, 0)));
     return R_NilValue;
 }
 
-void mac_savehistory(char *file)
+void Raqua_write_history(char *file)
 {
     FILE *fp;
     int i;
@@ -2179,12 +2416,12 @@ void mac_savehistory(char *file)
 }
 
 /**********************************************
- mac_loadhistory: load history command from a
+ Raqua_read_history: load history command from a
  specified file. Adapted from gl_loadhistory
  for Windows. It can read history files of
  Windowds porting.
 **********************************************/
-void mac_loadhistory(char *file)
+void Raqua_read_history(char *file)
 {
     FILE *fp;
     int i,buflen,j;
@@ -2244,10 +2481,154 @@ void Raqua_ProcessEvents(void)
      SendEventToEventTarget( theEvent, theTarget );    
      ReleaseEvent( theEvent );
     }
+    
 }
 
 
 
+
+void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
+{
+    if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
+	saveact = SaveAction;
+
+    if(saveact == SA_SAVEASK) {
+	if(R_Interactive) {
+	    switch (WantToSave(ConsoleWindow,"Save workspace image?")) {
+	    case kNavUserActionSaveChanges:
+		saveact = SA_SAVE;
+		break;
+	    case kNavUserActionDontSaveChanges:
+		saveact = SA_NOSAVE;
+		break;
+	    case kNavUserActionCancel:
+		jump_to_toplevel();
+		break;
+
+	    }
+	} else saveact = SaveAction;
+    }
+
+    switch (saveact) {
+    case SA_SAVE:
+	if(runLast) R_dot_Last();
+	if(R_DirtyImage) R_SaveGlobalEnv();
+            Raqua_write_history(R_HistoryFile);
+	break;
+    case SA_NOSAVE:
+	if(runLast) R_dot_Last();
+	break;
+    case SA_SUICIDE:
+    default:
+	break;
+    }
+    R_RunExitFinalizers();
+
+    CloseAllHelpWindows();
+    CloseAllEditWindows();
+    KillAllDevices();
+    
+    PrintWarnings();
+    CloseRAquaConsole();
+    exit(status);
+}
+
+void DestroyHelpWindow(WindowRef window){
+    TXNObject tmpObj;
+
+    if(window == NULL) return;
+    
+    if( GetWindowProperty(window, 'RHLP', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+        TXNDeleteObject(tmpObj);
+    DisposeWindow(window);
+}
+
+void DestroyEditWindow(WindowRef window){
+    TXNObject tmpObj;
+
+    if(window == NULL) return;
+    
+    if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+        TXNDeleteObject(tmpObj);
+    DisposeWindow(window);
+}
+
+void CloseAllHelpWindows(void){
+    int i;
+    
+    for(i=0; i<NumOfHelpWindows; i++){
+        if(HelpWindowsList[i] != NULL)
+         DestroyHelpWindow(HelpWindowsList[i]);
+        HelpWindowsList[i] = NULL;
+    }
+    NumOfHelpWindows = 0;     
+}
+
+void CloseAllEditWindows(void){
+    int 		i;
+    TXNObject  		tmpObj;
+    ItemCount		changes, newchanges;
+    NavUserAction	userAction;
+    char 		msg[1024], winname[255];
+    Str255		wintitle;
+    
+    for(i=0; i<NumOfEditWindows; i++){
+        if(EditWindowsList[i] != NULL){
+         if( GetWindowProperty(EditWindowsList[i], 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                    GetWindowProperty(EditWindowsList[i], 'REDT', 'chgs', sizeof(ItemCount), NULL, &changes);
+                    TXNGetActionChangeCount(tmpObj,kTXNAllCountMask,&newchanges);
+                    if( changes != newchanges ){
+                     ShowWindow( EditWindowsList[i] );
+                     GetWTitle( EditWindowsList[i], wintitle );
+                     CopyPascalStringToC(wintitle, winname);
+                     sprintf(msg, "Do you want to save changes for window %s?",winname);
+                     userAction = YesOrNot(EditWindowsList[i], msg);
+                     if(userAction == kNavUserActionSaveChanges)
+                        SaveWindow(EditWindowsList[i],false);
+                    }
+         }
+         DestroyEditWindow(EditWindowsList[i]);
+        }
+        EditWindowsList[i] = NULL;
+    }
+    NumOfEditWindows = 0;     
+
+
+}
+
+    
+void Raqua_ShowMessage(char *msg)
+{
+	AlertStdAlertParamRec	alertParamRec;
+	short itemHit=0;
+        Str255	title;
+	
+	alertParamRec.movable = false;				// Make alert movable modal
+	alertParamRec.helpButton = false;			// Is there a help button?
+	alertParamRec.filterProc = NULL;			// event filter
+	alertParamRec.defaultText = NULL;			// Text for button in OK position
+	alertParamRec.cancelText = NULL;			// Text for button in cancel position
+	alertParamRec.otherText = NULL;				// Text for button in left position
+	alertParamRec.defaultButton = 1;			// Which button behaves as the default
+	alertParamRec.cancelButton = 0;				// Which one behaves as cancel (can be 0)
+	alertParamRec.position = kWindowAlertPositionParentWindow;	
+        
+	SysBeep( 5 );
+        CopyCStringToPascal(msg,title);
+	StandardAlert( kAlertStopAlert, title, NULL, &alertParamRec, &itemHit );
+}
+
+
+
+
+void Raqua_Suicide(char *s)
+{
+    char  pp[1024];
+
+    snprintf(pp, 1024, "Fatal error: %s\n", s);
+    Raqua_ShowMessage(pp);
+    Raqua_CleanUp(SA_SUICIDE, 2, 0);
+}
 
 
 #endif /* HAVE_AQUA */

@@ -52,7 +52,6 @@ typedef struct
    RGBColor	BGInputColor;
    RGBColor	FGOutputColor;
    RGBColor	BGOutputColor;
-   char		WorkingDir[500];
    char		DeviceFontName[255];
    int       	DevicePointSize;
    double	DeviceWidth;

@@ -78,9 +78,6 @@ void CallFontPanel(void);
 #define kOutputBackButton   	1011
 #define kInputBackButton    	1012
 
-#define	kWorkingDirButton   	2001
-#define kWorkingDirText 	2002
-
 #define	kDeviceFontButton   	3001
 #define kDeviceFontText 	3002
 #define kOverrideRDefBox	3007
@@ -103,7 +100,6 @@ void CallFontPanel(void);
 #define kMaxNumTabs		3
 
 ControlID	MainControlID = { kPrefControlsSig, kConsoleFontText };
-ControlID	WorkingDirTextID = { kPrefControlsSig, kWorkingDirText };
 ControlID	ConsoleFontTextID = { kPrefControlsSig, kConsoleFontText };
 ControlID	DeviceFontTextID = { kPrefControlsSig, kDeviceFontText };
 ControlID	TabSizeID = { kPrefControlsSig, kTabSizeField };
@@ -122,7 +118,6 @@ static	RGBColor	DefaultFGInputColor = {0xffff, 0xffff, 0x0000};
 static	RGBColor	DefaultBGInputColor = {0x0000, 0x0000, 0xffff};
 static	RGBColor	DefaultFGOutputColor = {0x0000, 0xffff, 0x0000};
 static	RGBColor	DefaultBGOutputColor = {0x0000, 0x0000, 0x0000};
-static	char		DefaultWorkingDir[] = "~/";
 static	char 		DefaultDeviceFontName[] = "Helvetica";
 static	int		DefaultDevicePointSize = 12;
 static	double 		DefaultDeviceWidth = 5.0;
@@ -174,7 +169,6 @@ CFStringRef appName, tabsizeKey, fontsizeKey, consolefontKey, devicefontKey;
 CFStringRef outfgKey, outbgKey, infgKey, inbgKey;
 CFStringRef devWidthKey, devHeightKey, devPSizeKey;
 CFStringRef devAutoRefreshKey, devAntialiasingKey, devOverrideRDefKey;
-CFStringRef InitialWorkingDirKey;
            
          
              
@@ -198,7 +192,6 @@ void	SetUpPrefSymbols(void){
     devAutoRefreshKey = CFSTR("Device Autorefresh");
     devAntialiasingKey = CFSTR("Device Antialiasing");
     devOverrideRDefKey = CFSTR("Override R Defaults");
-    InitialWorkingDirKey = CFSTR("Initial Working Directory");
 }
 
 OSStatus InstallPrefsHandlers(void){
@@ -226,8 +219,6 @@ OSStatus InstallPrefsHandlers(void){
     err = InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kOutputBackButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
 
     err = InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kInputBackButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
-
-    err = InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kWorkingDirButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
 
     err = InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kDeviceFontButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
      
@@ -289,7 +280,6 @@ void SetDefaultPrefs(void)
     DefaultPrefs.BGInputColor = DefaultBGInputColor;
     DefaultPrefs.FGOutputColor = DefaultFGOutputColor;
     DefaultPrefs.BGOutputColor = DefaultBGOutputColor;
-    strcpy(DefaultPrefs.WorkingDir, DefaultWorkingDir);
     strcpy(DefaultPrefs.DeviceFontName, DefaultDeviceFontName);
     DefaultPrefs.DevicePointSize = DefaultDevicePointSize;
     DefaultPrefs.DeviceWidth = DefaultDeviceWidth;
@@ -311,7 +301,6 @@ void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
     To->BGInputColor = From->BGInputColor;
     To->FGOutputColor = From->FGOutputColor;
     To->BGOutputColor = From->BGOutputColor;
-    strcpy(To->WorkingDir,From->WorkingDir);
     strcpy(To->DeviceFontName, From->DeviceFontName);
     To->DevicePointSize = From->DevicePointSize;
     To->DeviceWidth = From->DeviceWidth;
@@ -332,7 +321,7 @@ void GetRPrefs(void)
     double	devheight, devwidth;
     CFDataRef	color;
     RGBColor    fgout,bgout,fgin,bgin;
-    char consolefont[255], devicefont[255], workingdir[500];
+    char consolefont[255], devicefont[255];
     int	autorefresh, antialiasing, overrideRdef;
     
     SetUpPrefSymbols();
@@ -372,17 +361,6 @@ void GetRPrefs(void)
 
     strcpy(CurrentPrefs.ConsoleFontName, consolefont);
 
-
-/* Initial Working Directory */
-
-    text = CFPreferencesCopyAppValue(InitialWorkingDirKey, appName);   
-    if (text) {
-	if (! CFStringGetCString (text, workingdir, 500,  kCFStringEncodingMacRoman)) strcpy(workingdir, DefaultPrefs.WorkingDir);
-	CFRelease(text);
-    } else 
-	strcpy(workingdir, DefaultPrefs.WorkingDir); /* set default value */
-
-    strcpy(CurrentPrefs.WorkingDir, workingdir);
 
 /* Device Point Size */
   value = CFPreferencesCopyAppValue(devPSizeKey, appName);   
@@ -534,14 +512,7 @@ void SetUpPrefsWindow(RAquaPrefsPointer Settings)
    SetControlData(myControl, kControlEditTextPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
    DrawOneControl(myControl);    
    CFRelease(text);
- 
-/* Sets Initial Working Directory Prefs */
-    GetControlByID(RPrefsWindow, &WorkingDirTextID, &myControl);
-    text = CFStringCreateWithCString(NULL, Settings->WorkingDir, kCFStringEncodingMacRoman);
-    SetControlData(myControl, kControlEditTextPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
-    DrawOneControl(myControl);    
-    CFRelease(text);
- 
+  
 /* Sets color font for Output Console */
     GetControlByID(RPrefsWindow, &OutputColorID, &myControl);
     controlStyle.foreColor = Settings->FGOutputColor;
@@ -596,14 +567,13 @@ void SaveRPrefs(void)
     double	devwidth, devheight;
     CFDataRef	color;
     RGBColor    fgout,bgout,fgin,bgin;
-    char 	consolefont[255], devicefont[255], workingdir[500];
+    char 	consolefont[255], devicefont[255];
     int	autorefresh, antialiasing, overrideRdef;
     
     tabsize = CurrentPrefs.TabSize;
     fontsize = CurrentPrefs.ConsoleFontSize;
     strcpy(consolefont, CurrentPrefs.ConsoleFontName);
     strcpy(devicefont, CurrentPrefs.DeviceFontName);
-    strcpy(workingdir, CurrentPrefs.WorkingDir);
     
     pointsize = CurrentPrefs.DevicePointSize;
     devwidth = CurrentPrefs.DeviceWidth;
@@ -641,11 +611,6 @@ void SaveRPrefs(void)
 /* Device Font Name */
     text = CFStringCreateWithCString(NULL, devicefont, kCFStringEncodingMacRoman);
     CFPreferencesSetAppValue(devicefontKey, text, appName);
-    CFRelease(text);
-
-/* Initial Working Directory */
-    text = CFStringCreateWithCString(NULL, workingdir, kCFStringEncodingMacRoman);
-    CFPreferencesSetAppValue(InitialWorkingDirKey, text, appName);
     CFRelease(text);
 
 
@@ -723,7 +688,7 @@ static pascal OSStatus PrefsTabEventHandlerProc( EventHandlerCallRef inCallRef, 
         // Hide the current pane and make the user selected pane the active one
         // our 3 tab pane IDs.  Put a dummy in so we can index without subtracting 1 (this array is zero based, 
         // control values are 1 based).
-        int tabList[] = {kDummyValue, kTabMasterID,kTabMasterID+1,kTabMasterID+2};
+        int tabList[] = {kDummyValue, kTabMasterID,kTabMasterID+1};
                                                                                     
         // hide the current one, and set the new one
         SetControlVisibility( GrabCRef(  theWindow, kTabPaneSig,  tabList[lastPaneSelected]), false, true );
@@ -740,7 +705,7 @@ static pascal OSStatus PrefsTabEventHandlerProc( EventHandlerCallRef inCallRef, 
 
 static void SetInitialTabState(WindowRef theWindow)
 {
-    int tabList[] = {kTabMasterID,kTabMasterID+1,kTabMasterID+2}; 
+    int tabList[] = {kTabMasterID,kTabMasterID+1}; 
     short qq=0;
     // If we just run without setting the initial state, then the tab control
     // will have both (or all) sets of controls overlapping each other.
@@ -800,7 +765,6 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
         break;
       
         case kSavePrefsButton: 
-         fprintf(stderr,"\n kSavePrefsButton");
          GetDialogPrefs();
          RSetColors();
          RSetTab();
@@ -811,7 +775,6 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
         break;
 
         case kDefaultPrefsButton: 
-         fprintf(stderr,"\n kDefaultPrefsButton");
          CopyPrefs(&DefaultPrefs,&TempPrefs);
          SetUpPrefsWindow(&TempPrefs);
          SetInitialTabState(RPrefsWindow);     
@@ -862,13 +825,8 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
          SetControlFontStyle(myControl, &controlStyle);
          Draw1Control(myControl);    
         break;
-
-        case kWorkingDirButton:
-         fprintf(stderr,"\n kWorkingDirButton");
-        break;
         
         case kDeviceFontButton:
-         fprintf(stderr,"\nkDeviceFontButton");
          isConsoleFont = false;
          CallFontPanel();
         break;

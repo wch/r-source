@@ -80,7 +80,21 @@
           <string name="title">Edit</string>
           <object name="submenu" class="IBCarbonMenu" id="147">
             <string name="title">Edit</string>
-            <array count="7" name="items">
+            <array count="10" name="items">
+              <object class="IBCarbonMenuItem" id="326">
+                <string name="title">Undo</string>
+                <string name="keyEquivalent">z</string>
+                <ostype name="command">undo</ostype>
+              </object>
+              <object class="IBCarbonMenuItem" id="327">
+                <string name="title">Redo</string>
+                <string name="keyEquivalent">Z</string>
+                <int name="keyEquivalentModifier">1179648</int>
+                <ostype name="command">redo</ostype>
+              </object>
+              <object class="IBCarbonMenuItem" id="328">
+                <boolean name="separator">TRUE</boolean>
+              </object>
               <object class="IBCarbonMenuItem" id="143">
                 <string name="title">Cut</string>
                 <string name="keyEquivalent">x</string>
@@ -430,7 +444,7 @@
         <array count="5" name="subviews">
           <object class="IBCarbonTab" id="249">
             <string name="bounds">12 20 340 460 </string>
-            <array count="3" name="subviews">
+            <array count="2" name="subviews">
               <object class="IBCarbonUserPane" id="251">
                 <string name="bounds">42 20 340 460 </string>
                 <array count="3" name="subviews">
@@ -524,28 +538,6 @@
                 <ostype name="controlSignature">PRTB</ostype>
                 <int name="controlID">1000</int>
                 <string name="title">Console</string>
-                <int name="featureBits">2</int>
-              </object>
-              <object class="IBCarbonUserPane" id="293">
-                <string name="bounds">42 20 340 460 </string>
-                <array count="2" name="subviews">
-                  <object class="IBCarbonButton" id="295">
-                    <string name="bounds">62 40 82 272 </string>
-                    <ostype name="controlSignature">PREF</ostype>
-                    <int name="controlID">2001</int>
-                    <string name="title">Choose Initial Working Directory</string>
-                  </object>
-                  <object class="IBCarbonEditText" id="297">
-                    <string name="bounds">106 43 123 437 </string>
-                    <ostype name="controlSignature">PREF</ostype>
-                    <int name="controlID">2002</int>
-                    <boolean name="enabled">FALSE</boolean>
-                    <string name="title">~/</string>
-                    <string name="helpTagText">The initial working directory is assumed to be the user directory ~/</string>
-                  </object>
-                </array>
-                <ostype name="controlSignature">PRTB</ostype>
-                <int name="controlID">1001</int>
                 <int name="featureBits">2</int>
               </object>
               <object class="IBCarbonUserPane" id="294">
@@ -643,14 +635,14 @@
                   </object>
                 </array>
                 <ostype name="controlSignature">PRTB</ostype>
-                <int name="controlID">1002</int>
+                <int name="controlID">1001</int>
                 <int name="featureBits">2</int>
               </object>
             </array>
             <ostype name="controlSignature">PRTT</ostype>
             <int name="controlID">1000</int>
-            <int name="tabSelection">3</int>
-            <array count="3" name="tabItems">
+            <int name="tabSelection">2</int>
+            <array count="2" name="tabItems">
               <dictionary count="4">
                 <string>contentResID</string>
                 <string>0</string>
@@ -660,16 +652,6 @@
                 <string>Text Windows</string>
                 <string>userPane</string>
                 <reference idRef="251"/>
-              </dictionary>
-              <dictionary count="4">
-                <string>contentResID</string>
-                <string>0</string>
-                <string>tabEnabled</string>
-                <string>1</string>
-                <string>tabName</string>
-                <string>Start Up</string>
-                <string>userPane</string>
-                <reference idRef="293"/>
               </dictionary>
               <dictionary count="4">
                 <string>contentResID</string>
@@ -742,42 +724,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">-24675 16238 -24377 16678 </string>
+      <string name="bounds">13 28314 311 28754 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">-9686 29818 -9684 29842 </string>
+          <string name="bounds">18217 4238 18219 4242 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">-9686 -16907 -9684 -16857 </string>
+          <string name="bounds">18217 23049 18219 23079 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">-9586 -17206 -9570 -16813 </string>
+          <string name="bounds">18103 22740 18119 23133 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">-9626 -17154 -9606 -17146 </string>
+          <string name="bounds">18143 22794 18163 22798 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">-9614 -16907 -9618 -16912 </string>
+          <string name="bounds">18150 23037 18148 23036 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">-9624 -17039 -9608 -16963 </string>
+          <string name="bounds">18141 22907 18157 22983 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">-9485 -17140 -9489 -17140 </string>
+          <string name="bounds">18021 22809 18019 22803 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">-9496 -17210 -9480 -17163 </string>
+          <string name="bounds">18013 22736 18029 22783 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">-9496 -17070 -9480 -17023 </string>
+          <string name="bounds">18013 22876 18029 22923 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -792,10 +774,7 @@
     <reference idRef="287"/>
     <reference idRef="288"/>
     <reference idRef="290"/>
-    <reference idRef="293"/>
     <reference idRef="294"/>
-    <reference idRef="295"/>
-    <reference idRef="297"/>
     <reference idRef="298"/>
     <reference idRef="299"/>
     <reference idRef="304"/>
@@ -814,6 +793,9 @@
     <reference idRef="321"/>
     <reference idRef="322"/>
     <reference idRef="323"/>
+    <reference idRef="326"/>
+    <reference idRef="327"/>
+    <reference idRef="328"/>
   </array>
   <array count="118" name="allParents">
     <reference idRef="1"/>
@@ -913,9 +895,6 @@
     <reference idRef="280"/>
     <reference idRef="280"/>
     <reference idRef="249"/>
-    <reference idRef="249"/>
-    <reference idRef="293"/>
-    <reference idRef="293"/>
     <reference idRef="254"/>
     <reference idRef="254"/>
     <reference idRef="294"/>
@@ -934,6 +913,9 @@
     <reference idRef="294"/>
     <reference idRef="191"/>
     <reference idRef="191"/>
+    <reference idRef="147"/>
+    <reference idRef="147"/>
+    <reference idRef="147"/>
   </array>
   <dictionary count="5" name="nameTable">
     <string>AboutWindow</string>
@@ -947,5 +929,5 @@
     <string>PrefsWindow</string>
     <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">326</unsigned_int>
+  <unsigned_int name="nextObjectID">335</unsigned_int>
 </object>
