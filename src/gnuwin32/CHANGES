@@ -132,6 +132,8 @@ The sizes of metafiles in pixels were often coming out one pixel more
 than requested, so the background was not quite all painted.  Now we
 over-estimate.
 
+Rproxy.dll would cause a crash when transferring large amounts of data.
+
 
 
 rw1081
