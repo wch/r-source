@@ -1,7 +1,7 @@
 select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
 {
     if(!interactive()) stop("select.list() cannot be used non-interactively")
-    if(.Platform$OS.type == "windows")
+    if(.Platform$OS.type == "windows" | .Platform$GUI == "AQUA")
         return(.Internal(select.list(list, preselect, multiple, title)))
     ## simple text-based alternatives.
     if(!multiple) {

@@ -26,7 +26,8 @@ function(dataDir, contents)
     ## </NOTE>
 
     if(!file_test("-d", dataDir))
-        stop("directory ", sQuote(dataDir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", dataDir),
+             domain = NA)
     ## dataFiles <- list_files_with_type(dataDir, "data")
     dataTopics <- list_data_in_pkg(dataDir=dataDir)
     if(!length(dataTopics)) return(matrix("", 0, 2))
@@ -69,7 +70,8 @@ function(demoDir)
     ## </NOTE>
 
     if(!file_test("-d", demoDir))
-        stop("directory ", sQuote(demoDir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", demoDir),
+             domain = NA)
     demoFiles <- list_files_with_type(demoDir, "demo")
     demoTopics <- unique(basename(file_path_sans_ext(demoFiles)))
     if(!length(demoTopics)) return(matrix("", 0, 2))
@@ -77,7 +79,9 @@ function(demoDir)
     if(file_test("-f", INDEX <- file.path(demoDir, "00Index"))) {
         demoEntries <- try(read.00Index(INDEX))
         if(inherits(demoEntries, "try-error"))
-            warning("cannot read index information in file ", sQuote(INDEX))
+            warning(gettextf("cannot read index information in file '%s'",
+                             INDEX),
+                    domain = NA)
         idx <- match(demoTopics, demoEntries[ , 1], 0)
         demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
     }
@@ -91,12 +95,14 @@ function(demoDir)
 function(demoDir)
 {
     if(!file_test("-d", demoDir))
-        stop("directory ", sQuote(demoDir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", demoDir),
+             domain = NA)
     info_from_build <- .build_demo_index(demoDir)
     info_from_index <- try(read.00Index(file.path(demoDir, "00Index")))
     if(inherits(info_from_index, "try-error"))
-        stop(" cannot read index information in file ",
-             sQuote(file.path(demoDir, "00Index")))
+        stop(gettextf("cannot read index information in file '%s'",
+                      file.path(demoDir, "00Index")),
+             domain = NA)
     bad_entries <-
         list(missing_from_index =
              info_from_build[grep("^[[:space:]]*$",

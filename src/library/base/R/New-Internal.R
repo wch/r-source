@@ -94,7 +94,14 @@ deparse <- function(expr, width.cutoff = 60,
     .Internal(deparse(expr, width.cutoff, backtick, opts))
 }
 
-do.call <- function(what,args).Internal(do.call(what,args))
+do.call <- function(what,args,quote=FALSE) {
+	enquote <- function(x) as.call(list(as.name("quote"), x))
+	if( !is.list(args) )
+	   stop("second argument must be a list")
+	if( quote ) args = lapply(args, enquote)
+	.Internal(do.call(what,args))
+}
+
 drop <- function(x).Internal(drop(x))
 format.info <- function(x, nsmall=0).Internal(format.info(x, nsmall))
 gc <- function(verbose = getOption("verbose"),  reset=FALSE)

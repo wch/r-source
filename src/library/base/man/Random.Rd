@@ -1,9 +1,9 @@
 \name{Random}
-\alias{.Random.seed}
 \alias{RNG}
 \alias{RNGkind}
 \alias{RNGversion}
 \alias{set.seed}
+\alias{.Random.seed}
 \title{Random Number Generation}
 \description{
   \code{.Random.seed} is an integer vector, containing the random number

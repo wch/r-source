@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-01 22:29\n"
+"POT-Creation-Date: 2005-03-03 12:50\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -88,17 +88,14 @@ msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 msgid "argument is missing with no default"
 msgstr "argomento mancante senza valore di default"
 
-msgid "invalid arguments in"
-msgstr "argomenti non validi in"
-
-msgid "(need named args)"
-msgstr "(servono argomenti col nome)"
+msgid "invalid arguments in '%s'  (need named args)"
+msgstr ""
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr "'name.opt' deve essere di tipo carattere, nome di una lista esistente"
 
-msgid "Cannot reset non-existing"
-msgstr "Non posso ripristinare qualcosa che non esiste"
+msgid "cannot reset non-existent '%s'"
+msgstr ""
 
 msgid "invalid options in"
 msgstr "opzioni non valide in"
@@ -148,9 +145,8 @@ msgstr "'file' manca senza valore di default"
 msgid "'file' is must be a non-empty character string"
 msgstr "'file' deve essere una stringa carattere non vuota"
 
-#, fuzzy
 msgid "sorry, 'gs' cannot be found"
-msgstr "spiacente, ma non trovo gs"
+msgstr "spiacente, ma non trovo 'gs'"
 
 #, fuzzy
 msgid "device '%s' is not available"
@@ -196,13 +192,11 @@ msgstr "indice fuori range"
 msgid "invalid Windows font:  must be a single font family name"
 msgstr "font Windows non valido: deve essere una 'font family name' singola"
 
-#, fuzzy
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr "argomenti non validi in windowsFonts (deve essere 'font names')"
+msgstr "argomenti non validi in 'windowsFonts' (deve essere 'font names')"
 
-#, fuzzy
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr "argomenti non validi in windowsFonts (necessita di argomenti con nome)"
+msgstr "argomenti non validi in 'windowsFonts' (necessita di argomenti con nome)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -213,6 +207,12 @@ msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "differisce tra nuovo e vecchio"
 msgstr[1] "differiscono tra nuovi e vecchi"
+
+#~ msgid "invalid arguments in"
+#~ msgstr "argomenti non validi in"
+
+#~ msgid "(need named args)"
+#~ msgstr "(servono argomenti col nome)"
 
 #~ msgid "device"
 #~ msgstr "dispositivo"

@@ -18,7 +18,7 @@ menu(choices, graphics = FALSE, title = "")
 }
 \details{
   If \code{graphics = TRUE} and a windowing system is available
-  (Windows, MacOS X [soon] or X11 \emph{via} Tcl/Tk) a listbox widget is
+  (Windows, MacOS X or X11 \emph{via} Tcl/Tk) a listbox widget is
   used, otherwise a text menu.
   
   Ten or fewer items will be displayed in a single column, more in

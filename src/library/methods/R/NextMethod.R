@@ -6,13 +6,13 @@
     ## were not there.  The definition is applied literally by deleting the given
     ## method and then calling MethodListSelect.
     if(!is(method, "MethodDefinition"))
-        stop("NextMethod not defined because the the current method is not a MethodDefinition object")
+        stop("'NextMethod' not defined because the the current method is not a 'MethodDefinition' object")
     ## remove all cached methods
     mlist@allMethods <- mlist@methods
     ## delete the excluded method(s)
     for(signature in excluded) {
         if(!is(signature, "signature"))
-            stop("expected a list of signature objects, got \"", class(signature), "\"")
+            stop(gettextf("expected a list of signature objects, got \"%s\"", class(signature)), domain = NA)
         if(length(signature)>0)
             mlist <- insertMethod(mlist, signature, names(signature), NULL, FALSE)
     }
@@ -86,8 +86,7 @@ callNextMethod <- function(...) {
         fdef <- genericForPrimitive(f)
         ## check that this could be a basic function with methods
         if(is.null(fdef))
-            stop("A call to callNextMethod() appears in a call to \"",
-                 f, "\", but the call doesn't seem to come from either a generic function or another callNextMethod.")
+            stop(gettextf("a call to callNextMethod() appears in a call to '%s', but the call does not seem to come from either a generic function or another 'callNextMethod'", f), domain = NA)
         f <- fdef@generic
         method <- maybeMethod
     }
@@ -106,7 +105,7 @@ callNextMethod <- function(...) {
     }
     else if(is.null(method)) {
         if(is.null(nextMethod))
-            stop("call to callNextMethod doesn't appear to be in a method or callNextMethod context")
+            stop("call to 'callNextMethod' does not appear to be in a 'method' or 'callNextMethod' context")
         ## else, callNextMethod() from another callNextMethod
         method <- nextMethod
         if(!is(method, "MethodWithNext")) {
@@ -119,8 +118,9 @@ callNextMethod <- function(...) {
         assign(".nextMethod", method, envir = nextMethodEnv)
         assign(".Generic", f, envir = nextMethodEnv)
     }
-    else 
-        stop("Bad object found as method (class \"", class(method), "\")")
+    else
+        stop(gettextf("bad object found as method (class \"%s\")",
+                      class(method)), domain = NA)
     subsetCase <- !is.na(match(f, .BasicSubsetFunctions))
     if(nargs()>0)
         eval(substitute(.nextMethod(...)), callEnv)

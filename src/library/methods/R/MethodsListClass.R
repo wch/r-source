@@ -66,12 +66,12 @@
         switch(typeof(def),
                "builtin" = , "special" = , "NULL" = return(def),
                "closure" = {},
-               stop(paste("Invalid object for formal method defintion: type \"",
-                          typeof(def), "\"", sep=""))
+               stop(gettextf("invalid object for formal method definition: type \"%s\"",
+                             typeof(def)), domain = NA)
                )
         if(is(def, "MethodDefinition"))
             value <- def
-        else 
+        else
             value <- new("MethodDefinition", def)
         if(sealed)
             value <- new("SealedMethodDefinition", value)
@@ -119,17 +119,16 @@
                 co <- class(.Object)
                 if(.identC(cv, co) && is.null(packageSlot(cv))) {
                     if(is.na(match(cv, .BasicClasses))) {
-                        warning("Missing package slot (", packageSlot(co), ") in object of class \"",
-                                class(.Object), "\" (package info added)")
+                        warning(gettextf("missing package slot (%s) in object of class \"%s\" (package info added)", packageSlot(co), class(.Object)),
+                                domain = NA)
                         class(value) <- class(.Object)
                     }
                     else
                         return(value)
                 }
                 else
-                    stop(paste("Initialize method returned an object of class \"",
-                           class(value), "\" instead of the required class \"",
-                           class(.Object), "\"", sep=""))
+                    stop(gettextf("initialize method returned an object of class \"%s\" instead of the required class \"%s\"",
+                                  class(value), class(.Object)), domain = NA)
             }
             value
         }
@@ -201,9 +200,10 @@
         if(is.null(sigArgs))
             names(signature) <- formalNames[seq(along = classes)]
         else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
-            stop("The names in signature for method (",
-                       paste(sigArgs, collapse = ", "), ") don't match function's arguments (",
-                       paste(formalNames, collapse = ", "),")")
+            stop(gettextf("the names in signature for method (%s) do not match function's arguments (%s)",
+                          paste(sigArgs, collapse = ", "),
+                          paste(formalNames, collapse = ", ")),
+                 domain = NA)
         ## the named classes become the signature object
         class(signature) <- class(object)
         signature

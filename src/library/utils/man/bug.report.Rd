@@ -6,12 +6,7 @@ bug.report(subject = "",
            ccaddress = Sys.getenv("USER"),
            method = getOption("mailer"),
            address = "r-bugs@r-project.org",
-#ifdef windows
-           file = "R.bug.report", wait = TRUE)
-#endif
-#ifdef unix
            file = "R.bug.report")
-#endif
 }
 \arguments{
   \item{subject}{Subject of the email. Please do not use single quotes
@@ -23,9 +18,6 @@ bug.report(subject = "",
   \item{address}{Recipient's email address.}
   \item{file}{File to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
-#ifdef windows
-  \item{wait}{logical. Should \R wait for the editor to return?}
-#endif
 }
 \description{
   Invokes an editor to write a bug report and optionally mail it to the
@@ -47,7 +39,7 @@ bug.report(subject = "",
   If method is \code{"gnudoit"}, then an emacs mail buffer is opened
   and used for sending the email.
 
-  If method is \code{"none"} or \code{NULL} (which is the default on
+  If method is \code{"none"} or \code{NULL} (and in every case on
   Windows systems), then only an editor is opened to help writing the
   bug report.  The report can then be copied to your favorite email
   program and be sent to the r-bugs list.

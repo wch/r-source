@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-01 22:35\n"
+"POT-Creation-Date: 2005-03-02 09:33\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -210,9 +210,6 @@ msgid "'x' must not have 0 dimensionality"
 msgstr ""
 
 msgid "extra argument(s) %s will be disregarded"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "invalid 'shade' specification"

@@ -527,6 +527,7 @@ extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
 LibExtern char*	R_HistoryFile;	/* Name of the history file */
 LibExtern int	R_HistorySize;	/* Size of the history file */
 LibExtern int	R_RestoreHistory;	/* restore the history file? */
+extern void 	R_setupHistory();
 
 /* Warnings/Errors */
 extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */

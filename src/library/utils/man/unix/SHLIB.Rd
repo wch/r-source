@@ -30,7 +30,13 @@
   bundle, e.g. an \code{R-devel} RPM.
 }
 \seealso{
-  \code{\link{COMPILE}}, \code{\link{dyn.load}}, \code{\link{library.dynam}}.
+  \code{\link{COMPILE}},
+  \code{\link{dyn.load}},
+  \code{\link{library.dynam}}.
+
+  The section on \dQuote{Customizing compilation under Unix} in
+  \dQuote{R Administration and Installation}
+  (see the \file{doc/manual} subdirectory of the \R source tree).  
 
   The \sQuote{Writing R Extensions} manual.
 }

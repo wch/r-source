@@ -38,10 +38,10 @@ next
 }
 \details{
   \code{break} breaks out of a \code{for}, \code{while} or \code{repeat}
-  loop, that is goes to the first statement after the loop.
-  \code{next} transfer control to the first statement of the loop (after
-  advancing \code{var} along \code{seq} in a \code{for} loop).  They
-  both apply only to the innermost of nested loops.
+  loop; control is transferred to the first statement outside the inner-most loop.
+  \code{next} halts the processing of the current iteration and advances the
+  looping index. Both \code{break} and \code{next} apply only to the innermost 
+  of nested loops.
   
   Note that it is a common mistake to forget to put braces (\code{\{ .. \}})
   around your statements, e.g., after \code{if(..)} or \code{for(....)}.
@@ -49,7 +49,7 @@ next
   \code{else} to avoid a syntax error in entering a \code{if ... else}
   construct at the keyboard or via \code{source}.
   For that reason, one (somewhat extreme) attitude of defensive programming
-  uses braces always, e.g., for \code{if} clauses.
+  is to always use braces, e.g., for \code{if} clauses.
 
   The index \code{seq} in a \code{for} loop is evaluated at the start of
   the loop; changing it subsequently does not affect the loop.  The

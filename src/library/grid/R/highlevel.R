@@ -106,7 +106,7 @@ grid.show.layout <- function(l, newpage=TRUE,
                          cell.label=TRUE, label.col="blue",
                              unit.col="red", vp=NULL) {
   if (!is.layout(l))
-    stop("l must be a layout")
+    stop("'l' must be a layout")
   if (newpage)
     grid.newpage()
   if (!is.null(vp))
@@ -235,15 +235,15 @@ function(pch, labels, frame=TRUE,
   labels <- as.character(labels)
   nkeys <- length(labels)
   if (length(pch) != nkeys)
-    stop("pch and labels not the same length")
+    stop("'pch' and 'labels' not the same length")
   if (!is.unit(hgap))
     hgap <- unit(hgap, default.units)
   if (length(hgap) != 1)
-    stop("hgap must be single unit")
+    stop("'hgap' must be single unit")
   if (!is.unit(vgap))
     vgap <- unit(vgap, default.units)
   if (length(vgap) != 1)
-    stop("vgap must be single unit")
+    stop("'vgap' must be single unit")
   gf <- grid.frame(layout=grid.layout(nkeys, 2), vp=vp, gp=gp, draw=FALSE)
   for (i in 1:nkeys) {
     if (i==1) {
@@ -277,15 +277,15 @@ function(pch, labels, frame=TRUE,
   labels <- as.character(labels)
   nkeys <- length(labels)
   if (length(pch) != nkeys)
-    stop("pch and labels not the same length")
+    stop("'pch' and 'labels' not the same length")
   if (!is.unit(hgap))
     hgap <- unit(hgap, default.units)
   if (length(hgap) != 1)
-    stop("hgap must be single unit")
+    stop("'hgap' must be single unit")
   if (!is.unit(vgap))
     vgap <- unit(vgap, default.units)
   if (length(vgap) != 1)
-    stop("vgap must be single unit")
+    stop("'vgap' must be single unit")
   legend.layout <-
     grid.layout(nkeys, 3,
                 widths=unit.c(unit(2, "lines"),

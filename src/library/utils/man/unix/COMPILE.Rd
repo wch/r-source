@@ -27,6 +27,9 @@
 }
 \seealso{
   \code{\link{SHLIB}},
-  \code{\link{dyn.load}}
+  \code{\link{dyn.load}};
+  the section on \dQuote{Customizing compilation under Unix} in
+  \dQuote{R Administration and Installation}
+  (see the \file{doc/manual} subdirectory of the \R source tree).  
 }
 \keyword{utilities}

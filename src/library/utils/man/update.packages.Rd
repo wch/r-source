@@ -35,7 +35,7 @@ old.packages(lib.loc = NULL, repos = CRAN,
 new.packages(lib.loc = NULL, repos = CRAN,
              contriburl = contrib.url(repos),
              CRAN = getOption("repos"),
-             method, available = NULL)
+             method, available = NULL, ask = FALSE)
 
 download.packages(pkgs, destdir, available = NULL,
                   repos = CRAN,
@@ -163,6 +163,8 @@ contrib.url(repos, type = getOption("pkgType"))
   packages/bundles that are available at the repositories.  It will also
   give warnings about incompletely installed bundles (provided the
   information is available) and bundles whose contents has changed.
+  If \code{ask != FALSE} it asks which packages should be installed
+  in the first element of \code{lib.loc}.
 
   \code{download.packages} takes a list of package/bundle names and a
   destination directory, downloads the newest versions and saves them in

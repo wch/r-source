@@ -53,7 +53,7 @@ languageEl <-
         }
         else {
             if(which < 1 || which > n)
-                stop("Invalid index for function argument")
+                stop("invalid index for function argument")
             ## we don't warn if this is used to replace the body (which == n)
             ## but maybe we should.
             data[[which]] <- value

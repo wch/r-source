@@ -149,7 +149,7 @@ SEXP R_initMethodDispatch(SEXP envir)
 			     Methods_Namespace));
     if(R_short_skeletons == R_UnboundValue || 
        R_empty_skeletons == R_UnboundValue)
-	error(_("Couldn't find the skeleton calls for methods (package  detached?): expect very bad things to happen"));
+	error(_("could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"));
     f_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 0);
     fgets_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 1);
     f_x_skeleton = VECTOR_ELT(R_empty_skeletons, 0);
@@ -250,7 +250,7 @@ static SEXP setOverride(SEXP mlist, SEXP value)
     if(n_ov >= max_ov) {
 	/* should flex, but for now ... */
 	n_ov = 0;
-	error(_("More than %d nested methods list searches (system error?)"), 
+	error("more than %d nested methods list searches (system error?)", 
 	      n_ov);
     }
     ov_mlists[n_ov] = mlist;
@@ -273,7 +273,7 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
     SEXP value, methods;
     methods = R_do_slot(mlist, s_allMethods);
     if(methods == R_NilValue) {
-	error(_("No \"allMethods\" slot found in object  of class \"%s\" used as methods list for function \"%s\""),
+	error(_("no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"),
 	      class_string(mlist), CHAR_STAR(fname));
 	return(R_NilValue); /* -Wall */
     }
@@ -354,7 +354,7 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
     }
     val = R_tryEval(e, Methods_Namespace, &check_err);
     if(check_err)
-	error(_("S language method selection got an error when called from internal dispatch for function \"%s\""),
+	error(_("S language method selection got an error when called from internal dispatch for function '%s'"),
 	      check_symbol_or_string(fname, TRUE,
 				  "Function name for method selection called internally"));
     UNPROTECT(1);
@@ -394,7 +394,7 @@ static SEXP R_S_sysfunction(int n, SEXP ev)
 static SEXP R_get_function_env(SEXP obj, SEXP fname)
 {
     if(TYPEOF(obj) != CLOSXP)
-	error(_("retrieved object for \"%s\" was not a function"),
+	error("object retrieved for '%s' was not a function",
 	      CHAR_STAR(fname));
     return CLOENV(obj);
 }
@@ -405,7 +405,7 @@ static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
     SEXP obj;
     obj = findVarInFrame(env, what);
     if(obj == R_UnboundValue)
-	error(_("No \"%s\" object in environment of function \"%s\""),
+	error(_("no '%s' object in environment of function '%s'"),
 	      CHAR_STAR(what), CHAR_STAR(fname));
     return obj;
 }
@@ -458,10 +458,10 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
     if(value == R_UnboundValue) {
 	if(LOGICAL_VALUE(mustFind)) {
 	    if(env == R_GlobalEnv)
-		error(_("No generic function definition found for \"%s\""),
+		error(_("no generic function definition found for '%s'"),
 		  CHAR_STAR(name));
 	    else
-		error(_("No generic function definition found for \"%s\" in the supplied environment"),
+		error(_("No generic function definition found for '%s' in the supplied environment"),
 		  CHAR_STAR(name));
 	}
 	value = R_NilValue;
@@ -480,7 +480,7 @@ static SEXP get_skeleton(SEXP symbol, SEXP generic)
        methods and for the arguments to .Primitive methods */
     vl = GET_ATTR(generic, s_skeleton);
     if(vl == R_NilValue)
-	error(_("Invalid generic function for \"%s\": no skeleton slot defined"),
+	error("invalid generic function for '%s': no 'skeleton' slot defined",
 	      CHAR_STAR(symbol));
     return vl;
 }
@@ -582,7 +582,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	PROTECT(mlist = R_primitive_methods(fdef)); nprotect++;
 	prim_case = TRUE;
 	break;
-    default: error(_("Invalid  generic function object for method selection for function \"%s\": expected a function or a primitive, got an object of class \"%s\""),
+    default: error(_("invalid  generic function object for method selection for function '%s': expected a function or a primitive, got an object of class \"%s\""),
 		   CHAR_STAR(fsym), class_string(fdef));
     }
     switch(TYPEOF(mlist)) {
@@ -597,7 +597,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	SEXP value;
 	PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
 	if(isNull(value))
-	    error(_("No direct or inherited method for function \"%s\" for this call"),
+	    error(_("no direct or inherited method for function '%s' for this call"),
 		  CHAR_STAR(fname));
 	mlist = value;
 	/* now look again.  This time the necessary method should
@@ -640,7 +640,7 @@ static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
     R_varloc_t loc = R_findVarLocInFrame(ev, symbol);
     if (loc == NULL)
-	error(_("Couldn't find symbol \"%s\" in frame of call"),
+	error(_("could not find symbol '%s' in frame of call"),
 	      CHAR_STAR(symbol));
     return R_GetVarLocMISSING(loc);
 }
@@ -650,7 +650,7 @@ SEXP R_missingArg(SEXP symbol, SEXP ev) {
 	error(_("invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""),
 	     class_string(symbol));
     if(!isEnvironment(ev))
-	error(_("invalid environment in checking for missing argument, \"%s\", in methods dispatch: got an object of class \"%s\""),
+	error(_("invalid environment in checking for missing argument, '%s', in methods dispatch: got an object of class \"%s\""),
 	     CHAR(PRINTNAME(symbol)), class_string(ev));
     if(is_missing_arg(symbol, ev))
 	return R_TRUE;
@@ -676,7 +676,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	return mlist;
     PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
     if(arg_slot == R_NilValue) {
-	error(_("Object of class \"%s\" used as methods list for function \"%s\" ( no \"argument\" slot)"),
+	error(_("object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"),
 	      class_string(mlist), CHAR_STAR(fname));
 	return(R_NilValue); /* -Wall */
     }
@@ -687,10 +687,10 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	   "name" */
 	arg_sym = install(CHAR(asChar(arg_slot)));
     if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
-	error(_("(in selecting a method for function \"%s\") \"...\" and related variables can't be used for methods dispatch"),
+	error(_("(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"),
 	      CHAR_STAR(fname));
     if(TYPEOF(ev) != ENVSXP) {
-	error(_("(in selecting a method for function \"%s\") The environment argument for dispatch must be an R environment; got an object of class \"%s\""),
+	error(_("(in selecting a method for function '%s') the 'environment' argument for dispatch must be an R environment; got an object of class \"%s\""),
 	    CHAR_STAR(fname), class_string(ev));
 	return(R_NilValue); /* -Wall */
     }
@@ -704,7 +704,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	    SEXP arg, class_obj; int check_err;
 	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
 	    if(check_err)
-		error(_("Unable to find the argument \"%s\" in selecting a method for function \"%s\""),
+		error(_("unable to find the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	    PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
 	    class = CHAR_STAR(class_obj);
@@ -715,21 +715,21 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	SEXP arg; int check_err;
 	PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
 	if(check_err)
-	    error(_("Unable to find the argument \"%s\" in selecting a method for function \"%s\""),
+	    error(_("unable to find the argument '%s' in selecting a method for function '%s'"),
 		  CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	class = CHAR_STAR(arg);
     }
     method = R_find_method(mlist, class, fname);
     if(isNull(method)) {
       if(!firstTry)
-	error(_("No matching method for function \"%s\" (argument \"%s\", with class %s)"),
+	error(_("no matching method for function '%s' (argument '%s', with class \"%s\")"),
 	      CHAR_STAR(fname), CHAR(PRINTNAME(arg_sym)), class);
       UNPROTECT(nprotect);
       return(R_NilValue);
     }
     if(value == R_MissingArg) {/* the check put in before calling
 			  function  MethodListSelect in R */
-      error(_("Recursive use of function \"%s\" in method selection, with no default method"),
+      error(_("recursive use of function '%s' in method selection, with no default method"),
 		  CHAR_STAR(fname));
       return(R_NilValue);
     }
@@ -760,7 +760,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
     */
     op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
     if(op == R_UnboundValue)
-	error(_("Internal error in callNextMethod: \".nextMethod\" was not assigned in the frame of the method call"));
+	error(_("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call"));
     /* If "..." is an argument, need to pass it down to next method;
      * match.call() doesn't seem (always?) to include this, so we
      * check below and add it if needed. */
@@ -791,7 +791,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
 	if(this_sym == R_DotsSymbol) {
 	    /* don't copy this; will have been appended */
 	    if(dotsDone)
-		error(_("In processing callNextMethod, found a \"...\" in the matched call, but no corresponding ... argument "));
+		error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"));
 	}
 	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
@@ -803,7 +803,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
 	   leaves the previous function, methods list unchanged */
 	do_set_prim_method(op, "set", R_NilValue, R_NilValue);
 	if(error_flag)
-	    Rf_error(_("Error in evaluating a primitive next method"));
+	    Rf_error(_("error in evaluating a 'primitive' next method"));
     }
     else
 	val = eval(e, ev);
@@ -859,15 +859,15 @@ static char *check_single_string(SEXP obj, Rboolean nonEmpty, char *what) {
     char *string = "<unset>"; /* -Wall */
     if(isString(obj)) {
 	if(length(obj) != 1)
-	    error(_("%s must be a single string (got a character vector of length %d))"),
+	    error(_("'%s' must be a single string (got a character vector of length %d))"),
 		  what, length(obj));
 	string = CHAR(asChar(obj));
 	if(nonEmpty && (! string || !string[0]))
-	    error(_("%s must be a non-empty string; got an empty string"),
+	    error(_("'%s' must be a non-empty string; got an empty string"),
 		  what);
     }
     else {
-	error(_("%s must be a single string (got an object of class \"%s\")"),
+	error(_("'%s' must be a single string (got an object of class \"%s\")"),
 	      what, class_string(obj));
     }
     return string;

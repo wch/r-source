@@ -17,7 +17,9 @@ function(dir, outDir)
         stop(paste(gettext("Invalid DESCRIPTION file") ,
                    paste(.capture_output_from_print(ok),
                          collapse = "\n"),
-                   sep = "\n\n"), call.=FALSE, domain=NA)
+                   sep = "\n\n"),
+             domain = NA,
+             call. = FALSE)
     }
 
     db <- .read_description(file.path(dir, "DESCRIPTION"))
@@ -25,8 +27,10 @@ function(dir, outDir)
     nm <- names(db)
     if("Built" %in% nm) {
         db <- db[-match("Built", nm)]
-        warning("*** someone has corrupted the Built field in package ",
-                sQuote(db["Package"]), " ***", call.=FALSE)
+        warning(gettextf("*** someone has corrupted the Built field in package '%s' ***",
+                         db["Package"]),
+                domain = NA,
+                call. = FALSE)
     }
 
     OS <- Sys.getenv("R_OSTYPE")
@@ -58,7 +62,9 @@ function(dir, outDir)
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-         stop("cannot open directory ", sQuote(outMetaDir))
+         stop(gettextf("cannot open directory '%s'",
+                       outMetaDir),
+              domain = NA)
     saveInfo <- .split_description(db)
     .saveRDS(saveInfo, file.path(outMetaDir, "package.rds"))
 
@@ -110,7 +116,7 @@ function(dir, packages)
     for(p in unlist(strsplit(packages, "[[:space:]]+"))) {
         meta_dir <- file.path(dir, p, "Meta")
         if(!file_test("-d", meta_dir) && !dir.create(meta_dir))
-            stop("cannot open directory ", sQuote(meta_dir))
+            stop(gettextf("cannot open directory '%s'", meta_dir))
         package_info_dcf_file <- file.path(dir, p, "DESCRIPTION")
         package_info_rds_file <- file.path(meta_dir, "package.rds")
         if(file_test("-nt",
@@ -148,7 +154,8 @@ function(lib.loc = NULL)
 function(dir, outDir)
 {
     if(!file_test("-d", dir))
-        stop("directory ", sQuote(dir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", dir),
+             domain = NA)
     dir <- file_path_as_absolute(dir)
 
     ## Attempt to set the LC_COLLATE locale to 'C' to turn off locale
@@ -232,17 +239,20 @@ function(dir, outDir)
     codeFiles <- file.path(codeDir, codeFiles)
 
     if(!file_test("-d", outDir) && !dir.create(outDir))
-        stop("cannot open directory ", sQuote(outDir))
+        stop(gettextf("cannot open directory '%s'", outDir),
+             domain = NA)
     outCodeDir <- file.path(outDir, "R")
     if(!file_test("-d", outCodeDir) && !dir.create(outCodeDir))
-        stop("cannot open directory ", sQuote(outCodeDir))
+        stop(gettextf("cannot open directory '%s'", outCodeDir),
+             domain = NA)
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
     ## It may be safer to do
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
     if(!file.create(outFile))
-        stop("unable to create ", sQuote(outFile))
+        stop(gettextf("unable to create '%s'", outFile),
+             domain = NA)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
     # use fast version of file.append that ensure LF between files
@@ -261,9 +271,11 @@ function(dir, outDir)
 {
     options(warn = 1)                   # to ensure warnings get seen
     if(!file_test("-d", dir))
-        stop("directory ", sQuote(dir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", dir),
+             domain = NA)
     if(!file_test("-d", outDir))
-        stop("directory ", sQuote(outDir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", outDir),
+             domain = NA)
 
     ## If there is an @file{INDEX} file in the package sources, we
     ## install this, and do not build it.
@@ -275,7 +287,8 @@ function(dir, outDir)
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-         stop("cannot open directory ", sQuote(outMetaDir))
+         stop(gettextf("cannot open directory '%s'", outMetaDir),
+              domain = NA)
     .install_package_Rd_indices(dir, outDir)
     .install_package_vignette_index(dir, outDir)
     .install_package_demo_index(dir, outDir)
@@ -368,7 +381,8 @@ function(dir, outDir)
     ## </FIXME>
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop("cannot open directory ", sQuote(outVignetteDir))
+        stop(gettextf("cannot open directory '%s'", outVignetteDir),
+             domain = NA)
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
@@ -451,7 +465,8 @@ function(dir, outDir)
     outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop("cannot open directory ", sQuote(outVignetteDir))
+        stop(gettextf("cannot open directory '%s'", outVignetteDir),
+             domain = NA)
     ## For the time being, assume that no PDFs are available in
     ## vignetteDir.
     vignettePDFs <-
@@ -469,7 +484,8 @@ function(dir, outDir)
     cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
     if(!file_test("-d", buildDir) && !dir.create(buildDir))
-        stop("cannot create directory ", sQuote(buildDir))
+        stop(gettextf("cannot create directory '%s'", buildDir),
+             domain = NA)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
@@ -498,28 +514,39 @@ function(dir, outDir)
             ## may not have texi2dvi
             res <- system(paste("pdflatex", texfile))
             if(res)
-                stop("unable to run pdflatex on ", sQuote(texfile))
+                stop(gettextf("unable to run pdflatex on '%s'",
+                              texfile),
+                     domain = NA)
             if(length(grep("\\bibdata",
                            readLines(paste(base, ".aux", sep = ""))))) {
                 res <- system(paste("bibtex", base))
                 if(res)
-                    stop("unable to run bibtex on ", sQuote(base))
+                    stop(gettextf("unable to run bibtex on '%s'", base),
+                         domain = NA)
                 res <- system(paste("pdflatex", texfile))
                 if(res)
-                    stop("unable to run pdflatex on ", sQuote(texfile))
+                    stop(gettextf("unable to run pdflatex on '%s'",
+                                  texfile),
+                         domain = NA)
             }
             res <- system(paste("pdflatex", texfile))
             if(res)
-                stop("unable to run pdflatex on ", sQuote(texfile))
+                stop(gettextf("unable to run pdflatex on '%s'",
+                              texfile),
+                     domain = NA)
         } else
             texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
         if(!file.exists(pdffile))
-            stop("file ", sQuote(pdffile), " was not created")
+            stop(gettextf("file '%s' was not created",
+                          pdffile),
+                 domain = NA)
         if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
-            stop("cannot copy ", sQuote(pdffile), " to ",
-                 sQuote(outVignetteDir))
+            stop(gettextf("cannot copy '%s' to '%s'",
+                          pdffile,
+                          outVignetteDir),
+                 domain = NA)
     }
     ## Need to change out of this dir before we delete it, at least on
     ## Windows.
@@ -543,7 +570,8 @@ function(dir, outDir)
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-        stop("cannot open directory ", sQuote(outMetaDir))
+        stop(gettextf("cannot open directory '%s'", outMetaDir),
+             domain = NA) 
     .saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }

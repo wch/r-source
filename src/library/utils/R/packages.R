@@ -204,7 +204,7 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
 new.packages <- function(lib.loc = NULL, repos = CRAN,
                          contriburl = contrib.url(repos),
                          CRAN = getOption("repos"),
-                         method, available = NULL)
+                         method, available = NULL, ask = FALSE)
 {
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
@@ -223,6 +223,7 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
     if(any(ok)) { # we have at least one bundle installed
         for(b in unique(instp[ok, "Bundle"]))
             if(!is.na(b)) {
+                if(! b %in% rownames(available)) next
                 ok1 <- which(instp[, "Bundle"] == b)
                 contains <- instp[ok1[1], "Contains"]
                 if(!is.na(contains)) {
@@ -241,7 +242,27 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
     instp[ok, "Package"] <- instp[ok, "Bundle"]
     installed <- unique(instp[, "Package"])
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
-    setdiff(poss, installed)
+    res <- setdiff(poss, installed)
+    update <- character(0)
+    if(is.character(ask) && ask == "graphics") {
+        if(.Platform$OS.type == "unix"
+           && capabilities("tcltk") && capabilities("X11")) {
+            k <- tcltk::tk_select.list(res, multiple = TRUE,
+                                       title = "New packages to be installed")
+            update <- res[match(k, res)]
+        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+            k <- select.list(res, multiple = TRUE,
+                             title = "New packages to be installed")
+            update <- res[match(k, res)]
+        }
+    } else if(is.logical(ask) && ask)
+        update <- res[match(select.list(res, multiple = TRUE,
+                                        title = "New packages to be installed")
+                            , res)]
+    if(length(update))
+        install.packages(update, lib = lib.loc[1], repos = repos,
+                         method = method, available = available)
+    res
 }
 
 installed.packages <- function(lib.loc = NULL, priority = NULL)
@@ -420,12 +441,12 @@ chooseCRANmirror <- function(graphics = TRUE)
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     if(graphics) {
         ## return a character vector of URLs
-        if(.Platform$OS.type == "unix"
-           && capabilities("tcltk") && capabilities("X11")) {
-            URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
-                      "CRAN mirror"), "URL"]
-        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
             URL <- m[m[,1] == select.list(m[,1],, FALSE, "CRAN mirror"), "URL"]
+        else if(.Platform$OS.type == "unix" &&
+                 capabilities("tcltk") && capabilities("X11"))
+                URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
+                          "CRAN mirror"), "URL"]
     } else {
         ## text-mode fallback
         res <- menu(m[,1], , "CRAN mirror")
@@ -470,14 +491,13 @@ setRepositories <- function(graphics=TRUE)
     res <- integer(0)
     if(graphics) {
         ## return a list of row numbers.
-        if(.Platform$OS.type == "unix" &&
-                  capabilities("tcltk") && capabilities("X11")) {
-            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
-                                               multiple = TRUE, "Repositories"),
-                         a[, 1])
-         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
             res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
-                                     "Repositories"),
+                                     "Repositories"), a[, 1])
+        else if(.Platform$OS.type == "unix" &&
+                capabilities("tcltk") && capabilities("X11"))
+            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
+                                            multiple = TRUE, "Repositories"),
                          a[, 1])
     }
     if(!length(res)) {

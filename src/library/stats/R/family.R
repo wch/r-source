@@ -133,8 +133,7 @@ poisson <- function (link = "log")
     }
     if (any(linktemp == c("log", "identity", "sqrt")))
 	stats <- make.link(linktemp)
-    else stop(dQuote(linktemp),
-              ' link not available for poisson family; available links are "identity", "log" and "sqrt"')
+    else stop(gettextf('link "%s" not available for poisson family; available links are "identity", "log" and "sqrt"', linktemp), domain = NA)
     variance <- function(mu) mu
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)
@@ -179,7 +178,7 @@ quasipoisson <- function (link = "log")
     }
     if (any(linktemp == c("log", "identity", "sqrt")))
 	stats <- make.link(linktemp)
-    else stop(dQuote(linktemp), ' link not available for poisson family; available links are "identity", "log" and "sqrt"')
+    else stop(gettextf('link "%s" not available for quasipoisson family; available links are "identity", "log" and "sqrt"', linktemp), domain = NA)
     variance <- function(mu) mu
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)
@@ -218,7 +217,7 @@ gaussian <- function (link = "identity")
     }
     if (any(linktemp == c("inverse", "log", "identity")))
 	stats <- make.link(linktemp)
-    else stop(dQuote(linktemp), 'link not available for gaussian family, available links are "inverse", "log" and "identity"')
+    else stop(gettextf('link "%s" not available for gaussian family, available links are "inverse", "log" and "identity"', linktemp), domain = NA)
     structure(list(family = "gaussian",
 		   link = linktemp,
 		   linkfun = stats$linkfun,
@@ -249,7 +248,8 @@ binomial <- function (link = "logit")
     }
     if (any(linktemp == c("logit", "probit", "cloglog", "cauchit", "log")))
 	stats <- make.link(linktemp)
-    else stop(sQuote(linktemp), ' link not available for binomial family, available links are "logit", ""probit", "cloglog", "cauchit" and "log"')
+    else stop(gettextf('link "%s" not available for binomial family, available links are "logit", ""probit", "cloglog", "cauchit" and "log"', linktemp),
+              domain = NA)
     variance <- function(mu) mu * (1 - mu)
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)
@@ -363,7 +363,7 @@ Gamma <- function (link = "inverse")
     }
     if (any(linktemp == c("inverse", "log", "identity")))
 	stats <- make.link(linktemp)
-    else stop(dQuote(linktemp), ' link not available for gamma family, available links are "inverse", ""log" and "identity"')
+    else stop(gettextf('link "%s" not available for gamma family, available links are "inverse", ""log" and "identity"', linktemp), domain = NA)
     variance <- function(mu) mu^2
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)
@@ -408,7 +408,8 @@ inverse.gaussian <- function(link = "1/mu^2")
     }
     if (any(linktemp == c("inverse", "log", "identity", "1/mu^2")))
 	stats <- make.link(linktemp)
-    else stop(dQuote(linktemp), 'link not available for inverse gauss family, available links are "inverse", "1/mu^2", "log" and "identity"')
+    else stop(gettextf('link "%s" not available for inverse gauss family, available links are "inverse", "1/mu^2", "log" and "identity"', linktemp),
+              domain = NA)
     ##	stats <- make.link("1/mu^2")
     variance <- function(mu) mu^3
     dev.resids <- function(y, mu, wt)  wt*((y - mu)^2)/(y*mu^2)
@@ -488,11 +489,10 @@ quasi <- function (link = "identity", variance = "constant")
 	       dev.resids <- function(y, mu, wt)
 		   wt * ((y - mu)^2)/(y * mu^2)
 	   },
-	   stop(dQuote(variancetemp),
-                ' not recognised, possible variances are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"')
+	   stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', variancetemp), domain = NA)
 	   )# end switch(.)
 # 0.1 fudge here matches poisson: S has 1/6.
-    initialize <- expression({ n <- rep.int(1, nobs); mustart <- y + 0.1 *(y == 0)})
+    initialize <- expression({ n <- rep.int(1, nobs); mustart <- y + 0.1 * (y == 0)})
     aic <- function(y, n, mu, wt, dev) NA
     structure(list(family = "quasi",
 		   link = linktemp,

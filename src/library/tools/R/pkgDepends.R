@@ -6,8 +6,9 @@ pkgDepends <- function(pkg, recursive=TRUE, local=TRUE,
     instPkgs <- utils::installed.packages(lib.loc=lib.loc)
 
     depMtrx <- getDepMtrx(pkg, instPkgs, local)
-    if (is.null(depMtrx)) ## Package was not found
-        stop("package ", sQuote(pkg), " was not found.")
+    if (is.null(depMtrx))               # Package was not found
+        stop(gettextf("package '%s' was not found", pkg),
+             domain = NA)
 
     getDepList(depMtrx, instPkgs, recursive, local, reduce, lib.loc)
 }
@@ -19,7 +20,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
                 R=character())
     class(out) <- c("DependsList", class(out))
 
-    if ((!is.matrix(depMtrx))&&(is.na(depMtrx))) ## no dependencies
+    if ((!is.matrix(depMtrx))&&(is.na(depMtrx))) # no dependencies
         return(out)
 
     mtrxList <- buildDepList(depMtrx, instPkgs, recursive, lib.loc)
@@ -39,7 +40,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
         }
     }
 
-    if (reduce == TRUE) { ## Found and NotFound are already reduced
+    if (reduce == TRUE) {       # Found and NotFound are already reduced
         mtrxList$R <- reduceDepends(mtrxList$R)
         mtrxList$Depends <- reduceDepends(mtrxList$Depends)
         mtrxList$Installed <- reduceDepends(mtrxList$Installed)
@@ -98,7 +99,7 @@ buildDepList <- function(depMtrx, instPkgs, recursive=TRUE,
                                         curMtrxList$Installed)
         }
     }
-    else { ##recurse is FALSE
+    else {                              # recurse is FALSE
         mtrxList$Depends <- depMtrx
         mtrxList$Installed <- instDeps
     }
@@ -110,7 +111,7 @@ getDepMtrx <- function(pkg, instPkgs, local=TRUE) {
 
     ## Need to see if pkg is installed - if not, get online
     row <- match(pkg,instPkgs[,"Package"])
-    if (!is.na(row)) ## package is installed
+    if (!is.na(row))                    # package is installed
         pkgDeps <- package.dependencies(instPkgs[row,])[[1]]
     else {
         if (local)
@@ -119,7 +120,7 @@ getDepMtrx <- function(pkg, instPkgs, local=TRUE) {
             pkgDeps <- getRemotePkgDepends(pkg)
     }
 
-    pkgDeps  ## Either a matrix, NA if no deps or NULL if not found
+    pkgDeps        # Either a matrix, NA if no deps or NULL if not found
 }
 
 getRemotePkgDepends <- function(pkg, contriburl=getOption("repos")) {
@@ -189,7 +190,7 @@ foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
                 cranRow <- which(depMtrx[i,1] == cran[,1])
                 if (length(cranRow) > 0) {
                     ## Found it in repos
-                    if (is.na(depMtrx[i,2])) ## no version, automatically okay
+                    if (is.na(depMtrx[i,2])) # no version, automatically okay
                         found <- TRUE
                     else if(compareDependsPkgVersion(cran[cranRow, "Version"],
                                                      depMtrx[i,2],

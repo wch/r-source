@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-03-01), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2005-03-02), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2280,7 +2280,7 @@ print method
 show method
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-Creating a new generic function for "print" in ".GlobalEnv"
+Creating a new generic function for 'print' in '.GlobalEnv'
 [1] "print"
 > foo
 S4 print method

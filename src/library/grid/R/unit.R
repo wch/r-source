@@ -25,16 +25,16 @@ recycle.data <- function(data, data.per, max.n) {
 }
 
 # Create an object of class "unit"
-# Simple units are of the form `unit(1, "cm")' or `unit(1:3, "cm")' or
-# `unit(c(1,3,6), c("cm", "inch", "npc"))'
-# More complicated units are of the form `unit(1, "string", "a string")'
-# or `unit(1, "grob", a.grob)'
+# Simple units are of the form 'unit(1, "cm")' or 'unit(1:3, "cm")' or
+# 'unit(c(1,3,6), c("cm", "inch", "npc"))'
+# More complicated units are of the form 'unit(1, "string", "a string")'
+# or 'unit(1, "grob", a.grob)'
 unit <- function(x, units, data=NULL) {
   if (!is.numeric(x))
-    stop("x must be numeric")
+    stop("'x' must be numeric")
   units <- as.character(units)
   if (length(x) == 0 || length(units) == 0)
-    stop("x and units must have length > 0")
+    stop("'x' and 'units' must have length > 0")
   valid.unit(x, units, recycle.data(data, FALSE, length(x)))
 }
 
@@ -63,9 +63,9 @@ convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
   whatto <- match(axisTo, c("x", "y")) - 1 +
     2*(match(typeTo, c("location", "dimension")) - 1)
   if (!is.unit(x))
-    stop("`x' argument must be a unit object")
+    stop("'x' argument must be a unit object")
   if (is.na(whatfrom) || is.na(whatto))
-    stop("Invalid axis or type")
+    stop("Invalid 'axis' or 'type'")
   value <- grid.Call("L_convert", x, as.integer(whatfrom),
                  as.integer(whatto), valid.units(unitTo))
   if (!valueOnly)
@@ -139,13 +139,13 @@ valid.data <- function(units, data) {
     for (i in (1:n)[str.units])
       if (!(length(data) >= i &&
             (is.character(data[[i]]) || is.expression(data[[i]]))))
-        stop("No string supplied for `strwidth' unit")
+        stop("No string supplied for 'strwidth' unit")
   str.units <- (units == "strheight" | units == "mystrheight")
   if (any(str.units != 0))
     for (i in (1:n)[str.units])
       if (!(length(data) >= i &&
             (is.character(data[[i]]) || is.expression(data[[i]]))))
-        stop("No string supplied for `strheight' unit")
+        stop("No string supplied for 'strheight' unit")
   # Make sure that a grob has been specified
   grob.units <- units == "grobwidth"
   if (any(grob.units != 0))
@@ -153,12 +153,12 @@ valid.data <- function(units, data) {
       if (!(length(data) >= i &&
             (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
              is.character(data[[i]]))))
-        stop("No grob supplied for `grobwidth' unit")
+        stop("No 'grob' supplied for 'grobwidth' unit")
       if (is.character(data[[i]]))
         data[[i]] <- gPathDirect(data[[i]])
       if (inherits(data[[i]], "gPath"))
         if (depth(data[[i]]) > 1)
-          stop("gPath must have depth 1 in grobwidth/height units")
+          stop("'gPath' must have depth 1 in 'grobwidth/height' units")
     }
   grob.units <- units == "grobheight"
   if (any(grob.units != 0))
@@ -166,12 +166,12 @@ valid.data <- function(units, data) {
       if (!(length(data) >= i &&
             (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
              is.character(data[[i]]))))
-        stop("No grob supplied for `grobheight' unit")
+        stop("No 'grob' supplied for 'grobheight' unit")
       if (is.character(data[[i]]))
         data[[i]] <- gPathDirect(data[[i]])
       if (inherits(data[[i]], "gPath"))
         if (depth(data[[i]]) > 1)
-          stop("gPath must have depth 1 in grobwidth/height units")
+          stop("'gPath' must have depth 1 in 'grobwidth/height' units")
     }
   data
 }
@@ -198,7 +198,8 @@ unit.arithmetic <- function(func.name, arg1, arg2=NULL) {
 Ops.unit <- function(e1, e2) {
   ok <- switch(.Generic, "+"=TRUE, "-"=TRUE, "*"=TRUE, FALSE)
   if (!ok)
-    stop(paste("Operator", .Generic, "not meaningful for units"))
+    stop(gettextf("Operator '%s' not meaningful for units", .Generic),
+         domain = NA)
   if (.Generic == "*")
     # can only multiply a unit by a scalar
     if (nchar(.Method[1])) {
@@ -235,7 +236,8 @@ Summary.unit <- function(..., na.rm=FALSE) {
   x <- unit.c(...)
   ok <- switch(.Generic, "max"=TRUE, "min"=TRUE, "sum"=TRUE, FALSE)
   if (!ok)
-    stop(paste("Summary function", .Generic, "not meaningful for units"))
+    stop(gettextf("'Summary' function '%s' not meaningful for units",
+                  .Generic), domain = NA)
   unit.arithmetic(.Generic, x)
 }
 
@@ -551,7 +553,7 @@ unit.length.unit.arithmetic <- function(unit) {
 }
 
 #########################
-# Convenience functions 
+# Convenience functions
 #########################
 
 stringWidth <- function(string) {

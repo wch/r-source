@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:35\n"
+"POT-Creation-Date: 2005-03-02 09:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,7 @@ msgstr ""
 msgid "you must specify 'package' or 'dir'"
 msgstr ""
 
-msgid "directory"
-msgstr ""
-
-msgid "does not exist"
+msgid "directory '%s' does not exist"
 msgstr ""
 
 msgid "cannot source package code"
@@ -29,10 +26,10 @@ msgstr ""
 msgid "neither code nor data objects found"
 msgstr ""
 
-msgid "does not contain R code"
+msgid "directory '%s' does not contain R code"
 msgstr ""
 
-msgid "does not contain Rd sources"
+msgid "directory '%s' does not contain Rd sources"
 msgstr ""
 
 msgid "unable to create"
@@ -44,37 +41,19 @@ msgstr ""
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr ""
 
-msgid "file"
+msgid "file '%s' does not exist"
 msgstr ""
 
-msgid "parse error in file"
+msgid "parse error in file '%s'"
 msgstr ""
 
-msgid "declared S3 method"
-msgstr ""
-
-msgid "not found"
+msgid "declared S3 method '%s' not found"
 msgstr ""
 
 msgid "cannot check R code installed as image"
 msgstr ""
 
-msgid "you must specify"
-msgstr ""
-
-msgid "package"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "dir"
-msgstr ""
-
-msgid "or"
-msgstr ""
-
-msgid "parse error in examples from file"
+msgid "parse error in examples from file '%s'"
 msgstr ""
 
 msgid "Package Rd sources were installed without preserving Rd file names."
@@ -89,7 +68,7 @@ msgstr ""
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
 
-msgid "missing/empty \\name field in"
+msgid "missing/empty \\name field in '%s'"
 msgstr ""
 
 msgid "Rd files must have a non-empty \\name."
@@ -98,7 +77,7 @@ msgstr ""
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
 msgstr ""
 
-msgid "missing/empty \\title field in"
+msgid "missing/empty \\title field in '%s'"
 msgstr ""
 
 msgid "Rd files must have a non-empty \\title."
@@ -107,37 +86,28 @@ msgstr ""
 msgid "argument 'outFile' must be a character string or connection"
 msgstr ""
 
-msgid "does not contain Rd objects"
+msgid "directory '%s' does not contain Rd objects"
 msgstr ""
 
-msgid "unterminated section"
+msgid "unterminated section '%s'"
 msgstr ""
 
-msgid "incomplete section"
+msgid "incomplete section 'section{%s}'"
 msgstr ""
 
-msgid "section{"
-msgstr ""
-
-msgid "}"
+msgid "unterminated section 'section{%s}'"
 msgstr ""
 
 msgid "argument 'txt' must be a character string"
 msgstr ""
 
-msgid "unmatched \\item name in"
+msgid "unmatched \\item name in '\\item{%s'"
 msgstr ""
 
-msgid "\\item{"
+msgid "no \\item description for item '%s'"
 msgstr ""
 
-msgid ".*$"
-msgstr ""
-
-msgid "no \\item description for item"
-msgstr ""
-
-msgid "unmatched \\item description for item"
+msgid "unmatched \\item description for item '%s'"
 msgstr ""
 
 msgid "unclosed \\dontrun"
@@ -149,7 +119,7 @@ msgstr ""
 msgid "Rd syntax errors found"
 msgstr ""
 
-msgid "Syntax error in documentation object"
+msgid "Syntax error in documentation object '%s':"
 msgstr ""
 
 msgid "cannot deal with Rd objects with missing/empty names"
@@ -164,19 +134,22 @@ msgstr ""
 msgid "running make failed"
 msgstr ""
 
-msgid "cannot read index information in file"
+msgid "cannot read index information in file '%s'"
 msgstr ""
 
 msgid "argument 'vignette' must be of length 1"
 msgstr ""
 
-msgid "file:"
-msgstr ""
-
-msgid "not found."
+msgid "file '%s' not found"
 msgstr ""
 
 msgid "Invalid DESCRIPTION file"
+msgstr ""
+
+msgid "*** someone has corrupted the Built field in package '%s' ***"
+msgstr ""
+
+msgid "cannot open directory '%s'"
 msgstr ""
 
 msgid "*** someone has corrupted the Built field in package"
@@ -188,10 +161,10 @@ msgstr ""
 msgid "***"
 msgstr ""
 
-msgid "cannot open directory"
+msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr ""
 
-msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgid "unable to create '%s'"
 msgstr ""
 
 msgid "unable to copy INDEX to"
@@ -200,40 +173,37 @@ msgstr ""
 msgid "INDEX"
 msgstr ""
 
-msgid "cannot create directory"
+msgid "cannot create directory '%s'"
 msgstr ""
 
-msgid "unable to run pdflatex on"
+msgid "unable to run pdflatex on '%s'"
 msgstr ""
 
-msgid "unable to run bibtex on"
+msgid "unable to run bibtex on '%s'"
 msgstr ""
 
-msgid "was not created"
+msgid "file '%s' was not created"
 msgstr ""
 
-msgid "cannot copy"
+msgid "cannot copy '%s' to '%s'"
 msgstr ""
 
-msgid "to"
-msgstr ""
-
-msgid "00Index"
-msgstr ""
-
-msgid "there is no package called"
+msgid "there is no package called '%s'"
 msgstr ""
 
 msgid "name space must not be loaded."
 msgstr ""
 
-msgid "has no .rda file"
+msgid "package '%s' has no .rda file"
 msgstr ""
 
 msgid "package seems to be using lazy loading for data already"
 msgstr ""
 
 msgid "object(s)"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "are created by more than one data call"
@@ -245,10 +215,7 @@ msgstr ""
 msgid "source must be an environment or a list"
 msgstr ""
 
-msgid "this cannot be used for package"
-msgstr ""
-
-msgid "base"
+msgid "this cannot be used for package 'base'"
 msgstr ""
 
 msgid "package contains no R code"
@@ -260,7 +227,7 @@ msgstr ""
 msgid "argument 'pkg' must be of length 1"
 msgstr ""
 
-msgid "was not found."
+msgid "package '%s' was not found"
 msgstr ""
 
 msgid "bad operand"
@@ -269,16 +236,10 @@ msgstr ""
 msgid "had its dependencies reduced to a minimal set."
 msgstr ""
 
-msgid "argument"
+msgid "argument '%s' must be a character string or connection"
 msgstr ""
 
-msgid "must be a character string or connection"
-msgstr ""
-
-msgid "test"
-msgstr ""
-
-msgid "is not available"
+msgid "test '%s' is not available"
 msgstr ""
 
 msgid "no or more than one match"
@@ -293,13 +254,10 @@ msgstr ""
 msgid "only Rd syntax is currently supported"
 msgstr ""
 
-msgid "running texi2dvi on"
+msgid "running texi2dvi on '%s' failed"
 msgstr ""
 
-msgid "failed"
-msgstr ""
-
-msgid "is not in valid DCF format"
+msgid "file '%s' is not in valid DCF format"
 msgstr ""
 
 msgid "Call sequence:"
@@ -309,4 +267,7 @@ msgid "Processing packages:"
 msgstr ""
 
 msgid "done"
+msgstr ""
+
+msgid "parsing '%s'"
 msgstr ""

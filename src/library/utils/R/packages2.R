@@ -15,7 +15,16 @@ install.packages <-
     }
 
     if(missing(pkgs) || !length(pkgs)) {
-        if(.Platform$OS.type == "unix" &&
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+            if(is.null(available))
+                available <- available.packages(contriburl = contriburl,
+                                                method = method)
+            if(NROW(available)) {
+                a <- explode_bundles(available)
+                pkgs <- select.list(a, multiple = TRUE, title = "Packages")
+            }
+            if(!length(pkgs)) stop("no packages were specified")
+        } else if(.Platform$OS.type == "unix" &&
                   capabilities("tcltk") && capabilities("X11")) {
             if(is.null(available))
                 available <- available.packages(contriburl = contriburl,
@@ -24,15 +33,6 @@ install.packages <-
                 a <- explode_bundles(available)
                 pkgs <- tcltk::tk_select.list(a, multiple = TRUE,
                                               title ="Packages")
-            }
-            if(!length(pkgs)) stop("no packages were specified")
-         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
-            if(is.null(available))
-                available <- available.packages(contriburl = contriburl,
-                                                method = method)
-            if(NROW(available)) {
-                a <- explode_bundles(available)
-                pkgs <- select.list(a, multiple = TRUE, title = "Packages")
             }
             if(!length(pkgs)) stop("no packages were specified")
         } else
@@ -88,7 +88,7 @@ install.packages <-
             if(system(cmd) > 0)
                 warning(gettextf(
                  "installation of package '%s' had non-zero exit status",
-                                sQuote(update[i, 1])), domain = NA)
+                                update[i, 1]), domain = NA)
         }
         return(invisible())
     }
@@ -179,7 +179,7 @@ install.packages <-
             if(status > 0)
                 warning(gettextf(
                  "installation of package '%s' had non-zero exit status",
-                                sQuote(update[i, 1])), domain = NA)
+                                 update[i, 1]), domain = NA)
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",

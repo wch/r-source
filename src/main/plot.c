@@ -662,6 +662,8 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xadd = .5 * (pin1 / scale - xdelta) * asp;
 	    yadd = .5 * (pin2 / scale - ydelta);
 	}
+	if(xmax < xmin) xadd *= -1;
+	if(ymax < ymin) yadd *= -1;
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
     }

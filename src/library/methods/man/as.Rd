@@ -41,7 +41,8 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
       Returns the version of this object coerced to be the given
       \code{Class}.
 
-      If the corresponding \code{is(object, Class)} relation is true, it will be used.
+      If the corresponding \code{is(object, Class)} relation is true, it
+      will be used.
       In particular, if the relation has a coerce method, the method
       will be invoked on \code{object}.  However, if the object's
       class extends \code{Class} in a simple way (e.g, by including
@@ -75,36 +76,34 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   }
 }
 \arguments{
-  \item{object}{ Any object. }
-  \item{Class}{ The name of the class to which \code{object} should be
+  \item{object}{any \R object.}
+  \item{Class}{the name of the class to which \code{object} should be
     coerced. }
-  \item{strict}{ A logical flag.  If \code{TRUE}, the returned object
-  must be strictly from the target class (unless that class is a
-  virtual class, in which case the object will be from the closest
-  actual class (often the original object, if that class extends the
-  virtual class directly).
+  \item{strict}{logical flag.  If \code{TRUE}, the returned object
+    must be strictly from the target class (unless that class is a
+    virtual class, in which case the object will be from the closest
+    actual class (often the original object, if that class extends the
+    virtual class directly).
 
-  If \code{strict = FALSE}, any simple extension of the target class
-  will be returned, without further change.  A simple extension is,
-  roughly, one that just adds slots to an existing class.
-
-      }
+    If \code{strict = FALSE}, any simple extension of the target class
+    will be returned, without further change.  A simple extension is,
+    roughly, one that just adds slots to an existing class.}
   \item{value}{The value to use to modify \code{object} (see the
     discussion below).  You should supply an object with class
     \code{Class}; some coercion is done, but you're unwise to rely on
     it.}
 
-  \item{from, to}{ The classes between which \code{def} performs coercion.
+  \item{from, to}{The classes between which \code{def} performs coercion.
 
     (In the case of the \code{coerce} function these are objects from
     the classes, not the names of the classes, but you're not expected
     to call \code{coerce} directly.)}
-  \item{def}{ A function of one argument.  It will get an object from
+  \item{def}{function of one argument.  It will get an object from
     class \code{from} and had better return an object of class
     \code{to}. (If you want to save \code{setAs} a little work, make
     the name of the argument \code{from}, but don't worry about it,
     \code{setAs} will do the conversion.) }
-  \item{replace}{If supplied, the function to use as a replacement
+  \item{replace}{if supplied, the function to use as a replacement
     method.}
   \item{where}{the position or environment in which to store the
     resulting method for \code{coerce}.}
@@ -188,7 +187,7 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
 
   The function \code{coerce}
   exists almost entirely as a repository for such methods, to be
-  selected as desribed above by the \code{as} function.
+  selected as described above by the \code{as} function.
   In fact, it
   would usually be a bad idea to call \code{coerce} directly, since then
   you would get inheritance on the \code{to} argument; as mentioned,
@@ -240,13 +239,13 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   When inheritance does apply, coerce and replace methods can be
   specified through either \code{setIs} or \code{setAs}; the effect is
   essentially the same.
-  }
+}
 
 \section{Basic Coercion Methods}{
-Methods are pre-defined for coercing any object to one of the basic
-datatypes.  For example, \code{as(x, "numeric")} uses the existing
-\code{as.numeric} function.  These built-in methods can be listed by
-\code{showMethods("coerce")}.
+  Methods are pre-defined for coercing any object to one of the basic
+  datatypes.  For example, \code{as(x, "numeric")} uses the existing
+  \code{as.numeric} function.  These built-in methods can be listed by
+  \code{showMethods("coerce")}.
 }
 
 \references{
@@ -270,12 +269,12 @@ datatypes.  For example, \code{as(x, "numeric")} uses the existing
 
 \dontshow{
 setClass("track",
-            representation(x="numeric", y="numeric"))
+         representation(x="numeric", y="numeric"))
 setClass("trackCurve",
-            representation("track", smooth = "numeric"))
+         representation("track", smooth = "numeric"))
 }
 
-setAs("track", "numeric", function(from)from@y)
+setAs("track", "numeric", function(from) from@y)
 
 t1 <- new("track", x=1:20, y=(1:20)^2)
 
@@ -289,7 +288,6 @@ setClass("ca", representation(a = "character", id = "numeric"))
 
 setClass("cb", representation(b = "character", id = "numeric"))
 
-
 setClass("id")
 setIs("ca", "id")
 setIs("cb", "id")
@@ -297,8 +295,7 @@ setIs("cb", "id")
 
 setAs("id", "numeric", function(from) from@id)
 
-CA <- new("ca", a ="A", id = 1)
-
+CA <- new("ca", a = "A", id = 1)
 CB <- new("cb", b = "B", id = 2)
 
 setAs("cb", "ca", function(from, to )new(to, a=from@b, id = from@id))
@@ -308,11 +305,8 @@ as(CB, "numeric")
 \dontshow{
 ## should generate an error (should have been a function of one argument)
 try(setAs("track", "numeric", function(x, y,z)x@y))
-
 }
-
 }
-
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}

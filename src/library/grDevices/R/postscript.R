@@ -26,9 +26,8 @@ check.options <-
 {
     lnew <- length(new)
     if(lnew != length(newnames <- names(new)))
-	stop("invalid arguments in ",
-		   sQuote(deparse(sys.call(sys.parent()))),
-		   " (need named args)")
+	stop(gettextf("invalid arguments in '%s'  (need named args)",
+                      deparse(sys.call(sys.parent()))), domain = NA)
     if(!is.character(name.opt))
 	stop("'name.opt' must be character, name of an existing list")
     if(reset) {
@@ -39,7 +38,8 @@ check.options <-
 ##-		stop(paste("Cannot reset '", name.opt,
 ##-			"'  since it exists only once in search()!\n", sep=""))
 
-	} else stop("Cannot reset non-existing ", sQuote(name.opt))
+	} else stop(gettextf("cannot reset non-existent '%s'", name.opt),
+                    domain = NA)
     }
     old <- get(name.opt, envir=envir)
     if(!is.list(old))

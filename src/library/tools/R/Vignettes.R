@@ -102,7 +102,8 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop("directory ", sQuote(dir), " does not exist")
+            stop(gettextf("directory '%s' does not exist", dir),
+                 domain = NA) 
         else
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
@@ -200,7 +201,9 @@ vignetteInfo <- function(file) {
 function(vignetteDir)
 {
     if(!file_test("-d", vignetteDir))
-        stop("directory ", sQuote(vignetteDir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", vignetteDir),
+             domain = NA)
+
     vignetteFiles <-
         path.expand(list_files_with_type(vignetteDir, "vignette"))
 
@@ -230,7 +233,9 @@ function(vignetteDir)
                  INDEX <- file.path(vignetteDir, "00Index.dcf"))) {
         vignetteEntries <- try(read.dcf(INDEX))
         if(inherits(vignetteEntries, "try-error"))
-            warning("cannot read index information in file ", sQuote(INDEX))
+            warning(gettextf("cannot read index information in file '%s'",
+                             INDEX),
+                    domain = NA)
         else
             vignetteEntries <-
                 cbind(colnames(vignetteEntries), c(vignetteEntries))
@@ -257,7 +262,8 @@ function(vignetteDir)
 function(vignetteDir)
 {
     if(!file_test("-d", vignetteDir))
-        stop("directory ", sQuote(vignetteDir), " does not exist")
+        stop(gettextf("directory '%s' does not exist", vignetteDir),
+             domain = NA)
     vignetteIndex <- .build_vignette_index(vignetteDir)
     badEntries <-
         vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, "Title"]),
@@ -310,7 +316,8 @@ vignetteDepends <- function(vignette, recursive=TRUE, reduce=TRUE,
     if (length(vignette) != 1)
         stop("argument 'vignette' must be of length 1")
     if (!file.exists(vignette))
-        stop("file: ", sQuote(vignette), " not found.")
+        stop(gettextf("file '%s' not found", vignette),
+             domain = NA)
 
     vigDeps <- vignetteInfo(vignette)$depends
 

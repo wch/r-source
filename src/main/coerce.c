@@ -1855,29 +1855,38 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     fun = CAR(args);
     args = CADR(args);
 
-    if (!isString(fun) || length(fun) <= 0 || CHAR(STRING_ELT(fun, 0)) == '\0')
-	errorcall_return(call, R_MSG_A1_char);
+    /* must be a string or a function */
+    if( isString(fun) ) {
+	if( length(fun) != 1 || CHAR(STRING_ELT(fun,0)) == '\0')
+	    errorcall_return(call, _("first argument must be a character string or a function"))
+    } else if (!isFunction(fun) )
+	    errorcall_return(call, _("first argument must be a character string or a function"))
 
     if (!isNull(args) && !isNewList(args))
 	errorcall_return(call, R_MSG_A2_list);
+
     n = length(args);
     names = getAttrib(args, R_NamesSymbol);
 
     PROTECT(c = call = allocList(n + 1));
     SET_TYPEOF(c, LANGSXP);
-    SETCAR(c, install(CHAR(STRING_ELT(fun, 0))));
+    if( isString(fun) )
+        SETCAR(c, install(CHAR(STRING_ELT(fun, 0))));
+    else
+        SETCAR(c, fun);
     c = CDR(c);
     for (i = 0; i < n; i++) {
 #ifndef NEW
-	SETCAR(c, VECTOR_ELT(args, i));
+        SETCAR(c, VECTOR_ELT(args, i));
 #else
-	SETCAR(c, mkPROMISE(VECTOR_ELT(args, i), rho));
-	SET_PRVALUE(CAR(c), VECTOR_ELT(args, i));
+        SETCAR(c, mkPROMISE(VECTOR_ELT(args, i), rho));
+        SET_PRVALUE(CAR(c), VECTOR_ELT(args, i)); */
 #endif
-	if (ItemName(names, i) != R_NilValue)
-	    SET_TAG(c, install(CHAR(ItemName(names, i))));
-	c = CDR(c);
+        if (ItemName(names, i) != R_NilValue)
+            SET_TAG(c, install(CHAR(ItemName(names, i))));
+        c = CDR(c);
     }
+
     cptr = R_GlobalContext;
     while (cptr->nextcontext != NULL) {
         if (cptr->callflag & CTXT_FUNCTION ) {

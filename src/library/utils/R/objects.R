@@ -71,7 +71,7 @@ methods <- function (generic.function, class)
             truegf <- findGeneric(generic.function, parent.frame())
             if(nchar(truegf) && truegf != generic.function) {
                 warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
-                        generic.funcion, truegf), domain = NA)
+                        generic.function, truegf), domain = NA)
                 generic.function <- truegf
             }
         }

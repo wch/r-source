@@ -62,7 +62,7 @@
   Options \option{--lazy}, \option{--no-lazy}, \option{--lazy-data} and
   \option{--no-lazy-data} control where the \R objects and the datasets
   are made available for lazy loading.  (These options are overridden by
-  any values set in the DESCRIPTION file.)  The default is
+  any values set in the \file{DESCRIPTION} file.)  The default is
   \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
   package with more than 25kB of \R code and no saved image.
 
@@ -102,8 +102,10 @@
   using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
   the internet;
+  the section on \dQuote{Add-on packages} in \dQuote{R Installation and
+    Administration} and
   the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
-    Extensions} (see the \file{doc/manual} subdirectory of the \R source
-  tree).
+    Extensions}
+  (see the \file{doc/manual} subdirectory of the \R source tree).
 }
 \keyword{utilities}

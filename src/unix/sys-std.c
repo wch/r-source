@@ -765,6 +765,7 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 #ifdef HAVE_LIBREADLINE
 # ifdef HAVE_READLINE_HISTORY_H
 	if(R_Interactive && UsingReadline) {
+	    R_setupHistory(); /* re-read the history size and filename */
 	    stifle_history(R_HistorySize);
 	    write_history(R_HistoryFile);
 	}
@@ -925,6 +926,7 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     if(R_Interactive && UsingReadline) {
 	write_history(file);
 #ifdef HAVE_HISTORY_TRUNCATE_FILE
+	R_setupHistory(); /* re-read the history size */
 	history_truncate_file(file, R_HistorySize);
 #endif
     } else errorcall(call, _("no history available to save"));

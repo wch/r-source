@@ -15,7 +15,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     else outside <- FALSE #rep(FALSE, length = length(x))
 
     ord <- 1 + (degree <- as.integer(degree))
-    if(ord <= 1) stop("degree must be integer >= 1")
+    if(ord <= 1) stop("'degree' must be integer >= 1")
     if(!missing(df) && missing(knots)) {
         nIknots <- df - ord + (1 - intercept)
         if(nIknots < 0) {

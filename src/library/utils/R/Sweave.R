@@ -270,7 +270,7 @@ RweaveLatexSetup <-
             styfile <- gsub("\\\\", "/", styfile)
         if(any(grep(" ", styfile)))
             warning(gettextf("path to '%s' contains spaces,\n", styfile),
-                    gettextt("this may cause problems when running LaTeX"),
+                    gettext("this may cause problems when running LaTeX"),
                     domain = NA)
     }
     else

@@ -136,7 +136,8 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
       record(name)
     }
   } else {
-    stop(paste("Viewport", name, "was not found"))
+    stop(gettextf("Viewport '%s' was not found", as.character(name)[1]),
+         domain = NA)
   }
   invisible(result)
 }
@@ -286,7 +287,7 @@ grid.prompt <- function(ask) {
   old.prompt <- .Call("L_getAsk")
   if (!missing(ask)) {
     if (!is.logical(ask))
-      stop("Invalid ask value")
+      stop("Invalid 'ask' value")
     .Call("L_setAsk", ask)
   }
   old.prompt
@@ -438,6 +439,6 @@ grid.record <- function(expr, list,
 
 recordGrob <- function(expr, list,
                        name=NULL, gp=NULL, vp=NULL) {
-  grob(expr=substitute(expr), list=list, 
+  grob(expr=substitute(expr), list=list,
        name=name, gp=gp, vp=vp, cl="recordedGrob")
 }
