@@ -19,7 +19,15 @@ showDefault <-
     cl <- data.class(object)
     if(isClass(cl) && is.na(match(cl, .BasicClasses))) {
         cat(file = con, "An object of class \"", cl, "\"\n", sep="")
+        slots <- slotNames(cl)
+        if(!is.na(match(".Data", slots))) {
+            dataPart <- object@.Data
+            show(dataPart)
+            slots <- slots[is.na(match(slots, ".Data"))]
+        }
         for(what in slotNames(cl)) {
+            if(identical(what, ".Data"))
+                next ## should have been done above
             cat(file = con, "Slot ",what, ":\n", sep="")
             print(slot(object, what))
             cat(file = con, "\n")
