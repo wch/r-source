@@ -11,9 +11,13 @@ include $(top_builddir)/Makeconf
 
 all: R docs
 
-R: $(top_builddir)/src/include/Platform.h
-	@echo "Building R"
+R: stamp-R
+stamp-R: $(top_builddir)/src/include/Platform.h
+	@echo 'Building R'
 	cd src; $(MAKE) R
+	@if [ ! -f etc/stamp-docs ]; then\
+		echo 'You should'; echo '	make docs'; echo 'now ...';fi
+	@touch $@
 
 $(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
@@ -65,7 +69,7 @@ uninstall:
 mostlyclean:
 
 clean:
-	@echo "Cleaning at top level"
+	@echo "Cleaning at top level"; rm -f stamp-R
 	@cd demos/dynload; $(MAKE) $@
 	@echo "Cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Cleaning the source tree"; cd src; $(MAKE) $@
