@@ -37,6 +37,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   relops tried to set time series parameters before dimensions
+
     o   arithmetic tried to set time series parameters before dimensions
 
     o   mvfft fixes (from Martyn Plummer) - not working with vectors and

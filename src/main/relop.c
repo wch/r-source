@@ -136,11 +136,6 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(x);
-    if (xts || yts) {
-	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
-	UNPROTECT(2);
-    }
     if (dims != R_NilValue) {
 	setAttrib(x, R_DimSymbol, dims);
 	if (xnames != R_NilValue)
@@ -153,6 +148,11 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(x, R_NamesSymbol, xnames);
 	else if (length(x) == length(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
+    }
+    if (xts || yts) {
+	setAttrib(x, R_TspSymbol, tsp);
+	setAttrib(x, R_ClassSymbol, class);
+	UNPROTECT(2);
     }
 
     UNPROTECT(4);
