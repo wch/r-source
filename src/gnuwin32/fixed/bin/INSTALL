@@ -37,18 +37,18 @@ $version = $1;
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "docs:s", "save|s", "no-save",
 		    "with-package-versions",
-		    "use-zip", "use-zip-data", "use-zip-help", 
+		    "use-zip", "use-zip-data", "use-zip-help",
 		    "auto-zip", "build", "fake", "unsafe",
 		    "lazy", "no-lazy", "lazy-data", "no-lazy-data");
-		    
+
 ##   	topLevelFiles will be files that sit in the top level of a
 ##      zip/tarball along with any included directories.
 ##	This needs to be fixed: this file shouldn't do binary builds,
 ##	that's what build.in is for - DJM
 ##      No, that is what INSTALL --build is for, pace DJM
 
-my $topLevelFiles = "DESCRIPTION";		    
-			
+my $topLevelFiles = "DESCRIPTION";
+
 GetOptions (@knownoptions) || usage();
 R_version($name, $version) if $opt_version;
 
@@ -155,7 +155,7 @@ foreach $pkg (@ARGV){
 
     die "no valid package name found\n" unless length($pkgname) > 0;
     my $pkgoutdir = "$library/$pkgname";
-    die "  *** can't install into source directory ***\n" 
+    die "  *** can't install into source directory ***\n"
 	if $canonpkg eq $pkgoutdir;
     $pkgdir = Win32::GetShortPathName($pkgdir) if $pkgdir =~ / /;
 
@@ -163,7 +163,7 @@ foreach $pkg (@ARGV){
     $makecmd = "pkgfake" if $opt_fake;
     $description = new R::Dcf("$pkg/DESCRIPTION");
     my $intname = $description->{"Package"};
-    
+
     ## do we have a package bundle?
     my $zippkgs = $pkgname;
     my @bundlepkgs = ($pkgname);
@@ -174,7 +174,7 @@ foreach $pkg (@ARGV){
 	$zippkgs = join(" ", @bundlepkgs);
 	## join up description files
 	foreach $ppkg (@bundlepkgs) {
-	    open pkgdesc, "> $pkg/$ppkg/DESCRIPTION" 
+	    open pkgdesc, "> $pkg/$ppkg/DESCRIPTION"
 		|| die "cannot write $ppkg/DESCRIPTION";
 	    if (open pkgdescin, "< $pkg/$ppkg/DESCRIPTION.in") {
 		while(<pkgdescin>) { print pkgdesc $_; }
@@ -290,7 +290,7 @@ foreach $pkg (@ARGV){
 		    }
 		}
 		# print ("out was $out, nodups was $nodups\n");
-		$opt = "$pkgname-ZIPDATA=zip" 
+		$opt = "$pkgname-ZIPDATA=zip"
 		    if ($tmp == 1) || ($out > 100 && $nodups);
 	    }
 	    $dir = $pkgdir. "/" . $pkgname . "/man";
@@ -302,7 +302,7 @@ foreach $pkg (@ARGV){
 	    }
 	    print "Using auto-selected zip options '$opt'\n";
 	} else {
-	    $opt = "$pkgname-ZIPDATA=zip" 
+	    $opt = "$pkgname-ZIPDATA=zip"
 		if ($opt_use_zip || $opt_use_zip_data);
 	    $opt = $opt . " $pkgname-HELP=ziponly"
 		if ($opt_use_zip || $opt_use_zip_help);
@@ -325,7 +325,7 @@ foreach $pkg (@ARGV){
 		$spkg = Win32::GetShortPathName($spkg) if $spkg =~ / /;
 		$spkg =~ s+\\+/+g; # seems some systems need this
 		my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
-		$cmd .= "RHOME=$R_HOME SPKG=$spkg BUILD=$BUILD" . 
+		$cmd .= "RHOME=$R_HOME SPKG=$spkg BUILD=$BUILD" .
 		    " DPKG=$library/$decpkgname PKG=$decpkgname" .
 		    " RLIB=$library lazyload";
 #		print "$cmd\n";
@@ -336,7 +336,7 @@ foreach $pkg (@ARGV){
 	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
 #	    print "$cmd\n";
 	    $res = system($cmd) if($res == 0);
-	    
+
 	} # end of if($res)
 	if($res) {
 	    printf "*** Installation of $pkgname failed ***\n";
@@ -347,7 +347,7 @@ foreach $pkg (@ARGV){
 	if($res) {
 	    if($is_bundle) { # back out the whole bundle
 		for $pkgname (@bundlepkgs) {
-		    $pkgname .= "_" . $description->{"Version"} 
+		    $pkgname .= "_" . $description->{"Version"}
 		    if $opt_with_package_versions;
 		    rmtree($library . "/" . $pkgname);
 		    $dppkg = $lockdir . "/" . $pkgname;
@@ -381,6 +381,9 @@ foreach $pkg (@ARGV){
 	    chdir($currentDir);
 	}
 	chdir($startdir);
+	print "packaged installation of ";
+	if ($is_bundle) {print "bundle";} else {print "package";};
+	print " '$pkgname' as $filename.zip\n";
     }
     # wipe out lockdir
     rmtree($lockdir) if $safe;
