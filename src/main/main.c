@@ -64,8 +64,11 @@ extern Rboolean useCocoa;				/* from src/unix/system.c              */
  */
 
 void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible);
-
+#ifdef HAVE_AQUA
+int ParseBrowser(SEXP, SEXP);
+#else
 static int ParseBrowser(SEXP, SEXP);
+#endif
 
 static void onpipe(int);
 
@@ -683,7 +686,11 @@ static void printwhere(void)
   Rprintf("\n");
 }
 
+#ifdef HAVE_AQUA
+int ParseBrowser(SEXP CExpr, SEXP rho)
+#else
 static int ParseBrowser(SEXP CExpr, SEXP rho)
+#endif
 {
     int rval=0;
     if (isSymbol(CExpr)) {
