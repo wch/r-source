@@ -40,8 +40,7 @@
 }
 
 ### The following code is only executed when dumping
-
-.saveImage <- FALSE # not already saved
+assign(".saveImage", FALSE, .GlobalEnv)
 dyn.load(file.path(.Library, "methods", "libs",
                    paste("methods", .Platform$dynlib.ext, sep="")))
 .First.lib("methods", "methods", .GlobalEnv)

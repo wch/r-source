@@ -100,8 +100,19 @@ slot <-
 
 "slot<-" <-
   ## Set the value of the named slot.  Must be one of the slots in the class's definition.
-  function(object, name, check = TRUE, value)
-    .Call("R_set_slot", object, name, check, value, PACKAGE = "methods")
+  function(object, name, check = TRUE, value) {
+    if(check) {
+      ClassDef <- getClass(class(object))
+      slotDefs <- getProperties(ClassDef)
+      slot <- elNamed(slotDefs, name)
+      if(is.null(slot))
+        stop(paste("\"", name, "\" is not a slot in class \"", class(object), "\"", sep = ""))
+      if(!is(value, slot))
+        stop(paste("Value supplied is not valid for slot \"", name, "\", is(value, \"", slot,
+             "\") is not TRUE", sep=""))
+    }
+    .Call("R_set_slot", object, name, value, PACKAGE = "methods")
+  }
 
 ## "@" <-
 ##   function(object, name)
@@ -203,13 +214,23 @@ new <-
             }
         }
         if(length(elements)>0) {
+          slotDefs <- getProperties(ClassDef)
             snames <- names(elements)
-            which  <- match(snames, slotNames(value))
+            which  <- match(snames, names(slotDefs))
             if(any(is.na(which)))
                 stop(paste("Invalid names for properties of class ",
                            Class, ": ", paste(snames[is.na(which)], collapse=", ")))
-            for(i in seq(along=snames))
-                slot(value, el(snames, i)) <- el(args, i)
+            for(i in seq(along=snames)) {
+              slotName <- el(snames, i)
+              slotClass <- elNamed(slotDefs, slotName)
+              slotVal <- el(args, i)
+              if(!.Force && !is(slotVal, slotClass))
+                stop(paste("Invalid object for slot \"", slotName,
+                           "\", with class \"", class(slotVal), 
+                           "\", should be or extend class \"", slotClass, "\"", sep = ""))
+              slotVal <- as(slotVal, slotClass)
+              slot(value, slotName, check = FALSE) <- slotVal
+            }
         }
     }
     value

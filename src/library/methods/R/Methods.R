@@ -325,7 +325,7 @@ selectMethod <-
                 stop("No unique method corresponding to this signature")
         }
         else
-            Recall(f, signature, mustFind, inherited, selection)
+            Recall(f, signature, optional, inherited, selection)
     }
     else {
         if(optional)

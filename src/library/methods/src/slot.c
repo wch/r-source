@@ -35,11 +35,8 @@ SEXP R_get_slot(SEXP obj, SEXP name)
     return value;
 }
 
-SEXP R_set_slot(SEXP obj, SEXP name, SEXP check, SEXP value)
+SEXP R_set_slot(SEXP obj, SEXP name, SEXP value)
 {
-    if(LOGICAL_VALUE(check))
-	/*  an error will occur in getting the slot if it's not defined */
-	R_get_slot(obj, name);
     if(value == R_NilValue) {
 	/* slots, but not attributes, can be NULL.  Store a special symbol
 	   instead. */
