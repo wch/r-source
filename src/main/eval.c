@@ -63,17 +63,15 @@ extern void R_ProcessEvents();
    The stack is traced by walking back along the context stack, just
    like the traceback creation in jump_to_toplevel.  One drawback of
    this approach is that it does not show BUILTIN's since they don't
-   get a context.  It should be possible to set a context around
-   BUILTIN's when profiling is enabled, and the context type
-   CTXT_BUILTIN has been added to allow this.  But at the moment there
-   are some problems, in particular with pos2env which assumes the
-   current context is a real one.  So for now BUILTIN tracing is
-   disabled; it may be possible to turn it on soon.
+   get a context.  With recent changes to pos.to.env it seems possible
+   to insert a context around BUILTIN calls to that they show up in
+   the trace.  Since there is a cost in establishing these contexts,
+   they are only inserted when profiling is enabled.
 
-   One possible advantage of not adding the BUILTIN tracing is that
-   then profiling adds no cost when the timer is turned off.  This
-   This would be useful if we want to allow profiling to be turned on
-   and off from within R.
+   One possible advantage of not tracing BUILTIN's is that then
+   profiling adds no cost when the timer is turned off.  This would be
+   useful if we want to allow profiling to be turned on and off from
+   within R.
 
    One thing that makes interpreting profiling output tricky is lazy
    evaluation.  When an expression f(g(x)) is profiled, lazy
