@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.107 $ ';
+my $revision = ' $Revision: 1.108 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -62,6 +62,14 @@ my $opt_vignettes = 1;
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 R::Vars::error("R_HOME", "R_CMD", "R_EXE");
+
+## <FIXME>
+## This should really be in R::Utils so that it can be kept in sync
+## between R CMD check and R CMD build.
+my $data_exts_re = "(R|r|RData|rdata|rda|TXT|txt|tab|csv|CSV)";
+my $demo_exts_re = "[Rr]";
+my $vignette_exts_re = "[RrSs](nw|tex)";
+## </FIXME>
 
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
@@ -517,13 +525,6 @@ sub check_pkg {
 	push(@badfiles, $index) unless (-s $index);
 	## Could have more tests, e.g. for correct format ...
     }
-    ## <FIXME>
-    ## This should really be in R::Utils so that it can be kept in sync
-    ## between R CMD check and R CMD build.
-    my $data_exts_re = "(R|r|RData|rdata|rda|TXT|txt|tab|csv|CSV)";
-    my $demo_exts_re = "[Rr]";
-    my $vignette_exts_re = "[RrSs](nw|tex)";
-    ## </FIXME>
     &checkIndex("INDEX");
     &checkIndex(&file_path("data", "00Index"))
       if(-d "data" && &list_files_with_exts("data", $data_exts_re));
@@ -1135,12 +1136,14 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if($opt_vignettes && (-d &file_path($pkgdir, "inst", "doc"))) {
+    if($opt_vignettes
+       && (-d &file_path($pkgdir, "inst", "doc"))
+       && &list_files_with_exts(&file_path($pkgdir, "inst", "doc"),
+				$vignette_exts_re)) {
 	$log->checking(join("",
 			    ("Sweave files in '",
 			     &file_path("inst", "doc"),
 			     "'")));
-
 
 	my $Rcmd = "library(tools)\n";
 	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
