@@ -1324,15 +1324,15 @@ double transformFromINCHES(double value, int unit,
     /*      
      * Convert to NPC
      */
-    double result = value/(thisCM/2.54);
+    double result = value;
     switch (unit) {
     case L_NPC:      
+	result = result/(thisCM/2.54);
 	break;
     case L_CM: 
-	result = result*thisCM;
+	result = result*2.54;
 	break;
     case L_INCHES: 
-        result = result*(thisCM/2.54);
 	break;
     /* FIXME:  The following two assume that the pointsize specified
      * by the user is actually the pointsize provided by the
@@ -1343,33 +1343,33 @@ double transformFromINCHES(double value, int unit,
      * or somesuch.
      */
     case L_CHAR:
-	result = result*(72*thisCM/2.54)/(gc->ps*gc->cex);
+	result = (result*72)/(gc->ps*gc->cex);
 	break;	
     case L_LINES:
-	result = result*(72*thisCM/2.54)/(gc->ps*gc->cex*gc->lineheight);
+	result = (result*72)/(gc->ps*gc->cex*gc->lineheight);
 	break;
     case L_MM:
-	result = result*10*thisCM;
+	result = result*2.54*10;
 	break;
 	/* Maybe an opportunity for some constants below here (!) 
 	 */
     case L_POINTS:
-	result = result*72.27*(thisCM/2.54);
+	result = result*72.27;
 	break;
     case L_PICAS:
-	result = result/12*72.27*(thisCM/2.54);
+	result = result/12*72.27;
 	break;
     case L_BIGPOINTS:
-	result = result*72*(thisCM/2.54); 
+	result = result*72; 
 	break;
     case L_DIDA:
-	result = result/1238*1157*72.27*(thisCM/2.54);
+	result = result/1238*1157*72.27;
 	break;
     case L_CICERO:
-	result = result/1238*1157*72.27*(thisCM/2.54)/12;
+	result = result/1238*1157*72.27/12;
 	break;
     case L_SCALEDPOINTS:
-	result = result*65536*72.27*(thisCM/2.54);
+	result = result*65536*72.27;
 	break;
 	/*
 	 * I'm not sure the remaining ones makes any sense.
