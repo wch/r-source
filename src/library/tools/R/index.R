@@ -1,5 +1,14 @@
 ### Miscellaneous indexing functions.
 
+## <NOTE>
+## Currently indices are represented as 2-column character matrices.
+## To 'merge' indices in the sense of using the values from index B for
+## all keys in index A also present in index B, we currently use
+##   idx <- match(indA[ , 1], indB[ , 1], 0)
+##   indA[which(idx != 0), 2] <- indB[idx, 2]
+## which could be abstracted into a function .mergeIndexEntries().
+## </NOTE>
+
 ### * .buildDataIndex
 
 .buildDataIndex <-
@@ -12,7 +21,8 @@ function(dataDir, contents)
     ## We could also have an interface like
     ##   .buildDataIndex(dir, contents = NULL)
     ## where @code{dir} is the path to a package's root source dir and
-    ## contents is .listFilesWithType(file.path(dir, "man"), "docs").
+    ## contents is Rdcontents(.listFilesWithType(file.path(dir, "man"),
+    ## "docs")).
     ## </NOTE>
     
     if(!.fileTest("-d", dataDir))
@@ -21,9 +31,25 @@ function(dataDir, contents)
     dataTopics <-
         unique(basename(gsub("\\.[[:alpha:]]+$", "", dataFiles)))
     dataIndex <- cbind(dataTopics, "")
-    dataEntries <- .buildRdIndex(contents, type = "data")
-    idx <- match(dataTopics, dataEntries[ , 1], 0)
-    dataIndex[which(idx != 0), 2] <- dataEntries[idx, 2]
+    ## <FIXME>
+    ## Remove this for 1.8.
+    ## Compatibility code for transition from old-style to new-style
+    ## indexing.  If we have @file{data/00Index}, use it when computing
+    ## the data index, but let the Rd entries override the index ones.
+    if(.fileTest("-f", INDEX <- file.path(dataDir, "00Index"))) {
+        dataEntries <- try(read.00Index(INDEX))
+        if(inherits(dataEntries, "try-error"))
+            warning(paste("cannot read index information in file",
+                          sQuote(INDEX)))
+        idx <- match(dataTopics, dataEntries[ , 1], 0)
+        dataIndex[which(idx != 0), 2] <- dataEntries[idx, 2]
+    }
+    ## </FIXME>
+    aliasIndices <-
+        rep(1 : NROW(contents), sapply(contents$Aliases, length))
+    idx <- match(dataTopics, unlist(contents$Aliases), 0)
+    dataIndex[which(idx != 0), 2] <-
+        contents[aliasIndices[idx], "Title"]
     dataIndex
 }
 
