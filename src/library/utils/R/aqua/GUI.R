@@ -133,8 +133,8 @@
         pkgs.status <- character(length(is.loaded))
         pkgs.status[which(is.loaded)] <- "loaded"
         pkgs.status[which(!is.loaded)] <- " "
-
-        load.idx <- .Internal(package.manager(is.loaded,pkgs,pkgs.desc))
+ 	pkgs.url <- file.path(.find.package(pkgs),"html","00Index.html")
+        load.idx <- .Internal(package.manager(is.loaded,pkgs,pkgs.desc,pkgs.url))
 
         toload <- which(load.idx & !is.loaded)
         tounload <- which(is.loaded & !load.idx)
