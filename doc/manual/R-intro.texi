@@ -17,11 +17,11 @@
 @include R-defs.texi
 @include version.texi
 
-@macro Rcopyright{}
+@macro RIcopyright{}
 Copyright @copyright{} 1990, 1992 W.@: Venables
 Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
-Copyright @copyright{} 1997, 1998 M.@: M@"achler
-Copyright @copyright{} 1999--2001 R Development Core Team
+Copyright @copyright{} 1997, 1998 M.@: Maechler
+@Rcopyright99{}
 @end macro
 
 @c NOTE:
@@ -32,7 +32,7 @@ Copyright @copyright{} 1999--2001 R Development Core Team
 @ifinfo
 This is an introduction to R.
 
-@Rcopyright{}
+@RIcopyright{}
 
 @permission{}
 
@@ -45,15 +45,10 @@ This is an introduction to R.
 @author R Development Core Team
 
 @page
-@vskip 0pt plus 1filll
+@vskip 0pt plus 1fill
 
 @flushleft
-@c - This FAILS (for the @"achler part in make R-intro.dvi) :
-@c - @Rcopyright{}
-Copyright @copyright{} 1990, 1992 W.@: Venables
-Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
-Copyright @copyright{} 1997, 1998 M.@: M@"achler
-Copyright @copyright{} 1999, 2000 R Development Core Team
+@RIcopyright{}
 @end flushleft
 
 @permission{}

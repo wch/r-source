@@ -29,6 +29,14 @@ $\t\$%
 @strong{\p\}
 @end macro
 
+@c -- edit these here alone -- in order keep consistency
+@macro Rcopyright{}
+Copyright @copyright{} 2000--2001 R Development Core Team
+@end macro
+@macro Rcopyright99{}
+Copyright @copyright{} 1999--2001 R Development Core Team
+@end macro
+
 @macro permission{}
 Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
