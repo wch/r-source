@@ -153,4 +153,9 @@ uninstall-dvi uninstall-info uninstall-pdf:
 check:
 	@(cd tests && $(MAKE) $@)
 
+rsync-recommended:
+	@(cd src/library/Recommended && $(MAKE) rsync-update)
+reset-recommended:
+	@(cd src/library/Recommended && rm -f Timestamp && $(MAKE) Timestamp)
+
 TAGS:

@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = profile $(R_PKGS)
+SUBDIRS = profile $(R_PKGS) Recommended
 
 PKGS = $(R_PKGS)
 
