@@ -8,7 +8,7 @@
   add-on packages.
 }
 \usage{
-read.00Index(file = "")
+read.00Index(file)
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the

@@ -1,7 +1,7 @@
 \name{prod}
 \title{Product of Vector Elements}
 \usage{
-prod(\dots, na.rm=TRUE)
+prod(\dots, na.rm = FALSE)
 }
 \alias{prod}
 \description{
