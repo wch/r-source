@@ -793,16 +793,16 @@ There is a huge amount of user-contributed code for S, available at the
 @node What is S-PLUS?, What are the differences between R and S?, What is S?, R and S
 @section What is @sc{S-Plus}?
 
-@SPLUS{} is a value-added version of S sold by Mathsoft, Inc.  Based on
-the S language, @SPLUS{} provides functionality in a wide variety of
-areas, including robust regression, modern non-parametric regression,
-time series, survival analysis, multivariate analysis, classical
-statistical tests, quality control, and graphics drivers.  Add-on
-modules add additional capabilities for wavelet analysis, spatial
+@SPLUS{} is a value-added version of S sold by Insightful Corporation.
+Based on the S language, @SPLUS{} provides functionality in a wide
+variety of areas, including robust regression, modern non-parametric
+regression, time series, survival analysis, multivariate analysis,
+classical statistical tests, quality control, and graphics drivers.
+Add-on modules add additional capabilities for wavelet analysis, spatial
 statistics, GARCH models, and design of experiments.
 
-See the @uref{http://www.mathsoft.com/splus/, MathSoft @SPLUS{} page}
-for further information.
+See the @uref{http://www.insightful.com/products/splus/, Insightful
+@SPLUS{} page} for further information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
 @section What are the differences between R and S?
@@ -1917,7 +1917,7 @@ programs and statistical processes.  It is intended to provide
 assistance for interactive statistical programming and data analysis.
 Languages supported include: S dialects (S 3/4, @SPLUS{} 3.x/4.x/5.x,
 and R), LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects
-(SPSS, PSPP) and SCA.
+(SPSS, Fiasco) and SCA.
 
 @acronym{ESS} grew out of the need for bug fixes and extensions to
 S-mode 4.8 (which was a @acronym{GNU} Emacs interface to S/@SPLUS{}

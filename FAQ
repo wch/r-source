@@ -616,16 +616,16 @@ S Repository (http://lib.stat.cmu.edu/S/) at CMU.
 3.2 What is S-PLUS?
 ===================
 
-   S-PLUS is a value-added version of S sold by Mathsoft, Inc.  Based on
-the S language, S-PLUS provides functionality in a wide variety of areas,
-including robust regression, modern non-parametric regression, time series,
-survival analysis, multivariate analysis, classical statistical tests,
-quality control, and graphics drivers.  Add-on modules add additional
-capabilities for wavelet analysis, spatial statistics, GARCH models, and
-design of experiments.
+   S-PLUS is a value-added version of S sold by Insightful Corporation.
+Based on the S language, S-PLUS provides functionality in a wide variety of
+areas, including robust regression, modern non-parametric regression, time
+series, survival analysis, multivariate analysis, classical statistical
+tests, quality control, and graphics drivers.  Add-on modules add
+additional capabilities for wavelet analysis, spatial statistics, GARCH
+models, and design of experiments.
 
-   See the MathSoft S-PLUS page (http://www.mathsoft.com/splus/) for
-further information.
+   See the Insightful S-PLUS page
+(http://www.insightful.com/products/splus/) for further information.
 
 3.3 What are the differences between R and S?
 =============================================
@@ -1651,7 +1651,7 @@ provides a standard interface between statistical programs and statistical
 processes.  It is intended to provide assistance for interactive
 statistical programming and data analysis.  Languages supported include: S
 dialects (S 3/4, S-PLUS 3.x/4.x/5.x, and R), LispStat dialects (XLispStat,
-ViSta), SAS, Stata, SPSS dialects (SPSS, PSPP) and SCA.
+ViSta), SAS, Stata, SPSS dialects (SPSS, Fiasco) and SCA.
 
    ESS grew out of the need for bug fixes and extensions to S-mode 4.8
 (which was a GNU Emacs interface to S/S-PLUS version 3 only).  The current
