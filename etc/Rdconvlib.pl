@@ -1428,6 +1428,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    # Now split by \cr blocks
 	    my @blocks = split /\\cr/, $para;
 	    foreach $text (@blocks) {
+		$text =~ s/^\s+//o;
 		print txtout mywrap($indent1, $indent2, $text), "\n";
 		$indent1 = $indent2;
 	    }

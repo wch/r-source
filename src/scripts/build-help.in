@@ -37,8 +37,8 @@ print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
 require "$R_HOME/etc/Rdconvlib.pl";
 require "$R_HOME/etc/buildlib.pl";
 
-$NROFF="@NROFF@" unless $NROFF=$ENV{"NROFF"};
-$TBL="@TBL@" unless $TBL=$ENV{"TBL"};
+#$NROFF="@NROFF@" unless $NROFF=$ENV{"NROFF"};
+#$TBL="@TBL@" unless $TBL=$ENV{"TBL"};
 
 # if option --htmllists is set we only rebuild some list files and
 # exit
@@ -117,9 +117,10 @@ foreach $manfile (@mandir) {
 	    $destfile = "$dest/help/$targetfile";
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		open(nroffout, "| $TBL | $NROFF -ms 2> /dev/null | " .
-		     " ${R_HOME}/bin/help.pretty > '$destfile'");
-		Rdconv($manfile, "nroff", "", -1, $pkg);
+		Rdconv($manfile, "txt", "", "$destfile", $pkg);
+#		open(nroffout, "| $TBL | $NROFF -ms 2> /dev/null | " .
+#		     " ${R_HOME}/bin/help.pretty > '$destfile'");
+#		Rdconv($manfile, "nroff", "", -1, $pkg);
 	    }
 	}
 
