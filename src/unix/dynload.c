@@ -124,28 +124,204 @@ static struct {
 static int nCPFun = 0;
 #endif
 
+#define MAX_NUM_DLLS	100
+
+static int CountDLL = 0;
+
+#include "R_ext/Rdynload.h"
+typedef struct {
+  char *name;
+  void       *fun;
+  int         numArgs;
+  /* Add information about argument types or converters. */  
+} Rf_DotCSymbol;
+
+typedef struct {
+  char *name;
+  void       *fun;
+  int         numArgs;
+
+} Rf_DotCallSymbol;
+
+typedef struct {
+  char *name;
+  void       *fun;
+  int         numArgs;
+
+} Rf_DotFortranSymbol;
+
+
+struct _DllInfo {
+    char	   *path;
+    char	   *name;
+    void	   *handle;
+
+    int            numCSymbols;
+    Rf_DotCSymbol     *CSymbols;
+
+    int            numCallSymbols;
+    Rf_DotCallSymbol  *CallSymbols;
+
+    int              numFortranSymbols;
+    Rf_DotFortranSymbol *FortranSymbols;
+};
+
+static DllInfo LoadedDLL[MAX_NUM_DLLS];
+
+
 #ifdef DL_SEARCH_PROG
-static void *dlhandle;
+static DllInfo baseDll;
 #endif
 
 void InitFunctionHashing()
 {
 #ifdef DL_SEARCH_PROG
-    dlhandle = dlopen(0, RTLD_NOW);
+    baseDLL.handle = dlopen(0, RTLD_NOW);
 #endif
 }
 
 
-#define MAX_NUM_DLLS	100
+void R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym);
+void R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, Rf_DotCallSymbol *sym);
+void R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, Rf_DotFortranSymbol *sym);
 
-static int CountDLL = 0;
-
-static struct {
-    char	*path;
-    char	*name;
-    void	*handle;
+/*
+ Returns a reference to the DllInfo object associated with the dynamic library
+ with the path name `path'. This ensures uniqueness rather than having the 
+ undesirable situation of two libraries with the same name but in different
+ directories.
+ This is available so that itcan be called from arbitrary C routines
+ that need to call R_registerRoutines(). The initialization routine
+ R_init_<library name> is passed the DllInfo reference as an argument.
+ Other routines must explicitly request it using this routine.
+ */
+DllInfo *
+R_getDllInfo(const char *path)
+{ 
+  int i;
+  for(i = 0; i < CountDLL; i++) {
+    if(strcmp(LoadedDLL[i].path, path) == 0)
+       return(&LoadedDLL[i]);
+  }
+  return((DllInfo*) NULL);
 }
-LoadedDLL[MAX_NUM_DLLS];
+
+/*
+  Explicitly register the native routines for use in .Call(), .C() and .Fortran()
+  functions. These registered values are used to resolve symbols in a library
+  that makes a call to this routine, rather than the usual dynamic resolution
+  done by dlsym() or the equivalent on the different platforms.
+ */
+int
+R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
+                     R_CallMethodDef *callRoutines,
+                     R_FortranMethodDef *fortranRoutines)
+{
+ int i, num;
+
+ if(info == NULL)
+   error("R_RegisterRoutines called with invalid DllInfo object.");
+
+
+ if(croutines) {
+   for(num=0; croutines[num].name != NULL; num++) {;}
+   info->CSymbols = (Rf_DotCSymbol*)calloc(num, sizeof(Rf_DotCSymbol));
+   info->numCSymbols = num;
+   for(i = 0; i < num; i++) {
+     R_addCRoutine(info, croutines+i, info->CSymbols + i);
+   }
+ }
+
+ if(callRoutines) {
+   for(num=0; callRoutines[num].name != NULL; num++) {;}
+   info->CallSymbols = (Rf_DotCallSymbol*)calloc(num, sizeof(Rf_DotCallSymbol));
+   info->numCallSymbols = num;
+   for(i = 0; i < num; i++) {
+     R_addCallRoutine(info, callRoutines+i, info->CallSymbols + i);
+   }
+ }
+
+ if(fortranRoutines) {
+   for(num=0; fortranRoutines[num].name != NULL; num++) {;}
+   info->FortranSymbols = (Rf_DotFortranSymbol*)calloc(num, sizeof(Rf_DotFortranSymbol));
+   info->numFortranSymbols = num;
+
+   for(i = 0; i < num; i++) {
+     R_addFortranRoutine(info, fortranRoutines+i, info->FortranSymbols + i);
+   }
+ }
+
+ return(1);
+}
+
+void
+R_addFortranRoutine(DllInfo *info, R_FortranMethodDef *croutine, Rf_DotFortranSymbol *sym)
+{
+ sym->name = strdup(croutine->name);
+ sym->fun = croutine->fun;
+ sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+}
+
+
+void
+R_addCRoutine(DllInfo *info, R_CMethodDef *croutine, Rf_DotCSymbol *sym)
+{
+ sym->name = strdup(croutine->name);
+ sym->fun = croutine->fun;
+ sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+}
+
+void
+R_addCallRoutine(DllInfo *info, R_CallMethodDef *croutine, Rf_DotCallSymbol *sym)
+{
+ sym->name = strdup(croutine->name);
+ sym->fun = croutine->fun;
+ sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
+}
+
+
+
+void
+Rf_freeCSymbol(Rf_DotCSymbol *sym)
+{
+  free(sym->name);
+}
+
+void
+Rf_freeCallSymbol(Rf_DotCallSymbol *sym)
+{
+  free(sym->name);
+}
+
+void
+Rf_freeFortranSymbol(Rf_DotFortranSymbol *sym)
+{
+  free(sym->name);
+}
+
+void
+Rf_freeDllInfo(DllInfo *info)
+{
+  int i;
+    free(info->name);
+    free(info->path);
+    if(info->CSymbols) {
+      for(i = 0; i < info->numCSymbols; i++)
+        Rf_freeCSymbol(info->CSymbols+i);
+      free(info->CSymbols);
+    }
+    if(info->CallSymbols) {
+      for(i = 0; i < info->numCallSymbols; i++)
+        Rf_freeCallSymbol(info->CallSymbols+i);
+      free(info->CallSymbols);
+    }
+    if(info->FortranSymbols) {
+      for(i = 0; i < info->numFortranSymbols; i++)
+        Rf_freeFortranSymbol(info->FortranSymbols+i);
+      free(info->FortranSymbols);
+    }
+}
+
 
 	/* Remove the specified DLL from the current DLL list */
 	/* Returns 1 if the DLL was found and removed from */
@@ -164,6 +340,9 @@ static int DeleteDLL(char *path)
     return 0;
 found:
 #ifdef CACHE_DLL_SYM
+      /* Wouldn't a linked list be easier here? 
+         Potentially ruin the contiguity of the memory.
+       */
     for(i = nCPFun - 1; i >= 0; i--)
 	if(!strcmp(CPFun[i].pkg, LoadedDLL[loc].name)) {
 	    if(i < nCPFun - 1) {
@@ -173,17 +352,24 @@ found:
 	    } else nCPFun--;
 	}
 #endif
-    free(LoadedDLL[loc].name);
-    free(LoadedDLL[loc].path);
+    Rf_freeDllInfo(LoadedDLL+loc);
     dlclose(LoadedDLL[loc].handle);
     for(i = loc + 1 ; i < CountDLL ; i++) {
 	LoadedDLL[i - 1].path = LoadedDLL[i].path;
 	LoadedDLL[i - 1].name = LoadedDLL[i].name;
 	LoadedDLL[i - 1].handle = LoadedDLL[i].handle;
+	LoadedDLL[i - 1].numCSymbols = LoadedDLL[i].numCSymbols;
+	LoadedDLL[i - 1].numCallSymbols = LoadedDLL[i].numCallSymbols;
+	LoadedDLL[i - 1].numFortranSymbols = LoadedDLL[i].numFortranSymbols;
+	LoadedDLL[i - 1].CSymbols = LoadedDLL[i].CSymbols;
+	LoadedDLL[i - 1].CallSymbols = LoadedDLL[i].CallSymbols;
+	LoadedDLL[i - 1].FortranSymbols = LoadedDLL[i].FortranSymbols;
     }
     CountDLL--;
     return 1;
 }
+
+
 
 #define DLLerrBUFSIZE 1000
 static char DLLerror[DLLerrBUFSIZE] = "";
@@ -196,6 +382,8 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 	/* or if dlopen fails for some reason. */
 
 static int computeDLOpenFlag(int asLocal, int now); /* Defined below. */
+
+static DL_FUNC R_dlsym(DllInfo *dll, char const *name);
 
 static int AddDLL(char *path, int asLocal, int now)
 {
@@ -242,6 +430,23 @@ static int AddDLL(char *path, int asLocal, int now)
     LoadedDLL[CountDLL].path = dpath;
     LoadedDLL[CountDLL].name = name;
     LoadedDLL[CountDLL].handle = handle;
+
+    LoadedDLL[CountDLL].numCSymbols = 0;
+    LoadedDLL[CountDLL].numCallSymbols = 0;
+    LoadedDLL[CountDLL].numFortranSymbols = 0;
+    LoadedDLL[CountDLL].CSymbols = NULL;
+    LoadedDLL[CountDLL].CallSymbols = NULL;
+    LoadedDLL[CountDLL].FortranSymbols = NULL;
+
+    {
+      char *tmp;
+      DL_FUNC f;
+      tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") + strlen(name)+ 1));
+      sprintf(tmp, "%s%s","R_init_", name);
+      f = dlsym(LoadedDLL[CountDLL].handle, tmp);
+      if(f)
+        f(LoadedDLL + CountDLL);
+    }
     CountDLL++;
 
     return 1;
@@ -321,22 +526,93 @@ computeDLOpenFlag(int asLocal, int now)
     return(openFlag);
 }
 
+Rf_DotCSymbol *
+Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name)
+{
+  int i;
+      for(i = 0; i < info->numCSymbols; i++) {
+        if(strcmp(name, info->CSymbols[i].name) == 0)
+          return(&(info->CSymbols[i]));
+      }
 
-static DL_FUNC R_dlsym(void *handle, char const *name)
+ return(NULL);
+}
+
+Rf_DotFortranSymbol *
+Rf_lookupRegisteredFortranSymbol(DllInfo *info, const char *name)
+{
+  int i;
+   for(i = 0; i < info->numFortranSymbols; i++) {
+     if(strcmp(name, info->FortranSymbols[i].name) == 0)
+      return(&(info->FortranSymbols[i]));
+   }
+
+ return((Rf_DotFortranSymbol*)NULL);
+}
+
+Rf_DotCallSymbol *
+Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name)
+{
+  int i;
+      for(i = 0; i < info->numCallSymbols; i++) {
+        if(strcmp(name, info->CallSymbols[i].name) == 0)
+          return(&(info->CallSymbols[i]));
+      }
+ return((Rf_DotCallSymbol*)NULL);
+}
+
+
+static DL_FUNC R_dlsym(DllInfo *info, char const *name)
 {
     char buf[MAXIDSIZE+1];
+    int i, fail = 0;
+    if(info->numCSymbols > 0) {
+      Rf_DotCSymbol *sym;
+      sym = Rf_lookupRegisteredCSymbol(info, name);
+      if(sym)
+        return(sym->fun);
+      fail = 1;
+    }
+
+    if(info->numFortranSymbols > 0) {
+      Rf_DotFortranSymbol *sym;
+      sym = Rf_lookupRegisteredFortranSymbol(info, name);
+      if(sym)
+        return(sym->fun);
+      fail = 1;
+    }
+
+    if(info->numCallSymbols > 0) {
+      Rf_DotCallSymbol *sym;
+      sym = Rf_lookupRegisteredCallSymbol(info, name);
+      if(sym)
+        return(sym->fun);
+      fail = 1;
+    }
+    
+    if(fail)
+      return((DL_FUNC) NULL);
+
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
     sprintf(buf, "%s", name);
 #else
     sprintf(buf, "_%s", name);
 #endif
-    return (DL_FUNC) dlsym(handle, buf);
+    return (DL_FUNC) dlsym(info->handle, buf);
 }
 
 	/* R_FindSymbol checks whether one of the libraries */
 	/* that have been loaded contains the symbol name and */
 	/* returns a pointer to that symbol upon success. */
 
+/*
+  In the future, this will receive an additional argument
+  which will specify the nature of the symbol expected by the 
+  caller, specifically whether it is for a .C(), .Call(),
+  .Fortran(), .External(), generic, etc. invocation. This will 
+  reduce the pool of possible symbols in the case of a library
+  that registers its routines.
+ */
 
 DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
@@ -361,7 +637,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 	doit = all;
 	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
 	if(doit) {
-	    fcnptr = R_dlsym(LoadedDLL[i].handle, name);
+	    fcnptr = R_dlsym(&LoadedDLL[i], name);
 	    if (fcnptr != (DL_FUNC) NULL) {
 #ifdef CACHE_DLL_SYM
 		if(strlen(pkg) <= 20 && strlen(name) <= 20 && nCPFun < 100) {
@@ -377,7 +653,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
     }
     if(all || !strcmp(pkg, "base")) {
 #ifdef DL_SEARCH_PROG
-	fcnptr = R_dlsym(dlhandle, name);
+	fcnptr = R_dlsym(&baseDll, name);
 #else
 	for(i=0 ; CFunTab[i].name ; i++)
 	    if(!strcmp(name, CFunTab[i].name))
@@ -456,8 +732,8 @@ extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, ptr_R_GetX11Image,
 
 void R_load_X11_shlib(void)
 {
-    char X11_DLL[PATH_MAX], buf[1000], *p;
-    void *handle;
+    char X11_DLL[PATH_MAX], buf[1000], *p; 
+    DllInfo dll;
     struct stat sb;
 
     p = getenv("R_HOME");
@@ -472,19 +748,19 @@ void R_load_X11_shlib(void)
 	R_Suicide("Probably no X11 support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
 #ifdef RTLD_NOW
-    handle = dlopen(X11_DLL, RTLD_NOW);
+    dll.handle = dlopen(X11_DLL, RTLD_NOW);
 #else
-    handle = dlopen(X11_DLL, 0);
+    dll.handle = dlopen(X11_DLL, 0);
 #endif
-    if(handle == NULL) {
+    if(dll.handle == NULL) {
 	sprintf(buf, "The X11 shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-    ptr_X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
+    ptr_X11DeviceDriver = R_dlsym(&dll, "X11DeviceDriver");
     if(!ptr_X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
-    ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
+    ptr_dataentry = R_dlsym(&dll, "RX11_dataentry");
     if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
-    ptr_R_GetX11Image = R_dlsym(handle, "R_GetX11Image");
+    ptr_R_GetX11Image = R_dlsym(&dll, "R_GetX11Image");
     if(!ptr_R_GetX11Image) R_Suicide("Cannot load R_GetX11Image");
 }
 
@@ -498,7 +774,7 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 void R_load_gnome_shlib(void)
 {
     char gnome_DLL[PATH_MAX], buf[1000], *p;
-    void *handle;
+    DllInfo dll;
     struct stat sb;
 
     p = getenv("R_HOME");
@@ -513,46 +789,46 @@ void R_load_gnome_shlib(void)
 	R_Suicide("Probably no GNOME support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
 #ifdef RTLD_NOW
-    handle = dlopen(gnome_DLL, RTLD_NOW);
+    dll.handle = dlopen(gnome_DLL, RTLD_NOW);
 #else
-    handle = dlopen(gnome_DLL, 0);
+    dll.handle = dlopen(gnome_DLL, 0);
 #endif
-    if(handle == NULL) {
+    if(dll.handle == NULL) {
 	sprintf(buf, "The GNOME shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-    ptr_R_Suicide = R_dlsym(handle, "Rgnome_Suicide");
+    ptr_R_Suicide = R_dlsym(&dll, "Rgnome_Suicide");
     if(!ptr_R_Suicide) Rstd_Suicide("Cannot load R_Suicide");
-    ptr_R_ShowMessage = R_dlsym(handle, "Rgnome_ShowMessage");
+    ptr_R_ShowMessage = R_dlsym(&dll, "Rgnome_ShowMessage");
     if(!ptr_R_ShowMessage) R_Suicide("Cannot load R_ShowMessage");
-    ptr_R_ReadConsole = R_dlsym(handle, "Rgnome_ReadConsole");
+    ptr_R_ReadConsole = R_dlsym(&dll, "Rgnome_ReadConsole");
     if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole");
-    ptr_R_WriteConsole = R_dlsym(handle, "Rgnome_WriteConsole");
+    ptr_R_WriteConsole = R_dlsym(&dll, "Rgnome_WriteConsole");
     if(!ptr_R_WriteConsole) R_Suicide("Cannot load R_WriteConsole");
-    ptr_R_ResetConsole = R_dlsym(handle, "Rgnome_ResetConsole");
+    ptr_R_ResetConsole = R_dlsym(&dll, "Rgnome_ResetConsole");
     if(!ptr_R_ResetConsole) R_Suicide("Cannot load R_ResetConsole");
-    ptr_R_FlushConsole = R_dlsym(handle, "Rgnome_FlushConsole");
+    ptr_R_FlushConsole = R_dlsym(&dll, "Rgnome_FlushConsole");
     if(!ptr_R_FlushConsole) R_Suicide("Cannot load R_FlushConsole");
-    ptr_R_ClearerrConsole = R_dlsym(handle, "Rgnome_ClearerrConsole");
+    ptr_R_ClearerrConsole = R_dlsym(&dll, "Rgnome_ClearerrConsole");
     if(!ptr_R_ClearerrConsole) R_Suicide("Cannot load R_ClearerrConsole");
-    ptr_R_Busy = R_dlsym(handle, "Rgnome_Busy");
+    ptr_R_Busy = R_dlsym(&dll, "Rgnome_Busy");
     if(!ptr_R_Busy) R_Suicide("Cannot load R_Busy");
-    ptr_R_CleanUp = R_dlsym(handle, "Rgnome_CleanUp");
+    ptr_R_CleanUp = R_dlsym(&dll, "Rgnome_CleanUp");
     if(!ptr_R_CleanUp) R_Suicide("Cannot load R_CleanUp");
-    ptr_R_ShowFiles = R_dlsym(handle, "Rgnome_ShowFiles");
+    ptr_R_ShowFiles = R_dlsym(&dll, "Rgnome_ShowFiles");
     if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
-    ptr_R_ChooseFile = R_dlsym(handle, "Rgnome_ChooseFile");
+    ptr_R_ChooseFile = R_dlsym(&dll, "Rgnome_ChooseFile");
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-    ptr_gnome_start = R_dlsym(handle, "gnome_start");
+    ptr_gnome_start = R_dlsym(&dll, "gnome_start");
     if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
-    ptr_GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
+    ptr_GTKDeviceDriver = R_dlsym(&dll, "GTKDeviceDriver");
     if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
-    ptr_R_loadhistory = R_dlsym(handle, "Rgnome_loadhistory");
+    ptr_R_loadhistory = R_dlsym(&dll, "Rgnome_loadhistory");
     if(!ptr_R_loadhistory) R_Suicide("Cannot load Rgnome_loadhsitoryr");
-    ptr_R_savehistory = R_dlsym(handle, "Rgnome_savehistory");
+    ptr_R_savehistory = R_dlsym(&dll, "Rgnome_savehistory");
     if(!ptr_R_savehistory) R_Suicide("Cannot load Rgnome_savehsitoryr");
 /* Uncomment the next two lines to experiment with the gnome() device */
-/*    ptr_GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
+/*    ptr_GnomeDeviceDriver = R_dlsym(&dll, "GnomeDeviceDriver");
       if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
 }
 
