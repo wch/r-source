@@ -26,6 +26,7 @@
    See the file COPYLIB.TXT for details.
 */
 
+#define NONAMELESSUNION
 #include "internal.h"
 
 extern void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
