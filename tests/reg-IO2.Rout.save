@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-10-08)
+Version 1.4.0 Under development (unstable) (2001-11-29)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -70,6 +70,8 @@ header and `col.names' are of different lengths in: read.table("foo3", header = 
   head
 1    2
 3    4
+Warning message: 
+incomplete final line found by readLines on `foo4' 
 > unlink("foo4")
 > 
 > # blank last line
@@ -200,6 +202,19 @@ logical(0)
   x1 x.2 x3
 1  1   2  2
 2  2   3  3
+> unlink("test.dat")
+> 
+> cat('#comment\n\n#another\n#\n#\n',
++     'C1\tC2\tC3\n"Panel"\t"Area Examined"\t"# Blemishes"\n',
++     '"1"\t"0.8"\t"3"\n', '"2"\t"0.6"\t"2"\n', '"3"\t"0.8"\t"3"\n',
++     file = "test.dat", sep="")
+> read.table("test.dat")
+     V1            V2          V3
+1    C1            C2          C3
+2 Panel Area Examined # Blemishes
+3     1           0.8           3
+4     2           0.6           2
+5     3           0.8           3
 > unlink("test.dat")
 > 
 > ## end of tests

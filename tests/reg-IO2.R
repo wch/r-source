@@ -83,4 +83,11 @@ cat("x1\tx#2\tx3\n1\t2\t2\n2\t3\t3\n", file = "test.dat")
 read.table("test.dat", header=T, comment.char="")
 unlink("test.dat")
 
+cat('#comment\n\n#another\n#\n#\n',
+    'C1\tC2\tC3\n"Panel"\t"Area Examined"\t"# Blemishes"\n',
+    '"1"\t"0.8"\t"3"\n', '"2"\t"0.6"\t"2"\n', '"3"\t"0.8"\t"3"\n',
+    file = "test.dat", sep="")
+read.table("test.dat")
+unlink("test.dat")
+
 ## end of tests
