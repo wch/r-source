@@ -16,9 +16,9 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             stop("conf.level must be a single number between 0 and 1")
     }
 
-    if(!is.numeric(x)) stop("`x' must be numeric")
+    if(!is.numeric(x)) stop("x must be numeric")
     if(!is.null(y)) {
-        if(!is.numeric(y)) stop("`y' must be numeric")
+        if(!is.numeric(y)) stop("y must be numeric")
         DNAME <- paste(deparse(substitute(x)), "and",
                        deparse(substitute(y)))
         if(paired) {
