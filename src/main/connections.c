@@ -487,7 +487,7 @@ static void file_truncate(Rconnection con)
     if(chsize(fd, size))
 	error(_("file truncation failed"));
 #else
-    error(_("file truncation navailable on this platform"));
+    error(_("file truncation unavailable on this platform"));
 #endif
     this->last_was_write = TRUE;
     this->wpos = f_tell(this->fp);
