@@ -25,7 +25,7 @@ Furthermore:
 
 /*
 
-  $Id: apse.c,v 1.1 2002/05/25 22:16:10 hornik Exp $
+  $Id: apse.c,v 1.2 2002/06/08 10:20:32 hornik Exp $
 
 */
 
@@ -900,12 +900,13 @@ static apse_bool_t _apse_match_next_state(apse_t *ap) {
 #ifdef APSE_DEBUGGING
 	    printf("(equal = %d, active = %d)\n", equal, active);
 #endif
-	    if (equal == ap->edit_distance + 1 && ap->is_greedy == 0 ||
-		equal < ap->prev_equal && ap->prev_active && active > ap->prev_active &&
-		!APSE_BIT_TST(ap->state,
-			      ap->edit_distance,
-			      ap->bitvectors_in_state,
-			      ap->text_position - ap->match_begin)) {
+	    if ((equal == ap->edit_distance + 1 && ap->is_greedy == 0) ||
+		(equal < ap->prev_equal && ap->prev_active &&
+		 active > ap->prev_active &&
+		 !APSE_BIT_TST(ap->state,
+			       ap->edit_distance,
+			       ap->bitvectors_in_state,
+			       ap->text_position - ap->match_begin))) {
 		ap->match_begin = ap->text_position;
 #ifdef APSE_DEBUGGING
 		printf("(slide begin %d)\n", ap->match_begin);
