@@ -39,13 +39,14 @@ package.skeleton <-
     ## DESCRIPTION
     cat("Creating DESCRIPTION ...\n")
     description <- file(file.path(path, name, "DESCRIPTION"), "wt")
-    cat("Package: the_name_of_the_package\n",
+    cat("Package: ", name,
 	"Type: Package\n",
-	"Title: What the package does\n",
+	"Title: What the package does (short line)\n",
 	"Version: 1.0\n",
+	"Date: ", format(Sys.time(), format="%Y-%m-%d"), "\n",
 	"Author: Who wrote it\n",
-	"Description: More about what it does\n",
 	"Maintainer: Who to complain to <yourfault@somewhere.net>\n",
+	"Description: More about what it does (maybe more than one line)\n",
 	"License: What license is it under?\n",
 	file = description, sep = "")
     close(description)
@@ -55,10 +56,11 @@ package.skeleton <-
 
     ## src/README
     readme <- file(file.path(path, name, "src", "README"), "wt")
-    cat("Put C/C++/Fortran code here.\n",
-	"If you have compiled code, add a .First.lib() function\n",
-	"in the 'R' subdirectory to load it.\n",
-	file = readme, sep = "")
+    cat("Put C/C++/Fortran code here.",
+	"If you have compiled code, add a .First.lib() function",
+	"in the 'R' subdirectory to load it;",
+	"or if you use a NAMESPACE, an .OnLoad() function instead.\n",
+	file = readme, sep = "\n")
     close(readme)
 
     ## man/README

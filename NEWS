@@ -484,6 +484,8 @@ UTILITIES
 	by Uwe Ligges.)  How to prepare such repositories is
 	documented in the 'R Installation and Administration' manual.
 
+    o	package.skeleton() adds a bit more to DESCRIPTION.
+
 
 DOCUMENTATION
 
@@ -1132,7 +1134,7 @@ BUG FIXES
     o   toLatex(sessionInfo()) produced incorrect LaTeX on some
         platforms due to special characters in the platform
         identifier.
-	
+
 
 
 

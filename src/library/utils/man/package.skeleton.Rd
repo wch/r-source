@@ -8,12 +8,12 @@
   files describing further steps in packaging.
 }
 \usage{
-package.skeleton(name = "anRpackage", list, environment = .GlobalEnv, 
+package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
 	         path = ".", force = FALSE)
 }
 \arguments{
   \item{name}{character string: the directory name for your package.}
-  \item{list}{character vector naming the R objects to put in the package}
+  \item{list}{character vector naming the \R objects to put in the package.}
   \item{environment}{if \code{list} is omitted, the contents of this
     environment are packaged.}
   \item{path}{path to put the package directories in.}
@@ -30,20 +30,24 @@ package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
   code and help files but not data files (which are looked for by name).
 }
 
-\references{Read the \emph{Writing R Extensions} manual for more details }
+\references{Read the \emph{Writing R Extensions} manual for more details.
+}
 \seealso{
   \code{\link{prompt}}, \code{\link{install.packages}}
 }
 
 \examples{
-\dontrun{
-    f <- function(x,y) x+y
-    g <- function(x,y) x-y
-    d <- data.frame(a=1,b=2)
-    e <- rnorm(1000)
-    package.skeleton(list=c("f","g","d","e"), name="AnExample")
+ ## two functions and two "data sets" :
+ f <- function(x,y) x+y
+ g <- function(x,y) x-y
+ d <- data.frame(a=1, b=2)
+ e <- rnorm(1000)
+\dontshow{
+  owd <- getwd()
+  setwd(tempdir())
 }
+ package.skeleton(list=c("f","g","d","e"), name="mypkg")
+\dontshow{ setwd(owd) }
 }
-
 \keyword{file}
 \keyword{utilities}
