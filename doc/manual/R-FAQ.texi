@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.2-1, 2000-12-12
+@set FAQ-VERSION 1.2-1, 2000-12-13
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1461,8 +1461,8 @@ Package for drawing ellipses and ellipse-like confidence regions.
 @item fdim
 Functions for calculating fractal dimension.
 @item foreign
-Functions for reading data stored by statistical software like Minitab,
-SAS, SPSS, etc.
+Functions for reading and writing data stored by statistical software
+like Minitab, SAS, SPSS, Stata, etc.
 @item fracdiff
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-1, 2000-12-12
+Version 1.2-1, 2000-12-13
 Kurt Hornik
 
 
@@ -1185,8 +1185,8 @@ works, was published in the Journal of Statistical Software
      Functions for calculating fractal dimension.
 
 *foreign*
-     Functions for reading data stored by statistical software like Minitab,
-     SAS, SPSS, etc.
+     Functions for reading and writing data stored by statistical software
+     like Minitab, SAS, SPSS, Stata, etc.
 
 *fracdiff*
      Maximum likelihood estimation of the parameters of a fractionally
