@@ -1,9 +1,9 @@
-
-xy.coords <- function(x, y, xlab=NULL, ylab=NULL) {
+xy.coords <- function(x, y, xlab=NULL, ylab=NULL)
+{
     if(is.null(y)) {
 	ylab <- xlab
 	if(is.language(x)) {
-	    if(length(x) == 3 && deparse(x[[1]]) == '~') {
+            if (inherits(x, "formula") && length(x) == 3) {
 		ylab <- deparse(x[[2]])
 		xlab <- deparse(x[[3]])
 		y <- eval(x[[2]], sys.frame(sys.parent()))
@@ -61,8 +61,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL) {
     return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
 }
 
-plot <- function(x, ...)
-    UseMethod("plot")
+plot <- function(x, ...) UseMethod("plot")
 
 plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 log="", main=NULL,  sub=NULL, xlab=NULL, ylab=NULL,
@@ -95,44 +94,44 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     invisible()
 }
 
-plot.factor <-
-    function(x, y, ...) {
-	if (missing(y))
-	    barplot(table(x), ...)
-	else if (is.numeric(y))
-	    boxplot(y ~ x, ...)
-	else NextMethod("plot")
-    }
+plot.factor <- function(x, y, ...)
+{
+    if (missing(y))
+        barplot(table(x), ...)
+    else if (is.numeric(y))
+        boxplot(y ~ x, ...)
+    else NextMethod("plot")
+}
 
-plot.formula <-
-    function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {
-	if (missing(na.action)) na.action <- options()$na.action
-	m <- match.call(expand.dots = FALSE)
-	if (is.matrix(eval(m$data, sys.parent())))
-	    m$data <- as.data.frame(data)
-	m$... <- NULL
-	m[[1]] <- as.name("model.frame")
-	mf <- eval(m, sys.parent())
-	response <- attr(attr(mf, "terms"), "response")
-	if (response) {
-	    varnames <- names(mf)
-	    y <- mf[[response]]
-	    ylab <- varnames[response]
-	    if (length(varnames) > 2) {
-		opar <- par(ask = ask)
-		on.exit(par(opar))
-	    }
-	    for (i in varnames[-response])
-		plot(mf[[i]], y, xlab = i, ylab = ylab, ...)
-	}
-	else plot.data.frame(mf)
+plot.formula <- function(formula, data = NULL, subset, na.action,
+                         ..., ask = TRUE)
+{
+    if (missing(na.action)) na.action <- options()$na.action
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, sys.parent())))
+        m$data <- as.data.frame(data)
+    m$... <- NULL
+    m[[1]] <- as.name("model.frame")
+    mf <- eval(m, sys.parent())
+    response <- attr(attr(mf, "terms"), "response")
+    if (response) {
+        varnames <- names(mf)
+        y <- mf[[response]]
+        ylab <- varnames[response]
+        if (length(varnames) > 2) {
+            opar <- par(ask = ask)
+            on.exit(par(opar))
+        }
+        for (i in varnames[-response])
+            plot(mf[[i]], y, xlab = i, ylab = ylab, ...)
     }
+    else plot.data.frame(mf)
+}
 
 plot.xy <-
     function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
     .Internal(plot.xy(xy, type, pch, lty, col, bg=bg, cex=cex, ...))
 
-plot.new <- function(ask=NA)
-    .Internal(plot.new(ask))
+plot.new <- function(ask=NA) .Internal(plot.new(ask))
 
-frame <- plot.new
+frame <- .Alias(plot.new)

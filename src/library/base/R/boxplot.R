@@ -3,28 +3,30 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
 		    plot=TRUE, border=par("fg"), col=NULL, log="", pars=NULL)
 {
     args <- list(x,...)
-    namedargs <- if(!is.null(attributes(args)$names))
-	attributes(args)$names != ""
-    else
-	rep(FALSE, length=length(args))
-
+    namedargs <-
+	if(!is.null(attributes(args)$names))
+	    attributes(args)$names != ""
+	else
+	    rep(FALSE, length=length(args))
     pars <- c(args[namedargs], pars)
-
-    groups <- if(is.language(x)) {
-	if(length(x) == 3 && deparse(x[[1]]) == '~') {
-	    groups <- eval(x[[3]], data)
-	    x <- eval(x[[2]], data)
-	    split(x, groups)
+    groups <-
+	if(is.language(x)) {
+	    if (inherits(x, "formula") && length(x) == 3) {
+		groups <- eval(x[[3]], data)
+		x <- eval(x[[2]], data)
+		split(x, groups)
+	    }
 	}
-	else stop("invalid first argument")
-    }
-    else {
-	groups <- args[!namedargs]
-	if (length(groups) == 1 && is.list(x)) x else groups
-    }
-    n <- length(groups)
-    if(!missing(names.x)) attr(groups, "names") <- names.x
-    else if(is.null(attr(groups, "names"))) attr(groups, "names") <- 1:n
+	else {
+	    groups <- args[!namedargs]
+	    if (length(groups) == 1 && is.list(x)) x else groups
+	}
+    if(0 == (n <- length(groups)))
+	stop("invalid first argument")
+    if(!missing(names.x))
+	attr(groups, "names") <- names.x
+    else if(is.null(attr(groups, "names")))
+	attr(groups, "names") <- 1:n
     for(i in 1:n)
 	groups[i] <- list(boxplot.stats(groups[[i]], range))
     if(plot) {
@@ -89,14 +91,14 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	}
     }## bplt
 
-    n <- length(z)
+    if(!is.list(z) || 0 == (n <- length(z)))
+	stop("invalid first argument")
     limits <- numeric(0)
     nmax <- 0
     for(i in 1:n) {
 	nmax <- max(nmax,z[[i]]$n)
 	limits <- range(limits, z[[i]]$stats, z[[i]]$out, finite=TRUE)
     }
-
     width <- if (!is.null(width)) {
 	if (length(width) != n | any(is.na(width)) | any(width <= 0))
 	    stop("invalid boxplot widths")

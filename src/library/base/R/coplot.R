@@ -1,28 +1,22 @@
-"co.intervals" <-
-    function (x, number = 6, overlap = 0.5)
+co.intervals <- function (x, number = 6, overlap = 0.5)
 {
     x <- sort(x[!is.na(x)])
     n <- length(x)
     ## "from the record"
     r <- n/(number * (1 - overlap) + overlap)
-    l <- round(1 + 0:(number - 1) * (1 - overlap) * r)
-    u <- round(r + 0:(number - 1) * (1 - overlap) * r)
-    cbind(x[l], x[u])
+    ii <- 0:(number - 1) * (1 - overlap) * r
+    cbind(x[round(1+ii)], x[round(r+ii)])
 }
 
-panel.smooth <-
-    function(x, y, col = par("col"), pch = par("pch"), col.smooth = "red",
-	     f=2/3, iter=3, ...)
+panel.smooth <- function(x, y, col = par("col"), pch = par("pch"),
+			 col.smooth = "red", f = 2/3, iter = 3, ...)
 {
     points(x, y, pch=pch, col=col)
     lines(lowess(x, y, f=f, iter=iter), col = col.smooth, ...)
 }
 
-
-
-coplot <-
-    function (formula, data, given.values, panel=points, rows, columns,
-	      show.given = TRUE, col = par("fg"), pch=par("pch"), ...)
+coplot <- function (formula, data, given.values, panel=points, rows, columns,
+		    show.given = TRUE, col = par("fg"), pch=par("pch"), ...)
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) == "(")
@@ -35,7 +29,7 @@ coplot <-
     ## parse and check the formula
 
     formula <- deparen(formula)
-    if (deparse(formula[[1]]) != "~")
+    if (!inherits(formula, "formula"))
 	bad.formula()
     y <- deparen(formula[[2]])
     rhs <- deparen(formula[[3]])

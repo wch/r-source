@@ -8,24 +8,22 @@ stripplot <- function(x, method="overplot", jitter=0.1, offset=1/3,
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)
 	error("invalid plotting method")
-    if(is.language(x)) {
-	if(length(x) == 3 && deparse(x[[1]]) == '~') {
-	    groups <- eval(x[[3]], sys.frame(sys.parent()))
-	    x <- eval(x[[2]], sys.frame(sys.parent()))
-	    groups <- split(x, groups)
+    groups <-
+	if(is.language(x)) {
+	    if (inherits(x, "formula") && length(x) == 3) {
+		groups <- eval(x[[3]], sys.frame(sys.parent()))
+		x <- eval(x[[2]], sys.frame(sys.parent()))
+		split(x, groups)
+	    }
 	}
-	else stop("invalid first argument")
-    }
-    else if(is.list(x)) {
-	groups <- x
-    }
-    else if(is.numeric(x)) {
-	groups <- list(x)
-    } else stop("invalid first argument")
-    n <- length(groups)
-    if(!missing(group.names)) attr(groups, "names") <- group.names
-    else if(is.null(attr(groups, "names"))) attr(groups, "names") <- 1:n
-
+	else if(is.list(x)) x
+	else if(is.numeric(x)) list(x)
+    if(0 == (n <- length(groups)))
+	stop("invalid first argument")
+    if(!missing(group.names))
+	attr(groups, "names") <- group.names
+    else if(is.null(attr(groups, "names")))
+	attr(groups, "names") <- 1:n
     dlim <- rep(NA, 2)
     for(i in groups)
 	dlim <- range(dlim, i, finite=TRUE)
