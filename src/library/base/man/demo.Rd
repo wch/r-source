@@ -20,11 +20,17 @@ demo(topic, device = getOption("device"),
 }
 \seealso{\code{\link{source}} which is called by \code{demo}.}
 \examples{
-\dontrun{
-% the demos are strictly tested anyway, since R 1.3.0
+% Most demos are strictly tested anyway, since R 1.3.0,
+% make sure, the others are run here: 
+demo() # gives list
+
 demo(lm.glm)
-ch <- "scoping"
-demo(ch, character = TRUE)
+\testonly{
+demo(nlm)
+}
+\dontrun{
+ ch <- "scoping"
+ demo(ch, character = TRUE)
 }
 }
 \keyword{documentation}
