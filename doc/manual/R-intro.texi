@@ -6834,6 +6834,9 @@ control the printing of diagnostic messages.
 @item --ess
 Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
 
+@item --debug
+Enable the ``Break to debugger'' menu item in @code{Rgui}.
+
 @item --args
 This flag does nothing except cause the rest of the command line to be
 skipped: this can be useful to retrieve values from it with

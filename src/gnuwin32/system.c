@@ -49,6 +49,7 @@ SA_TYPE RestoreAction = SA_RESTORE;
 Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;
 Rboolean DebugInitFile = FALSE;
+Rboolean DebugMenuitem = FALSE;
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
@@ -399,7 +400,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = TRUE;
-    if (R_Interactive && CharacterMode == RTerm) 
+    if (R_Interactive && CharacterMode == RTerm)
 	SetConsoleTitle(oldtitle);
 #if 0
     UnLoad_Unzip_Dll();
@@ -589,8 +590,9 @@ void R_SetWin32(Rstart Rp)
     pR_ShowMessage = Rp->message;
     R_yesnocancel = Rp->yesnocancel;
     my_R_Busy = Rp->busy;
+    DebugMenuitem = Rp->DebugMenuitem;
     /* Process R_HOME/etc/Renviron.site, then
-       .Renviron or ~/.Renviron, if it exists. 
+       .Renviron or ~/.Renviron, if it exists.
        Only used here in embedded versions */
     if(!Rp->NoRenviron) {
 	process_site_Renviron();
@@ -633,18 +635,18 @@ char *PrintUsage(void)
 {
     static char msg[5000];
     char msg0[] =
-"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save data sets at the end of the session\n  --no-save             Don't save them\n", 
-	msg1[] = 
+"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save data sets at the end of the session\n  --no-save             Don't save them\n",
+	msg1[] =
 "  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved data sets at startup\n  --no-restore-data     Don't restore previously saved data sets\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
-	msg2[] = 
+	msg2[] =
 "  --vanilla             Combine --no-save, --no-restore, --no-site-file,\n                          --no-init-file and --no-environ\n  --min-vsize=N         Set vector heap min to N bytes; '4M' = 4 MegaB\n  --max-vsize=N         Set vector heap max to N bytes;\n  --min-nsize=N         Set min number of cons cells to N\n  --max-nsize=N         Set max number of cons cells to N\n",
 	msg2b[] =
 "  --max-mem-size=N      Set limit for memory to be used by R\n  --max-ppsize=N        Set max size of protect stack to N\n",
 	msg3[] =
-"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n", 
-	msg4[] = 
+"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
+	msg4[] =
 "  --ess                 Don't use getline for command-line editing\n                          and assert interactive use";
-    if(CharacterMode == RTerm) 
+    if(CharacterMode == RTerm)
 	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
     else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
     strcat(msg, msg0);
@@ -672,7 +674,7 @@ int cmdlineoptions(int ac, char **av)
 
     /* ensure R_Home gets set early: we are in rgui or rterm here */
     R_Home = getRHOME();
-    
+
 #ifdef _R_HAVE_TIMING_
     R_setStartTime();
 #endif
@@ -692,9 +694,10 @@ int cmdlineoptions(int ac, char **av)
     R_max_memory = min(1024 * Mega, ms.dwTotalPhys);
     /* need enough to start R: fails on a 8Mb system */
     R_max_memory = max(16 * Mega, R_max_memory);
-    
+
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;
+    Rp->DebugMenuitem = DebugMenuitem;
     for (i = 1; i < ac; i++)
 	if (!strcmp(av[i], "--no-environ") || !strcmp(av[i], "--vanilla"))
 		Rp->NoRenviron = TRUE;
@@ -798,6 +801,8 @@ int cmdlineoptions(int ac, char **av)
 		    R_ShowMessage(s);
 		} else
 		    R_max_memory = value;
+	    } else if(!strcmp(*av, "--debug")) {
+		Rp->DebugMenuitem = TRUE;
 	    } else if(!strcmp(*av, "--args")) {
 		break;
 	    } else {
@@ -811,8 +816,8 @@ int cmdlineoptions(int ac, char **av)
 	    char *p, *fn = pp.cFileName, path[MAX_PATH];
 
 	    res = FindFirstFile(*av, &pp); /* convert to long file name */
-	    if(!usedRdata && 
-	       res != INVALID_HANDLE_VALUE && 
+	    if(!usedRdata &&
+	       res != INVALID_HANDLE_VALUE &&
 	       strlen(fn) >= 6 &&
 	       stricmp(fn+strlen(fn)-6, ".RData") == 0) {
 		set_workspace_name(fn);

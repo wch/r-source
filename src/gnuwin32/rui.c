@@ -56,6 +56,8 @@ static window RFrame;
 rect MDIsize;
 #endif
 extern int ConsoleAcceptCmd, R_is_running;
+extern Rboolean DebugMenuitem;
+
 static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
@@ -292,12 +294,10 @@ static void menukill(control m)
     UserBreak = TRUE;
 }
 
-#ifdef DEBUG
 static void menudebug(control m)
 {
     asm("int $3");
 }
-#endif
 
 static void menuls(control m)
 {
@@ -920,9 +920,7 @@ int setupui()
 
     MCHECK(newmenu("Misc"));
     MCHECK(newmenuitem("Stop current computation           \tESC", 0, menukill));
-#ifdef DEBUG
-    MCHECK(newmenuitem("Break to debugger", 0, menudebug));
-#endif
+    if (DebugMenuitem) MCHECK(newmenuitem("Break to debugger", 0, menudebug));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mlazy = newmenuitem("Buffered output", 'W', menulazy));
     MCHECK(newmenuitem("-", 0, NULL));

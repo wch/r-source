@@ -24,11 +24,10 @@ memory chunks that should not matter.
 Both Rterm and Rgui now give usage information via the --help
 command-line flag.
 
-When gnuwin32/rui.c is compiled with DEBUG=T, there is now a
-"Misc|Break to debugger" menu option.  This will cause a trap
-to an external debugger, e.g. for running Rgui under gdb.  Be
-careful: If the menu item is selected when not running under a
-debugger R is likely to crash.
+There is now a "Misc|Break to debugger" menu option, enabled by the 
+"--debug" command line option.  This will cause a trap to an external
+debugger, e.g. for running Rgui under gdb.  If the menu item
+is selected when not running under a debugger R is likely to crash.
 
 Rcmd SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files

@@ -79,6 +79,7 @@ typedef struct
     blah5 yesnocancel;
     blah6 busy;
     UImode CharacterMode;
+    Rboolean DebugMenuitem;
 #endif
 } structRstart;
 
