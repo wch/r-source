@@ -5182,8 +5182,8 @@ void InitGraphics(void)
 
 static SEXP getSymbolValue(char *symbolName)
 {
-    SEXP s, t;
-    t = findVar(s = install(symbolName), R_NilValue);
+    SEXP t;
+    t = findVar(install(symbolName), R_NilValue);
     return t;
 }
 

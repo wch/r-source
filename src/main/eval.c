@@ -369,7 +369,6 @@ SEXP eval(SEXP e, SEXP rho)
 
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 {
-    int i;
     SEXP body, formals, actuals, savedrho;
     volatile  SEXP newrho;
     SEXP f, a, tmp;
@@ -488,7 +487,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     /*  Set a longjmp target which will catch any explicit returns
 	from the function body.  */
 
-    if ((i = SETJMP(cntxt.cjmpbuf))) {
+    if ((SETJMP(cntxt.cjmpbuf))) {
 	if (R_ReturnedValue == R_DollarSymbol) {
 	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
 	    R_GlobalContext = &cntxt;      /* put the context back */

@@ -78,10 +78,9 @@ void PrintDefaults(SEXP rho)
 
 SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int  append_, ifile, closeOnExit;
+    int ifile, closeOnExit;
 
     ifile = asInteger(CAR(args));
-    append_ = asLogical(CADR(args));
     closeOnExit = asLogical(CADDR(args));
     if(closeOnExit == NA_LOGICAL)
 	error("invalid value for closeOnExit");

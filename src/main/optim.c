@@ -613,7 +613,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
     double **P;
     double size, step, temp, trystep;
     char tstr[6];
-    double VH, VL, VN, VR;
+    double VH, VL, VR;
 
     if (trace)
 	Rprintf("  Nelder-Mead direct search function minimizer\n");
@@ -695,7 +695,6 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	    if (VH > VL + convtol && VL > abstol) {
 		sprintf(tstr, "%5d", funcount);
 		if (trace) Rprintf("%s%s %f %f\n", action, tstr, VH, VL);
-		VN = beta * VL + (1.0 - beta) * VH;
 
 		for (i = 0; i < n; i++) {
 		    temp = -P[i][H - 1];

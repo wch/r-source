@@ -219,7 +219,6 @@ static double BlueGamma	 = 0.6;
 static struct { int red; int green; int blue; } RPalette[512];
 static XColor XPalette[512];
 static int PaletteSize;
-static int RedLevels, GreenLevels, BlueLevels;
 
 
 /* Monochome Displays : Compute pixel values by converting */
@@ -247,7 +246,7 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
 {
     unsigned int d, dmin = 0xFFFFFFFF;
     unsigned int dr;
-    int i, imin;
+    int i;
     unsigned int pixel = 0;  /* -Wall */
     int gray = (0.299 * r + 0.587 * g + 0.114 * b) + 0.0001;
     for (i = 0; i < PaletteSize; i++) {
@@ -256,7 +255,6 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
 	if (d < dmin) {
 	    pixel = XPalette[i].pixel;
 	    dmin = d;
-	    imin = i;
 	}
     }
     return pixel;
@@ -377,12 +375,8 @@ static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
 	PaletteSize = 0;
 	return 0;
     }
-    else {
-	RedLevels = nr;
-	GreenLevels = ng;
-	BlueLevels = nb;
+    else
 	return 1;
-    }
 }
 
 static void SetupPseudoColor()
@@ -414,7 +408,7 @@ static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
     unsigned int d, dmin = 0xFFFFFFFF;
     unsigned int dr, dg, db;
     unsigned int pixel;
-    int i, imin;
+    int i;
     pixel = 0;			/* -Wall */
     for (i = 0; i < PaletteSize; i++) {
 	dr = (RPalette[i].red - r);
@@ -424,7 +418,6 @@ static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
 	if (d < dmin) {
 	    pixel = XPalette[i].pixel;
 	    dmin = d;
-	    imin = i;
 	}
     }
     return pixel;
@@ -549,7 +542,7 @@ static Rboolean SetupX11Color()
 	else {
 	    if (model == TRUECOLOR)
 		model = PSEUDOCOLOR2;
-	    SetupPseudoColor(model);
+	    SetupPseudoColor();
 	}
     }
     else if (Vclass == TrueColor) {
@@ -558,7 +551,7 @@ static Rboolean SetupX11Color()
 	else if (model == GRAYSCALE)
 	    SetupGrayScale();
 	else if (model == PSEUDOCOLOR1 || model == PSEUDOCOLOR2)
-	    SetupPseudoColor(model);
+	    SetupPseudoColor();
 	else
 	    SetupTrueColor();
     }

@@ -450,7 +450,7 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 {
 /* == printArray(.) */
-    SEXP ii, nn, dn, dnn;
+    SEXP dn, dnn;
     int i, j, k, l, b, nb, ndim;
     int nr, nc;
     int has_dimnames = 0, has_dnn = 0;
@@ -466,8 +466,6 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
     }
     else {
 	SEXP dn0, dn1;
-	PROTECT(ii = allocVector(INTSXP, ndim));
-	PROTECT(nn = allocVector(INTSXP, ndim));
 	nr = INTEGER(dim)[0];
 	nc = INTEGER(dim)[1];
 	b = nr * nc;
@@ -528,7 +526,6 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	    }
 	    Rprintf("\n");
 	}
-	UNPROTECT(2);
     }
 }
 

@@ -608,10 +608,9 @@ SEXP labelformat(SEXP labels)
 {
     /* format(labels): i.e. from numbers to strings */
     SEXP ans = R_NilValue;/* -Wall*/
-    int save_digits, i, n, w, d, e, wi, di, ei;
+    int i, n, w, d, e, wi, di, ei;
     char *strp;
     n = length(labels);
-    save_digits = R_print.digits;
     R_print.digits = 7;/* maximally 7 digits -- ``burnt in'';
 			  S-PLUS <= 5.x has about 6 
 			  (but really uses single precision..) */

@@ -839,7 +839,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
        then we must free(dd) */
 
     double xoff, yoff, pointsize;
-    rcolor setbg, setfg, setfill;
+    rcolor setbg, setfg;
 
     PostScriptDesc *pd;
 
@@ -866,7 +866,6 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     setbg = str2col(bg);
     setfg = str2col(fg);
-    setfill = NA_INTEGER;
 
     pd->width = width;
     pd->height = height;
