@@ -25,7 +25,7 @@
 }
 \usage{
 sQuote(s)
-.convertFilePathToAbsolute(dir)
+.convertFilePathToAbsolute(path)
 .listFilesWithExts(dir, exts, path = TRUE)
 .loadPackageQuietly(package, lib.loc)
 .makeS3MethodsStopList(package)
