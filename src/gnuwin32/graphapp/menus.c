@@ -36,7 +36,10 @@
    execute shortcut if menu item is grayed out */
 
 #include "internal.h"
+#ifdef SUPPORT_GUI_MBCS
 #include <wchar.h>
+size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
+#endif
 
 /*
  *  Menu variables.
@@ -119,7 +122,7 @@ static int find_char(int ch, char *str)
 	    mbstate_t mb_st;
 
 	    memset(&mb_st, 0, sizeof(mbstate_t));
-	    mb_len = mbrtowc(NULL, str+where, MB_CUR_MAX, &mb_st);
+	    mb_len = Rf_mbrtowc(NULL, str+where, MB_CUR_MAX, &mb_st);
 	    if (mb_len > 1) {where += mb_len - 1; continue;}
 	    if (str[where] == ch) return where;
 	}
