@@ -1799,7 +1799,8 @@ with C++} Addison-Wesley.
 
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
-Draft book from @uref{http://www.postgresql.org/docs/awbook.html}.
+Addison-Wesley.
+Also downloadable at @uref{http://www.postgresql.org/docs/awbook.html}.
 
 @noindent
 T.@: M.@: Therneau and P.@: M.@: Grambsch (2000) @emph{Modeling Survival
