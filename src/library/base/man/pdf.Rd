@@ -2,7 +2,7 @@
 \alias{pdf}
 \title{PDF Graphics Device}
 %% The definitive doc is the source :-)
-%% 	../../../main/devices.c  &   ../../../unix/devPS.c
+%% 	../../../main/devices.c  &   ../../../main/devPS.c
 \description{
   \code{pdf} starts the graphics device driver for producing PDF
   graphics.
@@ -22,7 +22,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     inches.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
-    number.} 
+    number.}
   \item{family}{the font family to be used, one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
