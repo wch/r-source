@@ -279,7 +279,7 @@ while test -n "${1}"; do
 	## Otherwise, the build date for an older version may be newer
 	## than the modification date for the new sources as recorded in
 	## the tarball ...
-	gzip -dc "${1}" | (cd "${tmpdir}" && ${TAR} -mxf -)
+	${R_GZIPCMD} -dc "${1}" | (cd "${tmpdir}" && ${TAR} -mxf -)
 	## If we have a binary bundle distribution, the DESCRIPTION file
 	## is at top level.
 	if test -f "${tmpdir}/DESCRIPTION"; then
@@ -859,7 +859,7 @@ do_install_source () {
     filename="${R_PACKAGE_NAME}_${version}_R_${R_PLATFORM}.tar"
     filepath="${startdir}/$filename"
     ${TAR} -chf "$filepath" -C "${R_LIBRARY_DIR}" ${R_PACKAGE_NAME}
-    gzip -9f "$filepath"
+    ${R_GZIPCMD} -9f "$filepath"
     echo "packaged installation of '${R_PACKAGE_NAME}' as ${filename}.gz"
   fi
 
