@@ -1,3 +1,24 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997-1999   Robert Gentleman, Ross Ihaka
+ *                            and the R Development Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 #include "Defn.h"
 #include "Fileio.h"
 
@@ -9,8 +30,8 @@
 #endif
 
 extern int UsingReadline;
-extern int DefaultSaveAction;
-extern int DefaultRestoreAction;
+extern int SaveAction;
+extern int RestoreAction;
 extern int LoadSiteFile;
 extern int LoadInitFile;
 extern int DebugInitFile;
@@ -23,7 +44,7 @@ char *tilde_expand(char*);
 
 char *R_ExpandFileName(char *s)
 {
-    return tilde_expand(s);
+    return( tilde_expand(s) );
 }
 #else
 char *R_ExpandFileName(char *s)
@@ -34,7 +55,7 @@ char *R_ExpandFileName(char *s)
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
-	return( fopen(filename, mode) );
+    return( fopen(filename, mode) );
 }
 
 FILE *R_OpenLibraryFile(char *file)
@@ -66,13 +87,13 @@ FILE *R_OpenSiteFile(void)
     fp = NULL;
 
     if (LoadSiteFile) {
-        if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
-            return fp;
-        if ((fp = R_fopen(getenv("RPROFILE"), "r")))
-            return fp;
-        sprintf(buf, "%s/etc/Rprofile", R_Home);
-        if ((fp = R_fopen(buf, "r")))
-            return fp;
+	if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
+	    return fp;
+	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
+	    return fp;
+	sprintf(buf, "%s/etc/Rprofile", R_Home);
+	if ((fp = R_fopen(buf, "r")))
+	    return fp;
     }
 
     return fp;
@@ -86,13 +107,13 @@ FILE *R_OpenInitFile(void)
     fp = NULL;
 
     if (LoadInitFile) {
-        if ((fp = R_fopen(".Rprofile", "r")))
-            return fp;
-        if ((home = getenv("HOME")) == NULL)
-            return NULL;
-        sprintf(buf, "%s/.Rprofile", home);
-        if ((fp = R_fopen(buf, "r")))
-            return fp;
+	if ((fp = R_fopen(".Rprofile", "r")))
+	    return fp;
+	if ((home = getenv("HOME")) == NULL)
+	    return NULL;
+	sprintf(buf, "%s/.Rprofile", home);
+	if ((fp = R_fopen(buf, "r")))
+	    return fp;
     }
 
     return fp;
@@ -111,7 +132,7 @@ void R_Busy(int which)
 
 void R_SaveGlobalEnv(void)
 {
-    FILE *fp = R_fopen(".RData", "w");
+    FILE *fp = R_fopen(".RData", "wb"); /* binary file */
     if (!fp)
 	error("can't save data -- unable to open ./.RData\n");
     R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
@@ -121,14 +142,15 @@ void R_SaveGlobalEnv(void)
 void R_RestoreGlobalEnv(void)
 {
     FILE *fp;
-    if(DefaultRestoreAction) {
-	if(!(fp = R_fopen(".RData","r"))) {
+    if(RestoreAction == SA_RESTORE) {
+	if(!(fp = R_fopen(".RData", "rb"))) { /* binary file */
 	    /* warning here perhaps */
 	    return;
 	}
 	FRAME(R_GlobalEnv) = R_LoadFromFile(fp);
 	if(!R_Quiet)
 	    Rprintf("[Previously saved workspace restored]\n\n");
+        fclose(fp);
     }
 }
 
@@ -268,12 +290,16 @@ char *R_HomeDir()
 
 /* Unix file names which begin with "." are invisible. */
 /* Macintosh file names which end with "\r" are invisible. */
+/* More complex tests may be needed on other platforms. */
 
 int R_HiddenFile(char *name)
 {
     if (name && name[0] != '.') return 0;
     else return 1;
 }
+
+/* This call provides a simple interface to the "stat" */
+/* system call.  This is available on the Macintosh too. */
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -283,5 +309,3 @@ int R_FileExists(char *path)
     struct stat sb;
     return stat(R_ExpandFileName(path), &sb) == 0;
 }
-
-

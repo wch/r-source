@@ -22,6 +22,7 @@ SOURCES = \
 	system-unix.c \
 	devGNOME.c \
 	devGTK.c \
+	edit.c \
 	gtkconsole.c \
 	gnome-find-dialog.c \
 	terminal.c \

@@ -432,27 +432,35 @@ void R_ClearerrConsole()
 
 	/*--- File Handling Code ---*/
 
-static HaveHOME=-1;
-static UserHOME[PATH_MAX]
-static newFileName[PATH_MAX]
+static int HaveHOME=-1;
+static char UserHOME[PATH_MAX];
+static char newFileName[PATH_MAX];
 char *R_ExpandFileName(char *s)
 {
-    return s;
     char *p;
-    
+
     if(s[0] != '~') return s;
     if(HaveHOME < 0) {
-	p = getenv("HOME");
+	HaveHOME = 0;
+ 	p = getenv("HOME");
 	if(p && strlen(p)) {
 	    strcpy(UserHOME, p);
-	    strcat(UserHOME, FILESEP);
 	    HaveHOME = 1;
-	} else
-	    HaveHOME = 0;
+	} else {
+	    p = getenv("HOMEDIR");
+	    if(p) {
+		strcpy(UserHOME, p);
+		p = getenv("HOMEPATH");
+		if(p) {
+		    strcat(UserHOME, p);
+		    HaveHOME = 1;
+		}
+	    }
+	}
     }
-    if(HaveHOME > 0){
+    if(HaveHOME > 0) {
 	strcpy(newFileName, UserHOME);
-	strcat(newFileName, s);
+	strcat(newFileName, s+1);
 	return newFileName;
     } else return s;
 }
@@ -589,7 +597,7 @@ void R_SetParams(Rstart Rp)
     R_CallBackHook = Rp->CallBack;
     R_ShowMessage = Rp->message;
     R_yesnocancel = Rp->yesnocancel;
-    my_R_Busy = Rp->busy;    
+    my_R_Busy = Rp->busy;
     R_Quiet = Rp->R_Quiet;
     R_Slave = Rp->R_Slave;
     R_Interactive = Rp->R_Interactive;
@@ -607,7 +615,7 @@ void R_SetParams(Rstart Rp)
  * in case R_VSIZE and R_NSIZE are set there.
  */
     if(!Rp->NoRenviron) processRenviron();
-#ifdef Win32    
+#ifdef Win32
     /* in case caller uses getline */
     gl_events_hook = ProcessEvents;
     _controlfp(_MCW_EM, _MCW_EM);
@@ -855,7 +863,7 @@ int cmdlineoptions(int ac, char **av)
 /*
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
- */    
+ */
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
@@ -874,7 +882,7 @@ void R_InitialData(void)
     R_RestoreGlobalEnv();
 }
 
-/* 
+/*
    R_CleanUp is invoked at the end of the session to give the user the
    option of saving their data.
    If ask == SA_SAVEASK the user should be asked if possible (and this
@@ -887,10 +895,12 @@ void R_InitialData(void)
 
 void R_dot_Last(void);		/* in main.c */
 
+void R_CleanUp(int saveact)
+{
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
-    
-    if(saveact == SA_SAVEASK) 
+
+    if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
 	    switch (R_yesnocancel("Save workspace image?")) {
 	    case YES:
@@ -903,8 +913,9 @@ void R_dot_Last(void);		/* in main.c */
 		jump_to_toplevel();
 		break;
 	    }
-	}
-    
+	} else saveact = SaveAction;
+    }
+
     switch (saveact) {
     case SA_SAVE:
 	R_dot_Last();
@@ -1185,7 +1196,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    newpager(wtitle, file[i], headers[i], del);
 		} else if (!strcmp(pager, "console")) {
 		    DWORD len = 1;
-		    HANDLE f = CreateFile(file[i], GENERIC_READ, 
+		    HANDLE f = CreateFile(file[i], GENERIC_READ,
 					  FILE_SHARE_WRITE,
 					  NULL, OPEN_EXISTING, 0, NULL);
 		    if (f != INVALID_HANDLE_VALUE) {
@@ -1207,7 +1218,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 	    } else {
 		sprintf(buf, "file.show(): file %s does not exist\n", file[i]);
 		warning(buf);
-	    }	    
+	    }
 	}
 	return 0;
     }

@@ -185,7 +185,7 @@
 #endif
 
 static int UsingReadline = 1;
-static int SaveAction = SA_DEFAULT;
+static int SaveAction = SA_SAVEASK;
 static int RestoreAction = SA_RESTORE;
 static int LoadSiteFile = 1;
 static int LoadInitFile = 1;
@@ -369,9 +369,9 @@ char *R_ExpandFileName(char *s)
     return( tilde_expand(s) );
 }
 #else
-static HaveHOME=-1;
-static UserHOME[PATH_MAX]
-static newFileName[PATH_MAX]
+static int HaveHOME=-1;
+static char UserHOME[PATH_MAX];
+static char newFileName[PATH_MAX];
 char *R_ExpandFileName(char *s)
 {
     char *p;
@@ -381,14 +381,13 @@ char *R_ExpandFileName(char *s)
 	p = getenv("HOME");
 	if(p && strlen(p)) {
 	    strcpy(UserHOME, p);
-	    strcat(UserHOME, FILESEP);
 	    HaveHOME = 1;
 	} else
 	    HaveHOME = 0;
     }
     if(HaveHOME > 0){
 	strcpy(newFileName, UserHOME);
-	strcat(newFileName, s);
+	strcat(newFileName, s+1);
 	return newFileName;
     } else return s;
 }
@@ -730,7 +729,8 @@ void R_CleanUp(int saveact)
 	    default:
 		goto qask;
 	    }
-	}
+	} else 
+	    saveact = SaveAction;
 
     switch (saveact) {
     case SA_SAVE:
