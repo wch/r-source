@@ -29,7 +29,7 @@ AC_PREREQ(2.50)
 ## of M4 magic.  Note that M4 esyscmd has a trailing newline because the
 ## shell command output has one, hence the patsubst() trick.
 m4_define([R_VERSION],
-          m4_patsubst(m4_esyscmd([cat VERSION]), [ \(\w\|\W\)*]))
+          patsubst(m4_esyscmd([cat VERSION]), [ \(\w\|\W\)*]))
 AC_INIT([R], R_VERSION, [r-bugs@R-project.org])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
@@ -1255,8 +1255,13 @@ AC_CONFIG_FILES(
 ])
 
 AC_CONFIG_COMMANDS_PRE(
-[LTLIBOBJS=`echo "${LIBOBJS}" | sed 's/\.o/\.lo/g'`
+## <NOTE>
+## Autoconf 2.53 makes using 'LIBOBJS' an error.
+## Hence, we need to work around this as recommended in the Autoconf
+## docs, section 'AC_LIBOBJ vs. LIBOBJS'.
+[LTLIBOBJS=`echo "${LIB@&t@OBJS}" | sed 's/\.o/\.lo/g'`
 AC_SUBST(LTLIBOBJS)
+## </NOTE>
 LTALLOCA=`echo "${ALLOCA}" | sed 's/\.o/.lo/g'`
 AC_SUBST(LTALLOCA)])
 
@@ -1302,10 +1307,10 @@ if test -n "${warn_arg_with_g77}"; then
   AC_MSG_WARN([${warn_arg_with_g77}])
 fi
 if test -n "${warn_arg_with_f77}"; then
-  AC_MSG_WARN([${warn_arg_with_g77}])
+  AC_MSG_WARN([${warn_arg_with_f77}])
 fi
 if test -n "${warn_arg_with_f2c}"; then
-  AC_MSG_WARN([${warn_arg_with_g77}])
+  AC_MSG_WARN([${warn_arg_with_f2c}])
 fi
 if test -n "${warn_F77_and_F2C}"; then
   AC_MSG_WARN([${warn_F77_and_F2C}])
