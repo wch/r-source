@@ -217,6 +217,10 @@ none
 
 Directory:  incoming
 
+* PR# 828 *
+Subject: termplot fails for composite non-factor terms
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 * PR# 827 *
 Subject: tseries 0.7-0 with R 1.2.1 dumps core
 From: keith.briggs@bt.com
