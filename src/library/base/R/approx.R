@@ -125,7 +125,7 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
        index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only
        PACKAGE = "base")
     if(has.na) {
-        ii <- integer(nx)
+        ii <- as.integer(ix)
         ii[ix] <- NA
         ii[!ix] <- index
         ii
