@@ -1,6 +1,15 @@
 menu .menu
 toplevel .tk-R -menu .menu
-pack [text .tk-R.term -bg white -font 10x20]
+pack [frame .tk-R.toolbar] -anchor n -fill x
+pack [text .tk-R.term -bg white -font 9x15]
+
+## Implements a "stop button" which sends SIGINT to the R process.
+## Unfortunately, SIGINTs are not handled gracefully...
+# pack [frame .tk-R.toolbar.stop -container true] -side right
+# set stopscript $env(R_HOME)/library/tcltk/exec/stopit.tcl 
+# update
+# exec wish -use [winfo id .tk-R.toolbar.stop] < $stopscript [pid] &
+
 .tk-R.term mark set insert-mark "end - 1 chars"
 focus .tk-R.term
 
@@ -53,6 +62,7 @@ proc Rc_read { prompt addtohistory } {
     .tk-R.term see end
     set phist $nhist
     tkwait variable terminput
+    .tk-R.term mark set insert end
     if ($addtohistory) then {
 	lappend hist [string trimright $terminput]
 	incr nhist
@@ -63,5 +73,6 @@ proc Rc_read { prompt addtohistory } {
 proc Rc_write { buf } {
     .tk-R.term insert insert-mark $buf
     .tk-R.term see end
-    .tk-R.term mark set insert end
+    #.tk-R.term mark set insert end
+    #update
 }

@@ -4,6 +4,7 @@ tkStartGUI <- function() {
     .C("RTcl_ActivateConsole", PACKAGE = "tcltk")
     Menu <- .Tk.newwin(".menu")
     Term <- .Tk.newwin(".tk-R.term") 
+    Toolbar <- .Tk.newwin(".tk-R.toolbar")
     options(pager=tkpager)
 
     fileMenu <- tkmenu(Menu)
@@ -17,6 +18,9 @@ tkStartGUI <- function() {
     tkadd(Menu,"cascade",label="Packages",menu=packageMenu)
     tkadd(Menu,"cascade",label="Help",menu=helpMenu)
     
+    tkadd(fileMenu,"command",label="Source R code", 
+	  command=function(){f <- as.character(tkgetOpenFile())
+                             if (length(f)) source(f)})
     tkadd(fileMenu,"cascade", label="Quit", menu=quitMenu)
     
     tkadd(quitMenu,"command",label="Save workspace", command=quote(q("yes")))
@@ -29,11 +33,6 @@ tkStartGUI <- function() {
     loadpackageWidget <- function()
     {
 	pkglist <- .packages(all=TRUE)
-        loaded <- .packages()
-        # might be a good idea to label packages that
-        # have already been loaded, but then we can't just lapply() below
-	#n <- match(loaded, pkglist)
-	#pkglist[n] <- page(pkglist[n], "*")
         lvar <- tclVar()
 	tclObj(lvar) <- pkglist
 	box <- tklistbox(tt<-tktoplevel(),
@@ -70,21 +69,42 @@ tkStartGUI <- function() {
     tkadd(packageMenu,"command",label="Install packages from CRAN", 
           command=CRANpackageWidget)
 
-    topicHelp <- function()
-    {
+    
+    local({
+        label <- tklabel(Toolbar,text="Help topic:")
         txtvar <- tclVar()
-        entry <- tkentry(tt<-tktoplevel(),textvariable=txtvar)
+        entry <- tkentry(Toolbar,textvariable=txtvar)
         showhelp <-  function() {
             s <- as.character(tclObj(txtvar))[1]
-            if (nchar(s) == 0) return
+            if (length(s) == 0) return
             nm <- as.name(s)
             eval(substitute(help(nm)))
-            tkdestroy(tt)
+            tclvalue(txtvar)<-""
         }
-        tkpack(entry)
+        tkpack(label,side="left")
+        tkpack(entry,side="left")
         tkbind(entry, "<Return>", showhelp)
-    } 
+    }) 
     
-    tkadd(helpMenu,"command", label="Help on topic...", command=topicHelp)
+    manuals <- matrix(c(
+	"R-FAQ",     "Frequently asked questions",
+	"R-intro",   "An Introduction to R",
+	"R-admin",   "R Administrators Manual",
+	"R-data",    "R Data Import/Export",
+	"R-exts",    "Writing R extensions",
+	"R-lang",    "R Language Reference",
+	"refman",    "R Reference Manual",
+    ), ncol=2, byrow=TRUE)
+
+    helpPDFMenu <- tkmenu(helpMenu)   	
+    tkadd(helpMenu,"cascade", label="Manuals in PDF format", menu=helpPDFMenu)
+    pdfBase <- file.path(R.home(), "doc", "manual")
+    apply(manuals, 1, function(x) {
+	f <- file.path(pdfBase, paste(x[1], ".pdf", sep="") )
+        cmd <- function() system(paste(getOption("pdfviewer"), f, "&"))
+	tkadd(helpPDFMenu, "command", label=x[2], command=cmd,
+              state=if (file.exists(f)) "normal" else "disabled")
+    })	
+    #tkadd(helpMenu,"command", label="Help on topic...", command=topicHelp)
     assign(".GUIenv", environment(), envir=.GlobalEnv)
 }
