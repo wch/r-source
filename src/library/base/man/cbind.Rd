@@ -24,7 +24,8 @@ rbind(\dots, deparse.level = 1)
   a data frame and the rest are vectors or matrices.  There can be other
   methods; in particular, there is one for time series objects.
 
-  The data frame method takes the classes of the columns from the first
+  The \code{rbind} data frame method takes the classes of the columns
+  from the first
   data frame.  Factors are have their levels expanded as necessary (in
   the order of the levels of the levelsets of the factors encountered)
   and the result is an ordered factor if and only if all the components
@@ -78,7 +79,10 @@ rbind(\dots, deparse.level = 1)
      drop through to the default code.
    }
    If you want to combine other objects with data frames, it may be
-   necessary to coerce them to data frames first.
+   necessary to coerce them to data frames first.  (Note that this
+   algorithm can result in calling the data frame method if the
+   arguments are all either data frames or vectors, and this will result in
+   the coercion of character vectors to factors.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
