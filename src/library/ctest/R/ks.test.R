@@ -46,7 +46,8 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         if(mode(y) != "function")
             stop("y must be numeric or a string naming a valid function")
         METHOD <- "One-sample Kolmogorov-Smirnov test"
-        n <- length(x)
+        if(length(unique(x)) < n)
+            warning("cannot compute correct p-values with ties")
         x <- y(sort(x), ...) - (0 : (n-1)) / n
         STATISTIC <- switch(alternative,
                             "two.sided" = max(c(x, 1/n - x)),
