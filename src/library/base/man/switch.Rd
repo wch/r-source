@@ -9,14 +9,21 @@ switch(EXPR, \dots)
   \item{\dots}{the list of alternatives, given explicitly.}
 }
 \description{
-  \code{switch} evaluates \code{EXPR}.  If the value is an integer
-  between 1 and \code{nargs()-1} then the corresponding element of
-  \code{\dots} is evaluated and the result returned.
+  \code{switch} evaluates \code{EXPR} and accordingly chooses one of the
+  further arguments (in \code{\dots}).
+}
+\details{
+  If the value of \code{EXPR} is an integer between 1 and
+  \code{nargs()-1} then the corresponding element of \code{\dots} is
+  evaluated and the result returned.
 
   If \code{EXPR} returns a character string then that string is used to
   match the names of the elements in \code{\dots}.  If there is an exact
-  match then that element is evaluated and the result returned.  In the
-  case of no match, if there's a further argument in \code{switch(..)}
+  match then that element is evaluated and returned if there is one,
+   otherwise the next element is chosen, e.g.,
+  \code{switch("cc", a=1, cc=, d=2)} evaluates to \code{2}.
+  \cr
+  In the case of no match, if there's a further argument in \code{switch(..)}
   that one is returned, otherwise \code{NULL}.
 }
 \examples{
@@ -31,9 +38,9 @@ centre(x, "mean")
 centre(x, "median")
 centre(x, "trimmed")
 
-ccc <- c("b","QQ","a","A","b")
-for(ch in ccc) cat(ch,":",switch(ch, a=1, b=2:3),		"\n")
-for(ch in ccc) cat(ch,":",switch(ch, a=1, b=2:3, "Otherwise: last arg."),"\n")
+ccc <- c("b","QQ","a","A","bb")
+for(ch in ccc) cat(ch,":",switch(ch, a=1,    b=2:3),		"\n")
+for(ch in ccc) cat(ch,":",switch(ch, a=,A=1, b=2:3, "Otherwise: last"),"\n")
 
 ## Numeric EXPR don't allow an `otherwise':
 for(i in c(-1:3,9))  print(switch(i, 1,2,3,4))
