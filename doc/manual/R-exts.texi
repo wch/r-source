@@ -1564,17 +1564,17 @@ It is necessary to know something about how @R{} objects are handled in
 C code.  All the @R{} objects you will deal with will be handled with
 the type @dfn{SEXP}@footnote{SEXP is an acronym for @emph{S}imple
 @emph{EXP}ression, common in LISP-like language syntaxes.}, which is a
-pointer to a structure.  Think of this structure as a @emph{variant
-type} that can handle all the usual types of @R{} objects, that is
-vectors of various modes, functions, environments, language objects and
-so on.  The details are given later in this section, but for most
-purposes the programmer does not need to know them.  Think rather of a
-model such as that used by Visual Basic, in which @R{} objects are
-handed around in C code (as they are in interpreted @R{} code) as the
-variant type, and the appropriate part is extracted for, for example,
-numerical calculations, only when it is needed.  As in interpreted @R{}
-code, much use is made of coercion to force the variant object to the
-right type.
+pointer to a structure with typedef @code{SEXPREC}.  Think of this
+structure as a @emph{variant type} that can handle all the usual types
+of @R{} objects, that is vectors of various modes, functions,
+environments, language objects and so on.  The details are given later
+in this section, but for most purposes the programmer does not need to
+know them.  Think rather of a model such as that used by Visual Basic,
+in which @R{} objects are handed around in C code (as they are in
+interpreted @R{} code) as the variant type, and the appropriate part is
+extracted for, for example, numerical calculations, only when it is
+needed.  As in interpreted @R{} code, much use is made of coercion to
+force the variant object to the right type.
 
 @menu
 * Garbage Collection::
@@ -1599,9 +1599,9 @@ the memory is from time to time @dfn{garbage collected}.  That is, all
 the allocated memory not being used is freed, and the objects that are
 in use may be moved. 
 
-The @R{} object types are represented by a C structure called
-@code{SEXPREC}, defined by a typedef in @file{Rinternals.h}. It contains
-several things among which are pointers to data blocks and to other
+The @R{} object types are represented by a C structure defined by a
+typedef @code{SEXPREC} in @file{Rinternals.h}. It contains several
+things among which are pointers to data blocks and to other
 @code{SEXPREC}s. With the current memory managements scheme, the data
 blocks may be moved in memory during garbage collection, and the
 pointers to them updated. Because of this it is not safe to save and
@@ -1611,8 +1611,8 @@ is simply a pointer to a @code{SEXPREC}.
 If you create an @R{} object in your C code, you must tell @R{} that you
 are using the object by using the @code{PROTECT} macro on a pointer to
 the object. This tells @R{} that the object is in use so it is not
-destroyed. Notice that the object is what is protected, not the pointer
-variable. It is a common mistake to believe that if you said
+destroyed. Notice that it is the object which is protected, not the pointer
+variable. It is a common mistake to believe that if you invoked
 @code{PROTECT(@var{p})} at some point then @var{p} is protected from
 then on, but that is not true once a new object is assigned to @var{p}.
 
@@ -1670,11 +1670,11 @@ that any of the @R{} macros and functions might (re)move the object.
 In some cases it is necessary to keep better track of whether protection
 is really needed. Be particularly aware of situations where a large
 number of objects are generated. The pointer protection stack has a
-fixed size and can overflow. It is not a good idea then to just
-@code{PROTECT} everything in sight and @code{UNPROTECT} several thousand
-objects at the end. It will almost invariably be possible to either
-assign the objects as part of another object (which automatically
-protects them) or unprotect them immediately after use.
+fixed size (default 10,000) and can become full. It is not a good idea
+then to just @code{PROTECT} everything in sight and @code{UNPROTECT}
+several thousand objects at the end. It will almost invariably be
+possible to either assign the objects as part of another object (which
+automatically protects them) or unprotect them immediately after use.
 
 Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
