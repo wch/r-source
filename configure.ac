@@ -42,7 +42,17 @@ AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 ## Autoheader initialization.
 AH_TOP([#ifndef _CONFIG_H
 #define _CONFIG_H])
-AH_BOTTOM([#endif /* not _CONFIG_H */])
+AH_BOTTOM([
+#ifdef Win32
+# define snprintf  _snprintf
+# define vsnprintf  _vsnprintf
+# define isnan(a) _isnan((a))
+# define finite(a) _finite((a))
+/* 27/03/2000 win32-api needs this for ANSI compliance */
+# define NONAMELESSUNION
+#endif /* Win32 */
+
+#endif /* not _CONFIG_H */])
 
 ### ** Platform.
 
@@ -772,11 +782,13 @@ case "${host_os}" in
     if test "${GCC}" = yes; then
       shlib_ldflags="-shared -fPIC"
     else
-      ## <FIXME>
-      ## Why do we *explictly* need 'ld' here?
+      ## <NOTE>
+      ## If native cc insists on tacking on crt0.o when it calls ld, and
+      ## crt0.o is not built with PIC.  As there seems to be no obvious
+      ## way to tell cc not to do this, we use ld for linking shlibs.
       shlib_ld=ld
-      ## </FIXME>
       shlib_ldflags="-b"
+      ## </NOTE>
     fi
     if test "${GXX}" = yes; then
       shlib_cxxldflags="-shared -fPIC"
