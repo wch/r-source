@@ -106,6 +106,10 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 --This isn't really a bug: the line in question is a plain-text equation, not a
 --piece of R code.
+* PR# 1437 *
+Subject: [DOC] as.call 
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 05 Apr 2002 17:25:49 +0200
 
 Directory:  Graphics
 
@@ -351,14 +355,7 @@ Date: Mon, 05 Nov 2001 10:05:27 -0500
 
 Directory:  Models
 
-* PR# 1331 *
-Subject: Bug in glm.fit?
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
-* PR# 1422 *
-Subject: glm start/offset bugs
-From: Brett Presnell <presnell@stat.ufl.edu>
-Date: Thu, 28 Mar 2002 22:03:23 -0500
+none
 
 Directory:  Startup
 
@@ -443,19 +440,3 @@ Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1435 *
-Subject: problem by calculation
-From: feng@tu-cottbus.de
-Date: Fri, 5 Apr 2002 10:41:07 +0200 (MET DST)
-* PR# 1436 *
-Subject: Fw:R-bugs,honey
-From: isleep <isleep@home.nl>
-Date: Fri, 5 Apr 2002 08:34:37 -0600
-* PR# 1437 *
-Subject: [DOC] as.call 
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 05 Apr 2002 17:25:49 +0200
-* PR# 1438 *
-Subject: [????] ????, ?¦?°, ?¨??????... ??º??? ????¾???!!!
-From: ??º? ?¶???? ºñ?ý <nextsoft21@chollian.net>
-Date: Sat, 6 Apr 2002 07:28:24 +0900
