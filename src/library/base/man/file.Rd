@@ -64,8 +64,8 @@ path.expand(path)
 
   \code{dirname} returns the part of the \code{path} up to (but
   excluding) the last path separator, or \code{"."} if there is no path
-  separator.  A leading tilde is expanded to the home directory if
-  possible.
+  separator.  Tilde expansion is done: see the description for
+  \code{path.expand} below.
 
   In both \code{basename} and \code{dirname} trailing file separators
   are removed before dissecting the path, and for \code{dirname} any
@@ -74,15 +74,18 @@ path.expand(path)
   \code{path.expand} expands path(s) by replacing a leading tilde by the
   user's home directory (if defined on that platform).
 #ifdef unix
-  On \emph{some Unix} versions, a leading \code{~user} will expand to the home
-  directory of \code{user}, but not on Unix versions without
+  On \emph{some Unix} versions, a leading \code{~user} will expand to
+  the home directory of \code{user}, but not on Unix versions without
   \code{readline} installed.
 #endif
 }
 \author{
   Ross Ihaka, Brian Ripley
 }
-\seealso{\code{\link{file.show}}, \code{\link{list.files}}.}
+\seealso{
+  \code{\link{file.info}}, \code{\link{file.access}},
+  \code{\link{file.show}}, \code{\link{list.files}}.
+}
 
 \examples{
 cat("file A\n", file="A")
