@@ -4520,7 +4520,9 @@ also formatting it properly.  The @R{} Core Team recommends to use a
 basic indentation of 4 for @R{} and C (and most likely also Perl) code,
 and 2 for documentation in Rd format.  Emacs users can implement this
 indentation style by putting the following in one of their startup
-files.
+files.  (For emacs 20.x: for emacs 21.x use customization to set the
+@code{c-default-style} to @code{"bsd"} and @code{c-basic-offset} to
+@code{4}.)
 
 @smallexample
 ;;; C
