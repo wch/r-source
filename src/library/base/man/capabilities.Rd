@@ -6,11 +6,14 @@
   build of \R.
 }
 \usage{
-capabilities()
+capabilities(what = NULL)
+}
+\arguments{
+  \item{what}{character vector or \code{NULL}, specifiying
+    required components.}
 }
 \value{
   A named logical vector. Current components are
-  \describe{
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
     \item{png}{Is the \code{\link{png}} function operational?}
     \item{tcltk}{Is the \code{tcltk} package operational?}
@@ -18,11 +21,15 @@ capabilities()
     \item{libz}{Is \code{\link{gzfile}} available?}
     \item{libxml}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
-  }
 }
 \seealso{\code{\link{.Platform}}}
 
 \examples{
-capbilities()
+capabilities()
+
+if(!capabilities("libxml"))
+   warning("internal download.file() is not available")
+
+## See also the examples for `connections'.
 }
 \keyword{utilities}

@@ -2,6 +2,7 @@
 \alias{connection}
 \alias{file}
 \alias{pipe}
+\alias{gzfile}
 \alias{url}
 \alias{open}
 \alias{open.connection}
@@ -42,7 +43,7 @@ isSeekable(con)
 }
 \arguments{
   \item{description}{character. A description of the connection. For
-    \code{file} and \code{path} this is a path to the file to be opened.
+    \code{file} and \code{pipe} this is a path to the file to be opened.
     For \code{url} it is a complete URL, including schemes
     (\code{http://}, \code{ftp://} or \code{file://}).
   }
@@ -149,7 +150,10 @@ isSeekable(con)
 
 \seealso{
   \code{\link{textConnection}}, \code{\link{readLines}},
-  \code{\link{showConnections}}, \code{\link{pushBack}}
+  \code{\link{showConnections}}, \code{\link{pushBack}}.
+
+  \code{\link{capabilities}} to see if \code{gzfile} and \code{url} are
+  supported by this build of \R.
 }
 
 \examples{
@@ -160,7 +164,7 @@ close(zz)
 readLines("ex.data")
 unlink("ex.data")
 
-if(capabilities()["libz"]) {
+if(capabilities("libz")) {
   zz <- gzfile("ex.gz", "w")  # compressed file
   cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
   close(zz)

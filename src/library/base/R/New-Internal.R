@@ -168,4 +168,11 @@ unique <- function(x, incomparables = FALSE) {
 
 memory.profile <- function() .Internal(memory.profile())
 
-capabilities <- function() .Internal(capabilities())
+capabilities <- function(what = NULL)
+{
+    z  <- .Internal(capabilities())
+    if(is.null(what)) return(z)
+    nm <- names(z)
+    i <- pmatch(what, nm)
+    if(is.na(i)) logical(0) else z[i]
+}
