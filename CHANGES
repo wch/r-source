@@ -14,6 +14,11 @@ NEW FEATURES
     o	There has been a major change in directory structure
 	masterminded by Kurt Hornik.
 
+    o   Use of "dimnames" and "names" attributes on one dimensional
+	arrays will now produce identical results.  This means that
+	you really don't need differentiate between vectors and
+        one dimensional arrays.
+
 
 BUG FIXES
 
@@ -27,3 +32,4 @@ BUG FIXES
 
     o	There was a swap of coordinates internally in "mtext" which
 	meant that labels were coming out in the wrong place.  Fixed.
+
