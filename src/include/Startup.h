@@ -36,7 +36,7 @@ typedef enum {RGui, RTerm, LinkDLL} UImode;
 typedef enum {
     SA_NORESTORE,/* = 0 */
     SA_RESTORE,
-    SA_DEFAULT,
+    SA_DEFAULT,/* was === SA_RESTORE */
     SA_NOSAVE,
     SA_SAVE,
     SA_SAVEASK,
