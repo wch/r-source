@@ -291,3 +291,7 @@ Directory:  incoming
 Subject: "function" function -- infinite loops and bus error [not user problem]
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
+* PR# 374 *
+Subject: Bug in R0.90.0?
+From: Claudio Lupi <c.lupi@isae.it>
+Date: Tue, 14 Dec 1999 12:55:00 +0100
