@@ -72,7 +72,9 @@ methods(generic.function, class)
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
   it is recommended to use the more flexible and robust \emph{S4} scheme
-  provided in the \code{methods} package.
+  provided in the \code{methods} package.  Functions can have both S3
+  and S4 methods, and function \code{\link[methods]{showMethods}} will
+  list the S4 methods (possibly none).
   \cr
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
   new S4 methods are available but is meant for \R internal use only.
