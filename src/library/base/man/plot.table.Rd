@@ -1,0 +1,46 @@
+\name{plot.table}
+\alias{plot.table}
+\title{Plot Methods for `table' Objects}
+\description{
+  This is a method of the generic \code{plot} function for
+  (contingency) \code{\link{table}} objects.  Whereas for two- and more
+  dimensional tables, a \code{\link{mosaicplot}} is drawn,
+  one-dimensional ones are plotted ``bar like''.
+}
+\usage{
+%% Improvement ideas: see code definition, currently in ../R/plot.R
+plot.table(x, type = "h", ylim = c(0, max(x)), lwd = 2,
+           xlab = NULL, ylab = deparse(substitute(x)), frame.plot = is.num, ...)
+}
+\arguments{
+  \item{x}{a \code{\link{table}} (like) object.}
+  \item{type}{plotting type.}
+  \item{ylim}{range of y-axis.}
+  \item{lwd}{line width of bars when \code{type = "h"} is used.}
+  \item{xlab,ylab}{x- and y-axis labels.}
+  \item{ylab}{ ~~Describe \code{ylab} here~~ }
+  \item{frame.plot}{logical indicating if a frame (\code{\link{box}})
+    should be drawn.  Default are ~~Describe \code{frame.plot} here~~ }
+  \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.}
+}
+\details{
+  The current implementation (R 1.2) is somewhat experimental and will
+  be improved and extended.
+}
+\seealso{\code{\link{plot.factor}}, the \code{\link{plot}} method for factors.}
+
+\examples{
+## 1-d tables
+(Poiss.tab <- table(N = rpois(200, lam= 5)))
+plot(Poiss.tab, main = "plot(table(rpois(200, lam=5)))")
+
+data(state)
+plot(table(state.division))
+
+## 4-D :
+data(Titanic)
+plot(Titanic, main ="plot(Titanic, main= *)")
+
+}
+\keyword{hplot}
+\keyword{category}
