@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# ${RHOME}/src/include/GETSYMBOLS
+
+# @configure_input@
+
+# This code assembles the table of statically loaded C and Fortran
+# code which is to be accessed via .C and .Fortran calls.
+
+srcdir=@srcdir@
+top_srcdir=@top_srcdir@
+top_builddir=../..
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
+s/C_FUNCTION(\(.*\))/int \1();/
+' ${top_srcdir}/src/appl/ROUTINES > /tmp/FFDecl.h
+
+${top_srcdir}/aux/move-if-change /tmp/FFDecl.h FFDecl.h
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/	{ F77_QSYMBOL(\1),	F77_SYMBOL(\1)},/
+s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
+' ${top_srcdir}/src/appl/ROUTINES > /tmp/FFTab.h
+
+${top_srcdir}/aux/move-if-change /tmp/FFTab.h  FFTab.h
