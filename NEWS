@@ -11,7 +11,8 @@
 
 NEW FEATURES
 
-
+   o    Faster algorithm in summaryRprof.
+	
 BUG FIXES
 
 

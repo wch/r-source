@@ -1,53 +1,61 @@
-summaryRprof <- function(filename = "Rprof.out", chunksize = 5000)
-{
-    rprof <- file(filename)
-    open(rprof, "r")
-    on.exit(close(rprof))
-    head  <-  scan(rprof,  nlines = 1, what = list("", interval=0), sep = "=",
-                   quiet = TRUE)
 
-    total <- new.env(hash = TRUE)
-    self <- new.env(hash = TRUE)
-    inc <- function(f, e){
-        if (exists(f, envir = e, inherits = FALSE))
-            assign(f, get(f, envir = e)+1, envir = e)
-        else
-            assign(f, 1, envir = e)
-    }
-    count <- 0
+
+summaryRprof<-function(filename = "Rprof.out", chunksize=5000){
+
+    filename<-file(filename, "rt")
+    on.exit(close(filename))
+    sample.interval<-as.numeric(strsplit(readLines(filename,n=1),"=")[[1]][2])/1e6
+
+    fnames<-NULL
+    ucounts<-NULL
+    fcounts<-NULL
+
     repeat({
-        chunk <- readLines(rprof, n = chunksize)
-        nread <- length(chunk)
-        if (nread == 0)
-            break
-        count <- count+nread
-        thelines <- strsplit(chunk, " ", fixed=TRUE)
-        lapply(thelines, function (a.line){
-            lapply(unique(a.line), inc, e = total)
-            inc(a.line[[1]], e = self)
-        })
-        if (nread < chunksize)
-            break
+
+       chunk<-readLines(filename,n=chunksize)	
+       if (length(chunk)==0) 
+           break
+
+       chunk<-strsplit(chunk," ")
+
+       newfirsts<-sapply(chunk, "[[", 1)
+       newuniques<-unlist(sapply(chunk, unique))
+    
+       new.utable<-table(newuniques)
+       new.ftable<-table(factor(newfirsts,levels=names(new.utable)))
+  
+       fcounts<-rowsum( c(as.vector(new.ftable),fcounts),
+			c(names(new.ftable),fnames) )
+       ucounts<-rowsum( c(as.vector(new.utable),ucounts),
+			c(names(new.utable),fnames) )
+
+       fnames<-sort(unique(c(fnames,names(new.utable))))       
+
+       if (length(chunk)<chunksize) 
+           break
     })
-    if(count == 0) stop("no events were recorded")
-    totalt <- sapply(ls(envir = total,all.names=TRUE), function(f) get(f, envir = total))
-    selft <- sapply(ls(envir = self,all.names=TRUE), function(f) get(f, envir = self))
 
-    digits <- ifelse(head$interval < 1e4, 3, 2)
-    totalpct <- round(totalt*100/count, 1)
-    selfpct <- round(selft*100/sum(selft), 1)
-    totalt <- round(totalt*head$interval/1e6, digits)
-    selft <- round(selft*head$interval/1e6, digits)
+    if (sum(fcounts)==0)
+      stop("No events were recorded")
 
-    combine <- merge(data.frame(self.time = selft, self.pct = selfpct),
-                     data.frame(total.time = totalt, total.pct = totalpct),
-                     by = 0, all = TRUE)
-    row.names(combine) <- combine[, "Row.names"]
-    combine <- combine[, -1]
-    combine$self.time[is.na(combine$self.time)] <- 0
-    combine$self.pct[is.na(combine$self.pct)] <- 0
-    list(by.self = combine[order(-combine$self.time), ],
-         by.total = combine[order(-combine$total.time), c(3,4,1,2)],
-         sampling.time = count * head$interval/1e6)
+    digits<-ifelse(sample.interval<0.01, 3,2)
+    firstnum<-round(fcounts*sample.interval,digits)
+    uniquenum<-round(ucounts*sample.interval,digits)
+
+    firstpct<-round(100*firstnum/sum(firstnum),1)
+    uniquepct<-round(100*uniquenum/sum(firstnum),1) 
+
+    index1<-order(-firstnum,-uniquenum)
+    index2<-order(-uniquenum,-firstnum)  
+
+    rval<-data.frame(firstnum,firstpct,uniquenum,uniquepct)
+    names(rval)<-c("self.time","self.pct","total.time","total.pct")
+    rownames(rval)<-fnames
+
+    list(by.self=rval[index1,],
+         by.total=rval[index2,c(3,4,1,2)],
+         sampling.time=sum(fcounts)*sample.interval)
+    
+
 }
 
