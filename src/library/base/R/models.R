@@ -192,12 +192,10 @@ model.offset <- function(x) {
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
-model.matrix.default <- function(formula, data, contrasts = NULL)
+model.matrix.default <- function(formula, data = sys.frame(sys.parent()), contrasts = NULL)
 {
  t <- terms(formula)
- if (missing(data)) 
-     data <- eval(substitute(model.frame(formula)), sys.frame(sys.parent()))
- else if (is.null(attr(data, "terms")))
+ if (is.null(attr(data, "terms")))
      data <- model.frame(formula, data)
  contrastsL <- contrasts
  rm(contrasts)
