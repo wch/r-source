@@ -813,10 +813,14 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6534 *
-Subject: Attachment Type Not Allowed by FleetBoston Policy (Anti-Spam)
-Subject: TEST
-From: Trend_Wal@fleet.com
-From: r-bugs@r-project.org
-Date: Tue, 03 Feb 2004 18:32:33 -0500
-Date: Tue, 3 Feb 2004 18:33:48 -0500
+* PR# 6544 *
+Subject: VIRUS IN YOUR MAIL
+Subject: 
+From: root <root@comunicacion.fibran.com.ec>
+From: r-bugs@biostat.ku.dk
+Date: Wed, 4 Feb 2004 18:07:10 -0500
+Date: Wed, 4 Feb 2004 18:13:18 -0500
+* PR# 6545 *
+Subject: Email to *.statsci.com
+From: "Ski Kacoroski" <ski@insightful.com>
+Date: Wed, 4 Feb 2004 15:24:49 -0800
