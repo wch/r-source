@@ -87,8 +87,8 @@ AC_DEFUN([R_PROG_INSTALL],
       AC_MSG_WARN([${warn_install}])
       ;;
   esac
-  case "${host}" in
-    *aix*|*hpux*)
+  case "${host_os}" in
+    aix*|hpux*)
       ## installbsd on AIX does not seem to work?
       INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
       AC_MSG_WARN([${warn_install}])
@@ -209,7 +209,7 @@ AC_DEFUN([R_PROG_MAKEINFO],
 ##
 ## R_PROG_CC_M
 ##
-## Test whether the C compiler accepts -M for generating dependencies
+## Check whether the C compiler accepts -M for generating dependencies
 ##
 AC_DEFUN([R_PROG_CC_M],
   [ depend_rules_frag=Makefrag.dep
@@ -244,7 +244,7 @@ EOF
 ##
 ## R_PROG_CC_C_O_LO
 ##
-## See whether C compiler supports -c -o FILE.lo
+## Check whether the C compiler supports -c -o FILE.lo
 ##
 AC_DEFUN([R_PROG_CC_C_O_LO],
 [ cc_o_lo_rules_frag=Makefrag.cc
@@ -282,7 +282,7 @@ EOF
 ##
 ## R_PROG_CC_FLAG
 ##
-## Test whether the C compiler handles a command line option
+## Check whether the C compiler handles a command line option
 ##
 AC_DEFUN([R_PROG_CC_FLAG],
   [ ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
@@ -308,7 +308,7 @@ AC_DEFUN([R_PROG_CC_FLAG],
 ##
 ## R_PROG_CXX_M
 ##
-## Test whether the C++ compiler accepts -M for generating dependencies
+## Check whether the C++ compiler accepts -M for generating dependencies
 ##
 AC_DEFUN([R_PROG_CXX_M],
   [ AC_REQUIRE([R_PROG_CC_M])
@@ -355,7 +355,7 @@ EOF
 ##
 ## R_PROG_CXX_C_O_LO
 ##
-## See whether C++ compiler supports -c -o FILE.lo
+## Check whether the C++ compiler supports -c -o FILE.lo
 ##
 AC_DEFUN([R_PROG_CXX_C_O_LO],
 [ cxx_o_lo_rules_frag=Makefrag.cxx
@@ -406,7 +406,7 @@ EOF
 ##
 ## R_PROG_CXX_FLAG
 ##
-## Test whether the C++ compiler handles a command line option
+## Check whether the C++ compiler handles a command line option
 ##
 AC_DEFUN([R_PROG_CXX_FLAG],
   [ ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
@@ -491,8 +491,8 @@ elif ${use_f2c}; then
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 else
   F77=
-  case "${host}" in
-    *hpux*)
+  case "${host_os}" in
+    hpux*)
       AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf cf77 cft77 pgf77 fl32 af77 \
                            f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
       ;;
@@ -506,32 +506,6 @@ else
   fi
 fi
 ])
-##
-## R_PROG_F77_GNU
-##
-## See if ${F77-f77} is the GNU Fortran compiler
-##
-AC_DEFUN([R_PROG_F77_GNU],
-  [ AC_CACHE_CHECK([whether ${F77-f77} is the GNU Fortran compiler],
-      r_cv_prog_f77_is_g77,
-      [ if ${use_g77}; then
-	  r_cv_prog_f77_is_g77=yes
-	else
-	  foutput=`${F77-f77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
-	  if test -n "${foutput}"; then
-	    r_cv_prog_f77_is_g77=yes
-	  else
-	    r_cv_prog_f77_is_g77=no
-	  fi
-	fi
-      ])
-    if test "${r_cv_prog_f77_is_g77}" = yes; then
-      G77=yes
-      : ${FFLAGS="-g -O2"}
-    else
-      G77=
-    fi
-  ])
 ##
 ## See if the Fortran compiler appends underscores
 ##
@@ -570,7 +544,7 @@ EOF
   fi
 ])
 ##
-## See whether Fortran and C compilers agree on int and double
+## Check whether the Fortran and C compilers agree on int and double
 ##
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
  [AC_REQUIRE([AC_CHECK_LIBM])
@@ -646,7 +620,7 @@ EOF]
   fi
 ])
 ##
-## See whether Fortran and C compilers agree on double complex
+## Check whether the Fortran and C compilers agree on double complex
 ##
 AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
  [AC_REQUIRE([AC_CHECK_LIBM])
@@ -721,7 +695,7 @@ EOF]
     AC_SUBST(HAVE_DOUBLE_COMPLEX)
 ])
 ##
-## See whether Fortran compiler supports -c -o FILE.lo
+## Check whether the Fortran compiler supports -c -o FILE.lo
 ##
 AC_DEFUN([R_PROG_F77_C_O_LO],
 [AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
@@ -795,9 +769,9 @@ int main () {
 #endif
   return(0);
 }],
-	  r_cv_func___setfpucw_needed=no,
-	  r_cv_func___setfpucw_needed=yes,
-	  r_cv_func___setfpucw_needed=no))
+	  [r_cv_func___setfpucw_needed=no],
+	  [r_cv_func___setfpucw_needed=yes],
+	  [r_cv_func___setfpucw_needed=no]))
       if test "${r_cv_func___setfpucw_needed}" = yes; then
 	AC_DEFINE(NEED___SETFPUCW)
       fi
@@ -833,7 +807,7 @@ int main () {
 #ifdef HAVE_FINITE
   return(finite(1./0.) | finite(0./0.) | finite(-1./0.));
 #else
-  return(0);
+  return(1);
 #endif
 }],
 	    [r_cv_func_finite_works=yes],
@@ -891,26 +865,6 @@ if test "x${r_cv_func_strptime_works}" = xyes; then
 fi
 ])
 ##
-## R_IEEE_754
-##
-AC_DEFUN([R_IEEE_754],
- [AC_CHECK_FUNCS(finite isnan)
-  AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
-    r_cv_ieee_754,
-    [## <FIXME>
-    ## This fails is finite() or isnan() are defined as macros rather
-    ## than exist as library functions ... 
-    if test "${ac_cv_func_finite}" = yes \
-        && test "${ac_cv_func_isnan}" = yes; then
-    ## </FIXME>
-      r_cv_ieee_754=yes
-    else
-      r_cv_ieee_754=no
-    fi])
-  if test "${r_cv_ieee_754}" = yes; then
-    AC_DEFINE(IEEE_754)
-  fi])
-##
 ## R_HEADER_SETJMP
 ##
 AC_DEFUN([R_HEADER_SETJMP],
@@ -946,6 +900,39 @@ AC_DEFUN([R_HEADER_GLIBC2],
     AC_DEFINE(HAVE_GLIBC2)
   fi])
 ##
+## R_HEADER_MATH_ISFINITE
+##
+AC_DEFUN([R_HEADER_MATH_ISFINITE],
+[AC_CACHE_CHECK([whether math.h defines isfinite],
+r_cv_header_math_isfinite,
+AC_EGREP_CPP(yes,
+[#include <math.h>
+#if defined(isfinite)
+  yes
+#endif],
+r_cv_header_math_isfinite=yes,
+r_cv_header_math_isfinite=no))
+if test "${r_cv_header_math_isfinite}" = yes; then
+  AC_DEFINE(HAVE_ISFINITE_IN_MATH_H)
+fi
+])
+## R_HEADER_MATH_ISNAN
+##
+AC_DEFUN([R_HEADER_MATH_ISNAN],
+[AC_CACHE_CHECK([whether math.h defines isnan],
+r_cv_header_math_isnan,
+AC_EGREP_CPP(yes,
+[#include <math.h>
+#if defined(isnan)
+  yes
+#endif],
+r_cv_header_math_isnan=yes,
+r_cv_header_math_isnan=no))
+if test "${r_cv_header_math_isnan}" = yes; then
+  AC_DEFINE(HAVE_ISNAN_IN_MATH_H)
+fi
+])
+##
 ## R_TYPE_SOCKLEN
 ##
 AC_DEFUN([R_TYPE_SOCKLEN], [
@@ -964,7 +951,8 @@ if test "${ac_cv_header_sys_socket_h}" = yes; then
     done])
 fi
 if test "x${r_cv_type_socklen}" = x; then
-  AC_MSG_WARN(could not determine)
+  warn_type_socklen="could not determine type of socket length"
+  AC_MSG_WARN(${warn_type_socklen})
 else
   AC_MSG_RESULT([${r_cv_type_socklen} *])
 fi
@@ -1012,7 +1000,29 @@ AC_DEFUN([R_GNOME], [
     AC_DEFINE(HAVE_GNOME, 1)
   fi
   AC_SUBST(HAVE_GNOME)
-  AC_SUBST(GNOME_IF_FILES)])
+  AC_SUBST(GNOME_IF_FILES)
+])
+##
+## R_IEEE_754
+##
+AC_DEFUN([R_IEEE_754],
+[AC_CHECK_FUNCS(finite isnan)
+AC_REQUIRE([R_HEADER_MATH_ISFINITE])
+AC_REQUIRE([R_HEADER_MATH_ISNAN])
+AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
+r_cv_ieee_754,
+[if (test "${ac_cv_func_finite}" = yes \
+      || test "${r_cv_header_math_isfinite}" = yes) \
+    && (test "${ac_cv_func_isnan}" = yes \
+      || test "${r_cv_header_math_isnan}" = yes); then
+  r_cv_ieee_754=yes
+else
+  r_cv_ieee_754=no
+fi])
+if test "${r_cv_ieee_754}" = yes; then
+  AC_DEFINE(IEEE_754)
+fi
+])
 ##
 ## R_BSD_NETWORKING
 ##
@@ -1079,7 +1089,8 @@ AC_DEFUN([R_BITMAPS], [
       ], AC_MSG_RESULT([no]))
     ])
   ])
-  AC_SUBST(BITMAP_LIBS)])
+  AC_SUBST(BITMAP_LIBS)
+])
 ##
 ## Try finding {tcl,tk}Config.sh
 ##
@@ -1157,7 +1168,6 @@ if test -z "${TCLTK_CPPFLAGS}"; then
 #endif], found_tcl_h=yes, have_tcltk=no)
       AC_MSG_RESULT([${found_tcl_h}])
     fi
-    unset found_tcl_h
   fi
   if test "${have_tcltk}" = yes; then
     ## Part 2.  Check for tk.h.
@@ -1191,7 +1201,6 @@ if test -z "${TCLTK_CPPFLAGS}"; then
 #endif], found_tk_h=yes, have_tcltk=no)
       AC_MSG_RESULT([${found_tk_h}])
     fi
-    unset found_tk_h
   fi
 fi])
 ##
@@ -1243,8 +1252,8 @@ if test -z "${TCLTK_LIBS}"; then
   ## * Protecting all entries in TCLTK_LIBS that do not start with `-l'
   ##   or `-L' with `-Wl,' (hoping that all compilers understand this).
   ##   Easy, hence ...
-  case "${host}" in
-    *aix*)
+  case "${host_os}" in
+    aix*)
       orig_TCLTK_LIBS="${TCLTK_LIBS}"
       TCLTK_LIBS=
       for flag in ${orig_TCLTK_LIBS}; do

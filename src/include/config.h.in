@@ -110,6 +110,12 @@
    GNOME GUI to be built. */
 #undef HAVE_GNOME
 
+/* Define if you have the isfinite() macro in <math.h>. */
+#undef HAVE_ISFINITE_IN_MATH_H
+
+/* Define if you have the isnan() macro in <math.h>. */
+#undef HAVE_ISNAN_IN_MATH_H
+
 /* Define if you have the JPEG headers and libraries. */
 #undef HAVE_JPEG
 
@@ -263,9 +269,6 @@
 
 /* Define if you have the isascii function.  */
 #undef HAVE_ISASCII
-
-/* Define if you have the isfinite function.  */
-#undef HAVE_ISFINITE
 
 /* Define if you have the isnan function.  */
 #undef HAVE_ISNAN
