@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-14, 2002-07-03
+@set FAQ-VERSION 1.5-15, 2002-07-11
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -2032,12 +2032,15 @@ An @acronym{ODBC} database interface.
 @item StatDataML
 Read and write StatDataML.
 @c <COMMENT>
-@c Moved to Archive for 1.5 (as this contains the summary functions).
+@c Moved to Attic for 1.5 (as this contains the summary functions).
 @c @item colSums
 @c Matrix summary functions in C.
 @c </COMMENT>
-@item cxx
-A small C++ test package.
+@c <COMMENT>
+@c Moved to Attic for 1.5.1 as no longer needed.
+@c @item cxx
+@c A small C++ test package.
+@c </COMMENT>
 @item dopt
 Finding D-optimal experimental designs.
 @item dseplus
@@ -2045,21 +2048,29 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
-@c <NOTE>
+@c <COMMENT>
 @c Moved to Devel for 1.5 as it fails R CMD check.
-@item event.chart
-Package for creating event charts.
-@c </NOTE>
-@item hpower
-A suite of functions to compute power and sample size for tests of the
-general linear hypothesis.
+@c Moved to Attic for 1.5.1 as apparently no longer actively
+@c maintained.
+@c @item event.chart
+@c Package for creating event charts.
+@c </COMMENT>
+@c <COMMENT>
+@c Moved to Attic for 1.5.1 as no longer maintained.
+@c @item hpower
+@c A suite of functions to compute power and sample size for tests of the
+@c general linear hypothesis.
+@c </COMMENT>
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
 @item pls
 Univariate Partial Least Squares Regression.
-@item regexp
-Simple regular expression interface.
+@c <COMMENT>
+@c Moved to Attic for 1.5.1 as no longer needed.
+@c @item regexp
+@c Simple regular expression interface.
+@c </COMMENT>
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
@@ -2561,6 +2572,7 @@ dir /opt/R/src/unix
 * Why is the output not printed when I source() a file?::  
 * Why does outer() behave strangely with my function?::  
 * Why does the output from anova() depend on the order of factors in the model?::  
+* How do I produce PNG graphics in batch mode?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3109,7 +3121,7 @@ then you can use @code{outer()} by writing, e.g.,
 outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 @end smallexample
 
-@node Why does the output from anova() depend on the order of factors in the model?,  , Why does outer() behave strangely with my function?, R Miscellanea
+@node Why does the output from anova() depend on the order of factors in the model?, How do I produce PNG graphics in batch mode?, Why does outer() behave strangely with my function?, R Miscellanea
 @section Why does the output from anova() depend on the order of factors in the model?
 
 In a model such as @code{~A+B+A:B}, R will report the difference in sums
@@ -3135,6 +3147,16 @@ easily.  Any two models can be compared with @code{anova(@var{model1},
 @var{model2})}, and @code{drop1(@var{model1})} will show the sums of
 squares resulting from dropping single terms.
 
+@node How do I produce PNG graphics in batch mode?,  , Why does the output from anova() depend on the order of factors in the model?, R Miscellanea
+@section How do I produce PNG graphics in batch mode?
+
+Under Unix, the @code{png()} device uses the X11 driver, which is a
+problem in batch mode or for remote operation.  If you have ghostscript
+you can use @code{bitmap()}, which produces a PostScript file then
+converts it to any bitmap format supported by ghostscript.  On some
+installations this produces ugly output, on others it is perfectly
+satisfactory.  In theory one could also use Xvfb, which provides an X
+server with no display.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
