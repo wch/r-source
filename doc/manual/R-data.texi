@@ -1706,7 +1706,8 @@ cat("One more line\n", file = zz)
 close(zz)
 
 ## convert decimal point to comma in output, using a pipe (Unix)
-zz <- pipe(paste("sed s/\\./,/ >", "outfile"), "w")
+## both R strings and (probably) the shell need \ doubled
+zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 ## now look at the output file:

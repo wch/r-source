@@ -26,14 +26,12 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 	method <- "Pearson's product-moment correlation"
 	names(NVAL) <- "correlation"
 	r <- cor(x, y)
-	ESTIMATE <- r
-	names(ESTIMATE) <- "cor"
-	PARAMETER <- n - 2
-	names(PARAMETER) <- "df"
-	STATISTIC <- sqrt(PARAMETER) * r / sqrt(1 - r^2)
-	names(STATISTIC) <- "t"
-	p <- pt(STATISTIC, PARAMETER)
-        if(n > 3) {
+        df <- n - 2
+	ESTIMATE <- c(cor = r)
+	PARAMETER <- c(df = df)
+	STATISTIC <- c(t = sqrt(df) * r / sqrt(1 - r^2))
+	p <- pt(STATISTIC, df)
+        if(n > 3) { ## confidence int.
             if(!missing(conf.level) &&
                (length(conf.level) != 1 || !is.finite(conf.level) ||
                 conf.level < 0 || conf.level > 1))
@@ -62,13 +60,14 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 	    names(NVAL) <- "tau"
 	    x <- rank(x)
 	    y <- rank(y)
-	    ESTIMATE <- .C("kendall_tau",
-			   as.integer(length(x)),
-			   as.double(x),
-			   as.double(y),
-			   tau = as.double(0),
-			   PACKAGE = "ctest")$tau
-	    names(ESTIMATE) <- "tau"
+	    r <- .C("kendall_tau",
+                    length(x),
+                    as.double(x),
+                    as.double(y),
+                    tau = as.double(0),
+                    PACKAGE = "ctest")$tau
+            ESTIMATE <- c(tau = r)
+
             if(!is.finite(ESTIMATE)) {  # all x or all y the same
                 ESTIMATE[] <- NA
                 STATISTIC <- c(T = NA)
@@ -78,10 +77,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 if(is.null(exact))
                     exact <- (n < 50)
                 if(exact && !TIES) {
-                    q <- as.integer((ESTIMATE + 1) * n * (n - 1) / 4)
+                    q <- round((r + 1) * n * (n - 1) / 4)
                     pkendall <- function(q, n) {
                         .C("pkendall",
-                           as.integer(length(q)),
+                           length(q),
                            p = as.double(q),
                            as.integer(n),
                            PACKAGE = "ctest")$p
@@ -99,8 +98,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                                "less" = pkendall(q, n))
                     STATISTIC <- c(T = q)
                 } else {
-                    STATISTIC <- c(z = ESTIMATE /
-                                   sqrt((4 * n + 10) / (9 * n * (n-1))))
+                    STATISTIC <- c(z = r / sqrt((4 * n + 10) / (9 * n*(n-1))))
                     p <- pnorm(STATISTIC)
                     if(exact && TIES)
                         warning("Cannot compute exact p-value with ties")
@@ -109,7 +107,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 	} else {
 	    method <- "Spearman's rank correlation rho"
 	    names(NVAL) <- "rho"
-	    ESTIMATE <- c(rho = cor(rank(x), rank(y)))
+	    r <- cor(rank(x), rank(y))
+	    ESTIMATE <- c(rho = r)
             if(!is.finite(ESTIMATE)) {  # all x or all y the same
                 ESTIMATE[] <- NA
                 STATISTIC <- c(S = NA)
@@ -118,19 +117,24 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             else {
                 ## Use the test statistic S = sum(rank(x) - rank(y))^2
                 ## and AS 89 for obtaining better p-values than via the
-                ## simple normal approximation of S by N((n^3-n)/6,
-                ## 1/sqrt(n-1)).  In the case of no ties, S = (1-rho) *
-                ## (n^3-n)/6.
+                ## simple normal approximation.
+                ## In the case of no ties, S = (1-rho) * (n^3-n)/6.
                 pspearman <- function(q, n, lower.tail = TRUE) {
-                    .C("prho",
-                       as.integer(n),
-                       as.integer(q + 1),
-                       p = double(1),
-                       integer(1),
-                       as.logical(lower.tail),
-                       PACKAGE = "ctest")$p
+                    if(n <= 1290) # n*(n^2 - 1) does not overflow
+                        .C("prho",
+                           as.integer(n),
+                           as.integer(q + 1),
+                           p = double(1),
+                           integer(1),
+                           as.logical(lower.tail),
+                           PACKAGE = "ctest")$p
+                    else { # for large n: aymptotic t_{n-2}
+                        r <- 1 - 6 * q / (n*(n*n - 1))
+                        pt(r / sqrt((1 - r^2)/(n-2)), df = n-2,
+                           lower.tail= !lower.tail)
+                    }
                 }
-                q <- as.integer((n^3 - n) * (1 - ESTIMATE) / 6)
+                q <- round((n^3 - n) * (1 - r) / 6)
                 STATISTIC <- c(S = q)
                 PVAL <-
                     switch(alternative,
@@ -149,7 +153,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
         }
     }
 
-    if(is.null(PVAL))                   # for "pearson" (and when else ??)
+    if(is.null(PVAL)) # for "pearson" only, currently
 	PVAL <- switch(alternative,
 		       "less" = p,
 		       "greater" = 1 - p,

@@ -283,7 +283,8 @@ readLines(pipe("ls -1"))
 scan(pipe("sed -e s/,$// data2"), sep=",")
 
 # convert decimal point to comma in output
-zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
+# both R strings and (probably) the shell need \ doubled
+zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 file.show("outfile", delete.file=TRUE)}
