@@ -462,10 +462,10 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP callenv, defenv;
 #endif
     RCNTXT *cptr;
-    int i,j;
+    int i,j,cftmp;
 
     cptr = R_GlobalContext;
-
+    cftmp = cptr->callflag;
     cptr->callflag = CTXT_GENERIC;
 
     /* get the env NextMethod was called from */
@@ -474,17 +474,21 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (cptr->callflag & CTXT_FUNCTION && cptr->cloenv == sysp)
 	    break;
 	cptr = cptr->nextcontext;
-    }
+    } 
     if (cptr == NULL)
 	error("NextMethod called from outside a closure");
 
     PROTECT(newcall = duplicate(cptr->call));
 
+    /* eg get("print.ts")(1) */
+    if (TYPEOF(CAR(cptr->call)) == LANGSXP)
+       error("NextMethod called from anonymous function");
+
     /* set up the arglist */
     s = findFun(CAR(cptr->call), cptr->sysparent);
-    if (TYPEOF(s) != CLOSXP)
-	errorcall(cptr->call, "function is not a closure");
-
+    if (TYPEOF(s) != CLOSXP){
+	errorcall(R_NilValue, "function is not a closure");
+    } 
     /* get formals and actuals; attach the names of the formals to
        the actuals, expanding any ... that occurs */
     formals = FORMALS(s);

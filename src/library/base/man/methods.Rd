@@ -57,6 +57,11 @@ methods(generic.function, class)
   current environment. (S does this differently!)  If they have been
   evaluated in the current (or a previous environment) they remain
   evaluated.
+
+  \code{NextMethod} should not be called except in methods called by
+  \code{UseMethod}. In particular it will not work inside anonymous
+  calling functions (eg \code{get("print.ts")(AirPassengers)}).
+  
 }
 \note{
   The \code{methods} function was written by Martin Maechler.

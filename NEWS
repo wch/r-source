@@ -510,6 +510,8 @@ BUG FIXES
 
    o    binom.test() miscalculated p-value in some extreme cases 
 
+   o    get("print.ts")(1) would segfault. It's now just an error.
+
 
 
 		CHANGES IN R VERSION 1.5.1
