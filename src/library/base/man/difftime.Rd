@@ -3,6 +3,10 @@
 \alias{as.difftime}
 \alias{print.difftime}
 \alias{round.difftime}
+\alias{Ops.difftime}
+\alias{*.difftime}
+\alias{Math.difftime}
+\alias{Summary.difftime}
 
 \title{Time Intervals}
 \description{
