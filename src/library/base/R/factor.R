@@ -25,8 +25,8 @@ nlevels <- function(x) length(levels(x))
 
 "levels<-" <- function(x, value) {
     x <- as.factor(x)
-    if (length(value) != nlevels(x))
-	stop("Length mismatch in levels<-")
+    ## if (length(value) != nlevels(x))
+    ## 	stop("Length mismatch in levels<-")
     value <- as.character(value)
     uvalue <- unique(value)
     factor(match(value, uvalue), labels = uvalue)[x]
