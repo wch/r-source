@@ -17,13 +17,21 @@ NEW FEATURES
         save or SIGUSR2 to quit and save without running .Last and
         on.exit expressions.
 
-    o   Option for user-supplied normal rbndom generator in RNGkind(). 
+    o   Option for user-supplied normal rbndom generator in RNGkind().
+
+    o	New functions tolower() and toupper() for converting alphabetic
+	characters to lower-case and upper-case, respectively.
+
+    o	Command line option `-g' can now be used as short version of
+	`--gui'.
 
 
 BUG FIXES
 
     o   The Mathlib functions now use exactly the same values for
         +/-Inf, NaN and NA as the rest of R in all cases.
+
+    o	Improved automatic remaking.
 
 
 
@@ -454,7 +462,7 @@ NEW FEATURES
     o	New command line option `--gui' to specify the graphical user
 	interface under Unix.  Currently, possible values are `X11' (the
 	(default) and `GNOME', provided that GNOME support is available.
-	Command line options \`-g' and `--gnome' are defunct.
+	Command line options `-g' and `--gnome' are defunct.
 
     o	power.t.test() and power.prop.test() functions added for power and
 	sample size calculations.
