@@ -160,12 +160,35 @@ AC_DEFUN([R_PROG_TEXMF],
     warn_pdf="you cannot build PDF versions of the R manuals"
     AC_MSG_WARN(${warn_pdf})
   fi
-  AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
-  if test -n "${MAKEINFO}"; then
+  AC_PATH_PROGS(MAKEINFO_CMD, [${MAKEINFO} makeinfo])
+  if test "${PERL}" = "${FALSE}"; then
+    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  else
+    INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
+    AC_SUBST(INSTALL_INFO)
+  fi
+  : ${R_RD4DVI="ae"}
+  AC_SUBST(R_RD4DVI)
+  : ${R_RD4PDF="ae,hyper"}
+  AC_SUBST(R_RD4PDF)
+  ])
+##
+## R_PROG_MAKEINFO
+##
+AC_DEFUN([R_PROG_MAKEINFO],
+## This used to be part of R_PROG_TEXMF, where it really belongs.
+## Unfortunately, AM_PROG_LIBTOOL unconditionally overwrites MAKEINFO
+## by makeinfo or missing.  To allow users to pass a MAKEINFO setting to
+## configure, we thus have to run R_PROG_TEXMF before AM_PROG_LIBTOOL,
+## save the result to something not overwritten (hence MAKEINFO_CMD),
+## and finally set MAKEINFO according to our needs.
+[AC_REQUIRE([R_PROG_TEXMF])
+  AC_REQUIRE([AM_PROG_LIBTOOL])
+  if test -n "${MAKEINFO_CMD}"; then
     AC_CACHE_CHECK([whether makeinfo version is at least 4],
       r_cv_prog_makeinfo_v4,
-      [ makeinfo_version=`${MAKEINFO} --version | grep "^makeinfo" | \
-          sed 's/[[^)]]*) \(.\).*/\1/'`
+      [ makeinfo_version=`${MAKEINFO_CMD} --version | \
+          grep "^makeinfo" | sed 's/[[^)]]*) \(.\).*/\1/'`
 	if test -z "${makeinfo_version}"; then
 	  r_cv_prog_makeinfo_v4=no
 	elif test ${makeinfo_version} -lt 4; then
@@ -179,18 +202,10 @@ AC_DEFUN([R_PROG_TEXMF],
     warn_info="you cannot build info versions of the R manuals"
     AC_MSG_WARN(${warn_info})
     MAKEINFO=false
-  fi
-  if test "${PERL}" = "${FALSE}"; then
-    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   else
-    INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
-    AC_SUBST(INSTALL_INFO)
+    MAKEINFO="${MAKEINFO_CMD}"
   fi
-  : ${R_RD4DVI="ae"}
-  AC_SUBST(R_RD4DVI)
-  : ${R_RD4PDF="ae,hyper"}
-  AC_SUBST(R_RD4PDF)
-  ])
+])
 ##
 ## R_PROG_CC_M
 ##
