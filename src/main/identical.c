@@ -26,7 +26,7 @@
 /* MEMCMP: a general, quicker (in principle) test for non-recursive
    vectors than comparing elements in a loop.
    Depends on the existence of memcmp (which is checked and set in
-   config.h by autoconf.
+   config.h by autoconf.  (Aug 2002: it is not, currently.)
 
    One detail is that using memcmp on double's implies that different
    NaN bit patterns (if they occur) are different.  The non-memcmp
@@ -202,12 +202,15 @@ static Rboolean compute_identical(SEXP x, SEXP y)
 }
 
 /* return TRUE if x and y differ, including the case
-   that one, but not both are NAN.  Two NAN values are judged
-   identical for this purpose */
+   that one, but not both are NaN.  Two NaN values are judged
+   identical for this purpose, but NA != NaN */
 /* used only in the NO_MEMCMP case */
 
 static Rboolean neWithNaN(double x,  double y)
 {
+    
+    if(R_IsNA(x))
+	return(R_IsNA(y) ? FALSE : TRUE);
     if(ISNAN(x))
 	return(ISNAN(y) ? FALSE : TRUE);
     return(x != y);

@@ -120,13 +120,13 @@ NEW FEATURES
 	the same way text() does, so a wider range of inputs is allowed.
 
     o	prompt()'s default and data.frame methods have a new 3rd argument
-	`name' allowing to use them more easily in scripts and loops.
+	`name' allowing them to used more easily in scripts and loops.
 
     o	rgb() has a new `maxColorValue' argument, allowing r,g,b in [0,M],
-	particularly in {0:255} efficiently and non-error-prone.
+	particularly in {0:255}, efficiently and non-error-prone.
 
     o   summaryRprof() provides the functionality of R CMD Rprof in R
-	code, though more slowly
+	code, though more slowly.
 
     o   stop() accepts multiple arguments (which are concatenated)
 	just as warning() does.
@@ -146,7 +146,6 @@ NEW FEATURES
     o	help.start() on Unix now uses a .R subdirectory of the
 	per-session temporary directory and not ~/.R.  A side effect
 	is that ~/.R is now never deleted by R.
-
 
 
 DEPRECATED & DEFUNCT
@@ -194,7 +193,7 @@ UTILITIES
 
 BUG FIXES
 
-    o	axis() was not listening to par("mgp")[3] by default.
+    o	axis() was not respecting par("mgp")[3] by default.
 	(PR#916)
 
     o	tcltk back-compatibility fix for tcl8.0	 <<Peter fixme>>
@@ -301,7 +300,10 @@ BUG FIXES
 	were included in the smoothing window).
 
     o   match() was assuming that there was only one possible bit
-	pattern for a numeric NA, so some matches failed on Solaris.
+	pattern for a numeric NA, so some matches failed on Solaris
+	under some compiler options.
+
+    o	identical() no longer thinks NaN and as.double(NA) are identical.
 
 
 
