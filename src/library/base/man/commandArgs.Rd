@@ -27,7 +27,7 @@ commandArgs()
 }
 %\author{DTL}
 #ifdef unix
-\seealso{\code{\link{BATCH}}}
+\seealso{\code{\link[utils]{BATCH}}}
 #endif
 \examples{
 commandArgs()

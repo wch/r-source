@@ -258,8 +258,8 @@ getOption(x)
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 #ifdef unix
-    \item{\code{X11fonts}:}{character vector of length 2. See \code{\link{X11}}.
-    }
+    \item{\code{X11fonts}:}{character vector of length 2.
+      See \code{\link[graphics]{X11}}.}
 #endif
   }
 
