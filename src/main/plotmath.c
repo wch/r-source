@@ -2925,8 +2925,8 @@ void GMathText(double x, double y, int coords, SEXP expr,
 void GMMathText(SEXP str, int side, double line, int outer,
 		double at, int las, DevDesc *dd)
 {
-    int coords = 0;
-    double a, xadj, yadj;
+    int coords, subcoords;
+    double angle, xadj, yadj;
 
 #ifdef BUG61
 #else
@@ -2940,90 +2940,82 @@ void GMMathText(SEXP str, int side, double line, int outer,
 
     MathDevice = dd;
 
-    if (outer) {
-	xadj = MathDevice->gp.adj;
-	yadj = NA_REAL;
-	switch (side) {
-	case 1:	a = 0;  coords = OMA1; 	break;
-	case 2:	a = 90; coords = OMA2;	break;
-	case 3:	a = 0;  coords = OMA3;	break;
-	case 4:	a = 90;	coords = OMA4;	break;
-	default: return;/* never happens */
+    xadj = MathDevice->gp.adj;
+
+    /* This is MOSTLY the same as the same section of GMtext
+     * BUT it differs because it sets different values for yadj for
+     * different situations.
+     * Paul
+     */
+    if(outer) {
+	switch(side) {
+	case 1:	    coords = OMA1;	break;
+	case 2:	    coords = OMA2;	break;
+	case 3:	    coords = OMA3;	break;
+	case 4:	    coords = OMA4;	break;
 	}
-	GMathText(at, line, coords, str, xadj, yadj, a, dd);
+	subcoords = NIC;
     }
     else {
-	switch (side) {
-	case 1:
-	    if (las == 2 || las == 3) {/* perpendicular */
-		at = at - GConvertXUnits(dd->gp.yLineBias,
-					 LINES, USER, dd);
-		line = line + dd->gp.yLineBias;
-		a = 90.0;
-		xadj = 1.0;
-		yadj = 0.5;
-	    }
-	    else {
-		line = line + 1 - dd->gp.yLineBias;
-		a = 0.0;
-		xadj = MathDevice->gp.adj;
-		yadj = NA_REAL;
-	    }
-	    coords = MAR1;
-	    break;
-	case 2:
-	    if (las == 1 || las == 2) {
-		at = at + GConvertYUnits(dd->gp.yLineBias,
-					 LINES, USER, dd);
-		line = line + dd->gp.yLineBias;
-		a = 0.0;
-		xadj = 1.0;
-		yadj = 0.5;
-	    }
-	    else {
-		line = line + dd->gp.yLineBias;
-		a = 90.0;
-		xadj = MathDevice->gp.adj;
-		yadj = NA_REAL;
-	    }
-	    coords = MAR2;
-	    break;
-	case 3:
-	    if (las == 2 || las == 3) {/* perpendicular */
-		at = at - GConvertXUnits(dd->gp.yLineBias,
-					 LINES, USER, dd);
-		line = line + dd->gp.yLineBias;
-		a = 90.0;
-		xadj = 0.0;
-		yadj = 0.5;
-	    }
-	    else {
-		line = line + dd->gp.yLineBias;
-		a = 0.0;
-		xadj = MathDevice->gp.adj;
-		yadj = NA_REAL;
-	    }
-	    coords = MAR3;
-	    break;
-	case 4:
-	    if (las == 1 || las == 2) {
-		at = at + GConvertYUnits(dd->gp.yLineBias,
-					 LINES, USER, dd);
-		line = line + dd->gp.yLineBias;
-		a = 0.0;
-		xadj = 0.0;
-		yadj = 0.5;
-	    }
-	    else {
-		line = line + 1 - dd->gp.yLineBias;
-		a = 90.0;
-		xadj = MathDevice->gp.adj;
-		yadj = NA_REAL;
-	    }
-	    coords = MAR4;
-	    break;
-	default: return;/* never happens */
+	switch(side) {
+	case 1:	    coords = MAR1;	break;
+	case 2:	    coords = MAR2;	break;
+	case 3:	    coords = MAR3;	break;
+	case 4:	    coords = MAR4;	break;
 	}
-	GMathText(at, line, coords, str, xadj, yadj, a, dd);
+	subcoords = USER;
     }
+    /* Note: I changed dd->gp.yLineBias to 0.3 here. */
+    /* Purely visual tuning. RI */
+    switch(side) {
+    case 1:
+	if(las == 2 || las == 3) {
+	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
+	    angle = 90;
+	    yadj = 0.5;
+	}
+	else {
+	    line = line + 1 - dd->gp.yLineBias;
+	    angle = 0;
+	    yadj = NA_REAL;
+	}
+	break;
+    case 2:
+	if(las == 1 || las == 2) {
+	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	    angle = 0;
+	    yadj = 0.5;
+	}
+	else {
+	    line = line + dd->gp.yLineBias;
+	    angle = 90;
+	    yadj = NA_REAL;
+	}
+	break;
+    case 3:
+	if(las == 2 || las == 3) {
+	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
+	    angle = 90;
+	    yadj = 0.5;
+	}
+	else {
+	    line = line + dd->gp.yLineBias;
+	    angle = 0;
+	    yadj = NA_REAL;
+	}
+	break;
+    case 4:
+	if(las == 1 || las == 2) {
+	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	    angle = 0;
+	    yadj = 0.5;
+	}
+	else {
+	    line = line + 1 - dd->gp.yLineBias;
+	    angle = 90;
+	    yadj = NA_REAL;
+	}
+	break;
+    }
+    GMathText(at, line, coords, str, xadj, yadj, angle, dd);
 }/* GMMathText */
