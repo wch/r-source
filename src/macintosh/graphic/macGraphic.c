@@ -3,7 +3,7 @@
  *  file macGraphic.c
  *  Copyright (C) 1998-1999  Ross Ihaka
  *                2000-2001  Stefano M. Iacus and the R core team
- *
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -1303,13 +1303,19 @@ static void SetFont(int face, int size, DevDesc *dd)
     if (face == 3) realFace = 2;	/* italic */
     if (face == 4) realFace = 3;	/* bold & italic */
 #if TARGET_API_MAC_CARBON
+    if(systemVersion > kMinSystemVersion)
     postFontId = FMGetFontFamilyFromName(PostFont);
+    else
+     GetFNum(PostFont, &postFontId);
 #else
     GetFNum(PostFont, &postFontId);
 #endif
     if (face == 5){ realFace = 0;	/* plain symbol */
 #if TARGET_API_MAC_CARBON
+    if(systemVersion > kMinSystemVersion)
     postFontId = FMGetFontFamilyFromName(MacSymbolFont);
+    else
+     GetFNum(MacSymbolFont, &postFontId);
 #else
     GetFNum(MacSymbolFont, &postFontId);
 #endif
