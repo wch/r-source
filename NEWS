@@ -15,6 +15,10 @@ BUG FIXES
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
 
+    o	The internal download.file() methods was setting the proxy
+	port to 0 unless it was specified.
+
+
 
 		CHANGES IN R VERSION 1.5.1
 
