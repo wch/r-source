@@ -42,6 +42,12 @@ static SEXP stripAttrib(SEXP tag, SEXP lst)
     return lst;
 }
 
+/* NOTE: For environments serialize.c calls this function to find if
+   there is a class attribute in order to reconstruct the object bit
+   if needed.  This means the function cannot use OBJECT(vec) == 0 to
+   conclude that the class attribute is R_NilVaule.  If you want to
+   rewrite this function to use such a pre-test, be sure to adjust
+   serialize.c accordingly.  LT */
 SEXP getAttrib(SEXP vec, SEXP name)
 {
     SEXP s;
@@ -989,6 +995,7 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 	    error("Can't get a slot (\"%s\") from an object of type \"%s\"",
 		  CHAR(asChar(input)), CHAR(type2str(TYPEOF(obj))));
 	}
+	else classString = R_NilValue; /* make sure it is initialized */
  	/* not there.  But since even NULL really does get stored, this
 	   implies that there is no slot of this name.  Or somebody
 	   screwed up by using atttr(..) <- NULL */
