@@ -3,13 +3,14 @@
 \title{Save Windows Plot to a File}
 \usage{
 savePlot(filename="Rplot",
-         type=c("wmf", "png", "jpeg", "jpg", "ps"),
+         type=c("wmf", "png", "jpeg", "jpg", "bmp", "ps"),
          device=dev.cur())
 }
 \arguments{
     \item{filename}{The filename under which to save the plot, without
 	the extension.}
-    \item{type}{The type of plot, Windows metafile, PNG, JPEG or PostScript.}
+    \item{type}{The type of plot, Windows metafile, PNG, JPEG, BMP
+      (Windows bitmap format)  or PostScript.}
     \item{device}{A device number of a \code{windows} device, by default
     the current device.}
 }
