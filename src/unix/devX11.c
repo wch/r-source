@@ -1187,6 +1187,10 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
+    /* There are still a couple of bugs in this area. Xservers seem to
+       not quite agree on which parts of the outer boundary are contained
+       in the clip region */
+
     if (x0 < x1) {
 	xd->clip.x = R_rint(x0);
 	xd->clip.width = R_rint(x1 - x0);
@@ -1196,18 +1200,15 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 	xd->clip.width = R_rint(x0 - x1);
     }
 
-    /* For some reason an adjustment is needed in the y direction to
-       get the boundaries included in the clip region, but not in the
-       x direction. Hence the -1 and +2. */
-
     if (y0 < y1) {
-	xd->clip.y = R_rint(y0) - 1;
-	xd->clip.height = R_rint(y1 - y0) + 2;
+	xd->clip.y = R_rint(y0);
+	xd->clip.height = R_rint(y1 - y0);
     }
     else {
-	xd->clip.y = R_rint(y1) - 1;
-	xd->clip.height = R_rint(y0 - y1) + 2;
+	xd->clip.y = R_rint(y1);
+	xd->clip.height = R_rint(y0 - y1);
     }
+
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
 #ifdef XSYNC
     XSync(display, 0);
