@@ -1,17 +1,18 @@
+library(ts)
 ### ar
 data(lh)
 ar(lh)
-ar(lh, method="burg")
-ar(lh, method="ols")
+ar(lh, method = "burg")
+ar(lh, method = "ols")
 ar(lh, FALSE, 4) # fit ar(4)
 ar.ols(lh)
 ar.ols(lh, FALSE, 4) # fit ar(4) by OLS
 
 data(LakeHuron)
 ar(LakeHuron)
-ar(LakeHuron, method="burg")
-ar(LakeHuron, method="ols")
-ar(LakeHuron, method="mle")
+ar(LakeHuron, method = "burg")
+ar(LakeHuron, method = "ols")
+ar(LakeHuron, method = "mle")
 
 data(sunspot)
 ar(sunspot.year, method = "yw")
@@ -77,6 +78,7 @@ for(p in 1:5)
    for(q in 0:5) aics[1+p, 1+q] <- arima0(WWWusage, c(p,1,q),
        optim.control = list(maxit = 500))$aic
 round(aics - min(aics, na.rm=TRUE), 2)
+
 
 
 ### nottem
