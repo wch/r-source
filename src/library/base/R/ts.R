@@ -152,13 +152,13 @@ print.ts <- function(x, calendar, ...)
 }
 
 plot.ts <-
-function (x, type="l", xlim, ylim, xlab = "Time", ylab, log="",
+function (x, type="l", xlim=NULL, ylim=NULL, xlab = "Time", ylab, log="",
 	col=par("col"), bg=NA, pch=par("pch"), lty=par("lty"),
 	axes = TRUE, frame.plot = axes, ann = par("ann"), main = NULL, ...)
 {
 	time.x <- time(x)
-	if(missing(xlim)) xlim <- range(time.x)
-	if(missing(ylim)) ylim <- range(x, na.rm=TRUE)
+	if(is.null(xlim)) xlim <- range(time.x)
+	if(is.null(ylim)) ylim <- range(x, finite=TRUE)
 	if(missing(ylab)) ylab <- deparse(substitute(x))
 	plot.new()
 	plot.window(xlim, ylim, log)

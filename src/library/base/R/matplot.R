@@ -55,8 +55,8 @@ matplot <- function(x, y, type="p",
 	xy <- xy.coords(x, y, xlabel, ylabel)
 	xlab <- if (is.null(xlab)) xy$xlab  else xlab
 	ylab <- if (is.null(ylab)) xy$ylab  else ylab
-	xlim <- if (is.null(xlim)) range(xy$x, na.rm = TRUE)  else xlim
-	ylim <- if (is.null(ylim)) range(xy$y, na.rm = TRUE)  else ylim
+	xlim <- if (is.null(xlim)) range(xy$x, finite = TRUE)  else xlim
+	ylim <- if (is.null(ylim)) range(xy$y, finite = TRUE)  else ylim
 	if(length(type)< k) type<- rep(type,length= k)
 	if(length(lty) < k) lty <- rep(lty, length= k)
 	if(length(pch) < k) pch <- rep(pch, length= k)

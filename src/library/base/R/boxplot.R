@@ -38,7 +38,7 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
 boxplot.stats <- function(x, coef = 1.5)
 {
 	nna <- !is.na(x)
-	n <- length(nna)
+	n <- length(nna)# including +/- Inf
 	stats <- fivenum(x, na.rm=TRUE)
 	iqr <- diff(stats[c(2, 4)])
 	out <- x < (stats[2]-coef*iqr) | x > (stats[4]+coef*iqr)
@@ -52,39 +52,49 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 		border=par("fg"), col=NULL, log="", pars=NULL, ...)
 {
  bplt <- function(x, wid, stats, out, conf, notch, border, col)
-  {
-	  pars <- c(pars, list(...))# from bxp(...);  not yet used.
+ {
+	## Draw single box plot.
+	pars <- c(pars, list(...))# from bxp(...).
 
-	  if(!any(is.na(stats))) {
-		  wid <- wid/2
-		  if(notch) {
-			  xx <- x+wid*c(-1,1, 1, notch.frac, 1,
-					1,-1,-1,-notch.frac,-1)
-			  yy <- c(stats[c(2,2)],conf[1],stats[3],conf[2],
-				  stats[c(4,4)],conf[2],stats[3],conf[1])
-			  polygon(xx, yy, col=col, border=border)
-			  segments(x-wid/2, stats[3], x+wid/2, stats[3], col=border)
-		  }
-		  else {
-			  xx <- x+wid*c(-1,1,1,-1)
-			  yy <- stats[c(2,2,4,4)]
-			  polygon(xx, yy, col=col, border=border)
-			  segments(x-wid,stats[3],x+wid,stats[3],col=border)
-		  }
-		  segments(rep(x,2),stats[c(1,5)], rep(x,2),
-			   stats[c(2,4)], lty="dashed",col=border)
-		  segments(rep(x-wid/2,2),stats[c(1,5)],rep(x+wid/2,2),
-			   stats[c(1,5)],col=border)
-		  points(rep(x,length(out)), out, col=border)
-	  }
-  }
+	if(!any(is.na(stats))) {
+		## stats = +/- Inf:  polygon & segments should handle
+		wid <- wid/2
+		if(notch) {
+			xx <- x+wid*c(-1,1, 1, notch.frac, 1,
+				      1,-1,-1,-notch.frac,-1)
+			yy <- c(stats[c(2,2)],conf[1],stats[3],conf[2],
+				stats[c(4,4)],conf[2],stats[3],conf[1])
+			polygon(xx, yy, col=col, border=border)
+			segments(x-wid/2,stats[3], x+wid/2,stats[3], col=border)
+		}
+		else {
+			xx <- x+wid*c(-1,1,1,-1)
+			yy <- stats[c(2,2,4,4)]
+			polygon(xx, yy, col=col, border=border)
+			segments(x-wid,stats[3],x+wid,stats[3],col=border)
+		}
+		segments(rep(x,2),stats[c(1,5)], rep(x,2),
+			 stats[c(2,4)], lty="dashed",col=border)
+		segments(rep(x-wid/2,2),stats[c(1,5)],rep(x+wid/2,2),
+			 stats[c(1,5)],col=border)
+		points(rep(x,length(out)), out, col=border)
+		if(any(inf <- !is.finite(out))) {
+			## FIXME: should MARK on plot !! (S-plus doesn't either)
+			warning(paste("Outlier (",
+				 paste(unique(out[inf]),collapse=", "),
+				      ") in ", paste(x,c("st","nd","rd","th")
+						   [pmin(4,x)], sep=""),
+				      " boxplot are NOT drawn", sep=""))
+		}
+	}
+ }## bplt
 
  n <- length(z)
  limits <- numeric(0)
  nmax <- 0
  for(i in 1:n) {
 	nmax <- max(nmax,z[[i]]$n)
-	limits <- range(limits, z[[i]]$stats, z[[i]]$out)
+	limits <- range(limits, z[[i]]$stats, z[[i]]$out, finite=TRUE)
  }
 
  width <- if (!is.null(width)) {

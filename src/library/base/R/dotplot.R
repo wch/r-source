@@ -1,33 +1,33 @@
 dotplot <-
-function (x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"), 
-	pch = 21, gpch = 21, bg = par("bg"), color = par("fg"), 
-	gcolor = par("fg"), lcolor = "gray", ...) 
+function (x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
+	pch = 21, gpch = 21, bg = par("bg"), color = par("fg"),
+	gcolor = par("fg"), lcolor = "gray", ...)
 {
 	opar <- par("mar", "cex", "yaxs")
 	on.exit(par(opar))
 	par(cex = cex, yaxs = "i")
 	n <- length(x)
 	if (is.matrix(x)) {
-		if (is.null(labels)) 
+		if (is.null(labels))
 			labels <- rownames(x)
-		if (is.null(labels)) 
+		if (is.null(labels))
 			labels <- as.character(1:nrow(x))
 		labels <- rep(labels, length = n)
-		if (is.null(groups)) 
+		if (is.null(groups))
 			groups <- col(x, as.factor = TRUE)
 		glabels <- levels(groups)
 	}
 	else {
-		if (is.null(labels)) 
+		if (is.null(labels))
 			labels <- names(x)
-		if (!is.null(groups)) 
+		if (!is.null(groups))
 			glabels <- levels(groups)
 		else glabels <- NULL
 	}
 	linch <- 0
 	ginch <- 0
 	goffset <- 0
-	if (!is.null(labels)) 
+	if (!is.null(labels))
 		linch <- max(strwidth(labels, "inch"), na.rm = TRUE)
 	if (!is.null(glabels)) {
 		ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
@@ -52,13 +52,13 @@ function (x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 		ylim <- range(0, y + 2)
 	}
 	plot.new()
-	plot.window(xlim = range(x, na.rm = T), ylim = ylim, log = "")
+	plot.window(xlim = range(x, finite = TRUE), ylim = ylim, log = "")
 	box()
 	xmin <- par("usr")[1]
 	if (!is.null(labels)) {
 		luser <- max(strwidth(labels, "user"), na.rm = TRUE)
 		loffset <- luser + xinch(0.1)
-		text(rep(xmin - loffset, n), y, labels[o], 
+		text(rep(xmin - loffset, n), y, labels[o],
 			xpd = TRUE, adj = 0, col = color, ...)
 	}
 	abline(h = y, lty = "dotted", col = lcolor)
@@ -66,13 +66,13 @@ function (x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	if (!is.null(groups)) {
 		gpos <- rev(cumsum(tapply(groups, groups, length) + 2) - 1)
 		guser <- max(strwidth(glabels, "user"), na.rm = TRUE)
-		goffset <- max(luser + xinch(goffset), guser, 
-			na.rm = TRUE) + xinch(0.1)
-		text(rep(xmin - goffset, nlevels(groups)), gpos, 
+		goffset <- max(luser + xinch(goffset), guser, na.rm = TRUE) +
+		  xinch(0.1)
+		text(rep(xmin - goffset, nlevels(groups)), gpos,
 			glabels, xpd = TRUE, adj = 0, col = gcolor, ...)
 		if (!is.null(gdata)) {
 			abline(h = gpos, lty = "dotted")
-			points(gdata, gpos, pch = gpch, col = gcolor, 
+			points(gdata, gpos, pch = gpch, col = gcolor,
 				bg = bg, ...)
 		}
 	}

@@ -61,7 +61,8 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
 }
 \seealso{
   \code{\link{boxplot.stats}} which does the computation,
-  \code{\link{bxp}} for the plotting.
+  \code{\link{bxp}} for the plotting, and \code{\link{stripplot}} for an
+  alternative (with small data sets).
 }
 \examples{
 data(insects)

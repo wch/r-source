@@ -2,9 +2,9 @@
 \title{Display Contours}
 \usage{
 contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
-        nlevels = 10, levels = pretty(range(z, na.rm = TRUE), nlevels),
+        nlevels = 10, levels = pretty(range(z, finite = TRUE), nlevels),
         labcex = 0,
-        xlim = range(x, na.rm = TRUE), ylim = range(y, na.rm = TRUE),
+        xlim = range(x, finite = TRUE), ylim = range(y, finite = TRUE),
         col = par("fg"), lty = par("lty"), add = FALSE, ...)
 }
 \alias{contour}
