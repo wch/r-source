@@ -101,7 +101,7 @@ static double R_ValueOfNA(void)
 
 int R_IsNA(double x)
 {
-    if (x != x) {
+    if (isnan(x)) {
 	ieee_double y;
 	y.value = x;
 	return (y.word[lw] == 1954);
@@ -111,7 +111,7 @@ int R_IsNA(double x)
 
 int R_IsNaN(double x)
 {
-    if (x != x) {
+    if (isnan(x)) {
 	ieee_double y;
 	y.value = x;
 	return (y.word[lw] != 1954);
