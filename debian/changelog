@@ -1,8 +1,11 @@
-r-base (1.0.1-0) unstable; urgency=low
+r-base (1.0.0-2) unstable; urgency=low
 
-  * Preparing for new upstream release
+  * The pdf documentation is now in a new package r-doc-pdf
+  * A GNOME-enabled version is available in a new package r-gnome (Closes #44503)
+  * debian/{rules,control}: Modified accordingly
+  * Thanks to Dirk Eddelbuettel who did most of the work for this.
 
- -- Douglas Bates <bates@stat.wisc.edu>  Wed, 15 Mar 2000 12:13:34 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu, 16 Mar 2000 16:28:07 -0600
 
 r-base (1.0.0-1) unstable; urgency=low
 

@@ -24,3 +24,38 @@ Description: `GNU S' - A language and environment for statistical computing.
  and update.packages that can be used to select and update R packages from the
  Comprehensive R Archive Network.  The Debian packages r-cran, r-cran-non-free,
  and r-mlbench are no longer needed and have been withdrawn.
+
+Package: r-gnome
+Architecture: any
+Depends: r-base (= ${Source-Version}), ${shlibs:Depends}
+Description: `GNU S' - GNOME-enabled executable
+ R is described by its authors as "not unlike" S, which is a language
+ developed at Bell Laboratories for statistical computing and graphics.
+ It provides support for a variety of statistical and graphical analyses.
+ R is a true computer language which contains a number of control-flow
+ constructions for iteration and alternation.  It allows users to add
+ additional functionality by defining new functions.  Fortran and C
+ code can be linked and called at run time.
+ .
+ S is the statistician's Matlab and R is to S what Octave is to Matlab.
+ .
+ This package provides the executable linked with the GNOME libraries
+ for use as
+ .
+ R --gui=GNOME
+
+Package: r-doc-pdf
+Architecture: all
+Suggests: pdf-viewer | xpdf | acroread, r-base
+Description: `GNU S' documentation in pdf format
+ R is described by its authors as "not unlike" S, which is a language
+ developed at Bell Laboratories for statistical computing and graphics.
+ It provides support for a variety of statistical and graphical analyses.
+ R is a true computer language which contains a number of control-flow
+ constructions for iteration and alternation.  It allows users to add
+ additional functionality by defining new functions.  Fortran and C
+ code can be linked and called at run time.
+ .
+ S is the statistician's Matlab and R is to S what Octave is to Matlab.
+ .
+ This packages provides the documentation for R in pdf format.
