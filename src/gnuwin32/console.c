@@ -242,6 +242,7 @@ newconsoledata(font f, int rows, int cols,
     p->mx0 = 5;
     p->mx1 = 14;
     p->sel = 0;
+    p->input = 0;
     return (p);
 }
 
@@ -256,6 +257,8 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
     gfillrect(p->bm, bgr, r);
 
     if (len > fch) {
+	/* Some of the string is visible:
+	   we don't know the string length, so modify it in place */
 	if (FC && (fch == 0)) {
 	    chf = s[0];
 	    s[0] = '$';
@@ -273,6 +276,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	} else
 	    ch = '\0';
 	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &s[fch]);
+	/* restore the string */
 	if (ch)
 	    s[last] = ch;
 	if (chl)
@@ -284,14 +288,14 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 
 #define WLHELPER(a, b, c, d) writelineHelper(p, a, b, c, d, j, len, s)
 
+/* write line i of the buffer at row j on bitmap */
 static int writeline(ConsoleData p, int i, int j)
 {
     char *s;
     int   insel, len, col1, d;
     int   c1, c2, c3, x0, y0, x1, y1;
 
-    if ((i < 0) || (i >= NUMLINES))
-	FRETURN(0);
+    if ((i < 0) || (i >= NUMLINES)) FRETURN(0);
     s = VLINE(i);
     len = strlen(s);
     col1 = COLS - 1;
@@ -342,7 +346,6 @@ static int writeline(ConsoleData p, int i, int j)
 
 void drawconsole(control c, rect r)
 FBEGIN
-PBEGIN
     int i, ll, wd, maxwd = 0;
 
     ll = min(NUMLINES, ROWS);
@@ -361,7 +364,6 @@ PBEGIN
     gchangescrollbar(c, HWINSB, FC, maxwd, COLS,
                      p->kind == CONSOLE || NUMLINES > ROWS);
     gchangescrollbar(c, VWINSB, FV, NUMLINES - 1 , ROWS, p->kind == CONSOLE);
-PEND
 FVOIDEND
 
 void setfirstvisible(control c, int fv)
@@ -384,13 +386,10 @@ FBEGIN
         rw = FV + ww;
         writeline(p, rw, ww);
         if (ds == 0) {
-	    PBEGIN;
 	    RSHOW(RLINE(ww));
-	    PEND;
  	    FVOIDRETURN;
         }
     }
-    PBEGIN
     if (ds == 1) {
         gscroll(BM, pt(0, -FH), RMLINES(0, ROWS - 1));
         gfillrect(BM, p->bg, RLINE(ROWS - 1));
@@ -402,7 +401,6 @@ FBEGIN
 	WRITELINE(fv, 0);
     }
     RSHOW(getrect(c));
-    PEND
     FV = fv;
     NEWFV = fv;
     p->needredraw = 0;
@@ -487,7 +485,7 @@ FBEGIN
 FVOIDEND
 
 
-/* These are the getline keys ^A ^E ^B ^F ^N ^P ^K ^H ^D ^U ^T */
+/* These are the getline keys ^A ^E ^B ^F ^N ^P ^K ^H ^D ^U ^T ^O */
 #define BEGINLINE 1
 #define ENDLINE   5
 #define CHARLEFT 2
@@ -805,6 +803,16 @@ FVOIDEND
 
 int consolewrites(control c, char *s)
 FBEGIN
+    char buf[1001];
+    if(p->input) {
+        int i, len = strlen(LINE(NUMLINES - 1));
+	/* save the input line */
+	strncpy(buf, LINE(NUMLINES - 1), 1000);
+	buf[1000] = '\0';
+	/* now zap it */
+	for(i = 0; i < len; i++) xbufaddc(p->lbuf, '\b');
+	USER(NUMLINES - 1) = -1;
+    }
     xbufadds(p->lbuf, s, 0);
     FC = 0;
     if (strchr(s, '\n')) p->needredraw = 1;
@@ -812,7 +820,12 @@ FBEGIN
         setfirstvisible(c, NUMLINES - ROWS);
     else {
         p->newfv = NUMLINES - ROWS;
-       if (p->newfv < 0) p->newfv = 0;
+        if (p->newfv < 0) p->newfv = 0;
+    }
+    if(p->input) {
+        if (!strchr(s, '\n')) xbufaddc(p->lbuf, '\n');
+	xbufadds(p->lbuf, buf, 1);
+	REDRAW;
     }
 FEND(0)
 
@@ -858,9 +871,7 @@ static char consolegetc(control c)
 	    winfree(p->clp);
 	    p->clp = NULL;
 	}
-    }
-    else
-    {
+    } else {
           ch = p->kbuf[p->firstkey];
           p->firstkey = (p->firstkey + 1) % NKEYS;
           p->numkeys--;
@@ -892,12 +903,9 @@ FBEGIN
     checkvisible(c);
     if (p->needredraw) {
         REDRAW;
-    }
-    else {
-        PBEGIN
-          WRITELINE(NUMLINES - 1, p->r);
-          RSHOW(RLINE(p->r));
-        PEND
+    } else {
+	WRITELINE(NUMLINES - 1, p->r);
+	RSHOW(RLINE(p->r));
     }
 FVOIDEND
 
@@ -906,18 +914,17 @@ FBEGIN
     char cur_char;
     char *cur_line;
     char *aLine;
-    int ns0 = p->lbuf->ns;
+    int ns0 = NUMLINES;
 
     /* print the prompt */
     xbufadds(p->lbuf, prompt, 1);
     if (!xbufmakeroom(p->lbuf, len + 1)) FRETURN(1);
-    aLine = p->lbuf->s[p->lbuf->ns - 1];
+    aLine = LINE(NUMLINES - 1);
     prompt_len = strlen(aLine);
     if (NUMLINES > ROWS) {
 	p->r = ROWS - 1;
 	p->newfv = NUMLINES - ROWS;
-    }
-    else {
+    } else {
 	p->r = NUMLINES - 1;
 	p->newfv = 0;
     }
@@ -930,11 +937,22 @@ FBEGIN
     REDRAW;
     for(;;) {
 	char chtype;
+	p->input = 1;
 	cur_char = consolegetc(c);
-	chtype = isprint(cur_char) ||
-	    ((unsigned char)cur_char > 0x7f);
-	if(p->lbuf->ns != ns0) { /* we scrolled, e.g. cleared screen */
-            cur_line = p->lbuf->s[p->lbuf->ns - 1] + prompt_len;
+	p->input = 0;
+	chtype = isprint(cur_char) || ((unsigned char)cur_char > 0x7f);
+	if(NUMLINES != ns0) { /* we scrolled, e.g. cleared screen */
+            cur_line = LINE(NUMLINES - 1) + prompt_len;
+	    ns0 = NUMLINES;
+	    if (NUMLINES > ROWS) {
+		p->r = ROWS - 1;
+		p->newfv = NUMLINES - ROWS;
+	    } else {
+		p->r = NUMLINES - 1;
+		p->newfv = 0;
+	    }
+	    USER(NUMLINES - 1) = prompt_len;
+	    p->needredraw = 1;
 	}
         if(chtype && (max_pos < len - 2)) {
 	    int i;
@@ -1409,6 +1427,7 @@ void consoleclear(control c)
 FBEGIN
     xbuf l = p->lbuf;
     int oldshift = l->shift;
+
     l->shift = (l->ns - 1);
     xbufshift(l);
     l->shift = oldshift;

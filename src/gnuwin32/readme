@@ -47,10 +47,11 @@ manuals for R, which unpack into @RWVER@/doc/manual.
 
 You should install at least one of the text help and the compiled HTML help.
 
-WARNING: we have had reports that Dr Solomon's VirusScan interferes
-with rwinst.exe to the extent of making the PC unusable.  If you have
-this, please either disable it during installation or install
-manually.  No other virus-checking software seems to exhibit this fault.
+WARNING: we have had reports that a program called VirusScan
+(attributed to Dr Solomon's or McAfee) interferes with rwinst.exe to
+the extent of making the PC unusable.  If you have this, please either
+disable it during installation or install manually.  No other
+virus-checking software seems to exhibit this fault.
 
 
 Usage
@@ -93,11 +94,11 @@ use it.]
 TERMINAL/BATCH:
 
 Rterm.exe will run from a command line such as an MS-DOS or Commands
-Window running the standard shells, command.com (9x) and cmd.exe (NT),
-as well as the ports of bash and tcsh that we use.  Its primary
-purpose is to allow batch operation, but it does provide all the
-facilities needed for interactive use, including command-line editing
-(see the file README.Rterm).
+Window running the standard shells, command.com (9x/ME) and cmd.exe
+(NT/2000), as well as the ports of bash and tcsh that we use.  Its
+primary purpose is to allow batch operation, but it does provide all
+the facilities needed for interactive use, including command-line
+editing (see the file README.Rterm).
 
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
@@ -105,8 +106,8 @@ commands like
 Rterm.exe --no-restore --no-save < infile > outfile
 
 although users will probably want to set up simple .bat or .cmd files
-to run batch jobs.
-
+to run batch jobs. You can also use it via Rcmd BATCH: see ?BATCH or
+Rcmd BATCH --help.
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
 under NTEmacs, for example with ess-5.1.16.  The pager is
@@ -171,10 +172,10 @@ contains instructions.
 Customization
 =============
 
-Environment variables can be set as NAME=value on the command line,
-including in a short-cut.  They can also be set (as NAME=value lines)
-in the file .Renviron in the working directory, or if that does not
-exist HOME\.Renviron.
+Environment variables can be set as NAME=value at the end of the
+command line, including in a shortcut.  They can also be set (as
+NAME=value lines) in the file .Renviron in the working directory, or
+if that does not exist HOME\.Renviron.
 
 Many aspects of the console (size, appearance, font, font size,
 colours) can be customized by editing the file etc\Rconsole, and a

@@ -38,7 +38,7 @@ struct structConsoleData {
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
     bitmap bm;
 
-    int   cur_pos, max_pos, prompt_len;	/* editing */
+    int   input, cur_pos, max_pos, prompt_len;	/* editing */
 
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
@@ -87,10 +87,6 @@ typedef struct structConsoleData *ConsoleData;
 #define FVOIDEND }}
 #define FVOIDRETURN { return; }
 #define FRETURN(result) {return result;}
-
-#define PBEGIN
-
-#define PEND
 
 #define RSHOW(r) {gbitblt(c, p->bm, topleft(r), r);}
 
