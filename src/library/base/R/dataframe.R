@@ -785,19 +785,28 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		nvar <- length(value)
 		all.levs <- vector("list", nvar)
 		has.dim <- logical(nvar)
+                facCol <- logical(nvar)
+                ordCol <- logical(nvar)
 		for(j in 1:nvar) {
 		    xj <- value[[j]]
-		    if( !is.null(levels(xj)) )
+		    if( !is.null(levels(xj)) ) {
 			all.levs[[j]] <- levels(xj)
+                        facCol[j] <- TRUE # turn categories into factors
+                    } else facCol[j] <- is.factor(xj)
+                    ordCol[j] <- is.ordered(xj)
 		    has.dim[j] <- length(dim(xj)) == 2
 		}
 	    }
 	    else for(j in 1:nvar)
-		if(length(lij <- levels(xi[[j]])) > 0) {
-		    if(is.null(pi) || is.na(jj <- pi[[j]]))
-			jj <- j
-		    all.levs[[jj]] <- unique(c(all.levs[[jj]], lij))
-		}
+                if(facCol[j]) {
+                    xij <- xi[[j]]
+                    if(is.null(pi) || is.na(jj <- pi[[j]])) jj <- j
+                    if(length(lij <- levels(xij)) > 0) {
+                        all.levs[[jj]] <- unique(c(all.levs[[jj]], lij))
+                        ordCol[j] <- ordCol[j] & is.ordered(xij)
+                    } else if(is.character(xij))
+                        all.levs[[jj]] <- unique(c(all.levs[[jj]], xij))
+                }
 	}
 	else if(is.list(xi)) {
 	    ni <- range(sapply(xi, length))
@@ -836,7 +845,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
     names(value) <- clabs
     for(j in 1:nvar)
 	if(length(lij <- all.levs[[j]]) > 0)
-	    value[[j]] <- factor(as.vector(value[[j]]), lij)
+            value[[j]] <-
+                factor(as.vector(value[[j]]), lij, ordered = ordCol[j])
     if(any(has.dim)) {
 	rmax <- max(unlist(rows))
 	for(i in (1:nvar)[has.dim])
@@ -861,17 +871,19 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    pi <- pseq
 	for(j in 1:nvar) {
 	    jj <- pi[j]
+            xij <- xi[[j]]
 	    if(has.dim[jj])
-		value[[jj]][ri,	 ] <- xi[[j]]
-	    else value[[jj]][ri] <- xi[[j]]
+		value[[jj]][ri,	 ] <- xij
+            ## coerce factors to vectors, in case lhs is character or
+            ## level set has changed
+	    else value[[jj]][ri] <- if(is.factor(xij)) as.vector(xij) else xij
 	}
     }
-    for(j in 1:nvar) {
-	xj <- value[[j]]
-	if(!has.dim[j] && !inherits(xj, "AsIs") &&
-		is.character(xj))
-	    value[[j]] <- factor(xj)
-    }
+#     for(j in 1:nvar) {
+# 	xj <- value[[j]]
+# 	if(!has.dim[j] && !inherits(xj, "AsIs") && is.character(xj))
+# 	    value[[j]] <- factor(xj)
+#     }
     rlabs <- unlist(rlabs)
     while(any(xj <- duplicated(rlabs)))
 	rlabs[xj] <- paste(rlabs[xj], 1:sum(xj), sep = "")

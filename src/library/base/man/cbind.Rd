@@ -24,6 +24,12 @@ rbind(\dots, deparse.level = 1)
   a data frame and the rest are vectors or matrices.  There can be other
   methods; in particular, there is one for time series objects.
 
+  The data frame method takes the classes of the columns from the first
+  data frame.  Factors are have their levels expanded as necessary (in
+  the order of the levels of the levelsets of the factors encountered)
+  and the result is an ordered factor if and only if all the components
+  were ordered factors.  (The last point differs from S-PLUS.)
+
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
   rows) of the result.  If all the arguments are vectors, the number of

@@ -2067,12 +2067,70 @@ i <- c(1:2,NA);	 fi <- factor(i, exclude = NULL)
 stopifnot(identical(as.character(i), dimnames(table(fi))[[1]]))
 ## not in 2003-Mar-10 unstable
 
+
 ## [lm.]influence() for multivariate lm :
 n <- 32
 Y <- matrix(rnorm(3 * n), n, 3)
 X <- matrix(rnorm(5 * n), n, 5)
 infm <- lm.influence(mod <- lm(Y ~ X))
-## failed upto 2003-03-29 (pre 1.7.0)
+## failed up to 2003-03-29 (pre 1.7.0)
+
+
+## rbind.data.frame with character and ordered columns
+A <- data.frame(a=1)
+A$b <- "A"
+B <- data.frame(a=2)
+B$b <- "B"
+AB <- rbind(A,B)
+(cl <- sapply(AB, class))
+stopifnot(cl[2] == "character") # was factor in 1.6.2
+
+A <- data.frame(a=1:3, b=ordered(letters[1:3]))
+B <- data.frame(a=7:9, b=ordered(letters[7:9]))
+AB <- rbind(A,B)
+(cl <- sapply(AB, class))
+stopifnot(cl$b[1] == "ordered") # was factor in 1.6.2
+C <- data.frame(a=4:6, b=letters[4:6])
+ABC <- rbind(AB, C)
+(cl <- sapply(ABC, class))
+stopifnot(cl[2] == "factor")
+
+A <- data.frame(a=1)
+A$b <- "A"
+B <- data.frame(a=2, b="B")
+(AB <- rbind(A,B))
+(cl <- sapply(AB, class))
+stopifnot(cl[2] == "character")
+
+A <- data.frame(a=1, b="A")
+B <- data.frame(a=2)
+B$b <- "B"
+(AB <- rbind(A,B))
+(cl <- sapply(AB, class))
+stopifnot(cl[2] == "factor")
+A <- data.frame(a=c("A", NA, "C"))
+B <- data.frame(a=c("B", NA, "C"))
+(AB <- rbind(A,B))
+stopifnot(levels(AB$a) == c("A", "C", "B"))
+A <- data.frame(a=I(c("A", NA, "C")))
+B <- data.frame(a=I(c("B", NA, "C")))
+(AB <- rbind(A,B))
+(cl <- sapply(AB, class))
+stopifnot(cl[1] == "AsIs")
+
+A <- data.frame(a=1)
+A$b <- "A"
+B <- data.frame(a=2, b=I("B"))
+(AB <- rbind(A,B))
+(cl <- sapply(AB, class))
+stopifnot(cl[2] == "character")
+
+A <- data.frame(a=1, b="A")
+B <- data.frame(a=2, b=I("B"))
+(AB <- rbind(A,B))
+(cl <- sapply(AB, class))
+stopifnot(cl[2] == "factor")
+##
 
 
 ## keep at end, as package `methods' has had persistent side effects

@@ -725,6 +725,12 @@ BUG FIXES
     o	R CMD config now works correctly when called from a Makefile
 	using GNU make.
 
+    o	The data.frame method for rbind() was
+	- converting character columns to factors,
+	- converting ordered factor columns to unordered factors,
+	- failing to append correctly a factor to a character column 
+	  and vice versa.
+
 
 
 	**************************************************
