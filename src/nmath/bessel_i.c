@@ -37,6 +37,8 @@ double bessel_i(double x, double alpha, double expo)
 {
     long nb, ncalc, ize;
     double *bi;
+    char *vmax;
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -47,10 +49,10 @@ double bessel_i(double x, double alpha, double expo)
     }
     ize = (long)expo;
     if (alpha < 0) {
-	/* Using Abramowitz & Stegun  9.6.2 
+	/* Using Abramowitz & Stegun  9.6.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_i(x, -alpha, expo) + 
-	       bessel_k(x, -alpha, expo) * ((ize == 1)? 2. : 2.*exp(-x))/M_PI 
+	return(bessel_i(x, -alpha, expo) +
+	       bessel_k(x, -alpha, expo) * ((ize == 1)? 2. : 2.*exp(-x))/M_PI
 	       * sin(-M_PI * alpha));
     }
     nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
@@ -59,6 +61,7 @@ double bessel_i(double x, double alpha, double expo)
     bi = (double *) calloc(nb, sizeof(double));
     if (!bi) MATHLIB_ERROR("%s", "bessel_i allocation error");
 #else
+    vmax = vmaxget();
     bi = (double *) R_alloc(nb, sizeof(double));
 #endif
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
@@ -74,6 +77,8 @@ double bessel_i(double x, double alpha, double expo)
     x = bi[nb-1];
 #ifdef MATHLIB_STANDALONE
     free(bi);
+#else
+    vmaxset(vmax);
 #endif
     return x;
 }

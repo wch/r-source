@@ -38,6 +38,8 @@ double bessel_j(double x, double alpha)
 {
     long nb, ncalc;
     double *bj;
+    char *vmax;
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -58,6 +60,7 @@ double bessel_j(double x, double alpha)
     bj = (double *) calloc(nb, sizeof(double));
     if (!bj) MATHLIB_ERROR("%s", "bessel_j allocation error");
 #else
+    vmax = vmaxget();
     bj = (double *) R_alloc(nb, sizeof(double));
 #endif
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
@@ -72,6 +75,8 @@ double bessel_j(double x, double alpha)
     x = bj[nb-1];
 #ifdef MATHLIB_STANDALONE
     free(bj);
+#else
+    vmaxset(vmax);
 #endif
     return x;
 }

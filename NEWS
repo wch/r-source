@@ -20,6 +20,8 @@ USER-VISIBLE CHANGES
 	method to distribute data objects is now via 
 	save(compress = TRUE).
 
+    o	pie() replaces piechart() and defaults to using pastel colours.
+
 
 NEW FEATURES
 
@@ -220,6 +222,10 @@ C-LEVEL FACILITIES
     o	The methods used by optim() have entry points in R_ext/Applic.h
 	and have a more general interface documented in `Writing R
 	Extensions'.
+
+    o	The bessel_? entry points are now suitable to be called
+	repeatedly from code loaded by .C().  (They did not free
+	memory until .C() returned in earlier versions of R.)
 
 
 BUG FIXES

@@ -37,6 +37,8 @@ double bessel_y(double x, double alpha)
 {
     long nb, ncalc;
     double *by;
+    char *vmax;
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -56,6 +58,7 @@ double bessel_y(double x, double alpha)
     by = (double *) calloc(nb, sizeof(double));
     if (!by) MATHLIB_ERROR("%s", "bessel_y allocation error");
 #else
+    vmax = vmaxget();
     by = (double *) R_alloc(nb, sizeof(double));
 #endif
     Y_bessel(&x, &alpha, &nb, by, &ncalc);
@@ -72,6 +75,8 @@ double bessel_y(double x, double alpha)
     x = by[nb-1];
 #ifdef MATHLIB_STANDALONE
     free(by);
+#else
+    vmaxset(vmax);
 #endif
     return x;
 }

@@ -37,6 +37,8 @@ double bessel_k(double x, double alpha, double expo)
 {
     long nb, ncalc, ize;
     double *bk;
+    char *vmax;
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -54,6 +56,7 @@ double bessel_k(double x, double alpha, double expo)
     bk = (double *) calloc(nb, sizeof(double));
     if (!bk) MATHLIB_ERROR("%s", "bessel_k allocation error");
 #else
+    vmax = vmaxget();
     bk = (double *) R_alloc(nb, sizeof(double));
 #endif
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
@@ -68,6 +71,8 @@ double bessel_k(double x, double alpha, double expo)
     x = bk[nb-1];
 #ifdef MATHLIB_STANDALONE
     free(bk);
+#else
+    vmaxset(vmax);
 #endif
     return x;
 }
