@@ -62,7 +62,7 @@ $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/src/include/Rversion.h
 
 $(DLLNAME).a: $(OBJS)
 	@$(RM) -f $@
-	$(AR) cr $@ *.o
+	$(AR) cr $@ $(OBJS)
 	$(RANLIB) $@
 
 $(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)

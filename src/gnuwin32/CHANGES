@@ -11,7 +11,8 @@ The fast bmp/png/jpeg code introduced in R 1.8.0 is used even for
 256-color displays (as we have now been able to test it on such).
 
 R's internal malloc etc are now remapped to Rm_malloc etc and only
-used in allocating memory for R objects.
+used in allocating memory for R objects, the Wilcoxon tests and a few
+other memory-intensive applications.
 
 Improved malloc routines from the current version of Doug Lea's malloc
 (as suggested by David Teller) should enable large memory areas to be
@@ -23,11 +24,15 @@ memory chunks that should not matter.
 Both Rterm and Rgui now give usage information via the --help
 command-line flag.
 
-When gnuwin32/rui.c is compiled with DEBUG=T, there is now a 
+When gnuwin32/rui.c is compiled with DEBUG=T, there is now a
 "Misc|Break to debugger" menu option.  This will cause a trap
-to an external debugger, e.g. for running Rgui under gdb.  Be 
-careful: If the menu item is selected when not running under a 
+to an external debugger, e.g. for running Rgui under gdb.  Be
+careful: If the menu item is selected when not running under a
 debugger R is likely to crash.
+
+Rcmd SHLIB was computing dependencies for all C files, not just those
+specified on the command line, and building the DLL from all *.o files
+in the directory.
 
 
 
@@ -62,7 +67,7 @@ File src/nmath/dnt.c was not being built for the standalone Rmath library.
 
 packageStatus() now works under Windows.
 
-Fixed instability under some Windows versions associated with 
+Fixed instability under some Windows versions associated with
 double buffering of the windows() device. (PR#5173)
 
 
@@ -91,7 +96,7 @@ Rterm reverts to sending warning/error messages to stdout on Windows
 
 Rcmd BATCH is now handled in C, and works again on Windows 95/98/ME.
 
-Rcmd now sets the TEXINPUTS environment variable so that LaTeX 
+Rcmd now sets the TEXINPUTS environment variable so that LaTeX
 macros in share/texmf are available via e.g. "Rcmd latex.exe mydoc".
 
 Calling dev.off() (or ending a session) when a windows() device is
@@ -110,7 +115,7 @@ unless overridden.)
 
 doc/manual/Makefile.win now has targets for fullrefman.{dvi,pdf}.
 
-Added "Help | Search help..." menu item to Rgui as a front end to 
+Added "Help | Search help..." menu item to Rgui as a front end to
 help.search().
 
 
@@ -181,15 +186,15 @@ Added some conditional compilation directives to the source so that the
 replacement malloc() (see INSTALL) need not be used.
 
 Changed the installer build code so that patch versions are named
-rwXXXXpat.exe, development versions are named rwXXXXdev.exe, and 
+rwXXXXpat.exe, development versions are named rwXXXXdev.exe, and
 beta versions are named rwXXXXbeta.exe.
 
 Fixed bugs that caused crash when windows were resized repeatedly.(PR#1711)
 
-Changed help to use the 'title' parameter of file.show when displaying 
+Changed help to use the 'title' parameter of file.show when displaying
 help, for consistency with Unix versions.
 
-Default in installer changed so a normal user installation will 
+Default in installer changed so a normal user installation will
 include the source package installation files.
 
 Moved the Sweave style file to the main install group.
@@ -216,7 +221,7 @@ user/password combination can be set to prompt the user with a
 username/password dialog box, and this will be presented on proxy
 authentication failure.
 
-New function choose.files() for interactive multiple file selection. 
+New function choose.files() for interactive multiple file selection.
 
 The output from formatC() uses e+/-0n not e+/-00n for compatibility with
 other platforms and with format().
@@ -277,7 +282,7 @@ multiple file selection.
 now install several files at once (by selecting multiple files in the
 file selector).
 
-Removed some calls to reset the size of the console, so it will 
+Removed some calls to reset the size of the console, so it will
 stay maximized throughout window operations.
 
 The internal pager will page down with space or CTRL-F and page up
@@ -356,7 +361,7 @@ Printing and copying from the menu of a graphics device now preserve
 the active graphics device.
 
 Fixed a crash that occurred when an attempt was made to view a file in
-the pager but the file could not be opened (e.g. because another 
+the pager but the file could not be opened (e.g. because another
 application had it opened with exclusive access).
 
 
