@@ -99,7 +99,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   \code{\link{loess.control}},
   \code{\link{predict.loess}}.
 
-  \code{\link[base]{lowess}}, the ancestor of \code{loess} (with
+  \code{\link{lowess}}, the ancestor of \code{loess} (with
   different defaults!).
 }
 \examples{

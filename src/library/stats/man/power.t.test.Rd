@@ -44,7 +44,7 @@ power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
   you may see errors from it, notably about inability to bracket the
   root when invalid arguments are given.
 }
-\seealso{\code{\link{t.test}}, \code{\link[base]{uniroot}}}
+\seealso{\code{\link{t.test}}, \code{\link{uniroot}}}
 
 \examples{
  power.t.test(n=20, delta=1)

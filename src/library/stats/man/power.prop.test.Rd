@@ -44,7 +44,7 @@ power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
   specified.
 }
 
-\seealso{\code{\link{prop.test}}, \code{\link[base]{uniroot}}}
+\seealso{\code{\link{prop.test}}, \code{\link{uniroot}}}
 
 
 \examples{

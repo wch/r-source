@@ -36,7 +36,7 @@ power.anova.test(groups = NULL, n = NULL, between.var = NULL,
   you may see errors from it, notably about inability to bracket the
   root when invalid arguments are given.
 }
-\seealso{\code{\link[base]{anova}}, \code{\link[base]{lm}}, \code{\link[base]{uniroot}}}
+\seealso{\code{\link{anova}}, \code{\link{lm}}, \code{\link{uniroot}}}
 
 \examples{
 power.anova.test(groups=4, n=5, between.var=1, within.var=3)

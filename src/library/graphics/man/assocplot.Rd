@@ -41,8 +41,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   element of \code{col}, which defaults to red.
 }
 \seealso{
-  \code{\link{mosaicplot}};
-  \code{\link[ctest]{chisq.test}}.
+  \code{\link{mosaicplot}}; \code{\link[stats]{chisq.test}}.
 }
 \references{
   Cohen, A. (1980),
