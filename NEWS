@@ -135,6 +135,9 @@ C-LEVEL FACILITIES
     o	The Makefile in src/nmath/standalone now has 'install' and
 	'uninstall' targets -- see the README file in that directory.
 
+    o	Header files Rinternals.h and Rdefines.h are now suitable for
+	calling directly from C++.
+
 
 DEPRECATED & DEFUNCT
 

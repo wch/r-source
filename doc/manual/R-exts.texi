@@ -3107,15 +3107,14 @@ functions that have been used to implement the core parts of @R{}
 through @code{.Internal} calls.  A public subset of these is defined in
 the header file @file{Rinternals.h} in the directory
 @file{@var{R_HOME}/include} that should be available on any @R{}
-installation.  (Users of C++ should note that this is a C header and
-needs to be declared as @code{extern "C"}.)
+installation.
 
 Another approach is to use @R{} versions of the macros and functions
 defined for the @Sl{} version 4 interface @code{.Call}, which are
-defined in the header file @file{Rdefines.h} (again, a C and not a C++
-header).  This is a somewhat simpler approach, and is certainly to be
-preferred if the code might be shared with @Sl{} at any stage.  However,
-it is less well documented and less tested.
+defined in the header file @file{Rdefines.h}.  This is a somewhat
+simpler approach, and is certainly to be preferred if the code might be
+shared with @Sl{} at any stage.  However, it is less well documented and
+less tested.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
@@ -4729,9 +4728,9 @@ conflicts (notably with Windows headers), and the known
 problematic defines can be removed by defining @code{STRICT_R_HEADERS}.
 
 Most of these header files, including all those included by @file{R.h},
-can be used from C++ code.  Others (including @file{Rinternals.h} and
-@code{Rdefines.h} should be included within an @code{extern "C"}
-declaration, and for clarity this is advisable for all @R{} header files.
+can be used from C++ code.  Some others need to be included within an
+@code{extern "C"} declaration, and for clarity this is advisable for all
+@R{} header files.
 
 @quotation
 @strong{Note:} Because @R{} re-maps many of its external names to avoid
