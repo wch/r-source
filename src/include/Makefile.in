@@ -23,7 +23,7 @@ INT_HEADERS = Defn.h Errormsg.h Fileio.h Graphics.h IOStuff.h \
 DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) \
   config.h.in stamp-h.in Rmath.h0.in
 
-SUBDIRS = R_ext
+SUBDIRS = R_ext Rmodules
 
 TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
 

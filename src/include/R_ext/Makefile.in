@@ -22,12 +22,7 @@ R_EXT_HEADERS = \
   Parse.h Print.h PrtUtil.h R-ftp-http.h RS.h Random.h RConverters.h \
   Rdynload.h Utils.h eventloop.h libextern.h
 
-## <FIXME>
-## Why are the module headers not in R_EXT_HEADERS?
-## Because they are not installed.
-DISTFILES = Makefile.in $(R_EXT_HEADERS) \
-  RX11.h Rinternet.h Rlapack.h
-## </FIXME>
+DISTFILES = Makefile.in $(R_EXT_HEADERS)
 TIMESTAMPS = $(R_EXT_HEADERS:.h=.ts)
 
 CLEANFILES = stamp-R $(TIMESTAMPS)

@@ -50,7 +50,7 @@
 #define R_X11_DEVICE 1
 #include "devX11.h"
 
-#include <R_ext/RX11.h>
+#include <Rmodules/RX11.h>
 
 #define CURSOR		XC_crosshair		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */

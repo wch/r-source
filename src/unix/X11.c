@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2003 The R Development Core Team
+ *  Copyright (C) 1999-2004 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include <Defn.h>
 #if defined(HAVE_X11)
 
-#include <R_ext/RX11.h>	     /* typedefs for the module routine types */
+#include <Rmodules/RX11.h>   /* typedefs for the module routine types */
 
 static R_X11Routines routines, *ptr = &routines;
 
