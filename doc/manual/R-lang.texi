@@ -3593,6 +3593,7 @@ A uniform set of file access functions is provided on all platforms:
 @item @code{file.exists} @tab Test for existence           @findex file.exists
 @item @code{file.info} @tab Miscellaneous file information @findex file.info
 @item @code{file.remove} @tab remove files                 @findex file.remove
+@item @code{file.rename} @tab rename files                 @findex file.rename
 @item @code{file.show} @tab Display a text file            @findex file.show
 @item @code{unlink} @tab Remove files or directories.      @findex unlink
 @end multitable
