@@ -28,14 +28,34 @@
   creates a binary image of the package code, which is then loaded when
   the library is attached, rather than evaluating the package source at
   that time.  Having a file \code{install.R} in the package directory
-  (its contents don't matter) makes this the default behavior for the
-  package (option \code{--no-save} overrides).  You may need \code{--save}
-  if your package requires other packages to evaluate its own source.
+  makes this the default behavior for the package (option
+  \code{--no-save} overrides).  You may need \code{--save} if your
+  package requires other packages to evaluate its own source.  If the
+  file \file{install.R} is non-empty, it should contain R expressions to
+  be executed when the package is attached, after loading the saved
+  image.  
 
   
   For checking (via the examples in the help files \file{man/*.Rd},
   use \code{Rcmd check [-l lib] <pkg>}: use \code{Rcmd check --help}
   for more information.
+}
+
+\section{Packages using the methods package}{
+Packages that require the methods package, and that use functions such as
+\code{\link{setMethod}} or \code{\link{setClass}}, should be installed
+by creating a binary image.
+
+The package should require the methods package, both during installation
+and when the user attaches the package.  A good solution for most
+cases is to include the line \code{require("methods")} twice, once at
+the beginning of the package's R source, and once in the file
+\file{install.R} in the package directory (the top-level directory, \emph{not}
+in the \file{R} directory below that).  The \file{install.R} file
+causes an image to be saved, and the contents will ensure that methods
+are available when
+the package is attached.
+
 }
 \seealso{
   \code{\link{REMOVE}}, and \code{\link{library}} for information on
