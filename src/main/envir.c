@@ -72,7 +72,7 @@
 #define HASHTABLEGROWTHRATE  1.2
 #define HASHMINSIZE          29
 
-
+#define IS_HASHED(x)         (HASHTAB(x) != R_NilValue)
 
 /*----------------------------------------------------------------------
 
@@ -215,10 +215,20 @@ SEXP R_NewHashTable(int size, int growth_rate)
 
 */
 
+static SEXP DeleteItem(SEXP symbol, SEXP lst)
+{
+    if (lst != R_NilValue) {
+	CDR(lst) = DeleteItem(symbol, CDR(lst));
+	if (TAG(lst) == symbol)
+	    lst = CDR(lst);
+    }
+    return lst;
+}
+
 void R_HashDelete(int hashcode, SEXP symbol, SEXP table)
 {
-    /* Call R_HashSet with Unbound value */
-    R_HashSet(hashcode, symbol, table, R_UnboundValue);
+    VECTOR(table)[hashcode % HASHSIZE(table)] =
+	DeleteItem(symbol, VECTOR(table)[hashcode % HASHSIZE(table)]);
     return;
 }
 
@@ -444,10 +454,8 @@ void unbindVar(SEXP symbol, SEXP rho)
 	}
     }
     else {
-	/* Do the hash table thing */
 	hashcode = newhashpjw(CHAR(PRINTNAME(symbol))) %
 	    HASHSIZE(HASHTAB(rho));
-	/* Should be changed to remove */
 	R_HashDelete(hashcode, symbol, HASHTAB(rho));
     }
 }
@@ -813,6 +821,222 @@ static SEXP mfindVarInFrame(SEXP rho, SEXP symbol)
 	frame = CDR(frame);
     }
     return R_NilValue;
+}
+
+
+/*----------------------------------------------------------------------
+
+  do_assign
+
+  
+ */
+
+SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP name, val, aenv;
+    int ginherits = 0;
+    checkArity(op, args);
+    name = findVar(CAR(args), rho);
+    PROTECT(args = evalList(args, rho));
+    if (!isString(CAR(args)) || length(CAR(args)) == 0)
+	error("assign: invalid first argument\n");
+    else
+	name = install(CHAR(STRING(CAR(args))[0]));
+    PROTECT(val = CADR(args));
+    R_Visible = 0;
+    aenv = CAR(CDDR(args));
+    if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
+	error("invalid envir argument\n");
+    if (isLogical(CAR(nthcdr(args, 3))))
+	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
+    else
+	error("get: invalid inherits argument\n");
+    if (ginherits)
+	setVar(name, val, aenv);
+    else
+	defineVar(name, val, aenv);
+    UNPROTECT(2);
+    return val;
+}
+
+
+/*----------------------------------------------------------------------
+
+  do_remove
+
+  There are three arguments to do_remove; a list of names to remove,
+  an optional environment (if missing set it to R_GlobalEnv) and
+  inherits, a logical indicating whether to look in the parent env if
+  a symbol is not found in the supplied env.  This is ignored if
+  environment is not specified.
+
+*/
+
+static int RemoveVariable(SEXP name, int hashcode, SEXP env)
+{
+    SEXP *fp;
+    if (IS_HASHED(env)) {
+	SEXP hashtab = HASHTAB(env);
+	fp = &(VECTOR(hashtab)[hashcode % HASHSIZE(hashtab)]);
+    }
+    else
+	fp = &(FRAME(env));
+
+    while (*fp != R_NilValue) {
+	if (TAG(*fp) == name) {
+	    *fp = CDR(*fp);
+	    R_DirtyImage = 1;
+	    return 1;
+	}
+	fp = &CDR(*fp);
+    }
+    return 0;
+}
+
+SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP name, envarg, tsym, tenv, tframe;
+    int ginherits = 0;
+    int done, i, hashcode;
+    checkArity(op, args);
+
+    name = CAR(args);
+    if (!isString(name))
+	error("invalid first argument to remove.\n");
+    args = CDR(args);
+
+    envarg = CAR(args);
+    if (envarg != R_NilValue) {
+	if (TYPEOF(envarg) != ENVSXP)
+	    error("invalid envir argument\n");
+    }
+    else envarg = R_GlobalContext->sysparent;
+    args = CDR(args);
+
+    if (isLogical(CAR(args)))
+	ginherits = asLogical(CAR(args));
+    else
+	error("get: invalid inherits argument\n");
+
+    for (i = 0; i < LENGTH(name); i++) {
+	done = 0;
+	tsym = install(CHAR(STRING(name)[i]));
+	hashcode = hashpjw(CHAR(PRINTNAME(tsym)));
+	tenv = envarg;
+	while (tenv != R_NilValue) {
+	    done = RemoveVariable(tsym, hashcode, tenv);
+	    if (done || !ginherits)
+		break;
+	    tenv = CDR(tenv);
+	}
+	if (!done)
+	    warning("remove: variable \"%s\" was not found\n",
+		    CHAR(PRINTNAME(tsym)));
+    }
+    return R_NilValue;
+}
+
+
+/*----------------------------------------------------------------------
+
+  do_get
+
+  This function returns the SEXP associated with the character
+  argument.  It needs the environment of the calling function as a
+  default.
+
+      get(x, envir, mode, inherits)
+      exists(x, envir, mode, inherits)
+
+*/
+
+
+SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP rval, genv, t1;
+    SEXPTYPE gmode;
+    int ginherits = 0, where;
+    checkArity(op, args);
+
+    /* Grab the environment off the first arg */
+    /* for use as the default environment. */
+
+    /* TODO: Don't we have a better way */
+    /* of doing this using sys.xxx now? */
+
+    rval = findVar(CAR(args), rho);
+    if (TYPEOF(rval) == PROMSXP)
+	genv = PRENV(rval);
+
+    /* Now we can evaluate the arguments */
+
+    PROTECT(args = evalList(args, rho));
+
+    /* The first arg is the object name */
+    /* It must be present and a string */
+
+    if (!isString(CAR(args)) || length(CAR(args)) < 1
+	|| strlen(CHAR(STRING(CAR(args))[0])) == 0) {
+	errorcall(call, "invalid first argument\n");
+	t1 = R_NilValue;
+    }
+    else
+	t1 = install(CHAR(STRING(CAR(args))[0]));
+
+    /* envir :	originally, the "where=" argument */
+
+    if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
+	where = asInteger(CADR(args));
+	genv = R_sysframe(where,R_GlobalContext);
+    }
+    else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
+	genv = CADR(args);
+    else {
+	errorcall(call,"invalid envir argument\n");
+	genv = R_NilValue;  /* -Wall */
+    }
+
+    /* mode :  The mode of the object being sought */
+
+    if (isString(CAR(CDDR(args)))) {
+	if (!strcmp(CHAR(STRING(CAR(CDDR(args)))[0]),"function"))
+	    gmode = FUNSXP;
+	else
+	    gmode = str2type(CHAR(STRING(CAR(CDDR(args)))[0]));
+    } else {
+	errorcall(call,"invalid mode argument\n");
+	gmode = FUNSXP;/* -Wall */
+    }
+
+    if (isLogical(CAR(nthcdr(args, 3))))
+	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
+    else
+	errorcall(call,"invalid inherits argument\n");
+
+    /* Search for the object */
+    rval = findVar1(t1, genv, gmode, ginherits);
+
+    UNPROTECT(1);
+
+    if (PRIMVAL(op)) { /* have get(.) */
+	if (rval == R_UnboundValue)
+	    errorcall(call,"variable \"%s\" was not found\n",
+		      CHAR(PRINTNAME(t1)));
+	/* We need to evaluate if it is a promise */
+	if (TYPEOF(rval) == PROMSXP)
+	    rval = eval(rval, genv);
+	NAMED(rval) = 1;
+	return rval;
+    }
+    else { /* exists(.) */
+	if (rval == R_UnboundValue)
+	    ginherits = 0;
+	else
+	    ginherits = 1;
+	rval = allocVector(LGLSXP, 1);
+	LOGICAL(rval)[0] = ginherits;
+	return rval;
+    }
 }
 
 
