@@ -67,7 +67,7 @@ $(EX_IN): FORCE
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--txt --example" $(MAKE) R_PKGS="$${pkg}" DOCS); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
-	  $(top_builddir)/bin/massage-Examples $${pkg} \
+	  $(SHELL) $(top_srcdir)/share/sh/massage-Examples.sh $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
 	fi)
