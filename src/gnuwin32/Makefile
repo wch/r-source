@@ -161,7 +161,9 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
 	$(MAKE) --no-print-directory -C ./getline
-	$(MAKE) --no-print-directory -C ../extra/xdr -f Makefile.win
+	@for ex in pcre bzip2 zlib xdr; do \
+	  $(MAKE) --no-print-directory -C ../extra/$${ex} -f Makefile.win || exit 1; \
+	done
 
 rmodules:
 	$(MAKE) --no-print-directory -C ../modules \

@@ -2,14 +2,12 @@
 include ../../gnuwin32/MkRules
 
 CFLAGS = -I../../include -I. -O2 -DWIN32
-ifdef SUPPORT_UTF8
-CFLAGS += -DSUPPORT_UTF8
-endif
 
-all: libpcre.a
+all: makeMakedeps libpcre.a
 
-pcre.o: pcre.c chartables.h
-libpcre.a: get.o maketables.o pcre.o study.o
+CSOURCES = get.c maketables.c pcre.c study.c
+OBJS=$(CSOURCES:.c=.o)
+libpcre.a: $(OBJS)
 
 ## this can't be used if cross-building, so ship the file
 ifneq ($(strip $(BUILD)),CROSS)
@@ -22,7 +20,16 @@ chartables.h: chartables.h.win
 endif
 
 clean:
-	$(RM) *.o *~ libpcre.a
+	$(RM) *.o *~ libpcre.a *.d Makedeps
 
 distclean: clean
 	$(RM) chartables.h dftables.exe
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps
