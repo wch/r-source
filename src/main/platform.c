@@ -831,8 +831,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
     
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 7));
-    PROTECT(ansnames = allocVector(STRSXP, 7));
+    PROTECT(ans = allocVector(LGLSXP, 8));
+    PROTECT(ansnames = allocVector(STRSXP, 8));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -869,19 +869,27 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(ans)[i++] = 0;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("libxml"));
-#ifdef HAVE_LIBXML
-    INTEGER(ans)[i++] = 1;
-#else
-    INTEGER(ans)[i++] = 0;
-#endif
-
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
 #if defined(Win32) || defined(HAVE_BSD_NETWORKING)
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;
 #endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("sockets"));
+#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("libxml"));
+#if defined(HAVE_LIBXML) || defined(HAVE_BSD_NETWORKING)
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

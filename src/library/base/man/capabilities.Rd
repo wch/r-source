@@ -9,8 +9,8 @@
 capabilities(what = NULL)
 }
 \arguments{
-  \item{what}{character vector or \code{NULL}, specifiying
-    required components.}
+  \item{what}{character vector or \code{NULL}, specifying
+    required components.  \code{NULL} implies that all are required.}
 }
 \value{
   A named logical vector. Current components are
@@ -19,15 +19,19 @@ capabilities(what = NULL)
     \item{tcltk}{Is the \code{tcltk} package operational?}
     \item{X11}{(Unix)  Are \code{X11} and the data editor available?}
     \item{libz}{Is \code{\link{gzfile}} available?}
-    \item{libxml}{Are \code{\link{url}} and the internal method for
+    \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
+    \item{sockets}{Are \code{\link{make.socket}} and related functions
+      available?}
+    \item{libxml}{Is there support for integrating \code{libxml} with
+      the \R event loop?}
 }
 \seealso{\code{\link{.Platform}}}
 
 \examples{
 capabilities()
 
-if(!capabilities("libxml"))
+if(!capabilities("http/ftp"))
    warning("internal download.file() is not available")
 
 ## See also the examples for `connections'.
