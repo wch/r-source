@@ -47,7 +47,6 @@ extern char *alloca(size_t);
 extern UImode  CharacterMode;
 
 #ifdef SUPPORT_MBCS
-#if 0
 static int wcwidth(wchar_t ucs)
 {
   return 1 +
@@ -64,13 +63,6 @@ static int wcwidth(wchar_t ucs)
       (ucs >= 0x20000 && ucs <= 0x2fffd) ||
       (ucs >= 0x30000 && ucs <= 0x3fffd)*/));
 }
-#endif
-
-static int wcwidth(wchar_t ucs)
-{
-    return (ucs==L'M') ?3:1;
-}
-
 
 static mbstate_t mb_st; /* use for char transpose as well */
 
@@ -375,6 +367,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
     int i, used, w0;
     char *buff, *P = s, *q;
     wchar_t wc;
+    Rboolean leftedge;
 #endif
 
     /* This is right, since columns are of fixed size */
@@ -388,7 +381,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	if (FC && (fch == 0)) {chf = s[FC]; s[FC] = '$';} else chf = '\0';
 	if ((len > FC+COLS) && (lch == COLS - 1)) {
 	    chl = s[FC+lch]; s[FC+lch] = '$';
-	} 
+	}
 	else chl = '\0';
 	last = FC + lch + 1;
 	if (len > last) {ch = s[last]; s[last] = '\0';} else ch = '\0';
@@ -400,37 +393,34 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 #else
 	q = buff = alloca(strlen(s) + 1); /* overkill */
 
-	if (FC && (fch == 0)) {*q++ = '$'; fch++;}
+	leftedge = FC && (fch == 0);
+	if(leftedge) fch++;
 	memset(&mb_st, 0, sizeof(mbstate_t));
-	for (w0 = -FC; w0 < fch; ) {
+	for (w0 = -FC; w0 < fch && *P; ) { /* should have enough ... */
 	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 	    w0 += wcwidth(wc);
 	}
 	/* Now we have got to on or just after the left edge.
 	   Possibly have a widechar hanging over.
-	   It's not clear what to do, so fill with blanks.
+	   If so, fill with blanks.
 	*/
 	if(w0 > fch) for(i = 0; i < w0 - fch; i++) *q++ = ' ';
 
+	if (leftedge) *q++ = '$';
+
 	while (w0 < lch) {
 	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    if(used <= 0) break;
 	    w0 += wcwidth(wc);
-	    if(w0 > lch) {
-		break; /* char straddling the right edge  
-			  is not displayed */
-	    }
-	    for(j = 0; j < used; j++) {
-		*q++ = *P++;
-		if(*P == 'M') {*q++ ='N';*q++ ='O';}
-	    }
+	    if(w0 > lch) break; /* char straddling the right edge
+				   is not displayed */
+	    for(j = 0; j < used; j++) *q++ = *P++;
 	}
+	*q = 0;
 	if((len > FC+COLS) && (lch == COLS - 1)) *q++ = '$';
 	else {
 	    used = mbrtowc(NULL, P, MB_CUR_MAX, &mb_st);
-	    for(j = 0; j < used; j++) {
-		if(*P == 'M') {*q++ ='N';*q++ ='O';}
-		*q++ = *P++;
-	    }
+	    for(j = 0; j < used; j++) *q++ = *P++;
 	}
 	*q = '\0';
 	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), buff);
@@ -490,7 +480,7 @@ static int writeline(ConsoleData p, int i, int j)
 		P += used;
 	    }
 	    w0 = wcwidth(wc); P -= used;
-	    r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
+	    r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH,
 		     w0 * FW, FH);
 	    gfillrect(p->bm, p->ufg, r);
 	    for(ii = 0; ii < used; ii++) nn[ii] = P[ii];
