@@ -141,11 +141,12 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			strncpy(buf, line, strchr(line, ':')-line);
 			buf[strchr(line, ':')-line] = '\0';
 			SET_STRING_ELT(what, nwhat, mkChar(buf));
-			SET_STRING_ELT(retval, nwhat+nwhat*k,
+			nwhat++;
+			/* lastm uses C indexing, hence nwhat-1 */
+			lastm=nwhat-1;
+			SET_STRING_ELT(retval, lastm+nwhat*k,
 				       mkChar(line +
 					      regmatch[0].rm_eo));
-			lastm=nwhat;
-			nwhat++;
 		    }
 		}
 		else{
