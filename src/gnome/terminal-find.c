@@ -29,6 +29,8 @@ struct _find_selection {
 static GnomeFindDialogParams find_params; /* find parameters from dialog box */
 
 static gint find_pos, find_pos_max; /* current position of the find 'cursor', and the max (min is 0) */
+static gint find_pos_init; /* the initial find position (for wrapped searches) */
+static gboolean search_wrapped; /* used to determine if a search has wrapped */
 
 static gchar *find_text_cache; /* cache of the console text */
 
@@ -39,8 +41,6 @@ static GList *find_current_match;  /* List of matches on currently cached line *
 regex_t *preg; /* compiled regular expression structure */
 
 
-/* FIXME: find/find again needs to check if regex button state has changed; force line cache update if it has */
-/* FIXME: save/restore find params to dialog box */
 /* FIXME: wrapped searches */
 
 void find_update_text_cache(void)
@@ -63,9 +63,7 @@ void find_compile_regex(GnomeFindDialog *find_dialog)
 
   GtkWidget *message_dialog;
 
-  /* FIXME: cache compiled regular expression */
-
-  if(find_params.regular_exp == TRUE) {
+  if(find_params.regex == TRUE) {
     /* compile the regular expression */
     cflags = REG_EXTENDED;
     if(find_params.case_sensitive == FALSE) {
@@ -101,7 +99,6 @@ void find_compile_regex(GnomeFindDialog *find_dialog)
 void find_free_regex(void)
 {
 #ifdef HAVE_REGCOMP
-  /* FIXME: this will have to change if compiled regex is cached */
   if(preg != NULL) {
     regfree(preg);
     preg = NULL;
@@ -147,21 +144,43 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
   /* Move one line */
   switch (find_params.direction) {
   case GNOME_FIND_FORWARDS:
-    while ((find_pos <= find_pos_max) && (find_text_cache[find_pos] == '\n')) {
-      find_pos++;
-    }
-    if (find_pos > find_pos_max) {
-      return GNOME_FIND_NOMATCH;
-    }
+    do {
+      if(find_pos > find_pos_max) {
+	if(find_params.wrap_search == TRUE) {
+	  find_pos = 0;
+	  search_wrapped = TRUE;
+	}
+	else {
+	  return GNOME_FIND_NOMATCH;
+	}
+      }
+      else {
+	find_pos++;
+	if((search_wrapped) && (find_pos >= find_pos_init)) {
+	  return GNOME_FIND_NOMATCH;
+	}
+      }
+    } while (find_text_cache[find_pos] == '\n');
     break;
-
+    
   case GNOME_FIND_BACKWARDS:
-    while ((find_pos >= 0) && (find_text_cache[find_pos] == '\n')) {
-      find_pos--;
-    }
-    if (find_pos < 0) {
-      return GNOME_FIND_NOMATCH;
-    }
+    do {
+      if(find_pos < 0) {
+	if(find_params.wrap_search == TRUE) {
+	  find_pos = find_pos_max;
+	  search_wrapped = TRUE;
+	}
+	else {
+	  return GNOME_FIND_NOMATCH;
+	}
+      }
+      else {
+	find_pos--;
+	if((search_wrapped) && (find_pos <= find_pos_init)) {
+	  return GNOME_FIND_NOMATCH;
+	}
+      }
+    } while (find_text_cache[find_pos] == '\n');
     break;
   }
 
@@ -180,7 +199,7 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
 
   /* Search line */
 #ifdef HAVE_REGCOMP
-  if (find_params.regular_exp == TRUE) {
+  if (find_params.regex == TRUE) {
     /* Regular expression search */
     tmp_find_pos = 0; 
     eflags = 0;
@@ -258,6 +277,8 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
 
   /* Return result */
   if (find_current_match != NULL) {
+    if(find_params.direction == GNOME_FIND_BACKWARDS)
+      find_current_match = g_list_last(find_current_match);
     return GNOME_FIND_MATCH;
   }
 
@@ -304,6 +325,7 @@ void find_process_result(GnomeFindDialog *find_dialog, int find_result)
 void R_gtk_terminal_find(GnomeFindDialog *find_dialog)
 {
   int find_result, select_start, select_end;
+  find_selection *find_select;
 
   GtkWidget *message_dialog;
 
@@ -325,7 +347,6 @@ void R_gtk_terminal_find(GnomeFindDialog *find_dialog)
   find_result = GNOME_FIND_NOTFOUND;
 
   while (find_result == GNOME_FIND_NOTFOUND) {
-    /*    if ((line_cache_update == TRUE) || (find_current_match == NULL) || (find_pos < line_cache_start) || (find_pos > line_cache_end)) {*/
     if ((line_cache_update == TRUE) || (find_pos < line_cache_start) || (find_pos > line_cache_end)) {
       find_result = find_update_line_cache(find_dialog);
     }
@@ -335,8 +356,14 @@ void R_gtk_terminal_find(GnomeFindDialog *find_dialog)
 	find_result = find_update_line_cache(find_dialog);
       }
       else {
-	find_current_match = find_current_match->next;
-	find_result = GNOME_FIND_MATCH;
+	find_select = (find_selection *) find_current_match->next->data;
+	if ((search_wrapped) && (find_select->select_start >= find_pos_init)) {
+	  find_result = GNOME_FIND_NOMATCH;
+	}
+	else {
+	  find_current_match = find_current_match->next;
+	  find_result = GNOME_FIND_MATCH;
+	}
       }
     }
     else if (find_params.direction == GNOME_FIND_BACKWARDS) {
@@ -345,8 +372,14 @@ void R_gtk_terminal_find(GnomeFindDialog *find_dialog)
 	find_result = find_update_line_cache(find_dialog);
       }
       else {
-	find_current_match = find_current_match->prev;
-	find_result = GNOME_FIND_MATCH;
+	find_select = (find_selection *) find_current_match->prev->data;
+	if ((search_wrapped) && (find_select->select_start <= find_pos_init)) {
+	  find_result = GNOME_FIND_NOMATCH;
+	}
+	else {
+	  find_current_match = find_current_match->prev;
+	  find_result = GNOME_FIND_MATCH;
+	}
       }
     }
   }
@@ -368,14 +401,25 @@ static void find_console_changed(GtkWidget *widget, gpointer data)
 
 static void find_dialog_cb(GtkWidget *widget, gpointer data)
 {
+  gchar *tmp_text;
+
   g_return_if_fail(widget != NULL);
   g_return_if_fail(GNOME_IS_FIND_DIALOG(widget));
 
-  if(find_params.find_text != NULL)
+  tmp_text = gnome_find_dialog_get_find_text(GNOME_FIND_DIALOG(widget));
+
+  if(find_params.find_text != NULL) {
+    if(strcmp(find_params.find_text, tmp_text) != 0) {
+      line_cache_update = TRUE;
+    }
     g_free(find_params.find_text);
+  }
+
+  if(find_params.regex != GNOME_FIND_DIALOG(widget)->params.regex)
+    line_cache_update = TRUE;
 
   find_params = GNOME_FIND_DIALOG(widget)->params;
-  find_params.find_text = gnome_find_dialog_get_find_text(GNOME_FIND_DIALOG(widget));
+  find_params.find_text = tmp_text;
 
   switch(find_params.start_pos) {
   case GNOME_FIND_TOP:
@@ -391,19 +435,33 @@ static void find_dialog_cb(GtkWidget *widget, gpointer data)
     break;
   }
 
+  find_pos_init = find_pos;
+  search_wrapped = FALSE;
+
   R_gtk_terminal_find(GNOME_FIND_DIALOG(widget));
 }
 
 static void find_again_dialog_cb(GtkWidget *widget, gpointer data)
 {
+  gchar *tmp_text;
+
   g_return_if_fail(widget != NULL);
   g_return_if_fail(GNOME_IS_FIND_DIALOG(widget));
 
-  if(find_params.find_text != NULL)
+  tmp_text = gnome_find_dialog_get_find_text(GNOME_FIND_DIALOG(widget));
+
+  if(find_params.find_text != NULL) {
+    if(strcmp(find_params.find_text, tmp_text) != 0) {
+      line_cache_update = TRUE;
+    }
     g_free(find_params.find_text);
+  }
+
+  if(find_params.regex != GNOME_FIND_DIALOG(widget)->params.regex)
+    line_cache_update = TRUE;
 
   find_params = GNOME_FIND_DIALOG(widget)->params;
-  find_params.find_text = gnome_find_dialog_get_find_text(GNOME_FIND_DIALOG(widget));
+  find_params.find_text = tmp_text;
 
   R_gtk_terminal_find(GNOME_FIND_DIALOG(widget));
 }
@@ -413,9 +471,9 @@ void edit_find_cb(GtkWidget *widget, gpointer data)
   GtkWidget *find_dialog;
 
 #ifdef HAVE_REGCOMP
-  find_dialog = gnome_find_dialog_new("Find text", NULL, TRUE, TRUE, TRUE);
+  find_dialog = gnome_find_dialog_new("Find text", &find_params, TRUE, TRUE, TRUE);
 #else
-  find_dialog = gnome_find_dialog_new("Find text", NULL, TRUE, TRUE, FALSE);
+  find_dialog = gnome_find_dialog_new("Find text", &find_params, TRUE, TRUE, FALSE);
 #endif /* HAVE_REGCOMP */
 
   gnome_dialog_set_parent(GNOME_DIALOG(find_dialog), GTK_WINDOW(R_gtk_main_window));
@@ -441,7 +499,14 @@ void R_gtk_terminal_find_init()
 {
   /* Find functionality */
   find_params.find_text = NULL;
+  find_params.direction = GNOME_FIND_FORWARDS;
+  find_params.start_pos = GNOME_FIND_TOP;
+  find_params.case_sensitive = FALSE;
+  find_params.wrap_search = FALSE;
+  find_params.regex = FALSE;
   find_pos = 0;
+  find_pos_init = 0;
+  search_wrapped = FALSE;
   find_text_cache = NULL;
   line_cache_update = TRUE;
   find_current_match = NULL;

@@ -47,7 +47,7 @@ struct _GnomeFindDialogParams
 
   gboolean case_sensitive;
   gboolean wrap_search;
-  gboolean regular_exp;
+  gboolean regex;
 
   gchar *find_text;
 };
@@ -62,6 +62,9 @@ struct _GnomeFindDialog
   GnomeFindDialogParams params;
 
   GtkWidget *find_entry;
+
+  GtkWidget *top_radio, *cursor_radio, *bottom_radio;
+  GtkWidget *forwards_radio, *backwards_radio;
 
   GtkWidget *find_button;
   GtkWidget *find_again_button;
@@ -78,10 +81,10 @@ struct _GnomeFindDialogClass
 
 guint      gnome_find_dialog_get_type      (void);
 GtkWidget *gnome_find_dialog_new           (const gchar *title,
-				            const gchar *find_text,
+				            const GnomeFindDialogParams *find_params,
 				            gboolean show_case_sensitive,
 				            gboolean show_wrap_search,
-				            gboolean show_reg_exp);
+				            gboolean show_regex);
 gchar     *gnome_find_dialog_get_find_text (GnomeFindDialog *dialog); /* returns allocated memory */
 
 
