@@ -143,6 +143,12 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   should be regarded as a comment and be discarded.  Lines beginning
   with a comment character (possibly after white space) are treated
   as blank lines.
+
+  As from \R 2.1.0, \code{scan} attempts to share storage with
+  character strings that have already been read.  If an upper bound on
+  the number of character strings cannot be deduced from \code{nmax} or
+  \code{n}, sharing is used for the first 10000 unique strings which are
+  read in.
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as

@@ -177,6 +177,13 @@ NEW FEATURES
 	--no-readline, nor from embedded applications.  Then "~name"
 	is no longer expanded, but "~" still is.
 
+    o   scan() arranges to share storage of duplicated character
+	strings read in: this can dramatically reduce the memory
+	requirements for large character vectors which will
+	subsequently be turned into factors with relatively few
+	levels.  For a million items this halved the time and reduced
+	storage by a factor of 20.
+
 
 UTILITIES
 

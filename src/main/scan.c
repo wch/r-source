@@ -25,12 +25,17 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
+#include <Rmath.h> /* for imin2 */
 
 /* The size of vector initially allocated by scan */
 #define SCAN_BLOCKSIZE		1000
 /* The size of the console buffer */
 #define CONSOLE_BUFFER_SIZE	1024
 #define CONSOLE_PROMPT_SIZE	256
+
+/* The number of distinct strings to track */
+#define MAX_STRINGS	10000
+
 
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 static unsigned char *ConsoleBufp;
@@ -49,9 +54,73 @@ typedef struct {
     Rconnection con;
     Rboolean wasopen;
     int save; /* = 0; */
+    void *hash;
 
     char convbuf[100];
 } LocalData;
+
+/* Hashing structure for strings: not the same as in unique.c */
+typedef struct _HashData {
+  int K, M;
+  SEXP *HashTable;
+  int nins, maxstrings;
+} HashData;
+
+static int scatter(unsigned int key, HashData *d)
+{
+    return 3141592653U * key >> (32 - d->K);
+}
+
+static int shash(char *instr, HashData *d)
+{
+    unsigned int k;
+    char *p = instr;
+    k = 0;
+    while (*p++)
+	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
+    return scatter(k, d);
+}
+
+static int sequal(char *str1, char *str2)
+{
+    return !strcmp(str1, str2);
+}
+
+static HashData *HashTableSetup(int maxstrings)
+{
+    int n4 = 2 * maxstrings;
+    HashData *d;
+    d = (HashData *) R_alloc(1, sizeof(HashData));
+    d->M = 2;
+    d->K = 1;
+    while (d->M < n4) {
+	d->M *= 2;
+	d->K += 1;
+    }
+    d->nins = 0;
+    d->maxstrings = maxstrings;
+
+    d->HashTable = (SEXP *) S_alloc(d->M, sizeof(SEXP));
+    return d;
+}
+
+static SEXP insertString(char *str, HashData *d)
+{
+    int i;
+    SEXP tmp, *h = d->HashTable;
+
+    if(d->nins >= d->maxstrings) return mkChar(str);
+    i = shash(str, d);
+    while (h[i] != NULL) {
+	if (sequal(str, CHAR(h[i]))) return h[i];
+	i = (i + 1) % d->M;
+    }
+    d->nins++;
+    tmp = mkChar(str);
+    h[i] = tmp;
+    return tmp;
+}
+
 
 #define NO_COMCHAR 100000 /* won't occur even in unicode */
 
@@ -430,7 +499,7 @@ static void extractItem(char *buffer, SEXP ans, int i, LocalData *d)
 	if (isNAstring(buffer, 1, d))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else
-	    SET_STRING_ELT(ans, i, mkChar(buffer));
+	    SET_STRING_ELT(ans, i, insertString(buffer, d->hash));
 	break;
     case RAWSXP:
 	if (isNAstring(buffer, 0, d))
@@ -465,6 +534,15 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
     if (d->ttyflag) sprintf(ConsolePrompt, "1: ");
 
     strip = asLogical(stripwhite);
+
+    /* compute bound on number of distinct strings */
+    if (type == STRSXP) {
+	int maxstring;
+
+	maxstring = (maxlines > 0) ? maxlines : MAX_STRINGS;
+	if(maxitems > 0) maxstring = imin2(maxitems, maxstring);
+	d->hash = HashTableSetup(maxstring);
+    }
 
     for (;;) {
 	if (bch == R_EOF) {
@@ -561,7 +639,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     SEXP ans, new, old, w;
     char *buffer = NULL;
     int blksize, c, i, ii, j, n, nc, linesread, colsread, strip, bch;
-    int badline;
+    int badline, nstring = 0;
     R_StringBuffer buf = {NULL, 0, MAXELTSIZE};
 
     nc = length(what);
@@ -583,10 +661,19 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		if (!d->ttyflag & !d->wasopen) d->con->close(d->con);
 		error("invalid `what=' specified");
 	    }
+	    if(TYPEOF(w) == STRSXP) nstring++;
 	    SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(w), blksize));
 	}
     }
     setAttrib(ans, R_NamesSymbol, getAttrib(what, R_NamesSymbol));
+
+    /* compute bound on number of distinct strings */
+    if(nstring > 0) {
+	int maxstring;
+	maxstring = (maxlines > 0) ? maxlines*nstring : MAX_STRINGS;
+	if(maxitems > 0) maxstring = imin2(maxitems*nstring/nc, maxstring);
+	d->hash = HashTableSetup(maxstring);
+    }
 
     n = 0; linesread = 0; colsread = 0; ii = 0;
     badline = 0;
@@ -720,11 +807,12 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline;
-    char *p;
+    char *p, *vmax;
     LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
+    vmax = vmaxget();
 
     file = CAR(args);		   args = CDR(args);
     what = CAR(args);		   args = CDR(args);
@@ -837,6 +925,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
     if (data.quotesave) free(data.quotesave);
+    vmaxset(vmax);
     return ans;
 }
 
