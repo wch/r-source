@@ -190,6 +190,10 @@ NEW FEATURES
         of source-ing the package.  Packages that do more than just
         assign object definitions may need to install with `--save'.
 
+    o   scan() has a new argument `multi.line' for S compatibility,
+	but the default remains the opposite of S (records can cross
+	line boundaries by default).
+
 
 
 BUG FIXES
@@ -218,6 +222,9 @@ BUG FIXES
 
     o   The implementation of sys.function() did not work when the
 	current function was already a function (e.g., a closure). 
+
+    o   Using a pushback with more than two lines at a time could crash.
+
 
 
 	**************************************************

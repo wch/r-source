@@ -3,7 +3,8 @@ scan <-
 	     quote = if (sep=="\n") "" else "'\"",
              dec = ".", skip = 0, nlines = 0,
 	     na.strings = "NA", flush = FALSE, fill = FALSE,
-             strip.white = FALSE, quiet = FALSE, blank.lines.skip = TRUE)
+             strip.white = FALSE, quiet = FALSE, blank.lines.skip = TRUE,
+             multi.line = TRUE)
 {
     na.strings <- as.character(na.strings)# allow it to be NULL
     if(!missing(n)) {
@@ -22,5 +23,5 @@ scan <-
         stop("argument `file' must be a character string or connection")
     .Internal(scan(file, what, nmax, sep, dec, quote, skip, nlines,
                    na.strings, flush, fill, strip.white, quiet,
-                   blank.lines.skip))
+                   blank.lines.skip, multi.line))
 }
