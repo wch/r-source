@@ -161,15 +161,14 @@
    problem with getting the prototype of strptime(). */
 /* #undef HAVE_GLIBC2 */
 
-/* Define if you have the GNOME headers and libraries, and want the GNOME GUI
-   to be built. */
-/* #undef HAVE_GNOME */
-
 /* Define to 1 if you have the <grp.h> header file. */
 /* #undef HAVE_GRP_H */
 
 /* Define to 1 if you have the `hypot' function. */
 #define HAVE_HYPOT 1
+
+/* Define to 1 if you have the `iconv' function. */
+/* #undef HAVE_ICONV */
 
 /* Define to 1 if you have the <ieee754.h> header file. */
 /* #undef HAVE_IEEE754_H */
@@ -236,6 +235,12 @@
 
 /* Define to 1 if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */
+
+/* Define to 1 if you have the `mbrtowc' function. */
+/* #undef HAVE_MBRTOWC */
+
+/* Define to 1 if you have the `mbsrtowcs' function. */
+/* #undef HAVE_MBSRTOWCS */
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
@@ -398,6 +403,21 @@
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1
 
+/* Define to 1 if you have the `wcrtomb' function. */
+/* #undef HAVE_WCRTOMB */
+
+/* Define to 1 if you have the `wcscoll' function. */
+#define HAVE_WCSCOLL 1
+
+/* Define to 1 if you have the `wcsrtombs' function. */
+/* #undef HAVE_WCSRTOMBS */
+
+/* Define to 1 if you have the `wcswidth' function. */
+/* #undef HAVE_WCSWIDTH */
+
+/* Define to 1 if you have the <wctype.h> header file. */
+#define HAVE_WCTYPE_H 1
+
 /* Define if finite() is correct for -Inf/NaN/Inf. */
 #define HAVE_WORKING_FINITE 1
 
@@ -442,13 +462,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 2.0.0"
+#define PACKAGE_STRING "R 2.1.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "R"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.0.0"
+#define PACKAGE_VERSION "2.1.0"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
@@ -526,7 +546,7 @@
 /* #undef Unix */
 
 /* Version number of package */
-#define VERSION "2.0.0"
+#define VERSION "2.1.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
