@@ -1,7 +1,7 @@
-R 1.6.1 for Windows
+R 1.6.2 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.6.1 to
+This distribution contains the sources to build a port of R-1.6.2 to
 run on Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips. See the
 file `README.rw1062' for fuller details, including how to install the binary
 versions.
@@ -90,11 +90,11 @@ Do not use spaces nor unnecessary quotes in your PATH variable.
 Building
 --------
 
-You also need the R source (R-1.6.1.tgz).
+You also need the R source (R-1.6.2.tgz).
 
-Then: untar R-1.6.1.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.6.2.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.6.1/src/gnuwin32
+	cd /somewhere/R-1.6.2/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed and to
 set the type(s) of help that you want built.  BEWARE: MkRules contains
@@ -270,11 +270,11 @@ There is currently a complete set of tools at
 
 You will need Perl, zip and unzip installed.
 
-You also need the R source (R-1.6.1.tgz).
+You also need the R source (R-1.6.2.tgz).
 
-Then: untar R-1.6.1.tgz somewhere, and
+Then: untar R-1.6.2.tgz somewhere, and
 
-	cd /somewhere/R-1.6.1/src/gnuwin32
+	cd /somewhere/R-1.6.2/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
