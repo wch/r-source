@@ -10,6 +10,7 @@
   A time series object containing average air temperatures at
   Nottingham Castle in degrees Fahrenheit for 20 years.
 }
+\usage{data(nottem)}
 \source{
   Anderson, O.D. (1976)
   \emph{Time Series Analysis and Forecasting: The Box-Jenkins approach.}
