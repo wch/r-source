@@ -591,7 +591,7 @@ static SEXP coerceToVectorList(SEXP v)
 	}
 	break;
     default:
-	UNIMPLEMENTED("coerceToPairList");
+	UNIMPLEMENTED("coerceToVectorList");
     }
     tmp = getAttrib(v, R_NamesSymbol);
     if (tmp != R_NilValue)
@@ -696,7 +696,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 		COMPLEX(rval)[i] = asComplex(CAR(vp));
 	    break;
 	default:
-	    UNIMPLEMENTED("coerceList");
+	    UNIMPLEMENTED("coercePairList");
 	}
     }
     else
@@ -763,7 +763,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 		COMPLEX(rval)[i] = asComplex(VECTOR(v)[i]);
 	    break;
 	default:
-	    UNIMPLEMENTED("coerceList");
+	    UNIMPLEMENTED("coerceVectorList");
 	}
     }
     else
