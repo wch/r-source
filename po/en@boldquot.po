@@ -28,12 +28,13 @@
 # This catalog furthermore displays the text between the quotation marks in
 # bold face, assuming the VT100/XTerm escape sequences.
 #
+#: src/main/main.c:49
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-27 17:05+0000\n"
-"PO-Revision-Date: 2005-01-27 17:05+0000\n"
+"POT-Creation-Date: 2005-01-30 08:29+0000\n"
+"PO-Revision-Date: 2005-01-30 08:29+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -441,22 +442,6 @@ msgstr "truncate not enabled for this connection"
 #: src/main/connections.c:827
 msgid "allocation of pipe connection failed"
 msgstr "allocation of pipe connection failed"
-
-#: src/gnuwin32/shext.c:101
-msgid "Invalid R_USER"
-msgstr "Invalid R_USER"
-
-#: src/gnuwin32/shext.c:104
-msgid "Invalid HOME"
-msgstr "Invalid HOME"
-
-#: src/gnuwin32/shext.c:109
-msgid "Invalid HOMEDRIVE"
-msgstr "Invalid HOMEDRIVE"
-
-#: src/gnuwin32/shext.c:112
-msgid "Invalid HOMEDRIVE+HOMEPATH"
-msgstr "Invalid HOMEDRIVE+HOMEPATH"
 
 #: src/gnuwin32/sys-win32.c:188
 msgid "character string expected as first argument"
@@ -2453,7 +2438,7 @@ msgstr "‘[1mname[0m’ must be a string (of length 1) or native symbol refer
 msgid "invalid 'naok' value"
 msgstr "invalid ‘[1mnaok[0m’ value"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:747
+#: src/main/dotcode.c:144 src/main/dotcode.c:744
 msgid "too many arguments in foreign function call"
 msgstr "too many arguments in foreign function call"
 
@@ -2471,7 +2456,7 @@ msgstr "%s function name not in DLL for package %s"
 msgid "%s function name not in load table"
 msgstr "%s function name not in load table"
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:239
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to %s, but argument %d "
@@ -2480,133 +2465,133 @@ msgstr ""
 "explicit request not to duplicate arguments in call to %s, but argument %d "
 "is of the wrong type (%d != %d)"
 
-#: src/main/dotcode.c:257
+#: src/main/dotcode.c:254
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "NAs in foreign function call (arg %d)"
 
-#: src/main/dotcode.c:271
+#: src/main/dotcode.c:268
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "NA/NaN/Inf in foreign function call (arg %d)"
 
-#: src/main/dotcode.c:293
+#: src/main/dotcode.c:290
 #, c-format
 msgid "Complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "Complex NA/NaN/Inf in foreign function call (arg %d)"
 
-#: src/main/dotcode.c:305
+#: src/main/dotcode.c:302
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "character variables must be duplicated in .C/.Fortran"
 
-#: src/main/dotcode.c:309
+#: src/main/dotcode.c:306
 msgid "only first string in char vector used in .Fortran"
 msgstr "only first string in char vector used in .Fortran"
 
-#: src/main/dotcode.c:322 src/main/dotcode.c:439
+#: src/main/dotcode.c:319 src/main/dotcode.c:436
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "unsupported encoding ‘[1m%s[0m’"
 
-#: src/main/dotcode.c:336
+#: src/main/dotcode.c:333
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "conversion problem in re-encoding to ‘[1m%s[0m’"
 
-#: src/main/dotcode.c:343 src/main/dotcode.c:461
+#: src/main/dotcode.c:340 src/main/dotcode.c:458
 msgid "re-encoding is not supported on this system"
 msgstr "re-encoding is not supported on this system"
 
-#: src/main/dotcode.c:366 src/main/dotcode.c:378
+#: src/main/dotcode.c:363 src/main/dotcode.c:375
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "invalid mode to pass to Fortran (arg %d)"
 
-#: src/main/dotcode.c:453
+#: src/main/dotcode.c:450
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "conversion problem in re-encoding from ‘[1m%s[0m’"
 
-#: src/main/dotcode.c:530
+#: src/main/dotcode.c:527
 msgid "NAOK used more than once"
 msgstr "NAOK used more than once"
 
-#: src/main/dotcode.c:534
+#: src/main/dotcode.c:531
 msgid "DUP used more than once"
 msgstr "DUP used more than once"
 
-#: src/main/dotcode.c:540
+#: src/main/dotcode.c:537
 msgid "DLL name is too long"
 msgstr "DLL name is too long"
 
-#: src/main/dotcode.c:543 src/main/dotcode.c:601 src/main/dotcode.c:607
+#: src/main/dotcode.c:540 src/main/dotcode.c:598 src/main/dotcode.c:604
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE used more than once"
 
-#: src/main/dotcode.c:580
+#: src/main/dotcode.c:577
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE argument must be a single character string"
 
-#: src/main/dotcode.c:586
+#: src/main/dotcode.c:583
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE argument is too long"
 
-#: src/main/dotcode.c:630 src/main/dotcode.c:638
+#: src/main/dotcode.c:627 src/main/dotcode.c:635
 msgid "ENCODING used more than once"
 msgstr "ENCODING used more than once"
 
-#: src/main/dotcode.c:632 src/main/dotcode.c:640
+#: src/main/dotcode.c:629 src/main/dotcode.c:637
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING argument must be a single character string"
 
-#: src/main/dotcode.c:677
+#: src/main/dotcode.c:674
 msgid "no arguments supplied"
 msgstr "no arguments supplied"
 
-#: src/main/dotcode.c:678
+#: src/main/dotcode.c:675
 msgid "too many arguments"
 msgstr "too many arguments"
 
-#: src/main/dotcode.c:718 src/main/dotcode.c:753 src/main/dotcode.c:1550
+#: src/main/dotcode.c:715 src/main/dotcode.c:750 src/main/dotcode.c:1547
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "Incorrect number of arguments (%d), expecting %d for %s"
 
-#: src/main/dotcode.c:1410 src/main/dotcode.c:2180
+#: src/main/dotcode.c:1407 src/main/dotcode.c:2177
 msgid "too many arguments, sorry"
 msgstr "too many arguments, sorry"
 
-#: src/main/dotcode.c:1434 src/main/dotcode.c:1456 src/main/engine.c:2624
+#: src/main/dotcode.c:1431 src/main/dotcode.c:1453 src/main/engine.c:2624
 msgid "Invalid graphics state"
 msgstr "Invalid graphics state"
 
-#: src/main/dotcode.c:1505
+#: src/main/dotcode.c:1502
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "NULL value for DLLInfoReference when looking for DLL"
 
-#: src/main/dotcode.c:1576
+#: src/main/dotcode.c:1573
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Wrong type for argument %d in call to %s"
 
-#: src/main/dotcode.c:2269
+#: src/main/dotcode.c:2266
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type “[1m%s[0m” not supported in interlanguage calls"
 
-#: src/main/dotcode.c:2281
+#: src/main/dotcode.c:2278
 msgid "invalid function in call_R"
 msgstr "invalid function in call_R"
 
-#: src/main/dotcode.c:2283
+#: src/main/dotcode.c:2280
 msgid "invalid argument count in call_R"
 msgstr "invalid argument count in call_R"
 
-#: src/main/dotcode.c:2285
+#: src/main/dotcode.c:2282
 msgid "invalid return value count in call_R"
 msgstr "invalid return value count in call_R"
 
-#: src/main/dotcode.c:2330
+#: src/main/dotcode.c:2327
 #, c-format
 msgid "Mode '%s' is not supported in call_R"
 msgstr "Mode ‘[1m%s[0m’ is not supported in call_R"
@@ -3766,71 +3751,71 @@ msgstr "invalid ‘[1mx[0m’ type in ‘[1mx %s y[0m’"
 msgid "invalid 'y' type in 'x %s y'"
 msgstr "invalid ‘[1my[0m’ type in ‘[1mx %s y[0m’"
 
-#: src/main/main.c:100
+#: src/main/main.c:106
 #, c-format
 msgid "syntax error: evaluating expression %d"
 msgstr "syntax error: evaluating expression %d"
 
-#: src/main/main.c:209
+#: src/main/main.c:215
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "error: system commands are not supported in this version of R.\n"
 
-#: src/main/main.c:267 src/main/main.c:361
+#: src/main/main.c:273 src/main/main.c:367
 msgid "syntax error"
 msgstr "syntax error"
 
-#: src/main/main.c:521
+#: src/main/main.c:527
 msgid "unable to open the base package\n"
 msgstr "unable to open the base package\n"
 
-#: src/main/main.c:560
+#: src/main/main.c:566
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "WARNING: UTF-8 locales are not supported in this build of R\n"
 
-#: src/main/main.c:589
+#: src/main/main.c:595
 msgid "unable to restore saved data in .RData\n"
 msgstr "unable to restore saved data in .RData\n"
 
-#: src/main/main.c:839
+#: src/main/main.c:845
 msgid "can't quit from browser"
 msgstr "can't quit from browser"
 
-#: src/main/main.c:843
+#: src/main/main.c:849
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "one of “[1myes[0m”, “[1mno[0m”, “[1mask[0m” or “[1mdefault[0m” expected."
 
-#: src/main/main.c:848
+#: src/main/main.c:854
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=“[1mask[0m” in non-interactive use: command-line default will be used"
 
-#: src/main/main.c:856
+#: src/main/main.c:862
 msgid "unrecognized value of save"
 msgstr "unrecognized value of save"
 
-#: src/main/main.c:859
+#: src/main/main.c:865
 msgid "invalid status, 0 assumed"
 msgstr "invalid status, 0 assumed"
 
-#: src/main/main.c:864
+#: src/main/main.c:870
 msgid "invalid runLast, FALSE assumed"
 msgstr "invalid runLast, FALSE assumed"
 
-#: src/main/main.c:895
+#: src/main/main.c:901
 msgid "cannot allocate space for toplevel callback element"
 msgstr "cannot allocate space for toplevel callback element"
 
-#: src/main/main.c:973
+#: src/main/main.c:979
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negative index passed to R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1086
+#: src/main/main.c:1092
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "warning messages from top-level task callback ‘[1m%s[0m’\n"
 
-#: src/main/main.c:1146
+#: src/main/main.c:1152
 msgid "top-level task callback did not return a logical value"
 msgstr "top-level task callback did not return a logical value"
 
@@ -5380,6 +5365,78 @@ msgstr "invalid first argument ‘[1mn[0m’"
 #: src/main/random.c:446
 msgid "invalid second argument 'size'"
 msgstr "invalid second argument ‘[1msize[0m’"
+
+#: src/main/regex.c:2536
+msgid "Success"
+msgstr "Success"
+
+#: src/main/regex.c:2539
+msgid "No match"
+msgstr "No match"
+
+#: src/main/regex.c:2542
+msgid "Invalid regular expression"
+msgstr "Invalid regular expression"
+
+#: src/main/regex.c:2545
+msgid "Invalid collation character"
+msgstr "Invalid collation character"
+
+#: src/main/regex.c:2548
+msgid "Invalid character class name"
+msgstr "Invalid character class name"
+
+#: src/main/regex.c:2551
+msgid "Trailing backslash"
+msgstr "Trailing backslash"
+
+#: src/main/regex.c:2554
+msgid "Invalid back reference"
+msgstr "Invalid back reference"
+
+#: src/main/regex.c:2557
+msgid "Unmatched [ or [^"
+msgstr "Unmatched [ or [^"
+
+#: src/main/regex.c:2560
+msgid "Unmatched ( or \\("
+msgstr "Unmatched ( or \\("
+
+#: src/main/regex.c:2563
+msgid "Unmatched \\{"
+msgstr "Unmatched \\{"
+
+#: src/main/regex.c:2566
+msgid "Invalid content of \\{\\}"
+msgstr "Invalid content of \\{\\}"
+
+#: src/main/regex.c:2569
+msgid "Invalid range end"
+msgstr "Invalid range end"
+
+#: src/main/regex.c:2572
+msgid "Memory exhausted"
+msgstr "Memory exhausted"
+
+#: src/main/regex.c:2575
+msgid "Invalid preceding regular expression"
+msgstr "Invalid preceding regular expression"
+
+#: src/main/regex.c:2578
+msgid "Premature end of regular expression"
+msgstr "Premature end of regular expression"
+
+#: src/main/regex.c:2581
+msgid "Regular expression too big"
+msgstr "Regular expression too big"
+
+#: src/main/regex.c:2584
+msgid "Unmatched ) or \\)"
+msgstr "Unmatched ) or \\)"
+
+#: src/main/regex.c:3053
+msgid "No previous regular expression"
+msgstr "No previous regular expression"
 
 #: src/main/relop.c:71
 msgid ""
