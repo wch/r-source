@@ -1,5 +1,8 @@
-approxfun <- function (x, y, method = "linear", rule = 1, f = 0)
+approxfun <- function (x, y=NULL, method = "linear", rule = 1, f = 0)
 {
+	x <- xy.coords(x, y)
+	y <- x$y
+	x <- x$x
 	if (!is.numeric(x) || !is.numeric(y))
 		stop("approx: x and y must be numeric")
 	n <- length(x)

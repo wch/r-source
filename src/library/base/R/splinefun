@@ -1,5 +1,8 @@
-splinefun <- function(x, y, method="fmm")
+splinefun <- function(x, y=NULL, method="fmm")
 {
+	x <- xy.coords(x, y)
+	y <- x$y
+	x <- x$x
 	if (!is.numeric(x) || !is.numeric(y))
 		stop("splinefun: x and y must be numeric")
 	n <- length(x)

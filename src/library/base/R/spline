@@ -1,5 +1,8 @@
-spline <- function(x, y, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x))
+spline <- function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x))
 {
+	x <- xy.coords(x, y)
+	y <- x$y
+	x <- x$x
 	if (!is.numeric(x) || !is.numeric(y))
 		stop("spline: x and y must be numeric")
 	nx <- length(x)
