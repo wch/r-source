@@ -138,10 +138,12 @@ extern char *DefaultPalette[];
 #ifndef R_GRAPHICS_INTERNAL
 typedef struct {
 /* opaque structure */
+int dummy;
 } GPar;
 
 typedef struct {
 /* opaque structure */
+int dummy;
 } DevDesc;
 #endif
 
