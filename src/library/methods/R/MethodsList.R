@@ -351,7 +351,7 @@ inheritedSubMethodLists <-
     if(isClass(thisClass)) {
       ## for consistency, order the available methods by
       ## the ordering of the superclasses of thisClass
-      superClasses <- names(getExtends(getClass(thisClass)))
+      superClasses <- names(getClass(thisClass)@contains)
       classes <- superClasses[!is.na(match(superClasses, classes))]
       for(which in seq(along=classes)) {
         tryClass <- el(classes, which)
@@ -370,7 +370,7 @@ inheritedSubMethodLists <-
         if(isClass(tryClass)) {
             tryClassDef <- getClass(tryClass) 
             if(is(tryClassDef, "classRepresentation")) {
-              if(!is.na(match(thisClass, names(getSubclasses(tryClassDef)))))
+              if(!is.na(match(thisClass, names(tryClassDef@subclasses))))
                 elNamed(value, tryClass) <- el(methods, which)
           }
         }
