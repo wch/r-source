@@ -1,3 +1,11 @@
+		CHANGES IN R VERSION 0.62.1
+
+BUG FIXES
+
+    o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc 
+	directories.
+
+    
 		CHANGES IN R VERSION 0.62
 
 NEW FEATURES
