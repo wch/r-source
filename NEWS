@@ -24,6 +24,9 @@ BUG FIXES
     o	Various strangeness with match.call() and "..." has been fixed
 	(PR#813).
 
+    o   sys.function() could return an unevaluated promise, messing up
+        formals() and match.arg() (PR#872)
+
     o	Deparsing or dumping attributes with non-standard names was
 	not quoting the name (PR#871).
 
@@ -50,6 +53,8 @@ BUG FIXES
 
     o	dchisq with integer x, df and ncp sometimes gave incorrect
 	results on i686 Linux.
+
+
 
 
 
