@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-30, 2003-02-04
+@set FAQ-VERSION 1.6-31, 2003-02-07
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1702,13 +1702,15 @@ learned and compared from data.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
-@item dichromat
-Color schemes for dichromats: collapse red-green distinctions to
-simulate the effects of colour-blindness.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
 or sampling grids.
+@item dichromat
+Color schemes for dichromats: collapse red-green distinctions to
+simulate the effects of colour-blindness.
+@item dispmod
+Functions for modelling dispersion in GLMs.
 @item dr
 Functions, methods, and datasets for fitting dimension reduction
 regression, including pHd and inverse regression methods SIR and SAVE.
@@ -1951,7 +1953,7 @@ Functions for import, export, plotting and other manipulations of
 bitmapped images.
 @c <COMMENT>
 @c Outdated on CRAN along with 1.5.0 release as we do not have an active
-@c maintainer to fix outstanding QA problems.
+@c maintainer to fix outstanding quality problems.
 @c @item polymars
 @c Polychotomous regression based on Multivariate Adaptive Regression
 @c Splines.
