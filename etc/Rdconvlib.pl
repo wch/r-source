@@ -24,7 +24,7 @@
 
 ## New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
 ## ---	===========
-## Original idead:  Can have *SEVERAL* verbatim	 codeblocks which should
+## Original idea:  Can have *SEVERAL* verbatim	 codeblocks which should
 ## appear  (almost) WHERE they were initially !!
 ## BUT, this is not really possible:
 ##	we collect the block into a hash array and don't even remember
