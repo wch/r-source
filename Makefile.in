@@ -83,6 +83,7 @@ install: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
 	done
+@WANT_R_FRAMEWORK_TRUE@$(MAKE) install-R-framework
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)
 install-strip:
@@ -161,12 +162,7 @@ check check-devel check-all:
 reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
-install-Rframework:
-	@(cd $(top_builddir) && \
-	  $(MAKE) install \
-	    rhome="@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources" \
-	    mandir="@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources" \
-	    bindir="@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources" )
+install-R-framework:
 	@(cd $(top_builddir)/src/modules/aqua && \
 	  cp Info.plist "@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources")
 	@(cd "@R_FRAMEWORK_DIR@/Versions/$(VERSION)" && \
@@ -195,7 +191,7 @@ install-aqua:
 	  cp -R * /Applications/R.app/Contents/Resources)
 	@(mkdir -p /Applications/R.app/Contents/MacOS)
 	@test -f "@R_FRAMEWORK_DIR@/Resources/bin/RAqua"  \
-	  || (echo "please, make install-Rframework first" &&  exit 1)
+	  || (echo "please, make install-R-framework first" &&  exit 1)
 	@(cd /Applications/R.app/Contents/MacOS && \
 	  ln -f "@R_FRAMEWORK_DIR@/Resources/bin/RAqua" R && \
 	  chmod 755 R)

@@ -149,6 +149,21 @@ if test "${want_R_framework}" != no; then
       ;;
   esac
 fi
+AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
+## If we build a framework, then we need to adjust the installation
+## paths, and warn about overriding 'prefix'.
+if test "${want_R_framework}" = yes; then
+  ## Note that Autoconf sets things up so that by default, prefix and
+  ## exec_prefix are set to 'NONE'.  Let's hope for no change.
+  if test "x${prefix}" != xNONE; then
+    warn_framework_and_prefix="overriding 'prefix' for installing the R framework"
+    AC_MSG_WARN([${warn_framework_and_prefix}])
+  fi
+  prefix="${R_framework_dir}"
+  rhome="${prefix}/Versions/${VERSION}/Resources"
+  bindir="${rhome}"
+  mandir="${rhome}"
+fi
 AC_SUBST(R_FRAMEWORK_DIR)
 
 ## Allow the user to specify building R shared libraries.
@@ -1553,6 +1568,9 @@ R is now configured for ${host}
 ])
 if test -n "${warn_F77_and_F2C}"; then
   AC_MSG_WARN([${warn_F77_and_F2C}])
+fi
+if test -n "${warn_framework_and_prefix}"; then
+  AC_MSG_WARN([${warn_framework_and_prefix}])
 fi
 if test -n "${warn_f77_cc_double_complex}"; then
   AC_MSG_WARN([${warn_f77_cc_double_complex}])
