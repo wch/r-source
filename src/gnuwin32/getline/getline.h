@@ -10,7 +10,9 @@
 
 typedef size_t (*gl_strwidth_proc)(char *);
 
-char           *getline(char *);		/* read a line of input */
+/* read a line of input */
+char           *getline(char *prompt, char *buf, int maxlen);  
+
 void            gl_setwidth(int);		/* specify width of screen */
 void            gl_histadd(char *);		/* adds entries to hist */
 void		gl_strwidth(gl_strwidth_proc);	/* to bind gl_strlen */

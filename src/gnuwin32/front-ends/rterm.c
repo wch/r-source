@@ -43,12 +43,12 @@ char *getRVersion()
     return(Rversion);
 }
 
-DWORD mainThreadId;
+static DWORD mainThreadId;
 
 static void my_onintr()
 {
-    UserBreak = 1;
-    PostThreadMessage(mainThreadId, 0, 0, 0);
+  UserBreak = 1;
+  PostThreadMessage(mainThreadId,0,0,0);
 }
 
 
@@ -62,9 +62,9 @@ int AppMain (int argc, char **argv)
     if (isatty(0)) 
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     cmdlineoptions(argc, argv);
+    mainThreadId = GetCurrentThreadId() ;
     signal(SIGBREAK, my_onintr);
     setup_term_ui();
-    mainThreadId = GetCurrentThreadId();
     mainloop();
     return 0;
 }

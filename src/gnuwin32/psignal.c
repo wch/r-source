@@ -8,18 +8,11 @@
  *                                                                           *
  *****************************************************************************/
 
-/* 
-   Changes (g.m.):
-   10.06.1999: Made self contained - Changed some names
-   11.06.1999: Added 'sigsetjmp' and 'siglongjmp'
-*/
-
+#include <windows.h>
 #include "psignal.h"
 
 
 /* Define stuff ************************************************************ */
-#undef signal
-sighandler_t signal(int, sighandler_t);
 
 #ifndef TRUE
   #define TRUE 1
@@ -56,13 +49,13 @@ struct downhill_Signal_Struct
 /* Static stuff **************************************************************/
 static struct downhill_Signal_Struct* downhill_Signal_Info = NULL;
 static sigset_t                       downhill_Sigset_Mask = 0;
-static int                            IGotASignal;
+static HANDLE                            IGotASignal;
 
 /* Function stuff ************************************************************/
 
 
 /* Handle a signal ========================================================= */
-static void PrivateSignalHandler(int signal_Number)
+void raise(int signal_Number)
 {
         if (!IS_SIGNAL(signal_Number)) {
 			errno = EINVAL;
@@ -131,37 +124,54 @@ static void PrivateSignalHandler(int signal_Number)
 
 			}
 		}
-                IGotASignal = TRUE;
+                PulseEvent(IGotASignal);
 	}
-	/* In any case, restore the signal handler */
-        signal(signal_Number,PrivateSignalHandler);
 }
 
 /* Init the signal re-direction ============================================ */
+
+/* Hardware interrupt handler.  */
+static BOOL CALLBACK hwIntrHandler (DWORD type)
+{
+  int ret;
+  switch (type) {
+  case CTRL_C_EVENT : 
+  case CTRL_BREAK_EVENT : 
+    /*  
+	Why SIGBREAK? SIGINT is used internally by R and the signal 
+	handler for SIGINT ends with a 'longjmp'. But, under Windows,
+	hardware interrupt handler runs in a different thread. So,
+	longjmp fails (tipically it will crash R). So, we raise a SIGBREAK
+	to record that the user want to stop. This is then
+	processed at due time. Drawback of this approach: if R is lost
+	inside a C or Fortran routine we don't break it. I (g.m.) have
+	tried to raise a signal in the appropriate thread using
+	SuspendThread/GetThreadContext/setting Eip to the signal handler/
+	SetThreadContext/ResumeThread but I had success only under NT.
+    */    
+    raise(SIGBREAK);
+    ret = TRUE;
+  default:
+    ret = FALSE;
+  }
+  return ret; 
+}
+
 static int downhill_Signal_Init(void)
 {
 	/* Skip this if we've already done it */
 	if (downhill_Signal_Info == NULL)
 	{
-		int signal_Index;
+		if (!(downhill_Signal_Info =
+		      calloc(sizeof(struct downhill_Signal_Struct),NSIG)) ||
+		    !(IGotASignal=CreateEvent(NULL,FALSE,FALSE,NULL)) ||
+                    !SetConsoleCtrlHandler (hwIntrHandler, TRUE))
 
-		/* Get some memory */
-		downhill_Signal_Info =
-		 calloc(sizeof(struct downhill_Signal_Struct),NSIG);
-		if (downhill_Signal_Info == NULL)
 		{
-			errno = ENOMEM;
-			return FALSE;
-		}
-
-		/* Set everything up */
-		for (signal_Index = 1;signal_Index < NSIG;signal_Index++)
-		{
-		    if ((downhill_Signal_Info[signal_Index].signal_Handler = 
-                             signal(signal_Index, PrivateSignalHandler))
-                         == SIG_ERR)
-                      downhill_Signal_Info[signal_Index].signal_Handler =
-                         SIG_IGN; 
+                  if (downhill_Signal_Info) free(downhill_Signal_Info);  
+                  if (IGotASignal) CloseHandle(IGotASignal);
+		  errno = ENOMEM;
+		  return FALSE;
 		}
 	}
 	return TRUE;
@@ -214,7 +224,7 @@ int sigaction(int signal_Number,struct sigaction* sigaction_Info,
 }
 
 /* Set the action of a signal ============================================== */
-sighandler_t _psignal(int signal_Number, sighandler_t signal_Handler)
+sighandler_t signal(int signal_Number, sighandler_t signal_Handler)
 {
 	sighandler_t signal_HandlerOld;
 
@@ -357,7 +367,7 @@ int sigprocmask(int mask_Function,sigset_t* sigset_Info,
 		 (downhill_Signal_Info[signal_Index].signal_Count > 0))
 		{
 	            downhill_Signal_Info[signal_Index].signal_Count = 0;
-		    PrivateSignalHandler(signal_Index);
+		    raise(signal_Index);
 		}
 	}
 
@@ -410,27 +420,15 @@ int sigrelse(int signal_Number)
 }
 
 
-void _praise(int signal_Number) {
-       PrivateSignalHandler(signal_Number);
-}
 
-
-#ifndef DONT_HAVE_SLEEP
 /* Pause until a signal ==================================================== */
 int pause(void)
 {
 	/* Wait for a signal */
-        IGotASignal = FALSE;
-	for (;;)
-	{
-		/* And return if we were interrupted */
-                sleep(1);
-		if (IGotASignal)
-		{
-			errno = EINTR;
-			return -1;
-		}
-	}
+        WaitForSingleObject(IGotASignal,INFINITE);
+	/* And return if we were interrupted */
+	errno = EINTR;
+	return -1;
 }
 
 
@@ -450,4 +448,4 @@ int sigsuspend(sigset_t* sigset_Info)
 
 	return -1;
 }
-#endif
+

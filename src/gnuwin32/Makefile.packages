@@ -3,6 +3,7 @@
 include MkRules
 
 HELP=YES
+WINHELP=BOTH
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
@@ -19,11 +20,18 @@ libR.a:  R.exp
 
 base-HELP=ziponly
 
+
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help $($*-HELP)help-$*
 	$(MAKE) -C ./help contents-$*
+ifeq ($(strip $(WINHELP)),CHM)
+	$(MAKE) -C ./help chm-$*
+endif
+ifeq ($(strip $(WINHELP)),BOTH)
+	$(MAKE) -C ./help winhlp-$* # also makes chm
+endif
 endif
 
 pkgcheck-%:
@@ -38,6 +46,9 @@ ziphelp-%:
 ziponly-%:
 	$(MAKE) -C ./help ziponlyhelp-$*
 	$(MAKE) -C ./help contents-$*
+
+
+
 
 bootstrap-DLLNM=boott
 

@@ -32,8 +32,8 @@
 #include "console.h"
 #include "rui.h"
 #include "getline/getline.h"
-/*#include "devga.h"*/
-/*#include <windows.h>*/
+#include <windows.h>  /* for CreateEvent,.. */
+#include <process.h> /* for _begithread,... */
 #include "run.h"
 #include "Startup.h"
 
@@ -54,7 +54,7 @@ int   AllDevicesKilled = 0;
 int   setupui(void);
 void  delui(void);
 
-DWORD mainThreadId;
+static DWORD mainThreadId;
 
 
 int   UserBreak = 0;
@@ -73,7 +73,6 @@ void ProcessEvents(void)
     while (peekevent()) doevent();
     if (UserBreak) {
 	UserBreak = 0;
-	/* error("user break"); */
 	raise(SIGINT);
     }
     R_CallBackHook();
@@ -98,7 +97,7 @@ void R_Suicide(char *s)
  */
 
 /*
- * I realized that we are supporting 4 different type of input.
+ * We support 4 different type of input.
  * 1) from the gui console;
  * 2) from a character mode console (interactive);
  * 3) from a pipe under --ess, i.e, interactive.
@@ -106,16 +105,50 @@ void R_Suicide(char *s)
  *
  * Hence, it is better to have a different function for every
  * situation.
- * Same, it is true for output (but in this case, 3==4)
+ * Same, it is true for output (but in this case, 2=3=4)
  *
  * BTW, 3 and 4 are different on input  since fgets,ReadFile...
- * "blocks" =>
- * (e.g.) you cannot give focus to the graphics device if
- * you are wating for input. For this reason, under 3,
- * fgets is runned in a different thread (Windows is wonderful,
- * I never used 'threads', hence, after made this running
- * I was very, very happy "Wuah, fgets in a thread!!!")
- */
+ * "blocks" =>  (e.g.) you cannot give focus to the graphics device if
+ * you are wating for input. For this reason, input is got in a different 
+ * thread 
+ *
+ * All works in this way:
+ * R_ReadConsole calls TrueReadConsole which points to:
+ * case 1: GuiReadConsole
+ * case 2 and 3: ThreadedReadConsole
+ * case 4: FileReadConsole
+ * ThreadedReadConsole wake up our 'reader thread' and wait until
+ * a new line of input is available. The 'reader thread' uses 
+ * InThreadReadConsole to get it. InThreadReadConsole points to:
+ * case 2: CharReadConsole
+ * case 3: FileReadConsole
+*/
+
+/* Global variables */
+static int (*TrueReadConsole) (char *, char *, int, int);
+static int (*InThreadReadConsole) (char *, char *, int, int);
+static void (*TrueWriteConsole) (char *, int);
+HANDLE EhiWakeUp;
+static char *tprompt, *tbuf;
+static  int tlen, thist, lineavailable;
+
+ /* Fill a text buffer with user typed console input. */
+int
+R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
+{
+    ProcessEvents();
+    return TrueReadConsole(prompt, (char *) buf, len, addtohistory);
+}
+
+	/* Write a text buffer to the console. */
+	/* All system output is filtered through this routine. */
+
+void R_WriteConsole(char *buf, int len)
+{
+    ProcessEvents();
+    TrueWriteConsole(buf, len);
+}
+
 
 
 /*1: from GUI console */
@@ -127,7 +160,8 @@ void Rconsolesetwidth(int cols)
 	R_SetOptionWidth(cols);
 }
 
-static int GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
+static int 
+GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     char *p;
     char *NormalPrompt =
@@ -146,151 +180,62 @@ static int GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
     return 1;
 }
 
-static void GuiWriteConsole(char *buf,int len)
-{
-    char *p;
 
-    for (p = buf; *p; p++)
-	if (*p == '\001')
-	    *p = EOF;
-    consolewrites(RConsole, buf);
-}
+/* 2 and 3: reading in a thread */
 
-/*2: from character console with getline */
 
-static char LastLine[512], *gl = NULL;
-static int lineavailable;
-static DWORD id;
-
-static void pipe_onintr()
-{
-    UserBreak = 1;
-    PostThreadMessage(mainThreadId, 0, 0, 0);
-}
-
-static DWORD CALLBACK
-threadedgetline(LPVOID unused)
-{
-    gl = getline(LastLine);
+/* 'Reader thread' main function */
+static void __cdecl ReaderThread(void *unused)
+{ 
+  while(1) {
+    WaitForSingleObject(EhiWakeUp,INFINITE);
+    tlen = InThreadReadConsole(tprompt,tbuf,tlen,thist);
     lineavailable = 1;
     PostThreadMessage(mainThreadId, 0, 0, 0);
-    return 0;
+  }
+}  
+
+static int 
+ThreadedReadConsole(char *prompt, char *buf, int len, int addtohistory)
+{ 
+  sighandler_t oldint,oldbreak;
+  /* 
+   *   SIGINT/SIGBREAK when ESS is waiting for output are a real pain: 
+   *   they get processed after user hit <return>. 
+   *   The '^C\n' in raw Rterm is nice. But, do we really need it ? 
+  */
+  oldint = signal(SIGINT, SIG_IGN);
+  oldbreak = signal(SIGBREAK, SIG_IGN);
+  mainThreadId = GetCurrentThreadId();
+  lineavailable = 0;
+  tprompt = prompt;
+  tbuf = buf;
+  tlen = len;
+  thist = addtohistory;
+  PulseEvent(EhiWakeUp);
+  while (1) {
+    WaitMessage();
+    if (lineavailable) break;
+    doevent();
+  }
+  lineavailable = 0;
+  /* restore handler  */
+  signal(SIGINT,oldint);
+  signal(SIGBREAK,oldbreak);
+  return tlen;
 }
 
-int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
-{
-    int   i;
-    HANDLE rH;
-    if (!gl) {
-      /*
-         All the signal stuff must be rethinked. Anyway, in this way
-         it works both under NT and 9X. But, first SIGINT can be lost
-         (if is received AFTER signal(SIGINT,pipe_onintr) and
-          BEFORE WaitMessage() below).
-      */
-        sighandler_t oldhandler = signal(SIGINT, pipe_onintr);
-	strcpy(LastLine, prompt);
-	lineavailable = 0;
-	mainThreadId = GetCurrentThreadId();
-	rH = CreateThread(NULL, 0, threadedgetline, NULL, 0, &id);
-	while (1) {
-	    WaitMessage();
-	    if (lineavailable || UserBreak) break;
-	    doevent();
-	}
-        signal(SIGINT, oldhandler);
-	if (UserBreak) {
-		UserBreak = 0;
-		lineavailable = 0;
-		TerminateThread(rH, 1);
-		CloseHandle(rH);
-		gl = NULL;
-		/* raise(SIGINT);  just clean up ourselves */
-		Rprintf("^C\n");
-		strcpy(buf, "\n");
-		return 1;
-	}
-	CloseHandle(rH);
-	LastLine[0] = '\0';
-	if (addtohistory)
-	    gl_histadd(gl);
-    }
-    for (i = 0; *gl && (*gl != '\n') && (i < len - 2); gl++, i++)
-	buf[i] = *gl;
-    buf[i] = '\n';
-    buf[i + 1] = '\0';
-    if (!*gl || (*gl == '\n'))
-	gl = NULL;
-    return 1;
-}
 
-void CharWriteConsole(char *buf, int len)
-{
-    char *p = strrchr(buf, '\n');
-
-    if (p)
-	strcpy(LastLine, p + 1);
-    else
-	strcat(LastLine, buf);
-    printf("%s", buf);
-}
-
-/*3: from a pipe under --ess*/
-
-/*
- * Variables used to communicate between thread and main process
- */
-static int lengthofbuffer;
-static char *inputbuffer;
-
-static DWORD CALLBACK
-threadedfgets(LPVOID unused)
-{
-    signal(SIGINT, pipe_onintr);
-    inputbuffer = fgets(inputbuffer, lengthofbuffer, stdin);
-    lineavailable = 1;
-    PostThreadMessage(mainThreadId, 0, 0, 0);
-    return 0;
-}
-
+/*2: from character console with getline (only used as InThreadReadConsole)*/
 static int
-PipeReadConsole(char *prompt, char *buf, int len, int addhistory)
+CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
-    HANDLE rH;
-    DWORD  id;
-    sighandler_t oldhandler = signal(SIGINT, pipe_onintr);
-    if (!R_Slave) {
-	fputs(prompt, stdout);
-	fflush(stdout);
-    }
-    lineavailable = 0;
-    lengthofbuffer = len;
-    inputbuffer = buf;
-    mainThreadId = GetCurrentThreadId();
-    rH = CreateThread(NULL, 0, threadedfgets, NULL, 0, &id);
-    if (!rH) {
-	/* failure! Use standard fgets. */
-	inputbuffer = fgets(buf, len, stdin);
-	lineavailable = 1;
-    } else {
-	while (1) {
-	    WaitMessage();
-	    if (lineavailable) break;
-	    doevent();
-	}
-	if (rH)
-	    CloseHandle(rH);
-    }
-    signal(SIGINT, oldhandler);
-    if(!inputbuffer) {
-	strcpy(buf, "\n");
-	printf("^C\n");
-    }
-    return 1;
+   getline(prompt,buf,len);
+   if (addtohistory) gl_histadd(buf);
+   return 1;
 }
 
-/*4: non-interactive
-*/
+/*3: (as InThreadReadConsole) and 4: non-interactive */
 static int
 FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 {
@@ -300,37 +245,33 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
     }
     if (!fgets(buf, len, stdin))
 	return 0;
-    if (!R_Slave)
+    if (!R_Interactive && !R_Slave)
 	fputs(buf, stdout);
     return 1;
 }
 
+
+/* Rgui */
+static void 
+GuiWriteConsole(char *buf,int len)
+{
+    char *p;
+
+    for (p = buf; *p; p++)
+	if (*p == '\001')
+	    *p = EOF;
+    consolewrites(RConsole, buf);
+}
+
+/* Rterm write */
 static void
-FileWriteConsole(char *buf, int len)
+TermWriteConsole(char *buf, int len)
 {
     printf("%s", buf);
 }
 
 
-static int (*TrueReadConsole) (char *, char *, int, int);
-static void (*TrueWriteConsole) (char *, int);
 
- /* Fill a text buffer with user typed console input. */
-int
-R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
-{
-    ProcessEvents();
-    return TrueReadConsole(prompt, (char *) buf, len, addtohistory);
-}
-
-	/* Write a text buffer to the console. */
-	/* All system output is filtered through this routine. */
-
-void R_WriteConsole(char *buf, int len)
-{
-    ProcessEvents();
-    TrueWriteConsole(buf, len);
-}
 
 
 	/* Indicate that input is coming from the console */
@@ -665,19 +606,19 @@ int cmdlineoptions(int ac, char **av)
 
 /* Here so that --ess and similar can change */
     Rp->CallBack = R_DoNothing;
+    InThreadReadConsole = NULL;
     if (CharacterMode == RTerm) {
 	if (isatty(0)) {
 	    Rp->R_Interactive = True;
-	    LastLine[0] = 0;
-	    Rp->ReadConsole = CharReadConsole;
-	    Rp->WriteConsole = CharWriteConsole;
+	    Rp->ReadConsole = ThreadedReadConsole;
+            InThreadReadConsole = CharReadConsole;
 	} else {
 	    Rp->R_Interactive = False;
-	    R_Consolefile = stdout; /* used for errors */
-	    R_Outputfile = stdout;  /* used for sink-able output */
 	    Rp->ReadConsole = FileReadConsole;
-	    Rp->WriteConsole = FileWriteConsole;
 	}
+	R_Consolefile = stdout; /* used for errors */
+	R_Outputfile = stdout;  /* used for sink-able output */
+        Rp->WriteConsole = TermWriteConsole;
 	Rp->message = char_message;
 	Rp->yesnocancel = char_yesnocancel;
 	Rp->busy = CharBusy;
@@ -713,7 +654,8 @@ int cmdlineoptions(int ac, char **av)
 	    } else if (!strcmp(*av, "--ess")) {
 /* Assert that we are interactive even if input is from a file */
 		Rp->R_Interactive = True;
-		Rp->ReadConsole = PipeReadConsole;
+		Rp->ReadConsole = ThreadedReadConsole;
+                InThreadReadConsole = FileReadConsole;
 	    } else if (!strcmp(*av, "--mdi")) {
 		MDIset = 1;
 	    } else if (!strcmp(*av, "--sdi") || !strcmp(*av, "--no-mdi")) {
@@ -754,5 +696,12 @@ int cmdlineoptions(int ac, char **av)
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
+    if (InThreadReadConsole && 
+        (!(EhiWakeUp = CreateEvent(NULL,FALSE,FALSE,NULL)) ||
+	 (_beginthread(ReaderThread,0,NULL)==-1)))
+      R_Suicide("impossible to create 'reader thread'; you must free some system resources");
     return 0;
 }
+
+
+

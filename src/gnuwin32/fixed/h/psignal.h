@@ -135,36 +135,20 @@ int           sigismember(sigset_t* sigset_Info,int signal_Number);
 int           sigpending(sigset_t* sigset_Info);
 int           sigprocmask(int mask_Function,sigset_t* sigset_Info,
                sigset_t* sigset_InfoOld);
-sighandler_t  _psignal(int signal_Number, sighandler_t);
-void          _praise(int);
-#ifndef DONT_HAVE_SLEEP
-  int pause(void);
-  int sigsuspend(sigset_t* sigset_Info);
-#endif
+sighandler_t  signal(int signal_Number, sighandler_t);
+void          raise(int);
+int pause(void);
+int sigsuspend(sigset_t* sigset_Info);
 
 /* Re-mapped functions ===================================================== */
 
 #define sigmask(signal_Index) (1<<(signal_Index-1))
 
 /* 
-   If 'signal' or 'raise' are undef, original versions are used.
-   This is done internally. But don't undef, if you don't know what
-   you are doing. 
- */
-#define       signal(a,b) _psignal(a,b)
-#define       raise(a) _praise(a)
-
-/* 
    This must be a macro, since we want setjmp working in the
    calling environment
 */
-/*#define sigsetjmp(jb,sm) {\
-  if ((jb->mask_was_saved = (sm))) \
-     sigprocmask(0,NULL,&jb->saved_mask);\
-  else \
-     sigemptyset (&jb->saved_mask); \
-  setjmp(jb->jmpbuf); \
-  }*/
+
 #define sigsetjmp(jb, sm) (\
                sm?sigprocmask(SIG_SETMASK,NULL,&jb->saved_mask):0,\
                jb->mask_was_saved=sm,\
@@ -172,11 +156,7 @@ void          _praise(int);
 
 
 /* We can transform this in a function but ... */
-/*#define siglongjmp(jb,v) {\
-  if (jb->mask_was_saved) \
-     sigprocmask(SIG_SETMASK,&jb->saved_mask,NULL);\
-  longjmp(jb->jmpbuf, 1);\
-  }*/
+
 #define siglongjmp(jb, val) (((jb->mask_was_saved)?\
                sigprocmask(SIG_SETMASK, &jb->saved_mask, 0):0),\
                longjmp(jb->jmpbuf, val))
