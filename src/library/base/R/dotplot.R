@@ -54,7 +54,7 @@
 	o <- rev(order(as.numeric(groups)))
 	x <- x[o]
 	groups <- groups[o]
-	offset <- cumsum(c(0, diff(as.numeric(groups)[o]) != 0))
+	offset <- cumsum(c(0, diff(as.numeric(groups)) != 0))
 	y <- 1:n + 2 * offset
 	ylim <- range(0, y + 2)
     }
@@ -73,7 +73,7 @@
     abline(h = y, lty = "dotted", col = lcolor)
     points(x, y, pch = pch, col = color, bg = bg)
     if (!is.null(groups)) {
-	gpos <- rev(cumsum(tapply(groups, groups, length) + 2) - 1)
+	gpos <- rev(cumsum(rev(tapply(groups, groups, length)) + 2) - 1)
 	ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
 	goffset <- (max(linch+0.2, ginch, na.rm = TRUE) + 0.1)/lheight
 	for(i in 1:nlevels(groups))
