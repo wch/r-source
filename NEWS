@@ -38,6 +38,11 @@ BUG FIXES
     o   formatC(x, format="fg") could return exponential format if
 	rounding pushed x over a positive power of 10. (PR#2299)
 
+    o   attr(x, foo) used partial matching for `foo' (even though not
+	documented to do so), and failed to find `foo' if there were
+	two or more partial matches before the exact match in the list
+	of attributes.
+
 
 
 		CHANGES IN R VERSION 1.6.1

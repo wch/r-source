@@ -790,7 +790,7 @@ SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, t, tag = R_NilValue, alist;
     char *str;
     int n;
-    enum { NONE, PARTIAL, FULL } match = NONE;
+    enum { NONE, PARTIAL, PARTIAL2, FULL } match = NONE;
 
     s = CAR(args);
     t = CADR(args);
@@ -812,16 +812,17 @@ SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 		match = FULL;
 		break;
 	    }
-	    else if (match == PARTIAL)
+	    else if (match == PARTIAL) {
 		/* this match is partial and we already have a partial match,
 		   so the query is ambiguous and we return R_NilValue */
-		return R_NilValue;
-	    else {
+		match = PARTIAL2;
+	    } else {
 		tag = tmp;
 		match = PARTIAL;
 	    }
 	}
     }
+    if (match == PARTIAL2) return R_NilValue;
 
     /* unless a full match has been found, check for a "names" attribute */
     if (match != FULL && ! strncmp(CHAR(PRINTNAME(R_NamesSymbol)), str, n)) {
