@@ -656,9 +656,13 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
    To be safe, we signal a compiler error if int is not 32 bits. */
 # error code requires that int have 32 bits
 #else
-/* This should be handled properly in configure. Configure should also
-   check that a double can accurately represent any int. */
+/* Just to be on the safe side, configure ought to check that the
+   mashine uses two's complement. A define like
 #define USES_TWOS_COMPLEMENT (~0 == (unsigned) -1)
+   might work, but at least one compiler (CodeWarrior 6) chokes on it.
+   So for now just assume it is true.
+*/
+#define USES_TWOS_COMPLEMENT 1
 
 #if USES_TWOS_COMPLEMENT
 # define OPPOSITE_SIGNS(x, y) ((x < 0) ^ (y < 0))
