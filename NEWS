@@ -263,8 +263,14 @@ NEW FEATURES
 	be saved are to be found.
 
     o   save() now takes a version argument to specify the workspace file
-        format version to use.  This is in preparation for a change in
-        the default format.
+        format version to use.  The version used in R 1.3 is version 1,
+	and this remains the default.  Version 2 is a new experimental
+        format that may become the default soon.
+
+    o   A new serialization mechanism is available that can be used to
+        serialize R objects to connections or to strings.  This mechanism
+	is used for the version 2 save format.  For now, only an internal
+	C interface is available.
 
     o	New function checkAssignFuns() for checking whether the final
 	argument of assignment functions in a package is named `value'.
