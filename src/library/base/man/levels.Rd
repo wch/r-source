@@ -18,7 +18,7 @@ levels(x) <- value
 }
 \arguments{
   \item{x}{an object, for example a factor.}
-  \item{x}{A valid value for \code{levels(x)}.
+  \item{value}{A valid value for \code{levels(x)}.
     For the default method, \code{NULL} or a character vector.}
 }
 \seealso{\code{\link{levels<-.factor}}, \code{\link{nlevels}}.
