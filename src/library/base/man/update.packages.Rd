@@ -13,19 +13,11 @@
   CRAN and update outdated packages on the fly.}
 }
 \usage{
-#ifdef unix
 update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method, instlib = NULL,
                 ask=TRUE, available=NULL, destdir=NULL,
 		installWithVers=FALSE)
-#endif
-#ifndef unix
-update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
-                contriburl = contrib.url(CRAN),
-                method, instlib = NULL,
-                ask=TRUE, available=NULL, destdir=NULL)
-#endif
 
 installed.packages(lib.loc = NULL, priority = NULL)
 CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
@@ -37,17 +29,10 @@ old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
                   contriburl = contrib.url(CRAN), method = "auto")
-#ifdef unix
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,
-		 installWithVers=FALSE)
-#endif
-#ifndef unix
-install.packages(pkgs, lib, CRAN = getOption("CRAN"),
-                 contriburl = contrib.url(CRAN),
-                 method, available = NULL, destdir = NULL)
-#endif
+		 installWithVers = FALSE)
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
