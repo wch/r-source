@@ -49,7 +49,7 @@ plot.lm (x, which = 1:4,
     have identical variance (under the hypothesis), which are given as
     \eqn{R_i / sqrt{1 - h_{ii}}}{R[i] / sqrt(1 - h.ii)} where
     \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix, see
-    \code{\link{hat}} or \code{\link{lm.influence}()$hat}.
+    \code{\link{hat}} or \code{\link{lm.influence}()}.
 }
 \references{
     Belsley, D. A., E. Kuh and R. E. Welsch (1980).
