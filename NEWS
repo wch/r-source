@@ -527,15 +527,16 @@ BUG FIXES
 
     o	str(x) gives better output when x is of mode "(".
 
-    o	Lapack error messages corrected (PR#3494) and incorrect call to
-	DGEQP3 (PR#2867).
+    o   Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
+	corrected.
 
     o	format(*, nsmall = m) with m > 0 now returns exponential format
 	less often.
 
-    o	file.copy() ignored the overwrite argument (PR#3529)
+    o	file.copy() ignored the overwrite argument. (PR#3529)
 
     o	The length of a string specification of lty is now checked: it
+	should be 2, 4, 6 or 8.
 
     o	Rd conversion was limiting a file to 1000 pairs of braces,
 	without any warning.  Now the limit is 10000, with a warning.
