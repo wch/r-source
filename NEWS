@@ -66,7 +66,9 @@ BUG FIXES
 
     o   approx failed if inputs contained NAs.
 
-    o	lm.influence failed when there were indetermined coefficients, PR#280.
+    o	weighted lm fits with 1 diml x failed if any weight was zero.
+
+    o	lm.influence failed when there were undetermined coefficients, PR#280.
 
 
 		CHANGES IN R VERSION 0.65.0
