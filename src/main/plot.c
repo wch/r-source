@@ -603,6 +603,11 @@ void GetAxisLimits(double left, double right, double *low, double *high)
 
 /* axis(side, at, labels, ...) */
 
+/*
+<FIXME>
+Do we really want to plot NAs?
+</FIXME>
+*/
 SEXP labelformat(SEXP labels)
 {
     /* format(labels): i.e. from numbers to strings */
@@ -649,15 +654,14 @@ SEXP labelformat(SEXP labels)
 	UNPROTECT(1);
 	break;
     case STRSXP:
-	formatString(STRING_PTR(labels), n, &w, 0);
+/*
+<FIXME>
+Handle NAs, perhaps?
+</FIXME>
+*/
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
-#ifdef OLD
-	    strp = EncodeString(CHAR(STRING_ELT(labels, i)), 0, 0, Rprt_adj_left);
-	    SET_STRING_ELT(ans, i, mkChar(strp));
-#else
 	    SET_STRING_ELT(ans, i, STRING_ELT(labels, i));
-#endif
 	}
 	UNPROTECT(1);
 	break;
