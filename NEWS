@@ -286,6 +286,8 @@ BUG FIXES
 
     o	cbind(d,f) now works for 0-column dataframes. This fixes PR#1102.
 
+    o	plot(ts(0:99), log = "y") now works
+
 
 
 	**************************************************

@@ -56,6 +56,8 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 		if(ndata < nobs) data[rep(1:ndata, length = nobs), ]
 		else if(ndata > nobs) data[1:nobs, ]
 	    }
+    ## FIXME: The following "attr<-"() calls C tspgets() which uses a
+    ##  	fixed equivalent of ts.eps := 1e-5
     attr(data, "tsp") <- c(start, end, frequency) #-- order is fixed
     if(!is.null(class) && class != "none") attr(data, "class") <- class
     data
@@ -177,7 +179,7 @@ Ops.ts <- function(e1, e2)
     } else {
         nc1 <- NCOL(e1)
         nc2 <- NCOL(e2)
-        ## use ts.intersect to align e1 and e2        
+        ## use ts.intersect to align e1 and e2
         e12 <- .cbind.ts(list(e1, e2),
                          c(deparse(substitute(e1))[1],
                            deparse(substitute(e2))[1]),
@@ -389,8 +391,8 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 	  main = NULL, plot.type = c("multiple", "single"),
 	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
 {
-    xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
-    ylabel <- if (!missing(y)) deparse(substitute(y)) else NULL
+    xlabel <- if (!missing(x)) deparse(substitute(x))## else NULL
+    ylabel <- if (!missing(y)) deparse(substitute(y))
     plot.type <- match.arg(plot.type)
     if(plot.type == "multiple" && NCOL(x) > 1) {
 	m <- match.call()
@@ -437,19 +439,20 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
                   type = if(do.lab) "c" else "l")
 	return(invisible())
     }
+    ## Else : no y, only x
     if(missing(ylab)) {
         ylab <- colnames(x)
         if(length(ylab) != 1)
             ylab <- xlabel
     }
-    time.x <- time(x)
-    if(is.null(xlim)) xlim <- range(time.x)
-    if(is.null(ylim)) ylim <- range(x[is.finite(x)])
+    xy <- xy.coords(x,y,log=log)# using this mainly because of the log
+    if(is.null(xlim)) xlim <- range(xy$x)
+    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
     plot.new()
     plot.window(xlim, ylim, log, ...)
     if(is.matrix(x)) {
 	for(i in 1:ncol(x))
-	    lines.default(time.x, x[,i],
+	    lines.default(xy$x, x[,i],
 			  col = col[(i-1) %% length(col) + 1],
 			  lty = lty[(i-1) %% length(lty) + 1],
 			  lwd = lwd[(i-1) %% length(lwd) + 1],
@@ -458,7 +461,7 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 			  type = type)
     }
     else {
-	lines.default(time.x, x, col = col[1], bg = bg, lty = lty[1],
+	lines.default(xy$x, x, col = col[1], bg = bg, lty = lty[1],
 		      lwd = lwd[1], pch = pch[1], type = type)
     }
     if (ann)
