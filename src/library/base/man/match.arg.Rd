@@ -24,7 +24,7 @@ match.arg(arg, choices)
   otherwise, an error is signalled.
 }
 \seealso{
-  \code{\link{pmatch}}
+  \code{\link{pmatch}}, \code{\link{match.fun}}, \code{\link{match.call}}.
 }
 \examples{
 ## Extends the example for `switch'
