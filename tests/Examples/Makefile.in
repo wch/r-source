@@ -58,7 +58,7 @@ $(EX_IN): FORCE
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  if test -f $@ ; then \
-	   if test -a -n "`tail -6 $@|grep '^Time elapsed'`" ; then \
+	   if test -n "`tail -6 $@|grep '^Time elapsed'`" ; then \
 	     if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
 	     cp -p $@ $@.bak ; \
 	  fi ; fi ; \
