@@ -23,11 +23,10 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
         dependences <- FALSE
     }
+    if(is.null(available))
+        available <- CRAN.packages(contriburl = contriburl, method = method)
     if(dependencies) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
-        if(is.null(available))
-            available <- CRAN.packages(contriburl = contriburl,
-                                       method = method)
         have <- .packages(all.available = TRUE)
         repeat {
             deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
