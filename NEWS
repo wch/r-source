@@ -1,5 +1,22 @@
 	**************************************************
 	*						 *
+	*	       0.64 SERIES NEWS			 *
+	*    (This label is really only here to keep	 *
+	*     CVS from getting confused...)		 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 0.64.0
+
+NEW FEATURES
+
+    o	Gnome support added
+
+
+
+ 	**************************************************
+	*						 *
 	*	       0.63 SERIES NEWS			 *
 	*    (This label is really only here to keep	 *
 	*     CVS from getting confused...)		 *
