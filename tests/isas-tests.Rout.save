@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Patched (unreleased) (September 21, 1999)
+Version 0.65.0 Patched (unreleased) (September 22, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -329,192 +329,151 @@ Error in is.single(x) : type "single" unimplemented in R
 > is.array(as.array( x ))
 [1] TRUE
 > is.call(as.call( x ))
-[1] TRUE
+Error in as.call(x) : illegal length 0 argument
 > is.character(as.character( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.complex(as.complex( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 15
 > is.data.frame(as.data.frame( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.double(as.double( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 14
 > is.expression(as.expression( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.factor(as.factor( x ))
-Error: incorrect tag type
+[1] FALSE
 > is.function(as.function( x ))
-Error: incorrect tag type
+Error in as.function.default(l, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 13
 > is.list(as.list( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.logical(as.logical( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 10
 > is.matrix(as.matrix( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.name(as.name( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 1
 > is.null(as.null( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.numeric(as.numeric( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 14
 > is.ordered(as.ordered( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.pairlist(as.pairlist( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.qr(as.qr( x ))
-Error: incorrect tag type
+Error: you cannot be serious
 > is.real(as.real( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 14
 > is.single(as.single( x ))
-Error: incorrect tag type
+Error: (list) object cannot be coerced to vector type 14
 > is.ts(as.ts( x ))
-Error: incorrect tag type
+Error: ts object must have one or more observations
 > is.vector(as.vector( x ))
-Error: incorrect tag type
+[1] TRUE
 > 
 > if(is.array( x ))  all.equal(x, as.array( x ))
-Error: incorrect tag type
 > if(is.call( x ))  all.equal(x, as.call( x ))
-Error: incorrect tag type
 > if(is.character( x ))  all.equal(x, as.character( x ))
-Error: incorrect tag type
 > if(is.complex( x ))  all.equal(x, as.complex( x ))
-Error: incorrect tag type
 > if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-Error: incorrect tag type
 > if(is.double( x ))  all.equal(x, as.double( x ))
-Error: incorrect tag type
 > if(is.expression( x ))  all.equal(x, as.expression( x ))
-Error: incorrect tag type
 > if(is.factor( x ))  all.equal(x, as.factor( x ))
-Error: incorrect tag type
 > if(is.function( x ))  all.equal(x, as.function( x ))
-Error: incorrect tag type
 > if(is.integer( x ))  all.equal(x, as.integer( x ))
-Error: incorrect tag type
 > if(is.list( x ))  all.equal(x, as.list( x ))
-Error: incorrect tag type
+[1] TRUE
 > if(is.logical( x ))  all.equal(x, as.logical( x ))
-Error: incorrect tag type
 > if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-Error: incorrect tag type
 > if(is.name( x ))  all.equal(x, as.name( x ))
-Error: incorrect tag type
 > if(is.null( x ))  all.equal(x, as.null( x ))
-Error: incorrect tag type
 > if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-Error: incorrect tag type
 > if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-Error: incorrect tag type
 > if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-Error: incorrect tag type
 > if(is.qr( x ))  all.equal(x, as.qr( x ))
-Error: incorrect tag type
 > if(is.real( x ))  all.equal(x, as.real( x ))
-Error: incorrect tag type
 > if(is.single( x ))  all.equal(x, as.single( x ))
-Error: incorrect tag type
+Error in is.single(x) : type "single" unimplemented in R
 > if(is.ts( x ))  all.equal(x, as.ts( x ))
-Error: incorrect tag type
 > if(is.vector( x ))  all.equal(x, as.vector( x ))
-Error: incorrect tag type
+[1] TRUE
 > 
 > ###--------
 >  x <- list(a = 1)
-Error: protect(): stack overflow
 > is.array(as.array( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.call(as.call( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.character(as.character( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.complex(as.complex( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.data.frame(as.data.frame( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.double(as.double( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.expression(as.expression( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.factor(as.factor( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.function(as.function( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.integer(as.integer( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.list(as.list( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.logical(as.logical( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.matrix(as.matrix( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.name(as.name( x ))
-Error: incorrect tag type
+Error: invalid type/length (1/1) in vector allocation
 > is.null(as.null( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.numeric(as.numeric( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.ordered(as.ordered( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.pairlist(as.pairlist( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.qr(as.qr( x ))
-Error: incorrect tag type
+Error: you cannot be serious
 > is.real(as.real( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.single(as.single( x ))
-Error: incorrect tag type
+Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.ts(as.ts( x ))
-Error: incorrect tag type
+[1] TRUE
 > is.vector(as.vector( x ))
-Error: incorrect tag type
+[1] TRUE
 > 
 > if(is.array( x ))  all.equal(x, as.array( x ))
-Error: incorrect tag type
 > if(is.call( x ))  all.equal(x, as.call( x ))
-Error: incorrect tag type
 > if(is.character( x ))  all.equal(x, as.character( x ))
-Error: incorrect tag type
 > if(is.complex( x ))  all.equal(x, as.complex( x ))
-Error: incorrect tag type
 > if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
-Error: incorrect tag type
 > if(is.double( x ))  all.equal(x, as.double( x ))
-Error: incorrect tag type
 > if(is.expression( x ))  all.equal(x, as.expression( x ))
-Error: incorrect tag type
 > if(is.factor( x ))  all.equal(x, as.factor( x ))
-Error: incorrect tag type
 > if(is.function( x ))  all.equal(x, as.function( x ))
-Error: incorrect tag type
 > if(is.integer( x ))  all.equal(x, as.integer( x ))
-Error: incorrect tag type
 > if(is.list( x ))  all.equal(x, as.list( x ))
-Error: incorrect tag type
+[1] TRUE
 > if(is.logical( x ))  all.equal(x, as.logical( x ))
-Error: incorrect tag type
 > if(is.matrix( x ))  all.equal(x, as.matrix( x ))
-Error: incorrect tag type
 > if(is.name( x ))  all.equal(x, as.name( x ))
-Error: incorrect tag type
 > if(is.null( x ))  all.equal(x, as.null( x ))
-Error: incorrect tag type
 > if(is.numeric( x ))  all.equal(x, as.numeric( x ))
-Error: incorrect tag type
 > if(is.ordered( x ))  all.equal(x, as.ordered( x ))
-Error: incorrect tag type
 > if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
-Error: incorrect tag type
 > if(is.qr( x ))  all.equal(x, as.qr( x ))
-Error: incorrect tag type
 > if(is.real( x ))  all.equal(x, as.real( x ))
-Error: incorrect tag type
 > if(is.single( x ))  all.equal(x, as.single( x ))
-Error: incorrect tag type
+Error in is.single(x) : type "single" unimplemented in R
 > if(is.ts( x ))  all.equal(x, as.ts( x ))
-Error: incorrect tag type
 > if(is.vector( x ))  all.equal(x, as.vector( x ))
-Error: incorrect tag type
+[1] TRUE
 > 
 > 
