@@ -69,6 +69,8 @@ DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
+ifneq ($(strip $(DEPS)),)
 	@cat $(DEPS) >> Makedeps
+endif
 
 -include Makedeps
