@@ -1,5 +1,5 @@
-\name{levels}
-\title{Factor Levels}
+\name{levels.factor}
+\title{Factor Levels Assignment}
 \usage{
 levels(x) <- value
 }
@@ -31,6 +31,5 @@ levels(z) <- c("A", "B", "A")
 # same, using a named list
 z <- gl(3, 2, 12)
 levels(z) <- list(A=c(1,3), B=2)
-
 }
 \keyword{category}

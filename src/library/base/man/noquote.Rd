@@ -6,7 +6,7 @@ print.noquote(obj, \dots)
 obj[j]
 }
 \alias{noquote}
-\alias{[.noquote}
+%> ./Extract.Rd for "[" and "[<-"
 \alias{print.noquote}
 \alias{as.matrix.noquote}
 \arguments{

@@ -6,6 +6,7 @@ print(anova.object)
 }
 \alias{anova}
 \alias{anova.mlm}
+% others in ./lm.summaries.Rd
 \alias{print.anova}
 \arguments{
 \item{object}{an object containing the results returned

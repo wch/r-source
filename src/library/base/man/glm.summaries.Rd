@@ -27,7 +27,7 @@ print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
 \alias{residuals.glm}
 \alias{print.glm}
 \alias{print.glm.null}
-\alias{print.anova.glm}
+%Deprecated: print.anova.glm
 \alias{print.summary.glm}
 \alias{print.summary.glm.null}
 \arguments{

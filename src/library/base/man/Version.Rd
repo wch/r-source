@@ -1,4 +1,4 @@
-\name{Version}
+\name{R.Version}
 \title{Version Information}
 \usage{
 R.Version()

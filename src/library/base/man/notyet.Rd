@@ -9,14 +9,13 @@
 .NotYetUsed(arg)
 
 symbols(\dots)
-plot.lm(\dots)
 }
 \arguments{
   \item{arg}{an argument of a function that is not yet used.}
 }
 %------ PLEASE: put \alias{.} here for  EACH !
 \alias{symbols}
-\alias{plot.lm}
+%done\alias{plot.lm}
 \description{
   In order to pinpoint missing functionality, the \R core team uses
   these functions for missing \R functions and not yet used arguments of
