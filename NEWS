@@ -24,10 +24,6 @@ INSTALLATION CHANGES
 	ensures that features such as inlining are only used if the
 	compilation flags specified support them.  (PR#7257)
 
-   o	If makeinfo >= 4.5 is not available, placeholders are created
-	for the HTML manuals in doc/manual (rather than empty files
-	as in 2.0.0).
-
 
 BUG FIXES
 
@@ -58,7 +54,7 @@ INSTALLATION CHANGES
 	invoked for compilation steps).
 
    o	If makeinfo >= 4.5 is not available, warnings are given that
-	some of the HTML manuals will be empty, and the index page
+	some of the HTML manuals will be missing, and the index page
 	given by help.start() will link to CRAN versions of those manuals.
 
 
