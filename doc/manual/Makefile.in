@@ -149,14 +149,6 @@ stamp-images-pdf:
 	fi
 	@touch $@
 
-MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
-MAKEINFO_HTML_OPTS = --number-sections --html
-front-matter: $(top_srcdir)/FAQ $(top_srcdir)/doc/html/faq.html
-$(top_srcdir)/FAQ: $(srcdir)/R-FAQ.texi
-	@$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
-$(top_srcdir)/doc/html/faq.html: $(srcdir)/R-FAQ.texi
-	@$(MAKEINFO) $(MAKEINFO_HTML_OPTS) $< -o $@
-
 install: installdirs install-tex
 	@echo "installing doc/manual ..."
 installdirs:
@@ -236,6 +228,14 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
+MAKEINFO_HTML_OPTS = --number-sections --html
+maintainer-build: $(top_srcdir)/FAQ $(top_srcdir)/doc/html/faq.html
+$(top_srcdir)/FAQ: $(srcdir)/R-FAQ.texi
+	@$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
+$(top_srcdir)/doc/html/faq.html: $(srcdir)/R-FAQ.texi
+	@$(MAKEINFO) $(MAKEINFO_HTML_OPTS) $< -o $@
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
