@@ -57,6 +57,17 @@ void warningcall(SEXP call, char *format, ...)
     char *dcall, buf[BUFSIZE];
     RCNTXT *cptr;
 
+    s = GetOption(install("warning.expression"), R_NilValue);
+    if( s!= R_NilValue ) {
+        if( !isLanguage(s) &&  ! isExpression(s) )
+            error("invalid option \"warning.expression\"\n"); 
+        cptr=R_GlobalContext;
+        while (cptr->callflag != CTXT_RETURN && cptr->callflag )
+            cptr = cptr->nextcontext;
+        eval(s, cptr->cloenv);
+        return;
+    }
+
     w = asInteger(GetOption(install("warn"), R_NilValue));
 
     if( w == NA_INTEGER ) /* set to a sensible value */

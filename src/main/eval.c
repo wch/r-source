@@ -1067,10 +1067,11 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (cptr == NULL)
 	error("Recall called from outside a closure\n");
-    t = CAR(cptr->call);
-    s = findFun(t, cptr->sysparent);
-    PROTECT(t = LCONS(t,args));
-    ans = applyClosure(t, s, args, cptr->sysparent, R_NilValue);
+    if( TYPEOF(CAR(cptr->call)) == SYMSXP)
+        PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
+    else
+        PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
+    ans = applyClosure(cptr->call, s, args, cptr->cloenv, R_NilValue);
     UNPROTECT(1);
     return ans;
 }

@@ -284,7 +284,8 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
        */
 
     n = length(args);
-    if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))) {
+    if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))
+        && TAG(args) == R_NilValue ) {
 	args = CAR(args);
 	n = length(args);
     }
