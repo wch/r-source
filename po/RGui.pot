@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 10:15+0000\n"
+"POT-Creation-Date: 2005-02-08 11:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,18 @@ msgstr ""
 msgid ""
 "Font %s-%d-%d  not found.\n"
 "Using system fixed font"
+msgstr ""
+
+#: console.c:1743
+msgid "Text files (*.txt)"
+msgstr ""
+
+#: console.c:1745
+msgid "Save selection to"
+msgstr ""
+
+#: console.c:1747
+msgid "Save console contents to"
 msgstr ""
 
 #: dataentry.c:217
@@ -118,7 +130,7 @@ msgstr ""
 msgid "Autosize column"
 msgstr ""
 
-#: dataentry.c:1561 pager.c:293
+#: dataentry.c:1561 pager.c:293 ../library/grDevices/src/devWindows.c:1593
 msgid "Stay on top"
 msgstr ""
 
@@ -131,6 +143,7 @@ msgid "Data Editor"
 msgstr ""
 
 #: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1065
+#: ../library/grDevices/src/devWindows.c:1538
 msgid "File"
 msgstr ""
 
@@ -249,6 +262,7 @@ msgid "Print script"
 msgstr ""
 
 #: editor.c:645 pager.c:429 rui.c:1046
+#: ../library/grDevices/src/devWindows.c:1500
 msgid "Print"
 msgstr ""
 
@@ -269,6 +283,7 @@ msgid "Save as..."
 msgstr ""
 
 #: editor.c:673 pager.c:453 rui.c:1081
+#: ../library/grDevices/src/devWindows.c:1596
 msgid "Print..."
 msgstr ""
 
@@ -375,7 +390,7 @@ msgstr ""
 msgid "Save image in"
 msgstr ""
 
-#: rui.c:158 rui.c:172 rui.c:1150
+#: rui.c:158 rui.c:172 rui.c:1150 graphapp/dialogs.c:357
 msgid "All files (*.*)"
 msgstr ""
 
@@ -666,8 +681,38 @@ msgstr ""
 msgid "menu or item does not exist"
 msgstr ""
 
-#: system.c:393
+#: system.c:403
 msgid "Save workspace image?"
+msgstr ""
+
+#: graphapp/dialogs.c:101 graphapp/dialogs.c:118
+msgid "Question"
+msgstr ""
+
+#: graphapp/dialogs.c:138
+msgid " Change working directory to:"
+msgstr ""
+
+#: graphapp/dialogs.c:141
+#, c-format
+msgid "Unable to set '%s' as working directory"
+msgstr ""
+
+#: graphapp/dialogs.c:366
+msgid "Select working directory"
+msgstr ""
+
+#: graphapp/dialogs.c:570
+msgid "User"
+msgstr ""
+
+#: graphapp/dialogs.c:571
+msgid "Password"
+msgstr ""
+
+#: graphapp/dialogs.c:732 graphapp/dialogs.c:738
+#, c-format
+msgid "\"%s\" not found"
 msgstr ""
 
 #: graphapp/gmenus.c:47
@@ -684,4 +729,246 @@ msgstr ""
 
 #: graphapp/gmenus.c:50
 msgid "Arrange Icons"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:845
+msgid "Png files (*.png)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:846
+msgid "Portable network graphics file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:848
+msgid "Windows bitmap files (*.bmp)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:849
+msgid "Windows bitmap file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:851
+msgid "Jpeg files (*.jpeg,*jpg)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:852
+msgid "Jpeg file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:873
+msgid "Postscript files (*.ps)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:874
+msgid "Postscript file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:886
+msgid "PDF files (*.pdf)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:887
+msgid "PDF file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:899
+msgid "Enhanced metafiles (*.emf)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:900
+msgid "Enhanced metafiles"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:904
+#: ../library/grDevices/src/devWindows.c:2678
+msgid "file path selected is too long: only 512 bytes are allowed"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1120
+msgid "No plot to replace!"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1166
+msgid "Variable name"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1173
+msgid "Variable doesn't exist or doesn't contain any plots!"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1189
+msgid "Name of variable to save to"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1494
+msgid "Copy to the clipboard as a metafile"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1506
+msgid "Return focus to console"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1512
+#: ../library/grDevices/src/devWindows.c:1523
+msgid "Stop locator"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1522
+#: ../library/grDevices/src/devWindows.c:1526
+msgid "Stop"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1528
+msgid "Continue"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1532
+msgid "Next"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1533
+msgid "Next plot"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1539
+msgid "Save as"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1540
+msgid "Metafile..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1541
+msgid "Postscript..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1542
+msgid "PDF..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1543
+msgid "Png..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1544
+msgid "Bmp..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1545
+msgid "Jpeg"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1546
+#, c-format
+msgid "50% quality..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1547
+#, c-format
+msgid "75% quality..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1548
+#, c-format
+msgid "100% quality..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1549
+msgid "Copy to the clipboard"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1550
+msgid "as a Bitmap\tCTRL+C"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1551
+msgid "as a Metafile\tCTRL+W"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1554
+msgid "Print...\tCTRL+P"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1556
+msgid "close Device"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1557
+msgid "History"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1558
+msgid "Recording"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1561
+msgid "Add\tINS"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1562
+msgid "Replace"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1564
+msgid "Previous\tPgUp"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1565
+msgid "Next\tPgDown"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1567
+msgid "Save to variable..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1568
+msgid "Get from variable..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1570
+msgid "Clear history"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1571
+msgid "Resize"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1572
+msgid "R mode"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1574
+msgid "Fit to window"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1576
+msgid "Fixed size"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1583
+msgid "Copy as metafile"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1585
+msgid "Copy as bitmap"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1588
+msgid "Save as metafile..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1590
+msgid "Save as postscript..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:2422
+msgid "Locator is active"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:2982
+msgid "Waiting to confirm page change..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:2994
+msgid "Click or hit ENTER for next page"
 msgstr ""
