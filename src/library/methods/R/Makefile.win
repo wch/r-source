@@ -8,18 +8,20 @@ $(DPKG)/R:
 $(DPKG)/R/all.rda: all.R
 	@echo "  dumping R code in package \`$(PKG)'"
 ifeq ($(strip $(BUILD)),CROSS)
-	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave)
+	@ cp `$(R_EXE) RHOME`/library/methods/libs/methods.so $(RHOME)/library/methods/libs
+	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\", \"..\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave)
+	@ rm $(RHOME)/library/methods/libs/methods.so
 else
 	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\")" | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL)
-	@$(CP) -p $(RHOME)/share/R/nsrdaload.R $(DPKG)/R/$(PKG)
 endif
+	@$(CP) -p $(RHOME)/share/R/nsrdaload.R $(DPKG)/R/$(PKG)
 
 all.R: $(PKGRFILES)
 	@echo "  collecting R files"
 	@$(MKDIR) -p $(DPKG)/R
 	@echo ".packageName <- \"methods\"" > $@
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(CAT) $(PKGRFILES) | $(SED) -e 's+= file.path(.Library+= file.path("../../../library"+' >> $@
+	@$(CAT) $(PKGRFILES) | $(SED) -e 's+file.path(.Library+file.path("../../library"+' >> $@
 else
 	@$(CAT) $(PKGRFILES)   >> $@
 endif
