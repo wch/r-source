@@ -544,10 +544,15 @@ static DL_FUNC R_dlsym(DllInfo *info, char const *name)
 DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
     DL_FUNC fcnptr = (DL_FUNC) NULL;
+#ifndef Macintosh
     int i, all = (strlen(pkg) == 0), doit;
+#else /* cannot load locally */
+    int i, all = (strlen("") == 0), doit;
+#endif
 
     if(R_osDynSymbol->lookupCachedSymbol)
 	fcnptr = R_osDynSymbol->lookupCachedSymbol(name, pkg, all);
+
     if(fcnptr)
 	return(fcnptr);
 
@@ -636,11 +641,19 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 
 int moduleCdynload(char *module, int local, int now)
 {
+#ifndef Macintosh
     char dllpath[PATH_MAX], *p = getenv("R_HOME");
-
+#else
+    char dllpath[PATH_MAX], *p = R_Home;
+#endif    
     if(!p) return 0;
+#ifndef Macintosh
     sprintf(dllpath, "%s%smodules%s%s.%s", p, FILESEP, FILESEP, 
 	    module, SHLIB_EXT);
+#else /* no "dot" in DLL names under MacOS */
+    sprintf(dllpath, "%s%smodules%s%s%s", p, FILESEP, FILESEP, 
+	    module, SHLIB_EXT);
+#endif
     return AddDLL(dllpath, local, now);
 }
 
