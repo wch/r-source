@@ -33,6 +33,16 @@ winMenuItems(menuname)
   If the \code{menuname} parameter of \code{winMenuAddItem} does not
   already exist, it will be created automatically.
   
+  Normally new submenus and menu items are added to the main console
+  menu. They may be added elsewhere using the following special names:
+  \describe{
+      \item{\code{$ConsoleMain}}{The console menu (the default)}
+      \item{\code{$ConsolePopup}}{The console popup menu}
+      \item{\code{$Graph<n>Main}}{The menu for graphics window \code{<n>}}
+      \item{\code{$Graph<n>Popup}}{The popup menu for graphics window 
+      \code{<n>}}
+  }
+  
   Specifying an existing item in \code{winMenuAddItem} enables the
   action to be changed.
 
@@ -51,6 +61,9 @@ winMenuItems(menuname)
   return the items that exist in that menu.  The return value is a named
   vector where the names correspond to the names of the items and the
   values of the vector are the corresponding actions.
+  
+  The \code{winMenuDel} function will delete a menu and all of its items
+  and submenus.  \code{winMenuDelItem} just deletes one menu item.
 }
 \value{
   \code{NULL}, invisibly. If an error occurs, an informative error
@@ -67,6 +80,8 @@ winMenuAddItem("Testit", "two", "disable")
 winMenuAddItem("Testit", "three", "cccc")
 winMenuAddItem("Testit/extras", "one more", "ddd")
 winMenuAddItem("Testit/extras", "and another", "eee")
+winMenuAdd("$ConsolePopup/Testit")
+winMenuAddItem("$ConsolePopup/Testit", "six", "fff")
 winMenuNames()
 winMenuItems("Testit")
 }}

@@ -44,6 +44,11 @@ files and processing each package separately.
 Installation of a bundle now fails as soon as installing any component
 package fails.
 
+winMenuAdd() and winMenuAddItem() now allow addition of menu items to
+the console and graphics windows and their popup menus.  Repeated
+addition of the same menu no longer leads to duplicate menus.
+winMenuDel() now deletes all submenus and items within the menu.
+
 
 
 rw1091

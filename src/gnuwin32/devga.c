@@ -1876,6 +1876,14 @@ static void GA_NewPage(R_GE_gcontext *gc,
     SH;
 }
 
+static void deleteGraphMenus(int devnum)
+{
+    char prefix[15];
+
+    sprintf(prefix, "$Graph%i", devnum);
+    windelmenus(prefix);
+}
+
 	/********************************************************/
 	/* device_Close is called when the device is killed	*/
 	/* this function is responsible for destroying any 	*/
@@ -1899,6 +1907,7 @@ static void GA_Close(NewDevDesc *dd)
 	hide(xd->gawin);
 	del(xd->bm);
 	if (xd == GA_xd) GA_xd = NULL;
+	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
       SaveAsBitmap(dd, xd->res_dpi);
     }
@@ -2724,3 +2733,34 @@ int getDeviceHandle(int dev)
     if (!xd) return(0);
     return(getHandle(xd->gawin));
 }
+
+/* This assumes a menuname of the form $Graph<nn>Main, $Graph<nn>Popup, $Graph<nn>LocMain,
+   or $Graph<nn>LocPopup where <nn> is the
+   device number.  We've already checked the $Graph prefix. */
+
+menu getGraphMenu(char* menuname)
+{
+    int devnum;
+    GEDevDesc *gdd;
+    gadesc *xd;
+
+    menuname = menuname + 6;
+    devnum = atoi(menuname);
+    if(devnum < 1 || devnum > R_MaxDevices)
+    	error("invalid graph device number");
+
+    while (('0' <= *menuname) && (*menuname <= '9')) menuname++;
+
+    gdd = (GEDevDesc*) GetDevice(devnum - 1);
+
+    if(!gdd) error("invalid device");
+
+    xd = (gadesc *) gdd->dev->deviceSpecific;
+
+    if(!xd || xd->kind != SCREEN) error("bad device");
+
+    if (strcmp(menuname, "Main") == 0) return(xd->mbar);
+    else if (strcmp(menuname, "Popup") == 0) return(xd->grpopup);
+    else return(NULL);
+}
+
