@@ -185,8 +185,7 @@
 #define R_MINOR		"UNKNOWN"
 #define R_STATUS	"UNKNOWN"
 #define R_STATUS_REV	"UNKNOWN"
-#define R_DAY		"UNKNOWN"
-#define R_MONTH		"UNKNOWN"
-#define R_YEAR		"UNKNOWN"
+
+#include "Version.h"
 
 #endif

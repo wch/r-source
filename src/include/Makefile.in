@@ -16,11 +16,16 @@ DISTFILES = $(shell cd $(srcdir) && ls Makefile.in Platform.h.in *.h)
 SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
 	 Fortran.h Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h \
 	 Random.h Rdefines.h Rinternals.h Utils.h
-OBJ_HEADERS = Platform.h
+OBJ_HEADERS = Platform.h Version.h
 
-all: R
+all: Makefile R
 
-R: Platform.h FFDecl.h FFTab.h
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile Platform.h FFDecl.h FFTab.h Version.h
 	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$$f $(top_builddir)/include; \
@@ -29,17 +34,24 @@ R: Platform.h FFDecl.h FFTab.h
 	  $(INSTALL_DATA) $$f $(top_builddir)/include; \
 	done
 
-Platform.h: $(top_srcdir)/date-stamp
+Platform.h: $(top_srcdir)/configure $(srcdir)/Platform.h.in
 	@cd $(top_builddir) && $(MAKE) src/include/Platform.h
 	@touch $@
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
 	$(top_srcdir)/tools/GETSYMBOLS
 
+Version.h: $(top_srcdir)/date-stamp
+	@awk -F/ '{ \
+	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
+	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
+	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
+	  $(top_srcdir)/date-stamp > $@
+
 mostlyclean:
 clean:
 distclean:
-	@rm -f GETSYMBOLS Makefile Platform.h FFDecl.h FFTab.h
+	@rm -f GETSYMBOLS Makefile Platform.h FFDecl.h FFTab.h Version.h
 maintainer-clean: distclean
 
 install install-strip uninstall::
