@@ -16,9 +16,9 @@ NEW FEATURES
 	can be customized by cognescenti.
 
     o   The assignment form of split() allows recycling of vectors 
-        within the value list. In particular, things like 
-            split(x, g) <- lapply(split(x, g), mean)
-        now work
+	within the value list. In particular, things like 
+	    split(x, g) <- lapply(split(x, g), mean)
+	now work
 
 
 DOCUMENTATION
@@ -173,7 +173,7 @@ BUG FIXES
 
     o	require() without a version argument tried for an unversioned
 	load of a package even though a versioned install was already
-	loaded.  This often lead to a message that a required package
+	loaded.  This often led to a message that a required package
 	was being loaded when it was not actually being loaded.
 
     o	str(<S4.object>) made use of attributes() instead of slot(),
@@ -208,11 +208,11 @@ BUG FIXES
 
     o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
 
-    o   class "raw" had been omitted from the list of basic classes,
-        and so could not be used in S4 classes.
+    o   Class "raw" had been omitted from the list of basic classes in
+	the "methods" package and so could not be used in S4 classes.
 
-    o   function getGroupMembers(), part of the definition of S4
-        classes, had been promised for release 2.0, but slipped through.
+    o   Function getGroupMembers(), part of the definition of S4
+	classes, had been promised for release 2.0, but slipped through.
 
 
 
