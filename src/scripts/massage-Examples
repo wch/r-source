@@ -24,7 +24,11 @@ assign("par.postscript", par(no.readonly = TRUE), env = .CheckExEnv)
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 _EOF_
 ) | sed "s/PKG/${PKG}/"
-if [ "${PKG}" != "base" ]; then echo "library('${PKG}')" ; fi
+if [ "${PKG}" = "tcltk" ]; then 
+  echo "require('tcltk') || q()"
+else
+  if [ "${PKG}" != "base" ]; then echo "library('${PKG}')" ; fi
+fi
 
 ## 2) ---- edit a few of these files:
 for file in ${FILES}
