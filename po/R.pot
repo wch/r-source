@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-01 09:01+0000\n"
+"POT-Creation-Date: 2005-02-01 21:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,6 +116,101 @@ msgstr ""
 msgid "dataentry: expression too long"
 msgstr ""
 
+#: src/gnuwin32/dataentry.c:1501
+msgid "Cell width(s)"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1506
+msgid "Cell width"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1509
+msgid "variable"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1548
+msgid ""
+"Navigation.\n"
+"  Keyboard: cursor keys move selection\n"
+"\tTab move right, Shift+Tab moves left\n"
+"\tPgDn or Ctrl+F: move down one screenful\n"
+"\tPgUp or Ctrl+B: move up one screenful\n"
+"\tHome: move to (1,1) cell\n"
+"\tEnd: show last rows of last column.\n"
+"   Mouse: left-click in a cell, use the scrollbar(s).\n"
+"\n"
+"Editing.\n"
+"  Type in the currently hightlighted cell\n"
+"  Double-click in a cell for an editable field\n"
+"\n"
+"Misc.\n"
+"  Ctrl-L redraws the screen, auto-resizing the columns\n"
+"  Ctrl-C copies selected cell\n"
+"  Ctrl-V pastes to selected cell\n"
+"  Right-click menu for copy, paste, autosize currently selected column\n"
+"\n"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1554 src/gnuwin32/dataentry.c:1648
+#: src/gnuwin32/editor.c:714 src/gnuwin32/rui.c:1103
+msgid "Help"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1556
+msgid "Copy selected cell"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1557
+msgid "Paste to selected cell"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1558
+msgid "Autosize column"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1560 src/gnuwin32/pager.c:293
+msgid "Stay on top"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1562 src/gnuwin32/dataentry.c:1640
+#: src/gnuwin32/pager.c:295 src/gnuwin32/pager.c:458
+msgid "Close"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1612
+msgid "Data Editor"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1638 src/gnuwin32/editor.c:662
+#: src/gnuwin32/pager.c:450 src/gnuwin32/rui.c:1053
+msgid "File"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1642 src/gnuwin32/editor.c:680
+#: src/gnuwin32/pager.c:460 src/gnuwin32/rui.c:1074
+msgid "Edit"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1643
+msgid "Copy  \tCTRL+C"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1644
+msgid "Paste \tCTRL+V"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1645
+msgid "Delete\tDEL"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1647
+msgid "Cell widths ..."
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:1649
+msgid "Data editor"
+msgstr ""
+
 #: src/gnuwin32/dynload.c:101
 #, c-format
 msgid "DLL attempted to change FPU control word from %x to %x"
@@ -129,12 +224,163 @@ msgstr ""
 msgid "No RGui console to paste to"
 msgstr ""
 
+#: src/gnuwin32/editor.c:537
+msgid "R EDITOR\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:539
+msgid "A standard text editor for editing and running R code.\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:541
+msgid "RUNNING COMMANDS\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:542
+msgid "To run a line or section of R code, select the code and either\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:543
+msgid "     Press Ctrl-R\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:544
+msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:545
+msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:546
+msgid ""
+"This will copy the selected commands to the console and evaluate them.\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:547
+msgid ""
+"If there is no selection, this will just run the current line and advance\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:548
+msgid "the cursor by one line.\n"
+msgstr ""
+
+#: src/gnuwin32/editor.c:560 src/gnuwin32/editor.c:635
+#: src/gnuwin32/editor.c:696
+msgid "Run line or selection"
+msgstr ""
+
+#: src/gnuwin32/editor.c:562 src/gnuwin32/editor.c:681
+msgid "Undo"
+msgstr ""
+
+#: src/gnuwin32/editor.c:564 src/gnuwin32/editor.c:684
+msgid "Cut"
+msgstr ""
+
+#: src/gnuwin32/editor.c:565 src/gnuwin32/editor.c:686
+#: src/gnuwin32/pager.c:288 src/gnuwin32/pager.c:461 src/gnuwin32/rui.c:1018
+#: src/gnuwin32/rui.c:1075
+msgid "Copy"
+msgstr ""
+
+#: src/gnuwin32/editor.c:566 src/gnuwin32/editor.c:688 src/gnuwin32/rui.c:1022
+#: src/gnuwin32/rui.c:1076
+msgid "Paste"
+msgstr ""
+
+#: src/gnuwin32/editor.c:567 src/gnuwin32/editor.c:690
+msgid "Delete"
+msgstr ""
+
+#: src/gnuwin32/editor.c:569 src/gnuwin32/editor.c:692
+#: src/gnuwin32/pager.c:291 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1080
+msgid "Select all"
+msgstr ""
+
+#: src/gnuwin32/editor.c:627 src/gnuwin32/pager.c:414 src/gnuwin32/rui.c:1006
+msgid "Open script"
+msgstr ""
+
+#: src/gnuwin32/editor.c:631
+msgid "Save script"
+msgstr ""
+
+#: src/gnuwin32/editor.c:639 src/gnuwin32/pager.c:434
+msgid "Return focus to Console"
+msgstr ""
+
+#: src/gnuwin32/editor.c:642
+msgid "Print script"
+msgstr ""
+
+#: src/gnuwin32/editor.c:644 src/gnuwin32/pager.c:429 src/gnuwin32/rui.c:1034
+msgid "Print"
+msgstr ""
+
+#: src/gnuwin32/editor.c:663 src/gnuwin32/pager.c:451 src/gnuwin32/rui.c:1055
+msgid "New script"
+msgstr ""
+
+#: src/gnuwin32/editor.c:665 src/gnuwin32/pager.c:452 src/gnuwin32/rui.c:1056
+msgid "Open script..."
+msgstr ""
+
+#: src/gnuwin32/editor.c:667
+msgid "Save"
+msgstr ""
+
+#: src/gnuwin32/editor.c:669
+msgid "Save as..."
+msgstr ""
+
+#: src/gnuwin32/editor.c:672 src/gnuwin32/pager.c:453 src/gnuwin32/rui.c:1069
+msgid "Print..."
+msgstr ""
+
+#: src/gnuwin32/editor.c:675
+msgid "Close script"
+msgstr ""
+
+#: src/gnuwin32/editor.c:678 src/gnuwin32/rui.c:1072
+msgid "Exit"
+msgstr ""
+
+#: src/gnuwin32/editor.c:694 src/gnuwin32/rui.c:1081
+msgid "Clear console"
+msgstr ""
+
+#: src/gnuwin32/editor.c:698
+msgid "Run all"
+msgstr ""
+
+#: src/gnuwin32/editor.c:701
+msgid "Find..."
+msgstr ""
+
+#: src/gnuwin32/editor.c:703
+msgid "Replace..."
+msgstr ""
+
+#: src/gnuwin32/editor.c:706 src/gnuwin32/rui.c:1085
+msgid "GUI preferences..."
+msgstr ""
+
+#: src/gnuwin32/editor.c:715
+msgid "Editor"
+msgstr ""
+
 #: src/gnuwin32/editor.c:771
 msgid "Maximum number of editors reached"
 msgstr ""
 
 #: src/gnuwin32/editor.c:776
 msgid "Unable to create editor window"
+msgstr ""
+
+#: src/gnuwin32/editor.c:785
+msgid "Untitled"
 msgstr ""
 
 #: src/gnuwin32/extra.c:46
@@ -237,7 +483,7 @@ msgstr ""
 msgid "unable to add menu item (%s)"
 msgstr ""
 
-#: src/gnuwin32/extra.c:589
+#: src/gnuwin32/extra.c:589 src/gnuwin32/rui.c:1321 src/gnuwin32/rui.c:1393
 msgid "menu does not exist"
 msgstr ""
 
@@ -347,7 +593,24 @@ msgid "Insufficient memory to display file in internal pager"
 msgstr ""
 
 #: src/gnuwin32/pager.c:162 src/gnuwin32/pager.c:174 src/gnuwin32/pager.c:194
+#: src/gnuwin32/rui.c:215 src/gnuwin32/rui.c:242
 msgid "No selection"
+msgstr ""
+
+#: src/gnuwin32/pager.c:289 src/gnuwin32/pager.c:419 src/gnuwin32/pager.c:463
+msgid "Paste to console"
+msgstr ""
+
+#: src/gnuwin32/pager.c:290 src/gnuwin32/pager.c:424 src/gnuwin32/pager.c:465
+msgid "Paste commands to console"
+msgstr ""
+
+#: src/gnuwin32/pager.c:455 src/gnuwin32/rui.c:1070
+msgid "Save to File..."
+msgstr ""
+
+#: src/gnuwin32/pager.c:470
+msgid "View"
 msgstr ""
 
 #: src/gnuwin32/pager.c:499
@@ -361,9 +624,307 @@ msgid ""
 "Using system fixed font"
 msgstr ""
 
-#: src/gnuwin32/rui.c:810
+#: src/gnuwin32/rui.c:103
+msgid "R files (*.R)"
+msgstr ""
+
+#: src/gnuwin32/rui.c:104
+msgid "Select file to source"
+msgstr ""
+
+#: src/gnuwin32/rui.c:125 src/gnuwin32/rui.c:141
+msgid "R images (*.RData)"
+msgstr ""
+
+#: src/gnuwin32/rui.c:126
+msgid "Select image to load"
+msgstr ""
+
+#: src/gnuwin32/rui.c:142
+msgid "Save image in"
+msgstr ""
+
+#: src/gnuwin32/rui.c:156 src/gnuwin32/rui.c:170 src/gnuwin32/rui.c:1138
+msgid "All files (*.*)"
+msgstr ""
+
+#: src/gnuwin32/rui.c:157
+msgid "Load history from"
+msgstr ""
+
+#: src/gnuwin32/rui.c:171
+msgid "Save history in"
+msgstr ""
+
+#: src/gnuwin32/rui.c:224 src/gnuwin32/rui.c:233
+msgid "No text available"
+msgstr ""
+
+#: src/gnuwin32/rui.c:282
+msgid "Name of data frame or matrix"
+msgstr ""
+
+#: src/gnuwin32/rui.c:289
+#, c-format
+msgid "'%s' cannot be found"
+msgstr ""
+
+#: src/gnuwin32/rui.c:349
+msgid "Are you sure?"
+msgstr ""
+
+#: src/gnuwin32/rui.c:423
+msgid "Help on"
+msgstr ""
+
+#: src/gnuwin32/rui.c:464
+msgid "Search help"
+msgstr ""
+
+#: src/gnuwin32/rui.c:479
+msgid "Apropos"
+msgstr ""
+
+#: src/gnuwin32/rui.c:806
 #, c-format
 msgid "Error at line %d of file %s"
+msgstr ""
+
+#: src/gnuwin32/rui.c:847
+msgid "Can only drag-and-drop .R, .RData and .rda files"
+msgstr ""
+
+#: src/gnuwin32/rui.c:900
+msgid "Packages"
+msgstr ""
+
+#: src/gnuwin32/rui.c:901
+msgid "Load package..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:903
+msgid "Set CRAN mirror..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:905
+msgid "Install package(s) from CRAN..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:907
+msgid "Update packages from CRAN"
+msgstr ""
+
+#: src/gnuwin32/rui.c:910
+msgid "Install package(s) from local zip files..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:913
+msgid "Install package(s) from Bioconductor..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:915
+msgid "Update packages from Bioconductor"
+msgstr ""
+
+#: src/gnuwin32/rui.c:927
+msgid "FAQ on R"
+msgstr ""
+
+#: src/gnuwin32/rui.c:929
+msgid "FAQ on R for &Windows"
+msgstr ""
+
+#: src/gnuwin32/rui.c:938 src/gnuwin32/rui.c:941
+msgid "Manuals (in PDF)"
+msgstr ""
+
+#: src/gnuwin32/rui.c:942
+msgid "An &Introduction to R"
+msgstr ""
+
+#: src/gnuwin32/rui.c:945
+msgid "R &Reference Manual"
+msgstr ""
+
+#: src/gnuwin32/rui.c:948
+msgid "R Data Import/Export"
+msgstr ""
+
+#: src/gnuwin32/rui.c:951
+msgid "R Language Definition"
+msgstr ""
+
+#: src/gnuwin32/rui.c:954
+msgid "Writing R Extensions"
+msgstr ""
+
+#: src/gnuwin32/rui.c:962
+msgid "R functions (text)..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:963
+msgid "Html help"
+msgstr ""
+
+#: src/gnuwin32/rui.c:965
+msgid "Search help..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:967
+msgid "Apropos..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:969
+msgid "R Project home page"
+msgstr ""
+
+#: src/gnuwin32/rui.c:970
+msgid "CRAN home page"
+msgstr ""
+
+#: src/gnuwin32/rui.c:972
+msgid "About"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1010
+msgid "Load image"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1014
+msgid "Save image"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1026
+msgid "Copy and paste"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1030
+msgid "Stop current computation"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1054
+msgid "Source R code..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1057
+msgid "Display file(s)..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1059
+msgid "Load Workspace..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1060
+msgid "Save Workspace..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1062
+msgid "Load History..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1064
+msgid "Save History..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1067
+msgid "Change dir..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1077
+msgid "Paste commands only"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1079
+msgid "Copy and Paste"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1083
+msgid "Data editor..."
+msgstr ""
+
+#: src/gnuwin32/rui.c:1087
+msgid "Misc"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1088
+msgid "Stop current computation           \tESC"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1091
+msgid "Break to debugger"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1093
+msgid "Buffered output"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1095
+msgid "List objects"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1096
+msgid "Remove all objects"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1097
+msgid "List &search path"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1104
+msgid "Console"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1139
+msgid "Select file"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1186
+msgid "'mname' is limited to 100 chars"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1226
+#, c-format
+msgid "menu %s does not exist"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1268
+msgid "Only 16 menus are allowed"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1272
+msgid "'menu' is limited to 50 chars"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1282
+msgid "base menu does not exist"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1297
+msgid "failed to allocate menu"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1309
+msgid "too many menu items have been created"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1313 src/gnuwin32/rui.c:1424
+msgid "menu + item is limited to 100 chars"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1339 src/gnuwin32/rui.c:1352 src/gnuwin32/rui.c:1357
+msgid "failed to allocate char storage"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1365
+msgid "failed to allocate menuitem"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1414
+msgid "menu not found"
+msgstr ""
+
+#: src/gnuwin32/rui.c:1432
+msgid "menu or item does not exist"
 msgstr ""
 
 #: src/gnuwin32/run.c:43
@@ -421,69 +982,85 @@ msgstr ""
 msgid "character string expected as third argument"
 msgstr ""
 
-#: src/gnuwin32/system.c:116 src/unix/sys-std.c:65
+#: src/gnuwin32/system.c:112 src/unix/sys-std.c:65
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:286 src/unix/sys-std.c:587
+#: src/gnuwin32/system.c:282 src/unix/sys-std.c:587
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr ""
 
-#: src/gnuwin32/system.c:292 src/unix/sys-std.c:593
+#: src/gnuwin32/system.c:288 src/unix/sys-std.c:593
 msgid "<ERROR: invalid input in encoding> "
 msgstr ""
 
-#: src/gnuwin32/system.c:490
+#: src/gnuwin32/system.c:486
 #, c-format
 msgid "Unable to open file '%s'"
 msgstr ""
 
-#: src/gnuwin32/system.c:503
+#: src/gnuwin32/system.c:499
 #, c-format
 msgid "file.show(): file %s does not exist\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:623
+#: src/gnuwin32/system.c:619
 msgid "Invalid R_HOME"
 msgstr ""
 
-#: src/gnuwin32/system.c:838
+#: src/gnuwin32/system.c:834
 msgid "WARNING: no max-mem-size given\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:844
+#: src/gnuwin32/system.c:840
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:846
+#: src/gnuwin32/system.c:842
 #, c-format
 msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:851
+#: src/gnuwin32/system.c:847
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:861
+#: src/gnuwin32/system.c:857
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:904
+#: src/gnuwin32/system.c:900
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 
-#: src/gnuwin32/system.c:909
+#: src/gnuwin32/system.c:905
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 
-#: src/gnuwin32/system.c:918
+#: src/gnuwin32/system.c:914
 msgid "WARNING: invalid R_HISTSIZE ignored;"
+msgstr ""
+
+#: src/gnuwin32/graphapp/gmenus.c:47
+msgid "Windows"
+msgstr ""
+
+#: src/gnuwin32/graphapp/gmenus.c:48
+msgid "Cascade"
+msgstr ""
+
+#: src/gnuwin32/graphapp/gmenus.c:49
+msgid "Tile"
+msgstr ""
+
+#: src/gnuwin32/graphapp/gmenus.c:50
+msgid "Arrange Icons"
 msgstr ""
 
 #: src/include/Errormsg.h:31
@@ -1125,7 +1702,7 @@ msgstr ""
 msgid "invalid add argument"
 msgstr ""
 
-#: src/main/builtin.c:66 src/main/errors.c:896
+#: src/main/builtin.c:66 src/main/errors.c:898
 msgid "invalid number of arguments"
 msgstr ""
 
@@ -1403,15 +1980,15 @@ msgstr ""
 msgid "invalid 'width' argument"
 msgstr ""
 
-#: src/main/coerce.c:88 src/main/errors.c:911
+#: src/main/coerce.c:88 src/main/errors.c:913
 msgid "NAs introduced by coercion"
 msgstr ""
 
-#: src/main/coerce.c:90 src/main/errors.c:912
+#: src/main/coerce.c:90 src/main/errors.c:914
 msgid "inaccurate integer conversion in coercion"
 msgstr ""
 
-#: src/main/coerce.c:92 src/main/errors.c:913
+#: src/main/coerce.c:92 src/main/errors.c:915
 msgid "imaginary parts discarded in coercion"
 msgstr ""
 
@@ -1531,7 +2108,7 @@ msgstr ""
 msgid "alpha level %d, not in 0:255"
 msgstr ""
 
-#: src/main/colors.c:84 src/main/errors.c:897 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:899 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr ""
 
@@ -2185,7 +2762,7 @@ msgstr ""
 msgid "No loop to break from, jumping to top level"
 msgstr ""
 
-#: src/main/context.c:276 src/main/errors.c:993
+#: src/main/context.c:276 src/main/errors.c:995
 msgid "No function to return from, jumping to top level"
 msgstr ""
 
@@ -3040,7 +3617,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: src/main/errors.c:469 src/main/errors.c:1028
+#: src/main/errors.c:469 src/main/errors.c:1030
 msgid "In addition: "
 msgstr ""
 
@@ -3052,86 +3629,86 @@ msgstr ""
 msgid "Execution halted\n"
 msgstr ""
 
-#: src/main/errors.c:739 src/main/errors.c:798
+#: src/main/errors.c:741 src/main/errors.c:800
 msgid "invalid 'domain' value"
 msgstr ""
 
-#: src/main/errors.c:740
+#: src/main/errors.c:742
 msgid "invalid 'string' value"
 msgstr ""
 
-#: src/main/errors.c:803
+#: src/main/errors.c:805
 msgid "invalid 'dirname' value"
 msgstr ""
 
-#: src/main/errors.c:839
+#: src/main/errors.c:841
 msgid " [invalid string in stop(.)]"
 msgstr ""
 
-#: src/main/errors.c:865
+#: src/main/errors.c:867
 msgid " [invalid string in warning(.)]"
 msgstr ""
 
-#: src/main/errors.c:881
+#: src/main/errors.c:883
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr ""
 
-#: src/main/errors.c:887
+#: src/main/errors.c:889
 #, c-format
 msgid "Unimplemented feature in %s"
 msgstr ""
 
-#: src/main/errors.c:899
+#: src/main/errors.c:901
 msgid "time-series/vector length mismatch"
 msgstr ""
 
-#: src/main/errors.c:900
+#: src/main/errors.c:902
 msgid "incompatible arguments"
 msgstr ""
 
-#: src/main/errors.c:902
+#: src/main/errors.c:904
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr ""
 
-#: src/main/errors.c:903
+#: src/main/errors.c:905
 msgid "unknown error (report this!)"
 msgstr ""
 
-#: src/main/errors.c:915
+#: src/main/errors.c:917
 msgid "unknown warning (report this!)"
 msgstr ""
 
-#: src/main/errors.c:1009
+#: src/main/errors.c:1011
 msgid "top level inconsistency?"
 msgstr ""
 
-#: src/main/errors.c:1109
+#: src/main/errors.c:1111
 msgid "bad handler data"
 msgstr ""
 
-#: src/main/errors.c:1257
+#: src/main/errors.c:1259
 msgid "error message not a string"
 msgstr ""
 
-#: src/main/errors.c:1331
+#: src/main/errors.c:1333
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 
-#: src/main/errors.c:1357 src/main/errors.c:1373
+#: src/main/errors.c:1359 src/main/errors.c:1375
 msgid "bad error message"
 msgstr ""
 
-#: src/main/errors.c:1415
+#: src/main/errors.c:1417
 msgid "bad restart"
 msgstr ""
 
-#: src/main/errors.c:1447
+#: src/main/errors.c:1449
 msgid "restart not on stack"
 msgstr ""
 
-#: src/main/errors.c:1465
+#: src/main/errors.c:1467
 msgid "not in a try context"
 msgstr ""
 
