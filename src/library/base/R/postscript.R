@@ -9,7 +9,8 @@
 			    onefile = TRUE,
 			    print.it = FALSE,
 			    append = FALSE,
-                            pagecentre = TRUE)
+                            pagecentre = TRUE,
+                            command = "default")
 
 check.options <-
     function(new, name.opt, reset = FALSE, assign.opt = FALSE,
@@ -96,8 +97,11 @@ postscript <- function (file = "Rplots.ps", ...)
     new <- list(...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
+
+    if(old$command == "default")
+        old$command <-if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
     .Internal(PS(file, old$paper, old$family, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
-                 old$onefile, old$pagecentre))
+                 old$onefile, old$pagecentre, old$print.it, old$command))
 }
 ##--> source in ../../../main/devices.c	 and ../../../main/devPS.c

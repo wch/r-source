@@ -104,6 +104,10 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
  *  height	= height in inches
  *  horizontal	= {TRUE: landscape; FALSE: portrait}
  *  ps		= pointsize
+ *  onefile     = {TRUE: normal; FALSE: single EPSF page}
+ *  pagecentre  = centre plot region on paper?
+ *  printit     = `print' after closing device?
+ *  command     = `print' command
  */
 
 SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -111,8 +115,8 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifndef Macintosh
     DevDesc *dd;
     char *vmax;
-    char *file, *paper, *face, *bg, *fg;
-    int horizontal, onefile, pagecentre;
+    char *file, *paper, *face, *bg, *fg, *cmd;
+    int horizontal, onefile, pagecentre, printit;
     double height, width, ps;
     gcall = call;
     vmax = vmaxget();
@@ -128,7 +132,9 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	horizontal = 1;
     ps = asReal(CAR(args));	      args = CDR(args);
     onefile = asLogical(CAR(args));   args = CDR(args);
-    pagecentre = asLogical(CAR(args));
+    pagecentre = asLogical(CAR(args));args = CDR(args);
+    printit = asLogical(CAR(args));   args = CDR(args);
+    cmd = SaveString(CAR(args), 0);
 
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
@@ -136,7 +142,8 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
     if(!PSDeviceDriver(dd, file, paper, face, bg, fg, width, height,
-		       (double)horizontal, ps, onefile, pagecentre)) {
+		       (double)horizontal, ps, onefile, pagecentre,
+		       printit, cmd)) {
 	free(dd);
 	errorcall(call, "unable to start device PostScript");
     }

@@ -215,7 +215,7 @@ static void SaveAsWin(DevDesc *dd, char *display)
 			 GConvertXUnits(1.0, NDC, INCHES, dd),
 			 GConvertYUnits(1.0, NDC, INCHES, dd),
 			 dd->gp.ps))
-        PrivateCopyDevice(dd,ndd,display);
+        PrivateCopyDevice(dd, ndd, display);
 }
 
 
@@ -233,29 +233,29 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
    GInit(&ndd->dp);
 
    /* Set default values... */
-   strcpy(family,"Helvetica");
-   strcpy(paper,"default");
-   strcpy(bg,"white");
-   strcpy(fg,"black");
+   strcpy(family, "Helvetica");
+   strcpy(paper, "default");
+   strcpy(bg, "white");
+   strcpy(fg, "black");
    /* and then try to get it from .PostScript.Options */
    if ((s!=R_UnboundValue) && (s!=R_NilValue)) {
       SEXP names = getAttrib(s, R_NamesSymbol);
       int i,done;
-      for (i=0,done=0; (done<4) && (i<length(s)) ;i++) {
-        if(!strcmp("family",CHAR(STRING(names)[i]))) {
-           strcpy(family,CHAR(STRING(VECTOR(s)[i])[0]));
+      for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
+        if(!strcmp("family", CHAR(STRING(names)[i]))) {
+           strcpy(family, CHAR(STRING(VECTOR(s)[i])[0]));
            done += 1;
         }
-        if(!strcmp("paper",CHAR(STRING(names)[i]))) {
-           strcpy(paper,CHAR(STRING(VECTOR(s)[i])[0]));
+        if(!strcmp("paper", CHAR(STRING(names)[i]))) {
+           strcpy(paper, CHAR(STRING(VECTOR(s)[i])[0]));
            done += 1;
         }
-        if(!strcmp("bg",CHAR(STRING(names)[i]))) {
-           strcpy(bg,CHAR(STRING(VECTOR(s)[i])[0]));
+        if(!strcmp("bg", CHAR(STRING(names)[i]))) {
+           strcpy(bg, CHAR(STRING(VECTOR(s)[i])[0]));
            done += 1;
         }
-        if(!strcmp("fg",CHAR(STRING(names)[i]))) {
-           strcpy(fg,CHAR(STRING(VECTOR(s)[i])[0]));
+        if(!strcmp("fg", CHAR(STRING(names)[i]))) {
+           strcpy(fg, CHAR(STRING(VECTOR(s)[i])[0]));
            done += 1;
         }
       }
@@ -263,8 +263,8 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
    if (PSDeviceDriver(ndd, fn, paper, family, bg, fg,
 		      GConvertXUnits(1.0, NDC, INCHES, dd),
 		      GConvertYUnits(1.0, NDC, INCHES, dd),
-		      (double)0, dd->gp.ps, 0, 1))
-    /* horizontal=F, onefile=F, pagecentre=T */
+		      (double)0, dd->gp.ps, 0, 1, 0, ""))
+    /* horizontal=F, onefile=F, pagecentre=T, print.it=F */
      PrivateCopyDevice(dd, ndd, "postscript");
 }
 
@@ -595,11 +595,11 @@ static void menufilebitmap(control m)
     fixslash(fn);
     gsetcursor(xd->gawin, WatchCursor);
     show(xd->gawin);
-    if (m==xd->mpng) SaveAsPng(dd,fn);
-    else if (m==xd->mbmp) SaveAsBmp(dd,fn);
-    else if (m==xd->mjpeg50) SaveAsJpeg(dd,50,fn);
-    else if (m==xd->mjpeg75) SaveAsJpeg(dd,75,fn);
-    else SaveAsJpeg(dd,100,fn);
+    if (m==xd->mpng) SaveAsPng(dd, fn);
+    else if (m==xd->mbmp) SaveAsBmp(dd, fn);
+    else if (m==xd->mjpeg50) SaveAsJpeg(dd, 50, fn);
+    else if (m==xd->mjpeg75) SaveAsJpeg(dd, 75, fn);
+    else SaveAsJpeg(dd, 100, fn);
     gsetcursor(xd->gawin, ArrowCursor);
     show(xd->gawin);
 }

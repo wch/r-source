@@ -13,7 +13,12 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
     concatenated, and printed, with the remaining arguments
     controlling the output.}
   \item{file}{character string naming the file to print to.  If
-    \code{""} (the default), \code{cat} prints to the standard output.}
+    \code{""} (the default), \code{cat} prints to the standard output.
+#ifdef unix
+    If it is \code{"|cmd"}, the output is piped to the command given
+    by \file{cmd}.
+#endif
+  }
   \item{sep}{character string to insert between the objects to print.}
   \item{fill}{a logical or numeric controlling how the output is
     broken into successive lines.  If \code{FALSE}, only newlines

@@ -622,10 +622,11 @@ void PostScriptText(FILE *fp, double x, double y,
 
 typedef struct {
     char filename[PATH_MAX];
+    int open_type;
 
     char papername[64];	 /* paper name */
-    int paperwidth;	 /* paper width in inches */
-    int paperheight;	 /* paper height in inches */
+    int paperwidth;	 /* paper width in big points (1/72 in) */
+    int paperheight;	 /* paper height in big points */
     int landscape;	 /* landscape mode */
     int pageno;		 /* page number */
 
@@ -635,11 +636,13 @@ typedef struct {
     int fontsize;	 /* font size in points */
     int maxpointsize;
 
-    double width;	 /* plot width in points */
-    double height;	 /* plot height in points */
-    double pagewidth;	 /* page width in points */
-    double pageheight;	 /* page height in points */
+    double width;	 /* plot width in inches */
+    double height;	 /* plot height in inches */
+    double pagewidth;	 /* page width in inches */
+    double pageheight;	 /* page height in inches */
     int pagecentre;      /* centre image on page? */
+    int printit;         /* print page at close? */
+    char command[PATH_MAX];
 
     double lwd;		 /* current line width */
     int lty;		 /* current line type */
@@ -706,7 +709,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 		   char *bg, char *fg,
 		   double width, double height,
 		   double horizontal, double ps,
-		   int onefile, int pagecentre)
+		   int onefile, int pagecentre, int printit, char*cmd)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -745,6 +748,12 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	free(pd);
 	error("invalid foreground/background color (postscript)");
     }
+    pd->printit = printit;
+    strcpy(pd->command, cmd);
+    if (printit && strlen(cmd) == 0)
+	error("postscript(prinit.it=T) used with an empty print command");
+    strcpy(pd->command, cmd);
+
 
     /* Deal with paper and plot size and orientation */
 
@@ -972,13 +981,26 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
     }
 
     if (strlen(pd->filename) == 0) {
-	SEXP s = STRING(GetOption(install("printcmd"), R_NilValue))[0];
-	if(s == NA_STRING || strlen(CHAR(s)) == 0) return 0;
-	pd->psfp = popen(CHAR(s), "w");
+#if defined(Win32) || defined(NO_POPEN)
+	error("printing via file = \"\" is not implemented in this version");
+	return 0;
+#else
+	if(strlen(pd->command) == 0) return 0;
+	pd->psfp = popen(pd->command, "w");
+	pd->open_type = 1;
+#endif
     } else if (pd->filename[0] == '|') {
+#if defined(Win32) || defined(NO_POPEN)
+	error("file = \"|cmd\" is not implemented in this version");
+	return 0;
+#else
 	pd->psfp = popen(pd->filename + 1, "w");
-    } else
+	pd->open_type = 1;
+#endif
+    } else {
 	pd->psfp = R_fopen(R_ExpandFileName(pd->filename), "w");
+	pd->open_type = 0;
+    }
     if (!pd->psfp) return 0;
 
     if(pd->landscape)
@@ -1060,12 +1082,36 @@ static void PS_NewPage(DevDesc *dd)
     }
 }
 
+#ifdef Win32
+int   runcmd(char *cmd, int wait, int visible, char *finput);
+#endif
 static void PS_Close(DevDesc *dd)
 {
+    char buff[PATH_MAX];
+    int err = 0;
+
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptFileTrailer(pd->psfp, pd->pageno);
-    fclose(pd->psfp);
+    if(pd->open_type == 1) 
+	pclose(pd->psfp); 
+    else {
+	fclose(pd->psfp);
+	if (pd->printit) {
+	    strcpy(buff, pd->command);
+	    strcat(buff, " ");
+	    strcat(buff, pd->filename);
+/*	    Rprintf("buff is %s\n", buff); */
+#ifdef Unix
+	    err = system(buff);
+#endif
+#ifdef Win32
+	    err = runcmd(buff, 0, 0, NULL);
+#endif
+	    if (err) 
+		warning("error from postscript() in running:\n    %s", buff);
+	}
+    }
     free(pd);
 }
 

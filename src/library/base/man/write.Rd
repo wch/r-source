@@ -7,15 +7,21 @@ write(x, file="data",
 }
 \alias{write}
 \arguments{
-\item{x}{the data to be written out.}
-\item{file}{the name of the file (quoted) to write to.}
-\item{ncolumns}{the number of columns to write the data in.}
-\item{append}{if \code{TRUE} the data \code{x} is appended to file \code{file}.}
+  \item{x}{the data to be written out.}
+  \item{file}{the name of the file (quoted) to write to.
+    If \code{""}, print to the standard output.
+#ifdef unix
+    If it is \code{"|cmd"}, the output is piped to the command given
+    by \file{cmd}.
+#endif
+  }
+  \item{ncolumns}{the number of columns to write the data in.}
+  \item{append}{if \code{TRUE} the data \code{x} is appended to file \code{file}.}
 }
 \description{
-The data (usually a matrix) \code{x} are written to file \code{file}.
-If \code{x} is a two dimensional matrix you need to transpose it to get the
-columns in \code{file} the same as those in the internal representation.
+  The data (usually a matrix) \code{x} are written to file \code{file}.
+  If \code{x} is a two-dimensional matrix you need to transpose it to get the
+  columns in \code{file} the same as those in the internal representation.
 }
 \seealso{
 \code{\link{scan}} for reading data.

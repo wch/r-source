@@ -57,7 +57,10 @@ NEW FEATURES
 
     o	New argument `extend' to window() (and updated documentation).
 
-    o	postscript(file="|cmd") is allowed, to pipe output to cmd.
+    o	file="|cmd" is allowed (to pipe output to `cmd'), under cat()
+	and postscript() and functions that use them (for example, write()).
+
+    o	postscript(print.it=TRUE) now does print the plot file.
 
 
 BUG FIXES

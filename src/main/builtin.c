@@ -179,9 +179,9 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP objs, file, fill, sepr, labs, s;
     FILE *savefp;
-    int havefile, append;
+    int havefile, usepopen = 0, append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
-    char *p = "", buf[512];
+    char *p = "", *pfile, buf[512];
 
     checkArity(op, args);
 
@@ -226,12 +226,22 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (append == NA_LOGICAL)
 	errorcall(call, "invalid append specification");
 
-    if (strlen(CHAR(STRING(file)[0])) > 0) {
+    if (strlen(pfile = CHAR(STRING(file)[0])) > 0) {
 	savefp = R_Outputfile;
-	if(!(R_Outputfile = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])),
-				    (append) ? "a" : "w"))) {
-	    R_Outputfile = savefp;
-	    errorcall(call, "unable to open file");
+	if (pfile[0] == '|') {
+#if defined(Win32) || defined(NO_POPEN)
+	    error("file = \"|cmd\" is not implemented in this version");
+#else
+	    R_Outputfile = popen(pfile + 1, "w");
+	    usepopen = 1;
+#endif
+	} else {
+	    R_Outputfile = R_fopen(R_ExpandFileName(pfile),
+				   (append) ? "a" : "w");
+	    if (!R_Outputfile) {
+		R_Outputfile = savefp;
+		errorcall(call, "unable to open file");
+	    }
 	}
 	havefile = 1;
     }
@@ -314,7 +324,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((pwidth != INT_MAX) || nlsep)
 	Rprintf("\n");
     if (havefile) {
-	fclose(R_Outputfile);
+	if (usepopen) pclose(R_Outputfile); else fclose(R_Outputfile);
 	R_Outputfile = savefp;
     }
     else

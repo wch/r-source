@@ -9,6 +9,11 @@ rw1010
 
 Console preferences editor on the Edit menu in Rgui.
 
+The postscript() device can now spool plots to a printer. You will
+need a suitable program to send a file to the spooler (or even to
+interpret PostScript for the printer): the RedMon suite available from
+http://www.cs.wisc.edu/~ghost/rjl.html shoudl provide suitable tools.
+
 
 rw1001
 ======
@@ -26,7 +31,7 @@ version.
 Building on a non-default drive should be more reliable, as Perl is
 used to find the current drive.
 
-
+    -------------------------------------------------------------------
 
 	For changes prior to the release of R 1.0.0 on 29 Feb 2000
 	see the file CHANGES0 in the source distribution.
