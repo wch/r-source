@@ -18,7 +18,8 @@
   In \R, the startup mechanism is as follows.
 
 #ifndef mac
-  Unless \code{--no-environ} was given, \R searches for user and site
+  Unless \code{--no-environ} was given on the command line,
+  \R searches for user and site
   files to process for setting environment variables.  The name of the
   site file is the one pointed to by the environment variable
   \code{R\_ENVIRON}; if this is unset or empty,
@@ -51,13 +52,17 @@
 
   It then loads a saved image of the user workspace from \file{.RData}
   if there is one (unless \code{--no-restore-data} was specified, or
-  \code{--no-restore}).
-  
-  Finally, if a function \code{.First} exists, it is executed as
-  \code{.First()}.
+  \code{--no-restore}, on the command line).
 
-  The functions \code{.First} and \code{\link{.Last}} can be defined
-  in the appropriate startup profiles or reside in \file{.RData}.
+  Finally, if a function \code{.First} is found on the search path,
+  it is executed as \code{.First()}.  In a ``factory-fresh'' version of
+  \R the \code{.First} in the system profile file
+  \file{library/base/R/Rprofile} is used.  (This \code{\link{require}}s
+  the \code{ctest} library.)
+
+  A function \code{.First} (and \code{\link{.Last}}) can be defined
+  in appropriate \code{.Rprofile} or \code{Rprofile.site} files
+  or have been saved in \file{.RData}.
 
   The commands history is read from the file specified by the
   environment variable \code{R_HISTFILE} (default \code{.Rhistory})
@@ -68,6 +73,10 @@
   \code{--no-restore} and \code{--no-environ}.
 }
 \details{
+  Note that there are two sorts of files used in startup:
+  \emph{environment files} which contain lists of environment variables
+  to be set, and \emph{profile files} which contain \R code.
+
   Lines in a site or user environment file should be either comment
   lines starting with \code{#}, or lines of the form \code{name=value}.
   The latter sets the environmental variable \code{name} to
@@ -87,15 +96,16 @@
 #ifdef Unix
   The file \file{\$R\_HOME/etc/Renviron} is always read very early in
   the start-up processing.  It contains environment variables set by \R
-  in the configure process.  Values in that file can be overriden by
-  site or user environment files.
-  
+  in the configure process.  Values in that file can be overriden in
+  site or user environment files: do not change
+  \file{\$R\_HOME/etc/Renviron} itself.
+
 #endif
   Prior to \R version 1.4.0, the environment files searched were
   \file{.Renviron} in the current directory, the file pointed to by
   \code{R_ENVIRON} if set, and \file{.Renviron} in the user's home
   directory.
-  
+
   Prior to \R version 1.2.1, \file{.Rprofile} was sourced after
   \file{.RData} was loaded, although the documented order was as here.
 
@@ -110,12 +120,16 @@
   \code{\link{.Last}} for final actions before termination.
 }
 \examples{
-\dontrun{## Some examples with a Unix flavour
-# ~/.Renviron
+\dontrun{
+# Example ~/.Renviron on Unix
 R_LIBS=~/R/library
 PAGER=/usr/local/bin/less
 
-# .Rprofile
+# Example .Renviron on Windows
+R_LIBS=C:/R/library
+TCL_LIBRARY=c:/packages/Tcl/lib/tcl8.3
+
+# Example of .Rprofile
 options(width=65, digits=5)
 options(show.signif.stars=FALSE)
 ps.options(horizontal=FALSE)
