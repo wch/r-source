@@ -24,8 +24,8 @@ plot(y ~ x, \dots)
       \item \code{"c"} for the lines part alone of \code{"b"},
       \item \code{"o"} for both ``\bold{o}verplotted'',
       \item \code{"h"} for ``\bold{h}istogram'' like vertical lines,
-      \item \code{"s"} for \bold{s}teps,
-      \item \code{"S"} for other \bold{s}teps,
+      \item \code{"s"} for stair \bold{s}teps,
+      \item \code{"S"} for other \bold{s}teps, see \emph{Details} below,
       \item \code{"n"} for no plotting.
     }
     All other \code{type}s give a warning or an error; using, e.g.,
@@ -48,6 +48,11 @@ plot(y ~ x, \dots)
   including \code{\link{function}}s, \code{\link{data.frame}}s,
   \code{\link{density}} objects, etc.  Use \code{methods(plot)} and
   the documentation for these.
+
+  The two step types differ in their x-y preference: Going from
+  \eqn{(x1,y1)} to \eqn{(x2,y2)} with \eqn{x1 < x2}, \code{type = "s"}
+  moves first horizontal, then vertical, whereas \code{type = "S"} moves
+  the other way around.
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.formula}} and other
