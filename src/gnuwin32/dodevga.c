@@ -24,11 +24,11 @@
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Graphics.h"
-
-static SEXP gcall;
-int   X11DeviceDriver(DevDesc *, char *, double, double, double);
+#include "devga.h"
 
 /* Return a non-relocatable copy of a string */
+
+static SEXP gcall;
 
 static char *SaveString(SEXP sxp, int offset)
 {
@@ -74,7 +74,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!X11DeviceDriver(dd, display, width, height, ps)) {
+    if (!GADeviceDriver(dd, display, width, height, ps)) {
 	free(dd);
 	errorcall(call, "unable to start device devga");
     }

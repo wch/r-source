@@ -18,10 +18,5 @@
  */
 
 #include "Graphics.h"
-/* Declarations (for devX11.c) which are not only there,
- * ------------ but also, e.g., in  system.c  [event loop]
- */
-int isX11DeviceActive(void);
-void SaveX11DeviceAsGif(char *filename);
-int X11DeviceDriver(DevDesc*, char*, double, double, double);
+int GADeviceDriver(DevDesc*, char*, double, double, double);
 
