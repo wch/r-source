@@ -813,6 +813,9 @@ BUG FIXES
 	careful to reevaluate modified mle() calls in its parent
 	environment.
 
+    o   Fix to rendering of accented superscripts and subscripts
+	e.g., expression((b[dot(a)])).
+        (Patch from Uwe Ligges.)
 
 
 
