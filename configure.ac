@@ -331,7 +331,7 @@ AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
-AC_PROG_INSTALL
+R_PROG_INSTALL
 AC_PATH_PROG(JAVAC, javac)
 ## Make
 : ${MAKE=make}
@@ -418,22 +418,16 @@ AC_CHECK_LIB(ncurses, main, ,
                           AC_CHECK_LIB(termlib, main)))
 AC_CHECK_LIB(dl, dlopen)
 
-## BLAS.
-if ${use_blas}; then
-  R_BLAS_LIBS
-fi
-if test -n "${BLAS_LIBS}"; then
-  BLAS=
-else
-  BLAS="blas.o"
-fi
-AC_SUBST(BLAS)
-AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x${BLAS_LIBS}" != x])
-
 ## Readline.
+## <FIXME>
+## Get rid of R_ARG_USE eventually ...
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
+  use_readline=${ac_cv_lib_readline_rl_callback_read_char}
+else
+  use_readline=no
 fi
+## </FIXME>
 
 ### * Checks for header files.
 
@@ -979,6 +973,21 @@ R_FUNC_FINITE
 R_FUNC_LOG
 R_FUNC_STRPTIME
 
+## BLAS.
+## <NOTE>
+## This has to come *after* checking for FORTRAN 77 compiler/converter
+## characteristics (notably name mangling and FLIBS).
+if ${use_blas}; then
+  R_BLAS_LIBS
+fi
+if test -n "${BLAS_LIBS}"; then
+  BLAS=
+else
+  BLAS="blas.o"
+fi
+AC_SUBST(BLAS)
+AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x${BLAS_LIBS}" != x])
+
 ### * Checks for system services.
 
 ## X11.
@@ -1219,6 +1228,7 @@ R is now configured for ${host}
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
   Tcl/Tk support:            ${use_tcltk}
+  Readline support:          ${use_readline}
 
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
