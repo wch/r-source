@@ -64,7 +64,7 @@ The current version of this document is @value{VERSION}.
 
 @menu
 * Obtaining R::                 
-* Installing R under Unix::     
+* Installing R under Unix-alikes::  
 * Installing R under Windows::  
 * Installing R under Mac OS X::  
 * Add-on packages::             
@@ -76,7 +76,7 @@ The current version of this document is @value{VERSION}.
 * Concept index::               
 @end menu
 
-@node Obtaining R, Installing R under Unix, Top, Top
+@node Obtaining R, Installing R under Unix-alikes, Top, Top
 @chapter Obtaining R
 @cindex Obtaining R
 
@@ -127,6 +127,7 @@ users, set @code{umask} before unpacking so that the files will be
 readable by the target group (e.g., @code{umask 022} to be usable by all
 users).
 
+
 @node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
 @section Getting patched and development versions
 
@@ -138,55 +139,15 @@ The tarballs are available from
 @uref{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
 @samp{R-patched.tar.gz} or @samp{R-devel.tar.gz} (or the
 @samp{.tar.bz2} versions) and unpack as described in the previous
-section.  
+section.  They are built in exactly the same way as distributions of R
+releases.
 
-These versions do not contain the current sources for the recommended
-packages, which can be obtained by @code{rsync} or downloaded from CRAN.
-To use @code{rsync} to install the appropriate sources for the
-recommended packages, run @command{./tools/rsync-recommended} from the
-top-level of the @R{} sources.
+@menu
+* Using Subversion and rsync::  
+@end menu
 
-If downloading manually from CRAN, do ensure that you have the correct
-versions of the recommended packages: if the number in the file
-@file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
-the contents of @samp{http://cran.r-project.org/src/contrib/@var{dir}},
-where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
-r-devel or @file{@var{x}.@var{y}.@var{z}-patched/Recommended} for
-r-patched, respectively, to directory @file{src/library/Recommended} in
-the sources you have unpacked.  Normally @samp{R-patched.tar.gz} will
-have the number of the last released version, and @samp{R-devel.tar.gz}
-that of the next minor (@samp{@var{x}.@var{y}.0}) or major release.
-After downloading manually you need to execute
-@command{tools/link-recommended} from the top level of the sources to
-make the requisite links in @file{src/library/Recommended}.  A suitable
-incantation from the top level of the R sources using @command{wget}
-might be
-
-@smallexample
-wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
-  http://cran.r-project.org/src/contrib/@var{dir}
-./tools/link-recommended
-@end smallexample
-
-@c @node Using rsync,  , Getting patched and development versions, Obtaining R
-@c @section Using rsync
-@c @findex rsync
-
-@c Sources are also available via anonymous rsync.  Use
-
-@c @smallexample
-@c rsync -rC --delete rsync.r-project.org::@var{module} R
-@c @end smallexample
-
-@c @noindent
-@c to create a copy of the source tree specified by @var{module} in the
-@c subdirectory @file{R} of the current directory, where @var{module} can
-@c be one of @samp{r-release} (current released version), @samp{r-patched}
-@c (patched released version), and @samp{r-devel} (development version).
-@c The rsync trees are created directly from the master CVS archive and are
-@c updated hourly.  The @option{-C} option in the @command{rsync} command
-@c is to cause it to skip the CVS directories.  Further information on
-@c @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+@node Using Subversion and rsync,  , Getting patched and development versions, Getting patched and development versions
+@subsection Using Subversion and rsync
 
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
@@ -204,7 +165,7 @@ svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @noindent
 to check out r-devel into directory @var{path}.
 
-Note that @code{https} is required, and that the SSL certificate for the
+Note that @code{https:} is required, and that the SSL certificate for the
 Subversion server of the R project is
 
 @smallexample
@@ -219,21 +180,45 @@ Certificate information:
 (currently, there is no ``trusted certificate'').  You can accept this
 certificate permanently and will not be asked about it anymore.
 
-The sources for the recommended packages need to be downloaded
-separately, as described earlier in this section.
+The Subversion repository does not contain the current sources for the
+recommended packages, which can be obtained by @code{rsync} or
+downloaded from CRAN.  To use @code{rsync} to install the appropriate
+sources for the recommended packages, run
+@command{./tools/rsync-recommended} from the top-level of the @R{}
+sources.
+
+If downloading manually from CRAN, do ensure that you have the correct
+versions of the recommended packages: if the number in the file
+@file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
+the contents of @samp{http://cran.r-project.org/src/contrib/@var{dir}},
+where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
+r-devel or @file{@var{x}.@var{y}.@var{z}-patched/Recommended} for
+r-patched, respectively, to directory @file{src/library/Recommended} in
+the sources you have unpacked.  After downloading manually you need to
+execute @command{tools/link-recommended} from the top level of the
+sources to make the requisite links in @file{src/library/Recommended}.
+A suitable incantation from the top level of the R sources using
+@command{wget} might be
+
+@smallexample
+wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
+  http://cran.r-project.org/src/contrib/@var{dir}
+./tools/link-recommended
+@end smallexample
 
 
-@node Installing R under Unix, Installing R under Windows, Obtaining R, Top
-@chapter Installing R under Unix
-@cindex Installing under Unix
 
-@R{} will configure and build under a number of common Unix platforms
-including i386-freebsd, @var{cpu}-linux-gnu for the i386, alpha, amd64,
-arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
-@uref{http://buildd.debian.org/build.php?&pkg=r-base}),
+@node Installing R under Unix-alikes, Installing R under Windows, Obtaining R, Top
+@chapter Installing R under Unix-alikes
+@cindex Installing under Unix-alikes
+
+@R{} will configure and build under a number of common Unix and
+Unix-alike platforms including i386-*-freebsd, @var{cpu}-*-linux-gnu for
+the i386, alpha, amd64, arm, hppa, ia64, m68k, powerpc, and sparc CPUs
+(see e.g.@: @uref{http://buildd.debian.org/build.php?&pkg=r-base}),
 powerpc-apple-darwin and sparc-sun-solaris, as well as probably (it is
-tested less frequently on these) i386-netbsd, i386-openbsd,
-i386-sun-solaris, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix and
+tested less frequently on these) i386-*-netbsd, i386-*-openbsd,
+i386-sun-solaris, mips-sgi-irix, alpha-dec-osf*, rs6000-ibm-aix and
 hppa-hp-hpux.
 
 @cindex Linux
@@ -250,13 +235,14 @@ building from the sources.
 * Installation::                
 @end menu
 
-@node Simple compilation, Making the manuals, Installing R under Unix, Installing R under Unix
+@node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
 @section Simple compilation
 
 First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs}, and install those you want or
 need.  Ensure that the environment variable @samp{TMPDIR} is either
-unset or points to a valid temporary directory.
+unset (and @file{/tmp} exists and can be written in) or points to a
+valid temporary directory.
 
 @findex R_HOME
 Choose a place to install the @R{} tree (@R{} is not just a binary, but
@@ -359,10 +345,10 @@ it takes several minutes.
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/html/faq.html}, or
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html} which always has
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html} which always has
 the latest version).
 
-@node Making the manuals, Installation, Simple compilation, Installing R under Unix
+@node Making the manuals, Installation, Simple compilation, Installing R under Unix-alikes
 @section Making the manuals
 @cindex Manuals
 
@@ -453,7 +439,7 @@ can be overridden by setting the environment variable @code{R_RD4PDF}.
 e.g. for printing.
 
 
-@node Installation,  , Making the manuals, Installing R under Unix
+@node Installation,  , Making the manuals, Installing R under Unix-alikes
 @section Installation
 @cindex Installation
 
@@ -525,7 +511,7 @@ To ensure that the installed tree is usable by the right group of users,
 set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
 the sources and throughout the build process.
 
-@node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix, Top
+@node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
 
@@ -808,8 +794,7 @@ You will not be able to build the info files unless you have
 The typeset documentation and building vignettes needs @command{tex} and
 @command{latex}, or @command{pdftex} and @command{pdflatex}.
 
-If you want to build from the R Subversion repository or the
-@samp{r-patched}/@samp{r-devel} tarballs you need Perl,
+If you want to build from the R Subversion repository you need Perl,
 @command{makeinfo} and @command{pdflatex}.
 
 
