@@ -17,6 +17,7 @@
 \alias{Compare}
 \alias{Complex}
 \alias{Math2}
+\alias{group generic} % used in class.Rd
 \concept{group generic}
 \title{Group Generic Functions}
 \description{
@@ -197,10 +198,10 @@ Complex(z)
   might expect, admittedly via a bit of trickery in the background.
 
   Note: currently those members which are not primitive functions have
-  to have been converted to S4 generic functions \emph{before} setting
-  an S4 group generic method, as it only sets methods for existing S4
-  generics.  This can be done by a call to \code{setGeneric}, for
-  example \code{setGeneric("round", group="Math2")}.
+  to have been converted to S4 generic functions (preferably
+  \emph{before} setting an S4 group generic method) as it only sets
+  methods for known S4 generics.  This can be done by a call to
+  \code{setGeneric}, for example \code{setGeneric("round", group="Math2")}.
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr
