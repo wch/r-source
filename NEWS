@@ -154,7 +154,7 @@ BUG FIXES
     o   The return value for par() was incorrectly documented, and in
 	consequence cpgram() was not re-setting "pty".
 
-    o   package.dependencies printed unnecessary debugging messages
+    o   package.dependencies() printed unnecessary debugging messages
 	(version comparison), these have been removed.
 
     o   backslashes in examples in help files are now converted 
@@ -179,6 +179,8 @@ BUG FIXES
 
     o   Contour labels used to be rounded to integers.
 
+    o   Calling rbinom() repeatedly with the same p but different n
+	gave incorrect results.
 
 
 	**************************************************
