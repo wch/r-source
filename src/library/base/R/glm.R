@@ -613,11 +613,11 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	    apply(cbind(paste(format.char(c("Null","Residual"),width=8,flag=""),
 			      "deviance:"),
 			format(unlist(x[c("null.deviance","deviance")]),
-			       digits= max(5, digits + 3)), " on",
+			       digits= max(5, digits+1)), " on",
 			format(unlist(x[c("df.null","df.residual")])),
 			" degrees of freedom\n"),
 		  1, paste, collapse=" "),
-	    "AIC: ", format(x$aic, digits= max(5, digits + 2)),"\n\n",
+	    "AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
 	    "Number of Fisher Scoring iterations: ", x$iter,
 	    "\n\n", sep="")
 
