@@ -1573,7 +1573,12 @@ static Rboolean initwin(void) /* TRUE = Error */
     if(utf8locale) {
 	ioim = XOpenIM(iodisplay, NULL, NULL, NULL);
 
-	if(!ioim) error("unable to open X Input Method");
+	if(!ioim) {
+	    XFreeGC(iodisplay, iogc);
+	    XDestroyWindow(iodisplay, iowindow);
+	    XCloseDisplay(iodisplay);
+	    error("unable to open X Input Method");
+	}
 	ioic = XCreateIC(ioim, 
 			 XNInputStyle, XIMPreeditNone | XIMStatusNothing, 
 			 XNClientWindow, iowindow,
