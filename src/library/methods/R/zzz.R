@@ -67,7 +67,9 @@
                                     sep=":")]
         for(i in sch) {
             nev <- ev <- as.environment(i)
-            try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
+#            try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
+            ns <- .Internal(getRegisteredNamespace(as.name(getPackageName(ev))))
+            if(!is.null(ns)) nev <- asNamespace(ns)
             if(!exists(".noGenerics", where = nev, inherits = FALSE) &&
                !identical(getPackageName(ev), "methods"))
                 cacheMetaData(ev, TRUE, searchWhere = .GlobalEnv)

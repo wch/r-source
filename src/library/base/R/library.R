@@ -43,10 +43,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                        "See the Note in ?library"))
     }
 
-    checkNoGenerics <- function(env)
+    checkNoGenerics <- function(env, pkg)
     {
         nenv <- env
-        try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
+        ns <- .Internal(getRegisteredNamespace(as.name(pkg)))
+        if(!is.null(ns)) nenv <- asNamespace(ns)
         if (exists(".noGenerics", envir = nenv, inherits = FALSE))
             TRUE
         else {
@@ -212,7 +213,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 			else stop("package/namespace load failed")
 		    else {
 			on.exit(do.call("detach", list(name = pkgname)))
-			nogenerics <- checkNoGenerics(env)
+			nogenerics <- checkNoGenerics(env, package)
 			if(warn.conflicts &&
 			   !exists(".conflicts.OK", envir = env, inherits = FALSE))
                             checkConflicts(package, pkgname, pkgpath, nogenerics)
@@ -264,7 +265,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 			if (logical.return) return(FALSE)
 			else stop(".First.lib failed")
 		}
-		nogenerics <- checkNoGenerics(env)
+		nogenerics <- checkNoGenerics(env, package)
 		if(warn.conflicts &&
 		   !exists(".conflicts.OK", envir = env, inherits = FALSE))
 		    checkConflicts(package, pkgname, pkgpath, nogenerics)
