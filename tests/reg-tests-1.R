@@ -2224,6 +2224,12 @@ pacf(matrix(rnorm(100), , 1))
 ## both failed in 1.7.1.
 
 
+## lsfit was not setting residuals in the rank=0 case
+fit <- lsfit(matrix(0, 10, 1), 1:10, intercept=FALSE)
+stopifnot(fit$residuals == 1:10)
+## zero residuals in 1.7.1.
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

@@ -44,6 +44,8 @@ BUG FIXES
 
     o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
 
+    o	lsfit() was returning incorrect residuals for 0-rank fits.
+
 
 
 
