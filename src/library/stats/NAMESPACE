@@ -3,7 +3,7 @@ useDynLib(stats)
 # exportPattern("^[^\\.]")
 export(.checkMFClasses, .getXlevels, .MFclass)
 
-export(add.scope, add1, aggregate, aggregate.data.frame,
+export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        aggregate.default, aggregate.ts, AIC, alias, anova, anova.glm,
        anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov,
        as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd, bw.nrd0,

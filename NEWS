@@ -239,6 +239,10 @@ NEW FEATURES
     o   Added as.list.environment to coerce environments to lists 
         (efficiently). 
 
+    o	New function addmargins() in the stats package to add marginal
+	summaries to tables, e.g. row and column totals.  (Based on a
+	contribution by Bendix Carstensen.)
+
     o   Changes to package 'grid':
 
         - Renamed push/pop.viewport() to push/popViewport().
