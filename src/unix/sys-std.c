@@ -348,13 +348,13 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    return 0;
 	ll = strlen((char *)buf);
 	/* remove CR in CRLF ending */
-	if (buf[ll - 1] == '\n' && buf[ll - 2] == '\r') {
+	if (ll >= 2 && buf[ll - 1] == '\n' && buf[ll - 2] == '\r') {
 	    buf[ll - 2] = '\n';
 	    buf[--ll] = '\0';    
 	}
 /* according to system.txt, should be terminated in \n, so check this
    at eof */
-	if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+	if (feof(stdin) && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
 	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
 	if (!R_Slave)
