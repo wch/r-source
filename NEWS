@@ -14,6 +14,12 @@ NEW FEATURES
     o   Added a few "trivial and obviously missing" functions to tcltk:
         tkchooseDirectory, tkpopup, tkdialog, tkread 
 
+    o   barplot() has a new argument `axis.lty', which if set to 1
+	allows the pre-1.6.0 behaviour of plotting the axis and tick
+	marks for the categorical axis.  (This was apparently not
+	intentional, but axis() used to ignore lty=0.)
+
+
 BUG FIXES
 
     o	hist(<datetime>, cex.axis = f)	now works for x-axis too.

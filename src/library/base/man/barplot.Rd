@@ -11,7 +11,7 @@
         xlim = NULL, ylim = NULL, xpd = TRUE,
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-        inside = TRUE, plot = TRUE, \dots)
+        inside = TRUE, plot = TRUE, axis.lty = 0, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -77,6 +77,9 @@
   \item{inside}{logical.  If \code{TRUE}, the lines which  divide
     adjacent bars will be drawn.}
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
+  \item{axis.lty}{the graphics parameter \code{lty} applied to the axis
+    and tick marks of the categorical (default horzontal) axis.  Note
+    that by default the axis is suppressed.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
     passed to \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
@@ -95,6 +98,10 @@
 
   If \code{beside} is true, use \code{colMeans(mp)} for the
   midpoints of each \emph{group} of bars, see example.
+}
+\note{
+  Prior to \R 1.6.0, \code{barplot} behaved as if \code{axis.lty = 1},
+  unintentionally.
 }
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
