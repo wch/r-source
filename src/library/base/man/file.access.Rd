@@ -45,6 +45,7 @@ directories have both read and write permissions.
 \seealso{\code{\link{file.info}}}
 
 \examples{
-file.access(dir("."))
+fa <- file.access(dir("."))
+table(fa) # count successes & failures
 }
 \keyword{file}
