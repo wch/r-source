@@ -69,8 +69,9 @@ int	R_EvalCount = 0;	    /* Evaluation count */
 /* File Input/Output */
 
 int	R_Interactive = 1;	    /* Interactive? */
-int	R_Quiet = 0;		    /* Be Quiet */
+int	R_Quiet = 0;		    /* Be quiet */
 int	R_Slave = 0;		    /* Run as a slave process */
+int	R_Verbose = 0;		    /* Be verbose */
 int	R_Console;		    /* Console active flag */
 IoBuffer R_ConsoleIob;		    /* Console IO Buffer */
 FILE*	R_Inputfile = NULL;	    /* Current input flag */
