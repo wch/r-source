@@ -211,6 +211,8 @@ BUG FIXES
     o	The dimnames<- method for data.frames was not checking the
 	validity of the row names.
 
+    o   Various memory leaks reported by valgrind have been plugged.
+
 
 
 

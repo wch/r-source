@@ -1362,6 +1362,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     free(buf);
     if(!data.wasopen) data.con->close(data.con);
+    if (data.quotesave) free(data.quotesave);
     return ans;
 
 no_more_lines:
@@ -1379,5 +1380,6 @@ no_more_lines:
     for(i = 0; i < nread; i++)
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
     UNPROTECT(2);
+    if (data.quotesave) free(data.quotesave);
     return ans2;
 }
