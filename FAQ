@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-14, 2002-07-03
+Version 1.5-15, 2002-07-11
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -84,6 +84,7 @@ R FAQ
   7.18 Why is the output not printed when I source() a file?
   7.19 Why does outer() behave strangely with my function?
   7.20 Why does the output from anova() depend on the order of factors in the model?
+  7.21 How do I produce PNG graphics in batch mode?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1844,9 +1845,6 @@ these a try, of course.  This area of CRAN currently contains
 *StatDataML*
      Read and write StatDataML.
 
-*cxx*
-     A small C++ test package.
-
 *dopt*
      Finding D-optimal experimental designs.
 
@@ -1857,22 +1855,12 @@ these a try, of course.  This area of CRAN currently contains
 *ensemble*
      Ensembles of tree classifiers.
 
-*event.chart*
-     Package for creating event charts.
-
-*hpower*
-     A suite of functions to compute power and sample size for tests of the
-     general linear hypothesis.
-
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
 
 *pls*
      Univariate Partial Least Squares Regression.
-
-*regexp*
-     Simple regular expression interface.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -2731,6 +2719,16 @@ that R reports.  You can compute your favorite sums of squares quite
 easily.  Any two models can be compared with `anova(MODEL1, MODEL2)', and
 `drop1(MODEL1)' will show the sums of squares resulting from dropping
 single terms.
+
+7.21 How do I produce PNG graphics in batch mode?
+=================================================
+
+   Under Unix, the `png()' device uses the X11 driver, which is a problem
+in batch mode or for remote operation.  If you have ghostscript you can use
+`bitmap()', which produces a PostScript file then converts it to any bitmap
+format supported by ghostscript.  On some installations this produces ugly
+output, on others it is perfectly satisfactory.  In theory one could also
+use Xvfb, which provides an X server with no display.
 
 8 R Programming
 ***************
