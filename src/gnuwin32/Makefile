@@ -113,6 +113,19 @@ rpackage: ../../library/R.css
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
 	@$(ECHO)
+ifeq ($(strip $(BUILD)),CROSS)
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  echo "tools:::makeLazyLoading(\"base\", lib.loc=\"$(RLIB)\")" | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave ; \
+	fi
+	@if ! test -f ../../library/tools/R/tools.rdb ; then \
+	  echo "preparing package tools for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R; \
+	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
+	fi
+else
 	@if ! test -f ../../library/base/R/base.rdb ; then \
 	  echo "preparing package base for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R ../library/base/makebasedb.R; \
@@ -125,11 +138,12 @@ rpackage: ../../library/R.css
 	    echo "makeLazyLoading(\"tools\")") | \
 	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
 	fi
+endif
 	@for pkg in $(LAZY_PKGS); do \
-	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload ; \
+	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazyload ; \
 	done
 	@touch ../../library/methods/R/all.rda
-	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
+	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
 
 	@$(MAKE) --no-print-directory vignettes
 
@@ -346,10 +360,10 @@ pkgcheck-%:
 	fi
 
 lazyload-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) -f $(RHOME)/src/gnuwin32/MakePkg lazyload
 
 lazydata-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
 
 ziphelp-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*

@@ -308,14 +308,32 @@ endif
 endif
 
 lazyload:
+ifeq ($(strip $(BUILD)),CROSS)
+	@if ! test -f ../../library/$(PKG)/R/$(PKG).rdb ; then \
+	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
+	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
+	  rm -f ../../library/$(PKG)/R/all.rda ; \
+	fi
+else
 	@if ! test -f ../../library/$(PKG)/R/$(PKG).rdb ; then \
 	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
 	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\")" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
 	  rm -f ../../library/$(PKG)/R/all.rda ; \
 	fi
+endif
 
 lazydata:
+ifeq ($(strip $(BUILD)),CROSS)
+	@if test -d ../../library/$(PKG)/data; then \
+	  if ! test -f ../../library/$(PKG)/data/Rdata.rdb ; then \
+	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
+	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
+	  fi ; \
+	fi
+else
 	@if test -d ../../library/$(PKG)/data; then \
 	  if ! test -f ../../library/$(PKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
@@ -323,3 +341,4 @@ lazydata:
 	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
 	  fi ; \
 	fi
+endif
