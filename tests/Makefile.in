@@ -105,7 +105,7 @@ test-Specific:
 test-undoc:
 	@for p in $(R_PKGS); do \
 	  echo "Undocumented objects in package \`$${p}':"; \
-	  echo "undoc(\"$${p}\")" | $(R) --nsize 500000 | grep "^ *\\["; \
+	  echo "undoc(\"$${p}\")" | $(R) --nsize=500000 | grep "^ *\\["; \
 	  echo; \
 	done
 

@@ -44,65 +44,82 @@ Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
    or  R command      [arguments]
    or  R CMD Rcommand [arguments]
 
+If a long option shows an argument as mandatory, then it is mandatory
+for the equivalent short option also.
+
 Options:
-  --gnome                   Run the gnome binary.
-  --save                    Do save data sets at the end of the session.
-  --no-save                 Don't save them.
-  --restore                 Do restore previously saved data sets at startup.
-  --no-restore              Don't restore them.
-  --no-readline             Don't use readline for command-line editing.
-  --no-site-file            Don't read the site-wide Rprofile.
-  --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
-  --no-environ              Don't read the .Renviron or ~/.Renviron files.
-  --vanilla		    Combine --no-save, --no-restore, --no-site-file,
-                            --no-init-file, and --no-environ.
-  --vsize N                 Set vector heap size to N bytes; \`4M' = 4 MegaB.
-  --nsize N                 Set number of cons cells to N.
-  -h, --help, -?            Print short help message and exit.
-  -q, --quiet, --silent     Don't print startup message.
-  --slave                   Make R run as quietly as possible.
-  --version                 Print version info and exit.
-  --verbose                 Print more information about progress.
-  -d NAME, --debugger NAME  Run R through debugger NAME.
+  -g, --gnome		Run the gnome binary
+  --save                Do save data sets at the end of the session
+  --no-save             Don't save them
+  --restore             Do restore previously saved data sets at startup
+  --no-restore          Don't restore them
+  --no-readline         Don't use readline for command-line editing
+  --no-site-file        Don't read the site-wide Rprofile
+  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files
+  --no-environ          Don't read the .Renviron or ~/.Renviron files
+  --vanilla		Combine --no-save, --no-restore, --no-site-file,
+			--no-init-file, and --no-environ
+  --vsize=N             Set vector heap size to N bytes; \`4M' = 4 MegaB
+  --nsize=N             Set number of cons cells to N
+  -h, --help            Print short help message and exit
+  -q, --quiet           Don't print startup message
+  --silent              Same as --quiet
+  --slave               Make R run as quietly as possible
+  --version             Print version info and exit
+  --verbose             Print more information about progress
+  -d, --debugger=NAME   Run R through debugger NAME
 
 Commands:
-  RHOME				Give R's home directory
-  BATCH infile [ outfile ]	Run Batch job
-  COMPILE|INSTALL|REMOVE|SHLIB  Package management & dyn.load compilation
+  RHOME			Give R's home directory and exit
+  BATCH			Run batch job
+  COMPILE		Compile files for use with R
+  INSTALL		Install add-on packages
+  REMOVE		Remove add-on packages
+  SHLIB			Build shared library for dynamic loading
+
+  Please use \`R command --help' to obtain further information.
 
 Rcommands:
-  Rdconv
-  Rdindex, Sd2Rd
-  Rd2dvi, Rd2txt
-  ...
+  Rdconv		Convert Rd format to various other formats
+  Rd2dvi		Convert Rd format to DVI
+  Rd2txt		Convert Rd format to pretty text
+  Rdindex		Extract index information from Rd files
+  Sd2Rd			Convert S documentation to Rd format
+  build			Build add-on packages
+  check			Check add-on packages
 
-Report bugs to <R-bugs@biostat.ku.dk>."
+  Please use \`R CMD Rcommand --help' to obtain further information.
+
+Report bugs to <R-bugs@lists.r-project.org>."
 
 # Argument loop
-DBG=
+args=
+debugger=
 while test -n "${1}"; do
   case ${1} in
     RHOME)
       echo ${R_HOME}; exit 0 ;;
+    BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
+      cmd="${1}"; shift; exec sh "${R_HOME}/bin/${cmd}" "${@}" ;;
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
-    BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-      CMD="$1"; shift; exec sh "${R_HOME}/bin/${CMD}" "${@}" ;;
     -g|--gnome)
       R_BINARY="R.gnome" ;;
-    -d|--debugger)
-      DBG="${2}"; shift  ;;
+    -d)
+      debugger="${2}"; shift ;;
+    --debugger=*)
+      debugger=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --no-environ)
       USE_R_ENVIRON=false ;;
     --vanilla)
-      ARGS="${ARGS} ${1}"
+      args="${args} ${1}"
       USE_R_ENVIRON=false ;;
-    -h|--help|-\?)
-      $0 --version
-      echo "${USAGE_MSG}"
-      exit 0 ;;
+    -h|--help)
+      echo "${USAGE_MSG}"; exit 0 ;;
+    --version)
+      exec ${R_HOME}/bin/${R_BINARY} --version ;;
     *)
-      ARGS="${ARGS} ${1}" ;;
+      args="${args} ${1}" ;;
   esac
   shift
 done
@@ -116,15 +133,15 @@ if ${USE_R_ENVIRON}; then # use the one in current dir, or default
   fi
 fi
 
-if test -z "${DBG}"; then
-  exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${ARGS}
+if test -z "${debugger}"; then
+  exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${args}
 else
-  if test -n "${ARGS}"; then
-    echo "*** Further command line arguments (\`${ARGS}') disregarded"
-    echo "*** (maybe use \`run ${ARGS}' from *inside* ${DBG})"
+  if test -n "${args}"; then
+    echo "*** Further command line arguments (\`${args}') disregarded"
+    echo "*** (maybe use \`run ${args}' from *inside* ${debugger})"
     echo ""
   fi
-  exec ${DBG} ${R_HOME}/bin/${R_BINARY}
+  exec ${debugger} ${R_HOME}/bin/${R_BINARY}
 fi
 
 ### Local Variables: ***
