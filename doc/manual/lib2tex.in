@@ -1,5 +1,5 @@
 #! @PERL@
-### $Id: lib2tex.in,v 1.3 1999/02/22 16:29:03 leisch Exp $
+### $Id: lib2tex.in,v 1.4 1999/03/31 15:17:42 ripley Exp $
 
 ## Create a single pkg-pkgname.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -57,17 +57,36 @@ sub do_header {
     $outfile->print("\n\\chapter\{The \\texttt\{$pkgname\} package\}\n");
 }
 
+sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 sub do_tex_files {
     my( $latexDir, $outfile ) = @_;
     my $fh = new FileHandle;
+    my $fname;
+    my $fline;
+    my %filenames;
+
     opendir DIR, $latexDir or
 	croak "can't open directory $latexDir: $!\n";
-    for( sort( grep /\.tex$/, readdir DIR ) ) {
-	$fh->open( $latexDir . $_ ) or croak "unable to open file $_:$!\n";
+    foreach $fname ( grep /^[A-za-z].*\.tex$/, readdir DIR ) 
+    {
+	$fh->open( $latexDir . $fname ) 
+	    or croak "unable to open file $_:$!\n";
+	$fline = <$fh>;
+	# first line is \Header{object}{...}
+	$fline =~ s/\\Header\{\s*([^}]*)\}//;
+	$filenames{$1} = $fname;
+    }
+    close $fh;
+
+    foreach $fname (sort foldorder keys %filenames)
+    {
+	$fh->open( $latexDir . $filenames{$fname} ) 
+	    or croak "unable to open file $_:$!\n";
 	$outfile->print( <$fh> );
     }
+    close $fh;
 }
-	
+
 sub do_trailer {
     my $outfile = shift;
     $outfile->print("\\clearpage");
