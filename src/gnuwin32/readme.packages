@@ -73,7 +73,8 @@ Edit MkRules to set the appropriate paths as needed.
 BEWARE: MkRules contains tabs and some editors (e.g. WinEdt) silently 
 remove them.
 
-Do not use paths with spaces in: you can always use the short forms.
+Do not use filepaths with spaces in: you can always use the short forms
+(found by dir /x at the Windows command line).
 Do not use unnecessary quotes in your PATH variable.
 Do not have our toolset and any other version of cygwin1.dll in your path.
 
@@ -99,7 +100,7 @@ At this point there are two approaches:
 
 1) Streamlined way
 
-Assuming that ...\rw1050\bin is in your path, use
+Assuming that ...\rw10xx\bin is in your path, use
 
 	Rcmd INSTALL package
 
@@ -112,7 +113,7 @@ Rcmd INSTALL --help for a full list of options, which include
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine `--use-zip-data' and `--use-zip-help'
 
-TYPE can be "none" or "normal" or "chm" (the default) or "winhlp" or "all"
+TYPE can be "none" or "normal" or "chm" (the default) or "all"
 
 
 2) Manual `full-control'
@@ -190,7 +191,9 @@ build.
 
 You may need to set TMPDIR to (the absolute path to) a suitable
 temporary directory: the default is c:/TEMP.  (Use forward slashes,
-although the code will try to convert backslashes as from 1.7.0.)
+although the code will try to convert backslashes as from 1.7.0.  Do
+not have spaces in the filepath, although from 1.9.0 we attempt to
+work around this.)
 
 These have been used successfully under NT/2000/XP.  We have seen
 problems with some Perl versions on Win 95/98/ME, but believe these
@@ -339,6 +342,10 @@ which installs the package in \mysources\mypkg as \R\library\mypkg.
 It may well be simpler to use
 
 	Rcmd INSTALL -l /R/library /mysources/mypkg
+
+Once again, if the paths contain spaces use the short forms, although
+Rcmd INSTALL will attempt to convert the paths if needed (but they
+will need to be quoted on the command line).
 
 
 Cross-building packages on Linux

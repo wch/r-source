@@ -61,8 +61,9 @@ have successfully used it elsewhere, others have reported problems).
 
 
 All of these need to be installed and in your path, and the
-appropriate environment variables set.  You also need `.' in your path.
-Do not use paths with spaces in: you can always use the short forms.
+appropriate environment variables set.  You also need `.' in your
+path.  Do not use filepaths with spaces in: you can always use the
+short forms (found by dir /x at the Windows command line).
 
 
 Check your path
@@ -92,8 +93,8 @@ Then: untar R-1.x.y.tgz somewhere (with no spaces in the path names),
 	tar zxvf /path/to/R-1.x.y.tgz
 	cd /somewhere/R-1.x.y/src/gnuwin32
 
-BEWARE: do untar the sources, and not use broken tools such as WinZip that
-don't understand about symbolic links.
+BEWARE: do untar the sources rather than use broken tools such as
+WinZip that don't understand about symbolic links.
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed and to
 set the type(s) of help that you want built.  BEWARE: MkRules contains
@@ -131,7 +132,7 @@ memory.
 You can test a build by (optionally) building the recommended packages
 (see below) and running `make check'.  You may need to set TMPDIR to
 (the absolute path to) a suitable temporary directory: the default is
-c:/TEMP.  (Use forward slashes.)
+c:/TEMP.  (Use forward slashes and do not use a path including spaces.)
 
 
 Using ATLAS
@@ -165,13 +166,13 @@ use of this, put the DLL somewhere in your path or in R_HOME/bin, and
 edit MkRules to define USE_GOTO=YES and the name of the DLL (something
 like libgoto_p4_512-r0.9.dll).
 
-Goto's BLAS takes preference over ATLAS, and seems a little
-faster. However, as it is compiled for MSVC, we have been unable to
-make it work for complex arithmetic and so it is only used in for real
-linear algebra.
+Goto's BLAS takes preference over ATLAS, and seems a little faster.
+However, as it is compiled for MSVC, we have been unable to make it
+work for complex arithmetic and so it is only used in for real linear
+algebra.
 
-Goto supplies DLLs for PIII, P4 and Opteron processors: that for PIIIs
-runs on AthlonXP as well.
+Mr Goto supplies DLLs for PIII, P4 and Opteron processors: that for
+PIIIs runs on AthlonXP as well.
 
 
 Building bitmap device support
