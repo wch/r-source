@@ -41,7 +41,7 @@
 #if !defined(lint) && defined(SCCSIDS)
 static char sccsid[] = "@(#)xdr_float.c 1.12 87/08/11 Copyr 1984 Sun Micro";
 #endif
-
+ 
 /*
  * xdr_float.c, Generic XDR routines impelmentation.
  *
