@@ -46,13 +46,15 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     R_Q_P01_check(p);
 
     if(n != floor(n + 0.5)) ML_ERR_return_NAN;
-    if (pr <= 0 || pr >= 1 || n <= 0)
+    if (pr < 0 || pr > 1 || n < 0)
 	ML_ERR_return_NAN;
 
+    if (pr == R_DT_0 || n == 0) return 0.;
     if (p == R_DT_0) return 0.;
     if (p == R_DT_1) return n;
 
     q = 1 - pr;
+    if(q == 0.) return n; /* covers the full range of the distribution */
     mu = n * pr;
     sigma = sqrt(n * pr * q);
     gamma = (q - pr) / sigma;

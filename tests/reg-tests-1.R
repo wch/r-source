@@ -2867,3 +2867,20 @@ outer(x, x, "-")
 (z <- outer(x, x, "difftime", units="days"))
 stopifnot(class(z) == "difftime")
 ## failed in 1.8.1
+
+
+## PR#5900 qbinom when probability is 1
+stopifnot(qbinom(0.95, 10, 1) == 10)
+stopifnot(qbinom(0, 10, 1) == 0)
+# and for prob = 0
+stopifnot(qbinom(0.95, 10, 0) == 0)
+stopifnot(qbinom(0, 10, 0) == 0)
+# and size = 0
+stopifnot(qbinom(0.95, 0, 0.5) == 0)
+## 1.8.1 was programmed to give NaN
+
+
+## base:: and ::: were searching in the wrong places
+stopifnot(inherits(try(base::lm), "try-error"))
+stopifnot(inherits(try(graphics::log), "try-error"))
+## equivalent constructs succeeded in 1.8.1

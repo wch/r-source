@@ -250,6 +250,9 @@ BUG FIXES
     o   Lookups base:: and ::: were not confining their search to the
 	named package/namespace.
 
+    o   qbinom() was returning NaN for prob = 0 or 1 or size = 0 even
+	though the result is well-defined.  (In part, PR#5900.)
+
 
 
 
