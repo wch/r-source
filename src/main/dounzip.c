@@ -30,11 +30,15 @@
 # include <sys/stat.h>
 #endif
 
+#ifdef Win32
+#include <io.h> /* for mkdir */
+#endif
+
 static int R_mkdir(char *path)
 {
 #ifdef Win32
     char *p, local[PATH_MAX];
-    /* Looks like `/' only works on NT, with no drive in the path */
+    /* Looks like `/' only works on NT4 with no drive in the path */
     strcpy(local, path);
     for (p = local; *p; p++) if (*p == '/') *p = '\\';
     return mkdir(local);
