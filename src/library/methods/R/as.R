@@ -169,7 +169,7 @@ setAs <-
         ## else go ahead (but are there any cases here where extds is TRUE?)
         setIs(from, to, coerce = def, replace = replace, where = where)
     }
-    else {  # extds is FALSE
+    ## else extds is FALSE -- no is() action
         args <- formalArgs(def)
         if(!is.na(match("strict", args))) args <- args[-match("strict", args)]
         if(length(args) == 1)
@@ -185,21 +185,25 @@ setAs <-
         setMethod("coerce", c(from, to), method, where = where)
         if(!is.null(replace)) {
             args <- formalArgs(replace)
-            if(length(args) != 2)
-                stop("a replace method definition in setAs must be a function of two arguments")
-            replace <- body(replace)
-            if(!identical(args, c("from", "value"))) {
-                ll <- list(quote(from), quote(value))
-                names(ll) <- args
-                replace <- substituteDirect(replace, ll)
-                warning("Argument names in replace changed to agree with \"coerce<-\" generic:\n",
-                        paste(deparse(bdy), sep="\n    "), "\n")
+            if(identical(args, c("from", "to", "value")))
+                method <- replace
+            else {
+                ## if not from an extends object, process the arguments
+                if(length(args) != 2)
+                    stop("a replace method definition in setAs must be a function of two arguments, got ", length(args))
+                replace <- body(replace)
+                if(!identical(args, c("from", "value"))) {
+                    ll <- list(quote(from), quote(value))
+                    names(ll) <- args
+                    replace <- substituteDirect(replace, ll)
+                    warning("Argument names in replace changed to agree with \"coerce<-\" generic:\n",
+                            paste(deparse(bdy), sep="\n    "), "\n")
+                }
+                method <- eval(function(from, to, value)NULL)
+                functionBody(method, envir = .GlobalEnv) <- replace
             }
-            method <- eval(function(from, to, value)NULL)
-            functionBody(method, envir = .GlobalEnv) <- replace
             setMethod("coerce<-", c(from, to), method, where = where)
         }
-    }
 }
 
 .setCoerceGeneric <- function(where) {
