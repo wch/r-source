@@ -2752,10 +2752,11 @@ It can be an important part of some projects to import data from
 external databases or from files intended for other systems.  There are
 various packages being developed to ease the importing of data to @R{}.
 Currently there as a package @pkg{stataread} which reads and writes
-Stata files and an experimental package @pkg{foreign} to read SAS,
-Minitab and SPSS files.  Package @pkg{RmSQL} provides an interface to
-mSQL databases, and a package @pkg{RODBC} is being developed to provide
-connections to ODBC databases (such as Access on Windows).
+Stata files and an experimental package @pkg{foreign} which it is
+planned will be able to read SAS, Minitab and SPSS files.  Several
+packages provide interfaces to SQL databases, and a package @pkg{RODBC}
+is being developed to provide connections to ODBC databases (such as
+Access on Windows).
 
 
 @node Probability distributions, Loops and conditional execution, Reading data from files, Top
