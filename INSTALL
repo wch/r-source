@@ -71,7 +71,7 @@ directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run
 	make
 
 and so on, as described further below.  This has the advantage of always
-keeping your source tree `clean'.
+keeping your source tree `clean'.  (You may need GNU make to allow this.)
 
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
@@ -134,7 +134,10 @@ USING MAKE
 To compile R, you currently most likely need GNU make.  (To be more
 precise, you need a version of make which accepts shell wildcards in
 dependencies.)  On Solaris 2.6 in particular, you need a version of
-GNU make different from 3.77 (the current one); 3.76.1 works fine.
+GNU make different from 3.77 (the current one); 3.76.1 works fine, as
+does the Sun make.  To build in a separate directory you need a make
+than uses the VPATH variable: GNU make does but e.g. Sun make does
+not.
 
 
 USING FORTRAN
