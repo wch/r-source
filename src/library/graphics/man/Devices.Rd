@@ -69,7 +69,7 @@ dev.interactive()
 #endif
 %% </FIXME>
   }
-  None of these are available under \code{\link[base:BATCH]{R CMD BATCH}}.
+  None of these are available under \code{R CMD \link[base:BATCH]{BATCH}}.
 #endif
 }
 \value{

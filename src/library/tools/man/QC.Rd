@@ -61,7 +61,7 @@ checkS3methods(package, dir, lib.loc = NULL)
   by the generic.  The rules when \code{\dots} is involved are subtle:
   see the source code.  Functions recognized as S3 generics are those
   with a call to \code{UseMethod} in their body, internal S3 generics
-  (see \code{\link[base]{zMethods}}), and S3 group generics (see
+  (see \code{\link[base]{InternalMethods}}), and S3 group generics (see
   \code{\link[base]{Math}}).  Possible dispatch under a different name
   is not taken into account.  The generics are sought first in the given
   package and then in the \pkg{base} package (but currently not in other
