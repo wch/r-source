@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-29 @value{FAQ-YEAR}-07-02
+@set FAQ-VERSION 1.9-30 @value{FAQ-YEAR}-07-04
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2026,6 +2026,19 @@ Monte Carlo exact tests for log-linear models.
 @item exactRankTests
 Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
+@item fBasics
+The Rmetrics module for ``Markets, basic statistics, and date and time
+management''.  Rmetrics is an environment and software collection for
+teaching financial engineering and computational finance
+(@uref{http://www.Rmetrics.org/}).
+@item fExtremes
+The Rmetrics module for ``Beyond the Sample, Dealing with Extreme
+Values''.
+@item fOptions
+The Rmetrics module for ``The Valuation of Options''.
+@item fSeries
+The Rmetrics module for ``The Dynamical Process Behind Financial
+Markets''.
 @item fastICA
 Implementation of FastICA algorithm to perform Independent Component
 Analysis (ICA) and Projection Pursuit.
