@@ -8369,7 +8369,6 @@ trap 'rm -fr `echo "Makeconf
   src/scripts/REMOVE
   src/scripts/R.sh
   src/scripts/Rd2contents
-  src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/SHLIB
@@ -8625,7 +8624,6 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/scripts/REMOVE
   src/scripts/R.sh
   src/scripts/Rd2contents
-  src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/SHLIB
