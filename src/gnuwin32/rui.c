@@ -53,6 +53,7 @@ console RConsole = NULL;
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
 static window RFrame;
+rect MDIsize;
 #endif
 extern int ConsoleAcceptCmd, R_is_running;
 static menubar RMenuBar;
@@ -511,6 +512,7 @@ void readconsolecfg()
 	RguiMDI |= RW_MDI;
     if (MDIset == -1)
 	RguiMDI &= ~RW_MDI;
+    MDIsize = rect(0, 0, 0, 0);
 #endif
     sprintf(optf, "%s/RConsole", getenv("R_USER"));
     if (!optopenfile(optf)) {
@@ -522,6 +524,7 @@ void readconsolecfg()
     fnchanged = 0;
     while ((ok = optread(opt, '='))) {
 	done = 0;
+	printf("%s, %d\n", opt[0], ok);
 	if (ok == 2) {
 	    if (!strcmp(opt[0], "font")) {
 		strcpy(fn, opt[1]);
@@ -599,6 +602,31 @@ void readconsolecfg()
 		    RguiMDI |= RW_STATUSBAR;
 		else if (!strcmp(opt[1], "no"))
 		    RguiMDI &= ~RW_STATUSBAR;
+		done = 1;
+	    }
+	    if (!strcmp(opt[0], "MDIsize")) { /* wxh+x+y */
+		int x=0, y=0, w=0, h=0, sign;
+		char *p = opt[1];
+
+		if(*p == '-') {sign = -1; p++;} else sign = +1;
+		for(w=0; isdigit(*p); p++) w = 10*w + (*p - '0');
+		w *= sign;
+		p++;
+
+		if(*p == '-') {sign = -1; p++;} else sign = +1;
+		for(h=0; isdigit(*p); p++) h = 10*h + (*p - '0');
+		h *= sign;
+
+		if(*p == '-') sign = -1; else sign = +1;
+		p++;
+		for(x=0; isdigit(*p); p++) x = 10*x + (*p - '0');
+		x *= sign;
+		if(*p == '-') sign = -1; else sign = +1;
+		p++;
+		for(y=0; isdigit(*p); p++) y = 10*y + (*p - '0');
+		y *= sign;
+
+		MDIsize = rect(x, y, w, h);
 		done = 1;
 	    }
 #endif
@@ -725,7 +753,7 @@ int setupui()
 #ifdef USE_MDI
     if (RguiMDI & RW_MDI) {
 	TRACERUI("Rgui");
-	RFrame = newwindow("RGui", rect(0, 0, 0, 0),
+	RFrame = newwindow("RGui", MDIsize,
 			   StandardWindow | Menubar | Workspace);
 	setclose(RFrame, closeconsole);
 	show(RFrame);
