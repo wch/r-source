@@ -24,7 +24,7 @@
 #endif
 
 #include <Defn.h>
-#include <R_Ext/RStartup.h>
+#include <R_ext/RStartup.h>
 
 
 /* Remove and process common command-line arguments
