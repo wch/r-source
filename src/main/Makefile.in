@@ -43,11 +43,9 @@ DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
-	Rstrptime.h \
+	Rregex.h Rstrptime.h \
 	arithmetic.h \
-	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h \
-	names.h \
-	regex.h
+	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \
