@@ -927,7 +927,12 @@ void InitTempDir()
 	R_Suicide("cannot find unused tempdir name");
     /* Now try to create it */
     res = mkdir(tm);
-    if(res) R_Suicide("Can't mkdir R_TempDir");
+    if(res) {
+	char buff[2000];
+	sprintf(buff, "%s\nDoes %s exist and is it writeable?", 
+		"Can't mkdir R_TempDir", tmp);
+	R_Suicide(buff);
+    }
     len = strlen(tm);
     p = (char *) malloc(len+1);
     if(!p) R_Suicide("Can't allocate R_TempDir");
