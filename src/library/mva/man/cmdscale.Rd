@@ -31,14 +31,18 @@ cmdscale(d, k = 2, eig = FALSE)
   \item{eig}{the eigenvalues computed during the scaling process.}
 }
 \references{
-  Seber, G. A. F. (1984). \emph{Multivariate Analysis}. New York: Wiley.
+  Seber, G. A. F. (1984).
+  \emph{Multivariate Observations}.
+  New York: Wiley.
 
-  Torgerson, W. S. (1958). \emph{Theory and Methods of Scaling}.
+  Torgerson, W. S. (1958).
+  \emph{Theory and Methods of Scaling}.
   New York: Wiley.
 }
 \note{
   The S version of this function provides for computing an additional
-  ``fiddle'' factor suggested by Torgerson.  \R does not provide this option.
+  ``fiddle'' factor suggested by Torgerson.  \R does not provide this
+  option.
 }
 \seealso{
   \code{\link{dist}}. Also

@@ -38,7 +38,8 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   Relations between two sets of variables.
   \emph{Biometrika}, \bold{28}, 321--327.
   
-  Seber, G. A. F. (1984). \emph{Multivariate Analysis}.
+  Seber, G. A. F. (1984).
+  \emph{Multivariate Observations}.
   New York: Wiley, p. 506f.
 }
 \seealso{
