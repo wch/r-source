@@ -7,6 +7,7 @@ all: libintl.a header-install
 
 header-install: libintl.h
 	cp -p $< ../../include
+	cp -p $< ../../../include
 
 prefix = /usr/local
 datadir = ${prefix}/share
