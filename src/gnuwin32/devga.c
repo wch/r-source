@@ -1381,8 +1381,8 @@ static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
     xd->fast = 1;  /* Use `cosmetic pens' if available */
     xd->xshift = xd->yshift = 0;
     if (!dsp[0]) {
-      if (!setupScreenDevice(dd, xd, w, h, recording, resize)) 
-	  return FALSE;
+	if (!setupScreenDevice(dd, xd, w, h, recording, resize)) 
+	    return FALSE;
     } else if (!strcmp(dsp, "win.print")) {
 	xd->kind = PRINTER;
 	xd->gawin = newprinter(MM_PER_INCH * w, MM_PER_INCH * h);
@@ -1836,7 +1836,7 @@ static void GA_Circle(double x, double y, int coords,
     ix = (int) x;
     iy = (int) y;
     rr = rect(ix - ir, iy - ir, 2 * ir, 2 * ir);
-    if (R_ALPHA(col)) {
+    if (R_OPAQUE(col)) {
 	SetColor(col, dd);
 	DRAW(gfillellipse(_d, xd->fgcolor, rr));
     }
