@@ -63,6 +63,9 @@ BUG FIXES
     o   crossprod() on matrices with zero extents would return an
 	uninitialized matrix (rather than one filled with zeros).
 
+    o   DF[[i,j]] for a data frame used row j and col i, not as intended
+        row i and col j.
+
 
 
 		CHANGES IN R VERSION 1.8.0

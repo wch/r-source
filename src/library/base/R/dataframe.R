@@ -448,7 +448,7 @@ data.frame <-
 	  as.matrix(x)[[i]]
  	  else .subset2(x,i))(x, ...)
     else
-        .subset2(.subset2(x, ..1), ..2)
+        .subset2(.subset2(x, ..2), ..1)
 }
 
 "[<-.data.frame" <- function(x, i, j, value)
