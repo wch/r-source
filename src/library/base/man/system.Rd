@@ -2,23 +2,35 @@
 \title{Invoke a System Command}
 \usage{
 system(command, intern=FALSE)
+.Platform
 }
 \alias{system}
+\alias{.Platform}
+\alias{unix}
 \arguments{
 \item{command}{the system command to be invoked, as a string.}
 \item{intern}{a logical, indicates whether to make the output of the
 command an \R object.}
 }
 \description{
-\code{system} invokes the system command specified by \code{command}.
-If \code{intern} is \code{TRUE} then popen is used to invoke the
-command and the output collected, line by line, into an \R string
-vector which is returned as the value of \code{system}.  If \code{intern}
+    \code{system} invokes the system command specified by \code{command}.
+    
+    \code{.Platform} is a list with functions and variables as
+    components.  This provides a possibility to write OS portable \R
+    code.  However, this interface is still experimental.
+}
+\details{If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
+command and the output collected, line by line, into an \R
+\code{\link{character}} vector which is returned as the value of
+\code{system}.  If \code{intern} 
 is \code{FALSE} then the C function \code{system} is used to invoke
 the command and the value returned by \code{system} is the exit
 status of this function.  This function provides users with
 the ability to invoke system commands on whatever platform they
 are using.
+
+\code{unix} is a \emph{deprecated} alternative, available for some
+backwards compatibility reasons.
 }
 \examples{
 # list all files in the current directory using the -F flag
