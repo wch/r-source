@@ -612,23 +612,27 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    dd->dp.srt = dd->gp.srt = x;
 	else par_error(what);
     }
+	/* NOTE: tck and tcl must be treated in parallel. */
+	/* If one is NA the other must be non NA.  If tcl */
+	/* is NA then setting tck to NA will reset tck to */
+	/* its initial default value.  See also graphics.c */
     else if (streql(what, "tck")) {
 	lengthCheck(what, value, 1);
 	x = asReal(value);
-	if (FINITE(x)) {
-	    dd->dp.tck = dd->gp.tck = x;
+	dd->dp.tck = dd->gp.tck = x;
+	if (FINITE(x))
 	    dd->dp.tcl = dd->gp.tcl = NA_REAL;
-	}
-	else par_error(what);
+	else if(!FINITE(dd->dp.tcl))
+	    dd->dp.tcl = dd->gp.tcl = -0.5;
     }
     else if (streql(what, "tcl")) {
 	lengthCheck(what, value, 1);
 	x = asReal(value);
-	if (FINITE(x)) {
-	    dd->dp.tcl = dd->gp.tcl = x;
+	dd->dp.tcl = dd->gp.tcl = x;
+	if (FINITE(x))
 	    dd->dp.tck = dd->gp.tck = NA_REAL;
-	}
-	else par_error(what);
+	else if (!FINITE(dd->dp.tck))
+	    dd->dp.tck = dd->gp.tck = 0.02;	/* S Default */
     }
     else if (streql(what, "tmag")) {
 	lengthCheck(what, value, 1);

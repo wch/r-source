@@ -63,7 +63,6 @@ static int rhash(SEXP x, int index)
 	return scatter(*((unsigned int *) (&tmp)));
 }
 
-#ifdef COMPLEX_DATA
 static int chash(SEXP x, int index)
 {
 	complex tmp;
@@ -72,7 +71,6 @@ static int chash(SEXP x, int index)
 	return scatter((*((unsigned int *)(&tmp.r)) |
 		(*((unsigned int *)(&tmp.r)))));
 }
-#endif
 
 static int shash(SEXP x, int index)
 {
@@ -156,13 +154,11 @@ void HashTableSetup(SEXP x)
 		equal = requal;
 		MKsetup(LENGTH(x));
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		hash = chash;
 		equal = cequal;
 		MKsetup(LENGTH(x));
 		break;
-#endif
 	case STRSXP:
 		hash = shash;
 		equal = sequal;
@@ -267,7 +263,6 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (LOGICAL(dup)[i] == 0)
 				REAL(ans)[k++] = REAL(x)[i];
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < n; i++)
 			if (LOGICAL(dup)[i] == 0) {
@@ -276,7 +271,6 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 				k++;
 			}
 		break;
-#endif
 	case STRSXP:
 		for (i = 0; i < n; i++)
 			if (LOGICAL(dup)[i] == 0)

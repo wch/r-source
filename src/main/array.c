@@ -397,7 +397,6 @@ static void crossprod(double *x, int nrx, int ncx, double *y, int nry, int ncy, 
 		}
 }
 
-#ifdef COMPLEX_DATA
 static void ccrossprod(complex *x, int nrx, int ncx, complex *y, int nry, int ncy, complex *z)
 {
 	int i, j, k;
@@ -428,19 +427,14 @@ static void ccrossprod(complex *x, int nrx, int ncx, complex *y, int nry, int nc
 			;
 		}
 }
-#endif
 
 SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	int ldx, ldy, nrx, ncx, nry, ncy, mode;
 	SEXP x, y, xdims, ydims, ans;
 
-#ifdef COMPLEX_DATA
 	if (!(isNumeric(CAR(args)) || isComplex(CAR(args))) ||
 	    !(isNumeric(CADR(args)) || isComplex(CADR(args))))
-#else
-	if (!isNumeric(CAR(args)) || !isNumeric(CADR(args)))
-#endif
 		error("%%*%% requires numeric matrix/vector arguments\n");
 
 	x = CAR(args);
@@ -522,22 +516,18 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			errorcall(call, "non-conformable arguments\n");
 	}
 
-#ifdef COMPLEX_DATA
 	if(isComplex(CAR(args)) || isComplex(CADR(args)))
 		mode = CPLXSXP;
 	else
-#endif
 		mode = REALSXP;
 	CAR(args) = coerceVector(CAR(args), mode);
 	CADR(args) = coerceVector(CADR(args), mode);
 
 	if(PRIMVAL(op) == 0) {
 		PROTECT(ans = allocMatrix(mode, nrx, ncy));
-#ifdef COMPLEX_DATA
 		if(mode == CPLXSXP)
 			cmatprod(COMPLEX(CAR(args)), nrx, ncx, COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 		else
-#endif
 			matprod(REAL(CAR(args)), nrx, ncx, REAL(CADR(args)), nry, ncy, REAL(ans));
 		PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 		PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
@@ -547,11 +537,9 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else {
 		PROTECT(ans = allocMatrix(mode, ncx, ncy));
-#ifdef COMPLEX_DATA
 		if(mode == CPLXSXP)
 			ccrossprod(COMPLEX(CAR(args)), nrx, ncx, COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 		else
-#endif
 			crossprod(REAL(CAR(args)), nrx, ncx, REAL(CADR(args)), nry, ncy, REAL(ans));
 		PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 		PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
@@ -611,12 +599,10 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 		for (i = 0; i < len; i++)
 			REAL(r)[i] = REAL(a)[(i / ncol) + (i % ncol) * nrow];
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < len; i++)
 			COMPLEX(r)[i] = COMPLEX(a)[(i / ncol) + (i % ncol) * nrow];
 		break;
-#endif
 	case STRSXP:
 		for (i = 0; i < len; i++)
 			STRING(r)[i] = STRING(a)[(i / ncol) + (i % ncol) * nrow];
@@ -726,14 +712,12 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 			REAL(r)[j] = REAL(a)[i];
 		}
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < len; i++) {
 			j = swap(i, dimsa, dimsr, perm, ind1, ind2);
 			COMPLEX(r)[j] = COMPLEX(a)[i];
 		}
 		break;
-#endif
 	case STRSXP:
 		for (i = 0; i < len; i++) {
 			j = swap(i, dimsa, dimsr, perm, ind1, ind2);

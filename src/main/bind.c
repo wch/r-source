@@ -84,12 +84,10 @@ static void answertype(SEXP x, int recurse, int usenames)
 				ans_flags |= 16;
 				ans_length += LENGTH(CAR(t));
 				break;
-#ifdef COMPLEX_DATA
 			case CPLXSXP:
 				ans_flags |= 32;
 				ans_length += LENGTH(CAR(t));
 				break;
-#endif
 			case STRSXP:
 				ans_flags |= 64;
 				ans_length += LENGTH(CAR(t));
@@ -145,7 +143,6 @@ static void listanswer(SEXP x, int recurse)
 			ans_ptr = CDR(ans_ptr);
 		}
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for(i=0 ; i<LENGTH(x) ; i++) {
 			CAR(ans_ptr) = allocVector(CPLXSXP, 1);
@@ -153,7 +150,6 @@ static void listanswer(SEXP x, int recurse)
 			ans_ptr = CDR(ans_ptr);
 		}
 		break;
-#endif
 	case STRSXP:
 		for(i=0 ; i<LENGTH(x) ; i++) {
 			CAR(ans_ptr) = allocVector(STRSXP, 1);
@@ -258,7 +254,6 @@ static void realanswer(SEXP x)
 	}
 }
 
-#ifdef COMPLEX_DATA
 static void complexanswer(SEXP x)
 {
 	int i, nx, xi;
@@ -296,7 +291,6 @@ static void complexanswer(SEXP x)
 		break;
 	}
 }
-#endif
 
 /* 
    TagName can get either a SYMSXP, a STRSXP or a CHARSXP or NILSXP
@@ -570,10 +564,8 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 			mode = INTSXP;
 		if (ans_flags & 16)
 			mode = REALSXP;
-#ifdef COMPLEX_DATA
 		if (ans_flags & 32)
 			mode = CPLXSXP;
-#endif
 	}
 	PROTECT(ans = allocVector(mode, ans_length));
 	ans_ptr = ans;
@@ -592,10 +584,8 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	else if(mode == STRSXP)
 		stringanswer(args);
-#ifdef COMPLEX_DATA
 	else if(mode == CPLXSXP)
 		complexanswer(args);
-#endif
 	else if(mode == REALSXP)
 		realanswer(args);
 	else
@@ -670,10 +660,8 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			mode = INTSXP;
 		if (ans_flags & 16)
 			mode = REALSXP;
-#ifdef COMPLEX_DATA
 		if (ans_flags & 32)
 			mode = CPLXSXP;
-#endif
 	}
 
 	switch(mode) {
@@ -791,7 +779,6 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 			}
 		}
 	}
-#ifdef COMPLEX_DATA
 	else if(mode == CPLXSXP) {
 		for (t = args; t != R_NilValue; t = CDR(t)) {
 			if( length(CAR(t)) > 0 ) {
@@ -803,7 +790,6 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 			}
 		}
 	}
-#endif
 	else {
 		for (t = args; t != R_NilValue; t = CDR(t)) {
 			if( length(CAR(t)) > 0 ) {
@@ -962,7 +948,6 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		UNPROTECT(1);
 		return result;
 	}
-#ifdef COMPLEX_DATA
 	else if (mode == CPLXSXP) {
 		for (t = args; t != R_NilValue; t = CDR(t)) {
 			if (length(CAR(t))>0) {
@@ -979,7 +964,6 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		UNPROTECT(1);
 		return result;
 	}
-#endif
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 		if (length(CAR(t))>0) {
 			u = CAR(t);

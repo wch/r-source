@@ -145,12 +145,10 @@ void copyVector(SEXP s, SEXP t)
 		for (i = 0; i < ns; i++)
 			REAL(s)[i] = REAL(t)[i % nt];
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < ns; i++)
 			COMPLEX(s)[i] = COMPLEX(t)[i % nt];
 		break;
-#endif
 	default:
 		UNIMPLEMENTED("copyVector");
 	}
@@ -226,13 +224,11 @@ void copyMatrix(SEXP s, SEXP t, int byrow)
 				for (j = 0; j < nc; j++)
 					REAL(s)[i + j * nr] = REAL(t)[k++ % nt];
 			break;
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
 			for (i = 0; i < nr; i++)
 				for (j = 0; j < nc; j++)
 					COMPLEX(s)[i + j * nr] = COMPLEX(t)[k++ % nt];
 			break;
-#endif
 		default:
 			UNIMPLEMENTED("copyMatrix");
 		}

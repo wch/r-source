@@ -370,11 +370,9 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote)
 	case REALSXP:
 		printRealMatrix(x, offset, r, c, rl, cl);
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		printComplexMatrix(x, offset, r, c, rl, cl);
 		break;
-#endif
 	case STRSXP:
 		if (quote) quote = '"';
 		printStringMatrix(x, offset, r, c, quote, rl, cl);
@@ -435,11 +433,9 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote)
 			case REALSXP:
 				printRealMatrix(x, i*b, nr, nc, CAR(dimnames), CADR(dimnames));
 				break;
-#ifdef COMPLEX_DATA
 			case CPLXSXP:
 				printComplexMatrix(x, i*b, nr, nc, CAR(dimnames), CADR(dimnames));
 				break;
-#endif
 			case STRSXP:
 				if (quote) quote = '"';
 				printStringMatrix(x, i*b, nr, nc, quote, CAR(dimnames), CADR(dimnames));

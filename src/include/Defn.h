@@ -20,7 +20,6 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
-#define COMPLEX_DATA
 #define COUNTING
 
 #include "Platform.h"

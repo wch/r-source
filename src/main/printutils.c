@@ -274,14 +274,12 @@ char *EncodeElement(SEXP x, int index, int quote)
 			formatString(&STRING(x)[index], 1, &w, quote);
 			EncodeString(CHAR(STRING(x)[index]), w, quote, adj_left);
 			break;
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
 			formatComplex(&COMPLEX(x)[index], 1,
 				&w, &d, &e, &wi, &di, &ei);
 			EncodeComplex(COMPLEX(x)[index],
 				w, d, e, wi, di, ei);
 			break;
-#endif
 	}
 	return Encodebuf;
 }

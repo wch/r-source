@@ -241,7 +241,6 @@ FUNTAB R_FunTab[] =
 {"qt",		do_math2,	20,	11,	2,	PP_FUNCALL,	0},
 
 
-#ifdef COMPLEX_DATA
 /* Mathematical Functions of a Complex Argument */
 
 {"Re",		do_cmathfuns,	1,	1,	1,	PP_FUNCALL,	0},
@@ -250,7 +249,6 @@ FUNTAB R_FunTab[] =
 {"Arg",		do_cmathfuns,	4,	1,	1,	PP_FUNCALL,	0},
 {"Conj",	do_cmathfuns,	5,	1,	1,	PP_FUNCALL,	0},
 
-#endif
 
 /* Mathematical Functions of Three Variables */
 
@@ -525,11 +523,9 @@ FUNTAB R_FunTab[] =
 {"any.data.frame",do_anydf,	0,	1,	-1,	PP_FUNCALL,	0},
 
 /* Complex Valued Functions */
-#ifdef COMPLEX_DATA
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL,	0},
 {"mvfft",	do_mvfft,	0,	11,	2,	PP_FUNCALL,	0},
 {"polyroot",	do_polyroot,	0,	1,	1,	PP_FUNCALL,	0},
-#endif
 {"nextn",	do_nextn,	0,	11,	2,	PP_FUNCALL,	0},
 
 /* Device Drivers */

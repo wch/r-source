@@ -330,14 +330,12 @@ SEXP allocVector(SEXPTYPE type, int length)
 		else
 			size = 1 + FLOAT2VEC(length);
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		if (length <= 0)
 			size = 0;
 		else
 			size = 1 + COMPLEX2VEC(length);
 		break;
-#endif
 	case STRSXP:
 	case EXPRSXP:
 	case VECSXP:
@@ -494,9 +492,7 @@ void markSExp(SEXP s)
 		case ORDSXP:
 		case INTSXP:
 		case REALSXP:
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
-#endif
 			break;
 		case STRSXP:
 		case EXPRSXP:
@@ -549,11 +545,9 @@ void compactPhase(void)
 		case REALSXP:
 			size = LENGTH(s) * sizeof(double);
 			break;
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
 			size = LENGTH(s) * sizeof(complex);
 			break;
-#endif
 		case STRSXP:
 		case EXPRSXP:
 		case VECSXP:

@@ -88,9 +88,7 @@ SEXP do_complex(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_countfields(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cum(SEXP, SEXP, SEXP, SEXP);
-#ifdef COMPLEX_DATA
 SEXP do_cmathfuns(SEXP, SEXP, SEXP, SEXP);
-#endif
 SEXP do_compcases(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cov(SEXP, SEXP, SEXP, SEXP);
 SEXP do_D(SEXP, SEXP, SEXP, SEXP);

@@ -455,7 +455,6 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 			else
 				REAL(rval)[i] = NA_REAL;
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < len; i++)
 			if (i < lenx) {
@@ -468,7 +467,6 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 				COMPLEX(rval)[i].i = NA_REAL;
 			}
 		break;
-#endif
 	case STRSXP:
 		for (i = 0; i < len; i++)
 			if (i < lenx) {

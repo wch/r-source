@@ -49,9 +49,7 @@ char *EncodeLogical(int, int);
 char *EncodeFactor(int, int, int, SEXP);
 char *EncodeInteger(int, int);
 char *EncodeReal(double, int, int, int);
-#ifdef COMPLEX_DATA
 char *EncodeComplex(complex, int, int, int, int, int, int);
-#endif
 char *EncodeString(char*, int, int, int);
 char *EncodeElement(SEXP, int, int);
 

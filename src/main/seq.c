@@ -171,13 +171,11 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 			for (j = 0; j < (INTEGER(t)[i]); j++)
 				REAL(a)[n++] = REAL(s)[i];
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < nc; i++)
 			for (j = 0; j < (INTEGER(t)[i]); j++)
 				COMPLEX(a)[n++] = COMPLEX(s)[i];
 		break;
-#endif
 	case STRSXP:
 		for (i = 0; i < nc; i++)
 			for (j = 0; j < (INTEGER(t)[i]); j++)
@@ -246,12 +244,10 @@ SEXP rep(SEXP s, SEXP ncopy)
 		for (i = 0; i < na; i++)
 			REAL(a)[i] = REAL(s)[i % ns];
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		for (i = 0; i < na; i++)
 			COMPLEX(a)[i] = COMPLEX(s)[i % ns];
 		break;
-#endif
 	case STRSXP:
 		for (i = 0; i < na; i++)
 			STRING(a)[i] = STRING(s)[i % ns];

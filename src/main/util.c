@@ -384,12 +384,10 @@ int isReal(SEXP s)
 	return (TYPEOF(s) == REALSXP);
 }
 
-#ifdef COMPLEX_DATA
 int isComplex(SEXP s)
 {
 	return (TYPEOF(s) == CPLXSXP);
 }
-#endif
 
 int isUnordered(SEXP s)
 {
@@ -477,14 +475,7 @@ SEXPTYPE str2type(char *s)
 
 	for (i=0; TypeTable[i].str ; i++) {
 		if (!strcmp(s, TypeTable[i].str))
-#ifdef COMPLEX_DATA
 			return TypeTable[i].type;
-#else
-			if (TypeTable[i].type == CPLXSXP)
-				error("no complex data in this R version\n");
-			else
-				return TypeTable[i].type;
-#endif
 	}
 	return -1;
 }

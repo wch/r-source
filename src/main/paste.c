@@ -135,9 +135,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP l, nastring, x, y;
 	int i, n, nl, trim;
 	int w, d, e;
-#ifdef COMPLEX_DATA
 	int wi, di, ei;
-#endif
 	char *strp;
 
 	PrintDefaults(env);
@@ -227,7 +225,6 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		UNPROTECT(1);
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei);
 		if (trim) wi = w = 0;
@@ -238,7 +235,6 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		UNPROTECT(1);
 		break;
-#endif
 	case STRSXP:
 		formatString(STRING(x), n, &w, 0);
 		if (trim) w = 0;
@@ -269,9 +265,7 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP l, x;
 	int n, w, d, e;
-#ifdef COMPLEX_DATA
 	int wi, di, ei;
-#endif
 	checkArity(op, args);
 	x = CAR(args);
 	n = LENGTH(x);
@@ -294,13 +288,11 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 		case REALSXP:
 			formatReal(REAL(x), n, &w, &d, &e);
 			break;
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
 			wi = di = ei = 0;
 			formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei);
 			n = -1;/* complex 'code' */
 			break;
-#endif
 		case STRSXP:
 			formatString(STRING(x), n, &w, 0);
 			break;

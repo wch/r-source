@@ -82,7 +82,6 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg)
 		}
 		return (void*)rptr;
 		break;
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
 		n = LENGTH(s);
 		zptr = COMPLEX(s);
@@ -97,7 +96,6 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg)
 		}
 		return (void*)zptr;
 		break;
-#endif
 	case STRSXP:
 		if(!dup)
 			error("character variables must be duplicated in .C/.Fortran\n");
@@ -152,7 +150,6 @@ static SEXP CPtrToRObj(void *p, int n, SEXPTYPE type)
 				REAL(s)[i] = rptr[i];
 			}
 			break;
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
 			s = allocVector(type, n);
 			zptr = (complex*)p;
@@ -160,7 +157,6 @@ static SEXP CPtrToRObj(void *p, int n, SEXPTYPE type)
 				COMPLEX(s)[i] = zptr[i];
 			}
 			break;
-#endif
 		case STRSXP:
 			PROTECT(s = allocVector(type, n));
 			cptr = (char**)p;
@@ -936,9 +932,7 @@ static struct {
 	{"logical",	LGLSXP},
 	{"integer",	INTSXP},
 	{"double",	REALSXP},
-#ifdef COMPLEX_DATA
 	{"complex",	CPLXSXP},
-#endif
 	{"character",	STRSXP},
 	{"list",	LISTSXP},
 	{NULL,		0}
@@ -987,13 +981,11 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 			REAL(CAR(pcall)) = (double*)(arguments[i]);
 			LENGTH(CAR(pcall)) = lengths[i];
 			break;
-#ifdef COMPLEX_DATA
 		case CPLXSXP:
 			CAR(pcall) = allocSExp(CPLXSXP);
 			COMPLEX(CAR(pcall)) = (complex*)(arguments[i]);
 			LENGTH(CAR(pcall)) = lengths[i];
 			break;
-#endif
 		case STRSXP:
 			n = lengths[i];
 			CAR(pcall) = allocVector(STRSXP, n);
@@ -1025,9 +1017,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	case LGLSXP:
 	case INTSXP:
 	case REALSXP:
-#ifdef COMPLEX_DATA
 	case CPLXSXP:
-#endif
 	case STRSXP:
 		if(nres > 0)
 			results[0] = RObjToCPtr(s, 1, 1, 0);
