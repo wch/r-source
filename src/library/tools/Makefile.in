@@ -52,12 +52,6 @@ all: Makefile DESCRIPTION
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	  done; \
 	fi
-	@if test -d $(srcdir)/inst/Sweave; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/Sweave; \
-	  for f in `ls -d $(srcdir)/inst/Sweave/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/Sweave; \
-	  done; \
-	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \

@@ -25,7 +25,8 @@ USER-VISIBLE CHANGES
 	into stats, and lqs has been returned to MASS.  In all cases a
 	stub has been left that will issue a warning and ensure that
 	the appropriate new home is loaded.  All the time series
-	datasets have been moved to package stats.
+	datasets have been moved to package stats.  Sweave has been
+	moved to utils.
 
 	A few user-contributed packages have made assumptions about
 	where functions were and so will need updating.

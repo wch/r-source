@@ -1,8 +1,6 @@
 useDynLib(tools)
 
-export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
-       "RweaveLatex", "RweaveLatexSetup", "Stangle", "Sweave",
-       "SweaveSyntConv", "SweaveSyntaxLatex", "SweaveSyntaxNoweb",
+export(".installMD5sums",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
        "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
@@ -21,12 +19,6 @@ export(".installPackageCodeFiles",
        ".checkVignetteIndex")
 ## </FIXME>
 
-## <FIXME>
-## Needed by Bioconductor's vExplorer(): will no longer be necessary
-## when Sweave objects are in place
-export("RtangleWritedoc",
-       "RweaveLatexOptions")
-## </FIXME>
 
 S3method("print", "checkDemoIndex")
 S3method("print", "checkDocFiles")
