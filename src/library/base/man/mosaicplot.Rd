@@ -106,7 +106,7 @@
   190--200.
 
   The home page of Michael Friendly
-  (\url{http://hotspur.psych.yorku.ca/SCS/friendly.html}) provides
+  (\url{http://www.math.yorku.ca/SCS/friendly.html}) provides
   information on various aspects of graphical methods for analyzing
   categorical data, including mosaic plots.
 }

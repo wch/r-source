@@ -55,7 +55,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   Graphical methods for categorical data.
   \emph{SAS User Group International Conference Proceedings}, \bold{17},
   190--200.
-  \url{http://hotspur.psych.yorku.ca/SCS/sugi/sugi17-paper.html}
+  \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
 }
 \examples{
 data(HairEyeColor)
