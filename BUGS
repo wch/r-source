@@ -798,27 +798,22 @@ Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 4184 *
-Subject: getGenerics is wrong in 1.8.0 alpha
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-From:   "base"  "base"    "base"    "base"  "base" "base" "base"
-From:   "methods"       "base"   "methods" "methods"  "methods"    "methods"
-From:   "methods"
-From:   "base"  "base"    "base"    "base"  "base" "base" "base"
-From:   "methods"       "methods" "methods" "methods"  "methods"
-From:   "methods"    "methods"
-Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
-..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 5703 *
-Subject: bug + insufficient doc in R CMD INSTALL
-From: "David Pierce" <dpierce@ucsd.edu>
-Date: Thu, 11 Dec 2003 10:33:06 -0800 (PST)
 * PR# 5834 *
 Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6440 *
-Subject: Info regarding vigra
-From: "Mgletsos" <infoCepheus@golfgod.net>
-Date: Sat, 17 Jan 2004 16:04:43 -0200
+* PR# 6441 *
+Subject: VIRUS (W32/Bagle-A) IN YOUR MAIL
+Subject: Hi
+Subject: Hi
+From: virusalert@ox.ac.uk
+From: r-bugs@r-project.org
+From: r-bugs@r-project.org
+Date: Mon, 19 Jan 2004 09:57:56 +0000 (GMT)
+Date: Mon, 19 Jan 2004 20:56:49 +1000
+Date: Mon, 19 Jan 2004 20:56:49 +1000
+* PR# 6442 *
+Subject: small bug on qchisq
+From: Remy.Drouilhet@upmf-grenoble.fr
+Date: Mon, 19 Jan 2004 18:09:34 +0100 (CET)
