@@ -14,7 +14,7 @@ data.matrix <- function(frame)
             cl <- class(x)
             length(cl) > 1 || ! (cl %in% c("numeric", "integer", "logical"))
         })
-        if(any(cl))
+        if(length(cl) && any(cl))
             warning("class information lost from one or more columns")
     }
     x <- matrix(nr=d[1], nc=d[2], dimnames=dimnames(frame))
