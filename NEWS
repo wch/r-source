@@ -79,6 +79,14 @@ BUG FIXES
     o	matpoints() and matlines() now also have a "type =" argument
 	with defaults "p" and "l", respectively; PR#506.
 
+    o   Some Windows systems would crash when printing was attempted.
+        We believe that this was caused by a malfunctioning HP printer
+        driver. A workaround for the problem has been installed. Also
+        a problem with cut-and-paste has been solved.
+
+    o   The new Perl 5.6 broke our version-detection mechanism. A
+        better one has been inserted.
+
 
 	*********************************************************
 	*							*
