@@ -571,6 +571,8 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define unprotect		Rf_unprotect
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
+#define warningcall		Rf_warningcall
+#define WarningMessage		Rf_WarningMessage
 #endif
 
 /* Type Coercions of all kinds */
@@ -734,6 +736,8 @@ int StringBlank(SEXP);
 SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
+void warningcall(SEXP, char*,...);
+void WarningMessage(SEXP, R_WARNING, ...);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);

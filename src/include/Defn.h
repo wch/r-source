@@ -561,8 +561,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define unmarkPhase		Rf_unmarkPhase
 #endif
 #define usemethod		Rf_usemethod
-#define warningcall		Rf_warningcall
-#define WarningMessage		Rf_WarningMessage
 #define yyerror			Rf_yyerror
 #define yyinit			Rf_yyinit
 #define yylex			Rf_yylex
@@ -690,8 +688,6 @@ void unbindVar(SEXP, SEXP);
 void unmarkPhase(void);
 #endif
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
-void warningcall(SEXP, char*,...);
-void WarningMessage(SEXP, int, ...);
 
 /* gram.y & gram.c : */
 void yyerror(char *);
