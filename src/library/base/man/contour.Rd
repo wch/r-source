@@ -7,7 +7,7 @@
 \usage{
 contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         z,
-        nlevels = 10, levels = pretty(zlim, nlevels),
+        nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
         xlim = range(x, finite = TRUE),
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
@@ -30,6 +30,8 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     \code{levels} is not supplied.}
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
+  \item{labels}{a vector giving the labels for the contour lines.  If 
+    \code{NULL} then the levels are used as labels.}
   \item{labcex}{\code{cex} for contour labelling.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
   \item{method}{character string specifying where the labels will be

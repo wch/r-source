@@ -656,7 +656,7 @@ FUNTAB R_FunTab[] =
 {"identify",	do_identify,	0,	11,	6,	PP_FUNCALL},
 {"strheight",	do_strheight,	0,	11,	3,	PP_FUNCALL},
 {"strwidth",	do_strwidth,	0,	11,	3,	PP_FUNCALL},
-{"contour",	do_contour,	0,	11,	11,	PP_FUNCALL},
+{"contour",	do_contour,	0,	11,	12,	PP_FUNCALL},
 {"image",	do_image,	0,	11,	5,	PP_FUNCALL},
 {"dend",	do_dend,	0,	111,	6,	PP_FUNCALL},
 {"dend.window",	do_dendwindow,	0,	111,	6,	PP_FUNCALL},

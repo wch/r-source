@@ -1,7 +1,7 @@
 contour <-
 function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	  z,
-	  nlevels = 10, levels = pretty(zlim, nlevels),
+	  nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
 	  xlim = range(x, finite = TRUE),
 	      ylim = range(y, finite = TRUE),
 	  zlim = range(z, finite = TRUE),
@@ -9,7 +9,6 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	  col = par("fg"), lty = par("lty"), lwd = par("lwd"), 
 	  add = FALSE, ...)
 {
-    ## labcex is disregarded since we do NOT yet put  ANY labels...
     if (missing(z)) {
 	if (!missing(x)) {
 	    if (is.list(x)) {
@@ -44,8 +43,10 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 				        "bold italic"))
         vfont <- c(typeface-1, fontindex-1)
     }
+    if (!is.null(labels))
+        labels <- as.character(labels)
     .Internal(contour(as.double(x), as.double(y), z, as.double(levels),
-		      labcex, drawlabels, method, vfont, 
+		      labels, labcex, drawlabels, method, vfont, 
 		      col = col, lty = lty, lwd = lwd))
     if (!add) {
 	axis(1)
