@@ -3,7 +3,7 @@
 \name{aov}
 \title{Fit an Analysis of Variance Model}
 \usage{
-aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
+aov(formula, data=NULL, projections=FALSE, contrasts=NULL, ...)
 }
 \alias{aov}
 \alias{print.aov}
