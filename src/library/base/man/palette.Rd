@@ -27,7 +27,9 @@ The palette which was in effect.  This is invisible unless
 the argument is omitted.
 }
 \seealso{
-\code{\link{gray}}, \code{\link{rainbow}}, \code{\link{terrain.colors}}.
+  \code{\link{colors}} for the vector of built-in ``named'' colors;
+  \code{\link{hsv}}, \code{\link{gray}}, \code{\link{rainbow}},
+  \code{\link{terrain.colors}},\dots to construct colors.
 }
 \examples{
 palette()           # obtain the current palette
