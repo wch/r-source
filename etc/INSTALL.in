@@ -47,17 +47,14 @@ else
 fi
 
 lib=${2:-${RHOME}/library}
-
 test -d ${lib} || mkdir ${lib} || exit 1;
 lib=`cd ${lib}; pwd`
-
-test -d ${lib}/${pkg} || mkdir ${lib}/${pkg} || exit 1;
 
 src=@LIBSRC@
 
 cd ${pkg}
 pkg=`basename ${pkg}`
-
+test -d ${lib}/${pkg} || mkdir ${lib}/${pkg} || exit 1;
 echo "Installing package \`${pkg}' ..."
 ##DEBUG me: set -x -v
 
@@ -167,5 +164,3 @@ fi
 ${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}
 
 echo "DONE (INSTALL)"
-
-
