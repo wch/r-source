@@ -185,16 +185,16 @@ as.integer.tclObj <- function(x, ...) .External("RTcl_ObjAsIntVector",
 
 is.tclObj <- function(x) inherits(x, "tclObj")
 
-as.tclObj <- function(x) {
+as.tclObj <- function(x, drop=FALSE) {
     if (is.tclObj(x)) return(x)
-    z <- switch (storage.mode(x),
-                 character =
-                 .External("RTcl_ObjFromCharVector", x, PACKAGE="tcltk"),
-                 double =
-                 .External("RTcl_ObjFromDoubleVector", x, PACKAGE="tcltk"),
-                 integer =
-                 .External("RTcl_ObjFromIntVector", x, PACKAGE="tcltk"),
-                 stop(paste("Cannot handle object of mode ", storage.mode(x))))
+    z <- switch(storage.mode(x),
+                character =
+                .External("RTcl_ObjFromCharVector", x, drop, PACKAGE="tcltk"),
+                double =
+                .External("RTcl_ObjFromDoubleVector", x,drop,PACKAGE="tcltk"),
+                integer =
+                .External("RTcl_ObjFromIntVector", x, drop, PACKAGE="tcltk"),
+                stop(paste("Cannot handle object of mode ", storage.mode(x))))
     class(z) <- "tclObj"
     z
 }

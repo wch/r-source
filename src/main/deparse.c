@@ -545,7 +545,31 @@ static void printcomment(SEXP s, LocalParseData *d)
     }
 }
 
-	/* This is the recursive part of deparsing. */
+static char * backquotify(char *s)
+{
+    static char buf[120];
+    char *t = buf;
+ 
+    /* If a symbol is not a valid name, put it in backquotes, escaping
+     * any backquotes in the string itself */
+
+    /* NOTE: This could be fragile if sufficiently weird names are
+     * used. Ideally, we should insert backslash escapes, etc. */
+
+    if (isValidName(s)) return s;
+    *t++ = '`';
+    while ( *s ) {
+	if ( *s  == '`' || *s == '\\' ) 
+	    *t++ = '\\';
+	*t++ = *s++;
+    }
+    *t++ = '`';
+    *t = '\0';
+    return buf;
+}
+	
+/* This is the recursive part of deparsing. */
+
 
 static void deparse2buff(SEXP s, LocalParseData *d)
 {
@@ -559,7 +583,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff("NULL", d);
 	break;
     case SYMSXP:
-	print2buff(CHAR(PRINTNAME(s)), d);
+	print2buff(backquotify(CHAR(PRINTNAME(s))), d);
 	break;
     case CHARSXP:
 	print2buff(CHAR(s), d);

@@ -1608,6 +1608,14 @@ static int StringValue(int c)
     return STR_CONST;
 }
 
+static int QuotedSymbolValue(int c)
+{
+    int dummy = StringValue(c);
+    UNPROTECT(1);
+    PROTECT(yylval = install(yytext));
+    return SYMBOL;
+}
+
 static int SpecialValue(int c)
 {
     char *p = yytext;
@@ -1731,6 +1739,8 @@ static int token()
 
     /* functions, constants and variables */
 
+    if (c == '`')
+	return QuotedSymbolValue(c);
  symbol:
 
     if (c == '.' || isalpha(c))

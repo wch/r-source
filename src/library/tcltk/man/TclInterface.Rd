@@ -64,7 +64,7 @@ tclVar(init="")
 \method{tclObj}{tclVar}(x)
 tclObj(x) <- value
 
-as.tclObj(x)
+as.tclObj(x, drop=FALSE)
 is.tclObj(x)
 
 # x of class "tclObj"
@@ -84,6 +84,8 @@ tclRequire(package, warn = TRUE)
 \arguments{
   \item{win}{a window structure}
   \item{x}{an object}
+  \item{drop}{logical. Indicates whether a single-element vector should
+    be made into a simple Tcl object or a list of length one}
   \item{value}{For \code{tclvalue} assignments, a character string. For
     \code{tclObj} assignments, an object of class \code{tclObj}}
   \item{ID}{a window ID}
@@ -170,7 +172,12 @@ tclRequire(package, warn = TRUE)
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
   \code{"double"}, or \code{"integer"}. Conversely, such vectors can be
-  converted using \code{as.tclObj}. The object behind a \code{tclVar} object
+  converted using \code{as.tclObj}. There is an ambiguity as to what
+  should happen for length one vectors, controlled by the \code{drop}
+  argument; there are cases where the distiction matters to Tcl,
+  although mostly it treats them equivalently.
+
+  The object behind a \code{tclVar} object
   is extracted using \code{tclObj(x)} which also allows an assignment
   form, in which the right hand side of the assignment is automatically
   converted using \code{as.tclObj}. There is a print method for

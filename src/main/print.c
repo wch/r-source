@@ -534,8 +534,10 @@ void PrintValueRec(SEXP s,SEXP env)
     case NILSXP:
 	Rprintf("NULL\n");
 	break;
-    case SYMSXP:
-	Rprintf("%s\n", CHAR(PRINTNAME(s)));
+    case SYMSXP: /* Use deparse here to handle backtick quotification
+		  * of "weird names" */
+	t = deparse1(s, 0);
+	Rprintf("%s\n", CHAR(STRING_ELT(t, 0)));
 	break;
     case SPECIALSXP:
     case BUILTINSXP:
