@@ -75,23 +75,29 @@ static SEXP pkgtrim(SEXP args, DllReference *dll);
    b) an external pointer giving the address of the routine
       (e.g. getNativeSymbolInfo("foo")$address)
    c) or a NativeSymbolInfo itself  (e.g. getNativeSymbolInfo("foo"))
+
+   NB: in the last two cases it set fun as well!
  */
-static int
+static void
 checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
 {
-    if (isValidString(op))
-	return(0);
+    if (isValidString(op)) return;
 
     else if((TYPEOF(op) == EXTPTRSXP && 
 	     R_ExternalPtrTag(op) == Rf_install("native symbol"))) {
+	/* This is illegal C */
 	if((*fun = R_ExternalPtrAddr(op)) == NULL)
 	    errorcall(call, "NULL value passed as symbol address.");
 	return(0);
-    } else if(inherits(op, "NativeSymbolInfo"))
-	return(checkValidSymbolId(VECTOR_ELT(op, 1), call, fun));
+    } 
+    else if(inherits(op, "NativeSymbolInfo")) {
+	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun);
+	return;
+    }
+    
     errorcall(call, 
-	      "function name must be a string (of length 1) or native symbol reference.");
-    return(0);
+	      "'name' must be a string (of length 1) or native symbol reference.");
+    return; /* not reached */
 }
 
 
@@ -114,7 +120,8 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     DllReference dll = {"", NULL, NULL, NOT_DEFINED};
 
     op = CAR(args);
-    checkValidSymbolId(op, call, fun);
+    checkValidSymbolId(op, call, fun); /* NB, might set fun, 
+					  not just a check! */
 
     /* The following code modifies the argument list */
     /* We know this is ok because do_dotCode is entered */
