@@ -350,7 +350,7 @@ static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
     SEXP txt, nms;
 
     txt   = R_NilValue;
-    cex   = NA_REAL;	
+    cex   = NA_REAL;
     col   = NA_INTEGER;
     font  = NA_INTEGER;
     vfont = NA_INTEGER;
@@ -406,7 +406,7 @@ static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
     }
     UNPROTECT(1);
     if (txt != R_NilValue) {
-	*ptxt = txt;	
+	*ptxt = txt;
 	if (R_FINITE(cex))       *pcex   = cex;
 	if (col != NA_INTEGER)   *pcol   = col;
 	if (font != NA_INTEGER)  *pfont  = font;
@@ -2551,8 +2551,6 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 }
 
-
-/* FIXME : Shouldn't we use  pythag() "everywhere" instead of hypot() ?? */
 #ifdef Macintosh
 # define hypot pythag
 #endif
