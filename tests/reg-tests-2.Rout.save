@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-01-21), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-01-24), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3237,11 +3237,11 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
  [6] [<-           [[            [[<-          aggregate     as.data.frame
 [11] as.list       as.matrix     by            dim           dimnames     
 [16] dimnames<-    duplicated    edit          format        formula      
-[21] is.na         mean          merge         na.exclude    na.omit      
-[26] plot          print         prompt        row.names     row.names<-  
-[31] rowsum        split         split<-       stack         str          
-[36] subset        summary       t             transform     unique       
-[41] unstack      
+[21] head          is.na         mean          merge         na.exclude   
+[26] na.omit       plot          print         prompt        row.names    
+[31] row.names<-   rowsum        split         split<-       stack        
+[36] str           subset        summary       t             tail         
+[41] transform     unique        unstack      
 > meth2gen("dendrogram")
 [1] [[      cut     plot    print   reorder rev     str    
 > ## --> the output may need somewhat frequent updating..
