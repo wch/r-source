@@ -204,6 +204,14 @@ enum {
 #define R_MAGIC_BINARY_VERSION16 1971
 #define R_MAGIC_ASCII_VERSION16	 1972
 
+/* Startup Actions */
+
+#define SA_NORESTORE 0
+#define SA_RESTORE   1
+#define SA_SAVEASK   1
+#define SA_NOSAVE    2
+#define SA_SAVE      3
+
 
 /*--- Global Variables ---------------------------------------------------- */
 
@@ -385,6 +393,7 @@ void onintr();
 int OneIndex(SEXP, SEXP, int, int, SEXP*);
 SEXP parse(FILE*, int);
 void PrintGreeting(void);
+void PrintVersion(char *);
 void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
 SEXP R_LoadFromFile(FILE*);
