@@ -37,6 +37,17 @@ AC_DEFUN([R_PROG_AR],
 AC_SUBST(ARFLAGS)
 ])# R_PROG_AR
 
+AC_DEFUN([R_PROG_INSTALL],
+[AC_REQUIRE([AC_PROG_INSTALL])
+case "${INSTALL}" in
+  [[\\/]]* | ?:[[\\/]]* ) # absolute
+    ;;
+  *)
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+    ;;
+esac
+])# R_PROG_INSTALL
+
 AC_DEFUN([R_PROG_PAGER],
 [AC_PATH_PROGS(PAGER, [${PAGER} less more page pg], false)
 if test "${PAGER}" = false; then
@@ -1222,90 +1233,93 @@ AC_SUBST(TCLTK_LIBS)
 AC_SUBST(use_tcltk)
 ])# R_TCLTK
 
-AC_DEFUN([R_BLAS_LIBS], [
+AC_DEFUN([R_BLAS_LIBS],
+[AC_REQUIRE([R_PROG_F77_FLIBS])
+AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
+AC_REQUIRE([R_PROG_F2C_FLIBS])
+
+acx_blas_ok=no
+case "${with_blas}" in
+  yes | "") ;;
+  no) acx_blas_ok=disable ;;
+  -* | */* | *.a | *.so | *.so.* | *.o) BLAS_LIBS="${with_blas}" ;;
+  *) BLAS_LIBS="-l${with_blas}" ;;
+esac
+
 if test "${r_cv_prog_f77_append_underscore}" = yes \
   || test -n "${F2C}"; then
-  dgemm_func=dgemm_
+  dgemm=dgemm_
+  sgemm=sgemm_
 else
-  dgemm_func=dgemm
-fi
-if test -z "${with_blas}"; then
-  with_blas=yes
+  dgemm=dgemm
+  sgemm=sgemm
 fi
 
-if test "$with_blas" = "no"; then
-  BLAS_LIBS=" "
-elif test "$with_blas" != "yes"; then
-  ## user specified a BLAS library to try on the command line
-  ## Safeguard against users giving the location of the lib.
-  blas_lib_dir=`AS_DIRNAME(["${with_blas}"])`
-  if test "x${blas_lib_dir}" = x; then
-    AC_CHECK_LIB($with_blas, $dgemm_func, 
-                 BLAS_LIBS="-l$with_blas", , $FLIBS)
-  else
-    blas_lib_name=`basename ${with_blas} | sed 's/^lib\([[^.]]*\).*$/\1/'`
-    AC_CHECK_LIB($blas_lib_name, $dgemm_func,
-      BLAS_LIBS="-L${blas_lib_dir} -l${blas_lib_name}", ,
-      [-L${blas_lib_dir} ${FLIBS}])
+acx_blas_save_LIBS="${LIBS}"
+LIBS="${LIBS} ${FLIBS}"
+
+if test "${acx_blas_ok}" = no; then
+  if test "x${BLAS_LIBS}" != x; then
+    save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
+    AC_MSG_CHECKING([for ${sgemm} in ${BLAS_LIBS}])
+    AC_TRY_LINK_FUNC(${sgemm}, [acx_blas_ok=yes], [BLAS_LIBS=""])
+    AC_MSG_RESULT(${acx_blas_ok})
+    LIBS="$save_LIBS"
   fi
 fi
 
-if test "x$BLAS_LIBS" = x; then
-  # Checks for ATLAS BLAS library:
-  AC_CHECK_LIB(atlas, ATL_xerbla, BLAS_LIBS="-latlas")
-  if test "x$BLAS_LIBS" != x; then
-    # check for other atlas libs:
-    AC_CHECK_LIB(cblas, cblas_dgemm,BLAS_LIBS="-lcblas $BLAS_LIBS",,$BLAS_LIBS)
-    AC_CHECK_LIB(f77blas, $dgemm_func, 
-		 BLAS_LIBS="-lf77blas $BLAS_LIBS", , $BLAS_LIBS $FLIBS)
-  fi
+if test "${acx_blas_ok}" = no; then
+  AC_CHECK_FUNC(${sgemm}, [acx_blas_ok=yes])
 fi
 
-# if test "x$BLAS_LIBS" = x; then
-#   # BLAS in Alpha CXML library?
-#   AC_CHECK_LIB(cxml, $dgemm_func, BLAS_LIBS="-lcxml", , $FLIBS)
-# fi
+if test "${acx_blas_ok}" = no; then
+  AC_CHECK_LIB(atlas, ATL_xerbla,
+               [AC_CHECK_LIB(f77blas, ${sgemm},
+		             [AC_CHECK_LIB(cblas, cblas_dgemm,
+			                   [acx_blas_ok=yes
+			                    BLAS_LIBS="-lcblas -lf77blas -latlas"],
+			                   [], [-lf77blas -latlas])],
+			     [], [-latlas])])
+fi
 
-# if test "x$BLAS_LIBS" = x; then
-#   # BLAS in Alpha DXML library? (now called CXML, see above)
-#   AC_CHECK_LIB(dxml, $dgemm_func, BLAS_LIBS="-ldxml", , $FLIBS)
-# fi
+if test "${acx_blas_ok}" = no; then
+  AC_CHECK_LIB(blas, ${sgemm},
+	       [AC_CHECK_LIB(dgemm, $dgemm,
+		             [AC_CHECK_LIB(sgemm, ${sgemm},
+			                   [acx_blas_ok=yes
+                                            BLAS_LIBS="-lsgemm -ldgemm -lblas"],
+			                   [], [-lblas])],
+			     [], [-lblas])])
+fi
 
-if test "x$BLAS_LIBS" = x; then
-  if test "x$GCC" != xyes; then
-    # Check for BLAS in Sun Performance library:
+  
+
+if test "${acx_blas_ok}" = no; then
+  if test "x$GCC" != xyes; then # only works with Sun CC
     AC_CHECK_LIB(sunmath, acosp,
-                 AC_CHECK_LIB(sunperf, $dgemm_func,
-			      BLAS_LIBS="-xlic_lib=sunperf -lsunmath", ,
-			      [-lsunmath $FLIBS]))
+                 [AC_CHECK_LIB(sunperf, ${sgemm},
+                               [BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
+                                acx_blas_ok=yes],
+                               [], [-lsunmath])])
   fi
 fi
 
-# if test "x$BLAS_LIBS" = x; then
-#   # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
-#   AC_CHECK_LIB(scs, $dgemm_func,
-#                BLAS_LIBS="-lscs", 
-# 	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
-# 			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
-# fi
+ 
 
-if test "x$BLAS_LIBS" = x; then
-  # Checks for BLAS in IBM ESSL library.  We must also link
-  # with -lblas in this case (ESSL does not include the full BLAS):
-  AC_CHECK_LIB(blas, zherk, 
-	       AC_CHECK_LIB(essl, $dgemm_func, 
-			    BLAS_LIBS="-lessl -lblas", , $FLIBS), , $FLIBS)
+if test "${acx_blas_ok}" = no; then
+  AC_CHECK_LIB(blas, ${sgemm},
+	       [AC_CHECK_LIB(essl, ${sgemm},
+			     [acx_blas_ok=yes
+                              BLAS_LIBS="-lessl -lblas"],
+			     [], [-lblas ${FLIBS}])])
 fi
 
-if test "x$BLAS_LIBS" = x; then
-  # Finally, check for the generic BLAS library:
-  AC_CHECK_LIB(blas, $dgemm_func, BLAS_LIBS="-lblas", , $FLIBS)
+if test "${acx_blas_ok}" = no; then
+  AC_CHECK_LIB(blas, ${sgemm},
+               [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
 
-if test "$with_blas" = "no"; then
-  # Unset BLAS_LIBS so that we know below that nothing was found.
-  BLAS_LIBS=""
-fi
+LIBS="${acx_blas_save_LIBS}"
 
 AC_SUBST(BLAS_LIBS)
 ])# R_BLAS_LIBS
