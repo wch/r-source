@@ -1,8 +1,11 @@
 r-base (0.99.0-0) unstable; urgency=low
 
   * Test builds in preparation for the 0.99.0 release
+  * Added creation and installation of info documentation
+  * Created the PDF documentation and added it to the doc directory
+  * Added dependence on the atlas2 package and used the atlas blas
 
- -- Douglas Bates <bates@stat.wisc.edu>  Fri,  7 Jan 2000 14:33:03 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Sat,  8 Jan 2000 13:52:32 -0600
 
 r-base (0.90.1-1) unstable; urgency=low
 
