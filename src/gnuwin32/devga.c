@@ -588,8 +588,8 @@ static char *SaveFontSpec(SEXP sxp, int offset)
  * and convert it into a Windows-specific font description using
  * the Windows font database (see src/library/graphics/R/unix/windows.R)
  *
- * IF gcontext fontfamily is empty ("") 
- * OR IF can't find gcontext fontfamily in font database 
+ * IF gcontext fontfamily is empty ("")
+ * OR IF can't find gcontext fontfamily in font database
  * THEN return NULL
  */
 static char* translateFontFamily(char* family) {
@@ -599,7 +599,7 @@ static char* translateFontFamily(char* family) {
     PROTECT_INDEX xpi;
 
     PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
-    PROTECT_WITH_INDEX(windowsenv = findVar(install(".Windowsenv"), 
+    PROTECT_WITH_INDEX(windowsenv = findVar(install(".Windowsenv"),
 					   graphicsNS), &xpi);
     if(TYPEOF(windowsenv) == PROMSXP)
 	REPROTECT(windowsenv = eval(windowsenv, graphicsNS), xpi);
@@ -631,7 +631,7 @@ static char* translateFontFamily(char* family) {
 #define SMALLEST 2
 #define LARGEST 100
 
-static void SetFont(char *family, int face, int size, double rot, 
+static void SetFont(char *family, int face, int size, double rot,
 		    NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -1598,10 +1598,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:", 4)) {
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
-	if(R_OPAQUE(canvascolor))
-	    xd->bg = dd->startfill = GArgb(canvascolor, 1.0);
-	else
-	    xd->bg = dd->startfill = canvascolor;
+	xd->bg = dd->startfill = canvascolor;
 	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
 	if(strlen(dsp+4) >= 512) error("filename too long in %s() call",
@@ -1629,7 +1626,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     } else if (!strncmp(dsp, "jpeg:", 5)) {
         char *p = strchr(&dsp[5], ':');
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
-	xd->bg = dd->startfill = GArgb(canvascolor, 1.0);
+	xd->bg = dd->startfill = canvascolor;
         xd->kind = JPEG;
 	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
@@ -2692,7 +2689,6 @@ static void SaveAsPng(NewDevDesc *dd,char *fn)
 	free(data);
     } else
 	warning("processing of the plot ran out of memory");
-    /* R_OPAQUE(xd->bg) ? 0 : xd->canvascolor) ; */
     gsetcliprect(xd->bm, r);
     fclose(fp);
 }
