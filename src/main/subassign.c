@@ -1052,7 +1052,6 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 		begincontext(&cntxt,CTXT_RETURN, call, rho, rho, args);
 		if(usemethod("[<-", CAR(args), call, args, rho, &y)) {
 			endcontext(&cntxt);
-			UNPROTECT(1);
 			return y;
 		}
 		endcontext(&cntxt);
