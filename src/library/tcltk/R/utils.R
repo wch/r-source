@@ -19,7 +19,6 @@ tk_select.list <-
         tkdestroy(dlg)
     }
     onCancel <- function() {
-        ans <<- character(0)
         tkgrab.release(dlg)
         tkdestroy(dlg)
     }
@@ -31,15 +30,14 @@ tk_select.list <-
 
     scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 100
     ## allow for win furniture and buttons
-    ## The 80% is a fudge: better to be too small than too large.
-    ht <- min(length(list), (0.8*scht) %/% 20) # a guess of font height
+    ht <- min(length(list), scht %/% 20) # a guess of font height
     box <- tklistbox(dlg, height = ht,
                      listvariable = lvar, bg = "white",
                      selectmode = ifelse(multiple, "multiple", "single"))
     tmp <- tcl("font", "metrics", tkcget(box, font=NULL))
     ## fudge factor here seems to be 1 on Windows, 3 on X11.
     tmp <- as.numeric(sub(".*linespace ([0-9]+) .*", "\\1", tclvalue(tmp)))+3
-    ht <- min(length(list), (0.8*scht) %/% tmp)
+    ht <- min(length(list), scht %/% tmp)
     tkdestroy(box)
     if(ht < length(list)) {
         scr <- tkscrollbar(dlg, repeatinterval = 5,
