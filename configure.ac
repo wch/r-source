@@ -564,10 +564,10 @@ case "${host_cpu}" in
     fi
     if test "${GXX}" = yes; then
       R_PROG_CXX_FLAG([-mieee],
-                      [R_XTRA_CXXFLAGS="${R_XTRA_CFLAGS} -mieee"])
+                      [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee"])
     else
       R_PROG_CXX_FLAG([-ieee],
-                      [R_XTRA_CXXFLAGS="${R_XTRA_CFLAGS} -ieee"])
+                      [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -ieee"])
     fi
     ## </NOTE>
     ;;
