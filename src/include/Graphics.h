@@ -506,5 +506,6 @@ double yNPCtoUsr(double, DevDesc*);
 
 unsigned int rgb2col(char *);
 unsigned int name2col(char *);
+unsigned str2col(char *s, DevDesc *dd);
 
 #endif
