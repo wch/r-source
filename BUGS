@@ -109,6 +109,11 @@ Directory:  Language
 Subject: match.call problem
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 12 Jan 2001 17:46:15 +0100
+* PR# 669 *
+Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 25 Sep 2000 10:17:15 +0200
+--status of AsIs columns
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -117,15 +122,6 @@ Date: 06 Feb 2000 01:18:50 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 809 *
-Subject: changing dimnames of a matrix with rownames/colnames causes
-From: David Meyer <David.Meyer@ci.tuwien.ac.at>
-Date: Wed, 10 Jan 2001 13:20:44 +0100
-* PR# 669 *
-Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 25 Sep 2000 10:17:15 +0200
---status of AsIs columns
 
 Directory:  Low-level
 
@@ -181,10 +177,10 @@ none
 
 Directory:  incoming
 
-* PR# 816 *
-Subject: dotplot: character size of labels
-From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
-Date: Thu, 18 Jan 2001 14:54:32 +0100
+* PR# 818 *
+Subject: bringToTop() fails
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Fri, 19 Jan 2001 17:01:15 +0100
 * PR# 815 *
 Subject: Memory problem 2
 From: Zoltan Barta <Z.Barta@bristol.ac.uk>
@@ -193,3 +189,11 @@ Date: Mon, 15 Jan 2001 10:18:14 +0000 (GMT Standard Time)
 Subject: Memory problem ?
 From: Zoltan Barta <Z.Barta@bristol.ac.uk>
 Date: Mon, 15 Jan 2001 09:54:16 +0000 (GMT Standard Time)
+* PR# 817 *
+Subject: colors not cycled in type=h plot
+From: fisk@bowdoin.edu
+Date: Fri, 19 Jan 2001 14:54:39 +0100 (MET)
+* PR# 816 *
+Subject: dotplot: character size of labels
+From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
+Date: Thu, 18 Jan 2001 14:54:32 +0100
