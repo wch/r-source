@@ -1,5 +1,3 @@
-plot.prcomp <- function(x, ...) { screeplot(x, ...) }
-
 prcomp <- function(x, retx = TRUE, center = TRUE, scale. = FALSE,
                    tol = NULL) {
     x <- as.matrix(x)
@@ -18,6 +16,9 @@ prcomp <- function(x, retx = TRUE, center = TRUE, scale. = FALSE,
     class(r) <- "prcomp"
     r
 }
+
+plot.prcomp <- function(x, main = deparse(substitute(x)), ...)
+    screeplot(x, main = main, ...)
 
 print.prcomp <- function(x, print.x = FALSE, ...) {
     cat("Standard deviations:\n")
