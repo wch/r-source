@@ -138,7 +138,31 @@ Date: 01 Mar 2000 16:00:54 +0100
 Subject: Re: [R] Re: R-1.0.0 is released
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 01 Mar 2000 20:26:40 +0100
-* PR# 469 *
-Subject:  using function names as parameters 
-From: Torsten Hothorn <hothorn@ci.tuwien.ac.at>
-Date: Fri, 3 Mar 2000 10:11:00 +0100
+* PR# 470 *
+Subject: anova-bug in R-version  1.0.0?
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Mon, 6 Mar 2000 16:35:12 +0100 
+* PR# 471 *
+Subject:  Problems with nlme 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Tue, 7 Mar 2000 15:28:00 +0800
+* PR# 472 *
+Subject: R-crash using cut-and-paste
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Tue, 7 Mar 2000 10:59:41 +0100 
+* PR# 473 *
+Subject: Re: autoload error in profile {was anova-bug in R-version  1.0.0?}
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 7 Mar 2000 11:03:51 +0000 (GMT)
+* PR# 474 *
+Subject: update fails after specific sequence of steps
+From: John Fox <jfox@mcmaster.ca>
+Date: Tue, 07 Mar 2000 09:06:21 -0500
+* PR# 475 *
+Subject: Error compiling R on RS6000
+From: pgutwin@us.ibm.com
+Date: Tue, 7 Mar 2000 16:35:59 +0100 (MET)
+* PR# 476 *
+Subject: lm(rnorm(1000)~rnorm(1000)) kills rw1000
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Tue, 7 Mar 2000 10:34:56 -0800 (PST)
