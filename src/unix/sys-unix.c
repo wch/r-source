@@ -260,6 +260,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     struct utsname name;
+    char *user;
 
     checkArity(op, args);
     PROTECT(ans = allocVector(STRSXP, 6));
@@ -272,7 +273,9 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     STRING(ans)[2] = mkChar(name.version);
     STRING(ans)[3] = mkChar(name.nodename);
     STRING(ans)[4] = mkChar(name.machine);
-    STRING(ans)[5] = mkChar(getlogin());
+    user = getlogin();
+    if(user) STRING(ans)[5] = mkChar(user);
+    else STRING(ans)[5] = mkChar("unknown");
     PROTECT(ansnames = allocVector(STRSXP, 6));
     STRING(ansnames)[0] = mkChar("sysname");
     STRING(ansnames)[1] = mkChar("release");
