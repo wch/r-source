@@ -168,7 +168,7 @@ function(package, dir, lib.loc = NULL)
     if(!is.na(match("package:methods", search()))) {
         ## Undocumented S4 methods?
         methodsSignatures <- function(f) {
-            mlist <- getMethods(f, codeEnv)
+            mlist <- getMethodsMetaData(f, codeEnv)
             meths <- linearizeMlist(mlist, FALSE)
             classes <- meths@classes
             default <-
@@ -365,7 +365,7 @@ function(package, dir, lib.loc = NULL,
     if(!is.na(match("package:methods", search()))) {
         lapply(getGenerics(codeEnv),
                function(f) {
-                   meths <- linearizeMlist(getMethods(f, codeEnv))
+                   meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
                    sigs <- sapply(meths@classes, paste, collapse = ",")
                    if(!length(sigs)) return()
                    args <- lapply(meths @ methods, formals)
@@ -1586,7 +1586,7 @@ function(package, dir, file, lib.loc = NULL,
                 ## without it, current versions of SparseM fail on
                 ## "%x%"().
                 f <- getGeneric(f, where = codeEnv)
-                meths <- linearizeMlist(getMethods(f, codeEnv))
+                meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
                 ## </FIXME>
                 exprs <- c(exprs, lapply(meths@methods, body))
             }
@@ -1986,7 +1986,7 @@ function(package, dir, lib.loc = NULL)
         badS4ReplaceMethods <-
             sapply(S4generics,
                    function(f) {
-                       meths <- linearizeMlist(getMethods(f, codeEnv))
+                       meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
                        ind <- which(sapply(meths@methods,
                                            .checkLastFormalArg)
                                     == FALSE)
