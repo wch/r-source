@@ -22,6 +22,9 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
+    o	.Alias, reshapeLong(), reshapeWide() are defunct.
+
+
 DOCUMENTATION CHANGES
 
 UTILITIES

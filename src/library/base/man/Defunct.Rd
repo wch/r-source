@@ -25,6 +25,9 @@
 \alias{source.url}
 \alias{httpclient}
 \alias{parse.dcf}
+\alias{.Alias}
+\alias{reshapeLong}
+\alias{reshapeWide}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
@@ -63,6 +66,14 @@ httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
            file=tempfile(), drop.ctrl.z=TRUE)
 parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 % </Removed 1.4.0>
+% Removed in 1.5.0
+.Alias(expr)
+reshapeWide(x, i = reshape.i, j = reshape.j, val = reshape.v,
+            jnames = levels(j))
+reshapeLong(x,jvars,  ilev = row.names(x),
+            jlev = names(x)[jvars], iname = "reshape.i",
+            jname = "reshape.j", vname = "reshape.v")
+% </Removed 1.5.0>
 }
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
@@ -94,6 +105,16 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 
   \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
   faster, but has a slightly different interface.
+
+    \code{.Alias} provided an unreliable way to create duplicate
+  references to the same object. There is no direct replacement. Where
+  multiple references to a single object are required for semantic
+  reasons consider using environments or external pointers. There are
+  some notes on \url{http://developer.r-project.org}.
+
+  \code{reshape*}, which were experimental, are replaced by
+  \code{\link{reshape}}. This has a different syntax and allows multiple
+  time-varying variables.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}

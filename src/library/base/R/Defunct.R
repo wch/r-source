@@ -31,3 +31,11 @@ source.url <- function(...) .Defunct()
 httpclient <- function(...) .Defunct()
 parse.dcf <- function(...) .Defunct()
 ## </entry>
+
+## <entry>
+## Deprecated in 1.4.0
+## Defunct in 1.5.0
+.Alias <- function(...) .Defunct()
+reshapeLong <- function(...) .Defunct()
+reshapeWide <- function(...) .Defunct()
+## </entry>

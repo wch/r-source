@@ -13,7 +13,7 @@ R.version.string
     \code{R.Version()} provides detailed information about the version of
     \R running. \cr
     \code{R.version} is a variable (a \code{\link{list}}) holding this
-    information (and \code{version} is an \code{\link{.Alias}} to it for
+    information (and \code{version} is a copy of it for
     S compatibility), whereas \code{R.version.string} is simple
     \code{\link{character}} string, useful for plotting, etc.
 }

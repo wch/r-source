@@ -1071,7 +1071,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     return duplicate(saverhs);
 }
 
-
+/* Defunct in in 1.5.0
 SEXP do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op,args);
@@ -1079,7 +1079,7 @@ SEXP do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_NAMED(CAR(args), 0);
     return CAR(args);
 }
-
+*/
 
 /*  Assignment in its various forms  */
 
