@@ -40,7 +40,8 @@ extern Rboolean useaqua; /* from src/unix/system.c */
 
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
     ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
-    ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser;
+    ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
+    ptr_do_selectlist;
 
 DL_FUNC ptr_R_ProcessEvents, ptr_CocoaInnerQuartzDevice, 
     ptr_CocoaGetQuartzParameters, ptr_CocoaSystem;
@@ -114,6 +115,11 @@ SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return(ptr_do_flushconsole(call, op, args, env));
+}
+
+SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    return(ptr_do_selectlist(call, op, args, env));
 }
 
 SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)

@@ -441,7 +441,7 @@ chooseCRANmirror <- function(graphics = TRUE)
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     if(graphics) {
         ## return a character vector of URLs
-        if(.Platform$OS.type == "unix"
+        if((.Platform$OS.type == "unix" & .Platform$GUI != "AQUA")
            && capabilities("tcltk") && capabilities("X11")) {
             URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
                       "CRAN mirror"), "URL"]
