@@ -2122,7 +2122,7 @@ SEXP do_search(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(ans, 0, mkChar(".GlobalEnv"));
     SET_STRING_ELT(ans, n-1, mkChar("package:base"));
     i = 1;
-    for (t = ENCLOS(R_GlobalEnv); t != R_EmptyEnv ; t = ENCLOS(t)) {
+    for (t = ENCLOS(R_GlobalEnv); t != R_BaseEnv ; t = ENCLOS(t)) {
 	name = getAttrib(t, install("name"));
 	if (!isString(name) || length(name) < 1)
 	    SET_STRING_ELT(ans, i, mkChar("(unknown)"));

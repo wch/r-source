@@ -78,12 +78,12 @@ parent.env(env) <- value
 
   The object \code{.BaseNamespaceEnv} is the namespace environment for
   the base package.  The environment of the base package itself is
-  represented by \code{NULL}, the ultimate enclosure of any environment:
+  available as \code{baseenv()}.  The ultimate enclosure of any environment
+  is the empty environment \code{emptyenv()}, to which nothing may
+  be assigned.
   If one follows the \code{parent.env()} chain of enclosures back far
-  enough from any environment, eventually one reaches \code{NULL}.
-  This means that arithmetic operators and the base package functions
-  will be always be found by \code{\link{eval}()} or \code{\link{get}(...,
-  inherits = TRUE)}.
+  enough from any environment, eventually one reaches the empty
+  environment.
 
   The replacement function \code{parent.env<-} is extremely dangerous as
   it can be used to destructively change environments in ways that
@@ -109,7 +109,7 @@ ls(envir=environment(approxfun(1:2,1:2, method="const")))
 
 is.environment(.GlobalEnv) # TRUE
 
-e1 <- new.env(parent = NULL)  # this one has enclosure package:base.
+e1 <- new.env(parent = baseenv())  # this one has enclosure package:base.
 e2 <- new.env(parent = e1)
 assign("a", 3, env=e1)
 ls(e1)
