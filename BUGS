@@ -134,6 +134,10 @@ Date: Thu, 5 Dec 2002 15:32:32 +0100
 Subject: avas: segmentation fault on empty args
 From: vograno@arbitrade.com
 Date: Fri, 6 Dec 2002 19:41:48 +0100 (MET)
+* PR# 2363 *
+Subject: nlme() and parameters "model", "fixed" and "random"
+From: jerome@hivnet.ubc.ca
+Date: Wed, 11 Dec 2002 22:29:47 +0100 (MET)
 
 Directory:  Analyses
 
@@ -625,10 +629,6 @@ Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
 Subject: pmax loses row names
 From: hosking@watson.ibm.com
 Date: Mon, 9 Dec 2002 16:54:41 +0100 (MET)
-* PR# 2363 *
-Subject: nlme() and parameters "model", "fixed" and "random"
-From: jerome@hivnet.ubc.ca
-Date: Wed, 11 Dec 2002 22:29:47 +0100 (MET)
 * PR# 2365 *
 Subject: R-intro: Simple manipulations/Vectors and assignment
 From: nvj@fys.ku.dk
@@ -641,7 +641,11 @@ Date: Thu, 12 Dec 2002 14:19:43 +0100 (MET)
 Subject: convergence problem with nlme()
 From: jerome@hivnet.ubc.ca
 Date: Thu, 12 Dec 2002 23:43:14 +0100 (MET)
-* PR# 2370 *
-Subject: xyplot {lattice} bug causes crash
-From: Toby.Patterson@csiro.au
-Date: Fri, 13 Dec 2002 00:14:38 +0100 (MET)
+* PR# 2371 *
+Subject: Minor glitch in building documentation
+From: Peter Rye <prye@shiraz.apana.org.au>
+Date: 12 Dec 2002 23:47:22 +1100
+* PR# 2372 *
+Subject: slow down aging dljw
+From: dfcqkennedi <mvtiana@msn.com>
+Date: Thu, 12 Dec 2002 23:12:13 -0800
