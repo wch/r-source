@@ -145,7 +145,7 @@ static void rmin(double *x, int n, double *value)
     for (i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
-		s = NA_REAL;/* was s += x[i];*/
+		if(s != NA_REAL) s = x[i];/* was s += x[i];*/
 		if(!updated) updated = 1;
 	    }
 	}
@@ -202,7 +202,7 @@ static void rmax(double *x, int n, double *value)
     for (i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
-		s = NA_REAL;/* was s += x[i];*/
+		if(s != NA_REAL) s = x[i];/* was s += x[i];*/
 		if(!updated) updated = 1;
 	    }
 	}
