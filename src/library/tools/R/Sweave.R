@@ -371,8 +371,10 @@ RweaveLatexWritedoc <- function(object, chunk)
 
     while(any(pos <- grep(object$syntax$docexpr, chunk)))
     {
-        cmd <- sub(paste(".*", object$syntax$docexpr, ".*", sep=""),
-                   "\\1", chunk[pos[1]])
+        cmdloc <- regexpr(object$syntax$docexpr, chunk[pos[1]])
+        cmd <- substr(chunk[pos[1]], cmdloc,
+                      cmdloc+attr(cmdloc, "match.length")-1)
+        cmd <- sub(object$syntax$docexpr, "\\1", cmd)
         if(object$options$eval)
             val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
         else
