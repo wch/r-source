@@ -153,11 +153,10 @@ double R_dist_binary(double *x, int nr, int nc, int i1, int i2)
 enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY };
 /* == 1,2,..., defined by order in the R function dist */
 
-static double (*distfun)(double*, int, int, int, int);
-
 void R_distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
 {
     int dc, i, j, ij;
+    double (*distfun)(double*, int, int, int, int) = NULL;
 
     switch(*method) {
     case EUCLIDEAN:

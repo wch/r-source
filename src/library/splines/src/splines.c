@@ -223,7 +223,7 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
 #include "R_ext/Rdynload.h"
 
 
-static R_CallMethodDef R_CallDef[] = {
+const static R_CallMethodDef R_CallDef[] = {
    {"spline_basis", (DL_FUNC)&spline_basis, 4},
    {"spline_value", (DL_FUNC)&spline_value, 5},
    {NULL, NULL, 0},

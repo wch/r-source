@@ -21,15 +21,15 @@
 #include "mva.h"
 #include "R_ext/Rdynload.h"
 
-R_CMethodDef CEntries[] = {
+static const R_CMethodDef CEntries[] = {
     {"dblcen", (DL_FUNC) &dblcen, 2},  
     {"R_cutree", (DL_FUNC) &R_cutree, 6},  
     {"R_distance", (DL_FUNC) &R_distance, 2},  
     {NULL, NULL, 0}
 };
 
-R_FortranMethodDef FortEntries[] = {
-    {"hclust", (DL_FUNC) &F77_SUB(hclust), 11},  
+static const R_FortranMethodDef FortEntries[] = {
+    {"hclust", (DL_FUNC) &F77_SUB(hclust), 11}, 
     {"hcass2", (DL_FUNC) &F77_SUB(hcass2), 6},  
     {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},  
     {NULL, NULL, 0}
