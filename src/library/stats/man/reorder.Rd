@@ -14,16 +14,20 @@ reorder(x, \dots)
 \method{reorder}{dendrogram}(x, wts, \dots)
 }
 \arguments{
-  \item{x}{The object to be reordered}
-  \item{wts}{The weights for reordering.}
-  \item{\dots}{additional arguments }
+  \item{x}{the object to be reordered}
+  \item{wts}{numeric weights (arbitrary values) for reordering.}
+  \item{\dots}{additional arguments}
 }
 \details{
-  Using the weights the leaves of the dendrogram are reordered so as to
-  be in an order as consistent as possible with the weights.
+  Using the weights \code{wts}, the leaves of the dendrogram are
+  reordered so as to be in an order as consistent as possible with the
+  weights.  Afterward, at each node, the branches are ordered in
+  increasing weights (where the weight of a branch is defined as the sum
+  of the weights of its sub branches).
 }
 \value{
-  From \code{reorder.dendrogram} a dendrogram.
+  From \code{reorder.dendrogram} a dendrogram, where each node has a
+  further attribute \code{value} with its corresponding weight.
 }
 \author{R. Gentleman}
 \seealso{\code{\link{heatmap}}, \code{\link{cophenetic}} }
