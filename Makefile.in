@@ -163,7 +163,8 @@ distdir: $(DISTFILES) vignettes
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
-	(cp library/grid/doc/*.pdf $(distdir)/src/library/grid/inst/doc)
+	@cp library/grid/doc/*.pdf library/grid/doc/index.html \
+	  $(distdir)/src/library/grid/inst/doc
 
 dvi info pdf:
 	-@(cd doc && $(MAKE) $@)
