@@ -15,7 +15,7 @@ while test -n "${1}"; do
 done
 
 IN=${1}
-OUT=${2-"${1}out"}
+OUT=${2-`basename ${1} .R`.Rout}
 
 (echo "invisible(options(echo = TRUE))"; \
     cat ${IN}; \

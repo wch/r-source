@@ -27,6 +27,27 @@ BUG FIXES
 
 NEW FEATURES
 
+    o   preserve factor levels and contrast settings in model objects
+
+    o   factor[...,drop=T] reduces level set 
+
+    o   added dblepr, intpr
+
+    o   do_modelmatrix(model.c): Set rownames from data argument.
+
+    o   New generic function preplot().
+
+    o	A new R BATCH interface for non-interactive execution.
+
+    o   Added `offline' argument to help() for producing hardcopy via
+	latex and dvips.
+
+    o   glm.fit.null now calculates AIC and print.glm.null prints it
+
+    o   effects.lm implemented
+
+    o   new class "mlm" for multivariate "lm", predict.mlm to go with it
+
     o   New generic function preplot().
 
     o	A new R BATCH interface for non-interactive execution.
@@ -35,6 +56,33 @@ NEW FEATURES
 	latex and dvips.
 
 BUG FIXES
+
+    o   binary operation on 1x1 matrix lost dimension
+
+    o   fix anova.glm for null model
+
+    o   glm.fit.null: ensure df.residual == df.null for a null model
+
+    o   summary.glm: correlations in saturated cases
+
+    o   stat.anova: use match.arg and labeled switch statement
+
+    o   Major cleanup of glm iteration code
+
+    o   Correct reordering of glm coefficients if pivoting
+
+    o   Rownames on contrast matrices
+
+    o   factor() and [.factor preserves class "ordered" 
+
+    o   Code rearrangement in predict.lm (avoid unnecessary computation)
+        + let rownames through on predictions
+
+    o   model.matrix.default: Initial code to define model frame 
+        simplified considerably after defaulting data argument to
+        sys.frame(sys.parent()).  This also removes the problem where
+        data.frame mangles I(x^2) and similar names, so that the
+        "reorder" sanity check at the end fails.
 
     o	The handling of extra FORTRAN libraries (f2c-related and BLAS)
 	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be

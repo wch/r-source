@@ -11,7 +11,8 @@
     If \code{infile} starts with a `-', use \code{--} as the final 
     option.}
   \item{outfile}{the name of a file to write output to.  If not given,
-    the name used is the one of \code{infile} with `out' appended.}
+    the name used is the one of \code{infile}, with a possible `.R'
+    extension stripped, and `.Rout' appended.}
 }
 \details{By default, the input commands are printed along with the
   output.  To suppress this behavior, add \code{options(echo = FALSE)}

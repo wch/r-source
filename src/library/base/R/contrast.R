@@ -19,6 +19,7 @@ function(x, how.many, value)
 {
  if(!is.factor(x))
 	stop("contrasts apply only to factors")
+ if(is.function(value)) value <- value(nlevels(x))
  if(is.numeric(value)) {
    value <- as.matrix(value)
    nlevs <- nlevels(x)
@@ -26,6 +27,7 @@ function(x, how.many, value)
      stop("wrong number of contrast matrix rows")
    n1 <- if(missing(how.many)) nlevs - 1 else how.many
    nc <- ncol(value)
+   rownames(value) <- levels(x)
    if(nc  < n1) {
      cm <- qr(cbind(1,value))
      if(cm$rank != nc+1) stop("singular contrast matrix")

@@ -1,5 +1,5 @@
 "factor" <- function (x, levels = sort(unique(x), na.last = TRUE),
-	labels=levels, exclude = NA, ordered = FALSE)
+	labels=levels, exclude = NA, ordered = is.ordered(x))
 {
   if (length(x) == 0)
     return(character(0))
@@ -101,12 +101,12 @@ Ops.factor <- function(e1, e2)
   value
 }
 
-"[.factor" <- function(x, i)
+"[.factor" <- function(x, i, drop=F)
 {
   y <- NextMethod("[")
-  class(y)<-"factor"
+  class(y)<-class(x)
   attr(y,"levels")<-attr(x,"levels")
-  y
+  if ( drop ) factor(y) else y
 }
 
 "[<-.factor" <- function(x, i, value)

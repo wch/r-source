@@ -46,6 +46,8 @@ extern "C" {
 #endif
 
   extern char *S_alloc();
+  extern void call_R();
+#define call_S call_R
   extern void seed_in(long *);
   extern void seed_out();
   extern double unif_rand(void);
@@ -79,6 +81,13 @@ extern "C" {
 #define DOUBLE_EPS     DBL_EPSILON
 #define DOUBLE_XMAX    DBL_MAX
 #define DOUBLE_XMIN    DBL_MIN
+
+extern int F77_SYMBOL(dblepr) (char *label, int *nchar,
+			       double *data, int *ndata);
+extern int F77_SYMBOL(intpr) (char *label, int *nchar,
+			      int *data, int *ndata);
+
+
 
 #ifdef __cplusplus
 }

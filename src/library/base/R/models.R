@@ -149,7 +149,8 @@ na.omit <- function(frame)
 model.frame <- function(x, ...)	UseMethod("model.frame")
 
 model.frame.default <-
-function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
+function(formula, data = NULL, subset=NULL, na.action = na.fail,
+         drop.unused.levels = F, xlev = NULL,...)
 {
 	if(missing(formula)) {
 		if(!missing(data) && inherits(data, "data.frame") &&
@@ -174,8 +175,31 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
 	if(!inherits(formula, "terms"))
 		formula <- terms(formula, data = data)
         subset<-eval(substitute(subset),data)
-	.Internal(model.frame(formula, data, substitute(list(...)),
+	data <- .Internal(model.frame(formula, data, substitute(list(...)),
 		subset, na.action))
+  # fix up the levels
+  if(length(xlev) > 0) {
+    for(nm in names(xlev))
+      if(!is.null(xl <- xlev[[nm]])) {
+        xi <- data[[nm]]
+        if(is.null(nxl <- levels(xi)))
+          warning("variable", nm, "is not a factor")
+        else {
+          xi <- xi[, drop=T] # drop unused levels
+          if(any(m <- is.na(match(nxl, xl))))
+            stop("factor", nm, "has new level(s)", nxl[m])
+          data[[nm]] <- factor(xi, levels=xl)
+        }
+      }
+  } else if(drop.unused.levels) {
+    for(nm in names(data)) {
+      x <- data[[nm]]
+      if(is.factor(x) &&
+         length(unique(x)) < length(levels(x)))
+        data[[nm]] <- data[[nm]][, drop = T]
+    }
+  }
+  data
 }
 
 model.weights <- function(x) x$"(weights)"
@@ -190,32 +214,39 @@ model.offset <- function(x) {
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
-model.matrix.default <- function(formula, data, contrasts = NULL)
+model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
+                                 contrasts.arg = NULL, xlev = NULL)
 {
  t <- terms(formula)
- if (missing(data)) 
-	data <- model.frame(formula)
- else if (is.null(attr(data, "terms")))
-     data <- model.frame(formula, data)
- contrastsL <- contrasts
- rm(contrasts)
- if (!is.null(contrastsL)) {
-	namD <- names(data)
-	if (!is.list(contrastsL))
-		stop("invalid contrasts")
-	if (is.null(namC <- names(contrastsL)))
-		stop("invalid contrasts argument")
-	for (nn in namC) {
-		if (is.na(ni <- match(nn, namD)))
-			warning(paste("Variable", nn,
-				      "absent, contrast ignored"))
-		else contrasts(data[[ni]]) <- contrastsL[[nn]]
-	}
+ if (is.null(attr(data, "terms")))
+     data <- model.frame(formula, data, xlev=xlev)
+ contr.funs <- as.character(.Options$contrasts)
+ isF <- sapply(data, is.factor)[-1]
+ isOF <- sapply(data, is.ordered)
+ namD <- names(data)
+ for(nn in namD[-1][isF]) # drop response
+   if(is.null(attr(data[[nn]], "contrasts")))
+     contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
+# it might be safer to have numerical contrasts:
+#        get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
+ if (!is.null(contrasts.arg) && is.list(contrasts.arg)) {
+   if (is.null(namC <- names(contrasts.arg)))
+     stop("invalid contrasts argument")
+   for (nn in namC) {
+     if (is.na(ni <- match(nn, namD)))
+       warning(paste("Variable", nn, "absent, contrast ignored"))
+     else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
+   }
  }
- reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
- if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
- data <- data[,reorder, drop=FALSE]
- .Internal(model.matrix(t, data))
+# reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+# if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
+# data <- data[,reorder, drop=FALSE]
+ ans <- .Internal(model.matrix(t, data))
+ cons <- if(any(isF))
+   lapply(data[-1][isF], function(x) attr(x,  "contrasts"))
+ else NULL
+ attr(ans, "contrasts") <- cons
+ ans
 }
 model.response <- function (data, type = "any") 
 {

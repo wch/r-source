@@ -414,6 +414,7 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b);
 /* void GCircle(double x, double y, double radius, int col, int border); */
 void call_R(char *func, long nargs, void **arguments, char **modes, long *lengths, char **names, long nres, char **results);
 void printRealVector(double * x, int n, int index);
+void printIntegerVector(int * x, int n, int index);
 int StringFalse(char *name);
 
 		/* Platform Dependent Gui Hooks */

@@ -1,7 +1,7 @@
 lm <-
 function(formula, data = list(), subset, weights, na.action,
-	 method = "qr", model = TRUE, x = FALSE, y = FALSE,
-	 qr = TRUE, singular.ok = TRUE, ...)
+         method = "qr", model = TRUE, x = FALSE, y = FALSE,
+         qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
 {
 	ret.x <- x
 	ret.y <- y
@@ -10,7 +10,8 @@ function(formula, data = list(), subset, weights, na.action,
 	mf$singular.ok <- NULL
 	mf$model <- NULL
 	mf$method <- NULL
-	mf$x <- mf$y <- mf$qr <- NULL
+        mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
+        mf$drop.unused.levels <- T
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if (method == "model.frame")
@@ -18,6 +19,13 @@ function(formula, data = list(), subset, weights, na.action,
 	else if (method != "qr")
 		warning(paste("method =", method,
 			      "is not supported. Using \"qr\"."))
+        xvars <- as.character(attr(mt, "variables"))[-1]
+        if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+        if(length(xvars) > 0) {
+          xlev <- lapply(mf[xvars], levels)
+          xlev <- xlev[!sapply(xlev, is.null)]
+        } else xlev <- NULL
+
 	if (length(list(...)))
 		warning(paste("Extra arguments", deparse(substitute(...)),
 			"are just disregarded."))
@@ -36,12 +44,14 @@ function(formula, data = list(), subset, weights, na.action,
 			c("mlm.null", "lm.null", "mlm", "lm")
 		else c("lm.null", "lm")
 	} else {
-		x <- model.matrix(mt, mf)
+		x <- model.matrix(mt, mf, contrasts)
 		z <- if (is.null(w))
 			lm.fit(x, y)
 		else lm.wfit(x, y, w)
 		class(z) <- c(if (is.matrix(y)) "mlm", "lm")
 	}
+        z$contrasts <- attr(x, "contrasts")
+        z$xlevels <- xlev
 	z$call <- match.call()
 	z$terms <- mt
 	if (model)
@@ -73,16 +83,18 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 	coef <- z$coefficients
 	pivot <- z$pivot
 	r1 <- 1:z$rank
-	if (ny > 1) {
+        dn <- colnames(x)
+        nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+	if (is.matrix(y)) {
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
-		dimnames(coef) <- list(dimnames(x)[[2]], dimnames(y)[[2]])
-		rownames(z$effects) <- NULL
+		dimnames(coef) <- list(dn, colnames(y))
+		dimnames(z$effects) <- list(nmeffects,colnames(y))
 	} else {
 		coef[-r1] <- NA
 		coef[pivot] <- coef
-		names(coef) <- dimnames(x)[[2]]
-		names(z$effects) <- NULL
+		names(coef) <- dn
+		names(z$effects) <- nmeffects
 	}
 	z$coefficients <- coef
 	c(z[c("coefficients", "residuals", "effects", "rank")],
@@ -130,18 +142,18 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	coef <- z$coefficients
 	pivot <- z$pivot
 	r1 <- 1:z$rank
-	if (ny > 1) {
+        dn <- colnames(x)
+        nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+	if (is.matrix(y)) {
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
-		dimnames(coef) <- list(dimnames(x)[[2]], dimnames(y)[[2]])
-		dimnames(z$residuals) <- dimnames(y)
-		dimnames(z$effects)[[2]] <- dimnames(y)[[2]]
-	}
-	else {
+		dimnames(coef) <- list(dn, colnames(y))
+		dimnames(z$effects) <- list(nmeffects,colnames(y))
+	} else {
 		coef[-r1] <- NA
 		coef[pivot] <- coef
-		names(coef) <- dimnames(x)[[2]]
-		names(z$residuals) <- names(y)
+		names(coef) <- dn
+		names(z$effects) <- nmeffects
 	}
 	z$coefficients <- coef
 	z$residuals <- z$residuals/wts
@@ -165,16 +177,6 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 		z$residuals <- save.r
 		z$fitted.values <- save.f
 		z$weights <- save.w
-	}
-	else {
-		if (ny > 1) {
-			dimnames(z$residuals) <- dimnames(y)
-			dimnames(z$fitted.values) <- dimnames(y)
-		}
-		else {
-			names(z$residuals) <- names(y)
-			names(z$fitted.values) <- names(y)
-		}
 	}
 	c(z[c("coefficients", "residuals", "fitted.values", "effects",
 		"weights", "rank")], list(assign = attr(x, "assign"),
@@ -480,31 +482,34 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	invisible(x)
 }
 
-predict.lm <- function(object, newdata = model.frame(object),
+predict.lm <- function(object, newdata,
     se.fit = FALSE, scale = NULL, df = Inf,
     interval=c("none","confidence","prediction"), level=.95)
 {
-  X <- model.matrix(delete.response(terms(object)), newdata)
+  if(missing(newdata)) X <- model.matrix(object)
+  else
+    X <- model.matrix(delete.response(terms(object)), newdata,
+                      contrasts = object$contrasts, xlev = object$xlevels)
   n <- NROW(object$qr$qr)
   p <- object$rank
   p1 <- 1:p
   piv <- object$qr$pivot[p1]
-  if (is.null(scale)){
-    r <- resid(object)
-    f <- fitted(object)
-    w <- weights(object)
-    if (is.null(w)) rss <- sum(r^2)
-    else rss <- sum(r^2 * w)
-    df <- n - p
-    res.var <- rss/df
-  } else
-    res.var <- scale^2
-  R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
-  vcov <- res.var * R
   est <- object$coefficients[piv]
-  predictor <- c(X[, piv, drop = F] %*% est)
+  predictor <- drop(X[, piv, drop = F] %*% est)
   interval <- match.arg(interval)
   if(se.fit || interval != "none") {
+    if (is.null(scale)){
+      r <- resid(object)
+      f <- fitted(object)
+      w <- weights(object)
+      if (is.null(w)) rss <- sum(r^2)
+      else rss <- sum(r^2 * w)
+      df <- n - p
+      res.var <- rss/df
+    } else
+      res.var <- scale^2
+    R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
+    vcov <- res.var * R
     ip <- real(NROW(X))
     for (i in (1:NROW(X))) {
       xi <- X[i, piv]
@@ -528,7 +533,22 @@ predict.lm <- function(object, newdata = model.frame(object),
   else predictor
 }
 
-effects.lm <- function(...) .NotYetImplemented()
+effects.lm <- 
+function(object, set.sign = F)
+{
+  eff <- object$effects
+  if(set.sign) {
+    dd <- coef(object)
+    if(is.matrix(eff)) {
+      r <- 1:dim(dd)[1]
+      eff[r,  ] <- sign(dd) * abs(eff[r,  ])
+    } else {
+      r <- 1:length(dd)
+      eff[r] <- sign(dd) * abs(eff[r])
+    }
+  }
+  structure(eff, assign = object$assign, class = "coef")
+}
 
 ## Old version below, did it ever work?
 
@@ -559,4 +579,25 @@ plot.lm <- function(x,...) {
   abline(h=0, lty=3, col = "gray")
 
   qqnorm(r/sqrt(1-hii), ylab = "Standardized Residuals")
+}
+
+model.matrix.lm <- function(object, ...)
+{
+  if(n <- match("x", names(object), 0)) object[[n]]
+  else {
+    data <- model.frame(object, xlev = object$xlevels, ...)
+    NextMethod("model.matrix", data = data, contrasts = object$contrasts)
+  }
+}
+
+predict.mlm <- 
+function(fit, newdata, se.fit = FALSE)
+{
+  if(missing(newdata)) return(fit$fitted)
+  if(se.fit)
+    stop("The\"se.fit\" argument is not currently implemented for mlm objects")
+  x <- model.matrix(fit, newdata) # will use model.matrix.lm
+  piv <- object$qr$pivot[1:object$rank]
+  pred <- X[, piv, drop = F] %*% object$coefficients[piv,]
+  if(inherits(fit, "mlm")) pred else pred[, 1]
 }

@@ -20,6 +20,6 @@ paste(\dots, sep = " ", collapse = NULL)
 \examples{
 paste(1:12) # same as as.character(..)
 paste("A", 1:6, sep = "")
-paste("Today is", system.date())
+paste("Today is", date())
 }
 \keyword{character}
