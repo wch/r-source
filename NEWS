@@ -24,6 +24,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	--debugger .. now gives a warning if other command line args are used
+
     o	pt(t,df, ncp) now also works for bigger ncp's
     
     o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.

@@ -13,7 +13,12 @@ case "${ARG}" in
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
 	shift; exec sh "${RHOME}/bin/${ARG}" "$@" ;;
     -d|--debugger)
-	exec "$2" ${RHOME}/bin/R.binary ;;
+        deb="$2"; shift;shift; args="$@"
+        if [ -n "$args" ];then 
+	  echo "*** Further command line arguments ('$args') disregarded, while using debugger $deb"
+	  echo "*** (maybe use 'run $args'  from *inside* $deb" ; echo ''
+	fi
+	exec $deb ${RHOME}/bin/R.binary;;
     -h|--help|-\?)
 	cat <<_EOF_
 
