@@ -74,6 +74,12 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).
 }
+\section{Warning}{
+  The standard code has been reported to be very slow or give errors
+  when applied to extremely long character strings (tens of thousands of
+  characters or more): the code used when \code{perl=TRUE} seems faster
+  and more reliable for such usages.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
