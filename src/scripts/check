@@ -66,7 +66,7 @@ for pkg in ${PKGS}; do
   ${RHOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
     > ${pkg}-Ex.R
   echo " Running examples in package \`${pkg}' ..."
-  ${RHOME}/bin/R --vanilla --vsize 6 < ${pkg}-Ex.R > ${pkg}-Ex.Rout
+  ${RHOME}/bin/R --vanilla --vsize 6M < ${pkg}-Ex.R > ${pkg}-Ex.Rout
   if test ${?} -eq 0; then
     echo " OK"
   else

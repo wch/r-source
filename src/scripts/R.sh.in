@@ -35,8 +35,8 @@ Options:
   --no-site-file            Don't read the site-wide Rprofile.
   --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
   --vanilla		    = --no-save, no-restore, no-site-file, no-init-file
-  --vsize N                 Set the vector heap size to N (>= 1)  megabytes.
-  --nsize N                 Set the number of cons cells to N (>= 200000).
+  --vsize N                 Set vector heap size to N bytes; "4M" = 4 MegaB.
+  --nsize N                 Set number of cons cells to N. ___See ?Memory___
   -h, --help, -?            Print short help message and exit.
   -q, --quiet, --silent     Make R run as quietly as possible.
   --version                 Print version info and exit.
