@@ -14,8 +14,8 @@ setGeneric <-
              useAsDefault = existsFunction(name, generic = FALSE),
              genericFunction = NULL)
 {
-    if(nargs() == 1 && isGeneric(name)) {
-        message("Function \"", name, "\" is already a generic; no change")
+    if(isGeneric(name)) {
+        message("Function \"", name, "\" is already a generic; no change (use removeMethods or removeGeneric to force reset)")
         return(name)
     }
     if(exists(name, "package:base") &&

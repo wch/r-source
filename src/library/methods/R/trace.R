@@ -140,7 +140,14 @@
                       def <- def@.Data
                   .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print)
                   .Object
-              })
+              }, where = envir)
+    if(!isGeneric("show"))
+        setGeneric("show", where = envir)
+    setMethod("show", "traceable", function(object) {
+        message("Object of class \"", class(object), "\"")
+        show(object@original)
+        cat("\n## (to see the tracing code, look at body(object))\n")
+    }, where = envir)
 }
 
 .doTracePrint <- function(msg = "") {
