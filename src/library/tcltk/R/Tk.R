@@ -74,7 +74,10 @@
 
 tkdestroy  <- function(win) {
     tkcmd("destroy", win)
-    rm(list=.Tk.ID(win), envir=get("parent", envir=win$env)$env)
+    ID <- .Tk.ID(win)
+    env <- get("parent", envir=win$env)$env
+    if (exists(ID, envir=env, inherits=FALSE))
+        rm(list=ID, envir=env)
 }
 
 is.tkwin <- function(x) inherits(x, "tkwin")
@@ -113,9 +116,18 @@ tkradiobutton <- function(parent, ...) tkwidget(parent, "radiobutton", ...)
 tkscale       <- function(parent, ...) tkwidget(parent, "scale", ...)
 tkscrollbar   <- function(parent, ...) tkwidget(parent, "scrollbar", ...)
 tktext        <- function(parent, ...) tkwidget(parent, "text", ...)
-tktoplevel    <- function(parent=.TkRoot,...) tkwidget(parent,"toplevel",...)
 
-
+tktoplevel    <- function(parent=.TkRoot,...) {
+    w <- tkwidget(parent,"toplevel",...)
+    ID <- .Tk.ID(w)
+    tkbind(w, "<Destroy>",
+           function() {
+               if (exists(ID, envir=parent$env, inherits=FALSE))
+                   rm(list=ID, envir=parent$env)
+               tkbind(w, "<Destroy>","")
+           })
+    w
+}
 ### ------ Window & Geometry managers, widget commands &c ------
 
 
@@ -347,6 +359,32 @@ tkyview         <- function(widget, ...) tkcmd(widget, "yview", ...)
 tkyview.moveto  <- function(widget, ...)tkcmd(widget, "yview", "moveto", ...)
 tkyview.scroll  <- function(widget, ...)tkcmd(widget, "yview", "scroll", ...)
 
+tkpager <- function(file, header, title, delete.file)
+{
+    for ( i in seq(along=file) ){
+        zfile <- file[[i]]
+        tt <- tktoplevel()
+        tkwm.title(tt, if (length(title))
+                   title[(i-1) %% length(title)+1] else "")
+        txt <- tktext(tt, bg="grey90", font="courier",
+                      yscrollcommand=function(...)tkset(scr,...))
+        scr <- tkscrollbar(tt, repeatinterval=5,
+                           command=function(...)tkyview(txt,...))
+        tkpack(txt, side="left", fill="both", expand=TRUE)
+        tkpack(scr, side="right", fill="y")
+
+        chn <- tkcmd("open", zfile)
+        tkinsert(txt, "end", header[[i]])
+        tkinsert(txt, "end", gsub("_\b","",tkcmd("read", chn)))
+        tkcmd("close", chn)
+
+        tkconfigure(txt, state="disabled")
+        tkmark.set(txt,"insert","0.0")
+        tkfocus(txt)
+
+        if (delete.file) tkcmd("file", "delete", zfile)
+    }
+}
 
 
 

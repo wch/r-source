@@ -234,8 +234,20 @@ NEW FEATURES
     o   gc() now reports the space allocated, not the space free,
 	since the total space is now variable.
 
-    o   prop.table() and margin.table() now work with an empty margin.
+    o   prop.table() and margin.table() now work with an empty `margin'.
 
+    o   file.show() allows `pager' argument to be an R function, and
+        consequently, the `pager' option can be an R function. 
+
+    o   tcltk library now has tkpager() which is designed to be used
+        by file.show() and shows help pages etc. in separate text
+        widgets. On the Unix platforms, it is now used for the `pager'
+        option when the library is loaded, unless the `tkpager' option
+        is set otherwise
+
+    o   tcltk is now more careful about removing the objects
+        representing widgets in the R workspace when the windows are
+        destroyed (e.g. using window manager controls)  
 
 BUG FIXES
 

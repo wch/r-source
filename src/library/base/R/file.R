@@ -10,7 +10,10 @@ function (..., header=rep("", nfiles), title="R Information",
 {
     file <- c(...)
     nfiles <- length(file)
-    .Internal(file.show(file, header, title, delete.file, pager))
+    if (is.function(pager))
+	pager(file, header, title, delete.file)
+    else
+        .Internal(file.show(file, header, title, delete.file, pager))
 }
 
 file.append <- function(file1, file2)
