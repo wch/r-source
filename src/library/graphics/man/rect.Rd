@@ -1,5 +1,5 @@
 \name{rect}
-\title{Draw a One or More Rectangles}
+\title{Draw One or More Rectangles}
 \usage{
 rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
      col = NULL, border = NULL, lty = NULL, lwd = par("lwd"),
