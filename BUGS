@@ -225,7 +225,23 @@ none
 
 Directory:  incoming
 
+* PR# 833 *
+Subject: link in FAQ incorrect
+From: Gijsbert Stoet <stoet@pcg.wustl.edu>
+Date: Tue, 30 Jan 2001 16:18:43 -0600
+* PR# 830 *
+Subject: Disappearing x axis in plot.factor
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:27:13 -0500
 * PR# 829 *
 Subject: variables in nls
 From: baron@cattell.psych.upenn.edu
 Date: Sun, 28 Jan 2001 15:07:27 +0100 (MET)
+* PR# 832 *
+Subject: Rconsole documentation
+From: david.firth@nuffield.oxford.ac.uk
+Date: Tue, 30 Jan 2001 15:52:49 +0100 (MET)
+* PR# 831 *
+Subject: screen can't go back to (split) screen with log="y" plot
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:39:41 -0500
