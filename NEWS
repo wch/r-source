@@ -739,6 +739,9 @@ BUG FIXES
     o	cycle() sometimes failed on a time series which started at a cycle
 	other than 1.
 
+    o	read.dcf() read incorrectly files which did not end in a new line.
+
+
 
 	**************************************************
 	*						 *
