@@ -14,6 +14,13 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir); \
 	       ls COPYRIGHT COPYRIGHT.ftn Makefile.in ROUTINES *.[cfh])
 
+## All functions/subroutines  that are to be called via
+## 	.Fortran
+## or	.C
+## 
+## should also have an entry in ./ROUTINES  in order to be ``pre-dyn.loaded'';
+## see ../src/unix/dynload.c.
+
 OBJS = \
 	approx.o \
 	bakslv.o \
