@@ -35,17 +35,15 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 /*
  *	printname  c-entry  offset  eval  arity	 pp-info  mark
  *
- *	Note:	We now consider eval to be made up of two digits XY.
- *		X = 1 says that this is an internal function which must
- *		be accessed with a .Internal call, any other value is
- *		accessable directly.
- *		Y = 1 says evaluate arguments before calling and Y=0 says
- *		don't evaluate.
- *	New Apr 9/96: eval is made up of three digits XYZ. X=1 says that
- *		we should switch R_Visible off (the least common situation).
- *		Y=1 says that this is an internal function (as above) and
- *		Z=1 says evaluate arguments before calling and Z=0 says
- *		don't evaluate.
+ *	Note: [New Apr 9/96, before only had "YZ"]
+ *		We now consider  'eval'  to be made up of three digits XYZ :
+ *              X=1 says that we should switch R_Visible off
+ *		    (the least common situation).
+ *		Y=1 says that this is an internal function which must
+ *		    be accessed with a  .Internal(.) call, any other value is
+ *		    accessable directly.
+ *		Z=1 says evaluate arguments before calling and
+ *		Z=0 says don't evaluate.
  *
  * E.g:		SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
  *
@@ -59,8 +57,8 @@ FUNTAB R_FunTab[] =
 {"while",	do_while,	0,	0,	-1,	PP_WHILE,	0},
 {"for",		do_for,		0,	0,	-1,	PP_FOR,		0},
 {"repeat",	do_repeat,	0,	0,	-1,	PP_REPEAT,	0},
-{"break",	do_break,	CTXT_BREAK,0,	-1,	PP_BREAK,	0},
-{"next",	do_break,	CTXT_NEXT,0,	-1,	PP_NEXT,	0},
+{"break",	do_break, CTXT_BREAK,	0,	-1,	PP_BREAK,	0},
+{"next",	do_break, CTXT_NEXT,	0,	-1,	PP_NEXT,	0},
 {"return",	do_return,	0,	0,	-1,	PP_RETURN,	0},
 {"stop",	do_stop,	0,	1,	1,	PP_FUNCALL,	0},
 {"warning",	do_warning,	0,	101,	1,	PP_FUNCALL,	0},
@@ -121,7 +119,7 @@ FUNTAB R_FunTab[] =
 
 /* Vectors, Matrices and Arrays */
 
-{"vector",	do_makevector,	0,	1,	2,	PP_FUNCALL,	0},
+{"vector",	do_makevector,	0,	11,	2,	PP_FUNCALL,	0},
 {"factor",	do_makefactor,	0,	11,	3,	PP_FUNCALL,	0},
 {"complex",	do_complex,	0,	11,	3,	PP_FUNCALL,	0},
 {"matrix",	do_matrix,	0,	11,	4,	PP_FUNCALL,	0},
@@ -144,7 +142,7 @@ FUNTAB R_FunTab[] =
 {"dimnames",	do_dimnames,	0,	1,	1,	PP_FUNCALL,	0},
 {"dimnames<-",	do_dimnamesgets,0,	1,	2,	PP_FUNCALL,	0},
 {"all.names",	do_allnames,	0,	11,	4,	PP_FUNCALL,	0},
-{"row.names",	do_rownames,	0,	1,	1,	PP_FUNCALL,	0},
+/*{"row.names",	do_rownames,	0,	1,	1,	PP_FUNCALL,	0},*/
 {"dim",		do_dim,		0,	1,	1,	PP_FUNCALL,	0},
 {"dim<-",	do_dimgets,	0,	1,	2,	PP_FUNCALL,	0},
 {"levels",	do_levels,	0,	1,	1,	PP_FUNCALL,	0},
@@ -153,8 +151,8 @@ FUNTAB R_FunTab[] =
 {"attributes<-",do_attributesgets,0,	1,	1,	PP_FUNCALL,	0},
 {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL,	0},
 {"attr<-",	do_attrgets,	0,	0,	3,	PP_FUNCALL,	0},
-{"comment",	do_comment,	0,	1,	1,	PP_FUNCALL,	0},
-{"comment<-",	do_commentgets,	0,	1,	2,	PP_FUNCALL,	0},
+{"comment",	do_comment,	0,	11,	1,	PP_FUNCALL,	0},
+{"comment<-",	do_commentgets,	0,	11,	2,	PP_FUNCALL,	0},
 {"get",		do_get,		1,	10,	4,	PP_FUNCALL,	0},
 {"exists",	do_get,		0,	10,	4,	PP_FUNCALL,	0},
 {"assign",	do_assign,	0,	110,	4,	PP_FUNCALL,	0},
@@ -171,10 +169,10 @@ FUNTAB R_FunTab[] =
 
 
 /* Mathematical Functions */
-{"round",	do_round,	10001,	1,	1,	PP_FUNCALL,	0},
+{"round",	do_round,	10001,	11,	1,	PP_FUNCALL,	0},
 {"atan",	do_atan,	10002,	1,	1,	PP_FUNCALL,	0},
-{"log",		do_log,		10003,	1,	1,	PP_FUNCALL,	0},
-{"signif",	do_signif,	10004,	1,	1,	PP_FUNCALL,	0},
+{"log",		do_log,		10003,	11,	1,	PP_FUNCALL,	0},
+{"signif",	do_signif,	10004,	11,	1,	PP_FUNCALL,	0},
 
 {"abs",		do_math1,	0,	1,	1,	PP_FUNCALL,	0},
 {"floor",	do_math1,	1,	1,	1,	PP_FUNCALL,	0},
@@ -198,27 +196,27 @@ FUNTAB R_FunTab[] =
 {"asinh",	do_math1,	34,	1,	1,	PP_FUNCALL,	0},
 {"atanh",	do_math1,	35,	1,	1,	PP_FUNCALL,	0},
 
-{"lgamma",	do_math1,	40,	1,	1,	PP_FUNCALL,	0},
-{"gamma",	do_math1,	41,	1,	1,	PP_FUNCALL,	0},
+{"lgamma",	do_math1,	40,	11,	1,	PP_FUNCALL,	0},
+{"gamma",	do_math1,	41,	11,	1,	PP_FUNCALL,	0},
 
 /* Polygamma Functions */
 
-{"digamma",	do_math1,	42,	1,	1,	PP_FUNCALL,	0},
-{"trigamma",	do_math1,	43,	1,	1,	PP_FUNCALL,	0},
-{"tetragamma",	do_math1,	44,	1,	1,	PP_FUNCALL,	0},
-{"pentagamma",	do_math1,	45,	1,	1,	PP_FUNCALL,	0},
+{"digamma",	do_math1,	42,	11,	1,	PP_FUNCALL,	0},
+{"trigamma",	do_math1,	43,	11,	1,	PP_FUNCALL,	0},
+{"tetragamma",	do_math1,	44,	11,	1,	PP_FUNCALL,	0},
+{"pentagamma",	do_math1,	45,	11,	1,	PP_FUNCALL,	0},
 
 /* Mathematical Functions of Two Variables */
 
-{"atan2",	do_math2,	0,	1,	2,	PP_FUNCALL,	0},
+{"atan2",	do_math2,	0,	11,	2,	PP_FUNCALL,	0},
 /* KH
    {"signif",	do_math2,	1,	1,	2,	PP_FUNCALL,	0},
    */
 
-{"lbeta",	do_math2,	2,	1,	2,	PP_FUNCALL,	0},
-{"beta",	do_math2,	3,	1,	2,	PP_FUNCALL,	0},
-{"lchoose",	do_math2,	4,	1,	2,	PP_FUNCALL,	0},
-{"choose",	do_math2,	5,	1,	2,	PP_FUNCALL,	0},
+{"lbeta",	do_math2,	2,	11,	2,	PP_FUNCALL,	0},
+{"beta",	do_math2,	3,	11,	2,	PP_FUNCALL,	0},
+{"lchoose",	do_math2,	4,	11,	2,	PP_FUNCALL,	0},
+{"choose",	do_math2,	5,	11,	2,	PP_FUNCALL,	0},
 
 {"dchisq",	do_math2,	6,	11,	2,	PP_FUNCALL,	0},
 {"pchisq",	do_math2,	7,	11,	2,	PP_FUNCALL,	0},
