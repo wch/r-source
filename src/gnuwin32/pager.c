@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file pager.c
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -387,9 +387,9 @@ static pager pagercreate()
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
     MCHECK(newmenu("File"));
-    MCHECK(m = newmenuitem("Print", 0, pagerprint));
+    MCHECK(m = newmenuitem("Print...", 0, pagerprint));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Save to File", 0, pagersavefile));
+    MCHECK(m = newmenuitem("Save to File...", 0, pagersavefile));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem("Close", 0, pagerclose));

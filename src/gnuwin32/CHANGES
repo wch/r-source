@@ -56,6 +56,11 @@ There is a print method for saved plot histories, and individual
 plots can be replayed from the command line by subsetting a
 plot history variable.
 
+The menus use `...' to indicate that they lead to a dialog box.
+
+There is a new menu item  `Edit | Data editor...'  to edit (via fix())
+R objects, especially data frames and matrices.
+
 The console pop-up was checking the wrong item for `Buffered output'.
 
 Plot histories are saved in a different format: those from earlier

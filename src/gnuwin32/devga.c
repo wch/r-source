@@ -1290,21 +1290,21 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(xd->mbar = newmenubar(mbarf));
     MCHECK(m = newmenu("File"));
     MCHECK(xd->msubsave = newsubmenu(m, "Save as"));
-    MCHECK(xd->mwm = newmenuitem("Metafile", 0, menuwm));
-    MCHECK(xd->mps = newmenuitem("Postscript", 0, menups));
-    MCHECK(xd->mpdf = newmenuitem("PDF", 0, menupdf));
-    MCHECK(xd->mpng = newmenuitem("Png", 0, menufilebitmap));
-    MCHECK(xd->mbmp = newmenuitem("Bmp", 0, menufilebitmap));
+    MCHECK(xd->mwm = newmenuitem("Metafile...", 0, menuwm));
+    MCHECK(xd->mps = newmenuitem("Postscript...", 0, menups));
+    MCHECK(xd->mpdf = newmenuitem("PDF...", 0, menupdf));
+    MCHECK(xd->mpng = newmenuitem("Png...", 0, menufilebitmap));
+    MCHECK(xd->mbmp = newmenuitem("Bmp...", 0, menufilebitmap));
     MCHECK(newsubmenu(xd->msubsave,"Jpeg"));
-    MCHECK(xd->mjpeg50 = newmenuitem("50% quality", 0, menufilebitmap));
-    MCHECK(xd->mjpeg75 = newmenuitem("75% quality", 0, menufilebitmap));
-    MCHECK(xd->mjpeg100 = newmenuitem("100% quality", 0, menufilebitmap));
+    MCHECK(xd->mjpeg50 = newmenuitem("50% quality...", 0, menufilebitmap));
+    MCHECK(xd->mjpeg75 = newmenuitem("75% quality...", 0, menufilebitmap));
+    MCHECK(xd->mjpeg100 = newmenuitem("100% quality...", 0, menufilebitmap));
     MCHECK(newsubmenu(m, "Copy to the clipboard"));
     MCHECK(xd->mclpbm = newmenuitem("as a Bitmap\tCTRL+C", 0, menuclpbm));
     MCHECK(xd->mclpwm = newmenuitem("as a Metafile\tCTRL+W", 0, menuclpwm));
     addto(m);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mprint = newmenuitem("Print\tCTRL+P", 0, menuprint));
+    MCHECK(xd->mprint = newmenuitem("Print...\tCTRL+P", 0, menuprint));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(xd->mclose = newmenuitem("close Device", 0, menuclose));
 #ifdef PLOTHISTORY
@@ -1318,8 +1318,8 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(xd->mprev = newmenuitem("Previous\tPgUp", 0, menuprev));
     MCHECK(xd->mnext = newmenuitem("Next\tPgDown", 0, menunext));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->msvar = newmenuitem("Save to variable", 0, menusvar));
-    MCHECK(xd->mgvar = newmenuitem("Get from variable", 0, menugvar));
+    MCHECK(xd->msvar = newmenuitem("Save to variable...", 0, menusvar));
+    MCHECK(xd->mgvar = newmenuitem("Get from variable...", 0, menugvar));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(xd->mclear = newmenuitem("Clear history", 0, menuclear));
 #endif
@@ -1339,12 +1339,12 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(m = newmenuitem("Copy as bitmap", 0, menuclpbm));
     setdata(m, (void *) dd);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Save as metafile", 0, menuwm));
+    MCHECK(m = newmenuitem("Save as metafile...", 0, menuwm));
     setdata(m, (void *) dd);
-    MCHECK(m = newmenuitem("Save as postscript", 0, menups));
+    MCHECK(m = newmenuitem("Save as postscript...", 0, menups));
     setdata(m, (void *) dd);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Print", 0, menuprint));
+    MCHECK(m = newmenuitem("Print...", 0, menuprint));
     setdata(m, (void *) dd);
     gchangepopup(xd->gawin, xd->grpopup);
 

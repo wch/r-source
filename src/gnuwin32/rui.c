@@ -21,6 +21,8 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
+
 #ifdef Win32
 #define USE_MDI 1
 #endif
@@ -57,7 +59,7 @@ static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mapropos, mhelpstart, mFAQ, mrwFAQ, 
-    mpkgl, mpkgi, mpkgil, mpkgu;
+    mpkgl, mpkgi, mpkgil, mpkgu, mde;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
@@ -226,6 +228,25 @@ static void menuclear(control m)
     consoleclear(RConsole);
 }
 
+static void menude(control m)
+{
+    char *s;
+    SEXP var;
+
+    if (!ConsoleAcceptCmd) return;
+    s = askstring("Name of data frame or matrix", "");
+    if(s) {
+	var = findVar(install(s), R_GlobalEnv);
+	if (var != R_UnboundValue) {
+	    sprintf(cmd, "fix(%s)", s);
+	    consolecmd(RConsole, cmd);
+	} else {
+	    sprintf(cmd, "`%s' cannot be found", s);
+	    askok(cmd);
+	}
+    }
+    show(RConsole);
+}
 
 static void menuconfig(control m)
 {
@@ -419,6 +440,7 @@ static void menuact(control m)
 	enable(mpkgi);
 	enable(mpkgil);
 	enable(mpkgu);
+	enable(mde);
     } else {
 	disable(msource);
 	disable(mload);
@@ -432,6 +454,7 @@ static void menuact(control m)
 	disable(mpkgi);
 	disable(mpkgil);
 	disable(mpkgu);
+	disable(mde);
     }
     
     if (consolecancopy(RConsole)) {
@@ -762,19 +785,19 @@ int setupui()
     MCHECK(gpopup(popupact, ConsolePopup));
     MCHECK(RMenuBar = newmenubar(menuact));
     MCHECK(newmenu("File"));
-    MCHECK(msource = newmenuitem("Source R code", 0, menusource));
-    MCHECK(mdisplay = newmenuitem("Display file", 0, menudisplay));
+    MCHECK(msource = newmenuitem("Source R code...", 0, menusource));
+    MCHECK(mdisplay = newmenuitem("Display file...", 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mload = newmenuitem("Load Workspace", 0, menuloadimage));
-    MCHECK(msave = newmenuitem("Save Workspace", 0, menusaveimage));
+    MCHECK(mload = newmenuitem("Load Workspace...", 0, menuloadimage));
+    MCHECK(msave = newmenuitem("Save Workspace...", 0, menusaveimage));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mloadhistory = newmenuitem("Load History", 0, menuloadhistory));
-    MCHECK(msavehistory = newmenuitem("Save History", 0, menusavehistory));
+    MCHECK(mloadhistory = newmenuitem("Load History...", 0, menuloadhistory));
+    MCHECK(msavehistory = newmenuitem("Save History...", 0, menusavehistory));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem("Change dir", 0, menuchangedir));
+    MCHECK(newmenuitem("Change dir...", 0, menuchangedir));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem("Print", 0, menuprint));
-    MCHECK(newmenuitem("Save to File", 0, menusavefile));
+    MCHECK(newmenuitem("Print...", 0, menuprint));
+    MCHECK(newmenuitem("Save to File...", 0, menusavefile));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("Exit", 0, menuexit));
 
@@ -785,7 +808,9 @@ int setupui()
     MCHECK(newmenuitem("Select all", 0, menuselectall));
     MCHECK(newmenuitem("Clear console", 'L', menuclear));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mconfig = newmenuitem("GUI preferences", 0, menuconfig));
+    MCHECK(mde = newmenuitem("Data editor...", 0, menude));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mconfig = newmenuitem("GUI preferences...", 0, menuconfig));
 
     MCHECK(newmenu("Misc"));
     MCHECK(newmenuitem("Stop current computation           \tESC", 0, menukill));
@@ -797,11 +822,11 @@ int setupui()
     MCHECK(msearch = newmenuitem("List &search path", 0, menusearch));
 
     MCHECK(newmenu("Packages"));
-    MCHECK(mpkgl = newmenuitem("Load package", 0, menupkgload));
+    MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgi = newmenuitem("Install package from CRAN", 0, 
+    MCHECK(mpkgi = newmenuitem("Install package from CRAN...", 0, 
 			       menupkginstallcran));
-    MCHECK(mpkgil = newmenuitem("Install package from local zip file", 0, 
+    MCHECK(mpkgil = newmenuitem("Install package from local zip file...", 0, 
 				menupkginstalllocal));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgu = newmenuitem("Update packages from CRAN", 0, 
@@ -817,7 +842,7 @@ int setupui()
     MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
     if (!check_doc_file("doc/html/rw-faq.html")) disable(mrwFAQ);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mhelp = newmenuitem("R language (standard)", 0, menuhelp));
+    MCHECK(mhelp = newmenuitem("R language (standard)...", 0, menuhelp));
     MCHECK(mhelpstart = newmenuitem("R language (&html)", 0, menuhelpstart));
     if (!check_doc_file("doc/html/rwin.html")) disable(mhelpstart);
     MCHECK(mman = newsubmenu(m, "Manuals"));
@@ -840,7 +865,7 @@ int setupui()
     addto(m);
 
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mapropos = newmenuitem("Apropos", 0, menuapropos));
+    MCHECK(mapropos = newmenuitem("Apropos...", 0, menuapropos));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("About", 0, menuabout));
     consolesetbrk(RConsole, menukill, ESC, 0);
