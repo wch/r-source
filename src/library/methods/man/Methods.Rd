@@ -84,7 +84,7 @@ recompute the merged definitions.
 
 When methods list are merged, they can come from two sources:
 \enumerate{
-\item{
+\item {
 Methods list objects for the same function on one or more currently
 attached databases.
 These are merged so that methods in a database earlier in the search
@@ -92,7 +92,7 @@ list override methods for the same function later in the search list.
 A method overrides only another method for the same signature.  See
 the comments on class \code{"ANY"} in the section on \bold{Inheritance}.
 }
-\item{Methods list objects corresponding to the
+\item {Methods list objects corresponding to the
     generic function itself and to the group generic functions, if
     any, for this function.
     Any generic function can be defined to belong to a group generic.
