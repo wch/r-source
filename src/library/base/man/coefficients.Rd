@@ -6,6 +6,9 @@ coefficients(x, \dots)
 }
 \alias{coef}
 \alias{coefficients}
+\alias{coef.default}
+\alias{coef.lm}
+\alias{coef.glm}
 \arguments{
   \item{x}{an object for which the extraction of model coefficients is
     meaningful.}
@@ -27,6 +30,9 @@ coefficients(x, \dots)
   \code{\link{fitted.values}} and \code{\link{residuals}} for related
   methods;
   \code{\link{glm}}, \code{\link{lm}} for model fitting.
+}
+\examples{
+x <- 1:5; coef(lm(c(1:3,7,6) ~ x))
 }
 \keyword{regression}
 \keyword{models}

@@ -2,21 +2,27 @@
 \title{Print Values}
 \usage{
 print(x, \dots)
+
+print.factor(x, quote = FALSE)
+print.ordered(x, quote = FALSE)
 }
 \alias{print}
+\alias{print.factor}
+\alias{print.ordered}
 \description{
 \code{print} prints its argument.
-It is implemented as a generic function which
-means that new printing methods can be easily
-added for new classes.
+It is a generic function which means that new printing methods can be
+easily added for new \code{\link{class}}es.
 
-The default version of print is described in \code{print.default}.
+The default version of print is described in \code{link{print.default}}.
+Use \code{\link{methods}("print")} to get all the methods for the
+\code{print} generic.
 }
-\seealso{
-\code{\link{print.default}}.
+\seealso{The default method \code{\link{print.default}}, and help for the
+  methods above; further \code{\link{options}}.
 }
 \examples{
-ts(1:20)#-- print  is the ``Default function'' --
+ts(1:20)#-- print  is the ``Default function'' --> print.ts(.) is called
 rr <- for(i in 1:3) print(1:i)
 rr
 }

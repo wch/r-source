@@ -9,6 +9,8 @@ Gamma(link = "inverse")
 inverse.gaussian(link = "1/mu^2")
 poisson(link = "log")
 quasi(link = "identity", variance = "constant")
+
+print.family(x, \dots)
 }
 \alias{family}
 \alias{binomial}
@@ -17,6 +19,7 @@ quasi(link = "identity", variance = "constant")
 \alias{inverse.gaussian}
 \alias{poisson}
 \alias{quasi}
+\alias{print.family}
 \arguments{
   \item{link}{a specification for the model link function.
     The \code{binomial} family admits the links \code{logit},
@@ -30,7 +33,7 @@ quasi(link = "identity", variance = "constant")
     \code{1/mu^2} and \code{sqrt}.
     The function \code{\link{power}} can also be used to create a
     power link function for the \code{quasi} family.
-  
+
     The other families have only one permissible link function:
     \code{identity} for the \code{gaussian} family, and \code{1/mu^2}
     for the \code{inverse.gaussian} family.}
