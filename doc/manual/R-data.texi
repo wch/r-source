@@ -96,7 +96,7 @@ principal authors of the packages mentioned are
 @item @pkg{RSPerl} @tab Duncan Temple Lang
 @item @pkg{RPgSQL} @tab Timothy Keitt
 @item @pkg{RSPython} @tab Duncan Temple Lang
-@item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
+@c @item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
 @end multitable
 @end quotation
 
@@ -451,6 +451,25 @@ by setting @code{blank.lines.skip = FALSE}, which will only be useful in
 conjunction with @code{fill = TRUE}, perhaps to indicate missing data in
 a regular layout.
 
+@item @strong{Classes for the variables}
+
+Unless you take any special action, @code{read.table} tries to select a
+suitable class for each variable in the data frame.  It tries in turn
+@code{logical}, @code{integer}, @code{numeric} and @code{complex},
+moving on if any entry is not missing and cannot be
+converted.@footnote{This is normally fast as looking at the first entry
+rules out most of the possibilities.}  If all of these fail, the
+variable is converted to a factor.
+
+Arguments @code{colClasses} and @code{as.is} provide greater control.
+@code{as.is} suppresses conversion of character vectors to factors
+(only).  Using @code{colClasses} allows the desired class to be set for
+each column in the input.
+
+Note that @code{colClasses} and @code{as.is} are specified @emph{per} 
+column, not @emph{per} variable, and so include the column of row names
+(if any).
+
 @end enumerate
 
 @findex read.csv
@@ -483,6 +502,13 @@ Error in read.table("files.dat", header = TRUE) :
 @noindent
 This may give enough information to find the problem, but the auxiliary
 function @code{count.fields} can be useful to investigate further.
+
+Efficiency can be important when reading large data grids.  It will help
+to specify @code{colClasses} as one of the atomic vector types (logical,
+integer, numeric, complex or character) for each column, and to give
+@code{nrows}, the number of rows to be read (and a mild over-estimate is
+better than not specifying this at all).
+
 
 @node Fixed-width-format files, Using scan directly, Variations on read.table, Spreadsheet-like data
 @section Fixed-width-format files
@@ -1334,96 +1360,94 @@ lengthy, but there is one in the @file{Example} directory of the package.
 @cindex Binary files
 
 @menu
-* Package Rstreams::            
 * Binary data formats::         
 @end menu
 
 Binary connections (@ref{Connections}) are now the preferred way to
-handle binary files, and package @pkg{Rstreams} will be withdrawn in
-late 2001.
+handle binary files.
 
 
-@node Package Rstreams, Binary data formats, Binary files, Binary files
-@section Package Rstreams
+@c  @node Package Rstreams, Binary data formats, Binary files, Binary files
+@c  @section Package Rstreams
 
-Package @pkg{Rstreams} on @acronym{CRAN} provides a low-level interface
-to read from and write to binary files.  It has been used to read in
-data from MRI experiments and Windows sound files, for example.
+@c  Package @pkg{Rstreams} on @acronym{CRAN} provides a low-level interface
+@c  to read from and write to binary files.  It has been used to read in
+@c  data from MRI experiments and Windows sound files, for example.
 
-@findex openstream
-@findex closestream
-@pkg{Rstreams}' view of the file is as a stream of bytes.  A file can be
-opened by the function @code{openstream} for either reading or writing.
-The return value is a number (in fact the file descriptor) that is used
-to reference the open file until it is closed by @code{closestream}.
+@c  @findex openstream
+@c  @findex closestream
+@c  @pkg{Rstreams}' view of the file is as a stream of bytes.  A file can be
+@c  opened by the function @code{openstream} for either reading or writing.
+@c  The return value is a number (in fact the file descriptor) that is used
+@c  to reference the open file until it is closed by @code{closestream}.
 
-@findex readint
-@findex readfloat
-@findex readcomplex
-@findex readchar
-Once a stream is open for reading, bytes can be transferred from it to
-an @R{} object by one of the functions
+@c  @findex readint
+@c  @findex readfloat
+@c  @findex readcomplex
+@c  @findex readchar
+@c  Once a stream is open for reading, bytes can be transferred from it to
+@c  an @R{} object by one of the functions
 
-@example
-readint(stream, n, size = 4, signed = TRUE, swapbytes = FALSE)
-readfloat(stream, n, size = 8, swapbytes = FALSE)
-readcomplex(stream, n, size = 8, swapbytes = FALSE)
-readchar(stream, n = 1, len = NA, bufsize = 256)
-@end example
+@c  @example
+@c  readint(stream, n, size = 4, signed = TRUE, swapbytes = FALSE)
+@c  readfloat(stream, n, size = 8, swapbytes = FALSE)
+@c  readcomplex(stream, n, size = 8, swapbytes = FALSE)
+@c  readchar(stream, n = 1, len = NA, bufsize = 256)
+@c  @end example
 
-@noindent
-These return an @R{} object of an appropriate mode and storage mode.
-(Integers too large to be represented in storage mode @code{"integer"}
-will be read into a vector of storage mode @code{"double"}.)  Here
-@code{n} is the number of items to be read, but fewer will be read if
-there is insufficient data on the file.
+@c  @noindent
+@c  These return an @R{} object of an appropriate mode and storage mode.
+@c  (Integers too large to be represented in storage mode @code{"integer"}
+@c  will be read into a vector of storage mode @code{"double"}.)  Here
+@c  @code{n} is the number of items to be read, but fewer will be read if
+@c  there is insufficient data on the file.
 
-The size of the data components on file need not be the same as that in
-the machine running @R{}, and data written on a little-endian machine
-can be read on a big-endian machine or @emph{vice versa} by setting
-@code{swapbytes = TRUE}.
+@c  The size of the data components on file need not be the same as that in
+@c  the machine running @R{}, and data written on a little-endian machine
+@c  can be read on a big-endian machine or @emph{vice versa} by setting
+@c  @code{swapbytes = TRUE}.
 
-Character data can be read by @code{readchar} either as fixed-length
-blocks of bytes (by specifying @code{len}) or as
-@acronym{ASCII}-zero-delimited strings.  It is also possible to read
-lines of text separated by one of the standard end-of-line marks
-(LF, CRLF or CR) by
-@findex readlines
-@example
-readlines(stream, n = 1, bufsize = 256, eol)
-@end example
-@noindent
-where by default the @code{eol} mark is detected automatically.
-
-
-@findex writeint
-@findex writefloat
-@findex writecomplex
-@findex writechar
-A file open for writing can be written to by any of
-
-@example
-writeint(stream, data, size = 4, swapbytes = FALSE)
-writefloat(stream, data, size = 8, swapbytes = FALSE)
-writecomplex(stream, data, size = 8, swapbytes = FALSE)
-writechar(stream, data, asciiz = FALSE)
-@end example
-
-@noindent
-where @code{data} is an @R{} vector of an appropriate mode.  There is no
-separator between character strings on the file unless @code{asciiz =
-TRUE} is specified.
-
-@findex copystream
-Function @code{copystream} can copy a specified number of bytes from one
-open stream to another.
-
-@findex truncate
-Function @code{truncate} truncates a stream at its current position, so
-all data after that point is lost.
+@c  Character data can be read by @code{readchar} either as fixed-length
+@c  blocks of bytes (by specifying @code{len}) or as
+@c  @acronym{ASCII}-zero-delimited strings.  It is also possible to read
+@c  lines of text separated by one of the standard end-of-line marks
+@c  (LF, CRLF or CR) by
+@c  @findex readlines
+@c  @example
+@c  readlines(stream, n = 1, bufsize = 256, eol)
+@c  @end example
+@c  @noindent
+@c  where by default the @code{eol} mark is detected automatically.
 
 
-@node Binary data formats,  , Package Rstreams, Binary files
+@c  @findex writeint
+@c  @findex writefloat
+@c  @findex writecomplex
+@c  @findex writechar
+@c  A file open for writing can be written to by any of
+
+@c  @example
+@c  writeint(stream, data, size = 4, swapbytes = FALSE)
+@c  writefloat(stream, data, size = 8, swapbytes = FALSE)
+@c  writecomplex(stream, data, size = 8, swapbytes = FALSE)
+@c  writechar(stream, data, asciiz = FALSE)
+@c  @end example
+
+@c  @noindent
+@c  where @code{data} is an @R{} vector of an appropriate mode.  There is no
+@c  separator between character strings on the file unless @code{asciiz =
+@c  TRUE} is specified.
+
+@c  @findex copystream
+@c  Function @code{copystream} can copy a specified number of bytes from one
+@c  open stream to another.
+
+@c  @findex truncate
+@c  Function @code{truncate} truncates a stream at its current position, so
+@c  all data after that point is lost.
+
+
+@node Binary data formats,  , Binary files, Binary files
 @section Binary data formats
 @c @findex hdf5
 @c @cindex Hierarchical Data Format
@@ -1459,8 +1483,7 @@ netCDF, not write it (yet).
 @cindex Connections
 @emph{Connections} are used in @R{} in the sense of Chambers (1998), a
 set of functions to replace the use of file names by a flexible
-interface to file-like objects.  Connections were introduced to @R{} in
-version 1.2.0.
+interface to file-like objects.
 
 
 @menu
@@ -1728,11 +1751,11 @@ connections, and is not implemented on all platforms.
 
 @findex readBin
 @findex writeBin
-@R{} version 1.2.1 added functions @code{readBin} and @code{writeBin} to
-read and write from binary connections.  A connection is opened in
-binary mode by appending @code{"b"} to the mode specification, that is
-using mode @code{"rb"} for reading, and mode @code{"wb"} or @code{"ab"}
-(where appropriate) for writing.  The functions have arguments
+Functions @code{readBin} and @code{writeBin} read to and write from
+binary connections.  A connection is opened in binary mode by appending
+@code{"b"} to the mode specification, that is using mode @code{"rb"} for
+reading, and mode @code{"wb"} or @code{"ab"} (where appropriate) for
+writing.  The functions have arguments
 
 @smallexample
 readBin(con, what, n = 1, size = NA, endian = .Platform$endian) 
@@ -1753,9 +1776,11 @@ file as a stream of bytes exactly as it is represented in memory.
 as a vector of mode given by @code{what}.  This can be either an object
 of the appropriate mode (e.g. @code{what=integer()}) or a character
 string describing the mode (one of the five given in the previous
-paragraph or @code{"double"} or @code{"int"}).  @code{size} specifies
-the maximum number of vector elements to read from the connection: if
-fewer are available a shorter vector will be returned.
+paragraph or @code{"double"} or @code{"int"}).  Argument @code{n}
+specifies the maximum number of vector elements to read from the
+connection: if fewer are available a shorter vector will be returned.
+Argument @code{signed} allows 1-byte and 2-byte integers to be
+read as signed (the default) or unsigned integers.
 
 The remaining two arguments are used to write or read data for
 interchange with another program or another platform.  By default binary
@@ -1778,7 +1803,7 @@ attempted for vectors containing @code{NA}'s.
 @findex writeChar
 Character strings are read and written in C format, that is as a string
 of bytes terminated by a zero byte.  Functions @code{readChar} and
-@code{writeChar} (added in 1.3.0) provide greater flexibility.
+@code{writeChar} provide greater flexibility.
 
 @node Network interfaces, References, Connections, Top
 @chapter Network interfaces
