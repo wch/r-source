@@ -610,11 +610,10 @@ setting the environment variable @env{R_LIBS} or using the @R{} function
 @cindex Packages, installing
 
 Packages may be distributed in source form or compiled binary form.
-Installing source packages requires that compilers and tools
-(including Perl 5.004 or later) be installed.  Binary packages
-are platform specific and generally need
-no special tools to install, but see the documentation for
-your platform for details.
+Installing source packages requires that compilers and tools (including
+Perl 5.004 or later) be installed.  Binary packages are platform
+specific and generally need no special tools to install, but see the
+documentation for your platform for details.
 
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
@@ -633,7 +632,8 @@ library @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked
 for in the environment: @file{.Renviron} is not read by @command{R CMD}.)
 
 The same command works in Windows if you have the source-code package
-files installed.
+files installed.  There are a number of options available: use @code{R
+CMD INSTALL --help} to see the current list.
 
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within

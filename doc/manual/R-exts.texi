@@ -314,6 +314,13 @@ separated list of file paths relative to the @file{R} subdirectory.
 Paths containing white space or single or double quotes need to be
 quoted.  Applicable OS-specific collate specifications take precedence.
 
+The optional @samp{LazyLoad} and @samp{LazyData} fields control whether
+the @R{} objects and the datasets (respectively) use lazy-loading: set
+the field's value to @samp{yes} for lazy-loading and @samp{no} (or omit
+it) for no lazy-loading.  Note that these values override the
+command-line options of @code{R CMD INSTALL}, @samp{--[no-]lazy} and
+@samp{--[no-]lazy-data}.
+
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
 

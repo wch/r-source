@@ -39,7 +39,7 @@ my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "with-package-versions",
 		    "use-zip", "use-zip-data", "use-zip-help", 
 		    "auto-zip", "build", "fake", 
-		    "lazy", "no-lazy", "lazy-data");
+		    "lazy", "no-lazy", "lazy-data", "no-lazy-data");
 		    
 ##   	topLevelFiles will be files that sit in the top level of a
 ##      zip/tarball along with any included directories.
@@ -172,11 +172,27 @@ foreach $pkg (@ARGV){
     my $save = "CHECK";
     $save = "false" if $opt_no_save;
     $save = "true" if $opt_save;
+
     my $lazyload = 0;
     $lazyload = 1 if $opt_lazy;
     $lazyload = 0 if $opt_no_lazy;
+    my $tmp = $description->{"LazyLoad"});
+    if(!undef $tmp) {
+	$tmp = lc $tmp;
+	if($tmp eq "yes") {$lazyload = 1;} else {$lazyload = 0;} 
+    }
+    print "*** lazyload is $lazyload ***\n" if($opt_debug);
+
     my $lazydata = 0;
     $lazydata = 1 if $opt_lazy_data;
+    $lazydata = 0 if $opt_no_lazy_data;
+    my $tmp = $description->{"LazyData"});
+    if(!undef $tmp) {
+	$tmp = lc $tmp;
+	if($tmp eq "yes") {$lazydata = 1;} else {$lazydata = 0;}
+    }
+    print "*** lazydata is $lazydata ***\n" if($opt_debug);
+
     my $opt = "";
     my $dpkg = $library. "/" . $pkgname;
     if($opt_with_package_versions) {
@@ -357,9 +373,12 @@ Options:
   -s, --save            save the package source as an image file, and arrange for
                         this file to be loaded when the library is attached.
   --no-save             do not save the package source as an image file.
+
   --lazy                use lazy loading
   --no-lazy             do not use lazy loading (current default)
   --lazy-data           use lazy loading for data
+  --no-lazy-data        do not use lazy loading for data (current default)
+
   --fake		do minimal install for testing purposes
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB

@@ -41,6 +41,11 @@
   image.  Options to be passed to R when creating the save image can be
   specified via \option{--save=ARGS}.
 
+  Options \option{--lazy}, \option{--no-lazy}, \option{--lazy-data} and
+  \option{--no-lazy-data} control where the \R objects and the datasets
+  are made available for lazy loading.  (These options are overridden by
+  any values set in the DESCRIPTION file.)
+
   Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)
   or \code{chm} (the default, text, HTML and CHTML).

@@ -39,6 +39,7 @@ Options:
       --lazy            use lazy loading
       --no-lazy         do not use lazy loading (current default)
       --lazy-data       use lazy loading for data
+      --no-lazy-data    do not use lazy loading for data (current default)
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -183,6 +184,8 @@ while test -n "${1}"; do
       lazy=false ;;
     --lazy-data)
       lazy_data=true ;;
+    --no-lazy-data)
+      lazy_data=false ;;
     --no-save)
       save=false ;;
     -d|--debug)
@@ -472,8 +475,17 @@ do_install_source () {
     rm -f "${R_PACKAGE_DIR}/data/"*
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/data/"*
-    if ${lazy_data}; then
-      echo "   moving datasets to DB"
+    thislazy=${lazy_data}
+    tmp=`get_dcf_field LazyData DESCRIPTION`
+    if test "x$tmp" != "x" ; then
+      if test "x$tmp" = "xyes"; then
+	thislazy=true
+      else
+	thislazy=false
+      fi
+    fi
+    if ${thislazy}; then
+      echo "   moving datasets to lazyload DB"
       echo "tools:::data2LazyLoadDB(\"${pkg_name}\")" | \
         R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla > /dev/null
     else
@@ -568,7 +580,17 @@ do_install_source () {
     fi
   fi
 
-  if ${lazy}; then
+  thislazy=${lazy}
+  tmp=`get_dcf_field LazyLoad DESCRIPTION`
+  if test "x$tmp" != "x" ; then
+    if test "x$tmp" = "xyes"; then
+      thislazy=true
+    else
+      thislazy=false
+    fi
+  fi
+  if ${thislazy}; then
+     echo "preparing package ${pkg_name} for lazy loading"
      echo "tools:::makeLazyLoading(\"${pkg_name}\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla --slave
      rm -f ${R_PACKAGE_DIR}/R/all.rda

@@ -57,6 +57,11 @@
   image.  Options to be passed to R when creating the save image can be
   specified via \option{--save=ARGS}.
 
+  Options \option{--lazy}, \option{--no-lazy}, \option{--lazy-data} and
+  \option{--no-lazy-data} control where the \R objects and the datasets
+  are made available for lazy loading.  (These options are overridden by
+  any values set in the DESCRIPTION file.)
+
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.
 
