@@ -39,7 +39,6 @@ R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
 R_NativePrimitiveArgType prho_t[5] = {INTSXP, INTSXP, REALSXP, INTSXP, LGLSXP};
 R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
-/* Not used yet until we sort out the as.single(). */
 R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
 				       SINGLESXP, REALSXP, REALSXP, INTSXP};
 
