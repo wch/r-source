@@ -16,8 +16,11 @@ NEW FEATURES
 
     o	diag(x) now keeps names when appropriate and barfs when x is an array.
 
-    o   functions source.url, url.show, read.table.url, scan.url to read
+    o	functions source.url, url.show, read.table.url, scan.url to read
 	from an http server instead of a file.
+
+    o	grid() gets useful defaults: grid lines drawn at tick marks.
+
 
 BUG FIXES
 
@@ -26,9 +29,9 @@ BUG FIXES
 
     o	arguments after --no-readline in the Unix version were ignored.
 
-    o   couldn't set attributes in hashed environments.
+    o	couldn't set attributes in hashed environments.
 
-    o   [<-.data.frame mishandled dfr[1] <- 1 (forgotten drop=FALSE)
+    o	[<-.data.frame mishandled dfr[1] <- 1 (forgotten drop=FALSE)
 
 
 		CHANGES IN R VERSION 0.65.0
@@ -192,7 +195,7 @@ BUG FIXES
     o	log(0) gives -Inf on all architectures.
 
     o	When persp() was the first graphics command given to R it gave
-	the error "plot.new() has not been called yet".  This no
+	the error "plot.new() has not been called yet".	 This no
 	longer happens.
 
     o	pgamma() gave 0 or 1 for extreme arguments too soon.
@@ -225,9 +228,9 @@ BUG FIXES
     o	a clipping problem for plots when there non-zero outer margins
 	has been fixed.	 This problem used to affect coplot() and pairs().
 
-    o   get("zzz", mode="xxx") missed promise objects.
+    o	get("zzz", mode="xxx") missed promise objects.
 
-    o   match.fun failed when a data frame was attached containing a
+    o	match.fun failed when a data frame was attached containing a
 	"length" variable (e.g.)
 
 
