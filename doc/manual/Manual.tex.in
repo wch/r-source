@@ -32,7 +32,10 @@
 \chapter{Mathematical Annotation in \R\ Graphics}
 \input{plotmath}
 
-\chapter{\R (Internal) Programming Miscellania}
+\chapter{Programming}
+\input{programming.tex}
+
+\chapter{\R\ (Internal)Programming Miscellania}
 \input{primitive-funs}
 
 \cleardoublepage

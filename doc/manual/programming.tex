@@ -1,0 +1,105 @@
+\section{Dynamically loading a C++ library from R}
+
+\noindent
+\emph{Adrian Trapletti}
+
+\bigskip
+Suppose we have the following hypothetical C++ library, consisting of the two files
+\verb+X.hh+ and \verb+X.cc+, which we want to use in R:
+\begin{verbatim}
+-------------------------------
+X.hh
+-------------------------------
+class X
+{
+public:
+  X ();
+  ~X ();
+};
+
+class Y
+{
+public:
+  Y ();
+  ~Y ();
+};
+-------------------------------
+X.cc:
+-------------------------------
+#include <iostream.h>
+#include "X.hh"
+
+static Y y;
+
+X::X()
+{
+  cout << "constructor X" << endl;
+}
+
+X::~X()
+{
+  cout << "destructor X" << endl;
+}
+
+Y::Y()
+{
+  cout << "constructor Y" << endl;
+}
+
+Y::~Y()
+{
+  cout << "destructor Y" << endl;
+}
+\end{verbatim}
+implementing the 2 classes \texttt{X} and \texttt{Y}. 
+The only thing we have to do, is writing a wrapper function 
+and ensuring that the function is bracketed by 
+\begin{verbatim}
+extern "C" {
+
+}
+\end{verbatim}
+For example, 
+\begin{verbatim}
+-------------------------------
+X_main.cc:
+-------------------------------
+#include "X.hh"
+
+extern "C" {
+
+void X_main ()
+{
+  X x;
+}
+
+}
+\end{verbatim}
+Compiling and linking should be done with the C++ compiler-linker
+\begin{verbatim}
+g++ -c X.cc
+g++ -c X_main.cc
+g++ -shared -o X.so X_main.o X.o
+\end{verbatim}
+Otherwise (i.e., linking, e.g., with GNU ld) \verb+__main()+ and hence, 
+the constructor of the static variable \verb+Y+ are not
+called.
+Now starting R yields
+\begin{verbatim}
+R : Copyright 1999, The R Development Core Team
+Version 0.63.2  (January 12, 1999)
+...
+Type    "q()" to quit R.
+
+>dyn.load("X.so")
+constructor Y
+>.C("X_main")
+constructor X
+destructor X
+> q()
+Save workspace image? [y/n/c]: y
+destructor Y
+\end{verbatim}
+
+
+
