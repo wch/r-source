@@ -514,3 +514,9 @@ rbind(test, test1)
 rbind(test1, test)
 ## 1.6.1 treated matrix as a vector.
 
+## escapes in non-quoted printing
+x <- "\\abc\\"
+names(x) <- 1
+x
+print(x, quote=FALSE)
+## 1.6.2 had label misaligned

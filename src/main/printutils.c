@@ -244,6 +244,7 @@ int Rstrlen(char *s, int quote)
 #ifdef ESCquote
 	    case '\'':
 #endif
+		 len += 2; break;
 #ifdef ESC_BARE_QUOTE
 	    case '\"': len += 2; break;
 #else

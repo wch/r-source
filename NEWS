@@ -259,6 +259,12 @@ BUG FIXES
 	vectors.  Also added tests for numeric inputs, as per the help
 	page.  (PR#2453)
 
+    o	Printing unquoted character vectors containing escape
+	characters was computing the wrong length and hence
+	misaligning names.  This was due to a bug in Rstrlen which
+	might had other effects.
+
+
 
 
 	**************************************************
