@@ -15,25 +15,26 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 \arguments{
   \item{x}{the object to be written, typically a data frame.  If not, it
     is attempted to coerce \code{x} to a data frame.}
-  \item{file}{the name of the file which the data are to be written to.}
-  \item{append}{logical. If true, the output is appended to targshe file. If
-    false, any existing file of the name is destroyed.}
+  \item{file}{either a character string naming a file or a connection.
+    \code{""} indicates output to the console.}
+  \item{append}{logical.  If \code{TRUE}, the output is appended to the
+    file.  If \code{FALSE}, any existing file of the name is destroyed.}
   \item{quote}{a logical or a numeric vector.  If \code{TRUE}, any
-    character or factor columns will be surrounded by double quotes.  If a
-    numeric vector, its elements are taken as the indices of the
+    character or factor columns will be surrounded by double quotes.  If
+    a numeric vector, its elements are taken as the indices of the
     variable (columns) to quote.  In both cases, row and columns names
     are quoted if they are written, but not if \code{quote is FALSE}.} 
-  \item{sep}{the field separator string.  Values within each row of \code{x}
-    are separated by this string.}
+  \item{sep}{the field separator string.  Values within each row of
+    \code{x} are separated by this string.}
   \item{eol}{the character(s) to print at the end of each line (row).}
   \item{na}{the string to use for missing values in the data.}
   \item{dec}{the string to use for decimal points.}
-  \item{row.names}{either a logical value indicating whether the row names of
-    \code{x} are to be written along with \code{x}, or a character
-    vector of row names to be written.}
-  \item{col.names}{either a logical value indicating whether the column names
-    of \code{x} are to be written along with \code{x}, or a character
-    vector of column names to be written.}
+  \item{row.names}{either a logical value indicating whether the row
+    names of \code{x} are to be written along with \code{x}, or a
+    character vector of row names to be written.}
+  \item{col.names}{either a logical value indicating whether the column
+    names of \code{x} are to be written along with \code{x}, or a
+    character vector of column names to be written.}
   \item{qmethod}{a character string specifying how to deal with embedded
     double quote characters when quoting strings.  Must be one of
     \code{"escape"} (default), in which case the quote character is
@@ -41,9 +42,9 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     it is doubled.  You can specify just the initial letter.}
 }
 \details{
-  Normally there is no column name for a column of row names
-  If \code{col.names=NA} a blank column name is added. This can be
-  used to write CSV files for input to spreadsheets.
+  Normally there is no column name for a column of row names.  If
+  \code{col.names=NA} a blank column name is added.  This can be used to
+  write CSV files for input to spreadsheets.
 }
 
 \seealso{
