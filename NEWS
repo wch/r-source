@@ -211,6 +211,9 @@ NEW FEATURES
     o	princomp() now warns if both `x' and `covmat' are supplied,
 	and returns scores only if the centring used is known.
 
+    o	New functions head() and tail() in package `utils'.
+	(Based on a contribution by Patrick Burns.)
+
 
 UTILITIES
 
