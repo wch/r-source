@@ -18,18 +18,34 @@ DISTFILES = $(shell cd $(srcdir); \
 ## also have an entry in `./ROUTINES' in order to be ``pre-dyn.loaded'';
 ## see `../unix/dynload.c'.
 
-OBJS = \
-	S_compat.o \
-	approx.o \
-	bakslv.o \
-	binning.o \
+SRCS_C = \
+	S_compat.c \
+	approx.c \
+	bakslv.c \
+	binning.c \
+	chull.c \
+	cpoly.c \
+	cumsum.c \
+	distance.c \
+	fft.c \
+	fortran.c \
+	loglin.c \
+	lowess.c \
+	machar.c \
+	massdist.c \
+	pretty.c \
+	pythag.c \
+	rowsum.c \
+	splines.c \
+	stem.c \
+	strsignif.c \
+	tabulate.c \
+	zeroin.c
+DEPS = $(SRCS_C:.c=.d)
+OBJS = $(SRCS_C:.c=.o) \
 	$(BLAS) \
 	ch2inv.o \
 	chol.o \
-	chull.o \
-	cpoly.o \
-	cumsum.o \
-	distance.o \
 	dpbfa.o \
 	dpbsl.o \
 	dpoco.o \
@@ -45,40 +61,32 @@ OBJS = \
 	dtrco.o \
 	dtrsl.o \
 	eigen.o \
-	fortran.o \
-	fft.o \
 	fmin.o \
 	lminfl.o \
-	loglin.o \
-	lowess.o \
-	machar.o \
-	massdist.o \
-	pretty.o \
-	pythag.o \
-	rowsum.o \
-	splines.o \
-	stem.o \
-	strsignif.o \
-	tabulate.o \
-	uncmin.o \
-	zeroin.o
+	uncmin.o
 
 LIB = libappl.a
 
-all: R
+all: Makefile R
 
-R: $(LIB)
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile Makedeps $(LIB)
+
+Makedeps: $(DEPS)
+	@cat $(DEPS) > $@
 
 $(LIB):	$(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
 
-$(OBJS): $(top_srcdir)/src/include/Applic.h
-approx.o binning.o cpoly.o distance.o splines.o tabulate.o: $(top_srcdir)/src/include/Arith.h
-
 mostlyclean: clean
 clean:
-	@-rm -f *.o *.a
+	@echo "Cleaning in $(subdir)"
+	@-rm -f Makedeps *.d *.o *.a
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
@@ -89,3 +97,5 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
+-include ./Makedeps

@@ -13,16 +13,18 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfhy])
 
-OBJS = arithmetic.o array.o attrib.o bind.o builtin.o character.o       \
-	coerce.o colors.o complex.o context.o cov.o cum.o debug.o       \
-	deparse.o deriv.o devices.o dotcode.o dstruct.o duplicate.o     \
-	envir.o errors.o eval.o format.o fourier.o gram.o gram-ex.o graphics.o    \
-	iosupport.o list.o logic.o main.o match.o memory.o model.o      \
-	names.o objects.o optimize.o options.o par.o paste.o platform.o \
-	plot.o plot3d.o plotmath.o print.o printarray.o printvector.o   \
-	printutils.o random.o relop.o saveload.o scan.o seq.o sort.o    \
-	source.o split.o subassign.o subscript.o subset.o summary.o     \
-	unique.o util.o version.o
+SRCS = arithmetic.c array.c attrib.c bind.c builtin.c character.c       \
+	coerce.c colors.c complex.c context.c cov.c cum.c debug.c       \
+	deparse.c deriv.c devices.c dotcode.c dstruct.c duplicate.c     \
+	envir.c errors.c eval.c format.c fourier.c gram.c gram-ex.c     \
+	graphics.c iosupport.c list.c logic.c main.c match.c memory.c   \
+	model.c names.c objects.c optimize.c options.c par.c paste.c    \
+	platform.c plot.c plot3d.c plotmath.c print.c printarray.c      \
+	printvector.c printutils.c random.c relop.c saveload.c scan.c   \
+	seq.c sort.c source.c split.c subassign.c subscript.c subset.c  \
+	summary.c unique.c util.c version.c
+DEPS = $(SRCS:.c=.d)
+OBJS = $(SRCS:.c=.o)
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
 RGNOMELIBS = ../gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
@@ -37,7 +39,16 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile $(top_builddir)/bin/R.binary @RGNOMEBIN@
+R: Makefile Makedeps $(top_builddir)/bin/R.binary @RGNOMEBIN@
+
+Makedeps: ../include/Platform.h ../include/FFDecl.h $(DEPS)
+	@cat $(DEPS) > $@
+
+../include/Platform.h:
+	(cd ../include; $(MAKE) $(@F))
+
+../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
+	(cd ../include; $(top_srcdir)/aux/GETSYMBOLS)
 
 $(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
@@ -54,19 +65,14 @@ $(top_builddir)/bin/R.gnome: $(OBJS) $(RGNOMELIBS)
 ../nmath/libmath.a:
 	(cd ../nmath; $(MAKE) $(@F))
 
-$(OBJS): $(top_srcdir)/src/include/Defn.h
-
-#$(srcdir)/gram.c: $(srcdir)/gram.y
-#	$(YACC) $<
-#	mv y.tab.c $@
-
 gram.c: $(srcdir)/gram.y
 	$(YACC) $(srcdir)/gram.y
 	mv y.tab.c $@
 
 mostlyclean: clean
 clean:
-	@-rm -f R.binary R-Image *core *.o gram.c
+	@echo "Cleaning in $(subdir)"
+	@-rm -f R.binary R-Image *core Makedeps *.d *.o gram.c
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
@@ -76,30 +82,6 @@ tags: *.h *.c
 	ctags *.h *.c
 TAGS: *.h *.c
 	etags *.h *.c
-
-# Dependencies
-
-colors.o:	$(top_srcdir)/src/include/Graphics.h
-graphics.o:	$(top_srcdir)/src/include/Graphics.h
-par.o:		$(top_srcdir)/src/include/Graphics.h
-plot.o:		$(top_srcdir)/src/include/Graphics.h
-
-arithmetic.o:	$(top_srcdir)/src/include/Mathlib.h
-format.o:	$(top_srcdir)/src/include/Mathlib.h
-random.o:	$(top_srcdir)/src/include/Mathlib.h \
-			$(top_srcdir)/src/include/Random.h
-
-deparse.o:	names.h
-names.o:	names.h
-
-print.o:	$(top_srcdir)/src/include/Print.h
-printarray.o:	$(top_srcdir)/src/include/Print.h
-printutils.o:	$(top_srcdir)/src/include/Print.h
-printvector.o:	$(top_srcdir)/src/include/Print.h
-
-version.o:	../include/Platform.h
-../include/Platform.h:
-	(cd ../include; $(MAKE) Platform.h)
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
@@ -111,3 +93,5 @@ distdir: $(DISTFILES)
 # Unused targets
 
 install install-strip uninstall info dvi check::
+
+-include ./Makedeps

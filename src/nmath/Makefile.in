@@ -13,59 +13,65 @@ subdir = src/nmath
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfh])
 
-OBJS =	\
-	mlutils.o \
-	d1mach.o i1mach.o \
-	fmax2.o fmin2.o fmod.o fprec.o fround.o ftrunc.o \
-	sign.o fsign.o fsquare.o fcube.o \
-	imax2.o imin2.o \
-	chebyshev.o logrelerr.o lgammacor.o gammalims.o \
-	gamma.o lgamma.o gamma_cody.o beta.o lbeta.o polygamma.o \
-	bessel_i.o bessel_j.o bessel_k.o bessel_y.o \
-	choose.o \
-	snorm.o sunif.o sexp.o \
-	dgamma.o pgamma.o qgamma.o rgamma.o \
-	dbeta.o pbeta.o qbeta.o rbeta.o \
-	dunif.o punif.o qunif.o runif.o \
-	dnorm.o pnorm.o qnorm.o rnorm.o \
-	dlnorm.o plnorm.o qlnorm.o rlnorm.o \
-	df.o pf.o qf.o rf.o \
-	dt.o pt.o qt.o rt.o \
-	dchisq.o pchisq.o qchisq.o rchisq.o \
-	dbinom.o pbinom.o qbinom.o rbinom.o \
-	dcauchy.o pcauchy.o qcauchy.o rcauchy.o \
-	dexp.o pexp.o qexp.o rexp.o \
-	dgeom.o pgeom.o qgeom.o rgeom.o \
-	dhyper.o phyper.o qhyper.o rhyper.o \
-	dnbinom.o pnbinom.o qnbinom.o rnbinom.o \
-	dpois.o ppois.o qpois.o rpois.o \
-	dweibull.o pweibull.o qweibull.o rweibull.o \
-	dlogis.o plogis.o qlogis.o rlogis.o \
-	dnchisq.o pnchisq.o qnchisq.o \
-	dnbeta.o pnbeta.o \
-	pnf.o pnt.o \
-	ptukey.o qtukey.o \
-	wilcox.o \
-	signrank.o
+SRCS = \
+	mlutils.c \
+	d1mach.c i1mach.c \
+	fmax2.c fmin2.c fmod.c fprec.c fround.c ftrunc.c \
+	sign.c fsign.c fsquare.c fcube.c \
+	imax2.c imin2.c \
+	chebyshev.c logrelerr.c lgammacor.c gammalims.c \
+	gamma.c lgamma.c gamma_cody.c beta.c lbeta.c polygamma.c \
+	bessel_i.c bessel_j.c bessel_k.c bessel_y.c \
+	choose.c \
+	snorm.c sunif.c sexp.c \
+	dgamma.c pgamma.c qgamma.c rgamma.c \
+	dbeta.c pbeta.c qbeta.c rbeta.c \
+	dunif.c punif.c qunif.c runif.c \
+	dnorm.c pnorm.c qnorm.c rnorm.c \
+	dlnorm.c plnorm.c qlnorm.c rlnorm.c \
+	df.c pf.c qf.c rf.c \
+	dt.c pt.c qt.c rt.c \
+	dchisq.c pchisq.c qchisq.c rchisq.c \
+	dbinom.c pbinom.c qbinom.c rbinom.c \
+	dcauchy.c pcauchy.c qcauchy.c rcauchy.c \
+	dexp.c pexp.c qexp.c rexp.c \
+	dgeom.c pgeom.c qgeom.c rgeom.c \
+	dhyper.c phyper.c qhyper.c rhyper.c \
+	dnbinom.c pnbinom.c qnbinom.c rnbinom.c \
+	dpois.c ppois.c qpois.c rpois.c \
+	dweibull.c pweibull.c qweibull.c rweibull.c \
+	dlogis.c plogis.c qlogis.c rlogis.c \
+	dnchisq.c pnchisq.c qnchisq.c \
+	dnbeta.c pnbeta.c \
+	pnf.c pnt.c \
+	ptukey.c qtukey.c \
+	wilcox.c \
+	signrank.c
+DEPS = $(SRCS:.c=.d)
+OBJS = $(SRCS:.c=.o)
 
 LIB = libmath.a
 
-all: R
+all: Makefile R
 
-R: $(LIB)
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile Makedeps $(LIB)
+
+Makedeps: $(DEPS)
+	@cat $(DEPS) > $@
 
 $(LIB): $(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
 
-$(OBJS): $(top_srcdir)/src/include/Mathlib.h $(top_srcdir)/src/include/Arith.h
-sunif.o: $(top_srcdir)/src/include/Random.h
-snorm.o: $(top_srcdir)/src/include/Random.h
-
 mostlyclean: clean
 clean:
-	@echo Cleaning in src/nmath
-	@-rm -f *.o *.a
+	@echo "Cleaning in $(subdir)"
+	@-rm -f Makedeps *.d *.o *.a
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
@@ -76,3 +82,5 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
+-include ./Makedeps
