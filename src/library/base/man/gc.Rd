@@ -22,16 +22,17 @@ This takes place automagically without user intervention, and the
 primary purpose of calling \code{gc} is for the report on memory usage.
 }
 \value{
-\code{gc} returns a 2*3 matrix with rows \code{"Ncells"} (\emph{cons
-    cells}, usually 20 bytes each on 32-bit systems, 36 bytes each on
-64-bit systems) and \code{"Vcells"} (\emph{vector cells}, 8 bytes each),
-and columns \code{"free"}, \code{"total"} and \code{"(Mb)"} (rounded up
-to the next 0.1Mb).
+  \code{gc} returns a 2*4 matrix with rows \code{"Ncells"} (\emph{cons
+    cells}, usually 28 bytes each on 32-bit systems, and \code{"Vcells"}
+  (\emph{vector cells}, 8 bytes each), and columns \code{"used"},
+  \code{"total"}, each also interpreted in megabytes (rounded up to
+  the next 0.1Mb).
 
 \code{gcinfo} returns the previous value of the flag.
 }
-\seealso{\code{\link{Memory}} on \R's memory management  and
-    \code{\link{gctorture}} if you are an \R hacker.}
+\seealso{\code{\link{Memory}} on \R's memory management,
+  \code{\link{gc.time}} for the time spent in garbage collection
+  and \code{\link{gctorture}} if you are an \R hacker.}
 \examples{
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when R does it
@@ -39,7 +40,6 @@ x <- integer(0); for(i in 1:18) x <- c(x,i,x)
 gcinfo(verbose = FALSE)#-- don't show it anymore
 
 ( rgc <- gc(TRUE) )
-(100*rgc[,"free"])\%/\% rgc[,"total"] # the percentages
-rgc[2,"free"]/ (1024 / 8) # free vector heap in K bytes
+(100*rgc[,"used"])\%/\% rgc[,"total"] # percentages
 }
 \keyword{environment}

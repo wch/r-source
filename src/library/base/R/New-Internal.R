@@ -86,8 +86,9 @@ duplicated <- function(x, incomparables = FALSE) {
 }
 format.info <- function(x).Internal(format.info(x))
 gc <- function(verbose = getOption("verbose"))
-    matrix(.Internal(gc(verbose))/c(1,1,1,1,10,10),2,3,
-           dimnames = list(c("Ncells","Vcells"),c("free","total", "(Mb)")))
+    matrix(.Internal(gc(verbose))/c(1,1,10,10,1,1,10,10),2,4,
+           dimnames = list(c("Ncells","Vcells"),
+           c("used", "(Mb)", "total", "(Mb)")))
 gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))

@@ -1003,7 +1003,21 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     gc_reporting = asLogical(CAR(args));
 #ifdef USE_GENERATIONAL_GC
     num_old_gens_to_collect = NUM_OLD_GENERATIONS;
-#endif
+    R_gc();
+    gc_reporting = ogc;
+    /*- now return the [used , total ] for cells and heap */
+    PROTECT(value = allocVector(INTSXP, 8));
+    INTEGER(value)[0] = R_NSize - R_Collected;
+    INTEGER(value)[1] = R_VSize - VHEAP_FREE();
+    INTEGER(value)[4] = R_NSize;
+    INTEGER(value)[5] = R_VSize;
+    /* next four are in 0.1Mb, rounded up */
+    INTEGER(value)[2] = 10.0 * (R_NSize - R_Collected)/1048576.0 * 
+	sizeof(SEXPREC) + 0.999;
+    INTEGER(value)[3] = 10.0 * (R_VSize - VHEAP_FREE())/131072.0 + 0.999;
+    INTEGER(value)[6] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
+    INTEGER(value)[7] = 10.0 * R_VSize/131072.0 + 0.999;
+#else
     R_gc();
     gc_reporting = ogc;
     /*- now return the [free , total ] for cells and heap */
@@ -1015,6 +1029,7 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* next two are in 0.1Mb, rounded up */
     INTEGER(value)[4] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
     INTEGER(value)[5] = 10.0 * R_VSize/131072.0 + 0.999;
+#endif
     UNPROTECT(1);
     return value;
 }

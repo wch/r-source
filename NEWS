@@ -198,7 +198,7 @@ NEW FEATURES
 	levels of detail.
 
     o	The R Language Manual (R-lang.texi) is now included and built
-	in the same way as the other manuals..
+	in the same way as the other manuals.
 
     o	The postscript() driver now allows a user-specified family so,
 	for example, one can use the same fonts in diagrams as in 
@@ -214,7 +214,7 @@ NEW FEATURES
         fields per line. (Programs like Excel has a habit of creating
         such files when exporting.)
 
-    o   new functions read.delim() and read.delim2() to make it
+    o   New functions read.delim() and read.delim2() to make it
         easier to read delimited files as Windows programs tend to
         create (usually TAB separated).
 
@@ -224,9 +224,15 @@ NEW FEATURES
         nonlocal return from R's error handling could bring the Tk
         system into a strange state.  
 
-    o   new `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
+    o   New `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
 
     o   New function object.size() to give approximate memory allocation.
+
+    o   New primitive gc.time() to report on time spent in garbage
+        collection.
+
+    o   gc() now reports the space allocated, not the space free,
+	since the total space in now variable.
 
 
 BUG FIXES
