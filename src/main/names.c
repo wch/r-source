@@ -21,6 +21,10 @@
 #include "Print.h"
 #include "names.h"
 
+#ifdef Unix
+SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
+#endif
+
 #ifdef Win32
 SEXP do_winedit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sysfile(SEXP, SEXP, SEXP, SEXP);
@@ -420,6 +424,9 @@ FUNTAB R_FunTab[] =
 {"machine",	do_machine,	0,	1,	0,	PP_FUNCALL,	0},
 {"Machine",	do_Machine,	0,	1,	0,	PP_FUNCALL,	0},
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL,	0},
+#ifdef Unix
+{"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL,	0},
+#endif
 #ifdef Win32
 {"system.file",	do_sysfile,	0,	11,	2,	PP_FUNCALL,	0},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL,	0},
