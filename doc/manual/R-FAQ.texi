@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-34, @value{FAQ-YEAR}-01-23
+@set FAQ-VERSION 1.8-35, @value{FAQ-YEAR}-01-28
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2015,6 +2015,9 @@ point or block (co)kriging, sequential Gaussian or indicator
 GTK graphics device driver that may be used independently of the R-GNOME
 interface and can be used to create R devices as embedded components in
 a GUI using a Gtk drawing area widget, e.g., using RGtk.
+@item hapassoc
+Likelihood inference of trait associations with SNP haplotypes and other 
+attributes using the EM Algorithm.
 @item haplo.score
 Score tests for association of traits with haplotypes when linkage phase
 is ambiguous.
