@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1950,7 +1950,7 @@ newX11Desc * Rf_allocNewX11DeviceDesc(double ps)
 }
 
 
-Rboolean R_GetX11Image(int d, XImage **pximage, int *pwidth, int *pheight)
+Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
     SEXP dev = elt(findVar(install(".Devices"), R_NilValue), d);
 
@@ -1963,9 +1963,9 @@ Rboolean R_GetX11Image(int d, XImage **pximage, int *pwidth, int *pheight)
 	NewDevDesc *dd = ((GEDevDesc *)GetDevice(d))->dev;
 	newX11Desc *xd = dd->deviceSpecific;
 
-	*pximage = XGetImage(display, xd->window, 0, 0,
-			     xd->windowWidth, xd->windowHeight,
-			     AllPlanes, ZPixmap);
+	pximage = (void *) XGetImage(display, xd->window, 0, 0,
+				     xd->windowWidth, xd->windowHeight,
+				     AllPlanes, ZPixmap);
 	*pwidth = xd->windowWidth;
 	*pheight = xd->windowHeight;
 	return TRUE;
@@ -2053,16 +2053,134 @@ newX11Desc * Rf_allocX11DeviceDesc(double ps)
   return(xd);
 }
 
+typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
+					   double, double, double, double,
+					   X_COLORTYPE, int, int);
+
+/* Return a non-relocatable copy of a string */
+
+static SEXP gcall;
+
+static char *SaveString(SEXP sxp, int offset)
+{
+    char *s;
+    if(!isString(sxp) || length(sxp) <= offset)
+	errorcall(gcall, "invalid string argument");
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
+    return s;
+}
+
+static DevDesc* 
+Rf_addX11Device(char *display, double width, double height, double ps, 
+		double gamma, int colormodel, int maxcubesize,
+		int canvascolor, char *devname)
+{
+    NewDevDesc *dev = NULL;
+    GEDevDesc *dd;
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (NewDevDesc*)calloc(1, sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->newDevStruct = 1;
+	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
+	/* Took out the GInit because MOST of it is setting up
+	 * R base graphics parameters.  
+	 * This is supposed to happen via addDevice now.
+	 */
+	if (!newX11DeviceDriver((DevDesc*)(dev), display, width, height, 
+				ps, gamma, 
+				colormodel, maxcubesize, canvascolor)) {
+	    free(dev);
+	    errorcall(gcall, "unable to start device %s", devname);
+       	}
+	gsetVar(install(".Device"), mkString(devname), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    
+    return((DevDesc*) dd);
+}
+
+SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    char *display, *vmax, *cname, *devname;
+    double height, width, ps, gamma;
+    int colormodel, maxcubesize, canvascolor;
+    SEXP sc;
+
+    gcall = call;
+    vmax = vmaxget();
+
+    /* Decode the arguments */
+    display = SaveString(CAR(args), 0); args = CDR(args);
+    width = asReal(CAR(args));	args = CDR(args);
+    height = asReal(CAR(args)); args = CDR(args);
+    if (width <= 0 || height <= 0)
+	errorcall(call, "invalid width or height");
+    ps = asReal(CAR(args)); args = CDR(args);
+    gamma = asReal(CAR(args)); args = CDR(args);
+    if (gamma < 0 || gamma > 100)
+	errorcall(call, "invalid gamma value");
+
+    if (!isValidString(CAR(args)))
+	error("invalid colortype passed to X11 driver");
+    cname = CHAR(STRING_ELT(CAR(args), 0));
+    if (strcmp(cname, "mono") == 0)
+	colormodel = 0;
+    else if (strcmp(cname, "gray") == 0 || strcmp(cname, "grey") == 0)
+	colormodel = 1;
+    else if (strcmp(cname, "pseudo.cube") == 0)
+	colormodel = 2;
+    else if (strcmp(cname, "pseudo") == 0)
+	colormodel = 3;
+    else if (strcmp(cname, "true") == 0)
+	colormodel = 4;
+    else {
+	warningcall(call, 
+		    "unknown X11 color/colour model -- using monochrome");
+	colormodel = 0;
+    }
+    args = CDR(args);
+    maxcubesize = asInteger(CAR(args));
+    if (maxcubesize < 1 || maxcubesize > 256)
+        maxcubesize = 256;
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, "invalid value of `canvas'");
+    canvascolor = RGBpar(sc, 0);
+
+    devname = "X11";
+    if (!strncmp(display, "png::", 5)) devname = "PNG";
+    else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
+    else if (!strcmp(display, "XImage")) devname = "XImage";
+
+    Rf_addX11Device(display, width, height, ps, gamma, colormodel, 
+		    maxcubesize, canvascolor, devname);
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
 extern SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
 
-void R_init_X11(DllInfo *info)
+void R_init_R_X11(DllInfo *info)
 {
-      /* Ideally, we would not cast X11DeviceDriver here.
-         However, the declaration in R_ext/RX11.h doesn't have access
-         to the definition of X_COLORTYPE, at present. Thus we need
-         to explicitly cast to avoid compiler warnings.
-       */
-    R_setX11Routines((R_X11DeviceDriverRoutine) newX11DeviceDriver,
-                      RX11_dataentry,
-                      R_GetX11Image);
+    R_X11Routines *tmp;
+    tmp = (R_X11Routines*) malloc(sizeof(R_X11Routines));
+    if(!tmp) {
+	error("Cannot allocate memory for X11Routines structure");
+	return;
+    }
+    tmp->X11 = in_do_X11;
+    tmp->de = RX11_dataentry;
+    tmp->image = R_GetX11Image;
+    R_setX11Routines(tmp);
 }

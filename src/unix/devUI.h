@@ -4,23 +4,14 @@
 # define extern
 #endif
 
-#include "../modules/X11/devX11.h" /* for X_COLORTYPE, but don't get the
-				      definition of the struct.  */
 #include "Startup.h"		/* for SA_TYPE */
 
-typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
-					   double, double, double, double,
-					   X_COLORTYPE, int, int);
+Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight);
+/* pximage is really (XImage **) */
 
-extern X11DeviceDriverRoutine ptr_X11DeviceDriver;
-
-extern Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *);
 extern Rboolean (*ptr_GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
 
 extern Rboolean (*ptr_GTKDeviceDriver)(DevDesc*, char*, double, double, double);
-
-extern SEXP (*ptr_dataentry)(SEXP call, SEXP op, SEXP args, SEXP rho);
-
 #ifdef HAVE_AQUA
 extern void (*ptr_R_StartConsole)();
 #endif
@@ -41,23 +32,10 @@ extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern int (*R_timeout_handler)();
 extern long R_timeout_val;
 
-extern DevDesc* 
-Rf_addX11Device(char *display, double height, double width, double ps, 
-		double gamma, int colormodel, int maxcubesize, 
-		int canvascolor, char *devname, 
-		X11DeviceDriverRoutine deviceDriverRoutine);
 
 #ifdef __SYSTEM__
 # undef extern
 #endif
 
-extern Rboolean stub_X11DeviceDriver(DevDesc*, char*, double, double,
-				     double, double, X_COLORTYPE, int,
-				     int);
-extern Rboolean stub_R_GetX11Image(int, void *, int *, int *);
-
 Rboolean stub_GnomeDeviceDriver(DevDesc*, char*, double, double, double);
 Rboolean stub_GTKDeviceDriver(DevDesc*, char*, double, double, double);
-
-extern SEXP stub_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
-

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -84,7 +84,6 @@ int R_ChooseFile(int new, char *buf, int len)
 void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
 
 void R_setStartTime(void); /* in sys-unix.c */
-void R_load_X11_shlib(void); /* in dynload.c */
 void R_load_gnome_shlib(void); /* in dynload.c */
 
 int Rf_initialize_R(int ac, char **av);
@@ -185,19 +184,14 @@ int Rf_initialize_R(int ac, char **av)
 
     ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
     ptr_GTKDeviceDriver = stub_GTKDeviceDriver;
-    ptr_X11DeviceDriver = stub_X11DeviceDriver;
-    ptr_dataentry = stub_dataentry;
-    ptr_R_GetX11Image = stub_R_GetX11Image;
 #ifdef HAVE_X11
     if(useX11) {
 	if(!usegnome) {
-	    R_load_X11_shlib();
 	    R_GUIType="X11";
 	} else {
 #ifndef HAVE_GNOME
 	    R_Suicide("GNOME GUI is not available in this version");
 #endif
-	    R_load_X11_shlib();
 	    R_load_gnome_shlib();
 	    R_GUIType="GNOME";
 	    ptr_gnome_start(ac, av, Rp);

@@ -24,7 +24,11 @@ USER-VISIBLE CHANGES
     o   Formulae are not longer automatically simplified when terms()
 	is called, so the formulae in results may still be in the
 	original form rather than the equivalent simplified form
-	(which may have reordered the terms).
+	(which may have reordered the terms): the result are now
+	much closer to those of S.
+
+    o   The R_X11 module is no longer loaded until it is needed, so
+	do test that x11() works in a new Unix-alike R installation.
 
 
 NEW FEATURES
@@ -315,6 +319,9 @@ C-LEVEL FACILITIES
 	ROUTINES file (in src/appl/) and associated scripts to
 	generate FFTab.h and FFDecl.h are no longer used.
 
+    o	The undocumented non-API entry point R_GetX11Image is available
+	as function rather than as ptr_R_GetX11Image.
+
 
 BUG FIXES
 
@@ -358,8 +365,8 @@ BUG FIXES
 
     o	StructTS() now accepts numeric time series of integer storage mode.
 
-
     o   all(), any() now handle NAs as documented.
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2002 The R Development Core Team
+ *  Copyright (C) 1999-2003 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,113 +22,89 @@
 #endif
 
 #include <Defn.h>
-#include <Rdynpriv.h>
-
-#include "Runix.h"
-#include <sys/types.h>
-#ifdef HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
-
-#ifndef HAVE_NO_SYMBOL_UNDERSCORE
-# ifdef HAVE_ELF_H
-#  define HAVE_NO_SYMBOL_UNDERSCORE
-# endif
-#endif
-
-/* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
-   this support is broken. So we force use of shlib even when dlfcn.h
-   is available */
-#ifdef __hpux
-# ifdef HAVE_DL_H
-#  include "hpdlfcn.h"
-#  define HAVE_DYNAMIC_LOADING
-# endif
-#else
-# ifdef HAVE_DLFCN_H
-#  include <dlfcn.h>
-#  define HAVE_DYNAMIC_LOADING
-# endif
-#endif
-
-#if defined(HAVE_X11) && defined(HAVE_DYNAMIC_LOADING)
+#if defined(HAVE_X11)
 
 #include <R_ext/RX11.h>	     /* typedefs for the module routine types */
 
-/*
-  This is now only used to find R_init_X11 in the module.
- */
-static DL_FUNC Rdlsym(void *handle, char const *name)
+static R_X11Routines routines, *ptr = &routines;
+
+static int initialized = 0;
+
+R_X11Routines *
+R_setX11Routines(R_X11Routines *routines)
 {
-    char buf[MAXIDSIZE+1];
-#ifdef HAVE_NO_SYMBOL_UNDERSCORE
-    sprintf(buf, "%s", name);
-#else
-    sprintf(buf, "_%s", name);
-#endif
-    return (DL_FUNC) dlsym(handle, buf);
+    R_X11Routines *tmp;
+    tmp = ptr;
+    ptr = routines;
+    return tmp;
 }
 
-
-extern R_X11DeviceDriverRoutine ptr_X11DeviceDriver;
-extern R_X11DataEntryRoutine    ptr_dataentry;
-extern R_GetX11ImageRoutine     ptr_R_GetX11Image;
-
-/* This is called too early to use moduleCdynload */
-void R_load_X11_shlib(void)
+static void X11_Init(void)
 {
-    char X11_DLL[PATH_MAX], buf[1000], *p;
-    void *handle;
-    struct stat sb;
-    DL_FUNC f;
+    int res;
 
-    p = getenv("R_HOME");
-    if(!p) {
-	sprintf(buf, "R_HOME was not set");
-	R_Suicide(buf);
+    initialized = -1;
+    if(strcmp(R_GUIType, "X11") && strcmp(R_GUIType, "GNOME")) {
+	warning("X11 module is not available under this GUI");
+	return;
     }
-    strcpy(X11_DLL, p);
-    strcat(X11_DLL, "/modules/R_X11");
-    strcat(X11_DLL, SHLIB_EXT); /* from config.h */
-    if(stat(X11_DLL, &sb))
-	R_Suicide("Probably no X11 support: the shared library was not found");
-#ifdef RTLD_NOW
-    handle = dlopen(X11_DLL, RTLD_NOW);
-#else
-    handle = dlopen(X11_DLL, 0);
-#endif
-    if(handle == NULL) {
-	sprintf(buf, "The X11 shared library could not be loaded.\n  The error was %s\n", dlerror());
-	R_Suicide(buf);
+    res = moduleCdynload("R_X11", 1, 1);
+    if(!res) return;
+    initialized = 1;    
+    return;
+}
+
+
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    if(!initialized) X11_Init();
+    if(initialized > 0)
+	return (*ptr->X11)(call, op, args, rho);
+    else {
+	error("R_X11 module cannot be loaded");
+	return R_NilValue;
     }
-    f = Rdlsym(handle, "R_init_X11");
-    if(f)
-	f((DllInfo *) NULL);
-
-    /* Perhaps do error checking to see all the routines have been set
-       and R_Suicide if not, as in the semantics before switching to
-       self-registering modules.
-    */
 }
 
-
-#include <R_ext/RX11.h>
-
-void
-R_setX11Routines(R_X11DeviceDriverRoutine dev, R_X11DataEntryRoutine dataEntry, R_GetX11ImageRoutine image)
+SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    ptr_X11DeviceDriver = dev;
-    ptr_dataentry = dataEntry;
-    ptr_R_GetX11Image = image;
+    if(!initialized) X11_Init();
+    if(initialized > 0)
+	return (*ptr->de)(call, op, args, rho);
+    else {
+	error("R_X11 module cannot be loaded");
+	return R_NilValue;
+    }
 }
 
+Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
+{
+    if(!initialized) X11_Init();
+    if(initialized > 0)
+	return (*ptr->image)(d, pximage, pwidth, pheight);
+    else {
+	error("R_X11 module cannot be loaded");
+	return FALSE;
+    }
+}
 
 #else
 
-void R_load_X11_shlib()
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_Suicide("no support to load X11 shared library in this R version");
+    error("X11 is not available");
+    return R_NilValue;
 }
 
-#endif
+SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("X11 is not available");
+    return R_NilValue;
+}
 
+Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
+{
+    error("X11 is not available");
+    return R_NilValue;
+}
+#endif

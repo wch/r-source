@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000     the R Development Core Team
+ *  Copyright (C) 2000-3     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,25 +25,6 @@
 #include "Rdevices.h"
 #include "devUI.h"
 
-Rboolean stub_X11DeviceDriver(DevDesc *dd,
-		    char *display,
-		    double width,
-		    double height,
-		    double pointsize,
-		    double gamma,
-		    X_COLORTYPE colormodel,
-                    int maxcube, int canvascolor)
-{
-    error("the x11 device has not been loaded");
-    return FALSE;
-}
-
-Rboolean stub_R_GetX11Image(int d, void *ppximage, int *pwidth, int *pheight)
-{
-    error("the x11 device has not been loaded");
-    return FALSE;
-}
-
 Rboolean stub_GnomeDeviceDriver(DevDesc *dd, char *display, 
 			   double width, double height, double pointsize)
 {
@@ -56,11 +37,6 @@ Rboolean stub_GTKDeviceDriver(DevDesc *dd, char *display, double width,
 {
     error("the gtk device is only available with --gui=GNOME");
     return FALSE;
-}
-
-SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    return ptr_dataentry(call, op, args, rho);
 }
 
 SEXP stub_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
