@@ -428,6 +428,12 @@ int main(int ac, char **av)
 
     R_DefParams(Rp);
     R_SizeFromEnv(Rp);
+    /* Store the command line arguments before they are processed
+       by the R option handler. These are stored in Rp and then moved 
+       to the global variable CommandLineArgs in R_SetParams.
+     */
+    R_set_command_line_arguments(ac, av, Rp);
+
     R_common_command_line(&ac, av, Rp);
     while (--ac) {
 	if (**++av == '-') {

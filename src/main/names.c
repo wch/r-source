@@ -478,6 +478,7 @@ FUNTAB R_FunTab[] =
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
+{"commandArgs", do_commandArgs, 0,      11,     0,      PP_FUNCALL},
 #ifdef Win32
 {"system",	do_system,	0,	11,	3,	PP_FUNCALL},
 #else

@@ -36,6 +36,7 @@ Version <- function() { .Deprecated("R.Version"); R.Version() }
 machine <- function().Internal(machine())
 colors <- function().Internal(colors())
 colours <- .Alias(colors)
+commandArgs <- function() .Internal(commandArgs())
 
 args <- function(name).Internal(args(name))
 

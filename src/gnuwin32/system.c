@@ -629,6 +629,15 @@ int cmdlineoptions(int ac, char **av)
     setStartTime();
 #endif
 
+    /* Store the command line arguments before they are processed
+       by the different option handlers. We do this here so that
+       we get all the name=value pairs. Otherwise these will
+       have been removed by the time we get to call 
+       R_common_command_line().
+     */
+    R_set_command_line_arguments(ac, av, Rp);
+
+
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;
     for (i = 1; i < ac; i++)

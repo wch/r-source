@@ -271,6 +271,8 @@ void R_SetParams(Rstart Rp)
     LoadInitFile = Rp->LoadInitFile;
     DebugInitFile = Rp->DebugInitFile;
     SetSize(Rp->vsize, Rp-> nsize);
+    CommandLineArgs = Rp->CommandLineArgs;
+    NumCommandLineArgs = Rp->NumCommandLineArgs;
 #ifdef Win32
     R_SetWin32(Rp);
 #endif
@@ -285,6 +287,48 @@ static void R_common_badargs() {
     exit(1);
 }
 */
+
+/*
+  This copies the command line arguments to the Rstart
+  structure. The memory is obtained from calloc, etc. 
+  since these are permanent and it is not intended that
+  they be modified. This is why they are copied before
+  being processed and removed from the list.
+
+  We might store these as a SEXP. I have no strong opinion
+  about this.
+ */
+void
+R_set_command_line_arguments(int argc, char **argv, Rstart Rp)
+{
+ int i;
+
+  Rp->NumCommandLineArgs = argc;
+  Rp->CommandLineArgs = (char**) calloc(argc, sizeof(char*));
+
+  for(i=0;i < argc; i++) {
+    Rp->CommandLineArgs[i] = strdup(argv[i]);
+  }
+}
+
+
+/*
+  The .Internal which returns the command line arguments
+  that are stored in global variables.
+ */
+SEXP do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+ int i;
+ SEXP vals;
+
+  vals = allocVector(STRSXP, NumCommandLineArgs);
+  for(i = 0; i < NumCommandLineArgs; i++) {
+    STRING(vals)[i] = mkChar(CommandLineArgs[i]);
+  }
+
+ return(vals);
+}
+
 
 void R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
