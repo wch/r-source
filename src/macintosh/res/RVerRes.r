@@ -92,9 +92,9 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 		/*	The R copyright text */
 		{ 13, 221, 92, 500 }, StaticText {enabled, 
 		"R for MacOS and MacOS X\n"	/*	Version */
-		"\0xA9 2001 R Development Core Team\n"	/*	(c)  */
+		"\0xA9 2002 R Development Core Team\n"	/*	(c)  */
 		"http://www.r-project.org\n"/*	HTTP URL */
-		kVersString " , " kStatusString 
+		kVersString " - " kStatusString 
 		 },
 		 
 		/* GNU License */
@@ -113,7 +113,7 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 	
 	     /* Platfrom specific (c) */
 		{199, 8, 216, 470 }, StaticText {enabled, 
-		"Macintosh device by Wing K. Wan 1999, Stefano M. Iacus 2000-2001."	
+		"Macintosh device by Wing K. Wan 1999, Stefano M. Iacus 2000-2002."	
 		 },
 		
 		 /* Waste (c) */
