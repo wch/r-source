@@ -52,6 +52,9 @@ NEW FEATURES
 
     o	save.image() as short-cut to save the current session in .RData
 
+    o   new design of HTML help pages, including an index of all
+        functions from all installed packages
+
 
 BUG FIXES
 
