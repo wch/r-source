@@ -183,9 +183,9 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     dim = getAttrib(x, R_DimSymbol);
 
     sr = SETCAR(s, arraySubscript(0, CAR(s), dim, getAttrib,
-                                  (STRING_ELT), x));
+				  (STRING_ELT), x));
     sc = SETCADR(s, arraySubscript(1, CADR(s), dim, getAttrib,
-                                   (STRING_ELT), x));
+				   (STRING_ELT), x));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
     PROTECT(sr);
@@ -329,7 +329,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     r = s;
     for (i = 0; i < k; i++) {
 	SETCAR(r, arraySubscript(i, CAR(r), xdims, getAttrib,
-                             (STRING_ELT), x));
+				 (STRING_ELT), x));
 	bound[i] = LENGTH(CAR(r));
 	n *= bound[i];
 	r = CDR(r);
