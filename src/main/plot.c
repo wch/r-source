@@ -2430,108 +2430,160 @@ double hypot(double x, double y)
 
 #define THRESHOLD	0.25
 
+static void drawLabel(double xi, double yi, int pos, double offset, char *l,
+		      DevDesc *dd) 
+{
+    switch (pos) {
+    case 4:
+	xi = xi+offset;
+	GText(xi, yi, INCHES, l, 0.0, 
+	      dd->gp.yCharOffset, 0.0, dd);
+	break;
+    case 2:
+	xi = xi-offset;
+	GText(xi, yi, INCHES, l, 1.0,
+	      dd->gp.yCharOffset, 0.0, dd);
+	break;
+    case 3:
+	yi = yi+offset;
+	GText(xi, yi, INCHES, l, 0.5,
+	      0.0, 0.0, dd);
+	break;
+    case 1:
+	yi = yi-offset;
+	GText(xi, yi, INCHES, l, 0.5,
+	      1-(0.5-dd->gp.yCharOffset),
+	      0.0, dd);
+    }
+}
+
 SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, x, y, l, ind, pos, Offset;
+    SEXP ans, x, y, l, ind, pos, Offset, saveans;
     double xi, yi, xp, yp, d, dmin, offset;
-    int i, imin, k, n, npts, plot;
+    int i, imin, k, n, npts, plot, posi;
     DevDesc *dd = CurrentDevice();
 
-    GCheckState(dd);
-
-    checkArity(op, args);
-    x = CAR(args);
-    args = CDR(args); y = CAR(args);
-    args = CDR(args); l = CAR(args);
-    args = CDR(args); npts = asInteger(CAR(args));
-    args = CDR(args); plot = asLogical(CAR(args));
-    args = CDR(args); Offset = CAR(args);
-    if (npts <= 0 || npts == NA_INTEGER)
-	error("invalid number of points in identify");
-    if (!isReal(x) || !isReal(y) || !isString(l) || !isReal(Offset))
-	errorcall(call, "incorrect argument type");
-    if (LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
-	errorcall(call, "different argument lengths");
-    n = LENGTH(x);
-    if (n <= 0) {
-	R_Visible = 0;
-	return NULL;
-    }
-
-    offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
-    PROTECT(ind = allocVector(LGLSXP, n));
-    PROTECT(pos = allocVector(INTSXP, n));
-    for (i = 0; i < n; i++)
-	LOGICAL(ind)[i] = 0;
-
-    k = 0;
-    GMode(2, dd);
-    while (k < npts) {
-	if (!GLocator(&xp, &yp, INCHES, dd)) break;
-	dmin = DBL_MAX;
-	imin = -1;
-	for (i = 0; i < n; i++) {
-	    xi = REAL(x)[i];
-	    yi = REAL(y)[i];
-	    GConvert(&xi, &yi, USER, INCHES, dd);
-	    if (!R_FINITE(xi) || !R_FINITE(yi)) continue;
-	    d = hypot(xp-xi, yp-yi);
-	    if (d < dmin) {
-		imin = i;
-		dmin = d;
+    /* If we are replaying the display list, then just redraw the
+       labels beside the identified points */
+    if (call == R_NilValue) {
+	ind = CAR(args); args = CDR(args);
+	pos = CAR(args); args = CDR(args);
+	x = CAR(args); args = CDR(args);
+	y = CAR(args); args = CDR(args);
+	Offset = CAR(args); args = CDR(args);
+	l = CAR(args);
+	n = length(x);
+	for (i=0; i<n; i++) {
+	    plot = LOGICAL(ind)[i];
+	    if (plot) {
+		xi = REAL(x)[i];
+		yi = REAL(y)[i];
+		GConvert(&xi, &yi, USER, INCHES, dd);
+		posi = INTEGER(pos)[i];
+		offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
+		drawLabel(xi, yi, posi, offset, CHAR(STRING(l)[i]), dd);
 	    }
 	}
-	if (dmin > THRESHOLD)
-	    REprintf("warning: no point with %.2f inches\n", THRESHOLD);
-	else if (LOGICAL(ind)[imin])
-	    REprintf("warning: nearest point already identified\n");
-	else {
-	    k++;
-	    LOGICAL(ind)[imin] = 1;
-	    xi = REAL(x)[imin];
-	    yi = REAL(y)[imin];
-	    GConvert(&xi, &yi, USER, INCHES, dd);
-	    if (fabs(xp-xi) >= fabs(yp-yi)) {
-		if (xp >= xi) {
-		    INTEGER(pos)[imin] = 4;
-		    xi = xi+offset;
-		    if (plot) GText(xi, yi, INCHES,
-			  CHAR(STRING(l)[imin]), 0.0,
-			  dd->gp.yCharOffset, 0.0, dd);
-		}
-		else {
-		    INTEGER(pos)[imin] = 2;
-		    xi = xi-offset;
-		    if (plot) GText(xi, yi, INCHES,
-			  CHAR(STRING(l)[imin]), 1.0,
-			  dd->gp.yCharOffset, 0.0, dd);
+	return R_NilValue;
+    }
+    else {
+	GCheckState(dd);
+
+	checkArity(op, args);
+	x = CAR(args);
+	args = CDR(args); y = CAR(args);
+	args = CDR(args); l = CAR(args);
+	args = CDR(args); npts = asInteger(CAR(args));
+	args = CDR(args); plot = asLogical(CAR(args));
+	args = CDR(args); Offset = CAR(args);
+	if (npts <= 0 || npts == NA_INTEGER)
+	    error("invalid number of points in identify");
+	if (!isReal(x) || !isReal(y) || !isString(l) || !isReal(Offset))
+	    errorcall(call, "incorrect argument type");
+	if (LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
+	    errorcall(call, "different argument lengths");
+	n = LENGTH(x);
+	if (n <= 0) {
+	    R_Visible = 0;
+	    return NULL;
+	}
+	
+	offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
+	PROTECT(ind = allocVector(LGLSXP, n));
+	PROTECT(pos = allocVector(INTSXP, n));
+	for (i = 0; i < n; i++)
+	    LOGICAL(ind)[i] = 0;
+	
+	k = 0;
+	GMode(2, dd);
+	while (k < npts) {
+	    if (!GLocator(&xp, &yp, INCHES, dd)) break;
+	    dmin = DBL_MAX;
+	    imin = -1;
+	    for (i = 0; i < n; i++) {
+		xi = REAL(x)[i];
+		yi = REAL(y)[i];
+		GConvert(&xi, &yi, USER, INCHES, dd);
+		if (!R_FINITE(xi) || !R_FINITE(yi)) continue;
+		d = hypot(xp-xi, yp-yi);
+		if (d < dmin) {
+		    imin = i;
+		    dmin = d;
 		}
 	    }
+	    if (dmin > THRESHOLD)
+		REprintf("warning: no point with %.2f inches\n", THRESHOLD);
+	    else if (LOGICAL(ind)[imin])
+		REprintf("warning: nearest point already identified\n");
 	    else {
-		if (yp >= yi) {
-		    INTEGER(pos)[imin] = 3;
-		    yi = yi+offset;
-		    if (plot) GText(xi, yi, INCHES,
-			  CHAR(STRING(l)[imin]), 0.5,
-			  0.0, 0.0, dd);
+		k++;
+		LOGICAL(ind)[imin] = 1;
+		
+		xi = REAL(x)[imin];
+		yi = REAL(y)[imin];
+		GConvert(&xi, &yi, USER, INCHES, dd);
+		if (fabs(xp-xi) >= fabs(yp-yi)) {
+		    if (xp >= xi) {
+			INTEGER(pos)[imin] = 4;
+		    }
+		    else {
+			INTEGER(pos)[imin] = 2;
+		    }
 		}
 		else {
-		    INTEGER(pos)[imin] = 1;
-		    yi = yi-offset;
-		    if (plot) GText(xi, yi, INCHES,
-			  CHAR(STRING(l)[imin]), 0.5,
-			  1-(0.5-dd->gp.yCharOffset),
-			  0.0, dd);
+		    if (yp >= yi) {
+			INTEGER(pos)[imin] = 3;
+		    }
+		    else {
+			INTEGER(pos)[imin] = 1;
+		    }
 		}
+		if (plot) 
+		    drawLabel(xi, yi, INTEGER(pos)[imin], offset, 
+			      CHAR(STRING(l)[imin]), dd);
 	    }
 	}
+	GMode(0, dd);
+	PROTECT(ans = allocList(2));
+	CAR(ans) = ind;
+	CADR(ans) = pos;
+	PROTECT(saveans = allocList(6));
+	CAR(saveans) = ind;
+	CADR(saveans) = pos;
+	CADDR(saveans) = x;
+	CADDDR(saveans) = y;
+	CAD4R(saveans) = Offset;
+	CAD4R(CDR(saveans)) = l;
+	
+	/* We are recording, so save enough information to be able to
+	   redraw the text labels beside identified points */
+	if (call != R_NilValue)
+	    recordGraphicOperation(op, saveans, dd);
+	UNPROTECT(4);
+
+	return ans;
     }
-    GMode(0, dd);
-    ans = allocList(2);
-    CAR(ans) = ind;
-    CADR(ans) = pos;
-    UNPROTECT(2);
-    return ans;
 }
 
 SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
