@@ -877,13 +877,13 @@ void freeType1Fonts()
     while (enclist) {
 	enclist = enclist->next;
 	freeEncoding(loadedEncodings->encoding);
-	free(loadedEncodings);
+	freeEncList(loadedEncodings);
 	loadedEncodings = enclist;
     }
     while (fontlist) {
 	fontlist = fontlist->next;
 	freeFontFamily(loadedFonts->family);
-	free(loadedFonts);
+	freeFontList(loadedFonts);
 	loadedFonts = fontlist;
     }
 }
