@@ -311,24 +311,18 @@ static void partrans(int np, double *raw, double *new)
 /* raw is overwritten */
 static void dotrans(Starma G, double *raw, double *new, int trans)
 {
-    int i, v;
+    int i, v, n = G->mp + G->mq + G->msp + G->msq;
 
     if(trans) {
 	v = 0;
-	for(i = 0; i < G->mp; i++)
-	    partrans(G->mp, raw+v, new + v);
+	partrans(G->mp, raw+v, new + v);
 	v += G->mp;
-	for(i = 0; i < G->mq; i++)
-	    partrans(G->mq, raw + v, new + v);
+	partrans(G->mq, raw + v, new + v);
 	v += G->mq;
-	for(i = 0; i < G->msp; i++)
-	    partrans(G->msp, raw + v, new + v);
+	partrans(G->msp, raw + v, new + v);
 	v += G->msp;
-	for(i = 0; i < G->msq; i++)
-	    partrans(G->msq, raw + v, new + v);
-	for(i = G->mp + G->mq + G->msp + G->msq;
-	    i < G->mp + G->mq + G->msp + G->msq + G->m; i++) new[i] = raw[i];
+	partrans(G->msq, raw + v, new + v);
+	for(i = n; i < n + G->m; i++) new[i] = raw[i];
     } else
-	for(i = 0; i < G->mp + G->mq + G->msp + G->msq + G->m; i++)
-	    new[i] = raw[i];
+	for(i = 0; i < n + G->m; i++) new[i] = raw[i];
 }
