@@ -24,6 +24,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>
+#include <Devices.h>
 #include "devga.h"
 
 /* Return a non-relocatable copy of a string */
