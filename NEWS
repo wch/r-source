@@ -94,6 +94,11 @@ NEW FEATURES
     o   ppr() is now interruptible at suitable places in the
 	underlying FORTRAN code.
 
+    o   formula.default() now looks for a "terms" component before a
+	'formula' argument in the saved call: the component will have
+	`.' expanded and probably will have the original environment
+	set as its environment.  And what it does is now documented.
+
 
 UTILITIES
 

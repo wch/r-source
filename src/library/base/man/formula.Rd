@@ -73,6 +73,13 @@ as.formula(object, env = parent.frame())
   As from \R 1.8.0 variable names can be quoted by backticks \code{`like
     this`} in formulae, although there is no guarantee that all code
   using formulae will accept such non-syntactic names.
+
+  When \code{formula} is called on a fitted model object, either a
+  specific method is used (such as that for class \code{"nls"}) of the
+  default method.  The default first looks for a \code{"formula"}
+  component of the object (and evaluates it), then a \code{"terms"}
+  component, then a \code{formula} parameter of the call (and evaluates
+  its value) and finally a \code{"formula"} attribute.
 }
 \section{Environments}{
   A formula object has an associated environment, and
@@ -85,7 +92,7 @@ as.formula(object, env = parent.frame())
   \code{as.formula} will use the \code{env} argument for their
   environment. Pre-existing formulas extracted with
   \code{as.formula} will only have their environment changed if
-  \code{env} is explicitly given.
+  \code{env} is given explicitly.
 }
 \value{
   All the functions above produce an object of class \code{"formula"}

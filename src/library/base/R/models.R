@@ -2,8 +2,8 @@ formula <- function(x, ...) UseMethod("formula")
 formula.default <- function (x,env=parent.frame(), ...)
 {
     if (!is.null(x$formula))		eval(x$formula)
-    else if (!is.null(x$call$formula))	eval(x$call$formula)
     else if (!is.null(x$terms))		x$terms
+    else if (!is.null(x$call$formula))	eval(x$call$formula)
     else if (!is.null(attr(x, "formula"))) attr(x, "formula")
     else {form<-switch(mode(x),
 		NULL = structure(NULL, class = "formula"),
