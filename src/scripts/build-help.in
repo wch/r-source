@@ -2,11 +2,10 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
 # ${RHOME}/bin/build-help
-# Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex] [--example]
-#                    [--dosnames] [--htmllists] [pkg] [lib]
-# Install all html help files for package pkg to library lib
+# Usage:  build-help [options]  [pkg] [lib]
+# Install all help files for package pkg to library lib
 # (defaults are `${RHOME}/src/library/base' and the default library,
-# `${RHOME}/library', respectively).
+#  `${RHOME}/library', respectively).
 
 use File::Basename;
 use Cwd;
@@ -50,10 +49,6 @@ if($opt_htmllists){
     exit 0;
 }
 
-
-
-
-
 # default is to build all documentation formats
 if(!$opt_html && !$opt_nroff && !$opt_latex && !$opt_example){
     $opt_html = 1;
@@ -81,7 +76,7 @@ if($opt_example){
   mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
 }
 
-print "  >>> Building help pages for package `$pkg'\n";
+print "	 >>> Building help pages for package `$pkg'\n";
 print "      Formats: ";
 print "text " if $opt_nroff;
 print "html " if $opt_html;
@@ -92,8 +87,8 @@ print "\n";
 
 # get %htmlindex and %anindex
 
+%anindex = read_anindex($lib);
 if($opt_html){
-    %anindex = read_anindex($lib);
     %htmlindex = read_htmlindex($lib);
     build_htmlfctlist($lib);
 }
@@ -105,7 +100,7 @@ format STDOUT =
 
 foreach $manfile (@mandir) {
     if($manfile =~ /\.[Rr]d$/) {
-        $manfilebase = basename($manfile, (".Rd", ".rd"));
+	$manfilebase = basename($manfile, (".Rd", ".rd"));
 	$manage = (-M $manfile);
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = "";
@@ -154,8 +149,9 @@ foreach $manfile (@mandir) {
 
 sub usage {
 
-    print "Usage:  build-help [--rhome dir] [--html] [--nroff]\n" .
-	  "        [--latex] [--example] [--dosnames] [pkg] [lib]\n";
+    print "Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex]\n" .
+      "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
+      "                   [pkg] [lib]\n";
 
     exit 0;
 }

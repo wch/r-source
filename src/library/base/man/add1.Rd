@@ -24,10 +24,12 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
 \alias{add1.default}
 \alias{add1.lm}
 \alias{add1.glm}
+\alias{add1.mlm}
 \alias{drop1}
 \alias{drop1.default}
 \alias{drop1.lm}
 \alias{drop1.glm}
+\alias{drop1.mlm}
 \arguments{
  \item{object}{a fitted models object.}
  \item{scope}{a formula giving the terms to be considered for adding or
@@ -84,7 +86,8 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
     Their authors' definitions of Mallows' Cp and Akaike's AIC are used, not
     those of the authors of the models chapter of S.
 }
-\seealso{\code{\link{aov}}, \code{\link{lm}}}
+\seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
+    \code{\link{extractAIC}}.}
 \examples{
 example(step)#-> swiss
 (alm1 <- add1(lm1, ~ I(Education^2) + .^2))

@@ -1,36 +1,36 @@
-% file proj.Rd
 % copyright (C) 1998 B. D. Ripley
 %
 \name{proj}
 \title{Projections of models}
 \usage{
-proj(object, ...)
-proj.default(object, onedf = TRUE, ..)
-proj.lm(object, onedf = TRUE, unweighted.scale = FALSE)
-proj.aov(object, onedf = FALSE, unweighted.scale = FALSE)
-proj.aovlist(object, onedf = FALSE, unweighted.scale = FALSE)
+proj 	 (object, \dots)  
+proj.aov    (object, onedf = FALSE, unweighted.scale = FALSE)  
+proj.aovlist(object, onedf = FALSE, unweighted.scale = FALSE)  
+proj.default(object, onedf = TRUE, \dots)  
+proj.lm     (object, onedf = FALSE, unweighted.scale = FALSE)  
 }
 \alias{proj}
+\alias{proj.default}
 \alias{proj.lm}
 \alias{proj.aov}
 \alias{proj.aovlist}
 \arguments{
- \item{object}{An object of class \code{lm} or a class inheriting from
+ \item{object}{An object of class \code{"lm"} or a class inheriting from
    it, or an object with a similar structure including in particular
    components \code{qr} and \code{effects}.}
  \item{onedf}{A logical flag. If \code{TRUE}, a projection is returned for all
    the columns of the model matrix. If \code{FALSE}, the single-column
    projections are collapsed by terms of the model (as represented in
    the analysis of variance table).}
- \item{unweighted.scale}{If the fit producing \code{objects} used
+ \item{unweighted.scale}{If the fit producing \code{object} used
    weights, this determines if the projections correspond to weighted or
    unweighted observations.}
- \item{\ldots}{Swallow and ignore any other arguments.}
+ \item{\dots}{Swallow and ignore any other arguments.}
 }
 \description{
  \code{proj} returns a matrix or list of matrices giving the projections
- of the data onto the terms of a linear model. It is most frequently
- used for \code{aov} models.
+ of the data onto the terms of a linear model.  It is most frequently
+ used for \code{\link{aov}} models.
 }
 \details{
  A projection is given for each stratum of the object, so for \code{aov}
@@ -60,9 +60,8 @@ proj.aovlist(object, onedf = FALSE, unweighted.scale = FALSE)
 }
 \author{B.D. Ripley}
 
-
-\seealso{\code{\link{aov}},  \code{\link{lm}}, \code{\link{model.tables}}}
-
+\seealso{\code{\link{aov}}, \code{\link{lm}}, \code{\link{model.tables}}
+}
 \examples{
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
 P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)

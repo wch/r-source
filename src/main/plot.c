@@ -442,7 +442,7 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 /*	Called from do_axis()	such as
  *	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high)
  *
- *	Computes  *low < *high
+ *	Computes  *low < left, right < *high  (even if left=right)
  */
     double eps;
     if(left > right) {/* swap */
@@ -1122,15 +1122,17 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else if (type == 'h') { /* h[istogram] (bar plot) */
 	dd->gp.col = INTEGER(col)[0];
+	if (dd->gp.ylog)
+	    yold = dd->gp.usr[2];/* DBL_MIN fails.. why ???? */
+	else
+	    yold = 0.0;
+	yold = GConvertY(yold, USER, DEVICE, dd);
 	for (i = 0; i < n; i++) {
 	    xx = x[i];
 	    yy = y[i];
-	    xold = xx;
-	    yold = 0.0;
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    GConvert(&xold, &yold, USER, DEVICE, dd);
 	    if (FINITE(xx) && FINITE(yy)) {
-		GLine(xold, yold, xx, yy, DEVICE, dd);
+		GLine(xx, yold, xx, yy, DEVICE, dd);
 	    }
 	}
     }

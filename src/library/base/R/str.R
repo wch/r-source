@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.8 1998/11/12 18:06:40 maechler Exp $
+    ## $Id: str.R,v 1.9 1999/01/06 15:37:49 pd Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -41,18 +41,17 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## -------------------------------------------------------------------------
-    ## $Id: str.R,v 1.8 1998/11/12 18:06:40 maechler Exp $
+    ## $Id: str.R,v 1.9 1999/01/06 15:37:49 pd Exp $
 
-    oo <- options(digits = digits.d)
-    ##was .Options $ digits <- digits.d # only in this function frame !
-    on.exit(options(oo))
+    oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
     ## le.str: not used for arrays:
     le.str <-
-	if(is.na(le)) " __no length(.)__ " else
-    if(give.length) {
-	if(le > 0) paste("[1:", paste(le), "]", sep = "")  else "(0)"
-    } else ""
+	if(is.na(le)) " __no length(.)__ "
+	else if(give.length) {
+	    if(le > 0) paste("[1:", paste(le), "]", sep = "")
+	    else "(0)"
+	} else ""
     std.attr <- "names"			  #-- Default NON interesting attributes
     has.class <- !is.null(cl <- class(object))
     mod <- ""
@@ -65,7 +64,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	cat(" NULL\n")
     else if(is.list(object)) {
 	i.pl <- is.pairlist(object)
-        if(le == 0) { cat(" ", if(i.pl)"pair", "list()\n",sep="")
+	if(le == 0) { cat(" ", if(i.pl)"pair", "list()\n",sep="")
 		      return(invisible()) }
 	is.d.f <- is.data.frame(object)
 	if(is.d.f ||
@@ -83,7 +82,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    nam.ob <-
 		if(is.null(nam.ob <- names(object))) rep("", le)
 		else { max.ncnam <- max(nchar(nam.ob))
-		       formatC(nam.ob, width = max.ncnam, flag = '-')
+		       format.char(nam.ob, width = max.ncnam, flag = '-')
 		   }
 	    for(i in 1:le) {
 		cat(indent.str,"$ ", nam.ob[i], ":", sep="")
@@ -197,13 +196,12 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    give.mode <- FALSE
 	    if (mod == "call" || mod == "language" || mod == "symbol"
 		|| is.environment(object)) {
-		##give.mode <- !is.vector(object)#--then it hasn't yet been done
+		##give.mode <- !is.vector(object)#--then it has not yet been done
 		object <- deparse(object)
 		le <- length(object) #== 1, always / depending on char.length ?
 		format.fun <- function(x)x
 		vec.len <- round(.5 * vec.len)
 	    } else if (mod == "expression") {
-		##give.mode <- !is.vector(object)#--then it hasn't yet been done
 		format.fun <- function(x) deparse(as.expression(x))
 		vec.len <- round(.75 * vec.len)
 	    } else if (mod == "name"){
@@ -243,7 +241,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    format.fun <- function(x)x
 	    vec.len <- sum(cumsum(3 + if(le>0) nchar(object) else 0) <
 			   wid - (4 + 5 * nest.lev + nchar(str1)))
-	    ## 5*nest is 'arbitrary'
+					# 5*nest is 'arbitrary'
 	} else {
 	    bracket <- ""
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
@@ -252,6 +250,8 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		    else	   as.character
 	}
 	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
+
+	vec.len <- max(1,round(vec.len))
 	cat(str1, " ", bracket,
 	    paste(format.fun(if(le>1) object[1:min(vec.len, le)] else object),
 		  collapse = paste(bracket, " ", bracket, sep="")),
@@ -279,7 +279,8 @@ ls.str <- function(..., mode = "any", max.level = 1, give.attr = FALSE)
     for(name in ls(..., envir = sys.frame(sys.parent())))
 	if(exists(name, mode = mode)) {
 	    cat(name, ": ")
-	    str(get(name, mode = mode), max.level = max.level, give.attr = give.attr)
+	    str(get(name, mode = mode), max.level = max.level,
+		give.attr = give.attr)
 	}
     invisible()
 }

@@ -8,10 +8,13 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 \arguments{
   \item{names.arg}{a vector of names to be abbreviated.}
   \item{minlength}{the minimum length of the abbreviations.}
-  \item{use.classes}{a flag which is ignored by R.}
-  \item{dot}{a flag indicating whether to postpend a dot.}
+  \item{use.classes}{logical (currently ignored by \R).}
+  \item{dot}{logical; should a dot (\code{"."}) be postpended?}
 }
-\description{
+\description{Abbreviate Strings to at least \code{minlength} characters,
+    such that they remain \emph{unique} (if they were).
+}
+\details{
   The algorithm used is similar to that of S.
   First spaces at the beginning of the word are stripped.
   Then any other spaces are stripped.
@@ -47,5 +50,13 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 \examples{
 x <- c("abcd", "efgh", "abce")
 abbreviate(x, 2)
+
+data(state)
+(st.abb <- abbreviate(state.name, 2))
+table(nchar(st.abb))# out of 50, 3 need 4 letters
+\testonly{
+for(m in 1:5) {
+  cat("\n",m,":\n"); print(as.vector(abbreviate(state.name, minl=m)))}
+}
 }
 \keyword{character}

@@ -81,6 +81,8 @@ x != y
   longer form is appropriate for programming control-flow.
 
   \code{xor} indicates elementwise exclusive OR.
+}
+\details{
 
   These operators are generic. You can write methods to handle subsetting
 of specific classes of data.
@@ -140,7 +142,6 @@ The generic function \code{formula} and its specific
 methods provide a way of extracting formulae
 which have been included in other objects.
 
-
   An \R ``object'' is a data object which has a \code{class} attribute.
   A class attribute is a vector of character strings giving the names of
   the classes which the object ``inherits'' from.  When a generic
@@ -186,6 +187,14 @@ y[c(3,4)] # a list containing the third and fourth elements of y
 y$a      #the element of y named a
 ##-------------------------------------------
 
+%%-- The following "\testonly{" is not properly treated [latex/html/nroff]:
+%% ===>  ALL the following example text is doubled !!
+\testonly{
+  cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")}
+# parse 3 statements from the file "xyz.Rdmped"
+parse(file = "xyz.Rdmped", n = 3)
+
+
 x <- -1:12
 x + 1
 2 * x + 3
@@ -197,6 +206,6 @@ x[(x > 0) & (x < 1)]    # all x values between 0 and 1
 if (any(x == 0) || any(y == 0)) "zero encountered"
 
 }
-}
+}% this is extraneous! should give an error!
 \keyword{array}
 \keyword{list}

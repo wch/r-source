@@ -117,7 +117,7 @@ double qtukey(double p, double rr, double cc, double df)
     static double eps = 0.0001;
     static int maxiter = 50;
     static double ans, valx0, valx1, x0, x1, xabs;
-    int i, iter;
+    int iter;
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(rr) || ISNAN(cc) || ISNAN(df)) {
@@ -166,7 +166,7 @@ double qtukey(double p, double rr, double cc, double df)
 
     /* Find new iterate */
 
-    for(iter=1 ; iter < maxiter ; i++) {
+    for(iter=1 ; iter < maxiter ; iter++) {
 	ans = x1 - ((valx1 * (x1 - x0)) / (valx1 - valx0));
 	valx0 = valx1;
 

@@ -471,6 +471,7 @@ SEXP StringFromLogical(int, int*);
 SEXP StringFromInteger(int, int*);
 SEXP StringFromReal(double, int*);
 SEXP StringFromComplex(complex, int*);
+SEXP EnsureString(SEXP);
 
 
 /* Other Internally Used Functions */

@@ -1,13 +1,15 @@
 \name{plot.factor}
 \title{Plotting factor variables}
 \usage{
-plot.factor(x, y, \dots)
+plot.factor(x, y, legend.text = levels(y),\dots)
 }
 \alias{plot.factor}
 \arguments{
- \item{x,y}{numeric or factor.  \code{y} may be missing.}
- \item{\dots}{Further arguments to \code{\link{plot}}, see also
-   \code{\link{par}}.}
+    \item{x,y}{numeric or factor.  \code{y} may be missing.}
+    \item{legend.text}{a vector of text used to construct a legend for
+	the plot. Only used if \code{y} is present and a factor.}
+    \item{\dots}{Further arguments to \code{\link{plot}}, see also
+   	\code{\link{par}}.}
 }
 \description{
   This functions implements a ``scatterplot'' method for
@@ -17,12 +19,14 @@ plot.factor(x, y, \dots)
   appropriate.
 }
 \seealso{
-  \code{\link{plot.default}}, \code{\link{plot.formula}}.
+    \code{\link{plot.default}}, \code{\link{plot.formula}},
+    \code{\link{barplot}}, \code{\link{boxplot}}.
 }
 \examples{
 data(plants)
-plot(plants)#-> plot.data.frame
-plot(weight ~ group, data=plants)#-> plot.formula and plot.factor
+plot(plants)                             # -> plot.data.frame
+plot(weight ~ group, data=plants)        # numeric vector ~ factor
+plot(cut(weight,2) ~ group, data=plants) # factor ~ factor
 }
 \keyword{hplot}
 

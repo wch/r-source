@@ -26,16 +26,15 @@ void PrintGreeting(void)
     Rprintf("Version %s.%s %s (%s %s, %s)\n\n",
 	    R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
 
-    Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
-    Rprintf("You are welcome to redistribute it under certain conditions.\n");
-    Rprintf("Type\t\"?license\" or \"?licence\" for distribution details.\n\n");
+    Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
+	    "You are welcome to redistribute it under certain conditions.\n"
+	    "Type\t\"?license\" or \"?licence\" for distribution details.\n\n");
     Rprintf("R is a collaborative project with many contributors.\n"
 	    "Type\t\"?contributors\" for a list.\n\n");
 
-    Rprintf("Type\t\"demo()\" for some demos,"
-	    " \"help()\" for on-line help, or\n\t\"help.start()\""
-	    " for a HTML browser interface to help.\n");
-    Rprintf("Type\t\"q()\" to quit R.\n\n");
+    Rprintf("Type\t\"demo()\" for some demos, \"help()\" for on-line help, or\n"
+            "    \t\"help.start()\" for a HTML browser interface to help.\n"
+	    "Type\t\"q()\" to quit R.\n\n");
 }
 
 SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)

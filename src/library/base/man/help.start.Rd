@@ -1,4 +1,4 @@
-\name{help}
+\name{help.start}
 \title{Hypertext Documentation}
 \usage{
 help.start(gui = "irrelevant", browser = "netscape", remote = NULL)

@@ -1,4 +1,6 @@
 #### copyright (C) 1998 B. D. Ripley
+
+## mlm := multivariate lm()
 summary.mlm <- function(object, ...)
 {
     coef <- coef(object)
@@ -29,7 +31,7 @@ summary.mlm <- function(object, ...)
     class(value) <- "listof"
     value
 }
-
+## predict.mlm  is in  >> ./lm.R <<
 anova.mlm <- function(...) stop("no anova method implemented for mlm models")
 
 deviance.mlm <- function(object, ...)

@@ -74,7 +74,7 @@ barplot <-
 	}
 	axis(if(horiz) 2 else 1, at = w.m, labels = names.arg, lty = 0)
     }
-    if (!missing(legend.text)) {
+    if (!is.null(legend.text)) {
 	xy <- par("usr")
 	legend(xy[2] - xinch(0.1), xy[4] - yinch(0.1),
 	       legend = rev(legend.text), fill = rev(col),

@@ -183,6 +183,7 @@ void InitOptions(void)
     UNPROTECT(2);
 }
 
+#if 0
 /* FIXME : This functionality should be universal */
 /* See also in bind.c. */
 
@@ -205,6 +206,7 @@ void InitOptions(void)
     }
     return s;
 }
+#endif
 
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

@@ -1,7 +1,7 @@
-forwardsolve <- function(l, x, k=ncol(l)) backsolve(l,x,k, upper.tri = FALSE)
+forwardsolve <- function(l, x, k=ncol(l), upper.tri = FALSE, transpose = FALSE)
+    backsolve(l,x, k=k, upper.tri= upper.tri, transpose= transpose)
 
-backsolve <- function(r, x, k=ncol(r),
-                      upper.tri = TRUE, transpose = FALSE)
+backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
 {
     r <- as.matrix(r)# nr  x  k
     storage.mode(r) <- "double"
@@ -21,7 +21,7 @@ backsolve <- function(r, x, k=ncol(r),
 	    info= integer(1),
 	    DUP= FALSE)[c("x","info")]
     if(z$info != 0)
-        stop(paste("singular matrix in backsolve. First zero in diagonal [",
-                   z$info,"].",sep=""))
+	stop(paste("singular matrix in backsolve. First zero in diagonal [",
+		   z$info,"].",sep=""))
     z$x
 }

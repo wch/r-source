@@ -449,7 +449,8 @@ int StartDevice(SEXP, SEXP, int, SEXP, int);
 
 void DevNull(void);
 
-/*- these added by MM, eliminating -Wall "implicit declaration"s: */
+/* Miscellaneous */
+void NewFrameConfirm();
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
 void initDisplayList();
 void copyDisplayList(int);
@@ -630,8 +631,10 @@ SEXP LTYget(unsigned int);
 
 /* Convert an R unit (e.g., "user") into an internal unit (e.g., USER)> */
 int GMapUnits(int);
-/* Convert a location from one coordinate system to another: */
+/* Convert a LOCATION from one coordinate system to another: */
 void GConvert(double*, double*, int, int, DevDesc*);
+double GConvertX(double, int, int, DevDesc*);
+double GConvertY(double, int, int, DevDesc*);
 /* Convert an x/y-dimension from one set of units to another: */
 double GConvertXUnits(double, int, int, DevDesc*);
 double GConvertYUnits(double, int, int, DevDesc*);

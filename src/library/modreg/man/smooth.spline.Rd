@@ -1,5 +1,5 @@
-% file modreg/man/smooth.spline.Rd
-% copyright (C) 1998 B. D. Ripley
+%%%% file modreg/man/smooth.spline.Rd
+%%%% copyright (C) 1998 B. D. Ripley
 %
 \name{smooth.spline}
 \title{Fit a Smoothing Spline}
@@ -15,9 +15,9 @@ smooth.spline(x, y, w=rep(1, length(x)), df=5, spar=0, cv=FALSE,
    to be specified by \code{x}.}
  \item{w}{optional vector of weights}
  \item{df}{the desired equivalent number of degrees of freedom (trace of
- the smoother matrix).}
- \item{spar}{the coeffcient "lambda" of the integral of the squared
-   second derivative in the fit criterion.}
+     the smoother matrix).}
+ \item{spar}{the coefficient \eqn{\lambda} of the integral of the squared
+   second derivative in the fit (penalized log lik.) criterion.}
  \item{cv}{ordinary (TRUE) or `generalized' (FALSE) cross-validation.}
  \item{all.knots}{if TRUE, all points in \code{x} are uses as knots. If
    FAlSE, a suitably fine grid of knots is used.}
@@ -26,15 +26,14 @@ smooth.spline(x, y, w=rep(1, length(x)), df=5, spar=0, cv=FALSE,
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
 }
-\description{
- Fits a cubic smoothing spline to the supplied data.
+\description{Fits a cubic smoothing spline to the supplied data.
 }
 \details{
   The \code{x} vextor should contain at lest ten distinct values.
 
   If \code{spar} is missing or 0, the value of \code{df} is used to
   determine the degree of smoothing. If both are missing, leave-one-out
-  cross-validation is used to determine "lambda".
+  cross-validation is used to determine \eqn{\lambda}.
 }
 \value{
   An object of class \code{"smooth.spline"} with components
@@ -46,22 +45,23 @@ smooth.spline(x, y, w=rep(1, length(x)), df=5, spar=0, cv=FALSE,
   \item{cv.crit}{(generalized) cross-validation score.}
   \item{pen.crit}{penalized criterion}
   \item{df}{equivalent degrees of freedom used.}
-  \item{spar}{the value of "lambda" chosen.}
+  \item{spar}{the value of \eqn{\lambda} chosen.}
   \item{fit}{list for use by \code{predict.smooth.spline}.}
   \item{call}{}
 }
 \author{B.D. Ripley}
-
 \seealso{\code{\link{predict.smooth.spline}}}
-
 \examples{
 data(cars)
 attach(cars)
-plot(speed, dist)
+plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)
 print(cars.spl)
-lines(cars.spl)
-lines(smooth.spline(speed, dist, df=10), lty=2)
+lines(cars.spl, col = "blue")
+lines(smooth.spline(speed, dist, df=10), lty=2, col = "red")
+legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
+               "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
+	bg='bisque')
 detach()
 }
 \keyword{smooth}

@@ -8,7 +8,8 @@ NextMethod <- function(generic=NULL, object=NULL, ...)
 
 methods <- function (generic.function, class)
 {
-    allnames <- unique(c(ls(pos=seq(along=search()))))
+    an <- lapply(seq(along=(sp <- search())), ls)
+    names(an) <- sp
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
@@ -20,7 +21,7 @@ methods <- function (generic.function, class)
 	name <- paste(".", class, "$", sep = "")
     }
     else stop("must supply generic.function or class")
-    grep(gsub("([.[])", "\\\\\\1", name), allnames, value = TRUE)
+    grep(gsub("([.[])", "\\\\\\1", name), unlist(an), value = TRUE)
 }
 
 data.class <- function(x) {

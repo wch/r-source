@@ -20,7 +20,12 @@ then
 fi
 $D2L $@ > Rd2.tex
 echo "MANTEXDIR= '$MANTEXDIR'"
-if [ ! -f Rd2dvi.tex ]; then ln -s ${MANTEXDIR}/Rd2dvi.tex . ; fi
+if [ ! -f Rd2dvi.tex ]
+then
+ ##ln -s ${MANTEXDIR}/Rd2dvi.tex . 
+ R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep '"'|sed 's/ *//g;s/"//g'`
+ sed "s/a4paper/${R_P}paper/" ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
+fi
 if [ ! -f Rd.sty ]; then
  sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd2.sty
 fi

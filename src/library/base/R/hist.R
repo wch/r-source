@@ -13,20 +13,24 @@ hist.default <-
     eval(main)
     eval(xlab)
     n <- length(x <- x[!is.na(x)])
-    use.br <- !missing(breaks) && length(breaks) > 1
-    breaks <-
-	if(use.br) sort(breaks)
-	else {
-	    rx <- range(x)
-	    pretty (rx + c(0, diff(rx)/1000),
-		    n = if(missing(breaks)) 1 + log2(n)
-		    else { # breaks = `nclass'
-			if (is.na(breaks) | breaks < 2)
-			    stop("invalid number of breaks")
-			breaks
-		    })
+    use.br <- !missing(breaks) && (nB <- length(breaks)) > 1
+    if(use.br)
+	breaks <- sort(breaks)
+    else {
+	dx <- diff(rx <- range(x))
+	nnb <-
+	    if(missing(breaks)) 1 + log2(n)
+	    else { # breaks = `nclass'
+		if (is.na(breaks) | breaks < 2)
+		    stop("invalid number of breaks")
+		breaks
+	    }
+	breaks <- pretty (rx, n = nnb, min.n=1, eps.corr = 2)
+	nB <- length(breaks)
+	if(nB <= 1) { ##-- Impossible !
+	    stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
 	}
-    nB <- length(breaks)
+    }
     storage.mode(x) <- "double"
     storage.mode(breaks) <- "double"
     counts <- .C("bincount",
@@ -35,7 +39,7 @@ hist.default <-
 		 breaks,
 		 nB,
 		 counts = integer(nB - 1),
-                 right  = as.logical(right),
+		 right	= as.logical(right),
 		 include= as.logical(include.lowest),
 		 NAOK = FALSE, DUP = FALSE) $counts
     if (any(counts < 0))
@@ -58,7 +62,7 @@ hist.default <-
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     y <- if (freq) counts else intensities
     r <- list(breaks = breaks, counts = counts,
-              intensities = intensities, mids = mids)
+	      intensities = intensities, mids = mids)
     if (plot) {
 	plot.new()
 	plot.window(xlim, ylim, "") #-> ylim's default from 'y'
@@ -77,7 +81,7 @@ hist.default <-
 	    text(mids, y,
 		 labels = if(freq) counts else round(intensities,3),
 		 adj = c(0.5, -0.5))
-        invisible(r)
+	invisible(r)
     }
     else r
 }

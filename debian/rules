@@ -7,7 +7,7 @@ package=r-base
 build:
 	dh_testdir
 	CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
-	   SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr --with-g77\
+	 SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr --with-g77
 	make 
 	make help
 	make html
@@ -20,7 +20,7 @@ clean:
 	-make distclean
 	-rm -f `find . -name "*~"`
 	-rm -rf debian/tmp debian/files* core debian/substvars
-	-rm -rf src/lib
+	-rm -f doc/html/function.html doc/html/packages.html
 
 # Build architecture-independent files here.
 binary-indep: build
@@ -34,11 +34,11 @@ binary-arch: build
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
 	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' \
-	    -e '/R.binary  /s::R.binary -v 8 -n 400000 :'\
+	    -e '/R.binary  /s::R.binary --vsize 8 --nsize 400000 :'\
 	  < bin/R > debian/tmp/usr/bin/R
 	dh_installdocs
-	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/doc/html . &&\
-	  ln -s ../../lib/R/library .)
+	(cd debian/tmp/usr/doc/r-base/doc && ln -s ../../../lib/R/doc/html .)
+	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/library .)
 	dh_installmenu
 	dh_installmanpages re_format.7 regex.3
 	dh_installchangelogs NEWS

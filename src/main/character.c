@@ -156,19 +156,32 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Abbreviate long names in the S-designated fashion; first spaces then */
-/* lower case vowels; then lower case consonants; then upper case letters */
-/* special characters.  Letters are dropped from the end of words and at */
-/* least one letter is retained from each word.  If use.classes is FALSE */
-/* then the only differentiation is between white space and letters.  If */
-/* unique abbreviations are not produced letters are added until the */
-/* results are unique (duplicated names are removed prior to entry). */
-/* names, minlength, use.classes, dot */
+/* Abbreviate 
+   long names in the S-designated fashion:
+   1) spaces 
+   2) lower case vowels
+   3) lower case consonants
+   4) upper case letters 
+   5) special characters.  
 
-#define LASTCHAR(i) (!isspace(buff1[i-1]) && (!buff1[i+1] || isspace(buff1[i+1]))) 
+   Letters are dropped from the end of words
+   and at least one letter is retained from each word.  
+
+   If unique abbreviations are not produced letters are added until the 
+   results are unique (duplicated names are removed prior to entry). 
+   names, minlength, use.classes, dot 
+*/
+
+
+#define FIRSTCHAR(i) (isspace(buff1[i-1]))
+#define LASTCHAR(i) (!isspace(buff1[i-1]) && (!buff1[i+1] || isspace(buff1[i+1])))
+#define LOWVOW(i) (buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' || \
+		   buff1[i] == 'o' || buff1[i] == 'u')
 
 static SEXP stripchars(SEXP inchar, int minlen)
 {
+/* abbreviate(inchar, minlen) */
+
     int i, j, nspace = 0, upper;
     char buff1[MAXELTSIZE];
 
@@ -190,37 +203,47 @@ static SEXP stripchars(SEXP inchar, int minlen)
 	goto donesc;
 
     for (i = upper, j = 1; i > 0; i--) {
-	if (isspace(buff1[i]))
-          if (j) 
-            buff1[i] = '\0' ;
-          else
-	    nspace++;
-        else
-          j = 0;
+	if (isspace(buff1[i])) {
+	    if (j) 
+		buff1[i] = '\0' ;
+	    else
+		nspace++;
+        } 
+	else
+	    j = 0;
 	/*strcpy(buff1[i],buff1[i+1]);*/
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
 
     upper = strlen(buff1) -1;
+    for (i = upper; i > 0; i--) { 
+        if(LOWVOW(i) && LASTCHAR(i))
+	    strcpy(&buff1[i], &buff1[i + 1]);
+	if (strlen(buff1) - nspace <= minlen)
+	    goto donesc;
+    }
 
+    upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
-	if ((buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' ||
-	     buff1[i] == 'o' || buff1[i] == 'u')) {
-	    if (LASTCHAR(i))
-		strcpy(&buff1[i], &buff1[i + 1]);
-	}
+	if (LOWVOW(i) && !FIRSTCHAR(i))
+	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
 
     upper = strlen(buff1) - 1;
+    for (i = upper; i > 0; i--) {
+	if (islower(buff1[i]) && LASTCHAR(i))
+	    strcpy(&buff1[i], &buff1[i + 1]);
+	if (strlen(buff1) - nspace <= minlen)
+	    goto donesc;
+    }
 
-    for (i = upper; i >= 0; i--) {
-	if (islower(buff1[i])) {
-	    if (LASTCHAR(i))
-		strcpy(&buff1[i], &buff1[i + 1]);
-	}
+    upper = strlen(buff1) -1;
+    for (i = upper; i > 0; i--) {
+	if (islower(buff1[i]) && !FIRSTCHAR(i))
+	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -229,7 +252,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
-	if (LASTCHAR(i) && !isspace(buff1[i]))
+	if (!FIRSTCHAR(i) && !isspace(buff1[i]))
 	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
@@ -358,8 +381,11 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = allocVector(STRSXP, nmatches);
 	j = 0;
 	for (i = 0 ; i < n ; i++)
-	    if (INTEGER(ind)[i])
-		STRING(ans)[j++] = STRING(vec)[i];
+	    if (INTEGER(ind)[i]) {
+		STRING(ans)[j++] = STRING(vec)[i];	
+		/* FIXME: Want to inherit 'names(vec)': [the following is wrong]
+		   TAG   (ans)[j]   = TAG(vec)[i]; */
+	    }
     }
     else {
 	ans = allocVector(INTSXP, nmatches);
@@ -459,8 +485,8 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt == NA_INTEGER) extended_opt = 1;
 
     if (!isString(pat) || length(pat) < 1 ||
-       !isString(rep) || length(rep) < 1 ||
-       !isString(vec))
+	!isString(rep) || length(rep) < 1 ||
+	!isString(vec))
 	errorcall(call, "invalid argument\n");
 
     eflags = 0;

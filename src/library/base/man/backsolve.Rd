@@ -1,13 +1,15 @@
 \name{backsolve}
 \title{Solve an Upper or Lower Triangular System}
 \usage{
-backsolve(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
+   backsolve(r, x, k= ncol(r), upper.tri = TRUE, transpose = FALSE)
+forwardsolve(l, x, k= ncol(l), upper.tri = FALSE, transpose = FALSE)
 }
 \alias{backsolve}
+\alias{forwardsolve}
 \arguments{
     % Name 'r' is not really make sense for upper.tri = FALSE
     % Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
-\item{r}{an upper (or lower) triangular matrix giving the coefficients for
+\item{r,l}{an upper (or lower) triangular matrix giving the coefficients for
 the system to be solved.  Values below (above) the diagonal are ignored.}
 \item{x}{a matrix whose columns give ``right-hand sides'' for the equations.}
 \item{k}{The number of columns of \code{r} and rows of \code{x} to use.}

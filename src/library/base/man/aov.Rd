@@ -1,4 +1,3 @@
-% file aov.Rd
 % copyright (C) 1998 B. D. Ripley
 %
 \name{aov}
@@ -7,6 +6,12 @@
 aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
 }
 \alias{aov}
+\alias{print.aov}
+\alias{print.aovlist}
+\alias{summary.aov}
+\alias{summary.aovlist}
+\alias{print.summary.aov}
+\alias{print.summary.aovlist}
 \arguments{
  \item{formula}{A formula specifying the model.}
  \item{data}{A data frame in which the variables specified in the
@@ -38,12 +43,13 @@ aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
-  of class \code{c("maov", "aov", "mlm", "lm")}.
+  of class \code{c("maov", "aov", "mlm", "lm")}.  There are
+  \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{lm}},\code{\link{alias}},\code{\link{proj}},
-  \code{\link{model.tables}}}
-
+  \code{\link{model.tables}}
+}
 \examples{
 ## From Venables and Ripley (1997) p.210.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)

@@ -34,7 +34,7 @@ R:
 	  echo "You should \`make docs' now ..."; \
 	fi
 
-$(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
+src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
 
 docs help html latex examples:: FORCE
@@ -53,8 +53,8 @@ install: all installdirs
 	@$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
 	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(rhome)/bin/R
 	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
-	@chmod 755 $(bindir)/R $(rhome)/bin
-	@for f in `ls bin/* | grep -v '^R\|R.binary'`; do \
+	@chmod 755 $(bindir)/R $(rhome)/bin/R
+	@for f in `ls bin/* | grep -v '^bin/\(R\|R.binary\)\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \

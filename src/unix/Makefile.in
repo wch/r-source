@@ -35,8 +35,6 @@ $(LIB): $(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
 
-dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 dataentry.o: $(srcdir)/dataentry.c $(srcdir)/dataentry.h $(top_srcdir)/src/include/Defn.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
 rotated.o: $(srcdir)/rotated.c $(srcdir)/rotated.h
@@ -44,11 +42,11 @@ rotated.o: $(srcdir)/rotated.c $(srcdir)/rotated.h
 devX11.o: $(srcdir)/devX11.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
 devPS.o: $(srcdir)/devPS.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 devPicTeX.o: $(srcdir)/devPicTeX.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
-system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+
+dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
+fileio.o: $(srcdir)/fileio.c $(top_srcdir)/src/include/Fileio.h
+system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h ../include/Platform.h
 
 ../include/FFTab.h ../include/FFDecl.h::
 	(cd ../include; $(MAKE) $(@F))

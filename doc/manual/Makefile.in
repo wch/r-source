@@ -11,13 +11,13 @@ subdir = doc/manual
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = EQN ABOUT.tex Man.tex plotmath.tex primitive-funs.tex \
+DISTFILES = EQN ABOUT.tex.in Man.tex.in plotmath.tex primitive-funs.tex \
 	writing-Rd.tex Rd.sty lib2tex.in Makefile.in
 
 RLIB = $(top_builddir)/library
 RLIBsrc = $(top_srcdir)/src/library
 
-mansrcs = $(srcdir)/Man.tex $(srcdir)/writing-Rd.tex \
+mansrcs = Man.tex $(srcdir)/writing-Rd.tex \
 	  $(srcdir)/plotmath.tex $(srcdir)/primitive-funs.tex
 pkgsrcs = pkg-base.tex pkg-eda.tex pkg-modreg.tex pkg-mva.tex \
 	pkg-stepfun.tex
@@ -32,6 +32,14 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+ABOUT.tex: $(srcdir)/ABOUT.tex.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+Man.tex: $(srcdir)/Man.tex.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
@@ -101,13 +109,14 @@ clean:
 	@echo cleaning in doc/manual
 	@-rm -f *.aux *.toc Man.i?? *.dvi *.log *.ps *.ps-2
 distclean: clean
-	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex
+	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex \
+	  ABOUT.tex Man.tex
 maintainer-clean: distclean
 
 Man.ps:	Man.dvi
 	$(DVIPS) -f $< -o $@
 
-ABOUT.dvi: $(srcdir)/ABOUT.tex $(srcdir)/writing-Rd.tex $(srcdir)/Rd.sty
+ABOUT.dvi: ABOUT.tex $(srcdir)/writing-Rd.tex $(srcdir)/Rd.sty
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
 ABOUT.ps: ABOUT.dvi

@@ -15,7 +15,8 @@ descends through lists combining all their elements into
 a vector.
 }
 \seealso{
-\code{\link{unlist}}.
+\code{\link{unlist}} and \code{\link{as.vector}} to produce
+attribute-free vectors.
 }
 \examples{
 c(1,7:9)

@@ -1,8 +1,15 @@
+r-base (0.63.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Linked html directory to /usr/doc/r-base/doc/html (Dirk Eddelbuettel)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri,  4 Dec 1998 14:22:19 -0600
+
 r-base (0.63.0-2) unstable; urgency=low
 
-  * 
+  * recompiled against libc6-dev_2.0.7u-6 for __register_frame_info fix
 
- --
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun, 29 Nov 1998 15:39:48 -0600
 
 r-base (0.63.0-1) unstable; urgency=low
 

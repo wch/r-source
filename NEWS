@@ -1,8 +1,71 @@
+	**************************************************
+	*                                                *
+	*              0.63 SERIES NEWS                  *
+	*    (This label is really only here to keep     *
+	*     CVS from getting confused...)              *
+	*                                                *
+	**************************************************
+
+
+		CHANGES IN R VERSION 0.63.2
+
+NEW FEATURES
+
+    o	sink() has new `append' argument.
+
+    o	new function rle().
+
+    o	plot(.) and  curve(.) also accept a function as first argument.
+	new `plot.function'.
+
+    o	new function loglin().
+
+    o	pretty() has new arguments and now better "obeys" its 'n' arg.
+	Internal GPretty() [implicitly used by	axis(.., at = NULL,..)
+	now uses pretty.
+
+BUG FIXES
+
+    o	`make install' copied the R shell script a second time without
+	getting RHOME right (thus also breaking R CMD check).  Fixed.
+
+    o	help() after help.start() did not work if topic was not equal
+	to filename (e.g. rnorm is found in Normal.html)
+
+    o	fix the 0.63.1 fix for abbreviate(.);  improved doc.
+
+    o	predict.mlm(.) couldn't have worked with `newdata'.
+
+    o	model.frame/na.omit bug for matrices and Surv objects.
+
+    o	mean( <data.frame> ) now doesn't return sum(.) anymore.
+
+    o	str(.) doesn't give extraneous "..." in rare cases anymore.
+
+    o	Added documentation for group methods ("Math", "Ops","Summary").
+
+    o	R_PAPERSIZE is used for Rd2dvi and at configure time for the 
+	`make dvi' parts.
+
+    o	hist(i) now also works for e.g., i = -1, 0, or 1.
+
+    o   range() now works on dataframes (uses c(..., recursive=T))
+
+    o	pretty(.) does not loop infinitely anymore in very extreme cases.
+
+    o   math functions should work better on dataframes now
+
+    o	plot(.., type = 'h', log = 'y')	 now works ...
+
+    o   plot.factor(x, y, ...) of two factors now makes
+        barplot(table(y,x), ...)
+
+
 		CHANGES IN R VERSION 0.63.1
 
 NEW FEATURES
 
-    o   new function mosaicplot().
+    o	new function mosaicplot().
 
     o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
 
@@ -17,16 +80,16 @@ NEW FEATURES
 	points to help(Memory).
 
     o	rowsum() and improved na.omit() added from survival4
-    
-    o	backsolve(.) has new arguments "upper.tri = TRUE,  transpose = FALSE"
 
-    o	hist() has new "right = TRUE" argument;	 
+    o	backsolve(.) has new arguments "upper.tri = TRUE, transpose = FALSE"
+
+    o	hist() has new "right = TRUE" argument;
 	"right = FALSE" gives  [a,b) intervals
 
     o	help() has "htmlhelp" argument, allowing to suppress htmlhelp after
 	help.start().  This is desired for ESS.
 
-    o   quantile(.) has an "names = TRUE" argument for speed.
+    o	quantile(.) has an "names = TRUE" argument for speed.
 	It is much better documented now.
 
 
@@ -76,13 +139,17 @@ BUG FIXES
 
     o	couple of messups in dotplot
 
-    o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey 
+    o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey
 
-    o   do_modelframe could lose contrast attributes
+    o	do_modelframe could lose contrast attributes
 
     o	"make check" needed standardisation of locale
 
     o	unlist(...,recursive=F) got names wrong
+
+    o	abbreviate(.) does not anymore return random garbage in some
+	cases [by Guido M.]
+
 
 		CHANGES IN R VERSION 0.63
 

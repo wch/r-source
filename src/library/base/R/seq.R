@@ -3,17 +3,16 @@ seq <- function(x, ...) UseMethod("seq")
 seq.default <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 			length.out = NULL, along.with = NULL)
 {
+    if(nargs() == 1 && !missing(from))
+	return(if(mode(from) == "numeric" && length(from) == 1)
+               1:from else seq(along.with = from))
+
     if(!missing(along.with))
 	length.out <- length(along.with)
     else if(!missing(length.out))
 	length.out <- ceiling(length.out)
 
-    if(nargs() == 1 && !missing(from)) {
-	if(mode(from) == "numeric" && length(from) == 1)
-	    1:from
-	else seq(along.with = from)
-    }
-    else if(is.null(length.out))
+    if(is.null(length.out))
 	if(missing(by))
 	    from:to
 	else { # dealing with 'by'
@@ -34,8 +33,8 @@ seq.default <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 	    n <- as.integer(n + 1e-7)
 	    from + (0:n) * by
 	}
-    else if(length.out < 0)
-	stop("Length cannot be negative")
+    else if(!is.finite(length.out) || length.out < 0)
+	stop("Length must be non-negative number")
     else if(length.out == 0)
 	integer(0)
     else if(missing(by)) {
