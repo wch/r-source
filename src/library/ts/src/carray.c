@@ -145,7 +145,7 @@ Array make_matrix(double vec[], int nrow, int ncol)
    return make_array(vec, dim, 2);
 }
 
-Array make_zero_matrix(nrow, ncol)
+Array make_zero_matrix(int nrow, int ncol)
 {
    int dim[2];
    Array a;
