@@ -130,16 +130,27 @@ RweaveLatexSetup <-
                              "Sweave")
     else
         styfile <- "Sweave"
+
+    eval.with.opt <- function (expr, options){
+        if(options$eval){
+            res <- try(.Internal(eval.with.vis(expr, .GlobalEnv, NULL)))
+            if(inherits(res, "try-error")) return(res)
+            if(options$print | (options$term & res$visible))
+                print(res$value)
+        }
+        return(res)
+    }
     
     options <- list(prefix=TRUE, prefix.string=prefix.string,
                     engine="R", print=FALSE, eval=eval,
                     fig=FALSE, pdf=pdf, eps=eps, 
-                    width=6, height=6,
+                    width=6, height=6, term=FALSE,
                     echo=echo, results="verbatim", split=split,
                     strip.white=TRUE, include=TRUE)
     
     list(output=output, styfile=styfile,
          debug=debug, quiet=quiet,
+         eval.with.opt = eval.with.opt,
          options=options, chunkout=list())
 }
 
@@ -154,6 +165,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
         if(options$echo) cat(" echo")
         if(options$eval){
             if(options$print) cat(" print")
+            if(options$term) cat(" term")
             cat("", options$results)
             if(options$fig){
                 if(options$eps) cat(" eps") 
@@ -194,13 +206,11 @@ RweaveLatexRuncode <- function(object, chunk, options)
             cat("\nR> ", paste(dce, collapse="\n+  "),
                 file=chunkout, append=TRUE, sep="")
         }
-        if(options$print)
-            ce <- parse(text=paste("print(", dce, ")"))
 
         tmpcon <- textConnection("output", "w")
         sink(file=tmpcon)
         err <- NULL
-        if(options$eval) err <- try(eval(ce, envir=.GlobalEnv))
+        if(options$eval) err <- object$eval.with.opt(ce, options)
         sink()
         close(tmpcon)
         if(inherits(err, "try-error"))
@@ -211,8 +221,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
         
         if(length(output)>0 & (options$results!="hide")){
             if(openSinput){
-                cat("\n\\end{Sinput}\n",
-                    file=chunkout, append=TRUE)
+                cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
                 openSinput <- FALSE
             }
             if(options$results=="verbatim")
@@ -227,15 +236,16 @@ RweaveLatexRuncode <- function(object, chunk, options)
             cat(output, file=chunkout, append=TRUE)
             remove(output)
             
-            if(options$results=="verbatim")
+            if(options$results=="verbatim"){
                 cat("\n\\end{Soutput}\n", file=chunkout, append=TRUE)
+            }
         }
     }
 
-    if(openSinput)
-        cat("\n\\end{Sinput}\n",
-            file=chunkout, append=TRUE)
-
+    if(openSinput){
+        cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
+    }
+    
     if(is.null(options$label) & options$split)
         close(chunkout)
 
@@ -313,7 +323,8 @@ RweaveLatexOptions <- function(options)
     }
 
     LOGOPTS <- c("fig", "pdf", "eps", "echo", "split",
-                 "strip.white", "include", "prefix", "eval", "print")
+                 "strip.white", "include", "prefix", "eval",
+                 "print", "term")
 
     LOGOPTS <- LOGOPTS[LOGOPTS %in% names(options)]
     
