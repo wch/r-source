@@ -128,6 +128,10 @@ BUG FIXES
 
     o	str() wouldn't work quite right for named characters.
 
+    o   Colour conversion (rgb, gray, hsv) truncated doubles and so
+	gave machine-dependent results on the examples. It now rounds.
+
+
 
 		CHANGES IN R VERSION 0.65.0
 

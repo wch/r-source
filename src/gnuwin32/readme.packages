@@ -12,7 +12,7 @@ need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
 cat; we have packaged a set at bin/windows/windows-NT/etc/tools.zip
 extracted from the cygwin distribution
 (http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
-past problems on some versions of Windows95, we use the cygwin ld
+past problems on some versions of Windows 95, we use the cygwin ld
 contained in that set, which must be before the mingw32 one in your
 path. (We have no way of knowing if this is still necessary.)
 
@@ -22,6 +22,7 @@ working setup from building earlier versions of R. We have also
 successfully used the variant of mingw32 that uses the MSVCRT run-time 
 system (under gcc-2.95 but not earlier versions), and in the case of the
 mclust library found this more successful that the standard version.
+Be aware that not all Windows machines have MSVCRT.DLL installed.
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
@@ -30,6 +31,9 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
 http://msdn.microsoft.com/workshop/author/htmlhelp.
+
+If you want to make Window help files you will need hcrtf.exe from a
+Windows compiler installation, or hcp505
 
 For large packages it is helpful to make zipped help files: for that
 you need zip from the Info-ZIP project 
@@ -112,6 +116,7 @@ If you build a debug version of the DLL in the development
 environment, you can debug the DLL code there just by setting the
 executable to be debugged to the full path to the R front-end.
 
+
 Simple Ports
 ============
 
@@ -136,4 +141,23 @@ mypkg, in RHOME\src\library, and run
 	cd RHOME\src\gnuwin32
 	make pkg-mypkg
 
+If you have a Unix/Linux box, it will suffice to zip up the Unix installation
+of the package.  Install the package, then
 
+cd `R RHOME`/library
+zip -rl /dest/mypkg.zip mypkg
+
+(the -l flag converts to CRLF line endings: it is not absolutely necessary
+that users may want to read the information files in a Windows editor).
+
+zip is often installed on Linux machines, and sources and binaries for
+Unix boxes are available via the Info-Zip site given above.
+
+
+Feedback
+========
+
+Please send comments and bug reports to (preferably both of)
+
+    Guido Masarotto <guido@hal.stat.unipd.it>
+    Brian Ripley <ripley@stats.ox.ac.uk>
