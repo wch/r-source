@@ -182,11 +182,11 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	}
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
-	rdoc2chm($chmfile)	if $type =~ /chm/i;
 	rdoc2txt($txtfile)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/;
 	rdoc2Ssgm($Sdfile)	if $type =~ /Ssgm/;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
+	rdoc2chm($chmfile)	if $type =~ /chm/i;
 
 	while($text =~ /$EPREFORMAT($ID)/){
 	    my $id = $1;
@@ -954,7 +954,6 @@ sub html_print_argblock {
 
     my ($block,$title) = @_;
 
-
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped preformat")
 	  && $text =~ /$EPREFORMAT($ID)/){
@@ -962,7 +961,6 @@ sub html_print_argblock {
 	my $ec = code2html($epreformats{$id});
 	$text =~ s/$EPREFORMAT$id/<pre>$ec<\/pre>/;
     }
-
 
     if(defined $blocks{$block}){
 	print $htmlout (html_title3($title));
@@ -1053,7 +1051,6 @@ sub html_unescape_codes {
 	my $ec = code2html($epreformats{$id});
 	$text =~ s/$EPREFORMAT$id/<pre>$ec<\/pre>/;
     }
-
 
     $text;
 }
@@ -2172,7 +2169,8 @@ sub nroff_tables {
 	}
 	$table .= ".TE\n";
 
-	$text =~ s/\\tabular.*$id/$table/s;    }
+	$text =~ s/\\tabular.*$id/$table/s;
+    }
 
     $text;
 }
@@ -2876,7 +2874,6 @@ sub see2Ssgm {
     }
 
     $text = unmark_brackets($text);
-    $text;
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped preformat")
@@ -2891,7 +2888,7 @@ sub see2Ssgm {
 	}
     }
 
-
+    $text;
 }
 
 ## Print a standard block
