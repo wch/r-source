@@ -396,7 +396,11 @@ static void ExtractListNames(SEXP l, SEXP tag, int recurse, SEXP base)
 {
     int i;
 
-    base = TagName(tag, base, 0);
+    if (!isNull(base))
+	base = TagName(tag, base, 0);
+    else
+	base = tag;
+
     if(recurse) {
 	ExtractNames(l, recurse, 0, base);
     } else {
