@@ -2,8 +2,8 @@
 
 
 .Tcl <- function(...)
-    structure(.External("dotTcl", ..., PACKAGE = "tcltk"),
-              class="tclObj")
+    invisible(structure(.External("dotTcl", ..., PACKAGE = "tcltk"),
+              class="tclObj"))
 .Tcl.callback <- function(...)
     .External("dotTclcallback", ..., PACKAGE = "tcltk")
 
@@ -41,6 +41,7 @@
     val2string <- function(x) {
         if (is.null(x)) return("")
         if (is.tkwin(x)){current.win <<- x ; return (.Tk.ID(x))}
+	if (inherits(x,"tclVar")) return(ls(x$env))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
 	    e <- parent.frame()
