@@ -18,8 +18,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
-#include "IOStuff.h"
+#include "IOStuff.h"/*-> Defn.h */
+#include "Fileio.h"
 #include "Parse.h"
 
 
@@ -35,7 +35,7 @@ static void	CheckFormalArgs(SEXP, SEXP);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
 static void	IfPush(void);
-static int	IsComment(SEXP);
+/* NOT_used static int	IsComment(SEXP);*/
 static int	KeywordLookup(char*);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
@@ -531,13 +531,13 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     SEXP ans, sav_expr = expr;
     if(GenerateCode) {
 	if (isString(expr))
-	    expr = install(CHAR(STRING(expr)[0])); 
+	    expr = install(CHAR(STRING(expr)[0]));
 	UNPROTECT_PTR(args);
 	UNPROTECT_PTR(sav_expr);
 	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg)
 	    ans = lang1(expr);
-	else    
-	    ans = LCONS(expr, CDR(args));   
+	else
+	    ans = LCONS(expr, CDR(args));
 	PROTECT(ans);
     }
     else {
@@ -546,7 +546,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 	PROTECT(ans = R_NilValue);
     }
     return ans;
-}       
+}
 
 static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 {
@@ -555,7 +555,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
     UNPROTECT_PTR(body);
     UNPROTECT_PTR(formals);
     if (GenerateCode)
-	PROTECT(ans = lang3(fname, CDR(formals), body)); 
+	PROTECT(ans = lang3(fname, CDR(formals), body));
     else
 	PROTECT(ans = R_NilValue);
     PopComment();
@@ -633,7 +633,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
     case STRSXP:
 	return lang2(arg, tag);
     default:
-	error("incorrect tag type\n");
+	error("incorrect tag type\n"); return R_NilValue/* -Wall */;
     }
 }
 
@@ -688,6 +688,7 @@ static void PopComment(void)
 	R_CommentSxp = CDR(R_CommentSxp);
 }
 
+#ifdef NOT_used
 int IsComment(SEXP l)
 {
     if (isList(l) && isString(CAR(l))
@@ -696,6 +697,7 @@ int IsComment(SEXP l)
     else
 	return 0;
 }
+#endif
 
 static void AddComment(SEXP l)
 {
@@ -716,7 +718,7 @@ static void AddComment(SEXP l)
 	}
 	PROTECT(cmt);
 	setAttrib(l, R_CommentSymbol, cmt);
-	UNPROTECT(1);	
+	UNPROTECT(1);
 	/* Reset the comment accumulator */
 	CAR(R_CommentSxp) = R_NilValue;
     }
@@ -753,7 +755,7 @@ int R_fgetc(FILE *fp)
 {
     int c = fgetc(fp);
     /* get rid of  CR in CRLF line termination */
-    if (c == '\r') {	
+    if (c == '\r') {
 	c = fgetc(fp);
 	/* retain CR's with no following linefeed */
 	if (c != '\n') {
@@ -786,7 +788,7 @@ int R_fgetc(FILE *fp)
  *
  *	SEXP R_Parse1Buffer(IOBuffer *buffer, int gencode, int *status)
  *
- *	
+ *
  *  The success of the parse is indicated as folllows:
  *
  *
@@ -814,7 +816,7 @@ static int	SavedToken;
 static SEXP	SavedLval;
 static char	contextstack[50], *contextp;
 
-static SEXP ParseInit()
+static void ParseInit()
 {
     contextp = contextstack;
     *contextp = ' ';
@@ -1107,10 +1109,10 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 	try_again:
 	    if(!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
-				 buf, 1024, 1) == 0) return;
+				 buf, 1024, 1) == 0) return R_NilValue;
 		bufp = buf;
 	    }
-	    while (c = *bufp++) {
+	    while ((c = *bufp++)) {
 		R_IoBufferPutc(c, buffer);
 		if (c == ';' || c == '\n') {
 		    break;
@@ -1140,10 +1142,10 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 	for (;;) {
 	    if (!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
-				 buf, 1024, 1) == 0) return;
+				 buf, 1024, 1) == 0) return R_NilValue;
 		bufp = buf;
 	    }
-	    while (c = *bufp++) {
+	    while ((c = *bufp++)) {
 		R_IoBufferPutc(c, buffer);
 		if (c == ';' || c == '\n') {
 		    break;
@@ -1374,7 +1376,7 @@ SEXP mkFalse(void)
     return s;
 }
 
-int yyerror(char *s)
+void yyerror(char *s)
 {
 }
 
@@ -1543,10 +1545,9 @@ static int SpecialValue(int c)
 int isValidName(char *name)
 {
     char *p;
-    int c, i, j;
+    int c, i;
 
     p = name;
-
     c = *p++;
 
     if( isdigit(c) )
@@ -1599,7 +1600,7 @@ static int token()
 	SavedLval = R_NilValue;
 	SavedToken = 0;
 	return c;
-    }		
+    }
     c = SkipSpace();
     if (c == '#') c = SkipComment();
     if (c == R_EOF) return END_OF_INPUT;
@@ -1654,17 +1655,18 @@ static int token()
 	    yylval = install("<-");
 	    return LEFT_ASSIGN;
 	}
-	if (nextchar('<'))
+	if (nextchar('<')) {
 	    if (nextchar('-')) {
 		yylval = install("<<-");
 		return LEFT_ASSIGN;
 	    }
 	    else
 		return ERROR;
+	}
 	yylval = install("<");
 	return LT;
     case '-':
-	if (nextchar('>'))
+	if (nextchar('>')) {
 	    if (nextchar('>')) {
 		yylval = install("<<-");
 		return RIGHT_ASSIGN;
@@ -1673,6 +1675,7 @@ static int token()
 		yylval = install("<-");
 		return RIGHT_ASSIGN;
 	    }
+	}
 	yylval = install("-");
 	return '-';
     case '>':
@@ -1890,7 +1893,7 @@ int yylex()
 	ifpop();
 	EatLines = 1;
 	break;
-	
+
 	/* These tokens terminate any immediately */
 	/* preceding "if" statements. */
 
@@ -1917,7 +1920,7 @@ int yylex()
 	*++contextp = '[';
 	*++contextp = '[';
 	break;
-		
+
     case '[':
 	*++contextp = tok;
 	break;

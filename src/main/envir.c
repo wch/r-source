@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -162,6 +162,7 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
     }
     else
         error("..%d used in an incorrect context, no ... to look in\n",i);
+    /* -Wall: */return R_NilValue;
 }
 
 
