@@ -1200,6 +1200,7 @@ int main (int ac, char **av)
     if (popt_arg_no_readline)
 	UsingReadline = 0;
     glade_gnome_init ();
+    gdk_rgb_init ();
     r_gnome_initialised = TRUE;
 
     /* set the parameters */
