@@ -2573,22 +2573,6 @@ drop argument will be ignored in: "[.data.frame"(women, "height", drop = TRUE)
 > ## second and third were interpreted as women["height", , drop] in 1.7.x
 > 
 > 
-> ## printing corrupt data frames
-> data(swiss)
-> sw <- swiss[1:5, 1:4]  # select a manageable subset
-> sw$new4 <- 1:3  ## will run but result in a corrupt data frame
-> sw
-             Fertility Agriculture Examination Education new4
-Courtelary        80.2        17.0          15        12    1
-Delemont          83.1        45.1           6         9    2
-Franches-Mnt      92.5        39.7           5         5    3
-Moutier           85.8        36.5          12         7 <NA>
-Neuveville        76.9        43.5          17        15 <NA>
-Warning message: 
-corrupt data frame: columns will be truncated or padded with NAs in: format.data.frame(x, digits = digits) 
-> ## gave error prior to 1.8.0, now a warning
-> 
-> 
 > ## make.names
 > make.names("")
 [1] "X"
@@ -2624,5 +2608,4 @@ corrupt data frame: columns will be truncated or padded with NAs in: format.data
 2  2           5           8
 3  3           6           9
 > ## wrong printed names in 1.7.1
-> 
 > 

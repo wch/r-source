@@ -3,6 +3,7 @@
 \alias{[[.data.frame}
 \alias{[<-.data.frame}
 \alias{[[<-.data.frame}
+\alias{$<-.data.frame}
 \title{Extract or Replace Parts of a Data Frame}
 \description{
   Extract or replace subsets of data frames.
@@ -17,6 +18,9 @@ x[[i]]
 x[[i]] <- value
 x[[i, j]]
 x[[i, j]] <- value
+
+x$name
+x$name <- value
 }
 \arguments{
   \item{x}{data frame.}
@@ -31,13 +35,17 @@ x[[i, j]] <- value
 
   \item{value}{A suitable replacement value: it will be repeated a whole
     number of times if necessary and it may be coerced: see the
-    Coercion section.}
+    Coercion section.  If \code{NULL}, deletes the column if a single
+    column is selected.}
+
+  \item{name}{a character string or (unquoted) name.}
 }
 \details{
   Data frames can be indexed in several modes.  When \code{[} and
   \code{[[} are used with a single index, they index the data frame
-  as if it were a list. In this usage a \code{drop} argument is
-  ignored, with a warning.
+  as if it were a list.  In this usage a \code{drop} argument is
+  ignored, with a warning.  Using \code{$} is equivalent to using
+  \code{[[} are used with a single index.
 
   When \code{[} and \code{[[} are used with two indices they act
   like indexing a matrix:  \code{[[} can only be used to select one element.
@@ -88,11 +96,6 @@ x[[i, j]] <- value
   behaviour is equivalent to specifying \code{drop=FALSE} when only one
   \emph{row} is left.  To drop from a data frame to a list, \code{drop =
     FALSE} has to specified explicitly.
-
-  Since a data frame is a list, it is possible to apply the
-  \code{$<-} operator to add or replace a column.  This is a bad idea
-  as it circumvents integrity checks on the data frame, for example
-  having all columns of the same length.
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two
@@ -132,12 +135,9 @@ sw["new1"] <- LETTERS[1:5]   # adds a character column
 sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
                              # but this got converted to a factor in 1.7.x
+sw$new4 <- 1:5
 sapply(sw, class)
-
-## DON'T do this
-\dontrun{
-sw$new4 <- 1:3  ## will run but result in a corrupt data frame
-}
+sw$new4 <- NULL              # delete the column
 
 ## matrices in a data frame
 A <- data.frame(x=1:3, y=I(matrix(4:6)), z=I(matrix(letters[1:9],3,3)))

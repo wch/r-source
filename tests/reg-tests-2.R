@@ -948,14 +948,6 @@ women[,"height", drop = TRUE]  # a vector
 ## second and third were interpreted as women["height", , drop] in 1.7.x
 
 
-## printing corrupt data frames
-data(swiss)
-sw <- swiss[1:5, 1:4]  # select a manageable subset
-sw$new4 <- 1:3  ## will run but result in a corrupt data frame
-sw
-## gave error prior to 1.8.0, now a warning
-
-
 ## make.names
 make.names("")
 make.names(".aa")
@@ -976,4 +968,3 @@ colnames(A) <- letters[1:2]
 aa[["row.names"]] <- A
 aa
 ## wrong printed names in 1.7.1
-

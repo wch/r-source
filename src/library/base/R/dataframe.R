@@ -463,6 +463,8 @@ data.frame <-
         if(missing(i) && missing(j)) { # case df[]
             i <- j <- NULL
             has.i <- has.j <- FALSE
+            ## added in 1.8.0
+            if(is.null(value)) return(x[logical(0)])
         } else { # case df[ind]
             ## really ambiguous, but follow common use as if list
             ## except for a full-sized logical matrix
@@ -630,7 +632,7 @@ data.frame <-
 {
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
-    ## to avoid any special methods for [[, etc
+    ## to avoid any special methods for [[<-
     class(x) <- NULL
     rows <- attr(x, "row.names")
     nrows <- length(rows)
@@ -708,6 +710,29 @@ data.frame <-
     x[[jseq]][[iseq]] <- value
     class(x) <- cl
     x
+}
+
+## added in 1.8.0
+"$<-.data.frame"<- function(x, i, value)
+{
+    cl <- oldClass(x)
+    ## delete class: Version 3 idiom
+    ## to avoid any special methods for [[<-
+    class(x) <- NULL
+    nrows <- length(attr(x, "row.names"))
+    if(!is.null(value)) {
+        N <- NROW(value)
+        if(N > nrows)
+            stop(paste("replacement has", N, "rows, data has", nrows))
+        if(N < nrows && N > 0)
+            if(nrows %% N == 0 && length(dim(value)) <= 1)
+                value <- rep(value, length = nrows)
+            else
+                stop(paste("replacement has", N, "rows, data has", nrows))
+    }
+    x[[i]] <- value
+    class(x) <- cl
+    return(x)
 }
 
 xpdrows.data.frame <- function(x, old.rows, new.rows)

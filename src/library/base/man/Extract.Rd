@@ -39,17 +39,23 @@ x$name
     below).}
 }
 \details{
+  These operators are generic.  You can write methods to handle subsetting
+  of specific classes of objects, see \link{InternalMethods} as well as
+  \code{\link{[.data.frame}} and \code{\link{[.factor}}.  The
+  descriptions here apply only to the default methods.
+
+  The most important distinction between \code{[}, \code{[[} and
+  \code{$} is that the \code{[} can select more than one element whereas
+  the other two select a single element.  \code{$} does not allow
+  computed indices, whereas \code{[[} does.
+  
+  The \code{[[} operator requires all relevant subscripts to be supplied.
+  With the \code{[} operator an empty index (a comma separated blank)
+  indicates that all entries in that dimension are selected.
+
   If one of these expressions appears on the left side of an assignment
   then that part of \code{x} is set to the value of the right hand side
   of the assignment.
-
-  These operators are generic. You can write methods to handle subsetting
-  of specific classes of objects, see \link{InternalMethods} as well as
-  \code{\link{[.data.frame}} and \code{\link{[.factor}}.
-
-  The \code{[[} operator requires all relevant subscripts to be supplied.
-  With the \code{[} operator a comma separated blank indicates that all
-  entries in that dimension are selected.
 
   Indexing by factors is allowed and is equivalent to indexing by the
   numeric codes (see \code{\link{factor}}) and not by the character
