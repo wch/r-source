@@ -192,6 +192,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 	if(quantile.used < p+1) stop(paste("quantile must be at least", p+1))
 	## re-scale to roughly common scale
 	divisor <- apply(x, 2, IQR)
+        if(any(divisor == 0)) stop("at least one column has IQR 0")
 	x <- x /rep(divisor, rep(n,p))
 	qn <- quantile.used
 	ps <- p + 1

@@ -47,6 +47,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 }
 
 \seealso{
+  The `R Data Import/Export' manual.
+  
   \code{\link{read.table}}, \code{\link{write}}.
 }
 

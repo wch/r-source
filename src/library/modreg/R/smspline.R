@@ -55,7 +55,7 @@ smooth.spline <-
 				y = y, w = w)),
 		  ncol = 3, byrow=TRUE)
     wbar <- tmp[, 1]
-    ybar <- tmp[, 2]/wbar
+    ybar <- tmp[, 2]/ifelse(wbar> 0, wbar, 1)
     yssw <- sum(tmp[, 3] - wbar*ybar^2)
     nx <- length(ux)
     r.ux <- ux[nx] - ux[1]
@@ -209,7 +209,7 @@ supsmu <-
     leno <- length(ord)
     if(diff <- n - leno)
 	warning(paste(diff, "observation(s) with NAs, NaNs and/or Infs deleted"))
-    .Fortran("bdrsetsmu")
+    .Fortran("bdrsetsmu", PACKAGE = "modreg")
     smo <- .Fortran("bdrsupsmu",
 		    as.integer(leno),
 		    as.double(xo),

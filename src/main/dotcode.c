@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000  The R Development Core Team
+ *  Copyright (C) 1997-2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <Devices.h>
+#include <Rdevices.h>
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))
@@ -366,7 +366,6 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    DL_FUNC fun;
     char *sym;
     int val;
     checkArity(op, args);
@@ -374,7 +373,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_IA);
     sym = CHAR(STRING_ELT(CAR(args), 0));
     val = 1;
-    if (!(fun = R_FindSymbol(sym, "")))
+    if (!(R_FindSymbol(sym, "")))
 	val = 0;
     ans = allocVector(LGLSXP, 1);
     LOGICAL(ans)[0] = val;
@@ -1777,6 +1776,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
 	    PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which));
 	    SET_ATTRIB(s, duplicate(ATTRIB(CAR(pargs))));
+	    SET_OBJECT(s, OBJECT(CAR(pargs)));
 	    if (TAG(pargs) != R_NilValue)
 		havenames = 1;
 	    SET_VECTOR_ELT(ans, nargs, s);

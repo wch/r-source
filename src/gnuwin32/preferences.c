@@ -309,7 +309,7 @@ static void save(button b)
     fprintf(fp, "setwidthonresize = %s\n\n",
 	    ischecked(c_resize) ? "yes" : "no");
     fprintf(fp, "# memory limits for the console scrolling buffer, in bytes and lines\n");
-    fprintf(fp, "bufbytes = %s\nbufiles = %s\n\n", 
+    fprintf(fp, "bufbytes = %s\nbuflines = %s\n\n", 
 	    gettext(f_cbb), gettext(f_cbl));
     fprintf(fp, "%s\n%s\n%s\npagerstyle = %s\n\n\n",
 	    "# The internal pager can displays help in a single window",

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -787,6 +787,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
 	    SET_VECTOR_ELT(r, j, VECTOR_ELT(a, i));
 	}
+	break;
     default:
 	errorcall(call, R_MSG_IA);
     }

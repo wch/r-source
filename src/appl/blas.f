@@ -16,12 +16,12 @@ c
 c     
 c     code for increment not equal to 1
 c     
-	 nincx = n*incx
-	 do 10 i = 1,nincx,incx
-	    dtemp = dtemp + dabs(dx(i))
- 10	 continue
-	 dasum = dtemp
-	 
+         nincx = n*incx
+         do 10 i = 1,nincx,incx
+            dtemp = dtemp + dabs(dx(i))
+ 10      continue
+         dasum = dtemp
+         
       else
 c
 c     code for increment equal to 1
@@ -29,20 +29,20 @@ c
 c
 c     clean-up loop
 c
-	 m = mod(n,6)
-	 if( m .ne. 0 ) then
-	    do 30 i = 1,m
-	       dtemp = dtemp + dabs(dx(i))
- 30	    continue
-	    if( n .lt. 6 ) go to 60
-	 endif
-	 mp1 = m + 1
-	 do 50 i = mp1,n,6
-	    dtemp = dtemp + dabs(dx(i))	   + dabs(dx(i + 1)) +
-     &			    dabs(dx(i + 2))+ dabs(dx(i + 3)) +
-     &			    dabs(dx(i + 4))+ dabs(dx(i + 5))
- 50	 continue
- 60	 dasum = dtemp
+         m = mod(n,6)
+         if( m .ne. 0 ) then
+            do 30 i = 1,m
+               dtemp = dtemp + dabs(dx(i))
+ 30         continue
+            if( n .lt. 6 ) go to 60
+         endif
+         mp1 = m + 1
+         do 50 i = mp1,n,6
+            dtemp = dtemp + dabs(dx(i))    + dabs(dx(i + 1)) +
+     &                      dabs(dx(i + 2))+ dabs(dx(i + 3)) +
+     &                      dabs(dx(i + 4))+ dabs(dx(i + 5))
+ 50      continue
+ 60      dasum = dtemp
       endif
       return
       end
@@ -62,37 +62,37 @@ c
       if (da .eq. 0.0d0) return
       if(incx.eq.1.and.incy.eq.1)go to 20
 c
-c	 code for unequal increments or equal increments
-c	   not equal to 1
+c        code for unequal increments or equal increments
+c          not equal to 1
 c
       ix = 1
       iy = 1
       if(incx.lt.0)ix = (-n+1)*incx + 1
       if(incy.lt.0)iy = (-n+1)*incy + 1
       do 10 i = 1,n
-	dy(iy) = dy(iy) + da*dx(ix)
-	ix = ix + incx
-	iy = iy + incy
+        dy(iy) = dy(iy) + da*dx(ix)
+        ix = ix + incx
+        iy = iy + incy
    10 continue
       return
 c
-c	 code for both increments equal to 1
+c        code for both increments equal to 1
 c
 c
-c	 clean-up loop
+c        clean-up loop
 c
    20 m = mod(n,4)
       if( m .eq. 0 ) go to 40
       do 30 i = 1,m
-	dy(i) = dy(i) + da*dx(i)
+        dy(i) = dy(i) + da*dx(i)
    30 continue
       if( n .lt. 4 ) return
    40 mp1 = m + 1
       do 50 i = mp1,n,4
-	dy(i) = dy(i) + da*dx(i)
-	dy(i + 1) = dy(i + 1) + da*dx(i + 1)
-	dy(i + 2) = dy(i + 2) + da*dx(i + 2)
-	dy(i + 3) = dy(i + 3) + da*dx(i + 3)
+        dy(i) = dy(i) + da*dx(i)
+        dy(i + 1) = dy(i + 1) + da*dx(i + 1)
+        dy(i + 2) = dy(i + 2) + da*dx(i + 2)
+        dy(i + 3) = dy(i + 3) + da*dx(i + 3)
    50 continue
       return
       end
@@ -111,40 +111,40 @@ c
       if(n.le.0)return
       if(incx.eq.1.and.incy.eq.1)go to 20
 c
-c	 code for unequal increments or equal increments
-c	   not equal to 1
+c        code for unequal increments or equal increments
+c          not equal to 1
 c
       ix = 1
       iy = 1
       if(incx.lt.0)ix = (-n+1)*incx + 1
       if(incy.lt.0)iy = (-n+1)*incy + 1
       do 10 i = 1,n
-	dy(iy) = dx(ix)
-	ix = ix + incx
-	iy = iy + incy
+        dy(iy) = dx(ix)
+        ix = ix + incx
+        iy = iy + incy
    10 continue
       return
 c
-c	 code for both increments equal to 1
+c        code for both increments equal to 1
 c
 c
-c	 clean-up loop
+c        clean-up loop
 c
    20 m = mod(n,7)
       if( m .eq. 0 ) go to 40
       do 30 i = 1,m
-	dy(i) = dx(i)
+        dy(i) = dx(i)
    30 continue
       if( n .lt. 7 ) return
    40 mp1 = m + 1
       do 50 i = mp1,n,7
-	dy(i) = dx(i)
-	dy(i + 1) = dx(i + 1)
-	dy(i + 2) = dx(i + 2)
-	dy(i + 3) = dx(i + 3)
-	dy(i + 4) = dx(i + 4)
-	dy(i + 5) = dx(i + 5)
-	dy(i + 6) = dx(i + 6)
+        dy(i) = dx(i)
+        dy(i + 1) = dx(i + 1)
+        dy(i + 2) = dx(i + 2)
+        dy(i + 3) = dx(i + 3)
+        dy(i + 4) = dx(i + 4)
+        dy(i + 5) = dx(i + 5)
+        dy(i + 6) = dx(i + 6)
    50 continue
       return
       end
@@ -165,35 +165,35 @@ c
       if(n.le.0)return
       if(incx.eq.1.and.incy.eq.1)go to 20
 c
-c	 code for unequal increments or equal increments
-c	   not equal to 1
+c        code for unequal increments or equal increments
+c          not equal to 1
 c
       ix = 1
       iy = 1
       if(incx.lt.0)ix = (-n+1)*incx + 1
       if(incy.lt.0)iy = (-n+1)*incy + 1
       do 10 i = 1,n
-	dtemp = dtemp + dx(ix)*dy(iy)
-	ix = ix + incx
-	iy = iy + incy
+        dtemp = dtemp + dx(ix)*dy(iy)
+        ix = ix + incx
+        iy = iy + incy
    10 continue
       ddot = dtemp
       return
 c
-c	 code for both increments equal to 1
+c        code for both increments equal to 1
 c
-c	 clean-up loop
+c        clean-up loop
 c
    20 m = mod(n,5)
       if( m .eq. 0 ) go to 40
       do 30 i = 1,m
-	dtemp = dtemp + dx(i)*dy(i)
+        dtemp = dtemp + dx(i)*dy(i)
    30 continue
       if( n .lt. 5 ) go to 60
    40 mp1 = m + 1
       do 50 i = mp1,n,5
-	dtemp = dtemp + dx(i)*dy(i) + dx(i + 1)*dy(i + 1) +
-     *	 dx(i + 2)*dy(i + 2) + dx(i + 3)*dy(i + 3) + dx(i + 4)*dy(i + 4)
+        dtemp = dtemp + dx(i)*dy(i) + dx(i + 1)*dy(i + 1) +
+     *   dx(i + 2)*dy(i + 2) + dx(i + 3)*dy(i + 3) + dx(i + 4)*dy(i + 4)
    50 continue
    60 ddot = dtemp
       return
@@ -209,16 +209,16 @@ c     if trouble with automatic computation of these quantities,
 c     they can be set by direct assignment statements.
 c     assume the computer has
 c
-c	 b = base of arithmetic
-c	 t = number of base  b	digits
-c	 l = smallest possible exponent
-c	 u = largest possible exponent
+c        b = base of arithmetic
+c        t = number of base  b  digits
+c        l = smallest possible exponent
+c        u = largest possible exponent
 c
 c     then
 c
-c	 eps = b**(1-t)
-c	 tiny = 100.0*b**(-l+t)
-c	 huge = 0.01*b**(u-t)
+c        eps = b**(1-t)
+c        tiny = 100.0*b**(-l+t)
+c        huge = 0.01*b**(u-t)
 c
 c     dmach same as smach except t, l, u apply to
 c     double precision.
@@ -226,12 +226,12 @@ c
 c     cmach same as smach except if complex division
 c     is done by
 c
-c	 1/(x+i*y) = (x-i*y)/(x**2+y**2)
+c        1/(x+i*y) = (x-i*y)/(x**2+y**2)
 c
 c     then
 c
-c	 tiny = sqrt(tiny)
-c	 huge = sqrt(huge)
+c        tiny = sqrt(tiny)
+c        huge = sqrt(huge)
 c
 c
 c     job is 1, 2 or 3 for epsilon, tiny and huge, respectively.
@@ -275,42 +275,42 @@ c
 *
       double precision function dnrm2 ( n, x, incx )
 *     .. scalar arguments ..
-      integer				incx, n
+      integer                           incx, n
 *     .. array arguments ..
-      double precision			x( * )
+      double precision                  x( * )
 *     .. parameters ..
-      double precision	    one		, zero
-      parameter		  ( one = 1.0d+0, zero = 0.0d+0 )
+      double precision      one         , zero
+      parameter           ( one = 1.0d+0, zero = 0.0d+0 )
 *     .. local scalars ..
-      integer		    ix
-      double precision	    absxi, norm, scale, ssq
+      integer               ix
+      double precision      absxi, norm, scale, ssq
 *     .. intrinsic functions ..
-      intrinsic		    abs, sqrt
+      intrinsic             abs, sqrt
 *     ..
 *     .. executable statements ..
       if( n.lt.1 .or. incx.lt.1 )then
-	 norm  = zero
+         norm  = zero
       else if( n.eq.1 )then
-	 norm  = abs( x( 1 ) )
+         norm  = abs( x( 1 ) )
       else
-	 scale = zero
-	 ssq   = one
-*	 the following loop is equivalent to this call to the lapack
-*	 auxiliary routine:
-*	 call dlassq( n, x, incx, scale, ssq )
+         scale = zero
+         ssq   = one
+*        the following loop is equivalent to this call to the lapack
+*        auxiliary routine:
+*        call dlassq( n, x, incx, scale, ssq )
 *
-	 do 10, ix = 1, 1 + ( n - 1 )*incx, incx
-	    if( x( ix ).ne.zero )then
-	       absxi = abs( x( ix ) )
-	       if( scale.lt.absxi )then
-		  ssq	= one	+ ssq*( scale/absxi )**2
-		  scale = absxi
-	       else
-		  ssq	= ssq	+     ( absxi/scale )**2
-	       end if
-	    end if
-   10	 continue
-	 norm  = scale * sqrt( ssq )
+         do 10, ix = 1, 1 + ( n - 1 )*incx, incx
+            if( x( ix ).ne.zero )then
+               absxi = abs( x( ix ) )
+               if( scale.lt.absxi )then
+                  ssq   = one   + ssq*( scale/absxi )**2
+                  scale = absxi
+               else
+                  ssq   = ssq   +     ( absxi/scale )**2
+               end if
+            end if
+   10    continue
+         norm  = scale * sqrt( ssq )
       end if
 *
       dnrm2 = norm
@@ -331,28 +331,28 @@ c
       if(n.le.0)return
       if(incx.eq.1.and.incy.eq.1)go to 20
 c
-c	code for unequal increments or equal increments not equal
-c	  to 1
+c       code for unequal increments or equal increments not equal
+c         to 1
 c
       ix = 1
       iy = 1
       if(incx.lt.0)ix = (-n+1)*incx + 1
       if(incy.lt.0)iy = (-n+1)*incy + 1
       do 10 i = 1,n
-	dtemp = c*dx(ix) + s*dy(iy)
-	dy(iy) = c*dy(iy) - s*dx(ix)
-	dx(ix) = dtemp
-	ix = ix + incx
-	iy = iy + incy
+        dtemp = c*dx(ix) + s*dy(iy)
+        dy(iy) = c*dy(iy) - s*dx(ix)
+        dx(ix) = dtemp
+        ix = ix + incx
+        iy = iy + incy
    10 continue
       return
 c
-c	code for both increments equal to 1
+c       code for both increments equal to 1
 c
    20 do 30 i = 1,n
-	dtemp = c*dx(i) + s*dy(i)
-	dy(i) = c*dy(i) - s*dx(i)
-	dx(i) = dtemp
+        dtemp = c*dx(i) + s*dy(i)
+        dy(i) = c*dy(i) - s*dx(i)
+        dx(i) = dtemp
    30 continue
       return
       end
@@ -369,11 +369,11 @@ c
       if( dabs(da) .gt. dabs(db) ) roe = da
       scale = dabs(da) + dabs(db)
       if( scale .ne. 0.0d0 ) go to 10
-	 c = 1.0d0
-	 s = 0.0d0
-	 r = 0.0d0
-	 z = 0.0d0
-	 go to 20
+         c = 1.0d0
+         s = 0.0d0
+         r = 0.0d0
+         z = 0.0d0
+         go to 20
    10 r = scale*dsqrt((da/scale)**2 + (db/scale)**2)
       r = dsign(1.0d0,roe)*r
       c = da/r
@@ -401,32 +401,32 @@ c
       if( n.le.0 .or. incx.le.0 )return
       if(incx.eq.1)go to 20
 c
-c	 code for increment not equal to 1
+c        code for increment not equal to 1
 c
       nincx = n*incx
       do 10 i = 1,nincx,incx
-	dx(i) = da*dx(i)
+        dx(i) = da*dx(i)
    10 continue
       return
 c
-c	 code for increment equal to 1
+c        code for increment equal to 1
 c
 c
-c	 clean-up loop
+c        clean-up loop
 c
    20 m = mod(n,5)
       if( m .eq. 0 ) go to 40
       do 30 i = 1,m
-	dx(i) = da*dx(i)
+        dx(i) = da*dx(i)
    30 continue
       if( n .lt. 5 ) return
    40 mp1 = m + 1
       do 50 i = mp1,n,5
-	dx(i) = da*dx(i)
-	dx(i + 1) = da*dx(i + 1)
-	dx(i + 2) = da*dx(i + 2)
-	dx(i + 3) = da*dx(i + 3)
-	dx(i + 4) = da*dx(i + 4)
+        dx(i) = da*dx(i)
+        dx(i + 1) = da*dx(i + 1)
+        dx(i + 2) = da*dx(i + 2)
+        dx(i + 3) = da*dx(i + 3)
+        dx(i + 4) = da*dx(i + 4)
    50 continue
       return
       end
@@ -445,45 +445,45 @@ c
       if(n.le.0)return
       if(incx.eq.1.and.incy.eq.1)go to 20
 c
-c	code for unequal increments or equal increments not equal
-c	  to 1
+c       code for unequal increments or equal increments not equal
+c         to 1
 c
       ix = 1
       iy = 1
       if(incx.lt.0)ix = (-n+1)*incx + 1
       if(incy.lt.0)iy = (-n+1)*incy + 1
       do 10 i = 1,n
-	dtemp = dx(ix)
-	dx(ix) = dy(iy)
-	dy(iy) = dtemp
-	ix = ix + incx
-	iy = iy + incy
+        dtemp = dx(ix)
+        dx(ix) = dy(iy)
+        dy(iy) = dtemp
+        ix = ix + incx
+        iy = iy + incy
    10 continue
       return
 c
-c	code for both increments equal to 1
+c       code for both increments equal to 1
 c
-c	clean-up loop
+c       clean-up loop
 c
    20 m = mod(n,3)
       if( m .eq. 0 ) go to 40
       do 30 i = 1,m
-	dtemp = dx(i)
-	dx(i) = dy(i)
-	dy(i) = dtemp
+        dtemp = dx(i)
+        dx(i) = dy(i)
+        dy(i) = dtemp
    30 continue
       if( n .lt. 3 ) return
    40 mp1 = m + 1
       do 50 i = mp1,n,3
-	dtemp = dx(i)
-	dx(i) = dy(i)
-	dy(i) = dtemp
-	dtemp = dx(i + 1)
-	dx(i + 1) = dy(i + 1)
-	dy(i + 1) = dtemp
-	dtemp = dx(i + 2)
-	dx(i + 2) = dy(i + 2)
-	dy(i + 2) = dtemp
+        dtemp = dx(i)
+        dx(i) = dy(i)
+        dy(i) = dtemp
+        dtemp = dx(i + 1)
+        dx(i + 1) = dy(i + 1)
+        dy(i + 1) = dtemp
+        dtemp = dx(i + 2)
+        dx(i + 2) = dy(i + 2)
+        dy(i + 2) = dtemp
    50 continue
       return
       end
@@ -505,27 +505,27 @@ c
       if(n.eq.1)return
       if(incx.eq.1)go to 20
 c
-c	 code for increment not equal to 1
+c        code for increment not equal to 1
 c
       ix = 1
       dmax = dabs(dx(1))
       ix = ix + incx
       do 10 i = 2,n
-	 if(dabs(dx(ix)).gt.dmax)then
-	    idamax = i
-	    dmax = dabs(dx(ix))
-	 endif
-	 ix = ix + incx
+         if(dabs(dx(ix)).gt.dmax)then
+            idamax = i
+            dmax = dabs(dx(ix))
+         endif
+         ix = ix + incx
    10 continue
       return
 c
-c	 code for increment equal to 1
+c        code for increment equal to 1
 c
    20 dmax = dabs(dx(1))
       do 30 i = 2,n
-	 if(dabs(dx(i)).le.dmax) go to 30
-	 idamax = i
-	 dmax = dabs(dx(i))
+         if(dabs(dx(i)).le.dmax) go to 30
+         idamax = i
+         dmax = dabs(dx(i))
    30 continue
       return
       end

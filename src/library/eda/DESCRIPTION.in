@@ -3,5 +3,6 @@ Version: @VERSION@
 Priority: base
 Title: Exploratory Data Analysis
 Author: R Development Core Team
+Maintainer: R Core Team <R-core@r-project.org>
 Description: Exploratory Data Analysis, in the Tukey sense
 License: GPL Version 2 or later.

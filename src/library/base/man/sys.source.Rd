@@ -4,7 +4,7 @@
 \description{
   Parses expressions in the given file, and then successively evaluates
   them in the specified environment.  By default, evaluation is done in
-  the global environment.
+  the user's workspace (the global environment).
 }
 \usage{
 sys.source(file, envir = NULL, chdir = FALSE,

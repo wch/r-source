@@ -35,7 +35,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
 # list all files in the current directory using the -F flag
 \dontrun{system("ls -F")}
 
-# t1 contains a vector of strings, each one
+# t1 is a character vector, each one
 # representing a separate line of output from who
 t1 <- system("who", TRUE)
 

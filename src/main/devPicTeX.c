@@ -2,6 +2,7 @@
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +26,7 @@
 #include "Defn.h"
 #include "Graphics.h"
 #include "Fileio.h"
-#include "Devices.h"
+#include <Rdevices.h>
 
 	/* device-specific information per picTeX device */
 
@@ -143,10 +144,10 @@ static double charwidth[4][128] = {
 };
 
 static char *fontname[] = {
-	"cmss10",
-	"cmssbx10",
-	"cmssi10",
-	"cmssxi10"
+    "cmss10",
+    "cmssbx10",
+    "cmssi10",
+    "cmssxi10"
 };
 
 
@@ -294,23 +295,13 @@ static void PicTeX_NewPage(DevDesc *dd)
 
 static void PicTeX_Close(DevDesc *dd)
 {
-	picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
+    picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-	fprintf(ptd->texfp, "\\endpicture\n}\n");
-	fclose(ptd->texfp);
+    fprintf(ptd->texfp, "\\endpicture\n}\n");
+    fclose(ptd->texfp);
 
-	free(ptd);
+    free(ptd);
 }
-
-
-	/* Seek */
-/* NO LONGER USED
-static void PicTeX_MoveTo(double x, double y)
-{
-	xlast = x;
-	ylast = y;
-}
-*/
 
 	/* Draw To */
 
@@ -402,26 +393,26 @@ static void PicTeX_ClipLine(double x0, double y0, double x1, double y1,
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
 			int coords, DevDesc *dd)
 {
-	picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
+    picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-	if (x1 != x2 || y1 != y2) {
+    if (x1 != x2 || y1 != y2) {
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	GConvert(&x1, &y1, coords, DEVICE, dd);
 	GConvert(&x2, &y2, coords, DEVICE, dd);
 	if(ptd->debug)
-		fprintf(ptd->texfp,
-			"%% Drawing line from %.2f, %.2f to %.2f, %.2f\n",
-			x1, y1, x2, y2);
+	    fprintf(ptd->texfp,
+		    "%% Drawing line from %.2f, %.2f to %.2f, %.2f\n",
+		    x1, y1, x2, y2);
 	PicTeX_ClipLine(x1, y1, x2, y2, ptd);
 	if (ptd->debug)
-		fprintf(ptd->texfp,
-			"%% Drawing clipped line from %.2f, %.2f to %.2f, %.2f\n",
-			ptd->clippedx0, ptd->clippedy0,
-			ptd->clippedx1, ptd->clippedy1);
+	    fprintf(ptd->texfp,
+		    "%% Drawing clipped line from %.2f, %.2f to %.2f, %.2f\n",
+		    ptd->clippedx0, ptd->clippedy0,
+		    ptd->clippedx1, ptd->clippedy1);
 	fprintf(ptd->texfp, "\\plot %.2f %.2f %.2f %.2f /\n",
 		ptd->clippedx0, ptd->clippedy0,
 		ptd->clippedx1, ptd->clippedy1);
-	}
+    }
 }
 
 static void PicTeX_Polyline(int n, double *x, double *y, int coords,
@@ -435,7 +426,7 @@ static void PicTeX_Polyline(int n, double *x, double *y, int coords,
     x1 = x[0];
     y1 = y[0];
     GConvert(&x1, &y1, coords, DEVICE, dd);
-    for (i=1; i<n; i++) {
+    for (i = 1; i < n; i++) {
 	x2 = x[i];
 	y2 = y[i];
 	GConvert(&x2, &y2, coords, DEVICE, dd);
@@ -443,6 +434,8 @@ static void PicTeX_Polyline(int n, double *x, double *y, int coords,
 	fprintf(ptd->texfp, "\\plot %.2f %.2f %.2f %.2f /\n",
 		ptd->clippedx0, ptd->clippedy0,
 		ptd->clippedx1, ptd->clippedy1);
+	x1 = x2;
+	y1 = y2;
     }
 }
 
@@ -465,28 +458,12 @@ static double PicTeX_StrWidth(char *str, DevDesc *dd)
 }
 
 
-
-
-	/* Start a Path */
-/* NO LONGER USED
-	static void PicTeX_StartPath()
-	{
-		SetLinetype(GP->lty, dd->gp.lwd, dd);
-	}
-*/
-
-	/* End a Path */
-/* NO LONGER USED
-	static void PicTeX_EndPath()
-	{
-	}
-*/
-
 /* Possibly Filled Rectangle */
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
 			int coords, int bg, int fg, DevDesc *dd)
 {
     double x[4], y[4];
+
     x[0] = x0; y[0] = y0;
     x[1] = x0; y[1] = y1;
     x[2] = x1; y[2] = y1;
@@ -503,7 +480,6 @@ static void PicTeX_Circle(double x, double y, int coords, double r,
     fprintf(ptd->texfp,
 	    "\\circulararc 360 degrees from %.2f %.2f center at %.2f %.2f\n",
 	    x, (y + r), x, y);
-
 }
 
 static void PicTeX_Polygon(int n, double *x, double *y, int coords,
@@ -590,7 +566,7 @@ static void PicTeX_Text(double x, double y, int coords,
     fprintf(ptd->texfp,"\\put ");
     textext(str, ptd);
     if (rot == 90 )
-	 fprintf(ptd->texfp," [rB] <%.2fpt,%.2fpt>", xoff, yoff);
+	fprintf(ptd->texfp," [rB] <%.2fpt,%.2fpt>", xoff, yoff);
     else fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
     fprintf(ptd->texfp," at %.2f %.2f\n", x, y);
 }
@@ -602,12 +578,10 @@ static Rboolean PicTeX_Locator(double *x, double *y, DevDesc *dd)
 }
 
 
-/* Set Graphics mode - not needed for PS */
 static void PicTeX_Mode(int mode, DevDesc* dd)
 {
 }
 
-/* GraphicsInteraction() for the Mac */
 static void PicTeX_Hold(DevDesc *dd)
 {
 }

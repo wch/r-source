@@ -29,10 +29,9 @@
 
 double dnchisq(double x, double df, double lambda, int give_log)
 {
-    const static int maxiter = 100;
-    const static double eps = 1.e-14;
+    const static double eps = 5e-15;
 
-    double dens, i, lambda2, psum, sum, weight;
+    double i, lambda2, term, sum, q, mid, dfmid, imax, errorbound;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(df) || ISNAN(lambda))
@@ -43,27 +42,45 @@ double dnchisq(double x, double df, double lambda, int give_log)
     if (!R_FINITE(df) || !R_FINITE(lambda))
 	ML_ERR_return_NAN;
 
-    if(x <= 0) return R_D__0;
+    if(x < 0) return R_D__0;
 
 
     if(lambda == 0)
 	return dchisq(x, df, give_log);
 
-    dens = dchisq(x, df,  /* log = */ FALSE);
     lambda2 = 0.5 * lambda;
-    weight = exp(-lambda2);
-    sum	 = weight * dens;
-    psum = weight;
-    for(i=1; i < maxiter; i++) {
-	dens *= (x/df);
+
+    /* find max element of sum */
+    imax = ceil((-(2+df) +sqrt((2-df) * (2-df) + 4 * lambda * x))/4);
+    if (imax < 0) imax = 0;
+    dfmid = df + 2 * imax;
+    mid = dpois_raw(imax, lambda2, FALSE) * dchisq(x, dfmid, FALSE);
+
+    sum = mid;
+    /* upper tail */
+    term = mid;
+    i = imax;
+    df = dfmid;
+    do {
+	i++;
+	q = x * lambda2 / i / df;
 	df += 2;
-	weight *= (lambda2 / i);
-	sum  += weight * dens;
-	psum += weight;
-	if (1 - psum < eps) break;
-    }
-    if(1 - psum >= eps) { /* not converged */
-	ML_ERROR(ME_PRECISION);
+	term = q * term;
+	sum += term;
+	errorbound = term * q / (1-q);
+    } while (errorbound > eps);
+    /* lower tail */
+    term = mid;
+    df = dfmid;
+    i = imax;
+    while ( i ){
+	df -= 2;
+	q = i * df / x / lambda2;
+	i--;
+	term = q * term;
+	sum += term;
+	errorbound = term * q / (1-q);
+	if ( errorbound <= eps ) break;
     }
     return R_D_val(sum);
 }

@@ -23,7 +23,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Devices.h>
+#include <Rdevices.h>
 #include "devga.h"
 
 /* Return a non-relocatable copy of a string */

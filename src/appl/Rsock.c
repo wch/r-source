@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
 
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 1998  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998-2001   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,11 +24,17 @@
 #include <config.h>
 #endif
 
+#ifndef Macintosh /* Jago: macro already defined */
 #define NULL 0
+#endif
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
+#if defined(Macintosh)
+#include <types.h>
+#else
 #include <sys/types.h>
+#endif
 /* #include <errno.h>*/
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -154,7 +160,7 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     *len = (int) n;
 }
 
-#ifndef Win32
+#if !(defined(Win32) || defined(Macintosh)) /* Jago was: #ifndef Win32 */
 #include <signal.h>
 #include <sys/wait.h>
 static void sig_child(int sig)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000	 The R Development Core Team
+ *  Copyright (C) 2000, 2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,11 @@
 /* Exports setulb()
  *         ======
  * called from lbfgsb() in ../main/optim.c */
-
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
 #include <string.h>
 #include <R.h> /* for F77_CALL */
 #include <R_ext/Linpack.h>

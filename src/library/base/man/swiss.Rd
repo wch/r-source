@@ -50,7 +50,8 @@
 }
 \examples{
 data(swiss)
-pairs(swiss, panel = panel.smooth, main = "swiss data")
+pairs(swiss, panel = panel.smooth, main = "swiss data",
+      col = 3+ (swiss$Catholic > 50))
 summary(lm(Fertility ~ . , data = swiss))
 }
 \keyword{datasets}

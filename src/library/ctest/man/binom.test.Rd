@@ -31,7 +31,7 @@ binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
     \code{p}.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
-  \item{method}{the string \code{"Exact binomial test"}.}
+  \item{method}{the character string \code{"Exact binomial test"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{

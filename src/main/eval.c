@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000	The R Development Core Team.
+ *  Copyright (C) 1998-2001	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -326,13 +326,13 @@ SEXP eval(SEXP e, SEXP rho)
 #ifdef R_PROFILING
 	    if (R_Profiling) {
 		RCNTXT cntxt;
-		begincontext(&cntxt, CTXT_BUILTIN, e,
-			     R_NilValue, R_NilValue, R_NilValue);
 		PROTECT(tmp = evalList(CDR(e), rho));
 		R_Visible = 1 - PRIMPRINT(op);
+		begincontext(&cntxt, CTXT_BUILTIN, e,
+			     R_NilValue, R_NilValue, R_NilValue);
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
-		UNPROTECT(1);
 		endcontext(&cntxt);
+		UNPROTECT(1);
 	    } else {
 #endif
 		PROTECT(tmp = evalList(CDR(e), rho));
@@ -369,7 +369,6 @@ SEXP eval(SEXP e, SEXP rho)
 
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 {
-    int i;
     SEXP body, formals, actuals, savedrho;
     volatile  SEXP newrho;
     SEXP f, a, tmp;
@@ -488,7 +487,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     /*  Set a longjmp target which will catch any explicit returns
 	from the function body.  */
 
-    if ((i = SETJMP(cntxt.cjmpbuf))) {
+    if ((SETJMP(cntxt.cjmpbuf))) {
 	if (R_ReturnedValue == R_DollarSymbol) {
 	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
 	    R_GlobalContext = &cntxt;      /* put the context back */

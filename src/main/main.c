@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #define __MAIN__
 #include "Defn.h"
 #include "Graphics.h"
-#include "Devices.h"		/* for InitGraphics */
+#include "Rdevices.h"		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Parse.h"
 #include "Startup.h"
@@ -121,7 +121,7 @@ char *R_PromptString(int browselevel, int type)
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
     int c, status, browsevalue;
-    char *bufp, buf[1024];
+    unsigned char *bufp, buf[1024];
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
@@ -217,7 +217,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 }
 
 
-static char DLLbuf[1024], *DLLbufp;
+static unsigned char DLLbuf[1024], *DLLbufp;
 
 void R_ReplDLLinit()
 {
@@ -299,10 +299,8 @@ int R_ReplDLLdo1()
 static int doneit;
 
 FILE* R_OpenSysInitFile(void);
-#ifndef Macintosh
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
-#endif
 
 #ifdef OLD
 static void R_LoadProfile(FILE *fp)
@@ -327,6 +325,10 @@ static void R_LoadProfile(FILE *fp, SEXP env)
         R_Inputfile = NULL;
     }
 }
+
+/* Use this to allow e.g. Win32 malloc to call warning.
+   Don't use R-specific type, e.g. Rboolean */
+int R_Is_Running = 0;
 
 void setup_Rmainloop(void)
 {
@@ -374,7 +376,8 @@ void setup_Rmainloop(void)
     InitColors();
     InitGraphics();
     Init_C_alloc();
-
+    R_Is_Running = 1;
+    
     /* gc_inhibit_torture = 0; */
 
     /* Initialize the global context for error handling. */
@@ -394,10 +397,11 @@ void setup_Rmainloop(void)
 
     R_Warnings = R_NilValue;
 
-    /* On initial entry we open the base language */
-    /* package and begin by running the repl on it. */
-    /* If there is an error we pass on to the repl. */
-    /* Perhaps it makes more sense to quit gracefully? */
+    /* On initial entry we open the base language package and begin by
+       running the repl on it.
+       If there is an error we pass on to the repl.
+       Perhaps it makes more sense to quit gracefully?
+    */
 
     fp = R_OpenLibraryFile("base");
     R_Inputfile = NULL;
@@ -417,13 +421,21 @@ void setup_Rmainloop(void)
     }
     fclose(fp);
 
-    /* This is where we try to load a user's */
-    /* saved data.	The right thing to do here */
-    /* is very platform dependent.	E.g. Under */
-    /* Unix we look in a special hidden file and */
-    /* on the Mac we look in any documents which */
-    /* might have been double clicked on or dropped */
-    /* on the application */
+    /* This is where we source the system-wide, the site's and the
+       user's profile (in that order).  If there is an error, we
+       drop through to further processing.
+    */
+
+    R_LoadProfile(R_OpenSysInitFile(), R_NilValue);
+    R_LoadProfile(R_OpenSiteFile(), R_NilValue);
+    R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
+
+    /* This is where we try to load a user's saved data.
+       The right thing to do here is very platform dependent.
+       E.g. under Unix we look in a special hidden file and on the Mac
+       we look in any documents which might have been double clicked on
+       or dropped on the application.
+    */
 
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
@@ -438,17 +450,9 @@ void setup_Rmainloop(void)
     else
     	R_Suicide("unable to restore saved data\n (remove .RData or increase memory)\n");
 
-    /* This is where we source the system-wide, the site's and the
-       user's profile (in that order).  If there is an error, we
-       drop through to further processing. */
-
-    R_LoadProfile(R_OpenSysInitFile(), R_NilValue);
-    R_LoadProfile(R_OpenSiteFile(), R_NilValue);
-    R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
-
-    /* Initial Loading is done.  At this point */
-    /* we try to invoke the .First Function. */
-    /* If there is an error we continue */
+    /* Initial Loading is done.
+       At this point we try to invoke the .First Function.
+       If there is an error we continue. */
 
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);

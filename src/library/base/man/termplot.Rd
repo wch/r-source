@@ -8,7 +8,7 @@
 }
 \usage{
 termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
-         terms=NULL, se=FALSE, xlabs=NULL, ylab=NULL, main = NULL,
+         terms=NULL, se=FALSE, xlabs=NULL, ylabs=NULL, main = NULL,
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 2,
          col.res= "gray", cex = 1, pch = par("pch"),
@@ -23,7 +23,7 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
   \item{terms}{which terms to plot (default \code{NULL} means all terms)}
   \item{se}{plot pointwise standard errors?}
   \item{xlabs}{vector of labels for the x axes}
-  \item{ylab}{label for the y axes}
+  \item{ylabs}{vector of labels for the y axes}
   \item{main}{logical, or vector of main titles;  if \code{TRUE}, the
     model's call is taken as main title, \code{NULL} or \code{FALSE} mean
     no titles.}

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file extra.c
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -643,6 +643,7 @@ struct mallinfo {
   int keepcost; /* top-most, releasable (via malloc_trim) space */
 };
 extern unsigned long max_total_mem;
+extern unsigned int R_max_memory;
 
 struct mallinfo mallinfo();
 #endif
@@ -654,15 +655,14 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     checkArity(op, args);
     maxmem = asLogical(CAR(args));
-    if(maxmem == NA_LOGICAL)
-	errorcall(call, "invalid `max' argument");
     PROTECT(ans = allocVector(INTSXP, 1));
 #ifdef LEA_MALLOC
-    if(maxmem) {
+    if(maxmem == NA_LOGICAL) 
+	INTEGER(ans)[0] = R_max_memory;
+    else if(maxmem)
 	INTEGER(ans)[0] = max_total_mem;
-    } else {
+    else
 	INTEGER(ans)[0] = mallinfo().uordblks;
-    }
 #else
     INTEGER(ans)[0] = NA_INTEGER;
 #endif

@@ -65,14 +65,10 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in R data man; do \
+	@for d in R data exec man src; do \
 	  if test -d $(srcdir)/$${d}; then \
-	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	        | (cd $(distdir); $(TAR) -x -f -)) \
-	      || exit 1; \
-	  fi; \
-	  if test -d $(srcdir)/src; then \
-	    ((cd $(srcdir); $(TAR) -c -f - $${d}/*[.cfh]) \
+	    ((cd $(srcdir); \
+	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	        | (cd $(distdir); $(TAR) -x -f -)) \
 	      || exit 1; \
 	  fi; \

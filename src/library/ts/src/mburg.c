@@ -219,17 +219,15 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
     int i, j, k, l, nser = NROW(ss_ff);
     int iter;
     Array ss_bf;
-    Array s, s_inv, tmp, d1;
+    Array s, tmp, d1;
     Array D1, D2, THETA, THETAOLD, THETADIFF, TMP;
     Array obj;
-    Array id;
     Array e, f, g, h, sg, sh;
     Array theta;
 
     ss_bf = make_zero_matrix(nser,nser);
     transpose_matrix(ss_fb, ss_bf);
     s = make_zero_matrix(nser, nser);
-    s_inv = make_zero_matrix(nser, nser);
     tmp = make_zero_matrix(nser, nser);
     d1 = make_zero_matrix(nser, nser);
 
@@ -250,7 +248,6 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
     TMP = make_zero_matrix(nser*nser, 1);
 
     obj = make_zero_matrix(1,1);
-    id = make_identity_matrix(nser);
 
     /* utility matrices e,f,g,h */
     qr_solve(E, ss_bf, e);

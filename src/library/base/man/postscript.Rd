@@ -9,7 +9,7 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
            paper, family, bg, fg, width, height, horizontal, pointsize,
-           pagecentre, print.it, command))
+           pagecentre, print.it, command)
 
 %  paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
@@ -122,8 +122,8 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
   italic and bold italic fonts to be used.  If these paths do not
   contain the file separator, they are taken to refer to files in the
   \R directory \file{R\_HOME/afm}.  Thus the default Helvetica family
-  can be specified by \code{family = c("hv______.lt1",
-    "hvb_____.lt1", "hvo_____.lt1", "hvbo____.lt1")}.
+  can be specified by \code{family = c("hv______.afm",
+    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm")}.
 
   It is the user's responsibility to check that suitable fonts are made
   available, and that they contain the needed characters when re-encoded
@@ -132,6 +132,9 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
   including the PostScript plot file should either embed the font
   outlines (usually from \code{.pfb} or \code{.pfa} files) or
   use DSC comments to instruct the print spooler to do so.
+
+  As ISOLatin1 encoding is used, \code{-} is set as a minus and not
+  as a hyphen.  Supply a hyphen (character 173) if that is what you need.
 }
 \seealso{
     \code{\link{Devices}},

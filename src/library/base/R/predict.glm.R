@@ -39,8 +39,8 @@ predict.glm <-
 	se.fit <- pred$se.fit
 	switch(type,
 	       response = {
-		   fit <- family(object)$linkinv(fit)
 		   se.fit <- se.fit * abs(family(object)$mu.eta(fit))
+		   fit <- family(object)$linkinv(fit)
 	       },
 	       link =, terms=)
 	pred <- list(fit=fit, se.fit=se.fit, residual.scale=residual.scale)

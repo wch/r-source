@@ -13,7 +13,7 @@ print.matrix <- function (x, rowlab = dn[[1]], collab = dn[[2]],
 			  na.print=NULL, print.gap=NULL, ...) {
     x <- as.matrix(x)
     dn <- dimnames(x)
-    if(!is.null(print.gap)) .NotYetUsed("print.gap")
+    if(!is.null(print.gap)) .NotYetUsed("print.gap", error = FALSE)
     ## and `na.print' could be done in .Internal(.) as well:
     if(!is.null(na.print) && any(ina <- is.na(x)))
 	x[ina] <- na.print

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -108,16 +109,15 @@ SEXP mkChar(const char *name)
 static int ddVal(SEXP name)
 {
     char *buf, *endp;
-    int rval;
 
     buf = CHAR(name);
     if( !strncmp(buf,"..",2) && strlen(buf) > 2 ) {
         buf += 2;
-	rval = strtol(buf, &endp, 10);
+	strtol(buf, &endp, 10);
         if( *endp != '\0')
-		return 0;
+	    return 0;
 	else
-		return 1;
+	    return 1;
     }
     return 0;
 }
@@ -125,17 +125,17 @@ static int ddVal(SEXP name)
 SEXP mkSYMSXP(SEXP name, SEXP value)
 
 {
-	SEXP c;
-	int i;
-	PROTECT(name);
-	PROTECT(value);
-	i = ddVal(name);
-	c = allocSExp(SYMSXP);
-	SET_PRINTNAME(c, name);
-	SET_SYMVALUE(c, value);
-	SET_DDVAL(c, i);
-	UNPROTECT(2);
-	return c;
+    SEXP c;
+    int i;
+    PROTECT(name);
+    PROTECT(value);
+    i = ddVal(name);
+    c = allocSExp(SYMSXP);
+    SET_PRINTNAME(c, name);
+    SET_SYMVALUE(c, value);
+    SET_DDVAL(c, i);
+    UNPROTECT(2);
+    return c;
 }
 
 

@@ -18,6 +18,8 @@
   By default, the input commands are printed along with the
   output.  To suppress this behavior, add \code{options(echo = FALSE)}
   at the beginning of \code{infile}.
+
+  Files with an incomplete last line (no end of line mark) are now accepted.
 }
 \keyword{utilities}
     

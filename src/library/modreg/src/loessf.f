@@ -52,7 +52,7 @@ c     remaining vertices
          j=i-1
          do 6 k=1,d
             v(i,k)=v(1+mod(j,2)*(vc-1),k)
-            j=DFLOAT(j)/2.D0
+            j=DBLE(j)/2.D0
     6    continue
     5 continue
       return
@@ -503,8 +503,8 @@ c     coef, d, deg, del
      +930370d0 /
       if(deg.eq.0) dk=1
       if(deg.eq.1) dk=d+1
-      if(deg.eq.2) dk=dfloat((d+2)*(d+1))/2.d0
-      corx=dsqrt(k/dfloat(n))
+      if(deg.eq.2) dk=dble((d+2)*(d+1))/2.d0
+      corx=dsqrt(k/dble(n))
       z=(dsqrt(k/trl)-corx)/(1-corx)
       if(nsing .eq. 0 .and. 1 .lt. z)   call ehg184('Chernobyl! trL<k',t
      +rl,1,1)
@@ -593,7 +593,7 @@ c     remaining vertices
          j=i-1
          do 4 k=1,d
             v(i,k)=v(1+mod(j,2)*(vc-1),k)
-            j=ifloor(DFLOAT(j)/2.D0)
+            j=ifloor(DBLE(j)/2.D0)
     4    continue
     3 continue
 c     as in ehg131
@@ -741,7 +741,7 @@ c     bottom of while loop
       execnt=execnt+1
       call ehg141(trl,n,1,tau,d,nsing,dka,d1a,d2a)
       call ehg141(trl,n,2,tau,d,nsing,dkb,d1b,d2b)
-      alpha=dfloat(tau-dka)/dfloat(dkb-dka)
+      alpha=dble(tau-dka)/dble(dkb-dka)
       delta1=(1-alpha)*d1a+alpha*d1b
       delta2=(1-alpha)*d2a+alpha*d2b
       return
@@ -800,7 +800,7 @@ c           bottom of while loop
       execnt=execnt+1
       call ehg197(1,tau,d,f,dka,trla)
       call ehg197(2,tau,d,f,dkb,trlb)
-      alpha=dfloat(tau-dka)/dfloat(dkb-dka)
+      alpha=dble(tau-dka)/dble(dkb-dka)
       trl=(1-alpha)*trla+alpha*trlb
       return
       end
@@ -810,7 +810,7 @@ c           bottom of while loop
       double precision trl, f
       dk = 0
       if(deg.eq.1) dk=d+1
-      if(deg.eq.2) dk=dfloat((d+2)*(d+1))/2.d0
+      if(deg.eq.2) dk=dble((d+2)*(d+1))/2.d0
       g1 = (-0.08125d0*d+0.13d0)*d+1.05d0
       trl = dk*(1+max(0.d0,(g1-f)/f))
       return
@@ -901,7 +901,7 @@ c     tensor
          if(.not.i2)then
             call ehg182(122)
          end if
-         lg=DFLOAT(lg)/2.D0
+         lg=DBLE(lg)/2.D0
          do 8 ig=1,lg
 c           Hermite basis
             phi0=(1-h)**2*(1+2*h)
@@ -1183,11 +1183,11 @@ c        Hermite basis
       end
 
 c DSIGN is unused, causes conflicts on some platforms
-c	DOUBLE PRECISION function DSIGN(a1,a2)
-c	DOUBLE PRECISION a1, a2
-c	DSIGN=DABS(a1)
-c	if(a2.ge.0)DSIGN=-DSIGN
-c	end
+c       DOUBLE PRECISION function DSIGN(a1,a2)
+c       DOUBLE PRECISION a1, a2
+c       DSIGN=DABS(a1)
+c       if(a2.ge.0)DSIGN=-DSIGN
+c       end
 
       subroutine ehg136(u,lm,m,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,
      +     od,o,ihat,w,rcond,sing,dd,tdeg,cdeg,s)
@@ -1496,7 +1496,7 @@ c           $Lf sub {:,l,:} = V SIGMA sup {+} U sup T Q sup T W$
      +wv(iv(12)),wv(iv(15)),wv(iv(16)),wv(iv(18)),ifloor(iv(3)*wv(2)),wv
      +(3),wv(iv(26)),wv(iv(24)),wv(4),iv(30),iv(33),iv(32),iv(41),iv(iv(
      +25)),wv(iv(34)),setlf)
-      if(iv(14).lt.iv(6)+DFLOAT(iv(4))/2.D0)then
+      if(iv(14).lt.iv(6)+DBLE(iv(4))/2.D0)then
          call ehg183('k-d tree limited by memory; nvmax=',iv(14
      +),1,1)
       else
@@ -1547,7 +1547,7 @@ c     version -> versio
             i1=d+1
          else
             if(ideg.eq.2)then
-               i1=dfloat((d+2)*(d+1))/2.d0
+               i1=dble((d+2)*(d+1))/2.d0
             end if
          end if
       end if
@@ -1723,7 +1723,7 @@ c     find median of absolute residuals
       do 4 identi=1,n
          pi(identi)=identi
     4 continue
-      nh=ifloor(dfloat(n)/2.d0)+1
+      nh=ifloor(dble(n)/2.d0)+1
 c     partial sort to find 6*mad
       call ehg106(1,n,nh,1,rw,pi,n)
       if((n-nh)+1.lt.nh)then
@@ -1772,7 +1772,7 @@ c     median absolute deviation
       do 4 identi=1,n
          pi(identi)=identi
     4 continue
-      m=ifloor(dfloat(n)/2.d0)+1
+      m=ifloor(dble(n)/2.d0)+1
       call ehg106(1,n,m,1,ytilde,pi,n)
       if((n-m)+1.lt.m)then
          call ehg106(1,m-1,m-1,1,ytilde,pi,n)
@@ -1846,14 +1846,14 @@ c     top of while loop
             if(ncmax.lt.nc+2)then
                i2=.true.
             else
-               i2=(nvmax.lt.nv+DFLOAT(vc)/2.D0)
+               i2=(nvmax.lt.nv+DBLE(vc)/2.D0)
             end if
             leaf=i2
          end if
          if(.not.leaf)then
             call ehg129(l,u,dd,x,pi,n,sigma)
             k=IDAMAX(dd,sigma,1)
-            m=DFLOAT(l+u)/2.D0
+            m=DBLE(l+u)/2.D0
             call ehg106(l,u,m,1,x(1,k),pi,n)
 c           all ties go with hi son
 c           top of while loop

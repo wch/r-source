@@ -1,0 +1,120 @@
+Macintosh porting of R
+======================
+
+In this directory you can find all the files needed to compile a
+version of R for MacOS.  The original code for MacOS was written by
+Ross Ihaka, Julian Harris and Wing Kwong (Tiki) Wan. More recently
+Stefano M. Iacus has written new code, modified or simply updated most
+of the older files to work with current versions of R sources and the
+Waste Text Engine.
+
+Before building R
+=================
+
+There are only two files that must be uncompressed before
+starting compiling R. These are
+
+src/macintosh/res/R.rsrc.hqx	-  the R application resource file
+src/macintosh/cwpro/R.mcp.hqx	-  the CodeWarrior Project file
+
+and you need to expand them via any hqx decoding utility.
+
+Some files need to be created on a Unix/Linux/MacOS X platform. Unpack
+the sources on such a platform and run (you will probably need GNU
+make)
+
+	cd src/macintosh
+	make
+	make distribution
+
+and then copy the file dist.zip to the Macintosh and unpack it at the
+top level of the R sources.  It creates the library folder, and adds
+files in doc/html and some header files in src/macintosh.
+
+
+Building R
+==========
+
+The R binary can be compiled using Code Warrior Pro 6, called CW
+subsequently, by simply opening the file "R.mcp" in the "cwpro" directory.
+To build the R application you need version 2.x of the Waste Library
+by Marco Piovanelli. This should be included in the CW6 distribution.
+In case you don't have this, please download the full archive from the
+official Waste library site,  http://www.merzwaren.com/waste.
+
+You also need a fortran compiler or an F2C tool to compile the *.f
+fortran files in src/appl directory.  The R.mcp project assumes that
+you have converted the files with F2C and put the *.c sources in
+/src/appl directory.  The CW6 distribution includes Mac F2C. You just
+need to drag and drop fortran *.f files on the Mac F2C icon to convert
+the files. 
+
+Please note: take care to remove or rename the file "fp.h" in the
+f2clib directory of Mac F2C distribution. This file conflicts
+with the standard "fp.h" in the Apple Universal Libraries that
+is needed in order to use IEEE 754 arithmetics.
+
+Once you have built the R application, copy the "R" binary from
+"src/macintosh/bin" in the folder where you put also the "library"
+directory (with all packages built), the "afm", "demos" and "tests"
+directories. The distribution folder should appear as
+
+afm/		(dir)
+demo/		(dir)
+library/	(dir)
+R		(file)
+tests/		(dir)
+
+You should also copy the ".Renviron" file in the same directory.
+
+
+Before building R :
+===================
+
+1) Please copy the file "src/include/macintosh/config.mac.h" to
+   "src/include/config.h" before you build the R application.
+
+2) if you do not use F2C you need a Fortran compiler
+   and also to change the R.mcp project.
+
+
+Building packages
+=================
+
+To build compiled code for the standard packages, expand the
+respective archives "src/<pkg>/src/<pkg>.mcp.hqx" that contain
+a CW project.  Once you have built a package you should move the
+resulting file to the "libs" directory in the "library/<pkg>"
+folder.
+
+Brian Ripley has written a "makefile" that you can run under MacOS X
+that automates most of the things needed to build the R application,
+configure it, build help and doc files etc.  If you are not able to
+run this "makefile" you can take the help and examples files from the
+Windows version by simply copying the whole directories {help, html,
+R-ex} from the Windows distribution to the package directory here.
+
+At present this applies to the data and R directories too.
+
+
+Futher directions
+=================
+
+Most of the files in the src/macintosh directory are only partially
+commented. This will change in the near future. The GUI sources are adapted
+from the WasteDemo application from the Waste Text Engine distribution.
+Thanks to Marco Piovanelli for providing these sources for free.
+
+Note that the process of building R for the Macintosh is still not
+satisfactory to us, and we are working on improvements.
+
+---------
+
+For comments and feedback, please contact either the
+R Core Development Team (and Stefano M. Iacus) at
+
+  R-core@R-project.org
+
+or only
+
+  Stefano M. Iacus <stefano.iacus@unimi.it>

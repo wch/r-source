@@ -17,7 +17,7 @@
 \usage{
 ppr(formula, data = sys.parent(), weights,
     subset, na.action, contrasts = NULL,
-    ww = rep(1,q), nterms, max.terms=nterms, optlevel = 2,
+    ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2,
     sm.method = c("supsmu", "spline", "gcvspline"),
     bass = 0, span = 0, df = 5, gcvpen = 1)
 
@@ -50,7 +50,7 @@ ppr.default(x, y, weights = rep(1,n),
   }
   \item{nterms}{number of terms to include in the final model.}
   \item{data}{
-    Data frame from which variables specified in \code{formula} are
+    data frame from which variables specified in \code{formula} are
     preferentially to be taken.
   }
   \item{weights}{a vector of weights \code{w_i} for each \emph{case}.}
@@ -60,11 +60,11 @@ ppr.default(x, y, weights = rep(1,n),
     \code{w_i ww_j (y_ij - fit_ij)^2} divided by the sum of \code{w_i}.
   }
   \item{subset}{
-    An index vector specifying the cases to be used in the training
+    an index vector specifying the cases to be used in the training
     sample.  (NOTE: If given, this argument must be named.)
   }
   \item{na.action}{
-    A function to specify the action to be taken if \code{\link{NA}}s are
+    a function to specify the action to be taken if \code{\link{NA}}s are
     found. The default action is for the procedure to fail.  An
     alternative is \code{\link{na.omit}}, which leads to rejection of cases
     with missing values on any required variable.  (NOTE: If given, this
@@ -132,8 +132,8 @@ method functions.
 \item{yb}{the weighted means of each response}
 \item{ys}{the overall scale factor used: internally the responses are
   divided by \code{ys} to have unit total weighted sum of squares.}
-\item{fitted.values}{the fitted values, as a matrix if \code{q > 1}}
-\item{residuals}{the residuals, as a matrix if \code{q > 1}}
+\item{fitted.values}{the fitted values, as a matrix if \code{q > 1}.}
+\item{residuals}{the residuals, as a matrix if \code{q > 1}.}
 \item{smod}{internal work array, which includes the ridge functions
   evaluated at the training set points.}
 }
@@ -144,7 +144,7 @@ method functions.
 
   The algorithm first adds up to \code{max.terms} ridge terms one at a
   time; it will use less if it is unable to find a term to add that makes
-  sufficient difference.  It then removes the least \emph{"important"}
+  sufficient difference.  It then removes the least ``\emph{important}''
   term at each step until \code{nterm} terms are left.
 
   The levels of optimization (argument \code{optlevel})

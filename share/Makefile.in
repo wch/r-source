@@ -50,6 +50,9 @@ install-sources: installdirs
 	    $(INSTALL_DATA) $${f} $(rhome)/share/perl/$${d}; \
 	  done; \
 	done
+	@for f in $(srcdir)/perl/*.pl; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/share/perl; \
+	done
 install-strip: install
 uninstall:
 	@echo "uninstalling share ..."

@@ -11,7 +11,7 @@ fix(x, ...)
 \description{
   \code{fix} invokes the editor specified in
   \code{\link{options}("editor")} on \code{x} and then assigns the new
-  (edited) version of \code{x} in the global environment.
+  (edited) version of \code{x} in the user's workspace.
 }
 \seealso{
   \code{\link{edit}},  \code{\link{edit.data.frame}}

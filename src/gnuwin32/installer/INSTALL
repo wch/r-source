@@ -1,7 +1,7 @@
-You need to get Info-Zip's unzip541.zip from one of many mirrors, and
+You need to get Info-Zip's unzip542.zip from one of many mirrors, and
 unzip it in this directory, with say
 
-	unzip unzip541.zip -d unzip
+	unzip unzip542.zip -d unzip
 
 Then alter UNZIPDIR in the Makefile if necessary and run make.
 

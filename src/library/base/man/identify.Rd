@@ -57,4 +57,7 @@ identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
   \code{pos}, indicating where the labels were placed relative to the
   identified points.
 }
+\seealso{
+  \code{\link{locator}}
+}
 \keyword{iplot}

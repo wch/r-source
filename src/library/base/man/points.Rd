@@ -42,6 +42,10 @@ points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
   centered at the coordinates.
 }
 \details{
+  The coordinates can be passed in a plotting structure
+  (a list with \code{x} and \code{y} components), a two-column matrix, a
+  time series, \dots.  See \code{\link{xy.coords}}.
+
   Graphical parameters are permitted as arguments to this function.
 }
 \seealso{

@@ -38,7 +38,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Devices.h"		/* KillAllDevices() [nothing else?] */
+#include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
 #include "devUI.h" /* includes Startup.h */

@@ -14,8 +14,8 @@ object.size(x)
   Exactly which parts of the memory allocation should be attributed
   to which object is not clear-cut.  This function merely provides
   a rough indication.  For example, it will not detect if character
-  storage for strings are shared between identical elements (which it
-  will be if \code{rep} was used, for example).
+  storage for character strings are shared between identical elements
+  (which it will be if \code{rep} was used, for example).
 
   The calculation is of the size of the object, and excludes the space
   needed to store its name in the symbol table.
@@ -25,7 +25,7 @@ object.size(x)
   actual object, for each of them.
 }
 \value{
-  An estimate memory allocation atributable to the object, in bytes.
+  An estimate of the memory allocation attributable to the object, in bytes.
 }
 
 \examples{

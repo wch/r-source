@@ -1,7 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -34,20 +34,26 @@ SEXP do_PicTeX(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Gnome(SEXP, SEXP, SEXP, SEXP);
 SEXP do_GTK(SEXP, SEXP, SEXP, SEXP);
 SEXP do_XFig(SEXP, SEXP, SEXP, SEXP);
+#ifdef Macintosh
+SEXP do_Macintosh(SEXP, SEXP, SEXP, SEXP);
+#endif
 
 /* Function Names */
 
-#ifdef Win32
+#if defined(Win32) || defined(Macintosh)
 SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
-SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_int_unzip(SEXP, SEXP, SEXP, SEXP);
+#endif
+
+#ifdef Win32
+SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveDevga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
-SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
@@ -231,6 +237,7 @@ SEXP do_matrix(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memlimits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memoryprofile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_menu(SEXP, SEXP, SEXP, SEXP);
+SEXP do_merge(SEXP, SEXP, SEXP, SEXP);
 SEXP do_missing(SEXP, SEXP, SEXP, SEXP);
 SEXP do_modelframe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_modelmatrix(SEXP, SEXP, SEXP, SEXP);
@@ -383,8 +390,8 @@ SEXP do_stdout(SEXP, SEXP, SEXP, SEXP);
 SEXP do_stderr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readlines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writelines(SEXP, SEXP, SEXP, SEXP);
-SEXP do_readraw(SEXP, SEXP, SEXP, SEXP);
-SEXP do_writeraw(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readbin(SEXP, SEXP, SEXP, SEXP);
+SEXP do_writebin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_open(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isopen(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isincomplete(SEXP, SEXP, SEXP, SEXP);

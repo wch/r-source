@@ -31,13 +31,28 @@ hist.default <-
                     stop("invalid number of breaks")
                 breaks
             }
-        breaks <- pretty (rx, n = nnb, min.n=1, eps.corr = 2)
+        breaks <- pretty (rx, n = nnb, min.n=1)
+
         nB <- length(breaks)
         if(nB <= 1) ##-- Impossible !
             stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
     }
+    ## Fuzz to handle cases where points are "effectively on"
+    ## the boundaries
+    diddle <- 1e-7 * max(abs(range(breaks)))
+    fuzz <- if(right)
+	c(if(include.lowest)-diddle else diddle,
+	    rep(diddle, length(breaks) - 1))
+    else
+	c(rep(-diddle, length(breaks) - 1),
+	    if(include.lowest) diddle else -diddle)
+
+    breaks <- breaks + fuzz
+
     storage.mode(x) <- "double"
     storage.mode(breaks) <- "double"
+    ## With the fuzz adjustment above, the "right" and "include"
+    ## arguments are really irrelevant
     counts <- .C("bincount",
                  x,
                  n,

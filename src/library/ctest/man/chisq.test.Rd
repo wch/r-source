@@ -66,7 +66,7 @@ chisq.test(InsectSprays$count > 7, InsectSprays$spray)
                                 # Prints test summary
 chisq.test(InsectSprays$count > 7, InsectSprays$spray)$obs
                                 # Counts observed
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$obs
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$exp
                                 # Counts expected under the null
 
 ## Effect of simulating p-values

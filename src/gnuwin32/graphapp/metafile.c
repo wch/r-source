@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999  Guido Masarotto
+ *  Copyright (C) 1999-2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,8 +69,8 @@ static object get_metafile_base(void)
     return metafile_base;
 }
 
-
-metafile newmetafile(char *name,rect r)
+/* width and height are in mm */
+metafile newmetafile(char *name, double width, double height)
 {
     metafile obj;
     HDC hDC;
@@ -91,8 +91,8 @@ metafile newmetafile(char *name,rect r)
 
     wr.left = 0;
     wr.top =  0 ;
-    wr.right =  (ppix * r.width) / cppix ;
-    wr.bottom = (ppiy * r.height) / cppiy ;
+    wr.right =  (ppix * width) / cppix ;
+    wr.bottom = (ppiy * height) / cppiy ;
 
     hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, 
 			    "GraphApp\0\0");
@@ -106,18 +106,11 @@ metafile newmetafile(char *name,rect r)
 	DeleteEnhMetaFile(CloseEnhMetaFile(hDC));
 	return NULL;
     }
-    obj->rect = rect(0, 0, (ppix * r.width)/2540, (ppiy * r.height)/2540);
+    obj->rect = rect(0, 0, (ppix * width)/2540, (ppiy * height)/2540);
     obj->depth = GetDeviceCaps(hDC, BITSPIXEL) * GetDeviceCaps(hDC, PLANES);
-    obj->die = private_delmetafile ;
+    obj->die = private_delmetafile;
     obj->drawstate = copydrawstate();
     obj->drawstate->dest = obj;
-    settext(obj,name ? name : "");
+    settext(obj, name ? name : "");
     return obj;
 }
-
-
-
-
-
-
-

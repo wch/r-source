@@ -6,7 +6,7 @@
 }
 \usage{
 axis(side, at, labels = TRUE, tick = TRUE, line = 0,
-     pos = NA, outer = FALSE, \dots)
+     pos = NA, outer = FALSE, font = NA, vfont = NULL, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
@@ -27,6 +27,8 @@ axis(side, at, labels = TRUE, tick = TRUE, line = 0,
   \item{outer}{a logical value indicating whether the axis should be
     drawn in the outer plot margin, rather than the standard plot
     margin.}
+  \item{font}{font for text.}
+  \item{vfont}{vector font for text.}
   \item{\dots}{graphical parameters may also be passed as arguments to
     this function.}
 }

@@ -29,6 +29,11 @@ if(!interactive())
 all(dpois(0:5,0)	   == c(1, rep(0,5)))
 all(dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
 
+## PR #842
+all.equal(cumsum(dnbinom(0:5, .9, .5)),
+         (pnb <- pnbinom(0:5, .9, .5)))
+All.eq(pnb[c(2,4)], c(0.777035760338812, 0.946945347071519))
+
 ## Currently, just Wilcoxon  [should do this for all !]
 is.sym <- TRUE
 for(n in rpois(5, lam=6))

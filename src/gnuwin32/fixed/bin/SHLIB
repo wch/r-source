@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000 R Development Core Team
+# Copyright (C) 2000, 2001 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ use File::Path;
 use Getopt::Long;
 
 
-my $revision = ' $Revision: 1.3 $ ';
+my $revision = ' $Revision: 1.3.4.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -52,8 +52,19 @@ if($opt_output){
     $dllname =~ s/\.[^\.]+$//;
 }
 
-my $srcs=join(" ", @ARGV);
-system("make -f $R_HOME/src/gnuwin32/MakeDLL RHOME=$R_HOME $debug DLLNAME=$dllname SOURCES='$srcs'");
+my @cfsrcs;
+my @cxxsrcs;
+foreach $src (@ARGV) {
+    if ($src =~ /\.(cc|cpp|C)$/) {
+	push @cxxsrcs, $src;
+    } else {
+	push @cfsrcs, $src;
+    }
+}
+
+my $srcs=join(" ", @cfsrcs);
+my $cxx=join(" ", @cxxsrcs);
+system("make -f $R_HOME/src/gnuwin32/MakeDll RHOME=$R_HOME $debug DLLNAME=$dllname CFSOURCES='$srcs' CXXSOURCES='$cxx'");
 
 
 sub usage {

@@ -2,14 +2,17 @@
 %%%% copyright (C) 1998 B. D. Ripley
 %
 \name{smooth.spline}
+\alias{smooth.spline}
+\alias{predict.smooth.spline.fit}
+\alias{print.smooth.spline}
 \title{Fit a Smoothing Spline}
+\description{
+  Fits a cubic smoothing spline to the supplied data.
+}
 \usage{
 smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
               cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1)
 }
-\alias{smooth.spline}
-\alias{predict.smooth.spline.fit}
-\alias{print.smooth.spline}
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
    list or a two-column matrix specifying x and y. }
@@ -19,7 +22,7 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
  \item{df}{the desired equivalent number of degrees of freedom (trace of
      the smoother matrix).}
  \item{spar}{the coefficient \eqn{\lambda} of the integral of the squared
-   second derivative in the fit (penalized log lik.) criterion.}
+   second derivative in the fit (penalized log likelihood) criterion.}
  \item{cv}{ordinary (\code{TRUE}) or `generalized' (\code{FALSE})
    cross-validation.}
  \item{all.knots}{if \code{TRUE}, all points in \code{x} are uses as
@@ -28,8 +31,6 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
-}
-\description{Fits a cubic smoothing spline to the supplied data.
 }
 \details{
   The \code{x} vector should contain at least ten distinct values.
@@ -56,7 +57,7 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
   \item{df}{equivalent degrees of freedom used.}
   \item{spar}{the value of \eqn{\lambda} chosen.}
   \item{fit}{list for use by \code{predict.smooth.spline}.}
-  \item{call}{}
+  \item{call}{the matched call.}
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{predict.smooth.spline}}}
