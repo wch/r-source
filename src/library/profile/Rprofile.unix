@@ -6,7 +6,7 @@
 
 options(printcmd = getenv("R_PRINTCMD"))
 options(papersize = getenv("R_PAPERSIZE"))
-options(device = if(interactive() && getenv("DISPLAY"))
+options(device = if(interactive() && getenv("DISPLAY") != "")
         "X11" else "postscript")
 
 # .First <- function() { if (interactive() && getenv("DISPLAY") != "") x11() }
