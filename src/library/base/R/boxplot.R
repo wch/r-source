@@ -94,42 +94,48 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 {
     pars <- c(pars, list(...))
 
-    bplt <- function(x, wid, stats, out, conf, notch, border, col, horizontal)
+    bplt <- function(x, wid, stats, out, conf, notch, border, col,
+                     horizontal, xlog)
     {
 	## Draw single box plot
 	if(!any(is.na(stats))) {
-	    ## stats = +/- Inf:	 polygon & segments should handle
+            ## stats = +/- Inf:	polygon & segments should handle
+
+            ## Compute "x + w" -- ``correctly'' in log-coord. case:
+            xP <-
+                if(xlog) function(x,w) x * exp(w)
+                else function(x,w) x + w
 	    wid <- wid/2
             if (notch) {
-                xx <- x + wid * c(-1, 1, 1, notch.frac, 1,
-                                   1,-1,-1,-notch.frac,-1)
+                xx <- xP(x, wid * c(-1, 1, 1, notch.frac, 1,
+                                    1, -1,-1,-notch.frac,-1))
                 yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
                         stats[c(4, 4)], conf[2], stats[3], conf[1])
             }
             else {
-                xx <- x + wid * c(-1, 1, 1, -1)
+                xx <- xP(x, wid * c(-1, 1, 1, -1))
                 yy <- stats[c(2, 2, 4, 4)]
             }
             if(!notch) notch.frac <- 1
             wntch <- notch.frac*wid
             if (horizontal) {
                 polygon(yy, xx, col = col, border = border)
-                segments(stats[3], x - wntch,
-                         stats[3], x + wntch, col = border)
+                segments(stats[3], xP(x, -wntch),
+                         stats[3], xP(x, +wntch), col = border)
                 segments(stats[c(1, 5)], rep(x, 2),
                          stats[c(2, 4)], rep(x, 2), lty= "dashed", col= border)
-                segments(stats[c(1, 5)], rep(x - wid/2, 2),
-                         stats[c(1, 5)], rep(x + wid/2, 2), col = border)
+                segments(stats[c(1, 5)], rep(xP(x, -wid/2), 2),
+                         stats[c(1, 5)], rep(xP(x, +wid/2), 2), col = border)
                 do.call("points",c(list(out, rep(x, length(out))), pt.pars))
             }
             else { ## vertical
                 polygon(xx, yy, col=col, border=border)
-                segments(x - wntch, stats[3],
-                         x + wntch, stats[3], col=border)
+                segments(xP(x, -wntch), stats[3],
+                         xP(x, +wntch), stats[3], col=border)
                 segments(rep(x,2), stats[c(1,5)],
                          rep(x,2), stats[c(2,4)], lty= "dashed",col= border)
-                segments(rep(x - wid/2, 2), stats[c(1,5)],
-                         rep(x + wid/2, 2), stats[c(1,5)], col=border)
+                segments(rep(xP(x, -wid/2), 2), stats[c(1,5)],
+                         rep(xP(x, +wid/2), 2), stats[c(1,5)], col=border)
                 do.call("points",c(list(rep(x,length(out)), out), pt.pars))
             }
 	    if(any(inf <- !is.finite(out))) {
@@ -164,16 +170,6 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	pars$ylim <- NULL
     }
 
-    width <-
-	if(!is.null(width)) {
-	    if(length(width) != n | any(is.na(width)) | any(width <= 0))
-		stop("invalid boxplot widths")
-	    boxwex * width/max(width)
-	}
-	else if(varwidth) boxwex * sqrt(z$n/max(z$n))
-	else if(n == 1) 0.5 * boxwex
-	else rep(boxwex, n)
-
     if(missing(border) || length(border)==0)
 	border <- par("fg")
     pt.pars <- c(pars[names(pars) %in% c("pch", "cex", "bg")], col = border)
@@ -187,6 +183,22 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
         else
             plot.window(xlim = c(0.5, n + 0.5), ylim = ylim, log = log)
     }
+    xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
+    ## default boxwex depends on xlog
+    if(missing(boxwex))
+        boxwex <- 0.8 * {
+            if(n <= 1) 1 else
+            quantile(diff(sort(if(xlog)log(at) else at)), 0.10) }
+
+    width <-
+	if(!is.null(width)) {
+	    if(length(width) != n | any(is.na(width)) | any(width <= 0))
+		stop("invalid boxplot widths")
+	    boxwex * width/max(width)
+	}
+	else if(varwidth) boxwex * sqrt(z$n/max(z$n))
+	else if(n == 1) 0.5 * boxwex
+	else rep(boxwex, n)
     for(i in 1:n)
 	bplt(at[i], wid=width[i],
 	     stats= z$stats[,i],
@@ -195,7 +207,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	     notch= notch,
 	     border=border[(i-1)%%length(border)+1],
 	     col = if(is.null(col)) col else col[(i-1)%%length(col)+1],
-             horizontal=horizontal)
+             horizontal = horizontal, xlog = xlog)
 
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
