@@ -17,7 +17,7 @@ pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
 
-R_EXE = $(top_builddir)/bin/R --vanilla
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
@@ -49,7 +49,7 @@ all: Makefile DESCRIPTION
 	  done; \
 	  rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*; \
 	  echo "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
-	    R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null; \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) > /dev/null; \
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
