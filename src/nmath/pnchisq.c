@@ -70,7 +70,7 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 
     /* check if (f+2n) is greater than x */
 
-    flag = LFALSE;
+    flag = FALSE;
     n = 1;
     f_2n = f + 2.;/* = f + 2*n */
     f_x_2n += 2.;/* = f - x + 2*n */
@@ -81,7 +81,7 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 	if (f_x_2n > 0) {
 
 	    /* find the error bound and check for convergence */
-	    flag = LTRUE;
+	    flag = TRUE;
 	    goto L10;
 	}
 	for(;;) {

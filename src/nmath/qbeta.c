@@ -143,7 +143,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     tx = prev = 0.;	/* keep -Wall happy */
 
     for (i_pb=0; i_pb < 1000; i_pb++) {
-	y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ LTRUE);
+	y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ TRUE);
 	/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
 #ifdef IEEE_754
 	if(!R_FINITE(y))

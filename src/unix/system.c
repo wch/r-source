@@ -53,9 +53,9 @@ void fpu_setup(int);     /* in sys-unix.c */
 int UsingReadline = 1;
 int SaveAction = SA_SAVEASK;
 int RestoreAction = SA_RESTORE;
-int LoadSiteFile = True;
-int LoadInitFile = True;
-int DebugInitFile = False;
+int LoadSiteFile = TRUE;
+int LoadInitFile = TRUE;
+int DebugInitFile = FALSE;
 
 
 /* call pointers to allow interface switching */
@@ -238,14 +238,14 @@ Rf_initialize_R(int ac, char **av)
 
 /*
   It would be better to enclose this routine within a conditional
-    #ifdef R_EMBEDDED    
+    #ifdef R_EMBEDDED
       Rf_initEmbeddedR() {
         ...
       }
     #endif
 
     However, we would then have to recompile this file, libunix.a
-    and then link libR.so. Until we have this sorted out in the 
+    and then link libR.so. Until we have this sorted out in the
     Makefiles, we compile this unconditionally.
 */
 
@@ -262,8 +262,8 @@ Rf_initialize_R(int ac, char **av)
  via the R function commandArgs().
 
  We have to sort out how to recompile this file when building libR.so,
- having already compiled for the standalone build. However, since on 
- most platforms we will have to recompile all the files with the 
+ having already compiled for the standalone build. However, since on
+ most platforms we will have to recompile all the files with the
  position independent code (PIC) flag, this is a larger issue.
 
 
@@ -275,7 +275,7 @@ Rf_initialize_R(int ac, char **av)
          0) name of executable
          1) don't load the X11 graphics library
          2) don't show the banner at startup.
-       
+
 
     char *argv[]= {"REmbeddedPostgres", "--gui=none", "--silent"};
     initEmbedded(sizeof(argv)/sizeof(argv[0]), argv);
@@ -285,7 +285,7 @@ int
 Rf_initEmbeddedR(int argc, char **argv)
 {
     Rf_initialize_R(argc, argv);
-    setup_Rmainloop();    
+    setup_Rmainloop();
  return(1);
 }
 

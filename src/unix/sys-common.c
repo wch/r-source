@@ -304,26 +304,26 @@ extern void R_ShowMessage(char *);
 
 void R_DefParams(Rstart Rp)
 {
-    Rp->R_Quiet = False;
-    Rp->R_Slave = False;
-    Rp->R_Interactive = True;
-    Rp->R_Verbose = False;
+    Rp->R_Quiet = FALSE;
+    Rp->R_Slave = FALSE;
+    Rp->R_Interactive = TRUE;
+    Rp->R_Verbose = FALSE;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_SAVEASK;
-    Rp->LoadSiteFile = True;
-    Rp->LoadInitFile = True;
-    Rp->DebugInitFile = False;
+    Rp->LoadSiteFile = TRUE;
+    Rp->LoadInitFile = TRUE;
+    Rp->DebugInitFile = FALSE;
     Rp->vsize = R_VSIZE;
     Rp->nsize = R_NSIZE;
 #ifdef Win32
-    Rp->NoRenviron = False;
+    Rp->NoRenviron = FALSE;
 #endif
 }
 
 #define Max_Nsize 50000000	/* must be < LONG_MAX (= 2^32 - 1 =)
 				   2147483647 = 2.1e9 */
                                 /* limit was 2e7, changed to 5e7, which gives
-                                   nearly 2Gb of cons cells */ 
+                                   nearly 2Gb of cons cells */
 #define Max_Vsize (2048*Mega)	/* 2048*Mega = 2^(11+20) must be < LONG_MAX */
 
 #define Min_Nsize 160000
@@ -485,32 +485,32 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    else if (!strcmp(*av, "--silent") ||
 		     !strcmp(*av, "--quiet") ||
 		     !strcmp(*av, "-q")) {
-		Rp->R_Quiet = True;
+		Rp->R_Quiet = TRUE;
 	    }
 	    else if (!strcmp(*av, "--vanilla")) {
 		Rp->SaveAction = SA_NOSAVE; /* --no-save */
 		Rp->RestoreAction = SA_NORESTORE; /* --no-restore */
-		Rp->LoadSiteFile = False; /* --no-site-file */
-		Rp->LoadInitFile = False; /* --no-init-file */
+		Rp->LoadSiteFile = FALSE; /* --no-site-file */
+		Rp->LoadInitFile = FALSE; /* --no-init-file */
 		R_RestoreHistory = 0;     /* --no-restore-history */
 	    }
 	    else if (!strcmp(*av, "--verbose")) {
-		Rp->R_Verbose = True;
+		Rp->R_Verbose = TRUE;
 	    }
 	    else if (!strcmp(*av, "--slave") ||
 		     !strcmp(*av, "-s")) {
-		Rp->R_Quiet = True;
-		Rp->R_Slave = True;
+		Rp->R_Quiet = TRUE;
+		Rp->R_Slave = TRUE;
 		Rp->SaveAction = SA_NOSAVE;
 	    }
 	    else if (!strcmp(*av, "--no-site-file")) {
-		Rp->LoadSiteFile = False;
+		Rp->LoadSiteFile = FALSE;
 	    }
 	    else if (!strcmp(*av, "--no-init-file")) {
-		Rp->LoadInitFile = False;
+		Rp->LoadInitFile = FALSE;
 	    }
 	    else if (!strcmp(*av, "--debug-init")) {
-	        Rp->DebugInitFile = True;
+	        Rp->DebugInitFile = TRUE;
 	    }
 	    else if (!strcmp(*av, "-save") ||
 		     !strcmp(*av, "-nosave") ||
@@ -558,7 +558,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    ac--; av++; p = *av;
 		}
 		else
-		    p = &(*av)[8];		
+		    p = &(*av)[8];
 		if (p == NULL) {
 		    R_ShowMessage("WARNING: no nsize given\n");
 		    break;

@@ -80,7 +80,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
 	if (y > 0.05 + a) {
 	    /* Asymptotic inverse expansion about normal */
-	    x = qnorm(0.5 * P, 0.0, 1.0, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+	    x = qnorm(0.5 * P, 0.0, 1.0, /*lower_tail*/TRUE, /*log_p*/FALSE);
 	    y = x * x;
 	    if (ndf < 5)
 		c += 0.3 * (ndf - 4.5) * (x + 0.6);

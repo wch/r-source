@@ -66,10 +66,10 @@
 # define hypot pythag
 #endif
 
-static void calct(int *);
-static void fxshft(int *, double *, double *, int *);
-static void vrshft(int, double *, double *, int *);
-static void nexth(int *);
+static void calct(Rboolean *);
+static void fxshft(int, double *, double *, Rboolean *);
+static void vrshft(int, double *, double *, Rboolean *);
+static void nexth(Rboolean *);
 static void noshft(int);
 static void polyev(int *,
 		   double *, double *, double *, double *,
@@ -108,14 +108,14 @@ static double infin;
 int R_cpoly(double *opr, double *opi, int *degree,
 	    double *zeror, double *zeroi, int *fail)
 {
-    int i__1;
     double d__1, d__2;
     static double base = (double)FLT_RADIX;
     static double cosr, sinr;
-    static int conv, d_n, i, i1, i2;
+    static int d_n, i, i1, i2;
     static double zi, zr, xx, yy, smalno;
     static double bnd, xxx;
     int d1;
+    Rboolean conv;
 
     eta = DBL_EPSILON;
     infin = DBL_MAX;
@@ -133,7 +133,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
     xx = (float).70710678;
 
     yy = -xx;
-    *fail = LFALSE;
+    *fail = FALSE;
 
     nn = *degree;
     d1 = nn - 1;
@@ -141,7 +141,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
     /* algorithm fails if the leading coefficient is zero. */
 
     if (opr[0] == 0.0 && opi[0] == 0.0) {
-	*fail = LTRUE;
+	*fail = TRUE;
 	return 0;
     }
 
@@ -211,8 +211,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
 
 		/*  second stage calculation, fixed shift */
 
-		i__1 = i2 * 10;
-		fxshft(&i__1, &zr, &zi, &conv);
+		fxshft(i2 * 10, &zr, &zi, &conv);
 
 		if (conv)
 		    goto L10;
@@ -222,7 +221,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
 	/* the zerofinder has failed on two major passes */
 	/* return empty handed */
 
-	*fail = LTRUE;
+	*fail = TRUE;
 	return 0;
 
 	/* the second stage jumps directly to the third stage iteration.
@@ -254,19 +253,14 @@ int R_cpoly(double *opr, double *opi, int *degree,
 static void noshft(int l1)
 {
     double d__1, d__2;
-    static int i, j, n;
-    static double t1, t2;
-    static int jj;
-    static int nm1;
-    static double xni;
+    int i, j, jj, n = nn - 1, nm1 = n - 1;
 
-    n = nn - 1;
-    nm1 = n - 1;
+    double t1, t2, xni;
 
-    for (i=1; i<=n; i++) {
-	xni = (double)(nn - i);
-	hr[i-1] = xni * pr[i-1] / (double) n;
-	hi[i-1] = xni * pi[i-1] / (double) n;
+    for (i=0; i < n; i++) {
+	xni = (double)(nn - i - 1);
+	hr[i] = xni * pr[i] / n;
+	hi[i] = xni * pi[i] / n;
     }
 
     for (jj = 1; jj <= l1; jj++) {
@@ -289,14 +283,12 @@ static void noshft(int l1)
 	    d__1 = -pr[nn-1];
 	    d__2 = -pi[nn-1];
 	    cdivid(&d__1, &d__2, &hr[n-1], &hi[n-1], &tr, &ti);
-	    for (i=1; i<=nm1; i++) {
+	    for (i = 1; i <= nm1; i++) {
 		j = nn - i;
 		t1 = hr[j-2];
 		t2 = hi[j-2];
-		hr[j-1] = tr * t1 - ti * t2 +
-		    pr[j-1];
-		hi[j-1] = tr * t2 + ti * t1 +
-		    pi[j-1];
+		hr[j-1] = tr * t1 - ti * t2 + pr[j-1];
+		hi[j-1] = tr * t2 + ti * t1 + pi[j-1];
 	    }
 	    hr[0] = pr[0];
 	    hi[0] = pi[0];
@@ -313,10 +305,9 @@ static void noshft(int l1)
  *  zr,zi - approximate zero if conv is .true.
  *  conv  - int indicating convergence of stage 3 iteration  */
 
-static void fxshft(int *l2, double *zr, double *zi, int *conv)
+static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
 {
-    double d__1, d__2;
-    static int pasd, bool, test;
+    Rboolean pasd, bool, test;
     static double svsi, svsr;
     static int i, j, n;
     static double oti, otr;
@@ -328,8 +319,8 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
     polyev(&nn, &sr, &si,
 	   pr, pi, qpr, qpi, &pvr, &pvi);
 
-    test = LTRUE;
-    pasd = LFALSE;
+    test = TRUE;
+    pasd = FALSE;
 
     /* calculate first t = -p(s)/h(s). */
 
@@ -337,7 +328,7 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
 
     /* main loop for one second stage step. */
 
-    for (j=1; j<=*l2; j++) {
+    for (j=1; j<=l2; j++) {
 
 	otr = tr;
 	oti = ti;
@@ -352,14 +343,12 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
 	/* test for convergence unless stage 3 has */
 	/* failed once or this is the last h polynomial. */
 
-	if (!bool && test && j != *l2) {
-	    d__1 = tr - otr;
-	    d__2 = ti - oti;
+	if (!bool && test && j != l2) {
 	    if (hypot(tr - otr, ti - oti) >= hypot(*zr, *zi) * 0.5) {
-		pasd = LFALSE;
+		pasd = FALSE;
 	    }
 	    else if (! pasd) {
-		pasd = LTRUE;
+		pasd = TRUE;
 	    }
 	    else {
 
@@ -368,9 +357,9 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
 		/* iteration, after saving the current */
 		/* h polynomial and shift. */
 
-		for (i=1; i<=n ; i++) {
-		    shr[i-1] = hr[i-1];
-		    shi[i-1] = hi[i-1];
+		for (i = 0; i < n; i++) {
+		    shr[i] = hr[i];
+		    shi[i] = hi[i];
 		}
 		svsr = sr;
 		svsi = si;
@@ -383,7 +372,7 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
 		/* turn off testing and restore */
 		/* h, s, pv and t. */
 
-		test = LFALSE;
+		test = FALSE;
 		for (i=1 ; i<=n ; i++) {
 		    hr[i-1] = shr[i-1];
 		    hi[i-1] = shi[i-1];
@@ -410,15 +399,15 @@ static void fxshft(int *l2, double *zr, double *zi, int *conv)
  *	      on exit.
  *  conv    - .true. if iteration converges  */
 
-static void vrshft(int l3, double *zr, double *zi, int *conv)
+static void vrshft(int l3, double *zr, double *zi, Rboolean *conv)
 {
-    static int bool, b;
+    Rboolean bool, b;
     static int i, j;
     static double r1, r2, mp, ms, tp, relstp;
     static double omp;
 
-    *conv = LFALSE;
-    b = LFALSE;
+    *conv = FALSE;
+    b = FALSE;
     sr = *zr;
     si = *zi;
 
@@ -451,7 +440,7 @@ static void vrshft(int l3, double *zr, double *zi, int *conv)
 		/* one zero to dominate. */
 
 		tp = relstp;
-		b = LTRUE;
+		b = TRUE;
 		if (relstp < eta)
 		    tp = eta;
 		r1 = sqrt(tp);
@@ -494,12 +483,12 @@ static void vrshft(int l3, double *zr, double *zi, int *conv)
     return;
 
 L_conv:
-    *conv = LTRUE;
+    *conv = TRUE;
     *zr = sr;
     *zi = si;
 }
 
-static void calct(int *bool)
+static void calct(Rboolean *bool)
 {
     /* computes	 t = -p(s)/h(s).
      * bool   - logical, set true if h(s) is essentially zero.	*/
@@ -526,36 +515,30 @@ static void calct(int *bool)
     }
 }
 
-static void nexth(int *bool)
+static void nexth(Rboolean *bool)
 {
     /* calculates the next shifted h polynomial.
-     * bool   -	 logical, if .true. h(s) is essentially zero
+     * bool :	if TRUE  h(s) is essentially zero
      */
-    static int j, n;
-    static int nm1;
-    static double t1, t2;
+    int j, n = nn - 1;
+    double t1, t2;
 
-    n = nn - 1;
-    nm1 = n - 1;
     if (!*bool) {
-	for (j=2 ; j<=n ; j++) {
-	    t1 = qhr[j - 2];
-	    t2 = qhi[j - 2];
-	    hr[j-1] = tr * t1 - ti * t2 +
-		qpr[j-1];
-	    hi[j-1] = tr * t2 + ti * t1 +
-		qpi[j-1];
+	for (j=1; j < n; j++) {
+	    t1 = qhr[j - 1];
+	    t2 = qhi[j - 1];
+	    hr[j] = tr * t1 - ti * t2 + qpr[j];
+	    hi[j] = tr * t2 + ti * t1 + qpi[j];
 	}
 	hr[0] = qpr[0];
 	hi[0] = qpi[0];
     }
     else {
-
 	/* if h(s) is zero replace h with qh. */
 
-	for (j=2 ; j<=n ; j++) {
-	    hr[j-1] = qhr[j-2];
-	    hi[j-1] = qhi[j-2];
+	for (j=1; j < n; j++) {
+	    hr[j] = qhr[j-1];
+	    hi[j] = qhi[j-1];
 	}
 	hr[0] = 0.;
 	hi[0] = 0.;

@@ -17,10 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef True
-#define True 1
-#define False 0
-#endif
+#include "R_ext/Constants.h" /* TRUE/FALSE */
 
 #ifdef Win32
 typedef int (*blah1) (char *, char *, int, int);
@@ -50,7 +47,7 @@ typedef struct
          of them passed to the application.
          These are populated via the routine R_set_command_line_arguments()
          called from R_common_command_line().
-         They are available 
+         They are available
        */
     int    NumCommandLineArgs;
     char **CommandLineArgs;

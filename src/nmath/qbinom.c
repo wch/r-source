@@ -72,27 +72,21 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     if (p + 1.01*DBL_EPSILON >= 1.) return n;
 
     /* y := approx.value (Cornish-Fisher expansion) :  */
-    z = qnorm(p, 0., 1., /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+    z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
     if(y > n) /* way off */ y = n;
 
 #ifdef DEBUG_qbinom
     REprintf("  new (p,1-p)=(%7g,%7g), z=qnorm(..)=%7g, y=%5g\n", p, 1-p, z, y);
 #endif
-    z = pbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+    z = pbinom(y, n, pr, /*lower_tail*/TRUE, /*log_p*/FALSE);
 
     /* fuzz to ensure left continuity: */
     p *= 1 - 64*DBL_EPSILON;
 
+/*-- Fixme, here y can be way off --
+  should use interval search instead of primitive stepping down or up */
 
-    if (y>n){
-	y=n;
-	z = pbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
-    }
-    else if (y<0){
-	y=0;
-	z = pbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
-    }
 #ifdef maybe_future
     if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
 #else
@@ -104,7 +98,7 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 #endif
 	for(;;) {
 	    if(y == 0 ||
-	       (z = pbinom(y - 1, n, pr, /*l._t.*/LTRUE, /*log_p*/LFALSE)) < p)
+	       (z = pbinom(y - 1, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
 		return y;
 	    y = y - 1;
 	}
@@ -116,7 +110,7 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 	for(;;) {
 	    y = y + 1;
 	    if(y == n ||
-	       (z = pbinom(y, n, pr, /*l._t.*/LTRUE, /*log_p*/LFALSE)) >= p)
+	       (z = pbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
 		return y;
 	}
     }

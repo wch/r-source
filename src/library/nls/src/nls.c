@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.5 2000/08/07 22:24:35 luke Exp $ 
+ *  $Id: nls.c,v 1.6 2000/08/30 16:45:16 maechler Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -28,14 +28,6 @@
 #include "R.h"
 #include "Rinternals.h"
 #include <stdlib.h>
-
-#ifndef FALSE
-#define FALSE 0
-#endif
-
-#ifndef TRUE
-#define TRUE 1
-#endif
 
 #ifndef MIN
 #define MIN(a,b) (((a)<(b))?(a):(b))
@@ -77,7 +69,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
     newPars, newIncr, trace;
 
   doTrace = asLogical(doTraceArg);
-  
+
   if(!isNewList(control))
     error("control must be a list\n");
   if(!isNewList(m))
@@ -136,9 +128,9 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 
   PROTECT(pars = eval(getPars, R_GlobalEnv));
   nPars = LENGTH(pars);
-  
+
   dev = asReal(eval(deviance, R_GlobalEnv));
-  if(doTrace) eval(trace,R_GlobalEnv); 
+  if(doTrace) eval(trace,R_GlobalEnv);
 
   fac = 1.0;
   hasConverged = FALSE;
@@ -150,7 +142,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
       break;
     }
     PROTECT(newIncr = eval(incr,R_GlobalEnv));
-    
+
     while(fac >= minFac) {
       for(j = 0; j < nPars; j++) REAL(newPars)[j] = REAL(pars)[j] +
 				   fac * REAL(newIncr)[j];
@@ -179,7 +171,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
       UNPROTECT(9);
       error("step factor reduced below minimum");
     }
-    if(doTrace) eval(trace,R_GlobalEnv); 
+    if(doTrace) eval(trace,R_GlobalEnv);
   }
 
   if(!hasConverged) {

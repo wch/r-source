@@ -45,6 +45,6 @@ double qf(double p, double n1, double n2, int lower_tail, int log_p)
     if (n1 > 4e5)
 	return 1/qchisq(p, n2, !lower_tail, log_p) * n2;
 
-    p = (1. / qbeta(R_DT_CIv(p), n2/2, n1/2, LTRUE, LFALSE) - 1.) * (n2 / n1);
+    p = (1. / qbeta(R_DT_CIv(p), n2/2, n1/2, TRUE, FALSE) - 1.) * (n2 / n1);
     return ML_VALID(p) ? p : ML_NAN;
 }

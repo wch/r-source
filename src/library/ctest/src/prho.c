@@ -129,7 +129,7 @@ void prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
 			      )));
 	y = u / exp(y / 2.);
 	*pv = (*lower_tail ? -y : y) +
-	    pnorm(x, 0., 1., *lower_tail, /*log_p = */LFALSE);
+	    pnorm(x, 0., 1., *lower_tail, /*log_p = */FALSE);
 	/* above was call to alnorm() [algorithm AS 66] */
 	if (*pv < 0) *pv = 0.;
 	if (*pv > 1) *pv = 1.;

@@ -65,10 +65,10 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     if (p + 1.01*DBL_EPSILON >= 1.) return ML_POSINF;
 
     /* y := approx.value (Cornish-Fisher expansion) :  */
-    z = qnorm(p, 0., 1., /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+    z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
 
-    z = ppois(y, lambda, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+    z = ppois(y, lambda, /*lower_tail*/TRUE, /*log_p*/FALSE);
 
     /* fuzz to ensure left continuity; 1 - 1e-7 may lose too much : */
     p *= 1 - 64*DBL_EPSILON;
@@ -84,7 +84,7 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 			/* search to the left */
 	for(;;) {
 	    if(y == 0 ||
-	       (z = ppois(y - 1, lambda, /*l._t.*/LTRUE, /*log_p*/LFALSE)) < p)
+	       (z = ppois(y - 1, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
 		return y;
 	    y = y - 1;
 	}
@@ -92,7 +92,7 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     else {		/* search to the right */
 	for(;;) {
 	    y = y + 1;
-	    if((z = ppois(y, lambda, /*l._t.*/LTRUE, /*log_p*/LFALSE)) >= p)
+	    if((z = ppois(y, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
 		return y;
 	}
     }

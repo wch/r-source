@@ -29,16 +29,12 @@
 #include "R.h" /* for error, vmaxset/get */
 #include <stdio.h>
 
-#define TRUE 1
-#define FALSE 0
 
 static void assert(int bool)
 {
-    if(!bool) {
+    if(!bool)
 	error("assert failed in src/library/ts/src/carray.c");
-    }
 }
-
 
 static Array init_array()
 {

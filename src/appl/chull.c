@@ -13,10 +13,7 @@
 #include <config.h>
 #endif
 
-typedef int logical;
-#define TRUE_ (1)
-#define FALSE_ (0)
-
+#include "R_ext/Constants.h" /* TRUE,... */
 
 static void split(int n, double *x,
 		  int m, int *in,
@@ -76,7 +73,7 @@ static void split(int n, double *x,
     /* Local variables (=0 : -Wall) */
     double a=0, b=0, down, d1, up, xt, z;
     int i, is;
-    logical vert, neg_dir=0;
+    Rboolean vert, neg_dir=0;
 
     /* Parameter adjustments */
     --x;
@@ -173,7 +170,7 @@ void R_chull(int *n, double *x, int *m, int *in,
  */
 #define y(k) x[k + x_dim1]
 
-    logical mine, maxe;
+    Rboolean mine, maxe;
     int i, j, ilinh, ma, mb, kn, mm, kx, mx, mp1, mbb, nia, nib,
 	inh, min, mxa, mxb, mxbb;
     int x_dim1, x_offset;
@@ -203,25 +200,25 @@ void R_chull(int *n, double *x, int *m, int *in,
     min = 1;
     mx = 1;
     kx = in[1];
-    maxe = FALSE_;
-    mine = FALSE_;
+    maxe = FALSE;
+    mine = FALSE;
     /* find two vertices of the convex hull for the initial partition */
     for (i = 2; i <= *m; ++i) {
 	j = in[i];
 	if ((d1 = x[j] - x[kx]) < 0.) {
 	} else if (d1 == 0) {
-	    maxe = TRUE_;
+	    maxe = TRUE;
 	} else {
-	    maxe = FALSE_;
+	    maxe = FALSE;
 	    mx = i;
 	    kx = j;
 	}
 	if ((d1 = x[j] - x[kn]) < 0.) {
-	    mine = FALSE_;
+	    mine = FALSE;
 	    min = i;
 	    kn = j;
 	} else if (d1 == 0) {
-	    mine = TRUE_;
+	    mine = TRUE;
 	}
     }
 
@@ -322,7 +319,7 @@ void R_chull(int *n, double *x, int *m, int *in,
 	      &ia[1], &mb, &mxa,
 	      &ib[nib], &mbb, &mxb);
 	ia[ma] = mbb;
-    } while(TRUE_);
+    } while(TRUE);
 
 /*	 now traverse the RIGHT HALF of the tree */
  L12:
@@ -375,7 +372,7 @@ void R_chull(int *n, double *x, int *m, int *in,
 	      -2,
 	      &ia[nia], &mbb, &mxa,
 	      &ib[nib], &mb, &mxb);
-    } while(TRUE_);
+    } while(TRUE);
 
 /* -------------------------------------------------------------- */
 

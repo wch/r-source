@@ -60,9 +60,6 @@
 
 /* ----- The following constants and entry points are part of the R API ---- */
 
-#define LTRUE	(1)
-#define LFALSE	(0)
-
 /* 30 Decimal-place constants */
 /* Computed with bc -l (scale=32; proper round) */
 
@@ -155,6 +152,17 @@
 #ifndef M_LN_SQRT_PId2
 #define M_LN_SQRT_PId2	0.225791352644727432363097614947	/* log(sqrt(pi/2)) */
 #endif
+
+#ifdef MATHLIB_STANDALONE
+ typedef enum { FALSE = 0, TRUE } Rboolean;
+#else
+# include "R_ext/Constants.h"
+
+/* for API back-compatibility -- DEPRECATED since R 1.2 -- */
+#define LTRUE  TRUE
+#define LFALSE FALSE
+#endif
+
 
 /* always remap these two to avoid conflicts with Fortran versions */
 #define d1mach		Rf_d1mach

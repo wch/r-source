@@ -139,8 +139,8 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 #endif
     /* Final Newton step: */
     val = val -
-	(pnorm(val, 0., 1., /*lower*/LTRUE, /*log*/LFALSE) - p_) /
-	 dnorm(val, 0., 1., /*log*/LFALSE);
+	(pnorm(val, 0., 1., /*lower*/TRUE, /*log*/FALSE) - p_) /
+	 dnorm(val, 0., 1., /*log*/FALSE);
 
 #else
 /*-- use AS 241 --- */

@@ -48,7 +48,7 @@ double dnchisq(double x, double df, double lambda, int give_log)
     if(lambda == 0)
 	return dchisq(x, df, give_log);
 
-    dens = dchisq(x, df,  /* log = */ LFALSE);
+    dens = dchisq(x, df,  /* log = */ FALSE);
     lambda2 = 0.5 * lambda;
     weight = exp(-lambda2);
     sum	 = weight * dens;

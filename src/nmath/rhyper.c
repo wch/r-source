@@ -119,14 +119,14 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	ML_ERR_return_NAN;
 
     /* if new parameter values, initialize */
-    reject = LTRUE;
-    setup1 = LFALSE;
-    setup2 = LFALSE;
+    reject = TRUE;
+    setup1 = FALSE;
+    setup2 = FALSE;
     if (nn1 != n1s || nn2 != n2s) {
-	setup1 = LTRUE;
-	setup2 = LTRUE;
+	setup1 = TRUE;
+	setup2 = TRUE;
     } else if (kk != ks) {
-	setup2 = LTRUE;
+	setup2 = TRUE;
     }
     if (setup1) {
 	n1s = nn1;
@@ -257,7 +257,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 			/ (k - i);
 	    }
 	    if (v <= f) {
-		reject = LFALSE;
+		reject = FALSE;
 	    }
 	} else {
 	    /* squeeze using upper and lower bounds */
@@ -289,7 +289,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    /* test against upper bound */
 	    alv = log(v);
 	    if (alv > ub) {
-		reject = LTRUE;
+		reject = TRUE;
 	    } else {
 				/* test against lower bound */
 		dr = xm * (r * r * r * r);
@@ -306,7 +306,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		    de = de / (1.0 + e);
 		if (alv < ub - 0.25 * (dr + ds + dt + de)
 		    + (y + m) * (gl - gu) - deltal) {
-		    reject = LFALSE;
+		    reject = FALSE;
 		} else {
 		    /*
 		     * stirling's formula to machine
@@ -314,9 +314,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		     */
 		    if (alv <= (a - afc(ix) - afc(n1 - ix)
 				- afc(k - ix) - afc(n2 - k + ix))) {
-			reject = LFALSE;
+			reject = FALSE;
 		    } else {
-			reject = LTRUE;
+			reject = TRUE;
 		    }
 		}
 	    }

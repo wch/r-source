@@ -70,19 +70,19 @@ double rpois(double mu)
     /* Local Vars  [initialize some for -Wall]: */
     double del, difmuk= 0., E= 0., fk= 0., fx, fy, g, px, py, t, u= 0., v, x;
     double pois = -1.;
-    int k, kflag, big_mu, new_big_mu = LFALSE;
+    int k, kflag, big_mu, new_big_mu = FALSE;
 
     if (mu <= 0.)
 	return 0.;
 
     big_mu = mu >= 10.;
     if(big_mu)
-	new_big_mu = LFALSE;
+	new_big_mu = FALSE;
 
     if (!(big_mu && mu == muprev)) {/* maybe compute new persistent par.s */
 
 	if (big_mu) {
-	    new_big_mu = LTRUE;
+	    new_big_mu = TRUE;
 	    /* Case A. (recalculation of s,d,l	because mu has changed):
 	     * The poisson probabilities pk exceed the discrete normal
 	     * probabilities fk whenever k >= m(mu).
