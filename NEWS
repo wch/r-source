@@ -99,6 +99,11 @@ BUG FIXES
     o	approx(list(x=rep(NaN,9),y=1:9), xout=NaN) does not seg.fault
 	anymore (PR#6809).
 
+    o	plot(1, pch=NA) does not give an error anymore and
+	plot(1:2, pch=c("o",NA)) only prints one symbol	 (PR#6876).
+
+    o	diffinv(matrix(3, 7,0)) now works.
+
 
 
 		CHANGES IN R VERSION 1.9.0
