@@ -40,6 +40,13 @@ functions pxxxx().  Because rare events do happen, this test suite
 will be failed in about 1 in 50 runs.
 
 
+	make test-Internet
+
+runs tests which need access to the Internet and/or sockets and so may
+not run on every machine.  You will see some differences in the output,
+but no test should fail if you do have sockets and Internet access.
+
+
 	make test-Gct
 
 runs a subset of the specific tests with gctorture turned on.  This is slow,
