@@ -1,27 +1,33 @@
 \name{contrasts}
+\alias{contrasts}
+\alias{contrasts<-}
 \title{Get and Set Contrast Matrices}
+\description{
+  Set and view the contrasts associated with a factor.
+}
 \usage{
 contrasts(x)
 contrasts(x) <- ctr
 }
-\alias{contrasts}
-\alias{contrasts<-}
 \arguments{
-\item{x}{a factor.}
-\item{ctr}{either a matrix whose columns give coefficients
-for contrasts in the levels of \code{x}, or the (quoted)
-name of a function which computes such matrices.}
+  \item{x}{a factor.}
+  \item{ctr}{either a matrix whose columns give coefficients for
+    contrasts in the levels of \code{x}, or the (quoted) name of a
+    function which computes such matrices.}
 }
-\value{
-These functions are used to set and view the
-contrasts associated with a factor.
-If contrasts are not set for a factor the default
-functions from \code{\link{options}("contrasts")} are used.
+\details{
+  If contrasts are not set for a factor the default functions from
+  \code{\link{options}("contrasts")} are used.
 }
 \seealso{
-    \code{\link{C}}, \code{\link{contr.helmert}}, \code{\link{contr.poly}},
-    \code{\link{contr.sum}}, \code{\link{contr.treatment}},
-    \code{\link{glm}}, \code{\link{aov}}, \code{\link{lm}}.
+  \code{\link{C}},
+  \code{\link{contr.helmert}},
+  \code{\link{contr.poly}},
+  \code{\link{contr.sum}},
+  \code{\link{contr.treatment}};
+  \code{\link{glm}},
+  \code{\link{aov}},
+  \code{\link{lm}}.
 }
 \examples{
 example(factor)

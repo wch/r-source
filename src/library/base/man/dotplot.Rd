@@ -1,15 +1,17 @@
 \name{dotplot}
+\alias{dotplot}
 \title{Cleveland Dot Plots}
+\description{
+  Draw a Cleveland dot plot.
+}
 \usage{
 dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
         pch = 21, gpch = 21, bg = par("bg"), color = par("fg"),
         gcolor = par("fg"), lcolor = "gray", \dots)
 }
-\alias{dotplot}
 \arguments{
-  \item{x}{either a vector or matrix of numeric values
-    (\code{NA}s are allowed).
-    If \code{x} is a matrix the overall plot consists of
+  \item{x}{either a vector or matrix of numeric values (\code{NA}s are
+    allowed).  If \code{x} is a matrix the overall plot consists of
     juxtaposed dotplots for each row.}
   \item{labels}{a vector of labels for each point.
     For vectors the default is to use \code{names(x)} and for

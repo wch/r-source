@@ -1,24 +1,30 @@
 \name{body}
-\title{Access to and Manipulation of the Body of a Function}
-\usage{
-body(fun=sys.function(sys.parent()))
-body(obj) <- list
-}
 \alias{body}
 \alias{body<-}
+\title{Access to and Manipulation of the Body of a Function}
+\description{
+  Get or set the body of a function.
+}
+\usage{
+body(fun = sys.function(sys.parent()))
+body(fun) <- list
+}
+\arguments{
+  \item{fun}{a function object or a character string naming the function
+    to be manipulated.
+    If not specified, the function calling \code{body} is used.}
+  \item{list}{a list of \R expressions.}  
+}
 \value{
-If \code{fun} is a function then the body of that
-function is returned.
-If \code{fun} is a character string then the function with that name
-is found and used.
-If \code{fun} is not specified then the function calling \code{body}
-is used.
+  \code{body} returns the body of the function specified.
 
-The assignment form sets the body of a function \code{obj} to the
-\code{list} on the right hand side.
+  The assignment form sets the body of a function to the list on the
+  right hand side.
 }
 \seealso{
-\code{\link{alist}}, \code{\link{args}}, \code{\link{function}}.
+  \code{\link{alist}},
+  \code{\link{args}},
+  \code{\link{function}}.
 }
 \examples{
 body(body)

@@ -1,14 +1,17 @@
 \name{fft}
+\alias{fft}
+\alias{mvfft}
 \title{Fast Discrete Fourier Transform}
+\description{
+  Performs the Fast Fourier Transform of an array.
+}
 \usage{
 fft(z, inverse = FALSE)
 mvfft(z, inverse = FALSE)
 }
-\alias{fft}
-\alias{mvfft}
 \arguments{
   \item{z}{a real or complex array containing the values to be
-    transformed}
+    transformed.}
   \item{inverse}{if \code{TRUE}, the unnormalized inverse transform is
     computed (the inverse has a \code{+} in the exponent of \eqn{e},
     but here, we do \emph{not} divide by \code{1/length(x)}).}
@@ -24,7 +27,8 @@ mvfft(z, inverse = FALSE)
   When \code{z} contains an array, \code{fft} computes and returns the
   multivariate (spatial) transform.  If \code{inverse} is \code{TRUE},
   the (unnormalized) inverse Fourier transform is returned, i.e.,
-  if \code{y <- fft(z)}, then \code{z} is \code{fft(y, inv=TRUE) / length(y)}.
+  if \code{y <- fft(z)}, then \code{z} is
+  \code{fft(y, inverse = TRUE) / length(y)}.
 
   By contrast, \code{mvfft} takes a real or complex matrix as argument,
   and returns a similar shaped matrix, but with each column replaced by

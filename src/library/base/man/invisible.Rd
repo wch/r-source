@@ -1,14 +1,22 @@
 \name{invisible}
-\title{Change the Print Mode to Invisible}
-\usage{invisible(expr)}
 \alias{invisible}
-\value{
-This function returns a (temporarily) invisible copy of its argument.
-This can be useful when it is desired to have functions
-return values which can be assigned, but which do not
-print when they are not assigned.
+\title{Change the Print Mode to Invisible}
+\description{
+  Return a (temporarily) invisible copy of an object.
 }
-\seealso{\code{\link{return}} and \code{\link{function}}.}
+\usage{invisible(x)}
+\arguments{
+  \item{x}{an arbitrary \R object.}
+}
+\details{
+  This function can be useful when it is desired to have functions
+  return values which can be assigned, but which do not print when they
+  are not assigned.
+}
+\seealso{
+  \code{\link{return}},
+  \code{\link{function}}.
+}
 \examples{
 # These functions both return their argument
 f1 <- function(x) x

@@ -1,22 +1,24 @@
 \name{data.class}
+\alias{data.class}
 \title{Object Classes}
+\description{
+  Determine the class of an arbitrary \R object.
+}
 \usage{
 data.class(x)
 }
-\alias{data.class}
 \arguments{
-  \item{x}{an \R object}
+  \item{x}{an \R object.}
 }
 \value{
   character string giving the ``class'' of \code{x}.
 
   The ``class'' is the (first element) of the \code{\link{class}}
-  attribute if this is
-  non-\code{NULL}, or inferred from the object's \code{dim} attribute if
-  this is non-\code{NULL}, or \code{mode(x)}.
+  attribute if this is non-\code{NULL}, or inferred from the object's
+  \code{dim} attribute if this is non-\code{NULL}, or \code{mode(x)}.
 
   Simply speaking, \code{data.class(x)} returns what is typically useful
-  for method dispatching.  (Or, what the basic creator functions already
+ for method dispatching.  (Or, what the basic creator functions already
   and maybe eventually all will attach as a class attribute.)
 }
 \seealso{

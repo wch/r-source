@@ -1,5 +1,14 @@
 \name{environment}
+\alias{environment}
+\alias{environment<-}
+\alias{.GlobalEnv}
+\alias{globalenv}
+\alias{is.environment}
+\alias{new.env}
 \title{Environment Access}
+\description{
+  Get, set, test for and create environments.
+}
 \usage{
 environment(fun = NULL)
 environment(fun) <- value
@@ -7,30 +16,29 @@ is.environment(obj)
 .GlobalEnv
 new.env()
 }
-\alias{environment}
-\alias{environment<-}
-\alias{.GlobalEnv}
-\alias{globalenv}
-\alias{is.environment}
-\alias{new.env}
 \arguments{
-\item{fun}{a \code{\link{function}} or \code{NULL}, which is the default.}
+  \item{fun}{a \code{\link{function}} or \code{NULL}, which is the
+    default.}
+  \item{value}{}
+  \item{obj}{an arbitrary \R object.}
 }
 \value{
-If \code{fun} is a function then \code{environment(fun)}
-returns the environment associated with that function.
-If \code{fun} is \code{NULL} then the global environment, \code{.GlobalEnv},
- is returned. This variable is currently defined as \code{globalenv()}.
+  If \code{fun} is a function then \code{environment(fun)} returns the
+  environment associated with that function.  If \code{fun} is
+  \code{NULL} then the global environment, \code{.GlobalEnv}, is
+  returned.  This variable is currently defined as \code{globalenv()}.
 
-\code{new.env} returns a new (empty) environment enclosed in the
-parent's environment.
+  The assignment form sets the environment of the function \code{fun} to
+  the \code{value} given.
 
-The assignment form sets the environment of the function \code{fun}
-to the \code{value} given.  \code{is.environment(obj)} returns \code{TRUE}
-iff \code{obj} is an \code{environment}.
+  \code{is.environment(obj)} returns \code{TRUE} iff \code{obj} is an
+  \code{environment}.
+
+  \code{new.env} returns a new (empty) environment enclosed in the
+  parent's environment.
 }
 \seealso{
-The \code{envir} argument of \code{\link{eval}}.
+  The \code{envir} argument of \code{\link{eval}}.
 }
 \examples{
 ##-- all three give the same:
@@ -40,7 +48,7 @@ environment(environment)
 
 ls(envir=environment(approxfun(1:2,1:2, method="const")))
 
-is.environment(.GlobalEnv)# T
+is.environment(.GlobalEnv)# TRUE
 }
 \keyword{data}
 \keyword{programming}

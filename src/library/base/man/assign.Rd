@@ -1,5 +1,13 @@
 \name{assign}
+\alias{assign}
+\alias{<-}
+\alias{<<-}
+\alias{->}
+\alias{->>}
 \title{Assign a Value to a Name}
+\description{
+  Assign a value to a name in an environment.
+}
 \usage{
 assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
        inherits = FALSE, immediate = TRUE)
@@ -8,20 +16,16 @@ x <<- value
 value -> x
 value ->> x
 }
-\alias{assign}
-\alias{<-}
-\alias{<<-}
-\alias{->}
-\alias{->>}
 \arguments{
   \item{x}{a variable name (given as a quoted string).}
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{an index into the search list which determines which
-    environment the assignment is to take place in. A character string may
-    also be used. The environment
-    can also be specified directly with \code{envir}.}
+    environment the assignment is to take place in.  A character string
+    may also be used.  The environment can also be specified directly
+    with \code{envir}.}
   \item{envir}{the \code{\link{environment}} in which to assign.  The
-    default is the environment where the call to \code{assign} takes place.}
+    default is the environment where the call to \code{assign} takes
+    place.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
   \item{immediate}{an ignored compatibility feature.}
@@ -49,11 +53,14 @@ value ->> x
   found then its value is redefined, otherwise assignment takes place
   globally.
 
-  Note that the action of \code{<<-} and \code{->>} differs from
-  that in the S language, but is useful in conjunction with the
-  scoping rules of R.
+  Note that the action of \code{<<-} and \code{->>} differs from that in
+  the S language, but is useful in conjunction with the scoping rules of
+  R.
 }
-\seealso{\code{\link{get}}, \code{\link{environment}}.}
+\seealso{
+  \code{\link{get}},
+  \code{\link{exists}},
+  \code{\link{environment}}.}
 \examples{
 for(i in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
  nam <- paste("r",i, sep=".")

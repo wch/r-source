@@ -1,34 +1,37 @@
 \name{get}
+\alias{get}
 \title{Return a Variable's Value}
+\description{
+  Search for an \R object with a given name and return it if found.
+}
+ 
 \usage{
 get(x, pos=-1, envir=pos.to.env(pos), mode="any", inherits=TRUE)
 }
-\alias{get}
 \arguments{
-\item{x}{a variable name (given as a quoted string).}
-\item{pos}{position in search list, can be numerical or a quoted string.}
-\item{envir}{the environment to be used.}
-\item{mode}{the type of object sought.}
-\item{inherits}{should the enclosing frames of
-the environment be inspected?}
+  \item{x}{a variable name (given as a quoted string).}
+  \item{pos}{position in search list, can be numerical or a quoted
+    string.}
+  \item{envir}{the environment to be used.}
+  \item{mode}{the type of object sought.}
+  \item{inherits}{should the enclosing frames of the environment be
+    inspected?}
 }
 \value{
-This function searches the specified environment for a
-bound variable whose name is given by the string \code{x}.
-If the variable's value is not of the correct
-\code{mode}, it is ignored.
+  This function searches the specified environment for a bound variable
+  whose name is given by the string \code{x}.  If the variable's value
+  is not of the correct \code{mode}, it is ignored.
 
-If \code{inherits} is \code{FALSE}, only the first frame
-of the specified environment is inspected.
-If \code{inherits} is \code{TRUE}, the search is continued
-up through the parent frames until a bound value of the right
-mode is found.
+  If \code{inherits} is \code{FALSE}, only the first frame of the
+  specified environment is inspected.  If \code{inherits} is
+  \code{TRUE}, the search is continued up through the parent frames
+  until a bound value of the right mode is found.
 
-Using a \code{NULL} environment is equivalent to using
-the current environment.
+  Using a \code{NULL} environment is equivalent to using the current
+  environment.
 }
 \seealso{
-\code{\link{exists}}.
+  \code{\link{exists}}.
 }
 \examples{
 get("\%o\%")

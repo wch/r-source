@@ -1,20 +1,21 @@
 \name{chol2inv}
+\alias{chol2inv}
 \title{Inverse from Choleski Decomposition}
+\description{
+  Invert a symmetric, positive definite square matrix from its Choleski
+  decomposition.
+}
 \usage{
 chol2inv(x, size = ncol(x))
 }
-\alias{chol2inv}
 \arguments{
-  \item{x}{a matrix.  The first \code{nc} columns of the
-    upper triangle contain the Choleski decomposition of the
-    matrix to be inverted.}
+  \item{x}{a matrix.  The first \code{nc} columns of the upper triangle
+    contain the Choleski decomposition of the matrix to be inverted.}
   \item{size}{the number of columns of \code{x} containing the
     Choleski decomposition.}
 }
 \value{
-  This matrix uses the given Choleski decomposition
-  to invert the original positive definite matrix.
-  It returns the inverse of the decomposed matrix.
+  The inverse of the decomposed matrix.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)

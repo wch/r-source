@@ -1,30 +1,40 @@
 \name{expression}
-\title{Unevaluated Expressions}
-\usage{
-expression(\dots)
-
-is.expression(expr)
-as.expression(expr)
-}
 \alias{expression}
 \alias{is.expression}
 \alias{as.expression}
 \alias{as.expression.default}
+\title{Unevaluated Expressions}
+\description{
+  Creates or tests for objects of mode \code{"expression"}.
+}
+\usage{
+expression(\dots)
+
+is.expression(x)
+as.expression(x)
+}
+\arguments{
+  \item{\dots}{valid \R expressions.}
+  \item{x}{an arbitrary \R object.}
+}
 \value{
+  \code{expression} returns a vector of mode \code{"expression"}
+  containing its arguments as unevaluated ``\link{call}s''.
 
-\code{expression} returns a vector of mode \code{"expression"}
-containing its arguments as unevaluated ``\link{call}s''.
+  \code{is.expression} returns \code{TRUE} if \code{expr} is an
+  expression object and \code{FALSE} otherwise.
 
-\code{is.expression} returns \code{TRUE} if \code{expr} is
-an expression object and \code{FALSE} otherwise.
-
-\code{as.expression} attempts to coerce its argument
-into an expression object.
+  \code{as.expression} attempts to coerce its argument into an
+  expression object.
 }
 \seealso{
-  \code{\link{call}}, \code{\link{eval}}, \code{\link{function}}.
-  Further, \code{\link{text}} and \code{\link{legend}} for plotting math
-  expressions.
+  \code{\link{call}},
+  \code{\link{eval}},
+  \code{\link{function}}.
+  Further,
+  \code{\link{text}} and
+  \code{\link{legend}}
+  for plotting math expressions.
 }
 \examples{
 length(ex1 <- expression(1+ 0:9))# 1

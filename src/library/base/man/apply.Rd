@@ -1,9 +1,13 @@
 \name{apply}
+\alias{apply}
 \title{Apply Functions Over Array Margins}
+\description{
+  Returns a vector or array or list of values obtained by applying a
+  function to margins of an array.
+}
 \usage{
 apply(x, MARGIN, FUN, \dots)
 }
-\alias{apply}
 \arguments{
   \item{x}{the array to be used.}
   \item{MARGIN}{a vector giving the subscripts which the function will

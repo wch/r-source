@@ -1,15 +1,16 @@
 \name{interactive}
+\alias{interactive}
 \title{Is R Running Interactively?}
+\description{ 
+  Return \code{TRUE} when \R is being used interactively and
+  \code{FALSE} otherwise.
+}
 \usage{
 interactive()
 }
-\alias{interactive}
-\value{
-This function returns \code{TRUE} when \R is being used interactively
-and \code{FALSE} when not.
-}
 \seealso{
-\code{\link{source}}, \code{\link{.First}}
+  \code{\link{source}},
+  \code{\link{.First}}
 }
 \examples{
  .First <- function() if(interactive()) x11()

@@ -1,18 +1,24 @@
 \name{complete.cases}
+\alias{complete.cases}
 \title{Find Complete Cases}
+\description{
+  Return a logical vector indicating which cases are complete, i.e.,
+  have no missing values.
+}
 \usage{
 complete.cases(\dots)
 }
-\alias{complete.cases}
 \arguments{
-\item{\dots}{a sequence of vectors, matrices and data frames.}
+  \item{\dots}{a sequence of vectors, matrices and data frames.}
 }
 \value{
-A logical vector specifying which
-observations/rows have no missing values across the entire sequence.
+  A logical vector specifying which observations/rows have no missing
+  values across the entire sequence.
 }
 \seealso{
-\code{\link{is.na}}, \code{\link{na.omit}}, \code{\link{na.fail}}.
+  \code{\link{is.na}},
+  \code{\link{na.omit}},
+  \code{\link{na.fail}}.
 }
 \examples{
 data(airquality)

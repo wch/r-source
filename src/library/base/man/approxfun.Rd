@@ -1,13 +1,17 @@
-\name{approx[fun]}
+\name{approxfun}
+\alias{approx}
+\alias{approxfun}
 \title{Interpolation Functions}
+\description{
+  Return a list of points which linearly interpolate given data points,
+  or a function performing the linear (or constant) interpolation.
+}
 \usage{
 approx   (x, y, xout, method="linear", n=50,
           yleft, yright, rule=1, f=0)
 approxfun(x, y,       method="linear",
           yleft, yright, rule=1, f=0)
 }
-\alias{approx}
-\alias{approxfun}
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
@@ -48,8 +52,8 @@ approxfun(x, y,       method="linear",
   interpolated values.  This is often more useful than \code{approx}.
 }
 \details{
-    The inputs can contain missing values which are delted, so at least
-    two complete \code{(x, y)} pairs are required.
+  The inputs can contain missing values which are deleted, so at least
+  two complete \code{(x, y)} pairs are required.
 }
 \seealso{
   \code{\link{spline}} and \code{\link{splinefun}} for spline

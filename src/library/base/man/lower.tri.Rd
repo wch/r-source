@@ -1,21 +1,22 @@
 \name{lower.tri}
-\title{Lower and Upper Triangular Part of a Matrix}
-\usage{
-lower.tri(x, diag=FALSE)
-upper.tri(x, diag=FALSE)
-}
 \alias{lower.tri}
 \alias{upper.tri}
-\arguments{
-\item{x}{a matrix.}
-\item{diag}{logical. Should the diagonal be included?}
+\title{Lower and Upper Triangular Part of a Matrix}
+\description{
+  Returns a matrix of logicals the same size of a given matrix with
+  entries \code{TRUE} in the lower or upper triangle.
 }
-\value{
-  Returns a \bold{\code{\link{logical}}} matrix of the same dimension as
-  \code{x} which is \code{TRUE} for the relevant triangular part of \code{x}.
+\usage{
+lower.tri(x, diag = FALSE)
+upper.tri(x, diag = FALSE)
+}
+\arguments{
+  \item{x}{a matrix.}
+  \item{diag}{logical. Should the diagonal be included?}
 }
 \seealso{
-\code{\link{diag}}, \code{\link{matrix}}.
+  \code{\link{diag}},
+  \code{\link{matrix}}.
 }
 \examples{
 m2 <- ma <- matrix(1:20, 4, 5)

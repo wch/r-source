@@ -1,9 +1,14 @@
 \name{tapply}
+\alias{tapply}
 \title{Apply a Function Over a ``Ragged'' Array}
+\description{
+  Apply a function to each cell of a ragged array, i.e., for to each
+  (non-empty) group of values given by a unique combination of the
+  levels of certain factors.
+}
 \usage{
 tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
 }
-\alias{tapply}
 \arguments{
   \item{X}{an atomic object, typically a vector.}
   \item{INDEX}{list of factors, each of same length as \code{X}.}
@@ -21,12 +26,11 @@ tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
   When \code{FUN} is present, \code{tapply} calls \code{FUN} for each
   cell that has any data in it.  If \code{FUN} returns a single atomic
   value for each cell (e.g., functions \code{mean} or \code{var}) and
-  when \code{simplify} is true,
-  \code{tapply} returns a multi-way \link{array} containing the values.  The
-  array has the same number of dimensions as \code{INDEX} has
-  components; the number of levels in a dimension is the number of
-  levels (\code{nlevels(.)}) in the corresponding component of
-  \code{INDEX}.
+  when \code{simplify} is \code{TRUE}, \code{tapply} returns a multi-way
+  \link{array} containing the values.  The array has the same number of
+  dimensions as \code{INDEX} has components; the number of levels in a
+  dimension is the number of levels (\code{nlevels()}) in the
+  corresponding component of \code{INDEX}.
 
   Note that contrary to S, \code{simplify = TRUE} always returns an
   array, possibly 1-dimensional.
@@ -38,8 +42,9 @@ tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
 }
 \seealso{
   the convenience function \code{\link{aggregate}} (using \code{tapply});
-  \code{\link{apply}}, \code{\link{lapply}} with its version
-  \code{sapply}.
+  \code{\link{apply}},
+  \code{\link{lapply}} with its version
+  \code{\link{sapply}}.
 }
 \examples{
 groups <- as.factor(rbinom(32, n = 5, p = .4))
