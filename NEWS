@@ -7,6 +7,10 @@
 
 NEW FEATURES
 
+    o   contrast() no longer drops colnames for 1DF contrasts.
+	Consequentially, labeling of regression coefficients for binary
+	factors contain level names (again...).
+
     o	locator(, type=) is implemented to plot points or draw lines
 	interactively.
 

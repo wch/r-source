@@ -10,7 +10,7 @@ contrasts <-
     }
     else if (is.character(ctr))
 	ctr <- get(ctr)(levels(x), contrasts = contrasts)
-    if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1]], "")
+    #if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1]], "")
     ctr
 }
 
