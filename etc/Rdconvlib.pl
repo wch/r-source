@@ -959,6 +959,21 @@ sub text2nroff {
 
     $text =~ s/\\item\s+/\n.ti -\\w\@*\\ \@u\n* /go;
 
+    # handle "\describe"
+    $text = replace_command($text,
+			    "describe",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
+    {
+	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	$arg = text2nroff($arg);
+	$descitem = ".IP \"\" $TAGOFF\n".
+	    ".ti -\\w\@" . $arg . 
+	    "\\ \@u\n" . $arg . "\\ " . text2nroff($desc);
+	$descitem =~ s/\\&\././go;
+	$text =~ s/\\itemnormal.*$id/$descitem/s;
+    }
     $text = nroff_unescape_codes($text);
     unmark_brackets($text);
 }
@@ -1074,12 +1089,9 @@ sub nroff_print_argblock {
 		$arg = text2nroff($arg);
 		$desc = text2nroff($desc);
 		print nroffout "\n";
-#		print nroffout ".LP\n";
-#		print nroffout ".in +$TAGOFF\n";
 		print nroffout ".IP \"\" $TAGOFF\n";
 		print nroffout ".ti -\\w\@$arg:\\ \@u\n";
 		print nroffout "$arg:\\ $desc\n";
-#		print nroffout ".in -$TAGOFF\n";
 		$text =~ s/.*$id//s;
 	    }
 	    print nroffout text2nroff($text, $TAGOFF), "\n";
@@ -1200,7 +1212,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
       if($_[0]) { open txtout, "> $_[0]"; } else { open txtout, "| cat"; }
     }
 
-    $Text::Wrap::columns=65;
+    $Text::Wrap::columns=72;
     $INDENT = 3;
 
     if ($pkgname) {
@@ -1713,8 +1725,8 @@ sub rdoc2Sd { # (filename)
 	print Sdout text2nroff($blocks{"description"}), "\n";
     }
     if (defined $blocks{"usage"}){
-	print Sdout ".CS";
-	print Sdout text2nroff($blocks{"usage"});
+	print Sdout ".CS\n";
+	print Sdout text2nroff($blocks{"usage"}), "\n";
     }
     Sd_print_argblock("arguments", ".RA");
     Sd_print_argblock("value", ".RT");
