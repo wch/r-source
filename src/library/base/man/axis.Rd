@@ -29,5 +29,10 @@ box() #- to make it look "as usual"
 
 plot(1:7, rnorm(7), type = 's', xaxt='n', col = 'red')
 axis(1, 1:7, LETTERS[1:7], col.axis = 'blue')
+\testonly{ # test sorting of labels
+Y <- c(10.50, 4.0, 13.75, 7.25)
+plot(1:4, Y, xlim=c(0,5), ylim=c(0,15))
+axis(side=4, at=Y, labels=LETTERS[1:4])
+}
 }
 \keyword{aplot}

@@ -107,12 +107,14 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	axis now sorts `labels' when it sort `at'.
+
     o	abline now understands the "lwd" graphics parameter if it
 	is supplied as an inline argument.
 
     o	The internals of postscript have been changed so that line
 	textures (dotted dashed etc) look better.  The use of the
-	PostScript "initclip" operator has been stopped so that we
+	PostScript "initclip" operator has been removed so that we
 	can(?) really claim eps compliance.
 
     o	cooks.distance() now also works for "glm" objects;

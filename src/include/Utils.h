@@ -30,6 +30,7 @@
 void	isort(int*,     int);
 void	rsort(double*, int);
 void	csort(complex*, int);
+void    rsort_with_index(double *, int *, int);
 void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
 void	iPsort(int*,    int, int);
 void	rPsort(double*, int, int);

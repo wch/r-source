@@ -119,6 +119,22 @@ void ssort(SEXP *x, int n)
 #undef TYPE_CMP
 }
 
+void rsort_with_index(double *x, int *index, int n)
+{
+    double v;
+    int i, j, h, iv;
+
+    for (h = 1; h <= n / 9; h = 3 * h + 1);
+    for (; h > 0; h /= 3)
+	for (i = h; i < n; i++) {
+	    v = x[i]; iv = index[i];
+	    j = i;
+	    while (j >= h && rcmp(x[j - h], v) > 0)
+		 { x[j] = x[j - h]; index[j] = index[j-h]; j -= h; }
+	    x[j] = v; index[j] = iv;
+	}
+}
+
 void revsort(double *a, int *ib, int n)
 {
 /* Sort a[] into descending order by "heapsort";
