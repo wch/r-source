@@ -783,6 +783,11 @@ Subject: R fails to build on AFS
 From: Atro.Tossavainen+rproject@helsinki.fi
 Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
 ..insufficent information: what was the error message?
+* PR# 6815 *
+Subject: make fails with Sun Forte compiler
+From: rsparapa@mcw.edu
+Date: Fri, 23 Apr 2004 20:07:05 +0200 (CEST)
+..Sun Solaris 9, not reproducible with Forte by BDR
 
 Directory:  TooMuchAtOnce
 
@@ -880,10 +885,6 @@ Date: Thu, 22 Apr 2004 19:08:19 -0700
 Subject: is.na(valid_date) too often true on SGI MIPS
 From: aa056@chebucto.ns.ca
 Date: Fri, 23 Apr 2004 18:27:45 +0200 (CEST)
-* PR# 6815 *
-Subject: make fails with Sun Forte compiler
-From: rsparapa@mcw.edu
-Date: Fri, 23 Apr 2004 20:07:05 +0200 (CEST)
 * PR# 6816 *
 Subject: CONGRATULATION FOR WINNING.
 From: infobeetopromo1 <infobeetopromo1@telstra.com>
@@ -892,7 +893,7 @@ Date: Fri, 23 Apr 2004 10:54:27 -0700
 Subject: Start saving now
 From: "Marcus Prater" <FXCMLWEUD@mailsent.net>
 Date: Fri, 23 Apr 2004 18:08:42 -0700
-* PR# 6818 *
-Subject: Weirdness with choose.files on Microsoft Windows
-From: kwright@eskimo.com
-Date: Fri, 23 Apr 2004 23:55:27 +0200 (CEST)
+* PR# 6819 *
+Subject: package fdim slopeopt error
+From: phddas@yahoo.com
+Date: Sun, 25 Apr 2004 00:23:42 +0200 (CEST)
