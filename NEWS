@@ -3,7 +3,8 @@
 NEW FEATURES
 
     o   New example(<foo>) function runs the \emph{Examples} R code of <foo>.
-	[to be documented and more thoroughly tested -- MM].
+	example(.) calls source(..) which now has a `verbose' instead of `debug'
+	argument.
 
     o   experimental functions [as.|is.|]pairlist() for the few old-style
 	dotted pair lists [undocumented].
@@ -74,6 +75,8 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
 BUG FIXES
+
+    o   source(..., echo=TRUE) now puts a `"' if necessary after truncation.
 
     o	menu(.) works for empty imput
 
