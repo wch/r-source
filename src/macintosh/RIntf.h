@@ -613,7 +613,7 @@ OSErr			InitializeEvents( void );
 
 /* from WEDemoFiles.c
  */
-OSStatus		ReadTextFile( const FSSpec *, WEReference );  /*Jago */
+OSStatus		ReadTextFile( const FSSpec *, WindowPtr );  /*Jago */
 OSStatus		WriteTextFile( const FSSpec *, WEReference ); /* Jago */
 OSStatus		ReadUnicodeTextFile ( const FSSpec *, WEReference ) ;  /* Jago  */
 OSErr			WritePictFile( const FSSpec *, PicHandle );

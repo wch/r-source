@@ -901,9 +901,9 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
         	SourceFile(&fileSpec);
         else {    
         DoNew( false);
-        RemWinMenuItem();
-        ReadTextFile ( &fileSpec, GetWindowWE ( Edit_Windows[Edit_Window-1] ) );
-        UniqueWinTitle();
+        RemWinMenuItem(Edit_Windows[Edit_Window-1] );
+        ReadTextFile ( &fileSpec,  Edit_Windows[Edit_Window-1]  );
+        UniqueWinTitle(Edit_Windows[Edit_Window-1] );
         }
     }else
 	if ((fileInfo.fdType == 'BINA')||(fileInfo.fdType == 'ROBJ')){

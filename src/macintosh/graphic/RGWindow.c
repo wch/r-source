@@ -78,18 +78,6 @@ void changeGWinPtr(WindowPtr window, Str255 Cur_Title)
 	gGReference[j] = gGReference[j+1];
     }
     Current_Window--;
-/*    windowMenu = GetMenuHandle(kMenuWindows);
-
-    for(i = 1; i <= CountMenuItems(windowMenu); i++){
-	GetMenuItemText(windowMenu, i , (unsigned char*)&Menu_Title);
-	CopyPascalStringToC(Menu_Title,mTitle);
-	CopyPascalStringToC(Menu_Title,wTitle);
-	if (strcmp(mTitle,wTitle) == 0) {
-	    DeleteMenuItem(windowMenu, i);
-	    break;
-	}
-    }
-*/
 }
 
 
