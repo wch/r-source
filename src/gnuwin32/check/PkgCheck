@@ -54,7 +54,7 @@ tests:
 	@(out=$(shell echo \"$(test-out)\");\
 	  if test -n "$${out}"; then \
 	    echo "Running specific tests"; \
-	    $(MAKE) -f $(R_HOME)/src/gnuwin32/check/PkgCheck $${out}; \
+	    $(MAKE) -f $(RHOME)/src/gnuwin32/check/PkgCheck $${out}; \
 	  fi)
 
 clean:
