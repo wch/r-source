@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,13 +21,13 @@
 
 double rlogis(double location, double scale)
 {
-	double u;
+    double u;
 /* #ifndef IEEE_754 */
-	if (!finite(location) || !finite(scale)) {
-		ML_ERROR(ME_DOMAIN);
-		return ML_NAN;
-	}
+    if (!finite(location) || !finite(scale)) {
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
+    }
 /* #endif */
-	u = sunif();
-	return location + scale * log(u / (1.0 - u));
+    u = sunif();
+    return location + scale * log(u / (1.0 - u));
 }
