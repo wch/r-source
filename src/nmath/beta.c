@@ -52,10 +52,18 @@ double beta(double a, double b)
     if(ISNAN(a) || ISNAN(b)) return a + b;
 #endif
 
-    if (a <= 0 || b <= 0) {
-        ML_ERROR(ME_DOMAIN);
-        return ML_NAN;
+    if (a < 0 || b < 0) {
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
     }
+    else if (a == 0 || b == 0) {
+	return ML_POSINF;
+    }
+#ifdef IEEE_754
+    else if (!FINITE(a) || !FINITE(b)) {
+	return 0;
+    }
+#endif
 
     if (a + b < xmax)
 	return gamma(a) * gamma(b) / gamma(a+b);
@@ -63,7 +71,7 @@ double beta(double a, double b)
     val = lbeta(a, b);
     if (val < alnsml) {
 	/* a and/or b so big that beta underflows */
-        ML_ERROR(ME_UNDERFLOW);
+	ML_ERROR(ME_UNDERFLOW);
 	return ML_UNDERFLOW;
     }
     return exp(val);

@@ -38,20 +38,28 @@ double lbeta(double a, double b)
     static double corr, p, q;
 
     p = q = a;
-    if(b < p) p = b;
-    if(b > q) q = b;
+    if(b < p) p = b;/* := min(a,b) */
+    if(b > q) q = b;/* := max(a,b) */
 
 #ifdef IEEE_754
     if(ISNAN(a) || ISNAN(b))
 	return a + b;
 #endif
 
-    /* both arguments must be > 0 */
+    /* both arguments must be >= 0 */
 
-    if (p <= 0) {
+    if (p < 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
+    else if (p == 0) {
+	return ML_POSINF;
+    }
+#ifdef IEEE_754
+    else if (!FINITE(q)) {
+	return ML_NEGINF;
+    }
+#endif
 
     if (p >= 10) {
 	/* p and q are big. */
@@ -66,6 +74,6 @@ double lbeta(double a, double b)
 		+ (q - 0.5) * logrelerr(-p / (p + q));
     }
     else
-	/* p and q are small. */
+	/* p and q are small: p <= q > 10. */
 	return log(gamma(p) * (gamma(q) / gamma(p + q)));
 }
