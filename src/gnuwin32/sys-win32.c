@@ -149,9 +149,8 @@ void R_getProcTime(double *data)
     data[2] = (double) elapsed / 100.0;
     data[3] = R_NaReal;
     data[4] = R_NaReal;
-    UNPROTECT(1);
-    return ans;
 }
+
 double R_getClockIncrement(void)
 {
   return 1.0 / 100.0;
