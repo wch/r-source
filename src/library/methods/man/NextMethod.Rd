@@ -40,22 +40,23 @@ callNextMethod()
   The value returned by the selected method.
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package implement a facility for classes and
-methods as described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package implement a facility for classes and
+  methods as described in \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998).  See this book for further details and
+  examples.
 }
 \author{
   John Chambers
 }
-\seealso{ {\link{Methods} for the general behavior of method dispatch }}
+\seealso{\link{Methods} for the general behavior of method dispatch}
 
 \examples{
 
 ## some class definitions with simple inheritance
-setClass("B0" ,representation(b0 = "numeric"))
+setClass("B0" , representation(b0 = "numeric"))
 
 setClass("B1", "B0")
 
@@ -81,4 +82,3 @@ f(b1)
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}
-

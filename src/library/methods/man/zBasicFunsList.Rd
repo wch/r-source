@@ -18,7 +18,7 @@
 
   In any case, some definition of a formal argument list is needed if
   users are to define methods for these functions.  In particular, if
-  methods are to be merged from multiple libraries, the different sets
+  methods are to be merged from multiple packages, the different sets
   of methods need to agree on the formal arguments.
 
   In the absence of reflectance, this list provides the relevant

@@ -243,16 +243,6 @@ sigToEnv(signature)
       Is this object a primitive function (either a builtin or special)?
     }
     
-    \item{\code{getFromMethodMetaData, assignToMethodMetaData,
-	removeFromMethodMetaData}}{
-      Functions to manage the session metadata for methods.  Don't
-      call these directly.
-    }
-    
-    \item{\code{is.primitive}}{
-      Is this object a primitive function (either a builtin or special)?
-    }
-    
     \item{\code{removeMethodsObject}:}{
       remove the metadata object containing methods for \code{f}.
     }

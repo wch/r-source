@@ -13,29 +13,28 @@ removeMethod(f, signature, where)
 \arguments{
   \item{f}{ The character-string name of the generic function. }
   \item{signature}{ A match of formal argument names for \code{f} with
-      the character-string names of corresponding classes.  This
-      argument can also just be the vector of class names, in which case
-      the first name corresponds to the first formal argument, the
-      next to the second formal argument, etc.}
+    the character-string names of corresponding classes.  This
+    argument can also just be the vector of class names, in which case
+    the first name corresponds to the first formal argument, the
+    next to the second formal argument, etc.}
   \item{definition}{ A function definition, which will become the method
-      called when the arguments in a call to \code{f} match the
-      classes in \code{signature}, directly or through inheritance. }
+    called when the arguments in a call to \code{f} match the
+    classes in \code{signature}, directly or through inheritance. }
   \item{where}{ The database in which to store the definition of the
     method; by default, the current global environment.
 
-  For \code{removeMethod}, the default is the location of the (first)
-  instance of the method for this signature.}
+    For \code{removeMethod}, the default is the location of the (first)
+    instance of the method for this signature.}
   \item{valueClass}{ If supplied, this argument asserts that the
-      method will return a value of this class.  (At present this
-      argument is stored but not explicitly used.) }
+    method will return a value of this class.  (At present this
+    argument is stored but not explicitly used.) }
 }
 \value{
+  These functions exist for their side-effect, in setting or removing a
+  method in the object defining methods for the specified generic.
 
-These functions exist for their side-effect, in setting or removing a
-method in the object defining methods for the specified generic.
-
-The value returned by \code{removeMethod} is \code{TRUE} if a method
-was found to be removed.
+  The value returned by \code{removeMethod} is \code{TRUE} if a method
+  was found to be removed.
 }
 \details{
   R methods for a particular generic function are stored in an object
@@ -77,11 +76,12 @@ was found to be removed.
   \code{definition} match those of the generic..
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes and
+  methods described in \emph{Programming with Data} (John M. Chambers,
+  Springer, 1998).  See this book for further details and examples.
 }
 \author{
   John Chambers

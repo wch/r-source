@@ -1,28 +1,28 @@
 \name{show}
 \alias{show}
 \title{Show an Object}
+\description{
+  Display the object, by printing, plotting or whatever suits its class.
+
+  The function \code{show} exists to be specialized by methods; the
+  default method calls \code{showDefault}.
+
+  With library \code{methods} attached, methods for \code{show} will
+  usually be invoked for automatic printing (see the details).
+
+  The function \code{showDefault} allows redirection of output and
+  optional use of old-style print methods, but normally will not be
+  called directly.
+}
 \usage{
 show(object)
 
 showDefault(object, printTo = stdout(), oldMethods = TRUE)
 }
-\description{
-  Display the object, by printing, plotting or whatever suits its class.
-
-The function \code{show} exists to be specialized by methods; the
-default method calls \code{showDefault}.  
-
-With library \code{methods} attached, methods for \code{show} will
-usually be invoked for automatic printing (see the details).
-
-The function \code{showDefault} allows redirection of output and
-optional use of old-style print methods, but normally will not be called directly.
-
-}
 \arguments{
   \item{object}{Any R object}
   
-\item{printTo}{Either a file or \link{connection}, or else
+  \item{printTo}{Either a file or \link{connection}, or else
     \code{FALSE}.  In the latter case, the lines of text that would
     have been printed are returned as the value of the call (in a
     character vector with one element per line of output).
@@ -32,13 +32,14 @@ optional use of old-style print methods, but normally will not be called directl
     when called from the methods package for automatic printing (to
     avoid potential recursion; see the
     details below).
+  }
 }
-}
-\value{ \code{show} returns an invisible \code{NULL}.
+\value{
+  \code{show} returns an invisible \code{NULL}.
 
-  For \code{showDefault}, if \code{printTo} is
-  \code{FALSE}, the value is a character vector containing the lines that would
-  otherwise have been printed.
+  For \code{showDefault}, if \code{printTo} is \code{FALSE}, the value
+  is a character vector containing the lines that would otherwise have
+  been printed.
 }
 \details{
   The \code{methods} package overrides the base definition of
@@ -55,10 +56,12 @@ optional use of old-style print methods, but normally will not be called directl
   and then call that function also in the method for \code{show}
   with signature \code{"myClass"}.
 }
-\seealso{ \code{\link{showMethods}} prints all the methods for one or
-  more functions;  \code{\link{showMlist}} prints individual methods lists;
-  \code{\link{showClass}} prints class definitions.  Neither of
-  the latter two normally needs to be called directly.
+\seealso{
+  \code{\link{showMethods}} prints all the methods for one or more
+  functions;
+  \code{\link{showMlist}} prints individual methods lists; 
+  \code{\link{showClass}} prints class definitions.
+  Neither of the latter two normally needs to be called directly.
 }
 \examples{
 ## following the example shown in the setMethod documentation ...

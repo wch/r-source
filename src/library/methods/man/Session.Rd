@@ -45,7 +45,7 @@ browseAll()
   \item{tracer, exit}{
     The code to use at the entrance or exit trace.  Either a function
     (which will be called with no arguments) or an expression (typically
-    constructed from \code{link{quote}} or \code{\link{substitute}}) to
+    constructed from \code{\link{quote}} or \code{\link{substitute}}) to
     be evaluated.
   }
 }

@@ -50,14 +50,14 @@ promptClass(clName, filename, type = "class", where)
   primary documentation.
 
   The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data}, (John M. Chambers,
+  methods described in \emph{Programming with Data} (John M. Chambers,
   Springer, 1998).  See this book for further details and examples.
 }
 \seealso{\code{\link{prompt}} for documentation of functions, 
   \code{\link{promptMethods}} for documentation of method definitions.
 
-  For processing of the edited documentation, either use \code{R cmd
-    \link{Rdconv}}, or include the edited file in the \code{man}
+  For processing of the edited documentation, either use \code{R CMD
+    \link{Rdconv}}, or include the edited file in the \file{man}
   subdirectory of a package.
 }
 \examples{
@@ -65,14 +65,15 @@ promptClass(clName, filename, type = "class", where)
 ## from setClass
 ## A simple class with two slots
 setClass("track",
-            representation(x="numeric", y="numeric"))
+         representation(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
 setClass("trackCurve",
-            representation("track", smooth = "numeric"))
+         representation("track", smooth = "numeric"))
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
-setClass("trackMultiCurve", representation(x="numeric", y="matrix", smooth="matrix"),
-          prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
+setClass("trackMultiCurve",
+         representation(x="numeric", y="matrix", smooth="matrix"),
+         prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
 
 setIs("trackMultiCurve", "trackCurve",
   test = function(obj) {ncol(slot(obj, "y")) == 1},

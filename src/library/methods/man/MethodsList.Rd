@@ -74,11 +74,11 @@ loadMethod(method, fname, envir)
 
     \item{\code{SignatureMethod}:}{ 
       construct a MethodsList object containing (only) this method,
-      corresponding to the signature; i.e., such that signature[[1]] is
-      the match for the first argument, signature[[2]] for the second
-      argument, and so on.  The string \code{"missing"} means a match
-      for a missing argument, and \code{"ANY"} means use this as the
-      default setting at this level.
+      corresponding to the signature; i.e., such that
+      \code{signature[[1]]} is the match for the first argument,
+      \code{signature[[2]]} for the second argument, and so on.  The
+      string \code{"missing"} means a match for a missing argument, and
+      \code{"ANY"} means use this as the default setting at this level.
 
       The first argument is the argument names to be used for dispatch
       corresponding to the signatures.
@@ -158,7 +158,7 @@ loadMethod(method, fname, envir)
   primary documentation.
 
   The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data}, (John M. Chambers,
+  methods described in \emph{Programming with Data} (John M. Chambers,
   Springer, 1998).  See this book for further details and examples.
 }
 \author{

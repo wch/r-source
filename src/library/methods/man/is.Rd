@@ -3,6 +3,20 @@
 \alias{extends}
 \alias{setIs}
 \title{Is an Object from a Class}
+\description{
+  \code{is}: 
+  With two arguments, tests whether \code{object} can be treated as from
+  \code{class2}.
+
+  With one argument, returns all the super-classes of this object's class.
+
+  \code{extends}: 
+  Does the first class extend the second class?
+  Returns \code{maybe} if the extension includes a test.
+
+  \code{setIs}: 
+  Defines \code{class1} to be an extension of \code{class2}.
+}
 \usage{
 is(object, class2)
 
@@ -12,44 +26,24 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
       by = NULL, where = 1)
 
 }
-\description{
-  
-  \code{is}: 
-  With two arguments, tests whether \code{object} can be treated as from \code{class2}.
-
-With one argument, returns all the super-classes of this object's class.
-
-  
-  \code{extends}: 
-  Does the first class extend the second class?
-Returns \code{maybe} if the extension includes a test.
-
-  
-  \code{setIs}: 
-  Defines class1 to be an extension of class2.  
-}
 \arguments{
   \item{object}{Any R object.}
   \item{class1, class2}{
-    The names of the classes between which \code{is} relations are to be defined.
-  }
-  \item{maybe}{What value to return if the relationship is conditional.
-  }
+    The names of the classes between which \code{is} relations are to be
+    defined.}
+  \item{maybe}{What value to return if the relationship is conditional.}
   \item{test, coerce, replace}{
     Functions optionally supplied to test whether the relation is
     defined, to coerce the object to \code{class2}, and to alter the
-    object so that \code{is(object, class2)} is identical to \code{value}.
-  }
+    object so that \code{is(object, class2)} is identical to
+    \code{value}.}
   \item{by}{
     The name of an intermediary class.  Coercion will proceed by first
     coercing to this class and from there to the target class.  (The
-    intermediate coercions have to be valid.)
-    }
+    intermediate coercions have to be valid.)}
   \item{where}{
     Where to store the metadata defining the relationship. Default is
-    the global environment.
-  }
-  
+    the global environment.}
 }
 
 \details{
@@ -93,11 +87,12 @@ quite sure you know what you're doing.
 
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes and
+  methods described in \emph{Programming with Data} (John M. Chambers,
+  Springer, 1998).  See this book for further details and examples.
 }
 \author{
   John Chambers

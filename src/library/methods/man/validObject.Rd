@@ -27,20 +27,22 @@ setValidity(ClassDef, method)
     function returns a vector of strings describing the problems.  If
     \code{test} is \code{FALSE} (the default) validity failure generates
     an error.}
-
-  \item{ClassDef}{The name of the class whose validity method is to be set.}
-  \item{method}{A validity method;  that is, either \code{NULL} or a function of one argument
-    (the \code{object}).  Like \code{validObject}, the function should return
-    \code{TRUE} if the object is valid, and one or more descriptive
-    strings if any problems are found.  Unlike \code{validObject}, it
-    should never generate an error.
+  \item{ClassDef}{The name of the class whose validity method is to be
+    set.}
+  \item{method}{A validity method;  that is, either \code{NULL} or a
+    function of one argument (the \code{object}).  Like
+    \code{validObject}, the function should return \code{TRUE} if the
+    object is valid, and one or more descriptive strings if any problems
+    are found.  Unlike \code{validObject}, it should never generate an
+    error.
 
     Note that validity methods do not have to check validity of any
     slots or superclasses:  the logic of \code{validObject} ensures
     these tests are done once only.  As a consequence, if one validity
-    method wants to use another, it should extract and call the method from the
-    other definition of the other class by calling
-    \code{\link{getValidity}}:  it should \emph{not} call \code{validObject}.}
+    method wants to use another, it should extract and call the method
+    from the other definition of the other class by calling
+    \code{\link{getValidity}}:  it should \emph{not} call
+    \code{validObject}.}
 }
 \details{
   Validity testing takes place ``bottom up'':  first the validity of the
@@ -54,19 +56,19 @@ setValidity(ClassDef, method)
   validity test.
 }
 \value{
-  \code{validObject} returns \code{TRUE} if the object is valid.  Otherwise a vector of strings
-  describing problems found, except that if \code{test} is \code{FALSE},
-  validity failure generates an error, with the corresponding strings
-  in the error message.
+  \code{validObject} returns \code{TRUE} if the object is valid.
+  Otherwise a vector of strings describing problems found, except that
+  if \code{test} is \code{FALSE}, validity failure generates an error,
+  with the corresponding strings in the error message.
 }
 \references{
   The web page \url{http://www.omegahat.org/RSMethods/index.html}
   is the primary documentation.
 
   The functions in this package emulate the facility for classes
-  and methods described in
-  \emph{Programming with Data}, (John M. Chambers, Springer, 1998).
-  See this book for further details and examples.
+  and methods described in \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998).  See this book for further details and
+  examples.
 }
 \author{
   John Chambers

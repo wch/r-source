@@ -6,18 +6,16 @@
 \alias{MethodsListSelect}
 \title{ Get the Definition of a Method }
 \description{
-  A call to \code{getMethod} returns the method
-  corresponding a particular generic function and signature; a call to
-  \code{findMethod} returns the vector of package names in which a
-  matching method is found.
+  A call to \code{getMethod} returns the method corresponding a
+  particular generic function and signature; a call to \code{findMethod}
+  returns the vector of package names in which a matching method is found.
 
-  The functions \code{MethodsListSelect}
-  and \code{selectMethod} select methods using an environment in which
-  arguments to the function have been assigned (they differ in the
-  treatment of inheritance).  Neither is intended to be called directly,
-  except perhaps in debugging. The function
-  \code{getMethods} returns \emph{all} the methods for the generic
-  function.
+  The functions \code{MethodsListSelect} and \code{selectMethod} select
+  methods using an environment in which arguments to the function have
+  been assigned (they differ in the treatment of inheritance).  Neither
+  is intended to be called directly, except perhaps in debugging.  The
+  function \code{getMethods} returns \emph{all} the methods for the
+  generic function.
 
   The function \code{findMethod} returns the package(s) in the search
   list (or in the packages specified by the \code{where} argument) that
@@ -31,48 +29,46 @@ findMethod(f, signature, where)
 getMethods(f, where=-1)
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
-selectMethod(f, signature, optional=False, useInherited, mlist=getMethods(f))
-
+selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
 }
 \arguments{
   \item{f}{ The character-string name of the generic function.
 
-  In \code{getMethods} only, this argument may be a function definition,
-in which case the special methods list object, if any, stored in the environment of the function is
-returned.  (This usage is largely for internal purposes; you aren't
-likely to have such a function definition for direct use.)}
-  \item{signature}{ The signature of classes to match to the arguments of \code{f}.  The vector of strings
-      for the classes should be named, and the names must match formal
-      argument names of \code{f}.  If not named, the signature is assumed to apply to the
-      arguments of \code{f} in order, but note below for
-      \code{selectMethod}.
+    In \code{getMethods} only, this argument may be a function
+    definition, in which case the special methods list object, if any,
+    stored in the environment of the function is returned.  (This usage
+    is largely for internal purposes; you aren't likely to have such a
+    function definition for direct use.)}
+  \item{signature}{ The signature of classes to match to the arguments
+    of \code{f}.  The vector of strings for the classes should be named,
+    and the names must match formal argument names of \code{f}.  If not
+    named, the signature is assumed to apply to the arguments of
+    \code{f} in order, but note below for \code{selectMethod}.
 
-      For \code{selectMethod}, the signature can optionally be an
-      environment with classes assigned to the names of the
-      corresponding arguments.  If the signature is not an environment,
-      it must currently be named.
- }
-  \item{where}{ Where to look for the method.  By default, looks in
-      all the currently attached databases (i.e., the complete search list). }
+    For \code{selectMethod}, the signature can optionally be an
+    environment with classes assigned to the names of the corresponding
+    arguments.  If the signature is not an environment, it must
+    currently be named.}
+  \item{where}{ Where to look for the method.  By default, looks in all
+    the currently attached databases (i.e., the complete search list).}
   \item{optional}{ If the selection does not produce a unique result,
-      an error is generated, unless this argument is \code{TRUE}.  In
-      that case, the value returned is either a \code{MethodsList}
-      object, if more than one method matches this signature, or
-      \code{NULL} if no method matches.}
+    an error is generated, unless this argument is \code{TRUE}.  In that
+    case, the value returned is either a \code{MethodsList} object, if
+    more than one method matches this signature, or \code{NULL} if no
+    method matches.}
 
   \item{mlist}{In \code{selectMethod}, the \code{MethodsList} object
-      can be explicitly supplied.  (Unlikely to be used, except in the
-      recursive call that finds matches to more than one argument.)}
+    can be explicitly supplied.  (Unlikely to be used, except in the
+    recursive call that finds matches to more than one argument.)}
 
   \item{env}{The environment in which argument evaluations are done in
     \code{MethodsListSelect}.  Currently must be supplied, but should
-    usually be \code{sys.frame(sys.parent())} when calling the function explicitly
-    for debugging purposes.}
+    usually be \code{sys.frame(sys.parent())} when calling the function
+    explicitly for debugging purposes.}
   \item{fEnv, finalDefault, evalArgs, useInherited}{ Internal-use
-      arguments for the function's environment, the method to use as
-      the overall default, whether to evaluate arguments, and which
-      arguments should use inheritance.}
-
+    arguments for the function's environment, the method to use as
+    the overall default, whether to evaluate arguments, and which
+    arguments should use inheritance.}
 }
 \details{
   A call to \code{getMethod} returns the method for a particular
@@ -128,18 +124,16 @@ likely to have such a function definition for direct use.)}
   error in this case.
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package implement a facility for classes and
-methods as described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package implement a facility for classes and
+  methods as described in \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998).  See this book for further details and
+  examples.
 }
 \author{
   John Chambers
-}
-\examples{
-
 }
 \keyword{programming}
 \keyword{classes}

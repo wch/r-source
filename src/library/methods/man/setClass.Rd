@@ -6,11 +6,12 @@
 \alias{getClasses}
 \title{Create a Class Definition}
 \description{
-Create a formally defined class with specified slots and/or
-relationships to other classes.  Also functions to remove a class
-definition, to test whether a
-class has been defined, to test whether an object is a class definition,
-and to reset the internal definition of a class.}
+  Create a formally defined class with specified slots and/or
+  relationships to other classes.  Also functions to remove a class
+  definition, to test whether a class has been defined, to test whether
+  an object is a class definition, and to reset the internal definition
+  of a class.
+}
 \usage{
 setClass(Class, representation, prototype,
          contains=character(), validity, access, where=1, version=FALSE)
@@ -28,32 +29,24 @@ resetClass(Class)
 \arguments{
   \item{Class}{ character string name for the class }
   \item{representation}{ the slots that the new class should have
-      and/or other classes that this class extends.  Usually a call to
-      the \code{\link{representation}} function. }
+    and/or other classes that this class extends.  Usually a call to
+    the \code{\link{representation}} function. }
   \item{prototype}{ an object (usually a list) providing the default
     data for the slots specified in the representation. }
   \item{contains}{ what classes does this class extend?  (These are
-      called \emph{superclasses} in some languages.)  When these
-      classes have slots, all their slots will be contained in the new
-      class as well. }
-  \item{where}{ What environment to use to store or remove the definition (as metadata).
+    called \emph{superclasses} in some languages.)  When these classes
+    have slots, all their slots will be contained in the new class as
+    well. }
+  \item{where}{ What environment to use to store or remove the
+    definition (as metadata).
     By default, uses the global environment for \code{setClass} and
     searches for a definition to remove, for \code{removeClass}. }
   \item{validity, access, version}{ Control arguments included for
-      compatibility with the S-Plus API, but not currently used.  }
-
-    \item{x}{an arbitrary object.}
-
-    \item{formal}{
-      Should a formal definition be required?
-    }
-
-    \item{object}{
-      any R object.
-    }
-    
+    compatibility with the S-Plus API, but not currently used.  }
+  \item{x}{an arbitrary object.}
+  \item{formal}{ Should a formal definition be required? }
+  \item{object}{ any R object. }
 }
-
 \details{
 
   These are the functions that create and manipulate formal class
@@ -62,13 +55,13 @@ resetClass(Class)
  
   \describe{ 
     \item{\code{setClass}:}{ 
-      Define Class to be an S-style class.  The effect is to create an
-      object, of class \code{"classRepEnvironment"}, and store this
-      (hidden) in the specified environment or database.  Objects can be
-      created from the class (e.g., by calling \code{\link{new}}),
-      manipulated (e.g., by accessing the object's slots), and methods
-      may be defined including the class name in the signature (see
-      \code{\link{setMethod}}).
+      Define \code{Class} to be an S-style class.  The effect is to
+      create an object, of class \code{"classRepEnvironment"}, and store
+      this (hidden) in the specified environment or database.  Objects
+      can be created from the class (e.g., by calling
+      \code{\link{new}}), manipulated (e.g., by accessing the object's
+      slots), and methods may be defined including the class name in the
+      signature (see \code{\link{setMethod}}).
     }
 
     \item{\code{removeClass}:}{ 
@@ -80,32 +73,34 @@ resetClass(Class)
     }
   
     \item{\code{isClass}:}{ 
-      Is this a the name of a formally defined class? (Argument \code{formal} is for
-      compatibility and is ignored.)
+      Is this a the name of a formally defined class? (Argument
+      \code{formal} is for compatibility and is ignored.)
     }
 
     \item{\code{isClassDef}:}{ 
       Is this object a class definition (it will be, for example, if it
       is the value of a call to \code{\link{getClass}}, the complete
-      definition of a class with its extensions, or to \code{\link{getClassDef}}, the local
-      definition  of the class).
+      definition of a class with its extensions, or to
+      \code{\link{getClassDef}}, the local definition of the class).
     }
 
     \item{\code{getClasses}:}{
-      The names of all the classes formally defined on `where'.
-      If called with no argument, all the classes currently known in the session
-      (which does not include classes that may be defined on one of the attached
-      libraries, but have not yet been used in the session).
+      The names of all the classes formally defined on \code{where}.  If
+      called with no argument, all the classes currently known in the
+      session (which does not include classes that may be defined on one
+      of the attached packages, but have not yet been used in the
+      session).
     }
 
     \item{\code{unclass}:}{
-      Returns the object containing the values of all the slots in this object's
-      class definition (specifically, ithe returned object has attributes corresponding
-      to each slot), in the case that the object's class is formally defined with slots.  
-      
-      For classes that extend a single other class (e.g., a basic class
-      such as \code{"numeric"}) the result is an object of that class.
+      Returns the object containing the values of all the slots in this
+      object's class definition (specifically, if the returned object
+      has attributes corresponding to each slot), in the case that the
+      object's class is formally defined with slots.  For classes that
+      extend a single other class (e.g., a basic class such as
+      \code{"numeric"}) the result is an object of that class.
     }
+    
     \item{\code{resetClass}:}{
       Reset the internal definition of a class.  The effect is that
       the next time the definition of this class is needed, it will be
@@ -116,7 +111,7 @@ resetClass(Class)
       definition of a class that this class extends (but doing that in
       the  middle of a session is living dangerously, since it may
       invalidate existing objects).
-      }
+    }
   }
 }
 \section{Inheritance and Prototypes}{
@@ -158,9 +153,9 @@ resetClass(Class)
   is the primary documentation.
 
   The functions in this package emulate the facility for classes
-  and methods described in
-  \emph{Programming with Data}, (John M. Chambers, Springer, 1998).
-  See this book for further details and examples.
+  and methods described in \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998).  See this book for further details and
+  examples.
 }
 \author{
   John Chambers

@@ -19,6 +19,6 @@
     \item{\code{fromClass}:}{Object of class \code{"character"} ~~ }
 }}
 \section{Extends}{
-Class \code{"OptionalMethods"} directly.
+  Class \code{"OptionalMethods"} directly.
 }
 \keyword{methods}

@@ -3,8 +3,9 @@
 \alias{initialize}
 \title{ Generate an Object from a Class }
 \description{
-  Given the the name or the definition of a class, plus optionally
-  data to be included in the object, \code{new} returns an object from that class.
+  Given the the name or the definition of a class, plus optionally data
+  to be included in the object, \code{new} returns an object from that
+  class.
 }
 \usage{
 new(Class, ...)
@@ -13,46 +14,45 @@ initialize(object, ...)
 }
 \arguments{
   \item{Class}{ Either the name of a class (the usual case) or the
-    object describing the class (e.g., the value returned by \code{getClass}). }
+    object describing the class (e.g., the value returned by
+    \code{getClass}).}
   \item{\dots}{ Data to include in the new object.  Named arguments
     correspond to slots in the class definition. Unnamed arguments must
     be objects from classes that this class extends.}
-
-  \item{object}{ An object:  see the Details section.
-  }
+  \item{object}{ An object:  see the Details section.}
 }
 \details{
-  The function \code{new} begins by copying the prototype object from the class
-  definition.  Then information is inserted according to the \dots
-  arguments, if any.
+  The function \code{new} begins by copying the prototype object from
+  the class definition.  Then information is inserted according to the
+  \code{\dots} arguments, if any.
 
-  The interpretation of the \dots arguments can be specialized to
-  particular classes, if an appropriate method has been defined for the generic
-  function \code{"initialize"}.  The \code{new} function calls
+  The interpretation of the \code{\dots} arguments can be specialized to
+  particular classes, if an appropriate method has been defined for the
+  generic function \code{"initialize"}.  The \code{new} function calls
   \code{initialize} with the object generated from the prototype as the
   \code{object} argument to \code{initialize}.
 
-  By default,  unnamed arguments in the \dots are interpreted as objects
-  from a superclass, and named arguments are interpreted as objects to
-  be assigned into the correspondingly named slots.  Thus, explicit slots override inherited
-  information for the same slot, regardless of the order in which the
-  arguments appear.
+  By default, unnamed arguments in the \code{\dots} are interpreted as
+  objects from a superclass, and named arguments are interpreted as
+  objects to be assigned into the correspondingly named slots.  Thus,
+  explicit slots override inherited information for the same slot,
+  regardless of the order in which the arguments appear.
 
-  The \code{initialize} methods do not have to have \dots as there
-  second argument (see the examples), and generally it is better design
-  \emph{not} to have \dots as a formal argument, if only a fixed set of
-  arguments make sense.
+  The \code{initialize} methods do not have to have \code{\dots} as
+  there second argument (see the examples), and generally it is better
+  design \emph{not} to have \code{\dots} as a formal argument, if only a
+  fixed set of arguments make sense.
 
-  Note that the basic vector classes, \code{"numeric"}, etc. are implicitly defined,
-  so one can use \code{new} for these classes.
-
+  Note that the basic vector classes, \code{"numeric"}, etc. are
+  implicitly defined, so one can use \code{new} for these classes.
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes and
+  methods described in \emph{Programming with Data} (John M. Chambers,
+  Springer, 1998).  See this book for further details and examples.
 }
 \author{
   John Chambers
@@ -109,8 +109,6 @@ setMethod("initialize", "track", function(object, ...) {
      stop("specified x and y of different lengths")
     object
   })
-
-
 
 }
 \keyword{programming}

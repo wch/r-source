@@ -4,36 +4,37 @@
 %% private
 \alias{.untracedFunction}
 \alias{.makeTracedFunction}
-
-\title{ Interactive Tracing and Debugging of Calls to a Function or Method}
+\title{ Interactive Tracing and Debugging of Calls to a Function or
+  Method}
 \description{
- A call to \code{trace} modified version of a function or of a formal method can be created
- to do arbitrary computations (usually to call an interactive browser)
- at various places in the call.  A call to \code{untrace} cancels the tracing.
+  A call to \code{trace} modified version of a function or of a formal
+  method can be created to do arbitrary computations (usually to call
+  an interactive browser) at various places in the call.  A call to
+  \code{untrace} cancels the tracing.
 }
 \usage{
 trace(what, tracer, exit, at, print = TRUE, signature = NULL)
 untrace(what)
 }
-%- maybe also `usage' for other objects documented here.
-\arguments{
-  \item{what}{ The name (quoted or not) of a function to be traced or untraced.
-    More than one name can be given in the quoted form, with the same
-    action applied to each one. }
+\arguments{ 
+  \item{what}{ The name (quoted or not) of a function to be traced or
+    untraced.  More than one name can be given in the quoted form, with
+    the same action applied to each one. }
   \item{tracer}{Either a function or an unevaluated expression.  The
-    function will be called or
-    the expression will be evaluated either at the beginning of the
-    call, or before steps in the call if argument \code{at} is supplied.
+    function will be called or the expression will be evaluated either
+    at the beginning of the call, or before steps in the call if
+    argument \code{at} is supplied.
     See the details section.}
   \item{exit}{ Either a function or an unevaluated expression.  The
-    function will be called or
-    the expression will be evaluated on exiting the function.  See the
-    details section. }
+    function will be called or the expression will be evaluated on
+    exiting the function.
+    See the details section. }
   \item{at}{ An optional numeric vector.  If supplied, \code{tracer}
     will be called just before the corresponding step in the body of the
-    function. See the details section. }
+    function.
+    See the details section. }
   \item{print}{ If \code{TRUE}, a descriptive line is printed before any
-  trace expression is evaluated.}
+    trace expression is evaluated.}
   \item{signature}{ If this argument is supplied, it should be a
     signature for a method for function \code{what}.  In this case, the
     method, and \emph{not} the function itself, is traced. }
@@ -124,10 +125,12 @@ untrace(what)
   The traced function(s) name(s).  The relevant consequence is the
   assignment that takes place.
 }
-\seealso{ \code{\link{browser}} and \code{\link{recover}}, the likeliest
-tracing functions; also, \code{\link{quote}} and
-  \code{\link{substitute}} for constructing general expressions. }
-
+\seealso{
+  \code{\link{browser}} and \code{\link{recover}}, the likeliest
+  tracing functions;
+  also, \code{\link{quote}} and \code{\link{substitute}} for
+  constructing general expressions.
+}
 \examples{
 
 f <- function(x, y) {

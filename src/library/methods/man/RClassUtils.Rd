@@ -205,14 +205,15 @@ validSlotNames(names)
       Utility function to create an empty object into which slots can be
       set.
   
-      Currently just creates an empty list with class "NULL".
+      Currently just creates an empty list with class \code{"NULL"}.
 
       Later version should create a special object reference that marks
       an object currently with no slots and no data.
     }
 
     \item{\code{completeClassDefinition}:}{ 
-      Completes the definition of Class, relative to the current session.
+      Completes the definition of \code{Class}, relative to the current
+      session.
 
       The completed definition is stored in the session's class metadata,
       to be retrieved the next time that getClass is called on this
@@ -224,13 +225,13 @@ validSlotNames(names)
 
     \item{\code{getFromClassDef}:}{ 
       Extracts one of the intrinsically defined class definition
-      properties (".Poperties", etc.)  Strictly a utility function.
+      properties (".Properties", etc.)  Strictly a utility function.
     }
 
     \item{\code{setInClassDef}:}{ 
       Set Property in Class Definition.
       Set one of the intrinsically defined class definition properties
-      (".Poperties", etc.)  Strictly a utility function.
+      (".Properties", etc.)  Strictly a utility function.
     }
 
     \item{\code{synchronizeClassDef}:}{ 
@@ -354,9 +355,9 @@ validSlotNames(names)
       that don't have a formal definition.  
   
       Any of these could have a formal definition, except for
-      Class="NULL" (disallowed because NULL can't have attributes).  For
-      all cases except "NULL", the class of the result will be set to
-      Class.
+      \code{Class="NULL"} (disallowed because \code{NULL} can't have
+      attributes).  For all cases except \code{"NULL"}, the class of the
+      result will be set to \code{Class}.
 
       See \code{new} for the interpretation of the arguments.
     }
@@ -393,8 +394,8 @@ validSlotNames(names)
     \item{\code{showClass}:}{ 
       Print the information about a class definition.  
       
-      If \code{complete==TRUE}, include the indirect information about
-      extensions.
+      If \code{complete} is \code{TRUE}, include the indirect
+      information about extensions.
     }
     
     \item{\code{showExtends}:}{ 

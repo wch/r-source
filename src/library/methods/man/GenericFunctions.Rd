@@ -15,6 +15,11 @@
 \alias{setReplaceMethod}
 \alias{callGeneric}
 \title{Tools for Managing Generic Functions}
+\description{
+  The functions documented here manage collections of methods associated
+  with a generic function, as well as providing information about the
+  generic functions themselves.
+}
 \synopsis{
 isGeneric(f, where, fdef, getName = FALSE)
 isGroup(f, where, fdef)
@@ -60,91 +65,76 @@ allGenerics(where)
 callGeneric(\dots)
 
 }
-
-\description{
-The functions documented here manage collections of methods associated
-with a generic function, as well as providing information about the
-generic functions themselves.
-}
-
 \section{Summary of Functions}{
+  \describe{
+    \item{\code{isGeneric}:}{ 
+      Is there a function named \code{f}, and if so, is it a generic?
 
-\describe{
-  \item{\code{isGeneric}:}{ 
-    Is there a function named \code{f}, and if so, is it a generic?
+      The \code{getName} argument allows a function to find the name
+      from a function definition.  If it is \code{TRUE} then the name of
+      the generic is returned, or \code{FALSE} if this is not a generic
+      function definition.
 
-    The \code{getName} argument allows a function to find the name from
-    a function definition.  If it is \code{TRUE} then the name of the
-    generic is returned, or \code{FALSE} if this is not a generic
-    function definition.
+      The behavior of \code{isGeneric} and \code{\link{getGeneric}} for
+      primitive functions is slightly different.  These functions don't
+      exist as formal function objects (for efficiency and historical
+      reasons), regardless of whether methods have been defined for
+      them.  A call to \code{isGeneric} tells you whether methods have
+      been defined for this primitive function, either on database
+      \code{where} or anywhere in the current search list.  In contrast,
+      a call to \code{\link{getGeneric}} will return what the generic
+      for that function would be, even if no methods have been currently
+      defined for it.
+    }
+  
+    \item{\code{removeGeneric}:}{ 
+      Remove the generic function of this name.  
+    }
+    \item{\code{standardGeneric}:}{ 
+      Dispatches a method from the current function call for the generic
+      function \code{f}.
+    }
+    \item{\code{getMethods}:}{ 
+      The list of methods for the specified generic.  
+    }
+    \item{\code{dumpMethod}:}{ 
+      Dump the method for this generic function and signature.  
+    }
+    \item{\code{existsFunction}:}{ 
+      Is there a function of this name.  If \code{generic} is
+      \code{FALSE}, generic functions are not counted.
+    }
+    \item{\code{findFunction}:}{ 
+      return all the elements of the search list on which a function
+      definition for \code{name} exists.
 
-    The behavior of \code{isGeneric} and \code{\link{getGeneric}} for
-    primitive functions is slightly different.  These functions don't
-    exist as formal function objects (for efficiency and historical
-    reasons), regardless of whether methods have been defined for them.
-    A call to \code{isGeneric} tells you whether methods have been
-    defined for this primitive function, either on database \code{where}
-    or anywhere in the current search list.  In contrast, a call to
-    \code{\link{getGeneric}} will return what the generic for that
-    function would be, even if no methods have been currently defined
-    for it.
-  
-  }
-  
-  \item{\code{removeGeneric}:}{ 
-  Remove the generic function of this name.  
-  }
-  \item{\code{standardGeneric}:}{ 
-  Dispatches a method from the current function call for the generic function \code{fname}.  
-  
-  }
-  \item{\code{getMethods}:}{ 
-  The list of methods for the specified generic.  
-  
-  }
+      \emph{NOTE:} Use this rather than \code{\link{find}} with
+      \code{mode="function"}, which is not as meaningful, and has a few
+      subtle bugs from its use of regular expressions.
+    }
+    \item{\code{selectMethod}:}{ 
+      Returns the method (a function) that R would use to evaluate a
+      call to this generic, with arguments corresponding to the
+      specified signature.
 
-  \item{\code{dumpMethod}:}{ 
-  Dump the method for this generic function and signature.  
-  
+      \code{f} = the name of the generic function, \code{signature} is
+      the signature of classes to match to the arguments of \code{f}.
+    }
+    \item{\code{dumpMethods}:}{ 
+      Dump all the methods for this generic.  
+    }
+    \item{\code{signature}:}{ 
+      Returns a named list of classes to be matched to arguments of a
+      generic function.
+    }
+    \item{\code{callGeneric}:}{ 
+      In the body of a method, this function will make a call to the
+      current generic function.  If no arguments are passed to
+      \code{callGeneric}, the arguments to the current call are passed
+      down; otherwise, the arguments are interpreted as in a call to the
+      generic function.
+    }
   }
-  \item{\code{existsFunction}:}{ 
-  Is there a function of this name. If \code{generic==FALSE}, generic functions are not counted.
-
-  
-  }
-  \item{\code{findFunction}:}{ 
-  return all the elements of the search list on which a function
-  definition for \code{name} exists.
-
-  \emph{NOTE:} Use this rather than \code{\link{find}} with
-  \code{mode="function"}, which is not as meaningful, and has a few subtle bugs from its use of
-  regular expressions.
-  
-  }
-  \item{\code{selectMethod}:}{ 
-  Returns the method (a function) that R would use to evaluate a call to this generic,
-with arguments corresponding to the specified signature.
-
-f = the name of the generic function
-sig = the signature of classes to match to the arguments of f.  
-  
-  }
-  \item{\code{dumpMethods}:}{ 
-  Dump all the methods for this generic.  
-  }
-  \item{\code{signature}:}{ 
-  Returns a named list of classes to be matched to arguments of a
-  generic function.
- 
-  }
-  \item{\code{callGeneric}:}{ 
-  In the body of a method, this function will make a call to the current
-  generic function.  If no arguments are passed to \code{callGeneric},
-  the arguments to the current call are passed down; otherwise, the arguments
-  are interpreted as in a call to the generic function.
- 
-  }
-}
 }
 
 \arguments{
@@ -187,123 +177,103 @@ sig = the signature of classes to match to the arguments of f.
 
 \section{Details}{
   \describe{
+    \item{\code{setGeneric}:}{ 
+      If there is already a non-generic function of this name, it will
+      be used to define the generic unless \code{def} is supplied, and
+      the current function will become the default method for the
+      generic.
+
+      If \code{def} is supplied, this defines the generic function, and
+      no default method will exist (often a good feature, if the
+      function should only be available for a meaningful subset of all
+      objects).
+
+      Arguments \code{group} and \code{valueClass} are retained for
+      consistency with S-Plus, but are currently not used.
+    }
+    \item{\code{isGeneric}:}{ 
+      If the \code{fdef} argument is supplied, take this as the
+      definition of the generic, and test whether it is really a
+      generic, with \code{f} as the name of the generic.  (This argument
+      is not available in S-Plus.)
+    }
+    \item{\code{removeGeneric}:}{ 
+      If \code{where} supplied, just remove the version on this element
+      of the search list; otherwise, removes the first version
+      encountered.
+    }
+    \item{\code{standardGeneric}:}{ 
+      Generic functions should usually have a call to
+      \code{standardGeneric} as their entire body.  They can, however,
+      do any other computations as well.
+
+      The usual \code{setGeneric} (directly or through calling
+      \code{setMethod}) creates a function with a call to
+      \code{standardGeneric}.
+    }
+    \item{\code{getMethods}:}{ 
+      If the function is not a generic function, returns \code{NULL}.
+      The \code{f} argument can be either the character string name of
+      the generic or the object itself.
+
+      The \code{where} argument optionally says where to look for the
+      function, if \code{f} is given as the name.
+    }
+    \item{\code{dumpMethod}:}{ 
+      The resulting source file will recreate the method.
+    }
+    \item{\code{findFunction}:}{ 
+      If \code{generic} is \code{FALSE}, ignore generic functions.
+    }
+    \item{\code{selectMethod}:}{ 
+      The vector of strings for the classes can be named or not.  If
+      named, the names must match formal argument names of \code{f}.  If
+      not named, the signature is assumed to apply to the arguments of
+      \code{f} in order.
+
+      If \code{mustFind} is \code{TRUE}, an error results if there is no
+      method (or no unique method) corresponding to this signature.
+      Otherwise may return \code{NULL} or a MethodsList object.
+    }
+    \item{\code{dumpMethods}:}{ 
+      If \code{signature} is supplied only the methods matching this
+      initial signature are dumped.  (This feature is not found in
+      S-Plus:  don't use it if you want compatibility.)
+    }
+    \item{\code{signature}:}{ 
+      The advantage of using \code{signature} is to provide a check on
+      which arguments you meant, as well as clearer documentation in
+      your method specification.  In addition, \code{signature} checks
+      that each of the elements is a single character string.
+    }
+    \item{\code{removeMethods}:}{ 
+      Returns \code{TRUE} if \code{f} was a generic function,
+      \code{FALSE} (silently) otherwise.
   
-  \item{\code{setGeneric}:}{ 
-  
-
-If there is already a non-generic function of this name, it will be used
-to define the generic unless \code{def} is supplied, and the current function will
-become the default method for the generic.
-
-If \code{def} is supplied, this defines the generic function, and no default method
-will exist (often a good feature, if the function should only be available for
-a meaningful subset of all objects).
-
-Arguments \code{group} and \code{valueClass} are retained for consistency with S-Plus, but
-are currently not used.
-
-  
+      If there is a default method, the function will be re-assigned as
+      a simple function with this definition; otherwise, it will be
+      removed.  The assignment or removal can be controlled by optional
+      argument \code{where}, which defaults to the first element of the
+      search list having a function called \code{f}.
+    }
   }
-  \item{\code{isGeneric}:}{ 
-  
-
-If the \code{fdef} argument is supplied, take this as the definition of the
-generic, and test whether it is really a generic, with \code{f} as the name of
-the generic.  (This argument is not available in S-Plus.)
-
-  
-  }
-  \item{\code{removeGeneric}:}{ 
-  
-
-If \code{where} supplied, just remove the version on this element of the search list;
-otherwise, removes the first version encountered.
-
-  
-  }
-  \item{\code{standardGeneric}:}{ 
-  
-Generic functions should usually have a call to \code{standardGeneric} as their entire
-body.  They can, however, do any other computations as well.
-
-The usual \code{setGeneric} (directly or through calling
-\code{setMethod}) creates a function with a call to
-\code{standardGeneric}.
-
-  
-  }
-  \item{\code{getMethods}:}{ 
-  If the function is not
-a generic function, returns NULL.  
-The \code{f} argument can be either the character string name of the generic
-or the object itself
-
-The \code{where} argument optionally says where to look for the function, if
-\code{f} is given as the name.
-
-  
-  }
-  \item{\code{dumpMethod}:}{ 
-   
-The resulting source file will recreate the method.
-
-  
-  }
-  \item{\code{findFunction}:}{ 
-  If \code{generic} is FALSE, ignore generic
-functions.
-
-  
-  }
-  \item{\code{selectMethod}:}{ 
-  The vector of strings
-for the classes can be named or not.  If named, the names must match formal
-argument names of f.  If not named, the signature is assumed to apply to the
-arguments of f in order.
-mustFind = If TRUE, an error results if there is no method (or no unique method)
-corresponding to this signature.  Otherwise may return NULL or a MethodsList
-object.
-
-  
-  }
-  \item{\code{dumpMethods}:}{ 
-  
-
-If \code{signature} is supplied only the methods matching this initial signature
-are dumped.  (This feature is not found in S-Plus:  don't use it if you want
-compatibility.)
-
-  }
-  \item{\code{signature}:}{ 
-  The advantage
-of using \code{signature} is to provide a check on which arguments you meant, as well
-as clearer documentation in your method specification.  In addition, \code{signature}
-checks that each of the elements is a single character string.
-
-  }
-
-  \item{\code{removeMethods}:}{ 
-  Returns \code{TRUE} if
-  \code{f} was a generic function, \code{FALSE} (silently) otherwise.
-  
-  If there is a default method, the function will be re-assigned as
-  a simple function with this definition; otherwise, it will be removed.  The
-  assignment or removal can be controlled by optional argument \code{where}, which
-  defaults to the first element of the search list having a function called \code{f}.
-}
-}
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes and
+  methods described in \emph{Programming with Data} (John M. Chambers,
+  Springer, 1998).  See this book for further details and examples.
 }
 \author{
   John Chambers
 }
-\seealso{\code{\link{setGeneric}}, \code{\link{setClass}}, \code{\link{showMethods}}}
+\seealso{
+  \code{\link{setGeneric}},
+  \code{\link{setClass}},
+  \code{\link{showMethods}}
+}
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}

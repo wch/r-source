@@ -3,10 +3,10 @@
 \alias{setGroupGeneric}
 \title{Define a New Generic Function}
 \description{
- Create a new generic function of the given name, for which formal methods can
- then be defined. Typically, an existing non-generic function becomes
- the default method, but there is much optional control.  See the
- details section.
+  Create a new generic function of the given name, for which formal
+  methods can then be defined.  Typically, an existing non-generic
+  function becomes the default method, but there is much optional
+  control.  See the details section.
 }
 \usage{
 setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign,
@@ -87,7 +87,7 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
 \details{
   The \code{setGeneric} function is called to initialize a generic
   function in an environment (usually the global environment), as
-  prepartion for defining some methods for that function.
+  preparation for defining some methods for that function.
 
   The simplest and most common situation is that \code{name} is already
   an ordinary non-generic function, and you now want to turn this
@@ -169,25 +169,24 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
   specification of methods, etc.
 }
 \value{
-  The \code{setGeneric} function exists for its side effect:  saving the
-  generic function to allow methods to be specified later.  It returns \code{name}.
+  The \code{setGeneric} function exists for its side effect: saving the
+  generic function to allow methods to be specified later.  It returns
+  \code{name}.
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes and
+  methods described in \emph{Programming with Data} (John M. Chambers,
+  Springer, 1998).  See this book for further details and examples.
 }
-
 \author{
   John Chambers
 }
-
 \seealso{
-  \code{\link{Methods}} for a discussion of other functions to
-  specify and manipulate the methods of generic functions.
+  \code{\link{Methods}} for a discussion of other functions to specify
+  and manipulate the methods of generic functions.
 }
-
 \keyword{ programming }
 \keyword{ methods }
