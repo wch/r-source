@@ -689,13 +689,11 @@ stopifnot(!is.factor(ddf$b))
 stopifnot(prettyNum(123456, big.mark=",") == "123,456")
 
 ## PR 1552: cut.dendrogram
-library(cluster)
-data(flower)
- dfl <- daisy(flower, type = list(asymm = 3))
-hdfl <- hclust(dfl, method = "average")
-ddfl <- as.dendrogram(hdfl)
-cdfl <- cut(ddfl, h = 0.31311)## error in 1.5.0
-detach("package:cluster")# leave mva
+library(mva)
+data(USArrests)
+hc <- hclust(dist(USArrests), "ave")
+cc <- cut(as.dendrogram(hc), h = 20)## error in 1.5.0
+detach("package:mva")
 
 ## predict.smooth.spline(*, deriv > 0) :
 require(modreg)
