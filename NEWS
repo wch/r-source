@@ -186,6 +186,9 @@ NEW FEATURES
 	same way as print.summary.lm(), and both show them as NAs in
 	the table of coefficients.
 
+    o	print.table() has a new argument `zero.print' and is now
+	documented.
+
     o	rank(x, na.last = "keep") now preserves NAs in `x', and the
 	argument `ties.method' allows to use non-averaging ranks in the
 	presence of ties.
