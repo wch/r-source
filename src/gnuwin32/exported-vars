@@ -49,3 +49,5 @@ R_standardGeneric_ptr
 R_Toplevel
 R_ToplevelContext
 R_GlobalContext
+R_interrupts_suspended
+R_interrupts_pending

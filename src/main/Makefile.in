@@ -18,7 +18,7 @@ SOURCES_C = \
 	character.c coerce.c colors.c complex.c connections.c context.c \
 	cov.c cum.c \
 	dcf.c datetime.c debug.c devPS.c devPicTeX.c deparse.c deriv.c \
-	devNull.c dotcode.c dounzip.c dstruct.c duplicate.c \
+	dotcode.c dounzip.c dstruct.c duplicate.c \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c graphics.c \

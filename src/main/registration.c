@@ -262,7 +262,6 @@ static R_CallMethodDef callMethods [] = {
 static R_ExternalMethodDef externalMethods [] = {
     EXTDEF(call_dqags),
     EXTDEF(call_dqagi),
-    EXTDEF(PicTeX),
     EXTDEF(PostScript),
     EXTDEF(XFig),
     EXTDEF(PDF),
