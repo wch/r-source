@@ -122,9 +122,8 @@ void R_load_gnome_shlib(void)
     if(!ptr_R_loadhistory) R_Suicide("Cannot load Rgnome_loadhsitoryr");
     ptr_R_savehistory = Rdlsym(handle, "Rgnome_savehistory");
     if(!ptr_R_savehistory) R_Suicide("Cannot load Rgnome_savehistory");
-/* Uncomment the next two lines to experiment with the gnome() device */
-/*    ptr_GnomeDeviceDriver = Rdlsym(handle, "GnomeDeviceDriver");
-      if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
+    ptr_GnomeDeviceDriver = Rdlsym(handle, "GnomeDeviceDriver");
+    if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");
 }
 
 #else
