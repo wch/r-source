@@ -22,7 +22,9 @@ OBJS = \
 	edit.o \
 	fileio.o \
 	rotated.o \
-	system.o
+	system.o \
+	Rsock.o \
+	sock.o
 
 LIB = libunix.a
 
