@@ -240,12 +240,12 @@ of stable versions are for bug fixes mostly.
 
 to create a copy of the source tree specified by MODULE in the subdirectory
 `R' of the current directory, where MODULE specifies one of the three
-existing flavors of the R sources, and can be one of `r-release' (latest
-released version), `r-release-patched' (latest released version with
-patches applied), and `r-devel' (current development version).  The rsync
-trees are created directly from the master CVS archive and are updated
-hourly.  The `-C' option in the rsync command is to cause it to skip the
-CVS directories.  Further information on rsync is available at
+existing flavors of the R sources, and can be one of `r-release' (current
+released version), `r-patched' (patched released version), and
+`r-pre-release' (pre-release development version).  The rsync trees are
+created directly from the master CVS archive and are updated hourly.  The
+`-C' option in the rsync command is to cause it to skip the CVS
+directories.  Further information on rsync is available at
 `http://rsync.samba.org/rsync/'.
 
 2.5 How can R be installed?
@@ -1184,6 +1184,9 @@ works, was published in the Journal of Statistical Software
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
      VAriance Stabilization for regression) methods for selecting regression
      transformations.
+
+*adapt*
+     Adaptive quadrature in up to 20 dimensions.
 
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.

@@ -274,12 +274,12 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 <p>to create a copy of the source tree specified by <var>module</var> in the
 subdirectory <code>R</code> of the current directory, where <var>module</var>
 specifies one of the three existing flavors of the R sources, and can be
-one of <code>r-release</code> (latest released version),
-<code>r-release-patched</code> (latest released version with patches applied),
-and <code>r-devel</code> (current development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly. 
-The <code>-C</code> option in the rsync command is to cause it to skip the
-CVS directories.  Further information on rsync is available at
+one of <code>r-release</code> (current released version), <code>r-patched</code>
+(patched released version), and <code>r-pre-release</code> (pre-release
+development version).  The rsync trees are created directly from the
+master CVS archive and are updated hourly.  The <code>-C</code> option in
+the rsync command is to cause it to skip the CVS directories.  Further
+information on rsync is available at
 <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
 <p><hr>
@@ -1412,6 +1412,8 @@ distributions).
 <dd>ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
 transformations. 
+<br><dt><strong>adapt</strong>
+<dd>Adaptive quadrature in up to 20 dimensions. 
 <br><dt><strong>akima</strong>
 <dd>Linear or cubic spline interpolation for irregularly gridded data. 
 <br><dt><strong>ash</strong>

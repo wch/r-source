@@ -270,12 +270,12 @@ rsync -rC rsync.r-project.org::@var{module} R
 to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
 specifies one of the three existing flavors of the R sources, and can be
-one of @samp{r-release} (latest released version),
-@samp{r-release-patched} (latest released version with patches applied),
-and @samp{r-devel} (current development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly.
-The @option{-C} option in the rsync command is to cause it to skip the
-CVS directories.  Further information on rsync is available at
+one of @samp{r-release} (current released version), @samp{r-patched}
+(patched released version), and @samp{r-pre-release} (pre-release
+development version).  The rsync trees are created directly from the
+master CVS archive and are updated hourly.  The @option{-C} option in
+the rsync command is to cause it to skip the CVS directories.  Further
+information on rsync is available at
 @uref{http://rsync.samba.org/rsync/}.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
@@ -1451,6 +1451,8 @@ Facilities for reading @acronym{XML} documents and DTDs.
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
 transformations.
+@item adapt
+Adaptive quadrature in up to 20 dimensions.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
 @item ash
