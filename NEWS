@@ -152,7 +152,7 @@ BUG FIXES
     o	plot() with small relative ranges gave an error, which e.g. broke
 	library(ts); plot(stl(ts(rep(1:7, 15), freq = 7), s.win = "per"))
 
-    o	Using scan() with 0-length `what' arguemtn now gives an error
+    o	Using scan() with 0-length `what' argument now gives an error
 	message rather than a segfault.
 
 
