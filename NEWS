@@ -168,9 +168,12 @@ BUG FIXES
     o	pnorm() was slower than necessary in the outer tails in some
 	cases due to a typo in the improvements from PR#699.  (PR#2883)
 
-    o   setGeneric() and setMethod() now catch some examples where the
-        generic and the method have different argument lists; the
-        evaluator checks for internal consistency of these argument lists.
+    o	setGeneric() and setMethod() now catch some examples where the
+	generic and the method have different argument lists; the
+	evaluator checks for internal consistency of these argument lists.
+
+    o	expand.grid(x) {the rare case of one argument} now treats factor
+	levels as in the typical case of two or more arguments.
 
     o   Some implicit coercions to lists could cause segfaults, e.g.
           x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
@@ -197,6 +200,18 @@ BUG FIXES
 
     o   A bug could produce apparent loops in formal method selection when
         inheritance was restricted (used for the as() function).
+
+    o	Empty expressions as in return(x,) could generate subsequent
+	segfaults: they are now errors.  (PR#2880)
+
+    o   The Kinderman-Ramage Normal Random Generator had several
+        problems leading to not-quite normally distributed variates 
+        (PR#2846). One problem was traced to an error in the original 
+        1976 JASA paper! Thanks to Josef Leydold and his team for 
+        investigating this. The old generator has been retained for
+        reproducibility of older results, under the name 
+        "Buggy Kinderman-Ramage". A warning is issued if you select it 
+        (also indirectly via RNGversion()).
 
 
 

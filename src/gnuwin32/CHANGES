@@ -44,6 +44,7 @@ rwXXXXpat.exe and development versions are named rwXXXXdev.exe.
 Fixed bugs that caused crash when windows were resized repeatedly.(PR#1711)
 
 
+
 rw1070
 ======
 

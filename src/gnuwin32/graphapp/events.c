@@ -243,6 +243,8 @@ static void handle_resize(object obj)
 		obj->call->resize(obj,
 			rect(0,0,obj->rect.width,obj->rect.height));
 	}
+	deletion_traversal();  /* We may be called again before 
+				  returning to doevent */
 }
 
 /*
