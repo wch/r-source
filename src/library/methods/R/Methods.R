@@ -623,49 +623,49 @@ signature <-
 showMethods <-
     ## Show all the methods for the specified function.
     ##
-    ## If `where' is supplied, the definition from that database will be used; otherwise,
-    ## the current definition is used (which will include inherited methods that have arisen so
-    ## far in the session).
+    ## If `where' is supplied, the definition from that database will
+    ## be used; otherwise, the current definition is used (which will
+    ## include inherited methods that have arisen so far in the
+    ## session).
     ##
+    ## The output style is different from S-Plus in that it does not
+    ## show the database from which the definition comes, but can
+    ## optionally include the method definitions, if `includeDefs == TRUE'.
     ##
-    ## The output style is different from S-Plus in that it does not show the database
-    ## from which the definition comes, but can optionally include the method definitions,
-    ## if `includeDefs == TRUE'.
-    function(f = character(), where = topenv(parent.frame()), classes = NULL, includeDefs = FALSE,
-             inherited = TRUE, printTo = stdout())
+    function(f = character(), where = topenv(parent.frame()), classes = NULL,
+             includeDefs = FALSE, inherited = TRUE, printTo = stdout())
 {
     if(identical(printTo, FALSE)) {
         tmp <- tempfile()
+        on.exit(unlink(tmp))
         con <- file(tmp, "w")
     }
     else con <- printTo
     if(is(f, "function"))
         f <- as.character(substitute(f))
     if(!is(f, "character"))
-        stop("Argument \"f\" should be the name(s) of generic functions (got object of class\"",
-             class(f), "\")")
+        stop("First argument should be the name(s) of generic functions",
+             " (got object of class \"", class(f), '")')
     if(length(f)==0) {
-        if(missing(where))
-            f <- getGenerics()
-        else
-            f <- getGenerics(where)
+        f <- if(missing(where)) getGenerics() else getGenerics(where)
     }
     if(length(f) == 0)
         cat(file = con, "No applicable functions")
     else if(length(f) > 1) {
         value <- character()
-        for(ff in f) {
+        for(ff in f) { ## recall for each
             mlist <- getMethods(ff, where)
             if(length(mlist@methods) == 0)
                 next
-            value <- c(value, Recall(ff, where, classes, includeDefs, inherited, printTo))
+            value <- c(value,
+                       Recall(ff, where, classes, includeDefs, inherited, printTo))
         }
         if(length(value) > 0)
             return(value)
         else
             return()
     }
-    else {
+    else { ## f of length 1
         cat(file= con, "\nFunction \"", f, "\":\n", sep="")
         if(!isGeneric(f, where))
             cat(file = con, "<not a generic function>\n")
@@ -679,9 +679,7 @@ showMethods <-
     }
     if(identical(printTo, FALSE)) {
         close(con)
-        value <- readLines(tmp)
-        unlink(tmp)
-        value
+        readLines(tmp)
     }
 }
 
