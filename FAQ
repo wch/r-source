@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-07
+Version 2.0.2005-03-08
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2473,6 +2473,10 @@ distributions of R.)
 
 *merror*
      Accuracy and precision of measurements.
+
+*meta*
+     Fixed and random effects meta-analysis, with functions for tests of
+     bias, forest and funnel plot.
 
 *mfp*
      Multiple Fractional Polynomials.
