@@ -206,7 +206,8 @@ BUG FIXES (many of which resulted from the added features...)
 
     o   mode(.) now returns "(" for a "parentheses 'call'".
 
-    o   Bug fix in mva dist.c for method binary (gave "invalid distance").
+    o   Bug fix in mva dist.c for method binary (gave "invalid
+        distance"). plot.hclust failed for data without row names.
 
     o	R INSTALL should work (again) now when `pkg' is a relative file
 	name.
