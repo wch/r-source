@@ -2158,6 +2158,9 @@ distributions of R.)
      Estimation/multiple imputation programs for mixed categorical and
      continuous data.
 
+*mixreg*
+     Functions to fit mixtures of regressions.
+
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
