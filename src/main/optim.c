@@ -17,7 +17,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif macintosh
 
 #include "Defn.h"
 #include <Rdefines.h>		/* for CREATE_STRING_VECTOR */

@@ -54,7 +54,11 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!tmp) {
 	error("Could not allocate memory");
     }
+#ifndef macintosh    
     sprintf(tmp, ".%s", SHLIB_EXT);
+#else    /* Usually DLL under MacOS do not have are called "LibraryLib" withoud dot a "." */
+    sprintf(tmp, "%s", SHLIB_EXT);
+#endif    
     SET_VECTOR_ELT(value, 2, mkString(tmp));
     SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
 #ifdef WORDS_BIGENDIAN
@@ -280,9 +284,13 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#ifndef Macintosh
+#ifndef macintosh
 #include <sys/types.h>
-#endif
+#else 
+ #include <types.h>
+ #include "dirent.h"
+#endif macintosh
+
 #if HAVE_DIRENT_H
 # include <dirent.h>
 #elif HAVE_SYS_NDIR_H
@@ -520,8 +528,13 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef HAVE_STAT
+#ifndef macintosh
 #include <sys/types.h>
 #include <sys/stat.h>
+#else
+#include <types.h>
+#include <stat.h>
+#endif macintosh
 
 #if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)

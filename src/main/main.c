@@ -299,7 +299,7 @@ int R_ReplDLLdo1()
 static int doneit;
 
 FILE* R_OpenSysInitFile(void);
-#ifndef Macintosh
+#ifndef macintosh
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 #endif

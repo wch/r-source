@@ -29,6 +29,10 @@
 #include <Rmath.h>
 #include <Devices.h>
 
+#ifdef macintosh
+#include "Graphics.h"
+#endif macintosh
+
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))
 #endif

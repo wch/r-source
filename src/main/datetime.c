@@ -308,7 +308,11 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WIN32
 #define tzname _tzname
 #else
+#ifndef macintosh
 extern char *tzname[2];
+#else
+char *tzname[2];
+#endif macintosh
 #endif
 
 static char buff[20]; /* for putenv */
@@ -373,7 +377,9 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning("cannot set timezones on this system");
 # endif
 #endif
+#ifndef macintosh
 	tzset();
+#endif macintosh
     }
 
     n = LENGTH(x);
@@ -427,7 +433,9 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 # endif
 #endif
 	}
+#ifndef macintosh
 	tzset();
+#endif
     }
     return ans;
 }
@@ -468,7 +476,9 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning("cannot set timezones on this system");
 # endif
 #endif
+#ifndef macintosh
 	tzset();
+#endif macintosh
     }
 
     for(i = 0; i < 6; i++)
@@ -523,7 +533,9 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 # endif
 #endif
 	}
+#ifndef macintosh
 	tzset();
+#endif
     }
 
     UNPROTECT(1);

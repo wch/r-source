@@ -31,7 +31,7 @@
 
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
-#ifdef Macintosh
+#ifdef macintosh
 
 /* The universe will end if the Stack on the Mac grows til it hits the heap. */
 /* This code places a limit on the depth to which eval can recurse. */
@@ -196,7 +196,7 @@ SEXP eval(SEXP e, SEXP rho)
 
     if (R_EvalDepth > R_Expressions)
 	error("evaluation is nested too deeply: infinite recursion?");
-#ifdef Macintosh
+#ifdef macintosh
     /* check for a user abort */
     if ((R_EvalCount++ % 100) == 0) {
 	isintrpt();
