@@ -993,7 +993,9 @@ SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, "character argument expected");
     path = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
+#ifdef HAVE_CHDIR
     if(chdir(path) < 0)
+#endif
 	errorcall(call, "cannot change working directory");
     return(R_NilValue);
 }
