@@ -1,5 +1,5 @@
 \name{dotplot}
-\title{Cleveland Dotcharts}
+\title{Cleveland Dot Plots}
 \usage{
 dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
         pch = 21, gpch = 21, bg = par("bg"), color = par("fg"), 
@@ -37,7 +37,7 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
   This function is invoked for its side effect, which is to produce two
   variants of dotplots as described in Cleveland's graphics book.
 
-  Dotcharts are a reasonable substitute for barcharts.}
+  Dot plots are a reasonable substitute for bar plots.}
 \references{
   Cleveland, W. S. (1985).
   \emph{The Elements of Graphing Data},
