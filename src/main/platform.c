@@ -285,7 +285,7 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 #ifdef Win32
-# include <io.h>		/* for unlink */
+int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 #endif
 
 SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -307,8 +307,12 @@ SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("expanded destination name too long");
     strncpy(to, p, PATH_MAX - 1);
 
-#if defined(Win32) || defined(Macintosh)
-    /* rename() on Windows does not overwrite files */
+#ifdef Win32
+    return Rwin_rename(from, to) == 0 ? mkTrue() : mkFalse();
+#endif
+
+#if defined(Macintosh)
+    /* rename() on Windows/Mac does not overwrite files */
     if (!unlink(to))
 	if (errno == EACCES) return mkFalse();
 #endif
