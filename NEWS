@@ -79,6 +79,12 @@ BUG FIXES
     o	The pdf() device now initialises graphical parameters
 	properly.  (PR#2281)
 
+    o   Checks in the C code prevent possible memory faults when
+        standardGeneric is called invalidly.
+
+    o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
+        the .Call interface to generate arbitrary objects.
+
 
 
 		CHANGES IN R VERSION 1.6.1
