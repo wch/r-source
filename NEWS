@@ -199,6 +199,11 @@ NEW FEATURES
 	on the first directory given in `R_LIBS' if this is set and 
 	non-null, and the default library otherwise.
 
+    o   Functions httpclient(), read.table.url(), scan.url() and
+	source.url() are now deprecated, and hence method="socket' in
+	download.file() is.  Use url connections instead.
+
+
 
 BUG FIXES
 
