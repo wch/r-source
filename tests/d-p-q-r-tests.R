@@ -23,7 +23,7 @@ for(n in rpois(5, lam=6))
         eq <- all.equal(Fx, cumsum(fx), tol= 1e-14)
         if(!is.logical(eq) || !eq) print(eq)
     }
-is.sym        
+is.sym
 
 ##--- Cumulative Poisson '==' Cumulative Chi^2 :
 ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
@@ -60,14 +60,16 @@ x <- round(rgamma(100, shape = 2),2)
 for(sh in round(rlnorm(30),2)) {
     Ga <- gamma(sh)
     for(sig in round(rlnorm(30),2)) {
-        if(!(all((d1 <- dgamma(  x,   shape = sh, scale = sig)) ==
-                 (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig))))
-            cat("ERROR: dgamma() doesn't scale!\n",
-                "(x, shape, scale) =", formatC(c(x, shape, scale)),"\n")
-        tst <- all.equal(d1,
-                         1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig))
+        tst <- all.equal((d1 <- dgamma(  x,   shape = sh, scale = sig)),
+                         (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig),
+                         tol = 1e-15)
         if(!(is.logical(tst) && tst))
-            cat("NOT Equal:=(x, shape, scale) =",
-                formatC(c(x, shape, scale)),"\n")
+            cat("ERROR: dgamma() doesn't scale:",tst,"\n",
+                "  x =", formatC(x),"\n  shape,scale=",formatC(c(sh, sig)),"\n")
+        tst <- all.equal(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)),
+                         tol= 1e-14)
+        if(!(is.logical(tst) && tst))
+            cat("NOT Equal:",tst,"\n x =", formatC(x),
+                "\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
 }
