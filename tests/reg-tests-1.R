@@ -135,7 +135,7 @@ topfun <- function(x, Fun=fun1) {
   a1 <- fun1(x)
   print(a1)
   a2 <- Fun(x,A="power")
-  all.equal(a1, a2)
+  stopifnot(all.equal(a1, a2))
   print(a2)
 }
 topfun(2, fun1)
