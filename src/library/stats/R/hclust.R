@@ -99,8 +99,6 @@ plot.hclust <-
     storage.mode(merge) <- "integer"
     n <- nrow(merge)
     height <- as.double(x$height)
-    ord <- as.double(order(x$order))
-
     labels <-
 	if(missing(labels) || is.null(labels)) {
 	    if (is.null(x$labels))
@@ -115,8 +113,8 @@ plot.hclust <-
 	}
 
     plot.new()
-    .Internal(dend.window(n, merge, height, ord, hang, labels, ...))
-    .Internal(dend       (n, merge, height, ord, hang, labels, ...))
+    .Internal(dend.window(n, merge, height,                 hang, labels, ...))
+    .Internal(dend       (n, merge, height, order(x$order), hang, labels, ...))
     if(axes)
         axis(2, at=pretty(range(height)))
     if (frame.plot)
