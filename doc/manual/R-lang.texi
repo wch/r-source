@@ -18,7 +18,7 @@
 @include version.texi
 
 @macro Rcopyright{}
-Copyright @copyright{} 2000 R Development Core Team
+Copyright @copyright{} 2000--2001 R Development Core Team
 @end macro
 @macro C {}
 @strong{C}

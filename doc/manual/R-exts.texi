@@ -20,7 +20,7 @@
 @ifinfo
 This is a guide to extending R.
 
-Copyright 1999, 2000 R Development Core Team
+Copyright @copyright{} 1999--2001 R Development Core Team
 
 @ignore
 Permission is granted to process this file through TeX and print the

@@ -20,7 +20,7 @@
 @ifinfo
 This is a guide to importing and exporting data to and from R.
 
-Copyright 2000 R Development Core Team
+Copyright @copyright{} 2000, 2001 R Development Core Team
 
 @ignore
 Permission is granted to process this file through TeX and print the
