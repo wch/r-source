@@ -33,6 +33,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   PROTECT'ed some memory in NewExtractNames that was getting overwritten
+        during garbage collection.
+
     o	Crossing factors (`:') works again.
 
     o   terms.formula used to choke on terms more than 60 characters long
