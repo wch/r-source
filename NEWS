@@ -6,6 +6,16 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.4.1
+
+
+BUG FIXES
+
+    o	scan(multi.line = FALSE) now always gives an immediate error
+	message if a line is incomplete. (As requested in PR#1210)
+
+
+
 		CHANGES IN R VERSION 1.4.0
 
 

@@ -531,9 +531,8 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		    colsread = 0;
 		} else if (!badline)
 		    badline = linesread;
-/* Proposed change for 1.5.0 re PR# 1210
 		if(badline && !multiline)
-		error("line %d did not have %d elements", badline, nc); */
+		error("line %d did not have %d elements", badline, nc);
 	    }
 	    if (maxitems > 0 && n >= maxitems)
 		goto done;
