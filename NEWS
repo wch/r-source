@@ -189,7 +189,25 @@ NEW FEATURES
       -   A "next method" facility has been provided, via the function
           callNextMethod.  This calls the method that would have been
           selected if the currently active method didn't exist.  See
-          the online documentation.  This is an extension to the API.
+          ?callNextMethod.  This is an extension to the API.
+
+      -   Classes can have initialize methods, which will be called
+          when the function new() is used to create an object from the
+          class.  See ?initialize.  This is an extension to the API.
+
+      -   The logic of setGeneric has been clarified, simplifying
+          nonstandard generic functions and default methods.
+
+    o   The recover() function has been moved to the base package.
+        This is an interactive debugging function, usually a good
+        choice for options(error=).  See ?recover.
+
+    o   An extended version of the trace() function is available,
+        compatible with the function in S-Plus.  Calls to R functions
+        can be inserted on entry, on exit, and before any
+        subexpressions. Calls to browser and recover are useful.  The
+        trace() function requires the methods package, but can be
+        applied to any R function.  See ?trace (after library(methods)).
 
     o   New assignment forms of split(); new function unsplit().
 
