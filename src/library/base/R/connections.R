@@ -42,12 +42,6 @@ close.connection <- function (con, type = "rw")
 file <- function(description, open = "", blocking = TRUE)
     .Internal(file(description, open, blocking))
 
-pipe <- function(description, open = "")
-    .Internal(pipe(description, open))
-
-fifo <- function(description, open = "", blocking = FALSE)
-    .Internal(fifo(description, open, blocking))
-
 textConnection <- function(object, open = "")
     .Internal(textConnection(deparse(substitute(object)), object, open))
 

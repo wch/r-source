@@ -1,6 +1,6 @@
 \name{showConnections}
 \alias{showConnections}
-\alias{getlConnection}
+\alias{getConnection}
 \alias{getAllConnections}
 \alias{stdin}
 \alias{stdout}
@@ -19,8 +19,9 @@ stderr()
 }
 \arguments{
   \item{all}{logical: if true all connections, including closed ones
-    and the standard ones are displayed. If false only open user-creartd
+    and the standard ones are displayed. If false only open user-created
     connections are included.}
+
   \item{what}{integer: a row number of the table given by
     \code{showConnections}.}
 }
@@ -43,7 +44,7 @@ stderr()
   objects.
 
   \code{showConnections} returns a character matrix of information with
-  a row for each connection, by default only for open connections.
+  a row for each connection, by default only for open non-standard connections.
 
   \code{getConnection} returns a connection object, or \code{NULL}.
 }

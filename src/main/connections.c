@@ -726,7 +726,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 no_more_lines:
     free(buf);
     if(!wasopen) con->close(con);
-    if(strlen(buf) > 0) { /* incomplete last line */
+    if(nbuf > 0) { /* incomplete last line */
 	nread++;
 	warningcall(call, "incomplete final line");
     }

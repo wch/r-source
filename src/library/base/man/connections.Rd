@@ -4,6 +4,7 @@
 \alias{open}
 \alias{open.default}
 \alias{isOpen}
+\alias{isIncomplete}
 \alias{close}
 \alias{close.connection}
 \alias{seek}
@@ -21,6 +22,7 @@ open(con, open = "rt", blocking = TRUE)
 close(con, type = "rw")
 seek(con, where = NA, rw = "")
 isOpen(con, rw = "")
+isIncomplete(con)
 }
 \arguments{
   \item{description}{character. A description of the connection. For
@@ -51,8 +53,7 @@ isOpen(con, rw = "")
   specified position.
 
   Text connections are opened and the character vector is copied at the
-  time the
-  connection object is created, and \code{close} destroys the copy.
+  time the connection object is created, and \code{close} destroys the copy.
   You cannot \code{seek} on a text connection, and \code{seek} will
   always return zero as the position.
 
@@ -80,8 +81,11 @@ isOpen(con, rw = "")
   \code{seek} returns the current position, as a byte offset, if
   relevant.
 
-  \code{isopen} returns a logical value, whether the connection is
+  \code{isOpen} returns a logical value, whether the connection is
   currently open.
+
+  \code{isIncomplete} returns a logical value, whether last read attempt
+  was blocked (currently always false).
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chamber,
