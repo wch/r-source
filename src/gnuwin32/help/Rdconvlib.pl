@@ -2,6 +2,7 @@
 # and R (Examples) format
 
 # Copyright (C) 1997 Friedrich Leisch
+# Modifications for Windows (C) 1998, 1999 B. D. Ripley
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -646,7 +647,7 @@ sub html_print_block {
 
     if(defined $blocks{$block}){
 	print htmlout html_title3($title);
-	print htmlout text2html($blocks{$block});
+	print htmlout "<p>\n", text2html($blocks{$block}), "</p>\n";
     }
 }
 
@@ -689,8 +690,8 @@ sub html_print_argblock {
 		    get_arguments("item", $text, 2);
 		print htmlout "<TR VALIGN=TOP><TD><CODE>";
 		print htmlout text2html($arg);
-		print htmlout "</CODE>\n<TD>\n";
-		print htmlout text2html($desc), "\n";
+		print htmlout "</CODE></TD>\n<TD>\n";
+		print htmlout text2html($desc), "</TD></TR>\n";
 		$text =~ s/.*$id//s;
 	    }
 	    print htmlout "</TABLE>\n";

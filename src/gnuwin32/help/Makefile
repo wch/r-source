@@ -17,6 +17,11 @@ chm-%:
 	-(cd ../../library/$*/chm; hhc $*.hhp)
 	mkdir -p ../../../library/$*/winhlp
 	cp ../../library/$*/chm/$*.chm ../../../library/$*/winhlp
+#
+#hlp-%: chm-%
+	cp logo.bmp ../../library/$*/chm
+	(cd ../../library/$*/chm; perl ../../../gnuwin32/help/html-to-rtf.pl $*.hhp; hcrtf /x $*.hpj)
+	cp ../../library/$*/chm/$*.cnt   ../../library/$*/chm/$*.hlp ../../../library/$*/winhlp
 
 contents-%:
 	$(PERL) Rd2contents ../../library/$* ../../../library/$*/CONTENTS
