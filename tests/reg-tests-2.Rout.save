@@ -400,6 +400,7 @@ numeric(0)
 > format(zz)
     a      b
 1 abc def"gh
+> ## " (E fontification)
 > 
 > ## printing more than 16 is platform-dependent
 > for(i in c(1:5,10,15,16)) cat(i,":\t",format(pi,digits=i),"\n")
@@ -2305,4 +2306,7 @@ Step:  AIC= 24.97
 - x2    1     26.79  74.76  28.74
 - x1    1    820.91 868.88  60.63
 > ## failed in 1.6.2
+> 
+> str(array(1))# not a scalar
+ num [, 1] 1
 > 

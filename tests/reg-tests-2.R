@@ -90,6 +90,7 @@ z
 ## handling of quotes
 zz <- data.frame(a=I("abc"), b=I("def\"gh"))
 format(zz)
+## " (E fontification)
 
 ## printing more than 16 is platform-dependent
 for(i in c(1:5,10,15,16)) cat(i,":\t",format(pi,digits=i),"\n")
@@ -874,3 +875,5 @@ if(require(MASS)) {
     detach("package:MASS")
 }
 ## failed in 1.6.2
+
+str(array(1))# not a scalar
