@@ -1,8 +1,8 @@
 arima0 <- function(x, order = c(0, 0, 0),
                    seasonal = list(order = c(0, 0, 0), period = NA),
                    xreg = NULL, include.mean = TRUE, delta = 0.01,
-                   transform.pars = 2, fixed = NULL,
-                   method = c("CSS-ML", "ML", "CSS"), n.cond)
+                   transform.pars = TRUE, fixed = NULL,
+                   method = c("ML", "CSS"), n.cond)
 {
     arma0f <- function(p)
     {
@@ -56,8 +56,8 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(any(is.na(x)) || (ncxreg && any(is.na(xreg)))) {
         ## only exact recursions handle NAs
         delta <- -1
-        if(method == "CSS-ML") method <- "ML"
     }
+
     storage.mode(x) <- storage.mode(xreg) <- "double"
     if(method == "CSS") transform.pars <- 0
     G <- .Call("setup_starma", as.integer(arma), x, n.used, xreg,
@@ -71,20 +71,9 @@ arima0 <- function(x, order = c(0, 0, 0),
     if (is.null(fixed)) fixed <- rep(NA, length(init))
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
-    if(method == "CSS-ML") {
-        .Call("Starma_method", G, 1, PACKAGE = "ts") # CSS to start
-        res <- optim(init[mask], arma0f, method = "BFGS", hessian = FALSE)
-        .Call("Starma_method", G, 0, PACKAGE = "ts")
-        coef <- res$par
-        if(transform.pars)
-            coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
-        res <- optim(coef, arma0f, method = "BFGS",
-                     hessian = transform.pars < 2)
-   } else {
-        .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
-        res <- optim(init[mask], arma0f, method = "BFGS",
-                     hessian = transform.pars < 2)
-    }
+    .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
+    res <- optim(init[mask], arma0f, method = "BFGS",
+                 hessian = !transform.pars)
     if(res$convergence > 0)
         warning(paste("possible convergence problem: optim gave code=",
                       res$convergence))
@@ -92,10 +81,10 @@ arima0 <- function(x, order = c(0, 0, 0),
 
     if(transform.pars)
         coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
-    if(transform.pars == 2) {
+    if(transform.pars) {
         .Call("set_trans", G, 0, PACKAGE = "ts")
         res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE,
-                     control = list(reltol = 100*.Machine$double.eps))
+                     control = list(maxit = 0))
         coef <- res$par
     }
     arma0f(coef)  # reset pars
@@ -116,12 +105,6 @@ arima0 <- function(x, order = c(0, 0, 0),
     names(arma) <- c("ar", "ma", "sar", "sma", "period", "diff", "sdiff")
     var <- solve(res$hessian*length(x))
     dimnames(var) <- list(nm[mask], nm[mask])
-    if(transform.pars == 1) {
-        if(ncxreg > 0) {
-            ind <- sum(arma[1:4]) + 1:ncxreg
-            var <- var[ind, ind, drop = FALSE]
-        } else var <- matrix(NA, 0, 0)
-    }
     value <- 2 * n.used * res$value + n.used + n.used*log(2*pi)
     aic <- if(method != "CSS") value + 2*length(coef) else NA
     res <- list(coef = fixed, sigma2 = sigma2, var.coef = var, mask = mask,
