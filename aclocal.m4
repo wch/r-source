@@ -398,13 +398,6 @@ elif test "${use_f77}" = yes; then
     F77="${with_f77}"
   fi
   AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test "${use_g77}" = yes; then
-  if test "${with_g77}" = yes; then
-    F77=g77
-  else
-    F77="${with_g77}"
-  fi
-  AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test "${use_f2c}" = yes; then
   F77=
   if test "${with_f2c}" = yes; then
@@ -446,7 +439,7 @@ for arg in ${FLIBS}; do
     -lcrt?.o)
       ;;
     -l:*)
-      flibs="${flibs} -Wl,${arg}"
+      flibs="${flibs} ${wl}${arg}"
       ;;
     *)
       flibs="${flibs} ${arg}"
@@ -1285,14 +1278,14 @@ if test -z "${TCLTK_LIBS}"; then
     fi
   fi
   ## Postprocessing for AIX.
-  ## On AIX, the *_LIB_SPEC variables need to contain `-bI:' flags for
+  ## On AIX, the *_LIB_SPEC variables need to contain '-bI:' flags for
   ## the Tcl export file.  These are really flags for ld rather than the
-  ## C/C++ compilers, and hence may need protection via `-Wl,'.
+  ## C/C++ compilers, and hence may need protection via '-Wl,'.
   ## We have two ways of doing that:
-  ## * Recording whether `-Wl,' is needed for the C or C++ compilers,
+  ## * Recording whether '-Wl,' is needed for the C or C++ compilers,
   ##   and getting this info into the TCLTK_LIBS make variable ... mess!
-  ## * Protecting all entries in TCLTK_LIBS that do not start with `-l'
-  ##   or `-L' with `-Wl,' (hoping that all compilers understand this).
+  ## * Protecting all entries in TCLTK_LIBS that do not start with '-l'
+  ##   or '-L' with '-Wl,' (hoping that all compilers understand this).
   ##   Easy, hence ...
   case "${host_os}" in
     aix*)
