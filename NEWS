@@ -178,6 +178,9 @@ NEW FEATURES
     o	New functions is.leaf(), dendrapply() and a labels() method for
 	dendrogram objects.
 
+    o	legend() has an argument 'pt.lwd' and setting 'density' now works
+	because 'angle' now defaults to 45 (mostly contributed by Uwe Ligges).
+
     o	library() now checks the version dependence (if any) of
 	required packages mentioned in the Depends: field of the
 	DESCRIPTION file.

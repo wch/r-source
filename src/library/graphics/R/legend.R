@@ -1,7 +1,7 @@
 legend <-
 function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
-	 angle = NULL, density = NULL, bty = "o",
-	 bg = par("bg"), pt.bg = NA, cex = 1, pt.cex = cex,
+	 angle = 45, density = NULL, bty = "o", bg = par("bg"),
+         pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
 	 text.width = NULL, text.col = par("col"),
          merge = do.lines && has.pch, trace = FALSE,
@@ -152,11 +152,12 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     if(plot && (has.pch || do.lines))
 	col <- rep(col, length.out = n.leg)
 
+    if(missing(lwd)) lwd <- par("lwd")
+    force(pt.lwd)
     if (do.lines) {			#- draw lines ---------------------
 	seg.len <- 2 # length of drawn segment, in xchar units
 	if(missing(lty)) lty <- 1
 	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0)
-	if(missing(lwd)) lwd <- par("lwd")
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
 	if(trace)
@@ -178,8 +179,8 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	if(trace)
 	    catn("  points2(", x1,",", y1,", pch=", pch[ok],", ...)")
 	if(plot)
-	    points2(x1, y1,
-                    pch = pch[ok], col= col[ok], cex= pt.cex[ok], bg= pt.bg[ok])
+	    points2(x1, y1, pch = pch[ok], col = col[ok],
+                    cex = pt.cex[ok], bg = pt.bg[ok], lwd = pt.lwd)
 	if (!merge) xt <- xt + dx.pch
     }
 
