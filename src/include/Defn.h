@@ -210,7 +210,8 @@ enum {
     CTXT_RETURN	  = 12,
     CTXT_BROWSER  = 16,
     CTXT_GENERIC  = 20,
-    CTXT_RESTART  = 28
+    CTXT_RESTART  = 28,
+    CTXT_BUILTIN  = 32  /* used in profiling */
 };
 
 /*
