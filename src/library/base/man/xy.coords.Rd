@@ -1,7 +1,7 @@
 \name{xy.coords}
 \title{Extracting Plotting Structures}
 \description{
-  \code{xy.coords} is used by many function to obtain
+  \code{xy.coords} is used by many functions to obtain
   x and y coordinates for plotting.
   The use of this common mechanism across all \R functions
   produces a measure of consistency.
