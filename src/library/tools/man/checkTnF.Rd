@@ -1,9 +1,10 @@
 \name{checkTnF}
 \alias{checkTnF}
+\alias{print.checkTnF}
 \title{Check R Code for T/F}
 \description{
   Checks the specified R code for occurrences of \code{T} or \code{F},
-  and reports the expression containing these.  This is useful as in R
+  and gathers the expression containing these.  This is useful as in R
   \code{T} and \code{F} are just variables which are set to the logicals
   \code{TRUE} and \code{FALSE} by default, but are not reserved words
   and hence can be overwritten by the user.  Hence, one should always
@@ -25,6 +26,13 @@ checkTnF(package, dir, file, lib.loc = NULL)
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
+}
+\value{
+  An object of class \code{"checkTnF"} which is a list with the
+  expressions found to contain \code{T} or \code{F}.
+
+  There is a \code{print} method for nicely displaying the information
+  contained in such objects.
 }
 \section{Warning}{
   This function is still experimental.  Both name and interface might

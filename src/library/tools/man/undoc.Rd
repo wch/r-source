@@ -1,5 +1,6 @@
 \name{undoc}
 \alias{undoc}
+\alias{print.undoc}
 \title{Find Undocumented Objects}
 \usage{
 undoc(package, dir, lib.loc = NULL)
@@ -28,7 +29,13 @@ undoc(package, dir, lib.loc = NULL)
   are still under discussion.
 }
 \value{
-  A character vector containing the names of the undocumented objects.
+  An object of class \code{"undoc"} which is a list of character vectors
+  containing the names of the undocumented objects split according to
+  documentation type.  This representation is still experimental, and
+  might change in future versions.
+
+  There is a \code{print} method for nicely displaying the information
+  contained in such objects.
 }
 \examples{
 undoc("eda")                   # Undocumented objects in `eda'

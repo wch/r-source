@@ -1,5 +1,6 @@
 \name{checkFF}
 \alias{checkFF}
+\alias{print.checkFF}
 \title{Check Foreign Function Calls}
 \usage{
 checkFF(package, dir, file, lib.loc = NULL,
@@ -24,12 +25,23 @@ checkFF(package, dir, file, lib.loc = NULL,
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
-    printed.}
+    printed (and the result is returned invisibly).}
+}
+\value{
+  An object of class \code{"checkFF"}, which currently is a list of the
+  (parsed) foreign function calls with no \code{PACKAGE} argument.
+
+  There is a \code{print} method for nicely displaying the information
+  contained in such objects.
 }
 \seealso{
   \code{\link{.C}},
   \code{\link{.Fortran}};
   \code{\link{Foreign}}.
+}
+\section{Warning}{
+  This function is still experimental.  Both name and interface might
+  change in future versions.
 }
 \examples{
 checkFF(package = "ts", verbose = TRUE)

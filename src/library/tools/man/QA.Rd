@@ -4,6 +4,9 @@
 \alias{checkDocArgs}
 \alias{checkDocStyle}
 \alias{checkMethods}
+\alias{print.checkDocArgs}
+\alias{print.checkDocStyle}
+\alias{print.checkMethods}
 \title{QA Checks for R Code and/or Documentation}
 \description{
   Functions for performing various quality checks.
@@ -53,9 +56,19 @@ checkMethods(package, dir, lib.loc = NULL)
   package), after possibly detaching an already loaded version of the
   package.
 }
+\value{
+  \code{checkAssignFuns} returns a character vector with the names of
+  assignment functions with final argument \emph{not} named
+  \code{value}.
+
+  The other functions return objects of class the same as the respective
+  function names containing the information about problems detected.
+  There is a \code{print} method for nicely displaying the information
+  contained in such objects.
+}
 \section{Warning}{
-  These functions are still experimental.  Both names and interfaces
-  might change in future versions.
+  These functions are still experimental.  Both names, interfaces and
+  values might change in future versions.
 }
 \keyword{utilities}
 \keyword{documentation}
