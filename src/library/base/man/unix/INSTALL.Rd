@@ -53,6 +53,9 @@
   image.  Options to be passed to R when creating the save image can be
   specified via \option{--save=ARGS}.
 
+  If the attempt to install the package fails, leftovers are removed.
+  If the package was already installed, the old version is restored.
+
   Use \code{R CMD INSTALL --help} for more usage information.
 }
 
