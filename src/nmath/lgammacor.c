@@ -66,6 +66,7 @@ double lgammacor(double x)
     /* Initialize machine dependent constants, the first time gamma() is called.
 	FIXME for threads ! */
     if (nalgm == 0) {
+	/* For IEEE double precision : nalgm = 5 */
 	nalgm = chebyshev_init(algmcs, 15, DBL_EPSILON/2);/*was d1mach(3)*/
 	xbig = 1 / sqrt(DBL_EPSILON/2); /* ~ 94906265.6 for IEEE double */
 	xmax = exp(fmin2(log(DBL_MAX / 12), -log(12 * DBL_MIN)));
