@@ -30,6 +30,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	else {
 	    pattern <- keyword
 	    fields <- "keyword"
+            if(is.null(agrep)) agrep <- FALSE
 	}
     } else if(!missing(whatis)) {
 	if(!is.character(whatis) || (length(whatis) > 1))
