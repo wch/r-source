@@ -94,8 +94,8 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 
 formatDL <-
 function(x, y, style = c("table", "list"),
-         width = 0.9 * getOption("width"), indent = NULL) {
-
+         width = 0.9 * getOption("width"), indent = NULL)
+{
     if(length(x) != length(y))
         stop("`x' and `y' must have the same length")
     x <- as.character(x)
@@ -129,35 +129,4 @@ function(x, y, style = c("table", "list"),
         r <- unlist(lapply(y, paste, collapse = "\n"))
     }
     r
-}
-
-write.dcf <-
-function(x, file = "", append = FALSE,
-         indent = 0.1 * getOption("width"),
-         width = 0.9 * getOption("width")) {
-    
-    if(!is.data.frame(x))
-        x <- data.frame(x)
-    x <- as.matrix(x)
-    mode(x) <- "character"
-
-    if(file == "")
-        file <- stdout()
-    else if(is.character(file)) {
-        file <- file(file, ifelse(append, "a", "w"))
-        on.exit(close(file))
-    }
-    if(!inherits(file, "connection"))
-        stop("argument `file' must be a character string or connection")
-
-    nr <- nrow(x)
-    nc <- ncol(x)
-    
-    eor <- character(nr * nc)
-    eor[seq(1, nr - 1) * nc] <- "\n"    # newline for end of record
-
-    writeLines(paste(formatDL(rep(colnames(x), nr), c(t(x)), style =
-                     "list", width = width, indent = indent),
-                     eor, sep = ""),
-               file)
 }
