@@ -27,7 +27,6 @@
 \alias{Rdpp}
 \alias{Rdinfo}
 \alias{Rdcontents}
-%\alias{Rdindex} % already in use in base for R CMD Rdindex
 \alias{Rd2contents}
 \alias{.installPackageDescription}
 \alias{.installPackageIndices}
@@ -63,8 +62,6 @@ sQuote(s)
 Rdpp(lines)
 Rdinfo(file)
 Rdcontents(RdFiles)
-Rdindex(RdFiles, outFile = "", type = NULL,
-        width = 0.9 * getOption("width"), indent = NULL)
 Rd2contents(dir, outFile = "")
 .stripRdComments(lines)
 .writeContentsRDS(contents, outFile)

@@ -68,7 +68,6 @@ Commands:
   Rdconv		Convert Rd format to various other formats
   Rd2dvi		Convert Rd format to DVI/PDF
   Rd2txt		Convert Rd format to pretty text
-  Rdindex		Extract index information from Rd files
   Sd2Rd			Convert S documentation to Rd format
   config                Obtain configuration information about R
 

@@ -6656,8 +6656,6 @@ La@TeX{}, plain text, and S documentation format.
 Convert Rd format to DVI/PDF.
 @item Rd2txt
 Convert Rd format to text.
-@item Rdindex
-Extract index information from Rd files.
 @item Sd2Rd
 Convert S documentation to Rd format.
 @end table
@@ -6862,8 +6860,6 @@ La@TeX{}, plain text, and S documentation format.
 Convert Rd format to DVI/PDF.
 @item Rd2txt
 Convert Rd format to text.
-@item Rdindex
-Extract index information from Rd files.
 @item Sd2Rd
 Convert S documentation to Rd format.
 @end table

@@ -611,7 +611,8 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.
 You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
 documentation.  (The @command{Rdindex} utility requires version 5.005 or
-later, but has an @R{} equivalent in package @pkg{tools}.)
+later, but has been deprecated in favor of the function @code{Rdindex()}
+in package @pkg{tools} as of @R{} version 1.7.0.)
 
 You will not be able to build the info files unless you have
 @command{makeinfo} version 4 or later installed (and some Linux

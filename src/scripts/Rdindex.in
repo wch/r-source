@@ -28,7 +28,7 @@ use R::Utils;
 use R::Vars;
 use R::Rd;
 
-my $revision = ' $Revision: 1.17 $ ';
+my $revision = ' $Revision: 1.18 $ ';
 my $version;
 my $name;
 
@@ -82,6 +82,9 @@ foreach my $rdfile (sort @Rdfiles) {
 sub usage {
     print STDERR <<END;
 Usage: R CMD Rdindex [options] FILES
+
+Note: this utility is deprecated.
+Use Rdindex() from package tools instead.
 
 Create an index table from the R documentation sources specified by
 FILES, by either giving the paths to the files, or the path to a
