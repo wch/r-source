@@ -199,6 +199,9 @@ NEW FEATURES
     o	locator() allows inline graphics parameters (for the plotting
 	it does with type !="n").
 
+    o	New function quade.test() for the Quade test for unreplicated
+	blocked data.
+
 
 
 BUG FIXES
