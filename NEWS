@@ -47,6 +47,7 @@ BUG FIXES
 
     o   a memory leak in deparsing was introduced when eliminating
         static variables (thanks to Achim Zeileis for spotting this).
+	A similar problem in loading workspaces has been corrected.
 
     o   TclInterface.Rd incorrectly used \synopsis for \usage so that
         the usage section wasn't output.
