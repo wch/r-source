@@ -69,20 +69,20 @@ $infiles = 0;
 $language = "0x409 English (United States)";
 while(<HHP>) {
     if(/Compiled file=(.*)$/) {
-	chomp $1;
 	$outhtm = $1;
+	chomp $outhtm;
     }
     if(/Contents file=(.*)$/) {
-	chomp $1;
 	$contentshtm = $1;
+	chomp $contentshtm;
     }
     if(/Default topic=(.*)$/) {
-	chomp $1;
 	$defaulthtm = $1;
+	chomp $defaulthtm;
     }
     if(/Language=(.*)$/) {
-	chomp $1;
 	$language = $1;
+	chomp $language;
     }
     if(/\[/) {
 	$infiles = 0;
