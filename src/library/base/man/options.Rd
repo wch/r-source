@@ -264,8 +264,8 @@ getOption(x)
     \code{warn} \tab \code{0}\tab
     \code{warning.length} \tab \code{1000}\cr
     \code{echo} \tab \code{TRUE} \tab
-    \code{verbose} \tab \code{FALSE} \tab
-    \code{scipen} \tab \code{0}
+    \code{verbose} \tab \code{FALSE} \cr
+    \code{scipen} \tab \code{0} \tab \tab
   }
   Others are set from environment variables or are platform-dependent.
 }
