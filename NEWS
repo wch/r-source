@@ -301,6 +301,8 @@ NEW FEATURES
         - New function topenv() to determine the nearest top level
           environment (usually .GlobalEnv or a name space environment).
 
+	- Added name space support for packages that do no use methods.        
+
     o	lm.influence() has a new `do.coef' argument allowing *not* to
 	compute casewise changed coefficients.	This makes plot.lm() much
 	quicker for large data sets.
