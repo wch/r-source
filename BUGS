@@ -283,3 +283,7 @@ Date: Thu, 23 Dec 1999 19:12:58 +0100
 Subject: coredump with plot(x,y,pch="+",cex=2.2)
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 26 Dec 1999 18:14:10 -0500 (EST)
+* PR# 390 *
+Subject: axis for small ranges
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Tue, 28 Dec 1999 13:28:01 +0100
