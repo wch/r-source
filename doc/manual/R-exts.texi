@@ -181,7 +181,8 @@ contained in a separate @file{TITLE} file in older versions of @R{},
 please use the title field in the @file{DESCRIPTION} file from now on.
 
 The @samp{Maintainer} field should give a @emph{single} name with email
-address in angle brackets (for sending bug reports etc.).
+address in angle brackets (for sending bug reports etc.).  It should not
+end in a period.
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
@@ -191,18 +192,18 @@ be found.  These @acronym{URL}s are converted to active hyperlinks on
 
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
-optionally followed by comparison operator (currently only @samp{>=} and
-@samp{<=} are supported) and a version number in parentheses.  You can
-also use the special package name @samp{R} if your package depends on a
-certain version of R.  E.g., if the package works only with R version
-0.90 or newer, include @samp{R (>= 0.90)} in the @samp{Depends} field.
-Future versions of R will use this field to autoload required packages,
-hence please do not misuse the @samp{Depends} field for comments on
-other software that might be needed or not using proper syntax.  Other
-dependencies should be listed in the @samp{Description} field or a
-separate @samp{README} file.  The @R{}'s @samp{INSTALL} facilities
-already checks if the version of R used is recent enough for the
-package being installed.
+optionally followed by a comparison operator (currently only @samp{>=}
+and @samp{<=} are supported) and a version number in parentheses.  You
+can also use the special package name @samp{R} if your package depends
+on a certain version of R.  E.g., if the package works only with R
+version 0.90 or newer, include @samp{R (>= 0.90)} in the @samp{Depends}
+field.  Future versions of R will use this field to autoload required
+packages, hence please do not misuse the @samp{Depends} field for
+comments on other software that might be needed or not using proper
+syntax.  Other dependencies should be listed in the @samp{Description}
+field or a separate @samp{README} file.  The @R{}'s @samp{INSTALL}
+facilities already checks if the version of R used is recent enough for
+the package being installed.
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The INDEX file
