@@ -120,6 +120,19 @@ AC_SUBST(config_opts)
 
 ### ** Optional features.
 
+## <FIXME>
+## Remove in 1.6.
+for arg in ${ac_configure_args}; do
+  case ${arg} in
+    --with-g77*)
+      warn_arg_with_g77="option '--with-g77' is deprecated.
+Use variable F77 to specify a FORTRAN 77 compiler if necessary."
+      AC_MSG_WARN([${warn_arg_with_g77}])
+      ;;
+  esac
+done
+## </FIXME>
+
 ## Allow the user to specify support for R profiling.
 AC_ARG_ENABLE([R-profiling],
 [AC_HELP_STRING([--enable-R-profiling],
@@ -186,16 +199,7 @@ AC_ARG_WITH([f77],
 [R_ARG_USE(f77)],
 [use_f77=no])
 
-## <FIXME>
-## Remove '--with-g77' for 1.6.
-AC_ARG_WITH([g77], [],
-[warn_arg_with_g77="option '--with-g77' is deprecated.
-Use variable F77 to specify a FORTRAN 77 compiler if necessary."
-AC_MSG_WARN([${warn_with_g77}])],
-[])
-## </FIXME>
-
-## Make sure only one of the above options for Fortran compilers was
+## Make sure only one of the above options for FORTRAN compilers was
 ## specified.
 R_ARG_WITH_EXCLUSIVE([f77], [f2c],
 [warn_f77_and_f2c="--with-f77 and --with-f2c both given!  Using f77 ..."
@@ -438,7 +442,7 @@ AC_HEADER_TIME
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h errno.h fcntl.h \
-  floatingpoint.h fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
+ floatingpoint.h fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
   netdb.h netinet/in.h pwd.h readline/history.h readline/readline.h \
   rpc/xdr.h stdarg.h string.h strings.h sys/param.h sys/select.h \
   sys/socket.h sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
@@ -548,9 +552,11 @@ case "${host_cpu}" in
                      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee"])
     fi
     if test "${G77}" = yes; then
-      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
+      R_PROG_F77_FLAG([-mieee],
+                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"])
     else
-      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -ieee"
+      R_PROG_F77_FLAG([-ieee],
+                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -ieee"])
     fi
     if test "${GXX}" = yes; then
       R_PROG_CXX_FLAG([-mieee],
@@ -604,13 +610,15 @@ case "${host_os}" in
     R_C_OPTIEEE
     ## <NOTE>
     ## We really should test explictly whether the FORTRAN and C++
-    ## compilers need '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
-    ## assume that non-GNU tools are native and hence need the flag.
+    ## compilers *need* '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
+    ## check whether the non-GNU tools *accept* the flag.
     if test "${G77}" != yes; then
-      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"
+      R_PROG_F77_FLAG([-OPT:IEEE_NaN_inf=ON],
+                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"])
     fi
     if test "${GXX}" != yes; then
-      R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -OPT:IEEE_NaN_inf=ON"
+      R_PROG_CXX_FLAG([-OPT:IEEE_NaN_inf=ON],
+                      [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -OPT:IEEE_NaN_inf=ON"])
     fi
     ## </NOTE>
     ;;
@@ -730,11 +738,8 @@ case "${host_os}" in
     cxxpicflags=
     fpicflags=
     wl="-Wl,"
-    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp"
-    main_ldflags="${main_ldflags} ${wl}-bM:SRE"
-    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512"
-    shlib_ldflags="${shlib_ldflags} ${wl}-bnoentry ${wl}-bexpall"
-    shlib_ldflags="${shlib_ldflags} ${wl}-bI:\$(R_HOME)/etc/R.exp"
+    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
+    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
     ;;
   darwin*)
