@@ -27,6 +27,6 @@
 \examples{
 data(ToothGrowth)
 coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
-       xlab = "ToothGrowth data: given is supplement type")
+       xlab = "ToothGrowth data: length vs dose, given type of supplement")
 }
 \keyword{datasets}
