@@ -40,7 +40,6 @@ extern "C" {
 
 #ifdef Win32
 #include <windows.h>
-#define HAVE_DLFCN_H  1
 #define CACHE_DLL_SYM 1
 #else
 typedef void *HINSTANCE;
