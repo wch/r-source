@@ -98,7 +98,3 @@ legend(1,10, c("A","bcd"), lwd = 2:3, pch= 21:22, pt.bg="skyblue",
 x <- 2^seq(1,1001, length=20)
 plot(x, x^0.9, type="l", log="xy")
 ## gave error 'Infinite axis extents [GEPretty(1.87013e-12,inf,5)]' for R 2.0.1
-plot(x^0.9, 1e-20/x, type="l", log="xy") # still warning
-## and ugly labels because  10^-323 |==> 9.881313e-324 numerically
-## gave error 'log - axis(), 'at' creation, _LARGE_ range: ne = -429496728 <= 0 ...
-
