@@ -31,7 +31,9 @@ NEW FEATURES
     o	R CMD Rd2dvi has more convenient defaults for its output file.
 
     o	R CMD check now also fully checks the Depends field in the
-	package DESCRIPTION file.
+	package DESCRIPTION file.  It also tests whether all methods in
+	the code have all arguments of the corresponding generic, and
+	for arguments shown in \usage but not documented in \arguments.
 
     o	New function checkDocArgs() for checking whether all arguments
 	shown in \usage of Rd files are documented in the corresponding

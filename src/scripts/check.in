@@ -34,7 +34,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.51 $ ';
+my $revision = ' $Revision: 1.52 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -446,6 +446,34 @@ sub check_pkg {
 	$log->result("OK") unless $any;
     }
 
+    ## check whether methods have all arguments of the corresponding
+    ## generic.
+    if(-d "R") {
+	$log->checking("generic/method consistency");
+
+	my $Rcmd = "$TMPDIR/Rcmd.$$";
+	my $Rout = "$TMPDIR/Rout.$$";
+	open Rcmd, "> $Rcmd" or die "Cannot write to \`$Rcmd'\n";
+        print Rcmd "checkMethods(dir = \"${pkgdir}\")\n";
+        close Rcmd;
+        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        my @out;
+        open Rout,  "< $Rout";
+        while(<Rout>) {chomp; push(@out, $_);}
+        close Rout;
+        unlink($Rcmd);
+        unlink($Rout);
+
+	@out = grep(!/^\>/, @out);
+	if($#out>=0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+
     ## check R documentation files
     
     if(-d "man") {
@@ -663,6 +691,34 @@ sub check_pkg {
 	    $log->result("OK");
 	}
 	## </FIXME>
+    }
+
+    ## check whether all arguments shown in \usage are document in
+    ## \arguments.
+    if(-d "man") {
+	$log->checking("for undocumented arguments in \\usage");
+
+	my $Rcmd = "$TMPDIR/Rcmd.$$";
+	my $Rout = "$TMPDIR/Rout.$$";
+	open Rcmd, "> $Rcmd" or die "Cannot write to \`$Rcmd'\n";
+        print Rcmd "checkDocArgs(dir = \"${pkgdir}\")\n";
+        close Rcmd;
+        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        my @out;
+        open Rout,  "< $Rout";
+        while(<Rout>) {chomp; push(@out, $_);}
+        close Rout;
+        unlink($Rcmd);
+        unlink($Rout);
+
+	@out = grep(!/^\>/, @out);
+	if($#out>=0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}
     }
 
     chdir($pkgoutdir);
