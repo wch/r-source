@@ -36,8 +36,8 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
 \examples{
 ff <- tempfile()
 ##- May only work on Unix: --
-system("echo '123456' >", ff)
-system("echo '987654' >>", ff)
+system(paste("echo '123456' >", ff))
+system(paste("echo '987654' >>", ff))
 read.fwf(ff, width=c(1,2,3))	#> 1 23 456 \\ 9 87 654
 unlink(ff); rm(sys)
 }
