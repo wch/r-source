@@ -15,23 +15,23 @@ hist.default <-
     n <- length(x <- x[!is.na(x)])
     use.br <- !missing(breaks) && (nB <- length(breaks)) > 1
     if(use.br)
-        breaks <- sort(breaks)
+	breaks <- sort(breaks)
     else {
-        dx <- diff(rx <- range(x))
-        nnb <-
-            if(missing(breaks)) 1 + log2(n)
-            else { # breaks = `nclass'
-                if (is.na(breaks) | breaks < 2)
-                    stop("invalid number of breaks")
-                breaks
-            }
-        breaks <- pretty (rx + c(-1,1)/1000 * dx, n = nnb)
-        nB <- length(breaks)
-        if(nB == 1) {##  search anew for breaks; dx is (always ?) 0.
-            breaks <-
-                if(breaks != 0) breaks * c(.8, 1.2) else c(-.2,.2)
-            nB <- length(breaks)
-        }
+	dx <- diff(rx <- range(x))
+	nnb <-
+	    if(missing(breaks)) 1 + log2(n)
+	    else { # breaks = `nclass'
+		if (is.na(breaks) | breaks < 2)
+		    stop("invalid number of breaks")
+		breaks
+	    }
+	breaks <- pretty (rx + c(-1,1)/1000 * dx, n = nnb)
+	nB <- length(breaks)
+	if(nB == 1) {##	 search anew for breaks; dx is (always ?) 0.
+	    breaks <-
+		if(breaks != 0) breaks * c(.8, 1.2) else c(-.2,.2)
+	    nB <- length(breaks)
+	}
     }
     storage.mode(x) <- "double"
     storage.mode(breaks) <- "double"
@@ -41,7 +41,7 @@ hist.default <-
 		 breaks,
 		 nB,
 		 counts = integer(nB - 1),
-                 right  = as.logical(right),
+		 right	= as.logical(right),
 		 include= as.logical(include.lowest),
 		 NAOK = FALSE, DUP = FALSE) $counts
     if (any(counts < 0))
@@ -64,7 +64,7 @@ hist.default <-
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     y <- if (freq) counts else intensities
     r <- list(breaks = breaks, counts = counts,
-              intensities = intensities, mids = mids)
+	      intensities = intensities, mids = mids)
     if (plot) {
 	plot.new()
 	plot.window(xlim, ylim, "") #-> ylim's default from 'y'
@@ -83,7 +83,7 @@ hist.default <-
 	    text(mids, y,
 		 labels = if(freq) counts else round(intensities,3),
 		 adj = c(0.5, -0.5))
-        invisible(r)
+	invisible(r)
     }
     else r
 }
