@@ -2195,6 +2195,11 @@ read.table(f, header = TRUE, sep ="¦")
 ## failed in 1.7.0
 
 
+## PR#2993 need to consider delta=NULL in power.t.test{ctest}
+power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
+## failed in 1.7.0
+
+
 ## body() and formals() looked in different places
 bar <- function(x=NULL)
 {
@@ -2244,6 +2249,8 @@ a10<-strsplit(a, na)
 stopifnot(identical(a10, as.list(a)))
 ## but nchar doesn't fit this pattern
 stopifnot(all(!is.na(nchar(a))))
+## NA and "NA" were not distringuished in 1.7.x
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

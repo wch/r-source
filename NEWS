@@ -322,7 +322,16 @@ BUG FIXES
 	expressions such as expression(x*y) (since the comments in the
 	C code were incorrect).  (PR#2577)
 
-	
+    o   power.t.test(..., delta=NULL,alternative='two.sided') failed. (PR#2993)
+
+    o	Lines on postscript() plots with thousands of segments might
+	have been plotted inaccurately in 1.7.0. (PR#3132)
+
+	Solid lines in postscript() output are split into groups of 1000
+	segments to help some PostScript interpreters (typically old
+	level-1 interpreters).
+
+
 
 		CHANGES IN R VERSION 1.7.0
 
