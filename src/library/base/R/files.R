@@ -84,7 +84,8 @@ format.octmode <- function(x, ...)
     isna <- is.na(x)
     y <- x[!isna]
     ans0 <- character(length(y))
-    while(any(y > 0)) {
+    z <- NULL
+    while(any(y > 0) || is.null(z)) {
         z <- y%%8
         y <- floor(y/8)
         ans0 <- paste(z, ans0, sep="")

@@ -835,6 +835,12 @@ stopifnot(class(fit) == "try-error")
 ## had formula y ~ x1 + x1 + x3 in 1.5.1.
 
 
+## PR#1759 as.character.octmode() (Henrik Bengtsson)
+x <- 0; class(x) <- "octmode"
+stopifnot(as.character(x) == "0")
+## gave "" in 1.5.1
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
