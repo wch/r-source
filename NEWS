@@ -11,14 +11,18 @@
 
 NEW FEATURES
 
-    o	prompt() now also works with a character argument (useful
-	for producing many *.Rd files in a loop).
+    o	prompt() now also works with a character argument (useful for
+	producing many *.Rd files in a loop).
 
     o	The Unix front-end shell script now ignores a value for R_HOME
         found in the environment.
 
     o	Connections functions such as file() now accept a description of
 	length > 1, with a warning.
+
+    o	All text-mode connections now accept input with LF, CR or CRLF
+	line endings.  This means that readLines() can be used on DOS
+	files and source() on Mac files, for example.
 
     o	DESCRIPTION file has a new recommended `Maintainer:' field.
 

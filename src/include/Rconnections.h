@@ -38,6 +38,7 @@ typedef struct Rconn
 /*    void (*onerror)(struct Rconn *); */
     int nPushBack, posPushBack; /* number of lines, position on top line */
     char **PushBack;
+    int save;
     void *private;
 } *Rconnection;
 

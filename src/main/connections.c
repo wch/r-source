@@ -127,6 +127,7 @@ static void file_open(Rconnection con)
     con->canread = !con->canwrite;
     if(strlen(con->mode) >= 2 && con->mode[2] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    con->save = -1000;
   
 /*    if(!con->blocking) {
 	fd = fileno(fp);
@@ -156,11 +157,8 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 static int file_fgetc(Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
-#ifdef Win32
-    return fgetc(fp); /* R_fgetc fails on Windows */
-#else
-    return R_fgetc(fp);
-#endif
+    int c = fgetc(fp);
+    return feof(fp) ? R_EOF : c;
 }
 
 static int file_ungetc(int c, Rconnection con)
@@ -293,6 +291,7 @@ static void pipe_open(Rconnection con)
     con->canread = !con->canwrite;
     if(strlen(con->mode) >= 2 && con->mode[2] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    con->save = -1000;
 }
 
 static void pipe_close(Rconnection con)
@@ -495,6 +494,7 @@ static Rconnection newterminal(char *description, char *mode)
     new->read = &null_read;
     new->write = &null_write;
     new->nPushBack = 0;
+    new->save = -1000;
     new->private = NULL;
     return new;
 }
@@ -594,6 +594,7 @@ static void text_init(Rconnection con, SEXP text)
 
 static void text_open(Rconnection con)
 {
+    con->save = -1000;
 }
 
 static void text_close(Rconnection con)
@@ -993,7 +994,23 @@ int Rconn_fgetc(Rconnection con)
     char *curLine;
     int c;
     
-    if(con->nPushBack <= 0 ) return con->fgetc(con);
+    if(con->nPushBack <= 0) {
+	/* map CR or CRLF to LF */
+	if (con->save != -1000) {
+	    c = con->save;
+	    con->save = -1000;
+	    return c;
+	}
+	c = con->fgetc(con);
+	if (c == '\r') {
+	    c = con->fgetc(con);
+	    if (c != '\n') {
+		con->save = (c != '\r') ? c : '\n';
+		return('\n');
+	    }
+	}
+	return c;
+    }
     curLine = con->PushBack[con->nPushBack-1];
     c = curLine[con->posPushBack++];
     if(con->posPushBack >= strlen(curLine)) {
@@ -1056,7 +1073,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(ans = ans2);
 	}
 	nbuf = 0;
-	while((c = Rconn_fgetc(con)) != EOF) {
+	while((c = Rconn_fgetc(con)) != R_EOF) {
 	    if(nbuf == buf_size) {
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
@@ -1067,7 +1084,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	buf[nbuf] = '\0';
 	SET_STRING_ELT(ans, nread, mkChar(buf));
-	if(c == EOF) goto no_more_lines;
+	if(c == R_EOF) goto no_more_lines;
     }
     UNPROTECT(1);
     free(buf);

@@ -2378,10 +2378,9 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
 
 #include "Rconnections.h"
 static Rconnection con_parse;
-
 static int con_getc(void)
 {
-    return con_parse->fgetc(con_parse);
+    return Rconn_fgetc(con_parse);
 }
 
 static int con_ungetc(int c)
