@@ -48,10 +48,10 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   $, $<-, [[, [[<- can be applied to environments. Only character
-        arguments are allowed and no partial matching is done. The
-        semantics are basically that of get/assign to the environment with
-        inherits=FALSE.
+    o	$, $<-, [[, [[<- can be applied to environments. Only character
+	arguments are allowed and no partial matching is done. The
+	semantics are basically that of get/assign to the environment with
+	inherits=FALSE.
 
     o	There are now print() and [ methods for "acf" objects.
 
@@ -115,7 +115,7 @@ NEW FEATURES
     o	Functions grep(), regexpr(), sub() and gsub() now coerce their
 	arguments to character, rather than give an error.
 
-    	The perl=TRUE argument now uses character tables prepared for
+	The perl=TRUE argument now uses character tables prepared for
 	the locale currently in use each time it is used, rather than
 	those of the C locale.
 
@@ -147,7 +147,7 @@ NEW FEATURES
 
     o	ppr() now fully supports categorical explanatory variables,
 
-    	ppr() is now interruptible at suitable places in the
+	ppr() is now interruptible at suitable places in the
 	underlying FORTRAN code.
 
     o	princomp() now warns if both `x' and `covmat' are supplied,
@@ -165,7 +165,7 @@ NEW FEATURES
 	is now ignored for S compatibility.  (Previously padding with
 	NAs was used.)
 
-     	The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
+	The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
 	to the default method (as expected by PR#5818).
 
     o	User hooks can be set for onLoad, library, detach and
@@ -183,7 +183,7 @@ NEW FEATURES
 	work around these on Windows).	Some examples are now tested for
 	during configuration.
 
-    o	strsplit() now has `fixed' and `perl' arguments and 
+    o	strsplit() now has `fixed' and `perl' arguments and
 	split="" is optimized.
 
     o	subset() now allows a `drop' argument to remove unused factor
@@ -252,18 +252,18 @@ UTILITIES
 	of the package's DESCRIPTION file when testing an installed
 	package.
 
-    o   The DESCRIPTION file of packages may contain a 'Suggests:'
-        field for packages that are only used in examples or
-        vignettes.
+    o	The DESCRIPTION file of packages may contain a 'Suggests:'
+	field for packages that are only used in examples or
+	vignettes.
 
     o	Added an option to package.dependencies() to handle the
-        'Suggests' levels of dependencies.
+	'Suggests' levels of dependencies.
 
-    o   Vignette dependencies can now be checked and obtained via
+    o	Vignette dependencies can now be checked and obtained via
 	vignetteDepends.
 
-    o   Option 'repositories' to list URLs for package repositories
-        added.
+    o	Option 'repositories' to list URLs for package repositories
+	added.
 
 
 C-LEVEL FACILITIES
@@ -459,12 +459,12 @@ BUG FIXES
 	\end{Section} etc which occasionally gave problems, as fixed for
 	some other \end{Foo} in 1.8.1.	(PR#5645)
 
-    o   Work around a glibc bug to make the %Z format usable in strftime().
+    o	Work around a glibc bug to make the %Z format usable in strftime().
 
     o	The glm method for rstandard() was wrongly scaled for cases where
 	summary(model)$dispersion != 1.
 
-    o   Calling princomp() with a covariance matrix (rather than a
+    o	Calling princomp() with a covariance matrix (rather than a
 	list) failed to predict scores rather than predict NA as
 	intended.  (PR#6452)
 
@@ -473,25 +473,29 @@ BUG FIXES
 
     o	isoreg() could segfault on monotone input sequences.  (PR#6494)
 
-    o	Rdconv detected \link{\url{}} only very slowly.  (PR#6496)
+    o	Rdconv detected \link{\url{}} only very slowly.	 (PR#6496)
 
     o	aov() with Error() term and no intercept incorrectly assigned
 	terms to strata. (PR#6510)
 
-    o   ftable() incorrectly handled arguments named "x".  (PR#6541)
+    o	ftable() incorrectly handled arguments named "x".  (PR#6541)
 
     o	vector(), matrix(), array() and their internal equivalents
 	report correctly that the number of elements specified was too
 	large (rather than reporting it as negative).
 
-    o   Minor copy-paste error in example(names).  (PR#6594)
+    o	Minor copy-paste error in example(names).  (PR#6594)
 
-    o   length<-() now works correctly on factors (and is now generic
+    o	length<-() now works correctly on factors (and is now generic
 	with a method for factors).
 
-    o   x <- 2^32; x:(x+3) no longer generates an error (but gives a
+    o	x <- 2^32; x:(x+3) no longer generates an error (but gives a
 	result of type "double").
 
+    o	pgamma(30, 100, lower=FALSE, log=TRUE) is not quite 0, now.
+	pgamma(x, alph) now only uses a normal approximation for
+	alph > 1e5 instead of alph > 1000.  This also improves the accuracy
+	of ppois().
 
 
 

@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998		Ross Ihaka
  *  Copyright (C) 1999-2000	The R Development Core Team
+ *  Copyright (C) 2003-2004     The R Foundation
  *  based on AS 239 (C) 1988 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -62,7 +63,8 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	elimit = M_LN2*(DBL_MIN_EXP),/* will set exp(E) = 0 for E < elimit ! */
     /* was elimit = -88.0e0; */
 #endif
-	alphlimit = 1000.;/* normal approx. for alph > alphlimit */
+	/* normal approx. for alph > alphlimit */
+	alphlimit = 1e5;/* was 1000. till R.1.8.x */
 
     double pn1, pn2, pn3, pn4, pn5, pn6, arg, a, b, c, an, osum, sum;
     long n;
@@ -91,15 +93,22 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
     if (x <= 0.)
 	return R_DT_0;
 
+#define USE_PNORM \
+    pn1 = sqrt(alph) * 3. * (pow(x/alph, 1./3.) + 1. / (9. * alph) - 1.); \
+    return pnorm(pn1, 0., 1., lower_tail, log_p);
+
     if (alph > alphlimit) { /* use a normal approximation */
-	pn1 = sqrt(alph) * 3. * (pow(x/alph, 1./3.) + 1. / (9. * alph) - 1.);
-	return pnorm(pn1, 0., 1., lower_tail, log_p);
+	USE_PNORM;
     }
 
-    /* if x is extremely large __compared to alph__ then return 1 */
-
-    if (x > xbig * alph)
-	return R_DT_1;
+    if (x > xbig * alph) {
+	if (x > DBL_MAX * alph)
+	    /* if x is extremely large __compared to alph__ then return 1 */
+	    return R_DT_1;
+	else { /* this only "helps" when log_p = TRUE */
+	    USE_PNORM;
+	}
+    }
 
     if (x <= 1. || x < alph) {
 
@@ -116,8 +125,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	    a += 1.;
 	    c *= x / a;
 	    sum += c;
-	} while (c > DBL_EPSILON);
-	arg += log(sum);
+	} while (c > DBL_EPSILON * sum);
     }
     else { /* x >= max( 1, alph) */
 
@@ -161,8 +169,9 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 		pn4 /= xlarge;
 	    }
 	}
-	arg += log(sum);
     }
+
+    arg += log(sum);
 
 #ifdef DEBUG_p
     REprintf("--> arg=%12g (elimit=%g)\n", arg, elimit);
@@ -176,10 +185,10 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 #ifndef IEEE_754
     /* Underflow check :*/
     if (arg < elimit)
-	sum = 0.;
-    else
+	return (lower_tail) ? 0. : (log_p ? 0. : 1.);
 #endif
-	sum = exp(arg);
-
-    return (lower_tail) ? sum : R_D_val(1 - sum);
+    /* sum = exp(arg); and return   if(lower_tail) sum  else 1-sum : */
+    return (lower_tail) ? exp(arg)
+	: (log_p ? (arg > -M_LN2 ? log(-expm1(arg)) : log1p(-exp(arg)))
+                 : -expm1(arg));
 }
