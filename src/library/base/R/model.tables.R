@@ -264,7 +264,8 @@ replications <- function(formula, data = NULL, na.action)
 	formula <- terms(formula, data = data)
     }
     if(missing(na.action))
-        if(!is.null(tj <- attr(data, "na.action"))) na.action <- tj
+        if(!is.null(tj <- attr(data, "na.action")) && is.function(tj))
+            na.action <- tj
         else {
             naa <- getOption("na.action")
             if(!is.null(naa)) na.action <- match.fun(naa)

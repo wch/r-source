@@ -386,6 +386,9 @@ BUG FIXES
 	tried to replicate them to maximum number of rows, and failed
 	if this was 1 or more.
 
+    o   replicate() now understands data frames to which na.omit() has
+	been applied.
+
 
 
 	**************************************************
