@@ -170,7 +170,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
 function(vignetteFiles)
 {
     vignetteIndexEntryRE <-
-        "[[:space:]]*%+[[:space:]]\\\\VignetteIndexEntry\{([^}]*)\}"
+        "[[:space:]]*%+[[:space:]]*\\\\VignetteIndexEntry\{([^}]*)\}"
     vignetteTitles <-
         sapply(vignetteFiles,
                function(file) {
