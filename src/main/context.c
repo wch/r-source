@@ -108,6 +108,27 @@
 
 static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 {
+    RCNTXT *c;
+    int savevis = R_Visible;
+
+    PROTECT(val);
+    for (c = R_GlobalContext; c != cptr; c = c->nextcontext) {
+	void (*cend)() = c->cend;
+	if (cend != NULL) {
+	    c->cend = NULL; /* prevent recursion */
+	    cend();
+	}
+	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
+	    SEXP s = c->conexit;
+	    c->conexit = R_NilValue; /* prevent recursion */
+	    PROTECT(s);
+	    eval(s, c->cloenv);
+	    UNPROTECT(1);
+	}
+    }
+    UNPROTECT(1);
+    R_Visible = savevis;
+
     R_PPStackTop = cptr->cstacktop;
     R_EvalDepth = cptr->evaldepth;
     R_ReturnedValue = val;
