@@ -13,14 +13,14 @@ objects(name, pos= -1, envir=pos.to.env(pos),
 in the vector of names returned by \code{search}.}
 \item{pos}{the index of an attached object in
   the list returned by \code{search}.  Defaults to the \emph{current}
-  environment.} 
+  environment.}
 \item{envir}{an evaluation environment.  Defaults to the one corresponding
-to \code{pos}.}
+  to \code{pos}.}
 \item{all.names}{a logical value.  If \code{TRUE}, all
-object names are returned.  If \code{FALSE}, names
-which begin with a ``.'' are omitted.}
-\item{pattern}{an optional regular expression.  Only names
-matching \code{pattern} are returned.}
+  object names are returned.  If \code{FALSE}, names which begin with a
+  ``.'' are omitted.}
+\item{pattern}{an optional regular expression, see \code{\link{grep}}.
+  Only names matching \code{pattern} are returned.}
 }
 \description{
 \code{ls} and \code{objects} return a vector of character strings
@@ -32,19 +32,21 @@ When invoked with no argument inside a function,
 This is useful in conjunction with \code{browser}.
 }
 \seealso{
-\code{\link{apropos}} for finding objects in the whole search path;
-\code{\link{class}}, \code{\link{methods}}, etc. for object-oriented programming.
+\code{\link{apropos}} (or \code{\link{find}}) for finding objects in the
+whole search path; \code{\link{grep}} for more details on ``regular
+expressions''; \code{\link{class}}, \code{\link{methods}}, etc. for
+object-oriented programming.
 }
 \examples{
 .Ob <- 1
-ls(pat="O")             
+ls(pat="O")
 ls(pat="O", all = T)    # also shows ".[foo]"
 
 # shows an empty list because inside myfunc no variables are defined
 myfunc _ function() {ls()}
 myfunc()
 
-# define a local variable inside myfunc 
+# define a local variable inside myfunc
 myfunc _ function() {y_1; ls()}
 myfunc()                # shows "y"
 }
