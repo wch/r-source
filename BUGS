@@ -627,40 +627,25 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 ..Incorrect result confirmed on RH8.0 and segfault on Windows (BDR)
 ..The segfault is under a call to regexec: PCRE is not used.
 ..If perl=TRUE is included, this works, fast.
+* PR# 7022 *
+Subject: Bug in parse(text = <long polynom>)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 25 Jun 2004 09:19:32 +0200
 
 Directory:  Macintosh
 
-* PR# 6882 *
-Subject: Darwin Framework and Application Install Directory Improvements
-From: ch-r@bobobeach.com
-Date: Thu, 13 May 2004 20:55:36 +0200 (CEST)
-..Lots of assertions, no evidence of a bug.
 * PR# 6903 *
 Subject: Memory Leak in OS X versions?
 From: dvanbrunt@well-wired.com
 Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
-* PR# 6920 *
-Subject: cannot start help
-From: Kuo-Chen Chan <kuochen@mac.com>
-Date: Fri, 28 May 2004 00:55:54 -0400
-..MacOS X, no actual error described.
 * PR# 6940 *
 Subject: Crash in OSX
 From: murray.pung@studentmail.newcastle.edu.au
 Date: Sat,  5 Jun 2004 04:36:52 +0200 (CEST)
-* PR# 6964 *
-Subject: Re: [Rd] =?iso-8859-1?q?Can=B4t_start_help_and_update_on_Mac_=28PR?=
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 10 Jun 2004 12:37:06 +0100 (BST)
-..Grabbled header: part of PR#6920
 * PR# 6982 *
 Subject: out-of-date information in R for Mac OS X FAQ
 From: d.firth@warwick.ac.uk
 Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
-* PR# 7000 *
-Subject: Re: [R] Html help does not work in Mac OSX 10.3.4
-From: Ulises Mora Alvarez <umalvarez@fata.unam.mx>
-Date: Mon, 21 Jun 2004 19:34:45 -0500 (CDT)
 
 Directory:  Misc
 
@@ -914,54 +899,7 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 7013 *
-Subject: Returned mail
-Subject: Re: Extended Mail System
-From: AntiVirus_for_SMTP@ctc.cl
-From: r-bugs@biostat.ku.dk
-Date: Wed, 23 Jun 2004 05:08:20 -0400
-Date: Wed, 23 Jun 2004 11:09:53 +0200
-* PR# 7014 *
-Subject: headstand
-From: "Grace " <nwcsznuvdwt@monsieurcinema.com>
-Date: Wed, 23 Jun 2004 07:50:07 -0500
-* PR# 7015 *
-Subject: Dreamwaver MX 2004          
-From: "Garry Mims" <Iiawpuo@mail.1starnet.com>
-Date: Wed, 23 Jun 2004 14:50:55 -0600
-* PR# 7016 *
-Subject: FROM MRS CYNTHIADUBE
-From: "cynthia dube" <mrscynthiadube10@rccgmail.org>
-Date: Thu, 24 Jun 2004 04:50:58 -0500
-* PR# 7017 *
-Subject: FROM MRS CYNTHIADUBE
-From: "cynthia dube" <mrscynthiadube10@rccgmail.org>
-Date: Thu, 24 Jun 2004 04:52:52 -0500
-* PR# 7018 *
-Subject: inestimable
-From: "Hung Jacobs" <qkpyq@pochtamt.ru>
-Date: Thu, 24 Jun 2004 16:03:41 +0300
-* PR# 7019 *
-Subject: Discounted OEM Microsoft, Adobe, Autodesk, Corel software from Billings's SoftShop
-From: "Aline Dotson" <VNZPNAQFUCXQ@keromail.com>
-Date: Thu, 24 Jun 2004 08:38:21 -0700
-* PR# 7020 *
-Subject: All popular s ofwtare at very low p rices
-From: Roosevelt Tompkins <PUVAM@hotmail.com>
-Date: Fri, 25 Jun 2004 16:01:54 +0300 (GMT)
-* PR# 7021 *
-Subject: error in installing packages
-From: nyinyi65@yahoo.com
-Date: Fri, 25 Jun 2004 06:12:02 +0200 (CEST)
-* PR# 7022 *
-Subject: Bug in parse(text = <long polynom>)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 25 Jun 2004 09:19:32 +0200
 * PR# 7023 *
 Subject: legend lwd - feature request
 From: "Leslie Foldager" <Lfo@psykiatri.aaa.dk>
 Date: Fri, 25 Jun 2004 11:03:31 +0200
-* PR# 7024 *
-Subject: So Embrassing If U Dont Increase Ur Size any blew 
-From: "Lisbeth Blossom" <ypw50pipgi@abac.com>
-Date: Fri, 25 Jun 2004 16:06:13 -0700
