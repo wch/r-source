@@ -399,7 +399,9 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     AllDevicesKilled = TRUE;
     if (R_Interactive && CharacterMode == RTerm) 
 	SetConsoleTitle(oldtitle);
+#if 0
     UnLoad_Unzip_Dll();
+#endif
     UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE
 	&& CharacterMode == RTerm)

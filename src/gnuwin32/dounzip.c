@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "Defn.h"
 void R_ShowMessage(char *s); /* from rui.h */
 
+#ifdef OLD
 static int unzip_is_loaded = 0;
 static int Load_Unzip_DLL();
 static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
@@ -229,4 +230,4 @@ static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
     if (hUF) { GlobalUnlock(hUF); GlobalFree(hUF); }
     return 0;
 }
-
+#endif

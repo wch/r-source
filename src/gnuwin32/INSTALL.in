@@ -84,15 +84,11 @@ Then run
 	make
 
 
-Note 1: the file @RWVER@\unzip\unzip32.dll is not in the source
-distribution. It can be found in file unz542dN.zip at any Info-ZIP
-mirror, or you can copy it from a binary distribution.
-
-The file @RWVER@\bin\Rchtml.dll is only built if CHM help is specified
-in MkRules. Its source is the help directory, and you need
-the HTML Help Workshop files to build it. It contains instructions
-to build it under VC++6, and it is preferable to use that as the 
-VC++ library will check versions of the components needed. You can just
+Note 1: The file @RWVER@\bin\Rchtml.dll is only built if CHM help is
+specified in MkRules. Its source is the help directory, and you need
+the HTML Help Workshop files to build it. It contains instructions to
+build it under VC++6, and it is preferable to use that as the VC++
+library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
 Note 2: we have had reports that Norton Anti-Virus locks up the

@@ -27,7 +27,7 @@ zip.file.extract(file, zipname = "R.zip")
 \note{
   The implementation differs by platform: it might do nothing.
   The \code{"internal"} method is very simple, and will not create
-  directories or set file dates.
+  parent directories nor set file dates.
 }
 
 \author{B. D. Ripley}

@@ -102,8 +102,6 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 fixfiles:
 	$(MKDIR) -p ../../bin
 	$(MAKE) -C ./fixed
-	$(CP) -pr unzip ../..
-	$(RM) ../../unzip/*.h
 
 fixed/fixdesc:
 	sh fixed/GETDESC $(ALLPACKAGES)
@@ -361,7 +359,7 @@ distribution: bindist packagedist docsdist
 bindist: tcl bitmapdll docfiles
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr ../../bin ../../modules ../../afm ../../unzip $(RPREFIX)
+	$(CP) -pr ../../bin ../../modules ../../afm $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 # morley.tab is needed for R-intro Appendix A

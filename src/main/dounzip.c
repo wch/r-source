@@ -27,27 +27,43 @@
 #include "unzip.h"
 
 #define BUF_SIZE 4096
-static int 
-do_unzip(char *zipname, char *dest, int nfiles, char **files)
+static int
+extract_one(unzFile uf, char *dest, char *filename)
 {
-    int   i, err = 0;
-    unzFile uf;
+    int err = UNZ_OK;
     FILE *fout;
-    char  outname[PATH_MAX], buf[BUF_SIZE];
-
-    uf = unzOpen(zipname);
-    if (!uf)
-	return 1;
-    for (i = 0; i < nfiles; i++) {
-	err = unzLocateFile(uf, files[i], 0);
-	if (err != UNZ_OK)
-	    return err;
-	err = unzOpenCurrentFile(uf);
-	if (err != UNZ_OK)
-	    return err;
+    char  outname[PATH_MAX], buf[BUF_SIZE], *p;
+    
+    err = unzOpenCurrentFile(uf);
+    if (err != UNZ_OK) return err;
 	strcpy(outname, dest);
 	strcat(outname, FILESEP);
-	strcat(outname, files[i]);
+    if(filename) {
+	strcat(outname, filename);
+    } else {
+	unz_file_info file_info;
+	char filename_inzip[PATH_MAX];
+	err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, 
+				    sizeof(filename_inzip), NULL, 0, NULL, 0);
+	strcat(outname, filename_inzip);
+    }
+#ifdef Win32
+    for (p = outname; *p; p++)
+	if (*p == '\\') *p = '/';
+#endif
+    p = outname + strlen(outname) - 1;
+    if(*p == '/') { /* Don't know how these are stored in Mac zip files */
+	*p = '\0';
+#ifdef Win32
+	/* Looks like `/' only works on NT, with no drive in the path */
+	for (p = outname; *p; p++) if (*p == '/') *p = '\\';
+	err = mkdir(outname);
+#else
+	err = mkdir(outname, 0755);
+#endif
+    } else {
+	/* make parents as required ? */
+	/* Rprintf("extracting %s\n", outname);*/
 	fout = fopen(outname, "wb");
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
@@ -56,18 +72,41 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files)
 	}
 	while (1) {
 	    err = unzReadCurrentFile(uf, buf, BUF_SIZE);
-	    if (err <= 0)
-		break;
-	    if (fwrite(buf, err, 1, fout) != 1) {
-		err = -200;
-		break;
-	    }
+	    /* Rprintf("read %d bytes\n", err); */
+	    if (err <= 0) break;
+	    if (fwrite(buf, err, 1, fout) != 1) err = -200;
+	    if (err < BUF_SIZE) { err = 0; break; }
 	}
 	fclose(fout);
-	if (err != UNZ_OK)
-	    break;
     }
     unzCloseCurrentFile(uf);
+    return err;
+}
+
+
+static int 
+do_unzip(char *zipname, char *dest, int nfiles, char **files)
+{
+    int   i, err = 0;
+    unzFile uf;
+
+    uf = unzOpen(zipname);
+    if (!uf) return 1;
+    if(nfiles == 0) { /* all files */
+	unz_global_info gi;
+	unzGetGlobalInfo(uf, &gi);
+	for (i = 0; i < gi.number_entry; i++) {
+	    if(i > 0) if(unzGoToNextFile(uf) != UNZ_OK) break;
+	    if (extract_one(uf, dest, NULL) != UNZ_OK) break;	    
+	}
+    } else {
+	for (i = 0; i < nfiles; i++) {
+	    if (unzLocateFile(uf, files[i], 0) != UNZ_OK) break;
+	    if (extract_one(uf, dest, files[i]) != UNZ_OK) break;
+	}
+	unzCloseCurrentFile(uf);
+	if (err != UNZ_OK) return err;
+    }
     unzClose(uf);
     return err;
 }
@@ -518,6 +557,19 @@ unzOpen(const char *path)
     *s = us;
     unzGoToFirstFile((unzFile) s);
     return (unzFile) s;
+}
+
+/*
+  Write info about the ZipFile in the *pglobal_info structure.
+  No preparation of the structure is needed
+  return UNZ_OK if there is no problem. */
+static int unzGetGlobalInfo (unzFile file, unz_global_info *pglobal_info)
+{
+    unz_s* s;
+    if (file == NULL) return UNZ_PARAMERROR;
+    s = (unz_s*)file;
+    *pglobal_info = s->gi;
+    return UNZ_OK;
 }
 
 

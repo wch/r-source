@@ -71,21 +71,21 @@ typedef voidp unzFile;
 /* tm_unz contain date/time info */
 typedef struct tm_unz_s 
 {
-	uInt tm_sec;            /* seconds after the minute - [0,59] */
-	uInt tm_min;            /* minutes after the hour - [0,59] */
-	uInt tm_hour;           /* hours since midnight - [0,23] */
-	uInt tm_mday;           /* day of the month - [1,31] */
-	uInt tm_mon;            /* months since January - [0,11] */
-	uInt tm_year;           /* years - [1980..2044] */
+    uInt tm_sec;            /* seconds after the minute - [0,59] */
+    uInt tm_min;            /* minutes after the hour - [0,59] */
+    uInt tm_hour;           /* hours since midnight - [0,23] */
+    uInt tm_mday;           /* day of the month - [1,31] */
+    uInt tm_mon;            /* months since January - [0,11] */
+    uInt tm_year;           /* years - [1980..2044] */
 } tm_unz;
 
 /* unz_global_info structure contain global data about the ZIPfile
    These data comes from the end of central dir */
 typedef struct unz_global_info_s
 {
-	uLong number_entry;         /* total number of entries in
-				       the central dir on this disk */
-	uLong size_comment;         /* size of the global comment of the zipfile */
+    uLong number_entry;         /* total number of entries in
+				   the central dir on this disk */
+    uLong size_comment;         /* size of the global comment of the zipfile */
 } unz_global_info;
 
 
@@ -142,6 +142,12 @@ static int unzClose OF((unzFile file));
     these files MUST be closed with unzipCloseCurrentFile before call unzipClose.
   return UNZ_OK if there is no problem. */
 
+static int unzGetGlobalInfo OF((unzFile file,
+				unz_global_info *pglobal_info));
+/*
+  Write info about the ZipFile in the *pglobal_info structure.
+  No preparation of the structure is needed
+  return UNZ_OK if there is no problem. */
 
 
 /***************************************************************************/
