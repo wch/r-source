@@ -1223,18 +1223,8 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lwd = CAR(args));
     nlwd = length(lwd); args = CDR(args);
 
-/*
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
-	xpd = dd->gp.xpd;
-*/
-
     GSavePars(dd);
     ProcessInlinePars(args, dd);
-
-/*
-    dd->gp.xpd = xpd;
-*/
 
     x0 = REAL(sx0);
     y0 = REAL(sy0);
