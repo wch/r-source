@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-14, @value{FAQ-YEAR}-06-01
+@set FAQ-VERSION 1.7-15, @value{FAQ-YEAR}-06-03
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -20,6 +20,10 @@
 
 @macro SPLUS{}
 @sc{S-Plus}
+@end macro
+
+@macro CRAN{}
+@acronym{CRAN}
 @end macro
 
 @macro HTML{}
@@ -151,7 +155,7 @@ Texinfo source} used for creating all these formats using the
 @uref{http://texinfo.org/, @acronym{GNU} Texinfo system}.
 
 You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
-subdirectory of a @acronym{CRAN} site (@pxref{What is CRAN?}).
+subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
 
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
@@ -278,9 +282,8 @@ introduced in r-devel.
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
 
-Sources, binaries and documentation for R can be obtained via
-@acronym{CRAN}, the ``Comprehensive R Archive Network'' (see @ref{What
-is CRAN?}).
+Sources, binaries and documentation for R can be obtained via @CRAN{},
+the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
 Sources are also available via anonymous rsync.  Use
 
@@ -325,8 +328,7 @@ has full details.
 Note that you need a @FORTRAN{} compiler or @command{f2c} in addition to
 a C compiler to build R.  Also, you need Perl version 5 to build the R
 object documentations.  (If this is not available on your system, you
-can obtain a PDF version of the object reference manual via
-@acronym{CRAN}.)
+can obtain a PDF version of the object reference manual via @CRAN{}.)
 
 In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
@@ -391,12 +393,12 @@ respectively.
 @node How can R be installed (Windows), How can R be installed (Macintosh), How can R be installed (Unix), How can R be installed?
 @subsection How can R be installed (Windows)
 
-The @file{bin/windows} directory of a @acronym{CRAN} site contains
-binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, ME, NT4, 2000, and XP (at
-least) on Intel and clones (but not on other platforms).  The Windows
-version of R was created by Robert Gentleman, and is now being developed
-and maintained by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
+The @file{bin/windows} directory of a @CRAN{} site contains binaries for
+a base distribution and a large number of add-on packages from @CRAN{}
+to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
+clones (but not on other platforms).  The Windows version of R was
+created by Robert Gentleman, and is now being developed and maintained
+by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
 @email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
 
 @c Note that when uncompressing the zip files, the pkunzip program needs to
@@ -413,11 +415,11 @@ Windows @acronym{FAQ}''} for more details.
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
 
-The @file{bin/macos} directory of a @acronym{CRAN} site contains
-bin-hexed (@file{hqx}) and stuffit (@file{sit}) archives for a base
-distribution and a large number of add-on packages to run under MacOS
-8.6 to MacOS 9.1 or MacOS X natively.  The Mac version of R and the Mac
-binaries are maintained by
+The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
+(@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
+and a large number of add-on packages to run under MacOS 8.6 to MacOS
+9.1 or MacOS X natively.  The Mac version of R and the Mac binaries are
+maintained by
 @c @email{stefano.iacus@@unimi.it, Stefano Iacus}.
 @email{Stefano.Iacus@@r-project.org, Stefano Iacus}.
 
@@ -426,7 +428,7 @@ The @uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 
 Binaries of base distributions for MacOS X (Darwin) with X11 are made
 available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
-@file{bin/macosx} directory of a @acronym{CRAN} site.
+@file{bin/macosx} directory of a @CRAN{} site.
 @c @uref{http://www.stat.ucla.edu/~deleeuw/R/}.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
@@ -451,7 +453,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c           8.2   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux 2.6   i386  1.6.2  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
-The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
+The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Mandrake
 8.0/8.1/8.2/9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9
@@ -468,13 +470,13 @@ deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
 
 @noindent
 (where @var{distribution} is either @samp{stable} or @samp{testing};
-feel free to use a @acronym{CRAN} mirror instead of the master) to the
-file @file{/etc/apt/sources.list}.  Once you have added that line the
+feel free to use a @CRAN{} mirror instead of the master) to the file
+@file{/etc/apt/sources.list}.  Once you have added that line the
 programs @command{apt-get}, @command{apt-cache}, and @command{dselect}
 (using the apt access method) will automatically detect and install
 updates of the R packages.
 
-@c The @file{bin/osf} directory of a @acronym{CRAN} site contains RPMs
+@c The @file{bin/osf} directory of a @CRAN{} site contains RPMs
 @c by Albrecht Gebhardt for alpha systems running Alpha Unix
 @c (OSF/Tru64).
 
@@ -665,8 +667,8 @@ Subscription and posting to the other lists is done analogously, with
 `r-help' replaced by `r-announce' and `r-devel', respectively.
 
 Subscriptions to `r-help' and `r-devel' are also available in digest
-format, see the @file{doc/html/mail.html} file in @acronym{CRAN} for
-more information.
+format, see the @file{doc/html/mail.html} file in @CRAN{} for more
+information.
 
 It is recommended that you send mail to r-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This
@@ -679,8 +681,8 @@ include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
 
 Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the @file{doc/html/mail.html} file in
-@acronym{CRAN}.  Searchable archives of the lists are available via
+in a monthly schedule via the @file{doc/html/mail.html} file in @CRAN{}.
+Searchable archives of the lists are available via
 @uref{http://maths.newcastle.edu.au/~rking/R/}.
 
 The R Core Team can be reached at @email{r-core@@lists.r-project.org}
@@ -689,12 +691,12 @@ for comments and reports.
 @node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
 @section What is @acronym{CRAN}?
 
-The ``Comprehensive R Archive Network'' (@acronym{CRAN}) is a collection
-of sites which carry identical material, consisting of the R
+The ``Comprehensive R Archive Network'' (@CRAN{}) is a collection of
+sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
 binaries.
 
-The @acronym{CRAN} master site at TU Wien, Austria, can be found at the
+The @CRAN{} master site at TU Wien, Austria, can be found at the
 @acronym{URL}
 
 @quotation
@@ -737,20 +739,19 @@ and is currently being mirrored daily at
 @end quotation
 
 @noindent
-Please use the @acronym{CRAN} site closest to you to reduce network
-load.
+Please use the @CRAN{} site closest to you to reduce network load.
 
-From @acronym{CRAN}, you can obtain the latest official release of R,
-daily snapshots of R (copies of the current CVS trees), as gzipped and
-bzipped tar files, a wealth of additional contributed code, as well as
-prebuilt binaries for various operating systems (Linux, Digital Unix,
-and MS Windows).  @acronym{CRAN} also provides access to documentation
-on R, existing mailing lists and the R Bug Tracking system.
+From @CRAN{}, you can obtain the latest official release of R, daily
+snapshots of R (copies of the current CVS trees), as gzipped and bzipped
+tar files, a wealth of additional contributed code, as well as prebuilt
+binaries for various operating systems (Linux, MacOS Classic, MacOS X,
+and MS Windows).  @CRAN{} also provides access to documentation on R,
+existing mailing lists and the R Bug Tracking system.
 
-To ``submit'' to @acronym{CRAN}, simply upload to
+To ``submit'' to @CRAN{}, simply upload to
 @uref{ftp://cran.r-project.org/incoming/} and send an email to
-@email{cran@@r-project.org}.  Note that CRAN generally does not accept
-submissions of precompiled binaries due to security reasons.
+@email{cran@@r-project.org}.  Note that @CRAN{} generally does not
+accept submissions of precompiled binaries due to security reasons.
 
 @quotation
 @strong{Note:}  It is very important that you indicate the copyright
@@ -759,7 +760,7 @@ in your submission.
 @end quotation
 
 Please always use the @acronym{URL} of the master site when referring to
-@acronym{CRAN}.
+@CRAN{}.
 
 @node Can I use R for commercial purposes?,  , What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
@@ -1448,6 +1449,17 @@ for more information.
 @node Which add-on packages exist for R?, How can add-on packages be installed?, R Add-On Packages, R Add-On Packages
 @section Which add-on packages exist for R?
 
+@menu
+* Add-on packages in R::        
+* Add-on packages from CRAN::   
+* Add-on packages from Omegahat::  
+* Add-on packages from BioConductor::  
+* Other add-on packages::       
+@end menu
+
+@node Add-on packages in R, Add-on packages from CRAN, Which add-on packages exist for R?, Which add-on packages exist for R?
+@subsection Add-on packages in R
+
 The R distribution comes with the following extra packages:
 
 @table @strong
@@ -1484,9 +1496,12 @@ Tools for package development and administration.
 Time Series.
 @end table
 
-The following packages are available from the @acronym{CRAN}
-@file{src/contrib} area.  (Packages denoted as @emph{Recommended} are to
-be included in all binary distributions of R.)
+@node Add-on packages from CRAN, Add-on packages from Omegahat, Add-on packages in R, Which add-on packages exist for R?
+@subsection Add-on packages from @acronym{CRAN}
+
+The following packages are available from the @CRAN{} @file{src/contrib}
+area.  (Packages denoted as @emph{Recommended} are to be included in all
+binary distributions of R.)
 
 @table @strong
 @item AnalyzeFMRI
@@ -2212,13 +2227,13 @@ Export data to La@TeX{} and @HTML{} tables.
 @end table
 
 @noindent
-See @acronym{CRAN} @file{src/contrib/PACKAGES} for more information.
+See @CRAN{} @file{src/contrib/PACKAGES} for more information.
 
-There is also a @acronym{CRAN} @file{src/contrib/Devel} directory which
+There is also a @CRAN{} @file{src/contrib/Devel} directory which
 contains packages still ``under development'' or depending on features
 only present in the current development versions of R.  Volunteers are
-invited to give these a try, of course.  This area of @acronym{CRAN}
-currently contains
+invited to give these a try, of course.  This area of @CRAN{} currently
+contains
 
 @table @strong
 @item Dopt
@@ -2322,9 +2337,12 @@ Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
 @end table
 
-Directory @file{src/contrib/Omegahat} contains yet unreleased packages
-from the @uref{http://www.omegahat.org/, Omegahat Project for
-Statistical Computing}.  Currently, there are
+@node Add-on packages from Omegahat, Add-on packages from BioConductor, Add-on packages from CRAN, Which add-on packages exist for R?
+@subsection Add-on packages from Omegahat
+
+The @file{src/contrib/Omegahat} Directory of a CRAN site contains yet
+unreleased packages from the @uref{http://www.omegahat.org/, Omegahat
+Project for Statistical Computing}.  Currently, there are
 
 @table @strong
 @item CORBA
@@ -2417,6 +2435,9 @@ from C objects, call graphs, etc.
 An extension module for libxslt, the @XML{}-@XSL{} document translator,
 that allows @XSL{} functions to be implemented via R functions.
 @end table
+
+@node Add-on packages from BioConductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
+@subsection Add-on packages from BioConductor
 
 The @uref{http://www.bioconductor.org, Bioconductor Project} produces an
 open source software framework that will assist biologists and
@@ -2516,8 +2537,11 @@ Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces.
 @end table
 
-These packages will eventually also be made available via @acronym{CRAN}
+These packages will eventually also be made available via @CRAN{}
 as well.
+
+@node Other add-on packages,  , Add-on packages from BioConductor, Which add-on packages exist for R?
+@subsection Other add-on packages
 
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
@@ -2548,7 +2572,7 @@ obtained from the mailing list archive.
 @node How can add-on packages be installed?, How can add-on packages be used?, Which add-on packages exist for R?, R Add-On Packages
 @section How can add-on packages be installed?
 
-(Unix only.)  The add-on packages on @acronym{CRAN} come as gzipped tar
+(Unix only.)  The add-on packages on @CRAN{} come as gzipped tar
 files named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
 ``bundles'' containing more than one package.  Provided that
 @command{tar} and @command{gzip} are available on your system, type
@@ -2574,7 +2598,7 @@ $ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
 where @var{lib} gives the path to the library tree to install to.
 
 Even more conveniently, you can install and automatically update
-packages from within R if you have access to @acronym{CRAN}.  See the
+packages from within R if you have access to @CRAN{}.  See the
 help page for @code{CRAN.packages()} for more information.
 
 You can use several library trees of add-on packages.  The easiest way
@@ -2789,7 +2813,7 @@ editing saved transcripts, and re-evaluating commands from transcript
 files).
 
 The latest stable version of @acronym{ESS} are available via
-@acronym{CRAN} or the
+@CRAN{} or the
 @uref{http://software.biostat.washington.edu/statsoft/ess/, ESS web
 page}.  The @HTML{} version of the documentation can be found at
 @uref{http://stat.ethz.ch/ESS/}.
