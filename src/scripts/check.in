@@ -20,6 +20,10 @@
 
 # Send any bug reports to r-bugs@r-project.org
 
+## <FIXME>
+## This is not portable: has Unix-style file paths and system().
+## </FIXME>
+
 use Cwd;
 use File::Basename;
 use File::Copy;
@@ -34,7 +38,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.66 $ ';
+my $revision = ' $Revision: 1.67 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -125,11 +129,11 @@ my $R_opts = "--vanilla";
 if($opt_latex) {
     my $log = new R::Logfile();
     $log->checking("for working latex");
-    open(texfile, "> $TMPDIR/Rtextest$$.tex")
+    open(TEXFILE, "> $TMPDIR/Rtextest$$.tex")
       or die "Error: cannot write to Rtextest$$.tex\n";
-    print texfile "\\documentclass\{article\}\\begin\{document\}" .
+    print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
-    close texfile;
+    close TEXFILE;
     chdir($TMPDIR);
     if(Rsystem("$LATEX Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
@@ -469,19 +473,19 @@ sub check_pkg {
 
     if(!$is_base_pkg && -d "R") {
 	$log->checking("R files for library.dynam");
-	my $Rfile_pattern;
+	my @Rfiles;
 	if($opt_install) {
 	    ## Only need to check the installed file (if installed).
-	    $Rfile_pattern = "$library/$pkgname/R/$pkgname";
+	    @Rfiles = ("$library/$pkgname/R/$pkgname");
 	}
 	else {
 	    ## Otherwise (if the package was not installed), we need to
 	    ## check all R code files.
-	    $Rfile_pattern = "R/*.[RrSsq]";
+	    @Rfiles = &list_files_with_exts("R", "[RrSsq]");
 	}
 	my $any = 0;
 	my $ext;
-	foreach my $Rfile (<$Rfile_pattern>) {
+	foreach my $Rfile (@Rfiles) {
 	    last if $any;
 	    open(RFILE, "< $Rfile")
 	      or die "Error: cannot open file \`$Rfile' for reading";
@@ -514,14 +518,14 @@ sub check_pkg {
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
-	open Rcmd, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-        print Rcmd "checkMethods(dir = \"${pkgdir}\")\n";
-        close Rcmd;
+	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
+        print RCMD "checkMethods(dir = \"${pkgdir}\")\n";
+        close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
-        open Rout, "< $Rout";
-        while(<Rout>) {chomp; push(@out, $_);}
-        close Rout;
+        open ROUT, "< $Rout";
+        while(<ROUT>) {chomp; push(@out, $_);}
+        close ROUT;
         unlink($Rcmd);
         unlink($Rout);
 
@@ -535,33 +539,51 @@ sub check_pkg {
 	}
     }
 
+    ## Check whether assignment functions have their final argument
+    ## named `value'.
+
+    if(-d "R") {
+	$log->checking("for assignment functions with final arg not " .
+		       "named \`value'");
+	my $Rcmd = "$TMPDIR/Rcmd.$$";
+	my $Rout = "$TMPDIR/Rout.$$";
+	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
+        print RCMD "checkAssignFuns(dir = \"${pkgdir}\")\n";
+        close RCMD;
+        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        my @out;
+        open ROUT, "< $Rout";
+        while(<ROUT>) {chomp; push(@out, $_);}
+        close ROUT;
+        unlink($Rcmd);
+        unlink($Rout);
+
+	@out = grep(!/^(\>|character)/, @out);	
+	if($#out>=0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    exit(1);
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+
     ## Check R documentation files.
     
     if(-d "man") {
 	$log->checking("Rd files");
-	my @rdfiles;
-	my @badfiles;
-	while(<man/*.[rR]d>) {
-	    if(/</) {
-		push @badfiles, $_;
-	    }
-	    else {
-		push @rdfiles, $_;
-	    }
+	my @rdfiles = &list_files_with_exts("man", "[Rr]d");
+	my $manOSdir = &file_path("man", $OS);
+	if(-d $manOSdir) {
+	    @rdfiles = (@rdfiles,
+			&list_files_with_exts($manOSdir, "[Rr]d"));
 	}
-	if(-d "man/$OS") {
-	    while(<man/$OS/*.[rR]d>) {
-		if(/</) {
-		    push @badfiles, $_;
-		}
-		else {
-		    push @rdfiles, $_;
-		}
-	    }
-	}
+	my @badfiles = grep(/</, @rdfiles);
 	if($#badfiles >= 0) {
 	    $log->error("  Cannot handle Rd file names containing \`<'.\n" .
-			"  These are not legal file names on all R platforms.\n" .
+			"  These are not legal file names on all R " .
+			"platforms.\n" .
 			"  Please rename the following files and try again:");
 	    $log->message("    " . join("\n    ", @badfiles));
 	    exit(1);
@@ -690,14 +712,14 @@ sub check_pkg {
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
-	open Rcmd, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-        print Rcmd "undoc(dir = \"${pkgdir}\")\n";
-        close Rcmd;
+	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
+        print RCMD "undoc(dir = \"${pkgdir}\")\n";
+        close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
-        open Rout, "< $Rout";
-        while (<Rout>) {chomp; push(@out, $_);}
-        close Rout;
+        open ROUT, "< $Rout";
+        while(<ROUT>) {chomp; push(@out, $_);}
+        close ROUT;
         unlink($Rcmd);
         unlink($Rout);
 
@@ -725,14 +747,14 @@ sub check_pkg {
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
-	open Rcmd, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-        print Rcmd "codoc(dir = \"${pkgdir}\")\n";
-        close Rcmd;
+	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
+        print RCMD "codoc(dir = \"${pkgdir}\")\n";
+        close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
-        open Rout, "< $Rout";
-        while(<Rout>) {chomp; push(@out, $_);}
-        close Rout;
+        open ROUT, "< $Rout";
+        while(<ROUT>) {chomp; push(@out, $_);}
+        close ROUT;
         unlink($Rcmd);
         unlink($Rout);
 
@@ -759,14 +781,14 @@ sub check_pkg {
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
-	open Rcmd, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-        print Rcmd "checkDocArgs(dir = \"${pkgdir}\")\n";
-        close Rcmd;
+	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
+        print RCMD "checkDocArgs(dir = \"${pkgdir}\")\n";
+        close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
-        open Rout, "< $Rout";
-        while(<Rout>) {chomp; push(@out, $_);}
-        close Rout;
+        open ROUT, "< $Rout";
+        while(<ROUT>) {chomp; push(@out, $_);}
+        close ROUT;
         unlink($Rcmd);
         unlink($Rout);
 
@@ -820,7 +842,8 @@ sub check_pkg {
 	
         if(-e "${library}/${pkgname}/R-ex/R-ex.zip") {
             $iszipped = 1;
-            system("unzip ${library}/${pkgname}/R-ex/R-ex.zip " .
+	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip");
+            system("$UNZIP ${library}/${pkgname}/R-ex/R-ex.zip " .
                    "-d ${library}/${pkgname}/R-ex");
         }
         if($WINDOWS) {
@@ -891,25 +914,25 @@ sub check_pkg {
             $makevars = " -f $testsrcdir/Makevars";
         }
         else {
-            open makevars, "> Makevars";
-            print makevars "makevars = -f Makevars\n";
-            print makevars "srcdir = $testsrcdir\n";
+            open MAKEVARS, "> Makevars";
+            print MAKEVARS "makevars = -f Makevars\n";
+            print MAKEVARS "srcdir = $testsrcdir\n";
             ## at least windows does not pass env correctly to make
-            print makevars "R_LIBS = $ENV{'R_LIBS'}\n"; 
-            print makevars "VPATH = \$(srcdir)\n\n";
-            print makevars "test-src-1 =";
+            print MAKEVARS "R_LIBS = $ENV{'R_LIBS'}\n"; 
+            print MAKEVARS "VPATH = \$(srcdir)\n\n";
+            print MAKEVARS "test-src-1 =";
             while(<$testdir/*.R>) {
-                print makevars "\\\n " . basename($_);
+                print MAKEVARS "\\\n " . basename($_);
             }
-            print makevars "\n";
-            print makevars "test-src-auto =";
+            print MAKEVARS "\n";
+            print MAKEVARS "test-src-auto =";
             while(<$testdir/*.Rin>) {
                 s/Rin$/R/;
-                print makevars "\\\n " . basename($_);
+                print MAKEVARS "\\\n " . basename($_);
             }
-            print makevars "\n";
-	    print makevars "USE_GCT = $opt_use_gct\n";
-            close makevars;
+            print MAKEVARS "\n";
+	    print MAKEVARS "USE_GCT = $opt_use_gct\n";
+            close MAKEVARS;
             $makevars = " -f Makevars";
         }
         print "\n";
@@ -927,21 +950,21 @@ sub check_pkg {
 	$ENV{'TEXINPUTS'} = 
             env_path("$R_HOME/share/texmf", $ENV{'TEXINPUTS'});
         $log->creating("${pkgname}-manual.tex");
-        open manual, "> ${pkgname}-manual.tex";
-        print manual "\\documentclass\{article\}\n" .
+        open MANUAL, "> ${pkgname}-manual.tex";
+        print MANUAL "\\documentclass\{article\}\n" .
             "\\usepackage[ae, hyper]\{Rd\}\n".
                 "\\begin\{document\}\n";
         while(<$library/$pkgname/latex/*.tex>) {
             my $file = $_;
-            open(file, "< $file") ||
+            open(FILE, "< $file") ||
                 $log->error("cannot open file \`$file' for reading");
-            while(<file>) {
-                print manual $_;
+            while(<FILE>) {
+                print MANUAL $_;
             }
-            close file;
+            close FILE;
         }
-        print manual "\\end\{document\}\n";
-        close manual;
+        print MANUAL "\\end\{document\}\n";
+        close MANUAL;
         $log->result("OK");
         if($HAVE_LATEX) {
             $log->checking("${pkgname}-manual.tex");
