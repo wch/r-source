@@ -16,7 +16,7 @@ setGeneric <-
 {
     if(exists(name, "package:base") &&
        typeof(get(name, "package:base")) != "closure") {
-        msg <- paste("\"",name, "\" is a primitive function; its generic definition is built in and automatically included.", sep="")
+        msg <- paste("\"",name, "\" is a primitive function for which methods are not allowed.", sep="")
         if(nargs() == 1)
             warning(msg)
         else

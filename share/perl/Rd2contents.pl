@@ -76,7 +76,7 @@ Prepare the CONTENTS file for a directory.
 
 Options:
   -o, --output=OUT	use 'OUT' as the output file
-      --os=NAME		use OS type 'NAME' (unix, mac or windows)
+      --os=NAME		use OS type 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'.
 END
   exit 0;
