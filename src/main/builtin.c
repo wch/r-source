@@ -39,13 +39,22 @@ SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
-    SEXP code;
+    SEXP code, add, oldcode, tmp;
+    int addit = 0;
+
     switch (length(args)) {
     case 0:
 	code = R_NilValue;
 	break;
     case 1:
 	code = CAR(args);
+	break;
+    case 2:
+	code = CAR(args);
+	add = eval(CADR(args), rho);
+	if ( TYPEOF(add) != LGLSXP || length(add) != 1 )
+	    errorcall(call, "invalid add argument");
+	addit = (LOGICAL(add)[0] == 1);
 	break;
     default:
 	errorcall(call, "invalid number of arguments");
@@ -55,7 +64,28 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (ctxt != R_ToplevelContext && !(ctxt->callflag & CTXT_FUNCTION) )
 	ctxt = ctxt->nextcontext;
     if (ctxt->callflag & CTXT_FUNCTION)
-	ctxt->conexit = code;
+    {
+	if (addit && (oldcode = ctxt->conexit) != R_NilValue )
+	    if ( CAR(oldcode) != install("{") )
+	    {
+		PROTECT(tmp = allocList(3));
+		CAR(tmp) = install("{");
+		CADR(tmp) = oldcode;
+		CADDR(tmp) = code;
+		TYPEOF(tmp) = LANGSXP;
+		ctxt->conexit = tmp;
+		UNPROTECT(1);
+	    }
+	    else
+	    {
+		PROTECT(tmp=allocList(1));
+		CAR(tmp) = code;
+		ctxt->conexit = listAppend(oldcode,tmp);
+		UNPROTECT(1);
+	    }
+	else
+	    ctxt->conexit = code;
+    }
     return R_NilValue;
 }
 
