@@ -113,6 +113,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     {
 	## Takes in a character vector of version numbers
         ## returns the position of the maximum version.
+        if(length(vers) == 0) return(integer(0))
         vers <- package_version(vers)
 	max <- vers[1]
         for (i in seq(along=vers)) if (max < vers[i]) max <- vers[i]
