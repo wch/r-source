@@ -557,6 +557,10 @@ void PrintValueRec(SEXP s,SEXP env)
 	    t = deparse1(s, 0);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
+#ifdef BYTECODE
+	if (TYPEOF(s) == CLOSXP && isByteCode(BODY(s)))
+	    Rprintf("<bytecode: %p>\n", BODY(s));
+#endif
 	if (TYPEOF(s) == CLOSXP) t = CLOENV(s);
 	else t = R_GlobalEnv;
 	if (t != R_GlobalEnv)
