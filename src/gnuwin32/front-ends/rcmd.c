@@ -25,6 +25,15 @@
 
 extern char *getRHOME(); /* in ../rhome.c */
 
+static int pwait(HANDLE p)
+{
+    DWORD ret;
+
+    WaitForSingleObject(p, INFINITE);
+    GetExitCodeProcess(p, &ret);
+    return ret;
+}
+
 int main (int argc, char **argv)
 {
     /* tasks:
@@ -135,8 +144,8 @@ int main (int argc, char **argv)
 	    fprintf(stderr, "unable to run Rterm.exe\n");
 	    exit(3);
 	}
-	CloseHandle(pi.hThread);	
-	exit(0);
+	CloseHandle(pi.hThread);
+	exit(pwait(pi.hProcess));
     } else {
 	RHome = getRHOME();
 	strcpy(RHOME, "R_HOME=");
