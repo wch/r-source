@@ -2,6 +2,11 @@
 
 NEW FEATURES
 
+    o   Many functions changed from <primitive> to .Internal(..).
+	Currently, new .Internal(.)s in ..library/base/R/New-Internal.R
+
+    o   C-code: Many "-Wall" fixes (MM & DB).
+
     o   mva's dist() now takes arguments diag and upper which control
         how the distance matrix is printed.
 
@@ -24,7 +29,7 @@ NEW FEATURES
     o	Usage of R COMPILE now is R COMPILE [options] srcfiles, where
 	through options one can set e.g. CFLAGS or FFLAGS.
 
-    o	Usage of R SHLIB now is R SHLIB [-o libname] files, where the 
+    o	Usage of R SHLIB now is R SHLIB [-o libname] files, where the
 	file names can be that of source or object files.
 
     o   Data files are now also documented using the Rd format, all
