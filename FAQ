@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-10, 2001-07-12
+Version 1.3-11, 2001-07-13
 Kurt Hornik
 
 
@@ -1422,6 +1422,12 @@ works, was published in the Journal of Statistical Software
 
 *panel*
      Functions and datasets for fitting models to Panel data.
+
+*pcurve*
+     Fits a principal curve to a numeric multivariate dataset in arbitrary
+     dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis
+     and other distance matrices and performs multi-dimensional scaling and
+     principal component analyses.
 
 *permax*
      Functions intended to facilitate certain basic analyses of DNA array
