@@ -155,7 +155,10 @@ BUG FIXES
     o   \tabular is rendered better in latex, and long tabular
 	material is now acceptable (and split over pages).
 
+    o   evaluation depth wasn't properly reset by  "next"
+
     o   Old (pre-0.63.1) .Random.seed would cause problems if used.
+
 
 
 	**************************************************

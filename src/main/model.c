@@ -1311,35 +1311,16 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Need to save and restore 'most' attributes */
 
     if (subset != R_NilValue) {
-#if 0
-	SEXP tmp2;
-        PROTECT(tmp2 = allocVector(VECSXP, length(data)));
-	for (i =nc; i--;){
-	    VECTOR(tmp2)[i]=allocVector(INTSXP,1);
-	    copyMostAttrib(VECTOR(data)[i],VECTOR(tmp2)[i]);
-	}
-	PROTECT(tmp=install("[.data.frame")); 
-	PROTECT(tmp=LCONS(tmp,list4(data,subset,R_MissingArg,install("F"))));
-	/*
-	  PROTECT(tmp = lang4(install("["), data, subset, R_MissingArg)); */
-	PROTECT(data = eval(tmp, rho));
-	for (i =nc; i--;){
-	    copyMostAttrib(VECTOR(tmp2)[i],VECTOR(data)[i]);
-	}
-	UNPROTECT(4);
-#else
 	PROTECT(tmp=install("[.data.frame")); 
 	PROTECT(tmp=LCONS(tmp,list4(data,subset,R_MissingArg,install("F"))));
 	data = eval(tmp, rho);
 	UNPROTECT(2);
-#endif
     }
     UNPROTECT(2);
     PROTECT(data);
 
     /* finally, we run na.action on the data frame */
-    /* usually, this will be na.fail which should */
-    /* just be a check and should not use memory */
+    /* usually, this will be na.omit */
 
     if (na_action != R_NilValue) {
 	if (isString(na_action) && length(na_action) > 0)
@@ -1353,7 +1334,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   by subsetting in na.action.  */     
 	for ( i = length(ans) ; i-- ; )
 	  	copyMostAttrib(VECTOR(data)[i],VECTOR(ans)[i]);
-	/*	ATTRIB(VECTOR(ans)[i]) = ATTRIB(VECTOR(data)[i]); */
+
 	UNPROTECT(3);
     }
     else ans = data;
