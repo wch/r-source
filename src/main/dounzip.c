@@ -221,24 +221,36 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #include <Rconnections.h>
 
-static void unz_open(Rconnection con)
+static Rboolean unz_open(Rconnection con)
 {
     unzFile uf;
     char path[2*PATH_MAX], *p;
 
-    if(con->mode[0] != 'r')
-	error("unz connections can only be opened for reading");
+    if(con->mode[0] != 'r') {
+	warning("unz connections can only be opened for reading");
+	return FALSE;
+    }
     p = R_ExpandFileName(con->description);
-    if (strlen(p) > PATH_MAX - 1)
-	error("zip path is too long");
+    if (strlen(p) > PATH_MAX - 1) {
+	warning("zip path is too long");
+	return FALSE;
+    }
     strcpy(path, p);
     p = strrchr(path, ':');
-    if(!p) error("invalid description of unz connection");
+    if(!p) {
+	warning("invalid description of unz connection");
+	return FALSE;
+    }
     *p = '\0';
     uf = unzOpen(path);
-    if(!uf) error("cannot open zip file `%s'", path);
-    if (unzLocateFile(uf, p+1, 0) != UNZ_OK)
-	error("cannot locate file `%s' in zip file `%s'", p+1, path);
+    if(!uf) {
+	warning("cannot open zip file `%s'", path);
+	return FALSE;
+    }
+    if (unzLocateFile(uf, p+1, 0) != UNZ_OK) {
+	warning("cannot locate file `%s' in zip file `%s'", p+1, path);
+	return FALSE;
+    }
     unzOpenCurrentFile(uf);
     ((Runzconn)(con->private))->uf = uf;
     con->isopen = TRUE;
@@ -247,6 +259,7 @@ static void unz_open(Rconnection con)
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    return FALSE;
 }
 
 static void unz_close(Rconnection con)
