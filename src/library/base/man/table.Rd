@@ -10,7 +10,7 @@
 table(\dots, exclude = c(NA, NaN), dnn, deparse.level = 1)
 as.table(x, \dots)
 is.table(x)
-as.data.frame.table(x, \dots)
+as.data.frame.table(x, row.names = NULL, optional = FALSE)
 }
 \arguments{
   \item{\dots}{objects which can be interpreted as factors (including
@@ -23,6 +23,10 @@ as.data.frame.table(x, \dots)
   \item{deparse.level}{controls how the default \code{dnn} is
     constructed.  See details.}
   \item{x}{an arbitrary \R object.}
+  \item{row.names}{a character vector giving the row names for the data
+    frame.}
+  \item{optional}{a logical controlling whether row names are set.
+    Currently not used.}
 }
 \description{
   \code{table} uses the cross-classifying factors to build a contingency
