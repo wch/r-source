@@ -22,8 +22,8 @@
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names. \code{pkgs} can also contain name of package
-  archive files of the form \file{pkg_version.tar.gz} as obtained from CRAN,
-  these are then extracted in a temporary directory.}
+  archive files of the form \file{pkg\_version.tar.gz} as obtained from
+  CRAN, these are then extracted in a temporary directory.}
 }
 \seealso{
   \code{\link{REMOVE}}, and \code{\link{library}} for information on

@@ -159,7 +159,8 @@ par(\dots, no.readonly = FALSE)
   \item{mfg}{A numerical vector of the form \code{c(i, j)} where
     \code{i} and \code{j} indicate which figure in an array of figures
     is to be drawn next (if setting) or is being drawn (if enquiring).
-    The array must already have been  set by \code{mfcol} or \sfn{mfrow}.
+    The array must already have been  set by \code{mfcol} or
+    \code{mfrow}.
 
     For compatibility with S, the form \code{c(i, j, nr, nc)} is also
     accepted, when \code{nc} and \code{nc} should be the current number of
