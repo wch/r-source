@@ -428,7 +428,7 @@ L190:
 		cc = bb;
 		bb = aa;
 		aa = en * bb / *x - cc;
-		m = 2 - m;
+		m = m ? 0 : 2; /* m = 2 - m failed on gcc4-20041019 */
 		if (m != 0) {
 		    em -= 1.;
 		    alp2em = em + em + nu;
@@ -463,7 +463,7 @@ L190:
 		    if (n == 1)
 			goto L240;
 
-		    m = 2 - m;
+		    m = m ? 0 : 2; /* m = 2 - m failed on gcc4-20041019 */
 		    if (m != 0) {
 			em -= 1.;
 			alp2em = em + em + nu;
@@ -483,7 +483,7 @@ L190:
 	    for (n = n-1; n >= 2; n--) {
 		en -= 2.;
 		b[n] = en * b[n + 1] / *x - b[n + 2];
-		m = 2 - m;
+		m = m ? 0 : 2; /* m = 2 - m failed on gcc4-20041019 */
 		if (m != 0) {
 		    em -= 1.;
 		    alp2em = em + em + nu;
