@@ -47,7 +47,7 @@ UImode  CharacterMode;
 int ConsoleAcceptCmd;
 void closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
-
+void UnLoad_Rbitmap_Dll();
 
 /* used to avoid some flashing during cleaning up */
 int   AllDevicesKilled = 0;
@@ -377,6 +377,7 @@ void R_CleanUp(int saveact, int status, int runLast)
     if (CharacterMode == RGui)
 	savehistory(RConsole, ".Rhistory");
     UnLoad_Unzip_Dll();
+    Unload_Rbitmap_Dll();
     app_cleanup();
     exit(status);
 }

@@ -11,8 +11,19 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
                   width=width, height=height, pointsize=pointsize, 1))
 
-savePlot <- function(filename = "Rplot", type = c("wmf", "gif", "ps"),
-                       device = dev.cur())
+png <- function(filename = "Rplot.png", width = 480, height = 480,
+                pointsize = 12)
+    .Internal(devga(paste("png:", filename, sep=""),
+                  width=width, height=height, pointsize=pointsize, 1))
+
+jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
+                 pointsize = 12, quality=75)
+    .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
+                  width=width, height=height, pointsize=pointsize, 1))
+
+savePlot <- function(filename = "Rplot",
+                     type = c("wmf", "png", "jpeg", "jpg", "ps"),
+                     device = dev.cur())
 {
     type <- match.arg(type)
     devlist <- dev.list()
