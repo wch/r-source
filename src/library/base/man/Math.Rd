@@ -1,4 +1,4 @@
-\name{Math}
+\name{abs}
 \title{Miscellaneous Mathematical Functions}
 \usage{
 abs(x)

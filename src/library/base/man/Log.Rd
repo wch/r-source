@@ -1,4 +1,4 @@
-\name{Log}
+\name{log}
 \title{Logarithms and Exponentials}
 \usage{
 log(x)

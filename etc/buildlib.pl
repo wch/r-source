@@ -255,7 +255,13 @@ sub build_htmlpkglist {
     close htmlfile;
 }
 
-
+sub striptitle { # text
+    my $text = $_[0];
+    $text =~ s/\\//go;
+    $text =~ s/---/-/go;
+    $text =~ s/--/-/go;
+    return $text;
+}
 
 sub build_index {
 
@@ -378,11 +384,13 @@ sub build_index {
 	}
 # skip method aliases.
 	$generic = $alias;  
-	$generic =~ s/data\.frame$/dataframe/o;
-	$generic =~ s/model\.matrix$/modelmatrix/o;
+	$generic =~ s/\.data\.frame$/.dataframe/o;
+	$generic =~ s/\.model\.matrix$/.modelmatrix/o;
 	$generic =~ s/\.[^.]+$//o;
-#	print " $alias, $generic, $file, $currentfile\n";
-	if ($generic eq $current && $file eq $currentfile) { 
+#	print "   $alias, $generic, $file, $currentfile\n";
+	next if $alias =~ /<-$/o || $generic =~ /<-$/o;
+	if ($generic eq $current && $file eq $currentfile && 
+	    $generic ne "ar") { 
 #	    print "skipping $alias\n";
 	    next; 
 	} else { $current = $alias; $currentfile = $file;}
@@ -391,11 +399,12 @@ sub build_index {
 	$htmlalias = $alias;
 	$htmlalias =~ s/</&lt;/go;
 	$htmlalias =~ s/>/&gt;/go;
+	my $title = striptitle($alltitles{$alias});
 	print htmlfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
-	    "$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
+	    "$htmlalias</A></TD>\n<TD>$title</TD></TR>\n";
 	if($opt_chm) {
 	    print chmfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
-		"$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";}
+		"$htmlalias</A></TD>\n<TD>$title</TD></TR>\n";}
     }
 
     print htmlfile "</TABLE>\n";
@@ -451,15 +460,21 @@ sub build_htmlfctlist {
 # skip method aliases.
 	    $file = $htmlindex{$alias};
 	    $generic = $alias;  
-	    $generic =~ s/data\.frame$/dataframe/o;
-	    $generic =~ s/model\.matrix$/modelmatrix/o;
+	    $generic =~ s/\.data\.frame$/.dataframe/o;
+	    $generic =~ s/\.model\.matrix$/.modelmatrix/o;
 	    $generic =~ s/\.[^.]+$//o;
-	    if ($generic eq $current && $file eq $currentfile) { 
+# omit all replacement functions and all plot and print methods
+	    next if $alias =~ /<-$/o || $generic =~ /<-$/o;
+	    next if $alias =~ /plot\./o;
+	    next if $alias =~ /print\./o;
+	    if ($generic eq $current && $file eq $currentfile
+		&& $generic ne "ar") { 
 		next;
 	    } else { $current  = $alias; $currentfile = $file;}
+	    my $title = striptitle($htmltitles{$alias});
 	    print htmlfile "<TR><TD width=\"25%\">" .
 		"<A HREF=\"../../library/$file\">" .
-		    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n";
+		    "$alias</A></TD>\n<TD>$title</TD></TR>\n";
 	}
     }
 

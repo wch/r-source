@@ -1,4 +1,4 @@
-\name{dynload}
+\name{dyn.load}
 \alias{dyn.load}
 \alias{dyn.unload}
 \alias{is.loaded}

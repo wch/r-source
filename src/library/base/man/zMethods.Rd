@@ -20,11 +20,14 @@ Summary.factor(x, \dots)
 \alias{.Generic}
 \alias{.Group}
 \alias{.Class}
+\alias{Math}
 \alias{Math.data.frame}
 \alias{Math.factor}
+\alias{Ops}
 \alias{Ops.data.frame}
 \alias{Ops.factor}
 \alias{Ops.ordered}
+\alias{Summary}
 \alias{Summary.data.frame}
 \alias{Summary.factor}
 
