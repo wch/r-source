@@ -62,10 +62,6 @@ Date: Thu, 13 Jun 2002 08:21:50 +0200
 ..The supplementary (table of sum one) is fixed for 1.5.1.
 ..Detection code for the first problem has been added to 1.5.1 which will stop
 ..the crash, but the underlying cause is still open.
-* PR# 1716 *
-Subject: rdiscrete in e1071 fails when n==1
-From: "John Aitchison" <jaitchis@hwy.com.au>
-Date: Fri, 28 Jun 2002 10:28:17 +1000
 * PR# 1729 *
 Subject: problem with qq( )
 From: Jarno.Tuimala@Helsinki.Fi
@@ -605,71 +601,11 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: termplot
 From: Mark.Bravington@csiro.au
 Date: Wed, 26 Mar 2003 10:32:17 +1100
-* PR# 2693 *
-Subject: URGENT RESPONSES NEEDED
-From: "MICHEAL SANKOH JNR." <mark_sank04@mal.com>
-Date: Thu, 27 Mar 2003 15:11:53 +0100
-* PR# 2694 *
-Subject: panel.stripplot
-From: steven.j.novick@gsk.com
-Date: Thu, 27 Mar 2003 15:48:15 +0100 (MET)
-* PR# 2695 *
-Subject: =?EUC-KR?B?KLGksO0pIL/suK6+xrHiILq4ubAxyKMgodogvNLB38fRILz4sKPAuyC/tb/4yPchIEAg?=
-From: "우리아기" <dnfldeks14@lycos.co.kr>
-Date: Thu, 27 Mar 2003 23:59:20 +0900
-* PR# 2696 *
-Subject: Deprecated component in plot.histogram 
-From: j.c.rougier@durham.ac.uk
-Date: Thu, 27 Mar 2003 15:16:00 GMT
-* PR# 2697 *
-Subject: NEW! 60% off Generic Viagra!
-From: "Monica Rosado" <Zachery9729b@angelfire.com>
-Date: Fri, 28 Mar 03 17:12:12 GMT
-* PR# 2698 *
-Subject: freeQQ
-From: "dds" <wyhao33@yahoo.com.cn>
-Date: Fri, 28 Mar 2003 10:15:23 +0800
-* PR# 2699 *
-Subject: Free bottle of Anti Aging Formula! mv ouztqg 
-From: "Charles" <FountainOfYouth235403@earthlink.net>
-Date: Fri, 28 Mar 03 08:59:30 GMT
-* PR# 2700 *
-Subject: (광고) 고려홍삼의 경이로운 효능을 체험해 보세요 @
-From: "forhealth" <allnets@dreamwiz.com>
-Date: Fri, 28 Mar 2003 14:48:43 +0900
-* PR# 2701 *
-Subject: URGENT RESPONSES NEEDED
-From: "MICHEAL SANKOH JNR." <mark_sank10@mal.com>
-Date: Fri, 28 Mar 2003 12:53:21 +0100
-* PR# 2703 *
-Subject: energy enhancement
-From: "Araceli Cash" <wu3uhiarrf02@hotmail.com>
-Date: Sat, 29 Mar 03 10:26:35 GMT
-* PR# 2704 *
-Subject: Maritime Newsletter (Week 13)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Sat, 29 Mar 2003 13:20:19 +0900
-* PR# 2705 *
-Subject: 스즈끼 마나미 팬이시죠?
-From: 안남현<KAV-MAIL@mail.com>
-Date: Sat, 29 Mar 2003 16:38:40 +0100 (MET)
-* PR# 2706 *
-Subject: RESPOND PLEASE.
-From: MR KARIM KABILA <karikabila@netscape.net>
-Date: Sun, 30 Mar 2003 00:44:29 +0100
-* PR# 2707 *
-Subject: Ready to ENLARGE your p-e-n-i-s? yehxzm 
-From: "Marva Richter" <3r2skfaq@aol.com>
-Date: Sun, 30 Mar 03 05:47:22 GMT
-* PR# 2708 *
-Subject: You CAN make it bigger yhukwxovfq  
-From: "Kyle Tobin" <ohb7jchd1p4@aol.com>
-Date: Sun, 30 Mar 03 06:39:25 GMT
-* PR# 2709 *
-Subject: NEW // Don't pay top dollar for viagra
-From: "Pam Hill" <Darren9487e@mailamerica.org>
-Date: Mon, 31 Mar 03 15:38:08 GMT
-* PR# 2710 *
-Subject: wishlist: add log argument to stripchart
-From: Stephen Eglen <eglen@pcg.wustl.edu>
-Date: Sun, 30 Mar 2003 14:32:01 -0600
+* PR# 2711 *
+Subject: docs, examples, man pages
+From: Tom Laudeman <twl8n@virginia.edu>
+Date: Mon, 31 Mar 2003 09:34:18 -0500
+* PR# 2712 *
+Subject: Doctors create new penis pills
+From: "Chase Cook" <chase.cook@public.wsj.com>
+Date: Wed, 26 Mar 2003 04:47:01 +0000
