@@ -831,8 +831,11 @@ function(package, dir, lib.loc = NULL)
             c(allGenerics,
               allObjs[sapply(allObjs, .isS3Generic, env) == TRUE])
     }
-    ## R internal S3 generics.
-    allGenerics <- c(allGenerics, .getInternalS3generics())
+    ## Add internal S3 generics and S3 group generics.
+    allGenerics <-
+        c(allGenerics,
+          .getInternalS3generics(),
+          c("Math", "Ops", "Summary"))
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
@@ -841,7 +844,8 @@ function(package, dir, lib.loc = NULL)
     methodsInPackage <- sapply(allGenerics, function(g) {
         ## <FIXME>
         ## We should really determine the name g dispatches for, see
-        ## a current version of methods() [2003-07-07].
+        ## a current version of methods() [2003-07-07].  (Care is needed
+        ## for internal generics and group generics.)
         ## Matching via grep() is tricky with e.g. a '$' in the name of
         ## the generic function ... hence substr().
         name <- paste(g, ".", sep = "")
@@ -1257,10 +1261,23 @@ function(package, dir, lib.loc = NULL)
         }
     }
 
+    ## Deal with S3 group methods.  We create a separate environment
+    ## with pseudo-definitions for these.
+    S3groupGenericsEnv <- new.env()
+    assign("Math",
+           function(x, ...) UseMethod("Math"),
+           envir = S3groupGenericsEnv)
+    assign("Ops",
+           function(e1, e2) UseMethod("Ops"),
+           envir = S3groupGenericsEnv)
+    assign("Summary",
+           function(x, ...) UseMethod("Summary"),
+           envir = S3groupGenericsEnv)
+
     ## Now determine the 'bad' methods in the function objects of the
     ## package.
     badMethods <- list()
-    envList <- list(codeEnv)
+    envList <- list(codeEnv, S3groupGenericsEnv)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
         ## Find all available S3 generics.
@@ -1272,21 +1289,16 @@ function(package, dir, lib.loc = NULL)
             ls(envir = env, all.names = TRUE)
         genFuns <- allObjs[sapply(allObjs, .isS3Generic, env) == TRUE]
 
-        ## If we're checking the S3 generics from base, also add the
-        ## internal ones.  Currently, only two of there (unlist and
-        ## as.vector) are not .Primitive and hence have formals, but
-        ## anyway ...
-        ## <FIXME>
-        ## We cannot simply add all of .getInternalS3generics() as
-        ## checkArgs() (currently?) does not know about .Primitive.
-        ## Either change that, or at least use
-        ##   internalS3generics <- .getInternalS3generics()
-        ##   internalS3generics[!sapply(internalS3generics,
-        ##                              .isPrimitive, NULL)]
-        ## for adding ...
-        if(identical(env, as.environment(NULL)))
-            genFuns <- c(genFuns, c("as.vector", "unlist"))
-        ## </FIXME>
+        ## For base, also add the internal S3 generics which are not
+        ## .Primitive (as checkArgs() does not deal with these).
+        if(identical(env, as.environment(NULL))) {
+            internalS3generics <- .getInternalS3generics()
+            internalS3generics <-
+                internalS3generics[sapply(internalS3generics,
+                                          .isPrimitive, NULL)
+                                   == FALSE]
+            genFuns <- c(genFuns, internalS3generics)
+        }
 
         for(g in genFuns) {
             ## Find all methods in funs for generic g.
