@@ -70,8 +70,8 @@ filter(presidents, rep(1,3))
 ## A simple simulation function for ARMA processes
 arma.sim <- function(n, ar = NULL, ma = NULL, sigma = 1.0)
 {
-    x <- ts(rnorm(n+100, 0, sigma^2), start = -99)
-    if(length(ma)) x <- filter(x, ma, sides=1)
+    x <- ts(rnorm(n+100, 0, sigma), start = -99)
+    if(length(ma)) x <- filter(x, c(1, ma), sides=1)
     if(length(ar)) x <- filter(x, ar, method="recursive")
     as.ts(x[-(1:100)])
 }
