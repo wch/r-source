@@ -65,10 +65,10 @@ parent.frame(n=1)
   for the current frame and its parents.)
 
   \code{parent.frame(n)} is a convenient shorthand for
-  \code{sys.frame(sys.parent(n))}.
+  \code{sys.frame(sys.parent(n))} (implemented more efficiently).
 }
 \seealso{
-  \code{\link{eval}} for the usage of \code{sys.frame}.
+  \code{\link{eval}} for the usage of \code{sys.frame} and \code{parent.frame}.
 }
 \examples{
 ff <- function(x) gg(x)

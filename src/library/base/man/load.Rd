@@ -1,13 +1,12 @@
 \name{load}
 \title{Reload Saved Datasets}
 \usage{
-load(filename, envir = sys.frame(sys.parent())))
+load(filename, envir = parent.frame()))
 }
 \alias{load}
 \arguments{
-  \item{filename}{a character string giving the name of the file to
-    load.}
-  \item{envir}{the environment where the data should be loaded} 
+  \item{filename}{a character string giving the name of the file to load.}
+  \item{envir}{the environment where the data should be loaded}
 }
 \description{
 This function will reload the datasets written to a file

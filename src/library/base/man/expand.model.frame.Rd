@@ -8,21 +8,19 @@
   recovered for a model using \code{sin(x)} as a predictor.
 }
 \usage{
-expand.model.frame(model, extras, enclos = sys.frame(sys.parent()),
-                   na.expand = FALSE)
+expand.model.frame(model, extras, enclos = parent.frame(), na.expand = FALSE)
 }
-
 \arguments{
-  \item{model}{A fitted model}
-  \item{extras}{One-sided formula or vector of character strings
+  \item{model}{a fitted model}
+  \item{extras}{one-sided formula or vector of character strings
     describing new variables to be added}
-  \item{enclos}{An environment to evaluate things in}
-  \item{na.expand}{See below}
+  \item{enclos}{an environment to evaluate things in}
+  \item{na.expand}{logical; see below}
 }
 \details{
   If \code{na.expand=FALSE} then \code{NA} values in the extra variables
   will be passed to the \code{na.action} function used in
-  \code{model}. This may result in a shorter data frame (with
+  \code{model}.  This may result in a shorter data frame (with
   \code{\link{na.omit}}) or an error (with \code{\link{na.fail}}).  If
   \code{na.expand=TRUE} the returned data frame will have precisely the
   same rows as \code{model.frame(model)}, but the columns corresponding to
@@ -31,16 +29,16 @@ expand.model.frame(model, extras, enclos = sys.frame(sys.parent()),
 \value{
   A data frame.
 }
-
 \seealso{\code{\link{model.frame}},\code{\link{predict}}}
 
 \examples{
 data(trees)
 model <- lm(log(Volume) ~ log(Girth) + log(Height), data=trees)
-expand.model.frame(model, ~ Girth)
+expand.model.frame(model, ~ Girth) # prints data.frame like
+
 dd <- data.frame(x=1:5, y=rnorm(5), z=c(1,2,NA,4,5))
 model <- glm(y ~ x, data=dd, subset=1:4, na.action=na.omit)
-expand.model.frame(model, "z", na.expand=FALSE)
+expand.model.frame(model, "z", na.expand=FALSE) # = default
 expand.model.frame(model, "z", na.expand=TRUE)
 }
 \keyword{manip}

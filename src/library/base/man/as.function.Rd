@@ -3,7 +3,7 @@
 \usage{
 as.function(x, \dots)
 
-as.function.default(l, envir = sys.frame(sys.parent()), \dots)
+as.function.default(l, envir = parent.frame(), \dots)
 }
 \alias{as.function}
 \alias{as.function.default}

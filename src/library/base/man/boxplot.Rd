@@ -1,7 +1,7 @@
 \name{boxplot}
 \title{Box Plots}
 \description{
-    Produce box-and-whisker plot(s) of the given (grouped) values.
+  Produce box-and-whisker plot(s) of the given (grouped) values.
 }
 \alias{boxplot}
 \alias{boxplot.default}
@@ -10,12 +10,12 @@
 boxplot(x, \dots)
 boxplot.default(x, \dots, range = 1.5, width = NULL,
         varwidth = FALSE, notch = FALSE, names, boxwex = 0.8,
-        data = sys.frame(sys.parent()), plot = TRUE,
+        data = parent.frame(), plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL)
 boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
-  \item{x}{an R object.}
+  \item{x}{an \R object.}
   \item{\dots}{methods may have additional arguments.}
 
   \item{x, \dots}{the data from which the boxplots are to be produced.

@@ -9,7 +9,7 @@
   contained in a data frame, using a formula interface.
 }
 \synopsis{
-xtabs(formula = ~., data = sys.frame(sys.parent()), subset, na.action,
+xtabs(formula = ~., data = parent.frame(), subset, na.action,
       exclude = c(NA, NaN), drop.unused.levels = FALSE)
 print.xtabs(x, \dots)
 print.summary.xtabs(x, digits = getOption("digits") - 3)

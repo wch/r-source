@@ -2,7 +2,7 @@
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
 model.frame(formula, \dots)
-model.frame.default(formula, data = sys.frame(sys.parent()),
+model.frame.default(formula, data = parent.frame(),
                     subset = NULL, na.action,
                     drop.unused.levels = FALSE, xlev = NULL, \dots)
 
@@ -31,10 +31,10 @@ Methods for
 
   \item{drop.unused.levels}{should factors have unused levels dropped?
     Defaults to \code{FALSE}.}
-  
+
   \item{xlev}{a named list of character vectors giving the full set of levels
     to be assumed for each factor.}
-  
+
   \item{\dots}{further arguments such as \code{subset}, \code{offset} and
     \code{weights}. \code{NULL} arguments are treated as missing.}
 }
@@ -46,7 +46,9 @@ Methods for
   A \code{\link{data.frame}} containing the variables used in
   \code{formula}.
 }
-\seealso{\code{\link{model.matrix}} for the ``design matrix''.}
+\seealso{\code{\link{model.matrix}} for the ``design matrix'' and
+  \code{\link{expand.model.frame}} for model.frame manipulation.
+}
 \examples{
 data(cars)
 data.class(model.frame(dist ~ speed, data = cars))

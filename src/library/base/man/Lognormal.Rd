@@ -20,7 +20,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations to generate.}
   \item{meanlog, sdlog}{mean and standard deviation of the distribution
-    on the log scale.}
+    on the log scale with default values of \code{0} and \code{1} respectively.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -32,15 +32,16 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   \code{rlnorm} generates random deviates.
 }
 \details{
-  If \code{meanlog} or \code{sdlog} are not specified they assume the
-  default values of \code{0} and \code{1} respectively.
-
   The log normal distribution has density
   \deqn{
     f(x) = \frac{1}{\sqrt{2\pi}\sigma x} e^{-(\log(x) - \mu)^2/2 \sigma^2}%
   }{f(x) = 1/(sqrt(2 pi) sigma x) e^-((log x - mu)^2 / (2 sigma^2))}
   where \eqn{\mu} and \eqn{\sigma} are the mean and standard
   deviation of the logarithm.
+%% Mode = exp(max(0, mu - sigma^2)); Median = exp(mu)
+%% E[X]   = exp(mu + 1/2 sigma^2);
+%% Var[X] = exp(sigma^2) (exp(sigma^2) - 1) exp(2 mu)
+%% -> coeff.var. = sigma/mu = sqrt(exp(sigma^2) - 1) ~= sigma, if sigma < 1/2
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
