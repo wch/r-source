@@ -83,11 +83,9 @@ src/nmath/sunif.c
   (C) Royal Statistical Society
 
 
-src/library/ctest/src/alnorm.f
-src/library/ctest/src/nscor.f
-src/library/ctest/src/ppnd.f
+src/library/ctest/src/nscor.c
 src/library/ctest/src/prho.f
-src/library/ctest/src/swilk.f
+src/library/ctest/src/swilk.c
   are based in whole or in part on Applied Statistics algorithms
   (C) Royal Statistical Society
 
