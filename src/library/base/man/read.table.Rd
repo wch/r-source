@@ -12,8 +12,8 @@
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
-           skip = 0, check.names = TRUE, fill = FALSE, strip.white = FALSE,
-           blank.lines.skip = TRUE)
+           skip = 0, check.names = TRUE, fill = FALSE,
+           strip.white = FALSE, blank.lines.skip = TRUE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
@@ -26,16 +26,6 @@ read.delim(file, header = TRUE, sep = "\t", quote="\"", dec=".",
 
 read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
          fill = TRUE, \dots)
-}
-\details{
-  \code{read.csv} and \code{read.csv2} are identical to
-  \code{read.table} except for the defaults. They are intended for
-  reading "comma separated value" files (.csv) or the variant used in
-  countries that use a comma as decimal point and a semicolon
-  as field separator. Similarly, \code{read.delim} and
-  \code{read.delim2} are for reading delimited files, defaulting to
-  the TAB character for the delimiter. Notice that
-  \code{header = TRUE} and \code{fill = TRUE} in these variants.
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -52,8 +42,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{header}{a logical value indicating whether the file contains the
     names of the variables as its first line. If missing, the value is
-    determined from the file format: \code{header} is set to @code{TRUE}
-    if and only if the first row contains one fewer field than the second.}
+    determined from the file format: \code{header} is set to \code{TRUE}
+    if and only if the first row contains one fewer field than the
+    second.}
 
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.  If \code{sep = ""} the
@@ -86,10 +77,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{skip}{the number of lines of the data file to skip before
     beginning to read data.}
 
-  \item{check.names}{logical. If \code{TRUE} then the names of the
+  \item{check.names}{logical.  If \code{TRUE} then the names of the
     variables in the data frame are checked to ensure that they are
-    valid variable names.  If necessary they are adjusted (by
-    \code{\link{make.names}}) so that they are.}
+    syntactically valid variable names.  If necessary they are adjusted
+    (by \code{\link{make.names}}) so that they are.}
 
   \item{fill}{logical. If \code{TRUE} then in case the rows have unequal
     length, blank fields are implicitly added.}
@@ -110,6 +101,16 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   the data in the file.
 
   This function is the principal means of reading tabular data into \R.
+}
+\details{
+  \code{read.csv} and \code{read.csv2} are identical to
+  \code{read.table} except for the defaults.  They are intended for
+  reading ``comma separated value'' files (\file{.csv}) or the variant
+  used in countries that use a comma as decimal point and a semicolon
+  as field separator.  Similarly, \code{read.delim} and
+  \code{read.delim2} are for reading delimited files, defaulting to the
+  TAB character for the delimiter.  Notice that \code{header = TRUE} and
+  \code{fill = TRUE} in these variants.
 }
 \note{
   The implementation of \code{read.table} currently reads everything as

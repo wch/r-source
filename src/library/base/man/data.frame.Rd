@@ -1,17 +1,5 @@
 \name{data.frame}
 \title{Data Frames}
-\usage{
-data.frame(\dots, row.names = NULL, check.rows = FALSE,
-        check.names = TRUE)
-
-as.data.frame(x, row.names = NULL, optional)
-is.data.frame(x)
-
-row.names(x)
-row.names(x) <- names
-print(x, \dots, digits = NULL, quote = FALSE, right = TRUE)
-plot (x, \dots)
-}
 \alias{data.frame}
 \alias{as.data.frame}
 \alias{is.data.frame}
@@ -43,6 +31,24 @@ plot (x, \dots)
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
 \alias{xpdrows.data.frame}
+\description{
+  These functions create or manipulate data frames, tightly coupled
+  collections of variables which share many of the properties of
+  matrices and of lists, used as the fundamental data structure by most
+  of \R's modeling software.
+}
+\usage{
+data.frame(\dots, row.names = NULL, check.rows = FALSE,
+        check.names = TRUE)
+
+as.data.frame(x, row.names = NULL, optional)
+is.data.frame(x)
+
+row.names(x)
+row.names(x) <- names
+print(x, \dots, digits = NULL, quote = FALSE, right = TRUE)
+plot (x, \dots)
+}
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
     \code{tag=value}.  Component names are created based on the tag (if
@@ -51,26 +57,20 @@ plot (x, \dots)
     frame.}
   \item{check.rows}{if \code{TRUE} then the rows are checked for
     consistency of length and names.}
-  \item{check.names}{if \code{TRUE} then the names of the variables
-    in the data frame are checked to ensure that they are valid
-    variable names.  If necessary they are adjusted (by
-    \code{\link{make.names}}) so that they are.}
+  \item{check.names}{logical.  If \code{TRUE} then the names of the
+    variables in the data frame are checked to ensure that they are
+    syntactically valid variable names.  If necessary they are adjusted
+    (by \code{\link{make.names}}) so that they are.}
   \item{data.frame.obj}{objects of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
   \item{optional}{logical. If true, setting row names is optional.}
-}
-\description{
-  These functions create or manipulate data frames, tightly coupled collections
-  of variables which share many of the properties of matrices and of
-  lists, used as the fundamental data structure by most of \R's
-  modeling software.
 }
 \value{
   For \code{data.frame(.)} a data frame, a matrix-like stucture whose
   columns may be of differing types (numeric, factor and character).
 
-  \code{as.data.frame} is generic function with many \code{\link{methods}}.
-  It attempts to coerce its argument to be a data frame.
+  \code{as.data.frame} is generic function with many methods.   It
+  attempts to coerce its argument to be a data frame.
 
   \code{is.data.frame} returns \code{TRUE} if its argument is a data
   frame and \code{FALSE} otherwise.
@@ -104,8 +104,10 @@ plot (x, \dots)
   with the exception of matrices of class \code{\link{model.matrix}}.
 }
 \seealso{
-  \code{\link{read.table}}, \code{\link{Math.data.frame}},etc, about
-  \emph{Group} methods for \code{data.frame}s;  \code{\link{make.names}}.
+  \code{\link{read.table}},
+  \code{\link{Math.data.frame}} etc, about
+  \emph{Group} methods for \code{data.frame}s;
+  \code{\link{make.names}}.
 }
 \examples{
 L3 <- LETTERS[1:3]
