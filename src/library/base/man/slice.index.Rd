@@ -27,4 +27,4 @@ slice.index(x, MARGIN)
 x <- array(1 : 24, c(2, 3, 4))
 slice.index(x, 2)
 }
-
+\keyword{array}
