@@ -996,6 +996,7 @@ SEXP do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     ans = ascommon(call, CAR(args), STRSXP);
+    SET_ATTRIB(ans, R_NilValue);
     UNPROTECT(1);
     return ans;
 }
