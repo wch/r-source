@@ -22,11 +22,10 @@ If no data sets are specified, the available data sets are displayed.
 
 Currently, two formats of data files are supported:
 \enumerate{
-  \item{files ending \code{".R} are simply \code{\link{source}()d} in.}
+  \item{files ending \code{".R"} are simply \code{\link{source}()d} in.}
   \item{\code{".tab"} files are read using
     \code{\link{read.table}(\dots, header = TRUE)}, and hence result in
     a \code{\link{data.frame}}.}
-
 }
 }
 \value{
@@ -41,5 +40,5 @@ data(package = base)         # list the data sets in the base package
 data(crimes, "deaths")       # load the data sets `crimes' and `deaths'
 help(crimes)                 # give information on data set `crimes'
 }
-\keyword{datasets}
 \keyword{documentation}
+\keyword{datasets}
