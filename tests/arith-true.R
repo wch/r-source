@@ -176,6 +176,10 @@ for(i in 1:n) {
               all(x==0) || all.equal(p, rev(-pretty(-x)), tol = 10*Meps))
 }
 
+## PR#741:
+pi != (pi0 <- pi + 2*.Machine$double.eps)
+is.na(match(c(1,pi,pi0), pi)[3])
+    
 
 ## Last Line:
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
