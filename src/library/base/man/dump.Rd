@@ -20,6 +20,12 @@ dump(list, file = "dumpdata.R", append = FALSE, forDisplay = FALSE,
   \item{append}{if \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
+    
+  \item{forDisplay}{logical indicating whether to make the representation 
+                    more readable}
+
+  \item{useSource}{logical indicating whether to use the saved source
+  		   when dumping a function}
 
   \item{envir}{the environment to search for objects.}
 }
