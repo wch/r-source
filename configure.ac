@@ -976,7 +976,8 @@ AC_SUBST(LIBR_LDFLAGS)
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
-  popen putenv rint setenv strcoll stat strptime symlink system times unsetenv)
+  popen putenv rint setenv strcoll stat strptime symlink \
+  system times unsetenv)
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
@@ -1183,6 +1184,8 @@ AC_CONFIG_FILES(
   src/Makefile
   src/appl/Makefile
   src/extra/Makefile
+  src/extra/bzip2/Makefile
+  src/extra/pcre/Makefile
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile
   src/include/Makefile
@@ -1302,9 +1305,6 @@ if test "${have_png}" = yes; then
 fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
-fi
-if test "${have_bzlib}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
 fi
 if test "${have_pcre}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])

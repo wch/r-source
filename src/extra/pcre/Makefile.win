@@ -3,27 +3,25 @@ include ../../gnuwin32/MkRules
 
 CFLAGS = -I. -O2 -DSTATIC
 
-all: config.h pcre.h libRpcre.a
+all: config.h libRpcre.a
 
-pcre.o: pcre.c
-libRpcre.a: get.o maketables.o pcre.o study.o
+pcre.o: pcre.c chartables.h
+libRpcre.a: get.o pcre.o study.o
 
 ## this can't be used if cross-building, so ship the file
 ifneq ($(strip $(BUILD)),CROSS)
 dftables.exe: dftables.c
-chartables.c: dftables.exe
-	dftables > chartables.c
+chartables.h: dftables.exe
+	dftables > chartables.h
+else
+$(CP) chartables.h.win chartables.h
 endif
 
-config.h: config.in
+config.h: config.h.in
 	$(SED)  -e 's/HAVE_STRERROR 0/HAVE_STERROR 1/' \
 	        -e 's/HAVE_MEMMOVE  0/HAVE_MEMMOVE 1/' \
 	        -e '/#undef size_t/d' -e '/#undef const/d' \
 	  $< > $@
-
-pcre.h: pcre.in
-	$(SED)  -e 's/@PCRE_MAJOR@/9/' -e 's/@PCRE_MINOR@/7/' \
-	  -e 's/@PCRE_DATE@/02-Jan-2002/' $< > $@
 
 clean:
 	$(RM) *.o *~ libRpcre.a

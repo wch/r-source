@@ -84,6 +84,9 @@ INSTALLATION CHANGES
 	was sometimes failing because the Fortran libraries were not
 	found.
 
+    o	PCRE and bzip2 are built from versions in the R sources if the
+	appropriate library is not found.
+
 
 DEPRECATED & DEFUNCT
 

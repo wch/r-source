@@ -258,7 +258,7 @@ functions, and put in the file chartables.c. These tables are used by PCRE
 whenever the caller of pcre_compile() does not provide an alternate set of
 tables. */
 
-#include "chartables.c"
+#include "chartables.h"
 
 
 

@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.7.0 (2002-11-16).
+<p>The current version of this document is 1.7.0 (2002-11-29).
 
 ISBN 3-901167-52-8
 
@@ -887,6 +887,9 @@ compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
 <code>make</code> is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
+<p><code>gcc</code> 3.2.1 appears to generate incorrect code on 32-bit
+Solaris, but versions 3.1 and 3.2 work correctly.
+
 <p>If using <code>gcc</code>, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be discerned from <code>gcc
 -v</code>.)  <code>gcc</code> makes modified versions of some header files, and
@@ -931,6 +934,8 @@ FFLAGS="-m64 -g -O2"
 CXXFLAGS="-m64 -g -O2"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 </pre>
+
+<p>This <em>does</em> work with <code>gcc</code> 3.2.1.
 
 <p>Some care is needed to ensure that libraries found by
 <code>configure</code> are compatible with the R executable and modules, as
@@ -1153,7 +1158,7 @@ of practice at porting R to new platforms <small>...</small>.
 <li>Installing under Unix: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Installing under Windows: <a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
 <li>Linux: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
-<li>MacOS X: <a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
+<li>MacOS X: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>, <a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>
 <li>Manuals: <a href="#Making%20the%20manuals">Making the manuals</a>
 <li>Manuals, installing: <a href="#Installation">Installation</a>
 <li>Obtaining R: <a href="#Obtaining%20R">Obtaining R</a>

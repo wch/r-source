@@ -1654,6 +1654,13 @@ if test "${have_pcre}" = yes; then
             [Define if you have the PCRE headers and libraries.])
   LIBS="-lpcre ${LIBS}"
 fi
+AC_MSG_CHECKING([whether PCRE support needs to be compiled])
+if test "x${have_pcre}" = xyes; then
+  AC_MSG_RESULT([no])
+else
+  AC_MSG_RESULT([yes])
+fi
+AM_CONDITIONAL(BUILD_PCRE, [test "x${have_pcre}" = xno])
 ])# R_PCRE
 
 AC_DEFUN([R_BZLIB],
@@ -1661,11 +1668,13 @@ AC_DEFUN([R_BZLIB],
 if test "${have_bzlib}" = yes; then
   AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
 fi
-if test "${have_bzlib}" = yes; then
-  AC_DEFINE(HAVE_BZLIB, 1,
-            [Define if you have the bzip2 headers and libraries.])
-  LIBS="-lbz2 ${LIBS}"
+AC_MSG_CHECKING([whether bzip2 support needs to be compiled])
+if test "x${have_bzlib}" = xyes; then
+  AC_MSG_RESULT([no])
+else
+  AC_MSG_RESULT([yes])
 fi
+AM_CONDITIONAL(BUILD_BZLIB, [test "x${have_bzlib}" = xno])
 ])# R_BZLIB
 
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],

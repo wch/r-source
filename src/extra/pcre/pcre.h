@@ -10,9 +10,9 @@
 /* The file pcre.h is build by "configure". Do not edit it; instead
 make changes to pcre.in. */
 
-#define PCRE_MAJOR          @PCRE_MAJOR@
-#define PCRE_MINOR          @PCRE_MINOR@
-#define PCRE_DATE           @PCRE_DATE@
+#define PCRE_MAJOR          3
+#define PCRE_MINOR          9
+#define PCRE_DATE           02-Jan-2002
 
 /* Win32 uses DLL by default */
 

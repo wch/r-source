@@ -51,9 +51,6 @@
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 
-/* Define if you have the bzip2 headers and libraries. */
-#undef HAVE_BZLIB
-
 /* Define to 1 if you have the `chdir' function. */
 #undef HAVE_CHDIR
 

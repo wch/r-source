@@ -61,8 +61,10 @@ DISTFILES = Makefile.in Makefile.win \
 
 ## these are built with CPICFLAGS so safe to use in libR.so
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
+BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 ## use an explicit library: there might be an unsatisfactory -lz around
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
+R_BZLIBS = @BUILD_BZLIB_TRUE@ ../extra/bzip2/libbz2.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 
 ## <FIXME>
@@ -78,7 +80,7 @@ R_bin_OBJECTS = $(OBJECTS)
 ## -export-symbols SYMFILE.
 @USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
 ## </FIXME>
-R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS)
+R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS)
 ## <NOTE>
 ## Automake would figure this out itself.
 R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILE_TRUE@ $(top_builddir)/etc/R.exp
@@ -96,7 +98,8 @@ libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_XDR)
+libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
+  $(R_ZLIBS) $(R_BZLIBS) $(R_XDR)
 libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILE_TRUE@ $(top_builddir)/etc/R.exp
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
@@ -159,7 +162,7 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	$(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
 
 connections.o: $(srcdir)/connections.c
-	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+	$(CC) $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 
 dounzip.o: $(srcdir)/dounzip.c
 	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@

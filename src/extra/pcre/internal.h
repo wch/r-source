@@ -37,7 +37,12 @@ modules, but which are not relevant to the outside. */
 
 /* Get the definitions provided by running "configure" */
 
-#include "config.h"
+#include <config.h>
+#define HAVE_MEMMOVE 1
+#ifndef NEWLINE
+#define NEWLINE '\n'
+#endif
+
 
 /* To cope with SunOS4 and other systems that lack memmove() but have bcopy(),
 define a macro for memmove() if HAVE_MEMMOVE is false, provided that HAVE_BCOPY

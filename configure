@@ -466,7 +466,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO SET_MAKE build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM config_opts WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C GETWD BUILDDIR_IS_SRCDIR AWK LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS JAVAC PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT ECHO STRIP ac_ct_STRIP CPP EGREP LIBTOOL LIBTOOL_DEPS R_BROWSER F77 FFLAGS ac_ct_F77 CXX CXXFLAGS ac_ct_CXX CXXCPP shlibpath_var LIBM FLIBS HAVE_DOUBLE_COMPLEX COMPILE_DOUBLE_COMPLEX_TRUE COMPILE_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILE_TRUE USE_EXPORTFILE_FALSE LIBR_EXT LIBR_LDFLAGS ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS BLAS_LIBS BLAS USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE R_GUIS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS GNOME_LIBS GNOMEUI_LIBS GNOMEGNORBA_LIBS GTKXMHTML_LIBS ZVT_LIBS GNOME_LIBDIR GNOME_INCLUDEDIR GNOME_CONFIG ORBIT_CONFIG ORBIT_IDL HAVE_ORBIT_TRUE HAVE_ORBIT_FALSE ORBIT_CFLAGS ORBIT_LIBS HAVE_GNORBA_TRUE HAVE_GNORBA_FALSE GNORBA_CFLAGS GNORBA_LIBS GNOME_APPLETS_LIBS GNOME_CAPPLET_LIBS LIBGLADE_CONFIG LIBGLADE_CFLAGS LIBGLADE_LIBS HAVE_GNOME GNOME_IF_FILES TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE R_PROFILING PAPERCONF R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO SET_MAKE build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM config_opts WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C GETWD BUILDDIR_IS_SRCDIR AWK LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS JAVAC PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT ECHO STRIP ac_ct_STRIP CPP EGREP LIBTOOL LIBTOOL_DEPS R_BROWSER F77 FFLAGS ac_ct_F77 CXX CXXFLAGS ac_ct_CXX CXXCPP shlibpath_var LIBM FLIBS HAVE_DOUBLE_COMPLEX COMPILE_DOUBLE_COMPLEX_TRUE COMPILE_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILE_TRUE USE_EXPORTFILE_FALSE LIBR_EXT LIBR_LDFLAGS ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS BLAS_LIBS BLAS USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE R_GUIS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS GNOME_LIBS GNOMEUI_LIBS GNOMEGNORBA_LIBS GTKXMHTML_LIBS ZVT_LIBS GNOME_LIBDIR GNOME_INCLUDEDIR GNOME_CONFIG ORBIT_CONFIG ORBIT_IDL HAVE_ORBIT_TRUE HAVE_ORBIT_FALSE ORBIT_CFLAGS ORBIT_LIBS HAVE_GNORBA_TRUE HAVE_GNORBA_FALSE GNORBA_CFLAGS GNORBA_LIBS GNOME_APPLETS_LIBS GNOME_CAPPLET_LIBS LIBGLADE_CONFIG LIBGLADE_CFLAGS LIBGLADE_LIBS HAVE_GNOME GNOME_IF_FILES TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE LTLIBOBJS'
 ac_subst_files='r_cc_rules_frag r_f77_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
@@ -17344,7 +17344,8 @@ fi
 
 for ac_func in access chdir expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
-  popen putenv rint setenv strcoll stat strptime symlink system times unsetenv
+  popen putenv rint setenv strcoll stat strptime symlink \
+  system times unsetenv
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking for $ac_func" >&5
@@ -23036,13 +23037,23 @@ fi
 
 
 fi
-if test "${have_bzlib}" = yes; then
+echo "$as_me:$LINENO: checking whether bzip2 support needs to be compiled" >&5
+echo $ECHO_N "checking whether bzip2 support needs to be compiled... $ECHO_C" >&6
+if test "x${have_bzlib}" = xyes; then
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+else
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+fi
 
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_BZLIB 1
-_ACEOF
 
-  LIBS="-lbz2 ${LIBS}"
+if test "x${have_bzlib}" = xno; then
+  BUILD_BZLIB_TRUE=
+  BUILD_BZLIB_FALSE='#'
+else
+  BUILD_BZLIB_TRUE='#'
+  BUILD_BZLIB_FALSE=
 fi
 
 
@@ -23236,6 +23247,24 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
   LIBS="-lpcre ${LIBS}"
+fi
+echo "$as_me:$LINENO: checking whether PCRE support needs to be compiled" >&5
+echo $ECHO_N "checking whether PCRE support needs to be compiled... $ECHO_C" >&6
+if test "x${have_pcre}" = xyes; then
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+else
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+fi
+
+
+if test "x${have_pcre}" = xno; then
+  BUILD_PCRE_TRUE=
+  BUILD_PCRE_FALSE='#'
+else
+  BUILD_PCRE_TRUE='#'
+  BUILD_PCRE_FALSE=
 fi
 
 
@@ -23626,7 +23655,7 @@ esac
 
           ac_config_headers="$ac_config_headers src/include/config.h"
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ac_config_files="$ac_config_files Makeconf Makefile afm/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron m4/Makefile share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/ctest/DESCRIPTION src/library/ctest/Makefile src/library/ctest/src/Makefile src/library/eda/DESCRIPTION src/library/eda/Makefile src/library/eda/src/Makefile src/library/lqs/DESCRIPTION src/library/lqs/Makefile src/library/lqs/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/modreg/DESCRIPTION src/library/modreg/Makefile src/library/modreg/src/Makefile src/library/mva/DESCRIPTION src/library/mva/Makefile src/library/mva/src/Makefile src/library/nls/DESCRIPTION src/library/nls/Makefile src/library/nls/src/Makefile src/library/profile/Makefile src/library/stepfun/DESCRIPTION src/library/stepfun/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/ts/DESCRIPTION src/library/ts/Makefile src/library/ts/src/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/aqua/Makefile src/modules/gnome/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/scripts/f77 src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makeconf Makefile afm/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron m4/Makefile share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/bzip2/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/ctest/DESCRIPTION src/library/ctest/Makefile src/library/ctest/src/Makefile src/library/eda/DESCRIPTION src/library/eda/Makefile src/library/eda/src/Makefile src/library/lqs/DESCRIPTION src/library/lqs/Makefile src/library/lqs/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/modreg/DESCRIPTION src/library/modreg/Makefile src/library/modreg/src/Makefile src/library/mva/DESCRIPTION src/library/mva/Makefile src/library/mva/src/Makefile src/library/nls/DESCRIPTION src/library/nls/Makefile src/library/nls/src/Makefile src/library/profile/Makefile src/library/stepfun/DESCRIPTION src/library/stepfun/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/ts/DESCRIPTION src/library/ts/Makefile src/library/ts/src/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/aqua/Makefile src/modules/gnome/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/scripts/f77 src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
 
 
           ac_config_commands="$ac_config_commands stamp-h"
@@ -24154,6 +24183,8 @@ do
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
   "src/appl/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/appl/Makefile" ;;
   "src/extra/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/Makefile" ;;
+  "src/extra/bzip2/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/bzip2/Makefile" ;;
+  "src/extra/pcre/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/pcre/Makefile" ;;
   "src/extra/xdr/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/xdr/Makefile" ;;
   "src/extra/zlib/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/zlib/Makefile" ;;
   "src/include/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/include/Makefile" ;;
@@ -24476,6 +24507,10 @@ s,@BUILD_ZLIB_TRUE@,$BUILD_ZLIB_TRUE,;t t
 s,@BUILD_ZLIB_FALSE@,$BUILD_ZLIB_FALSE,;t t
 s,@USE_MMAP_ZLIB_TRUE@,$USE_MMAP_ZLIB_TRUE,;t t
 s,@USE_MMAP_ZLIB_FALSE@,$USE_MMAP_ZLIB_FALSE,;t t
+s,@BUILD_BZLIB_TRUE@,$BUILD_BZLIB_TRUE,;t t
+s,@BUILD_BZLIB_FALSE@,$BUILD_BZLIB_FALSE,;t t
+s,@BUILD_PCRE_TRUE@,$BUILD_PCRE_TRUE,;t t
+s,@BUILD_PCRE_FALSE@,$BUILD_PCRE_FALSE,;t t
 s,@R_PROFILING@,$R_PROFILING,;t t
 s,@PAPERCONF@,$PAPERCONF,;t t
 s,@R_LD_LIBRARY_PATH@,$R_LD_LIBRARY_PATH,;t t
@@ -25065,15 +25100,6 @@ if test -z "${r_capabilities}"; then
   r_capabilities="JPEG"
 else
   r_capabilities="${r_capabilities}${separator}JPEG"
-fi
-fi
-if test "${have_bzlib}" = yes; then
-  separator=", "
-test -z "${separator}" && separator=" "
-if test -z "${r_capabilities}"; then
-  r_capabilities="bzip2"
-else
-  r_capabilities="${r_capabilities}${separator}bzip2"
 fi
 fi
 if test "${have_pcre}" = yes; then
