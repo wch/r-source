@@ -305,6 +305,14 @@ Date: Tue, 11 Jun 2002 20:20:11 +0200
 Subject: make install fails - index.html not found
 From: dhouston@bio.ri.ccf.org
 Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
+* PR# 1673 *
+Subject: Late Make Problem with Readline
+From: jerfox@stanford.edu
+Date: Sat, 15 Jun 2002 12:00:07 +0200 (MET DST)
+* PR# 1676 *
+Subject: R configure.in makes bad alpha assumptions
+From: mcmahill@mtl.mit.edu
+Date: Sat, 15 Jun 2002 19:21:09 -0400 (EDT)
 
 Directory:  Language
 
@@ -484,19 +492,7 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1672 *
-Subject: [??????´º?º] ??~?ð?????© ?????¶°­°? µ??µ?? °?°?!! ????±? ???????? ??°?!!   
-From: "??¶???????´?..............."<erokorea17@hotmail.com>
-Date: Sat, 15 Jun 2002 17:08:44 -0600
-* PR# 1673 *
-Subject: Late Make Problem with Readline
-From: jerfox@stanford.edu
-Date: Sat, 15 Jun 2002 12:00:07 +0200 (MET DST)
-* PR# 1674 *
-Subject: ???? ¾?´? ???? ??µ??? 8°­ !!! [±¤°?]
-From: ????´???<mhpark@hananet.net>
-Date: Sat, 15 Jun 2002 12:45:33 +0200 (MET DST)
-* PR# 1675 *
-Subject: ¢????????? ????????[±?±???][±¤°?]
-From: ?º?¾?? <eunjw234@dreamwiz.com>
-Date: Tue, 16 Apr 2002 02:44:59 +0900
+* PR# 1682 *
+Subject: overzealous help-links.sh script!
+From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
+Date: Mon, 17 Jun 2002 15:10:18 +0200
