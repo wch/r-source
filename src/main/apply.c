@@ -50,7 +50,7 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
        since the computation of one may destroy the other */
 
 
-    ind = allocVector(INTSXP, 1);
+    PROTECT(ind = allocVector(INTSXP, 1));
     PROTECT(tmp = LCONS(R_Bracket2Symbol, LCONS(X, LCONS(ind, R_NilValue))));
     PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
@@ -59,7 +59,7 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(ind)[0] = i + 1;
 	SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
     }
-    UNPROTECT(3);
+    UNPROTECT(4);
     return ans;
 }
 

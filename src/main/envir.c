@@ -2319,7 +2319,7 @@ SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP env, ans, names, R_fcall, FUN, tmp;
+    SEXP env, ans, names, R_fcall, FUN, tmp, tmp2, ind;
     int i, k, all;
 
     checkArity(op, args);
@@ -2347,21 +2347,23 @@ SEXP do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(names = allocVector(STRSXP, k));
 
     PROTECT(ans = allocVector(VECSXP, k));
+    PROTECT(tmp2 = allocVector(VECSXP, k));
 
     k = 0;
     if(HASHTAB(env) != R_NilValue) 
-      HashTableValues(HASHTAB(env), all, ans, &k);
+      HashTableValues(HASHTAB(env), all, tmp2, &k);
     else
-      FrameValues(FRAME(env), all, ans, &k);
+      FrameValues(FRAME(env), all, tmp2, &k);
 
-    tmp = LCONS(R_NilValue, LCONS(R_DotsSymbol, R_NilValue));
-    PROTECT(R_fcall = LCONS(FUN, tmp));
+    PROTECT(ind = allocVector(INTSXP, 1));
+    PROTECT(tmp = LCONS(R_Bracket2Symbol, LCONS(tmp2, LCONS(ind, R_NilValue))));
+    PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
     for(i = 0; i < k; i++) {
-        SETCAR(tmp, VECTOR_ELT(ans, i));
-        SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
+      INTEGER(ind)[0] = i+1;
+      SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
     }
-
+    
     k = 0;
     if(HASHTAB(env) != R_NilValue) 
         HashTableNames(HASHTAB(env), all, names, &k);
@@ -2369,7 +2371,7 @@ SEXP do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
         FrameNames(FRAME(env), all, names, &k);
 
     setAttrib(ans, R_NamesSymbol, names);
-    UNPROTECT(3);
+    UNPROTECT(6);
     return(ans);
 }
 
