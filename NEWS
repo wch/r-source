@@ -10,7 +10,7 @@
 
 NEW FEATURES
 
-    o   R CMD Rd2dvi has new options --pdf and --title
+    o   R CMD Rd2dvi has new options --pdf, --title and --output
 
     o   new date and URL fields in DESCRIPTION file of packages.
 
