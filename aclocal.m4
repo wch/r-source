@@ -143,7 +143,7 @@ AC_DEFUN([R_PROG_TEXMF],
     AC_MSG_WARN(${warn_info})
     MAKEINFO=false
   fi
-  if test "${PERL}" = ${FALSE}; then
+  if test "${PERL}" = "${FALSE}"; then
     AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   else
     INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
