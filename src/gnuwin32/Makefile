@@ -195,6 +195,7 @@ Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 	@$(MAKE) --no-print-directory R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
+	$(CP) unicode/iconv.dll ../../modules/
 ifdef USE_UNICOWS
 	$(CP) unicode/opencow.dll ../../bin/
 endif

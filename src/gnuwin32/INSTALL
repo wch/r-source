@@ -35,7 +35,7 @@ Windows shell, type PATH at the prompt to find out.
 
 For international character support, you will need iconv.dll.  Extract
 this from http://www.murdoch-sutherland.com/Rtools/iconv.zip and put
-it in R_HOME/modules at the end of the build.
+it in R_HOME/src/gnuwin32/unicode.
 
 You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution
