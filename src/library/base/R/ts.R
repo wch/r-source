@@ -9,7 +9,7 @@ start.default	<- function (x) start(ts(x))
 end.default	<- function (x)	end(ts(x))
 frequency.default<-function (x) frequency(ts(x))
 time.default	<- function (x)	time(ts(x))
-window.default	<- function (x)	window(ts(x))
+window.default	<- function (x, ...)	window(ts(x), ...)
 
 options(ts.eps = 1e-5)#- default as S
 
@@ -172,7 +172,7 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
                      xlim, ylim = ylim, log = log, col = col, bg = bg,
                      pch = pch, axes = axes, frame.plot = frame.plot,
                      ann = ann, main = main, ...)
-	text(xy, labels = 
+	text(xy, labels =
              if(all(tsp(x)==tsp(y))) formatC(time(x),wid = 1)
              else seq(along = x),
 	     col = col, cex = cex)
