@@ -12,7 +12,7 @@
 USER-VISIBLE CHANGES
 
     o	eigen() and svd() now use LAPACK routines unless a new
-	back-compatibility option is turned on.  The signs and
+	back-compatibility option is turned on.	 The signs and
 	normalization of eigen/singular vectors may change from
 	earlier versions.
 
@@ -43,7 +43,7 @@ NEW FEATURES
     o	PDF files produced by pdf() have more extensive information
 	fields, including the version of R that produced them.
 
-    o   Installed packages under Unix without compiled code are no
+    o	Installed packages under Unix without compiled code are no
 	longer stamped with the platform and can be copied to other
 	Unix-alike platforms (but not to other OSes because of
 	potential problems with line endings).
@@ -59,33 +59,33 @@ NEW FEATURES
 
     o	The internal random number generators will now never return
 	values of 0 or 1 for runif.  This might affect simulation
-	output in extremely rare cases.  Note that this is not
+	output in extremely rare cases.	 Note that this is not
 	guaranteed for user-supplied random-number generators, nor
 	when the standalone Rmath library is used.
 
-     o  New function constrOptim() for optimisation under linear inequality
-        constraints.
+     o	New function constrOptim() for optimisation under linear inequality
+	constraints.
 
-     o  if() and while() give a warning if called with a vector condition.
+     o	if() and while() give a warning if called with a vector condition.
 
-     o  ts() now allows arbitrary values for y in start/end = c(x, y):
+     o	ts() now allows arbitrary values for y in start/end = c(x, y):
 	it always allowed y < 1 but objected to y > frequency.
 
-     o  Add `difftime' methods for the group generics. (Thereby fixing
-        PR#2345)
+     o	Add `difftime' methods for the group generics. (Thereby fixing
+	PR#2345)
 
-     o  When assigning names to a vector, a value that is too short is
+     o	When assigning names to a vector, a value that is too short is
 	padded by character NAs. (Wishlist part of PR#2358)
 
-     o  The postscript() and PDF() drivers now allow the title to be set.
+     o	The postscript() and PDF() drivers now allow the title to be set.
 
-     o  table() now allows exclude= with factor arguments (requested by
+     o	table() now allows exclude= with factor arguments (requested by
 	Michael Friendly).
 
-     o  New convenience function loadURL() to allow loading data files
+     o	New convenience function loadURL() to allow loading data files
 	from URLs (requested by Frank Harrell).
 
-     o  biplot.default() allows `xlab' and `ylab' parameters to be set
+     o	biplot.default() allows `xlab' and `ylab' parameters to be set
 	(without partially matching to `xlabs' and `ylabs').
 	(Thanks to Uwe Ligges.)
 
@@ -93,9 +93,9 @@ NEW FEATURES
 	during configuration, and available as the 'pdfviewer' option.
 
      o	If a prompt() method is called with 'filename' as 'NA', a
-        list-style representation of the documentation shell generated
-        is returned.  New function promptData() for documenting objects
-        as data sets.
+	list-style representation of the documentation shell generated
+	is returned.  New function promptData() for documenting objects
+	as data sets.
 
      o	New argument `local' for example() (suggested by Andy Liaw).
 
@@ -120,25 +120,25 @@ INSTALLATION CHANGES
 
     o	New configure option --with-lapack to allow high-performance
 	LAPACK libraries to be used: a generic LAPACK library will be
-	used if found.  This option is not the default.
+	used if found.	This option is not the default.
 
-    o   New configure options --with-libpng, --with-jpeglib, --with-zlib,
-        --with-bzlib and --with-pcre, principally to allow these
+    o	New configure options --with-libpng, --with-jpeglib, --with-zlib,
+	--with-bzlib and --with-pcre, principally to allow these
 	libraries to be avoided if they are unsuitable.
 
-    o   If the precious variable R_BROWSER is set at configure time 
-        it overrides the automatic selection of the default browser.
-        It should be set to the full path unless the browser appears 
-        at different locations on different client machines.
+    o	If the precious variable R_BROWSER is set at configure time
+	it overrides the automatic selection of the default browser.
+	It should be set to the full path unless the browser appears
+	at different locations on different client machines.
 
 
 DEPRECATED & DEFUNCT
 
     o	The assignment operator `_' will be removed in the next
-        release and users are now warned on every usage: you may even see
-        multiple warnings for each usage.
+	release and users are now warned on every usage: you may even see
+	multiple warnings for each usage.
 
-        If environment variable R_NO_UNDERLINE is set to anything of
+	If environment variable R_NO_UNDERLINE is set to anything of
 	positive length then use of `_' becomes a syntax error.
 
     o	machine(), Machine() and Platform() are defunct.
@@ -151,7 +151,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o   Sys.sleep() on Unix was having trouble with waits of less than 0.5s 
+    o	Sys.sleep() on Unix was having trouble with waits of less than 0.5s
 
 
 
@@ -166,9 +166,6 @@ BUG FIXES
 
 
 BUG FIXES
-
-    o   The pdf() device now initialises graphical parameters 
-	properly.  (PR#2281)
 
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
@@ -187,17 +184,17 @@ BUG FIXES
     o	rbind() with a mixture of data frames and matrices treated the
 	matrices as vectors. (PR#2266)
 
-    o   stripchart(method="stack") was not handling missing values. (PR#2018)
+    o	stripchart(method="stack") was not handling missing values. (PR#2018)
 
-    o   Arithmetic functions such as log() lost the object bit from
+    o	Arithmetic functions such as log() lost the object bit from
 	classed objects if coercion was needed. (PR#2315)
 
-    o   exp_rand would go into an infinite loop if unif_rand returned 0.
+    o	exp_rand would go into an infinite loop if unif_rand returned 0.
 
-    o   formatC(x, format="fg") could return exponential format if
+    o	formatC(x, format="fg") could return exponential format if
 	rounding pushed x over a positive power of 10. (PR#2299)
 
-    o   attr(x, foo) used partial matching for `foo' (even though not
+    o	attr(x, foo) used partial matching for `foo' (even though not
 	documented to do so), and failed to find `foo' if there were
 	two or more partial matches before the exact match in the list
 	of attributes.
@@ -216,7 +213,7 @@ BUG FIXES
 
     o	system(intern=TRUE) has an undocumented line length limit of
 	119 chars both on Unix and Windows.  The limit is now 8096 and
-	documented.  On Unix (only) every 120th character used to be 
+	documented.  On Unix (only) every 120th character used to be
 	discarded.
 
     o	plot.POSIX[cl]t were not passing graphics parameters on to
@@ -226,14 +223,17 @@ BUG FIXES
 	when using the BSD-compatible install system program found by
 	configure.  We now always use install-sh on HP-UX. (PR#2091)
 
-    o   c() was converting NA names to "NA": now proper NA strings are
+    o	c() was converting NA names to "NA": now proper NA strings are
 	used wherever possible. (PR#2358)
 
-    o   A typo was causing segfaults when using data.entry under SuSE.
+    o	A typo was causing segfaults when using data.entry under SuSE.
 
-    o   mostattributes<-() was failing to copy across dimnames when
+    o	mostattributes<-() was failing to copy across dimnames when
 	one component was NULL, affecting pmax() and pmin() when the
 	first argument was a matrix.  (root cause of PR#2357)
+
+    o	The pdf() device now initialises graphical parameters
+	properly.  (PR#2281)
 
 
 		CHANGES IN R VERSION 1.6.1
