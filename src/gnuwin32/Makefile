@@ -6,6 +6,7 @@ all:
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
 	@$(MAKE) --no-print-directory htmldocs
+	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
@@ -55,7 +56,8 @@ SOURCES = \
 OBJS = $(SOURCES:.c=.o) e_pow.o
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
-   ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a
+   ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
+   ../extra/intl/libintl.a
 
 R_PKGS0 = $(filter-out base tools, $(R_PKGS_BASE))
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
@@ -161,7 +163,7 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
 	$(MAKE) --no-print-directory -C ./getline
-	@for ex in pcre bzip2 zlib xdr; do \
+	@for ex in pcre bzip2 zlib xdr intl; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} -f Makefile.win || exit 1; \
 	done
 
