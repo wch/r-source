@@ -25,6 +25,18 @@ rw1001
 The installer, rwinst.exe, now checks for ZIP files as well as zip files,
 as some browsers manage to map filenames to uppercase.
 
+There are batch files  Rd2txt.bat Rdconv.bat Rdindex.bat Sd2Rd.bat
+which are the equivalent of the Unix `R CMD foo' utilities mentioned in
+`Writing R Extensions'.  To use these you must have R_HOME set as an
+environment variable (using the form P:/R/rw1001).  There is also a
+shell script Rd2dvi.sh which you can use if you have sh.exe (as
+used to compile packages) and latex etc. The environment variable
+XDVI sets the previewer, defaulting to xdvi.bat.
+
+A file `Makevars' in the `src' directory of a package can be used to
+add to/override the MakeDll makefile used to make foo.dll, as on Unix.
+(See `Creating shared libraries', section 3.4 of `Writing R Extensions'.)
+
 Under rare conditions (lots of very short input lines) the history buffer
 could overrun and so cause crashes. This has been possible since rw0623,
 but first caused reported problems in rw1000 and has now been fixed.
@@ -35,6 +47,7 @@ version by restoring the settings before and after each page.
 
 Building on a non-default drive should be more reliable, as Perl is
 used to find the current drive.
+
 
     -------------------------------------------------------------------
 
