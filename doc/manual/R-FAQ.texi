@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-33, 2001-03-04
+@set FAQ-VERSION 1.2-34, 2001-03-06
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1377,6 +1377,8 @@ U.S. National Institute for Standards and Technology.
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
+@item RMySQL
+An interface between R and the MySQL database system.
 @item RODBC
 An @acronym{ODBC} database interface.
 @item RPgSQL
@@ -1638,8 +1640,6 @@ MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures.
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
-@item RMySQL
-An interface between R and the MySQL database system.
 @item StatDataML
 Read and write StatDataML.
 @item cmprsk
