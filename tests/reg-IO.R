@@ -53,4 +53,5 @@ readLines("testIO.R")
 source("testIO.R", echo=TRUE)
 unlink("testIO.R")
 
-## end of reg+IO.R
+## end of reg+IO.R: the next line has no EOL chars
+2 + 2

@@ -38,7 +38,9 @@ NEW FEATURES
 	line endings.  This means that readLines() can be used on DOS
 	files and source() on Mac files, for example.
 
-	Also, CRLF-terminated files can be used as stdin on Unix.
+	Also, CRLF-terminated files can be used as stdin on Unix, and
+	files with last lines without an EOL mark can be used as stdin 
+	and source()-ed on Unix and Windows.
 
     o	DESCRIPTION file has a new recommended `Maintainer:' field.
 

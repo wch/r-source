@@ -332,7 +332,7 @@ static void readline_handler(unsigned char *line)
 }
 #endif
 
-	/* Fill a text buffer with user typed console input. */
+	/* Fill a text buffer from stdin or with user typed console input. */
 
 int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
@@ -347,7 +347,12 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	/* remove CR in CRLF ending */
 	if (buf[ll - 1] == '\n' && buf[ll - 2] == '\r') {
 	    buf[ll - 2] = '\n';
-	    buf[ll - 1] = '\0';    
+	    buf[--ll] = '\0';    
+	}
+/* according to system.txt, should be terminated in \n, so check this
+   at eof */
+	if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
 	if (!R_Slave)
 	    fputs((char *)buf, stdout);
