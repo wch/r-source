@@ -222,6 +222,8 @@ int Rf_initialize_R(int ac, char **av)
 	if (**++av == '-') {
 	    if(!strcmp(*av, "--no-readline")) {
 		UsingReadline = FALSE;
+	    } else if(!strcmp(*av, "--args")) {
+		break;
 	    } else {
 		snprintf(msg, 1024, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(msg);

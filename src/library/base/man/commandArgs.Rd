@@ -13,6 +13,9 @@ commandArgs()
   processing takes place.  This means that they are the unmodified
   values.  If it were useful, we could provide support an argument which
   indicated whether we want the unprocessed or processed values.
+
+  This is especially useful with the \code{--args} command-line flag to
+  \R, as all of the command line after than flag is skipped.
 }
 \value{
   A character vector containing the name of the executable and the

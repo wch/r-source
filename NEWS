@@ -18,7 +18,7 @@ USER-VISIBLE CHANGES
     o	Saving data containing name space references no longer warns
 	about name spaces possibly being unavailable on load.
 
-    o   det uses an LU decomposition and Lapack.  The `method'
+    o   det() uses an LU decomposition and LAPACK.  The `method'
         argument to det no longer has any effect.
 
 NEW FEATURES
@@ -284,8 +284,12 @@ NEW FEATURES
 	does not use these new facilities should remain unaffected.
 
     o	polygon() and rect() now interpret density < 0 or NA to mean
-	filling is desired: this allows filling and shading to be
-	mixed in one call, e.g. from legend(). 
+	filling (by colour) is desired: this allows filling and
+	shading to be mixed in one call, e.g. from legend().
+
+    o	There is a new command-line flag --args that causes the rest of
+	the command line to be skipped (but recorded in commandArgs()
+	for further processing).
 
 
 DEPRECATED & DEFUNCT
