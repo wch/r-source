@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.85 $'
+revision='$Revision: 1.86 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -358,7 +358,7 @@ do_install () {
       message "data"
       mkdir -p "${lib}/${pkg}/data"
       rm -f "${lib}/${pkg}/data/"*
-      cp data/* "${lib}/${pkg}/data"
+      cp data/* "${lib}/${pkg}/data" 2>/dev/null
       chmod 644 "${lib}/${pkg}/data/"*
       if test -n "${use_zip_data}" \
           -a -n "${R_UNZIPCMD}" \
@@ -373,7 +373,7 @@ do_install () {
       message "demo"
       mkdir -p "${lib}/${pkg}/demo"
       rm -f "${lib}/${pkg}/demo/"*
-      cp demo/* "${lib}/${pkg}/demo"
+      cp demo/* "${lib}/${pkg}/demo" 2>/dev/null
       chmod 644 "${lib}/${pkg}/demo/"*
     fi
 
@@ -381,7 +381,7 @@ do_install () {
       message "exec"
       mkdir -p "${lib}/${pkg}/exec"
       rm -f "${lib}/${pkg}/exec/"*
-      cp exec/* "${lib}/${pkg}/exec"
+      cp exec/* "${lib}/${pkg}/exec" 2>/dev/null
       chmod 755 "${lib}/${pkg}/exec/"*
     fi
 
