@@ -63,8 +63,8 @@
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise), for the bars or bar components.}
   \item{col}{a vector of colors for the bars or bar components.
-    By default, grey is used if \code{height} is a vector, and
-    \code{heat.colors(nrow(height))} if \code{height} is a matrix.}
+    By default, grey is used if \code{height} is a vector, and a
+    gamma-corrected grey palette if \code{height} is a matrix.}
   \item{border}{the color to be used for the border of the bars.}
   \item{main,sub}{overall and sub title for the plot.}
   \item{xlab}{a label for the x axis.}
