@@ -166,6 +166,7 @@ NEW FEATURES
 
     o   read.fortran reads Fortran-style fixed-format specifications.
 
+
 UTILITIES
 
     o   Package utils now contains a much improved citation function
