@@ -1,0 +1,39 @@
+#-*- Makefile -*-
+include $(RHOME)/src/gnuwin32/MkRules
+
+DLLNAME = grDevices
+
+all: makeMakedeps $(DLLNAME).dll
+
+ifdef DEBUG
+  DLLFLAGS=
+  DEBUGFLAG=-g -Wall
+else
+  DLLFLAGS=-s
+  DEBUGFLAG=-Wall
+endif
+
+SOURCES_C = devNull.c devPicTeX.c devPS.c devWindows.c init.c
+
+DEPS = $(SOURCES_C:.c=.d)
+OBJS = $(SOURCES_C:.c=.o)
+
+RESFLAGS=--include-dir $(RHOME)/include
+grDevices_res.o: grDevices_res.rc $(RHOME)/include/Rversion.h
+
+CFLAGS = -I$(RHOME)/src/include -I$(RHOME)/src/gnuwin32 -DHAVE_CONFIG_H $(DEBUGFLAG) -O2
+DLLLIBS = -L$(RHOME)/src/gnuwin32 -lR
+
+$(DLLNAME).a: $(OBJS)
+$(DLLNAME).dll : $(DLLNAME).a grDevices_res.o
+
+clean:
+	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+ifneq ($(strip $(DEPS)),)
+	@cat $(DEPS) >> Makedeps
+endif
+
+-include Makedeps
