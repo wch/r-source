@@ -43,8 +43,8 @@
  *
  *	If a piece of code R-allocs some blocks, it is required to
  *	reset the R_VMax pointer back to its original value before it
- *	exits.  This can be done with the functions getvmax and
- *	setvmax.
+ *	exits.  This can be done with the functions vmaxget and
+ *	vmaxset.
  */
 
 #ifdef HAVE_CONFIG_H
