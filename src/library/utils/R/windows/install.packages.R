@@ -119,7 +119,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
 
     if(dependencies && !oneLib) {
         warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
-        dependences <- FALSE
+        dependencies <- FALSE
     }
     if(dependencies) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only

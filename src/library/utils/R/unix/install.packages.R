@@ -21,7 +21,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
 
     if(dependencies && !oneLib) {
         warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
-        dependences <- FALSE
+        dependencies <- FALSE
     }
     if(is.null(available))
         available <- CRAN.packages(contriburl = contriburl, method = method)
