@@ -61,6 +61,8 @@ function(termobj, dropx=NULL, keep.response=FALSE)
 terms.formula <-
 function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE) 
 {
+        if(!is.null(data) && !is.environment(data) && !is.data.frame(data))
+		data <- as.data.frame(data)
 	new.specials <- unique(c(specials, "offset"))
 	terms <- .Internal(terms.formula(x, new.specials, abb, data, keep.order))
 	offsets <- attr(terms,"specials")$offset
