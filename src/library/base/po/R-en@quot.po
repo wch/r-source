@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-11 08:53\n"
-"PO-Revision-Date: 2005-03-11 08:53\n"
+"POT-Creation-Date: 2005-03-14 07:40\n"
+"PO-Revision-Date: 2005-03-14 07:40\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -484,8 +484,8 @@ msgstr "‘to’ must be a POSIXt object"
 msgid "'file' must be a character string or connection"
 msgstr "‘file’ must be a character string or connection"
 
-msgid "x must be a square matrix"
-msgstr "x must be a square matrix"
+msgid "'x' must be a square matrix"
+msgstr "‘x’ must be a square matrix"
 
 msgid "determinant not currently defined for complex matrices"
 msgstr "determinant not currently defined for complex matrices"
@@ -819,8 +819,8 @@ msgstr "invalid ‘category’ argument"
 msgid "'arg' should be one of"
 msgstr "‘arg’ should be one of"
 
-msgid "there is more than one match in match.arg"
-msgstr "there is more than one match in match.arg"
+msgid "there is more than one match in 'match.arg'"
+msgstr "there is more than one match in ‘match.arg’"
 
 msgid "no match"
 msgstr "no match"
@@ -994,11 +994,8 @@ msgstr "wrong argument"
 msgid "not defined for package_version objects"
 msgstr "not defined for package_version objects"
 
-msgid "x must be numeric"
-msgstr "x must be numeric"
-
-msgid "invalid n value"
-msgstr "invalid n value"
+msgid "invalid 'n' value"
+msgstr "invalid ‘n’ value"
 
 msgid "'shrink.sml' must be numeric > 0"
 msgstr "‘shrink.sml’ must be numeric > 0"
@@ -1039,9 +1036,6 @@ msgstr "‘k’ is too large"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "need larger value of ‘ncol’ as pivoting occurred"
 
-msgid "file' must be a character string or connection"
-msgstr "file' must be a character string or connection"
-
 msgid "no lines available in input"
 msgstr "no lines available in input"
 
@@ -1075,8 +1069,8 @@ msgstr "‘as.is’ has the wrong length %d  != cols = %d"
 msgid "invalid 'row.names' specification"
 msgstr "invalid ‘row.names’ specification"
 
-msgid "x must be a vector"
-msgstr "x must be a vector"
+msgid "'x' must be a vector"
+msgstr "‘x’ must be a vector"
 
 msgid "invalid 'rle' structure"
 msgstr "invalid ‘rle’ structure"
@@ -1269,9 +1263,6 @@ msgstr "invalid ‘col.names’ specification"
 
 msgid "appending column names to file"
 msgstr "appending column names to file"
-
-msgid "invalid 'row.names 'specification"
-msgstr "invalid 'row.names 'specification"
 
 msgid "invalid 'digits'"
 msgstr "invalid ‘digits’"

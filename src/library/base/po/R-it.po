@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-11 08:53\n"
+"POT-Creation-Date: 2005-03-14 07:40\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -495,8 +495,8 @@ msgstr "'to' deve essere un oggetto POSIXt"
 msgid "'file' must be a character string or connection"
 msgstr "'file' deve essere una string di caratteri o una connessione"
 
-msgid "x must be a square matrix"
-msgstr "x deve essere una matrice quadrata"
+msgid "'x' must be a square matrix"
+msgstr "'x' deve essere una matrice quadrata"
 
 msgid "determinant not currently defined for complex matrices"
 msgstr "il deteminante di matrici complesse non è definito"
@@ -855,15 +855,15 @@ msgstr "argomento 'category' non valido"
 msgid "'arg' should be one of"
 msgstr "'arg' deve essere uno tra"
 
-msgid "there is more than one match in match.arg"
-msgstr "c'è più di un 'match' in match.arg"
+#, fuzzy
+msgid "there is more than one match in 'match.arg'"
+msgstr "c'è più di un 'match' in 'match.arg'"
 
 msgid "no match"
 msgstr "nessun match"
 
-#, fuzzy
 msgid "'input' must have length 1"
-msgstr "l'input deve avere lunghezza 1"
+msgstr "'input' deve avere lunghezza 1"
 
 #, fuzzy
 msgid "'input' and 'target' must be character vectors"
@@ -1052,10 +1052,8 @@ msgstr "argomento sbagliato"
 msgid "not defined for package_version objects"
 msgstr "non definito per oggetti package_version"
 
-msgid "x must be numeric"
-msgstr "x deve essere di tipo numeric"
-
-msgid "invalid n value"
+#, fuzzy
+msgid "invalid 'n' value"
 msgstr "valore n non valido"
 
 msgid "'shrink.sml' must be numeric > 0"
@@ -1099,9 +1097,6 @@ msgstr ""
 "c'è bisogno di un valore più grande di 'ncol' poiché si utilizzato il "
 "pivoting"
 
-msgid "file' must be a character string or connection"
-msgstr "'file' deve essere una stringa di caratteri o una connessione"
-
 msgid "no lines available in input"
 msgstr "nessuna linea disponibile in input"
 
@@ -1135,8 +1130,8 @@ msgstr "'as.is' ha la lunghezza sbagliata %d  != cols = %d"
 msgid "invalid 'row.names' specification"
 msgstr "specificazione di 'row.names' non valida"
 
-msgid "x must be a vector"
-msgstr "x deve essere un vettore"
+msgid "'x' must be a vector"
+msgstr "'x' deve essere un vettore"
 
 msgid "invalid 'rle' structure"
 msgstr "'struttura 'rle' non valida"
@@ -1333,9 +1328,6 @@ msgstr "specificazione di 'col.names' non valida"
 msgid "appending column names to file"
 msgstr "accodo nomi colonna al file"
 
-msgid "invalid 'row.names 'specification"
-msgstr "specificazione di 'row.names' non valida"
-
 msgid "invalid 'digits'"
 msgstr "'digits' non valido"
 
@@ -1385,162 +1377,3 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
 
-#~ msgid "found"
-#~ msgstr "trovato"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "row.names"
-#~ msgstr "row.names"
-
-#~ msgid "File"
-#~ msgstr "File"
-
-#~ msgid "not found."
-#~ msgstr "non trovato"
-
-#~ msgid "in"
-#~ msgstr "in"
-
-#~ msgid "]"
-#~ msgstr "]"
-
-#~ msgid "cannot coerce class"
-#~ msgstr "impossibile cambiare classe"
-
-#~ msgid "into a data.frame"
-#~ msgstr "in un data.frame"
-
-#~ msgid "invalid row.names, length"
-#~ msgstr "row.names non valida, lunghezza"
-
-#~ msgid "for a data frame with"
-#~ msgstr "per un data frame con"
-
-#~ msgid "rows"
-#~ msgstr "righe"
-
-#~ msgid "supplied"
-#~ msgstr "specificate"
-
-#~ msgid "row names for"
-#~ msgstr "row names per"
-
-#~ msgid "rows, data has"
-#~ msgstr "righe, i dati hanno"
-
-#~ msgid "items, need"
-#~ msgstr "elemento, necessitano di"
-
-#~ msgid "is a matrix/data frame of"
-#~ msgstr "è una matrice/data frame di"
-
-#~ msgid "rows, need"
-#~ msgstr "righe, necessitano di"
-
-#~ msgid "has"
-#~ msgstr "ha"
-
-#~ msgid "rows to replace"
-#~ msgstr "righe da sostituire"
-
-#~ msgid "provided"
-#~ msgstr "fornito"
-
-#~ msgid "variables"
-#~ msgstr "variabili"
-
-#~ msgid "not meaningful"
-#~ msgstr "senza senso"
-
-#~ msgid "to class \"Date\""
-#~ msgstr "in classe \"Date\""
-
-#~ msgid "to class \"POSIXlt\""
-#~ msgstr "in classe \"POSIXlt\""
-
-#~ msgid "to class \"POSIXct\""
-#~ msgstr "in classe \"POSIXct\""
-
-#~ msgid "in eigen"
-#~ msgstr "in eigen"
-
-#~ msgid "should be 1 or"
-#~ msgstr "dovrebbe essere 1 o"
-
-#~ msgid "Level sets of factors are different"
-#~ msgstr ""
-#~ "Gli insiemi dei levels delle due variabili factor differiscono tra loro"
-
-#~ msgid "package"
-#~ msgstr "pacchetto"
-
-#~ msgid "has been merged into 'stats4'"
-#~ msgstr "è stato integrato in 'stats4'"
-
-#~ msgid "There is no package called"
-#~ msgstr "Non c'è nessun pacchetto chiamato"
-
-#~ msgid "found more than once,"
-#~ msgstr "trovato più di una volta,"
-
-#~ msgid "using the one found in"
-#~ msgstr "uso quello trovato in"
-
-#~ msgid "required by"
-#~ msgstr "richiesto da"
-
-#~ msgid "could not be found"
-#~ msgstr "non può essere trovato"
-
-#~ msgid "was found, but"
-#~ msgstr "trovato, ma"
-
-#~ msgid "could not be loaded"
-#~ msgstr "non può essere caricato"
-
-#~ msgid "is loaded, but"
-#~ msgstr "caricato, ma"
-
-#~ msgid "namespace"
-#~ msgstr "namespace"
-
-#~ msgid "Unable to load R code in package"
-#~ msgstr "Impossibile caricare il codice R nel pacchetto"
-
-#~ msgid "In"
-#~ msgstr "In"
-
-#~ msgid "name space"
-#~ msgstr "namespace"
-
-#~ msgid "is loaded"
-#~ msgstr "è caricato"
-
-#~ msgid "failed in"
-#~ msgstr "non riuscito in"
-
-#~ msgid "object(s)"
-#~ msgstr "oggetto(i)"
-
-#~ msgid "are not exported by"
-#~ msgstr "non sono esportati da"
-
-#~ msgid "previous export(s)"
-#~ msgstr "esportazioni precedenti"
-
-#~ msgid "S3 method"
-#~ msgstr "metodo S3"
-
-#~ msgid "object"
-#~ msgstr "oggetto"
-
-#~ msgid "found an S4 version of"
-#~ msgstr "trovata una versione S4 di"
-
-#~ msgid "S3 method(s)"
-#~ msgstr "metodo(i) S3"
-
-#~ msgid "were declared in NAMESPACE but not found"
-#~ msgstr "dichiarati in NAMESPACE ma non trovati"

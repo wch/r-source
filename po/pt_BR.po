@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-11 08:05+0000\n"
+"POT-Creation-Date: 2005-03-14 07:40+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -2266,7 +2266,7 @@ msgstr "ambiente inválido"
 msgid "Object \"%s\" not found"
 msgstr "Objeto \"%s\" não encontrado"
 
-#: src/main/deparse.c:1222
+#: src/main/deparse.c:1216
 msgid "badly formed function expression"
 msgstr "expressão funcional mal formada"
 
@@ -3778,58 +3778,63 @@ msgstr "memória vetorial esgotada (limite atingido?)"
 msgid "cons memory exhausted (limit reached?)"
 msgstr "memória do tipo cons esgotada (limite atingido?)"
 
-#: src/main/memory.c:1725
+#: src/main/memory.c:1540 src/main/memory.c:1543
+#, c-format
+msgid "cannot allocate memory block of size %.0f"
+msgstr ""
+
+#: src/main/memory.c:1738
 msgid "negative length vectors are not allowed"
 msgstr "vetores de comprimento negativo não são permitidos"
 
-#: src/main/memory.c:1743 src/main/memory.c:1753 src/main/memory.c:1763
-#: src/main/memory.c:1775
+#: src/main/memory.c:1756 src/main/memory.c:1766 src/main/memory.c:1776
+#: src/main/memory.c:1788
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "não foi possível alocar vetor de comprimento %d"
 
-#: src/main/memory.c:1787
+#: src/main/memory.c:1800
 #, c-format
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr "tipo/comprimento inválido (%d/%d) na alocação de vetor"
 
-#: src/main/memory.c:1833
+#: src/main/memory.c:1846
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr "não é possível alocar vetor de tamanho %lu Kb"
 
-#: src/main/memory.c:1914
+#: src/main/memory.c:1927
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() não está implementado nesse sistema"
 
-#: src/main/memory.c:2100
+#: src/main/memory.c:2113
 msgid "protect(): protection stack overflow"
 msgstr "protect(): estouro da proteção de pilha"
 
-#: src/main/memory.c:2116
+#: src/main/memory.c:2129
 msgid "unprotect(): stack imbalance"
 msgstr "unprotect(): desbalanço de pilha"
 
-#: src/main/memory.c:2129
+#: src/main/memory.c:2142
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: ponteiro não encontrado"
 
-#: src/main/memory.c:2172
+#: src/main/memory.c:2185
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc não pôde alocar (%d de %d) memória"
 
-#: src/main/memory.c:2181
+#: src/main/memory.c:2194
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc não pôde re-alocar (tamanho %d) memória"
 
-#: src/main/memory.c:2300
+#: src/main/memory.c:2313
 msgid "not safe to return vector pointer"
 msgstr "não é seguro retornar um ponteiro de vetor"
 
-#: src/main/memory.c:2328 src/main/memory.c:2337 src/main/memory.c:2348
-#: src/main/memory.c:2361 src/main/memory.c:2377 src/main/memory.c:2394
+#: src/main/memory.c:2341 src/main/memory.c:2350 src/main/memory.c:2361
+#: src/main/memory.c:2374 src/main/memory.c:2390 src/main/memory.c:2407
 msgid "bad value"
 msgstr "valor inválido"
 
