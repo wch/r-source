@@ -42,7 +42,7 @@ Summary.factor(x, \dots)
     A function \emph{\code{f}} belonging to one of these groups must be
     \code{\link{.Internal}} or \code{\link{.Primitive}} and will
     automatically be using \emph{\code{<grp>.<class> (ob)}} when
-    \emph{\code{f}(<ob>)} is called, \emph{\code{f}} belongs to group
+    \emph{\code{f(<ob>)}} is called, \emph{\code{f}} belongs to group
     \emph{\code{<grp>}} and \emph{\code{<ob>}} is of \code{\link{class}}
     \emph{\code{<class>}}.
     
@@ -110,24 +110,24 @@ Summary.factor(x, \dots)
     The following builtin function are \emph{generic} as well, i.e., you
     can write \code{\link{methods}} for them:
 
-    \code{\link{"\["}}%		do_subset() [subset.c:464]
-    \code{\link{"\[\["}}%	do_subset2()[subset.c:567]
+    \code{\link{"["}}, %do_subset() [subset.c:464]
+    \code{\link{"[["}}%	do_subset2()[subset.c:567]
     
-    \code{\link{dimnames<-}}%do_dimnamesgets()	[attrib.c:422]
-    \code{\link{dimnames}}%do_dimnames()		[attrib.c:489]
-    \code{\link{dim<-}}%do_dimgets()	[attrib.c:513]
+    \code{\link{dimnames<-}}, %do_dimnamesgets()	[attrib.c:422]
+    \code{\link{dimnames}}, %do_dimnames()		[attrib.c:489]
+    \code{\link{dim<-}}, %do_dimgets()	[attrib.c:513]
     \code{\link{dim}}%do_dim()		[attrib.c:501]
     
-    \code{\link{c}}%do_c()		[bind.c:524]
-    \code{\link{unlist}}%do_unlist()	[bind.c:648]
-    \code{\link{as.vector}}%do_asvector() [coerce.c:948]
-    \code{\link{is.na}}%do_isna()     [coerce.c:1244]
+    \code{\link{c}}, %do_c()		[bind.c:524]
+    \code{\link{unlist}}, %do_unlist()	[bind.c:648]
+    \code{\link{as.vector}}, %do_asvector() [coerce.c:948]
+    \code{\link{is.na}}, %do_isna()     [coerce.c:1244]
     \code{\link{is.nan}}%do_isnan()    [coerce.c:1332]
 }
 \references{
     Appendix A, \emph{Classes and Methods} of \cr
     Chambers and Hastie (1992). \emph{Statistical Models in S};
-    Wadsworth \& Brooks/Cole.
+    Wadsworth & Brooks/Cole.
 }
 \seealso{
 \code{\link{methods}} for methods of non-Internal generic functions.
