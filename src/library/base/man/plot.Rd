@@ -6,7 +6,7 @@ plot(x, \dots)
 }
 \usage{
 plot(x, y, xlim=range(x), ylim=range(y), type="p",
-        main, xlab, ylab, \dots)
+     main, xlab, ylab, \dots)
 plot(y ~ x, \dots)
 }
 \arguments{
@@ -21,6 +21,7 @@ plot(y ~ x, \dots)
       \item \code{"p"} for \bold{p}oints,
       \item \code{"l"} for \bold{l}ines,
       \item \code{"b"} for \bold{b}oth,
+      \item \code{"c"} for the lines part alone of \code{"b"},
       \item \code{"o"} for both ``\bold{o}verplotted'',
       \item \code{"h"} for ``\bold{h}istogram'' like vertical lines,
       \item \code{"s"} for \bold{s}teps,
@@ -39,11 +40,11 @@ plot(y ~ x, \dots)
   the graphical parameter arguments, see \code{\link{par}}.
 }
 \details{
-    For simple scatter plots, \code{\link{plot.default}} will be used.
-    However, there are \code{plot} methods for many \R objects,
-    including \code{\link{function}}s, \code{\link{data.frame}}s,
-    \code{\link{density}} objects, etc.  Use \code{methods(plot)} and
-    the documentation for these.
+  For simple scatter plots, \code{\link{plot.default}} will be used.
+  However, there are \code{plot} methods for many \R objects,
+  including \code{\link{function}}s, \code{\link{data.frame}}s,
+  \code{\link{density}} objects, etc.  Use \code{methods(plot)} and
+  the documentation for these.
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.formula}} and other

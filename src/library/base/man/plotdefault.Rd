@@ -15,11 +15,17 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}
-  \item{type}{the type of plot desired.  The following possibilities are
-    possible; \code{"p"} for points, \code{"l"} for lines, \code{"o"}
-    for overplotted points and lines, \code{"b"} or \code{c} for points
+  \item{type}{1-character string giving the type of plot desired.
+%% FIXME: ./plot.Rd has a nice itemized list.
+%% -----  Should it at all?   Should we just point to it?
+    The following values are possible;
+    \code{"p"} for points, \code{"l"} for lines,
+    \code{"o"} for overplotted points and lines,
+    \code{"b"} or \code{"c"} for (empty if \code{"c"}) points
     joined by lines, \code{"s"} and \code{"S"} for step functions and
-    \code{"h"} for \emph{high density} vertical lines.}
+    \code{"h"} for \emph{high density} vertical lines.  Finally,
+    \code{"n"} does not produce any points or lines.}
+
   \item{xlim}{the x limits (min,max) of the plot.}
   \item{ylim}{the y limits of the plot.}
   \item{log}{a character string which contains \code{"x"} if the x axis
