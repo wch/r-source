@@ -710,19 +710,34 @@ use private La@TeX{} extensions which are only available on his machine.
 Only the @R{} code inside the vignettes is part of the checking
 procedure, typesetting manuals is not part of the package QA.
 
-By default @code{R CMD build} will run @code{Sweave} and @code{texi2dvi
---pdf} on all vignettes. However, if a @file{Makefile} is found, then
-@code{R CMD build} will try to run
+By default @code{R CMD build} will run @code{Sweave} on all files in
+Sweave format. If no @file{Makefile} is found in directory
+@file{inst/doc}, then @code{texi2dvi --pdf} is run on all vignettes.
+Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
+run @code{make} after the @code{Sweave} step, such that PDF manuals can
+be created from arbitrary source formats (plain La@TeX{} files, @dots{}).  The
+@file{Makefile} should take care of both creation of PDF files and
+cleaning up afterwards, i.e., delete all files that shall not appear in
+the final package archive.  Note that the @code{make} step is executed
+independently from the presence of any files in Sweave format.
 
+The directory @file{inst/doc} should contain an index named
+@file{00Index.dcf} of all documentation files, the format is similar to
+the format of the @file{DESCRIPTION} file:
 @quotation
-@code{make pdf; make clean}
+@cartouche
+@smallexample
+foo-summary.pdf:    A short introduction to package foo.
+foo-manual.pdf:     A comprehensive manual for package foo.
+someTipps.pdf:      Tipps that might be useful.
+@end smallexample
+@end cartouche
 @end quotation
-
-@noindent
-such that PDF manuals can be created from arbitrary source formats
-(plain La@TeX{} files, @dots{}).  Every @file{Makefile} in
-@file{inst/doc} must contain these two targets, otherwise @code{R CMD
-build} will give an error.
+If no index file is present, then @code{R CMD build} looks for
+@code{\VignetteIndexEntry} statements in all Sweave files and
+auto-generates the index. The @code{\VignetteIndexEntry} statement
+is best placed in La@TeX{} comment, such that no definition of the command
+is necessary.
 
 
 @node Submitting a package to CRAN,  , Writing package vignettes, Creating R packages
