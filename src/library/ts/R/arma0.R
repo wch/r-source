@@ -122,7 +122,7 @@ arima0 <- function(x, order = c(0, 0, 0),
             S <- svd(na.omit(xreg))
             xreg <- xreg %*% S$v
         }
-        fit <- lm(x ~ xreg - 1)
+        fit <- lm(x ~ xreg - 1, na.action = na.omit)
         init0 <- c(init0, coef(fit))
         ses <- summary(fit)$coef[,2]
         parscale <- c(parscale, ses)
