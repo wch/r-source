@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997, 1998  Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -625,7 +625,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     int dolabels, logflag=0;
     int col, fg;
     int i, n, nint=0;
-    int which, xtckCoords, ytckCoords;
+    int side, xtckCoords, ytckCoords;
     double x, y, tempx, tempy, tnew, tlast;
     double tck;
     double axp[3], usr[2];
@@ -636,23 +636,19 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* initial checks */
 
+    if(length(args) < 3) errorcall(call, "too few arguments\n");
     GCheckState(dd);
-    if(length(args) < 3)
-	errorcall(call, "too few arguments\n");
 
-    /* required argument "which" */
+    /* required argument "side" */
 
-    which = asInteger(CAR(args));
-    if (which < 1 || which > 4)
-	errorcall(call, "invalid axis number\n");
-    args = CDR(args);
+    side = asInteger(CAR(args));
+    if (side < 1 || side > 4)
+	errorcall(call, "invalid axis number\n"); args = CDR(args);
 
     /* tick-label locations */
     /* these are coerced lower down */
 
-
-    at = CAR(args);
-    args = CDR(args);
+    at = CAR(args); args = CDR(args);
 
     /* labels */
 
@@ -662,18 +658,16 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(i == 0 || i == NA_LOGICAL)
 	    dolabels = 0;
 	PROTECT(lab = R_NilValue);
-    }
-    else if (isExpression(CAR(args))) {
+    } else if (isExpression(CAR(args))) {
 	PROTECT(lab = CAR(args));
-    }
-    else {
+    } else {
 	PROTECT(lab = coerceVector(CAR(args), STRSXP));
     }
     args = CDR(args);
 
     /* retrieve relevant "par" values */
 
-    switch(which) {
+    switch(side) {
     case 1:
     case 3:
 	axp[0] = dd->dp.xaxp[0];
@@ -733,19 +727,16 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Check the axis type parameter */
     /* If it is 'n', there is nothing to do */
-    if(which == 1 || which == 3) {
+    if(side == 1 || side == 3) {
 	if(dd->gp.xaxt == 'n') {
-	    GRestorePars(dd);
-	    return R_NilValue;
+	    GRestorePars(dd);	    return R_NilValue;
 	}
-    }
-    else if(which == 2 || which == 4) {
+    } else if(side == 2 || side == 4) {
 	if(dd->gp.yaxt == 'n') {
-	    GRestorePars(dd);
-	    return R_NilValue;
+	    GRestorePars(dd);	    return R_NilValue;
 	}
     }
-    else errorcall(call, "invalid \"which\" value\n");
+    else errorcall(call, "invalid \"side\" value\n");
 
     x = dd->gp.usr[0];
     y = dd->gp.usr[2];
@@ -754,11 +745,11 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Draw the axis */
     GMode(dd, 1);
-    switch (which) {
+    switch (side) {
     case 1:
     case 3:
 	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
-	if (which == 3) {
+	if (side == 3) {
 	    y = dd->gp.usr[3];
 	    xtckCoords = MAR3;
 	}
@@ -768,7 +759,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* The S way of doing ticks */
 	    double y0, y1;
 	    if (dd->gp.tck > 0.5) {
-		if (which == 1) {
+		if (side == 1) {
 		    y0 = dd->gp.usr[2];
 		    y1 = dd->gp.usr[2] + dd->gp.tck *
 			(dd->gp.usr[3] - dd->gp.usr[2]);
@@ -782,7 +773,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		tck = dd->gp.tck * ((dd->gp.fin[0] < dd->gp.fin[1]) ?
 				    dd->gp.fin[0] : dd->gp.fin[1]);
-		if (which == 1) {
+		if (side == 1) {
 		    y0 = dd->gp.usr[2];
 		    y1 = dd->gp.usr[2] + (tck / dd->gp.fin[1]) *
 			(dd->gp.usr[3] - dd->gp.usr[2]);
@@ -819,7 +810,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    GConvert(&tempx, &tempy, USER, NFC, dd);
 	    if (dolabels) {
 		if(isExpression(lab)) {
-		    GMMathText(VECTOR(lab)[i], which,
+		    GMMathText(VECTOR(lab)[i], side,
 			       dd->gp.mgp[1], 0, x, dd->gp.las, dd);
 		}
 		else {
@@ -827,7 +818,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    tnew = tempx - 0.5 * labw;
 		    /* check that there's room for labels */
 		    if (dd->gp.las == 2 || tnew - tlast >= gap) {
-			GMtext(CHAR(STRING(lab)[i]), which,
+			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, x,
 			       dd->gp.las, dd);
 			tlast = tempx + 0.5 *labw;
@@ -839,7 +830,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2:
     case 4:
 	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
-	if (which == 4) {
+	if (side == 4) {
 	    x = dd->gp.usr[1];
 	    ytckCoords = MAR4;
 	}
@@ -849,7 +840,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* The S way of doing ticks */
 	    double x0, x1;
 	    if (dd->gp.tck > 0.5) {
-		if (which == 2) {
+		if (side == 2) {
 		    x0 = dd->gp.usr[0];
 		    x1 = dd->gp.usr[0] + dd->gp.tck *
 			(dd->gp.usr[1] - dd->gp.usr[0]);
@@ -863,7 +854,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		tck = dd->gp.tck * ((dd->gp.fin[0] < dd->gp.fin[1]) ?
 				    dd->gp.fin[0] : dd->gp.fin[1]);
-		if (which == 2) {
+		if (side == 2) {
 		    x0 = dd->gp.usr[0];
 		    x1 = dd->gp.usr[0] + (tck / dd->gp.fin[0]) *
 			(dd->gp.usr[1] - dd->gp.usr[0]);
@@ -899,7 +890,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    GConvert(&tempx, &tempy, USER, NFC, dd);
 	    if (dolabels) {
 		if(isExpression(lab)) {
-		    GMMathText(VECTOR(lab)[i], which,
+		    GMMathText(VECTOR(lab)[i], side,
 			       dd->gp.mgp[1], 0, y, dd->gp.las, dd);
 		}
 		else {
@@ -908,7 +899,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    labw = GConvertYUnits(labw, INCHES, NFC, dd);
 		    tnew = tempy - 0.5 * labw;
 		    if (dd->gp.las > 0 || tnew - tlast >= gap) {
-			GMtext(CHAR(STRING(lab)[i]), which,
+			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, y,
 			       dd->gp.las, dd);
 			tlast = tempy + 0.5 *labw;
@@ -996,8 +987,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(dd, 1);
     GClip(dd);
 
-    /* lines and overplotted lines and points */
     if (type == 'l' || type == 'o') {
+      /* lines and overplotted lines and points */
 	dd->gp.col = INTEGER(col)[0];
 	xold = NA_REAL;
 	yold = NA_REAL;
@@ -1022,9 +1013,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-
-    /* points connected with broken lines */
-    if(type == 'b' || type == 'c') {
+    else if(type == 'b' || type == 'c') {
+      /* points connected with broken lines */
 	double d, f;
 	d = GConvertYUnits(0.5, CHARS, INCHES, dd);
 	dd->gp.col = INTEGER(col)[0];
@@ -1048,8 +1038,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-
-    if (type == 's') {
+    else if (type == 's') { /* step function  I */
 	double xtemp[3], ytemp[3];
 	dd->gp.col = INTEGER(col)[0];
 	xold = x[0];
@@ -1070,8 +1059,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-
-    if (type == 'S') {
+    else if (type == 'S') { /* step function  II */
 	double xtemp[3], ytemp[3];
 	dd->gp.col = INTEGER(col)[0];
 	xold = x[0];
@@ -1092,8 +1080,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-
-    if (type == 'h') {
+    else if (type == 'h') { /* h[istogram] (bar plot) */
 	dd->gp.col = INTEGER(col)[0];
 	for (i = 0; i < n; i++) {
 	    xx = x[i];
@@ -1107,7 +1094,6 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-
     if (type == 'p' || type == 'b' || type == 'o') {
 	for (i = 0; i < n; i++) {
 	    xx = x[i];
@@ -1166,17 +1152,15 @@ static void xypoints(SEXP call, SEXP args, int *n)
 SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* segments(x0, y0, x1, y1, col, lty, xpd) */
-    SEXP sx0, sy0, sx1, sy1, col, lty;
+    SEXP sx0, sx1, sy0, sy1, col, lty;
     double *x0, *x1, *y0, *y1;
     double xx[2], yy[2];
-    int nx0, nx1, ny0, ny1;
-    int i, n, ncol, nlty, xpd;
+    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, xpd;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
-    GCheckState(dd);
-
     if(length(args) < 4) errorcall(call, "too few arguments\n");
+    GCheckState(dd);
 
     xypoints(call, args, &n);
 
@@ -1185,11 +1169,11 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
     sx1 = CAR(args); nx1 = length(sx1); args = CDR(args);
     sy1 = CAR(args); ny1 = length(sy1); args = CDR(args);
 
-    PROTECT(lty = FixupLty(GetPar("lty", args), dd));
-    nlty = length(lty);
-
     PROTECT(col = FixupCol(GetPar("col", args), dd));
     ncol = LENGTH(col);
+
+    PROTECT(lty = FixupLty(GetPar("lty", args), dd));
+    nlty = length(lty);
 
     xpd = asLogical(GetPar("xpd", args));
     if (xpd == NA_LOGICAL)
@@ -1212,8 +1196,7 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 	yy[1] = y1[i%ny1];
 	GConvert(xx, yy, USER, DEVICE, dd);
 	GConvert(xx+1, yy+1, USER, DEVICE, dd);
-	if (FINITE(xx[0]) && FINITE(yy[0]) &&
-	    FINITE(xx[1]) && FINITE(yy[1])) {
+	if (FINITE(xx[0]) && FINITE(yy[0]) && FINITE(xx[1]) && FINITE(yy[1])) {
 	    dd->gp.col = INTEGER(col)[i % ncol];
 	    if (dd->gp.col == NA_INTEGER)
 		dd->gp.col = dd->dp.col;
@@ -1304,12 +1287,13 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* do_arrows(x0, y0, x1, y1, length, angle, code, col, lty, xpd) */
+    /* arrows(x0, y0, x1, y1, length, angle, code, col, lty, xpd) */
     SEXP sx0, sx1, sy0, sy1, col, lty;
     double *x0, *x1, *y0, *y1;
-    double xx0, yy0, xx1, yy1, hlength, angle;
-    int code, i, n, nx0, nx1, ny0, ny1;
-    int ncol, nlty, xpd;
+    double xx0, yy0, xx1, yy1;
+    double hlength, angle;
+    int code;
+    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, xpd;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1363,7 +1347,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	GConvert(&xx0, &yy0, USER, DEVICE, dd);
 	GConvert(&xx1, &yy1, USER, DEVICE, dd);
 	if (FINITE(xx0) && FINITE(yy0) && FINITE(xx1) && FINITE(yy1)) {
-	    dd->gp.col = INTEGER(col)[i % ncol];
+	  dd->gp.col = INTEGER(col)[i % ncol];
 	    if (dd->gp.col == NA_INTEGER)
 		dd->gp.col = dd->dp.col;
 	    if(nlty == 0 || INTEGER(lty)[i % nlty] == NA_INTEGER)
@@ -1375,8 +1359,8 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     GMode(dd, 0);
-
     GRestorePars(dd);
+
     UNPROTECT(2);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
@@ -1769,7 +1753,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    n = length(xlab);
 	    for(i=0 ; i<n ; i++)
-	        GMtext(CHAR(STRING(sub)[i]), 1, dd->gp.mgp[0]+1.0, 0,
+		GMtext(CHAR(STRING(sub)[i]), 1, dd->gp.mgp[0]+1.0, 0,
 		   xNPCtoUsr(adj, dd), 0, dd);
 	}
     }
@@ -1783,7 +1767,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    n = length(xlab);
 	    for(i=0 ; i<n ; i++)
-	        GMtext(CHAR(STRING(xlab)[i]), 1, dd->gp.mgp[0] + i, 0,
+		GMtext(CHAR(STRING(xlab)[i]), 1, dd->gp.mgp[0] + i, 0,
 		   xNPCtoUsr(adj, dd), 0, dd);
 	}
     }
@@ -1797,9 +1781,9 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    n = length(ylab);
 	    for(i=0 ; i<n ; i++)
-	        GMtext(CHAR(STRING(ylab)[i]), 2, dd->gp.mgp[0] - i, 0,
+		GMtext(CHAR(STRING(ylab)[i]), 2, dd->gp.mgp[0] - i, 0,
 		   yNPCtoUsr(adj, dd), 0, dd);
-        }
+	}
     }
     GMode(dd, 0);
     GRestorePars(dd);
