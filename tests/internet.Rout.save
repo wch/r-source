@@ -1,6 +1,6 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.6.0 Under development (unstable) (2002-06-14)
+R : Copyright 2003, The R Development Core Team
+Version 1.7.0 Under development (unstable) (2003-01-21)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -28,17 +28,19 @@ Type `q()' to quit R.
 > # test do_download.
 > nrow(CRAN.packages())
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain; charset=iso-8859-1' length 77168 bytes
+connected to 'cran.r-project.org' on port 80.
+Content type `text/plain; charset=iso-8859-1' length 93729 bytes
 opened URL
 .......... .......... .......... .......... ..........
-.......... .......... .....
-downloaded 75Kb
+.......... .......... .......... .......... .
+downloaded 91Kb
 
-[1] 163
+[1] 191
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
 > readLines(zz)
+connected to 'cran.r-project.org' on port 80.
  [1] "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">"              
  [2] ""                                                              
  [3] "<html>"                                                        
@@ -73,6 +75,7 @@ Error in url("http://foo.bar", "r") : cannot open URL `http://foo.bar'
 > # and via read.table, test http and ftp.
 > 
 > read.table("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
+connected to 'www.stats.ox.ac.uk' on port 80.
      V1  V2   V3    V4 V5
 1     1 307  930 36.58  0
 2     2 307  940 36.73  0
