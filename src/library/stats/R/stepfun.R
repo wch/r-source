@@ -48,7 +48,7 @@ print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
     cat(" x[1:", n, "] = ", numform(xx[i1(n)]),
 	if(n > 3) ", ", if(n > 5) " ..., ", numform(xx[i2(n)]), "\n", sep = "")
     y <- eval(expression(c(yleft, y)), env = env)
-    cat(n+1, " step heights = ", numform(y[i1(n+1)]),
+    cat(n+1, " plateau levels = ", numform(y[i1(n+1)]),
 	if(n+1 > 3) ", ", if(n+1 > 5) " ..., ", numform(y[i2(n+1)]), "\n",
 	sep = "")
     invisible(x)
@@ -61,10 +61,12 @@ summary.stepfun <- function(object, ...)
     ## n <- n-1
     cat("Step function with continuity 'f'=",
 	format(eval(expression(f),env = environment(object))),
-	", ", n, "knots at\n")
+	", ", n, if(n <= 6) "knots at\n" else "knots with summary\n")
     summ <- if(n>6) summary else function(x) x
     print(summ(knots(object)))
-    cat(if(n>6)"\n" else"  ", "and	", n+1," step heights (y) at\n", sep="")
+    cat(if(n>6) "\n" else "  ", "and	", n+1,
+        " plateau levels (y) ", if(n <= 6) "at\n" else "with summary\n",
+        sep="")
     print(summ(eval(expression(c(yleft,y)),env = environment(object))))
     invisible()
 }

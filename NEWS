@@ -207,6 +207,11 @@ BUG FIXES
     o	untrace() after trace() failed if package 'methods' was attached.
 	(PR#7301)
 
+    o	summary.stepfun() was reporting for n > 6 summaries of the
+	knots and levels as the actual values.  Both print() and
+	summary() methods called the constant values "step heights",
+	although they were not the heights of the steps.
+
 
 
 	*********************************************************
