@@ -67,8 +67,6 @@ BUG FIXES
 	the order of evaluation of calls to random numbers was not
 	fully defined.	This affected the Mac port.
 
-    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
-
     o	ppr() inside nested calls sometimes failed to find objects
 	due to a typo in the eval call in ppr.formula.
 
@@ -120,6 +118,7 @@ BUG FIXES
     o   contour() could loop infinitely (PR#897).
 
     o   R-lang manual had precedence of %% wrong (PR#879)
+
 
 
 		CHANGES IN R VERSION 1.2.2
