@@ -126,6 +126,9 @@ BUG FIXES
 
     o   rep(1:2,c(1,-1)) segfaulted (PR 619)
 
+    o   x[["a"]] <- y rejected some object types for y (e.g.
+        expressions) which were accepted in x$a <- y (PR
+ 
 
 		CHANGES IN R VERSION 1.1.0
 
