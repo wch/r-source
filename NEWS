@@ -28,9 +28,14 @@ NEW FEATURES
     o	codoc() now also checks whether all arguments shown in \usage
 	are documented in \arguments.
 
+    o	The startup processing now interprets escapes in the values of
+	environment variables set in R_HOME/etc/Renviron in a similar
+	way to most shells.
+
 
 
 BUG FIXES
+
 
 
 

@@ -56,8 +56,10 @@
   \code{bar} can be of the same form (as in \code{${foo-${bar-blah}}}).
 
   Leading and trailing white space in \code{value} are stripped.
-  No other interpretation of \code{value} is performed. In particular,
-  if it is enclosed in quotes, the quotes form part of the value.
+%  No other interpretation of \code{value} is performed. In particular,
+%  if it is enclosed in quotes, the quotes form part of the value.
+  \code{value} is processed in a similar to a Unix shell.  In particular
+  quotes are stripped, and backslashes are removed except inside quotes.
 }
 \note{
   Prior to \R version 1.2.1, \file{.Rprofile} was sourced after
@@ -66,8 +68,19 @@
   The format for \file{.Renviron} files was changed in version 1.2.0.
   Older files are quite likely to work but may generate warnings on
   startup if they contained unnecessary \code{export} statements.
+
+  Values in \file{.Renviron} files were not processed prior to version
+  1.4.0.
 }
 \seealso{
   \code{\link{.Last}} for final actions before termination.
 }
+\examples{
+\dontrun{## if .Renviron contains
+FOOBAR="coo\bar"doh\\ex"abc\"def'"
+
+## then we get
+> cat(Sys.getenv("FOOBAR3"), "\n")
+coo\bardoh\exabc"def'
+}}
 \keyword{environment}

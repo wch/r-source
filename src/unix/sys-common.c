@@ -659,11 +659,35 @@ static char *findterm(char *s)
 
 static void Putenv(char *a, char *b)
 {
-    char *buf;
+    char *buf, *value, *p, *q, quote='\0';
+    int inquote = 0;
 
     buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
     if(!buf) R_Suicide("allocation failure in reading Renviron");
-    strcpy(buf, a); strcat(buf, "="); strcat(buf, b);
+    strcpy(buf, a); strcat(buf, "="); 
+    value = buf+strlen(buf);
+
+    /* now process the value */
+    for(p = b, q = value; *p; p++) {
+	/* remove quotes around sections, preserve \ inside quotes */
+	if(!inquote && (*p == '"' || *p == '\'')) {
+	    inquote = 1;
+	    quote = *p;
+	    continue;
+	}
+	if(inquote && *p == quote && *(p-1) != '\\') {
+	    inquote = 0;
+	    continue;
+	}
+	if(!inquote && *p == '\\') {
+	    if(*(p+1) == '\n') p++;
+	    else if(*(p+1) == '\\') *q++ = *p;
+	    continue;
+	}
+	if(inquote && *p == '\\' && *(p+1) == quote) continue;
+	*q++ = *p;
+    }
+    *q = '\0';
     putenv(buf);
     /* no free here: storage remains in use */
 }
