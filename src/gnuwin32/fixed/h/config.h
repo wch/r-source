@@ -138,6 +138,13 @@ double atanh(double);
 #define HAVE_LOCALE_H 1
 #define HAVE_SYS_STAT_H 1
 #define HAVE_UNISTD_H 1
+#undef R_PROFILING
+#undef HAVE_PWD_H
+#undef HAVE_GRP_H
+#define HAVE_STAT 1
+#define HAVE_ACCESS 1
+#undef HAVE_SYS_UTSNAME_H
+
 
 /* Dirent stuff */
 #define HAVE_DIRENT_H 1

@@ -128,6 +128,12 @@
 #undef HAVE_SYS_STAT_H
 #undef HAVE_UNISTD_H
 #undef R_PROFILING
+#undef HAVE_PWD_H
+#undef HAVE_GRP_H
+#undef HAVE_STAT
+#undef HAVE_ACCESS
+#undef HAVE_SYS_UTSNAME_H
+
 
 /* Define this to use the system regex rather than GNU regex included in R.
    Intended only for use with special systems such as Condor */

@@ -597,6 +597,8 @@ FUNTAB R_FunTab[] =
 {"list.files",  do_listfiles,   0,      11,     4,      PP_FUNCALL},
 {"file.exists", do_fileexists,  0,      11,     1,      PP_FUNCALL},
 {"file.choose", do_filechoose,  0,      11,     1,      PP_FUNCALL},
+{"file.info",	do_fileinfo,	0,	11,	1,	PP_FUNCALL},
+{"file.access",	do_fileaccess,	0,	11,	2,	PP_FUNCALL},
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
@@ -607,6 +609,7 @@ FUNTAB R_FunTab[] =
 {"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
+{"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},

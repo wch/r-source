@@ -483,3 +483,59 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "savehistory can only be used in Rgui and Rterm");
     return R_NilValue;
 }
+
+#include <lmcons.h>
+
+SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, ansnames;
+    OSVERSIONINFO verinfo;
+    char isNT[8]="??", ver[256], 
+	name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
+    DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
+
+    checkArity(op, args);
+    PROTECT(ans = allocVector(STRSXP, 6));
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	strcpy(isNT, "NT");
+	break;
+    case VER_PLATFORM_WIN32_WINDOWS:
+	strcpy(isNT, "9x");
+	break;
+    case VER_PLATFORM_WIN32s:
+	strcpy(isNT, "win32s");
+	break;
+    default:
+	sprintf(isNT, "ID=%d", (int)verinfo.dwPlatformId);
+	break;
+    }
+
+    STRING(ans)[0] = mkChar("Windows");
+    sprintf(ver, "%s %d.%d", isNT,
+	    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion);
+    STRING(ans)[1] = mkChar(ver);
+    sprintf(ver, "(build %d) %s", LOWORD(verinfo.dwBuildNumber), 
+	    verinfo.szCSDVersion);
+    STRING(ans)[2] = mkChar(ver);
+    GetComputerName(name, &namelen);
+    STRING(ans)[3] = mkChar(name);
+    STRING(ans)[4] = mkChar("x86");
+    GetUserName(user, &userlen);
+    STRING(ans)[5] = mkChar(user);
+    PROTECT(ansnames = allocVector(STRSXP, 6));
+    STRING(ansnames)[0] = mkChar("sysname");
+    STRING(ansnames)[1] = mkChar("release");
+    STRING(ansnames)[2] = mkChar("version");
+    STRING(ansnames)[3] = mkChar("nodename");
+    STRING(ansnames)[4] = mkChar("machine");
+    STRING(ansnames)[5] = mkChar("login");
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    UNPROTECT(2);
+    return ans;
+    warning("Sys,info is not implemented on this system");
+    return R_NilValue; /* -Wall */
+}
+

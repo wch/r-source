@@ -502,3 +502,144 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "file name too long");
     return mkString(R_ExpandFileName(buf));
 }
+
+#ifdef HAVE_STAT
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H)
+#include <pwd.h>
+#include <grp.h>
+#define UNIX_EXTRAS 1
+#endif
+
+SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir, 
+	mode, xxclass;
+#ifdef UNIX_EXTRAS
+    SEXP uid, gid, uname, grname;
+    struct passwd *stpwd;
+    struct group *stgrp;
+#endif
+    int i, n;
+    struct stat sb;
+
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn))
+        errorcall(call, "invalid filename argument");
+    n = length(fn);
+#ifdef UNIX_EXTRAS
+    PROTECT(ans = allocVector(VECSXP, 10));
+    PROTECT(ansnames = allocVector(STRSXP, 10));
+#else
+    PROTECT(ans = allocVector(VECSXP, 6));
+    PROTECT(ansnames = allocVector(STRSXP, 6));
+#endif
+    fsize = VECTOR(ans)[0] = allocVector(INTSXP, n);
+    STRING(ansnames)[0] = mkChar("size");
+    isdir = VECTOR(ans)[1] = allocVector(LGLSXP, n);
+    STRING(ansnames)[1] = mkChar("isdir");
+    mode  = VECTOR(ans)[2] = allocVector(INTSXP, n);
+    STRING(ansnames)[2] = mkChar("mode");
+    mtime = VECTOR(ans)[3] = allocVector(INTSXP, n);
+    STRING(ansnames)[3] = mkChar("mtime");
+    ctime = VECTOR(ans)[4] = allocVector(INTSXP, n);
+    STRING(ansnames)[4] = mkChar("ctime");
+    atime = VECTOR(ans)[5] = allocVector(INTSXP, n);
+    STRING(ansnames)[5] = mkChar("atime");
+#ifdef UNIX_EXTRAS
+    uid = VECTOR(ans)[6] = allocVector(INTSXP, n);
+    STRING(ansnames)[6] = mkChar("uid");
+    gid = VECTOR(ans)[7] = allocVector(INTSXP, n);
+    STRING(ansnames)[7] = mkChar("gid");
+    uname = VECTOR(ans)[8] = allocVector(STRSXP, n);
+    STRING(ansnames)[8] = mkChar("uname");
+    grname = VECTOR(ans)[9] = allocVector(STRSXP, n);
+    STRING(ansnames)[9] = mkChar("grname");
+#endif
+    for (i = 0; i < n; i++) {
+	if (STRING(fn)[i] != R_NilValue && 
+	    stat(R_ExpandFileName(CHAR(STRING(fn)[i])), &sb) == 0) {
+	    INTEGER(fsize)[i] = (int) sb.st_size;
+	    LOGICAL(isdir)[i] = (int) sb.st_mode & S_IFDIR;
+	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
+	    INTEGER(mtime)[i] = (int) sb.st_mtime;
+	    INTEGER(ctime)[i] = (int) sb.st_ctime;
+	    INTEGER(atime)[i] = (int) sb.st_atime;
+#ifdef UNIX_EXTRAS
+	    INTEGER(uid)[i] = (int) sb.st_uid;
+	    INTEGER(gid)[i] = (int) sb.st_gid;
+	    stpwd = getpwuid(sb.st_uid);
+	    if(stpwd) STRING(uname)[i] = mkChar(stpwd->pw_name);
+	    else STRING(uname)[i] = NA_STRING;
+	    stgrp = getgrgid(sb.st_gid);
+	    if(stgrp) STRING(grname)[i] = mkChar(stgrp->gr_name);
+	    else STRING(grname)[i] = NA_STRING;
+#endif
+	} else {
+	    INTEGER(fsize)[i] = NA_INTEGER;
+	    LOGICAL(isdir)[i] = NA_INTEGER;
+	    INTEGER(mode)[i]  = NA_INTEGER;
+	    INTEGER(mtime)[i] = NA_INTEGER;
+	    INTEGER(ctime)[i] = NA_INTEGER;
+	    INTEGER(atime)[i] = NA_INTEGER;
+#ifdef UNIX_EXTRAS
+	    INTEGER(uid)[i] = NA_INTEGER;
+	    INTEGER(gid)[i] = NA_INTEGER;
+	    STRING(uname)[i] = NA_STRING;
+	    STRING(grname)[i] = NA_STRING;
+#endif
+	}
+    }
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    PROTECT(xxclass = allocVector(STRSXP, 1));
+    STRING(xxclass)[0] = mkChar("octmode");
+    classgets(mode, xxclass);
+    UNPROTECT(3);
+    return ans;
+}
+#else
+SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("file.info is not implemented on this system");
+    return R_NilValue; /* -Wall */
+}
+#endif
+
+#ifdef HAVE_ACCESS
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ans;
+    int i, n, mode, modemask;
+
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn))
+        errorcall(call, "invalid names argument");
+    n = length(fn);
+    mode = asInteger(CADR(args));
+    if(mode < 0 || mode > 7) error("invalid mode value");
+    modemask = 0;
+    if (mode & 1) modemask |= X_OK;
+    if (mode & 2) modemask |= W_OK;
+    if (mode & 4) modemask |= R_OK;
+    PROTECT(ans = allocVector(INTSXP, n));
+    for (i = 0; i < n; i++)
+	INTEGER(ans)[i] = access(R_ExpandFileName(CHAR(STRING(fn)[i])),
+				 modemask);
+    UNPROTECT(1);
+    return ans;
+}
+#else
+SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("file.access is not implemented on this system");
+    return R_NilValue; /* -Wall */
+}
+#endif

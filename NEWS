@@ -20,7 +20,7 @@ NEW FEATURES
 
     o	The more recent GNU regex from grep-2.4.2 is used.
 
-    o   where command added to debug.
+    o   `where' command added to debug.
 
     o   inherits() is now an internal function and compatible with S.
 
@@ -45,6 +45,11 @@ NEW FEATURES
 
     o	New function Rprof() for profiling R expressions under Unix.
 	Configure with --enable-R-profiling to make this operational.
+
+    o	New functions file.access() and file.info() for information on
+	files on the user's file systems.
+
+    o	New function Sys.info() for platorn, host and user information.
 
 
 
