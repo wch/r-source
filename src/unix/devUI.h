@@ -4,7 +4,7 @@
 # define extern
 #endif
 
-#include "Startup.h"		/* for SA_TYPE */
+#include "R_ext/RStartup.h"		/* for SA_TYPE */
 
 #ifdef HAVE_AQUA
 extern void (*ptr_R_StartConsole)();

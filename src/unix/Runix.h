@@ -1,4 +1,4 @@
-#include "Startup.h"
+#include "R_ext/RStartup.h"
 
 void fpu_setup(Rboolean);/* ./sys-unix.c */
 
