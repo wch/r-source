@@ -4623,16 +4623,25 @@ which allocates @var{n} units of @var{size} bytes each.  A typical usage
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 @end smallexample
 
-There is a similar call, @code{S_alloc}, for compatibility with @Sl{},
-which differs only in zeroing the memory allocated, and
+There are similar calls, @code{S_alloc} and @code{Salloc}, (for
+compatibility with various versions of @Sl{}) which zero the memory
+allocated,
+@smallexample
+type* Salloc(long @var{n}, int @var{type})
+char* S_alloc(long @var{n}, int @var{size})
+@end smallexample
+
+and
 
 @smallexample
-S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
+type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
+char* S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 @end smallexample
 
 @noindent
 which changes the allocation size from @var{old} to @var{new} units, and
-zeroes the additional units.
+zeroes the additional units.  (Only @code{Salloc} and @code{Srealloc} are
+compatible with current versions of @Sl{}.)
 
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
