@@ -36,6 +36,15 @@
 #include "nmath.h"
 #include "dpq.h"
 
+#ifndef MATHLIB_STANDALONE
+#ifdef Macintosh
+extern void isintrpt();
+#endif
+#ifdef Win32
+extern void R_ProcessEvents();
+#endif
+#endif
+
 static double ***w;
 static int allocated_m, allocated_n;
 
@@ -98,6 +107,16 @@ static double
 cwilcox(int k, int m, int n)
 {
     int c, u, i, j, l;
+
+#ifndef MATHLIB_STANDALONE
+    /* check for a user interrupt */
+#ifdef Macintosh
+    isintrpt();
+#endif
+#ifdef Win32
+    R_ProcessEvents();
+#endif
+#endif
 
     u = m * n;
     c = (int)(u / 2);
