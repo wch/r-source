@@ -11,6 +11,9 @@
 
 NEW FEATURES
 
+    o   Primitive function .External() to call dynamically loaded
+	`internal'-style functions (code from Jean Meloche)
+
     o   Function page() to view an R object in a pager.
 
     o   Support for handling embedded '\n's in text strings

@@ -3,9 +3,11 @@
 \usage{
       .C(name, \dots, NAOK=FALSE, DUP=TRUE)
 .Fortran(name, \dots, NAOK=FALSE, DUP=TRUE)
+.External(name, \dots)
 }
 \alias{.C}
 \alias{.Fortran}
+\alias{.External}
 \arguments{
 \item{name}{a character string giving the name of a C function or
   Fortran subroutine.}
@@ -19,11 +21,17 @@
 \description{
 The functions \code{.C} and \code{.Fortran} can be used to
 make calls to C and Fortran code.
+
+\code{.External} can be used to call
+compiled code that uses \R objects in the same way as internal \R
+functions. There is no documentation to help you write this sort of code.
 }
 \value{
-The functions return a list similar to the \code{\dots}
+The functions \code{.C} and \code{.Fortran} return a list similar to the \code{\dots}
 list of arguments passed in, but reflecting any
 changes made by the C or Fortran code.
+
+\code{.External} returns an \R object.
 
 These calls are typically made in conjunction with
 \code{\link{dyn.load}} which links DLLs to \R.
@@ -56,5 +64,13 @@ In this case the output variable didn't exist before the call so it can't
 cause trouble. If the input variable is not changed in \code{Cfunction} you are
 safe.
 }
+
+\section{Header files for external code}{
+Writing code for use with \code{.External} will typically require access 
+to the header files in the \code{src/include}. These are not copied by
+\code{make install} and so may not be available in an installed version
+of \R.
+}
+    
 \seealso{\code{\link{dyn.load}}.}
 \keyword{programming}

@@ -261,6 +261,33 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/*   Call dynamically loaded "internal" functions */
+/*   code by Jean Meloche <jean@stat.ubc.ca> */
+
+SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+      DL_FUNC fun;
+      char buf[128], *p, *q, *vmax;
+      SEXP retval;
+
+      /* I don't like this messing with vmax <TSL>*/
+      /* vmax = vmaxget(); */
+      op = CAR(args);
+      if (!isString(op)) errorcall(call,"function name must be a string\n");
+
+      /* make up load symbol & look it up */
+      p = CHAR(STRING(op)[0]);
+      q = buf; while ((*q = *p) != '\0') { p++; q++; }
+
+      if (!(fun=R_FindSymbol(buf))) errorcall(call,
+              "C-R function not in load table\n");
+
+      retval=fun(args);
+
+      /* vmaxset(vmax); */
+      return retval;
+}
+
 SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs;

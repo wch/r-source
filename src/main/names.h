@@ -139,6 +139,7 @@ SEXP do_edit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_erase(SEXP, SEXP, SEXP, SEXP);
+SEXP do_External(SEXP, SEXP, SEXP, SEXP);
 SEXP do_eval(SEXP, SEXP, SEXP, SEXP);
 SEXP do_expression(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileappend(SEXP, SEXP, SEXP, SEXP);
