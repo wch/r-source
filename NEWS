@@ -279,7 +279,7 @@ INTERNATIONALIZATION
     o	Phrases in .Rd files can be marked by \enc{}{} to show a
 	transliteration to ASCII for use in e.g. text help.
 
-    o	The use of pch in points() now allows for multi-byte character
+    o	The use of 'pch' in points() now allows for multi-byte character
 	sets: in such a locale a glyph can either be specified as a
 	multi-byte single character or as a number, the Unicode point.
 
@@ -292,6 +292,13 @@ INTERNATIONALIZATION
 
     o	Functions sQuote() and dQuote() use the Unicode directional
         quotes if in a UTF-8 locale.
+
+    o	The infrastructure is now in place for C-level error and
+	warning messages to be translated from English and used on
+	systems with Native Language Support.  Currently this has been
+	used for the startup message and for the stats and splines
+	packages.  See 'Writing R Extensions' for how to make use of
+	this in a package.
 
 
 UTILITIES
@@ -336,7 +343,7 @@ UTILITIES
     o	R CMD build now reports empty directories in the source tree.
 
     o	New function write_PACKAGES() in package 'tools' to help with
-	preparing local package repositories.  (Based on contribution
+	preparing local package repositories.  (Based on a contribution
 	by Uwe Ligges.)
 
 

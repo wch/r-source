@@ -127,6 +127,7 @@ installation) for the tools that you need to have installed.
 * Submitting a package to CRAN::  
 * Package name spaces::         
 * Writing portable packages::   
+* Localization::                
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -1494,7 +1495,7 @@ exportClasses(c1, c2)
 respectively.
 
 
-@node Writing portable packages,  , Package name spaces, Creating R packages
+@node Writing portable packages, Localization, Package name spaces, Creating R packages
 @section Writing portable packages
 
 @code{R CMD check} provides a basic set of checks, but often further
@@ -1597,6 +1598,96 @@ well as ensuring you have used the @code{PACKAGE} argument that @code{R
 CMD check} checks for.
 
 @end itemize
+
+@node Localization,  , Writing portable packages, Creating R packages
+@section Localization
+
+@R{} provides facilities to make use of translations of messages on
+systems which have suitable@footnote{Currently GNU @code{gettext} is
+required: it is likely that this will be bundled with future versions of
+R.} OS-level support.
+
+@menu
+* R messages::                  
+* C-level messages::            
+@end menu
+
+@node R messages, C-level messages, Localization, Localization
+@subsection R messages
+
+Mechanisms to support the translation of @R{} @code{warning} and
+@code{stop} messages are planned for @R{} 2.1.0.
+
+@node C-level messages,  , R messages, Localization
+@subsection C-level messages
+
+@R{} 2.1.0 introduced mechanisms to translate the C-level error and
+warning messages, and this has been implemented in package @pkg{splines}
+as a demonstration (and also in @pkg{stats}, but with no translations
+provided).  The process of enabling translations is
+
+@itemize
+@item
+In a header file that will be included in all the C files
+containing messages that should be translated, declare
+@example
+#include <R.h>  /* to include Rconfig.h */
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("@var{pkg}", String)
+/* replace @var{pkg} as appropriate */
+#else
+#define _(String) (String)
+#endif
+@end example
+
+@item
+For each message that should be translated, wrap it in @code{_(...)},
+for example
+@example
+error(_("'ord' must be a positive integer"));
+@end example
+
+@item
+Arrange to initialize NLS, for example by having @code{.onLoad} call
+@example
+.C("@var{pkg}_init", file.path(libname, pkgname), PACKAGE="@var{pkg}")
+@end example
+where the C function called looks like
+@example
+void @var{pkg}_init(char **path)
+@{
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX];
+
+    strcpy(localedir, path[0]);
+    strcat(localedir, "/po");
+    bindtextdomain("@var{pkg}", localedir);
+#endif   
+@}
+@end example
+
+@item
+In the package's @file{src} directory run
+@example
+xgettext --keyword=_ -o @var{pkg}.pot *.c
+@end example
+@end itemize
+
+The file @file{src/@var{pkg}.pot} is the template file, and
+conventionally this is shipped as @file{po/@var{pkg}.pot}.  A translator
+to another language makes a copy of this file and edits it (see the
+@code{gettext} manual) to produce say @file{@var{ll}.po}, where @var{ll}
+is the code for the language in which the translation is to be used.
+(This file would be shipped in the @file{po} directory.)  Next run
+@code{msgfmt} on @file{@var{ll}.po} to produce @file{@var{ll}.mo}, and
+copy that to @file{inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo}.  Now when
+the package is loaded after installation it will look for translations
+of its messages in the @file{po/@var{lang}/LC_MESSAGES/@var{pkg}.mo} file
+for any language @var{lang} that matches the user's preferences (via the
+setting of the @code{LANGUAGES} environment variable or from the locale
+settings).
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files
@@ -2442,7 +2533,12 @@ Latin-1 files work reasonably well, but other encodings will definitely
 give problems with the @LaTeX{} conversion and may with others.
 
 For convenience, encoding names @code{latin1} and @code{latin2} are
-recognized: these are @code{UTF-8} and likely to work fairly widely.
+always recognized: these and @code{UTF-8} are likely to work fairly
+widely.
+
+The @code{\enc} command (@pxref{Insertions}) can be used to provide
+transliterations which will be used in conversions that do not support
+the declared encoding.
 
 
 @node Processing Rd format,  , Encoding, Writing R documentation files
