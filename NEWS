@@ -28,6 +28,11 @@ BUG FIXES
     o	Setting row/column names preserves the names of the dimnames
 	(PR#809). 
 
+    o	Using help() after help.start() on Unix was failing to find
+	the linked help files if more than one package was loaded (as
+	now happens by default).
+
+
 
 		CHANGES IN R VERSION 1.2.1
 
