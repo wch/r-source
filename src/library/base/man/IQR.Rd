@@ -1,14 +1,14 @@
 \name{IQR}
 \title{The Interquartile Range}
 \usage{
-IQR(x)
+IQR(x, na.rm = FALSE)
 }
 \alias{IQR}
 \description{
-This function computes interquartile range of the data
-values in its arguments.
-Note that this function compute the quartiles using the function
-\code{quantile} rather than following Tukey's recommendations.
+This function computes interquartile range of the \code{x}
+values.
+Note that this function computes the quartiles using the
+\code{\link{quantile}} function rather than following Tukey's recommendations.
 }
 \references{
 Tukey, J. W. (1977).
