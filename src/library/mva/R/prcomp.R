@@ -1,27 +1,50 @@
-prcomp <- function(x, scale=FALSE, use="all.obs") {
-    if(scale) cv <- cor(as.matrix(x), use=use)
-    else cv <- cov(as.matrix(x), use=use)
-    edc <- svd(cv)[c("d", "u")]
-    cn <- paste("Comp.", 1:ncol(cv), sep="")
-    vn <- dimnames(x)[[2]]
-    names(edc$d) <- cn
-    dimnames(edc$u) <- list(vn, cn)
-    edc <- list(var=edc$d, load=edc$u, scale=scale)
-    class(edc) <- "prcomp"
-    edc
+plot.prcomp <- function(x, ...) { screeplot(x, ...) }
+
+prcomp <- function(x, retx = TRUE, center = TRUE, scale. = FALSE,
+                   tol = NULL) {
+    x <- as.matrix(x)
+    s <- svd(scale(x, center = center, scale = scale.), nu = 0)
+    if (!is.null(tol)) {
+        rank <- sum(s$d > (s$d[1]*tol))
+        if (rank < ncol(x))
+            s$v <- s$v[, 1:rank, drop = FALSE]
+    }
+    s$d <- s$d / sqrt(max(1, nrow(x) - 1))
+    dimnames(s$v) <-
+        list(colnames(x), paste("PC", seq(len = ncol(s$v)), sep = ""))
+    r <- list(sdev = s$d, rotation = s$v)
+    if (retx) r$x <- x %*% s$v
+    class(r) <- "prcomp"
+    r
 }
 
-print.prcomp <- function(x) {
-    cat("\nPrincipal Components:", if(x$scale) "Correlation" else "Covariance",
-	"matrix\n\n")
-    cat("Component Variances:\n")
-    print(x$var)
-    cat("\nLoadings:\n")
-    print(x$load)
-    cat("\n")
+print.prcomp <- function(x, print.x = FALSE, ...) {
+    cat("Standard deviations:\n")
+    print(x$sdev)
+    cat("\nRotation:\n")
+    print(x$rotation)
+    if (print.x && length(x$x)) {
+        cat("\nRotated variables:\n")
+        print(x$x)
+    }
+    invisible(x)
 }
 
-plot.prcomp <- function(x, main="Scree Plot", ylab="Variance",
-			xlab="Component", ...) {
-    plot(x$var, main=main, xlab=xlab, ylab=ylab, ...)
+summary.prcomp <- function(object) {
+    vars <- object$sdev^2
+    vars <- vars/sum(vars)
+    importance <- rbind("Standard deviation" = object$sdev,
+                        "Proportion of Variance" = round(vars, 5),
+                        "Cumulative Proportion" = round(cumsum(vars), 5))
+    colnames(importance) <- colnames(object$rotation)
+    object$importance <- importance
+    class(object) <- "summary.prcomp"
+    object
+}
+
+print.summary.prcomp <- function(x, digits = min(3, .Options$digits-3),
+                                 ...) {
+    cat("Importance of components:\n")
+    print(x$importance, digits = digits)
+    invisible(x)
 }
