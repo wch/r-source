@@ -20,7 +20,7 @@
 
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
-$VERSION = "0.2.2";#MM
+$VERSION = "0.2.3";#MM
 # Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
 
 
@@ -741,7 +741,6 @@ sub code2nroff {
     $text =~ s/\\dots/.../go;
     $text =~ s/\\n/\\\\n/g;
 
-
     $text = undefined_command($text, "link");
 
     unmark_brackets($text);
@@ -913,6 +912,8 @@ sub code2examp {
     $text =~ s/\\dots/.../go;
 
     $text = undefined_command($text, "link");
+    $text =~ s/\\\\/\\/g;
+
     unmark_brackets($text);
 }
 
