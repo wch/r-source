@@ -3,6 +3,7 @@
 \alias{kernapply.default}
 \alias{kernapply.ts}
 \alias{kernapply.tskernel}
+\alias{kernapply.vector}
 
 \title{Apply Smoothing Kernel}
 \usage{

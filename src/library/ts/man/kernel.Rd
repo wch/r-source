@@ -1,10 +1,11 @@
 \name{kernel}
 \alias{kernel}
+\alias{bandwidth.kernel}
 \alias{df.kernel}
 \alias{is.tskernel}
 \alias{print.tskernel}
 \alias{plot.tskernel}
-\alias{[.kernel}
+\alias{[.tskernel}
 
 \title{Smoothing Kernel Objects}
 \usage{

@@ -1,6 +1,7 @@
 \name{ar}
 \alias{ar}
 \alias{ar.burg}
+\alias{ar.burg.R}
 \alias{ar.yw}
 \alias{ar.ols}
 \alias{ar.mle}

@@ -2,6 +2,7 @@
 \alias{acf}
 \alias{ccf}
 \alias{pacf}
+\alias{pacf.default}
 \alias{pacf.ts}
 \alias{pacf.mts}
 \alias{plot.acf}

@@ -1,6 +1,8 @@
 \name{spectrum}
 \alias{spectrum}
 \alias{plot.spec}
+\alias{plot.spec.coherency}
+\alias{plot.spec.phase}
 \alias{spec}
 \title{Spectral Density Estimation}
 \usage{

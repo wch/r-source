@@ -1,5 +1,6 @@
 \name{arima0}
 \alias{arima0}
+\alias{arima0.diag}
 \alias{print.arima0}
 \alias{predict.arima0}
 \title{ARIMA Modelling of Time Series -- Preliminary Version}
@@ -9,6 +10,7 @@ arima0(x, order = c(0, 0, 0),
        xreg = NULL, include.mean, na.action = na.fail,
        delta = 0.01, transform.pars = 2)
 predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
+arima0.diag(fit, gof.lag = 10) 
 }
 \arguments{
  \item{x}{a univariate time series}
@@ -38,7 +40,7 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
      invertibility. If equal to 2, the optimization is rerun on
      the original scale to find the Hessian.}
 
- \item{arima0.obj}{The result of an \code{arima0} fit.}
+ \item{arima0.obj, fit}{The result of an \code{arima0} fit.}
 
  \item{newxreg}{New values of \code{xreg} to be used for
      prediction. Must have at least \code{n.ahead} rows.}
@@ -46,6 +48,8 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
  \item{n.ahead}{The number of steps ahead for which prediction is required.}
 
  \item{se.fit}{Logical: should standard errors of prediction be returned?}
+
+ \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
 }
 \description{
     Fit an ARIMA model to a univariate time series by exact maximum

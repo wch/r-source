@@ -2,6 +2,7 @@
 \alias{diffinv}
 \alias{diffinv.ts}
 \alias{diffinv.default}
+\alias{diffinv.vec}
 \title{Discrete Integrals: Inverse of Differencing}
 \usage{
 diffinv(x, lag = 1, differences = 1,
