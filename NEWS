@@ -36,6 +36,9 @@ BUG FIXES
     o	type.convert() ignored na.strings when no conversion was done.
 	(PR#6781, not needed for its primary use in read.table.)
 
+    o	src/modules/X11/dataentry.c would not build on some XFree
+	4.4.0 systems.
+
 
 
 
