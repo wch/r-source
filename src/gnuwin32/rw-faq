@@ -11,9 +11,6 @@ development, that described here. It is often called something like rw0640
 Windows in the Venables & Ripley `R Complements' at
 http://www.stats.ox.ac.uk/pub/MASS2.
 
-This version of the FAQ describes some features only in rw0641 that is due
-for release by mid-May.
-
   ------------------------------------------------------------------------
 
 1. Installation and Usage
@@ -80,6 +77,7 @@ and will probably want rw06xxw.zip (the HTML format help files). Optionally,
 you can also download rw06xxl.zip (the LaTeX format help files, used for
 offline printing), and the installer, rwinst.exe.
 
+
 1.2) How do I install R for Windows?
 
 First, you need Windows 95 or 98 or NT4 (or possibly earlier): Windows
@@ -87,19 +85,19 @@ First, you need Windows 95 or 98 or NT4 (or possibly earlier): Windows
 is likely except perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
-rwinst.exe and navigate its wizard-like pages).
-Alternatively, choose a location and unzip the zip files (with a tool that
-preserves long file names and the directory structure: we recommend the
-INFO-ZIP project's unzip). All the files will unpack into a directory called
+rwinst.exe and navigate its wizard-like pages).  Alternatively, choose
+a location and unzip the zip files (with a tool that preserves long
+file names and the directory structure: we recommend the INFO-ZIP
+project's unzip). All the files will unpack into a directory called
 rw06xx, for some `xx'.
 
-Choose a working directory for R. Make a shortcut to rw06xx\bin\Rgui.exe on
-your desktop or somewhere on the Start file tree. Right-click the shortcut,
-select Properties... and change the `Start in' field to your working
-directory.
+Choose a working directory for R. Make a shortcut to
+rw06xx\bin\Rgui.exe on your desktop or somewhere on the Start menu
+file tree. Right-click the shortcut, select Properties... and change
+the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
-field. We use --vsize 10M --nsize 250k.
+field. We use --vsize 10M --nsize 300k.
 
 
 1.3) How do I run it?
@@ -203,7 +201,7 @@ them in autoexec.bat or in an MS-DOS window from which you launch
 Rgui/Rterm. Under NT you can use the control panel. You can also set them on
 the command line, for example in the shortcut you could have
 
-      path_to_R\bin\rgui.exe --vsize 10M --nsize 250k RLIBS=e:/R/library
+      path_to_R\bin\rgui.exe --vsize 10M --nsize 300k RLIBS=e:/R/library
 
 and from rw0641 you can set variables in a file Renviron in your home
 directory, for example
@@ -221,11 +219,11 @@ simpler to install a private copy of R to do the building.
 HTML help only works for packages installed in rw06xx\library.
 
 (Information for rw0633 or later) To update the HTML help files after you
-have installed a binary package, run
+have installed a binary package, run at the R prompt.
 
       > link.html.help()
 
-at the R prompt. (The source-code installation does this automatically, and
+(The source-code installation does this automatically, and
 if you have that installed you can use (preferably)
 
       cd rw06xx\src\gnuwin32\help
@@ -284,13 +282,13 @@ console width (unless disabled in the configuration file).
 
 The graphics has a history mechanism. As the README says:
 
-`The History menu allows the recording of plots. When plots have been
-recorded they can be reviewed by PgUp and PgDn, saved and replaced.
-Recording can be turned on automatically (the Recording item on the list) or
-individual plots can be added (Add or the INS key). The whole plot history
-can be saved to or retrieved from an R variable in the global environment.
+  `The History menu allows the recording of plots. When plots have been
+  recorded they can be reviewed by PgUp and PgDn, saved and replaced.
+  Recording can be turned on automatically (the Recording item on the list) or
+  individual plots can be added (Add or the INS key). The whole plot history
+  can be saved to or retrieved from an R variable in the global environment.
 
-There is only one graphics history shared by all the x11 devices.'
+  There is only one graphics history shared by all the x11 devices.'
 
 The R console and graphics windows have configuration files stored in the
 RHOME\etc directory called Rconsole and (rw0633 and later) Rdevga; you can
@@ -306,18 +304,19 @@ see ?Rconsole.
 
 Have you changed the working directory?: see Q4.2.
 
-Prior to rw0633, using the file dialog boxes from the menus to navigate the
-file system changes the working directory. Either don't use them, or use the
-`Source file' menu item and navigate back to where you want the workspace
-(.RData) saved before quitting Rgui.
+Prior to rw0633, using the file dialog boxes from the menus to
+navigate the file system changes the working directory. Either don't
+use them, or use the `Source file' menu item and navigate back to
+where you want the workspace (.RData) saved before quitting Rgui.
 
 
 4.2) How do I store my workspace in a different place?
 
-Use the `File | Change Dir' menu item to select a new working directory:
-this defaults to the last directory you loaded a file from. From rw0641 this
-has a browse button. The workspace is saved in the working directory. You
-can also save a snapshot of the workspage from the `Save Image' menu item.
+Use the `File | Change Dir' menu item to select a new working
+directory: this defaults to the last directory you loaded a file
+from. From rw0641 this has a browse button. The workspace is saved in
+the working directory. You can also save a snapshot of the workspage
+from the `Save Image' menu item.
 
 
 4.3) Can I load workspaces saved under Unix/GNU-Linux?
@@ -367,12 +366,10 @@ and so update the console.
 
 6.1) How can I compile R from source?
 
-Get the R sources and the corresponding file rw06xxs.zip from the
-distribution (see Q1.1). Suppose you want to compile R-0.64.0.
+Get the R sources. Suppose you want to compile R-0.64.1.
 
-      tar zxvf R-0.64.0.tgz (ignore warnings about aux)
-      cd R-0.64.0
-      unzip ...\rw0640s
+      tar zxvf R-0.64.1.tgz (ignore warnings about aux)
+      cd R-0.64.1
       cd src\gnuwin32
 
 Now read the README and set up all the tools needed. Then you can just use
@@ -404,7 +401,7 @@ However, note
    * gdb will only be able to find the source code if we run in the location
      where the source was compiled (rw0xxx/src/gnuwin32 for the main system,
      rw0xxx/src/library/mypkg/src for a package), unless told otherwise by
-     the directory.
+     the `directory' command.
 
    * It is only possible to set breakpoints in a DLL after the DLL has been
      loaded. So a way to examine the function tukeyline in package eda might
@@ -426,5 +423,14 @@ However, note
      program under a debugger and sending it a signal to interrupt it and
      drop control back to the debugger does not work.
 
+   * We have seen examples in debugging problems with Windows events that
+     the cygwin gdb was able to catch but terminated the mingw32 gdb.
+
+
+If you have an X server available on the PC, there is a version of DDD
+available that runs under the cygwin emulation layer (follow the links at
+http://sourceware.cygnus.com/cygwin) and provides a graphical user
+interface to gdb.
+
   ------------------------------------------------------------------------
-Last edited 3 May 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 26 May 1999 by Brian Ripley ripley@stats.ox.ac.uk
