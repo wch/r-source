@@ -11,13 +11,14 @@ include $(top_builddir)/etc/Makeconf
 MKINSTALLDIRS = $(top_srcdir)/aux/mkinstalldirs
 
 pkg = eda
+LIB = $(pkg).$(SHLIBEXT)
 OBJS = line.o smooth.o
 
-all: $(pkg).$(SHLIBEXT)
+all: $(LIB)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs
 	@cp $< $(top_builddir)/library/$(pkg)/libs
 
-$(pkg).$(SHLIBEXT): $(OBJS)
+$(LIB): $(OBJS)
 	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $<
 
 mostlyclean: clean
