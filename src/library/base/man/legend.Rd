@@ -15,13 +15,9 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
   and \code{y} arguments.
 }
 \arguments{
-  \item{x,y}{the x and y location of the legend.
-    \code{x} can be a list with \code{x} and \code{y} components.}
-%% if argument \code{y} is missing.
-%S: location of the rectangle in which to put the legend.
-%S: If x & y are length 1, they determine the top left corner of the rectangle;
-%S: if .. length 2 vectors, they give opposite corners of the rectangular area.
-%S: A list containing x and y values may be supplied.
+  \item{x, y}{the x and y co-ordinates to be used to position the legend.
+    \code{x} can be a list with \code{x} and \code{y} components.
+    See Details.}
   \item{legend}{a vector of text values or an \code{\link{expression}}
     of length \eqn{\ge 1}{>= 1} to appear in the legend.}
   \item{fill}{if specified, this argument will cause boxes filled
@@ -64,6 +60,11 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
      specification).}
 }
 \details{
+  If \code{x, y} give the coordinates of one point, this is used as the
+  top-left coordinate of the rectangle containing the legend.  If they
+  give the coordinates of two points, these specify opposite corners of the
+  rectangle (either pair of corners, in any order).
+  
  ``Attribute'' arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
 
@@ -73,7 +74,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
   See the examples for how to right-justify labels.
 }
 \value{
-  A (\code{\link{invisible}}) list with list components
+  A list with list components
   \item{rect}{a list with components
     \describe{
       \item{\code{w, h}}{positive numbers giving \bold{w}idth and
@@ -88,6 +89,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
 	giving the x and y coordinates of the legend's text(s).}
     }
   }
+  returned invisibly.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
