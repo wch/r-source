@@ -1172,7 +1172,11 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
+#ifdef Macintosh
+    char *buf = (char *)&ptr; /* this silents CodeWarrior compiler */
+#else
     char *buf = ptr;
+#endif
     int len = size * nitems, start = 0, end = len;
 
     Rsockwrite(&(this->fd), &buf, &start, &end, &len);
