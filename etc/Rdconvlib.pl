@@ -62,13 +62,14 @@ $Math_del = "\$"; #UNquoted '$'
 $MAXLOOPS = 1000;
 
 
-sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
+sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
     $Rdname = $_[0];
     open rdfile, "<$Rdname" || die "Rdconv(): Couldn't open '$Rdfile':$!\n";
 
     $type = $_[1];
     $debug = $_[2];
+    $pkgname = $_[4];
 
     if($type !~ /,/) {
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
@@ -788,9 +789,9 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".pl 100i\n";
     print nroffout ".po 3\n";
     print nroffout ".na\n";
+    print nroffout $blocks{"name"}, "($pkgname)\n\n" if $pkgname;
     print nroffout ".SH\n";
     print nroffout $blocks{"title"}, "\n";
-
     nroff_print_codeblock("usage", "");
     nroff_print_argblock("arguments", "Arguments");
     nroff_print_block("format", "Format");
@@ -834,8 +835,6 @@ sub text2nroff {
     ## be done first
     $text = nroff_tables($text);
     $text =~ s/\\cr\n?/\n.br\n/sgo;
-
-
 
     $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
     $text =~ s/\\dots/\\&.../go;

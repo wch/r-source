@@ -119,7 +119,7 @@ foreach $manfile (@mandir) {
 		$textflag = "text";
 		open(nroffout, "| $TBL | $NROFF -ms 2> /dev/null | " .
 		     " ${R_HOME}/bin/help.pretty > '$destfile'");
-		Rdconv($manfile, "nroff", "", -1);
+		Rdconv($manfile, "nroff", "", -1, $pkg);
 	    }
 	}
 
