@@ -194,6 +194,9 @@ install-R-framework:
 	  $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua)
 	@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
 	@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
+	@(cp $(srcdir)/src/modules/aqua/CHANGES "$(R_FRAMEWORK_DIR)/Resources/NEWS.aqua")
+	@(cp $(srcdir)/src/modules/aqua/RAqua-FAQ.html "$(R_FRAMEWORK_DIR)/Resources/RAqua-FAQ.html")
+
 
 
 install-aqua:

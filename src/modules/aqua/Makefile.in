@@ -19,7 +19,7 @@ OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = AquaReadMe.txt  Raete.r Makefile.in Info.plist.in \
-  $(SOURCES) $(HEADERS)
+  CHANGES RAqua-FAQ.html $(SOURCES) $(HEADERS)
 
 SUBDIRS_WITH_NO_BUILD = Contents
 
@@ -94,8 +94,5 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
-
-aqualaunch:
-	@gcc $(top_srcdir)/src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c
 
 ## Automagically generated dependencies:
