@@ -85,7 +85,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   strsplit fix broke copy.url.
+    o	strsplit fix broke copy.url.
 
     o	0 ^ -1 == Inf  &  min(NA, NaN) is now always NA
 
@@ -113,13 +113,14 @@ BUG FIXES
     o	\enumerate now enumerates in text conversion of .Rd files.
 
     o	glm() no longer fails with names<- errors in cases where
-        observations with fits on the mu.eta boundary have been dropped.
+	observations with fits on the mu.eta boundary have been dropped.
 
     o	Deviance residuals could be NaN instead of 0 by rounding error.
 
     o	shapiro.test(x) now gives better error messages (eg. x=rep(1,5))
 	and doesn't print ANYTHING anymore (in some cases).
 
+    o	mode(as.formula(paste("~", paste(1:50, collapse="+")))[2]) now works.
 
 		CHANGES IN R VERSION 0.90.1
 
