@@ -206,8 +206,8 @@ installed:
 	glib
 	glib-devel
 
-You will need also libglade 0.3 or later.  For more information on
-libglade and to download the source, see
+You will need also libglade 0.5 or later for correct behaviour.  For
+more information on libglade and to download the source, see
 http://www.daa.com.au/~james/gnome/. The sources are also available
 from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs are in
 RedHat 6.1 and are available from rawhide.redhat.com.
