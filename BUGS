@@ -170,6 +170,22 @@ From: "Johannes Freudenberg" <johannes.freudenberg@imise.uni-leipzig.de>
 Subject: Installing RSPerl
 From: nisai@lagrange.tampabaywater.org
 Date: Sun, 6 Jul 2003 21:28:21 +0200 (MET DST)
+* PR# 3639 *
+Subject: Genetics package: Heterozygosity and PIC incorrect
+From: gerard.tromp@sanger.med.wayne.edu
+Date: Mon, 4 Aug 2003 00:02:58 +0200 (MET DST)
+* PR# 3642 *
+Subject: R package {genetics} function summary.genotype -- H and PIC return incorrect values.
+From: "Gerard Tromp" <gerard.tromp@sanger.med.wayne.edu>
+Date: Sun, 3 Aug 2003 22:45:06 -0400
+* PR# 3648 *
+Subject: hclust() and agnes() method="average" divergence
+From: "Grum, Mikkel [IPGRI-SSA-Nairobi]" <m.grum@cgiar.org>
+Date: Sun, 03 Aug 2003 23:41:39 -0700
+* PR# 3652 *
+Subject: Re: [Rd] R package {genetics} function summary.genotype -- H and
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Mon, 04 Aug 2003 10:12:14 +0200
 
 Directory:  Analyses
 
@@ -332,6 +348,10 @@ Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 Subject: surprising behaviour of "bgroup": sets all in greek letters
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Sun, 25 May 2003 18:33:49 +0200
+* PR# 3217 *
+Subject: inconsistent handling of NA lty
+From: paul@stat.auckland.ac.nz
+Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
 * PR# 3504 *
 Subject: Incorrect tick mark length when `tck' != NA
 From: BoersN@pac.dfo-mpo.gc.ca
@@ -408,6 +428,10 @@ Subject: 1.7.1 make check fails
 From: "Richard A. O'Keefe" <ok@cs.otago.ac.nz>
 Date: Wed, 18 Jun 2003 17:31:21 +1200 (NZST)
 ..problem with tcltk--await further information
+* PR# 3485 *
+Subject: Undefined subroutine &R::Rdconv::fill
+From: michael.t.klinglesmith@intel.com
+Date: Tue, 15 Jul 2003 18:56:23 +0200 (MET DST)
 
 Directory:  Language
 
@@ -516,6 +540,11 @@ Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
 ..follow up to 2875
+* PR# 3602 *
+Subject: Mac OS 10 (not X11) failure to rotate symbols
+From: "p.b.pynsent" <p.b.pynsent@bham.ac.uk>
+Date: Thu, 31 Jul 2003 17:06:08 +0100
+..not a bug: this is as documented
 
 Directory:  Misc
 
@@ -547,6 +576,10 @@ Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
 From: Kurt Hornik <hornik@ci.tuwien.ac.at>
 Date: Mon, 17 Mar 2003 21:32:55 +0100
 ..part of 2644
+* PR# 3646 *
+Subject: as.POSIXct Bug when used with POSIXlt arg and tz= arg
+From: Gabor Grothendieck <ggrothendieck@volcanomail.com>
+Date: Sun, 3 Aug 2003 20:08:59 -0700 (PDT)
 
 Directory:  Models
 
@@ -678,6 +711,10 @@ Subject: scan() crash in Windows 98
 From: "Simon Fear" <Simon.Fear@synequanon.com>
 Date: Wed, 11 Jun 2003 12:09:38 +0100
 ..Currently unreproducible
+* PR# 3644 *
+Subject: Windows 2000 Bug in GMT +/- n Timezones
+From: Gabor Grothendieck <ggrothendieck@volcanomail.com>
+Date: Sun, 3 Aug 2003 20:06:49 -0700 (PDT)
 
 Directory:  incoming
 
@@ -703,10 +740,6 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 3217 *
-Subject: inconsistent handling of NA lty
-From: paul@stat.auckland.ac.nz
-Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
 * PR# 3325 *
 Subject: optim with constraints 
 From: aa@tango.stat.unipd.it (Adelchi Azzalini)
@@ -715,10 +748,6 @@ Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
 Subject: feature enhancement request & patch:  dev.control(displaylist='en
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Mon, 7 Jul 2003 13:49:48 -0400 
-* PR# 3485 *
-Subject: Undefined subroutine &R::Rdconv::fill
-From: michael.t.klinglesmith@intel.com
-Date: Tue, 15 Jul 2003 18:56:23 +0200 (MET DST)
 * PR# 3486 *
 Subject: The two chisq.test p values differ when the contingency table is transposed!
 From: shitao@ucla.edu
@@ -727,295 +756,3 @@ Date: Wed, 16 Jul 2003 01:27:25 +0200 (MET DST)
 Subject: missing permissions in reference manual copyright page
 From: Brian Gough <bjg@network-theory.co.uk>
 Date: Mon, 21 Jul 2003 15:12:30 +0100
-* PR# 3567 *
-Subject:                       PLEASE I NEED YOUR ASSISTANCE.
-From: PETERS BAHTAN <bahtan2002@netscape.net>
-Date: Sat, 26 Jul 2003 17:15:42 +0100
-* PR# 3568 *
-Subject: Worldwide Partners program
-From: "The TechNews" <editor@the-tech-news.com>
-Date: Sat, 26 Jul 2003 21:31:13 +0200
-* PR# 3569 *
-Subject: FWD: best solution to "that" problem mipslewqq 
-From: "Pedro Prather" <hmaa0yl@centralpets.com>
-Date: Sun, 27 Jul 03 17:07:22 GMT
-* PR# 3570 *
-Subject: HELP US
-From: "KUKU BIO" <kukubio@netscape.net>
-Date: Sun, 27 Jul 2003 02:49:25 +0100
-* PR# 3571 *
-Subject: Put 15K in Your Pocket Every Month! cl
-From: "Ezra Allred" <dsm2xts9um@redones.net>
-Date: Sun, 27 Jul 03 20:43:30 GMT
-* PR# 3572 *
-Subject: Make your penis thicker, harder and bigger  colosseum
-From: "Kerri Bravo" <gpe84h6f6aa@163.net>
-Date: Sun, 27 Jul 03 08:09:20 GMT
-* PR# 3573 *
-Subject: How about feeling & looking 20 years younger?
-From: "Lavern Drummond" <7fff4phn2zz@bscinet.com>
-Date: Sun, 27 Jul 03 17:50:52 GMT
-* PR# 3574 *
-Subject: No Perscription Required Cheap Prices
-From: "Brett Costello" <0hfalr6osz@uymail.com>
-Date: Sun, 27 Jul 03 19:50:18 GMT
-* PR# 3575 *
-Subject: You need to update your computer
-From: "" <adrawen@keromail.com>
-Date: Sun, 27 Jul 03 22:42:22 GMT
-* PR# 3576 *
-Subject: Develop a Larger Penis in Weeks  demountable
-From: "Kelli Mcgowan" <bv6r4w5gtt@eyou.com>
-Date: Mon, 28 Jul 03 14:10:49 GMT
-* PR# 3577 *
-Subject: Having sleep trouble? Ambien/Sonata online no prescription required
-From: "Archie Medina" <h42dm6n9@aei-sandiego.com>
-Date: Mon, 28 Jul 03 13:05:14 GMT
-* PR# 3578 *
-Subject: Here is the latest craze urd
-From: "Katina Benoit" <iyz908eyry@bigblue.net.au>
-Date: Mon, 28 Jul 03 14:44:50 GMT
-* PR# 3579 *
-Subject: Low Mortgage Rates gx bgci
-From: "Alfonso Contreras" <nsrqnbr@csc.com>
-Date: Mon, 28 Jul 03 13:17:52 GMT
-* PR# 3580 *
-Subject: Trim Down oy mvtucy
-From: "Ronny Montano" <mecue8@ihateclowns.com>
-Date: Tue, 29 Jul 03 16:47:09 GMT
-* PR# 3581 *
-Subject: Increase your penis size in 1 Day  uproot
-From: "Maria Norris" <y8ypppe0cyq@km169.net>
-Date: Tue, 29 Jul 03 05:27:28 GMT
-* PR# 3582 *
-Subject: Business-Loans Only! d aplsj apfo  
-From: "Joann Goodwin" <549qakbj@phreego.com>
-Date: Tue, 29 Jul 03 02:47:06 GMT
-* PR# 3583 *
-Subject: Next Day Delivery--Phentermine,V1 agra, Meridia ,Didrex... a c xxlagnrgb
-From: "Bernard Sands" <rd33hlat@yahoo.ca>
-Date: Tue, 29 Jul 03 20:43:11 GMT
-* PR# 3584 *
-Subject: Soliciting For Business Venture and Partnership.
-From: eric kaby <erickaby12@starmedia.com>
-Date: Tue, 29 Jul 2003 10:35:01 -0400
-* PR# 3585 *
-Subject: cbind/rbind inconsistency with NULL parameter
-From: Johannes Martin <jmartin2003@notamusica.com>
-Date: Tue, 29 Jul 2003 17:01:43 +0200 (CEST)
-* PR# 3586 *
-Subject: {{No   Annual    Fee}}
-From: "aserty" <zagfhj@citiz.net>
-Date: Wed, 30 Jul 2003 02:31:58 +0800
-* PR# 3587 *
-Subject: p.dalgaard@biostat.ku.dk ct
-From: "Homer Gilmore" <jonhtiw257@excite.com>
-Date: Tue, 29 Jul 03 19:06:44 GMT
-* PR# 3588 *
-Subject: p.dalgaard@biostat.ku.dk  nffuc
-From: "Normand Gay" <kiro723mvw@yahoo.ca>
-Date: Tue, 29 Jul 03 19:16:07 GMT
-* PR# 3589 *
-Subject: Satisfy your lover with your penis  pickman
-From: "Clare Givens" <kt4xu2q5acyk@263.net>
-Date: Wed, 30 Jul 03 08:36:14 GMT
-* PR# 3590 *
-Subject: 
-From: "Mr. Seung Chang" <chong_1@uymail.com>
-Date: Wed, 30 Jul 2003 00:54:52 +0100
-* PR# 3591 *
-Subject: Get Cash For The Holidays! pxzfdsig dbjpr
-From: "Monique Garner" <bouxwh50c@yahoo.com>
-Date: Wed, 30 Jul 03 09:03:00 GMT
-* PR# 3592 *
-Subject: Having sleep trouble? No prescription required - Ambien, Sonata etc.
-From: "Bruno Eason" <0xsl0hns00h@nmerh115.bnr.ca>
-Date: Wed, 30 Jul 03 08:40:10 GMT
-* PR# 3593 *
-Subject: Here's A Quick Way To Get The Extra Cash You Have Always Wanted! xgv  qjl
-From: "Elbert Murillo" <2tryderech@yahoo.com>
-Date: Wed, 30 Jul 03 19:38:52 GMT
-* PR# 3594 *
-Subject: From: "stephen coleman 
-From: "stephen coleman" <stephencoleman@sudanmail.net.sd>
-Date: Wed, 30 Jul 2003 16:26:55 +0300
-* PR# 3595 *
-Subject: Re: [Rd] cbind/rbind inconsistency with NULL parameter
-From: Tony Plate <tplate@blackmesacapital.com>
-Date: Wed, 30 Jul 2003 09:30:09 -0600
-* PR# 3596 *
-Subject: wrong axis scale when plotting on a filled.contour plot
-From: gruteser@colorado.edu
-Date: Wed, 30 Jul 2003 23:36:47 +0200 (MET DST)
-* PR# 3597 *
-Subject: This can please her
-From: "Melva Ashley" <hzgurszhqybq@nmerh140.bnr.ca>
-Date: Thu, 31 Jul 03 04:00:23 GMT
-* PR# 3598 *
-Subject: compare and SEE the savings. eylq
-From: "Olen Egan" <b3mccvsfxb@bigblue.net.au>
-Date: Fri, 01 Aug 03 09:58:11 GMT
-* PR# 3599 *
-Subject: Re: [Rd] wrong axis scale when plotting on a filled.contour plot
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Thu, 31 Jul 2003 10:26:18 +0200
-* PR# 3600 *
-Subject: Boost your Penis Size 3 to 5 Inches  khaki
-From: "Rusty Landis" <zg32mxr628t@21cn.net>
-Date: Thu, 31 Jul 03 19:05:55 GMT
-* PR# 3601 *
-Subject:                  Increase your penis by 3 inches!   238450
-From: 238450@email.com
-Date: Thu, 31 Jul 2003 12:52:25 -0500
-* PR# 3602 *
-Subject: Mac OS 10 (not X11) failure to rotate symbols
-From: "p.b.pynsent" <p.b.pynsent@bham.ac.uk>
-Date: Thu, 31 Jul 2003 17:06:08 +0100
-* PR# 3603 *
-Subject: Increase your penis by 2 to 5 inches in Weeks  mosquito
-From: "Sadie Connor" <kccv2u8u2@elong.com>
-Date: Fri, 01 Aug 03 01:06:38 GMT
-* PR# 3604 *
-Subject: round to even digit
-From: kbroman@jhsph.edu
-Date: Thu, 31 Jul 2003 19:53:50 +0200 (MET DST)
-* PR# 3605 *
-Subject: =?EUC-KR?B?KLGksO0pIMG+t67BpiC6wMX1IMD9vuDH/CC+0MPgvrK3ubHixesgvNKws0Ag?=
-From: "概流颇况" <softface456@netian.com>
-Date: Fri, 1 Aug 2003 03:55:23 +0900
-* PR# 3606 *
-Subject: =?EUC-KR?B?KLGksO0pIMG+t67BpiC6wMX1IMD9vuDH/CC+0MPgvrK3ubHixesgvNKws0Ag?=
-From: "概流颇况" <softface456@netian.com>
-Date: Fri, 1 Aug 2003 03:55:22 +0900
-* PR# 3607 *
-Subject:               Copy VHS tapes to CD too! 238454
-From: 238454@delphi.com
-Date: Thu, 31 Jul 2003 17:25:22 -0500
-* PR# 3608 *
-Subject: *** Self Employed Health Insurance - Free Quotes!  gzd kjlg enlh
-From: "Bryant Castaneda" <spbpsbf073@centermarketingpros.com>
-Date: Thu, 31 Jul 03 19:45:49 GMT
-* PR# 3609 *
-Subject: Give me one good reason.
-From: "Alva Cody" <plk56pesp95x@dasher.com>
-Date: Fri, 01 Aug 03 11:44:46 GMT
-* PR# 3610 *
-Subject: Promote Your Customers
-From: "Laura" <Boostinger@kuweb.net>
-Date: Sat, 2 Aug 2003 00:11:01 +0800
-* PR# 3611 *
-Subject: Develop a Larger Penis in Weeks  berwick
-From: "Collin Goldman" <3bt5ha8ha24q@netease.com>
-Date: Fri, 01 Aug 03 22:18:31 GMT
-* PR# 3612 *
-Subject: Get Prescriiption Medsto Your Door - NoPrior Prescriptiion Needed euoxjy
-From: "Clay Barber" <exk134u@msn.com>
-Date: Fri, 01 Aug 2003 09:22:12 -0300
-* PR# 3613 *
-Subject: Avoid lung cancer!
-From: "Nola Sosa" <7ak13ondyx@utcru.sk>
-Date: Fri, 01 Aug 03 20:39:48 GMT
-* PR# 3614 *
-Subject: Re: how l
-From: "Marta Fink" <time2breal205900@moscowmail.com>
-Date: Sat, 02 Aug 03 01:06:30 GMT
-* PR# 3615 *
-Subject: Business-Loans .... ONLY! xhypagdzxgpak
-From: "Randal Bauer" <ymhzxrh@runbox.net>
-Date: Sat, 02 Aug 03 04:47:45 GMT
-* PR# 3616 *
-Subject: YOUR ATTENTION IS NEEDED !
-From: "george peter anderson" <georgepeter@zapo.net>
-Date: Tue, 29 Jul 2003 22:26:24 +0300
-* PR# 3617 *
-Subject: The Magic of Artistic Paper-Cuts
-From: "Window Flower" <reply@windowflower.com>
-Date: Sat, 2 Aug 2003 12:36:47 +0800
-* PR# 3618 *
-Subject: Order Online with NO PRIOR PRESCRIPTION dbjp ezd nxnhid 
-From: "Gerald Wilkerson" <kz7hnrnsg@texanisp.com>
-Date: Sat, 02 Aug 03 00:20:48 GMT
-* PR# 3619 *
-Subject: Can't sleep? Ambien online no perscription required
-From: "Gladys Hansen" <0m8tb2kn9mo5@qualitylife.com>
-Date: Sat, 02 Aug 03 00:16:07 GMT
-* PR# 3620 *
-Subject: fwd: hey its me again
-From: bdale_55@yahoo.com
-Date: Sat, 2 Aug 2003 03:38:21 -0400
-* PR# 3621 *
-Subject: fwd: hey its me again
-From: bdale_55@yahoo.com
-Date: Sat, 2 Aug 2003 03:38:29 -0400
-* PR# 3622 *
-Subject: Need Money for Your Business? zbrth urdqp cifesuh
-From: "Christoper Browning" <bzauke@dls.net>
-Date: Sat, 02 Aug 03 14:55:46 GMT
-* PR# 3623 *
-Subject: Get your V ! agra HERE.  dmclt
-From: "Bernadette Gonzales" <cyssymb@excite.com>
-Date: Sat, 02 Aug 03 15:03:39 GMT
-* PR# 3624 *
-Subject: Get $100.00 Bonus!!!!
-From: Hello@casino.info
-Date: Sat, 02 Aug 2003 16:42:39 +0100
-* PR# 3625 *
-Subject: your account                         kezkuauu
-From: admin@r-project.org
-Date: Sat, 02 Aug 2003 15:53:03 -0500
-* PR# 3626 *
-Subject: Produce stronger, rock hard erections
-From: "Tania Hooks" <038fbab@earthlink.net>
-Date: Tue, 02 Sep 03 02:44:26 GMT
-* PR# 3627 *
-Subject: R-announce,ultimate digitalcablefilter ofkgyv
-From: "Tamika Singer" <nlzvux8@earthlink.net>
-Date: Sun, 03 Aug 2003 00:01:09 -0200
-* PR# 3628 *
-Subject: Lose weight Fast!
-From: "Beverley Hinton" <5y1kbpcfm@springfieldmo.com>
-Date: Sun, 03 Aug 03 05:32:40 GMT
-* PR# 3629 *
-Subject: Item #Surveys - Notification of Payment Received         T454eHJk1k7KR56ucj8gSv33Gl545
-From: lillaaavcyi@hotmail.com
-Date: Sun, 03 Aug 2003 13:30:51 +1100
-* PR# 3630 *
-Subject: IMMEDIATE ATTENTION
-From: "Dr. Chris Amadi" <dramadi@web-mail.com.ar>
-Date: Sun, 3 Aug 2003 10:20:42 +0100
-* PR# 3631 *
-Subject: No Prescription Required Cheap Prices
-From: "Dorothy Hamlin" <bpk84e0sn@uymail.com>
-Date: Sun, 03 Aug 03 10:31:42 GMT
-* PR# 3632 *
-Subject: quick q
-From: bd.lammers@gte.net
-Date: Sun, 3 Aug 2003 18:12:59 +0800
-* PR# 3633 *
-Subject: quick q
-From: bd.lammers@gte.net
-Date: Sun, 3 Aug 2003 18:13:09 +0800
-* PR# 3634 *
-Subject: fwd: hey its me again
-From: bindigo@yahoo.com
-Date: Sun, 3 Aug 2003 18:29:29 +0800
-* PR# 3635 *
-Subject: gates
-From: bsarah@yahoo.com
-Date: Sun, 3 Aug 2003 19:50:08 +0800
-* PR# 3636 *
-Subject: gates
-From: bsarah@yahoo.com
-Date: Sun, 3 Aug 2003 19:50:06 +0800
-* PR# 3637 *
-Subject: Treat As Urgent
-From: "Bongani Kabelo" <tim03@justice.com>
-Date: Sun, 3 Aug 2003 07:22:43 +0200
-* PR# 3638 *
-Subject: RE: best solution to "that" problem wfakcbdv  umlvm
-From: "Tasha Gifford" <dndwksu@ihateclowns.com>
-Date: Mon, 04 Aug 03 04:46:15 GMT
-* PR# 3639 *
-Subject: Genetics package: Heterozygosity and PIC incorrect
-From: gerard.tromp@sanger.med.wayne.edu
-Date: Mon, 4 Aug 2003 00:02:58 +0200 (MET DST)
