@@ -17,6 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#define NONAMELESSUNION
 #include <windows.h>
 #include <direct.h>
 #include <stdlib.h>
