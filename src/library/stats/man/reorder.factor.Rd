@@ -43,10 +43,11 @@
 \author{Deepayan Sarkar \email{deepayan@stat.wisc.edu}}
 
 \examples{
-  bymedian <- with(InsectSprays, reorder(spray, count, median))
-  boxplot(count ~ bymedian, data = InsectSprays,
-          xlab = "Type of spray", ylab = "Insect count",
-          main = "InsectSprays data", varwidth = TRUE, col = "lightgray")
+bymedian <- with(InsectSprays, reorder(spray, count, median))
+boxplot(count ~ bymedian, data = InsectSprays,
+        xlab = "Type of spray", ylab = "Insect count",
+        main = "InsectSprays data", varwidth = TRUE,
+        col = "lightgray")
 }
 \keyword{utilities}
 
