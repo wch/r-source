@@ -1,6 +1,25 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.6 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.6.0
+
+
+NEW FEATURES
+
+    o   New operator :: in the grammar, for namespaces.
+
+
+BUG FIXES
+
+
+
+	**************************************************
+	*						 *
 	*	       1.5 SERIES NEWS			 *
 	*						 *
 	**************************************************
