@@ -2789,6 +2789,12 @@ stopifnot(identical(dim(x), as.integer(c(0, 3))))
 ## numeric(0) in 1.8.0
 
 
+## PR#5405
+library(stepfun)
+try(stepfun(c(), 1)(2))# > Error
+## segfaults in 1.8.1 and earlier
+
+
 ## PR#4955 now allow embedded newlines in quoted fields in read.table
 temp <- tempfile()
 data <- data.frame(a=c("c", "e\nnewline"))
