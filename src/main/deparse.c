@@ -545,6 +545,7 @@ static void printcomment(SEXP s, LocalParseData *d)
     }
 }
 
+#if 0
 static char * backquotify(char *s)
 {
     static char buf[120];
@@ -556,7 +557,8 @@ static char * backquotify(char *s)
     /* NOTE: This could be fragile if sufficiently weird names are
      * used. Ideally, we should insert backslash escapes, etc. */
 
-    if (isValidName(s)) return s;
+    if (isValidName(s) || *s == '\0') return s;
+
     *t++ = '`';
     while ( *s ) {
 	if ( *s  == '`' || *s == '\\' ) 
@@ -567,6 +569,7 @@ static char * backquotify(char *s)
     *t = '\0';
     return buf;
 }
+#endif
 	
 /* This is the recursive part of deparsing. */
 
@@ -583,7 +586,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff("NULL", d);
 	break;
     case SYMSXP:
+#if 0
 	print2buff(backquotify(CHAR(PRINTNAME(s))), d);
+#else
+	print2buff(CHAR(PRINTNAME(s)), d);
+#endif
 	break;
     case CHARSXP:
 	print2buff(CHAR(s), d);
