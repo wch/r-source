@@ -11,14 +11,14 @@ file.append(file1, file2)
 \alias{file.append}
 \alias{file.remove}
 \alias{file.exists}
-%- maybe also `usage' for other objects documented here.
 \arguments{
  \item{file, file1, file2}{character vectors, containing file names.}
 }
 \description{
 These functions provide a very basic interface to the computer's
 filestore.  
-
+}
+\details{
 \code{file.create} creates files with the given names if they
 do not already exist and truncates them if they do.
 It returns a logical vector indicating the success or failure
@@ -47,7 +47,8 @@ cat("file B\n", file="B")
 file.append("A", "B")
 file.create("A")
 file.append("A", rep("B", 10))
-# file.show("A")
-file.remove("A", "B")
+if(interactive()) file.show("A")
+
+file.remove("A"); file.remove("B")
 }
 \keyword{file}
