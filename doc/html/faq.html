@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-36, 2003-08-11</h2>
+<h2>Version 1.7-37, 2003-08-19</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1400,17 +1400,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <h2 class="chapter">4 R Web Interfaces</h2>
 
-<p><strong>Rcgi</strong> is a CGI WWW interface to R by
-<a href="mailto:mjr@stats.mth.uea.ac.uk">Mark J. Ray</a>.  Recent versions have the
-ability to use "embedded code": you can mix user input and code,
-allowing the <small>HTML</small> author to do anything from load in data sets to
-enter most of the commands for users without writing CGI scripts. 
-Graphical output is possible in PostScript or GIF formats and the
-executed code is presented to the user for revision.
-
-   <p>See <a href="http://stats.mth.uea.ac.uk/Rcgi/">http://stats.mth.uea.ac.uk/Rcgi/</a> for more information.
-
-   <p><strong>Rweb</strong> is developed and maintained by
+<p><strong>Rweb</strong> is developed and maintained by
 <a href="mailto:jeff@math.montana.edu">Jeff Banfield</a>.  The
 <a href="http://www.math.montana.edu/Rweb/">Rweb Home Page</a> provides access
 to all three versions of Rweb--a simple text entry form that returns
@@ -1432,6 +1422,25 @@ intends to make the first steps in statistical programming with R
 a local installation since the only requirement for the user is a
 JavaScript capable browser.  See <a href="http://osvisions.com/r-online/">http://osvisions.com/r-online/</a>
 for more information.
+
+   <p><strong>CGIwithR</strong> is an R add-on package by
+<a href="mailto:david.firth@nuffield.ox.ac.uk">David Firth</a> and has its home
+page at <a href="http://www.stats.ox.ac.uk/~firth/CGIwithR/index.html">http://www.stats.ox.ac.uk/~firth/CGIwithR/index.html</a>.  It
+provides some simple extensions to R to facilitate running R scripts
+through the CGI interface to a web server.  It is easily installed using
+Apache under Linux and in principle should run on any platform that
+supports R and a web server provided that the installer has the
+necessary security permissions.
+
+   <p><strong>Rcgi</strong> is a CGI WWW interface to R by
+<a href="mailto:mjr@stats.mth.uea.ac.uk">Mark J. Ray</a>.  It had the ability to
+use "embedded code": you could mix user input and code, allowing the
+<small>HTML</small> author to do anything from load in data sets to enter most of
+the commands for users without writing CGI scripts.  Graphical output
+was possible in PostScript or GIF formats and the executed code was
+presented to the user for revision.  However, it is not clear if the
+project is still active and recent attempts to contact the author or
+find the package have failed.
 
 <div class="node">
 <p><hr>
@@ -1926,7 +1935,7 @@ library.
      <dd>The Grid graphics package, a rewrite of the graphics layout
 capabilities, plus some support for interaction. 
 <em>Recommended</em>
-(will become a integrated into the R distribution for version 1.8.0). 
+(will be integrated into the R distribution for version 1.8.0). 
 <br><dt><strong>gss</strong>
      <dd>A comprehensive package for structural multivariate function estimation
 using smoothing splines. 
