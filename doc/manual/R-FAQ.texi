@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-45 @value{FAQ-YEAR}-08-14
+@set FAQ-VERSION 1.9-46 @value{FAQ-YEAR}-08-19
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2298,6 +2298,8 @@ Linear mixed models.
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
 and H. Sonnberger, 1986, Physica.
+@item locfdr
+Computation of local false discovery rates.
 @item locfit
 Local Regression, likelihood and density estimation.
 @item logistf

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-45 2004-08-14
+Version 1.9-46 2004-08-19
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2141,6 +2141,9 @@ distributions of R.)
      A collection of tests on the assumptions of linear regression models
      from the book "The linear regression model under test" by W. Kraemer
      and H. Sonnberger, 1986, Physica.
+
+*locfdr*
+     Computation of local false discovery rates.
 
 *locfit*
      Local Regression, likelihood and density estimation.
