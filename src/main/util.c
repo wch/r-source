@@ -733,8 +733,16 @@ SEXP nthcdr(SEXP s, int n)
 SEXP do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP t;
+    RCNTXT *cptr;
+    int nargs = NA_INTEGER;
+    for (cptr = R_GlobalContext; cptr != NULL; cptr = cptr->nextcontext) {
+	if ((cptr->callflag & CTXT_FUNCTION) && cptr->cloenv == rho) {
+	    nargs = length(cptr->promargs);
+	    break;
+	}
+    }
     t = allocVector(INTSXP, 1);
-    *INTEGER(t) = NARGS(rho);
+    *INTEGER(t) = nargs;
     return (t);
 }
 
