@@ -280,6 +280,7 @@ function(package)
              "split.screen",
              "update.packages"),
              Hmisc = "t.test.cluster",
+             MASS = c("frequency.polygon", "hist.FD", "hist.scott"),
              XML = "text.SAX",
              ctest = "t.test",
              quadprog = c("solve.QP", "solve.QP.compact"),
