@@ -1,8 +1,7 @@
-\name{standardGeneric.Rd}
+\name{standardGeneric}
 \alias{standardGeneric}
 \alias{objWithClass}
 \alias{dataClass}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Formal Method System Placeholders }
 \description{
   These routines are primitives used with the \code{methods} package.
@@ -15,4 +14,5 @@ objWithClass(object, value)
 dataClass(object)
 }
 \author{ John Chambers }
-\keyword{ programming }
+\keyword{programming}
+\keyword{internal}
