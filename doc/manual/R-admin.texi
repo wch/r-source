@@ -1476,6 +1476,9 @@ for the assembler/loader in use.  If you download @command{gcc} from
 @code{binutils} too.  To avoid all these pitfalls we strongly
 recommended you compile @command{gcc} from the sources yourself.
 
+It was reported by Mike Pacey that Sun Forte 9 requires
+@code{-xopenmp=stubs} added to @code{LDFLAGS}.
+
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.  The maximal set of optimization options known to work is

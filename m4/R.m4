@@ -192,7 +192,7 @@ if test -n "${MAKEINFO_CMD}"; then
   _R_PROG_MAKEINFO_VERSION
 fi
 if test "${r_cv_prog_makeinfo_v4}" != yes; then
-  warn_info="you cannot build info versions of the R manuals"
+  warn_info="you cannot build info or html versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
   MAKEINFO=false
 else
