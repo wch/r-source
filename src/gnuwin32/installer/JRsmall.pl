@@ -30,10 +30,10 @@ my $iconpars="WorkingDir: \"{app}\"" ;
 # my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
 
 open ver, "< ../../../VERSION";
-$VER = <ver>;
+$RVER = <ver>;
 close ver;
-$VER =~ s/\n.*$//;
-$VER =~ s/Under .*$/Pre-release/;
+$RVER =~ s/\n.*$//;
+$RVER =~ s/Under .*$/Pre-release/;
 
 open insfile, "> Rsmall.iss" || die "Cannot open Rsmall.iss\n";
 print insfile <<END;
