@@ -146,15 +146,25 @@ users).
 
 A patched version of the current release, @samp{r-patched} and the
 current development version, @samp{r-devel}, are available as daily
-tarballs and via rsync.
+tarballs and via rsync.  The development version is also available by
+anonymous CVS from @uref{http://anoncvs.r-project.org/}.
 
 The tarballs are available from
 @uref{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
 @samp{R-patched.tar.gz} or @samp{R-devel.tar.gz} (or the
 @samp{.tar.bz2} versions) and unpack as described in the previous
-section.  These tarballs do not contain the current sources for the
+section.  
+
+These tarballs do not contain the current sources for the
 recommended packages, which can be obtained by rsync (see the next
-section).
+section) or from CRAN.  Do ensure that you have the correct versions of
+the recommended packages: if the number in the file @file{VERSION} is
+@samp{@var{x}.@var{y}.@var{z}} you need to download the contents of
+@samp{http://cran.r-project.org/src/contrib/@var{x}.@var{y}.@var{z}/Recommended}
+to directory @file{src/library/Recommended} in the sources you have
+unpacked.  Normally @samp{R-patched.tar.gz} will have the number of the
+last released version, and  @samp{R-devel.tar.gz} that of the next minor
+(@samp{@var{x}.@var{y}.0}) release.
 
 
 @node Using rsync,  , Getting patched and development versions, Obtaining R
@@ -169,22 +179,19 @@ rsync -rC --delete rsync.r-project.org::@var{module} R
 
 @noindent
 to create a copy of the source tree specified by @var{module} in the
-subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the four existing flavors of the R sources, and can be
-one of @samp{r-release} (current released version), @samp{r-patched}
+subdirectory @file{R} of the current directory, where @var{module} can
+be one of @samp{r-release} (current released version), @samp{r-patched}
 (patched released version), and @samp{r-devel} (development version).
-(These flavors are described in the R FAQ,
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/}.)  The rsync trees are
-created directly from the master CVS archive and are updated hourly.
-The @option{-C} option in the @command{rsync} command is to cause it to
-skip the CVS directories.  Further information on @command{rsync} is
-available at @uref{http://rsync.samba.org/rsync/}.
+The rsync trees are created directly from the master CVS archive and are
+updated hourly.  The @option{-C} option in the @command{rsync} command
+is to cause it to skip the CVS directories.  Further information on
+@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
 Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs.  To install the
-appropriate sources for the recommended packages, run
-@command{./tools/rsync-recommended} from the top-level of the R sources
-that you pulled by rsync.
+packages, whereas these are included in the tarballs of released
+versions.  To install the appropriate sources for the recommended
+packages, run @command{./tools/rsync-recommended} from the top-level of
+the R sources that you pulled by rsync.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
@@ -1494,8 +1501,9 @@ started}.) Then click on one of the keywords and after a short delay
 
 If this fails you should double-check that Java is enabled in your
 browser by visiting a page such as
-@uref{http://www.java.com/en/download/help/testvm.jsp}.  You can check
-which version of Java is in use at
+@uref{http://www.java.com/en/download/help/testvm.jsp} (although that
+will fail for earlier versions of Java which do work with R).  You can
+check which version of Java is in use at
 @uref{http://java.sun.com/docs/books/tutorial/applet/practical/properties.html}.
 
 Many thanks to Marc Schwartz in tracking down many of these issues with
