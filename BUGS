@@ -32,10 +32,11 @@ Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 
 Directory:  Add-ons
 
-* PR# 601 *
-Subject: plot.times error -- missing or illegal tck parameter
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Wed, 12 Jul 2000 15:56:08 +1000
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -45,11 +46,6 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
---possibly the RH6.2 Fortran bug
 
 Directory:  Analyses
 
@@ -150,6 +146,19 @@ Date: Tue, 20 Jun 2000 12:03:36 +0100 (BST)
 
 Directory:  Low-level
 
+* PR# 608 *
+Subject: seg.fault in eval.c
+From: Adrian Vance Custer <acuster@nopause.berkeley.edu>
+Date: Sat, 15 Jul 2000 01:22:23 -0700
+* PR# 536 *
+Subject: Problem with match.arg()
+From: kjetikj@astro.uio.no
+Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+--1.0.0 bug fixed for 1.0.1 ??
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
@@ -161,15 +170,6 @@ Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
 Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
---1.0.0 bug fixed for 1.0.1 ??
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 
 Directory:  Misc
 
@@ -249,11 +249,4 @@ none
 
 Directory:  incoming
 
-* PR# 609 *
-Subject: typos in ?lm
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sat, 15 Jul 2000 15:14:41 -0400 (EDT)
-* PR# 608 *
-Subject: seg.fault in eval.c
-From: Adrian Vance Custer <acuster@nopause.berkeley.edu>
-Date: Sat, 15 Jul 2000 01:22:23 -0700
+none
