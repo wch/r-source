@@ -107,7 +107,7 @@ else
 	    R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 ## install halts here if collater failed
-	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME)
+	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
 else
 	@$(ECHO) "  no R files in this package"
 endif
