@@ -1,5 +1,8 @@
-stop <- function(message = NULL, call. = TRUE)
+stop <- function(..., call. = TRUE)
+{
+    if(nargs() == 0) message <- NULL else message <- paste(..., sep="")
     .Internal(stop(as.logical(call.),message))
+}
 
 stopifnot <- function(...)
 {

@@ -1,13 +1,14 @@
 \name{stop}
 \title{Stop Function Execution}
 \usage{
-stop(message = NULL, call. = TRUE)
+stop(\dots, call. = TRUE)
 geterrmessage()
 }
 \alias{stop}
 \alias{geterrmessage}
 \arguments{
-  \item{message}{a character vector (of length 1) or \code{NULL}.}
+  \item{\dots}{character vectors (which are pasted together with no
+    separator) or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     error message.}
 }
