@@ -5,7 +5,7 @@
 \alias{pacf.default}
 \alias{pacf.ts}
 \alias{pacf.mts}
-\title{Autocovariance and Autocorrelation Function Estimation}
+\title{Auto- and Cross- Covariance and -Correlation Function Estimation}
 \description{
   The function \code{acf} computes (and by default plots) estimates of
   the autocovariance or autocorrelation function.  Function \code{pacf}
