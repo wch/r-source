@@ -14,7 +14,8 @@ dftables.exe: dftables.o
 chartables.h: dftables.exe
 	dftables > chartables.h
 else
-$(CP) chartables.h.win chartables.h
+chartables.h: chartables.h.win 
+	$(CP) chartables.h.win chartables.h
 endif
 
 clean:
