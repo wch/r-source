@@ -35,6 +35,9 @@ NEW FEATURES
 
     o	New function as.difftime() for time(-interval) data.
 
+    o	PDF files produced by pdf() have more extensive information
+	fields, including the version of R that produced them.
+
 
 INSTALLATION CHANGES
 

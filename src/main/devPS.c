@@ -2878,6 +2878,7 @@ static void PDF_EncodeFont(PDFDesc *pd, int nobj)
 }
 
 #include <time.h>
+#include <Rversion.h>
 
 static void PDF_startfile(PDFDesc *pd)
 {
@@ -2898,7 +2899,12 @@ static void PDF_startfile(PDFDesc *pd)
 	    "1 0 obj\n<<\n/CreationDate (D:%04d%02d%02d%02d%02d%02d)\n",
 	    1900 + ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday,
 	    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
-    fprintf(pd->pdffp, "/Producer (R Graphics)\n>>\nendobj\n");
+    fprintf(pd->pdffp,
+	    "/ModDate (D:%04d%02d%02d%02d%02d%02d)\n",
+	    1900 + ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday,
+	    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
+    fprintf(pd->pdffp, "/Producer (R %s.%s)\n/Creator (R)\n>>\nendobj\n",
+	    R_MAJOR, R_MINOR);
 
     /* Object 2 is the Catalog, pointing to pages list in object 3 (at end) */
 
