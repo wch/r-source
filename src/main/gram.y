@@ -115,6 +115,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
     for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
     return clen;
 }
+
 #endif
 
 /* Handle function source */
@@ -334,17 +335,9 @@ cr	:					{ EatLines = 1; }
 static int (*ptr_getc)(void);
 static int (*ptr_ungetc)(int);
 
-/* Private pushback, since file ungetc only guarantees one byte.
-   We need up to one MBCS-worth */
-
-static int pushback[16];
-static unsigned int npush = 0;
-
 static int xxgetc(void)
 {
-    int c;
-
-    if(npush) c = pushback[--npush]; else c = ptr_getc();
+    int c = ptr_getc();
     if (c == EOF) {
         EndOfFile = 1;
         return R_EOF;
@@ -365,10 +358,7 @@ static int xxungetc(int c)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
-/*    return ptr_ungetc(c); */
-    if(npush >= 16) return EOF;
-    pushback[npush++] = c;
-    return c;
+    return ptr_ungetc(c);
 }
 
 static int xxvalue(SEXP v, int k)
