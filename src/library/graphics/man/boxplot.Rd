@@ -50,8 +50,8 @@ boxplot(x, \dots)
     overlap this is \sQuote{strong evidence} that the two medians differ
     (Chambers \emph{et al.}, 1983, p. 62).  See \code{\link{boxplot.stats}}
     for the calculations used.}
-  \item{outline}{if \code{outline} is not true, the boxplot lines are
-    not drawn.}% the argument name is most ugly but S+ compatible
+  \item{outline}{if \code{outline} is not true, the outliers are
+    not drawn (as points whereas S+ uses lines).}% the argument name is most ugly but S+ compatible
   \item{names}{group labels which will be printed under each boxplot.}
   \item{boxwex}{a scale factor to be applied to all boxes.  When there
     are only a few groups, the appearance of the plot can be improved
