@@ -25,10 +25,14 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
-/* #include <fcntl.h> not yet */
+#include <R_ext/R-ftp-http.h>
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
+#endif
+
+#ifdef HAVE_FCNTL_H
+# include <fcntl.h>
 #endif
 
 /* Win32 does have popen, but it does not work in GUI applications,
@@ -47,6 +51,8 @@ static Rconnection Connections[NCONNECTIONS];
 static int R_SinkNumber, R_SinkSaved;
 static int SinkCons[NSINKS], SinkConsClose[NSINKS];
 
+static void
+pushback(Rconnection con, int newLine, char *line);
 
 /* ------------- admin functions (see also at end) ----------------- */
 
@@ -93,7 +99,6 @@ void Rconn_setEncoding(Rconnection con, SEXP enc)
 }
 
 
-
 /* ------------------- null connection functions --------------------- */
 
 static void null_open(Rconnection con)
@@ -101,10 +106,53 @@ static void null_open(Rconnection con)
     error("open/close not enabled for this connection");
 }
 
+static void null_close(Rconnection con)
+{
+    con->isopen = FALSE;
+}
+
+static void null_destroy(Rconnection con)
+{
+    free(con->private);
+}
+
 static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error("printing not enabled for this connection");
     return 0; /* -Wall */
+}
+
+#define BUFSIZE 1000
+static int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
+{
+    char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
+    int res, usedRalloc = FALSE;
+
+#ifdef HAVE_VSNPRINTF
+    res = vsnprintf(buf, BUFSIZE, format, ap);
+    if(res >= BUFSIZE) { /* res is the desired output length */
+	usedRalloc = TRUE;
+	b = R_alloc(res + 1, sizeof(char));
+	vsprintf(buf, format, ap);
+    } else if(res < 0) { /* just a failure indication */
+	usedRalloc = TRUE;
+	b = R_alloc(10*BUFSIZE, sizeof(char));
+	res = vsnprintf(buf, 10*BUFSIZE, format, ap);
+	if (res < 0) {
+	    *(b + 10*BUFSIZE) = '\0';
+	    warning("printing of extremely long output is truncated");
+	    res = 10*BUFSIZE;
+	}
+    }
+    con->write(b, 1, res, con);
+#else
+    /* allocate a large buffer and hope */
+    b = R_alloc(10*BUFSIZE, sizeof(char));
+    res = vsprintf(b, format, ap);
+    con->write(b, 1, res, con);
+#endif
+    if(usedRalloc) vmaxset(vmax);
+    return res;
 }
 
 static int null_fgetc(Rconnection con)
@@ -143,12 +191,34 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
     return 0; /* -Wall */
 }
 
+void init_con(Rconnection new, char *description, char *mode)
+{
+    strcpy(new->description, description);
+    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
+    new->isopen = new->incomplete = FALSE;
+    new->canread = new->canwrite = TRUE; /* in principle */
+    new->canseek = FALSE;
+    new->text = TRUE;
+    new->open = &null_open;
+    new->close = &null_close;
+    new->destroy = &null_destroy;
+    new->vfprintf = &null_vfprintf;
+    new->fgetc = &null_fgetc;
+    new->seek = &null_seek;
+    new->truncate = &null_truncate;
+    new->fflush = &null_fflush;
+    new->read = &null_read;
+    new->write = &null_write;
+    new->nPushBack = 0;
+    new->save = -1000;
+}
+
 /* ------------------- file connections --------------------- */
 
 static void file_open(Rconnection con)
 {
     FILE *fp;
-#ifdef HAVE_FCNTL
+#ifdef HAVE_FCNTL_H
     int fd, flags;
 #endif
 
@@ -163,7 +233,7 @@ static void file_open(Rconnection con)
     else con->text = TRUE;
     con->save = -1000;
 
-#ifdef HAVE_FCNTL
+#ifdef HAVE_FCNTL_H
     if(!con->blocking) {
 	fd = fileno(fp);
 	flags = fcntl(fd, F_GETFL);
@@ -179,11 +249,6 @@ static void file_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static void file_destroy(Rconnection con)
-{
-    free(con->private);
-}
-
 static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
@@ -193,8 +258,8 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 static int file_fgetc(Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
-    int c = con->encoding[fgetc(fp)];
-    return feof(fp) ? R_EOF : c;
+    int c = fgetc(fp);
+    return feof(fp) ? R_EOF : con->encoding[c];
 }
 
 static long file_seek(Rconnection con, int where, int origin)
@@ -271,15 +336,10 @@ static Rconnection newfile(char *description, char *mode)
 	free(new->class); free(new);
 	error("allocation of file connection failed");
     }
-    strcpy(new->description, description);
-    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = FALSE;
-    new->canread = new->canwrite = TRUE; /* in principle */
+    init_con(new, description, mode);
     new->canseek = TRUE;
-    new->text = TRUE;
     new->open = &file_open;
     new->close = &file_close;
-    new->destroy = &file_destroy;
     new->vfprintf = &file_vfprintf;
     new->fgetc = &file_fgetc;
     new->seek = &file_seek;
@@ -287,7 +347,6 @@ static Rconnection newfile(char *description, char *mode)
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
-    new->nPushBack = 0;
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
@@ -366,11 +425,6 @@ static void pipe_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static void pipe_destroy(Rconnection con)
-{
-    free(con->private);
-}
-
 static Rconnection newpipe(char *description, char *mode)
 {
     Rconnection new;
@@ -387,23 +441,14 @@ static Rconnection newpipe(char *description, char *mode)
 	free(new->class); free(new);
 	error("allocation of pipe connection failed");
     }
-    strcpy(new->description, description);
-    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = FALSE;
-    new->canread = new->canwrite = TRUE; /* in principle */
-    new->canseek = FALSE;
-    new->text = TRUE;
+    init_con(new, description, mode);
     new->open = &pipe_open;
     new->close = &pipe_close;
-    new->destroy = &pipe_destroy;
     new->vfprintf = &file_vfprintf;
     new->fgetc = &file_fgetc;
-    new->seek = &null_seek;
-    new->truncate = &null_truncate;
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
-    new->nPushBack = 0;
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
@@ -500,45 +545,6 @@ static void gzfile_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static void gzfile_destroy(Rconnection con)
-{
-    free(con->private);
-}
-
-#define BUFSIZE 1000
-static int gzfile_vfprintf(Rconnection con, const char *format, va_list ap)
-{
-    gzFile fp = ((Rgzfileconn)(con->private))->fp;
-    char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
-    int res, usedRalloc = FALSE;
-
-#ifdef HAVE_VSNPRINTF
-    res = vsnprintf(buf, BUFSIZE, format, ap);
-    if(res >= BUFSIZE) { /* res is the desired output length */
-	usedRalloc = TRUE;
-	b = R_alloc(res + 1, sizeof(char));
-	vsprintf(buf, format, ap);
-    } else if(res < 0) { /* just a failure indication */
-	usedRalloc = TRUE;
-	b = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(buf, 10*BUFSIZE, format, ap);
-	if (res < 0) {
-	    *(b + 10*BUFSIZE) = '\0';
-	    warning("printing of extremely long output is truncated");
-	    res = 10*BUFSIZE;
-	}
-    }
-    gzwrite(fp, b, res);
-#else
-    /* allocate a large buffer and hope */
-    b = R_alloc(10*BUFSIZE, sizeof(char));
-    res = vsprintf(b, format, ap);
-    gzwrite(fp, b, res);
-#endif
-    if(usedRalloc) vmaxset(vmax);
-    return res;
-}
-
 static int gzfile_fgetc(Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
@@ -600,25 +606,19 @@ static Rconnection newgzfile(char *description, char *mode, int compress)
 	free(new->class); free(new);
 	error("allocation of gzfile connection failed");
     }
-    strcpy(new->description, description);
+    init_con(new, description, "");
     strncpy(new->mode, mode, 1);
     sprintf(new->mode+1, "b%1d", compress);
 
-    new->isopen = new->incomplete = FALSE;
-    new->canread = new->canwrite = TRUE; /* in principle */
     new->canseek = TRUE;
-    new->text = FALSE;
     new->open = &gzfile_open;
     new->close = &gzfile_close;
-    new->destroy = &gzfile_destroy;
-    new->vfprintf = &gzfile_vfprintf;
+    new->vfprintf = &dummy_vfprintf;
     new->fgetc = &gzfile_fgetc;
     new->seek = &gzfile_seek;
-    new->truncate = &null_truncate;
     new->fflush = &gzfile_fflush;
     new->read = &gzfile_read;
     new->write = &gzfile_write;
-    new->nPushBack = 0;
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
@@ -749,26 +749,11 @@ static Rconnection newterminal(char *description, char *mode)
 	free(new->class); free(new);
 	error("allocation of terminal connection failed");
     }
-    strcpy(new->description, description);
-    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
+    init_con(new, description, mode);
     new->isopen = TRUE;
-    new->incomplete = FALSE;
-    new->text = TRUE;
     new->canread = (strcmp(mode, "r") == 0);
     new->canwrite = (strcmp(mode, "w") == 0);
-    new->canseek = FALSE;
-    new->open = &null_open;
-    new->close = &null_open;
     new->destroy = &null_open;
-    new->vfprintf = &null_vfprintf;
-    new->fgetc = &null_fgetc;
-    new->seek = &null_seek;
-    new->truncate = &null_truncate;
-    new->fflush = &null_fflush;
-    new->read = &null_read;
-    new->write = &null_write;
-    new->nPushBack = 0;
-    new->save = -1000;
     new->private = NULL;
     return new;
 }
@@ -899,25 +884,15 @@ static Rconnection newtext(char *description, SEXP text)
 	free(new->class); free(new);
 	error("allocation of text connection failed");
     }
-    strcpy(new->description, description);
-    strcpy(new->mode, "r");
-    new->isopen = new->text = TRUE;
-    new->incomplete = FALSE;
-    new->canread = TRUE; new->canwrite = FALSE;
-    new->canseek = FALSE;
+    init_con(new, description, "r");
+    new->isopen = TRUE;
+    new->canread = TRUE;
     new->open = &text_open;
     new->close = &text_close;
     new->destroy = &text_destroy;
-    new->vfprintf = &null_vfprintf;
     new->fgetc = &text_fgetc;
     new->seek = &text_seek;
-    new->truncate = &null_truncate;
-    new->fflush = &null_fflush;
-    new->read = &null_read;
-    new->write = &null_write;
-    new->nPushBack = 0;
     new->private = (void*) malloc(sizeof(struct textconn));
-    new->save = -1000;
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error("allocation of text connection failed");
@@ -1054,25 +1029,15 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
 	free(new->class); free(new);
 	error("allocation of text connection failed");
     }
-    strcpy(new->description, description);
-    strcpy(new->mode, mode); /* must be "w" or "a" at this point */
-    new->isopen = new->text = TRUE;
-    new->incomplete = FALSE;
-    new->canread = FALSE; new->canwrite = TRUE;
-    new->canseek = FALSE;
+    init_con(new, description, mode);
+    new->isopen = TRUE;
+    new->canwrite = TRUE;
     new->open = &text_open;
     new->close = &outtext_close;
     new->destroy = &outtext_destroy;
     new->vfprintf = &text_vfprintf;
-    new->fgetc = &null_fgetc;
     new->seek = &text_seek;
-    new->truncate = &null_truncate;
-    new->fflush = &null_fflush;
-    new->read = &null_read;
-    new->write = &null_write;
-    new->nPushBack = 0;
     new->private = (void*) malloc(sizeof(struct outtextconn));
-    new->save = -1000;
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error("allocation of text connection failed");
@@ -1122,32 +1087,23 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- socket connections  --------------------- */
 
-/* R interface (Rsock.c) :*/
-void Rsockopen(int *port);
-void Rsocklisten(int *sock, char **buf, int *len);
-void Rsockconnect(int *port, char **host);
-void Rsockclose(int *sockp);
-void Rsockread (int *sockp, char **buf, int *maxlen);
-void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
 
 
 static void sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
     int port = this->port, len = 256;
-    char buf[256], *ptr = buf;
+    char buf[256];
 
     if(this->server) {
-	Rsockopen(&port);
-	Rsocklisten(&port, &ptr, &len);
+	R_SockOpen(this->port);
+	R_SockListen(this->port, buf, len);
     } else {
-	Rsockconnect(&port, &(con->description));
+	R_SockConnect(port, con->description);
     }
     this->fd = port;
     
     con->isopen = TRUE;
-    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
-    con->canread = !con->canwrite;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
@@ -1155,8 +1111,19 @@ static void sock_open(Rconnection con)
 
 static void sock_close(Rconnection con)
 {
-    /* close socket here */
+    Rsockconn this = (Rsockconn)con->private;
+    R_SockClose(this->port);
     con->isopen = FALSE;
+}
+
+static int sock_fgetc(Rconnection con)
+{
+    Rsockconn this = (Rsockconn)con->private;
+    unsigned char c;
+    int n;
+    
+    n = R_SockRead(this->fd, (char *)&c, 1);
+    return (n == 1) ? con->encoding[c] : R_EOF;
 }
 
 static void sock_destroy(Rconnection con)
@@ -1168,26 +1135,16 @@ static size_t sock_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
-    char *buf = ptr;
-    int len = size * nitems;
 
-    Rsockread(&(this->fd), &buf, &len);
-    return len;
+    return R_SockRead(this->fd, ptr, size * nitems)/size;
 }
 
 static size_t sock_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
-#ifdef Macintosh
-    char *buf = (char *)&ptr; /* this silents CodeWarrior compiler */
-#else
-    char *buf = ptr;
-#endif
-    int len = size * nitems, start = 0, end = len;
 
-    Rsockwrite(&(this->fd), &buf, &start, &end, &len);
-    return len;
+    return R_SockWrite(this->fd, ptr, size * nitems)/size;
 }
 
 static Rconnection newsock(char *host, int port, int server, char *mode)
@@ -1207,23 +1164,14 @@ static Rconnection newsock(char *host, int port, int server, char *mode)
 	free(new->class); free(new);
 	error("allocation of socket connection failed");
     }
-    strcpy(new->description, host);
-    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = FALSE;
-    new->canread = new->canwrite = TRUE; /* in principle */
-    new->canseek = TRUE;
-    new->text = TRUE;
+    init_con(new, host, mode);
     new->open = &sock_open;
     new->close = &sock_close;
     new->destroy = &sock_destroy;
-    new->vfprintf = &null_vfprintf;
-    new->fgetc = &null_fgetc;
-    new->seek = &null_seek;
-    new->truncate = &null_truncate;
-    new->fflush = &null_fflush;
-    new->read = &null_read;
-    new->write = &null_write;
-    new->nPushBack = 0;
+    new->vfprintf = &dummy_vfprintf;
+    new->fgetc = &sock_fgetc;
+    new->read = &sock_read;
+    new->write = &sock_write;
     new->private = (void *) malloc(sizeof(struct sockconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
@@ -1243,7 +1191,7 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
-    error("socket connections are not yet operational");
+#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) != 1)
 	error("invalid `host' argument");
@@ -1260,16 +1208,19 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     blocking = asLogical(CAR(args));
     if(blocking == NA_LOGICAL)
 	error("invalid `blocking' argument");
+    args = CDR(args);
     sopen = CAR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
-    enc = CADDR(args);
+    args = CDR(args);
+    enc = CAR(args);
     if(!isInteger(enc) || length(enc) != 256)
 	error("invalid `enc' argument");
 
     ncon = NextConnection();
-    Connections[ncon] = newsock(host, port, server, open);
+    con = newsock(host, port, server, open);
+    Connections[ncon] = con;
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
     con->blocking = blocking;
@@ -1284,7 +1235,9 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
-
+#else
+    error("sockets are not available on this system");
+#endif
     return ans;
 }
 
@@ -1519,7 +1472,14 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!con->canread)
 	errorcall(call, "cannot read from this connection");
     wasopen = con->isopen;
-    if(!wasopen) con->open(con);
+    if(!wasopen) {
+	con->open(con);
+    } else { /* for a non-blocking connection, more input may
+		have become available, so re-position */
+	if(con->canseek && !con->blocking)
+	    con->seek(con, con->seek(con, -1, 1), 1);
+    }
+    
     buf = (char *) malloc(buf_size);
     if(!buf)
 	error("cannot allocate buffer in readLines");
@@ -1554,12 +1514,19 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!wasopen) con->close(con);
     return ans;
 no_more_lines:
-    free(buf);
     if(!wasopen) con->close(con);
+    con->incomplete = TRUE;
     if(nbuf > 0) { /* incomplete last line */
-	nread++;
-	warningcall(call, "incomplete final line");
+	if(con->text && con->blocking) {
+	    nread++;
+	    warningcall(call, "incomplete final line");
+	} else {
+	    /* push back the rest */
+	    pushback(con, 0, buf);
+	    con->incomplete = FALSE;
+	}
     }
+    free(buf);
     if(n < nnn && !ok)
 	errorcall(call, "too few lines read");
     PROTECT(ans2 = allocVector(STRSXP, nread));
@@ -2091,6 +2058,30 @@ SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- push back text  --------------------- */
 
 
+static void
+pushback(Rconnection con, int newLine, char *line)
+{
+    int nexists = con->nPushBack;
+    char **q;
+
+    if(nexists > 0) {
+	q = con->PushBack =
+	    (char **) realloc(con->PushBack, (nexists+1)*sizeof(char *));
+    } else {
+	q = con->PushBack = (char **) malloc(sizeof(char *));
+    }
+    if(!q) error("could not allocate space for pushBack");
+    q += nexists;
+    *q = (char *) malloc(strlen(line) + 1 + newLine);
+    if(!(*q)) error("could not allocate space for pushBack");
+    strcpy(*q, line);
+    if(newLine) strcat(*q, "\n");
+    q++;
+    con->posPushBack = 0;
+    con->nPushBack++;
+}
+
+
 SEXP do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, n, nexists, newLine;
@@ -2323,7 +2314,6 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 #define HAVE_LIBXML 1
 #endif
 
-#include <R_ext/R-ftp-http.h>
 
 static Rboolean IDquiet=TRUE;
 
@@ -2372,12 +2362,6 @@ static void url_close(Rconnection con)
     }
     con->isopen = FALSE;
 }
-
-static void url_destroy(Rconnection con)
-{
-    free(con->private);
-}
-
 
 static int url_fgetc(Rconnection con)
 {
@@ -2433,23 +2417,13 @@ static Rconnection newurl(char *description, char *mode)
 	free(new->class); free(new);
 	error("allocation of url connection failed");
     }
-    strcpy(new->description, description);
-    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = FALSE;
-    new->canread = new->canwrite = TRUE; /* in principle */
+    init_con(new, description, mode);
+    new->canwrite = FALSE;
     new->canseek = FALSE;
-    new->text = TRUE;
     new->open = &url_open;
     new->close = &url_close;
-    new->destroy = &url_destroy;
-    new->vfprintf = &null_vfprintf;
     new->fgetc = &url_fgetc;
-    new->seek = &null_seek;
-    new->truncate = &null_truncate;
-    new->fflush = &null_fflush;
     new->read = &url_read;
-    new->write = &null_write;
-    new->nPushBack = 0;
     new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
@@ -2536,7 +2510,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-void putdots(int *pold, int new)
+static void putdots(int *pold, int new)
 {
     int i, old = *pold;
     *pold = new;

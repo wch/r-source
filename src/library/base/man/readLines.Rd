@@ -24,7 +24,11 @@ readLines(con = stdin(), n = -1, ok = TRUE)
   If it is not open, it is opened for the duration of the call and then
   closed again.
 
-  An incomplete last line (no final newline) will be accepted, with a warning.
+  If the final line is incomplete (no final EOL marker) the behaviour
+  depends on whether the connection is blocking or not. For a blocking
+  text-mode connection (or a non-text-mode connection) the line
+  will be accepted, with a warning.  For a non-blocking text-mode
+  connection the incomplete line is pushed back, silently.
 }
 \value{
   A character vector of length the number of lines read.
@@ -38,6 +42,18 @@ cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file="ex.data",
     sep="\n")
 readLines("ex.data", n=-1)
 unlink("ex.data") # tidy up
+
+## difference in blocking
+cat("123\nabc", file = "test1")
+readLines("test1") # line with a warning
+
+con <- file("test1", "r", blocking = FALSE)
+readLines(con) # empty
+cat(" def\n", file = "test1", append = TRUE)
+readLines(con) # gets both
+close(con)
+
+unlink("test1") # tidy up
 }
 \keyword{file}
 \keyword{connection}
