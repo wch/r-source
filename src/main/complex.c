@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2000		    The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -97,15 +98,16 @@ static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 
 static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 {
+/* r := a^b */
     double logr, logi, x, y;
     int ib;
 
-    if(b->i == 0.) {		/* be fast (and more accurate)*/
+    if(b->i == 0.) {		/* ^ "real" : be fast (and more accurate)*/
 	if(b->r == 1.) {	/* a^1 */
 	    r->r = a->r; r->i = a->i; return;
 	}
-	if(a->i == 0.) {
-	    r->r = pow(a->r, b->r); r->i = 0.; return;
+	if(a->i == 0. && a->r >= 0.) {
+	    r->r = R_pow(a->r, b->r); r->i = 0.; return;
 	}
 	if(a->r == 0. && b->r == (ib = (int)b->r)) {/* (|a|*i)^b */
 	    x = POW_DI(&(a->i), &ib);
