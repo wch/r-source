@@ -18,7 +18,12 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Arith.h"
+#include "Memory.h"
 #include <math.h>
 
 #ifndef min
@@ -46,10 +51,9 @@ filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 	    for(j = max(0, nshift + i - nn); j < min(nf, i + nshift + 1) ; j++) {
 		tmp = x[i + nshift - j];
 		if(my_isok(tmp)) z += filter[j] * tmp;
-		else { out[i] = NA_REAL; goto bad; }
+		else { out[i] = NA_REAL; continue; }
 	    }
 	    out[i] = z;
-	bad:
 	}
     } else { /* circular */
 	for(i = 0; i < nn; i++)
@@ -61,10 +65,9 @@ filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 		if(ii >= nn) ii -= nn;
 		tmp = x[ii];
 		if(my_isok(tmp)) z += filter[j] * tmp;
-		else { out[i] = NA_REAL; goto bad2; }
+		else { out[i] = NA_REAL; continue; }
 	    }
 	    out[i] = z;
-	bad2:
 	}	
     }
 }
@@ -80,10 +83,9 @@ filter2(double *x, int *n, double *filter, int *nfilt, double *out)
 	for (j = 0; j < nf; j++) {
 	    tmp = out[nf + i - j - 1];
 	    if(my_isok(tmp)) sum += tmp * filter[j];
-	    else { out[i] = NA_REAL; goto bad3; }
+	    else { out[i] = NA_REAL; continue; }
 	}
 	out[nf + i] = sum;
-    bad3:    
     }
 }
 
@@ -91,7 +93,9 @@ void
 acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 {
     int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1;
-    double sum, se[nn];
+    double sum, *se;
+
+    se = (double *) R_alloc(nn, sizeof(double));
     
     for(u = 0; u < ns; u++)
 	for(v = 0; v < ns; v++)
