@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 12:25\n"
+"POT-Creation-Date: 2005-02-10 15:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,16 +14,22 @@ msgstr ""
 msgid "'%s' is defunct."
 msgstr ""
 
-msgid "Use '%s' instead,"
+msgid "Use '%s' instead."
 msgstr ""
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr ""
+
+msgid "See help(\"Defunct\")"
 msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr ""
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr ""
+
+msgid "See help(\"Deprecated\")"
 msgstr ""
 
 msgid "argument to La.svd must be numeric or complex"
@@ -797,6 +803,9 @@ msgstr ""
 msgid "image could not be renamed and is left in"
 msgstr ""
 
+msgid "[Previously saved workspace restored]"
+msgstr ""
+
 msgid "invalid 'category' argument"
 msgstr ""
 
@@ -1259,6 +1268,12 @@ msgstr ""
 msgid "No such element"
 msgstr ""
 
+msgid "Removing"
+msgstr ""
+
+msgid "Registering evaluate as low-level callback"
+msgstr ""
+
 msgid "width must be positive"
 msgstr ""
 
@@ -1304,5 +1319,10 @@ msgstr[1]    ""
 
 msgid        "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "Warning message:\n"
+msgid_plural "Warning messages:\n"
 msgstr[0]    ""
 msgstr[1]    ""

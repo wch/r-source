@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 14:56\n"
+"POT-Creation-Date: 2005-02-10 15:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -345,24 +345,6 @@ msgid "Directory"
 msgstr ""
 
 msgid "already exists"
-msgstr ""
-
-msgid "Installed packages:"
-msgstr ""
-
-msgid "Available packages:"
-msgstr ""
-
-msgid "(each package appears only once)"
-msgstr ""
-
-msgid "Number of installed packages:"
-msgstr ""
-
-msgid "Number of available packages (each package counted only once):"
-msgstr ""
-
-msgid "Nothing to do!"
 msgstr ""
 
 msgid "unable to access index for repository"
