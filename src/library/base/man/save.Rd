@@ -1,9 +1,11 @@
 \name{save}
 \title{Save \R Objects}
 \usage{
-save(..., list = character(0), file = "", ascii = FALSE)
+save(\dots, list = character(0), file = "", ascii = FALSE)
+save.image()
 }
 \alias{save}
+\alias{save.image}
 \arguments{
   \item{\dots}{the names of the objects to be saved.}
   \item{list}{A character vector containing the names of objects to be
@@ -18,14 +20,16 @@ save(..., list = character(0), file = "", ascii = FALSE)
   \code{save} writes a external representation of \R objects to the
   specified file.  The objects can be read back from the file at a later
   date by using the function \code{load}.
+
+  \code{save.image()} is just a short-cut for ``save my current work'',
+  i.e., \code{save(list = ls(), file = ".RData")}. It is what also
+  happens with \code{\link{q}("yes")}/
 }
 \seealso{
-  \code{\link{dput}},
-  \code{\link{dump}},
-  \code{\link{load}}.
+  \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
 }
 \examples{
 save(x, y, file = "xy.Rdata")
-save(list = ls(), file = "all.Rdata")
+save.image()
 }
 \keyword{file}
