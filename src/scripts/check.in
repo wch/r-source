@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.163 $ ';
+my $revision = ' $Revision: 1.164 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -51,7 +51,6 @@ my $opt_tests = 1;
 my $opt_latex = 1;
 my $opt_use_gct = 0;
 my $opt_codoc = 1;
-my $opt_perms = 1;
 my $opt_install = 1;
 my $opt_vignettes = 1;
 
@@ -61,7 +60,7 @@ R::Vars::error("R_HOME", "R_CMD", "R_EXE");
 
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
-		    "use-gct" => \$opt_use_gct, "no-codoc", "no-perms",
+		    "use-gct" => \$opt_use_gct, "no-codoc",
 		    "install=s" => \$opt_install, "no-install",
 		     "no-vignettes");
 GetOptions(@known_options) or usage();
@@ -74,7 +73,6 @@ $opt_examples = 0 if $opt_no_examples;
 $opt_tests = 0 if $opt_no_tests;
 $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
-$opt_perms = 0 if $opt_no_perms;
 $opt_install = 0 if $opt_no_install;
 $opt_vignettes = 0 if $opt_no_vignettes;
 
@@ -314,10 +312,9 @@ foreach my $pkg (@ARGV) {
 			unless($opt_install eq "check");
 		    my $warn_re =
 			"(" . join("|", ("^WARNING:",
+					 "^Warning:",
 					 ": warning: .*ISO C",
-					 "missing link\\(s\\):",
-					 "missing text for \\\\item " .
-					 "in \\\\describe")) . ")";
+					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
 		    if(scalar(@lines) > 0) {
 			$log->warning();
@@ -492,9 +489,6 @@ sub check_pkg {
 
     ## Check for sufficient file permissions (Unix only).
 
-    ## This is a bit controversial, and hence there is a command line
-    ## option '--no-perms' to turn this off.
-    ##
     ## This used to be much more 'aggressive', requiring that dirs and
     ## files have mode >= 00755 and 00644, respectively (with an error
     ## if not), and that files know to be 'text' have mode 00644 (with a
@@ -506,7 +500,7 @@ sub check_pkg {
     ## exists in the top-level directory but are not executable, which
     ## is most likely not what was intended.
 
-    if($opt_perms && ($R::Vars::OSTYPE eq "unix")) {
+    if($R::Vars::OSTYPE eq "unix") {
 	$log->checking("for sufficient/correct file permissions");
 	my @bad_files = ();
 
@@ -740,15 +734,26 @@ sub check_pkg {
     ## Need to do this here because we need the 'real' DESCRIPTION file
     ## (also in the case of bundles), and to know that its 'Depends'
     ## field is syntactically correct.
-    if($description->{"Depends"} && $opt_install) {
+    if(($description->{"Depends"} || $description->{"Suggests"})
+       && $opt_install) {
 	$log->checking("package dependencies");
 	my @required_packages = ();
-	my @dependencies = split(/\,/, $description->{"Depends"});
+	my @dependencies = split(/\,/,
+				 ($description->{"Depends"},
+				  $description->{"Suggests"},
+				  $description->{"Package"}));
+	## According to FL, everything listed in Depends or Suggests
+	## should be available for successfully running R CMD check.
+	## \VignetteDepends{} entries not "required" by the package code
+	## must be in Suggests.  Note also that some of us think that a
+	## package vignette must require its own package, which otoh is
+	## not required in the package DESCRIPTION file.
 	foreach my $dep (@dependencies) {
 	    $dep =~ s/^\s*([\w\.]+).*$/\1/;
 	    next if($dep eq "R");
 	    push(@required_packages, $dep);
 	}
+
 	if($#required_packages >= 0) {
 	    my $Rcmd = "requiredPackages <- c(\"";
 	    $Rcmd .= join("\", \"", @required_packages);
@@ -764,7 +769,35 @@ sub check_pkg {
 		exit(1);
 	    }
 	}
-	$log->result("OK");
+	my $any = 0;
+	if((-d &file_path("inst", "doc"))
+	   && &list_files_with_type(&file_path("inst", "doc"),
+				    "vignette")) {
+	    my $dir = &file_path("inst", "doc");
+	    my $cmd = "reqs <- ";
+	    if(scalar(@required_packages) > 0) {
+		$cmd .= "c(\"" .
+		  join("\", \"", @required_packages) .
+		  "\")\n";
+	    }
+	    else {
+		$cmd .= "character()\n";
+	    }
+	    $cmd .= "deps <- tools:::.buildVignetteIndex(\"$dir\")\$Depends\n";
+	    $cmd .= "deps <- unique(sort(unlist(deps)))\n";
+	    $cmd .= "writeLines(deps[!deps %in% reqs])\n";
+	    my @out = R_runR($cmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
+	    @out = grep(!/^\>/, @out);
+	    if($#out >= 0) {
+		$any++;
+		$log->warning();
+		$log->print("Vignette dependencies not required:\n");
+		$log->print(wrap("  ", "  ", @out) . "\n");
+	    }
+	}
+
+	$log->result("OK") unless($any);
     }
 
     ## Check index information.
@@ -1043,7 +1076,6 @@ sub check_pkg {
     my @msg_writing_Rd
       = ("See chapter 'Writing R documentation files'",
 	 "in manual 'Writing R Extensions'.\n");
-
 
     if(-d "man") {
 	$log->checking("Rd files");
@@ -1736,7 +1768,6 @@ Options:
                         (default is 'pkg.Rcheck' in current directory,
 			where 'pkg' is the name of the package checked)
       --no-clean        do not clean outdir before using it
-      --no-perms        do not check sufficient/correct file permissions
       --no-codoc        do not check for code/documentation mismatches
       --no-examples     do not run the examples in the Rd files
       --no-install      skip installation and associated tests
