@@ -111,7 +111,7 @@ int Rf_initialize_R(int ac, char **av)
     char *p, msg[1024], **avv;
     structRstart rstart;
 #ifdef ENABLE_NLS
-    char localedir[MAX_PATH];
+    char localedir[PATH_MAX+20];
 #endif
     Rstart Rp = &rstart;
 
