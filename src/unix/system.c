@@ -83,7 +83,19 @@ void R_load_X11_shlib(); /* in dynload.c */
 void R_load_gnome_shlib(); /* in dynload.c */
 
 
+int Rf_initialize_R(int ac, char **av);
+
 int main(int ac, char **av)
+{
+  Rf_initialize_R(ac, av);
+
+    mainloop();
+    /*++++++  in ../main/main.c */
+    return 0;
+}
+
+int
+Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j, value, ierr, useX11 = 1, usegnome = 0;
     char *p, msg[1024], **avv;
@@ -220,10 +232,61 @@ int main(int ac, char **av)
     if (R_RestoreHistory) Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
+ return(0);
+}
 
-    mainloop();
-    /*++++++  in ../main/main.c */
-    return 0;
+
+/*
+  It would be better to enclose this routine within a conditional
+    #ifdef R_EMBEDDED    
+      Rf_initEmbeddedR() {
+        ...
+      }
+    #endif
+
+    However, we would then have to recompile this file, libunix.a
+    and then link libR.so. Until we have this sorted out in the 
+    Makefiles, we compile this unconditionally.
+*/
+
+
+/*
+ This is the routine that can be called to initialize the R environment
+ when it is embedded within another application (by loading libR.so).
+
+ The arguments are the command line arguments that would be passed to
+ the regular standalone R, including the first value identifying the
+ name of the `application' being run.  This can be used to indicate in
+ which application R is embedded and used by R code (e.g. in the
+ Rprofile) to determine how to initialize itself. These are accessible
+ via the R function commandArgs().
+
+ We have to sort out how to recompile this file when building libR.so,
+ having already compiled for the standalone build. However, since on 
+ most platforms we will have to recompile all the files with the 
+ position independent code (PIC) flag, this is a larger issue.
+
+
+ The return value indicates whether the initialization was successful
+ (Currently there is a possibility to do a long jump within the
+ initialization code so that will we never return here.)
+
+ Example:
+         0) name of executable
+         1) don't load the X11 graphics library
+         2) don't show the banner at startup.
+       
+
+    char *argv[]= {"REmbeddedPostgres", "--gui=none", "--silent"};
+    initEmbedded(sizeof(argv)/sizeof(argv[0]), argv);
+*/
+
+int
+Rf_initEmbeddedR(int argc, char **argv)
+{
+    Rf_initialize_R(argc, argv);
+    setup_Rmainloop();    
+ return(1);
 }
 
 

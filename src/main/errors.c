@@ -27,7 +27,18 @@
    two lines */
 #define LONGCALL 30
 
-static void jump_now();
+/* This is now non-static so that other applications that link or load libR.so
+   can override it by defining their own version and hence by-pass the longjmp
+   back into the standard R event loop.
+ */
+void jump_now();
+/*
+  Method that resets the global state of the evaluator in the event
+  of an error. Was in jump_now(), but is now a separate method so that
+  we can call it without invoking the longjmp. This is needed when embedding
+  R in other applications.
+*/
+void Rf_resetStack(int topLevel);
 
 /*
 Different values of inError are used to indicate different places
@@ -402,8 +413,22 @@ void jump_to_toplevel()
    could result in an infinite-loop condition. All you can do
    is reset things and exit.
 */
-static void jump_now()
+void jump_now()
 {
+  Rf_resetStack(0);
+  LONGJMP(R_ToplevelContext->cjmpbuf, 0);
+}
+
+
+/*
+ The topLevelReset argument controls whether the R_GlobalContext is 
+ reset to its initial condition.
+ In regular stand-alone R, this is not needed (see jump_now() above).
+ But when R is embedded in an application, this must be set or otherwise
+ subsequent errors get caught in an infinite loop when iterating over
+ the contexts in the error handling routine jump_to_toplevel() above.
+*/
+void Rf_resetStack(int topLevelReset) {
     if( inError == 2 )
 	REprintf("Lost warning messages\n");
     inError=0;
@@ -411,7 +436,9 @@ static void jump_now()
     R_PPStackTop = 0;
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
-    LONGJMP(R_ToplevelContext->cjmpbuf, 0);
+    if(topLevelReset) {
+        R_GlobalContext = R_ToplevelContext;
+    }
 }
 
 #ifdef OLD_Macintosh
