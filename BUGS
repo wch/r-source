@@ -51,10 +51,6 @@ From: arto.luoma@uta.fi
 Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
 --Seems specific to one locale on one system.
 --The bug is unlikely to be in R.
-* PR# 1124 *
-Subject: Wrong df in bartlett.test when subsetting data
-From: jens.lund@nordea.com
-Date: Wed, 10 Oct 2001 17:43:42 +0200 (MET DST)
 * PR# 1178 *
 Subject: segfault using svm from e1071
 From: Jan Rychter <jan@rychter.com>
@@ -78,10 +74,6 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 Subject: bug.report() & docs should mention r-devel
 From: murdoch@stats.uwo.ca
 Date: Thu, 4 Oct 2001 01:23:27 +0200 (MET DST)
-* PR# 1132 *
-Subject: Problem with "describe" lists.
-From: Rolf Turner <rolf@localhost.localdomain>
-Date: Thu, 18 Oct 2001 16:41:03 +0800
 * PR# 1136 *
 Subject: cex/col/etc. in title(): documentation?
 From: Ben Bolker <ben@zoo.ufl.edu>
