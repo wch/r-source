@@ -59,9 +59,6 @@ extern double	R_NaReal;		/* NA_REAL */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
-int R_IsNA(double);/* Missing Value Test */
-int R_IsNaN(double);/* Special NaN */
-
 #ifdef Win32
 extern int isnan(double);
 extern int finite(double);
@@ -69,10 +66,13 @@ extern int finite(double);
 
 #ifdef IEEE_754
 
+int R_IsNA(double);/* True for Real NA only */
+int R_IsNaN(double);/* True for special NaN,  *not* for NA */
+
 #define MATH_CHECK(call)	(call)
 #define FINITE(x)		finite(x)
-#define ISNAN(x)		((x)!=(x))/* True, *both* for NA & NaN */
-#define ISNA(x)			R_IsNA(x) /* --> ../main/arithmetic.c */
+#define ISNAN(x)		((x)!=(x))/* -> True, *both* for NA | NaN */
+#define ISNA(x)			R_IsNA(x) /* from ../main/arithmetic.c */
 
 #else
 

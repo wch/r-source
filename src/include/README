@@ -51,6 +51,9 @@ S.h
 	-> Platform.h
 	-> Memory.h
 
+Applic.h
+	-> Platform.h
+
 Fortran.h
 	-> Platform.h
 	-> Complex.h
