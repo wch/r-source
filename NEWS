@@ -20,6 +20,8 @@ NEW FEATURES
     o   Function nsl() to look up IP addresses of hosts: intended as
 	a way to test for internet connectivity.
 
+    o	R CMD Rd2dvi has more convenient defaults for its output file.
+
 
 
 BUG FIXES
