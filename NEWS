@@ -51,6 +51,9 @@ USER-VISIBLE CHANGES
         separately but not via data(sunspot) (which is used by package
         lattice to retrieve a dataset 'sunspot').
 
+    o	Packages must been re-installed for this version, and
+	library() will enforce this.
+
     o	Package names must now be given exactly in library() and
     	require(), regardless of whether the underlying file system is
     	case-sensitive or not.

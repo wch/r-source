@@ -20,8 +20,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(!is.na(built <- fields[1, "Built"])) {
             builtFields <- strsplit(built, ";", fixed=TRUE)[[1]]
             builtunder <- substring(builtFields[1], 3)
-            if(nchar(builtunder) &&
-               compareVersion(current, builtunder) < 0) {
+            ## must be >= 2.0.0
+            if(!nchar(builtunder) || compareVersion("2.0.0", builtunder) > 0)
+                stop("package ", fields[1, "Package"], " was built before R 2.0.0: please re-install it", call. = FALSE)
+            ## warn if later than this version
+            if(compareVersion(current, builtunder) < 0) {
                 warning(paste("package", fields[1, "Package"],
                               "was built under R version", builtunder),
                         call. = FALSE)
