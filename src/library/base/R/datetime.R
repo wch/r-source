@@ -629,7 +629,7 @@ cut.POSIXt <-
     x <- as.POSIXct(x)
 
     if (inherits(breaks, "POSIXt")) {
-	breaks <- as.POSIXlt(breaks)
+	breaks <- as.POSIXct(breaks)
     } else if(is.numeric(breaks) && length(breaks) == 1) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1) {

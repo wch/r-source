@@ -180,6 +180,8 @@ BUG FIXES
 	segments to help some PostScript interpreters (typically old
 	level-1 interpreters).
 
+    o   cut.POSIXt failed when the breaks were date/time objects (PR#3181)
+
     o   Usage of methods in dist.Rd is now correctly documented
         (as.matrix.dist() is not an exported symbol).
 
