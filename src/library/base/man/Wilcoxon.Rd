@@ -33,7 +33,8 @@ rwilcox(nn, m, n)
   \code{m * n * (m + n + 1) / 12}, respectively.
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
-\seealso{}
+\seealso{\code{\link{dsignrank}} etc, for the \emph{one-sample} Wilcoxon
+    rank statistic.}
 \examples{
 x <- -1:(4*6 + 1)
 fx <- dwilcox(x, 4, 6)
