@@ -2717,7 +2717,7 @@ AC_CACHE_CHECK(for iconv, ac_cv_func_iconv, [
          iconv(cd,NULL,NULL,NULL,NULL);
          iconv_close(cd);],
         ac_cv_func_iconv="in libiconv")
-      if test $"ac_cv_func_iconv" = no; then 
+      if test "$ac_cv_func_iconv" = no; then 
         LIBS="$r_save_LIBS"
       fi
   fi
