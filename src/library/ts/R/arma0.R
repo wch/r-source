@@ -126,7 +126,6 @@ arima0 <- function(x, order = c(0, 0, 0),
         if(transform.pars) {
             if(any(!mask[1:narma]))
                 warning("transformed ARMA parameters were fixed")
-            browser()
             ## check stationarity
             if(arma[1] > 0)
                 if(!arCheck(init[1:arma[1]]))
