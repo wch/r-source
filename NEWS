@@ -162,7 +162,7 @@ NEW FEATURES
 
     o	legend() has a new argument pt.bg.
 
-    o   autoload() accepts lib.loc and other arguments to library()
+    o	autoload() accepts lib.loc and other arguments to library()
 
     o	bxp() has new argument "frame.plot", as plot.default().
 
@@ -227,19 +227,21 @@ BUG FIXES
 
     o	bxp(*) now obeys axes, xaxt, yaxt & ylim arguments (again?).
 
-    o   Use FILESEP instead of '/' in devPS.c.
+    o	Use FILESEP instead of '/' in devPS.c.
 
-    o   Errors in argument matching could cause crashes if error
-    	handler was used
+    o	Errors in argument matching could cause crashes if error
+	handler was used
 
-    o   Zero the widths of undefined chars in postscript().
+    o	Zero the widths of undefined chars in postscript().
 
-    o   Make font metrics local to the device in postscript(), so
+    o	Make font metrics local to the device in postscript(), so
 	that simultaneous instances of postscript/xfig/bitmap can use
 	different values for `family'.
 
-    o   plot.stl() now uses correct time labels for tickmarks of x-axes
+    o	plot.stl() now uses correct time labels for tickmarks of x-axes
 
+    o	lm.fit & lm.wfit (and hence lm) now give understandable error
+	messages when there are 0 non-NA cases.
 
 
 

@@ -66,9 +66,11 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     z
 }
 
+## lm.fit() and lm.wfit() have *MUCH* in common  [say ``code re-use !'']
 lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 {
-    if (is.null(n <- nrow(x))) stop("'x' must be a matrix")
+    if (is.null(n <- nrow(x))) stop("`x' must be a matrix")
+    if(n == 0) stop("0 (non-NA) cases")
     p <- ncol(x)
     if (p == 0) {
         ## oops, null model
@@ -127,6 +129,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
+    if(n == 0) stop("0 (non-NA) cases")
     ny <- NCOL(y)
     ## treat one-col matrix as vector
     if(is.matrix(y) && ny == 1)
@@ -379,16 +382,15 @@ deviance.lm <- function(object, ...) sum(weighted.residuals(object)^2)
 formula.lm <- function(object, ...) formula(object$terms)
 family.lm <- function(object, ...) { gaussian() }
 
-model.frame.lm <-
-    function(formula, data, na.action, ...) {
-	if (is.null(formula$model)) {
-	    fcall <- formula$call
-	    fcall$method <- "model.frame"
-	    fcall[[1]] <- as.name("lm")
-	    eval(fcall, parent.frame())
-	}
-	else formula$model
+model.frame.lm <- function(formula, data, na.action, ...) {
+    if (is.null(formula$model)) {
+        fcall <- formula$call
+        fcall$method <- "model.frame"
+        fcall[[1]] <- as.name("lm")
+        eval(fcall, parent.frame())
     }
+    else formula$model
+}
 
 variable.names.lm <- function(object, full=FALSE)
 {
@@ -719,33 +721,3 @@ predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
     if(inherits(object, "mlm")) pred else pred[, 1]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
