@@ -1256,8 +1256,22 @@ SEXP cons(SEXP car, SEXP cdr)
     return s;
 }
 
+/*----------------------------------------------------------------------
+
+  NewEnvironment
+
+  Create an environment by extending "rho" with a frame obtained by
+  pairing the variable names given by the tags on "namelist" with
+  the values given by the elements of "valuelist".
+
+*/
+
 /* NewEnvironment is defined directly do avoid the need to protect its
-   arguments unless a GC will actually occur. */
+   arguments unless a GC will actually occur.  This definition allows
+   the namelist argument to be shorter than the valuelist; in this
+   case the remaining values must be named already.  (This is useful
+   in cses where the entire valuelist is already named--namelist can
+   then be R_NilValue */
 SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 {
     SEXP v, n, newrho;
@@ -1281,7 +1295,7 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 
     v = valuelist;
     n = namelist;
-    while (v != R_NilValue) {
+    while (v != R_NilValue && n != R_NilValue) {
 	SET_TAG(v, TAG(n));
 	v = CDR(v);
 	n = CDR(n);
