@@ -2367,7 +2367,7 @@ static void drawPointsLines(double xp, double yp, double xold, double yold,
 
 SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, nobs, ans, saveans, stype;
+    SEXP x, y, nobs, ans, saveans, stype = R_NilValue;
     int i, n, type='p';
     double xp, yp, xold=0, yold=0;
     DevDesc *dd = CurrentDevice();
@@ -2392,6 +2392,7 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    GMode(0, dd);
 	}
+	return R_NilValue;
     } else {
 	GCheckState(dd);
 
