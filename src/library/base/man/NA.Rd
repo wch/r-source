@@ -26,7 +26,11 @@ is.na(x) <- value
   \item{value}{a suitable index vector for use with \code{x}.}
 }
 \details{
-  For character vectors the value \code{"NA"} represents missingness.
+  %% Next par on character NAs taken from R-lang.texi:
+  The \code{NA} of character type is as from R 1.5.0 distinct from the
+  string \code{"NA"}.  Programmers who need to specify an explicit
+  string \code{NA} should use \code{as.character(NA)} rather than
+  \code{"NA"}, or set elements to \code{NA} using \code{is.na<-}.
 
   \code{is.na(x)} works elementwise when \code{x} is a
   \code{\link{list}}. 
