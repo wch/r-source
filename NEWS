@@ -613,7 +613,7 @@ BUG FIXES
 
     o	tcltk was using deprecated internals of the Tcl library when
 	accessing error messages.  Not likely to be a user-visible
-	change (yet!).
+	change.
 
     o	The automatic search for BLAS libs now tries Sun's libsunperf
 	the way the latest versions require. (PR#2530)
@@ -705,6 +705,9 @@ BUG FIXES
     o   reference to by() added in ?tapply
 
     o   ?lm describes what happens with matrix response
+
+    o   The X11 device has improved event handling. In particular it
+        used to often miss the last of a series of resize events.
 
 
 

@@ -574,6 +574,7 @@ static void handleEvent(XEvent event)
     NewDevDesc *dd;
     newX11Desc *xd;
     int devNum = 0;
+    int do_update = 0;
 
     if (event.xany.type == Expose) {
 	while(XCheckTypedEvent(display, Expose, &event))
@@ -581,12 +582,38 @@ static void handleEvent(XEvent event)
 	XFindContext(display, event.xexpose.window,
 		     devPtrContext, &temp);
 	dd = (NewDevDesc *) temp;
+	if (event.xexpose.count == 0)
+	    do_update = 1;
+    }
+    else if (event.type == ConfigureNotify) {
+	while(XCheckTypedEvent(display, ConfigureNotify, &event))
+	    ;
+	XFindContext(display, event.xconfigure.window,
+		     devPtrContext, &temp);
+	dd = (NewDevDesc *) temp;
 	xd = (newX11Desc *) dd->deviceSpecific;
-	if (xd->resize) {
-	    dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
+	if (xd->windowWidth != event.xconfigure.width ||
+	    xd->windowHeight != event.xconfigure.height)
+	    do_update = 1;
+	xd->windowWidth = event.xconfigure.width;
+	xd->windowHeight = event.xconfigure.height;
+        dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
 		     dd);
-	    xd->resize = 0;
+
+	if (do_update) /* Gobble Expose events; we'll redraw anyway */
+	    while(XCheckTypedEvent(display, Expose, &event))
+		;
+    }
+    else if ((event.type == ClientMessage) &&
+	     (event.xclient.message_type == _XA_WM_PROTOCOLS))
+	if (!inclose && event.xclient.data.l[0] == protocol) {
+	    XFindContext(display, event.xclient.window,
+			 devPtrContext, &temp);
+	    dd = (NewDevDesc *) temp;
+	    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
 	}
+
+    if (do_update) {
 	/* It appears possible that a device may receive an expose
 	 * event in the middle of the device being "kill"ed by R
 	 * This means that R knows nothing about the device
@@ -597,23 +624,6 @@ static void handleEvent(XEvent event)
 	if (devNum > 0)
 	    GEplayDisplayList((GEDevDesc*) GetDevice(devNum));
     }
-    else if (event.type == ConfigureNotify) {
-	XFindContext(display, event.xconfigure.window,
-		     devPtrContext, &temp);
-	dd = (NewDevDesc *) temp;
-	xd = (newX11Desc *) dd->deviceSpecific;
-	xd->windowWidth = event.xconfigure.width;
-	xd->windowHeight = event.xconfigure.height;
-	xd->resize = 1;
-    }
-    else if ((event.type == ClientMessage) &&
-	     (event.xclient.message_type == _XA_WM_PROTOCOLS))
-	if (!inclose && event.xclient.data.l[0] == protocol) {
-	    XFindContext(display, event.xclient.window,
-			 devPtrContext, &temp);
-	    dd = (NewDevDesc *) temp;
-	    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
-	}
 }
 
 static void R_ProcessEvents(void *data)
