@@ -311,3 +311,11 @@ Date: Mon, 25 Oct 1999 10:34:28 -0700 (PDT)
 Subject: dodgy list operation
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Tue, 26 Oct 1999 14:46:11 +0100 (BST)
+* PR# 299 *
+Subject: Wrong text() adjustment with (math)expression and "\n"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 26 Oct 1999 19:57:01 +0200 (MET DST)
+* PR# 300 *
+Subject: Plotting bug in R
+From: Stephen Turner <S.R.E.Turner@statslab.cam.ac.uk>
+Date: Wed, 27 Oct 1999 17:31:01 +0100 (GMT)
