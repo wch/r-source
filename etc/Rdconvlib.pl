@@ -149,6 +149,18 @@ sub get_blocks {
 		$blocks{$block} =~ s/^\s*(\S)/$1/;
 		$blocks{$block} =~ s/\n[ \t]*(\S)/\n$1/g;
 	    }
+
+	    # no formatting commands allowed in the title string
+	    if($block =~ /title/) {
+		if($blocks{"title"} =~ /$ID/){
+		    my $msg = "\nERROR: Environment ";
+		    $msg .= "(text enclosed in \{\}) ";
+		    $msg .= "found in \\title\{...\}.\n";
+		    $msg .= "       The title must be plain text!\n\n";
+		    die($msg);
+		}
+	    }
+		
 	}
     }
     print stderr "---\n" if $debug;
@@ -1019,9 +1031,9 @@ sub latex_code_cmd {
 
     if($code =~ /[$LATEX_SPECIAL]/){
         die("\nERROR: found `\@' in \\code{...\}\n")
-	  if $code =~ /@/;
+	    if $code =~ /@/;
         die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
-	  if $code =~ /HYPERLINK\(/;
+	    if $code =~ /HYPERLINK\(/;
 	$code = "\\verb@" . $code . "@";
     }
     else {
