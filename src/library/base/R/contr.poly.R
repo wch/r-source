@@ -40,11 +40,23 @@ contr.poly <- function (n, contrasts = TRUE)
 
 ## implemented by BDR 29 May 1998
 ## `coefs' code added by KH
-## prediction added BDR Jan 2002
-poly <- function(x, degree = 1, coefs = NULL)
+## prediction, ...  added BDR Jan 2002
+poly <- function(x, ..., degree = 1, coefs = NULL)
 {
-    if(is.matrix(x)) stop("poly is only implemented for vectors")
-    if(degree < 1) stop("degree must be at least 1")
+    dots <- list(...)
+    if(nd <- length(dots)) {
+        if(nd == 1 && length(dots[[1]]) == 1) # unnamed degree
+            degree <- dots[[1]]
+        else return(polym(x, ..., degree = degree))
+    }
+    if(is.matrix(x)) {
+        m <- unclass(as.data.frame(cbind(x, ...)))
+        return(do.call("polym", c(m, degree=degree)))
+    }
+    if(degree < 1)
+        stop("degree must be at least 1")
+    if(degree >= length(x))
+        stop("degree must be less than number of points")
     n <- degree + 1
     if(is.null(coefs)) { # fitting
         xbar <- mean(x)
@@ -90,4 +102,24 @@ makepredictcall.poly  <- function(var, call)
     if(as.character(call)[1] != "poly") return(call)
     call$coefs <- attr(var, "coefs")
     call
+}
+
+polym <- function(..., degree = 1)
+{
+    dots <- list(...)
+    nd <- length(dots)
+    if(nd == 0) stop("must supply one or more vectors")
+    if(nd == 1) return(poly(dots[[1]], degree))
+    n <- sapply(dots, length)
+    if(any(n != n[1]))
+        stop("arguments must have the same length")
+    z <- expand.grid(0:degree, 0:degree)
+    s <- rowSums(z)
+    ind <- (s > 0) & (s <= degree)
+    z <- z[ind, ]; s <- s[ind]
+    res <- cbind(1, poly(dots[[1]], degree))[, 1 + z[, 1]]
+    for(i in 2:nd) res <- res * cbind(1, poly(dots[[i]], degree))[, 1 + z[, i]]
+    colnames(res) <- apply(z, 1, function(x) paste(x, collapse = "."))
+    attr(res, "degree") <- as.vector(s)
+    res
 }

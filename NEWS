@@ -65,6 +65,10 @@ NEW FEATURES
 	including lm() and glm().  See ?poly, ?cars and ?ns for
 	examples.
 
+   o	poly() now works with more than one vector or a matrix as input,
+	and has a predict method for objects created from a single
+	vector.
+
    o	Argument `split' of summary.{aov,aovlist} is now implemented. 
 
 
