@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.157 $'
+revision='$Revision: 1.158 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -160,6 +160,7 @@ save_args=
 fake=false
 
 while test -n "${1}"; do
+  ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
   case ${1} in
     -h|--help)
       echo "${usage}"; exit 0 ;;
@@ -211,6 +212,7 @@ while test -n "${1}"; do
       fake=true ;;
     *)
       if test -f "${1}"; then
+	##DBG echo "  in 'R INSTALL' --arg checking-- FILE '${1}'"
 	pkgname=`basename "${1}"`
 	## Also allow for 'package.tgz' ...
 	pkgname=`basename "${pkgname}" .tgz`
@@ -229,6 +231,7 @@ while test -n "${1}"; do
 	  exit 1
 	fi
       elif test -f "${1}/DESCRIPTION"; then
+	##DBG echo " in 'R INSTALL' -f DESCRIPTION --> 'get_packages ${1}'"
         get_packages "${1}"
       else
 	warning "invalid package '${1}'"
@@ -237,6 +240,11 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+if ${debug} ; then
+  echo "'Rcmd INSTALL': in startdir= $startdir with tmpdir= $tmpdir"
+  echo "   lib= '$lib', pkgs= '$pkgs'"
+fi
 
 if test -z "${pkgs}"; then
   error "no packages specified"
@@ -251,6 +259,7 @@ else
   exit 2
 fi
 lockdir="${lib}/00LOCK"
+if ${debug} ; then  echo "   before checking lockdir= '${lockdir}'" ; fi
 if test -d "${lockdir}" || test -f "${lockdir}"; then
   error "failed to lock directory '${lib}' for modifying"
   echo "Try removing '${lockdir}'" >&2
@@ -263,6 +272,7 @@ else
     exit 3
   fi
 fi
+if ${debug} ; then  echo '   after checking lockdir' ; fi
 
 if ${fake}; then
   use_configure=false
@@ -289,6 +299,8 @@ if test -z "${build_help_opts}"; then
 elif ${debug}; then
   build_help_opts="--debug ${build_help_opts}"
 fi
+
+if ${debug} ; then echo "   build_help_opts= '${build_help_opts}'" ; fi
 
 is_first_package=yes
 
@@ -779,7 +791,9 @@ do_cleanup () {
 
 ### 
 ### Main loop.
-
+if ${debug} ; then
+    echo "'Rcmd INSTALL': now doing 'eval ... do_install':"
+fi
 eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
 do_cleanup
 
