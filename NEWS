@@ -53,6 +53,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	stars() has "NULL" instead of "NA" defaults.
+
     o	expand.grid(x) now also works for vector arguments x.
 
     o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
