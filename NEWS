@@ -254,11 +254,12 @@ NEW FEATURES
     o   The "?" operator has new forms for querying documentation on
         S4 methods.  See the online documentation.
 
-    o   sort(method = "quick", decreasing = TRUE) now works.
+    o   sort(method = "quick", decreasing = TRUE) is now implemented.
 
-    o   sort.list() has method "quick" (a wrapper for sort(method =
+    o   sort.list() has methods "quick" (a wrapper for sort(method =
 	"quick", index.return = TRUE) and "radix" (a very fast method
-	for small integers).
+	for small integers).  The default "shell" method works faster
+	on long vectors with many ties.
 
 
 DEPRECATED & DEFUNCT

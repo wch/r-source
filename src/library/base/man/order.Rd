@@ -9,6 +9,7 @@
 }
 \usage{
 order(\dots, na.last = TRUE, decreasing = FALSE)
+
 sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
           method = c("shell", "quick", "radix"))
 }
@@ -31,17 +32,11 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   The sort used is \emph{stable} (except for \code{method = "quick"}),
   so any unresolved ties will be left in their original ordering.
 
-  When the ordering of ties does not matter in the one argument case
-  (e.g., in \code{sort.list}), \code{method="quick"} may be much faster
-  for long \code{x} vectors
-  with many ties.  If the ordering does matter, \code{order(x, seq(along=x))} 
-  may be faster than \code{sort.list(x)} with many ties.
-
-  The default method is a good compromise.  Method \code{"shell"} is
-  only supported for numeric \code{x} with \code{na.last=NA}, and is not
-  stable.
+  The default method for \code{sort.list} is a good compromise.
+  Method \code{"quick"} is only supported for numeric \code{x} with
+  \code{na.last=NA}, and is not stable, but will be faster for long vectors.
   Method \code{"radix"} is only implemented for integer \code{x} with
-  \code{0 <= x <= 1000} (or missing).  For such \code{x} it is very
+  a range of less than 100,000.  For such \code{x} it is very
   fast (and stable), and hence is ideal for sorting factors.
 
   \code{partial} is supplied for compatibility with other
@@ -80,17 +75,18 @@ z <- cbind(a, b)
 (o <- order(a, b, na.last = NA)); z[o, ]
 
 \dontrun{
-##  speed examples for long vectors:
-##  the differences are much less dramatic for 1e5.
+##  speed examples for long vectors: timings are immediately after gc()
 x <- factor(sample(letters, 1e6, replace=TRUE))
-system.time(o <- sort.list(x)) ## very slow 12 mins
-stopifnot(!is.unsorted(x[o]))
-system.time(o <- order(x, seq(along=x))) # 11 secs
+system.time(o <- sort.list(x)) ## 4 secs
 stopifnot(!is.unsorted(x[o]))
 system.time(o <- sort.list(x, method="quick", na.last=NA)) # 0.4 sec
 stopifnot(!is.unsorted(x[o]))
 system.time(o <- sort.list(x, method="radix")) # 0.04 sec
 stopifnot(!is.unsorted(x[o]))
+xx <- sample(1:26, 1e7, replace=TRUE)
+system.time(o <- sort.list(xx, method="radix")) # 0.4 sec
+xx <- sample(1:100000, 1e7, replace=TRUE)
+system.time(o <- sort.list(xx, method="radix")) # 4 sec
 }}
 \keyword{univar}
 \keyword{manip}
