@@ -12,7 +12,9 @@ exp(x)
 \alias{log2}
 \alias{exp}
 \arguments{
-  \item{x}{a numeric of complex vector}
+  \item{x}{a numeric or complex vector.}
+  \item{base}{positive number. The base with respect to which
+    logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
   }
 \description{
   \code{log} computes natural logarithms,
@@ -32,8 +34,9 @@ exp(x)
 }
 \examples{
 log(exp(3))
+all(log(1:10) ==log(1:10, exp(1)))
 log10(30) == log(30, 10)
-log10(10^7) == 10^log10(7)        
+log10(1e7)# = 7
 log2(2^pi) == 2^log2(pi)
 Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps
 Mod(1+exp(pi*1i)) < .Machine$double.eps
