@@ -408,7 +408,7 @@ static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 		base = R_NilValue;
 	    } else { /* neither	 Vector	 nor  List */
 		if(!isNull(TAG(args)))
-		  STRING(ans_names)[ans_nnames++] = TAG(args);
+		  STRING(ans_names)[ans_nnames++] = PRINTNAME(TAG(args));
 		else
 		  STRING(ans_names)[ans_nnames++] = blank;
 	    }
