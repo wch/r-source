@@ -65,7 +65,7 @@ static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mman0, mapropos, mhelpstart, mhelpsearch, mFAQ,
-    mrwFAQ, mpkgl, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde, mCRAN;
+    mrwFAQ, mpkgl, mpkgm, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde, mCRAN;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
@@ -388,6 +388,14 @@ static void menupkginstallbioc(control m) {
 	       "local({a<- CRAN.packages(CRAN=getOption(\"BIOC\"))\ninstall.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a, CRAN=getOption(\"BIOC\"), dependencies=TRUE)})");
 }
 
+
+static void menupkgcranmirror(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole,
+	       "local({m <- read.csv(file.path(R.home(), \"doc/CRAN_mirrors.csv\"), as.is=TRUE); URL <- m[m[, 1]==select.list(m[,1],,FALSE), 'URL']; if(!is.na(URL)) options(CRAN=URL)})");
+}
+
 static void menupkginstallcran(control m)
 {
     if (!ConsoleAcceptCmd) return;
@@ -541,6 +549,7 @@ static void menuact(control m)
 	enable(mhelpsearch);
 	enable(mapropos);
 	enable(mpkgl);
+	enable(mpkgm);
 	enable(mpkgi);
 	enable(mpkgb);
 	enable(mpkgil);
@@ -559,6 +568,7 @@ static void menuact(control m)
 	disable(mhelpsearch);
 	disable(mapropos);
 	disable(mpkgl);
+	disable(mpkgm);
 	disable(mpkgi);
 	disable(mpkgb);
 	disable(mpkgil);
@@ -888,13 +898,15 @@ int RguiPackageMenu()
     MCHECK(newmenu("Packages"));
     MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
     MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgm = newmenuitem("Set CRAN mirror...", 0,
+			       menupkgcranmirror));
     MCHECK(mpkgi = newmenuitem("Install package(s) from CRAN...", 0,
 			       menupkginstallcran));
-    MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
-				0, menupkginstalllocal));
-    MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgu = newmenuitem("Update packages from CRAN", 0,
 			       menupkgupdate));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
+				0, menupkginstalllocal));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgb = newmenuitem("Install package(s) from Bioconductor...",
 			       0, menupkginstallbioc));

@@ -7,6 +7,11 @@ See the file NEWS for changes that affect all versions of R.
 rw2001
 ======
 
+There is a new menu item to set a CRAN mirror.
+
+Bug fixes
+---------
+
 jpeg(), png() and bmp() were not handling background colours properly.
 
 It seems that on some systems (but not the maintainers') Mozilla 1.7.3
