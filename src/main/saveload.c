@@ -1832,8 +1832,9 @@ static void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 	    magic = R_MAGIC_XDR_V2;
 	    type = R_pstream_xdr_format;
 #else
-	    magic = R_MAGIC_BINARY_V2;
-	    type = R_pstream_binary_format;
+	    warning("portable binary format is not available; using ascii");
+	    magic = R_MAGIC_ASCII_V2;
+	    type = R_pstream_ascii_format;
 #endif
 	}
 	R_WriteMagic(fp, magic);
