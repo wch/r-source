@@ -206,9 +206,9 @@ i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
 rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 @cindex Linux
-@cindex MacOS X
+@cindex Mac OS X
 In addition, binary distributions are available for most common Linux
-distributions, and for MacOS X (Darwin) with X11.  See the @acronym{FAQ}
+distributions, and for Mac OS X (Darwin) with X11.  See the @acronym{FAQ}
 for current details.  These are installed in platform-specific ways.  So
 for the rest of this chapter we consider only building from the sources.
 
@@ -711,7 +711,7 @@ The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro aka Forte aka Sun ONE @command{cc} and
-@command{f95} compilers}, @code{libessl} on IBM, @code{vecLib} on MacOS
+@command{f95} compilers}, @code{libessl} on IBM, @code{vecLib} on Mac OS
 X) but ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 BLAS that runs on a wide range of Unix-alike platforms.  If no more
 specific library is found, a @code{libblas} library in the library path
@@ -763,7 +763,7 @@ but not single-precision nor complex routines.
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
-@code{libsunperf} on Solaris and @code{vecLib} on MacOS 10.2.2).
+@code{libsunperf} on Solaris and @code{vecLib} on Mac OS X 10.2.2).
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
 library.  You can specify a specific LAPACK library or a search for a
@@ -1117,7 +1117,7 @@ of compilers and support libraries.
 
 @menu
 * Linux::                       
-* MacOS X::                     
+* Mac OS X::                     
 * Solaris::                     
 * HP-UX::                       
 * IRIX::                        
@@ -1126,7 +1126,7 @@ of compilers and support libraries.
 * AIX::                         
 @end menu
 
-@node Linux, MacOS X, Platform notes, Platform notes
+@node Linux, Mac OS X, Platform notes, Platform notes
 @subsection Linux
 @cindex Linux
 
@@ -1156,11 +1156,11 @@ might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
 
 
-@node MacOS X, Solaris, Linux, Platform notes
-@subsection MacOS X
-@cindex MacOS X
+@node Mac OS X, Solaris, Linux, Platform notes
+@subsection Mac OS X
+@cindex Mac OS X
 
-You can build @R{} as a Unix application on MacOS X.  You will need the
+You can build @R{} as a Unix application on Mac OS X.  You will need the
 DevTools, @command{f2c} or @command{g77}, and the @code{dlcompat}
 library.  You will also need to install an X sub-system or configure
 with @option{--without-x}.
@@ -1178,7 +1178,7 @@ fink install g77
 
 @cindex BLAS library
 @cindex LAPACK library
-The @code{vecLib} library of MacOS >= 10.2.2 can be used @emph{via} the
+The @code{vecLib} library of Mac OS X >= 10.2.2 can be used @emph{via} the
 configuration options
 @smallexample
 --with-blas="-framework vecLib" --with-lapack
@@ -1192,7 +1192,7 @@ dynmaic library.  (We have had reports of success with pre-release
 versions of @command{gcc 3.3}.)
 
 
-@node Solaris, HP-UX, MacOS X, Platform notes
+@node Solaris, HP-UX, Mac OS X, Platform notes
 @subsection Solaris on Sparc
 @cindex Solaris
 
@@ -1558,8 +1558,7 @@ distributions of @code{j2re 1.4.2_01} available: see
 http://www.MedAnalytics.com/INSTALL
 @end smallexample
 
-Sun's @code{j2re 1.4.x} is said not to work with Mozilla 1.6 under MacOS
-X.
+Sun's @code{j2re 1.4.x} is said not to work with Mozilla 1.6 under Mac OS X.
 
 @node Java Virtual Machines on Windows ,  , Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
