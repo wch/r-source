@@ -616,7 +616,6 @@ UTILITIES
           hence no longer tested by R CMD check.
 	  
 
-
 DOCUMENTATION
 
     o	File doc/html/faq.html no longer exists, and doc/manual/R-FAQ.html
@@ -642,7 +641,7 @@ C-LEVEL FACILITIES
     o	ISNAN now works even in C++ code that undefines the 'isnan' macro.
 
     o	R_alloc's limit on 64-bit systems has been raised from just
-	under 2^31 bytes to just under 2^34, and is now checked.
+	under 2^31 bytes (2Gb) to just under 2^34 (16Gb), and is now checked.
 
     o	New math utility functions  log1pmx(x), lgamma1p(x),
 	logspace_add(logx, logy), and logspace_sub(logx, logy).
@@ -959,11 +958,16 @@ BUG FIXES
     o   reshape(direction="wide") had some sorting problems when 
         guessing time points (PR#7669)
 
-    o   par() set xaxp before xlog and yaxp before ylog, causing PR#831.
+    o   par() set 'xaxp' before 'xlog' and 'yaxp' before 'ylog',
+	causing PR#831.
 
     o   The logic in tclRequire() to check the availability of a Tcl
-        package turned out to be fallible. It now uses a try()-and-see
+        package turned out to be fallible.  It now uses a try()-and-see
         mechanism instead.
+
+    o   Opening a unz() connection on a non-existent file left a file
+	handle in use.
+
 
 
 
