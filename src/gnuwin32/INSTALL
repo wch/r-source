@@ -30,7 +30,9 @@ BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier
 versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set, and make sure it is at the front of your path
-(including before the Windows system directories).
+(including before the Windows system directories).  If you are using a
+Windows shell, type PATH at the prompt to find out.
+
 
 You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution
@@ -326,8 +328,8 @@ Then run `make' (and parallel make works reliably, unlike on Windows).
 Packages can be made in the same way as natively: see the file
 README.packages.
 
-(It is possible to cross-build the main installers using WINE, which
-we leave as an exercise for the reader.)
+(It is possible to cross-build the installers using WINE, which we
+leave as an exercise for the reader.)
 
 To distribute a cross-build (or just to transfer it to a Windows machine
 for testing) use
