@@ -18,9 +18,9 @@ FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L../../../gnuwin32  $(FLIBS) -lR 
 
 
-ifeq ($(PKG),modreg)
-  FFLAGS+=-ffloat-store
-endif 
+#ifeq ($(PKG),modreg)
+#  FFLAGS+=-ffloat-store
+#endif 
 
 
 AA=$(wildcard Makefile)

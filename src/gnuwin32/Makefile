@@ -35,7 +35,7 @@ FFLAGS=$(OPTFLAGS)
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
-rpackage: $(PKGS)
+rpackage: fixed/fixdesc $(PKGS)
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
@@ -61,6 +61,9 @@ fixfiles:
 	$(MAKE) -C ./fixed
 	$(CP) -pr unzip ../..
 	$(RM) ../../unzip/*.h
+
+fixed/fixdesc:
+	sh fixed/GETDESC $(PACKAGES)
 
 R.dll: R.a $(MAINLIBS) $(EXTRALIBS)
 
@@ -144,7 +147,7 @@ ziponly-%:
 bootstrap-DLLNM=boott
 
 clean: cleanwin $(PKGCLEAN)
-	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps
+	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 
 distclean veryclean: clean
 	$(RM) -rf R.exp ../../bin ../../library

@@ -1,0 +1,6 @@
+  maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < ../../VERSION`
+  min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < ../../VERSION`
+  rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < ../../VERSION`
+for d in $*; do
+  sed -e s/@VERSION@/$maj.$min/  ../library/$d/DESCRIPTION.in > ../library/$d/DESCRIPTION
+done

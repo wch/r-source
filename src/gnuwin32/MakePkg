@@ -46,7 +46,7 @@ endif
 OFILES0=$(wildcard $(SPKG)/*)
 OFILES1= DESCRIPTION INDEX TITLE
 OFILES-NO= R r chm data man src src-c Makefile.in inst check orig \
-	DESCRIPTION INDEX TITLE index title
+	DESCRIPTION DESCRIPTION.in INDEX TITLE index title
 OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
 OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
 OFILES=$(filter-out $(OFILES2),$(OFILES0))
