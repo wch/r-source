@@ -26,7 +26,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "Errormsg.h"
+#include "Error.h"
 #include "Arith.h"
 #include "Platform.h"
 #include "Mathlib.h"		/* for floor(), fmax2(),.. in GPretty(.) */
