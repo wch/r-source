@@ -31,8 +31,11 @@ BUG FIXES
     o	coplot(..) doesn't give an extraneous warning anymore when called
 	on a fresh device.
 
-    o   hasArg() used wrong logic to get the parent function. (sys.function()
-        behaves differently from what is documented
+    o	hasArg() used wrong logic to get the parent function. (sys.function()
+	behaves differently from what is documented
+
+    o	prompt(ff) now gives proper \usage{..} for
+	f <- function(x, g = function(u) { x <- u^2 ; sin(x)/x }) { g(x) }
 
 
 
