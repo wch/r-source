@@ -54,6 +54,9 @@ columnar data.
 
 Keyboard entry is terminated by typing a blank line.
 }
+\note{
+    \code{what=complex()} is not yet supported.
+}
 \seealso{
 \code{\link{read.table}} for more user-friendly reading of data matrices.
 \code{\link{write}}.
