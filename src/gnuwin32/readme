@@ -129,12 +129,12 @@ installed.
 (i) Text help. This is the default, and the fallback option.
 It will display in the currently set pager (use options(pager=) to change).
 
-(ii) Compiled HTML files. Set this as the default by
+(ii) Compiled HTML files.  Set this as the default by
 options(chmhelp=T) or for individual help items by help(topic,
-chmhelp=T).  Full text search is available from the Search tab.  To
-make use of this you will need a recent version of Windows or IE4 or
-later installed, or use the updater hhupd.exe on CRAN at 
-bin/windows/windows-NT/etc.
+chmhelp=T).  Full text search is available from the Search tab.
+According to Microsoft, to make use of this you will need a recent
+version of Windows or have IE4 or later installed, or use the updater
+hhupd.exe on CRAN at bin/windows/windows-NT/etc.
 
 (iii) Windows .hlp files. Set this as the default by
 options(winhelp=T) or for individual help items by help(topic,
