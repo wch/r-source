@@ -23,6 +23,7 @@
  */
 
 #include "internal.h"
+extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <winbase.h>
 
 static HDC GETHDC(drawing d)
