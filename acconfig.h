@@ -71,6 +71,9 @@
    GUI to be built. */
 #undef HAVE_X11
 
+/* Define if you have the XDR headers and library routines. */
+#undef HAVE_XDR
+
 /* Define if you have the zlib headers and libraries. */
 #undef HAVE_ZLIB
 
