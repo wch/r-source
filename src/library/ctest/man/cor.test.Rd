@@ -1,6 +1,7 @@
 \name{cor.test}
 \alias{cor.test}
 \alias{cor.test.default}
+\alias{cor.test.formula}
 \title{Test for Association Between Paired Samples}
 \description{
   Test for association between paired samples, using one of
