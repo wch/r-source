@@ -1863,17 +1863,13 @@ SEXP R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP fun)
 	cntxt.cenddata = &mbs;
 
 	InitMemOutPStream(&out, &mbs, type, 0, hook, fun);
-        /**** Need to make sure the buffer is released on error.  This
-	      will be easier to do once this code is included in base.
-	      But maybe having a oublic unwind-protect mechanism would
-	      be useful too. */
 	R_Serialize(object, &out);
 
 	val =  CloseMemOutPStream(&out);
 
 	/* end the context after anything that could raise an error but before
 	   calling OutTerm so it doesn't get called twice */
-    endcontext(&cntxt);
+	endcontext(&cntxt);
 
 	return val;
     }
