@@ -6,6 +6,17 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.9.1
+
+
+
+BUG FIXES
+
+    o	pbinom(q, N, prob) is now more accurate when prob is close to 0
+	(PR#6756).
+
+
+
 		CHANGES IN R VERSION 1.9.0
 
 

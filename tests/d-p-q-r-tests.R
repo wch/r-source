@@ -437,4 +437,9 @@ All.eq(1, pcauchy(-1e20) / 3.183098861837907e-21)
 for(x in 10^c(15,25,50,100,200))
     print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
 
+pr <- 1e-23 ## PR#6757
+stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
+                    tol= 1e-12, scale= 1e-270))
+## pbinom(.) gave 0 in R 1.9.0
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

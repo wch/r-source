@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 beta (2004-03-27), ISBN 3-900051-00-3
+Version 1.9.0 Patched (2004-04-12), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -921,6 +921,11 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 [1] TRUE
 > 
+> pr <- 1e-23 ## PR#6757
+> stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
++                     tol= 1e-12, scale= 1e-270))
+> ## pbinom(.) gave 0 in R 1.9.0
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  6.63 0.09 6.73 0 0 
+Time elapsed:  2.56 0.01 2.59 0 0 
 > 
