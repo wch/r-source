@@ -261,7 +261,8 @@ int editorchecksave(editor c) {
     int save;
     char buf[EDITORMAXTITLE + 100];
     if (ggetmodified(t)) {
-	snprintf(buf, EDITORMAXTITLE + 100, "\"%s\" has been modified.  Do you want to save the changes?",
+	snprintf(buf, EDITORMAXTITLE + 100, 
+		 "\"%s\" has been modified.  Do you want to save the changes?",
 		 (p->title ? p->title : "Untitled"));
 	save = askyesnocancel(buf);
 	switch (save) {
@@ -271,7 +272,8 @@ int editorchecksave(editor c) {
 	case NO:
 	    break;
 	case CANCEL:
-	    return 1; /* used in rui.c (closeconsole) to abort closing the whole of Rgui */
+	    return 1; /* used in rui.c (closeconsole) to abort closing 
+			 the whole of Rgui */
 	}
     }
     return 0;
