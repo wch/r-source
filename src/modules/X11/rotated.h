@@ -37,6 +37,7 @@
 /* ---------------------------------------------------------------------- */
 
 /* Protoized : C++ or ANSI C */
+/* only XRotDrawString is used in R */
 double	XRotVersion(char*, int);
 void	XRotSetMagnification(double);
 void	XRotSetBoundingBoxPad(int);
@@ -51,7 +52,14 @@ int	XRotDrawAlignedImageString(Display*, XFontStruct*, double,
 XPoint *XRotTextExtents(Display*, XFontStruct*, double,
 			int, int, char*, int);
 
+/* addition in 2.1.0 */
+int	XmbRotDrawString(Display*, XFontSet, double,
+			 Drawable, GC, int, int, char*);
+
 /* ---------------------------------------------------------------------- */
+
+void                    XSetFontSet(Display *display,GC gc,XFontSet font);
+XFontStruct            *XFontStructOfFontSet(XFontSet font);
 
 #endif /* _XVERTEXT_INCLUDED_ */
 

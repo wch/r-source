@@ -23,6 +23,10 @@
 # include <config.h>
 #endif
 
+#ifdef SUPPORT_UTF8
+# define USE_FONTSET 1
+#endif
+
 #ifdef HAVE_RINT
 #define R_rint(x) rint(x)
 #else
@@ -652,12 +656,34 @@ static int force_nonscalable = 0; /* for testing */
 #define ADOBE_SIZE(I) ((I) > 7 && (I) < 35 && (adobe_sizes & (1<<((I)-8))))
 #define SMALLEST 2
 
+
+/*
+ * Can't load Symbolfont to XFontSet!!
+ */
+#ifdef USE_FONTSET
+static XFontSet XLoadQueryFontSet(Display *display,
+                                  const char *fontset_name)
+{
+  XFontSet fontset;
+  int  missing_charset_count;
+  char **missing_charset_list, *def_string;
+
+  fontset = XCreateFontSet(display, fontset_name, &missing_charset_list,
+			   &missing_charset_count, &def_string);
+  if (missing_charset_count) XFreeStringList(missing_charset_list);
+  return fontset;
+}
+#endif
+
 static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 {
     int pixelsize, i;
     cacheentry *f;
-    char buf[128];
-    XFontStruct *tmp;
+    char buf[BUFSIZ];
+#ifdef USE_FONTSET
+    char buf1[BUFSIZ];
+#endif
+    void *tmp;
 
     if (size < SMALLEST) size = SMALLEST;
     face--;
@@ -686,16 +712,32 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
      * The symbol font face is a historical oddity
      * Always use a standard font for font face 4
      */
-    if (face == 4)
-	sprintf(buf, xd->symbolfamily,  pixelsize);
+    if (face == SYMBOL_FONTFACE - 1)
+        sprintf(buf, xd->symbolfamily,  pixelsize);
     else
-	sprintf(buf, family,
-		weight[face & 1],
-		slant[(face & 2)>>1 ],	pixelsize);
+#ifdef USE_FONTSET
+      if ( *slant[(face & 2) >> 1] == 'o') {
+        sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+		pixelsize);
+        sprintf(buf1, family, weight[face & 1], "i",  pixelsize);
+	strcat(buf,",");
+	strcat(buf,buf1);
+      } else
+#endif
+	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+		pixelsize);
 #ifdef DEBUG_X11
     Rprintf("loading:\n%s\n",buf);
 #endif
-    tmp = (void *) XLoadQueryFont(display, buf);
+    if (face == SYMBOL_FONTFACE - 1)
+      tmp = (void *)XLoadQueryFont(display, buf);
+    else
+#ifdef USE_FONTSET
+      tmp = (void *)XLoadQueryFontSet(display, buf);
+#else
+      tmp = (void *)XLoadQueryFont(display, buf);
+#endif
+
 #ifdef DEBUG_X11
     if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
@@ -714,7 +756,12 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	   If we can't find a "fixed" font then something is seriously
 	   wrong */
 	if ( ADOBE_SIZE(pixelsize) ) {
+#ifdef USE_FONTSET
+	    tmp = (void*) XLoadQueryFontSet(display,
+                         "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
+#else
 	    tmp = (void*) XLoadQueryFont(display, "fixed");
+#endif
 	    if (tmp)
 		return tmp;
 	    else
@@ -736,11 +783,18 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	else
 	    sprintf(buf, fontname,
 		    weight[face & 1],
-		    slant[(face & 2)>>1 ],  pixelsize);
+		    slant[(face & 2) >> 1 ],  pixelsize);
 #ifdef DEBUG_X11
 	Rprintf("loading:\n%s\n",buf);
 #endif
-	tmp = (void *) XLoadQueryFont(display, buf);
+	if (face == SYMBOL_FONTFACE - 1)
+	    tmp = (void *) XLoadQueryFont(display, buf);
+	else
+#ifdef USE_FONTSET
+	    tmp = (void *) XLoadQueryFontSet(display, buf);
+#else
+	    tmp = (void *) XLoadQueryFont(display, buf);
+#endif
 #ifdef DEBUG_X11
 	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
@@ -753,11 +807,18 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	else
 	    sprintf(buf, fontname,
 		    weight[face & 1],
-		    slant[(face & 2)>>1 ],  24);
+		    slant[(face & 2) >> 1 ],  24);
 #ifdef DEBUG_X11
 	Rprintf("loading:\n%s\n",buf);
 #endif
-	tmp = (void *) XLoadQueryFont(display, buf);
+	if (face == SYMBOL_FONTFACE - 1)
+	    tmp = (void *) XLoadQueryFont(display, buf);
+	else
+#ifdef USE_FONTSET
+	    tmp = (void *) XLoadQueryFontSet(display, buf);
+#else
+	    tmp = (void *) XLoadQueryFont(display, buf);
+#endif
 #ifdef DEBUG_X11
 	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
@@ -777,7 +838,14 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
     if (nfonts == MAXFONTS) /* make room in the font cache */
     {
 	for (i = 0 ; i < CLRFONTS ; i++)
-	    XFreeFont(display, fontcache[i].font);
+	  if (fontcache[i].face == SYMBOL_FONTFACE -1)
+	      XFreeFont(display, (XFontStruct *)(fontcache[i].font));
+	  else
+#ifdef USE_FONTSET
+	      XFreeFontSet(display, (XFontSet)(fontcache[i].font));
+#else
+	      XFreeFont(display, (XFontStruct *)(fontcache[i].font));
+#endif
 	for (i = CLRFONTS ; i < MAXFONTS ; i++)
 	    fontcache[i - CLRFONTS] = fontcache[i];
 	nfonts -= CLRFONTS;
@@ -793,7 +861,13 @@ static int SetBaseFont(newX11Desc *xd)
     xd->font = RLoadFont(xd, xd->fontfamily, xd->fontface, xd->fontsize);
     if (!xd->font) {
 	xd->usefixed = 1;
+#ifdef USE_FONTSET
+	xd->font = xd->fixedfont =
+	    (void *)XLoadQueryFontSet(display,
+				      "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
+#else
 	xd->font = xd->fixedfont = (void *) XLoadQueryFont(display, "fixed");
+#endif
 	if (!xd->fixedfont)
 	    return 0;
     }
@@ -803,7 +877,11 @@ static int SetBaseFont(newX11Desc *xd)
 static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 {
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
-    XFontStruct *tmp;
+    void *tmp;
+#ifdef USE_FONTSET
+    XGCValues gcv;
+    XGetGCValues(display, xd->wgc , GCFont, &gcv);
+#endif
 
     if (face < 1 || face > 5) face = 1;
 
@@ -818,7 +896,14 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 	    strcpy(xd->fontfamily, family);
 	    xd->fontface = face;
 	    xd->fontsize = size;
-	    XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
+            if (face == SYMBOL_FONTFACE)
+		XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
+            else
+#ifdef USE_FONTSET
+		XSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
+#else
+	        XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
+#endif
 	} else
 	    error("X11 font at size %d could not be loaded", size);
     }
@@ -972,6 +1057,12 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     XGCValues gcv;
     /* Indicates whether the display is created within this particular call: */
     Rboolean DisplayOpened = FALSE;
+
+#ifdef USE_FONTSET
+    if (!XSupportsLocale ())
+	warning("locale not supported by Xlib: some X ops will operate in C locale");
+    if (!XSetLocaleModifiers ("")) warning("X cannot set locale modifiers");
+#endif
 
     if (!strncmp(dsp, "png::", 5)) {
 	char buf[PATH_MAX]; /* allow for pageno formats */
@@ -1144,7 +1235,14 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     gcv.arc_mode = ArcChord;
     xd->wgc = XCreateGC(display, xd->window, GCArcMode, &gcv);
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
-    XSetFont(display, xd->wgc, ((XFontStruct*) xd->font)->fid);
+    if ( xd->fontface == SYMBOL_FONTFACE )
+	XSetFont(display, xd->wgc, ((XFontStruct*)(xd->font))->fid);
+    else
+#ifdef USE_FONTSET
+	XSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
+#else
+        XSetFont(display, xd->wgc, ((XFontStruct*) xd->font)->fid);
+#endif
 
     /* ensure that line drawing is set up at the first */
     /* graphics call */
@@ -1217,7 +1315,19 @@ static double newX11_StrWidth(char *str,
     int size = gc->cex * gc->ps + 0.5;
     SetFont(translateFontFamily(gc->fontfamily, xd),
 	    gc->fontface, size, dd);
-    return (double)XTextWidth((XFontStruct*)xd->font, str, strlen(str));
+    if (xd->fontface == SYMBOL_FONTFACE)
+	return (double) XTextWidth((XFontStruct*)(xd->font), str, strlen(str));
+    else
+#ifdef USE_FONTSET
+	if(utf8locale)
+	    return (double) Xutf8TextEscapement((XFontSet)(xd->font),
+						str, strlen(str));
+	else
+	    return (double) XmbTextEscapement((XFontSet)(xd->font),
+					      str, strlen(str));
+#else
+       return (double) XTextWidth((XFontStruct*)xd->font, str, strlen(str));
+#endif
 }
 
 
@@ -1229,13 +1339,63 @@ static void newX11_MetricInfo(int c,
 			      double* ascent, double* descent,
 			      double* width, NewDevDesc *dd)
 {
-    int first, last;
-    int size = gc->cex * gc->ps + 0.5;
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
+    int first = 0, last = 0;
+    int size = gc->cex * gc->ps + 0.5;
+#ifdef USE_FONTSET
+    XFontStruct *fontstruct;
+    /* int i; */
+#else
     XFontStruct *f = (XFontStruct *) xd->font;
+#endif
 
-    SetFont(translateFontFamily(gc->fontfamily, xd),
-	    gc->fontface, size, dd);
+    SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
+
+#ifdef USE_FONTSET
+    if (xd->font) {
+	if (xd->fontface != SYMBOL_FONTFACE) {
+	    char **ml; XFontStruct **fs_list;
+
+	    XFontsOfFontSet((XFontSet)(xd->font), &fs_list, &ml);
+	    fontstruct = fs_list[0];
+	} else {
+	    fontstruct = (XFontStruct*)(xd->font);
+	}
+	first = fontstruct->min_char_or_byte2;
+	last = fontstruct->max_char_or_byte2;
+    } else {
+	fontstruct = NULL;
+    }
+
+    if (fontstruct != NULL && c == 0) {
+        *ascent = fontstruct->ascent;
+        *descent = fontstruct->descent;
+        *width = fontstruct->max_bounds.width;
+    } else if (fontstruct != NULL && first <= c && c <= last) {
+	if (xd->fontface != SYMBOL_FONTFACE) {
+	    char buf[2];
+	    XFontSetExtents *extent = XExtentsOfFontSet((XFontSet)(xd->font));
+
+	    buf[0] = c; buf[1] = 0;
+	    *ascent = extent->max_logical_extent.height * 4 / 5;
+	    *descent = extent->max_logical_extent.height / 5;
+	    if(utf8locale)
+		*width = Xutf8TextEscapement((XFontSet)(xd->font), buf, 
+					     strlen(buf));
+	    else
+		*width = XmbTextEscapement((XFontSet)(xd->font), buf, 
+					   strlen(buf));
+	} else {
+	    *ascent = fontstruct->per_char[c-first].ascent;
+	    *descent = fontstruct->per_char[c-first].descent;
+	    *width = fontstruct->per_char[c-first].width;
+	}
+    } else {
+	*ascent = 0;
+	*descent = 0;
+	*width = 0;
+    }
+#else
     first = f->min_char_or_byte2;
     last = f->max_char_or_byte2;
 
@@ -1243,17 +1403,16 @@ static void newX11_MetricInfo(int c,
 	*ascent = f->ascent;
 	*descent = f->descent;
 	*width = f->max_bounds.width;
-    }
-    else if (first <= c && c <= last) {
+    } else if (first <= c && c <= last) {
 	*ascent = f->per_char[c-first].ascent;
 	*descent = f->per_char[c-first].descent;
 	*width = f->per_char[c-first].width;
-    }
-    else {
+    } else {
 	*ascent = 0;
 	*descent = 0;
 	*width = 0;
     }
+#endif
 }
 
 static void newX11_Clip(double x0, double x1, double y0, double y1,
@@ -1450,8 +1609,15 @@ static void newX11_Close(NewDevDesc *dd)
     if (numX11Devices == 0)  {
       int fd = ConnectionNumber(display);
 	/* Free Resources Here */
-	while (nfonts--)  XFreeFont(display, 
-				    (XFontStruct *)(fontcache[nfonts]).font);
+	while (nfonts--)
+	  if (fontcache[nfonts].face == SYMBOL_FONTFACE -1)
+	      XFreeFont(display, (XFontStruct *)(fontcache[nfonts].font));
+	  else
+#ifdef USE_FONTSET
+	      XFreeFontSet(display, (XFontSet)(fontcache[nfonts].font));
+#else
+	      XFreeFont(display, (XFontStruct *)(fontcache[nfonts]).font);
+#endif
 	nfonts = 0;
         if(xd->handleOwnEvents == FALSE)
 	    removeInputHandler(&R_InputHandlers,
@@ -1667,8 +1833,17 @@ static void newX11_Text(double x, double y,
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	len = strlen(str);
-	XRotDrawString(display, (XFontStruct *)xd->font, rot, xd->window, 
-		       xd->wgc, (int)x, (int)y, str);
+	if (xd->fontface == SYMBOL_FONTFACE)
+	    XRotDrawString(display, (XFontStruct *)(xd->font), rot, xd->window,
+			   xd->wgc, (int)x, (int)y, str);
+	else
+#ifdef USE_FONTSET
+	    XmbRotDrawString(display, (XFontSet)(xd->font), rot, xd->window,
+			     xd->wgc, (int)x, (int)y, str);
+#else
+	    XRotDrawString(display, (XFontStruct *) xd->font, rot, xd->window,
+			   xd->wgc, (int)x, (int)y, str);
+#endif
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);
 #endif
@@ -1845,12 +2020,19 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     /* Nominal Character Sizes in Pixels */
 
     SetBaseFont(xd);
-    { 
+    {
+#ifdef USE_FONTSET
+	char **ml;
+	XFontStruct *f, **fs_list;
+	XFontsOfFontSet((XFontSet) xd->font, &fs_list, &ml);
+	f = fs_list[0];
+#else
 	XFontStruct *f = (XFontStruct *) xd->font;
+#endif
 	dd->cra[0] = f->max_bounds.rbearing - f->min_bounds.lbearing;
 	dd->cra[1] = f->max_bounds.ascent + f->max_bounds.descent;
     }
-    
+
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
     /* so that it is exactly over the plotting point */
