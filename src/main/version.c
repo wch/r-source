@@ -78,3 +78,17 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return value;
 }
+
+void PrintVersion(char *s)
+{
+    char tmp[50];
+    sprintf(s, "Version %s.%s %s (%s %s, %s)\n",
+	    R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
+    sprintf(tmp, "Copyright (C) %s R Development Core Team\n\n", R_YEAR);
+    strcat(s, tmp);
+    strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
+    strcat(s, "You are welcome to redistribute it under the terms of the\n");
+    strcat(s, "GNU General Public License.  For more information about\n");
+    strcat(s, "these matters, see http://www.gnu.org/copyleft/gpl.html.\n");
+}
+
