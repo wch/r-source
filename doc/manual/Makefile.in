@@ -10,10 +10,18 @@ subdir = doc/manual
 
 include $(top_builddir)/Makeconf
 
+MAKEINFO = @MAKEINFO@
+TEXI2DVI = $(top_srcdir)/tools/texi2dvi
+TEXI2PDF = $(TEXI2DVI) --pdf
+PDFLATEX = @PDFLATEX@
+
+infodir = @infodir@
+INSTALL_INFO = @INSTALL_INFO@
+
 # set the next to `.' if your LaTeX lacks the ae font package
-AE=ae
+AE = @AE@
 # set the next to `ae' to omit the hyperlinks
-PDF=pdf
+PDF = pdf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Manual.tex.in Reference.tex.in \
@@ -41,18 +49,20 @@ Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps \
 	   Man-5.ps Man-6.ps Man-7.ps Man-8.ps
 Manbooks = $(Manparts:.ps=.bps)
 
-MAKEINFO = makeinfo
-TEXI2DVI = $(top_srcdir)/tools/texi2dvi
-
 .SUFFIXES:
 .SUFFIXES: .dvi .info .texi .pdf
 
-all: Makefile R lib2tex dvi
+all: Makefile lib2tex R dvi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+	@chmod +x $@
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
@@ -61,17 +71,10 @@ R:
 	  done \
 	fi
 
-lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-	@chmod +x $@
-
 Manual.tex: $(srcdir)/Manual.tex.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-
 Reference.tex: $(srcdir)/Reference.tex.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
@@ -82,13 +85,13 @@ Reference.tex: $(srcdir)/Reference.tex.in $(top_builddir)/config.status
 .texi.info:
 	$(MAKEINFO) $<
 .texi.pdf:
-	$(TEXI2DVI) --pdf $<
+	$(TEXI2PDF) $<
 
-dvi: Manual.dvi Reference.dvi R-external.dvi
+dvi: Manual.dvi Reference.dvi R-external.dvi R-prog.dvi
 
 Manual.dvi: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making LaTeX documentation ..."
-	@$(RM) -f *.aux Manual.toc
+	@rm -f *.aux Manual.toc
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Manual.tex}'
 	@$(MAKEINDEX) Manual
@@ -97,16 +100,14 @@ Manual.dvi: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 
 Reference.dvi: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo "LaTeX documentation: Reference Index ..."
-	@$(RM) -f *.aux Reference.toc Reference.ind
+	@rm -f *.aux Reference.toc Reference.ind
 	@TEXINPUTS="$(srcdir)/$(AE):$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 	@$(MAKEINDEX) Reference
 	@TEXINPUTS="$(srcdir)/$(AE):$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
-
 Version.tex: $(top_builddir)/bin/R
 	$(top_builddir)/bin/R --version > $@
-
 pkg-%.tex: FORCE
 	@echo "Collecting components of $@ ..."
 	@cd $(top_builddir)/src/library && \
@@ -115,18 +116,18 @@ pkg-%.tex: FORCE
 FORCE:
 
 R-external.dvi: R-external.texi $(srcdir)/texinfo.tex
+R-prog.dvi: R-prog.texi $(srcdir)/texinfo.tex
 
-info: R-external.info
+info: R-external.info R-prog.info
 
 R-external.info: R-external.texi
+R-prog.info: R-prog.texi
 
-PDFLATEX = pdflatex
-
-pdf: Manual.pdf Reference.pdf R-external.pdf
+pdf: Manual.pdf Reference.pdf R-external.pdf R-prog.pdf
 
 Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/$(PDF)/Rd.sty
 	@echo "Making PDF LaTeX documentation ..."
-	@$(RM) -f *.aux Manual.toc
+	@rm -f *.aux Manual.toc
 	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{Manual.tex}'
 	@$(MAKEINDEX) Manual
@@ -135,7 +136,7 @@ Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/$(PDF)/Rd.sty
 
 Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	@echo "PDF LaTeX documentation: Reference Index ..."
-	@$(RM) -f *.aux Reference.toc Reference.ind
+	@rm -f *.aux Reference.toc Reference.ind
 	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{Reference.tex}'
 	@$(MAKEINDEX) Reference
@@ -145,6 +146,7 @@ Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	  $(PDFLATEX) '\nonstopmode\input{Reference.tex}'
 
 R-external.pdf: R-external.texi $(srcdir)/texinfo.tex
+R-prog.pdf: R-prog.texi $(srcdir)/texinfo.tex
 
 install: installdirs
 	@echo "Installing doc/manual ..."
@@ -154,9 +156,41 @@ install: installdirs
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual
 install-strip: install
+install-dvi: dvi
+	@$(MKINSTALLDIRS) $(rhome)/doc/dvi
+	@for f in *.dvi; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/dvi; \
+	done
+install-info: info $(infodir)/dir
+	@for f in R-prog.info*; do \
+	  $(INSTALL_DATA) $${f} $(infodir); \
+	done
+	@$(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/R-prog.info \
+	  || echo "You need to adjust $(infodir)/dir manually"
+install-pdf: pdf
+	@$(MKINSTALLDIRS) $(rhome)/doc/pdf
+	@for f in *.pdf; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/pdf; \
+	done
+
+$(infodir)/dir:
+	@$(MKINSTALLDIRS) -p $(infodir)
+	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
+
 uninstall:
 	@echo "Uninstalling doc/manual ..."
 	@rm -rf $(rhome)/doc/manual
+uninstall-dvi:
+	@-rm -f $(rhome)/doc/dvi/*
+	@-rmdir $(rhome)/doc/dvi
+uninstall-info:
+	@$(INSTALL_INFO) --remove \
+	  --info-dir=$(infodir) $(infodir)/R-prog.info \
+	  || echo "You need to adjust $(infodir)/dir manually"
+	@rm -f $(infodir)/R-prog.info*
+uninstall-pdf:
+	@-rm -f $(rhome)/doc/pdf/*
+	@-rmdir $(rhome)/doc/pdf
 
 mostlyclean: clean
 clean:
@@ -168,9 +202,11 @@ clean:
 	  *.ps *.ps-2 *.info*
 	@-rm -f R-external.cp R-external.fn R-external.ky R-external.pg \
 	  R-external.tmp R-external.tp R-external.vr
+	@-rm -f R-prog.cp R-prog.fn R-prog.ky R-prog.pg \
+	  R-prog.tmp R-prog.tp R-prog.vr
 distclean: clean
-	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex \
-	  ABOUT.tex Manual.tex *.pdf *.dvi
+	@-rm -f auto Version.tex pkg-*.tex Makefile install-info \
+	  lib2tex ABOUT.tex Manual.tex *.pdf *.dvi
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
@@ -179,4 +215,3 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
         done
-
