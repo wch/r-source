@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Core team.
- *  Copyright (C) 2002      The R Foundation
+ *  Copyright (C) 2002-3    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,9 @@ double bessel_k(double x, double alpha, double expo)
 {
     long nb, ncalc, ize;
     double *bk;
+#ifndef MATHLIB_STANDALONE
     char *vmax;
+#endif
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
