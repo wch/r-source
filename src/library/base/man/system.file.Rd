@@ -6,7 +6,7 @@ system.file(\dots, package = "base", lib.loc = .lib.loc, pkg, lib)
 \alias{system.file}
 \arguments{
   \item{\dots}{character strings, specifying subdirectory and file(s)
-    within some package.  The default, none or \code{""}, returns the
+    within some package.  The default, none, returns the
     root of the package.  Wildcards are not supported.}
   \item{package}{a character string with the name of a single package.
     An error occurs if more than one package name is given.}
