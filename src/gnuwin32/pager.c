@@ -66,18 +66,17 @@ static xbuf file2xbuf(char *name, int del)
     xlong dim;
     xint  ms;
     xbuf  xb;
-
-    f = CreateFile(name, GENERIC_READ, FILE_SHARE_WRITE,
+    f = CreateFile(name, GENERIC_READ, FILE_SHARE_READ,
 		   NULL, OPEN_EXISTING, 0, NULL);
     if (f == INVALID_HANDLE_VALUE) {
-	warning("File %s could not be opened by internal pager", name);
-	return NULL;
+		R_ShowMessage("Error opening file");
+		return NULL;
     }
     vv = GetFileSize(f, NULL);
     p = (char *) malloc((size_t) vv + 1);
     if (!p) {
 	CloseHandle(f);
-	warning("Insufficient memory to display %s in internal pager", name);
+	R_ShowMessage("Insufficient memory to display in internal pager");
 	return NULL;
     }
     ReadFile(f, p, vv, &rr, NULL);
@@ -221,9 +220,8 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
     ConsoleData p = getdata(pagerInstance);
     int i;
     xbuf nxbuf = file2xbuf(filename, deleteonexit);
-
     if (!nxbuf) {
-/*	R_ShowMessage("File not found or memory insufficient"); */
+	/* R_ShowMessage("File not found or memory insufficient"); */
 	return 0;
     }
     if (pagerActualKept == PAGERMAXKEPT) {
@@ -475,8 +473,10 @@ pager newpager(char *title, char *filename, char *header, int deleteonexit)
         c = newpager1win(wtitle, filename, deleteonexit);
     else
         c = newpagerNwin(wtitle, filename, deleteonexit);
-    haveusedapager++;
-    BringToTop(c);
+	if (c) {
+	    haveusedapager++;
+	    BringToTop(c);
+	}
     return c;
 }
 
