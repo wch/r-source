@@ -17,7 +17,7 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = AquaReadMe.txt AquaInstall.in R.fix Makefile.in aqua.R \
+DISTFILES = AquaReadMe.txt AquaInstall.in R.fix Makefile.in \
   $(SOURCES) $(HEADERS)
 
 SUBDIRS_WITH_NO_BUILD = Contents RAqua
