@@ -1129,11 +1129,11 @@ int R_ChooseFile(int new, char *buf, int len)
 		     "clicked",
 		     (GtkSignalFunc) R_ChooseFile_cancel,
 		     NULL);
-  gtk_signal_connect(GTK_FILE_SELECTION(fs),
+  gtk_signal_connect(GTK_OBJECT(fs),
 		     "delete",
 		     (GtkSignalFunc) R_ChooseFile_cancel,
 		     NULL);
-  gtk_signal_connect(GTK_FILE_SELECTION(fs),
+  gtk_signal_connect(GTK_OBJECT(fs),
 		     "destroy",
 		     (GtkSignalFunc) R_ChooseFile_cancel,
 		     NULL);
