@@ -130,8 +130,8 @@ par(\dots, no.readonly = FALSE)
       coordinates.
       Note that \code{c(\link{strwidth}(ch), \link{strheight}(ch))} for
       a given string \code{ch} is usually much more precise.}
-    \item{\code{din}}{\emph{\bold{R.O.}}; the device dimensions in
-      inches.}
+    \item{\code{din}}{\emph{\bold{R.O.}}; the device dimensions,
+      \code{(width,height)}, in inches.}
     \item{\code{err}}{(\emph{Unimplemented}; \R is silent when points
       outside the plot region are \emph{not} plotted.)
       The degree of error reporting desired.}
@@ -142,8 +142,8 @@ par(\dots, no.readonly = FALSE)
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,
 	y2)} which gives the (NDC) coordinates of the figure region in
       the display region of the device.}
-    \item{\code{fin}}{A numerical vector of the form \code{c(x, y)}
-      which gives the size of the figure region in inches.}
+    \item{\code{fin}}{The figure region dimensions,
+      \code{(width,height)}, in inches.}  
     \item{\code{font}}{An integer which specifies which font to use for
       text.  If possible, device drivers arrange so that 1 corresponds
       to plain text, 2 to bold face, 3 to italic and 4 to bold italic.}
@@ -233,8 +233,8 @@ par(\dots, no.readonly = FALSE)
 	right)} giving the size of the outer margins in inches.}
     \item{\code{pch}}{Either an integer specifying a symbol or a single
       character to be used as the default in plotting points. }
-    \item{\code{pin}}{The width and height of the current plot in
-      inches.}
+    \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
+      in inches.}
     \item{\code{plt}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the coordinates of the plot region as fractions of the
       current figure region.}
