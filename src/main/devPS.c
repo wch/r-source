@@ -542,10 +542,14 @@ void PostScriptSetColor(FILE *fp, double r, double g, double b)
 
 void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
 {
+    double dash;
     int i;
     fprintf(fp,"[");
-    for (i = 0; i < nlty; i++)
-	fprintf(fp," %.2f", lty[i] * lwd);
+    for (i = 0; i < nlty; i++) {
+        dash = lwd * ((i % 2) ? lty[i] + 1 : lty[i] - 1);
+	if (dash < 0) dash = 0;
+	fprintf(fp," %.2f", dash);
+    }
     fprintf(fp,"] 0 setdash\n");
 }
 
