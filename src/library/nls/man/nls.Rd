@@ -12,13 +12,13 @@
 \alias{summary.nls}
 \alias{print.summary.nls}
 \alias{weights.nls}
+\alias{AIC.nls}
 \title{Nonlinear Least Squares}
 \usage{
 nls(formula, data, start, control = nls.control(),
     algorithm = "default", trace = FALSE, subset,
     weights, na.action)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
  \item{formula}{a nonlinear model formula including variables and parameters}
  \item{data}{an optional data frame in which to evaluate the variables in
@@ -46,12 +46,13 @@ nls(formula, data, start, control = nls.control(),
     when the data contain \code{NA}s.}
 }
 \description{
-  Determine the nonlinear least squares estimates of the parameters.
+  Determine the nonlinear least squares estimates of the nonlinear model
+  parameters and return a class \code{nls} object.
 }
 \details{
   An \code{nls} object is a type of fitted model object.  It has methods
   for the generic functions \code{coef}, \code{formula}, \code{resid},
-  \code{print}, \code{summary}, and \code{fitted}.
+  \code{print}, \code{summary}, \code{AIC}, and \code{fitted}.
 }
 \value{
   A list of
@@ -60,8 +61,11 @@ nls(formula, data, start, control = nls.control(),
     argument.  The actual data values are present in the environment of
     the \code{m} component.}
 }
-\references{Bates, D.M. and Watts, D.G. (1988), \emph{Nonlinear Regression Analysis
-    and Its Applications}, Wiley}
+\references{
+  Bates, D.M. and Watts, D.G. (1988)
+  \emph{Nonlinear Regression Analysis and Its Applications},
+  Wiley
+}
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nlsModel}}}
 \examples{
