@@ -1,0 +1,40 @@
+This branch has a first version of `connections' implemented
+fairly closely following those in S4.
+
+The following functions have been changed to take connections rather
+than files.
+
+cat
+count.fields
+dput, dump
+parse
+readLines
+scan
+sink
+
+plus those that use them like dget, read.fwf, read.table, write, write.table.
+
+There are new functions
+
+open
+close
+seek
+
+file
+textConnection
+isOpen
+isIncomplete
+pushBack
+pushBackLength
+
+print and summary methods for connections
+
+showConnections, getAllConnections, getConnection
+
+stdin, stdout, stderr
+writeLines
+
+
+Things which are under testing are output textConnections and output
+pipes (on Unix).  In principle we could add fifos and sockets.
+
