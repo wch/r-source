@@ -119,12 +119,22 @@ foreach my $pkg (@ARGV) {
 	mkdir("$libdir", 0755)
 	    or die "Error: cannot create directory '$libdir'\n";
 
-	if(R_system(join(" ",
-			 (&shell_quote_file_path(${R::Vars::R_EXE}),
-			  "CMD INSTALL -l",
-			  &shell_quote_file_path($libdir),
-			  "$INSTALL_opts",
-			  &shell_quote_file_path($pkg))))) {
+	my $cmd;
+	if($WINDOWS) {
+	    $cmd = join(" ",
+			("Rcmd.exe INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "$INSTALL_opts",
+			 &shell_quote_file_path($pkg)));
+	} else {
+	    $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "CMD INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "$INSTALL_opts",
+			 &shell_quote_file_path($pkg)));
+	}
+	if(R_system($cmd)) {
 	    $log->error("installation failed");
 	}
 	print("\n");
