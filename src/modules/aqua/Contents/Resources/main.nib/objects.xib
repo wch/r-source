@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="69" name="allObjects">
+  <array count="118" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="7" name="items">
@@ -388,8 +388,395 @@
     <reference idRef="243"/>
     <reference idRef="245"/>
     <reference idRef="246"/>
+    <object class="IBCarbonWindow" id="247">
+      <string name="windowRect">104 199 530 679 </string>
+      <string name="title">R Preferences</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="248">
+        <string name="bounds">0 0 426 480 </string>
+        <array count="5" name="subviews">
+          <object class="IBCarbonTab" id="249">
+            <string name="bounds">12 20 340 460 </string>
+            <array count="3" name="subviews">
+              <object class="IBCarbonUserPane" id="251">
+                <string name="bounds">42 20 340 460 </string>
+                <array count="2" name="subviews">
+                  <object class="IBCarbonGroupBox" id="255">
+                    <string name="bounds">184 40 279 440 </string>
+                    <array count="6" name="subviews">
+                      <object class="IBCarbonStaticText" id="256">
+                        <string name="bounds">212 56 228 142 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1007</int>
+                        <string name="title">Output Color</string>
+                      </object>
+                      <object class="IBCarbonButton" id="257">
+                        <string name="bounds">212 150 232 266 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1009</int>
+                        <string name="title">Choose Color</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="258">
+                        <string name="bounds">247 56 263 142 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1008</int>
+                        <string name="title">Input Color</string>
+                      </object>
+                      <object class="IBCarbonButton" id="259">
+                        <string name="bounds">244 150 264 266 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1010</int>
+                        <string name="title">Choose Color</string>
+                      </object>
+                      <object class="IBCarbonButton" id="260">
+                        <string name="bounds">212 278 232 432 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1011</int>
+                        <string name="title">Choose Background</string>
+                      </object>
+                      <object class="IBCarbonButton" id="261">
+                        <string name="bounds">244 278 264 432 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1012</int>
+                        <string name="title">Choose Background</string>
+                      </object>
+                    </array>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">1006</int>
+                    <string name="title">Text Colors</string>
+                  </object>
+                  <object class="IBCarbonGroupBox" id="254">
+                    <string name="bounds">50 40 142 440 </string>
+                    <array count="4" name="subviews">
+                      <object class="IBCarbonButton" id="252">
+                        <string name="bounds">78 56 98 177 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1002</int>
+                        <string name="title">Choose Font</string>
+                        <string name="helpTagText">Select Font size, shape, etc</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="253">
+                        <string name="bounds">118 56 134 294 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1003</int>
+                        <string name="title">Font name and size</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="298">
+                        <string name="bounds">78 272 94 331 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1004</int>
+                        <string name="title">Tab Size</string>
+                      </object>
+                      <object class="IBCarbonEditText" id="299">
+                        <string name="bounds">81 344 97 421 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">1005</int>
+                        <boolean name="useInlineInput">TRUE</boolean>
+                      </object>
+                    </array>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">1001</int>
+                    <string name="title">Fonts and Tabs</string>
+                  </object>
+                </array>
+                <ostype name="controlSignature">PRTB</ostype>
+                <int name="controlID">1000</int>
+                <string name="title">Console</string>
+                <int name="featureBits">2</int>
+              </object>
+              <object class="IBCarbonUserPane" id="293">
+                <string name="bounds">42 20 340 460 </string>
+                <array count="2" name="subviews">
+                  <object class="IBCarbonButton" id="295">
+                    <string name="bounds">62 40 82 272 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">2001</int>
+                    <string name="title">Choose Initial Working Directory</string>
+                  </object>
+                  <object class="IBCarbonEditText" id="297">
+                    <string name="bounds">106 43 123 437 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">2002</int>
+                    <string name="title">~/</string>
+                    <string name="helpTagText">The initial working directory is assumed to be the user directory ~/</string>
+                  </object>
+                </array>
+                <ostype name="controlSignature">PRTB</ostype>
+                <int name="controlID">1001</int>
+                <int name="featureBits">2</int>
+              </object>
+              <object class="IBCarbonUserPane" id="294">
+                <string name="bounds">42 20 340 460 </string>
+                <array count="4" name="subviews">
+                  <object class="IBCarbonButton" id="304">
+                    <string name="bounds">62 40 82 145 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">3001</int>
+                    <string name="title">Device Font</string>
+                  </object>
+                  <object class="IBCarbonStaticText" id="305">
+                    <string name="bounds">93 40 109 440 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">3002</int>
+                    <string name="title">Font Name</string>
+                    <string name="helpTagText">Should be a Postscript Font Name</string>
+                  </object>
+                  <object class="IBCarbonGroupBox" id="309">
+                    <string name="bounds">122 40 254 440 </string>
+                    <array count="9" name="subviews">
+                      <object class="IBCarbonStaticText" id="306">
+                        <string name="bounds">150 56 166 132 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3004</int>
+                        <string name="title">Point Size</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="307">
+                        <string name="bounds">187 56 203 132 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3005</int>
+                        <string name="title">Width</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="308">
+                        <string name="bounds">222 56 238 132 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3006</int>
+                        <string name="title">Height</string>
+                      </object>
+                      <object class="IBCarbonEditText" id="310">
+                        <string name="bounds">149 162 165 239 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3007</int>
+                        <string name="title">12</string>
+                      </object>
+                      <object class="IBCarbonEditText" id="311">
+                        <string name="bounds">187 162 203 239 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3008</int>
+                        <string name="title">5</string>
+                      </object>
+                      <object class="IBCarbonEditText" id="312">
+                        <string name="bounds">219 160 235 237 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3009</int>
+                        <string name="title">6</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="316">
+                        <string name="bounds">186 294 202 370 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3011</int>
+                        <string name="title">inches</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="317">
+                        <string name="bounds">222 294 238 370 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3012</int>
+                        <string name="title">inches</string>
+                      </object>
+                      <object class="IBCarbonStaticText" id="318">
+                        <string name="bounds">148 294 164 370 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3010</int>
+                        <string name="title">points</string>
+                      </object>
+                    </array>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">3003</int>
+                    <string name="title">R Side</string>
+                  </object>
+                  <object class="IBCarbonGroupBox" id="315">
+                    <string name="bounds">268 40 326 440 </string>
+                    <array count="2" name="subviews">
+                      <object class="IBCarbonCheckBox" id="313">
+                        <string name="bounds">296 52 310 154 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3013</int>
+                        <string name="title">Antialiasing</string>
+                        <string name="helpTagText">With Antialiasing &quot;ON&quot; it looks very nice but slower.</string>
+                      </object>
+                      <object class="IBCarbonCheckBox" id="314">
+                        <string name="bounds">296 319 310 424 </string>
+                        <ostype name="controlSignature">PREF</ostype>
+                        <int name="controlID">3014</int>
+                        <string name="title">Auto Refresh</string>
+                        <string name="helpTagText">With Auto Refresh &quot;ON&quot; it is slower but more user friendly</string>
+                      </object>
+                    </array>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">3013</int>
+                    <string name="title">MacOS Side</string>
+                  </object>
+                </array>
+                <ostype name="controlSignature">PRTB</ostype>
+                <int name="controlID">1002</int>
+                <int name="featureBits">2</int>
+              </object>
+            </array>
+            <ostype name="controlSignature">PRTT</ostype>
+            <int name="controlID">1000</int>
+            <int name="tabSelection">3</int>
+            <array count="3" name="tabItems">
+              <dictionary count="4">
+                <string>contentResID</string>
+                <string>0</string>
+                <string>tabEnabled</string>
+                <string>1</string>
+                <string>tabName</string>
+                <string>Console</string>
+                <string>userPane</string>
+                <reference idRef="251"/>
+              </dictionary>
+              <dictionary count="4">
+                <string>contentResID</string>
+                <string>0</string>
+                <string>tabEnabled</string>
+                <string>1</string>
+                <string>tabName</string>
+                <string>Start Up</string>
+                <string>userPane</string>
+                <reference idRef="293"/>
+              </dictionary>
+              <dictionary count="4">
+                <string>contentResID</string>
+                <string>0</string>
+                <string>tabEnabled</string>
+                <string>1</string>
+                <string>tabName</string>
+                <string>Quartz Device</string>
+                <string>userPane</string>
+                <reference idRef="294"/>
+              </dictionary>
+            </array>
+          </object>
+          <object class="IBCarbonButton" id="277">
+            <string name="bounds">386 141 406 211 </string>
+            <ostype name="controlSignature">PREF</ostype>
+            <int name="controlID">5000</int>
+            <string name="title">Apply</string>
+            <string name="helpTagText">Use current preferences settings for the current session only</string>
+            <int name="buttonType">1</int>
+          </object>
+          <object class="IBCarbonButton" id="278">
+            <string name="bounds">386 270 406 340 </string>
+            <ostype name="controlSignature">PREF</ostype>
+            <int name="controlID">5003</int>
+            <string name="title">Save</string>
+            <string name="helpTagText">Applies current settings to this session and saves for future use</string>
+          </object>
+          <object class="IBCarbonButton" id="279">
+            <string name="bounds">386 390 406 460 </string>
+            <ostype name="controlSignature">PREF</ostype>
+            <int name="controlID">5001</int>
+            <string name="title">Cancel</string>
+            <int name="buttonType">2</int>
+          </object>
+          <object class="IBCarbonButton" id="276">
+            <string name="bounds">386 20 406 96 </string>
+            <ostype name="controlSignature">PREF</ostype>
+            <int name="controlID">5002</int>
+            <string name="title">Defaults</string>
+            <string name="helpTagText">Resets settitngs to default values</string>
+          </object>
+        </array>
+      </object>
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <int name="carbonWindowClass">4</int>
+      <int name="themeBrush">49</int>
+      <int name="windowPosition">7</int>
+      <string name="helpTagText">Choose your favorite R settings</string>
+    </object>
+    <reference idRef="248"/>
+    <reference idRef="249"/>
+    <reference idRef="251"/>
+    <reference idRef="252"/>
+    <reference idRef="253"/>
+    <reference idRef="254"/>
+    <reference idRef="255"/>
+    <reference idRef="256"/>
+    <reference idRef="257"/>
+    <reference idRef="258"/>
+    <reference idRef="259"/>
+    <reference idRef="260"/>
+    <reference idRef="261"/>
+    <reference idRef="276"/>
+    <reference idRef="277"/>
+    <reference idRef="278"/>
+    <reference idRef="279"/>
+    <object class="IBCarbonUserPane" id="280">
+      <string name="bounds">-24675 12086 -24377 12526 </string>
+      <array count="9" name="subviews">
+        <object class="IBCarbonCheckBox" id="281">
+          <string name="bounds">15898 5814 15900 5910 </string>
+          <string name="title">AntiAliasing</string>
+        </object>
+        <object class="IBCarbonCheckBox" id="282">
+          <string name="bounds">15898 24625 15900 24747 </string>
+          <string name="title">Auto Refresh</string>
+        </object>
+        <object class="IBCarbonStaticText" id="284">
+          <string name="bounds">15998 24362 16014 24755 </string>
+          <string name="title">Font Name</string>
+        </object>
+        <object class="IBCarbonButton" id="283">
+          <string name="bounds">15958 24386 15978 24450 </string>
+          <string name="title">Choose Font</string>
+        </object>
+        <object class="IBCarbonEditText" id="285">
+          <string name="bounds">15970 24632 15966 24685 </string>
+          <string name="title">12</string>
+        </object>
+        <object class="IBCarbonStaticText" id="286">
+          <string name="bounds">15960 24529 15976 24605 </string>
+          <string name="title">Point Size</string>
+        </object>
+        <object class="IBCarbonEditText" id="287">
+          <string name="bounds">16099 24428 16095 24428 </string>
+          <string name="title">5</string>
+        </object>
+        <object class="IBCarbonStaticText" id="288">
+          <string name="bounds">16088 24358 16104 24405 </string>
+          <string name="title">Width:</string>
+        </object>
+        <object class="IBCarbonStaticText" id="290">
+          <string name="bounds">16088 24498 16104 24545 </string>
+          <string name="title">Height:</string>
+        </object>
+      </array>
+      <int name="featureBits">2</int>
+    </object>
+    <reference idRef="281"/>
+    <reference idRef="282"/>
+    <reference idRef="283"/>
+    <reference idRef="284"/>
+    <reference idRef="285"/>
+    <reference idRef="286"/>
+    <reference idRef="287"/>
+    <reference idRef="288"/>
+    <reference idRef="290"/>
+    <reference idRef="293"/>
+    <reference idRef="294"/>
+    <reference idRef="295"/>
+    <reference idRef="297"/>
+    <reference idRef="298"/>
+    <reference idRef="299"/>
+    <reference idRef="304"/>
+    <reference idRef="305"/>
+    <reference idRef="306"/>
+    <reference idRef="307"/>
+    <reference idRef="308"/>
+    <reference idRef="309"/>
+    <reference idRef="310"/>
+    <reference idRef="311"/>
+    <reference idRef="312"/>
+    <reference idRef="313"/>
+    <reference idRef="314"/>
+    <reference idRef="315"/>
+    <reference idRef="316"/>
+    <reference idRef="317"/>
+    <reference idRef="318"/>
   </array>
-  <array count="69" name="allParents">
+  <array count="118" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -459,8 +846,57 @@
     <reference idRef="235"/>
     <reference idRef="235"/>
     <reference idRef="235"/>
+    <reference idRef="1"/>
+    <reference idRef="247"/>
+    <reference idRef="248"/>
+    <reference idRef="249"/>
+    <reference idRef="254"/>
+    <reference idRef="254"/>
+    <reference idRef="251"/>
+    <reference idRef="251"/>
+    <reference idRef="255"/>
+    <reference idRef="255"/>
+    <reference idRef="255"/>
+    <reference idRef="255"/>
+    <reference idRef="255"/>
+    <reference idRef="255"/>
+    <reference idRef="248"/>
+    <reference idRef="248"/>
+    <reference idRef="248"/>
+    <reference idRef="248"/>
+    <reference idRef="249"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="280"/>
+    <reference idRef="249"/>
+    <reference idRef="249"/>
+    <reference idRef="293"/>
+    <reference idRef="293"/>
+    <reference idRef="254"/>
+    <reference idRef="254"/>
+    <reference idRef="294"/>
+    <reference idRef="294"/>
+    <reference idRef="309"/>
+    <reference idRef="309"/>
+    <reference idRef="309"/>
+    <reference idRef="294"/>
+    <reference idRef="309"/>
+    <reference idRef="309"/>
+    <reference idRef="309"/>
+    <reference idRef="315"/>
+    <reference idRef="315"/>
+    <reference idRef="294"/>
+    <reference idRef="309"/>
+    <reference idRef="309"/>
+    <reference idRef="309"/>
   </array>
-  <dictionary count="4" name="nameTable">
+  <dictionary count="5" name="nameTable">
     <string>AboutWindow</string>
     <reference idRef="190"/>
     <string>Files Owner</string>
@@ -469,6 +905,8 @@
     <reference idRef="166"/>
     <string>MenuBar</string>
     <reference idRef="29"/>
+    <string>PrefsWindow</string>
+    <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">247</unsigned_int>
+  <unsigned_int name="nextObjectID">319</unsigned_int>
 </object>

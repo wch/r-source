@@ -73,7 +73,11 @@ TXNFrameID		OutframeID	= 0;
 TXNFrameID		InframeID	= 0;
 
 WindowRef	RAboutWindow=NULL;
+WindowRef	RPrefsWindow=NULL;
+
 pascal void RAboutHandler(WindowRef window);
+pascal void RPrefsHandler(WindowRef window);
+
 #define kRAppSignature '0FFF'
 //int 	RFontSize = 12;
 
@@ -110,12 +114,27 @@ void RSetFontSize(int size);
 #define kRExampleRun		'rexr'
                 
                 
+enum {kTabMasterSig = 'PRTT', kTabMasterID = 1000,kTabPaneSig= 'PRTB', kPrefControlsSig = 'PREF'};
+enum {kDummyValue = 0,kMaxNumTabs= 3};
+enum{kApplyPrefsButton = 5000,kCancelPrefsButton = 5001, kDefaultPrefsButton = 5002, kSavePrefsButton = 5003};
+
+#define kConsoleFontButton  1002
+#define kOutputColorButton  1009
+#define kInputColorButton   1010
+#define kOutputBackButton   1011
+#define kInputBackButton    1012
+#define	kWorkingDirButton   2001
+#define	kDeviceFontButton   3001
+
+
+static void SetInitialTabState(WindowRef theWindow);
                 
 static pascal OSStatus
 RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 static pascal OSStatus
 RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 void RescaleInOut(double prop);
+void CallFontPanel(void);
 
 OSErr DoSelectDirectory( void );
 OSStatus SelectFile(FSSpec *outFSSpec,  char *Title);
@@ -124,6 +143,7 @@ OSStatus FSMakePath(SInt16 volRefNum, SInt32 dirID, ConstStr255Param name, UInt8
 	UInt32 maxPathSize);
 OSErr FSMakeFSRef(FSVolumeRefNum volRefNum, SInt32 dirID, ConstStr255Param name, FSRef *ref);
         
+ControlRef GrabCRef(WindowRef theWindow,OSType theSig, SInt32 theNum);
 
 int Raqua_ShowFiles(int nfile, char **fileName, char **title,
 		char *WinTitle, Rboolean del, char *pager);
@@ -139,6 +159,10 @@ void Raqua_FlushConsole(void);
 void Raqua_ClearerrConsole(void);
 int NewHelpWindow(char *fileName, char *title, char *WinTitle);
 		     
+                     
+OSStatus MySetFontSelection (WindowRef thisWindow);
+OSStatus MyGetFontSelection (EventRef event);
+                     
 void consolecmd(char *cmd);
 void RSetColors(void);
                    
@@ -149,6 +173,10 @@ static const EventTypeSpec	REvents[] =
 	{ kEventClassTextInput, kEventTextInputUnicodeForKeyEvent }
 };
 
+    EventTypeSpec	tabControlEvents[] ={
+    { kEventClassControl, kEventControlHit },
+    { kEventClassCommand, kEventCommandProcess }};
+
 static const EventTypeSpec	aboutSpec =
 	{ kEventClassWindow, kEventWindowClose };
 
@@ -157,7 +185,12 @@ static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
                                      AppleEvent* reply, UInt32 refcon); 
 static pascal OSStatus KeybHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void *inUserData );
 static pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData);
+static pascal OSStatus RPrefsWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData);
+
 OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
+
+static pascal OSStatus PrefsTabEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
+static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 
 WindowRef			ConsoleWindow=NULL;
 
@@ -172,13 +205,19 @@ static const EventTypeSpec	RCmdEvents[] =
 
 static const EventTypeSpec	RGlobalWinEvents[] =
 {
-        { kEventClassWindow, kEventWindowBoundsChanged }
+        { kEventClassWindow, kEventWindowBoundsChanged },
+        { kEventClassWindow, kEventWindowFocusAcquired },
+        { kEventClassWindow, kEventWindowFocusRelinquish },
+        { kEventClassFont, kEventFontPanelClosed},
+        { kEventClassFont, kEventFontSelection} 
 };
 
 static const EventTypeSpec	RCloseWinEvent[] = 
 {
         { kEventClassWindow, kEventWindowClose }        
 };
+
+ EventTypeSpec	okcanxControlEvents[] ={{ kEventClassControl, kEventControlHit }};
 
 void HistBack(void);
 void HistFwd(void);
@@ -194,6 +233,8 @@ static 	short 	RTopicHelpItem=-1;
 static	short 	RunExampleItem=-1;
 static	short	SearchHelpItem=-1;
 static  short  	PreferencesItem=-1;
+
+#define IntToFixed(a) ((Fixed)(a) << 16)
 
 void GetRPrefs(void);
 void SaveRPrefs(void);
@@ -235,6 +276,10 @@ void Raqua_StartConsole(void)
    if(err != noErr)
      goto noconsole;
    
+    err = CreateWindowFromNib(nibRef,CFSTR("PrefsWindow"),&RPrefsWindow);
+   if(err != noErr)
+     goto noconsole;
+
     if(nibRef)
      DisposeNibReference(nibRef);
   
@@ -267,13 +312,13 @@ void Raqua_StartConsole(void)
         err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
                             &OutframeID, 0);
-	fprintf(stderr,"\n err(1) =%d",err);	
+	// fprintf(stderr,"\n err(1) =%d",err);	
         frameOptions = kTXNShowWindowMask | kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
 		
         err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleInObject,
                             &InframeID, 0);
-	fprintf(stderr,"\n err(2) =%d",err);	
+//	fprintf(stderr,"\n err(2) =%d",err);	
 
         if (err == noErr){		
             if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ){
@@ -283,7 +328,7 @@ void Raqua_StartConsole(void)
                 if (err != noErr)
                     goto noconsole;
 		        
-	fprintf(stderr,"\n err(3) =%d",err);	
+//	fprintf(stderr,"\n err(3) =%d",err);	
 			
                 err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
                 err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
@@ -312,11 +357,38 @@ void Raqua_StartConsole(void)
                                                 RGlobalWinEvents, 0, NULL);
          err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP(QuitAppleEventHandler), 
                                     0, false );
-	fprintf(stderr,"\n err(5) =%d",err);	
+//	fprintf(stderr,"\n err(5) =%d",err);	
 
         TXNFocus(RConsoleOutObject,true);
         InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
                                 (void *)RAboutWindow, NULL);
+
+        InstallWindowEventHandler(RPrefsWindow, NewEventHandlerUPP(RPrefsWinHandler), 1, &aboutSpec, 
+                                (void *)RPrefsWindow, NULL);
+
+    InstallControlEventHandler( GrabCRef(RPrefsWindow,kTabMasterSig,kTabMasterID),  PrefsTabEventHandlerProc , GetEventTypeCount(tabControlEvents), tabControlEvents, RPrefsWindow, NULL );
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kApplyPrefsButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kCancelPrefsButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kDefaultPrefsButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kSavePrefsButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+     
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kConsoleFontButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kOutputColorButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kInputColorButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kOutputBackButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kInputBackButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kWorkingDirButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+
+        InstallControlEventHandler( GrabCRef(RPrefsWindow,kPrefControlsSig,kDeviceFontButton),  GenContEventHandlerProc , GetEventTypeCount(okcanxControlEvents), okcanxControlEvents, RPrefsWindow, NULL );        
+     
+
+        
         RSetColors();
      
         }
@@ -355,6 +427,7 @@ void Raqua_StartConsole(void)
        RSetTab(PrefTabSize);
        RSetFontSize(PrefFontSize);
 
+       EnableMenuCommand(NULL, kHICommandPreferences);
 noconsole:
     if(bundleURL)
      CFRelease( bundleURL );
@@ -426,7 +499,7 @@ OSStatus InitMLTE(void)
         
 	defaults.fontID = fontID;  
 	defaults.pointSize = kTXNDefaultFontSize;
-        fprintf(stderr,"\n fontsize=%d, %d",PrefFontSize, (Fixed)PrefFontSize);
+    //    fprintf(stderr,"\n fontsize=%d, %d",PrefFontSize, (Fixed)PrefFontSize);
   	defaults.encoding = CreateTextEncoding(kTextEncodingMacRoman, kTextEncodingDefaultVariant,
                                                 kTextEncodingDefaultFormat);
   	defaults.fontStyle = kTXNDefaultFontStyle;
@@ -570,6 +643,19 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
 }
  
 
+pascal void RPrefsHandler(WindowRef window)
+{
+    CFStringRef	text;
+    CFStringRef	appBundle;
+    ControlID	versionInfoID = {kRAppSignature, kRVersionInfoID};
+    ControlRef	versionControl;
+    ControlFontStyleRec	controlStyle;
+    
+    SetInitialTabState(window);
+     
+    ShowWindow(window);
+}
+
 pascal void RAboutHandler(WindowRef window)
 {
     CFStringRef	text;
@@ -591,6 +677,20 @@ pascal void RAboutHandler(WindowRef window)
     SelectWindow(window);    
 }
  
+pascal OSStatus RPrefsWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData)
+{
+    OSStatus result = eventNotHandledErr;
+    UInt32	eventKind;
+    
+    eventKind = GetEventKind(event);
+    if( eventKind == kEventWindowClose)
+    {
+     HideWindow( (WindowRef)userData );
+     result = noErr;
+    }
+    return result;
+}
+
 pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData)
 {
     OSStatus result = eventNotHandledErr;
@@ -660,6 +760,11 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 					sizeof( HICommand ), NULL, &command );
             if ( eventKind == kEventCommandProcess ){
              switch(command.commandID){
+/* Apple Menu */
+              case kHICommandPreferences:
+                   RPrefsHandler(RPrefsWindow);
+              break;
+              
 /* File Menu */
               case kHICommandOpen:
                result = SelectFile(&tempfss,"Select File to Source");
@@ -850,6 +955,24 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
        
         switch(eventClass){
          
+         case kEventClassFont:         //6
+         {
+             switch (eventKind)
+             {
+                    case kEventFontPanelClosed:                //7
+                        fprintf(stderr,"\n font win closed");
+                    break;
+         
+                    case kEventFontSelection:               //8
+                        err = MyGetFontSelection (inEvent);
+                    break;
+                    
+                    default:
+                    break;
+             }
+         } 
+         break;
+ 
         case kEventClassWindow:
          
         GetEventParameter (inEvent, kEventParamAttributes, typeUInt32, NULL, sizeof(RWinCode), 
@@ -874,7 +997,16 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              }
             break;
             
-
+            case kEventWindowFocusRelinquish:
+             SetFontInfoForSelection(kFontSelectionATSUIType,
+                    0, NULL, NULL);
+            break;
+            
+            case kEventWindowFocusAcquired:
+              err = SetFontInfoForSelection(kFontSelectionATSUIType, 0, NULL,
+                 GetWindowEventTarget(EventWindow));
+            break;
+            
             default:
             break;
         }    
@@ -1694,6 +1826,212 @@ void SaveRPrefs(void)
     (void)CFPreferencesAppSynchronize(appName);
 }
 
+// Handler for the prefs tabs
+// Switches between the 3 panes we have in this sample
+static pascal OSStatus PrefsTabEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
+{
+    static UInt16 lastPaneSelected = 1; // static, to keep track of it long term (in a more complex application
+                                        // you might store this in a data structure in the window refCon)                                            
+    WindowRef theWindow = (WindowRef)inUserData;  // get the windowRef, passed around as userData    
+    short controlValue = 0;
+    int qq;
+    //  Get the new value of the tab control now that the user has picked it    
+    controlValue = GetControlValue( GrabCRef(theWindow,kTabMasterSig,kTabMasterID) );
+    // same as last ?
+    if ( controlValue != lastPaneSelected )
+    {
+        // different from last time.
+        // Hide the current pane and make the user selected pane the active one
+        // our 3 tab pane IDs.  Put a dummy in so we can index without subtracting 1 (this array is zero based, 
+        // control values are 1 based).
+        int tabList[] = {kDummyValue, kTabMasterID,kTabMasterID+1,kTabMasterID+2};
+                                                                                    
+        // hide the current one, and set the new one
+        SetControlVisibility( GrabCRef(  theWindow, kTabPaneSig,  tabList[lastPaneSelected]), false, true );
+        SetControlVisibility( GrabCRef(  theWindow, kTabPaneSig,  tabList[controlValue]), true, true );    
+
+        // make sure the new configuration is drawn correctly by redrawing the Tab control itself        
+        Draw1Control( GrabCRef(theWindow,kTabMasterSig,kTabMasterID) );  
+        // and update our tracking
+        lastPaneSelected= controlValue;    
+    }
+    
+    return( eventNotHandledErr );
+}
+
+static void SetInitialTabState(WindowRef theWindow)
+{
+    int tabList[] = {kTabMasterID,kTabMasterID+1,kTabMasterID+2}; 
+    short qq=0;
+    // If we just run without setting the initial state, then the tab control
+    // will have both (or all) sets of controls overlapping each other.
+    // So we'll fix that by making one pane active right off the bat.
+    
+    // First pass, turn every pane invisible
+    for(qq=0;qq<kMaxNumTabs;qq++)
+    SetControlVisibility( GrabCRef(  theWindow, kTabPaneSig,  tabList[qq]), false, true );  
+    
+    // Set the tab control itself to have a value of 1, the first pane of the tab set
+    SetControlValue(GrabCRef(theWindow,kTabMasterSig,kTabMasterID),1 );
+
+    // This is the important bit, of course.  We're setting the currently selected pane
+    // to be visible, which makes the associated controls in the pane visible.
+    SetControlVisibility( GrabCRef(  theWindow, kTabPaneSig,  tabList[0]), true, true );
+
+}
+
+ControlRef GrabCRef(WindowRef theWindow,OSType theSig, SInt32 theNum)
+{   ControlID contID;
+    ControlRef theRef = NULL;
+    contID.signature= theSig;
+    contID.id=theNum;
+    GetControlByID( theWindow, &contID, &theRef );
+    return(theRef);
+}
+
+static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
+{
+    ControlRef theCont = NULL;
+    ControlID theID;
+    WindowRef theWindow = (WindowRef)inUserData;
+    
+    // Find out which button was clicked, and what it's ID is
+    GetEventParameter (inEvent, kEventParamDirectObject, typeControlRef,NULL, sizeof(ControlRef), NULL, &theCont);
+    GetControlID(theCont,&theID); 
+    // swtich off the ID
+ 
+    switch(theID.id){
+        case kApplyPrefsButton:  
+                                        // harvest the controls and close
+            HideWindow(theWindow);         break;
+        
+        case kCancelPrefsButton: 
+            HideWindow(theWindow);  // window goes away with no changes
+            // Because the only point of this sample is to run the prefs panel, I'll quit 
+        break;
+      
+        case kSavePrefsButton: 
+         fprintf(stderr,"\n kSavePrefsButton");
+        break;
+
+        case kDefaultPrefsButton: 
+         fprintf(stderr,"\n kDefaultPrefsButton");
+        break;
+  
+        case kConsoleFontButton:
+         CallFontPanel();
+        break;
+
+        case kOutputColorButton:
+         fprintf(stderr,"\n kOutputColorButton");
+        break;
+        
+        case kInputColorButton:
+         fprintf(stderr,"\n kInputColorButton");
+        break;
+        
+        case kOutputBackButton:
+         fprintf(stderr,"\n kOutputBackButton");
+        break;
+        
+        case kInputBackButton:
+         fprintf(stderr,"\n kInputBackButton");
+        break;
+
+        case kWorkingDirButton:
+         fprintf(stderr,"\n kWorkingDirButton");
+        break;
+        
+        case kDeviceFontButton:
+         fprintf(stderr,"\nkDeviceFontButton");
+        break;
+        
+        default:
+        break;
+    }
+
+   return( eventNotHandledErr );
+}
+
+
+
+void CallFontPanel(void)
+{
+
+   fprintf(stderr,"\n console font=%d", FPShowHideFontPanel());
+   
+}
+
+OSStatus MySetFontSelection (WindowRef thisWindow)
+{
+    OSStatus            status = noErr;
+    ATSUStyle           myStyle;              //1
+    ATSUAttributeTag    myTags[2];
+    ByteCount           mySizes[2];
+    ATSUAttributeValuePtr   myValues[2];
+    ATSUFontID          theFontID;
+    Fixed               theFontSize;
+    HIObjectRef     myHIObjectTarget;             //2
+
+    status = ATSUCreateStyle (&myStyle);             //3
+    verify_noerr (ATSUFindFontFromName ("Times Roman", 
+                            strlen ("Times Roman"), 
+                            kFontFullName, kFontNoPlatform, 
+                            kFontNoScript, kFontNoLanguage, 
+                            &theFontID) );                //4
+
+    myTags[0] = kATSUFontTag;                //5
+    mySizes[0] = sizeof (theFontID);
+    myValues[0] = &theFontID;
+
+    theFontSize = Long2Fix (36);                    //6
+    myTags[1] = kATSUSizeTag;
+    mySizes[1] = sizeof(theFontSize);
+    myValues[1] = &theFontSize;
+
+    verify_noerr (ATSUSetAttributes (myStyle, 2, 
+                            myTags, mySizes, myValues) );          //7
+    myHIObjectTarget = (HIObjectRef) GetWindowEventTarget (thisWindow);              //8
+    SetFontInfoForSelection (kFontSelectionATSUIType, 
+                            1, 
+                            &myStyle, 
+                            myHIObjectTarget);            //9
+    status = ATSUDisposeStyle (myStyle);             //10
+    return status;
+}
+
+OSStatus MyGetFontSelection (EventRef event)
+
+{
+    OSStatus status = noErr;
+    FMFontFamilyInstance    instance;                  //1
+    FMFontSize              fontSize;       
+
+    instance.fontFamily = kInvalidFontFamily;
+    instance.fontStyle = normal;
+    fontSize = 0;
+                                        
+    status = GetEventParameter (event, kEventParamFMFontFamily,
+                                    typeFMFontFamily, NULL,
+                                    sizeof (instance.fontFamily), 
+                                    NULL, &(instance.fontFamily));             //2
+    check_noerr (status);            //3
+
+    status = GetEventParameter (event, kEventParamFMFontStyle,
+                                    typeFMFontStyle, NULL,
+                                    sizeof (instance.fontStyle), 
+                                    NULL, &(instance.fontStyle));           //4
+    check_noerr (status);
+
+    status = GetEventParameter (event, kEventParamFMFontSize,
+                                    typeFMFontSize, NULL,
+                                    sizeof( fontSize), NULL, &fontSize);              //5
+                                    
+    fprintf(stderr,"\n family=%d, style=%d, size=%d",  instance.fontFamily, instance.fontStyle, fontSize);                              
+    check_noerr (status);
+
+    return status;
+}
 
 #endif /* HAVE_AQUA */
 
