@@ -4,7 +4,7 @@ setClass <-
              contains = character(), validity = NULL, access = list(),
              where = topenv(parent.frame()), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
 {
-    if(isClass(Class) && getClassDef(Class)@sealed)
+    if(isClass(Class, where = where) && getClassDef(Class, where)@sealed)
         stop(paste("\"", Class, "\" has a sealed class definition and cannot be redefined", sep=""))
     if(is(representation, "classRepresentation")) {
         ## supplied a class definition object
@@ -157,12 +157,15 @@ getClassDef <-
   function(Class, where = topenv(parent.frame()), package = attr(Class, "package"))
 {
     cname <- classMetaName(Class)
+    value <- NULL
     if(exists(cname, where))
-        get(cname, where)
-    else if(!is.null(package))
-        .getFromPackage(cname, package)
-    else
-        NULL
+        value <- get(cname, where)
+    else if(!is.null(package)) {
+        .requirePackage(package)
+        if(exists(cname, where))
+            value <- get(cname, where)
+    }
+    value
 }
 
 getClass <-
@@ -319,6 +322,7 @@ getClasses <-
 validObject <- function(object, test = FALSE) {
     Class <- class(object)
   classDef <- getClass(Class)
+    where <- findClass(classDef)[[1]]
   anyStrings <- function(x) if(identical(x, TRUE)) character() else x
   ## perform, from bottom up, the default and any explicit validity tests
   ## First, validate the slots.
@@ -342,7 +346,7 @@ validObject <- function(object, test = FALSE) {
     i <- i+1
     if(is.function(testFun) && !is(object, superClass))
       next ## skip conditional relations that don't hold for this object
-    validityMethod <- getClassDef(superClass)@validity
+    validityMethod <- getClassDef(superClass, where)@validity
     if(is(validityMethod, "function"))
       errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
     
@@ -370,7 +374,7 @@ setValidity <-
         Class <- ClassDef@className
     }
     else {
-      ClassDef <- getClassDef(Class)
+      ClassDef <- getClassDef(Class, where)
   }
     method <- .makeValidityMethod(Class, method)
     if(is.null(method) ||
@@ -387,13 +391,16 @@ resetClass <- function(Class, classDef, where) {
         if(is(Class, "classRepresentation")) {
             classDef <- Class
             Class <- Class@className
-            package <- classDef@package
             if(missing(where))
-                where <- .requirePackage(package)
+                where <- .classDefEnv(classDef)
         }
         else {
-            if(missing(where))
-                where <- findClass(Class, unique = "resetting the definition")[[1]]
+            if(missing(where)) {
+                if(missing(classDef))
+                    where <- findClass(Class, unique = "resetting the definition")[[1]]
+                else
+                    where <- .classDefEnv(classDef)
+            }
             if(missing(classDef)) {
                 classDef <- getClassDef(Class, where)
                 if(is.null(classDef)) {
@@ -498,12 +505,12 @@ initialize <- function(.Object, ...) {
 
 findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
     if(is(Class, "classRepresentation")) {
-        Class <- Class@className
         pkg <- Class@package
+        Class <- Class@className
     }
     else
         pkg <- ""
-    if(missing(where) && nchar(pkg))
+    if(missing(where) && nchar(pkg)) 
             where <- .requirePackage(pkg)
     else
         where <- as.environment(where)

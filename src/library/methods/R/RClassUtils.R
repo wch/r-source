@@ -1329,15 +1329,6 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 
 .className <- function(cl) if(is(cl, "classRepresentation")) cl@className else as(cl, "character")
 
-## utility to get class, generic function, or methodlist from a named package
-.getFromPackage <- function(name, package, optional = TRUE) {
-    where <- .requirePackage(package)
-    if(exists(name, where, inherits = FALSE))
-        get(name, where)
-    else
-        NULL
-}
-
 ## bootstrap version:  all classes and methods must be in the version of the methods
 ## package being built in the toplevel environment: MUST avoid require("methods") !
 .requirePackage <- function(package)
@@ -1345,14 +1336,24 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 
 ## real version of .requirePackage
 ..requirePackage <- function(package) {
-    if(identical(as.environment(package), topenv(parent.frame())))
+    ## FIXME:  the following is needed when attaching methods with namespace
+    if(.identC(package, "methods"))
+        return(topenv(parent.frame())) # must have methods available if .requirePackage is called
+    value  <- trySilent(as.environment(package))
+    if(identical(value, topenv(parent.frame())))
         return(topenv(parent.frame())) # .GlobalEnv, the package's environment set by sys.source, or a namespace
-    value <- trySilent(loadNamespace(package))
+    if(!is.environment(value))
+        value <- trySilent(loadNamespace(package))
     if(is.environment(value))
         return(value)
     require(package, character.only = TRUE)
-    searchPackageName <- paste("package:", package)
-    match(searchPackageName, search())
+    ##FIXME:  inefficient to require the paste() -- as.environment should include this
+    as.environment(paste("package:", package, sep=""))
 }
+
+.classDefEnv <- function(classDef) {
+    .requirePackage(classDef@package)
+}
+
     
         

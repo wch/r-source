@@ -222,7 +222,7 @@ getAllMethods <-
       else {
           if(search)
               fdef <- basicDef
-          gwhere <- "package:base" #  Arbitary: .genericAssign uses .BasicFunsList
+          gwhere <- "package:base" # ??
       }
       if(is(fdef, "genericFunction")) {
           deflt <- finalDefaultMethod(fdef@default)
@@ -240,23 +240,35 @@ getAllMethods <-
           stop("Invalid \"fdef\" for \"", f,
                "\" in getAllMethods; expected either a genericFunction object or a primitive function, got an object of class \"",
                class(fdef), "\"")
+      metaname <- mlistMetaName(fdef@generic, where)
       primCase <- is.primitive(deflt)
       ## NOTE: getGroup & getGeneric have to be called with the default
       ## topenv() here.  This may not work for installs w/o saved image TODO: check
       groups <- getGroup(fdef, TRUE)
-      methods <- fdef@default
-      funs <- c(fdef, groups)
+      methods <- fdef@default # NOT getMethods(fdef) which may be out of date
+      funs <- c(f, groups)
       changed <- FALSE
-      for(fun in rev(funs)) {
-          fun <- getGeneric(fun, where = where)
-          if(is.null(fun))
-              next # but really an error?
-          genericLabel <- if(primCase && !identical(fun, fdef)) f else character()
-          libs = .findAll(mlistMetaName(fun@generic), where)
-          for(mwhere in rev(libs)) {
-              mw <- getMethodsMetaData(fun, mwhere)
-              methods <- mergeMethods(methods, mw, genericLabel)
-              changed <- TRUE
+      for(ff in rev(funs)) {
+          ## for f itself, get the metadata, otherwise use getMethods, because
+          ## getAllMethods must have been called for these functions earlier
+          if(identical(ff, f)) {
+              libs = .findAll(metaname, where)
+              for(mwhere in rev(libs)) {
+                  mw <- getMethodsMetaData(f, mwhere)
+                  methods <- mergeMethods(methods, mw)
+                  changed <- TRUE
+              }
+          }
+          else {
+              fun <- getGeneric(ff, where = where)
+              if(is.null(fun))
+                  next # but really an error?
+              genericLabel <- if(primCase) f else character()
+              mw <- getMethods(fun)
+              if(is(mw, "MethodsList") && length(mw@methods) > 0) {
+                  methods <- mergeMethods(methods, mw, genericLabel)
+                  changed <- TRUE
+              }
           }
       }
       ev <- environment(fdef)

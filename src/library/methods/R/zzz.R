@@ -36,7 +36,6 @@
         assign("makeGeneric", .makeGeneric, envir = where)
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
-        assign(".requirePackage", ..requirePackage, envir = where)
         .makeBasicFuns(where)
         rm(.makeGeneric, .newClassRepresentation, envir = where)
         .InitMethodDefinitions(where)
@@ -46,6 +45,7 @@
         ## now seal the classes defined in the package
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)
+        assign(".requirePackage", ..requirePackage, envir = where)
         ## TO DO: .InitSubsetMethods(where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()

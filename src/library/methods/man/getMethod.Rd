@@ -63,10 +63,11 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     default, the function finds the methods for the corresponding
     generic function.  To restrict the search to a particular package
     or environment, e.g., supply this argument as
-    \code{getMethodsMetaData(f,where)}.
+    \code{getMethodsMetaData(f,where)}.  For \code{selectMethod}, see
+    the discussion of argument \code{fdef}.
     }
 
-  \item{mlist, fdef}{In \code{selectMethod}, the \code{MethodsList} object
+  \item{fdef}{In \code{selectMethod}, the \code{MethodsList} object
     and/or the generic function object can be explicitly supplied.  (Unlikely to be used, except in the
     recursive call that finds matches to more than one argument.)}
 

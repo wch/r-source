@@ -64,7 +64,7 @@ makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package,
                         slots = names(getSlots(classDef1)),
-                        classDef1 = getClass(Class), classDef2 = getClass(to)) {
+                        classDef1 = getClass(Class), classDef2) {
     ## test for datapart class:  must be the data part class, except
     ## that extensions within the basic classes are allowed (numeric, integer)
     dataEquiv <- function(cl1, cl2) {
@@ -74,7 +74,14 @@ makeExtends <- function(Class, to,
     class1Defined <- missing(slots) # only at this time can we construct methods
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     dataPartClass <- elNamed(slots, ".Data")
-    dataPart <- simple && !is.null(dataPartClass) && dataEquiv(to, dataPartClass)
+    dataPart <- FALSE
+    if(simple && !is.null(dataPartClass)) {
+        if(isClass(dataPartClass) && isClass(to)) {
+            ## note that dataPart, to are looked up in the methods package & parents:
+            ## Assertion is that only these classes are allowed as data slots
+            dataPart <- dataEquiv(dataPartClass, to)
+        }
+    }
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
         if(!isVirtualClass(classDef2))
@@ -118,10 +125,10 @@ makeExtends <- function(Class, to,
         }
         else if(simple) {
             replace <- .simpleExtReplace
-            if(isVirtualClass(to)) {  # a simple is to a virtual class => a union
+            if(isVirtualClass(classDef2)) {  # a simple is to a virtual class => a union
                 body(replace, envir = environment(replace)) <-
                     substitute({
-                        if(!is(value, FROM))
+                        if(!is(value, TO))
                             stop("The computation: as(object,\"", TO,
                                  "\") <- value is valid when object has class",
                                  FROM, "\" only if is(value, \"",TO,"\") is TRUE ( class(value) was \"",
