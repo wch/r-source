@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-17, 2002-12-01
+@set FAQ-VERSION 1.6-18, 2002-12-04
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1923,6 +1923,10 @@ bitmapped images.
 @c Polychotomous regression based on Multivariate Adaptive Regression
 @c Splines.
 @c </COMMENT>
+@item polspline
+Routines for the polynomial spline fitting routines hazard regression,
+hazard estimation with flexible tails, logspline, lspec, polyclass, and
+polymars, by C. Kooperberg and co-authors.
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
