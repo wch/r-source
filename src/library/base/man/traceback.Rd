@@ -6,16 +6,23 @@ traceback()
 \alias{traceback}
 \alias{.Traceback}
 \description{
-  \code{traceback()} prints the call stack of the last error, i.e., the
-  sequence of calls that lead to the error.  This is useful when an
+  \code{traceback()} prints the call stack of the last uncaught error,
+  i.e., the sequence of calls that lead to the error.  This is useful when an
   error occurs with an unidentifiable error message.
-  This stack is stored as a list in \code{.Traceback},
-  which \code{traceback} prints in a user-friendly format.
 }
 \value{
   \code{traceback()} returns nothing, but prints the deparsed call stack
   deepest call first.  The calls may print on more that one line, and
   the first line is labelled by the frame number.
+}
+\details{
+  The stack is stored as a list in \code{.Traceback},
+  which \code{traceback} prints in a user-friendly format.
+
+  Errors which are caught \emph{via} \code{\link{try}} or
+  \code{\link{tryCatch}} do not generate a traceback, so what is printed
+  is the call sequence for the last uncaught error, and not necessarily
+  the last error.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
