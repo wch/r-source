@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-14, 2001-08-01
+@set FAQ-VERSION 1.3-15, 2001-08-04
 @set REL-VERSION 1.3.0
 @c %**end of header
 
@@ -1397,9 +1397,6 @@ Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
 @item GLMMGibbs
 Generalised Linear Mixed Models by Gibbs sampling.
-@item GenKern
-Functions for generating and manipulating generalised binned kernel
-density estimates.
 @item GeneSOM
 Clustering genes using Self-Organizing Maps (SOMs).
 @item KernSmooth
@@ -1484,6 +1481,11 @@ R. Tibshirani, 1993, Chapman and Hall.
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
+@item car
+Companion to Applied Regression, containing functions for applied
+regession, linear models, and generalized linear models, with an
+emphasis on regression diagnostics, particularly graphical diagnostic
+methods.
 @item cclust
 Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
@@ -1654,8 +1656,6 @@ data, especially with regard to comparing expression levels between two
 types of tissue.
 @item pinktoe
 Converts S trees to @HTML{}/Perl files for interactive tree traversal.
-@item pls
-Univariate Partial Least Squares Regression.
 @item polymars
 Polychotomous regression based on Multivariate Adaptive Regression
 Splines.
@@ -1680,6 +1680,10 @@ two-sample comparison of binary outcomes.
 Recursive PARTitioning and regression trees.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
+@item sem
+Functions for fitting general linear Structural Equation Models (with
+observed and unobserved variables) by the method of maximum likelihood
+using the RAM approach.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
 @item sm
@@ -1755,15 +1759,13 @@ Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures.
+@item GenKern
+Functions for generating and manipulating generalised binned kernel
+density estimates.
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
 @item StatDataML
 Read and write StatDataML.
-@item car
-Companion to Applied Regression, containing functions for applied
-regession, linear models, and generalized linear models, with an
-emphasis on regression diagnostics, particularly graphical diagnostic
-methods.
 @item cxx
 A small C++ test package.
 @item dopt
@@ -1791,12 +1793,10 @@ A basic method for fitting and testing multivariate linear models,
 including stabilized test procedures by Laeuter et.@: al.
 @item npConfRatio
 Nonparametric confidence intervals for the ratios of medians.
+@item pls
+Univariate Partial Least Squares Regression.
 @item regexp
 Simple regular expression interface.
-@item sem
-Functions for fitting general linear Structural Equation Models (with
-observed and unobserved variables) by the method of maximum likelihood
-using the RAM approach.
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
@@ -2212,7 +2212,6 @@ dir /opt/R/src/unix
 * How should I set options?::   
 * How do file names work in Windows?::  
 * Why does plotting give a color allocation error?::  
-* Is R Y2K-compliant?::         
 * How do I convert factors to numeric?::  
 * Are Trellis displays implemented in R?::  
 * What are the enclosing and parent environments?::  
@@ -2489,7 +2488,7 @@ When you really need a @samp{\}, you have to escape it with another
 Thus, in filenames use something like @code{"c:\\data\\money.dat"}.  You
 can also replace @samp{\} by @samp{/} (@code{"c:/data/money.dat"}).
 
-@node Why does plotting give a color allocation error?, Is R Y2K-compliant?, How do file names work in Windows?, R Miscellanea
+@node Why does plotting give a color allocation error?, How do I convert factors to numeric?, How do file names work in Windows?, R Miscellanea
 @section Why does plotting give a color allocation error?
 
 Sometimes plotting, e.g., when running @code{demo(image)}, results in
@@ -2507,19 +2506,19 @@ You could also set the @code{colortype} of @code{X11()} to
 @code{"pseudo.cube"} rather than the default @code{"pseudo"}.  See the
 help page for @code{X11()} for more information.
 
-@node Is R Y2K-compliant?, How do I convert factors to numeric?, Why does plotting give a color allocation error?, R Miscellanea
-@section Is R Y2K-compliant?
+@c  @node Is R Y2K-compliant?, How do I convert factors to numeric?, Why does plotting give a color allocation error?, R Miscellanea
+@c  @section Is R Y2K-compliant?
 
-We expect R to be Y2K compliant when compiled and run on a Y2K compliant
-system.  In particular R does not internally represent or manipulate
-dates as two-digit quantities.  However, no guarantee of Y2K compliance
-is provided for R.  R is free software and comes with @emph{no warranty
-whatsoever}.
+@c  We expect R to be Y2K compliant when compiled and run on a Y2K compliant
+@c  system.  In particular R does not internally represent or manipulate
+@c  dates as two-digit quantities.  However, no guarantee of Y2K compliance
+@c  is provided for R.  R is free software and comes with @emph{no warranty
+@c  whatsoever}.
 
-R, like any other programming language, can be used to write programs
-and manipulate data in ways that are not Y2K compliant.
+@c  R, like any other programming language, can be used to write programs
+@c  and manipulate data in ways that are not Y2K compliant.
 
-@node How do I convert factors to numeric?, Are Trellis displays implemented in R?, Is R Y2K-compliant?, R Miscellanea
+@node How do I convert factors to numeric?, Are Trellis displays implemented in R?, Why does plotting give a color allocation error?, R Miscellanea
 @section How do I convert factors to numeric?
 
 It may happen that when reading numeric data into R (usually, when
