@@ -16,7 +16,7 @@
 update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method = "auto", instlib = NULL,
-                ask=TRUE, available=NULL)
+                ask=TRUE, available=NULL, destdir=NULL)
 
 installed.packages(lib.loc = .lib.loc)
 CRAN.packages(CRAN = options("CRAN"), method = "auto",
@@ -28,9 +28,9 @@ old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = options("CRAN"), method = "auto",
                   contriburl = contrib.url(CRAN))
-install.packages(pkgs, lib, available = NULL,
-                  CRAN = options("CRAN"), method = "auto",
-                  contriburl = contrib.url(CRAN))
+install.packages(pkgs, lib, CRAN = options("CRAN"),
+                 contriburl = contrib.url(CRAN),
+                 method = "auto", available = NULL, destdir=NULL)
 }
 \arguments{ 
   \item{lib.loc}{A character vector describing the location of R
@@ -88,8 +88,8 @@ install.packages(pkgs, lib, available = NULL,
 #endif
   
   \code{install.packages} can be used to install new packages, it
-  takes a vector of package names and a destination directory, downloads
-  the packages from CRAN and installs them. If the destination directory
+  takes a vector of package names and a destination library, downloads
+  the packages from CRAN and installs them. If the library
   is omitted it defaults to the first directory in \code{.lib.loc}, with
   a warning.
 %  The first argument can be an unquoted name, as in
@@ -98,6 +98,12 @@ install.packages(pkgs, lib, available = NULL,
   Argument \code{pkgs} can also be a character vector of file names of
   zip files if \code{CRAN=NULL}. The zip files are then unpacked directly.
 #endif
+
+  For \code{install.packages} and \code{update.packages}, \code{destdir}
+  is the directory to which packages will be downloaded. If it is
+  \code{NULL} (the default) a temporary directory is used, and the user
+  will be given the option of deleting the temporary files once the
+  packages are installed.
 }
 #ifdef windows
 \note{

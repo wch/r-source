@@ -124,7 +124,13 @@ NEW FEATURES
 
     o	The "keep.source" option now defaults to interactive() instead of TRUE.
 
-    o	by() works when embedded in a function.
+    o	dev.print() now checks if the current device is replayable
+	(and not all devices were, despite the documentation).
+
+    o	New device bitmap(), like dev2bitmap() but a stand-alone device.
+
+    o	install.packages() and update.packages() have a new `destdir'
+	argument for the directory to which to download the packages.
 
 
 BUG FIXES
@@ -156,6 +162,10 @@ BUG FIXES
 	unintentionally removed along with nroff-based conversion to text).
 
     o	strheight("X") with no active device would segfault.
+
+    o	by() works when embedded in a function.
+
+    o	aggregate applied to multiple time series lost the series names.
 
 
 		CHANGES IN R VERSION 1.0.1

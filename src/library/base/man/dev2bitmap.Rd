@@ -1,29 +1,36 @@
 \name{dev2bitmap}
 \alias{dev2bitmap}
-\title{Copy Graphics Device to Bitmap File}
+\alias{bitmap}
+\title{Graphics Device for Bitmap Files}
 \usage{
+bitmap(file, type = "png256", height = 6, width = 6, res = 72,
+       pointsize, \dots)
 dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
            pointsize, \dots)
 }
 \arguments{
- \item{file}{The putput file name, with an appropriate extension.}
- \item{type}{The type of bitmap. the default is \code{"png256"}.}
- \item{height}{The plot height, in inches.}
- \item{width}{The plot width, in inches.}
- \item{res}{Resolution, in dots per inch.}
- \item{pointsize}{The pointsize to be used for text: defaults to
-     something reasonable given the width and height}
- \item{\dots}{Other parameters passes to \code{\link{postscript}}.}
+  \item{file}{The putput file name, with an appropriate extension.}
+  \item{type}{The type of bitmap. the default is \code{"png256"}.}
+  \item{height}{The plot height, in inches.}
+  \item{width}{The plot width, in inches.}
+  \item{res}{Resolution, in dots per inch.}
+  \item{pointsize}{The pointsize to be used for text: defaults to
+    something reasonable given the width and height}
+  \item{\dots}{Other parameters passes to \code{\link{postscript}}.}
 }
 \description{
-  Copy the current graphics device to a file in a bitmap graphics
-  format.
+  \code{bitmap} generates a bitmap graphics file.
+  \code{dev2bitmap} copies the current graphics device to a file in a
+  bitmap graphics format.
 }
 \details{
   \code{dev2bitmap} works by copying the current device to a
   \code{\link{postscript}} device, and post-processing the output file
-  using \code{ghostscript}.  You will need a recent version of
-  \code{ghostscript} (5.10 and later have been tested): the full path to
+  using \code{ghostscript}. \code{bitmap} works in the same way using a
+  \code{postscript} device and postprocessing the output as ``printing''.
+
+  You will need a recent version of \code{ghostscript} (5.10, 5.50 and
+  6.01 have been tested): the full path to
   the executable can be set by the environment variable \code{"R_GSCMD"}.
 
   The types available will depend on the version of \code{ghostscript},
@@ -45,8 +52,19 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 }
 \author{B. D. Ripley}
 
-\section{Warning}{This is experimental and may be withdrawn in favour of
-an equivalent device in a later version.}
+\section{Warning}{
+  This is experimental and may be withdrawn in favour of
+  an equivalent device in a later version.
+}
+
+#ifdef windows
+\note{
+  Use of \code{bitmap} will leave a temporary file (with file name
+  starting \code{Rbit}).  Use of the \code{\link{bmp}},
+  \code{\link{png}} and \code{\link{jpeg}} devices is preferable to
+  using these functions.
+}
+#endif
 
 \seealso{\code{\link{postscript}}}
 
