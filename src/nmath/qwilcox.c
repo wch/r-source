@@ -35,7 +35,7 @@ double qwilcox(double x, double m, double n)
 
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-    return x + n + p;
+    return x + m + n;
   if(!FINITE(x) || !FINITE(m) || !FINITE(n)) {
     ML_ERROR(ME_DOMAIN);
     return ML_NAN;
@@ -47,12 +47,10 @@ double qwilcox(double x, double m, double n)
   if (x < 0 || x > 1 || m <= 0 || n <= 0) {
     ML_ERROR(ME_DOMAIN);
     return ML_NAN;
-  }
-  if (m >= WILCOX_MMAX) {
+  } else if (m >= WILCOX_MMAX) {
     warning("m should be less than %d\n", WILCOX_MMAX);
     return ML_NAN;
-  }
-  if (n >= WILCOX_NMAX) {
+  } else if (n >= WILCOX_NMAX) {
     warning("n should be less than %d\n", WILCOX_NMAX);
     return ML_NAN;
   }
