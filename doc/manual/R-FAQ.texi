@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-41 @value{FAQ-YEAR}-08-06
+@set FAQ-VERSION 1.9-42 @value{FAQ-YEAR}-08-09
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2581,6 +2581,10 @@ R interface to RNG with multiple streams.
 @item rmeta
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
+@item rmetasim
+An interface between R and the metasim simulation engine.  Facilitates
+the use of the metasim engine to build and run individual based
+population genetics simulations.
 @item rpart
 Recursive PARTitioning and regression trees.  @emph{Recommended}.
 @item rpart.permutation
