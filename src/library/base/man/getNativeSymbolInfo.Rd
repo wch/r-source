@@ -87,7 +87,7 @@ getNativeSymbolInfo(name, PACKAGE)
   avoid resolving it repeatedly or using the internal
   cache.
   In the future, one may be able to treat \code{NativeSymbol}
-  objects as directly callback objects.
+  objects directly as callback objects.
 }
 \seealso{
   \code{\link{is.loaded}},
