@@ -12,8 +12,16 @@ void _R_tcldo()
     Tcl_ServiceAll();
 }
 
+static void (* old_R_tcldo)();
+
 void tcltk_start()
 {
     tcltk_init(); /* won't return on error */
+    old_R_tcldo = R_tcldo;
     R_tcldo = (DL3) R_FindSymbol("_R_tcldo", "TclTk");
+}
+
+void tcltk_end()
+{
+    R_tcldo = old_R_tcldo;
 }

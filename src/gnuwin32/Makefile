@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = BOTH # NO, CHM, BOTH
+WINHELP = CHM # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX = rw1010
@@ -179,7 +179,7 @@ clean: cleanwin $(PKGCLEAN)
 distclean veryclean: clean
 	$(RM) -rf R.exp ../../bin ../../library
 	$(RM) -f ../library/*/src/*.o ../library/*/src/*.a
-	$(RM) -f ../library/*/src/*.def ../library/*/src/*.dll
+	$(RM) -f ../library/*/src/*.dll
 	$(RM) -rf ../library/*/check
 	$(RM) -f ../../doc/html/search/index.txt \
 	../../doc/html/function.html ../../doc/html/packages.html \
