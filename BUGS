@@ -180,10 +180,18 @@ Date: Sun, 03 Aug 2003 23:41:39 -0700
 Subject: Re: [Rd] R package {genetics} function summary.genotype -- H and
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 04 Aug 2003 10:12:14 +0200
+* PR# 4266 *
+Subject: RODBC access to MS-Excel
+From: michael.hecht@geocities.com
+Date: Tue, 23 Sep 2003 09:39:40 +0200 (MET DST)
 * PR# 4384 *
 Subject: wrong results in dist.binary (library ade4)
 From: c.duering@threads.de
 Date: Wed, 1 Oct 2003 22:48:23 +0200 (MET DST)
+* PR# 4403 *
+Subject: misprint  in Leaps $size
+From: paulluo@cs.cmu.edu
+Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
 
 Directory:  Analyses
 
@@ -327,18 +335,10 @@ Date: Thu, 26 Sep 2002 19:37:40 +0200 (MET DST)
 Subject: Wandering usr values in par(no.readonly=TRUW)
 From: Jari Oksanen <jarioksa@sun3.oulu.fi>
 Date: Tue, 12 Nov 2002 13:50:44 +0200
-* PR# 2578 *
-Subject: "trace" argument in legend()
-From: jerome@hivnet.ubc.ca
-Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
 * PR# 2630 *
 Subject: plot() with type="s" and lty=2
 From: jerome@hivnet.ubc.ca
 Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
-* PR# 4219 *
-Subject: hist will not use parameter xaxs
-From: mwall@diversa.com
-Date: Thu, 18 Sep 2003 22:35:38 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -731,14 +731,6 @@ Date: Tue, 16 Sep 2003 22:22:53 +0200 (CEST)
 Subject: strptime
 From: pliu3@ncsu.edu
 Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
-* PR# 4266 *
-Subject: RODBC access to MS-Excel
-From: michael.hecht@geocities.com
-Date: Tue, 23 Sep 2003 09:39:40 +0200 (MET DST)
-* PR# 4275 *
-Subject: getAnywhere
-From: <Mark.Bravington@csiro.au>
-Date: Wed, 24 Sep 2003 18:06:02 +1000
 * PR# 4281 *
 Subject: Calling C fn crashes
 From: ashenfluff@yahoo.com
@@ -759,10 +751,6 @@ Date: Thu, 25 Sep 2003 13:09:15 +0200
 Subject: (fwd) package inst directory copied too early?
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Sat, 27 Sep 2003 19:19:29 -0400
-* PR# 4343 *
-Subject: colours in dotchart
-From: "Ian Wilson" <i.wilson@maths.abdn.ac.uk>
-Date: Mon, 29 Sep 2003 11:24:42 +0100
 * PR# 4361 *
 Subject: dump/source problem with hclust object
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -775,91 +763,9 @@ Date: Wed, 01 Oct 2003 07:45:41 +1200
 Subject: Leaving 'Package:' out of description deletes entire library
 From: ellis@stat.harvard.edu
 Date: Fri, 3 Oct 2003 03:32:58 +0200 (MET DST)
-* PR# 4401 *
-Subject: Re: Bug#213857: r-base-core: xfig plot fails with invalid line type
-From: Dirk Eddelbuettel <edd@debian.org>
-Date: Fri, 3 Oct 2003 07:16:38 -0500
-* PR# 4402 *
-Subject: Awarded Best DVD Copier Software 2003 hvi swswz y 
-From: "Murray Stinson" <773kyh@hotmail.com>
-Date: Fri, 03 Oct 03 20:08:38 GMT
-* PR# 4403 *
-Subject: misprint  in Leaps $size
-From: paulluo@cs.cmu.edu
-Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
-* PR# 4404 *
-Subject: Sensational Software to Backup DVD Movies... ssvvpjfqw rad ytjb
-From: "Jackson Cho" <mpvnno@hotmail.com>
-Date: Fri, 03 Oct 03 21:17:41 GMT
-* PR# 4405 *
-Subject: a bug of function plot
-From: xzhao@stat.wvu.edu
-Date: Sat, 4 Oct 2003 04:56:26 +0200 (MET DST)
-* PR# 4406 *
-Subject: Excellent pricing on our medication  szjt
-From: "Phoebe Marsh" <z75xhjwjj@exc.ehb.epson.co.jp>
-Date: Sat, 04 Oct 2003 05:09:37 -0100
-* PR# 4407 *
-Subject: AWARD  NOTIFICATION
-From: Luckyday International <proluckyday2003@netscape.net>
-Date: Sat, 04 Oct 2003 05:37:11 +0200
-* PR# 4408 *
-Subject: Your Source For Online Prescriptions......Soma-Watson     .. 		  u up by
-From: "Maynard Dominguez" <u31bccdqo@juno.com>
-Date: Sat, 04 Oct 03 23:12:56 GMT
-* PR# 4409 *
-Subject: Awarded Best DVD Copier Software 2003 o jcasx
-From: "Jesse Meyers" <qasybicp7@hotmail.com>
-Date: Sat, 04 Oct 03 07:20:16 GMT
-* PR# 4410 *
-Subject: =?us-ascii?B?MiBOZWVkIG5vdCBvdmVyIHRoZSBjb3VudGVyIE1lZHM/IHpqeWx=?= xukyw
-From: Rebecca Martin <num1sxy@flanderscoast.be>
-Date: Sat, 04 Oct 2003 01:25:22 +0700
-* PR# 4411 *
-Subject: Turn back Your Aging Process Naturally
-From: dreday1802@mail15.com
-Date: Sat, 4 Oct 2003 12:02:48 +0200 (added by postmaster@virgilio.it)
-* PR# 4412 *
-Subject: Eres soltero/a...	(r-bugs@biostat.ku.dk)         aqn
-From: jhd__Silvina Comino <mdvceleste_278@hotmail.com>
-Date: Sat, 4 Oct 2003 19:45:12 -0300
-* PR# 4413 *
-Subject: Más de 10.000 solteras y solteros...	(r-bugs@biostat.ku.dk) vdha
-From: vjbi__Camana Bermudez <bxceleste_2886@yahoo.com.mx>
-Date: Sat, 4 Oct 2003 19:47:17 -0300
-* PR# 4414 *
-Subject: clean your mailbox from unwanted viruses and spam t zdgqrgndqgekcz
-From: "Marsha Gage" <v923niyce@freeuk.com>
-Date: Sat, 04 Oct 2003 22:28:54 GMT
-* PR# 4415 *
-Subject: Best_Med_Prices wyxot  fblplclmkj
-From: "Nolan Reid" <sh42wkokl@excite.com>
-Date: Sat, 04 Oct 03 19:57:48 GMT
-* PR# 4416 *
-Subject: R-bugs, Prescription Drugs now online!kpldhf qoe z
-From: "Michael Joyce" <hb968gq@canoemail.com>
-Date: Wed, 06 Oct 1999 00:01:21 GMT
-* PR# 4417 *
-Subject: No Prescription Required Cheap Prices
-From: "Dario Arnold" <w6et3w7dd@uymail.com>
-Date: Sun, 05 Oct 03 12:20:57 GMT
-* PR# 4418 *
-Subject: bid      emil
-From: "Lynnette Hicks" <wocuweakk@lasd.org>
-Date: Sun, 05 Oct 03 11:25:16 GMT
-* PR# 4419 *
-Subject: =?us-ascii?B?MyBNZW4sIEEgUG93ZXJmdWwgSGVyYiB4aWZo?= ajrs
-From: Harris <livenlearn13@areth.demon.co.uk>
-Date: Sun, 05 Oct 2003 08:42:51 -0400
-* PR# 4420 *
-Subject: GOOD DAY
-From: sam ahmed <samahmed5@123.com>
-Date: Sun, 05 Oct 2003 08:57:38 -0800
-* PR# 4421 *
-Subject: Best Prices on the net for prescription medication. rtpqgezzgtu
-From: "Elmer Valencia" <tooatxu@pbro.freeserve.co.uk>
-Date: Mon, 06 Oct 2003 05:46:09 -0300
-* PR# 4422 *
-Subject: Hello
-From: mukuluzi@tiscali.co.uk
-Date: Sun, 5 Oct 2003 21:02:00 +0200
+* PR# 4437 *
+Subject: Put a smile on someones face today
+From: "eCardica.com" <newsletter06@ecardica.net>
+Date: Mon, 06 Oct 03 20:38:46 GMT
+* PR# 4438 *
+Date: Mon, 6 Oct 2003 22:04:03 +0200 (added by postmaster@virgilio.it)
