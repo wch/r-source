@@ -34,12 +34,13 @@ use R::Dcf;
 use R::Logfile;
 use R::Rdtools;
 use R::Utils;
+use R::Vars;
 use Text::DelimMatch;
 
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.83 $ ';
+my $revision = ' $Revision: 1.84 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -55,6 +56,8 @@ my $opt_use_gct = 0;
 my $opt_codoc = 1;
 my $opt_perms = 1;
 my $opt_install = 1;
+
+my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
@@ -96,13 +99,13 @@ my $R_opts = "--vanilla";
 if($opt_latex) {
     my $log = new R::Logfile();
     $log->checking("for working latex");
-    open(TEXFILE, "> $R_TMPDIR/Rtextest$$.tex")
+    open(TEXFILE, "> ${R::Vars::TMPDIR}/Rtextest$$.tex")
       or die "Error: cannot write to Rtextest$$.tex\n";
     print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
     close TEXFILE;
-    chdir($R_TMPDIR);
-    if(R_system("$R_LATEX Rtextest$$ > Rtextest$$.out")) {
+    chdir($R::Vars::TMPDIR);
+    if(R_system("${R::Vars::LATEX} Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
 	$HAVE_LATEX = 0;
     } else {
@@ -116,7 +119,7 @@ if($opt_latex) {
 
 ## get the valid keywords for later ...
 my %standard_keywords = ();
-open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db")
+open(KEYWORDS, "< ${R::Vars::RHOME}/doc/KEYWORDS.db")
   or die "Error: cannot open \`KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
@@ -268,7 +271,7 @@ sub check_pkg {
     ##   755.  This includes `.' and src.
     ## Given time, the above could be implemented.
 
-    if($opt_perms && ($R_OSTYPE eq "unix")) {
+    if($opt_perms && ($R::Vars::OSTYPE eq "unix")) {
 	$log->checking("for sufficient/correct file permissions");
 	my @badfiles = ();
 	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\\.swp\$",
@@ -506,7 +509,7 @@ sub check_pkg {
 	$log->checking("generic/method consistency");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R_OSTYPE eq "unix")){
+	if($opt_install && ($R::Vars::OSTYPE eq "unix")){
 	    $Rcmd .= "checkMethods(package = \"${pkgname}\")\n";
 	}
         else {
@@ -531,7 +534,7 @@ sub check_pkg {
 	$log->checking("for assignment functions with final arg not " .
 		       "named \`value'");
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R_OSTYPE eq "unix")) {
+	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
 	    $Rcmd .= "checkAssignFuns(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -559,7 +562,7 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd files");
 	my @rdfiles = &list_files_with_exts("man", "[Rr]d");
-	my $manOSdir = &file_path("man", $R_OSTYPE);
+	my $manOSdir = &file_path("man", $R::Vars::OSTYPE);
 	if(-d $manOSdir) {
 	    @rdfiles = (@rdfiles,
 			&list_files_with_exts($manOSdir, "[Rr]d"));
@@ -628,7 +631,7 @@ sub check_pkg {
 	    my $text = "";
 	    ## Read the Rd file via Rdpp, and get rid of the \alias
 	    ## entries as these may have unbalanced braces (Paren.Rd).
-	    my @lines = split(/\n/, &Rdpp($rdfile, $R_OSTYPE));
+	    my @lines = split(/\n/, &Rdpp($rdfile, $R::Vars::OSTYPE));
 	    foreach my $line (@lines) {
 		$text .= "\n$line" unless ($line =~ /^\\alias/);
 	    }
@@ -696,7 +699,7 @@ sub check_pkg {
 	$log->checking("for undocumented objects");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R_OSTYPE eq "unix")) {
+	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
 	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -727,7 +730,7 @@ sub check_pkg {
 	$log->checking("for code/documentation mismatches");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R_OSTYPE eq "unix")) {
+	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
 	    $Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -757,7 +760,7 @@ sub check_pkg {
 	$log->checking("for undocumented arguments in \\usage");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R_OSTYPE eq "unix")) {
+	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
 	    $Rcmd .= "checkDocArgs(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -821,11 +824,11 @@ sub check_pkg {
         }
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
-            $cmd = "perl ${R_HOME}/bin/massage-Examples ".
+            $cmd = "perl ${R::Vars::RHOME}/bin/massage-Examples ".
   		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
   		     "> ${pkgname}-Ex.R";
         } else {
-	    $cmd = "${R_CMD} perl ${R_HOME}/share/perl/massage-Examples.pl ".
+	    $cmd = "${R_CMD} perl ${R::Vars::RHOME}/share/perl/massage-Examples.pl ".
 	             "${pkgname} ${library}/${pkgname}/R-ex ".
 		     "> ${pkgname}-Ex.R";
         }
@@ -872,8 +875,9 @@ sub check_pkg {
         while(<$testsrcdir/*>) {
             copy($_, basename($_));
         }
-        my $makefiles = "-f ${R_HOME}/share/make/tests.mk";
-        if($WINDOWS) {$makefiles = "-f ${R_HOME}/share/make/wintests.mk";}
+        my $makefiles = "-f ${R::Vars::RHOME}/share/make/tests.mk";
+        if($WINDOWS) {
+            $makefiles = "-f ${R::Vars::RHOME}/share/make/wintests.mk";}
         my $makevars = "";
         if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
             $makefiles .= " -f $testsrcdir/Makefile.win";
@@ -910,7 +914,7 @@ sub check_pkg {
             $makevars = " -f Makevars";
         }
         print "\n";
-        if(system("$R_MAKE $makefiles $makevars")) {
+        if(system("$R::Vars::MAKE $makefiles $makevars")) {
             $log->error();
             exit(1);
         }
@@ -949,7 +953,7 @@ sub check_pkg {
     if($opt_latex) {
 	if(-d "$library/$pkgname/latex") {
 	    $ENV{'TEXINPUTS'} = 
-	      env_path("$R_HOME/share/texmf", $ENV{'TEXINPUTS'});
+	      env_path("$R::Vars::RHOME/share/texmf", $ENV{'TEXINPUTS'});
 	    $log->creating("${pkgname}-manual.tex");
 	    open MANUAL, "> ${pkgname}-manual.tex";
 	    print MANUAL "\\documentclass\{article\}\n" .
@@ -970,7 +974,7 @@ sub check_pkg {
 	    if($HAVE_LATEX) {
 		$log->checking("${pkgname}-manual.tex");
 		print "\n";
-		if(R_system("$R_LATEX ${pkgname}-manual")) {
+		if(R_system("${R::Vars::LATEX} ${pkgname}-manual")) {
 		    $log->error();
 		    exit(1);
 		}
@@ -983,7 +987,8 @@ sub check_pkg {
 		my $Rd2dvi_opts = "--no-preview -o ${pkgname}-manual.dvi";
 		## <FIXME>
 		## Surely there is a better way?
-		$Rd2dvi_opts .= ">/dev/null 2>&1" if($R_OSTYPE eq "unix");
+		$Rd2dvi_opts .= ">/dev/null 2>&1"
+                    if($R::Vars::OSTYPE eq "unix");
 		## </FIXME>
 		if(R_system("${R_CMD} Rd2dvi ${Rd2dvi_opts} $pkgdir")) {
 		    $log->error("installation failed");

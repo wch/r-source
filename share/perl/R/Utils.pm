@@ -4,42 +4,14 @@ package R::Utils;
 use Carp;
 use FileHandle;
 use Exporter;
+use R::Vars;
 
 @ISA = qw(Exporter);
 @EXPORT = qw(R_getenv R_version file_path env_path
 	     list_files_with_exts R_tempfile R_system
-	     R_runR
-	     $R_OSTYPE $R_LATEX $R_MAKE $R_HOME $R_CMD
-	     $R_EXE $R_TMPDIR);
+	     R_runR);
 
 #**********************************************************
-
-## <FIXME>
-## Currently, R_OSTYPE is always set on Unix/Windows.
-$R_OSTYPE = R_getenv("R_OSTYPE", "mac");
-## </FIXME>
-
-
-$R_LATEX = R_getenv("LATEX", "latex");
-$R_MAKE = R_getenv("MAKE", "make");
-
-$R_HOME = $ENV{'R_HOME'} ||
-    croak "Error: environment variable R_HOME not found";
-
-$R_CMD = $ENV{'R_CMD'} ||
-    croak "Error: environment variable R_CMD not found";
-
-if($R_OSTYPE eq "windows"){
-    $R_EXE = file_path($R_HOME, "Rterm.exe");
-    $R_TMPDIR = R_getenv("TMPDIR", "/TEMP");
-}
-else{
-    $R_EXE = file_path($R_HOME, "bin", "R");
-    $R_TMPDIR = R_getenv("TMPDIR", "/tmp");
-}
-croak "Error: please set TMPDIR to a valid temporary directory\n"
-    unless (-e $R_TMPDIR);
-
 
 ## return the value of an environment variable; or the default if no
 ## such environment variable is set or it is empty.
@@ -90,14 +62,14 @@ sub text2html {
 sub file_path {
     my @args = @_;
     my $filesep = "/";
-    $filesep = ":" if($R_OSTYPE eq "mac");
+    $filesep = ":" if($R::Vars::OSTYPE eq "mac");
     join($filesep, @args);
 }
 
 sub env_path {
     my @args = @_;
     my $envsep = ":";
-    $envsep = ";" if($R_OSTYPE eq "windows");
+    $envsep = ";" if($R::Vars::OSTYPE eq "windows");
     join($envsep, @args);
 }
 
@@ -107,7 +79,7 @@ sub list_files_with_exts {
     my @files;
     $exts = ".*" unless $exts;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
-    if($R_OSTYPE eq "mac"){
+    if($R::Vars::OSTYPE eq "mac"){
 	@files = grep { /\.$exts$/ && -f "$dir:$_" } readdir(DIR);
     }
     else{
@@ -127,10 +99,10 @@ sub R_tempfile {
 
     my $pat = "Rutils";
     $pat = $_[0] if $_[0];
-    my $retval = file_path($R_TMPDIR,
+    my $retval = file_path($R::Vars::TMPDIR,
 			   $pat . $$ . sprintf("%05d", rand(10**5)));
     while(-f $retval){
-	$retval = file_path($R_TMPDIR,
+	$retval = file_path($R::Vars::TMPDIR,
 			    $pat . $$ . sprintf("%05d", rand(10**5)));
     }
     $retval;
@@ -140,7 +112,7 @@ sub R_system
 {
     my $cmd = $_[0];
     my $tmpf = R_tempfile();
-    if($R_OSTYPE eq "windows") {
+    if($R::Vars::OSTYPE eq "windows") {
 	open(tmpf, "> $tmpf")
 	  or die "Error: cannot write to \`$tmpf'\n";
 	print tmpf "$cmd\n";
