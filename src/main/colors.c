@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2005  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *  Copyright (C) 2003	     The R Foundation
  *
@@ -171,15 +171,15 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* D65 White Point */
-                                                                                
+
 #define WHITE_X 95.047
 #define WHITE_Y 100.000
 #define WHITE_Z 108.883
 #define WHITE_u 0.1978398
 #define WHITE_v 0.4683363
-                                                                                
+
 /* Standard CRT Gamma */
-                                                                                
+
 #define GAMMA 2.4
 
 static double gtrans(double u)
@@ -199,21 +199,22 @@ static int FixupColor(int *r, int *g, int *b)
     return fix;
 }
 
-static hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
+static void
+hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
 {
     double L, U, V;
-    double u, v, uN, vN;
+    double u, v;
     double X, Y, Z;
-                                                                                
+
     /* Step 1 : Convert to CIE-LUV */
-                                                                                
+
     h = DEG2RAD * h;
     L = l;
     U = c * cos(h);
     V = c * sin(h);
-                                                                                
+
     /* Step 2 : Convert to CIE-XYZ */
-                                                                                
+
     if (L <= 0 && U == 0 && V == 0) {
         X = 0; Y = 0; Z = 0;
     }
@@ -224,9 +225,9 @@ static hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
         X =  9.0 * Y * u / (4 * v);
         Z =  - X / 3 - 5 * Y + 3 * Y / v;
     }
-                                                                                
+
     /* Step 4 : CIE-XYZ to sRGB */
-                                                                                
+
     *R = gtrans(( 3.240479 * X - 1.537150 * Y - 0.498535 * Z) / WHITE_Y);
     *G = gtrans((-0.969256 * X + 1.875992 * Y + 0.041556 * Z) / WHITE_Y);
     *B = gtrans(( 0.055648 * X - 0.204043 * Y + 1.057311 * Z) / WHITE_Y);
@@ -239,9 +240,9 @@ SEXP do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
     int nh, nc, nl, na, max, i;
     int ir, ig, ib;
     int fixup;
-                                                                                
+
     checkArity(op, args);
-                                                                                
+
     PROTECT(h = coerceVector(CAR(args),REALSXP)); args = CDR(args);
     PROTECT(c = coerceVector(CAR(args),REALSXP)); args = CDR(args);
     PROTECT(l = coerceVector(CAR(args),REALSXP)); args = CDR(args);
@@ -311,8 +312,8 @@ SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(4);
 	return(allocVector(STRSXP, 0));
     }
-    l_max = nr; 
-    if (l_max < ng) l_max = ng; 
+    l_max = nr;
+    if (l_max < ng) l_max = ng;
     if (l_max < nb) l_max = nb;
     if (l_max < na) l_max = na;
 
@@ -323,7 +324,7 @@ SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define _R_set_c_RGBA(_R,_G,_B,_A)				\
     for (i = 0; i < l_max; i++)				\
-	SET_STRING_ELT(c, i, mkChar(RGBA2rgb(_R,_G,_B,_A))) 
+	SET_STRING_ELT(c, i, mkChar(RGBA2rgb(_R,_G,_B,_A)))
 
     if(OP) { /* OP == 1:  rgb256() :*/
 	_R_set_c_RGBA(CheckColor(INTEGER(r)[i%nr]),
