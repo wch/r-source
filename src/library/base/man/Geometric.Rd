@@ -30,6 +30,9 @@ The geometric distribution with \code{prob} \eqn{= p} has density
 
   If an element of \code{x} is not integer, the result of \code{pgeom}
   is zero, with a warning.
+
+  The quantile is left continuous: \code{qgeom(q, prob)} is the largest
+  integer x such that P(X <= x) < q.
 }
 \seealso{
 \code{\link{dnbinom}} for the negative binomial which generalizes
@@ -38,7 +41,9 @@ the geometric distribution.
 \examples{
 pp <- sort(c((1:9)/10, 1 - .2^(2:8)))
 print(qg <- qgeom(pp, prob = .2))
-for(i in 1:2) print(qg <- qgeom(pgeom(qg, prob=.2), prob =.2))
+## test that qgeom is an inverse of pgeom
+print(qg1 <- qgeom(pgeom(qg, prob=.2), prob =.2))
+all(qg == qg1)
 Ni <- rgeom(20, prob = 1/4); table(factor(Ni, 0:max(Ni)))
 }
 \keyword{distribution}

@@ -45,5 +45,6 @@ double qgeom(double x, double p)
     }
 #endif
     if (x == 0) return 0;
-    return ceil(log(1 - x) / log(1.0 - p) - 1);
+/* add a fuzz to ensure left continuity */
+    return ceil(log(1 - x) / log(1.0 - p) - 1 - 1e-7);
 }

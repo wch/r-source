@@ -30,6 +30,9 @@ for \eqn{x = 0, 1, 2, \ldots}.
 
 If an element of \code{x} is not integer, the result of \code{dpois} is zero,
 with a warning.
+
+The quantile is left continuous: \code{qpois(q, lambda)} is the largest
+integer x such that P(X <= x) < q.
 }
 \seealso{
 \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
