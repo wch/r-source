@@ -180,9 +180,6 @@ R_PROG_ECHO_N
 ## Make.
 : ${MAKE=make}
 AC_SUBST(MAKE)
-## Nroff && friends
-AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
-AC_PATH_PROG(TBL, [${TBL} tbl], false)
 ## Perl.
 R_PROG_PERL
 ## Tar.
@@ -197,7 +194,6 @@ AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 ## C compiler.
 
 AC_PROG_CC
-AC_PROG_CPP
 AC_PROG_GCC_TRADITIONAL
 
 dnl Yes, we already need this at configure time ...
@@ -277,9 +273,8 @@ fi
 
 if test -n "${F77}"; then
   FC=${F77}
-  R_PROG_F77_WORKS
-  R_PROG_F77_GNU
-  OCTAVE_FLIBS
+  AC_PROG_F77
+  AC_F77_LIBRARY_LDFLAGS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   f77_rules_frag=Makefrag.f77
