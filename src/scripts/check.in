@@ -32,7 +32,6 @@ use R::Logfile;
 use R::Rdtools;
 use R::Utils;
 use R::Vars;
-use Text::DelimMatch;
 use Text::Wrap;
 
 ## Don't buffer output.
@@ -84,11 +83,11 @@ if($opt_install eq "fake") {
 $opt_install = 0 if($opt_install eq "no");
 
 my $opt_ff_calls = 1;
-## The neverending story ... for the time being, allow to turn this off
-## by setting the environment variable R_CHECK_FF_CALLS to a Perl 'null'
-## value.
-if(defined($ENV{"R_CHECK_FF_CALLS"})) {
-    $opt_ff_calls = $ENV{"R_CHECK_FF_CALLS"};
+## The neverending story ...
+## For the time being, allow to turn this off by setting the environment
+## variable _R_CHECK_FF_CALLS_ to a Perl 'null' value.
+if(defined($ENV{"_R_CHECK_FF_CALLS_"})) {
+    $opt_ff_calls = $ENV{"_R_CHECK_FF_CALLS_"};
 }
 
 ## Use system default unless explicitly specified otherwise.
@@ -235,7 +234,7 @@ foreach my $pkg (@ARGV) {
 	    else {
 		my $use_install_log =
 		    (($opt_install =~ /^check/) ||
-		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
+		     $ENV{"_R_CHECK_USE_INSTALL_LOG_"} ||
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = "";
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
@@ -313,12 +312,20 @@ foreach my $pkg (@ARGV) {
 			"found by readLines";
 		    @lines = grep(!/$warn_re/, @lines);
 		    ## Package writers cannot really do anything about
-		    ## non ISO C code in *system* headers.  Hence, try
-		    ## to ignore these by default, but make it possible
-		    ## to get all ISO C warnings via an environment
-		    ## variable.
-		    @lines = grep(!/^ *\/.*: warning: .*ISO C/, @lines)
-			if(!$ENV{"R_CHECK_ALL_NON_ISO_C"});
+		    ## non ISO C code in *system* headers.  Also, GCC
+		    ## 3.4 or better warns about function pointers
+		    ## casts which are "needed" for dlsym(), but it
+		    ## seems that all systems which have dlsym() also
+		    ## support the cast.  Hence, try to ignore these by
+		    ## default, but make it possible to get all ISO C
+		    ## warnings via an environment variable.
+		    if(!$ENV{"_R_CHECK_ALL_NON_ISO_C_"}) {
+			@lines = grep(!/^ *\/.*: warning: .*ISO C/,
+				      @lines);
+			$warn_re = "warning: *ISO C	forbids.*" .
+			    "function pointer";
+			@lines = grep(!/$warn_re/, @lines);
+		    }
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
@@ -784,7 +791,7 @@ sub check_pkg {
 
     $log->checking("package subdirectories");
     my $any;
-    if($ENV{"R_CHECK_SUBDIRS_NOCASE"}) {
+    if($ENV{"_R_CHECK_SUBDIRS_NOCASE_"}) {
 	## Argh.  We often get submissions where 'R' comes out as 'r',
 	## or 'man' comes out as 'MAN'.  Maybe we should warn about this
 	## unconditionally ...
