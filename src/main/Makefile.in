@@ -78,7 +78,8 @@ SOURCES = \
 	summary.c \
 	unique.c \
 	util.c \
-	version.c
+	version.c \
+	@LIBOBJS@
 SOURCES_F = \
 	xxxpr.f
 DEPENDS = $(SOURCES:.c=.d)

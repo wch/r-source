@@ -35,6 +35,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#ifndef HAVE_STRDUP
+extern char *strdup();
+#endif
 #include "rotated.h"
 
 /* ---------------------------------------------------------------------- */
@@ -133,9 +136,6 @@ static struct style_template {
 /* ---------------------------------------------------------------------- */
 
 
-static char	       *my_strdup(char *str);
-static char	       *my_strtok(char *str1, char *str2);
-
 double			 XRotVersion(char *str, int n);
 void			XRotSetMagnification(double m);
 void			XRotSetBoundingBoxPad(int p);
@@ -153,79 +153,6 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font, doub
 static void		XRotAddToLinkedList(Display *dpy, RotatedTextItem *item);
 static void		XRotFreeTextItem(Display *dpy, RotatedTextItem *item);
 static XImage	       *XRotMagnifyImage(Display *dpy, XImage *ximage);
-
-
-/* ---------------------------------------------------------------------- */
-
-
-/**************************************************************************/
-/* Routine to mimic `strdup()' (some machines don't have it)		  */
-/**************************************************************************/
-
-static char *my_strdup(char *str)
-{
-    char *s;
-
-    if(str==NULL)
-	return NULL;
-
-    s=(char *)malloc((unsigned)(strlen(str)+1));
-    if(s!=NULL)
-	strcpy(s, str);
-
-    return s;
-}
-
-
-/* ---------------------------------------------------------------------- */
-
-
-/**************************************************************************/
-/* Routine to replace `strtok' : this one returns a zero length string if */
-/* it encounters two consecutive delimiters				  */
-/**************************************************************************/
-
-static char *my_strtok(char *str1, char *str2)
-{
-    char *ret;
-    int i, j, stop;
-    static int start, len;
-    static char *stext;
-
-    if(str2==NULL)
-	return NULL;
-
-    /* initialise if str1 not NULL */
-    if(str1!=NULL) {
-	start=0;
-	stext=str1;
-	len=strlen(str1);
-    }
-
-    /* run out of tokens ? */
-    if(start>=len)
-	return NULL;
-
-    /* loop through characters */
-    for(i=start; i<len; i++) {
-	/* loop through delimiters */
-	stop=0;
-	for(j=0; j<strlen(str2); j++)
-	    if(stext[i]==str2[j])
-		stop=1;
-
-	if(stop)
-	    break;
-    }
-
-    stext[i]='\0';
-
-    ret=stext+start;
-
-    start=i+1;
-
-    return ret;
-}
 
 
 /* ---------------------------------------------------------------------- */
@@ -657,11 +584,11 @@ static int XRotDrawHorizontalString(Display *dpy, XFontStruct *font,
     else
 	yp=y;
 
-    str1=my_strdup(text);
+    str1=strdup(text);
     if(str1==NULL)
 	return 1;
 
-    str3=my_strtok(str1, str2);
+    str3=strtok(str1, str2);
 
     /* loop through each section in the string */
     do {
@@ -685,7 +612,7 @@ static int XRotDrawHorizontalString(Display *dpy, XFontStruct *font,
 	/* move to next line */
 	yp+=height;
 
-	str3=my_strtok((char *)NULL, str2);
+	str3=strtok((char *)NULL, str2);
     }
     while(str3!=NULL);
 
@@ -793,11 +720,11 @@ static RotatedTextItem *XRotRetrieveFromCache(Display *dpy, XFontStruct *font,
 	    return NULL;
 
 	/* record what it shows */
-	item->text=my_strdup(text);
+	item->text=strdup(text);
 
 	/* fontname or ID */
 	if(font_name!=NULL) {
-	    item->font_name=my_strdup(font_name);
+	    item->font_name=strdup(font_name);
 	    item->fid=0;
 	}
 	else {
@@ -893,11 +820,11 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font,
 	str2=str2_b;
 
     /* find width of longest section */
-    str1=my_strdup(text);
+    str1=strdup(text);
     if(str1==NULL)
 	return NULL;
 
-    str3=my_strtok(str1, str2);
+    str3=strtok(str1, str2);
 
     XTextExtents(font, str3, strlen(str3), &dir, &asc, &desc,
 		 &overall);
@@ -906,7 +833,7 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font,
 
     /* loop through each section */
     do {
-	str3=my_strtok((char *)NULL, str2);
+	str3=strtok((char *)NULL, str2);
 
 	if(str3!=NULL) {
 	    XTextExtents(font, str3, strlen(str3), &dir, &asc, &desc,
@@ -962,11 +889,11 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font,
     /* start at top of bitmap */
     yp=font->ascent;
 
-    str1=my_strdup(text);
+    str1=strdup(text);
     if(str1==NULL)
 	return NULL;
 
-    str3=my_strtok(str1, str2);
+    str3=strtok(str1, str2);
 
     /* loop through each section in the string */
     do {
@@ -1002,7 +929,7 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font,
 	/* move to next line */
 	yp+=height;
 
-	str3=my_strtok((char *)NULL, str2);
+	str3=strtok((char *)NULL, str2);
     }
     while(str3!=NULL);
 
@@ -1432,11 +1359,11 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
 	str2=str2_b;
 
     /* find width of longest section */
-    str1=my_strdup(text);
+    str1=strdup(text);
     if(str1==NULL)
 	return NULL;
 
-    str3=my_strtok(str1, str2);
+    str3=strtok(str1, str2);
 
     XTextExtents(font, str3, strlen(str3), &dir, &asc, &desc,
 		 &overall);
@@ -1445,7 +1372,7 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
 
     /* loop through each section */
     do {
-	str3=my_strtok((char *)NULL, str2);
+	str3=strtok((char *)NULL, str2);
 
 	if(str3!=NULL) {
 	    XTextExtents(font, str3, strlen(str3), &dir, &asc, &desc,

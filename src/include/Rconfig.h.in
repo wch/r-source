@@ -74,6 +74,8 @@
 
 /* General String Comparison */
 #undef HAVE_STRCOLL
+/* String duplication */
+#undef HAVE_STRDUP
 
 /* Inverse Hyperbolics */
 #undef HAVE_ASINH

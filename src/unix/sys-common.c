@@ -1,25 +1,28 @@
 /*
- *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-1999   Robert Gentleman, Ross Ihaka
- *                            and the R Development Core Team
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  R : A Computer Language for Statistical Data Analysis
+  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
+  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka
+                            and the R Development Core Team
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
+  U.S.A.
  */
 
-         /* See ../unix/system.txt for a description of functions */
+/*
+  See ../unix/system.txt for a description of functions
+ */
 
 #ifdef HAVE_CONFIG_H
 #include <Rconfig.h>
@@ -27,6 +30,11 @@
 
 #include "Defn.h"
 #include "Fileio.h"
+
+#include <string.h>
+#ifndef HAVE_STRDUP
+extern char *strdup();
+#endif
 
 extern int SaveAction;
 extern int RestoreAction;
@@ -138,12 +146,12 @@ void R_SaveGlobalEnv(void)
 }
 
 /*
- *  5) FILESYSTEM INTERACTION
+ * 5) FILESYSTEM INTERACTION
  */
 
-    /*
-     *  This call provides a simple interface to the "stat" system call.
-     */
+/*
+ * This call provides a simple interface to the "stat" system call.
+ */
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -376,10 +384,11 @@ R_set_command_line_arguments(int argc, char **argv, Rstart Rp)
 
 
 /*
-  The .Internal which returns the command line arguments
-  that are stored in global variables.
+  The .Internal which returns the command line arguments that are stored
+  in global variables.
  */
-SEXP do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP
+do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
  int i;
  SEXP vals;
@@ -392,7 +401,8 @@ SEXP do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
  return(vals);
 }
 
-void R_common_command_line(int *pac, char **argv, Rstart Rp)
+void
+R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
     int ac = *pac, newac = 1;	/* argv[0] is process name */
     int ierr;
