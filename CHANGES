@@ -97,8 +97,7 @@ NEW FEATURES
     o   new design of HTML help pages, including an index of all
 	functions from all installed packages.
 
-
-BUG FIXES
+BUG FIXES (many of which resulted from the added features...)
 
     o   "R --no-readline" now again gives proper prompts.
 
@@ -133,6 +132,29 @@ BUG FIXES
     o	Many small code changes (eliminating extraneous variables, nested comm.)
 	in C code in order to satisfy `gcc -Wall' [Doug Bates].
 
+
+		CHANGES IN R VERSION 0.61.2
+
+NEW FEATURES
+
+    o	None (by definition, x.y.z releases are bugfix releases now)
+
+BUG FIXES
+
+    o   In 0.61.1, model.matrix was fixed to pay attention to the order of
+	the names of its data arg, but the data arg was defaulting to an
+	unnamed list, so  model.matrix(~x)  failed...
+
+    o   Indexing with [[]] and a zero-length vector segfaulted.
+
+    o   Coercion of factors as in S-plus
+
+    o   dyn.load statement in demos/dynload/zero.R fixed
+
+    o   Factors could get allocated without the OBJECT bit, which
+	nearly drove Kurt mad trying to write plot.factor...
+
+    o   Fixed confidence limit problem in t.test
 
 
 		CHANGES IN R VERSION 0.61.1

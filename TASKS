@@ -534,7 +534,6 @@ FROM:	<bates@stat.wisc.edu>
 	creating nested anonymous functions are welcome.  I'll try to
 	work out a corresponding all.vars function.
 	[ all.names() and all.vars() added in 0.61.			]
-
 ----------------------------------------------------------------------
 TASK:	"sys.function" problem
 STATUS:	Open

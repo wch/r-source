@@ -12,9 +12,10 @@
 #    extract the function from the passed "list".
 
 dyn.load("zero.so")
-##-- you probably should change this to
+##-- you may need to change this to
 ## dyn.load("<RHOME>/demos/dynload/zero.so")
-##-- substituting the proper path for <RHOME>
+##-- substituting the proper path for <RHOME>,
+## unless you are executing R from the directory containing zero.so
 
 zero <- function(f, guesses, tol=1e-7) {
 	f.check <- function(x) {
@@ -33,3 +34,10 @@ cube1 <- function(x) (x^2+1)*(x-1.5)
 x0 <- zero(cube1, c(0,5))
 print(x0)
 print(x0,15)
+
+
+
+
+
+
+
