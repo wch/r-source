@@ -81,7 +81,7 @@ makeExtends(Class, to, coerce, test, replace, by, package, slots,
 reconcilePropertiesAndPrototype(name, properties, prototype,
        superClasses, where)
 
-tryNew(Class)
+tryNew(Class, where)
 
 trySilent(expr)
 
