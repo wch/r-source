@@ -35,7 +35,10 @@
   \code{subset}. If the formula in \code{plot.formula} contains more
   than one non-response term, a series of plots of y against each term
   is given.  A plot against the running index can be specified as
-  \code{plot(y~1)}.
+  \code{plot(y ~ 1)}.
+
+  Missing values are not considered in these methods, and in particular
+  cases with missing values are not removed.
 
   If \code{y} is an object (ie. has a \code{\link[base]{class}} attribute)
   then \code{plot.formula} looks for a plot method for that class first.

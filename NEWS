@@ -136,6 +136,8 @@ BUG FIXES
 	(PR#6830 under Unix/Linux: it already worked under Windows.)
 	Also 'R CMD check'.
 
+    o   mosaicplot() stops cleanly if given a table containing missing values.
+
 
 
 		CHANGES IN R VERSION 1.9.0
