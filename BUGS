@@ -122,11 +122,6 @@ Date: Wed, 31 Mar 1999 14:09:53 +0200
 
 Directory:  In-Out
 
-* PR# 117 *
-Subject: load() -> segfault
-From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
-Date: Mon, 8 Feb 1999 18:10:36 -0800 (PST)
---Fixed-size buffer used to hold unlimited size object. Not good...
 * PR# 125 *
 Subject: scan rejects complex
 From: John.Peters@tip.csiro.au (John Peters)
@@ -277,15 +272,11 @@ Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
 Subject: core dump
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Wed, 7 Apr 1999 16:30:39 +0200 (MET DST)
-* PR# 161 *
-Subject: Error in ppois function
-From: mh.smith@auckland.ac.nz
-Date: Fri, 9 Apr 1999 05:20:26 +0200
-* PR# 162 *
-Subject: a strange logical bug
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Fri, 9 Apr 1999 08:40:03 +0200 (MET DST)
 * PR# 163 *
 Subject: IRIX compile
 From: mtim@farm.ecs.umass.edu
 Date: Sat, 10 Apr 1999 19:35:43 +0200
+* PR# 164 *
+Subject: Re: [R] repeated measurements libraries v0.4
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 11 Apr 1999 22:52:34 +0100 (BST)
