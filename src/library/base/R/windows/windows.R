@@ -36,6 +36,7 @@ savePlot <- function(filename = "Rplot",
     if(is.na(devcur)) stop("no such device")
     devname <- names(devlist)[devcur]
     if(devname != "windows") stop("can only copy from `windows' devices")
-    filename <- paste(filename, type, sep=".")
+    if(filename == "clipboard" && type == "wmf") filename <- ""
+    if(nchar(filename) > 0) filename <- paste(filename, type, sep=".")
     invisible(.Internal(saveDevga(device, filename, type)))
 }
