@@ -66,6 +66,7 @@ BUG FIXES
     o	cut() now produces correct default labels even when
 	include.lowest=TRUE (PR#1263).
 
+    o	reformulate() properly works with a response.
 
 
 		CHANGES IN R VERSION 1.4.0
