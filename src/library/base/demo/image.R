@@ -1,7 +1,7 @@
 if(dev.cur() <= 1) get(getOption("device"))()
 
 opar <- par(ask = interactive() &&
-            (.Device %in% c("X11", "GTK", "windows")))
+            (.Device %in% c("X11", "GTK", "windows","quartz")))
 # For source
 
 data(volcano)
