@@ -9,7 +9,8 @@ BUILDlatex = $(RETC)/Rdconv --type latex
 
 Packages = pkg-base.tex pkg-eda.tex pkg-mva.tex pkg-stepfun.tex
 #- Man.tex  also must have an  \input{..} for each of these ^^^^
-Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps
+Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps\
+	   Man-5.ps Man-6.ps Man-7.ps Man-8.ps
 Manbooks = $(Manparts:.ps=.bps)
 
 
@@ -40,16 +41,21 @@ Man.dvi: Man.tex Version.tex Rd.sty $(Packages)
 	-makeindex Man
 	-latex '\nonstopmode\input{Man.tex}'
 ##-- need \nonstopmode, since we still have some 'alias' problems in Index
-Version.tex:
-	../../bin/R --version > $@
+Version.tex: $(rRHOME)/bin/R
+	$^ --version > $@
 
 Manbooks:: $(Manbooks)
 
 $(Manparts): Man.dvi
-	dvips        -l64 -f $< -o Man-1.ps
-	dvips  -p65 -l128 -f $< -o Man-2.ps
-	dvips -p129 -l192 -f $< -o Man-3.ps
-	dvips -p193       -f $< -o Man-4.ps
+	dvips        -l36 -f $< -o Man-1.ps
+	dvips  -p37  -l72 -f $< -o Man-2.ps
+	dvips  -p73 -l108 -f $< -o Man-3.ps
+	dvips -p109 -l144 -f $< -o Man-4.ps
+	dvips -p145 -l180 -f $< -o Man-5.ps
+	dvips -p181 -l216 -f $< -o Man-6.ps
+	dvips -p217 -l252 -f $< -o Man-7.ps
+	dvips -p253 -l288 -f $< -o Man-8.ps
+	dvips -p289       -f $< -o Man-9.ps
 
 Man.ps:	Man.dvi
 	dvips -f $< -o $@
