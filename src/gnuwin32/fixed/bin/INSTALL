@@ -54,7 +54,23 @@ R_version($name, $version) if $opt_version;
 
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
+my $Rversion = $ENV{'R_VERSION'} ||
+    die "Error: Environment variable R_VERSION not found\n";
 usage() if $opt_help;
+
+## ===== to allow to be converted for use when cross-compiling =====
+my $BUILD = "MINGW";
+if($BUILD == "CROSS") {
+    my $startdir = cwd();
+    chdir("../..");
+    $R_HOME = cwd();
+    chdir($startdir);
+    open FILE, "< $R_HOME/VERSION";
+    $Rversion = <FILE>;
+    close FILE;
+    $Rversion =~ s/ .*\n$//;
+}
+## ===== end =====
 
 if($opt_debug) {
     print "\nOption -d or --debug is accepted for compatibility with Unix.\n";
@@ -179,7 +195,6 @@ foreach $pkg (@ARGV){
 	if($depends =~ /\bR *\(([^\) ]+) *([^\) ]+)\)/) { # regexp from check
             my $op = $1;
             my $ver = $2;
-	    my $Rversion = $ENV{'R_VERSION'};
 	    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
 	    if ($op eq ">=" && $ver) {
 		die "This R is version $Rversion\n".
@@ -303,7 +318,9 @@ foreach $pkg (@ARGV){
 	    print "*** lazyload is $lazyload ***\n" if $opt_debug;
 	    if($lazyload) {
 		my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
-		$cmd .= "RHOME=$R_HOME SPKG=$pkg DPKG=$library/$decpkgname PKG=$decpkgname RLIB=$library lazyload";
+		$cmd .= "RHOME=$R_HOME SPKG=$pkg BUILD=$BUILD" . 
+		    " DPKG=$library/$decpkgname PKG=$decpkgname" .
+		    " RLIB=$library lazyload";
 #		print "$cmd\n";
 		system($cmd);
 	    }

@@ -296,10 +296,6 @@ nlme-ZIPDATA = zip
 rpart-HELP = ziponly
 survival-HELP = ziponly
 
-# need special-case handling for bundle, as --auto-zip is not enabled
-dse1-HELP = ziponly
-dse2-HELP = ziponly
-
 bundle-%:
 	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
@@ -516,10 +512,12 @@ clean-recommended:
 
 
 recommended: unpack-recommended
-ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "use 'make recommended0' when cross-building"
-else
 	@$(ECHO) "--- Making recommended packages"
+ifeq ($(strip $(BUILD)),CROSS)
+        @for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+          $(R_EXE) CMD XINSTALL --unsafe --lazy --docs=normal ../library/$${p} || exit 1; \
+        done
+else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
 	 $(RHOME)/bin/rcmd.exe INSTALL --unsafe --lazy ../library/$${p} || exit 1; \
 	done
