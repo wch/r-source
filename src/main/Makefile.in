@@ -45,8 +45,9 @@ DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
-	Rregex.h Rstrptime.h \
+	RBufferUtils.h Rregex.h Rstrptime.h \
 	arithmetic.h apse.h \
+	par-common.c \
 	qsort-body.c \
 	unzip.h
 
