@@ -172,7 +172,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	x1 <- (if(merge) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]
 	if(trace)
-	    catn("  points2(", x1,",", y1,", pch=", pch[ok],"...)")
+	    catn("  points2(", x1,",", y1,", pch=", pch[ok],", ...)")
 	if(plot)
 	    points2(x1, y1, pch = pch[ok], col= col[ok], cex=cex, bg= pt.bg[ok])
 	if (!merge) xt <- xt + dx.pch
