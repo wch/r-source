@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-23
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-27
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -691,7 +691,7 @@ To cite R in publications, use
 @end group
 @end example
 
-Citation strings (or Bib@TeX{} entroes) for R and R packages can also be
+Citation strings (or Bib@TeX{} entries) for R and R packages can also be
 obtained by @code{citation()}.
 
 @node What mailing lists exist for R?, What is CRAN?, Citing R, R Basics
@@ -894,7 +894,7 @@ Bell Labs language `S' (@pxref{What is S?}).
 The R Foundation is a not for profit organization working in the public
 interest.  It was founded by the members of the R Core Team in order to
 provide support for the R project and other innovations in statistical
-computing, provide a reference point for individuals, instititutions or
+computing, provide a reference point for individuals, institutions or
 commercial enterprises that want to support or interact with the R
 development community, and to hold and administer the copyright of R
 software and documentation.  See
@@ -2641,6 +2641,8 @@ Analysis of experimental crosses to identify QTLs.
 For solving quadratic programming problems.
 @item quantreg
 Quantile regression and related methods.
+@item qvalue
+Q-value estimation for false discovery rate control.
 @item qvcalc
 Functions to compute quasi-variances and associated measures of
 approximation error.
