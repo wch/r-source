@@ -126,7 +126,7 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  fi; \
 	}
 
-RGui.pot-update:
+RGui.pot-update: remove-potcdate.sed
 	(cd $(top_srcdir)/src/gnuwin32; $(XGETTEXT) --default-domain=RGui \
 	  --keyword= --keyword=G_ --keyword=GN_ \
 	  --add-comments=TRANSLATORS: \
