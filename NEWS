@@ -17,6 +17,8 @@ NEW FEATURES
 
     o	legend() has a new argument 'pt.cex'.
 
+    o	plot.ts() has more arguments, particularly 'yax.flip'.
+
 
 INSTALLATION ISSUES
 
@@ -28,10 +30,10 @@ INSTALLATION ISSUES
 	a working build: the critical LAPACK routines are now compiled
 	with -ffloat-store.
 
-    o   Added patches to enable 64-bit builds on AIX 5.1: see the R-admin
+    o	Added patches to enable 64-bit builds on AIX 5.1: see the R-admin
 	manual for details.
 
-    o   Added some patches to allow non-IEEE-754 installations to work
+    o	Added some patches to allow non-IEEE-754 installations to work
 	reasonably well.  (Infs and NAs are still not handled properly
 	in complex arithmetics and functions such a sin.)
 
@@ -82,7 +84,7 @@ BUG FIXES
 	(and often random) answers, and is now an error.
 
     o	The C-level function ncols was returning a random answer
-	(often 0) for a 1D array.  This caused model.matrix to()
+	(often 0) for a 1D array.  This caused model.matrix to
 	misbehave (perhaps segfault) if a term was a 1D array.	(PR#6838)
 
     o	The configure script now finds the pdf viewers ggv and gpdf.
@@ -108,6 +110,8 @@ BUG FIXES
 
     o	diffinv(matrix(3, 7,0)) now works.
 
+    o	plot.ts(z) for multivariate 'z' now properly draws all 'nc' xlab`s
+	when nc > 1 and obeys 'ann=FALSE' or 'axes=FALSE'.
 
 
 		CHANGES IN R VERSION 1.9.0
