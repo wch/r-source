@@ -15,7 +15,7 @@ NEW FEATURES
 	producing many *.Rd files in a loop).
 
     o	The Unix front-end shell script now ignores a value for R_HOME
-        found in the environment.
+	found in the environment.
 
     o	Connections functions such as file() now accept a description of
 	length > 1, with a warning.
@@ -65,36 +65,43 @@ BUG FIXES
     o	scan(strip.white=TRUE) and readline() could give incorrect 
 	answers when an input field was empty or blank.
 
-    o   dchisq() now behaves better for large values of its ncp parameter.
+    o	dchisq() now behaves better for large values of its ncp parameter.
 
-    o   is.vector() is now correctly documented: complex vectors and
+    o	besselJ(*, nu) is now ok for nu < 1; fix improves other values by a
+        few bits as well.
+
+    o	is.vector() is now correctly documented: complex vectors and
 	lists return TRUE.
 
-    o   The convergence criterion in the Fortran SVD code has been
+    o	The convergence criterion in the Fortran SVD code has been
 	changed to circumvent spurious convergence errors when
 	comparing extended-precision quantities on ix86 Linux (and
 	some compilers and options).
 
-    o   Rdindex now handles multi-line \title{}'s correctly
+    o	Rdindex now handles multi-line \title{}'s correctly
 
-    o   Add weights.glm so that plot.lm gets the correct weights from
+    o	Add weights.glm so that plot.lm gets the correct weights from
 	glm objects (the ones that go with deviance residuals not the
 	working residuals).
 
-    o   The help pages for lm and glm now describe the fitted objects.
+    o	The help pages for lm and glm now describe the fitted objects.
 
-    o   Printing a language object (e.g. a formula) in a list was
+    o	Printing a language object (e.g. a formula) in a list was
 	clobbering the buffer holding the tag labels which then were 
 	lost in subsequent lines of printout (PR#746).
 
-    o   aic in family() objects is now computed more precisely using
+    o	aic in family() objects is now computed more precisely using
 	dxxxx(log=TRUE).  For binomial fits the value was wrong for
 	models specified via proportions and weights.
 
-    o   Using non-integer numbers of successes in a binomial glm
+    o	Using non-integer numbers of successes in a binomial glm
 	(as formerly in demo(lm.glm) now gives a warning, as the
 	theory and in particular the AIC value is not applicable.
 
+    o	demo(is.things) works again {is.ALL() doesn't call methods anymore}.
+
+    o	persp(*, nticks = nn) now works (better) for too small nn.
+	persp(*, main = t1, sub= t2) now work (as always documented).
 
 
 		CHANGES IN R VERSION 1.2.0
