@@ -24,6 +24,9 @@ NEW FEATURES
     o	help() has "htmlhelp" argument, allowing to suppress htmlhelp after
 	help.start().  This is desired for ESS.
 
+    o   quantile(.) has an "names = TRUE" argument for speed.
+	It is much better documented now.
+
 
 BUG FIXES
 
