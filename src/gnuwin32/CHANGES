@@ -17,9 +17,13 @@ bringToTop() now works with MDI child windows as well as SDI windows.
 Rcmd build/check use a different check for a directory, to work around
 a bug in (some versions of) Windows Perl.
 
-The datetime code has been modified to workaround a problem reported
-on Win98SE machines which caused times to be reported in GMT.
-(This is clearly a Windows bug and few machines seemed affected.)
+The datetime code has been modified to work around a problem reported
+on a Win98 machine which caused times to be reported in GMT.  (This
+seems a bug in a particular version of msvcrt.dll and few machines
+were affected.)  A side-effect of the changes is that the timezone
+names reported are usually more sensible (but sometimes less).
+
+File etc/Makeconf-tests was missing from rw102Xsp.zip.
 
 
 rw1021

@@ -338,7 +338,7 @@ GW32_HEADERS = globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin \
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc \
 	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/doc/manual \
 	  $(RPREFIX)/src $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
@@ -364,6 +364,7 @@ packagedist:
 	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/Sd2Rd \
 	  ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
+	$(CP) ../../etc/Makeconf-test $(RPREFIX)/etc
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
