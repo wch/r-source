@@ -55,6 +55,8 @@ NEW FEATURES
     o	If R_PAPERSIZE is not specified otherwise, configure now tries
 	to compute it by calling paperconf.
 
+    o	The deprecated alternative RPROFILE is no longer accepted: use
+	R_PROFILE instead.
 
 
 BUG FIXES

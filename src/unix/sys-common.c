@@ -74,8 +74,8 @@ FILE *R_OpenSiteFile(void)
     if (LoadSiteFile) {
 	if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
 	    return fp;
-	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
-	    return fp;
+/*	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
+	return fp; */
 	sprintf(buf, "%s/etc/Rprofile", R_Home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
