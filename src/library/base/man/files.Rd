@@ -27,8 +27,8 @@ path.expand(path)
   \item{overwrite}{logical; should the destination files be overwritten?}
 }
 \description{
-  These functions provide a very basic interface to the computer's
-  filestore.  
+  These functions provide a low-level interface to the computer's
+  file system.
 }
 \details{
   The \code{\dots} arguments are concatenated to form one character
@@ -84,7 +84,8 @@ path.expand(path)
 }
 \seealso{
   \code{\link{file.info}}, \code{\link{file.access}},
-  \code{\link{file.show}}, \code{\link{list.files}}.
+  \code{\link{file.show}}, \code{\link{list.files}},
+  \code{\link{unlink}}.
 }
 
 \examples{
