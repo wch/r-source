@@ -21,3 +21,5 @@ EXPORTS
  Tcl_GetIntFromObj
  Tcl_NewIntObj
  Tcl_NewDoubleObj
+ Tcl_GetStringFromObj
+
