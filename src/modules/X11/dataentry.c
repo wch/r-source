@@ -22,8 +22,7 @@
 /* <UTF8-FIXME> 
    used XTextWidth and XDrawText, so need to use fontsets
 
-   GetCharP is still character-based, XLookupString is explicitly for
-   Latin-1.
+   I just don't seem to be able to get XCreateIC right.
 */
 
 /* The version for R 2.1.0 is partly based on patches by 
@@ -31,12 +30,6 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
-
-#ifdef SUPPORT_UTF8
-# define HAVE_XUTF8DRAWIMAGESTRING 1
-# define HAVE_XUTF8DRAWSTRING 1
-# define HAVE_XUTF8TEXTESCAPEMENT 1
 #endif
 
 #include <stdlib.h>
@@ -179,7 +172,8 @@ static char             *font_name="9x15";
 static XFontSet         font_set;
 static XFontStruct	**fs_list;
 static int		font_set_cnt;
-static char             *fontset_name="-alias-fixed-medium-r-normal--10-";
+static char             *fontset_name="-alias-fixed-medium-r-normal--12-";
+static XIM		ioim;
 static XIC		ioic;
 #endif
 
@@ -1010,9 +1004,9 @@ static void handlechar(char *text)
 	highlightrect();
     }
 
-    if (currentexp == 1)	/* we are parsing a number */
+    if (currentexp == 1) {	/* we are parsing a number */
 #ifdef SUPPORT_UTF8
-	mbrtowc(&wc, text, MB_CUR_MAX , NULL);
+	mbrtowc(&wc, text, MB_CUR_MAX, NULL);
 	switch (wc) {
 	case L'-':
 	    if (nneg == 0) nneg++; else goto donehc;
@@ -1051,6 +1045,7 @@ static void handlechar(char *text)
 	    break;
 	}
 #endif
+    }
     if (currentexp == 3) {
 #ifdef SUPPORT_UTF8
 	mbrtowc(&wc, text, MB_CUR_MAX , NULL);
@@ -1392,6 +1387,12 @@ static void RefreshKeyboardMapping(DEEvent * event)
 void closewin(void)
 {
     XFreeGC(iodisplay, iogc);
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	XDestroyIC(ioic);
+	XCloseIM(ioim);
+    }
+#endif
     XDestroyWindow(iodisplay, iowindow);
     XCloseDisplay(iodisplay);
 }
@@ -1423,6 +1424,7 @@ static Rboolean initwin(void) /* TRUE = Error */
     XEvent ioevent;
     XSetWindowAttributes winattr;
     XWindowAttributes attribs;
+    XWMHints hints;
 
     strcpy(copycontents, "");
 
@@ -1520,18 +1522,20 @@ static Rboolean initwin(void) /* TRUE = Error */
     iohint.width = windowWidth;
     iohint.height = windowHeight;
     iohint.flags = PPosition | PSize;
+    hints.flags = InputHint;
+    hints.input = True;
     root = DefaultRootWindow(iodisplay);
 
     if ((iowindow = XCreateSimpleWindow(
-	iodisplay,
-	root,
-	iohint.x,
-	iohint.y,
-	iohint.width,
-	iohint.height,
-	bwidth,
-	ioblack,
-	iowhite)) == 0) {
+	     iodisplay,
+	     root,
+	     iohint.x,
+	     iohint.y,
+	     iohint.width,
+	     iohint.height,
+	     bwidth,
+	     ioblack,
+	     iowhite)) == 0) {
 	warning("unable to open window for data editor");
 	return TRUE;
     }
@@ -1547,14 +1551,12 @@ static Rboolean initwin(void) /* TRUE = Error */
     _XA_WM_PROTOCOLS = XInternAtom(iodisplay, "WM_PROTOCOLS", 0);
     protocol = XInternAtom(iodisplay, "WM_DELETE_WINDOW", 0);
     XSetWMProtocols(iodisplay, iowindow, &protocol, 1);
+    XSetWMHints(iodisplay, iowindow, &hints);
 
 
     iogc = XCreateGC(iodisplay, iowindow, 0, 0);
 #ifdef SUPPORT_UTF8
-    if(utf8locale) {
-	for(i = 0; i < font_set_cnt; i++)
-	    XSetFont(iodisplay, iogc, fs_list[i]->fid);
-    } else
+    if(!utf8locale)
 #endif
 	XSetFont(iodisplay, iogc, font_info->fid);
     XSetBackground(iodisplay, iogc, iowhite);
@@ -1568,7 +1570,23 @@ static Rboolean initwin(void) /* TRUE = Error */
     XMapRaised(iodisplay, iowindow);
 #ifdef SUPPORT_UTF8
     /* FIXME  create ic by something like */
-    ioic = XCreateIC(XOpenIM(iodisplay, NULL, NULL, NULL));
+    if(utf8locale) {
+	ioim = XOpenIM(iodisplay, NULL, NULL, NULL);
+
+	if(!ioim) error("unable to open X Input Method");
+	ioic = XCreateIC(ioim, 
+			 XNInputStyle, XIMPreeditNone | XIMStatusNothing, 
+			 XNClientWindow, iowindow,
+			 NULL);
+	if(!ioic) {
+	    XFreeGC(iodisplay, iogc);
+	    XCloseIM(ioim);
+	    XDestroyWindow(iodisplay, iowindow);
+	    XCloseDisplay(iodisplay);
+	    error("unable to open X Input Context");
+	}
+    }
+    
 #endif
 
     /* now set up the menu-window, for now use the same text

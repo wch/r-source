@@ -28,7 +28,6 @@
 
 #ifdef SUPPORT_UTF8
 # define USE_FONTSET 1
-# define HAVE_XUTF8TEXTESCAPEMENT 1
 #endif
 
 #ifdef HAVE_RINT
@@ -908,10 +907,8 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 	    xd->fontsize = size;
             if (face == SYMBOL_FONTFACE)
 		XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
+#ifndef USE_FONTSET
             else
-#ifdef USE_FONTSET
-		RXSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
-#else
 	        XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
 #endif
 	} else
@@ -1247,10 +1244,8 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
     if ( xd->fontface == SYMBOL_FONTFACE )
 	XSetFont(display, xd->wgc, ((XFontStruct*)(xd->font))->fid);
+#ifndef USE_FONTSET
     else
-#ifdef USE_FONTSET
-	RXSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
-#else
         XSetFont(display, xd->wgc, ((XFontStruct*) xd->font)->fid);
 #endif
 

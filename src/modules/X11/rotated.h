@@ -58,7 +58,6 @@ int	XmbRotDrawString(Display*, XFontSet, double,
 
 /* ---------------------------------------------------------------------- */
 
-void                    RXSetFontSet(Display *display,GC gc,XFontSet font);
 XFontStruct            *RXFontStructOfFontSet(XFontSet font);
 
 #endif /* _XVERTEXT_INCLUDED_ */
