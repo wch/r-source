@@ -72,6 +72,7 @@ ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe).
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  You also need `.' in your path.
+Do not use paths with spaces in: you can always use the short forms.
 
 
 Check your path
@@ -84,6 +85,8 @@ mingw\bin
 Perl\bin
 the latex bin directory
 zip.exe, unzip.exe, hhc.exe
+
+Do not use unnecessary quotes in your PATH variable.
 
 
 Building

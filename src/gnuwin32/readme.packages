@@ -61,8 +61,11 @@ files: for that you need zip and unzip from the Info-ZIP project
 
 
 All of these need to be installed and in your path, and the
-appropriate environment variables set.  Edit MkRules to set the
-appropriate paths as needed.
+appropriate environment variables set.  
+Edit MkRules to set the appropriate paths as needed.
+Do not use paths with spaces in: you can always use the short forms.
+Do not use unnecessary quotes in your PATH variable.
+
 
 BEWARE: if you have Norton Anti-Virus you may need to disable it.
 Some versions lock up the machine when windres is run.  (Norton
