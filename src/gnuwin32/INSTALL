@@ -20,7 +20,7 @@ Collect the tools
 -----------------
 
 You will need suitable versions of at least make, sh, cat, cp, cut,
-diff, echo, egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch;
+diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch;
 we use those from the cygwin distribution
 (http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at

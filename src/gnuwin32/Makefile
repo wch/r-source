@@ -63,7 +63,7 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll libR.a CHTML \
+rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll CHTML \
 	 ../include/globalvar.h front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
@@ -108,7 +108,7 @@ Rdll: makeMakedeps ../../bin/R.dll
 	$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
 
-front-ends: libR.a
+front-ends:
 	$(MAKE) -C front-ends
 
 R.a: $(OBJS)
@@ -184,7 +184,7 @@ ts-ZIPDATA = zip
 bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
-pkg-%:  libR.a #../include/globalvar.h
+pkg-%:  # libR.a ../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" EXTRADOCS=$($*-EXTRADOCS) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
@@ -399,7 +399,7 @@ packagedist:
 	  $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
-	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
+	$(CP) -p exported-vars MkRules MakePkg MakeDll \
 	  pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed

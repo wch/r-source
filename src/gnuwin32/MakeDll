@@ -1,5 +1,5 @@
 #-*- Makefile -*-
-all:  libR $(DLLNAME).dll
+all:  $(DLLNAME).dll
 
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
@@ -29,7 +29,7 @@ CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include -include $(RHOME)/src/include/gl
 CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
-DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
+DLLLIBS=$(PKG_LIBS) $(FLIBS) $(RHOME)/bin/R.dll 
 RESFLAGS=--include-dir $(RHOME)/src/include
 
 
@@ -46,8 +46,6 @@ else
 -include Makevars
 endif
 
-libR:
-	@$(MAKE) --no-print-directory -C $(RHOME)/src/gnuwin32 libR.a
 
 $(DLLNAME)_res.rc:
 	PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@

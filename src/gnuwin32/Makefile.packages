@@ -19,9 +19,6 @@ else
  DLLFLAGS=-s
 endif
 
-libR.a:  R.exp
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
-
 #                          ===== Packages ======
 
 bundle-%:
