@@ -1846,7 +1846,7 @@ SEXP do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP c, fun, names, funcall;
+    SEXP c, fun, names;
     int i, n;
     RCNTXT *cptr;
 
@@ -1858,10 +1858,9 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* must be a string or a function */
     if( isString(fun) ) {
 	if( length(fun) != 1 || CHAR(STRING_ELT(fun,0)) == '\0')
-	    errorcall_return(call, "first argument must be a length 1 string")
-    }
-    else if (!isFunction(fun) )
-	errorcall_return(call, "first argument must be a function");
+	    errorcall_return(call, _("first argument must be a character string or a function"))
+    } else if (!isFunction(fun) )
+	    errorcall_return(call, _("first argument must be a character string or a function"))
 
     if (!isNull(args) && !isNewList(args))
 	errorcall_return(call, R_MSG_A2_list);
