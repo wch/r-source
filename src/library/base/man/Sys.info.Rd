@@ -31,7 +31,7 @@ login name comes from \code{getlogin(2)}, and the user name from
 #endif
 #ifdef windows
 The information is obtained from Windows system calls.  It is likely to
-be most complete on Windows NT and 2000 systems.
+be most complete on Windows NT/2000/XP systems.
 #endif
 }
 \note{
