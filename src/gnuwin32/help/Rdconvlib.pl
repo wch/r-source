@@ -623,7 +623,7 @@ sub code2html {
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$htmlfile = $htmlindex{$argkey};
-	
+
 	if($htmlfile){
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
@@ -822,7 +822,7 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".po 3\n";
     print nroffout ".na\n";
     print nroffout ".tl '", $blocks{"name"},
-          "($pkgname)''R Documentation'\n\n" if $pkgname;
+          " {$pkgname}''R Documentation'\n\n" if $pkgname;
     print nroffout ".SH\n";
     print nroffout striptitle($blocks{"title"}), "\n";
     nroff_print_block("description", "Description");
@@ -1571,7 +1571,7 @@ sub latex_code_cmd {
 	  if $code =~ /@/;
 	warn("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
-	## till 0.63.1 
+	## till 0.63.1
 	## $code = "\\verb@" . $code . "@";
 	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
 	$code =~ s/[$LATEX_SPECIAL]/\\$&/go;# escape them (not the "bsl" )
