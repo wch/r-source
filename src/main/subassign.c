@@ -943,7 +943,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    j = 0;
 	    while (++index[j] >= bound[j]) {
 		index[j] = 0;
-		j = ++j % k;
+		j = (j + 1) % k;
 	    }
 	}
       next_i:
