@@ -90,25 +90,3 @@ function (..., list = character(0), pos = -1, envir = as.environment(pos),
 }
 
 "remove" <- rm
-
-as.environment<- function(object)
-{
-    switch(typeof(object),
-           environment = return(object),
-           character = {
-               n <- match(object, search())
-               if(is.na(n))
-                   stop(paste("\"", c(object, "character(0)")[[1]],
-                              "\" not found on search list", sep=""))
-               object <- n
-           },
-           integer= {
-               if(identical(object, as.integer(-1)))
-                   return(sys.frame(sys.parent(2)))
-           },
-           double =  {
-               if(identical(object, -1))
-                   return(sys.frame(sys.parent(2)))
-           })
-    pos.to.env(object)
-}

@@ -331,6 +331,90 @@ SEXP do_class(SEXP call, SEXP op, SEXP args, SEXP env)
     return getAttrib(CAR(args), R_ClassSymbol);
 }
 
+/* character elements corresponding to the syntactic types in the
+   grammar */
+static SEXP lang2str(SEXP obj, SEXPTYPE t)
+{
+  SEXP symb = CAR(obj);
+  static SEXP if_sym = 0, while_sym, for_sym, eq_sym, gets_sym,
+    lpar_sym, lbrace_sym, call_sym;
+  if(!if_sym) {
+    /* initialize:  another place for a hash table */
+    if_sym = install("if");
+    while_sym = install("while");
+    for_sym = install("for");
+    eq_sym = install("=");
+    gets_sym = install("<-");
+    lpar_sym = install("(");
+    lbrace_sym = install("{");
+    call_sym = install("call");
+  }
+  if(isSymbol(symb)) {
+    if(symb == if_sym || symb == for_sym || symb == while_sym ||
+       symb == lpar_sym || symb == lbrace_sym || 
+       symb == eq_sym || symb == gets_sym)
+      return PRINTNAME(symb);
+  }
+  return PRINTNAME(call_sym);
+}
+
+/* the S4-style class: for dispatch  required to be a single string;
+   for the newClass function, keeps S3-style multiple classes. */
+
+SEXP R_data_class(SEXP obj, int singleString)
+{
+    SEXP class, value; int n;
+    class = getAttrib(obj, R_ClassSymbol);
+    n = length(class);
+    if(n == 1 || (n > 0 && !singleString))
+	return(class);
+    if(n == 0) {
+	SEXP dim; int n;
+	dim = getAttrib(obj, R_DimSymbol);
+	n = length(dim);
+	if(n > 0) {
+	    if(n == 2)
+		class = mkChar("matrix");
+	    else
+		class = mkChar("array");
+	}
+	else {
+	  SEXPTYPE t = TYPEOF(obj);
+	  switch(t) {
+	  case CLOSXP: case SPECIALSXP: case BUILTINSXP:
+	    class = mkChar("function");
+	    break;
+	  case REALSXP:
+	    class = mkChar("numeric");
+	    break;
+	  case LANGSXP:
+	    class = lang2str(obj, t);
+	    break;
+	  default:
+	    class = type2str(t);
+	  }
+	}
+    }
+    else
+	class = asChar(class);
+    PROTECT(value = allocVector(STRSXP, 1));
+    SET_STRING_ELT(value, 0, class);
+    UNPROTECT(1);
+    return value;
+}
+
+SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  checkArity(op, args);
+  return R_data_class(CAR(args), FALSE);
+}
+
+SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  checkArity(op, args);
+  return R_set_class(CAR(args), CADR(args), call);
+}
+
 /* names(object) <- name */
 SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {

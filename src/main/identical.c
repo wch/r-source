@@ -162,7 +162,7 @@ static Rboolean compute_identical(SEXP x, SEXP y)
       x = CDR(x);
       y = CDR(y);
     }
-    return(TRUE);
+    return(y == R_NilValue);
   }
   case SYMSXP:
     return(strcmp(CHAR(x), CHAR(y)) == 0 ? TRUE : FALSE);

@@ -47,7 +47,7 @@ Real.primitives <-
            ".External.graphics", ".Call.graphics",
 	   ".C", ".Fortran", "symbol.C", "symbol.For",
 	   "globalenv", "pos.to.env", "unclass",
-           "as.character",
+           "as.character", "as.environment",
 	   ##maybe ? "gc", "gcinfo",
 	   ##
 	   "debug", "undebug", "trace", "untrace",
@@ -65,6 +65,7 @@ Real.primitives <-
 	 c("environment<-",
 	   "length",	"length<-",
 	   "class",	"class<-",
+	   "dataClass", "objWithClass",
 	   "attr", # again
 	   "attr<-",
 	   "attributes",	"attributes<-",

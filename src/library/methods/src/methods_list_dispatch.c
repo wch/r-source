@@ -15,6 +15,9 @@ SEXP findVarInFrame(SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
 void R_PreserveObject(SEXP);
 
+/* attrib.c */
+SEXP R_data_class(SEXP obj, int singleString);
+
 
 /* from main/subassign.c */
 SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val);
@@ -109,34 +112,7 @@ static SEXP R_mode(SEXP obj)
 
 
 /* the  SEXP for the data.class string (roughly, the green book class function) */
-static SEXP R_data_class(SEXP obj)
-{
-    SEXP class, value; int n;
-    class = getAttrib(obj, R_ClassSymbol);
-    n = length(class);
-    if(n == 1)
-	return(class);
-    if(n == 0) {
-	SEXP dim; int n;
-	dim = getAttrib(obj, R_DimSymbol);
-	n = length(dim);
-	if(n > 0) {
-	    if(n == 2)
-		class = mkChar("matrix");
-	    else
-		class = mkChar("array");
-	}
-	else {
-	    class = type2str(TYPEOF((obj)));
-	}
-    }
-    else
-	class = asChar(class);
-    PROTECT(value = allocVector(STRSXP, 1));
-    SET_STRING_ELT(value, 0, class);
-    UNPROTECT(1);
-    return value;
-}
+
 
 /* simplified version of do_subset2_dflt, with no partial matching */
 static SEXP R_element_named(SEXP obj, char * what)
@@ -653,7 +629,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
 	/* should be a formal argument in the frame, get its value */
 	if(TYPEOF(arg) == PROMSXP)
 	    PROTECT(arg = eval(arg, ev));
-	class_obj = PROTECT(R_data_class(arg));
+	class_obj = PROTECT(R_data_class(arg, TRUE));
     }
     class = CHAR(asChar(class_obj));
     method = R_find_method(mlist, class, fname, ev, arg, class_obj, &inherited);

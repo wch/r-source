@@ -1893,3 +1893,39 @@ SEXP do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return env;
 }
+
+static SEXP matchEnvir(SEXP call, char *what)
+{
+  SEXP t, name, nameSymbol;
+  if(!strcmp(".GlobalEnv", what))
+    return R_GlobalEnv;
+  if(!strcmp("package:base", what))
+    return R_NilValue;
+  nameSymbol = install("name");
+  for (t = ENCLOS(R_GlobalEnv); t != R_NilValue ; t = ENCLOS(t)) {
+    name = getAttrib(t, nameSymbol);
+    if(isString(name) && length(name) > 0 &&
+       !strcmp(CHAR(STRING_ELT(name, 0)), what))
+      return t;
+  }
+  errorcall(call, "Package named \"%s\" not found in search list",
+	    what);
+  return R_NilValue;
+}
+
+SEXP do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+  SEXP arg = CAR(args);
+  checkArity(op, args);
+  if(isEnvironment(arg))
+    return arg;
+  switch(TYPEOF(arg)) {
+  case STRSXP:
+    return matchEnvir(call, CHAR(asChar(arg)));
+  case REALSXP: case INTSXP:
+    return do_pos2env(call, op, args, rho);
+  default:
+    errorcall(call, "Invalid object for as.environment");
+    return R_NilValue; /* -Wall */
+  }
+}

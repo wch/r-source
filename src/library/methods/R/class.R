@@ -1,19 +1,5 @@
-class <-
-  function(x)
-{
-    value <- attr(x, "class")
-    if(is.null(value)) {
-        ## similar to data.class
-        l <- length(dim(x))
-        if (l == 2)
-            "matrix"
-        else if (l > 0)
-            "array"
-        else mode(x)
-    }
-    else
-        value
-}
+class <- dataClass
+
 .BasicVectorClasses <- c("logical", "numeric", "character",
                          "complex", "integer", "single",
                          "expression", "list")
@@ -22,6 +8,10 @@ class <-
 
 "class<-" <-
   function(x, value)
+  objWithClass(x, value)
+
+classGetsInR <-
+function(x, value)
 {
     ## a definition of match that avoids messing with inheritance
     ## (The version on base calls is.factor, is.table)
@@ -45,4 +35,21 @@ class <-
         mode(x) <- value
         x
     }
+}
+
+classInR <-
+  function(x)
+{
+    value <- attr(x, "class")
+    if(is.null(value)) {
+        ## similar to data.class
+        l <- length(dim(x))
+        if (l == 2)
+            "matrix"
+        else if (l > 0)
+            "array"
+        else mode(x)
+    }
+    else
+        value
 }

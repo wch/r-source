@@ -80,6 +80,7 @@ SEXP do_arrows(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asPOSIXct(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asPOSIXlt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_ascall(SEXP, SEXP, SEXP, SEXP);
+SEXP do_as_environment(SEXP, SEXP, SEXP, SEXP);
 SEXP do_ascharacter(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asfunction(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asmatrixdf(SEXP, SEXP, SEXP, SEXP);
@@ -399,6 +400,9 @@ SEXP do_getDL(SEXP, SEXP, SEXP, SEXP);
 SEXP do_playDL(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getGPar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setGPar(SEXP, SEXP, SEXP, SEXP);
+
+SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env);
 
 /* Connections */
 SEXP do_stdin(SEXP, SEXP, SEXP, SEXP);

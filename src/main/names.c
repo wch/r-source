@@ -169,6 +169,8 @@ FUNTAB R_FunTab[] =
 {"drop",	do_drop,	0,	11,	1,	PP_FUNCALL},
 {"class",	do_class,	0,	1,	1,	PP_FUNCALL},
 {"class<-",	do_classgets,	0,	1,	2,	PP_FUNCALL},
+{"dataClass",	R_do_data_class,0,	1,	1,	PP_FUNCALL},
+{"objWithClass",R_do_set_class,	0,	1,	2,	PP_FUNCALL},
 {"unclass",	do_unclass,	0,	1,	1,	PP_FUNCALL},
 {"names",	do_names,	0,	11,	1,	PP_FUNCALL},
 {"names<-",	do_namesgets,	0,	11,	2,	PP_FUNCALL},
@@ -425,6 +427,7 @@ FUNTAB R_FunTab[] =
 {"do.call",	do_docall,	0,	11,	2,	PP_FUNCALL},
 {"as.call",	do_ascall,	0,	1,	1,	PP_FUNCALL},
 {"type.convert",do_typecvt,	1,	11,	4,	PP_FUNCALL},
+{"as.environment", do_as_environment,	0,	1,	1,	PP_FUNCALL},
 
 
 /* String Manipulation */

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-08-16)
+Version 1.4.0 Under development (unstable) (2001-08-27)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -36,7 +36,7 @@ Error in as.call(x) : invalid argument list
 > is.double(as.double( x ))
 [1] TRUE
 > is.environment(as.environment( x ))
-Error in pos.to.env(object) : invalid "pos" argument
+Error in as.environment(x) : invalid "pos" argument
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -96,7 +96,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.environment(x)) { cat('IS: ');all.equal(x, as.environment( x ), tol=0)
 + } else   !isall.equal(x, as.environment( x ))
-Error in pos.to.env(object) : invalid "pos" argument
+Error in as.environment(x) : invalid "pos" argument
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -323,7 +323,7 @@ Error in as.table.default(x) : cannot coerce into a table
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 [1] TRUE
 > f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in pos.to.env(object) : invalid "pos" argument
+Error in as.environment(x) : invalid "pos" argument
 > f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
@@ -412,7 +412,7 @@ Error in as.call(x) : invalid argument list
 > is.double(as.double( x ))
 [1] TRUE
 > is.environment(as.environment( x ))
-Error in pos.to.env(object) : invalid "pos" argument
+[1] FALSE
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -473,7 +473,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.environment(x)) { cat('IS: ');all.equal(x, as.environment( x ), tol=0)
 + } else   !isall.equal(x, as.environment( x ))
-Error in pos.to.env(object) : invalid "pos" argument
+[1] FALSE
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -701,7 +701,7 @@ Error in as.table.default(x) : cannot coerce into a table
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 [1] TRUE
 > f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in pos.to.env(object) : invalid "pos" argument
+[1] TRUE
 > f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
@@ -791,7 +791,7 @@ Error in as.complex.default(x) : (list) object cannot be coerced to vector type 
 > is.double(as.double( x ))
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > is.environment(as.environment( x ))
-Error in as.environment(x) : (list) object cannot be coerced to vector type 13
+Error in as.environment(x) : Invalid object for as.environment
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -852,7 +852,7 @@ Error in as.complex.default(x) : (list) object cannot be coerced to vector type 
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > if(is.environment(x)) { cat('IS: ');all.equal(x, as.environment( x ), tol=0)
 + } else   !isall.equal(x, as.environment( x ))
-Error in as.environment(x) : (list) object cannot be coerced to vector type 13
+Error in as.environment(x) : Invalid object for as.environment
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -1069,7 +1069,7 @@ Error in as.double.default(x) : (list) object cannot be coerced to vector type 1
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in as.environment(x) : (list) object cannot be coerced to vector type 13
+Error in as.environment(x) : Invalid object for as.environment
 > f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
@@ -1874,8 +1874,7 @@ Error in as.call(x) : invalid argument list
 > is.double(as.double( x ))
 [1] TRUE
 > is.environment(as.environment( x ))
-Error in switch(typeof(object), environment = return(object), character = { : 
-	"1.3" not found on search list
+Error in as.environment(x) : Package named "1.3" not found in search list
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -1935,8 +1934,7 @@ IS: [1] TRUE
 [1] TRUE
 > if(is.environment(x)) { cat('IS: ');all.equal(x, as.environment( x ), tol=0)
 + } else   !isall.equal(x, as.environment( x ))
-Error in switch(typeof(object), environment = return(object), character = { : 
-	"1.3" not found on search list
+Error in as.environment(x) : Package named "1.3" not found in search list
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -2144,8 +2142,7 @@ Error in as.table.default(x) : cannot coerce into a table
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 [1] TRUE
 > f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in switch(typeof(object), environment = return(object), character = { : 
-	"1.3" not found on search list
+Error in as.environment(x) : Package named "1.3" not found in search list
 > f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
@@ -2234,7 +2231,7 @@ Error in as.table.ftable(x) : x must be an `ftable'
 > is.double(as.double( x ))
 [1] TRUE
 > is.environment(as.environment( x ))
-[1] TRUE
+Error in as.environment(x) : Invalid object for as.environment
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -2294,7 +2291,7 @@ Error in as.table.default(x) : cannot coerce into a table
 [1] TRUE
 > if(is.environment(x)) { cat('IS: ');all.equal(x, as.environment( x ), tol=0)
 + } else   !isall.equal(x, as.environment( x ))
-[1] TRUE
+Error in as.environment(x) : Invalid object for as.environment
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -2502,7 +2499,7 @@ Error in as.table.default(x) : cannot coerce into a table
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 [1] TRUE
 > f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in target[[i]] : object is not subsettable
+Error in as.environment(x) : Invalid object for as.environment
 > f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
@@ -2592,7 +2589,7 @@ Error in "dimnames<-.data.frame"(*tmp*, value = list(n)) :
 > is.double(as.double( x ))
 [1] TRUE
 > is.environment(as.environment( x ))
-Error in pos.to.env(object) : invalid argument
+Error in as.environment(x) : Invalid object for as.environment
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
@@ -2653,7 +2650,7 @@ IS: [1] TRUE
 [1] TRUE
 > if(is.environment(x)) { cat('IS: ');all.equal(x, as.environment( x ), tol=0)
 + } else   !isall.equal(x, as.environment( x ))
-Error in pos.to.env(object) : invalid argument
+Error in as.environment(x) : Invalid object for as.environment
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -2833,7 +2830,7 @@ Error in as.table.default(x) : cannot coerce into a table
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
 [1] TRUE
 > f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in pos.to.env(object) : invalid argument
+Error in as.environment(x) : Invalid object for as.environment
 > f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
 [1] TRUE
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
@@ -2906,6 +2903,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  6.4 1.49 7.89 0 0 
+Time elapsed:  1.16 0.01 1.17 0 0 
 > 
 > 
