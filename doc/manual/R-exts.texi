@@ -107,7 +107,7 @@ help pages
 
 @noindent
 before reading on.  If the package you are writing uses the
-@code{methods} package, look at the corresponding section in
+@pkg{methods} package, look at the corresponding section in
 @code{?INSTALL}.
 
 @menu
@@ -131,7 +131,7 @@ A package consists of a subdirectory containing the files
 Optionally the package can also contain (Bourne shell) script files
 @file{configure} and @file{cleanup} which are executed before and
 (provided that option @option{--clean} was given) after installation on
-Unix, @xref{Configure and cleanup}.
+Unix, see @ref{Configure and cleanup}.
 
 @menu
 * The DESCRIPTION file::
@@ -196,11 +196,9 @@ The @samp{Maintainer} field should give a @emph{single} name with email
 address in angle brackets (for sending bug reports etc.).  It should not
 end in a period or comma.
 
-The optional @samp{URL} field may give a list of @acronym{URL}s
-separated by commas or whitespace, for example the homepage of the
-author or a page where additional material describing the software can
-be found.  These @acronym{URL}s are converted to active hyperlinks on
-@acronym{CRAN}.
+The optional @samp{Date} field gives the release date of the current
+version of the package.  It is strongly recommended to use the yyyy-mm-dd
+format conforming to the ISO standard.
 
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
@@ -218,6 +216,11 @@ should be listed in the @samp{SystemRequirements} field or a separate
 if the version of R used is recent enough for the package being
 installed.
 
+The optional @samp{URL} field may give a list of @acronym{URL}s
+separated by commas or whitespace, for example the homepage of the
+author or a page where additional material describing the software can
+be found.  These @acronym{URL}s are converted to active hyperlinks on
+@acronym{CRAN}.
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
@@ -5301,8 +5304,7 @@ c(formals(foo.default), alist(... = ))}.)
 Note that this cannot be used for functions in another package, as the
 order of packages on the search path cannot be controlled, except that
 all precede the base package.  Where the name of the package is known
-and it is in a namespace (currently only @pkg{base}) another way to
-access the orignal form is
+and it is in a namespace another way to access the orignal form is
 
 @smallexample
 foo.default <- base::foo
