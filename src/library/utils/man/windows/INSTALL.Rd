@@ -43,8 +43,10 @@
 
   Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)
-  or \code{chm} (the default, text, HTML and CHTML) or \code{winhlp} or
-  \code{all} (adding old-style Windows \code{.hlp} files, no longer tested).
+  or \code{chm} (the default, text, HTML and CHTML).
+
+  If the attempt to install the package fails, leftovers are removed.
+  If the package was already installed, the old version is restored.
 
   Use \code{R CMD INSTALL --help} for more usage information.
 }
