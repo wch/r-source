@@ -37,8 +37,8 @@ rnorm(n, mean=0, sd=1)
   \eqn{\sigma}{sigma} the standard deviation.
 }
 \seealso{
-  \code{\link{.Random.seed}} about random number generation, and
-  \code{\link{dlnorm}} for the \emph{Log}normal distribution.
+  \code{\link{runif}} and \code{\link{.Random.seed}} about random number
+  generation, and \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
 \examples{
 dnorm(0) == 1/ sqrt(2*pi)
