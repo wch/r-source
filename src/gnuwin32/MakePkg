@@ -58,7 +58,7 @@ endif
 
 # demos
 PKGDEMOS0=$(wildcard $(SPKG)/demo/*)
-PKGDEMOS=$(filter-out $(SPKG)/demo/CVS $(SPKG)/demo/.svn, $(PKGDEMOS0))
+PKGDEMOS=$(filter-out $(SPKG)/demo/CVS $(SPKG)/demo/.svn $(SPKG)/demo/00Index, $(PKGDEMOS0))
 
 # exec
 EXECFILES=$(filter-out $(SPKG)/exec/CVS $(SPKG)/exec/.svn, $(wildcard $(SPKG)/exec/*))

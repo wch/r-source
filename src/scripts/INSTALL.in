@@ -530,6 +530,7 @@ do_install_source () {
     rm -f "${R_PACKAGE_DIR}/demo/"*
     cp demo/* "${R_PACKAGE_DIR}/demo" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/demo/"*
+    rm -f "${R_PACKAGE_DIR}/demo/00Index"
   fi
 
   if test -d exec && test "${fake}" != "true"; then

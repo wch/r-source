@@ -15,7 +15,6 @@ function(topic, device = getOption("device"),
 
 	## Build the demo db.
 	db <- matrix(character(0), nr = 0, nc = 4)
-	noindex <- character(0)
 	for(path in paths) {
 	    entries <- NULL
 	    ## Check for new-style 'Meta/demo.rds', then for '00Index'.
@@ -24,22 +23,6 @@ function(topic, device = getOption("device"),
                                 file.path(path, "Meta", "demo.rds"))) {
 		entries <- .readRDS(INDEX)
 	    }
-	    else if(tools::file_test("-f",
-                                     INDEX <-
-                                     file.path(path, "demo", "00Index")))
-		entries <- read.00Index(INDEX)
-	    else {
-		## No index: check whether subdir 'demo' contains demos.
-		demoDir <- file.path(path, "demo")
-		entries <- tools::list_files_with_type(demoDir, "demo")
-		if(length(entries) > 0) {
-		    entries <-
-			unique(tools::file_path_sans_ext(basename(entries)))
-		    entries <- cbind(entries, "")
-		}
-		else
-		    noindex <- c(noindex, basename(path))
-	    }
 	    if(NROW(entries) > 0) {
 		db <- rbind(db,
 			    cbind(basename(path), dirname(path),
@@ -47,19 +30,6 @@ function(topic, device = getOption("device"),
 	    }
 	}
 	colnames(db) <- c("Package", "LibPath", "Item", "Title")
-
-	if(length(noindex) > 0) {
-	    if(!missing(package) && (length(package) > 0)) {
-		## Warn about given packages which do not have a demo
-		## index.
-		packagesWithNoIndex <- package[package %in% noindex]
-		if(length(packagesWithNoIndex) > 0)
-		    warning(paste("packages with demos",
-				  "but no index:",
-				  paste(sQuote(packagesWithNoIndex),
-					collapse = ",")))
-	    }
-	}
 
 	footer <- if(missing(package))
 	    paste("Use ",

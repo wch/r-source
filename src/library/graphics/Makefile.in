@@ -52,7 +52,7 @@ all: Makefile DESCRIPTION
 	fi
 	@if test -d $(srcdir)/demo; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
+	  for f in `ls -d $(srcdir)/demo/* | sed -e '/CVS/d' -e '/00Index/d'`; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	  done; \
 	fi

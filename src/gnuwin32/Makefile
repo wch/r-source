@@ -296,7 +296,6 @@ nlme-HELP = ziponly
 nlme-ZIPDATA = zip
 rpart-HELP = ziponly
 survival-HELP = ziponly
-survival-ZIPDATA = zip
 
 # need special-case handling for bundle, as --auto-zip is not enabled
 dse1-HELP = ziponly
@@ -524,7 +523,8 @@ recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
 	@$(MAKE) --no-print-directory PKGDIR=../library/VR lazyload-MASS \
-	  lazyload-class lazyload-nnet lazyload-spatial lazydata-MASS
+	  lazyload-class lazyload-nnet lazyload-spatial \
+	lazydata-MASS lazydata-spatial
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
 	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p || exit 1; \
 	done

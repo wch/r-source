@@ -1,6 +1,5 @@
 data <-
-function(..., list = character(0),
-         package = NULL, lib.loc = NULL,
+function(..., list = character(0), package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"), envir = .GlobalEnv)
 {
     fileExt <- function(x) sub(".*\\.", "", x)
@@ -27,8 +26,6 @@ function(..., list = character(0),
 
     ## Find the directories with a 'data' subdirectory.
     paths <- paths[tools::file_test("-d", file.path(paths, "data"))]
-    ## Earlier versions remembered given packages with no 'data'
-    ## subdirectory, and warned about them.
 
     dataExts <- tools:::.make_file_exts("data")
 
@@ -37,7 +34,6 @@ function(..., list = character(0),
 
         ## Build the data db.
         db <- matrix(character(0), nr = 0, nc = 4)
-        noindex <- character(0)
         for(path in paths) {
             entries <- NULL
             ## Use "." as the 'package name' of the working directory.
@@ -47,60 +43,25 @@ function(..., list = character(0),
                     basename(path)
                 else
                     "."
-            ## Check for new-style 'Meta/data.rds', then for '00Index'.
-            ## Earlier versions also used to check for 'index.doc'.
+            ## Check for new-style 'Meta/data.rds'
             if(tools::file_test("-f",
                                 INDEX <-
                                 file.path(path, "Meta", "data.rds"))) {
                 entries <- .readRDS(INDEX)
-            }
-            else if(tools::file_test("-f",
-                                     INDEX <-
-                                     file.path(path, "data", "00Index")))
-                entries <- read.00Index(INDEX)
-            else {
-                ## No index: check whether subdir 'data' contains data
-                ## sets.  Easy if data files were not collected into a
-                ## zip archive ... in any case, as data sets found are
-                ## available for loading, we also list their names.
+            } else {
+                ## No index: should only be true for ./data >= 2.0.0
                 dataDir <- file.path(path, "data")
                 entries <- tools::list_files_with_type(dataDir, "data")
-                if((length(entries) == 0)
-                   && all(tools::file_test("-f",
-                                           file.path(dataDir,
-                                                     c("Rdata.zip",
-                                                       "filelist"))))) {
-                    entries <- readLines(file.path(dataDir, "filelist"))
-                    entries <- entries[fileExt(entries) %in% dataExts]
-                }
                 if(length(entries) > 0) {
                     entries <-
                         unique(tools::file_path_sans_ext(basename(entries)))
                     entries <- cbind(entries, "")
                 }
-                else
-                    noindex <- c(noindex, packageName)
             }
-            if(NROW(entries) > 0) {
-                db <- rbind(db,
-                            cbind(packageName, dirname(path),
-                                  entries))
-            }
+            if(NROW(entries) > 0)
+                db <- rbind(db, cbind(packageName, dirname(path), entries))
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
-
-        if(length(noindex) > 0) {
-            if(!missing(package) && (length(package) > 0)) {
-                ## Warn about given packages which do not have a data
-                ## index.
-                packagesWithNoIndex <- package[package %in% noindex]
-                if(length(packagesWithNoIndex) > 0)
-                    warning(paste("packages with data sets",
-                                  "but no index:",
-                                  paste(sQuote(packagesWithNoIndex),
-                                        collapse = ",")))
-            }
-        }
 
         footer <- if(missing(package))
             paste("Use ",
