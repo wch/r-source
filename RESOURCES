@@ -16,11 +16,15 @@ index page given by `help.start()').
 2 Mailing lists
 ***************
 
-Thanks to Martin Maechler <Martin.Maechler@r-project.org> there are number
-of mailing lists which are used by R users and developers.  They are
+Thanks to Martin Maechler <Martin.Maechler@r-project.org> there are a
+number of mailing lists which are used by R users and developers.  They are
 
     <r-announce@lists.r-project.org>
-          announcements of new R releases or applications;
+          major announcements of new R releases or applications;
+
+    <r-packages@lists.r-project.org>
+          announcements on the availability of new or enhanced contributed
+          packages;
 
     <r-help@lists.r-project.org>
           general inquiries and discussion about R;
@@ -28,23 +32,21 @@ of mailing lists which are used by R users and developers.  They are
     <r-devel@lists.r-project.org>
           discussions about the future of R and pre-testing of new versions.
 
-To subscribe (or unsubscribe) to these mailing lists send `subscribe' (or
-`unsubscribe') in the _body_ of the message (not in the subject!) to
+The web interface at `http://www.stat.math.ethz.ch/mailman/listinfo/'
+provides convenient access to information on these lists, subscription,
+archives, and so on.  One can also subscribe (or unsubscribe) via email,
+e.g. to `R-help' by sending `subscribe' (or `unsubscribe') in the _body_ of
+the message (not in the subject!) to <r-help-request@lists.r-project.org>.
 
-     <r-announce-request@lists.r-project.org>
-     <r-help-request@lists.r-project.org>
-     <r-devel-request@lists.r-project.org>
-
-Archives of the mailing lists are made available monthly; see the
-`doc/mail/mail.html' file on any CRAN node.  An HTML archive is available
-via `http://www.ens.gu.edu.au/robertk/R/'.
+See `http://www.r-project.org/mail.html' for more information on the R
+mailing lists.
 
 3 Archives
 **********
 
 The Comprehensive R Archive Network (CRAN) is a collection of sites which
 carry identical material, consisting of the R distribution(s), the
-contributed extensions, documentation for R, and binaries. It is currently
+contributed extensions, documentation for R, and binaries.  It is currently
 mirrored daily at
 
 `http://cran.au.r-project.org/'
@@ -56,7 +58,7 @@ mirrored daily at
 `http://cran.at.r-project.org/'
      TU Wien, Austria
 
-`http://cran.br.r-project.org'
+`http://cran.br.r-project.org/'
      Universidade Federal do Paraná, Brasil
 
 `http://www.termix.ufv.br/CRAN/'
@@ -102,7 +104,7 @@ mirrored daily at
      University of Bristol, UK
 
 `http://cran.us.r-project.org/'
-     University of Wisconsin, Madison, WI, USA
+     Pair Networks, Pittsburgh, PA, USA
 
 `http://cran.stat.ucla.edu/'
      University of California, Los Angeles, CA, USA
@@ -117,10 +119,7 @@ mirrored daily at
      University of North Carolina, Chapel Hill, NC, USA
 
 `http://lib.stat.cmu.edu/R/CRAN/'
-     Statlib, Carnegie Mellon University, PA, USA
-
-`http://cran.mirrors.pair.com/'
-     Pair Networks, PA, USA
+     Statlib at Carnegie Mellon University, Pittsburgh, PA, USA
 
 `http://www.binarycode.org/cran'
      BinaryCode.org, Austin, TX, USA

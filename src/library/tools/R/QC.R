@@ -280,7 +280,7 @@ function(package, dir, lib.loc = NULL)
             c(undocThings,
               list("S4 methods" =
                    unique(sub("([^,]*),(.*)",
-                              "\\\\S4method{\\1}{\\2}",
+                              "generic \\1 and siglist \\2",
                               S4methods))))
     }
 
@@ -292,8 +292,14 @@ print.undoc <-
 function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
-        writeLines(paste("Undocumented ", names(x)[i], ":", sep = ""))
-        .prettyPrint(x[[i]])
+        tag <- names(x)[i]
+        writeLines(paste("Undocumented ", tag, ":", sep = ""))
+        ## We avoid markup for indicating S4 methods, hence need to
+        ## special-case output for these ...
+        if(tag == "S4 methods")
+            writeLines(strwrap(x[[i]], indent = 2, exdent = 2))
+        else
+            .prettyPrint(x[[i]])
     }
     invisible(x)
 }
@@ -2308,11 +2314,12 @@ function(x, ...)
 ### * .checkPackageDepends
 
 .checkPackageDepends <-
-function(dir) {
-    
-    if(!fileTest("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
-    dir <- filePathAsAbsolute(dir)
+function(package)
+{
+    if(length(package) != 1)
+        stop(paste("argument", sQuote("package"),
+                   "must be of length 1"))
+    dir <- .find.package(package)
     
     ## We definitely need a valid DESCRIPTION file.
     db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
@@ -2351,7 +2358,7 @@ function(dir) {
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vignetteDir <- file.path(dir, "inst", "doc")
+    vignetteDir <- file.path(dir, "doc")
     if(fileTest("-d", vignetteDir)
        && length(listFilesWithType(vignetteDir, "vignette"))) {
         reqs <- .buildVignetteIndex(dir)$Depends

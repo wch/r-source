@@ -67,13 +67,16 @@ via the on-line help (on the index page given by @code{help.start()}).
 @chapter Mailing lists
 
 Thanks to @email{Martin.Maechler@@r-project.org, Martin Maechler} there
-are number of mailing lists which are used by R users and developers.
+are a number of mailing lists which are used by R users and developers.
 They are
 
 @quotation
 @table @email
 @item r-announce@@lists.r-project.org
-announcements of new R releases or applications;
+major announcements of new R releases or applications;
+@item r-packages@@lists.r-project.org
+announcements on the availability of new or enhanced contributed
+packages;
 @item r-help@@lists.r-project.org
 general inquiries and discussion about R;
 @item r-devel@@lists.r-project.org
@@ -81,21 +84,16 @@ discussions about the future of R and pre-testing of new versions.
 @end table
 @end quotation
 
-To subscribe (or unsubscribe) to these mailing lists send
-@samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
-message (not in the subject!) to
+The web interface at
+@uref{http://www.stat.math.ethz.ch/mailman/listinfo/} provides
+convenient access to information on these lists, subscription, archives,
+and so on.  One can also subscribe (or unsubscribe) via email, e.g.@: to
+`R-help' by sending @samp{subscribe} (or @samp{unsubscribe}) in the
+@emph{body} of the message (not in the subject!) to
+@email{r-help-request@@lists.r-project.org}.
 
-@quotation
-@email{r-announce-request@@lists.r-project.org} @*
-@email{r-help-request@@lists.r-project.org}     @*
-@email{r-devel-request@@lists.r-project.org}
-@end quotation
-
-@ifinfo
-Archives of the mailing lists are made available monthly; see the
-@file{doc/mail/mail.html} file on any CRAN node.  An @acronym{HTML}
-archive is available via @uref{http://www.ens.gu.edu.au/robertk/R/}.
-@end ifinfo
+See @uref{http://www.r-project.org/mail.html} for more information on
+the R mailing lists.
 
 @node Archives, Bug-tracking system, Mailing lists, Top
 @chapter Archives
@@ -103,7 +101,7 @@ archive is available via @uref{http://www.ens.gu.edu.au/robertk/R/}.
 The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
 sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
-binaries. It is currently mirrored daily at
+binaries.  It is currently mirrored daily at
 
 @table @asis
 @item @uref{http://cran.au.r-project.org/}
@@ -114,7 +112,7 @@ AARNet (accessible only from Australia and New Zealand)
 @item @uref{http://cran.at.r-project.org/}
 TU Wien, Austria
 
-@item @uref{ http://cran.br.r-project.org}
+@item @uref{http://cran.br.r-project.org/}
 Universidade Federal do Paraná, Brasil
 @item @uref{http://www.termix.ufv.br/CRAN/}
 Federal University of Vicosa, Brasil
@@ -158,7 +156,7 @@ National Taiwan University, Taipei, Taiwan
 University of Bristol, UK
 
 @item @uref{http://cran.us.r-project.org/}
-University of Wisconsin, Madison, WI, USA
+Pair Networks, Pittsburgh, PA, USA
 @item @uref{http://cran.stat.ucla.edu/}
 University of California, Los Angeles, CA, USA
 @item @uref{http://www.bioconductor.org/CRAN/}
@@ -168,9 +166,7 @@ Get-Software.com, Augusta, ME, USA
 @item @uref{http://www.ibiblio.org/pub/languages/R/CRAN/}
 University of North Carolina, Chapel Hill, NC, USA
 @item @uref{http://lib.stat.cmu.edu/R/CRAN/}
-Statlib, Carnegie Mellon University, PA, USA
-@item @uref{http://cran.mirrors.pair.com/}
-Pair Networks, PA, USA
+Statlib at Carnegie Mellon University, Pittsburgh, PA, USA
 @item @uref{http://www.binarycode.org/cran}
 BinaryCode.org, Austin, TX, USA
 @item @uref{ http://mirrors.mix5.com/CRAN/}

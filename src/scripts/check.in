@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177 $ ';
+my $revision = ' $Revision: 1.178 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -327,6 +327,13 @@ foreach my $pkg (@ARGV) {
 					 ": warning: .*ISO C",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
+		    ## Package writers cannot really do anything about
+		    ## non ISO C code in *system* headers.  Hence, try
+		    ## to ignore these by default, but make it possible
+		    ## to get all ISO C warnings via an environment
+		    ## variable.
+		    @lines = grep(!/^ *\/.*: warning: .*ISO C/, @lines)
+			if(!$ENV{"R_CHECK_ALL_NON_ISO_C"});
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
@@ -763,7 +770,7 @@ sub check_pkg {
     ## Also, if --install=skip, bundles never get DESCRIPTION files
     ## made in the source dir which is what we are checking here.
     ## </NOTE>
-    if(!$is_base_pkg && $opt_install && ($opt_install ne "skip")) {
+    if($opt_install) {
 	$log->checking("package dependencies");
 	## According to FL, everything listed in Depends or Suggests
 	## should be available for successfully running R CMD check.
@@ -772,7 +779,7 @@ sub check_pkg {
 	## package vignette must require its own package, which otoh is
 	## not required in the package DESCRIPTION file.
 	## Namespace imports must really be in Depends.
-	my $Rcmd = "tools:::.checkPackageDepends(dir = \"${pkgdir}\")\n";
+	my $Rcmd = "tools:::.checkPackageDepends(\"${pkgname}\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -903,8 +910,9 @@ sub check_pkg {
 	## Do subdirectories of 'inst' interfere with R package system
 	## subdirectories?
 	if((-d "inst")) {
-	    my @R_system_subdirs = ("Meta", "R", "data", "demo", "exec",
-				    "man", "help", "html", "latex", "R-ex");
+	    my @R_system_subdirs =
+		("Meta", "R", "data", "demo", "exec", "man", "help",
+		 "html", "latex", "R-ex");
 	    my @bad_dirs = ();
 	    foreach my $dir (@R_system_subdirs) {
 		push(@bad_dirs, $dir)
@@ -1009,6 +1017,10 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("S3 generic/method consistency");
 
+	my @msg_S3_methods =
+	  ("See section 'Generic functions and methods'",
+	   "of the 'Writing R Extensions' manual.\n");
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
@@ -1023,6 +1035,7 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_S3_methods));
 	}
 	else {
 	    $log->result("OK");
@@ -1065,6 +1078,10 @@ sub check_pkg {
     if($opt_ff_calls && (-d "R")) {
 	$log->checking("foreign function calls");
 
+	my @msg_ff_calls =
+	  ("See section 'System and foreign language interfaces'",
+	   "of the 'Writing R Extensions' manual.\n");
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
@@ -1079,6 +1096,7 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_ff_calls));
 	}
 	else {
 	    $log->result("OK");

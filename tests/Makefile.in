@@ -370,8 +370,7 @@ test-Packages-Recommended:
 	  else \
 	    echo "checking package '$${p}'"; \
 	  fi; \
-	  R_LIBS= R_CHECK_FF_CALLS=yes \
-	    $(top_builddir)/bin/R CMD check --install=skip \
+	  R_LIBS= $(top_builddir)/bin/R CMD check --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
 	done
 
