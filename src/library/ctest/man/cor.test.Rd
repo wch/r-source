@@ -3,8 +3,10 @@
 \alias{cor.test.default}
 \alias{cor.test.formula}
 \concept{Kendall correlation coefficient}
+\concept{Kendall's tau}
 \concept{Pearson correlation coefficient}
 \concept{Spearman correlation coefficient}
+\concept{Spearman's rho}
 \title{Test for Association/Correlation Between Paired Samples}
 \description{
   Test for association between paired samples, using one of
