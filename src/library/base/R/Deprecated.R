@@ -16,6 +16,7 @@ getenv <- function(x) {
 }
 ## </Deprecated>
 
+## Deprecated in 1.3.0
 "httpclient" <-
     function (url, port = 80, error.is.fatal = TRUE, check.MIME.type = TRUE,
               file = tempfile(), drop.ctrl.z = TRUE)
@@ -116,7 +117,7 @@ getenv <- function(x) {
 parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
 {
     .Deprecated("read.dcf")
-    
+
     parse.dcf.entry <- function(text, fields=NULL, versionfix=FALSE)
     {
         contlines <- grep("^[ \t]+", text)
@@ -157,7 +158,7 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
         warning("zero length `text'")
         return(list())
     }
-        
+
     ## remove empty lines
     notok <- grep("^[ \t]+$", text)
     if (length(notok) > 0)
@@ -181,11 +182,4 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
     ## else
     retval
 }
-
-
-
-
-
 ## </Deprecated>
-
-
