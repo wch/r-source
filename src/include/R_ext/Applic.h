@@ -26,6 +26,7 @@
 #define R_APPLIC_H_
 
 #include "Rconfig.h"		/* F77... */
+#include "R_ext/Boolean.h"
 
 void R_approx(double *, double *, int *, double *, int *,
 	      int *, double *, double *, double *);
@@ -92,15 +93,11 @@ int F77_SYMBOL(rs)(int *nm, int *n, double *a, double *w,
 /* NOTE:  The following functions use GLOBAL (static) variables !!
  * ----   some of R-core think that this should be changed,
  *        which will INEVITABLY extend the argument lists ...!
- *-- i.e. don't export these yet!
  */
-#ifdef NOT_YET
 void fft_factor(int n, int *pmaxf, int *pmaxp);
 
-int fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
-	     double *work, int *iwork);
-/* returns 1 for success,  0 otherwise */
-#endif
+Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
+/* TRUE: success */ int isn, double *work, int *iwork);
 
 /* fortran.c   is covered by ./Fortran.h */
 

@@ -23,7 +23,7 @@
 #endif
 
 #include "Mathlib.h"/* for imax2(.),..*/
-/*WHEN FIXED: #include "Applic.h" */
+#include "Applic.h"
 
 /*  Fast Fourier Transform
  *
