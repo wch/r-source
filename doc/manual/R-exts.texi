@@ -120,12 +120,14 @@ in the following format:
 @smallexample
 Package: pkgname
 Version: 0.5-1
-Date: 2000/01/04
+Date: 2000-01-04
 Title: My first collection of functions
-Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>.
+Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>, with
+  contributions from A. User <A.User@@whereever.net>.
+Maintainer: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>
 Depends: R (>= 0.99), nlme
 Description: A short (one paragraph) description of what
-        the package does and why it may be useful.
+  the package does and why it may be useful.
 License: GPL version 2 or newer
 URL: http://www.r-project.org, http://www.another.url
 @end smallexample
@@ -136,10 +138,11 @@ URL: http://www.r-project.org, http://www.another.url
 Continuation lines (for example, for descriptions longer than one line)
 start with a space or tab.  The @samp{Package}, @samp{Version},
 @samp{Author}, and @samp{Description} fields are mandatory, the
-remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
-@samp{URL}, @dots{}) are optional.  The @samp{Author} field should
-contain an email address in angle brackets (for sending bug reports
-etc.).
+@samp{Maintainer} field is recommended and will be required in @R{}
+version 1.3.0,
+@c FIXME: 1.3.0
+the remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
+@samp{URL}, @dots{}) are optional.
 
 The @samp{License} field should contain an explicit statement or a
 well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
@@ -152,6 +155,9 @@ The @samp{Title} field should give a short description of the package
 and not have any continuation lines.  This information has been
 contained in a separate @file{TITLE} file in older versions of @R{},
 please use the title field in the @file{DESCRIPTION} file from now on.
+
+The @samp{Maintainer} field should give a @emph{single} name with email
+address in angle brackets (for sending bug reports etc.).
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the

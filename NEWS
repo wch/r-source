@@ -20,6 +20,8 @@ NEW FEATURES
     o	Connections functions such as file() now accept a description of
 	length > 1, with a warning.
 
+    o	DESCRIPTION file has a new recommended `Maintainer:' field.
+
 
 BUG FIXES
     
