@@ -1364,7 +1364,7 @@ sub rdoc2latex {# (filename)
       print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
 	if $debug;
       printf latexout "\\alias\{%s\}\{%s\}\n", $a, $blocks{"name"}
-	unless /^$blocks{"name"}$/;
+	unless /^\Q$blocks{"name"}\E$/; # Q..E : Quote (escape) Metacharacters
     }
     foreach (@keywords) {
       printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}

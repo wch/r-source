@@ -13,7 +13,7 @@
 # Steve Atkins, Nov '97
 
 $Font{"P"} = "\\f0\\fs22";
-$Font{"H1"} = "\\f0\\fs48\\cf13";
+$Font{"H1"} = "\\f0\\fs48\\cf15";
 $Font{"H2"} = "\\f0\\fs36\\cf1";
 $Font{"H3"} = "\\f0\\fs30\\cf14";
 $Font{"H4"} = "\\f0\\fs26";
