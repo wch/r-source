@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-12, 2002-06-20
+@set FAQ-VERSION 1.5-13, 2002-07-02
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -424,15 +424,14 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2002-06-19:
+@c Linux binaries as of 2002-06-28:
 @c
-@c debian   2.2 i386  1.5.0  Douglas Bates <bates@stat.wisc.edu>
+@c debian   2.2 i386  1.5.1  Douglas Bates <bates@stat.wisc.edu>
 @c          3.0 i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
-@c linuxppc 5.0 ppc   1.5.0  Alex Buerkle <buerkla@uwec.edu>
 @c mandrake 8.1 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
 @c          8.2 i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x i386  1.5.0  Stephen Eglen <stephen@gnu.org>
-@c          7.x alpha 1.5.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c redhat   6.x i386  1.5.1  Stephen Eglen <stephen@gnu.org>
+@c          7.x alpha 1.5.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.5.1  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.3 i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c          8.0 i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -1812,6 +1811,10 @@ networks''), and for multinomial log-linear models.  Contained in the
 @file{VR} bundle.
 @item norm
 Analysis of multivariate normal datasets with missing values.
+@item normix
+One-dimensional normal mixture models classes, for, e.g., density
+estimation or clustering algorithms research and teaching; providing the
+widely used Marron-Wand densities.
 @item npmc
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
