@@ -37,14 +37,14 @@ static char * expandcmd(char *cmd)
     int   d , ext;
 
     if (!(s = (char *) winmalloc(MAX_PATH + strlen(cmd)))) {
-	strcpy(RunError, "Insufficient memory (expandcmd)\n");
+	strcpy(RunError, "Insufficient memory (expandcmd)");
 	return NULL;
     }
     for (p = cmd; *p && isspace(*p); p++);
     for (q = p, d = 0; *q && ( d || !isspace(*q) ); q++)
       if (*q=='\"') d = d ? 0 : 1;
     if (d) {
-	strcpy(RunError, "A \" is missing(expandcmd)\n");
+	strcpy(RunError, "A \" is missing(expandcmd)");
 	return NULL;
     }
     c = *q;
@@ -81,7 +81,7 @@ static char * expandcmd(char *cmd)
    if (!d) {
        winfree(s);
        strncpy(RunError,p, 200);
-       strcat(RunError," not found \n");
+       strcat(RunError," not found");
        *q = c;
        return NULL;
    }
@@ -171,7 +171,6 @@ static HANDLE pcreate(char* cmd,char *finput,
     if (!ret) {
 	strcpy(RunError, "Impossible to run '");
 	strncat(RunError, ecmd, 200);
-	strcat(RunError, "'\n");
 	winfree(ecmd);
 	return NULL;
     }
@@ -232,13 +231,13 @@ rpipeOpen(char *cmd, int visible, char *finput)
     DWORD id;
 
     if (!(r = (rpipe *) winmalloc(sizeof(struct structRPIPE)))) {
-	strcpy(RunError, "Insufficient memory (rpipeOpen)\n");
+	strcpy(RunError, "Insufficient memory (rpipeOpen)");
 	return NULL;
     }
     r->process = NULL;
     if (CreatePipe(&hTemp, &(r->write), NULL, 0) == FALSE) {
 	rpipeClose(r);
-	strcpy(RunError, "Inpossible to create pipe\n");
+	strcpy(RunError, "Inpossible to create pipe");
 	return NULL;
     }
     hTHIS = GetCurrentProcess();
@@ -260,7 +259,7 @@ rpipeOpen(char *cmd, int visible, char *finput)
 	return NULL;
     if (!(hThread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
 	rpipeClose(r);
-	strcpy(RunError, "Inpossible to create thread/pipe \n");
+	strcpy(RunError, "Inpossible to create thread/pipe");
 	return NULL;
     }
     CloseHandle(hThread);
