@@ -10,6 +10,12 @@ CHANGES IN R (AQUA) VERSION 1.9.0
 
 
 NEW FEATURES
+    o   The user can select a startup working directory in the 
+        Preferences using the Misc tab.
+
+    o   The current working directory is now displayed on top of
+        R Console window bar.
+
     o   The refresh of the aqua console is now faster than before an 
         buffering of R output is enabled by default even if the user 
         can't set it. The preferences panel no longer contains the 
