@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-06 14:44+0000\n"
-"PO-Revision-Date: 2005-02-06 14:44+0000\n"
+"POT-Creation-Date: 2005-02-08 09:45+0000\n"
+"PO-Revision-Date: 2005-02-08 09:45+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -403,12 +403,17 @@ msgstr "WARNING: --max-mem-size=%lu‘[1m%c[0m’: too large and ignored\n"
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 
-#: src/gnuwin32/system.c:869
+#: src/gnuwin32/system.c:869 src/unix/system.c:230
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr "WARNING: unknown option %s\n"
 
-#: src/gnuwin32/system.c:912
+#: src/gnuwin32/system.c:894 src/unix/system.c:234
+#, c-format
+msgid "ARGUMENT '%s' __ignored__\n"
+msgstr "ARGUMENT ‘[1m%s[0m’ __ignored__\n"
+
+#: src/gnuwin32/system.c:912 src/unix/system.c:272
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 "you must specify ‘[1m--save[0m’, ‘[1m--no-save[0m’ or ‘[1m--vanilla[0m’"
@@ -1194,8 +1199,8 @@ msgstr "invalid rhs in substr<-()"
 msgid "non-character argument in strsplit()"
 msgstr "non-character argument in strsplit()"
 
-#: src/main/character.c:361 src/main/pcre.c:108 src/main/pcre.c:246
-#: src/main/pcre.c:361
+#: src/main/character.c:361 src/main/pcre.c:111 src/main/pcre.c:251
+#: src/main/pcre.c:370
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl = TRUE is only fully implemented in UTF-8 locales"
 
@@ -1220,98 +1225,98 @@ msgstr "non-character names"
 msgid "invalid value of allow_"
 msgstr "invalid value of allow_"
 
-#: src/main/character.c:790 src/main/character.c:1281
+#: src/main/character.c:790 src/main/character.c:1303
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "invalid multibyte string %d"
 
-#: src/main/character.c:854 src/main/character.c:1174 src/main/pcre.c:110
-#: src/main/pcre.c:366
+#: src/main/character.c:866 src/main/character.c:1192 src/main/pcre.c:113
+#: src/main/pcre.c:375
 msgid "regular expression is invalid in this locale"
 msgstr "regular expression is invalid in this locale"
 
-#: src/main/character.c:876 src/main/character.c:1028
-#: src/main/character.c:1177 src/main/pcre.c:117 src/main/pcre.c:262
-#: src/main/pcre.c:371
+#: src/main/character.c:888 src/main/character.c:1044
+#: src/main/character.c:1195 src/main/pcre.c:120 src/main/pcre.c:267
+#: src/main/pcre.c:380
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "invalid regular expression ‘[1m%s[0m’"
 
-#: src/main/character.c:885 src/main/character.c:1191 src/main/pcre.c:132
-#: src/main/pcre.c:295 src/main/pcre.c:386
+#: src/main/character.c:898 src/main/character.c:1210 src/main/pcre.c:135
+#: src/main/pcre.c:300 src/main/pcre.c:395
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "input string %d is invalid in this locale"
 
-#: src/main/character.c:937 src/main/pcre.c:176
+#: src/main/character.c:953 src/main/pcre.c:181
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "invalid backreference %d in regular expression"
 
-#: src/main/character.c:1023 src/main/pcre.c:248
+#: src/main/character.c:1039 src/main/pcre.c:253
 msgid "'pattern' is invalid in this locale"
 msgstr "‘[1mpattern[0m’ is invalid in this locale"
 
-#: src/main/character.c:1025 src/main/pcre.c:250
+#: src/main/character.c:1041 src/main/pcre.c:255
 msgid "'replacement' is invalid in this locale"
 msgstr "‘[1mreplacement[0m’ is invalid in this locale"
 
-#: src/main/character.c:1034
+#: src/main/character.c:1050
 msgid "zero-length pattern"
 msgstr "zero-length pattern"
 
-#: src/main/character.c:1257
+#: src/main/character.c:1279
 msgid "non-character argument to tolower()"
 msgstr "non-character argument to tolower()"
 
-#: src/main/character.c:1331
+#: src/main/character.c:1353
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "decreasing range specification ('%lc-%lc')"
 
-#: src/main/character.c:1417
+#: src/main/character.c:1439
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "decreasing range specification ('%c-%c')"
 
-#: src/main/character.c:1495
+#: src/main/character.c:1517
 msgid "invalid (NA) arguments."
 msgstr "invalid (NA) arguments."
 
-#: src/main/character.c:1517
+#: src/main/character.c:1539
 msgid "invalid multibyte string 'old'"
 msgstr "invalid multibyte string ‘[1mold[0m’"
 
-#: src/main/character.c:1524
+#: src/main/character.c:1546
 msgid "invalid multibyte string 'new'"
 msgstr "invalid multibyte string ‘[1mnew[0m’"
 
-#: src/main/character.c:1543 src/main/character.c:1604
+#: src/main/character.c:1565 src/main/character.c:1626
 msgid "old is longer than new"
 msgstr "old is longer than new"
 
-#: src/main/character.c:1560
+#: src/main/character.c:1582
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "invalid input multibyte string %d"
 
-#: src/main/character.c:1703
+#: src/main/character.c:1725
 msgid "Use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr "Use of agrep() in a UTF-8 locale may only work for ASCII strings"
 
-#: src/main/character.c:1712
+#: src/main/character.c:1734
 msgid "could not allocate memory for approximate matching"
 msgstr "could not allocate memory for approximate matching"
 
-#: src/main/character.c:1736
+#: src/main/character.c:1758
 msgid "could not perform case insensitive matching"
 msgstr "could not perform case insensitive matching"
 
-#: src/main/character.c:1778
+#: src/main/character.c:1800
 msgid "argument must be a character vector of length 1"
 msgstr "argument must be a character vector of length 1"
 
-#: src/main/character.c:1780
+#: src/main/character.c:1802
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1319,45 +1324,45 @@ msgstr ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 
-#: src/main/character.c:1795 src/main/character.c:1827
-#: src/main/character.c:1848
+#: src/main/character.c:1817 src/main/character.c:1849
+#: src/main/character.c:1870
 msgid "argument 'x' must be a raw vector"
 msgstr "argument ‘[1mx[0m’ must be a raw vector"
 
-#: src/main/character.c:1798
+#: src/main/character.c:1820
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "argument ‘[1mmultiple[0m’ must be TRUE or FALSE"
 
-#: src/main/character.c:1829
+#: src/main/character.c:1851
 msgid "argument 'shift' must be a small integer"
 msgstr "argument ‘[1mshift[0m’ must be a small integer"
 
-#: src/main/character.c:1866
+#: src/main/character.c:1888
 msgid "argument 'x' must be a integer vector"
 msgstr "argument ‘[1mx[0m’ must be a integer vector"
 
-#: src/main/character.c:1886
+#: src/main/character.c:1908
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "argument ‘[1mx[0m’ must be raw, integer or logical"
 
-#: src/main/character.c:1888
+#: src/main/character.c:1910
 msgid "argument 'type' must be a character string"
 msgstr "argument ‘[1mtype[0m’ must be a character string"
 
-#: src/main/character.c:1892
+#: src/main/character.c:1914
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "argument ‘[1mx[0m’ must be a multiple of %d long"
 
-#: src/main/character.c:1906 src/main/character.c:1921
+#: src/main/character.c:1928 src/main/character.c:1943
 msgid "argument 'x' must not contain NAs"
 msgstr "argument ‘[1mx[0m’ must not contain NAs"
 
-#: src/main/character.c:1946
+#: src/main/character.c:1968
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requires a character vector"
 
-#: src/main/character.c:1951 src/main/character.c:1955
+#: src/main/character.c:1973 src/main/character.c:1977
 msgid "invalid 'width' argument"
 msgstr "invalid ‘[1mwidth[0m’ argument"
 
@@ -7253,6 +7258,25 @@ msgstr "Can't allocate R_TempDir"
 #: src/unix/sys-unix.c:366
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() is not implemented on this system"
+
+#: src/unix/system.c:167
+#, c-format
+msgid "WARNING: --gui or -g without value ignored"
+msgstr "WARNING: --gui or -g without value ignored"
+
+#: src/unix/system.c:189
+#, c-format
+msgid "WARNING: unknown gui `%s', using X11\n"
+msgstr "WARNING: unknown gui ‘[1m%s[0m’, using X11\n"
+
+#: src/unix/system.c:192
+#, c-format
+msgid "WARNING: unknown gui `%s', using none\n"
+msgstr "WARNING: unknown gui ‘[1m%s[0m’, using none\n"
+
+#: src/unix/system.c:310
+msgid "WARNING: Only editing the first in the list of files"
+msgstr "WARNING: Only editing the first in the list of files"
 
 #: src/unix/X11.c:50
 msgid "X11 module is not available under this GUI"

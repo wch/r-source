@@ -110,4 +110,5 @@ src/unix/dynload.c
 src/unix/edit.c
 src/unix/sys-std.c
 src/unix/sys-unix.c
+src/unix/system.c
 src/unix/X11.c

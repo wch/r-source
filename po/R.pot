@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 09:04+0000\n"
+"POT-Creation-Date: 2005-02-08 09:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,12 +378,17 @@ msgstr ""
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:869
+#: src/gnuwin32/system.c:869 src/unix/system.c:230
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:912
+#: src/gnuwin32/system.c:894 src/unix/system.c:234
+#, c-format
+msgid "ARGUMENT '%s' __ignored__\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:912 src/unix/system.c:272
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 
@@ -7125,6 +7130,25 @@ msgstr ""
 
 #: src/unix/sys-unix.c:366
 msgid "Sys.info() is not implemented on this system"
+msgstr ""
+
+#: src/unix/system.c:167
+#, c-format
+msgid "WARNING: --gui or -g without value ignored"
+msgstr ""
+
+#: src/unix/system.c:189
+#, c-format
+msgid "WARNING: unknown gui `%s', using X11\n"
+msgstr ""
+
+#: src/unix/system.c:192
+#, c-format
+msgid "WARNING: unknown gui `%s', using none\n"
+msgstr ""
+
+#: src/unix/system.c:310
+msgid "WARNING: Only editing the first in the list of files"
 msgstr ""
 
 #: src/unix/X11.c:50
