@@ -45,7 +45,7 @@ predict.lqs(object, newdata)
 }
 \examples{
 data(stackloss)
-.Random.seed <- 1:4
+set.seed(123)
 fm <- lqs(stack.loss ~ ., data = stackloss, method = "S", nsamp = "exact")
 predict(fm, stackloss)
 }

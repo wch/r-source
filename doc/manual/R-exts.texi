@@ -2972,6 +2972,9 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
+These routines are declared in @file{R_ext/PrtUtil.h} which is not
+included by @file{R.h}.
+
 @subsection Printing from Fortran
 @cindex Printing from C
 

@@ -44,6 +44,38 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.0.1
+
+BUG FIXES
+
+    o	pgamma(Inf, 1, Inf) gives NaN instead of an infinite loop, PR#462.
+
+    o	Inline xaxt and yaxt parameters were ignored.
+
+    o	Setting the normal RNG was not always recorded in .Random.seed.
+
+    o	\link[pkg]{foo} links were wrongly translated to HTML.
+
+    o	Direct use of show.data() with no args was incorrect.
+
+    o	print.coefmat does sensible things if options
+	show.signif.stars and show.coef.Pvalues are not set correctly.
+
+    o   x <- list(a=1, b=2) ; x["c"] <- 3 now (again) stretches the list
+        rather than give a "subscript out of bounds" error.
+
+    o   Models with response appearing on rhs could cause segfault.
+
+    o   as.data.frame.matrix will now ensure the columns added have
+	non-empty names.
+
+    o   Some (strange?) model formulas could cause memory corruption
+        (thanks to John Fox for digging this up).
+ 
+    o   Matrix multiplication in cases such as 1:3 %*% t(1:2) is accepted.
+
+
+
 		CHANGES IN R VERSION 1.0.0
 
 

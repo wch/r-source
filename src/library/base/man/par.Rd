@@ -239,7 +239,10 @@ par(\dots, no.readonly = FALSE)
     subsequent plots. (\emph{Only \code{"r"} and \code{"i"} styles are
       currently implemented})}
   \item{xaxt}{A character which specifies the axis type.
-    Specifying \code{"n"} causes an axis to be set up, but not plotted.}
+    Specifying \code{"n"} causes an axis to be set up, but not
+    plotted. The standard value is \code{"s"}: for compatibility with S
+    values \code{"l"} and \code{"e"} are accepted but are equivalent
+    to \code{"s"}.}
   \item{xlog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
     \code{\link{plot.default}}).
     If \code{TRUE} a logarithmic scale is in use. For a new device, it

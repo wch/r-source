@@ -47,8 +47,8 @@ Microsoft HTML Help Workshop, available for download at
 http://msdn.microsoft.com/workshop/author/htmlhelp.
 
 If you want to make Windows (.hlp) files you will need a Windows help
-compiler, preferably hcrtf.exe. This is available for download at
-ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE.
+compiler, preferably hcrtf.exe. This has been available for download at
+ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
@@ -70,19 +70,19 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1000\unzip\unzip32.dll is not in the source
+Note 1: the file rw1001\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw1000\bin\Rchtml.dll is only built if CHM help is specifed
+The file rw1001\bin\Rchtml.dll is only built if CHM help is specifed
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
 VC++ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
-The file rw1000\bin\Rbitmap.dll is not built automatically:
+The file rw1001\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 

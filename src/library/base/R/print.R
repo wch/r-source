@@ -62,7 +62,7 @@ print.simple.list <- function(x, ...)
 
 print.coefmat <-
     function(x, digits = max(3, getOption("digits") - 2),
-	     signif.stars= getOption("show.signif.stars"),
+	     signif.stars = getOption("show.signif.stars"),
 	     dig.tst = max(1, min(5, digits - 1)),
 	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
 	     P.values = NULL,
@@ -81,8 +81,14 @@ print.coefmat <-
     if(is.null(d <- dim(x)) || length(d) != 2)
 	stop("1st arg. 'x' must be coefficient matrix/d.f./...")
     nc <- d[2]
-    if(is.null(P.values))
-	P.values <- has.Pvalue && getOption("show.coef.Pvalues")
+    if(is.null(P.values)) {
+        scp <- getOption("show.coef.Pvalues")
+        if(!is.logical(scp) || is.na(scp)) {
+            warning("option `show.coef.Pvalues' is invalid: assuming TRUE")
+            scp <- TRUE
+        }
+	P.values <- has.Pvalue && scp
+    }
     else if(P.values && !has.Pvalue)
 	stop("'P.values is TRUE, but has.Pvalue not!")
 
@@ -118,6 +124,10 @@ print.coefmat <-
     }
     if(any(ina)) Cf[ina] <- na.print
     if(P.values) {
+        if(!is.logical(signif.stars) || is.na(signif.stars)) {
+            warning("option `show.signif.stars' is invalid: assuming TRUE")
+            signif.stars <- TRUE
+        }
 	pv <- xm[, nc]
 	if(any(okP <- ok[,nc])) {
 	    Cf[okP, nc] <- format.pval(pv[okP], digits = dig.tst)
