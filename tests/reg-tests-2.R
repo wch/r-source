@@ -251,3 +251,14 @@ as.numeric(as.character(Inf))
 ## PR#1092 (rowsum dimnames)
 rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
 ## rownames were 1,2 in <= 1.3.1.
+
+## PR#1115 (saving strings with ascii=T)
+x <- y <- unlist(as.list(
+    parse(text=paste("\"\\",
+          as.character(structure(0:255,class="octmode")),
+             "\"",sep=""))))
+save(x, ascii=T, file=(fn <- tempfile()))
+load(fn)
+all(x==y)
+## 1.3.1 had trouble with \
+
