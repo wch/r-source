@@ -52,12 +52,21 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{sep}{by default, scan expects to read white-space delimited
     input fields.  Alternatively, \code{sep} can be used to specify a
     character which delimits fields.  A field is always delimited by an
-    end-of-line marker unless it is quoted.}
+    end-of-line marker unless it is quoted.
+
+    If specified this should be the empty character string or \code{NULL}
+    (the default) or a character string containing just one single-byte
+    character.
+  }
 
   \item{quote}{the set of quoting characters as a single character
-    string.}
+    string or \code{NULL}.  In a UTF-8 locale the quoting characters
+    must be ASCII (single-byte).}
 
-  \item{dec}{decimal point character.}
+  \item{dec}{decimal point character.  This should be a character string
+    containing just one single-byte character.  (\code{NULL} and a
+    zero-length character vector are also accepted, and taken as the
+    default.)}
 
   \item{skip}{the number of  lines of the input file to skip before
     beginning to read data values.}

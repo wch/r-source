@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2004   The R Development Core Team.
+ *  Copyright (C) 1998-2005   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> byte-level access needs checking.
+/* <UTF8> 
+   byte-level access needed checks.
    I think it is OK provided quotes, comment, sep and dec chars are ASCII
 */
 
@@ -858,15 +859,24 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
-	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	else {
+	    char *sc = CHAR(STRING_ELT(sep, 0));
+	    if(strlen(sc) > 1) 
+		errorcall(call, "invalid sep value: must be one byte");
+	    data.sepchar = (unsigned char) sc[0];
+	}
 	/* gets compared to chars: bug prior to 1.7.0 */
     } else errorcall(call, "invalid sep value");
 
     if (isString(dec) || isNull(dec)) {
 	if (length(dec) == 0)
 	    data.decchar = '.';
-	else
-	    data.decchar = CHAR(STRING_ELT(dec, 0))[0];
+	else {
+	    char *dc = CHAR(STRING_ELT(dec, 0));
+	    if(strlen(dc) != 1) 
+		errorcall(call, "invalid decimal separator: must be one byte");
+	    data.decchar = dc[0];
+	}
     }
     else
 	errorcall(call, "invalid decimal separator");
