@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-19, 2000-11-01
+@set FAQ-VERSION 1.1-20, 2000-11-02
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -567,8 +567,9 @@ implementing R is described in:
 @section Citing R
 
 To cite R in publications, use the above Ihaka & Gentleman (1996), ``R:
-A Language for Data Analysis and Graphics'', @emph{Journal of
-Computational and Graphical Statistics}, @strong{5}, 299--314.
+A Language for Data Analysis and Graphics'',
+@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+Computational and Graphical Statistics}}, @strong{5}, 299--314.
 
 @node What mailing lists exist for R?, What is CRAN?, Citing R, R Basics
 @section What mailing lists exist for R?
@@ -1009,14 +1010,11 @@ Lexical scoping allows using function closures and maintaining local
 state.  A simple example (taken from Abelson and Sussman) is obtained by
 typing @kbd{demo(scoping)} at the R prompt.  Further information is
 provided in the standard R reference ``R: A Language for Data Analysis
-and Graphics'' (@pxref{What documentation exists for R?}) and a paper on
-``Lexical Scope and Statistical Computing'' by Robert Gentleman and Ross
-Ihaka which can be obtained from the @file{doc/misc} directory of a CRAN
-site and will appear in the
-@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
-Computational and Graphical Statistics}} around the beginning of 2000.
-
-@c CHECK JCGS paper ``Lexical Scope and Statistical Computing''
+and Graphics'' (@pxref{What documentation exists for R?}) and in Robert
+Gentleman and Ross Ihaka (2000), ``Lexical Scope and Statistical
+Computing'', @uref{http://www.amstat.org/publications/jcgs/, ,
+@emph{Journal of Computational and Graphical Statistics}}, @strong{9},
+491--508.
 
 Lexical scoping also implies a further major difference.  Whereas S
 stores all objects as separate files in a directory somewhere (usually
@@ -1252,14 +1250,11 @@ handling of line types, more convenient color handling (via palettes),
 gamma correction for color, and, most importantly, mathematical
 annotation in plot texts, via input expressions reminiscent of @TeX{}
 constructs.  See the help page for @code{plotmath}, which features an
-impressive on-line example.  The paper ``An Approach to Providing
-Mathematical Annotation in Plots'' by Paul Murrell and Ross Ihaka, which
-will soon appear in the @uref{http://www.amstat.org/publications/jcgs/,
-, @emph{Journal of Computational and Graphical Statistics}}, has more
-details on this.
-
-@c CHECK JCGS paper ``An Approach to Providing Mathematical Annotations
-@c Plots''
+impressive on-line example.  More details can be found in Paul Murrell
+and Ross Ihaka (2000), ``An Approach to Providing Mathematical
+Annotation in Plots'', @uref{http://www.amstat.org/publications/jcgs/, ,
+@emph{Journal of Computational and Graphical Statistics}}, @strong{9},
+582--599.
 
 @node R Web Interfaces, R Add-On Packages, R and S, Top
 @chapter R Web Interfaces
@@ -1441,6 +1436,8 @@ Genetic algorithm for curve fitting.
 @item gee
 An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data.
+@item gld
+Basic functions for the generalised (Tukey) lambda distribution.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
