@@ -208,6 +208,11 @@ UTILITIES
 	unbalanced braces in Rd files.  It now also provides pointers to
 	documentation for problems it reports.
 
+    o	R CMD check, build and INSTALL produce outline-type output.
+
+    o	QA functions in package 'tools' now return the results of their
+	computations as objects with suitable print() methods.
+
 
 C-LEVEL FACILITIES
 
