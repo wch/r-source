@@ -21,7 +21,7 @@
 #include "Mathlib.h"
 #define FORTRAN_H
 
-#include "Rconfig.h"
+#include "config.h"
 #include "Complex.h"
 
 	/* General F2C Macros */

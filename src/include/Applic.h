@@ -25,7 +25,7 @@
 #ifndef APPLIC_H_
 #define APPLIC_H_
 
-#include "Rconfig.h"		/* F77... */
+#include "config.h"		/* F77... */
 
 void approx(double *, double *, int *, double *, int *,
 	    int *, double *, double *, double *);

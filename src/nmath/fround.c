@@ -103,7 +103,7 @@ double fround(double x, double digits)
        2) ../main/coerce.c   & ../main/deparse.c have  DBL_DIG  directly
        3) ../main/options.c has   #define MAX_DIGITS 22  for options(digits)
 
-       Really should decide on a (Rconfig.h dependent?) global MAX_DIGITS.
+       Really should decide on a (config.h dependent?) global MAX_DIGITS.
        --MM--
      */
 #ifdef IEEE_754

@@ -1,5 +1,5 @@
 ##-- Keep  'library' and 'library.dynam'  PLATFORM-Independent !
-##-- Use  .Platform  (== Platform() from Rconfig.h ) to configure!
+##-- Use  .Platform  (== Platform() from config.h ) to configure!
 ##	  ~~~~~~~~~
 
 library <-

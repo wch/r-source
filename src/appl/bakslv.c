@@ -24,10 +24,10 @@
    */
 
 #ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
+#include <config.h>
 #endif
 
-#include "Fortran.h"		/* incl Rconfig.h */
+#include "Fortran.h"		/* incl config.h */
 #include "Linpack.h"		/* incl Blas.h    */
 #include "Applic.h"
 

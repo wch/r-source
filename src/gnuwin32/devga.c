@@ -22,7 +22,7 @@
  *  ../unix/devX11.c --
  */
 #ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
+#include <config.h>
 #endif
 
 #include "Defn.h"

@@ -1,7 +1,7 @@
 #ifndef LINPACK_H_
 #define LINPACK_H_
 
-#include "Rconfig.h"		/* for F77_SYMBOL */
+#include "config.h"		/* for F77_SYMBOL */
 #include "Blas.h"
 
 	/* Double Precision Linpack */

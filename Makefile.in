@@ -39,8 +39,8 @@ R:
 	  echo "You should \`make docs' now ..."; \
 	fi
 
-src/include/Rconfig.h: $(srcdir)/configure \
-  $(srcdir)/src/include/Rconfig.h.in
+src/include/config.h: $(srcdir)/configure \
+  $(srcdir)/src/include/config.h.in
 	$(top_srcdir)/configure --srcdir $(top_srcdir) @config_opts@
 
 docs help html latex examples:: FORCE

@@ -13,13 +13,13 @@ include $(top_builddir)/Makeconf
 SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
 	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
 	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
-OBJ_HEADERS = Rversion.h Rver.h Rconfig.h
+OBJ_HEADERS = Rversion.h Rver.h config.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
 	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h Startup.h \
 	$(SRC_HEADERS) \
-	Rconfig.h.in
+	config.h.in
 
 all: Makefile R
 
@@ -28,7 +28,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h Rver.h
+R: Makefile config.h Rversion.h FFDecl.h FFTab.h Rver.h
 	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$$f $(top_builddir)/include; \
@@ -37,14 +37,14 @@ R: Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h Rver.h
 	  $(INSTALL_DATA) $$f $(top_builddir)/include; \
 	done
 
-Rconfig.h: $(top_srcdir)/configure $(srcdir)/Rconfig.h.in
-	@cd $(top_builddir) && $(MAKE) src/include/Rconfig.h
+config.h: $(top_srcdir)/configure $(srcdir)/config.h.in
+	@cd $(top_builddir) && $(MAKE) src/include/config.h
 	@touch $@
 
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
 
-Rver.h: $(top_srcdir)/VERSION Rconfig.h
+Rver.h: $(top_srcdir)/VERSION config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
@@ -53,7 +53,7 @@ FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
 mostlyclean:
 clean:
 distclean:
-	@rm -f GETSYMBOLS Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h
+	@rm -f GETSYMBOLS Makefile config.h Rversion.h FFDecl.h FFTab.h
 maintainer-clean: distclean
 
 install install-strip uninstall::

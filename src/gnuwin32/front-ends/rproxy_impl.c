@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.6 2000/01/13 21:01:27 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.7 2000/01/21 16:49:18 hornik Exp $
  */
 
 #include <windows.h>
@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include "globalvar.h"
 #undef CharacterMode
-#include "Rconfig.h"
+#include "config.h"
 #include "Rversion.h"
 #include "Startup.h"
 #include "bdx.h"

@@ -6878,7 +6878,7 @@ trap 'rm -fr `echo "Makeconf
   tools/keyword-test
   tools/install-info
   tools/pkg2tex
- src/include/Rconfig.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
+ src/include/config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
 
@@ -7189,7 +7189,7 @@ ac_eD='%g'
 if test "${CONFIG_HEADERS+set}" != set; then
 EOF
 cat >> $CONFIG_STATUS <<EOF
-  CONFIG_HEADERS="src/include/Rconfig.h"
+  CONFIG_HEADERS="src/include/config.h"
 EOF
 cat >> $CONFIG_STATUS <<\EOF
 fi

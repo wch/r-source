@@ -24,8 +24,8 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h
 
 
-fixh: h/Rconfig.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h
-	$(CP) -p ./h/Rconfig.h ./h/psignal.h ../../include
+fixh: h/config.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h
+	$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	sh ./GETVERSION > ../../include/Rversion.h
 	$(ECHO) done > fixh
 

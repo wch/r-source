@@ -19,7 +19,7 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include "Rconfig.h"
+#include "config.h"
 #include "Rversion.h"
 #include "Startup.h"
 /* for askok and askyesnocancel */

@@ -34,7 +34,7 @@ extern "C" {
 
 #include "Error.h"
 #include "Memory.h"
-#include "Rconfig.h"
+#include "config.h"
 
 #include <stddef.h>
 #include <stdlib.h>

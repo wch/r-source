@@ -22,7 +22,7 @@
 /* Code to handle list / vector switch */
 
 #ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
+#include <config.h>
 #endif
 
 #include "Defn.h"

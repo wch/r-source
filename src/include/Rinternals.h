@@ -21,7 +21,7 @@
 #ifndef _R_INTERNALS_H_
 #define _R_INTERNALS_H_
 
-#include "Rconfig.h"
+#include "config.h"
 #include "Arith.h"
 #include "Complex.h"
 #include "Errormsg.h"

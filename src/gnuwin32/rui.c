@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
+#include <config.h>
 #endif
 
 /* R user interface based on GraphApp */

@@ -24,7 +24,7 @@
    K. A. Robbins and S. Robbins, Prentice Hall, 1996. */
 
 #ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
+#include <config.h>
 #endif
 
 #if defined(__MWERKS__) && defined(macintosh)

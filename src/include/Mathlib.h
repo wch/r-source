@@ -30,7 +30,7 @@
 /*-- Mathlib as part of R --  undefine this for standalone : */
 #define MATHLIB_IN_R
 
-#include "Rconfig.h"
+#include "config.h"
 #include "Arith.h"
 #include "Random.h"
 

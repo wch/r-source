@@ -21,7 +21,7 @@
 #undef HASHING
 
 #ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
+#include <config.h>
 #endif
 
 #define ARGUSED(x) LEVELS(x)

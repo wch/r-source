@@ -24,10 +24,10 @@
 #define COUNTING
 
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Errormsg.h, Memory.h
-				  PrtUtil.h, Utils.h, Rconfig.h */
+				  PrtUtil.h, Utils.h, config.h */
 
 /*  Heap and Pointer Protection Stack Sizes.  */
-/*  These values are minima and can be overriden in Rconfig.h	*/
+/*  These values are minima and can be overriden in config.h	*/
 
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 

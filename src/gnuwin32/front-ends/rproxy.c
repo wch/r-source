@@ -17,12 +17,12 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy.c,v 1.4 1999/12/15 17:20:28 pd Exp $
+ *  $Id: rproxy.c,v 1.5 2000/01/21 16:49:18 hornik Exp $
  */
 
 #include <windows.h>
 #include <stdio.h>
-#include "Rconfig.h"
+#include "config.h"
 #include "Rversion.h"
 #include "bdx.h"
 #include "SC_proxy.h"
