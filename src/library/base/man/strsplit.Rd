@@ -53,9 +53,11 @@ strReverse <- function(x)
 	sapply(lapply(strsplit(x,NULL), rev), paste, collapse="")
 strReverse(c("abc", "Statistics"))
 
+## get the first names of the members of R-core
 a <- readLines(file.path(R.home(),"AUTHORS"))[-(1:8)]
 a <- a[(0:2)-length(a)]
-sub("\t.*","", a) # names without e-addresses
-strReverse(sub(" .*","", a))# reverse the first names
+(a <- sub(" .*","", a))
+# and reverse them
+strReverse(a)
 }
 \keyword{character}
