@@ -34,6 +34,7 @@
 #include "getline/getline.h"
 #include <windows.h>		/* for CreateEvent,.. */
 #include <process.h>		/* for _beginthread,... */
+#include <io.h>			/* for isatty, chdir */
 #include "run.h"
 #include "Startup.h"
 
