@@ -32,6 +32,18 @@ representation <-
     includes <- as.character(value[nchar(anames)==0])
     if(any(duplicated(includes)))
         stop(paste("Duplicate class names among superclasses:", paste(includes[duplicated(includes)], collapse = ", ")))
+    slots <- anames[nchar(anames)>0]
+    if(any(duplicated(slots)))
+       stop(paste("Duplicated slot names: ", paste(slotNames[duplicated(slotNames)], collapse="")))
+    for(super in includes) {
+      if(isClass(super)) {
+        supSlots <- slotNames(super)
+        if(any(!is.na(match(supSlots, slots))))
+          stop(paste("Inheritance from class \"", super, "\" introduces duplicate slot names: ",
+                     paste(supSlots[!is.na(match(supSlots, slots))], collapse =", "), sep=""))
+        slots <- c(slots, supSlots)
+      }
+    }
     value
 }
 
