@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-3  R Development Core Team
+ *  Copyright (C) 2000-4  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,6 +34,31 @@ static int pwait(HANDLE p)
     return ret;
 }
 
+void rcmdusage (char *RCMD)
+{
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s",
+	    "where 'command' is one of:\n",
+	    "  INSTALL  Install add-on packages.\n",
+	    "  REMOVE   Remove add-on packages.\n",
+	    "  SHLIB    Make a DLL for use with dyn.load.\n",
+	    "  BATCH    Run R in batch mode.\n",
+	    "  build    Build add-on packages.\n",
+	    "  check    Check add-on packages.\n",
+	    "  Rprof    Post process R profiling files.\n",
+	    "  Rdconv   Convert Rd format to various other formats, including html, Nroff,\n",
+	    "           LaTeX, plain text, and S documentation format.\n",
+	    "  Rd2dvi.sh Convert Rd format to DVI/PDF.\n",
+	    "  Rd2txt   Convert Rd format to text.\n",
+	    "  Sd2Rd    Convert S documentation to Rd format.\n");
+
+    if(strcmp(RCMD, "R CMD") == 0)
+	fprintf(stderr, "For the first four 'CMD' may be omitted.\n");
+    fprintf(stderr, "\n%s%s%s%s",
+	    "Use\n  ", RCMD, " command --help\n",
+	    "for usage information for each command.\n\n");    
+}
+
+
 int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
@@ -46,26 +71,33 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     int i, iused, res, status = 0;
     char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], PATH[10000],
 	RHOME[MAX_PATH], *p, cmd[10000], Rversion[25];
+    char RCMD[] = "R CMD";
+    int len = strlen(argv[0]);
+    
+    if(strncmp(argv[0]+len-4, "Rcmd", 4) == 0 || 
+       strncmp(argv[0]+len-4, "rcmd", 4) == 0 ||
+       strncmp(argv[0]+len-8, "Rcmd.exe", 8) == 0 || 
+       strncmp(argv[0]+len-8, "rcmd.exe", 8) == 0) 
+	strcpy(RCMD, "Rcmd");
+
 
     if (argc <= cmdarg) {
-	fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
-"Usage: R CMD command args\n\n",
-"Run R command, where command is one of:\n",
-"  INSTALL  Install add-on packages.\n",
-"  REMOVE   Remove add-on packages.\n",
-"  SHLIB    Make a DLL for use with dyn.load.\n",
-"  BATCH    Run R in batch mode.\n",
-"  build    Build add-on packages.\n",
-"  check    Check add-on packages.\n",
-"  Rprof    Post process R profiling files.\n",
-"  Rdconv   Convert Rd format to various other formats, including html, Nroff,\n",
-"           LaTeX, plain text, and S documentation format.\n",
-"  Rd2dvi.sh Convert Rd format to DVI/PDF.\n",
-"  Rd2txt   Convert Rd format to text.\n",
-"  Sd2Rd    Convert S documentation to Rd format.\n",
-"Use\n",
-"  R CMD command --help\n",
-"for usage information for each command.\n");
+	fprintf(stderr, "%s%s%s", "Usage: ", RCMD, " command args\n\n");
+	rcmdusage(RCMD);
+	return(0);
+    }
+    if (argc == cmdarg+1 && strcmp(argv[cmdarg], "--help") == 0) {
+	/* need to cover Rcmd --help, R CMD --help and R --help */
+	if(cmdarg == 2 || (cmdarg == 1 && strcmp(RCMD, "Rcmd")) == 0) {
+	    fprintf(stderr, "%s%s%s", "Usage: ", RCMD, " command args\n\n");
+	    rcmdusage(RCMD);
+	    return(0);
+	}
+	/* R --help */
+	sprintf(cmd, "%s/bin/Rterm.exe --help", getRHOME());
+	system(cmd);
+	fprintf(stderr, "%s", "\n\nOr: R CMD command args\n\n");
+	rcmdusage(RCMD);
 	return(0);
     }
 
@@ -82,10 +114,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* process the command line */
 	sprintf(cmd, "%s/bin/Rterm.exe --restore --save", getRHOME());
 
-	for(i = cmdarg + 1, iused = 1; i < argc; i++) {
+	for(i = cmdarg + 1, iused = cmdarg; i < argc; i++) {
 	    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
-		fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s\n",
-"Usage: R CMD BATCH [options] infile [outfile]\n\n",
+		fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+"Usage: ", RCMD, " BATCH [options] infile [outfile]\n\n",
 "Run R non-interactively with input from infile and place output (stdout\n",
 "and stderr) to another file.  If not given, the name of the output file\n",
 "is the one of the input file, with a possible '.R' extension stripped,\n",

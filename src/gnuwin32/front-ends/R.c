@@ -33,7 +33,8 @@ int main (int argc, char **argv)
 	else if (strcmp(argv[1], "BATCH") == 0
 		|| strcmp(argv[1], "SHLIB") == 0
 		|| strcmp(argv[1], "INSTALL") == 0
-	 	|| strcmp(argv[1], "REMOVE") == 0) cmdarg = 1;
+		|| strcmp(argv[1], "REMOVE") == 0
+	 	|| strcmp(argv[1], "--help") == 0) cmdarg = 1;
     }
 
     exit(rcmdfn(cmdarg, argc, argv));
