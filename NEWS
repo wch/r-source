@@ -117,6 +117,9 @@ BUG FIXES
 
     o	range() now works properly for date-time objects.
 
+ 
+    o   contour() could loop infinitely (PR#897). Apparently fixed.
+
 
 
 		CHANGES IN R VERSION 1.2.2

@@ -1149,8 +1149,8 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* PREVIOUSLY: atom = DBL_EPSILON * (zmax - zmin); */
-
-    atom = 1e-3 * (zmax - zmin);
+    /* changed to 1e-3, but this caused PR#897 */
+    atom = 1e-7 * (zmax - zmin);
 
     /* Initialize the segment data base */
     /* Note we must be careful about resetting */
