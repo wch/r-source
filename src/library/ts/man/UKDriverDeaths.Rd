@@ -1,8 +1,6 @@
-% file UKDriverDeaths.Rd
-% copyright (C) 1994-9 W. N. Venables and B. D. Ripley
-%
 \name{UKDriverDeaths}
 \alias{UKDriverDeaths}
+\alias{Seatbelts}
 \title{
   Road Casualties in Great Britain 1969--84
 }
