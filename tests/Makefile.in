@@ -48,7 +48,8 @@ test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
 all-basic-tests = Examples Specific
-all-extra-tests = Internet Lapack Nafns Random Reg FF codoc undoc
+all-extra-tests = Internet Lapack Nafns Random Reg \
+  DocArgs FF Methods codoc undoc
 
 DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
