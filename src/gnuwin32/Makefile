@@ -289,25 +289,14 @@ methods-HELP = ziponly
 stats-HELP = ziponly
 utils-HELP = ziponly
 
-base-ZIPDATA = zip
-stats-ZIPDATA = zip
-
 MASS-HELP = ziponly
-MASS-ZIPDATA = zip
 boot-HELP = ziponly
-boot-ZIPDATA = zip
 cluster-HELP = ziponly
-cluster-ZIPDATA = zip
 grid-HELP = ziponly
-grid-ZIPDATA = zip
 lattice-HELP = ziponly
-lattice-ZIPDATA = zip
 nlme-HELP = ziponly
-nlme-ZIPDATA = zip
 rpart-HELP = ziponly
-rpart-ZIPDATA = zip
 survival-HELP = ziponly
-survival-ZIPDATA = zip
 
 # need special-case handling for bundle, as --auto-zip is not enabled
 dse1-HELP = ziponly
@@ -377,15 +366,18 @@ ziphelp-%:
 ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
 
+## must be careful not to zip up a dir setup for lazy-data
 zipdata-%:
-	@$(ECHO) "  zipping data"
-	@(cd $(RLIB)/$*/data; \
-	  if test -f Rdata.zip ; then \
-	    unzip -qou Rdata; \
-	  fi; \
-	  $(RM) Rdata.zip filelist ; \
-	  ls -1 > filelist; \
-	  zip -rmq9X Rdata * -x filelist 00Index)
+	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	  $(ECHO) "  zipping data" ; \
+	  (cd $(RLIB)/$*/data; \
+	    if test -f Rdata.zip ; then \
+	      unzip -qou Rdata; \
+	    fi; \
+	    $(RM) Rdata.zip filelist ; \
+	    ls -1 > filelist; \
+	    zip -rmq9X Rdata * -x filelist 00Index) ;\
+	fi
 
 data-%:
 	@$(ECHO) "  not zipping data"
@@ -531,9 +523,9 @@ clean-recommended:
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR lazyload-MASS \
-	  lazyload-class lazyload-nnet lazyload-spatial
+	  lazyload-class lazyload-nnet lazyload-spatial lazydata-MASS
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
-	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p || exit 1; \
+	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p lazydata-$$p || exit 1; \
 	done
 
 rinstaller:
