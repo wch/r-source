@@ -428,17 +428,16 @@ enum {
     kItemShowWSpace  =  1,
 	kItemClrWSpace	 =  2,
 	kItemBrowseWSpace =	3,
-	kItemUpdateBrowser =4,
     kItemLoadWSpace  =  5,
 	kItemSaveWSpace	 =  6,
-	kItemLoadHistory =  9,
-	kItemSaveHistory =  10,
-	kItemShowHistory =  11,
-	kItemChangeDir   =  13,
-	kItemShowDir	 =  14,
-	kItemResetDir    =  15,
-	kItemShowLibrary =  17,
-	kItemShowData	 =  18
+	kItemLoadHistory =  8,
+	kItemSaveHistory =  9,
+	kItemShowHistory =  10,
+	kItemChangeDir   =  12,
+	kItemShowDir	 =  13,
+	kItemResetDir    =  14,
+	kItemShowLibrary =  16,
+	kItemShowData	 =  17
 };
 
 /*	Config menu items
