@@ -612,12 +612,13 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
       break;
     case LANGSXP:
 	if(mlist == R_NilValue) {
+	    primitive_type t;
 	    /* a recursive call: use the skeleton default call */
 	    call = f;
 	    f = CAR(f);
-	    prim_case = primitive_case(fsym, f);
-	    if(prim_case)
-		call = nonstandard_primitive(prim_case, call, f, ev);
+	    t = primitive_case(fsym, f);
+	    if(t != STANDARD)
+		call = nonstandard_primitive(t, call, f, ev);
 	    else
 		/* the skeleton is almost surely a call to the same primitive, 
 		   but we don't need to assume that. */
