@@ -53,23 +53,27 @@ realclean:
 	$(MAKE) acclean
 
 install: all
-	$(INSTALL) -d $(bindir) $(mandir)/man1
-	$(INSTALL_DATA) R.1 $(mandir)/man1
+	$(INSTALL) -d $(bindir)
+	$(INSTALL) -d $(mandir)/man1
 	$(INSTALL) -d $(rhome)/bin
 	$(INSTALL) -d $(rhome)/cmd 
 	$(INSTALL) -d $(rhome)/etc 
 	$(INSTALL) -d $(rhome)/include 
 	$(INSTALL) -d $(rhome)/library
-	$(INSTALL_DATA) COPYING COPYRIGHTS MIRROR-SITES RESOURCES $(rhome)
+	$(INSTALL_DATA) R.1 $(mandir)/man1
+	for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; \
+		do $(INSTALL_DATA) $$f $(rhome); done
 	cd afm; $(MAKE) $@
 	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
 	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
 	chmod 755 $(bindir)/R
-	$(INSTALL_PROGRAM) `ls cmd/[a-z]* | grep -v '.*\.in'`  $(rhome)/cmd
+	for f in `ls cmd/[a-z]* | grep -v '.*\.in'`; \
+		do $(INSTALL_PROGRAM) $$f $(rhome)/cmd; done
 	cd demos; $(MAKE) $@
 	cd doc; $(MAKE) $@
 	cd etc; $(MAKE) $@
-	$(INSTALL_DATA) include/*.h $(rhome)/include
+	for f in include/*.h; \
+		do $(INSTALL_DATA) $$f $(rhome)/include; done
 	@echo "Installing library ..."
 	cd library; tar c [a-z]* | (cd $(rhome)/library; tar x)
 	$(INSTALL_DATA) library/LibIndex $(rhome)/library

@@ -89,5 +89,7 @@ realclean: clean
 
 install:
 	$(INSTALL) -d $(rhome)/doc/manual
-	$(INSTALL_DATA) Makefile *.tex *.sty $(rhome)/doc/manual
+	for f in Makefile *.tex *.sty; \
+		do $(INSTALL_DATA) $$f $(rhome)/doc/manual; \
+	done
 

@@ -61,9 +61,13 @@ distclean realclean:
 
 install:
 	$(INSTALL) -d $(rhome)/etc
-	$(INSTALL) COMPILE INSTALL REMOVE SHLIB $(rhome)/etc
-	$(INSTALL) Rd2dvi Rd2txt Rdconv Rdindex Rman2Rd \
-		   Sd2Rd build-help help.pretty $(rhome)/etc
-	$(INSTALL_DATA) buildlib.pl html-layout.pl Makeconf Rdconvlib.pl \
-		        $(rhome)/etc
-	$(INSTALL_PROGRAM) Rd2txt Rdconv Rdindex Sd2Rd $(bindir)
+	for f in COMPILE INSTALL REMOVE SHLIB Rd2dvi Rd2txt \
+	   Rdconv Rdindex Rman2Rd Sd2Rd build-help help.pretty; \
+		do $(INSTALL) $$f $(rhome)/etc; \
+	done
+	for f in buildlib.pl html-layout.pl Makeconf Rdconvlib.pl; \
+		do $(INSTALL_DATA) $$f $(rhome)/etc; \
+	done
+	for f in Rd2txt Rdconv Rdindex Sd2Rd; \
+		do $(INSTALL_PROGRAM) $$f $(bindir); \
+	done

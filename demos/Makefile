@@ -6,9 +6,19 @@ install:
 	$(INSTALL) -d $(rhome)/demos/language 
 	$(INSTALL) -d $(rhome)/demos/models 
 	$(INSTALL) -d $(rhome)/demos/nlm
-	$(INSTALL_DATA) dynload/Makefile dynload/README dynload/zero* \
-			$(rhome)/demos/dynload
-	$(INSTALL_DATA) graphics/*.R $(rhome)/demos/graphics
-	$(INSTALL_DATA) language/*.R $(rhome)/demos/language
-	$(INSTALL_DATA) models/*.R $(rhome)/demos/models
-	$(INSTALL_DATA) nlm/*.R $(rhome)/demos/nlm
+	for f in dynload/Makefile dynload/README dynload/zero*; \
+		do $(INSTALL_DATA)  $$f $(rhome)/demos/dynload; \
+	done
+	for f in graphics/*.R; \
+		do $(INSTALL_DATA) $$f $(rhome)/demos/graphics; \
+	done
+	for f in language/*.R; \
+		do $(INSTALL_DATA) $$f $(rhome)/demos/language; \
+	done
+	for f in models/*.R; \
+		do $(INSTALL_DATA) $$f $(rhome)/demos/models; \
+	done
+	for f in nlm/*.R; \
+		do $(INSTALL_DATA) $$f $(rhome)/demos/nlm; \
+	done
+
