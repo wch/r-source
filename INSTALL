@@ -72,7 +72,7 @@ This will install to the following directories:
 
 	$prefix/bin		(some) executables
 	$prefix/man/man1	man pages
-	$prefix/lib/R		all the rest (libraries, online help
+	$prefix/share/R		all the rest (libraries, online help
 				system, ...)
 
 where prefix is determined during configuration (typically /usr/local)
