@@ -6,7 +6,7 @@ that version. The main R FAQ can be found at
 http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html.
 
 There are two versions of R for Windows, but only is under active
-development, that described here. It is often called something like rw0650
+development, that described here. It is often called something like rw0651
 (although not officially). The information here applies only to
 recent versions (rw0642 or later).
 
@@ -374,10 +374,10 @@ and so update the console.
 
 6.1) How can I compile R from source?
 
-Get the R sources. Suppose you want to compile R-0.65.0.
+Get the R sources. Suppose you want to compile R-0.65.1.
 
-      tar zxvf R-0.65.0.tgz
-      cd R-0.65.0
+      tar zxvf R-0.65.1.tgz
+      cd R-0.65.1
       cd src\gnuwin32
 
 Now read the README and set up all the tools needed. Then you can just use

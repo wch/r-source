@@ -467,7 +467,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		if (!strcmp(pager, "internal")) {
 		    newpager(wtitle, file[i], headers[i], del);
 		} else if (!strcmp(pager, "console")) {
-		    DWORD len = 1;
+/*		    DWORD len = 1;
 		    HANDLE f = CreateFile(file[i], GENERIC_READ,
 					  FILE_SHARE_WRITE,
 					  NULL, OPEN_EXISTING, 0, NULL);
@@ -476,7 +476,16 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 			    buf[len] = '\0';
 			    R_WriteConsole(buf,strlen(buf));
 			}
-			CloseHandle(f);
+			CloseHandle(f);*/
+/* The above causes problems with lack of CRLF translations */
+		    size_t len;
+		    FILE *f = fopen(file[i], "rt");
+		    if(f) {
+			while((len = fread(buf, 1, 1023, f))) {
+			    buf[len] = '\0';
+			    R_WriteConsole(buf, strlen(buf));
+			}
+			fclose(f);
 			if (del) DeleteFile(file[i]);
 		    }
 		    else {

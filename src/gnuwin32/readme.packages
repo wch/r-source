@@ -33,7 +33,7 @@ Microsoft HTML Help Workshop, available for download at
 http://msdn.microsoft.com/workshop/author/htmlhelp.
 
 If you want to make Window help files you will need hcrtf.exe from a
-Windows compiler installation, or hcp505
+Windows compiler installation, or hcp505.exe.
 
 For large packages it is helpful to make zipped help files: for that
 you need zip from the Info-ZIP project 

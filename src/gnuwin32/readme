@@ -1,7 +1,7 @@
-R 0.65.0 for Windows 9x and NT
+R 0.65.1 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.65.0 to run on
+This distribution contains a binary distribution of R-0.65.1 to run on
 Windows 95, 98 and NT4 on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
@@ -16,23 +16,23 @@ Installation
 The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).
 
-To install manually, unpack rw0650b.zip anywhere you like. It will
-unpack to a directory tree under rw0650. The help, HTML, Compiled
-HTML, Windows and latex help files are in separate files rw0650h.zip,
-rw0650w.zip, rw0650ch.zip, rw0650wh.zip and rw0650l.zip which should
-be unpacked in the same directory in which you unpacked rw0650b.zip.
+To install manually, unpack rw0651b.zip anywhere you like. It will
+unpack to a directory tree under rw0651. The help, HTML, Compiled
+HTML, Windows and latex help files are in separate files rw0651h.zip,
+rw0651w.zip, rw0651ch.zip, rw0651wh.zip and rw0651l.zip which should
+be unpacked in the same directory in which you unpacked rw0651b.zip.
 
 Usage
 =====
 
-There are two executables in rw0650\bin:
+There are two executables in rw0651\bin:
 
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\rw0650\bin\rgui.exe and adding the arguments in the Target field.
+...\rw0651\bin\rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
@@ -153,7 +153,7 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0650\library. They are then available for use. You
+be unpacked in rw0651\library. They are then available for use. You
 can also use the installer rwinst.exe to selectively unpack the zip
 files.
 
@@ -163,10 +163,10 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-rw0650\doc\html.  If you have the source-package files and Perl
+rw0651\doc\html.  If you have the source-package files and Perl
 installed you can use
 
-	cd ...\rw0650\src\gnuwin32\help
+	cd ...\rw0651\src\gnuwin32\help
 	make indices
 
 Private libraries of packages can be used and can be specified by the
@@ -183,7 +183,7 @@ in the environment or on the command line, or add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw0650sp.zip installed (but not the R source). This contains
+distribution rw0651sp.zip installed (but not the R source). This contains
 detailed instructions.
 
 
@@ -256,14 +256,14 @@ compiler, preferably hcrtf.exe.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
-You also need: the R source (R-0.65.0.tgz), and to build the
+You also need: the R source (R-0.65.1.tgz), and to build the
 installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
-Then: untar R-0.65.0.tgz somewhere,
+Then: untar R-0.65.1.tgz somewhere,
 
-	cd /somewhere/R-0.65.0/src/gnuwin32
+	cd /somewhere/R-0.65.1/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
 edit Makefile to set the type(s) of help that you want built.
@@ -272,12 +272,12 @@ and run
 
 	make BUILD=MINGW32 or CYGWIN
 
-Note 1: the file rw0650\unzip\unzip32.dll is not in the source
+Note 1: the file rw0651\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw0650\bin\Rchtml.dll is not built automatically. Its source
+The file rw0651\bin\Rchtml.dll is not built automatically. Its source
 is the help directory, and you need the HTML Help Workshop files and
 Visual C++ to build it. We suggest you copy it from the binary
 distribution.
@@ -306,12 +306,12 @@ http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 and ensure that these are in your path. You will need Perl and nroff
 installed.
 
-You also need: the R source (R-0.65.0.tgz), and to build the installer,
+You also need: the R source (R-0.65.1.tgz), and to build the installer,
 unzip5.40.zip from any Info-ZIP mirror.
 
-Then: untar R-0.65.0.tgz somewhere
+Then: untar R-0.65.1.tgz somewhere
 
-	cd /somewhere/R-0.65.0/src/gnuwin32
+	cd /somewhere/R-0.65.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You

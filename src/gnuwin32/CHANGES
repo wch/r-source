@@ -11,7 +11,8 @@ directory on CRAN.
 
 There is support for building Windows help files (as in Windows 95) and
 compiled HTML files (as in Windows 2000) and both are available for the
-standard packages.
+standard packages.  Set options(winhelp=TRUE) to make this your
+preferred help system.
 
 The new function update.packages() is supported if you have wget.exe
 (a copy is in the windows/windows-NT/etc directory on CRAN) or

@@ -163,7 +163,7 @@ cleanwin:
 
 
 bindist:
-	$(RM) -rf $(RPREFIX) library
+	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library

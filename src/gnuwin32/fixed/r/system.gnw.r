@@ -112,6 +112,22 @@ zip.file.extract <- function(file, zipname="R.zip")
 
 ### the following functions support update.packages()
 
+zip.unpack <- function(zipname, dest)
+{
+    if(file.exists(zipname)) {
+        if((unzip <- options()$unzip) != "internal") {
+            system(paste(unzip, "-oq", zipname, "-d", dest),
+                   show = FALSE, invisible = TRUE)
+        } else {
+            rc <- .Internal(int.unzip(zipname, NULL, dest))
+            if (rc == 10)
+                warning(paste(R.home(),
+                              "unzip\\unzip32.dll cannot be loaded", sep="\\"))
+            rc
+        }
+    } else stop(paste("zipfile", zipname, "not found"))
+}
+
 parse.description <- function(desc)
 {
     ## remove empty lines
@@ -265,10 +281,7 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
             for(p in update[oklib,"Package"])
             {
                 okp <- p==pkgs[, 1]
-                if(length(okp) > 0) {
-                    cmd <- paste("unzip -o", pkgs[okp, 2], "-d", lib)
-                    system(cmd)
-                }
+                for(pkg in pkgs[okp, 2]) zip.unpack(pkg, lib)
             }
         }
         cat("\n")
