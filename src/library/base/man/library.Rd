@@ -16,15 +16,15 @@
 \alias{print.packageInfo}
 \description{
   \code{library} and \code{require} load add-on packages.
-  
+
   \code{.First.lib} is called when a package is loaded;
   \code{.Last.lib} is called when a package is detached.
-  
+
   \code{.packages} returns information about package availability.
-  
+
   \code{.path.package} returns information about where a package was
   loaded from.
-  
+
   \code{.find.package} returns the directory paths of installed
   packages.
 }
@@ -53,7 +53,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{package, help}{the name of a package, given as a \link{name} or
     literal character string, or a character string, depending on
     whether \code{character.only} is \code{FALSE} (default) or
-    \code{TRUE}).} 
+    \code{TRUE}).}
   \item{pos}{the position on the search list at which to attach the
     loaded package.  Note that \code{.First.lib} may attach other
     packages, and \code{pos} is computed \emph{after} \code{.First.lib}
@@ -64,7 +64,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     of \code{NULL} corresponds to all libraries currently known.}
   \item{character.only}{a logical indicating whether \code{package} or
     \code{help} can be assumed to be character strings.}
-  \item{version}{A character string denoting a version number of the 
+  \item{version}{A character string denoting a version number of the
      package to be loaded.  If no version is given, a suitable default
      is chosen.}
   \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
@@ -132,7 +132,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   is not installed in a \dQuote{standard} location).  \code{.First.lib}
   is invoked after the search path interrogated by \code{search()}
   has been updated, so
-  \code{as.environment(match("package:name"), search())} will return the
+  \code{as.environment(match("package:name", search()))} will return the
   environment in which the package is stored.  If calling
   \code{.First.lib} gives an error the loading of the package is
   abandoned, and the package will be unavailable.  Similarly, if the
@@ -187,7 +187,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   directories at which \R library trees are rooted) by calling
   \code{.libPaths} with the directories specified in \env{R\_LIBS}.
 #endif
-#ifdef windows  
+#ifdef windows
   The library search path is initialized at startup from the environment
   variable \code{R\_LIBS} (which should be a semicolon-separated list of
   directories at which \R library trees are rooted) by calling
