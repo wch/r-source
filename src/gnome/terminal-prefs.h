@@ -27,7 +27,7 @@ void R_set_SaveAction(int sa);
 void settings_prefs_cb(GtkWidget *widget, gpointer data);
 
 void R_gnome_prefs_gui_load(void);
-void R_gnome_prefs_cmd_load(int defrestoreact, int defsaveact, int defvsize, int defnsize);
+void R_gnome_prefs_cmd_load(int defrestoreact, int defsaveact);
 void R_gnome_prefs_save(void);
 
 int prefs_get_restoreact(void);

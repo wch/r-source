@@ -117,7 +117,7 @@ void R_gnome_prefs_gui_load(void)
   gnome_config_pop_prefix();    
 }
 
-void R_gnome_prefs_cmd_load(int defrestoreact, int defsaveact, int defvsize, int defnsize)
+void R_gnome_prefs_cmd_load(int defrestoreact, int defsaveact)
 {
   gchar *tmp;
 

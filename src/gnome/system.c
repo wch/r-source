@@ -239,10 +239,10 @@ void R_ShowQueuedMessages()
 	/*--- Initialization Code ---*/
 
 
-void set_gnome_prefs(Rstart Rp)
+void R_set_gnome_prefs(Rstart Rp)
 {
-    RestoreAction = prefs_get_restoreact();
-    SaveAction = prefs_get_saveact();
+    Rp->RestoreAction = prefs_get_restoreact();
+    Rp->SaveAction = prefs_get_saveact();
 }
 
 void R_set_SaveAction(int sa)
@@ -271,7 +271,8 @@ int main(int ac, char **av)
     /* Gnome startup preferences */
     gnomelib_init("R",
 		  g_strdup_printf("%s.%s %s (%s %s %s)", R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR));
-    R_gnome_prefs_cmd_load(RestoreAction, SaveAction, Rp->vsize, Rp->nsize);
+    R_gnome_prefs_cmd_load(RestoreAction, SaveAction);
+    R_set_gnome_prefs(Rp);
 
     /* command line params */
     R_common_command_line(&ac, av, Rp);
