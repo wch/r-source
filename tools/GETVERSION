@@ -13,6 +13,7 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   y=`cut -d/ -f1 < date-stamp`
   m=`cut -d/ -f2 < date-stamp`
   d=`cut -d/ -f3 < date-stamp`
+  y1=`expr ${y} - 2000`
   echo "/* Rversion.h.  Generated automatically. */"
   echo "#ifndef R_VERSION_H"
   echo "#define R_VERSION_H"
@@ -29,8 +30,8 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "#define R_YEAR   \"${y}\""
   echo "#define R_MONTH  \"${m}\""
   echo "#define R_DAY    \"${d}\""
-## 3 here is for 2003: stops problems with leading zeros
-  echo "#define R_FILEVERSION    ${maj},${pl}${sl},3${m}${d},0"
+## Using 1-digit year stops problems with leading zeros
+  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${y1}${m}${d},0"
   echo
   echo '#ifdef __cplusplus'
   echo '}'
