@@ -77,7 +77,22 @@ front-ends/Rpwd.exe:
 
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
-	 ../../bin/Rblas.dll CHTML front-ends COPYRIGHTS rmodules
+	 ../../bin/Rblas.dll CHTML front-ends COPYRIGHTS rmodules Rcode
+
+## used to build skeletal versions of packages, enough to run
+## package tools to install them properly
+## need ctest as it is in the main .Rprofile.
+INITPACKAGES = base tools ctest
+Rcode:
+	@$(ECHO) "  making bootstrap versions of packages"
+	@for pkg in $(INITPACKAGES); do \
+	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
+	  $(ECHO) "  --" $$pkg; \
+	  $(MAKE) --no-print-directory -C $(PKGDIR)/$${pkg} PKG=$${pkg} \
+	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg Rcode; \
+	  fi; \
+	done
+
 
 rpackage: fixed/fixdesc ../../library/R.css
 	@$(MAKE) --no-print-directory $(PKGS)
@@ -255,6 +270,7 @@ pkg-%:
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi
 ifeq ($(strip $(HELP)),YES)
+	@$(ECHO) "installing help"
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
@@ -286,7 +302,7 @@ ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
 
 zipdata-%:
-	@echo "  zipping data"
+	@$(ECHO) "  zipping data"
 	@(cd $(RLIB)/$*/data; \
 	  if test -f Rdata.zip ; then \
 	    unzip -qou Rdata; \
@@ -296,7 +312,7 @@ zipdata-%:
 	  zip -rmq9X Rdata * -x filelist 00Index)
 
 data-%:
-	@echo "  not zipping data"
+	@$(ECHO) "  not zipping data"
 
 
 #                          ===== cleaning ======
@@ -519,18 +535,18 @@ rsync-recommended:
 	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 ../library/%/DESCRIPTION: ../library/Recommended/%.tgz
-	@echo "---- $*"
+	@$(ECHO) "---- $*"
 	(cd ../library; rm -rf $*; tar zxf Recommended/$*.tgz; touch $@)
 
 unpack-recommended:
-	@echo "--- Unpacking recommended packages"
+	@$(ECHO) "--- Unpacking recommended packages"
 	@for i in ${RECOMMENDED} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION ; done
 
 clean-recommended:
 	@for i in ${RECOMMENDED} ; do $(RM) -r ../library/$${i} ; done
 
 recommended: unpack-recommended
-	@echo "--- Making recommended packages"
+	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
 	@for p in $(REC_NONBUNDLES); do \
 	  $(MAKE) --no-print-directory pkg-$$p; \

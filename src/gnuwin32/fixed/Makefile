@@ -8,7 +8,7 @@ profiles: ../../../library/base/R/Rprofile
 ../../library/profile/Rprofile.gnw
 	@$(ECHO) -------- Building $@ from $^--------
 	mkdir -p ../../../library/base/R
-	$(CAT)  $^ > $@
+	@$(CAT)  $^ > $@
 
 
 SED0='/^\#/d'
