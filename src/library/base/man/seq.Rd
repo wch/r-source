@@ -16,17 +16,17 @@ from:to
    a:b
 
 seq(from, to)
-seq(from, to, by=)
-seq(from, to, length=)
-seq(along=)
+seq(from, to, by= )
+seq(from, to, length.out= )
+seq(along.with= )
 seq(from)
 }
 \arguments{
   \item{from}{starting value of sequence.}
   \item{to}{(maximal) end value of the sequence.}
   \item{by}{increment of the sequence.}
-  \item{length}{desired length of the sequence.}
-  \item{along}{take the length from the length of this argument.}
+  \item{length.out}{desired length of the sequence.}
+  \item{along.with}{take the length from the length of this argument.}
   \item{a,b}{\code{\link{factor}}s of same length.}
 }
 \details{
@@ -48,10 +48,10 @@ seq(from)
   The second form generates \code{from, from+by}, \ldots, up to the
   sequence value less than or equal to \code{to}.
 
-  The third generates a sequence of \code{length} equally spaced values
-  from \code{from} to \code{to}.
+  The third generates a sequence of \code{length.out} equally spaced
+  values from \code{from} to \code{to}.
 
-  The fourth form generates the sequence \code{1, 2, \dots, length(along)}.
+  The fourth form generates the sequence \code{1, 2, \dots, length(along.with)}.
 
   The last generates the sequence \code{1, 2, \dots, length(from)}
   (as if argument \code{along} had been specified),
@@ -67,7 +67,11 @@ seq(from)
 }
 \value{
   The result is of \code{mode} \code{"integer"} if \code{from} is
-  (numerically equal to an) integer and \code{by} is not specified.
+  (numerically equal to an) integer and, e.g., only \code{to} is
+  specified, or also if only \code{length} or only \code{along.with} is
+  specified.
+  % MM: to specify all the conditions doesn't seem worth, nor should the
+  % code be changed just for docu.purposes; e.g. str(seq(from=1:1, to=8, by=3:3))
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

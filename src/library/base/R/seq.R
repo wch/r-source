@@ -41,6 +41,7 @@ seq.default <-
 	stop("Length must be non-negative number")
     else if(length.out == 0)
 	integer(0)
+    else if (One) 1:length.out
     else if(missing(by)) {
 	if(from == to || length.out < 2)
 	    by <- 1

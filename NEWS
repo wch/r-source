@@ -298,7 +298,6 @@ BUG FIXES
 
 
 
-
 	**************************************************
 	*						 *
 	*	       2.0 SERIES NEWS			 *
@@ -350,6 +349,8 @@ BUG FIXES
 	behind.	 (PR#7230)
 
     o	read.table() could fail when the row.names were looking like numbers.
+
+    o	seq(length= <n>) now always returns "integer" storage.
 
 
 

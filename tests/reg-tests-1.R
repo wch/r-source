@@ -608,7 +608,7 @@ X <- X[, colSums(X) <= 3]
 X <- rbind(X, 3:3 - colSums(X))
 for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
   px <- apply(X, 2, function(x) dmultinom(x, prob = p))
-  stopifnot(is.all.equal(sum(px), 1))
+  stopifnot(all.equal(sum(px), 1))
 }
 ## end of moved from Multinom.Rd
 
@@ -3383,3 +3383,11 @@ d <- read.table(tf)
 ## gave error ("duplicate row.names") in 2.0.1
 stopifnot(all.equal(d,d0))
 unlink(tf)
+
+## seq() should be more consistent in returning "integer"
+stopifnot(typeof(seq(length=0)) == "integer",
+          identical(seq(length=0), seq(along=0[0])),
+          identical(seq(length=3), 1:3),
+          identical(seq(length=3), seq(along=1:3)))
+
+
