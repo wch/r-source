@@ -41,6 +41,9 @@ Making packages now warns if there is a configure script.
 ga.h was needed for building package `windlgs', but was omitted from the
 `source package' code for rw1040. It is now included.
 
+Rcmd check was failing on Windows 9X, because additions in 1.4.0 were
+not using Rsystem().
+
 
 
 rw1040
