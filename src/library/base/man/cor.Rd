@@ -54,7 +54,8 @@ cov(x, y = NULL, use = "all.obs")
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation, and from \R 1.2.3 fail if \code{x} has length zero.
+  observation (whereas S-plus has been returning \code{NaN}),
+  and from \R 1.2.3 fail if \code{x} has length zero.
 }
 \seealso{\code{\link{cov.wt}} for \emph{weighted} covariance
   computation, \code{\link{sd}} for standard deviation (vectors).
