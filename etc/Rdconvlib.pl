@@ -526,8 +526,8 @@ sub text2html {
     $text =~ s/\\right\)/\)/go;
     $text =~ s/\\R/<FONT FACE=\"Courier New,Courier\"
 	COLOR=\"\#666666\"><b>R<\/b><\/FONT>/go;
-    $text =~ s/---/&#151/go;
-    $text =~ s/--/&#150/go;
+    $text =~ s/---/&#151;/go; # HTML 4.01 has &mdash; and &#8212;
+    $text =~ s/--/&#150;/go; # HTML 4.01 has &ndash; and &#8211;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
@@ -1361,7 +1361,7 @@ sub text2txt {
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$descitem = "\n.ti " . text2txt($arg) . " \n\n" . text2txt($desc);
+	$descitem = "\n.ti " . text2txt($arg) . " \n" . text2txt($desc);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
 
