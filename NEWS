@@ -39,6 +39,8 @@ NEW FEATURES
 
     o	new function max.col() from MASS, thanks to V&R.
 
+    o   CVS logs available on http://developer.r-project.org/R.cvslog
+
 BUG FIXES
 
     o	The Mathlib functions now use exactly the same values for
