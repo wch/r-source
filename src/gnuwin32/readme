@@ -164,7 +164,7 @@ chmhelp=TRUE).  Full text search is available from the Search tab.
 According to Microsoft, to make use of this you will need to have IE3
 or later installed and a recent version of Windows or (not Windows
 XP or 2000 or ME) use the updater hhupd.exe at
-http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm.
+http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
 
 (iii) HTML help to be displayed in your normal browser.  Set this as
 the default by options(htmlhelp=TRUE) or for individual help items by
