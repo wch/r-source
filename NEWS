@@ -73,9 +73,11 @@ BUG FIXES
     o	cor.test(*, method="spearman") gave wrong results `randomly'
 	(because of a wrong type passed to C; PR#4718).
 
-    o	dist() objects with NA's didn't print these, now do (PR#4866).
+    o	dist() objects with NA's didn't print these, now do. (PR#4866).
 
     o	regexpr(fixed=TRUE) returned 0-based indices.
+
+    o	df[, length_1_index] <- value did not recycle short rhs. (PR#4820)
 
 
 
