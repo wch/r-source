@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-02
+Version 2.0.2005-03-03
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1412,6 +1412,9 @@ distributions of R.)
      Functions for kernel smoothing (and density estimation) corresponding
      to the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995.
      _Recommended_.
+
+*LDheatmap*
+     Heat maps of linkage disequilibrium measures.
 
 *LogicReg*
      Routines for Logic Regression.
