@@ -2082,8 +2082,14 @@ Rboolean GADeviceDriver(DevDesc *dd, char *display, double width,
 
     /* Inches per raster unit */
 
-    dd->dp.ipr[0] = pixelWidth(xd->gawin);
-    dd->dp.ipr[1] = pixelHeight(xd->gawin);
+    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+	dd->dp.ipr[0] = 1.0/user_xpinch;
+    else
+	dd->dp.ipr[0] = pixelWidth(xd->gawin);
+    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+	dd->dp.ipr[1] = 1.0/user_ypinch;
+    else
+	dd->dp.ipr[1] = pixelHeight(xd->gawin);
 
     /* Device capabilities */
     /* Clipping is problematic for X11 */
