@@ -19,28 +19,28 @@ stepfun <- function (x, y, f = 0)
     rval
 }
 
-is.stepfun <- function(x) is.function(x) && inherits(x,"stepfun")
+is.stepfun <- function(x) is.function(x) && inherits(x, "stepfun")
 
 ## Quite obvious  that I will want to have  knots.spline(..)  etc......
-knots <- function(...) UseMethod("knots")
-knots.stepfun <- function(Fn) eval(expression(x), env=environment(Fn))
+knots <- function(Fn, ...) UseMethod("knots")
+knots.stepfun <- function(Fn, ...) eval(expression(x), env=environment(Fn))
 
 
-print.stepfun <- function (Fn, digits=getOption("digits") -2, ...)
+print.stepfun <- function (Fn, digits = getOption("digits") - 2, ...)
 {
-    numform <- function(x)	paste(formatC(x, dig=digits), collapse=", ")
-    i1 <- function(n) 1:min(3,n)
-    i2 <- function(n) if(n>=4) max(4,n-1):n else integer(0)
+    numform <- function(x) paste(formatC(x, dig = digits), collapse=", ")
+    i1 <- function(n) 1:min(3, n)
+    i2 <- function(n) if(n >= 4) max(4, n-1):n else integer(0)
     cat("Step function\nCall: ")
     print(attr(Fn, "call"), ...)
     env <- environment(Fn)
     n <- length(x <- eval(expression(x), env = env))
-    cat(" x[1:",n,"] = ", numform(x[i1(n)]),
-	if(n>3) ", ", if(n>5) " ..., ", numform(x[i2(n)]), "\n", sep = "")
-    y <- eval(expression(c(yleft,y)),env = env)
+    cat(" x[1:", n, "] = ", numform(x[i1(n)]),
+	if(n > 3) ", ", if(n > 5) " ..., ", numform(x[i2(n)]), "\n", sep = "")
+    y <- eval(expression(c(yleft, y)), env = env)
     cat(n+1, " step heights = ", numform(y[i1(n+1)]),
-	if(n+1>3) ", ", if(n+1>5)" ..., ",numform(y[i2(n+1)]),"\n",
-	sep="")
+	if(n+1 > 3) ", ", if(n+1 > 5) " ..., ", numform(y[i2(n+1)]), "\n",
+	sep = "")
     invisible(Fn)
 }
 

@@ -22,6 +22,12 @@ cov.mve(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
 cov.mcd(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
         nsamp = "best", seed)
 }
+\synopsis{
+cov.rob(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
+        method = c("mve", "mcd", "classical"), nsamp = "best", seed)
+cov.mve(\dots)
+cov.mcd(\dots)
+}
 \arguments{
 \item{x}{
   a matrix or data frame.

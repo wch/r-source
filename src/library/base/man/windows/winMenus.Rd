@@ -11,7 +11,7 @@
 winMenuAdd(menuname)
 winMenuAddItem(menuname, itemname, action)
 winMenuDel(menuname)
-winMenuDelItem(menuname)
+winMenuDelItem(menuname, itemname)
 }
 \arguments{
   \item{menuname}{a character string naming a menu.}

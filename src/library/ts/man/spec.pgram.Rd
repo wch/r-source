@@ -4,8 +4,8 @@
     Periodogram}
 \usage{
 spec.pgram(x, spans = NULL, kernel, taper = 0.1,
-           demean = FALSE, detrend =TRUE,
-           pad = 0, fast = TRUE, plot = FALSE, na.action, \dots)
+           pad = 0, fast = TRUE, demean = FALSE, detrend =TRUE,
+           plot = FALSE, na.action, \dots)
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}

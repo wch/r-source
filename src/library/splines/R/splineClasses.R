@@ -1,4 +1,4 @@
-## $Id: splineClasses.R,v 1.3 2000/08/06 03:30:52 bates Exp $
+## $Id: splineClasses.R,v 1.4 2000/09/04 06:44:53 ripley Exp $
 ##
 ## Classes and methods for determining and manipulating interpolation
 ## splines.
@@ -224,7 +224,7 @@ polySpline.polySpline <-
 
 as.polySpline <-
     ## Conversion of an object to a polynomial spline representation
-    function(object) polySpline(object)
+    function(object, ...) polySpline(object, ...)
 
 polySpline.bSpline <-
     function(object, ...)

@@ -11,8 +11,8 @@
 \usage{
 windows(width = 7, height = 7, pointsize = 12)
 win.graph(width = 7, height = 7, pointsize = 12)
-x11(display = "", width = 7, height = 7, pointsize = 12)
-X11(display = "", width = 7, height = 7, pointsize = 12)
+x11(width = 7, height = 7, pointsize = 12)
+X11(width = 7, height = 7, pointsize = 12)
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
 win.print(width = 7, height = 7, pointsize = 12)
 }

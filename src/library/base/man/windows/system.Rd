@@ -1,9 +1,9 @@
 \name{system}
 \title{Invoke a System Command}
 \usage{
-system(command, intern=FALSE, wait=TRUE, input,
-       show.output.on.console=FALSE
-       invisible=FALSE, minimized=FALSE)
+system(command, intern = FALSE, wait = TRUE, input,
+       show.output.on.console = FALSE,
+       invisible = FALSE, minimized = FALSE)
 }
 \alias{system}
 \alias{unix}

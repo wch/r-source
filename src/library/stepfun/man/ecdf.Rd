@@ -2,7 +2,7 @@
 \title{Empirical Cumulative Distribution Function}
 \usage{
 ecdf(x)
-plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
+plot(x, verticals = FALSE, col.01line = "gray70", \dots)
 }
 \alias{ecdf}
 \alias{print.ecdf}

@@ -28,6 +28,17 @@ lqs.default(x, y, intercept, method = c("lts", "lqs", "lms", "S"),
 lmsreg(\ldots)
 ltsreg(\ldots)
 }
+\synopsis{
+lqs(x, \dots)
+lqs.formula(formula, data = NULL, \dots,
+            method = c("lts", "lqs", "lms", "S", "model.frame"),
+            subset, na.action = na.fail, model = TRUE,
+            x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
+lqs.default(x, y, intercept, method = c("lts", "lqs", "lms", "S"),
+            quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
+lmsreg(\ldots)
+ltsreg(\ldots)
+}
 \arguments{
 \item{formula}{
   a formula of the form \code{y ~ x1 + x2 + \dots{}\{\}}.

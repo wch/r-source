@@ -1,12 +1,13 @@
 \name{stepfun}
 \title{Step Functions}
 \usage{
-fn <- stepfun(x, y, f=0)
-is.stepfun(fn)
-knots(fn)
+stepfun(x, y, f=0)
 
-print(fn, \dots)
-summary(fn)
+is.stepfun(x)
+knots(Fn, \dots)
+
+print.stepfun(Fn, digits, \dots)
+summary.stepfun(Fn)
 }
 \alias{stepfun}
 \alias{is.stepfun}

@@ -3,8 +3,8 @@
 \usage{
 dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
 
-print.dist(dist.obj, diag = NULL, upper = NULL)
-as.matrix.dist(dist.obj)
+print.dist(x, diag = NULL, upper = NULL, \dots)
+as.matrix.dist(x)
 as.dist(m, diag = NULL, upper = NULL)
 }
 \alias{dist}
@@ -24,8 +24,8 @@ as.dist(m, diag = NULL, upper = NULL)
     distance matrix should be printed by \code{print.dist}.}
   \item{upper}{A logical value indicating whether the upper triangle of the
       distance matrix should be printed by \code{print.dist}.}
-  \item{m}{A distance matrix to be converted to a dist object (only
-      lower triangle is used, the rest is ignored).}
+    \item{m}{A matrix of distances to be converted to a \code{"dist"}
+      object (only the lower triangle is used, the rest is ignored).}
 }
 \description{
   This function computes and returns the distance matrix computed by
@@ -52,20 +52,22 @@ as.dist(m, diag = NULL, upper = NULL)
   distance matrices and vice versa.
 }
 \value{
+  An object of class \code{"dist"}.
+  
   The lower triangle of the distance matrix stored by columns in a
   single vector.  The vector has the attributes \code{"Size"},
   \code{"Diag"}, \code{"Upper"}, \code{"Labels"} and \code{"class"} equal
   to \code{"dist"}.
 }
 \references{
-  Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
-  \emph{Multivariate Analysis}, London: Academic Press.
+  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979)
+  \emph{Multivariate Analysis.} London: Academic Press.
 }
 \seealso{
   \code{\link{hclust}}.
 }
 \examples{
-x <- matrix(rnorm(100),nrow=5)
+x <- matrix(rnorm(100), nrow=5)
 dist(x)
 dist(x, diag = TRUE)
 dist(x, upper = TRUE)

@@ -4,7 +4,12 @@
 \usage{
 bug.report(subject = "", ccaddress = Sys.getenv("USER"),
            method = getOption("mailer"), address = "r-bugs@biostat.ku.dk",
+#ifdef windows
+           file = "R.bug.report", wait = TRUE)
+#endif
+#ifdef unix
            file = "R.bug.report")
+#endif
 }
 \arguments{
   \item{subject}{Subject of the email. Please do not use single quotes
@@ -16,6 +21,9 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   \item{address}{Recipient's email address.}
   \item{file}{File to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
+#ifdef windows
+  \item{wait}{logical. Should \R wait for the editor to return?}
+#endif
 }
 \description{
   Invokes an editor to write a bug report and optionally mail it to the

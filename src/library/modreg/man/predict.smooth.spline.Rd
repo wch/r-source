@@ -4,7 +4,7 @@
 \name{predict.smooth.spline}
 \title{Predict from Smoothing Spline Fit}
 \usage{
-predict.smooth.spline(object, x, deriv = 0)
+predict.smooth.spline(object, x, deriv = 0, \dots)
 }
 \alias{predict.smooth.spline}
 \arguments{

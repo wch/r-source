@@ -1,26 +1,26 @@
 as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 
-as.dendrogram.hclust <- function(hobj, ...)
+as.dendrogram.hclust <- function(object, ...)
 {
-    if(is.null(hobj$labels))
-        hobj$labels <- hobj$order
-    
+    if(is.null(object$labels))
+        object$labels <- object$order
+
     z <- list()
-    for(k in 1:nrow(hobj$merge)){
-        x <- sort(hobj$merge[k,])
+    for(k in 1:nrow(object$merge)){
+        x <- sort(object$merge[k,])
         k <- as.character(k)
         if(all(x<0)){  # two leaves
-            z[[k]] <- as.list(hobj$labels[-x])
+            z[[k]] <- as.list(object$labels[-x])
             attr(z[[k]],"members") <- 2
             attr(z[[k]],"midpoint") <- 0.5
             attr(z[[k]][[1]], "members") <-
               attr(z[[k]][[2]], "members") <- 1
             attr(z[[k]][[1]], "height") <-
               attr(z[[k]][[2]], "height") <- 0
-              
+
         }
         else if(x[1]<0){ # one leave, one node
-            z[[k]] <- list(hobj$labels[-x[1]],
+            z[[k]] <- list(object$labels[-x[1]],
                            z[[as.character(x[2])]])
             x <- as.character(x)
             attr(z[[k]],"members") <-
@@ -33,7 +33,7 @@ as.dendrogram.hclust <- function(hobj, ...)
         else{ # two nodes
             x <- as.character(x)
             z[[k]] <- list(z[[x[1]]],
-                           z[[x[2]]]) 
+                           z[[x[2]]])
             attr(z[[k]],"members") <-
                 attr(z[[x[1]]], "members")+
                     attr(z[[x[2]]], "members")
@@ -42,7 +42,7 @@ as.dendrogram.hclust <- function(hobj, ...)
                  attr(z[[x[1]]], "midpoint")+
                  attr(z[[x[2]]], "midpoint"))/2
         }
-        attr(z[[k]],"height") <- hobj$height[as.integer(k)]
+        attr(z[[k]],"height") <- object$height[as.integer(k)]
     }
     z <- z[[k]]
     class(z) <- "dendrogram"
@@ -73,14 +73,14 @@ plotNode <- function(x1, x2, subtree, type, center){
     if(is.recursive(subtree) & (x1!=x2)){
         K <- length(subtree)
         topy <- attr(subtree, "height")
-        
+
         bx <- plotNodeLimit(x1, x2, subtree, center)
         topx <- bx$x
-        
+
         for(k in 1:K){
             boty <- attr(subtree[[k]], "height")
             if(is.null(boty)) boty <- 0
-            
+
             if(center){
                 botx <- mean(c(bx$limit[k], bx$limit[k+1]))
             }
@@ -90,14 +90,14 @@ plotNode <- function(x1, x2, subtree, type, center){
                 botx <- bx$limit[k] + mid
 
             }
-            
+
             if(type=="triangle")
                 lines(c(topx, botx), c(topy, boty))
             else{
                 lines(c(topx, botx), c(topy, topy))
                 lines(c(botx, botx), c(topy, boty))
             }
-            
+
             plotNode(bx$limit[k], bx$limit[k+1],
                      subtree[[k]], type, center)
         }
@@ -107,7 +107,7 @@ plotNode <- function(x1, x2, subtree, type, center){
 
 ### get the left borders of all children and the
 ### handle point for the edge connecting to
-### the parent. 
+### the parent.
 plotNodeLimit <- function(x1, x2, subtree, center){
 
     limit <- c(x1, x2)
@@ -133,14 +133,14 @@ plotNodeLimit <- function(x1, x2, subtree, center){
     }
     list(x=x, limit=limit)
 }
-             
+
 cut.dendrogram <- function(dobj, h)
 {
     LOWER <- NULL
     X <- 1
-    
+
     assignNodes <- function(subtree, h){
-        
+
         if(is.recursive(subtree)){
             for(k in 1:length(subtree)){
                 if(attr(subtree[[k]], "height")<=h){
@@ -158,7 +158,7 @@ cut.dendrogram <- function(dobj, h)
         }
         subtree
     }
-    
+
     list(upper=assignNodes(dobj, h), lower=LOWER)
 }
 

@@ -7,7 +7,7 @@
 \title{Spectral Density Estimation}
 \usage{
 spectrum(x, method = c("pgram","ar"), plot = TRUE, ...)
-plot.spec(spec.obj, add=FALSE, ci=0.95,
+plot.spec(spec.obj, add = FALSE, ci = 0.95,
           log = c("yes", "dB", "no"), ci.col = "blue", ci.lty = 3, 
           plot.type = c("marginal", "coherency", "phase"), ...)
 }

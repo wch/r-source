@@ -45,7 +45,7 @@ hclust <- function(d, method="complete", members=NULL)
         members <- rep(1, n)
     if(length(members)!=n)
         stop("Invalid length of members")
-    
+
     hcl <- .Fortran("hclust",
 		    n = as.integer(n),
 		    len = as.integer(len),
@@ -76,17 +76,17 @@ hclust <- function(d, method="complete", members=NULL)
 		 labels=attr(d, "Labels"),
                  method=METHODS[method],
                  call=match.call())
-    
+
     if(!is.null(attr(d, "method"))){
         tree$dist.method <- attr(d, "method")
     }
-    
+
     class(tree) <- "hclust"
     tree
 }
 
 plot.hclust <-
-    function (tree, hang = 0.1, labels=NULL, ...)
+    function (tree, labels = NULL, hang = 0.1, ...)
 {
     merge <- tree$merge
     if (!is.matrix(merge) || ncol(merge) != 2)
@@ -135,11 +135,11 @@ print.hclust <- function(tree)
     if(!is.null(tree$call))
         cat("\nCall:\n",deparse(tree$call),"\n\n",sep="")
     if(!is.null(tree$method))
-        cat("Cluster method   :", tree$method, "\n") 
+        cat("Cluster method   :", tree$method, "\n")
     if(!is.null(tree$dist.method))
         cat("Distance         :", tree$dist.method, "\n")
         cat("Number of objects:", length(tree$height)+1, "\n")
     cat("\n")
 }
-    
+
 

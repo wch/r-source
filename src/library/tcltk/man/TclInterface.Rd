@@ -39,7 +39,7 @@ tclvar$name
 tclvar$name <- value
 
 addTclPath(path)
-tclRequire(package)
+tclRequire(package, warn = TRUE)
 }
 \arguments{
   \item{win}{a window structure}
@@ -47,6 +47,7 @@ tclRequire(package)
   \item{ID}{a window ID}
   \item{path}{path to a directory containing Tcl packages}
   \item{package}{a Tcl package name}
+  \item{warn}{logical. Warn if not found?}
 }
 \details{
   Many of these functions are not intended for general use but are used

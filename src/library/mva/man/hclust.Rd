@@ -9,7 +9,7 @@
 \usage{
 hclust(d, method = "complete", members=NULL)
 
-plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
+plot.hclust(tree, labels, hang = 0.1, \dots)
 }
 \arguments{
   \item{d}{a dissimilarity structure as produced by \code{dist}.}
@@ -22,7 +22,7 @@ plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
 
   \item{members}{\code{NULL} or a vector with length size of \code{d}.}
 
-  \item{hclust.obj}{an object of the type produced by \code{hclust}.}
+  \item{tree}{an object of the type produced by \code{hclust}.}
 
   \item{hang}{The fraction of the plot height by which labels should hang
     below the rest of the plot.

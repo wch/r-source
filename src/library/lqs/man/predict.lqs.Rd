@@ -10,11 +10,11 @@
   Predict from an resistant regression fitted by \code{lqs}.
 }
 \usage{
-predict.lqs(object, newdata)
+predict.lqs(object, newdata, \dots)
 }
 \arguments{
   \item{object}{
-    object inheriting from class \code{lqs}
+    object inheriting from class \code{"lqs"}
   }
   \item{newdata}{
     matrix or data frame of cases to be predicted or, if object
@@ -22,7 +22,9 @@ predict.lqs(object, newdata)
     variables used. A vector will be interpreted
     as a row vector.  If \code{newdata} is missing, an attempt will be
     made to retrieve the data used to fit the \code{lqs} object.
-}}
+  }
+  \item{\dots}{arguments to be passed from or to other methods.}
+}
 \value{
   A vector of predictions.
 }

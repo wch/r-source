@@ -41,13 +41,13 @@ names.dist <- function(d) attr(d, "Labels")
     d
 }
 
-as.matrix.dist <- function(obj)
+as.matrix.dist <- function(x)
 {
-    size <- attr(obj, "Size")
+    size <- attr(x, "Size")
     df <- matrix(0, size, size)
-    df[row(df) > col(df)] <- obj
+    df[row(df) > col(df)] <- x
     df <- df + t(df)
-    labels <- attr(obj, "Labels")
+    labels <- attr(x, "Labels")
     dimnames(df) <-
 	if(is.null(labels)) list(1:size,1:size) else list(labels,labels)
     df
@@ -76,21 +76,21 @@ as.dist <- function(m, diag = FALSE, upper=FALSE)
 }
 
 
-print.dist <- function(obj, diag=NULL, upper=NULL)
+print.dist <- function(x, diag = NULL, upper = NULL, ...)
 {
     if(is.null(diag))
-	diag <- if(is.null(attr(obj, "Diag"))) FALSE else attr(obj, "Diag")
+	diag <- if(is.null(attr(x, "Diag"))) FALSE else attr(x, "Diag")
     if(is.null(upper))
-	upper <- if(is.null(attr(obj,"Upper")))FALSE else attr(obj, "Upper")
+	upper <- if(is.null(attr(x,"Upper"))) FALSE else attr(x, "Upper")
 
-    size <- attr(obj, "Size")
-    df <- as.matrix.dist(obj)
+    size <- attr(x, "Size")
+    df <- as.matrix.dist(x)
     if(!upper)
 	df[row(df) < col(df)] <- NA
     if(!diag)
 	df[row(df) == col(df)] <- NA
-    print(if(diag || upper) df else df[-1,-size], na="")
-    invisible(obj)
+    print(if(diag || upper) df else df[-1, -size], na = "")
+    invisible(x)
 }
 
 
