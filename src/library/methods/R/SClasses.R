@@ -193,16 +193,17 @@ getClassDef <-
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class, .Force = FALSE, where = .classEnv(Class, topenv(parent.frame()), FALSE))
+  function(Class, .Force = FALSE,
+	   where = .classEnv(Class, topenv(parent.frame()), FALSE))
 {
     value <- getClassDef(Class, where)
     if(is.null(value)) {
-            if(!.Force)
-                stop(gettextf("\"%s\" is not a defined class", Class),
-                     domain = NA)
-            else
-                value <- makeClassRepresentation(Class, package = "base", virtual = TRUE, where = where)
-      }
+	if(!.Force)
+	    stop(gettextf("\"%s\" is not a defined class", Class), domain = NA)
+	else
+	    value <- makeClassRepresentation(Class, package = "base",
+					     virtual = TRUE, where = where)
+    }
     value
 }
 
@@ -261,24 +262,21 @@ checkSlotAssignment <- function(obj, name, value)
      "slot<-"(object, name, TRUE, value)
    }
 
-slotNames <-
-  ##  The names of the class's slots.  The argument is either the name of a class, or
-  ## an object from the relevant class.
-  function(x)
+##  The names of the class's slots.  The argument is either the name
+##  of a class, or an object from the relevant class.
+slotNames <- function(x)
+    if(is(x, "classRepresentation")) names(x@slots) else .slotNames(x)
+
+.slotNames <- function(x)
 {
-    if(is(x, "classRepresentation"))
-        names(x@slots)
-    else {
-        if(is.character(x) && length(x) == 1)
-            classDef <- getClassDef(x)
-        else
-            classDef <- getClassDef(class(x))
-        if(is.null(classDef))
-            character()
-        else
-            names(classDef@slots)
-    }
+    classDef <-
+	getClassDef(if(is.character(x) && length(x) == 1) x else class(x))
+    if(is.null(classDef))
+	character()
+    else
+	names(classDef@slots)
 }
+
 
 removeClass <-  function(Class, where) {
     if(missing(where)) {

@@ -22,7 +22,7 @@ USER-VISIBLE CHANGES
     o	The meaning of 'encoding' for a connection has changed: See the
 	internationalization section below.
 
-    o	There has been some rationalization of the format of 
+    o	There has been some rationalization of the format of
 	warning/error messages, to make them easier to translate.
 	Generally names of functions and arguments are single-quoted,
 	and classes double-quoted.
@@ -306,6 +306,9 @@ NEW FEATURES
 
     o	Collected warnings during start-up are now printed before the
 	initial prompt rather than after the first command.
+
+    o	slotNames() is better documented and there's new .slotNames() {for
+	rare use}.
 
 
 INTERNATIONALIZATION
@@ -644,19 +647,24 @@ BUG FIXES
 	- Fixed bug in grid.text() when "rot" argument has length 0.
 	  (reported by Emmanuel Paradis)
 
-    o	str() removed any class from environment objects.
-
     o	.install_package_vignette_index() created an index even in an
 	empty 'doc' directory.
 
     o	The print() method for factors now escapes characters in the
 	levels in the same way as they are printed.
 
-    o	str() no longer interprets control characters in character
+    o	str() removed any class from environment objects.
+
+	str() no longer interprets control characters in character
 	strings and factor levels; also no longer truncates factor
 	levels unless they are longer than 'nchar.max'.
 	Truncation of such long strings is now indicated ''outside''
 	the string.
+
+	str(<S4.object>) was misleading for the case of a single slot.
+
+	str() now also properly displays S4 class definitions (such as
+	returned by getClass().
 
     o	print.factor(quote=TRUE) was not quoting levels, causing
 	ambiguity when the levels contained spaces or quotes.
@@ -716,8 +724,6 @@ BUG FIXES
 	(spotted by Robert McGehee)
 
     o   eval() was not handling values from return() correctly.
-
-    o	str(<S4.object>) was misleading for the case of a single slot.
 
     o   par(omd) is now of the form c(x1, x2, y1, y2) to match the
 	documentation and for S-PLUS compatibility.
