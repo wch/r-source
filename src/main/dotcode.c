@@ -26,8 +26,8 @@
 #include <stdlib.h>
 
 #include <Defn.h>
-#include <Graphics.h>
 #include <Rmath.h>
+#include <Devices.h>
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))

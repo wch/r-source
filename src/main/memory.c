@@ -33,8 +33,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Graphics.h"
+#include <Defn.h>
+#include <Graphics.h> /* display lists */
+#include <Devices.h> /* GetDevice */
 
 static int gc_reporting = 0;
 static int gc_count = 0;

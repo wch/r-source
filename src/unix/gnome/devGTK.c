@@ -24,8 +24,9 @@
 
 #include <gnome.h>
 
-#include "Defn.h"
-#include "Graphics.h"
+#include <Defn.h>
+#include <Graphics.h>
+#include <Devices.h>
 #include "devGTK.h"
 #include "terminal.h"
 #include "gdkrotated.h"

@@ -44,6 +44,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
+#include <Devices.h>
 
 
 /* par(.)'s call */

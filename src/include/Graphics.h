@@ -59,7 +59,7 @@ typedef enum {
  OMA4	= 5,	/* outer margin 4 (right) */
  NFC	= 7,	/* normalised figure region coordinates (0,1) */
  NPC	= 16,	/* normalised plot region coordinates (0,1) */
- USER	= 12,	/* user/data/world corrdinates;
+ USER	= 12,	/* user/data/world coordinates;
 		 * x,=(xmin,xmax), y=(ymin,ymax) */
  MAR1	= 8,	/* figure margin 1 (bottom) x=USER(x), y=LINES */
  MAR2	= 9,	/* figure margin 2 (left)   x=USER(y), y=LINES */
@@ -339,11 +339,52 @@ typedef struct {
  * ../unix/gnome/devGNOME.c	Gnome
  */
 
+/* always remap private functions */
 #include <Rgraphics.h>
+#define char2col		Rf_char2col
+#define col2name		Rf_col2name
+#define copyGPar		Rf_copyGPar
+#define CreateAtVector		Rf_CreateAtVector
+#define GetAxisLimits		Rf_GetAxisLimits
+#define GInit			Rf_GInit
+#define labelformat		Rf_labelformat
+#define name2col		Rf_name2col
+#define number2col		Rf_number2col
+#define rgb2col			Rf_rgb2col
+#define RGB2rgb			Rf_RGB2rgb
+#define ScaleColor		Rf_ScaleColor
+#define str2col			Rf_str2col
+#define StrMatch		Rf_StrMatch
+
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
-#define GInit			Rf_GInit
 void GInit(GPar*);
+
+void copyGPar(GPar *, GPar *);
+
+/* some functions that plot.c needs to share with plot3d.c */
+SEXP CreateAtVector(double*, double*, int, Rboolean);
+void GetAxisLimits(double, double, double*, double*);
+SEXP labelformat(SEXP);
+
+
+		/* Miscellaneous (from graphics.c & colors.c) */
+
+unsigned int rgb2col(char *);
+unsigned int name2col(char *);
+unsigned int number2col(char *);
+unsigned int char2col(char *);/* rgb2col() or name2col() */
+unsigned int str2col(char *);
+
+char* col2name(unsigned int);
+
+unsigned int ScaleColor(double x);
+
+char* RGB2rgb(unsigned int, unsigned int, unsigned int);
+
+int StrMatch(char *s, char *t);
+
+double R_Log10(double);
 
 #endif /* GRAPHICS_H_ */

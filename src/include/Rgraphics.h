@@ -102,7 +102,7 @@ typedef enum {
  OMA4	= 5,	/* outer margin 4 (right) */
  NFC	= 7,	/* normalised figure region coordinates (0,1) */
  NPC	= 16,	/* normalised plot region coordinates (0,1) */
- USER	= 12,	/* user/data/world corrdinates;
+ USER	= 12,	/* user/data/world coordinates;
 		 * x,=(xmin,xmax), y=(ymin,ymax) */
  MAR1	= 8,	/* figure margin 1 (bottom) x=USER(x), y=LINES */
  MAR2	= 9,	/* figure margin 2 (left)   x=USER(y), y=LINES */
@@ -143,26 +143,11 @@ extern char *DefaultPalette[];
 typedef struct {
 /* opaque structure */
 int dummy;
-} GPar;
-
-typedef struct {
-/* opaque structure */
-int dummy;
 } DevDesc;
-#endif
+#endif /* R_GRAPHICS_INTERNAL */
 
 #ifndef R_NO_REMAP
-#define addDevice		Rf_addDevice
-#define char2col		Rf_char2col
-#define col2name		Rf_col2name
-#define copyDisplayList		Rf_copyDisplayList
-#define copyGPar		Rf_copyGPar
-#define CreateAtVector		Rf_CreateAtVector
-#define curDevice		Rf_curDevice
-#define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
-#define deviceNumber		Rf_deviceNumber
-#define DevNull			Rf_DevNull
 #define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
 #define FixupFont		Rf_FixupFont
@@ -182,8 +167,6 @@ int dummy;
 #define GConvertY		Rf_GConvertY
 #define GConvertYUnits		Rf_GConvertYUnits
 #define GEndPath		Rf_GEndPath
-#define GetAxisLimits		Rf_GetAxisLimits
-#define GetDevice		Rf_GetDevice
 #define GExpressionHeight	Rf_GExpressionHeight
 #define GExpressionWidth	Rf_GExpressionWidth
 #define GForceClip		Rf_GForceClip
@@ -217,32 +200,12 @@ int dummy;
 #define GVStrHeight		Rf_GVStrHeight
 #define GVStrWidth		Rf_GVStrWidth
 #define GVText			Rf_GVText
-#define inhibitDisplayList	Rf_inhibitDisplayList
-#define initDisplayList		Rf_initDisplayList
-#define KillDevice		Rf_KillDevice
-#define killDevice		Rf_killDevice
-#define labelformat		Rf_labelformat
 #define LTYget			Rf_LTYget
 #define LTYpar			Rf_LTYpar
-#define name2col		Rf_name2col
-#define number2col		Rf_number2col
-#define NewFrameConfirm		Rf_NewFrameConfirm
-#define nextDevice		Rf_nextDevice
-#define NoDevices		Rf_NoDevices
-#define NumDevices		Rf_NumDevices
-#define playDisplayList		Rf_playDisplayList
-#define prevDevice		Rf_prevDevice
 #define ProcessInlinePars	Rf_ProcessInlinePars
-#define recordGraphicOperation	Rf_recordGraphicOperation
-#define rgb2col			Rf_rgb2col
-#define RGB2rgb			Rf_RGB2rgb
 #define RGBpar			Rf_RGBpar
-#define ScaleColor		Rf_ScaleColor
 #define selectDevice		Rf_selectDevice
 #define Specify2		Rf_Specify2
-#define StartDevice		Rf_StartDevice
-#define str2col			Rf_str2col
-#define StrMatch		Rf_StrMatch
 /* which of these conversions should be public? maybe all?*/
 #define xDevtoNDC		Rf_xDevtoNDC
 #define xDevtoNFC		Rf_xDevtoNFC
@@ -258,58 +221,6 @@ int dummy;
 
 
 		/* User Callable Functions */
-
-/*-------------------------------------------------------------------
- *
- *  DEVICE FUNCTIONS are concerned with the creation and destruction
- *  of devices.
- *
- */
-
-/* Return a pointer to the current device. */
-DevDesc* CurrentDevice(void);
-/* Return a pointer to a device which is identified by number */
-DevDesc* GetDevice(int);
-/* Kill device which is identified by number. */
-void KillDevice(DevDesc*);
-/* Is the null device the current device? */
-int NoDevices(void);
-/* How many devices exist ? (>= 1) */
-int NumDevices(void);
-/* Get the index of the specified device. */
-int deviceNumber(DevDesc*);
-/* Create a new device. */
-int StartDevice(SEXP, SEXP, int, SEXP, int);
-
-void DevNull(void);
-
-/* Miscellaneous */
-void NewFrameConfirm(void);
-void recordGraphicOperation(SEXP, SEXP, DevDesc*);
-void initDisplayList(DevDesc *dd);
-void copyDisplayList(int);
-void playDisplayList(DevDesc*);
-void inhibitDisplayList(DevDesc*);
-
-/*-------------------------------------------------------------------
- *
- *  DEVICE UTILITIES are concerned with providing information
- *  for R interpreted functions.
- *
- */
-
-/* Return the number of the current device. */
-int curDevice(void);
-/* Return the number of the next device. */
-int nextDevice(int);
-/* Return the number of the previous device. */
-int prevDevice(int);
-/* Make the specified device (specified by number) the current device */
-int selectDevice(int);
-/* Kill device which is identified by number. */
-void killDevice(int);
-/* ...NO DOC... */
-void addDevice(DevDesc *);
 
 
 /*-------------------------------------------------------------------
@@ -501,8 +412,6 @@ void GSetupAxis(int, DevDesc*);
 /* Return row and column of current figure in the layout matrix */
 void currentFigureLocation(int*, int*, DevDesc*);
 
-double R_Log10(double);
-
 /* which of these conversions should be public? maybe all? [NO_REMAP] */
 double xDevtoNDC(double, DevDesc*);
 double yDevtoNDC(double, DevDesc*);
@@ -515,28 +424,6 @@ double yDevtoUsr(double, DevDesc*);
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
 
-
-		/* Miscellaneous (from graphics.c & colors.c) */
-
-unsigned int rgb2col(char *);
-unsigned int name2col(char *);
-unsigned int number2col(char *);
-unsigned int char2col(char *);/* rgb2col() or name2col() */
-unsigned int str2col(char *);
-
-char* col2name(unsigned int);
-
-unsigned int ScaleColor(double x);
-
-char* RGB2rgb(unsigned int, unsigned int, unsigned int);
-
-int StrMatch(char *s, char *t);
-void copyGPar(GPar *, GPar *);
-
-/* some functions that plot.c needs to share with plot3d.c */
-SEXP CreateAtVector(double*, double*, int, Rboolean);
-void GetAxisLimits(double, double, double*, double*);
-SEXP labelformat(SEXP);
 
 /* Vector fonts */
 

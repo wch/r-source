@@ -25,9 +25,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Graphics.h"
-#include "Devices.h"
+#include <Defn.h>
+#include <Graphics.h>
+#include <Devices.h>
 #include <stdio.h>
 #include "opt.h"
 #include "graphapp/ga.h"
