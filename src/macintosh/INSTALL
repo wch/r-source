@@ -171,6 +171,11 @@ src/library/base/R/windows/dialogs.R
 library/R-ex/Script.r
 
 you should either rename or remove these files.
+If all went fine, CodeWarrior will create the binary
+R.cw in the root folder of R source tree.
+Libraries, modules and help files have to be built
+using MPW. In order take make this work you have to
+rename "R.cw" as "R".
 
 
 /----------------------- eof -----------------------------/
@@ -186,7 +191,7 @@ or just
 
 
 
-November 24, 2001				Stefano M. Iacus
+November 29, 2001				Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
