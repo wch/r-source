@@ -22,15 +22,20 @@ history(max.show = 25, reverse = FALSE)
 }
 \details{
 #ifdef windows
-  This works in Rgui and Rterm but not in embedded/DCOM versions.
+  This works in Rgui and interactive Rterm but not in batch use of Rterm
+  nor in embedded/DCOM versions.
 #endif
 #ifdef unix
   This works under the \code{readline} and GNOME interfaces, but not if
-  \code{readline} is not available.
+  \code{readline} is not available (for example, in batch use).
 #endif
 }
 \note{
   If you want to save the history (almost) every session, you can put a
   call to \code{savehistory()} in \code{\link{.Last}}.
 }
+\examples{\dontrun{
+.Last <- function()
+    if(interactive()) try(savehistory("~/.Rhistory"))
+}}
 \keyword{utilities}
