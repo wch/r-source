@@ -290,7 +290,6 @@ MASS-HELP = ziponly
 boot-HELP = ziponly
 cluster-HELP = ziponly
 lattice-HELP = ziponly
-lattice-ZIPDATA = zip
 mgcv-HELP = ziponly
 nlme-HELP = ziponly
 rpart-HELP = ziponly
