@@ -25,6 +25,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   binary operation on 1x1 matrix lost dimension
+
+    o   fix anova.glm for null model
+
     o   glm.fit.null: ensure df.residual == df.null for a null model
 
     o   summary.glm: correlations in saturated cases

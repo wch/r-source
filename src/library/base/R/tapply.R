@@ -7,6 +7,7 @@ tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
 	if (!is.list(INDEX)) INDEX <- list(INDEX)
 	nI <- length(INDEX)
 	namelist <- vector("list", nI)
+	names(namelist) <- names(INDEX)
 	extent <- integer(nI)
 	nx <- length(x)
 	group <- rep(1, nx)#- to contain the splitting vector

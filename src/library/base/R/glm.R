@@ -385,6 +385,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 	## construct table and title
 
 	table <- cbind(c(NA, -diff(resdf)), c(NA, -diff(resdev)), resdf, resdev)
+	if (nvars == 0) table <- table[1,,drop=F] # kludge for null model
 	dimnames(table) <- list(c("NULL", attr(object$terms, "term.labels")),
 				c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
 	title <- paste("Analysis of Deviance Table", "\n\nModel: ",
@@ -457,8 +458,8 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 {
  test <- match.arg(test)
- dev.col<-match("Deviance",colnames(table))
- if ( is.na(dev.col) ) dev.col<-match("Sum of Sq")
+ dev.col <- match("Deviance", colnames(table))
+ if ( is.na(dev.col) ) dev.col <- match("Sum of Sq", colnames(table))
  switch(test,
 	"Chisq" = {
 	  cbind(table,"P(>|Chi|)"= 1-pchisq(abs(table[, dev.col]), abs(table[, "Df"])))
