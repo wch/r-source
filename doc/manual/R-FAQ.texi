@@ -702,11 +702,10 @@ who maintain an active position in the development of R.
 @noindent
 Convenient access to information on these lists, subscription, and
 archives is provided by the web interface at
-@uref{http://www.stat.math.ethz.ch/mailman/listinfo/}.  One can also
-subscribe (or unsubscribe) via email, e.g.@: to R-help by sending
-@samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
-message (not in the subject!) to
-@email{R-help-request@@lists.R-project.org}.
+@uref{http://stat.ethz.ch/mailman/listinfo/}.  One can also subscribe
+(or unsubscribe) via email, e.g.@: to R-help by sending @samp{subscribe}
+(or @samp{unsubscribe}) in the @emph{body} of the message (not in the
+subject!) to @email{R-help-request@@lists.R-project.org}.
 
 Send email to @email{R-help@@lists.R-project.org} to send a message to
 everyone on the R-help mailing list.  Subscription and posting to the
@@ -3520,7 +3519,7 @@ For help with @acronym{ESS}, send email to
 @email{ESS-help@@stat.ethz.ch}.
 
 Please send bug reports and suggestions on @acronym{ESS} to
-@email{ESS-bugs@@stat.math.ethz.ch}.  The easiest way to do this from is
+@email{ESS-bugs@@stat.ethz.ch}.  The easiest way to do this from is
 within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 [ESS] or [iESS] pulldown menus.
 
@@ -3621,6 +3620,7 @@ dir /opt/R/src/unix
 * Why do lattice/trellis graphics not work?::  
 * How can I sort the rows of a data frame?::  
 * Why does the help.start() search engine not work?::  
+* Why did my .Rprofile stop working when I updated R?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4315,7 +4315,7 @@ command line, the result is automatically printed, but in
 To sort the rows within a data frame, with respect to the values in one
 or more of the columns, simply use @code{order()}.
 
-@node Why does the help.start() search engine not work?,  , How can I sort the rows of a data frame?, R Miscellanea
+@node Why does the help.start() search engine not work?, Why did my .Rprofile stop working when I updated R?, How can I sort the rows of a data frame?, R Miscellanea
 @section Why does the help.start() search engine not work?
 
 The browser-based search engine in @code{help.start()} utilizes a Java
@@ -4336,6 +4336,26 @@ search page.
 @xref{Enabling search in HTML help, , Enabling search in HTML help,
 R-admin, R Installation and Administration}, for further details.
 @end ifset
+
+@node Why did my .Rprofile stop working when I updated R?,  , Why does the help.start() search engine not work?, R Miscellanea
+@section Why did my .Rprofile stop working when I updated R?
+
+Did you read the @file{NEWS} file?  For functions that are not in the
+@strong{base} package you need to specify the correct package namespace,
+since the code will be run @emph{before} the packages are loaded.  E.g.,
+
+@example
+ps.options(horizontal = FALSE)
+help.start()
+@end example
+
+@noindent
+needs to be
+
+@example
+graphics::ps.options(horizontal = FALSE)
+utils::help.start()
+@end example
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

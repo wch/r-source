@@ -85,6 +85,7 @@ R FAQ
   7.24 Why do lattice/trellis graphics not work?
   7.25 How can I sort the rows of a data frame?
   7.26 Why does the help.start() search engine not work?
+  7.27 Why did my .Rprofile stop working when I updated R?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -542,8 +543,8 @@ mailing lists devoted to R.
 
 Convenient access to information on these lists, subscription, and archives
 is provided by the web interface at
-`http://www.stat.math.ethz.ch/mailman/listinfo/'.  One can also subscribe
-(or unsubscribe) via email, e.g. to R-help by sending `subscribe' (or
+`http://stat.ethz.ch/mailman/listinfo/'.  One can also subscribe (or
+unsubscribe) via email, e.g. to R-help by sending `subscribe' (or
 `unsubscribe') in the _body_ of the message (not in the subject!) to
 <R-help-request@lists.R-project.org>.
 
@@ -3460,9 +3461,9 @@ can be found at `http://stat.ethz.ch/ESS/'.
    For help with ESS, send email to <ESS-help@stat.ethz.ch>.
 
    Please send bug reports and suggestions on ESS to
-<ESS-bugs@stat.math.ethz.ch>.  The easiest way to do this from is within
-Emacs by typing `M-x ess-submit-bug-report' or using the [ESS] or [iESS]
-pulldown menus.
+<ESS-bugs@stat.ethz.ch>.  The easiest way to do this from is within Emacs
+by typing `M-x ess-submit-bug-report' or using the [ESS] or [iESS] pulldown
+menus.
 
 6.2 Should I run R from within Emacs?
 =====================================
@@ -4050,6 +4051,21 @@ and of browsers.  For further details please consult section "Enabling
 search in HTML help" in `R Installation and Administration'.  This manual is
 included in the R distribution, *note What documentation exists for R?::,
 and its HTML version is linked from the HTML search page.
+
+7.27 Why did my .Rprofile stop working when I updated R?
+========================================================
+
+Did you read the `NEWS' file?  For functions that are not in the *base*
+package you need to specify the correct package namespace, since the code
+will be run _before_ the packages are loaded.  E.g.,
+
+     ps.options(horizontal = FALSE)
+     help.start()
+
+needs to be
+
+     graphics::ps.options(horizontal = FALSE)
+     utils::help.start()
 
 8 R Programming
 ***************
