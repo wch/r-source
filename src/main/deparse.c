@@ -79,7 +79,6 @@
 
 #include "Defn.h"
 #include "Print.h"
-#include "names.h"
 #include "Fileio.h"
 
 #define BUFSIZE 512
@@ -404,7 +403,7 @@ static void printcomment(SEXP s)
 
 static void deparse2buff(SEXP s)
 {
-    int fop;
+    PPinfo fop;
     Rboolean lookahead = FALSE, lbreak = FALSE;
     SEXP op, t;
     char tpb[120];
