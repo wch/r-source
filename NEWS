@@ -800,6 +800,9 @@ BUG FIXES
 
     o   summary() methods for POSIX[cl]t and Date classes coerced the
 	number of NAs to a date on printing.
+
+    o	KalmanSmooth would sometimes return NA values with NA inputs. 
+	(PR#6738)
  
 
 
