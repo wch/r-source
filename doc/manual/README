@@ -1,5 +1,6 @@
-The version of Rd.sty here uses url.sty. This is normally installed,
-and can be obtained from any CTAN node or mirror: see
+The version of Rd.sty in R_HOME/share/texmf uses url.sty.  This is
+normally installed, and can be obtained from any CTAN node or mirror:
+see
 
 	http://www.tug.org/ctan.html
 
