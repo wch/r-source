@@ -796,7 +796,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     dd->dp.xCharOffset =  0.4900;
     dd->dp.yCharOffset =  0.3333;
-    dd->dp.yLineBias = 0.1;
+    dd->dp.yLineBias = 0.2;
 
     /* Inches per Raster Unit */
     /* We use points (72 dots per inch) */
