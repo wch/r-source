@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-40, @value{FAQ-YEAR}-09-12
+@set FAQ-VERSION 1.7-42, @value{FAQ-YEAR}-09-16
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -179,7 +179,7 @@ In particular, note that I do not have access to Windows or Mac systems.
 Features specific to the Windows and Mac OS ports of R are described in
 the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for Windows
 @acronym{FAQ}''} and the
-@uref{http://cran.r-project.org/bin/macos/rmac-FAQ.html, ``R for
+@uref{http://cran.R-project.org/bin/macos/rmac-FAQ.html, ``R for
 Macintosh @acronym{FAQ}/DOC''}.  If you have information on Mac or
 Windows systems that you think should be added to this document, please
 let me know.
@@ -234,8 +234,8 @@ flexible graphical environment for creating various kinds of data
 presentations.  Additional modules (``add-on packages'') are available
 for a variety of specific purposes (@pxref{R Add-On Packages}).
 
-R was initially written by @email{Ross.Ihaka@@r-project.org, Ross Ihaka}
-and @email{Robert.Gentleman@@r-project.org, Robert Gentleman} at the
+R was initially written by @email{Ross.Ihaka@@R-project.org, Ross Ihaka}
+and @email{Robert.Gentleman@@R-project.org, Robert Gentleman} at the
 Department of Statistics of the University of Auckland in Auckland, New
 Zealand.  In addition, a large group of individuals has contributed to R
 by sending code and bug reports.
@@ -247,7 +247,7 @@ Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
 Martin Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian
 Ripley, Duncan Temple Lang, and Luke Tierney.
 
-R has a home page at @uref{http://www.r-project.org/}.  It is free
+R has a home page at @uref{http://www.R-project.org/}.  It is free
 software distributed under a @acronym{GNU}-style copyleft, and an
 official part of the @acronym{GNU} project (``@acronym{GNU} S'').
 
@@ -287,9 +287,9 @@ the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
 Sources are also available via anonymous rsync.  Use
 
-@smallexample
-rsync -rC rsync.r-project.org::@var{module} R
-@end smallexample
+@example
+rsync -rC --delete rsync.R-project.org::@var{module} R
+@end example
 
 @noindent
 to create a copy of the source tree specified by @var{module} in the
@@ -298,7 +298,7 @@ specifies one of the three existing flavors of the R sources, and can be
 one of @samp{r-release} (current released version), @samp{r-patched}
 (patched released version), and @samp{r-devel} (development version).
 The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The @option{-C} option in the @command{rsync} command
+updated hourly.  The @option{-C} and in the @command{rsync} command
 is to cause it to skip the CVS directories.  Further information on
 @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
@@ -333,10 +333,10 @@ can obtain a PDF version of the object reference manual via @CRAN{}.)
 In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
 
-@smallexample
+@example
 $ ./configure
 $ make
-@end smallexample
+@end example
 
 If these commands execute successfully, the R binary and a shell script
 front-end called @file{R} are created and copied to the @file{bin}
@@ -378,9 +378,9 @@ In the above, @code{prefix} is determined during configuration
 (typically @file{/usr/local}) and can be set by running
 @command{configure} with the option
 
-@smallexample
+@example
 $ ./configure --prefix=/where/you/want/R/to/go
-@end smallexample
+@end example
 
 @noindent
 (E.g., the R executable will then be installed into
@@ -399,7 +399,7 @@ to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
 clones (but not on other platforms).  The Windows version of R was
 created by Robert Gentleman, and is now being developed and maintained
 by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
-@email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
+@email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 
 @c Note that when uncompressing the zip files, the pkunzip program needs to
 @c be invoked with the @samp{-D} flag to create subdirectories.  Also, be
@@ -420,8 +420,7 @@ The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
 and a large number of add-on packages to run under MacOS 8.6 to MacOS
 9.1 or MacOS X natively.  The Mac version of R and the Mac binaries are
 maintained by
-@c @email{stefano.iacus@@unimi.it, Stefano Iacus}.
-@email{Stefano.Iacus@@r-project.org, Stefano Iacus}.
+@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.
 
 The @uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 @acronym{FAQ}/DOC''} has more details.
@@ -464,9 +463,9 @@ Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
 
-@smallexample
-deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
-@end smallexample
+@example
+deb http://cran.R-project.org/bin/linux/debian @var{distribution} main
+@end example
 
 @noindent
 (where @var{distribution} is either @samp{stable} or @samp{testing};
@@ -606,7 +605,7 @@ An annotated bibliography (Bib@TeX{} format) of R-related publications
 which includes most of the above references can be found at
 
 @display
-@uref{http://www.r-project.org/doc/bib/R.bib}
+@uref{http://www.R-project.org/doc/bib/R.bib}
 @end display
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
@@ -614,7 +613,7 @@ which includes most of the above references can be found at
 
 To cite R in publications, use
 
-@smallexample
+@example
 @group
 @@article@{,
   author =    @{Ross Ihaka and Robert Gentleman@},
@@ -626,50 +625,56 @@ To cite R in publications, use
   pages =     @{299--314@}
 @}
 @end group
-@end smallexample
+@end example
 
 @node What mailing lists exist for R?, What is CRAN?, Citing R, R Basics
 @section What mailing lists exist for R?
 
-Thanks to @email{Martin.Maechler@@r-project.org, Martin Maechler}, there
-are three mailing lists devoted to R.
+Thanks to @email{Martin.Maechler@@R-project.org, Martin Maechler}, there
+are four mailing lists devoted to R.
 
 @table @code
-@item r-announce
-This list is for announcements about the development of R and the
+@item R-announce
+A moderated list for announcements about the development of R and the
 availability of new code.
-@item r-devel
+@item R-packages
+A moderated list for announcements on the availability of new or
+enhanced contributed packages.
+@item R-help
+The `main' R mailing list, for announcements about the development of R
+and the availability of new code, including new or enhanced contributed
+packages, questions and answers about problems and solutions using R,
+enhancements and patches to the source code and documentation of R,
+comparison and compatibility with S and @SPLUS{}, and for the posting of
+nice examples and benchmarks.
+@item R-devel
 This list is for discussions about the future of R and pre-testing of
 new versions.  It is meant for those who maintain an active position in
 the development of R.
-@item r-help
-The `main' R mailing list, for announcements about the development of R
-and the availability of new code, questions and answers about problems
-and solutions using R, enhancements and patches to the source code and
-documentation of R, comparison and compatibility with S and @SPLUS{},
-and for the posting of nice examples and benchmarks.
 @end table
 
 @noindent
-Note that the r-announce list is gatewayed into r-help, so you don't
-need to subscribe to both of them.
+Note that the R-announce and R-packages lists are gatewayed into R-help.
+Hence, you should subscribe to either of them only in case you are not
+subscribed to R-help.
 
-Send email to @email{r-help@@lists.r-project.org} to reach everyone on
-the r-help mailing list.  To subscribe (or unsubscribe) to this list
+Send email to @email{R-help@@lists.R-project.org} to reach everyone on
+the R-help mailing list.  To subscribe (or unsubscribe) to this list
 send @samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
 message (not in the subject!) to
-@email{r-help-request@@lists.r-project.org}.  Information about the list
+@email{R-help-request@@lists.R-project.org}.  Information about the list
 can be obtained by sending an email with @samp{info} as its contents to
-@email{r-help-request@@lists.r-project.org}.
+@email{R-help-request@@lists.R-project.org}.
 
 Subscription and posting to the other lists is done analogously, with
-`r-help' replaced by `r-announce' and `r-devel', respectively.
+@samp{R-help} replaced by @samp{R-announce}, @samp{R-packages}, and
+@samp{R-devel}, respectively.
 
-Subscriptions to `r-help' and `r-devel' are also available in digest
-format, see the @file{doc/html/mail.html} file in @CRAN{} for more
-information.
+Subscriptions to the R-help and R-devel mailing lists are also available
+in digest (plain or MIME) format, see the @file{doc/html/mail.html} file
+in @CRAN{} for more information.
 
-It is recommended that you send mail to r-help rather than only to the R
+It is recommended that you send mail to R-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This
 may save them precious time they can use for constantly improving R, and
 will typically also result in much quicker feedback for yourself.
@@ -684,7 +689,7 @@ in a monthly schedule via the @file{doc/html/mail.html} file in @CRAN{}.
 Searchable archives of the lists are available via
 @uref{http://maths.newcastle.edu.au/~rking/R/}.
 
-The R Core Team can be reached at @email{r-core@@lists.r-project.org}
+The R Core Team can be reached at @email{R-core@@lists.R-project.org}
 for comments and reports.
 
 @node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
@@ -701,38 +706,38 @@ The @CRAN{} master site at TU Wien, Austria, can be found at the
 @quotation
 @c @multitable @columnfractions .45 .30
 @c @item
-@uref{http://cran.r-project.org/}
+@uref{http://cran.R-project.org/}
 @c @tab (Austria)
 @c @end multitable
 @end quotation
 
 @noindent
-@c (which is the same as @uref{http://cran.at.r-project.org/})
+@c (which is the same as @uref{http://cran.at.R-project.org/})
 and is currently being mirrored daily at
 
 @quotation
 @multitable @columnfractions .45 .40
-@item @uref{http://cran.at.r-project.org/}
+@item @uref{http://cran.at.R-project.org/}
 @tab (TU Wien, Austria)
-@item @uref{http://cran.au.r-project.org/}
+@item @uref{http://cran.au.R-project.org/}
 @tab (PlanetMirror, Australia)
-@item @uref{http://cran.br.r-project.org/}
+@item @uref{http://cran.br.R-project.org/}
 @tab (Universidade Federal de Paran@'a, Brazil)
-@item @uref{http://cran.ch.r-project.org/}
+@item @uref{http://cran.ch.R-project.org/}
 @tab (ETH Z@"urich, Switzerland)
-@item @uref{http://cran.de.r-project.org/}
+@item @uref{http://cran.de.R-project.org/}
 @tab (APP, Germany)
-@item @uref{http://cran.dk.r-project.org/}
+@item @uref{http://cran.dk.R-project.org/}
 @tab (SunSITE, Denmark)
-@item @uref{http://cran.hu.r-project.org/}
+@item @uref{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
-@c @item @uref{http://cran.it.r-project.org/}
+@c @item @uref{http://cran.it.R-project.org/}
 @c @tab (Italy)
-@item @uref{http://cran.uk.r-project.org/}
+@item @uref{http://cran.uk.R-project.org/}
 @tab (U of Bristol, United Kingdom)
-@item @uref{http://cran.us.r-project.org/}
+@item @uref{http://cran.us.R-project.org/}
 @tab (U of Wisconsin, USA)
-@item @uref{http://cran.za.r-project.org/}
+@item @uref{http://cran.za.R-project.org/}
 @tab (Rhodes U, South Africa)
 @end multitable
 @end quotation
@@ -748,8 +753,8 @@ and MS Windows).  @CRAN{} also provides access to documentation on R,
 existing mailing lists and the R Bug Tracking system.
 
 To ``submit'' to @CRAN{}, simply upload to
-@uref{ftp://cran.r-project.org/incoming/} and send an email to
-@email{cran@@r-project.org}.  Note that @CRAN{} generally does not
+@uref{ftp://cran.R-project.org/incoming/} and send an email to
+@email{cran@@R-project.org}.  Note that @CRAN{} generally does not
 accept submissions of precompiled binaries due to security reasons.
 
 @quotation
@@ -926,19 +931,19 @@ bindings that were in effect at the time the function was created.
 
 Consider the following function:
 
-@smallexample
+@example
 @group
 cube <- function(n) @{
   sq <- function() n * n
   n * sq()
 @}
 @end group
-@end smallexample
+@end example
 
 Under S, @code{sq()} does not ``know'' about the variable @code{n}
 unless it is defined globally:
 
-@smallexample
+@example
 @group
 S> cube(2)
 Error in sq():  Object "n" not found
@@ -947,29 +952,29 @@ S> n <- 3
 S> cube(2)
 [1] 18
 @end group
-@end smallexample
+@end example
 
 In R, the ``environment'' created when @code{cube()} was invoked is
 also looked in:
 
-@smallexample
+@example
 @group
 R> cube(2)
 [1] 8
 @end group
-@end smallexample
+@end example
 
 @c The following more `realistic' example illustrating the differences in
 @c scoping is due to @email{tlumley@@u.washington.edu, Thomas Lumley}.
 @c The function
 
-@c @smallexample
+@c @example
 @c jackknife.lm <- function(lmobj) @{
 @c   n <- length(resid(lmobj))
 @c   jval <- sapply(1:n, function(i) coef(update(lmobj, subset = -i)))
 @c   (n - 1) * (n - 1) * var(jval) / n
 @c @}
-@c @end smallexample
+@c @end example
 
 @c @noindent
 @c does something useful in R, but does not work in S.  In order to make it
@@ -981,7 +986,7 @@ R> cube(2)
 
 @c The following version works in S.
 
-@c @smallexample
+@c @example
 @c jackknife.S.lm <- function(lmobj) @{
 @c   n <- length(resid(lmobj))
 @c   jval <- sapply(1:n,
@@ -989,7 +994,7 @@ R> cube(2)
 @c                  lmobj = lmobj)
 @c   (n - 1) * (n - 1) * var(jval) / n
 @c @}
-@c @end smallexample
+@c @end example
 
 @c (The S version was written independently by Thomas and at least three of
 @c his fellow students over the past couple of years, causing literally
@@ -1005,7 +1010,7 @@ postings by Luke Tierney.)
 The @SPLUS{} documentation for @code{call()} basically suggests the
 following:
 
-@smallexample
+@example
 @group
 dorder <- function(n, r, pfun, dfun) @{
   f <- function(x) NULL
@@ -1020,7 +1025,7 @@ dorder <- function(n, r, pfun, dfun) @{
   f
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent Rather tricky, isn't it?  The code uses the fact that in S,
 functions are just lists of special mode with the function body as the
@@ -1030,7 +1035,7 @@ work, though).
 A version which makes heavy use of @code{substitute()} and seems to work
 under both S and R is
 
-@smallexample
+@example
 @group
 dorder <- function(n, r, pfun, dfun) @{
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
@@ -1039,14 +1044,14 @@ dorder <- function(n, r, pfun, dfun) @{
                        a = r - 1, b = n - r, K = con)))
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 (the @code{eval()} is not needed in S).
 
 However, in R there is a much easier solution:
 
-@smallexample
+@example
 @group
 dorder <- function(n, r, pfun, dfun) @{
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
@@ -1055,7 +1060,7 @@ dorder <- function(n, r, pfun, dfun) @{
   @}
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 This seems to be the ``natural'' implementation, and it works because
@@ -1068,7 +1073,7 @@ in the above version, the free variables in the value function are not
 modified, you can actually use it in S as well if you abstract out the
 closure operation into a function @code{MC()} (for ``make closure''):
 
-@smallexample
+@example
 @group
 dorder <- function(n, r, pfun, dfun) @{
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
@@ -1078,7 +1083,7 @@ dorder <- function(n, r, pfun, dfun) @{
      list(con = con, pfun = pfun, dfun = dfun, r = r, n = n))
 @}
 @end group
-@end smallexample
+@end example
 
 Given the appropriate definitions of the closure operator, this works in
 both R and S, and is much ``cleaner'' than a substitute/eval solution
@@ -1087,13 +1092,13 @@ access to evaluation frames, as is of course possible in both R and S).
 
 For R, @code{MC()} simply is
 
-@smallexample
+@example
 MC <- function(f, env) f
-@end smallexample
+@end example
 
 @noindent (lexical scope!), a version for S is
 
-@smallexample
+@example
 @group
 MC <- function(f, env = NULL) @{
   env <- as.list(env)
@@ -1112,7 +1117,7 @@ MC <- function(f, env = NULL) @{
   return(cf)
 @}
 @end group
-@end smallexample
+@end example
 
 Similarly, most optimization (or zero-finding) routines need some
 arguments to be optimized over and have other parameters that depend on
@@ -1135,13 +1140,14 @@ Computing'', @uref{http://www.amstat.org/publications/jcgs/, ,
 
 Lexical scoping also implies a further major difference.  Whereas S
 stores all objects as separate files in a directory somewhere (usually
-@file{.Data} under the current directory), R does not.  All objects
-in R are stored internally.  When R is started up it grabs a very large
-piece of memory and uses it to store the objects.  R performs its own
-memory management of this piece of memory.  Having everything in memory
-is necessary because it is not really possible to externally maintain
-all relevant ``environments'' of symbol/value pairs.  This difference
-also seems to make R @emph{faster} than S.
+@file{.Data} under the current directory), R does not.  All objects in R
+are stored internally.  When R is started up it grabs a piece of memory
+and uses it to store the objects.  R performs its own memory management
+of this piece of memory, growing and shrinking its size as needed.
+Having everything in memory is necessary because it is not really
+possible to externally maintain all relevant ``environments'' of
+symbol/value pairs.  This difference also seems to make R @emph{faster}
+than S.
 
 The down side is that if R crashes you will lose all the work for the
 current session.  Saving and restoring the memory ``images'' (the
@@ -1283,9 +1289,9 @@ By default, @code{ls()} returns the names of the objects in the current
 (under R) and global (under S) environment, respectively.  For example,
 given
 
-@smallexample
+@example
 x <- 1; fun <- function() @{y <- 1; ls()@}
-@end smallexample
+@end example
 
 @noindent
 then @code{fun()} returns @code{"y"} in R and @code{"x"} (together with
@@ -1695,6 +1701,8 @@ distributions).
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
+@item VaR
+Methods for calculation of Value at Risk (VaR).
 @item XML
 Facilities for reading @XML{} documents and DTDs.
 @item abind
@@ -2231,6 +2239,11 @@ Functions for interacting with, saving and restoring R sessions.
 An object-oriented framework for geostatistical modeling.
 @item shapefiles
 Functions to read and write ESRI shapefiles.
+@item shapes
+Routines for the statistical analysis of shapes, including procrustes
+analysis, displaying shapes and principal components, testing for mean
+shape difference, thin-plate spline transformation grids and edge
+superimposition methods.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
@@ -2676,15 +2689,7 @@ Jim has also started @strong{dna}, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 @uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
 
-@c @email{hfe@@math.uio.no, Harald Fekjaer} has written @strong{addreg}, a
-@c package for additive hazards regression, which can be obtained from
-@c @uref{http://www.med.uio.no/imb/stat/addreg/}.
-
-@email{fharrell@@virginia.edu, Frank Harrell} has made R ports of his
-@strong{Design} and @strong{Hmisc} packages available via
-@uref{http://hesweb1.med.virginia.edu/biostat/s/library/r/}.
-
-More code has been posted to the r-help mailing list, and can be
+More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
 
 @node How can add-on packages be installed?, How can add-on packages be used?, Which add-on packages exist for R?, R Add-On Packages
@@ -2695,9 +2700,9 @@ files named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
 ``bundles'' containing more than one package.  Provided that
 @command{tar} and @command{gzip} are available on your system, type
 
-@smallexample
+@example
 $ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
-@end smallexample
+@end example
 
 @noindent
 at the shell prompt to install to the library tree rooted at the first
@@ -2708,9 +2713,9 @@ to the default library by default.)
 
 To install to another tree (e.g., your private one), use
 
-@smallexample
+@example
 $ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
-@end smallexample
+@end example
 
 @noindent
 where @var{lib} gives the path to the library tree to install to.
@@ -2726,16 +2731,16 @@ trees are rooted.  You do not have to specify the default tree in
 @env{R_LIBS}.  E.g., to use a private tree in @file{$HOME/lib/R} and a
 public site-wide tree in @file{/usr/local/lib/R-contrib}, put
 
-@smallexample
+@example
 R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
-@end smallexample
+@end example
 
 @noindent
 into your (Bourne) shell profile or even preferably, add the line
 
-@smallexample
+@example
 R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
-@end smallexample
+@end example
 
 @noindent
 your @file{~/.Renviron} file.  (Note that no @code{export} statement is
@@ -2747,9 +2752,9 @@ for more information.)
 
 To find out which additional packages are available on your system, type
 
-@smallexample
+@example
 library()
-@end smallexample
+@end example
 
 @noindent
 at the R prompt.  
@@ -2775,6 +2780,8 @@ foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
 grid          The Grid Graphics Package
 lattice       Lattice Graphics
 lqs           Resistant Regression and Covariance Estimation
+methods       Formal Methods and Classes
+mle           Maximum likelihood estimation
 mgcv          Multiple smoothing parameter estimation and GAMs by GCV
 modreg        Modern Regression: Smoothing and Local Methods
 mva           Classical Multivariate Analysis
@@ -2787,38 +2794,38 @@ spatial       functions for kriging and point pattern analysis
 splines       Regression Spline Functions and Classes
 stepfun       Step Functions, including Empirical Distributions
 survival      Survival analysis, including penalised likelihood
-tcltk         Interface to Tcl/Tk
+tcltk         Tcl/Tk Interface
 tools         Tools for Package Development and Administration
 ts            Time series functions
 @end smallexample
 
 You can ``load'' the installed package @var{pkg} by
 
-@smallexample
+@example
 library(@var{pkg})
-@end smallexample
+@end example
 
 You can then find out which functions it provides by typing one of
 
-@smallexample
+@example
 library(help = @var{pkg})
 help(package = @var{pkg})
-@end smallexample
+@end example
 
 You can unload the loaded package @var{pkg} by
 
-@smallexample
+@example
 detach("package:@var{pkg}")
-@end smallexample
+@end example
 
 @node How can add-on packages be removed?, How can I create an R package?, How can add-on packages be used?, R Add-On Packages
 @section How can add-on packages be removed?
 
 Use
 
-@smallexample
+@example
 $ R CMD REMOVE @var{pkg_1} @dots{} @var{pkg_n}
-@end smallexample
+@end example
 
 @noindent
 to remove the packages @var{pkg_1}, @dots{}, @var{pkg_n} from the
@@ -2828,9 +2835,9 @@ of R prior to 1.3.0 removed from the default library by default.)
 
 To remove from library @var{lib}, do
 
-@smallexample
+@example
 $ R CMD REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
-@end smallexample
+@end example
 
 @node How can I create an R package?, How can I contribute to R?, How can add-on packages be removed?, R Add-On Packages
 @section How can I create an R package?
@@ -2875,7 +2882,7 @@ as described in ``Statistical Models in S'' (see @ref{What is S?});
 Generalized Additive Models (@pxref{Are GAMs implemented in R?}) and
 some of the nonlinear modeling code are not there yet.
 
-The @uref{http://developer.r-project.org/, R Developer Page} acts as an
+The @uref{http://developer.R-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
 various other writeups, ideas lists, and CVS miscellanea.
@@ -2884,7 +2891,7 @@ Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
 
 If you are interested in working on any of these projects, please notify
-@email{Kurt.Hornik@@r-project.org, Kurt Hornik}.
+@email{Kurt.Hornik@@R-project.org, Kurt Hornik}.
 
 @node R and Emacs, R Miscellanea, R Add-On Packages, Top
 @chapter R and Emacs
@@ -3003,7 +3010,7 @@ the R binary.  That way @file{.gdbinit} can stay in the directory with
 the code and be used to set up the environment and the search paths for
 the source, e.g.@: as follows:
 
-@smallexample
+@example
 set env R_HOME /opt/R
 set env R_PAPERSIZE letter
 set env R_PRINTCMD lpr
@@ -3011,7 +3018,7 @@ dir /opt/R/src/appl
 dir /opt/R/src/main
 dir /opt/R/src/nmath
 dir /opt/R/src/unix
-@end smallexample
+@end example
 
 @node R Miscellanea, R Programming, R and Emacs, Top
 @chapter R Miscellanea
@@ -3139,9 +3146,9 @@ reading in data files.  This should no longer happen.
 
 You can use
 
-@smallexample
+@example
 x[i] <- list(NULL)
-@end smallexample
+@end example
 
 @noindent
 to set component @code{i} of the list @code{x} to @code{NULL}, similarly
@@ -3166,9 +3173,9 @@ can save the image under a different name.
 To remove all objects in the currently active environment (typically
 @code{.GlobalEnv}), you can do
 
-@smallexample
+@example
 rm(list = ls(all = TRUE))
-@end smallexample
+@end example
 
 @noindent
 (Without @option{all = TRUE}, only the objects with names not starting
@@ -3190,10 +3197,10 @@ differentiated.  What you (most likely) really want is obtained by
 ``quoting'' the first argument upon surrounding it with
 @code{expression()}.  For example,
 
-@smallexample
+@example
 R> D(expression(x^2), "x")
 2 * x
-@end smallexample
+@end example
 
 Although this behavior may initially seem to be rather strange, is
 perfectly logical.  The ``intuitive'' behavior could easily be
@@ -3201,17 +3208,17 @@ implemented, but problems would arise whenever the expression is
 contained in a variable, passed as a parameter, or is the result of a
 function call.  Consider for instance the semantics in cases like
 
-@smallexample
+@example
 D2 <- function(e, n) D(D(e, n), n)
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 g <- function(y) eval(substitute(y), sys.frame(sys.parent(n = 2)))
 g(a * b)
-@end smallexample
+@end example
 
 See the help page for @code{deriv()} for more examples.
 
@@ -3228,27 +3235,27 @@ been determined to be a @emph{feature}.
 To prevent this happening, add the option @option{drop = FALSE} to the
 subscripting.  For example,
 
-@smallexample
+@example
 rowmatrix <- mat[2, , drop = FALSE]  # @r{creates a row matrix}
 colmatrix <- mat[, 2, drop = FALSE]  # @r{creates a column matrix}
 a <- b[1, 1, 1, drop = FALSE]        # @r{creates a 1 x 1 x 1 array}
-@end smallexample
+@end example
 
 The @option{drop = FALSE} option should be used defensively when
 programming.  For example, the statement
 
-@smallexample
+@example
 somerows <- mat[index, ]
-@end smallexample
+@end example
 
 @noindent
 will return a vector rather than a matrix if @code{index} happens to
 have length 1, causing errors later in the code.  It should probably be
 rewritten as
 
-@smallexample
+@example
 somerows <- mat[index, , drop = FALSE]
-@end smallexample
+@end example
 
 @node How does autoloading work?, How should I set options?, Why do my matrices lose dimensions?, R Miscellanea
 @section How does autoloading work?
@@ -3278,7 +3285,7 @@ variable.
 
 For example, given
 
-@smallexample
+@example
 test1 <- function(x = pi, dig = 3) @{
   oo <- options(digits = dig); on.exit(options(oo));
   cat(.Options$digits, x, "\n")
@@ -3287,17 +3294,17 @@ test2 <- function(x = pi, dig = 3) @{
   .Options$digits <- dig
   cat(.Options$digits, x, "\n")
 @}
-@end smallexample
+@end example
 
 @noindent
 we obtain:
 
-@smallexample
+@example
 R> test1()
 3 3.14 
 R> test2()
 3 3.141593
-@end smallexample
+@end example
 
 What is really used is the @emph{global} value of @code{.Options}, and
 using @kbd{options(OPT = VAL)} correctly updates it.  Local copies of
@@ -3352,16 +3359,16 @@ It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If @code{f} is such a
 factor object, you can use
 
-@smallexample
+@example
 as.numeric(as.character(f))
-@end smallexample
+@end example
 
 @noindent
 to get the numbers back.  More efficient, but harder to remember, is
 
-@smallexample
+@example
 as.numeric(levels(f))[as.integer(f)]
-@end smallexample
+@end example
 
 In any case, do not call @code{as.numeric()} or their likes directly for
 the task at hand (as @code{as.numeric()} or @code{unclass()} give the
@@ -3444,9 +3451,9 @@ case, either use @code{parse()} on your pasted character string or use
 @code{substitute()} on an expression.  For example, if @code{ahat} is an
 estimator of your parameter @math{a} of interest, use
 
-@smallexample
+@example
 title(substitute(hat(a) == ahat, list(ahat = ahat)))
-@end smallexample
+@end example
 
 @noindent
 (note that it is @samp{==} and not @samp{=}).  There are more worked
@@ -3515,16 +3522,16 @@ from package @strong{mda}.
 
 Most R commands do not generate any output. The command
 
-@smallexample
+@example
 1+1
-@end smallexample
+@end example
 
 @noindent
 computes the value 2 and returns it; the command
 
-@smallexample
+@example
 summary(glm(y~x+z, family=binomial))
-@end smallexample
+@end example
 
 @noindent
 fits a logistic regression model, computes some summary information and
@@ -3539,16 +3546,16 @@ specifically print it.
 
 To print the value use
 
-@smallexample
+@example
 print(1+1)
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 print(summary(glm(y~x+z, family=binomial)))
-@end smallexample
+@end example
 
 @noindent
 instead, or use @code{source(@var{file}, echo=TRUE)}.
@@ -3569,28 +3576,28 @@ scalars, then you can still use @code{outer()} but you will need to wrap
 your function up first, to simulate vectorized behavior.  Suppose your
 function is
 
-@smallexample
+@example
 foo <- function(x, y, happy) @{
   stopifnot(length(x) == 1, length(y) == 1) # scalars only!
   (x + y) * happy
 @}
-@end smallexample
+@end example
 
 @noindent
 If you define the general function
 
-@smallexample
+@example
 wrapper <- function(x, y, my.fun, ...) @{
   sapply(seq(along = x), FUN = function(i) my.fun(x[i], y[i], ...))
 @}
-@end smallexample
+@end example
 
 @noindent
 then you can use @code{outer()} by writing, e.g.,
 
-@smallexample
+@example
 outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
-@end smallexample
+@end example
 
 @node Why does the output from anova() depend on the order of factors in the model?, How do I produce PNG graphics in batch mode?, Why does outer() behave strangely with my function?, R Miscellanea
 @section Why does the output from anova() depend on the order of factors in the model?
@@ -3610,7 +3617,7 @@ full model to the models with each factor removed one at a time (the
 famous `Type III sums of squares' from SAS, for example).  These do not
 depend on the order of factors in the model.  The question of which set
 of sums of squares is the Right Thing provokes low-level holy wars on
-r-help from time to time.
+R-help from time to time.
 
 There is no need to be agitated about the particular sums of squares
 that R reports.  You can compute your favorite sums of squares quite
@@ -3646,60 +3653,60 @@ packages such as @code{libreadline-dev} (Debian) or
 
 If you have
 
-@smallexample
+@example
 varname <- c("a", "b", "d")
-@end smallexample
+@end example
 
 @noindent
 you can do
 
-@smallexample
+@example
 get(varname[1]) + 2
-@end smallexample
+@end example
 
 @noindent
 for
 
-@smallexample
+@example
 a + 2
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 assign(varname[1], 2 + 2)
-@end smallexample
+@end example
 
 @noindent
 for
 
-@smallexample
+@example
 a <- 2 + 2
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 eval(substitute(lm(y ~ x + variable),
                 list(variable = as.name(varname[1]))
-@end smallexample
+@end example
 
 @noindent
 for
 
-@smallexample
+@example
 lm(y ~ x + a)
-@end smallexample
+@end example
 
 At least in the first two cases it is often easier to just use a list,
 and then you can easily index it by name
 
-@smallexample
+@example
 vars <- list(a = 1:10, b = rnorm(100), d = LETTERS)
 vars[["a"]]
-@end smallexample
+@end example
 
 @noindent
 without any of this messing about.
@@ -3788,9 +3795,9 @@ are a Bourne shell user, you can also pass the desired flags to Make
 (which is used for controlling compilation) via the Make variable
 @code{MAKEFLAGS}, as in
 
-@smallexample
+@example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
-@end smallexample
+@end example
 
 @node R Bugs, Acknowledgments, R Programming, Top
 @chapter R Bugs
@@ -3864,9 +3871,9 @@ unnecessary work for the ones trying to fix the problem.
 For example, suppose that on a data set which you know to be quite large
 the command
 
-@smallexample
+@example
 R> data.frame(x, y, z, monday, tuesday)
-@end smallexample
+@end example
 
 @noindent
 never returns.  Do not report that @code{data.frame()} fails for large
@@ -3898,11 +3905,11 @@ read.
 On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
-bug report can be emailed to @email{r-bugs@@r-project.org} or submitted
-to the Web page at @uref{http://bugs.r-project.org/}.
+bug report can be emailed to @email{R-bugs@@R-project.org} or submitted
+to the Web page at @uref{http://bugs.R-project.org/}.
 
 Bug reports on contributed packages should perhaps be sent to the
-package maintainer rather than to r-bugs.
+package maintainer rather than to R-bugs.
 
 @node Acknowledgments,  , R Bugs, Top
 @chapter Acknowledgments
