@@ -3156,6 +3156,7 @@ static int typeofnext(void)
 	    k = 2;
 	else
 	    k = 3;
+	/* <FIXME> is it clear multiple ungets are allowed? */
 	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
     } else
 #endif
@@ -3584,6 +3585,7 @@ static int SymbolValue(int c)
 		s[0] = c; s[clen] = '\0';
 		for(i = 1; i < clen; i++) s[i] = xxgetc();
 		Mbrtowc(&wc, s, clen, NULL);
+		/* <FIXME> is it clear multiple ungets are allowed? */
 		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
 		if(!iswalnum(wc)) break;
 	    } else 
@@ -3657,6 +3659,7 @@ static int token()
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
 	Mbrtowc(&wc, s, clen, NULL);
+	/* <FIXME> is it clear multiple ungets are allowed? */
 	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
  	if (iswdigit(wc)) return NumericValue(c);
     } else
@@ -3686,6 +3689,7 @@ static int token()
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
 	Mbrtowc(&wc, s, clen, NULL);
+	/* <FIXME> is it clear multiple ungets are allowed? */
 	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
  	if (iswalpha(wc)) return SymbolValue(c);
     } else
@@ -4021,5 +4025,3 @@ int yylex(void)
     }
     return tok;
 }
-
-

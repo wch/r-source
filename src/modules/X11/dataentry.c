@@ -968,6 +968,8 @@ static void clearrect(void)
 
 /* --- Not true! E.g. ESC ends up in here... */
 #ifdef SUPPORT_UTF8
+/* <FIXME> This is not correct for stateful MBCSs, but that's hard to 
+   do as we get a char at a time */
 #include <wchar.h>
 #include <wctype.h>
 #endif

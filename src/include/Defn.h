@@ -906,6 +906,7 @@ Rboolean utf8strIsASCII(char *str);
 int utf8clen(char c);
 #endif
 #ifdef SUPPORT_MBCS
+#define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 void mbcsToLatin1(char *in, char *out);
 #endif

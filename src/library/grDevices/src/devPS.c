@@ -632,16 +632,18 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics, int face)
     short wx;
 
 #ifdef SUPPORT_MBCS
+    mbstate_t mb_st;
     if(utf8locale && !utf8strIsASCII((char *) p) && face != 5) {
 	wchar_t wc, wc2;
+	mbs_init(&mb_st);
 	while (*p) {
-	    int res = mbrtowc(&wc, (char *)p, MB_CUR_MAX, NULL);
+	    int res = mbrtowc(&wc, (char *)p, MB_CUR_MAX, &mb_st);
 	    if(res > 0) p += res;
 	    else {
 		warning("invalid character in PostScriptStringWidth");
 		return 0;
 	    }
-	    if(*p) mbrtowc(&wc2, (char *)p, MB_CUR_MAX, NULL); else wc2 = 0;
+	    if(*p) mbrtowc(&wc2, (char *)p, MB_CUR_MAX, &mb_st); else wc2 = 0;
 #ifdef USE_HYPHEN
 	    if (wc == L'-' && !iswdigit(wc2))
 		wx = metrics->CharInfo[(int)PS_hyphen].WX;
