@@ -6,6 +6,18 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.5.2
+
+
+BUG FIXES
+
+    o	tcltk ... <<Peter, please fill in>>
+
+    o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
+
+    o	as.data.frame() does not coerce logical into factors anymore.
+
+
 		CHANGES IN R VERSION 1.5.1
 
 
