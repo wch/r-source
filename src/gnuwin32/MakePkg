@@ -98,12 +98,12 @@ ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "collater('"$(SPKG)"', pkg='"$(PKG)"',destDir='"$(DPKG)/R"')" \
+	@$(ECHO) ".installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
 else
-	@$(ECHO) "collater('"$(SPKG)"', pkg='"$(PKG)"',destDir='"$(DPKG)/R"')" \
-	  | $(RHOME)/bin/rterm.exe \
-	  --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
+	@$(ECHO) ".installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
+	  | $(RHOME)/bin/rterm.exe --vanilla --slave \
+	    R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 ## install halts here if collater failed
 	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME)
@@ -250,7 +250,7 @@ endif
 indices:
 	@$(ECHO) "  installing indices"
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
+	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
 else
 	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
@@ -266,7 +266,7 @@ md5sums:
 ifneq ($(strip $(PKG)),base)
 	@$(ECHO) "  adding MD5 sums"
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
+	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
 else
 	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
