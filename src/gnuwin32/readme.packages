@@ -29,6 +29,11 @@ We recommend that you use a recent snapshot of the Mingw port of gcc
 from http://sourceforge.net/projects/mingw/.  For example, at the time
 of writing, MinGW-1.1.tar.gz based on gcc-2.95.3.  Just unpack this
 somewhere and put its bin directory in your path, *after* our tools.
+It is desirable to update the header files, for example with
+mingw-runtime-1.3.tar.gz and w32api-1.3.tar.gz.  (Version 2 of the
+mingw-runtime is a beta and needs some changes.  When a version based
+on gcc-3.1 is released, it is expected that yet other changes will be
+required.)
 
 No earlier Mingw compiler has been tested and support for using the
 Cygwin compiler has been withdrawn.  If you see errors about `-shared'
@@ -75,7 +80,7 @@ Then
 	make libR.a
 
 which might take up to a minute.  This only needs to be done once for
-each R release, and should be done automatically when needed if
+each R release, and will be done automatically when needed if
 omitted at this point.
 
 
