@@ -29,7 +29,8 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
 \note{This function currently relies on the \code{Perl} script
   \file{\$R\_HOME/bin/fwf2table}.
   Therefore, it will only work in an environment with
-  \code{Perl 5} installed, see \file{INSTALL} in \file{\$R\_HOME}.
+  \code{Perl 5} installed, see \file{INSTALL} in the top-level directory
+  of the sources.
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
 \seealso{\code{\link{scan}} and \code{\link{read.table}}.}

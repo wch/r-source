@@ -23,9 +23,11 @@ commandArgs()
   is platform dependent. It may be the fully qualified name, or simply
   the last component (or basename) of the application.
 }
-\
+
 %\author{DTL}
+#ifdef unix
 \seealso{\code{\link{BATCH}}}
+#endif
 
 \examples{
   commandArgs()

@@ -116,9 +116,11 @@ provide(name)
 }
 
 \section{Creating Packages}{
+#ifdef unix
   For installation etc, refer to \code{\link{INSTALL}} and
-  \code{\link{REMOVE}},
-
+  \code{\link{REMOVE}}.
+#endif
+ 
     Packages provide a mechanism for loading optional code and attached
     documentation as needed.  The \R distribution provides the example
     packages \code{eda}, \code{mva}, and \code{stepfun}.
@@ -199,7 +201,9 @@ provide(name)
     \code{\link{objects}}, \code{\link{autoload}},
     \code{\link{library.dynam}};
     \code{\link{data}};
+#ifdef unix
     \code{\link{INSTALL}}, \code{\link{REMOVE}}
+#endif
 }
 \examples{
 .packages()	    	    # maybe just "base"
