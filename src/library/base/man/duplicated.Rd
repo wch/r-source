@@ -4,6 +4,7 @@
 \alias{duplicated.data.frame}
 \alias{duplicated.matrix}
 \alias{duplicated.array}
+\alias{duplicated.list}
 \title{Determine Duplicate Elements}
 \description{
   Determines which elements of a vector of data frame are duplicates
@@ -38,6 +39,10 @@ duplicated(x, incomparables = FALSE, \dots)
   to those for an earlier element (in row-major order).  This would most
   commonly be used to find duplicated rows (the default) or columns
   (with \code{MARGIN = 2}).
+}
+\section{Warning}{
+  The \code{list} method is potentially slow (\eqn{O(n^2}) in the
+  current implementation.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

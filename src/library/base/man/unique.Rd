@@ -4,6 +4,7 @@
 \alias{unique.data.frame}
 \alias{unique.matrix}
 \alias{unique.array}
+\alias{unique.list}
 \title{Extract Unique Elements}
 \description{
   \code{unique} returns a vector, data frame or array like \code{x}
@@ -36,6 +37,10 @@ unique(x, incomparables = FALSE, \dots)
   An object of the same type of \code{x}. but if
   an element is equal to one with a smaller index, it is removed.
   Dimensions of arrays are not dropped.
+}
+\section{Warning}{
+  The \code{list} method is potentially slow (\eqn{O(n^2}) in the
+  current implementation.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -29,6 +29,13 @@ duplicated.matrix <- duplicated.array <-
     res
 }
 
+duplicated.list <- function(x, incomparables = FALSE, ...)
+{
+    if(!is.logical(incomparables) || incomparables)
+	.NotYetUsed("incomparables != FALSE")
+    .Internal(duplicated.list(x))
+}
+
 unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
 
 
@@ -68,3 +75,11 @@ unique.matrix <- unique.array <-
     args[[MARGIN]] <- !duplicated(as.vector(temp))
     do.call("[", c(list(x=x), args, list(drop=FALSE)))
 }
+
+unique.list <- function(x, incomparables = FALSE, ...)
+{
+    if(!is.logical(incomparables) || incomparables)
+	.NotYetUsed("incomparables != FALSE")
+    x[!duplicated(x)]
+}
+

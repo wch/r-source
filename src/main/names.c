@@ -209,6 +209,7 @@ FUNTAB R_FunTab[] =
 {"assign",	do_assign,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"remove",	do_remove,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"duplicated",	do_duplicated,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"duplicated.list",do_duplicated,2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"unique",	do_duplicated,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"which.min",	do_first_min,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"which.max",	do_first_max,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
