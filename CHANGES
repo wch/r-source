@@ -116,6 +116,9 @@ NEW FEATURES
 
 BUG FIXES (many of which resulted from the added features...)
 
+    o   Rd files: leading whitespace of lines in user-defined sections
+	was not correctly removed by Rdconv
+
     o   sign(.) works again.
 
     o   [.data.frame segfaulted if arg. wasn't a data frame
