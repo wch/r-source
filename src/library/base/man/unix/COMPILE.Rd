@@ -16,6 +16,11 @@
     values for \code{CFLAGS} or \code{FFLAGS}, or for obtaining
     information about usage and version of the utility.}
 }
+\details{
+  Note that Ratfor is not supported.  If you have Ratfor source code,
+  you need to convert it to FORTRAN.  On many Solaris systems mixing
+  Ratfor and FORTRAN code will work.
+}
 \seealso{
   \code{\link{SHLIB}},
   \code{\link{dyn.load}}

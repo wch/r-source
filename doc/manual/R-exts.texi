@@ -245,20 +245,22 @@ distribution for an example.
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix}, @file{windows} or @file{mac}.
 
-The C, C++, or FORTRAN source files for the compiled code are in
-@file{src}, plus optionally file @file{Makevars} or @file{Makefile}.
-When a package is installed using @code{R CMD INSTALL}, Make is used to
-control compilation and linking into a shared library for loading into
-@R{}.  There are default variables and rules for this (determined when
-@R{} is configured and recorded in @file{$R_HOME/etc/Makeconf}).  These
-rules can be tweaked by setting macros in a file @file{src/Makevars}
-(@pxref{Using Makevars}).  Note that this mechanism should be general
-enough to eliminate the need for a package-specific @file{Makefile}.  If
-such a file is to be distributed, considerable care is needed to make it
-general enough to work on all @R{} platforms.  If necessary,
-platform-specific files can be used, for example @file{Makevars.win} or
-@file{Makefile.win} on Windows take precedence over @file{Makevars} or
-@file{Makefile}.
+The C, C++, or FORTRAN@footnote{Note that Ratfor is not supported.  If
+you have Ratfor source code, you need to convert it to FORTRAN.  On many
+Solaris systems mixing Ratfor and FORTRAN code will work.} source files
+for the compiled code are in @file{src}, plus optionally file
+@file{Makevars} or @file{Makefile}.  When a package is installed using
+@code{R CMD INSTALL}, Make is used to control compilation and linking
+into a shared library for loading into @R{}.  There are default
+variables and rules for this (determined when @R{} is configured and
+recorded in @file{$R_HOME/etc/Makeconf}).  These rules can be tweaked by
+setting macros in a file @file{src/Makevars} (@pxref{Using Makevars}).
+Note that this mechanism should be general enough to eliminate the need
+for a package-specific @file{Makefile}.  If such a file is to be
+distributed, considerable care is needed to make it general enough to
+work on all @R{} platforms.  If necessary, platform-specific files can
+be used, for example @file{Makevars.win} or @file{Makefile.win} on
+Windows take precedence over @file{Makevars} or @file{Makefile}.
 
 The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
