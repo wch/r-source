@@ -181,7 +181,7 @@ rect getregion(gadesc *xd)
 
 static void GA_Activate(NewDevDesc *dd);
 static void GA_Circle(double x, double y, double r,
-		      int col, int fill, int lty, double lwd,
+		      int col, int fill, double gamma, int lty, double lwd,
 		      NewDevDesc *dd);
 static void GA_Clip(double x0, double x1, double y0, double y1, 
 		     NewDevDesc *dd);
@@ -190,21 +190,21 @@ static void GA_Deactivate(NewDevDesc *dd);
 static void GA_Hold(NewDevDesc *dd);
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
-		    int col, int lty, double lwd,
+		    int col, double gamma, int lty, double lwd,
 		    NewDevDesc *dd);
 static void GA_MetricInfo(int c, int font, double cex, double ps,
 			  double* ascent, double* descent,
 			  double* width, NewDevDesc *dd);
 static void GA_Mode(int mode, NewDevDesc *dd);
-static void GA_NewPage(int fill, NewDevDesc *dd);
+static void GA_NewPage(int fill, double gamma, NewDevDesc *dd);
 static void GA_Polygon(int n, double *x, double *y, 
-		       int col, int fill, int lty, double lwd,
+		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
 static void GA_Polyline(int n, double *x, double *y, 
-			int col, int lty, double lwd,
+			int col, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
 static void GA_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, int lty, double lwd,
+		    int col, int fill, double gamma, int lty, double lwd,
 		    NewDevDesc *dd);
 static void GA_Size(double *left, double *right,
 		    double *bottom, double *top,
@@ -214,10 +214,10 @@ static double GA_StrWidth(char *str, int font,
 			  double cex, double ps, NewDevDesc *dd);
 static void GA_Text(double x, double y, char *str, 
 		    double rot, double hadj, 
-		    int col, int font, double cex, double ps,
+		    int col, double gamma, int font, double cex, double ps,
 		    NewDevDesc *dd);
 static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double, 
-			Rboolean, int, int);
+			Rboolean, int, int, double);
 
 	/********************************************************/
 	/* end of list of required device driver actions 	*/
@@ -227,7 +227,7 @@ static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
 
 static double pixelHeight(drawing  d);
 static double pixelWidth(drawing d);
-static void SetColor(int, NewDevDesc *);
+static void SetColor(int, double, NewDevDesc *);
 static void SetFont(int, int, double, NewDevDesc *);
 static void SetLinetype(int, double, NewDevDesc *);
 static int Load_Rbitmap_Dll();
@@ -548,13 +548,13 @@ static void SetFont(int face, int size, double rot, NewDevDesc *dd)
 }
 
 
-static void SetColor(int color, NewDevDesc *dd)
+static void SetColor(int color, double gamma, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (color != xd->col) {
 	xd->col = color;
-	xd->fgcolor = GArgb(color, 1.0 /* gamma */);
+	xd->fgcolor = GArgb(color, gamma);
     }
 }
 
@@ -1394,7 +1394,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 
 static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 			double w, double h, Rboolean recording,
-			int resize, int canvascolor)
+			int resize, int canvascolor, double gamma)
 {
     rect  rr;
 
@@ -1406,7 +1406,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     xd->col = dd->startcol = R_RGB(0, 0, 0);
 
     xd->fgcolor = Black;
-    xd->bgcolor = xd->canvascolor = GArgb(canvascolor, 1.0 /* gamma */);
+    xd->bgcolor = xd->canvascolor = GArgb(canvascolor, gamma);
     xd->outcolor = myGetSysColor(COLOR_APPWORKSPACE);
     xd->rescale_factor = 1.0;
     xd->fast = 1;  /* Use `cosmetic pens' if available */
@@ -1683,7 +1683,7 @@ static void GA_Resize(NewDevDesc *dd)
 	/* (e.g., postscript)					*/
 	/********************************************************/
 
-static void GA_NewPage(int fill, NewDevDesc *dd)
+static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -1711,7 +1711,7 @@ static void GA_NewPage(int fill, NewDevDesc *dd)
     if (!R_OPAQUE(xd->bg)) 
 	xd->bgcolor = xd->canvascolor;
     else
-	xd->bgcolor = GArgb(xd->bg, 1.0 /* gamma */);
+	xd->bgcolor = GArgb(xd->bg, gamma);
     if (xd->kind != SCREEN) {
 	xd->needsave = TRUE;
 	xd->clip = getrect(xd->gawin);
@@ -1818,7 +1818,7 @@ static void GA_Deactivate(NewDevDesc *dd)
 	/********************************************************/
 
 static void GA_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, int lty, double lwd,
+		     int col, int fill, double gamma, int lty, double lwd,
 		     NewDevDesc *dd)
 {
     int   tmp;
@@ -1840,12 +1840,12 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
     }
     r = rect((int) x0, (int) y0, (int) x1 - (int) x0, (int) y1 - (int) y0);
     if (R_OPAQUE(fill)) {
-	SetColor(fill, dd);
+	SetColor(fill, gamma, dd);
 	DRAW(gfillrect(_d, xd->fgcolor, r));
 
     }
     if (R_OPAQUE(col)) {
-	SetColor(col, dd);
+	SetColor(col, gamma, dd);
 	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r, 0));
     }
@@ -1867,7 +1867,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	/********************************************************/
 
 static void GA_Circle(double x, double y, double r,
-		       int col, int fill, int lty, double lwd,
+		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd)
 {
     int   ir, ix, iy;
@@ -1887,12 +1887,12 @@ static void GA_Circle(double x, double y, double r,
     iy = (int) y;
     rr = rect(ix - ir, iy - ir, 2 * ir, 2 * ir);
     if (R_OPAQUE(fill)) {
-	SetColor(fill, dd);
+	SetColor(fill, gamma, dd);
 	DRAW(gfillellipse(_d, xd->fgcolor, rr));
     }
     if (R_OPAQUE(col)) {
 	SetLinetype(lty, lwd, dd);
-	SetColor(col, dd);
+	SetColor(col, gamma, dd);
 	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr, 0));
     }
 }
@@ -1906,7 +1906,7 @@ static void GA_Circle(double x, double y, double r,
 	/********************************************************/
 
 static void GA_Line(double x1, double y1, double x2, double y2,
-		     int col, int lty, double lwd,
+		     int col, double gamma, int lty, double lwd,
 		     NewDevDesc *dd)
 {
     int   xx1, yy1, xx2, yy2;
@@ -1919,7 +1919,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     xx2 = (int) x2;
     yy2 = (int) y2;
 
-    SetColor(col, dd),
+    SetColor(col, gamma, dd),
     SetLinetype(lty, lwd, dd);
     if (R_OPAQUE(xd->fgcolor))
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
@@ -1936,7 +1936,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 	/********************************************************/
 
 static void GA_Polyline(int n, double *x, double *y, 
-			    int col, int lty, double lwd,
+			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd)
 {
     char *vmax = vmaxget();
@@ -1951,7 +1951,7 @@ static void GA_Polyline(int n, double *x, double *y,
 	p[i].x = (int) devx;
 	p[i].y = (int) devy;
     }
-    SetColor(col, dd);
+    SetColor(col, gamma, dd);
     SetLinetype(lty, lwd, dd);
     if (R_OPAQUE(xd->fgcolor))
 	DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0));
@@ -1971,7 +1971,7 @@ static void GA_Polyline(int n, double *x, double *y,
 	/********************************************************/
 
 static void GA_Polygon(int n, double *x, double *y, 
-			int col, int fill, int lty, double lwd,
+			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
     char *vmax = vmaxget();
@@ -1991,11 +1991,11 @@ static void GA_Polygon(int n, double *x, double *y,
 	points[i].y = (int) (devy);
     }
     if (R_OPAQUE(fill)) {
-	SetColor(fill, dd);
+	SetColor(fill, gamma, dd);
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
     }
     if (R_OPAQUE(col)) {
-	SetColor(col, dd);
+	SetColor(col, gamma, dd);
 	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0 ));
     }
@@ -2015,7 +2015,7 @@ static void GA_Polygon(int n, double *x, double *y,
 
 static void GA_Text(double x, double y, char *str, 
 		     double rot, double hadj, 
-		     int col, int font, double cex, double ps,
+		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd)
 {
     int   size;
@@ -2031,7 +2031,7 @@ static void GA_Text(double x, double y, char *str,
     x += -xl * cos(rot1) + yl * sin(rot1);
     y -= -xl * sin(rot1) - yl * cos(rot1);
     SetFont(font, size, rot, dd);
-    SetColor(col, dd);
+    SetColor(col, gamma, dd);
     if (R_OPAQUE(xd->fgcolor)) {
 #ifdef NOCLIPTEXT
 	gsetcliprect(xd->gawin, getrect(xd->gawin));
@@ -2181,13 +2181,13 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     xd->basefontsize = ps ;
     dd->startfont = 1;
     dd->startps = ps;
-    /* FIXME: need all devices to initialise "dd->startgamma"
-     * dd->gamma = gamma = gamma;
-     */
+    dd->startlty = LTY_SOLID;
+    dd->startgamma = gamma;
 
     /* Start the Device Driver and Hardcopy.  */
 
-    if (!GA_Open(dd, xd, display, width, height, recording, resize, canvas)) {
+    if (!GA_Open(dd, xd, display, width, height, recording, resize, canvas,
+		 gamma)) {
 	free(xd);
 	return FALSE;
     }

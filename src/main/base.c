@@ -55,8 +55,9 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	ddp->ps = dev->startps;
 	ddp->col = ddp->fg = dev->startcol;
 	ddp->bg = dev->startfill;
-	/* ddp->font = dev->startfont; */
-	/* ddp->lty = dev->startlty; */
+	ddp->font = dev->startfont; 
+	ddp->lty = dev->startlty; 
+	ddp->gamma = dev->startgamma;
 	/* Initialise the gp settings too.
 	 */
 	/* copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp)); */

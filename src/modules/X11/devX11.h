@@ -110,7 +110,7 @@ typedef struct {
 
 newX11Desc *Rf_allocNewX11DeviceDesc(double ps);
 int      Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel, int maxcube, Rboolean setHandlers);
-int      Rf_setNewX11DeviceData(NewDevDesc *dd, newX11Desc *xd);
+int      Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd);
 Rboolean newX11_Open(NewDevDesc *dd, newX11Desc *xd, 
 		     char *dsp, double w, double h, 
 		     double gamma_fac, X_COLORTYPE colormodel, 

@@ -66,20 +66,18 @@ typedef struct {
     Rboolean canRotateText;	/* text can be rotated */
     Rboolean canResizeText;	/* text can be resized */
     Rboolean canClip;		/* Hardware clipping */
+    Rboolean canChangeGamma;    /* can the gamma factor be modified */
     int canHAdj;	        /* Can do at least some horiz adjust of text
 			           0 = none, 1 = {0,0.5, 1}, 2 = [0,1] */
     double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
     double asp;		        /* Pixel aspect ratio = ipr[1]/ipr[0] */
     double cra[2];	        /* Character size in rasters; [0]=x, [1]=y */
-    double startps;             /* Pure hack of convenience.
-				 * Provides a place for a graphics system
-				 * to look for the starting pointsize
-				 * set by a device.
-				 */
+    double startps;             
     int startcol;
     int startfill;
     int startlty;
     int startfont;
+    double startgamma;
     void *deviceSpecific;	/* pointer to device specific parameters */
     Rboolean displayListOn;     /* toggle for display list status */
     SEXP displayList;           /* display list */
@@ -112,7 +110,8 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Circle(double x, double y, double r,
-     *		              int col, int fill, int lty, double lwd,
+     *		              int col, int fill, double gamma,
+     *                        int lty, double lwd,
      *                        NewDevDesc *dd);
      *
      */
@@ -183,7 +182,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Line(double x1, double y1, double x2, double y2,
-     *		            int col, int lty, double lwd,
+     *		            int col, double gamma, int lty, double lwd,
      *                      NewDevDesc *dd);
      *
      */
@@ -222,7 +221,7 @@ typedef struct {
      * An example is ...
      *
      *
-     * static void X11_NewPage(int fill, NewDevDesc *dd);
+     * static void X11_NewPage(int fill, double gamma, NewDevDesc *dd);
      *
      */
     void (*newPage)();
@@ -254,7 +253,8 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Polygon(int n, double *x, double *y, 
-     *		               int col, int fill, int lty, double lwd,
+     *		               int col, int fill, double gamma,
+     *                         int lty, double lwd,
      *                         NewDevDesc *dd);
      *
      */
@@ -266,7 +266,8 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Polyline(int n, double *x, double *y, 
-     *		                int col, int lty, double lwd,
+     *		               int col, double gamma,
+     *                         int lty, double lwd,
      *                          NewDevDesc *dd);
      *
      */
@@ -283,7 +284,8 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Rect(double x0, double y0, double x1, double y1,
-     *		            int col, int fill, int lty, double lwd,
+     *		            int col, int fill, double gamma,
+     *                      int lty, double lwd,
      *                      NewDevDesc *dd);
      *
      */
@@ -323,7 +325,8 @@ typedef struct {
      *
      * static void X11_Text(double x, double y, char *str, 
      *                      double rot, double hadj, 
-     *		            int col, int font, double cex, double ps,
+     *		            int col, double gamma,
+     *                      int font, double cex, double ps,
      * 	                    NewDevDesc *dd);
      *
      */

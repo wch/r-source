@@ -164,27 +164,27 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
 void GENewPage(int fill, GEDevDesc *dd);
 void GELine(double x1, double y1, double x2, double y2, 
-	    int col, int lty, double lwd,
+	    int col, double gamma, int lty, double lwd,
 	    GEDevDesc *dd);
 void GEPolyline(int n, double *x, double *y, 
-		int col, int lty, double lwd,
+		int col, double gamma, int lty, double lwd,
 		GEDevDesc *dd);
 void GEPolygon(int n, double *x, double *y, 
-	       int col, int fill, int lty, double lwd,
+	       int col, int fill, double gamma, int lty, double lwd,
 	       GEDevDesc *dd);
 void GECircle(double x, double y, double radius,
-	     int col, int fill, int lty, double lwd,
+	     int col, int fill, double gamma, int lty, double lwd,
 	     GEDevDesc *dd);
 void GERect(double x0, double y0, double x1, double y1,
-	    int col, int fill, int lty, double lwd,
+	    int col, int fill, double gamma, int lty, double lwd,
 	    GEDevDesc *dd);
 void GEText(double x, double y, char *str,
 	    double xc, double yc, double rot, 
-	    int col, int font, double cex, double ps,
+	    int col, double gamma, int font, double cex, double ps,
 	    GEDevDesc *dd);
 void GEMode(int mode, GEDevDesc* dd);
 void GESymbol(double x, double y, int pch, double size,
-	      int col, int fill, double lty, double lwd,
+	      int col, int fill, double gamma, double lty, double lwd,
 	      int font, double cex, double ps,
 	      GEDevDesc *dd);
 void GEPretty(double *lo, double *up, int *ndiv);

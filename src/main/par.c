@@ -335,7 +335,10 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     else if(streql(what, "gamma")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->gamma = gpptr(dd)->gamma = x;
+	if (((GEDevDesc*) dd)->dev->canChangeGamma)
+	    dpptr(dd)->gamma = gpptr(dd)->gamma = x;
+	else
+	    warningcall(gcall, "gamma cannot be modified on this device");
     }
     else if (streql(what, "lab")) {
 	value = coerceVector(value, INTSXP);
@@ -947,7 +950,10 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if(streql(what, "gamma")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->gamma = x;
+	if (((GEDevDesc*) dd)->dev->canChangeGamma)
+	    gpptr(dd)->gamma = x;
+	else
+	    warningcall(gcall, "gamma cannot be modified on this device");
     }
     else if (streql(what, "lab")) {
 	value = coerceVector(value, INTSXP);

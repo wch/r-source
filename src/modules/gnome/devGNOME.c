@@ -38,7 +38,7 @@
 /* Device driver actions */
 static void GNOME_Activate(NewDevDesc *dd);
 static void GNOME_Circle(double x, double y, double r,
-		       int col, int fill, int lty, double lwd,
+		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
 static void GNOME_Clip(double x0, double x1, double y0, double y1, 
 		     NewDevDesc *dd);
@@ -47,21 +47,21 @@ static void GNOME_Deactivate(NewDevDesc *dd);
 static void GNOME_Hold(NewDevDesc *dd);
 static Rboolean GNOME_Locator(double *x, double *y, NewDevDesc *dd);
 static void GNOME_Line(double x1, double y1, double x2, double y2,
-		     int col, int lty, double lwd,
+		     int col, double gamma, int lty, double lwd,
 		     NewDevDesc *dd);
 static void GNOME_MetricInfo(int c, int font, double cex, double ps,
 			      double* ascent, double* descent,
 			      double* width, NewDevDesc *dd);
 static void GNOME_Mode(int mode, NewDevDesc *dd);
-static void GNOME_NewPage(int fill, NewDevDesc *dd);
+static void GNOME_NewPage(int fill, double gamma, NewDevDesc *dd);
 static void GNOME_Polygon(int n, double *x, double *y, 
-			int col, int fill, int lty, double lwd,
+			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
 static void GNOME_Polyline(int n, double *x, double *y, 
-			    int col, int lty, double lwd,
+			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd);
 static void GNOME_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, int lty, double lwd,
+		     int col, int fill, double gamma, int lty, double lwd,
 		     NewDevDesc *dd);
 static void GNOME_Resize(NewDevDesc *dd);
 static void GNOME_Size(double *left, double *right,
@@ -71,7 +71,7 @@ static double GNOME_StrWidth(char *str, int font,
 			      double cex, double ps, NewDevDesc *dd);
 static void GNOME_Text(double x, double y, char *str, 
 		     double rot, double hadj, 
-		     int col, int font, double cex, double ps,
+		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd);
 static Rboolean GNOME_Open(NewDevDesc*, gnomeDesc*, char*, double, double);
 
@@ -398,7 +398,7 @@ static GnomeUIInfo graphics_toolbar[] =
   GNOMEUIINFO_END
 };
 
-static void GNOME_NewPage(int fill, NewDevDesc *dd)
+static void GNOME_NewPage(int fill, double gamma, NewDevDesc *dd)
 {
   GnomeCanvasItem *group;
   gnomeDesc *gd = (gnomeDesc*) dd->deviceSpecific;
@@ -486,7 +486,8 @@ GNOME_Open(NewDevDesc *dd, gnomeDesc *gd, char *dsp, double w, double h)
 
     /* create new plot area on canvas */
     /* FIXME: We should have a canvas color argument */
-    GNOME_NewPage(R_RGB(255,255,255), dd);
+    /* gamma is defaulted to 1 here */
+    GNOME_NewPage(R_RGB(255,255,255), 1, dd);
 
     /* place and realize the canvas */
     gnome_app_set_contents(GNOME_APP(gd->window), gd->canvas);
@@ -687,7 +688,7 @@ static void GNOME_Deactivate(NewDevDesc *dd)
 /* drawing stuff */
 
 static void GNOME_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, int lty, double lwd,
+		     int col, int fill, double gamma, int lty, double lwd,
 		     NewDevDesc *dd)
 {
     double tmp;
@@ -727,7 +728,7 @@ static void GNOME_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void GNOME_Circle(double x, double y, double r,
-		       int col, int fill, int lty, double lwd,
+		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd)
 {
     double x1, y1, x2, y2;
@@ -759,7 +760,7 @@ static void GNOME_Circle(double x, double y, double r,
 }
 
 static void GNOME_Line(double x1, double y1, double x2, double y2,
-		     int col, int lty, double lwd,
+		     int col, double gamma, int lty, double lwd,
 		     NewDevDesc *dd)
 {
     GnomeCanvasPoints *points;
@@ -794,7 +795,7 @@ static void GNOME_Line(double x1, double y1, double x2, double y2,
 }
 
 static void GNOME_Polyline(int n, double *x, double *y, 
-			    int col, int lty, double lwd,
+			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd)
 {
     int i;
@@ -836,7 +837,7 @@ static void GNOME_Polyline(int n, double *x, double *y,
 }
 
 static void GNOME_Polygon(int n, double *x, double *y, 
-			int col, int fill, int lty, double lwd,
+			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
     int i;
@@ -873,7 +874,7 @@ static void GNOME_Polygon(int n, double *x, double *y,
 
 static void GNOME_Text(double x, double y, char *str, 
 		     double rot, double hadj, 
-		     int col, int font, double cex, double ps,
+		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd)
 {
   double affine[6] = {1, 0, 0, 1, 0, 0};
@@ -988,11 +989,14 @@ Rboolean GnomeDeviceDriver(DevDesc *odd, char *display,
     ps = 2 * (ps / 2);
     gd->fontface = -1;
     gd->fontsize = -1;
-    /*    dd->startfont = 1; */
+    
+    dd->startfont = 1; 
     dd->startps = ps;
     dd->startcol = 0;
     dd->startfill = NA_INTEGER;
-    /* dd->startlty = LTY_SOLID; */
+    dd->startlty = LTY_SOLID; 
+    dd->startgamma = 1;
+
     /* device driver start */
     if(!GNOME_Open(dd, gd, display, width, height)) {
 	free(gd);
@@ -1046,6 +1050,7 @@ Rboolean GnomeDeviceDriver(DevDesc *odd, char *display,
     dd->canResizeText= TRUE;
     dd->canClip = FALSE;/* FIXME: really? */
     dd->canHAdj = 0;/* not better? {0, 0.5, 1} */
+    dd->canChangeGamma = FALSE;
 
     dd->ask = FALSE;
 

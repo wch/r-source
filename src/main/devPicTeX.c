@@ -154,7 +154,7 @@ static char *fontname[] = {
 
 static void PicTeX_Activate(NewDevDesc *dd);
 static void PicTeX_Circle(double x, double y, double r,
-		       int col, int fill, int lty, double lwd,
+		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
 static void PicTeX_Clip(double x0, double x1, double y0, double y1, 
 		     NewDevDesc *dd);
@@ -163,18 +163,18 @@ static void PicTeX_Deactivate(NewDevDesc *dd);
 static void PicTeX_Hold(NewDevDesc *dd);
 static Rboolean PicTeX_Locator(double *x, double *y, NewDevDesc *dd);
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
-		     int col, int lty, double lwd,
+		     int col, double gamma, int lty, double lwd,
 		     NewDevDesc *dd);
 static void PicTeX_MetricInfo(int c, int font, double cex, double ps,
 			      double* ascent, double* descent,
 			      double* width, NewDevDesc *dd);
 static void PicTeX_Mode(int mode, NewDevDesc *dd);
-static void PicTeX_NewPage(int fill, NewDevDesc *dd);
+static void PicTeX_NewPage(int fill, double gamma, NewDevDesc *dd);
 static void PicTeX_Polygon(int n, double *x, double *y, 
-			int col, int fill, int lty, double lwd,
+			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, int lty, double lwd,
+		     int col, int fill, double gamma, int lty, double lwd,
 		     NewDevDesc *dd);
 static void PicTeX_Size(double *left, double *right,
 		     double *bottom, double *top,
@@ -183,7 +183,7 @@ static double PicTeX_StrWidth(char *str, int font,
 			      double cex, double ps, NewDevDesc *dd);
 static void PicTeX_Text(double x, double y, char *str, 
 		     double rot, double hadj, 
-		     int col, int font, double cex, double ps,
+		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd);
 static Rboolean PicTeX_Open(NewDevDesc*, picTeXDesc*);
 
@@ -289,7 +289,7 @@ static void PicTeX_Clip(double x0, double x1, double y0, double y1,
 
 	/* Start a new page */
 
-static void PicTeX_NewPage(int fill, NewDevDesc *dd)
+static void PicTeX_NewPage(int fill, double gamma, NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
@@ -412,7 +412,7 @@ static void PicTeX_ClipLine(double x0, double y0, double x1, double y1,
 }
 
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
-		     int col, int lty, double lwd,
+		     int col, double gamma, int lty, double lwd,
 		     NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
@@ -436,7 +436,7 @@ static void PicTeX_Line(double x1, double y1, double x2, double y2,
 }
 
 static void PicTeX_Polyline(int n, double *x, double *y, 
-			    int col, int lty, double lwd,
+			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd)
 {
     double x1, y1, x2, y2;
@@ -480,7 +480,7 @@ static double PicTeX_StrWidth(char *str, int font,
 
 /* Possibly Filled Rectangle */
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, int lty, double lwd,
+		     int col, int fill, double gamma, int lty, double lwd,
 		     NewDevDesc *dd)
 {
     double x[4], y[4];
@@ -489,11 +489,11 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
     x[1] = x0; y[1] = y1;
     x[2] = x1; y[2] = y1;
     x[3] = x1; y[3] = y0;
-    PicTeX_Polygon(4, x, y, col, fill, lty, lwd, dd);
+    PicTeX_Polygon(4, x, y, col, fill, gamma, lty, lwd, dd);
 }
 
 static void PicTeX_Circle(double x, double y, double r,
-		       int col, int fill, int lty, double lwd,
+		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
@@ -504,7 +504,7 @@ static void PicTeX_Circle(double x, double y, double r,
 }
 
 static void PicTeX_Polygon(int n, double *x, double *y, 
-			int col, int fill, int lty, double lwd,
+			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
     double x1, y1, x2, y2;
@@ -569,7 +569,7 @@ static void textext(char *str, picTeXDesc *ptd)
 
 static void PicTeX_Text(double x, double y, char *str, 
 		     double rot, double hadj, 
-		     int col, int font, double cex, double ps,
+		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd)
 {
     int size;
@@ -620,7 +620,11 @@ Rboolean internalPicTeXDeviceDriver(NewDevDesc *dd, char *filename,
 
     dd->startfill = str2col(bg);
     dd->startcol = str2col(fg);
-    
+    dd->startps = 10;
+    dd->startlty = 0;
+    dd->startfont = 1;
+    dd->startgamma = 1;
+
     dd->newDevStruct = 1;
     
     dd->activate = PicTeX_Activate;
@@ -657,7 +661,6 @@ Rboolean internalPicTeXDeviceDriver(NewDevDesc *dd, char *filename,
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
 
-    dd->startps = 10;
     dd->cra[0] =	 (6.0/12.0) * 10.0;
     dd->cra[1] =	(10.0/12.0) * 10.0;
 
@@ -680,6 +683,7 @@ Rboolean internalPicTeXDeviceDriver(NewDevDesc *dd, char *filename,
     dd->canResizeText = TRUE;
     dd->canClip = TRUE;
     dd->canHAdj = 0;
+    dd->canChangeGamma = FALSE;
 
     ptd->lty = 1;
     ptd->pageno = 0;
