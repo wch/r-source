@@ -80,6 +80,7 @@ Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
 	unzip -qo ../$(PREFIX)h
 	unzip -qo ../$(PREFIX)ch -d $(PREFIX)ch
 	unzip -qo ../$(PREFIX)d1 -d $(PREFIX)d1
+	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-admin.pdf
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-exts.pdf
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-lang.pdf
 	for p in $(RECOMMENDED); do \
@@ -87,7 +88,7 @@ Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
 	done
 	rm -rf $(PREFIX)/library/*/html $(PREFIX)/library/*/latex
 	rm -rf $(PREFIX)/library/rpart/Manuscript
-	rm -rf $(PREFIX)/library/survival5/doc
+	rm -rf $(PREFIX)/library/survival/doc
 	perl JRsmall.pl $(PREFIX)
 
 miniR.exe: Rsmall.iss
