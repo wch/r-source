@@ -155,7 +155,7 @@ library <-
 
 library.dynam <-
   function (chname, package = .packages(), lib.loc = .lib.loc,
-	    verbose = getOption("verbose"), file.ext = .Platform$dynlib.ext)
+	    verbose = getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
@@ -173,7 +173,7 @@ library.dynam <-
     }
     if (verbose)
       cat("now dyn.load(", file, ")..\n", sep = "")
-    dyn.load(file)
+    dyn.load(file, ...)
     assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
   }
   invisible(.Dyn.libs)

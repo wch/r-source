@@ -11,6 +11,13 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
     through.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through.}
+  \item{verbose}{a logical value  indicating whether an announcement is printed
+on the console before loading the shared library. The default value is taken
+from the verbose entry in the system options.}
+  \item{file.ext}{the extension to append to the file name to specify the library to 
+be loaded. This defaults to the appropriate value for the operating system.}
+ \item{...}{additional arguments needed by some libraries that are passed to the 
+call to \code{\link{dyn.load}} to control how the library is loaded.}
 }
 \description{
   Load the specified file of compiled code if it has not been loaded already.
