@@ -82,6 +82,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 	    ## the actual copy has to be done by C code to avoid forcing
             ## promises that might have been created using delay().
             .Internal(lib.fixup(loadenv, env))
+            ## save the package name in the environment
+            assign(".packageName", package, envir = env)
             ## run .First.lib
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
