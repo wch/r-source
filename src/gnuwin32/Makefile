@@ -104,7 +104,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 
-fixfiles:
+fixfiles: docfiles
 	@$(MKDIR) -p ../../bin
 	@$(MAKE) --no-print-directory -C ./fixed
 
@@ -335,6 +335,7 @@ distclean veryclean: clean clean-recommended
 	@for pkg in $(ALLPACKAGES); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
+	$(RM) rw-FAQ fixed/html/rw-FAQ.html INSTALL
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
@@ -416,7 +417,7 @@ bindist: tcl bitmapdll docfiles
 		../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
-	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
+	$(CP) -p rw-FAQ $(RPREFIX)
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
 	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
 # convert docs and batch files to CRLF: might already be on Windows, though.

@@ -12,7 +12,7 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 INSTALL: INSTALL.in ../../VERSION RWVERSION
 	$(SED) $(SEDVER) INSTALL.in > INSTALL
 
-FAQs: rw-faq fixed/html/rw-FAQ.html
+FAQs: rw-FAQ fixed/html/rw-FAQ.html
 
 fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
@@ -25,6 +25,6 @@ fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@mv -f tmp2.html $@
 	@rm tmp.texi tmp.html
 
-rw-faq: rw-FAQ.texi ../../VERSION RWVERSION
+rw-FAQ: rw-FAQ.texi ../../VERSION RWVERSION
 	$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@
