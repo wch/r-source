@@ -29,9 +29,7 @@
 #define devNumber		Rf_devNumber
 #define DevNull			Rf_DevNull
 #define inhibitDisplayList	Rf_inhibitDisplayList
-#ifndef Macintosh
 #define InitGraphics		Rf_InitGraphics
-#endif
 #define GetDevice		Rf_GetDevice
 #define KillAllDevices		Rf_KillAllDevices
 #define KillDevice		Rf_KillDevice

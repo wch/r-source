@@ -1,7 +1,7 @@
 #   File:       Makefile.mac
 #   Target:     modregLib
 #   Created:    Jago, Aug 2001, Stefano M. Iacus
-#   Updated:	Jago, Jan 2002
+#   Updated:	Jago, Mar 2003
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -29,7 +29,7 @@ Includes        = -i ::::include: ¶
 				  
 Sym-PPC         = -sym off
 
-PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
+PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23,7 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
                   -d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power -enum int
 				  
 ### Library directory ###
@@ -42,6 +42,7 @@ SrcFiles        =  	bsplvd.c ¶
 					bvalue.c ¶
 					bvalus.c ¶
 					init.c ¶
+					isoreg.c ¶
 					ksmooth.c ¶
 					loessc.c ¶
 					loessf.c ¶
@@ -51,7 +52,9 @@ SrcFiles        =  	bsplvd.c ¶
 					sgram.c ¶
 					sinerp.c ¶
 					sslvrg.c ¶
+					Srunmed.c ¶
 					stxwx.c ¶
+					Trunmed.c ¶
 # 					xxxsbart_com.c ¶
 					::::main:xxxpr.c
 
@@ -61,6 +64,7 @@ ObjFiles-PPC    =   bsplvd.o ¶
 					bvalue.o ¶
 					bvalus.o ¶
 					init.o ¶
+					isoreg.o ¶
 					ksmooth.o ¶
 					loessc.o ¶
 					loessf.o ¶
@@ -69,8 +73,10 @@ ObjFiles-PPC    =   bsplvd.o ¶
 					sbart.o ¶
 					sgram.o ¶
 					sinerp.o ¶
+					Srunmed.o ¶
 					sslvrg.o ¶
 					stxwx.o ¶
+					Trunmed.o ¶
 #					xxxsbart_com.o ¶
                     ::::main:xxxpr.o
 
@@ -152,6 +158,7 @@ stxwx.c  Ä stxwx.f
 ::::main:xxxpr.c Ä ::::main:xxxpr.f
  
 init.o Ä init.c
+isoreg.o Ä isoreg.c
 ksmooth.o Ä  ksmooth.c
 loessc.o Ä loessc.c
 bsplvd.o Ä bsplvd.c
@@ -165,6 +172,8 @@ sgram.o  Ä sgram.c
 sinerp.o Ä sinerp.c
 sslvrg.o Ä sslvrg.c
 stxwx.o  Ä stxwx.c
+Srunmed.o Ä Srunmed.c
+Trunmed.o Ä Trunmed.c
 #xxxsbart_com.o Ä xxxsbart_com.c
 ::::main:xxxpr.o Ä ::::main:xxxpr.c
 

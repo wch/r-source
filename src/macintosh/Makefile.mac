@@ -29,7 +29,7 @@ profiles Ä {RHOME}library:base:R:Rprofile
 
 ## ------------- library -----------
 PACKAGES =  base ctest eda lqs methods modreg mva nls splines stepfun ts tools
-LIBF = ctest eda lqs methods modreg mva nls splines ts
+LIBF = ctest eda lqs methods modreg mva nls splines ts tools
 DATA = base modreg mva nls ts
 DEMO = base eda
 MODULES = vfonts lapack
@@ -88,8 +88,10 @@ datafiles Ä $OutOfDate
 	   if ! `Exists -d {RHOME}library:{pkg}:data`
 	    NewFolder {RHOME}library:{pkg}:data
 	   end
-	   Duplicate -y ::library:{pkg}:data:00Index ¶
-	    ::library:{pkg}:data:Å.Å {RHOME}library:{pkg}:data
+       if  `Exists -d ::library:{pkg}:data:00Index`
+	    Duplicate -y ::library:{pkg}:data:00Index {RHOME}library:{pkg}:data
+	   end
+	   Duplicate -y ::library:{pkg}:data:Å.Å {RHOME}library:{pkg}:data
 	  end
 	 end 
 
@@ -127,7 +129,7 @@ help Ä $OutOfDate
 	for pkg in {PACKAGES}
 	 Begin
 	  SetDirectory {RHOME}share:perl
-	  perl  build-help-mac.pl -txt -html -example -latex :::src:library:{pkg} :::library
+	  perl  build-help-mac.pl -txt -html -example :::src:library:{pkg} :::library
 	  perl Rd2contents.pl --os="mac" >:::library:{pkg}:CONTENTS :::src:library:{pkg}
       SetDirectory :::src:macintosh:
       if {pkg} == base

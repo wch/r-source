@@ -238,7 +238,7 @@ echo "### Generates Rconfig.h" >>MakeR
 echo Rconfig.h Ä ::include:config.h config.mac.h >> MakeR
 echo '	' Duplicate -y config.mac.h ::include:config.h >>MakeR
 echo "	 execute :tools:GETCONFIG > Rconfig.h" >> MakeR
-echo '	' Duplicate -y ::include:Rmath.h.in ::include:Rmath.h >>MakeR
+echo '	' Duplicate -y ::include:Rmath.h0.in ::include:Rmath.h >>MakeR
 echo " " >>MakeR
 echo " " >>MakeR
 

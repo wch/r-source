@@ -56,6 +56,7 @@ struct dirent {
     char            d_name[NAME_MAX + 1];
 };
 
+#ifndef DIR
 typedef struct {
     short           ioFDirIndex;
     short           ioVRefNum;
@@ -63,7 +64,7 @@ typedef struct {
     short           flags;
     struct dirent   currEntry;
 } DIR;
-
+#endif
 
 #define direct dirent
 

@@ -1,7 +1,7 @@
 #   File:       Makefile.mac
 #   Target:     lapackLib
 #   Created:    Jago, Aug 2001, Stefano M. Iacus
-#   Updated:	Jago, Jan 2002
+#   Updated:	Jago, Mar 2003
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -39,26 +39,41 @@ ModDir     		= ::::modules:
 ### Source Files ###
 
 SrcFiles        =  ¶
-				  blas2.c ¶
 				  cmplx.c ¶
 				  cmplxblas.c ¶
-				  double.c ¶
-				  Lapack.c 
+				  dlapack0.c ¶
+				  dlapack1.c ¶
+				  dlapack2.c ¶
+				  dlapack3.c ¶
+				  Lapack.c ¶
+				  rgeev.c ¶
+				  rsyev.c
+				  
 
-FortFiles		=   blas2.f ¶
+FortFiles		=   ¶
 					cmplx.f ¶
 					cmplxblas.f ¶
-					double.f
+				  dlapack0.f ¶
+				  dlapack1.f ¶
+				  dlapack2.f ¶
+				  dlapack3.f ¶
+				  rgeev.f ¶
+				  rsyev.f
+				  
 
 
 ### Object Files ###
 
 ObjFiles-PPC    =  ¶
-				  blas2.o ¶
 				  cmplx.o ¶
 				  cmplxblas.o ¶
-				  double.o ¶
-				  Lapack.o 
+				  dlapack0.o ¶
+				  dlapack1.o ¶
+				  dlapack2.o ¶
+				  dlapack3.o ¶
+				  Lapack.o ¶
+				  rgeev.o ¶
+				  rsyev.o
 
 ### Libraries ###
 
@@ -112,15 +127,23 @@ LibFiles-PPC    =  ¶
 ### Required Dependencies ###
 
 # f2c dependencies
-blas2.c Ä blas2.f
 cmplx.c Ä cmplx.f
 cmplxblas.c Ä cmplxblas.f
-double.c Ä double.f
+dlapack0.c Ä dlapack0.f
+dlapack1.c Ä dlapack1.f
+dlapack2.c Ä dlapack2.f
+dlapack3.c Ä dlapack3.f
+rgeev.c Ä rgeev.f
+rsyev.c Ä rsyev.f
 
-blas2.o  Ä  blas2.c
-cmplx.o  Ä  cmplx.c
-cmplxblas.o  Ä  cmplxblas.c
-double.o  Ä  double.c
+cmplx.o Ä cmplx.c
+cmplxblas.o Ä cmplxblas.c
+dlapack0.o Ä dlapack0.c
+dlapack1.o Ä dlapack1.c
+dlapack2.o Ä dlapack2.c
+dlapack3.o Ä dlapack3.c
+rgeev.o Ä rgeev.c
+rsyev.o Ä rsyev.c
 Lapack.o  Ä  Lapack.c
 
 
