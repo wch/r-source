@@ -63,6 +63,10 @@ Rconfig.h: $(top_srcdir)/VERSION config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
+Rmath.h: $(srcdir)/Rmath.h.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
 install: installdirs
 	@for d in $(SUBDIRS); do \
