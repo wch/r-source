@@ -292,6 +292,13 @@ static void menukill(control m)
     UserBreak = TRUE;
 }
 
+#ifdef DEBUG
+static void menudebug(control m)
+{
+    asm("int $3");
+}
+#endif
+
 static void menuls(control m)
 {
     if (!ConsoleAcceptCmd) return;
@@ -913,6 +920,9 @@ int setupui()
 
     MCHECK(newmenu("Misc"));
     MCHECK(newmenuitem("Stop current computation           \tESC", 0, menukill));
+#ifdef DEBUG
+    MCHECK(newmenuitem("Break to debugger", 0, menudebug));
+#endif
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mlazy = newmenuitem("Buffered output", 'W', menulazy));
     MCHECK(newmenuitem("-", 0, NULL));
