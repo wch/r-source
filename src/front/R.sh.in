@@ -8,6 +8,8 @@ ARG=$1
 case ${ARG} in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
+    CMD)
+	shift; PATH=$PATH:$RHOME/cmd:$RHOME/etc exec $* ;;
     SHLIB|COMPILE|INSTALL|REMOVE)
 	shift; exec sh ${RHOME}/etc/${ARG} $* ;;
     -d|--debugger)
