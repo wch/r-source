@@ -286,8 +286,11 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
+/* Unfortunately glibc and Solaris diff in the const in the iopen decl */
 #ifdef HAVE_ICONV
+#define const
 #include <iconv.h>
+#undef const
 #endif
 
 /* FIXME: remove line limit */
@@ -299,7 +302,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, x;
     iconv_t obj;
     int i;
-    const char *inbuf; /* Solaris headers care here */
+    char *inbuf; /* Solaris headers have const char*  here */
     char *outbuf, buff[BUFSIZE];
     size_t inb, outb, res;
     
