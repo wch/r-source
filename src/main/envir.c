@@ -84,6 +84,11 @@
  *
  * LT */
 
+/* This is needed for now for the write barrier test to work.  But
+   since it disables testing of this file it should either be removed
+   or at least limited to code that really needs it. LT */
+#define USE_RINTERNALS
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
