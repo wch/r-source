@@ -121,7 +121,6 @@ NEW FEATURES
 	rudimentary, since the data editor really only knows about
 	numeric and character vectors.
 
-<<<<<<< NEWS
     o   Modifications to the data editor so that one can use ESC to
         quit a partial cell entry and entering an empty cell causes
         the element to be set to NA.
@@ -143,6 +142,9 @@ NEW FEATURES
 	trivial)
 
     o	optimize() can now be used recursively.
+
+    o	RNGkind can now set the algorithm used to generate normal
+	random variates from uniforms.
 
 
 BUG FIXES
