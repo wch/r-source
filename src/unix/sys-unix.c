@@ -75,39 +75,12 @@ FILE *R_OpenInitFile(void)
      *   R_ChooseFile is interface-specific
      */
 
+char *R_ExpandFileName_readline(char *s, char *buff);  /* sys-std.c */
 
 static char newFileName[PATH_MAX];
-#ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_READLINE_H
-#  include <readline/readline.h>
-# else
-extern char *tilde_expand (const char *);
-# endif
-
-/* tilde_expand (in libreadline) mallocs storage for its return value.
-   The R entry point does not require that storage to be freed, so we
-   copy the value to a static buffer, to void a memory leak in R<=1.6.0.
-
-   This is not thread-safe, but as R_ExpandFileName is a public entry
-   point (in R-exts.texi) it will need to deprecated and replaced by a
-   version which takes a buffer as an argument.
-
-   BDR 10/2002
-*/
-
-char *R_ExpandFileName(char *s)
-{
-    char *s2 = tilde_expand(s);
-
-    strncpy(newFileName, s2, PATH_MAX);
-    if(strlen(s2) >= PATH_MAX) newFileName[PATH_MAX-1] = '\0';
-    free(s2);
-    return newFileName;
-}
-#else /* not HAVE_LIBREADLINE */
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
-char *R_ExpandFileName(char *s)
+static char *R_ExpandFileName_unix(char *s, char *buff)
 {
     char *p;
 
@@ -122,12 +95,32 @@ char *R_ExpandFileName(char *s)
 	    HaveHOME = 0;
     }
     if(HaveHOME > 0 && (strlen(UserHOME) + strlen(s+1) < PATH_MAX)) {
-	strcpy(newFileName, UserHOME);
-	strcat(newFileName, s+1);
-	return newFileName;
+	strcpy(buff, UserHOME);
+	strcat(buff, s+1);
+	return buff;
     } else return s;
 }
-#endif /* not HAVE_LIBREADLINE */
+
+/* tilde_expand (in libreadline) mallocs storage for its return value.
+   The R entry point does not require that storage to be freed, so we
+   copy the value to a static buffer, to void a memory leak in R<=1.6.0.
+
+   This is not thread-safe, but as R_ExpandFileName is a public entry
+   point (in R-exts.texi) it will need to deprecated and replaced by a
+   version which takes a buffer as an argument.
+
+   BDR 10/2002
+*/
+
+extern Rboolean UsingReadline;
+
+char *R_ExpandFileName(char *s)
+{
+#ifdef HAVE_LIBREADLINE
+    if(UsingReadline) return R_ExpandFileName_readline(s, newFileName);
+#endif
+    return R_ExpandFileName_unix(s, newFileName);
+}
 
 
 /*

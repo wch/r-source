@@ -173,6 +173,10 @@ NEW FEATURES
 
     o	Hashing has been tweaked to use half as much memory as before.
 
+    o   Readline is not used for tilde expansion when R is run with
+	--no-readline, nor from embedded applications.  Then "~name"
+	is no longer expanded, but "~" still is.
+
 
 UTILITIES
 

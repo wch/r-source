@@ -388,7 +388,19 @@ typedef void rl_vcpfunc_t (char *);
 extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
 extern void rl_callback_handler_remove(void);
 extern void rl_callback_read_char(void);
+extern char *tilde_expand (const char *);
 # endif
+
+char *R_ExpandFileName_readline(char *s, char *buff)
+{
+    char *s2 = tilde_expand(s);
+
+    strncpy(buff, s2, PATH_MAX);
+    if(strlen(s2) >= PATH_MAX) buff[PATH_MAX-1] = '\0';
+    free(s2);
+    return buff;
+}
+
 
 # ifdef HAVE_READLINE_HISTORY_H
 #  include <readline/history.h>
