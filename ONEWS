@@ -2185,7 +2185,7 @@ NEW FEATURES
     o	*, - and / work more generally on "difftime" objects, which now
 	have a diff() method.
 
-    o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
+    o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstrom.
 
     o	dump() only quotes object names in the file where necessary.
 
@@ -3352,7 +3352,7 @@ NEW FEATURES
 
     o	The postscript() and PDF() drivers now allow the title to be set.
 
-    o	New function power.anova.test(), contributed by Claus EkstrÅ¯m.
+    o	New function power.anova.test(), contributed by Claus Ekstrom.
 
     o	power.t.test() now behaves correctly for negative delta in the
 	two-tailed case.
@@ -3436,7 +3436,7 @@ NEW FEATURES
     o	symnum() has a new logical argument `abbr.colnames'.
 
     o	summary(<logical>) now mentions NA's as suggested by
-	GÅˆran BrostrÅˆm.
+	Goran Brostrom.
 
     o	summaryRprof() now prints times with a precision appropriate
 	to the sampling interval, rather than always to 2dp.
@@ -4200,7 +4200,7 @@ NEW FEATURES
 	estimates of a fitted model.
 
     o	duplicated() and unique() have methods for matrices and arrays
-	(based on ideas from Jens OehlschlÅ‰gel).
+	(based on ideas from Jens Oehlschlaegel).
 
     o	Internally memory sizes and counts of cons cells are now stored
 	in unsigned longs.  This allows memory limits to be set and
@@ -4770,7 +4770,7 @@ BUG FIXES
 	DST. (PR#1543)
 
     o	tcltk package didn't work with tcl8.0.x.  Compatibility code
-	inserted (PR#1640, thanks to RenÅÈ Bertin for helping out with
+	inserted (PR#1640, thanks to Rene' Bertin for helping out with
 	this).
 
     o	selfStart() {pkg "nls"} now works again when parameter names are
