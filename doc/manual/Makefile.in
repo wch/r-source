@@ -114,9 +114,9 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 ## <NOTE>
 ## We do not make sure echo does not interpret backslash escapes.
 ## Could be trouble ...
-	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
+	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
@@ -168,9 +168,9 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	fi
 	@echo "DVI/LaTeX documentation: full reference index ..."
 	@rm -f *.aux fullrefman.toc fullrefman.ind stamp-fullrefman-dvi
-	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
+	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
 	  echo "\\part{}"; \
@@ -205,7 +205,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=`$(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION`; \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
-	if test "$${R_PAPERSIZE-$(R_PAPERSIZE)}" = "a4"; then \
+	if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
 	fi
 
@@ -244,9 +244,9 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 ## <NOTE>
 ## We do not make sure echo does not interpret backslash escapes.
 ## Could be trouble ...
-	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
+	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
@@ -274,9 +274,9 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	fi
 	@echo "PDF/LaTeX documentation: full reference index ..."
 	@rm -f *.aux fullrefman.toc fullrefman.ind stamp-fullrefman-pdf
-	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
+	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
 	  echo "\\part{}"; \
