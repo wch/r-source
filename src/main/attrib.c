@@ -703,6 +703,7 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nvalues <= 0)
 	return R_NilValue;
     /* FIXME */
+    PROTECT(namesattr);
     PROTECT(value = allocVector(VECSXP, nvalues));
     PROTECT(names = allocVector(STRSXP, nvalues));
     nvalues = 0;
@@ -722,7 +723,7 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     setAttrib(value, R_NamesSymbol, names);
     SET_NAMED(value, NAMED(CAR(args)));
-    UNPROTECT(2);
+    UNPROTECT(3);
     return value;
 }
 
