@@ -62,9 +62,12 @@
 #define IS_100DPI ((int) (1./pixelHeight() + 0.5) == 100)
 
 
-#define X_BELL_VOLUME 50 /* integer between -100 and 100 for the volume 
+#define X_BELL_VOLUME 0 /* integer between -100 and 100 for the volume 
                             of the bell in locator. */
-
+			/* Note: This is in relation to 
+			the general bell level. Was 50, but if > 0
+			then "xset b off" will not disable the
+			locator bell - pd 2002-3-11 */
 /* a colour used to represent the background on png if transparent
    NB: must be grey as used as RGB and BGR
 */

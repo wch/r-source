@@ -356,6 +356,9 @@ BUG FIXES
         locale information.  Now only LC_CTYPE, LC_COLLATE and LC_TIME
         are determined by the user's environment variables (PR#1321)
 
+    o   In X11, locator() would sound the bell even if "xset b off"
+        had been set.
+
 
 	**************************************************
 	*						 *
