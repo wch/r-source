@@ -335,9 +335,13 @@ NEW FEATURES
     o	The edit.matrix() and edit.data.frame() editors can now handle
 	logical data.
 
-    o   Classes and methods can be `sealed', by using the
+    o	Formal classes and methods can be `sealed', by using the
         corresponding argument to setClass or setMethod.  New
         functions isSealedClass() and isSealedMethod() test sealing.
+
+    o   unique.default() now works for POSIXct objects, and hence so
+	does factor().
+
 
 
 INSTALLATION CHANGES
