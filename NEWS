@@ -24,6 +24,10 @@ BUG FIXES
 
     o   model.frame/na.omit bug for matrices and Surv objects.
 
+    o   mean( <data.frame> ) now doesn't return sum(.) anymore.
+
+    o   str(.) doesn't give extraneous "..." in rare cases anymore.
+
 
 		CHANGES IN R VERSION 0.63.1
 
