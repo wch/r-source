@@ -10,7 +10,8 @@ rw1040
 If --max-mem-size is given a value greater than 256M, the requested
 maximum memory is reserved (but not allocated) initially.  This will
 enable the memory to be managed more efficiently, but does increase
-the chance that R cannot be started.
+the chance that R cannot be started.  There appears to be an effective
+limit of about 1700M, at least under Windows 2000.
 
 memory.limit() can now increase the memory limit of the current session.
 This will not work if the limit is currently reached!
@@ -21,23 +22,17 @@ internet2.dll (see changes for rw1030) can be selected by the
 The miniR* distribution has grown to seven floppies, and the html
 files no longer fit on a floppy.
 
-libR.a is no longer used (except when cross-building) as the
-recommended compiler can import directly from R.dll.
-
-globalvar.h is no longer used: the header files now declare imported
-variables.
-
 The background colour of a windows() window (outside the device
 region) is now in the `Application Background' colour of the current
 Windows colour scheme.  (It used to be LightGrey.)
 
 Gamma correction is now applied to the background colour of a graphics
 window.  (It has long been applied to the foreground colours.)  Users
-of LCD screens may want to set something like par(gamma=2) after
-launching a graphics window.
+of LCD screens may want to set something like gamma=2 when launching a
+graphics window.
 
 The canvas colour of a windows() window can now be specified.  This is
-not gamma-corrected, and defaults to "white".
+is gamma-corrected, and defaults to "white".
 
 savePlot() now supports saving to PDF.
 
@@ -49,14 +44,21 @@ plotting to/saving to most devices.  The png() device does support
 transparent backgrounds, but this is not accessible through the 
 menus nor the savePlot() function.
 
-Building under (repaired) Cygwin -mno-cygwin environments is no longer
-supported.  You probably do need the compiler system recommended for
-rw1031 or later.
-
 The console pop-up was checking the wrong item for `Buffered output'.
 
 Installing a package now first removes the data and demo directories
 if they exist.
+
+Building under (repaired) Cygwin -mno-cygwin environments is no longer
+supported.  You probably do need the compiler system recommended for
+rw1031 or later.
+
+libR.a is no longer used (except when cross-building) as the
+recommended compiler can import directly from R.dll.
+
+globalvar.h is no longer used: the header files now declare imported
+variables.  This make it essential to use the R header files rather
+than copying entries from them.
 
 
 

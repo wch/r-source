@@ -512,7 +512,7 @@ width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x
 ============================================================
 
 You may want to do this from within a function, for example when calling
-`idenitfy' or `readline'.  Use the function `bringToTop()'.  With its
+`identify' or `readline'.  Use the function `bringToTop()'.  With its
 default argument it brings the active graphics window to the top and
 gives it focus.  With argument `-1' it brings the console to the top
 and gives it focus.
@@ -589,7 +589,7 @@ buffer and so update the console.
 =====================================================
 
 They only *seem* to be truncated: that $ at the end indicates you can
-scroll the window to see the rest of the message.  Use the horizontal
+scroll the window to see the rest of the line.  Use the horizontal
 scrollbar or the <CTRL + left/right arrow> keys to scroll horizontally.
 
 

@@ -614,7 +614,7 @@ modes.  In fact it is a 21" monitor and 400mm x 300mm!
 @section How do I move focus to a graphics window or the console?
 
 You may want to do this from within a function, for example when calling
-@samp{idenitfy} or @samp{readline}.  Use the function
+@samp{identify} or @samp{readline}.  Use the function
 @samp{bringToTop()}.  With its default argument it brings the active
 graphics window to the top and gives it focus.  With argument @samp{-1}
 it brings the console to the top and gives it focus.
@@ -717,7 +717,7 @@ the buffer and so update the console.
 @section Long lines in the console or pager are truncated.
 
 They only @strong{seem} to be truncated: that $ at the end indicates you
-can scroll the window to see the rest of the message.  Use the horizontal
+can scroll the window to see the rest of the line.  Use the horizontal
 scrollbar or the @key{CTRL + left/right arrow} keys to scroll horizontally.
 
 

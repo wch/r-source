@@ -12,7 +12,7 @@
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        canvas = "white")
+        canvas = "white", gamma = 1)
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
@@ -34,6 +34,12 @@ win.print(width = 7, height = 7, pointsize = 12)
     vertically.}
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.}
+  \item{gamma}{the gamma correction factor.  This value is used
+    to ensure that the colors displayed are linearly related to
+    RGB values. By default this is taken from
+    \code{\link{options}("gamma"}, or is 1 (no correction) if that is
+    unset.  It sets \code{par("gamma")} for the device.
+  }
 }
 
 \description{
