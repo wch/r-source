@@ -9,7 +9,7 @@
 }
 \usage{
 heatmap(x, Rowv, Colv, distfun = dist, add.expr,
-        scale=c("row", "column", "none"), \dots)
+        scale=c("row", "column", "none"), na.rm = TRUE, \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
@@ -24,6 +24,7 @@ heatmap(x, Rowv, Colv, distfun = dist, add.expr,
   \item{scale}{character indicating if the values should be centered and
     scaled in either the row direction or the column direction, or
     none.  The default is \code{"row"}.}
+  \item{na.rm}{logical indicating whether \code{NA}'s should be removed}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
     e.g. \code{col} specifying the colors.} %
 }

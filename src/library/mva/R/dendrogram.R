@@ -443,7 +443,7 @@ reorder.dendrogram <- function(x, wts, ...)
 ## original Andy Liaw; modified RG
 
 heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
-                     scale = c("row", "column", "none"), ...)
+                     scale = c("row", "column", "none"), na.rm=TRUE, ...)
 {
     scale <- match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
@@ -456,9 +456,9 @@ heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
     c.cex <- 0.2 + 1/log10(nc)
     ## by default order by row/col means
     if( missing(Rowv) )
-        Rowv <- apply(x, 1, mean)
+        Rowv <- apply(x, 1, mean, na.rm=na.rm)
     if( missing(Colv) )
-        Colv <- apply(x, 2, mean)
+        Colv <- apply(x, 2, mean, na.rm=na.rm)
     ## get the dendrograms
     if( !inherits(Rowv, "dendrogram") ) {
         xdist <- distfun(x)
@@ -479,14 +479,14 @@ heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
     ## reorder x
     x <- x[order.dendrogram(ddr), order.dendrogram(ddc)]
     if(scale == "row") {
-        mn <- rowMeans(x)
-        sd <- apply(x, 1, sd)
+        mn <- rowMeans(x, na.rm=na.rm)
+        sd <- apply(x, 1, sd, na.rm=na.rm)
         x <- sweep(x, 1, mn)
         x <- sweep(x, 1, sd, "/")
     }
     else if(scale == "column") {
-        mn <- colMeans(x)
-        sd <- apply(x, 2, sd)
+        mn <- colMeans(x, na.rm=na.rm)
+        sd <- apply(x, 2, sd, na.rm=na.rm)
         x <- sweep(x, 2, mn)
         x <- sweep(x, 2, sd, "/")
     }
