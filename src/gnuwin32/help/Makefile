@@ -113,9 +113,9 @@ help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
 
 zipup:
-	zip -${ZIPFLAGS} help/Rhelp help/* -x help/AnIndex 2> /dev/null || exit 0
-	zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R 2> /dev/null || exit 0
-	zip -${ZIPFLAGS} latex/Rhelp latex/*.tex 2> /dev/null || exit 0
+	@zip -${ZIPFLAGS} help/Rhelp help/* -x help/AnIndex 2> /dev/null || exit 0
+	@zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R 2> /dev/null || exit 0
+	@zip -${ZIPFLAGS} latex/Rhelp latex/*.tex 2> /dev/null || exit 0
 
 uz-%:
 	@if test -f $*.zip ; then \
