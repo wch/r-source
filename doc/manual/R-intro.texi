@@ -386,8 +386,8 @@ Either form of quote mark may be used to escape the other, as in the
 string @code{"It's important"}.  Our convention is to use
 double quote marks for preference.
 
-On most versions of @R{} help is available in @HTML{} format by running
-
+On most @R{} installations help is available in @HTML{} format by running
+@findex help.start
 @example
 > help.start()
 @end example
@@ -395,7 +395,23 @@ On most versions of @R{} help is available in @HTML{} format by running
 @noindent
 which will launch a Web browser (@code{netscape} on UNIX) that allows
 the help pages to be browsed with hyperlinks.  On UNIX, subsequent help
-requests are sent to the @HTML{}-based help system.
+requests are sent to the @HTML{}-based help system.  The `Search Engine
+and Keywords' link in the page loaded by @code{help.start()} is
+particularly useful as it is contains a high-level concept list which
+searches though available functions.  It can be a great way to get you
+bearings quickly and to understand the breadth of what @R{} has to
+offer.
+
+@findex help.search
+The @code{help.search} command allows searching for help in various
+ways: try @code{?help.search} for details and examples.
+
+The examples on a help topic can normally be run by 
+@findex example
+@example
+> example(@var{topic})
+@end example
+
 
 Windows versions of @R{} have other optional help systems: use
 
@@ -6833,6 +6849,9 @@ to obtain usage information for each of the tools accessible via the
 
 @node Invoking R on a Macintosh,  , Invoking R under Windows, Invoking R
 @section Invoking R on a Macintosh
+
+This section applies to the classic MacOS port, and not to ports of the
+Unix version to MacOS X.
 
 The @R{} application startup is similar to that of UNIX and Windows
 systems.  Only a console-based version of @R{} for Macintosh exists, and
