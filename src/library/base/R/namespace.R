@@ -247,7 +247,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
         if(.isMethodsDispatchOn() &&
-           exists(".noGenerics", envir = ns, inherits = FALSE)) {
+           !exists(".noGenerics", envir = ns, inherits = FALSE)) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             if(length(expClasses) > 0) {
@@ -259,8 +259,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.
-            allMethods <- unique(c(methods:::getGenerics(ns),
-                                   methods:::getGenerics(parent.env(ns))))
+            allMethods <- unique(c(methods:::.getGenerics(ns),
+                                   methods:::.getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
             if(length(allMethods) > 0) {
                 expMethods  <- unique(c(expMethods,
@@ -562,7 +562,7 @@ namespaceImportClasses <- function(self, ns, vars) {
 
 namespaceImportMethods <- function(self, ns, vars) {
     allVars <- character()
-    allMlists <- methods:::getGenerics(ns)
+    allMlists <- methods:::.getGenerics(ns)
     if(any(is.na(match(vars, allMlists))))
         stop("Requested methods objects not found in environment/package \"",
                 methods:::getPackageName(ns), "\": ",

@@ -538,6 +538,18 @@ getGenerics <-
 
 allGenerics <- getGenerics
 
+## faster version for use outside methods
+.getGenerics <- function(where)
+{
+    if(missing(where)) where <- .envSearch(topenv(parent.frame()))
+    else if(is.environment(where)) where <- list(where)
+    these <- character()
+    for(i in where) these <- c(these, objects(i, all=TRUE))
+    these <- unique(these)
+    matched <- substr(these, 1, 6) == ".__M__"
+    gsub(".__M__(.*):([^:]+)", "\\1", these[matched])
+}
+
 is.primitive <-
   function(fdef)
     switch(typeof(fdef),
@@ -548,7 +560,7 @@ is.primitive <-
 cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where)) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
-    generics <- getGenerics(where)
+    generics <- .getGenerics(where)
     for(f in generics) {
         fdef <- getGeneric(f, FALSE, searchWhere)
         ## silently ignores all generics not visible from searchWhere
