@@ -6890,7 +6890,7 @@ Install add-on packages.
 @item REMOVE
 Remove add-on packages.
 @item build
-Build add-on packages.
+Build (that is, package) add-on packages.
 @item check
 Check add-on packages.
 @item LINK

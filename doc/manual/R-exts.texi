@@ -567,8 +567,8 @@ License: GPL (version 2 or later)
 The @samp{Contains} field lists the packages, which should be
 contained in separate subdirectories with the names given.  During
 building and installation, packages will be installed in the order
-specified.  Be sure to order this list so that dependencies are
-appropriately met.
+specified.  Be sure to order this list so that dependencies are met
+appropriately.
 
 The packages contained in a bundle are standard packages in all
 respects except that the @file{DESCRIPTION} file is replaced by a
@@ -874,7 +874,7 @@ A check is made for missing documentation entries, such as undocumented
 user-level objects in the package
 
 @item
-Documentation for functions, data sets, and S4 classes in checked for
+Documentation for functions, data sets, and S4 classes is checked for
 consistency with the corresponding code.
 
 @item
@@ -950,7 +950,8 @@ Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
 
 @code{R CMD build} can also build pre-compiled version of packages for
-binary distributions.
+binary distributions, but @code{R CMD INSTALL --build} is preferred (and
+is considerably more flexible).
 
 @quotation
 @strong{Note}: @code{R CMD check} and @code{R CMD build} run @R{} with

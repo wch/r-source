@@ -52,6 +52,7 @@ Options:
       --fake		do minimal install for testing purposes
       --no-lock		install on top of any existing installation
                         without using a lock directory
+      --build           build binary tarball(s) of the installed package(s)
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -200,6 +201,7 @@ fake=false
 lazy="auto"
 lazy_data=false
 lock=true
+tarup=false
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -262,6 +264,8 @@ while test -n "${1}"; do
       fake=true ;;
     --no-lock)
       lock=false ;;
+    --build)
+      tarup=true ;;
     *)
       if test -f "${1}"; then
 	##DBG echo "  in 'R INSTALL' --arg checking-- FILE '${1}'"
@@ -293,6 +297,12 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+if (${tarup} && ${fake}); then
+  error "building a fake installation is disallowed"
+  do_cleanup_tmpdir;
+  exit 1
+fi
 
 if ${debug} ; then
   echo "'Rcmd INSTALL': in startdir= $startdir with tmpdir= $tmpdir"
@@ -391,6 +401,9 @@ do_install_binary () {
     error "installing binary package failed"
     do_exit_on_error
   fi
+  if ${tarup} ; then
+    echo "${pkg} was already a binary package and will not be rebuilt"
+  fi
 }
 
 ### 
@@ -438,6 +451,10 @@ do_install_source () {
     fi
     ## check if we are in a bundle so we can back out the whole bundle
     if grep "^Bundle:" DESCRIPTION >/dev/null; then
+      if ${tarup} ; then
+        error "cannot build (nor INSTALL) binary versions of bundles"
+        do_exit_on_error
+      fi
       bundlepkg=`get_dcf_field Contains ../DESCRIPTION`
     else
       bundlepkg=${pkg_name}
@@ -789,6 +806,17 @@ do_install_source () {
     if test -x ./cleanup ; then
       ./cleanup
     fi
+  fi
+
+  ## now repackage as a tarball if requested
+  if ${tarup} ; then
+    version=`get_dcf_field Version DESCRIPTION`
+    ## R_PLATFORM is set by R CMD
+    filename="${pkgname}_${version}_R_${R_PLATFORM}.tar"
+    filepath="${startdir}/$filename"
+    ${TAR} -chf "$filepath" -C "${R_LIBRARY_DIR}" ${R_PACKAGE_NAME}
+    gzip -9f "$filepath"
+    echo "packaged installation of '${pkgname}' as ${filename}.gz"
   fi
 
   stars="*"
