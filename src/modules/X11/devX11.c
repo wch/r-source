@@ -1375,6 +1375,7 @@ static void newX11_MetricInfo(int c,
     SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
 
 #ifdef USE_FONTSET
+    *ascent = 0; *descent = 0; *width = 0; /* fallback position */
     if (xd->font) {
 	if (xd->fontface != SYMBOL_FONTFACE) {
 	    char **ml; XFontStruct **fs_list;
@@ -1384,37 +1385,40 @@ static void newX11_MetricInfo(int c,
 	} else f = xd->font->font;
 	first = f->min_char_or_byte2;
 	last = f->max_char_or_byte2;
-    }
+    } else return;
 
-    if (f != NULL && c == 0) {
+    if (c == 0) {
         *ascent = f->ascent;
         *descent = f->descent;
         *width = f->max_bounds.width;
-    } else if (f != NULL && first <= c && c <= last) {
-	if (xd->fontface != SYMBOL_FONTFACE) {
-	    char buf[2];
-	    XFontSetExtents *extent = XExtentsOfFontSet(xd->font->fontset);
+	return;
+    }
 
-	    buf[0] = c; buf[1] = 0;
-	    *ascent = extent->max_logical_extent.height * 4 / 5;
-	    *descent = extent->max_logical_extent.height / 5;
+    if (xd->fontface != SYMBOL_FONTFACE) {
+	XFontSetExtents *extent = XExtentsOfFontSet(xd->font->fontset);
+	char buf[10];
+	wchar_t wc[2] = L" ";
+
+	wc[0] = (unsigned int) c;
+	wcstombs(buf, wc, 10);
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
-	    if(utf8locale)
-		*width = Xutf8TextEscapement(xd->font->fontset, buf, 
-					     strlen(buf));
-	    else
+	if(utf8locale)
+	    *width = Xutf8TextEscapement(xd->font->fontset, buf, strlen(buf));
+	else
 #endif
-		*width = XmbTextEscapement(xd->font->fontset, buf, 
-					   strlen(buf));
-	} else {
+	    *width = XmbTextEscapement(xd->font->fontset, buf, strlen(buf));
+
+	/* it seeems we cannot get the per-char ascent and descent
+	   even from X*TextExtents, so follow Nakama's fudge */
+	*ascent = extent->max_logical_extent.height * 0.8;
+	*descent = extent->max_logical_extent.height * 0.2;
+	Rprintf("%d %lc w=%f a=%f d=%f\n", c, wc[0], *width, *ascent, *descent);
+    } else { /* symbol font */
+	if(first <= c && c <= last) {
 	    *ascent = f->per_char[c-first].ascent;
 	    *descent = f->per_char[c-first].descent;
 	    *width = f->per_char[c-first].width;
 	}
-    } else {
-	*ascent = 0;
-	*descent = 0;
-	*width = 0;
     }
 #else
     f = xd->font->font;
