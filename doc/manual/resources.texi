@@ -127,8 +127,14 @@ University of Toronto, Canada
 @item @uref{http://cran.dk.r-project.org/}
 SunSITE, Denmark
 
+@item @uref{http://cran.fr.r-project.org/}
+INRA, Toulouse, France
+
 @item @uref{http://cran.hu.r-project.org/}
-Semmelweis University, Hungary 
+Semmelweis University, Hungary
+
+@item @uref{http://microarrays.unife.it/CRAN/}
+Universita di Ferrara, Italy
 
 @item @uref{ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/}
 University of Aizu, Japan
