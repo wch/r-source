@@ -31,6 +31,14 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   A couple of problems with group generic operations.
+
+    o   A bug which meant that it was not possible to add elements
+        to zero length lists in the obvious way has been fixed.
+                x <- list(); x[[1]] <- 10
+                x <- list(); x[["a"]] <- 11
+        both now work.
+
     o	save.image() ignored dot-names. (esp. .First())
 
     o   lab= argument to plot() misinterpreted by axis() via ... passing
@@ -85,8 +93,7 @@ BUG FIXES
 
     o	logical binops tried to set time series parameters before dimensions
 
-    o	upped the BUFSIZE in model.c (This is really peeing in the pants
-	to keep warm...)
+    o	upped the BUFSIZE in model.c (NOT proper long-term solution)
 
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
 	for numeric formatting.
