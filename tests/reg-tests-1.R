@@ -95,3 +95,10 @@ read.table(tf)
 ## gave error in 1.2.2
 unlink(tf)
 
+## PR 871 (deparsing of attribute names) Harald Fekjær, 2001-03-08,
+midl <- 4
+attr(midl,"Object created") <- date()
+deparse(midl)
+dump("midl", "midl.R")
+source("midl.R") ## syntax error in 1.2.2
+unlink("midl.R")
