@@ -124,7 +124,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(CP) $< $@
 
 bitmap/zlib/libz.a:
-	$(MAKE) -C bitmap make buildzlib
+	$(MAKE) -C bitmap buildzlib
 
 rdocs:
 	@$(MAKE) -C ../../doc/manual -f Makefile.win html
