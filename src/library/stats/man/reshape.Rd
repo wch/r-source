@@ -25,9 +25,9 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     to multiple variables in the wide format.}
   \item{timevar}{the variable in long format that differentiates multiple
     records from the same group or individual.}
-  \item{idvar}{the variable in long format that identifies multiple
-    records from the same group/individual.  This variable may also be
-    present in wide format.}
+  \item{idvar}{Names of one or more variables in long format that identify multiple
+    records from the same group/individual.  These variables may also be
+    present in wide format}
   \item{ids}{the values to use for a newly created \code{idvar}
     variable in long format.}
   \item{times}{the values to use for a newly created \code{timevar}
@@ -54,8 +54,9 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \sQuote{id} variable showing which records refer to the same person.
 
   If the data frame resulted from a previous \code{reshape} then the
-  operation can be reversed by specifying just the \code{direction}
-  argument.  The other arguments are stored as attributes on the data frame.
+  operation can be reversed simply by \code{reshape(a)}. The
+  \code{direction} argument is optional and the other arguments are
+  stored as attributes on the data frame.
 
   If \code{direction="long"} and no \code{varying} or \code{v.names}
   arguments are supplied it is assumed that all variables except
@@ -120,6 +121,15 @@ long <- reshape(state.x77, idvar="state", ids=row.names(state.x77),
 reshape(long, direction="wide")
 
 reshape(long, direction="wide", new.row.names=unique(long$state))
+
+## multiple id variables
+df3 <- data.frame(school=rep(1:3,each=4), class=rep(9:10,6), time=rep(c(1,1,2,2),3),
+score=rnorm(12))
+wide <- reshape(df3, idvar=c("school","class"), direction="wide")
+wide
+## transform back
+reshape(wide)
+
 }
 \keyword{manip}
 

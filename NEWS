@@ -206,6 +206,8 @@ NEW FEATURES
 	whole string, and non-printable characters are represented by
 	octal escape sequences.
 
+    o   reshape() can handle multiple id variables.
+
 
 UTILITIES
 
