@@ -1,4 +1,4 @@
-\name{date-time-classes}
+\name{DateTimeClasses}
 \alias{POSIXct}
 \alias{POSIXlt}
 \alias{print.POSIXct}
@@ -23,22 +23,20 @@
 \alias{is.na.POSIXlt}
 \alias{all.equal.POSIXct}
 \alias{c.POSIXct}
-
 \title{Date-Time Classes}
 \description{
-  Description of the classes \code{"POSIXlt"} and
-  \code{"POSIXct"} representing calendar dates and times (to the nearest
-  second). 
+  Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
+  representing calendar dates and times (to the nearest second). 
 }
 \usage{
 print.POSIXct(x, ...)
 print.POSIXlt(x, ...)
 
-summary.POSIXct(object, digits=15, ...)
-summary.POSIXlt(object, digits=15, ...)
+summary.POSIXct(object, digits = 15, ...)
+summary.POSIXlt(object, digits = 15, ...)
 
-time + number; time - number
-
+time + number
+time - number
 time1 lop time2
 }
 \arguments{
@@ -47,13 +45,15 @@ time1 lop time2
     should be high enough to represent the least important time unit
     exactly.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
+  \item{time, time1, time2}{date-time objects.}
+  \item{number}{a numeric object.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
   represents the (signed) number of seconds since the beginning of 1970
-  as a numeric vector. Class \code{"POSIXlt"} is a named list of
+  as a numeric vector.  Class \code{"POSIXlt"} is a named list of
   vectors representing
   \describe{
     \item{\code{sec}}{0--61: seconds}
@@ -67,13 +67,17 @@ time1 lop time2
     \item{\code{isdst}}{Daylight savings time flag. Positive if in
       force, zero if not, negative if unknown.}
   }
+  The classes correspond to the ANSI C constructs of ``calendar time''
+  (the \code{time\_t} data type) and ``local time'' (or broken-down
+  time, the \code{struct tm} data type), from which they also inherit
+  their names.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
-  \code{"POSIXlt"} is closer to human-readable forms. Logical
+  \code{"POSIXlt"} is closer to human-readable forms.  Logical
   comparisons and limited arithmetic are available for both classes.
   Differences between objects are returned as the number of (non-leap)
   seconds between them.  One can add or subtract a number of seconds
-  from a data-time object, but not add two data-time objects.
+  from a date-time object, but not add two date-time objects.
 
   \code{"POSIXlt"} objects will often have an attribute \code{"tzone"},
   a character vector of length 3 giving the timezone name from the

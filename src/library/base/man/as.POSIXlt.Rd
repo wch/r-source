@@ -18,26 +18,24 @@ as.POSIXlt(x, tz = "")
 
 }
 \arguments{
-  \item{x, object}{An object to be converted.}
+  \item{x}{An object to be converted.}
   \item{tz}{A timezone specification to be used for the conversion.
-    System-specific, but \code{""} is the current timezone,
-    and \code{"GMT"} is UTC (Coordinated Universal Time, in French).}
+    System-specific, but \code{""} is the current timezone, and
+    \code{"GMT"} is UTC (Coordinated Universal Time, in French).}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
   nearest second).  They can take convert a wide variety of objects,
   including objects of the other class and of classes \code{"date"}
-  (from package \code{\link[date]{date}}), \code{"chron"} and \code{"dates"}
-  (from package \code{\link[chron]{chron}}) to these classes. They can
-  also convert character strings of the formats \code{"2001-02-03"} and
-  \code{"2001/02/03"} optionally followed by white space and a time in the
-  format \code{"14:52"} or \code{"14:52:03"}.  (Formats such as
-  \code{"01/02/03"} are ambiguous but can be converted via a format
-  specification by \code{\link{strptime}}.)
-
-  \code{Sys.time} returns the system's idea of the current time and
-  \code{Sys.timezone} returns the current time zone.
+  (from package \code{\link[date]{date}}), \code{"chron"} and
+  \code{"dates"} (from package \code{\link[chron]{chron}}) to these
+  classes.  They can also convert character strings of the formats
+  \code{"2001-02-03"} and \code{"2001/02/03"} optionally followed by
+  white space and a time in the format \code{"14:52"} or
+  \code{"14:52:03"}.  (Formats such as \code{"01/02/03"} are ambiguous
+  but can be converted via a format specification by
+  \code{\link{strptime}}.)
 }
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the
@@ -51,8 +49,7 @@ as.POSIXlt(x, tz = "")
   \code{\link{format.POSIXlt}} or \code{\link{format.POSIXct}}.
 }
 \seealso{
-  \link{date-time-classes} for details of the classes.
-
+  \link{DateTimeClasses} for details of the classes;
   \code{\link{strptime}} for conversion to and from character
   representations.
 }
@@ -61,7 +58,7 @@ as.POSIXlt(x, tz = "")
 unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01
 
-(z <- as.POSIXlt(Sys.time())) # the current date, as class "POSIXct"
+(z <- as.POSIXlt(Sys.time())) # the current date, as class "POSIXlt"
 unlist(unclass(z))            # a list shown as a named vector
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT

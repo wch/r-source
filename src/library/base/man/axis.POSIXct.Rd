@@ -2,7 +2,6 @@
 \alias{axis.POSIXct}
 \alias{plot.POSIXct}
 \alias{plot.POSIXlt}
-
 \title{Date-time Plotting Functions}
 \description{
   Functions to manipulate objects of classes \code{"POSIXlt"} and
@@ -17,6 +16,7 @@ axis.POSIXct(side, x, format, ...)
 \arguments{
   \item{x}{A date-time object.}
   \item{y}{numeric values to be plotted against \code{x}.}
+  \item{xlab}{a character string giving the label for the x axis.}
   \item{side}{See \code{\link{axis}}.}
   \item{format}{See \code{\link{strptime}}.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
@@ -28,13 +28,15 @@ axis.POSIXct(side, x, format, ...)
   output format, but this can be overridden by supplying a \code{format}
   specification.
 }
-  \link{date-time-classes} for details of the classes.
+\seealso{
+  \link{DateTimeClasses} for details of the classes.
 }
 \examples{
 \dontrun{library(MASS)
 data(beav1)
 attach(beav1)
-time <- strptime(paste(day, time%/%100, time%%100), "%j %H %M")
+time <- strptime(paste(day, time \%/\% 100, time \%\% 100),
+                 "\%j \%H \%M")
 plot(time, temp, type="l") # axis at 4-hour intervals.
 detach("beav1")}
 

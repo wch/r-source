@@ -13,7 +13,7 @@ Sys.timezone()
 }
 \value{
   \code{Sys.time} returns an object of class \code{"POSIXct"} (see
-  \link{date-time-classes}).
+  \link{DateTimeClasses}).
 
   \code{Sys.timezone} returns an OS-specific character string, possibly
   an empty string.

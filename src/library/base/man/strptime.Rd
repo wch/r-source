@@ -7,12 +7,11 @@
 \alias{as.character.POSIXlt}
 \alias{ISOdatetime}
 \alias{ISOdate}
-
 \title{Date-time Conversion Functions to and from Character}
 \description{
   Functions to convert between character representations and objects of
-  classes \code{"POSIXlt"} and \code{"POSIXct"} representing
-  calendar dates and times.
+  classes \code{"POSIXlt"} and \code{"POSIXct"} representing calendar
+  dates and times.
 }
 \usage{
 format.POSIXct(x, format = "", tz = "", ...)
@@ -33,7 +32,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     System-specific, but \code{""} is the current time zone, and
     \code{"GMT"} is UTC.}
   \item{format}{A character vector. The default is
-    \code{"\%Y-\%m-\%d \%H:\%M;\%S"} if any component has a time
+    \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"} otherwise.
   }
   \item{\dots}{Further arguments to be passed from or to other methods.}
@@ -100,17 +99,17 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   The \code{format} methods and \code{strftime} return character vectors
   representing the time.
 
-  \code{strptime} turns character representations into an object of class
-  \code{"POSIXlt"}.
+  \code{strptime} turns character representations into an object of
+  class \code{"POSIXlt"}.
 
   \code{ISOdatetime} and \code{ISOdate} return an object of class
   \code{"POSIXct"}.
 }
 \note{
-  The default formats follow the rules of the ISO 8601
-  international standard which expresses a day as \code{2001-02-03} and
-  a time as \code{14:01:02} using leading zeroes as here. The ISO form
-  uses no space to separate dates and times.
+  The default formats follow the rules of the ISO 8601 international
+  standard which expresses a day as \code{"2001-02-03"} and a time as
+  \code{"14:01:02"} using leading zeroes as here.  The ISO form uses no
+  space to separate dates and times.
 }
 \references{
   International Organization for Standardization (1988, 1997, \dots)
@@ -120,7 +119,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \url{ftp://ftp.qsl.net/pub/g1smd/8601v03.pdf}
 }
 \seealso{
-  \link{date-time-classes} for details of the date-time classes.
+  \link{DateTimeClasses} for details of the date-time classes;
   \code{\link{locales}} to query or set a locale.
   
   Your system's help pages on \code{strftime} and \code{strptime} to
@@ -129,6 +128,20 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 \examples{
 ## locale-specific version of date()
 format(Sys.time(), "\%a \%b \%d \%X \%Y")
+
+## read in date info in format `ddmmmyyyy'
+x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
+z <- strptime(x, "\%d\%b\%Y")
+z
+
+## read in date/time info in format `m/d/y h:m:s'
+dates <- c("02/27/92", "02/27/92", "01/14/92",
+           "02/28/92", "02/01/92")
+times <- c("23:03:20", "22:29:56", "01:03:30",
+           "18:21:03", "16:56:26")
+x <- paste(dates, times)
+z <- strptime(x, "\%m/\%d/\%y \%H:\%M:\%S")
+z
 }
 \keyword{utilities}
 \keyword{chron}
