@@ -4,8 +4,6 @@ use File::Basename;
 
 while(<$ARGV[0]/man/*.Rd>){
 
-    my $rdname = basename($_, (".Rd", ".rd"));
-
     $ARGV[0] =~ /([^\/]*)$/;
     my $pkg =$1;
     
@@ -16,6 +14,11 @@ while(<$ARGV[0]/man/*.Rd>){
 	$text .= $_;
     }
     close rdfile;
+
+    $text =~ /\\name\{\s*([^\}]+)\s*\}/s;
+    my $rdname = $1;
+    $rdname =~ s/\n/ /sg;
+
     $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
     my $rdtitle = $1;
     $rdtitle =~ s/\n/ /sg;
