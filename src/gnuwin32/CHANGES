@@ -1,0 +1,311 @@
+rw0641
+======
+
+There is a choice of interface for Rgui:
+
+o  SDI, single document interface. This is like the previous version,
+   with separate windows for the console, graphics and pager(s).
+
+o  MDI, multiple document interface.  There the console, graphics and
+   pagers are subwindows of one main `frame' window.
+
+You can set your preference (and details of the MDI) in the Rconsole
+file: this can also be overriden on the command line by --mdi or
+--sdi.
+
+If you use multiple files in the SDI pager, the (row) positions are
+remembered and re-used.
+
+For MDI pagers, the size is chosen by the system, and only multiple pagers
+are supported.
+
+When pagers are re-sized the strategy is now to keep the middle line
+in the middle.
+
+The option `setwidthonresize' in Rconsole automatically generates an
+internal call to options("width") if you resize the console width.
+This is the default, but we suggest you do not resize whilst R is
+outputting.
+
+The file HOME\.Renviron is now read. This can contain environment
+variables in NAME=value form, one per line. This is useful for setting
+R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, amongst others.
+
+You can now paste in more to the console: the limit (which was 2048
+chars) is now that of the clipboard.
+
+The command make pkgcheck-pkgname will do the equivalent of `R CMD
+check', that is run all the examples in the help pages for that package.
+
+
+rw0640
+======
+
+R-0.64 uses platform-independent code for file handling. Files are
+displayed under a pager in a separate window rather than in the
+console. 
+
+Environment variables can be set as NAME=value on the command line,
+including in a short-cut.
+
+Content of the pager and of the Rgui's console can be printed
+using File | Print.
+
+The help, latex and example files can be stored in zip files to save
+space; this is used for the base package.
+
+The menus are enabled/disabled and check-marked correctly under NT.
+We hope to have solved the 'rw0633 font dimension problem'  shown
+under some NT versions.
+
+read.fwf works if you have Perl installed.
+
+help(, offline=TRUE) will work if you have latex installed and
+customize RHOME/bin/helpPRINT.bat
+
+The sockets code is compiled in, but we have not tested it.
+
+system() has new arguments `invisible' and `minimized'.
+
+
+rw0633
+======
+
+The beginnings of a FAQ (RHOME/rw-faq).
+
+Programs can be launched from all shells: the full path to the
+executable is not needed.
+
+Configurable fonts in the graphics devices by the file Rdevga.
+
+Workspaces are saved in XDR format, and so can be shared with most
+Unix implementations of R.
+
+Printer and metafile graphics devices (?win.print and ?win.metafile).
+
+Consistent handling of start directory for dialogs and the working
+directory across versions of Windows.
+
+An improved and enhanced system() function (?system and ?shell). 
+
+Windows-specific help files where necessary.
+
+Better support for ESS.
+
+Better support for the installation of pre-compiled packages
+(?link.html.help)
+
+
+rw0632
+======
+
+The NT copy to the clipboard bug has been fixed.
+
+Help files use latin1 encoding (but, to see the difference, 
+you must use a latin1 capable font; for this reason, now, as packed, 
+the R console uses "Courier New"; if you don't like it, edit etc/Rconsole). 
+
+
+rw0631
+======
+
+There are two executables, Rgui.exe and Rterm.exe.
+
+NEW FEATURES
+
+Will run from NT command line.
+
+No `tricks' are needed for animated graphics.
+
+The windows are much more responsive.
+
+R commands can be interrupted by Esc.
+
+Rterm allows batch mode operation and can also be run in
+inferior-R-mode under NTEmacs.
+ 
+There is a history mechanism for graphics plots.
+
+Graphics can be copied to the clipboard.
+
+Commands history is saved between session (only by Rgui.exe).
+
+Saved images and user profile are called .RData and .Rprofile as under Unix
+(before they were RData and Rprofile).
+
+
+rw0630
+======
+
+- Minor adjustment to reflect changes in R-0.63.0 (options, example,...)
+
+- Fixed a couple of minor bugs in the graphics device. 
+
+- More control keys (some Emacs like (crtl+a, crtl+e, crtl+k), and, on
+popular demand, crtl+c and crtl-v for copy and paste); take a look at
+the help/console menuitem.
+
+- Added support for Cygwin B20 (target remains Mingw32,i.e, no Unix
+emulation layer)
+
+- Access of global variables in R.exe from a dll should work (all the
+orrible name-mangling needed by `gnuwin32' - `var' in R.exe becames
+`*__imp_var' in a dll - is done automatically).
+
+
+rw0624
+======
+
+New features:
+
+- The console can be configured (font, colours, dimensions).  No fancy
+dialog (yet), but look to the rw0624/etc/Rconsole file.
+
+- help.start() now is implemented. Of course, you need the html
+documentation.
+
+Bugs fixed (I hope):
+
+- Alt+Gr problems on some European keyboards.
+
+- Focus is 'always' given back to the console.
+
+- Filters in the dialogs which ask a file-name.
+
+- round(..) now works as documented.
+
+- Some small modification to the graphic device (position of text and
+clipping of lines was sometimes not exact). In addition, I changed the
+font to helvetica (for better consistency with the X11 device).
+
+
+rw0623
+======
+
+A. News (with respect to rw0613)
+--------------------------------
+
+(a) I rewrote the console using a portable toolkit (GraphApp, see
+http://www.cs.usyd.edu.au/~loki/graphapp). Now, output is buffered
+until some input is required. In addition, there are some command
+history support. For a mini help on the new console, use the
+help/Console menuitem.
+
+(b) I also rewrote the graphics device using GraphApp. Apart for the
+redraw (which seems faster) the GraphApp device is +/- equal to the
+one that you find in RJune. With respect to rw0613 the major
+improvements are: (i) it is a R0.62.x device,i.e., it supports
+multiple instances, resizing, copy,...(look to the dev.xxx functions);
+(ii) it supports plotting math expression; (iii) there is a new item
+in the menu which let to save the contents of the active device as a
+gif file; (ii) arbitrary line patterns in any width are supported.
+
+(c) Now, edit makes use of an external editor (the default one is
+notepad),i.e., it works as under Unix.
+
+(d) date() now works. In addition, proc.time(), and so
+system.time(..), works (but don't expect too much, you will get only
+the elapsed time).
+
+(e) IEEE math (Inf, Nan,..).
+
+(f) I used the GNU regex library. Hence all the
+code is GPL'ed.
+
+B. The new menubar
+------------------
+The menu bar contains the following item:
+
+File 
+
+Source R Code -> ask for a filename and then send to the
+interpreter a source(filename) command.
+
+Load Image -> ask for a filename and then send to the
+interpreter a load(filename) command.
+
+Save Image -> ask for a filename and then send to the
+interpreter a save.image(filename) command.
+
+Edit 
+
+Copy Paste Copy and Paste Select All
+
+Misc 
+
+Kill current computation
+
+List objects -> send to the interpreter a ls() command
+
+Remove all objects -> ask for confirmation and then send to
+the interpreter a rm(list=ls()) command
+
+Graphics save as Postscript -> ask for a filename and then send to the
+interpreter a dev.print(...) command
+
+save as gif -> ask for a filename (extension must be
+.gif) and then save the current plot as gif
+
+Help 
+
+Console -> mini help on the console
+
+R language -> ask for a topic and then send to the interpreter a
+help(topic) command
+
+Apropos -> ask for a topic and then send to the interpreter a
+apropos(topic) command
+
+About 
+
+Observe that some of the menu items just send to the interpreter a
+command. This means that these items are disabled when the interpreter
+is waiting for the completion of a previous command,i..e, when you
+have the ''continuation'' prompt. On the other end, under normal
+editing (prompt='>'), since the current line is saved and then
+restored you can, for example, type part of a command, ask for some
+help, and then complete your command.
+
+C. Printing
+-----------
+To avoid questions: printing is not directly supported (yet).
+
+To print the content of the console you must:
+a) select the text;
+b) copy it to the clipboard;
+c) paste it in some word processor or editor which can print.
+
+To obtain a good copy of your graphs you can:
+a) save it as postscript and then print on a ps printer (or play with
+it using gostscript);
+b) save it as a gif and then print it using one of the many programs
+which support this format (image manipulation programs, word processors,
+internet browsers,...).
+
+If you give the focus to a graphic windows, you can also copy it to
+the clipboard using the alt+print keys. But this is the standard
+Windows command and you will get also the window's decoration.  So
+this is useful only to get a "draft" copy of the graph.  [however, I
+find quite effective to open a word processor in which to paste
+command, console output and graphs. Indeed this is the way, I ask my
+students to work (of course, they must also write comments!)].
+
+[...]
+
+H. Bugs (known) and misc. observations.
+---------------------------------------
+(a) As always, the English of this README.
+
+(b) de() doesn't work anymore. If someone needs it, I can try to include
+the old one (or try to write a portable version of it using GraphApp).
+
+(c) edit(...) doesn't work properly under Win3.1/Win32s.
+
+(d) system(...) is quite limited (popen under MsWindows is a
+nightmare).
+
+(d) To use this version under Win32s you need a recent version of
+Win32s (I have only tested with the last one that can be found at
+ftp://ftp.microsoft.com).
+
+(e) Only the mouse can be used to select the text in the console.

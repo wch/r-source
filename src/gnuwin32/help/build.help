@@ -1,0 +1,184 @@
+#-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
+#
+# ${RHOME}/bin/build-help
+# Usage:  build-help [options]  [pkg] [lib]
+# Install all help files for package pkg to library lib
+# (defaults are `${RHOME}/src/library/base' and the default library,
+#  `${RHOME}/library', respectively).
+
+# This version: if pkg is not found, it is tried in $RHOME/src/library.
+
+use File::Basename;
+use Cwd;
+use Getopt::Long;
+
+fileparse_set_fstype; # Unix, in case one gets anything else.
+
+
+@knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug",
+		 "dosnames", "htmllists");
+GetOptions (@knownoptions) || usage();
+
+$cwd=getcwd();
+if($opt_rhome){
+    $RHOME=$opt_rhome;
+    print STDERR "RHOME from --rhome: `$RHOME'\n" if $opt_debug;
+}
+elsif($ENV{"RHOME"}){
+    $RHOME=$ENV{"RHOME"};
+    print STDERR "RHOME from ENV: `$RHOME'\n" if $opt_debug;
+}
+else{
+    chdir(dirname($0) . "/../../..");
+    $RHOME=getcwd();
+    print STDERR "RHOME: `$RHOME'\n" if $opt_debug;
+}
+$RHOME =~ s+\\+/+g; # Unix-style path
+
+require "$RHOME/src/gnuwin32/help/Rdconvlib.pl";
+require "$RHOME/src/gnuwin32/help/buildlib.pl";
+
+chdir($cwd);
+print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
+
+$tmpdir=$ENV{"TEMP"};
+if(!$tmpdir) {$tmpdir="c:/windows/temp";}
+$tmpdir =~ s+\\+/+g;
+#print "temp=$temp\n";
+
+# if option --htmllists is set we only rebuild some list files and
+# exit
+
+if($opt_htmllists){
+    build_htmlpkglist("$RHOME/library");
+
+    %anindex = read_anindex("$RHOME/library");
+    %htmlindex = read_htmlindex("$RHOME/library");
+
+    build_htmlfctlist("$RHOME/library");
+
+    exit 0;
+}
+
+# default is to build all documentation formats
+if(!$opt_html && !$opt_nroff && !$opt_latex && !$opt_example){
+    $opt_html = 1;
+    $opt_nroff = 1;
+    $opt_latex = 1;
+    $opt_example = 1;
+}
+
+($pkg, $lib, @mandir) = buildinit();
+$dest = "$lib/$pkg";
+print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
+
+build_index();
+if ($opt_latex) {
+    $latex_d="$dest/latex";
+    mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
+}
+if ($opt_example) {
+    $Rex_d="$dest/R-ex";
+    mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
+}
+
+print " >>> Building/Updating help pages for package `$pkg'\n";
+print "     Formats: ";
+print "text " if $opt_nroff;
+print "html " if $opt_html;
+print "latex " if $opt_latex;
+print "example " if $opt_example;
+print "\n";
+
+
+# get %htmlindex and %anindex
+
+%anindex = read_anindex($lib);
+if($opt_html){
+    %htmlindex = read_htmlindex($lib);
+    build_htmlfctlist($lib);
+}
+
+format STDOUT =
+  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<< @<<<<<< @<<<<<<
+  $manfilebase, $textflag, $htmlflag, $latexflag, $exampleflag
+.
+
+foreach $manfile (@mandir) {
+    if($manfile =~ /\.[Rr]d$/) {
+	$manfilebase = basename($manfile, (".Rd", ".rd"));
+	$manage = (-M $manfile);
+
+	$textflag = $htmlflag = $latexflag = $exampleflag = "";
+
+	if($opt_nroff){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = "$dest/help/$targetfile";
+	    if(fileolder($destfile, $manage)) {
+		$textflag = "text";
+		$tmpfile = "$tmpdir/nr1";
+		$tmp2 = "$tmpdir/nr2";
+		Rdconv($manfile, "nroff", "", "$tmpfile");
+#		$dest2 = $destfile;
+#		$dest2 =~ s+/+\\+g;
+		$cmd = "tbl $tmpfile | troff -Tlatin1 -ms | grotty -buo > $tmp2";
+		system("$cmd");
+		unlink($tmpfile);
+		open hlpfile, "<$tmp2" || die "Couldn't open '$tmp2'\n";
+		open dest, ">$destfile" || die "Couldn't open '$destfile'\n";
+		$keep = $/; undef $/;
+		while (<hlpfile>) {
+		    s/\xAD/-/go;	    # ISO Latin hyphen to -
+		    s/\n*$/\n\n/s;          # remove all trailing blank lines
+		    s/\n\s*\n\s*\n/\n\n/sg; # convert two blank lines into one
+		    print dest $_;
+		}
+		$/ = $keep;
+		close hlpfile;
+		close dest;
+		unlink($tmp2);
+	    }
+	}
+
+	if($opt_html){
+	    my $targetfile = $filenm{$manfilebase};
+	    $misslink = "";
+	    $destfile = "$dest/html/$targetfile.$HTML";
+	    if(fileolder($destfile,$manage)) {
+		$htmlflag = "html";
+		print "\t$destfile" if $opt_debug;
+		Rdconv($manfile, "html", "", "$destfile");
+	    }
+	}
+
+	if($opt_latex){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = "$dest/latex/$targetfile.tex";
+	    if(fileolder($destfile,$manage)) {
+		$latexflag = "latex";
+		Rdconv($manfile, "latex", "", "$destfile");
+	    }
+	}
+	if($opt_example){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = "$dest/R-ex/$targetfile.R";
+	    if(fileolder($destfile,$manage)) {
+		Rdconv($manfile, "example", "", "$destfile");
+		if(-f$destfile) {$exampleflag = "example";}
+	    }
+	}
+
+	write if ($textflag || $htmlflag || $latexflag || $exampleflag);
+	print "     missing link(s): $misslink\n" 
+	    if $htmlflag && length($misslink);
+    }
+}
+
+sub usage {
+
+    print "Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex]\n" .
+      "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
+      "                   [pkg] [lib]\n";
+
+    exit 0;
+}

@@ -1,0 +1,13 @@
+all:  zero.dll 
+
+OBJS=zero.o
+
+include ../../src/gnuwin32/MkRules
+
+DLLFLAGS=-s 
+CFLAGS=-I../../src/include -O2 
+FFLAGS=-O2
+DLLLIBS=-L../../src/gnuwin32 -lR $(FLIBS)
+
+
+zero.dll : zero.o

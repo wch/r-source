@@ -1,0 +1,102 @@
+.SUFFIXES: .c .f .o .a .def .exp .dll .exe 
+
+# Alternatives CYGWIN (-B20.1), EGCS (-1.1.x-mingw32), CROSS (my Linux Box)
+
+BUILD=EGCS
+
+ifeq ($(strip $(BUILD)),CYGWIN)
+BINPREF=
+# HEADER=e:/cygwin-b20/H-i586-cygwin32/i586-cygwin32/include/mingw32
+# Cygwin B20 (not B20.1) needs
+# MINGW32CFLAG= -mno-cygwin -isystem $(HEADER) -DWIN32
+MINGW32CFLAG= -mno-cygwin -DWIN32
+MINGW32LDFLAG= -mno-cygwin
+FLIBS=-lg2c.mingw32
+AWK=gawk
+endif
+
+ifeq ($(strip $(BUILD)),EGCS)
+BINPREF=
+MINGW32FLAG= 
+MINGW32LDFLAG= 
+FLIBS=-lg2c
+AWK=gawk
+endif 
+
+ifeq ($(strip $(BUILD)),CROSS)
+BINPREF=i386-mingw32-
+HEADER=/home/guido/mingw32/i386-mingw32/include
+HEADER=/home/markov/ripley/R-X/i386-mingw32/include
+MINGW32CFLAG=-isystem $(HEADER)
+MINGW32LDFLAG= 
+FLIBS=-lg2c
+AWK=awk
+endif 
+
+PERL=perl
+RM=rm -f
+SED=sed
+ECHO=echo
+CP=cp
+MKDIR=mkdir
+CAT=cat
+CC=$(BINPREF)gcc $(MINGW32CFLAG) 
+F77=$(BINPREF)g77
+AS=$(BINPREF)as
+DLL=$(BINPREF)gcc $(MINGW32LDFLAG) -mdll
+DLLTOOL=$(BINPREF)dlltool -k --as $(AS)
+LINKER=$(BINPREF)gcc $(MINGW32LDFLAG) 
+AR=$(BINPREF)ar
+RANLIB=$(BINPREF)ranlib
+NM=$(BINPREF)nm
+CPP=$(CC) -E
+RESCOMP=$(BINPREF)windres 
+
+.c.o:
+	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
+	
+.f.o:
+	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+
+%.exe %.exp:  
+	@$(ECHO) -------- Building $@ from $^ --------
+	$(ECHO) EXPORTS > $*.exp
+	$(NM) $^ | $(SED) -n "/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p" >> $*.exp
+	$(DLLTOOL) --dllname $@  --output-exp $*.e --def $*.exp
+	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ -Wl,--base-file,$*.b $*.e $^ $($*-LIBS) $(LIBS)
+	$(DLLTOOL) --dllname $@  --base-file $*.b  --output-exp $*.e  --def $*.exp
+	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $*.e $^ $($*-LIBS) $(LIBS)
+	rm $*.e $*.b 
+
+
+%.dll %.def:   
+	@$(ECHO) ------- Building $@ from $^ --------
+	$(ECHO) LIBRARY $* > $*.def
+	$(ECHO) EXPORTS >> $*.def
+	$(NM) $^ > Defs
+	$(SED) -n "/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p" Defs >> $*.def
+	$(DLL) -Wl,--base-file,$*.b $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $@  --base-file $*.b --output-exp $*.e --def $*.def
+	$(DLL)  -Wl,--base-file,$*.b $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.e $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $@ --base-file $*.b --output-exp $*.e --def $*.def 
+	$(DLL)  $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $*.e $^ $($*-DLLLIBS) $(DLLLIBS)	     
+	$(RM)  $*.b $*.e Defs
+
+lib%.a: %.def
+	@$(ECHO) -------- Building $@ from $^ --------
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib lib$*.a
+	 
+lib%.a: %.exp
+	@$(ECHO) -------- Building $@ from $^ --------
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.exe --def $*.exp --output-lib lib$*.a	 
+	 
+%.a:    
+	@$(ECHO) -------- Building $@ from $^ --------
+	$(AR) cr $@ $^
+	$(RANLIB) $@
+
+
+%.o:    %.rc
+	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $^ -o $@
+	
+	

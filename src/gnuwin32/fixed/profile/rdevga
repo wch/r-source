@@ -1,0 +1,33 @@
+# The system-wide copy is in rwxxxx/etc.
+# A user copy can be installed in ''HOME''.
+
+# Format is 
+#   face:style
+# where style is plain, bold, italic and bold&italic.
+# Only the first 32 font will be used
+
+Times New Roman : plain
+Times New Roman : bold
+Times New Roman : italic
+Times New Roman : bold&italic
+
+#Please, don't change the following definition. The plot math engine
+#assume that font5 contains greek letters and math symbols
+Symbol: plain
+
+Arial : plain
+Arial : bold
+Arial : italic
+Arial : bold&italic
+Courier New: plain
+Courier New: bold
+Courier New: italic
+Courier New: bold&italic
+
+Century Gothic : plain
+Century Gothic : bold
+Century Gothic : italic
+Century Gothic : bold&italic
+
+Matisse ITC: plain
+Wingdings: plain
