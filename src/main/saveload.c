@@ -27,7 +27,7 @@
 #include "Mathlib.h"
 #include "Fileio.h"
 
-#ifdef HAVE_HDF5_H
+#ifdef HAVE_HDF5
 #include <hdf5.h>
 #endif
 
@@ -1261,7 +1261,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-#ifdef HAVE_HDF5_H
+#ifdef HAVE_HDF5
 
 #define STRING2REF_CONV "string->ref"
 #define REF2STRING_CONV "ref->string"

@@ -69,7 +69,7 @@
 #undef HAVE_RPC_XDR_H
 
 /* HDF5 Library Available */
-#undef HAVE_HDF5_H
+#undef HAVE_HDF5
 
 /* General String Comparison */
 #undef HAVE_STRCOLL

@@ -380,7 +380,18 @@ AC_CHECK_LIB(ncurses, main,,
 AC_CHECK_LIB(dl, dlopen)
 
 AC_CHECK_LIB(z, main)
+
 AC_CHECK_LIB(hdf5, main)
+AC_MSG_CHECKING(for HDF5 version 1.2)
+AC_TRY_LINK([#include <hdf5.h>],
+[H5T_pers_t convtype = H5T_PERS_SOFT; H5Tclose ((hid_t) 0); ],have_hdf5=yes,have_hdf5=no)
+if test $have_hdf5 = yes; then
+  AC_DEFINE(HAVE_HDF5)
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
 
 BLAS="blas.o"
 if ${use_dxml}; then
