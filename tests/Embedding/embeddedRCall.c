@@ -4,6 +4,7 @@
 #include <Rdefines.h>
 
 #include "embeddedRCall.h"
+#include "config.h"
 #include "Defn.h"
 
 int
