@@ -136,7 +136,7 @@ sub get_exclude_patterns {
     ## exported.
     ## <NOTE>
     ## Has Unix-style '/' path separators hard-coded.
-    my @exclude_patterns = ("^.Rbuildignore\$", "^.DS_Store\$",
+    my @exclude_patterns = ("^.Rbuildignore\$", "(^|/)\\.DS_Store\$",
 			    "\~\$", "\\.bak\$", "\\.swp\$",
 			    "(^|/)\\.#[^/]*\$", "(^|/)#[^/]*#\$",
 			    "^TITLE\$", "^data/00Index\$",
@@ -244,7 +244,7 @@ sub R_cwd {
     if($R::Vars::OSTYPE eq "windows") {
 	# ensure there are no spaces in the paths.
 	Win32::GetShortPathName($abspath) if $abspath =~ / /;
-    } 
+    }
     $abspath;
 }
 
