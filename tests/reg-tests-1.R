@@ -703,3 +703,6 @@ x <- (1:200)/32
 ss <- smooth.spline(x, 10*sin(x))
 stopifnot(length(x) == length(predict(ss,deriv=1)$x))# not yet in 1.5.0
 detach("package:modreg")
+
+## pweibull(large, log=T):
+stopifnot(all(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0))

@@ -90,6 +90,8 @@ BUG FIXES
 	when length(x) was largish.
     o   smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
 
+    o   pexp(x, log=TRUE) and pweibull(*) were losing precision for large x.
+
 
 		CHANGES IN R VERSION 1.5.0
 
