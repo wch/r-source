@@ -9,14 +9,14 @@ setGeneric <-
   ## If `def' is supplied, this defines the generic function.  The default method for
   ## a new generic will usually be an existing non-generic.  See the .Rd page
   ##
-    function(name, def, group = NULL, valueClass = NULL, where = 1, doAssign)
+    function(name, def = NULL, group = NULL, valueClass = NULL, where = 1, doAssign)
 {
-    useAsDefault <-  missing(def) && existsFunction(name)
+    useAsDefault <-  is.null(def) && existsFunction(name)
     if(useAsDefault) {
         fdef <- getFunction(name)
     }
     else {
-        if(missing(def))
+        if(is.null(def))
             stop(paste("No existing function \"", name, "\", arguments must be supplied"))
         fdef <- def
     }
@@ -70,17 +70,13 @@ isGeneric <-
   ## If the `fdef' argument is supplied, take this as the definition of the
   ## generic, and test whether it is really a generic, with `f' as the name of
   ## the generic.  (This argument is not available in S-Plus.)
-  function(f, where = -1, fdef, getName = FALSE)
+  function(f, where = -1, fdef = NULL, getName = FALSE)
 {
     ## the fdef argument is not found in S4 but should be ;-)
-    if(missing(fdef)) {
-        if(missing(where))
-            fdef <- getFunction(f, mustFind = FALSE)
-        else
+    if(is.null(fdef))
           fdef <- getFunction(f, where=where, mustFind = FALSE)
     if(is.null(fdef))
       return(FALSE)
-    }
     ## check primitives. These are never stored as explicit generic functions.
     ## The definition of isGeneric for them is that methods metadata exists,
     ## either on this database or anywhere (where == -1)
@@ -148,7 +144,7 @@ getMethods <-
     if(is.function(f)) {
         fdef <- f
         ev <- environment(fdef)
-        if(exists(".Methods", ev)) {
+        if(exists(".Methods", ev, inherits = FALSE)) {
           get(".Methods", ev )
         }
         else
@@ -169,7 +165,6 @@ getMethodsForDispatch <-
     fdef <- getFromMethodMetaData(f)
     if(is.null(fdef)) {
         fdef <- getAllMethods(f)
-        assignToMethodMetaData(f, fdef)
     }
     get(".Methods", envir = environment(fdef))
 }
@@ -181,7 +176,6 @@ cacheMethod <-
     fdef <- getFromMethodMetaData(f)
     if(is.null(fdef)) {
         fdef <- getAllMethods(f)
-        assignToMethodMetaData(f, fdef)
     }
     ev <- environment(fdef)
     methods <- get(".Methods", envir = ev)
@@ -486,3 +480,30 @@ resetGeneric <-
 setReplaceMethod <-
   function(f, ...)
   setMethod(paste(f, "<-", sep=""), ...)
+
+setGroupGeneric <-
+  ## create a group generic function for this name.
+  function(name, def = NULL, group = NULL, valueClass = NULL,
+           knownMembers = character(), where = 1)
+  {
+    if(is.null(def))
+      def <- getFunction(def)
+    ## By definition, the body must generate an error.
+    body(def) <- substitute(stop(MSG), list(MSG =
+                      paste("Function \"", name,
+                            "\" is a group generic; don't call it directly",
+                            sep ="")))
+    setGeneric(name = name, def = def, group = group, valueClass = valueClass, where = where)
+    setGroupMembers(name, knownMembers)
+    name
+  }
+
+isGroupGeneric <-
+  function(f, where = -1, fdef = NULL)
+  {
+    if(!isGeneric(f, where = where, fdef = fdef))
+      return(FALSE)
+    if(is.null(fdef))
+      fdef <- getGeneric(f)
+    exists(".GroupMembers", envir =environment(fdef), inherits = FALSE)
+  }

@@ -12,6 +12,11 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             stop("argument `package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
 	if(is.na(match(pkgname, search()))) {
+            ## check for the methods package before attaching this package.
+            ## Only if it is _already_ here do we do cacheMetaData
+            ## (otherwise, the methods package does it instead, perhaps
+            ## from a requires() in this package's .First.lib).
+            hasMethods <- !is.na(match("package:methods", search()))
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
             if(length(pkgpath) == 0) {
@@ -94,6 +99,9 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		    }
 		}
 	    }
+            if(hasMethods
+               && !identical(pkgname, "package:methods"))
+               cacheMetaData(env, TRUE)
             on.exit()
 	}
 	else if(verbose)

@@ -1,5 +1,6 @@
 \name{setGeneric}
 \alias{setGeneric}
+\alias{setGroupGeneric}
 \title{Define a New Generic Function}
 \description{
  Create a new generic function of the given name, for which formal methods can
@@ -7,6 +8,8 @@
 }
 \usage{
 setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign)
+
+setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
 }
 \arguments{
   \item{name}{ The character string name of the generic function.  In
@@ -51,6 +54,13 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign)
     generics for primitives cannot be overriden by setting
     \code{doAssign} to \code{TRUE}.
   }
+
+  \item{\code{knownMembers}:}{
+    (For \code{setGroupGeneric} only)  The names of functions that are known to be
+    members of this group.  This information is used to reset cached
+    definitions of the member generics when information about the group
+    generic is changed.
+    }
 }
 \details{
   The \code{setGeneric} function is called to initialize a generic
@@ -71,6 +81,16 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign)
   case, too, you will most often supply only \code{name}.  The existing
   function becomes the default method, and the special \code{group} and
   \code{valueClass} properties remain unspecified.
+
+  The \code{setGroupGeneric} function behaves like \code{setGeneric} except that
+  it constructs a group generic function, differing in two ways from an
+  ordinary generic function.  First,
+  this function cannot be called directly, and the body of the function
+  created will contain a stop call with this information.  Second, the
+  group generic function contains information about the known members of
+  the group, used to keep the members up to date when the group
+  definition changes, through changes in the search list or direct
+  specification of methods, etc.
 }
 \value{
   The \code{setGeneric} function exists for its side effect:  saving the

@@ -151,6 +151,13 @@ getAllMethods <-
     methods <- setAllMethodsSlot(methods)
     assign(".Methods", methods, ev)
     environment(fdef) <- ev
+    assignToMethodMetaData(f, fdef)
+    ## in the current version of this function,
+    ## primitives are pre-cached in the method metadata (because
+    ## they are not visible as generic functions from the C code).
+    fun <- getFunction(f)
+    if(is.primitive(fun))
+      setPrimitiveMethods(f, fun, "set", fdef)
     fdef
   }
 
@@ -279,7 +286,7 @@ getMethodsMetaData <-
   ## get the methods meta-data for function f on database where
   function(f, where) {
     mname <- mlistMetaName(f)
-    if(exists(mname, where = where))
+    if(exists(mname, where = where, inherits = FALSE))
       get(mname, where)
     else
       NULL
@@ -319,24 +326,25 @@ is.primitive <-
            "special" = , "builtin" = TRUE,
            FALSE)
     
+
 cacheMetaData <-
-  function(envir, attach) {
+  function(envir, attach = TRUE) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
     generics <- getGenerics(envir)
     if(length(generics)>0)
-      cacheGenericsMetaData(generics, attach)
+      cacheGenericsMetaData(generics, attach, envir)
   }
 
 cacheGenericsMetaData <-
-  function(generics, attach = TRUE) {
+  function(generics, attach = TRUE, envir = NULL) {
     for(f in generics) {
+      if(!is.null(getFromMethodMetaData(f)))
+        removeFromMethodMetaData(f)
       ## find the function.  It may be a generic, but will be a primitive
       ## if the internal C code is being used to dispatch methods for primitives.
       ## It may also be NULL, if no function is found (when detaching the only
       ## package defining this function, for example).
-      if(!is.null(getFromMethodMetaData(f)))
-        removeFromMethodMetaData(f)
       fdef <- getFunction(f, mustFind = FALSE)
       if(is.primitive(fdef)) {
         if(attach) code <- "reset"
@@ -344,26 +352,37 @@ cacheGenericsMetaData <-
           code <- "clear"
           for(i in search()) {
             envi <- as.environment(i)
-            if(!identical(envi, env) &&
-               !is.null(getMethodsMetaData(f, envi)))
-              code <- "reset"
+            if(identical(envi, envir))
+              next
+            if(!is.null(getMethodsMetaData(f, envi)))
+              {code <- "reset"; break}
           }
         }
         switch(code,
-               reset = {
-      ## in the current version of this function,
-      ## primitives are pre-cached in the method metadata (because
-      ## they are not visible as generic functions from the C code).
-                 generic <- getAllMethods(f)
-                 assignToMethodMetaData(f, generic)
-                 setPrimitiveMethods(f, fdef, code, generic)
-                 },
-               clear = setPrimitiveMethods(f, fdef, code, NULL))
+               reset = setPrimitiveMethods(f, fdef, code, getGeneric(f), NULL),
+               clear = setPrimitiveMethods(f, fdef, code, NULL, NULL))
+      }
+      else if(isGroupGeneric(f, fdef = fdef)) {
+        members <- getGroupMembers(f, fdef = fdef)
+        ## do the computations for the members as well; important if the
+        ## members are primitive functions.
+        if(length(members)>0)
+          Recall(members, attach, envir)
       }
     }
   }
 
 setPrimitiveMethods <-
-  function(f, fdef, code, generic)
-    .Call("R_M_setPrimitiveMethods", f, fdef, code, generic, PACKAGE="methods")
+  function(f, fdef, code, generic, mlist = get(".Methods", envir = environment(generic)))
+    .Call("R_M_setPrimitiveMethods", f, fdef, code, generic, mlist, PACKAGE="methods")
 
+
+setGroupMembers <-
+  function(f, members, fdef = getGeneric(f))
+{
+  assign(".GroupMembers", members, envir = environment(fdef))
+}
+
+getGroupMembers <-
+  function(f, fdef = getGeneric(f))
+  get(".GroupMembers", envir = environment(fdef))

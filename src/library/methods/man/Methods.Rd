@@ -12,7 +12,7 @@
 \alias{removeMethods}
 \alias{signature}
 \alias{setReplaceMethod}
-\title{Defining Methods and Generic Functions}
+\title{Methods and Generic Functions}
 \usage{
 isGeneric(f, where, fdef, getName = FALSE)
 
@@ -42,9 +42,13 @@ allGenerics(where)
 }
 \description{
 
-These are the functions that deal with formally defined methods.
-Brief documentation is provided below.  See the references for an
-introduction and for more details.
+This documentation describes how method definition and selection works,
+and the functions that deal with formally defined methods.
+Brief documentation of the functions is provided below.
+
+The section \bold{How Methods Work} may help more than the individual
+function documentation; it
+describes the underlying mechanism.
   
 \describe{
   \item{\code{isGeneric}:}{ 
@@ -66,7 +70,8 @@ introduction and for more details.
     function would be, even if no methods have been currently defined
     for it.
   
-}
+  }
+  
   \item{\code{removeGeneric}:}{ 
   Remove the generic function of this name.  
   }
@@ -90,7 +95,11 @@ introduction and for more details.
   }
   \item{\code{findFunction}:}{ 
   return all the elements of the search list on which a function
-definition for \code{name} exists.  
+  definition for \code{name} exists.
+
+  \emph{NOTE:} Use this rather than \code{\link{find}} with
+  \code{mode="function"}, which is not as meaningful, and has a few subtle bugs from its use of
+  regular expressions.
   
   }
   \item{\code{selectMethod}:}{ 
@@ -139,6 +148,137 @@ Similarly, omitting \code{f} is not currently supported.
   }
 }
 }
+\section{How Methods Work}{
+
+A generic function is a function that has
+associated with it a
+collection of other functions(the methods), all of which agree in
+formal arguments with the generic.
+In R, the ``collection'' is an object of class
+\code{"\link{MethodsList}"}, which contains a named list of methods
+(the \code{methods} slot),
+and the name of one of the formal arguments to the function (the
+\code{argument} slot).
+The names of the methods are the names of classes, and the corresponding element
+defines the method or methods to be used if the corresponding argument
+has that class.
+For example, suppose a function \code{f} has formal arguments
+\code{x} and \code{y}.
+The methods list object for that function has the object
+\code{as.name("x")} as its \code{argument} slot.
+An element of the methods named \code{"track"} is selected if the
+actual argument corresponding to \code{x} is an object of class
+\code{"track"}.
+If there is such an element, it can generally be either a function or
+another methods list object.
+
+In the first case, the function defines the method to use for any call
+in which \code{x} is of class
+\code{"track"}.
+In the second case, the new methods list object defines the selection
+of methods depending on the remaining formal arguments,
+in this example, \code{y}.
+The same selection process takes place, recursively, using the new
+methods list.
+Eventually, the selection returns either a function or \code{NULL},
+meaning that no method matched the actual arguments.
+
+Each method selected corresponds conceptually to a \emph{signature};
+that is a named list of classes, with names corresponding to some or
+all of the formal arguments.
+In the previous example, if selecting class \code{"track"} for
+\code{x}, finding that the selection was another methods list and then
+selecting class \code{"numeric"} for \code{y} would produce a method
+associated with the signature \code{
+   x = "track", y = "numeric"
+}
+
+The actual selection is done recursively, but you can see the methods
+arranged by signature by calling the function
+\code{\link{showMethods}}, and objects with the methods arranged
+this way (in two different forms) are returned by the functions
+\code{\link{listFromMlist}} and \code{\link{linearizeMlist}}.
+
+In an R session, each generic function has a single methods list
+object defining all the currently available methods.
+The session methods list object is created the first time the function is called
+by merging all the relevant method definitions currently visible.
+Whenever something happens that
+might change the definitions (such as attaching or detaching a package
+with methods for this function, or explicitly defining or removing methods), the merged
+methods list object is removed.  The next call to the function will
+recompute the merged definitions.
+
+When methods list are merged, they can come from two sources:
+\enumerate{
+\item{
+Methods list objects for the same function on one or more currently
+attached databases.
+These are merged so that methods in a database earlier in the search
+list override methods for the same function later in the search list.
+A method overrides only another method for the same signature.  See
+the comments on class \code{"ANY"} in the section on \bold{Inheritance}.
+}
+\item{Methods list objects corresponding to the
+    generic function itself and to the group generic functions, if
+    any, for this function.
+    Any generic function can be defined to belong to a group generic.
+    The methods for the group generic are available as methods for
+    this function.  The group generic can itself be defined as belong
+    to a group; as a result there is a list of group generic
+    functions.  A method defined for a function and a particular
+    signature overrides a method for the same signature for that
+    function's group generic
+}
+}
+Merging is done first over databases for a particular function, and
+then over the generic and its group generics.
+
+The result is a single methods list object that contains all the
+methods \emph{directly} defined for this function.
+As calls to the function occur, this information may be supplemented
+by \emph{inherited} methods, which we consider next.
+}
+\section{Class Inheritance and Method Selection}{
+If no method is found directly for the actual arguments in a call to a
+generic function, an attempt is made to match the available methods to
+the arguments by using \emph{inheritance}.
+
+Each class definition potentially includes the names of one or more
+classes that the new class extends.  (These are sometimes called the
+\emph{superclasses} of the new class.)  These classes themselves may
+extend other classes.  Putting all this information together produces
+the full list of superclasses for this class. (You can see this list
+for any class \code{"A"} from the expression \code{extends("A")}.)
+In addition, any class implicitly extends class \code{"ANY"}.
+
+A method will be selected by inheritance if we can find a method in
+the methods list for a signature corresponding to any
+combination of superclasses for each of the relevant arguments.
+The search for such a method is performed by the function
+\code{\link{MethodsListSelect}}, working as follows.
+
+For the first formal argument of the function, a list of classes is
+made up from the class itself, all its superclasses, and class
+\code{"ANY"}.
+For each of these, the selection computation looks for an element of
+the methods with the corresponding name.  Each time it finds one, it
+then calls the selection process recursively if necessary to select a
+method directly or by inheritance for the remaining arguments.
+
+Each one of these recursive calls can fail or it can return a function
+(the method).  As long as the calls fail, the selection process moves
+on to the next superclass and tries again.
+The last step corresponds to class \code{"ANY"}, the default method
+defined at this level.
+
+The effect of this definition of the selection process is to order all
+possible inherited methods, first by the superclasses for the first
+argument, then within this by the superclasses for the second
+argument, and so on.
+Superclasses are ordered by how direct they are:  first, the direct
+superclasses, then the superclasses of these classes.
+}
 \arguments{
   \item{f}{ The character string naming the function. }
   \item{where}{ Where on the search list of attached packages to look
@@ -166,7 +306,9 @@ Similarly, omitting \code{f} is not currently supported.
     functions be included.  Supply as \code{FALSE} to get only
     non-generic functions.}
 
-  \item{fdef}{Optional, but usually omitted, argument to \code{isGeneric}}
+  \item{fdef}{Optional, the generic function definition.
+
+   Usually omitted in calls to \code{isGeneric}}
   
   \item{getName}{If \code{TRUE}, \code{isGeneric} returns the name of
     the generic.  By default, it returns \code{TRUE}. }

@@ -629,7 +629,7 @@ void InitFunctionHashing(void);
 void InitGlobalEnv(void);
 int R_has_methods(SEXP);
 void R_InitialData(void);
-SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP);
 void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);

@@ -247,13 +247,22 @@ getAllSuperClasses <-
   ## User code should not need to call getAllSuperClasses directly; instead, use getExtends(getClass())
   ## (which will complete the definition if necessary).
   function(ClassDef) {
-    immediate <- names(getExtends(ClassDef))
-    super <- character()
-    for(what in immediate)
-      ## calling getClass will recursively force completion of the superclasses
-      super <- c(super, what, names(getExtends(getClass(what))))
-    unique(super)
+    temp <- superClassDepth(ClassDef)
+    unique(temp$label[sort.list(temp$depth)])
   }
+
+superClassDepth <-
+  function(ClassDef)
+{    
+  immediate <- names(getExtends(ClassDef))
+  super <- list(label=immediate, depth = rep(1, length(immediate)))
+  for(what in immediate) {
+    more <- Recall(getClassDef(what))
+    super$depth <- c(super$depth, 1+more$depth)
+    super$label <- c(super$label, more$label)
+  }
+  super
+}
 
 setExtends <-
   ## set the class's Extends information given the class representation (only, not from

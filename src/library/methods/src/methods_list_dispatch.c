@@ -225,7 +225,7 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist)
 	return R_NilValue;
     methods = R_get_attr(mlist, "allMethods");
     if(methods == R_NilValue)
-    {  return R_NilValue;}
+      {  return R_NilValue;}
     while(!isNull(args) && !isNull(methods)) {
 	object = CAR(args); args = CDR(args);
 	class = CHAR(asChar(R_data_class(object, TRUE)));
@@ -233,7 +233,7 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist)
 	if(isNull(value) || isFunction(value))
 	    return value;
 	/* continue matching args down the tree */
-	methods = value;
+	methods = R_get_attr(value, "allMethods");
     }
     return(R_NilValue);
 }
@@ -552,7 +552,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	       then the default method is forced to be also); or
 	       the original function is a closure */
 	    if(firstCall) {
-		deflt = R_find_method(mlist, "ANY", fname);
+		PROTECT(deflt = R_find_method(mlist, "ANY", fname)); nprotect++;
 		prim_case = isPrimitive(deflt);
 		if(prim_case) {
 		    op = deflt;
@@ -577,7 +577,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 		PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
 		if(firstCall) {
 		    if(prim_case) {
-			do_set_prim_method(op, "reset", prev_fun, NULL);
+			do_set_prim_method(op, "reset", prev_fun, value);
 		    }
 		    else {
 			R_assign_to_method_metadata(fsym, fdef);
@@ -714,10 +714,8 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     return method;
 }
 
-SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef)
+SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec, 
+			     SEXP fundef, SEXP mlist)
 {
-    SEXP mlist;
-    mlist = R_get_from_f_env(R_get_function_env(fundef, fname),
-			     s_dot_Methods, fname);
     return R_set_prim_method(fname, op, code_vec, fundef, mlist);
 }

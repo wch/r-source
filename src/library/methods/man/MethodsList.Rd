@@ -10,7 +10,7 @@
 \alias{emptyMethodsList}
 \alias{insertMethodInEmptyList}
 \alias{listFromMlist}
-\alias{listFromMlistForPrint}
+\alias{linearizeMlist}
 \alias{finalDefaultMethod}
 \alias{mergeMethods}
 \title{MethodsList Objects}
@@ -33,7 +33,7 @@ print.MethodsList(x, ...)
 
 listFromMlist(mlist, prefix = list())
 
-listFromMlistForPrint(mlist, inherited = TRUE, useArgName = TRUE, prev = character())
+listFromMlistForPrint(mlist, inherited = TRUE)
 
 finalDefaultMethod(mlist, fname = "")
 

@@ -1511,7 +1511,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	else
 	  argValue = args;
 	PROTECT(argValue);
-	value = R_possible_dispatch(call, op, argValue, rho, x);
+	value = R_possible_dispatch(call, op, argValue, rho);
 	UNPROTECT(1);
 	if(value) {
 	  *ans = value;
@@ -1657,6 +1657,16 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     if (args != R_NilValue && ! isObject(CAR(args)) &&
         (CDR(args) == R_NilValue || ! isObject(CADR(args))))
 	return 0;
+    /* try for formal method */
+    if(R_has_methods(op)) {
+      SEXP value;
+      value = R_possible_dispatch(call, op, args, rho);
+      if(value) {
+	*ans = value;
+	return 1;
+      }
+      /*else to on to look for S3 methods */
+    }
 
     /* check whether we are processing the default method */
     if ( isSymbol(CAR(call)) ) {

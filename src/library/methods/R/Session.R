@@ -23,7 +23,7 @@ traceOn <-
         name <- as.character(substitute(what))
     else
         def <- getFunction(name)
-    if(exists(name, sessionData(), inherit=FALSE)) {
+    if(exists(name, sessionData(), inherits = FALSE)) {
         remove(list=name, pos=sessionData())
         def <- getFunction(name)
     }

@@ -12,6 +12,7 @@
 \alias{getSlots}
 \alias{getExtends}
 \alias{getAllSuperClasses}
+\alias{superClassDepth}
 \alias{setExtends}
 \alias{getPrototype}
 \alias{setPrototype}
@@ -76,6 +77,8 @@ getSlots(x, complete = TRUE)
 getExtends(ClassDef)
 
 getAllSuperClasses(ClassDef)
+
+superClassDepth(ClassDef)
 
 setExtends(ClassDef, value)
 
@@ -252,16 +255,19 @@ information as well.
 
   
   }
-\item{\code{getAllSuperClasses}:}{ 
+\item{\code{getAllSuperClasses}, \code{superClassDepth}:}{ 
   Get the names of all the classes that this class definition extends.
 
 A utility function used to complete a class definition.  
   It returns all the
-superclasses reachable from this class, in depth-first order (which is the order
+superclasses reachable from this class, in breadth-first order (which is the order
 used for matching methods); that is, the first direct superclass followed by all its
 superclasses, then the next, etc.  (The order is relevant only in the case that
 some of the superclasses have multiple inheritance.)
 
+\code{superClassDepth} returns the same information, but as a list with
+components \code{label} and \code{depth}, the latter for the number of
+generations back each class is in the inheritance tree.
   
   
   }

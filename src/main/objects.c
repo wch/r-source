@@ -959,65 +959,68 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
-    int offset=0; prim_methods_t code; SEXP value;
-    switch(code_string[0]) {
-    case 'c': /* clear */
-	code = NO_METHODS; break;
-    case 'r': /* reset */
-	code = NEEDS_RESET; break;
-    case 's': /* set */
-	code = HAS_METHODS; break;
-    default:
-	error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
+  int offset = 0; prim_methods_t code; SEXP value;
+  switch(code_string[0]) {
+  case 'c': /* clear */
+    code = NO_METHODS; break;
+  case 'r': /* reset */
+    code = NEEDS_RESET; break;
+  case 's': /* set */
+    code = HAS_METHODS; break;
+  default:
+    error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
+  }
+  switch(TYPEOF(op)) {
+  case BUILTINSXP: case SPECIALSXP:
+    offset = PRIMOFFSET(op);
+    break;
+  default: 
+    error("Invalid object: must be a primitive function");
+  }
+  if(offset >= maxMethodsOffset) {
+    int n;
+    n = offset;
+    if(n < DEFAULT_N_PRIM_METHODS)
+      n = DEFAULT_N_PRIM_METHODS;
+    if(n < 2*maxMethodsOffset)
+      n = 2 * maxMethodsOffset;
+    if(prim_methods) {
+      prim_methods = Realloc(prim_methods, n, prim_methods_t);
+      prim_generics = Realloc(prim_generics, n, SEXP);
+      prim_mlist = Realloc(prim_mlist, n, SEXP);
+   }
+    else {
+      prim_methods = Calloc(n, prim_methods_t);
+      prim_generics = Calloc(n, SEXP);
+      prim_mlist = Calloc(n, SEXP);
     }
-    switch(TYPEOF(op)) {
-    case BUILTINSXP: case SPECIALSXP:
-	offset = PRIMOFFSET(op);
-	break;
-    default: 
-	error("Invalid object: must be a primitive function");
-    }
-    if(offset >= maxMethodsOffset) {
-	int n;
-	n = offset;
-	if(n < DEFAULT_N_PRIM_METHODS)
-	    n = DEFAULT_N_PRIM_METHODS;
-	if(n < 2*maxMethodsOffset)
-	    n = 2 * maxMethodsOffset;
-	if(prim_methods) {
-	    prim_methods = Realloc(prim_methods, n, prim_methods_t);
-	    prim_generics = Realloc(prim_generics, n, SEXP);
-	    prim_mlist = Realloc(prim_mlist, n, SEXP);
-	}
-	else {
-	    prim_methods = Calloc(n, prim_methods_t);
-	    prim_generics = Calloc(n, SEXP);
-	    prim_mlist = Calloc(n, SEXP);
-	}
-	maxMethodsOffset = n;
-    }
-    if(offset > curMaxOffset)
-	curMaxOffset = offset;
-    prim_methods[offset] = code;
-    /* store a preserved pointer to the generic function if there is not
-       one there currently.  Unpreserve it if no more methods, but don't
-       replace it otherwise:  the generic definition is not allowed to
-       change while it's still defined! */
-    value = prim_generics[offset];
-    if(code == NO_METHODS && prim_generics[offset]) {
-	R_ReleaseObject(prim_generics[offset]);
-	prim_generics[offset] = 0;
-    }
-    else if(fundef && !prim_generics[offset]) {
-	R_PreserveObject(fundef);
-	if(TYPEOF(fundef) != CLOSXP)
-	    error("The formal definition of a primitive generic must be a function object (got type %s)",
-		  type2str(TYPEOF(fundef)));
-	prim_generics[offset] = fundef;
-	if(mlist)
-	    prim_mlist[offset] = mlist;
-    }
-    return value;
+    maxMethodsOffset = n;
+  }
+  if(offset > curMaxOffset)
+    curMaxOffset = offset;
+  prim_methods[offset] = code;
+  /* store a preserved pointer to the generic function if there is not
+     one there currently.  Unpreserve it if no more methods, but don't
+     replace it otherwise:  the generic definition is not allowed to
+     change while it's still defined! (the stored methods list can,
+     however) */
+  value = prim_generics[offset];
+  if(code == NO_METHODS && prim_generics[offset]) {
+    R_ReleaseObject(prim_generics[offset]);
+    prim_generics[offset] = 0;
+    prim_mlist[offset] = 0;
+  }
+  else if(fundef && !isNull(fundef) && !prim_generics[offset]) {
+    SEXP env;
+    R_PreserveObject(fundef);
+    if(TYPEOF(fundef) != CLOSXP)
+      error("The formal definition of a primitive generic must be a function object (got type %s)",
+	    type2str(TYPEOF(fundef)));
+    prim_generics[offset] = fundef;
+  }
+  if(mlist && !isNull(mlist))
+    prim_mlist[offset] = mlist;
+  return value;
 }
 
 /* Could there be methods for this op?  Checks
@@ -1055,35 +1058,40 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
    the methods be set up to return a special object rather than trying
    to evaluate the default (which would get us into a loop). */
 SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, 
-			 SEXP rho, SEXP x)
+			 SEXP rho)
 {
-    SEXP fundef, value; int offset; prim_methods_t current;
-    offset = PRIMOFFSET(op);
-    if(offset < 0 || offset > curMaxOffset)
-	error("Invalid primitive operation given for dispatch");
-    current = prim_methods[offset];
-    if(current == NO_METHODS || current == SUPPRESSED)
-	return(NULL);
-    fundef = prim_generics[offset];
-    if(!fundef || TYPEOF(fundef) != CLOSXP)
-	error("Internal error:  stored generic for \"%s\" was not a function",
-	      PRIMNAME(op));
-    if(quick_method_check_ptr) {
-	value = (*quick_method_check_ptr)(args, prim_mlist[offset]);
-	if(isPrimitive(value))
-	    return(NULL);
-	if(isFunction(value))
-	    /* found a method, call it */
-	    return applyClosure(call, value, args, rho, R_NilValue);
-	/* else, need to perform full method search */
-    }
-    prim_methods[offset] = SUPPRESSED;
-    /* To do:  arrange for the setting to be restored in case of an
-       error in method search */
-    value = applyClosure(call, fundef, args, rho, R_NilValue);
-    prim_methods[offset] = current;
-    if(value == deferred_default_object)
-	return NULL;
-    else
-	return value;
+  SEXP fundef, value, mlist; int offset; prim_methods_t current;
+  offset = PRIMOFFSET(op);
+  if(offset < 0 || offset > curMaxOffset)
+    error("Invalid primitive operation given for dispatch");
+  current = prim_methods[offset];
+  if(current == NO_METHODS || current == SUPPRESSED)
+    return(NULL);
+  /* check that the methods for this function have been collected (by
+     getAllMethods), and that method check pointer has been set by
+     library(methods) */
+  mlist = prim_mlist[offset];
+  if(mlist && !isNull(mlist)
+     && quick_method_check_ptr) {
+    value = (*quick_method_check_ptr)(args, mlist);
+    if(isPrimitive(value))
+      return(NULL);
+    if(isFunction(value))
+      /* found a method, call it */
+      return applyClosure(call, value, args, rho, R_NilValue);
+    /* else, need to perform full method search */
+  }
+  fundef = prim_generics[offset];
+  if(!fundef || TYPEOF(fundef) != CLOSXP)
+    error("primitive function \"%s\" has been set for methods but no  generic function supplied",
+	  PRIMNAME(op));
+  prim_methods[offset] = SUPPRESSED;
+  /* To do:  arrange for the setting to be restored in case of an
+     error in method search */
+  value = applyClosure(call, fundef, args, rho, R_NilValue);
+  prim_methods[offset] = current;
+  if(value == deferred_default_object)
+    return NULL;
+  else
+    return value;
 }

@@ -17,13 +17,15 @@ allNames <-
 getFunction <-
   ## find the object as a function.
   function(name, generic = TRUE, mustFind = TRUE,
-           where = 1:length(search()))
+           where = -1)
 {
     isGenericFunction <- function(obj) exists(".Generic", envir = environment(obj), inherits=FALSE)
     found <- FALSE
+    if(identical(where, -1))
+      where <- 1:length(search())
+    else if(is.environment(where)) where <- list(where)
     ## unfortunately, if `where' turns out to be an environment, the for
     ## loop will generate an error.
-    if(is.environment(where)) where <- list(where)
     for(i in where)
         if(exists(name, i, inherits = FALSE)) {
             f <- get(name, i)
@@ -81,28 +83,26 @@ formalArgs <-
 
 existsFunction <-
   ## Is there a function of this name. If `generic==FALSE', generic functions are not counted.
-  function(f, generic=TRUE,
-           where = find(f, mode="function", numeric=TRUE))
+  function(f, generic=TRUE, where)
 {
-    if(generic && missing(where))
-        return(length(where) > 0)
-    if(is.environment(where)) {
-        if(!exists(f, where))
-            return(FALSE)
+  if(missing(where))
+    return(length(findFunction(f, generic)) > 0)
+  if(is.environment(where) || length(where == 1)) {
+        if(!exists(f, where, inherits = FALSE))
+          return(FALSE)
         obj <- get(f, where)
         return(is.function(obj) &&
                (generic || !isGeneric(f, fdef = obj)))
     }
+  ## the case of multiple databases supplied.  Unusual, but supported.
     for(wherei in where) {
         if(!exists(f, where, inherits=FALSE))
             next
         obj <- get(f, wherei)
-        if(is(obj, "function")) {
-            if(!generic &&
-               isGeneric(f, fdef = obj))
-                next
-            return(TRUE)
-        }
+        if(is.function(obj) &&
+           generic || is.primitive(obj)
+           || !isGeneric(f, wherei, obj))
+          return(TRUE)
     }
     return(FALSE)
 }
@@ -113,12 +113,16 @@ findFunction <-
   ## functions.
   function(f, generic = TRUE)
 {
-    allWhere <- find(f, mode = "function", numeric=TRUE)
-    if(generic)
-        allWhere
-    else
-        sapply(as.list(allWhere), function(x)isGeneric(get(f, x)))
-}
+    allWhere <- integer()
+    for(i in seq(along=search()))
+      if(exists(f, i, inherits = FALSE)) {
+        fdef <-get(f, i)
+        if(generic || is.primitive(fdef)
+           || !isGeneric(f, i, fdef))
+          allWhere <- c(allWhere, i)
+      }
+    allWhere
+  }
 
 Quote <- get("quote" , mode = "function")
 

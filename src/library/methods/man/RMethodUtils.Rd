@@ -9,6 +9,8 @@
 \alias{conformMethodArgs}
 \alias{getGeneric}
 \alias{getGroup}
+\alias{getGroupMembers}
+\alias{setGroupMembers}
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
@@ -18,6 +20,8 @@
 \alias{removeFromMethodMetaData}
 \alias{is.primitive}
 \alias{.saveImage}
+\alias{cacheMetaData}
+\alias{cacheGenericsMetaData}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -44,6 +48,9 @@ getGeneric(f, mustFind=FALSE)
 
 getGroup(fdef, recursive=FALSE)
 
+getGroupMembers(f, fdef = getGeneric(f))
+setGroupMembers(f, members, fdef = getGeneric(f))
+
 matchSignature(names, signature, fun)
 
 ## manage method metadata
@@ -54,6 +61,11 @@ assignToMethodMetaData(name, value)
 removeFromMethodMetaData(name)
 
 is.primitive(fdef)
+
+cacheMetaData(envir, attach = TRUE)
+
+cacheGenericsMetaData(generics, attach = TRUE, envir)
+
 
 }
 \description{
@@ -133,6 +145,10 @@ returns \code{NULL} or throws an error.
 
   If \code{recursive=TRUE}, also all the
   group(s) of these groups.
+}
+
+\item{\code{getGroupMembers}, \code{setGroupMembers}:}{
+  Get or set the known members of the group generic function \code{f}.
   }
 
 \item{\code{matchSignature}}{
@@ -160,6 +176,18 @@ returns \code{NULL} or throws an error.
     
     \item{\code{is.primitive}}{
       Is this object a primitive function (either a builtin or special)?
+    }
+    \item{\code{cacheMetaData, cacheGenericsMetaData}:}{
+      Utilities for ensuring that the session-scope information about
+      class and method definitions is up to date.  Should normally be
+      called automatically whenever needed (for example, when a method
+      or class definition changes, or when a database is attached or
+      detached.
+
+      The \code{environment} must be one of the environments on the
+      current search list; note in particular that even on detaching
+      (\code{attach=FALSE}), the environment will normally still be on
+      the search list.
       }
 
 \item{\code{.saveImage}}{Flag, used in dynamically initializing the

@@ -4,11 +4,15 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
         if (!file.exists(what))
             stop(paste("File", what, " not found.", sep=""))
         name<-paste("file:", what, sep="")
-        .Internal(attach(NULL, pos, name))
+        value <- .Internal(attach(NULL, pos, name))
         load(what, envir=as.environment(pos))
     }
     else
-        .Internal(attach(what, pos, name))
+        value <- .Internal(attach(what, pos, name))
+    if((length(objects(envir = value, all=TRUE)) > 0)
+       && !is.na(match("package:methods", search())))
+      cacheMetaData(value, TRUE)
+    invisible(value)
 }
 
 detach <- function(name, pos=2)
@@ -22,13 +26,16 @@ detach <- function(name, pos=2)
 	if(is.na(pos))
 	    stop("invalid name")
     }
+    env <- as.environment(pos)
     if(exists(".Last.lib", where = pos, inherits=FALSE)) {
         .Last.lib <- get(".Last.lib", pos = pos, inherits=FALSE)
         if(is.function(.Last.lib)) {
-            libpath <- attr(as.environment(pos), "path")
+            libpath <- attr(env, "path")
             if(!is.null(libpath)) try(.Last.lib(libpath))
         }
     }
+    if(!is.na(match("package:methods", search())))
+      cacheMetaData(env, FALSE)
     .Internal(detach(pos))
 }
 
