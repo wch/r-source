@@ -346,7 +346,7 @@ int main () {
 EOF
       changequote([, ])
       if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
-	if ${CC-cc} ${LDFLAGS} -o conftest conftest.o conftestf.o \
+	if ${CC-cc} ${LDFLAGS} ${MAINLDFLAGS} -o conftest conftest.o conftestf.o \
             ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
 	  if test ${?} = 0; then

@@ -547,8 +547,12 @@ case "${host}" in
 esac
 
 AC_SUBST(CFLAGS)
+AC_SUBST(MAIN_CFLAGS)
+AC_SUBST(SHLIB_CFLAGS)
 AC_SUBST(CXXFLAGS)
 AC_SUBST(FFLAGS)
+AC_SUBST(MAIN_FFLAGS)
+AC_SUBST(SHLIB_FFLAGS)
 AC_SUBST(F2CFLAGS)
 AC_SUBST(R_XTRA_CFLAGS)
 AC_SUBST(R_XTRA_CXXFLAGS)
@@ -561,7 +565,7 @@ AC_SUBST(R_XTRA_LIBS)
 ##
 ## MAINLD, MAINLDFLAGS
 ##   command and flags for loading the main binary so that it will load
-##   shared libraries (DLLs) at runtime
+##   shared libraries (DLLs) at runtime, also for profiling.
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code
 ## SHLIBLD, SHLIBLDFLAGS
@@ -699,7 +703,13 @@ case "${host}" in
 esac
 
 : ${MAINLD=${mainld}}
-: ${MAINLDFLAGS=${mainldflags}}
+#: ${MAINLDFLAGS=${mainldflags}}
+if test -n "${MAINLDFLAGS}" ; then
+  MAINLDFLAGS="${MAINLDFLAGS} ${mainldflags}"
+else
+  MAINLDFLAGS=${mainldflags}
+fi
+
 : ${CPICFLAGS=${cpicflags}}
 if test -z "${CPICFLAGS}"; then
   case "${host}" in
@@ -723,7 +733,14 @@ if test -z "${CXXPICFLAGS}"; then
   esac
 fi
 : ${SHLIBLD=${shlibld}}
-: ${SHLIBLDFLAGS=${shlibldflags}}
+#: ${SHLIBLDFLAGS=${SHLIBLDFLAGS} ${shlibldflags}}
+
+if test -n "${SHLIBLDFLAGS}" ; then
+  SHLIBLDFLAGS="${SHLIBLDFLAGS} ${shlibldflags}"
+else
+  SHLIBLDFLAGS=${shlibldflags}
+fi
+
 if test -z "${SHLIBLDFLAGS}"; then
   AC_MSG_WARN([Could not determine SHLIBLDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])

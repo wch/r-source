@@ -48,6 +48,12 @@
 # other cases.
 # CFLAGS=
 
+# The following additional CFLAGS to be used only in the main compilation
+# and only in building shared libraries respectively. For example,
+# on some systems one needs MAIN_CFLAGS=-pg when profiling.
+# MAIN_CFLAGS=
+# SHLIB_CFLAGS=
+
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
 # If unset defaults to -I/usr/local/include
@@ -66,6 +72,12 @@
 # above.  If unspecified, defaults to "-O2" for g77, and "" otherwise.
 # FFLAGS=
 
+# The following additional FFLAGS to be used only in the main compilation
+# and only in building shared libraries respectively. For example,
+# on some systems one needs MAIN_FFLAGS=-pg when profiling.
+# MAIN_FFLAGS=
+# SHLIB_FFLAGS=
+
 # The command to be used to load the main R binary.
 # This is usually the FORTRAN or C compiler, but the automatic choice
 # can be overriden by means of this variable.
@@ -73,7 +85,9 @@
 
 # The flags which are necessary for loading main program which will load
 # DLLs at runtime.  HP-UX and Linux-elf are examples of platforms which
-# use this.  These platforms are already taken care of by configure.
+# use this.  These platforms are already taken care of by configure,
+# and anything set here will be in addition.  For example, one can set
+# flags for profiling here.
 # MAINLDFLAGS=
 
 # Any special flags which must be used when compiling C code to be
@@ -88,7 +102,8 @@
 # FPICFLAGS=
 
 # Any special flags which are required by `ld' when creating shared
-# libraries.  This is usually automatically detected by configure.
+# libraries.  This is usually automatically detected by configure,
+# and anything set here will be in addition.
 # SHLIBLDFLAGS=
 
 # For `-l' and `-L' options to pass to the linker.

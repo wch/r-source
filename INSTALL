@@ -93,6 +93,8 @@ letter.
 If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables LIBS (for libraries) and
 CPPFLAGS (for header files), respectively, to specify these locations.
+These default to /usr/local/lib and /usr/local/include to catch the
+most common cases.
 
 If you find you need to alter configure variables, it is worth noting
 that some settings are cached in the file `config.cache', and it is a
@@ -253,6 +255,34 @@ libglade needs libxml 1.4 or later, the source for which is available
 from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs of libxml-1.4
 and libxml-devel-1.4 are available from updates.redhat.com and mirrors,
 or ftp.gurulabs.com/pub/gnome/updates.
+
+
+COMPILE AND LOAD FLAGS
+
+A wide range of flags can be set in the file config.site or via
+environment variables.  We have already mentioned
+
+	CPPFLAGS	extra include flags
+	LIBS		libraries and -L/lib/path flags
+
+and others include
+
+	CFLAGS		debugging and optimization flags, C
+	MAIN_CFLAGS	ditto, for compiling the main program
+	SHLIB_CFLAGS	  or shared libraries
+	FFLAGS		debugging and optimization flags, Fortran
+	MAIN_FFLAGS	ditto, for compiling the main program
+	SHLIB_FFLAGS	  or shared libraries
+	MAINLDFLAGS	additional flags for the main link
+	SHLIBLDFLAGS	additional flags for the linking shared libraries
+
+Library paths specified as -L/lib/path in LIBS are collected together
+and prepended to LD_LIBRARY_PATH, so there should be no need for
+-R or -rpath flags.
+
+To compile a profiling version of R, one might for example want to use
+MAIN_CFLAGS=-pg, MAIN_FFLAGS=-pg, MAINLDFLAGS=-pg on platforms where
+-pg cannot be used with position-independent code.
 
 
 NEW PLATFORMS (Standards Hah!)
