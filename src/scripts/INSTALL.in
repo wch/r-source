@@ -456,7 +456,11 @@ do_install_source () {
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
       cd src;
-      makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
+      makefiles="-f \"${R_HOME}\"/share/make/shlib.mk"
+      if test -r "${HOME}/.Rmakeconf"; then
+        makefiles="${makefiles} -f \"${HOME}/.Rmakeconf\""
+      fi
+      makefiles="${makefiles} -f Makefile"
       if test -r Makevars; then
 	makefiles="-f Makevars ${makefiles}"
       fi
