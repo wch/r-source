@@ -23,6 +23,7 @@ DISTFILES = README \
 	install-sh \
 	keywords2html.pl \
 	ldAIX4 \
+	link-recommended \
 	linkcheck.pl \
 	ltmain.sh \
 	mdate-sh \
