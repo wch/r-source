@@ -481,7 +481,7 @@ SEXP RTcl_RemoveArrayElem(SEXP args)
 
     return R_NilValue;
 }
-#endif TCL80
+#endif /* TCL80 */
 
 /* Warning: These two functions return a pointer to internal static
    data. Copy immediately. */
