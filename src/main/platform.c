@@ -382,6 +382,7 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, npath, ltopicbuf, html;
     FILE *fp;
 
+    checkArity(op, args);
     topic = CAR(args); args = CDR(args);
     if(!isString(topic) || length(topic) < 1 || isNull(topic))
 	error("invalid \"topic\" argument\n");
@@ -405,7 +406,7 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		"help", CHAR(STRING(sep)[0]),
 		CHAR(STRING(indexname)[0]));
 	if ((fp = fopen(linebuf, "rt")) == NULL)
-	    error("unable to open index file");
+	    error("unable to open index file %s\n", linebuf);
 	while (filbuf(linebuf, fp)) {
 	    if(strncmp(linebuf, topicbuf, ltopicbuf) == 0) {
 		p = &linebuf[ltopicbuf - 1];

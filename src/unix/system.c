@@ -903,6 +903,33 @@ int R_ShowFile(char *file, char *title)
     else return 1;
 }
 
+int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
+{
+    int c, i;
+    char *pager;
+    FILE *fp, *fpg;
+    if (nfile > 0) {
+        pager = getenv("PAGER");
+        if (pager == NULL) pager = "more";
+        if ((fpg = fopen(pager, "w")) != NULL) {
+	    for(i = 0; i < nfile; i++) {
+		if (title[i])
+		    fprintf(fpg, "%s\n\n", title[i]);
+		if ((fp = fopen(file[i], "r")) != NULL) {
+		    while ((c = fgetc(fp)) != EOF)
+			fputc(c, fpg);
+		    fprintf(fpg, "\n");
+		    fclose(fpg);
+		}
+		else
+		    fprintf(fpg, "NO FILE %s\n\n", file[i]);
+	    }
+	}
+	else return 0;
+    }
+    return 1;
+}
+
 char *R_HomeDir()
 {
 	return getenv("RHOME");
