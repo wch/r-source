@@ -183,9 +183,8 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
 	    cat("Loading required package:", package, "\n")
 	library(package, char = TRUE, logical = TRUE,
 		warn.conflicts = warn.conflicts, keep.source = keep.source)
-    }
-    else
-	TRUE
+    } else TRUE
+    else TRUE
 }
 
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
