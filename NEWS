@@ -288,6 +288,9 @@ BUG FIXES
     o	ls.str() and lsf.str() now work better with pos > 1, and are
 	correctly documented (PR#899).
 
+    o	ks.test() in package ctest now had the one-sided alternatives in
+	the one-sample case reversed (PR#934).
+
 
 
 	**************************************************
