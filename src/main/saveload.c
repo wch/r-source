@@ -110,11 +110,10 @@ copy of smbuf and use that (non-static). That would
 mean some of them wouldn't need the extra argument.
 */
 
- R_StringBuffer buffer;
- char smbuf[512];		/* Small buffer for temp use */
+    R_StringBuffer buffer;
+    char smbuf[512];		/* Small buffer for temp use */
                                 /* smbuf is only used by Ascii. */
-
- XDR xdrs;
+    XDR xdrs;
 
 } SaveLoadData;
 
