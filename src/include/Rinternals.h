@@ -21,6 +21,10 @@
 #ifndef _R_INTERNALS_H_
 #define _R_INTERNALS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <R_ext/Arith.h>
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
@@ -1023,6 +1027,10 @@ int R_system(char *);
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
 #define vectorSubscript         Rf_vectorSubscript
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _R_INTERNALS_H_ */
