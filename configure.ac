@@ -75,6 +75,8 @@ case "${host_os}" in
    ;;
 esac
 AC_SUBST(R_OSTYPE)
+AM_CONDITIONAL(USE_WINDOWS, [test "x${R_OSTYPE}" = xwindows])
+
 
 ### ** Defaults.
 
