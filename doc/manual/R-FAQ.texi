@@ -1543,6 +1543,8 @@ A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
 and also performs searches using a number of less time-consuming
 techniques.
+@item lgtdl
+A set of methods for longitudinal data objects.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
@@ -1598,6 +1600,12 @@ An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
+@item panel
+Functions and datasets for fitting models to Panel data.
+@item permax
+Functions intended to facilitate certain basic analyses of DNA array
+data, especially with regard to comparing expression levels between two
+types of tissue.
 @item pls
 Univariate Partial Least Squares Regression.
 @item polymars
