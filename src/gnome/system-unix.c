@@ -260,31 +260,6 @@ SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
     return rval;
 }
 
-SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    char *tmp;
-    int ask=0;
-
-    if(R_BrowseLevel) {
-	warning("can't quit from browser\n");
-	return R_NilValue;
-    }
-    if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\" or \"ask\" expected.\n");
-    tmp = CHAR(STRING(CAR(args))[0]);
-    if( !strcmp(tmp,"ask") )
-	ask=1;
-    else if( !strcmp(tmp,"no") )
-	ask=2;
-    else if( !strcmp(tmp,"yes") )
-	ask=3;
-    else
-	errorcall(call,"unrecognized value of ask\n");
-    R_CleanUp(ask);
-    exit(0);
-    /*NOTREACHED*/
-}
-
 /* New / Experimental API elements */
 char *R_HomeDir()
 {
