@@ -15,7 +15,7 @@
 table(\dots, exclude = c(NA, NaN), dnn, deparse.level = 1)
 as.table(x, \dots)
 is.table(x)
-as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
+\method{as.data.frame}{table}(x, row.names = NULL, optional = FALSE, \dots)
 }
 \arguments{
   \item{\dots}{objects which can be interpreted as factors (including
@@ -28,7 +28,8 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
     \emph{dimnames names}).}
   \item{deparse.level}{controls how the default \code{dnn} is
     constructed.  See details.}
-  \item{x}{an arbitrary \R object.}
+  \item{x}{an arbitrary \R object, or an object inheriting from class
+    \code{"table"} for the \code{as.data.frame} method.}
   \item{row.names}{a character vector giving the row names for the data
     frame.}
   \item{optional}{a logical controlling whether row names are set.
@@ -54,11 +55,11 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
   \code{as.table} and \code{is.table} coerce to and test for contingency
   table, respectively.
 
-  \code{as.data.frame.table} is a method for the generic function
-  \code{as.data.frame} to convert the array-based representation of a
-  contingency table to a data frame containing the classifying factors
-  and the corresponding counts (the latter as component \code{Freq}).
-  This is the inverse of \code{\link{xtabs}}.
+  The \code{as.data.frame} method for objects inheriting from class
+  \code{"table"} can be used to convert the array-based representation
+  of a contingency table to a data frame containing the classifying
+  factors and the corresponding counts (the latter as component
+  \code{Freq}).  This is the inverse of \code{\link{xtabs}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
