@@ -15,7 +15,7 @@ load <- function (file, envir = parent.frame())
 
     magic <- readChar(con, 5)
     if(nchar(magic) == 0) {
-        warning("no input available on ", sQuote(file))
+        warning("no input is available")
         return(character(0))
     }
     if (regexpr("RD[AX]2\n", magic) == -1) {
@@ -56,6 +56,8 @@ save <- function(..., list = character(0),
         else if (inherits(file, "connection"))
             con <- file
         else stop("bad file argument")
+        if(isOpen(con) && summary(con)$text != "binary")
+            stop("can only save to a binary connection")
         invisible(.Internal(saveToConn(list, con, ascii, version, envir)))
     }
 }

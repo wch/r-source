@@ -328,6 +328,8 @@ NEW FEATURES
         provides the ability to return the alpha component of
 	colours (as well as the red, green, and blue components).
 
+    o	save() now checks that a binary connection is used.
+
     o	source() with 'echo = TRUE' uses the function source attribute
 	when displaying commands as they are parsed.
 
@@ -754,6 +756,9 @@ BUG FIXES
         in several ways.  as() methods and x@.Data should work better.
 
     o   hist() and pretty() accept (and ignore) infinite values.  (PR#7220)
+
+    o   It is no longer possible to call gzcon() more than once on a
+	connection.
 
 
 

@@ -3481,9 +3481,10 @@ SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(allow == NA_INTEGER)
 	errorcall(call, "`allowNonCompression' must be TRUE or FALSE");
 
-
-    /* if(incon->text)
-       error("gzcon can only work with binary connections");*/
+    if(incon->isGzcon) {
+	warningcall(call, "this is already a gzcon connection");
+	return CAR(args);
+    }
     m = incon->mode;
     if(strcmp(m, "r") == 0 || strcmp(m, "rb") == 0) mode = "rb";
     else if (strcmp(m, "w") == 0 || strcmp(m, "wb") == 0) mode = "wb";
