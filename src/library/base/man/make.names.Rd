@@ -29,6 +29,11 @@ make.names(names, unique = FALSE)
   appended to them.  Duplicated values are altered by
   \code{\link{make.unique}}.
 }
+\note{
+  Prior to version 1.9.0, underscores were not valid in variable names,
+  and code that relies on them being converted to dots will no longer
+  work. The simplest workaround is to use \code{gsub("_", ".", names)}.
+}
 \seealso{
   \code{\link{make.unique}},
   \code{\link{names}},
@@ -36,7 +41,7 @@ make.names(names, unique = FALSE)
   \code{\link{data.frame}}.
 }
 \examples{
-make.names(c("a and b", "a_and_b"), unique=TRUE)
+make.names(c("a and b", "a-and-b"), unique=TRUE)
 # "a.and.b"  "a.and.b.1"
 
 data(state)

@@ -161,7 +161,15 @@ SEXP FixupPch(SEXP pch, int dflt)
     else if (isString(pch)) {
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
-	    INTEGER(ans)[i] = CHAR(STRING_ELT(pch, i))[0];
+	    INTEGER(ans)[i] = STRING_ELT(pch, i) != NA_STRING ?
+		CHAR(STRING_ELT(pch, i))[0] : NA_INTEGER;
+    }
+    else if (isLogical(pch)) {/* NA, but not TRUE/FALSE */
+	ans = allocVector(INTSXP, n);
+	for (i = 0; i < n; i++)
+	    if(LOGICAL(pch)[i] == NA_LOGICAL)
+		INTEGER(ans)[i] = NA_INTEGER;
+	    else error("only NA allowed in logical plotting symbol");
     }
     else error("invalid plotting symbol");
     for (i = 0; i < n; i++) {
@@ -2846,7 +2854,7 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 /*     box(which="plot", lty="solid", ...)
        --- which is coded, 1 = plot, 2 = figure, 3 = inner, 4 = outer.
 */
-    int which, col, fg;
+    int which, col;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -2856,9 +2864,9 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
     if (which < 1 || which > 4)
 	errorcall(call, "invalid \"which\" specification");
     col= Rf_gpptr(dd)->col;	Rf_gpptr(dd)->col= NA_INTEGER;
-    fg = Rf_gpptr(dd)->col;	Rf_gpptr(dd)->fg = NA_INTEGER;
+    Rf_gpptr(dd)->fg = NA_INTEGER;
     ProcessInlinePars(args, dd, call);
-    if (Rf_gpptr(dd)->col == NA_INTEGER) {
+    if (Rf_gpptr(dd)->col == NA_INTEGER) {/* col := 'fg' or original 'col' */
 	if (Rf_gpptr(dd)->fg == NA_INTEGER)
 	    Rf_gpptr(dd)->col = col;
 	else

@@ -368,6 +368,10 @@ AC_ARG_VAR([TCLTK_CPPFLAGS],
 AC_ARG_VAR([MAKE], [Make command])
 AC_ARG_VAR([F2C], [Fortran-to-C converter command])
 AC_ARG_VAR([R_BROWSER], [default browser])
+AC_ARG_VAR([BLAS_LIBS],
+           [flags needed for linking against external BLAS libraries])
+AC_ARG_VAR([LAPACK_LIBS],
+           [flags needed for linking against external LAPACK libraries])
 
 ### ** Check whether we build in srcdir.
 
@@ -510,7 +514,7 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h langinfo.h locale.h \
+  fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
   netdb.h netinet/in.h \
   pwd.h readline/history.h readline/readline.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
@@ -663,7 +667,12 @@ case "${host_os}" in
       R_PROG_CC_FLAG([-mno-fp-in-toc],
                      R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
     fi
-    R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
+    ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
+    if test "x${OBJECT_MODE}" = "x64"; then
+       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
+    else
+       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
+    fi
     ;;
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -1096,7 +1105,8 @@ case "${host_os}" in
     ##     LIBR_LDFLAGS="-dynamiclib"
    
     ## LIBR_LDFLAGS="-dynamiclib -install_name ${R_FRAMEWORK_DIR}/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
-	LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
+    MAJR_VERSION=`echo "${PACKAGE_VERSION}" | sed  -e "s/[[\.]][[1-9]]$/.0/"` 
+    LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
     ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
@@ -1161,12 +1171,16 @@ AC_SUBST(LAPACK_LDFLAGS)
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
-  nl_langinfo popen putenv rint setenv strcoll stat strptime symlink \
+  popen putenv rint setenv strcoll stat strptime symlink \
   system times unsetenv)
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
+
+## check whether nl_langinfo(CODESET) is in langinfo.h
+## defines HAVE_LANGINFO_CODESET if it's there
+AM_LANGINFO_CODESET
 
 ## Used to build src/include/Rmath.h.
 ## <NOTE>

@@ -19,7 +19,7 @@ SOURCES = $(SOURCES_C) $(SOURCES_F) @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS)
 OBJECTS = $(SOURCES_C:.c=.lo) $(SOURCES_F:.f=.lo)
 HEADERS = Lapack.h
 
-LIBSOURCES = dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
+LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
   @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f @USE_EXTERNAL_BLAS_FALSE@ cmplxblas.f
 LIBOBJECTS = $(LIBSOURCES:.f=.lo)
 
@@ -29,7 +29,7 @@ DISTFILES = \
 	Rlapackrc.rc dllversion.rc \
 	$(HEADERS) $(SOURCES_C) \
 	cmplx.f cmplxblas.f \
-	dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
+	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
 	rgeev.f rsyev.f
 
 ## <FIXME>
@@ -59,6 +59,11 @@ Makefile: $(srcdir)/Makefile.in \
 Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
+
+## we need to force stores with gcc 3.4.0 on i686
+DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS) -ffloat-store
+@USING_G77_TRUE@dlamc.lo: dlamc.f
+@USING_G77_TRUE@	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
 R: Makefile
 	@$(MAKE) Makedeps

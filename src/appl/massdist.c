@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1996-2001     Robert Gentleman and Ross Ihaka and the
+ *  Copyright (C) 1996-2004     Robert Gentleman and Ross Ihaka and the
  *				R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <R_ext/Arith.h>
 #include <R_ext/Applic.h>

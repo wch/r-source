@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-0 2004-04-10</h2>
+<h2>Version 1.9-24 2004-06-15</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -173,7 +173,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
    <p>In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
 described in the <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">"R for Windows <small>FAQ</small>"</a> and the
-<a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">"R for Mac OS X <small>FAQ</small></a>.  If you have information on Macintosh or Windows
+<a href="http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html">"R for Mac OS X <small>FAQ</small></a>.  If you have information on Macintosh or Windows
 systems that you think should be added to this document, please let me
 know.
 
@@ -201,6 +201,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#What%20is%20CRAN%3f">What is CRAN?</a>: 
 <li><a href="#Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>: 
 <li><a href="#Why%20is%20R%20named%20R%3f">Why is R named R?</a>: 
+<li><a href="#What%20is%20the%20R%20Foundation%3f">What is the R Foundation?</a>: 
 </ul>
 
 <div class="node">
@@ -313,7 +314,7 @@ the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What i
 
    <p>Sources are also available via anonymous rsync.  Use
 
-<pre class="example">     rsync -rC --delete rsync.R-project.org::<var>module</var> R
+<pre class="example">     rsync -rptC --delete rsync.R-project.org::<var>module</var> R
      </pre>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
@@ -477,7 +478,7 @@ be used with RAqua corresponding to the "<var>x</var>.<var>y</var>" release of
 R. The installation of these packages is available through the
 "Package" menu of the RAqua GUI.  This port of R for Mac OS X is
 maintained by <a href="mailto:Stefano.Iacus@R-project.org">Stefano Iacus</a>.  The
-<a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">"R for Mac OS X <small>FAQ</small></a> has more details.
+<a href="http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html">"R for Mac OS X <small>FAQ</small></a> has more details.
 
    <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains bin-hexed
 (<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base distribution
@@ -498,9 +499,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
 stable/testing/unstable packages for the i386 platform (now part of the
 Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
-9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386
-packages by Martyn Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by
-Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
+9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9/Fedora1
+i386, 7.x alpha, and Fedora1 x86_64 packages by Martyn Plummer, Naoki
+Takebayashi, and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2
+i386 and 9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386
+packages by Susunu Tanimura.
 
    <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -540,6 +543,11 @@ for on-line reading in <small>HTML</small> and PDF formats, and as hardcopy via
 LaTeX, see <a href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>.  An up-to-date <small>HTML</small>
 version is always available for web browsing at
 <a href="http://stat.ethz.ch/R-manual/">http://stat.ethz.ch/R-manual/</a>.
+
+   <p>Printed copies of the R reference manual for some version(s) are
+available from Network Theory Ltd, at
+<a href="http://www.network-theory.co.uk/R/base/">http://www.network-theory.co.uk/R/base/</a>.  For each set of manuals
+sold, the publisher donates USD 10 to the R Foundation (see <a href="#What%20is%20the%20R%20Foundation%3f">What is the R Foundation?</a>).
 
    <p>The R distribution also comes with the following manuals.
 
@@ -669,7 +677,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
        author       = {{R Development Core Team}},
        organization = {R Foundation for Statistical Computing},
        address      = {Vienna, Austria},
-       year         = 2003,
+       year         = 2004,
        note         = {ISBN 3-900051-00-3},
        url          = {http://www.R-project.org}
      }
@@ -691,8 +699,8 @@ are four mailing lists devoted to R.
 
      <dl>
 <dt><code>R-announce</code>
-     <dd>A moderated list for announcements about the development of R and the
-availability of new code. 
+     <dd>A moderated list for major announcements about the development of R and
+the availability of new code. 
 <br><dt><code>R-packages</code>
      <dd>A moderated list for announcements on the availability of new or
 enhanced contributed packages. 
@@ -704,30 +712,26 @@ enhancements and patches to the source code and documentation of R,
 comparison and compatibility with S and <small>S-PLUS</small>, and for the posting of
 nice examples and benchmarks. 
 <br><dt><code>R-devel</code>
-     <dd>This list is for discussions about the future of R and pre-testing of
-new versions.  It is meant for those who maintain an active position in
-the development of R. 
+     <dd>This list is for discussions about the future of R, proposals of new
+functionality, and pre-testing of new versions.  It is meant for those
+who maintain an active position in the development of R. 
 </dl>
 
-<p>Note that the R-announce and R-packages lists are gatewayed into R-help. 
-Hence, you should subscribe to either of them only in case you are not
-subscribed to R-help.
-
-   <p>Send email to <a href="mailto:R-help@lists.R-project.org">R-help@lists.R-project.org</a> to reach everyone on
-the R-help mailing list.  To subscribe (or unsubscribe) to this list
-send <code>subscribe</code> (or <code>unsubscribe</code>) in the <em>body</em> of the
+<p>Convenient access to information on these lists, subscription, and
+archives is provided by the web interface at
+<a href="http://www.stat.math.ethz.ch/mailman/listinfo/">http://www.stat.math.ethz.ch/mailman/listinfo/</a>.  One can also
+subscribe (or unsubscribe) via email, e.g. to R-help by sending
+<code>subscribe</code> (or <code>unsubscribe</code>) in the <em>body</em> of the
 message (not in the subject!) to
-<a href="mailto:R-help-request@lists.R-project.org">R-help-request@lists.R-project.org</a>.  Information about the list
-can be obtained by sending an email with <code>info</code> as its contents to
 <a href="mailto:R-help-request@lists.R-project.org">R-help-request@lists.R-project.org</a>.
 
-   <p>Subscription and posting to the other lists is done analogously, with
-<code>R-help</code> replaced by <code>R-announce</code>, <code>R-packages</code>, and
-<code>R-devel</code>, respectively.
-
-   <p>Subscriptions to the R-help and R-devel mailing lists are also available
-in digest (plain or MIME) format, see the <code>doc/html/mail.html</code> file
-in <small>CRAN</small> for more information.
+   <p>Send email to <a href="mailto:R-help@lists.R-project.org">R-help@lists.R-project.org</a> to send a message to
+everyone on the R-help mailing list.  Subscription and posting to the
+other lists is done analogously, with <code>R-help</code> replaced by
+<code>R-announce</code>, <code>R-packages</code>, and <code>R-devel</code>, respectively. 
+Note that the R-announce and R-packages lists are gatewayed into R-help. 
+Hence, you should subscribe to either of them only in case you are not
+subscribed to R-help.
 
    <p>It is recommended that you send mail to R-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This
@@ -739,12 +743,10 @@ code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See
 <a href="#R%20Bugs">R Bugs</a> for more details.
 
-   <p>Please read the <a href="http://www.r-project.org/posting-guide.html">posting guide</a> <em>before</em> sending anything to any mailing list.
+   <p>Please read the <a href="http://www.R-project.org/posting-guide.html">posting guide</a> <em>before</em> sending anything to any mailing list.
 
-   <p>Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the <code>doc/html/mail.html</code> file in <small>CRAN</small>. 
-Searchable archives of the lists are available via
-<a href="http://maths.newcastle.edu.au/~rking/R/">http://maths.newcastle.edu.au/~rking/R/</a>.
+   <p>See <a href="http://www.R-project.org/mail.html">http://www.R-project.org/mail.html</a> for more information on
+the R mailing lists.
 
    <p>The R Core Team can be reached at <a href="mailto:R-core@lists.R-project.org">R-core@lists.R-project.org</a>
 for comments and reports.
@@ -772,7 +774,7 @@ binaries.
 <a href="http://cran.R-project.org/">http://cran.R-project.org/</a>
 </blockquote>
 
-<p>and is currently being mirrored daily at
+<p>Daily mirrors are available at <small>URL</small>s including
 
    <blockquote>
         <p><table><tr align="left"><td valign="top"><a href="http://cran.at.R-project.org/">http://cran.at.R-project.org/</a>
@@ -783,24 +785,28 @@ binaries.
 </td><td valign="top">(Universidade Federal de Paran&aacute;, Brazil)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.ch.R-project.org/">http://cran.ch.R-project.org/</a>
 </td><td valign="top">(ETH Z&uuml;rich, Switzerland)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.de.R-project.org/">http://cran.de.R-project.org/</a>
-</td><td valign="top">(APP, Germany)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.dk.R-project.org/">http://cran.dk.R-project.org/</a>
 </td><td valign="top">(SunSITE, Denmark)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.es.R-project.org/">http://cran.es.R-project.org/</a>
 </td><td valign="top">(Spanish National Research Network, Madrid, Spain)
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.fr.R-project.org/">http://cran.fr.R-project.org/</a>
+</td><td valign="top">(INRA, Toulouse, France)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.hu.R-project.org/">http://cran.hu.R-project.org/</a>
 </td><td valign="top">(Semmelweis U, Hungary)
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.pt.R-project.org/">http://cran.pt.R-project.org/</a>
+</td><td valign="top">(Universidade do Porto, Portugal)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.uk.R-project.org/">http://cran.uk.R-project.org/</a>
 </td><td valign="top">(U of Bristol, United Kingdom)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.us.R-project.org/">http://cran.us.R-project.org/</a>
-</td><td valign="top">(U of Wisconsin, USA)
+</td><td valign="top">(pair Networks, USA)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.za.R-project.org/">http://cran.za.R-project.org/</a>
 </td><td valign="top">(Rhodes U, South Africa)
         <br></td></tr></table>
 </blockquote>
 
-<p>Please use the <small>CRAN</small> site closest to you to reduce network load.
+<p>See <a href="http://cran.R-project.org/mirrors.html">http://cran.R-project.org/mirrors.html</a> for a complete list of
+mirrors.  Please use the <small>CRAN</small> site closest to you to reduce network
+load.
 
    <p>From <small>CRAN</small>, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
@@ -872,6 +878,7 @@ Core Team does not provide legal advice under any circumstances.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Why%20is%20R%20named%20R%3f">Why is R named R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20is%20the%20R%20Foundation%3f">What is the R Foundation?</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
@@ -882,6 +889,25 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <p>The name is partly based on the (first) names of the first two R authors
 (Robert Gentleman and Ross Ihaka), and partly a play on the name of the
 Bell Labs language `S' (see <a href="#What%20is%20S%3f">What is S?</a>).
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="What%20is%20the%20R%20Foundation%3f">What is the R Foundation?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20is%20R%20named%20R%3f">Why is R named R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+<br>
+</div>
+
+<h3 class="section">2.13 What is the R Foundation?</h3>
+
+<p>The R Foundation is a not for profit organization working in the public
+interest.  It was founded by the members of the R Core Team in order to
+provide support for the R project and other innovations in statistical
+computing, provide a reference point for individuals, instititutions or
+commercial enterprises that want to support or interact with the R
+development community, and to hold and administer the copyright of R
+software and documentation.  See
+<a href="http://www.R-project.org/foundation/">http://www.R-project.org/foundation/</a> for more information.
 
 <div class="node">
 <p><hr>
@@ -1392,6 +1418,14 @@ character value.
 
      <li>R disallows repeated formal arguments in function calls.
 
+     <li>In S, <code>dump()</code>, <code>dput()</code> and <code>deparse()</code> are essentially
+different interfaces to the same code.  In R from version 2.0.0, this is
+only true if the same values are passed in the <code>forDisplay</code> and
+<code>useSource</code> arguments, but by default they are not.  By default
+<code>dump()</code> tries to write code that will evaluate to reproduce the
+object, whereas <code>dput()</code> and <code>deparse()</code> default to options
+for producing deparsed code that is readable.
+
    </ul>
 
    <p>There are also differences which are not intentional, and result from
@@ -1527,7 +1561,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packag
 <li><a accesskey="1" href="#Add-on%20packages%20in%20R">Add-on packages in R</a>: 
 <li><a accesskey="2" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>: 
 <li><a accesskey="3" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>: 
-<li><a accesskey="4" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>: 
+<li><a accesskey="4" href="#Add-on%20packages%20from%20Bioconductor">Add-on packages from Bioconductor</a>: 
 <li><a accesskey="5" href="#Other%20add-on%20packages">Other add-on packages</a>: 
 </ul>
 
@@ -1745,6 +1779,9 @@ engine in R.
 <br><dt><strong>RSvgDevice</strong>
      <dd>A graphics device for R that uses the new w3.org <small>XML</small> standard for
 Scalable Vector Graphics. 
+<br><dt><strong>RUnit</strong>
+     <dd>Functions implementing a standard Unit Testing framework, with
+additional code inspection and report generation tools. 
 <br><dt><strong>RadioSonde</strong>
      <dd>A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
@@ -1833,6 +1870,8 @@ various approaches.
 asymptotic likelihood ratio methods. 
 <br><dt><strong>aws</strong>
      <dd>Functions to perform adaptive weights smoothing. 
+<br><dt><strong>bayesmix</strong>
+     <dd>Bayesian mixture models of univariate Gaussian distributions using JAGS. 
 <br><dt><strong>betareg</strong>
      <dd>Beta regression for modeling rates and proportions. 
 <br><dt><strong>bim</strong>
@@ -1842,6 +1881,8 @@ and Bmapqtl samples.
      <dd>Generation of correlated artificial binary data. 
 <br><dt><strong>blighty</strong>
      <dd>Function for drawing the coastline of the United Kingdom. 
+<br><dt><strong>boa</strong>
+     <dd>Bayesian Output Analysis Program for MCMC. 
 <br><dt><strong>boolean</strong>
      <dd>Boolean logit and probit: a procedure for testing Boolean hypotheses. 
 <br><dt><strong>boot</strong>
@@ -1874,6 +1915,9 @@ finding the number of clusters in a data set.
      <dd>Analysis of configuration frequencies. 
 <br><dt><strong>chron</strong>
      <dd>A package for working with chronological objects (times and dates). 
+<br><dt><strong>circular</strong>
+     <dd>Circular statistics, from "Topics in Circular Statistics" by Rao
+Jammalamadaka and A. SenGupta, 2001, World Scientific. 
 <br><dt><strong>class</strong>
      <dd>Functions for classification (k-nearest neighbor and LVQ). 
 Contained in the <code>VR</code> bundle.  <em>Recommended</em>. 
@@ -1905,6 +1949,10 @@ and fractional factorial designs.
      <dd>Robust covariance estimation via nearest neighbor cleaning. 
 <br><dt><strong>cramer</strong>
      <dd>Routine for the multivariate nonparametric Cramer test. 
+<br><dt><strong>crossdes</strong>
+     <dd>Functions for the construction and randomization of balanced carryover
+balanced designs, to check given designs for balance, and for simulation
+studies on the validity of two randomization procedures. 
 <br><dt><strong>date</strong>
      <dd>Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms <code>8/30/53</code>,
@@ -1938,6 +1986,9 @@ R language objects.
      <dd>Compute Hartigan's dip test statistic for unimodality. 
 <br><dt><strong>dispmod</strong>
      <dd>Functions for modelling dispersion in GLMs. 
+<br><dt><strong>distr</strong>
+     <dd>An object orientated implementation of distributions and some additional
+functionality. 
 <br><dt><strong>dr</strong>
      <dd>Functions, methods, and datasets for fitting dimension reduction
 regression, including pHd and inverse regression methods SIR and SAVE. 
@@ -1979,6 +2030,14 @@ distribution, quantile and density functions to univariate, bivariate
 and (for simulation) multivariate parametric extreme value
 distributions, and provides fitting functions which calculate maximum
 likelihood estimates for univariate and bivariate models. 
+<br><dt><strong>evdbayes</strong>
+     <dd>Functions for the bayesian analysis of extreme value models, using MCMC
+methods. 
+<br><dt><strong>evir</strong>
+     <dd>Extreme Values in R: Functions for extreme value theory, which may be
+divided into the following groups; exploratory data analysis, block
+maxima, peaks over thresholds (univariate and bivariate), point
+processes, gev/gpd distributions. 
 <br><dt><strong>exactLoglinTest</strong>
      <dd>Monte Carlo exact tests for log-linear models. 
 <br><dt><strong>exactRankTests</strong>
@@ -2007,6 +2066,8 @@ like Minitab, SAS, SPSS, Stata, etc.  <em>Recommended</em>.
 <br><dt><strong>fork</strong>
      <dd>Functions for handling multiple processes: simple wrappers around the
 Unix process management API calls. 
+<br><dt><strong>fortunes</strong>
+     <dd>R fortunes. 
 <br><dt><strong>forward</strong>
      <dd>Forward search approach to robust analysis in linear and generalized
 linear regression models. 
@@ -2131,6 +2192,9 @@ order statistics, peaks over thresholds and point processes.
      <dd>An S4 class for handling irregular time series. 
 <br><dt><strong>kernlab</strong>
      <dd>Kernel-based machine learning methods including support vector machines. 
+<br><dt><strong>klaR</strong>
+     <dd>Miscellaneous functions for classification and visualization developed
+at the Department of Statistics, University of Dortmund. 
 <br><dt><strong>knnTree</strong>
      <dd>Construct or predict with k-nearest-neighbor classifiers, using
 cross-validation to select k, choose variables (by forward or
@@ -2140,6 +2204,9 @@ classifier will consist of a classification tree with one such
 k-nn classifier in each leaf. 
 <br><dt><strong>knncat</strong>
      <dd>Nearest-neighbor classification with categorical variables. 
+<br><dt><strong>kza</strong>
+     <dd>Kolmogorov-Zurbenko Adpative filter for locating change points in a time
+series. 
 <br><dt><strong>labstatR</strong>
      <dd>Functions for the book "Laboratorio di statistica con R" by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
@@ -2221,6 +2288,8 @@ and undirected graphs.
 <br><dt><strong>maxstat</strong>
      <dd>Maximally selected rank and Gauss statistics with several p-value
 approximations. 
+<br><dt><strong>mcgibbsit</strong>
+     <dd>Warnes and Raftery's MCGibbsit MCMC diagnostic. 
 <br><dt><strong>mclust</strong>
      <dd>Model-based cluster analysis: the 2002 version of MCLUST. 
 <br><dt><strong>mda</strong>
@@ -2242,6 +2311,8 @@ multiple smoothing parameter selection by GCV or UBRE.
 <br><dt><strong>mix</strong>
      <dd>Estimation/multiple imputation programs for mixed categorical and
 continuous data. 
+<br><dt><strong>mixreg</strong>
+     <dd>Functions to fit mixtures of regressions. 
 <br><dt><strong>mlbench</strong>
      <dd>A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data. 
@@ -2294,8 +2365,6 @@ removed such that the reduced data set has complete separation.
      <dd>Estimating the number of essential genes in a genome on the basis of
 data from a random transposon mutagenesis experiment, through the use of
 a Gibbs sampler. 
-<br><dt><strong>netCDF</strong>
-     <dd>Read data from netCDF files. 
 <br><dt><strong>nlme</strong>
      <dd>Fit and compare Gaussian linear and nonlinear mixed-effects models. 
 <em>Recommended</em>. 
@@ -2413,10 +2482,18 @@ approximation error.
 best. 
 <br><dt><strong>randomForest</strong>
      <dd>Breiman's random forest classifier. 
+<br><dt><strong>rbugs</strong>
+     <dd>Functions to prepare files needed for running BUGS in batch mode, and
+running BUGS from R.  Support for Linux systems with Wine is emphasized. 
 <br><dt><strong>ref</strong>
      <dd>Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
 encapsulates matrices and data frames. 
+<br><dt><strong>regress</strong>
+     <dd>Fitting Gaussian linear models where the covariance structure is a
+linear combination of known matrices by maximising the residual log
+likelihood.  Can be used for multivariate models and random effects
+models. 
 <br><dt><strong>relimp</strong>
      <dd>Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model. 
@@ -2430,11 +2507,15 @@ Library (GDAL).
 <br><dt><strong>rimage</strong>
      <dd>Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading <small>JPEG</small> files. 
+<br><dt><strong>rlecuyer</strong>
+     <dd>R interface to RNG with multiple streams. 
 <br><dt><strong>rmeta</strong>
      <dd>Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes. 
 <br><dt><strong>rpart</strong>
      <dd>Recursive PARTitioning and regression trees.  <em>Recommended</em>. 
+<br><dt><strong>rpart.permutation</strong>
+     <dd>Permutation tests of rpart models. 
 <br><dt><strong>rpvm</strong>
      <dd>R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use. 
@@ -2468,8 +2549,8 @@ regression models (GLMs).
      <dd>Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach. 
-<br><dt><strong>serialize</strong>
-     <dd>Simple interfce for serializing to connections. 
+<br><dt><strong>seqmon</strong>
+     <dd>Sequential monitoring of clinical trials. 
 <br><dt><strong>session</strong>
      <dd>Functions for interacting with, saving and restoring R sessions. 
 <br><dt><strong>setRNG</strong>
@@ -2518,9 +2599,17 @@ files and sound samples.
      <dd>Functions for kriging and point pattern analysis from "Modern Applied
 Statistics with S" by W. Venables and B. Ripley.  Contained in the
 <code>VR</code> bundle.  <em>Recommended</em>. 
+<br><dt><strong>spatialCovariance</strong>
+     <dd>Computation of spatial covariance matrices for data on rectangles using
+one dimensional numerical integration and analytic results. 
 <br><dt><strong>spatstat</strong>
      <dd>Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates. 
+<br><dt><strong>spc</strong>
+     <dd>Statistical Process Control: evaluation of control charts by means of
+the zero-state, steady-state ARL (Average Run Length), setting up
+control charts for given in-control ARL, and plotting of the related
+figures. 
 <br><dt><strong>spdep</strong>
      <dd>A collection of functions to create spatial weights matrix objects from
 polygon contiguities, from point patterns by distance and tesselations,
@@ -2554,6 +2643,9 @@ weighted survey samples.
 <em>Recommended</em>. 
 <br><dt><strong>survrec</strong>
      <dd>Survival analysis for recurrent event data. 
+<br><dt><strong>svmpath</strong>
+     <dd>Computes the entire regularization path for the two-class svm classifier
+with essentialy the same cost as a single SVM fit. 
 <br><dt><strong>systemfit</strong>
      <dd>Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
@@ -2641,7 +2733,7 @@ matrix.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
-Next:&nbsp;<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20Bioconductor">Add-on packages from Bioconductor</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
@@ -2746,20 +2838,20 @@ that allows <small>XSL</small> functions to be implemented via R functions.
 
 <div class="node">
 <p><hr>
-Node:&nbsp;<a name="Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Node:&nbsp;<a name="Add-on%20packages%20from%20Bioconductor">Add-on packages from Bioconductor</a>,
 Next:&nbsp;<a rel="next" accesskey="n" href="#Other%20add-on%20packages">Other add-on packages</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
 
-<h3 class="subsection">5.1.4 Add-on packages from BioConductor</h4>
+<h3 class="subsection">5.1.4 Add-on packages from Bioconductor</h4>
 
 <p>The <a href="http://www.bioconductor.org">Bioconductor Project</a> produces an
 open source software framework that will assist biologists and
 statisticians working in bioinformatics, with primary emphasis on
 inference using DNA microarrays.  The following R packages are contained
-in the current release of BioConductor, with more packages under
+in the current release of Bioconductor, with more packages under
 development.
 
      <dl>
@@ -2770,27 +2862,65 @@ Human Genome Project.
 <br><dt><strong>Biobase</strong>
      <dd>Object-oriented representation and manipulation of genomic data (S4
 class structure). 
+<br><dt><strong>Biostrings</strong>
+     <dd>Class definitions and generics for biological sequences along with
+pattern matching algorithms. 
+<br><dt><strong>DNAcopy</strong>
+     <dd>Segments DNA copy number data using circular binary segmentation to
+detect regions with abnormal copy number. 
 <br><dt><strong>DynDoc</strong>
      <dd>Functionality to create and interact with dynamic documents, vignettes,
 and other navigable documents. 
-<br><dt><strong>MAGEML</strong>
-     <dd>Functionality to handle MAGEML documents. 
+<br><dt><strong>EBarrays</strong>
+     <dd>Empirical Bayes tools for the analysis of replicated microarray data
+across multiple conditions. 
+<br><dt><strong>GOstats</strong>
+     <dd>Tools for manipulating GO and microarrays. 
+<br><dt><strong>GeneSpring</strong>
+     <dd>Functions and class definitions to be able to read and write GeneSpring
+specific data objects and convert them to Bioconductor objects. 
+<br><dt><strong>GeneTS</strong>
+     <dd>A package for analysing multiple gene expression time series data. 
+Currently, implements methods for cell cycle analysis and for inferring
+large sparse graphical Gaussian models. 
+<br><dt><strong>Icens</strong>
+     <dd>Functions for computing the NPMLE for censored and truncated data. 
+<br><dt><strong>LPE</strong>
+     <dd>Significance analysis of microarray data with small number of replicates
+using the Local Pooled Error (LPE) method. 
+<br><dt><strong>MeasurementError.cor</strong>
+     <dd>Two-stage measurement error model for correlation estimation with
+smaller bias than the usual sample correlation. 
+<br><dt><strong>PROcess</strong>
+     <dd>Ciphergen SELDI-TOF processing. 
 <br><dt><strong>RBGL</strong>
      <dd>An interface between the graph package and the Boost graph libraries,
 allowing for fast manipulation of graph objects in R. 
+<br><dt><strong>RMAGEML</strong>
+     <dd>Functionality to handle MAGEML documents. 
 <br><dt><strong>ROC</strong>
      <dd>Receiver Operating Characteristic (ROC) approach for identifying genes
 that are differentially expressed in two types of samples. 
+<br><dt><strong>RSNPper</strong>
+     <dd>Interface to chip.org::SNPper for SNP-related data. 
 <br><dt><strong>RdbiPgSQL</strong>
      <dd>Methods for accessing data stored in PostgreSQL tables. 
+<br><dt><strong>Rdbi</strong>
+     <dd>Generic framework for database access in R. 
+<br><dt><strong>Resourcerer</strong>
+     <dd>Read annotation data from TIGR Resourcerer or convert the annotation
+data into Bioconductor data package. 
 <br><dt><strong>Rgraphviz</strong>
      <dd>An interface with Graphviz for plotting graph objects in R. 
 <br><dt><strong>Ruuid</strong>
      <dd>Creates Universally Unique ID values (UUIDs) in R. 
 <br><dt><strong>SAGElyzer</strong>
      <dd>Locates genes based on SAGE tags. 
-<br><dt><strong>SNPtools</strong>
-     <dd>Rudimentary structures for SNP data. 
+<br><dt><strong>SNAData</strong>
+     <dd>Data from the book "Social Network Analysis" by Wasserman &amp; Faust
+(1999). 
+<br><dt><strong>aCGH</strong>
+     <dd>Classes and functions for Array Comparative Genomic Hybridization data. 
 <br><dt><strong>affy</strong>
      <dd>Methods for Affymetrix Oligonucleotide Arrays. 
 <br><dt><strong>affyPLM</strong>
@@ -2799,6 +2929,12 @@ that are differentially expressed in two types of samples.
      <dd>Graphics toolbox for assessment of Affymetrix expression measures. 
 <br><dt><strong>affydata</strong>
      <dd>Affymetrix data for demonstration purposes. 
+<br><dt><strong>affylmGUI</strong>
+     <dd>Graphical User Interface for affy analysis using package <strong>limma</strong>. 
+<br><dt><strong>affypdnn</strong>
+     <dd>Probe Dependent Nearest Neighbors (PDNN) for the affy package. 
+<br><dt><strong>altcdfenvs</strong>
+     <dd>Utilities to handle cdfenvs. 
 <br><dt><strong>annaffy</strong>
      <dd>Functions for handling data from Bioconductor Affymetrix annotation data
 packages. 
@@ -2806,20 +2942,34 @@ packages.
      <dd>Associate experimental data in real time to biological metadata from web
 databases such as GenBank, LocusLink and PubMed.  Process and store
 query results.  Generate <small>HTML</small> reports of analyses. 
+<br><dt><strong>arrayMagic</strong>
+     <dd>Utilities for quality control and processing for two-color cDNA
+microarray data. 
+<br><dt><strong>arrayQuality</strong>
+     <dd>Performing print-run and array level quality assessment. 
+<br><dt><strong>bim</strong>
+     <dd>Bayesian interval mapping diagnostics:  functions to interpret QTLCart
+and Bmapqtl samples. 
+<br><dt><strong>convert</strong>
+     <dd>Convert Microarray Data Objects. 
 <br><dt><strong>ctc</strong>
      <dd>Tools to export and import Tree and Cluster to other programs. 
 <br><dt><strong>daMA</strong>
      <dd>Functions for the efficient design of factorial two-color microarray
 experiments and for the statistical analysis of factorial microarray
 data. 
+<br><dt><strong>ecolitk</strong>
+     <dd>Metadata and tools to work with E. coli. 
 <br><dt><strong>edd</strong>
      <dd>Expression density diagnostics: graphical methods and pattern
 recognition algorithms for distribution shape classification. 
+<br><dt><strong>exprExternal</strong>
+     <dd>Implementation of exprSet using externalVectors. 
 <br><dt><strong>externalVector</strong>
      <dd>Basic class definitions and generics for external pointer based vector
 objects for R. 
 <br><dt><strong>factDesign</strong>
-     <dd>A set of tools for analyzing data from factorial designed micraorray
+     <dd>A set of tools for analyzing data from factorial designed microarray
 experiments.  The functions can be used to evaluate appropriate tests of
 contrast and perform single outlier detection. 
 <br><dt><strong>gcrma</strong>
@@ -2837,6 +2987,9 @@ matrices.
 <br><dt><strong>globaltest</strong>
      <dd>Testing globally whether a group of genes is significantly related to
 some clinical variable of interest. 
+<br><dt><strong>goTools</strong>
+     <dd>Functions for description/comparison of oligo ID list using the Gene
+Ontology database. 
 <br><dt><strong>gpls</strong>
      <dd>Classification using generalized partial least squares for two-group and
 multi-group classification. 
@@ -2844,13 +2997,19 @@ multi-group classification.
      <dd>Classes and tools for creating and manipulating graphs within R. 
 <br><dt><strong>hexbin</strong>
      <dd>Binning functions, in particular hexagonal bins for graphing. 
+<br><dt><strong>impute</strong>
+     <dd>Imputation for microarray data (currently KNN only). 
 <br><dt><strong>limma</strong>
      <dd>Linear models for microarray data. 
+<br><dt><strong>limmaGUI</strong>
+     <dd>Graphical User Interface for package <strong>limma</strong>. 
 <br><dt><strong>makecdfenv</strong>
      <dd>Two functions.  One reads a Affymetrix chip description file (CDF) and
 creates a hash table environment containing the location/probe set
 membership mapping.  The other creates a package that automatically loads
 that environment. 
+<br><dt><strong>marray</strong>
+     <dd>Exploratory analysis for two-color spotted microarray data. 
 <br><dt><strong>marrayClasses</strong>
      <dd>Class definitions for pre-normalized and normalized cDNA microarray
 data.  Basic methods for accessing/replacing, printing, and subsetting. 
@@ -2869,7 +3028,7 @@ microarray intensity data: boxplots, scatter-plots, color images.
      <dd>Miscellaneous functions used in the functional genomics core facility in
 UCB and UCSF. 
 <br><dt><strong>matchprobes</strong>
-     <dd>ools for sequence matching of probes on arrays. 
+     <dd>Tools for sequence matching of probes on arrays. 
 <br><dt><strong>multtest</strong>
      <dd>Multiple testing procedures for controlling the family-wise error rate
 (FWER) and the false discovery rate (FDR).  Tests can be based on
@@ -2878,8 +3037,21 @@ permutation procedures are available to estimate adjusted
 p-values. 
 <br><dt><strong>ontoTools</strong>
      <dd>Graphs and sparse matrices for working with ontologies. 
+<br><dt><strong>pairseqsim</strong>
+     <dd>Pairwise sequence alignment and scoring algorithms for global, local and
+overlap alignment with affine gap penalty. 
 <br><dt><strong>pamr</strong>
-     <dd>Pam: prediction analysis for microarrays. 
+     <dd>Pam: Prediction Analysis for Microarrays. 
+<br><dt><strong>pickgene</strong>
+     <dd>Adaptive gene picking for microarray expression data analysis. 
+<br><dt><strong>prada</strong>
+     <dd>Tools for analyzing and navigating data from high-throughput phenotyping
+experiments based on cellular assays and fluorescent detection. 
+<br><dt><strong>qvalue</strong>
+     <dd>Q-value estimation for false discovery rate control. 
+<br><dt><strong>rama</strong>
+     <dd>Robust Analysis of MicroArrays: robust estimation of cDNA microarray
+intensities with replicates using a Bayesian hierarchical model. 
 <br><dt><strong>reposTools</strong>
      <dd>Tools for dealing with file repositories and allow users to easily
 install, update, and distribute packages, vignettes, and other files. 
@@ -2890,6 +3062,8 @@ format.
      <dd>Identifying differentially expressed genes and estimating the False
 Discovery Rate (FDR) with both the Significance Analysis of Microarrays
 (SAM) and the Empirical Bayes Analyses of Microarrays (EBAM). 
+<br><dt><strong>simpleaffy</strong>
+     <dd>Very simple high level analysis of Affymetrix data. 
 <br><dt><strong>splicegear</strong>
      <dd>A set of tools to work with alternative splicing. 
 <br><dt><strong>tkWidgets</strong>
@@ -2897,6 +3071,9 @@ Discovery Rate (FDR) with both the Significance Analysis of Microarrays
 <br><dt><strong>vsn</strong>
      <dd>Calibration and variance stabilizing transformations for both Affymetrix
 and cDNA array data. 
+<br><dt><strong>webbioc</strong>
+     <dd>Integrated web interface for doing microarray analysis using several of
+the Bioconductor packages. 
 <br><dt><strong>widgetTools</strong>
      <dd>Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces. 
@@ -2905,7 +3082,7 @@ interfaces.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Other%20add-on%20packages">Other add-on packages</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20Bioconductor">Add-on packages from Bioconductor</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
@@ -4329,8 +4506,18 @@ information and sends the bug to the correct address.  Alternatively the
 bug report can be emailed to <a href="mailto:R-bugs@R-project.org">R-bugs@R-project.org</a> or submitted
 to the Web page at <a href="http://bugs.R-project.org/">http://bugs.R-project.org/</a>.
 
-   <p>Bug reports on contributed packages should perhaps be sent to the
-package maintainer rather than to R-bugs.
+   <p>Bug reports on contributed packages should be sent first to the package
+maintainer, and only submitted to the R-bugs repository by package
+maintainers, mentioning the package in the subject line.
+
+   <p>There is a section of the bug repository for suggestions for
+enhancements for R labelled <code>wishlist</code>.  Suggestions can be
+submitted in the same ways as bugs, but please ensure that the subject
+line makes clear that this is for the wishlist and not a bug report, for
+example by starting with <code>Wishlist:</code>.
+
+   <p>Comments on and suggestions for the Windows port of R should be sent to
+<a href="mailto:R-windows@R-project.org">R-windows@R-project.org</a>.
 
 <div class="node">
 <p><hr>

@@ -49,7 +49,6 @@ sys.save.image(name)
     extra disk space during the save.}
   \item{name}{name of image file to save or load.}
   \item{quiet}{logical specifying whether a message should be printed.}
-  }
 }
 \details{
   All \R platforms use the XDR representation of binary objects in
@@ -77,6 +76,11 @@ sys.save.image(name)
   to be saved: they are searched for in the environment given by the
   \code{envir} argument, and the actual objects given as arguments need
   not be those found.  
+
+  Saved \R objects are binary files, even those saved with
+  \code{ascii=TRUE}, so ensure that they are transferred without
+  conversion of end of line markers.  The lines are delimited by LF on
+  all platforms.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},

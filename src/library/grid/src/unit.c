@@ -142,9 +142,14 @@ int unitLength(SEXP u)
 	result = LENGTH(u);
     else if (isUnitArithmetic(u))
 	if (fOp(u)) {
-	    if (timesOp(u)) 
-		result = unitLength(arg2(u));
-	    else {  /* must be "+" or "-" */
+	    if (timesOp(u)) {
+		/*
+		 * arg1 is always the numeric vector
+		 */
+		int n1 = LENGTH(arg1(u));
+		int n2 = unitLength(arg2(u));
+		result = (n1 > n2) ? n1 : n2;
+	    } else {  /* must be "+" or "-" */
 		int n1 = unitLength(arg1(u));
 		int n2 = unitLength(arg2(u));
 		result = (n1 > n2) ? n1 : n2;

@@ -173,7 +173,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 
     if(missing(border) || length(border)==0)
 	border <- par("fg")
-    pt.pars <- c(pars[names(pars) %in% c("pch", "cex", "bg")], col = border)
+    pt.pars <- c(pars[names(pars) %in% c("pch", "cex", "bg")], list(col=border))
 
     if (!add) {
     	plot.new()

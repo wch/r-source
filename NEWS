@@ -6,6 +6,203 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.9.1
+
+
+NEW FEATURES
+
+    o	as.Date() now has a method for "POSIXlt" objects.
+
+    o	mean() has a method for "difftime" objects and so summary()
+	works for such objects.
+
+    o	legend() has a new argument 'pt.cex'.
+
+    o	plot.ts() has more arguments, particularly 'yax.flip'.
+
+    o	heatmap() has a new 'keep.dendro' argument.
+
+    o	The default barplot method now handles vectors and 1-d arrays
+	(e.g., obtained by table()) the same, and uses grey instead of
+	heat color palettes in these cases.  (Also fixes PR#6776.)
+
+    o	nls() now looks for variables and functions in its formula in
+	the environment of the formula before the search path, in the
+	same way lm() etc look for variables in their formulae.
+
+
+INSTALLATION ISSUES
+
+    o	src/modules/X11/dataentry.c would not build on some XFree
+	4.4.0 systems.	(This is a bug in their header files but we have
+	added a workaround.)
+
+    o	Building with gcc/g77 3.4.0 on ix86 platforms failed to produce
+	a working build: the critical LAPACK routines are now compiled
+	with -ffloat-store.
+
+    o	Added patches to enable 64-bit builds on AIX 5.1: see the R-admin
+	manual for details.
+
+    o	Added some patches to allow non-IEEE-754 installations to work
+	reasonably well.  (Infs and NAs are still not handled properly
+	in complex arithmetic and functions such as sin().  See also
+	Deprecated, as support for non-IEEE-754 installations is about
+	to be removed.)
+
+    o	Installation will now work in Estonian (et_EE*) locales, which
+	sort z before u.  (PR#6958)
+
+
+DEPRECATED & DEFUNCT
+
+    o	Support for non-IEEE-754 arithmetic (which has been untested
+	for some time) will be removed in the next full release.
+
+    o	Direct use of R INSTALL|REMOVE|BATCH|COMPILE|SHLIB is
+	deprecated: use R CMD instead.
+
+    o	The gnome/GNOME graphics device is deprecated and will be
+	removed in the next full release.
+
+
+BUG FIXES
+
+    o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
+	(PR#6757)
+
+    o	pcauchy(x, .., log.p) is now more accurate for large x,
+	particularly when log.p = TRUE. (PR#6756)
+
+    o	pgeom(q, prob, lower.tail, log.p) is now (sometimes much) more
+	accurate when prob is very small. (PR#6792)
+
+	The code for pgeom(prob=1) assumed IEEE 754 arithmetic, and
+	gave NaNs under gcc 3.4.0 -fPIC, for example.
+
+    o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
+
+    o	as.Date() was failing on factors.  (PR#6779)
+
+    o	min(), max() and range() were failing on "difftime" objects.
+
+    o	as.data.frame.list() could fail on some unusual list names.
+	(PR#6782)
+
+    o	type.convert() ignored na.strings when no conversion was done.
+	(PR#6781, not needed for its primary use in read.table.)
+
+    o	Fixed a clipping problem in the quartz() device.
+
+    o	Subsetting a factor swapped the order of the attributes, which
+	identical() cares about.  (PR#6799)
+
+    o	The L-BFGS-B option of optim() apparently needs part of its
+	workspace zeroed.  (PR#6720)
+
+    o	extractAIC.survreg() needed updating.
+
+    o	When using the header Rmath.h in standalone mode, the case where
+	TRUE, FALSE are already defined is now handled correctly.
+
+    o	Package utils now exports several functions that are needed for
+	writing Sweave drivers.
+
+    o	Comparison of two lists/expressions was giving nonsensical
+	(and often random) answers, and is now an error.
+
+    o	The C-level function ncols was returning a random answer
+	(often 0) for a 1D array.  This caused model.matrix to
+	misbehave (perhaps segfault) if a term was a 1D array.	(PR#6838)
+
+    o	The configure script now finds the pdf viewers ggv and gpdf.
+
+    o	Workaround for the problems strptime on MacOS X has with dates
+	before 1900.
+
+    o	'R CMD build' works in a directory whose path contains spaces.
+	(PR#6830 under Unix/Linux: it already worked under Windows.)
+	Also 'R CMD check'.
+
+    o	mosaicplot() stops cleanly if given a table containing missing values.
+
+    o	install.packages() from a local CRAN was broken.
+
+    o	bxp() fixed for e.g.,  boxplot(..., border=2:4)
+
+    o	approx(list(x=rep(NaN,9), y=1:9), xout=NaN) does not seg.fault
+	anymore (PR#6809).
+
+    o	plot(1, pch=NA) does not give an error anymore and
+	plot(1:2, pch=c("o",NA)) only prints one symbol	 (PR#6876).
+
+    o	diffinv(matrix(3, 7,0)) now works.
+
+    o	plot.ts(z) for multivariate 'z' now properly draws all 'nc' xlab`s
+	when nc > 1 and obeys 'ann=FALSE' or 'axes=FALSE'.
+
+    o	aggregate(.data.frame) failed if the answer would have had one
+	row.
+
+    o	recordPlot() and replayPlot() failed to duplicate the display
+	list, so further plotting altered the saved or replayed object.
+
+    o	Assignments of the form adf[i,j] <- value now accept a
+	data-frame value as well as a list value.
+
+    o	dir.create() sometimes erroneously continued to report a directory
+	already existed after the first instance.  (PR#6892)
+
+    o	arima.sim() allows a null model.
+
+    o	which.min() & which.max()'s C code now PROTECT()'s its result.
+
+    o	Building standalone nmath did not support some of the DEBUG options.
+
+    o   mle() got confused if start value list was not in same order as
+        arguments of likelihood function (reported by Ben Bolker)
+
+    o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
+	always claimed.
+
+    o	update.packages("mgcv") and old.packages(*) now give a better error
+	message; and installed.packages("mgcv") properly returns <empty>.
+
+    o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
+	the two children at each node.	This fixes as.dendrogram(hh) for
+	the case where hh is a "reordered" hclust object.
+
+	plot.dendrogram(x) now draws leaves 'x' more sensibly.
+
+	reorder.dendrogram() now results in a dendrogram with correct
+	"midpoint"s, and hence reordered dendrograms are plotted correctly.
+
+	stats:::midcache.dendrogram() and hence the reorder() and rev()
+	dendrogram methods do not return bloated dendrograms.
+
+    o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
+	specified---not only when using default labels.
+
+    o   Copying lattice (grid) output to another device now works again
+        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)
+
+    o	hist() uses a more robust choice of its 'diddle' factor, used
+	to detect if an observation is on a bin boundary.  (PR#6931)
+
+    o	jitter(x) now returns x when length(x) == 0.
+
+    o	Under some rare circumstances the locale-specific tables used by
+	the perl=TRUE option to grep() etc were being corrupted and so
+	matches were missed.
+
+    o	qbinom(*, prob = 0, lower.tail = FALSE) now properly gives 0.
+	(PR#6972)
+
+    o	Class "octmode" needed a "[" method to preserve the class: see
+	example(file.info) for an example.
+
+
+
 		CHANGES IN R VERSION 1.9.0
 
 
@@ -215,8 +412,8 @@ NEW FEATURES
     o	strsplit() now has `fixed' and `perl' arguments and
 	split="" is optimized.
 
-    o	subset() now allows a `drop' argument to remove unused factor
-	levels.	 The default is still to keep them.
+    o	subset() now allows a `drop' argument which is passed on to
+	the indexing method for data frames.
 
     o	termplot() has an option to smooth the partial residuals.
 
@@ -481,7 +678,7 @@ DEPRECATED & DEFUNCT
     o	LTRUE/LFALSE in Rmath.h have been removed: they were
 	deprecated in 1.2.0.
 
-    o	package.contents() has been deprecated.
+    o	package.contents() and package.description() have been deprecated.
 
 
 INSTALLATION CHANGES
@@ -1743,7 +1940,7 @@ BUG FIXES
     o	Fixed some malformed error messages in the methods package.
 
     o	pipes were not opening properly when profiling on a Mac OS.
-        (PR#1140)
+	(PR#1140)
 
     o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
 	corrected.

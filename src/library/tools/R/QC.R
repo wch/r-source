@@ -280,7 +280,7 @@ function(package, dir, lib.loc = NULL)
             c(undocThings,
               list("S4 methods" =
                    unique(sub("([^,]*),(.*)",
-                              "\\\\S4method{\\1}{\\2}",
+                              "generic \\1 and siglist \\2",
                               S4methods))))
     }
 
@@ -292,8 +292,14 @@ print.undoc <-
 function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
-        writeLines(paste("Undocumented ", names(x)[i], ":", sep = ""))
-        .prettyPrint(x[[i]])
+        tag <- names(x)[i]
+        writeLines(paste("Undocumented ", tag, ":", sep = ""))
+        ## We avoid markup for indicating S4 methods, hence need to
+        ## special-case output for these ...
+        if(tag == "S4 methods")
+            writeLines(strwrap(x[[i]], indent = 2, exdent = 2))
+        else
+            .prettyPrint(x[[i]])
     }
     invisible(x)
 }
@@ -503,19 +509,7 @@ function(package, dir, lib.loc = NULL,
     ind <- sapply(dbSynopses, length) > 0
     dbUsageTexts[ind] <- dbSynopses[ind]
     withSynopsis <- as.character(dbNames[ind])
-    dbUsages <-
-        lapply(dbUsageTexts,
-               function(txt) {
-                   methodRE <-
-                       paste("(\\\\(S[34])?method",
-                             "{([.[:alnum:]]*)}",
-                             "{([.[:alnum:]]*)})",
-                             sep = "")
-                   txt <- gsub("\\\\l?dots", "...", txt)
-                   txt <- gsub("\\\\%", "%", txt)
-                   txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
-                   .parseTextAsMuchAsPossible(txt)
-               })
+    dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- sapply(dbUsages,
                   function(x) !is.null(attr(x, "badLines")))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
@@ -535,15 +529,6 @@ function(package, dir, lib.loc = NULL,
     variablesInUsages <- character()
     dataSetsInUsages <- character()
     functionsInUsagesNotInCode <- list()
-
-    ## <FIXME>
-    ## Should really have a utility function for creating this and
-    ## related regexps.
-    S4methodRE <- paste("\\\\S4method",
-                        "{([.[:alnum:]]*)}",
-                        "{([.[:alnum:]]*)}",
-                        sep = "")
-
 
     for(docObj in dbNames) {
 
@@ -627,7 +612,7 @@ function(package, dir, lib.loc = NULL,
         ## by comparing the explicit \usage entries for S4 methods to
         ## what is actually in the code.  We most likely also should do
         ## something similar for S3 methods.
-        ind <- grep(S4methodRE, functions)
+        ind <- grep(.S4_method_markup_regexp, functions)
         if(any(ind))
             functions <- functions[!ind]
         ## </FIXME>
@@ -1148,19 +1133,7 @@ function(package, dir, lib.loc = NULL)
     }
     names(db) <- names(dbAliases) <- dbNames
     dbUsageTexts <- lapply(db, getRdSection, "usage")
-    dbUsages <-
-        lapply(dbUsageTexts,
-               function(txt) {
-                   methodRE <-
-                       paste("(\\\\(S[34])?method",
-                             "{([.[:alnum:]]*)}",
-                             "{([.[:alnum:]]*)})",
-                             sep = "")
-                   txt <- gsub("\\\\l?dots", "...", txt)
-                   txt <- gsub("\\\\%", "%", txt)
-                   txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
-                   .parseTextAsMuchAsPossible(txt)
-               })
+    dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(dbUsages,
                              function(x) !is.null(attr(x, "badLines"))))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
@@ -1455,12 +1428,10 @@ function(package, dir, lib.loc = NULL)
         }
         else
             objects(envir = env, all.names = TRUE)
-        allGenerics <-
-            c(allGenerics,
-              objectsInEnv[sapply(objectsInEnv,
-                                  .isS3Generic,
-                                  env)
-                           == TRUE])
+        if(length(objectsInEnv))
+            allGenerics <-
+                c(allGenerics,
+                  objectsInEnv[sapply(objectsInEnv, .isS3Generic, env)==TRUE])
     }
     ## Add internal S3 generics and S3 group generics.
     allGenerics <-
@@ -1503,19 +1474,7 @@ function(package, dir, lib.loc = NULL)
     names(db) <- dbNames <- sapply(db, getRdSection, "name")
 
     dbUsageTexts <- lapply(db, getRdSection, "usage")
-    dbUsages <-
-        lapply(dbUsageTexts,
-               function(txt) {
-                   methodRE <-
-                       paste("(\\\\(S[34])?method",
-                             "{([.[:alnum:]]*)}",
-                             "{([.[:alnum:]]*)})",
-                             sep = "")
-                   txt <- gsub("\\\\l?dots", "...", txt)
-                   txt <- gsub("\\\\%", "%", txt)
-                   txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
-                   .parseTextAsMuchAsPossible(txt)
-               })
+    dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- sapply(dbUsages,
                   function(x) !is.null(attr(x, "badLines")))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
@@ -1965,9 +1924,9 @@ function(package, dir, lib.loc = NULL)
         }
         else
             objects(envir = env, all.names = TRUE)
-        S3generics <-
-            objectsInEnv[sapply(objectsInEnv, .isS3Generic, env)
-                         == TRUE]
+        S3generics <- if(length(objectsInEnv))
+            objectsInEnv[sapply(objectsInEnv, .isS3Generic, env) == TRUE]
+        else character(0)
 
         ## For base, also add the internal S3 generics which are not
         ## .Primitive (as checkArgs() does not deal with these).
@@ -2131,14 +2090,14 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
-    badReplaceFuns <-
+    badReplaceFuns <- if(length(replaceFuns)) {
         replaceFuns[sapply(replaceFuns, function(f) {
             ## Always get the functions from codeEnv ...
             ## Should maybe get S3 methods from the registry ...
             f <- get(f, envir = codeEnv)
             if(!is.function(f)) return(TRUE)
             .checkLastFormalArg(f)
-        }) == FALSE]
+        }) == FALSE]} else character(0)
 
     if(.isMethodsDispatchOn()) {
         S4generics <- methods::getGenerics(codeEnv)
@@ -2308,12 +2267,13 @@ function(x, ...)
 ### * .checkPackageDepends
 
 .checkPackageDepends <-
-function(dir) {
-    
-    if(!fileTest("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
-    dir <- filePathAsAbsolute(dir)
-    
+function(package)
+{
+    if(length(package) != 1)
+        stop(paste("argument", sQuote("package"),
+                   "must be of length 1"))
+    dir <- .find.package(package)
+
     ## We definitely need a valid DESCRIPTION file.
     db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
               silent = TRUE)
@@ -2351,7 +2311,7 @@ function(dir) {
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vignetteDir <- file.path(dir, "inst", "doc")
+    vignetteDir <- file.path(dir, "doc")
     if(fileTest("-d", vignetteDir)
        && length(listFilesWithType(vignetteDir, "vignette"))) {
         reqs <- .buildVignetteIndex(dir)$Depends
@@ -2359,7 +2319,7 @@ function(dir) {
         if(length(reqs))
             badDepends$missingVignetteDepends <- reqs
     }
-    
+
     ## Are all namespace dependencies listed as package dependencies?
     if(fileTest("-f", file.path(dir, "NAMESPACE"))) {
         reqs <- .getNamespacePackageDepends(dir)
@@ -2505,6 +2465,18 @@ function(txt)
     exprs
 }
 
+### * .parse_usage_as_much_as_possible
+
+.parse_usage_as_much_as_possible <-
+function(txt)
+{
+    txt <- gsub("\\\\l?dots", "...", txt)
+    txt <- gsub("\\\\%", "%", txt)
+    txt <- gsub(.S3_method_markup_regexp, "\"\\\\\\1\"", txt)
+    txt <- gsub(.S4_method_markup_regexp, "\"\\\\\\1\"", txt)
+    .parseTextAsMuchAsPossible(txt)
+}
+
 ### * .prettyPrint
 
 .prettyPrint <-
@@ -2526,6 +2498,17 @@ function(x)
         "\\2\\4.\\3",
         x)
 }
+
+### * .S3_method_markup_regexp
+
+.S3_method_markup_regexp <-
+    "(\\\\(S3)?method{([.[:alnum:]]*)}{([.[:alnum:]]*)})"
+    
+### * .S4_method_markup_regexp
+
+.S4_method_markup_regexp <-
+    "(\\\\S4method{([.[:alnum:]]*)}{([.[:alnum:],]*)})"
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

@@ -1,7 +1,7 @@
 #-*- perl -*-
 
 ## Copyright (C) 2001--2002 R Development Core Team
-## Copyright (C) 2003       The R Foundation
+## Copyright (C) 2003-4       The R Foundation
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -131,6 +131,7 @@ foreach my $file (@Rfiles) {
     while (<FILE>) {
 	$have_examples = 1
 	    if ((/_ Examples _/o) || (/### \*+ Examples/));
+	next if /^#/; # need to skip comment lines
 	$have_par = 1 if (/[^a-zA-Z0-9.]par\(/o || /^par\(/o);
 	$have_contrasts = 1 if /options\(contrasts/o;
     }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001 The R Development Core Team
+ *  Copyright (C) 2000-4 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -325,6 +325,9 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
     int lsnd, l1, l2, l3, ld, lr, lt;
     int lz, lwa, lwn, lss, lws, lwt, lsy, lwy;
 
+    /* make sure csave is initialized */
+    csave[0] = '\0';
+    
     /* Parameter adjustments */
     --wa;
     --isave;
@@ -635,6 +638,7 @@ static void mainlb(int n, int m, double *x,
 	gd = 0.;
 	sbgnrm = 0.;
 	stp = 0.;
+	xstep = 0.;
 	stpmx = 0.;
 	gdold = 0.;
 	dtd = 0.;

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2001   The R Development Core Team
- *  Copyright (C) 2002--2003  The R Foundation
+ *  Copyright (C) 2002--2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -742,11 +742,14 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ccrossprod(COMPLEX(CAR(args)), nrx, ncx,
 			   COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else {
-#ifdef IEEE_754
 	    if(sym)
+#ifdef IEEE_754
 		symcrossprod(REAL(CAR(args)), nrx, ncx, REAL(ans));
-	    else
+#else
+		crossprod(REAL(CAR(args)), nrx, ncx,
+			  REAL(CAR(args)), nry, ncy, REAL(ans));
 #endif
+	    else
 		crossprod(REAL(CAR(args)), nrx, ncx,
 			  REAL(CADR(args)), nry, ncy, REAL(ans));
 	}

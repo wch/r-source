@@ -146,7 +146,7 @@ par(\dots, no.readonly = FALSE)
       \code{new=TRUE} as well.}
     \item{\code{fin}}{The figure region dimensions,
       \code{(width,height)}, in inches. If you set this, unlike S, you
-      start a new plot.}  
+      start a new plot.}
     \item{\code{font}}{An integer which specifies which font to use for
       text.  If possible, device drivers arrange so that 1 corresponds
       to plain text, 2 to bold face, 3 to italic and 4 to bold italic.}
@@ -199,6 +199,10 @@ par(\dots, no.readonly = FALSE)
       Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
       array on the device by \emph{columns} (\code{mfcol}), or
       \emph{rows} (\code{mfrow}), respectively.
+
+      In a layout with exactly two rows and columns the base value of
+      \code{"cex"} is reduced by a factor of 0.83: if there are three or
+      more of either rows or columns, the reduction factor is 0.66.
 
       Consider the alternatives, \code{\link{layout}} and
       \code{\link{split.screen}}.
@@ -279,9 +283,17 @@ par(\dots, no.readonly = FALSE)
       \emph{negative}, and the ticks are as in the linear case,
       otherwise, \code{n} is in \code{1:3}, specifying a case number,
       and \code{x1} and \code{x2} are the lowest and highest power of 10
-      inside the user coordinates, \code{par("usr")[1:2]}.  See
-      \code{\link{axTicks}()} for more details.
+      inside the user coordinates, \code{10 ^ par("usr")[1:2]}. (The
+      \code{"usr"} coordinates are log10-transformed here!)
+
+      \describe{
+	\item{n=1}{will produce tick marks at \eqn{10^j} for
+	  integer \eqn{j},}
+	\item{n=2}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 5\}},}
+	\item{n=3}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 2, 5\}}.}
       }
+      See \code{\link{axTicks}()} for a pure \R implementation of this.
+    }
     \item{\code{xaxs}}{The style of axis interval calculation to be used
       for the x-axis.  Possible values are \code{"r"}, \code{"i"},
       \code{"e"}, \code{"s"}, \code{"d"}.  The styles are generally

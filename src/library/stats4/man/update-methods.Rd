@@ -8,7 +8,7 @@
   Update \code{"mle"} objects.
 }
 \usage{
-\S4method{plot}{mle}{object, \dots, evaluate = TRUE}
+\S4method{update}{mle}(object, \dots, evaluate = TRUE)
 }
 \arguments{
  \item{object}{An existing fit.}

@@ -1273,3 +1273,8 @@ terms(y ~ offset(x) + z - z, data=df, simplify = TRUE)
 x <- 1:3
 try(x[-c(1, NA)])
 ## worked on some platforms, segfaulted on others in 1.8.1
+
+## vector 'border' (and no 'pch', 'cex' nor 'bg'):
+data(InsectSprays)
+boxplot(count ~ spray, data = InsectSprays, border=2:7)
+## gave warnings in 1.9.0

@@ -39,7 +39,7 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
   \item{P.values}{logical or \code{NULL}; if \code{TRUE}, the last
     column of \code{x} is formatted by \code{\link{format.pval}} as P
     values.  If \code{P.values = NULL}, the default, it is set to
-    \code{TRUE} only if \code{link{options}("show.coef.Pvalue")} is
+    \code{TRUE} only if \code{\link{options}("show.coef.Pvalue")} is
     \code{TRUE} \emph{and} \code{x} has at least 4 columns \emph{and}
     the last column name of \code{x} starts with \code{"Pr("}.}
   \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
@@ -50,7 +50,9 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
     printed output.}
  \item{\dots}{further arguments for \code{\link{print}}.}
 }
-\value{Invisibly returns its argument, \code{x}.}}
+\value{
+  Invisibly returns its argument, \code{x}.
+}
 \author{Martin Maechler}
 \seealso{
   \code{\link{print.summary.lm}},

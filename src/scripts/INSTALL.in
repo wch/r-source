@@ -4,11 +4,11 @@
 
 # @configure_input@
 
-revision='$Revision: 1.147 $'
+revision='$Revision: 1.147.2.3 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2003 The R Core Development Team.
+Copyright (C) 2000-2004 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -388,7 +388,7 @@ do_install_source () {
   ## As from 1.7.0, packages without compiled code are not marked
   ## as being from any platform.
   echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package DESCRIPTION failed"
     do_exit_on_error
@@ -407,9 +407,6 @@ do_install_source () {
       eval ${MAKE} ${makefiles} \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
         || error=true; \
-      if ${clean}; then
-	${MAKE} clean
-      fi
       cd ..
     else
       cd src;
@@ -418,10 +415,6 @@ do_install_source () {
 	sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
           && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
 	  || error=true; \
-	if ${clean}; then
-	  rm -rf .libs _libs
-	  rm -f *.o *@SHLIB_EXT@
-	fi
       else
 	warning "no source files found"
       fi
@@ -440,7 +433,7 @@ do_install_source () {
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
       echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
@@ -534,7 +527,7 @@ do_install_source () {
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
-      ${code_cmd}) | R_DEFAULT_PACKAGES= ${R_SAVE_EXE} ${save_args}
+      ${code_cmd}) | R_DEFAULT_PACKAGES= LANG=C ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
       error "execution of package source for '${pkg_name}' failed"
       do_exit_on_error
@@ -569,7 +562,7 @@ do_install_source () {
 	echo "${NO_PERL5_MSG}"
       else
 	if ${debug}; then
-	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
+	  echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
 	fi
 	${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" \
 	  ${build_help_opts} \
@@ -586,10 +579,13 @@ do_install_source () {
 	  if test -d R-ex; then
 	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
 	  fi
+	  ## <FIXME>
+	  ## Eventually need to decide whether we want this ...
           ## NOT YET:
           ## if test -d latex; then
           ##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
           ## fi
+	  ## </FIXME>
 	  if test -d help; then
 	    (cd help; ${R_ZIPCMD} -m Rhelp * -x AnIndex);
 	  fi)
@@ -600,7 +596,7 @@ do_install_source () {
   fi
 
   echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error
@@ -609,7 +605,7 @@ do_install_source () {
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
       echo ".installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"
       do_exit_on_error
@@ -629,6 +625,16 @@ do_install_source () {
   ## </FIXME>
 
   if ${clean}; then
+    if test -d src; then
+      cd src
+      if test -f Makefile; then
+        ${MAKE} clean
+      else
+        rm -rf .libs _libs
+        rm -f *.o *@SHLIB_EXT@
+      fi
+      cd ..
+    fi
     if test -x ./cleanup ; then
       ./cleanup
     fi

@@ -241,7 +241,7 @@ AC_SUBST(R_BROWSER)
 ## the FreeBSD acroread port.
 AC_DEFUN([R_PROG_PDFVIEWER],
 [AC_PATH_PROGS(R_PDFVIEWER,
-               [${R_PDFVIEWER} acroread acroread4 xpdf gv gnome-gv kghostview open])
+               [${R_PDFVIEWER} acroread acroread4 xpdf gv gnome-gv ggv kghostview open gpdf])
 if test -z "${R_PDFVIEWER}"; then
   warn_pdfviewer="I could not determine a PDF viewer"
   AC_MSG_WARN([${warn_pdfviewer}])
@@ -661,6 +661,8 @@ if test -n "${F77}"; then
 elif test -z "${F2C}"; then
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
 fi
+## record if we are using g77, so we can use -ffloat-store
+AM_CONDITIONAL(USING_G77, [test "x${ac_cv_f77_compiler_gnu}" = xyes])
 ])# R_PROG_F77_OR_F2C
 
 ## R_PROG_F77_FLIBS
@@ -1311,11 +1313,12 @@ AC_DEFUN([R_FUNC_STRPTIME],
 int main () {
 #ifdef HAVE_STRPTIME
   struct tm tm;
-  char *p, *q;
+  char *p, *q, *p2;
 
-  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
+  p = strptime("1960-01-01", "%Y-%m-%d", &tm); /* works on MacOS X */
+  p2 =strptime("1899-01-01", "%Y-%m-%d", &tm); /* but this one does not */
   q = strptime("2003-02-40", "%Y-%m-%d", &tm);
-  exit(p == 0 || q);
+  exit(p == 0 || p2 == 0 || q);
 #else
   exit(1);
 #endif
@@ -2397,7 +2400,7 @@ AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 
 int main () {
   struct tm *tm;
-  time_t ct;
+  time_t ct = 0; /* required on 64bit AIX */
 
   ctime(&ct);
   ct = ct - (ct % 60);

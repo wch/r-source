@@ -4,6 +4,7 @@
 \alias{print.prcomp}
 \alias{summary.prcomp}
 \alias{print.summary.prcomp}
+\concept{PCA}
 \title{Principal Components Analysis}
 \description{
   Performs a principal components analysis on the given data matrix
@@ -23,9 +24,9 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   \item{scale.}{a logical value indicating whether the variables should
     be scaled to have unit variance before the analysis takes
     place. The default is \code{FALSE} for consistency with S, but
-    in general scaling is advisable. Alternately, a vector of length
+    in general scaling is advisable.  Alternatively, a vector of length
     equal the number of columns of \code{x} can be supplied.  The
-    value is passed to \code{scale}.}
+    value is passed to \code{\link{scale}}.}
   \item{tol}{a value indicating the magnitude below which components
     should be omitted. (Components are omitted if their
     standard deviations are less than or equal to \code{tol} times the
@@ -46,12 +47,13 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
     whose columns contain the eigenvectors).  The function
     \code{princomp} returns this in the element \code{loadings}.}
   \item{x}{if \code{retx} is true the value of the rotated data (the
-    data multiplied by the \code{rotation} matrix) is returned.}
+    centred (and scaled if requested) data multiplied by the
+    \code{rotation} matrix) is returned.}
 }
 \details{
   The calculation is done by a singular value decomposition of the
-  (centered and scaled) data matrix, not by using \code{eigen} on the
-  covariance matrix.  This
+  (centered and possibly scaled) data matrix, not by using
+  \code{eigen} on the covariance matrix.  This
   is generally the preferred method for numerical accuracy.  The
   \code{print} method for the these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.

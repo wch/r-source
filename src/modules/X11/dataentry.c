@@ -27,6 +27,10 @@
 
 /* don't use X11 function prototypes (which tend to ...): */
 #define NeedFunctionPrototypes 0
+/* XFree 4.4.0 forgets to define this if NeedFunctionPrototypes=0 */
+#ifndef _Xconst
+#define _Xconst const
+#endif
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

@@ -117,5 +117,4 @@ will be called on the completion of the next top-level task.
   sum(1:10)
 }
 }
-}
 \keyword{environment}

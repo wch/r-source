@@ -33,7 +33,10 @@ pairs(x, \dots)
 }
 \arguments{
   \item{x}{the coordinates of points given as columns of a matrix.}
-  \item{formula}{a formula, such as \code{y ~ x}.}
+  \item{formula}{a formula, such as \code{~ x + y + z}.  Each term will
+    give a separate variable in the pairs plot, so terms should be
+    numeric vectors.  (A response will be interpreted as another
+    variable, but not treated specially, so it is confusing to use one.)}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
@@ -74,6 +77,13 @@ pairs(x, \dots)
   A panel function should not attempt to start a new plot, but just plot
   within a given coordinate system: thus \code{plot} and \code{boxplot}
   are not panel functions.
+
+  For the default method, missing values are passed to the panel
+  functions and will often be ignored within a panel.  However, for the
+  formula method and the default value of \code{\link{na.action}}, all
+  cases which contain a missing values for any of the variables are
+  omitted completely (including when the scales are selected).  [The
+  behaviour of the formula method will be changed in R 2.0.0.]
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens

@@ -20,6 +20,10 @@ The files are as follows.
 	naming scheme.  These test for `features' such as GNOME, zlib,
 	etc., are named R_$FEATURE, and typically define HAVE_$FEATURE.
 
+  codeset.m4
+        is from GNU gettext and checks whether nl_langinfo(CODESET)
+        is available in langinfo.h.
+
   gnome-gnorba-check.m4
   gnome-orbit-check.m4
   gnome.m4

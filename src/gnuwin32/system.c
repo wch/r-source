@@ -56,7 +56,7 @@ int ConsoleAcceptCmd;
 void closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
 void UnLoad_Rbitmap_Dll();
-void set_workspace_name(char *fn);
+void set_workspace_name(char *fn); /* ../unix/sys-common.c */
 
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
@@ -328,8 +328,8 @@ void R_ClearerrConsole()
 
 void GuiBusy(int which)
 {
-	if (which == 1) gsetcursor(RConsole, WatchCursor);
-	if (which == 0) gsetcursor(RConsole, ArrowCursor);
+    if (which == 1) gsetcursor(RConsole, WatchCursor);
+    if (which == 0) gsetcursor(RConsole, ArrowCursor);
 }
 
 void CharBusy(int which)
@@ -438,27 +438,15 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 {
     int   i;
     char  buf[1024];
-    WIN32_FIND_DATA fd;
 
     if (nfile > 0) {
 	if (pager == NULL || strlen(pager) == 0)
 	    pager = "internal";
 	for (i = 0; i < nfile; i++) {
-	    if (FindFirstFile(file[i], &fd) != INVALID_HANDLE_VALUE) {
+	    if(!access(file[i], R_OK)) {
 		if (!strcmp(pager, "internal")) {
 		    newpager(wtitle, file[i], headers[i], del);
 		} else if (!strcmp(pager, "console")) {
-/*		    DWORD len = 1;
-		    HANDLE f = CreateFile(file[i], GENERIC_READ,
-					  FILE_SHARE_WRITE,
-					  NULL, OPEN_EXISTING, 0, NULL);
-		    if (f != INVALID_HANDLE_VALUE) {
-			while (ReadFile(f, buf, 1023, &len, NULL) && len) {
-			    buf[len] = '\0';
-			    R_WriteConsole(buf,strlen(buf));
-			}
-			CloseHandle(f);*/
-/* The above causes problems with lack of CRLF translations */
 		    size_t len;
 		    FILE *f = fopen(file[i], "rt");
 		    if(f) {
@@ -666,7 +654,7 @@ int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
     R_size_t value;
-    char *p;
+    char *p, *q;
     char  s[1024];
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -836,6 +824,7 @@ int cmdlineoptions(int ac, char **av)
 		snprintf(s, 1024, "ARGUMENT '%s' __ignored__\n", *av);
 		R_ShowMessage(s);
 	    }
+	    if(res != INVALID_HANDLE_VALUE) FindClose(res);
 	}
     }
     Rp->rhome = R_Home;
@@ -850,13 +839,12 @@ int cmdlineoptions(int ac, char **av)
     } else if ((p = getenv("HOME"))) {
 	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
 	strcpy(RUser, p);
-    } else if ((p = getenv("HOMEDRIVE"))) {
+    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
 	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
 	strcpy(RUser, p);
-	p = getenv("HOMEPATH");
-	if(!p || strlen(RUser) + strlen(p) >= MAX_PATH) 
-	    R_Suicide("Invalid HOMEDRIVE");
-	strcat(RUser, p);
+	if(strlen(RUser) + strlen(q) >= MAX_PATH)
+	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
+	strcat(RUser, q);
     } else
 	GetCurrentDirectory(MAX_PATH, RUser);
     p = RUser + (strlen(RUser) - 1);

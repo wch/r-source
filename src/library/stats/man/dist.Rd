@@ -102,7 +102,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
     and \code{upper} above, specifying how the object should be printed.}
   \item{call}{optionally, the \code{\link{call}} used to create the
     object.}
-  \item{methods}{optionally, the distance method used; resulting form
+  \item{method}{optionally, the distance method used; resulting form
     \code{\link{dist}()}, the (\code{\link{match.arg}()}ed) \code{method}
     argument.}
 }
@@ -144,7 +144,7 @@ dist(rbind(x,y), method="canberra")
 ## answer 2 * (6/5)
 
 ## Examples involving "Inf" :
-
+## These will not work on a non-IEEE 754 system.
 ## 1)
 x[6] <- Inf
 (m2 <- rbind(x,y))

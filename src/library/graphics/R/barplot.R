@@ -4,7 +4,7 @@ barplot.default <-
 function(height, width = 1, space = NULL, names.arg = NULL,
 	 legend.text = NULL, beside = FALSE, horiz = FALSE,
 	 density = NULL, angle = 45,
-	 col = heat.colors(NR), border = par("fg"),
+	 col = NULL, border = par("fg"),
 	 main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
 	 xlim = NULL, ylim = NULL, xpd = TRUE,
 	 axes = TRUE, axisnames = TRUE,
@@ -21,13 +21,19 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	names.arg <-
 	    if(is.matrix(height)) colnames(height) else names(height)
 
-    if (is.vector(height)) {
+    if (is.vector(height)
+        || (is.array(height) && (length(dim(height)) == 1))) {
+        ## Treat vectors and 1-d arrays the same.
 	height <- cbind(height)
 	beside <- TRUE
-    } else if (is.array(height) && (length(dim(height)) == 1)) {
-	height <- rbind(height)
-	beside <- TRUE
-    } else if (!is.matrix(height))
+        ## The above may look strange, but in particular makes color
+        ## specs work as most likely expected by the users.
+        if(is.null(col)) col <- "grey"
+    } else if (is.matrix(height)) {
+        ## In the matrix case, we use "colors" by default.
+        if(is.null(col)) col <- heat.colors(nrow(height))
+    }
+    else
 	stop(paste(sQuote("height"), "must be a vector or a matrix"))
 
     if(is.logical(legend.text))

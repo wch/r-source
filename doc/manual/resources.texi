@@ -50,11 +50,11 @@
 @chapter FAQ
 
 A collection of @uref{faq.html, , Frequently Asked Questions} and their
-answers is maintained by @email{Kurt.Hornik@@r-project.org, Kurt Hornik}
+answers is maintained by @email{Kurt.Hornik@@R-project.org, Kurt Hornik}
 and can be found at the @acronym{URL}
 
 @quotation
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html}
 @end quotation
 
 @ifinfo
@@ -66,36 +66,15 @@ via the on-line help (on the index page given by @code{help.start()}).
 @node Mailing lists, Archives, FAQ, Top
 @chapter Mailing lists
 
-Thanks to @email{Martin.Maechler@@r-project.org, Martin Maechler} there
-are number of mailing lists which are used by R users and developers.
-They are
+Thanks to @email{Martin.Maechler@@R-project.org, Martin Maechler} there
+are a number of mailing lists which are used by R users and developers.
+See
 
 @quotation
-@table @email
-@item r-announce@@lists.r-project.org
-announcements of new R releases or applications;
-@item r-help@@lists.r-project.org
-general inquiries and discussion about R;
-@item r-devel@@lists.r-project.org
-discussions about the future of R and pre-testing of new versions.
-@end table
+@uref{http://www.R-project.org/mail.html}
 @end quotation
 
-To subscribe (or unsubscribe) to these mailing lists send
-@samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
-message (not in the subject!) to
-
-@quotation
-@email{r-announce-request@@lists.r-project.org} @*
-@email{r-help-request@@lists.r-project.org}     @*
-@email{r-devel-request@@lists.r-project.org}
-@end quotation
-
-@ifinfo
-Archives of the mailing lists are made available monthly; see the
-@file{doc/mail/mail.html} file on any CRAN node.  An @acronym{HTML}
-archive is available via @uref{http://www.ens.gu.edu.au/robertk/R/}.
-@end ifinfo
+for details.
 
 @node Archives, Bug-tracking system, Mailing lists, Top
 @chapter Archives
@@ -103,96 +82,12 @@ archive is available via @uref{http://www.ens.gu.edu.au/robertk/R/}.
 The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
 sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
-binaries. It is currently mirrored daily at
-
-@table @asis
-@item @uref{http://cran.au.r-project.org/}
-PlanetMirror,  Australia 
-@item @uref{http://mirror.aarnet.edu.au/pub/CRAN/}
-AARNet (accessible only from Australia and New Zealand)
-
-@item @uref{http://cran.at.r-project.org/}
-TU Wien, Austria
-
-@item @uref{ http://cran.br.r-project.org}
-Universidade Federal do Paraná, Brasil
-@item @uref{http://www.termix.ufv.br/CRAN/}
-Federal University of Vicosa, Brasil
-@item @uref{http://lmq.esalq.usp.br/CRAN/}
-University of Sao Paulo, Piracicaba, Brasil
-
-@item @uref{ http://probability.ca/cran/}
-University of Toronto, Canada
-
-@item @uref{http://cran.dk.r-project.org/}
-SunSITE, Denmark
-
-@item @uref{http://cran.fr.r-project.org/}
-INRA, Toulouse, France
-
-@item @uref{http://cran.hu.r-project.org/}
-Semmelweis University, Hungary
-
-@item @uref{http://microarrays.unife.it/CRAN/}
-Universita di Ferrara, Italy
-
-@item @uref{ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/}
-University of Aizu, Japan
-
-@item @uref{http://www.fastmirrors.org/cran/}
-Fastmirrors.org, Slovenia
-
-@item @uref{http://cran.za.r-project.org/}
-Rhodes University, South Africa
-
-@item @uref{http://cran.es.r-project.org/}
-Spanish National Research Network, Madrid, Spain
-
-@item @uref{http://cran.ch.r-project.org/}
-ETH Zurich, Switzerland
-
-@item @uref{http://cran.csie.ntu.edu.tw/}
-National Taiwan University, Taipei, Taiwan
-
-@item @uref{http://cran.uk.r-project.org/}
-University of Bristol, UK
-
-@item @uref{http://cran.us.r-project.org/}
-University of Wisconsin, Madison, WI, USA
-@item @uref{http://cran.stat.ucla.edu/}
-University of California, Los Angeles, CA, USA
-@item @uref{http://www.bioconductor.org/CRAN/}
-Dana Farber Cancer Institute, Boston, MA, USA
-@item @uref{http://cran.get-software.com}
-Get-Software.com, Augusta, ME, USA
-@item @uref{http://www.ibiblio.org/pub/languages/R/CRAN/}
-University of North Carolina, Chapel Hill, NC, USA
-@item @uref{http://lib.stat.cmu.edu/R/CRAN/}
-Statlib, Carnegie Mellon University, PA, USA
-@item @uref{http://cran.mirrors.pair.com/}
-Pair Networks, PA, USA
-@item @uref{http://www.binarycode.org/cran}
-BinaryCode.org, Austin, TX, USA
-@item @uref{ http://mirrors.mix5.com/CRAN/}
-Mix5.com, Houston, TX, USA
-@end table
-
-Many of these sites can also be accessed using FTP.  In the interests of
-preserving international bandwidth please use a site near you if
-possible.
-
-The @acronym{CRAN} master site at TU Wien, Austria, can be found at the
-@acronym{URL}s
+binaries, with the master site at @uref{http://CRAN.R-project.org/} and
+information on daily mirrors available from
 
 @quotation
-@multitable @columnfractions .55 .40
-@item @uref{http://cran.r-project.org/}
-@item @uref{ftp://cran.r-project.org/pub/R/}
-@end multitable
+@uref{http://CRAN.R-project.org/mirrors.html}
 @end quotation
-
-and is also available for anonymous rsync at
-@samp{cran.r-project.org::CRAN}.
 
 @node Bug-tracking system,  , Archives, Top
 @chapter Bug-tracking system
@@ -201,10 +96,11 @@ R has a bug-tracking system (or perhaps a bug-filing system is a more
 precise description) available on the net at
 
 @quotation
-@uref{http://bugs.r-project.org/}
+@uref{http://bugs.R-project.org/}
 @end quotation
 
-and via e-mail to @email{r-bugs@@r-project.org}.  The R function
+@noindent
+and via e-mail to @email{r-bugs@@R-project.org}.  The R function
 @code{bug.report()} can be used to invoke an editor from a within an R
 session and send the report to the right address.  It also fills in some
 basic information, such as your R version and operating system, which

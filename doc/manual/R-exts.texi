@@ -151,8 +151,8 @@ Unix, see @ref{Configure and cleanup}.
 
 @cindex COPYING file
 
-The optional file @file{COPYING} contains a copy of the license to the package,
-e.g. a copy of the GNU public license.
+The optional file @file{COPYING} contains a copy of the license to the
+package, e.g.@: a copy of the GNU public license.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -258,23 +258,22 @@ parentheses.  (List package names even if they are part of a bundle.)
 You can also use the special package name @samp{R} if your package
 depends on a certain version of R.  E.g., if the package works only with
 R version 1.8.0 or newer, include @samp{R (>= 1.8.0)} in the
-@samp{Depends} field.  The R package checking facilities use this
-field, hence it is an error to use improper syntax 
-or misuse the @samp{Depends} field for comments on other software that
-might be needed.  Other dependencies (external to the @R{} system)
-should be listed in the @samp{SystemRequirements} field or a separate
-@samp{README} file.  The @R{} @command{INSTALL} facilities already check
-if the version of R used is recent enough for the package being
-installed.
+@samp{Depends} field.  The R package checking facilities use this field,
+hence it is an error to use improper syntax or misuse the @samp{Depends}
+field for comments on other software that might be needed.  Other
+dependencies (external to the @R{} system) should be listed in the
+@samp{SystemRequirements} field or a separate @file{README} file.  The
+@R{} @command{INSTALL} facilities already check if the version of R used
+is recent enough for the package being installed.
 
 The optional @samp{Suggests} field uses the same syntax as
-@samp{Depends} and lists packages that are not neccessarily
-needed. This includes packages used only in examples or vignettes, and
-packages loaded in the body of functions. E.g., consider an example
-from package @samp{foo} uses a dataset from package @samp{bar}. Then
-it is not necessary to have @samp{bar} for routine use of @samp{foo},
-unless one wants to execute the examples: it is nice to have
-@samp{bar}, but not necessary.  The general rules are
+@samp{Depends} and lists packages that are not necessarily needed.  This
+includes packages used only in examples or vignettes, and packages
+loaded in the body of functions.  E.g., consider an example from package
+@pkg{foo} uses a dataset from package @pkg{bar}. Then it is not
+necessary to have @pkg{bar} for routine use of @pkg{foo}, unless one
+wants to execute the examples: it is nice to have @pkg{bar}, but not
+necessary.  The general rules are
 
 @itemize @bullet
 @item Packages that are necessary to successfully load the package
@@ -350,10 +349,10 @@ normally an empty file.
 
 The optional file @file{R_PROFILE.R} is executed before the code in the
 @file{R} subdirectory and should be used to set up an environment needed
-only to evaluate the code (which is run with the @code{--vanilla}
+only to evaluate the code (which is run with the @option{--vanilla}
 command-line flag).  Very few packages will need such code.  Indeed,
-both @file{install.R} and @file{R_PROFILE.R} should be viewed as 
-experimental; the mechanism to execute code before attaching or 
+both @file{install.R} and @file{R_PROFILE.R} should be viewed as
+experimental; the mechanism to execute code before attaching or
 installing the package may change in the near future.
 
 
@@ -1037,7 +1036,8 @@ space directives} describing the imports and exports of the name space.
 Additional directives register any shared objects to be loaded and any
 S3-style methods that are provided.  Note that although the file looks
 like @R{} code (and often has @R{}-style comments) it is not processed
-as @R{} code and no conditional processing is currently supported.
+as @R{} code.  Only very simple conditional processing of @code{if}
+statements is implemented as of @R{} 1.9.0.
 
 Like other packages, packages with name spaces are loaded and attached
 to the search path by calling @code{library}.  Only the exported
@@ -1791,14 +1791,15 @@ of the form
 
 @noindent
 where @var{signature_list} contains the names of the classes in the
-signature of the method (without quotes) separated by @samp{,}, with
-@samp{ANY} used for arguments without an explicit specification.  E.g.,
-@samp{genericFunction-class} is the topic name for documentation for the
-S4 class @code{"genericFunction"}, and @samp{coerce,ANY,NULL-method} is
-the topic name for documentation for the S4 method for @code{coerce} for
-signature @code{c("ANY", "NULL")}.  It is crucial not to use different
-topic names, as otherwise the facilities for getting on-line
-documentation on S4 classes and methods via @samp{?} are bypassed.
+signature of the method (without quotes) separated by @samp{,} (without
+whitespace), with @samp{ANY} used for arguments without an explicit
+specification.  E.g., @samp{genericFunction-class} is the topic name for
+documentation for the S4 class @code{"genericFunction"}, and
+@samp{coerce,ANY,NULL-method} is the topic name for documentation for
+the S4 method for @code{coerce} for signature @code{c("ANY", "NULL")}.
+It is crucial not to use different topic names, as otherwise the
+facilities for getting on-line documentation on S4 classes and methods
+via @samp{?} are bypassed.
 
 Skeletons of documentation for S4 classes and methods can be generated
 by using the functions @code{promptClass()} and @code{promptMethods()},
@@ -2961,8 +2962,8 @@ void X_main () @{
 Compiling and linking should be done with the C++ compiler-linker
 (rather than the C compiler-linker or the linker itself); otherwise, the
 C++ initialization code (and hence the constructor of the static
-variable @code{Y}) are not called.  On a properly configured Unix system
-(support for C++ was added in @R{} version 1.1), one can simply use
+variable @code{Y}) are not called.  On a properly configured Unix or
+Windows system, one can simply use
 
 @smallexample
 R CMD SHLIB X.cc X_main.cc
@@ -3000,6 +3001,10 @@ Using C++ iostreams, as in this example, is best avoided.  There is no
 guarantee that the output will appear in the R console, and indeed it
 will not on the R for Windows console.  Use R code or the C entry points
 (@pxref{Printing}) for all I/O if at all possible.
+
+@R{} header files are C and not C++ header files and should be included
+within an @code{extern "C"} block.  (This is not always necessary but
+helps in reading C++ code.)
 
 
 @node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
@@ -3098,13 +3103,15 @@ functions that have been used to implement the core parts of @R{}
 through @code{.Internal} calls.  A public subset of these is defined in
 the header file @file{Rinternals.h} in the directory
 @file{@var{R_HOME}/include} that should be available on any @R{}
-installation.
+installation.  (Users of C++ should note that this is a C header and
+needs to be declared as @code{extern "C"}.)
 
-A more recent approach is to use @R{} versions of the macros and
-functions defined for the @Sl{} version 4 interface @code{.Call}, which
-are defined in the header file @file{Rdefines.h}.  This is a somewhat
-simpler approach, and is certainly to be preferred if the code might be
-shared with @Sl{} at any stage.
+Another approach is to use @R{} versions of the macros and functions
+defined for the @Sl{} version 4 interface @code{.Call}, which are
+defined in the header file @file{Rdefines.h} (again, a C and not a C++
+header).  This is a somewhat simpler approach, and is certainly to be
+preferred if the code might be shared with @Sl{} at any stage.  However,
+it is less well documented and less tested.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
@@ -4636,7 +4643,9 @@ conflicts (notably with Windows headers), and the known
 problematic defines can be removed by defining @code{STRICT_R_HEADERS}.
 
 Most of these header files, including all those included by @file{R.h},
-can be used from C++ code.
+can be used from C++ code.  Others (including @file{Rinternals.h} and
+@code{Rdefines.h} should be included within an @code{extern "C"}
+declaration, and for clarity this is advisable for all @R{} header files.
 
 @quotation
 @strong{Note:} Because @R{} re-maps many of its external names to avoid
@@ -5015,7 +5024,7 @@ Note that this is not guaranteed to be portable, for the return
 conventions might not be compatible between the C and FORTRAN compilers
 used.  (Passing values via arguments is safer.)
 
-The standard packages, for example @pkg{modreg}, are a rich source of
+The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
 
@@ -5566,7 +5575,7 @@ The FORTRAN interface routines for sorting double precision vectors are
 @end deftypefun
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
-Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``FORTRAN'')
+Given the @var{nr} by @var{nc} matrix @code{matrix} in row (``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).

@@ -131,9 +131,10 @@ Ops.factor <- function(e1, e2)
 "[.factor" <- function(x, i, drop=FALSE)
 {
     y <- NextMethod("[")
-    class(y) <- oldClass(x)
     attr(y,"contrasts")<-attr(x,"contrasts")
+    ## NB factor has levels before class in attribute list (PR#6799)
     attr(y,"levels")<-attr(x,"levels")
+    class(y) <- oldClass(x)
     if ( drop ) factor(y) else y
 }
 

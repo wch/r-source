@@ -50,8 +50,9 @@ arima(x, order = c(0, 0, 0),
   }
 
   \item{init}{optional numeric vector of initial parameter
-    values. Missing values will be filled in, by zeroes except for
-    regression coefficients.}
+    values.  Missing values will be filled in, by zeroes except for
+    regression coefficients.  Values already specified in \code{fixed}
+    will be ignored.}
 
   \item{method}{Fitting method: maximum likelihood or minimize
     conditional sum-of-squares.  The default (unless there are missing

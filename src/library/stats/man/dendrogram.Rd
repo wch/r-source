@@ -2,7 +2,7 @@
 \title{General Tree Structures}
 \alias{dendrogram}% the class
 \alias{as.dendrogram}
-%\alias{as.dendrogram.hclust}
+\alias{as.dendrogram.hclust}
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
 \alias{print.dendrogram}
@@ -24,11 +24,12 @@
 }
 \usage{
 as.dendrogram(object, \dots)
+\method{as.dendrogram}{hclust}(object, hang = -1, \dots)
 
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
-         center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
-         nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
-         horiz = FALSE, frame.plot = FALSE, \dots)
+      center = FALSE, edge.root = isLeaf(x) || !is.null(attr(x,"edgetext")),
+      nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
+      horiz = FALSE, frame.plot = FALSE, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
@@ -44,6 +45,9 @@ as.dendrogram(object, \dots)
   \item{object}{any \R object that can be made into one of class
     \code{"dendrogram"}.}
   \item{x}{object of class \code{"dendrogram"}.}
+  \item{hang}{numeric scalar indicating how the \emph{height} of leaves
+    should be computed from the heights of their parents; see
+    \code{\link{plot.hclust}}.}
   \item{type}{type of plot.}
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
     respect to the leaves in the branch.  Otherwise (default), plot them
@@ -69,8 +73,8 @@ as.dendrogram(object, \dots)
     \code{\link{print.default}}.}
   \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
     arguments to \code{str}, see \code{\link{str.default}()}.  Note that
-    the default `give.attr = FALSE' still shows \code{height} and
-    \code{members} attributes for each node.}
+    by default \code{give.attr = FALSE}, it still shows \code{height}
+    and \code{members} attributes for each node.}
 }
 \details{
   Warning: This documentation is preliminary.
@@ -86,8 +90,8 @@ as.dendrogram(object, \dots)
     \item{\code{height}}{numeric non-negative height at which the node
       is plotted.}
     \item{\code{midpoint}}{numeric horizontal distance of the node from
-      the left border of the branch.  This is needed at least for
-    \code{plot(*, center=FALSE)}.}
+      the left border (the leftmost leaf) of the branch (unit 1 between
+      all leaves).  This is used for \code{plot(*, center=FALSE)}.}
     \item{\code{label}}{character; the label of the node}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}

@@ -24,7 +24,7 @@ GNOME(display="", width=7, height=7, pointsize=12)
 }
 \author{Lyndon Drake \email{lyndon@stat.auckland.ac.nz}}
 \note{
-  This is still in development state.
+  This device was never completed, and will be removed in R 2.0.0.
 
   The GNOME device is only available when explicitly desired at
   configure/compile time, see the toplevel \file{INSTALL} file.

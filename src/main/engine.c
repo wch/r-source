@@ -2102,8 +2102,10 @@ void GEplayDisplayList(GEDevDesc *dd)
 	    for (i=0; i<numGraphicsSystems; i++)
 		if (dd->gesd[i] != NULL)
 		    if (!LOGICAL((dd->gesd[i]->callback)(GE_CheckPlot, dd, 
-							 R_NilValue))[0])
+							 R_NilValue))[0]) {
 			plotok = 0;
+			warning("Display list redraw incomplete");
+		    }
 	    theList = CDR(theList);
 	}
 	selectDevice(savedDevice);
@@ -2165,7 +2167,7 @@ void GEcopyDisplayList(int fromDevice)
 SEXP GEcreateSnapshot(GEDevDesc *dd)
 {
     int i;
-    SEXP snapshot;
+    SEXP snapshot, tmp;
     SEXP state;
     /* Create a list with one spot for the display list 
      * and one spot each for the registered graphics systems
@@ -2174,7 +2176,11 @@ SEXP GEcreateSnapshot(GEDevDesc *dd)
     PROTECT(snapshot = allocVector(VECSXP, 1 + numGraphicsSystems));
     /* The first element of the snapshot is the display list.
      */
-    SET_VECTOR_ELT(snapshot, 0, dd->dev->displayList);
+    tmp = dd->dev->displayList;
+    if(!isNull(tmp)) tmp = duplicate(tmp);
+    PROTECT(tmp);
+    SET_VECTOR_ELT(snapshot, 0, tmp);
+    UNPROTECT(1);
     /* For each registered system, obtain state information,
      * and store that in the snapshot.
      */
@@ -2213,7 +2219,7 @@ void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
 				    VECTOR_ELT(snapshot, i + 1));
     /* Replay the display list
      */
-    dd->dev->displayList = VECTOR_ELT(snapshot, 0);
+    dd->dev->displayList = duplicate(VECTOR_ELT(snapshot, 0));
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
 	GEinitDisplayList(dd);

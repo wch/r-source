@@ -49,7 +49,10 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
     \dots\dots\dots
 %%-- fixme: give even more details
 %%-- fixme: give even more details
-
+}
+\seealso{
+  \code{\link[graphics]{axTicks}} for the computation of pretty axis tick
+  locations in plots, particularly on the log scale.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

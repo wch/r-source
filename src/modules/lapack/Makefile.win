@@ -4,15 +4,16 @@ include ../../gnuwin32/MkRules
 MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
-	@$(MAKE) --no-print-directory -f Makefile.win -s ../../../bin/Rlapack.dll 
-	@$(MAKE) --no-print-directory -f Makefile.win -s ../../../lib/libRlapack.a
-	@$(MAKE) --no-print-directory -f Makefile.win -s ../../../modules/$(MODULE).dll
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../lib/libRlapack.a
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
 FSOURCES = rgeev.f rsyev.f
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
+dlamc-FFLAGS=-ffloat-store
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll
@@ -32,7 +33,7 @@ clean:
 
 
 # Rlapack.* section
-Rlapack.dll: dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
+Rlapack.dll: dlamc.o dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
 	@$(ECHO) LIBRARY Rlapack > Rlapack.def
 	@$(ECHO) EXPORTS >> Rlapack.def
 	@$(NM) $^ > Defs

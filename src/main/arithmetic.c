@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003	    The R Development Core Team.
- *  Copyright (C) 2003		    The R Foundation
+ *  Copyright (C) 2003-4       	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -87,8 +87,8 @@ typedef union
 } ieee_double;
 
 /* These variables hw and lw are only used if IEEE_754 is defined.
-   The value of each is fixed once we determine the endiannes
-   of the machine, and this cna be done via WORDS_BIGENDIAN.
+   The value of each is fixed once we determine the endianness
+   of the machine, and this can be done via WORDS_BIGENDIAN.
 
    Earlier code used to use establish_endianness()
    to compute these, but this is uncessary and makes them
@@ -205,14 +205,10 @@ int R_IsNaNorNA(double x)
 # endif
 }
 
+/* Having finite() is irrelevant as we are not using IEEE */
 int R_finite(double x)
 {
-# ifndef HAVE_FINITE
     return (x != R_NaReal && x < R_PosInf && x > R_NegInf);
-# else
-    int finite(double);
-    return finite(x);
-# endif
 }
 #endif /* IEEE_754 */
 
@@ -844,6 +840,10 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	    x2 = REAL(s2)[i2];
 	    if (ISNA(x1) || ISNA(x2))
 		REAL(ans)[i] = NA_REAL;
+	    else if(x1 == R_PosInf)
+		REAL(ans)[i] = (x2 == R_NegInf) ? NA_REAL : x1;
+	    else if(x1 == R_NegInf)
+		REAL(ans)[i] = (x2 == R_PosInf) ? NA_REAL : x1;
 	    else
 		REAL(ans)[i] = MATH_CHECK(x1 + x2);
 #endif
@@ -858,6 +858,10 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	    x2 = REAL(s2)[i2];
 	    if (ISNA(x1) || ISNA(x2))
 		REAL(ans)[i] = NA_REAL;
+	    else if(x1 == R_PosInf)
+		REAL(ans)[i] = (x2 == x1) ? NA_REAL : x1;
+	    else if(x1 == R_NegInf)
+		REAL(ans)[i] = (x2 == x1) ? NA_REAL : x1;
 	    else
 		REAL(ans)[i] = MATH_CHECK(x1 - x2);
 #endif
@@ -870,8 +874,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 #else
 	    x1 = REAL(s1)[i1];
 	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) && ISNA(x2))
+	    if (ISNA(x1) || ISNA(x2))
 		REAL(ans)[i] = NA_REAL;
+	    else if(x1 == R_PosInf)
+		REAL(ans)[i] = (x2 == 0.) ? NA_REAL : 
+		    ((x2 > 0) ? R_PosInf : R_NegInf);
+	    else if(x1 == R_NegInf)
+		REAL(ans)[i] = (x2 == 0.) ? NA_REAL : 
+		    ((x2 < 0) ? R_PosInf : R_NegInf);
+	    else if(x2 == R_PosInf)
+		REAL(ans)[i] = (x1 == 0.) ? NA_REAL : 
+		    ((x1 > 0) ? R_PosInf : R_NegInf);
+	    else if(x2 == R_NegInf)
+		REAL(ans)[i] = (x1 == 0.) ? NA_REAL : 
+		    ((x1 < 0) ? R_PosInf : R_NegInf);
 	    else
 		REAL(ans)[i] = MATH_CHECK(x1 * x2);
 #endif
@@ -884,8 +900,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 #else
 	    x1 = REAL(s1)[i1];
 	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2) || x2 == 0)
+	    if (!R_FINITE(x1) && !R_FINITE(x2))
 		REAL(ans)[i] = NA_REAL;
+	    else if (ISNA(x1) || ISNA(x2))
+		REAL(ans)[i] = NA_REAL;
+	    else if (x1 == 0.0 && x2 == 0.0)
+		REAL(ans)[i] = NA_REAL;
+	    else if (x2 == 0.0)
+		REAL(ans)[i] = (x1 > 0) ? R_PosInf : R_NegInf;
+	    else if (x1 == R_PosInf)
+		REAL(ans)[i] = (x2 > 0) ? R_PosInf : R_NegInf;
+	    else if (x1 == R_NegInf)
+		REAL(ans)[i] = (x2 < 0) ? R_PosInf : R_NegInf;
+	    else if (!R_FINITE(x2)) /* +/- Inf */
+		REAL(ans)[i] = 0.0;
 	    else
 		REAL(ans)[i] = MATH_CHECK(x1 / x2);
 #endif

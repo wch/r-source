@@ -6,13 +6,14 @@
 \alias{as.Date.default}
 \alias{as.Date.factor}
 \alias{as.Date.POSIXct}
+\alias{as.Date.POSIXlt}
 \alias{as.Date.date}
 \alias{as.Date.dates}
 
 \title{Date Conversion Functions to and from Character}
 \description{
   Functions to convert between character representations and objects of
-  classes \code{"Date"} representing calendar dates and times.
+  class \code{"Date"} representing calendar dates.
 }
 \usage{
 as.Date(x, \ldots)
@@ -40,9 +41,10 @@ as.Date(x, \ldots)
   and months.
 
   The \code{as.Date} methods accept character strings, factors, logical
-  \code{NA} and objects of class \code{"\link{POSIXct}"}, which are
-  converted to days by ignoring the time to be midnight in the
-  representation of the time in UTC.  Also objects of class
+  \code{NA} and objects of classes \code{"\link{POSIXlt}"} and
+  \code{"\link{POSIXct}"}.  (The last are converted to days by
+  ignoring the time after midnight in the
+  representation of the time in UTC.)  Also objects of class
   \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
   \pkg{\link[survival:as.date]{survival}}) and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}).
@@ -105,7 +107,7 @@ z
 
 ## read in date/time info in format 'm/d/y'
 dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
-as.Date(x, "\%m/\%d/\%y \%H:\%M:\%S")
+as.Date(dates, "\%m/\%d/\%y")
 }
 \keyword{utilities}
 \keyword{chron}

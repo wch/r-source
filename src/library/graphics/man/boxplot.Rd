@@ -17,23 +17,25 @@ boxplot(x, \dots)
         horizontal = FALSE, add = FALSE, at = NULL)
 }
 \arguments{
-  \item{formula}{a formula, such as \code{y ~ x}.}
+  \item{formula}{a formula, such as \code{y ~ grp}, where \code{y} is a
+    numeric vector of data values to be split into groups according to
+    the grouping variable \code{grp} (usually a factor).}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
   \item{x}{for specifying data from which the boxplots are to be
-    produced as well as for giving graphical parameters.  Additional
-    unnamed  arguments specify further data, either
-    as separate vectors (each corresponding to a component boxplot) or
-    as a single list containing such vectors.  \code{\link{NA}}s are
-    allowed in the data.}
+    produced. Either a numeric vector, or a single list containing such
+    vectors. Additional unnamed arguments specify further data
+    as separate vectors (each corresponding to a component boxplot).
+    \code{\link{NA}}s are allowed in the data.}
   \item{\dots}{For the \code{formula} method, arguments to the
     default method and graphical parameters.
 
     For the default method, unnamed arguments are additional data
-    vectors, and named arguments are graphical parameters in addition
-    to the ones given by argument \code{pars}.
+    vectors (unless \code{x} is a list when they are ignored),
+    and named arguments are graphical parameters in addition to the ones
+    given by argument \code{pars}.
   }
   \item{range}{this determines how far the plot whiskers extend out
     from the box.  If \code{range} is positive, the whiskers extend
@@ -50,8 +52,8 @@ boxplot(x, \dots)
     overlap this is \sQuote{strong evidence} that the two medians differ
     (Chambers \emph{et al.}, 1983, p. 62).  See \code{\link{boxplot.stats}}
     for the calculations used.}
-  \item{outline}{if \code{outline} is not true, the boxplot lines are
-    not drawn.}% the argument name is most ugly but S+ compatible
+  \item{outline}{if \code{outline} is not true, the outliers are
+    not drawn (as points whereas S+ uses lines).}% the argument name is most ugly but S+ compatible
   \item{names}{group labels which will be printed under each boxplot.}
   \item{boxwex}{a scale factor to be applied to all boxes.  When there
     are only a few groups, the appearance of the plot can be improved

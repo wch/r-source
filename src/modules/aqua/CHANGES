@@ -5,11 +5,21 @@
 *********************
 
 
+CHANGES IN R (AQUA) VERSION 1.9.1
+
+BUG FIXES
+
+    o   fixed the function "Check for R updates" that worked only 
+        on patches and not on full release changes.
+
+    o   fixed the clipping problem in the quartz device
+
 CHANGES IN R (AQUA) VERSION 1.9.0
 
 
 
 NEW FEATURES
+
     o   Dragging a file on the R icon, causes R to source the
         file or load the data into the workspace if the file
         is a RDX1/RDX2 R image file. At the moment there is no 
@@ -87,6 +97,7 @@ BUG FIXES
         from the S/R-tcl Mode in Alpha X.
 
 INSTALLATION CHANGES
+
     o   The defaults for configure for Darwin systems is
         --with-blas='-framework vecLib' --with-lapack --with-aqua
         that by default builds R as a framework and installs it in

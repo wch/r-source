@@ -539,8 +539,7 @@ pointsGrob <- function(x=runif(10),
                        y=runif(10),
                        pch=1, size=unit(1, "char"),
                        default.units="native",
-                       name=NULL, gp=gpar(),
-                       draw=TRUE, vp=NULL) {
+                       name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))

@@ -119,7 +119,7 @@ Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
 collect the files you need.  There are two versions of the distribution.
 
-1) @code{@RWVER@.exe} is about 20Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 21Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
@@ -341,7 +341,7 @@ errors to the normal output file on such systems.)
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
 @section Can I use @RWVER@ with ESS and (X)emacs?
 
-Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
+Yes.  Recent versions of ESS (e.g. 5.2.0) come with support for this
 version of R, and there is support for interrupting the R process from
 ESS (by @code{C-c C-c}).
 
@@ -424,11 +424,12 @@ life easier for yourself by using forward slashes as path separators:
 they do work under Windows.
 
 Another possible source of grief is spaces in folder names.  We have
-tried to make R work on paths with spaces in, but lots of people writing
+tried to make R work on paths with spaces in, but many people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @code{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties of the file on most versions of
-Windows, and from @code{dir /X} in a @code{Command Prompt} window on 2000/XP).
+Windows, and from @code{dir /X} in a @code{Command Prompt} window on
+2000/XP).
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -460,9 +461,7 @@ There is a (D)COM server written by Thomas Baier available on CRAN
 @code{Rproxy.dll} (in the R distribution) and @code{R.dll} to support
 transfer of data to and from R and remote execution of R commands, as
 well as embedding of an R graphics window.  An R-Excel interface making
-use of the DCOM server is included in the distribution.  @strong{NOTE:}
-You should ensure that the @code{@RWVER@/bin} directory is in your
-path when using this software, so that the R library DLLs are found.
+use of the DCOM server is included in the distribution.
 
 Another (D)COM server is available from @uref{http://www.omegahat.org/},
 which allows R objects to be exported as COM values.  That site also
@@ -508,13 +507,13 @@ installed a workaround that seems to avoid this.  A few other people
 have discovered this was caused by desktop switcher and keyboard macro
 programs, for example `Macro Magic' and `JS Pager'.
 
-If it still happens, try extracting the one to be found in the
-self-extracting archive
+If it still happens, try extracting the @samp{msvcrt.dll} to be found in
+the self-extracting archive
 @uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
 the @code{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
-directory reverts to the standard behaviour.
-It seems that on some versions of Windows (but not 2000/XP) you also
-need to put the @code{@RWVER@\bin} directory early in your path.
+directory reverts to the standard behaviour.  It seems that on some
+versions of Windows (but not 2000/XP) you also need to put the
+@code{@RWVER@\bin} directory early in your path.
 
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.  However, you are probably better off
@@ -663,10 +662,10 @@ need to be compiled for a fairly recent version.
 
 You can tell the version the package was compiled for by looking at the
 @code{Built:} line in its @file{DESCRIPTION} file or at the
-@code{Version} tab of its DLL (if it has one) in the @file{libs}
-directory.  (Right-click on the DLL in Windows Explorer and select
-@code{Version} tab of the @code{Properties}, or use the
-@code{DLL.version} function inside R.)
+@code{Version} tab of its DLL in the @file{libs} directory.
+(Right-click on the DLL in Windows Explorer and select @code{Version}
+tab of the @code{Properties}, or use the @code{DLL.version} function
+inside R.)
 
 
 @node Package TclTk does not work., Hyperlinks in Compiled HTML do not work., Loading a package fails., Packages
@@ -1067,7 +1066,7 @@ run.
 @item
 It is only possible to set breakpoints in a DLL after the DLL has
 been loaded.  So a way to examine the function @code{tukeyline} in
-package @code{eda} might be
+package @code{stats} might be
 
 @example
      gdb ../../../../bin/Rgui.exe
@@ -1078,7 +1077,7 @@ package @code{eda} might be
      (gdb) continue
      [ stops with console running ]
      (gdb) continue
-     Rconsole> library(eda)
+     Rconsole> library(stats)
      (gdb) break tukeyline
      (gdb) clear R_ReadConsole
      (gdb) continue
@@ -1178,14 +1177,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 March 14 by Professor B. D. Ripley
+Last edited 2004 June 18 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 March 14 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 June 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

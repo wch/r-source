@@ -13,7 +13,7 @@ filePathAsAbsolute(x)
 filePathSansExt(x)
 fileTest(op, x, y)
 listFilesWithExts(dir, exts, all.files = FALSE, full.names = TRUE)
-listFilesWithType(dir, type, all.files = FALSE. full.names = TRUE)
+listFilesWithType(dir, type, all.files = FALSE, full.names = TRUE)
 }
 \arguments{
   \item{x,y}{character vectors giving file paths.}

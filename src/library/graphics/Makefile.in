@@ -16,10 +16,8 @@ DISTFILES = DESCRIPTION.in Makefile.in \
 
 pkg = graphics
 
-R_EXE = $(top_builddir)/bin/R --vanilla
-
-RSRC = $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R 
-RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd 
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
 NSFILES = $(srcdir)/NAMESPACE $(srcdir)/NAMESPACE.unix
 
 all: Makefile DESCRIPTION

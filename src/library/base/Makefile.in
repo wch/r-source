@@ -11,13 +11,13 @@ subdir = src/library/base
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = INDEX DESCRIPTION.in Makefile.in
+DISTFILES = DESCRIPTION.in Makefile.in
 
 pkg = base
 
-RSRC = $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R 
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 
-RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd 
+RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
 
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"

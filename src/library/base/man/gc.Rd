@@ -39,8 +39,11 @@ gcinfo(verbose)
 
   \code{gcinfo} returns the previous value of the flag.
 }
-\seealso{\code{\link{Memory}} on \R's memory management
-  and \code{\link{gctorture}} if you are an \R hacker.}
+\seealso{\code{\link{Memory}} on \R's memory management,
+  and \code{\link{gctorture}} if you are an \R hacker.
+  \code{\link{reg.finalizer}} for actions to happen upon garbage
+  collection.
+}
 \examples{
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when R does it

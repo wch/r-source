@@ -6,6 +6,7 @@
 \alias{print.princomp}
 \alias{predict.princomp}
 \title{Principal Components Analysis}
+\concept{PCA}
 \usage{
 princomp(x, \dots)
 
