@@ -33,17 +33,31 @@ The histogram cells are intervals of the form
 \code{[a,b)}, i.e. they include their left-hand endpoint,
 but not their right one.
 }
+\value{
+  a list with components
+  \item{breaks}{the \eqn{n+1} cell boundaries (= \code{breaks} if that
+  was a vector).}
+  \item{counts}{\eqn{n} integers; for each cell, the number of
+    \code{x[]} inside.}
+  \item{rel.freqs}{the \emph{relative} frequencies}
+  \item{mids}{the \eqn{n} cell midpoints; useful for plotting.}
+}
 \examples{
 data(islands)
 op <- par(mfrow=c(2,2))
 hist(islands)
-hist(islands, col="gray")
+r <- hist(islands, col="gray")
+text(r$mids,r$counts,r$counts,adj=c(.5,-.5))
+
 hist(sqrt(islands), br = 12, col="lightblue", border="pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
-hist(sqrt(islands), br = c(4* 0:5,10* 3:5,70,100,140), col='lightgreen')
+r <- hist(sqrt(islands), br = c(4* 0:5,10* 3:5,70,100,140), col='blue1')
+text(r$mids, r$rel.fr, r$counts, adj=c(.5,-.5), col='blue3')
 par(op)
+
 str(hist(islands, plot= F))
 str(hist(islands, br=12, plot= F))
 }
 \keyword{hplot}
+\keyword{iplot}
 \keyword{distribution}

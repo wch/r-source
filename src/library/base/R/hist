@@ -1,11 +1,11 @@
 "hist" <-
 function (x, breaks, freq = NULL, col = NULL, border = par("fg"),
 	main = paste("Histogram of" , deparse(substitute(x))),
-	xlim = range(breaks), ylim = range(counts, 0),
+	xlim = range(breaks), ylim = range(y, 0),
 	xlab = deparse(substitute(x)), ylab,
 	axes=TRUE, plot = TRUE, ...)
 {
-	if (!is.numeric(x)) 
+	if (!is.numeric(x))
 		stop("hist: x must be numeric")
 	eval(main)
 	eval(xlab)
@@ -15,38 +15,35 @@ function (x, breaks, freq = NULL, col = NULL, border = par("fg"),
 	  if(use.br) sort(breaks)
 	  else {
 		rx <- range(x)
-		pretty (rx + c(0, diff(rx)/1000), 
+		pretty (rx + c(0, diff(rx)/1000),
 			n = if(missing(breaks)) 1 + log2(n)
-			else { # breaks = `nclass'	
-				if (is.na(breaks) | breaks < 2) 
+			else { # breaks = `nclass'
+				if (is.na(breaks) | breaks < 2)
 				  stop("invalid number of breaks")
 				breaks
 			})
 	  }
 	nB <- length(breaks)
-	counts <- .C("bincount", 
-		as.double(x), 
-		n, 
-		as.double(breaks), 
+	counts <- .C("bincount",
+		as.double(x),
+		n,
+		as.double(breaks),
 		nB,
-		counts = integer(nB - 1), 
+		counts = integer(nB - 1),
 		NAOK = FALSE) $counts
-	if (any(counts < 0)) 
-	 stop("negative `counts'. Internal Error in C-code for \"bincount\"")
-	if (is.null(freq)) 
+	if (any(counts < 0))
+          stop("negative `counts'. Internal Error in C-code for \"bincount\"")
+	if (is.null(freq))
 	  freq <- if(use.br) {
-		##-- Do frequencies if breaks are evenly spaced ...
+		##-- Do frequencies if breaks are evenly spaced
 		h <- diff(breaks)
-		diff(range(h)) < 1e-10 * h
+		diff(range(h)) < 1e-10 * mean(h)
 	  } else TRUE
-	if (!freq) {
-		counts <- counts/(sum(x) * diff(breaks))
-		if (missing(ylab)) 
-			ylab <- "Relative Frequency"
-	}
-	else if (missing(ylab)) 
-		ylab <- "Frequency"
+        rel.freqs <- counts/(sum(x) * diff(breaks))
+        if (missing(ylab))
+        	ylab <- paste(if(!freq)"Relative ","Frequency", sep="")
 	if(plot) {
+                y <- if(freq) counts else rel.freqs #-> ylim's default
 		plot.new()
 		plot.window(xlim, ylim, "")
 		title(main = main, xlab = xlab, ylab = ylab, ...)
@@ -54,8 +51,9 @@ function (x, breaks, freq = NULL, col = NULL, border = par("fg"),
 			axis(1, ...)
 			axis(2, ...)
 		}
-		rect(breaks[-length(breaks)], 0, breaks[-1], counts,
+		rect(breaks[-nB], 0, breaks[-1], y,
 		     col = col, border = border)
-		invisible(NULL)
-	} else list(breaks = breaks, counts = counts)
+	}
+	invisible(list(breaks = breaks, counts = counts, rel.freqs= rel.freqs,
+                       mids = .5*(breaks[-1]+breaks[-nB])))
 }
