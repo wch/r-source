@@ -176,10 +176,10 @@ NEW FEATURES
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
-    o   The assignment form of split() allows recycling of vectors 
-        within the value list. In particular, things like 
-            split(x, g) <- lapply(split(x, g), mean)
-        now work
+    o   The assignment form of split() allows recycling of vectors
+	within the value list. In particular, things like
+	    split(x, g) <- lapply(split(x, g), mean)
+	now work
 
 
 DOCUMENTATION
@@ -235,7 +235,7 @@ C-LEVEL FACILITIES
 
 BUG FIXES
 
-    o	The grid.grab() function in package grid would throw an error
+    o   The grid.grab() function in package grid would throw an error
 	if there were no viewports pushed (now returns NULL).
 
     o	model.frame.default() takes row names from the response
@@ -303,11 +303,11 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
-    o	Using Rprof() with a non-writable 'file' argument is now a
+    o   Using Rprof() with a non-writable 'file' argument is now a
 	non-fatal error and does not abort R.
 
-    o	binom.test() did not deparse its arguments early enough such
-	that the reported data were ugly if x was a table.
+    o   binom.test() did not deparse its arguments early enough such
+        that the reported data were ugly if x was a table.
 
     o	Systems based on glibc, including those using R's substitute for
 	strptime, were handling strptime("2001", "%Y") incorrectly, in
@@ -319,7 +319,7 @@ BUG FIXES
 	(PR#7301)
 
     o	summary.stepfun() was reporting for n > 6 summaries of the
-	knots and levels as the actual values.	Both print() and
+	knots and levels as the actual values.  Both print() and
 	summary() methods called the constant values "step heights",
 	although they were not the heights of the steps.
 
@@ -334,7 +334,7 @@ BUG FIXES
 
     o	require() without a version argument tried for an unversioned
 	load of a package even though a versioned install was already
-	loaded.	 This often lead to a message that a required package
+	loaded.  This often led to a message that a required package
 	was being loaded when it was not actually being loaded.
 
     o	str(<S4.object>) made use of attributes() instead of slot(),
@@ -360,20 +360,20 @@ BUG FIXES
     o	sort(partial=) silently ignored some other arguments: using
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
-	
-    o	The ave() function had trouble if the grouping contained
-	unused levels.
+
+    o   The ave() function had trouble if the grouping contained
+        unused levels.
 
     o   read.fwf() got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
 
     o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
 
-    o   class "raw" had been omitted from the list of basic classes,
-        and so could not be used in S4 classes.
+    o   Class "raw" had been omitted from the list of basic classes in
+	the "methods" package and so could not be used in S4 classes.
 
-    o   function getGroupMembers(), part of the definition of S4
-        classes, had been promised for release 2.0, but slipped through.
+    o   Function getGroupMembers(), part of the definition of S4
+	classes, had been promised for release 2.0, but slipped through.
 
 
 
