@@ -18,12 +18,11 @@ function (..., list = character(0),
         else
             show.data(lib.loc = lib.loc)
     } else for (name in names) {
-        paths <- system.file("data", pkg = package, lib = lib.loc)
-        if(missing(lib.loc)) {
-            paths0 <- file.path(c(.path.package(package, TRUE), getwd()),
-                                "data")
-            paths <- c(paths0[file.exists(paths0)], paths)
-        }
+        paths <- .find.package(package, lib.loc, quiet = TRUE)
+        if(missing(lib.loc))
+            paths <- c(.path.package(package, TRUE), getwd(), paths)
+        paths <- file.path(paths, "data")
+        paths <- unique(paths[file.exists(paths)])
         files <- NULL
         for (p in paths) {
             if(file.exists(file.path(p, "Rdata.zip"))) {
@@ -83,7 +82,7 @@ show.data <-
 function(package = .packages(), lib.loc = .lib.loc)
 {
     ## give `index' of all possible data sets
-    paths <- system.file(pkg = package, lib = lib.loc)
+    paths <- .find.package(package, lib.loc)
     if(missing(lib.loc))
         paths <- unique(c(.path.package(package, TRUE), getwd(), paths))
     

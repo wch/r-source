@@ -3,7 +3,7 @@
     if(!nchar(Sys.getenv("TCL_LIBRARY"))) stop("TCL_LIBRARY is not set")
     library.dynam("TclTk", pkg, lib)
     .C("tcltk_start", PACKAGE="TclTk")
-    extra <- system.file("exec", pkg="tcltk")
+    extra <- system.file("exec", package = "tcltk")
     extra <- gsub("\\\\", "/", extra)
     invisible(addTclPath(extra))
 }

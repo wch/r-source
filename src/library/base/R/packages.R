@@ -126,8 +126,8 @@ newerVersion <- function(a, b){
 
 package.contents <- function(pkg, lib=.lib.loc){
 
-    file <- system.file("CONTENTS", pkg=pkg, lib=lib)
-    if(file == ""){
+    file <- system.file("CONTENTS", package = pkg, lib.loc = lib)
+    if(file == "") {
         warning(paste("Cannot find CONTENTS file of package", pkg))
         return(NA)
     }
@@ -140,8 +140,8 @@ package.contents <- function(pkg, lib=.lib.loc){
 package.description <- function(pkg, lib=.lib.loc, fields=NULL)
 {
 
-    file <- system.file("DESCRIPTION", pkg=pkg, lib=lib)
-    if(file == ""){
+    file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib)
+    if(file == "") {
         warning(paste("Cannot find DESCRIPTION file of package", pkg))
         if(!is.null(fields)){
             retval <- rep(NA, length(fields))

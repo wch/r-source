@@ -15,19 +15,7 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
     }
 
     if(!missing(package)) {
-        which.lib.loc <-
-            lib.loc[file.exists(file.path(lib.loc, package))]
-        if(length(which.lib.loc) == 0)
-            stop(paste("package", fQuote(package), "is not installed"))
-        else if(length(which.lib.loc) > 1) {
-            which.lib.loc <- which.lib.loc[1]
-            warning(paste("package",
-                          fQuote(package),
-                          "found more than once\n",
-                          "using the one found in",
-                          fQuote(which.lib.loc[1])))
-        }
-        packageDir <- file.path(which.lib.loc, package)
+        packageDir <- .find.package(package, lib.loc)
         isBase <- package == "base"
         objsdocs <- sort(scan(file = file.path(packageDir, "help",
                               "AnIndex"),

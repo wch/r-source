@@ -22,7 +22,7 @@ make.packages.html <- function()
     cat('<table align="center" summary="R Package list">\n', file=out)
     pg <- sort(.packages(all.available = TRUE, lib.loc = .Library))
     for (i in  pg) {
-        t.file <- system.file("TITLE", pkg = i)
+        t.file <- system.file("TITLE", package = i)
         if (nchar(t.file) > 0)
             f.t <- scan(t.file, what="c", quiet=TRUE, quote="")
         else {
@@ -49,11 +49,11 @@ make.function.html <- function()
     out <- file(f.tg, open="a")
     pg <- .packages(all.available=TRUE, lib.loc=.Library)
     for (p in pg) {
-        f1 <- system.file("/help/AnIndex", pkg=p)
+        f1 <- system.file("help", "AnIndex", package = p)
         if (f1=="") next
         b <- scan(f1, what="c", sep="\t", quiet = TRUE, quote="")
         b <- matrix(b, ncol=2, byrow=TRUE)
-        f1 <- system.file("/help/00Titles", pkg = p)
+        f1 <- system.file("help", "00Titles", package = p)
         d <- scan(f1, what="c", sep="\t", quiet = TRUE, quote="")
         d <- matrix(d, ncol=2, byrow=TRUE)
         m <- match(b[, 1], d[, 1])
@@ -93,7 +93,7 @@ make.search.html <- function()
     if(file.exists(f.tg)) unlink(f.tg)
     out <- file(f.tg, open="w")
     for (i in  .packages(all.available=TRUE, lib.loc=.Library)) {
-        cfile <- system.file("CONTENTS", pkg = i)
+        cfile <- system.file("CONTENTS", package = i)
         if(nchar(cfile)) writeLines(readLines(cfile), out)
     }
     close(out)

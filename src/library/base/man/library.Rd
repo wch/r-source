@@ -7,6 +7,7 @@
 \alias{.First.lib}
 \alias{.Last.lib}
 \alias{.Library}
+\alias{.find.package}
 \alias{.packages}
 \alias{.path.package}
 \alias{.lib.loc}
@@ -16,6 +17,8 @@
   \code{.packages} returns information about package availability.
   \code{.path.package} returns information about where a package was
   loaded from.
+  \code{.find.package} returns the directory paths of installed
+  packages.
 }
 \usage{
 library(package, help = NULL, lib.loc = .lib.loc,
@@ -29,6 +32,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 
 .packages(all.available = FALSE, lib.loc = .lib.loc)
 .path.package(package = .packages(), quiet = FALSE)
+.find.package(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
 .lib.loc
 .Library
 .Autoloaded
@@ -56,8 +60,14 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     package.}
   \item{all.available}{logical; if \code{TRUE} return a character vector
     of all available packages in \code{lib.loc}.}
-  \item{quiet}{logical.  Should \code{.path.package} not give warnings or
-    an error if the package(s) are not loaded?}
+  \item{quiet}{logical.
+    For \code{.path.package}, should this not give warnings or an error
+    if the package(s) are not loaded?
+    For \code{.find.package}, should this not give warnings or an error
+    if the package(s) are not found?}
+  \item{use.attached}{a logical indicating whether attached packages
+    should be considered in addition to the ones installed in the given
+    libraries.}
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -108,10 +118,19 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
 
-  \code{.path.package} returns the paths from which the named packages were
-  loaded, or if none were named, for all currently loaded packages.
+  \code{.path.package} returns the paths from which the named packages
+  were loaded, or if none were named, for all currently loaded packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
   are not loaded, and given an error if none are.
+
+  \code{.find.package} returns the paths to the locations where the
+  names packages can be found.  If \code{lib.loc} is not given or
+  \code{use.attached} is \code{TRUE}, then attached packages are
+  searched before the libraries.  If a package is found more than once,
+  the first match is used.  Unless \code{quiet = TRUE} a warning will be
+  given about the named packages which are not found, and an error if
+  none are.  This function is not meant to be called by users, and its
+  interface might change in future versions.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.

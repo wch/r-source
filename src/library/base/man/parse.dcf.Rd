@@ -25,7 +25,7 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 }
 \seealso{\code{\link{package.contents}}, \code{\link{library}}}
 \examples{
-file <- system.file("CONTENTS", pkg="mva")
+file <- system.file("CONTENTS", package = "mva")
 parse.dcf(file=file)
 
 ## same in 2 steps

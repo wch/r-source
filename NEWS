@@ -127,6 +127,10 @@ NEW FEATURES
 
     o	rep() now handles lists (as generic vectors).
 
+    o	Arguments `pkg' and `lib' of system.file() have been renamed to
+	`package' and `lib.loc', respectively, to be consistent with
+	related functions.  The old names are deprecated.  Argument
+	`package' must now specify a single package.
 
 
 BUG FIXES

@@ -25,7 +25,7 @@ Type `q()' to quit R.
 +              )
 > for(pkg in c("base")) { ## maybe other packages; 
 + 
-+     demos <- list.files(file.path(system.file(pkg = pkg), "demo"),
++     demos <- list.files(file.path(system.file(package = pkg), "demo"),
 +                         pattern = "\\.R$")
 +     demos <- demos[is.na(match(demos, paste(dont[[pkg]], "R",sep=".")))]
 + 
@@ -1078,8 +1078,8 @@ flld.c> mtext(paste("filled.contour(.) from", R.version.string),
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1365 
-Number of builtin functions:	 1333 
+Number of base objects:		 1366 
+Number of builtin functions:	 1334 
 	 starting with 'is.' :	  41 
 
 > is.primitive <- function(obj) is.function(obj) && 
@@ -1606,5 +1606,5 @@ In addition: Warning messages:
 6: is.nan() applied to non-(list or vector) in: fn(obj) 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  23.44 2.07 26.04 0 0 
+Time elapsed:  7.23 0.08 14.97 0 0 
 > 

@@ -98,19 +98,29 @@ print.octmode <- function(x, ...)
     invisible(x)
 }
 
-
-system.file <- function (..., pkg = .packages(), lib = .lib.loc)
-{
-    flist <- list(...)
-    if((length(flist) > 1)
-       || (length(flist) == 1 && nchar(flist[[1]]) > 0)) {
-        FILES <- file.path(t(outer(lib, pkg, file.path)), ...)
-    } else {
-        if(missing(pkg)) pkg <- "base"
-        FILES <- outer(lib, pkg, file.path)
+system.file <-
+function(..., package = "base", lib.loc = .lib.loc, pkg, lib) {
+    if(nargs() == 0)
+        return(file.path(.Library, "base"))
+    if(!missing(pkg)) {
+        warning("argument `pkg' is deprecated.  Use `package' instead.")
+        if(missing(package)) package <- pkg
     }
+    if(!missing(lib)) {
+        warning("argument `lib' is deprecated.  Use `lib.loc' instead.")
+        if(missing(lib.loc)) lib.loc <- lib
+    }
+    if(length(package) != 1)
+        stop("argument `package' must be of length 1")
+    packagePath <- .find.package(package, lib.loc,
+                                 missing(lib.loc) && missing(lib),
+                                 quiet = TRUE)
+    if(length(packagePath) == 0)
+        return("")
+    FILES <- file.path(packagePath, ...)
     present <- file.exists(FILES)
-    if(any(present)) FILES[present]
+    if(any(present))
+        FILES[present]
     else ""
 }
 

@@ -69,7 +69,8 @@ help.search <- function(pattern, fields = c("alias", "title"),
             for (p in pkgs) {
                 if(verbose)
                     cat("", p, if((np <- np + 1)%% 5 == 0) "\n")
-                cfile <- system.file("CONTENTS", pkg = p, lib = lib)
+                cfile <- system.file("CONTENTS", package = p,
+                                     lib.loc = lib)
                 if(cfile != "") {
                     ctext <- scan("", file = cfile, sep = "\n",
                                   quote="", quiet = TRUE)

@@ -2,23 +2,7 @@ checkFF <- function(file, package, lib.loc = .lib.loc) {
     if(missing(file)) {
         if(missing(package))
             stop("you must specify `file' or `package'")
-        ## <FIXME>
-        ## This could be in .find.package().
-        fQuote <- function(s) paste("`", s, "'", sep = "")        
-        which.lib.loc <-
-            lib.loc[file.exists(file.path(lib.loc, package))]
-        if(length(which.lib.loc) == 0)
-            stop(paste("There is no package called", fQuote(package)))
-        if(length(which.lib.loc) > 1) {
-            which.lib.loc <- which.lib.loc[1]
-            warning(paste("Package ",
-                          fQuote(package),
-                          "found more than once,\n",
-                          "using the one found in",
-                          fQuote(which.lib.loc)))
-        }
-        file <- file.path(which.lib.loc, package, "R", package)
-        ## </FIXME>
+        file <- file.path(.find.package(package, lib.loc), "R", package)
     }
     if(!file.exists(file))
         stop(paste("file", fQuote(file), "does not exist"))

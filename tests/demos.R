@@ -10,7 +10,7 @@ dont <- list(base = c("nlm", "lm.glm")
              )
 for(pkg in c("base")) { ## maybe other packages; 
 
-    demos <- list.files(file.path(system.file(pkg = pkg), "demo"),
+    demos <- list.files(file.path(system.file(package = pkg), "demo"),
                         pattern = "\\.R$")
     demos <- demos[is.na(match(demos, paste(dont[[pkg]], "R",sep=".")))]
 

@@ -116,9 +116,8 @@ demo <- function(topic, device = getOption("device"),
 {
     fQuote <- function(s) paste("`", s, "'", sep = "")
     
-    paths <- system.file(pkg = package, lib = lib.loc)
-    if(missing(lib.loc))
-        paths <- unique(c(.path.package(package, TRUE), paths))
+    paths <- .find.package(package, lib.loc, missing(lib.loc),
+                           quiet = TRUE)
 
     if(missing(topic)) {
         ## List all available demos
@@ -190,11 +189,8 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     topic <- substitute(topic)
     if (!is.character(topic))
 	topic <- deparse(topic)[1]
-    INDICES <-
-        if(missing(lib.loc))
-            c(.path.package(package, TRUE),
-              system.file(pkg = package, lib = lib.loc))
-        else system.file(pkg = package, lib = lib.loc)
+    INDICES <- .find.package(package, lib.loc, missing(lib.loc),
+                             quiet = TRUE)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if (file == "") {
 	warning(paste("No help file found for `", topic, "'", sep = ""))
