@@ -152,5 +152,3 @@ as.stepfun.isoreg <- function(x, ...) {
     attr(sf, "call") <- x$call
     sf
 }
-
-.noGenerics <- TRUE
