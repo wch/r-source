@@ -8,9 +8,9 @@ use Text::Wrap;
 use Text::Tabs;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(R_getenv R_version file_path env_path
-	     list_files list_files_with_exts
-	     R_tempfile R_system R_runR
+@EXPORT = qw(R_getenv R_version R_tempfile R_system R_runR
+	     file_path env_path list_files
+	     list_files_with_exts list_files_with_type make_file_exts
 	     formatDL);
 
 #**********************************************************
@@ -41,7 +41,6 @@ or later for copying conditions.  There is NO warranty.
 END
     exit 0;
 }
-
 
 sub text2latex {
 
@@ -95,7 +94,7 @@ sub list_files {
     closedir(DIR);
     my @paths;
     foreach my $file (@files) {
-	push @paths, &file_path($dir, $file);
+	push(@paths, &file_path($dir, $file));
     }
     @paths;
 }
@@ -116,9 +115,34 @@ sub list_files_with_exts {
     ## .listFilesWithExts() used in some of the QA tools.
     my @paths;
     foreach my $file (@files) {
-	push @paths, &file_path($dir, $file);
+	push(@paths, &file_path($dir, $file));
     }
     @paths;
+}
+
+sub list_files_with_type {
+    my ($dir, $type, $OS) = @_;
+    $OS = $R::Vars::OSTYPE unless $OS;
+    my $exts = &make_file_exts($type);
+    my @files = &list_files_with_exts($dir, $exts);
+    if(($type eq "code") || ($type eq "docs")) {
+	$dir = &file_path($dir, $OS);
+	push(@files, &list_files_with_exts($dir, $exts)) if(-d $dir);
+    }
+    @files;
+}
+
+sub make_file_exts {
+    my ($type) = @_;
+    my %file_exts =
+	("code", "[RrSsq]",
+	 "data", "(R|r|RData|rdata|rda|TXT|txt|tab|csv|CSV)",
+	 "demo", "[Rr]",
+	 "docs", "[Rr]d",
+	 "vignette", "[RrSs](nw|tex)");
+    my $exts = $file_exts{$type};
+    die "Error: unknown type '$type'" unless defined($exts);
+    $exts;
 }
 
 sub get_exclude_patterns {

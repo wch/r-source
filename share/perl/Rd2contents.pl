@@ -22,13 +22,12 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $OSdir = $R::Vars::OSTYPE;
+my $OS_type = $R::Vars::OSTYPE;
 
-my @knownoptions = ("o|output:s", "os|OS:s");
-GetOptions (@knownoptions) || &usage();
+my @known_options = ("o|output:s", "os|OS:s");
+GetOptions (@known_options) || &usage();
 
-$OSdir = $opt_os if $opt_os;
-$OSdir = ":mac" if($R::Vars::OSTYPE eq "mac");
+$OS_type = $opt_os if $opt_os;
 
 my $out = 0;
 $out = $opt_o if(defined $opt_o && length($opt_o));
@@ -51,16 +50,14 @@ if($out) {
     $outfile = STDOUT;
 }
 
-my $mandir = &file_path($ARGV[0], "man");
-my @Rdfiles = &list_files_with_exts($mandir, "[Rr]d");
-$mandir = &file_path($mandir, $OSdir);
-if(-d $mandir) {
-    @Rdfiles = (@Rdfiles, &list_files_with_exts($mandir, "[Rr]d"));
-}
+my @Rdfiles =
+    &list_files_with_type(&file_path($ARGV[0], "man"),
+			  "docs",
+			  $OS_type);
 
 foreach my $rdfile (@Rdfiles) {
     my $file = basename($rdfile, (".Rd", ".rd"));
-    my $rdinfo = R::Rd->info($rdfile, $OSdir);
+    my $rdinfo = R::Rd->info($rdfile, $OS_type);
     print $outfile "Entry: " . $rdinfo->{"name"} . "\n";
     print $outfile "Aliases: " .
 	join(" ", @{$rdinfo->{"aliases"}}) . "\n";
@@ -83,7 +80,7 @@ Prepare the CONTENTS file for a directory.
 
 Options:
   -o, --output=OUT	use 'OUT' as the output file
-      --os=NAME		use OS subdir 'NAME' (unix, mac or windows)
+      --os=NAME		use OS type 'NAME' (unix, mac or windows)
       --OS=NAME		the same as '--os'.
 END
   exit 0;
