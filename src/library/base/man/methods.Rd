@@ -33,6 +33,10 @@ methods(generic.function, class)
   There is a \code{print} method which marks with an asterisk any
   methods which are not visible: such functions can be examined by
   \code{\link{getS3method}} or \code{\link{getAnywhere}}.
+
+  The \code{"info"} attribute is a data frame, currently with a
+  logical column, \code{visible} and a factor column \code{from}
+  (indicating where the methods were found).
 }
 \details{
   An \R ``object'' is a data object which has a \code{class} attribute.
