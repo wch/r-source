@@ -1,6 +1,6 @@
 \name{n2mfrow}
 \alias{n2mfrow}
-\title{Compute Default `mfrow' From Number of Plots}
+\title{Compute Default mfrow From Number of Plots}
 \description{
   Easy Setup for plotting multiple figures (in a rectangular layout) on
   one page.  It allows to specify a main title and uses \emph{smart}
