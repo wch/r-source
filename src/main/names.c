@@ -708,21 +708,25 @@ void InitNames()
 /* Returns the symbol corresponding to the string "name". */
 SEXP install(char *name)
 {
+	char buf[128];
 	SEXP sym;
 	int i;
 
 	if(*name == '\0')
 		error("attempt to use zero-length variable name\n");
+	if (strlen(name) > 127)
+		error("symbol print-name too long\n");
+	strcpy(buf, name);
 
-	i = hashpjw(name);
+	i = hashpjw(buf);
 
 		/* check to see if the symbol is already there */
 	for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
-		if (strcmp(name, CHAR(PRINTNAME(CAR(sym)))) == 0)
+		if (strcmp(buf, CHAR(PRINTNAME(CAR(sym)))) == 0)
 			return (CAR(sym));
 
 		/* make a new symbol node and link it into the list */
-	sym = mkSYMSXP(mkChar(name), R_UnboundValue);
+	sym = mkSYMSXP(mkChar(buf), R_UnboundValue);
 	R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
 	return (sym);
 }

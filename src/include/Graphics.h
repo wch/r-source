@@ -472,7 +472,7 @@ unsigned RGBpar(SEXP, int, DevDesc*);
 
 double Log10(double);
 void currentFigureLocation(int*, int*, DevDesc*);
-void GNewPlot(DevDesc*, int);
+DevDesc *GNewPlot(int, int);
 void GReset(DevDesc*);
 void GMapWin2Fig(DevDesc*);
 void GConvert(double*, double*, int, int, DevDesc*);

@@ -65,6 +65,8 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 		return 0;
+	/* Do this for early redraw attempts */
+	dd->displayList = R_NilValue;
         GInit(&dd->dp);
 	if(!X11DeviceDriver(dd, display, width, height, ps)) {
 		free(dd);
@@ -130,6 +132,8 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 		return 0;
+	/* Do this for early redraw attempts */
+	dd->displayList = R_NilValue;
         GInit(&dd->dp);
 	if(!PSDeviceDriver(dd, file, paper, face, bg, fg, width, height, (double)horizontal, ps)) {
 		free(dd);

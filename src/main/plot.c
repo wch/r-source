@@ -272,9 +272,12 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* plot.new(ask) - create a new plot */
     int ask, asksave;
-    DevDesc *dd = CurrentDevice();
+    DevDesc *dd;
 
     checkArity(op, args);
+
+    ask = asLogical(CAR(args));
+    dd = GNewPlot(call != R_NilValue, ask);
 
     ask = asLogical(CAR(args));
     if (ask == NA_LOGICAL)
@@ -282,7 +285,6 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
     asksave = dd->gp.ask;
     dd->gp.ask = ask;
 
-    GNewPlot(dd, call != R_NilValue);
 
     dd->dp.xlog = dd->gp.xlog = 0;
     dd->dp.ylog = dd->gp.ylog = 0;
