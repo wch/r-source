@@ -34,6 +34,11 @@ BUG FIXES
 	look in the package which was loaded, even if it is not in
 	one of the libraries given in .lib.loc.
 
+    o	The documentation for .Rd files said & must be entered as \&
+	but only the unescaped form was processed correctly. Now both
+	are accepted but & is preferred.
+
+
 
 	**************************************************
 	*						 *

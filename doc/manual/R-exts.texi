@@ -929,12 +929,13 @@ examples section in the file @file{Paren.Rd} for an example.} characters
 are special. Note that @code{\file} is @strong{not} a verbatim-like command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
-currently must escape all La@TeX{} special characters, i.e., besides
+currently must escape most La@TeX{} special characters, i.e., besides
 @samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
-@samp{&}, @samp{#}, and @samp{_} are produced by preceding each with a
-@samp{\}.  Further, enter @samp{^} as @code{\eqn@{\hat@{@}@}@{^@}}, and
-@samp{~} by @code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>},
-and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
+@samp{#}, and @samp{_} are produced by preceding each with a @samp{\}.
+(@samp{&} can also be escaped, but need not be.) Further, enter @samp{^}
+as @code{\eqn@{\hat@{@}@}@{^@}}, and @samp{~} by
+@code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>}, and @samp{|}
+must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
 @node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation
@@ -2953,7 +2954,7 @@ analogues using the @code{vprintf} interface.
 @cindex Printing from C
 
 In theory Fortran @code{write} and @code{print} statements can be used,
-but its output may not interleave well with that of C, and will be
+but the output may not interleave well with that of C, and will be
 invisible on GUI interfaces.  They are best avoided.
 
 Three subroutines are provided to ease the output of information from
@@ -3042,9 +3043,12 @@ distribution's parameters.  Argument @code{lower_tail} should be
 
 Note that you directly get the cumulative (or ``integrated'') @emph{hazard}
 function, @eqn{H(t) = - \log(1 - F(t)), H(t) = - log(1 - F(t))},
-by using @code{- p@emph{dist}(t, ...,
-/*lower_tail = */ LFALSE, /* give_log = */ LTRUE)},
-or shorter (and more cryptic) @code{- p@emph{dist}(t, ..., 0, 1)}.
+by using 
+@example
+- p@var{dist}(t, ..., /*lower_tail = */ LFALSE, /* give_log = */ LTRUE)
+@end example
+@noindent
+or shorter (and more cryptic) @code{- p@var{dist}(t, ..., 0, 1)}.
 @cindex cumulative hazard
 
 Finally, @code{give_log} should be non-zero if the result is required on
@@ -3073,7 +3077,7 @@ distributions.
 @item binomial @tab @code{binom} @tab @code{n, p}
 @item Cauchy @tab @code{cauchy} @tab @code{location, scale}
 @item chi-square @tab @code{chisq} @tab @code{df}
-@item non-central chi-square @tab @code{@{p,q@}nchisq} @tab @code{df, lambda}
+@item non-central chi-square @tab @code{nchisq} @tab @code{df, lambda}
 @item exponential @tab @code{exp} @tab @code{scale}
 @item F @tab @code{f} @tab @code{n1, n2}
 @item non-central F @tab @code{@{p,q@}nf} @tab @code{n1, n2, ncp}
@@ -3101,22 +3105,25 @@ The argument sequences are not all quite the same as the @R{} ones.
 @section Mathematical Utilities
 @findex R_pow
 @findex pythag
-@findex log1p
-In @R{}, there are a few other mathematical numerical utilities available.
+@c @findex log1p
+There are a few other numerical utilities available as entry points.
 
 @smallexample
 double R_pow(double x, double y)
 @end smallexample
+@noindent
 @code{R_pow(x,y)} computes @code{x ^ y} using @code{R_FINITE} checks and
 returning the proper result (the same as @R{}) for the cases where @code{x}
-or @code{y} are 0 or not finite, etc.
+or @code{y} are 0 or missing or infinite or @code{NaN}.
 
 @smallexample
 double pythag(double a, double b)
 @end smallexample
+@noindent
 @code{pythag(a,b)} computes @code{sqrt(a^2 + b^2)} without overflow or
-destructive underflow, e.g., it still works when both a and b are between
-1e200 and 1e300 (in IEEE double precision).
+destructive underflow: for example it still works when both @code{a} and
+@code{b} are between @code{1e200} and @code{1e300} (in IEEE double
+precision).
 
 
 @node Mathematical Constants, Utility functions, Mathematical Utilities, The R API
@@ -3132,39 +3139,42 @@ accuracy in @file{R_ext/Mathlib.h}.  The following definitions use
 @code{ln(x)} for the natural logarithm (@code{ = log(x)} in @R{}).
 
 @quotation
-@multitable {Name can be long}  {Definition (needs space)}  {0.12345678 ...}
+@multitable {Name can be long}  {Definition (needs space)}  {0.123456789012345678 ...}
 
 @item @strong{Name} @tab @strong{Definition (@code{ln = log})} @tab @strong{round(@emph{value}, 7)}
 
 @c SVID & X/Open Constants -- names from Solaris math.h :
 
-@item M_E            @tab = e               @tab 2.7182818
-@item M_LOG2E        @tab = log2(e)         @tab 1.4426950
-@item M_LOG10E       @tab = log10(e)        @tab 0.4342945
-@item M_LN2          @tab = ln(2)           @tab 0.6931472
-@item M_LN10         @tab = ln(10)          @tab 2.3025851
-@item M_PI           @tab = pi              @tab 3.1415927
-@item M_PI_2         @tab = pi/2            @tab 1.5707963
-@item M_PI_4         @tab = pi/4            @tab 0.7853982
-@item M_1_PI         @tab = 1/pi            @tab 0.3183099
-@item M_2_PI         @tab = 2/pi            @tab 0.6366198
-@item M_2_SQRTPI     @tab = 2/sqrt(pi)      @tab 1.1283792
-@item M_SQRT2        @tab = sqrt(2)         @tab 1.4142136
-@item M_SQRT1_2      @tab = 1/sqrt(2)       @tab 0.7071068
+@item @code{M_E}            @tab = e               @tab 2.7182818
+@item @code{M_LOG2E}        @tab = log2(e)         @tab 1.4426950
+@item @code{M_LOG10E}       @tab = log10(e)        @tab 0.4342945
+@item @code{M_LN2}          @tab = ln(2)           @tab 0.6931472
+@item @code{M_LN10}         @tab = ln(10)          @tab 2.3025851
+@item @code{M_PI}           @tab = pi              @tab 3.1415927
+@item @code{M_PI_2}         @tab = pi/2            @tab 1.5707963
+@item @code{M_PI_4}         @tab = pi/4            @tab 0.7853982
+@item @code{M_1_PI}         @tab = 1/pi            @tab 0.3183099
+@item @code{M_2_PI}         @tab = 2/pi            @tab 0.6366198
+@item @code{M_2_SQRTPI}     @tab = 2/sqrt(pi)      @tab 1.1283792
+@item @code{M_SQRT2}        @tab = sqrt(2)         @tab 1.4142136
+@item @code{M_SQRT1_2}      @tab = 1/sqrt(2)       @tab 0.7071068
 
 @c R-specific ones
 
-@item M_SQRT_32      @tab = sqrt(32)        @tab 5.6568542
-@item M_LOG10_2      @tab = log10(2)        @tab 0.3010300
-@item M_SQRT_PI      @tab = sqrt(pi)        @tab 1.7724539
-@item M_1_SQRT_2PI   @tab = 1/sqrt(2pi)     @tab 0.3989423
-@item M_SQRT_2dPI    @tab = sqrt(2/pi)      @tab 0.7978846
-@item M_LN_SQRT_PI   @tab = ln(sqrt(pi))    @tab 0.5723649
-@item M_LN_SQRT_2PI  @tab = ln(sqrt(2*pi))  @tab 0.9189385
-@item M_LN_SQRT_PId2 @tab = ln(sqrt(pi/2))  @tab 0.2257914
-
+@item @code{M_SQRT_32}      @tab = sqrt(32)        @tab 5.6568542
+@item @code{M_LOG10_2}      @tab = log10(2)        @tab 0.3010300
+@item @code{M_SQRT_PI}      @tab = sqrt(pi)        @tab 1.7724539
+@item @code{M_1_SQRT_2PI}   @tab = 1/sqrt(2pi)     @tab 0.3989423
+@item @code{M_SQRT_2dPI}    @tab = sqrt(2/pi)      @tab 0.7978846
+@item @code{M_LN_SQRT_PI}   @tab = ln(sqrt(pi))    @tab 0.5723649
+@item @code{M_LN_SQRT_2PI}  @tab = ln(sqrt(2*pi))  @tab 0.9189385
+@item @code{M_LN_SQRT_PId2} @tab = ln(sqrt(pi/2))  @tab 0.2257914
 @end multitable
 @end quotation
+
+There are a set of constants (for example @code{PI}, @code{DOUBLE_EPS})
+defined in the included header @file{R_ext/Constants.h}, mainly for
+compatibility with @Sl{}.
 
 
 
@@ -3211,10 +3221,6 @@ void cPsort(Rcomplex* x, int n, int k);
 all provide (very) partial sorting: they permute @code{x} so that
 @code{x[k]} is in the correct place with smaller values to the left,
 larger ones to the right.
-
-There are a set of constants (for example @code{PI}, @code{DOUBLE_EPS})
-defined in the included header @file{R_ext/Constants.h}, mainly for
-compatibility with @Sl{}.
 
 @node Version information,  , Utility functions, The R API
 @section Version information

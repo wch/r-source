@@ -21,7 +21,7 @@
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.8 $ ';
+my $revision = ' $Revision: 1.9 $ ';
 my $version;
 my $name;
 
@@ -206,7 +206,7 @@ sub substitute {
   if (!$inVerbatim) {
     s/\{/\\\{/g;
     s/\}/\\\}/g;
-    s/&/\\&/g;
+#    s/&/\\&/g; removed BDR 2000/02/10
     ## Added by BDR 1998/06/20
     s/\\\(aa/'/g;		# extra ' for highlight matching
     s/\\\(em/--/g;		# em dash
