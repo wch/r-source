@@ -84,6 +84,8 @@ mostlyclean:
 clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf html; \
+	else \
+	  rm -f html/function.html html/packages.html html/search/index.txt; \
 	fi
 	@(cd manual && $(MAKE) $@)
 distclean: clean
