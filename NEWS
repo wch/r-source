@@ -137,6 +137,10 @@ BUG FIXES
 
     o   table() misbehaved on empty (or all-NA) data
 
+    o   data editor now handles empty data frames, allowing data entry
+        to begin with  dd<-edit(data.frame())  or 
+	dd<-data.frame() ; fix(dd)
+
 
 		CHANGES IN R VERSION 1.1.0
 
