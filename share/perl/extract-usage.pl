@@ -25,7 +25,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Revision: 1.15 $ ';
 my $version;
 my $name;
 
@@ -111,15 +111,29 @@ while (<INFILE>) {
 	my %usages = get_usages($text, $opt_mode, $opt_verbose);
 
 	if($opt_mode eq "codoc") {
-	    $out->print("# vars: ", join(" ", @{$usages{"vars"}}), "\n");
-	    $out->print("# data: ", join(" ", @{$usages{"data"}}), "\n");
+	    $out->print("# variables: ",
+			join(" ", @{$usages{"variables"}}),
+			"\n");
+	    $out->print("# data sets: ",
+			join(" ", @{$usages{"data_sets"}}),
+			"\n");
 	}
 
-	my %funs = @{$usages{"funs"}};
-	foreach my $key (keys(%funs)){
-	    $funs{$key} =~ s/ *\\.?dots/ .../g;
+	my %functions = @{$usages{"functions"}};
+	foreach my $key (keys(%functions)) {
+	    $functions{$key} =~ s/ *\\.?dots/ .../g;
 	    if ($key !~ /^</) {
-		$out->print("$key <- function$funs{$key} NULL\n");
+		$out->print("\"$key\" <- ",
+			    "function$functions{$key} NULL\n");
+	    }
+	}
+
+	if($opt_mode ne "style") {	
+	    my %S4methods = @{$usages{"S4methods"}};
+	    foreach my $key (keys(%S4methods)) {
+		$S4methods{$key} =~ s/ *\\.?dots/ .../g;
+		$out->print("\"\\$key\" <- ",
+			    "function$S4methods{$key} NULL\n");
 	    }
 	}
 
