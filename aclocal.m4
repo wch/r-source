@@ -385,43 +385,42 @@ AC_DEFUN(R_PROG_F77_CC_COMPAT,
       y(3) = (x(2)/x(1)) ** a(1)
       end
 EOF
-      ${FC} -c ${FFLAGS} conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
+      ${FC} ${FFLAGS} -c conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
       changequote(, )
       cat > conftest.c <<EOF
-        #include <math.h>
-	#include "confdefs.h"
-	#ifdef HAVE_F77_UNDERSCORE
-	# define F77_SYMBOL(x)   x ## _
-	#else
-	# define F77_SYMBOL(x)   x
-	#endif
+#include <math.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
 
-	extern void F77_SYMBOL(cftest)(int *a, int *b,
-	  double *x, double *y);
+extern void F77_SYMBOL(cftest)(int *a, int *b, double *x, double *y);
 
-	int main () {
-	  int a[3] = {17, 237, 2000000000}, b[2], res = 0;
-	  double x[3] = {3.14159265, 123.456789, 2.3e34}, z[3];
-	  double eps = 1e-6;
-	  double zres[3];
-	  int i, bres[2];
+int main () {
+  int a[3] = {17, 237, 2000000000}, b[2], res = 0;
+  double x[3] = {3.14159265, 123.456789, 2.3e34}, z[3];
+  double eps = 1e-6;
+  double zres[3];
+  int i, bres[2];
 
-    	  zres[0] = (double) a[2]/x[1];
-	  zres[1] = x[2]*x[0];
-	  zres[2] = pow(x[1]/x[0], 17.0);
-	  bres[0] = a[2]/a[1];
-	  bres[1] = a[2] - a[0]*a[1];
-	  F77_SYMBOL(cftest)(a, b, x, z);
-	  if(b[0] != bres[0]) res++;
-	  if(b[1] != bres[1]) res++;
-	  for(i = 0; i < 3; i++)
-	    if(fabs(z[i]/zres[i] - 1) > eps) res++;
-	  printf("number of errors %d\n", res);
-	  return(res);
-        }
+  zres[0] = (double) a[2]/x[1];
+  zres[1] = x[2]*x[0];
+  zres[2] = pow(x[1]/x[0], 17.0);
+  bres[0] = a[2]/a[1];
+  bres[1] = a[2] - a[0]*a[1];
+  F77_SYMBOL(cftest)(a, b, x, z);
+  if(b[0] != bres[0]) res++;
+  if(b[1] != bres[1]) res++;
+  for(i = 0; i < 3; i++)
+    if(fabs(z[i]/zres[i] - 1) > eps) res++;
+  printf("number of errors %d\n", res);
+  return(res);
+}
 EOF
       changequote([, ])
-      if ${CC-cc} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
+      if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
 	if ${CC-cc} ${LDFLAGS} -o conftest conftest.o conftestf.o \
             ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
@@ -446,8 +445,8 @@ AC_DEFUN(R_PROG_F2C_FLIBS,
  [AC_CACHE_VAL(r_cv_f2c_flibs,
     [## This seems to be necessary on some Linux system. -- you bet! -pd
       cat > conftest.${ac_ext} << EOF
-	int MAIN_ () { return 0; }
-	int MAIN__ () { return 0; }
+int MAIN_ () { return 0; }
+int MAIN__ () { return 0; }
 EOF
       if AC_TRY_EVAL(ac_compile); then
 	${AR} ${ARFLAGS} libconftest.a conftest.o 1>&AC_FD_CC
@@ -500,15 +499,15 @@ AC_DEFUN(R_FUNC___SETFPUCW,
 	r_cv_func___setfpucw_needed,
 	AC_TRY_RUN(
 	  changequote(<<, >>)dnl
-	  <<
-	  int main () {
-	  #include <fpu_control.h>
-	  #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
-	    return(_FPU_DEFAULT != _FPU_IEEE);
-	  #endif
-	    return(0);
-	  }
-	  >>,
+<<
+int main () {
+#include <fpu_control.h>
+#if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
+  return(_FPU_DEFAULT != _FPU_IEEE);
+#endif
+  return(0);
+}
+>>,
 	  changequote([, ])dnl
 	  r_cv_func___setfpucw_needed=no,
 	  r_cv_func___setfpucw_needed=yes,
@@ -527,11 +526,11 @@ AC_DEFUN(R_FUNC_CALLOC,
       AC_TRY_RUN(
 	changequote(<<, >>)dnl
 	<<
-	#include <stdlib.h>
-	int main () {
-	  int *p = calloc(0, sizeof(int));
-	  return(p == 0);
-	}
+#include <stdlib.h>
+int main () {
+  int *p = calloc(0, sizeof(int));
+  return(p == 0);
+}
 	>>,
 	changequote([, ])dnl
 	r_cv_func_calloc_broken=no,
@@ -550,15 +549,15 @@ AC_DEFUN(R_FUNC_FINITE,
       AC_TRY_RUN(
 	changequote(<<, >>)dnl
 	<<
-	#include <math.h>
-	#include "confdefs.h"
-	int main () {
-	#ifdef HAVE_FINITE
-	  return(finite(1./0.) | finite(0./0.) | finite(-1./0.));
-	#else
-	  return(0);
-	#endif
-	}
+#include <math.h>
+#include "confdefs.h"
+int main () {
+#ifdef HAVE_FINITE
+  return(finite(1./0.) | finite(0./0.) | finite(-1./0.));
+#else
+  return(0);
+#endif
+}
 	>>,
 	changequote([, ])dnl
 	r_cv_func_finite_broken=no,
@@ -577,15 +576,15 @@ AC_DEFUN(R_FUNC_LOG,
       AC_TRY_RUN(
 	changequote(<<, >>)dnl
 	<<
-	#include <math.h>
-	#include "confdefs.h"
-	int main () {
-	#ifdef HAVE_ISNAN
-	  return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
-	#else
-	  return(log(0.) != -1. / 0);
-	#endif
-	}
+#include <math.h>
+#include "confdefs.h"
+int main () {
+#ifdef HAVE_ISNAN
+  return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
+#else
+  return(log(0.) != -1. / 0);
+#endif
+}
 	>>,
 	changequote([, ])dnl
 	r_cv_func_log_broken=no,
@@ -622,12 +621,12 @@ AC_DEFUN(R_C_OPTIEEE,
       AC_TRY_RUN(
 	changequote(<<, >>)dnl
 	<<
-	#include <math.h>
-	#include <ieeefp.h>
-	int main () {
-	  double x = 0;
-	  fpsetmask(0); x = x / x; return (x != x);
-	}
+#include <math.h>
+#include <ieeefp.h>
+int main () {
+  double x = 0;
+  fpsetmask(0); x = x / x; return (x != x);
+}
 	>>,
 	changequote([, ])dnl
 	r_cv_c_optieee=yes,

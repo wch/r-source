@@ -519,7 +519,9 @@ case "${host}" in
       -bI:\$(R_HOME)/etc/R.exp -lc -lm"
     ;;
   alpha*osf*)
+    ldcmd="${FC} -g -nofor_main -fpe3 "
     cpicflags=
+    shlibld=${FC}
     shlibldflags=-shared
     ;;
   alpha*linux)
@@ -589,8 +591,14 @@ esac
 : ${DLLFLAGS=${dllflags}}
 : ${CPICFLAGS=${cpicflags}}
 if test -z "${CPICFLAGS}"; then
-  AC_MSG_WARN([Could not determine CPICFLAGS.])
-  AC_MSG_ERROR([See the file INSTALL for more information.])
+  case "${host}" in
+    alpha*osf*)
+      ;;
+    *)
+      AC_MSG_WARN([Could not determine CPICFLAGS.])
+      AC_MSG_ERROR([See the file INSTALL for more information.])
+      ;;
+  esac
 fi
 : ${FPICFLAGS=${fpicflags}}
 : ${SHLIBLD=${shlibld}}
