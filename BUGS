@@ -764,6 +764,11 @@ Date: Thu, 25 Sep 2003 11:26:09 +0200
 Subject: Redhat 7.2 gcc optimisation 
 From: Paul Murrell <p.murrell@auckland.ac.nz>
 Date: Wed, 08 Oct 2003 15:28:11 +1300
+* PR# 6488 *
+Subject: R fails to build on AFS
+From: Atro.Tossavainen+rproject@helsinki.fi
+Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
+..insufficent information: what was the error message?
 
 Directory:  TooMuchAtOnce
 
@@ -808,66 +813,15 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6484 *
-Subject: investor
-From: "Georgina Herring" <icjwgoiiltet@diplomats.com>
-Date: Wed, 28 Jan 2004 10:41:45 +0300
-* PR# 6485 *
-Subject: Test
-From: relaisco-op@co-op.ca
-Date: Wed, 28 Jan 2004 03:45:12 -0500 (EST)
-* PR# 6486 *
-From: info@warepig.com
-Date: Wed, 28 Jan 2004 06:42:09 -0600
-* PR# 6487 *
-Subject: MailMarshal has detected a Virus in your message
-From: infrateam@oxon.blackwellpublishing.com
-Date: Tue, 27 Jan 2004 16:47:37 +0000
-* PR# 6488 *
-Subject: R fails to build on AFS
-From: Atro.Tossavainen+rproject@helsinki.fi
-Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
-* PR# 6489 *
-Subject: INTER@CTIVE... virus detectado
-From: Interactive_Antivirus@impsat.net.ec
-From: r-bugs@biostat.ku.dk
-Date: Wed, 28 Jan 2004 09:10:36 -0500
-Date: Wed, 28 Jan 2004 09:07:42 -0500
-* PR# 6490 *
-Subject: Returned mail: see transcript for details
-Subject: 
-From: Mail Delivery Subsystem <MAILER-DAEMON@mailuio.impsat.net.ec>
-From: r-bugs@biostat.ku.dk
-Date: Wed, 28 Jan 2004 09:15:43 -0500 (ECT)
-Date: Wed, 28 Jan 2004 09:07:42 -0500
-* PR# 6491 *
-Subject: Re: Re: costume
-From: "Taylor Dennis" <rslkvq@dublin.com>
-Date: Wed, 28 Jan 2004 08:13:18 -0600
-* PR# 6492 *
-Subject: Wish list - Windows RGui
-From: rbaer@atsu.edu
-Date: Wed, 28 Jan 2004 16:17:37 +0100 (CET)
-* PR# 6493 *
-Subject: Viruswarnung
-From: daemon <daemon@avg.net4you.net>
-Date: Wed, 28 Jan 2004 17:20:40 +0100
-* PR# 6494 *
-Subject: unstability when using isoreg() function
-From: klaster@karlin.mff.cuni.cz
-Date: Wed, 28 Jan 2004 17:30:58 +0100 (CET)
-* PR# 6495 *
-Subject: - FINAL ATTEMPT: Your CHECK may be Waiting.
-From: Kordo Hawrami <benumber1@quickspondermail.biz>
-Date: Wed, 28 Jan 2004 13:35:10 -0400
-* PR# 6496 *
-Subject: \link{\url{anything}} gives Rdconv trouble
-From: d.firth@warwick.ac.uk
-Date: Wed, 28 Jan 2004 22:28:28 +0100 (CET)
-* PR# 6497 *
-Subject: VIRUS IN YOUR MAIL
-Subject: hello
-From: postmaster@linearg.com
-From: r-bugs@biostat.ku.dk
-Date: Thu, 29 Jan 2004 08:29:24 +1100 (EST)
-Date: Thu, 29 Jan 2004 08:31:03 +1100
+* PR# 6501 *
+Subject: Your mail could not be processed and has been blocked
+From: Postmaster.PAR-MSW@sgcib.com
+Date: Thu, 29 Jan 2004 14:54:23 +0100 (CET)
+* PR# 6502 *
+Subject: Re: mucus cabana
+From: "Bethany" <xlmziybmp@catlover.com>
+Date: Thu, 29 Jan 2004 09:28:13 -0500
+* PR# 6503 *
+Subject: Modération de votre message
+From: SYMPA <sympa@gaia.anet.fr>
+Date: Thu, 29 Jan 2004 19:28:16 +0100
