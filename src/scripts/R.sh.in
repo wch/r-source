@@ -2,7 +2,8 @@
 # Shell wrapper for R executable.
 
 RHOME=R_HOME_DIR
-export RHOME
+R_HOME=${RHOME}
+export RHOME R_HOME
 
 R_BINARY="R.binary"
 # Default Printer Paper Size
