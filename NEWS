@@ -294,6 +294,10 @@ BUG FIXES
 	on "lm" fits with na.action = na.exclude (and perhaps other 
 	na.actions's except na.omit).
 
+    o	pmax() and pmin() sometimes used NAs in internal subassignments,
+	and sometimes these failed.
+	
+
 
 
 	*********************************************************

@@ -3338,3 +3338,8 @@ stopifnot(inherits(try(sort(x1)), "try-error"),
           inherits(try(sort(x1, partial=5)), "try-error"),
           inherits(try(sort(x2, partial=5)), "try-error"))
 ##
+
+
+## pmax failed with NA inputs
+pmax(c(1,2,NA), c(3,4,NA), na.rm=TRUE)
+## failed after for 2.0.0 change to subassignment
