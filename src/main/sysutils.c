@@ -381,7 +381,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	iconvlist(write_one, (void *)ans);
 #else
     error("`iconvlist' is not available on this system");
-    ans = R_NiValue; /* -Wall */
+    ans = R_NilValue; /* -Wall */
 #endif
     } else {
 	if(TYPEOF(x) != STRSXP)
