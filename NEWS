@@ -28,6 +28,7 @@ NEW FEATURES
         For LAPACK it currently is .Machine$double.eps but may be made
         tighter in future versions of R.
 
+
 BUG FIXES
 
     o	symnum(x) now behaves as documented when length(x) == 0 and uses
@@ -73,6 +74,8 @@ BUG FIXES
 	(because of a wrong type passed to C; PR#4718).
 
     o	dist() objects with NA's didn't print these, now do (PR#4866).
+
+    o	regexpr(fixed=TRUE) returned 0-based indices.
 
 
 
