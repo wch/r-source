@@ -45,8 +45,6 @@ choose <- function(n,k).Internal(choose(n,k))
 lchoose <- function(n,k).Internal(lchoose(n,k))
 
 ##-- 2nd part --
-D <- function(expr, name) .Internal(D(expr, name))
-
 # Machine <- function().Internal(Machine())
 R.Version <- function().Internal(Version())
 commandArgs <- function() .Internal(commandArgs())
