@@ -42,7 +42,7 @@ Stangle(file, driver=RTangle(), ...)
 }
 \seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
 \examples{
-testfile <- file.path(R.home(), "library", "tools",
+testfile <- file.path(.path.package("tools"),
                       "Sweave", "test-1.Rnw")
 
 ## create a LaTeX file

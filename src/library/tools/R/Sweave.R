@@ -126,8 +126,8 @@ RweaveLatexSetup <-
     output <- file(output, open="w+")
     
     if(stylepath)
-        styfile <- file.path(R.home(), "library", "tools", "Sweave",
-                             "Sweave")
+        styfile <- file.path(.path.package("tools"),
+                             "Sweave", "Sweave")
     else
         styfile <- "Sweave"
 
