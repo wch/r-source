@@ -23,19 +23,32 @@ R = R_LIBS= $(top_builddir)/bin/R
 OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
 OBJECTS_SRC = $(R_PKGS_RECOMMENDED_SOURCES:=.tgz)
 
-CLEANFILES = $(OBJECTS)
+CLEANFILES = $(OBJECTS) Makedeps
 DISTCLEANFILES = Makefile
 
 .SUFFIXES:
 .SUFFIXES: .tgz .ts
 
-all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ recommended-packages
-
-recommended-packages: $(OBJECTS_SRC)
-	for  i in $(OBJECTS) ; do $(MAKE) $$i ; done
+all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ Makedeps $(OBJECTS)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+## <NOTE>
+## We create dependencies so that packages are built in a certain order.
+## (Mostly to make parallel Make work.)
+## Currently, we enforce the order in which package sources are listed
+## in 'share/make/vars.mk'; we could prepend sources which must come
+## first. 
+## (Note that this currently starts with 'survival' as this was needed
+## by 'boot' at some time: not clear whether this is still true.)
+Makedeps: Makefile
+	@(set $(R_PKGS_RECOMMENDED_SOURCES); \
+	  while test -n "$${2}"; do \
+	  echo "$${2}.ts: $${1}.ts"; \
+	  shift; \
+	done) >> Makefile
+	@touch $@
+## </NOTE>
 
 .tgz.ts:
 ## <FIXME>
@@ -46,8 +59,11 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 ## </FIXME>
 	@touch $@
 
+## <FIXME>
+## This no longer seems to be the case?
 ## survival needs to be installed before boot
-boot.ts: survival.ts boot.tgz
+## boot.ts: survival.ts boot.tgz
+## </FIXME>
 
 R docs:
 
@@ -70,3 +86,5 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
+## Automagically generated dependencies:
