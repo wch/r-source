@@ -62,9 +62,8 @@ R: Makefile
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
-	@if [ ! -f src/library/stamp-docs ]; then \
-	  echo "you should 'make docs' now ..."; \
-	fi
+	@test -f src/library/stamp-docs || \
+	  echo "you should 'make docs' now ..."
 
 docs: FORCE
 	-@(cd doc && $(MAKE) $@)
@@ -112,6 +111,7 @@ maintainer-clean: distclean
 	@echo "deletes files that may need special rules to rebuild"
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
+	-@(cd $(srcdir) && rm -rf autom4te.cache)
 
 dist: dist-unix
 dist-unix: distdir
