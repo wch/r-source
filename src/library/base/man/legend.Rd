@@ -19,7 +19,8 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
     They can be specified in any way which is accepted by
     \code{\link{xy.coords}}: See Details.}
   \item{legend}{a vector of text values or an \code{\link{expression}}
-    of length \eqn{\ge 1}{>= 1} to appear in the legend.}
+    of length \eqn{\ge 1}{>= 1}, or a \code{\link{call}} (as resulting
+    from \code{\link{substitute}}) to appear in the legend.}
   \item{fill}{if specified, this argument will cause boxes filled
     with the specified colors (or shaded in the specified colors)
     to appear beside the legend text.}
