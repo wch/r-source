@@ -94,7 +94,7 @@ install.packages(pkgs, lib, repos = CRAN,
   \item{type}{character, indicating the type of package to download and
     install.
 #ifdef unix
-    (Not currently used under Unix-alikes.)
+    (Not currently used under Unix-alikes: defaults to \code{"source"}.)
 #endif
 #ifdef windows
     Valid values are \code{"binary"} (the default) and \code{"source"},

@@ -72,6 +72,9 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
 			    installWithVers = FALSE,
                             checkBuilt = FALSE, type)
 {
+    ## passing missingness sometimes fails.
+    if(missing(type)) 
+        type <- if(.Platform$OS.type == "windows") "binary" else "source"
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
 
