@@ -2,6 +2,9 @@
 #
 # ${RHOME}/tests/Makefile.win
 
+R_PKGS_BASE = \
+   base ctest eda lqs methods modreg mva nls splines stepfun tcltk tools ts
+
 srcdir = .
 
 ## Can't test when cross-building
@@ -22,71 +25,78 @@ test-src-gct = \
 test-src-strict-1 = \
 	$(test-src-gct) \
 	d-p-q-r-tests.R
-test-src-strict-auto = \
-	isas-tests.R
+test-src-strict-auto =
 test-src-sloppy-1 = \
 	print-tests.R
-test-src-sloppy-auto = \
-	no-segfault.R
+test-src-sloppy-auto =
 
 test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
-test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
-test-src-sloppy = $(test-src-sloppy-1) #$(test-src-sloppy-auto)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto) \
+  ${test-src-isas} ${test-src-segfault}
+test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
+test-src-isas = isas-tests.R
 test-src-lapack = lapack.R
 test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
 test-src-postscript = ps-tests.R
 test-src-ts = ts-tests.R
+test-src-segfault = no-segfault.R
 
-test-src-reg-1 = \
-	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
+test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
-
-all-basic-tests = Specific Reg Demo
-all-extra-tests = Internet Lapack Nafns Postscript Random
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
+test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
 test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
-test-out-segfault = $(test-src-sloppy-auto:.R=.Rout)
 
 ## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
-	$(test-out-ts)
+	$(test-out-segfault) $(test-out-ts) $(test-out-isas)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
 
-all: test-Specific test-Reg test-Demo
+all-basic-tests = Specific Reg Internet
+all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
+   Standalone Packages
+all-extra-tests = Lapack Nafns Postscript Random \
+  DocArgs FF Methods codoc undoc
+
+all check: test-all-basics
+check-devel: check test-all-devel
+check-all: check-devel # test-Examples-Recommended
+
 
 .Rin.R:
-	@echo "creating \`$@'"
+	@echo "creating '$@'"
 	@$(R) --slave < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo -n "running \`$<' ..."
+	@echo -n "running code in '$<' ..."
 	@$(R) < $< > $@  2>&1 || (mv $@ $@.fail && exit 1)
 	@echo "OK"
 	@if test -f $(srcdir)/$@.save  ; then \
 	  mv $@ $@.fail; \
-	  echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."; \
+	  echo -n "  comparing '$@' to '$(srcdir)/$@.save' ..."; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
 	  echo "OK"; \
@@ -94,28 +104,46 @@ all: test-Specific test-Reg test-Demo
 
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
-	@echo -n "running '$<' ..."
+	@echo -n "running code in '$<' ..."
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@echo "OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
-	  echo -n "comparing '$@' to '$(srcdir)/$@.save' ..."; \
+	  echo -n "  comparing '$@' to '$(srcdir)/$@.save' ..."; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
 	  echo "OK"; \
 	fi
-	@echo -n "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ..."
+	@echo -n "  comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ..."
 	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
 	@echo "OK"
 
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
-	@echo "running strict specific tests"
+	@echo "running strict specific tests ..."
 	@$(MAKE) -f Makefile.win test-Specific-strict RVAL_IF_DIFF=1
-	@echo "running sloppy specific tests"
+	@echo "running sloppy specific tests ..."
 	@$(MAKE) -f Makefile.win test-Specific-sloppy RVAL_IF_DIFF=0
-	@rm -f data F.Rd c0.Rd df0.Rd l0.Rd
+
+test-Packages:
+	@echo
+	@echo "---- checking base packages ----"
+	@for p in $(R_PKGS_BASE); do \
+	  echo ; \
+	  echo "* checking package '$${p}'"; \
+	  rcmd check ../src/library/$${p} || echo; \
+	done
+
+test-all-basics:
+	@for name in $(all-basic-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
+
+test-all-devel:
+	@for name in $(all-devel-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
 
 test-all-extras:
 	@for name in $(all-extra-tests); do \
@@ -126,12 +154,20 @@ test-Demo:
 	@echo "running demos from base and eda"
 	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
 
+internet.Rout2:
+	@$(R) --internet2 < internet.R > internet.Rout2 2>&1
+
+## These depend on an internet connection, and the sites being up
 test-Internet:
-	@echo "running tests of Internet and socket functions"
-	@$(RM) internet.Rout
+	@echo "running tests of Internet and socket functions ..."
+	@echo "  expect some differences"
 	@$(MAKE) -f Makefile.win $(test-out-internet) RVAL_IF_DIFF=0
-	$(R) --internet2 --vanilla < internet.R > internet.Rout2
-	-diff internet.Rout internet.Rout2
+	@$(MAKE) -f Makefile.win internet.Rout2 RVAL_IF_DIFF=0
+	-@diff internet.Rout internet.Rout2
+
+test-IsAs:
+	@echo "running tests of consistency of as/is.*"
+	@$(MAKE) -f Makefile.win $(test-out-isas) RVAL_IF_DIFF=1
 
 test-Lapack:
 	@echo "running tests of LAPACK-based functions"
@@ -150,22 +186,24 @@ test-Random:
 	@$(MAKE) -f Makefile.win $(test-out-random) RVAL_IF_DIFF=1
 
 test-Reg:
-	@echo "running regression tests"
+	@echo "running regression tests ..."
 	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=0
 
 test-Segfault:
-	@echo "running tests of mis-calling functions"
+	@echo "running tests to possibly trigger segfaults"
 	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
 	@$(RM) data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
-
-test-Ts:
-	@echo "running tests of package ts functions"
-	@$(MAKE) -f Makefile.win $(test-out-ts) RVAL_IF_DIFF=0
 
 test-Standalone:
 	@echo "testing building standalone Rmath"
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
 
+test-Ts:
+	@echo "running tests of package ts functions"
+	@$(MAKE) -f Makefile.win $(test-out-ts) RVAL_IF_DIFF=0
+
 clean:
-	@rm -f *.Rout *.Rout.fail *.Rout2 Rplots.ps reg-plot.ps reg-tests-2.ps $(test-src-auto)
+	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
+	  reg-tests-2.ps $(test-src-auto)
+	@rm -rf *.Rcheck

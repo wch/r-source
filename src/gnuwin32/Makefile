@@ -381,17 +381,21 @@ cleanwin:
 check test: pkgtests test-Basic
 
 test-Basic:
-	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win clean
-	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win RHOME=$(RHOME)
+	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win clean
+	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win
 
 
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
-check-all fullcheck: check check-recommended
+check-devel: check
+	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win $@
+
+check-all fullcheck: check-devel check-recommended
 
 REC_PKGS-CHK = $(foreach i, $(REC_PKGS), pkgcheck-$i)
 check-recommended: $(REC_PKGS-CHK)
+
 
 #                          ===== documentation ======
 
