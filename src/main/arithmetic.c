@@ -131,18 +131,8 @@ int R_IsNaN(double x)
     return 0;
 }
 
-/* <FIXME> This is not used in base R, and should be removed
- * once it is not used in lattice.
- */
-int R_IsNaNorNA(double x)
-{
-/* True for *both* NA and NaN.
-   NOTE: some systems do not return 1 for TRUE. */
-    return (isnan(x) != 0);
-}
-
 /* <FIXME> Simplify this mess.  Not used inside R 
-   if isfinite works, and only in packages if finite works */
+   if isfinite works, and if finite works only in packages */
 int R_finite(double x)
 {
 #ifdef HAVE_WORKING_ISFINITE
