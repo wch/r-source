@@ -33,7 +33,7 @@ bringToTop(which = dev.cur())
     recording plots.}
   \item{resize}{controls the action for resizing plots.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and vertically.}
-  \item{which}{a device number.}
+  \item{which}{a device number, or \code{-1}.}
 }
 
 \description{
@@ -44,7 +44,8 @@ bringToTop(which = dev.cur())
   the Windows print system.
 
   \code{bringToTop} brings the specified screen device's window to the
-  front of the window stack (and gives it focus).
+  front of the window stack (and gives it focus).  With argument
+  \code{-1}, it brings the console to the top.
 }
 
 \details{

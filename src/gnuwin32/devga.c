@@ -2372,6 +2372,9 @@ static void SaveAsBmp(DevDesc *dd,char *fn)
     fclose(fp);
 }
 
+#include "Startup.h"
+extern UImode CharacterMode;
+
 SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int dev;
@@ -2380,12 +2383,16 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     dev = asInteger(CAR(args));
-    if(dev < 1 || dev > NumDevices() || dev == NA_INTEGER)
-	errorcall(call, "invalid value of `which'");
-    dd = GetDevice(dev - 1);
-    if(!dd) errorcall(call, "invalid device");
-    xd = (gadesc *) dd->deviceSpecific;
-    if(!xd) errorcall(call, "invalid device");
-    BringToTop(xd->gawin);
+    if(dev == -1) { /* console */
+	if(CharacterMode == RGui) BringToTop(RConsole);
+    } else {
+	if(dev < 1 || dev > NumDevices() || dev == NA_INTEGER)
+	    errorcall(call, "invalid value of `which'");
+	dd = GetDevice(dev - 1);
+	if(!dd) errorcall(call, "invalid device");
+	xd = (gadesc *) dd->deviceSpecific;
+	if(!xd) errorcall(call, "invalid device");
+	BringToTop(xd->gawin);
+    }
     return R_NilValue;
 }

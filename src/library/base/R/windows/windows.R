@@ -44,7 +44,7 @@ bringToTop <- function(which = dev.cur())
     if(!exists(".Devices")) {
 	.Devices <- list("null device")
     }
-    if(.Devices[[which]] != "windows")
+    if(which > 0 && .Devices[[which]] != "windows")
         stop("can only bring windows devices to the front")
     invisible(.Internal(bringToTop(as.integer(which))))
 }
