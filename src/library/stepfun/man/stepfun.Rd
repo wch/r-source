@@ -48,7 +48,7 @@ as.stepfun(x, \dots)
   The value of the constant \eqn{c_i}{c[i]} above depends on the
   ``continuity'' parameter \code{f}.
   For the default, \code{right = FALSE, f = 0},
-  \code{fn} is a ``cadlag'' function, i.e. continuous at right,
+  \code{fn} is a ``cadlag'' function, i.e., continuous at right,
   limit (``the point'') at left.
   In general, \eqn{c_i}{c[i]} is interpolated in between the
   neighbouring \eqn{y} values,

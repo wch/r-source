@@ -81,7 +81,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   and \eqn{B_k(.)}{B[k](.)} is the \eqn{k}-th B-spline.
 
   Note that with these definitions, \eqn{f_i = f(x_i)}, and the B-spline
-  basis representation \eqn{f = X c} (i.e. \eqn{c} is
+  basis representation \eqn{f = X c} (i.e., \eqn{c} is
   the vector of spline coefficients), the penalized log likelihood is
   \eqn{L = (y - f)' W (y - f) + \lambda c' \Sigma c}, and hence
   \eqn{c} is the solution of the (ridge regression)
@@ -224,7 +224,7 @@ lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 % not for the user
   s2. <- smooth.spline(y18, cv=TRUE,con=list(trace=TRUE, tol=1e-6,low= -3,maxit=20))
   s2. ## Intel-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
-     ## {others, e.g. may end quite differently!}
+     ## {others, e.g., may end quite differently!}
   lines(predict(s2., xx), col = 4)
   mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
 

@@ -29,13 +29,12 @@ next
   of the form \code{\{ expr1 ; expr2 \}}.
 
   Note that it is a common mistake to forget putting braces (\code{\{ .. \}})
-  around your statements, e.g. after \code{if(..)} or \code{for(....)}.
+  around your statements, e.g., after \code{if(..)} or \code{for(....)}.
   For that reason, one (somewhat extreme) attitude of defensive programming
-  uses braces always, e.g. for \code{if} clauses.
+  uses braces always, e.g., for \code{if} clauses.
 
   The index \code{seq} in a \code{for} loop is evaluated at the start of
   the loop; changing it subsequently does not affect the loop.
-  
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -49,7 +49,7 @@ monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
   If the \code{labels} are not given but the \code{phase} is given, then
   the \code{labels} default to the unique values of the \code{phase}.  If
   both are given, then the \code{phase} values are assumed to be indices
-  into the \code{labels} array, i.e. they should be in the range
+  into the \code{labels} array, i.e., they should be in the range
   from 1 to \code{length(labels)}.
 }
 \value{

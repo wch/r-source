@@ -16,7 +16,7 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
   \item{x, y}{coordinate vectors of points to plot.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
-  \item{pch}{plotting ``character'', i.e. symbol to use.  \code{pch} can
+  \item{pch}{plotting ``character'', i.e., symbol to use.  \code{pch} can
     either be a \code{\link{character}} or an integer code for a set of
     graphics symbols.  The full set of S symbols is available with
     \code{pch=0:18}, see the last picture from \code{example(points)},

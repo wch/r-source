@@ -14,8 +14,8 @@ mad(x, center = median(x), constant = 1.4826, na.rm = FALSE,
   \item{low}{if \code{TRUE}, compute the ``lo-median'', i.e., for even
     sample size, do not average the two middle values, but take the
     smaller one.}
-  \item{high}{if \code{TRUE}, compute the ``hi-median'', i.e. take the larger
-    of the two middle values for even sample size.}
+  \item{high}{if \code{TRUE}, compute the ``hi-median'', i.e., take the
+    larger of the two middle values for even sample size.}
 }
 \description{
   Compute the median absolute deviation, i.e., the (lo-/hi-) median of

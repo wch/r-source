@@ -18,7 +18,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \item{\dots}{arguments to pass to the editor: see \code{\link{edit}}.}
 }
 \details{
-  The namespace can be specified in several ways.  Using e.g.{}
+  The namespace can be specified in several ways.  Using, for example,
   \code{ns="modreg"} is the most direct, but a loaded package with a
   namespace can be specified via any of the methods used for
   \code{\link{get}}: \code{ns} can also be the environment

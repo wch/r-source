@@ -49,7 +49,7 @@ removeTaskCallback(id)
 
   \code{removeTaskCallback} returns a logical value
   indicating whether the specified element was removed.
-  This can fail (i.e. return \code{FALSE})
+  This can fail (i.e., return \code{FALSE})
   if an incorrect name or index is given that does not
   correspond to the name or position of an element in the list.
 }

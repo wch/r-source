@@ -22,7 +22,7 @@ apply(X, MARGIN, FUN, \dots)
 \details{
   If \code{X} is not an array but has a dimension attribute,
   \code{apply} attempts to coerce it to an array via \code{as.matrix}
-  if it is two-dimensional (e.g. data frames) or via \code{as.array}.
+  if it is two-dimensional (e.g., data frames) or via \code{as.array}.
 }
 \value{
   If each call to \code{FUN} returns a vector of length \code{n}, then

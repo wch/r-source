@@ -12,7 +12,7 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = NULL,
 \arguments{
   \item{nx,ny}{number of cells of the grid in x and y direction.  When
     \code{NULL}, as per default, the grid aligns with the tick marks on
-    the corresponding \emph{default} axis (i.e. tickmarks as computed by
+    the corresponding \emph{default} axis (i.e., tickmarks as computed by
     \code{\link{axTicks}}).  When \code{\link{NA}}, no grid lines are
     drawn in the corresponding direction.}
   \item{col}{character or (integer) numeric; color of the grid lines.}

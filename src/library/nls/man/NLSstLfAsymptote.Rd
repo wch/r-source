@@ -1,20 +1,20 @@
-% $Id: NLSstLfAsymptote.Rd,v 1.5 2001/03/24 06:57:57 ripley Exp $
+% $Id: NLSstLfAsymptote.Rd,v 1.6 2003/07/07 08:21:12 hornik Exp $
 \name{NLSstLfAsymptote}
 \title{Horizontal Asymptote on the Left Side}
 \alias{NLSstLfAsymptote}
 \alias{NLSstLfAsymptote.sortedXyData}
+\description{
+  Provide an initial guess at the horizontal asymptote on the left side
+  (i.e., small values of \code{x}) of the graph of \code{y} versus
+  \code{x} from the \code{xy} object.  Primarily used within
+  \code{initial} functions for self-starting nonlinear regression
+  models.
+}
 \usage{
 NLSstLfAsymptote(xy)
 }
 \arguments{
  \item{xy}{a \code{sortedXyData} object}
-}
-\description{
-  Provide an initial guess at the horizontal asymptote on
-  the left side (i.e. small values of \code{x}) of the graph of \code{y}
-  versus \code{x} from the \code{xy} object.  Primarily used within
-  \code{initial} functions for self-starting nonlinear regression
-  models.
 }
 \value{
   A single numeric value estimating the horizontal asymptote for small

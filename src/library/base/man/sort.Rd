@@ -37,7 +37,7 @@ is.unsorted(x, na.rm = FALSE)
   sequence of the locale in use: see \code{\link{Comparison}}.
 
   \code{is.unsorted} returns a logical indicating if \code{x} is sorted
-  increasingly, i.e. \code{is.unsorted(x)} is true if \code{any(x !=
+  increasingly, i.e., \code{is.unsorted(x)} is true if \code{any(x !=
     sort(x))} (and there are no \code{NA}s).
 
   \code{method = "shell"} uses Shellsort and was the only method

@@ -139,7 +139,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   there are \eqn{2^{(n-1)}} possible orderings for the leaves
   in a cluster tree, or dendrogram.
   The algorithm used in \code{hclust} is to order the subtree so that
-  the tighter cluster is on the left (the last, i.e. most recent,
+  the tighter cluster is on the left (the last, i.e., most recent,
   merge of the left subtree is at a lower value than the last
   merge of the right subtree).
   Single observations are the tightest clusters possible,

@@ -45,7 +45,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
     Var(X) = exp(2*mu + sigma^2)*(exp(sigma^2) - 1)} and
   hence the coefficient of variation is
   \eqn{\sqrt{exp(\sigma^2) - 1}}{sqrt(exp(sigma^2) - 1)} which is
-    approximately \eqn{\sigma} when that is small (e.g. \eqn{\sigma < 1/2}).
+    approximately \eqn{\sigma} when that is small (e.g., \eqn{\sigma < 1/2}).
 %% Mode = exp(max(0, mu - sigma^2)); Median = exp(mu)
 }
 \note{

@@ -7,7 +7,7 @@
 \description{
   The value of the internal evaluation of a top-level \R expression
   is always assigned to \code{.Last.value} (in \code{package:base})
-  before further processing (e.g. printing).
+  before further processing (e.g., printing).
 }
 \details{
   The value of a top-level assignment \emph{is} put in \code{.Last.value},

@@ -39,7 +39,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     (s. \code{pch}).}
   \item{cex.fact}{numeric \emph{shrinking} factor to be used for the
     center points \emph{when there are flower leaves},
-    i.e. \code{cex / cex.fact} is used for these.}
+    i.e., \code{cex / cex.fact} is used for these.}
   \item{size}{of sunflower leaves in inches, 1[in] := 2.54[cm].
     Default: 1/8\", approximately 3.2mm.}
   \item{seg.col}{color to be used for the \bold{seg}ments which make the

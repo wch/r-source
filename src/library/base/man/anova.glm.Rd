@@ -34,9 +34,9 @@
 
   The table will optionally contain test statistics (and P values)
   comparing the reduction in deviance for the row to the residuals.
-  For models with known dispersion (e.g. binomial and Poisson fits)
+  For models with known dispersion (e.g., binomial and Poisson fits)
   the chi-squared test is most appropriate, and for those with
-  dispersion estimated by moments (e.g. \code{gaussian},
+  dispersion estimated by moments (e.g., \code{gaussian},
   \code{quasibinomial} and \code{quasipoisson} fits) the F test is
   most appropriate.  Mallows' \eqn{C_p}{Cp} statistic is the residual
   deviance plus twice the estimate of \eqn{\sigma^2}{sigma^2} times

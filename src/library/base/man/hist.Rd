@@ -81,7 +81,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   fraction of the data points falling in the cells.
   
   If \code{right = TRUE} (default), the histogram cells are intervals
-  of the form \code{(a, b]}, i.e. they include their right-hand endpoint,
+  of the form \code{(a, b]}, i.e., they include their right-hand endpoint,
   but not their left one, with the exception of the first cell when
   \code{include.lowest} is \code{TRUE}.
 

@@ -4,8 +4,8 @@
 \description{
   Evaluates new variables as if they had been part of the formula of the
   specified model.  This ensures that the same \code{na.action} and
-  \code{subset} arguments are applied and allows e.g. \code{x} to be
-  recovered for a model using \code{sin(x)} as a predictor.
+  \code{subset} arguments are applied and allows, for example, \code{x}
+  to be recovered for a model using \code{sin(x)} as a predictor.
 }
 \usage{
 expand.model.frame(model, extras, envir=environment(formula(model)),

@@ -36,7 +36,7 @@ xyz.coords(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL, log=NULL,
 }
 \value{
   A list with the components
-  \item{x}{numeric (i.e. \code{\link{double}}) vector of abscissa values.}
+  \item{x}{numeric (i.e., \code{\link{double}}) vector of abscissa values.}
   \item{y}{numeric vector of the same length as \code{x}.}
   \item{z}{numeric vector of the same length as \code{x}.}
   \item{xlab}{\code{character(1)} or \code{NULL}, the axis label of \code{x}.}

@@ -39,7 +39,7 @@ isoreg(x, y = NULL)
   \item{yf}{fitted values corresponding to \emph{ordered} x values.}
   \item{yc}{cumulative y values corresponding to \emph{ordered} x values.}
   \item{iKnots}{integer vector giving indices where the fitted curve jumps,
-    i.e. where the convex minorant has kinks.}
+    i.e., where the convex minorant has kinks.}
   \item{isOrd}{logical indicating if original x values were ordered
     increasingly already.}
   \item{ord}{\code{if(!isOrd)}: integer permutation \code{\link{order}(x)} of

@@ -38,6 +38,6 @@ coplot(log(Volume) ~ log(Girth) | Height, data = trees,
 summary(fm1 <- lm(log(Volume) ~ log(Girth), data = trees))
 summary(fm2 <- update(fm1, ~ . + log(Height), data = trees))
 step(fm2)
-## i.e. Volume ~= c * Height * Girth^2  seems reasonable
+## i.e., Volume ~= c * Height * Girth^2  seems reasonable
 }
 \keyword{datasets}

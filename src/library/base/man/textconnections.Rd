@@ -52,7 +52,7 @@ textConnection(object, open = "r")
   output.
 
   On platforms where \code{vsnprintf} does not return the needed length
-  of output (e.g. Windows) there is a 100,000 character limit on the
+  of output (e.g., Windows) there is a 100,000 character limit on the
   length of line for output connections: longer lines will be truncated
   with a warning.
 }

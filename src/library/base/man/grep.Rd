@@ -96,7 +96,7 @@ if(any(i <- grep("foo",txt)))
 i # 2 and 4
 txt[i]
 
-## Double all 'a' or 'b's;  "\\" must be escaped, i.e. `doubled'
+## Double all 'a' or 'b's;  "\\" must be escaped, i.e., `doubled'
 %% and escaped even once more in this *.Rd file!
 gsub("([ab])", "\\\\1_\\\\1_", "abc and ABC")
 

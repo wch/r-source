@@ -54,7 +54,7 @@ is.ts(x)
 
   Class \code{"ts"} has a number of methods.  In particular arithmetic
   will attempt to align time axes, and subsetting to extract subsets of
-  series can be used (e.g. \code{EuStockMarkets[, "DAX"]}).  However,
+  series can be used (e.g., \code{EuStockMarkets[, "DAX"]}).  However,
   subsetting the first (or only) dimension will return a matrix or
   vector, as will matrix subsetting.
 

@@ -31,7 +31,7 @@ La.chol(x)
   that \eqn{R'R = x} when \code{x} is symmetric.
 
   If \code{pivot = FALSE} and \code{x} is not non-negative definite an
-  error occurs.  If \code{x} is positive semi-definite (i.e. some zero
+  error occurs.  If \code{x} is positive semi-definite (i.e., some zero
   eigenvalues) an error will also occur, as a numerical tolerance is used.
 
   If \code{pivot = TRUE}, then the Choleski decomposition of a positive

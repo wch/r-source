@@ -12,8 +12,8 @@ anova(object, \dots)
   fitted model objects.
 }
 \arguments{
-  \item{object}{an object containing the results returned
-    by a model fitting function (e.g. \code{lm} or \code{glm}).}
+  \item{object}{an object containing the results returned by a model
+    fitting function (e.g., \code{lm} or \code{glm}).} 
   \item{\dots}{additional objects of the same type.}
 }
 \value{

@@ -58,6 +58,6 @@ hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 sv9 <- svd(h9 <- hilbert(9))$ d
 kappa(h9)# pretty high!
 kappa(h9, exact = TRUE) == max(sv9) / min(sv9)
-kappa(h9, exact = TRUE) / kappa(h9) # .677 (i.e. rel.error = 32\%)
+kappa(h9, exact = TRUE) / kappa(h9) # .677 (i.e., rel.error = 32\%)
 }
 \keyword{math}

@@ -1,21 +1,20 @@
 \name{sample}
+\alias{sample}
 \title{Random Samples and Permutations}
+\description{
+  \code{sample} takes a sample of the specified size from the elements
+  of \code{x} using either with or without replacement.
+}
 \usage{
 sample(x, size, replace = FALSE, prob = NULL)
 }
-\alias{sample}
 \arguments{
-  \item{x}{Either a (numeric, complex, character or logical)
-    vector of more than one element from which to
-    choose, or a positive integer.}
+  \item{x}{Either a (numeric, complex, character or logical) vector of
+    more than one element from which to choose, or a positive integer.}
   \item{size}{non-negative integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}
   \item{prob}{A vector of probability weights for obtaining the elements
     of the vector being sampled.}
-}
-\description{
-  \code{sample} takes a sample of the specified size from
-  the elements of \code{x} using either with or without replacement.
 }
 \details{
   If \code{x} has length 1, sampling takes place from
@@ -51,8 +50,8 @@ sample(x,replace=TRUE)
 # 100 Bernoulli trials
 sample(c(0,1), 100, replace = TRUE)
 
-## More careful bootstrapping --  Consider this when
-## using sample() programmatically (i.e. in your function or simulation)!
+## More careful bootstrapping --  Consider this when using sample()
+## programmatically (i.e., in your function or simulation)!
 
 # sample()'s surprise -- example
 x <- 1:10

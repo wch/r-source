@@ -48,7 +48,7 @@ quasipoisson(link = "log")
     the variance function.}
   \item{object}{the function \code{family} accesses the \code{family}
     objects which are stored within objects created by modelling
-    functions (e.g. \code{glm}).}
+    functions (e.g., \code{glm}).}
   \item{\dots}{further arguments passed to methods.}
 }
 \description{

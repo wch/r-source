@@ -23,7 +23,7 @@ getTaskCallbackNames()
 \note{
   One can use \code{\link{taskCallbackManager}}
   to manage user-level task callbacks,
-  i.e. S-language functions, entirely within
+  i.e., S-language functions, entirely within
   the S language and access the names
   more directly.
 }

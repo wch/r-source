@@ -26,7 +26,7 @@ is.nan(x)
 \details{
   \code{is.finite} returns a vector of the same length as \code{x}
   the jth element of which is \code{TRUE} if \code{x[j]} is
-  finite (i.e. it is not one of the values \code{NA}, \code{NaN},
+  finite (i.e., it is not one of the values \code{NA}, \code{NaN},
   \code{Inf} or \code{-Inf}).  All elements of character and
   generic (list) vectors are false, so \code{is.finite} is only useful for
   logical, integer, numeric and complex vectors.  Complex numbers are
@@ -34,7 +34,7 @@ is.nan(x)
 
   \code{is.infinite} returns a vector of the same length as \code{x}
   the jth element of which is \code{TRUE} if \code{x[j]} is
-  infinite (i.e. equal to one of \code{Inf} or \code{-Inf}).
+  infinite (i.e., equal to one of \code{Inf} or \code{-Inf}).
 
   \code{is.nan} tests if a numeric value is \code{NaN}.  Do not test
   equality to \code{NaN}, or even use \code{\link{identical}},

@@ -42,7 +42,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 
   Weights can be specified by a \code{weights} argument, but should not
   be used with an \code{Error} term, and are incompletely supported
-  (e.g. not by \code{\link{model.tables}}).
+  (e.g., not by \code{\link{model.tables}}).
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses

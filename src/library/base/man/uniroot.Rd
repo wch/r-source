@@ -17,7 +17,7 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
 }
 \description{
   The function \code{uniroot} searches the interval from \code{lower}
-  to \code{upper} for a root (i.e. zero) of the function \code{f} with
+  to \code{upper} for a root (i.e., zero) of the function \code{f} with
   respect to its first argument.
 }
 \details{

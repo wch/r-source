@@ -6,11 +6,13 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 }
 \arguments{
   \item{x}{numeric.}
-  \item{vec}{numeric, sorted (weakly) increasingly, of length \code{N}, say.}
+  \item{vec}{numeric, sorted (weakly) increasingly, of length \code{N},
+    say.}
   \item{rightmost.closed}{logical; if true, the rightmost interval,
     \code{vec[N-1] .. vec[N]} is treated as \emph{closed}, see below.}
   \item{all.inside}{logical; if true, the returned indices are coerced
-    into \eqn{\{1,\dots,N-1\}}, i.e. 0 is mapped to 1 and N to N-1.}
+    into \eqn{\{1,\dots,N-1\}}, i.e., 0 is mapped to 1 and \eqn{N} to
+    \eqn{N-1}.}
 }
 \description{
   Find the indices of \code{x} in \code{vec}, where \code{vec} must be

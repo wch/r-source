@@ -45,7 +45,7 @@ Filters
   filters may be selected.
 
   If you would like to display files in a particular directory,
-  give a fully qualified file mask (e.g. \code{'c:\\\\*.*'})
+  give a fully qualified file mask (e.g., \code{'c:\\\\*.*'})
   in the \code{default} argument.  If a directory is not given, the
   dialog will start in the current directory the first time, and
   ``remember'' the last directory on subsequent invocations.

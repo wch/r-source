@@ -7,14 +7,14 @@
 \title{Random Number Generation}
 \description{
   \code{.Random.seed} is an integer vector, containing the random number
-  generator (RNG) \bold{state} for random number generation in \R. It
+  generator (RNG) \bold{state} for random number generation in \R.  It
   can be saved and restored, but should not be altered by the user.
 
   \code{RNGkind} is a more friendly interface to query or set the kind
   of RNG in use.
 
   \code{RNGversion} can be used to set the random generators as they
-  were in an earlier \R{} version (for reproducibility).
+  were in an earlier \R version (for reproducibility).
   
   \code{set.seed} is the recommended way to specify seeds.
 }
@@ -36,7 +36,7 @@ set.seed(seed, kind = NULL)
     to return to the \R default.}
   \item{seed}{a single value, interpreted as an integer.}
   \item{vstr}{a character string containing a version number,
-    e.g. \code{"1.6.2"}}
+    e.g., \code{"1.6.2"}}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1, n2, \dots}{integers. See the details for how many are required
     (which depends on \code{rng.kind}).}
