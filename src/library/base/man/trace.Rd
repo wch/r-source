@@ -11,7 +11,7 @@
   call to \code{\link{browser}} or \code{\link{recover}}) at chosen
   places in any function.  A call to \code{untrace} cancels the tracing.
   Specified methods can be traced the same way, without tracing all
-  calls to the function.  Trace code can be any R expression.
+  calls to the function.  Trace code can be any \R expression.
 }
 \usage{
 trace(what, tracer, exit, at, print = TRUE, signature = NULL)
@@ -105,21 +105,21 @@ untrace(what)
 
   Tracing a method is basically just like tracing a function, with the
   exception that the traced version is stored by a call to
-  \code{\link{setMethod}} rather than by direct assignment, and so is
+  \code{\link[methods]{setMethod}} rather than by direct assignment, and so is
   the untraced version after a call to \code{untrace}.
 
   The version of \code{trace} described here is largely compatible with
   the version in S-Plus, although the two work by entirely different
   mechanisms.  The S-Plus \code{trace} uses the session frame, with the
-  result that tracing never carries over from one session to another (R
+  result that tracing never carries over from one session to another (\R
   does not have a session frame).  Another relevant distinction has
   nothing directly to do with \code{trace}:  The browser in S-Plus
   allows changes to be made to the frame being browsed, and the changes
-  will persist after exiting the browser.  The R browser allows changes,
+  will persist after exiting the browser.  The \R browser allows changes,
   but they disappear when the browser exits.  This may be relevant in
   that the S-Plus version allows you to experiment with code changes
-  interactively, but the R version does not.  (A future revision may
-  include a ``destructive'' browser for R.)
+  interactively, but the \R version does not.  (A future revision may
+  include a ``destructive'' browser for \R.)
 }
 \note{  The version of function tracing that includes any of the
   arguments except for the function name requires the methods package
