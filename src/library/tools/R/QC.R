@@ -2447,6 +2447,8 @@ function(db)
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
     files_with_unknown_encoding <- NULL
+    files_with_non_ASCII_meta_data <- NULL
+    files_with_non_ASCII_section_titles <- NULL
     files_with_missing_mandatory_tags <- NULL
     files_with_duplicated_unique_tags <- NULL
     files_with_bad_name <- files_with_bad_title <- NULL
@@ -2463,6 +2465,23 @@ function(db)
         if(length(x$meta$encoding) && is.na(x$meta$encoding))
             files_with_unknown_encoding <-
                 c(files_with_unknown_encoding, f)
+        for(tag in c("aliases", "doc_type", "encoding")) {
+            if(any(ind <- !.is_ASCII(x$meta[[tag]])))
+                files_with_non_ASCII_meta_data <-
+                    rbind(files_with_non_ASCII_meta_data,
+                          cbind(f, tag, x$meta[[tag]][ind]))
+        }
+        ## Non-ASCII user-defined section titles.
+        ## <NOTE>
+        ## Rd_parse() re-encodes these if necessary (and possible), but
+        ## we should still be able to catch the non-ASCII ones provided
+        ## that the native encoding extends ASCII.
+        user_defined_section_titles <- sapply(x$data$tags, "[", 2)
+        if(any(ind <- !.is_ASCII(user_defined_section_titles)))
+            files_with_non_ASCII_section_titles <-
+                rbind(files_with_non_ASCII_section_titles,
+                      cbind(f, user_defined_section_titles[ind]))
+        ## </NOTE>
         tags <- sapply(x$data$tags, "[[", 1)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
@@ -2499,6 +2518,8 @@ function(db)
     val <- list(files_with_surely_bad_Rd,
                 files_with_likely_bad_Rd,
                 files_with_unknown_encoding,
+                files_with_non_ASCII_meta_data,
+                files_with_non_ASCII_section_titles,
                 files_with_missing_mandatory_tags,
                 files_with_duplicated_unique_tags,
                 files_with_bad_name,
@@ -2508,6 +2529,8 @@ function(db)
         c("files_with_surely_bad_Rd",
           "files_with_likely_bad_Rd",
           "files_with_unknown_encoding",
+          "files_with_non_ASCII_meta_data",
+          "files_with_non_ASCII_section_titles",
           "files_with_missing_mandatory_tags",
           "files_with_duplicated_unique_tags",
           "files_with_bad_name",
@@ -2562,6 +2585,34 @@ function(x, ...)
         writeLines(c("Rd files with unknown encoding:",
                      paste(" ", x$files_with_unknown_encoding),
                      ""))
+    }
+
+    if(length(x$files_with_non_ASCII_meta_data)) {
+        writeLines("Rd files with invalid non-ASCII meta data:")
+        bad <- x$files_with_non_ASCII_meta_data
+        ## Reinstate the Rd markup tags for better intelligibility.
+        bad[ , 2] <- sub("aliases", "\\\\alias", bad[ , 2])
+        bad[ , 2] <- sub("doc_type", "\\\\docType", bad[ , 2])
+        bad[ , 2] <- sub("encoding", "\\\\encoding", bad[ , 2])
+        ind <- split(seq(length = NROW(bad)), bad[, 1])
+        for(i in seq(along = ind)) {
+            writeLines(c(paste(" ", paste(names(ind)[i], ":", sep = "")),
+                         paste("   ",
+                               apply(bad[ind[[i]], -1, drop = FALSE],
+                                     1, paste, collapse = " "))))
+        }
+        writeLines("")
+    }
+
+    if(length(x$files_with_non_ASCII_section_titles)) {
+        writeLines("Rd files with non-ASCII section titles:")
+        bad <- x$files_with_non_ASCII_section_titles
+        bad <- split(bad[, 2], bad[, 1])
+        for(i in seq(along = bad)) {
+            writeLines(c(paste(" ", paste(names(bad)[i], ":", sep = "")),
+                         strwrap(bad[[i]], indent = 4, exdent = 6),
+                         ""))
+        }
     }
 
     if(length(x$files_with_bad_name)) {
@@ -2641,6 +2692,38 @@ function(dfile)
         !is.na(priority <- db["Priority"]) && priority == "base"
 
     out <- list()                       # For the time being ...
+
+    ## Check encoding-related things first.
+
+    ## All field tags must be ASCII.
+    if(any(ind <- !.is_ASCII(names(db))))
+        out$fields_with_non_ASCII_tags <- names(db)[ind]
+    ## For all fields used by the R package management system, values
+    ## must be ASCII we well (so that the RPM works in a C locale).
+    ASCII_fields <- c("Package", "Version", "Depends", "Suggests",
+                      "Imports", "Priority", "Encoding")
+    ASCII_fields <- ASCII_fields[ASCII_fields %in% names(db)]
+    if(any(ind <- !.is_ASCII(db[ASCII_fields])))
+        out$fields_with_non_ASCII_values <- ASCII_fields[ind]
+
+    ## Determine encoding and re-encode if necessary and possible.
+    if("Encoding" %in% names(db)) {
+        encoding <- db["Encoding"]
+        if(Sys.getlocale("LC_CTYPE") != "C")
+            db <- utils::iconv(db, encoding, "")
+    }
+    else if(!all(.is_ISO_8859(db))) {
+        ## No valid Encoding meta-data.
+        ## Determine whether we can assume Latin1.
+        out$missing_encoding <- TRUE
+    }
+
+    if(any(is.na(nchar(db, "c")))) {
+        ## Ouch, invalid in the current locale.
+        ## (Can only happen in a MBCS locale.)
+        ## Try re-encoding from Latin1.
+        db <- utils::iconv(db, "latin1", "")
+    }
 
     ## Mandatory entries in DESCRIPTION:
     ##   Package, Version, License, Description, Title, Author,
@@ -2747,6 +2830,18 @@ function(dfile)
 print.check_package_description <-
 function(x, ...)
 {
+    if(length(x$missing_encoding))
+        writeLines(c("Unknown encoding", ""))
+    if(length(x$fields_with_non_ASCII_tags)) {
+        writeLines("Fields with non-ASCII tags:")
+        .pretty_print(x$fields_with_non_ASCII_tags)
+        writeLines(c("All field tags must be ASCII.", ""))
+    }
+    if(length(x$fields_with_non_ASCII_values)) {
+        writeLines("Fields with non-ASCII values:")
+        .pretty_print(x$fields_with_non_ASCII_values)
+        writeLines(c("These fields must have ASCII values.", ""))
+    }
     if(length(x$missing_required_fields)) {
         writeLines("Required fields missing:")
         .pretty_print(x$missing_required_fields)
@@ -2963,7 +3058,7 @@ function(x)
     ## Note how we deal with S3 replacement methods found.
     ## These come out named "\method{GENERIC}{CLASS}<-" which we
     ## need to turn into 'GENERIC<-.CLASS'.
-    sub("\\\\(S3)?method\\{([._[:alnum:]]*)\\}\\{([._[:alnum:]]*)\\}(<-)?",
+    sub("\\\\(S3)?method\\{([._[:alnum:]]*|\\$|\\[\\[?)\\}\\{([._[:alnum:]]*)\\}(<-)?",
         "\\2\\4.\\3",
         x)
 }
@@ -2971,7 +3066,7 @@ function(x)
 ### * .S3_method_markup_regexp
 
 .S3_method_markup_regexp <-
-    "(\\\\(S3)?method\\{([._[:alnum:]]*)\\}\\{([._[:alnum:]]*)\\})"
+    "(\\\\(S3)?method\\{([._[:alnum:]]*|\\$|\\[\\[?)\\}\\{([._[:alnum:]]*)\\})"
 
 ### * .S4_method_markup_regexp
 
