@@ -1947,7 +1947,7 @@ We can use
   SEXP ans, dim, dimnames, class;
     ....
   PROTECT(class = allocVector(STRSXP, 1));
-  SET_STRING(class, 0, mkChar("mat"));
+  SET_STRING_ELT(class, 0, mkChar("mat"));
   classgets(ans, class);
   UNPROTECT(4);
   return(ans);
