@@ -11,7 +11,7 @@ SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
 # Comment next line to stop substitution of malloc and friends
-winalloc-CFLAGS=-DDANGER=1
+#winalloc-CFLAGS=-DDANGER=1
 
 ../ga.a: $(OBJS)
 
