@@ -143,6 +143,8 @@ BUG FIXES
 
     o	as.POSIXct() on character objects was ignoring `tz'.
 
+    o	plot() with small relative ranges gave an error, which e.g. broke
+	library(ts); plot(stl(ts(rep(1:7, 15), freq = 7), s.win = "per"))
 
 
 		CHANGES IN R VERSION 1.2.0
