@@ -43,7 +43,21 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* TRUE and FALSE conflict with the Mac --- Fortran.h still defines them... */
+	/* Undo SGI Madness */
+
+#ifdef ftrunc
+# undef ftrunc
+#endif
+#ifdef qexp
+# undef qexp
+#endif
+#ifdef qgamma
+# undef qgamma
+#endif
+
+
+/* ----- The following constants and entry points are part of the R API ---- */
+
 #define LTRUE	(1)
 #define LFALSE	(0)
 
@@ -140,88 +154,6 @@
 #define M_LN_SQRT_PId2	0.225791352644727432363097614947	/* log(sqrt(pi/2)) */
 #endif
 
-
-#ifdef MATHLIB_IN_R/* Mathlib in R */
-
-#include "Error.h"
-# define MATHLIB_ERROR(fmt,x)		error(fmt,x);
-# define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
-# define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
-# define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
-# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
-
-#else/* Mathlib standalone */
-
-#include <stdio.h>
-# define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1) }
-# define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
-# define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
-# define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
-# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
-#endif
-
-#define ME_NONE		0
-/*	no error */
-#define ME_DOMAIN	1
-/*	argument out of domain */
-#define ME_RANGE	2
-/*	value out of range */
-#define ME_NOCONV	4
-/*	process did not converge */
-#define ME_PRECISION	8
-/*	does not have "full" precision */
-#define ME_UNDERFLOW	16
-/*	and underflow occured (important for IEEE)*/
-
-
-#ifdef IEEE_754
-extern double m_zero;
-extern double m_one;
-/* extern double m_tiny; */
-#define ML_ERROR(x)	/* nothing */
-#define ML_POSINF	(m_one / m_zero)
-#define ML_NEGINF	((-m_one) / m_zero)
-#define ML_NAN		(m_zero / m_zero)
-#define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
-#define ML_VALID(x)	(!ISNAN(x))
-
-#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
-void ml_error(int n);
-#define ML_ERROR(x)	ml_error(x)
-#define ML_POSINF	DBL_MAX
-#define ML_NEGINF	(-DBL_MAX)
-#define ML_NAN		(-DBL_MAX)
-#define ML_UNDERFLOW	0
-#define ML_VALID(x)	(errno == 0)
-#endif
-
-#define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
-
-	/* old-R Compatibility */
-
-#define snorm	norm_rand
-#define sunif	unif_rand
-#define sexp	exp_rand
-
-	/* Undo SGI Madness */
-
-#ifdef ftrunc
-# undef ftrunc
-#endif
-#ifdef qexp
-# undef qexp
-#endif
-#ifdef qgamma
-# undef qgamma
-#endif
-
-	/* Name Hiding to Avoid Clashes with Fortran */
-
-#ifdef HIDE_NAMES
-# define d1mach	c_d1mach
-# define i1mach	c_i1mach
-#endif
-
 #ifndef R_NO_REMAP
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
@@ -282,7 +214,7 @@ void ml_error(int n);
 #define lfastchoose	Rf_lfastchoose
 #define lgammacor	Rf_lgammacor
 #define lgammafn	Rf_lgammafn
-#define log1p	Rf_log1p
+#define log1p		Rf_log1p
 #define pbeta		Rf_pbeta
 #define pbeta_raw	Rf_pbeta_raw
 #define pbinom		Rf_pbinom
@@ -376,73 +308,11 @@ double R_log(double x);
 double R_pow(double x, double y);
 double R_pow_di(double, int);
 
-	/* Machine Characteristics */
-
-double	d1mach(int);
-double	d1mach_(int*);
-int	i1mach(int);
-int	i1mach_(int*);
-
-	/* General Support Functions */
-
-int	imax2(int, int);
-int	imin2(int, int);
-double	fmax2(double, double);
-double	fmin2(double, double);
-double	fmod(double, double);
-double	fprec(double, double);
-double	fround(double, double);
-double	ftrunc(double);
-double	sign(double);
-double	fsign(double, double);
-double	fsquare(double);
-double	fcube(double);
-
 	/* Random Number Generators */
 
 double	norm_rand(void);
 double	unif_rand(void);
 double	exp_rand(void);
-
-	/* Chebyshev Series */
-
-int	chebyshev_init(double*, int, double);
-double	chebyshev_eval(double, double *, int);
-
-	/* Gamma and Related Functions */
-
-double	log1p(double); /* = log(1+x) {care for small x} */
-void	gammalims(double*, double*);
-double	lgammacor(double);
-double	gammafn(double);
-double	gamma_cody(double);
-double	lgammafn(double);
-void	dpsifn(double, int, int, int, double*, int*, int*);
-double	digamma(double);
-double	trigamma(double);
-double	tetragamma(double);
-double	pentagamma(double);
-
-double	choose(double, double);
-double	lchoose(double, double);
-double	fastchoose(double, double);
-double	lfastchoose(double, double);
-
-	/* Bessel Functions of All Kinds */
-
-double	bessel_i(double, double, double);
-double	bessel_j(double, double);
-double	bessel_k(double, double, double);
-double	bessel_y(double, double);
-void	I_bessel(double*, double*, long*, long*, double*, long*);
-void	J_bessel(double*, double*, long*,	 double*, long*);
-void	K_bessel(double*, double*, long*, long*, double*, long*);
-void	Y_bessel(double*, double*, long*,	 double*, long*);
-
-	/* Beta and Related Functions */
-
-double	beta(double, double);
-double	lbeta(double, double);
 
 	/* Normal Distribution */
 
@@ -586,24 +456,24 @@ double	rnbeta(double, double, double);
 
 	/* Non-central F Distribution */
 
-double	dnf(double, double, double, double, int);
+/* double	dnf(double, double, double, double, int); */
 double	pnf(double, double, double, double, int, int);
 double	qnf(double, double, double, double, int, int);
-double	rnf(double, double, double);
+/* double	rnf(double, double, double); */
 
 	/* Non-central Student t Distribution */
 
-double	dnt(double, double, double, int);
+/* double	dnt(double, double, double, int); */
 double	pnt(double, double, double, int, int);
 double	qnt(double, double, double, int, int);
-double	rnt(double, double);
+/* double	rnt(double, double); */
 
 	/* Studentized Range Distribution */
 
-double	dtukey(double, double, double, double, int);
+/* double	dtukey(double, double, double, double, int); */
 double	ptukey(double, double, double, double, int, int);
 double	qtukey(double, double, double, double, int, int);
-double	rtukey(double, double, double);
+/* double	rtukey(double, double, double); */
 
 /* Wilcoxon Rank Sum Distribution */
 
@@ -620,5 +490,138 @@ double dsignrank(double, double, int);
 double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
+
+
+/* ----------------- Private part of the header file ------------------- */
+
+#ifdef MATHLIB_IN_R/* Mathlib in R */
+
+#include "R_ext/Error.h"
+# define MATHLIB_ERROR(fmt,x)		error(fmt,x);
+# define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
+# define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
+# define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
+# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
+
+#else/* Mathlib standalone */
+
+#include <stdio.h>
+# define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1) }
+# define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
+# define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
+# define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
+# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
+#endif
+
+#define ME_NONE		0
+/*	no error */
+#define ME_DOMAIN	1
+/*	argument out of domain */
+#define ME_RANGE	2
+/*	value out of range */
+#define ME_NOCONV	4
+/*	process did not converge */
+#define ME_PRECISION	8
+/*	does not have "full" precision */
+#define ME_UNDERFLOW	16
+/*	and underflow occured (important for IEEE)*/
+
+
+#ifdef IEEE_754
+extern double m_zero;
+extern double m_one;
+#define ML_ERROR(x)	/* nothing */
+#define ML_POSINF	(m_one / m_zero)
+#define ML_NEGINF	((-m_one) / m_zero)
+#define ML_NAN		(m_zero / m_zero)
+#define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
+#define ML_VALID(x)	(!ISNAN(x))
+
+#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
+void ml_error(int n);
+#define ML_ERROR(x)	ml_error(x)
+#define ML_POSINF	DBL_MAX
+#define ML_NEGINF	(-DBL_MAX)
+#define ML_NAN		(-DBL_MAX)
+#define ML_UNDERFLOW	0
+#define ML_VALID(x)	(errno == 0)
+#endif
+
+#define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+
+	/* old-R Compatibility */
+
+#define snorm	norm_rand
+#define sunif	unif_rand
+#define sexp	exp_rand
+
+	/* Name Hiding to Avoid Clashes with Fortran */
+
+#ifdef HIDE_NAMES
+# define d1mach	c_d1mach
+# define i1mach	c_i1mach
+#endif
+
+	/* Machine Characteristics */
+
+double	d1mach(int);
+double	d1mach_(int*);
+int	i1mach(int);
+int	i1mach_(int*);
+
+	/* General Support Functions */
+
+int	imax2(int, int);
+int	imin2(int, int);
+double	fmax2(double, double);
+double	fmin2(double, double);
+double	fmod(double, double);
+double	fprec(double, double);
+double	fround(double, double);
+double	ftrunc(double);
+double	sign(double);
+double	fsign(double, double);
+double	fsquare(double);
+double	fcube(double);
+
+	/* Chebyshev Series */
+
+int	chebyshev_init(double*, int, double);
+double	chebyshev_eval(double, double *, int);
+
+	/* Gamma and Related Functions */
+
+double  log1p(double); /* = log(1+x) {care for small x} */
+void	gammalims(double*, double*);
+double	lgammacor(double);
+double	gammafn(double);
+double	gamma_cody(double);
+double	lgammafn(double);
+void	dpsifn(double, int, int, int, double*, int*, int*);
+double	digamma(double);
+double	trigamma(double);
+double	tetragamma(double);
+double	pentagamma(double);
+
+double	choose(double, double);
+double	lchoose(double, double);
+double	fastchoose(double, double);
+double	lfastchoose(double, double);
+
+	/* Bessel Functions of All Kinds */
+
+double	bessel_i(double, double, double);
+double	bessel_j(double, double);
+double	bessel_k(double, double, double);
+double	bessel_y(double, double);
+void	I_bessel(double*, double*, long*, long*, double*, long*);
+void	J_bessel(double*, double*, long*,	 double*, long*);
+void	K_bessel(double*, double*, long*, long*, double*, long*);
+void	Y_bessel(double*, double*, long*,	 double*, long*);
+
+	/* Beta and Related Functions */
+
+double	beta(double, double);
+double	lbeta(double, double);
 
 #endif
