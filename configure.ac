@@ -1438,7 +1438,6 @@ AC_CONFIG_HEADERS([src/include/config.h])
 AC_CONFIG_FILES(
 [Makeconf
   Makefile
-  afm/Makefile
   doc/Makefile
   doc/html/Makefile
   doc/html/search/Makefile

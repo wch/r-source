@@ -48,16 +48,16 @@ From the announcement of the change (2001-Feb-05)
 Some of the code contains different copyright statements.  It is used
 here in accordance with the copyright conditions in that code.
 
-afm/*___.afm
+src/library/grDevices/inst/afm/*___.afm
 
 	Copyright (c) 1984 to 1992 Adobe Systems Incorporated.
 
-afm/*l.afm
+src/library/grDevices/inst/afm/*l.afm
 
 	Copyright 1999 by (URW)++ Design & Development
 
-afm/CM_*.afm
-afm/cm*.afm
+src/library/grDevices/inst/afm/CM_*.afm
+src/library/grDevices/inst/afm/cm*.afm
 
 	are derived from afms which are copyright by the American
 	Mathematical Society, but `the AMS does require that the
