@@ -54,14 +54,17 @@ extern void seed_out(long *);
 extern double unif_rand(void);
 extern double norm_rand(void);
 
+extern void *R_chk_calloc(size_t, size_t);
+extern void *R_chk_realloc(void *, size_t);
+extern void R_chk_free(void *);
 
-#define PROBLEM_BUFSIZE 4096
-static char problem_buf[PROBLEM_BUFSIZE];
+#define R_PROBLEM_BUFSIZE 4096
+char R_problem_buf[R_PROBLEM_BUFSIZE];
 
 #define NULL_ENTRY
-#define PROBLEM		sprintf(problem_buf,
-#define RECOVER(x)	), error(problem_buf)
-#define WARNING(x)	), warning(problem_buf)
+#define PROBLEM		sprintf(R_problem_buf,
+#define RECOVER(x)	), error(R_problem_buf)
+#define WARNING(x)	), warning(R_problem_buf)
 
 #define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
@@ -91,15 +94,8 @@ extern int F77_SYMBOL(dblepr) (char *label, int *nchar,
 extern int F77_SYMBOL(intpr) (char *label, int *nchar,
 			      int *data, int *ndata);
 
-
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* !R_S_H */
-
-
-
-
-
