@@ -376,6 +376,16 @@ BUG FIXES
 		CHANGES IN R VERSION 1.7.2
 
 
+NEW FEATURES
+
+    o	R CMD check accepts "ORPHANED" as package maintainer. Package
+        maintainers can now officially orphanize a package, i.e.,
+        resign from maintaining a package.
+
+    o	format.info() now also works with `nsmall' in analogy with
+	format.default()
+
+
 BUG FIXES
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
@@ -425,6 +435,10 @@ BUG FIXES
 
     o   Printing `nls' objects misbehaved when `data' was a composite
         expression. 
+
+    o	Lapack error messages corrected (PR#3494) and incorrect call to 
+	DGEQP3 (PR#2867).
+
 
 
 		CHANGES IN R VERSION 1.7.1

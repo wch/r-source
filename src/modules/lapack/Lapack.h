@@ -168,8 +168,7 @@ void F77_NAME(dgesv)(const int *n, const int *nrhs, double *a,
 void F77_NAME(dgeqp3)(const int *m, const int *n,
 		      double *a, const int *lda,
 		      int *jpvt, double *tau,
-		      double *work, const int *lwork,
-		      double *rwork, int *info);
+		      double *work, const int *lwork, int *info);
 
 /* DORMQR applies Q or Q**T from the Left or Right */
 void F77_NAME(dormqr)(const char *side, const char *trans,

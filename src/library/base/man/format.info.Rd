@@ -1,12 +1,13 @@
 \name{format.info}
 \title{format(.) Information}
 \usage{
-format.info(x)
+format.info(x, nsmall = 0)
 }
 \alias{format.info}
 \arguments{
  \item{x}{(numeric) vector; potential argument of
    \code{\link{format}(x,\dots)}.}
+ \item{nsmall}{ (see \code{\link{format}(*, nsmall)}).}
 }
 \description{
   Information is returned on how \code{\link{format}(x, digits =
@@ -34,6 +35,9 @@ x <- pi*10^c(-10,-2,0:2,8,20)
 names(x) <- formatC(x,w=1,dig=3,format="g")
 cbind(sapply(x,format))
 t(sapply(x, format.info))
+
+## using at least 8 digits right of "."
+t(sapply(x, format.info, nsmall = 8))
 
 # Reset old options:
 options(dd)

@@ -161,15 +161,22 @@ h <- 1:17
 Z <- array(h, dim=c(3,4,2))
 Z <- array(0, c(3,4,2))
 
-if(FALSE)
- D <- 2*A*B + C + 1
+## So if @code{A}, @code{B} and @code{C} are all similar arrays
+## <init>
+A <- matrix(1:6, 3,2)
+B <- cbind(1, 1:3)
+C <- rbind(1, rbind(2, 3:4))
+stopifnot(dim(A) == dim(B),
+          dim(B) == dim(C))
+## <init/>
+D <- 2*A*B + C + 1
 
 a <- 1:9
 b <- 10*(1:3)
 
- ab <- a %o% b
-all(ab == outer(a,b,"*"))
-outer(a,b)
+ab <- a %o% b
+stopifnot(ab == outer(a,b,"*"),
+          ab == outer(a,b))
 
 x <- 1:10
 y <- -2:2
@@ -185,13 +192,44 @@ plot(as.numeric(names(fr)), fr, type="h",
 ##
 
 B <- aperm(A, c(2,1))
+stopifnot(identical(B, t(A)))
+
+## for example, @code{A} and @code{B} are square matrices of the same size
+## <init>
+A <- matrix(1:4, 2,2)
+B <- A - 1
+## <init/>
 
 A * B
 
 A %*% B
 
+
+## <init>
+x <- c(-1, 2)
+## <init/>
 x %*% A %*% x
 
+x %*% x
+stopifnot(x %*% x == sum(x^2))
+
+xxT <- cbind(x) %*% x
+xxT
+stopifnot(identical(xxT, x %*% rbind(x)))
+
+## crossprod  ... (ADD)
+
+## diag  ... (ADD)
+
+## linear equations  ... (ADD)
+
+## solve  ... (ADD)
+
+## eigen:
+## a symmetric matrix @code{Sm}
+## <init>
+Sm <- matrix(-2:6, 3); Sm <- (Sm + t(Sm))/4; Sm
+## </init>
 ev <- eigen(Sm)
 
 evals <- eigen(Sm)$values
@@ -243,19 +281,22 @@ stem(eruptions)
 
 hist(eruptions)
 
+## <IMG> postscript("images/hist.eps", ...)
 # make the bins smaller, make a plot of density
 hist(eruptions, seq(1.6, 5.2, 0.2), prob=TRUE)
 lines(density(eruptions, bw=0.1))
 rug(eruptions) # show the actual data points
-
+## dev.off() <IMG/>
 
 library(stepfun)
 plot(ecdf(eruptions), do.points=FALSE, verticals=TRUE)
 
+## <IMG> postscript("images/ecdf.eps", ...)
 long <- eruptions[eruptions > 3]
 plot(ecdf(long), do.points=FALSE, verticals=TRUE)
 x <- seq(3, 5.4, 0.01)
 lines(x, pnorm(x, mean=mean(long), sd=sqrt(var(long))), lty=3)
+## dev.off() <IMG/>
 
 par(pty="s")
 qqnorm(long); qqline(long)
@@ -268,4 +309,132 @@ qqline(x)
 
 library(ctest)
 shapiro.test(long)
+
+ks.test(long, "pnorm", mean=mean(long), sd=sqrt(var(long)))
+
+##@section One- and two-sample tests
+
+## scan() from stdin :
+## can be cut & pasted, but not parsed and hence not source()d
+##scn A <- scan()
+##scn 79.98 80.04 80.02 80.04 80.03 80.03 80.04 79.97
+##scn 80.05 80.03 80.02 80.00 80.02
+A <- c(79.98, 80.04, 80.02, 80.04, 80.03, 80.03, 80.04, 79.97,
+       80.05, 80.03, 80.02, 80, 80.02)
+##scn B <- scan()
+##scn 80.02 79.94 79.98 79.97 79.97 80.03 79.95 79.97
+B <- c(80.02, 79.94, 79.98, 79.97, 79.97, 80.03, 79.95, 79.97)
+
+## <IMG> postscript("images/ice.eps", ...)
+boxplot(A, B)
+## dev.off() <IMG/>
+
+t.test(A, B)
+
+var.test(A, B)
+
+t.test(A, B, var.equal=TRUE)
+
+wilcox.test(A, B)
+
+library(stepfun)
+plot(ecdf(A), do.points=FALSE, verticals=TRUE, xlim=range(A, B))
+plot(ecdf(B), do.points=FALSE, verticals=TRUE, add=TRUE)
+
+###--- @chapter Grouping, loops and conditional execution
+
+
+###--- @chapter Writing your own functions
+
+
+###--- @chapter Statistical models in R
+
+
+###--- @chapter Graphical procedures
+
+###--- @appendix A sample session
+
+## "Simulate starting a new R session, by
+rm(list=ls(all=TRUE))
+
+if(interactive())
+    help.start()
+
+x <- rnorm(50)
+y <- rnorm(x)
+plot(x, y)
+ls()
+rm(x, y)
+x <- 1:20
+w <- 1 + sqrt(x)/2
+dummy <- data.frame(x=x, y= x + rnorm(x)*w)
+dummy
+fm <- lm(y ~ x, data=dummy)
+summary(fm)
+fm1 <- lm(y ~ x, data=dummy, weight=1/w^2)
+summary(fm1)
+attach(dummy)
+lrf <- lowess(x, y)
+plot(x, y)
+lines(x, lrf$y)
+abline(0, 1, lty=3)
+abline(coef(fm))
+abline(coef(fm1), col = "red")
+detach()# dummy
+
+plot(fitted(fm), resid(fm),
+     xlab="Fitted values",
+     ylab="Residuals",
+     main="Residuals vs Fitted")
+qqnorm(resid(fm), main="Residuals Rankit Plot")
+rm(fm, fm1, lrf, x, dummy)
+
+
+## This is added in order to work have the file >> MM: FIX *.texi!
+oldwd <- getwd()
+setwd(system.file("data"))
+
+file.show("morley.tab")
+mm <- read.table("morley.tab")
+mm
+mm$Expt <- factor(mm$Expt)
+mm$Run <- factor(mm$Run)
+attach(mm)
+plot(Expt, Speed, main="Speed of Light Data", xlab="Experiment No.")
+fm <- aov(Speed ~ Run + Expt, data=mm)
+summary(fm)
+fm0 <- update(fm, . ~ . - Run)
+anova(fm0, fm)
+detach()
+rm(fm, fm0)
+setwd(oldwd) # reset working directory to what it was
+
+x <- seq(-pi, pi, len=50)
+y <- x
+f <- outer(x, y, function(x, y) cos(y)/(1 + x^2))
+oldpar <- par(no.readonly = TRUE)
+par(pty="s")
+contour(x, y, f)
+contour(x, y, f, nlevels=15, add=TRUE)
+fa <- (f-t(f))/2
+contour(x, y, fa, nlevels=15)
+par(oldpar)
+image(x, y, f)
+image(x, y, fa)
+objects(); rm(x, y, f, fa)
+th <- seq(-pi, pi, len=100)
+z <- exp(1i*th)
+par(pty="s")
+plot(z, type="l")
+w <- rnorm(100) + rnorm(100)*1i
+w <- ifelse(Mod(w) > 1, 1/w, w)
+plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+",xlab="x", ylab="y")
+lines(z)
+
+w <- sqrt(runif(100))*exp(2*pi*runif(100)*1i)
+plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+", xlab="x", ylab="y")
+lines(z)
+
+rm(th, w, z)
+## q()
 

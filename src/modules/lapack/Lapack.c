@@ -397,13 +397,13 @@ static SEXP modLa_zgeqp3(SEXP Ain)
     F77_CALL(zgeqp3)(&m, &n, COMPLEX(A), &m, INTEGER(jpvt), COMPLEX(tau),
 		     &tmp, &lwork, rwork, &info);
     if (info != 0)
-	error("error code %d from Lapack routine zqeqp3", info);
+	error("error code %d from Lapack routine zgeqp3", info);
     lwork = (int) tmp.r;
     work = (Rcomplex *) R_alloc(lwork, sizeof(Rcomplex));
     F77_CALL(zgeqp3)(&m, &n, COMPLEX(A), &m, INTEGER(jpvt), COMPLEX(tau),
 		     work, &lwork, rwork, &info);
     if (info != 0)
-	error("error code %d from Lapack routine zqeqp3", info);
+	error("error code %d from Lapack routine zgeqp3", info);
     val = PROTECT(allocVector(VECSXP, 4));
     nm = PROTECT(allocVector(STRSXP, 4));
     rank = PROTECT(allocVector(INTSXP, 1));
@@ -788,7 +788,6 @@ static SEXP modLa_dgeqp3(SEXP Ain)
 {
     int i, m, n, *Adims, info, lwork;
     double *work, tmp;
-    double *rwork;
     SEXP val, nm, jpvt, tau, rank, A;
 
     if (!(isMatrix(Ain) && isReal(Ain)))
@@ -797,22 +796,21 @@ static SEXP modLa_dgeqp3(SEXP Ain)
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     m = Adims[0];
     n = Adims[1];
-    rwork = (double *) R_alloc(2*n, sizeof(double));
 
     jpvt = PROTECT(allocVector(INTSXP, n));
     for (i = 0; i < n; i++) INTEGER(jpvt)[i] = 0;
     tau = PROTECT(allocVector(REALSXP, m < n ? m : n));
     lwork = -1;
     F77_CALL(dgeqp3)(&m, &n, REAL(A), &m, INTEGER(jpvt), REAL(tau),
-		     &tmp, &lwork, rwork, &info);
+		     &tmp, &lwork, &info);
     if (info < 0)
-	error("error code %d from Lapack routine dqeqp3", info);
+	error("error code %d from Lapack routine dgeqp3", info);
     lwork = (int) tmp;
     work = (double *) R_alloc(lwork, sizeof(double));
     F77_CALL(dgeqp3)(&m, &n, REAL(A), &m, INTEGER(jpvt), REAL(tau),
-		     work, &lwork, rwork, &info);
+		     work, &lwork, &info);
     if (info < 0)
-	error("error code %d from Lapack routine dqeqp3", info);
+	error("error code %d from Lapack routine dgeqp3", info);
     val = PROTECT(allocVector(VECSXP, 4));
     nm = PROTECT(allocVector(STRSXP, 4));
     rank = PROTECT(allocVector(INTSXP, 1));

@@ -259,11 +259,12 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x;
-    int n, w, d, e;
+    int n, nsmall, w, d, e;
     int wi, di, ei;
     checkArity(op, args);
     x = CAR(args);
     n = LENGTH(x);
+    nsmall = asInteger(CADR(args));
     w = 0;
     d = 0;
     e = 0;
@@ -278,12 +279,12 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case REALSXP:
-	formatReal(REAL(x), n, &w, &d, &e, 0);
+	formatReal(REAL(x), n, &w, &d, &e, nsmall);
 	break;
 
     case CPLXSXP:
 	wi = di = ei = 0;
-	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, 0);
+	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
 	n = -1;/* complex 'code' */
 	break;
 

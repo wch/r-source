@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.15 $'
+revision='$Revision: 1.16 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
@@ -101,7 +101,7 @@ if ${debug}; then set -x; fi
 
 get_dcf_field () {
   ## Get one field including all continuation lines from a DCF file.
-  ws="[         ]"              # space and tab
+  ws="[ 	]"              # space and tab
   sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
     sed -n "/^${1}:/{s/^${1}:${ws}*//;p;}
             /^${ws}/{s/^${ws}*//;p;}"
