@@ -832,7 +832,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (length(at) != length(lab))
 	    errorcall(call, "location and label lengths differ");
     }
-    UNPROTECT(2);
+    PROTECT(lab);
     ind = (int *) R_alloc(n, sizeof(int));
     for(i = 0; i < n; i++) ind[i] = i;
     rsort_with_index(REAL(at), ind, n);
@@ -1057,7 +1057,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	break;
     } /* end  switch(side, ..) */
-
+    UNPROTECT(3); /* lab, at, lab again */
     GMode(0, dd);
     GRestorePars(dd);
     /* NOTE: only record operation if no "error"  */
