@@ -113,9 +113,8 @@ though most readers will find the latter far more appealing.
 
 This manual describes the import and export facilities available either
 in @R{} itself or via packages which are available from @acronym{CRAN}.
-Some of the packages described are still under development (and hence in
-the Devel area on @acronym{CRAN}) but they already provide useful
-functionality.
+Some of the packages described are still under development but they
+already provide useful functionality.
 
 Unless otherwise stated, everything described in this manual is
 available for both Unix/Linux and Windows versions of @R{}.
@@ -1212,7 +1211,7 @@ returned by @code{sqlTables}: this precludes the use of @code{sqlFetch}.
 @subsection Package RMySQL
 @cindex MySQL database system
 
-Package @pkg{RMySQL} in the Devel area on @acronym{CRAN} provides an
+Package @pkg{RMySQL} on @acronym{CRAN} provides an
 interface to the MySQL database system (see @uref{http://www.mysql.com}
 and Dubois, 2000.).  This is part of a project to provide a common
 @acronym{API} for access from @R{} to relational DBMSs using
@@ -1233,12 +1232,11 @@ manager object, and then a call to @code{dbConnect} opens a database
 connection which can subsequently be closed by a call to the generic
 function @code{close}.
 
-@findex dbExec
+@findex quickSQL
 @findex dbExecStatement
-@acronym{SQL} queries can be sent by either @code{dbExec} or
-@code{dbExecStatement}.  @code{dbExec} sends the query and retrieves the
-results as a list.  (It will fail unless the results are from a
-SELECT-like statement.)  @code{dbExecStatement} sends the query and
+@acronym{SQL} queries can be sent by either @code{quickSQL} or
+@code{dbExecStatement}.  @code{quickSQL} sends the query and retrieves the
+results as a data frame.   @code{dbExecStatement} sends the query and
 returns an object of class @code{"MySQLResultSet"} which can be used to
 retrieve the results, and subsequently used to @code{close} the result.
 
@@ -1275,8 +1273,7 @@ will need to be uploaded to the MySQL host.
     'load data infile "/tmp/arrests.dat" into table arrests')
 > unlink("/tmp/arrests.dat")
 ## Select from the loaded database.
-> as.data.frame(dbExec(con,
-    "select * from arrests where Rape > 30 order by Murder"))
+> quickSQL(con, "select * from USArrests where Rape > 30 order by Murder")
   Murder Assault UrbanPop Rape
 1    7.9     204       78 38.7
 2    8.1     294       80 31.0
