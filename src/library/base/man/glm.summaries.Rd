@@ -14,7 +14,8 @@ fitted.values(x) ; fitted(x)
 residuals(x, type="deviance")
 
 print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
-              na.print="", symbolic.cor = p > 4, signif.stars= TRUE, ...)
+              na.print="", symbolic.cor = p > 4,
+	      signif.stars= .Options$show.signif.stars, ...)
 }
 \alias{summary.glm}
 \alias{summary.glm.null}

@@ -3,6 +3,7 @@ format <- function(x, ...) UseMethod("format")
 ###	 -----
 ###----- FIXME ----- the digits handling should rather happen in
 ###	 -----       in .Internal(format(...))   in  ../../main/paste.c !
+###--- also the 'names' should be kept INTERNALLY !
 format.default <- function(x, trim=FALSE, digits=NULL)
 {
         if(!is.null(digits)) {
@@ -16,9 +17,8 @@ format.default <- function(x, trim=FALSE, digits=NULL)
                         .Internal(format(unlist(x),trim=trim))),
                  paste, collapse=", "),
                ##else: numeric, complex, character, ??? :
-               .Internal(format(x, trim=trim)))
+               structure(.Internal(format(x, trim = trim)), names=names(x)))
 }
-
 
 ##-- this should also happen in	C(.) :
 ##	.Internal(format(..) should work  with  'width =' and 'flag=.."

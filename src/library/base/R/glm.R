@@ -301,7 +301,8 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 		cat("  [contrasts: ",
 			apply(cbind(names(co),co), 1, paste, collapse="="), "]")
 	cat(":\n")
-	print.default(round(x$coefficients, digits), print.gap = 2)
+	print.default(format(x$coefficients, digits=digits),
+		      print.gap = 2, quote = FALSE)
 	cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
 		 x$df.residual, "Residual\n")
 	cat("Null Deviance:    ", format(signif(x$null.deviance, digits)), "\n")
@@ -561,9 +562,8 @@ summary.glm <- function(object, dispersion = NULL,
 }
 
 print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
-	formatfun = format, na.print = "",
-	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
-	...)
+	na.print = "", symbolic.cor = p > 4,
+	signif.stars= .Options$show.signif.stars, ...)
 {
 	cat("\nCall:\n")
 	cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")

@@ -16,7 +16,8 @@ residuals(x)
 weights(x)
 
 print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
-              symbolic.cor = p > 4, signif.stars= TRUE, ...)
+              symbolic.cor = p > 4,
+	      signif.stars= .Options$show.signif.stars, ...)
 }
 \alias{anova.lm}
 \alias{anova.lm.null}

@@ -186,7 +186,8 @@ print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 {
 	cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
 	cat("Coefficients:\n")
-	print(coef(x))
+	print.default(format(coef(x), digits=digits),
+		      print.gap = 2, quote = FALSE)
 	cat("\n")
 	invisible(x)
 }
@@ -486,7 +487,7 @@ predict.lm <- function(object, newdata = model.frame(object),
     else rss <- sum(r^2 * w)
     df <- n - p
     res.var <- rss/df
-  } else 
+  } else
     res.var <- scale^2
   R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
   vcov <- res.var * R
@@ -512,7 +513,7 @@ predict.lm <- function(object, newdata = model.frame(object),
     colnames(predictor) <- c("fit","lwr","upr")
   }
   if (se.fit)
-    list(fit = predictor, se.fit = sqrt(ip), 
+    list(fit = predictor, se.fit = sqrt(ip),
       df = df, residual.scale = sqrt(res.var))
   else predictor
 }
