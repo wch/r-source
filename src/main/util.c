@@ -313,7 +313,7 @@ int conformable(SEXP x, SEXP y)
 	PROTECT(x = getAttrib(x, R_DimSymbol));
 	y = getAttrib(y, R_DimSymbol);
 	UNPROTECT(1);
-	if ((n = LENGTH(x)) != LENGTH(y))
+	if ((n = length(x)) != length(y))
 		return 0;
 	for (i = 0; i < n; i++)
 		if (INTEGER(x)[i] != INTEGER(y)[i])
