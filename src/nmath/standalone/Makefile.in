@@ -44,8 +44,8 @@ SOURCES = \
 	ptukey.c qtukey.c \
 	wilcox.c \
 	signrank.c
-DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = sunif.o $(SOURCES:.c=.o)
+DEPENDS = $(SOURCES:.c=.ad)
+OBJECTS = sunif.o $(SOURCES:.c=.ao)
 LOBJECTS = sunif.lo $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -57,7 +57,13 @@ SHLIB = libRmath.$(SHLIB_EXT)
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
 
-.SUFFIXES: .c .f .d .lo .o
+.SUFFIXES: .c .f .ad .lo .ao
+
+.c.ad:
+	@echo "making $@ from $<"
+	@$(CC) -M $(ALL_CPPFLAGS) $< > $@
+.c.ao:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 
 .c.lo:
 	$(CC) $(ALL_CPPFLAGS) $(CPICFLAGS) $(ALL_CFLAGS) -c $< -o $@
@@ -81,7 +87,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES)
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
-	@cat $(DEPENDS) >> Makefile
+	@cat $(DEPENDS) | sed s/\.o:/.ao:/>> Makefile
+	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
 	@touch $@
 
 
