@@ -145,3 +145,8 @@ topfun(2, fun1)
 form <- cbind(log(inflowd1),log(inflowd2),log(inflowd3),
     log(inflowd4),log(inflowd5),log(inflowd6)) ~ precip*I(Tmax^2)
 terms(form) # error in 1.2.2
+
+## PR 881 Incorrect values in non-central chisq values on Linux, 2001-03-21
+x <- dchisq(c(7.1, 7.2, 7.3), df=2,ncp=20)
+stopifnot(all(diff(x) > 0))
+## on 1.2.2 on RH6.2 i686 Linux x = 0.01140512 0.00804528 0.01210514
