@@ -128,7 +128,7 @@ foreach $manfile (@mandir) {
 		    $tmp2 =~ s+/+\\+g;
 		}
 		$cmd = "tbl $tmpfile | troff -Tlatin1 -ms | grotty -buo > $tmp2";
-		system("$cmd");
+		system("$cmd") ==0 or die "cannot execute nroff cmd";
 		unlink($tmpfile);
 		open hlpfile, "<$tmp2" || die "Couldn't open '$tmp2'\n";
 		open dest, ">$destfile" || die "Couldn't open '$destfile'\n";
