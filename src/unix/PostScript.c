@@ -467,6 +467,7 @@ void PostScriptPolyline(FILE *fp, double *x, double *y, int nxy)
 		fprintf(fp, "%.2f %.2f l\n", x[i], y[i]);
 	fprintf(fp, "o\n");
 }
+
 static void PostScriptWriteString(FILE *fp, char *str)
 {
 	fputc('(', fp);

@@ -1679,7 +1679,7 @@ void GNewPlot(DevDesc *dd, int recording)
 	dd->gp.currentFigure = dd->dp.currentFigure;
 	if (dd->gp.currentFigure > dd->gp.lastFigure) {
 		if (!dd->gp.new) {
-			if (dd->gp.ask)
+			if (dd->gp.ask && recording)
 				NewFrameConfirm();
 			if (recording)
 				initDisplayList(dd);
@@ -2373,7 +2373,10 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 				count = 0;
 			}
 		}
+/*
 		x1 = x[i-1]; y1 = y[i-1];
+*/
+		x1 = x2; y1 = y2;
 	}
 
 	C_free((char *) xx);

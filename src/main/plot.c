@@ -122,6 +122,25 @@ SEXP do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
+	/* ProcessInLinePars handles inline par specifications */
+	/* in graphics functions.  It does this by calling */
+	/* Specify2 which is in par.c */
+
+int Specify2(char*, SEXP, DevDesc*);
+
+void ProcessInlinePars(SEXP s, DevDesc *dd)
+{
+	if(isList(s)) {
+		while(s != R_NilValue) {
+			if(isList(CAR(s)))
+				ProcessInlinePars(CAR(s), dd);
+			else if(TAG(s) != R_NilValue)
+				Specify2(CHAR(PRINTNAME(TAG(s))), CAR(s), dd);
+			s = CDR(s);
+		}
+	}
+}
+
 	/* GetPar is intended for looking through a list */
 	/* typically that bound to ... for a particular */
 	/* parameter value.  This is easier than trying */
@@ -354,6 +373,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	args = CDR(args);
 
 	GSavePars(dd);
+	ProcessInlinePars(args, dd);
 
 	if(isInteger(xlim)) {
 		if(INTEGER(xlim)[0] == NA_INTEGER || INTEGER(xlim)[1] == NA_INTEGER)
@@ -1941,6 +1961,8 @@ SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
+	/* CONTOUR PLOTTING */
+	
 	/**** stuff for contour plots ****/
 
 typedef struct SEG {
@@ -1987,24 +2009,35 @@ static void SwapSeg(SEGP seg)
 	/* Determine the entry direction to the next cell */
 	/* and update the cell indices */
 
+#ifdef OLD
+#define XMATCH(x0,x1) (fabs(x0-x1)<xtol)
+#define YMATCH(y0,y1) (fabs(y0-y1)<ytol)
+#else
+#define XMATCH(x0,x1) (fabs(x0-x1)==0)
+#define YMATCH(y0,y1) (fabs(y0-y1)==0)
+#endif
+
+static double xtol;
+static double ytol;
+
 static int SegDir(double xend, double yend, double *x, double *y, int *i, int *j, int nx, int ny)
 {
-	if(yend == y[*j]) {
+	if(YMATCH(yend, y[*j])) {
 		if(*j == 0) return 0;
 		*j = *j - 1;
 		return 3;
 	}
-	if(xend == x[*i]) {
+	if(XMATCH(xend, x[*i])) {
 		if(*i == 0) return 0;
 		*i = *i - 1;
 		return 4;
 	}
-	if(yend == y[*j+1]) {
+	if(YMATCH(yend, y[*j+1])) {
 		if(*j >= ny - 1) return 0;
 		*j = *j + 1;
 		return 1;
 	}
-	if(xend == x[*i+1]) {
+	if(XMATCH(xend, x[*i+1])) {
 		if(*i >= nx - 1) return 0;
 		*i = *i + 1;
 		return 2;
@@ -2027,12 +2060,12 @@ static SEGP SegUpdate(double xend, double yend, int dir, int tail, SEGP seglist,
 	switch(dir) {
 	case 1:
 	case 3:
-		if(yend == seglist->y0) {
+		if(YMATCH(yend,seglist->y0)) {
 			if(!tail) SwapSeg(seglist);
 			*seg = seglist;
 			return seglist->next;
 		}
-		if(yend == seglist->y1) {
+		if(YMATCH(yend,seglist->y1)) {
 			if(tail) SwapSeg(seglist);
 			*seg = seglist;
 			return seglist->next;
@@ -2040,12 +2073,12 @@ static SEGP SegUpdate(double xend, double yend, int dir, int tail, SEGP seglist,
 		break;
 	case 2:
 	case 4:
-		if(xend == seglist->x0) {
+		if(XMATCH(xend,seglist->x0)) {
 			if(!tail) SwapSeg(seglist);
 			*seg = seglist;
 			return seglist->next;
 		}
-		if(xend == seglist->x1) {
+		if(XMATCH(xend,seglist->x1)) {
 			if(tail) SwapSeg(seglist);
 			*seg = seglist;
 			return seglist->next;
@@ -2208,6 +2241,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 					seglist = NewSeg(xx[0], yy[0], xx[1], yy[1], seglist);
 					seglist = NewSeg(xx[2], yy[2], xx[3], yy[3], seglist);
 				}
+				else error("k != 2 or 4\n");
 			}
 			SegDB[i+j*nx] = seglist;
 		}
@@ -2253,6 +2287,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 					ns++;
 					s = s->next;
 				}
+
+				/* countour midpoint */
+				/* use for labelling sometime */
+
 				if(ns > 3) ns2 = ns/2;
 				else ns2 = -1;
 
@@ -2262,11 +2300,13 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 				ns = 0;
 				xxx[ns] = s->x0;
 				yyy[ns++] = s->y0;
-				while(s) {
-					xxx[ns] = s->x1;
-					yyy[ns++] = s->y1;
+				while(s->next) {
 					s = s->next;
+					xxx[ns] = s->x0;
+					yyy[ns++] = s->y0;
 				}
+				xxx[ns] = s->x1;
+				yyy[ns++] = s->y1;
 				GMode(dd, 1);
 				GPolyline(ns, xxx, yyy, USER, dd);
 				GMode(dd, 0);
@@ -2280,17 +2320,18 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
 SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP c, x, y, z, col, lty;
+	SEXP oargs, c, x, y, z, col, lty;
 	int i, j, nx, ny, nc, ncol, nlty;
 	int ltysave, colsave;
 	double atom, zmin, zmax;
 	char *vmax, *vmax0;
-	SEXP originalArgs = args;
 	DevDesc *dd = CurrentDevice();
 
 	GCheckState(dd);
 
 	if(length(args) < 4) errorcall(call, "too few arguments\n");
+
+	oargs = args;
 
 	x = CAR(args);
 	internalTypeCheck(call, x, REALSXP);
@@ -2343,6 +2384,9 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 			errorcall(call, "increasing y values expected\n");
 	}
 
+	xtol = 1e-3 * fabs(REAL(x)[nx-1]-REAL(x)[0]);
+	ytol = 1e-3 * fabs(REAL(y)[ny-1]-REAL(y)[0]);
+
 	for(i=0 ; i<nc ; i++)
 		if(!FINITE(REAL(c)[i]))
 			errorcall(call, "illegal NA contour values\n");
@@ -2363,7 +2407,10 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 		return R_NilValue;
 	}
 
+	/*
 	atom = DBL_EPSILON * (zmax - zmin);
+	*/
+	atom = 1e-3 * (zmax - zmin);
 
 		/* Initialize the segment data base */
 		/* Note we must be careful about resetting */
@@ -2396,19 +2443,17 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.lty = ltysave;
 	dd->gp.col = colsave;
 	UNPROTECT(2);
-
                 /* NOTE that i only record operation if no "error"  */
                 /* NOTE that if we're replaying then call == R_NilValue */
         if (call != R_NilValue)
-                recordGraphicOperation(op, originalArgs, dd);
-
+                recordGraphicOperation(op, oargs, dd);
 	return R_NilValue;
 }
 
 
 SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP sx, sy, sz, szlim, sc;
+	SEXP oargs, sx, sy, sz, szlim, sc;
 	double *x, *y, *z;
 	unsigned *c;
 	double xlow, xhigh, ylow, yhigh, zmin, zmax;
@@ -2418,6 +2463,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	GCheckState(dd);
 
 	checkArity(op,args);
+	oargs = args;
 
 	sx = CAR(args);
 	internalTypeCheck(call, sx, REALSXP);
@@ -2506,6 +2552,8 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.xpd = xpdsave;
 	R_Visible = 0;
 	UNPROTECT(1);
+	if (call != R_NilValue)
+		recordGraphicOperation(op, oargs, dd);
 	return R_NilValue;
 
 badxy:

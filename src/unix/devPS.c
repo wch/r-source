@@ -611,6 +611,7 @@ static void PS_Polyline(int n, double *x, double *y, int coords,
 
 	for (i=0; i<n; i++)
 		GConvert(&x[i], &y[i], coords, DEVICE, dd);
+	SetColor(dd->gp.col, dd);
 	PostScriptPolyline(pd->psfp, x, y, n);
 }
 
