@@ -48,7 +48,7 @@ static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
 
 /* Interface / Calling Hierarchy :
 
-  R__stop()   -> do_error ->   errorcall --> jump_to_toplevel
+  R__stop()   -> do_error ->   errorcall --> jump_to_top_ex
 			 /
 		    error
 
@@ -563,7 +563,7 @@ static void jump_to_top_ex(Rboolean traceback,
 
     /* Run onexit/cend code for all contexts down to but not including
        the jump target.  This may cause recursive calls to
-       jump_to_toplevel, but the possible number of such recursive
+       jump_to_top_ex, but the possible number of such recursive
        calls is limited since each exit function is removed before it
        is executed.  In addition, all but the first should have
        inError > 0.  This is not a great design because we could run
