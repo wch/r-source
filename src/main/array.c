@@ -325,6 +325,7 @@ SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
+    R_len_t len;
 
     if (length(args) != 1)
 	error("incorrect number of args to length");
@@ -334,7 +335,8 @@ SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
       return(ans);
 
     ans = allocVector(INTSXP, 1);
-    INTEGER(ans)[0] = length(CAR(args));
+    len = length(CAR(args));
+    INTEGER(ans)[0] = (len < INT_MAX) ? len : NA_INTEGER;
     return ans;
 }
 
