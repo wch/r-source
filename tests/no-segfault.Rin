@@ -82,7 +82,7 @@ for (pkg in core.pkgs) {
 	      sep="")
       }
   }
-  if(pkg != "base" && pkg != "methods") {
+  if(pkg != "base") {
       detach(pos=this.pos)
       cat("detach(pos=",this.pos,")\n")
   }
