@@ -692,6 +692,9 @@ BUG FIXES
     o   Rownames in xcoef and ycoef of cancor() were wrong if x or y
 	was rank-deficient.
 
+    o   lqs() could give warnings if there was an exact fit. (PR#1184)
+
+
 
 	**************************************************
 	*						 *

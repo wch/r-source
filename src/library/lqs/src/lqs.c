@@ -259,7 +259,7 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
 	}
     }/* for(trial in 0:ntrials) */
 
-    *crit = best;
+    *crit = (best < 0.0) ? 0.0 : best;
     if(*sample) PutRNGstate();
     /* lqs_free(); */
 }
