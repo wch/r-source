@@ -962,7 +962,9 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
-  int offset = 0; prim_methods_t code; SEXP value;
+  int offset = 0;
+  prim_methods_t code = NO_METHODS; /* -Wall */
+  SEXP value;
   Rboolean errorcase = FALSE;
   switch(code_string[0]) {
   case 'c': /* clear */
