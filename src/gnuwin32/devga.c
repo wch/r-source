@@ -39,7 +39,7 @@ extern int AllDevicesKilled;
 
 #define MM_PER_INCH	25.4	/* mm -> inch conversion */
 
-#define TRACEDEVGA(a)
+#define TRACEDEVGA(a) 
 #define NOBM(a) if(!xd->kind){a;}
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
 #define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
@@ -334,7 +334,7 @@ static void SetFont(int face, int size, double rot, DevDesc *dd)
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle)) {
-	del(xd->font);
+	del(xd->font); doevent();
 	xd->font = gnewfont(xd->gawin,
 			    fontname[face - 1], fontstyle[face - 1],
 			    size, rot);
