@@ -409,6 +409,9 @@ BUG FIXES
     o	The residual SSq printed from an aov() fit with weights is
 	now the weighted SSq.  (PR#1930)
 
+    o	aov() could still fail on multistrata models with very long
+	Error formulae.
+
 
 
 		CHANGES IN R VERSION 1.5.1
