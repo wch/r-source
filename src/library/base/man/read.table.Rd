@@ -1,8 +1,8 @@
 \name{read.table}
 \title{data input}
 \usage{
-read.table(file=, header=FALSE, sep="", row.names,
-        col.names, as.is=FALSE, na.strings="NA", skip=0)
+read.table(file, header = FALSE, sep = "", row.names,
+        col.names, as.is = FALSE, na.strings = "NA", skip = 0)
 }
 \alias{read.table}
 \arguments{
@@ -33,9 +33,10 @@ to read data.}
 \value{
 A data frame containing a representation of the data in the file.
 This function is the principal means of reading tabular data
-into R.
+into \R.
 }
 \seealso{
-\code{\link{scan}}, \code{\link{data.frame}}.
+\code{\link{scan}}, \code{\link{read.fwf}} for \bold{f}ixed \bold{w}idth
+\bold{f}ormatted input; \code{\link{data.frame}}.
 }
 \keyword{file}
