@@ -2,7 +2,7 @@
 \title{Box Plots}
 \usage{
 boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
-        notch = FALSE, names, data = sys.frame(sys.parent()),
+        notch = FALSE, names.x, data = sys.frame(sys.parent()),
         plot = TRUE, border = par("fg"), col = NULL, log = "",
         pars = NULL)
 }
@@ -30,8 +30,10 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
   \item{notch}{if \code{notch} is \code{TRUE}, a notch is drawn in each
     side of the boxes.  If the notches of two plots do not overlap then
     the medians are significantly different at the 5 percent level.}
-  \item{names}{group labels which while be printed under each boxplot.}
-  \item{data}{???}
+  \item{names.x}{group labels which while be printed under each boxplot.}
+  \item{data}{\code{\link{data.frame}}, \code{\link{list}}, or
+    \code{\link{environment}} in which variable names are evaluated when
+    \code{x} is a formula.}
   \item{plot}{if \code{TRUE} (the default) then a boxplot is produced.
     If not, the summaries which the boxplots are based on are returned.}
   \item{border}{an optional vector of colors for the outlines of the
@@ -39,9 +41,9 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
     \code{border} is less than the number of plots.}
   \item{col}{if \code{col} is non-null it is assumed to contain colors
     to be used to col the bodies of the box plots.}
-  \item{log}{???}
-  \item{pars}{???}
-  \item{\dots}{graphical parameters can also be passed as arguments to
+  \item{log}{character indicating if x- or y- or both coordinates should
+    be plotted in log scale.}
+  \item{pars, \dots}{graphical parameters can also be passed as arguments to
     \code{boxplot}.}
 }
 \value{
@@ -64,5 +66,8 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
 \examples{
 data(insects)
 boxplot(count ~ spray, data = insects, col = "lightgray")
+
+data(bees)
+boxplot(decrease ~ treatment, data = bees, log = "y", col="bisque")
 }
 \keyword{hplot}
