@@ -1,3 +1,11 @@
+## Test whether any Rd file in the `man' and `man/$OS' subdirectories of
+## directory DIR is newer than a given FILE.  Return 0 if such a file is
+## found (i.e., in the case of `success'), and 1 otherwise, so that the
+## return value can be used for shell `if' tests.
+##
+## Usage:
+##   perl /path/to/Rdnewer.pl [options] DIR FILE
+
 use File::Basename;
 use Getopt::Long;
 
