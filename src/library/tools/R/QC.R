@@ -165,20 +165,49 @@ function(package, dir, lib.loc = NULL)
                        "Ops", "Summary")]
     }
 
-    undocObjs <- list(code = codeObjs[! codeObjs %in% allDocTopics],
-                      data = dataObjs[! dataObjs %in% allDocTopics])
+    undocObjs <-
+        list("code objects" = codeObjs[! codeObjs %in% allDocTopics],
+             "data sets" = dataObjs[! dataObjs %in% allDocTopics])
 
     if(!is.na(match("package:methods", search()))) {
         ## Undocumented S4 classes?
-        S4Classes <- getClasses(codeEnv)
+        S4classes <- getClasses(codeEnv)
         undocObjs <-
             c(undocObjs,
-              list("S4 class" =
-                   S4Classes[! sapply(S4Classes,
-                                      function(u) topicName("class", u))
+              list("S4 classes" =
+                   S4classes[!sapply(S4classes,
+                                     function(u) topicName("class", u))
                              %in% allDocTopics]))
     }
 
+    if(!is.na(match("package:methods", search()))
+       && basename(dir) == "methods") {
+        ## Undocumented S4 methods?
+        ## Only do this for package methods itself, to get us started.
+        where <- paste("package:", basename(dir), sep = "")
+        ## Courtesy JMC for advice on finding all S4 methods ...
+        S4methods <-
+            sapply(getGenerics(where),
+                   function(f) {
+                       meths <-
+                           linearizeMlist(getMethods(f, where = where)) 
+                       sigs <-
+                           sapply(meths@classes,
+                                  function(x) paste(x, collapse = ","))
+                       if(length(sigs))
+                           paste(f, ",", sigs, sep = "")
+                       else
+                           character()
+                   })
+        S4methods <- unlist(S4methods, use.names = FALSE)
+        undocObjs <-
+            c(undocObjs,
+              list("S4 methods" =
+                   S4methods[!sapply(S4methods,
+                                     function(u) topicName("method", u))
+                             %in% allDocTopics]))
+    }
+                             
     class(undocObjs) <- "undoc"
     undocObjs
 }
@@ -187,7 +216,7 @@ print.undoc <-
 function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
-        writeLines(paste("Undocumented", names(x)[i], "objects:"))
+        writeLines(paste("Undocumented ", names(x)[i], ":", sep = ""))
         print(x[[i]])
     }
     invisible(x)
