@@ -23,6 +23,8 @@ restart(on = TRUE)
   you are doing.
 }
 \seealso{
+  \code{\link{try}} for a safer interface.
+  
   \code{\link{options}} for setting error handlers and suppressing the
   printing of error messages.
 }
