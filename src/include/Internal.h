@@ -43,6 +43,9 @@ SEXP do_newfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_addmenucmd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_delmenucmd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getmenucmd(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getnumcmd(SEXP, SEXP, SEXP, SEXP);
+SEXP do_delnumcmd(SEXP, SEXP, SEXP, SEXP);
+SEXP do_delusrcmd(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 /* Function Names */

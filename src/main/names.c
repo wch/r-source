@@ -523,7 +523,7 @@ FUNTAB R_FunTab[] =
 #ifdef Macintosh
 {"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
-{"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
+{"show.help.item", do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
 {"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
 {"file.edit",	do_fileedit,	0,	11,	1,	PP_FUNCALL},
@@ -531,6 +531,9 @@ FUNTAB R_FunTab[] =
 {"add.menu.cmd",	do_addmenucmd,	0,	11,	2,	PP_FUNCALL},
 {"del.menu.cmd",	do_delmenucmd,	0,	11,	1,	PP_FUNCALL},
 {"get.menu.cmd",	do_getmenucmd,	0,	11,	1,	PP_FUNCALL},
+{"get.num.cmd",	do_getnumcmd,	0,	11,	1,	PP_FUNCALL},
+{"del.num.cmd",	do_delnumcmd,	0,	11,	1,	PP_FUNCALL},
+{"del.usr.cmd",	do_delusrcmd,	0,	11,	0,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	5,	PP_FUNCALL},
