@@ -468,7 +468,7 @@ static void 	Quartz_Size(double *left, double *right,
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
     Rect portRect;
-   
+        
     GetWindowPortBounds ( xd->window, & portRect ) ;
     
     *left = 0.0;
@@ -479,8 +479,13 @@ static void 	Quartz_Size(double *left, double *right,
     xd->windowWidth = *right - *left;
     xd->windowHeight = *bottom - *top;
     SetCGContext(xd);
- 
+    
     return;
+}
+
+void Quartz_ReSizeWin(NewDevDesc *dd)
+{
+
 }
 
 static void 	Quartz_NewPage(int fill, double gamma, NewDevDesc *dd)
