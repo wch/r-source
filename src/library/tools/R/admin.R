@@ -119,7 +119,7 @@ function(dir, outDir)
     cat(paste(c("Entry:", "Aliases:", "Keywords:", "Description:",
                 "URL:"),
               t(cbind(contents[, c("Name", "Aliases", "Keywords",
-                                   "Title")],
+                                   "Title"), drop = FALSE],
                       URLs))),
         sep = c("\n", "\n", "\n", "\n", "\n\n"),
         file = file.path(outDir, "CONTENTS"))
