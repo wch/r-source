@@ -32,6 +32,10 @@ model.matrix   (object, \dots)
   \code{attr(terms(formula), "variables")}.  There may be other columns
   and the order is not important. If \code{contrasts} is specified it
   overrides the default factor coding for that variable.
+
+  In interactions, the variable whose levels vary fastest is the first
+  one to appear in the formula (and not in the term), so in \code{~ a +
+    b + b:a} the interaction will have \code{a} varying fastest.
 }
 \value{
   The design matrix for a regression model with the specified formula

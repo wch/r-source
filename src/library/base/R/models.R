@@ -143,7 +143,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data)
     new.specials <- unique(c(specials, "offset"))
-    tmp <- .Internal(terms.formula(x, new.specials, abb, data, keep.order))
+    tmp <- .Internal(terms.formula(x, new.specials, data, keep.order))
     ## need to fix up . in formulae in R
     terms <- fixFormulaObject(tmp)
     attributes(terms) <- attributes(tmp)

@@ -552,9 +552,8 @@ static SEXP DeleteTerms(SEXP left, SEXP right)
 
 static SEXP EncodeVars(SEXP formula)
 {
-    SEXP term, r;
-    int len, i, j;
-    char *c;
+    SEXP term;
+    int len;
 
     if (isNull(formula))
 	return R_NilValue;
@@ -571,20 +570,24 @@ static SEXP EncodeVars(SEXP formula)
     }
     if (isSymbol(formula)) {
 	if (formula == dotSymbol && framenames != R_NilValue) {
-	    r = R_NilValue;
-	    for (i=0; i< LENGTH(framenames); i++) {
+	    /* prior to 1.7.0 this made term.labels in reverse order. */
+	    SEXP r = R_NilValue, v = R_NilValue; /* -Wall */
+	    int i, j; char *c;
+
+	    if (!LENGTH(framenames)) return r;
+	    for (i = 0; i < LENGTH(framenames); i++) {
 		/* change in 1.6.0 do not use duplicated names */
 		c = CHAR(STRING_ELT(framenames, i));
 		for(j = 0; j < i; j++)
 		    if(!strcmp(c, CHAR(STRING_ELT(framenames, j))))
-			error("duplicated name `%s' in data frame using `.'", c);
-		PROTECT(r);
+			error("duplicated name `%s' in data frame using `.'", 
+			      c);
 		term = AllocTerm();
-		SetBit(term, InstallVar(install(c)),
-		       1);
-		r = CONS(term, r);
-		UNPROTECT(1);
+		SetBit(term, InstallVar(install(c)), 1);
+		if(i == 0) PROTECT(v = r = cons(term, R_NilValue));
+		else {SETCDR(v, CONS(term, R_NilValue)); v = CDR(v);}
 	    }
+	    UNPROTECT(1);
 	    return r;
 	}
 	else {
@@ -682,51 +685,6 @@ static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
     }
     return 2;
 }
-
-
-/* SortTerms sorts a ``vector'' of terms */
-
-static int TermGT(SEXP s, SEXP t)
-{
-    unsigned int si, ti;
-    int i;
-    if (LEVELS(s) > LEVELS(t)) return 1;
-    if (LEVELS(s) < LEVELS(t)) return 0;
-    for (i = 0; i < nwords; i++) {
-	si = ((unsigned*)INTEGER(s))[i];
-	ti = ((unsigned*)INTEGER(t))[i];
-	if (si > ti) return 0;
-	if (si < ti) return 1;
-    }
-    return 0;
-}
-
-static void SortTerms(SEXP *x, int n)
-{
-    int i, j, h;
-    SEXP xtmp;
-
-    h = 1;
-    do {
-	h = 3 * h + 1;
-    }
-    while (h <= n);
-
-    do {
-	h = h / 3;
-	for (i = h; i < n; i++) {
-	    xtmp = x[i];
-	    j = i;
-	    while (TermGT(x[j - h], xtmp)) {
-		x[j] = x[j - h];
-		j = j - h;
-		if (j < h)
-		    goto end;
-	    }
-	end:	x[j] = xtmp;
-	}
-    } while (h != 1);
-}
 
 
 /* Internal code for the ``terms'' function */
@@ -738,7 +696,7 @@ static void SortTerms(SEXP *x, int n)
 SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs;
-    SEXP specials, t, abb, data;
+    SEXP specials, t, data;
     int i, j, k, l, n, keepOrder;
 
     checkArity(op, args);
@@ -775,14 +733,6 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     specials = CADR(args);
     a = CDDR(args);
 
-    /* abb = is unimplemented */
-    /* FIXME: in any case it should be handled */
-    /* in a separate "abbreviation expansion" */
-    /* made before entry to this function. */
-
-    abb = CAR(a);
-    a=CDR(a);
-
     /* We use data to get the value to */
     /* substitute for "." in formulae */
 
@@ -794,6 +744,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	framenames = getAttrib(data, R_NamesSymbol);
     else
 	errorcall(call,"data argument is of the wrong type");
+
     if (framenames != R_NilValue)
 	if (length(CAR(args))== 3)
 	    CheckRHS(CADR(CAR(args)));
@@ -831,7 +782,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nvar = length(varlist) - 1;
     nwords = (nvar - 1) / WORDSIZE + 1;
-
+    
     /* Step 2: Recode the model terms in binary form */
     /* and at the same time, expand the model formula. */
 
@@ -851,25 +802,29 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     nvar = length(varlist) - 1; /* need to recompute, in case
                                    EncodeVars stretched it */
 
-    /* Step 3: Reorder the model terms. */
-    /* Horrible kludge -- write the addresses */
-    /* into a vector, simultaneously computing the */
-    /* the bitcount for each term.  Use a regular */
-    /* (stable) sort of the vector based on bitcounts. */
+    /* Step 3: Reorder the model terms by BitCount, otherwise
+       preserving their order. */
 
-    PROTECT(pattern = allocVector(STRSXP, nterm));
-    n = 0;
-    for (call = formula; call != R_NilValue; call = CDR(call)) {
-	SETLEVELS(CAR(call), BitCount(CAR(call)));
-	SET_STRING_ELT(pattern, n++, CAR(call));
+    if (!keepOrder) {
+	int *counts = (int *) R_alloc(nterm, sizeof(int)), bitmax = 0;
+	PROTECT(pattern = allocVector(VECSXP, nterm));
+	for (call = formula, n = 0; call != R_NilValue; call = CDR(call)) {
+	    SET_VECTOR_ELT(pattern, n, CAR(call));
+	    counts[n++] = BitCount(CAR(call));
+	}
+	for (n = 0; n < nterm; n++) 
+	    if(counts[n] > bitmax) bitmax = counts[n];
+	call = formula;
+	for (i = 0; i <= bitmax; i++) /* can order 0 occur? */
+	    for (n = 0; n < nterm; n++)
+		if (counts[n] == i) {
+		    SETCAR(call, VECTOR_ELT(pattern, n));
+		    SETLEVELS(CAR(call), i);
+		    call = CDR(call);
+		}
+	UNPROTECT(1);
     }
-    if (!keepOrder)
-	SortTerms(STRING_PTR(pattern), nterm);
-    n = 0;
-    for (call = formula; call != R_NilValue; call = CDR(call)) {
-	SETCAR(call, STRING_ELT(pattern, n++));
-    }
-    UNPROTECT(1);
+    
 
     /* Step 4: Compute the factor pattern for the model. */
     /* 0 - the variable does not appear in this term. */

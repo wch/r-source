@@ -7,23 +7,23 @@
   construct a \code{\link{model.matrix}}.
 }
 \usage{
-terms.formula(x, specials=NULL, abb=NULL, data=NULL, neg.out=TRUE,
-              keep.order=FALSE, ...)
+terms.formula(x, specials = NULL, abb = NULL, data = NULL, neg.out = TRUE,
+              keep.order = FALSE, ...)
 }
 \arguments{
   \item{x}{a formula.}
-  \item{specials}{what functions in the formula should be marked as
-    special in the terms object.}
-  \item{abb}{Unused in R.}
+  \item{specials}{which functions in the formula should be marked as
+    special in the \code{terms} object.}
+  \item{abb}{Not implemented in \R.}
   \item{data}{a data frame from which the meaning of the special symbol
     \code{.} can be inferred. It is unused if there is no \code{.} in
     the formula.}
-  \item{neg.out}{\code{TRUE} if terms with a minus, \code{-} should be
-    removed. If \code{FALSE} these are kept in and indicate a negative
-    order (for fractionate?).}
+  \item{neg.out}{Not implemented in \R.}
   \item{keep.order}{a logical value indicating whether the terms should
     keep their positions. If \code{FALSE} the terms are reordered so
-    that main effects come first.}
+    that main effects come first, followed by the interactions,
+    all second-order, all third-order and so on.  Effects of a given
+    order are kept in the order specified.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -31,7 +31,11 @@ terms.formula(x, specials=NULL, abb=NULL, data=NULL, neg.out=TRUE,
   all are implemented.
 }
 \value{
-  A \code{\link{terms}} object is returned.
+  A \code{\link{terms.object}} object is returned.  The object itself is
+  the re-ordered (unless \code{keep.order = TRUE}) formula.  In all
+  cases variables within an interaction term in the formula are
+  re-ordered by the ordering of the \code{"variables"} attribute, which
+  is the order in which the variables occur in the formula.
 }
 \seealso{
   \code{\link{terms.object}},
