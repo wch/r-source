@@ -212,7 +212,7 @@ MethodsListSelect <-
             thisInherit <- TRUE
         }
         else {
-            thisInherit <- useInherited[which]
+            thisInherit <- useInherited[[which]]
             nextUseInherited <- useInherited[-which]
         }
     }
@@ -237,25 +237,28 @@ MethodsListSelect <-
     }
     if(inherited || is(value, "EmptyMethodsList"))  {
         ## direct selection failed at this level or below
-        allSelections <- inheritedSubMethodLists(arg, fromClass, mlist, env)
-        allClasses <- names(allSelections)
         method <- NULL
-        if(thisInherit) for(i in seq(along = allSelections)) {
-            selection <- allSelections[[i]]
-            fromClass <- allClasses[[i]]
-            if(is(selection, "function"))
-                method <- selection
-            else if(is(selection, "MethodsList")) {
-                ## go on to try matching further arguments
-                method <- Recall(NULL, env, selection, finalDefault = finalDefault,
-                         evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
-                if(is(method, "EmptyMethodsList"))
-                    selection <- method   ## recursive selection failed
+        if(thisInherit)  {
+            allSelections <- inheritedSubMethodLists(arg, fromClass, mlist, env)
+            allClasses <- names(allSelections)
+            for(i in seq(along = allSelections)) {
+                selection <- allSelections[[i]]
+                fromClass <- allClasses[[i]]
+                if(is(selection, "function"))
+                    method <- selection
+                else if(is(selection, "MethodsList")) {
+                    ## go on to try matching further arguments
+                    method <- Recall(NULL, env, selection, finalDefault = finalDefault,
+                                     evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
+                    if(is(method, "EmptyMethodsList"))
+                        selection <- method   ## recursive selection failed
+                }
+                if(!is(selection, "EmptyMethodsList"))
+                    break
             }
-            if(!is(selection, "EmptyMethodsList"))
-                break
         }
-        if(is(selection, "EmptyMethodsList") && !is.null(f) && !is.null(finalDefault)) {
+        if((is.null(selection) || is(selection, "EmptyMethodsList"))
+           && !is.null(f) && !is.null(finalDefault)) {
             ## only use the final default method after exhausting all
             ## other possibilities, at all levels.
             method <- insertMethodInEmptyList(selection, finalDefault)

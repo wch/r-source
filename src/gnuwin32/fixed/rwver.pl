@@ -3,7 +3,8 @@ while(<>) {
     my $major = $1;
     my $minor = $2;
     my $patch = $3;
-    $patch++ if /Patched/;
+    $patch = $patch."pat" if /Patched/;
+    $patch = $patch."dev" if /unstable/;
     $minor = "0".$minor if $minor < 10;
     $ans = "rw$major$minor$patch\n";
 }
