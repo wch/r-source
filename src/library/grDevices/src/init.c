@@ -39,6 +39,10 @@ static R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(XFig),
     EXTDEF(PDF),
     EXTDEF(Quartz),
+#ifdef WIN32
+    EXTDEF(devga),
+    EXTDEF(savePlot),
+#endif
     {NULL, NULL, 0}
 };
 

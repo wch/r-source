@@ -28,3 +28,8 @@ SEXP Type1FontInUse(SEXP);
 SEXP Quartz(SEXP);
 
 SEXP L_nullDevice();
+
+#ifdef WIN32
+SEXP devga(SEXP);
+SEXP savePlot(SEXP);
+#endif
