@@ -3016,3 +3016,8 @@ res1 <- type.convert( c("abc","-"), as.is=TRUE, na.strings="-" )
 stopifnot(identical(mode(res1), "character"), is.na(res1[2]))
 ## res1[2] was "-" <= 1.9.0.
 
+
+## subsetting factor swaps order of attributes (PR#6799)
+af <- factor(c('A','B'))
+stopifnot(identical(af, af[1:2]))
+## failed in 1.9.0 as the attributes were class, level for af[1:2]
