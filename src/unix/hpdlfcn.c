@@ -205,10 +205,7 @@ void *dlsym(void *handle, const char *name)
   dlerrno = 0;
   myhandle = (handle == NULL) ? PROG_HANDLE : (shl_t) handle;
 
-  /* name+1 used below because R&R prepend an underscore, not needed
-     on HP's */
-
-  if (shl_findsym(&myhandle, name+1, TYPE_PROCEDURE, &f) != 0) {
+  if (shl_findsym(&myhandle, name, TYPE_PROCEDURE, &f) != 0) {
     dlerrno = 1;
     sprintf(errbuf, "symbol %s not found", name);
 #ifdef DEBUG
