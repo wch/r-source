@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-03-07)
+Version 1.7.0 Patched (2003-05-27)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -28,13 +28,14 @@ Type `q()' to quit R.
 > # test do_download.
 > nrow(CRAN.packages())
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain; charset=iso-8859-1' length 99193 bytes
+Content type `text/plain; charset=iso-8859-1' length 107359 bytes
 opened URL
 .......... .......... .......... .......... ..........
-.......... .......... .......... .......... ......
-downloaded 96Kb
+.......... .......... .......... .......... ..........
+....
+downloaded 104Kb
 
-[1] 202
+[1] 219
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -312,7 +313,13 @@ Error in url("http://foo.bar", "r") : cannot open URL `http://foo.bar'
 +     }
 +     strsplit(data, "\n")[[1]]
 + }
-> httpget("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
+> 
+> if(nchar(Sys.getenv("http_proxy")) > 0
++    || nchar(Sys.getenv("HTTP_PROXY")) > 0) {
++     cat("http proxy is set, so skip test of http over sockets\n")
++ } else {
++     httpget("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
++ }
   [1] "001 307 0930 36.58 0"  "002 307 0940 36.73 0"  "003 307 0950 36.93 0" 
   [4] "004 307 1000 37.15 0"  "005 307 1010 37.23 0"  "006 307 1020 37.24 0" 
   [7] "007 307 1030 37.24 0"  "008 307 1040 36.90 0"  "009 307 1050 36.95 0" 
