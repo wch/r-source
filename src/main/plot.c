@@ -1440,7 +1440,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* polygon(x, y, col, border) */
-    SEXP sx, sy, col, border, lty;
+    SEXP sx, sy, col, border, lty, sxpd;
     int nx=1, ny=1, ncol, nborder, nlty, xpd, i, start=0;
     int num = 0;
     double *x, *y, xx, yy, xold, yold;
@@ -1474,15 +1474,29 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(GetPar("lty", args), dd));
     nlty = length(lty);
 
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
+    /* 
+     * Have to use GetPar("xpd"...) here rather than ProcessInLinePars
+     * because ProcessInLinePars will choke on "border" (until GetPar
+     * is fixed - see GetPar)
+     * GetPar returning R_NilValue means xpd wasn't specified (so just 
+     * use current setting of par(xpd))
+     * Need separate check for this because otherwise unspecified xpd
+     * is the same as xpd=NA (because asInteger(R_NilValue)==NA_INTEGER)
+     */
+    sxpd = GetPar("xpd", args);
+    if (sxpd != R_NilValue)
+	xpd = asInteger(sxpd);
+    else
 	xpd = dd->gp.xpd;
 
     GSavePars(dd);
 
-    GMode(1, dd);
+    if (xpd == NA_INTEGER)
+	dd->gp.xpd = 2;
+    else
+	dd->gp.xpd = xpd;
 
-    dd->gp.xpd = xpd;
+    GMode(1, dd);
 
     if (INTEGER(lty)[0] == NA_INTEGER)
 	dd->gp.lty = dd->dp.lty;
@@ -1594,11 +1608,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(font = FixupFont(GetPar("font", args)));
     nfont = LENGTH(font);
 
-
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
-	xpd = dd->gp.xpd;/* was 0 */
-
     x = REAL(sx);
     y = REAL(sy);
     n = LENGTH(sx);
@@ -1606,7 +1615,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSavePars(dd);
     ProcessInlinePars(args, dd);
-    dd->gp.xpd = xpd;
 
     GMode(1, dd);
     for (i = 0; i < n; i++) {
@@ -2304,7 +2312,7 @@ SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
     /* override par("xpd") and force clipping to figure region */
     /* NOTE: don't override to _reduce_ clipping region */
     if (dd->gp.xpd < 1)
-	dd->gp.xpd = 1;
+	xpd = 1;
 
     for(i = 0 ; i < n ; i++) {
 	if (strlen(CHAR(STRING(labs)[i])) > 0) {
