@@ -149,7 +149,7 @@ AC_PROG_INSTALL
 ## not cached.  Could also use an absolute path in AC_CONFIG_AUX_DIR().
 case ${INSTALL} in
   *install-sh*)
-    INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
 esac
 ## Osman says that this is necessary.
 case ${host} in
@@ -406,8 +406,8 @@ fi
 
 if ${f77_is_g77}; then
   FFLAGS=${FFLAGS-"-O2"}
-  AC_CHECK_LIB(f2c, f_open, FLIBS="${FLIBS} -lf2c",
-    AC_CHECK_LIB(g2c, f_open, FLIBS="${FLIBS} -lg2c")
+  AC_CHECK_LIB(g2c, f_open, FLIBS="${FLIBS} -lg2c",
+    AC_CHECK_LIB(f2c, f_open, FLIBS="${FLIBS} -lf2c")
   )
 fi
 
@@ -666,6 +666,10 @@ case "${host}" in
     fi
     ;;
 esac
+
+if ${f77_is_g77}; then
+  SHLIBLD=${FC}
+fi
 
 AC_SUBST(LDCMD)
 AC_SUBST(DLLFLAGS)
