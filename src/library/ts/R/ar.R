@@ -29,12 +29,12 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     xfreq <- frequency(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
+    nser <- ncol(x)
     if (demean) {
         xm <- apply(x, 2, mean)
         x <- sweep(x, 2, xm)
     } else xm <- rep(0, nser)
     n.used <- nrow(x)
-    nser <- ncol(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
                  else round(order.max)
     if (order.max < 1) stop("order.max must be >= 1")
@@ -192,9 +192,9 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
             pred <- matrix(0, n.ahead, nser)
         }
         pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow=TRUE)
-        colnames(pred) <- colnames(jj$var.pred)
+        colnames(pred) <- colnames(object$var.pred)
         if(se.fit) {
-            warn("se.fit not yet implemented for multivariate models")
+            warning("se.fit not yet implemented for multivariate models")
             se <- array(NA, dim=c(n.ahead, nser, nser))
         }
     } else {
