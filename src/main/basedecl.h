@@ -87,3 +87,8 @@ SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBfetch(SEXP, SEXP, SEXP, SEXP);
 
+#ifdef BYTECODE
+SEXP R_getbcprofcounts();
+SEXP R_startbcprof();
+SEXP R_stopbcprof();
+#endif
