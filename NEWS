@@ -16,10 +16,10 @@ USER-VISIBLE CHANGES
 	signs and normalization of eigen/singular vectors may change
 	from earlier versions.
 
-    o	The `methods' package is now attached by default.
-	The option "defaultPackages" has been added and initially set
-	to c("methods", "ctest"), causing those packages to be
-	attached at startup.  See ?Startup and ?options for details.
+    o	The `methods' packages is now attached by default at startup.
+	The option "defaultPackages" has been added which contains the
+	initial list of packages.  See ?Startup and ?options for
+	details.  Note that .First() is no longer used by R itself.
 
 	class() now always (not just when `methods' is attached) gives
 	a non-null class, and UseMethod() always dispatches on the
@@ -44,7 +44,7 @@ USER-VISIBLE CHANGES
 	by default.
 
     o	Errors and warnings are sent to stderr not stdout on
-	command-line versions of R (Unix and Windows).  
+	command-line versions of R (Unix and Windows).
 
 
 NEW FEATURES
@@ -526,7 +526,8 @@ BUG FIXES
 
     o	str(array(1)) now does show the array.
 
-    o	step() nows works somewhat better if called from a function.
+    o	step(), add1.default() and drop1.default() now work somewhat
+	better if called from a function.
 
     o	page() was searching from the wrong environment, and so
 	searching base before the workspace.
@@ -555,6 +556,9 @@ BUG FIXES
 
     o	autoload() was returning the value of its last command, a
 	promise, even though it was documented to have no value.
+	As a result some packages (e.g. nlme) were loading packages
+	they meant to autoload.
+
 
 
 	**************************************************
