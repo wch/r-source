@@ -70,6 +70,10 @@ Directory:  Graphics
 Subject: par(lty = "1") -- lty storage-etc bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
+* PR# 580 *
+Subject: dotplot() colors reversed
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
 * PR# 565 *
 Subject: Postscript device ignores title if it is too long.
 From: Stephen Eglen <stephen@anc.ed.ac.uk>
@@ -82,14 +86,6 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 583 *
-Subject: persp greek label problem
-From: ramin.nakisa@ncr.com
-Date: Mon, 26 Jun 2000 20:06:38 +0200 (MET DST)
-* PR# 580 *
-Subject: dotplot() colors reversed
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
 
 Directory:  In-Out
 
@@ -97,10 +93,11 @@ none
 
 Directory:  Installation
 
-* PR# 585 *
-Subject:  Missing SearchEngine.html 
-From: Thomas J Vogels <tov@bavaria.ece.cmu.edu>
-Date: Thu, 29 Jun 2000 08:12:06 -0400
+* PR# 597 *
+Subject: multiply defined symbols
+From: plucas@csd.abdn.ac.uk
+Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
+--Probably system-specific due to use of fort77
 * PR# 467 *
 Subject: Re: [R] Re: R-1.0.0 is released
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -121,10 +118,10 @@ Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
 
 Directory:  Language
 
-* PR# 576 *
-Subject:  exists() and the mode argument 
-From: J.C.Rougier@durham.ac.uk
-Date: Tue, 20 Jun 2000 12:03:36 +0100 (BST)
+* PR# 589 *
+Subject: Bug with lists and expressions
+From: dmurdoch@pair.com (Duncan Murdoch)
+Date: Tue, 04 Jul 2000 02:26:41 GMT
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -133,6 +130,15 @@ Date: 06 Feb 2000 01:18:50 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 587 *
+Subject: dim(a <- ...) sets invisible flag erronously
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
+--Not specific to dim: R differs from S for most functions here.
+* PR# 576 *
+Subject:  exists() and the mode argument 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 20 Jun 2000 12:03:36 +0100 (BST)
 
 Directory:  Low-level
 
@@ -232,39 +238,4 @@ none
 
 Directory:  incoming
 
-* PR# 598 *
-Subject: minor typos in help pages
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sat, 8 Jul 2000 22:17:05 -0400 (EDT)
-* PR# 579 *
-Subject: possible bug, anova.glm(), family="gaussian"
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 12:31:22 -0400 (EDT)
-* PR# 578 *
-Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 22 Jun 2000 17:07:05 +0200
-* PR# 587 *
-Subject: dim(a <- ...) sets invisible flag erronously
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
-* PR# 586 *
-Subject: system.file on Windows, / vs \\
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 29 Jun 2000 09:49:39 -0700 (PDT)
-* PR# 595 *
-Subject: eigen function on Solaris2.6
-From: sharon@math.chalmers.se
-Date: Wed, 5 Jul 2000 19:39:17 +0200 (MET DST)
-* PR# 589 *
-Subject: Bug with lists and expressions
-From: dmurdoch@pair.com (Duncan Murdoch)
-Date: Tue, 04 Jul 2000 02:26:41 GMT
-* PR# 597 *
-Subject: multiply defined symbols
-From: plucas@csd.abdn.ac.uk
-Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
-* PR# 596 *
-Subject: Re: [R] R 1.1.0 dev.print() & dev.copy2eps -- bug{let}
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Thu, 6 Jul 2000 17:36:28 +0200 (CEST)
+none
