@@ -115,62 +115,53 @@ double gamma(double x)
 
 	n = x;
 	if(x < 0) --n;
-	y = x - n;
+	y = x - n;/* n = floor(x)  ==>	y in [ 0, 1 ) */
 	--n;
 	value = chebyshev_eval(y * 2 - 1, gamcs, ngam) + .9375;
 	if (n == 0)
-	    return value;
+	    return value;/* x = 1.dddd = 1+y */
 
-	if (n <= 0) {
-
-            /* compute gamma(x) for x < 1 */
-
-	    n = -n;
+	if (n < 0) {
+	    /* compute gamma(x) for -10 <= x < 1 */
 
 	    /* If the argument is exactly zero or a negative integer */
-	    /* then return Inf. I personally think that gamma(0) should */
-	    /* return NaN, but this seems to be the common practice. */
-
-	    if (x == 0 || (x < 0 && x + (n - 2) == 0)) {
+	    /* then return NaN. */
+	    if (x == 0 || (x < 0 && x == n + 2)) {
 		ML_ERROR(ME_RANGE);
 		return ML_NAN;
 	    }
 
 	    /* The answer is less than half precision */
 	    /* because x too near a negative integer. */
-
 	    if (x < -0.5 && fabs(x - (int)(x - 0.5) / x) < dxrel) {
 		ML_ERROR(ME_PRECISION);
 	    }
 
-	    /* The argument is so close to 0.0 */
-	    /* that the result would overflow. */
-
+	    /* The argument is so close to 0 that the result would overflow. */
 	    if (y < xsml) {
 		ML_ERROR(ME_RANGE);
 		if(x > 0) return ML_POSINF;
 		else return ML_NEGINF;
 	    }
 
-	    for (i = 1; i <= n; i++) {
-		value /= x + (i - 1);
+	    n = -n;
+
+	    for (i = 0; i < n; i++) {
+		value /= (x + i);
 	    }
 	    return value;
-
 	}
 	else {
-
-	    /* gamma(x) for x >= 2 and x <= 10 */
+	    /* gamma(x) for 2 <= x <= 10 */
 
 	    for (i = 1; i <= n; i++) {
-		value = (y + i) * value;
+		value *= (y + i);
 	    }
 	    return value;
 	}
     }
     else {
-
-        /* gamma(x) for |x| > 10.  recall y = fabs(x). */
+	/* gamma(x) for	 y = |x| > 10. */
 
 	if (x > xmax) {			/* Overflow */
 	    ML_ERROR(ME_RANGE);
