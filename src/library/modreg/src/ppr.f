@@ -159,6 +159,7 @@ c Common Vars
       asr=big
       lm=0
       do 100 l=1,m
+         call rchkusr()
          lm=lm+1
          asrold=asr
          call newb(lm,q,ww,b)

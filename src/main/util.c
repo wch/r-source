@@ -1023,3 +1023,8 @@ void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
     buf[nc] = '\0';
     warning(buf);
 }
+
+void F77_SYMBOL(rchkusr)(void)
+{
+    R_CheckUserInterrupt();
+}

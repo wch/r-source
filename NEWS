@@ -86,15 +86,14 @@ NEW FEATURES
 	rounding errors in low-precision calculations in gs >= 8.11.
 	(PR#5285, which is not a bug in R.)
 
-    o   arraySubscript and vectorSubscript take a new argument which
-        is a function pointer that provides access to character 
-        strings (such as the names vector) rather than assuming these
-        are passed in
-
-    o   new functions in the tools package: pkgDepends, getDepList and
-        installFoundDepends. These provide functionality for assessing
+    o   New functions in the tools package: pkgDepends, getDepList and
+        installFoundDepends.  These provide functionality for assessing
         dependencies and the availability of them (either locally or
         from on line repositories).
+
+    o   ppr() is now interruptible at suitable places in the
+	underlying FORTRAN code.
+
 
 UTILITIES
 
@@ -106,6 +105,18 @@ UTILITIES
 	which produces a warning whenever the default values of function
 	arguments differ between documentation and code.
 	Note that this affects "R CMD check" as well.
+
+
+C-LEVEL FACILITIES
+
+    o   arraySubscript and vectorSubscript take a new argument which
+        is a function pointer that provides access to character 
+        strings (such as the names vector) rather than assuming these
+        are passed in.
+
+    o	R_CheckUserInterrupts is now described in `Writing R Extensions'
+	and there is a new equivalent subroutine rchkusr for calling
+	from FORTRAN code.
 
 
 DEPRECATED & DEFUNCT
