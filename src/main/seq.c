@@ -87,11 +87,11 @@ seq(SEXP call, SEXP s1, SEXP s2)
     n1 = asReal(s1);
     n2 = asReal(s2);
     if (ISNAN(n1) || ISNAN(n2))
-	errorcall(call, "NA/NaN argument\n");
+	errorcall(call, "NA/NaN argument");
 
     if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX
 	|| fabs(n2 - n1) >= INT_MAX)
-	errorcall(call, "argument too large in magnitude\n");
+	errorcall(call, "argument too large in magnitude");
 
     n = fabs(n2 - n1) + 1 + FLT_EPSILON;
     if (n1 == (in1 = (int)(n1))) {
@@ -115,7 +115,7 @@ SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (isFactor(CAR(args)) && isFactor(CADR(args))) {
 	if (length(CAR(args)) != length(CADR(args)))
-	    errorcall(call, "unequal factor lengths\n");
+	    errorcall(call, "unequal factor lengths");
 	return(cross(CAR(args), CADR(args)));
     }
     return seq(call, CAR(args), CADR(args));
@@ -134,7 +134,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     na = 0;
     for (i = 0; i < nc; i++) {
 	if (INTEGER(t)[i] == NA_INTEGER)
-	    error("invalid number of copies in \"rep\"\n");
+	    error("invalid number of copies in \"rep\"");
 	na += INTEGER(t)[i];
     }
 
@@ -212,19 +212,19 @@ SEXP rep(SEXP s, SEXP ncopy)
     SEXP a, t;
 
     if (!isVector(ncopy))
-	error("\"rep\" incorrect type for second argument\n");
+	error("\"rep\" incorrect type for second argument");
 
     if (!isVector(s) && (!isList(s)))
-	error("attempt to replicate non-vector\n");
+	error("attempt to replicate non-vector");
 
     if ((length(ncopy) == length(s)))
 	return rep2(s, ncopy);
 
     if ((length(ncopy) != 1))
-	error("invalid number of copies in \"rep\"\n");
+	error("invalid number of copies in \"rep\"");
 
     if ((nc = asInteger(ncopy)) == NA_INTEGER || nc <= 0)
-	error("invalid number of copies in \"rep\"\n");
+	error("invalid number of copies in \"rep\"");
 
     ns = length(s);
     na = nc * ns;

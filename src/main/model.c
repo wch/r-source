@@ -119,7 +119,7 @@ static int InstallVar(SEXP var)
     int index;
     /* Check that variable is legitimate */
     if (!isSymbol(var) && !isLanguage(var) && !isZeroOne(var))
-	error("invalid term in model formula\n");
+	error("invalid term in model formula");
     /* Lookup/Install it */
     index = 0;
     for (v = varlist; CDR(v) != R_NilValue; v = CDR(v)) {
@@ -192,7 +192,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 	len = length(formula);
 	if (CAR(formula) == tildeSymbol) {
 	    if (response)
-		error("invalid model formula\n");
+		error("invalid model formula");
 	    if (isNull(CDDR(formula))) {
 		response = 0;
 		ExtractVars(CADR(formula), 0);
@@ -218,7 +218,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 	}
 	if (CAR(formula) == powerSymbol) {
 	    if (!isNumeric(CADDR(formula)))
-		error("invalid power in formula\n");
+		error("invalid power in formula");
 	    ExtractVars(CADR(formula), checkonly);
 	    return;
 	}
@@ -254,7 +254,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 	InstallVar(formula);
 	return;
     }
-    error("invalid model formula\n");
+    error("invalid model formula");
 }
 
 
@@ -462,7 +462,7 @@ static SEXP PowerTerms(SEXP left, SEXP right)
     int i, pow;
     pow = asInteger(right);
     if (pow==NA_INTEGER || pow <= 1)
-	error("Invalid power in formula\n");
+	error("Invalid power in formula");
     term = R_NilValue;		/* -Wall */
     PROTECT(left = EncodeVars(left));
     right = left;
@@ -632,7 +632,7 @@ static SEXP EncodeVars(SEXP formula)
 	SetBit(term, InstallVar(formula), 1);
 	return CONS(term, R_NilValue);
     }
-    error("invalid model formula\n");
+    error("invalid model formula");
     return R_NilValue;/*NOTREACHED*/
 }
 
@@ -764,7 +764,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isLanguage(CAR(args)) ||
 	CAR(CAR(args)) != tildeSymbol ||
 	(length(CAR(args)) != 2 && length(CAR(args)) != 3))
-	error("argument is not a valid model\n");
+	error("argument is not a valid model");
 
     PROTECT(ans = duplicate(CAR(args)));
 
@@ -791,7 +791,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (isFrame(data))
 	framenames = getAttrib(data, R_NamesSymbol);
     else
-	errorcall(call,"data argument is of the wrong type\n");
+	errorcall(call,"data argument is of the wrong type");
     if (framenames != R_NilValue)
 	if (length(CAR(args))== 3)
 	    CheckRHS(CADR(CAR(args)));
@@ -1112,7 +1112,7 @@ static SEXP ExpandDots(SEXP object, SEXP value)
     else return object;
 
  badformula:
-    error("invalid formula in update\n");
+    error("invalid formula in update");
     return R_NilValue; /*NOTREACHED*/
 }
 
@@ -1150,7 +1150,7 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(old) != LANGSXP ||
        (TYPEOF(new) != LANGSXP && CAR(old) != tildeSymbol) ||
        CAR(new) != tildeSymbol)
-	errorcall(call, "formula expected\n");
+	errorcall(call, "formula expected");
 
     if (length(old) == 3) {
 	lhs = CADR(old);
@@ -1235,18 +1235,18 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Argument Sanity Checks */
 
     if (!isNewList(variables))
-	errorcall(call, "invalid variables\n");
+	errorcall(call, "invalid variables");
     if (!isString(varnames))
-	errorcall(call, "invalid variable names\n");
+	errorcall(call, "invalid variable names");
     if ((nvars = length(variables)) != length(varnames))
-	errorcall(call, "number of variables != number of variable names\n");
+	errorcall(call, "number of variables != number of variable names");
     
     if (!isNewList(dots))
-	errorcall(call, "invalid extra variables\n");
+	errorcall(call, "invalid extra variables");
     if (!isString(dotnames))
-	errorcall(call, "invalid extra variable names\n");
+	errorcall(call, "invalid extra variable names");
     if ((ndots = length(dots)) != length(dotnames))
-	errorcall(call, "number of variables != number of variable names\n");
+	errorcall(call, "number of variables != number of variable names");
 
     /* Assemble the base data frame. */
     
@@ -1278,9 +1278,9 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = VECTOR(data)[i];
 	    if (TYPEOF(ans) < LGLSXP ||
 		TYPEOF(ans) > REALSXP)
-		errorcall(call, "invalid variable type\n");
+		errorcall(call, "invalid variable type");
 	    if (nrows(ans) != nr)
-		errorcall(call, "variable lengths differ\n");
+		errorcall(call, "variable lengths differ");
 	}
     }
     PROTECT(data);
@@ -1348,7 +1348,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(tmp = lang2(na_action, data));
 	PROTECT(ans = eval(tmp, rho));
 	if (!isNewList(ans) || length(ans) != length(data))
-	    errorcall(call, "invalid result from na.action\n");
+	    errorcall(call, "invalid result from na.action");
 	/* need to transfer _all but dim_ attributes, possibly lost 
 	   by subsetting in na.action.  */     
 	for ( i = length(ans) ; i-- ; )
@@ -1506,7 +1506,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(factors = duplicate(getAttrib(terms, install("factors"))));
     if (length(factors) == 0) {
 	if (intercept == 0)
-	    errorcall(call, "illegal model (zero parameters).\n");
+	    errorcall(call, "illegal model (zero parameters).");
 	nvar = 1;
 	nterms = 0;
     }
@@ -1514,7 +1514,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nvar = nrows(factors);
 	nterms = ncols(factors);
     }
-    else errorcall(call, "invalid terms argument\n");
+    else errorcall(call, "invalid terms argument");
 
     /* Get the variable names from the factor matrix */
 
@@ -1522,7 +1522,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(factors) > 0) {
 	if (length(vnames) < 1 ||
 	    (nvar - intercept > 0 && !isString(VECTOR(vnames)[0])))
-	    errorcall(call, "invalid terms argument\n");
+	    errorcall(call, "invalid terms argument");
 	vnames = VECTOR(vnames)[0];
     }
 
@@ -1533,9 +1533,9 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     vars = CADR(args);
     if (!isNewList(vars) || length(vars) < nvar)
-	errorcall(call, "invalid model frame\n");
+	errorcall(call, "invalid model frame");
     if (length(vars) == 0)
-	errorcall(call, "don't know how many cases\n");
+	errorcall(call, "don't know how many cases");
     n = nrows(VECTOR(vars)[0]);
     rnames = getAttrib(vars, R_RowNamesSymbol);
 
@@ -1552,7 +1552,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < nvar; i++) {
 	var_i = VECTOR(variable)[i] = VECTOR(vars)[i];
 	if (nrows(var_i) != n)
-	    errorcall(call, "variable lengths differ\n");
+	    errorcall(call, "variable lengths differ");
 	if (i == response - 1) {
 	    LOGICAL(ordered)[0] = 0;
 	    INTEGER(nlevs)[0] = 0;
@@ -1576,7 +1576,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else
-	    errorcall(call, "invalid variable type\n");
+	    errorcall(call, "invalid variable type");
     }
 
     /* If there is no intercept we look through the factor pattern */
@@ -1686,7 +1686,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     tnames = getAttrib(factors, R_DimNamesSymbol);
     if (nterms > 0) {
 	if (isNull(tnames))
-	    errorcall(call, "invalid terms object!\n");
+	    errorcall(call, "invalid terms object!");
 	tnames = CADR(tnames);
     }
     else tnames = R_NilValue;

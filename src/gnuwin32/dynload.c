@@ -223,7 +223,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
     if ((path[0] != '/') && (path[0] != '\\') && (path[1] != ':')) {
 	if (!getcwd(buf, MAX_PATH))
-	    errorcall(call, "can't get working directory!\n");
+	    errorcall(call, "can't get working directory!");
 	strcat(buf, "\\");
 	strcat(buf, path);
     } else
@@ -239,11 +239,11 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if (!isString(CAR(args)) || length(CAR(args)) != 1)
-	errorcall(call, "character argument expected\n");
+	errorcall(call, "character argument expected");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
     if (!AddDLL(buf))
-	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
+	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;
 }
@@ -254,9 +254,9 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if (!isString(CAR(args)) || length(CAR(args)) != 1)
-	errorcall(call, "character argument expected\n");
+	errorcall(call, "character argument expected");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     if (!DeleteDLL(buf))
-	errorcall(call, "dynamic library \"%s\" was not loaded\n", buf);
+	errorcall(call, "dynamic library \"%s\" was not loaded", buf);
     return R_NilValue;
 }

@@ -241,7 +241,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 #ifdef HAVE_UNISTD_H
 	if(!getcwd(buf, PATH_MAX))
 #endif
-	    errorcall(call, "can't get working directory!\n");
+	    errorcall(call, "can't get working directory!");
 	strcat(buf, "/");
 	strcat(buf, path);
     }
@@ -256,11 +256,11 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[2 * PATH_MAX];
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
-	errorcall(call, "character argument expected\n");
+	errorcall(call, "character argument expected");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
     if(!AddDLL(buf))
-	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
+	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;
 }
@@ -270,10 +270,10 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[2 * PATH_MAX];
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
-	errorcall(call, "character argument expected\n");
+	errorcall(call, "character argument expected");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     if(!DeleteDLL(buf))
-	errorcall(call, "shared library \"%s\" was not loaded\n", buf);
+	errorcall(call, "shared library \"%s\" was not loaded", buf);
     return R_NilValue;
 }
 
@@ -298,12 +298,12 @@ DL_FUNC R_FindSymbol(char const *name)
 
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error("no dyn.load support in this R version\n");
+    error("no dyn.load support in this R version");
 }
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error("no dyn.load support in this R version\n");
+    error("no dyn.load support in this R version");
 }
 
 #endif

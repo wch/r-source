@@ -26,7 +26,7 @@
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    error("no data entry editor in this version of R\n");
+    error("no data entry editor in this version of R");
     return R_NilValue;
 }
 

@@ -33,9 +33,9 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     f = CADR(args);
     if (!isVector(x))
-	errorcall(call, "first argument must be a vector\n");
+	errorcall(call, "first argument must be a vector");
     if (!isFactor(f))
-	errorcall(call, "second argument must be a factor\n");
+	errorcall(call, "second argument must be a factor");
     nlevs = nlevels(f);
     nfac = LENGTH(CADR(args));
     nobs = LENGTH(CAR(args));

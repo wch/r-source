@@ -216,7 +216,7 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args);
     if (!(isVector(x) || isNull(x)))
-	error("duplicated applies only to vectors\n");
+	error("duplicated applies only to vectors");
 
     /* handle zero length vectors */
     if (length(x) == 0) {
@@ -327,7 +327,7 @@ SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if ((!isVector(CAR(args)) && !isNull(CAR(args)))
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
-	error("match requires vector arguments\n");
+	error("match requires vector arguments");
 
     /* Coerce to a common type */
     /* Note: type == NILSXP is ok here */
@@ -384,10 +384,10 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_target = LENGTH(target);
     dups_ok = asLogical(CADDR(args));
     if (dups_ok == NA_LOGICAL)
-	errorcall(call, "invalid \"duplicates.ok\" argument\n");
+	errorcall(call, "invalid \"duplicates.ok\" argument");
 
     if (!isString(input) || !isString(target))
-	errorcall(call, "argument is not of mode character\n");
+	errorcall(call, "argument is not of mode character");
 
     ans = allocVector(INTSXP, n_input);
 
@@ -434,7 +434,7 @@ SEXP do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_target = LENGTH(target);
 
     if (!isString(input) || !isString(target))
-	errorcall(call, "argument is not of mode character\n");
+	errorcall(call, "argument is not of mode character");
 
     ans = allocVector(INTSXP, n_input);
 
@@ -559,7 +559,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (TYPEOF(funcall) != LANGSXP) {
 	b = deparse1(funcall, 1);
-	errorcall(call, "%s is not a valid call\n", CHAR(STRING(b)[0]));
+	errorcall(call, "%s is not a valid call", CHAR(STRING(b)[0]));
     }
 
     /* Get the function definition */
@@ -589,7 +589,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (TYPEOF(b) != CLOSXP) {
 	b = deparse1(b, 1);
-	errorcall(call, "%s is not a function\n", CHAR(STRING(b)[0]));
+	errorcall(call, "%s is not a function", CHAR(STRING(b)[0]));
     }
 
     /* Do we expand ... ? */
@@ -597,7 +597,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     expdots = asLogical(CAR(CDDR(args)));
     if (expdots == NA_LOGICAL) {
 	b = deparse1(CADDR(args), 1);
-	errorcall(call, "%s is not a logical\n", CHAR(STRING(b)[0]));
+	errorcall(call, "%s is not a logical", CHAR(STRING(b)[0]));
     }
 
     /* Get the formals and match the actual args */

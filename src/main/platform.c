@@ -97,12 +97,12 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     tl = CADR(args);
     if (!isString(fn) || length(fn) < 1 || STRING(fn)[0] == R_NilValue)
-	errorcall(call, "invalid filename\n");
+	errorcall(call, "invalid filename");
     if (!isString(tl) || length(tl) < 1 || STRING(tl)[0] == R_NilValue)
-	errorcall(call, "invalid filename\n");
+	errorcall(call, "invalid filename");
     if (!R_ShowFile(R_ExpandFileName(CHAR(STRING(fn)[0])),
                     CHAR(STRING(tl)[0])))
-	error("unable to display file \"%s\"\n", CHAR(STRING(fn)[0]));
+	error("unable to display file \"%s\"", CHAR(STRING(fn)[0]));
     return R_NilValue;
 }
 #else
@@ -120,13 +120,13 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     pg = CAR(args);
     n = 0;			/* -Wall */
     if (!isString(fn) || (n = length(fn)) < 1)
-	errorcall(call, "invalid filename specification\n");
+	errorcall(call, "invalid filename specification");
     if (!isString(hd) || length(hd) != n)
-	errorcall(call, "invalid headers\n");
+	errorcall(call, "invalid headers");
     if (!isString(tl))
-	errorcall(call, "invalid title\n");
+	errorcall(call, "invalid title");
     if (!isString(pg))
-        errorcall(call, "invalid pager specification\n");
+        errorcall(call, "invalid pager specification");
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -184,7 +184,7 @@ static int R_AppendFile(char *file1, char *file2)
     status = 1;
  append_error:
     if (status == 0)
-	warning("write error during file append!\n");
+	warning("write error during file append!");
     fclose(fp1);
     fclose(fp2);
     return status;
@@ -198,11 +198,11 @@ SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     f1 = CAR(args); n1 = length(f1);
     f2 = CADR(args); n2 = length(f2);
     if (!isString(f1))
-        errorcall(call, "invalid first filename\n");
+        errorcall(call, "invalid first filename");
     if (!isString(f2))
-        errorcall(call, "invalid second filename\n");
+        errorcall(call, "invalid second filename");
     if (n1 < 1)
-	errorcall(call, "nothing to append to\n");
+	errorcall(call, "nothing to append to");
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
@@ -227,7 +227,7 @@ SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, "invalid filename argument\n");
+        errorcall(call, "invalid filename argument");
     n = length(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
@@ -250,7 +250,7 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     f = CAR(args);
     if (!isString(f))
-        errorcall(call, "invalid first filename\n");
+        errorcall(call, "invalid first filename");
     n = length(f);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
@@ -308,30 +308,30 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d))
-	errorcall(call, "invalid directory argument\n");
+	errorcall(call, "invalid directory argument");
     p = CAR(args);  args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING(p)[0] != R_NilValue)
 	pattern = 1;
     else if (!isNull(p) && !(isString(p) && length(p) < 1))
-	errorcall(call, "invalid pattern argument\n");
+	errorcall(call, "invalid pattern argument");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args));
     ndir = length(d);
 #ifdef HAVE_REGCOMP
     if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
-        errorcall(call, "invalid pattern regular expression\n");
+        errorcall(call, "invalid pattern regular expression");
 #else
-	warning("pattern specification is not available in \"list.files\"\n");
+	warning("pattern specification is not available in \"list.files\"");
 #endif
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
 	if (strlen(dnp) >= DIRNAMEBUFSIZE)
-	    error("directory/folder path name too long\n");
+	    error("directory/folder path name too long");
 	strcpy(dirname, dnp);
 	if ((dir = opendir(dirname)) == NULL)
-	    errorcall(call, "invalid directory/folder name\n");
+	    errorcall(call, "invalid directory/folder name");
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 #ifdef HAVE_REGCOMP
@@ -351,14 +351,14 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
 	if (strlen(dnp) >= DIRNAMEBUFSIZE)
-	    error("directory/folder path name too long\n");
+	    error("directory/folder path name too long");
 	strcpy(dirname, dnp);
 	if (fullnames)
 	    dnp = dirname;
 	else
 	    dnp = NULL;
 	if ((dir = opendir(dirname)) == NULL)
-	    errorcall(call, "invalid directory/folder name\n");
+	    errorcall(call, "invalid directory/folder name");
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 #ifdef HAVE_REGCOMP
@@ -387,7 +387,7 @@ SEXP do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *path;
     checkArity(op, args);
     if (!(path = R_HomeDir()))
-	error("unable to determine R home location\n");
+	error("unable to determine R home location");
     return mkString(path);
 }
 
@@ -397,7 +397,7 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, nfile;
     checkArity(op, args);
     if (!isString(file = CAR(args)))
-        errorcall(call, "invalid file argument\n");
+        errorcall(call, "invalid file argument");
     nfile = length(file);
     ans = allocVector(LGLSXP, nfile);
     for(i = 0; i < nfile; i++) {
@@ -432,19 +432,19 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     topic = CAR(args); args = CDR(args);
     if(!isString(topic) || length(topic) < 1 || isNull(topic))
-	error("invalid \"topic\" argument\n");
+	error("invalid \"topic\" argument");
     path = CAR(args); args = CDR(args);
     if(!isString(path) || length(path) < 1 || isNull(path))
-	error("invalid \"path\" argument\n");
+	error("invalid \"path\" argument");
     indexname = CAR(args); args = CDR(args);
     if(!isString(indexname) || length(indexname) < 1 || isNull(indexname))
-	error("invalid \"indexname\" argument\n");
+	error("invalid \"indexname\" argument");
     sep = CAR(args); args = CDR(args);
     if(!isString(sep) || length(sep) < 1 || isNull(sep))
-	error("invalid \"sep\" argument\n");
+	error("invalid \"sep\" argument");
     type = CAR(args);
     if(!isString(type) || length(type) < 1 || isNull(type))
-	error("invalid \"type\" argument\n");
+	error("invalid \"type\" argument");
     strcpy(ctype, CHAR(STRING(type)[0]));
     sprintf(topicbuf, "%s\t", CHAR(STRING(topic)[0]));
     ltopicbuf = strlen(topicbuf);
@@ -502,8 +502,8 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     new = asLogical(CAR(args));
     if ((len = R_ChooseFile(new, buf, CHOOSEBUFSIZE)) == 0)
-	error("file choice cancelled\n");
+	error("file choice cancelled");
     if (len >= CHOOSEBUFSIZE - 1)
-	errorcall(call, "file name too long\n");
+	errorcall(call, "file name too long");
     return mkString(R_ExpandFileName(buf));
 }

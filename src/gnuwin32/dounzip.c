@@ -36,18 +36,18 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, ntopics, rc;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid zip name argument\n");
+	errorcall(call, "invalid zip name argument");
     strcpy(zipname, CHAR(STRING(CAR(args))[0]));
     args = CDR(args);
     fn = CAR(args);
     ntopics = length(fn);
     if (!isString(fn) || ntopics < 1 || ntopics > 50)
-	errorcall(call, "invalid topics argument\n");
+	errorcall(call, "invalid topics argument");
     for(i = 0; i < ntopics; i++)
 	topics[i] = CHAR(STRING(fn)[i]);
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid destination argument\n");
+	errorcall(call, "invalid destination argument");
     strcpy(dest, CHAR(STRING(CAR(args))[0]));
     rc = Load_Unzip_DLL();
     if (rc > 0) {

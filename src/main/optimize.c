@@ -65,7 +65,7 @@ static double F77_SYMBOL(fcn1)(double *x)
 	goto badvalue;
     }
  badvalue:
-    error("invalid function value in 'fmin' optimizer\n");
+    error("invalid function value in 'fmin' optimizer");
     return 0;/* for -Wall */
 }
 
@@ -82,30 +82,30 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     v = CAR(args);
     if (!isFunction(v))
-	errorcall(call, "attempt to minimize non-function\n");
+	errorcall(call, "attempt to minimize non-function");
     args = CDR(args);
 
     /* xmin */
 
     xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
-	errorcall(call, "invalid xmin value\n");
+	errorcall(call, "invalid xmin value");
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
-	errorcall(call, "invalid xmax value\n");
+	errorcall(call, "invalid xmax value");
     if (xmin >= xmax)
-	errorcall(call, "xmin not less than xmax\n");
+	errorcall(call, "xmin not less than xmax");
     args = CDR(args);
 
     /* tol */
 
     tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
-	errorcall(call, "invalid tol value\n");
+	errorcall(call, "invalid tol value");
 
     R_env1 = rho;
     PROTECT(R_fcall1 = lang2(v, R_NilValue));
@@ -150,7 +150,7 @@ double fcn2(double x, struct callinfo *info)
 	goto badvalue;
     }
  badvalue:
-    error("invalid function value in 'zeroin'\n");
+    error("invalid function value in 'zeroin'");
     return 0;/* for -Wall */
 
 }
@@ -170,36 +170,36 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     v = CAR(args);
     if (!isFunction(v))
-	errorcall(call,"attempt to minimize non-function\n");
+	errorcall(call,"attempt to minimize non-function");
     args = CDR(args);
 
     /* xmin */
 
     xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
-	errorcall(call, "invalid xmin value\n");
+	errorcall(call, "invalid xmin value");
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
-	errorcall(call, "invalid xmax value\n");
+	errorcall(call, "invalid xmax value");
     if (xmin >= xmax)
-	errorcall(call, "xmin not less than xmax\n");
+	errorcall(call, "xmin not less than xmax");
     args = CDR(args);
 
     /* tol */
 
     tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
-	errorcall(call, "invalid tol value\n");
+	errorcall(call, "invalid tol value");
     args = CDR(args);
 
     /* maxiter */
     iter = asInteger(CAR(args));
     if (iter <= 0)
-	errorcall(call, "maxiter must be positive\n");
+	errorcall(call, "maxiter must be positive");
 
     info.R_env2 = rho;
     PROTECT(info.R_fcall2 = lang2(v, R_NilValue)); /* the info used in fcn2() */
@@ -267,21 +267,21 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
     }
     return 0;
  badvalue:
-    error("invalid function value in 'nlm' optimizer\n");
+    error("invalid function value in 'nlm' optimizer");
     return 0;/* for -Wall */
 }
 
 
 static int F77_SYMBOL(d1fcn)(int *n, double *x, double *g)
 {
-    error("optimization using analytic gradients not implemented (yet)\n");
+    error("optimization using analytic gradients not implemented (yet)");
     return 0;/* for -Wall */
 }
 
 
 static int F77_SYMBOL(d2fcn)(int *n, double *x, double *g)
 {
-    error("optimization using analytic Hessians not implemented (yet)\n");
+    error("optimization using analytic Hessians not implemented (yet)");
     return 0;/* for -Wall */
 }
 
@@ -292,15 +292,15 @@ static double *fixparam(SEXP p, int *n, SEXP call)
     int i;
 
     if (!isNumeric(p))
-	errorcall(call, "numeric parameter expected\n");
+	errorcall(call, "numeric parameter expected");
 
     if (*n) {
 	if (LENGTH(p) != *n)
-	    errorcall(call, "conflicting parameter lengths\n");
+	    errorcall(call, "conflicting parameter lengths");
     }
     else {
 	if (LENGTH(p) <= 0)
-	    errorcall(call, "invalid parameter length\n");
+	    errorcall(call, "invalid parameter length");
 	*n = LENGTH(p);
     }
 
@@ -310,19 +310,19 @@ static double *fixparam(SEXP p, int *n, SEXP call)
     case INTSXP:
 	for (i = 0; i < *n; i++) {
 	    if (INTEGER(p)[i] == NA_INTEGER)
-		errorcall(call, "missing value in parameter\n");
+		errorcall(call, "missing value in parameter");
 	    x[i] = INTEGER(p)[i];
 	}
 	break;
     case REALSXP:
 	for (i = 0; i < *n; i++) {
 	    if (!R_FINITE(REAL(p)[i]))
-		errorcall(call, "missing value in parameter\n");
+		errorcall(call, "missing value in parameter");
 	    x[i] = REAL(p)[i];
 	}
 	break;
     default:
-	errorcall(call, "invalid parameter type\n");
+	errorcall(call, "invalid parameter type");
     }
     return x;
 }
@@ -330,7 +330,7 @@ static double *fixparam(SEXP p, int *n, SEXP call)
 
 static void invalid_na(SEXP call)
 {
-    errorcall(call, "invalid NA value in parameter\n");
+    errorcall(call, "invalid NA value in parameter");
 }
 
 
@@ -340,25 +340,25 @@ static void opterror(int nerr)
 {
     switch(nerr) {
     case -1:
-	error("non-positive number of parameters in nlm\n");
+	error("non-positive number of parameters in nlm");
     case -2:
-	error("nlm is inefficient for 1-d problems\n");
+	error("nlm is inefficient for 1-d problems");
     case -3:
-	error("illegal gradient tolerance in nlm\n");
+	error("illegal gradient tolerance in nlm");
     case -4:
-	error("illegal iteration limit in nlm\n");
+	error("illegal iteration limit in nlm");
     case -5:
-	error("minimization function has no good digits in nlm\n");
+	error("minimization function has no good digits in nlm");
     case -6:
-	error("no analytic gradient to check in nlm!\n");
+	error("no analytic gradient to check in nlm!");
     case -7:
-	error("no analytic Hessian to check in nlm!\n");
+	error("no analytic Hessian to check in nlm!");
     case -21:
-	error("probable coding error in analytic gradient\n");
+	error("probable coding error in analytic gradient");
     case -22:
-	error("probable coding error in analytic Hessian\n");
+	error("probable coding error in analytic Hessian");
     default:
-	error("*** unknown error message (msg = %d) in nlm()\n*** should not happen!\n", nerr);
+	error("*** unknown error message (msg = %d) in nlm()\n*** should not happen!", nerr);
     }
 }
 
@@ -417,7 +417,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_env = rho;
     v = CAR(args);
     if (!isFunction(v))
-	error("attempt to minimize non-function\n");
+	error("attempt to minimize non-function");
     PROTECT(R_fcall = lang2(v, R_NilValue));
     args = CDR(args);
 

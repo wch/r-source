@@ -161,7 +161,7 @@ void distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
 	distfun = dist_binary;
 	break;
     default:
-	error("distance(): invalid distance\n");
+	error("distance(): invalid distance");
     }
 
     dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */

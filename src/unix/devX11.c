@@ -370,7 +370,7 @@ static void SetupPseudoColor()
 		break;
         }
 	if (PaletteSize == 0) {
-	    warning("X11 driver unable to obtain color cube\n");
+	    warning("X11 driver unable to obtain color cube");
 	    depth = 1;
 	}
     }
@@ -415,8 +415,7 @@ static unsigned int GetPseudoColor2Pixel(int r, int g, int b)
     XPalette[PaletteSize].blue  = pow(b / 255.0, BlueGamma) * 0xffff;
     if (PaletteSize == 256 ||
 	XAllocColor(display, colormap, &XPalette[PaletteSize]) == 0) {
-	REprintf("Error: X11 cannot allocate additional graphics colors.\n");
-	error("Consider using colortype=\"pseudo.cube\" or \"gray\".\n");
+	error("Error: X11 cannot allocate additional graphics colors.\nConsider using colortype=\"pseudo.cube\" or \"gray\".");
     }
     RPalette[PaletteSize].red = r;
     RPalette[PaletteSize].green = g;

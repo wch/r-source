@@ -60,7 +60,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isVector(x) || !isVector(y))
 	errorcall(call,
-		  "comparison (%d) is possible only for vector types\n",
+		  "comparison (%d) is possible only for vector types",
 		  PRIMVAL(op));
 
     if (LENGTH(x) <= 0 || LENGTH(y) <= 0)
@@ -75,7 +75,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
-		errorcall(call, "non-conformable arrays\n");
+		errorcall(call, "non-conformable arrays");
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
 	else if (xarray) {
@@ -101,7 +101,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     if (xts || yts) {
 	if (xts && yts) {
 	    if (!tsConform(x, y))
-		errorcall(call, "Non-conformable time-series\n");
+		errorcall(call, "Non-conformable time-series");
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(class = getAttrib(x, R_ClassSymbol));
 	}
@@ -328,7 +328,7 @@ static SEXP complex_relop(int code, SEXP s1, SEXP s2)
     SEXP ans;
 
     if (code != EQOP && code != NEOP) {
-	errorcall(rcall, "illegal comparison with complex values\n");
+	errorcall(rcall, "illegal comparison with complex values");
     }
 
     n1 = LENGTH(s1);

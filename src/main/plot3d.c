@@ -315,7 +315,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		    seglist = ctr_newseg(xx[0], yy[0], xx[1], yy[1], seglist);
 		    seglist = ctr_newseg(xx[2], yy[2], xx[3], yy[3], seglist);
 		}
-		else error("k != 2 or 4\n");
+		else error("k != 2 or 4");
 	    }
 	    ctr_SegDB[i + j * nx] = seglist;
 	}
@@ -410,7 +410,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     if (length(args) < 4)
-	errorcall(call, "too few arguments\n");
+	errorcall(call, "too few arguments");
 
     oargs = args;
 
@@ -442,26 +442,26 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     /* col, lwd and lty vectors here --- FIXME: "lwd" ???? */
 
     if (nx < 2 || ny < 2)
-	errorcall(call, "insufficient x or y values\n");
+	errorcall(call, "insufficient x or y values");
 
     if (nrows(z) != nx || ncols(z) != ny)
-	errorcall(call, "dimension mismatch\n");
+	errorcall(call, "dimension mismatch");
 
     if (nc < 1)
-	errorcall(call, "no contour values\n");
+	errorcall(call, "no contour values");
 
     for (i = 0; i < nx; i++) {
 	if (!R_FINITE(REAL(x)[i]))
-	    errorcall(call, "missing x values\n");
+	    errorcall(call, "missing x values");
 	if (i > 0 && REAL(x)[i] < REAL(x)[i - 1])
-	    errorcall(call, "increasing x values expected\n");
+	    errorcall(call, "increasing x values expected");
     }
 
     for (i = 0; i < ny; i++) {
 	if (!R_FINITE(REAL(y)[i]))
-	    errorcall(call, "missing y values\n");
+	    errorcall(call, "missing y values");
 	if (i > 0 && REAL(y)[i] < REAL(y)[i - 1])
-	    errorcall(call, "increasing y values expected\n");
+	    errorcall(call, "increasing y values expected");
     }
 
     ctr_xtol = 1e-3 * fabs(REAL(x)[nx-1]-REAL(x)[0]);
@@ -469,7 +469,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0; i < nc; i++)
 	if (!R_FINITE(REAL(c)[i]))
-	    errorcall(call, "illegal NA contour values\n");
+	    errorcall(call, "illegal NA contour values");
 
     zmin = DBL_MAX;
     zmax = DBL_MIN;
@@ -481,9 +481,9 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (zmin >= zmax) {
 	if (zmin == zmax)
-	    warning("all z values are equal\n");
+	    warning("all z values are equal");
 	else
-	    warning("all z values are NA\n");
+	    warning("all z values are NA");
 	return R_NilValue;
     }
 
@@ -742,9 +742,9 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 
  badxy:
-    errorcall(call, "invalid x / y limits\n");
+    errorcall(call, "invalid x / y limits");
  badlev:
-    errorcall(call, "invalid contour levels\n");
+    errorcall(call, "invalid contour levels");
     return R_NilValue;  /* never used; to keep -Wall happy */
 }
 
@@ -787,7 +787,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
        !R_FINITE(REAL(szlim)[0]) ||
        !R_FINITE(REAL(szlim)[1]) ||
        REAL(szlim)[0] >= REAL(szlim)[1])
-	errorcall(call, "invalid z limits\n");
+	errorcall(call, "invalid z limits");
     zmin = REAL(szlim)[0];
     zmax = REAL(szlim)[1];
     args = CDR(args);
@@ -858,7 +858,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 
   badxy:
-    errorcall(call, "invalid x / y limits\n");
+    errorcall(call, "invalid x / y limits");
     return R_NilValue;/* never used; to keep -Wall happy */
 }
 
@@ -1201,7 +1201,7 @@ static void CheckRange(double *x, int n, double min, double max)
 	    if (x[i] > xmax) xmax = x[i];
 	}
     if (xmin < min || xmax > max)
-	errorcall(gcall, "coordinates outsize specified range\n");
+	errorcall(gcall, "coordinates outsize specified range");
 }
 #endif
 
@@ -1375,43 +1375,43 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd;
 
     if (length(args) < 18)
-	errorcall(call, "too few parameters\n");
+	errorcall(call, "too few parameters");
     gcall = call;
     originalArgs = args;
 
     PROTECT(x = coerceVector(CAR(args), REALSXP));
-    if (length(x) < 2) errorcall(call, "invalid x argument\n");
+    if (length(x) < 2) errorcall(call, "invalid x argument");
     args = CDR(args);
 
     PROTECT(y = coerceVector(CAR(args), REALSXP));
-    if (length(y) < 2) errorcall(call, "invalid y argument\n");
+    if (length(y) < 2) errorcall(call, "invalid y argument");
     args = CDR(args);
 
     PROTECT(z = coerceVector(CAR(args), REALSXP));
     if (!isMatrix(z) || nrows(z) != length(x) || ncols(z) != length(y))
-	errorcall(call, "invalid z argument\n");
+	errorcall(call, "invalid z argument");
     args = CDR(args);
 
     PROTECT(xlim = coerceVector(CAR(args), REALSXP));
-    if (length(xlim) != 2) errorcall(call, "invalid xlim argument\n");
+    if (length(xlim) != 2) errorcall(call, "invalid xlim argument");
     args = CDR(args);
 
     PROTECT(ylim = coerceVector(CAR(args), REALSXP));
-    if (length(ylim) != 2) errorcall(call, "invalid ylim argument\n");
+    if (length(ylim) != 2) errorcall(call, "invalid ylim argument");
     args = CDR(args);
 
     PROTECT(zlim = coerceVector(CAR(args), REALSXP));
-    if (length(zlim) != 2) errorcall(call, "invalid zlim argument\n");
+    if (length(zlim) != 2) errorcall(call, "invalid zlim argument");
     args = CDR(args);
 
     /* Checks on x/y/z Limits */
 
     if (!LimitCheck(REAL(xlim), &xc, &xs))
-	errorcall(call, "invalid x limits\n");
+	errorcall(call, "invalid x limits");
     if (!LimitCheck(REAL(ylim), &yc, &ys))
-	errorcall(call, "invalid y limits\n");
+	errorcall(call, "invalid y limits");
     if (!LimitCheck(REAL(zlim), &zc, &zs))
-	errorcall(call, "invalid z limits\n");
+	errorcall(call, "invalid z limits");
 
     theta = asReal(CAR(args));
     args = CDR(args);
@@ -1467,9 +1467,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!R_FINITE(theta) || !R_FINITE(phi) || !R_FINITE(r) || !R_FINITE(d) ||
 	d < 0 || r < 0)
-	errorcall(call, "invalid viewing parameters\n");
+	errorcall(call, "invalid viewing parameters");
     if (!R_FINITE(expand) || expand < 0)
-	errorcall(call, "invalid expand value\n");
+	errorcall(call, "invalid expand value");
     if (scale == NA_LOGICAL)
 	scale = 0;
 
@@ -1477,9 +1477,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(col = FixupCol(col, dd->gp.bg));
     ncol = LENGTH(col);
-    if (ncol < 1) errorcall(call, "invalid col specification\n");
+    if (ncol < 1) errorcall(call, "invalid col specification");
     PROTECT(border = FixupCol(border, dd->gp.fg));
-    if (length(border) < 1) errorcall(call, "invalid border specification\n");
+    if (length(border) < 1) errorcall(call, "invalid border specification");
 
     GSetState(1, dd);
     GSavePars(dd);

@@ -128,7 +128,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(CAR(args)))
-	errorcall(call, "wrong type for argument\n");
+	errorcall(call, "wrong type for argument");
 
     i = LENGTH(CAR(args));
     if (i == 0) {
@@ -211,7 +211,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (!isString(CAR(args)))
-	errorcall(call, "character argument expected\n");
+	errorcall(call, "character argument expected");
     if (isLogical(CADR(args)))
 	read = INTEGER(CADR(args))[0];
     if (read) {

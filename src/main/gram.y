@@ -729,7 +729,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
     case SYMSXP:
 	return lang2(arg, tag);
     default:
-	error("incorrect tag type\n"); return R_NilValue/* -Wall */;
+	error("incorrect tag type"); return R_NilValue/* -Wall */;
     }
 }
 
@@ -1416,7 +1416,7 @@ static void CheckFormalArgs(SEXP formlist, SEXP new)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == new) {
-	    error("Repeated formal argument.\n");
+	    error("Repeated formal argument");
 	}
 	formlist = CDR(formlist);
     }

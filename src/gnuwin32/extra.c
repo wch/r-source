@@ -62,7 +62,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     HANDLE h;
     checkArity(op, args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid file name argument\n");
+	errorcall(call, "invalid file name argument");
     tn = CHAR(STRING(CAR(args))[0]);
     /* try to get a new file name */
     tmp = getenv("TMP");
@@ -79,7 +79,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
         tm[0] = '\0';
     }
     if(!done)
-	error("cannot find unused tempfile name\n");
+	error("cannot find unused tempfile name");
     PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = mkChar(tm);
     UNPROTECT(1);
@@ -98,7 +98,7 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     fn = CAR(args);
     nfiles = length(fn);
     if (!isString(fn) || nfiles < 1)
-	errorcall(call, "invalid file name argument\n");
+	errorcall(call, "invalid file name argument");
     for(i = 0; i < nfiles; i++) {
 	strcpy(tmp, CHAR(STRING(fn)[i]));
 	for(p = tmp; *p != '\0'; p++)
@@ -135,14 +135,14 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     home = getenv("R_HOME");
     if (home == NULL)
-	error("R_HOME not set\n");
+	error("R_HOME not set");
     sprintf(buf, "%s\\doc\\html\\index.html", home);
     ff = fopen(buf, "r");
     if (!ff) {
 	sprintf(buf, "%s\\doc\\html\\index.htm", home);
 	ff = fopen(buf, "r");
 	if (!ff) {
-	    sprintf(buf, "%s\\doc\\html\\index.htm[l] not found\n", home);
+	    sprintf(buf, "%s\\doc\\html\\index.htm[l] not found", home);
 	    error(buf);
 	}
     }
@@ -173,40 +173,40 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if (!isString(CAR(args)))
-	errorcall(call, "invalid topic argument\n");
+	errorcall(call, "invalid topic argument");
     item = CHAR(STRING(CAR(args))[0]);
     type = asInteger(CADR(args));
     if (type == 1) {
 	ff = fopen(item, "r");
 	if (!ff) {
-	    sprintf(buf, "%s not found\n", item);
+	    sprintf(buf, "%s not found", item);
 	    error(buf);
 	}
 	fclose(ff);
 	home = getenv("R_HOME");
 	if (home == NULL)
-	    error("R_HOME not set\n");
+	    error("R_HOME not set");
 	ShellExecute(NULL, "open", item, NULL, home, SW_SHOW);
     } else if (type == 2) {
 	if (!isString(CADDR(args)))
-	    errorcall(call, "invalid hlpfile argument\n");
+	    errorcall(call, "invalid hlpfile argument");
 	hfile = CHAR(STRING(CADDR(args))[0]);
 	if (!WinHelp((HWND) 0, hfile, HELP_KEY, (DWORD) item))
-	    warning("WinHelp call failed\n");
+	    warning("WinHelp call failed");
 	else {
 	    if (nhfiles >= 50)
-		error("too many .hlp files opened\n");
+		error("too many .hlp files opened");
 	    hfiles[nhfiles] = malloc(strlen(hfile) * sizeof(char));
 	    strcpy(hfiles[nhfiles++], hfile);
 	}
     } else if (type == 3) {
 	if (!isString(CADDR(args)))
-	    warningcall(call, "invalid hlpfile argument\n");
+	    warningcall(call, "invalid hlpfile argument");
 	hfile = CHAR(STRING(CADDR(args))[0]);
 	if (!WinHelp((HWND) 0, hfile, HELP_QUIT, (DWORD) 0))
-	    error("WinHelp call failed\n");
+	    error("WinHelp call failed");
     } else
-	warning("type not yet implemented\n");
+	warning("type not yet implemented");
     return R_NilValue;
 }
 

@@ -65,7 +65,7 @@ void warningcall(SEXP call, char *format, ...)
     s = GetOption(install("warning.expression"), R_NilValue);
     if( s!= R_NilValue ) {
         if( !isLanguage(s) &&  ! isExpression(s) )
-            error("invalid option \"warning.expression\"\n"); 
+            error("invalid option \"warning.expression\""); 
         cptr = R_GlobalContext;
         while (cptr->callflag != CTXT_RETURN && cptr->callflag )
             cptr = cptr->nextcontext;
@@ -307,9 +307,9 @@ void do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     CAR(args) = coerceVector(CAR(args), STRSXP);
     if (length(CAR(args)) <= 0)
-	error("\n");
+	error("");
     else
-	error("%s\n", CHAR(STRING(CAR(args))[0]));
+	error("%s", CHAR(STRING(CAR(args))[0]));
     /*NOTREACHED*/
 }
 
@@ -332,13 +332,13 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* Error recovery for incorrect argument count error. */
 void WrongArgCount(char *s)
 {
-    error("incorrect number of arguments to \"%s\"\n", s);
+    error("incorrect number of arguments to \"%s\"", s);
 }
 
 
 void  UNIMPLEMENTED(char *s)
 {
-    error("Unimplemented feature in %s\n", s);
+    error("Unimplemented feature in %s", s);
 }
 
 static struct {

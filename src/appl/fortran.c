@@ -92,7 +92,7 @@ void ZDIV(complex *c, complex *a, complex *b)
 	abi = - abi;
     if( abr <= abi ) {
 	if(abi == 0)
-	    error("complex division by zero\n");
+	    error("complex division by zero");
 	ratio = b->r / b->i ;
 	den = b->i * (1 + ratio*ratio);
 	c->r = (a->r*ratio + a->i) / den;

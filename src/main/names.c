@@ -686,7 +686,7 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     name = CAR(args);
     if (!isString(name) || length(name) < 1 || STRING(name)[0] == R_NilValue)
-	errorcall(call, "string argument required\n");
+	errorcall(call, "string argument required");
     for (i = 0; R_FunTab[i].name; i++)
 	if (strcmp(CHAR(STRING(name)[0]), R_FunTab[i].name) == 0) {
 	    if ((R_FunTab[i].eval % 100 )/10)
@@ -694,7 +694,7 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
 	}
-    errorcall(call, "no such primitive function\n");
+    errorcall(call, "no such primitive function");
     return(R_NilValue);		/* -Wall */
 }
 
@@ -814,9 +814,9 @@ SEXP install(char *name)
     int i;
 
     if (*name == '\0')
-	error("attempt to use zero-length variable name\n");
+	error("attempt to use zero-length variable name");
     if (strlen(name) > MAXIDSIZE)
-	error("symbol print-name too long\n");
+	error("symbol print-name too long");
     strcpy(buf, name);
     i = hashpjw(buf);
     /* Check to see if the symbol is already present. */
@@ -841,9 +841,9 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     s = CAR(args);
     fun = CAR(s);
     if (!isSymbol(fun))
-	errorcall(call, "invalid internal function\n");
+	errorcall(call, "invalid internal function");
     if (INTERNAL(fun) == R_NilValue)
-	errorcall(call, "no internal function \"%s\"\n", CHAR(PRINTNAME(fun)));
+	errorcall(call, "no internal function \"%s\"", CHAR(PRINTNAME(fun)));
     args = CDR(s);
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env);
@@ -852,7 +852,7 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
     UNPROTECT(1);
     if (save != R_PPStackTop) {
-	REprintf("stack imbalance in internal %s, %d then %d\n",
+	REprintf("stack imbalance in internal %s, %d then %d",
 	       PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
     }
     return (args);

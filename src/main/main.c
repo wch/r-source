@@ -75,7 +75,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 		PrintWarnings();
 	    break;
 	case PARSE_ERROR:
-	    error("syntax error\n");
+	    error("syntax error");
 	    break;
 	case PARSE_EOF:
 	    return;
@@ -181,7 +181,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
 	case PARSE_ERROR:
 
-	    error("syntax error\n");
+	    error("syntax error");
 	    R_IoBufferWriteReset(&R_ConsoleIob);
 	    prompt_type = 1;
 	    break;
@@ -256,7 +256,7 @@ int R_ReplDLLdo1()
 	prompt_type = 1;
 	break;
     case PARSE_ERROR:
-	error("syntax error\n");
+	error("syntax error");
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	prompt_type = 1;
 	break;
@@ -569,11 +569,11 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int ask=SA_DEFAULT;
 
     if(R_BrowseLevel) {
-	warning("can't quit from browser\n");
+	warning("can't quit from browser");
 	return R_NilValue;
     }
     if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.\n");
+	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.");
     tmp = CHAR(STRING(CAR(args))[0]);
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
@@ -586,7 +586,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call, "unrecognized value of save\n");
+	errorcall(call, "unrecognized value of save");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(ask);

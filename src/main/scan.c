@@ -180,7 +180,7 @@ static void expected(char *what, char *got)
     }
     else
 	fclose(fp);
-    error("\"scan\" expected %s, got \"%s\"\n", what, got);
+    error("\"scan\" expected %s, got \"%s\"", what, got);
 }
 
 static void extractItem(char *buffer, SEXP ans, int i)
@@ -349,7 +349,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     for (i = 0; i < nc; i++) {
 	if (!isVector(VECTOR(what)[i])) {
 	    if (!ttyflag) fclose(fp);
-	    error("\"scan\" invalid \"what=\" specified\n");
+	    error("\"scan\" invalid \"what=\" specified");
 	}
 	VECTOR(ans)[i] = allocVector(TYPEOF(VECTOR(what)[i]), blksize);
     }
@@ -501,13 +501,13 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    sepchar = CHAR(STRING(sep)[0])[0];
     }
     else
-	errorcall(call, "invalid sep value\n");
+	errorcall(call, "invalid sep value");
     if (TYPEOF(stripwhite) != LGLSXP)
-	errorcall(call, "invalid strip.white value\n");
+	errorcall(call, "invalid strip.white value");
     if (length(stripwhite) != 1 && length(stripwhite) != length(what))
-	errorcall(call, "invalid strip.white length\n");
+	errorcall(call, "invalid strip.white length");
     if (TYPEOF(NAstrings) != STRSXP)
-	errorcall(call, "invalid na.strings value\n");
+	errorcall(call, "invalid na.strings value");
     filename = NULL;
     if (!isNull(file) && isString(file)) {
 	filename = CHAR(*STRING(file));
@@ -515,13 +515,13 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    filename = NULL;
     }
     else
-	errorcall(call, "\"scan\" file name required\n");
+	errorcall(call, "\"scan\" file name required");
 
     if (filename) {
 	ttyflag = 0;
 	filename = R_ExpandFileName(filename);
 	if ((fp = R_fopen(filename, "r")) == NULL)
-	    error("\"scan\" can't open file\n");
+	    error("\"scan\" can't open file");
 	for (i = 0; i < nskip; i++)
 	    while ((c = scanchar()) != '\n' && c != R_EOF);
     }
@@ -548,12 +548,12 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     case CPLXSXP:
 	if (!ttyflag)
 	    fclose(fp);
-	error("scan(): what=\"complex\" is not yet supported\n");
+	error("scan(): what=\"complex\" is not yet supported");
 #endif
     default:
 	if (!ttyflag)
 	    fclose(fp);
-	error("\"scan\" invalid \"what=\" specified\n");
+	error("\"scan\" invalid \"what=\" specified");
     }
     if (!ttyflag)
 	fclose(fp);
@@ -579,7 +579,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (LENGTH(sep) == 0) sepchar = 0;
 	else sepchar = CHAR(STRING(sep)[0])[0];
     }
-    else errorcall(call, "invalid sep value\n");
+    else errorcall(call, "invalid sep value");
 
     if (isString(file)) {
 	filename = CHAR(*STRING(file));
@@ -590,13 +590,13 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	filename = NULL;
 
     if (filename == NULL)
-	errorcall(call, "\"scan\" file name required\n");
+	errorcall(call, "\"scan\" file name required");
 
     if (filename) {
 	ttyflag = 0;
 	filename = R_ExpandFileName(filename);
 	if ((fp = R_fopen(filename, "r")) == NULL)
-	    error("\"scan\" can't open file\n");
+	    error("\"scan\" can't open file");
 	for (i = 0; i < nskip; i++)
 	    while ((c = scanchar()) != '\n' && c != R_EOF);
     }
@@ -642,7 +642,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while ((c=scanchar()) != quote) {
 		    if (c == R_EOF || c == '\n') {
 			fclose(fp);
-			errorcall(call, "string terminated by newline or EOF\n");
+			errorcall(call, "string terminated by newline or EOF");
 		    }
 		}
 	    }
@@ -692,11 +692,11 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
 
     if (!isString(CAR(args)))
-	errorcall(call,"the first argument must be of mode character\n");
+	errorcall(call,"the first argument must be of mode character");
 
     NAstrings = CADR(args);
     if (TYPEOF(NAstrings) != STRSXP)
-	errorcall(call, "invalid na.strings value\n");
+	errorcall(call, "invalid na.strings value");
 
     asIs = asLogical(CADDR(args));
     if (asIs == NA_LOGICAL) asIs = 0;
@@ -727,7 +727,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    break;
 		}
 	    }
-	    else errorcall(call,"null string encountered\n");
+	    else errorcall(call,"null string encountered");
 	}
     }
     if (!numeric) {
@@ -821,7 +821,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op,args);
 
     if (!isString(CAR(args)))
-	errorcall(call,"wrong argument\n");
+	errorcall(call,"wrong argument");
 
     sprintf(ConsolePrompt, "Selection: ");
 

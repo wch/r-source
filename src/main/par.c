@@ -53,14 +53,14 @@ static SEXP gcall;
 
 static void par_error(char *what)
 {
-    error("invalid value specified for graphics parameter \"%s\".\n",  what);
+    error("invalid value specified for graphics parameter \"%s\".",  what);
 }
 
 
 static void lengthCheck(char *what, SEXP v, int n)
 {
     if (length(v) != n)
-	errorcall(gcall, "parameter \"%s\" has the wrong length\n", what);
+	errorcall(gcall, "parameter \"%s\" has the wrong length", what);
 }
 
 
@@ -1476,7 +1476,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (isString(defdev) && length(defdev) > 0) {
 	    PROTECT(defdev = lang1(install(CHAR(STRING(defdev)[0]))));
 	}
-	else errorcall(call, "No active or default device\n");
+	else errorcall(call, "No active or default device");
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);
     }
@@ -1518,7 +1518,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
     }
     else {
-	errorcall(call, "invalid parameter passed to \"par\"\n");
+	errorcall(call, "invalid parameter passed to \"par\"");
 	return R_NilValue/* -Wall */;
     }
     /* should really only do this if specifying new pars ?  yes! [MM] */
@@ -1558,7 +1558,7 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (isString(defdev) && length(defdev) > 0) {
 	    PROTECT(defdev = lang1(install(CHAR(STRING(defdev)[0]))));
 	}
-	else errorcall(call, "No active or default device\n");
+	else errorcall(call, "No active or default device");
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);
     }

@@ -45,9 +45,9 @@ static void GetRNGstate()
     else {
 	seeds = coerceVector(seeds, INTSXP);
 	if (seeds == R_MissingArg)
-	    error(".Random.seed is a missing argument with no default\n");
+	    error(".Random.seed is a missing argument with no default");
 	if (!isVector(seeds))
-	    error(".Random.seed is not a vector\n");
+	    error(".Random.seed is not a vector");
 	RNG_kind = INTEGER(seeds)[0];
 	len_seed = RNG_Table[RNG_kind].n_seed;
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1) {
@@ -58,7 +58,7 @@ static void GetRNGstate()
 		/* compatibility mode */
 		RNG_kind = WICHMANN_HILL;
 	    } else {
-		error(".Random.seed has wrong length.\n");
+		error(".Random.seed has wrong length");
 	    }
 	}
 
@@ -69,9 +69,9 @@ static void GetRNGstate()
  	case RAND:
 	    break;
  	case MERSENNE_TWISTER:
-	    error("'Mersenne-Twister' not yet implemented\n"); break;
+	    error("'Mersenne-Twister' not yet implemented"); break;
 	default:
-	    error(".Random.seed[1] is NOT a valid RNG kind (code)\n");
+	    error(".Random.seed[1] is NOT a valid RNG kind (code)");
 	}
 	if(LENGTH(seeds) == 1)
 	    Randomize(RNG_kind);
@@ -116,15 +116,15 @@ static void RNGkind(RNGtype newkind)
     case SUPER_DUPER:
       break;
     case RAND:
-	error("RNGkind: \"Rand\" not yet available (BUG)!\n");
+	error("RNGkind: \"Rand\" not yet available (BUG)!");
 	srand((unsigned int)sunif()*UINT_MAX);
       break;
     case MERSENNE_TWISTER:
 	/* ... */
-	error("RNGkind: \"Mersenne-Twister\" not yet available!\n");
+	error("RNGkind: \"Mersenne-Twister\" not yet available!");
       break;
     default:
-      error("RNGkind: unimplemented RNG kind %d\n", newkind);
+      error("RNGkind: unimplemented RNG kind %d", newkind);
     }
     RNG_kind = newkind;
 
@@ -154,7 +154,7 @@ static int naflag = 0;
 
 static void invalid(SEXP call)
 {
-    errorcall(call, "invalid arguments\n");
+    errorcall(call, "invalid arguments");
 }
 
 static void random1(double (*f) (), double *a, int na, double *x, int n)
@@ -216,7 +216,7 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND1(4, rt);
 	    RAND1(5, rsignrank);
 	default:
-	    error("internal error in do_random1\n");
+	    error("internal error in do_random1");
 	}
 	if (naflag)
 	    warningcall(call, "NAs produced");
@@ -297,7 +297,7 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND2(10, rweibull);
 	    RAND2(11, rwilcox);
 	default:
-	    error("internal error in do_random2\n");
+	    error("internal error in do_random2");
 	}
 	if (naflag)
 	    warningcall(call,"NAs produced");
@@ -375,7 +375,7 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (PRIMVAL(op)) {
 	    RAND3(0, rhyper);
 	default:
-	    error("internal error in do_random2\n");
+	    error("internal error in do_random2");
 	}
 	if (naflag)
 	    warningcall(call,"NAs produced");
@@ -498,15 +498,15 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
     sum = 0.;
     for (i = 0; i < n; i++) {
 	if (!R_FINITE(p[i]))
-	    errorcall(call, "NA in probability vector\n");
+	    errorcall(call, "NA in probability vector");
 	if (p[i] < 0)
-	    errorcall(call, "non-positive probability\n");
+	    errorcall(call, "non-positive probability");
 	if (p[i] > 0)
 	    npos++;
 	sum += p[i];
     }
     if (npos == 0 || (!replace && k > npos))
-	errorcall(call, "insufficient positive probabilities\n");
+	errorcall(call, "insufficient positive probabilities");
     for (i = 0; i < n; i++)
 	p[i] = p[i] / sum;
 }
@@ -521,13 +521,13 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     replace = asLogical(CAR(args)); args = CDR(args);
     prob = CAR(args);
     if (replace == NA_LOGICAL)
-	errorcall(call, "invalid third argument\n");
+	errorcall(call, "invalid third argument");
     if (n == NA_INTEGER || n < 1)
-	errorcall(call, "invalid first argument\n");
+	errorcall(call, "invalid first argument");
     if (k == NA_INTEGER || k < 0)
-	errorcall(call, "invalid second argument\n");
+	errorcall(call, "invalid second argument");
     if (!replace && k > n)
-	errorcall(call, "can't take a sample larger than the population\n when replace = FALSE\n");
+	errorcall(call, "can't take a sample larger than the population\n when replace = FALSE");
     GetRNGstate();
     PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {
@@ -535,7 +535,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (NAMED(prob)) prob = duplicate(prob);
 	PROTECT(prob);
 	if (length(prob) != n)
-	    errorcall(call, "incorrect number of probabilities\n");
+	    errorcall(call, "incorrect number of probabilities");
 	FixupProb(call, REAL(prob), n, k, replace);
 	PROTECT(x = allocVector(INTSXP, n));
 	if (replace)

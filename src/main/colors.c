@@ -35,7 +35,7 @@ unsigned int char2col(char *s)
 unsigned int ScaleColor(double x)
 {
     if (!R_FINITE(x) || x < 0.0 || x > 1.0)
-	error("color intensity %g, not in [0,1]\n",x);
+	error("color intensity %g, not in [0,1]",x);
     return (unsigned int)(255*x);
 }
 
@@ -58,11 +58,11 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < R_ColorTableSize; i++)
 	STRING(ans)[i] = mkChar(col2name(R_ColorTable[i]));
     val = CAR(args);
-    if (!isString(val)) errorcall(call, "invalid argument type\n");
+    if (!isString(val)) errorcall(call, "invalid argument type");
     if ((n=length(val)) == 1) {
 	if (StrMatch("default", CHAR(STRING(val)[0])))
 	    setpalette(DefaultPalette);
-	else errorcall(call, "unknown palette (need >= 2 colors)\n");
+	else errorcall(call, "unknown palette (need >= 2 colors)");
     }
     else if (n > 1) {
 	for (i = 0; i < n; i++)
@@ -116,7 +116,7 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
     if (min > nv) min = nv;
     if (min > ng) min = ng;
     if (min <= 0)
-	errorcall(call, "invalid argument length\n");
+	errorcall(call, "invalid argument length");
 
     PROTECT(c = allocVector(STRSXP, max));
     for (i = 0; i < max; i++) {
@@ -125,7 +125,7 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	vv = REAL(v)[i % nv];
 	gg = REAL(gm)[i % ng];
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1)
-	    errorcall(call, "invalid HSV color\n");
+	    errorcall(call, "invalid HSV color");
 	hsv2rgb(&hh, &ss, &vv, &r, &g, &b);
 	r = pow(r, gg);
 	g = pow(g, gg);
@@ -155,10 +155,10 @@ SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
     nr = LENGTH(r); ng = LENGTH(g); nb = LENGTH(b);
     max = nr; if (max < ng) max = ng; if (max < nb) max = nb;
     min = nr; if (min > ng) min = ng; if (min > nb) min = nb;
-    if (min <= 0) errorcall(call, "invalid argument length\n");
+    if (min <= 0) errorcall(call, "invalid argument length");
 
     if (length(n) != 0 && length(n) != max)
-	errorcall(call, "invalid names vector\n");
+	errorcall(call, "invalid names vector");
 
     PROTECT(c = allocVector(STRSXP, max));
     for (i = 0; i < max; i++) {
@@ -187,7 +187,7 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlev; i++) {
 	level = REAL(lev)[i];
 	if (ISNAN(level) || level < 0 || level > 1)
-	    errorcall(call, "invalid gray level, must be in [0,1].\n");
+	    errorcall(call, "invalid gray level, must be in [0,1].");
 	ilevel = 255 * level;
 	STRING(ans)[i] = mkChar(RGB2rgb(ilevel, ilevel, ilevel));
     }

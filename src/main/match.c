@@ -102,7 +102,7 @@ int pmatch(SEXP formal, SEXP tag, int exact)
     }
     return psmatch(f, t, exact);
  fail:
-    error("invalid partial string match\n");
+    error("invalid partial string match");
     return 0;/* for -Wall */
 }
 
@@ -173,9 +173,9 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 	    for (b = supplied; b != R_NilValue; b = CDR(b)) {
 		if (TAG(b) != R_NilValue && pmatch(TAG(f), TAG(b), 1)) {
 		    if (ARGUSED(f) == 2)
-			error("formal argument \"%s\" matched by multiple actual arguments\n", CHAR(PRINTNAME(TAG(f))));
+			error("formal argument \"%s\" matched by multiple actual arguments", CHAR(PRINTNAME(TAG(f))));
 		    if (ARGUSED(b) == 2)
-			error("argument %d matches multiple formal arguments\n", i);
+			error("argument %d matches multiple formal arguments", i);
 		    CAR(a) = CAR(b);
 		    if(CAR(b) != R_MissingArg)
 			MISSING(a) = 0;		/* not missing this arg */
@@ -210,9 +210,9 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 		    if (ARGUSED(b) != 2 && TAG(b) != R_NilValue &&
 			pmatch(TAG(f), TAG(b), seendots)) {
 			if (ARGUSED(b))
-			    error("argument %d matches multiple formal arguments\n", i);
+			    error("argument %d matches multiple formal arguments", i);
 			if (ARGUSED(f) == 1)
-			    error("formal argument \"%s\" matched by multiple actual arguments\n", CHAR(PRINTNAME(TAG(f))));
+			    error("formal argument \"%s\" matched by multiple actual arguments", CHAR(PRINTNAME(TAG(f))));
 			CAR(a) = CAR(b);
 			if (CAR(b) != R_MissingArg)
 			    MISSING(a) = 0;         /* not missing this arg */
@@ -297,7 +297,7 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 	for (b = supplied; b != R_NilValue; b = CDR(b))
 	    if (!ARGUSED(b) && CAR(b) != R_MissingArg)
 		errorcall(R_GlobalContext->call,
-			  "unused argument to function\n");
+			  "unused argument to function");
     }
     UNPROTECT(1);
     return(actuals);

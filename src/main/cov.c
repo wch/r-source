@@ -288,7 +288,7 @@ static void complete1(int n, int ncx, double *x, int *ind, int na_fail)
 	z = &x[j * n];
 	for (i = 0 ; i < n ; i++)
 	    if (ISNAN(z[i])) {
-		if(na_fail) error("missing observations in cov/cor\n");
+		if(na_fail) error("missing observations in cov/cor");
 		else ind[i] = 0;
 	    }
     }
@@ -305,7 +305,7 @@ complete2(int n, int ncx, int ncy, double *x, double *y, int *ind, int na_fail)
 	z = &x[j * n];
 	for (i = 0 ; i < n ; i++)
 	    if (ISNAN(z[i])) {
-		if (na_fail) error("missing observations in cov/cor\n");
+		if (na_fail) error("missing observations in cov/cor");
 		else ind[i] = 0;
 	    }
     }
@@ -313,7 +313,7 @@ complete2(int n, int ncx, int ncy, double *x, double *y, int *ind, int na_fail)
 	z = &y[j*n];
 	for (i = 0 ; i < n ; i++)
 	    if (ISNAN(z[i])) {
-		if (na_fail) error("missing observations in cov/cor\n");
+		if (na_fail) error("missing observations in cov/cor");
 		else ind[i] = 0;
 	    }
     }
@@ -350,12 +350,12 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	y = CAR(args) = coerceVector(CAR(args), REALSXP);
 	if (isMatrix(y)) {
 	    if (nrows(y) != n)
-		errorcall(call, "incompatible dimensions\n");
+		errorcall(call, "incompatible dimensions");
 	    ncy = ncols(y);
 	}
 	else {
 	    if (length(y) != n)
-		errorcall(call, "incompatible dimensions\n");
+		errorcall(call, "incompatible dimensions");
 	    ncy = 1;
 	}
 	ansmat = (ansmat || isMatrix(y));
@@ -376,7 +376,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	pair = 1;
 	break;
     default:
-	errorcall(call, "invalid computational method\n");
+	errorcall(call, "invalid computational method");
     }
     if (ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
     else PROTECT(ans = allocVector(REALSXP, ncx * ncy));

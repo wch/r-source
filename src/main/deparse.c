@@ -139,7 +139,7 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ca1;
     int savecutoff, cut0;
     /*checkArity(op, args);*/
-    if(length(args) < 1) errorcall(call, "too few arguments\n");
+    if(length(args) < 1) errorcall(call, "too few arguments");
 
     ca1 = CAR(args); args = CDR(args);
     savecutoff = cutoff;
@@ -229,7 +229,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (strlen(CHAR(STRING(file)[0])) > 0) {
 	fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
 	if (!fp)
-	    errorcall(call, "unable to open file\n");
+	    errorcall(call, "unable to open file");
     }
     for (i = 0; i < LENGTH(tval); i++)
 	if (fp == NULL)
@@ -252,10 +252,10 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     names = CAR(args);
     file = CADR(args);
     if(!isString(names) || !isString(file))
-	errorcall(call, "character arguments expected\n");
+	errorcall(call, "character arguments expected");
     nobjs = length(names);
     if(nobjs < 1 || length(file) < 1)
-	errorcall(call, "zero length argument\n");
+	errorcall(call, "zero length argument");
 
     fp = NULL;
 
@@ -279,7 +279,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else {
 	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w")))
-	    errorcall(call, "unable to open file\n");
+	    errorcall(call, "unable to open file");
 	for (i = 0; i < nobjs; i++) {
 	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING(names)[i]));
 	    tval = deparse1(CAR(o), 0);
@@ -753,7 +753,7 @@ static void print2buff(char *strng)
     bufflen = strlen(buff);
     /*if (bufflen + tlen > BUFSIZE) {
 	buff[0] = '\0';
-	error("string too long in deparse\n");
+	error("string too long in deparse");
 	}*/
     AllocBuffer(bufflen + tlen);
     strcat(buff, strng);

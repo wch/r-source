@@ -1318,7 +1318,7 @@ static void X11_NewPage(DevDesc *dd)
     if ((xd->kind == 1) && xd->needsave)
 	nextpage(xd->gawin);
     if ((xd->kind == 2) && xd->needsave)
-	error("A metafile can store only one figure.\n");
+	error("A metafile can store only one figure.");
     if (!xd->kind) {
 	if (xd->recording && xd->needsave)
 	    AddtoPlotHistory(savedDisplayList, &savedGPar, 0);

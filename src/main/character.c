@@ -36,7 +36,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	errorcall(call, "nchar() requires a character vector\n");
+	errorcall(call, "nchar() requires a character vector");
     len = LENGTH(x);
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++)
@@ -99,7 +99,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     l = LENGTH(so);
 
     if (!isString(x) || !isInteger(sa) || !isInteger(so) || k==0 || l==0)
-	errorcall(call,"invalid argument in substr()\n");
+	errorcall(call,"invalid argument in substr()");
 
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
@@ -147,7 +147,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     tok = CADR(args);
     if (!isString(x) || !isString(tok))
-	errorcall(call,"non-character argument in strsplit()\n");
+	errorcall(call,"non-character argument in strsplit()");
     len = LENGTH(x);
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
@@ -314,7 +314,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
 
     if (!isString(CAR(args)))
-	errorcall(call, "the first argument must be a string\n");
+	errorcall(call, "the first argument must be a string");
     len = length(CAR(args));
 
     PROTECT(ans = allocVector(STRSXP, len));
@@ -337,7 +337,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op ,args);
     arg = CAR(args);
     if (!isString(arg))
-	errorcall(call, "non-character names\n");
+	errorcall(call, "non-character names");
     n = length(arg);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
@@ -370,7 +370,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 #define NO_REGEX_ERROR() \
 	errorcall(call, "POSIX regular expressions not available.\nSee " \
-		"R../src/regex/README, install it; then ./configure and make R.\n");\
+		"R../src/regex/README, install it; then ./configure and make R.");\
 	return R_NilValue;
 #endif
 
@@ -393,7 +393,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (value_opt == NA_INTEGER) value_opt = 0;
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
-	errorcall(call, "invalid argument\n");
+	errorcall(call, "invalid argument");
 
     eflags = 0;
 
@@ -401,7 +401,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
     if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
-	errorcall(call, "invalid regular expression\n");
+	errorcall(call, "invalid regular expression");
 
     n = length(vec);
     ind = allocVector(LGLSXP, n);
@@ -454,7 +454,7 @@ static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
 		if (k > nsubexpr)
-		    error("invalid backreference in regular expression\n");
+		    error("invalid backreference in regular expression");
 		n += (regmatch[k].rm_eo - regmatch[k].rm_so) - 2;
 		p++;
 	    }
@@ -525,14 +525,14 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(rep) || length(rep) < 1 ||
 	!isString(vec))
-	errorcall(call, "invalid argument\n");
+	errorcall(call, "invalid argument");
 
     eflags = 0;
     if (extended_opt) eflags = eflags | REG_EXTENDED;
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
     if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
-	errorcall(call, "invalid regular expression\n");
+	errorcall(call, "invalid regular expression");
 
     n = length(vec);
     PROTECT(ans = allocVector(STRSXP, n));

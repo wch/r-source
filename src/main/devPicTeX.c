@@ -288,7 +288,7 @@ static void PicTeX_Deactivate(DevDesc *dd)
 static void PicTeX_MetricInfo(int c, double *accent, double *descent,
 			      double *width, DevDesc *dd)
 {
-	error("Metric information not yet available for this device\n");
+	error("Metric information not yet available for this device");
 }
 
 	/* Initialize the device */
