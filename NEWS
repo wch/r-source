@@ -366,6 +366,13 @@ NEW FEATURES
 
     o	Sys.setlocale() now issues a warning if it fails.
 
+    o   GNOME interface now has separate colours for input and output
+        (like the windoaws GUI). These can be modified via the
+        properties dialogue.
+
+    o   Output from the GNOME console is block buffered for increased
+        speed
+
 
 DOCUMENTATION CHANGES
 
@@ -562,6 +569,14 @@ BUG FIXES
 
     o	fifo() no longer tries to truncate on opening in modes 
 	including "w". (Caused fifo example to fail on HP-UX.)
+
+    o   The GNOME console inherits standard emacs-style keyboard
+        shortcuts from the GtkText widget for cursor motion, editing
+        and selection.  These have been modified to allow for the prompt
+        at the beginning of the command line
+
+    o   Output over 1024 characters was discarded from the 
+        GNOME console.
 
 
 

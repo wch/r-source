@@ -150,7 +150,8 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 
 SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd;
+    NewDevDesc *dev;
+    GEDevDesc *dd;
     char *display, *vmax;
     double height, width, ps;
     gcall = call;
@@ -165,18 +166,18 @@ SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dd = (DevDesc *) calloc(1, sizeof(DevDesc))))
+	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
-	dd->displayList = R_NilValue;
-	GInit(&dd->dp);
-	if (!ptr_GTKDeviceDriver(dd, display, width, height, ps)) {
-	    free(dd);
+	dev->displayList = R_NilValue;
+	if (!ptr_GTKDeviceDriver ((DevDesc*)dev, display, width, height, ps)) {
+	    free(dev);
 	    errorcall(call, "unable to start device gtk");
 	}
 	gsetVar(install(".Device"), mkString("GTK"), R_NilValue);
-	addDevice(dd);
-	initDisplayList(dd);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	initDisplayList((DevDesc*) dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -184,7 +185,8 @@ SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd;
+    NewDevDesc *dev;
+    GEDevDesc *dd;
     char *display, *vmax;
     double height, width, ps;
     gcall = call;
@@ -199,18 +201,18 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dd = (DevDesc *) calloc(1, sizeof(DevDesc))))
+	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
-	dd->displayList = R_NilValue;
-	GInit(&dd->dp);
-	if (!ptr_GnomeDeviceDriver(dd, display, width, height, ps)) {
-	    free(dd);
+	dev->displayList = R_NilValue;
+	if (!ptr_GnomeDeviceDriver((DevDesc*)dev, display, width, height, ps)){
+	    free(dev);
 	    errorcall(call, "unable to start device gtk");
 	}
 	gsetVar(install(".Device"), mkString("gnome"), R_NilValue);
-	addDevice(dd);
-	initDisplayList(dd);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	initDisplayList((DevDesc*) dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -305,6 +307,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	addDevice((DevDesc*) dd);
 	initDisplayList((DevDesc*) dd);
     } END_SUSPEND_INTERRUPTS;
-
+    
+    return((DevDesc*) dd);
 }
 

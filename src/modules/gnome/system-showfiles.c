@@ -35,6 +35,7 @@ struct pager_data_ts {
 
 static void pagertb_print(GtkWidget *widget, gpointer data)
 {
+  /* FIXME */
 }
 
 static void pagertb_copy(GtkWidget *widget, gpointer data)
@@ -130,18 +131,120 @@ static void pagertb_close(GtkWidget *widget, gpointer data)
 
 static GnomeUIInfo pager_toolbar[] =
 {
-  GNOMEUIINFO_ITEM_STOCK("Print", "Print pager text", pagertb_print, GNOME_STOCK_PIXMAP_PRINT),
+  GNOMEUIINFO_ITEM_STOCK("Print", "Print pager text", pagertb_print,
+			 GNOME_STOCK_PIXMAP_PRINT),
   GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_STOCK("Copy", "Copy the selection", pagertb_copy, GNOME_STOCK_PIXMAP_COPY),
+  GNOMEUIINFO_ITEM_STOCK("Copy", "Copy the selection", pagertb_copy,
+			 GNOME_STOCK_PIXMAP_COPY),
   GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_STOCK("Top", "Scroll to the top", pagertb_start, GNOME_STOCK_PIXMAP_TOP),
-  GNOMEUIINFO_ITEM_STOCK("Page Up", "Scroll up one page", pagertb_pageup, GNOME_STOCK_PIXMAP_UP),
-  GNOMEUIINFO_ITEM_STOCK("Page Down", "Scroll down one page", pagertb_pagedown, GNOME_STOCK_PIXMAP_DOWN),
-  GNOMEUIINFO_ITEM_STOCK("Bottom", "Scroll to the end", pagertb_end, GNOME_STOCK_PIXMAP_BOTTOM),
+  GNOMEUIINFO_ITEM_STOCK("Top", "Scroll to the top", pagertb_start,
+			 GNOME_STOCK_PIXMAP_TOP),
+  GNOMEUIINFO_ITEM_STOCK("Page Up", "Scroll up one page", pagertb_pageup,
+			 GNOME_STOCK_PIXMAP_UP),
+  GNOMEUIINFO_ITEM_STOCK("Page Down", "Scroll down one page", 
+			 pagertb_pagedown, GNOME_STOCK_PIXMAP_DOWN),
+  GNOMEUIINFO_ITEM_STOCK("Bottom", "Scroll to the end", pagertb_end, 
+			 GNOME_STOCK_PIXMAP_BOTTOM),
   GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_STOCK("Close", "Close pager", pagertb_close, GNOME_STOCK_PIXMAP_CLOSE),
+  GNOMEUIINFO_ITEM_STOCK("Close", "Close pager", pagertb_close,
+			 GNOME_STOCK_PIXMAP_CLOSE),
   GNOMEUIINFO_END
 };
+
+
+
+void pager_set_style()
+{
+  /*
+  GtkStyle *textstyle;
+
+  textstyle = gtk_style_copy(gtk_widget_get_style(pager_data->text));
+  gdk_font_unref(textstyle->font);
+  textstyle->font = gdk_font_load(prefs_get_pager_text_font());
+  textstyle->text[GTK_STATE_NORMAL] = prefs_get_pager_text_textcolor();
+  textstyle->base[GTK_STATE_NORMAL] = prefs_get_pager_text_bgcolor();
+  gtk_widget_set_style(pager_data->text, textstyle);
+
+
+  // load title and em font here
+  titlefont = gdk_font_load(prefs_get_pager_title_font());
+  emfont = gdk_font_load(prefs_get_pager_em_font());
+
+  // set width to 80 columns here
+  charw = gdk_char_width(pager_data->text->style->font, 'w');
+  charh = gdk_char_height(pager_data->text->style->font, 'H');
+  winw = 83 * charw;
+  winh = 50 * charh;
+  gtk_widget_set_usize(pager_data->text, winw, winh);
+
+  gtk_text_set_editable (GTK_TEXT (pager_data->text), FALSE);
+  gtk_table_attach (GTK_TABLE (table), pager_data->text, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (pager_data->text)->vadj);
+  gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
+		    GTK_FILL, 
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  textcolor = prefs_get_pager_title_textcolor();
+  bgcolor = prefs_get_pager_title_bgcolor();
+
+  for(i = 0; i < nfile; i++) {
+    if((title[i] != NULL) && (*title[i] != '\0')) {
+      g_snprintf(buf, bufsize, "%s\n\n", title[i]);
+      gtk_text_insert(GTK_TEXT(pager_data->text), 
+		      titlefont,
+		      &textcolor, 
+		      &bgcolor,
+		      buf, strlen(buf));
+    }
+    if((fd = open(file[i], O_RDONLY, "")) != -1) {
+      do {
+	readlen = read(fd, buf, bufsize);
+
+	emmode = FALSE;
+	modestart = buf;
+
+	// strip backspaced stuff 
+	if(*buf == '\b')
+	  *buf = ' ';
+	for(j = buf, k = buf; j < buf + readlen; j++) {
+	  if(*j == '\b') {
+	    k--;
+	    if(k != modestart)
+	      gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
+			      modestart, k - modestart);
+	    modestart = k;
+	    emmode = TRUE;
+	  }
+	  else {
+	    *k = *j;
+	    k++;
+	    if(emmode) {
+	      gtk_text_insert(GTK_TEXT(pager_data->text),
+			      emfont,
+			      NULL, 
+			      NULL,
+			      k - 1, 1);
+	      modestart = k;
+	      emmode = FALSE;
+	    }
+	  }
+	}
+
+	gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
+			modestart, k - modestart);
+      } while(readlen == bufsize);
+    }
+    else {
+      g_snprintf(buf, bufsize, "NO FILE %s\n\n", file[i]);
+      gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
+		      buf, strlen(buf));
+    }
+  }
+  */
+}
 
 int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
 		     Rboolean del, char *pager) 
@@ -272,4 +375,18 @@ int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
 
   return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

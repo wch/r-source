@@ -1,7 +1,7 @@
 if(dev.cur() <= 1) get(getOption("device"))()
 
 opar <- par(ask = interactive() &&
-            (.Device %in% c("X11", "GTK", "windows", "Macintosh")))
+            (.Device %in% c("X11", "GTK", "gnome", "windows", "Macintosh")))
 # For source
 
 ## Here is some code which illustrates some of the differences between

@@ -42,7 +42,9 @@ typedef struct {
     double cex;				/* Character expansion */
     double srt;				/* String rotation */
 
-    gint bg;				/* Background */
+  //gint bg;				/* Background */
+    int fill;
+    int col;
 
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
@@ -74,24 +76,43 @@ Rboolean GTKDeviceDriver(DevDesc *dd, char *display, double width,
 			 double height, double pointsize);
 
 /* Device driver actions */
-static void   GTK_Activate(DevDesc *);
-static void   GTK_Circle(double, double, int, double, int, int, DevDesc*);
-static void   GTK_Clip(double, double, double, double, DevDesc*);
-static void   GTK_Close(DevDesc*);
-static void   GTK_Deactivate(DevDesc *);
-static void   GTK_Hold(DevDesc*);
-static void   GTK_Line(double, double, double, double, int, DevDesc*);
-static Rboolean GTK_Locator(double*, double*, DevDesc*);
-static void   GTK_Mode(int, DevDesc*);
-static void   GTK_NewPage(DevDesc*);
-static Rboolean GTK_Open(DevDesc*, gtkDesc*, char*, double, double);
-static void   GTK_Polygon(int, double*, double*, int, int, int, DevDesc*);
-static void   GTK_Polyline(int, double*, double*, int, DevDesc*);
-static void   GTK_Rect(double, double, double, double, int, int, int, DevDesc*);
-static void   GTK_Resize(DevDesc*);
-static double GTK_StrWidth(char*, DevDesc*);
-static void   GTK_Text(double, double, int, char*, double, double, DevDesc*);
-static void   GTK_MetricInfo(int, double*, double*, double*, DevDesc*);
+static void GTK_Activate(NewDevDesc *dd);
+static void GTK_Circle(double x, double y, double r,
+		       int col, int fill, int lty, double lwd,
+		       NewDevDesc *dd);
+static void GTK_Clip(double x0, double x1, double y0, double y1, 
+		     NewDevDesc *dd);
+static void GTK_Close(NewDevDesc *dd);
+static void GTK_Deactivate(NewDevDesc *dd);
+static void GTK_Hold(NewDevDesc *dd);
+static Rboolean GTK_Locator(double *x, double *y, NewDevDesc *dd);
+static void GTK_Line(double x1, double y1, double x2, double y2,
+		     int col, int lty, double lwd,
+		     NewDevDesc *dd);
+static void GTK_MetricInfo(int c, int font, double cex, double ps,
+			      double* ascent, double* descent,
+			      double* width, NewDevDesc *dd);
+static void GTK_Mode(int mode, NewDevDesc *dd);
+static void GTK_NewPage(int fill, NewDevDesc *dd);
+static void GTK_Polygon(int n, double *x, double *y, 
+			int col, int fill, int lty, double lwd,
+			NewDevDesc *dd);
+static void GTK_Polyline(int n, double *x, double *y, 
+			    int col, int lty, double lwd,
+			    NewDevDesc *dd);
+static void GTK_Rect(double x0, double y0, double x1, double y1,
+		     int col, int fill, int lty, double lwd,
+		     NewDevDesc *dd);
+static void GTK_Size(double *left, double *right,
+		     double *bottom, double *top,
+		     NewDevDesc *dd);
+static double GTK_StrWidth(char *str, int font,
+			      double cex, double ps, NewDevDesc *dd);
+static void GTK_Text(double x, double y, char *str, 
+		     double rot, double hadj, 
+		     int col, int font, double cex, double ps,
+		     NewDevDesc *dd);
+static Rboolean GTK_Open(NewDevDesc*, gtkDesc*, char*, double, double);
 
 /* Pixel Dimensions (Inches) */
 
@@ -180,7 +201,7 @@ static gint SetBaseFont(gtkDesc *gtkd)
 #define SMALLEST 8
 #define LARGEST 24
 
-static void SetFont(DevDesc *dd, gint face, gint size)
+static void SetFont(NewDevDesc *dd, gint face, gint size)
 {
     GdkFont *tmp_font;
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
@@ -231,7 +252,7 @@ static void SetColor(GdkColor *gcol, int color)
 }
 
 /* set the line type */
-static void SetLineType(DevDesc *dd, int newlty, double nlwd)
+static void SetLineType(NewDevDesc *dd, int newlty, double nlwd)
 {
     static gchar dashlist[8];
     gint i, j, newlwd;
@@ -278,10 +299,10 @@ static void SetLineType(DevDesc *dd, int newlty, double nlwd)
 
 static gint realize_event(GtkWidget *widget, gpointer data)
 {
-    DevDesc *dd;
+    NewDevDesc *dd;
     gtkDesc *gtkd;
 
-    dd = (DevDesc *) data;
+    dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
     gtkd = (gtkDesc *) dd->deviceSpecific;
@@ -304,10 +325,10 @@ static gint realize_event(GtkWidget *widget, gpointer data)
 
 static gint configure_event(GtkWidget *widget, GdkEventConfigure *event, gpointer data)
 {
-    DevDesc *dd;
+    NewDevDesc *dd;
     gtkDesc *gtkd;
 
-    dd = (DevDesc *) data;
+    dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
     gtkd = (gtkDesc *) dd->deviceSpecific;
@@ -328,10 +349,10 @@ static gint configure_event(GtkWidget *widget, GdkEventConfigure *event, gpointe
 
 static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data)
 {
-    DevDesc *dd;
+    NewDevDesc *dd;
     gtkDesc *gtkd;
 
-    dd = (DevDesc *) data;
+    dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
     gtkd = (gtkDesc *) dd->deviceSpecific;
@@ -340,7 +361,7 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
     g_return_val_if_fail(GTK_IS_DRAWING_AREA(gtkd->drawing), FALSE);
 
     if(gtkd->resize != 0) {
-	dd->dp.resize(dd);
+      //FIXME GTK_resize(dd);
     }
 
   
@@ -357,34 +378,34 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
 
 static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
-    DevDesc *dd;
+    NewDevDesc *dd;
 
-    dd = (DevDesc *) data;
+    dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
-    KillDevice(dd);
+    KillDevice((DevDesc*)dd);
 
     return TRUE;
 }
 
 static void tb_activate_cb(GtkWidget *widget, gpointer data)
 {
-    DevDesc *dd;
+    NewDevDesc *dd;
 
-    dd = (DevDesc *) data;
+    dd = (NewDevDesc *) data;
     g_return_if_fail(dd != NULL);
 
-    selectDevice(deviceNumber(dd));
+    selectDevice(devNumber((DevDesc*)dd));
 }
 
 static void tb_close_cb(GtkWidget *widget, gpointer data)
 {
-    DevDesc *dd;
+    NewDevDesc *dd;
 
-    dd = (DevDesc *) data;
+    dd = (NewDevDesc *) data;
     g_return_if_fail(dd != NULL);
 
-    KillDevice(dd);
+    KillDevice((DevDesc*)dd);
 }
 
 static GnomeUIInfo graphics_toolbar[] =
@@ -396,7 +417,7 @@ static GnomeUIInfo graphics_toolbar[] =
 };
 
 /* create window etc */
-static Rboolean GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
+static Rboolean GTK_Open(NewDevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 {
     gint iw, ih;
 
@@ -435,8 +456,8 @@ static Rboolean GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double
     gtk_widget_set_usize(gtkd->drawing, iw, ih);
 
     /* setup background color */
-    gtkd->bg = dd->dp.bg = R_RGB(255, 255, 255);
-    SetColor(&gtkd->gcol_bg, gtkd->bg);
+    //gtkd->bg = dd->bg = R_RGB(255, 255, 255);
+    SetColor(&gtkd->gcol_bg, R_RGB(255, 255, 255)); //FIXME canvas color
 
     /* place and realize the drawing area */
     gnome_app_set_contents(GNOME_APP(gtkd->window), gtkd->drawing);
@@ -480,19 +501,21 @@ static Rboolean GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double
     return TRUE;
 }
 
-static double GTK_StrWidth(char *str, DevDesc *dd)
+static double GTK_StrWidth(char *str, int font,
+			      double cex, double ps, NewDevDesc *dd)
 {
     int size;
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
-    size = dd->gp.cex * dd->gp.ps + 0.5;
-    SetFont(dd, dd->gp.font, size);
+    size = cex * ps + 0.5;
+    SetFont(dd, font, size);
 
     return (double) gdk_string_width(gtkd->font, str);
 }
 
-static void GTK_MetricInfo(int c, double *ascent, double *descent, 
-			   double *width, DevDesc *dd)
+static void GTK_MetricInfo(int c, int font, double cex, double ps,
+			      double* ascent, double* descent,
+			      double* width, NewDevDesc *dd)
 {
     gint size;
     gint lbearing, rbearing, iascent, idescent, iwidth;
@@ -500,8 +523,8 @@ static void GTK_MetricInfo(int c, double *ascent, double *descent,
     gchar tmp[2];
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
-    size = dd->gp.cex * dd->gp.ps + 0.5;
-    SetFont(dd, dd->gp.font, size);
+    size = cex * ps + 0.5;
+    SetFont(dd, font, size);
 
     if(c == 0) {
 	maxwidth = 0;
@@ -535,7 +558,7 @@ static void GTK_MetricInfo(int c, double *ascent, double *descent,
 }
 
 /* set clipping */
-static void GTK_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
+static void GTK_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
@@ -548,15 +571,28 @@ static void GTK_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
     gdk_gc_set_clip_rectangle(gtkd->wgc, &gtkd->clip);
 }
 
-static void GTK_Resize(DevDesc *dd)
+static void GTK_Size(double *left, double *right,
+		     double *bottom, double *top,
+		     NewDevDesc *dd)
+{
+    gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
+
+    *left = 0.0;
+    *right =  gtkd->windowWidth;
+    *bottom = gtkd->windowHeight;
+    *top = 0.0;
+}
+
+/* FIXME
+static void GTK_resize(NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
     if (gtkd->resize != 0) {
-	dd->dp.left = dd->gp.left = 0.0;
-	dd->dp.right = dd->gp.right =  gtkd->windowWidth;
-	dd->dp.bottom = dd->gp.bottom = gtkd->windowHeight;
-	dd->dp.top = dd->gp.top = 0.0;
+	dd->left = left = 0.0;
+	dd->right = right =  gtkd->windowWidth;
+	dd->bottom = bottom = gtkd->windowHeight;
+	dd->top = top = 0.0;
 	gtkd->resize = 0;
 
 	gdk_pixmap_unref(gtkd->pixmap);
@@ -568,9 +604,10 @@ static void GTK_Resize(DevDesc *dd)
 			   gtkd->windowWidth, gtkd->windowHeight);
     }
 }
+*/
 
 /* clear the drawing area */
-static void GTK_NewPage(DevDesc *dd)
+static void GTK_NewPage(int fill, NewDevDesc *dd)
 {
     gtkDesc *gtkd;
 
@@ -581,9 +618,9 @@ static void GTK_NewPage(DevDesc *dd)
     g_return_if_fail(gtkd->drawing != NULL);
     g_return_if_fail(GTK_IS_DRAWING_AREA(gtkd->drawing));
 
-    if(gtkd->bg != dd->dp.bg) {
-	SetColor(&gtkd->gcol_bg, dd->dp.bg);
-	gtkd->bg = dd->dp.bg;
+    if(gtkd->fill != fill) {
+	SetColor(&gtkd->gcol_bg, fill);
+	gtkd->fill = fill;
 	gdk_window_set_background(gtkd->drawing->window, &gtkd->gcol_bg);
     }
 
@@ -595,7 +632,7 @@ static void GTK_NewPage(DevDesc *dd)
 }
 
 /* kill off the window etc */
-static void GTK_Close(DevDesc *dd)
+static void GTK_Close(NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
@@ -609,7 +646,7 @@ static void GTK_Close(DevDesc *dd)
 #define title_text_inactive "R graphics device %d"
 #define title_text_active "R graphics device %d - Active"
 
-static void GTK_Activate(DevDesc *dd)
+static void GTK_Activate(NewDevDesc *dd)
 {
     gtkDesc *gtkd;
     gint devnum;
@@ -618,7 +655,7 @@ static void GTK_Activate(DevDesc *dd)
     gtkd = (gtkDesc *) dd->deviceSpecific;
     g_return_if_fail(gtkd != NULL);
 
-    devnum = deviceNumber(dd) + 1;
+    devnum = devNumber((DevDesc*)dd) + 1;
 
     title_text = g_strdup_printf(title_text_active, devnum);
 
@@ -627,7 +664,7 @@ static void GTK_Activate(DevDesc *dd)
     g_free(title_text);
 }
 
-static void GTK_Deactivate(DevDesc *dd)
+static void GTK_Deactivate(NewDevDesc *dd)
 {
     gtkDesc *gtkd;
     gint devnum;
@@ -636,7 +673,7 @@ static void GTK_Deactivate(DevDesc *dd)
     gtkd = (gtkDesc *) dd->deviceSpecific;
     g_return_if_fail(gtkd != NULL);
 
-    devnum = deviceNumber(dd) + 1;
+    devnum = devNumber((DevDesc*)dd) + 1;
 
     title_text = g_strdup_printf(title_text_inactive, devnum);
 
@@ -648,14 +685,15 @@ static void GTK_Deactivate(DevDesc *dd)
 /* drawing stuff */
 
 static void GTK_Rect(double x0, double y0, double x1, double y1,
-		     int coords, int bg, int fg, DevDesc *dd)
+		     int col, int fill, int lty, double lwd,
+		     NewDevDesc *dd)
 {
     double tmp;
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill, gcol_outline;
 
-    GConvert(&x0, &y0, coords, DEVICE, dd);
-    GConvert(&x1, &y1, coords, DEVICE, dd);
+    //GConvert(&x0, &y0, coords, DEVICE, dd);
+    //GConvert(&x1, &y1, coords, DEVICE, dd);
 
     if(x0 > x1) {
 	tmp = x0;
@@ -669,11 +707,11 @@ static void GTK_Rect(double x0, double y0, double x1, double y1,
     }
 
 
-    if (R_OPAQUE(bg)) {
-	SetColor(&gcol_fill, bg);
+    if (R_OPAQUE(fill)) {
+	SetColor(&gcol_fill, fill);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
 
-	SetLineType(dd, dd->gp.lty, dd->gp.lwd);
+	SetLineType(dd, lty, lwd);
 
 	gdk_draw_rectangle(gtkd->drawing->window,
 			   gtkd->wgc, TRUE,
@@ -686,11 +724,11 @@ static void GTK_Rect(double x0, double y0, double x1, double y1,
 			   (gint) x1 - (gint) x0,
 			   (gint) y1 - (gint) y0);
     }
-    if (R_OPAQUE(fg)) {
-	SetColor(&gcol_outline, fg);
+    if (R_OPAQUE(col)) {
+	SetColor(&gcol_outline, col);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_outline);
 
-	SetLineType(dd, dd->gp.lty, dd->gp.lwd);
+	SetLineType(dd, lty, lwd);
 
 	gdk_draw_rectangle(gtkd->drawing->window,
 			   gtkd->wgc, FALSE,
@@ -705,21 +743,22 @@ static void GTK_Rect(double x0, double y0, double x1, double y1,
     }
 }
 
-static void GTK_Circle(double x, double y, int coords,
-		       double r, int col, int border, DevDesc *dd)
+static void GTK_Circle(double x, double y, double r,
+		       int col, int fill, int lty, double lwd,
+		       NewDevDesc *dd)
 {
     GdkColor gcol_fill, gcol_outline;
     gint ix, iy, ir;
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
-    GConvert(&x, &y, coords, DEVICE, dd);
+    //GConvert(&x, &y, coords, DEVICE, dd);
 
     ix = x - r;
     iy = y - r;
     ir = 2 * floor(r + 0.5);
 
-    if (R_OPAQUE(col)) {
-	SetColor(&gcol_fill, col);
+    if (R_OPAQUE(fill)) {
+	SetColor(&gcol_fill, fill);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
 
 	gdk_draw_arc(gtkd->drawing->window,
@@ -731,11 +770,11 @@ static void GTK_Circle(double x, double y, int coords,
 		     ix, iy, ir, ir,
 		     0, 23040);
     }
-    if (R_OPAQUE(border)) {
-	SetColor(&gcol_outline, border);
+    if (R_OPAQUE(col)) {
+	SetColor(&gcol_outline, col);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_outline);
 
-	SetLineType(dd, dd->gp.lty, dd->gp.lwd);
+	SetLineType(dd, lty, lwd);
 
 	gdk_draw_arc(gtkd->drawing->window,
 		     gtkd->wgc, FALSE,
@@ -749,23 +788,24 @@ static void GTK_Circle(double x, double y, int coords,
 }
 
 static void GTK_Line(double x1, double y1, double x2, double y2,
-		     int coords, DevDesc *dd)
+		     int col, int lty, double lwd,
+		     NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill;
     gint ix1, iy1, ix2, iy2;
 
-    GConvert(&x1, &y1, coords, DEVICE, dd);
-    GConvert(&x2, &y2, coords, DEVICE, dd);
+    //GConvert(&x1, &y1, coords, DEVICE, dd);
+    //GConvert(&x2, &y2, coords, DEVICE, dd);
 
     ix1 = (gint) x1;  iy1 = (gint) y1;
     ix2 = (gint) x2;  iy2 = (gint) y2;
 
-    if (R_OPAQUE(dd->gp.col)) {
-	SetColor(&gcol_fill, dd->gp.col);
+    if (R_OPAQUE(col)) {
+	SetColor(&gcol_fill, col);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
 
-	SetLineType(dd, dd->gp.lty, dd->gp.lwd);
+	SetLineType(dd, lty, lwd);
 
 	gdk_draw_line(gtkd->drawing->window,
 		      gtkd->wgc, ix1, iy1, ix2, iy2);
@@ -774,7 +814,9 @@ static void GTK_Line(double x1, double y1, double x2, double y2,
     }
 }
 
-static void GTK_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
+static void GTK_Polyline(int n, double *x, double *y, 
+			    int col, int lty, double lwd,
+			    NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill;
@@ -786,16 +828,16 @@ static void GTK_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 
     for(i = 0; i < n; i++) {
 	devx = x[i]; devy = y[i];
-	GConvert(&devx, &devy, coords, DEVICE, dd);
+	//GConvert(&devx, &devy, coords, DEVICE, dd);
 	points[i].x = (gint16) devx;
 	points[i].y = (gint16) devy;
     }
 
-    if (R_OPAQUE(dd->gp.col)) {
-	SetColor(&gcol_fill, dd->gp.col);
+    if (R_OPAQUE(col)) {
+	SetColor(&gcol_fill, col);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
 
-	SetLineType(dd, dd->gp.lty, dd->gp.lwd);
+	SetLineType(dd, lty, lwd);
 
 	gdk_draw_lines(gtkd->drawing->window,
 		       gtkd->wgc, points, n);
@@ -806,8 +848,9 @@ static void GTK_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
     g_free(points);
 }
 
-static void GTK_Polygon(int n, double *x, double *y, int coords,
-			int bg, int fg, DevDesc *dd)
+static void GTK_Polygon(int n, double *x, double *y, 
+			int col, int fill, int lty, double lwd,
+			NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill, gcol_outline;
@@ -819,13 +862,13 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
 
     for(i = 0; i < n; i++) {
 	devx = x[i]; devy = y[i];
-	GConvert(&devx, &devy, coords, DEVICE, dd);
+	//GConvert(&devx, &devy, coords, DEVICE, dd);
 	points[i].x = (gint16) devx;
 	points[i].y = (gint16) devy;
     }
 
-    if (R_OPAQUE(bg)) {
-	SetColor(&gcol_fill, bg);
+    if (R_OPAQUE(fill)) {
+	SetColor(&gcol_fill, fill);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
 
 	gdk_draw_polygon(gtkd->drawing->window,
@@ -833,11 +876,11 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
 	gdk_draw_polygon(gtkd->pixmap,
 			 gtkd->wgc, TRUE, points, n);
     }
-    if (R_OPAQUE(fg)) {
-	SetColor(&gcol_outline, fg);
+    if (R_OPAQUE(col)) {
+	SetColor(&gcol_outline, col);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_outline);
 
-	SetLineType(dd, dd->gp.lty, dd->gp.lwd);
+	SetLineType(dd, lty, lwd);
 
 	gdk_draw_polygon(gtkd->drawing->window,
 			 gtkd->wgc, FALSE, points, n);
@@ -848,22 +891,24 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
     g_free(points);
 }
 
-static void GTK_Text(double x, double y, int coords,
-		     char *str, double rot, double hadj, DevDesc *dd)
+static void GTK_Text(double x, double y, char *str, 
+		     double rot, double hadj, 
+		     int col, int font, double cex, double ps,
+		     NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill;
     gint size;
     double rrot = DEG2RAD * rot;
 
-    GConvert(&x, &y, coords, DEVICE, dd);
+    //GConvert(&x, &y, coords, DEVICE, dd);
 
-    size = dd->gp.cex * dd->gp.ps + 0.5;
-    SetFont(dd, dd->gp.font, size);
+    size = cex * ps + 0.5;
+    SetFont(dd, font, size);
     gdk_gc_set_font(gtkd->wgc, gtkd->font);
 
-    if (R_OPAQUE(dd->gp.col)) {
-	SetColor(&gcol_fill, dd->gp.col);
+    if (R_OPAQUE(col)) {
+	SetColor(&gcol_fill, col);
 	gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
 
 	gdk_draw_text_rot(gtkd->drawing->window,
@@ -906,7 +951,7 @@ static void locator_button_press(GtkWidget *widget,
     gtk_main_quit();
 }
 
-static Rboolean GTK_Locator(double *x, double *y, DevDesc *dd)
+static Rboolean GTK_Locator(double *x, double *y, NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GTK_locator_info *info;
@@ -940,7 +985,7 @@ static Rboolean GTK_Locator(double *x, double *y, DevDesc *dd)
     return FALSE;
 }
 
-static void GTK_Mode(gint mode, DevDesc *dd)
+static void GTK_Mode(gint mode, NewDevDesc *dd)
 {
 #ifdef XSYNC
     if(mode == 0)
@@ -950,21 +995,24 @@ static void GTK_Mode(gint mode, DevDesc *dd)
 #endif
 }
 
-static void GTK_Hold(DevDesc *dd)
+static void GTK_Hold(NewDevDesc *dd)
 {
 }
 
 
 /* Device driver entry point */
 Rboolean
-GTKDeviceDriver(DevDesc *dd, char *display, double width, 
+GTKDeviceDriver(DevDesc *odd, char *display, double width, 
 		double height, double pointsize)
 {
+    NewDevDesc *dd;
     int ps;
     gchar tmp[2];
     gint cumwidth, c, rbearing, lbearing;
     double max_rbearing, min_lbearing;
     gtkDesc *gtkd;
+
+    dd = (NewDevDesc*) odd;  //How safe is this?
 
     if(!(gtkd = (gtkDesc *) malloc(sizeof(gtkDesc))))
 	return FALSE;
@@ -977,8 +1025,12 @@ GTKDeviceDriver(DevDesc *dd, char *display, double width,
     ps = 2 * (ps / 2);
     gtkd->fontface = -1;
     gtkd->fontsize = -1;
-    dd->dp.font = 1;
-    dd->dp.ps = ps;
+    //dd->startfont = 1;
+    dd->startps = ps;
+    dd->startcol = 0;
+    dd->startfill = NA_INTEGER;
+    //dd->startlty = LTY_SOLID;
+    //dd->startfont = 1;
 
     /* device driver start */
     if(!GTK_Open(dd, gtkd, display, width, height)) {
@@ -986,30 +1038,32 @@ GTKDeviceDriver(DevDesc *dd, char *display, double width,
 	return FALSE;
     }
 
-    /* setup data structure */
-    dd->dp.open = GTK_Open;
-    dd->dp.close = GTK_Close;
-    dd->dp.activate = GTK_Activate;
-    dd->dp.deactivate = GTK_Deactivate;
-    dd->dp.resize = GTK_Resize;
-    dd->dp.newPage = GTK_NewPage;
-    dd->dp.clip = GTK_Clip;
-    dd->dp.strWidth = GTK_StrWidth;
-    dd->dp.text = GTK_Text;
-    dd->dp.rect = GTK_Rect;
-    dd->dp.circle = GTK_Circle;
-    dd->dp.line = GTK_Line;
-    dd->dp.polyline = GTK_Polyline;
-    dd->dp.polygon = GTK_Polygon;
-    dd->dp.locator = GTK_Locator;
-    dd->dp.mode = GTK_Mode;
-    dd->dp.hold = GTK_Hold;
-    dd->dp.metricInfo = GTK_MetricInfo;
+    dd->newDevStruct = 1;
 
-    dd->dp.left = 0;
-    dd->dp.right = gtkd->windowWidth;
-    dd->dp.bottom = gtkd->windowHeight;
-    dd->dp.top = 0;
+    /* setup data structure */
+    dd->open = GTK_Open;
+    dd->close = GTK_Close;
+    dd->activate = GTK_Activate;
+    dd->deactivate = GTK_Deactivate;
+    dd->size = GTK_Size;
+    dd->newPage = GTK_NewPage;
+    dd->clip = GTK_Clip;
+    dd->strWidth = GTK_StrWidth;
+    dd->text = GTK_Text;
+    dd->rect = GTK_Rect;
+    dd->circle = GTK_Circle;
+    dd->line = GTK_Line;
+    dd->polyline = GTK_Polyline;
+    dd->polygon = GTK_Polygon;
+    dd->locator = GTK_Locator;
+    dd->mode = GTK_Mode;
+    dd->hold = GTK_Hold;
+    dd->metricinfo = GTK_MetricInfo;
+
+    dd->left = 0;
+    dd->right = gtkd->windowWidth;
+    dd->bottom = gtkd->windowHeight;
+    dd->top = 0;
 
     /* nominal character sizes */
     cumwidth = 0;
@@ -1026,25 +1080,25 @@ GTKDeviceDriver(DevDesc *dd, char *display, double width,
 	    max_rbearing = rbearing;
     }
 
-    dd->dp.cra[0] = max_rbearing - min_lbearing;
-    dd->dp.cra[1] = (double) gtkd->font->ascent + (double) gtkd->font->descent;
+    dd->cra[0] = max_rbearing - min_lbearing;
+    dd->cra[1] = (double) gtkd->font->ascent + (double) gtkd->font->descent;
 
     /* character addressing offsets */
-    dd->dp.xCharOffset = 0.4900;
-    dd->dp.yCharOffset = 0.3333;
-    dd->dp.yLineBias = 0.1;
+    dd->xCharOffset = 0.4900;
+    dd->yCharOffset = 0.3333;
+    dd->yLineBias = 0.1;
 
     /* inches per raster unit */
-    dd->dp.ipr[0] = pixelWidth();
-    dd->dp.ipr[1] = pixelHeight();
+    dd->ipr[0] = pixelWidth();
+    dd->ipr[1] = pixelHeight();
 
     /* device capabilities */
-    dd->dp.canResizePlot= TRUE;
-    dd->dp.canChangeFont= FALSE;
-    dd->dp.canRotateText= TRUE;
-    dd->dp.canResizeText= TRUE;
-    dd->dp.canClip = FALSE;/* FIXME: really? */
-    dd->dp.canHAdj = 0;/* not better? {0, 0.5, 1} */
+    dd->canResizePlot= TRUE;
+    dd->canChangeFont= FALSE;
+    dd->canRotateText= TRUE;
+    dd->canResizeText= TRUE;
+    dd->canClip = FALSE;/* FIXME: really? */
+    dd->canHAdj = 0;/* not better? {0, 0.5, 1} */
 
     /* gtk device description stuff */
     gtkd->cex = 1.0;

@@ -19,4 +19,5 @@
  */
 
 
-Rboolean GnomeDeviceDriver(DevDesc *, char *, double, double, double);
+Rboolean GnomeDeviceDriver(DevDesc *dd, char *display, double width,
+			   double height, double pointsize);

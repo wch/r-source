@@ -35,12 +35,21 @@
 void terminal_set_style(void) {
     GtkStyle *textstyle;
 
+    gtk_object_set (GTK_OBJECT(R_gtk_terminal_text),
+		    "output_color_gdk", prefs_get_console_outputcolor(),
+		    "input_color_gdk",  prefs_get_console_textcolor(),
+		    "bg_color_gdk",     prefs_get_console_bgcolor(),
+		    "font",             prefs_get_console_font(),
+		    NULL);
+
+    /*
     textstyle = gtk_style_copy(gtk_widget_get_style(R_gtk_terminal_text));
     gdk_font_unref(textstyle->font);
     textstyle->font = gdk_font_load(prefs_get_console_font());
     textstyle->text[GTK_STATE_NORMAL] = prefs_get_console_textcolor();
     textstyle->base[GTK_STATE_NORMAL] = prefs_get_console_bgcolor();
     gtk_widget_set_style(R_gtk_terminal_text, textstyle);
+    */
 }
 
 static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
@@ -98,7 +107,7 @@ void R_gtk_terminal_new()
   /*  R_SetOptionWidth(floor((double)winw / (double)charw)); */
 
   gtk_text_set_editable (GTK_TEXT (R_gtk_terminal_text), TRUE);
-  GTK_CONSOLE(R_gtk_terminal_text)->buffer_type = CONSOLE_BUF_LINE;
+  GTK_CONSOLE(R_gtk_terminal_text)->buffer_type = CONSOLE_BUF_BLOCK;
   gtk_table_attach (GTK_TABLE (table), R_gtk_terminal_text, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
