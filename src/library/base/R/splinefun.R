@@ -7,7 +7,7 @@ splinefun <- function(x, y=NULL, method="fmm")
     method <- match(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
 	stop("splinefun: invalid interpolation method")
-    if(any(diff(x) < 0)) {
+    if(is.unsorted(x)) {
 	z <- order(x)
 	x <- x[z]
 	y <- y[z]
