@@ -141,8 +141,10 @@ all(sapply(dimnames(m), length) == c(2,2))
 m[[1,2]] == m[[3]] && m[[3]] == m[3] && m[3] == m[1,2]
 
 ## bug in R <= 1.1.1 : unclass(*) didn't drop the class!
+## to be robust to S4 methods DON'T test for null class
+## The test for attr(,"class") is valid, if essentially useless
 d1 <- rbind(data.frame(a=1, b = I(TRUE)), new = c(7, "N"))
-is.null(class(unclass(d1$b)))
+is.null(attr(unclass(d1$b), "class"))
 
 ## bugs in R 1.2.0
 format(as.POSIXct(relR120 <- "2000-12-15 11:24:40")) == relR120

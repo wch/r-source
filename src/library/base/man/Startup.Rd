@@ -59,12 +59,19 @@
   Finally, if a function \code{.First} is found on the search path,
   it is executed as \code{.First()}.  In a ``factory-fresh'' version of
   \R the \code{.First} in the system profile file
-  \file{library/base/R/Rprofile} is used.  (This \code{\link{require}}s
-  the \code{ctest} library.)
+  \file{library/base/R/Rprofile} is used.  This calls
+  \code{\link{require}} to attach the default packages, specified by
+  \code{\link{options}("defaultPackages")}, which starts off being 
+  \code{c("methods", "ctest")}. 
 
   A function \code{.First} (and \code{\link{.Last}}) can be defined
   in appropriate \code{.Rprofile} or \code{Rprofile.site} files
-  or have been saved in \file{.RData}.
+  or have been saved in \file{.RData}.  If you want a different set of
+  packages than \code{methods} and \code{ctest} when you start, insert
+  a call to \code{\link{options}} in the
+  \code{.Rprofile} or \code{Rprofile.site} file.  For example,
+  \code{options(defaultPakages = character())} will attach no extra
+  packages on startup.
 
   The commands history is read from the file specified by the
   environment variable \code{R_HISTFILE} (default \code{.Rhistory})

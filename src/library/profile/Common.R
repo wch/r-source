@@ -34,5 +34,7 @@ options(encoding = native.enc)
 options(show.error.messages = TRUE)
 
 .First <- function() {
-    require("ctest", quietly = TRUE)
+    for(pkg in options()$defaultPackages)
+        ## following because library can't take general form of argument
+        eval(substitute(require(PKG, quietly = TRUE), list(PKG=pkg)))
 }

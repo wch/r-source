@@ -61,6 +61,14 @@ getOption(x)
     used with unordered factors and the second the function to be used
     with ordered factors.}
 
+  \item{defaultPackages}{ the packages that are attached by default
+    when \R starts up.  Initially set to \code{c("methods", "ctest")}.
+    To change these \emph{before} the initial startup, you must put
+    a call to \code{options} in your \code{.Rprofile} file, to ensure
+    that the change takes effect for the base package is initialized
+    (it is in the corresponding \code{.First} that the packages are attached.)
+    }
+
   \item{expressions}{sets a limit on the number of nested expressions that
     will be evaluated.  This is especially important on the Macintosh
     since stack overflow is likely if this is set too high.

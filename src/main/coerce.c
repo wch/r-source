@@ -1894,9 +1894,18 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
     valueType = (whichType == -1) ? -1 : classTable[whichType].sexp;
     PROTECT(cur_class = R_data_class(obj, FALSE)); nProtect++;
     classString = CHAR(asChar(cur_class));
-     /* If equal to cur. class; leave alone, except that assigning 
-	a type as a class deletes an explicit class attribute. */
-    if(!strcmp(valueString, classString) && valueType == -1) {}
+    /*  assigning type as a class deletes an explicit class attribute. */
+    if(valueType != -1) {
+      setAttrib(obj, R_ClassSymbol, R_NilValue);
+      if(classTable[whichType].canChange) {
+	PROTECT(obj = ascommon(call, obj, valueType));
+	nProtect++;
+      }
+      else if(valueType != TYPEOF(obj))
+	error("\"%s\" can only be set as the class if the object has this type; found \"%s\"",
+	      valueString, type2str(TYPEOF(obj)));
+      /* else, leave alone */
+    }
     else if(!strcmp("numeric", valueString)) {
       setAttrib(obj, R_ClassSymbol, R_NilValue);
       switch(TYPEOF(obj)) {
@@ -1905,26 +1914,13 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	nProtect++;
       }
     }
-    else {
-      if(valueType != -1) {
-	if(classTable[whichType].canChange) {
-	  setAttrib(obj, R_ClassSymbol, R_NilValue);
-	  PROTECT(obj = ascommon(call, obj, valueType));
-	  nProtect++;
-	}
-	else if(valueType != TYPEOF(obj))
-	  error("\"%s\" can only be set as the class if the object has this type; found \"%s\"",
-		valueString, type2str(TYPEOF(obj)));
-	/* else, leave alone */
-      }
-      else if(!strcmp("array", valueString) &&
-	      length(getAttrib(obj, R_DimSymbol)) >0) {}
-      else if(!strcmp("matrix", valueString) &&
-	      length(getAttrib(obj, R_DimSymbol)) == 2) {}
-      else { /* set the class but don't do the coercion; that's
-		supposed to be done by an as() method */
-	setAttrib(obj, R_ClassSymbol, value);
-      }
+    else if(!strcmp("array", valueString) &&
+	    length(getAttrib(obj, R_DimSymbol)) >0) {}
+    else if(!strcmp("matrix", valueString) &&
+	    length(getAttrib(obj, R_DimSymbol)) == 2) {}
+    else { /* set the class but don't do the coercion; that's
+	      supposed to be done by an as() method */
+      setAttrib(obj, R_ClassSymbol, value);
     }
   }
   UNPROTECT(nProtect);

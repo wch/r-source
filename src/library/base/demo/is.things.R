@@ -17,13 +17,15 @@ is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 
 ## Do we have a method (probably)?
 is.method <- function(fname) {
+    isFun <- function(name) (exists(name, mode="function") &&
+                        is.na(match(name, c("is", "as"))))
     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
-    if(np <= 1 ||
-       ## The following is for Sv4 (i.e. when library(methods) is active):
-       (np == 2 && sp[1] %in% c("is","as"))) return(FALSE)
-    exists(paste(sp[1:(np-1)], collapse = '.'), mode="function") ||
-    (np>=3 &&
-     exists(paste(sp[1:(np-2)], collapse = '.'), mode="function"))
+    if(np <= 1 )
+        FALSE
+    else 
+        (isFun(paste(sp[1:(np-1)], collapse = '.')) ||
+         (np>=3 &&
+          isFun(paste(sp[1:(np-2)], collapse = '.'))))
 }
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
