@@ -584,7 +584,9 @@ static int HashGet(SEXP item, SEXP ht)
 #define NAMESPACESXP      249
 #define PACKAGESXP        248
 #define PERSISTSXP        247
-
+/* the following are speculative--we may or may not need them soon */
+#define CLASSREFSXP       246
+#define GENERICREFSXP     245
 
 /*
  * Type/Flag Packing and Unpacking
@@ -878,7 +880,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
     case 2:
 	OutInteger(stream, version);
 	OutInteger(stream, R_VERSION);
-	OutInteger(stream, /*****R_Version(1,4,0)*/-1);
+	OutInteger(stream, R_Version(1,4,0));
 	break;
     default: error("version %d not supported", version);
     }
@@ -1119,6 +1121,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    break;
 	case BCODESXP:
 	    error("this version of R cannot read byte code objects");
+	case CLASSREFSXP:
+	    error("this version of R cannot read class references");
+	case GENERICREFSXP:
+	    error("this version of R cannot read generic function references");
 	default:
 	    s = R_NilValue; /* keep compiler happy */
 	    error("ReadItem: unknown type %i", type);
