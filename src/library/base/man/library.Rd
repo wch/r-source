@@ -99,16 +99,17 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   future versions.  When used with the default value (\code{NULL}) for
   \code{lib.loc}, the loaded packages are searched before the libraries.
 
-  \code{.First.lib} is called when a package is loaded by
-  \code{library}.  It is called with two arguments, the name of the
-  library directory where the package was found (i.e., the corresponding
-  element of \code{lib.loc}), and the name of the package (in that
-  order).  It is a good place to put calls to \code{\link{library.dynam}}
-  which are needed when loading a package into this function (don't call
-  \code{library.dynam} directly, as this will not work if the package
-  is not installed in a \dQuote{standard} location).  \code{.First.lib}
-  is invoked after the search path interrogated by \code{search()}
-  has been updated, so
+  \code{.First.lib} is called when a package without a namespace is
+  loaded by \code{library}.  (For packages with namespaces see
+  \code{\link{.onLoad}}.)  It is called with two arguments, the name of
+  the library directory where the package was found (i.e., the
+  corresponding element of \code{lib.loc}), and the name of the package
+  (in that order).  It is a good place to put calls to
+  \code{\link{library.dynam}} which are needed when loading a package
+  into this function (don't call \code{library.dynam} directly, as this
+  will not work if the package is not installed in a \dQuote{standard}
+  location).  \code{.First.lib} is invoked after the search path
+  interrogated by \code{search()} has been updated, so
   \code{as.environment(match("package:name", search()))} will return the
   environment in which the package is stored.  If calling
   \code{.First.lib} gives an error the loading of the package is
@@ -116,8 +117,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   option \code{".First.lib"} has a list element with the package's name,
   this element is called in the same manner as \code{.First.lib} when
   the package is loaded.  This mechanism allows the user to set package
-  \dQuote{load hooks} in addition to startup code as provided by the package
-  maintainers.
+  \dQuote{load hooks} in addition to startup code as provided by the
+  package maintainers, but \code{\link{setHook}} is preferred.
+  
 
   \code{.Last.lib} is called when a package is detached.  Beware
   that it might be called if \code{.First.lib} has failed, so it
