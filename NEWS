@@ -72,6 +72,9 @@ BUG FIXES
         generic and the method have different argument lists; the
         evaluator checks for internal consistency of these argument lists.
 
+    o   Some implicit coercions to lists could cause segfaults, e.g. 
+          x <- matrix(nrow=20000, ncol=20);x$any <- numeric(0)
+        due to a PROTECT bug (PR#2923)
 
 
 		CHANGES IN R VERSION 1.7.0
