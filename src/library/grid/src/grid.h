@@ -19,6 +19,7 @@
  *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <Rconfig.h>
 #include <Rinternals.h>
 #include <Rgraphics.h>  
 #include <Rmath.h>
