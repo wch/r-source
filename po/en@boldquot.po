@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-02 09:33+0000\n"
-"PO-Revision-Date: 2005-03-02 09:33+0000\n"
+"POT-Creation-Date: 2005-03-03 08:36+0000\n"
+"PO-Revision-Date: 2005-03-03 08:36+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -405,17 +405,17 @@ msgstr "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 
-#: src/gnuwin32/system.c:880 src/unix/system.c:230
+#: src/gnuwin32/system.c:880 src/unix/system.c:235
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "WARNING: unknown option ‘[1m%s[0m’\n"
 
-#: src/gnuwin32/system.c:905 src/unix/system.c:234
+#: src/gnuwin32/system.c:905 src/unix/system.c:239
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENT ‘[1m%s[0m’ __ignored__\n"
 
-#: src/gnuwin32/system.c:923 src/unix/system.c:272
+#: src/gnuwin32/system.c:923 src/unix/system.c:277
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "you must specify '--save', ‘[1m--no-save[0m’ or ‘[1m--vanilla[0m’"
 
@@ -1142,7 +1142,7 @@ msgstr "length<- invalid second argument"
 msgid "length<- missing value for 'length'"
 msgstr "length<- missing value for ‘[1mlength[0m’"
 
-#: src/main/builtin.c:652 src/main/coerce.c:1922 src/main/coerce.c:1953
+#: src/main/builtin.c:652 src/main/coerce.c:1932 src/main/coerce.c:1963
 #: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
 #: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
 #: src/main/eval.c:3036 src/main/eval.c:3128
@@ -1434,19 +1434,19 @@ msgstr "unimplemented predicate"
 msgid "%s() applied to non-(list or vector)"
 msgstr "%s() applied to non-(list or vector)"
 
-#: src/main/coerce.c:1891
+#: src/main/coerce.c:1901
 msgid "do.call: could not find parent environment"
 msgstr "do.call: could not find parent environment"
 
-#: src/main/coerce.c:1991
+#: src/main/coerce.c:2001
 msgid "invalid environment specified"
 msgstr "invalid environment specified"
 
-#: src/main/coerce.c:2069
+#: src/main/coerce.c:2079
 msgid "invalid replacement object to be a class string"
 msgstr "invalid replacement object to be a class string"
 
-#: src/main/coerce.c:2087
+#: src/main/coerce.c:2097
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1454,7 +1454,7 @@ msgstr ""
 "“[1m%s[0m” can only be set as the class if the object has this type; found "
 "“[1m%s[0m”"
 
-#: src/main/coerce.c:2103
+#: src/main/coerce.c:2113
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1463,7 +1463,7 @@ msgstr ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 
-#: src/main/coerce.c:2109
+#: src/main/coerce.c:2119
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
@@ -1886,7 +1886,7 @@ msgid "cannot close messages sink connection"
 msgstr "cannot close messages sink connection"
 
 #: src/main/connections.c:2199 src/main/connections.c:3399
-#: src/main/serialize.c:1569 src/main/serialize.c:1577
+#: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "connection is not open"
 
@@ -1903,7 +1903,7 @@ msgid "invalid value for 'ok'"
 msgstr "invalid value for ‘[1mok[0m’"
 
 #: src/main/connections.c:2340 src/main/connections.c:2517
-#: src/main/connections.c:2918 src/main/dcf.c:56 src/main/serialize.c:1571
+#: src/main/connections.c:2918 src/main/dcf.c:56 src/main/serialize.c:1580
 msgid "cannot read from this connection"
 msgstr "cannot read from this connection"
 
@@ -1936,7 +1936,7 @@ msgstr "invalid ‘[1msep[0m’ argument"
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
 #: src/main/connections.c:2967 src/main/connections.c:3400
-#: src/main/scan.c:1725 src/main/serialize.c:1579
+#: src/main/scan.c:1725 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "cannot write to this connection"
 
@@ -2274,7 +2274,7 @@ msgid "zero length argument"
 msgstr "zero length argument"
 
 #: src/main/deparse.c:346 src/main/saveload.c:1932 src/main/saveload.c:2199
-#: src/main/serialize.c:2121
+#: src/main/serialize.c:2130
 msgid "bad environment"
 msgstr "bad environment"
 
@@ -3367,7 +3367,7 @@ msgid "'file' must be non-empty string"
 msgstr "‘[1mfile[0m’ must be non-empty string"
 
 #: src/main/eval.c:3486 src/main/saveload.c:1923 src/main/saveload.c:2185
-#: src/main/serialize.c:1696
+#: src/main/serialize.c:1705
 msgid "'ascii' must be logical"
 msgstr "‘[1mascii[0m’ must be logical"
 
@@ -5538,7 +5538,7 @@ msgstr ""
 msgid "first argument must be a character vector"
 msgstr "first argument must be a character vector"
 
-#: src/main/saveload.c:1929 src/main/saveload.c:2193 src/main/serialize.c:1706
+#: src/main/saveload.c:1929 src/main/saveload.c:2193 src/main/serialize.c:1715
 msgid "bad version value"
 msgstr "bad version value"
 
@@ -5546,7 +5546,7 @@ msgstr "bad version value"
 msgid "unable to open file"
 msgstr "unable to open file"
 
-#: src/main/saveload.c:1952 src/main/saveload.c:2234 src/main/serialize.c:2135
+#: src/main/saveload.c:1952 src/main/saveload.c:2234 src/main/serialize.c:2144
 #, c-format
 msgid "object '%s' not found"
 msgstr "object ‘[1m%s[0m’ not found"
@@ -5576,7 +5576,7 @@ msgstr "XDR read failed"
 msgid "cannot save data -- unable to open %s"
 msgstr "cannot save data -- unable to open %s"
 
-#: src/main/saveload.c:2195 src/main/serialize.c:1708
+#: src/main/saveload.c:2195 src/main/serialize.c:1717
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "cannot save to connections in version %d format"
@@ -5589,9 +5589,9 @@ msgstr "connection not open for writing"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "cannot save XDR format to a text-mode connection"
 
-#: src/main/saveload.c:2221 src/main/serialize.c:1624
-#: src/main/serialize.c:1638 src/main/serialize.c:1757
-#: src/main/serialize.c:1779
+#: src/main/saveload.c:2221 src/main/serialize.c:1633
+#: src/main/serialize.c:1647 src/main/serialize.c:1766
+#: src/main/serialize.c:1788
 msgid "error writing to connection"
 msgstr "error writing to connection"
 
@@ -5778,8 +5778,8 @@ msgstr "attempt to replicate non-vector"
 msgid "unknown or inappropriate output format"
 msgstr "unknown or inappropriate output format"
 
-#: src/main/serialize.c:328 src/main/serialize.c:335 src/main/serialize.c:1848
-#: src/main/serialize.c:1856
+#: src/main/serialize.c:328 src/main/serialize.c:335 src/main/serialize.c:1857
+#: src/main/serialize.c:1865
 msgid "read error"
 msgstr "read error"
 
@@ -5820,46 +5820,46 @@ msgstr "‘[1m%s[0m’ may not be available when loading"
 msgid "namespaces may not be available when loading"
 msgstr "namespaces may not be available when loading"
 
-#: src/main/serialize.c:915
+#: src/main/serialize.c:924
 msgid "this version of R cannot write byte code objects"
 msgstr "this version of R cannot write byte code objects"
 
-#: src/main/serialize.c:922
+#: src/main/serialize.c:931
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem: unknown type %i"
 
-#: src/main/serialize.c:1092
+#: src/main/serialize.c:1101
 #, c-format
 msgid "version %d not supported"
 msgstr "version %d not supported"
 
-#: src/main/serialize.c:1120
+#: src/main/serialize.c:1129
 msgid "reference index out of range"
 msgstr "reference index out of range"
 
-#: src/main/serialize.c:1150
+#: src/main/serialize.c:1159
 msgid "names in persistent strings are not supported yet"
 msgstr "names in persistent strings are not supported yet"
 
-#: src/main/serialize.c:1328
+#: src/main/serialize.c:1337
 msgid "this version of R cannot read byte code objects"
 msgstr "this version of R cannot read byte code objects"
 
-#: src/main/serialize.c:1331
+#: src/main/serialize.c:1340
 msgid "this version of R cannot read class references"
 msgstr "this version of R cannot read class references"
 
-#: src/main/serialize.c:1333
+#: src/main/serialize.c:1342
 msgid "this version of R cannot read generic function references"
 msgstr "this version of R cannot read generic function references"
 
-#: src/main/serialize.c:1341
+#: src/main/serialize.c:1350
 #, c-format
 msgid "ReadItem: unknown type %i"
 msgstr "ReadItem: unknown type %i"
 
-#: src/main/serialize.c:1461
+#: src/main/serialize.c:1470
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
@@ -5868,7 +5868,7 @@ msgstr ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
 "d"
 
-#: src/main/serialize.c:1465
+#: src/main/serialize.c:1474
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -5877,63 +5877,63 @@ msgstr ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
 "newer"
 
-#: src/main/serialize.c:1594 src/main/serialize.c:1607
+#: src/main/serialize.c:1603 src/main/serialize.c:1616
 msgid "error reading from connection"
 msgstr "error reading from connection"
 
-#: src/main/serialize.c:1648
+#: src/main/serialize.c:1657
 msgid "only ascii format can be written to text mode connections"
 msgstr "only ascii format can be written to text mode connections"
 
-#: src/main/serialize.c:1662
+#: src/main/serialize.c:1671
 msgid "only ascii format can be read from text mode connections"
 msgstr "only ascii format can be read from text mode connections"
 
-#: src/main/serialize.c:1824
+#: src/main/serialize.c:1833
 msgid "cannot allocate buffer"
 msgstr "cannot allocate buffer"
 
-#: src/main/serialize.c:1990 src/main/serialize.c:2053
+#: src/main/serialize.c:1999 src/main/serialize.c:2062
 msgid "not a proper file name"
 msgstr "not a proper file name"
 
-#: src/main/serialize.c:1992
+#: src/main/serialize.c:2001
 msgid "not a proper string"
 msgstr "not a proper string"
 
-#: src/main/serialize.c:1996 src/main/serialize.c:1999
+#: src/main/serialize.c:2005 src/main/serialize.c:2008
 msgid "file open failed"
 msgstr "file open failed"
 
-#: src/main/serialize.c:2008
+#: src/main/serialize.c:2017
 msgid "write failed"
 msgstr "write failed"
 
-#: src/main/serialize.c:2009
+#: src/main/serialize.c:2018
 msgid "could not determine file position"
 msgstr "could not determine file position"
 
-#: src/main/serialize.c:2055
+#: src/main/serialize.c:2064
 msgid "bad offset/length argument"
 msgstr "bad offset/length argument"
 
-#: src/main/serialize.c:2078 src/main/serialize.c:2097
+#: src/main/serialize.c:2087 src/main/serialize.c:2106
 #, c-format
 msgid "open failed on %s"
 msgstr "open failed on %s"
 
-#: src/main/serialize.c:2081 src/main/serialize.c:2089
-#: src/main/serialize.c:2100
+#: src/main/serialize.c:2090 src/main/serialize.c:2098
+#: src/main/serialize.c:2109
 #, c-format
 msgid "seek failed on %s"
 msgstr "seek failed on %s"
 
-#: src/main/serialize.c:2093 src/main/serialize.c:2104
+#: src/main/serialize.c:2102 src/main/serialize.c:2113
 #, c-format
 msgid "read failed on %s"
 msgstr "read failed on %s"
 
-#: src/main/serialize.c:2123
+#: src/main/serialize.c:2132
 msgid "bad variable names"
 msgstr "bad variable names"
 
@@ -6046,35 +6046,39 @@ msgstr "unrecognised format at end of string"
 msgid "reference to non-existent argument %d"
 msgstr "reference to non-existent argument %d"
 
-#: src/main/sprintf.c:160
+#: src/main/sprintf.c:155
+msgid "coercion has changed vector length to 0"
+msgstr "coercion has changed vector length to 0"
+
+#: src/main/sprintf.c:163
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "use format %d or %i for logical objects"
 
-#: src/main/sprintf.c:173
+#: src/main/sprintf.c:176
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "use format %d, %i, %x or %X for integer objects"
 
-#: src/main/sprintf.c:186
+#: src/main/sprintf.c:189
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "use format %f, %e or %g for numeric objects"
 
-#: src/main/sprintf.c:220
+#: src/main/sprintf.c:223
 #, c-format
 msgid "use format %s for character objects"
 msgstr "use format %s for character objects"
 
-#: src/main/sprintf.c:223
+#: src/main/sprintf.c:226
 msgid "Likely truncation of character string"
 msgstr "Likely truncation of character string"
 
-#: src/main/sprintf.c:229
+#: src/main/sprintf.c:232
 msgid "unsupported type"
 msgstr "unsupported type"
 
-#: src/main/sprintf.c:244
+#: src/main/sprintf.c:248
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "String length exceeds buffer size of %d"
@@ -7244,22 +7248,22 @@ msgstr "cannot allocate R_TempDir"
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() is not implemented on this system"
 
-#: src/unix/system.c:167
+#: src/unix/system.c:172
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "WARNING: --gui or -g without value ignored"
 
-#: src/unix/system.c:189
+#: src/unix/system.c:194
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "WARNING: unknown gui '%s', using X11\n"
 
-#: src/unix/system.c:192
+#: src/unix/system.c:197
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "WARNING: unknown gui '%s', using none\n"
 
-#: src/unix/system.c:310
+#: src/unix/system.c:315
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "WARNING: Only editing the first in the list of files"
 
