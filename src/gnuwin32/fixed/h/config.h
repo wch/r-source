@@ -144,6 +144,10 @@ double atanh(double);
 #define HAVE_STAT 1
 #define HAVE_ACCESS 1
 #undef HAVE_SYS_UTSNAME_H
+#undef HAVE_GETUID
+#undef HAVE_GETPWUID
+#undef HAVE_GETGRGID
+#define HAVE_PUTENV 1
 
 
 /* Dirent stuff */
