@@ -231,7 +231,7 @@ provide <- function(package) {
     pos <- match(pkgs, s)
     if(any(m <- is.na(pos))) {
         miss <- paste(package[m], collapse=", ")
-        if(all(m)) error(paste("none of the packages are not loaded"))
+        if(all(m)) stop(paste("none of the packages are not loaded"))
         else warning(paste("package(s)", miss, "are not loaded"))
         pos <- pos[!m]
     }
