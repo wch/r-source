@@ -157,10 +157,10 @@ void findcontext(int mask, SEXP env, SEXP val)
     RCNTXT *cptr;
     cptr = R_GlobalContext;
     if (mask & CTXT_LOOP) {		/* break/next */
-	if (cptr->callflag & CTXT_LOOP)
-	    jumpfun(cptr, mask, val);
-	else
-	    error("No loop to break from, jumping to top level");
+	for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext)
+	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
+	        jumpfun(cptr, mask, val);
+        error("No loop to break from, jumping to top level");
     }
     else {				/* return; or browser */
 	for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext)

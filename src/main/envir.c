@@ -1436,6 +1436,8 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     s = sym = CAR(args);
+    if( isString(sym) && length(sym)==1 )
+        s = sym = install(CHAR(STRING_ELT(CAR(args), 0)));
     if (!isSymbol(sym))
 	error("\"missing\" illegal use of missing");
 

@@ -697,7 +697,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PrintValue(body);
 	    do_browser(call,op,args,rho);
 	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue,
+	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((tmp = SETJMP(cntxt.cjmpbuf))) {
 	    if (tmp == CTXT_BREAK) break;	/* break */
@@ -779,7 +779,7 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PrintValue(CAR(args));
 	    do_browser(call,op,args,rho);
 	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue,
+	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((cond = SETJMP(cntxt.cjmpbuf))) {
 	    if (cond == CTXT_BREAK) break;	/* break */
@@ -818,7 +818,7 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PrintValue(CAR(args));
 	    do_browser(call, op, args, rho);
 	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue,
+	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((cond = SETJMP(cntxt.cjmpbuf))) {
 	    if (cond == CTXT_BREAK) break;	/*break */
