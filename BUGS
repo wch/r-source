@@ -323,3 +323,23 @@ Date: Thu, 25 Nov 1999 17:54:15 +0100
 Subject: Bug in version 65.0
 From: mhdelsemme@ulg.ac.be
 Date: Fri, 26 Nov 1999 10:54:23 +0100 (MET)
+* PR# 346 *
+Subject: .Rprofile results in corruption of .RData?
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Fri, 26 Nov 1999 20:59:53 -0500 (EST)
+* PR# 347 *
+Subject: 你离不开“乔登”
+From: "华立服务" <hualicn@cmmail.com>
+Date: Tue, 23 Nov 1999 12:31:35
+* PR# 348 *
+Subject: portfolio.optim.default, Packages tseries quadprog
+From: steland@euv-frankfurt-o.de
+Date: Sat, 27 Nov 1999 11:30:20 +0100 (MET)
+* PR# 349 *
+Subject: size of text and numbers in graphs
+From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
+* PR# 350 *
+Subject: rstandard forgotten?
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sat, 27 Nov 1999 12:41:09 -0500 (EST)
