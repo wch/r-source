@@ -300,3 +300,11 @@ Date: Mon, 23 Aug 1999 19:43:24 +0200
 Subject: broken link in R FAQ page?
 From: Tian-Xiong Lu <tian@chico.ma.adfa.edu.au>
 Date: Tue, 24 Aug 1999 13:41:21 +1000 (EST)
+* PR# 256 *
+Subject: Error in ?text
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Wed, 25 Aug 1999 10:00:19 +0100 (BST)
+* PR# 257 *
+Subject:  dimnames names lost when subscripting 
+From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
+Date: Wed, 25 Aug 1999 12:45:28 +0200
