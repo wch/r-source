@@ -74,9 +74,9 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 	yt <- top - (1:n.leg) * ychar
 	if (!missing(fill)) {	#- draw filled boxes -------------
 		xx <- cbind(xt, xt + xbox)
-		if (xlog) xx <- 10^xx
+		##if (xlog) xx <- 10^xx
 		yy <- yt + cbind(rep(-0.5,n.leg), 0.5) * ybox
-		if (ylog) yy <- 10^yy
+		##if (ylog) yy <- 10^yy
 		rect(xx[,1], yy[,1], xx[,2], yy[,2], col = fill)
 		xt <- xt + xbox + xchar
 	}
@@ -85,9 +85,9 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 		pch <- rep(pch,length.out=n.leg)
 		ok <- (is.character(pch) | pch>0)
 		x1 <- (xt + ifelse(merge,0, 0.25) * xchar)[ok]
-		if (xlog) x1 <- 10^x1
+		##if (xlog) x1 <- 10^x1
 		y1 <- yt[ok]
-		if (ylog) y1 <- 10^y1
+		##if (ylog) y1 <- 10^y1
 		points(x1, y1, pch=pch[ok], col=col[ok], cex=cex)
 		if (!merge) xt <- xt + x.intersp/2 * xchar
 	}
@@ -97,16 +97,16 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 		x.off <- if(merge) -0.8 else 0
 		xx <- cbind(xt +    x.off  * xchar,
 			    xt + (2+x.off) * xchar)[ok,, drop=FALSE]
-		if (xlog) xx <- 10^xx
+		##if (xlog) xx <- 10^xx
 		y1 <- yt[ok]
-		if (ylog) y1 <- 10^y1
+		##if (ylog) y1 <- 10^y1
 		segments(xx[,1], y1, xx[,2], y1, lty = lty[ok], col = col[ok])
 		if (!merge) xt <- xt + 3 * xchar
 	}
 	if (merge) xt <- xt + x.intersp * xchar
 
-        ## text(.)  works itself in log-coordinates
-        ## -------  however, the 'y.intersp' looks wrong :
+	## text(.)  works itself in log-coordinates
+	## -------  however, the 'y.intersp' looks wrong :
 
 	## adj = (x,y) text-box adjustment
 	text(xt, yt, labels= legend, adj= c(0, 0.3*y.intersp), cex= cex)
