@@ -2637,6 +2637,7 @@ typedef struct {
 }
 GClipRect;
 
+static
 int inside (Edge b, double px, double py, GClipRect *clip)
 {
     switch (b) {
@@ -2656,6 +2657,7 @@ int cross (Edge b, double x1, double y1, double x2, double y2,
     else return 1;
 }
 
+static
 void intersect (Edge b, double x1, double y1, double x2, double y2,
 		double *ix, double *iy, GClipRect *clip)
 {
@@ -2684,6 +2686,7 @@ void intersect (Edge b, double x1, double y1, double x2, double y2,
     }
 }
 
+static
 void clipPoint (Edge b, double x, double y,
 		double *xout, double *yout, int *cnt, int store,
 		GClipRect *clip, GClipState *cs)
@@ -2735,6 +2738,7 @@ void clipPoint (Edge b, double x, double y,
     }
 }
 
+static
 void closeClip (double *xout, double *yout, int *cnt, int store,
 		GClipRect *clip, GClipState *cs)
 {
@@ -3527,11 +3531,11 @@ void GPretty(double *lo, double *up, int *ndiv)
 #ifdef DEBUG_PLOT
     x1 = ns; x2 = nu;
 #endif
-    unit = pretty0(&ns, &nu, ndiv, /* min_n = */ 1,
-		   /* shrink_sml = */ 0.25,
-		   high_u_fact,
-		   2, /* do eps_correction in any case */
-		   0/* return (ns,nu) in  (lo,up) */);
+    unit = R_pretty0(&ns, &nu, ndiv, /* min_n = */ 1,
+		     /* shrink_sml = */ 0.25,
+		     high_u_fact,
+		     2, /* do eps_correction in any case */
+		     0 /* return (ns,nu) in  (lo,up) */);
     if(nu >= ns + 1) {
 	ns++;
 	if(nu > ns + 1) nu--;

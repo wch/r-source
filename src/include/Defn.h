@@ -375,6 +375,90 @@ extern int     NumCommandLineArgs INI_as(0); /* the number of command line argum
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
+#ifdef R_REMAP
+#define applyRelOp		Rf_applyRelOp
+#define begincontext		Rf_begincontext
+#define checkArity		Rf_checkArity
+#define CheckFormals		Rf_CheckFormals
+#define classgets		Rf_classgets
+#define CleanEd			Rf_CleanEd
+#define compactPhase		Rf_compactPhase
+#define DataFrameClass		Rf_DataFrameClass
+#define ddfindVar		Rf_ddfindVar
+#define deparse1		Rf_deparse1
+#define deparse1line		Rf_deparse1line
+#define DispatchGroup		Rf_DispatchGroup
+#define DispatchOrEval		Rf_DispatchOrEval
+#define DropDims		Rf_DropDims
+#define duplicated		Rf_duplicated
+#define dynamicfindVar		Rf_dynamicfindVar
+#define endcontext		Rf_endcontext
+#define factorsConform		Rf_factorsConform
+#define findcontext		Rf_findcontext
+#define findVar1		Rf_findVar1
+#define findVarInFrame		Rf_findVarInFrame
+#define findVarLocInFrame	Rf_findVarLocInFrame
+#define FrameClassFix		Rf_FrameClassFix
+#define framedepth		Rf_framedepth
+#define frameSubscript		Rf_frameSubscript
+#define get1index		Rf_get1index
+#define getVar			Rf_getVar
+#define getVarInFrame		Rf_getVarInFrame
+#define hashpjw			Rf_hashpjw
+#define InitArithmetic		Rf_InitArithmetic
+#define InitColors		Rf_InitColors
+#define InitEd			Rf_InitEd
+#define InitFunctionHashing	Rf_InitFunctionHashing
+#define InitGlobalEnv		Rf_InitGlobalEnv
+#define InitMemory		Rf_InitMemory
+#define InitNames		Rf_InitNames
+#define InitOptions		Rf_InitOptions
+#define initStack		Rf_initStack
+#define internalTypeCheck	Rf_internalTypeCheck
+#define isValidName		Rf_isValidName
+#define jump_to_toplevel	Rf_jump_to_toplevel
+#define levelsgets		Rf_levelsgets
+#define mainloop		Rf_mainloop
+#define markPhase		Rf_markPhase
+#define markSExp		Rf_markSExp
+#define mat2indsub		Rf_mat2indsub
+#define match			Rf_match
+#define mkCLOSXP		Rf_mkCLOSXP
+#define mkFalse			Rf_mkFalse
+#define mkPROMISE		Rf_mkPROMISE
+#define mkQUOTE			Rf_mkQUOTE
+#define mkSYMSXP		Rf_mkSYMSXP
+#define NewEnvironment		Rf_NewEnvironment
+#define OneIndex		Rf_OneIndex
+#define onintr			Rf_onintr
+#define parse			Rf_parse
+#define PrintGreeting		Rf_PrintGreeting
+#define PrintVersion		Rf_PrintVersion
+#define PrintWarnings		Rf_PrintWarnings
+#define promiseArgs		Rf_promiseArgs
+#define scanPhase		Rf_scanPhase
+#define setVarInFrame		Rf_setVarInFrame
+#define sortVector		Rf_sortVector
+#define ssort			Rf_ssort
+#define str2type		Rf_str2type
+#define StrToInternal		Rf_StrToInternal
+#define substituteList		Rf_substituteList
+#define tsConform		Rf_tsConform
+#define tspgets			Rf_tspgets
+#define type2str		Rf_type2str
+#define unbindVar		Rf_unbindVar
+#define unmarkPhase		Rf_unmarkPhase
+#define usemethod		Rf_usemethod
+#define warningcall		Rf_warningcall
+#define WarningMessage		Rf_WarningMessage
+#define yyerror			Rf_yyerror
+#define yyinit			Rf_yyinit
+#define yylex			Rf_yylex
+#define yyparse			Rf_yyparse
+#define yyprompt		Rf_yyprompt
+#define yywrap			Rf_yywrap
+#endif
+
 /* Platform Dependent Gui Hooks */
 
 #define	R_CONSOLE	1

@@ -336,7 +336,7 @@ static SEXP NewBase(SEXP base, SEXP tag)
     return ans;
 }
 
-SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
+static SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
 {
 /* Construct a new Name/Tag, using
  *	base.tag

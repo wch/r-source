@@ -4,7 +4,7 @@ chull <- function(x, y=NULL)
     x <- cbind(X$x, X$y)
     n <- nrow(x)
     if(n == 0) return(integer(0))
-    z <- .C("chull",
+    z <- .C("R_chull",
 	    n=as.integer(n),
 	    as.double(x),
 	    as.integer(n),

@@ -21,6 +21,11 @@
 #ifndef _R_ERROR_H_
 #define _R_ERROR_H_
 
+#ifdef R_REMAP
+#define error Rf_error
+#define warning Rf_warning
+#endif
+
 void	error(const char *, ...);
 void	warning(const char *, ...);
 void	WrongArgCount(char *);

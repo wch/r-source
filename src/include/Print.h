@@ -23,6 +23,16 @@
 #include "R_ext/PrtUtil.h"
 #include "Defn.h"
 
+#ifdef R_REMAP
+#define formatString        Rf_formatString
+#define EncodeFactor        Rf_EncodeFactor
+#define EncodeElement       Rf_EncodeElement
+#define printArray          Rf_printArray
+#define printMatrix         Rf_printMatrix
+#define printNamedVector    Rf_printNamedVector
+#define printVector         Rf_printVector
+#endif
+
 typedef struct {
     int width;
     int na_width;

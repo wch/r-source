@@ -29,6 +29,23 @@
 #include <stdarg.h>
 #include "R_ext/Complex.h"
 
+#ifdef R_REMAP
+#define formatLogical      Rf_formatLogical
+#define formatInteger      Rf_formatInteger
+#define formatReal         Rf_formatReal
+#define formatComplex      Rf_formatComplex
+#define Decode2Long        Rf_Decode2Long
+#define EncodeLogical      Rf_EncodeLogical
+#define EncodeInteger      Rf_EncodeInteger
+#define EncodeReal         Rf_EncodeReal
+#define EncodeComplex      Rf_EncodeComplex
+#define EncodeString       Rf_EncodeString
+#define VectorIndex        Rf_VectorIndex
+#define printIntegerVector Rf_printIntegerVector
+#define printRealVector    Rf_printRealVector
+#define printComplexVector Rf_printComplexVector
+#endif
+
 #define adj_right 1
 #define adj_left  0
 

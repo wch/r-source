@@ -27,8 +27,8 @@
 
 #include "Rconfig.h"		/* F77... */
 
-void approx(double *, double *, int *, double *, int *,
-	    int *, double *, double *, double *);
+void R_approx(double *, double *, int *, double *, int *,
+	      int *, double *, double *, double *);
 
 void bakslv(double *, int *, int *,
 	    double *, int *, int *,
@@ -47,7 +47,7 @@ void chisqsim(long *nrow, long *ncol, long *nrowt, long *ncolt, long *n,
 	      long *jwork, double *results);
 
 /* chull.c -- comments in the source */
-void chull(int *n, double *x, int *m, int *in,
+void R_chull(int *n, double *x, int *m, int *in,
 	   int *ia, int *ib,
 	   int *ih, int *nh, int *il);
 
@@ -59,11 +59,12 @@ void polyev(int *,
 	    double *, double *, double *, double *);
 double errev(int *, double *, double *, double *,
 	     double *, double *, double *);
-double cauchy(int *, double *, double *);
-void scale(int *, double *, double *, double *, double *, double *, double *);
+double cpoly_cauchy(int *, double *, double *);
+void cpoly_scale(int *, double *, double *, double *, double *, double *, double *);
 void cdivid(double *, double *,double *, double *, double *, double *);
-double cmod(double *, double *);
+double cpoly_cmod(double *, double *);
 
+/* cumsum.c : */
 void cumsum(double *, int *, double *, double *);
 
 /* distance.c */
@@ -124,10 +125,10 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 /* ...............*/
 
 /* pretty.c */
-double pretty0(double *lo, double *up, int *ndiv, int min_n,
+double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 	       double shrink_sml, double high_u_fact[],
 	       int eps_correction, int return_bounds);
-void pretty(double *lo, double *up, int *ndiv, int *min_n,
+void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	    double *shrink_sml, double *high_u_fact, int *eps_correction);
 
 

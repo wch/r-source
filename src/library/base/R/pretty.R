@@ -18,7 +18,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
 	stop("argument `u5.bias' must be non-negative numeric")
     if((eps.correct <- as.integer(eps.correct)) < 0 || eps.correct > 2)
 	stop("argument `eps.correct' must be 0, 1, or 2")
-    z <- .C("pretty", l=as.double(min(x)), u=as.double(max(x)),
+    z <- .C("R_pretty", l=as.double(min(x)), u=as.double(max(x)),
             n = n,
             min.n,
 	    shrink = as.double(shrink.sml),
