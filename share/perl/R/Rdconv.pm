@@ -2692,7 +2692,8 @@ sub Ssgm_unescape_codes {
 	  && $text =~ /$ECODE($ID)/){
 	my $id = $1;
 	my $ec = code2Ssgm($ecodes{$id});
-	if($ec =~ /^<s-function/) {
+	if($ec =~ /<s-function/) { 
+	    # <s-expression cannot contain <s-function>
 	    $text =~ s/$ECODE$id/$ec/;
 	} else {
 	    $text =~ s/$ECODE$id/<s-expression>$ec<\/s-expression>/;
