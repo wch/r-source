@@ -458,7 +458,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* approriate method, we dispatch to that method, */
     /* otherwise we evaluate the arguments and fall through */
     /* to the generic code below.  Note that evaluation */
-    /* retains any missing arggument indicators. */
+    /* retains any missing argument indicators. */
 
     if(DispatchOrEval(call, op, args, rho, &ans, 0))
 	return(ans);

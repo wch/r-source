@@ -92,7 +92,8 @@ SEXP eval(SEXP e, SEXP rho)
 		tmp = findVar(e, rho);
 	if (tmp == R_UnboundValue)
 	    error("Object \"%s\" not found\n", CHAR(PRINTNAME(e)));
-	else if (tmp == R_MissingArg) {
+        /* if ..d is missing then ddfindVar will signal */
+	else if (tmp == R_MissingArg && !DDVAL(e) ) {
 	    char *n = CHAR(PRINTNAME(e));
 	    if(*n) error("Argument \"%s\" is missing, with no default\n",
 			 CHAR(PRINTNAME(e)));
