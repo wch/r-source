@@ -98,7 +98,7 @@ plot(gnp) # using `plot.ts' for time-series plot
 
 ## Multivariate
 z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
-class
+class(z)
 plot(z)
 plot(z, plot.type="single", lty=1:3)
 
