@@ -24,7 +24,10 @@ grid(nx = NULL, ny = NULL, col = "lightgray", lty = "dotted")
 \examples{
 data(iris)
 ## maybe change the desired number of tick marks:  par(lab=c(mx,my,7))
-plot(iris$Sepal.L, iris$Sepal.W, col = rep(1:3, rep(50, 3)),
-     xlim = c(4, 8), ylim = c(2, 4.5), panel.first = grid())
+with(iris,
+     plot(Sepal.Length, Sepal.Width, col = rep(1:3, rep(50, 3)),
+          xlim = c(4, 8), ylim = c(2, 4.5), panel.first = grid(),
+          main = "with(iris,  plot(...., panel.first = grid(), ..) )")
+    )
 }
 \keyword{aplot}
