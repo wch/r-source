@@ -39,10 +39,11 @@ legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
     not filled boxes.}
 }
 \description{
-  This function can be used to add legends to plots.  Note that a call
-  to the function \code{locator} can be used in place of the \code{x}
-  and \code{y} arguments.
-
+    This function can be used to add legends to plots.  Note that a call
+    to the function \code{\link{locator}} can be used in place of the \code{x}
+    and \code{y} arguments.
+}
+\details{
   The default values for \code{x.intersp} and \code{y.intersp} are
   computed from \code{Cx <- cex * par('cex')}.
 
