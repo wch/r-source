@@ -329,8 +329,9 @@ matchArg <-
   defaultMethod <- elNamed(methods, "ANY")## maybe NULL
   classes <- names(methods)
   value <- list()
-  if(thisClass == "missing") {}
-        ## no superclasses for "missing", not even "ANY"
+  if(thisClass == "missing") {
+        ## no superclasses for "missing"
+  }
   else {
     ## search in the superclasses, but don't use inherited methods
     ## There are two cases:  if thisClass is formally defined, use its
@@ -360,9 +361,9 @@ matchArg <-
           elNamed(value, tryClass) <- el(methods, which)
       }
     }
-    if(length(value) == 0 && !is.null(defaultMethod))
-      elNamed(value, "ANY") <- defaultMethod
   }
+  if(length(value) == 0 && !is.null(defaultMethod))
+      elNamed(value, "ANY") <- defaultMethod
   value
 }
 
