@@ -43,7 +43,7 @@ mean(sw.i / strwidth(str.ex, "fig")) / par('fin')[1] # = 1: are the same
 ## See how letters fall in classes -- depending on graphics device and font!
 all.lett <- c(letters, LETTERS)
 shL <- strheight(all.lett, units = "inches")
-table(shL)# all have same heights ..
+table(shL)# all have same heights ...
 mean(shL) / par("cin")[2] # should be 1 (exactly?)
 
 swL <- strwidth(all.lett)

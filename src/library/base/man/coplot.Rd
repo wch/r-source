@@ -38,7 +38,7 @@ co.intervals(x, number = 6, overlap = 0.5)
     interval, to be conditioned on, but is can also be a single vector
     of numbers or a set of factor levels (if the variable being
     conditioned on is a factor). In this case (no \code{b}),
-    the result of \code{co.intervals(..)} can be used directly as
+    the result of \code{co.intervals} can be used directly as
     \code{given.values} argument.
   }
   \item{panel}{a \code{\link{function}(x, y, col, pch, \dots)}

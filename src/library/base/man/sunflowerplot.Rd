@@ -41,7 +41,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     sunflowers leaves, see \code{\link{par}(col=)};
     \code{col = "gold"} reminds of real sunflowers.}
   \item{seg.lwd}{numeric; the line width for the leaves' segments.}
-  \item{\dots}{Further arguments to \code{\link{plot}(..)} [if
+  \item{\dots}{further arguments to \code{\link{plot}} [if
     \code{add=FALSE}].}
 }
 \description{

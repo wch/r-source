@@ -1,27 +1,26 @@
 \name{convolve}
+\alias{convolve}
 \title{Fast Convolution}
+\description{
+  Use the Fast Fourier Transform to compute the several kinds of
+  convolutions of two sequences.
+}
 \usage{
 convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 }
-\alias{convolve}
 \arguments{
-\item{x,y}{numeric sequences \emph{of the same length} to be convolved.}
-\item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
-  before back-transforming (default, and used for usual convolution).}
-\item{type}{character; one of \code{"circular"}, \code{"open"},
-  \code{"filter"} (beginning of word is ok).
-  For \code{circular}, the two sequences are treated as
-  \emph{circular}, i.e., periodic.
+  \item{x,y}{numeric sequences \emph{of the same length} to be
+    convolved.}
+  \item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
+    before back-transforming (default, and used for usual convolution).}
+  \item{type}{character; one of \code{"circular"}, \code{"open"},
+    \code{"filter"} (beginning of word is ok).  For \code{circular}, the
+    two sequences are treated as \emph{circular}, i.e., periodic.
 
-  For \code{open} and \code{filter}, the sequences are padded with
-  \code{0}s (from left and right) first;
-  \code{"filter"} returns the middle sub-vector of \code{"open"},
-  namely, the result of running a weighted mean of \code{x} with
-  weights \code{y}.}
-}
-\description{
-  Use the Fast Fourier Transform to compute the
-  several kinds of convolutions of two sequences.
+    For \code{open} and \code{filter}, the sequences are padded with
+    \code{0}s (from left and right) first; \code{"filter"} returns the
+    middle sub-vector of \code{"open"}, namely, the result of running a
+    weighted mean of \code{x} with weights \code{y}.}
 }
 \details{
   The Fast Fourier Transform, \code{\link{fft}}, is used for efficiency.
@@ -54,7 +53,7 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 \examples{
 x <- c(0,0,0,100,0,0,0)
 y <- c(0,0,1, 2 ,1,0,0)/4
-zapsmall(convolve(x,y))         #  *NOT* what you first thought..
+zapsmall(convolve(x,y))         #  *NOT* what you first thought.
 zapsmall(convolve(x, y[3:5], type="f")) # rather
 x <- rnorm(50)
 y <- rnorm(50)

@@ -1,6 +1,14 @@
 \name{layout}
+\alias{layout}
+\alias{layout.show}
+\alias{lcm}
 \title{Specifying Complex Plot Arrangements}
 \author{Paul R. Murrell}
+\description{
+  \code{layout} divides the device up into as many rows and columns as
+  there are in matrix \code{mat}, with the column-widths and the
+  row-heights specified in the respective arguments.
+}
 \usage{
 layout(mat,
        widths = rep(1, dim(mat)[2]),
@@ -10,9 +18,6 @@ layout(mat,
 layout.show(n = 1)
 lcm(x)
 }
-\alias{layout}
-\alias{layout.show}
-\alias{lcm}
 \arguments{
   \item{mat}{a matrix object specifying the location of the next
     \eqn{N} figures
@@ -32,11 +37,6 @@ lcm(x)
   \item{n}{number of figures to plot.}
   \item{x}{a dimension to be intepreted as a number of centimetres.}
 }
-\description{
-    \code{layout} divides the device up into as many rows and columns as
-    there are in matrix \code{mat}, with the column-widths and the
-    row-heights specified in the respective arguments.
-}
 \details{
     Figure \eqn{i} is allocated a region composed from a subset
     of these rows and columns, based on the rows and columns
@@ -53,7 +53,7 @@ lcm(x)
     \code{heights} arguments of \code{layout()}.
 }
 \value{
-\code{layout} returns the number of figures, \eqn{N}, see above.
+  \code{layout} returns the number of figures, \eqn{N}, see above.
 }
 \references{
   Murrell, P. R. (1999) Layouts: A mechanism for arranging plots on a page. 
@@ -62,50 +62,50 @@ lcm(x)
   Chapter 5 of Paul Murrell's Ph.D. thesis.
 }
 \seealso{
-\code{\link{par}(mfrow=..)}, \code{\link{par}(mfcol=..)}
-and \code{\link{par}(mfg=..)}
+  \code{\link{par}} with arguments \code{mfrow}, \code{mfcol}, or
+  \code{mfg}.
 }
 \examples{
- def.par <- par(no.readonly = TRUE)# save default, for resetting...
+def.par <- par(no.readonly = TRUE)# save default, for resetting...
 
- ## divide the device into two rows and two columns
- ## allocate figure 1 all of row 1
- ## allocate figure 2 the intersection of column 2 and row 2
- layout(matrix(c(1,1,0,2), 2, 2, byrow = TRUE))
- ## show the regions that have been allocated to each plot
- layout.show(2)
+## divide the device into two rows and two columns
+## allocate figure 1 all of row 1
+## allocate figure 2 the intersection of column 2 and row 2
+layout(matrix(c(1,1,0,2), 2, 2, byrow = TRUE))
+## show the regions that have been allocated to each plot
+layout.show(2)
 
- ## divide device into two rows and two columns
- ## allocate figure 1 and figure 2 as above
- ## respect relations between widths and heights
- nf <- layout(matrix(c(1,1,0,2), 2, 2, byrow=TRUE), respect=TRUE)
- layout.show(nf)
+## divide device into two rows and two columns
+## allocate figure 1 and figure 2 as above
+## respect relations between widths and heights
+nf <- layout(matrix(c(1,1,0,2), 2, 2, byrow=TRUE), respect=TRUE)
+layout.show(nf)
 
- ## create single figure which is 5cm square
- nf <- layout(matrix(1), widths=lcm(5), heights=lcm(5))
- layout.show(nf)
+## create single figure which is 5cm square
+nf <- layout(matrix(1), widths=lcm(5), heights=lcm(5))
+layout.show(nf)
 
 
- ##-- Create a scatterplot with marginal histograms -----
+##-- Create a scatterplot with marginal histograms -----
 
- x <- pmin(3, pmax(-3, rnorm(50)))
- y <- pmin(3, pmax(-3, rnorm(50)))
- xhist <- hist(x, breaks=seq(-3,3,0.5), plot=FALSE)
- yhist <- hist(y, breaks=seq(-3,3,0.5), plot=FALSE)
- top <- max(c(xhist$counts, yhist$counts))
- xrange <- c(-3,3)
- yrange <- c(-3,3)
- nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(3,1), c(1,3), TRUE)
- layout.show(nf)
+x <- pmin(3, pmax(-3, rnorm(50)))
+y <- pmin(3, pmax(-3, rnorm(50)))
+xhist <- hist(x, breaks=seq(-3,3,0.5), plot=FALSE)
+yhist <- hist(y, breaks=seq(-3,3,0.5), plot=FALSE)
+top <- max(c(xhist$counts, yhist$counts))
+xrange <- c(-3,3)
+yrange <- c(-3,3)
+nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(3,1), c(1,3), TRUE)
+layout.show(nf)
 
- par(mar=c(3,3,1,1))
- plot(x, y, xlim=xrange, ylim=yrange, xlab="", ylab="")
- par(mar=c(0,3,1,1))
- barplot(xhist$counts, axes=FALSE, ylim=c(0, top), space=0)
- par(mar=c(3,0,1,1))
- barplot(yhist$counts, axes=FALSE, xlim=c(0, top), space=0, horiz=TRUE)
+par(mar=c(3,3,1,1))
+plot(x, y, xlim=xrange, ylim=yrange, xlab="", ylab="")
+par(mar=c(0,3,1,1))
+barplot(xhist$counts, axes=FALSE, ylim=c(0, top), space=0)
+par(mar=c(3,0,1,1))
+barplot(yhist$counts, axes=FALSE, xlim=c(0, top), space=0, horiz=TRUE)
 
- par(def.par)#- reset to default
+par(def.par)#- reset to default
 }
 \keyword{iplot}
 \keyword{dplot}

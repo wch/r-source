@@ -13,7 +13,7 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
          col.se = "orange", lty.se = 2, lwd.se = 2,
          col.res= "gray", cex = 1, pch = par("pch"),
          ask = interactive() && nb.fig < n.tms && .Device != "postscript",
-         ...)
+         \dots)
 }
 \arguments{
   \item{model}{fitted model object}
@@ -64,10 +64,10 @@ y <- rnorm(100,sin(x/10)+as.numeric(z))
 model <- glm(y ~ ns(x,6) + z)
 
 par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
-termplot(model, main = paste("termplot( ", deparse(model$call)," ..)"))
+termplot(model, main = paste("termplot( ", deparse(model$call)," ...)"))
 termplot(model, rug=TRUE)
 termplot(model, partial=TRUE, rug= TRUE,
-         main="termplot(.., partial = TRUE, rug = TRUE)")
+         main="termplot(..., partial = TRUE, rug = TRUE)")
 termplot(model, partial=TRUE, se = TRUE, main = TRUE)
 if(rs) detach("package:splines")
 }

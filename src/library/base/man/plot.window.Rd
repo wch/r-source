@@ -1,36 +1,41 @@
 \name{plot.window}
-\title{Set up World Coordinates for Graphics Window}
-\usage{
-plot.window(xlim, ylim, log = "", asp = NA, \dots)
-}
 \alias{plot.window}
-\arguments{
-\item{xlim, ylim}{numeric of length 2, giving the x and y coordinates ranges.}
-\item{log}{character; indicating which axes should be in log scale.}
-\item{asp}{numeric, giving the \bold{asp}ect ratio y/x.}
-\item{\dots}{further graphical parameters as in \code{\link{par}(..)}.}
-}
+\title{Set up World Coordinates for Graphics Window}
 \description{
   This function sets up the world coordinate system for a graphics
   window.  It is called by higher level functions such as
   \code{\link{plot.default}} (\emph{after} \code{\link{plot.new}}).
 }
+\usage{
+plot.window(xlim, ylim, log = "", asp = NA, \dots)
+}
+\arguments{
+  \item{xlim, ylim}{numeric of length 2, giving the x and y coordinates
+    ranges.}
+  \item{log}{character; indicating which axes should be in log scale.}
+  \item{asp}{numeric, giving the \bold{asp}ect ratio y/x.}
+  \item{\dots}{further graphical parameters as in \code{\link{par}}.}
+}
 \details{
-  Note that if \code{asp} is a finite positive value then
-  the window is set up so that one data unit in the x direction
-  is equal in length to \code{asp} \eqn{\times}{*} one data unit in the
-  y direction.
+  Note that if \code{asp} is a finite positive value then the window is
+  set up so that one data unit in the x direction is equal in length to
+  \code{asp} \eqn{\times}{*} one data unit in the y direction.
 
   The special case \code{asp == 1} produces plots where distances
-  between points are represented accurately on screen.  Values
-  with \code{asp > 1} can be used to produce more accurate maps when
-  using latitude and longitude.
+  between points are represented accurately on screen.  Values with
+  \code{asp > 1} can be used to produce more accurate maps when using
+  latitude and longitude.
 
   Usually, one should rather use the higher level functions such as
   \code{\link{plot}}, \code{\link{hist}}, \code{\link{image}}, \dots,
-  instead and refer to their help pages for explanation of the arguments.
+  instead and refer to their help pages for explanation of the
+  arguments.
 }
-\seealso{\code{\link{xy.coords}}, \code{\link{plot.xy}}, \code{\link{plot.default}}.}
+\seealso{
+  \code{\link{xy.coords}},
+  \code{\link{plot.xy}},
+  \code{\link{plot.default}}.
+}
 \examples{
 ##--- An example for the use of  `asp' :
 library(mva)

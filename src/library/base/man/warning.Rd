@@ -28,7 +28,7 @@ warning(\dots)
 \seealso{
   \code{\link{stop}} for fatal errors,
   \code{\link{warnings}},
-  and \code{\link{options}(warn=..)}.
+  and \code{\link{options}} with argument \code{warn=}.
 }
 \examples{
 \testonly{eigenval <- 10 ^ -rnorm(1,m=6)

@@ -1,5 +1,15 @@
 \name{case/variable.names}
+\alias{case.names}
+\alias{case.names.lm}
+\alias{case.names.default}
+\alias{variable.names}
+\alias{variable.names.lm}
+\alias{variable.names.default}
 \title{Case and Variable Names of Fitted Models}
+\description{
+  Simple utilities returning (non-missing) case names, and
+  (non-eliminated) variable names.
+}
 \usage{
 case.names(object, \dots)
 case.names.lm(object, full = FALSE, \dots)
@@ -7,24 +17,14 @@ case.names.lm(object, full = FALSE, \dots)
 variable.names(object, \dots)
 variable.names.lm(object, full = FALSE, \dots)
 }
-\alias{case.names}
-\alias{case.names.lm}
-\alias{case.names.default}
-\alias{variable.names}
-\alias{variable.names.lm}
-\alias{variable.names.default}
 \arguments{
  \item{object}{an \R object, typically a fitted model.}
- \item{full}{logical; if \code{TRUE}, all names (including zero
-   weights,..) are returned.}
+ \item{full}{logical; if \code{TRUE}, all names (including zero weights,
+   \dots) are returned.}
  \item{\dots}{further arguments passed to or from other methods.}
 }
-\description{
-  Simple utilities returning (non-missing) case names, and
-  (non-eliminated) variable names.
-}
 \value{
-  A character vector
+  A character vector.
 }
 \seealso{\code{\link{lm}}}
 \examples{

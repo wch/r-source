@@ -40,9 +40,10 @@ na.exclude(object, \dots)
   \code{na.exclude}.
 }
 \seealso{
-  \code{\link{na.action}}, \code{\link{options}(na.action=..)} for
-  setting ``NA actions'', and \code{\link{lm}} and \code{\link{glm}}
-  for functions using these.
+  \code{\link{na.action}};
+  \code{\link{options}} with argument \code{na.action} for setting ``NA
+  actions'';
+  and \code{\link{lm}} and \code{\link{glm}} for functions using these.
 }
 \examples{
 DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA))
@@ -50,7 +51,7 @@ na.omit(DF)
 m <- as.matrix(DF)
 na.omit(m)
 stopifnot(all(na.omit(1:3) == 1:3))  # does not affect objects with no NA's
-try(na.fail(DF))#> Error: missing values in ..}
+try(na.fail(DF))#> Error: missing values in ...
 
 options("na.action")
 }

@@ -1,18 +1,18 @@
 \name{which}
-\title{Which indices are TRUE ?}
+\alias{which}
+\title{Which indices are TRUE?}
+\description{
+  Give the \code{TRUE} indices of a logical object, allowing for array
+  indices.
+}
 \usage{
 which(x, arr.ind = FALSE)
 }
-\alias{which}
 \arguments{
  \item{x}{a \code{\link{logical}} vector or array.  \code{\link{NA}}s
      are allowed and omitted (treated as if \code{FALSE}).}
  \item{arr.ind}{logical; should \bold{arr}ay \bold{ind}ices be returned
      when \code{x} is an array?}
-}
-\description{
-    Give the \code{TRUE} indices of a logical object,
-    allowing for array indices.
 }
 \value{
     If \code{arr.ind == FALSE} (the default), an integer vector with
@@ -47,7 +47,8 @@ dim(m) <- c(2,2,3); m
 which(m \%\% 3 == 0, arr.ind=FALSE)
 which(m \%\% 3 == 0, arr.ind=TRUE)
 
-vm <- c(m);  dim(vm) <- length(vm) #-- funny thing with  length(dim(..)) == 1
+vm <- c(m)
+dim(vm) <- length(vm) #-- funny thing with  length(dim(...)) == 1
 which(vm \%\% 3 == 0, arr.ind=TRUE)
 }
 \keyword{logic}

@@ -1,18 +1,18 @@
 \name{stopifnot}
 \alias{stopifnot}
-\title{Ensure the "Truth" of R Expressions}
-\usage{
-stopifnot(...)
-}
-\arguments{
- \item{\dots}{any number of (\code{\link{logical}}) \R expressions which
-   should evaluate to \code{\link{TRUE}}.}
-}
+\title{Ensure the `Truth' of R Expressions}
 \description{
   If any of the expressions in \code{\dots} are not \code{\link{all}}
-  \code{TRUE},
-  \code{\link{stop}(..)} is called, producing an error message
-  indicating the \emph{first} element of \code{\dots} which was not true.
+  \code{TRUE}, \code{\link{stop}} is called, producing an error message
+  indicating the \emph{first} element of \code{\dots} which was not
+  true.
+}
+\usage{
+stopifnot(\dots)
+}
+\arguments{
+  \item{\dots}{any number of (\code{\link{logical}}) \R expressions
+    which should evaluate to \code{\link{TRUE}}.}
 }
 \details{
   \code{stopifnot(A, B)} is conceptually equivalent to

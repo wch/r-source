@@ -29,7 +29,7 @@ panel.smooth(x, y, col, bg=NA, pch, cex = 1, col.smooth = "red",
 \examples{
 data(swiss)
 pairs(swiss, panel = panel.smooth, pch = ".")# emphasize the smooths
-pairs(swiss, panel = panel.smooth, lwd = 2, cex= 1.5, col="blue")# hmm..
+pairs(swiss, panel = panel.smooth, lwd = 2, cex= 1.5, col="blue")# hmm...
 }
 \keyword{hplot}
 \keyword{dplot}

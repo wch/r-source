@@ -49,7 +49,8 @@ substring(text, first, last = 1000000) <- value
 \examples{
 substr("abcdef",2,4)
 print(ss <- substring("abcdef",1:6,1:6))
-stopifnot(ss == strsplit ("abcdef",NULL)[[1]])# strsplit is more efficient..
+stopifnot(ss == strsplit ("abcdef",NULL)[[1]])
+## strsplit is more efficient ...
 
 substr(rep("abcdef",4),1:4,4:5)
 x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")

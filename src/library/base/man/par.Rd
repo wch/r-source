@@ -121,12 +121,14 @@ par(\dots, no.readonly = FALSE)
   \item{font.lab}{The font to be used for x and y labels.}
   \item{font.main}{The font to be used for plot main titles.}
   \item{font.sub}{The font to be used for plot sub-titles.}
-  \item{gamma}{the gamma correction, see \code{\link{hsv}(.., gamma)}.}
+  \item{gamma}{the gamma correction, see argument \code{gamma} to
+    \code{\link{hsv}}.}
   \item{lab}{A numerical vector of the form \code{c(x, y, len)} which
     modifies the way that axes are annotated.  The values of \code{x}
     and \code{y} give the (approximate) number of tickmarks on the x and
     y axes and \code{len} specifies the label size.  The default is
-    \code{c(5, 5, 7)}.  \emph{Currently}, \code{len} \emph{is unimplemented}.}
+    \code{c(5, 5, 7)}.
+    \emph{Currently}, \code{len} \emph{is unimplemented}.}
   \item{las}{numeric in \{0,1,2,3\}; the style of axis labels.
     \describe{
       \item{0:}{always parallel to the axis [\emph{default}],}
@@ -134,8 +136,8 @@ par(\dots, no.readonly = FALSE)
       \item{2:}{always perpendicular to the axis,}
       \item{3:}{always vertical.}
     }
-    Note that other string/character rotation (via  \code{par(srt = ..)})
-    does \emph{not} affect the axis labels.
+    Note that other string/character rotation (via argument \code{srt}
+    to \code{par}) does \emph{not} affect the axis labels.
   }
   \item{lty}{The line type.
     Line types can either be specified as an integer
@@ -163,8 +165,8 @@ par(\dots, no.readonly = FALSE)
     array on the device by \emph{columns} (\code{mfcol}), or
     \emph{rows} (\code{mfrow}), respectively.
 
-    Consider the alternatives, \code{\link{layout}(..)} and
-    \code{\link{split.screen}(..)}.
+    Consider the alternatives, \code{\link{layout}} and
+    \code{\link{split.screen}}.
   }
   \item{mfg}{A numerical vector of the form \code{c(i, j)} where
     \code{i} and \code{j} indicate which figure in an array of figures

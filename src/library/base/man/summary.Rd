@@ -1,5 +1,16 @@
 \name{summary}
+\alias{summary}
+\alias{summary.default}
+\alias{summary.data.frame}
+\alias{summary.factor}
+\alias{summary.matrix}
 \title{Object Summaries}
+\description{
+  \code{summary} is a generic function used to produce result summaries
+  of the results of various model fitting functions.  The function
+  invokes particular \code{\link{methods}} which depend on the
+  \code{\link{class}} of the first argument.
+}
 \usage{
 summary(object, \dots)
 
@@ -9,11 +20,6 @@ summary.data.frame(object, maxsum = 7,
 summary.factor    (object, maxsum = 100, \dots)
 summary.matrix    (object, \dots)
 }
-\alias{summary}
-\alias{summary.default}
-\alias{summary.data.frame}
-\alias{summary.factor}
-\alias{summary.matrix}
 \arguments{
   \item{object}{an object for which a summary is desired.}
   \item{maxsum}{integer, indicating how many levels should be shown for
@@ -22,12 +28,6 @@ summary.matrix    (object, \dots)
     \code{\link{signif}()} (for \code{summary.default}) or
     \code{\link{format}()} (for \code{summary.data.frame}).}
   \item{\dots}{additional arguments affecting the summary produced.}
-}
-\description{
-    \code{summary} is a generic function used to produce result
-    summaries of the results of various model fitting functions.  The
-    function invokes particular \code{\link{methods}} which depend on
-    the \code{\link{class}} of the first argument.
 }
 \details{
     For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
@@ -43,11 +43,14 @@ summary.matrix    (object, \dots)
     class of its argument.  See the documentation of the particular
     methods for details of what is produced by that method.
 }
-\seealso{\code{\link{anova}},\code{\link{summary.glm}},\code{\link{summary.lm}}.
+\seealso{
+  \code{\link{anova}},
+  \code{\link{summary.glm}},
+  \code{\link{summary.lm}}.
 }
 \examples{
 data(attenu)
-summary(attenu, digits = 4) #-> summary.data.frame(..), default precision
-summary(attenu $ station, maxsum = 20) #-> summary.factor(..)
+summary(attenu, digits = 4) #-> summary.data.frame(...), default precision
+summary(attenu $ station, maxsum = 20) #-> summary.factor(...)
 }
 \keyword{methods}

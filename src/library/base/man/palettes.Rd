@@ -1,5 +1,13 @@
 \name{Palettes}
+\alias{rainbow}
+\alias{heat.colors}
+\alias{terrain.colors}
+\alias{topo.colors}
+\alias{cm.colors}
 \title{Color Palettes}
+\description{
+  Create a vector of \code{n} ``contiguous'' colors.
+}
 \usage{
 rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
 heat.colors(n)
@@ -7,21 +15,16 @@ terrain.colors(n)
 topo.colors(n)
 cm.colors(n)
 }
-\alias{rainbow}
-\alias{heat.colors}
-\alias{terrain.colors}
-\alias{topo.colors}
-\alias{cm.colors}
 \arguments{
-\item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the palette.}
-\item{s,v}{the ``saturation'' and ``value'' to be used to
-  complete the HSV color descriptions.}
-\item{start}{the (corrected) hue in [0,1] at which the rainbow begins.}
-\item{end}{the (corrected) hue in [0,1] at which the rainbow ends.}
-\item{gamma}{the gamma correction, see \code{\link{hsv}(.., gamma)}.}
-}
-\description{
-These functions create a vector of \code{n} ``contiguous'' colors.
+  \item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the
+    palette.}
+  \item{s,v}{the ``saturation'' and ``value'' to be used to complete the
+    HSV color descriptions.}
+  \item{start}{the (corrected) hue in [0,1] at which the rainbow
+    begins.}
+  \item{end}{the (corrected) hue in [0,1] at which the rainbow ends.} 
+  \item{gamma}{the gamma correction, see argument \code{gamma} in
+    \code{\link{hsv}}.}
 }
 \details{
   Conceptually, all of these functions actually use (parts of) a line

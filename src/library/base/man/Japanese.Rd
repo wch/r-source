@@ -85,7 +85,7 @@ nc <- 4
 oldpar <- make.table(nr, nc)
 index <- 0
 digits <- c(0:9,"a","b","c","d","e","f")
-% "\" : double once for Rd, once for R ..
+% "\" : double once for Rd, once for R.
 draw.title("Hiragana : \\\\\\\\#J24nn", nc)
 for (i in 2:7) {
     for (j in 1:16) {

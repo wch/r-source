@@ -25,7 +25,7 @@ help.start(gui = "irrelevant", browser = "irrelevant")
   All the packages in the current value of \code{.lib.loc} are linked to
   a directory \code{.R} in the user's home directory.
 
-  The \code{browser} needs to work with a \code{"-remote openURL(..)"}
+  The \code{browser} needs to work with a \code{"-remote openURL(...)"}
   call. Then, the hypertext \R help interface is opened in any already
   running browser or a new one if necessary.
 

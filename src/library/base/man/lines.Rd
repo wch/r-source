@@ -9,7 +9,7 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
 \arguments{
   \item{x, y}{coordinate vectors of points to join.}
   \item{type}{character indicating the type of plotting; actually any of
-    the \code{type}s as in \code{\link{plot}(..)}.}
+    the \code{type}s as in \code{\link{plot}}.}
   \item{col}{color to use.}
   \item{lty}{line type to use.}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}) may
