@@ -45,11 +45,11 @@ arima0 <- function(x, order=c(0,0,0),
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
-    res <- nlm(arma0f, init, hessian=transform.pars < 2)
-    if(res$code > 2)
-        warning(paste("possible convergence problem: nlm gave code=",
-                      res$code))
-    coef <- res$estimate
+    res <- optim(init, arma0f, method="BFGS", hessian=transform.pars < 2)
+    if(res$convergence > 0)
+        warning(paste("possible convergence problem: optim gave code=",
+                      res$convergence))
+    coef <- res$par
     if(transform.pars) coef <- .C("dotrans", coef, new=coef, PACKAGE="ts")$new
     .C("free_starma", PACKAGE="ts")
     if(transform.pars == 2) {
@@ -57,8 +57,8 @@ arima0 <- function(x, order=c(0,0,0),
            as.integer(arma), as.double(x), as.integer(n.used),
            as.double(xreg), as.integer(ncxreg), as.double(delta),
            as.integer(0), PACKAGE="ts")
-        res <- nlm(arma0f, coef, hessian=TRUE)
-        coef <- res$estimate
+        res <- optim(coef, arma0f, method="BFGS", hessian=TRUE)
+        coef <- res$par
     }
     sigma2 <- .C("get_s2", res=double(1), PACKAGE="ts")$res
     resid <- .C("get_resid", res=double(n.used), PACKAGE="ts")$res
@@ -82,11 +82,11 @@ arima0 <- function(x, order=c(0,0,0),
             var <- var[ind, ind, drop=FALSE]
         } else var <- matrix(NA, 0, 0)
     }
-    value <- 2 * n.used * res$minimum + n.used + n.used*log(2*pi)
+    value <- 2 * n.used * res$value + n.used + n.used*log(2*pi)
     aic <- value + 2*length(coef)
     res <- list(coef = coef, sigma2 = sigma2, var.coef = var,
                 loglik = -0.5*value, aic = aic, arma = arma, resid = resid,
-                call = match.call(), series = series, code = res$code)
+                call = match.call(), series = series, code = res$convergence)
     class(res) <- "arima0"
     res
 }

@@ -9,47 +9,49 @@ arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
        xreg = NULL, include.mean, na.action = na.fail,
        delta = 0.01, transform.pars = 2)
+
 predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
+
 arima0.diag(fit, gof.lag = 10) 
 }
 \arguments{
- \item{x}{a univariate time series}
+  \item{x}{a univariate time series}
 
- \item{order}{A specification of the non-seasonal part of the ARIMA
-   model: the three components are (p, d, q), the AR order, the degree
-   of differencing and the MA order.}
+  \item{order}{A specification of the non-seasonal part of the ARIMA
+    model: the three components are (p, d, q), the AR order, the degree
+    of differencing and the MA order.}
 
- \item{seasonal}{A specification of the seasonal part of the ARIMA
-   model, plus the period (which defaults to \code{frequency(x)}).}
+  \item{seasonal}{A specification of the seasonal part of the ARIMA
+    model, plus the period (which defaults to \code{frequency(x)}).}
 
- \item{xreg}{Optionally, a vector or matrix of external regressors,
-   which must have the same number of rows as \code{x}.}
+  \item{xreg}{Optionally, a vector or matrix of external regressors,
+    which must have the same number of rows as \code{x}.}
 
- \item{include.mean}{Should the ARIMA model include
-   a mean term? The default is \code{TRUE} for undifferenced series,
-   \code{FALSE} for differenced ones (where a mean would not affect
-   the fit nor predictions).}
+  \item{include.mean}{Should the ARIMA model include
+    a mean term? The default is \code{TRUE} for undifferenced series,
+    \code{FALSE} for differenced ones (where a mean would not affect
+    the fit nor predictions).}
 
- \item{na.action}{Function to be applied to remove missing values.}
+  \item{na.action}{Function to be applied to remove missing values.}
 
- \item{delta}{A value to indicate at which point `fast recursions'
-   should be used. See the Details section.}
+  \item{delta}{A value to indicate at which point `fast recursions'
+    should be used. See the Details section.}
 
- \item{transform.pars}{If greater than 0, the ARMA parameters are
-   transformed to ensure that they remain in the region of
-   invertibility. If equal to 2, the optimization is rerun on
-   the original scale to find the Hessian.}
+  \item{transform.pars}{If greater than 0, the ARMA parameters are
+    transformed to ensure that they remain in the region of
+    invertibility. If equal to 2, the optimization is rerun on
+    the original scale to find the Hessian.}
 
- \item{arima0.obj, fit}{The result of an \code{arima0} fit.}
+  \item{arima0.obj, fit}{The result of an \code{arima0} fit.}
 
- \item{newxreg}{New values of \code{xreg} to be used for
-   prediction. Must have at least \code{n.ahead} rows.}
+  \item{newxreg}{New values of \code{xreg} to be used for
+    prediction. Must have at least \code{n.ahead} rows.}
 
- \item{n.ahead}{The number of steps ahead for which prediction is required.}
+  \item{n.ahead}{The number of steps ahead for which prediction is required.}
+  
+  \item{se.fit}{Logical: should standard errors of prediction be returned?}
 
- \item{se.fit}{Logical: should standard errors of prediction be returned?}
-
- \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
+  \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
 }
 \description{
   Fit an ARIMA model to a univariate time series by exact maximum
@@ -114,7 +116,7 @@ arima0.diag(fit, gof.lag = 10)
 
   \item{series}{the name of the series \code{x}.}
 
-  \item{convergence}{the \code{code} returned by \code{\link{nlm}}.}
+  \item{convergence}{the value returned by \code{\link{optim}}.}
 
   For \code{predict.arima0}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the

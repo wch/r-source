@@ -54,7 +54,11 @@ NEW FEATURES
         break user code if it has renamed the dispatch argument and
         uses the original name for a different argument.
 
-    o	Long-named command line options also allow `--name VALUE'.
+    o	Long-named command-line options also allow `--name VALUE'.
+
+    o   arima0() now uses optim() rather than nlm(), and is thereby
+	normally faster and gives more accurate solutions. Perhaps
+	more importantly, it fails to converge much less often.
 
 
 BUG FIXES
@@ -63,7 +67,7 @@ BUG FIXES
 	other internal structures, e.g. postscript file output on
 	Linux.
 
-    o   (0.99.0a) nlm() no longer segfaults with Hessian specified
+    o   (0.99.0a) nlm() no longer segfaults with Hessian specified.
 
     o   (0.99.0a) Gnome version plotmath works, kind of
 
