@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 alpha (2004-03-08), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-06-18), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -279,6 +279,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -559,6 +562,9 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -836,6 +842,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -1133,6 +1142,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -1431,6 +1443,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -1725,6 +1740,9 @@ Error in strptime(tim, format = format) : invalid `x' argument
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -2012,6 +2030,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -2298,6 +2319,9 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
+> f <- try(as.raw( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
+[1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
 [1] TRUE
@@ -2328,6 +2352,6 @@ non-square matrix in: as.dist(x)
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.36 0 0.35 0 0 
+Time elapsed:  0.5 0.01 0.52 0 0 
 > 
 > 
