@@ -1,5 +1,5 @@
-You need to get Info-Zip's or unzip542.zip unzip542.zip from one of
-many mirrors, and unzip it in this directory, with say
+You need to get Info-Zip's unzip542.zip from one of many mirrors, and
+unzip it in this directory, with say
 
 	unzip unzip542.zip -d unzip
 
