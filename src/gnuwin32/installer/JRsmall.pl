@@ -23,11 +23,17 @@ use File::Find;
 
 my $fn, $component, $path;
 my $startdir=cwd();
-my $RVER=$ARGV[0];
-my $RW=$ARGV[1];
+my $RVER;
+my $RW=$ARGV[0];
 my $iconpars="WorkingDir: \"{app}\"" ;
 ## add to the target command line as in the next example
 # my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
+
+open ver, "< ../../../VERSION";
+$VER = <ver>;
+close ver;
+$VER =~ s/\n.*$//;
+$VER =~ s/Under .*$/Pre-release/;
 
 open insfile, "> Rsmall.iss" || die "Cannot open Rsmall.iss\n";
 print insfile <<END;

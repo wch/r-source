@@ -35,7 +35,6 @@ clean:
 
 # section for JR software installer.
 
-RVER="1.2.2 patched"
 IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
@@ -52,7 +51,7 @@ R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
 	unzip -qo ../$(PREFIX)l -d $(PREFIX)l
 	unzip -qo ../$(PREFIX)sp -d $(PREFIX)sp
 	unzip -qo ../$(PREFIX)w -d $(PREFIX)w
-	perl JRins.pl $(RVER) $(PREFIX)
+	perl JRins.pl $(PREFIX)
 
 SetupR.exe: R.iss
 	"$(ISDIR)/compil32" /cc R.iss
@@ -67,7 +66,7 @@ Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-exts.pdf
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-lang.pdf
 	mkdir -p $(PREFIX)/doc/html
-	perl JRsmall.pl $(RVER) $(PREFIX)
+	perl JRsmall.pl $(PREFIX)
 
 miniR.exe: Rsmall.iss
 	"$(ISDIR)/compil32" /cc Rsmall.iss
