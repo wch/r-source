@@ -26,10 +26,11 @@
 #include "Complex.h"
 
 void	isort(int*,     int);
-void	rsort(double *, int);
+void	rsort(double*, int);
 void	csort(complex*, int);
-void	iFind(int *,    int, int);
-void	rFind(double *, int, int);
+void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
+void	iFind(int*,    int, int);
+void	rFind(double*, int, int);
 void	cFind(complex*, int, int);
 
 int	IndexWidth(int);
