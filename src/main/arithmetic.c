@@ -19,7 +19,7 @@
  */
 
 
-#include "Defn.h"
+#include "Defn.h"/*-> Arith.h */
 #include "Mathlib.h"
 #include "Applic.h"		/* machar */
 #include "arithmetic.h"
@@ -39,7 +39,6 @@ static RETSIGTYPE handle_fperror(int dummy)
 #endif
 
 #ifdef HAVE_MATHERR
-
 
 /* Override the SVID matherr function */
 
@@ -206,18 +205,31 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/*#ifdef Log_0_broken /-* only on some platforms: small performance loss: */
+#if 1==1/* always(for testing)*/
+double R_log(double x){ return(x == 0.0 ? R_NegInf : log(x)); }
+#else /* be more efficient -- one function less on the stack */
+#define R_log	log
+#endif
+
+double R_pow(double x, double y)
+{
+    return((x == 1.0 && !isnan(y)) ? 1.0 :
+	   ((x == R_NegInf && y != floor(y)) ? R_NaN : pow(x,y)));
+}
+
 /* Base 2 and General Base Logarithms */
 
 #ifdef OLD
 double log2(double x)
 {
-    return log(x) / M_LN_2;
+    return R_log(x) / M_LN_2;
 }
 #endif
 
 double logbase(double x, double base)
 {
-    return log(x) / log(base);
+    return R_log(x) / log(base);
 }
 
 static SEXP unary(SEXP, SEXP);
@@ -549,7 +561,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		REAL(ans)[i] = NA_REAL;
 	    else {
-		REAL(ans)[i] = MATH_CHECK(pow((double) x1, (double) x2));
+		REAL(ans)[i] = MATH_CHECK(R_pow((double) x1, (double) x2));
 	    }
 	}
 	break;
@@ -674,14 +686,14 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
     case POWOP:
 	mod_iterate(n1, n2, i1, i2) {
 #ifdef IEEE_754
-	    REAL(ans)[i] = pow(REAL(s1)[i1], REAL(s2)[i2]);
+	    REAL(ans)[i] = R_pow(REAL(s1)[i1], REAL(s2)[i2]);
 #else
 	    x1 = REAL(s1)[i1];
 	    x2 = REAL(s2)[i2];
 	    if (ISNA(x1) || ISNA(x2))
 		REAL(ans)[i] = NA_REAL;
 	    else
-		REAL(ans)[i] = MATH_CHECK(pow(x1, x2));
+		REAL(ans)[i] = MATH_CHECK(R_pow(x1, x2));
 #endif
 	}
 	break;
@@ -1023,7 +1035,7 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
 	else
-	    return math1(op, CAR(args), log);
+	    return math1(op, CAR(args), R_log);
     case 2:
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
