@@ -1,5 +1,5 @@
 #
-# ${RHOME}/tests/Makefile
+# ${R_HOME}/tests/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -15,10 +15,7 @@ DISTFILES = $(shell cd $(srcdir); \
 	       ls Makefile.in README Rdiff *.R *.Rout.save)
 SUBDIRS = Examples
 
-## FIXME
-
-RHOME= ..
-R    = LC_ALL=C $(RHOME)/bin/R --vanilla
+R = LC_ALL=C $(top_builddir)/bin/R --vanilla
 
 Ex = ./Examples
 

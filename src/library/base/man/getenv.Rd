@@ -18,7 +18,7 @@ getenv(x)
   (or \code{""} if no environment variable with that name was found).
 }
 \examples{
-getenv(c("RHOME", "R_PAPERSIZE", "R_PRINTCMD"))
+getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD"))
 }
 \keyword{environment}
 \keyword{utilities}

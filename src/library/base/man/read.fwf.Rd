@@ -27,7 +27,7 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
   which is called internally.
 }
 \note{This function currently relies on the \code{Perl} script
-  \file{\$RHOME/bin/fwf2table}.
+  \file{\$R\_HOME/bin/fwf2table}.
   Therefore, it will only work in an environment with
   \code{Perl} installed.
 }

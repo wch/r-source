@@ -27,23 +27,23 @@ use File::Basename;
 use Cwd;
 
 $cwd=getcwd();
-if($ENV{"RHOME"}){
-    $RHOME=$ENV{"RHOME"};
+if($ENV{"R_HOME"}){
+    $R_HOME=$ENV{"R_HOME"};
 }
 else{
-    $RHOME = `R RHOME`;
-    $RHOME =~ s/(.*)\n*/$1/;
+    $R_HOME = `R RHOME`;
+    $R_HOME =~ s/(.*)\n*/$1/;
 }
 
 chdir($cwd);
 
-require "$RHOME/etc/Rdconvlib.pl";
+require "$R_HOME/etc/Rdconvlib.pl";
 
 @knownoptions = ("debug|d", "type|t:s", "help|h");
 GetOptions (@knownoptions) || usage();
 
 usage() if $opt_help;
-print stderr "RHOME: '$RHOME';  cwd='$cwd'\n" if $opt_debug;
+print stderr "R_HOME: '$R_HOME';  cwd='$cwd'\n" if $opt_debug;
 
 ##-- In the future, we want allow  SEVERAL types simultaneously ... :
 if($opt_type =~ /html/i){

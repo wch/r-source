@@ -33,7 +33,7 @@
 ## ==> Consequence: Allow \verbatim{ ...}  only *within* other
 ##     top-level blocks ...
 
-require "$RHOME/etc/html-layout.pl";
+require "$R_HOME/etc/html-layout.pl";
 
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!

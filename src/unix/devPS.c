@@ -932,14 +932,10 @@ static void SetFont(int style, int size, DevDesc *dd)
 static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 {
     char buf[512];
-    char *rhome;
     int i;
 
-    if((rhome = getenv("RHOME")) == NULL)
-	return 0;
-
     for(i = 0; i < 5 ; i++) {
-	sprintf(buf, "%s/afm/%s.%s", rhome,
+	sprintf(buf, "%s/afm/%s.%s", R_Home,
 		Family[pd->fontfamily].font[i].abbr,
 		(i == 4) ? "afm" : Extension[pd->encoding]);
 	if(!PostScriptLoadFontMetrics(buf, &(metrics[i])))

@@ -10,37 +10,37 @@
 #  bu hand.
 
 
-RHOME=`pwd`
-MHOME=`pwd`/Macintosh
+R_HOME=`pwd`
+M_HOME=`pwd`/Macintosh
 
 # Remove any prior version
 
 echo "Removing previous source tree"
 
-rm -rf $MHOME
+rm -rf ${M_HOME}
 
 # (1) Create the directory structure
 
 echo "Creating directory structure"
 
-mkdir $MHOME
-mkdir $MHOME/library
-mkdir $MHOME/library/base
-mkdir $MHOME/library/base/R
-mkdir $MHOME/src
-mkdir $MHOME/src/include
-mkdir $MHOME/src/appl
-mkdir $MHOME/src/main
-mkdir $MHOME/src/nmath
-mkdir $MHOME/src/f2clib
-mkdir $MHOME/src/regex
+mkdir ${M_HOME}
+mkdir ${M_HOME}/library
+mkdir ${M_HOME}/library/base
+mkdir ${M_HOME}/library/base/R
+mkdir ${M_HOME}/src
+mkdir ${M_HOME}/src/include
+mkdir ${M_HOME}/src/appl
+mkdir ${M_HOME}/src/main
+mkdir ${M_HOME}/src/nmath
+mkdir ${M_HOME}/src/f2clib
+mkdir ${M_HOME}/src/regex
 
 # (2) Create the basic include files needed for compilation
 
 echo "Installing include files"
 
-cp $RHOME/src/include/*.h $MHOME/src/include
-cp $RHOME/src/macintosh/Platform.h $MHOME/src/include
+cp ${R_HOME}/src/include/*.h ${M_HOME}/src/include
+cp ${R_HOME}/src/macintosh/Platform.h ${M_HOME}/src/include
 
 # This code assembles the table of statically loaded C and Fortran
 # code which is to be accessed via .C and .Fortran calls.
@@ -50,13 +50,13 @@ sed '
 /Rsock/d
 s/F77_SUBROUTINE(\(.*\))/int \1_();/
 s/C_FUNCTION(\(.*\))/int \1();/
-' $RHOME/src/appl/ROUTINES > $MHOME/src/include/FFDecl.h
+' ${R_HOME}/src/appl/ROUTINES > ${M_HOME}/src/include/FFDecl.h
 sed '
 /^#/d
 /Rsock/d
 s/F77_SUBROUTINE(\(.*\))/	"\1_",	\1_,/
 s/C_FUNCTION(\(.*\))/	"\1",	\1,/
-' $RHOME/src/appl/ROUTINES > $MHOME/src/include/FFTab.h
+' ${R_HOME}/src/appl/ROUTINES > ${M_HOME}/src/include/FFTab.h
 
 # (3) C and Fortran Code
 
@@ -66,18 +66,18 @@ echo "Copying C and Fortran code"
 
 echo "Converting Fortran with f2c"
 
-cp $RHOME/src/appl/*.[chf] $MHOME/src/appl
-cd $MHOME/src/appl
+cp ${R_HOME}/src/appl/*.[chf] ${M_HOME}/src/appl
+cd ${M_HOME}/src/appl
 f2c *.f 2> /dev/null
 rm *.f
-cd $RHOME
+cd ${R_HOME}
 
-cp $RHOME/src/main/*.[chy] $MHOME/src/main
-cp $RHOME/src/nmath/*.[chy] $MHOME/src/nmath
-cp $RHOME/src/regex/*.[chy] $MHOME/src/regex
-cp $RHOME/src/f2clib/*.[chy] $MHOME/src/f2clib
-cp $RHOME/src/main/*.[chy] $MHOME/src/main
-cd $MHOME/src/main
+cp ${R_HOME}/src/main/*.[chy] ${M_HOME}/src/main
+cp ${R_HOME}/src/nmath/*.[chy] ${M_HOME}/src/nmath
+cp ${R_HOME}/src/regex/*.[chy] ${M_HOME}/src/regex
+cp ${R_HOME}/src/f2clib/*.[chy] ${M_HOME}/src/f2clib
+cp ${R_HOME}/src/main/*.[chy] ${M_HOME}/src/main
+cd ${M_HOME}/src/main
 byacc gram.y
 mv y.tab.c gram.c
 rm gram.y
@@ -86,22 +86,24 @@ rm gram.y
 
 echo "Interpreted function libraries"
 
-cd $RHOME/src/library/base/R
-cat `ls *.R | sed '/system.*/d'` system.mac.R > $MHOME/library/base/R/base
-cat $RHOME/src/library/profile/Common.R \
-    $RHOME/src/library/profile/Rprofile.mac >  $MHOME/library/base/R/Rprofile
+cd ${R_HOME}/src/library/base/R
+cat `ls *.R | sed '/system.*/d'` system.mac.R \
+    > ${M_HOME}/library/base/R/base
+cat ${R_HOME}/src/library/profile/Common.R \
+    ${R_HOME}/src/library/profile/Rprofile.mac \
+    > ${M_HOME}/library/base/R/Rprofile
 
 # (5) Manual entries etc (just grab the unix ones for now)
 
 echo "Manual entries, examples and data"
 
-cd $RHOME
+cd ${R_HOME}
 cp -R library/LibIndex Macintosh/library
 cp -R library/base/INDEX Macintosh/library/base
 cp -R library/base/data Macintosh/library/base
 cp -R library/base/R-ex Macintosh/library/base
 mkdir Macintosh/library/base/help
-for i in  `ls $RHOME/library/base/help`
+for i in  `ls ${R_HOME}/library/base/help`
 do
   sed 's/.//g' library/base/help/$i > Macintosh/library/base/help/$i
 done

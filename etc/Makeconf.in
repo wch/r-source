@@ -1,11 +1,11 @@
 # @configure_input@
 #
-# ${RHOME}/etc/Makeconf
+# ${R_HOME}/etc/Makeconf
 
 CC = @CC@
 CFLAGS = @CFLAGS@
 CPICFLAGS = @CPICFLAGS@
-CPPFLAGS = -I$(RHOME)/include
+CPPFLAGS = -I$(R_HOME)/include
 FC = @FC@
 FFLAGS = @FFLAGS@
 FLIBS = @FLIBS@

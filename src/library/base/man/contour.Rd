@@ -33,7 +33,7 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
 \description{
   Draws contour lines for the desired levels.
   There is currently no documentation about the algorithm.
-  The source code is in \file{\$RHOME/src/main/plot.c}.
+  The source code is in \file{\$R\_HOME/src/main/plot.c}.
 }
 \seealso{
   \code{\link{image}} and the graphics demo which can be invoked as

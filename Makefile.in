@@ -1,5 +1,5 @@
 #
-# ${RHOME}/Makefile
+# ${R_HOME}/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -50,8 +50,8 @@ install: all installdirs
 	  done)
 	@echo "Installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
-	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(rhome)/bin/R
-	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
+	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(rhome)/bin/R
+	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
 	@for f in `ls bin/* | grep -v '^bin/\(R\|R.binary\)\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \

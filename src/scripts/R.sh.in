@@ -1,9 +1,8 @@
 #!/bin/sh
 # Shell wrapper for R executable.
 
-RHOME=R_HOME_DIR
-R_HOME=${RHOME}
-export RHOME R_HOME
+R_HOME=R_HOME_DIR
+export R_HOME
 
 R_BINARY="R.binary"
 # Default Printer Paper Size
@@ -33,11 +32,11 @@ USE_R_ENVIRON=true
 while test -n "${1}"; do
   case ${1} in
     RHOME)
-      echo ${RHOME}; exit 0 ;;
+      echo ${R_HOME}; exit 0 ;;
     CMD)
-      shift; PATH="${PATH}:${RHOME}/bin" exec "${@}" ;;
+      shift; PATH="${PATH}:${R_HOME}/bin" exec "${@}" ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-      CMD="$1"; shift; exec sh "${RHOME}/bin/${CMD}" "${@}" ;;
+      CMD="$1"; shift; exec sh "${R_HOME}/bin/${CMD}" "${@}" ;;
     -g|--gnome)
       R_BINARY="R.gnome" ;;
     -d|--debugger)
@@ -47,7 +46,7 @@ while test -n "${1}"; do
 	echo "*** (maybe use \`run ${args}'  from *inside* ${deb}"
 	echo ""
       fi
-      exec ${deb} ${RHOME}/bin/${R_BINARY} ;;
+      exec ${deb} ${R_HOME}/bin/${R_BINARY} ;;
     --no-environ)
       USE_R_ENVIRON=false ;;
     --vanilla)
@@ -106,10 +105,9 @@ done
 if ${USE_R_ENVIRON}; then
   [ -r ${HOME}/.Renviron ] && . ${HOME}/.Renviron
 fi
-exec ${RHOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${ARGS}
+exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${ARGS}
 
 ### Local Variables: ***
 ### mode: sh ***
 ### sh-indentation: 2 ***
 ### End: ***
-

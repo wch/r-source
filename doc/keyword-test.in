@@ -9,23 +9,23 @@ use File::Basename;
 use Cwd;
 
 $cwd=getcwd();
-if($ENV{"RHOME"}){
-    $RHOME=$ENV{"RHOME"};
+if($ENV{"R_HOME"}){
+    $R_HOME=$ENV{"R_HOME"};
 }
 else{
     chdir(dirname($0) . "/..");
-    $RHOME=getcwd();
+    $R_HOME=getcwd();
 }
 
 chdir($cwd);
 
-require "$RHOME/etc/Rdconvlib.pl";
+require "$R_HOME/etc/Rdconvlib.pl";
 
 @knownoptions = ("debug|d", "help|h");
 GetOptions (@knownoptions) || usage();
 
 usage() if $opt_help;
-print stderr "RHOME: '$RHOME';  cwd='$cwd'\n" if $opt_debug;
+print stderr "R_HOME: '$R_HOME';  cwd='$cwd'\n" if $opt_debug;
 
 ##
 file:
@@ -64,12 +64,8 @@ file:
 
   }
 
-
-
 sub usage {
-
     print "keyword-test [ -d(ebug) ] [ -h(elp) ]  __.Rd-files__ \n";
     print "Example: $0 ../src/library/base/eda/*.Rd\n\n";
     exit 0;
 }
-

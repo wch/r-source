@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ${RHOME}/bin/BATCH
+# ${R_HOME}/bin/BATCH
 
 OPTS="--restore --save --no-readline"
 
@@ -20,4 +20,4 @@ OUT=${2-`basename ${1} .R`.Rout}
 (echo "invisible(options(echo = TRUE))"
  cat ${IN}
  echo "proc.time()"
-) | ${RHOME}/bin/R ${OPTS} >${OUT} 2>&1
+) | ${R_HOME}/bin/R ${OPTS} >${OUT} 2>&1

@@ -1,29 +1,29 @@
 #! /bin/sh
 
-URHOME="${HOME}/.R"
-PKGLIST="${URHOME}/doc/html/packages.html"
-SEARCHINDEX="${URHOME}/doc/html/search/index.txt"
-rm -rf ${URHOME}
+U_R_HOME="${HOME}/.R"
+PKGLIST="${U_R_HOME}/doc/html/packages.html"
+SEARCHINDEX="${U_R_HOME}/doc/html/search/index.txt"
+rm -rf ${U_R_HOME}
 
-dirs="${URHOME} ${URHOME}/doc ${URHOME}/doc/html ${URHOME}/doc/html/search ${URHOME}/library"
+dirs="${U_R_HOME} ${U_R_HOME}/doc ${U_R_HOME}/doc/html ${U_R_HOME}/doc/html/search ${U_R_HOME}/library"
 for d in ${dirs}; do
     mkdir -p ${d}
 done
 
-for f in ${RHOME}/doc/html/*; do
+for f in ${R_HOME}/doc/html/*; do
     if test -f $f; then
-	ln -s ${f} ${URHOME}/doc/html
+	ln -s ${f} ${U_R_HOME}/doc/html
     fi
 done
 
-for f in ${RHOME}/doc/html/search/*; do
+for f in ${R_HOME}/doc/html/search/*; do
     if test -f $f; then
-	ln -s ${f} ${URHOME}/doc/html/search
+	ln -s ${f} ${U_R_HOME}/doc/html/search
     fi
 done
 
 rm -f ${PKGLIST}
-cp ${RHOME}/doc/html/packages-head.html ${PKGLIST}
+cp ${R_HOME}/doc/html/packages-head.html ${PKGLIST}
 
 for lib in $*; do
     echo "<P><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
@@ -31,8 +31,8 @@ for lib in $*; do
     if test -d ${lib}; then
       for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
-	    rm -f ${URHOME}/library/${pkg}
-	    ln -s ${pkg} ${URHOME}/library
+	    rm -f ${U_R_HOME}/library/${pkg}
+	    ln -s ${pkg} ${U_R_HOME}/library
 	    pkgname=`basename ${pkg}`
 	    if test -r ${pkg}/TITLE; then
 		pkgtitle=`cat ${pkg}/TITLE | sed "s/^${pkgname}//"`
@@ -50,8 +50,8 @@ for lib in $*; do
     echo "" >> ${PKGLIST}
 done
 
-cat ${RHOME}/doc/html/packages-foot.html >> ${PKGLIST}
+cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
 
 rm -f ${SEARCHINDEX}
-cat ${URHOME}/library/*/CONTENTS > ${SEARCHINDEX}
+cat ${U_R_HOME}/library/*/CONTENTS > ${SEARCHINDEX}
 

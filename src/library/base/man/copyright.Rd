@@ -12,7 +12,7 @@
     \code{?\link{contributors}}) for the ability to use their work.
 }
 \details{
-    The file \file{\$RHOME/COPYRIGHTS} lists the copyrights in full
+    The file \file{\$R\_HOME/COPYRIGHTS} lists the copyrights in full
     detail.
 }
 \keyword{misc}

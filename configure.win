@@ -1,16 +1,16 @@
 #!/bin/sh
 
-RHOME=`pwd`
+R_HOME=`pwd`
 
-cp $RHOME/src/windows/Platform.h $RHOME/src/include
-cp $RHOME/src/unix/PostScript.c $RHOME/src/windows/PostScript.c
-cp $RHOME/src/unix/devPS.c $RHOME/src/windows/devPS.c
+cp ${R_HOME}/src/windows/Platform.h ${R_HOME}/src/include
+cp ${R_HOME}/src/unix/PostScript.c ${R_HOME}/src/windows/PostScript.c
+cp ${R_HOME}/src/unix/devPS.c ${R_HOME}/src/windows/devPS.c
 
 
 # This code assembles the table of statically loaded C and Fortran
 # code which is to be accessed via .C and .Fortran calls.
 
-cd $RHOME/src
+cd ${R_HOME}/src
 
 #we take only the C source for windows
 
@@ -20,7 +20,7 @@ sh GETSYMBOLS
 
 # Create the library of interpreted functions
 
-cd $RHOME/src/library/base/funs
+cd ${R_HOME}/src/library/base/funs
 mkdir -p ../../../library/base/R
 cat `ls R/[a-z]* | sed '/CVS/d; /~$$/d; /\.orig$$/d; \
 /\.bak$$/d; /^core$$/d; /system.*/d'` R/system.win| \
@@ -30,7 +30,8 @@ cp INDEX TITLE ../../../library/base
 mkdir -p ../../../library/base/data
 cp `ls data/[a-z]*` ../../../library/base/data
 
-cd $RHOME/etc
+cd ${R_HOME}/etc
 make install-html
 
-cp $RHOME/src/library/profile/Rprofile.win $RHOME/library/base/R/Rprofile
+cp ${R_HOME}/src/library/profile/Rprofile.win \
+   ${R_HOME}/library/base/R/Rprofile

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# ${RHOME}/cmd/filename
+# ${R_HOME}/bin/filename
 
 #cc Using 'found' ensures that at least an empty string is returned;
 #cc without,  system.file() returns   character(0) if nothing is found.

@@ -343,7 +343,7 @@ consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Library General
 Public License instead of this License.
 }
-\references{A copy of license is in \file{\$RHOME/COPYING} and you may
+\references{A copy of license is in \file{\$R\_HOME/COPYING} and you may
   also want to look at the R FAQ in 
   \url{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}.}
 \keyword{misc}

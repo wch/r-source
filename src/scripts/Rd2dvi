@@ -1,13 +1,13 @@
 #!/bin/sh
 #  Rd2dvi -- 'check' man pages (help files) by  'LaTeX'..
 #
-# Example (in $RHOME):
+# Example (in $R_HOME):
 #    bin/Rd2dvi src/library/base/man/Normal
 #    bin/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/* |sort|uniq`
 #
 Pwd=`dirname $0`
-RHOME=${Pwd}/..
-MANTEXDIR=${RHOME}/doc/manual
+R_HOME=${Pwd}/..
+MANTEXDIR=${R_HOME}/doc/manual
 D2L="${Pwd}/Rdconv -t latex"
 #
 call_dir=`pwd`

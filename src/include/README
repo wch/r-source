@@ -8,7 +8,7 @@ There are 2 kinds:
 	i.e., declaring code that can be used in
 	R packages or user code which will be  dyn.load()ed into R.
 
-	The declarations from "ii)" will be moved to  $(RHOME)/include/
+	The declarations from "ii)" will be moved to  $(R_HOME)/include/
 	and be available with, e.g., ``R COMPILE''.
 	These are listed as "SRC_HEADERS" in ./Makefile.
 			     ~~~~~~~~~~~

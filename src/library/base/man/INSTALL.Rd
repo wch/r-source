@@ -15,7 +15,7 @@
 }
 \description{
   To install packages into the default library tree (which is rooted at
-  \file{\$RHOME/library}), do \code{R INSTALL pkgs}.
+  \file{\$R\_HOME/library}), do \code{R INSTALL pkgs}.
 
   To install into the library tree \code{lib} instead of the default
   one, use \code{R INSTALL -l lib pkgs}.

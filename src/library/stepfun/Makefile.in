@@ -1,5 +1,5 @@
 #
-# ${RHOME}/src/library/${pkg}/Makefile
+# ${R_HOME}/src/library/stepfun/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@

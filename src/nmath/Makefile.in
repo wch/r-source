@@ -1,5 +1,5 @@
 #
-# ${RHOME}/src/nmath/Makefile
+# ${R_HOME}/src/nmath/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@

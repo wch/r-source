@@ -1,5 +1,5 @@
 #
-# ${RHOME}/afm/Makefile
+# ${R_HOME}/afm/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@

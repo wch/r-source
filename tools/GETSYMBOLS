@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# ${RHOME}/aux/GETSYMBOLS
+# ${R_HOME}/aux/GETSYMBOLS
 
 # This code assembles the table of statically loaded C and Fortran
 # code which is to be accessed via .C and .Fortran calls.
 
-AUXDIR=`echo $0 | sed 's%/[^/][^/]*$%%'`
-ROUTINES=${AUXDIR}/../src/appl/ROUTINES
+AUX_DIR=`echo $0 | sed 's%/[^/][^/]*$%%'`
+ROUTINES=${AUX_DIR}/../src/appl/ROUTINES
 tmpROUT=/tmp/ROUTINES$$
 
 ##-- Allow "#" comments in ../src/appl/ROUTINES :
@@ -20,13 +20,13 @@ s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
 s/C_FUNCTION(\(.*\))/int \1();/
 ' ${tmpROUT} > /tmp/FFDecl.h
 
-${AUXDIR}/move-if-change /tmp/FFDecl.h FFDecl.h
+${AUX_DIR}/move-if-change /tmp/FFDecl.h FFDecl.h
 
 sed '
 s/F77_SUBROUTINE(\(.*\))/	{ F77_QSYMBOL(\1),	F77_SYMBOL(\1)},/
 s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
 ' ${tmpROUT} > /tmp/FFTab.h
 
-${AUXDIR}/move-if-change /tmp/FFTab.h  FFTab.h
+${AUX_DIR}/move-if-change /tmp/FFTab.h  FFTab.h
 
 rm -f ${tmpROUT}

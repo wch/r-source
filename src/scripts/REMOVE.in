@@ -1,13 +1,13 @@
 #! /bin/sh
 
-# ${RHOME}/bin/REMOVE for removing add-on packages
+# ${R_HOME}/bin/REMOVE for removing add-on packages
 # Usage:
 #	R REMOVE [options] [-l lib] pkg_1 ... pkg_n
 
 VERSION="0.1-0"
 USAGE_MSG="Usage:  R REMOVE [options] [-l lib] pkg_1 ... pkg_n"
 PKGS=
-lib=${RHOME}/library
+lib=${R_HOME}/library
 
 while test -n "${1}"; do
   case ${1} in
@@ -56,7 +56,7 @@ if ${NO_PERL5}; then
   exit 2
 fi
 
-if test ${lib} = ${RHOME}/library; then
-  ${RHOME}/bin/build-help --htmllists
-  cat ${RHOME}/library/*/CONTENTS > ${RHOME}/doc/html/search/index.txt
+if test ${lib} = ${R_HOME}/library; then
+  ${R_HOME}/bin/build-help --htmllists
+  cat ${R_HOME}/library/*/CONTENTS > ${R_HOME}/doc/html/search/index.txt
 fi

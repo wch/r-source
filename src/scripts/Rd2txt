@@ -1,8 +1,8 @@
 #!/bin/sh
 
-RHOME=`R RHOME`
+R_HOME=`R RHOME`
 
-$RHOME/bin/Rdconv -t nroff $1 \
+${R_HOME}/bin/Rdconv -t nroff ${1} \
   | tbl \
   | nroff -ms 2> /dev/null \
-  | $RHOME/bin/help.pretty
+  | ${R_HOME}/bin/help.pretty

@@ -1,5 +1,5 @@
 #
-# ${RHOME}/src/library/mva/src/Makefile
+# ${R_HOME}/src/library/mva/src/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -10,12 +10,11 @@ subdir = src/library/mva/src
 
 include $(top_builddir)/etc/Makeconf
 MKINSTALLDIRS = $(top_srcdir)/aux/mkinstalldirs
-RHOME = $(top_builddir)
+R_HOME = $(top_builddir)
 
 pkg = mva
 LIB = $(pkg).$(SHLIBEXT)
 OBJS = dblcen.o hclust.o kmns.o
-
 
 all: $(LIB)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs

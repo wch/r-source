@@ -11,14 +11,14 @@
 
 ## Should work WHEREVER this is called from :
 (cd `dirname $0`/..
- RHOME=`pwd`; export RHOME
+ R_HOME=`pwd`; export R_HOME
 )
-RHOME=`cd ${RHOME}; pwd`	# absolute
+R_HOME=`cd ${R_HOME}; pwd`	# absolute
 
 PKG=$1; shift;
 FILES="$@"
 
-#Dbg> echo "RHOME=$RHOME"; echo
+#Dbg> echo "R_HOME=$R_HOME"; echo
 #Dbg> echo "FILES=$FILES"; echo ; echo; exit
 
 ## 1) ---- Header ----

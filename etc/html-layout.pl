@@ -1,7 +1,7 @@
 # The head of a html page (e.g. used for packages list)
 # Arguments:
 #  $title      of the page
-#  $top        relative path to $RHOME/doc/html (must be "." if we
+#  $top        relative path to $R_HOME/doc/html (must be "." if we
 #              already are there)
 #  $up         filename of the upper file
 #  $uptext     alternate text for upper file

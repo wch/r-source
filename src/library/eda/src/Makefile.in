@@ -1,5 +1,5 @@
 #
-# ${RHOME}/src/library/eda/src/Makefile
+# ${R_HOME}/src/library/eda/src/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -10,7 +10,7 @@ subdir = src/library/eda/src
 
 include $(top_builddir)/etc/Makeconf
 MKINSTALLDIRS = $(top_srcdir)/aux/mkinstalldirs
-RHOME = $(top_builddir)
+R_HOME = $(top_builddir)
 
 pkg = eda
 LIB = $(pkg).$(SHLIBEXT)

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ${RHOME}/bin/help
+# ${R_HOME}/bin/help
 
 if [ "${1}" = "INDEX" ];
 then

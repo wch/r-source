@@ -33,7 +33,7 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
-	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' \
+	sed -e '/^R_HOME=.*/s::R_HOME=/usr/lib/R:' \
 	    -e '/R.binary  /s::R.binary --vsize 8M --nsize 400000 :'\
 	  < bin/R > debian/tmp/usr/bin/R
 	dh_installdocs

@@ -1,5 +1,5 @@
 #
-# ${RHOME}/src/library/lqs/src/Makefile
+# ${R_HOME}/src/library/lqs/src/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -10,12 +10,11 @@ subdir = src/library/lqs/src
 
 include $(top_builddir)/etc/Makeconf
 MKINSTALLDIRS = $(top_srcdir)/aux/mkinstalldirs
-RHOME = $(top_builddir)
+R_HOME = $(top_builddir)
 
 pkg = lqs
 LIB = $(pkg).$(SHLIBEXT)
 OBJS = lqs.o
-
 
 all: $(LIB)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs

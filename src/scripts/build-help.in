@@ -1,11 +1,11 @@
 #! @PERL@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
-# ${RHOME}/bin/build-help
+# ${R_HOME}/bin/build-help
 # Usage:  build-help [options]  [pkg] [lib]
 # Install all help files for package pkg to library lib
-# (defaults are `${RHOME}/src/library/base' and the default library,
-#  `${RHOME}/library', respectively).
+# (defaults are `${R_HOME}/src/library/base' and the default library,
+#  `${R_HOME}/library', respectively).
 
 use File::Basename;
 use Cwd;
@@ -17,34 +17,34 @@ GetOptions (@knownoptions) || usage();
 
 $cwd=getcwd();
 if($opt_rhome){
-    $RHOME=$opt_rhome;
-    print STDERR "RHOME from --rhome: `$RHOME'\n" if $opt_debug;
+    $R_HOME=$opt_rhome;
+    print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
 }
-elsif($ENV{"RHOME"}){
-    $RHOME=$ENV{"RHOME"};
-    print STDERR "RHOME from ENV: `$RHOME'\n" if $opt_debug;
+elsif($ENV{"R_HOME"}){
+    $R_HOME=$ENV{"R_HOME"};
+    print STDERR "R_HOME from ENV: `$R_HOME'\n" if $opt_debug;
 }
 else{
     chdir(dirname($0) . "/..");
-    $RHOME=getcwd();
+    $R_HOME=getcwd();
 }
 chdir($cwd);
 print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
 
 
-require "$RHOME/etc/Rdconvlib.pl";
-require "$RHOME/etc/buildlib.pl";
+require "$R_HOME/etc/Rdconvlib.pl";
+require "$R_HOME/etc/buildlib.pl";
 
 # if option --htmllists is set we only rebuild some list files and
 # exit
 
 if($opt_htmllists){
-    build_htmlpkglist("$RHOME/library");
+    build_htmlpkglist("$R_HOME/library");
 
-    %anindex = read_anindex("$RHOME/library");
-    %htmlindex = read_htmlindex("$RHOME/library");
+    %anindex = read_anindex("$R_HOME/library");
+    %htmlindex = read_htmlindex("$R_HOME/library");
 
-    build_htmlfctlist("$RHOME/library");
+    build_htmlfctlist("$R_HOME/library");
 
     exit 0;
 }
@@ -85,8 +85,8 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    if ($lib ne "$RHOME/library") {
-	%basehtmlindex = read_htmlindex("$RHOME/library");
+    if ($lib ne "$R_HOME/library") {
+	%basehtmlindex = read_htmlindex("$R_HOME/library");
 	foreach $topic (keys %htmlindex) {
 	    $basehtmlindex{$topic} = $htmlindex{$topic};
 	}
@@ -113,7 +113,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
-		     " ${RHOME}/bin/help.pretty > '$destfile'");
+		     " ${R_HOME}/bin/help.pretty > '$destfile'");
 		Rdconv($manfile, "nroff", "", -1);
 	    }
 	}

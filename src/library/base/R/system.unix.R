@@ -23,7 +23,7 @@ help.start <- function (gui = "irrelevant", browser = .Options$browser,
 		 "/doc/html/index.html", sep = "")
     cat("If", browser, " is already running,\tit is *not* restarted,\n",
 	"and you must switch to its window.\nOtherwise, be patient..\n")
-    system(paste("${RHOME}/bin/help.links",
+    system(paste("${R_HOME}/bin/help.links",
 		 paste(unique(.lib.loc), sep=" ", collapse=" "),
 		 sep =" "))
     system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
