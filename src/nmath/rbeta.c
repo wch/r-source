@@ -27,7 +27,7 @@
 
 #include "Mathlib.h"
 
-static double expmax = 0.0;
+/* static double expmax = 0.0; */
 
 #define repeat for(;;)
 
