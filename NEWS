@@ -94,6 +94,9 @@ NEW FEATURES
 	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
 	variables.)  This makes R compatible with all S versions.
 
+    o   Modified `save' internals to improve performance when saving large
+	collections of code.
+
 
 
 BUG FIXES

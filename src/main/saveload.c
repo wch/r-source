@@ -758,24 +758,82 @@ static SEXP NewLoadSpecialHook (SEXPTYPE type)
  *  If "item" is present in "list" the a positive value is returned
  *  (the 1-based offset into the list).
  *
- *   Otherwise, a value of zero is returned.  */
+ *   Otherwise, a value of zero is returned.
+ *
+ *  The "list" is managed with a hash table.  This results in
+ *  significant speedups for saving large amounts of code.  A fixed
+ *  hash table size is used; this is not ideal but seems adequate for
+ *  now.  The hash table representation consists of a (list . vector)
+ *  pair.  The hash buckets are in the vector.  The list holds the
+ *  list of keys.  This list is in reverse order to the way the keys
+ *  were added (i.e. the most recently added key is first).  The
+ *  indices produced by HashAdd are in order.  Since the list is
+ *  written out in order, we either have to reverse the list or
+ *  reverse the indices; to retain byte for byte compatibility the
+ *  function FixHashEntries reverses the indices.  FixHashEntries must
+ *  be called after filling the tables and before using them to find
+ *  indices.  LT */
 
-static int NewLookup (SEXP item, SEXP list)
+#define HASHSIZE 1099
+
+#define PTRHASH(obj) (((unsigned long) (obj)) >> 2)
+
+#define HASH_TABLE_KEYS_LIST(ht) CAR(ht)
+#define SET_HASH_TABLE_KEYS_LIST(ht, v) SETCAR(ht, v)
+
+#define HASH_TABLE_COUNT(ht) TRUELENGTH(CDR(ht))
+#define SET_HASH_TABLE_COUNT(ht, val) SET_TRUELENGTH(CDR(ht), val)
+
+#define HASH_TABLE_SIZE(ht) LENGTH(CDR(ht))
+
+#define HASH_BUCKET(ht, pos) VECTOR_ELT(CDR(ht), pos)
+#define SET_HASH_BUCKET(ht, pos, val) SET_VECTOR_ELT(CDR(ht), pos, val)
+
+static SEXP MakeHashTable(void)
 {
-    SEXP iterator = list;
-    int count;
+    SEXP val = CONS(R_NilValue, allocVector(VECSXP, HASHSIZE));
+    SET_HASH_TABLE_COUNT(val, 0);
+    return val;
+}
 
-    if ((count = NewSaveSpecialHook(item)))	/* variable reuse :-) */
+static void FixHashEntries(SEXP ht)
+{
+    SEXP cell;
+    int count;
+    for (cell = HASH_TABLE_KEYS_LIST(ht), count = 1;
+	 cell != R_NilValue;
+	 cell = CDR(cell), count++)
+	INTEGER(TAG(cell))[0] = count;
+}
+
+static void HashAdd(SEXP obj, SEXP ht)
+{
+    int pos = PTRHASH(obj) % HASH_TABLE_SIZE(ht);
+    int count = HASH_TABLE_COUNT(ht) + 1;
+    SEXP val = ScalarInteger(count);
+    SEXP cell = CONS(val, HASH_BUCKET(ht, pos));
+
+    SET_HASH_TABLE_COUNT(ht, count);
+    SET_HASH_BUCKET(ht, pos, cell);
+    SET_TAG(cell, obj);
+    SET_HASH_TABLE_KEYS_LIST(ht, CONS(obj, HASH_TABLE_KEYS_LIST(ht)));
+    SET_TAG(HASH_TABLE_KEYS_LIST(ht), val);
+}
+    
+static int NewLookup (SEXP item, SEXP ht)
+{
+    int count = NewSaveSpecialHook(item);
+
+    if (count != 0)
 	return count;
-    /* now `count' is zero */
-    while (iterator != R_NilValue) {
-	R_assert(TYPEOF(list) == LISTSXP);
-	++count;
-	if (CAR(iterator) == item)
-	    return count;
-	iterator = CDR(iterator);
+    else {
+	int pos = PTRHASH(item) % HASH_TABLE_SIZE(ht);
+	SEXP cell;
+	for (cell = HASH_BUCKET(ht, pos); cell != R_NilValue; cell = CDR(cell))
+	    if (item == TAG(cell))
+		return INTEGER(CAR(cell))[0];
+	return 0;
     }
-    return 0;
 }
 
 /*  This code carries out the basic inspection of an object, building
@@ -790,7 +848,7 @@ static int NewLookup (SEXP item, SEXP list)
  *  method used here somehow shoots functional programming in the
  *  head --- sorry.  */
 
-static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
+static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
 {
     int count, length;
 
@@ -798,18 +856,14 @@ static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
 	return;
     switch (TYPEOF(obj)) {
     case SYMSXP:
-	if (NewLookup(obj, *sym_list))
+	if (NewLookup(obj, sym_list))
 	    return;
-	PROTECT(*env_list);
-	*sym_list = CONS(obj, *sym_list);
-	UNPROTECT(1);
+	HashAdd(obj, sym_list);
 	break;
     case ENVSXP:
-	if (NewLookup(obj, *env_list))
+	if (NewLookup(obj, env_list))
 	    return;
-	PROTECT(*sym_list);
-	*env_list = CONS(obj, *env_list);
-	UNPROTECT(1);
+	HashAdd(obj, env_list);
 	/* FALLTHROUGH */
     case LISTSXP:
     case LANGSXP:
@@ -970,26 +1024,35 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
 
 static void NewDataSave (SEXP s, FILE *fp)
 {
-    SEXP the_sym_list = R_NilValue, the_env_list = R_NilValue, iterator;
+    SEXP sym_table, env_table, iterator;
     int sym_count, env_count;
 
-    NewMakeLists(s, &the_sym_list, &the_env_list);
+    PROTECT(sym_table = MakeHashTable());
+    PROTECT(env_table = MakeHashTable());
+    NewMakeLists(s, sym_table, env_table);
+    FixHashEntries(sym_table);
+    FixHashEntries(env_table);
     OutInit(fp);
-    OutInteger(fp, sym_count = length(the_sym_list)); OutSpace(fp, 1);
-    OutInteger(fp, env_count = length(the_env_list)); OutNewline(fp);
-    for (iterator = the_sym_list; sym_count--; iterator = CDR(iterator)) {
+    OutInteger(fp, sym_count = HASH_TABLE_COUNT(sym_table)); OutSpace(fp, 1);
+    OutInteger(fp, env_count = HASH_TABLE_COUNT(env_table)); OutNewline(fp);
+    for (iterator = HASH_TABLE_KEYS_LIST(sym_table);
+	 sym_count--;
+	 iterator = CDR(iterator)) {
 	R_assert(TYPEOF(CAR(iterator)) == SYMSXP);
 	OutString(fp, CHAR(PRINTNAME(CAR(iterator))));
 	OutNewline(fp);
     }
-    for (iterator = the_env_list; env_count--; iterator = CDR(iterator)) {
+    for (iterator = HASH_TABLE_KEYS_LIST(env_table);
+	 env_count--;
+	 iterator = CDR(iterator)) {
 	R_assert(TYPEOF(CAR(iterator)) == ENVSXP);
-	NewWriteItem(ENCLOS(CAR(iterator)), the_sym_list, the_env_list, fp);
-	NewWriteItem(FRAME(CAR(iterator)), the_sym_list, the_env_list, fp);
-	NewWriteItem(TAG(CAR(iterator)), the_sym_list, the_env_list, fp);
+	NewWriteItem(ENCLOS(CAR(iterator)), sym_table, env_table, fp);
+	NewWriteItem(FRAME(CAR(iterator)), sym_table, env_table, fp);
+	NewWriteItem(TAG(CAR(iterator)), sym_table, env_table, fp);
     }
-    NewWriteItem(s, the_sym_list, the_env_list, fp);
+    NewWriteItem(s, sym_table, env_table, fp);
     OutTerm(fp);
+    UNPROTECT(2);
 }
 
 #define InVec(fp, obj, accessor, infunc, length)			\
