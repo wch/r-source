@@ -810,10 +810,20 @@ AC_DEFUN(R_TCLTK,
   [ have_tcltk=no
     TCLTK_LIBS=
     if test "${want_tcltk}" = yes; then
-      AC_CHECK_LIB(tcl, Tcl_Main,
+      AC_CHECK_LIB(tcl, Tcl_Main, [ TCLTK_LIBS="-ltcl"])
+      if test -n ${TCLTKLIBS}; then
         AC_CHECK_LIB(tk, Tk_Main,
-          [ TCLTK_LIBS="-ltcl -ltk"
-	    have_tcltk=yes ]))
+          [ TCLTK_LIBS="-ltcl -ltk" have_tcltk=yes ],, ${TCLTKLIBS})
+        if test "${have_tcltk}" = no; then
+        ## Try X11 libs
+          echo "checking with X11 libraries:"
+	  unset ac_cv_lib_tk_Tk_Main
+            AC_CHECK_LIB(tk, Tk_Main,
+              [ TCLTK_LIBS="-ltcl -ltk ${X_LIBS}"
+	        have_tcltk=yes ], , [-ltcl ${X_LIBS}])
+        fi
+      fi
+##      echo "have_tcltk now is ${have_tcltk}"
       if test "${have_tcltk}" = no; then
 	## Try finding {tcl,tk}Config.sh
 	libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
@@ -831,8 +841,8 @@ AC_DEFUN(R_TCLTK,
 	    if test -n "${TK_CONFIG}"; then
 	      . ${TK_CONFIG}	# get TK_VERSION
 	      AC_CHECK_LIB(tk${TK_VERSION}, Tk_Main,
-	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}"
-		  have_tcltk=yes ])
+	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}  ${TK_XLIBSW}"
+		  have_tcltk=yes ], , [${TCLTK_LIBS} ${TK_XLIBSW}] )
 	    fi
 	  fi
 	fi
@@ -851,8 +861,3 @@ dnl Local Variables: ***
 dnl mode: sh ***
 dnl sh-indentation: 2 ***
 dnl End: ***
-
-
-
-
-
