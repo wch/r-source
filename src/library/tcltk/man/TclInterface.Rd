@@ -12,6 +12,15 @@
 \alias{tclvar}
 \alias{tclVar}
 \alias{as.character.tclVar}
+\alias{tclArray}
+\alias{[[.tclArray}
+\alias{[[<-.tclArray}
+\alias{$.tclArray}
+\alias{$<-.tclArray}
+\alias{names.tclArray}
+\alias{length.tclArray}
+\alias{names<-.tclArray}
+\alias{length<-.tclArray}
 \alias{tclvalue}
 \alias{tclvalue<-}
 \alias{tclvalue.default}
@@ -67,6 +76,14 @@ tclVar(init="")
 \method{as.character}{tclVar}(x)
 \method{tclvalue}{tclVar}(x)
 \method{tclvalue}{tclVar}(x) <- value
+
+tclArray()
+\method{[[}{tclArray}(x,...)
+\method{[[}{tclArray}(x,...) <- value
+\method{$}{tclArray}(x, i)
+\method{$}{tclArray}(x, i) <- value
+\method{names}{tclArray}
+\method{length}{tclArray}
 
 tclObj(x)
 tclObj(x) <- value
@@ -180,6 +197,20 @@ tclRequire(package, warn = TRUE)
   explicitly naming global Tcl variable. Tcl variables created by 
   \code{tclVar}  are  uniquely named and automatically unset by the 
   garbage collector when the representing object is no longer in use. 
+
+  \code{tclArray} creates a new Tcl array and initalizes it to the empty
+  array. An R object of class \code{tclArray} and inheriting from class
+  \code{tclVar} is created to represent it. You can access elements of
+  the Tcl array using indexing with \code{[[} or \code{$}, which also
+  allow replacement forms. Notice that Tcl arrays are associative by
+  nature and hence unordered; indexing with a numeric index \code{i}
+  refers to the element with the \emph{name}
+  \code{as.character(i)}. Multiple indices are pasted together separated
+  by commas to form a single name. You can query the
+  length and the set of names in an array using methods for
+  \code{length} and \code{names}, respectively; these cannot
+  meaningfully be set so assignment forms exist only to print an error
+  message. 
 
   It is possible to access Tcl's \sQuote{dual-ported} objects directly,
   thus avoiding parsing and deparsing of their string representation.

@@ -4,8 +4,8 @@
 .Tcl <- function(...)
     structure(.External("dotTcl", ..., PACKAGE = "tcltk"),
               class="tclObj")
-.Tcl.objv <- function(...)
-    structure(.External("dotTclObjv", ..., PACKAGE = "tcltk"),
+.Tcl.objv <- function(objv)
+    structure(.External("dotTclObjv", objv, PACKAGE = "tcltk"),
               class="tclObj")
 
 .Tcl.callback <- function(...)

@@ -291,8 +291,14 @@ STANDARD PACKAGES
     	- The package is now in a namespace.  To remove it you will
  	  now need to use unloadNamespace("tcltk").
 
-	- as.tclObj() has gained a `drop' argument to decide what
-	  should happen for vectors of length one.
+	- The interface to Tcl has been made much more efficient by
+          evaluating Tcl commands via a vector of Tcl objects rather
+          than by constructing the string representation. 
+
+	- An interface to Tcl arrays has been introduced.
+
+	- as.tclObj() has gained a `drop' argument to resolve an
+	  ambiguity for vectors of length one.
 
     o	Changes in package 'tools':
 
