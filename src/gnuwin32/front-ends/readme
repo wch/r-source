@@ -43,7 +43,7 @@ A R proxy DLL
 =============
 
 Files bdx* and rproxy* are used to build a proxy DLL (by Thomas Baier) for
-use with his automation server RServer2.exe.  The file proxytest.c is a 
+use with his automation server StatConnectorSrv.exe.  The file rprx.c is a 
 simple test main program for rproxy.dll.
 
 The interface can evaluate commands and transfer simple R objects (e.g.

@@ -118,11 +118,12 @@ int main (int argc, char **argv)
     Rp->R_Interactive = 0;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
+    Rp->CommandLineArgs = NULL;
+    Rp->NumCommandLineArgs = 0;
     /* Rp->nsize = 300000;
        Rp->vsize = 6e6; */
     R_SetParams(Rp); /* so R_ShowMessage is set */
     R_SizeFromEnv(Rp);
-    R_SetParams(Rp);
     R_SetParams(Rp);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
