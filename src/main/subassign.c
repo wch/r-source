@@ -1333,10 +1333,10 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stretch = 0;
     if (isVector(x)) {
-	if (!isVectorList(x) && length(y) > 1)
+	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error("more elements supplied than there are to replace\n");
 	if (nsubs == 1) {
-	    offset = OneIndex(x, CAR(subs), 0, &newname);
+	    offset = OneIndex(x, CAR(subs), length(x), 0, &newname);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
 		UNPROTECT(1);
@@ -1355,6 +1355,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(index)[i] = get1index(CAR(subs), isNull(names) ?
 					      R_NilValue : VECTOR(names)[i],
+					      INTEGER(dims)[i],
 					      0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
@@ -1509,7 +1510,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(index = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),0);
+		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),
+					      INTEGER(dims)[i], 0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
 		    INTEGER(index)[i] >= INTEGER(dims)[i])
