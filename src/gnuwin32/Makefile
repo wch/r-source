@@ -1,18 +1,11 @@
 include MkRules
 include ../../share/make/vars.mk
 
-## This is done so Rpwd.exe gets built first under a native build,
-## but it is not used in Makefile under a cross-build.
-ifneq ($(strip $(BUILD)),CROSS)
-ifneq ($(strip $(wildcard Rpwd.exe)),)
-all: Rpwd.exe rbuild rpackage rdocs
-else
-all: Rpwd.exe
-	$(MAKE) rbuild rpackage rdocs
-endif
-else
-all: Rpwd.exe rbuild rpackage rdocs
-endif
+all:
+	@$(MAKE) --no-print-directory Rpwd.exe
+	@$(MAKE) --no-print-directory rbuild
+	@$(MAKE) --no-print-directory rpackage
+	@$(MAKE) --no-print-directory rdocs
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
@@ -56,7 +49,6 @@ MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a\
    ../extra/bzip2/libbz2.a
 
-# LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_STUBS), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES) $(R_PKGS_STUBS),pkg-$i)
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE) $(R_PKGS_STUBS),pkgclean-$i)
 
@@ -84,8 +76,14 @@ front-ends/Rpwd.exe:
 	$(MAKE) --no-print-directory -C front-ends Rpwd
 
 ## watch out: R.dll and Rblas.dll depend on each other.
-rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
-	 ../../bin/Rblas.dll CHTML front-ends COPYRIGHTS rmodules Rcode
+rbuild:
+	@$(MAKE) --no-print-directory fixfiles
+	@$(MAKE) --no-print-directory rlibs
+	@$(MAKE) --no-print-directory makeMakedeps
+	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
+	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
+	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
@@ -103,7 +101,9 @@ Rcode: fixed/fixdesc
 
 
 rpackage: ../../library/R.css
-	@$(MAKE) --no-print-directory $(PKGS)
+	@for pkg in $(PKGS); do \
+	  $(MAKE) --no-print-directory $${pkg}; \
+	done
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -223,9 +223,6 @@ ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
 	$(MAKE) --no-print-directory -C ./help -f MkChmDll
 endif
-ifeq ($(strip $(WINHELP)),BOTH)
-	$(MAKE) --no-print-directory -C ./help -f MkChmDll
-endif
 endif
 
 base-HELP = ziponly
@@ -259,7 +256,7 @@ dse1-HELP = ziponly
 dse2-HELP = ziponly
 
 bundle-%:
-	@$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
@@ -270,12 +267,10 @@ pkg-%:
 	fi
 ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
-endif
-ifeq ($(strip $(WINHELP)),BOTH)
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$* chm-$*
+else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 endif
 endif
 	@$(MAKE) --no-print-directory BUILD=$(BUILD) \

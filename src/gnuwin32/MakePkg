@@ -64,8 +64,14 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 # Others
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
-all:  $(DPKG)/zzzz frontmatter nmspace Dynlib R $(DPKG)/demo \
-  $(DPKG)/exec $(DPKG)/inst $(DATA) mansrcs indices
+all:  
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzz 
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s frontmatter
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s nmspace
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg Dynlib 
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s R
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s $(DPKG)/demo $(DPKG)/exec $(DPKG)/inst $(DATA)
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s mansrcs indices
 
 fake: zzzfirst frontmatter nmspacefake R Rfake $(DPKG)/demo \
   $(DPKG)/exec $(DPKG)/inst $(DATA) mansrcs indices

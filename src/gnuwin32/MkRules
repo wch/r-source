@@ -10,7 +10,7 @@ HELP = YES
 ifeq ($(strip $(BUILD)),CROSS)
 WINHELP = NO
 else
-WINHELP = CHM # NO, CHM, BOTH
+WINHELP = CHM # NO, CHM
 endif
 
 ## ============== configuration macros for building R ===================

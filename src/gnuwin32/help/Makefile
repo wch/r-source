@@ -37,14 +37,6 @@ chm-%:
 	  $(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml ; \
 	fi
 
-winhlp-%: chm-%
-	@if test -d $(PKGDIR)/$*/man ; then \
-	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
-	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp ; \
-	  $(MKDIR) -p $(RLIB)/$*/winhlp ; \
-	  $(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp ; \
-	fi
-
 ziphelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
@@ -53,10 +45,6 @@ ziponlyhelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqmX PKG=$* zipit
 
-
-winhelp-%:
-	$(MAKE) --no-print-directory -C $(PKGDIR)/$* \
-	  -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* win
 
 latex-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
@@ -73,24 +61,17 @@ HTM = $(filter-out 00Index.html, $(wildcard *.html))
 %.chm: $(HTM) Rchm.css logo.jpg
 	@hhc $*.hhp || exit 0
 
-%.hlp: %.rtf logo.bmp
-	hcrtf /x $*.hpj
-
-%.rtf: $(HTM)
-	perl $(RHOME)/share/perl/hhw-to-rtf.pl $*.hhp
-
 Rchm.css: $(RHOME)/src/gnuwin32/help/Rchm.css
 	@$(CP) $^ $@
 
 logo.jpg: $(RHOME)/doc/html/logo.jpg
 	@$(CP) $^ $@
 
-logo.bmp: $(RHOME)/src/gnuwin32/help/logo.bmp
-	@$(CP) $^ $@
-
 # following are designed to be run from the library/pkg directory:
 
-zipit: help/Rhelp.zip zipup
+zipit: 
+	-@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/help/Makefile help/Rhelp.zip
+	-@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/help/Makefile zipup
 unzipit:
 	-@$(MAKE) --no-print-directory -C latex \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp

@@ -6,7 +6,7 @@ include MkRules
 RVER = @RVER@
 
 HELP = YES
-WINHELP = NO # Use one of NO, CHM, BOTH (chm and winhelp)
+WINHELP = NO # Use one of NO, CHM
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
@@ -66,12 +66,10 @@ pkg-%:
 	fi
 ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
-endif
-ifeq ($(strip $(WINHELP)),BOTH)
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$* chm-$*
+else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 endif
 endif
 	@$(MAKE) --no-print-directory BUILD=$(BUILD) \

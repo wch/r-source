@@ -2,7 +2,11 @@
 include ../../gnuwin32/MkRules
 
 MODULE=lapack
-all: makeMakedeps Rlapack ../../../modules/$(MODULE).dll
+all: 
+	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
+	@$(MAKE) --no-print-directory -f Makefile.win -s ../../../bin/Rlapack.dll 
+	@$(MAKE) --no-print-directory -f Makefile.win -s ../../../lib/libRlapack.a
+	@$(MAKE) --no-print-directory -f Makefile.win -s ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
 FSOURCES = rgeev.f rsyev.f
@@ -28,8 +32,6 @@ clean:
 
 
 # Rlapack.* section
-Rlapack: ../../../bin/Rlapack.dll ../../../lib/libRlapack.a
-
 Rlapack.dll: dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
 	@$(ECHO) LIBRARY Rlapack > Rlapack.def
 	@$(ECHO) EXPORTS >> Rlapack.def
