@@ -159,6 +159,9 @@ int ggetkeystate();
 /* cursor.c */
 extern cursor CrossCursor;
 
+/* menus.h */
+
+void remove_menu_item(menuitem obj);
 
 #endif /* __GA__VERSION */
 

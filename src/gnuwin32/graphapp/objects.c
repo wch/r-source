@@ -595,3 +595,11 @@ void print_object_list(void)
 	fclose(f);
 }
 #endif
+
+void remove_menu_item(object obj)
+{
+	/* Must call private destructor first! */
+	if (obj->die) obj->die(obj);
+	remove_object(obj);
+	remove_deleted_object(obj);
+}
