@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE:-a4}
 
-revision='$Revision: 1.7 $'
+revision='$Revision: 1.8 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}" 
 
@@ -42,7 +42,7 @@ verbose=false
 
 TEXINPUTS=.:${R_HOME}/doc/manual:${TEXINPUTS}
 
-file_sed='s/[_$]/\\\\&/g'
+file_sed='s/[_$]/\\&/g'
 
 while test -n "${1}"; do
   case ${1} in
