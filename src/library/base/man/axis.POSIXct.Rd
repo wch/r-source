@@ -45,13 +45,14 @@ axis.POSIXct(side, x, at, format, ...)
 if(require(MASS, quietly = TRUE)) {
 data(beav1)
 attach(beav1)
-time <- strptime(paste(day, time \%/\% 100, time \%\% 100),
-                 "\%j \%H \%M")
+time <- strptime(paste(1990, day, time \%/\% 100, time \%\% 100),
+                 "\%Y \%j \%H \%M")
 plot(time, temp, type="l") # axis at 4-hour intervals.
 # now label every hour on the time axis
 plot(time, temp, type="l", xaxt="n")
 r <- as.POSIXct(round(range(time), "hours"))
 axis.POSIXct(1, at=seq(r[1], r[2], by="hour"), format="\%H")
+rm(time)
 detach(beav1)
 detach(package:MASS)
 }
