@@ -76,7 +76,7 @@ FORCE:
 %.R : $(srcdir)/make-%.R stamp-R
 	@$(R) < $< > /dev/null
 
-%.Rout : %.R
+.R.Rout:
 	@rm -f $@ $@.fail
 	@echo "running \`$<'"
 	@$(R) < $< > $@
@@ -120,7 +120,7 @@ test-undoc:
 $(TESTout): Makefile stamp-R
 
 stamp-R: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
-	@cd $(top_builddir) && $(MAKE) R
+#	@cd $(top_builddir) && $(MAKE) R
 	@touch $@
 
 mostlyclean: clean
