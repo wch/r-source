@@ -22,6 +22,8 @@ A package's DLL would only be built if standard source files were
 seen; now the presence of Makefile.win will trigger a build, allowing
 nonstandard languages to be used.
 
+The windows() device was not plotting transparent single lines correctly.
+
 
 
 rw1071

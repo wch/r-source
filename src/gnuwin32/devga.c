@@ -264,7 +264,7 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     if (!ndd) {
-	R_ShowMessage("No enough memory to copy graphics window");
+	R_ShowMessage("Not enough memory to copy graphics window");
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
@@ -1498,6 +1498,8 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
+	if(ld > ls && strlen(&dsp[ls + 1]) >= 512) 
+	    error("filename too long in win.metafile() call");
 	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
 	sprintf(buf, xd->filename, 1);
 	xd->w = MM_PER_INCH * w;
@@ -1960,11 +1962,12 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     xx2 = (int) x2;
     yy2 = (int) y2;
 
-    SetColor(col, gamma, dd),
-    SetLinetype(lty, lwd, dd);
-    if (R_OPAQUE(xd->fgcolor))
+    if (R_OPAQUE(col)) {
+	SetColor(col, gamma, dd);
+	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		       pt(xx1, yy1), pt(xx2, yy2), 0));
+    }
 }
 
 	/********************************************************/
@@ -2521,7 +2524,7 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
     if(dev == -1) { /* console */
 	if(CharacterMode == RGui) BringToTop(RConsole);
     } else {
-	if(dev < 1 || dev > NumDevices() || dev == NA_INTEGER)
+	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
 	    errorcall(call, "invalid value of `which'");
 	gdd = (GEDevDesc *) GetDevice(dev - 1);
 	if(!gdd) errorcall(call, "invalid device");
