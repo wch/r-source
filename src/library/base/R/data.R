@@ -23,16 +23,15 @@ function (..., list = character(0),
             subpre <- paste(".*", fsep, sep = "")
             for (file in files) {
                 if (verbose)
-                    cat("name=", name, ":\t file= ...", fsep, sub(subpre,
-                                            "", file), "::\t", sep = "")
+                    cat("name=", name, ":\t file= ...", fsep,
+                        sub(subpre, "", file), "::\t", sep = "")
                 if (found)
                     break
                 found <- TRUE
                 ext <- sub(".*\\.", "", file)
                 ## make sure the match is really for `name.ext'
                 ## otherwise
-                if (sub(subpre, "", file) != paste(name, ".",
-                       ext, sep = ""))
+                if (sub(subpre, "", file) != paste(name, ".", ext, sep = ""))
                     found <- FALSE
                 else switch(ext,
                             R = ,
@@ -53,8 +52,7 @@ function (..., list = character(0),
             }
         }
         if (!found)
-            warning(paste("Data set `", name, "' not found",
-                          sep = ""))
+            warning(paste("Data set `", name, "' not found", sep = ""))
     }
     invisible(names)
 }
@@ -68,12 +66,26 @@ show.data <-
     file.create(file)
     first <- TRUE
     for (lib in lib.loc) for (pkg in package) {
-        INDEX <- system.file("data", "index.doc", pkg = pkg, lib = lib)
+        if(!file.exists(file.path(lib, pkg, "data"))) next
+        INDEX <- system.file("data", "00Index", pkg = pkg, lib = lib)
+        if(INDEX == "")
+            INDEX <- system.file("data", "index.doc", pkg = pkg, lib = lib)
         if (INDEX != "") {
             cat(paste(ifelse(first, "", "\n"), "Data sets in package `",
                       pkg, "':\n\n", sep = ""), file = file, append = TRUE)
             file.append(file, INDEX)
             first <- FALSE
+        } else {
+            ## no index: check for datasets
+            files <- list.files(system.file("data", pkg = pkg, lib = lib))
+            if(length(files) > 0) {
+                warning(paste("package `", pkg,
+                              "' contains datasets but no index", sep=""))
+                cat(paste(ifelse(first, "", "\n"), "Data sets in package `",
+                          pkg, "':\n\nNo INDEX supplied -- please add one\n",
+                          sep = ""), file = file, append = TRUE)
+                first <- FALSE
+            }
         }
     }
     if (first) {

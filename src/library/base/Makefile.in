@@ -27,6 +27,7 @@ all:
 ##					      ^^ = TAB + Space
 	@cp $(srcdir)/INDEX $(srcdir)/TITLE $(top_builddir)/library/base
 	@cp `ls $(srcdir)/data/[a-z]*` $(top_builddir)/library/base/data
+	@cp $(srcdir)/data/00Index $(top_builddir)/library/base/data
 
 mostlyclean: clean
 clean:

@@ -27,7 +27,7 @@ all:
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in $(srcdir)/data/[a-z]*; do \
+	  for f in $(srcdir)/data/[a-z]* $(srcdir)/data/00Index; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	  done; \
 	fi
