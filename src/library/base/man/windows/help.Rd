@@ -14,7 +14,7 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 	sought (but \emph{not} a variable containing a character string!).}
     \item{offline}{a logical indicating whether documentation should be
 	displayed on-line to the screen (the default) or hardcopy of it
-	should be produced.
+	should be produced.}
     \item{package}{a name or character vector giving the packages to look
 	into for documentation.  By default, all packages in the search path
 	are used.}
