@@ -179,10 +179,13 @@ data.class <- function(x) {
 is.numeric.factor <- function(x) FALSE
 is.integer.factor <- function(x) FALSE
 
-encodeString <- function(x, w=0, quote="", na=TRUE,
+encodeString <- function(x, w = 0, quote = "", na = TRUE,
                          justify = c("left", "right", "centre"))
 {
-    x[] <- as.character(x) # preserve names, dim etc
+    at <- attributes(x)
+    x <- as.character(x) # we want e.g. NULL to work
+    attributes(x) <- at  # preserve names, dim etc
+    oldClass(x) <- NULL  # but not class
     justify <- match(match.arg(justify), c("left", "right", "centre")) - 1
     .Internal(encodeString(x, w, quote, justify, na))
 }
