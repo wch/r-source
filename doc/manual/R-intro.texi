@@ -5129,7 +5129,7 @@ regression.  Such regressions are useful for highlighting a trend in
 messy data or for data reduction to give some insight into a large data
 set.
 
-Function @code{loess} is the standard package @pkg{modreg}, together
+Function @code{loess} is the standard package @pkg{stats}, together
 with code for projection pursuit regression.
 @findex loess
 
@@ -6231,8 +6231,8 @@ command like
 @end example
 
 Users connected to the Internet can use the @code{CRAN.packages()}
-function (available through the @code{Packages} menu in the Windows
-GUI) to automatically update and install packages.
+function (available through the @code{Packages} menu in the Windows and
+RAqua GUIs) to automatically update and install packages.
 
 To see which packages are currently loaded, use
 @example
@@ -6271,17 +6271,16 @@ available in any @R{} installation.  A complete list is contained in the
 @section Contributed packages and @acronym{CRAN}
 @cindex CRAN 
 
-There are hundreds of contributed packages for @R{}, written by
-many different authors.  Some of these packages implement specialized statistical
-methods, others give access to data or hardware, and others are designed
-to complement textbooks.
-Some (the @emph{recommended} packages) are distributed with every binary
-distribution of @R{}.  Most are available for download from
-@acronym{CRAN} (@uref{http://cran.r-project.org} and its mirrors),
-and other repositories such as Bioconductor
-(@uref{http://www.bioconductor.org/}).  The @emph{R FAQ} contains a
-list that was current at the time of release, but the collection
-of available packages changes frequently.
+There are hundreds of contributed packages for @R{}, written by many
+different authors.  Some of these packages implement specialized
+statistical methods, others give access to data or hardware, and others
+are designed to complement textbooks.  Some (the @emph{recommended}
+packages) are distributed with every binary distribution of @R{}.  Most
+are available for download from @acronym{CRAN}
+(@uref{http://cran.r-project.org} and its mirrors), and other
+repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
+The @emph{R FAQ} contains a list that was current at the time of
+release, but the collection of available packages changes frequently.
 
 
 
@@ -6291,15 +6290,16 @@ of available packages changes frequently.
 @findex ::
 @findex :::
 
-Packages can have
-@emph{namespaces}, and currently all of the base and most of the
-recommended packages do.  Namespaces do two things:  they allow the
-package writer to hide functions and data that are meant only for internal
-use, and they prevent functions from breaking when a user (or other
-package writer) picks a name that clashes with one in the package.  
+Packages can have @emph{namespaces}, and currently all of the base and
+most of the recommended packages do.  Namespaces do three things: they
+allow the package writer to hide functions and data that are meant only
+for internal use, they prevent functions from breaking when a user
+(or other package writer) picks a name that clashes with one in the
+package, and they provide a way to refer to an object within a
+particular package.
 
 For example, @code{t()} is the transpose function in @R{}, but users
-might define their own object named @code{t}. Namespaces prevent
+might define their own function named @code{t}.  Namespaces prevent
 the user's definition from taking precedence, and breaking every
 function that tries to transpose a matrix.
 
