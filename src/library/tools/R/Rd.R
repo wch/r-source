@@ -62,6 +62,14 @@ function(lines)
     lines[-skipIndices]
 }
 
+### * .stripRdComments
+
+.stripRdComments <-
+function(lines)
+{
+    gsub("([^\\])((\\\\)*)%.*", "\\1\\2", lines)
+}
+
 ### * Rdinfo
 
 Rdinfo <-
@@ -252,6 +260,7 @@ function(contents, type = NULL)
         ## (Note: we really only want the Rd objects which have
         ## 'datasets' as their *only* keyword.)
         contents <- contents[idx, , drop = FALSE]
+        keywords <- keywords[idx]
     }
     
     ## Drop all Rd objects marked as 'internal' from the index.
