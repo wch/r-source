@@ -8,7 +8,8 @@
 #undef HAVE_ISNAN		/* IEEE Arith indicator */
 #undef HAVE_FINITE
 
-#undef HAVE_IEEEFP_H		/* Linux */
+#undef HAVE_IEEEFP_H		/* "-Wall" */
+#undef HAVE_IEEE754_H		/* Linux */
 
 #ifdef HAVE_ISNAN
 #ifdef HAVE_FINITE
