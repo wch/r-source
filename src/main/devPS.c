@@ -1792,7 +1792,7 @@ static void PostScriptSetLineWidth(FILE *fp, double linewidth)
 
 static void PostScriptSetLineEnd(FILE *fp, R_GE_lineend lend)
 {
-    int lineend;
+    int lineend = 1; /* -Wall */
     switch (lend) {
     case GE_ROUND_CAP:
 	lineend = 1;
@@ -1811,7 +1811,7 @@ static void PostScriptSetLineEnd(FILE *fp, R_GE_lineend lend)
 
 static void PostScriptSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
 {
-    int linejoin;
+    int linejoin = 1; /* -Wall */
     switch (ljoin) {
     case GE_ROUND_JOIN:
 	linejoin = 1;
@@ -4118,7 +4118,7 @@ static void PDF_SetFill(int color, NewDevDesc *dd)
 
 static void PDFSetLineEnd(FILE *fp, R_GE_lineend lend)
 {
-    int lineend;
+    int lineend = 1; /* -Wall */
     switch (lend) {
     case GE_ROUND_CAP:
 	lineend = 1;
@@ -4137,7 +4137,7 @@ static void PDFSetLineEnd(FILE *fp, R_GE_lineend lend)
 
 static void PDFSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
 {
-    int linejoin;
+    int linejoin = 1; /* -Wall */
     switch (ljoin) {
     case GE_ROUND_JOIN:
 	linejoin = 1;
