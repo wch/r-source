@@ -1699,15 +1699,19 @@ unbundled. The @code{gtk()} graphics device is a port of the
 available from CRAN as package @pkg{gtkDevice}.  The @code{gnome()}
 device uses the @acronym{GNOME} canvas, and is not currently available.
 
-Due to its experimental nature, the @acronym{GNOME} interface for @R{}
-will not be built automatically.  You need to have built @R{} first with
-the @option{--enable-R-shlib} option, and installed @R{} to where you
-are going to use it from.
+The sources for the @acronym{GNOME} interface for @R{} are currently
+only available by
+@example
+svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
+@end example
+
+You need to have built @R{} first with the @option{--enable-R-shlib}
+option, and installed @R{} to where you are going to use it from.
 
 Please check you have all the requirements.  You need at least the
 following libraries (or later) installed
 
-@smallexample
+@example
 audiofile-0.2.1
 esound-0.2.23
 glib-1.2.10
@@ -1717,7 +1721,7 @@ ORBit-0.5.12
 gnome-libs-1.4.1.2
 libxml-1.8.16
 libglade-0.17
-@end smallexample
+@end example
 
 @noindent
 It is preferable to have a complete installation of the @acronym{GNOME}
@@ -1732,13 +1736,11 @@ extension @samp{-devel}.  If you use a pre-packaged version of
 packages in order to compile the R-GNOME interface.
 
 The interface is a separate front-end program that is configured and
-built independently of the rest of @R{}.  If the version of @R{} you
-want to install into is not launched by @command{R}, set @env{R_HOME} to
-the @R{} home directory (the one containing @file{bin/R}).
-Create a build directory, and from there run
+built independently of @R{}.  Create a build directory, and from there
+run
 
 @example
-$(R_TOP_SRC_DIR)/src/modules/gnome/configure
+/path/to/gnomeGUI/configure R_HOME=/path/to/R/installation
 make
 make install
 @end example
@@ -1747,10 +1749,11 @@ make install
 This installs the two files @file{R_HOME/bin/exec/Rgnome} and
 @file{R_HOME/share/glade/gnome-interface.glade}.
 
-[To be updated:]
 The full list of options to this @command{configure} is
 
 @table @option
+@item R_HOME
+the directory (containing @file{bin/R}) of the @R{} installation
 @item --with-gnome
 specify the prefix for the @acronym{GNOME} dirs
 @item --with-gnome-includes=@var{DIR}
