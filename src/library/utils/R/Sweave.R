@@ -17,6 +17,16 @@ Sweave <- function(file, driver=RweaveLatex(),
 
     text <- readLines(file)
 
+    ## <FIXME>
+    ## This needs to be more refined eventually ...
+    if(any(is.na(nchar(text, "c")))) {
+        ## Ouch, invalid in the current locale.
+        ## (Can only happen in a MBCS locale.)
+        ## Try re-encoding from Latin1.
+        text <- iconv(text, "latin1", "")
+    }
+    ## </FIXME>
+
     mode <- "doc"
     chunknr <- 0
     chunk <- NULL
