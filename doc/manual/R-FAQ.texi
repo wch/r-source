@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.4-1, 2001-12-23
+@set FAQ-VERSION 1.4-2, 2001-12-29
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -376,7 +376,7 @@ respectively.
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
+from @acronym{CRAN} to run on Windows 95, 98, ME, NT4, 2000, and XP (at
 least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
 and maintained by @email{Guido.Masarotto@@r-project.org, Guido
@@ -681,8 +681,8 @@ and is currently being mirrored daily at
 @tab (TU Wien, Austria)
 @item @uref{http://cran.au.r-project.org/}
 @tab (PlanetMirror, Australia)
-@c  @item @uref{http://cran.br.r-project.org/}
-@c  @tab (Universidade Federal de Paran@'a, Brazil)
+@item @uref{http://cran.br.r-project.org/}
+@tab (Universidade Federal de Paran@'a, Brazil)
 @item @uref{http://cran.ch.r-project.org/}
 @tab (ETH Z@"urich, Switzerland)
 @item @uref{http://cran.de.r-project.org/}
