@@ -36,8 +36,8 @@ slotNames(x)
   \item{check}{If \code{TRUE}, check the assigned value for validity
     as the value of this slot.  You should never set this to
     \code{FALSE} in normal use, since the result can create invalid objects.
-    }
   }
+}
 \details{
   The \code{"@"} operator and the \code{slot} function extract or
   replace the formally defined slots for the object.  The operator
