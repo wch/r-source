@@ -68,6 +68,7 @@ The current version of this document is @value{VERSION}.
 * Installing R under Windows::  
 * Installing R under Mac OS X::  
 * Add-on packages::             
+* Internationalization::        
 * Essential and useful other programs::  
 * Configuration on Unix::       
 * Building the GNOME console::  
@@ -621,7 +622,7 @@ make prefix=/where/you/want/R.framework/to/go install
 @noindent
 the @file{R.framework} has not to be specified in the path.
 
-@node Add-on packages, Essential and useful other programs, Installing R under Mac OS X, Top
+@node Add-on packages, Internationalization, Installing R under Mac OS X, Top
 @chapter Add-on packages
 @cindex Packages
 
@@ -695,9 +696,10 @@ in the library search path is used.
 What this does is different on Unix and Windows.  On Unix it consults
 the list of available source packages on @acronym{CRAN} (or other
 repository/ies), downloads the latest version of the @pkg{foo} sources,
-and installs it (via @code{R CMD INSTALL}).  On Windows it looks at the
-list of @emph{binary} versions of packages available for your version of
-@R{} and downloads the latest version (if any).
+and installs it (via @code{R CMD INSTALL}).  On Windows it looks (by
+default) at the list of @emph{binary} versions of packages available for
+your version of @R{} and downloads the latest version (if any), although
+optionally it will also download and install a source package.
 
 On Unix @code{install.packages} can also install a source package from a
 local @file{.tar.gz} file by setting argument @code{repos} to
@@ -766,7 +768,158 @@ from the library.
 @strong{Note}: only @code{remove.packages} can remove package
 @emph{bundles}.
 
-@node Essential and useful other programs, Configuration on Unix, Add-on packages, Top
+
+@node Internationalization, Essential and useful other programs, Add-on packages, Top
+@chapter Internationalization and Localization
+
+@emph{Internationalization} refers to the process of enabling support
+for non-English languages, and @emph{localization} to adapting to a
+specific country and language.
+
+Full internationalization can be enabled when @R{} is built under
+Unix-alikes by the @command{configure} option @option{--enable-utf8}:
+@pxref{Configuration on Unix}.  Under Windows, it is enabled by default
+in source builds, but support for `East Asian' (Chinese/Japanese/Korean)
+languages is only enabled in the binary install if it is selected in the
+installer.
+
+All versions of @R{} support all single-byte character sets that the
+underlying OS can handle.  These are interpreted according to the
+@cindex locale
+current @code{locale}, as sufficiently complicated topic to merit a
+separate section.  Fully internationalized versions can also handle most
+multi-byte locales, in which a single character is represented by one,
+two or more consecutive bytes: examples of such locales are those using
+UTF-8 (becoming standard under Linux) and those for Chinese, Japanese
+and Korean.
+
+The other aspect of the internationalization is support of the
+translation of messages.  This is enabled in almost all builds of @R{}
+as from version 2.1.0.
+
+@menu
+* Locales::                     
+* Localization of messages::    
+@end menu
+
+@node Locales, Localization of messages, Internationalization, Internationalization
+@section Locales
+@cindex locale
+
+A @emph{locale} is a description of the local environment of the user,
+including the preferred language, the encoding of characters, the
+currency used and its conventions, and so on.  Aspects of the locale are 
+accessed by the @R{} functions @code{Sys.getlocale} and
+@code{Sys.localeconv}.
+
+The system of naming locales is OS-specific.  There is quite wide
+agreement on schemes, but not on the details of their implementation.  A
+locale needs to specify
+@itemize
+@item
+A human language.  These are generally specified by a lower-case two-character
+abbreviation following ISO 639.
+
+@item
+A `territory', used mainly to specify the currency. These are generally
+specified by an upper-case two-character abbreviation following ISO
+3166.  Sometimes the language and territory are used to specify the
+encoding, for example to distinguish between traditional and simplified
+Chinese.
+
+@item
+A charset encoding, which determines both how a byte stream should be
+divided into characters, and which characters the subsequences of bytes
+represent.
+
+@item
+Optionally, a modifier, for example to indicate that Austria is to be
+considered pre- or post-Euro.
+@end itemize
+
+@R{} is principally concerned with the first (for translations) and
+third.  Note that the charset may be deducible from the language, as
+some OSes offer only one charset per language, and most OSes have only
+one charset for many languages.  Note too the remark above about
+Chinese.
+
+@menu
+* Locales under Linux::         
+* Locales under Windows::       
+@end menu
+
+@node Locales under Linux, Locales under Windows, Locales, Locales
+@subsection Locales under Linux
+
+Modern Linux uses the XPG locale specifications which have the form
+@code{en_GB}, @code{en_GB.utf8}, @code{aa_ER.utf8@@saaho},
+@code{de_AT.iso885915@@euro}, the components being in the order listed
+above.  (See @command{man locale} and @command{locale -a} for more
+details.)  Similar schemes (but often in different cases) are used by
+most Unix-alikes.
+
+@node Locales under Windows,  , Locales under Linux, Locales
+@subsection Locales under Windows
+
+Windows also uses locales, but specified in a rather less concise way.
+Most users will encounter locales only via drop-down menus, but more
+information and lists can be found at
+@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}.
+
+
+@node Localization of messages,  , Locales, Internationalization
+@section Localization of messages
+
+The preferred language for messages is by default taken from the locale.
+This can be overridden first by the setting of the environment variable
+@code{LANGUAGE} and then by the environment variables @code{LC_ALL},
+@code{LC_MESSAGES} and @code{LANG}. (The last three are normally used to
+set the locale and so should not be needed, but the first is only used
+to select the language for messages.)  The code tries hard to map locale
+names to languages, even on Windows.
+
+Note that you should not expect to be able to change the language once R
+is running.
+
+Messages are divided into @emph{domains}, and translations may be
+available for some or all messages in a domain.  @R{} makes use of the
+following domains.
+
+@itemize
+@item
+Domain @code{R} for basic C-level error messages.
+
+@item
+Domain @code{R-@var{pkg}} for the R @code{stop} and @code{warning}
+messages in each package, including the @code{base} package.
+
+@item
+Domain @code{@var{pkg}} for the C-level messages in each package.
+
+@item
+Domain @code{RGui} for the menus etc for the R for Windows GUI front-end.
+
+@end itemize
+
+Dividing up the messages in this way allows @R{} to be extensible: as
+packages are loaded, their message translation catalogues can be loaded
+too.
+
+Translations are looked for by domain according to the currently
+specified language, as specifically as possible, so for example an
+Austrian (@code{de_AT}) translation catalogue will be used in preference
+to a generic German one (@code{de}) for an Austrian user.  Translations
+in the right language but the wrong charset can generally be made use of
+by on-the-fly re-encoding.  The @code{LANGUAGE} variable (only) can be a
+colon-separated list, for example @code{se:de}, giving a set of
+languages in decreasing order of preference.
+
+If no suitable translation catalog is found or a particular message is
+not translated in that catalogue, English is used.
+
+
+
+@node Essential and useful other programs, Configuration on Unix, Internationalization, Top
 @appendix Essential and useful other programs
 
 This appendix gives details of programs you will need to build @R{} on
@@ -1015,7 +1168,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 
 @menu
 * Configuration options::       
-* Internationalization::        
+* Internationalization support::  
 * Configuration variables::     
 * Using make::                  
 * Using FORTRAN::               
@@ -1023,7 +1176,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 * Platform notes::              
 @end menu
 
-@node Configuration options, Internationalization, Configuration on Unix, Configuration on Unix
+@node Configuration options, Internationalization support, Configuration on Unix, Configuration on Unix
 @section Configuration options
 
 @command{configure} has many options: running
@@ -1072,8 +1225,8 @@ against the dynamic library and so such packages cannot be used from a
 @R{} system built in the default way.
 
 
-@node Internationalization, Configuration variables, Configuration options, Configuration on Unix
-@section Internationalization
+@node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
+@section Internationalization support
 
 @R{} has long worked in the ISO Latin-1 8-bit character set and so
 covered English and most Western European languages (if not necessarily
@@ -1103,11 +1256,18 @@ exactly as if it was not configured with @option{--enable-utf8}.
 
 A version of @R{} with UTF-8 support can also be run in other multi-byte
 locales, for example those using the EUC-JP, EUC-KR and EUC-TW
-encodings.  A few parts of @R{} currently assume that ASCII characters
-never occur as part of multi-byte character sequences, which is true of
-UTF-8 and the EUC-* locales but not some Chinese and Korean locales.
+encodings.  A very few parts of @R{} currently assume that ASCII
+characters never occur as part of multi-byte character sequences, which
+is true of UTF-8 and the EUC-* locales but not some Chinese and Korean
+locales.
 
-@node Configuration variables, Using make, Internationalization, Configuration on Unix
+Translation of messages is supported via GNU @code{gettext}: this is
+found from system facilities or included in @R{} itself unless the
+configure option @option{--disable-nls} is used or the underlying OS has
+insufficiently standard C functions to support it.
+
+
+@node Configuration variables, Using make, Internationalization support, Configuration on Unix
 @section Configuration variables
 
 @findex configure
