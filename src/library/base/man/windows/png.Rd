@@ -45,6 +45,6 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
   \code{\link{bitmap}}}
 \examples{
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=1024, height=768}
+\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)}
 }
 \keyword{device}
