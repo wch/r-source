@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-07-03)
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2004-03-06), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ### Regression tests for which the printed output is the issue
 > ### May fail, e.g. by needing Recommended packages
@@ -472,4 +473,12 @@ Potentially influential observations of
 89  2.68_*  0.03    0.57_*
 93  2.68_*  0.03    0.57_*
 > ## only last two cols in row 57 should be influential
+> 
+> 
+> ## PR#6640  Zero weights in plot.lm
+> if(require(MASS)) {
++     fm1 <- lm(time~dist, data=hills, weights=c(0,0,rep(1,33)))
++     plot(fm1)
++ }
+> ## gave warnings in 1.8.1
 > 

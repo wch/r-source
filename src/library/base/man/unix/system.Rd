@@ -26,7 +26,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
   If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
   command and the output collected, line by line, into an \R
   \code{\link{character}} vector which is returned as the value of
-  \code{system}.  Output lines of more that 8096 characters will be split.
+  \code{system}.  Output lines of more than 8095 characters will be split.
 
   If \code{intern} is \code{FALSE} then the C function \code{system}
   is used to invoke the command and the value returned by \code{system}

@@ -1222,3 +1222,19 @@ stem(c(rep(1, 10), 1+1.e-8))
 stem(c(rep(1, 10), 1+1.e-9))
 stem(c(rep(1, 10), 1+1.e-10), atom=0) # integer-overflow is avoided.
 ##  had integer overflows in 1.8.1, and silly shifts of decimal point
+
+
+## PR#6633 warnings with vector op matrix, and more
+set.seed(1)
+x1 <- rnorm(3)
+y1 <- rnorm(4)
+x1 * y1
+x1 * as.matrix(y1) # no warning in 1.8.1
+x1 * matrix(y1,2,2)# ditto
+z1 <- x1 > 0
+z2 <- y1 > 0
+z1 & z2
+z1 & as.matrix(z2) # no warning in 1.8.1
+x1 < y1            # no warning in 1.8.1
+x1 < as.matrix(y1) # ditto
+##

@@ -215,7 +215,8 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	fp = R_popen(CHAR(STRING_ELT(CAR(args), 0)), x);
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
-	    if (read < INTERN_BUFSIZE) buf[read - 1] = '\0'; /* chop final CR */
+	    if (read > 0 && buf[read-1] == '\n') 
+		buf[read - 1] = '\0'; /* chop final CR */
 	    tchar = mkChar(buf);
 	    UNPROTECT(1);
 	    PROTECT(tlist = CONS(tchar, tlist));

@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-03-05), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-03-06), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3865,4 +3865,62 @@ Residuals 42 29204.1   695.3
   100000000 | 00000000000
 
 > ##  had integer overflows in 1.8.1, and silly shifts of decimal point
+> 
+> 
+> ## PR#6633 warnings with vector op matrix, and more
+> set.seed(1)
+> x1 <- rnorm(3)
+> y1 <- rnorm(4)
+> x1 * y1
+[1]  0.5574682  0.1410502  0.1609194 -0.3641637
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: x1 * y1 
+> x1 * as.matrix(y1) # no warning in 1.8.1
+           [,1]
+[1,]  0.5574682
+[2,]  0.1410502
+[3,]  0.1609194
+[4,] -0.3641637
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: x1 * as.matrix(y1) 
+> x1 * matrix(y1,2,2)# ditto
+          [,1]       [,2]
+[1,] 0.5574682  0.1609194
+[2,] 0.1410502 -0.3641637
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: x1 * matrix(y1, 2, 2) 
+> z1 <- x1 > 0
+> z2 <- y1 > 0
+> z1 & z2
+[1]  TRUE  TRUE  TRUE FALSE
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: z1 & z2 
+> z1 & as.matrix(z2) # no warning in 1.8.1
+      [,1]
+[1,]  TRUE
+[2,]  TRUE
+[3,]  TRUE
+[4,] FALSE
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: z1 & as.matrix(z2) 
+> x1 < y1            # no warning in 1.8.1
+[1] FALSE  TRUE FALSE FALSE
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: x1 < y1 
+> x1 < as.matrix(y1) # ditto
+      [,1]
+[1,] FALSE
+[2,]  TRUE
+[3,] FALSE
+[4,] FALSE
+Warning message: 
+longer object length
+	is not a multiple of shorter object length in: x1 < as.matrix(y1) 
+> ##
 > 

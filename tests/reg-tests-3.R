@@ -25,3 +25,11 @@ if(require(MASS)) {
     summary(influence.measures(fit))
 }
 ## only last two cols in row 57 should be influential
+
+
+## PR#6640  Zero weights in plot.lm
+if(require(MASS)) {
+    fm1 <- lm(time~dist, data=hills, weights=c(0,0,rep(1,33)))
+    plot(fm1)
+}
+## gave warnings in 1.8.1

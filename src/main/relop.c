@@ -44,17 +44,26 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     SEXP class=R_NilValue, dims, tsp=R_NilValue, xnames, ynames;
     int nx, ny, xarray, yarray, xts, yts;
-    Rboolean mismatch, iS;
+    Rboolean mismatch = FALSE, iS;
     PROTECT_INDEX xpi, ypi;
 
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
+    nx = length(x);
+    ny = length(y);
 
-    /* pre-test to handle the most common case quickly */
+    /* pre-test to handle the most common case quickly.
+       Used to skip warning too ....
+     */
     if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
 	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP &&
 	LENGTH(x) > 0 && LENGTH(y) > 0) {
 	SEXP ans = real_relop(PRIMVAL(op), x, y);
+	if (nx > 0 && ny > 0)
+	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
+	if (mismatch)
+	    warningcall(call, "longer object length\n"
+			"\tis not a multiple of shorter object length");
 	UNPROTECT(2);
 	return ans;
     }
@@ -100,6 +109,9 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     yarray = isArray(y);
     xts = isTs(x);
     yts = isTs(y);
+    if (nx > 0 && ny > 0)
+	mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
+ 
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
@@ -116,10 +128,6 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	PROTECT(ynames = getAttrib(y, R_DimNamesSymbol));
     }
     else {
-	nx = length(x);
-	ny = length(y);
-	if (nx > 0 && ny > 0)
-	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	PROTECT(dims = R_NilValue);
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));

@@ -16,17 +16,23 @@ function(x, which = 1:4,
     show <- rep(FALSE, 4)
     show[which] <- TRUE
     r <- residuals(x)
-    n <- length(r)
     yh <- predict(x) # != fitted() for glm
+    w <- weights(x)
+    if(!is.null(w)) { # drop obs with zero wt: PR#6640
+        wind <- w != 0
+        r <- r[wind]
+        yh <- yh[wind]
+        w <- w[wind]
+        labels.id <- labels.id[wind]
+    }
+    n <- length(r)
     if (any(show[2:4])) {
         s <- if(inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
         hii <- lm.influence(x, do.coef=FALSE)$hat
     }
     if (any(show[2:3])) {
         ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
-        w <- weights(x)
-        # r.w := weighted.residuals(x):
-        r.w <- if(is.null(w)) r else (sqrt(w)*r)[w!=0]
+        r.w <- if(is.null(w)) r else sqrt(w)*r
         rs <- r.w/(s * sqrt(1 - hii))
     }
     if (any(show[c(1,3)]))

@@ -79,15 +79,15 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	PROTECT(ynames = getAttrib(y, R_DimNamesSymbol));
     }
     else {
-	nx = length(x);
-	ny = length(y);
-	if(nx > 0 && ny > 0) {
-	    if(nx > ny) mismatch = nx % ny;
-	    else mismatch = ny % nx;
-	}
 	PROTECT(dims = R_NilValue);
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));
+    }
+    nx = length(x);
+    ny = length(y);
+    if(nx > 0 && ny > 0) {
+	if(nx > ny) mismatch = nx % ny;
+	else mismatch = ny % nx;
     }
     if (xts || yts) {
 	if (xts && yts) {

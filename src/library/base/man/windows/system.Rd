@@ -33,7 +33,7 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string. If the command could not be
   run or gives an error a \R error is generated.
-  (Output ines of more that 8096 characters will be split.)
+  (Output lines of more than 8095 characters will be split.)
 
   If \code{intern = FALSE}, the return value is a error code, given the
   invisible attribute (so needs to be printed explicitly). If the
