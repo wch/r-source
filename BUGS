@@ -56,17 +56,22 @@ none
 
 Directory:  Documentation
 
-* PR# 497 *
-Subject: par help wrong: xlog & ylog
-From: wsi@gcal.ac.uk
-Date: Tue, 21 Mar 2000 14:57:57 +0100 (MET)
+none
 
 Directory:  Graphics
 
-* PR# 512 *
-Subject: x11 colortype problems ('gray' is broken?)
-From: Thomas J Vogels <tov@ece.cmu.edu>
-Date: 07 Apr 2000 11:53:39 -0400
+* PR# 510 *
+Subject:  Strange behaviour of image 
+From: J.C.Rougier@durham.ac.uk
+Date: Thu, 6 Apr 2000 19:15:19 +0100 (BST)
+--At least an inaccurate description.
+--To be changed (with a back-compatibility option) in 1.1.0
+* PR# 400 *
+Subject: X11 troubles
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 13 Jan 2000 14:31:42 +0100
+--a) We don't handle multiple window closes well
+--b) X11 errors should be caught by an error handler, not kill R
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -74,28 +79,16 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
+* PR# 495 *
+Subject: barplot
+From: skala@incoma.cz
+Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
 * PR# 414 *
 Subject:  graphics bugs: steep slopes and large values beyond ylim 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 7 Feb 2000 18:28:04 -0500
 --Followup on R-devel showed this was due to generating integer coordinates 
 --outside +/- 2^15 in the X11 driver.
-* PR# 400 *
-Subject: X11 troubles
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 13 Jan 2000 14:31:42 +0100
---a) We don't handle multiple window closes well
---b) X11 errors should be caught by an error handler, not kill R
-* PR# 510 *
-Subject:  Strange behaviour of image 
-From: J.C.Rougier@durham.ac.uk
-Date: Thu, 6 Apr 2000 19:15:19 +0100 (BST)
---At least an inaccurate description.
---To be changed (with a back-compatibility option) in 1.1.0
-* PR# 495 *
-Subject: barplot
-From: skala@incoma.cz
-Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
 
 Directory:  In-Out
 
@@ -139,11 +132,6 @@ Directory:  Low-level
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
-* PR# 391 *
-Subject: Segfault in dataentry()
-From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
-Date: 29 Dec 1999 11:59:50 +0100
---dataentry(0,0) segfaults
 
 Directory:  Misc
 
@@ -184,4 +172,11 @@ none
 
 Directory:  incoming
 
-none
+* PR# 520 *
+Subject: Rd2Sd conversion: files
+From: Sergei Zuyev <sergei@stams.strath.ac.uk>
+Date: Fri, 14 Apr 2000 13:26:19 +0100
+* PR# 519 *
+Subject: bundle build and Rd2Sd converion fail
+From: Sergei Zuyev <sergei@stams.strath.ac.uk>
+Date: Fri, 14 Apr 2000 13:13:48 +0100
