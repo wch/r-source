@@ -8,7 +8,7 @@ coef(x, \dots)
 \alias{coef}
 \arguments{
 \item{x}{an object for which the extraction of model
-coefficients is meaningful.}
+  coefficients is meaningful.}
 \item{\dots}{other arguments.}
 }
 \value{
@@ -16,14 +16,14 @@ These are generic functions which extract
 model coefficents from objects returned by modeling functions.
 The abbreviated form \code{coef} is intended to encourage users
 to access object components through an accessor function
-rather than by directly referencing an object slot.
+rather than by directly referencing an object slot (list element).
 
 All object classes which are returned by model fitting
 functions should provide a \code{coefficients} method.
 }
 \seealso{
-\code{\link{fitted.values}}, \code{\link{glm}}, \code{\link{lm}},
-\code{\link{residuals}}.
+\code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
+\code{\link{glm}}, \code{\link{lm}} for model fitting.
 }
 \keyword{regression}
 \keyword{models}
