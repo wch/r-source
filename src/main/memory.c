@@ -1837,11 +1837,14 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	    R_SmallVallocSize += alloc_size;
 	}
 	else {
-	    s = NULL; /* initialize to suppress warning */
 	    Rboolean success = FALSE;
+	    s = NULL; /* initialize to suppress warning */
 	    if (size < (R_SIZE_T_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN)) {
 		s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
 		if (s == NULL) {
+		    /* If we are near the address space limit, we
+		       might be short of address space.  So return
+		       all unused objects to malloc and try again. */
 		    R_gc_internal(alloc_size);
 		    s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
 		}
