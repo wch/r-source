@@ -34,7 +34,7 @@ R_MINOR="64.1"
 R_STATUS="Patched (unreleased snapshot)"
 R_STATUS_REV="0"
 
-AC_CONFIG_AUX_DIR(aux)
+AC_CONFIG_AUX_DIR(tools)
 
 ### Platform
 ###
@@ -43,7 +43,7 @@ AC_CONFIG_AUX_DIR(aux)
 ### sort of sanity check written into configure.  We bypass the check by
 ### invoking config.guess directly and parsing the results ourselves.
 
-host=`${srcdir}/aux/config.guess`
+host=`${srcdir}/tools/config.guess`
 set `echo ${host} | tr '-' ' '`
 host_cpu=$1
 host_vendor=$2
@@ -155,7 +155,7 @@ esac
 ## Osman says that this is necessary.
 case ${host} in
   *hpux*)
-    INSTALL="\$\(top_srcdir\)/aux/install-sh -c" ;;
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
 esac
 
 AC_PROG_LN_S

@@ -19,6 +19,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	"aux" directory moved to "tools" to avoid difficulties on 
+    	Windows
+
     o   structure() clobbered factors with missing levels
 
     o   pmatch() misbehaved on duplicate matches

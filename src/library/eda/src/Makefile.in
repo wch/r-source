@@ -9,7 +9,7 @@ top_builddir = ../../../..
 subdir = src/library/eda/src
 
 include $(top_builddir)/etc/Makeconf
-MKINSTALLDIRS = $(top_srcdir)/aux/mkinstalldirs
+MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
 RHOME = $(top_builddir)
 
 pkg = eda

@@ -137,7 +137,7 @@ distdir: $(DISTFILES)
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
         done
-	@for d in aux debian; do \
+	@for d in tools debian; do \
 	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
