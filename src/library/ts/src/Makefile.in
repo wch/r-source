@@ -14,7 +14,10 @@ R_HOME = $(top_builddir)
 OBJS = PPsum.o burg.o eureka.o filter.o pacf.o starma.o stl.o \
        carray.o mburg.o myw.o qr.o
 SHLIB = $(pkg).@SHLIB_EXT@
+## FIXME:
+## Add $(LIBM)?
 SHLIB_LIBADD = $(FLIBS)
+## </FIXME>
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

@@ -13,7 +13,10 @@ R_HOME = $(top_builddir)
 
 OBJS = dblcen.o hclust.o hclust-utils.o kmns.o
 SHLIB = $(pkg).@SHLIB_EXT@
+## FIXME:
+## Add $(LIBM)?
 SHLIB_LIBADD = $(FLIBS)
+## </FIXME>
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

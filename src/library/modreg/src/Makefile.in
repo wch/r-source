@@ -14,7 +14,10 @@ R_HOME = $(top_builddir)
 OBJS = bsplvd.o bvalue.o bvalus.o ksmooth.o loessc.o loessf.o \
 	ppr.o qsbart.o sbart.o sgram.o sinerp.o sslvrg.o stxwx.o
 SHLIB = $(pkg).@SHLIB_EXT@
+## FIXME:
+## Add $(LIBM)?
 SHLIB_LIBADD = $(FLIBS)
+## </FIXME>
 PKG_LIBS = $(BLAS_LIBS)
 
 all: Makefile $(SHLIB)
