@@ -425,7 +425,8 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(realgroup = duplicate(group));
     if (group == R_UnboundValue){
 	group = generic;
-	realgroup = mkString("");
+	UNPROTECT(1);
+	PROTECT(realgroup = mkString(""));
     }
     if (!isString(group) || length(group) > 1)
 	errorcall(call, "invalid group argument found in NextMethod\n");

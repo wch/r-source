@@ -2309,7 +2309,7 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid cex value\n");
 
     n = LENGTH(str);
-    ans = allocVector(REALSXP, n);
+    PROTECT(ans = allocVector(REALSXP, n));
     cexsave = dd->gp.cex;
     dd->gp.cex = cex * dd->gp.cexbase;
     for(i=0 ; i<n ; i++)
@@ -2320,6 +2320,7 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 	    REAL(ans)[i] = GStrHeight(CHAR(STRING(str)[i]),
 				      GMapUnits(units), dd);
     dd->gp.cex = cexsave;
+    UNPROTECT(1);
     return ans;
 }
 
@@ -2348,7 +2349,7 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid cex value\n");
 
     n = LENGTH(str);
-    ans = allocVector(REALSXP, n);
+    PROTECT(ans = allocVector(REALSXP, n));
     cexsave = dd->gp.cex;
     dd->gp.cex = cex * dd->gp.cexbase;
     for(i=0 ; i<n ; i++)
@@ -2359,6 +2360,7 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 	    REAL(ans)[i] = GStrWidth(CHAR(STRING(str)[i]),
 				     GMapUnits(units), dd);
     dd->gp.cex = cexsave;
+    UNPROTECT(1);
     return ans;
 }
 
