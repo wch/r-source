@@ -100,6 +100,49 @@ format.pval(p / 0.9)
 format.pval(p / 0.9, dig=3)
 ## end of moved from format.Rd
 
+
+## is.finite
+x <- c(100,-1e-13,Inf,-Inf, NaN, pi, NA)
+x #  1.000000 -3.000000       Inf      -Inf        NA  3.141593        NA
+names(x) <- formatC(x, dig=3)
+is.finite(x)
+##-   100 -1e-13 Inf -Inf NaN 3.14 NA
+##-     T      T   .    .   .    T  .
+is.na(x)
+##-   100 -1e-13 Inf -Inf NaN 3.14 NA
+##-     .      .   .    .   T    .  T
+which(is.na(x) & !is.nan(x))# only 'NA': 7
+
+is.na(x) | is.finite(x)
+##-   100 -1e-13 Inf -Inf NaN 3.14 NA
+##-     T      T   .    .   T    T  T
+is.infinite(x)
+##-   100 -1e-13 Inf -Inf NaN 3.14 NA
+##-     .      .   T    T   .    .  .
+
+##-- either  finite or infinite  or  NA:
+all(is.na(x) != is.finite(x) | is.infinite(x)) # TRUE
+all(is.nan(x) != is.finite(x) | is.infinite(x)) # FALSE: have 'real' NA
+
+##--- Integer
+(ix <- structure(as.integer(x),names= names(x)))
+##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA
+##-   100      0     NA     NA     NA      3     NA
+all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
+
+storage.mode(ii <- -3:5)
+storage.mode(zm <- outer(ii,ii, FUN="*"))# integer
+storage.mode(zd <- outer(ii,ii, FUN="/"))# double
+range(zd, na.rm=TRUE)# -Inf  Inf
+zd[,ii==0]
+
+(storage.mode(print(1:1 / 0:0)))# Inf "double"
+(storage.mode(print(1:1 / 1:1)))# 1 "double"
+(storage.mode(print(1:1 + 1:1)))# 2 "integer"
+(storage.mode(print(2:2 * 2:2)))# 4 "integer"
+## end of moved from is.finite.Rd
+
+
 ## kronecker
 fred <- matrix(1:12, 3, 4, dimnames=list(LETTERS[1:3], LETTERS[4:7]))
 bill <- c("happy" = 100, "sad" = 1000)

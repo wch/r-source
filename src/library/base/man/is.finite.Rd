@@ -62,89 +62,9 @@ stopifnot(
     1/0 == Inf,
     1/Inf == 0
 )
-exp(-Inf) == 0
-##              (actually, the last one seems to give NA on not-very-new
-##               versions of Linux, which is a Linux bug and seems to be
-##               corrected in newer 'libc6' based Linuxen).
-
-stopifnot(
-    is.na(0/0),
-    !is.na(Inf),
-    is.nan(0/0),
-
-    !is.nan(NA)  &&  !is.infinite(NA)  && !is.finite(NA),
-     is.nan(NaN) &&  !is.infinite(NaN) && !is.finite(NaN),
-    !is.nan(c(1,NA)),
-    c(FALSE,TRUE,FALSE) == is.nan(c   (1,NaN,NA)),
-    c(FALSE,TRUE,FALSE) == is.nan(list(1,NaN,NA))#-> FALSE in older versions
-)
-
-lgamma(Inf) == Inf
-Inf + Inf == Inf
-Inf - Inf == NaN # NA --- should test with  'is.nan()
-
-(1/0) * (1/0)# Inf
-(1/0) / (1/0)# NaN
-
-pm <- c(-1,1) # 'pm' = plus/minus
-
-log(0) == - 1/0
-exp(-Inf) == 0
-
 sin(Inf)
 cos(Inf)
 tan(Inf)
-all(atan(Inf*pm) == pm*pi/2) # TRUE
-
-
-x <- c(100,-1e-13,Inf,-Inf, NaN, pi, NA)
-x #  1.000000 -3.000000       Inf      -Inf        NA  3.141593        NA
-names(x) <- formatC(x, dig=3)
-is.finite(x)
-##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     T      T   .    .   .    T  .
-is.na(x)
-##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     .      .   .    .   T    .  T
-which(is.na(x) & !is.nan(x))# only 'NA': 7
-
-is.na(x) | is.finite(x)
-##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     T      T   .    .   T    T  T
-is.infinite(x)
-##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-     .      .   T    T   .    .  .
-
-##-- either  finite or infinite  or  NA:
-all(is.na(x) != is.finite(x) | is.infinite(x)) # TRUE
-all(is.nan(x) != is.finite(x) | is.infinite(x)) # FALSE: have 'real' NA
-
-##--- Integer
-(ix <- structure(as.integer(x),names= names(x)))
-##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA 
-##-   100      0     NA     NA     NA      3     NA 
-all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
-
-ix[3] == (iI <- as.integer(Inf))#> warning: NAs introduced by coercion 
-ix[4] == (imI<- as.integer(-Inf))
-iI  == .Machine$integer.max # TRUE
-imI == -.Machine$integer.max # TRUE
-
-##--- Overflow in simple integer arithmetic:
-as.integer(2)*iI #  -2
-as.integer(3)*iI #  2147483645
-as.integer(3)*iI == iI-2 # TRUE
-
-storage.mode(ii <- -3:5)
-storage.mode(zm <- outer(ii,ii, FUN="*"))# integer
-storage.mode(zd <- outer(ii,ii, FUN="/"))# double
-range(zd, na.rm=TRUE)# -Inf  Inf
-zd[,ii==0]
-
-(storage.mode(print(1:1 / 0:0)))# Inf "double"
-(storage.mode(print(1:1 / 1:1)))# 1 "double"
-(storage.mode(print(1:1 + 1:1)))# 2 "integer"
-(storage.mode(print(2:2 * 2:2)))# 4 "integer"
 }
 \keyword{programming}
 \keyword{math}

@@ -87,6 +87,17 @@ dirname(character(0))
 ## end of moved from basename.Rd
 
 
+## Bessel
+## Check the Scaling :
+nus <- c(0:5,10,20)
+x <- seq(0,40,len=801)[-1]
+for(nu in nus)
+   stopifnot(abs(1- besselK(x,nu)*exp( x) / besselK(x,nu,expo=TRUE)) < 2e-15)
+for(nu in nus)
+   stopifnot(abs(1- besselI(x,nu)*exp(-x) / besselI(x,nu,expo=TRUE)) < 1e-15)
+## end of moved from Bessel.Rd
+
+
 ## c
 ll <- list(A = 1, c="C")
 stopifnot(identical(c(ll, d=1:3), c(ll, as.list(c(d=1:3)))))
@@ -278,6 +289,21 @@ stopifnot(1:10 == gf$linkfun(gf$linkinv(1:10)))
 ## end of moved from family.Rd
 
 
+## fft
+set.seed(123)
+eps <- 1e-11
+for(N in 1:130) {
+    x <- rnorm(N)
+    if(N %% 5 == 0) {
+        m5 <- matrix(x,ncol=5)
+        stopifnot(apply(m5,2,fft) == mvfft(m5))
+    }
+    dd <- Mod(1 - (f2 <- fft(fft(x), inverse=TRUE)/(x*length(x))))
+    stopifnot(dd < eps)
+}
+## end of moved from fft.Rd
+
+
 ## findint
 N <- 100
 X <- sort(round(rt(N, df=2), 2))
@@ -431,6 +457,29 @@ for(x in list(tst.val, x2, z2))
 rbind(is.nan(tst.val),
       is.na (tst.val))
 tst.val [ is.nan(tst.val) !=  is.na(tst.val) ]
+
+stopifnot(
+    is.na(0/0),
+    !is.na(Inf),
+    is.nan(0/0),
+
+    !is.nan(NA)  &&  !is.infinite(NA)  && !is.finite(NA),
+     is.nan(NaN) &&  !is.infinite(NaN) && !is.finite(NaN),
+    !is.nan(c(1,NA)),
+    c(FALSE,TRUE,FALSE) == is.nan(c   (1,NaN,NA)),
+    c(FALSE,TRUE,FALSE) == is.nan(list(1,NaN,NA))#-> FALSE in older versions
+)
+
+stopifnot(identical(lgamma(Inf), Inf))
+stopifnot(identical(Inf + Inf, Inf))
+stopifnot(identical(Inf - Inf, NaN))
+stopifnot(identical((1/0) * (1/0), Inf))
+stopifnot(identical((1/0) / (1/0), NaN))
+stopifnot(identical(exp(-Inf), 0))
+stopifnot(identical(log(0), -Inf))
+stopifnot(identical((-1)/0, -Inf))
+pm <- c(-1,1) # 'pm' = plus/minus
+stopifnot(atan(Inf*pm) == pm*pi/2)
 ## end of moved from is.finite.Rd
 
 
@@ -698,6 +747,26 @@ removeGeneric("f")
 if(!hasMethods) detach("package:methods")
 ## end of moved from trace.Rd
 
+
+## Trig
+## many of these tested for machine accuracy, which seems a bit extreme
+set.seed(123)
+stopifnot(cos(0) == 1)
+stopifnot(sin(3*pi/2) == cos(pi))
+x <- rnorm(99)
+stopifnot(all.equal( sin(-x), - sin(x)))
+stopifnot(all.equal( cos(-x), cos(x)))
+x <- abs(x); y <- abs(rnorm(x))
+stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
+stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
+
+x <- 1:99/100
+stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * .Machine$double.eps)
+## error is about 650* are x=0.01
+stopifnot(abs(1 - x / acos(cos(x))) < 1000 * .Machine$double.eps)
+stopifnot(abs(1 - x / asin(sin(x))) <= 10 * .Machine$double.eps)
+stopifnot(abs(1 - x / atan(tan(x))) <= 10 *.Machine$double.eps)
+## end of moved from Trig.Rd
 
 ## Uniform
 u <- runif(20)
