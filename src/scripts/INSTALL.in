@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.61 $'
+revision='$Revision: 1.62 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -58,17 +58,11 @@ tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 
 umask 022
 
-# Get one field including all continuation lines from a DCF file.
-get_dcf_field () {
-  ws="[ 	]"		# space and tab
-  sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
-    sed -n "/^${1}:/{s/^${1}:${ws}*//;p;}
-            /^${ws}/{s/^${ws}*//;p;}"
-}
-  
+. ${R_HOME}/share/sh/dcf.sh	# get_dcf_field()
 
-# get the full path names to all packages contained in $1; modifies pkgs
 get_packages () {
+  ## get the full path names to all packages contained in $1.
+  ## NOTE: modifies pkgs!
   if grep -s "^Contains:" "${1}/DESCRIPTION"; then
     bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
     for p in ${bundlepkg}; do
@@ -171,6 +165,9 @@ fi
 
 if test -d ${lib} -a -w ${lib} || mkdir ${lib} 2> /dev/null; then
   lib=`cd ${lib}; pwd`
+  ## FIXME: Remove eventually.
+  rm -f ${lib}/LibIndex
+  ## </FIXME>
   cp ${R_HOME}/doc/html/R.css ${lib}
 else
   echo "ERROR: cannot write to or create directory \`${lib}'"
@@ -318,26 +315,36 @@ do_install () {
       cp -r inst/* ${lib}/${pkg}
     fi
 
-    case $save in
-    CHECK) if test -r INSTALL.R; then R_SAVE_IMAGE=true; else R_SAVE_IMAGE=false; fi;;
-    *) R_SAVE_IMAGE=$save;;
+    case ${save} in
+      CHECK)
+	if test -r INSTALL.R; then
+	  R_SAVE_IMAGE=true;
+        else
+	  R_SAVE_IMAGE=false;
+        fi
+	;;
+      *)
+	R_SAVE_IMAGE=${save} ;;
     esac
     export R_SAVE_IMAGE
 
-   if ${R_SAVE_IMAGE}; then
-     echo " save image"
-     if test -s "R_PROFILE.R"; then true
-     else
-       echo "options(echo=FALSE)" > R_PROFILE.R
-     fi
-     R_PROFILE=./R_PROFILE.R
-     export R_PROFILE
-     (echo " .lib.loc <- c(\"${lib}\", .lib.loc)"; cat ${lib}/${pkg}/R/${pkg}; echo "rm(.lib.loc)") | ${R_HOME}/bin/R --save --silent|| (echo "Execution of package source for ${pkg} failed"; exit 1)
-     mv .RData ${lib}/${pkg}/R/all.rda
-     mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
-     if test -s INSTALL.R; then cp INSTALL.R ${lib}/${pkg}/R/${pkg}
-     else 
-      cat > ${lib}/${pkg}/R/${pkg} <<EOF
+    if ${R_SAVE_IMAGE}; then
+      echo " save image"
+      if test -s "R_PROFILE.R"; then true
+      else
+        echo "options(echo=FALSE)" > R_PROFILE.R
+      fi
+      R_PROFILE=./R_PROFILE.R
+      export R_PROFILE
+      (echo " .lib.loc <- c(\"${lib}\", .lib.loc)";
+        cat ${lib}/${pkg}/R/${pkg};
+        echo "rm(.lib.loc)") | ${R_HOME}/bin/R --save --silent \
+          || (echo "Execution of package source for ${pkg} failed"; exit 1)
+      mv .RData ${lib}/${pkg}/R/all.rda
+      mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
+      if test -s INSTALL.R; then cp INSTALL.R ${lib}/${pkg}/R/${pkg}
+      else
+        cat > ${lib}/${pkg}/R/${pkg} <<EOF
 .First.lib <- function(libname, pkgname) {
   fullName <- paste("package", pkgname, sep=":")
   myEnv <- pos.to.env(match(fullName, search()))
@@ -345,16 +352,16 @@ do_install () {
   rm(.First.lib, envir = myEnv)
   load(dataFile, myEnv)
   if(exists(".First.lib", envir = myEnv, inherits = FALSE)) {
-   f <- get(".First.lib", envir = myEnv, inherits = FALSE)
-   if(is.function(f))
-     f(libname, pkgname)
-   else
-     stop(paste("package \"", pkgname, "\"has a non-function .First", sep=""))
+    f <- get(".First.lib", envir = myEnv, inherits = FALSE)
+    if(is.function(f))
+      f(libname, pkgname)
+    else
+      stop(paste("package \"", pkgname, "\"has a non-function .First", sep=""))
   }
- }
+}
 EOF
-     fi
-   fi
+      fi
+    fi
 
     for f in COPYING INDEX; do
       if test -f ${f}; then cp ${f} ${lib}/${pkg}; fi
@@ -368,8 +375,8 @@ EOF
     fi
     ## copy DESCRIPTION file and remove blank lines
     if test -f DESCRIPTION; then
-      ${PERL} -ne 'print unless /^\s*$/;' DESCRIPTION \
-        > ${lib}/${pkg}/DESCRIPTION;
+      cat DESCRIPTION | sed '/^[	]*$/d;' \
+	> ${lib}/${pkg}/DESCRIPTION
     fi
     ## stamp DESCRIPTION with build information
     echo "Built: R" ${R_VERSION}\;  ${R_PLATFORM}\;  `date` \
@@ -424,7 +431,6 @@ EOF
     cp -r . ${lib}/${pkg}
   fi
 
-  (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)  
   chmod -R a+r ${lib}/${pkg}
 
   echo " DONE (${pkg})"
