@@ -14,8 +14,8 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
 	$(TESTsrc-strict-1) $(TESTsrc-strict-1:.R=.Rout.save) \
 	$(TESTsrc-sloppy-1) $(TESTsrc-sloppy-1:.R=.Rout.save) \
-	make-isas-tests.R isas-tests.Rout.save \
-	make-no-segfault.R
+	isas-tests.Rin isas-tests.Rout.save \
+	no-segfault.Rin
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
@@ -40,21 +40,15 @@ TESTsrc-sloppy-auto = \
 
 TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
 TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)
-# These two "hand made":
-#TESTsrc-Rdiff = $(TESTsrc-strict) $(TESTsrc-sloppy-1)
-#TESTsrc-NO-diff = no-segfault.R
-
-TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
 TESTsrc-auto = $(TESTsrc-strict-auto) $(TESTsrc-sloppy-auto)
+TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
 
 TESTout-strict = $(TESTsrc-strict:.R=.Rout)
 TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
 TESTout = $(TESTsrc:.R=.Rout)
-#TESTout-Rdiff = $(TESTsrc-Rdiff:.R=.Rout)
-#TESTout-NO-diff = $(TESTsrc-NO-diff:.R=.Rout)
 
 .SUFFIXES:
-.SUFFIXES: .R .Rout
+.SUFFIXES: .R .Rin .Rout
 
 all: Makefile test-All
 
@@ -73,7 +67,8 @@ Makedeps: Makefile
 	@touch $@
 FORCE:
 
-%.R : $(srcdir)/make-%.R stamp-R
+.Rin.R: stamp-R
+	@echo "creating \`$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
