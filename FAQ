@@ -214,7 +214,7 @@ modify the R source code archive.  The group currently consists of Doug
 Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
 Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
 Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
-Duncan Temple Lang, and Luke Tierney.
+Duncan Temple Lang, Luke Tierney, and Simon Urbanek.
 
    R has a home page at `http://www.R-project.org/'.  It is free software
 distributed under a GNU-style copyleft, and an official part of the GNU
@@ -1267,6 +1267,11 @@ distributions of R.)
 *AnalyzeFMRI*
      Functions for I/O, visualisation and analysis of functional Magnetic
      Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
+
+*BHH2*
+     Functions and data sets reproducing some examples in "Statistics for
+     Experimenters II" by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
+     2005, John Wiley and Sons.
 
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
