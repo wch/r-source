@@ -1,5 +1,5 @@
-\name{grid.current.viewport}
-\alias{grid.current.viewport}
+\name{current.viewport}
+\alias{current.viewport}
 \title{Get the Default Grid Viewport}
 \description{
   Returns the viewport that Grid is going to draw into.
