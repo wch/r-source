@@ -182,15 +182,6 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 		df.residual = n - z$rank))
 }
 
-print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
-{
-	cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
-	cat("Coefficients:\n")
-	print(coef(x))
-	cat("\n")
-	invisible(x)
-}
-
 summary.lm <- function (object, correlation = FALSE)
 {
 	z <- .Alias(object)
@@ -246,6 +237,15 @@ summary.lm <- function (object, correlation = FALSE)
 	}
 	class(ans) <- "summary.lm"
 	ans
+}
+
+print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
+{
+	cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
+	cat("Coefficients:\n")
+	print(coef(x), digits=digits, print.gap = 2)
+	cat("\n")
+	invisible(x)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
@@ -305,8 +305,8 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 	print(Coefs, quote = FALSE, ...)
 	if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
 
-	cat("\nResidual standard error:", format(signif(x$sigma,
-		digits)), "on", rdf, "degrees of freedom\n")
+	cat("\nResidual standard error:", format(signif(x$sigma, digits)),
+            "on", rdf, "degrees of freedom\n")
 	if (!is.null(x$fstatistic)) {
 		cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
 		cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,d=digits),
@@ -529,7 +529,7 @@ plot.lm <- function(x,...) {
   yh<- fitted(x)
   hii <- lm.influence(x)$hat
   if(prod(par("mfcol")) < 2 && interactive()) {
-          op <- par(ask = TRUE); on.exit(par(op))
+	  op <- par(ask = TRUE); on.exit(par(op))
   }
   plot(yh,r, xlab="Fitted values", ylab="Residuals",
        main = paste("Tukey-Anscombe plot of", deparse(x$call)))
