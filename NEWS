@@ -194,6 +194,10 @@ NEW FEATURES
 	but the default remains the opposite of S (records can cross
 	line boundaries by default).
 
+    o	If not explicitly given a library tree to install to or remove
+	from, respectively, R CMD INSTALL and R CMD REMOVE now operate
+	on the first directory given in `R_LIBS' if this is set and 
+	non-null, and the default library otherwise.
 
 
 BUG FIXES

@@ -30,7 +30,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 okp <- p == foundpkgs[, 1]
                 if(length(okp) > 0){
                     cmd <- paste(file.path(R.home(),"bin","R"),
-                                 "INSTALL -l", lib,
+                                 "CMD INSTALL -l", lib,
                                  foundpkgs[okp, 2])
                     status <- system(cmd)
                     if(status>0){

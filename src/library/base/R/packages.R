@@ -263,13 +263,10 @@ remove.packages <- function(pkgs, lib) {
         }
     }
 
-    ## <FIXME>
-    ## Use the same default for `lib' as in install.packages()?
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
-    ## </FIXME>
 
     paths <- .find.package(pkgs, lib)
     unlink(paths, TRUE)
