@@ -93,15 +93,24 @@ make.search.html <- function(lib.loc=.libPaths())
 
 fixup.package.URLs <- function(pkg, force = FALSE)
 {
+    top <- paste("file:///", gsub("\\\\", "/", R.home()), sep="")
     fixedfile <- file.path(pkg, "fixedHTMLlinks")
-    if(!force && file.exists(fixedfile)) return(TRUE)
+    if(file.exists(fixedfile)) {
+        oldtop <- readLines(fixedfile)
+        if(!force && (length(oldtop)==1) && top == oldtop) return(TRUE)
+        olddoc <- paste(oldtop, "/doc", sep="")
+        oldbase <- paste(oldtop, "/library/base", sep="")
+    } else {
+        olddoc <- "../../../doc"
+        oldbase <- "../../base"
+    }
     if(!file.create(fixedfile)) return(FALSE)
+    cat(top, "\n", sep="", file=fixedfile)
     htmldir <- file.path(pkg, "html")
     if(!file.exists(htmldir)) return(FALSE)
     files <- list.files(htmldir, pattern = "\.html$", full.names = TRUE)
-    doc <- paste("file:///", gsub("\\\\", "/", R.home()), "/doc", sep="")
-    base <- paste("file:///", gsub("\\\\", "/", R.home()),
-                  "/library/base", sep="")
+    doc <- paste(top, "/doc", sep="")
+    base <- paste(top, "/library/base", sep="")
     for(f in files) {
         page <- readLines(f)
         try(out <- file(f, open = "w"))
@@ -109,8 +118,8 @@ fixup.package.URLs <- function(pkg, force = FALSE)
             warning("cannot update", f)
             next
         }
-        page <- gsub("../../../doc", doc, page)
-        page <- gsub("../../base", base, page)
+        page <- gsub(olddoc, doc, page)
+        page <- gsub(oldbase, base, page)
         writeLines(page, out)
         close(out)
     }
