@@ -10,7 +10,7 @@ top_builddir = ..
 include $(top_builddir)/Makeconf
 
 # Everything except CVS and Makefile
-INSTALLFILES = $(srcdir)/*.afm $(srcdir)/*.lt1
+INSTALLFILES = `ls $(srcdir)/*.afm $(srcdir)/*.lt1`
 
 all: R
 
