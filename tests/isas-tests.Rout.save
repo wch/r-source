@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2003-12-04), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2003-12-11), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -284,8 +284,15 @@ IS: [1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
@@ -545,9 +552,15 @@ Error: x is not TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 [1] TRUE
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
@@ -806,8 +819,15 @@ IS: [1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
@@ -1086,8 +1106,15 @@ IS: [1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -1367,8 +1394,15 @@ IS: [1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -1643,8 +1677,15 @@ Error in strptime(tim, format = format) : invalid `x' argument
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -1912,8 +1953,15 @@ IS: [1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -2181,9 +2229,16 @@ Error: x is not TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.dendrogram( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
+> f <- try(as.dist( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
+[1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 [1] TRUE
+> f <- try(as.hclust( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
