@@ -44,7 +44,10 @@ realclean:
 	@echo "Cleaning at top level (+ bin/, library/, cmd/, doc/)"
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
+	@-rm -f Makefrag.f77
 	@-rm -f cmd/fwf2table
+	@-rm -f doc/keyword-test
+	@-rm -f doc/manual/lib2tex
 	@-rm -f doc/manual/pkg-*
 	@-rm -f doc/html/packages* doc/html/function*
 	@cd tests; $(MAKE) $@

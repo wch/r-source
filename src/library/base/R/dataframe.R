@@ -19,6 +19,8 @@ row.names.default <- function(x) attr(x,"row.names")
   }
   x
 }
+"row.names<-.default" <- function(x, value)
+    "row.names<-.data.frame"(as.data.frame(x),value)
 
 "is.na.data.frame" <- function (x)
 {
@@ -132,7 +134,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 }
 
 as.data.frame.ts <-
-function(x, row.names=NULL, optional=F)
+function(x, row.names=NULL, optional=FALSE)
 {
   if(is.matrix(x)) as.data.frame.matrix(x, row.names, optional)
   else as.data.frame.vector(x, row.names, optional)
@@ -855,10 +857,10 @@ Ops.data.frame <- function(e1, e2 = NULL)
   rclass <- !unary && (nchar(.Method[2]) > 0)
   value <- list()
   ## set up call as op(left, right)
-  f <- sys.call()
-  f[[1]] <- as.name(.Generic)
-  f[[2]] <- as.name("left")
-  if(!unary) f[[3]] <- as.name("right")
+  FUN <- get(.Generic, envir = sys.frame(sys.parent()),mode="function")
+  f <- if (unary) 
+    quote(FUN(left))
+  else quote(FUN(left, right))
   lscalar <- rscalar <- FALSE
   if(lclass && rclass) {
     rn <- row.names(e1)

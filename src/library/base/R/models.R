@@ -74,7 +74,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     data <- as.data.frame(data)
   new.specials <- unique(c(specials, "offset"))
   tmp <- .Internal(terms.formula(x, new.specials, abb, data, keep.order))
-  # need to fix up . in formulae in R
+  ## need to fix up . in formulae in R
   terms <- fixFormulaObject(tmp)
   attributes(terms) <- attributes(tmp)
   offsets <- attr(terms, "specials")$offset
@@ -146,11 +146,11 @@ na.omit <- function(frame)
 ##-	rval
 ##- }
 
-model.frame <- function(x, ...)	UseMethod("model.frame")
+model.frame <- function(formula, ...)	UseMethod("model.frame")
 
 model.frame.default <-
 function(formula, data = NULL, subset=NULL, na.action = na.fail,
-         drop.unused.levels = F, xlev = NULL,...)
+	 drop.unused.levels = FALSE, xlev = NULL,...)
 {
 	if(missing(formula)) {
 		if(!missing(data) && inherits(data, "data.frame") &&
@@ -187,22 +187,22 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail,
   if(length(xlev) > 0) {
     for(nm in names(xlev))
       if(!is.null(xl <- xlev[[nm]])) {
-        xi <- data[[nm]]
-        if(is.null(nxl <- levels(xi)))
-          warning("variable", nm, "is not a factor")
-        else {
-          xi <- xi[, drop=T] # drop unused levels
-          if(any(m <- is.na(match(nxl, xl))))
-            stop("factor", nm, "has new level(s)", nxl[m])
-          data[[nm]] <- factor(xi, levels=xl)
-        }
+	xi <- data[[nm]]
+	if(is.null(nxl <- levels(xi)))
+	  warning("variable", nm, "is not a factor")
+	else {
+	  xi <- xi[, drop= TRUE] # drop unused levels
+	  if(any(m <- is.na(match(nxl, xl))))
+	    stop("factor", nm, "has new level(s)", nxl[m])
+	  data[[nm]] <- factor(xi, levels=xl)
+	}
       }
   } else if(drop.unused.levels) {
     for(nm in names(data)) {
       x <- data[[nm]]
       if(is.factor(x) &&
-         length(unique(x)) < length(levels(x)))
-        data[[nm]] <- data[[nm]][, drop = T]
+	 length(unique(x)) < length(levels(x)))
+	data[[nm]] <- data[[nm]][, drop = TRUE]
     }
   }
   data
@@ -221,11 +221,17 @@ model.offset <- function(x) {
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
 model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
-                                 contrasts.arg = NULL, xlev = NULL)
+				 contrasts.arg = NULL, xlev = NULL)
 {
  t <- terms(formula)
  if (is.null(attr(data, "terms")))
      data <- model.frame(formula, data, xlev=xlev)
+ else {
+   reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+   if (any(is.na(reorder)))
+     stop("model frame and formula mismatch in model.matrix()")
+   data <- data[,reorder, drop=FALSE]
+ }
  contr.funs <- as.character(.Options$contrasts)
  isF <- sapply(data, is.factor)[-1]
  isOF <- sapply(data, is.ordered)
@@ -233,8 +239,8 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
  for(nn in namD[-1][isF]) # drop response
    if(is.null(attr(data[[nn]], "contrasts")))
      contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
-# it might be safer to have numerical contrasts:
-#        get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
+## it might be safer to have numerical contrasts:
+##	  get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
  if (!is.null(contrasts.arg) && is.list(contrasts.arg)) {
    if (is.null(namC <- names(contrasts.arg)))
      stop("invalid contrasts argument")
@@ -244,9 +250,6 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
      else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
    }
  }
-# reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
-# if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
-# data <- data[,reorder, drop=FALSE]
  ans <- .Internal(model.matrix(t, data))
  cons <- if(any(isF))
    lapply(data[-1][isF], function(x) attr(x,  "contrasts"))
@@ -254,7 +257,7 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
  attr(ans, "contrasts") <- cons
  ans
 }
-model.response <- function (data, type = "any") 
+model.response <- function (data, type = "any")
 {
   if (attr(attr(data, "terms"), "response")) {
     if (is.list(data) | is.data.frame(data)) {
@@ -264,33 +267,33 @@ model.response <- function (data, type = "any")
       if (is.matrix(v) && ncol(v) == 1) dim(v) <- NULL
       rows <- attr(data, "row.names")
       if (nrows <- length(rows)) {
-        if (length(v) == nrows) names(v) <- rows
-        else if (length(dd <- dim(v)) == 2) 
-          if (dd[1] == nrows && !length((dn <- dimnames(v))[[1]])) 
-            dimnames(v) <- list(rows, dn[[2]])
+	if (length(v) == nrows) names(v) <- rows
+	else if (length(dd <- dim(v)) == 2)
+	  if (dd[1] == nrows && !length((dn <- dimnames(v))[[1]]))
+	    dimnames(v) <- list(rows, dn[[2]])
       }
       return(v)
     } else stop("invalid data argument")
   } else return(NULL)
 }
-#model.response <- function (data, type = "any")
-#{
-#	if (attr(attr(data, "terms"), "response")) {
-#		if (is.list(data) | is.data.frame(data)) {
-#			v <- data[[1]]
-#			if (type == "numeric" | type == "double") {
-#				storage.mode(v) <- "double"
-#			}
-#			else if (type != "any")
-#				stop("invalid response type")
-#			if (is.matrix(v) && ncol(v) == 1)
-#				dim(v) <- NULL
-#			return(v)
-#		}
-#		else stop("invalid data argument")
-#	}
-#	else return(NULL)
-#}
+##model.response <- function (data, type = "any")
+##{
+##	if (attr(attr(data, "terms"), "response")) {
+##		if (is.list(data) | is.data.frame(data)) {
+##			v <- data[[1]]
+##			if (type == "numeric" | type == "double") {
+##				storage.mode(v) <- "double"
+##			}
+##			else if (type != "any")
+##				stop("invalid response type")
+##			if (is.matrix(v) && ncol(v) == 1)
+##				dim(v) <- NULL
+##			return(v)
+##		}
+##		else stop("invalid data argument")
+##	}
+##	else return(NULL)
+##}
 
 model.extract <- function (frame, component)
 {

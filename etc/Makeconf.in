@@ -1,3 +1,5 @@
+# @configure_input@
+
 CC=@CC@
 CFLAGS=@CFLAGS@ @CPICFLAGS@ -I$(RHOME)/include
 FC=@FC@

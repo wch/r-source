@@ -30,12 +30,13 @@
     }
 
   In addition, a large group of individuals has contributed to \R by
-  sending code and bug reports, notably
+  donating code, bug reports and documentation, notably
 
   Valerio Aimalea,
   Ben Bolker,
   Goran Brostrom,
   Paul Gilbert,
+  Robert King,
   Philippe Lambert,
   Patrick Lindsey,
   Jim Lindsey,

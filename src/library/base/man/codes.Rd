@@ -6,19 +6,44 @@ codes(x) <- value
 }
 \alias{codes}
 \alias{codes.factor}
+\alias{codes.ordered}
 \alias{codes<-}
-\value{
-This (generic) function retrieves the underlying
-integer codes used for the levels of a factor
-and can also be used to reset (a subset of) these codes.
-}
+
+\description{ This (generic) function returns a numeric coding of a
+factor. It can also be used to assign to a factor using the coded
+form. }
+
+\value{ For an ordered factor, it returns the internal coding (1 for
+the lowest group, 2 for the second lowest, etc.). For an unordered
+factor, an alphabetical ordering of the levels is assumed, i.e the
+level that is coded 1 is the one whose name is sorted first according
+to the prevailing collating sequence. }
+
 \seealso{
-\code{\link{factor}}, \code{\link{levels}}, \code{\link{nlevels}}.
+  \code{\link{unclass}} is very similar if applied to factors;
+  \code{\link{factor}}, \code{\link{levels}}, \code{\link{nlevels}}.
 }
 \examples{
+codes(rep(factor(c(20,10)),3))
+
 x <- gl(3,5)
 codes(x)[3] <- 2
-all(unique(codes(x)) == 1:nlevels(x))#- should be true for ALL factors
+x
+
+data(esoph)
+( ag <- esoph$alcgp[12:1] )
+codes(ag)
+
+codes(factor(1:10)) # BEWARE!
 }
+
+\note{The behaviour for unordered factors is dubious, but compatible
+with S version 3. To get the internal coding of a factor, use
+\code{\link{as.integer}}. Note in particular that the codes may not be
+the same in different language locales because of collating
+differences.}
+
 \keyword{category}
 \keyword{classes}
+
+

@@ -1,7 +1,7 @@
 lm <-
 function(formula, data = list(), subset, weights, na.action,
-         method = "qr", model = TRUE, x = FALSE, y = FALSE,
-         qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
+	 method = "qr", model = TRUE, x = FALSE, y = FALSE,
+	 qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
 {
 	ret.x <- x
 	ret.y <- y
@@ -19,12 +19,12 @@ function(formula, data = list(), subset, weights, na.action,
 	else if (method != "qr")
 		warning(paste("method =", method,
 			      "is not supported. Using \"qr\"."))
-        xvars <- as.character(attr(mt, "variables"))[-1]
-        if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
-        if(length(xvars) > 0) {
-          xlev <- lapply(mf[xvars], levels)
-          xlev <- xlev[!sapply(xlev, is.null)]
-        } else xlev <- NULL
+	xvars <- as.character(attr(mt, "variables"))[-1]
+	if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+	if(length(xvars) > 0) {
+	  xlev <- lapply(mf[xvars], levels)
+	  xlev <- xlev[!sapply(xlev, is.null)]
+	} else xlev <- NULL
 
 	if (length(list(...)))
 		warning(paste("Extra arguments", deparse(substitute(...)),
@@ -40,18 +40,20 @@ function(formula, data = list(), subset, weights, na.action,
 		z <- list(coefficients = numeric(0), residuals = y,
 			fitted.values = 0 * y, weights = w, rank = 0,
 			df.residual = length(y))
-		class(z) <- if (is.matrix(y))
-			c("mlm.null", "lm.null", "mlm", "lm")
-		else c("lm.null", "lm")
+		class(z) <-
+		  if (is.matrix(y))
+		    c("mlm.null", "lm.null", "mlm", "lm")
+		  else c("lm.null", "lm")
 	} else {
 		x <- model.matrix(mt, mf, contrasts)
-		z <- if (is.null(w))
+		z <-
+		  if (is.null(w))
 			lm.fit(x, y)
-		else lm.wfit(x, y, w)
+		  else lm.wfit(x, y, w)
 		class(z) <- c(if (is.matrix(y)) "mlm", "lm")
 	}
-        z$contrasts <- attr(x, "contrasts")
-        z$xlevels <- xlev
+	z$contrasts <- attr(x, "contrasts")
+	z$xlevels <- xlev
 	z$call <- match.call()
 	z$terms <- mt
 	if (model)
@@ -83,8 +85,8 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 	coef <- z$coefficients
 	pivot <- z$pivot
 	r1 <- 1:z$rank
-        dn <- colnames(x)
-        nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+	dn <- colnames(x)
+	nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
 	if (is.matrix(y)) {
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
@@ -142,8 +144,8 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	coef <- z$coefficients
 	pivot <- z$pivot
 	r1 <- 1:z$rank
-        dn <- colnames(x)
-        nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+	dn <- colnames(x)
+	nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
 	if (is.matrix(y)) {
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
@@ -252,8 +254,7 @@ summary.lm <- function (object, correlation = FALSE)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
-	...)
+	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,	...)
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -273,8 +274,8 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 		print(resid, digits = digits, ...)
 	}
 	if (nsingular <- df[3] - df[1])
-		cat("\nCoefficients: (", nsingular, " not defined because of singularities)\n",
-			sep = "")
+		cat("\nCoefficients: (", nsingular,
+		    " not defined because of singularities)\n", sep = "")
 	else cat("\nCoefficients:\n")
 
 	print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
@@ -452,7 +453,7 @@ predict.lm <- function(object, newdata,
   if(missing(newdata)) X <- model.matrix(object)
   else
     X <- model.matrix(delete.response(terms(object)), newdata,
-                      contrasts = object$contrasts, xlev = object$xlevels)
+		      contrasts = object$contrasts, xlev = object$xlevels)
   n <- NROW(object$qr$qr)
   p <- object$rank
   p1 <- 1:p
@@ -483,7 +484,7 @@ predict.lm <- function(object, newdata,
   {
     tfrac <- qt((1 - level)/2,df)
     w <- tfrac * switch(interval,
-      	confidence=sqrt(ip),
+	confidence=sqrt(ip),
 	prediction=sqrt(ip+res.var)
     )
     predictor<-cbind(predictor,predictor+

@@ -1,3 +1,29 @@
+r-base (0.62.3-0) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 19 Aug 1998 10:38:08 -0500
+
+r-base (0.62.2-2) unstable; urgency=low
+
+  * Cleaned up the build process by removing redundancies in config.site
+    and debian/rules.
+  * Changed C compiler to gcc instead of egcs.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri, 14 Aug 1998 13:52:34 -0500
+
+r-base (0.62.2-1) unstable; urgency=low
+
+  * Re-configured to include the readline library
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri, 14 Aug 1998 11:38:35 -0500
+
+r-base (0.62.2-0) unstable; urgency=low
+
+  * New upstream version
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Tue, 14 Jul 1998 13:36:15 -0500
+
 r-base (0.62.1-2) unstable; urgency=low
 
   * Corrected definition of RHOME in /usr/bin/R (bug#23621)

@@ -9,7 +9,6 @@
 .NotYetUsed(arg)
 
 symbols(\dots)
-effects.lm(\dots)
 plot.lm(\dots)
 }
 \arguments{
@@ -18,7 +17,6 @@ plot.lm(\dots)
 %------ PLEASE: put \alias{.} here for  EACH !
 \alias{symbols}
 \alias{plot.lm}
-\alias{effects.lm}
 \description{
   In order to pinpoint missing functionality, the \R core team uses
   these functions for missing \R functions and not yet used arguments of

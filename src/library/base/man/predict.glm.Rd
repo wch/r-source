@@ -37,8 +37,8 @@ predict.glm(object, newdata=NULL, type=c("link", "response"),
 \author{B.D. Ripley}
 \note{This method is also currently used for objects of
   class \code{"survreg"} (parametric survival fits from package
-  \code{survival4} and possibly others. The assumptions made by
-  \predict.glm} may not always be right for such objects.}
+  \code{survival4}) and possibly others. The assumptions made by
+  \code{predict.glm} may not always be right for such objects.}
 
 \seealso{\code{\link{glm}}}
 
@@ -55,10 +55,10 @@ plot(c(1,32), c(0,1), type="n", xlab="dose",
    ylab="prob", log="x")
 text(2^ldose, numdead/20,as.character(sex))
 ld <- seq(0, 5, 0.1)
-lines(2^ld, predict(budworm.lg, data.frame(ldose=ld, 
+lines(2^ld, predict(budworm.lg, data.frame(ldose=ld,
    sex=factor(rep("M", length(ld)), levels=levels(sex))),
    type="response"))
-lines(2^ld, predict(budworm.lg, data.frame(ldose=ld, 
+lines(2^ld, predict(budworm.lg, data.frame(ldose=ld,
    sex=factor(rep("F", length(ld)), levels=levels(sex))),
    type="response"))
 }

@@ -1,7 +1,7 @@
-"apply"<-
+apply <-
 function(X, MARGIN, FUN, ...)
 {
-	# ENSURE THAT FUN IS A FUNCTION
+	## Ensure that FUN is a function
 
 	if(is.character(FUN))
 		FUN <- get(FUN, mode = "function")
@@ -12,28 +12,28 @@ function(X, MARGIN, FUN, ...)
 		else stop(paste("\"", f, "\" is not a function", sep = ""))
 	}
 
-	# ENSURE THAT X IS AN ARRAY OBJECT
+	## Ensure that X is an array object
 
 	d <- dim(X)
 	dl <- length(d)
-	ds <- 1:length(d)
+	ds <- 1:dl
 	if(dl == 0)
 		stop("dim(X) must have a positive length")
 	if(length(class(X)) > 0)
 		X <- if(dl == 2) as.matrix(X) else as.array(X)
 	dn <- dimnames(X)
 
-	# EXTRACT THE MARGINS AND ASSOCIATED DIMNAMES
+	## Extract the margins and associated dimnames
 
-	s.call <- (1:length(d))[-MARGIN]
-	s.ans <- (1:length(d))[MARGIN]
+	s.call <- ds[-MARGIN]
+	s.ans <- ds[MARGIN]
 	d.call <- d[-MARGIN]
 	d.ans <- d[MARGIN]
 	dn.call <- dn[-MARGIN]
 	dn.ans <- dn[MARGIN]
-	# dimnames(X) <- NULL
+	## dimnames(X) <- NULL
 
-	# DO THE CALLS
+	## do the calls
 
 	newX <- aperm(X, c(s.call, s.ans))
 	dim(newX) <- c(prod(d.call), prod(d.ans))
@@ -42,7 +42,7 @@ function(X, MARGIN, FUN, ...)
 	for(i in 1:d2)
 		ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
 
-	# ANSWER DIMS AND DIMNAMES
+	## answer dims and dimnames
 
 	ans.names <- names(ans[[1]])
 	ans.list <- is.recursive(ans[[1]])
@@ -50,7 +50,7 @@ function(X, MARGIN, FUN, ...)
 	if(!ans.list)
 		ans.list <- any(unlist(lapply(ans, length)) != ans.length)
 	if(!ans.list)
-		ans <- unlist(ans, recursive = F)
+		ans <- unlist(ans, recursive = FALSE)
 	if(length(MARGIN) == 1 && length(ans) == d2) {
 		if(length(dn.ans[[1]]) > 0)
 			names(ans) <- dn.ans[[1]]

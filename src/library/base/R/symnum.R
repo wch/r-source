@@ -68,7 +68,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	      ch <- abbreviate(coln, minlength=1)
 	      if(sum(1+nchar(ch)) + max(nchar(coln)) + 1 > .Options[["width"]])
 					#-- would not fit on one line
-		abbreviate(ch, minlength=2, use.classes=F)
+		abbreviate(ch, minlength=2, use.classes=FALSE)
 	      else ch
       }
       else rep("", dim(Scor)[2])

@@ -19,7 +19,7 @@ for i in ${*}; do
   OBJS="${OBJS} ${obj}"
 done
 
-@SHLIBLD@ @SHLIBLDFLAGS@ -o ${lib} ${OBJS}    
+@SHLIBLD@ @SHLIBLDFLAGS@ @FLIBS@ -o ${lib} ${OBJS}
 
 ### Local Variables: ***
 ### mode: sh ***

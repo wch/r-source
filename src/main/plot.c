@@ -543,19 +543,19 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	case 1:
 	    n = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
 	    nint = n / nint + 1;
-	    rng = pow(10.0, (double)nint);
+	    rng = pow(10., (double)nint);
 	    dn = axp[0];
 	    n = 0;
 	    while(dn < umax) {
 		n++;
-		dn = rng * dn;
+		dn *= rng;
 	    }
 	    at = allocVector(REALSXP, n);
 	    dn = axp[0];
 	    n = 0;
 	    while(dn < umax) {
 		REAL(at)[n++] = dn;
-		dn = rng * dn;
+		dn *= rng;
 	    }
 	    break;
 	case 2:
@@ -2020,8 +2020,8 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     while(i < n) {
 	if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
 	    break;
-	if (dd->gp.xlog) REAL(x)[i] = pow(10, REAL(x)[i]);
-	if (dd->gp.ylog) REAL(y)[i] = pow(10, REAL(y)[i]);
+	if (dd->gp.xlog) REAL(x)[i] = pow(10., REAL(x)[i]);
+	if (dd->gp.ylog) REAL(y)[i] = pow(10., REAL(y)[i]);
 	i += 1;
     }
     GMode(dd, 0);
@@ -2051,18 +2051,23 @@ double hypot(double x, double y)
 
 SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, x, y, l, ind, pos;
+    SEXP ans, x, y, l, ind, pos, Offset;
     double xi, yi, xp, yp, d, dmin, offset;
-    int i, imin, k, n;
+    int i, imin, k, n, npts, plot;
     DevDesc *dd = CurrentDevice();
 
     GCheckState(dd);
 
     checkArity(op, args);
     x = CAR(args);
-    y = CADR(args);
-    l = CADDR(args);
-    if(!isReal(x) || !isReal(y) || !isString(l))
+    args = CDR(args); y = CAR(args);
+    args = CDR(args); l = CAR(args);
+    args = CDR(args); npts = asInteger(CAR(args));
+    args = CDR(args); plot = asLogical(CAR(args));
+    args = CDR(args); Offset = CAR(args);
+    if(npts <= 0 || npts == NA_INTEGER)
+	error("invalid number of points in identify\n");
+    if(!isReal(x) || !isReal(y) || !isString(l) || !isReal(Offset))
 	errorcall(call, "incorrect argument type\n");
     if(LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
 	errorcall(call, "different argument lengths\n");
@@ -2072,7 +2077,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	return NULL;
     }
 
-    offset = GConvertXUnits(0.5, CHARS, INCHES, dd);
+    offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
     PROTECT(ind = allocVector(LGLSXP, n));
     PROTECT(pos = allocVector(INTSXP, n));
     for(i=0 ; i<n ; i++)
@@ -2080,7 +2085,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 
     k = 0;
     GMode(dd, 2);
-    while(k < n) {
+    while(k < npts) {
 	if(!GLocator(&xp, &yp, INCHES, dd)) break;
 	dmin = DBL_MAX;
 	imin = -1;
@@ -2109,14 +2114,14 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(xp >= xi) {
 		    INTEGER(pos)[imin] = 4;
 		    xi = xi+offset;
-		    GText(xi, yi, INCHES,
+		    if(plot) GText(xi, yi, INCHES,
 			  CHAR(STRING(l)[imin]), 0.0,
 			  dd->gp.yCharOffset, 0.0, dd);
 		}
 		else {
 		    INTEGER(pos)[imin] = 2;
 		    xi = xi-offset;
-		    GText(xi, yi, INCHES,
+		    if(plot) GText(xi, yi, INCHES,
 			  CHAR(STRING(l)[imin]), 1.0,
 			  dd->gp.yCharOffset, 0.0, dd);
 		}
@@ -2125,14 +2130,14 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(yp >= yi) {
 		    INTEGER(pos)[imin] = 3;
 		    yi = yi+offset;
-		    GText(xi, yi, INCHES,
+		    if(plot) GText(xi, yi, INCHES,
 			  CHAR(STRING(l)[imin]), 0.5,
 			  0.0, 0.0, dd);
 		}
 		else {
 		    INTEGER(pos)[imin] = 1;
 		    yi = yi-offset;
-		    GText(xi, yi, INCHES,
+		    if(plot) GText(xi, yi, INCHES,
 			  CHAR(STRING(l)[imin]), 0.5,
 			  1-(0.5-dd->gp.yCharOffset),
 			  0.0, dd);

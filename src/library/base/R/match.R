@@ -2,7 +2,7 @@ match <- function(x, table, nomatch=NA)
   .Internal(match(as.character(x), as.character(table), nomatch))
 
 match.call <-
-function(definition=NULL, call=sys.call(sys.parent()), expand.dots=T)
+function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)
         .Internal(match.call(definition,call,expand.dots))
 
 pmatch <-

@@ -38,8 +38,10 @@ codes.factor <- function(x)
 {
   ## This is the S-plus semantics.
   ## The deeper meaning? Search me...
-  order(levels(x))[x]
+  rank(levels(x))[x]
 }
+
+codes.ordered <- .Alias(as.integer)
 
 "codes<-" <- function(x, value)
 {
@@ -48,8 +50,8 @@ codes.factor <- function(x)
   else if ( length(x) != length(value) )
     stop("Length mismatch in \"codes<-\"")
   ## S-plus again...
-  value<-rank(levels(x))[value]
-  attributes(value)<-attributes(x)
+  if ( !is.ordered(x) ) value <- order(levels(x))[value]
+  attributes(value) <- attributes(x)
   value
 }
 
@@ -101,7 +103,7 @@ Ops.factor <- function(e1, e2)
   value
 }
 
-"[.factor" <- function(x, i, drop=F)
+"[.factor" <- function(x, i, drop=FALSE)
 {
   y <- NextMethod("[")
   class(y)<-class(x)

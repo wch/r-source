@@ -87,8 +87,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
   invisible(x)
 }
 
-summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE,
-                        signif.stars= .Options$show.signif.stars, ...)
+summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
 {
   asgn <- object$assign[object$qr$pivot[1:object$rank]] # changed
   nterms <- max(asgn)+1
@@ -134,11 +133,6 @@ summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE,
     TT[nterms] <- TP[nterms] <- NA
     x$"F Value" <- TT
     x$"Pr(F)" <- TP
-    if(signif.stars)
-      x$Signif <- c(symnum(TP[ - nterms], corr = FALSE,
-                           cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
-                           symbols = c("***", "**", "*", ".", " ")),
-                    "") ## 'nterms' ~= 'Residuals' have no P-value
   }
   class(x) <- c("anova", "data.frame")
   row.names(x) <- format(nmrows)

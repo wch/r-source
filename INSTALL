@@ -76,6 +76,10 @@ and can be set by running configure with the option
 The prefix of the installation directories can also be seen in the
 status message that is displayed at the end of configure.
 
+If you have libraries and header files, e.g. for GNU readline, in
+non-system directories, use the variables LIBS (for libraries) and
+CPPFLAGS (for header files), respectively, to specify these locations.
+
 
 USING FORTRAN
 

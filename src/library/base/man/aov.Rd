@@ -4,6 +4,7 @@
 aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
 }
 \alias{aov}
+\alias{print.aov}
 \arguments{
  \item{formula}{A formula specifying the model.}
  \item{data}{A data frame in which the variables specified in the
@@ -17,12 +18,12 @@ aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
    or \code{na.action}.}
 }
 \description{
- This provides a wrapper to \code{lm} for fitting linear models to
+ This provides a wrapper to \code{\link{lm}} for fitting linear models to
  balanced or unbalanced experimental designs. The call to \code{lm} sets
  \code{singular.ok} to \code{TRUE} to allow for aliased effects.
 
- The main difference from \code{lm} is in the way \code{print},
- \code{summary} and so on handle the fit: this is expressed in the
+ The main difference from \code{lm} is in the way \code{\link{print}},
+ \code{\link{summary}} and so on handle the fit:  this is expressed in the
  traditional language of the analysis of variance rather than of linear
  models.
 }

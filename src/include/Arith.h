@@ -22,21 +22,25 @@
 
 #include "Platform.h"
 #ifdef Macintosh
-#include <fp.h>
+# include <fp.h>
 #else
-#include <math.h>
-#ifndef HAVE_FINITE
-#ifndef finite /* Do not declare if macro! */
-int finite(double);
-#endif
-#endif
+# include <math.h>
+# ifndef HAVE_FINITE
+#  ifndef finite /* Do not declare if macro! */
+#   ifdef isfinite/* HPUX math.h */
+#     define finite(x)	 isfinite(x)
+#   else
+      int finite(double);
+#   endif
+#  endif
+# endif
 #endif
 
 extern double	R_tmp;			/* Used in NaN/Inf checks */
 extern double	R_NaN;			/* IEEE NaN or -DBL_MAX */
 extern double	R_PosInf;		/* IEEE Inf or DBL_MAX */
 extern double	R_NegInf;		/* IEEE -Inf or -DBL_MAX */
-extern int   	R_NaInt;		/* NA_INTEGER etc */
+extern int	R_NaInt;		/* NA_INTEGER etc */
 extern double	R_NaReal;		/* NA_REAL */
 
 #ifdef Win32
@@ -54,9 +58,20 @@ extern int finite(double);
 #else
 
 #define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
-#define FINITE(x)		((x)!=R_NaReal)
-#define ISNAN(x)		((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
-#define ISNA(x)			((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
+
+#ifndef HAVE_FINITE
+#define FINITE(x)               ((x)!= R_NaReal)
+#else
+#define FINITE(x)		finite(x)
+#endif
+
+#ifndef HAVE_ISNAN
+#define ISNAN(x)                ((x)==R_NaReal)
+#else
+#define ISNAN(x)                (isnan(x) || (x)==R_NaReal)
+#endif
+
+#define ISNA(x)                 ((x)==R_NaReal)
 /* never used. in HP-UX' c89 "NAN" is for a double const. :
  * #define NAN(x)			ISNAN(x)
  */

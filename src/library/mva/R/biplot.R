@@ -3,8 +3,8 @@
 #
 biplot <- function(x, ...) UseMethod("biplot")
 
-biplot.default <- 
-function(x, y, var.axes = T, col, cex = rep(par("cex"), 2), 
+biplot.default <-
+function(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
 	xlabs = NULL, ylabs = NULL, expand=1, xlim = NULL, ylim = NULL,
          arrow.len = 0.1, ...)
 {
@@ -36,8 +36,8 @@ function(x, y, var.axes = T, col, cex = rep(par("cex"), 2),
   rangx2 <- unsigned.range(x[, 2])
   rangy1 <- unsigned.range(y[, 1])
   rangy2 <- unsigned.range(y[, 2])
-  
-  if(missing(xlim) && missing(ylim)) 
+
+  if(missing(xlim) && missing(ylim))
     xlim <- ylim <- rangx1 <- rangx2 <- range(rangx1, rangx2)
   else if(missing(xlim)) xlim <- rangx1 else ylim <- rangx2
   ratio <- max(rangy1/rangx1, rangy2/rangx2)/expand
@@ -45,8 +45,8 @@ function(x, y, var.axes = T, col, cex = rep(par("cex"), 2),
   oldpar <- par(pty = "s")
   plot(x, type = "n", xlim = xlim, ylim = ylim, col = col[1], ...)
   text(x, xlabs, cex = cex[1], col = col[1], ...)
-  par(new = T)
-  plot(y, axes = F, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
+  par(new = TRUE)
+  plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
        xlab = "", ylab = "", col = col[1], ...)
   axis(3, col = col[2])
   axis(4, col = col[2])

@@ -63,14 +63,53 @@ NEW FEATURES
 
     o   new class "mlm" for multivariate "lm", predict.mlm to go with it
 
-    o   New generic function preplot().
+    o   "Details" section added to .Rd format
 
-    o	A new R BATCH interface for non-interactive execution.
+    o   R_PRINTCMD and R_PAPERSIZE can now be set via users' environment,
+	overriding setting in startup script.
 
-    o   Added `offline' argument to help() for producing hardcopy via
-	latex and dvips.
+    o   enhanced identify() 
+
+    o   new function print.coefmat() 
+
+    o   added unix() as .Deprecated("system")
+
+    o   date() replacing system.date()
+
 
 BUG FIXES
+
+    o   substitute would re-substitute after expanding ... 
+
+    o   indexing modified object in some cases
+
+    o   sweep should work again on dataframes
+
+    o   minor changes in aov()
+
+    o	builds should now actually work on systems that do not add 
+	underscores to Fortran symbols
+
+    o   biplot[.default]() was redundant in "base" package; now only in "mva".
+
+    o	unix(..) now helps the user to find  system(..) instead.
+
+    o   apropos("[") and methods("[") now both work (even though "[" is not
+	a valid regular expression).
+
+    o   row.names<-.default now exists. Converts object to data
+        frame and then adds row names
+
+    o	codes() now distinguishes between ordered and unordered factors
+
+    o	codes() had *opposite* semantics of Splus. Now it's the same.
+
+    o   replicating factors now yields factors (again)
+
+    o   print.summary.xxx  functions more consistent, using new function
+	print.coefmat().
+
+    o   Changed many `T' to `TRUE'  and  `F' to `FALSE' in the base package.
 
     o   binary operation on 1x1 matrix lost dimension
 
@@ -88,12 +127,12 @@ BUG FIXES
 
     o   Rownames on contrast matrices
 
-    o   factor() and [.factor preserves class "ordered" 
+    o   factor() and [.factor preserves class "ordered"
 
     o   Code rearrangement in predict.lm (avoid unnecessary computation)
         + let rownames through on predictions
 
-    o   model.matrix.default: Initial code to define model frame 
+    o   model.matrix.default: Initial code to define model frame
         simplified considerably after defaulting data argument to
         sys.frame(sys.parent()).  This also removes the problem where
         data.frame mangles I(x^2) and similar names, so that the
@@ -103,6 +142,12 @@ BUG FIXES
 	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be
 	linked against these libraries.
 
+    o   Modified makefiles so configure followed by "make distclean"
+        should restore the source tree to its original form.
+
+    o   a leftover "colours <- colors" caused trouble when collating
+	sequence changes caused files to go into the "base" file in a 
+	different order
 
 		CHANGES IN R VERSION 0.62.2
 
@@ -149,7 +194,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   abbreviate() now always retains the first letter. 
+    o   abbreviate() now always retains the first letter.
 
     o   attr() partial matches for attribute name.
 
@@ -157,7 +202,7 @@ BUG FIXES
 
     o   binomial() accepts factor responses.
 
-    o   cbind() works with data frames. 
+    o   cbind() works with data frames.
 
     o   contrasts() gives simpler labels (like S) for factors with
         two levels.
@@ -174,7 +219,7 @@ BUG FIXES
     o   density() works correctly if from= or to= are used.
             n= can now take any value, not just a large power of 2.
 
-    o   expand.grid() now accepts more than two arguments, 
+    o   expand.grid() now accepts more than two arguments,
         or a list of factors.
 
     o   factor() and ordered() handle their levels argument better.
@@ -198,14 +243,14 @@ BUG FIXES
 
     o   terms.formula() and update.formula() now resolve `.' in formulae
         and tidy up `(a + b) - b' etc.
-    
+
     o   ... is now passed down correctly to functions inside functions.
 
     o   save.image didn't work (Martyn Plummer)
 
     o   abs() instead of fabs() in seq.c crashed R on Digital Unix
 
-    o   model.matrix() gagged on variables with complicated names 
+    o   model.matrix() gagged on variables with complicated names
 
     o   saturated models acting up in glm
 

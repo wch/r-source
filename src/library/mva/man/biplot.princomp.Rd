@@ -47,14 +47,11 @@ correspond to \code{pc.biplot = T}.
 Gabriel, K. R. (1971).
 The biplot graphical display of matrices with applications to principal
 component analysis.
-\emph{Biometrika}
-\bold{58} 453-467.
-
+\emph{Biometrika}, \bold{58} 453-467.
 
 Gabriel, K. R. and Odoroff, C. L. (1990).
 Biplots in biomedical research.
-\emph{Statistics in Medicine.}
-\bold{9}  469-485.
+\emph{Statistics in Medicine}, \bold{9} 469-485.
 }
 \seealso{
 \code{\link{biplot}}, \code{\link{princomp}}.

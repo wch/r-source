@@ -6,8 +6,8 @@ package=r-base
 
 build:
 	dh_testdir
-	R_PAPERSIZE=letter CC=egcc CFLAGS="-Wall -g -O2" FFLAGS="-Wall -g -O2"\
-	 ./configure --prefix=/usr
+	R_PAPERSIZE=letter CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
+	 SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr --with-g77
 	make 
 	make help
 	make html
