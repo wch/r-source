@@ -10,15 +10,11 @@ subdir = src/appl
 
 include $(top_builddir)/Makeconf
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir); \
-	       ls COPYRIGHT COPYRIGHT.ftn Makefile.in ROUTINES *.[cfh])
-
 ## All functions/subroutines to be called via .C() or .Fortran() must
 ## also have an entry in `./ROUTINES' in order to be ``pre-dyn.loaded'';
 ## see `../unix/dynload.c'.
 
-SRCS_C = \
+SOURCES_C = \
 	S_compat.c \
 	approx.c \
 	bakslv.c \
@@ -42,49 +38,53 @@ SRCS_C = \
 	strsignif.c \
 	tabulate.c \
 	zeroin.c
-DEPS = $(SRCS_C:.c=.d)
-OBJS = $(SRCS_C:.c=.o) \
-	$(BLAS) \
-	ch2inv.o \
-	chol.o \
-	dpbfa.o \
-	dpbsl.o \
-	dpoco.o \
-	dpodi.o \
-	dpofa.o \
-	dposl.o \
-	dqrdc.o \
-	dqrdc2.o \
-        dqrls.o \
-	dqrsl.o \
-	dqrutl.o \
-	dsvdc.o \
-	dtrco.o \
-	dtrsl.o \
-	eigen.o \
-	fmin.o \
-	lminfl.o \
-	uncmin.o
+SOURCES_F = \
+	ch2inv.f \
+	chol.f \
+	dpbfa.f \
+	dpbsl.f \
+	dpoco.f \
+	dpodi.f \
+	dpofa.f \
+	dposl.f \
+	dqrdc.f \
+	dqrdc2.f \
+        dqrls.f \
+	dqrsl.f \
+	dqrutl.f \
+	dsvdc.f \
+	dtrco.f \
+	dtrsl.f \
+	eigen.f \
+	fmin.f \
+	lminfl.f \
+	uncmin.f
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = COPYRIGHT COPYRIGHT.ftn Makefile.in README ROUTINES \
+	$(SOURCES_C) $(SOURCES_F) blas.f
 
 LIB = libappl.a
 
 all: Makefile Makedeps R
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(DEPS)
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(DEPENDS)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@cat $(DEPS) >> Makefile
+	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
 
-$(LIB):	$(OBJS)
-	$(AR) cr $(LIB) $(OBJS)
+$(LIB):	$(OBJECTS)
+	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
 mostlyclean: clean

@@ -12,22 +12,14 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir) && ls PSPAPER Makefile.in *.[cfh])
+SOURCES = Rsock.c dataentry.c devPS.c devPicTeX.c devX11.c dynload.c \
+	edit.c rotated.c system.c sock.c
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+HEADERS = Rsock.h dataentry.h devX11.h rotated.h sock.h
 
-SRCS = \
-	dataentry.c \
-	devPS.c \
-	devPicTeX.c \
-	devX11.c \
-	dynload.c \
-	edit.c \
-	rotated.c \
-	system.c \
-	Rsock.c \
-	sock.c
-DEPS = $(SRCS:.c=.d)
-OBJS = $(SRCS:.c=.o)
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in PSPAPER $(SOURCES) $(HEADERS)
 
 LIB = libunix.a
 
@@ -38,13 +30,13 @@ Makefile: $(srcdir)/Makefile.in \
   ../include/Version.h \
   ../include/FFDecl.h \
   ../include/FFTab.h \
-  $(DEPS)
+  $(DEPENDS)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@cat $(DEPS) >> Makefile
+	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
 R: Makefile
@@ -56,8 +48,8 @@ R: Makefile
 ../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
-$(LIB): $(OBJS)
-	$(AR) cr $(LIB) $(OBJS)
+$(LIB): $(OBJECTS)
+	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
 mostlyclean: clean

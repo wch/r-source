@@ -10,10 +10,7 @@ subdir = src/main
 
 include $(top_builddir)/Makeconf
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfhy])
-
-SRCS = \
+SOURCES = \
 	arithmetic.c \
 	array.c \
 	attrib.c \
@@ -77,8 +74,11 @@ SRCS = \
 	unique.c \
 	util.c \
 	version.c
-DEPS = $(SRCS:.c=.d)
-OBJS = $(SRCS:.c=.o)
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = $(SOURCES) arithmetic.h names.h gram.y
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
 RGNOMELIBS = ../gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
@@ -94,13 +94,13 @@ Makefile: $(srcdir)/Makefile.in \
   ../include/Platform.h \
   ../include/Version.h \
   ../include/FFDecl.h \
-  $(DEPS)
+  $(DEPENDS)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@cat $(DEPS) >> Makefile
+	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
 R: Makefile
@@ -115,16 +115,16 @@ R: Makefile
 ../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
-$(top_builddir)/bin/R.X11: $(OBJS) $(RLIBS) @EXPORTFILE@
+$(top_builddir)/bin/R.X11: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(LDCMD) $(DLLFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
+	$(LDCMD) $(DLLFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
-$(top_builddir)/bin/R.gnome: $(OBJS) $(RGNOMELIBS)
+$(top_builddir)/bin/R.gnome: $(OBJECTS) $(RGNOMELIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(LDCMD) $(DLLFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJS) $(ALL_GNOME_LIBS)
+	$(LDCMD) $(DLLFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJECTS) $(ALL_GNOME_LIBS)
 
-$(top_builddir)/etc/R.exp: $(OBJS) $(RLIBS)
-	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJS) $(RLIBS)
+$(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
+	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
 
 ../unix/libunix.a:
 	(cd ../unix;  $(MAKE) $(@F))
@@ -134,8 +134,8 @@ $(top_builddir)/etc/R.exp: $(OBJS) $(RLIBS)
 	(cd ../nmath; $(MAKE) $(@F))
 
 gram.c: $(srcdir)/gram.y
-	$(YACC) $(srcdir)/gram.y
-	mv y.tab.c $@
+	$(YACC) $(YFLAGS) $(srcdir)/gram.y
+	$(top_srcdir)/tools/move-if-change y.tab.c $(@F)
 
 mostlyclean: clean
 clean:

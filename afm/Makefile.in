@@ -11,7 +11,15 @@ subdir = afm
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.afm *.lt1)
+DISTFILES = Makefile.in \
+	agd_____.lt1 agdo____.lt1 agw_____.lt1 agwo____.lt1 bkd_____.lt1 \
+	bkdi____.lt1 bkl_____.lt1 bkli____.lt1 cob_____.lt1 cobo____.lt1 \
+	com_____.lt1 coo_____.lt1 hv______.lt1 hvb_____.lt1 hvbo____.lt1 \
+	hvn_____.lt1 hvnb____.lt1 hvnbo___.lt1 hvno____.lt1 hvo_____.lt1 \
+	ncb_____.lt1 ncbi____.lt1 nci_____.lt1 ncr_____.lt1 pob_____.lt1 \
+	pobi____.lt1 poi_____.lt1 por_____.lt1 tib_____.lt1 tibi____.lt1 \
+	tii_____.lt1 tir_____.lt1 \
+	sy______.afm
 
 all: Makefile R
 

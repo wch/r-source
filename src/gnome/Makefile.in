@@ -12,10 +12,7 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(GNOME_INCLUDEDIR) $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfh])
-
-SRCS = \
+SOURCES = \
 	../unix/dataentry.c \
 	../unix/devPS.c \
 	../unix/devPicTeX.c \
@@ -33,8 +30,23 @@ SRCS = \
 	terminal-menu.c \
 	terminal-prefs.c \
 	terminal-toolbar.c
-DEPS = $(SRCS:.c=.d)
-OBJS = $(SRCS:.c=.o)
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+HEADERS = \
+	dataentry.h \
+	devGNOME.h \
+	devGTK.h \
+	gdkrotated.h \
+	gnome-find-dialog.h \
+	gtkconsole.h \
+	terminal-functions.h \
+	terminal-menu.h \
+	terminal-prefs.h \
+	terminal-toolbar.h \
+	terminal.h
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 
 LIB = libRgnome.a
 
@@ -45,13 +57,13 @@ Makefile: $(srcdir)/Makefile.in \
   ../include/Version.h \
   ../include/FFDecl.h \
   ../include/FFTab.h \
-  $(DEPS)
+  $(DEPENDS)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@cat $(DEPS) >> $<
+	@cat $(DEPENDS) >> $<
 	@touch $@
 
 R: Makefile
@@ -63,8 +75,8 @@ R: Makefile
 ../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
-$(LIB): $(OBJS)
-	$(AR) cr $(LIB) $(OBJS)
+$(LIB): $(OBJECTS)
+	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
 mostlyclean: clean

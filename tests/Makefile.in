@@ -10,17 +10,18 @@ subdir = tests
 
 include $(top_builddir)/Makeconf
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir); \
-	       ls Makefile.in README Rdiff *.R *.Rout.save)
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
 
 TESTsrc = simple-true.R arith-true.R arith.R d-p-q-r-tests.R \
 	 print-tests.R is-things.R primitive-funs.R eval-etc.R
-
 TESTout = $(TESTsrc:.R=.Rout)
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in README Rdiff \
+	all-equal.R mode-methods.R $(TESTsrc) \
+	$(TESTsrc:.R=.Rout.save)
 
 %.Rout: %.R stamp-R
 	@rm -f $@.fail

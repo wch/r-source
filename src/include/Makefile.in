@@ -10,14 +10,17 @@ subdir = src/include
 
 include $(top_builddir)/Makeconf
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir) \
-	  && ls Makefile.in Platform.h.in Version.h.in *.h)
-
-SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
-	 Fortran.h Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h \
-	 Random.h Rdefines.h Rinternals.h Utils.h
+SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
+	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
+	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
 OBJ_HEADERS = Platform.h Version.h
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in README \
+	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h \
+	Statdecl.h Stattab.h \
+	$(SRC_HEADERS) \
+	Platform.h.in Version.h.in
 
 all: Makefile R
 
