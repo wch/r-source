@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   new tabular environment in Rdconv
+
     o  	.First.lib() now implemented; called by library() after loading
 	a package.
 
