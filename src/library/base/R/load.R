@@ -16,7 +16,7 @@ load <- function (file, envir = parent.frame())
     magic <- readChar(con, 5)
 
     if (regexpr("RD[AX]2\n", magic) == -1) {
-        ## Not a version 2 magic number, so try the old way.
+        ## Not a version >=2 magic number, so try the old way.
         if (is.character(file)) {
             close(con)
             on.exit()
@@ -38,7 +38,7 @@ save <- function(..., list = character(0),
     if (missing(ascii) && ! is.null(opts$ascii))
         ascii <- opts$ascii
     if (missing(version)) version <- opts$version
-    
+
     names <- as.character( substitute( list(...)))[-1]
     list<- c(list, names)
     if (! is.null(version) && version == 1)
@@ -64,7 +64,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
 
     opts <- getOption("save.image.defaults")
     if(is.null(opts)) opts <- getOption("save.defaults")
-        
+
     if (missing(safe) && ! is.null(opts$safe))
         safe <- opts$safe
     if (missing(compress) && ! is.null(opts$compress))
