@@ -10,20 +10,21 @@
   installed packages with different version numbers on the repository.
 }
 \usage{
-browse.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), global = FALSE)
+browse.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), contriburl, global = FALSE)
 browse.update.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), in.place = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{where}{Browse \code{"CRAN"} or \code{"BIOConductor"}}
   \item{type}{Type of package to download}
-  \item{global}{Not implemented }
+  \item{contriburl}{Different URL to browse. Overrides \code{where}}
+  \item{global}{Not implemented}
   \item{in.place}{Put the new package in the same directory as the old version}
 }
 \details{
-The \code{CRAN} and \code{BIOC} URLs are set in RAqua
+The \code{CRAN} and \code{BIOC} URLs are set in R with Aqua GUI
 Preferences. Packages are install in \code{.libPaths()[1]}, which is
-typically \code{~/Library/RAqua/library}.
+typically \code{~/Library/R/library}.
 }
 \value{
   Used for its side effects

@@ -1,5 +1,6 @@
     browse.pkgs <- function(where = c("CRAN","BIOC"),
-                            type = c("binary","source"), global = FALSE)
+                            type = c("binary","source"), 
+							contriburl, global = FALSE)
    {
      if (.Platform$GUI!="AQUA")
        stop("This function is intended to work with the Aqua GUI")
@@ -8,10 +9,14 @@
        installed.packages() -> x
        x[,1] -> i.pkgs
        x[,3] -> i.vers
-       if (type == "source")
-           CRAN.packages(getOption(where)) -> y
-       else
-           CRAN.binaries(getOption(where)) -> y
+	   if( !missing(contriburl) )
+				CRAN.packages(contriburl=contriburl) -> y
+       else { 
+			if(type == "binary") 
+				CRAN.binaries(getOption(where)) -> y
+			else
+				CRAN.packages(getOption(where)) -> y
+		}
        y[,1] -> c.pkgs
        y[,2] -> c.vers
 
@@ -39,9 +44,9 @@
        if(length(ui.pkgs) > 0)
            switch(type,
                   source = install.packages(ui.pkgs, CRAN = getOption(where),
-                  lib = .libPaths()[1]),
+                  contriburl=contriburl, lib = .libPaths()[1]),
                   binary = install.binaries(ui.pkgs, CRAN = getOption(where),
-                  lib = .libPaths()[1]))
+                  contriburl=contriburl, lib = .libPaths()[1]))
    }
 
     browse.update.pkgs <- function(where = c("CRAN", "BIOC"),
