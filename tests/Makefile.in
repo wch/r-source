@@ -58,7 +58,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
-	$(test-src-demo) \
+	$(test-src-demo) demos.Rout.save \
 	$(test-src-internet) internet.Rout.save \
 	$(test-src-lapack) \
 	$(test-src-nafns) \
@@ -88,7 +88,7 @@ test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
 
-test-out = $(test-src:.R=.Rout) $(test-out-gct) \
+test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
 	$(test-out-ts)
