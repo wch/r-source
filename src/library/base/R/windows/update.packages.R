@@ -1,7 +1,54 @@
 install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              contriburl=contrib.url(CRAN),
-                             method, available=NULL, destdir=NULL)
+                             method, available=NULL, destdir=NULL,
+                             installWithVers=FALSE)
 {
+    unpackPkg <- function(file, lib, installWithVers=FALSE) {
+        ## Create a temporary directory and unpack the zip to it
+        ## then get the real package & version name, copying the
+        ## dir over to the appropriate install dir.
+        tmpDir <- tempfile()
+        dir.create(tmpDir)
+        cDir <- getwd()
+        on.exit(setwd(cDir), add=TRUE)
+        res <- zip.unpack(file, tmpDir)
+        setwd(tmpDir)
+
+        ## From original install.packages
+        require(tools)
+        pkgname <- sub("\\.zip$", "", basename(pkg))
+        checkMD5sums(pkgname)
+
+        ## back to changes
+        ## Get the real package name, and if watned, the real version
+        ## num, and use this to install the package
+        desc <- read.dcf(file.path(pkgname,"DESCRIPTION"),
+                         c("Package","Version"))
+        if (installWithVers) {
+            instPath <- file.path(lib,paste(desc[1,1],desc[1,2],sep="_"))
+        }
+        else instPath <- file.path(lib, desc[1,1])
+
+        ## If the package is already installed w/ this
+        ## instName, remove it.  If it isn't there, the unlink call will
+        ## still return success.
+        ret <- unlink(instPath,recursive=TRUE)
+        if (ret == 0) {
+            ## Move the new package to the install lib and
+            ## remove our temp dir
+            file.rename(pkgname, instPath)
+        }
+        else {
+            ## Would prefer to make sure it is a "clean" install, but
+            ## if the directory could not be removed for some reason,
+            ## default to old behaviour where it would just copy all
+            ## files on top of previous install.
+            zip.unpack(file, lib)
+        }
+        setwd(cDir)
+        unlink(tmpDir, recursive=TRUE)
+    }
+
     if(!length(pkgs)) return(invisible())
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
@@ -28,18 +75,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     }
     if(is.null(CRAN) & missing(contriburl)) {
         for(i in seq(along=pkgs)) {
-            res <- zip.unpack(pkgs[i], lib)
-            if(length(ext <- attr(res, "extracted"))) {
-                first <- sub(paste("^", chartr("\\", "/", lib), "/", sep=""),
-                             "", ext[1])
-                first <- sub("/.*", "", first)
-                if(first != pkgnames[i]) {
-                    warning("zip file ", pkgs[i], " contains package ", first)
-                    pkgnames[i] <- first
-                }
-            }
-            require(tools)
-            checkMD5sums(pkgnames[i])
+            unpackPkg(pkgs[i], lib, installWithVers)
         }
         link.html.help(verbose=TRUE)
         return(invisible())
@@ -68,10 +104,8 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 okp <- p == foundpkgs[, 1]
                 if(length(okp) > 0){
                     for(pkg in foundpkgs[okp, 2]) {
-                        zip.unpack(pkg, lib)
-                        require(tools)
-                        pkgname <- sub("\\.zip$", "", basename(pkg))
-                        checkMD5sums(pkgname)
+                        ## changes begin - JG
+                        unpackPkg(pkg, lib, installWithVers)
                     }
                 }
             }
