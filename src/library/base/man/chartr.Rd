@@ -10,12 +10,14 @@
 chartr(old, new, x)
 tolower(x)
 toupper(x)
+casefold(x, upper = FALSE)
 }
 \arguments{
   \item{x}{a character vector.}
   \item{old}{a character string specifying the characters to be
     translated.}
   \item{new}{a character string specifying the translations.}
+  \item{upper}{logical: translate to upper or lower case?.}
 }
 \details{
   \code{chartr} translates each character in \code{x} that is specified
@@ -28,6 +30,9 @@ toupper(x)
   \code{tolower} and \code{toupper} convert upper-case characters in a
   character vector to lower-case, or vice versa.  Non-alphabetic
   characters are left unchanged.
+
+  \code{casefold} is a wrapper for \code{tolower} and \code{toupper}
+  provided for compatibility with S-PLUS.
 }
 \seealso{\code{\link{sub}} and \code{\link{gsub}} for other
   substitutions in strings.}

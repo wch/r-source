@@ -321,6 +321,9 @@ NEW FEATURES
         strictly required for formal methods, but imposed for now for
         simplicity and efficiency).
 
+    o   New function casefold(), a wrapper for tolower/toupper
+	provided for compatibility with S-PLUS.
+
 
 
 BUG FIXES
@@ -335,7 +338,7 @@ BUG FIXES
     o	The code in model.matrix.default() handling contrasts was
 	assuming a response was present, and so without a response was
 	failing to record the contrasts for the first variable if it
-	were a factor.
+	was a factor.
 
     o	diffinv() could get the time base wrong in some cases.
 
@@ -432,7 +435,7 @@ BUG FIXES
 	circumvented.  Functions lqs() and mve() can now be
 	interrupted on Windows and MacOS.
 
-    o	image() was incorrectly finding breakpoints from
+    o	image() was finding incorrect breakpoints from
 	irregularly-spaced midpoints. (PR#1160)
 
     o	Use fuzz in the 2-sample Kolmogorov-Smirnov test in package
