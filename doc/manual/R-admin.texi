@@ -1405,17 +1405,21 @@ too.
 Translations are looked for by domain according to the currently
 specified language, as specifically as possible, so for example an
 Austrian (@code{de_AT}) translation catalogue will be used in preference
-to a generic German one (@code{de}) for an Austrian user.  Translations
-in the right language but the wrong charset can generally be made use of
-by on-the-fly re-encoding.  The @code{LANGUAGE} variable (only) can be a
-colon-separated list, for example @code{se:de}, giving a set of
-languages in decreasing order of preference.
+to a generic German one (@code{de}) for an Austrian user.  However, if a
+specific translation catalogue exists but does not contain a
+translation, the less specific catalogues are consulted.  For example,
+@R{} has catalogues for @code{en_GB} that translate the Americanisms
+(e.g. @code{gray}) in the standard messages into English.
+
+Translations in the right language but the wrong charset can generally
+be made use of by on-the-fly re-encoding.  The @code{LANGUAGE} variable
+(only) can be a colon-separated list, for example @code{se:de}, giving a
+set of languages in decreasing order of preference.
 
 If no suitable translation catalogue is found or a particular message is
-not translated in that catalogue, English is used.
+not translated in any suitable catalogue, English is used.
 
-See
-@uref{http://developer.r-project.org/Translations.html} for how to
+See @uref{http://developer.r-project.org/Translations.html} for how to
 prepare and install translation catalogues.
 
 

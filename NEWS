@@ -361,12 +361,17 @@ INTERNATIONALIZATION
     o	Functions sQuote() and dQuote() use the Unicode directional
 	quotes if in a UTF-8 locale.
 
-    o	The infrastructure is now in place for C-level error and
-	warning messages to be translated from English and used on
-	systems with Native Language Support.  Currently this has been
-	used for the startup message.  See 'Writing R Extensions' for
-	how to make use of this in a package: all the standard
-	packages have been marked and splines is set up to do translation.
+    o   The infrastructure is now in place for C-level error and warning
+	messages to be translated and used on systems with Native
+	Language Support.  This has been used for the startup message
+	in English and to translate Americanisms such as 'color' into
+	English: translations to several other languages are under
+	way, and early partial versions for German, Italian and
+	Simplified Chinese are included.
+
+	See 'Writing R Extensions' for how to make use of this in a
+	package: all the standard packages have been marked and
+	splines is set up to do translation.
 
     o	R-level stop() and warning() messages can be translated, as can
 	other messages via the new function gettext().	Tools
