@@ -440,7 +440,11 @@ static int AddDLL(char *path, int asLocal, int now)
 	DL_FUNC f;
 	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") + 
 					   strlen(info->name)+ 1));
+#ifdef HAVE_NO_SYMBOL_UNDERSCORE
 	sprintf(tmp, "%s%s","R_init_", info->name);
+#else
+	sprintf(tmp, "_%s%s","R_init_", info->name);
+#endif
 	f = (DL_FUNC) R_osDynSymbol->dlsym(info, tmp);
 	free(tmp);
 	if(f)
