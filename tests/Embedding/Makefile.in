@@ -12,8 +12,8 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-SRCS_R = error.R foo.R
-SRCS_C = \
+SOURCES_R = error.R foo.R
+SOURCES_C = \
   RNamedCall.c \
   RParseEval.c \
   Rerror.c \
@@ -23,11 +23,13 @@ SRCS_C = \
   Rtest.c \
   embeddedRCall.c
 HEADERS = embeddedRCall.h
-EXECS = Rtest Rplot Rpostscript Rerror RNamedCall RParseEval Rpackage
+PROGRAMS = Rtest Rplot Rpostscript Rerror RNamedCall RParseEval Rpackage
 
 # <FIXME>
 # Currently Rshutdown.c is not used.
-DISTFILES = Makefile.in index.html $(SRCS_R) $(SRCS_C) $(HEADERS)
+DISTFILES = Makefile.in index.html \
+  $(SOURCES_R) $(SOURCES_C) $(HEADERS) \
+  Rshutdown.c
 # </FIXME>
 
 R_CMD_LINK = $(top_builddir)/bin/R CMD LINK $(CC)
@@ -42,12 +44,12 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R-sources:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  for f in $(SRCS_R); \
+	  for f in $(SOURCES_R); \
 	    do $(INSTALL_DATA) $(srcdir)/$${f} .; \
 	  done; \
 	fi
 
-tests: $(EXECS)
+tests: $(PROGRAMS)
 	(R_HOME=$(top_builddir); export R_HOME; ./Rtest --silent)
 	(R_HOME=$(top_builddir); export R_HOME; ./RNamedCall --silent)
 	(R_HOME=$(top_builddir); export R_HOME; ./RParseEval --silent)
@@ -78,10 +80,10 @@ R.so: showArgs.o
 mostlyclean: clean
 clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(SRCS_R); \
+	  rm -f $(SOURCES_R); \
 	fi
 	@-rm -rf .libs _libs
-	@-rm -f *.o $(EXECS) Rplots.ps
+	@-rm -f *.o $(PROGRAMS) Rplots.ps
 distclean: clean
 	@-rm -f Makefile config.*
 maintainer-clean: distclean
