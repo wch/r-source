@@ -29,6 +29,8 @@ NO_PERL5_MSG="\
 PKGS=
 lib=${RHOME}/library
 
+MAKE=${MAKE-make}
+
 umask 022
 
 while test -n "${1}"; do
@@ -98,7 +100,7 @@ for pkg in ${PKGS}; do
     mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
       (cd src;
-	make -f ${RHOME}/etc/Makeconf -f Makefile;
+	${MAKE} -f ${RHOME}/etc/Makeconf -f Makefile;
 	cp *.so ${lib}/${pkg}/libs)
     else
       (cd src;
