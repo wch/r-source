@@ -394,6 +394,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 {
     SEXP names, namei;
     int i, n, savecount, saveseqno, savefirstpos;
+    int usedefault;
 
     /* If we beneath a new tag, we reset the index */
     /* sequence and create the new basename string. */
@@ -405,6 +406,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 	savecount = count;
 	count = 0;
 	seqno = 0;
+	firstpos = -1;
     }
     else saveseqno = 0;
 
@@ -468,7 +470,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 	STRING(ans_names)[ans_nnames++] = base;
     }
     if (tag != R_NilValue) {
-	if (count == 1)
+	if (firstpos >= 0 && count == 1)
 	    STRING(ans_names)[firstpos] = base;
 	firstpos = savefirstpos;
 	count = savecount;
@@ -614,7 +616,9 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	PROTECT(ans_names = allocVector(STRSXP, ans_length));
 	ans_nnames = 0;
+#ifdef EXPT
 	if (!recurse) {
+#endif
 	    while (args != R_NilValue) {
 		seqno = 0;
 		firstpos = 0;
@@ -622,13 +626,15 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 		NewExtractNames(CAR(args), R_NilValue, TAG(args), recurse);
 		args = CDR(args);
 	    }
+#ifdef EXPT
 	}
 	else {
 	    seqno = 0;
 	    firstpos = 0;
 	    count = 0;
-	    NewExtractNames(args, R_NilValue, R_NilValue, recurse);
+	    NewExtractNames(args, R_NilValue, TAG(args), recurse);
 	}
+#endif
 	setAttrib(ans, R_NamesSymbol, ans_names);
 	UNPROTECT(1);
 #endif
