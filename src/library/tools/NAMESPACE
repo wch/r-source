@@ -8,7 +8,7 @@ export( .installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
 
 ## documented as internal but called from scripts
 export(.installPackageDescription, .installPackageIndices, 
-       .checkDemoIndex, .checkVignetteIndex)
+       .checkDemoIndex, .checkVignetteIndex, buildVignettes)
 
 ## these seem to need to be exported
 exportPattern("^print")
