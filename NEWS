@@ -20,6 +20,9 @@ NEW FEATURES
     o	Connections functions such as file() now accept a description of
 	length > 1, with a warning.
 
+    o	library(help = PKG) now displays the contents of the package's
+	DESCRIPRION file in addition to its INDEX.
+
     o	All text-mode connections now accept input with LF, CR or CRLF
 	line endings.  This means that readLines() can be used on DOS
 	files and source() on Mac files, for example.
