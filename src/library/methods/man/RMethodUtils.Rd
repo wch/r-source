@@ -35,8 +35,6 @@
 \alias{cacheMetaData}
 \alias{cacheGenericsMetaData}
 \alias{setPrimitiveMethods}
-\alias{printNoClass}
-\alias{print.default}
 \alias{missingArg}
 \alias{balanceMethodsList}
 \alias{sigToEnv}
@@ -101,10 +99,6 @@ cacheMetaData(where, attach = TRUE)
 cacheGenericsMetaData(generics, attach = TRUE, where, package)
 
 setPrimitiveMethods(f, fdef, code, generic, mlist)
-
-printNoClass(x, digits, quote, na.print, print.gap, right, ...)
-
-print.default(x, ...)
 
 missingArg(symbol, envir = parent.frame(), eval)
 
@@ -282,14 +276,6 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       The \code{setPrimitiveMethods} function resets the caching
       information for a particular primitive function.  Don't call it
       directly.
-    }
-
-    \item{\code{printNoClass},\code{print.default}: }{
-      \code{printNoClass} is equivalent to the version of
-      \code{print.default} in the base package.  The methods package
-      overrides the latter function to provide meaningful printing for
-      formally defined classes, and \code{printNoClass} is used to get
-      the original default printing.
     }
 
     \item{\code{missingArg}: }{

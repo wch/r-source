@@ -1,14 +1,27 @@
-print <- function(x, ...)UseMethod("print")
+print <- function(x, ...) UseMethod("print")
 
-##- Need '...' such that it can be called as  NextMethod("print", ...):
-print.default <-
-    function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL,right=FALSE,
-             ...)
+## from methods, should be deprecated.
+printNoClass <-
+    function(x, digits = NULL,quote = TRUE, na.print = NULL, print.gap = NULL,
+             right = FALSE, ...)
     .Internal(print.default(x,digits,quote,na.print,print.gap,right))
 
-print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
+##- Need '...' such that it can be called as  NextMethod("print", ...):
+print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
+                          print.gap = NULL, right = FALSE, ...)
+{
+    ## cheapest test first
+    if(length(list(...)) == 0 && "package:methods" %in% search()) {
+        cl <- oldClass(x)
+        if(length(cl) == 1 && isClass(cl)) return(show(x))
+    }
+    .Internal(print.default(x, digits, quote, na.print, print.gap, right))
+}
 
-print.matrix <- print.default
+
+print.atomic <- function(x, quote = TRUE, ...) print.default(x, quote=quote)
+
+print.matrix <- print.default  ## back-compatibility
 
 prmatrix <-
     function (x, rowlab = dn[[1]], collab = dn[[2]],
@@ -20,13 +33,12 @@ prmatrix <-
     .Internal(prmatrix(x, rowlab, collab, quote, right, na.print))
 }
 
-## print.tabular is now deprecated !
-
 noquote <- function(obj) {
     ## constructor for a useful "minor" class
     if(!inherits(obj,"noquote")) class(obj) <- c(attr(obj, "class"),"noquote")
     obj
 }
+
 as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
 
 "[.noquote" <- function (x, ...) {

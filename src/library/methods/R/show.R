@@ -37,17 +37,6 @@ showDefault <-
 show <- function(object)
     showDefault(object, FALSE)
 
-
-printNoClass <- get("print.default", "package:base")
-
-print.default <- function(x, ...) {
-    cl <- attr(x, "class") # pick off old-style objects
-    if(length(cl) == 1 && isClass(cl) && length(list(...)) == 0)
-        show(x)
-    else
-        printNoClass(x, ...)
-}
-
 .InitShowMethods <- function(envir) {
     if(!isGeneric("show"))
         setGeneric("show", where = envir)
