@@ -76,13 +76,14 @@ FORCE:
 	$(R) < $< > /dev/null
 
 %.Rout : %.R
-	@rm -f $@.fail
-	$(R) < $< > $@
+	@rm -f $@ $@.fail
+	@echo "running \`$<'"
+	@$(R) < $< > $@.fail
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  echo @ECHO_N@ \
 	    "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"; \
-	  $(RDIFF) $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
-	    (mv $@ $@.fail && exit 1); \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
 	  echo "@ECHO_T@ OK"; \
 	fi
 
