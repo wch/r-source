@@ -12,6 +12,7 @@ include $(top_builddir)/Makeconf
 
 SOURCES_C = \
 	@LIBOBJS@ \
+	apply.c \
 	arithmetic.c \
 	array.c \
 	attrib.c \
