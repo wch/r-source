@@ -24,22 +24,13 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.8 $ ';
-my $version;
-my $name;
-
-$revision =~ / ([\d\.]*) /;
-$version = $1;
-($name = $0) =~ s|.*/||;
+fileparse_set_fstype; # Unix, in case one gets anything else.
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "help|h", "version|v", "os|OS:s");
+		 "dosnames", "htmllists", "chm");
 GetOptions (@knownoptions) || usage();
-&R_version($name, $version) if $opt_version;
-&usage() if $opt_help;
 
-$OSdir ="unix";
-$OSdir = $opt_os if $opt_os;
+$OSdir = "windows";
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
@@ -49,15 +40,13 @@ my $current = cwd();
 if($opt_rhome){
     $R_HOME=$opt_rhome;
     print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
+} else{
+    chdir(dirname($0) . "/../../..");
+    $R_HOME=cwd();
+    print STDERR "R_HOME: `$R_HOME'\n" if $opt_debug;
 }
-elsif($ENV{"R_HOME"}){
-    $R_HOME=$ENV{"R_HOME"};
-    print STDERR "R_HOME from ENV: `$R_HOME'\n" if $opt_debug;
-}
-else{
-    chdir(dirname($0) . "/..");
-    $R_HOME = cwd();
-}
+$R_HOME =~ s+\\+/+g; # Unix-style path
+
 chdir($current);
 print STDERR "Current directory (cwd): `$current'\n" if $opt_debug;
 
@@ -76,18 +65,32 @@ if($opt_htmllists){
 }
 
 # default is to build all documentation formats
-if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
+if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_html = 1;
     $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
+    $opt_chm = 1;
 }
 
 ($pkg, $lib, @mandir) = buildinit();
 $dest = file_path($lib, $pkg);
 print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
-build_index($lib, $dest, "");
+if($opt_chm) {
+    $chmdir = "../chm";
+    if(! -d $chmdir) {
+	mkdir($chmdir, $dir_mod) or die "Could not create $chmdir: $!\n";
+    }
+    open_hhp($pkg);
+}
+build_index($lib, $dest, $chmdir);
+
+
+if($opt_chm) {
+    build_chm_toc();
+}
+
 if ($opt_latex) {
     $latex_d = file_path($dest, "latex");
     if(! -d $latex_d) {
@@ -107,6 +110,7 @@ print "text " if $opt_txt;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
 print "example " if $opt_example;
+print "chm " if $opt_chm;
 print "\n";
 
 
@@ -115,18 +119,13 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    if ($lib ne $mainlib) {
-	%basehtmlindex = read_htmlindex($mainlib);
-	foreach $topic (keys %htmlindex) {
-	    $basehtmlindex{$topic} = $htmlindex{$topic};
-	}
-	%htmlindex = %basehtmlindex;
-    }
+} elsif ($opt_chm) {
+    %htmlindex = read_htmlindex($lib);
 }
 
 format STDOUT =
-  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<< @<<<<<< @<<<<<<
-  $manfilebase, $textflag, $htmlflag, $latexflag, $exampleflag
+  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<< @<<<<<< @<<<<<< @<<<<<<
+  $manfilebase, $textflag, $htmlflag, $latexflag, $exampleflag, $chmflag
 .
 
 foreach $manfile (@mandir) {
@@ -135,7 +134,7 @@ foreach $manfile (@mandir) {
 	$manage = (-M $manfile);
 	$manfiles{$manfilebase} = $manfile;
 
-	$textflag = $htmlflag = $latexflag = $exampleflag = "";
+	$textflag = $htmlflag = $latexflag = $exampleflag = $chmflag = "";
 
 	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
@@ -157,6 +156,18 @@ foreach $manfile (@mandir) {
 	    }
 	}
 
+	if($opt_chm){
+	    my $targetfile = $filenm{$manfilebase};
+	    $misslink = "";
+	    $destfile = "../chm/$targetfile.$HTML";
+	    print hhpfile "$targetfile.$HTML\n";
+	    if(fileolder($destfile,$manage)) {
+		$chmflag = "chm";
+		print "\t$destfile" if $opt_debug;
+		Rdconv($manfile, "chm", "", "$destfile", $pkg);
+	    }
+	}
+
 	if($opt_latex){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
@@ -175,8 +186,9 @@ foreach $manfile (@mandir) {
 	    }
 	}
 
-	write if ($textflag || $htmlflag || $latexflag || $exampleflag);
-	print "     missing link(s): $misslink\n"
+	write if ($textflag || $htmlflag || $latexflag || 
+		  $exampleflag || $chmflag);
+	print "     missing link(s): $misslink\n" 
 	    if $htmlflag && length($misslink);
     }
 }
@@ -231,27 +243,81 @@ if($opt_example){
 	    unless defined $manfiles{$destfilebase};
     }
 }
+if($opt_chm){
+    my @destdir;
+    opendir dest,  "../chm";
+    @destdir = sort(readdir(dest));
+    closedir dest;
+    foreach $destfile (@destdir) {
+	$destfilebase = basename($destfile, (".html"));
+	next unless $destfile =~ /\.html$/;
+	next if $destfile eq "00Index.html";
+	unlink "../chm/$destfile" unless defined $manfiles{$destfilebase};
+    }
+}
 
 sub usage {
-  print STDERR <<END;
-Usage: R CMD $name [options] [pkg] [lib]
+    print "Usage:  build-help [--rhome dir] [--html] [--txt] [--latex]\n" .
+      "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
+      "                   [pkg] [lib]\n";
 
-Install all help files for package pkg to library lib
+    exit 0;
+}
 
-Options:
-  -h, --help		print short help message and exit
-  -v, --version		print version info and exit
-  -d, --debug           print debugging information
-  --rhome               R home directory, defaults to environment R_HOME
-  --html                build HTML files    (default is all)
-  --txt                 build text files    (default is all)
-  --latex               build LaTeX files   (default is all)
-  --example             build example files (default is all)
-  --htmllists           build HTML function and package lists
-  --dosnames            use 8.3 filenames
+sub open_hhp {
+    my $pkg = $_[0];
+
+    open(hhpfile, ">../chm/$pkg.hhp")
+	or die "Couldn't open the chm project file\n";
+    print hhpfile "[OPTIONS]\n", "Auto Index=Yes\n",
+    "Contents file=$pkg.toc\n",
+    "Compatibility=1.1 or later\n",
+    "Compiled file=$pkg.chm\n",
+    "Default topic=00Index.html\n",
+    "Display compile progress=No\n",
+    "Full-text search=Yes\n",
+    "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
+    "\n\n[FILES]\n00Index.html\n";
+}
 
 
-Email bug reports to <r-bugs\@r-project.org>.
-END
-  exit 0;
+sub build_chm_toc {
+    open(tocfile, ">../chm/$pkg.toc")
+	or die "Couldn't open the chm toc file";
+    print tocfile
+	"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
+	"<HEAD></HEAD><HTML><BODY>\n<UL>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  Contents\">\n",
+	"<param name=\"Local\" value=\"00Index.html\">\n",
+	"</OBJECT>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  R objects\">\n",
+	"</OBJECT>\n";
+    print tocfile "<UL>\n";   # contents of a book
+    foreach $alias (sort foldorder keys %aliasnm) {
+	print tocfile
+	    "<LI> <OBJECT type=\"text/sitemap\">\n",
+	    "<param name=\"Name\" value=\"$alias\">\n",
+	    "<param name=\"Local\" value=\"$aliasnm{$alias}.html\">\n",
+	    "</OBJECT>\n";
+    }
+    print tocfile "</UL>\n";  # end of a book
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  Titles\">\n",
+	"</OBJECT>\n";
+    print tocfile "<UL>\n";   # contents of a book
+    foreach $title (sort foldorder keys %title2file) {
+	print tocfile
+	    "<LI> <OBJECT type=\"text/sitemap\">\n",
+	    "<param name=\"Name\" value=\"$title\">\n",
+	    "<param name=\"Local\" value=\"$title2file{$title}.html\">\n",
+	    "</OBJECT>\n";
+    }
+    print tocfile "</UL>\n";  # end of a book
+    print tocfile "</UL>\n</BODY></HTML>\n";
+    close tocfile;
 }
