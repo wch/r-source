@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  R Development Core Team
+ *  Copyright (C) 1997--2002  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
 	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP &&
 	LENGTH(x) > 0 && LENGTH(y) > 0) {
-	SEXP ans = real_relop(PRIMVAL(op), x, y);      
+	SEXP ans = real_relop(PRIMVAL(op), x, y);
 	UNPROTECT(2);
 	return ans;
     }
@@ -403,7 +403,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 #define STRCMP strcmp
 #endif
 
-
+/* define NASTRING to have NA_STRING treated as missing */
 
 static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
@@ -420,6 +420,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     switch (code) {
     case EQOP:
 	for (i = 0; i < n; i++) {
+#ifdef NASTRING
+	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
+		(STRING_ELT(s2, i % n2) == NA_STRING))
+		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else
+#endif
 	    if (strcmp(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) == 0)
 		LOGICAL(ans)[i] = 1;
@@ -429,6 +435,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case NEOP:
 	for (i = 0; i < n; i++) {
+#ifdef NASTRING
+	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
+		(STRING_ELT(s2, i % n2) == NA_STRING))
+		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else
+#endif
 	    if (streql(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) != 0)
 		LOGICAL(ans)[i] = 0;
@@ -438,6 +450,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case LTOP:
 	for (i = 0; i < n; i++) {
+#ifdef NASTRING
+	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
+		(STRING_ELT(s2, i % n2) == NA_STRING))
+		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else
+#endif
 	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) < 0)
 		LOGICAL(ans)[i] = 1;
@@ -447,6 +465,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case GTOP:
 	for (i = 0; i < n; i++) {
+#ifdef NASTRING
+	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
+		(STRING_ELT(s2, i % n2) == NA_STRING))
+		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else
+#endif
 	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) > 0)
 		LOGICAL(ans)[i] = 1;
@@ -456,6 +480,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case LEOP:
 	for (i = 0; i < n; i++) {
+#ifdef NASTRING
+	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
+		(STRING_ELT(s2, i % n2) == NA_STRING))
+		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else
+#endif
 	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) <= 0)
 		LOGICAL(ans)[i] = 1;
@@ -465,6 +495,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case GEOP:
 	for (i = 0; i < n; i++) {
+#ifdef NASTRING
+	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
+		(STRING_ELT(s2, i % n2) == NA_STRING))
+		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else
+#endif
 	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) >= 0)
 		LOGICAL(ans)[i] = 1;
@@ -476,4 +512,3 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     UNPROTECT(2);
     return ans;
 }
-
