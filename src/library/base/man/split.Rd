@@ -4,7 +4,6 @@
 \alias{split.default}
 \alias{split.data.frame}
 \alias{split<-}
-\alias{split<-.default}
 \alias{split<-.data.frame}
 \alias{split.data.frame<-}
 \alias{unsplit}
@@ -19,7 +18,6 @@ split(x, f)
 split.default(x, f)
 split.data.frame(x, f)
 split(x, f) <- value
-split.default(x, f) <- value
 split.data.frame(x, f) <- value
 unsplit(value, f)
 }
