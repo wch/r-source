@@ -1,6 +1,7 @@
 codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
                   ignore.generic.functions = FALSE,
-                  keep.tempfiles = FALSE) {
+                  keep.tempfiles = FALSE,
+                  verbose = getOption("verbose")) {
     fQuote <- function(s) paste("`", s, "'", sep = "")
     listFilesWithExts <- function(dir, exts, path = TRUE) {
         ## Return the paths or names of the files in `dir' with
@@ -87,9 +88,17 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     ## Undocumented variables?
     vars <- lsCode[!funs]
     undocVars <- vars[!vars %in% lsDocs]
+    if(verbose) {
+        cat("\nVariables without usage information:\n")
+        print(undocVars)
+    }
     ## Undocumented functions?
     funs <- lsCode[funs]
     undocFuns <- funs[!funs %in% lsDocs]
+    if(verbose) {
+        cat("\nFunctions without usage information:\n")
+        print(undocFuns)
+    }
 
     isGeneric <- function(f) {
         any(grep("UseMethod", deparse(body(f))))
