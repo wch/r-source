@@ -19,7 +19,9 @@ as.ts(x)
 is.ts(x)
 }
 \arguments{
-  \item{data}{a vector or matrix of the observed time-series values.}
+  \item{data}{a numeric vector or matrix of the observed time-series
+    values. A data frame will be coerced to a numeric matrix via
+    \code{data.matrix}.}
   \item{start}{the time of the first observation.  Either a single
     number or a vector of two integers, which specify a natural time
     unit and a (1-based) number of samples into the time unit.  See 

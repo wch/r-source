@@ -15,7 +15,9 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
                else paste("Series", seq(nseries))
                )
 {
-    if(is.matrix(data) || is.data.frame(data)) {
+    if(is.data.frame(data)) data <- data.matrix(data)
+    if(!is.numeric(data)) stop("`data'  must be a numeric matrix")
+    if(is.matrix(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
         dimnames(data) <- list(NULL, names)
