@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-10-27
+Version 2.0.2004-10-29
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -774,17 +774,18 @@ the S language.
 3.3.1 Lexical scoping
 ---------------------
 
-Contrary to other implementations of the S language, R has adopted the
-evaluation model of Scheme.
+Contrary to other implementations of the S language, R has adopted an
+evaluation model in which nested function definitions are lexically scoped.
+This is analogous to the evalutation model in Scheme.
 
    This difference becomes manifest when _free_ variables occur in a
 function.  Free variables are those which are neither formal parameters
 (occurring in the argument list of the function) nor local variables
-(created by assigning to them in the body of the function).  Whereas S
-(like C) by default uses _static_ scoping, R (like Scheme) has adopted
-_lexical_ scoping.  This means the values of free variables are determined
-by a set of global variables in S, but in R by the bindings that were in
-effect at the time the function was created.
+(created by assigning to them in the body of the function).  In S, the
+values of free variables are determined by a set of global variables
+(similar to C, there is only local and global scope).  In R, they are
+determined by the bindings that were in effect at the time the function was
+created.
 
    Consider the following function:
 
@@ -910,20 +911,21 @@ one solution is to add an extra parameter to the function and to the
 optimizer to pass in these extras, which however can only work if the
 optimizer supports this.
 
-   Lexical scoping allows using function closures and maintaining local
-state.  A simple example (taken from Abelson and Sussman) is obtained by
-typing `demo("scoping")' at the R prompt.  Further information is provided
-in the standard R reference "R: A Language for Data Analysis and Graphics"
-(*note What documentation exists for R?::) and in Robert Gentleman and Ross
-Ihaka (2000), "Lexical Scope and Statistical Computing", _Journal of
-Computational and Graphical Statistics_, *9*, 491-508.
+   Nested lexically scoped functions allow using function closures and
+maintaining local state.  A simple example (taken from Abelson and Sussman)
+is obtained by typing `demo("scoping")' at the R prompt.  Further
+information is provided in the standard R reference "R: A Language for Data
+Analysis and Graphics" (*note What documentation exists for R?::) and in
+Robert Gentleman and Ross Ihaka (2000), "Lexical Scope and Statistical
+Computing", _Journal of Computational and Graphical Statistics_, *9*,
+491-508.
 
-   Lexical scoping also implies a further major difference.  Whereas S
-stores all objects as separate files in a directory somewhere (usually
-`.Data' under the current directory), R does not.  All objects in R are
-stored internally.  When R is started up it grabs a piece of memory and
-uses it to store the objects.  R performs its own memory management of this
-piece of memory, growing and shrinking its size as needed.  Having
+   Nested lexically scoped functions also imply a further major difference.
+Whereas S stores all objects as separate files in a directory somewhere
+(usually `.Data' under the current directory), R does not.  All objects in
+R are stored internally.  When R is started up it grabs a piece of memory
+and uses it to store the objects.  R performs its own memory management of
+this piece of memory, growing and shrinking its size as needed.  Having
 everything in memory is necessary because it is not really possible to
 externally maintain all relevant "environments" of symbol/value pairs.
 This difference also seems to make R _faster_ than S.

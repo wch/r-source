@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2004-10-27</h2>
+<h2>Version 2.0.2004-10-29</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1080,17 +1080,18 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#What-are-the-differences-between-R-and
 
 <h4 class="subsection">3.3.1 Lexical scoping</h4>
 
-<p>Contrary to other implementations of the S language, R has adopted the
-evaluation model of Scheme.
+<p>Contrary to other implementations of the S language, R has adopted an
+evaluation model in which nested function definitions are lexically
+scoped.  This is analogous to the evalutation model in Scheme.
 
    <p>This difference becomes manifest when <em>free</em> variables occur in a
 function.  Free variables are those which are neither formal parameters
 (occurring in the argument list of the function) nor local variables
-(created by assigning to them in the body of the function).  Whereas S
-(like C) by default uses <em>static</em> scoping, R (like Scheme) has
-adopted <em>lexical</em> scoping.  This means the values of free variables
-are determined by a set of global variables in S, but in R by the
-bindings that were in effect at the time the function was created.
+(created by assigning to them in the body of the function).  In S, the
+values of free variables are determined by a set of global variables
+(similar to C, there is only local and global scope).  In R, they are
+determined by the bindings that were in effect at the time the function
+was created.
 
    <p>Consider the following function:
 
@@ -1249,25 +1250,24 @@ it.  With S, one solution is to add an extra parameter to the function
 and to the optimizer to pass in these extras, which however can only
 work if the optimizer supports this.
 
-   <p>Lexical scoping allows using function closures and maintaining local
-state.  A simple example (taken from Abelson and Sussman) is obtained by
-typing <kbd>demo("scoping")</kbd> at the R prompt.  Further information is
-provided in the standard R reference &ldquo;R: A Language for Data Analysis
-and Graphics&rdquo; (see <a href="#What-documentation-exists-for-R_003f">What documentation exists for R?</a>) and in Robert
-Gentleman and Ross Ihaka (2000), &ldquo;Lexical Scope and Statistical
-Computing&rdquo;, <a href="http://www.amstat.org/publications/jcgs/"><em>Journal of Computational and Graphical Statistics</em></a>, <strong>9</strong>,
-491&ndash;508.
+   <p>Nested lexically scoped functions allow using function closures and
+maintaining local state.  A simple example (taken from Abelson and
+Sussman) is obtained by typing <kbd>demo("scoping")</kbd> at the R prompt. 
+Further information is provided in the standard R reference &ldquo;R: A
+Language for Data Analysis and Graphics&rdquo; (see <a href="#What-documentation-exists-for-R_003f">What documentation exists for R?</a>) and in Robert Gentleman and Ross Ihaka (2000), &ldquo;Lexical
+Scope and Statistical Computing&rdquo;,
+<a href="http://www.amstat.org/publications/jcgs/"><em>Journal of Computational and Graphical Statistics</em></a>, <strong>9</strong>, 491&ndash;508.
 
-   <p>Lexical scoping also implies a further major difference.  Whereas S
-stores all objects as separate files in a directory somewhere (usually
-<span class="file">.Data</span> under the current directory), R does not.  All objects in R
-are stored internally.  When R is started up it grabs a piece of memory
-and uses it to store the objects.  R performs its own memory management
-of this piece of memory, growing and shrinking its size as needed. 
-Having everything in memory is necessary because it is not really
-possible to externally maintain all relevant &ldquo;environments&rdquo; of
-symbol/value pairs.  This difference also seems to make R <em>faster</em>
-than S.
+   <p>Nested lexically scoped functions also imply a further major difference. 
+Whereas S stores all objects as separate files in a directory somewhere
+(usually <span class="file">.Data</span> under the current directory), R does not.  All
+objects in R are stored internally.  When R is started up it grabs a
+piece of memory and uses it to store the objects.  R performs its own
+memory management of this piece of memory, growing and shrinking its
+size as needed.  Having everything in memory is necessary because it is
+not really possible to externally maintain all relevant &ldquo;environments&rdquo;
+of symbol/value pairs.  This difference also seems to make R
+<em>faster</em> than S.
 
    <p>The down side is that if R crashes you will lose all the work for the
 current session.  Saving and restoring the memory &ldquo;images&rdquo; (the

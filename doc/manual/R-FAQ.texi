@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-27
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-29
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1009,17 +1009,18 @@ the S language.
 @node Lexical scoping, Models, What are the differences between R and S?, What are the differences between R and S?
 @subsection Lexical scoping
 
-Contrary to other implementations of the S language, R has adopted the
-evaluation model of Scheme.
+Contrary to other implementations of the S language, R has adopted an
+evaluation model in which nested function definitions are lexically
+scoped.  This is analogous to the evalutation model in Scheme.
 
 This difference becomes manifest when @emph{free} variables occur in a
 function.  Free variables are those which are neither formal parameters
 (occurring in the argument list of the function) nor local variables
-(created by assigning to them in the body of the function).  Whereas S
-(like C) by default uses @emph{static} scoping, R (like Scheme) has
-adopted @emph{lexical} scoping.  This means the values of free variables
-are determined by a set of global variables in S, but in R by the
-bindings that were in effect at the time the function was created.
+(created by assigning to them in the body of the function).  In S, the
+values of free variables are determined by a set of global variables
+(similar to C, there is only local and global scope).  In R, they are
+determined by the bindings that were in effect at the time the function
+was created.
 
 Consider the following function:
 
@@ -1220,26 +1221,26 @@ it.  With S, one solution is to add an extra parameter to the function
 and to the optimizer to pass in these extras, which however can only
 work if the optimizer supports this.
 
-Lexical scoping allows using function closures and maintaining local
-state.  A simple example (taken from Abelson and Sussman) is obtained by
-typing @kbd{demo("scoping")} at the R prompt.  Further information is
-provided in the standard R reference ``R: A Language for Data Analysis
-and Graphics'' (@pxref{What documentation exists for R?}) and in Robert
-Gentleman and Ross Ihaka (2000), ``Lexical Scope and Statistical
-Computing'', @uref{http://www.amstat.org/publications/jcgs/, ,
-@emph{Journal of Computational and Graphical Statistics}}, @strong{9},
-491--508.
+Nested lexically scoped functions allow using function closures and
+maintaining local state.  A simple example (taken from Abelson and
+Sussman) is obtained by typing @kbd{demo("scoping")} at the R prompt.
+Further information is provided in the standard R reference ``R: A
+Language for Data Analysis and Graphics'' (@pxref{What documentation
+exists for R?}) and in Robert Gentleman and Ross Ihaka (2000), ``Lexical
+Scope and Statistical Computing'',
+@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+Computational and Graphical Statistics}}, @strong{9}, 491--508.
 
-Lexical scoping also implies a further major difference.  Whereas S
-stores all objects as separate files in a directory somewhere (usually
-@file{.Data} under the current directory), R does not.  All objects in R
-are stored internally.  When R is started up it grabs a piece of memory
-and uses it to store the objects.  R performs its own memory management
-of this piece of memory, growing and shrinking its size as needed.
-Having everything in memory is necessary because it is not really
-possible to externally maintain all relevant ``environments'' of
-symbol/value pairs.  This difference also seems to make R @emph{faster}
-than S.
+Nested lexically scoped functions also imply a further major difference.
+Whereas S stores all objects as separate files in a directory somewhere
+(usually @file{.Data} under the current directory), R does not.  All
+objects in R are stored internally.  When R is started up it grabs a
+piece of memory and uses it to store the objects.  R performs its own
+memory management of this piece of memory, growing and shrinking its
+size as needed.  Having everything in memory is necessary because it is
+not really possible to externally maintain all relevant ``environments''
+of symbol/value pairs.  This difference also seems to make R
+@emph{faster} than S.
 
 The down side is that if R crashes you will lose all the work for the
 current session.  Saving and restoring the memory ``images'' (the
