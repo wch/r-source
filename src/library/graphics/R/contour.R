@@ -17,7 +17,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		z <- x
 		x <- seq(0, 1, len = nrow(z))
 	    }
-	} else stop("no `z' matrix specified")
+	} else stop("no 'z' matrix specified")
     } else if (is.list(x)) {
 	y <- x$y
 	x <- x$x
@@ -25,7 +25,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
 	stop("increasing x and y values expected")
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
-	stop("no proper `z' matrix specified")
+	stop("no proper 'z' matrix specified")
     ##- don't lose  dim(.)
     if (!is.double(z)) storage.mode(z) <- "double"
     invisible(.Internal(contourLines(as.double(x), as.double(y), z,
@@ -54,7 +54,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		z <- x
 		x <- seq(0, 1, len = nrow(z))
 	    }
-	} else stop("no `z' matrix specified")
+	} else stop("no 'z' matrix specified")
     } else if (is.list(x)) {
 	y <- x$y
 	x <- x$x
@@ -62,7 +62,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
 	stop("increasing x and y values expected")
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
-	stop("no proper `z' matrix specified")
+	stop("no proper 'z' matrix specified")
     if (!add) {
         localPlotWindow <-
             function(xlim, ylim, ..., main, sub, xlab, ylab, outer, line)

@@ -27,7 +27,7 @@ load <- function (file, envir = parent.frame())
             close(con)
             on.exit()
         }
-        else stop("the input does not start with a magic number compatible with  loading from a connection")
+        else stop("the input does not start with a magic number compatible with loading from a connection")
         .Internal(load(file, envir))
     }
     else .Internal(loadFromConn(con, envir))

@@ -48,10 +48,10 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             ifault = integer(1),
             PACKAGE = "base")
     switch(z$ifault,
-           stop("This should not happen"),
-           stop("This should not happen"),
-           warning("Algorithm did not converge"),
-           stop(paste("Incorrect specification of", sQuote("table"),
+           stop("this should not happen"),
+           stop("this should not happen"),
+           warning("algorithm did not converge"),
+           stop(paste("incorrect specification of", sQuote("table"),
                       "or", sQuote("start"))))
 
     if (print)

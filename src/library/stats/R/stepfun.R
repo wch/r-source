@@ -28,7 +28,7 @@ as.stepfun <- function(x, ...) UseMethod("as.stepfun")
 as.stepfun.default <- function(x, ...)
 {
     if(is.stepfun(x)) x
-    else stop("no `as.stepfun' method available for `x'")
+    else stop("no 'as.stepfun' method available for 'x'")
 }
 
 ## Quite obvious  that I will want to have  knots.spline(..)  etc......
@@ -73,7 +73,7 @@ summary.stepfun <- function(object, ...)
 
 ## Purpose: plot method for  stepfun (step function) objects
 ## --------------------------------------------------------------------
-## Arguments: for numeric `x', do empirical CDF;	  ==> `` ?plot.step ''
+## Arguments: for numeric 'x', do empirical CDF;	  ==> `` ?plot.step ''
 ## --------------------------------------------------------------------
 ## Author: Martin Maechler <maechler@stat.math.ethz.ch>
 ##	      1990, U.Washington, Seattle; improved, Dec.1993

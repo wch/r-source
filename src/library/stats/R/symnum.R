@@ -51,12 +51,12 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	}
     }
     else if(!is.logical(x))
-	stop("`x' must be numeric or logical")
+	stop("'x' must be numeric or logical")
     else  { ## logical x : no need for cut(points)
 	if(missing(symbols))		# different default
 	    symbols <- c(".","|")
 	else if(length(symbols) != 2)
-	    stop("must have 2 `symbols' for logical `x' argument")
+	    stop("must have 2 'symbols' for logical 'x' argument")
 	iS <- x + 1 # F = 1,  T = 2
     }
     if(has.na) {
@@ -89,11 +89,11 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	}
 	else if(is.null(abbr.colnames) || is.null(dimnames(ans)[[2]]))
 	    dimnames(ans)[[2]] <- rep("", dim(ans)[2])
-	else if(!is.logical(abbr.colnames)) stop("invalid `abbr.colnames'")
+	else if(!is.logical(abbr.colnames)) stop("invalid 'abbr.colnames'")
     }
     if(legend) {
 	legend <- c(rbind(sapply(cutpoints,format),
-			  c(paste("`",symbols,"'",sep=""),"")),
+			  c(sQuote(symbols),"")),
 		    if(has.na) paste("	    ## NA: `",na,"'",sep=""))
 	attr(ans,"legend") <- paste(legend[-2*(ns+1)], collapse=" ")
     }

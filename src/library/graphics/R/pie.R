@@ -4,7 +4,7 @@ pie <-
               main = NULL, ...)
 {
     if (!is.numeric(x) || any(is.na(x) | x <= 0))
-	stop("pie: `x' values must be positive.")
+	stop("'x' values must be positive.")
     if (is.null(labels))
 	labels <- as.character(1:length(x))
     x <- c(0, cumsum(x)/sum(x))

@@ -588,7 +588,7 @@ residuals.nls <- function(object, type = c("response", "pearson"), ...)
 logLik.nls <- function(object, REML = FALSE, ...)
 {
     if (REML)
-        stop("Cannot calculate REML log-likelihood for nls objects")
+        stop("cannot calculate REML log-likelihood for nls objects")
 
     res <- object$m$resid()
     N <- length(res)

@@ -86,25 +86,25 @@ arima <- function(x, order = c(0, 0, 0),
 
     x <- as.ts(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     storage.mode(x) <- "double"  # a precaution
     dim(x) <- NULL
     n <- length(x)
 
     if(!missing(order))
         if(!is.numeric(order) || length(order) != 3 || any(order < 0))
-            stop("`order' must be a non-negative numeric vector of length 3")
+            stop("'order' must be a non-negative numeric vector of length 3")
     if(!missing(seasonal))
         if(is.list(seasonal)) {
             if(is.null(seasonal$order))
-                stop("`seasonal' must be a list with component `order'")
+                stop("'seasonal' must be a list with component 'order'")
             if(!is.numeric(seasonal$order) || length(seasonal$order) != 3
                || any(seasonal$order < 0))
-                stop("`seasonal$order' must be a non-negative numeric vector of length 3")
+                stop("'seasonal$order' must be a non-negative numeric vector of length 3")
         } else if(is.numeric(order)) {
             if(length(order) == 3) seasonal <- list(order=seasonal)
-            else ("`seasonal' is of the wrong length")
-        } else stop("`seasonal' must be a list with component `order'")
+            else ("'seasonal' is of the wrong length")
+        } else stop("'seasonal' must be a list with component 'order'")
 
     if (is.null(seasonal$period) || is.na(seasonal$period)
         ||seasonal$period == 0) seasonal$period <- frequency(x)
@@ -183,7 +183,7 @@ arima <- function(x, order = c(0, 0, 0),
 
     if(!is.null(init)) {
         if(length(init) != length(init0))
-            stop("`init' is of the wrong length")
+            stop("'init' is of the wrong length")
         if(any(ind <- is.na(init))) init[ind] <- init0[ind]
         if(method == "ML") {
             ## check stationarity

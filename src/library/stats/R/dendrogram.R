@@ -9,7 +9,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     z <- list()
     nMerge <- length(oHgt <- object$height)
     if (nMerge != nrow(object$merge))
-	stop("`merge' and `height' do not fit!")
+	stop("'merge' and 'height' do not fit!")
     hMax <- oHgt[nMerge]
     one <- 1:1;	   two <- 2:2 # integer!
     for (k in 1:nMerge) {
@@ -60,7 +60,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     z
 }
 
-### MM: `FIXME'	 (2002-05-14):
+### MM: 'FIXME'	 (2002-05-14):
 ###	 =====
 ## We currently (mis)use a node's "members" attribute for two things:
 ## 1) #{sub nodes}
@@ -114,7 +114,7 @@ midcache.dendrogram <- function (x, type = "hclust")
 ##  Martin Maechler, 15 May 2002
 print.dendrogram <- function(x, digits = getOption("digits"), ...)
 {
-    cat("`dendrogram' ")
+    cat("'dendrogram' ")
     if(is.leaf(x))
 	cat("leaf '", format(attr(x, "label"), digits = digits),"'", sep='')
     else
@@ -134,7 +134,7 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 ## -- e.g. when 'object' is part of a larger structure which *is* str()ed
 ## with default max.level= 0,  the dendrogram shouldn't be str()ed to all levels
 
-    ## FIXME: `wid' argument is currently disregarded
+    ## FIXME: 'wid' argument is currently disregarded
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
 	lis <- lis[!(names(lis) %in% dropNam)]

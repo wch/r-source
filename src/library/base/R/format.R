@@ -148,7 +148,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     else stop("\"mode\" must be \"double\" (\"real\") or \"integer\"")
     if (mode == "character" || (!is.null(format) && format == "s")) {
 	if (mode != "character") {
-	    warning('formatC: Coercing argument to "character" for format="s"')
+	    warning('coercing argument to "character" for format="s"')
 	    x <- as.character(x)
 	}
 	return(format.char(x, width=width, flag=flag))
@@ -162,7 +162,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	else if (format == "d") {
 	    if (mode != "integer") mode <- storage.mode(x) <- "integer"
 	}
-	else stop('"format" must be in {"f","e","E","g","G", "fg", "s"}')
+	else stop('"format" must be one of {"f","e","E","g","G", "fg", "s"}')
     }
     some.special <- !all(Ok <- is.finite(x))
     if (some.special) {

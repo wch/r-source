@@ -27,7 +27,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
                 x <- seq(0, 1, len = nrow(z))
             }
         }
-        else stop("no `z' matrix specified")
+        else stop("no 'z' matrix specified")
     }
     else if (is.list(x)) {
         y <- x$y

@@ -52,7 +52,7 @@ getDLLRegisteredRoutines.character <- function(dll)
 
     dll <- which(w)[1]
     if(sum(w) > 1)
-        warning("Multiple DLLs match ", dll, ". Using ", dll$path)
+        warning("multiple DLLs match ", dll, ". Using ", dll$path)
 
     getDLLRegisteredRoutines(dlls[[dll]])
 }
@@ -62,7 +62,7 @@ getDLLRegisteredRoutines.DLLInfo <- function(dll)
 {
     ## Provide methods for the different types.
     if(!inherits(dll, "DLLInfo"))
-        stop("Must specify DLL via a DLLInfo object. See getLoadedDLLs()")
+        stop("must specify DLL via a DLLInfo object. See getLoadedDLLs()")
 
     info <- dll$info
     els <- .Call("R_getRegisteredRoutines", info, PACKAGE = "base")

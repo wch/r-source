@@ -72,7 +72,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
             stop("sample is too sparse to find alph2")
         if (fSD(lower, cnt, alph2, c1, n, d) *
             fSD(upper, cnt, alph2, c1, n, d) > 0)
-            stop("No solution in the specified range of bandwidths")
+            stop("no solution in the specified range of bandwidths")
         res <- uniroot(fSD, c(lower, upper), tol=0.1*lower,
                        x=cnt, alph2=alph2, c1=c1, n=n, d=d)$root
     }

@@ -23,8 +23,9 @@ smooth.spline <-
 	}
         n <- length(x)
         if(is.null(nk)) nk <- n.kn(n)
-        else if(!is.numeric(nk)) stop("`nknots' must be numeric <= n")
-        else if(nk > n) stop("can't use more inner knots than unique x values")
+        else if(!is.numeric(nk)) stop("'nknots' must be numeric <= n")
+        else if(nk > n)
+            stop("cannot use more inner knots than unique x values")
 	c(rep(x[1], 3), x[seq(1,n, len= nk)], rep(x[n], 3))
     }
     contr.sp <- list(low = -1.5,## low = 0.      was default till R 1.3.x
@@ -35,7 +36,7 @@ smooth.spline <-
     contr.sp[(names(control.spar))] <- control.spar
     if(!all(sapply(contr.sp[1:4],is.double)) ||
        contr.sp$tol < 0 || contr.sp$eps <= 0 || contr.sp$maxit <= 0)
-        stop("invalid `control.spar'")
+        stop("invalid 'control.spar'")
 
     xy <- xy.coords(x, y)
     y <- xy$y
@@ -63,7 +64,7 @@ smooth.spline <-
     ybar <- tmp[, 2]/ifelse(wbar > 0, wbar, 1)
     yssw <- sum(tmp[, 3] - wbar*ybar^2) # will be added to RSS for GCV
     nx <- length(ux)
-    if(nx <= 3) stop("need at least four unique `x' values")
+    if(nx <= 3) stop("need at least four unique 'x' values")
     if(cv && nx < n)
         warning(paste("crossvalidation with non-unique", sQuote("x"),
                       "seems doubtful"))
@@ -125,7 +126,7 @@ smooth.spline <-
     lev <- fit$lev
     df <- sum(lev)
     if(is.na(df))
-	stop("NA lev[]; probably smoothing parameter `spar' way too large!")
+	stop("NA lev[]; probably smoothing parameter 'spar' way too large!")
     if(fit$ier > 0 ) {
         sml <- fit$spar < 0.5
 	wtxt <- paste("smoothing parameter value too",
@@ -242,7 +243,7 @@ supsmu <-
 {
     if(span == "cv") span <- 0
     n <- length(y)
-    if(!n || !is.numeric(y)) stop("`y' must be numeric vector")
+    if(!n || !is.numeric(y)) stop("'y' must be numeric vector")
     if(length(x) != n) stop("number of observations in x and y must match.")
     if(length(wt) != n)
 	stop("number of weights must match number of observations.")

@@ -113,7 +113,7 @@ as.ts.default <- function(x)
     tsps <- sapply(sers[tsser], tsp)
     freq <- mean(tsps[3,])
     if(max(abs(tsps[3,] - freq)) > getOption("ts.eps")) {
-        stop("Not all series have the same frequency")
+        stop("not all series have the same frequency")
     }
     if(union) {
         st <- min(tsps[1,])
@@ -122,7 +122,7 @@ as.ts.default <- function(x)
         st <- max(tsps[1,])
         en <- min(tsps[2,])
         if(st > en) {
-            warning("Non-intersecting series")
+            warning("non-intersecting series")
             return(NULL)
         }
     }
@@ -227,7 +227,7 @@ ts.intersect <- function(..., dframe = FALSE)
 diff.ts <- function (x, lag = 1, differences = 1, ...)
 {
     if (lag < 1 | differences < 1)
-        stop("Bad value for lag or differences")
+        stop("bad value for lag or differences")
     if (lag * differences >= NROW(x)) return(x[0])
     ## <FIXME>
     ## lag() and its default method are defined in package ts, so we
@@ -430,7 +430,7 @@ plot.ts <-
 		      cex=cex.main, font=font.main, col=col.main, ...)
 	    panel <- match.fun(panel)
 	    nser <- NCOL(x)
-	    if(nser > 10) stop("Can't plot more than 10 series as \"multiple\"")
+	    if(nser > 10) stop("cannot plot more than 10 series as \"multiple\"")
 	    if(is.null(main)) main <- xlabel
 	    nm <- colnames(x)
 	    if(is.null(nm)) nm <- paste("Series", 1:nser)
@@ -591,7 +591,7 @@ window.default <- function(x, start = NULL, end = NULL,
     else switch(length(start),
 		start,
 		start[1] + (start[2] - 1)/xfreq,
-		stop("Bad value for start"))
+		stop("bad value for start"))
     if(start < xtsp[1] && !extend) {
 	start <- xtsp[1]
 	warning("start value not changed")
@@ -602,7 +602,7 @@ window.default <- function(x, start = NULL, end = NULL,
     else switch(length(end),
 		end,
 		end[1] + (end[2] - 1)/xfreq,
-		stop("Bad value for end"))
+		stop("bad value for end"))
     if(end > xtsp[2] && !extend) {
 	end <- xtsp[2]
 	warning("end value not changed")

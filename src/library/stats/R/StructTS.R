@@ -67,7 +67,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         stop("only implemented for univariate time series")
     x <- as.ts(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     storage.mode(x) <- "double"
     if(is.na(x[1]))
         stop("the first value of the time series must not be missing")

@@ -3,7 +3,7 @@ cut <- function(x, ...) UseMethod("cut")
 cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
 			 right=TRUE, dig.lab=3, ...)
 {
-    if (!is.numeric(x)) stop("cut: x must be numeric")
+    if (!is.numeric(x)) stop("'x' must be numeric")
     if (length(breaks) == 1) {
 	if (is.na(breaks) | breaks < 2)
 	    stop("invalid number of intervals")
@@ -13,7 +13,7 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
 	breaks <- seq(rx[1] - dx/1000,
 		      rx[2] + dx/1000, len=nb)
     } else nb <- length(breaks <- sort(breaks))
-    if (any(duplicated(breaks))) stop("cut: breaks are not unique")
+    if (any(duplicated(breaks))) stop("'breaks' are not unique")
     codes.only <- FALSE
     if (is.null(labels)) {#- try to construct nice ones ..
 	for(dig in dig.lab:12) {

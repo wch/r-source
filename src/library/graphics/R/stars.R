@@ -46,7 +46,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
             locations <- cbind(rep.int(locations[1],n.loc),
                                rep.int(locations[2],n.loc))
             if(!missing(labels) && n.loc > 1)
-                warning("labels don't make sense for a single location")
+                warning("labels do not make sense for a single location")
             else labels <- NULL
         }
         else {

@@ -110,7 +110,7 @@ smoothEnds <- function(y, k = 3)
 
     k <- as.integer(k)
     if (k < 0 || k%%2 == 0)
-        stop("bandwidth `k' must be >= 1 and odd!")
+        stop("bandwidth 'k' must be >= 1 and odd!")
     k <- k %/% 2
     if (k < 1) return(y)
     ## else: k >= 1: do something

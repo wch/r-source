@@ -11,7 +11,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(ists)  xtsp <- tsp(x)
     x <- as.matrix(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     n.used <- nrow(x)
     nser <- ncol(x)
     if(rescale) {

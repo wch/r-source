@@ -11,7 +11,7 @@ function(file = "", what = double(0), nmax = -1, n = -1, sep = "",
         if(missing(nmax))
             nmax <- n / pmax(length(what), 1)
         else
-            stop("Either specify `nmax' or `n', but not both.")
+            stop("either specify 'nmax' or 'n', but not both.")
     }
     if(is.character(file))
         if(file == "") file <- stdin()

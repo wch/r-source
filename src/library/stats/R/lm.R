@@ -749,7 +749,7 @@ predict.mlm <-
 {
     if(missing(newdata)) return(object$fitted)
     if(se.fit)
-	stop("The 'se.fit' argument is not yet implemented for mlm objects")
+	stop("the 'se.fit' argument is not yet implemented for mlm objects")
     if(missing(newdata)) {
         X <- model.matrix(object)
         offset <- object$offset

@@ -77,7 +77,7 @@ rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
     if(gamma != 1)# revert gamma corrected hsv values
         rgb <- rgb ^ (1/gamma)
     if(any(0 > rgb) || any(rgb > 1))
-        stop("rgb values must be in [0,maxColorValue]")
+        stop("rgb values must be in [0, maxColorValue]")
 
     .Internal(rgb2hsv(rgb))
 }
@@ -88,14 +88,14 @@ palette <- function(value)
     else invisible(.Internal(palette(value)))
 }
 
-## A quick little ``rainbow'' function -- improved by MM
+## A quick little ''rainbow'' function -- improved by MM
 ## doc in	../man/palettes.Rd
 rainbow <-
     function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
 {
     if ((n <- as.integer(n[1])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
-	    stop("`start' and `end' must be distinct and in [0,1].")
+	    stop("'start' and 'end' must be distinct and in [0, 1].")
 	hsv(h = seq(start, ifelse(start > end, 1, 0) + end, length= n) %% 1,
 	    s, v, gamma)
     } else character(0)

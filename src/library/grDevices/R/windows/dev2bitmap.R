@@ -1,9 +1,9 @@
 dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
                        pointsize, ...)
 {
-    if(missing(file)) stop("`file' is missing with no default")
+    if(missing(file)) stop("'file' is missing with no default")
     if(!is.character(file) || nchar(file) == 0)
-        stop("`file' is must be a non-empty character string")
+        stop("'file' is must be a non-empty character string")
     gsexe <- Sys.getenv("R_GSCMD")
     if(is.null(gsexe) || nchar(gsexe) == 0) gsexe <- "gswin32c.exe"
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE, invisible=TRUE)
@@ -39,9 +39,9 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
 bitmap <- function(file, type="png256", height=6, width=6, res=72,
                    pointsize, ...)
 {
-    if(missing(file)) stop("`file' is missing with no default")
+    if(missing(file)) stop("'file' is missing with no default")
     if(!is.character(file) || nchar(file) == 0)
-        stop("`file' is must be a non-empty character string")
+        stop("'file' is must be a non-empty character string")
     gsexe <- Sys.getenv("R_GSCMD")
     if(is.null(gsexe) || nchar(gsexe) == 0) gsexe <- "gswin32c.exe"
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE, invisible=TRUE)

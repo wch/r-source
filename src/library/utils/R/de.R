@@ -57,7 +57,7 @@ de.setup <- function(ilist, list.names, incols)
 		i <- i+1
 	    }
 	}
-	else stop("de.setup: wrong argument to dataentry")
+	else stop("wrong argument to dataentry")
     }
     names(ivec) <- inames
     return(ivec)
@@ -170,6 +170,6 @@ data.entry <- function(..., Modes=NULL, Names=NULL)
 	assign(i, tmp1[[j]], env=.GlobalEnv)
 	j <- j+1
     }
-    if(j==1) warning("not assigned anything!")
+    if(j==1) warning("not assigned anything")
     invisible(nn)
 }

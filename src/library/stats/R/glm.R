@@ -17,7 +17,7 @@ glm <- function(formula, family = gaussian, data, weights,
     if(is.function(family)) family <- family()
     if(is.null(family$family)) {
 	print(family)
-	stop("`family' not recognized")
+	stop("'family' not recognized")
     }
 
     ## extract x, y, etc from the model formula and frame
@@ -38,7 +38,7 @@ glm <- function(formula, family = gaussian, data, weights,
 	   "glm.fit" = 1,
 	   "glm.fit.null" = 1,
 	   ## else
-	   stop("invalid `method': ", method))
+	   stop("invalid 'method': ", method))
     mt <- attr(mf, "terms") # allow model.frame to update it
 
     Y <- model.response(mf, "numeric")
@@ -48,9 +48,9 @@ glm <- function(formula, family = gaussian, data, weights,
     offset <- model.offset(mf)
     ## check weights and offset
     if( !is.null(weights) && any(weights < 0) )
-	stop("Negative wts not allowed")
+	stop("negative wts not allowed")
     if(!is.null(offset) && length(offset) != NROW(Y))
-	stop("Number of offsets is ", length(offset),
+	stop("number of offsets is ", length(offset),
 	     ", should equal ", NROW(Y), " (number of observations)")
     ## these allow starting values to be expressed in terms of other vars.
     mustart <- model.extract(mf, "mustart")
@@ -121,7 +121,7 @@ glm.fit <-
     linkinv <- family$linkinv
     mu.eta <- family$mu.eta
     if (!is.function(variance) || !is.function(linkinv) )
-	stop("illegal `family' argument")
+	stop("illegal 'family' argument")
     valideta <- family$valideta
     if (is.null(valideta))
 	valideta <- function(eta) TRUE
@@ -139,11 +139,11 @@ glm.fit <-
     if(EMPTY) {
         eta <- rep.int(0, nobs) + offset
         if (!valideta(eta))
-            stop("Invalid linear predictor values in empty model")
+            stop("invalid linear predictor values in empty model")
         mu <- linkinv(eta)
         ## calculate initial deviance and coefficient
         if (!validmu(mu))
-            stop("Invalid fitted means in empty model")
+            stop("invalid fitted means in empty model")
         dev <- sum(dev.resids(y, mu, weights))
         w <- ((weights * mu.eta(eta)^2)/variance(mu))^0.5
         residuals <- (y - mu)/mu.eta(eta)
@@ -157,7 +157,7 @@ glm.fit <-
             if(!is.null(etastart)) etastart
             else if(!is.null(start))
                 if (length(start) != nvars)
-                    stop("Length of start should equal ", nvars,
+                    stop("length of start should equal ", nvars,
                          " and correspond to initial coefs for ",
                          deparse(xnames))
                 else {
@@ -167,7 +167,7 @@ glm.fit <-
             else family$linkfun(mustart)
         mu <- linkinv(eta)
         if (!(validmu(mu) && valideta(eta)))
-            stop("Can't find valid starting values: please specify some")
+            stop("cannot find valid starting values: please specify some")
         ## calculate initial deviance and coefficient
         devold <- sum(dev.resids(y, mu, weights))
         boundary <- conv <- FALSE
@@ -188,7 +188,7 @@ glm.fit <-
 
             if (all(!good)) {
                 conv <- FALSE
-                warning("No observations informative at iteration ", iter)
+                warning("no observations informative at iteration ", iter)
                 break
             }
             z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
@@ -208,7 +208,7 @@ glm.fit <-
                             PACKAGE = "base")
             if (any(!is.finite(fit$coefficients))) {
                 conv <- FALSE
-                warning("Non-finite coefficients at iteration ", iter)
+                warning("non-finite coefficients at iteration ", iter)
                 break
             }
             ## stop if not enough parameters
@@ -227,11 +227,11 @@ glm.fit <-
             if (!is.finite(dev)) {
                 if(is.null(coefold))
                     stop("no valid set of coefficients has been found:please supply starting values", call. = FALSE)
-                warning("Step size truncated due to divergence", call. = FALSE)
+                warning("step size truncated due to divergence", call. = FALSE)
                 ii <- 1
                 while (!is.finite(dev)) {
                     if (ii > control$maxit)
-                        stop("inner loop 1; can't correct step size")
+                        stop("inner loop 1; cannot correct step size")
                     ii <- ii + 1
                     start <- (start + coefold)/2
                     eta <- drop(x %*% start)
@@ -244,11 +244,11 @@ glm.fit <-
             }
             ## check for fitted values outside domain.
             if (!(valideta(eta) && validmu(mu))) {
-                warning("Step size truncated: out of bounds", call. = FALSE)
+                warning("step size truncated: out of bounds", call. = FALSE)
                 ii <- 1
                 while (!(valideta(eta) && validmu(mu))) {
                     if (ii > control$maxit)
-                        stop("inner loop 2; can't correct step size")
+                        stop("inner loop 2; cannot correct step size")
                     ii <- ii + 1
                     start <- (start + coefold)/2
                     eta <- drop(x %*% start)
@@ -270,8 +270,8 @@ glm.fit <-
             }
         } ##-------------- end IRLS iteration -------------------------------
 
-        if (!conv) warning("Algorithm did not converge")
-        if (boundary) warning("Algorithm stopped at boundary value")
+        if (!conv) warning("algorithm did not converge")
+        if (boundary) warning("algorithm stopped at boundary value")
         eps <- 10*.Machine$double.eps
         if (family$family == "binomial") {
             if (any(mu > 1 - eps) || any(mu < eps))
@@ -366,7 +366,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     named <- if (is.null(names(dotargs)))
 	rep(FALSE, length(dotargs)) else (names(dotargs) != "")
     if(any(named))
-	warning("The following arguments to anova.glm(..) are invalid and dropped: ",
+	warning("the following arguments to anova.glm are invalid and dropped: ",
 		paste(deparse(dotargs[named]), collapse=", "))
     dotargs <- dotargs[!named]
     is.glm <- unlist(lapply(dotargs,function(x) inherits(x,"glm")))
@@ -453,7 +453,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
     sameresp <- responses==responses[1]
     if(!all(sameresp)) {
 	object <- object[sameresp]
-	warning("Models with response ", deparse(responses[!sameresp]),
+	warning("models with response ", deparse(responses[!sameresp]),
 		" removed because response differs from ", "model 1")
     }
 

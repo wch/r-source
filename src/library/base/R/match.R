@@ -50,9 +50,9 @@ char.expand <-
     function(input, target, nomatch = stop("no match"))
 {
     if(length(input) != 1)
-	stop("char.expand: input must have length 1")
+	stop("input must have length 1")
     if(!(is.character(input) && is.character(target)))
-	stop("char.expand: input and target must be character")
+	stop("input and target must be character vectors")
     y <- .Internal(charmatch(input,target))
     if(any(is.na(y))) eval(nomatch)
     target[y]

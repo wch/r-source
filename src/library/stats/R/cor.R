@@ -72,7 +72,7 @@ cov2cor <- function(V)
     ## Author: Martin Maechler, Date: 12 Jun 2003, 11:50
     p <- (d <- dim(V))[1]
     if(!is.numeric(V) || length(d) != 2 || p != d[2])
-	stop("`V' is not a square numeric matrix")
+	stop("'V' is not a square numeric matrix")
     Is <- sqrt(1/diag(V)) # diag( 1/sigma_i )
     if(any(!is.finite(Is)))
 	warning("diagonal has non-finite entries")

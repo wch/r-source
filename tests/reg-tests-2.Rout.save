@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-01-20), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2005-01-28), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1759,8 +1759,8 @@ Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    68.01 
 Residual Deviance: 60.66 	AIC: 168.7 
 Warning messages:
-1: Step size truncated: out of bounds 
-2: Step size truncated: out of bounds 
+1: step size truncated: out of bounds 
+2: step size truncated: out of bounds 
 > ## step reduction failed in 1.4.1
 > set.seed(123)
 > y <- rpois(100, pmax(3*x, 0))
@@ -1778,33 +1778,33 @@ Residual Deviance: 228.5 	AIC: 344.7
 There were 27 warnings (use warnings() to see them)
 > warnings()
 Warning messages:
-1: Step size truncated: out of bounds
-2: Step size truncated: out of bounds
-3: Step size truncated: out of bounds
-4: Step size truncated: out of bounds
-5: Step size truncated: out of bounds
-6: Step size truncated: out of bounds
-7: Step size truncated: out of bounds
-8: Step size truncated: out of bounds
-9: Step size truncated: out of bounds
-10: Step size truncated: out of bounds
-11: Step size truncated: out of bounds
-12: Step size truncated: out of bounds
-13: Step size truncated: out of bounds
-14: Step size truncated: out of bounds
-15: Step size truncated: out of bounds
-16: Step size truncated: out of bounds
-17: Step size truncated: out of bounds
-18: Step size truncated: out of bounds
-19: Step size truncated: out of bounds
-20: Step size truncated: out of bounds
-21: Step size truncated: out of bounds
-22: Step size truncated: out of bounds
-23: Step size truncated: out of bounds
-24: Step size truncated: out of bounds
-25: Step size truncated: out of bounds
-26: Algorithm did not converge in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
-27: Algorithm stopped at boundary value in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
+1: step size truncated: out of bounds
+2: step size truncated: out of bounds
+3: step size truncated: out of bounds
+4: step size truncated: out of bounds
+5: step size truncated: out of bounds
+6: step size truncated: out of bounds
+7: step size truncated: out of bounds
+8: step size truncated: out of bounds
+9: step size truncated: out of bounds
+10: step size truncated: out of bounds
+11: step size truncated: out of bounds
+12: step size truncated: out of bounds
+13: step size truncated: out of bounds
+14: step size truncated: out of bounds
+15: step size truncated: out of bounds
+16: step size truncated: out of bounds
+17: step size truncated: out of bounds
+18: step size truncated: out of bounds
+19: step size truncated: out of bounds
+20: step size truncated: out of bounds
+21: step size truncated: out of bounds
+22: step size truncated: out of bounds
+23: step size truncated: out of bounds
+24: step size truncated: out of bounds
+25: step size truncated: out of bounds
+26: algorithm did not converge in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
+27: algorithm stopped at boundary value in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
 > 
 > 
 > ## extending char arrrays
@@ -3928,7 +3928,7 @@ longer object length
 [1] FALSE  TRUE FALSE FALSE
 Warning message:
 longer object length
-	is not a multiple of shorter object length in: x1 < y1 
+ 	is not a multiple of shorter object length in: x1 < y1 
 > x1 < as.matrix(y1) # ditto
       [,1]
 [1,] FALSE

@@ -21,13 +21,13 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     x <- x[OK]
     n <- n[OK]
     if ((k <- length(x)) < 1)
-	stop("Not enough data")
+	stop("not enough data")
     if (any(n <= 0))
-	stop("Elements of n must be positive")
+	stop("elements of n must be positive")
     if (any(x < 0))
-	stop("Elements of x must be nonnegative")
+	stop("elements of x must be nonnegative")
     if (any(x > n))
-	stop("Elements of x must not be greater than those of n")
+	stop("elements of x must not be greater than those of n")
 
     if (is.null(p) && (k == 1))
 	p <- .5
@@ -39,7 +39,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 	    stop("p must have the same length as x and n")
 	p <- p[OK]
 	if (any((p <= 0) | (p >= 1)))
-	    stop("Elements of p must be in (0,1)")
+	    stop("elements of p must be in (0,1)")
     }
 
     alternative <- match.arg(alternative)

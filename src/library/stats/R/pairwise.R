@@ -75,7 +75,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
     x <- x[OK]
     n <- n[OK]
     if (length(x) < 2)
-        stop("Too few groups")
+        stop("too few groups")
     compare.levels <- function(i, j) {
         prop.test(x[c(i,j)], n[c(i,j)], ...)$p.value
     }

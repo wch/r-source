@@ -25,7 +25,7 @@ matplot <- function(x, y, type = "p",
     ylabel <- if (!missing(y)) deparse(substitute(y))
     ##
     if(missing(x)) {
-	if(missing(y)) stop("Must specify at least one of `x' and `y'")
+	if(missing(y)) stop("Must specify at least one of 'x' and 'y'")
 	else x <- 1:NROW(y)
     } else if(missing(y)) {
 	y <- x;		ylabel <- xlabel
@@ -34,10 +34,10 @@ matplot <- function(x, y, type = "p",
     kx <- ncol(x <- as.matrix(x))
     ky <- ncol(y <- as.matrix(y))
     n <- nrow(x)
-    if(n != nrow(y)) stop("`x' and `y' must have same number of rows")
+    if(n != nrow(y)) stop("'x' and 'y' must have same number of rows")
 
     if(kx > 1 && ky > 1 && kx != ky)
-	stop("`x' and `y' must have only 1 or the same number of columns")
+	stop("'x' and 'y' must have only 1 or the same number of columns")
     if(kx == 1) x <- matrix(x, nrow = n, ncol = ky)
     if(ky == 1) y <- matrix(y, nrow = n, ncol = kx)
     k <- max(kx,ky)## k == kx == ky

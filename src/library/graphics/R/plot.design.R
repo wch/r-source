@@ -9,11 +9,11 @@ plot.design <-
 	##	      y : one numeric vector
 
 	if(!is.numeric(y))
-	    stop("`y' must be a numeric vector")
+	    stop("'y' must be a numeric vector")
 	if(!is.data.frame(x)) # or allow factor (see 2 lines below)?? {FIXME}
-	    stop("`x' must be a data frame")
+	    stop("'x' must be a data frame")
 	if(!all(sapply(x, is.factor)) & !is.factor(x)) # incl "ordered"
-	    stop("all columns/components of `x' must be factors")
+	    stop("all columns/components of 'x' must be factors")
 	k <- ncol(x)
         if(any(is.na(y))) {
             FUN <- fun; fun <- function(u) FUN(u [!is.na(u)])
@@ -44,13 +44,13 @@ plot.design <-
                  ...)
     } ## .plot.des()
 
-    ## `fun' dealing
+    ## 'fun' dealing
     fname <- deparse(substitute(fun))
     fun <- match.fun(fun)
     if (!(is.data.frame(x) | inherits(x,"formula")))
 	stop("x must be a dataframe or a formula!")
 
-    ## case `switch' :
+    ## case 'switch' :
     if(is.data.frame(x)) {
 	if(is.null(y)) { ## nothing to do
 	} else if(inherits(y,"formula")) {

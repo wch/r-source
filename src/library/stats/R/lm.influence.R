@@ -198,7 +198,7 @@ influence.measures <- function(model)
 	## Returns a matrix  of logicals structured like the argument
 	k <- ncol(infmat) - 4
 	if(n <= k)
-	    stop("Too few cases, n < k")
+	    stop("too few cases, n < k")
 	absmat <- abs(infmat)
 	result <- cbind(absmat[, 1:k] > 1, # |dfbetas| > 1
 			absmat[, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..

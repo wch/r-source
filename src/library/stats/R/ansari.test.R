@@ -79,7 +79,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
               uci <- NULL
               lci <- NULL
               if(length(u[u >= 0]) == 0 || length(l[l > 0]) == 0) {
-                  warning(paste("Samples differ in location: Cannot",
+                  warning(paste("samples differ in location: cannot",
                                 "compute confidence set, returning NA"))
                   return(c(NA, NA))
               }
@@ -105,7 +105,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             }
 
             cint <- if(length(sigma) < 1) {
-                warning("Cannot compute confidence set, returning NA")
+                warning("cannot compute confidence set, returning NA")
                 c(NA, NA)
             }
             else {
@@ -186,7 +186,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     c(min(x[x<=0], na.rm=TRUE)/max(y[y<0], na.rm=TRUE),
                       max(x[x<=0], na.rm=TRUE)/min(y[y<0], na.rm=TRUE))
             if (any(is.infinite(c(srangepos, srangeneg)))) {
-                warning(paste("Cannot compute asymptotic confidence",
+                warning(paste("cannot compute asymptotic confidence",
                               "set or estimator"))
                 conf.int <- FALSE
             } else {
@@ -196,8 +196,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     statu <- ab(srange[1], zq=qnorm(alpha/2))
                     statl <- ab(srange[2], zq=qnorm(alpha/2, lower=FALSE))
                     if (statu > 0 || statl < 0) {
-                        warning(paste("Samples differ in location:",
-                                      "Cannot compute confidence set,",
+                        warning(paste("samples differ in location:",
+                                      "cannot compute confidence set,",
                                       "returning NA"))
                         return(c(NA, NA))
                     }
@@ -223,15 +223,15 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 statl <- ab(srange[2], zq=0)
                 if (statu > 0 || statl < 0) {
                     ESTIMATE <- NA
-                    warning("Cannot compute estimate, returning NA")
+                    warning("cannot compute estimate, returning NA")
                 } else
                     ESTIMATE <- uniroot(ab, srange, tol=1e-4, zq=0)$root
             }
         }
         if(exact && TIES) {
-            warning("Cannot compute exact p-value with ties")
+            warning("cannot compute exact p-value with ties")
             if(conf.int)
-                warning(paste("Cannot compute exact confidence",
+                warning(paste("cannot compute exact confidence",
                               "intervals with ties"))
         }
     }

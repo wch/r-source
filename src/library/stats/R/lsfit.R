@@ -147,7 +147,7 @@ ls.diag <- function(ls.out)
 
     if( !is.null(ls.out$wt) ) {
 	if( any(ls.out$wt[good] == 0) )
-	    warning(paste("Observations with 0 weight not used in",
+	    warning(paste("observations with 0 weight not used in",
 			  "calculating standard deviation"))
 	resids <- resids * ls.out$wt[good]^0.5
     }

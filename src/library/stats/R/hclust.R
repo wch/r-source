@@ -38,7 +38,7 @@ hclust <- function(d, method="complete", members=NULL)
     if(is.null(n))
 	stop("invalid dissimilarities")
     if(n < 2)
-        stop("Must have n >= 2 objects to cluster")
+        stop("must have n >= 2 objects to cluster")
     len <- as.integer(n*(n-1)/2)
     if(length(d) != len)
         (if (length(d) < len) stop else warning
@@ -47,7 +47,7 @@ hclust <- function(d, method="complete", members=NULL)
     if(is.null(members))
         members <- rep(1, n)
     else if(length(members) != n)
-        stop("Invalid length of members")
+        stop("invalid length of members")
 
     hcl <- .Fortran("hclust",
 		    n = n,
@@ -224,7 +224,7 @@ function(x)
         ## If there is no label, we cannot recover the (names of the)
         ## objects the distances are for, and hence abort.
         if(is.null(label <- attr(x, "label")))
-            stop("Need dendrograms where all leaves have labels.")
+            stop("need dendrograms where all leaves have labels")
         return(as.dist(matrix(0, dimnames = list(label, label))))
     }
     children <- vector("list", length(x))

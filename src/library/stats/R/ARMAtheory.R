@@ -47,7 +47,7 @@ acf2AR <- function(acf)
 {
     r <- as.double(drop(acf))
     order.max <- length(r) - 1
-    if(order.max <= 0) stop("`acf' must be of length two or more")
+    if(order.max <= 0) stop("'acf' must be of length two or more")
     z <- .Fortran("eureka", as.integer(order.max), r, r,
                   coefs = double(order.max^2), vars = double(order.max),
                   double(order.max), PACKAGE = "stats")

@@ -32,7 +32,7 @@ edit.data.frame <-
     is.vector.unclass <- function(x) is.vector(unclass(x))
     if (length(name) > 0 && !all(sapply(name, is.vector.unclass)
                                  | sapply(name, is.factor)))
-        stop("Can only handle vector and factor elements")
+        stop("can only handle vector and factor elements")
 
     factor.mode <- match.arg(factor.mode)
 

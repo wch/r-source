@@ -9,7 +9,7 @@ sort <- function(x, partial = NULL, na.last = NA, decreasing = FALSE,
         x <- c(x)
     } else
     if(!is.atomic(x))
-        stop("`x' must be atomic")
+        stop("'x' must be atomic")
     if(has.na <- any(ina <- is.na(x))) {
         nas <- x[ina]
         x <-  x[!ina]
@@ -81,7 +81,7 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 {
     method <- match.arg(method)
     if(!is.atomic(x))
-        stop("`x' must be atomic")
+        stop("'x' must be atomic")
     if(!is.null(partial))
         .NotYetUsed("partial != NULL")
     if(method == "quick") {

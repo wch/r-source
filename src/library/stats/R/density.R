@@ -70,16 +70,16 @@ density <-
                      "sj-dpi" = bw.SJ(x, method="dpi"),
                      stop("unknown bandwidth rule"))
     }
-    if (!is.finite(bw)) stop("non-finite `bw'")
+    if (!is.finite(bw)) stop("non-finite 'bw'")
     bw <- adjust * bw
-    if (bw <= 0) stop("`bw' is not positive.")
+    if (bw <= 0) stop("'bw' is not positive.")
 
     if (missing(from))
         from <- min(x) - cut * bw
     if (missing(to))
 	to   <- max(x) + cut * bw
-    if (!is.finite(from)) stop("non-finite `from'")
-    if (!is.finite(to)) stop("non-finite `to'")
+    if (!is.finite(from)) stop("non-finite 'from'")
+    if (!is.finite(to)) stop("non-finite 'to'")
     lo <- from - 4 * bw
     up <- to + 4 * bw
     y <- .C("massdist",

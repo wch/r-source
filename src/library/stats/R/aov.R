@@ -5,7 +5,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     else terms(formula, "Error", data = data)
     indError <- attr(Terms, "specials")$Error
     if(length(indError) > 1)
-        stop(paste("There are", length(indError),
+        stop(paste("there are", length(indError),
                    "Error terms: only 1 is allowed"))
     lmcall <- Call <- match.call()
     lmcall[[1]] <- as.name("lm")
@@ -293,9 +293,9 @@ summary.aov <- function(object, intercept = FALSE, split,
         ns <- names(split)
         if(!is.null(Terms <- object$terms)) {
             if(!is.list(split))
-                stop("The split argument must be a list")
+                stop("the split argument must be a list")
             if(!all(ns %in% nmeffect))
-                stop("Unknown name(s) in the split list")
+                stop("unknown name(s) in the split list")
         }
         if(expand.split) {
             df.names <- names(coef(object))
@@ -548,11 +548,11 @@ se.contrast.aov <-
                })
         contrast <- contrast %*% coef
         if(!any(contrast) || all(is.na(contrast)))
-            stop("The contrast defined is empty (has no TRUE elements)")
+            stop("the contrast defined is empty (has no TRUE elements)")
     } else {
         contrast <- contrast.obj
         if(any(abs(colSums(contrast)) > 1e-8))
-            stop("Columns of contrast.obj must define a contrast (sum to zero)")
+            stop("columns of contrast.obj must define a contrast (sum to zero)")
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
     }
@@ -641,12 +641,12 @@ se.contrast.aovlist <-
                    })
         contrast <- contrast %*% coef
         if(!any(contrast))
-            stop("The contrast defined is empty (has no TRUE elements)")
+            stop("the contrast defined is empty (has no TRUE elements)")
     }
     else {
         contrast <- contrast.obj
         if(any(abs(colSums(contrast)) > 1e-8))
-            stop("Columns of contrast.obj must define a contrast(sum to zero)")
+            stop("columns of contrast.obj must define a contrast(sum to zero)")
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
     }

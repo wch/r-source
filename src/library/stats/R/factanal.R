@@ -106,7 +106,7 @@ factanal <-
             best <- fit$criteria[1]
         }
     }
-    if(best == Inf) stop("Unable to optimize from these starting value(s)")
+    if(best == Inf) stop("unable to optimize from these starting value(s)")
     load <- fit$loadings
     if(rotation != "none") {
         rot <- do.call(rotation, c(list(load), cn$rotate))

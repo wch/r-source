@@ -16,7 +16,7 @@ xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
 		y <- eval(rhs[[3]], environment(x), pf)
 		x <- eval(rhs[[2]], environment(x), pf)
 	    }
-	    else stop("invalid first argument [bad language]")
+	    else stop("invalid first argument [bad language object]")
 	}
 	else if(is.matrix(x) || is.data.frame(x)) {
 	    x <- data.matrix(x)

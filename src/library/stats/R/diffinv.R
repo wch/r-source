@@ -8,7 +8,7 @@ diffinv.vector <- function (x, lag = 1, differences = 1,
                             xi = rep(0., lag*differences), ...)
 {
     if (!is.vector(x)) stop ("x is not a vector")
-    if (lag < 1 || differences < 1) stop ("Bad value for lag or differences")
+    if (lag < 1 || differences < 1) stop ("bad value for lag or differences")
     if (length(xi) != lag*differences) stop ("xi has not the right length")
     if (differences == 1) {
         x <- as.double(x)

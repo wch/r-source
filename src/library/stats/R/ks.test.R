@@ -7,7 +7,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
     x <- x[!is.na(x)]
     n <- length(x)
     if(n < 1)
-        stop("Not enough x data")
+        stop("not enough x data")
     PVAL <- NULL
 
     if(is.numeric(y)) {
@@ -16,7 +16,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         n.x <- as.double(n)             # to avoid integer overflow
         n.y <- length(y)
         if(n.y < 1)
-            stop("Not enough y data")
+            stop("not enough y data")
         if(is.null(exact))
             exact <- (n.x * n.y < 10000)
         METHOD <- "Two-sample Kolmogorov-Smirnov test"
@@ -67,7 +67,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         if(is.numeric(x))
             x <- as.vector(x)
         else
-            stop("Argument x must be numeric")
+            stop("argument x must be numeric")
         p <- rep(0, length(x))
         p[is.na(x)] <- NA
         IND <- which(!is.na(x) & (x > 0))

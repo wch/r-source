@@ -11,7 +11,7 @@ hist.default <-
 	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, ...)
 {
     if (!is.numeric(x))
-	stop("`x' must be numeric")
+	stop("'x' must be numeric")
     xname <- paste(deparse(substitute(x), 500), collapse="\n")
     n <- length(x <- x[is.finite(x)])
     use.br <- !missing(breaks)
@@ -58,11 +58,11 @@ hist.default <-
     h <- diff(breaks)
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     if (!use.br && any(h <= 0))
-	stop("not strictly increasing `breaks'.")
+	stop("'breaks' are not strictly increasing")
     if (is.null(freq)) {
 	freq <- if(!missing(probability)) !as.logical(probability) else equidist
     } else if(!missing(probability) && any(probability == freq))
-	stop("`probability' is an alias for `!freq', however they differ.")
+	stop("'probability' is an alias for '!freq', however they differ.")
 
     ## Fuzz to handle cases where points are "effectively on"
     ## the boundaries
@@ -94,9 +94,9 @@ hist.default <-
 		 include= as.logical(include.lowest), naok = FALSE,
 		 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
     if (any(counts < 0))
-	stop("negative `counts'. Internal Error in C-code for \"bincount\"")
+	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
-	stop("some `x' not counted; maybe `breaks' do not span range of `x'")
+	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
     dens <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
@@ -134,7 +134,7 @@ plot.histogram <-
 	## for back compatibility
 	y <- x$density; if(is.null(y)) x$intensities else y}
     nB <- length(x$breaks)
-    if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
+    if(is.null(y) || 0 == nB) stop("'x' is wrongly structured")
 
     if(!add) {
 	if(is.null(ylim))

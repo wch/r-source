@@ -21,7 +21,7 @@ make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
     }
     else{
 	if (host != "localhost")
-	    stop("Can only receive calls on local machine")
+	    stop("can only receive calls on local machine")
 	tmp <- .C("Rsockopen", port = port, PACKAGE="base")
 	buffer <- paste(rep.int("#",256), collapse = "")
 	tmp2 <- .C("Rsocklisten", port = tmp$port,

@@ -37,7 +37,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
     else if(is.logical(main))
         main <- if(main) deparse(model$call, 500) else ""
     else if(!is.character(main))
-        stop("`main' must be TRUE, FALSE, NULL or character (vector).")
+        stop("'main' must be TRUE, FALSE, NULL or character (vector).")
     main <- rep(main, length = n.tms) # recycling
     pf <- envir
     carrier <- function(term) { # used for non-factor ones
@@ -125,7 +125,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
           if (!is.fac[i] && !is.null(smooth)){
             smooth(xx,pres[,i], lty=lty.smth, cex=cex, pch=pch, col=col.res,
                    col.smooth = col.smth,span=span.smth)
-          } else 
+          } else
           points(xx, pres[,i], cex = cex, pch = pch, col = col.res)
         }
 	if (rug) {

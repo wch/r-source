@@ -94,7 +94,7 @@ plot <- function (x, y, ...)
 {
     if (is.null(attr(x, "class")) && is.function(x)) {
 	nms <- names(list(...))
-	## need to pass `y' to plot.function() when positionally matched
+	## need to pass 'y' to plot.function() when positionally matched
 	if(missing(y)) # set to defaults {could use formals(plot.default)}:
 	    y <- { if (!"from" %in% nms) 0 else
 		   if (!"to"   %in% nms) 1 else
@@ -176,7 +176,7 @@ plot.table <-
     xnam <- deparse(substitute(x))
     rnk <- length(dim(x))
     if(rnk == 0)
-	stop("invalid table `x'")
+	stop("invalid table 'x'")
     if(rnk == 1) {
 	dn <- dimnames(x)
 	nx <- dn[[1]]

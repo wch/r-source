@@ -17,7 +17,7 @@ function(y, groups, blocks, ...)
                        deparse(substitute(groups)), " and ",
                        deparse(substitute(blocks)), sep = "")
         if(any(table(groups, blocks) != 1))
-            stop("Not an unreplicated complete block design")
+            stop("not an unreplicated complete block design")
         groups <- factor(groups)
         blocks <- factor(blocks)
     }

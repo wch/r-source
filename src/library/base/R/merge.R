@@ -10,19 +10,19 @@ merge.data.frame <-
 {
     fix.by <- function(by, df)
     {
-        ## fix up `by' to be a valid set of cols by number: 0 is row.names
+        ## fix up 'by' to be a valid set of cols by number: 0 is row.names
         by <- as.vector(by)
         nc <- ncol(df)
         if(is.character(by))
             by <- match(by, c("row.names", names(df))) - 1
         else if(is.numeric(by)) {
             if(any(by < 0) || any(by > nc))
-                stop("`by' must match numbers of columns")
+                stop("'by' must match numbers of columns")
         } else if(is.logical(by)) {
-            if(length(by) != nc) stop("`by' must match number of columns")
+            if(length(by) != nc) stop("'by' must match number of columns")
             by <- seq(along = by)[by]
-        } else stop("`by' must specify column(s)")
-        if(any(is.na(by))) stop("`by' must specify valid column(s)")
+        } else stop("'by' must specify column(s)")
+        if(any(is.na(by))) stop("'by' must specify valid column(s)")
         unique(by)
     }
 
@@ -49,7 +49,7 @@ merge.data.frame <-
         }
         row.names(x) <- 1:nx
         row.names(y) <- 1:ny
-        ## create keys from `by' columns:
+        ## create keys from 'by' columns:
         if(l.b == 1) {                  # (be faster)
             bx <- x[, by.x]; if(is.factor(bx)) bx <- as.character(bx)
             by <- y[, by.y]; if(is.factor(by)) by <- as.character(by)
@@ -84,14 +84,14 @@ merge.data.frame <-
         x <- x[c(m$xi, if(all.x) m$x.alone),
                c(by.x, (1:ncx)[-by.x]), drop=FALSE]
         names(x) <- c(nm.by, nm.x)
-        if(all.y) { ## add the `y.alone' rows to x[]
+        if(all.y) { ## add the 'y.alone' rows to x[]
             ## need to have factor levels extended as well -> using [cr]bind
             ya <- y[m$y.alone, by.y, drop=FALSE]
             names(ya) <- nm.by
             x <- rbind(x, cbind(ya, matrix(NA, nyy, ncx-l.b,
                                            dimnames=list(NULL,nm.x))))
         }
-        ## y (w/o `by'):
+        ## y (w/o 'by'):
         if(has.common.nms) {
             cnm <- nm.y %in% nm
             nm.y[cnm] <- paste(nm.y[cnm], suffixes[2], sep="")

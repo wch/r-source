@@ -334,7 +334,7 @@ str.default <-
 	}
 
 	## Not sure, this is ever triggered:
-	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
+	if(is.na(le)) { warning("'str.default': 'le' is NA"); le <- 0}
 
 	if(char.like) {
             en_object <- encodeString(object)

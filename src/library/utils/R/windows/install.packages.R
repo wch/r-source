@@ -153,7 +153,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             ## Bundle
             conts <- read.dcf("DESCRIPTION",fields="Contains")[1,]
             if (is.na(conts))
-                stop("Malformed bundle DESCRIPTION file, no Contains field")
+                stop("malformed bundle DESCRIPTION file, no Contains field")
             else
                 pkgs <- strsplit(conts," ")[[1]]
             ## now check the MD5 sums
@@ -410,7 +410,7 @@ contrib.url <- function(repos, type = c("binary", "source"))
             flush.console()
             chooseCRANmirror()
             repos <- sub("@CRAN@", getOption("CRAN"), repos)
-        } else stop("Trying to use CRAN without setting a mirror")
+        } else stop("trying to use CRAN without setting a mirror")
     if(type == "binary") {
         ver <- paste(R.version$major, substring(R.version$minor, 1, 1),
                      sep = ".")

@@ -190,7 +190,7 @@ reshape <-
        {
            if (missing(timevar) && missing(idvar)) {
                back <- attr(data,"reshapeLong")
-               if (is.null(back)) stop("No time or id specified")
+               if (is.null(back)) stop("no time or id specified")
                reshapeWide(data, idvar = back$idvar, timevar = back$timevar,
                            varying = back$varying, v.names = back$v.names,
                            new.row.names = new.row.names)
@@ -205,7 +205,7 @@ reshape <-
        {
            if (missing(timevar) && missing(idvar) && missing(v.names) && missing(varying)) {
                back <- attr(data,"reshapeWide")
-               if (is.null(back)) stop("No time or id specified")
+               if (is.null(back)) stop("no time or id specified")
                reshapeLong(data, idvar = back$idvar, timevar = back$timevar,
                            varying = back$varying, v.names = back$v.names,
                            times = back$times)

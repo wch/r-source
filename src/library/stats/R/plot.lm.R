@@ -9,7 +9,7 @@ function(x, which = 1:4,
          id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
 {
     if (!inherits(x, "lm"))
-	stop("Use only with 'lm' objects")
+	stop("use only with \"lm\" objects")
     if(!is.numeric(which) || any(which < 1) || any(which > 4))
         stop("`which' must be in 1:4")
     isGlm <- inherits(x, "glm")

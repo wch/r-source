@@ -95,10 +95,10 @@ simpleLoess <-
     x <- x[, order.parametric]
     order.drop.sqr <- (2 - drop.square)[order.parametric]
     if(degree==1 && sum.drop.sqr)
-	stop("Specified the square of a factor predictor to be dropped when degree = 1")
+	stop("specified the square of a factor predictor to be dropped when degree = 1")
     if(D == 1 && sum.drop.sqr)
-	stop("Specified the square of a predictor to be dropped with only one numeric predictor")
-    if(sum.parametric == D) stop("Specified parametric for all predictors")
+	stop("specified the square of a predictor to be dropped with only one numeric predictor")
+    if(sum.parametric == D) stop("specified parametric for all predictors")
 
     if(iterations)
     for(j in 1:iterations) {
@@ -215,7 +215,7 @@ simpleLoess <-
 predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 {
     if(!inherits(object, "loess"))
-	stop("First argument must be a loess object")
+	stop("first argument must be a loess object")
     if(is.null(newdata) & (se == FALSE)) return(fitted(object))
 
     if(is.null(newdata)) newx <- object$x

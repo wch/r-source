@@ -67,13 +67,13 @@ dev.off <-
 dev.copy <- function(device, ..., which = dev.next())
 {
     if(!missing(which) & !missing(device))
-	stop("Cannot supply which and device at the same time.")
+	stop("Cannot supply which and device at the same time")
     old.device <- dev.cur()
     if(old.device == 1)
-	stop("Cannot copy the null device.")
+	stop("Cannot copy the null device")
     if(missing(device)) {
 	if(which == 1)
-	    stop("Cannot copy to the null device.")
+	    stop("Cannot copy to the null device")
 	else if(which == dev.cur())
 	    stop("Cannot copy device to itself")
 	dev.set(which)

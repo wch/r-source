@@ -574,7 +574,7 @@ namespaceImportFrom <- function(self, ns, vars) {
     }
     else if (isNamespace(self)) {
         if (namespaceIsSealed(self))
-            stop("cannot import into a sealed namespace")
+            stop("cannot import into a sealed name space")
         impenv <- parent.env(self)
         msg <- "replacing previous import:"
         register <- TRUE
@@ -655,7 +655,7 @@ namespaceExport <- function(ns, vars) {
     namespaceIsSealed <- function(ns)
        environmentIsLocked(ns)
     if (namespaceIsSealed(ns))
-        stop("cannot add to exports of a sealed namespace")
+        stop("cannot add to exports of a sealed name space")
     ns <- asNamespace(ns, base.OK = FALSE)
     if (length(vars) > 0) {
         addExports <- function(ns, new) {

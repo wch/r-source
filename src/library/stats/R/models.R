@@ -303,7 +303,7 @@ model.frame.default <-
              && !is.null(attr(data, "class")))
         data <- as.data.frame(data)
     else if (is.array(data))
-        stop("`data' must be a data.frame, not a matrix or  array")
+        stop("'data' must be a data.frame, not a matrix or an array")
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     env <- environment(formula)

@@ -72,7 +72,7 @@ Sweave <- function(file, driver=RweaveLatex(),
                 syntax <- get(sname, mode = "list")
                 if(class(syntax) != "SweaveSyntax")
                     stop(paste("Object '", sname,
-                               "'has not class SweaveSyntax"))
+                               "' does not have class \"SweaveSyntax\""))
                 drobj$syntax <- syntax
             }
             if(is.null(chunk))
@@ -144,10 +144,10 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
         syntax <- get(syntax)
 
     if(class(syntax) != "SweaveSyntax")
-        stop("Target syntax not of class `SweaveSyntax'.\n")
+        stop("target syntax not of class \"SweaveSyntax\"")
 
     if(is.null(syntax$trans))
-        stop("Target syntax contains no translation table.\n")
+        stop("target syntax contains no translation table")
 
     insynt <- SweaveGetSyntax(file)
     text = readLines(file)
@@ -187,7 +187,7 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
         return(defaults)
 
     if(any(sapply(x, length)!=2))
-        stop(paste("Parse error or empty option in\n", text))
+        stop(paste("parse error or empty option in\n", text))
 
     options <- defaults
 
@@ -260,7 +260,7 @@ RweaveLatexSetup <-
         if(.Platform$OS.type == "windows")
             styfile <- gsub("\\\\", "/", styfile)
         if(any(grep(" ", styfile)))
-            warning(paste("Path '", styfile, "' contains spaces,\n",
+            warning(paste("path '", styfile, "' contains spaces,\n",
                           "this may cause problems when running latex.",
                           sep=""))
     }
@@ -316,12 +316,12 @@ RweaveLatexRuncode <- function(object, chunk, options)
         chunkout <- object$output
 
     SweaveHooks(options, run=TRUE)
-    
+
     chunkexps <- try(parse(text=chunk), silent=TRUE)
     RweaveTryStop(chunkexps, options)
     openSinput <- FALSE
     openSchunk <- FALSE
-    
+
     if(length(chunkexps)==0)
         return(object)
 
@@ -362,12 +362,12 @@ RweaveLatexRuncode <- function(object, chunk, options)
         if(length(output)==1 & output[1]=="") output <- NULL
 
         RweaveTryStop(err, options)
-        
+
         if(object$debug)
             cat(paste(output, collapse="\n"))
 
         if(length(output)>0 & (options$results != "hide")){
-                                                        
+
             if(openSinput){
                 cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
                 openSinput <- FALSE
@@ -562,8 +562,8 @@ RweaveTryStop <- function(err, options){
         stop(msg, err, call.=FALSE)
     }
 }
-           
-        
+
+
 
 
 

@@ -6,7 +6,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         if(add) d <- as.matrix(d)
 	x <- as.matrix(d^2)
 	if ((n <- nrow(x)) != ncol(x))
-	    stop("Distances must be result of dist or a square matrix")
+	    stop("distances must be result of dist or a square matrix")
     }
     else {
 	x <- matrix(0, n, n)

@@ -76,7 +76,7 @@ getInitial.formula <-
     #obj <- object                       # kluge to create a copy inside this
     #object[[1]] <- as.name("~")	 # function. match.call() is misbehaving
     switch (length(object),
-            stop("argument \"object\" has an impossible length"),
+            stop("argument 'object' has an impossible length"),
         {				# one-sided formula
 	    func <- get(as.character(object[[2]][[1]]))
 	    getInitial(func, data,

@@ -30,7 +30,7 @@ function(file, refhook = NULL)
 serialize <- function(object, connection, ascii = FALSE, refhook = NULL) {
     if (! is.null(connection)) {
         if (!inherits(connection, "connection"))
-            stop("`connection' must be a connection")
+            stop("'connection' must be a connection")
         if (missing(ascii)) ascii <- summary(connection)$text == "text"
     }
     if (! ascii && inherits(connection, "sockconn"))
@@ -42,6 +42,6 @@ serialize <- function(object, connection, ascii = FALSE, refhook = NULL) {
 
 unserialize <- function(connection, refhook = NULL) {
     if (! is.character(connection) && !inherits(connection, "connection"))
-        stop("`connection' must be a connection")
+        stop("'connection' must be a connection")
     .Call("R_unserialize", connection, refhook, PACKAGE="base")
 }

@@ -88,7 +88,7 @@ profiler.nls <-
                      params <- unlist(args)
                    } else stop("invalid argument to getProfile")
                    if(!all(names(params) %in% names(fittedPars)))
-                     stop("can not recognize parameter name")
+                     stop("cannot recognize parameter name")
                    startPars <- defaultPars
                    vary <- !(names(fittedPars) %in% names(params))
                    startPars[!vary] <- params

@@ -43,7 +43,7 @@ as.Date.default <- function(x, ...)
     if(inherits(x, "Date")) return(x)
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = "Date"))
-    stop(paste("Don't know how to convert `", deparse(substitute(x)),
+    stop(paste("Don't know how to convert '", deparse(substitute(x)),
 	       "' to class \"Date\"", sep=""))
 }
 
@@ -53,7 +53,7 @@ as.Date.date <- function(x, ...)
     if(inherits(x, "date")) {
         x <- (x - 3653) # origin 1960-01-01
         return(structure(x, class = "Date"))
-    } else stop(paste("`", deparse(substitute(x)),
+    } else stop(paste("'", deparse(substitute(x)),
                       "' is not a \"dates\" object", sep=""))
 }
 
@@ -66,7 +66,7 @@ as.Date.dates <- function(x, ...)
         if(length(z) == 3 && is.numeric(z))
             x  <- x + as.numeric(as.Date(paste(z[3], z[1], z[2], sep="/")))
         return(structure(x, class = "Date"))
-    } else stop(paste("`", deparse(substitute(x)),
+    } else stop(paste("'", deparse(substitute(x)),
                       "' is not a \"dates\" object", sep=""))
 }
 
@@ -189,23 +189,23 @@ mean.Date <- function (x, ...)
 
 seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
 {
-    if (missing(from)) stop("`from' must be specified")
-    if (!inherits(from, "Date")) stop("`from' must be a Date object")
-        if(length(as.Date(from)) != 1) stop("`from' must be of length 1")
+    if (missing(from)) stop("'from' must be specified")
+    if (!inherits(from, "Date")) stop("'from' must be a Date object")
+        if(length(as.Date(from)) != 1) stop("'from' must be of length 1")
     if (!missing(to)) {
-        if (!inherits(to, "Date")) stop("`to' must be a Date object")
-        if (length(as.Date(to)) != 1) stop("`to' must be of length 1")
-        if (to <= from) stop("`to' must be later than `from'")
+        if (!inherits(to, "Date")) stop("'to' must be a Date object")
+        if (length(as.Date(to)) != 1) stop("'to' must be of length 1")
+        if (to <= from) stop("'to' must be later than 'from'")
     }
     if (!missing(along.with)) {
         length.out <- length(along.with)
     }  else if (!missing(length.out)) {
-        if (length(length.out) != 1) stop("`length.out' must be of length 1")
+        if (length(length.out) != 1) stop("'length.out' must be of length 1")
         length.out <- ceiling(length.out)
     }
     status <- c(!missing(to), !missing(by), !is.null(length.out))
     if(sum(status) != 2)
-        stop("exactly two of `to', `by' and `length.out' / `along.with' must be specified")
+        stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
     if (missing(by)) {
         from <- unclass(as.Date(from))
         to <- unclass(as.Date(to))
@@ -213,7 +213,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         return(structure(res, class = "Date"))
     }
 
-    if (length(by) != 1) stop("`by' must be of length 1")
+    if (length(by) != 1) stop("'by' must be of length 1")
     valid <- 0
     if (inherits(by, "difftime")) {
         by <- switch(attr(by,"units"), secs = 1/86400, mins = 1/1440,
@@ -221,17 +221,17 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     } else if(is.character(by)) {
         by2 <- strsplit(by, " ", fixed=TRUE)[[1]]
         if(length(by2) > 2 || length(by2) < 1)
-            stop("invalid `by' string")
+            stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
                         c("days", "weeks", "months", "years"))
-        if(is.na(valid)) stop("invalid string for `by'")
+        if(is.na(valid)) stop("invalid string for 'by'")
         if(valid <= 2) {
             by <- c(1, 7)[valid]
             if (length(by2) == 2) by <- by * as.integer(by2[1])
         } else
             by <- if(length(by2) == 2) as.integer(by2[1]) else 1
-    } else if(!is.numeric(by)) stop("invalid mode for `by'")
-    if(is.na(by)) stop("`by' is NA")
+    } else if(!is.numeric(by)) stop("invalid mode for 'by'")
+    if(is.na(by)) stop("'by' is NA")
 
     if(valid <= 2) {
         from <- unclass(as.Date(from))
@@ -272,7 +272,7 @@ cut.Date <-
     function (x, breaks, labels = NULL, start.on.monday = TRUE,
               right = FALSE, ...)
 {
-    if(!inherits(x, "Date")) stop("`x' must be a date-time object")
+    if(!inherits(x, "Date")) stop("'x' must be a date-time object")
     x <- as.Date(x)
 
     if (inherits(breaks, "Date")) {
@@ -282,10 +282,10 @@ cut.Date <-
     } else if(is.character(breaks) && length(breaks) == 1) {
         by2 <- strsplit(breaks, " ", fixed=TRUE)[[1]]
         if(length(by2) > 2 || length(by2) < 1)
-            stop("invalid specification of `breaks'")
+            stop("invalid specification of 'breaks'")
 	valid <-
 	    pmatch(by2[length(by2)], c("days", "weeks", "months", "years"))
-	if(is.na(valid)) stop("invalid specification of `breaks'")
+	if(is.na(valid)) stop("invalid specification of 'breaks'")
 	start <- as.POSIXlt(min(x, na.rm=TRUE))
 	if(valid == 1) incr <- 1
 	if(valid == 2) {
@@ -301,7 +301,7 @@ cut.Date <-
 	maxx <- max(x, na.rm = TRUE)
 	breaks <- seq(start, maxx + incr, breaks)
 	breaks <- breaks[1:(1+max(which(breaks < maxx)))]
-    } else stop("invalid specification of `breaks'")
+    } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,
                right = right, ...)
     if(is.null(labels)) levels(res) <- as.character(breaks[-length(breaks)])
@@ -310,7 +310,7 @@ cut.Date <-
 
 julian.Date <- function(x, origin = as.Date("1970-01-01"), ...)
 {
-    if(length(origin) != 1) stop("`origin' must be of length one")
+    if(length(origin) != 1) stop("'origin' must be of length one")
     structure(unclass(x) - unclass(origin), "origin" = origin)
 }
 
@@ -350,7 +350,7 @@ diff.Date <- function (x, lag = 1, differences = 1, ...)
     ismat <- is.matrix(x)
     xlen <- if (ismat) dim(x)[1] else length(x)
     if (length(lag) > 1 || length(differences) > 1 || lag < 1 || differences < 1)
-        stop("`lag' and `differences' must be integers >= 1")
+        stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
         return(structure(numeric(0), class="difftime", units="days"))
     r <- x
