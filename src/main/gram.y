@@ -1963,6 +1963,7 @@ int yylex(void)
     case '@':
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
+    case EQ_ASSIGN:
 	EatLines = 1;
 	break;
 
