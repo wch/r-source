@@ -293,6 +293,10 @@ Date: Tue, 12 Nov 2002 13:50:44 +0200
 Subject: "trace" argument in legend()
 From: jerome@hivnet.ubc.ca
 Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
+* PR# 2630 *
+Subject: plot() with type="s" and lty=2
+From: jerome@hivnet.ubc.ca
+Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 
 Directory:  In-Out
 
@@ -301,6 +305,10 @@ Subject: Maybe a problem in binary read/write
 From: accot@free.fr
 Date: Tue, 18 Jun 2002 22:51:17 +0200 (MET DST)
 ..I don't think file() is said to work with devices!
+* PR# 2639 *
+Subject: Bug in read.socket
+From: mckay@gmr.com
+Date: Fri, 14 Mar 2003 14:28:58 +0100 (MET)
 
 Directory:  Installation
 
@@ -571,75 +579,6 @@ Date: Mon, 24 Feb 2003 17:01:47 GMT
 Subject: density(), with argument of length 1
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
-* PR# 2612 *
-Subject: It's simple. We make money. e  fzjtzgdodba
-From: "" <78goodto01@bigfoot.com>
-Date: Thu, 06 Mar 03 13:46:00 GMT
-* PR# 2613 *
-Subject: Re: are viruses destructive?
-From: "Levi Houston" <imte0l6@erols.com>
-Date: Fri, 07 Mar 03 03:15:46 GMT
-* PR# 2614 *
-Subject: seeking for assistance
-From: "samson urevbu" <samsonurevbu@netscape.net>
-Date: Sat, 8, Mar 2003 11:30:33 -0000
-* PR# 2615 *
-Subject: maybe later xdp
-From: rtxsheridan <qhsave-on-ink@satisfiedquicklinks.com>
-Date: Fri, 7 Mar 2003 16:37:27 -0800
-* PR# 2616 *
-Subject: AS SEEN ON NATIONAL TV                                                                      
-From: <3popmeexni@aol.com>
-Date: Sat, 08 Mar 2003 05:23:01 +1200
-* PR# 2617 *
-Subject: Re-Please read and let me know.
-From: "Dr Olabode Johnson" <olabode_johnson@rediffmail.com>
-Date: Wed, 3 Sep 2003 01:36:07 -0700
-* PR# 2618 *
-Subject: Stay young with our product. 0269ywYy3-274cOIx6819m-21
-From: <bryan.wiltshirecmfj@btinternet.com>
-Date: Sun, 09 Mar 2003 10:54:52 +0200
-* PR# 2619 *
-Subject: keal fount
-From: "Erin Davila" <gv6jpqrp@yahoo.com>
-Date: Sun, 09 Mar 03 04:24:33 GMT
-* PR# 2620 *
-Subject: （광고）정통부개정안에따른 메일데이타
-From: mailop<mailmarketer@hanmir.com>
-Date: Mon, 10 Mar 2003 06:58:34 +0900
-* PR# 2621 *
-Subject: (광고) 비주얼족패션몰-화이트데이이벤트 선물을 드려요~@
-From: test<test@test.com>
-Date: Mon, 10 Mar 2003 07:01:30 +0900
-* PR# 2622 *
-Subject: (Florida & All Inclusive Bahamas Cruise $199 pp.
-Subject: (Florida & All Inclusive Bahamas Cruise $199 pp.
-From: "M.I.U. " <zrodriguez@cfl.rr.com>
-From: "M.I.U. " <zrodriguez@cfl.rr.com>
-Date: Sun, 9 Mar 2003 00:00:00 -0500
-Date: 3/9/2003X-Mailer: Spyder Mailer 1.2
-Date: Sun, 9 Mar 2003 23:19:22 -0500
-Date: Sun, 9 Mar 2003 23:19:22 -0500
-* PR# 2623 *
-Subject: system(..., intern=TRUE) splits long lines
-From: Vadim Ogranovich <vograno@arbitrade.com>
-Date: Mon, 10 Mar 2003 12:59:11 -0600
-* PR# 2624 *
-Subject: AS SEEN ON NATIONAL TV                                                  
-From: <3popmeqvvv@yahoo.com>
-Date: Mon, 10 Mar 2003 23:44:32 +0100
-* PR# 2625 *
-Subject: (광고) 자동차 항균필터 교환하세요!!
-From: 에어몰<airmall@empal.com>
-Date: Tue, 11 Mar 2003 23:05:53 +0900
-* PR# 2626 *
-Subject: 1/2 off Viagra!                                                                                 .
-From: "Trenton Harrington" <Trisha5307h@hotmail.com>
-Date: Thu, 13 Mar 03 01:24:17 GMT
-* PR# 2627 *
-Subject: Special report on technological development
-From: "The Tech News" <editor@the-tech-news.com>
-Date: Wed, 12 Mar 2003 09:26:53 +0100
 * PR# 2628 *
 Subject: cex.axis in boxplot
 From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
@@ -648,19 +587,3 @@ Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 Subject: 'summary' with logicals
 From: =?ISO-8859-1?Q?G=C3=B6ran_Brostr=C3=B6m?= <gb@stat.umu.se>
 Date: Wed, 12 Mar 2003 23:34:26 +0100 (CET)
-* PR# 2630 *
-Subject: plot() with type="s" and lty=2
-From: jerome@hivnet.ubc.ca
-Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
-* PR# 2631 *
-Subject: (광고)영어포기해오셨죠?이젠 해결책 드릴께요@
-From: (주)늘배움터<multiple73@korea.com>
-Date: Thu, 13 Mar 2003 05:07:48 +0100 (MET)
-* PR# 2632 *
-Subject: It's simple. We make money.                                                          
-From: <mike2w4exsha@bigfoot.com>
-Date: Thu, 13 Mar 2003 05:29:02 -0100
-* PR# 2633 *
-Subject: The function 'apply'
-From: louisept@pweh.com
-Date: Thu, 13 Mar 2003 23:19:38 +0100 (MET)
