@@ -33,18 +33,17 @@ use our tool set.
 
 
 We recommend that you use the mingw32 port of gcc-2.95.2-1 by Mumit
-Khan from http://www.mingw.org/ or
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. (The `portal'
-gives more precise instructions.)  You can build R against either the
-crtdll.dll or msvcrt.dll runtime systems, and we recommend the latter.
-(In particular, locale support is poor with crtdll.dll, non-existent
-under Win9x and crtdll.dll has many memory leaks.)
+Khan from http://www.mingw.org/. (The `portal' gives more precise
+instructions on the current locations.)  You can build R against
+either the crtdll.dll or msvcrt.dll runtime systems, and we recommend
+the latter.  (In particular, locale support is poor with crtdll.dll,
+non-existent under Win9x and crtdll.dll has many memory leaks.)
 
-It may also be possible to use the compilers from the cygwin 1.1 net
+It might also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin -mwin32 flags; the current versions use
 mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
-binutils bundles. gcc-2.95.2-8, the latest we looked at, had fatal
-mistakes in its spec file, as did -7.)
+binutils bundles.  All the recent versions we have tried do not work
+unchanged with -mno-cygwin.)
 
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
@@ -55,7 +54,7 @@ mirrors, and included in our tools.zip).
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
 http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm
-You may need this on the same drive as the other tools (although we
+You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
 
 If you want to make Window help files you will need hcrtf.exe from a
