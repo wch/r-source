@@ -1,6 +1,15 @@
 # List of source files containing translatable strings.
 # The last line must not be a comment.
 
+src/appl/approx.c
+src/appl/binning.c
+src/appl/pretty.c
+src/appl/rcont.c
+src/appl/strsignif.c
 src/main/version.c
+src/modules/internet/internet.c
+src/modules/internet/nanoftp.c
+src/modules/internet/nanohttp.c
+src/modules/internet/sockconn.c
 src/modules/lapack/Lapack.c
 src/modules/X11/devX11.c
