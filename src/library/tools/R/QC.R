@@ -509,19 +509,7 @@ function(package, dir, lib.loc = NULL,
     ind <- sapply(dbSynopses, length) > 0
     dbUsageTexts[ind] <- dbSynopses[ind]
     withSynopsis <- as.character(dbNames[ind])
-    dbUsages <-
-        lapply(dbUsageTexts,
-               function(txt) {
-                   methodRE <-
-                       paste("(\\\\(S[34])?method",
-                             "{([.[:alnum:]]*)}",
-                             "{([.[:alnum:]]*)})",
-                             sep = "")
-                   txt <- gsub("\\\\l?dots", "...", txt)
-                   txt <- gsub("\\\\%", "%", txt)
-                   txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
-                   .parseTextAsMuchAsPossible(txt)
-               })
+    dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- sapply(dbUsages,
                   function(x) !is.null(attr(x, "badLines")))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
@@ -541,15 +529,6 @@ function(package, dir, lib.loc = NULL,
     variablesInUsages <- character()
     dataSetsInUsages <- character()
     functionsInUsagesNotInCode <- list()
-
-    ## <FIXME>
-    ## Should really have a utility function for creating this and
-    ## related regexps.
-    S4methodRE <- paste("\\\\S4method",
-                        "{([.[:alnum:]]*)}",
-                        "{([.[:alnum:]]*)}",
-                        sep = "")
-
 
     for(docObj in dbNames) {
 
@@ -633,7 +612,7 @@ function(package, dir, lib.loc = NULL,
         ## by comparing the explicit \usage entries for S4 methods to
         ## what is actually in the code.  We most likely also should do
         ## something similar for S3 methods.
-        ind <- grep(S4methodRE, functions)
+        ind <- grep(.S4_method_markup_regexp, functions)
         if(any(ind))
             functions <- functions[!ind]
         ## </FIXME>
@@ -1154,19 +1133,7 @@ function(package, dir, lib.loc = NULL)
     }
     names(db) <- names(dbAliases) <- dbNames
     dbUsageTexts <- lapply(db, getRdSection, "usage")
-    dbUsages <-
-        lapply(dbUsageTexts,
-               function(txt) {
-                   methodRE <-
-                       paste("(\\\\(S[34])?method",
-                             "{([.[:alnum:]]*)}",
-                             "{([.[:alnum:]]*)})",
-                             sep = "")
-                   txt <- gsub("\\\\l?dots", "...", txt)
-                   txt <- gsub("\\\\%", "%", txt)
-                   txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
-                   .parseTextAsMuchAsPossible(txt)
-               })
+    dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(dbUsages,
                              function(x) !is.null(attr(x, "badLines"))))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
@@ -1507,19 +1474,7 @@ function(package, dir, lib.loc = NULL)
     names(db) <- dbNames <- sapply(db, getRdSection, "name")
 
     dbUsageTexts <- lapply(db, getRdSection, "usage")
-    dbUsages <-
-        lapply(dbUsageTexts,
-               function(txt) {
-                   methodRE <-
-                       paste("(\\\\(S[34])?method",
-                             "{([.[:alnum:]]*)}",
-                             "{([.[:alnum:]]*)})",
-                             sep = "")
-                   txt <- gsub("\\\\l?dots", "...", txt)
-                   txt <- gsub("\\\\%", "%", txt)
-                   txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
-                   .parseTextAsMuchAsPossible(txt)
-               })
+    dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- sapply(dbUsages,
                   function(x) !is.null(attr(x, "badLines")))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
@@ -2520,6 +2475,18 @@ function(txt)
     exprs
 }
 
+### * .parse_usage_as_much_as_possible
+
+.parse_usage_as_much_as_possible <-
+function(txt)
+{
+    txt <- gsub("\\\\l?dots", "...", txt)
+    txt <- gsub("\\\\%", "%", txt)
+    txt <- gsub(.S3_method_markup_regexp, "\"\\\\\\1\"", txt)
+    txt <- gsub(.S4_method_markup_regexp, "\"\\\\\\1\"", txt)
+    .parseTextAsMuchAsPossible(txt)
+}
+
 ### * .prettyPrint
 
 .prettyPrint <-
@@ -2541,6 +2508,17 @@ function(x)
         "\\2\\4.\\3",
         x)
 }
+
+### * .S3_method_markup_regexp
+
+.S3_method_markup_regexp <-
+    "(\\\\(S3)?method{([.[:alnum:]]*)}{([.[:alnum:]]*)})"
+    
+### * .S4_method_markup_regexp
+
+.S4_method_markup_regexp <-
+    "(\\\\S4method{([.[:alnum:]]*)}{([.[:alnum:],]*)})"
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
