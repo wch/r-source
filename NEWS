@@ -56,6 +56,9 @@ DEPRECATED & DEFUNCT
         release and users are now warned on every usage: you may even see
         multiple warnings for each usage.
 
+        If environment variable R_NO_UNDERLINE is set to anything of
+	positive length then use of `_' becomes a syntax error.
+
     o	machine(), Machine() and Platform() are defunct.
 
     o	restart() is defunct.  Use try(), as has long been recommended.

@@ -522,6 +522,9 @@ SEXP R_primitive_methods(SEXP op);
 SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
+/* temporary switch to control underline-as-assigment */
+extern Rboolean R_no_underline		INI_as(FALSE);
+
 #ifdef __MAIN__
 # undef extern
 # undef LibExtern
