@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-04-01
+Version 2.0.2005-04-02
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1690,6 +1690,9 @@ distributions of R.)
 
 *adehabitat*
      A collection of tools for the analysis of habitat selection by animals.
+
+*adlift*
+     Adaptive Wavelet transforms for signal denoising.
 
 *agce*
      Analysis of growth curve experiments.
