@@ -45,7 +45,7 @@ BUG FIXES
 	4.4.0 systems.  (This is a bug in their header files but we have
 	added a workaround.)
 
-    o   Fixed the clipping problem in the quartz device.
+    o   Fixed the clipping problem in the quartz() device.
 
     o   Subsetting a factor swapped the order of the attributes, which
 	identical() cares about.  (PR#6799)
@@ -69,6 +69,10 @@ BUG FIXES
 	misbehave (perhaps segfault) if a term was a 1D array.  (PR#6838)
 
     o   The configure script now finds the pdf viewers ggv and gpdf.
+
+    o   Workaround the problems strptime on MacOS X has with dates
+	before 1900.
+
 
 
 		CHANGES IN R VERSION 1.9.0
